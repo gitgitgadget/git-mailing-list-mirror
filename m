@@ -2,101 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3EA00C433E0
-	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 18:03:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B447C433E6
+	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 18:03:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F299464F94
-	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 18:02:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DBC5064F94
+	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 18:03:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229555AbhCKSC2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Mar 2021 13:02:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48980 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230154AbhCKSCC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Mar 2021 13:02:02 -0500
-Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 749B9C061574
-        for <git@vger.kernel.org>; Thu, 11 Mar 2021 10:02:02 -0800 (PST)
-Received: by mail-ot1-x32e.google.com with SMTP id 31-20020a9d00220000b02901b64b9b50b1so41611ota.9
-        for <git@vger.kernel.org>; Thu, 11 Mar 2021 10:02:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=CW9oBN/4is30aV4k9lIyReu5cclbAd/y6v+S4W05noU=;
-        b=cKGaC+IUSmuHQ8vAWtybT9uz2ADDqezIwMZWYJUxeKtAvaj5H7uMnT/WCdlsdZ0eQ6
-         9W3V3C/KNETtpLNEzPpAhu8pvbHFa0qQYCOmwWlO3YilT/PWk9HaPOrS2r6j41m09Yg+
-         +m3BiZglrGQCNdgO8mw7b3Ksnm/9fDd1XVbFFiJR+ISw8DenK1AJkLO+7vtHb7MN9YWl
-         QVvyKrAunDFw8rdUgAQj7MEiOqz7I6phAZgbhMPWsoZQ84zJuNsRqfguYmF5WaXOu0wU
-         Qcj2wwGsG0Iy897M/o+2Z4sVFj97QhVbASpz4Hdgz+r53+X51R/Zw9oFMA0q7cU/AL2M
-         t+pw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=CW9oBN/4is30aV4k9lIyReu5cclbAd/y6v+S4W05noU=;
-        b=GURTFQazRHmmZsmK8KkIdljsVQzzHUMzTewYhaWoRRYBA1q3RdeIxBSdwS5HrE/dQk
-         AzH6cFT0aDMr0DHcEQPHck3XOJYgdROd20RTwH2uncL8qEr+DLbRBValhy/G/i5rIMzl
-         BoEfa5bqOLXZQIZy6uyGP3Wobq93HL8AmL5WMUHdJk0paDrRSu4DWW9iVNbIg/ownRr2
-         UB86slnAf8dJQFJlj/JErdMFaKe4c40NFHfqXqjbA4zcAa8PnlEHlFGZLV7jti/1Lh0a
-         orvTixPP6dagikTZ7TCMqs7jiCDXNfBqYvFFX1kL9QO8NpeScdUFkiFnADCfqvXjHWFg
-         COQQ==
-X-Gm-Message-State: AOAM531ckLPOuoisDonQMN/KeVvOrt8mJVeCYLpi0OAeaIOgnyXxor67
-        B3P92c+pkKKpjSlCfLPDQb/OAIE2Q4pk1p6QPrA=
-X-Google-Smtp-Source: ABdhPJyJo6zQNh6KKUPmeoTx9QndRqgxxFAu1txJ7/P2a9wQFl0Rn6rFIRug0LNTbF+U1hcBbAs14EonYq4mlFMUa4Y=
-X-Received: by 2002:a9d:8d5:: with SMTP id 79mr52248otf.345.1615485721914;
- Thu, 11 Mar 2021 10:02:01 -0800 (PST)
+        id S230226AbhCKSC7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Mar 2021 13:02:59 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61877 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229696AbhCKSCl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Mar 2021 13:02:41 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 28D2DBC15D;
+        Thu, 11 Mar 2021 13:02:41 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+        :subject:cc:date:message-id:mime-version:content-type; s=sasl;
+         bh=qZBugPVGVkawwCM4WVDdyok2OkE=; b=OdNSNCDyT+5hRgisbMT6E7o6LQir
+        5NayibZqwsk38bxzPJzFSEd8qCCPdBaRE32+DPv27YDce1LWWCO4mxyaker8GidH
+        MW63F+n6eK7nfduElFHURfqS5SL0fXORk7J9ir7njSl5vJO6MgQofXkGRWciBCnK
+        qGTvCFNyhliarFc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+        :cc:date:message-id:mime-version:content-type; q=dns; s=sasl; b=
+        DibmYweHQg/Z6KutU9zv9I46s+F9Mpo2HOb0/oK/zbUTVswwEhwvkLfg9sDyhhhe
+        r9djiUgR/5fVgGyJy/q6J/o2pat+YQwv3/fAhbd4rY0uO4iecakam4g7SPoW1WUT
+        rbcq6DJbmgWNf7a4xpdh9R0D5Z5frEUYtnoKbsv9N7I=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 20EAEBC15C;
+        Thu, 11 Mar 2021 13:02:41 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5E8D6BC15B;
+        Thu, 11 Mar 2021 13:02:40 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Han-Wen Nienhuys <hanwen@google.com>
+Subject: [PATCH] SQUASH??? calloc(nmemb,size)
+cc:     git@vger.kernel.org
+Date:   Thu, 11 Mar 2021 10:02:38 -0800
+Message-ID: <xmqqa6r9efgh.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-References: <f6cd9386-8a58-ee52-4c7b-60d9bd14a51d@gmail.com>
- <xmqqblbqipeh.fsf@gitster.g> <cd7c6682-7409-f72c-8751-02b70a423f83@gmail.com>
-In-Reply-To: <cd7c6682-7409-f72c-8751-02b70a423f83@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 11 Mar 2021 10:01:50 -0800
-Message-ID: <CABPp-BFPj4E=pOK_f=w9k_zGA+=A1F0Hv-PgYyNDdN30mXMBuw@mail.gmail.com>
-Subject: Re: [RFC PATCH] merge-recursive: create new files with O_EXCL
-To:     Ephrim Khong <dr.khong@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: F863C13E-8293-11EB-AA90-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 11, 2021 at 1:58 AM Ephrim Khong <dr.khong@gmail.com> wrote:
->
-> On 11.03.2021 00:01, Junio C Hamano wrote:
-> > Ephrim Khong <dr.khong@gmail.com> writes:
+Please squash this in to an appropriate step in your series;
+otherwise it triggers a Coccinelle check when merged to 'seen'.
 
-> As a side-note, the strace on the affected file also shows that git
-> writes that file twice during the merge, with the same content. There
-> might be some potential to further optimize merges to avoid such
-> double-writes. A small example to reproduce, note how "b" is opened
-> twice during the merge:
->
->   git init
->   echo "foo" > a
->   git add a
->   git commit -m "Initial commit"
->
->   git mv a b
->   git commit -m "File moved"
->
->   git checkout -b other_branch HEAD~
->   touch c && git add c && git commit -m "Some other commit"
->   strace -otrace git merge master -m "merge message"
->   grep '"b"' trace
+Thanks.
 
-Yeah, this is somewhat fundamental to merge-recursive's implementation
-design; fixing it essentially requires a rewrite.  That rewrite is
-nearing completion; so this double-write issue will be fixed when
-merge-ort is complete (or for anyone who applies the patches and tries
-it out now).
+ refs/reftable-backend.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-In fact, if you don't see the permissions problems when switching
-branches (because branch switching uses O_EXCL?), then merge-ort
-almost certainly incidentally fixes that problem for you as well.
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index b7d12ca91d..6faad8ce50 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -996,7 +996,7 @@ static struct ref_iterator_vtable git_reftable_reflog_ref_iterator_vtable = {
+ static struct ref_iterator *
+ git_reftable_reflog_iterator_begin(struct ref_store *ref_store)
+ {
+-	struct git_reftable_reflog_ref_iterator *ri = xcalloc(sizeof(*ri), 1);
++	struct git_reftable_reflog_ref_iterator *ri = xcalloc(1, sizeof(*ri));
+ 	struct git_reftable_ref_store *refs =
+ 		(struct git_reftable_ref_store *)ref_store;
+ 
+-- 
+2.31.0-rc2-173-g36b77366ca
+
