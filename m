@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E3986C433E9
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D2AEEC433DB
 	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 00:16:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B862664FD3
+	by mail.kernel.org (Postfix) with ESMTP id A898B64FDC
 	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 00:16:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229734AbhCKAPe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Mar 2021 19:15:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45562 "EHLO
+        id S229749AbhCKAPf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Mar 2021 19:15:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229711AbhCKAPX (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229704AbhCKAPX (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 10 Mar 2021 19:15:23 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54EDAC061761
-        for <git@vger.kernel.org>; Wed, 10 Mar 2021 16:15:21 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id j2so25294393wrx.9
-        for <git@vger.kernel.org>; Wed, 10 Mar 2021 16:15:21 -0800 (PST)
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CC57C061760
+        for <git@vger.kernel.org>; Wed, 10 Mar 2021 16:15:20 -0800 (PST)
+Received: by mail-wm1-x329.google.com with SMTP id g25so240896wmh.0
+        for <git@vger.kernel.org>; Wed, 10 Mar 2021 16:15:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=v3f3ewtkdTxKLMNir4voAbCAxVdfnbhEOyj9olsiy10=;
-        b=D80McD54jr6hZrbfVH7wn1lgGF+HEROWtxFt8pO4PgLPBQa74097klbWVx6AcKKT2O
-         J54QiM+88/NQopA+6dEqibUidanJpmA2C279wQwuNi2MKxsF8oK+NZ6ff9vbSINU1Hig
-         KlrVNlu2i80Hu1shceVRZ41RkKkL03E0DLA5sdhMQq9TaMLeB6lQSfQzpJAfuh9fSPI5
-         247kI1QPipD64+P0Ntzt/RHs5YmWneGTDU4aSwVhyRywe1yQuep63ECALyU6nYcU7lGY
-         Kf4naO6L7rj/2JGzSdbJWDRYjzl1yYZTWPhj7M9O+2E2W46gWmjRCavvtPMPU0T6LgIl
-         7cQg==
+        bh=zhFO0ZB8WC/jTUS2lHSbDcZtffpsKBae66rUyYDpTzc=;
+        b=M0w7zdDiWAiIKoC62hvHIHj8vsa3I7HwpX1tMapZUIfwAg3s+GheQieuNOQXbDEL8/
+         Ci4tHeaXXyLBWRyisHwnzcaRCcm7lEDNR8xgBnTGbYtzgMV0Gv4Biu1gENdOmEszuzlZ
+         FTcEq3ht+wjnxpB0t64ncCQ5n/1Dx31KByfxWX2pFosYYWpewnh6MTLj5RhrHp/GImym
+         ErzBBkqC+61G2QZJFR+Vh3YzIgCJPQfibZ9lb/xEPJWgozZ51c+sAOgJhotMmg0VRJsh
+         SrhgEHYHlC6c96a9Vh2R2YRVZysZlHTZFMlXJbIfwfC9lL4PVXDFBlOtxh1B/Q3XB/6+
+         O+QA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=v3f3ewtkdTxKLMNir4voAbCAxVdfnbhEOyj9olsiy10=;
-        b=e8NFSOSbhkAsiZ0mdnr81t5yvG0aIlcOYTEmz2OalcFUNFz7Gi+PwT1XgM9nDbRxZ/
-         anUzETnt3dF2kNoypldYggeB898TV9eaUrf80qo4uYlZeqOUU1/IdHFoWIMOW7EzMQn4
-         gZaNb6xzUkDGxnH8dGEYiACGZYzVibOuEctToTGkgSeWrh/IAzKUZlpY48iLgcRAecwT
-         5IiUtU8ljdnCB1PuB7KK5cA+7dmj1Ls46aZV1iRAvIXgGwECqgZfFesW5kGHqCMdAW2S
-         qR4xLbh96tF4vK0DP49hY/fqlfPPTrS4IiXXJmhMqF2mc2IFNxUtXJNILBo0DCZf26LP
-         urDw==
-X-Gm-Message-State: AOAM532Uyelup4kogWMXIJQXOy+ooMz5Hc64KG+fkL36F3V+4PpaXoJp
-        qmhKTYFk6hCwMWm+ajGtMNL6yLtd+P/xGA==
-X-Google-Smtp-Source: ABdhPJzWf8hFuDfuReBPgEbNxQFw+vjowy8xnG8fA5hJaj2LjZwEIoHAR3P9nzdpyZgds9M6ocem1A==
-X-Received: by 2002:adf:8562:: with SMTP id 89mr5935203wrh.101.1615421719855;
-        Wed, 10 Mar 2021 16:15:19 -0800 (PST)
+        bh=zhFO0ZB8WC/jTUS2lHSbDcZtffpsKBae66rUyYDpTzc=;
+        b=HyaO28HZRfp7+Am5SPW2qNXK1zkTWkEom1SWjO9JiLScxk3uY8qY4vFbGm99+2Choc
+         VZ8bJh+XMyPuhWjO0XsKr4vLEZ5NGTPYZ6mIA8JGVTW6LeJEbFW90g3hrM6AJQZcEPig
+         x3GeVTGFaUF+LPrqm3xh4YCSFZHK66TY1wspwfTQx5g5gb41Hl/4MduKjjJZXIV5/sSV
+         FSvcUl3LnuEsHkUBSX2G7W2QmO5j1xvkGpdL/v6dGmdtb3dE9LoZNhjNHU3NvyxkXtgc
+         rSEUwOlgtYxTTZ4nL66EHrKmL7twvx6+n3Ut99IpUGFPSuoaDrBrtebQxw/iBLhXhrw5
+         s7vQ==
+X-Gm-Message-State: AOAM531VKvWLDfVL9b5YFJ1u/dzFzdG/em6vM3kDeID+d0Hvxw41GVcM
+        RnLX/DohmLnKSirungbJo4Zy34p8JAjYGA==
+X-Google-Smtp-Source: ABdhPJxTmR4M0g0uBkjPB7sClcXcwl5eJZ6AqxPP2qv+iEbAGZr5fPyVgOH8fFLwKK393ldkR+lYiw==
+X-Received: by 2002:a7b:cb04:: with SMTP id u4mr5512153wmj.122.1615421718797;
+        Wed, 10 Mar 2021 16:15:18 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
         by smtp.gmail.com with ESMTPSA id s84sm1026447wme.11.2021.03.10.16.15.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Mar 2021 16:15:19 -0800 (PST)
+        Wed, 10 Mar 2021 16:15:18 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Elijah Newren <newren@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 4/4] tests: get rid of $_x05 from the test suite
-Date:   Thu, 11 Mar 2021 01:14:47 +0100
-Message-Id: <20210311001447.28254-5-avarab@gmail.com>
+Subject: [PATCH 3/4] shortlog tests: rewrite to get rid of --abbrev=35 hardcoding
+Date:   Thu, 11 Mar 2021 01:14:46 +0100
+Message-Id: <20210311001447.28254-4-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.0.rc1.213.gbfdb770ff55
 In-Reply-To: <YEj82fOf+F4xJC8S@coredump.intra.peff.net>
 References: <YEj82fOf+F4xJC8S@coredump.intra.peff.net>
@@ -78,133 +78,184 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Remove the last users of the $_x05 variable from the tests. It turns
-out that all of these tests can be rewritten unambiguously to simply
-use [0-9a-f]* instead.
+Rewrite much of the test logic introduced in 600372497c (shortlog:
+Document and test --format option, 2010-05-03), this allows us to get
+rid of the now-unused $_x35 variable in test-lib.sh
 
-In the case of the tree matching we're relying on there being a <TAB>
-after the SHA (but a space between the modes and type), then in some
-of the other tests here that an abbreviated SHA is at the start of the
-line, etc.
+There was a minimal migration of this test to SHA-256 in
+2ece6ad281 (t: switch $_x40 to $OID_REGEX, 2018-05-13), but actually
+we can just get rid of all the assumptions about hashing here, and
+make this easier to understand and maintain while we're at it.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t3101-ls-tree-dirname.sh          |  2 +-
- t/t3508-cherry-pick-many-commits.sh |  4 ++--
- t/t6006-rev-list-format.sh          | 12 +++++++-----
- t/t7600-merge.sh                    |  4 ++--
- t/test-lib.sh                       |  6 +-----
- 5 files changed, 13 insertions(+), 15 deletions(-)
+ t/t4201-shortlog.sh | 92 +++++++++++++++++++++++++--------------------
+ t/test-lib.sh       |  5 +--
+ 2 files changed, 54 insertions(+), 43 deletions(-)
 
-diff --git a/t/t3101-ls-tree-dirname.sh b/t/t3101-ls-tree-dirname.sh
-index 12bf31022a..110ebf7d52 100755
---- a/t/t3101-ls-tree-dirname.sh
-+++ b/t/t3101-ls-tree-dirname.sh
-@@ -187,7 +187,7 @@ EOF
+diff --git a/t/t4201-shortlog.sh b/t/t4201-shortlog.sh
+index 3095b1b2ff..3ef17c06e4 100755
+--- a/t/t4201-shortlog.sh
++++ b/t/t4201-shortlog.sh
+@@ -19,82 +19,94 @@ test_expect_success 'setup' '
+ 	commit=$(printf "%s\n" "Test" "" | git commit-tree "$tree") &&
+ 	git update-ref HEAD "$commit" &&
  
- test_expect_success 'ls-tree --abbrev=5' '
- 	git ls-tree --abbrev=5 $tree >current &&
--	sed -e "s/ $_x05[0-9a-f]*	/ X	/" <current >check &&
-+	sed -e "s/ [0-9a-f]*	/ X	/" <current >check &&
- 	cat >expected <<\EOF &&
- 100644 blob X	1.txt
- 100644 blob X	2.txt
-diff --git a/t/t3508-cherry-pick-many-commits.sh b/t/t3508-cherry-pick-many-commits.sh
-index e8375d1c97..1bf867d139 100755
---- a/t/t3508-cherry-pick-many-commits.sh
-+++ b/t/t3508-cherry-pick-many-commits.sh
-@@ -84,7 +84,7 @@ test_expect_success 'output to keep user entertained during multi-pick' '
- 	git reset --hard first &&
- 	test_tick &&
- 	git cherry-pick first..fourth >actual &&
--	sed -e "s/$_x05[0-9a-f][0-9a-f]/OBJID/" <actual >actual.fuzzy &&
-+	sed -e "s/ [0-9a-f]*\\]/ OBJID]/" <actual >actual.fuzzy &&
- 	test_line_count -ge 3 actual.fuzzy &&
- 	test_cmp expected actual.fuzzy
- '
-@@ -122,7 +122,7 @@ test_expect_success 'output during multi-pick indicates merge strategy' '
- 	git reset --hard first &&
- 	test_tick &&
- 	git cherry-pick --strategy resolve first..fourth >actual &&
--	sed -e "s/$_x05[0-9a-f][0-9a-f]/OBJID/" <actual >actual.fuzzy &&
-+	sed -e "s/ [0-9a-f]*\\]/ OBJID]/" <actual >actual.fuzzy &&
- 	test_cmp expected actual.fuzzy
++	echo "This is a very, very long first line for the commit message to see if it is wrapped correctly" >message &&
++
++	sed "s/i/1234/g" <message >tmp &&
++	tr 1234 "\360\235\204\236" <tmp >message.2 &&
++
++	sed "s/i/1234/g" <message >tmp &&
++	tr 1234 "\370\235\204\236" <tmp >message.3 &&
++
++	echo "a								12	34	56	78" >message.4 &&
++	echo "Commit by someone else" >message.5 &&
++
+ 	echo 2 >a1 &&
+-	git commit --quiet -m "This is a very, very long first line for the commit message to see if it is wrapped correctly" a1 &&
++	git commit --quiet -F message a1 &&
+ 
+ 	# test if the wrapping is still valid
+ 	# when replacing all is by treble clefs.
+ 	echo 3 >a1 &&
+-	git commit --quiet -m "$(
+-		echo "This is a very, very long first line for the commit message to see if it is wrapped correctly" |
+-		sed "s/i/1234/g" |
+-		tr 1234 "\360\235\204\236")" a1 &&
++	git commit --quiet -F message.2 a1 &&
+ 
+ 	# now fsck up the utf8
+ 	git config i18n.commitencoding non-utf-8 &&
+ 	echo 4 >a1 &&
+-	git commit --quiet -m "$(
+-		echo "This is a very, very long first line for the commit message to see if it is wrapped correctly" |
+-		sed "s/i/1234/g" |
+-		tr 1234 "\370\235\204\236")" a1 &&
++	git commit --quiet -F message.3 a1 &&
+ 
+ 	echo 5 >a1 &&
+-	git commit --quiet -m "a								12	34	56	78" a1 &&
++	git commit --quiet -F message.4 a1 &&
+ 
+ 	echo 6 >a1 &&
+-	git commit --quiet -m "Commit by someone else" \
++	git commit --quiet -F message.5  \
+ 		--author="Someone else <not!me>" a1 &&
+ 
+-	cat >expect.template <<-\EOF
++	cat >expect.default <<-EOF
+ 	A U Thor (5):
+-	      SUBJECT
+-	      SUBJECT
+-	      SUBJECT
+-	      SUBJECT
+-	      SUBJECT
++	      Test
++	      $(cat message)
++	      $(cat message.2)
++	      $(cat message.3)
++	      $(cat message.4)
+ 
+ 	Someone else (1):
+-	      SUBJECT
++	      $(cat message.5)
+ 
+ 	EOF
  '
  
-diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.sh
-index 35a2f62392..ec65081e17 100755
---- a/t/t6006-rev-list-format.sh
-+++ b/t/t6006-rev-list-format.sh
-@@ -453,16 +453,18 @@ test_expect_success 'add SP before non-empty (2)' '
+-fuzz() {
+-	file=$1 &&
+-	sed "
+-			s/$OID_REGEX/OBJECT_NAME/g
+-			s/$_x35/OBJID/g
+-			s/^ \{6\}[CTa].*/      SUBJECT/g
+-			s/^ \{8\}[^ ].*/        CONTINUATION/g
+-		" <"$file" >"$file.fuzzy" &&
+-	sed "/CONTINUATION/ d" <"$file.fuzzy"
+-}
+-
+ test_expect_success 'default output format' '
+ 	git shortlog HEAD >log &&
+-	fuzz log >log.predictable &&
+-	test_cmp expect.template log.predictable
++	test_cmp expect.default log
+ '
+ 
+ test_expect_success 'pretty format' '
+-	sed s/SUBJECT/OBJECT_NAME/ expect.template >expect &&
++	cat >expect <<-EOF &&
++	A U Thor (5):
++	      $(git rev-parse HEAD~5)
++	      $(git rev-parse HEAD~4)
++	      $(git rev-parse HEAD~3)
++	      $(git rev-parse HEAD~2)
++	      $(git rev-parse HEAD~1)
++
++	Someone else (1):
++	      $(git rev-parse HEAD~0)
++
++	EOF
+ 	git shortlog --format="%H" HEAD >log &&
+-	fuzz log >log.predictable &&
+-	test_cmp expect log.predictable
++	test_cmp expect log
  '
  
  test_expect_success '--abbrev' '
--	echo SHORT SHORT SHORT >expect2 &&
- 	echo LONG LONG LONG >expect3 &&
- 	git log -1 --format="%h %h %h" HEAD >actual1 &&
- 	git log -1 --abbrev=5 --format="%h %h %h" HEAD >actual2 &&
- 	git log -1 --abbrev=5 --format="%H %H %H" HEAD >actual3 &&
--	sed -e "s/$OID_REGEX/LONG/g" -e "s/$_x05/SHORT/g" <actual2 >fuzzy2 &&
--	sed -e "s/$OID_REGEX/LONG/g" -e "s/$_x05/SHORT/g" <actual3 >fuzzy3 &&
--	test_cmp expect2 fuzzy2 &&
-+	sed -e "s/$OID_REGEX/LONG/g" <actual3 >fuzzy3 &&
-+	test_file_size actual2 >expect &&
-+	# 3*5 SHAs + 3 separating spaces
-+	echo 18 >actual &&
-+	test_cmp expect actual &&
- 	test_cmp expect3 fuzzy3 &&
--	! test_cmp actual1 actual2
-+	! test_cmp actual1 actual2 &&
-+	! test_cmp actual2 actual3
+-	sed s/SUBJECT/OBJID/ expect.template >expect &&
++	cut -c 1-41 <expect >expect.abbrev &&
+ 	git shortlog --format="%h" --abbrev=35 HEAD >log &&
+-	fuzz log >log.predictable &&
+-	test_cmp expect log.predictable
++	test_cmp expect.abbrev log
  '
  
- test_expect_success '%H is not affected by --abbrev-commit' '
-diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
-index 1cbc9715a8..fec5a7b2dd 100755
---- a/t/t7600-merge.sh
-+++ b/t/t7600-merge.sh
-@@ -189,7 +189,7 @@ test_expect_success 'merge c0 with c1' '
- 	verify_head "$c1" &&
- 
- 	git reflog -1 >reflog.actual &&
--	sed "s/$_x05[0-9a-f]*/OBJID/g" reflog.actual >reflog.fuzzy &&
-+	sed "s/^[0-9a-f]*/OBJID/" <reflog.actual >reflog.fuzzy &&
- 	test_cmp reflog.expected reflog.fuzzy
+ test_expect_success 'output from user-defined format is re-wrapped' '
+-	sed "s/SUBJECT/two lines/" expect.template >expect &&
++	cat >expect <<-EOF &&
++	A U Thor (5):
++	      two lines
++	      two lines
++	      two lines
++	      two lines
++	      two lines
++
++	Someone else (1):
++	      two lines
++
++	EOF
+ 	git shortlog --format="two%nlines" HEAD >log &&
+-	fuzz log >log.predictable &&
+-	test_cmp expect log.predictable
++	test_cmp expect log
  '
  
-@@ -220,7 +220,7 @@ test_expect_success 'merge from unborn branch' '
- 	verify_head "$c1" &&
- 
- 	git reflog -1 >reflog.actual &&
--	sed "s/$_x05[0-9a-f][0-9a-f]/OBJID/g" reflog.actual >reflog.fuzzy &&
-+	sed "s/^[0-9a-f]*/OBJID/g" reflog.actual >reflog.fuzzy &&
- 	test_cmp reflog.expected reflog.fuzzy
- '
- 
+ test_expect_success !MINGW 'shortlog wrapping' '
 diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 4d5ba558d3..aeb4b2da1c 100644
+index 5f2ad2fd81..4d5ba558d3 100644
 --- a/t/test-lib.sh
 +++ b/t/test-lib.sh
 @@ -511,7 +511,7 @@ SQ=\'
  # when case-folding filenames
  u200c=$(printf '\342\200\214')
  
--export _x05 LF u200c EMPTY_TREE EMPTY_BLOB ZERO_OID OID_REGEX
-+export LF u200c EMPTY_TREE EMPTY_BLOB ZERO_OID OID_REGEX
+-export _x05 _x35 LF u200c EMPTY_TREE EMPTY_BLOB ZERO_OID OID_REGEX
++export _x05 LF u200c EMPTY_TREE EMPTY_BLOB ZERO_OID OID_REGEX
  
  # Each test should start with something like this, after copyright notices:
  #
-@@ -1380,10 +1380,6 @@ then
- 	fi
+@@ -1381,9 +1381,8 @@ then
  fi
  
--# Convenience
--# A regexp to match 5 hexdigits
--_x05='[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]'
--
+ # Convenience
+-# A regexp to match 5 and 35 hexdigits
++# A regexp to match 5 hexdigits
+ _x05='[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]'
+-_x35="$_x05$_x05$_x05$_x05$_x05$_x05$_x05"
+ 
  test_oid_init
  
- ZERO_OID=$(test_oid zero)
 -- 
 2.31.0.rc1.213.gbfdb770ff55
 
