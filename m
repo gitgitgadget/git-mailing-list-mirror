@@ -2,116 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F12A7C433E0
-	for <git@archiver.kernel.org>; Fri, 12 Mar 2021 00:49:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 365DFC433E9
+	for <git@archiver.kernel.org>; Fri, 12 Mar 2021 00:49:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CA0E264F94
-	for <git@archiver.kernel.org>; Fri, 12 Mar 2021 00:49:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 17E9964FA7
+	for <git@archiver.kernel.org>; Fri, 12 Mar 2021 00:49:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229606AbhCLAtL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Mar 2021 19:49:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51828 "EHLO
+        id S229771AbhCLAtM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Mar 2021 19:49:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51826 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230192AbhCLAsw (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230175AbhCLAsw (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 11 Mar 2021 19:48:52 -0500
-Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D6D3C061574
-        for <git@vger.kernel.org>; Thu, 11 Mar 2021 16:48:52 -0800 (PST)
-Received: by mail-qk1-x72a.google.com with SMTP id d20so22750126qkc.2
-        for <git@vger.kernel.org>; Thu, 11 Mar 2021 16:48:52 -0800 (PST)
+Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9EACC061574
+        for <git@vger.kernel.org>; Thu, 11 Mar 2021 16:48:51 -0800 (PST)
+Received: by mail-qk1-x730.google.com with SMTP id g185so22728744qkf.6
+        for <git@vger.kernel.org>; Thu, 11 Mar 2021 16:48:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=GKtp57NUtiNloa2g6AuEulN4dPVTUnQK96rM0HIGdZQ=;
-        b=UTF+FXljyp+KXk81qKwNlSjWGvOfH4HPjsTjeUklkDngUZIu+QAUX/LFKCxCMNozjR
-         t6EeGXD1HDD1z4gv0UMsX1ZBuI08i77DcAg0H49fREnNZHV0js5Ota9G09ixb+LxLZZ4
-         IW40UwH3XMZqend96w7ldodxb6/nEABtaIakD7e4112C6a7okBAYgxxUr5OInU9Lb4z8
-         EqT5EgtkCCfETBy9kzzNDzXBYGMhWdGPvfUrG0YsxhQdMT4XJPvdHIg06Aw5A6WBUnn5
-         4oak+4ZHw79OlWuyUkhErEycdqegp2jS3H4COBNjIwoR0qePVd7kKJ7KrXvFzi9iLwlz
-         j8+A==
+        h=sender:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=6OZYr+w6fZOm/euoBxVrioYJY068sOfGoEylMtzoAAc=;
+        b=FLWdsjUsu3Q3/3jtMzViSIsGOQj6h50E8twLqa8huhyMTJ5QKNU58KbdJCLXEAaEg2
+         ro4e1OxSHH11987HYBsVFUd+SkRAbtKqZg+QQoGwQoeB8io+G/UrjtGwFB5HUdwG7rMq
+         qYekl8MZQM6NDNs6ZKMgwAFL9iq+zFf7VRnPzVklrnBdP627+F+SH2bEOnIny0wszpMs
+         35iUcjLQrvkvfdfDlPH1sUoHh/X7ztbgoEf3TXpQOtPDU2qNJjy3SrIYYQR4GcNFQ7sF
+         5VQpwcObDVWjHJFVOu34gVt4WPRhMq6Zy8GLPOEBew2RDqFXSyfIBbRMMUWZnJeBKvIg
+         CLrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
-         :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=GKtp57NUtiNloa2g6AuEulN4dPVTUnQK96rM0HIGdZQ=;
-        b=T9ufkyAg6eCwZs4FAaqiTYlipfduu3pf07PoTRilvkTMvz5LjuMCurT4iFv+jAtqOv
-         muW04EyA5TduS2lrpNleBpWyDtFXlBDfWopOAITmvEVW/RKnjmGHjljOzj3xTrCsslzv
-         J2qo5Dx9G7w0NwLF4PrwDfxprAwvC6M74ZWeKrTdI/WryN04IUuTBCsk/M5yNyqnKN9N
-         1XXfLD/e3D0BCbEnBkGYEb3SHAQyw1LOVP9ZQVSJzXruP0l9U22NbAXWRffoR7NhJwpE
-         rMuHJpJ1menLFB81miOx/k07sfoPKVfDIDIS38F6fIwKJpD5vMMrcN4Q8aljukND+0q9
-         pJ9Q==
-X-Gm-Message-State: AOAM5330i+gx+4he83k3eIcVShZlQwT30HLiRJYf6pnjV+xEmENfnfvP
-        4gITN5hUcusxPaTRNwbAz9keoJDTWLg=
-X-Google-Smtp-Source: ABdhPJzXp69G5RxPd8RzO6goH4XLWw+0orRuAred4mb6GVcRgIVw370TP7KE5dE8HGZP2AiC2B2nxg==
-X-Received: by 2002:a37:a408:: with SMTP id n8mr10167692qke.6.1615510131601;
-        Thu, 11 Mar 2021 16:48:51 -0800 (PST)
+         :mime-version:content-transfer-encoding;
+        bh=6OZYr+w6fZOm/euoBxVrioYJY068sOfGoEylMtzoAAc=;
+        b=YxYfqkTBXpARPB2iYw97YEBJv2+D1xMReSYUAFj0Umt8FRvaTYgrC0HP6fUM6uE+qE
+         yhRw2Pnic/WgOV5+AJP6ADmnY2V7FB45cOTu73CZ4wwxNrsUI9DEb/PdLRn7N1eRitSC
+         XbfK/xZw14R6+qrEcSEFV7zFoCy/QwFYyvA3+aakNP1/liDc8b/EnY6a0Pbcpginm98n
+         0b4jG+v8OM0eyxiEHS8dZXWeXauCLQwzGJBEm36V2smXnN4W3V2BsPbMUOtxW6SSocvm
+         7TOeIU+1OceKYx6cCQ3aNh6SvCDBGADpkns2akIfN/q85hWZNeCfw3ykIjOe0yQOZnbE
+         XAZw==
+X-Gm-Message-State: AOAM5326lHqUDpopZPcjcOXzCdq7DWIFHgV8UVhz1jl/8i3PKk56w7nS
+        vhpEOn0O89MBtKXHsxCWJokepwA0E9M=
+X-Google-Smtp-Source: ABdhPJy7740WnBIdZsLUuoGvLB0AiD981wN9USN5lUlsZ+migkqgEPFlqEDKZ6RFo7snFYYDgVdWow==
+X-Received: by 2002:a37:4895:: with SMTP id v143mr10431075qka.345.1615510130896;
+        Thu, 11 Mar 2021 16:48:50 -0800 (PST)
 Received: from sidious.home (pool-71-121-201-126.bltmmd.fios.verizon.net. [71.121.201.126])
         by smtp.gmail.com with ESMTPSA id i5sm3297092qkg.32.2021.03.11.16.48.50
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 11 Mar 2021 16:48:51 -0800 (PST)
+        Thu, 11 Mar 2021 16:48:50 -0800 (PST)
 Sender: John Szakmeister <jszakmeister@gmail.com>
 From:   John Szakmeister <john@szakmeister.net>
 To:     git@vger.kernel.org, Jeff King <peff@peff.net>
 Cc:     John Szakmeister <john@szakmeister.net>
-Subject: [PATCH v2 1/2] http: store credential when PKI auth is used
-Date:   Thu, 11 Mar 2021 19:48:41 -0500
-Message-Id: <20210312004842.30697-2-john@szakmeister.net>
+Subject: [PATCH v2 0/2] http: store credential when PKI auth is used
+Date:   Thu, 11 Mar 2021 19:48:40 -0500
+Message-Id: <20210312004842.30697-1-john@szakmeister.net>
 X-Mailer: git-send-email 2.30.1
-In-Reply-To: <20210312004842.30697-1-john@szakmeister.net>
-References: <20210312004842.30697-1-john@szakmeister.net>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We already looked for the PKI credentials in the credential store, but
-failed to approve it on success.  Meaning, the PKI certificate password
-was never stored and git would request it on every connection to the
-remote.  Let's complete the chain by storing the certificate password on
-success.
+Here's my second attempt at getting the certificate password into the credential
+store.  I tested from a working PKI setup and found curl--at least reasonable
+recent versions of it--return CURLE_SSL_CERTPROBLEM:
 
-Likewise, we also need to reject the credential when there is a failure.
-Curl appears to report client-related certificate issues are reported
-with the CURLE_SSL_CERTPROBLEM error.  This includes not only a bad
-password, but potentially other client certificate related problems.
-Since we cannot get more information from curl, we'll go ahead and
-reject the credential upon receiving that error, just to be safe and
-avoid caching or saving a bad password.
+       CURLE_SSL_CERTPROBLEM (58)
+              problem with the local client certificate.
 
-Signed-off-by: John Szakmeister <john@szakmeister.net>
----
- http.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+It appears there could be another possible error from curl:
 
-diff --git a/http.c b/http.c
-index f8ea28bb2e..12a8aaba48 100644
---- a/http.c
-+++ b/http.c
-@@ -1637,7 +1637,17 @@ static int handle_curl_result(struct slot_results *results)
- 		credential_approve(&http_auth);
- 		if (proxy_auth.password)
- 			credential_approve(&proxy_auth);
-+		credential_approve(&cert_auth);
- 		return HTTP_OK;
-+	} else if (results->curl_result == CURLE_SSL_CERTPROBLEM) {
-+		/*
-+		 * We can't tell from here whether it's a bad path, bad
-+		 * certificate, bad password, or something else wrong
-+		 * with the certificate.  So we reject the credential to
-+		 * avoid caching or saving a bad password.
-+		 */
-+		credential_reject(&http_auth);
-+		return HTTP_NOAUTH;
- 	} else if (missing_target(results))
- 		return HTTP_MISSING_TARGET;
- 	else if (results->http_code == 401) {
+       CURLE_SSL_CONNECT_ERROR (35)
+              A  problem  occurred  somewhere  in the SSL/TLS handshake. You
+              really want the error buffer and read the message there as it
+              pinpoints the problem slightly more. Could be  certificates  (file
+              formats, paths, permissions), passwords, and others.
+
+This seems less likely to be a bad client password scenario, so I did not look
+for this particular error to reject it.
+
+I also added one other small patch to remove the check of a non-empty password
+before calling credential_store() for proxy_auth, as credential_store() already
+checks for a non-empty password and gracefully handles it when it doesn't.
+
+-John
+
+John Szakmeister (2):
+  http: store credential when PKI auth is used
+  http: drop the check for an empty proxy password before approving
+
+ http.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
+
 -- 
 2.30.1
 
