@@ -2,67 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A53DC433E6
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86E7AC43381
 	for <git@archiver.kernel.org>; Fri, 12 Mar 2021 20:20:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DE60A64F84
-	for <git@archiver.kernel.org>; Fri, 12 Mar 2021 20:20:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4BDFE64F8F
+	for <git@archiver.kernel.org>; Fri, 12 Mar 2021 20:20:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234690AbhCLUUN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Mar 2021 15:20:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50394 "EHLO
+        id S234615AbhCLUUT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Mar 2021 15:20:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50388 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234683AbhCLUUC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Mar 2021 15:20:02 -0500
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7784AC061762
-        for <git@vger.kernel.org>; Fri, 12 Mar 2021 12:20:01 -0800 (PST)
-Received: by mail-wm1-x332.google.com with SMTP id c76-20020a1c9a4f0000b029010c94499aedso16547026wme.0
-        for <git@vger.kernel.org>; Fri, 12 Mar 2021 12:20:01 -0800 (PST)
+        with ESMTP id S234682AbhCLUUB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Mar 2021 15:20:01 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01642C061761
+        for <git@vger.kernel.org>; Fri, 12 Mar 2021 12:20:00 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id y16so5504475wrw.3
+        for <git@vger.kernel.org>; Fri, 12 Mar 2021 12:20:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=oXi/N9DSW/IziE7+rn5DRY0PQ9Yy11dXZEetirpqj/0=;
-        b=PwbfCREb0wc197IsX7AXb9yyV3oBAbDoEvF0Uezjgc/3NfZAfbK+Fp1JpqMfWsOVan
-         Z61tG/kNmnAWlbeTQ6gD9xEOjg95l8Ay930Xzk9Q0Yh3TXpRmibsI4GqT0O89lHD8qpc
-         PQefoUcTWYuhjCoYHCHdRz/PvXzk1xb96FfVIstddrln/1wF2q12yn944yvSowGHJKwy
-         gSa1Ac8iiBEfQyOjWx7Z+LkY12RVvmCh2D6A7IrYs7WyPPLeIYltHzOo8Q5q1iNPXOHm
-         5WpgbFRzBpNCI9pfO4GZft7UdaVqBXyhB7S0hFpAfTLO935jKuS3L2DwSvFXjoMUl/lb
-         oiaA==
+        bh=ROXeQyOVRgVKS0s5296KQ8eIHVrbXdXWgu65MvPeWGE=;
+        b=QSqDAus2t1NdGA7OEA/ujrnbw8PNDbbTzzEie6dpZ132d2na6qj1MNPWl+dTPR4AAJ
+         hZGlDpDYdlNvRKM0Hc1RnXCOBaVU+MiuRa7TGEa6RSFS0ih3GJMSHmnzO9u4L2QEV31a
+         /gheNYwi+C4fddm6wiN6/FBQCV5+QvxPvYafxD27czAeEB3DmmY1bmKLpyxzRiSX4w7I
+         nxTU0Vr/g2/L35Df22tpNgmguCXxAERtuHY63hWGS1IwiskshUi+LfE7v8Hw/9EAayAD
+         9Qv7FD1oywqPF73iPgxpFcveQV0Vgh3raKhGnf6qjHf2lPXh5pfijQ6U5RHwpynivFMa
+         za0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=oXi/N9DSW/IziE7+rn5DRY0PQ9Yy11dXZEetirpqj/0=;
-        b=fV/nMV7eShWEc3pyiBiy4clIwAubiD11zIVTQdmH3SIxQtgNN+epzurGSG1ZDm9eoW
-         3AcbCyqpwmfLO4wwGmBZPxq/3dS0Z/zNkOr1QznRnWvUWTvROXlkhCNPhtsEDpX8QejL
-         MhjkRETrCo7uxDi7vm197d7tyAzr+VIrTmtlXeCO9dt2CcmMiKvu94DVSKDjkFIeXl9t
-         p8I1EhtTj4l4kafhSGa8Nib82nQfFQ571Ga4btQchIpE9eb/Qtak48HU9lARe1XWYdbq
-         eDBO1fQoeuItdUVOBX6sy8SDWD+rylij96uISNHgfC4MjLwds28Q0dBB6pH+qRyEnrwD
-         gqLg==
-X-Gm-Message-State: AOAM530n32ZaVcNRZyQaT2oRsJlPc4y/ROs65SbCQ8+UKnlbf1/H1a6o
-        0X9cbe1jnO5ISwCXCGI/32QvPY+sHgY=
-X-Google-Smtp-Source: ABdhPJwelZ7vMmZ65G9BBlrmr62aYWd1PdWHEyEdNRpgJsmNOdZ2hr2SaRtFwv+r/yYuqfEroU6j/Q==
-X-Received: by 2002:a05:600c:6d4:: with SMTP id b20mr14788374wmn.142.1615580400246;
-        Fri, 12 Mar 2021 12:20:00 -0800 (PST)
+        bh=ROXeQyOVRgVKS0s5296KQ8eIHVrbXdXWgu65MvPeWGE=;
+        b=K8xevd8Itw2xZ6pVQalIBy9eQgw89+POY9X2qc0ag4T8mcXMoRO3e4ipl7y++BUR5n
+         rnVFaUJnK5N23EPW5/x4HnQSBN0cS3G3DsAwYs39FqmPXyBxSqz/ZjR0YeTikxYoVXDo
+         6i022Wr0SCWfwCkGsGi9YovTM1/2kZmVWOa8M6CaFR/DqbPj7pYT2MymZMZEFnzD/nat
+         jU/Ht+utocGHWls09aMg1+pAKQRGeAudYtPBP1vk/jC1z6w+IlaPR5+R9ImdXNZvhzKq
+         bWy76wlSdUH11zeJ7sxXXoCLM1iZitFVHvxtuKlsciiY2crpE3qM2paeFi+gXsyoQ5bH
+         rxqg==
+X-Gm-Message-State: AOAM532rm3BYQll5dyDqsKpudkqXW2onbFHJI0oSze6zCgB4Ni8Xd3GU
+        caq/88urAkAYKjoCmoEZQaNGx+7CtW4=
+X-Google-Smtp-Source: ABdhPJxdZoA2deJ7RjNvmTRmm44sF3fu3oeXYgwM8TFpapyVg/yiPluUwYe22t5yqZaMntxMnMBozg==
+X-Received: by 2002:adf:ed46:: with SMTP id u6mr15538296wro.350.1615580399729;
+        Fri, 12 Mar 2021 12:19:59 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j4sm3165471wmo.10.2021.03.12.12.19.59
+        by smtp.gmail.com with ESMTPSA id n6sm3894551wmd.27.2021.03.12.12.19.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Fri, 12 Mar 2021 12:19:59 -0800 (PST)
-Message-Id: <502a66befabe1b7c616e9bc0f0ef4843ab4bdf77.1615580397.git.gitgitgadget@gmail.com>
+Message-Id: <e1d1d9f498070fa9a55e740ec433630824340525.1615580397.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.847.v5.git.git.1615580397.gitgitgadget@gmail.com>
 References: <pull.847.v4.git.git.1607522429.gitgitgadget@gmail.com>
         <pull.847.v5.git.git.1615580397.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 12 Mar 2021 20:19:43 +0000
-Subject: [PATCH v5 02/15] reftable: add LICENSE
+Date:   Fri, 12 Mar 2021 20:19:42 +0000
+Subject: [PATCH v5 01/15] init-db: set the_repository->hash_algo early on
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -86,51 +86,55 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-TODO: relicense?
+The reftable backend needs to know the hash algorithm for writing the
+initialization hash table.
 
+The initial reftable contains a symref HEAD => "main" (or "master"), which is
+agnostic to the size of hash value, but this is an exceptional circumstance, and
+the reftable library does not cater to this exception. It insists that all
+tables in the stack have a consistent format ID for the hash algorithm.
+
+Call set_repo_hash_algo directly after calling validate_hash_algorithm() (which
+reads $GIT_DEFAULT_HASH).
+
+Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- reftable/LICENSE | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
- create mode 100644 reftable/LICENSE
+ builtin/init-db.c | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-diff --git a/reftable/LICENSE b/reftable/LICENSE
-new file mode 100644
-index 000000000000..402e0f9356ba
---- /dev/null
-+++ b/reftable/LICENSE
-@@ -0,0 +1,31 @@
-+BSD License
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index dcc45bef5148..7766661a4755 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -438,6 +438,27 @@ int init_db(const char *git_dir, const char *real_git_dir,
+ 
+ 	validate_hash_algorithm(&repo_fmt, hash);
+ 
++	/*
++	 * At this point, the_repository we have in-core does not look
++	 * anything like one that we would see initialized in an already
++	 * working repository after calling setup_git_directory().
++	 *
++	 * Calling repository.c::initialize_the_repository() may have
++	 * prepared the .index .objects and .parsed_objects members, but
++	 * other members like .gitdir, .commondir, etc. have not been
++	 * initialized.
++	 *
++	 * Many API functions assume they are working with the_repository
++	 * that has sensibly been initialized, but because we haven't
++	 * really read from an existing repository, we need to hand-craft
++	 * the necessary members of the structure to get out of this
++	 * chicken-and-egg situation.
++	 *
++	 * For now, we update the hash algorithm member to what the
++	 * validate_hash_algorithm() call decided for us.
++	 */
++	repo_set_hash_algo(the_repository, repo_fmt.hash_algo);
 +
-+Copyright (c) 2020, Google LLC
-+All rights reserved.
-+
-+Redistribution and use in source and binary forms, with or without
-+modification, are permitted provided that the following conditions are
-+met:
-+
-+* Redistributions of source code must retain the above copyright notice,
-+this list of conditions and the following disclaimer.
-+
-+* Redistributions in binary form must reproduce the above copyright
-+notice, this list of conditions and the following disclaimer in the
-+documentation and/or other materials provided with the distribution.
-+
-+* Neither the name of Google LLC nor the names of its contributors may
-+be used to endorse or promote products derived from this software
-+without specific prior written permission.
-+
-+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-+OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-+LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ 	reinit = create_default_files(template_dir, original_git_dir,
+ 				      initial_branch, &repo_fmt,
+ 				      flags & INIT_DB_QUIET);
 -- 
 gitgitgadget
 
