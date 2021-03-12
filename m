@@ -7,117 +7,104 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 97C52C433E6
-	for <git@archiver.kernel.org>; Fri, 12 Mar 2021 13:57:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 95D79C433DB
+	for <git@archiver.kernel.org>; Fri, 12 Mar 2021 15:18:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5A90C65004
-	for <git@archiver.kernel.org>; Fri, 12 Mar 2021 13:57:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 64AE964FEA
+	for <git@archiver.kernel.org>; Fri, 12 Mar 2021 15:18:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230256AbhCLN4s (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Mar 2021 08:56:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51952 "EHLO
+        id S230388AbhCLPRZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Mar 2021 10:17:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41110 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229748AbhCLN4c (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Mar 2021 08:56:32 -0500
-Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E95AAC061574
-        for <git@vger.kernel.org>; Fri, 12 Mar 2021 05:56:31 -0800 (PST)
-Received: by mail-ot1-x333.google.com with SMTP id a17so3560124oto.5
-        for <git@vger.kernel.org>; Fri, 12 Mar 2021 05:56:31 -0800 (PST)
+        with ESMTP id S229748AbhCLPQz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Mar 2021 10:16:55 -0500
+Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67A91C061574
+        for <git@vger.kernel.org>; Fri, 12 Mar 2021 07:16:55 -0800 (PST)
+Received: by mail-ot1-x335.google.com with SMTP id 31-20020a9d00220000b02901b64b9b50b1so1550903ota.9
+        for <git@vger.kernel.org>; Fri, 12 Mar 2021 07:16:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=3YZdSUnqG16x4K+JGWW0dKB5AEzrIe4sfjuzzG9aDyE=;
-        b=HdFQmQHImn1v6xGAtcZbbWlf2WvQWmEuNiN78Gy925eAMn3O9T3/kS8uptrIIBe5ng
-         VUXWl/kP52dsDZ7Fnxpihuuwa3C4IS5RNwuUW+gc9LIoRK99QGz5UtHjVdalAmCsfls1
-         WJArrKr6xe+kJ0aY2YtTY8oTTn5e2CcQUjhWyBouPTRiKb42NrexCUz9MwXg+V84bZpL
-         B57K1DYGXpQB17N0XXjtI6REXxs6bTqYU2ggl4tLt58tMaV1OtrUG0pzsu/gX3mZSbZh
-         b4+OJxN12DboLP+y2SWugem8FEHXBxvytLG4wTmX78L+vgr3gKhknan8tNDWr+gj/Pfa
-         nLNw==
+        bh=8qbF2gOnOW8CreNFuqOeijvpJ8Tpf/xmwW87SAPSXTI=;
+        b=HPXy91ctXvIzXOqCNe++E4UyRa38BgVmL+yaUPytzn7QcUAMH6YLrd0gkRdNU/w2sA
+         VkLbZniiuJzDs1VgV9A7Q27fptlZ9+XiPMGiIblxMrU45cl8a6LoWzAXFUJDkeCHBufV
+         4MexSr2dN3k4lAn6L7aO0vaWew50Bgoy9JtoHagDvJJbPmpj9sNWJasJ2bgQ4TKMPS59
+         siPXau3xJKiE5wxJh+w38JTm54ag9lloLqksRelDeOMCqL71cSkVsu08EmtduQ5xEgue
+         NHk9NjeG0g38NJ4SdIzGYlajHHaVdEhchWKILRK4vjD4aOokmgCSOt0ULw07GmitK/oN
+         2VDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=3YZdSUnqG16x4K+JGWW0dKB5AEzrIe4sfjuzzG9aDyE=;
-        b=QhqUC2e8L15Mu5IAEid1GM+kxM/Ukn7hm8n/ErS+XLpUkoM4kzUDYZ3oDcFBiV5QeX
-         45qeeE7VhJG3KWyxSZvWvo8XMvuw6PYFtRF4u1oCrQMHt/2p7NWRrE0hwQZwEEiqnE+1
-         T6OXlWJBRjYfoFg8x2SYffx3IKfS8kDBlLfvKTPRb9I1gnC6CQG9GUoi7nSwL6aw6aDM
-         4TZNE5lDGomPQQ2P5P8v8461uGocntBLmE7s4xd1MwcXk7GVnhmShMpwuLZPhoeOkhKV
-         ji/oTjmwOwTi7+bZqzA6WZ7O1XHOkG3+kIoMocvj4I+B/jKrT7VzHycI1caMHfVD8tvw
-         XiCw==
-X-Gm-Message-State: AOAM532v4bzdj9CcoPsT5LOw8EjZWsCCPqP4OSLT2RxIShouZVB+LCh4
-        F1zvIB8Pg938jWk1e5BiEfS8fCj8amF+9hNA
-X-Google-Smtp-Source: ABdhPJxRt59/X8Tm7nOpat8G3/lDVPYt9qlJXliN2se9ztUVg5ZgE/UbZTzzom8EQPUPoG3g4IjEqQ==
-X-Received: by 2002:a05:6830:12d5:: with SMTP id a21mr3410495otq.34.1615557391297;
-        Fri, 12 Mar 2021 05:56:31 -0800 (PST)
+        bh=8qbF2gOnOW8CreNFuqOeijvpJ8Tpf/xmwW87SAPSXTI=;
+        b=m3pNy4IgdEagfVz74IVJejmwxkcl/B28j2Z46xlBQMWh/Mh5gx62N/C99arJOl8nlB
+         3ZHONsUQsbCVlGy5utM55BLAnukNrRT6v6hwaINgkiFFmr+w6Cxmgr/0MEc2lnI5NRbq
+         IcpzAUNYP6LDsVfX57ZTYVzwB+9U53hWNyUN+honrvpB8RaTTdxL9l3jJUh4rZ+IGxo+
+         ztuVkgiYV0IXex/U/PEwRcY2nfYXpXr/U15kAsdYCRUaSR8gBklTYk/2Io1o4XNZHPEb
+         nalhuBbCac9E45r+a51xFL71kyLpxEFpwuMH+ALWlkykJZAQwz44xEwcGrgCqU7eJfUv
+         9/VQ==
+X-Gm-Message-State: AOAM531FsVKcNKVxnTDB5xf62rEbHu/sq6sjSI+nPq93Sfwx/hZ3utu5
+        4Xj8Z2LHUT/UEpeKXGzfhxg=
+X-Google-Smtp-Source: ABdhPJyi9cVs4uoZ6Qi784LfgC6KF6Gm/nIdrRlNe3sjO7kzVDzHuCxzQS9BULD1LfPZiUQMmbf9TQ==
+X-Received: by 2002:a9d:2f04:: with SMTP id h4mr3718826otb.364.1615562214589;
+        Fri, 12 Mar 2021 07:16:54 -0800 (PST)
 Received: from ?IPv6:2600:1700:e72:80a0:1448:4b23:85a8:b6a4? ([2600:1700:e72:80a0:1448:4b23:85a8:b6a4])
-        by smtp.gmail.com with ESMTPSA id 33sm1347550otp.66.2021.03.12.05.56.29
+        by smtp.gmail.com with ESMTPSA id w7sm1257316oie.7.2021.03.12.07.16.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 Mar 2021 05:56:30 -0800 (PST)
-Subject: Re: [PATCH v2 05/20] sparse-index: implement ensure_full_index()
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, newren@gmail.com, pclouds@gmail.com,
-        jrnieder@gmail.com,
-        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <pull.883.git.1614111270.gitgitgadget@gmail.com>
- <pull.883.v2.git.1615404664.gitgitgadget@gmail.com>
- <399ddb0bad56c69ff9d9591f5e8eacf52cf50a15.1615404665.git.gitgitgadget@gmail.com>
- <xmqq1rckc1cb.fsf@gitster.g>
+        Fri, 12 Mar 2021 07:16:53 -0800 (PST)
+Subject: Re: [PATCH v3 00/16] midx: implement a multi-pack reverse index
+To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Cc:     avarab@gmail.com, dstolee@microsoft.com, gitster@pobox.com,
+        jonathantanmy@google.com, peff@peff.net
+References: <cover.1612998106.git.me@ttaylorr.com>
+ <cover.1615482270.git.me@ttaylorr.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <c5e42675-5f03-728a-60ec-880da368085b@gmail.com>
-Date:   Fri, 12 Mar 2021 08:56:28 -0500
+Message-ID: <c4e18157-3070-9ad1-00c9-1222340101ff@gmail.com>
+Date:   Fri, 12 Mar 2021 10:16:52 -0500
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.8.1
 MIME-Version: 1.0
-In-Reply-To: <xmqq1rckc1cb.fsf@gitster.g>
+In-Reply-To: <cover.1615482270.git.me@ttaylorr.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/12/2021 1:50 AM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 3/11/2021 12:04 PM, Taylor Blau wrote:
+> Here is another reroll of my series to implement a reverse index in
+> preparation for multi-pack reachability bitmaps. The previous version
+> was based on 'ds/chunked-file-api', but that topic has since been merged
+> to 'master'. This series is now built directly on top of 'master'.
 > 
->>  void ensure_full_index(struct index_state *istate)
->>  {
->> ...
->> +	int i;
->> +		tree = lookup_tree(istate->repo, &ce->oid);
->> +
->> +		memset(&ps, 0, sizeof(ps));
->> +		ps.recursive = 1;
->> +		ps.has_wildcard = 1;
->> +		ps.max_depth = -1;
->> +
->> +		read_tree_recursive(istate->repo, tree,
->> +				    ce->name, strlen(ce->name),
->> +				    0, &ps,
->> +				    add_path_to_index, full);
+> Not much has changed since last time. Jonathan Tan reviewed the previous
+> version, and I incorporated feedback from his review:
 > 
-> Ævar, the assumption that led to your e68237bb (tree.h API: remove
-> support for starting at prefix != "", 2021-03-08) closes the door
-> for this code rather badly.  Please work with Derrick to figure out
-> what the best course of action would be.
+>   - The usage macros in builtin/multi-pack-index.c were pulled out and
+>     defined separately.
+>   - Some sloppiness with converting a signed index referring to the
+>     preferred pack into an unsigned value was cleaned up.
+>   - Documentation clean-up, particularly in patches 12 and 13.
+> 
+> There are a couple of new things that we found while testing this out at
+> GitHub.
+> 
+>   - We now call finalize_object_file() on the multi-pack reverse index
+>     to set the correct permissions.
+>   - Patch 14 removed a stray hunk that introduced a memory leak.
+>   - Patch 16 (courtesy of Peff) is new. It improves the cache locality
+>     of midx_pack_order_cmp(), which has a substantial impact on
+>     repositories with many objects.
+> 
+> Thanks in advance for your review.
 
-Thanks for pointing this out, Junio.
-
-My preference would be to drop "tree.h API: remove support for
-starting at prefix != """, but it should be OK to keep "tree.h API:
-remove "stage" parameter from read_tree_recursive()" (currently
-b3a078863f6), even though it introduces a semantic conflict here.
-
-Since I haven't seen my sparse-index topic get picked up by a
-tracking branch, I'd be happy to rebase on top of Ævar's topic if
-I can still set a non-root prefix.
+I've reviewed the changes since my last review and this one looks
+good, including that new patch from Peff.
 
 Thanks,
 -Stolee
