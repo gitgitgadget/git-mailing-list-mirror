@@ -2,81 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AA6FC433E0
-	for <git@archiver.kernel.org>; Fri, 12 Mar 2021 21:43:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C6039C433E9
+	for <git@archiver.kernel.org>; Fri, 12 Mar 2021 21:55:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B55D064F72
-	for <git@archiver.kernel.org>; Fri, 12 Mar 2021 21:43:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9564364DAF
+	for <git@archiver.kernel.org>; Fri, 12 Mar 2021 21:55:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235324AbhCLVm2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Mar 2021 16:42:28 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63336 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234033AbhCLVl5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Mar 2021 16:41:57 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 346A7AEFB5;
-        Fri, 12 Mar 2021 16:41:56 -0500 (EST)
+        id S235331AbhCLVzQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Mar 2021 16:55:16 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50072 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235300AbhCLVzK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Mar 2021 16:55:10 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9B5B7BE5C3;
+        Fri, 12 Mar 2021 16:55:09 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=Uw9fqwc0P3oD
-        P0MbSXFkiEXlGNs=; b=Yp5CrjCuSVh2DA5cgJ9e+48wsY8Mxww4pd/CJgzg/oVS
-        Kq53q5kcifn5DSPuXGVrokTdFSHHxi1ivpLAyoZQzR7lWzOwW1pXf64Ljdgp03pk
-        KkLXvjd06IryIJ4CRCvjJO7oSzyiETnuzGq6S3DhJc3px4GzrmV+e1mu5PWxhIg=
+        :content-type; s=sasl; bh=4oeoduL2hKTKT5Fe4P1qoYiRvb4=; b=dckCTF
+        XmdeNZ6gp+NLTOHLp8ka+eilLSkFbJQoBfY1LjRRAx3idCbVtsq0U5ypVeP7UcJm
+        1yfvbf2gvJjrFkM8iUFPCggUs8v6nbZK6lrPhybTEtN5e4xu2hzQc5mUuKzMSHSK
+        zGjOc2iGM1YPVmP514Hv0cy1/iy8EeI5gUENQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=DObLDc
-        W5rXj97xO13OiI/65aJnO/M3ouUqEuQ7eV8Uo46ykKThVtF2X9zroASkxG0ejkqk
-        xyaN61S6lVHMJKsBvijkNEo32iwmewudZg0dIXO7RHBl/E8D7twEus8nvZbeFMC3
-        iO4knA8iniwRAG6UQQBfzvy74fAXQZth6QBXg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 25B42AEFB4;
-        Fri, 12 Mar 2021 16:41:56 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=rjXquOsD8Ya3NFxxtdgpxlDsbuhRWuQ3
+        k7HPb2eBJPxWp3JZktIg2rvmC/XdXHfxsmTQMAstOV3teaiXfoCV6CQoTApC7B6g
+        TjlbEuke8HP2zjUSqGmXnnUZQgKuv/CLAanfHvWllDeGud5weet3smBLGOJppnnV
+        5F/h+Ie7OLo=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 812B1BE5C1;
+        Fri, 12 Mar 2021 16:55:09 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 93A5DAEFB2;
-        Fri, 12 Mar 2021 16:41:55 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AF6A4BE5BE;
+        Fri, 12 Mar 2021 16:55:08 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2 2/6] tree.c API: move read_tree() into
- builtin/ls-files.c
-References: <20210306193458.20633-1-avarab@gmail.com>
-        <20210308022138.28166-3-avarab@gmail.com>
-Date:   Fri, 12 Mar 2021 13:41:54 -0800
-In-Reply-To: <20210308022138.28166-3-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Mon, 8 Mar 2021 03:21:34 +0100")
-Message-ID: <xmqq8s6s6od9.fsf@gitster.g>
+To:     Taylor Blau <ttaylorr@github.com>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Denton Liu <liu.denton@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        ZheNing Hu <adlternative@gmail.com>
+Subject: Re: [PATCH] [GSOC][RFC] format-patch: pass --right-only to range-diff
+References: <pull.898.git.1615100240295.gitgitgadget@gmail.com>
+        <YEaGbn5rU3pU7/q5@nand.local>
+Date:   Fri, 12 Mar 2021 13:55:07 -0800
+In-Reply-To: <YEaGbn5rU3pU7/q5@nand.local> (Taylor Blau's message of "Mon, 8
+        Mar 2021 15:18:04 -0500")
+Message-ID: <xmqq1rck6nr8.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: C3ED1728-837B-11EB-9E85-D152C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9CB42AFA-837D-11EB-84C5-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Taylor Blau <ttaylorr@github.com> writes:
 
-> Now builtin/ls-files.c is the last user of this code, let's move all
-> the relevant code there. This allows for subsequent simplification of
-> it, and an eventual move to read_tree_recursive().
+> Note that I think (and Johannes--cc'd--could confirm) that what you want
+> is '--left-only' to discard rebased changes from the upstream branch:
 
-There is a comment in cache.h that has long been a tad stale but not
-wrong.  This finally makes it incorrect.
+Does that mean range-diff got --left-only and --right-only
+backwards?  IOW, doesn't
 
-#define ADD_CACHE_JUST_APPEND 8		/* Append only; tree.c::read_tree() */
+$ git log --left-only A...B
 
-It would be sufficient to remove the mention of tree.c::read_tree().
-It does use this bit, but there are a few others, and there is not
-much point in singling out the oldest user the bit was invented for.
+show what is shown in "git log B..A", and if so, shouldn't
+
+$ git range-diff --left-only A...B
+
+which is a synonym for
+
+$ git range-diff B..A A..B
+
+also give commits in the B..A range?
+
+Puzzled....
 
