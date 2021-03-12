@@ -2,110 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 56FA9C433E0
-	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 22:26:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F12A7C433E0
+	for <git@archiver.kernel.org>; Fri, 12 Mar 2021 00:49:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1A2F364D9A
-	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 22:26:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CA0E264F94
+	for <git@archiver.kernel.org>; Fri, 12 Mar 2021 00:49:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229606AbhCKW0Z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Mar 2021 17:26:25 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54850 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229584AbhCKW0O (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Mar 2021 17:26:14 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B3B36BDDEE;
-        Thu, 11 Mar 2021 17:26:13 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=fKKhxOEGR6E3Pgr4VJ8lwm/xt
-        K0=; b=FEbAZAoCzmQ7/u0XTmRILgtJBx2ygSmyw38NddpQ/YyKlXuYg/lTE8bYT
-        AtR05hWAFy2m0Cr/7Kg/5LrXF019uS9EUARSToHccjbaHqgt0gVtbtLDORDA+o6/
-        MgUnD/rN9YEq6AYtmdoSyCbpPIVkEDuPL88IjdmzhgnH2+c6WQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; q=dns; s=sasl; b=C1dO8wrRIG8Q27iB2Qo
-        tJxuKPs0cp15eq0pzX5zDta4VwASAoMqmkqRuIb0wVVB+6p0RF0Y61tVZlsHHOtQ
-        hdoe+BAH0Qp4MpnU97QzQAbVG83eIzmE+rVXAMriqvms9cnP+8r++f4CQQ4Vaj2z
-        alJ+fzRmG/RI6WKH//eLxTQE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9684CBDDED;
-        Thu, 11 Mar 2021 17:26:13 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A18F2BDDEC;
-        Thu, 11 Mar 2021 17:26:11 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        James Ramsay <james@jramsay.com.au>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?Q?=C3=86var_Arnfj=C3=B6?= =?utf-8?Q?r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>,
-        Josh Steadmon <steadmon@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH v8 00/37] config-based hooks
-References: <20210311021037.3001235-1-emilyshaffer@google.com>
-Date:   Thu, 11 Mar 2021 14:26:10 -0800
-Message-ID: <xmqqim5xba4d.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S229606AbhCLAtL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Mar 2021 19:49:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51828 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230192AbhCLAsw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Mar 2021 19:48:52 -0500
+Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D6D3C061574
+        for <git@vger.kernel.org>; Thu, 11 Mar 2021 16:48:52 -0800 (PST)
+Received: by mail-qk1-x72a.google.com with SMTP id d20so22750126qkc.2
+        for <git@vger.kernel.org>; Thu, 11 Mar 2021 16:48:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=GKtp57NUtiNloa2g6AuEulN4dPVTUnQK96rM0HIGdZQ=;
+        b=UTF+FXljyp+KXk81qKwNlSjWGvOfH4HPjsTjeUklkDngUZIu+QAUX/LFKCxCMNozjR
+         t6EeGXD1HDD1z4gv0UMsX1ZBuI08i77DcAg0H49fREnNZHV0js5Ota9G09ixb+LxLZZ4
+         IW40UwH3XMZqend96w7ldodxb6/nEABtaIakD7e4112C6a7okBAYgxxUr5OInU9Lb4z8
+         EqT5EgtkCCfETBy9kzzNDzXBYGMhWdGPvfUrG0YsxhQdMT4XJPvdHIg06Aw5A6WBUnn5
+         4oak+4ZHw79OlWuyUkhErEycdqegp2jS3H4COBNjIwoR0qePVd7kKJ7KrXvFzi9iLwlz
+         j8+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+         :in-reply-to:references:mime-version:content-transfer-encoding;
+        bh=GKtp57NUtiNloa2g6AuEulN4dPVTUnQK96rM0HIGdZQ=;
+        b=T9ufkyAg6eCwZs4FAaqiTYlipfduu3pf07PoTRilvkTMvz5LjuMCurT4iFv+jAtqOv
+         muW04EyA5TduS2lrpNleBpWyDtFXlBDfWopOAITmvEVW/RKnjmGHjljOzj3xTrCsslzv
+         J2qo5Dx9G7w0NwLF4PrwDfxprAwvC6M74ZWeKrTdI/WryN04IUuTBCsk/M5yNyqnKN9N
+         1XXfLD/e3D0BCbEnBkGYEb3SHAQyw1LOVP9ZQVSJzXruP0l9U22NbAXWRffoR7NhJwpE
+         rMuHJpJ1menLFB81miOx/k07sfoPKVfDIDIS38F6fIwKJpD5vMMrcN4Q8aljukND+0q9
+         pJ9Q==
+X-Gm-Message-State: AOAM5330i+gx+4he83k3eIcVShZlQwT30HLiRJYf6pnjV+xEmENfnfvP
+        4gITN5hUcusxPaTRNwbAz9keoJDTWLg=
+X-Google-Smtp-Source: ABdhPJzXp69G5RxPd8RzO6goH4XLWw+0orRuAred4mb6GVcRgIVw370TP7KE5dE8HGZP2AiC2B2nxg==
+X-Received: by 2002:a37:a408:: with SMTP id n8mr10167692qke.6.1615510131601;
+        Thu, 11 Mar 2021 16:48:51 -0800 (PST)
+Received: from sidious.home (pool-71-121-201-126.bltmmd.fios.verizon.net. [71.121.201.126])
+        by smtp.gmail.com with ESMTPSA id i5sm3297092qkg.32.2021.03.11.16.48.50
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 11 Mar 2021 16:48:51 -0800 (PST)
+Sender: John Szakmeister <jszakmeister@gmail.com>
+From:   John Szakmeister <john@szakmeister.net>
+To:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Cc:     John Szakmeister <john@szakmeister.net>
+Subject: [PATCH v2 1/2] http: store credential when PKI auth is used
+Date:   Thu, 11 Mar 2021 19:48:41 -0500
+Message-Id: <20210312004842.30697-2-john@szakmeister.net>
+X-Mailer: git-send-email 2.30.1
+In-Reply-To: <20210312004842.30697-1-john@szakmeister.net>
+References: <20210312004842.30697-1-john@szakmeister.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: C8AAA9E2-82B8-11EB-A31E-D152C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer <emilyshaffer@google.com> writes:
+We already looked for the PKI credentials in the credential store, but
+failed to approve it on success.  Meaning, the PKI certificate password
+was never stored and git would request it on every connection to the
+remote.  Let's complete the chain by storing the certificate password on
+success.
 
-> Since v7:
-> - Addressed Jonathan Tan's review of part I
-> - Addressed Junio's review of part I and II
-> - Combined parts I and II
->
-> I think the updates to patch 1 between the rest of the work I've been
-> doing probably have covered =C3=86var's comments.
->
-> More details about per-patch changes found in the notes on each mail (I
-> hope).
->
-> I know that Junio was talking about merging v7 after Josh Steadmon's
-> review and I asked him not to - this reroll has those changes from
-> Jonathan Tan's review that I was wanting to wait for.
+Likewise, we also need to reject the credential when there is a failure.
+Curl appears to report client-related certificate issues are reported
+with the CURLE_SSL_CERTPROBLEM error.  This includes not only a bad
+password, but potentially other client certificate related problems.
+Since we cannot get more information from curl, we'll go ahead and
+reject the credential upon receiving that error, just to be safe and
+avoid caching or saving a bad password.
 
-I picked it up and replaced, not necessarily because it is an urgent
-thing to do during the pre-release period, but primarily because I
-wanted to be prepared for any nasty surprises by unmanageable
-conflicts I may have to face once the current cycle is over.
+Signed-off-by: John Szakmeister <john@szakmeister.net>
+---
+ http.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-It turns out that it was a bit painful to merge to 'seen' as there
-are in-flight topics that touch the hooks documentation, and the
-changes they make must be carried forward to the new file.
+diff --git a/http.c b/http.c
+index f8ea28bb2e..12a8aaba48 100644
+--- a/http.c
++++ b/http.c
+@@ -1637,7 +1637,17 @@ static int handle_curl_result(struct slot_results *results)
+ 		credential_approve(&http_auth);
+ 		if (proxy_auth.password)
+ 			credential_approve(&proxy_auth);
++		credential_approve(&cert_auth);
+ 		return HTTP_OK;
++	} else if (results->curl_result == CURLE_SSL_CERTPROBLEM) {
++		/*
++		 * We can't tell from here whether it's a bad path, bad
++		 * certificate, bad password, or something else wrong
++		 * with the certificate.  So we reject the credential to
++		 * avoid caching or saving a bad password.
++		 */
++		credential_reject(&http_auth);
++		return HTTP_NOAUTH;
+ 	} else if (missing_target(results))
+ 		return HTTP_MISSING_TARGET;
+ 	else if (results->http_code == 401) {
+-- 
+2.30.1
 
-But it was not too bad. =20
-
-The merge into 'seen' is 3cdeaeab (Merge branch 'es/config-hooks'
-into seen, 2021-03-11) as of this writing, and the output of
-
-    $ git diff 3cdeaeab3a^:Documentation/githooks.txt \
-               3cdeaeab3a:Documentation/native-hooks.txt
-
-    (i.e. the version of the file before the merge, where your topic
-    being merged took material to edit to produce the new "native-hooks"
-    document, is compared with the result)
-
-looks reasonable to me, but please double check.
-
-Thanks.
