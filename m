@@ -2,95 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E29E7C433E0
-	for <git@archiver.kernel.org>; Fri, 12 Mar 2021 23:13:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 04B6FC433E0
+	for <git@archiver.kernel.org>; Fri, 12 Mar 2021 23:28:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 987E064F1C
-	for <git@archiver.kernel.org>; Fri, 12 Mar 2021 23:13:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C64C764F50
+	for <git@archiver.kernel.org>; Fri, 12 Mar 2021 23:28:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235711AbhCLXMi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Mar 2021 18:12:38 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56060 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235714AbhCLXMH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Mar 2021 18:12:07 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0CB46BEF1C;
-        Fri, 12 Mar 2021 18:12:06 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=XafELUro4kobJGjBNmIAX5ax3Hk=; b=XAFYnF
-        ETTbhfkRIGPFMVfhPCCqcuuWtdNWhKnaPJq7ZV+wtH5mc5QaI6uOL44n0jHCZ1oV
-        uHNkEVDZTLWFde+YQ1SvkFYCnXf18b1jE3SBxDMJ6wpajsJGaoAqVhN+ZySTL92E
-        cPlMvHg0qcrfivThBMF3qgoi1jItvC5NIOe+c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=qVHh2n7QHDJAflrKwE1OXvxOBNoSehK8
-        ei+XPAH5zz2QT6PfcU9NzCDb7c7gb04h+oMSH5Eb+bOyjeISjA4WvMfjFmTbn0Rc
-        FZt/hRhv414OKk0KMVu/0OC8IhoXoAebOGKXntzoq7MNxSOAHChn7aABdNDoaMd1
-        TuLJ+IloT2s=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D4126BEF1B;
-        Fri, 12 Mar 2021 18:12:05 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1F86EBEF1A;
-        Fri, 12 Mar 2021 18:12:05 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>,
-        Seth House <seth@eseth.com>,
-        Dana Dahlstrom <dahlstrom@google.com>
-Subject: Re: [PATCH] mergetool: do not enable hideResolved by default
-References: <20210130054655.48237-1-seth@eseth.com>
-        <20210209200712.156540-1-seth@eseth.com>
-        <20210209200712.156540-2-seth@eseth.com> <YEbdj27CmjNKSWf4@google.com>
-        <xmqqmtvbjuvl.fsf@gitster.g> <xmqqzgzafo5o.fsf@gitster.g>
-Date:   Fri, 12 Mar 2021 15:12:03 -0800
-In-Reply-To: <xmqqzgzafo5o.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-        10 Mar 2021 17:57:07 -0800")
-Message-ID: <xmqqlfas55mk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S235772AbhCLX2G (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Mar 2021 18:28:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34352 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235775AbhCLX1k (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Mar 2021 18:27:40 -0500
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97FDCC061574
+        for <git@vger.kernel.org>; Fri, 12 Mar 2021 15:27:40 -0800 (PST)
+Received: by mail-pj1-x102f.google.com with SMTP id a22-20020a17090aa516b02900c1215e9b33so11456637pjq.5
+        for <git@vger.kernel.org>; Fri, 12 Mar 2021 15:27:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=FQ3yBuKciZDFLINCPZKu+kqdVbsaf0ZZrZziG7V1/g4=;
+        b=T8Uj1dngAi5lXxgHRCL9biyfmVogW7lSkCwIQyqzKsyvY1V8RIYnH13vQNTBzAjVBU
+         BJ8Jkd7y7Kld/Xveo3IkGJt50xks/G24ktBtRZo0CDK0YMY19JbZpjhHuox+n8U0X6iD
+         osXGDVBn45TQXRye86MJf7cj3vKMoKW8H8zc7UOv5WFWS9Nm/SRZDWxHNEODL5GnMkGV
+         l6m1ycQSLOGHv7CQMI+rJ0vBJ2/HtuSG/t7rcRUdrzDFxm9WieR+eNiuJtYJmAhc8fuK
+         4oH80JAF2mS2yedQ0pXeZukXp+aehPfn/QkuPEWmA0KZcampPggqkGAP3FLq/BiNT3pn
+         auiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=FQ3yBuKciZDFLINCPZKu+kqdVbsaf0ZZrZziG7V1/g4=;
+        b=BRDH8sAV89IukE/nr17ccayslksKrj40LwVevOPoxOlwDaNgDBfelNyn1VnkG4KK+k
+         LZKQucRSrcfd/qDgDH3KKeGnvChk1Pw2fsxixOsUHJVLYwg20EDjAQqEUbFMkiD7rhu5
+         TfvtIvLL2t2igqiEl8pbfqpMnAhiLviLOoOoG0tp1gJzUDt69288FQR71Az6O8+/kHoX
+         uZupeFJelaE2itoaIB3KquGkYi7nN+offYbb4V2nrvYVv99HtvO6UtNzdnwavmDQf+47
+         RQzk0kjMVMwolS2vJA2ZlNb+nuioVf+cqPO5e5XfzpNv/es7PDdSXx0gQgPX5EOxiY/T
+         pCLQ==
+X-Gm-Message-State: AOAM532Es6Npc9ihKBeK+tbdcPhj1OG2mCqrFUqkdc6HKuOcL4LMCNXo
+        7Ws4HWJdJ81YUu/htUdB6u/Q6g==
+X-Google-Smtp-Source: ABdhPJzvZEDfq2HUyyz9NI2eCI2lhG4XApjHsYHf3W5EF/cs47RQ9zXv7Ql5M0yxBZxkI9DhCbScFA==
+X-Received: by 2002:a17:90a:e00c:: with SMTP id u12mr631250pjy.133.1615591659856;
+        Fri, 12 Mar 2021 15:27:39 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:0:b463:c495:6445:6cb3])
+        by smtp.gmail.com with ESMTPSA id u20sm6495015pfm.146.2021.03.12.15.27.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 12 Mar 2021 15:27:39 -0800 (PST)
+Date:   Fri, 12 Mar 2021 15:27:34 -0800
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        James Ramsay <james@jramsay.com.au>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Josh Steadmon <steadmon@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH v8 00/37] config-based hooks
+Message-ID: <YEv45hrEytdM00iI@google.com>
+References: <20210311021037.3001235-1-emilyshaffer@google.com>
+ <xmqqim5xba4d.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5C45C900-8388-11EB-ABAB-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqim5xba4d.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Thu, Mar 11, 2021 at 02:26:10PM -0800, Junio C Hamano wrote:
+> 
+> Emily Shaffer <emilyshaffer@google.com> writes:
+> 
+> > Since v7:
+> > - Addressed Jonathan Tan's review of part I
+> > - Addressed Junio's review of part I and II
+> > - Combined parts I and II
+> >
+> > I think the updates to patch 1 between the rest of the work I've been
+> > doing probably have covered Ævar's comments.
+> >
+> > More details about per-patch changes found in the notes on each mail (I
+> > hope).
+> >
+> > I know that Junio was talking about merging v7 after Josh Steadmon's
+> > review and I asked him not to - this reroll has those changes from
+> > Jonathan Tan's review that I was wanting to wait for.
+> 
+> I picked it up and replaced, not necessarily because it is an urgent
+> thing to do during the pre-release period, but primarily because I
+> wanted to be prepared for any nasty surprises by unmanageable
+> conflicts I may have to face once the current cycle is over.
+> 
+> It turns out that it was a bit painful to merge to 'seen' as there
+> are in-flight topics that touch the hooks documentation, and the
+> changes they make must be carried forward to the new file.
+> 
+> But it was not too bad.  
+> 
+> The merge into 'seen' is 3cdeaeab (Merge branch 'es/config-hooks'
+> into seen, 2021-03-11) as of this writing, and the output of
+> 
+>     $ git diff 3cdeaeab3a^:Documentation/githooks.txt \
+>                3cdeaeab3a:Documentation/native-hooks.txt
+> 
+>     (i.e. the version of the file before the merge, where your topic
+>     being merged took material to edit to produce the new "native-hooks"
+>     document, is compared with the result)
+> 
+> looks reasonable to me, but please double check.
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> As we want to disable the feature for any backend when the user does
->> not explicitly say the feature is wanted (either in general, or for
->> a specific backend), the change in the above hunk is exactly want we
->> want to see.
->>
->> Looking good.  Let's not revert the series and disable by default.
->>
->> Should I expect an updated log message, though?  What was in the
->> proposed log message sounded more unsubstantiated complaint than
->> giving readable reasons why the feature is unwanted, but both the
->> response by Seth and your response to Seth's response had material
->> that made it more convincing why we would want to disable this by
->> default, e.g. "with little to no explanation", "We don't have a way
->> to communicate to the end-user" (both by Seth), "when ... didn't end
->> up lining up the files correctly", "no way to visually distinguish"
->> (yours) are all good ingredients to explain why this feature is
->> prone to subtly and silently give wrong information to the
->> end-users.
->
-> For tonight's pushout, I'll use the patch as-is and merge it in
-> 'seen'.
+I had a look at that diff (but targeting 6da6893c, which is what I see
+for "Merge branch 'es/config-hooks' into seen" when I fetch from
+gitster/git today) and it looks fine to me, very reasonable. Thanks for
+doing that.
 
-Any progress here?
+> 
+> Thanks.
