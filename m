@@ -6,63 +6,80 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0774FC433E0
-	for <git@archiver.kernel.org>; Fri, 12 Mar 2021 01:25:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A836C433DB
+	for <git@archiver.kernel.org>; Fri, 12 Mar 2021 01:32:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B641164F90
-	for <git@archiver.kernel.org>; Fri, 12 Mar 2021 01:25:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 09BB164F77
+	for <git@archiver.kernel.org>; Fri, 12 Mar 2021 01:32:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231489AbhCLBZJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Mar 2021 20:25:09 -0500
-Received: from cloud.peff.net ([104.130.231.41]:33048 "EHLO cloud.peff.net"
+        id S230084AbhCLBbg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Mar 2021 20:31:36 -0500
+Received: from cloud.peff.net ([104.130.231.41]:33062 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231355AbhCLBYh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Mar 2021 20:24:37 -0500
-Received: (qmail 19961 invoked by uid 109); 12 Mar 2021 01:24:37 -0000
+        id S229606AbhCLBbV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Mar 2021 20:31:21 -0500
+Received: (qmail 20034 invoked by uid 109); 12 Mar 2021 01:31:21 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 12 Mar 2021 01:24:37 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 12 Mar 2021 01:31:21 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15735 invoked by uid 111); 12 Mar 2021 01:24:37 -0000
+Received: (qmail 15846 invoked by uid 111); 12 Mar 2021 01:31:21 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 11 Mar 2021 20:24:37 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 11 Mar 2021 20:31:21 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 11 Mar 2021 20:24:36 -0500
+Date:   Thu, 11 Mar 2021 20:31:20 -0500
 From:   Jeff King <peff@peff.net>
 To:     John Szakmeister <john@szakmeister.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] http: store credential when PKI auth is used
-Message-ID: <YErC1LIaxomLd3Gu@coredump.intra.peff.net>
-References: <20210306225253.87130-1-john@szakmeister.net>
- <YEkljZWg4+lTQRyS@coredump.intra.peff.net>
- <CAEBDL5U=BxHzYWmG2Cpw+XcMJTF8_Qp0KXoKz6N+fHp1ZWdbRQ@mail.gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2 0/2] http: store credential when PKI auth is used
+Message-ID: <YErEaJ25gY8dzErv@coredump.intra.peff.net>
+References: <20210312004842.30697-1-john@szakmeister.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAEBDL5U=BxHzYWmG2Cpw+XcMJTF8_Qp0KXoKz6N+fHp1ZWdbRQ@mail.gmail.com>
+In-Reply-To: <20210312004842.30697-1-john@szakmeister.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 11, 2021 at 08:01:53PM -0500, John Szakmeister wrote:
+On Thu, Mar 11, 2021 at 07:48:40PM -0500, John Szakmeister wrote:
 
-> >   - I think proxy_cert_auth would probably want the same treatment.
+> Here's my second attempt at getting the certificate password into the credential
+> store.  I tested from a working PKI setup and found curl--at least reasonable
+> recent versions of it--return CURLE_SSL_CERTPROBLEM:
 > 
-> Oh, I think I misread this before making my fixes.  I think what you're
-> saying here is that proxy_cert_auth should be approved and rejected
-> in the same spots as the client cert auth?  I missed that but am happy
-> to add it, if that's what you meant.  The only trouble is that I don't have
-> a great way of checking that particular feature.
+>        CURLE_SSL_CERTPROBLEM (58)
+>               problem with the local client certificate.
+> 
+> It appears there could be another possible error from curl:
+> 
+>        CURLE_SSL_CONNECT_ERROR (35)
+>               A  problem  occurred  somewhere  in the SSL/TLS handshake. You
+>               really want the error buffer and read the message there as it
+>               pinpoints the problem slightly more. Could be  certificates  (file
+>               formats, paths, permissions), passwords, and others.
+> 
+> This seems less likely to be a bad client password scenario, so I did not look
+> for this particular error to reject it.
+> 
+> I also added one other small patch to remove the check of a non-empty password
+> before calling credential_store() for proxy_auth, as credential_store() already
+> checks for a non-empty password and gracefully handles it when it doesn't.
 
-Yep, that's what I meant. Looking at CURLE_SSL_* in curl.h, it looks
-like there's no way to distinguish a proxy cert problem from a regular
-cert problem. So probably we'd need to reject both when we see
-CURLE_SSL_CERTPROBLEM. As long as somebody is not using both at once, it
-would not matter at all. And even if they are, the worst case is having
-to put in their password again.
+Thanks. Both patches look good to me. I wondered briefly if we needed to
+worry about old versions of curl missing CURLE_SSL_CERTPROBLEM. But it
+seems to have shown up in ~2002, so I think we are fine to assume it's
+there.
 
-That said, given that nobody has asked for it and you have no easy way
-of testing it, I'm content to leave it be for now. Your patches
-shouldn't make anything worse there, and it shouldn't be too hard to
-find this discussion in the list archive later.
+It would be nice if we had some tests here, but we currently do not
+cover any of the ssl-cert stuff in the test suite. I suspect adding them
+would be a big pain to configure and maintain, so I'm OK to leave it off
+for now. Hopefully you gave it some basic manual testing with your
+working setup (good password is stored, bad password is rejected).
+
+Looking at how we generate the server-side cert for our http tests, we
+could _probably_ do something similar for a client-side cert, and just
+configure the server to accept a self-signed certificate. But like I
+said, I'm OK to leave that for another series (though of course if you
+want to work on it, that would be very much appreciated).
 
 -Peff
