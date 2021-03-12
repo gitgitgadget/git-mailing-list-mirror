@@ -2,153 +2,145 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 18484C433DB
-	for <git@archiver.kernel.org>; Fri, 12 Mar 2021 03:02:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 12D7FC433E0
+	for <git@archiver.kernel.org>; Fri, 12 Mar 2021 05:03:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DB08364F90
-	for <git@archiver.kernel.org>; Fri, 12 Mar 2021 03:02:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E343664F94
+	for <git@archiver.kernel.org>; Fri, 12 Mar 2021 05:03:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231531AbhCLDBq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Mar 2021 22:01:46 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:54996 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231351AbhCLDBQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Mar 2021 22:01:16 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 69B18124F59;
-        Thu, 11 Mar 2021 22:01:16 -0500 (EST)
-        (envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-        :subject:date:message-id:in-reply-to:references:mime-version
-        :content-transfer-encoding; s=sasl; bh=8yD478ONw1UaQ6yg4t4xnjUba
-        1Y=; b=axIB0ydC5I0Bq5vEZECKQNt6fjRCzp0DE98kfy9jXqVv6BenFbu+lsMU0
-        V8rGTGpb6E6m1LgV6/9Hy2jcx/d/S9tCLzhmF0A5LtYHiQstEu1J8SPghAq1eMqy
-        oIOYDYTw7WcJ6gcb2QiLTiap8Il2vgDVgJ889+n2yaXGyeL0qI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-        :date:message-id:in-reply-to:references:mime-version
-        :content-transfer-encoding; q=dns; s=sasl; b=DKH4BY3d0UGc+ATwO0t
-        uRD5M1J6d5v3DNWkI00v9uU+c15QEt3N55CKNtQ4dj5/XiI2j4ebP9JN792FTPEs
-        4OyRkj8gHb7vdwRYgsBEg7CfCClxWCfGJT6MLu8aMw+bzZEmWSzlovXMS8o6akQ8
-        vRoeWN/wryTP4la+yidkvAso=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 61CFD124F58;
-        Thu, 11 Mar 2021 22:01:16 -0500 (EST)
-        (envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id ABBE4124F57;
-        Thu, 11 Mar 2021 22:01:13 -0500 (EST)
-        (envelope-from gitster@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Subject: [PATCH 2/2] [WIP] sequencer.c: carry forward notes on HEAD across "rebase -x"
-Date:   Thu, 11 Mar 2021 19:01:07 -0800
-Message-Id: <20210312030107.1849942-3-gitster@pobox.com>
-X-Mailer: git-send-email 2.31.0-rc2-175-g3820f1c72e
-In-Reply-To: <20210312030107.1849942-1-gitster@pobox.com>
-References: <xmqq8s6tcuxc.fsf@gitster.g>
- <20210312030107.1849942-1-gitster@pobox.com>
+        id S229501AbhCLFBB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Mar 2021 00:01:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49480 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229473AbhCLFAq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Mar 2021 00:00:46 -0500
+Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6522BC061574
+        for <git@vger.kernel.org>; Thu, 11 Mar 2021 21:00:46 -0800 (PST)
+Received: by mail-yb1-xb34.google.com with SMTP id 133so24111003ybd.5
+        for <git@vger.kernel.org>; Thu, 11 Mar 2021 21:00:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=dmWjAWua/QU78XMoPAuufzJWxVibbN2nsjzwiAcUS4Q=;
+        b=p8nWa+qOxWPPGBzY5GWz8qLZG07DIZw98NJ1LAgAW6GfrduKBol0Nit3fzaqtTjVr8
+         DvuyJxZYJtObCO3MhBrhmU9CS3VpNG9t6B2EEjJRxJr53Ta5s2ZtgmLRrO8rWMHhgMNR
+         K5wqMFQ2Vzn+Ls0ZwenTrkDC+4G7d1hEYFXgH9Ra3UgHDypo2bSxt4na676hL9s+TMwD
+         AU3UiiUHZHOUgOZTCB2btHhWnCXiYavN+rDl8szv4crzZKnhRptjyQQND03ewZFXW7fY
+         mhGG4ZmGxJgDb7wmMOymqIH3RwBFLl1dZRVeHm9iHR+tcWpRV1wEkmPyU4TIKp3cEgYC
+         SnEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=dmWjAWua/QU78XMoPAuufzJWxVibbN2nsjzwiAcUS4Q=;
+        b=bCzV+kApjRIRXfo0n1IlgtOH6lGimX1Q0vY9mzaRQIeimV1sokrZYcXDYqXoeNlwWN
+         t2VEfGNha7ea9QPpLtXfTP05ETNpWJ3mspXGKVkf++ETzgVpYJ4/NsBS5LewUvAbrgMi
+         x1XXPTVYXIikNOzRLlFTTjMA7VX9eGsAqJXim0vNh1yAMrIDPCGYc42Ke4mwHI4X1lMK
+         /eOvxbsxuAWI7AcoJ83WMszlHifRjNrlcDT0RYin3y8n3hAOs4oAtJOzCVcL3LpQW4SK
+         7GK71t9tS0H1LsiaVK8xf72EYoKLOrR9/TdF2rGsu7nH2PFPAcGquzrLMXa/H/0By56L
+         y/pA==
+X-Gm-Message-State: AOAM533Z137YMpIX3rLeBYvbcbflzH3EcCJetqrPsSKqrCD4GTEtzASF
+        0+eQSjt3J69VnYOJ6sgNGshqFb4MlEQcZkewEZUbrS774yd+jg==
+X-Google-Smtp-Source: ABdhPJxE+lcxQi2ytpafW2jgqrTZEWPBwizF66y7OzkN2yoj4Y00pOPV18pWEw5jtcAure4dV67f4ObpeOkSKYAmelE=
+X-Received: by 2002:a25:8087:: with SMTP id n7mr16681486ybk.367.1615525245577;
+ Thu, 11 Mar 2021 21:00:45 -0800 (PST)
 MIME-Version: 1.0
-X-Pobox-Relay-ID: 34A06760-82DF-11EB-B74A-E43E2BB96649-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <875z1xwznd.fsf@gnu.org> <YEpusE7ZIE5RgOws@coredump.intra.peff.net>
+ <87a6r9o1yo.fsf@gnu.org>
+In-Reply-To: <87a6r9o1yo.fsf@gnu.org>
+From:   Phil Hord <phil.hord@gmail.com>
+Date:   Thu, 11 Mar 2021 21:00:34 -0800
+Message-ID: <CABURp0pFdHAx_+-e+O35Qxtbe3_+cZy9SZcOSeR2R7v_neRwKg@mail.gmail.com>
+Subject: Re: [Bug] Stashing during merge loses MERGING state
+To:     Tassilo Horn <tsdh@gnu.org>
+Cc:     Jeff King <peff@peff.net>, Git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When the external command invoked by "rebase -x" replaces the HEAD,
-we seem to lose the notes attached to the original HEAD, which is
-why we have been losing the amlog mappings in the git core project.
+On Thu, Mar 11, 2021 at 12:45 PM Tassilo Horn <tsdh@gnu.org> wrote:
+> >> Or that popping the stash again would also restore the MERGING state.
+> >
+> > This would make more sense: the stash records that part of the state,
+> > and then we make it available again later when the stash is applied.
+> > However, that feature doesn't exist yet.
+>
+> Too bad.
 
-Here is a half-successful attempt to fix it.  For whatever reason,
-when the external command is "git commit --amend --no-edit", the
-updated code carries notes forward correctly, but when the command
-is changed to "git commit --amend -m tweak", it fails to do so, and
-I do not have more time to work on this, so I'd stop here with an
-expected failure in the test.
+Consider also what happens when `git stash apply` results in a merge
+conflict because of differences between your current index and the one
+you had when you originally saved the stash.  This results in the
+usual merge conflict markers that then need to be cleaned up.
 
-Help is appreciated.
+Could we sanely deal with this in a world where we also tried to
+restore .git/MERGE_HEAD when the stash was applied. Something like
+`git stash apply --continue`, possibly after resolving the stash
+conflicts?  But what if we stashed the merge conflict that resulted
+from the stash apply?  I guess it would still work, but the stash
+history would be, um, interesting.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- sequencer.c                   | 10 +++++++++-
- t/t3404-rebase-interactive.sh | 18 ++++++++++++++++++
- 2 files changed, 27 insertions(+), 1 deletion(-)
+I wonder if a fix could be as simple as recording the MERGE_HEAD as
+the third parent commit of the stash ref. I think that would provide
+all the information needed to put things back, except possibly for
+things like the rerere state, which is also set up during a conflict,
+and other incidentals like .git/MERGE_MSG.  (And it feels like it
+might break compatibility with older versions that don't expect a
+third parent.)
 
-diff --git a/sequencer.c b/sequencer.c
-index 92a4871997..e0bdc39e4d 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -3276,7 +3276,10 @@ static int do_exec(struct repository *r, const cha=
-r *command_line)
- {
- 	struct strvec child_env =3D STRVEC_INIT;
- 	const char *child_argv[] =3D { NULL, NULL };
--	int dirty, status;
-+	int dirty, status, bad_head;
-+	struct object_id old_head_oid, new_head_oid;
-+
-+	bad_head =3D get_oid("HEAD", &old_head_oid);
-=20
- 	fprintf(stderr, _("Executing: %s\n"), command_line);
- 	child_argv[0] =3D command_line;
-@@ -3286,6 +3289,11 @@ static int do_exec(struct repository *r, const cha=
-r *command_line)
- 	status =3D run_command_v_opt_cd_env(child_argv, RUN_USING_SHELL, NULL,
- 					  child_env.v);
-=20
-+	bad_head |=3D get_oid("HEAD", &new_head_oid);
-+
-+	if (!bad_head && !oideq(&old_head_oid, &new_head_oid))
-+		commit_post_rewrite(r, &old_head_oid, &new_head_oid);
-+
- 	/* force re-reading of the cache */
- 	if (discard_index(r->index) < 0 || repo_read_index(r) < 0)
- 		return error(_("could not read index"));
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.s=
-h
-index 66bcbbf952..3222c594ab 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -155,6 +155,8 @@ test_expect_success 'rebase -i with the exec command =
-checks tree cleanness' '
- 	git rebase --continue
- '
-=20
-+# NEEDSWORK: Fix c762aada1ab3a2c428c with s/@/HEAD/;
-+
- test_expect_success 'rebase -x with empty command fails' '
- 	test_when_finished "git rebase --abort ||:" &&
- 	test_must_fail env git rebase -x "" @ 2>actual &&
-@@ -867,6 +869,22 @@ test_expect_success 'rebase -i can copy notes over a=
- fixup' '
- 	test_cmp expect output
- '
-=20
-+test_expect_success 'notes are copied even rebase -x changes HEAD' '
-+	git reset --hard n3 &&
-+	git rebase -x "git commit --amend --no-edit" n1^1 &&
-+	git log --format=3D"%s <%N>" n1^1..n3 >expect &&
-+	git log --format=3D"%s <%N>" n1^1..HEAD >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_failure 'notes are copied even rebase -x changes HEAD' '
-+	git reset --hard n3 &&
-+	git rebase -x "git commit --amend -m tweak" n1^1 &&
-+	git log --format=3D"tweak <%N>" n1^1..n3 >expect &&
-+	git log --format=3D"%s <%N>" n1^1..HEAD >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'rebase while detaching HEAD' '
- 	git symbolic-ref HEAD &&
- 	grandparent=3D$(git rev-parse HEAD~2) &&
---=20
-2.31.0-rc2-175-g3820f1c72e
+I would be a bit concerned about the possibility of silently creating
+an "evil merge".  Suppose you stash this conflict on some branch and
+then pop it onto a different one.  I expect we would then be prepared
+to store all those changes from a different branch including existing
+resolved merge conflicts into the new one.  That could be surprising
+and subtle.
 
+But maybe I'm overthinking it.  Wouldn't the stash apply result in
+merge conflicts that would catch out all the troubling parts?
+
+I think being able to stash during a merge conflict could be very
+useful.  I do sometimes need to get back to a working state
+momentarily and a merge conflict represents a long pole to doing so.
+Similarly, it could be useful to stash a conflicted `git rebase` so I
+could return to it later and pick up where I left off.  Now we really
+would need to store some extra metadata, though, like the todo-list
+and ORIG_HEAD.  And we would definitely need some extra command line
+switch to tell stash (or rebase) that I want to include all the rebase
+state and also "pause" the rebase by restoring to my starting point.
+
+Thanks for raising the issue, Tassilo.  This has obviously given me
+more ideas for things I forgot were missing.
+
+> > I can't offhand think of a reason it couldn't be implemented. It's
+> > possible that it would mess with somebody else's workflow (e.g., they
+> > think it's useful to stash some changes independent of the merging
+> > state, and then apply it later, perhaps while replaying the same or a
+> > similar merge). So it might need to be tied to a command-line option
+> > or similar.
+>
+> Everything breakes someones workflow [1], so an option would be fine.
+>
+> However, I'd suggest to protect users shooting in their foot with a
+> warning and confirmation query for the time being.  I consider myself a
+> quite experienced git user but this stash trouble today came totally
+> unexpected.  And I've asked on #git@irc.freenode.net and got no answer
+> which is totally uncommon.  So I guess that this stash during merge
+> thing is pretty much a gray area.
+
+I don't think we could easily add the warning when the stash is
+applied since we have forgotten the merge existed in the first place.
+So we would have to do it during stash save.
+
+"Warning: You are stashing during a merge conflict and your merge
+state will not be restored by stash apply."
+
+Seems reasonable.
+
+Phil
