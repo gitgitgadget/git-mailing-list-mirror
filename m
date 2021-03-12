@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 41FBAC4332D
-	for <git@archiver.kernel.org>; Fri, 12 Mar 2021 22:49:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E0D9C433DB
+	for <git@archiver.kernel.org>; Fri, 12 Mar 2021 22:49:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1DF6064FA9
-	for <git@archiver.kernel.org>; Fri, 12 Mar 2021 22:49:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 35AC364F6C
+	for <git@archiver.kernel.org>; Fri, 12 Mar 2021 22:49:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235660AbhCLWsk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Mar 2021 17:48:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54194 "EHLO
+        id S235662AbhCLWtL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Mar 2021 17:49:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235640AbhCLWsX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Mar 2021 17:48:23 -0500
-Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com [IPv6:2607:f8b0:4864:20::82c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4444AC061574
-        for <git@vger.kernel.org>; Fri, 12 Mar 2021 14:48:22 -0800 (PST)
-Received: by mail-qt1-x82c.google.com with SMTP id r14so5124813qtt.7
-        for <git@vger.kernel.org>; Fri, 12 Mar 2021 14:48:22 -0800 (PST)
+        with ESMTP id S235639AbhCLWs4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Mar 2021 17:48:56 -0500
+Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 908CEC061574
+        for <git@vger.kernel.org>; Fri, 12 Mar 2021 14:48:56 -0800 (PST)
+Received: by mail-qk1-x730.google.com with SMTP id f124so26064226qkj.5
+        for <git@vger.kernel.org>; Fri, 12 Mar 2021 14:48:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp.br; s=usp-google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=rsBdT66ZWNqemkuQiPHbDEXS7YyAoqR4l4bWbGM1q3I=;
-        b=xhy3eozCuqs1echl9/yFCGNs8m2PqX2msoDFyBIOt4Mi8n4vILMMYNrYvHoqPX3l6f
-         tDSjiDfpOdcWTWnE6xNk/toi3VDJanAdU2Zyi7G91fDu3t83VYIci+Wazs/oCjdV8f6g
-         jB6F38ZiM+rMMbNIRbsJVrxNTU7fChxhui7+mDXDiKMns0y5v89GDlqB1uGCPOYPfXK4
-         WAuU06yReZbrq/mz2PfM2fHwLl6oaVPUb67O/wo+HFl0bGsmQl4Du4x6JlAW9y7Rb+9k
-         0i7UarvognjkFg/liO4GQzCDgZU6kXfWilzYmoENgms0kgCOV7bQLZFwxuE5ia+peHEJ
-         ZL/w==
+        bh=8osWavCvxZ7LmzdZPfxM+JGrZtLUVmDCOp5iS/JPotc=;
+        b=uyZth+fRisugQ/MZeSCNgH5LUd6lWIPhoRWlLqCR1u8lotqfT4Z6EH1rrjM6AycIbg
+         e/u9epaYdCIHSGZDTU3dnZCXC6z8se3Pg9bFvjwpRYHwZxVTFfCTSrLFYRq1+W4708xm
+         zlBR85am68uWXkzoO/P8ejKUJRykEtDw6O3G4T+ypnPhh2e9TeAulpJ4rimcPBPIpXWC
+         LMEULMUFd8VSKd66xpth8N4VQzusYvr/FsLwh0a0FL7xYnWJl4ZJBobL7yV5iUMfGP0u
+         jlOWIL1M6eixRfpTZ/eMSe0AiDSTQxroNTnLHPqyr7VVs5dZBuBNn4WMrv6ueXnsxZwY
+         Zz5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=rsBdT66ZWNqemkuQiPHbDEXS7YyAoqR4l4bWbGM1q3I=;
-        b=XEdtoFZkNqyxmmzovkjTMN/9i4Pwv2tN0fAgYzqaQN2+iCJDrhyYV4dGZXLLdNKPec
-         iqsPwXgvN9tT0S00vw8p4ZXpl8n5PQrTbrETj6oGkVuDUVctGEAXjS+ixSibndW8oZdv
-         OUKjLT6G4xsgmCc0ng9MMJ9xivEOZBVK0gVPhYATM2n9VCyfLSllYpOd6D4zNsVSpYG2
-         YUb8CJarH9ZuSvaSPRdppibo4poh44hftYRl5WsmVyiFcHeee6tMZOkIlIogJO3D5dh5
-         Vr2KaFussIWRRZ6yg/xzgtIR15n5uKzWKb+w5gzp4AZ/2gkGRE6lofb08CcoSnxLNE6e
-         SW0g==
-X-Gm-Message-State: AOAM533eWyD3Af0wxvqY3QdqNs5d0p3S/hyABdH0rLWOJUVEPiESK1AW
-        l0naPzVVuiycSXL0vs8fGDHtxYbmI0IHHA==
-X-Google-Smtp-Source: ABdhPJwpUct9ZBoMO2xM1nroFf9mCto0xkpxyTIeC0AiOIry7DWZ/Efj1mX+B+ASgh+88cIYGBh9qg==
-X-Received: by 2002:ac8:664a:: with SMTP id j10mr13891292qtp.119.1615589300976;
-        Fri, 12 Mar 2021 14:48:20 -0800 (PST)
+        bh=8osWavCvxZ7LmzdZPfxM+JGrZtLUVmDCOp5iS/JPotc=;
+        b=HCLfRpPxRAm6uoDrn/fTKw6qyvtcW6BlueKe9R8i4R1WbiW3MLMIXmyz2ydcrmUM0Z
+         0IshnUwd/PRjoaqHTHpEfN2U/s0qJ/Ij8E2+ER20TANMaplpyZgVqs9uNSY2J2MBKquS
+         neoFOWsqKUosGqiJohJnADWudqPdYF6M2SQpfEPfaGfKxRgZIHtPjn/8wNwGXEi/Xehk
+         kOb6qvM/0uuZCZ7PO/fzPohNz7WXPSdnRaypPJ2y0JzOBfZ68nlhHvV2mATorpc2Fw+t
+         Cee+dAl4Ucf74F9vf1htomx51DFVP3gDcLQXD9hho89Z2gImxmEzMP6lky0IBUwDFKOn
+         xy3Q==
+X-Gm-Message-State: AOAM530g9Y67O+HaO54CRaCJnLXwylboqNFdvIb8kggFyh0RxiDhqgPU
+        1pM78ocv/zUzocWB1RohlNfszg7Bvb830w==
+X-Google-Smtp-Source: ABdhPJx9wpvTC17Tj9Y4U6qqmraTgcgcoj7v/1vUmEZaMD0bh6Uomb9+74Giy/+hA+BIp67qmX5MoQ==
+X-Received: by 2002:a37:a5c2:: with SMTP id o185mr15582030qke.428.1615589335329;
+        Fri, 12 Mar 2021 14:48:55 -0800 (PST)
 Received: from mango.meuintelbras.local ([177.32.118.149])
-        by smtp.gmail.com with ESMTPSA id j1sm4870400qti.55.2021.03.12.14.48.19
+        by smtp.gmail.com with ESMTPSA id j1sm4870400qti.55.2021.03.12.14.48.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Mar 2021 14:48:20 -0800 (PST)
+        Fri, 12 Mar 2021 14:48:54 -0800 (PST)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, newren@gmail.com
-Subject: [PATCH v3 6/7] add: warn when asked to update SKIP_WORKTREE entries
-Date:   Fri, 12 Mar 2021 19:48:01 -0300
-Message-Id: <66d5c71182274c78e1fcfe84e77deb17e4f0d7e6.1615588109.git.matheus.bernardino@usp.br>
+Subject: [PATCH v3 7/7] rm: honor sparse checkout patterns
+Date:   Fri, 12 Mar 2021 19:48:02 -0300
+Message-Id: <d25ea10560b501d2ca77b567927a0bb9bc874a1e.1615588109.git.matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.30.1
 In-Reply-To: <cover.1615588108.git.matheus.bernardino@usp.br>
 References: <cover.1615588108.git.matheus.bernardino@usp.br>
@@ -70,292 +70,152 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-`git add` already refrains from updating SKIP_WORKTREE entries, but it
-silently exits with zero code when it is asked to do so. Instead, let's
-warn the user and display a hint on how to update these entries.
+`git add` refrains from adding or updating index entries that are
+outside the current sparse checkout, but `git rm` doesn't follow the
+same restriction. This is somewhat counter-intuitive and inconsistent.
+So make `rm` honor the sparsity rules and advise on how to remove
+SKIP_WORKTREE entries just like `add` does. Also add some tests for the
+new behavior.
 
-Note that we only warn the user whey they give a pathspec item that
-matches no eligible path for updating, but it does match one or more
-SKIP_WORKTREE entries. A warning was chosen over erroring out right away
-to reproduce the same behavior `add` already exhibits with ignored
-files. This also allow users to continue their workflow without having
-to invoke `add` again with only the eligible paths (as those will have
-already been added).
-
+Suggested-by: Elijah Newren <newren@gmail.com>
 Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
 ---
- Documentation/config/advice.txt |  3 ++
- advice.c                        | 20 +++++++++
- advice.h                        |  4 ++
- builtin/add.c                   | 70 ++++++++++++++++++++++++-------
- pathspec.c                      | 15 +++++++
- pathspec.h                      |  8 ++++
- t/t3705-add-sparse-checkout.sh  | 73 +++++++++++++++++++++++++++++----
- 7 files changed, 172 insertions(+), 21 deletions(-)
+ Documentation/config/advice.txt  |  5 +-
+ Documentation/git-rm.txt         |  4 +-
+ builtin/rm.c                     | 35 +++++++++-----
+ t/t3602-rm-sparse-checkout.sh    | 78 ++++++++++++++++++++++++++++++++
+ t/t7011-skip-worktree-reading.sh |  5 --
+ 5 files changed, 108 insertions(+), 19 deletions(-)
+ create mode 100755 t/t3602-rm-sparse-checkout.sh
 
 diff --git a/Documentation/config/advice.txt b/Documentation/config/advice.txt
-index acbd0c09aa..851b83cf30 100644
+index 851b83cf30..8b2849ff7b 100644
 --- a/Documentation/config/advice.txt
 +++ b/Documentation/config/advice.txt
-@@ -119,4 +119,7 @@ advice.*::
- 	addEmptyPathspec::
+@@ -120,6 +120,7 @@ advice.*::
  		Advice shown if a user runs the add command without providing
  		the pathspec parameter.
-+	updateSparsePath::
-+		Advice shown when linkgit:git-add[1] is asked to update index
-+		entries outside the current sparse checkout.
+ 	updateSparsePath::
+-		Advice shown when linkgit:git-add[1] is asked to update index
+-		entries outside the current sparse checkout.
++		Advice shown when either linkgit:git-add[1] or linkgit:git-rm[1]
++		is asked to update index entries outside the current sparse
++		checkout.
  --
-diff --git a/advice.c b/advice.c
-index 164742305f..0b9c89c48a 100644
---- a/advice.c
-+++ b/advice.c
-@@ -2,6 +2,7 @@
+diff --git a/Documentation/git-rm.txt b/Documentation/git-rm.txt
+index ab750367fd..26e9b28470 100644
+--- a/Documentation/git-rm.txt
++++ b/Documentation/git-rm.txt
+@@ -23,7 +23,9 @@ branch, and no updates to their contents can be staged in the index,
+ though that default behavior can be overridden with the `-f` option.
+ When `--cached` is given, the staged content has to
+ match either the tip of the branch or the file on disk,
+-allowing the file to be removed from just the index.
++allowing the file to be removed from just the index. When
++sparse-checkouts are in use (see linkgit:git-sparse-checkout[1]),
++`git rm` will only remove paths within the sparse-checkout patterns.
+ 
+ 
+ OPTIONS
+diff --git a/builtin/rm.c b/builtin/rm.c
+index 4858631e0f..d23a3b2164 100644
+--- a/builtin/rm.c
++++ b/builtin/rm.c
+@@ -5,6 +5,7 @@
+  */
+ #define USE_THE_INDEX_COMPATIBILITY_MACROS
+ #include "builtin.h"
++#include "advice.h"
  #include "config.h"
- #include "color.h"
- #include "help.h"
-+#include "string-list.h"
- 
- int advice_fetch_show_forced_updates = 1;
- int advice_push_update_rejected = 1;
-@@ -136,6 +137,7 @@ static struct {
- 	[ADVICE_STATUS_HINTS]				= { "statusHints", 1 },
- 	[ADVICE_STATUS_U_OPTION]			= { "statusUoption", 1 },
- 	[ADVICE_SUBMODULE_ALTERNATE_ERROR_STRATEGY_DIE] = { "submoduleAlternateErrorStrategyDie", 1 },
-+	[ADVICE_UPDATE_SPARSE_PATH]			= { "updateSparsePath", 1 },
- 	[ADVICE_WAITING_FOR_EDITOR]			= { "waitingForEditor", 1 },
- };
- 
-@@ -284,6 +286,24 @@ void NORETURN die_conclude_merge(void)
- 	die(_("Exiting because of unfinished merge."));
- }
- 
-+void advise_on_updating_sparse_paths(struct string_list *pathspec_list)
-+{
-+	struct string_list_item *item;
-+
-+	if (!pathspec_list->nr)
-+		return;
-+
-+	fprintf(stderr, _("The following pathspecs didn't match any"
-+			  " eligible path, but they do match index\n"
-+			  "entries outside the current sparse checkout:\n"));
-+	for_each_string_list_item(item, pathspec_list)
-+		fprintf(stderr, "%s\n", item->string);
-+
-+	advise_if_enabled(ADVICE_UPDATE_SPARSE_PATH,
-+			  _("Disable or modify the sparsity rules if you intend"
-+			    " to update such entries."));
-+}
-+
- void detach_advice(const char *new_name)
+ #include "lockfile.h"
+ #include "dir.h"
+@@ -254,7 +255,7 @@ static struct option builtin_rm_options[] = {
+ int cmd_rm(int argc, const char **argv, const char *prefix)
  {
- 	const char *fmt =
-diff --git a/advice.h b/advice.h
-index bc2432980a..bd26c385d0 100644
---- a/advice.h
-+++ b/advice.h
-@@ -3,6 +3,8 @@
- 
- #include "git-compat-util.h"
- 
-+struct string_list;
-+
- extern int advice_fetch_show_forced_updates;
- extern int advice_push_update_rejected;
- extern int advice_push_non_ff_current;
-@@ -71,6 +73,7 @@ extern int advice_add_empty_pathspec;
- 	ADVICE_STATUS_HINTS,
- 	ADVICE_STATUS_U_OPTION,
- 	ADVICE_SUBMODULE_ALTERNATE_ERROR_STRATEGY_DIE,
-+	ADVICE_UPDATE_SPARSE_PATH,
- 	ADVICE_WAITING_FOR_EDITOR,
- };
- 
-@@ -92,6 +95,7 @@ void advise_if_enabled(enum advice_type type, const char *advice, ...);
- int error_resolve_conflict(const char *me);
- void NORETURN die_resolve_conflict(const char *me);
- void NORETURN die_conclude_merge(void);
-+void advise_on_updating_sparse_paths(struct string_list *pathspec_list);
- void detach_advice(const char *new_name);
- 
- #endif /* ADVICE_H */
-diff --git a/builtin/add.c b/builtin/add.c
-index 050cb8af30..d453313735 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -178,24 +178,43 @@ static char *prune_directory(struct dir_struct *dir, struct pathspec *pathspec,
- 	}
- 	dir->nr = dst - dir->entries;
- 	add_pathspec_matches_against_index(pathspec, &the_index, seen,
--					   PS_HEED_SKIP_WORKTREE);
-+					   PS_IGNORE_SKIP_WORKTREE);
- 	return seen;
- }
- 
--static void refresh(int verbose, const struct pathspec *pathspec)
-+static int refresh(int verbose, const struct pathspec *pathspec)
- {
- 	char *seen;
+ 	struct lock_file lock_file = LOCK_INIT;
 -	int i;
 +	int i, ret = 0;
-+	char *skip_worktree_seen = NULL;
-+	struct string_list only_match_skip_worktree = STRING_LIST_INIT_NODUP;
-+	int flags = REFRESH_DONT_MARK_SPARSE_MATCHES |
-+		    (verbose ? REFRESH_IN_PORCELAIN : REFRESH_QUIET);
+ 	struct pathspec pathspec;
+ 	char *seen;
  
- 	seen = xcalloc(pathspec->nr, 1);
--	refresh_index(&the_index, verbose ? REFRESH_IN_PORCELAIN : REFRESH_QUIET,
--		      pathspec, seen, _("Unstaged changes after refreshing the index:"));
-+	refresh_index(&the_index, flags, pathspec, seen,
-+		      _("Unstaged changes after refreshing the index:"));
- 	for (i = 0; i < pathspec->nr; i++) {
--		if (!seen[i])
--			die(_("pathspec '%s' did not match any files"),
--			    pathspec->items[i].original);
-+		if (!seen[i]) {
-+			if (matches_skip_worktree(pathspec, i, &skip_worktree_seen)) {
-+				string_list_append(&only_match_skip_worktree,
-+						   pathspec->items[i].original);
-+			} else {
-+				die(_("pathspec '%s' did not match any files"),
-+				    pathspec->items[i].original);
-+			}
-+		}
-+	}
-+
-+	if (only_match_skip_worktree.nr) {
-+		advise_on_updating_sparse_paths(&only_match_skip_worktree);
-+		ret = 1;
- 	}
-+
- 	free(seen);
-+	free(skip_worktree_seen);
-+	string_list_clear(&only_match_skip_worktree, 0);
-+	return ret;
- }
+@@ -295,6 +296,8 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
  
- int run_add_interactive(const char *revision, const char *patch_mode,
-@@ -571,16 +590,18 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	if (refresh_only) {
--		refresh(verbose, &pathspec);
-+		exit_status |= refresh(verbose, &pathspec);
- 		goto finish;
- 	}
- 
+ 	for (i = 0; i < active_nr; i++) {
+ 		const struct cache_entry *ce = active_cache[i];
++		if (ce_skip_worktree(ce))
++			continue;
+ 		if (!ce_path_match(&the_index, ce, &pathspec, seen))
+ 			continue;
+ 		ALLOC_GROW(list.entry, list.nr + 1, list.alloc);
+@@ -308,24 +311,34 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
  	if (pathspec.nr) {
- 		int i;
+ 		const char *original;
+ 		int seen_any = 0;
 +		char *skip_worktree_seen = NULL;
 +		struct string_list only_match_skip_worktree = STRING_LIST_INIT_NODUP;
- 
- 		if (!seen)
- 			seen = find_pathspecs_matching_against_index(&pathspec,
--					&the_index, PS_HEED_SKIP_WORKTREE);
-+					&the_index, PS_IGNORE_SKIP_WORKTREE);
- 
- 		/*
- 		 * file_exists() assumes exact match
-@@ -594,12 +615,24 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 
++
  		for (i = 0; i < pathspec.nr; i++) {
- 			const char *path = pathspec.items[i].match;
-+
- 			if (pathspec.items[i].magic & PATHSPEC_EXCLUDE)
- 				continue;
--			if (!seen[i] && path[0] &&
--			    ((pathspec.items[i].magic &
--			      (PATHSPEC_GLOB | PATHSPEC_ICASE)) ||
--			     !file_exists(path))) {
+ 			original = pathspec.items[i].original;
+-			if (!seen[i]) {
+-				if (!ignore_unmatch) {
+-					die(_("pathspec '%s' did not match any files"),
+-					    original);
+-				}
+-			}
+-			else {
 +			if (seen[i])
+ 				seen_any = 1;
+-			}
++			else if (ignore_unmatch)
 +				continue;
++			else if (matches_skip_worktree(&pathspec, i, &skip_worktree_seen))
++				string_list_append(&only_match_skip_worktree, original);
++			else
++				die(_("pathspec '%s' did not match any files"), original);
 +
-+			if (matches_skip_worktree(&pathspec, i, &skip_worktree_seen)) {
-+				string_list_append(&only_match_skip_worktree,
-+						   pathspec.items[i].original);
-+				continue;
-+			}
-+
-+			/* Don't complain at 'git add .' on empty repo */
-+			if (!path[0])
-+				continue;
-+
-+			if ((pathspec.items[i].magic & (PATHSPEC_GLOB | PATHSPEC_ICASE)) ||
-+			    !file_exists(path)) {
- 				if (ignore_missing) {
- 					int dtype = DT_UNKNOWN;
- 					if (is_excluded(&dir, &the_index, path, &dtype))
-@@ -610,7 +643,16 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 					    pathspec.items[i].original);
- 			}
+ 			if (!recursive && seen[i] == MATCHED_RECURSIVELY)
+ 				die(_("not removing '%s' recursively without -r"),
+ 				    *original ? original : ".");
  		}
-+
-+
+ 
 +		if (only_match_skip_worktree.nr) {
 +			advise_on_updating_sparse_paths(&only_match_skip_worktree);
-+			exit_status = 1;
++			ret = 1;
 +		}
-+
- 		free(seen);
 +		free(skip_worktree_seen);
 +		string_list_clear(&only_match_skip_worktree, 0);
++
+ 		if (!seen_any)
+-			exit(0);
++			exit(ret);
  	}
  
- 	plug_bulk_checkin();
-diff --git a/pathspec.c b/pathspec.c
-index 6d502e64e5..8247a65ec8 100644
---- a/pathspec.c
-+++ b/pathspec.c
-@@ -62,6 +62,21 @@ char *find_pathspecs_matching_against_index(const struct pathspec *pathspec,
- 	return seen;
- }
+ 	if (!index_only)
+@@ -405,5 +418,5 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
+ 			       COMMIT_LOCK | SKIP_IF_UNCHANGED))
+ 		die(_("Unable to write new index file"));
  
-+char *find_pathspecs_matching_skip_worktree(const struct pathspec *pathspec)
-+{
-+	struct index_state *istate = the_repository->index;
-+	char *seen = xcalloc(pathspec->nr, 1);
-+	int i;
-+
-+	for (i = 0; i < istate->cache_nr; i++) {
-+		struct cache_entry *ce = istate->cache[i];
-+		if (ce_skip_worktree(ce))
-+		    ce_path_match(istate, ce, pathspec, seen);
-+	}
-+
-+	return seen;
-+}
-+
- /*
-  * Magic pathspec
-  *
-diff --git a/pathspec.h b/pathspec.h
-index 0feb8e9f67..5b4c6614bf 100644
---- a/pathspec.h
-+++ b/pathspec.h
-@@ -160,6 +160,14 @@ void add_pathspec_matches_against_index(const struct pathspec *pathspec,
- char *find_pathspecs_matching_against_index(const struct pathspec *pathspec,
- 					    const struct index_state *istate,
- 					    enum ps_skip_worktree_action sw_action);
-+char *find_pathspecs_matching_skip_worktree(const struct pathspec *pathspec);
-+static inline int matches_skip_worktree(const struct pathspec *pathspec,
-+					int item, char **seen_ptr)
-+{
-+	if (!*seen_ptr)
-+		*seen_ptr = find_pathspecs_matching_skip_worktree(pathspec);
-+	return (*seen_ptr)[item];
-+}
- int match_pathspec_attrs(const struct index_state *istate,
- 			 const char *name, int namelen,
- 			 const struct pathspec_item *item);
-diff --git a/t/t3705-add-sparse-checkout.sh b/t/t3705-add-sparse-checkout.sh
-index 00b10ac877..c8db764058 100755
---- a/t/t3705-add-sparse-checkout.sh
-+++ b/t/t3705-add-sparse-checkout.sh
-@@ -36,10 +36,26 @@ setup_gitignore () {
- 	EOF
+-	return 0;
++	return ret;
  }
- 
+diff --git a/t/t3602-rm-sparse-checkout.sh b/t/t3602-rm-sparse-checkout.sh
+new file mode 100755
+index 0000000000..c83b026ed8
+--- /dev/null
++++ b/t/t3602-rm-sparse-checkout.sh
+@@ -0,0 +1,78 @@
++#!/bin/sh
++
++test_description='git rm in sparse checked out working trees'
++
++. ./test-lib.sh
++
 +test_expect_success 'setup' "
++	mkdir -p sub/dir &&
++	touch a b c sub/d sub/dir/e &&
++	git add -A &&
++	git commit -m files &&
++
 +	cat >sparse_error_header <<-EOF &&
 +	The following pathspecs didn't match any eligible path, but they do match index
 +	entries outside the current sparse checkout:
@@ -366,116 +226,78 @@ index 00b10ac877..c8db764058 100755
 +	hint: Disable this message with \"git config advice.updateSparsePath false\"
 +	EOF
 +
-+	echo sparse_entry | cat sparse_error_header - >sparse_entry_error &&
-+	cat sparse_entry_error sparse_hint >error_and_hint
++	echo b | cat sparse_error_header - >sparse_entry_b_error &&
++	cat sparse_entry_b_error sparse_hint >b_error_and_hint
 +"
 +
- test_expect_success 'git add does not remove sparse entries' '
- 	setup_sparse_entry &&
- 	rm sparse_entry &&
--	git add sparse_entry &&
-+	test_must_fail git add sparse_entry 2>stderr &&
-+	test_i18ncmp error_and_hint stderr &&
- 	test_sparse_entry_unchanged
- '
- 
-@@ -47,7 +63,8 @@ test_expect_success 'git add -A does not remove sparse entries' '
- 	setup_sparse_entry &&
- 	rm sparse_entry &&
- 	setup_gitignore &&
--	git add -A &&
-+	git add -A 2>stderr &&
-+	test_must_be_empty stderr &&
- 	test_sparse_entry_unchanged
- '
- 
-@@ -55,7 +72,13 @@ test_expect_success 'git add . does not remove sparse entries' '
- 	setup_sparse_entry &&
- 	rm sparse_entry &&
- 	setup_gitignore &&
--	git add . &&
-+	test_must_fail git add . 2>stderr &&
++for opt in "" -f --dry-run
++do
++	test_expect_success "rm${opt:+ $opt} does not remove sparse entries" '
++		git sparse-checkout set a &&
++		test_must_fail git rm $opt b 2>stderr &&
++		test_i18ncmp b_error_and_hint stderr &&
++		git ls-files --error-unmatch b
++	'
++done
 +
-+	cat sparse_error_header >expect &&
-+	echo . >>expect &&
-+	cat sparse_hint >>expect &&
-+
-+	test_i18ncmp expect stderr &&
- 	test_sparse_entry_unchanged
- '
- 
-@@ -64,7 +87,8 @@ do
- 	test_expect_success "git add${opt:+ $opt} does not update sparse entries" '
- 		setup_sparse_entry &&
- 		echo modified >sparse_entry &&
--		git add $opt sparse_entry &&
-+		test_must_fail git add $opt sparse_entry 2>stderr &&
-+		test_i18ncmp error_and_hint stderr &&
- 		test_sparse_entry_unchanged
- 	'
- done
-@@ -73,14 +97,16 @@ test_expect_success 'git add --refresh does not update sparse entries' '
- 	setup_sparse_entry &&
- 	git ls-files --debug sparse_entry | grep mtime >before &&
- 	test-tool chmtime -60 sparse_entry &&
--	git add --refresh sparse_entry &&
-+	test_must_fail git add --refresh sparse_entry 2>stderr &&
-+	test_i18ncmp error_and_hint stderr &&
- 	git ls-files --debug sparse_entry | grep mtime >after &&
- 	test_cmp before after
- '
- 
- test_expect_success 'git add --chmod does not update sparse entries' '
- 	setup_sparse_entry &&
--	git add --chmod=+x sparse_entry &&
-+	test_must_fail git add --chmod=+x sparse_entry 2>stderr &&
-+	test_i18ncmp error_and_hint stderr &&
- 	test_sparse_entry_unchanged &&
- 	! test -x sparse_entry
- '
-@@ -89,8 +115,41 @@ test_expect_success 'git add --renormalize does not update sparse entries' '
- 	test_config core.autocrlf false &&
- 	setup_sparse_entry "LINEONE\r\nLINETWO\r\n" &&
- 	echo "sparse_entry text=auto" >.gitattributes &&
--	git add --renormalize sparse_entry &&
-+	test_must_fail git add --renormalize sparse_entry 2>stderr &&
-+	test_i18ncmp error_and_hint stderr &&
-+	test_sparse_entry_unchanged
++test_expect_success 'recursive rm does not remove sparse entries' '
++	git reset --hard &&
++	git sparse-checkout set sub/dir &&
++	git rm -r sub &&
++	git status --porcelain -uno >actual &&
++	echo "D  sub/dir/e" >expected &&
++	test_cmp expected actual
 +'
 +
-+test_expect_success 'git add --dry-run --ignore-missing warn on sparse path' '
-+	setup_sparse_entry &&
-+	rm sparse_entry &&
-+	test_must_fail git add --dry-run --ignore-missing sparse_entry 2>stderr &&
-+	test_i18ncmp error_and_hint stderr &&
- 	test_sparse_entry_unchanged
- '
- 
++test_expect_success 'rm obeys advice.updateSparsePath' '
++	git reset --hard &&
++	git sparse-checkout set a &&
++	test_must_fail git -c advice.updateSparsePath=false rm b 2>stderr &&
++	test_i18ncmp sparse_entry_b_error stderr
++'
++
 +test_expect_success 'do not advice about sparse entries when they do not match the pathspec' '
-+	setup_sparse_entry &&
-+	test_must_fail git add nonexistent 2>stderr &&
++	git reset --hard &&
++	git sparse-checkout set a &&
++	test_must_fail git rm nonexistent 2>stderr &&
 +	test_i18ngrep "fatal: pathspec .nonexistent. did not match any files" stderr &&
 +	test_i18ngrep ! -F -f sparse_error_header stderr
 +'
 +
-+test_expect_success 'do not warn when pathspec matches dense entries' '
-+	setup_sparse_entry &&
-+	echo modified >sparse_entry &&
-+	>dense_entry &&
-+	git add "*_entry" 2>stderr &&
++test_expect_success 'do not warn about sparse entries when pathspec matches dense entries' '
++	git reset --hard &&
++	git sparse-checkout set a &&
++	git rm "[ba]" 2>stderr &&
 +	test_must_be_empty stderr &&
-+	test_sparse_entry_unchanged &&
-+	git ls-files --error-unmatch dense_entry
++	git ls-files --error-unmatch b &&
++	test_must_fail git ls-files --error-unmatch a
 +'
 +
-+test_expect_success 'add obeys advice.updateSparsePath' '
-+	setup_sparse_entry &&
-+	test_must_fail git -c advice.updateSparsePath=false add sparse_entry 2>stderr &&
-+	test_i18ncmp sparse_entry_error stderr
-+
++test_expect_success 'do not warn about sparse entries with --ignore-unmatch' '
++	git reset --hard &&
++	git sparse-checkout set a &&
++	git rm --ignore-unmatch b 2>stderr &&
++	test_must_be_empty stderr &&
++	git ls-files --error-unmatch b
 +'
 +
- test_done
++test_done
+diff --git a/t/t7011-skip-worktree-reading.sh b/t/t7011-skip-worktree-reading.sh
+index 26852586ac..1761a2b1b9 100755
+--- a/t/t7011-skip-worktree-reading.sh
++++ b/t/t7011-skip-worktree-reading.sh
+@@ -132,11 +132,6 @@ test_expect_success 'diff-files does not examine skip-worktree dirty entries' '
+ 	test -z "$(git diff-files -- one)"
+ '
+ 
+-test_expect_success 'git-rm succeeds on skip-worktree absent entries' '
+-	setup_absent &&
+-	git rm 1
+-'
+-
+ test_expect_success 'commit on skip-worktree absent entries' '
+ 	git reset &&
+ 	setup_absent &&
 -- 
 2.30.1
 
