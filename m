@@ -2,67 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A014BC4332D
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ABE6DC43331
 	for <git@archiver.kernel.org>; Fri, 12 Mar 2021 20:20:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7D33064F80
+	by mail.kernel.org (Postfix) with ESMTP id 9215864F84
 	for <git@archiver.kernel.org>; Fri, 12 Mar 2021 20:20:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234719AbhCLUUU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Mar 2021 15:20:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50402 "EHLO
+        id S234731AbhCLUUW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Mar 2021 15:20:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50426 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234693AbhCLUUD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Mar 2021 15:20:03 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06D49C061574
-        for <git@vger.kernel.org>; Fri, 12 Mar 2021 12:20:03 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id w11so5466652wrr.10
-        for <git@vger.kernel.org>; Fri, 12 Mar 2021 12:20:02 -0800 (PST)
+        with ESMTP id S234707AbhCLUUH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Mar 2021 15:20:07 -0500
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01CB8C061574
+        for <git@vger.kernel.org>; Fri, 12 Mar 2021 12:20:07 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id u5-20020a7bcb050000b029010e9316b9d5so12938103wmj.2
+        for <git@vger.kernel.org>; Fri, 12 Mar 2021 12:20:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=YjO94nrZiasyGcLGUQapikKA7X364hmWmXmJFGwf9FM=;
-        b=K3lTUqPqTqGjSwm5QH1wNqrreFYrTTSqIpbwsZ9Do/E+KA0c21GnEO0vRcpgVaLo4B
-         cqTMEt7i4hXa7aca44oAt+QHzjWCuZWwcAcm1rn7AncEWoj/ZeR9iDlVzpQcpbjAbgU8
-         v2moLTz0T9K7DJEHULEvam+Hf6jLv8uzBWd3lj5mHWroTVrdbMyI/n1FKi5OK8BjJxG5
-         GTJhk57k8mOI+DHKGRQRlH99nXvDwHJhvBowTDC7E55TRIOARCXBDACGQzL1prOrzhN/
-         hlb6Qnc+2EC/ZSAbChQ3hBNrVDA3y4LwSjDR3ldRdMnRXhMd8QQtBri/TcNZjoILKizj
-         Ib4g==
+        bh=mEYY5RFnABjUdPQXwEeopErjgHJtth0stDmGGwAAgSY=;
+        b=BrPDShSj5Oo6K7lxM9geoDmhd4VWS4Oue96yIrCGQqvmpM4vVdG6gdnRQ19NW6gldR
+         63iJqZ2Xzdg4VBjX3mGWwUNu/vBcvG5tDkWEmkrDNfsTFgR70W2Y5C8Cx/oQvs1DQ4Qa
+         Z6tB0sGP2O835NCfQsYbnxldPbocF5LS7eW1fwr+/dJ6Hu0nLbqXnliOTIczcyl7B6cE
+         3Llz7zikhy8tKVt8fYRRTHvw3yIk79yPcFjyoAqY1ebRuZ0cvodv4GWauJZ9hQ3XcOOF
+         Uqcku0W0MFPPFMrgwnBMFV3+M9OjWzSUNPHxcLl0tQk/3PIZz3mQna5CCGCkx/jgR0na
+         RCgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=YjO94nrZiasyGcLGUQapikKA7X364hmWmXmJFGwf9FM=;
-        b=ccwbhZBl3AC1fI4RZX31Gsawc+kSRTnoOTdSDWC40fgbDVWTBJ+Ag0i8xjidPM+9XX
-         o4XHS3yTeJpvx9IWowNjNEnt3Ip3HP580tlkav9zDfxoAKKzwt+uEe2cFvB4BvUu4ili
-         qFvvvDuI6YRf0n5O58azsFfItcEAV1FaJCVanxQYuEsAC8JzZnt9CTCSm/8w4LAWA/3s
-         Kb1FDaX6lglSq7XbZfXy9ytuYrV92azteHB7vBpXd7O46b/DGyqqqoGG1M9zzpvVlD1h
-         +atFW7JbQx7mmgRd+fRFx7q+5SdHx44lWdsU+yWKISCDsFZbCPAG+Je3lnKD/2YxRqax
-         lWkw==
-X-Gm-Message-State: AOAM533ysOIrkrgigOzIRad2icenHJ3gRC295vhhNUAQZCtsP0Fal3e5
-        FlIWaKLWY1lhpvNBcL4h6oEVmpL+Ap8=
-X-Google-Smtp-Source: ABdhPJyNeXIMw42ziC3twPzQHr2M1z/df+e+gR9KjgLisqxal0oIGW47qzlelYvvO+L64C+zUlWSUQ==
-X-Received: by 2002:adf:f60b:: with SMTP id t11mr10541789wrp.269.1615580401602;
-        Fri, 12 Mar 2021 12:20:01 -0800 (PST)
+        bh=mEYY5RFnABjUdPQXwEeopErjgHJtth0stDmGGwAAgSY=;
+        b=Vi7Tj9y20esWzRRebo32C0kJiMlRK1EtL13mLw9GNcI1N7lKiZ46v62JsD8dN1kSB/
+         fKUZdS/Zr3Yt+baVUygIW7nXsAN/AvdSPbapdRiVR1Ejq2H2WJGMnLBuaA+YCc0dmrII
+         EaWnbCxwa/IFHl4nEcZuuT9o+sNjz+D5SAMb7cBMgoDrAjugVnM/Sddfkq8FsYuSsX4l
+         VgPwg0iS0uQ7hESpTbzZoiTayYpdDp9dntsVea5MGJ/lXI1oBxqh8C7dquoHy5eCI1eD
+         vYsiABWC+o4/cmzyc+LlcOVgu7tE6uAWrsRyzZfC/YUIsSfjAzdCjRsYgIXoC/sbUjS8
+         c6LA==
+X-Gm-Message-State: AOAM532taFBkZnOMEglDVUHx/a11x7Tb3692Sl3JSQBaHcYFI+j9USFJ
+        ZtOY17C4/5U4UaxBzfZaTw9p9zBj9pU=
+X-Google-Smtp-Source: ABdhPJyb9ZPdSmHjN1/1c03LXtQfF8LxgDtplbeFqYGE4xF385DVKGydnxmSnDFipWrWbEv0VAzyOA==
+X-Received: by 2002:a1c:43c6:: with SMTP id q189mr14760541wma.80.1615580405587;
+        Fri, 12 Mar 2021 12:20:05 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a6sm3926371wmm.0.2021.03.12.12.20.01
+        by smtp.gmail.com with ESMTPSA id a131sm3503084wmc.48.2021.03.12.12.20.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Mar 2021 12:20:01 -0800 (PST)
-Message-Id: <5bbbafb428e9c3f6e95a880abbc1be596cf021fe.1615580397.git.gitgitgadget@gmail.com>
+        Fri, 12 Mar 2021 12:20:05 -0800 (PST)
+Message-Id: <f2f005afca192b0d9b0fc878ca40f3bbed53a28d.1615580397.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.847.v5.git.git.1615580397.gitgitgadget@gmail.com>
 References: <pull.847.v4.git.git.1607522429.gitgitgadget@gmail.com>
         <pull.847.v5.git.git.1615580397.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 12 Mar 2021 20:19:45 +0000
-Subject: [PATCH v5 04/15] reftable: utility functions
+Date:   Fri, 12 Mar 2021 20:19:50 +0000
+Subject: [PATCH v5 09/15] reftable: write reftable files
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -86,169 +86,35 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-This commit provides basic utility classes for the reftable library.
-
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
-Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Makefile                            |  24 +++++-
- contrib/buildsystems/CMakeLists.txt |  14 ++-
- reftable/basics.c                   | 128 ++++++++++++++++++++++++++++
- reftable/basics.h                   |  60 +++++++++++++
- reftable/basics_test.c              |  98 +++++++++++++++++++++
- reftable/publicbasics.c             |  58 +++++++++++++
- reftable/reftable-malloc.h          |  18 ++++
- reftable/reftable-tests.h           |  22 +++++
- reftable/system.h                   |  32 +++++++
- reftable/test_framework.c           |  23 +++++
- reftable/test_framework.h           |  53 ++++++++++++
- t/helper/test-reftable.c            |   9 ++
- t/helper/test-tool.c                |   3 +-
- t/helper/test-tool.h                |   1 +
- t/t0032-reftable-unittest.sh        |  15 ++++
- 15 files changed, 552 insertions(+), 6 deletions(-)
- create mode 100644 reftable/basics.c
- create mode 100644 reftable/basics.h
- create mode 100644 reftable/basics_test.c
- create mode 100644 reftable/publicbasics.c
- create mode 100644 reftable/reftable-malloc.h
- create mode 100644 reftable/reftable-tests.h
- create mode 100644 reftable/system.h
- create mode 100644 reftable/test_framework.c
- create mode 100644 reftable/test_framework.h
- create mode 100644 t/helper/test-reftable.c
- create mode 100755 t/t0032-reftable-unittest.sh
+ Makefile                   |   1 +
+ reftable/reftable-writer.h | 147 ++++++++
+ reftable/writer.c          | 691 +++++++++++++++++++++++++++++++++++++
+ reftable/writer.h          |  50 +++
+ 4 files changed, 889 insertions(+)
+ create mode 100644 reftable/reftable-writer.h
+ create mode 100644 reftable/writer.c
+ create mode 100644 reftable/writer.h
 
 diff --git a/Makefile b/Makefile
-index dfb0f1000fa3..43ed67fdb9db 100644
+index 57a61b359ea7..d37dd79bfab7 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -728,6 +728,7 @@ TEST_BUILTINS_OBJS += test-read-cache.o
- TEST_BUILTINS_OBJS += test-read-graph.o
- TEST_BUILTINS_OBJS += test-read-midx.o
- TEST_BUILTINS_OBJS += test-ref-store.o
-+TEST_BUILTINS_OBJS += test-reftable.o
- TEST_BUILTINS_OBJS += test-regex.o
- TEST_BUILTINS_OBJS += test-repository.o
- TEST_BUILTINS_OBJS += test-revision-walking.o
-@@ -804,6 +805,8 @@ TEST_SHELL_PATH = $(SHELL_PATH)
+@@ -2389,6 +2389,7 @@ REFTABLE_OBJS += reftable/blocksource.o
+ REFTABLE_OBJS += reftable/publicbasics.o
+ REFTABLE_OBJS += reftable/record.o
+ REFTABLE_OBJS += reftable/tree.o
++REFTABLE_OBJS += reftable/writer.o
+ REFTABLE_OBJS += reftable/zlib-compat.o
  
- LIB_FILE = libgit.a
- XDIFF_LIB = xdiff/lib.a
-+REFTABLE_LIB = reftable/libreftable.a
-+REFTABLE_TEST_LIB = reftable/libreftable_test.a
- 
- GENERATED_H += command-list.h
- GENERATED_H += config-list.h
-@@ -1172,7 +1175,7 @@ THIRD_PARTY_SOURCES += compat/regex/%
- THIRD_PARTY_SOURCES += sha1collisiondetection/%
- THIRD_PARTY_SOURCES += sha1dc/%
- 
--GITLIBS = common-main.o $(LIB_FILE) $(XDIFF_LIB)
-+GITLIBS = common-main.o $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB)
- EXTLIBS =
- 
- GIT_USER_AGENT = git/$(GIT_VERSION)
-@@ -2379,10 +2382,19 @@ XDIFF_OBJS += xdiff/xpatience.o
- XDIFF_OBJS += xdiff/xprepare.o
- XDIFF_OBJS += xdiff/xutils.o
- 
-+REFTABLE_OBJS += reftable/basics.o
-+REFTABLE_OBJS += reftable/error.o
-+REFTABLE_OBJS += reftable/publicbasics.o
-+
-+REFTABLE_TEST_OBJS += reftable/test_framework.o
-+REFTABLE_TEST_OBJS += reftable/basics_test.o
-+
- TEST_OBJS := $(patsubst %$X,%.o,$(TEST_PROGRAMS)) $(patsubst %,t/helper/%,$(TEST_BUILTINS_OBJS))
- OBJECTS := $(LIB_OBJS) $(BUILTIN_OBJS) $(PROGRAM_OBJS) $(TEST_OBJS) \
- 	$(XDIFF_OBJS) \
- 	$(FUZZ_OBJS) \
-+	$(REFTABLE_OBJS) \
-+	$(REFTABLE_TEST_OBJS) \
- 	common-main.o \
- 	git.o
- ifndef NO_CURL
-@@ -2534,6 +2546,12 @@ $(LIB_FILE): $(LIB_OBJS)
- $(XDIFF_LIB): $(XDIFF_OBJS)
- 	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
- 
-+$(REFTABLE_LIB): $(REFTABLE_OBJS)
-+	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
-+
-+$(REFTABLE_TEST_LIB): $(REFTABLE_TEST_OBJS)
-+	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
-+
- export DEFAULT_EDITOR DEFAULT_PAGER
- 
- Documentation/GIT-EXCLUDED-PROGRAMS: FORCE
-@@ -2812,7 +2830,7 @@ perf: all
- 
- t/helper/test-tool$X: $(patsubst %,t/helper/%,$(TEST_BUILTINS_OBJS))
- 
--t/helper/test-%$X: t/helper/test-%.o GIT-LDFLAGS $(GITLIBS)
-+t/helper/test-%$X: t/helper/test-%.o GIT-LDFLAGS $(GITLIBS) $(REFTABLE_TEST_LIB)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(filter %.a,$^) $(LIBS)
- 
- check-sha1:: t/helper/test-tool$X
-@@ -3142,7 +3160,7 @@ cocciclean:
- clean: profile-clean coverage-clean cocciclean
- 	$(RM) *.res
- 	$(RM) $(OBJECTS)
--	$(RM) $(LIB_FILE) $(XDIFF_LIB)
-+	$(RM) $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB) $(REFTABLE_TEST_LIB)
- 	$(RM) $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) git$X
- 	$(RM) $(TEST_PROGRAMS)
- 	$(RM) $(FUZZ_PROGRAMS)
-diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index ac3dbc079af8..986bfc04e0dc 100644
---- a/contrib/buildsystems/CMakeLists.txt
-+++ b/contrib/buildsystems/CMakeLists.txt
-@@ -601,6 +601,12 @@ parse_makefile_for_sources(libxdiff_SOURCES "XDIFF_OBJS")
- list(TRANSFORM libxdiff_SOURCES PREPEND "${CMAKE_SOURCE_DIR}/")
- add_library(xdiff STATIC ${libxdiff_SOURCES})
- 
-+#reftable
-+parse_makefile_for_sources(reftable_SOURCES "REFTABLE_OBJS")
-+
-+list(TRANSFORM reftable_SOURCES PREPEND "${CMAKE_SOURCE_DIR}/")
-+add_library(reftable STATIC ${reftable_SOURCES})
-+
- if(WIN32)
- 	if(NOT MSVC)#use windres when compiling with gcc and clang
- 		add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/git.res
-@@ -623,7 +629,7 @@ endif()
- #link all required libraries to common-main
- add_library(common-main OBJECT ${CMAKE_SOURCE_DIR}/common-main.c)
- 
--target_link_libraries(common-main libgit xdiff ${ZLIB_LIBRARIES})
-+target_link_libraries(common-main libgit xdiff reftable ${ZLIB_LIBRARIES})
- if(Intl_FOUND)
- 	target_link_libraries(common-main ${Intl_LIBRARIES})
- endif()
-@@ -855,11 +861,15 @@ if(BUILD_TESTING)
- add_executable(test-fake-ssh ${CMAKE_SOURCE_DIR}/t/helper/test-fake-ssh.c)
- target_link_libraries(test-fake-ssh common-main)
- 
-+#reftable-tests
-+parse_makefile_for_sources(test-reftable_SOURCES "REFTABLE_TEST_OBJS")
-+list(TRANSFORM test-reftable_SOURCES PREPEND "${CMAKE_SOURCE_DIR}/")
-+
- #test-tool
- parse_makefile_for_sources(test-tool_SOURCES "TEST_BUILTINS_OBJS")
- 
- list(TRANSFORM test-tool_SOURCES PREPEND "${CMAKE_SOURCE_DIR}/t/helper/")
--add_executable(test-tool ${CMAKE_SOURCE_DIR}/t/helper/test-tool.c ${test-tool_SOURCES})
-+add_executable(test-tool ${CMAKE_SOURCE_DIR}/t/helper/test-tool.c ${test-tool_SOURCES} ${test-reftable_SOURCES})
- target_link_libraries(test-tool common-main)
- 
- set_target_properties(test-fake-ssh test-tool
-diff --git a/reftable/basics.c b/reftable/basics.c
+ REFTABLE_TEST_OBJS += reftable/basics_test.o
+diff --git a/reftable/reftable-writer.h b/reftable/reftable-writer.h
 new file mode 100644
-index 000000000000..abd027b98882
+index 000000000000..9d2f8d605558
 --- /dev/null
-+++ b/reftable/basics.c
-@@ -0,0 +1,128 @@
++++ b/reftable/reftable-writer.h
+@@ -0,0 +1,147 @@
 +/*
 +Copyright 2020 Google LLC
 +
@@ -257,456 +123,151 @@ index 000000000000..abd027b98882
 +https://developers.google.com/open-source/licenses/bsd
 +*/
 +
-+#include "basics.h"
++#ifndef REFTABLE_WRITER_H
++#define REFTABLE_WRITER_H
 +
-+void put_be24(uint8_t *out, uint32_t i)
-+{
-+	out[0] = (uint8_t)((i >> 16) & 0xff);
-+	out[1] = (uint8_t)((i >> 8) & 0xff);
-+	out[2] = (uint8_t)(i & 0xff);
-+}
++#include <stdint.h>
 +
-+uint32_t get_be24(uint8_t *in)
-+{
-+	return (uint32_t)(in[0]) << 16 | (uint32_t)(in[1]) << 8 |
-+	       (uint32_t)(in[2]);
-+}
++#include "reftable-record.h"
 +
-+void put_be16(uint8_t *out, uint16_t i)
-+{
-+	out[0] = (uint8_t)((i >> 8) & 0xff);
-+	out[1] = (uint8_t)(i & 0xff);
-+}
++/* Writing single reftables */
 +
-+int binsearch(size_t sz, int (*f)(size_t k, void *args), void *args)
-+{
-+	size_t lo = 0;
-+	size_t hi = sz;
++/* reftable_write_options sets options for writing a single reftable. */
++struct reftable_write_options {
++	/* boolean: do not pad out blocks to block size. */
++	unsigned unpadded : 1;
 +
-+	/* Invariants:
-+	 *
-+	 *  (hi == sz) || f(hi) == true
-+	 *  (lo == 0 && f(0) == true) || fi(lo) == false
++	/* the blocksize. Should be less than 2^24. */
++	uint32_t block_size;
++
++	/* boolean: do not generate a SHA1 => ref index. */
++	unsigned skip_index_objects : 1;
++
++	/* how often to write complete keys in each block. */
++	int restart_interval;
++
++	/* 4-byte identifier ("sha1", "s256") of the hash.
++	 * Defaults to SHA1 if unset
 +	 */
-+	while (hi - lo > 1) {
-+		size_t mid = lo + (hi - lo) / 2;
++	uint32_t hash_id;
 +
-+		if (f(mid, args))
-+			hi = mid;
-+		else
-+			lo = mid;
-+	}
++	/* boolean: do not check ref names for validity or dir/file conflicts.
++	 */
++	unsigned skip_name_check : 1;
 +
-+	if (lo)
-+		return hi;
-+
-+	return f(0, args) ? 0 : 1;
-+}
-+
-+void free_names(char **a)
-+{
-+	char **p;
-+	if (a == NULL) {
-+		return;
-+	}
-+	for (p = a; *p; p++) {
-+		reftable_free(*p);
-+	}
-+	reftable_free(a);
-+}
-+
-+int names_length(char **names)
-+{
-+	char **p = names;
-+	for (; *p; p++) {
-+		/* empty */
-+	}
-+	return p - names;
-+}
-+
-+void parse_names(char *buf, int size, char ***namesp)
-+{
-+	char **names = NULL;
-+	size_t names_cap = 0;
-+	size_t names_len = 0;
-+
-+	char *p = buf;
-+	char *end = buf + size;
-+	while (p < end) {
-+		char *next = strchr(p, '\n');
-+		if (next && next < end) {
-+			*next = 0;
-+		} else {
-+			next = end;
-+		}
-+		if (p < next) {
-+			if (names_len == names_cap) {
-+				names_cap = 2 * names_cap + 1;
-+				names = reftable_realloc(
-+					names, names_cap * sizeof(*names));
-+			}
-+			names[names_len++] = xstrdup(p);
-+		}
-+		p = next + 1;
-+	}
-+
-+	names = reftable_realloc(names, (names_len + 1) * sizeof(*names));
-+	names[names_len] = NULL;
-+	*namesp = names;
-+}
-+
-+int names_equal(char **a, char **b)
-+{
-+	int i = 0;
-+	for (; a[i] && b[i]; i++) {
-+		if (strcmp(a[i], b[i])) {
-+			return 0;
-+		}
-+	}
-+
-+	return a[i] == b[i];
-+}
-+
-+int common_prefix_size(struct strbuf *a, struct strbuf *b)
-+{
-+	int p = 0;
-+	for (; p < a->len && p < b->len; p++) {
-+		if (a->buf[p] != b->buf[p])
-+			break;
-+	}
-+
-+	return p;
-+}
-diff --git a/reftable/basics.h b/reftable/basics.h
-new file mode 100644
-index 000000000000..096b36862b9f
---- /dev/null
-+++ b/reftable/basics.h
-@@ -0,0 +1,60 @@
-+/*
-+Copyright 2020 Google LLC
-+
-+Use of this source code is governed by a BSD-style
-+license that can be found in the LICENSE file or at
-+https://developers.google.com/open-source/licenses/bsd
-+*/
-+
-+#ifndef BASICS_H
-+#define BASICS_H
-+
-+/*
-+ * miscellaneous utilities that are not provided by Git.
-+ */
-+
-+#include "system.h"
-+
-+/* Bigendian en/decoding of integers */
-+
-+void put_be24(uint8_t *out, uint32_t i);
-+uint32_t get_be24(uint8_t *in);
-+void put_be16(uint8_t *out, uint16_t i);
-+
-+/*
-+ * find smallest index i in [0, sz) at which f(i) is true, assuming
-+ * that f is ascending. Return sz if f(i) is false for all indices.
-+ *
-+ * Contrary to bsearch(3), this returns something useful if the argument is not
-+ * found.
-+ */
-+int binsearch(size_t sz, int (*f)(size_t k, void *args), void *args);
-+
-+/*
-+ * Frees a NULL terminated array of malloced strings. The array itself is also
-+ * freed.
-+ */
-+void free_names(char **a);
-+
-+/* parse a newline separated list of names. `size` is the length of the buffer,
-+ * without terminating '\0'. Empty names are discarded. */
-+void parse_names(char *buf, int size, char ***namesp);
-+
-+/* compares two NULL-terminated arrays of strings. */
-+int names_equal(char **a, char **b);
-+
-+/* returns the array size of a NULL-terminated array of strings. */
-+int names_length(char **names);
-+
-+/* Allocation routines; they invoke the functions set through
-+ * reftable_set_alloc() */
-+void *reftable_malloc(size_t sz);
-+void *reftable_realloc(void *p, size_t sz);
-+void reftable_free(void *p);
-+void *reftable_calloc(size_t sz);
-+
-+/* Find the longest shared prefix size of `a` and `b` */
-+struct strbuf;
-+int common_prefix_size(struct strbuf *a, struct strbuf *b);
-+
-+#endif
-diff --git a/reftable/basics_test.c b/reftable/basics_test.c
-new file mode 100644
-index 000000000000..6d52f0f9d5aa
---- /dev/null
-+++ b/reftable/basics_test.c
-@@ -0,0 +1,98 @@
-+/*
-+Copyright 2020 Google LLC
-+
-+Use of this source code is governed by a BSD-style
-+license that can be found in the LICENSE file or at
-+https://developers.google.com/open-source/licenses/bsd
-+*/
-+
-+#include "system.h"
-+
-+#include "basics.h"
-+#include "test_framework.h"
-+#include "reftable-tests.h"
-+
-+struct binsearch_args {
-+	int key;
-+	int *arr;
++	/* boolean: copy log messages exactly. If unset, check that the message
++	 *   is a single line, and add '\n' if missing.
++	 */
++	unsigned exact_log_message : 1;
 +};
 +
-+static int binsearch_func(size_t i, void *void_args)
-+{
-+	struct binsearch_args *args = (struct binsearch_args *)void_args;
++/* reftable_block_stats holds statistics for a single block type */
++struct reftable_block_stats {
++	/* total number of entries written */
++	int entries;
++	/* total number of key restarts */
++	int restarts;
++	/* total number of blocks */
++	int blocks;
++	/* total number of index blocks */
++	int index_blocks;
++	/* depth of the index */
++	int max_index_level;
 +
-+	return args->key < args->arr[i];
-+}
++	/* offset of the first block for this type */
++	uint64_t offset;
++	/* offset of the top level index block for this type, or 0 if not
++	 * present */
++	uint64_t index_offset;
++};
 +
-+static void test_binsearch(void)
-+{
-+	int arr[] = { 2, 4, 6, 8, 10 };
-+	size_t sz = ARRAY_SIZE(arr);
-+	struct binsearch_args args = {
-+		.arr = arr,
-+	};
++/* stats holds overall statistics for a single reftable */
++struct reftable_stats {
++	/* total number of blocks written. */
++	int blocks;
++	/* stats for ref data */
++	struct reftable_block_stats ref_stats;
++	/* stats for the SHA1 to ref map. */
++	struct reftable_block_stats obj_stats;
++	/* stats for index blocks */
++	struct reftable_block_stats idx_stats;
++	/* stats for log blocks */
++	struct reftable_block_stats log_stats;
 +
-+	int i = 0;
-+	for (i = 1; i < 11; i++) {
-+		int res;
-+		args.key = i;
-+		res = binsearch(sz, &binsearch_func, &args);
++	/* disambiguation length of shortened object IDs. */
++	int object_id_len;
++};
 +
-+		if (res < sz) {
-+			EXPECT(args.key < arr[res]);
-+			if (res > 0) {
-+				EXPECT(args.key >= arr[res - 1]);
-+			}
-+		} else {
-+			EXPECT(args.key == 10 || args.key == 11);
-+		}
-+	}
-+}
++/* reftable_new_writer creates a new writer */
++struct reftable_writer *
++reftable_new_writer(int (*writer_func)(void *, const void *, size_t),
++		    void *writer_arg, struct reftable_write_options *opts);
 +
-+static void test_names_length(void)
-+{
-+	char *a[] = { "a", "b", NULL };
-+	EXPECT(names_length(a) == 2);
-+}
++/* Set the range of update indices for the records we will add. When writing a
++   table into a stack, the min should be at least
++   reftable_stack_next_update_index(), or REFTABLE_API_ERROR is returned.
 +
-+static void test_parse_names_normal(void)
-+{
-+	char in[] = "a\nb\n";
-+	char **out = NULL;
-+	parse_names(in, strlen(in), &out);
-+	EXPECT(!strcmp(out[0], "a"));
-+	EXPECT(!strcmp(out[1], "b"));
-+	EXPECT(out[2] == NULL);
-+	free_names(out);
-+}
-+
-+static void test_parse_names_drop_empty(void)
-+{
-+	char in[] = "a\n\n";
-+	char **out = NULL;
-+	parse_names(in, strlen(in), &out);
-+	EXPECT(!strcmp(out[0], "a"));
-+	EXPECT(out[1] == NULL);
-+	free_names(out);
-+}
-+
-+static void test_common_prefix(void)
-+{
-+	struct strbuf s1 = STRBUF_INIT;
-+	struct strbuf s2 = STRBUF_INIT;
-+	strbuf_addstr(&s1, "abcdef");
-+	strbuf_addstr(&s2, "abc");
-+	EXPECT(common_prefix_size(&s1, &s2) == 3);
-+	strbuf_release(&s1);
-+	strbuf_release(&s2);
-+}
-+
-+int basics_test_main(int argc, const char *argv[])
-+{
-+	RUN_TEST(test_common_prefix);
-+	RUN_TEST(test_parse_names_normal);
-+	RUN_TEST(test_parse_names_drop_empty);
-+	RUN_TEST(test_binsearch);
-+	RUN_TEST(test_names_length);
-+	return 0;
-+}
-diff --git a/reftable/publicbasics.c b/reftable/publicbasics.c
-new file mode 100644
-index 000000000000..25639f61af61
---- /dev/null
-+++ b/reftable/publicbasics.c
-@@ -0,0 +1,58 @@
-+/*
-+Copyright 2020 Google LLC
-+
-+Use of this source code is governed by a BSD-style
-+license that can be found in the LICENSE file or at
-+https://developers.google.com/open-source/licenses/bsd
-+*/
-+
-+#include "reftable-malloc.h"
-+
-+#include "basics.h"
-+#include "system.h"
-+
-+static void *(*reftable_malloc_ptr)(size_t sz) = &malloc;
-+static void *(*reftable_realloc_ptr)(void *, size_t) = &realloc;
-+static void (*reftable_free_ptr)(void *) = &free;
-+
-+void *reftable_malloc(size_t sz)
-+{
-+	return (*reftable_malloc_ptr)(sz);
-+}
-+
-+void *reftable_realloc(void *p, size_t sz)
-+{
-+	return (*reftable_realloc_ptr)(p, sz);
-+}
-+
-+void reftable_free(void *p)
-+{
-+	reftable_free_ptr(p);
-+}
-+
-+void *reftable_calloc(size_t sz)
-+{
-+	void *p = reftable_malloc(sz);
-+	memset(p, 0, sz);
-+	return p;
-+}
-+
-+void reftable_set_alloc(void *(*malloc)(size_t),
-+			void *(*realloc)(void *, size_t), void (*free)(void *))
-+{
-+	reftable_malloc_ptr = malloc;
-+	reftable_realloc_ptr = realloc;
-+	reftable_free_ptr = free;
-+}
-+
-+int hash_size(uint32_t id)
-+{
-+	switch (id) {
-+	case 0:
-+	case SHA1_ID:
-+		return SHA1_SIZE;
-+	case SHA256_ID:
-+		return SHA256_SIZE;
-+	}
-+	abort();
-+}
-diff --git a/reftable/reftable-malloc.h b/reftable/reftable-malloc.h
-new file mode 100644
-index 000000000000..5f2185f1f343
---- /dev/null
-+++ b/reftable/reftable-malloc.h
-@@ -0,0 +1,18 @@
-+/*
-+Copyright 2020 Google LLC
-+
-+Use of this source code is governed by a BSD-style
-+license that can be found in the LICENSE file or at
-+https://developers.google.com/open-source/licenses/bsd
-+*/
-+
-+#ifndef REFTABLE_H
-+#define REFTABLE_H
-+
-+#include <stddef.h>
-+
-+/* Overrides the functions to use for memory management. */
-+void reftable_set_alloc(void *(*malloc)(size_t),
-+			void *(*realloc)(void *, size_t), void (*free)(void *));
-+
-+#endif
-diff --git a/reftable/reftable-tests.h b/reftable/reftable-tests.h
-new file mode 100644
-index 000000000000..5e7698ae654e
---- /dev/null
-+++ b/reftable/reftable-tests.h
-@@ -0,0 +1,22 @@
-+/*
-+Copyright 2020 Google LLC
-+
-+Use of this source code is governed by a BSD-style
-+license that can be found in the LICENSE file or at
-+https://developers.google.com/open-source/licenses/bsd
-+*/
-+
-+#ifndef REFTABLE_TESTS_H
-+#define REFTABLE_TESTS_H
-+
-+int basics_test_main(int argc, const char **argv);
-+int block_test_main(int argc, const char **argv);
-+int merged_test_main(int argc, const char **argv);
-+int record_test_main(int argc, const char **argv);
-+int refname_test_main(int argc, const char **argv);
-+int reftable_test_main(int argc, const char **argv);
-+int stack_test_main(int argc, const char **argv);
-+int tree_test_main(int argc, const char **argv);
-+int reftable_dump_main(int argc, char *const *argv);
-+
-+#endif
-diff --git a/reftable/system.h b/reftable/system.h
-new file mode 100644
-index 000000000000..07277ca06273
---- /dev/null
-+++ b/reftable/system.h
-@@ -0,0 +1,32 @@
-+/*
-+Copyright 2020 Google LLC
-+
-+Use of this source code is governed by a BSD-style
-+license that can be found in the LICENSE file or at
-+https://developers.google.com/open-source/licenses/bsd
-+*/
-+
-+#ifndef SYSTEM_H
-+#define SYSTEM_H
-+
-+#include "git-compat-util.h"
-+#include "strbuf.h"
-+
-+#include <zlib.h>
-+
-+struct strbuf;
-+/* In git, this is declared in dir.h */
-+int remove_dir_recursively(struct strbuf *path, int flags);
-+
-+#define SHA1_ID 0x73686131
-+#define SHA256_ID 0x73323536
-+#define SHA1_SIZE 20
-+#define SHA256_SIZE 32
-+
-+/* This is uncompress2, which is only available in zlib as of 2017.
++   For transactional updates to a stack, typically min==max, and the
++   update_index can be obtained by inspeciting the stack. When converting an
++   existing ref database into a single reftable, this would be a range of
++   update-index timestamps.
 + */
-+int uncompress_return_consumed(Bytef *dest, uLongf *destLen,
-+			       const Bytef *source, uLong *sourceLen);
-+int hash_size(uint32_t id);
++void reftable_writer_set_limits(struct reftable_writer *w, uint64_t min,
++				uint64_t max);
++
++/*
++  Add a reftable_ref_record. The record should have names that come after
++  already added records.
++
++  The update_index must be within the limits set by
++  reftable_writer_set_limits(), or REFTABLE_API_ERROR is returned. It is an
++  REFTABLE_API_ERROR error to write a ref record after a log record.
++*/
++int reftable_writer_add_ref(struct reftable_writer *w,
++			    struct reftable_ref_record *ref);
++
++/*
++  Convenience function to add multiple reftable_ref_records; the function sorts
++  the records before adding them, reordering the records array passed in.
++*/
++int reftable_writer_add_refs(struct reftable_writer *w,
++			     struct reftable_ref_record *refs, int n);
++
++/*
++  adds reftable_log_records. Log records are keyed by (refname, decreasing
++  update_index). The key for the record added must come after the already added
++  log records.
++*/
++int reftable_writer_add_log(struct reftable_writer *w,
++			    struct reftable_log_record *log);
++
++/*
++  Convenience function to add multiple reftable_log_records; the function sorts
++  the records before adding them, reordering records array passed in.
++*/
++int reftable_writer_add_logs(struct reftable_writer *w,
++			     struct reftable_log_record *logs, int n);
++
++/* reftable_writer_close finalizes the reftable. The writer is retained so
++ * statistics can be inspected. */
++int reftable_writer_close(struct reftable_writer *w);
++
++/* writer_stats returns the statistics on the reftable being written.
++
++   This struct becomes invalid when the writer is freed.
++ */
++const struct reftable_stats *writer_stats(struct reftable_writer *w);
++
++/* reftable_writer_free deallocates memory for the writer */
++void reftable_writer_free(struct reftable_writer *w);
 +
 +#endif
-diff --git a/reftable/test_framework.c b/reftable/test_framework.c
+diff --git a/reftable/writer.c b/reftable/writer.c
 new file mode 100644
-index 000000000000..a5ff4e2a2d2f
+index 000000000000..d42ca8afac11
 --- /dev/null
-+++ b/reftable/test_framework.c
-@@ -0,0 +1,23 @@
++++ b/reftable/writer.c
+@@ -0,0 +1,691 @@
 +/*
 +Copyright 2020 Google LLC
 +
@@ -715,148 +276,745 @@ index 000000000000..a5ff4e2a2d2f
 +https://developers.google.com/open-source/licenses/bsd
 +*/
 +
-+#include "system.h"
-+#include "test_framework.h"
-+
-+#include "basics.h"
-+
-+void set_test_hash(uint8_t *p, int i)
-+{
-+	memset(p, (uint8_t)i, hash_size(SHA1_ID));
-+}
-+
-+int strbuf_add_void(void *b, const void *data, size_t sz)
-+{
-+	strbuf_add((struct strbuf *)b, data, sz);
-+	return sz;
-+}
-diff --git a/reftable/test_framework.h b/reftable/test_framework.h
-new file mode 100644
-index 000000000000..5fdc9519a5a5
---- /dev/null
-+++ b/reftable/test_framework.h
-@@ -0,0 +1,53 @@
-+/*
-+Copyright 2020 Google LLC
-+
-+Use of this source code is governed by a BSD-style
-+license that can be found in the LICENSE file or at
-+https://developers.google.com/open-source/licenses/bsd
-+*/
-+
-+#ifndef TEST_FRAMEWORK_H
-+#define TEST_FRAMEWORK_H
++#include "writer.h"
 +
 +#include "system.h"
++
++#include "block.h"
++#include "constants.h"
++#include "record.h"
++#include "tree.h"
 +#include "reftable-error.h"
 +
-+#define EXPECT_ERR(c)                                                  \
-+	if (c != 0) {                                                  \
-+		fflush(stderr);                                        \
-+		fflush(stdout);                                        \
-+		fprintf(stderr, "%s: %d: error == %d (%s), want 0\n",  \
-+			__FILE__, __LINE__, c, reftable_error_str(c)); \
-+		abort();                                               \
-+	}
++/* finishes a block, and writes it to storage */
++static int writer_flush_block(struct reftable_writer *w);
 +
-+#define EXPECT_STREQ(a, b)                                               \
-+	if (strcmp(a, b)) {                                              \
-+		fflush(stderr);                                          \
-+		fflush(stdout);                                          \
-+		fprintf(stderr, "%s:%d: %s (%s) != %s (%s)\n", __FILE__, \
-+			__LINE__, #a, a, #b, b);                         \
-+		abort();                                                 \
-+	}
++/* deallocates memory related to the index */
++static void writer_clear_index(struct reftable_writer *w);
 +
-+#define EXPECT(c)                                                          \
-+	if (!(c)) {                                                        \
-+		fflush(stderr);                                            \
-+		fflush(stdout);                                            \
-+		fprintf(stderr, "%s: %d: failed assertion %s\n", __FILE__, \
-+			__LINE__, #c);                                     \
-+		abort();                                                   \
-+	}
++/* finishes writing a 'r' (refs) or 'g' (reflogs) section */
++static int writer_finish_public_section(struct reftable_writer *w);
 +
-+#define RUN_TEST(f)                          \
-+	fprintf(stderr, "running %s\n", #f); \
-+	fflush(stderr);                      \
-+	f();
-+
-+void set_test_hash(uint8_t *p, int i);
-+
-+/* Like strbuf_add, but suitable for passing to reftable_new_writer
-+ */
-+int strbuf_add_void(void *b, const void *data, size_t sz);
-+
-+#endif
-diff --git a/t/helper/test-reftable.c b/t/helper/test-reftable.c
-new file mode 100644
-index 000000000000..3b58e423e7b1
---- /dev/null
-+++ b/t/helper/test-reftable.c
-@@ -0,0 +1,9 @@
-+#include "reftable/reftable-tests.h"
-+#include "test-tool.h"
-+
-+int cmd__reftable(int argc, const char **argv)
++static struct reftable_block_stats *
++writer_reftable_block_stats(struct reftable_writer *w, uint8_t typ)
 +{
-+	basics_test_main(argc, argv);
++	switch (typ) {
++	case 'r':
++		return &w->stats.ref_stats;
++	case 'o':
++		return &w->stats.obj_stats;
++	case 'i':
++		return &w->stats.idx_stats;
++	case 'g':
++		return &w->stats.log_stats;
++	}
++	abort();
++	return NULL;
++}
++
++/* write data, queuing the padding for the next write. Returns negative for
++ * error. */
++static int padded_write(struct reftable_writer *w, uint8_t *data, size_t len,
++			int padding)
++{
++	int n = 0;
++	if (w->pending_padding > 0) {
++		uint8_t *zeroed = reftable_calloc(w->pending_padding);
++		int n = w->write(w->write_arg, zeroed, w->pending_padding);
++		if (n < 0)
++			return n;
++
++		w->pending_padding = 0;
++		reftable_free(zeroed);
++	}
++
++	w->pending_padding = padding;
++	n = w->write(w->write_arg, data, len);
++	if (n < 0)
++		return n;
++	n += padding;
++	return 0;
++}
++
++static void options_set_defaults(struct reftable_write_options *opts)
++{
++	if (opts->restart_interval == 0) {
++		opts->restart_interval = 16;
++	}
++
++	if (opts->hash_id == 0) {
++		opts->hash_id = SHA1_ID;
++	}
++	if (opts->block_size == 0) {
++		opts->block_size = DEFAULT_BLOCK_SIZE;
++	}
++}
++
++static int writer_version(struct reftable_writer *w)
++{
++	return (w->opts.hash_id == 0 || w->opts.hash_id == SHA1_ID) ? 1 : 2;
++}
++
++static int writer_write_header(struct reftable_writer *w, uint8_t *dest)
++{
++	memcpy((char *)dest, "REFT", 4);
++
++	dest[4] = writer_version(w);
++
++	put_be24(dest + 5, w->opts.block_size);
++	put_be64(dest + 8, w->min_update_index);
++	put_be64(dest + 16, w->max_update_index);
++	if (writer_version(w) == 2) {
++		put_be32(dest + 24, w->opts.hash_id);
++	}
++	return header_size(writer_version(w));
++}
++
++static void writer_reinit_block_writer(struct reftable_writer *w, uint8_t typ)
++{
++	int block_start = 0;
++	if (w->next == 0) {
++		block_start = header_size(writer_version(w));
++	}
++
++	strbuf_release(&w->last_key);
++	block_writer_init(&w->block_writer_data, typ, w->block,
++			  w->opts.block_size, block_start,
++			  hash_size(w->opts.hash_id));
++	w->block_writer = &w->block_writer_data;
++	w->block_writer->restart_interval = w->opts.restart_interval;
++}
++
++static struct strbuf reftable_empty_strbuf = STRBUF_INIT;
++
++struct reftable_writer *
++reftable_new_writer(int (*writer_func)(void *, const void *, size_t),
++		    void *writer_arg, struct reftable_write_options *opts)
++{
++	struct reftable_writer *wp =
++		reftable_calloc(sizeof(struct reftable_writer));
++	strbuf_init(&wp->block_writer_data.last_key, 0);
++	options_set_defaults(opts);
++	if (opts->block_size >= (1 << 24)) {
++		/* TODO - error return? */
++		abort();
++	}
++	wp->last_key = reftable_empty_strbuf;
++	wp->block = reftable_calloc(opts->block_size);
++	wp->write = writer_func;
++	wp->write_arg = writer_arg;
++	wp->opts = *opts;
++	writer_reinit_block_writer(wp, BLOCK_TYPE_REF);
++
++	return wp;
++}
++
++void reftable_writer_set_limits(struct reftable_writer *w, uint64_t min,
++				uint64_t max)
++{
++	w->min_update_index = min;
++	w->max_update_index = max;
++}
++
++void reftable_writer_free(struct reftable_writer *w)
++{
++	reftable_free(w->block);
++	reftable_free(w);
++}
++
++struct obj_index_tree_node {
++	struct strbuf hash;
++	uint64_t *offsets;
++	size_t offset_len;
++	size_t offset_cap;
++};
++
++#define OBJ_INDEX_TREE_NODE_INIT    \
++	{                           \
++		.hash = STRBUF_INIT \
++	}
++
++static int obj_index_tree_node_compare(const void *a, const void *b)
++{
++	return strbuf_cmp(&((const struct obj_index_tree_node *)a)->hash,
++			  &((const struct obj_index_tree_node *)b)->hash);
++}
++
++static void writer_index_hash(struct reftable_writer *w, struct strbuf *hash)
++{
++	uint64_t off = w->next;
++
++	struct obj_index_tree_node want = { .hash = *hash };
++
++	struct tree_node *node = tree_search(&want, &w->obj_index_tree,
++					     &obj_index_tree_node_compare, 0);
++	struct obj_index_tree_node *key = NULL;
++	if (node == NULL) {
++		struct obj_index_tree_node empty = OBJ_INDEX_TREE_NODE_INIT;
++		key = reftable_malloc(sizeof(struct obj_index_tree_node));
++		*key = empty;
++
++		strbuf_reset(&key->hash);
++		strbuf_addbuf(&key->hash, hash);
++		tree_search((void *)key, &w->obj_index_tree,
++			    &obj_index_tree_node_compare, 1);
++	} else {
++		key = node->key;
++	}
++
++	if (key->offset_len > 0 && key->offsets[key->offset_len - 1] == off) {
++		return;
++	}
++
++	if (key->offset_len == key->offset_cap) {
++		key->offset_cap = 2 * key->offset_cap + 1;
++		key->offsets = reftable_realloc(
++			key->offsets, sizeof(uint64_t) * key->offset_cap);
++	}
++
++	key->offsets[key->offset_len++] = off;
++}
++
++static int writer_add_record(struct reftable_writer *w,
++			     struct reftable_record *rec)
++{
++	int result = -1;
++	struct strbuf key = STRBUF_INIT;
++	int err = 0;
++	reftable_record_key(rec, &key);
++	if (strbuf_cmp(&w->last_key, &key) >= 0)
++		goto done;
++
++	strbuf_reset(&w->last_key);
++	strbuf_addbuf(&w->last_key, &key);
++	if (w->block_writer == NULL) {
++		writer_reinit_block_writer(w, reftable_record_type(rec));
++	}
++
++	assert(block_writer_type(w->block_writer) == reftable_record_type(rec));
++
++	if (block_writer_add(w->block_writer, rec) == 0) {
++		result = 0;
++		goto done;
++	}
++
++	err = writer_flush_block(w);
++	if (err < 0) {
++		result = err;
++		goto done;
++	}
++
++	writer_reinit_block_writer(w, reftable_record_type(rec));
++	err = block_writer_add(w->block_writer, rec);
++	if (err < 0) {
++		result = err;
++		goto done;
++	}
++
++	result = 0;
++done:
++	strbuf_release(&key);
++	return result;
++}
++
++int reftable_writer_add_ref(struct reftable_writer *w,
++			    struct reftable_ref_record *ref)
++{
++	struct reftable_record rec = { NULL };
++	struct reftable_ref_record copy = *ref;
++	int err = 0;
++
++	if (ref->refname == NULL)
++		return REFTABLE_API_ERROR;
++	if (ref->update_index < w->min_update_index ||
++	    ref->update_index > w->max_update_index)
++		return REFTABLE_API_ERROR;
++
++	reftable_record_from_ref(&rec, &copy);
++	copy.update_index -= w->min_update_index;
++
++	err = writer_add_record(w, &rec);
++	if (err < 0)
++		return err;
++
++	if (!w->opts.skip_index_objects &&
++	    reftable_ref_record_val1(ref) != NULL) {
++		struct strbuf h = STRBUF_INIT;
++		strbuf_add(&h, (char *)reftable_ref_record_val1(ref),
++			   hash_size(w->opts.hash_id));
++		writer_index_hash(w, &h);
++		strbuf_release(&h);
++	}
++
++	if (!w->opts.skip_index_objects &&
++	    reftable_ref_record_val2(ref) != NULL) {
++		struct strbuf h = STRBUF_INIT;
++		strbuf_add(&h, reftable_ref_record_val2(ref),
++			   hash_size(w->opts.hash_id));
++		writer_index_hash(w, &h);
++		strbuf_release(&h);
++	}
++	return 0;
++}
++
++int reftable_writer_add_refs(struct reftable_writer *w,
++			     struct reftable_ref_record *refs, int n)
++{
++	int err = 0;
++	int i = 0;
++	QSORT(refs, n, reftable_ref_record_compare_name);
++	for (i = 0; err == 0 && i < n; i++) {
++		err = reftable_writer_add_ref(w, &refs[i]);
++	}
++	return err;
++}
++
++static int reftable_writer_add_log_verbatim(struct reftable_writer *w,
++					    struct reftable_log_record *log)
++{
++	struct reftable_record rec = { NULL };
++	if (w->block_writer != NULL &&
++	    block_writer_type(w->block_writer) == BLOCK_TYPE_REF) {
++		int err = writer_finish_public_section(w);
++		if (err < 0)
++			return err;
++	}
++
++	w->next -= w->pending_padding;
++	w->pending_padding = 0;
++
++	reftable_record_from_log(&rec, log);
++	return writer_add_record(w, &rec);
++}
++
++int reftable_writer_add_log(struct reftable_writer *w,
++			    struct reftable_log_record *log)
++{
++	char *input_log_message = NULL;
++	struct strbuf cleaned_message = STRBUF_INIT;
++	int err = 0;
++
++	if (log->value_type == REFTABLE_LOG_DELETION)
++		return reftable_writer_add_log_verbatim(w, log);
++
++	if (log->refname == NULL)
++		return REFTABLE_API_ERROR;
++
++	input_log_message = log->update.message;
++	if (!w->opts.exact_log_message && log->update.message != NULL) {
++		strbuf_addstr(&cleaned_message, log->update.message);
++		while (cleaned_message.len &&
++		       cleaned_message.buf[cleaned_message.len - 1] == '\n')
++			strbuf_setlen(&cleaned_message,
++				      cleaned_message.len - 1);
++		if (strchr(cleaned_message.buf, '\n')) {
++			// multiple lines not allowed.
++			err = REFTABLE_API_ERROR;
++			goto done;
++		}
++		strbuf_addstr(&cleaned_message, "\n");
++		log->update.message = cleaned_message.buf;
++	}
++
++	err = reftable_writer_add_log_verbatim(w, log);
++	log->update.message = input_log_message;
++done:
++	strbuf_release(&cleaned_message);
++	return err;
++}
++
++int reftable_writer_add_logs(struct reftable_writer *w,
++			     struct reftable_log_record *logs, int n)
++{
++	int err = 0;
++	int i = 0;
++	QSORT(logs, n, reftable_log_record_compare_key);
++
++	for (i = 0; err == 0 && i < n; i++) {
++		err = reftable_writer_add_log(w, &logs[i]);
++	}
++	return err;
++}
++
++static int writer_finish_section(struct reftable_writer *w)
++{
++	uint8_t typ = block_writer_type(w->block_writer);
++	uint64_t index_start = 0;
++	int max_level = 0;
++	int threshold = w->opts.unpadded ? 1 : 3;
++	int before_blocks = w->stats.idx_stats.blocks;
++	int err = writer_flush_block(w);
++	int i = 0;
++	struct reftable_block_stats *bstats = NULL;
++	if (err < 0)
++		return err;
++
++	while (w->index_len > threshold) {
++		struct reftable_index_record *idx = NULL;
++		int idx_len = 0;
++
++		max_level++;
++		index_start = w->next;
++		writer_reinit_block_writer(w, BLOCK_TYPE_INDEX);
++
++		idx = w->index;
++		idx_len = w->index_len;
++
++		w->index = NULL;
++		w->index_len = 0;
++		w->index_cap = 0;
++		for (i = 0; i < idx_len; i++) {
++			struct reftable_record rec = { NULL };
++			reftable_record_from_index(&rec, idx + i);
++			if (block_writer_add(w->block_writer, &rec) == 0) {
++				continue;
++			}
++
++			err = writer_flush_block(w);
++			if (err < 0)
++				return err;
++
++			writer_reinit_block_writer(w, BLOCK_TYPE_INDEX);
++
++			err = block_writer_add(w->block_writer, &rec);
++			if (err != 0) {
++				/* write into fresh block should always succeed
++				 */
++				abort();
++			}
++		}
++		for (i = 0; i < idx_len; i++) {
++			strbuf_release(&idx[i].last_key);
++		}
++		reftable_free(idx);
++	}
++
++	writer_clear_index(w);
++
++	err = writer_flush_block(w);
++	if (err < 0)
++		return err;
++
++	bstats = writer_reftable_block_stats(w, typ);
++	bstats->index_blocks = w->stats.idx_stats.blocks - before_blocks;
++	bstats->index_offset = index_start;
++	bstats->max_index_level = max_level;
++
++	/* Reinit lastKey, as the next section can start with any key. */
++	w->last_key.len = 0;
 +
 +	return 0;
 +}
-diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index f97cd9f48a69..dfa2bee9e8a2 100644
---- a/t/helper/test-tool.c
-+++ b/t/helper/test-tool.c
-@@ -49,13 +49,14 @@ static struct test_cmd cmds[] = {
- 	{ "pcre2-config", cmd__pcre2_config },
- 	{ "pkt-line", cmd__pkt_line },
- 	{ "prio-queue", cmd__prio_queue },
--	{ "proc-receive", cmd__proc_receive},
-+	{ "proc-receive", cmd__proc_receive },
- 	{ "progress", cmd__progress },
- 	{ "reach", cmd__reach },
- 	{ "read-cache", cmd__read_cache },
- 	{ "read-graph", cmd__read_graph },
- 	{ "read-midx", cmd__read_midx },
- 	{ "ref-store", cmd__ref_store },
-+	{ "reftable", cmd__reftable },
- 	{ "regex", cmd__regex },
- 	{ "repository", cmd__repository },
- 	{ "revision-walking", cmd__revision_walking },
-diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index 28072c0ad5ab..cad482a78915 100644
---- a/t/helper/test-tool.h
-+++ b/t/helper/test-tool.h
-@@ -45,6 +45,7 @@ int cmd__read_cache(int argc, const char **argv);
- int cmd__read_graph(int argc, const char **argv);
- int cmd__read_midx(int argc, const char **argv);
- int cmd__ref_store(int argc, const char **argv);
-+int cmd__reftable(int argc, const char **argv);
- int cmd__regex(int argc, const char **argv);
- int cmd__repository(int argc, const char **argv);
- int cmd__revision_walking(int argc, const char **argv);
-diff --git a/t/t0032-reftable-unittest.sh b/t/t0032-reftable-unittest.sh
-new file mode 100755
-index 000000000000..0ed14971a580
++
++struct common_prefix_arg {
++	struct strbuf *last;
++	int max;
++};
++
++static void update_common(void *void_arg, void *key)
++{
++	struct common_prefix_arg *arg = (struct common_prefix_arg *)void_arg;
++	struct obj_index_tree_node *entry = (struct obj_index_tree_node *)key;
++	if (arg->last != NULL) {
++		int n = common_prefix_size(&entry->hash, arg->last);
++		if (n > arg->max) {
++			arg->max = n;
++		}
++	}
++	arg->last = &entry->hash;
++}
++
++struct write_record_arg {
++	struct reftable_writer *w;
++	int err;
++};
++
++static void write_object_record(void *void_arg, void *key)
++{
++	struct write_record_arg *arg = (struct write_record_arg *)void_arg;
++	struct obj_index_tree_node *entry = (struct obj_index_tree_node *)key;
++	struct reftable_obj_record obj_rec = {
++		.hash_prefix = (uint8_t *)entry->hash.buf,
++		.hash_prefix_len = arg->w->stats.object_id_len,
++		.offsets = entry->offsets,
++		.offset_len = entry->offset_len,
++	};
++	struct reftable_record rec = { NULL };
++	if (arg->err < 0)
++		goto done;
++
++	reftable_record_from_obj(&rec, &obj_rec);
++	arg->err = block_writer_add(arg->w->block_writer, &rec);
++	if (arg->err == 0)
++		goto done;
++
++	arg->err = writer_flush_block(arg->w);
++	if (arg->err < 0)
++		goto done;
++
++	writer_reinit_block_writer(arg->w, BLOCK_TYPE_OBJ);
++	arg->err = block_writer_add(arg->w->block_writer, &rec);
++	if (arg->err == 0)
++		goto done;
++	obj_rec.offset_len = 0;
++	arg->err = block_writer_add(arg->w->block_writer, &rec);
++
++	/* Should be able to write into a fresh block. */
++	assert(arg->err == 0);
++
++done:;
++}
++
++static void object_record_free(void *void_arg, void *key)
++{
++	struct obj_index_tree_node *entry = (struct obj_index_tree_node *)key;
++
++	FREE_AND_NULL(entry->offsets);
++	strbuf_release(&entry->hash);
++	reftable_free(entry);
++}
++
++static int writer_dump_object_index(struct reftable_writer *w)
++{
++	struct write_record_arg closure = { .w = w };
++	struct common_prefix_arg common = { NULL };
++	if (w->obj_index_tree != NULL) {
++		infix_walk(w->obj_index_tree, &update_common, &common);
++	}
++	w->stats.object_id_len = common.max + 1;
++
++	writer_reinit_block_writer(w, BLOCK_TYPE_OBJ);
++
++	if (w->obj_index_tree != NULL) {
++		infix_walk(w->obj_index_tree, &write_object_record, &closure);
++	}
++
++	if (closure.err < 0)
++		return closure.err;
++	return writer_finish_section(w);
++}
++
++static int writer_finish_public_section(struct reftable_writer *w)
++{
++	uint8_t typ = 0;
++	int err = 0;
++
++	if (w->block_writer == NULL)
++		return 0;
++
++	typ = block_writer_type(w->block_writer);
++	err = writer_finish_section(w);
++	if (err < 0)
++		return err;
++	if (typ == BLOCK_TYPE_REF && !w->opts.skip_index_objects &&
++	    w->stats.ref_stats.index_blocks > 0) {
++		err = writer_dump_object_index(w);
++		if (err < 0)
++			return err;
++	}
++
++	if (w->obj_index_tree != NULL) {
++		infix_walk(w->obj_index_tree, &object_record_free, NULL);
++		tree_free(w->obj_index_tree);
++		w->obj_index_tree = NULL;
++	}
++
++	w->block_writer = NULL;
++	return 0;
++}
++
++int reftable_writer_close(struct reftable_writer *w)
++{
++	uint8_t footer[72];
++	uint8_t *p = footer;
++	int err = writer_finish_public_section(w);
++	int empty_table = w->next == 0;
++	if (err != 0)
++		goto done;
++	w->pending_padding = 0;
++	if (empty_table) {
++		/* Empty tables need a header anyway. */
++		uint8_t header[28];
++		int n = writer_write_header(w, header);
++		err = padded_write(w, header, n, 0);
++		if (err < 0)
++			goto done;
++	}
++
++	p += writer_write_header(w, footer);
++	put_be64(p, w->stats.ref_stats.index_offset);
++	p += 8;
++	put_be64(p, (w->stats.obj_stats.offset) << 5 | w->stats.object_id_len);
++	p += 8;
++	put_be64(p, w->stats.obj_stats.index_offset);
++	p += 8;
++
++	put_be64(p, w->stats.log_stats.offset);
++	p += 8;
++	put_be64(p, w->stats.log_stats.index_offset);
++	p += 8;
++
++	put_be32(p, crc32(0, footer, p - footer));
++	p += 4;
++
++	err = padded_write(w, footer, footer_size(writer_version(w)), 0);
++	if (err < 0)
++		goto done;
++
++	if (empty_table) {
++		err = REFTABLE_EMPTY_TABLE_ERROR;
++		goto done;
++	}
++
++done:
++	/* free up memory. */
++	block_writer_release(&w->block_writer_data);
++	writer_clear_index(w);
++	strbuf_release(&w->last_key);
++	return err;
++}
++
++static void writer_clear_index(struct reftable_writer *w)
++{
++	int i = 0;
++	for (i = 0; i < w->index_len; i++) {
++		strbuf_release(&w->index[i].last_key);
++	}
++
++	FREE_AND_NULL(w->index);
++	w->index_len = 0;
++	w->index_cap = 0;
++}
++
++static const int debug = 0;
++
++static int writer_flush_nonempty_block(struct reftable_writer *w)
++{
++	uint8_t typ = block_writer_type(w->block_writer);
++	struct reftable_block_stats *bstats =
++		writer_reftable_block_stats(w, typ);
++	uint64_t block_typ_off = (bstats->blocks == 0) ? w->next : 0;
++	int raw_bytes = block_writer_finish(w->block_writer);
++	int padding = 0;
++	int err = 0;
++	struct reftable_index_record ir = { .last_key = STRBUF_INIT };
++	if (raw_bytes < 0)
++		return raw_bytes;
++
++	if (!w->opts.unpadded && typ != BLOCK_TYPE_LOG) {
++		padding = w->opts.block_size - raw_bytes;
++	}
++
++	if (block_typ_off > 0) {
++		bstats->offset = block_typ_off;
++	}
++
++	bstats->entries += w->block_writer->entries;
++	bstats->restarts += w->block_writer->restart_len;
++	bstats->blocks++;
++	w->stats.blocks++;
++
++	if (debug) {
++		fprintf(stderr, "block %c off %" PRIu64 " sz %d (%d)\n", typ,
++			w->next, raw_bytes,
++			get_be24(w->block + w->block_writer->header_off + 1));
++	}
++
++	if (w->next == 0) {
++		writer_write_header(w, w->block);
++	}
++
++	err = padded_write(w, w->block, raw_bytes, padding);
++	if (err < 0)
++		return err;
++
++	if (w->index_cap == w->index_len) {
++		w->index_cap = 2 * w->index_cap + 1;
++		w->index = reftable_realloc(
++			w->index,
++			sizeof(struct reftable_index_record) * w->index_cap);
++	}
++
++	ir.offset = w->next;
++	strbuf_reset(&ir.last_key);
++	strbuf_addbuf(&ir.last_key, &w->block_writer->last_key);
++	w->index[w->index_len] = ir;
++
++	w->index_len++;
++	w->next += padding + raw_bytes;
++	w->block_writer = NULL;
++	return 0;
++}
++
++static int writer_flush_block(struct reftable_writer *w)
++{
++	if (w->block_writer == NULL)
++		return 0;
++	if (w->block_writer->entries == 0)
++		return 0;
++	return writer_flush_nonempty_block(w);
++}
++
++const struct reftable_stats *writer_stats(struct reftable_writer *w)
++{
++	return &w->stats;
++}
+diff --git a/reftable/writer.h b/reftable/writer.h
+new file mode 100644
+index 000000000000..4921c249d06b
 --- /dev/null
-+++ b/t/t0032-reftable-unittest.sh
-@@ -0,0 +1,15 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2020 Google LLC
-+#
++++ b/reftable/writer.h
+@@ -0,0 +1,50 @@
++/*
++Copyright 2020 Google LLC
 +
-+test_description='reftable unittests'
++Use of this source code is governed by a BSD-style
++license that can be found in the LICENSE file or at
++https://developers.google.com/open-source/licenses/bsd
++*/
 +
-+. ./test-lib.sh
++#ifndef WRITER_H
++#define WRITER_H
 +
-+test_expect_success 'unittests' '
-+	TMPDIR=$(pwd) && export TMPDIR &&
-+	test-tool reftable
-+'
++#include "basics.h"
++#include "block.h"
++#include "tree.h"
++#include "reftable-writer.h"
 +
-+test_done
++struct reftable_writer {
++	int (*write)(void *, const void *, size_t);
++	void *write_arg;
++	int pending_padding;
++	struct strbuf last_key;
++
++	/* offset of next block to write. */
++	uint64_t next;
++	uint64_t min_update_index, max_update_index;
++	struct reftable_write_options opts;
++
++	/* memory buffer for writing */
++	uint8_t *block;
++
++	/* writer for the current section. NULL or points to
++	 * block_writer_data */
++	struct block_writer *block_writer;
++
++	struct block_writer block_writer_data;
++
++	/* pending index records for the current section */
++	struct reftable_index_record *index;
++	size_t index_len;
++	size_t index_cap;
++
++	/*
++	 * tree for use with tsearch; used to populate the 'o' inverse OID
++	 * map */
++	struct tree_node *obj_index_tree;
++
++	struct reftable_stats stats;
++};
++
++#endif
 -- 
 gitgitgadget
 
