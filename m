@@ -8,57 +8,57 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 13AB6C433DB
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 44875C433E6
 	for <git@archiver.kernel.org>; Fri, 12 Mar 2021 01:34:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BE95D64F92
+	by mail.kernel.org (Postfix) with ESMTP id E88B164F95
 	for <git@archiver.kernel.org>; Fri, 12 Mar 2021 01:34:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229636AbhCLBdZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Mar 2021 20:33:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33232 "EHLO
+        id S229578AbhCLBdY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Mar 2021 20:33:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229569AbhCLBdB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Mar 2021 20:33:01 -0500
-Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FC6CC061574
-        for <git@vger.kernel.org>; Thu, 11 Mar 2021 17:33:01 -0800 (PST)
-Received: by mail-yb1-xb2e.google.com with SMTP id n195so23708958ybg.9
-        for <git@vger.kernel.org>; Thu, 11 Mar 2021 17:33:01 -0800 (PST)
+        with ESMTP id S229568AbhCLBcv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Mar 2021 20:32:51 -0500
+Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A71F3C061574
+        for <git@vger.kernel.org>; Thu, 11 Mar 2021 17:32:51 -0800 (PST)
+Received: by mail-yb1-xb2b.google.com with SMTP id f145so7323748ybg.11
+        for <git@vger.kernel.org>; Thu, 11 Mar 2021 17:32:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=zcJF0rfsstmWW3S0qTZ6mW/lyuanwK2btk7w5SFEdH0=;
-        b=PpJGV9NeA1By0Jw1nRW2xScQx0GLOov68tAAByAy1SzwFLjCO0+a0hZ/BIfvoqjgC+
-         U3Y9LlFDb/0UEAMKHWXK3ka4kzDOfj3uwNwZ8bJ+RfSELJl43FVTKzSbpBPMxqOne1rP
-         BAw2tyq6hwbmDWM7wrkFcKvn+gVZ/oct1hOSxT13QDbi07vou2/3u4g8Z/bux3IGj7bE
-         DXEtx7K632j1Zb4fmWeM8GhAhEdaFpT9QHw4Enb5GQ5FnRfIEeptvT3Q8S9Y8qt1lHxc
-         Zgoo6POiL30hybA7393n1P8wiIjO2JWELqi52TjpXFFAZCtz1YT8r9q8TD+fTm25Llec
-         y/Kg==
+        bh=B0l530xLy1m5i+Dwc0grgvUVZAxKT0EDo0FhirTtbPw=;
+        b=Xx+IixreUOtrg64/0ERY8GAz/PRFRtWGPyKRXaLdXaYCvV7NUWgpdHuxCvTmUcqA1F
+         9RpagK/xkyrfaU+QxmqCM6a0ROqhS+Ol17FWyjrbNRvuwQNcnYiOlUVN1Tok7jGgHJHG
+         L/9x8wajwi6rNFpBRAA5BmeJxJ4PoST8+m2lsKSyTc/t5DeWx0nt2KlgxS3ITWa3LATV
+         gCpCjzotQp7WRRQsKglRoj9UvztQtg0tT58d6HTQuaVwyt++TL01nfdAzQkVVGnIpexn
+         f/qfDSjFarxL36lpI6SsZUBytT5a2PLhdiPT/l5Kgl6lsAFUFCguTBvz2bZce7cUutLQ
+         53Mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=zcJF0rfsstmWW3S0qTZ6mW/lyuanwK2btk7w5SFEdH0=;
-        b=MeitHUEIDAbeL2oE4/Db+b3hG2S1oiROMQHhEbZ68LapXVNZjQFBjfH6s50IPt8P5R
-         VTPBM4lH3PuT8ePbllKvekbhXpYgVJD/ypNKBU5bOjszuY0QYa5O6ZEdgs9ruvHsx5cu
-         fuHmyWElY6x45ztNVSbK6d1EU82UkaIW33awvT0uBLEUL7VNmees0SMcC154pxbnHZGe
-         BLqI382opZRohGZNvisoM3eyE6SErHF/1wQdat2Iblg+gx2KFdPkjc3qzZl+J2PC4Ggj
-         jmd7Im991ljtHrH106bxJdKIIDf0ynU95Gl4ggjKkTYgVJtVTztTFXEGMP+csu0FyROX
-         FnYQ==
-X-Gm-Message-State: AOAM5309j93qIcQZCEx7uMZP24obWGTYRAVVfelgb2pqPUKcDI7CAfpA
-        Kx5+/4/X0CZ5AuOATO7BMXrLMFjMdo3d8VtJ9AOF4Phh
-X-Google-Smtp-Source: ABdhPJyQ+ICjWCYRqdOtKIZo1KvDHGWdOyx20/jeHNygwals6ocjxQAWp0cfQD/Jo0qMHFbtiNx3kGeGZ13oGTh9Cd0=
-X-Received: by 2002:a25:ddc3:: with SMTP id u186mr14990545ybg.238.1615512780971;
- Thu, 11 Mar 2021 17:33:00 -0800 (PST)
+        bh=B0l530xLy1m5i+Dwc0grgvUVZAxKT0EDo0FhirTtbPw=;
+        b=NIGV+4YmUUL1si4PY2CQVRsG3xPinnMODCSlxUIR0w40AY0F/gjB4IU6xnwNTjg4tz
+         xg5VmIt8IQdPi3eIl5tgYSq6U1ckng8ExowHptBzvq/yZWzFRijDgrnARO90k/2rVIhK
+         GgyFQsPJqat2lXbs9fM9EBAiHPAoTwIAUjsHuLdxzCBWR27XdlRnRrEJEbZfEoewrnmK
+         x+KZclJpJMqWG4PxqJCmPkQy6GJjvF/OvzvjZqlgs7jL1xvKuPIRo2oTWaEJEGt4luL9
+         RZSdMC9KFxLZ76Up5GH08k3p18Qf4grzKmK3ewyGzO6gdqtHQ74zvlEvSfh04sAaQVhA
+         2LFg==
+X-Gm-Message-State: AOAM533Yt1r/zQs/upWVGG+1zx9TZYBvYYcgqQhrKhy4GV2+saJLrso3
+        AcoTJVCtZVzypq49ClA74nuFYRf1jkysXUM8UJJqQNt3
+X-Google-Smtp-Source: ABdhPJw9M0+qqEfFJlIi0ZoxRClma9fZI5Eb/Xg5YDRKzdUWpiHBa3F9WPrIwvdeell+gldeXEe8HG5X+BcdzGnHz6g=
+X-Received: by 2002:a25:874c:: with SMTP id e12mr14747690ybn.403.1615512770907;
+ Thu, 11 Mar 2021 17:32:50 -0800 (PST)
 MIME-Version: 1.0
-References: <20210311125511.51152-1-bagasdotme@gmail.com> <20210311125511.51152-3-bagasdotme@gmail.com>
-In-Reply-To: <20210311125511.51152-3-bagasdotme@gmail.com>
+References: <20210311125511.51152-1-bagasdotme@gmail.com> <20210311125511.51152-2-bagasdotme@gmail.com>
+In-Reply-To: <20210311125511.51152-2-bagasdotme@gmail.com>
 From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Fri, 12 Mar 2021 09:32:49 +0800
-Message-ID: <CANYiYbE-Pr7LSOB-qjLn0jus-ERzUXR7E3LTWb8_35THaqA1FQ@mail.gmail.com>
-Subject: Re: [PATCH 2/3] po/README: document "core translation"
+Date:   Fri, 12 Mar 2021 09:32:39 +0800
+Message-ID: <CANYiYbH_U=3gN+LH7e-LBdRdcE0geAuUzoBX4O09qego0xKX-Q@mail.gmail.com>
+Subject: Re: [PATCH 1/3] po/README: document PO helper
 To:     Bagas Sanjaya <bagasdotme@gmail.com>
 Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
@@ -70,68 +70,52 @@ X-Mailing-List: git@vger.kernel.org
 Bagas Sanjaya <bagasdotme@gmail.com> =E4=BA=8E2021=E5=B9=B43=E6=9C=8811=E6=
 =97=A5=E5=91=A8=E5=9B=9B =E4=B8=8B=E5=8D=888:56=E5=86=99=E9=81=93=EF=BC=9A
 >
-> We now expect new language translations to have core subset of 5000+
-> messages translated for these to be merged. If it hasn't been done yet,
-> do so by first generate core PO, then do translation work there, merge
-> it back to main PO (XX.po), and fix any "fuzzy" errors.
+> Document about PO helper script (po-helper.sh). It covers about
+> installing the script and short usage examples.
 >
 > Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
 > ---
->  po/README | 36 ++++++++++++++++++++++++++++++++++++
->  1 file changed, 36 insertions(+)
+>  po/README | 22 ++++++++++++++++++++++
+>  1 file changed, 22 insertions(+)
 >
 > diff --git a/po/README b/po/README
-> index 9beffc2954..eda7edf4e6 100644
+> index efd5baaf1d..9beffc2954 100644
 > --- a/po/README
 > +++ b/po/README
-> @@ -39,6 +39,42 @@ coordinate among yourselves and nominate the team lead=
-er for your
->  language, so that the l10n coordinator only needs to interact with one
->  person per language.
+> @@ -286,3 +286,25 @@ Testing marked strings
 >
-> +Because there are now over 5000 messages that needs to be translated,
-> +we expect to complete translation for core subset of messages before
-> +a new language translation can be merged. See "Core translation"
-> +below.
+>  Git's tests are run under LANG=3DC LC_ALL=3DC. So the tests do not need =
+be
+>  changed to account for translations as they're added.
 > +
 > +
-> +Core translation
-> +----------------
-> +The core translation file, core-XX.po, covers some of commonly used
-> +commands:
+> +PO Helper
+> +---------
 > +
-> +  - wt-status.c
-> +  - builtin/clone.c
-> +  - builtin/checkout.c
-> +  - builtin/index-pack.c
-> +  - builtin/push.c
-> +  - builtin/reset.c
-> +
-> +To generate core-XX.po, install the helper script (see "PO Helper")
-> +and check the main PO file:
-> +
-> +    cd po/
-> +    po-helper.sh check id.po
+> +To make maintaining XX.po file easier, the l10n coordinator created
+> +po-helper.sh script. It is wrapper to gettext suite, specifically
 
-s/id.po/XX.po/
+It's better to rename the script to other name without the suffix
+".sh", so we can reimplement it in other programming language. Maybe
+we can rename it to `git-po-helper`, and host this helper in a
+separate project on GitHub.
 
 
+> +written for the purpose of Git l10n workflow.
 > +
-> +This will generate po/core-XX.po and corresponding po/core-XX.pot
-> +template. Now complete the translation in po/core-XX.po.
+> +To install the script, checkout "po-helper" branch, then copy
+> +utils/po-helper.sh to somewhere on $PATH, and mark it executable.
 > +
-> +When it is completed, merge core translation back to main PO file:
+> +Below are the usage examples:
 > +
-> +    msgcat core-XX.po XX.po -s -o /tmp/XX.po
-> +    mv /tmp/XX.po XX.po
-> +    msgmerge --add-location --backup=3Doff -U XX.po git.pot
+> +  - To start new language translation:
+> +        po-helper.sh init XX.po
+> +  - To update PO file:
+> +        po-helper.sh update XX.po
+> +  - To syntax check:
+> +        po-helper.sh check XX.po
 > +
-> +Fix any "fuzzy" errors that occurs, such as misplaced translated
-> +messages and duplicate messages.
-> +
->
->  Translation Process Flow
->  ------------------------
+> +Run po-helper.sh without arguments for usage help.
 > --
 > 2.25.1
 >
