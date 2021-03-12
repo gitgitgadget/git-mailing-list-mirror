@@ -8,62 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7070BC433E9
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C71FFC4332E
 	for <git@archiver.kernel.org>; Fri, 12 Mar 2021 20:20:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2724164F88
+	by mail.kernel.org (Postfix) with ESMTP id A605C64F8F
 	for <git@archiver.kernel.org>; Fri, 12 Mar 2021 20:20:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234717AbhCLUUU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Mar 2021 15:20:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50406 "EHLO
+        id S234729AbhCLUUW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Mar 2021 15:20:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234695AbhCLUUD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Mar 2021 15:20:03 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94417C061761
-        for <git@vger.kernel.org>; Fri, 12 Mar 2021 12:20:03 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id o16so2458342wrn.0
-        for <git@vger.kernel.org>; Fri, 12 Mar 2021 12:20:03 -0800 (PST)
+        with ESMTP id S234705AbhCLUUG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Mar 2021 15:20:06 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9C90C061574
+        for <git@vger.kernel.org>; Fri, 12 Mar 2021 12:20:05 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id f12so5475715wrx.8
+        for <git@vger.kernel.org>; Fri, 12 Mar 2021 12:20:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=oFJAhpbfmYWOen5lEM87XKwq8Ng0gAhI56lcF34HAIM=;
-        b=Ol/zGsin2rMbbHj+zaf8gjf2BFBpiuGTgSC89o/7N6IGtpFL7yu18PtzYtv6C1EIGT
-         Ec4pi0kwxbycqiZcdP7klf0e0X7hGfO9pMML83FnZIG80qO7ozR16L+qrZj5VEliuHrf
-         OxMZObYx75BYLdT33K2T5OLvtnwfhL7yoEuLiKnDWs4hSCdBf3L5DKnlt1QnBDAL+sS9
-         kxfRC6MbY6nOFM6tGMAlikUpttbaTM7WXMumaKL52doaT0nsDBpkO0AO2J3LQJjmJZY4
-         ljqkFX9elPvnRTyqDyIluivZwAfAgOEpPLFg6zhKPt19D9/gkitmn+AQlrN5R7eJegsJ
-         e+DA==
+        bh=9yoL2SAd7gmN5jg4sPzuy+VZHbeVTU2C9bmPwq7+SRU=;
+        b=vYmUHalNqzUPY7WU3PLWQiVxoCqyp2aW38MlbB2/YDKknVfmMsm9kGhpD6wBcYoshC
+         /o2ds4Lo25ytVrIdA9wNSKYY8GWKYjxaKBIg3lBMnHvFm5Uz1wYGsiddFxkR5EqpLAHE
+         7zy+wPl2fGJwmhKrQB2ySQFn7jJqs1YsKdc8YWQoYEXHwKZsWVlAVNF7OrjnrMlpLJ33
+         jpbmOks0zONZ05FacQqn7IGzrG2wZtoQ2xqm8EWr2vqKNkEvwNDBCwQcw6NKT2MDVx1/
+         lddl09EAcSjGHR8nlLNUtF2iJTkTYNU7Q0VITxQn5gKxs4Y8m/2Nk/XNQ02FG8J3mfwV
+         lEdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=oFJAhpbfmYWOen5lEM87XKwq8Ng0gAhI56lcF34HAIM=;
-        b=b/DuYLjpnIpMyz4O10TmdF+RNCKQVtycVoV+cQ4+sprSRFyDlDFbu27LlfKIER6U7a
-         wAVjH/D4KDNjsWMz63gIj08EX5cN8ThqfA0uo5nTLjP8xMamGllljiB5ut3JPv/wvirR
-         iAWbu2o/J/UGBANiaCPdfsKZQ/VJ8RZfURjtMTm/ITuJ7kBcL0u0sYj4HUiMSAtSCxLG
-         SKpl68iE/ZeRJNFCgW0UH33tCK3DZge9gKT1lkMcBO1yt9Il9tbQeLKNQ26rmr/A4qUq
-         OePHtsmXNc6HwuOdbi4bArURi9YNJ8mT/ox+SPpK/0FR5/YMmskxQyeLNln6MYO2oNpM
-         gQZA==
-X-Gm-Message-State: AOAM533sxztr8QRTRyxfRpiEn6i58L8DD0fAgTt/9Y2yYM4PjJOGlw/s
-        mcN/UA+Ant5Pz+ktipVUKZcYVlxiGhY=
-X-Google-Smtp-Source: ABdhPJzrgaRufrsGa3IRTE/7iA1hWRS/AbWm/JpcnuT6MmWBLmYHlwdFXT6oEhcuERKL/MUa6+o56w==
-X-Received: by 2002:adf:e482:: with SMTP id i2mr15699575wrm.392.1615580402251;
-        Fri, 12 Mar 2021 12:20:02 -0800 (PST)
+        bh=9yoL2SAd7gmN5jg4sPzuy+VZHbeVTU2C9bmPwq7+SRU=;
+        b=SW8DMHGeSTXqB0U9rwcymhtkk4JjxQYvFZ+KMdmrtYrlvJcZulrslmvLa3Je8SzkeT
+         nqtlyqUDG0T1ydZI+HeupFUfwRsTNMF6RzMe0Dp2k9vkXIX2RjkDhaI2XhBp4jjh5+A2
+         5Xtp/EfWf0eQ0xMeA8gLxxagRFY9UtvHNgcW4vGKo2r0mbVDg3hpIbqG2dcqZJOqcXXW
+         Ej1Mp1RuBtqVpgCbz/TpZxfkjqhlw39PI4jaZk/Aa9osHU3bFEzUPKbfeW4GZtgogsoP
+         IcRNgACvDaLKIl02vVODdhKP6jhTrB9T7RBP8pKLKauaW98Xj/dnbw7ZFuZ0xtle1Ji9
+         SXsA==
+X-Gm-Message-State: AOAM530iZXcpwBV4vJv1NRcm8HqXm+0TDurq2jRZfIny74zbaO52T7t1
+        2pMvKJK7ef1x2XJYV/8qb+a/gPyvWWE=
+X-Google-Smtp-Source: ABdhPJwgzzc6bW0MCS7u6P9P3C1/ZbHq+Dkx6SFPOjfHb8VzkUHdXSibq2aFV0dVDnXVGi55c0dtTQ==
+X-Received: by 2002:adf:b609:: with SMTP id f9mr15093926wre.223.1615580404551;
+        Fri, 12 Mar 2021 12:20:04 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j136sm3543633wmj.35.2021.03.12.12.20.01
+        by smtp.gmail.com with ESMTPSA id b15sm3934863wmd.41.2021.03.12.12.20.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Mar 2021 12:20:01 -0800 (PST)
-Message-Id: <e41fa780882d229995fb69dcc807420a5468ffdb.1615580397.git.gitgitgadget@gmail.com>
+        Fri, 12 Mar 2021 12:20:04 -0800 (PST)
+Message-Id: <b6eed7283aac77d65d9127408b0571ab13e46650.1615580397.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.847.v5.git.git.1615580397.gitgitgadget@gmail.com>
 References: <pull.847.v4.git.git.1607522429.gitgitgadget@gmail.com>
         <pull.847.v5.git.git.1615580397.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 12 Mar 2021 20:19:46 +0000
-Subject: [PATCH v5 05/15] reftable: add blocksource, an abstraction for random
- access reads
+Date:   Fri, 12 Mar 2021 20:19:49 +0000
+Subject: [PATCH v5 08/15] reftable: a generic binary tree implementation
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -87,44 +86,52 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-The reftable format is usually used with files for storage. However, we abstract
-away this using the blocksource data structure. This has two advantages:
+The reftable format includes support for an (OID => ref) map. This map can speed
+up visibility and reachability checks. In particular, various operations along
+the fetch/push path within Gerrit have ben sped up by using this structure.
 
-* log blocks are zlib compressed, and handling them is simplified if we can
-  discard byte segments from within the block layer.
-
-* for unittests, it is useful to read and write in-memory. The blocksource
-  allows us to abstract the data away from on-disk files.
+The map is constructed with help of a binary tree. Object IDs are hashes, so
+they are uniformly distributed. Hence, the tree does not attempt forced
+rebalancing.
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- Makefile                        |   1 +
- reftable/blocksource.c          | 148 ++++++++++++++++++++++++++++++++
- reftable/blocksource.h          |  22 +++++
- reftable/reftable-blocksource.h |  49 +++++++++++
- 4 files changed, 220 insertions(+)
- create mode 100644 reftable/blocksource.c
- create mode 100644 reftable/blocksource.h
- create mode 100644 reftable/reftable-blocksource.h
+ Makefile                 |  4 ++-
+ reftable/tree.c          | 63 ++++++++++++++++++++++++++++++++++++++++
+ reftable/tree.h          | 34 ++++++++++++++++++++++
+ reftable/tree_test.c     | 61 ++++++++++++++++++++++++++++++++++++++
+ t/helper/test-reftable.c |  1 +
+ 5 files changed, 162 insertions(+), 1 deletion(-)
+ create mode 100644 reftable/tree.c
+ create mode 100644 reftable/tree.h
+ create mode 100644 reftable/tree_test.c
 
 diff --git a/Makefile b/Makefile
-index 43ed67fdb9db..82db2ad5e2fd 100644
+index 3499996aa49e..57a61b359ea7 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -2384,6 +2384,7 @@ XDIFF_OBJS += xdiff/xutils.o
- 
- REFTABLE_OBJS += reftable/basics.o
- REFTABLE_OBJS += reftable/error.o
-+REFTABLE_OBJS += reftable/blocksource.o
+@@ -2388,12 +2388,14 @@ REFTABLE_OBJS += reftable/block.o
+ REFTABLE_OBJS += reftable/blocksource.o
  REFTABLE_OBJS += reftable/publicbasics.o
+ REFTABLE_OBJS += reftable/record.o
++REFTABLE_OBJS += reftable/tree.o
+ REFTABLE_OBJS += reftable/zlib-compat.o
  
++REFTABLE_TEST_OBJS += reftable/basics_test.o
+ REFTABLE_TEST_OBJS += reftable/block_test.o
+ REFTABLE_TEST_OBJS += reftable/record_test.o
  REFTABLE_TEST_OBJS += reftable/test_framework.o
-diff --git a/reftable/blocksource.c b/reftable/blocksource.c
+-REFTABLE_TEST_OBJS += reftable/basics_test.o
++REFTABLE_TEST_OBJS += reftable/tree_test.o
+ 
+ TEST_OBJS := $(patsubst %$X,%.o,$(TEST_PROGRAMS)) $(patsubst %,t/helper/%,$(TEST_BUILTINS_OBJS))
+ OBJECTS := $(LIB_OBJS) $(BUILTIN_OBJS) $(PROGRAM_OBJS) $(TEST_OBJS) \
+diff --git a/reftable/tree.c b/reftable/tree.c
 new file mode 100644
-index 000000000000..25d4d95b52b8
+index 000000000000..0061d14e306c
 --- /dev/null
-+++ b/reftable/blocksource.c
-@@ -0,0 +1,148 @@
++++ b/reftable/tree.c
+@@ -0,0 +1,63 @@
 +/*
 +Copyright 2020 Google LLC
 +
@@ -133,180 +140,67 @@ index 000000000000..25d4d95b52b8
 +https://developers.google.com/open-source/licenses/bsd
 +*/
 +
-+#include "system.h"
++#include "tree.h"
 +
 +#include "basics.h"
-+#include "blocksource.h"
-+#include "reftable-blocksource.h"
-+#include "reftable-error.h"
-+
-+static void strbuf_return_block(void *b, struct reftable_block *dest)
-+{
-+	memset(dest->data, 0xff, dest->len);
-+	reftable_free(dest->data);
-+}
-+
-+static void strbuf_close(void *b)
-+{
-+}
-+
-+static int strbuf_read_block(void *v, struct reftable_block *dest, uint64_t off,
-+			     uint32_t size)
-+{
-+	struct strbuf *b = (struct strbuf *)v;
-+	assert(off + size <= b->len);
-+	dest->data = reftable_calloc(size);
-+	memcpy(dest->data, b->buf + off, size);
-+	dest->len = size;
-+	return size;
-+}
-+
-+static uint64_t strbuf_size(void *b)
-+{
-+	return ((struct strbuf *)b)->len;
-+}
-+
-+static struct reftable_block_source_vtable strbuf_vtable = {
-+	.size = &strbuf_size,
-+	.read_block = &strbuf_read_block,
-+	.return_block = &strbuf_return_block,
-+	.close = &strbuf_close,
-+};
-+
-+void block_source_from_strbuf(struct reftable_block_source *bs,
-+			      struct strbuf *buf)
-+{
-+	assert(bs->ops == NULL);
-+	bs->ops = &strbuf_vtable;
-+	bs->arg = buf;
-+}
-+
-+static void malloc_return_block(void *b, struct reftable_block *dest)
-+{
-+	memset(dest->data, 0xff, dest->len);
-+	reftable_free(dest->data);
-+}
-+
-+static struct reftable_block_source_vtable malloc_vtable = {
-+	.return_block = &malloc_return_block,
-+};
-+
-+static struct reftable_block_source malloc_block_source_instance = {
-+	.ops = &malloc_vtable,
-+};
-+
-+struct reftable_block_source malloc_block_source(void)
-+{
-+	return malloc_block_source_instance;
-+}
-+
-+struct file_block_source {
-+	int fd;
-+	uint64_t size;
-+};
-+
-+static uint64_t file_size(void *b)
-+{
-+	return ((struct file_block_source *)b)->size;
-+}
-+
-+static void file_return_block(void *b, struct reftable_block *dest)
-+{
-+	memset(dest->data, 0xff, dest->len);
-+	reftable_free(dest->data);
-+}
-+
-+static void file_close(void *b)
-+{
-+	int fd = ((struct file_block_source *)b)->fd;
-+	if (fd > 0) {
-+		close(fd);
-+		((struct file_block_source *)b)->fd = 0;
-+	}
-+
-+	reftable_free(b);
-+}
-+
-+static int file_read_block(void *v, struct reftable_block *dest, uint64_t off,
-+			   uint32_t size)
-+{
-+	struct file_block_source *b = (struct file_block_source *)v;
-+	assert(off + size <= b->size);
-+	dest->data = reftable_malloc(size);
-+	if (pread(b->fd, dest->data, size, off) != size)
-+		return -1;
-+	dest->len = size;
-+	return size;
-+}
-+
-+static struct reftable_block_source_vtable file_vtable = {
-+	.size = &file_size,
-+	.read_block = &file_read_block,
-+	.return_block = &file_return_block,
-+	.close = &file_close,
-+};
-+
-+int reftable_block_source_from_file(struct reftable_block_source *bs,
-+				    const char *name)
-+{
-+	struct stat st = { 0 };
-+	int err = 0;
-+	int fd = open(name, O_RDONLY);
-+	struct file_block_source *p = NULL;
-+	if (fd < 0) {
-+		if (errno == ENOENT) {
-+			return REFTABLE_NOT_EXIST_ERROR;
-+		}
-+		return -1;
-+	}
-+
-+	err = fstat(fd, &st);
-+	if (err < 0)
-+		return -1;
-+
-+	p = reftable_calloc(sizeof(struct file_block_source));
-+	p->size = st.st_size;
-+	p->fd = fd;
-+
-+	assert(bs->ops == NULL);
-+	bs->ops = &file_vtable;
-+	bs->arg = p;
-+	return 0;
-+}
-diff --git a/reftable/blocksource.h b/reftable/blocksource.h
-new file mode 100644
-index 000000000000..072e2727ad20
---- /dev/null
-+++ b/reftable/blocksource.h
-@@ -0,0 +1,22 @@
-+/*
-+Copyright 2020 Google LLC
-+
-+Use of this source code is governed by a BSD-style
-+license that can be found in the LICENSE file or at
-+https://developers.google.com/open-source/licenses/bsd
-+*/
-+
-+#ifndef BLOCKSOURCE_H
-+#define BLOCKSOURCE_H
-+
 +#include "system.h"
 +
-+struct reftable_block_source;
++struct tree_node *tree_search(void *key, struct tree_node **rootp,
++			      int (*compare)(const void *, const void *),
++			      int insert)
++{
++	int res;
++	if (*rootp == NULL) {
++		if (!insert) {
++			return NULL;
++		} else {
++			struct tree_node *n =
++				reftable_calloc(sizeof(struct tree_node));
++			n->key = key;
++			*rootp = n;
++			return *rootp;
++		}
++	}
 +
-+/* Create an in-memory block source for reading reftables */
-+void block_source_from_strbuf(struct reftable_block_source *bs,
-+			      struct strbuf *buf);
++	res = compare(key, (*rootp)->key);
++	if (res < 0)
++		return tree_search(key, &(*rootp)->left, compare, insert);
++	else if (res > 0)
++		return tree_search(key, &(*rootp)->right, compare, insert);
++	return *rootp;
++}
 +
-+struct reftable_block_source malloc_block_source(void);
++void infix_walk(struct tree_node *t, void (*action)(void *arg, void *key),
++		void *arg)
++{
++	if (t->left != NULL) {
++		infix_walk(t->left, action, arg);
++	}
++	action(arg, t->key);
++	if (t->right != NULL) {
++		infix_walk(t->right, action, arg);
++	}
++}
 +
-+#endif
-diff --git a/reftable/reftable-blocksource.h b/reftable/reftable-blocksource.h
++void tree_free(struct tree_node *t)
++{
++	if (t == NULL) {
++		return;
++	}
++	if (t->left != NULL) {
++		tree_free(t->left);
++	}
++	if (t->right != NULL) {
++		tree_free(t->right);
++	}
++	reftable_free(t);
++}
+diff --git a/reftable/tree.h b/reftable/tree.h
 new file mode 100644
-index 000000000000..5aa3990a5732
+index 000000000000..fbdd002e23af
 --- /dev/null
-+++ b/reftable/reftable-blocksource.h
-@@ -0,0 +1,49 @@
++++ b/reftable/tree.h
+@@ -0,0 +1,34 @@
 +/*
 +Copyright 2020 Google LLC
 +
@@ -315,47 +209,110 @@ index 000000000000..5aa3990a5732
 +https://developers.google.com/open-source/licenses/bsd
 +*/
 +
-+#ifndef REFTABLE_BLOCKSOURCE_H
-+#define REFTABLE_BLOCKSOURCE_H
++#ifndef TREE_H
++#define TREE_H
 +
-+#include <stdint.h>
++/* tree_node is a generic binary search tree. */
++struct tree_node {
++	void *key;
++	struct tree_node *left, *right;
++};
 +
-+/* block_source is a generic wrapper for a seekable readable file.
++/* looks for `key` in `rootp` using `compare` as comparison function. If insert
++ * is set, insert the key if it's not found. Else, return NULL.
 + */
-+struct reftable_block_source {
-+	struct reftable_block_source_vtable *ops;
-+	void *arg;
-+};
++struct tree_node *tree_search(void *key, struct tree_node **rootp,
++			      int (*compare)(const void *, const void *),
++			      int insert);
 +
-+/* a contiguous segment of bytes. It keeps track of its generating block_source
-+ * so it can return itself into the pool. */
-+struct reftable_block {
-+	uint8_t *data;
-+	int len;
-+	struct reftable_block_source source;
-+};
++/* performs an infix walk of the tree. */
++void infix_walk(struct tree_node *t, void (*action)(void *arg, void *key),
++		void *arg);
 +
-+/* block_source_vtable are the operations that make up block_source */
-+struct reftable_block_source_vtable {
-+	/* returns the size of a block source */
-+	uint64_t (*size)(void *source);
-+
-+	/* reads a segment from the block source. It is an error to read
-+	   beyond the end of the block */
-+	int (*read_block)(void *source, struct reftable_block *dest,
-+			  uint64_t off, uint32_t size);
-+	/* mark the block as read; may return the data back to malloc */
-+	void (*return_block)(void *source, struct reftable_block *blockp);
-+
-+	/* release all resources associated with the block source */
-+	void (*close)(void *source);
-+};
-+
-+/* opens a file on the file system as a block_source */
-+int reftable_block_source_from_file(struct reftable_block_source *block_src,
-+				    const char *name);
++/*
++ * deallocates the tree nodes recursively. Keys should be deallocated separately
++ * by walking over the tree. */
++void tree_free(struct tree_node *t);
 +
 +#endif
+diff --git a/reftable/tree_test.c b/reftable/tree_test.c
+new file mode 100644
+index 000000000000..26d1e694252e
+--- /dev/null
++++ b/reftable/tree_test.c
+@@ -0,0 +1,61 @@
++/*
++Copyright 2020 Google LLC
++
++Use of this source code is governed by a BSD-style
++license that can be found in the LICENSE file or at
++https://developers.google.com/open-source/licenses/bsd
++*/
++
++#include "tree.h"
++
++#include "basics.h"
++#include "record.h"
++#include "test_framework.h"
++#include "reftable-tests.h"
++
++static int test_compare(const void *a, const void *b)
++{
++	return (char *)a - (char *)b;
++}
++
++struct curry {
++	void *last;
++};
++
++static void check_increasing(void *arg, void *key)
++{
++	struct curry *c = (struct curry *)arg;
++	if (c->last != NULL) {
++		assert(test_compare(c->last, key) < 0);
++	}
++	c->last = key;
++}
++
++static void test_tree(void)
++{
++	struct tree_node *root = NULL;
++
++	void *values[11] = { NULL };
++	struct tree_node *nodes[11] = { NULL };
++	int i = 1;
++	struct curry c = { NULL };
++	do {
++		nodes[i] = tree_search(values + i, &root, &test_compare, 1);
++		i = (i * 7) % 11;
++	} while (i != 1);
++
++	for (i = 1; i < ARRAY_SIZE(nodes); i++) {
++		assert(values + i == nodes[i]->key);
++		assert(nodes[i] ==
++		       tree_search(values + i, &root, &test_compare, 0));
++	}
++
++	infix_walk(root, check_increasing, &c);
++	tree_free(root);
++}
++
++int tree_test_main(int argc, const char *argv[])
++{
++	RUN_TEST(test_tree);
++	return 0;
++}
+diff --git a/t/helper/test-reftable.c b/t/helper/test-reftable.c
+index c9deeaf08c7a..050551fa6985 100644
+--- a/t/helper/test-reftable.c
++++ b/t/helper/test-reftable.c
+@@ -6,5 +6,6 @@ int cmd__reftable(int argc, const char **argv)
+ 	basics_test_main(argc, argv);
+ 	block_test_main(argc, argv);
+ 	record_test_main(argc, argv);
++	tree_test_main(argc, argv);
+ 	return 0;
+ }
 -- 
 gitgitgadget
 
