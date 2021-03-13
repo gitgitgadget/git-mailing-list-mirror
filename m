@@ -2,79 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DC663C433DB
-	for <git@archiver.kernel.org>; Sat, 13 Mar 2021 00:00:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 903D4C433DB
+	for <git@archiver.kernel.org>; Sat, 13 Mar 2021 01:09:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AFC1964F70
-	for <git@archiver.kernel.org>; Sat, 13 Mar 2021 00:00:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5AC5D64F69
+	for <git@archiver.kernel.org>; Sat, 13 Mar 2021 01:09:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235879AbhCMAAG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Mar 2021 19:00:06 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51497 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235848AbhCLX7i (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Mar 2021 18:59:38 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 942C1BF298;
-        Fri, 12 Mar 2021 18:59:37 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=FnVyG2yROj9x
-        gtzoWnkLU0wpGfQ=; b=wfghQiB5n0xGe+l9yXtaP60k8R8YZa4USceLwjXzONkz
-        8dNzA4UOHTrObFGoJU3i15y+A/U9fE+f7C7DRRFFP3t1GqkU9ay9CVY8eW1B2zYB
-        8YA98dpiwV7JrGv2teOTrC5jJdnFE2EOBxh4VpcfH6gKAAoHjkhsi0CsLTG6I9c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=NTkHhn
-        iSavl3FD3QUiWm/O7Ul+2fc9lMit53xpPTqUydYbODRAUYTLg7yZTKbPyoceclbJ
-        vR5p8AvruTTi4b7b5EjEiEyntfVy4i3CdYVpJXmJcrxKsx+UGCKQrgb3j5gVV9yY
-        O5LCQUVkC92E5DhloT+NC0cYyWSowM5JFODDY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8C6F1BF297;
-        Fri, 12 Mar 2021 18:59:37 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S232230AbhCMBI3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Mar 2021 20:08:29 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:39374 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S231679AbhCMBIT (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 12 Mar 2021 20:08:19 -0500
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:7d4e:cde:7c41:71c2])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1D658BF296;
-        Fri, 12 Mar 2021 18:59:37 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Eric Wong <e@80x24.org>,
-        Benno Evers <benno@bmevers.de>, Jean Privat <jean@pryen.org>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH 00/10] describe tests: refactor & fix recent broken tests
-References: <20200223125102.6697-1-benno@bmevers.de>
-        <20210228195414.21372-1-avarab@gmail.com>
-Date:   Fri, 12 Mar 2021 15:59:36 -0800
-In-Reply-To: <20210228195414.21372-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Sun, 28 Feb 2021 20:54:04 +0100")
-Message-ID: <xmqq1rcj6hzr.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E1D1F6048E;
+        Sat, 13 Mar 2021 01:08:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1615597698;
+        bh=Mly1PsAVf9PeUeRMSYfsGr1r1UBnJV4M9KuPJiMsL2Y=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=NM0FhdGHnrdmg9OUFGhwaYmKTJ8WsnET4QUuCQtl8FZSIjxfFMwF65zr4rOKCdbAS
+         Zflr6diNbod33ZRsz8dm/fk5wkF+6omNtjFphpg2rDGXO4M2WDJuJeClL/TY3Hwwok
+         f3xBkj33/Ayl6n/WLuSlj8fLGIjWrGs4sXwGSydeNALdcyZgreE0lfLEfsS1Q233KH
+         mAZ737qiL6K8+HAf0D0mfA+uyO/ZjqJPDseOb/CNoiGlkZo45OKhqv3b4ICVsH5ONN
+         LZd124oOoe3bmSpR+P0MMLE6iymmJ5mRiFzktM2qimIxEHXp9gOrMP3JuiZ90/BeyP
+         OPi9NpHM30pszfN4ninEcD8OX8olxltBpJk8oUFZNTnjxpMcCEvgt0ch+sg7pIiepO
+         3fK90cDBAyNtRvx7gP1zAsDpA1jUddvJe3gcms46JzaYQJrBsuKpdQaGODCPQsu2CF
+         fyGypEEHQn+FzMCY6J+0sRMZKVi70D2Rm6GbkZ0NGYJfUWZSPaM
+Date:   Sat, 13 Mar 2021 01:08:11 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Ephrim Khong <dr.khong@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [RFC PATCH] merge-recursive: create new files with O_EXCL
+Message-ID: <YEwQe0qMUtlI5PCl@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Ephrim Khong <dr.khong@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <f6cd9386-8a58-ee52-4c7b-60d9bd14a51d@gmail.com>
+ <xmqqblbqipeh.fsf@gitster.g>
+ <cd7c6682-7409-f72c-8751-02b70a423f83@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 002CDDB4-838F-11EB-BEEA-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="ASdgovQf22WGbDdw"
+Content-Disposition: inline
+In-Reply-To: <cd7c6682-7409-f72c-8751-02b70a423f83@gmail.com>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> While looking at the "git describe" tests due to the on-list
-> %(describe) discussion I discovered that the feature added in
-> 30b1c7ad9d (describe: don't abort too early when searching tags,
-> 2020-02-26) has never been tested for.
+--ASdgovQf22WGbDdw
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-This came during -rc freeze and got reviewed, so I'd expect a reroll
-sometime but does not have to be done in a hurry before the final
-which is expected to happen on the 15th.
+On 2021-03-11 at 09:54:41, Ephrim Khong wrote:
+> On 11.03.2021 00:01, Junio C Hamano wrote:
+> >  * understand why your NFS mount is broken and give a better
+> >    explanation as to why we need to have a workaround in our code.
+>=20
+> I'll work on this, but unfortunately have no idea of how to properly
+> debug it. Since it is a company server without administrative rights and
+> the backend is some IBM storage system, the options are limited and
+> processes are slow. What I did find out so far is that it is not a race
+> condition with unlink. A simple openat() without O_EXCL already produces
+> the wrong file mode.
 
-Thanks.
+This reminds me of a NFS bug that we saw in the past[0].  I don't know
+if you're using that same type of system in this case, but if so, it
+could be part of the problem.
+
+Since buggy NFS implementations seem to be a problem specifically with
+open(2) and I need to reroll my series to add some entries to the FAQ,
+and I'll document that we require NFS servers to support POSIX open
+semantics, including permissions and O_EXCL.
+
+> (I fully understand that this is not a bug on git's side, and I found no
+> documentation indicating that O_EXCL would be recommended or have any
+> effect in this way. Hopefully, others that run into similar issues would
+> benefit from this as well, there are a few reports online of people
+> running into "failed to refresh" errors.)
+
+This does tend to frequently affect Git, but it can also affect other
+programs as well, and you're probably going to be better off filing a
+bug report with IBM about their NFS server than trying to work around it
+in every situation.
+
+[0] https://lore.kernel.org/git/CAPx1GvfKxu8gwbp0Gn2dBf9th874skKjD-echeAFr7=
+_77o8FYw@mail.gmail.com/T/#mead6be6c92f0ab29cf9fd600781dea7315e87411
+--=20
+brian m. carlson (he/him or they/them)
+Houston, Texas, US
+
+--ASdgovQf22WGbDdw
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.27 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYEwQegAKCRB8DEliiIei
+gR1mAQCM4V94t9g2+ngn74igjNmJeYn3UAdNuXv04JzCBJg85QEA7rnx6HfWp5eT
+WknIDUU2rJuAIOOLe3F4FFjFwJ4mhAo=
+=Ltgj
+-----END PGP SIGNATURE-----
+
+--ASdgovQf22WGbDdw--
