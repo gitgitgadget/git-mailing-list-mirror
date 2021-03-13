@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 753FFC43381
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B976C433E9
 	for <git@archiver.kernel.org>; Sat, 13 Mar 2021 22:27:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4C37664EE4
+	by mail.kernel.org (Postfix) with ESMTP id 326E164EC9
 	for <git@archiver.kernel.org>; Sat, 13 Mar 2021 22:27:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234831AbhCMWWb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 13 Mar 2021 17:22:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45474 "EHLO
+        id S234825AbhCMWWa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 13 Mar 2021 17:22:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45470 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234792AbhCMWWO (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S234788AbhCMWWO (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 13 Mar 2021 17:22:14 -0500
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 645A6C061765
-        for <git@vger.kernel.org>; Sat, 13 Mar 2021 14:22:13 -0800 (PST)
-Received: by mail-wr1-x436.google.com with SMTP id e9so3736909wrw.10
-        for <git@vger.kernel.org>; Sat, 13 Mar 2021 14:22:13 -0800 (PST)
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7DBDC061763
+        for <git@vger.kernel.org>; Sat, 13 Mar 2021 14:22:12 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id l11so6740354wrp.7
+        for <git@vger.kernel.org>; Sat, 13 Mar 2021 14:22:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=hfbIQ5ZMDbHAwrELzZGGk8AxVsHiSbiG/2xPriEsgMg=;
-        b=M2T4ejO+2BE5UVa8cxcfAAlyHV5szLD+E6Yw0Y9Rox2mU/tQu1Woj3L0gLkHS12tUP
-         BMdUZrNAB46cyfUJRYI0Pa76SlTjo4TIHioUw3QnWEOqkpjWCyuKnu3nIROsVXuTTv6M
-         Lg/s2WEanXHI/bayBl5B//WVX7BcWQTGLw4M9PSS4Gxj6FfckbqVuAMbZGqyfGub6I/o
-         msm9JwBDGS60yIklwQNPLNOI+CK1QL7l7tuKaftV6+SRDeP9/hcFD3+Ud9BrzVEmlg7l
-         MDqy+yKzjsvKrd27B9rynjrlSEGmUc5CRa/yXjrOlangKzChZ6qv929UcxwMztyjqlWE
-         Qqzw==
+        bh=8C4NU9XuO3kkFqDLgcnC/yVC45WVPTrbfch2ha3o0n4=;
+        b=ewQNZzxN7FEw4wjjUhXXG951R+qAbFaYh67AjulworMXQTLgMhxrZqdsfYj90VUuO/
+         Q+FQs8lyvmDSYuP1BmKQeIhK1ZHfkyNDAb1sxMh1h8UOgkjI91q+9I3aLdeQZ2HyrTtY
+         jyDE9WS9qRBK1quuY0/0AtCgQ15W63nwQN6lEU4AAmg1+g1GP5KO5A06d/X5lmuKYTlG
+         nfwqR4U6gDPcv7JfugvZcUb9lwmWPCWTq7KhkXkrqRXENkSrzvXNICbf1Tjnzf51NH4Z
+         P3368YRISiwMDMm433meeOo+y+NEswMPD+hWSO1fZClsg2JATmPXX80PKqPrhcEQH919
+         nr1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=hfbIQ5ZMDbHAwrELzZGGk8AxVsHiSbiG/2xPriEsgMg=;
-        b=cKT7lFmYqD9L9UQp5bJZHNFP8VNa8TbFjgAtzRhx40GIF9quepCoBhVqL0rPPGbxfd
-         mhHupQ7RCWnxqvdSB2tIHNQDfExYEcBg5n3uoSraKz2IuNlkPFBhn4RirYR0DRoWKoNN
-         OSbdQnkyo6YVmf+FqBs1ZDDuobP3NWojxQOqGa9PeKmCGZgpepn27xaRKuFspTQaiveP
-         HB/MdrLbdoiPPTeyeIMX6HH3SeKYBL5YDqv5TShm0qZs4fM9HTK3IiBdCB2jre7z/V8D
-         GYtN8ZqKZxaYeEWvz0lbykaEWj4cP/67gBl/TFxZh5KL6QR2+4DozBoJpRrL+e52EH7c
-         wZPQ==
-X-Gm-Message-State: AOAM5302rpBXp0diLcrLMT58JLoHMeZ8eiwYlOSeQ/VBA22NbBvb+wmJ
-        gTBP+/GEUvp4Kr3jw5pjKKH8mcchNLQ=
-X-Google-Smtp-Source: ABdhPJxgyutvdbVLxL/zuBYb4uBmSzYslrySRPl6d2T7lc3KeFhXqmdzlo17NXohk0xLRqtV4eHahA==
-X-Received: by 2002:a5d:4281:: with SMTP id k1mr20271529wrq.374.1615674132065;
-        Sat, 13 Mar 2021 14:22:12 -0800 (PST)
+        bh=8C4NU9XuO3kkFqDLgcnC/yVC45WVPTrbfch2ha3o0n4=;
+        b=ExKHhsIZ0l9P9iPPMJ1p0Hm0bGeROsw9FMTL0PLglYkeXD55943LhnpJRrDc8lzrLC
+         Y+jcxzIXtuKvTgMpf5K6W1mo+dkpKk8457ONGDQqLiObJc5i9Z12k/3aqHYeHRwO78NJ
+         DkGhb3iBm2c777qESEhyrFK08BE6AQ9ahcqaTS1yfJrojMbUHD6vl8pwKRbJRWZX+2JJ
+         upM/U0kKSpi+CJEEyK0IfwwnpygtPSUaVVlLf70zmeTb2Hcpd+GBrJzbrhJ/PGoNr/Ca
+         sywy7m6jz1hvhL1QGHGDZ2EuhoCOsjI1RkF1iV6GX0wo2D58JmZI5Yz6Q/DEvRHZ6T1X
+         B/mQ==
+X-Gm-Message-State: AOAM533t7DWkTAmH0yidSfWDkUO5wkrPHx+AG+2vmTblirDGdZyESj8/
+        1SOC1pXFHESf0OgAfEDILO5b1y21G3c=
+X-Google-Smtp-Source: ABdhPJxv0pUPrNnmH4XyCWFuT1wYARWHJ3ik0gqsQT8gCmLORkXjHLrVcYKdv3qZxKO805hYy2bGJA==
+X-Received: by 2002:a05:6000:186f:: with SMTP id d15mr20756087wri.237.1615674130468;
+        Sat, 13 Mar 2021 14:22:10 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d16sm13273370wrx.79.2021.03.13.14.22.11
+        by smtp.gmail.com with ESMTPSA id u63sm7719685wmg.24.2021.03.13.14.22.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 13 Mar 2021 14:22:11 -0800 (PST)
-Message-Id: <9e30f4399abefc8af005a2de97eefe692fdb4848.1615674128.git.gitgitgadget@gmail.com>
+        Sat, 13 Mar 2021 14:22:10 -0800 (PST)
+Message-Id: <960dcf365b350ef7166bd4f92d48ed016502f101.1615674128.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.853.git.1615674128.gitgitgadget@gmail.com>
 References: <pull.853.git.1615674128.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 13 Mar 2021 22:22:04 +0000
-Subject: [PATCH 4/8] diffcore-rename: only compute dir_rename_count for
- relevant directories
+Date:   Sat, 13 Mar 2021 22:22:01 +0000
+Subject: [PATCH 1/8] diffcore-rename: take advantage of "majority rules" to
+ skip more renames
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,96 +80,99 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-When one side adds files to a directory that the other side renamed,
-directory rename detection is used to either move the new paths to the
-newer directory or warn the user about the fact that another path
-location might be better.
+In directory rename detection (when a directory is removed on one side
+of history and the other side adds new files to that directory), we work
+to find where the greatest number of files within that directory were
+renamed to so that the new files can be moved with the majority of the
+files.
 
-If a parent of the given directory had new files added to it, any
-renames in the current directory are also part of determining where the
-parent directory is renamed to.  Thus, naively, we need to record each
-rename N times for a path at depth N.  However, we can use the
-additional information added to dirs_removed in the last commit to avoid
-traversing all N parent directories in many cases.  Let's use an example
-to explain how this works.  If we have a path named
-   src/old_dir/a/b/file.c
-and src/old_dir doesn't exist on one side of history, but the other
-added a file named src/old_dir/newfile.c, then if one side renamed
-   src/old_dir/a/b/file.c => source/new_dir/a/b/file.c
-then this file would affect potential directory rename detection counts
-for
-   src/old_dir/a/b => source/new_dir/a/b
-   src/old_dir/a   => source/new_dir/a
-   src/old_dir     => source/new_dir
-   src             => source
-adding a weight of 1 to each in dir_rename_counts.  However, if src/
-exists on both sides of history, then we don't need to track any entries
-for it in dir_rename_counts.  That was implemented previously.  What we
-are adding now, is that if no new files were added to src/old_dir/a or
-src/old_dir/b, then we don't need to have counts in dir_rename_count
-for those directories either.
+Naively, we can just do this by detecting renames for *all* files within
+the removed/renamed directory, looking at all the destination
+directories where files within that directory were moved, and if there
+is more than one such directory then taking the one with the greatest
+number of files as the directory where the old directory was renamed to.
 
-In short, we only need to track counts in dir_rename_count for
-directories whose dirs_removed value is RELEVANT_FOR_SELF.  And as soon
-as we reach a directory that isn't in dirs_removed (signalled by
-returning the default value of NOT_RELEVANT from strintmap_get()), we
-can stop looking any further up the directory hierarchy.
+However, sometimes there are enough renames from exact rename detection
+or basename-guided rename detection that we have enough information to
+determine the majority winner already.  Add a function meant to compute
+whether particular renames are still needed based on this majority rules
+check.  The next several commits will then add the necessary
+infrastructure to get the information we need to compute which
+additional rename sources we can skip.
+
+An important side note for future further optimization:
+
+There is a possible improvement to this optimization that I have not yet
+attempted and will not be included in this series of patches: we could
+first check whether exact renames provide enough information for us to
+determine directory renames, and avoid doing basename-guided rename
+detection on some or all of the RELEVANT_LOCATION files within those
+directories.  In effect, this variant would mean doing the
+handle_early_known_dir_renames() both after exact rename detection and
+again after basename-guided rename detection, though it would also mean
+decrementing the number of "unknown" renames for each rename we found
+from basename-guided rename detection.  Adding this additional check for
+skippable renames right after exact rename detection might turn out to
+be valuable, especially for partial clones where it might allow us to
+download certain source files entirely.  However, this particular
+optimization was actually the last one I did in original implementation
+order, and by the time I implemented this idea, every testcase I had was
+sufficiently fast that further optimization was unwarranted.  If future
+testcases arise that tax rename detection more heavily (or perhaps
+partial clones can benefit from avoiding loading more objects), it may
+be worth implementing this more involved variant.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- diffcore-rename.c | 27 ++++++++++++++++++++++-----
- 1 file changed, 22 insertions(+), 5 deletions(-)
+ diffcore-rename.c | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
 diff --git a/diffcore-rename.c b/diffcore-rename.c
-index fafec66b29e9..0a17abd46691 100644
+index e8508541be14..a5d10afa221a 100644
 --- a/diffcore-rename.c
 +++ b/diffcore-rename.c
-@@ -461,6 +461,8 @@ static void update_dir_rename_counts(struct dir_rename_info *info,
- 		return;
+@@ -1073,6 +1073,24 @@ static void remove_unneeded_paths_from_src(int detecting_copies,
+ 	rename_src_nr = new_num_src;
+ }
  
- 	while (1) {
-+		int drd_flag = NOT_RELEVANT;
++static void handle_early_known_dir_renames(struct dir_rename_info *info,
++					   struct strset *relevant_sources,
++					   struct strset *dirs_removed)
++{
++	/*
++	 * Not yet implemented; directory renames are determined via an
++	 * aggregate of all renames under them and using a "majority wins"
++	 * rule.  The fact that "majority wins", though, means we don't need
++	 * all the renames under the given directory, we only need enough to
++	 * ensure we have a majority.
++	 *
++	 * For now, we don't have enough information to know if we have a
++	 * majority after exact renames and basename-guided rename detection,
++	 * so just return early without doing any extra filtering.
++	 */
++	return;
++}
 +
- 		/* Get old_dir, skip if its directory isn't relevant. */
- 		dirname_munge(old_dir);
- 		if (info->relevant_source_dirs &&
-@@ -509,16 +511,31 @@ static void update_dir_rename_counts(struct dir_rename_info *info,
- 			}
- 		}
- 
--		if (strintmap_contains(dirs_removed, old_dir))
-+		/*
-+		 * Above we suggested that we'd keep recording renames for
-+		 * all ancestor directories where the trailing directories
-+		 * matched, i.e. for
-+		 *   "a/b/c/d/e/foo.c" -> "a/b/some/thing/else/e/foo.c"
-+		 * we'd increment rename counts for each of
-+		 *   a/b/c/d/e/ => a/b/some/thing/else/e/
-+		 *   a/b/c/d/   => a/b/some/thing/else/
-+		 * However, we only need the rename counts for directories
-+		 * in dirs_removed whose value is RELEVANT_FOR_SELF.
-+		 * However, we add one special case of also recording it for
-+		 * first_time_in_loop because find_basename_matches() can
-+		 * use that as a hint to find a good pairing.
-+		 */
-+		if (dirs_removed)
-+			drd_flag = strintmap_get(dirs_removed, old_dir);
-+		if (drd_flag == RELEVANT_FOR_SELF || first_time_in_loop)
- 			increment_count(info, old_dir, new_dir);
--		else
--			break;
- 
-+		first_time_in_loop = 0;
-+		if (drd_flag == NOT_RELEVANT)
-+			break;
- 		/* If we hit toplevel directory ("") for old or new dir, quit */
- 		if (!*old_dir || !*new_dir)
- 			break;
--
--		first_time_in_loop = 0;
+ void diffcore_rename_extended(struct diff_options *options,
+ 			      struct strset *relevant_sources,
+ 			      struct strset *dirs_removed,
+@@ -1208,9 +1226,16 @@ void diffcore_rename_extended(struct diff_options *options,
+ 		 * Cull sources, again:
+ 		 *   - remove ones involved in renames (found via basenames)
+ 		 *   - remove ones not found in relevant_sources
++		 * and
++		 *   - remove ones in relevant_sources which are needed only
++		 *     for directory renames IF no ancestory directory
++		 *     actually needs to know any more individual path
++		 *     renames under them
+ 		 */
+ 		trace2_region_enter("diff", "cull basename", options->repo);
+ 		remove_unneeded_paths_from_src(want_copies, relevant_sources);
++		handle_early_known_dir_renames(&info, relevant_sources,
++					       dirs_removed);
+ 		trace2_region_leave("diff", "cull basename", options->repo);
  	}
  
- 	/* Free resources we don't need anymore */
 -- 
 gitgitgadget
 
