@@ -2,154 +2,183 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EF14EC43331
-	for <git@archiver.kernel.org>; Sat, 13 Mar 2021 22:27:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BEFBC433E0
+	for <git@archiver.kernel.org>; Sat, 13 Mar 2021 23:24:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C422464EDF
-	for <git@archiver.kernel.org>; Sat, 13 Mar 2021 22:27:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 634EB64EC4
+	for <git@archiver.kernel.org>; Sat, 13 Mar 2021 23:24:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234858AbhCMWWh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 13 Mar 2021 17:22:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45484 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234807AbhCMWWP (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Mar 2021 17:22:15 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA769C061574
-        for <git@vger.kernel.org>; Sat, 13 Mar 2021 14:22:14 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id j18so3740286wra.2
-        for <git@vger.kernel.org>; Sat, 13 Mar 2021 14:22:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=4FRkm4/v++XAhRpciS2SHqHnvytpt2phjEYNeQhsfmU=;
-        b=tczDFaD9GHR76uk4wEChP4sxYAqSERGY5lKPtgBBmqrYW8kV4Q0NBfmWRfYcqJVLs7
-         +QJuTptvUuUbIv+1lBXDF1n+M3BdJrTtswrMUjvUo8jzeEJtjmMCQq8qMLFpQbLgyPXi
-         XR1dn5RAP0TpSRXdtrS1yhFUixSGtKWvurDB5ldLliGRPvckri3v1GyhVccMm1wo38US
-         m1uPD4zV1sDsDNWRXwq+o9EV1bYLaLtLbqDL//ogzktCgU3jAvDaWD3SKG8Q9MnockK7
-         WuQSiCgE2ymGusIBiGh0ZERT/Cjw3vtWU0/vqHT+vyTxki9/WLOezA34nnKnPtObsbCM
-         +V5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=4FRkm4/v++XAhRpciS2SHqHnvytpt2phjEYNeQhsfmU=;
-        b=XbGwTd8wb8PAosJeNceK76HfuiQa25iC2M/NbeOuqmBe7DMsJKpa8h0aENhCm9gcFY
-         G7tSqI6zSm5iWfg4Bvk+bFFwixbqRSYrDMDOta4dHNHH2jgRSk31bBVrpjSt8sFSr2SX
-         TDZylV3CxKKdpAdoK/H29KfRIaev6XbR9qammGuoDh6luN2mui+YagSFb9J+Dy8/sFXf
-         lDR4o9ZJoyQrVhNmq7WXd3lkoa3jELRhnQs48Y1lQ/ujZtWvNi9+3dT7TqKy2Lyg3n+m
-         v9SR6+EDB3h0U5wRTjPxHJtHLMBeTDEwVhxxVxH5x4BlbeDSLjMkiKRdqPZ426/Vd1Ap
-         ZA7Q==
-X-Gm-Message-State: AOAM5328jcpYpM3HmVGEJTmhxiawUbqhB+TM2PgCEt58YWmiy4rhHqq4
-        Zm54Ydp9iHMCxsPF0MXzOrDs95dsVGs=
-X-Google-Smtp-Source: ABdhPJyNussruSecqpb4RQzLzuNgU0HcXoMg+Hd8T4mZHOuxY0x0chs4MpMDMncmKvrD6FMAIYnWYw==
-X-Received: by 2002:a5d:6a86:: with SMTP id s6mr21310997wru.307.1615674133598;
-        Sat, 13 Mar 2021 14:22:13 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v18sm14813251wrf.41.2021.03.13.14.22.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 13 Mar 2021 14:22:13 -0800 (PST)
-Message-Id: <1de40b1b88adee4d40a141f1eb796676b18da670.1615674128.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.853.git.1615674128.gitgitgadget@gmail.com>
-References: <pull.853.git.1615674128.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 13 Mar 2021 22:22:07 +0000
-Subject: [PATCH 7/8] merge-ort: record the reason that we want a rename for a
- file
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <dstolee@microsoft.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Jonathan Tan <jonathantanmy@google.com>,
+        id S234410AbhCMXXt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 13 Mar 2021 18:23:49 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51432 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233369AbhCMXXc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 Mar 2021 18:23:32 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2405AB80DD;
+        Sat, 13 Mar 2021 18:23:31 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=tcF3wSkwAz67
+        AVggatwH0s69W7s=; b=v3JINTSRGi2UyCbtXwz6Em25KPLqz1BlnSexXoltqg/y
+        gxMVkrkYeYWtXXEsjKhy1J2lo+rfIi/3s+RznBvydHy6/P1HuNydHQpIxftwzPFJ
+        FeQgI6jM7UsAocUudlmnPtRlveMSKr6D+ZwRd4c1cnIZW3lP0adFaJ9IeksDiaM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=tMKYsu
+        7IbsiJhe6M/paCdpVgFGGjyXA63r5xSCD2GP3EUHxA9mddSilK0y9MbYu/5wJgco
+        ACI74mCOD5ygl/w5Hi5/jQfJ2aKynsUiHqxqSziiQbbM7yUa9cBXSEa8zswFwHw1
+        iNi/zP+MXW0aVjPLNXhAc1GqZGoBgtgO16yP4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1ADACB80DC;
+        Sat, 13 Mar 2021 18:23:31 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8D223B80DB;
+        Sat, 13 Mar 2021 18:23:30 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     ZheNing Hu <adlternative@gmail.com>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Denton Liu <liu.denton@gmail.com>,
         Taylor Blau <me@ttaylorr.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+        Taylor Blau <ttaylorr@github.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3] [GSOC][RFC] format-patch: pass --left-only to
+ range-diff
+References: <pull.898.v2.git.1615278830804.gitgitgadget@gmail.com>
+        <pull.898.v3.git.1615285726482.gitgitgadget@gmail.com>
+        <xmqqpn0456lr.fsf@gitster.g>
+        <CAOLTT8QhgeGim6ujqqyXwQ=bmQtJ43T5i3CPmNMPmBr0amR-HQ@mail.gmail.com>
+Date:   Sat, 13 Mar 2021 15:23:29 -0800
+In-Reply-To: <CAOLTT8QhgeGim6ujqqyXwQ=bmQtJ43T5i3CPmNMPmBr0amR-HQ@mail.gmail.com>
+        (ZheNing Hu's message of "Sat, 13 Mar 2021 12:01:50 +0800")
+Message-ID: <xmqqwnua4ozy.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 1F39E9DA-8453-11EB-BCF1-D152C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+ZheNing Hu <adlternative@gmail.com> writes:
 
-There are two different reasons we might want a rename for a file -- for
-three-way content merging or as part of directory rename detection.
-Record the reason.  diffcore-rename will potentially be able to filter
-some of the ones marked as needed only for directory rename detection,
-if it can determine those directory renames based solely on renames
-found via exact rename detection and basename-guided rename detection.
+> Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B43=E6=9C=8813=E6=
+=97=A5=E5=91=A8=E5=85=AD =E4=B8=8A=E5=8D=886:51=E5=86=99=E9=81=93=EF=BC=9A
+>>
+>> "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>>
+>> > From: ZheNing Hu <adlternative@gmail.com>
+>> >
+>> > In https://lore.kernel.org/git/YBx5rmVsg1LJhSKN@nand.local/,
+>> > Taylor Blau proposing `git format-patch --cover-letter
+>> > --range-diff` may mistakenly place upstream commit in the
+>> > range-diff output. Teach `format-patch` pass `--left-only`
+>> > to range-diff,can avoid this kind of mistake.
+>>
+>> The above is a bit too dense for average readers to grok.  Even if
+>> the readers refer to the external reference, it is unclear where the
+>> "may mistakenly" can come from and why "--left-only" would be
+>> useful (and our log message should not depend on external material
+>> so heavily to begin with).
+>>
+>
+> You are right, commit information with the original thread link may mak=
+e
+> it difficult for readers to read. I will pay attention.
+>
+>> So let's think aloud to see what use case this may be helpful, and
+>> how the proposed solution makes the world a better place.
+>>
+>> If I understand correctly, the use case this tries to help is this:
+>>
+>>  * You had sent the v1 iteration of topic.  It was in the range
+>>    B1..T1 where B1 is the tip of the integration branch (like
+>>    'master') from the upstream.
+>>
+>>  * To prepare for the v2 iteration, not only you updated individual
+>>    commits, you rebased the series on a new upstream.  Now the topic
+>>    is in the range B2..T2, where B2 is the tip of the integration
+>>    branch from the upstream, and it is very likely that B2 is a
+>>    descendant of B1.
+>>
+>> And you want to find out how your commits in T2 (new iteration)
+>> compares with those in T1 (old iteration).  Normally,
+>>
+>>     $ git range-diff T1...T2
+>>
+>> would be the shortest-to-type and correct version but that is
+>> invalidated because you rebased.
+>>
+>>     ---o---B1--b---b---b---B2
+>>             \               \
+>>              t---t---T1      s---s---s---T2
+>>
+>> You'd have commits B1..T1 on the left hand side of the range-diff,
+>> while the right hand side has not just B2..T2 but also commits in
+>> the range B1..B2, too.
+>>
+>> By using --left-only (i.e. show only those pair that maps from
+>> commits in the left range), you can exclude the commits in the
+>> B1..B2.
+>>
+>>     $ git range-diff --left-only T1...T2
+>>
+>> I however wonder what --left-only (Suppress commits that are missing
+>> from the first range) would do to commits in range B2..T2 (they are
+>> all yours) that are (1) added since the v1 iteration, or (2)
+>> modified so drastically that no matching commit is found.  With the
+>> right invocation, of course,
+>>
+>>     $ git range-diff B1..T1 B2..T2
+>>
+>> you would not have such a problem.  If 2 't's in B1..T1 correspond
+>> to 2 of the 3 's's in B2..T2, at least the presense of the third 's'
+>> that did not match would show up in the output, making it clear that
+>> you have one more commit relative to the earlier iteration.  If use
+>> of --left-only filters it out, the output may be misleading to the
+>> readers, no?
+>>
+>> I started writing (or "thinking aloud") hoping that I can help
+>> coming up with a better log message to describe the problem being
+>> solved, but I ended up with "does this make the system better?"
+>
+> Junio, thank you for elaborating this issue in detail and clearly.
+> I probably understand what you mean by "git range-diff B1..T1 B2..T2"
+>  to correctly output the commits on my two version topic branch, withou=
+t
+> including the upstream commits of B1..B2.So we don=E2=80=99t even need =
+to specify
+> the `--left-only` to avoid the output of B1...B2, right?
+>
+> The only thing I can think of now is that if users tend to use T1...T2
+> to compare
+>  the differences between the two topics, will the upstream commit in
+> B1...B2 appear
+> more abrupt?
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- diffcore.h  |  6 ++++++
- merge-ort.c | 15 ++++++++++-----
- 2 files changed, 16 insertions(+), 5 deletions(-)
+Yes, it would be, but that is why you need to educate users what
+causes it, and what the right way to avoid unrelated commits from
+appearing, and how this --left-only fits in the solution.
 
-diff --git a/diffcore.h b/diffcore.h
-index d5a497b7a162..cf8d4cb8617d 100644
---- a/diffcore.h
-+++ b/diffcore.h
-@@ -167,6 +167,12 @@ enum dir_rename_relevance {
- 	RELEVANT_FOR_ANCESTOR = 1,
- 	RELEVANT_FOR_SELF = 2
- };
-+/* file_rename_relevance: the reason(s) we want rename information for a file */
-+enum file_rename_relevance {
-+	RELEVANT_NO_MORE = 0,  /* i.e. NOT relevant */
-+	RELEVANT_CONTENT = 1,
-+	RELEVANT_LOCATION = 2
-+};
- 
- void partial_clear_dir_rename_count(struct strmap *dir_rename_count);
- 
-diff --git a/merge-ort.c b/merge-ort.c
-index f2b259986e22..7f5750ce6ab0 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -99,16 +99,18 @@ struct rename_info {
- 	struct strmap dir_renames[3];
- 
- 	/*
--	 * relevant_sources: deleted paths for which we need rename detection
-+	 * relevant_sources: deleted paths wanted in rename detection, and why
- 	 *
- 	 * relevant_sources is a set of deleted paths on each side of
- 	 * history for which we need rename detection.  If a path is deleted
- 	 * on one side of history, we need to detect if it is part of a
- 	 * rename if either
--	 *    * we need to detect renames for an ancestor directory
- 	 *    * the file is modified/deleted on the other side of history
-+	 *    * we need to detect renames for an ancestor directory
- 	 * If neither of those are true, we can skip rename detection for
--	 * that path.
-+	 * that path.  The reason is stored as a value from enum
-+	 * file_rename_relevance, as the reason can inform the algorithm in
-+	 * diffcore_rename_extended().
- 	 */
- 	struct strintmap relevant_sources[3];
- 
-@@ -677,8 +679,11 @@ static void add_pair(struct merge_options *opt,
- 		unsigned content_relevant = (match_mask == 0);
- 		unsigned location_relevant = (dir_rename_mask == 0x07);
- 
--		if (content_relevant || location_relevant)
--			strintmap_set(&renames->relevant_sources[side], pathname, 1);
-+		if (content_relevant || location_relevant) {
-+			/* content_relevant trumps location_relevant */
-+			strintmap_set(&renames->relevant_sources[side], pathname,
-+				      content_relevant ? RELEVANT_CONTENT : RELEVANT_LOCATION);
-+		}
- 	}
- 
- 	one = alloc_filespec(pathname);
--- 
-gitgitgadget
+If some of the time, "--left-only T1...T2" would give you the same
+result as the more strict "B1..T1 B2..T2", that may be why users may
+want to use the "--left-only" instead as an easy/lazy alternative.
 
+But I suspect that it would give an incorrect result some of the
+time---for example, in the above example, wouldn't one of the
+commits labeled as 's' be completely hidden?  And if that is the
+case, the end-user documentation would need to warn about it, and
+explain that it is a easy/lazy alternative that can produce
+incorrect result in the log message.
