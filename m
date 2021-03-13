@@ -7,90 +7,162 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4688AC433DB
-	for <git@archiver.kernel.org>; Sat, 13 Mar 2021 02:52:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 517E8C4332E
+	for <git@archiver.kernel.org>; Sat, 13 Mar 2021 04:04:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0C55164F48
-	for <git@archiver.kernel.org>; Sat, 13 Mar 2021 02:52:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1B9C564F87
+	for <git@archiver.kernel.org>; Sat, 13 Mar 2021 04:04:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232487AbhCMCwT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Mar 2021 21:52:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49816 "EHLO
+        id S231789AbhCMECn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Mar 2021 23:02:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36508 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231597AbhCMCv4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Mar 2021 21:51:56 -0500
-Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96244C061574
-        for <git@vger.kernel.org>; Fri, 12 Mar 2021 18:51:56 -0800 (PST)
-Received: by mail-pg1-x529.google.com with SMTP id p21so17047556pgl.12
-        for <git@vger.kernel.org>; Fri, 12 Mar 2021 18:51:56 -0800 (PST)
+        with ESMTP id S229959AbhCMECD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Mar 2021 23:02:03 -0500
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2926C061574
+        for <git@vger.kernel.org>; Fri, 12 Mar 2021 20:02:03 -0800 (PST)
+Received: by mail-ot1-x32a.google.com with SMTP id 31-20020a9d00220000b02901b64b9b50b1so2459913ota.9
+        for <git@vger.kernel.org>; Fri, 12 Mar 2021 20:02:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=m9r/qk3Sy1MjsN8zztL9xPIkD2t2bdVD+ZihYPO8sZM=;
-        b=hbXzTG2IKu0Y6AdkkC9QYkOkK33WM42vMnZoOEkNsn03WzW0EivQ41hOTyRNycwM8v
-         mFCSpd8zVYJQbjLv+/oUBWKWPyv2qSxbcAb8dugmQKzV6xasmW2zTUHMoaJRpWPTlolQ
-         8XXd1m9kXcF38n3Mmp6KT8QXQbzC2gR90oIQTWf8Hp27cG2aI9KViwcrWbLn82s9BLUK
-         nlYkLGM0Lma4gscxqlMamglyz/OCC4o9HTKsKXRxIYYdk7jGNcE+DqjUaFFVlQTubKxW
-         9pQ1O9eIgxdqCQ7ncwkfEzRz5ltA1hamaPOK8IXeRu8zo+N+/wZv+7ymRB3ukCcN2GKq
-         404g==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=xz3McTbPXoaV3X4PfPG2E/6xsFVleI82wYDW+3/2Q6g=;
+        b=cO4gPHGfaICofDvDmNyscDOiU9jE+0dcy+shF0DDwdBuygmUp/WM3XIWtSs56cfHEx
+         Wb89mDrnSiW9kaw3qha1lqOHw13L1t3ZfYZI0yV3inr5BJDD65leU4tW1g6+zKkEfVZl
+         VO3U8MqAFGXEKgxNfiv4T87x/wzavsjz2WO44JCLAG7vwcCtFZq5czPWjzHxRHhTrWtn
+         eAXbDdGwOUbaVYEd10A5oHpknqYQePzAu4swvwyO7gw3iCc/aPjb+uLYTTuSIVIp9EvU
+         hWeDAWC3W3hLxozTxIjlT/qhP9Y0OwGu8AZXYL1uBG/Ux4Xkg0bUU4Jb7WbQWwTHD3NC
+         EkIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=m9r/qk3Sy1MjsN8zztL9xPIkD2t2bdVD+ZihYPO8sZM=;
-        b=jwTdgK8Yea8+kU6XDmk17Tk3GdVvFVW3cEgdvkXx68YwcJYnOFcX6tT7gx9kp6/tkA
-         iDOXRu4QjpN2X89ZEb7eltTYq76Or1hxYjm74D4jGtZZjyq9WqcGempWbbn+sRMzrrA/
-         8igNc8zBcX9wqyMlTrlyaSmHcO83QrnfXPksv2SZT1KbuvQj2QQVOYkBP4PTu5dfJ6Rp
-         +BOv7PGYkULDxPK0lHSuE5KaS5BVbpfadNwIqalOF5u+/nQX7uGn7NGeZR1OORO/nnhk
-         7GDeB2JJhel9Tns4YOeVqbJPoCrXgvKritEA/mL61Z8cFLZYTsimZ2xSdUdCKjV0Duf6
-         X9Dw==
-X-Gm-Message-State: AOAM533GwK4SvY9Ul9BxzwKZaIKnrV3XkZBF+zkIGSYpZhUfThoFJWPs
-        ya1fHhfUWr1g6RfKLkRrrqI=
-X-Google-Smtp-Source: ABdhPJyVFGYFuBcfM6KF5NLDpwKs/hVlU/J16CcH4e/IR3IRIbmXiuZe/19DCH924Jbg3JnP6YsMQQ==
-X-Received: by 2002:aa7:83cf:0:b029:1ee:f550:7d48 with SMTP id j15-20020aa783cf0000b02901eef5507d48mr15489044pfn.12.1615603916135;
-        Fri, 12 Mar 2021 18:51:56 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:200:a1e7:6707:cbf6:696d])
-        by smtp.gmail.com with ESMTPSA id c12sm7127155pfp.17.2021.03.12.18.51.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Mar 2021 18:51:55 -0800 (PST)
-Date:   Fri, 12 Mar 2021 18:51:53 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     John Ratliff <john@technoplaza.net>, git@vger.kernel.org
-Subject: Re: git credential cache and sudo
-Message-ID: <YEwoyeYM7ac+6aIx@google.com>
-References: <CAP8UukjW_TeswTHHfiwzc989U+wZMVcHeS1siRF0Rbg5nc3D5w@mail.gmail.com>
- <YEvPQS1+1sxd/aGw@coredump.intra.peff.net>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=xz3McTbPXoaV3X4PfPG2E/6xsFVleI82wYDW+3/2Q6g=;
+        b=cRhQPHeFyDHEMG+dgUxZ2KU7DGUUTTQ7odOkOGHK6A48SBmrZ1Yb/enERvg/c+M4iV
+         dN4haFIAsXCCyXt4qdopHXCy8QywR52tetmi9012h2S9+H4jlZzpx5l8X3/Gup4HgYFo
+         acyWlIvK9+roCKij30h99u+/DJUQaEFlLe6qymZLeF5mHvsdh6dTrS5JwvQUcennPhw7
+         xxcuXNiXU9oisux44cvc5wfvrq5m/MBgSnEtmxwTh+kC22SKN9iUAAC3wnJdPSanlnOC
+         gNEqkKXpezERkWwcxv3fWFj1IkQdm6fABcde6mpgGYhPsAH8DHfM5Jt+fQgKkrpSMFn1
+         tDhA==
+X-Gm-Message-State: AOAM533SEnvH6biL+8jvFNXUzl/vU7GnX1UMcemQKWJUiCr2pmYP8YiS
+        0uABCYgolJsSFcchtx3Y9tNKUSc7bvR2QscesRA=
+X-Google-Smtp-Source: ABdhPJyXlmyQvAfzhTEhREvT5WGoi1ez7XRYF/4V0t3ki/DChfT+eBXlKzjJ2lqdDrmNjsKqwtevmDwxKh6YEXj1WO8=
+X-Received: by 2002:a9d:6308:: with SMTP id q8mr5681121otk.160.1615608122788;
+ Fri, 12 Mar 2021 20:02:02 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YEvPQS1+1sxd/aGw@coredump.intra.peff.net>
+References: <pull.898.v2.git.1615278830804.gitgitgadget@gmail.com>
+ <pull.898.v3.git.1615285726482.gitgitgadget@gmail.com> <xmqqpn0456lr.fsf@gitster.g>
+In-Reply-To: <xmqqpn0456lr.fsf@gitster.g>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Sat, 13 Mar 2021 12:01:50 +0800
+Message-ID: <CAOLTT8QhgeGim6ujqqyXwQ=bmQtJ43T5i3CPmNMPmBr0amR-HQ@mail.gmail.com>
+Subject: Re: [PATCH v3] [GSOC][RFC] format-patch: pass --left-only to range-diff
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Denton Liu <liu.denton@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Taylor Blau <ttaylorr@github.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King wrote:
+Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B43=E6=9C=8813=E6=97=
+=A5=E5=91=A8=E5=85=AD =E4=B8=8A=E5=8D=886:51=E5=86=99=E9=81=93=EF=BC=9A
+>
+> "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > From: ZheNing Hu <adlternative@gmail.com>
+> >
+> > In https://lore.kernel.org/git/YBx5rmVsg1LJhSKN@nand.local/,
+> > Taylor Blau proposing `git format-patch --cover-letter
+> > --range-diff` may mistakenly place upstream commit in the
+> > range-diff output. Teach `format-patch` pass `--left-only`
+> > to range-diff,can avoid this kind of mistake.
+>
+> The above is a bit too dense for average readers to grok.  Even if
+> the readers refer to the external reference, it is unclear where the
+> "may mistakenly" can come from and why "--left-only" would be
+> useful (and our log message should not depend on external material
+> so heavily to begin with).
+>
 
-> Note that it's a little funky to be accessing the cache as a different user than
-> the one who created it. This should work reliably when the cache was created by
-> your normal user, but then accessed as root, because root has permissions to
-> access the socket. But if you spawn a cache daemon as root (because the _first_
-> operation you perform is as root, which automatically starts a daemon to store
-> the cached credential), then it's likely you won't be able to access it as your
-> regular user.
+You are right, commit information with the original thread link may make
+it difficult for readers to read. I will pay attention.
 
-I wonder if this suggests a missing feature in
-git-credential-cache(1): if the manpage advertised a way to launch the
-daemon through an explicit command, similar to 'ssh-agent', then a
-user could run that as themselves before running other commands that
-communicate with it as another user.
+> So let's think aloud to see what use case this may be helpful, and
+> how the proposed solution makes the world a better place.
+>
+> If I understand correctly, the use case this tries to help is this:
+>
+>  * You had sent the v1 iteration of topic.  It was in the range
+>    B1..T1 where B1 is the tip of the integration branch (like
+>    'master') from the upstream.
+>
+>  * To prepare for the v2 iteration, not only you updated individual
+>    commits, you rebased the series on a new upstream.  Now the topic
+>    is in the range B2..T2, where B2 is the tip of the integration
+>    branch from the upstream, and it is very likely that B2 is a
+>    descendant of B1.
+>
+> And you want to find out how your commits in T2 (new iteration)
+> compares with those in T1 (old iteration).  Normally,
+>
+>     $ git range-diff T1...T2
+>
+> would be the shortest-to-type and correct version but that is
+> invalidated because you rebased.
+>
+>     ---o---B1--b---b---b---B2
+>             \               \
+>              t---t---T1      s---s---s---T2
+>
+> You'd have commits B1..T1 on the left hand side of the range-diff,
+> while the right hand side has not just B2..T2 but also commits in
+> the range B1..B2, too.
+>
+> By using --left-only (i.e. show only those pair that maps from
+> commits in the left range), you can exclude the commits in the
+> B1..B2.
+>
+>     $ git range-diff --left-only T1...T2
+>
+> I however wonder what --left-only (Suppress commits that are missing
+> from the first range) would do to commits in range B2..T2 (they are
+> all yours) that are (1) added since the v1 iteration, or (2)
+> modified so drastically that no matching commit is found.  With the
+> right invocation, of course,
+>
+>     $ git range-diff B1..T1 B2..T2
+>
+> you would not have such a problem.  If 2 't's in B1..T1 correspond
+> to 2 of the 3 's's in B2..T2, at least the presense of the third 's'
+> that did not match would show up in the output, making it clear that
+> you have one more commit relative to the earlier iteration.  If use
+> of --left-only filters it out, the output may be misleading to the
+> readers, no?
+>
+> I started writing (or "thinking aloud") hoping that I can help
+> coming up with a better log message to describe the problem being
+> solved, but I ended up with "does this make the system better?"
 
-All that said: John, why are you running git as root in the first
-place?  It's likely that it's safer to run git as a different user and
-use a separate command such as rsync to perform the privileged deploy
-action.
+Junio, thank you for elaborating this issue in detail and clearly.
+I probably understand what you mean by "git range-diff B1..T1 B2..T2"
+ to correctly output the commits on my two version topic branch, without
+including the upstream commits of B1..B2.So we don=E2=80=99t even need to s=
+pecify
+the `--left-only` to avoid the output of B1...B2, right?
 
-Thanks,
-Jonathan
+The only thing I can think of now is that if users tend to use T1...T2
+to compare
+ the differences between the two topics, will the upstream commit in
+B1...B2 appear
+more abrupt?
+
+Thanks.
