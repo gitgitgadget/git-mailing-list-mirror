@@ -8,86 +8,90 @@ X-Spam-Status: No, score=-14.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F12D8C433E6
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BAA0FC433E0
 	for <git@archiver.kernel.org>; Sat, 13 Mar 2021 16:18:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BBCD364F23
+	by mail.kernel.org (Postfix) with ESMTP id 7780664F0F
 	for <git@archiver.kernel.org>; Sat, 13 Mar 2021 16:18:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234065AbhCMQSA (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S234059AbhCMQSA (ORCPT <rfc822;git@archiver.kernel.org>);
         Sat, 13 Mar 2021 11:18:00 -0500
-Received: from mout.web.de ([212.227.15.14]:36795 "EHLO mout.web.de"
+Received: from mout.web.de ([212.227.15.14]:44597 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234007AbhCMQRm (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Mar 2021 11:17:42 -0500
+        id S234000AbhCMQRf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 Mar 2021 11:17:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1615652257;
-        bh=q4QPXj4ontWsdTjUNKmEw+bk5PzTG0Ec/MteBOsGN3Y=;
+        s=dbaedf251592; t=1615652250;
+        bh=20KP0g/1+hEss9RPhO792+eZD8VTznRXMZY6z6+JZzo=;
         h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
-        b=BDB06OLnaINxTTLbgXLVm1aYe8LhoBNEO84y2Wlf1ue/h67+JhIvZgNCkzeDAetUM
-         YL5u0Z71P8q+iOyh5IuBHSxdawy82+Bv8lwz04h1unjgEZg5SE0Jq3/QO9OFqwu6QS
-         Kx5/WMHIZlL7hCsX4zKuPI/1Ue+uvh96c6hQeikQ=
+        b=AWV8Qf6zCiV9GR5qtKTEVG6pH4glYOrh3OznhWuowHx01yQQL00xRIDQRzR21QAC2
+         ZPyUZ0JmOr8qZ8SryPEyXlN39qHzLFM/VdL4SVfBwMCggfp+dNTLGpGk7j2yz3W6UZ
+         mW/cELGwqo0IFyGtlGOztDdEm0ypinb1D3x0Y2NE=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
 Received: from Mini-von-Rene.fritz.box ([79.203.24.70]) by smtp.web.de
- (mrweb001 [213.165.67.108]) with ESMTPSA (Nemesis) id
- 0MfHQo-1l6DoB2y66-00OnWM; Sat, 13 Mar 2021 17:17:37 +0100
+ (mrweb003 [213.165.67.108]) with ESMTPSA (Nemesis) id
+ 0MV4hR-1lDbWh2jin-00YTe8; Sat, 13 Mar 2021 17:17:30 +0100
 To:     Git List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jameson Miller <jamill@microsoft.com>
+        Jonathan Nieder <jrnieder@gmail.com>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe=2e?= <l.s.r@web.de>
-Subject: [PATCH] mem-pool: drop trailing semicolon from macro definition
-Message-ID: <87289f1a-3f64-713b-6c29-210faf87bf98@web.de>
-Date:   Sat, 13 Mar 2021 17:17:37 +0100
+Subject: [PATCH] block-sha1: drop trailing semicolon from macro definition
+Message-ID: <f8122736-e729-5d35-e1e1-78a213816d4a@web.de>
+Date:   Sat, 13 Mar 2021 17:17:30 +0100
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:78.0)
  Gecko/20100101 Thunderbird/78.8.1
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:d6+WR1y6dq8/FKtLX7/pNCI/c9+vj8RWhDHxqKc+XHe6uVOQTK5
- oWhPbwqoEKJCBMUFhsVp0TCseFB5cqWUI43uaxNN4IEwtTqQ5Y7pQi2MeNoGdPhh/5HkBJO
- oD7Ht+/WJ8d75oRZ7PrLc/8Ky6Pm00xBZDZ3XYU4mDhy2CXxZyTIO1KG478bzZXe9Moaphr
- /+eTydLAFQYnY4g4I3M9A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:1nv/64sQF/k=:/GfAF95gDAr/TGsz7qkkyP
- TpaqqMZ9GNzTM69B70Zrz3iJ+sZBbIWJuv90JTydQRaxX6S8SiA62S/M5i96tz8qwn/X3Xvbk
- FlcBfaZKIeGzgu/Ey4bcIXNJhCtFG93qtBqPSYYACpwgHLr9h1qgqImQchyS5eJTC/GR+PvPF
- LcDoX8FSRgP0cfSJQ+LUBtlkfTEIQJRDDvIUbTrJVrhWm2GDqfy0O5NHeHe1ZV7L2SdAQKgJ+
- qE6z80RS8WYhwBGyIxbIb5x0161CPkqOvnXtg23zwsjOLpYTA+Em2DHFa9nLavuJo9cbtY8OF
- YNtRa3BjSi7wpHxSxO/rcsBXvY7D+xjd9mJ8ani7E231Jddi8DkQ3kjp01LwYs3dVc0mCawU9
- xrgoj/uxmXg7hEGAklkOX5KDJiJWeqdb+hN3vPw+1gqqc8cIvv0ZLKCAeK7VCz5L+Q2xn0Ehs
- BgLg6UT/nxlzVt8aNu4cD0eljEX+7QXN0vbvaAsGGurv20RQENXZ4NrUIc8/CQ52kqLlUJfrs
- rEVAamrCe9ZjWjZocYH5yQUvZFOWStLUYMdsojzUc3vWl6dIue6xq7vwRgn5xHV6G4QXVWojB
- OFsL8niq6XNPd5vcCFOPu1dp71t1vzmmZygIpTzuxZ6kdqOlJ56mRngAF7QIIMuAfusYOmUM8
- 27tozJbNnQq/wgCDCbGbIRb4tL7uprFl4wnH9qfpv9lANpJgRPCieax0uorP/XG0wU7X52fYA
- ViKUNQ81mUWvrQRPlpv6y3IeRQNXxiqwreS7UuSOkP75164DIdYhSZCTpiOg3c8iB92E1Fn+w
- Jr/0eOnf1z6XWfQ/vNvPhWdq6JplWpDsVSlMa2OYMUJukZGDGb6XgKmOhlyuNBy9T46vOOUMG
- d7Y+enY6uv7cwDdr0yfA==
+X-Provags-ID: V03:K1:fFxB0408iwwxqPurJBXrvfMNgGMDoGHAoqRakHCF0s6qdIfwwGE
+ MLqiIUOMIHFpPdZTUrahqd80V0uxDBs2Ulq1BCwAnM9BbEZ4gHALeLg2ThN2PaoiUvrpNg9
+ AlU5+DOcOmlJv05DwJNRVcyfCdRIBF8WPkdT55ocKWaQfj66Zc1JSHSB4jfDwB6mxmdBz8E
+ c9v6w4RfR0ltHpVmUVB8Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:AbM3+1WMJb8=:1yWbyVptWwQvY6ZPFVkV7R
+ Q5MmaEzDPKNIrRBQV5t/PkQoHnzeQhHhZcbzgWbp1m990/hs7pLd2hI4RLP6m9qRaHj87kjOI
+ iK1A/zQW7g4Rv/S5r1tKwXCYiIOnMIqg/LROxdjhYQzql2k2aYyrJLBliz3WW5EG8nh2gX2UM
+ 1dSNZugJdIz7Y4GjCG8WMC2X6K6dvpGBDNkMG5PuxzmpU4b5QlTVZk2BAc3SOHLvWVBF69fCD
+ lDcchmnuofyYHWP67id5lbfpxMiEujlQ4EDcYs7VCS18E0uywZ2QozuqnI4MedGj+4ituNcsM
+ Ets+Wl5kFWt/nW2omj2dwDE8CZdlTsQtTYwSag2osYmU1Cfrt69oSMJSu2sSfl2NZRyWnTwYP
+ zG5RMrqKlXmErenYfrnKFSVc7Vqv/KP+BgugOpu3UcyInDAoQOmi0lflEkpRA0j2tVQMBayZY
+ 0jHb/OPHDG29FMpy69WU+EbLJs6K00lvA+QrquTKolHekTY25IcNFYgzhL2Vcvbc56mjKY3O9
+ pVsNNlznN33Vyq7AxeuPb0M8aJLV+turuB+RWaTnJFgtbCivekDyjwQjcshVnsH8IgwMG7K2b
+ hJJBgt3DWsexesGa/jc95ueHWyYAuJhCi7xS24ZgFpUEmqwzaFLRSHpegB+rErRQrmQJ4HPpF
+ H/CNde7MC6+ZDf+XNj+GcnSzJhO5hg5YhtK1XP6REscfqmJz3FeFfRDHee4LwdPTEPGNhY5bV
+ aMDjWZvHPG6wmyaKbpqjrASVL4RACE3BlM+6IfA6jiYnzw1ak0sRTYFg3SXmp0aXvj+RGT/4g
+ CWSP4pzDocJ4kfQXCteKEgO5x6DPzgEv/Ci3JY2/wZTr5AKVYC8QbIIdhnV/t61ikWAaDuTBy
+ /Kza8f0g1sfYaDFYVGPg==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Allow BLOCK_GROWTH_SIZE to be used like an integer literal by removing
-the trailing semicolon from its definition.  Also wrap the expression in
-parentheses, to allow it to be used with operators without leading to
-unexpected results.  It doesn't matter for the current use site, but
-make it follow standard macro rules anyway to avoid future surprises.
+23119ffb4e (block-sha1: put expanded macro parameters in parentheses,
+2012-07-22) added a trailing semicolon to the definition of SHA_MIX
+without explanation.  It doesn't matter with the current code, but make
+sure to avoid potential surprises by removing it again.
+
+This allows the macro to be used almost like a function: Users can
+combine it with operators of their choice, but still must not pass an
+expression with side-effects as a parameter, as it would be evaluated
+multiple times.
 
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- mem-pool.c | 2 +-
+ block-sha1/sha1.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/mem-pool.c b/mem-pool.c
-index 8401761dda..ccdcad2e3d 100644
-=2D-- a/mem-pool.c
-+++ b/mem-pool.c
-@@ -5,7 +5,7 @@
- #include "cache.h"
- #include "mem-pool.h"
+diff --git a/block-sha1/sha1.c b/block-sha1/sha1.c
+index 8681031402..1bb6e7c069 100644
+=2D-- a/block-sha1/sha1.c
++++ b/block-sha1/sha1.c
+@@ -70,7 +70,7 @@
+  * the input data, the next mix it from the 512-bit array.
+  */
+ #define SHA_SRC(t) get_be32((unsigned char *) block + (t)*4)
+-#define SHA_MIX(t) SHA_ROL(W((t)+13) ^ W((t)+8) ^ W((t)+2) ^ W(t), 1);
++#define SHA_MIX(t) SHA_ROL(W((t)+13) ^ W((t)+8) ^ W((t)+2) ^ W(t), 1)
 
--#define BLOCK_GROWTH_SIZE 1024*1024 - sizeof(struct mp_block);
-+#define BLOCK_GROWTH_SIZE (1024 * 1024 - sizeof(struct mp_block))
-
- /*
-  * Allocate a new mp_block and insert it after the block specified in
+ #define SHA_ROUND(t, input, fn, constant, A, B, C, D, E) do { \
+ 	unsigned int TEMP =3D input(t); setW(t, TEMP); \
 =2D-
 2.30.2
