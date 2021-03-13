@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2AC1BC433E0
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 753FFC43381
 	for <git@archiver.kernel.org>; Sat, 13 Mar 2021 22:27:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F025164ECD
-	for <git@archiver.kernel.org>; Sat, 13 Mar 2021 22:27:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4C37664EE4
+	for <git@archiver.kernel.org>; Sat, 13 Mar 2021 22:27:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234815AbhCMWWa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 13 Mar 2021 17:22:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45482 "EHLO
+        id S234831AbhCMWWb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 13 Mar 2021 17:22:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234796AbhCMWWO (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S234792AbhCMWWO (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 13 Mar 2021 17:22:14 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B128C061574
-        for <git@vger.kernel.org>; Sat, 13 Mar 2021 14:22:14 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id l11so6740379wrp.7
-        for <git@vger.kernel.org>; Sat, 13 Mar 2021 14:22:14 -0800 (PST)
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 645A6C061765
+        for <git@vger.kernel.org>; Sat, 13 Mar 2021 14:22:13 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id e9so3736909wrw.10
+        for <git@vger.kernel.org>; Sat, 13 Mar 2021 14:22:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=5/yJVBADopBvaw7H3HUHOXZEwnTiSSJ1BMR3ZZdBgxk=;
-        b=ENbu1QkuW4NRilxsZ9o1eqHy0eZa8jtzkyApaNP0pFpXxskWa23C5LnZX7Ienu4T6e
-         XGdRzXQ8hoGXd+J/2Sp7VdIYzJQwKEWF9rSeZwhdZcpICIgGpY4qSiHifDtx+fPTVC9Y
-         nKe6yUU7ind9PfsBGlT04YhpGJUg0h4hXvguKeY9qsuwTR69tNmRWqfyD9QqDGs8nw0T
-         iZ1040LneQr1tkD/7/tdNKmK94e8rdydIrQpklT1o8kn7ziqt3z5pN8YNVWXm3FtF4U/
-         TVR42E0oX/ppXO1aSNoeRufbw9z3xYwBK+33XswQWUZwfFFG9jTX3M8/lt+RIk/L1roQ
-         GMWA==
+        bh=hfbIQ5ZMDbHAwrELzZGGk8AxVsHiSbiG/2xPriEsgMg=;
+        b=M2T4ejO+2BE5UVa8cxcfAAlyHV5szLD+E6Yw0Y9Rox2mU/tQu1Woj3L0gLkHS12tUP
+         BMdUZrNAB46cyfUJRYI0Pa76SlTjo4TIHioUw3QnWEOqkpjWCyuKnu3nIROsVXuTTv6M
+         Lg/s2WEanXHI/bayBl5B//WVX7BcWQTGLw4M9PSS4Gxj6FfckbqVuAMbZGqyfGub6I/o
+         msm9JwBDGS60yIklwQNPLNOI+CK1QL7l7tuKaftV6+SRDeP9/hcFD3+Ud9BrzVEmlg7l
+         MDqy+yKzjsvKrd27B9rynjrlSEGmUc5CRa/yXjrOlangKzChZ6qv929UcxwMztyjqlWE
+         Qqzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=5/yJVBADopBvaw7H3HUHOXZEwnTiSSJ1BMR3ZZdBgxk=;
-        b=SfTgfpjel+mRImJA5oFeLQxrJdhWUHtAxXWemLARFMKhTHW6eYs7GOCbxA1M5KVIpv
-         3fcCmCB4r97qBO+reUPFeWZTpjmtb1ISAU0seCU/yzzeCtmuzTFZd/9bZgJRZyta35e/
-         RRKcK482SL9aYRfCrE4agyCT4E1J63wxe5C2mbKp8HvAo1ZwHnYD7Sj1M19I0Uy1aCq5
-         PjHLz4wI4mZp1wyEjF4iSh0S8gO5oweUQRgBYJXHk4HsZbNiHgdGpwc8UMlKyWtA9Zz3
-         0pGfRB1w5TX1Z7GRNk/QGumySQskfn6KKQyorv2L89bmTEBBfXKrgTBKCIcazbG+KhYh
-         trMg==
-X-Gm-Message-State: AOAM530bTbEj2mMHaCcaftVnzJFu6DCLxPp1Qs1OyDUx1g1G54NjLtk9
-        9WzO1Ioj8u3zSwk7fEnvYbZgUBS/hgc=
-X-Google-Smtp-Source: ABdhPJztsd0mmxkTrffWmRwEnPVhzPy8xh3g/+QDvJRvCpi1Ivv/gsrwladyKFwGNEnwXU8xu93Dpg==
-X-Received: by 2002:a05:6000:1ca:: with SMTP id t10mr20671892wrx.45.1615674133101;
-        Sat, 13 Mar 2021 14:22:13 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s8sm14126990wrn.97.2021.03.13.14.22.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=hfbIQ5ZMDbHAwrELzZGGk8AxVsHiSbiG/2xPriEsgMg=;
+        b=cKT7lFmYqD9L9UQp5bJZHNFP8VNa8TbFjgAtzRhx40GIF9quepCoBhVqL0rPPGbxfd
+         mhHupQ7RCWnxqvdSB2tIHNQDfExYEcBg5n3uoSraKz2IuNlkPFBhn4RirYR0DRoWKoNN
+         OSbdQnkyo6YVmf+FqBs1ZDDuobP3NWojxQOqGa9PeKmCGZgpepn27xaRKuFspTQaiveP
+         HB/MdrLbdoiPPTeyeIMX6HH3SeKYBL5YDqv5TShm0qZs4fM9HTK3IiBdCB2jre7z/V8D
+         GYtN8ZqKZxaYeEWvz0lbykaEWj4cP/67gBl/TFxZh5KL6QR2+4DozBoJpRrL+e52EH7c
+         wZPQ==
+X-Gm-Message-State: AOAM5302rpBXp0diLcrLMT58JLoHMeZ8eiwYlOSeQ/VBA22NbBvb+wmJ
+        gTBP+/GEUvp4Kr3jw5pjKKH8mcchNLQ=
+X-Google-Smtp-Source: ABdhPJxgyutvdbVLxL/zuBYb4uBmSzYslrySRPl6d2T7lc3KeFhXqmdzlo17NXohk0xLRqtV4eHahA==
+X-Received: by 2002:a5d:4281:: with SMTP id k1mr20271529wrq.374.1615674132065;
         Sat, 13 Mar 2021 14:22:12 -0800 (PST)
-Message-Id: <b62e26fb1213b69a2008d4ec2c2cb862329ee0b9.1615674128.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id d16sm13273370wrx.79.2021.03.13.14.22.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 13 Mar 2021 14:22:11 -0800 (PST)
+Message-Id: <9e30f4399abefc8af005a2de97eefe692fdb4848.1615674128.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.853.git.1615674128.gitgitgadget@gmail.com>
 References: <pull.853.git.1615674128.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 13 Mar 2021 22:22:06 +0000
-Subject: [PATCH 6/8] diffcore-rename: add computation of number of unknown
- renames
+Date:   Sat, 13 Mar 2021 22:22:04 +0000
+Subject: [PATCH 4/8] diffcore-rename: only compute dir_rename_count for
+ relevant directories
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,117 +80,96 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-The previous commit can only be effective if we have a computation of
-the number of paths under a given directory which are still have pending
-renames, and expected this number to be recorded in the dir_rename_count
-map under the key UNKNOWN_DIR.  Add the code necessary to compute these
-values.
+When one side adds files to a directory that the other side renamed,
+directory rename detection is used to either move the new paths to the
+newer directory or warn the user about the fact that another path
+location might be better.
 
-Note that this change means dir_rename_count might have a directory
-whose only entry (for UNKNOWN_DIR) was removed by the time merge-ort
-goes to check it.  To account for this, merge-ort needs to check for the
-case where the max count is 0.
+If a parent of the given directory had new files added to it, any
+renames in the current directory are also part of determining where the
+parent directory is renamed to.  Thus, naively, we need to record each
+rename N times for a path at depth N.  However, we can use the
+additional information added to dirs_removed in the last commit to avoid
+traversing all N parent directories in many cases.  Let's use an example
+to explain how this works.  If we have a path named
+   src/old_dir/a/b/file.c
+and src/old_dir doesn't exist on one side of history, but the other
+added a file named src/old_dir/newfile.c, then if one side renamed
+   src/old_dir/a/b/file.c => source/new_dir/a/b/file.c
+then this file would affect potential directory rename detection counts
+for
+   src/old_dir/a/b => source/new_dir/a/b
+   src/old_dir/a   => source/new_dir/a
+   src/old_dir     => source/new_dir
+   src             => source
+adding a weight of 1 to each in dir_rename_counts.  However, if src/
+exists on both sides of history, then we don't need to track any entries
+for it in dir_rename_counts.  That was implemented previously.  What we
+are adding now, is that if no new files were added to src/old_dir/a or
+src/old_dir/b, then we don't need to have counts in dir_rename_count
+for those directories either.
 
-With this change we are now computing the necessary value for each
-directory in dirs_removed, but are not using that value anywhere.  The
-next two commits will make use of the values stored in dirs_removed in
-order to compute whether each relevant_source (that is needed only for
-directory rename detection) has become unnecessary.
+In short, we only need to track counts in dir_rename_count for
+directories whose dirs_removed value is RELEVANT_FOR_SELF.  And as soon
+as we reach a directory that isn't in dirs_removed (signalled by
+returning the default value of NOT_RELEVANT from strintmap_get()), we
+can stop looking any further up the directory hierarchy.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- diffcore-rename.c | 41 +++++++++++++++++++++++++++++++++++++----
- merge-ort.c       |  3 +++
- 2 files changed, 40 insertions(+), 4 deletions(-)
+ diffcore-rename.c | 27 ++++++++++++++++++++++-----
+ 1 file changed, 22 insertions(+), 5 deletions(-)
 
 diff --git a/diffcore-rename.c b/diffcore-rename.c
-index 8fa29076e0aa..9844cd48788e 100644
+index fafec66b29e9..0a17abd46691 100644
 --- a/diffcore-rename.c
 +++ b/diffcore-rename.c
-@@ -699,7 +699,8 @@ static void cleanup_dir_rename_info(struct dir_rename_info *info,
- 	/*
- 	 * Although dir_rename_count was passed in
- 	 * diffcore_rename_extended() and we want to keep it around and
--	 * return it to that caller, we first want to remove any data
-+	 * return it to that caller, we first want to remove any counts in
-+	 * the maps associated with UNKNOWN_DIR entries and any data
- 	 * associated with directories that weren't renamed.
- 	 */
- 	strmap_for_each_entry(info->dir_rename_count, &iter, entry) {
-@@ -711,6 +712,9 @@ static void cleanup_dir_rename_info(struct dir_rename_info *info,
- 			strintmap_clear(counts);
- 			continue;
- 		}
-+
-+		if (strintmap_contains(counts, UNKNOWN_DIR))
-+			strintmap_remove(counts, UNKNOWN_DIR);
- 	}
- 	for (i = 0; i < to_remove.nr; ++i)
- 		strmap_remove(info->dir_rename_count,
-@@ -1125,6 +1129,7 @@ static void handle_early_known_dir_renames(struct dir_rename_info *info,
- 	 * a majority.
- 	 */
+@@ -461,6 +461,8 @@ static void update_dir_rename_counts(struct dir_rename_info *info,
+ 		return;
  
-+	int i;
- 	struct hashmap_iter iter;
- 	struct strmap_entry *entry;
- 
-@@ -1134,10 +1139,38 @@ static void handle_early_known_dir_renames(struct dir_rename_info *info,
- 		return; /* culling incompatbile with break detection */
- 
- 	/*
--	 * FIXME: Supplement dir_rename_count with number of potential
--	 * renames, marking all potential rename sources as mapping to
--	 * UNKNOWN_DIR.
-+	 * Supplement dir_rename_count with number of potential renames,
-+	 * marking all potential rename sources as mapping to UNKNOWN_DIR.
- 	 */
-+	for (i = 0; i < rename_src_nr; i++) {
-+		char *old_dir;
-+		struct diff_filespec *one = rename_src[i].p->one;
+ 	while (1) {
++		int drd_flag = NOT_RELEVANT;
 +
-+		/*
-+		 * sources that are part of a rename will have already been
-+		 * removed by a prior call to remove_unneeded_paths_from_src()
-+		 */
-+		assert(!one->rename_used);
-+
-+		old_dir = get_dirname(one->path);
-+		while (*old_dir != '\0' &&
-+		       NOT_RELEVANT != strintmap_get(dirs_removed, old_dir)) {
-+			char *freeme = old_dir;
-+
-+			increment_count(info, old_dir, UNKNOWN_DIR);
-+			old_dir = get_dirname(old_dir);
-+
-+			/* Free resources we don't need anymore */
-+			free(freeme);
-+		}
-+		/*
-+		 * old_dir and new_dir free'd in increment_count, but
-+		 * get_dirname() gives us a new pointer we need to free for
-+		 * old_dir.  Also, if the loop runs 0 times we need old_dir
-+		 * to be freed.
-+		 */
-+		free(old_dir);
-+	}
- 
- 	/*
- 	 * For any directory which we need a potential rename detected for
-diff --git a/merge-ort.c b/merge-ort.c
-index e2606c73ad88..f2b259986e22 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -1546,6 +1546,9 @@ static void get_provisional_directory_renames(struct merge_options *opt,
+ 		/* Get old_dir, skip if its directory isn't relevant. */
+ 		dirname_munge(old_dir);
+ 		if (info->relevant_source_dirs &&
+@@ -509,16 +511,31 @@ static void update_dir_rename_counts(struct dir_rename_info *info,
  			}
  		}
  
-+		if (max == 0)
-+			continue;
-+
- 		if (bad_max == max) {
- 			path_msg(opt, source_dir, 0,
- 			       _("CONFLICT (directory rename split): "
+-		if (strintmap_contains(dirs_removed, old_dir))
++		/*
++		 * Above we suggested that we'd keep recording renames for
++		 * all ancestor directories where the trailing directories
++		 * matched, i.e. for
++		 *   "a/b/c/d/e/foo.c" -> "a/b/some/thing/else/e/foo.c"
++		 * we'd increment rename counts for each of
++		 *   a/b/c/d/e/ => a/b/some/thing/else/e/
++		 *   a/b/c/d/   => a/b/some/thing/else/
++		 * However, we only need the rename counts for directories
++		 * in dirs_removed whose value is RELEVANT_FOR_SELF.
++		 * However, we add one special case of also recording it for
++		 * first_time_in_loop because find_basename_matches() can
++		 * use that as a hint to find a good pairing.
++		 */
++		if (dirs_removed)
++			drd_flag = strintmap_get(dirs_removed, old_dir);
++		if (drd_flag == RELEVANT_FOR_SELF || first_time_in_loop)
+ 			increment_count(info, old_dir, new_dir);
+-		else
+-			break;
+ 
++		first_time_in_loop = 0;
++		if (drd_flag == NOT_RELEVANT)
++			break;
+ 		/* If we hit toplevel directory ("") for old or new dir, quit */
+ 		if (!*old_dir || !*new_dir)
+ 			break;
+-
+-		first_time_in_loop = 0;
+ 	}
+ 
+ 	/* Free resources we don't need anymore */
 -- 
 gitgitgadget
 
