@@ -8,65 +8,65 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BF841C43332
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EF14EC43331
 	for <git@archiver.kernel.org>; Sat, 13 Mar 2021 22:27:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A844664EE8
+	by mail.kernel.org (Postfix) with ESMTP id C422464EDF
 	for <git@archiver.kernel.org>; Sat, 13 Mar 2021 22:27:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234853AbhCMWWg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 13 Mar 2021 17:22:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45486 "EHLO
+        id S234858AbhCMWWh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 13 Mar 2021 17:22:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45484 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234808AbhCMWWP (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S234807AbhCMWWP (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 13 Mar 2021 17:22:15 -0500
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5164BC061574
-        for <git@vger.kernel.org>; Sat, 13 Mar 2021 14:22:15 -0800 (PST)
-Received: by mail-wr1-x436.google.com with SMTP id j18so3740293wra.2
-        for <git@vger.kernel.org>; Sat, 13 Mar 2021 14:22:15 -0800 (PST)
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA769C061574
+        for <git@vger.kernel.org>; Sat, 13 Mar 2021 14:22:14 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id j18so3740286wra.2
+        for <git@vger.kernel.org>; Sat, 13 Mar 2021 14:22:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=R0z04Hb9b++84+nOhWzCIZ+vt6ikrVYjzV56JkLhAzc=;
-        b=LSHPc5UP8AjkUrcSg+qk2ug+YgS/SJ3j5i2K+tMcSQckBea3MhUVzLr6YMN2EWKMpg
-         YLAsYUnwwEEgWcQjDSknIu0WnVbwkUfuTfETD9k73QfBSj7BoGiVtoytHp1OIlYAKlMg
-         YzVddNDzexvSBTozKd8YBunav1mmDWVIz+eM82RbY0zMLNsVAl1OB4a4hZtWAOl3PadN
-         CwU0OXA7jtjWWKN++p6LgoU3s9s6y0D3a5+GHUqTkOrPjekNxg8arSsQOLWJ1mcVtY1v
-         BMQlUXcqMitWbws6YY4UsYOQCudHVhdeWRkm4Nw5Dx42xOzQSyEGZRJZ5VNE19ZXzbb+
-         K3OA==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=4FRkm4/v++XAhRpciS2SHqHnvytpt2phjEYNeQhsfmU=;
+        b=tczDFaD9GHR76uk4wEChP4sxYAqSERGY5lKPtgBBmqrYW8kV4Q0NBfmWRfYcqJVLs7
+         +QJuTptvUuUbIv+1lBXDF1n+M3BdJrTtswrMUjvUo8jzeEJtjmMCQq8qMLFpQbLgyPXi
+         XR1dn5RAP0TpSRXdtrS1yhFUixSGtKWvurDB5ldLliGRPvckri3v1GyhVccMm1wo38US
+         m1uPD4zV1sDsDNWRXwq+o9EV1bYLaLtLbqDL//ogzktCgU3jAvDaWD3SKG8Q9MnockK7
+         WuQSiCgE2ymGusIBiGh0ZERT/Cjw3vtWU0/vqHT+vyTxki9/WLOezA34nnKnPtObsbCM
+         +V5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=R0z04Hb9b++84+nOhWzCIZ+vt6ikrVYjzV56JkLhAzc=;
-        b=t7LJUly7qmNohP1/3JDbabbMcIQG42ypCBc2y2JcNz9bi2bGFm0fs6u70NMoN9SHjf
-         AITVjZHZ4nP2y/gPqOc1RuHdterUkadEzrm2ru/mICnWwgx8ci9+e20UgGelnTRZa0aS
-         RgA3IsQ+CnX332mRR/6VDqnuf6+f9w5x57Q2tFhgf21rhgdEoM5BQb9fxqKzo/sB28K4
-         TmL8zpvoV096UytQz9CCwU2xwW9JLvylUDPLiOhDNtQK4cH+vEIsz7oxrrqMUQr3ngTh
-         FwaJQYCCkTgmM4uu41UCzMh7IwuViTPELwPTSpBI8UgbBDqFhR3aIPGnTVQ8Bn6AYR6C
-         cY2w==
-X-Gm-Message-State: AOAM533tITEzMSRTt/fnhQty38zEcrVcnMFPxACEocUDd5G88x3zpuUh
-        LQA90Nlw2TBeBRxImPKd0QEl1+TNm0w=
-X-Google-Smtp-Source: ABdhPJzofzo0WRcbrc0d6R1sbwbzbAfHpwTOIEkNWpNryOlg7bri8vrMBpx5qC7AjKc5SbS7VSOozA==
-X-Received: by 2002:adf:fb91:: with SMTP id a17mr20328648wrr.93.1615674134102;
-        Sat, 13 Mar 2021 14:22:14 -0800 (PST)
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=4FRkm4/v++XAhRpciS2SHqHnvytpt2phjEYNeQhsfmU=;
+        b=XbGwTd8wb8PAosJeNceK76HfuiQa25iC2M/NbeOuqmBe7DMsJKpa8h0aENhCm9gcFY
+         G7tSqI6zSm5iWfg4Bvk+bFFwixbqRSYrDMDOta4dHNHH2jgRSk31bBVrpjSt8sFSr2SX
+         TDZylV3CxKKdpAdoK/H29KfRIaev6XbR9qammGuoDh6luN2mui+YagSFb9J+Dy8/sFXf
+         lDR4o9ZJoyQrVhNmq7WXd3lkoa3jELRhnQs48Y1lQ/ujZtWvNi9+3dT7TqKy2Lyg3n+m
+         v9SR6+EDB3h0U5wRTjPxHJtHLMBeTDEwVhxxVxH5x4BlbeDSLjMkiKRdqPZ426/Vd1Ap
+         ZA7Q==
+X-Gm-Message-State: AOAM5328jcpYpM3HmVGEJTmhxiawUbqhB+TM2PgCEt58YWmiy4rhHqq4
+        Zm54Ydp9iHMCxsPF0MXzOrDs95dsVGs=
+X-Google-Smtp-Source: ABdhPJyNussruSecqpb4RQzLzuNgU0HcXoMg+Hd8T4mZHOuxY0x0chs4MpMDMncmKvrD6FMAIYnWYw==
+X-Received: by 2002:a5d:6a86:: with SMTP id s6mr21310997wru.307.1615674133598;
+        Sat, 13 Mar 2021 14:22:13 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n6sm8659226wmd.27.2021.03.13.14.22.13
+        by smtp.gmail.com with ESMTPSA id v18sm14813251wrf.41.2021.03.13.14.22.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Sat, 13 Mar 2021 14:22:13 -0800 (PST)
-Message-Id: <495c10937b7f2b23b7d2a52c254e02ae9ce810a1.1615674128.git.gitgitgadget@gmail.com>
+Message-Id: <1de40b1b88adee4d40a141f1eb796676b18da670.1615674128.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.853.git.1615674128.gitgitgadget@gmail.com>
 References: <pull.853.git.1615674128.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 13 Mar 2021 22:22:08 +0000
-Subject: [PATCH 8/8] diffcore-rename: determine which relevant_sources are no
- longer relevant
-MIME-Version: 1.0
+Date:   Sat, 13 Mar 2021 22:22:07 +0000
+Subject: [PATCH 7/8] merge-ort: record the reason that we want a rename for a
+ file
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Fcc:    Sent
+MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Derrick Stolee <dstolee@microsoft.com>,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
@@ -80,125 +80,76 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-As noted a few commits ago ("diffcore-rename: only compute
-dir_rename_count for relevant directories"), when a source file rename
-is used as part of directory rename detection, we need to increment
-counts for each ancestor directory in dirs_removed with value
-RELEVANT_FOR_SELF.  However, a few commits ago ("diffcore-rename: check
-if we have enough renames for directories early on"), we may have
-downgraded all relevant ancestor directories from RELEVANT_FOR_SELF to
-RELEVANT_FOR_ANCESTOR.
-
-For a given file, if no ancestor directory is found in dirs_removed with
-a value of RELEVANT_FOR_SELF, then we can downgrade
-relevant_source[PATH] from RELEVANT_LOCATION to RELEVANT_NO_MORE.  This
-means we can skip detecting a rename for that particular path (and any
-other paths in the same directory).
-
-For the testcases mentioned in commit 557ac0350d ("merge-ort: begin
-performance work; instrument with trace2_region_* calls", 2020-10-28),
-this change improves the performance as follows:
-
-                            Before                  After
-    no-renames:        5.680 s ±  0.096 s     5.665 s ±  0.129 s
-    mega-renames:     13.812 s ±  0.162 s    11.435 s ±  0.158 s
-    just-one-mega:   506.0  ms ±  3.9  ms   494.2  ms ±  6.1  ms
-
-While this improvement looks rather modest for these testcases (because
-all the previous optimizations were sufficient to nearly remove all time
-spent in rename detection already),  consider this alternative testcase
-tweaked from the ones in commit 557ac0350d as follows
-
-    <Same initial setup as commit 557ac0350d, then...>
-    $ git switch -c add-empty-file v5.5
-    $ >drivers/gpu/drm/i915/new-empty-file
-    $ git add drivers/gpu/drm/i915/new-empty-file
-    $ git commit -m "new file"
-    $ git switch 5.4-rename
-    $ git cherry-pick --strategy=ort add-empty-file
-
-For this testcase, we see the following improvement:
-
-                            Before                  After
-    pick-empty:        1.936 s ±  0.024 s     688.1 ms ±  4.2 ms
-
-So roughly a factor of 3 speedup.  At $DAYJOB, there was a particular
-repository and cherry-pick that inspired this optimization; for that
-case I saw a speedup factor of 7 with this optimization.
+There are two different reasons we might want a rename for a file -- for
+three-way content merging or as part of directory rename detection.
+Record the reason.  diffcore-rename will potentially be able to filter
+some of the ones marked as needed only for directory rename detection,
+if it can determine those directory renames based solely on renames
+found via exact rename detection and basename-guided rename detection.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- diffcore-rename.c | 51 ++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 50 insertions(+), 1 deletion(-)
+ diffcore.h  |  6 ++++++
+ merge-ort.c | 15 ++++++++++-----
+ 2 files changed, 16 insertions(+), 5 deletions(-)
 
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index 9844cd48788e..7cc24592617e 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -1129,7 +1129,7 @@ static void handle_early_known_dir_renames(struct dir_rename_info *info,
- 	 * a majority.
+diff --git a/diffcore.h b/diffcore.h
+index d5a497b7a162..cf8d4cb8617d 100644
+--- a/diffcore.h
++++ b/diffcore.h
+@@ -167,6 +167,12 @@ enum dir_rename_relevance {
+ 	RELEVANT_FOR_ANCESTOR = 1,
+ 	RELEVANT_FOR_SELF = 2
+ };
++/* file_rename_relevance: the reason(s) we want rename information for a file */
++enum file_rename_relevance {
++	RELEVANT_NO_MORE = 0,  /* i.e. NOT relevant */
++	RELEVANT_CONTENT = 1,
++	RELEVANT_LOCATION = 2
++};
+ 
+ void partial_clear_dir_rename_count(struct strmap *dir_rename_count);
+ 
+diff --git a/merge-ort.c b/merge-ort.c
+index f2b259986e22..7f5750ce6ab0 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -99,16 +99,18 @@ struct rename_info {
+ 	struct strmap dir_renames[3];
+ 
+ 	/*
+-	 * relevant_sources: deleted paths for which we need rename detection
++	 * relevant_sources: deleted paths wanted in rename detection, and why
+ 	 *
+ 	 * relevant_sources is a set of deleted paths on each side of
+ 	 * history for which we need rename detection.  If a path is deleted
+ 	 * on one side of history, we need to detect if it is part of a
+ 	 * rename if either
+-	 *    * we need to detect renames for an ancestor directory
+ 	 *    * the file is modified/deleted on the other side of history
++	 *    * we need to detect renames for an ancestor directory
+ 	 * If neither of those are true, we can skip rename detection for
+-	 * that path.
++	 * that path.  The reason is stored as a value from enum
++	 * file_rename_relevance, as the reason can inform the algorithm in
++	 * diffcore_rename_extended().
  	 */
+ 	struct strintmap relevant_sources[3];
  
--	int i;
-+	int i, new_num_src;
- 	struct hashmap_iter iter;
- 	struct strmap_entry *entry;
+@@ -677,8 +679,11 @@ static void add_pair(struct merge_options *opt,
+ 		unsigned content_relevant = (match_mask == 0);
+ 		unsigned location_relevant = (dir_rename_mask == 0x07);
  
-@@ -1193,6 +1193,55 @@ static void handle_early_known_dir_renames(struct dir_rename_info *info,
- 				      RELEVANT_FOR_ANCESTOR);
- 		}
- 	}
-+
-+	for (i = 0, new_num_src = 0; i < rename_src_nr; i++) {
-+		struct diff_filespec *one = rename_src[i].p->one;
-+		int val;
-+
-+		val = strintmap_get(relevant_sources, one->path);
-+
-+		/*
-+		 * sources that were not found in relevant_sources should
-+		 * have already been removed by a prior call to
-+		 * remove_unneeded_paths_from_src()
-+		 */
-+		assert(val != -1);
-+
-+		if (val == RELEVANT_LOCATION) {
-+			int removable = 1;
-+			char *dir = get_dirname(one->path);
-+			while (1) {
-+				char *freeme = dir;
-+				int res = strintmap_get(dirs_removed, dir);
-+
-+				/* Quit if not found or irrelevant */
-+				if (res == NOT_RELEVANT)
-+					break;
-+				/* If RELEVANT_FOR_SELF, can't remove */
-+				if (res == RELEVANT_FOR_SELF) {
-+					removable = 0;
-+					break;
-+				}
-+				/* Else continue searching upwards */
-+				assert(res == RELEVANT_FOR_ANCESTOR);
-+				dir = get_dirname(dir);
-+				free(freeme);
-+			}
-+			free(dir);
-+			if (removable) {
-+				strintmap_set(relevant_sources, one->path,
-+					      RELEVANT_NO_MORE);
-+				continue;
-+			}
+-		if (content_relevant || location_relevant)
+-			strintmap_set(&renames->relevant_sources[side], pathname, 1);
++		if (content_relevant || location_relevant) {
++			/* content_relevant trumps location_relevant */
++			strintmap_set(&renames->relevant_sources[side], pathname,
++				      content_relevant ? RELEVANT_CONTENT : RELEVANT_LOCATION);
 +		}
-+
-+		if (new_num_src < i)
-+			memcpy(&rename_src[new_num_src], &rename_src[i],
-+			       sizeof(struct diff_rename_src));
-+		new_num_src++;
-+	}
-+
-+	rename_src_nr = new_num_src;
- }
+ 	}
  
- void diffcore_rename_extended(struct diff_options *options,
+ 	one = alloc_filespec(pathname);
 -- 
 gitgitgadget
+
