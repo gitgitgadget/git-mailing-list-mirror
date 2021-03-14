@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03CB8C4332B
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A655C4332E
 	for <git@archiver.kernel.org>; Sun, 14 Mar 2021 18:48:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D71B264EB0
+	by mail.kernel.org (Postfix) with ESMTP id C46CF64EC3
 	for <git@archiver.kernel.org>; Sun, 14 Mar 2021 18:48:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234119AbhCNSsW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 14 Mar 2021 14:48:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52090 "EHLO
+        id S234105AbhCNSsV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 14 Mar 2021 14:48:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233912AbhCNSrr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Mar 2021 14:47:47 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD430C061762
-        for <git@vger.kernel.org>; Sun, 14 Mar 2021 11:47:46 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id g25so6841617wmh.0
-        for <git@vger.kernel.org>; Sun, 14 Mar 2021 11:47:46 -0700 (PDT)
+        with ESMTP id S233985AbhCNSrt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Mar 2021 14:47:49 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBFD1C061764
+        for <git@vger.kernel.org>; Sun, 14 Mar 2021 11:47:47 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id f22-20020a7bc8d60000b029010c024a1407so18961124wml.2
+        for <git@vger.kernel.org>; Sun, 14 Mar 2021 11:47:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=dsdlIfBIWjFjjQUFEJkLCxf+5hhOr4wPB3YEkStWjUU=;
-        b=vIgDfkFPOz8Vd3yLBn3McFJ/FVnPLWbdTRvvSY2n9xwDJQFt8isvTUeCT8tTbT7MQ5
-         4Y3akydBH++SRnr3Lds922i6Ox6lArmL3rXy7sP8lht8Ne6c2mQ9yGQchmGUyydiNPTp
-         /WbpB2xMgxUCWmckuxWpWte5A6eDLAbz0Ug0AHE5kfGeMsw9YdT/1YTHYVlfNRSAKuV5
-         0n5TEfpI5JbTGfWks38bYfO+9akvl5gMhgrw4TQt01DATdj5q9Xv7/V455q9suDeuU+g
-         NYUuSTW6EFxD9HdXFRFocBa7xCp5S0/pUKYaWZ6tbkjuc4EZ9kCCr6RBLybRkI+98M4o
-         A0Lg==
+        bh=1KBF5N6/UdlX0Uvlr+J/y3JlDuq6Ng41G1ae0vnw04Y=;
+        b=n+eyJmEndlANTYNbjmPPO2tn0m7GYc0vfBPKrDUjjuW/QOSfyaqDx59J1oc0bxswBM
+         ALPVJWqGDfPjjN9GfEr+E8dNsIV36jF8GCSA6QHYYV48kD+gtAHhDr1HwXvHcmCwZLR0
+         pC/nGWXNqLocrFnZBxWONqyFc2An87V7a5vLNlbElcLiIBwgOx1d4oRJreQptUD/2oLT
+         7o2q96jQ5j9U3GVtBIdnYIi1+nPr0ZQvZL+iFmdwU0IyY6z4luyFExVONg4MOTW7cAGz
+         qxSd6dfNe2+VtW33iFl50jUyLePBEmmdpjmDbSrUNSf240tpzGjAmAgMo/UOZnBKbfMW
+         TwXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=dsdlIfBIWjFjjQUFEJkLCxf+5hhOr4wPB3YEkStWjUU=;
-        b=Q/VBbkDhcmk/Kh4t4UgYhWmsIZTEMnVCrbdNU8i00RWgffyvQ10d1j3dfXqkBTWoF/
-         Py6yiwsNNsxPdw1kxblojfVCdNC26drzJ5FqpYMgh/n60qLSboRa1a6rX89COsV63kDo
-         3kJiVYMmwxGbYtbjVsCeOxmoOsUYL8KEI+dtLv/ilOfTKeXlD3fyGFqpbMP/eytYch1A
-         bFfMHSvrIpo5VA+w/mvLGXTL9Fmbz4FgmwdMvsxcR9SaMHzCEZlSqI6TnTPEeQxrOG2T
-         H37V/mHlV+5b01JBe4Bq3vx2eh7zetnWzV2SJfNWwiYExZTSk+k9vjkohjKOHodMN9yQ
-         MVHQ==
-X-Gm-Message-State: AOAM533yw7WI46SuoGT92BYZh35QoYayWUdRC1aqzSEIZsxDd1BPbzD+
-        sCj9tm9pZ9WxnoVX7drrC+TmjXZSZjg=
-X-Google-Smtp-Source: ABdhPJypClUErR7rw+o1XFMj7/wOKiU5uhHzpczPWgC+pTWUaMIiXCAz4KiVPfQO0WsRSJXglIqI0w==
-X-Received: by 2002:a1c:bc82:: with SMTP id m124mr22711540wmf.118.1615747665665;
-        Sun, 14 Mar 2021 11:47:45 -0700 (PDT)
+        bh=1KBF5N6/UdlX0Uvlr+J/y3JlDuq6Ng41G1ae0vnw04Y=;
+        b=TUFmWcLSM5A6jQUZbzF+4xswgQ3S6Gauepb174hkYv0gerEJX5k9VCGgWJUSDNCDa7
+         gulAXcjymQoi+WzSM3ooakXB4x4O+XmnG6ZaUGZXXfbHJ+qBFOhUEx7B2c7BbikPN4EQ
+         GN4C7LPeP3EIaTh0R83qKOr+NX6i2OOVLqTUPNLEQn2mPzsPpnFp9DTF+SUUzPRBZVR8
+         1yqF+qQuY+RbM5Cm8a2L4KW/nvxyY2dNrQGLMm02C5aoGv5hKPRuVljLbbGSgSJUMun1
+         2lqxnh55MaW+iCKvW7MG4mQb+o2BB+WWXtwSn2IHAjr+pBYg/WRAmYtrceXxA4j9N2u8
+         LSeQ==
+X-Gm-Message-State: AOAM531KTnXrFR+npM0h1PQAXwN3SW8wEK0Aaiv3pABFz+C8d71yYa4f
+        qEV+uPjyT1sNn22wSN69+3kjkDtC1Mc=
+X-Google-Smtp-Source: ABdhPJw7SYMTXY8SLePzpd1C0NFa+gRT3H9dqg9ZZiu7TVb1eZ0FxJjtQ5zwV8LlvhkpopMmhLZoAg==
+X-Received: by 2002:a1c:ba88:: with SMTP id k130mr22764948wmf.42.1615747666204;
+        Sun, 14 Mar 2021 11:47:46 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a13sm14122834wrp.31.2021.03.14.11.47.45
+        by smtp.gmail.com with ESMTPSA id y18sm16460587wrw.39.2021.03.14.11.47.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Sun, 14 Mar 2021 11:47:45 -0700 (PDT)
-Message-Id: <a10ab9e68809e1045e4d181fa0cc807dbe6953cd.1615747662.git.gitgitgadget@gmail.com>
+Message-Id: <206a82200ca1d1da2232a98f9ec63ef7559fe97e.1615747662.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.899.v2.git.1615747662.gitgitgadget@gmail.com>
 References: <pull.899.git.1615228580.gitgitgadget@gmail.com>
         <pull.899.v2.git.1615747662.gitgitgadget@gmail.com>
 From:   "Andrzej Hunt via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 14 Mar 2021 18:47:37 +0000
-Subject: [PATCH v2 4/9] worktree: fix leak in dwim_branch()
+Date:   Sun, 14 Mar 2021 18:47:38 +0000
+Subject: [PATCH v2 5/9] init: remove git_init_db_config() while fixing leaks
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,73 +75,146 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Andrzej Hunt <ajrhunt@google.com>
 
-Make sure that we release the temporary strbuf during dwim_branch() for
-all codepaths (and not just for the early return).
+The primary goal of this change is to stop leaking init_db_template_dir.
+This leak can happen because:
+ 1. git_init_db_config() allocates new memory into init_db_template_dir
+    without first freeing the existing value.
+ 2. init_db_template_dir might already contain data, either because:
+  2.1 git_config() can be invoked twice with this callback in a single
+      process - at least 2 allocations are likely.
+  2.2 A single git_config() allocation can invoke the callback multiple
+      times for a given key (see further explanation in the function
+      docs) - each of those calls will trigger another leak.
 
-This leak appears to have been introduced in:
-  f60a7b763f (worktree: teach "add" to check out existing branches, 2018-04-24)
+The simplest fix for the leak would be to free(init_db_template_dir)
+before overwriting it. Instead we choose to convert to fetching
+init.templatedir via git_config_get_value() as that is more explicit,
+more efficient, and avoids allocations (the returned result is owned by
+the config cache, so we aren't responsible for freeing it).
 
-Note that UNLEAK(branchname) is still needed: the returned result is
-used in add(), and is stored in a pointer which is used to point at one
-of:
-  - a string literal ("HEAD")
-  - member of argv (whatever the user specified in their invocation)
-  - or our newly allocated string returned from dwim_branch()
-Fixing the branchname leak isn't impossible, but does not seem
-worthwhile given that add() is called directly from cmd_main(), and
-cmd_main() returns immediately thereafter - UNLEAK is good enough.
+If we remove init_db_template_dir, git_init_db_config() ends up being
+responsible only for forwarding core.* config values to
+platform_core_config(). However platform_core_config() already ignores
+non-core.* config values, so we can safely remove git_init_db_config()
+and invoke git_config() directly with platform_core_config() as the
+callback.
 
-This leak was found when running t0001 with LSAN, see also LSAN output
-below:
+The platform_core_config forwarding was originally added in:
+  287853392a (mingw: respect core.hidedotfiles = false in git-init again, 2019-03-11
+And I suspect the potential for a leak existed since the original
+implementation of git_init_db_config in:
+  90b45187ba (Add `init.templatedir` configuration variable., 2010-02-17)
 
-Direct leak of 60 byte(s) in 1 object(s) allocated from:
+LSAN output from t0001:
+
+Direct leak of 73 byte(s) in 1 object(s) allocated from:
     #0 0x49a859 in realloc /home/abuild/rpmbuild/BUILD/llvm-11.0.0.src/build/../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:164:3
-    #1 0x9ab076 in xrealloc /home/ahunt/oss-fuzz/git/wrapper.c:126:8
-    #2 0x939fcd in strbuf_grow /home/ahunt/oss-fuzz/git/strbuf.c:98:2
-    #3 0x93af53 in strbuf_splice /home/ahunt/oss-fuzz/git/strbuf.c:239:3
-    #4 0x83559a in strbuf_check_branch_ref /home/ahunt/oss-fuzz/git/object-name.c:1593:2
-    #5 0x6988b9 in dwim_branch /home/ahunt/oss-fuzz/git/builtin/worktree.c:454:20
-    #6 0x695f8f in add /home/ahunt/oss-fuzz/git/builtin/worktree.c:525:19
-    #7 0x694a04 in cmd_worktree /home/ahunt/oss-fuzz/git/builtin/worktree.c:1036:10
-    #8 0x4cd60d in run_builtin /home/ahunt/oss-fuzz/git/git.c:453:11
-    #9 0x4cb2da in handle_builtin /home/ahunt/oss-fuzz/git/git.c:704:3
-    #10 0x4ccc37 in run_argv /home/ahunt/oss-fuzz/git/git.c:771:4
-    #11 0x4cac29 in cmd_main /home/ahunt/oss-fuzz/git/git.c:902:19
-    #12 0x69caee in main /home/ahunt/oss-fuzz/git/common-main.c:52:11
-    #13 0x7f7b7dd10349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+    #1 0x9a7276 in xrealloc /home/ahunt/oss-fuzz/git/wrapper.c:126:8
+    #2 0x9362ad in strbuf_grow /home/ahunt/oss-fuzz/git/strbuf.c:98:2
+    #3 0x936eaa in strbuf_add /home/ahunt/oss-fuzz/git/strbuf.c:295:2
+    #4 0x868112 in strbuf_addstr /home/ahunt/oss-fuzz/git/./strbuf.h:304:2
+    #5 0x86a8ad in expand_user_path /home/ahunt/oss-fuzz/git/path.c:758:2
+    #6 0x720bb1 in git_config_pathname /home/ahunt/oss-fuzz/git/config.c:1287:10
+    #7 0x5960e2 in git_init_db_config /home/ahunt/oss-fuzz/git/builtin/init-db.c:161:11
+    #8 0x7255b8 in configset_iter /home/ahunt/oss-fuzz/git/config.c:1982:7
+    #9 0x7253fc in repo_config /home/ahunt/oss-fuzz/git/config.c:2311:2
+    #10 0x725ca7 in git_config /home/ahunt/oss-fuzz/git/config.c:2399:2
+    #11 0x593e8d in create_default_files /home/ahunt/oss-fuzz/git/builtin/init-db.c:225:2
+    #12 0x5935c6 in init_db /home/ahunt/oss-fuzz/git/builtin/init-db.c:449:11
+    #13 0x59588e in cmd_init_db /home/ahunt/oss-fuzz/git/builtin/init-db.c:714:9
+    #14 0x4cd60d in run_builtin /home/ahunt/oss-fuzz/git/git.c:453:11
+    #15 0x4cb2da in handle_builtin /home/ahunt/oss-fuzz/git/git.c:704:3
+    #16 0x4ccc37 in run_argv /home/ahunt/oss-fuzz/git/git.c:771:4
+    #17 0x4cac29 in cmd_main /home/ahunt/oss-fuzz/git/git.c:902:19
+    #18 0x69c4de in main /home/ahunt/oss-fuzz/git/common-main.c:52:11
+    #19 0x7f23552d6349 in __libc_start_main (/lib64/libc.so.6+0x24349)
 
 Signed-off-by: Andrzej Hunt <ajrhunt@google.com>
 ---
- builtin/worktree.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ builtin/init-db.c | 28 +++++++---------------------
+ 1 file changed, 7 insertions(+), 21 deletions(-)
 
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 1cd5c2016e3f..b0563aef685f 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -446,16 +446,18 @@ static void print_preparing_worktree_line(int detach,
- static const char *dwim_branch(const char *path, const char **new_branch)
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index dcc45bef5148..d31dbc883746 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -25,7 +25,6 @@
+ 
+ static int init_is_bare_repository = 0;
+ static int init_shared_repository = -1;
+-static const char *init_db_template_dir;
+ 
+ static void copy_templates_1(struct strbuf *path, struct strbuf *template_path,
+ 			     DIR *dir)
+@@ -94,7 +93,7 @@ static void copy_templates_1(struct strbuf *path, struct strbuf *template_path,
+ 	}
+ }
+ 
+-static void copy_templates(const char *template_dir)
++static void copy_templates(const char *template_dir, const char *init_template_dir)
  {
- 	int n;
-+	int branch_exists;
- 	const char *s = worktree_basename(path, &n);
- 	const char *branchname = xstrndup(s, n);
- 	struct strbuf ref = STRBUF_INIT;
+ 	struct strbuf path = STRBUF_INIT;
+ 	struct strbuf template_path = STRBUF_INIT;
+@@ -107,7 +106,7 @@ static void copy_templates(const char *template_dir)
+ 	if (!template_dir)
+ 		template_dir = getenv(TEMPLATE_DIR_ENVIRONMENT);
+ 	if (!template_dir)
+-		template_dir = init_db_template_dir;
++		template_dir = init_template_dir;
+ 	if (!template_dir)
+ 		template_dir = to_free = system_path(DEFAULT_GIT_TEMPLATE_DIR);
+ 	if (!template_dir[0]) {
+@@ -154,17 +153,6 @@ static void copy_templates(const char *template_dir)
+ 	clear_repository_format(&template_format);
+ }
  
- 	UNLEAK(branchname);
--	if (!strbuf_check_branch_ref(&ref, branchname) &&
--	    ref_exists(ref.buf)) {
--		strbuf_release(&ref);
-+
-+	branch_exists = !strbuf_check_branch_ref(&ref, branchname) &&
-+	                ref_exists(ref.buf);
-+	strbuf_release(&ref);
-+	if (branch_exists)
- 		return branchname;
--	}
+-static int git_init_db_config(const char *k, const char *v, void *cb)
+-{
+-	if (!strcmp(k, "init.templatedir"))
+-		return git_config_pathname(&init_db_template_dir, k, v);
+-
+-	if (starts_with(k, "core."))
+-		return platform_core_config(k, v, cb);
+-
+-	return 0;
+-}
+-
+ /*
+  * If the git_dir is not directly inside the working tree, then git will not
+  * find it by default, and we need to set the worktree explicitly.
+@@ -212,10 +200,7 @@ static int create_default_files(const char *template_path,
+ 	int reinit;
+ 	int filemode;
+ 	struct strbuf err = STRBUF_INIT;
+-
+-	/* Just look for `init.templatedir` */
+-	init_db_template_dir = NULL; /* re-set in case it was set before */
+-	git_config(git_init_db_config, NULL);
++	const char *init_template_dir = NULL;
  
- 	*new_branch = branchname;
- 	if (guess_remote) {
+ 	/*
+ 	 * First copy the templates -- we might have the default
+@@ -226,7 +211,8 @@ static int create_default_files(const char *template_path,
+ 	 * values (since we've just potentially changed what's available on
+ 	 * disk).
+ 	 */
+-	copy_templates(template_path);
++	git_config_get_value("init.templatedir", &init_template_dir);
++	copy_templates(template_path, init_template_dir);
+ 	git_config_clear();
+ 	reset_shared_repository();
+ 	git_config(git_default_config, NULL);
+@@ -422,8 +408,8 @@ int init_db(const char *git_dir, const char *real_git_dir,
+ 	}
+ 	startup_info->have_repository = 1;
+ 
+-	/* Just look for `core.hidedotfiles` */
+-	git_config(git_init_db_config, NULL);
++	/* Ensure `core.hidedotfiles` is processed */
++	git_config(platform_core_config, NULL);
+ 
+ 	safe_create_dir(git_dir, 0);
+ 
 -- 
 gitgitgadget
 
