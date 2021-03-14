@@ -2,147 +2,78 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D9BFC433DB
-	for <git@archiver.kernel.org>; Sun, 14 Mar 2021 20:26:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 30A53C433DB
+	for <git@archiver.kernel.org>; Sun, 14 Mar 2021 21:27:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4594764E6B
-	for <git@archiver.kernel.org>; Sun, 14 Mar 2021 20:26:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F218B64EAE
+	for <git@archiver.kernel.org>; Sun, 14 Mar 2021 21:27:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230441AbhCNU0Y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 14 Mar 2021 16:26:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44892 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233554AbhCNU0J (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Mar 2021 16:26:09 -0400
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90F98C061574
-        for <git@vger.kernel.org>; Sun, 14 Mar 2021 13:26:08 -0700 (PDT)
-Received: by mail-pj1-x1035.google.com with SMTP id mz6-20020a17090b3786b02900c16cb41d63so13632912pjb.2
-        for <git@vger.kernel.org>; Sun, 14 Mar 2021 13:26:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=I7nJd3xvDBvafPWUC1nMVfN7MZOWBCQZwtwMyeZI6v4=;
-        b=TlTtTuMPmM0so+qUjDIgDOVOrEORLMLRpwjI79aZ2l+yNK3AimzZHXLlplss7B5OXw
-         CaPt5ydkg7yPx4YhML6r/IxoyG9xBZLqWUHMd5KSZWQI+KDu4QwMuUeVA0pX8Vv0abTi
-         cHhkucDDPQ1sndzc8p0GAiU0ymTpV6L8kUSsd8KqPubahN99FNqvARoH9chpn41sEljl
-         xpxfHLaWogQXqwYz0SSdLvnWbHt9EFL5053PA+RiAtcN701t2SbnYuzU331QrTzLba2b
-         S3VBcnY5b3en5+xPB03On+ou8Ec+lRdJ5idYR0+p0wRqTYE9k9+Z7h0XvYUUw1qiK5rH
-         Z21w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=I7nJd3xvDBvafPWUC1nMVfN7MZOWBCQZwtwMyeZI6v4=;
-        b=O/EPsDVZzHh/tEVjBL/tsRm+O8AfVKU+wmPuXiQweTclge5i4r+W4JgROADn+vI0RQ
-         naQtFjyueVJWEBIgrnNzmfjRqtJ0wAYclJMnPORaqaaEO67GuQy/8gOZBEUVHz3AGBGK
-         dip693Zv1bg/ziqOd0b04fayi8xioQyjsoSdEYQkRnOSb02TTSKtW7jWFpcOVogyZZkM
-         zTqqFk4YuEzwq04tzsaDFh+KaU97WmWzJ4iCAp9Qz/xJLnicoGrrSIT6YVXphK37vxy4
-         qoRNAjCLDJ65usQraPHnlOJzNKzaSNMdH3BIdR990SeSISQEkLXCPmYFas/BLiFajXTy
-         AIFQ==
-X-Gm-Message-State: AOAM533xqgcscm+fMfDERbW+t+wlt7S85Yul07jXfhqSglpjbVhpGhe3
-        CUTpS1uzNSuzT1GLo95vmUKhVLVuoRjjrbH2RH0=
-X-Google-Smtp-Source: ABdhPJx2SKq1/3gKn3S1AQRyNbKMCi4nQVXXpgNRtbT0wUCupyrV2P4hBGouovJGcOGp+6QVSDLmgRNZfzlON+nSzC4=
-X-Received: by 2002:a17:90a:5413:: with SMTP id z19mr9059731pjh.137.1615753568207;
- Sun, 14 Mar 2021 13:26:08 -0700 (PDT)
+        id S231329AbhCNVRa convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Sun, 14 Mar 2021 17:17:30 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:50363 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229870AbhCNVR3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Mar 2021 17:17:29 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [173.33.197.34])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 12ELHOEr079690
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Sun, 14 Mar 2021 17:17:25 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Christian Strasser'" <christian@avr-fun.de>,
+        <git@vger.kernel.org>
+References: <8aa7be071abc23371397f72b725babc4e4e90190.camel@avr-fun.de>
+In-Reply-To: <8aa7be071abc23371397f72b725babc4e4e90190.camel@avr-fun.de>
+Subject: RE: Git install crashed nearly whole System
+Date:   Sun, 14 Mar 2021 17:17:18 -0400
+Message-ID: <00a701d71917$6d624d20$4826e760$@nexbridge.com>
 MIME-Version: 1.0
-References: <pull.899.git.1615228580.gitgitgadget@gmail.com>
- <pull.899.v2.git.1615747662.gitgitgadget@gmail.com> <2b03785bd4cb76285989aff259af57890ea9fe08.1615747662.git.gitgitgadget@gmail.com>
-In-Reply-To: <2b03785bd4cb76285989aff259af57890ea9fe08.1615747662.git.gitgitgadget@gmail.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Sun, 14 Mar 2021 21:25:57 +0100
-Message-ID: <CAN0heSo_ArBrjSncvx==kw8K1DzH=0y2h-Q=B_364Ea0EURXxg@mail.gmail.com>
-Subject: Re: [PATCH v2 7/9] parse-options: convert bitfield values to use
- binary shift
-To:     Andrzej Hunt via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Andrzej Hunt <andrzej@ahunt.org>,
-        Andrzej Hunt <ajrhunt@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQJAx1mv459/G8WhnKv5Co6S+gnuLamwnT2A
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, 14 Mar 2021 at 20:05, Andrzej Hunt via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: Andrzej Hunt <ajrhunt@google.com>
->
-> Because it's easier to read, but also likely to be easier to maintain.
-> I am making this change because I need to add a new flag in a later
-> commit.
+On March 14, 2021 2:24 PM, Christian Strasser wrote:
+> Subject: Git install crashed nearly whole System
+> I installed Git yesterday on my system. For that I used “sudo apt-get install
+> git-all”.  During the installation a lot of very important packages got removed!
+> It was horrible, and I couldn’t use my gnome desktop environment at all! A
+> lot off dependencies got lost!
+> Fortunately, I could save my system through read out the information about
+> removed packages from the apt history.
+> 
+> Today I totally removed git and tried to install everything again with the same
+> instruction. The same misbehavior did happen!
+> 
+> For more information I added the history as an attachment to this email.
+> 
+> Information about my system:
+> 
+> Kernel          : Linux 4.19.0-14-amd64 (x86_64)
+> Version         : #1 SMP Debian 4.19.171-2 (2021-01-30)
+> C Library       : GNU C Library / (Debian GLIBC 2.28-10) 2.28
+> Distribution    : Debian GNU/Linux 10 (buster)
+> 
+> Gnome           : Version: 3.30.2-11~deb10u2 (apt-cache show gnome-
+> shell  grep Version) -> 3.30.2
 
-Makes sense.
+I think it might be appropriate to report this to the apt team. The links can be found here: https://help.ubuntu.com/community/PackageManagerTroubleshootingProcedureshould
 
-> Also add a trailing comma to the last enum entry to simplify addition of
-> new flags.
+I just (2021 Mar 03 2115Z) ran apt-get update and apt-get upgrade git. Yes, it did upgrade a whole lot of packages, including ansible, git, syslog, openssh, and many others. The apt manager for ubuntu only appears to know about git 2.7.4. You might have to add the git-core repository using: add-apt-repository ppa:git-core/ppa -y
 
-Makes sense.
+After I added that, then ran apt-get upgrade git, I am now on git 2.29.0. Granted this is Ubuntu, not Debian, but apt should be ok. I'm not sure about the "git-all" package. I have never used that one (not is it certified at my place - just "git" is).
 
-> This changee was originally suggested by Peff in:
+Regards,
+Randall
 
-s/changee/change/
-
-> https://public-inbox.org/git/YEZ%2FBWWbpfVwl6nO@coredump.intra.peff.net/
-
->  enum parse_opt_flags {
-> -       PARSE_OPT_KEEP_DASHDASH = 1,
-> -       PARSE_OPT_STOP_AT_NON_OPTION = 2,
-> -       PARSE_OPT_KEEP_ARGV0 = 4,
-> -       PARSE_OPT_KEEP_UNKNOWN = 8,
-> -       PARSE_OPT_NO_INTERNAL_HELP = 16,
-> -       PARSE_OPT_ONE_SHOT = 32
-> +       PARSE_OPT_KEEP_DASHDASH = 1 << 0,
-> +       PARSE_OPT_STOP_AT_NON_OPTION = 1 << 1,
-> +       PARSE_OPT_KEEP_ARGV0 = 1 << 2,
-> +       PARSE_OPT_KEEP_UNKNOWN = 1 << 3,
-> +       PARSE_OPT_NO_INTERNAL_HELP = 1 << 4,
-> +       PARSE_OPT_ONE_SHOT = 1 << 5,
->  };
-
-Straightforward.
-
->  enum parse_opt_option_flags {
-> -       PARSE_OPT_OPTARG  = 1,
-> -       PARSE_OPT_NOARG   = 2,
-> -       PARSE_OPT_NONEG   = 4,
-> -       PARSE_OPT_HIDDEN  = 8,
-> -       PARSE_OPT_LASTARG_DEFAULT = 16,
-> -       PARSE_OPT_NODASH = 32,
-> -       PARSE_OPT_LITERAL_ARGHELP = 64,
-
-`PARSE_OPT_NEGHELP` is gone since acbb08c2e0b ("parse-options: remove
-PARSE_OPT_NEGHELP", 2012-02-28), which explains the jump here.
-
-> -       PARSE_OPT_SHELL_EVAL = 256,
-> -       PARSE_OPT_NOCOMPLETE = 512,
-> -       PARSE_OPT_COMP_ARG = 1024,
-> -       PARSE_OPT_CMDMODE = 2048
-> +       PARSE_OPT_OPTARG  = 1 << 0,
-> +       PARSE_OPT_NOARG   = 1 << 1,
-> +       PARSE_OPT_NONEG   = 1 << 2,
-> +       PARSE_OPT_HIDDEN  = 1 << 3,
-> +       PARSE_OPT_LASTARG_DEFAULT = 1 << 4,
-> +       PARSE_OPT_NODASH = 1 << 5,
-> +       PARSE_OPT_LITERAL_ARGHELP = 1 << 6,
-> +       PARSE_OPT_SHELL_EVAL = 1 << 7,
-> +       PARSE_OPT_NOCOMPLETE = 1 << 8,
-> +       PARSE_OPT_COMP_ARG = 1 << 9,
-> +       PARSE_OPT_CMDMODE = 1 << 10,
->  };
-
-Those last few conversions close the gap and we end with 1024 rather
-than 2048. That "should" be ok, unless some piece of code relies on
-exact values here, or even their relations(!). Hopefully not? Might be
-worth calling out in the commit message that you're changing some
-values, if you're rerolling anyway. (Or you could leave 1<<8 unused to
-make this a true no-op, then use that value in the next patch. Anyway, I
-think this is safely in bikeshedding land.)
-
-Martin
