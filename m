@@ -2,80 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 56B65C433E0
-	for <git@archiver.kernel.org>; Sun, 14 Mar 2021 17:32:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BF84C433DB
+	for <git@archiver.kernel.org>; Sun, 14 Mar 2021 18:02:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1CA3A64E98
-	for <git@archiver.kernel.org>; Sun, 14 Mar 2021 17:32:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EA0C364E76
+	for <git@archiver.kernel.org>; Sun, 14 Mar 2021 18:01:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233912AbhCNRbq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 14 Mar 2021 13:31:46 -0400
-Received: from mail-ot1-f51.google.com ([209.85.210.51]:42588 "EHLO
-        mail-ot1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233560AbhCNRbV (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Mar 2021 13:31:21 -0400
-Received: by mail-ot1-f51.google.com with SMTP id 31-20020a9d00220000b02901b64b9b50b1so4006775ota.9
-        for <git@vger.kernel.org>; Sun, 14 Mar 2021 10:31:20 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=E3FUBfFGN1E1XVpGyLmAaSnICGnJSZzn9kgmWQJ5bWU=;
-        b=AOtW9Clys2IuGZ78fowMOEu2GF3/GLVB+8pL5BmzHF7P3Ia8D9zH3WWljQXXdztilZ
-         F9AdxIx4cdO7/vQj4wPEXL/zd4avs4eEP2wmtq/pyA4gUrpykXwPUUw8/g/GaUOz9cfk
-         tUihsX/5hD2EgfhfR+O/5E+9vlvWhbbEga9XvsTgCoXqGCuuNX879H1X/FtCIXxIyUej
-         pO34k398/Yk9jQq6O/v55p7zpcKy9xe74T/Idso7gsD9KGoRET3LHfr9XF8CDTEcmUNh
-         PVZkAk2qXVONoinirpbdi02IHb572fVy3RZUMdjXE5KMeyfr3koYv3hfRDQkigFy3uHp
-         2w8w==
-X-Gm-Message-State: AOAM533BF/8jGlw/vzCd672SsxwMM3S1qhfpyNh+bWOljyP31EikvQId
-        DaclyGluQfuDSMzGWlfjn0w+Fht9cqqshJuwWeFuY5QneWIV1w==
-X-Google-Smtp-Source: ABdhPJz3Wy81SZAET4dPceolt/XCcSRa1EoyhtWlXd+BsoUV5TFXX8ARz4LmBh0qZ2o0RGLJ13u4M1KmMOH3Q1KYHCI=
-X-Received: by 2002:a9d:73d0:: with SMTP id m16mr11196456otk.172.1615743080481;
- Sun, 14 Mar 2021 10:31:20 -0700 (PDT)
+        id S233530AbhCNR5j (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 14 Mar 2021 13:57:39 -0400
+Received: from mx.kolabnow.com ([95.128.36.41]:11468 "EHLO mx.kolabnow.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229870AbhCNR51 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Mar 2021 13:57:27 -0400
+Received: from localhost (unknown [127.0.0.1])
+        by ext-mx-out002.mykolab.com (Postfix) with ESMTP id AED9A7D9;
+        Sun, 14 Mar 2021 18:56:56 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kolabnow.com; h=
+        content-transfer-encoding:content-language:content-type
+        :content-type:in-reply-to:mime-version:date:date:message-id:from
+        :from:references:subject:subject:received:received:received; s=
+        dkim20160331; t=1615744616; x=1617559017; bh=rXUJsOkt/wbIr/gNL0/
+        3UcsN3mDAa87Y+vJvqaoy+Bo=; b=V/V4EiTNtDEvwaauR1krtG/kqXR+fK0uvX2
+        pjoJ1a4bzX979IGE4hxu9tvNARwCDtQecKcw9O0CeA8uEzMObzRyC5DAZhGY4NgU
+        iCv0oKPqithlnjybj9UmwahMW2Q/falwtZTBuuv9UUfr/N16HpMqqCQN3qFY5itE
+        bs/m0PFdtBpZXxhRvAU1xu9+GPAACq0J62nNIGrbj9mIn9vbIvqBqaqCFF8yl4ZJ
+        cQiOWo+OQDm1oHbeJH5PtIwfqWdaeBt4OeBb11OJdmaBIJMkojNegkRPvSnEKd82
+        iEZ76hfjkfYFbnUugXDvZMWE0FM06G5h3UQEqVr/yW3S+wXEPGOz6LhcjzWjZu/s
+        Mj0B2p4h9arZhbcJJ4uigklPxZxh373XzrjFXhhDoZ8RVn7I1G9tcjmtCF0hJAEy
+        vuVnRo+E3NS2RioG7tq7oAWUs2bCmF3bPuxSAJIA1ZMQQDeWjFJU6RW1jpbeA1fp
+        1LGJzZoOua1K74TNEWBdAoPZMFv2LFeOPaGDRzwbDahcg0f8WWKyS1eA0K1+cW0J
+        QFl1TOb4/3k2BpuuUCa17GloQ4weV9UQERXrZaOc8KtGjd8XL8j9Qm9gYa/mU0hP
+        ddM4Jk3N9J+MYu2UQhSShdOPVhLSPSBOS75li88/1AJPhPB2YTMgblKSUSGCoEFd
+        KThP/h6c=
+X-Virus-Scanned: amavisd-new at mykolab.com
+Received: from mx.kolabnow.com ([127.0.0.1])
+        by localhost (ext-mx-out002.mykolab.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id HVstuJcXeNyo; Sun, 14 Mar 2021 18:56:56 +0100 (CET)
+Received: from int-mx002.mykolab.com (unknown [10.9.13.2])
+        by ext-mx-out002.mykolab.com (Postfix) with ESMTPS id 04A885BB;
+        Sun, 14 Mar 2021 18:56:55 +0100 (CET)
+Received: from ext-subm002.mykolab.com (unknown [10.9.6.2])
+        by int-mx002.mykolab.com (Postfix) with ESMTPS id 9334F33EB;
+        Sun, 14 Mar 2021 18:56:53 +0100 (CET)
+Subject: Re: [PATCH 4/7] worktree: fix leak in dwim_branch()
+To:     Jeff King <peff@peff.net>,
+        Andrzej Hunt via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Andrzej Hunt <ajrhunt@google.com>
+References: <pull.899.git.1615228580.gitgitgadget@gmail.com>
+ <d46a4e701620704ae3fd203c9d9dffb172cb3804.1615228580.git.gitgitgadget@gmail.com>
+ <YEZ4BQTeT/vdX+tK@coredump.intra.peff.net>
+From:   Andrzej Hunt <andrzej@ahunt.org>
+Message-ID: <b328381d-2e38-af02-e84d-cfb8174103ee@ahunt.org>
+Date:   Sun, 14 Mar 2021 18:56:51 +0100
 MIME-Version: 1.0
-References: <CAN7rbOve-EFOGPjr1wrD77r-3RQ+3+qso82_oV5Qud-skobL7w@mail.gmail.com>
- <YEzwOqgFcva4fmoV@camp.crustytoothpaste.net>
-In-Reply-To: <YEzwOqgFcva4fmoV@camp.crustytoothpaste.net>
-From:   Arun Sharma <arun@sharma-home.net>
-Date:   Sun, 14 Mar 2021 10:31:11 -0700
-Message-ID: <CAN7rbOuOaHY553KX1Qcr_XWGG6DFo1yUjdYVu5mn=HYPmOj6vQ@mail.gmail.com>
-Subject: Re: bug report: mutual recursion in the git-subtree shell script
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Arun Sharma <arun@sharma-home.net>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <YEZ4BQTeT/vdX+tK@coredump.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 13, 2021 at 9:03 AM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
->
-> I don't use git-subtree, but there's some additional information which
-> would probably be helpful here to someone who does.  What OS are you
-> using, what version of Git, and what shell is the shell you have as
-> /bin/sh (or, if you've compiled using a custom shell, the shell you're
-> using for that)?
+On 08/03/2021 20:16, Jeff King wrote:
+> On Mon, Mar 08, 2021 at 06:36:17PM +0000, Andrzej Hunt via GitGitGadget wrote:
+> 
+>> Make sure that we release the temporary strbuf during dwim_branch() for
+>> all codepaths (and not just for the early return).
+> 
+> Makes sense. Two style nits:
 
-Thanks for the hint. I was using ubuntu 20.04.
+Thank, I'll fix both.
+> 
+>> -	if (!strbuf_check_branch_ref(&ref, branchname) &&
+>> -	    ref_exists(ref.buf)) {
+>> -		strbuf_release(&ref);
+>> +
+>> +	branch_exists = (!strbuf_check_branch_ref(&ref, branchname) &&
+>> +			 ref_exists(ref.buf));
+> 
+> We'd usually omit the extra parentheses here. I.e.,:
+> 
+>    branch_exists = !strbuf_check_branch_ref(&ref, branchname) &&
+>                    ref_exists(ref.buf);
 
-$ git --version
-git version 2.25.1
+I've made this change - but I have a question about the formatting:
+- In the few examples that I could find, the second line is aligned 
+using spaces (i.e. same number of tabs as the previous line, followed by 
+spaces to align correctly). However that appears to violate the 
+indent-with-non-tab style check - should I switch to 100% tabs instead?
 
-$ bash --version
-GNU bash, version 5.0.16(1)-release (x86_64-pc-linux-gnu)
+That check has been around since:
 
-To repro, you can try to split a week old version of:
+e2f6331a14 (.gitattributes: CR at the end of the line is an error, 
+2009-06-19)
 
-https://github.com/postgres/postgres (subtree: src/interfaces/libpq)
-
-It could take several minutes because of the size of the repo.
-
-And then try to pull the latest version and push the merged result
-into the smaller subproject.
-
- -Arun
+So maybe it's being intentionally ignored in the cases that I've seen (I 
+only noticed it for my series because of the automated checks on Github) 
+- but I thought I should ask to sure.
