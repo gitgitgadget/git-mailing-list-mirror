@@ -3,63 +3,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AC3EC433E6
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 582AAC43381
 	for <git@archiver.kernel.org>; Sun, 14 Mar 2021 16:56:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DBBCF64E33
-	for <git@archiver.kernel.org>; Sun, 14 Mar 2021 16:56:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 25E6764EEE
+	for <git@archiver.kernel.org>; Sun, 14 Mar 2021 16:56:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233779AbhCNQzi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 14 Mar 2021 12:55:38 -0400
-Received: from mx.kolabnow.com ([95.128.36.40]:35398 "EHLO mx.kolabnow.com"
+        id S233951AbhCNQzk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 14 Mar 2021 12:55:40 -0400
+Received: from mx.kolabnow.com ([95.128.36.40]:34092 "EHLO mx.kolabnow.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233966AbhCNQzU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Mar 2021 12:55:20 -0400
+        id S233977AbhCNQzZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Mar 2021 12:55:25 -0400
 Received: from localhost (unknown [127.0.0.1])
-        by ext-mx-out003.mykolab.com (Postfix) with ESMTP id 12C8D4049B;
-        Sun, 14 Mar 2021 17:55:01 +0100 (CET)
+        by ext-mx-out001.mykolab.com (Postfix) with ESMTP id 6CF2DDB4;
+        Sun, 14 Mar 2021 17:55:14 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kolabnow.com; h=
         content-transfer-encoding:content-language:content-type
         :content-type:in-reply-to:mime-version:date:date:message-id:from
         :from:references:subject:subject:received:received:received; s=
-        dkim20160331; t=1615740900; x=1617555301; bh=5bq90ixzlRxBq7eEfUo
-        0C3XYnz0sPMb/SHsG1u1ycV8=; b=5v9NOLo/SAOCanljHRvwvVIfbB5mMy1yzWR
-        WSAi0eJc4DtcWznh1OeCLoHL7bb+dP/lTSCCphv1cVkwe5WcLa+np8TrnRtR0GoT
-        mRWO9dqtYp6thPTzzF8WoASX986zN5yD/yAwC+gdh2mhhgKV2NfKl3c3LANBm233
-        XO0oy13gp5OS54fVf1pYfQ5+P1fEhAEMrC7c5/nk8TMcGbgePKgV0mvRU7o/xdsR
-        GV5YUm1FM711G6zSvKp1Z0jz1M/vO1qFLkByt8pQOOCwiiy5+r5Q1utjxbSYhbOz
-        56oZATMzx60RsD0UKD9DCDmJqQgCwCXTHCUt7ZGpWxoWctzqmKlotoXfhgZfN55U
-        T0wEuqIIXyN5YZtOLcECD2vkCmYX6mh0p1i9ZST4Y3PlkIHDNDQkYchiK+OnvnJO
-        DnH3v4w4NCiwJOY/dENtnPuOKEJNRCZ286VFWgHl4lHxBmtS0YyaqPzXoZDQHv2N
-        72Lb3DJHInindS443dumwl5X1cnQQtDn2t1Vs/5Tk4cuYMkeI2IQSS/zIT5VDKkD
-        e9qIWv0KQ+DniUk9Vtnk+cyaAoK/WdFkO3IvsRmTgsHDhH1nDFPItJSz/Xdliv4j
-        5bSp/sqAMhdCqRrQb6ouoZdw1VibP6haD+d2P4ZyYyO2v8zZtvxaiindoV3G/wOh
-        m4yfxpzY=
+        dkim20160331; t=1615740913; x=1617555314; bh=IPruyQ1PWTsDjE//YwH
+        vI+dhSh+OYH35Ej+wb61WaGo=; b=ZZ67vd+AhTEgIP8pKg7lekarfcP8w1XiVKd
+        RMiGve8oOwaBHIAEHAG0E/Tu9yIaZOkTnmz453i1IiRXIaqgPaNtyCDPQDrDgM7H
+        Qte17glm9NU3RPDQ6oL281/pbdWB86Da4Ewzg/NTOiDohlgaG84bdmpt1bPnzS2R
+        TME9aaWcN6q6F0aCeMCpZCd0V8MI5U4CqtqUdAOjSZ+5ON0CLMy5fsprM27cdFBY
+        kG+MfocoJzMt6UMLwWUlrAdWQ/nqec/w0SP06RE2hvdo08X+NVwBv6n5LgWqfec3
+        ADUsDEXKKWv4pWWJsogbPX1Cr1dI1/HJrrLR24Y2X7ue/TkIn2vHw25eHf0wWPe1
+        5jeIhWLHsNgKX9MlU2ZPfHLFVBW6FVcwh6mb9AMtTPV81LhDY47eg4Ht2qEzeidK
+        BKUnmgrCkIb+mQ/4wPx0B3EGrjVizd6GMIyReRKeS6DpMQmq1ZkGBwGVTPf/7NQp
+        VO6CN3fIiX7iNcaNEZ5jj9wNvr4DHzfYr+LdrMF8GJ2cyGKnyJJnzKRlmfUYLqRQ
+        wE4ZA+GknWc6N7ugj18Hyvz4J+rwRnW5Vl7jJnUcKry/9Flk4nSJEdr/aJL8orbA
+        DR7/KZ8bpnKUYzXJbbHiQkog1UQjTQigrlS1rF8BtV9KlHqKlWDbJdVUHwfaQ3U2
+        jr7lXaU0=
 X-Virus-Scanned: amavisd-new at mykolab.com
 Received: from mx.kolabnow.com ([127.0.0.1])
-        by localhost (ext-mx-out003.mykolab.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id cnDq0ubCDL7T; Sun, 14 Mar 2021 17:55:00 +0100 (CET)
+        by localhost (ext-mx-out001.mykolab.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id iVNtAYXh7_hc; Sun, 14 Mar 2021 17:55:13 +0100 (CET)
 Received: from int-mx001.mykolab.com (unknown [10.9.13.1])
-        by ext-mx-out003.mykolab.com (Postfix) with ESMTPS id 3D4FA403B1;
-        Sun, 14 Mar 2021 17:55:00 +0100 (CET)
+        by ext-mx-out001.mykolab.com (Postfix) with ESMTPS id 79D70B00;
+        Sun, 14 Mar 2021 17:55:13 +0100 (CET)
 Received: from ext-subm002.mykolab.com (unknown [10.9.6.2])
-        by int-mx001.mykolab.com (Postfix) with ESMTPS id 0A8B2B1D;
-        Sun, 14 Mar 2021 17:54:57 +0100 (CET)
+        by int-mx001.mykolab.com (Postfix) with ESMTPS id EA168B1F;
+        Sun, 14 Mar 2021 17:55:11 +0100 (CET)
 Subject: Re: [PATCH 0/7] Fix all leaks in t0001
-To:     Jeff King <peff@peff.net>,
+To:     Junio C Hamano <gitster@pobox.com>,
         Andrzej Hunt via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org
 References: <pull.899.git.1615228580.gitgitgadget@gmail.com>
- <YEZzGjNMSj+MkDUH@coredump.intra.peff.net>
+ <xmqqk0qh5v7v.fsf@gitster.c.googlers.com>
 From:   Andrzej Hunt <andrzej@ahunt.org>
-Message-ID: <d22dc5e6-415e-e265-e894-67b28fe9fe54@ahunt.org>
-Date:   Sun, 14 Mar 2021 17:54:54 +0100
+Message-ID: <a36441d6-4d9d-1cee-9227-272d5332f889@ahunt.org>
+Date:   Sun, 14 Mar 2021 17:55:09 +0100
 MIME-Version: 1.0
-In-Reply-To: <YEZzGjNMSj+MkDUH@coredump.intra.peff.net>
+In-Reply-To: <xmqqk0qh5v7v.fsf@gitster.c.googlers.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -67,101 +67,66 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 08/03/2021 19:55, Jeff King wrote:
-> I think it's worth doing. The reason t0000 passes is because it was my
-> reference script when adding UNLEAK() back in:
+On 08/03/2021 19:57, Junio C Hamano wrote:
+> "Andrzej Hunt via GitGitGadget" <gitgitgadget@gmail.com> writes:
 > 
->    https://lore.kernel.org/git/20170905130149.agc3zp3s6i6e5aki@sigill.intra.peff.net/
+>> hand: fixing or suppressing these leaks should make it easier to spot leaks
+>> that have more significant user impact (it's entirely plausible that no real
+>> impactful leaks exist).
 > 
-> (which might be of historical interest if you haven't read it). I knew
-> that the next step would be tediously going through the test suite
-> looking at the tool results, and I somehow stalled on that part. ;)
-> 
-> But I think it's nice to move the goal forward incrementally. I agree
-> that a lot of these leaks aren't that important, but it's generally as
-> easy to fix or annotate them as it is to argue that they shouldn't be > dealt with.
+> Even if there is no leaks that matter exist now, to help maintain
+> that state, suppressing false positives would be useful, provided if
+> such checkers are run sufficiently often.
 
-Thanks for the confirmation! I'd seen your post, but wasn't sure if 
-there'd been a change of plan or just lack of time :).
+Expanding on my thoughts in response to Peff's comments regarding 
+running leak checking under ASAN: I'm wondering whether it would be 
+acceptable to piggyback leak-checking on top of the existing ASAN test runs:
 
->> Note: this series does not guarantee that there are no leaks within
->> t0000-t0001, it only fixes those leaks which cause test failures. There is
->> at least one test case in t0000 where git is invoked in a subshell, and the
->> return value is ignored - meaning that a memory leak that is occuring during
->> that invocation does not cause tests to fail (I'm still trying to figure out
->> if that's something that's worth fixing - but that's probably a topic for a
->> separate thread):
->> https://git.kernel.org/pub/scm/git/git.git/tree/t/t0000-basic.sh#n1285
-> 
-> It's not the subshell there, but rather that git is on the left-hand
-> side of a pipe (and so its exit code is discarded). We've been slowly
-> fixing such cases (the usual technique is to use a tempfile).
+- It looks like people are already running tests with ASAN from time to
+   time - enabling leak checking there would add leak-checking coverage
+   without having to run LSAN separately (this would have to be
+    restricted to those tests that are leak-free - more on that below).
+- I also saw some discussion around enabling ASAN in CI, although I
+   don't think that went anywhere yet [1]. I'd be interested in trying to
+   pick that up - ASAN seems quite valuable by itself, and running it
+   in CI would be a simple way to also get leak-checking in CI.
+   (Again, this would have to be limited to known leak-free tests.)
 
-Thanks for the tip! I've started on another series to fix t0000-basic 
-along with the leaks that that uncovers. In future I suspect it's best 
-to start by removing pipes _before_ running leak-checking against a 
-given test. (Fortunately t0001 doesn't contain any such cases, so this 
-series is valid as is.)
+(I'm planning to run some benchmarks to see how much enabling 
+leak-checking with ASAN actually costs - I'm assuming it's fairly cheap 
+if you're already running ASAN, but I'd like to verify that.)
 
->> In case anyone is interested: I have been using the following workflow to
->> find leaks and verify fixes - I'm running into crashes when using LSAN
->> standalone, therefore I'm using full ASAN instead (I'm not particularly
->> concerned about this: LSAN standalone mode is known to be less-well tested
->> than leak-checking within ASAN [1], and the crashes are occurring within the
->> leak-checker itself):
-> 
-> Yeah, I think using ASAN is just fine. I found that LSAN is faster, but
-> if you are running a single script the difference probably doesn't
-> matter. I also found that clang's support was much more mature than
-> gcc's (I don't know how different the state is these days, though).
-> 
-> Regardless, if you can get it to run cleanly with _any_ leak checker,
-> I'll be quite happy. :)
+As to the mechanics of enabling leak-checking with ASAN: test-lib.sh 
+currently completely disables ASAN's leak-checking. Instead we could add 
+a simple allowlist, to enable leak-checking for those tests that don't - 
+Fix LSAN crashleak - this needn't be much more complex than:
 
-I was wrong when it comes to LSAN being broken. What was actually 
-happening is: we default to running ASAN and LSAN with abort_on_error=1, 
-and I had overridden that setting when running with ASAN. When I 
-switched to LSAN, abort_on_error was enabled again - and I was just 
-misinterpreting the intentional abortion as opposed to seeing an 
-unexplained crashes. [As far as I can tell, abort_on_error is needed to 
-detect leaks during a test_must_fail and similar scenarios.]
+  $TEST_NUMBER <= highest_leak_free_test
 
-I've briefly tested all the various combinations of gcc or clang, with 
-LSAN or ASAN or both - and they all seem to work as expected, with one 
-exception: gcc with LSAN-only finds what seems to be a false positive, 
-in a method which mallocs, followed by a die().
+I.e. something like this:
 
-To make it trickier, that new "leak" happens inside a test_must_fail - 
-the LSAN output is swallowed, making it hard to diagnose. I'll try to 
-prepare a separate patch to not discard stderr in that scenario.
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index d3f6af6a65..cf9f1ad827 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -41,7 +41,13 @@ GIT_BUILD_DIR="$TEST_DIRECTORY"/..
+  # the noise level. This needs to happen at the start of the script,
+  # before we even do our "did we build git yet" check (since we don't
+  # want that one to complain to stderr).
+-: ${ASAN_OPTIONS=detect_leaks=0:abort_on_error=1}
++if test $TEST_NUMBER -le 10
++then
++    DETECT_LEAKS=1
++else
++    DETECT_LEAKS=0
++fi
++: ${ASAN_OPTIONS=detect_leaks=$DETECT_LEAKS:abort_on_error=1}
+  export ASAN_OPTIONS
 
-Regardless of the LSAN/ASAN differences - I'm wondering whether 
-piggybacking on the existing ASAN validation might be the best way to 
-get leak checking run more often (limited to a subset of leak-free tests 
-of course). I'll expand on these thoughts in my reply to Junio.
+  # If LSAN is in effect we _do_ want leak checking, but we still
 
->> make GIT_TEST_OPTS="-i -v" DEFAULT_TEST_TARGET="t0000-basic.sh"
->> ASAN_OPTIONS="detect_leaks=1:abort_on_error=1" SANITIZE=address DEVELOPER=1
->> CFLAGS="-DSUPPRESS_ANNOTATED_LEAKS -g -fno-optimize-sibling-calls -O1
->> -fno-omit-frame-pointer" test
-> 
-> There's some magic in the Makefile for detecting SANITIZE=leak and
-> setting -DSUPPRESS_ANNOTATED_LEAKS. It might be worth that extending
-> that to SANITIZE=address, but I guess we wouldn't want to do so for most
-> builds (which also are setting detect_leaks=0 in the test suite). Maybe
-> we should have some other name to trigger asan-as-a-leak-detector. Or
-> maybe that just gets complicated, because we pass the results of
-> SANITIZE on to the compiler directly.
+(This would also require moving TEST_NUMBER a bit earlier in
+  test-lib.sh.)
 
-I've realised it's enough to set SANITIZE=leak,address. That gives us 
-the benefits of ASAN, but still adds -DSUPPRESS_ANNOTATED_LEAKS. Given 
-that LSAN seems stable enough with clang, I suppose this is only really 
-useful for gcc users.
-
-> I haven't looked at the individual patches yet. I'll respond to them
-> individually.
-> 
-> -Peff
-
-Thank you for the reviews! I'm still a bit new to the git codebase, 
-thank you for being patient with my (deficits of) style :).
+[1] 
+https://public-inbox.org/git/20170710155831.3zxijp7bvbquvlau@sigill.intra.peff.net/
