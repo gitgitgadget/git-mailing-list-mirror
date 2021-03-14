@@ -2,85 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D09F3C433DB
-	for <git@archiver.kernel.org>; Sat, 13 Mar 2021 23:38:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8748AC433E6
+	for <git@archiver.kernel.org>; Sun, 14 Mar 2021 01:27:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9F5BB64D9F
-	for <git@archiver.kernel.org>; Sat, 13 Mar 2021 23:38:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 43DC764ED0
+	for <git@archiver.kernel.org>; Sun, 14 Mar 2021 01:27:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233369AbhCMXh7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 13 Mar 2021 18:37:59 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56894 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231597AbhCMXhs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Mar 2021 18:37:48 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8AB3197EA7;
-        Sat, 13 Mar 2021 18:37:47 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=9Z4vMr4kne97RlvXvPMF7QMFIB8=; b=QilptM
-        HgvtjOFP36USsQArgberdoUzGIxXUWQiMkymfXmU6mBtwC26RZzLPN4AzviQ9JeQ
-        jdPE5w1eYIj7pSIdzxAJRxYXg9lZpaksuhiBsIVhGbF5snQzveedGGCV99eDcm/b
-        Ao7IWDJRju9Sqy5juIsQt03bFNRH9NJsBWM3I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=AMIFJZ4fiTiuMiW9GfsPVJI5FTUAx5C5
-        IMRrYeHsjX4qa4wK2nA4Gke5Jk/yM6LerxTmHJSXYsgYB6zhWgauN4uHvRcrWIx4
-        Y3cbfAtqgIbDxJwoYm9mRkI6r6DZhNElaIO3ae0UdEfN/9xmhMl4CO0NsYbF4jLR
-        v5ZTm/mV9G4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 81B6697EA4;
-        Sat, 13 Mar 2021 18:37:47 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D202697EA0;
-        Sat, 13 Mar 2021 18:37:45 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>,
-        Seth House <seth@eseth.com>,
-        Dana Dahlstrom <dahlstrom@google.com>
-Subject: Re: [PATCH 2/2] doc: describe mergetool configuration in
- git-mergetool(1)
-References: <20210130054655.48237-1-seth@eseth.com>
-        <20210209200712.156540-1-seth@eseth.com>
-        <20210209200712.156540-2-seth@eseth.com> <YEbdj27CmjNKSWf4@google.com>
-        <xmqqmtvbjuvl.fsf@gitster.g> <xmqqzgzafo5o.fsf@gitster.g>
-        <xmqqlfas55mk.fsf@gitster.g> <YEv5d0pGvEVpepoY@google.com>
-        <xmqqh7lg54h4.fsf@gitster.g> <YEx5hM/HWby3FBJv@google.com>
-        <YEx6ve6AbqacVTQH@google.com>
-Date:   Sat, 13 Mar 2021 15:37:45 -0800
-In-Reply-To: <YEx6ve6AbqacVTQH@google.com> (Jonathan Nieder's message of "Sat,
-        13 Mar 2021 00:41:33 -0800")
-Message-ID: <xmqqo8fm4oc6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S234084AbhCNBLK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 13 Mar 2021 20:11:10 -0500
+Received: from mail-ej1-f53.google.com ([209.85.218.53]:44818 "EHLO
+        mail-ej1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231205AbhCNBKr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 Mar 2021 20:10:47 -0500
+Received: by mail-ej1-f53.google.com with SMTP id ox4so44861532ejb.11
+        for <git@vger.kernel.org>; Sat, 13 Mar 2021 17:10:47 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=xZb2baESz1dgWvkyUZOyscKlhLrVM93S9zVPdVbfKIk=;
+        b=IIjf3b9TXQD/huDNu+NVm3IfFKl5qQho8BdiZbNc/xVBkx8pIxoAMXs51d1zE50QsN
+         5xEsm8tiKxka/YCPeYAh0N5cFdxePs6IQQjVeAqtSr9Jw1mUCl9mLHr3nKg2Q+G7hBHy
+         6ZIjUYTUVljchhdNsXVMdZuoyiLH5/tm7b7D016/AzI7gL2ZDMNJUxSiCT7L/tOMmzdO
+         UZOcL8BvVC86vM39JpXKhAW4LjyGuXjbhhsa991f4NBnuSYkc6Lgr64YbIHBd6e57Qgz
+         3jkvtQWiM7Oc3SVVOebQoX/SozrtMIf3bhEqWrmlPhp393aS7LIIqzh9pPjGXChLuZi4
+         v96g==
+X-Gm-Message-State: AOAM533NpaN6SEhgC9DVd6DIbDPNYSXzdLDmnC4/dpRrmXe4nk4TFWqp
+        HifASTprFgqHF8Rcb/E461/FqwM+L/oZ0CIyceQ=
+X-Google-Smtp-Source: ABdhPJxHkLEWDtUNo5sF4R37/cmx2huqQOcsIEi3leoqb7JSzXuXA4zfUNTwWd+RDaOzyw6MMcEUxIpFnsVWn/k4fbU=
+X-Received: by 2002:a17:906:7c48:: with SMTP id g8mr16545211ejp.138.1615684246632;
+ Sat, 13 Mar 2021 17:10:46 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1D03C652-8455-11EB-BB64-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+References: <20210310194306.32565-1-charvi077@gmail.com> <20210313134012.20658-7-charvi077@gmail.com>
+In-Reply-To: <20210313134012.20658-7-charvi077@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sat, 13 Mar 2021 20:10:35 -0500
+Message-ID: <CAPig+cRQe3EURfXYQ9QwxfiSjJom3gZoZ_Q07ON4B+YgHu6dCw@mail.gmail.com>
+Subject: Re: [PATCH v5 6/6] doc/git-commit: add documentation for
+ fixup=[amend|reword] options
+To:     Charvi Mendiratta <charvi077@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+On Sat, Mar 13, 2021 at 8:43 AM Charvi Mendiratta <charvi077@gmail.com> wrote:
+> Helped-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+> Signed-off-by: Charvi Mendiratta <charvi077@gmail.com>
 
-> Tested by running
->
-> 	make -C Documentation git-mergetool.1
-> 	man Documentation/git-mergetool.1
->
-> and reading through the page.
+It may have been more accurate to retain the Helped-by: with my name
+while adding the Signed-off-by: (which I offered in case you
+incorporated my significant rewrites), rather than replacing the
+Helped-by: altogether. Not worth a re-roll, though.
 
-Nice.  Also applying this step and running
+> diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+> @@ -86,11 +86,44 @@ OPTIONS
+> +--fixup=[(amend|reword):]<commit>::
+> +       Create a new commit which "fixes up" `<commit>` when applied with
+> +       `git rebase --autosquash`. Plain `--fixup=<commit>` creates a
+> +       "fixup!" commit which changes the content of `<commit>` but leaves
+> +       its log message untouched. `--fixup=amend:<commit>` is similar but
+> +       creates an "amend!" commit which also replaces the log message of
+> +       `<commit>` with the log message of the "amend!" commit.
+> +       `--fixup=reword:<commit>` creates an "amend!" commit which
+> +       replaces the log message of `<commit>` with its own log message
+> +       but makes no changes to the content of `<commit>`.
+> ++
+> +The commit created by plain `--fixup=<commit>` has a subject
+> +composed of "fixup!" followed by the subject line from <commit>,
+> +and is recognized specially by `git rebase --autosquash`. The `-m`
+> +option may be used to supplement the log message of the created
+> +commit, but the additional commentary will be thrown away once the
+> +"fixup!" commit is squashed into `<commit>` by
+> +`git rebase --autosquash`.
+> ++
+> +The commit created by `--fixup=amend:<commit>` is similar but its
+> +subject is instead prefixed with "amend!". The log message of
+> +<commit> is copied into the log message of the "amend!" commit and
+> +opened in an editor so it can be refined. When `git rebase
+> +--autosquash` squashes the "amend!" commit into `<commit>`, the
+> +log message of `<commit>` is replaced by the refined log message
+> +from the "amend!" commit. It is an error for the "amend!" commit's
+> +log message to be empty unless `--allow-empty-message` is
+> +specified.
+> ++
+> +`--fixup=reword:<commit>` is shorthand for `--fixup=amend:<commit>
+> +--only`. It creates an "amend!" commit with only a log message
+> +(ignoring any changes staged in the index). When squashed by `git
+> +rebase --autosquash`, it replaces the log message of `<commit>`
+> +without making any other changes.
+> ++
+> +Neither "fixup!" nor "amend!" commits change authorship of
+> +`<commit>` when applied by `git rebase --autosquash`.
+> +See linkgit:git-rebase[1] for details.
 
-	cd Documentation && ./doc-diff HEAD^ HEAD
+I see that you took my entire rewrite verbatim. That's fine. My bias
+is probably showing, but I do now find this documentation patch easier
+to understand.
 
-would was a trivial way to see the change ;-)
+Thanks.
