@@ -6,60 +6,61 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BF84C433DB
-	for <git@archiver.kernel.org>; Sun, 14 Mar 2021 18:02:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5AF2AC433DB
+	for <git@archiver.kernel.org>; Sun, 14 Mar 2021 18:08:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EA0C364E76
-	for <git@archiver.kernel.org>; Sun, 14 Mar 2021 18:01:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2B5A564EC3
+	for <git@archiver.kernel.org>; Sun, 14 Mar 2021 18:08:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233530AbhCNR5j (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 14 Mar 2021 13:57:39 -0400
-Received: from mx.kolabnow.com ([95.128.36.41]:11468 "EHLO mx.kolabnow.com"
+        id S231892AbhCNSHq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 14 Mar 2021 14:07:46 -0400
+Received: from mx.kolabnow.com ([95.128.36.40]:34976 "EHLO mx.kolabnow.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229870AbhCNR51 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Mar 2021 13:57:27 -0400
+        id S231205AbhCNSHZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Mar 2021 14:07:25 -0400
 Received: from localhost (unknown [127.0.0.1])
-        by ext-mx-out002.mykolab.com (Postfix) with ESMTP id AED9A7D9;
-        Sun, 14 Mar 2021 18:56:56 +0100 (CET)
+        by ext-mx-out001.mykolab.com (Postfix) with ESMTP id 38648E47;
+        Sun, 14 Mar 2021 19:07:23 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kolabnow.com; h=
         content-transfer-encoding:content-language:content-type
         :content-type:in-reply-to:mime-version:date:date:message-id:from
         :from:references:subject:subject:received:received:received; s=
-        dkim20160331; t=1615744616; x=1617559017; bh=rXUJsOkt/wbIr/gNL0/
-        3UcsN3mDAa87Y+vJvqaoy+Bo=; b=V/V4EiTNtDEvwaauR1krtG/kqXR+fK0uvX2
-        pjoJ1a4bzX979IGE4hxu9tvNARwCDtQecKcw9O0CeA8uEzMObzRyC5DAZhGY4NgU
-        iCv0oKPqithlnjybj9UmwahMW2Q/falwtZTBuuv9UUfr/N16HpMqqCQN3qFY5itE
-        bs/m0PFdtBpZXxhRvAU1xu9+GPAACq0J62nNIGrbj9mIn9vbIvqBqaqCFF8yl4ZJ
-        cQiOWo+OQDm1oHbeJH5PtIwfqWdaeBt4OeBb11OJdmaBIJMkojNegkRPvSnEKd82
-        iEZ76hfjkfYFbnUugXDvZMWE0FM06G5h3UQEqVr/yW3S+wXEPGOz6LhcjzWjZu/s
-        Mj0B2p4h9arZhbcJJ4uigklPxZxh373XzrjFXhhDoZ8RVn7I1G9tcjmtCF0hJAEy
-        vuVnRo+E3NS2RioG7tq7oAWUs2bCmF3bPuxSAJIA1ZMQQDeWjFJU6RW1jpbeA1fp
-        1LGJzZoOua1K74TNEWBdAoPZMFv2LFeOPaGDRzwbDahcg0f8WWKyS1eA0K1+cW0J
-        QFl1TOb4/3k2BpuuUCa17GloQ4weV9UQERXrZaOc8KtGjd8XL8j9Qm9gYa/mU0hP
-        ddM4Jk3N9J+MYu2UQhSShdOPVhLSPSBOS75li88/1AJPhPB2YTMgblKSUSGCoEFd
-        KThP/h6c=
+        dkim20160331; t=1615745242; x=1617559643; bh=QwxxN0swAG20VT4Dec8
+        oO3CNu5PXbtm1g2WGkEDuAow=; b=KMYhhKfyPH3VDdFuQqgmFN1/gsD8tRLQqMV
+        mob9Osj7qBQDfbzXFpVGB2KiF9eRKIfdJyyFR85j19suaMxF+OO96V2aQh7n5vyu
+        Wm5M0LWqhBic3lxU96ik2eqq14l6W5ylZBUjUQl8dUtpFJY/i2KnmUvp/TdfKMWA
+        tmOhk9BMuDqADQ9pdO0b+O91tFm498sryKJ6ABDY9V0JIhRZsJtrZzZuW22Ju8NU
+        DCJ4ehh23mUrTRlxw0xTsclvMG+ukp2PiizvRfsyQgde9sJhAHBviW0FJc7Pta7n
+        WFUA2wEWXqEhU/y+w+WDHSl9xQxrffA3W0GmY4WM76wG4GzJg0EwV4ZJA297bUW9
+        O4o+SgVUG2XcEfCI/kks7si4WP+Vuzk6bLxnjbHJsRuOYzrLVMfu1cimv16eIwar
+        gapeNrW/4shi+IfZlTxsHixuLa0LlP72HNmBQenaQ4CaqeMX5x3l6VZhTEG9Oqgj
+        QrcG+P6nzrfSy4d/mIWnGXj8MOJfPFJb3934w0AEuss03MVbZaj9+82m6UBoae9+
+        foXl4DywpkWnYQuERJsGw9RdIMWlVjPMJ3u1NaRgH1+5F1IH3h7u7sFMgf6MSeDo
+        cysSNyN+CXHRRsa7MHJsiL49eiQwd3cLnM8e4YUPzRCP1GXKFX/qJ01LdQHOumyv
+        S41YRrBM=
 X-Virus-Scanned: amavisd-new at mykolab.com
 Received: from mx.kolabnow.com ([127.0.0.1])
-        by localhost (ext-mx-out002.mykolab.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id HVstuJcXeNyo; Sun, 14 Mar 2021 18:56:56 +0100 (CET)
+        by localhost (ext-mx-out001.mykolab.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id SjYjIIExSzhc; Sun, 14 Mar 2021 19:07:22 +0100 (CET)
 Received: from int-mx002.mykolab.com (unknown [10.9.13.2])
-        by ext-mx-out002.mykolab.com (Postfix) with ESMTPS id 04A885BB;
-        Sun, 14 Mar 2021 18:56:55 +0100 (CET)
-Received: from ext-subm002.mykolab.com (unknown [10.9.6.2])
-        by int-mx002.mykolab.com (Postfix) with ESMTPS id 9334F33EB;
-        Sun, 14 Mar 2021 18:56:53 +0100 (CET)
-Subject: Re: [PATCH 4/7] worktree: fix leak in dwim_branch()
+        by ext-mx-out001.mykolab.com (Postfix) with ESMTPS id 785C2B00;
+        Sun, 14 Mar 2021 19:07:22 +0100 (CET)
+Received: from ext-subm001.mykolab.com (unknown [10.9.6.1])
+        by int-mx002.mykolab.com (Postfix) with ESMTPS id 3C19A33EB;
+        Sun, 14 Mar 2021 19:07:20 +0100 (CET)
+Subject: Re: [PATCH 1/7] symbolic-ref: don't leak shortened refname in
+ check_symref()
 To:     Jeff King <peff@peff.net>,
         Andrzej Hunt via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Andrzej Hunt <ajrhunt@google.com>
 References: <pull.899.git.1615228580.gitgitgadget@gmail.com>
- <d46a4e701620704ae3fd203c9d9dffb172cb3804.1615228580.git.gitgitgadget@gmail.com>
- <YEZ4BQTeT/vdX+tK@coredump.intra.peff.net>
+ <ff0f7c167fa5b5da2d843fa03edb70907e6af763.1615228580.git.gitgitgadget@gmail.com>
+ <YEZ0jLppB9wOg/af@coredump.intra.peff.net>
 From:   Andrzej Hunt <andrzej@ahunt.org>
-Message-ID: <b328381d-2e38-af02-e84d-cfb8174103ee@ahunt.org>
-Date:   Sun, 14 Mar 2021 18:56:51 +0100
+Message-ID: <8d413cdb-e264-8381-7254-522c3453f188@ahunt.org>
+Date:   Sun, 14 Mar 2021 19:07:18 +0100
 MIME-Version: 1.0
-In-Reply-To: <YEZ4BQTeT/vdX+tK@coredump.intra.peff.net>
+In-Reply-To: <YEZ0jLppB9wOg/af@coredump.intra.peff.net>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -67,39 +68,61 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 08/03/2021 20:16, Jeff King wrote:
-> On Mon, Mar 08, 2021 at 06:36:17PM +0000, Andrzej Hunt via GitGitGadget wrote:
-> 
->> Make sure that we release the temporary strbuf during dwim_branch() for
->> all codepaths (and not just for the early return).
-> 
-> Makes sense. Two style nits:
 
-Thank, I'll fix both.
+On 08/03/2021 20:01, Jeff King wrote:
+> On Mon, Mar 08, 2021 at 06:36:14PM +0000, Andrzej Hunt via GitGitGadget wrote:
 > 
->> -	if (!strbuf_check_branch_ref(&ref, branchname) &&
->> -	    ref_exists(ref.buf)) {
->> -		strbuf_release(&ref);
->> +
->> +	branch_exists = (!strbuf_check_branch_ref(&ref, branchname) &&
->> +			 ref_exists(ref.buf));
+>> From: Andrzej Hunt <ajrhunt@google.com>
+>>
+>> This leak has existed since:
+>> 9ab55daa55 (git symbolic-ref --delete $symref, 2012-10-21)
+>>
+>> This leak was found when running t0001 with LSAN, see also LSAN output
+>> below:
+>>
+>> Direct leak of 19 byte(s) in 1 object(s) allocated from:
+>>      #0 0x486514 in strdup /home/abuild/rpmbuild/BUILD/llvm-11.0.0.src/build/../projects/compiler-rt/lib/asan/asan_interceptors.cpp:452:3
+>>      #1 0x9ab048 in xstrdup /home/ahunt/oss-fuzz/git/wrapper.c:29:14
+>>      #2 0x8b452f in refs_shorten_unambiguous_ref /home/ahunt/oss-fuzz/git/refs.c
+>>      #3 0x8b47e8 in shorten_unambiguous_ref /home/ahunt/oss-fuzz/git/refs.c:1287:9
+>>      #4 0x679fce in check_symref /home/ahunt/oss-fuzz/git/builtin/symbolic-ref.c:28:14
+>>      #5 0x679ad8 in cmd_symbolic_ref /home/ahunt/oss-fuzz/git/builtin/symbolic-ref.c:70:9
+>>      #6 0x4cd60d in run_builtin /home/ahunt/oss-fuzz/git/git.c:453:11
+>>      #7 0x4cb2da in handle_builtin /home/ahunt/oss-fuzz/git/git.c:704:3
+>>      #8 0x4ccc37 in run_argv /home/ahunt/oss-fuzz/git/git.c:771:4
+>>      #9 0x4cac29 in cmd_main /home/ahunt/oss-fuzz/git/git.c:902:19
+>>      #10 0x69cc6e in main /home/ahunt/oss-fuzz/git/common-main.c:52:11
+>>      #11 0x7f98388a4349 in __libc_start_main (/lib64/libc.so.6+0x24349)
 > 
-> We'd usually omit the extra parentheses here. I.e.,:
+> As a general template for fixing leaks, this information seems pretty
+> good. You might want to give a brief reason for why it's a leak (like
+> you do already in the second patch). Here it just would be something
+> like:
 > 
->    branch_exists = !strbuf_check_branch_ref(&ref, branchname) &&
->                    ref_exists(ref.buf);
+>    shorten_unambiguous_ref() returns an allocated string. We have to
+>    track it separately from the const refname.
+> 
+> Or whatever. It doesn't need to be a novel, but just give an overview of
+> what's going that makes the diff obvious.
 
-I've made this change - but I have a question about the formatting:
-- In the few examples that I could find, the second line is aligned 
-using spaces (i.e. same number of tabs as the previous line, followed by 
-spaces to align correctly). However that appears to violate the 
-indent-with-non-tab style check - should I switch to 100% tabs instead?
+Good point - I've copied this one verbatim - but it's also a good thing 
+to remember if/when I fix further leaks!
 
-That check has been around since:
+> 
+> There's also an idiom in Git's codebase when a const pointer may alias
+> unowned storage, or a buffer that needs to be freed. Something like:
+> 
+>    if (print) {
+>            char *to_free = NULL;
+> 	  if (shorten)
+> 	          refname = to_free = shorten_unambiguous_ref(refname, 0);
+> 	  puts(refname);
+> 	  free(to_free);
+>    }
+> 
+> That avoids duplicating the part of the code that handles the variable.
+> In this case it is only a single line, but IMHO it's still easier to
+> read, as it makes clear that we call puts() in either case.
 
-e2f6331a14 (.gitattributes: CR at the end of the line is an error, 
-2009-06-19)
-
-So maybe it's being intentionally ignored in the cases that I've seen (I 
-only noticed it for my series because of the automated checks on Github) 
-- but I thought I should ask to sure.
+That's a nice pattern, and will probably be useful for future leak fixes 
+too - I've made this change too!
