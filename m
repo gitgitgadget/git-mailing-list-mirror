@@ -2,66 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 71BD4C43381
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C435C433E6
 	for <git@archiver.kernel.org>; Sun, 14 Mar 2021 22:18:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 494A664E86
+	by mail.kernel.org (Postfix) with ESMTP id 3631264E77
 	for <git@archiver.kernel.org>; Sun, 14 Mar 2021 22:18:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229574AbhCNWRs (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S229579AbhCNWRs (ORCPT <rfc822;git@archiver.kernel.org>);
         Sun, 14 Mar 2021 18:17:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40380 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229532AbhCNWRm (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229524AbhCNWRm (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 14 Mar 2021 18:17:42 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40841C061574
-        for <git@vger.kernel.org>; Sun, 14 Mar 2021 15:17:42 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id g20so7047717wmk.3
-        for <git@vger.kernel.org>; Sun, 14 Mar 2021 15:17:42 -0700 (PDT)
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B984EC061574
+        for <git@vger.kernel.org>; Sun, 14 Mar 2021 15:17:41 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id b9so4772124wrt.8
+        for <git@vger.kernel.org>; Sun, 14 Mar 2021 15:17:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=z8vwt4Zyxh9BzSX1a5zsk4FdOOJt01pZmeEEHzdNk8Q=;
-        b=gPfYOwjWP5RDOUW63iuybzb69BgmfZMfbDoPkx0Uu3kJ+OGTgRRmI1Fz3aqwzbyUU6
-         tiHyR+pGwVyhY7M3UMS28yaRP5CsR4sKRhVr6WRnba9BukjFlvtZvkJJAMv0cKrWSRwj
-         LIJsmi8uisQsQmaUO1fLs1060Z+4YmnVdQEfMyjvzvNGNdVCXJ+kVnVIvU8pANzAhjQE
-         dvEhkDQqPA0zSAGn17B47yk079/WbZel1QlPtj5/pIwXb4k6Iq/d124WakC4uMNI996m
-         VSZzI81zCVVcaeo9R4zRjKeOXC+O39EQX7fJeDTqqcDzP9OQJiy3T0iYL9X7GWX9MD3i
-         6XsQ==
+        bh=w11hh3M80MmjnO7LUjMtDjtaGxocqE7NunSOyGe7LU4=;
+        b=HUCtNBOQeuNUN45xPsz8kduBSPUmgo2GygJlsoUmfsBbeYc/9dijXfyfSegvgbXdWA
+         RsgNiiAwWCKI7I6le+b9ozxYYTnwSI7rhKXunCIUZmXcZOVDvGQJLC6X6AYjrylDVkEI
+         Z4gqg+6GZe9Qn5Qe4NiK60d+875ijA4vZ7tb4tARh/C78M3IVwuKHqwMNrWLFsI+6jVw
+         wZtZaG09Wtix87tFZN1OelpubjH/eVJjdrDQBDTg70DGqIPZ0i/yLAfM3wx5t+76mjzX
+         Y5KdCZyJavCP2WdCrVRG8bwKYzssz/tiq3+SvRR7WBgxT/U303t192iRusYu3oLvST6C
+         r14w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=z8vwt4Zyxh9BzSX1a5zsk4FdOOJt01pZmeEEHzdNk8Q=;
-        b=eLFxu3piTgVgOA+TYRhkH/rv/syV2sTV35YMBPLORC0wcUr3Pmox6JoEvFzz7CKK88
-         bykrz0h+iVm8YUHU1AC1QXdtQNbNH+hjO7NXOXE8/ls7sktC4NRC7Z2naUiDmov38irE
-         0ySWMu77zXLQ5OmyeStuy0kNQoc9DBa7L6+dej0TcJN5Y2XRk7p1+Fniw5K+yZjfKAOC
-         LcolQPTXjLV4hqjT97mwrKMcpWkLGaA06kksk90o0X0xhgYfECuMrmnfzhhc2blkEJzb
-         IFUivSCEOQf5v7Jm0S0oW4vzogxfTmFcFKZpc6wCWQME8FjasE9fs4czGya7mJtZEptN
-         DLxg==
-X-Gm-Message-State: AOAM532NyYYF4nxJdyObPUq4U8LsfIkJHbDE/3UP3QdhteUY6sQlth8w
-        feQuijxN563MtcSA3lfg/KpYZT7WMJw=
-X-Google-Smtp-Source: ABdhPJyERzfvzWtUbxD+/AnlcBTAXpauQegcAM/gEEjW5/x1tGAub6pSgxNHNunsPs6j0bAnL8JV7A==
-X-Received: by 2002:a1c:804e:: with SMTP id b75mr23510247wmd.113.1615760260991;
+        bh=w11hh3M80MmjnO7LUjMtDjtaGxocqE7NunSOyGe7LU4=;
+        b=CBz/mNPsCI+XaQk6TJUq05EAhJpH5vKK6PrMGSgd9iAHYf//+2dKdL7BXuFtS1TV4l
+         1QX++1NEz1gy6FHOyMIo6fKzLNFOw1JMaxm8MIVICOXAdqKTbU43sps3eF4Y3B1WwpQx
+         LScXRhyC3KpvalEDzHGfhuEB7H8G1AIWV2DR+gC3492B9RlF3tLqwO8RulcyJB0AqQzX
+         eHgFDjRhzPQQoAwCzfNX1RRykY00t075QrIG9WVW1u/qzbSy504tyFSXpq9HXVVd2zof
+         LWu0bPuOSwn7BKxJ9zinOa9LtPnYLLt40U/jfYpl1Qh3Zw2Iyr+DTGSybQhHE0pZhAU0
+         sb4A==
+X-Gm-Message-State: AOAM533kix2a1dXNuZclZnB0yyljXbSuOVnBSo2QFfGDFIeq990pDt1G
+        FzSZEhp9r5556qpY/SQq10VGj7+UO0Q=
+X-Google-Smtp-Source: ABdhPJx/nWU28QQE/PA1y3QPClEsdwrfIQFDWmGqhmXnfBo7dNoIOsGfpH3lVQc6IsF207oBdDE0/Q==
+X-Received: by 2002:a5d:550b:: with SMTP id b11mr24999244wrv.313.1615760260453;
         Sun, 14 Mar 2021 15:17:40 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j30sm18542717wrj.62.2021.03.14.15.17.40
+        by smtp.gmail.com with ESMTPSA id m3sm10297192wmc.48.2021.03.14.15.17.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Sun, 14 Mar 2021 15:17:40 -0700 (PDT)
-Message-Id: <740302586dd8902c46567fc2de9b7296cce4eda2.1615760258.git.gitgitgadget@gmail.com>
+Message-Id: <dda5b537a3f0706ebf933e2b2efd996267e9d9b1.1615760258.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.903.git.1615760258.gitgitgadget@gmail.com>
 References: <pull.903.git.1615760258.gitgitgadget@gmail.com>
 From:   "Nipunn Koorapati via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 14 Mar 2021 22:17:37 +0000
-Subject: [PATCH 3/3] fsmonitor: add perf test for git diff HEAD
+Date:   Sun, 14 Mar 2021 22:17:36 +0000
+Subject: [PATCH 2/3] fsmonitor: add assertion that fsmonitor is valid to
+ check_removed
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,93 +76,115 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Nipunn Koorapati <nipunn@dropbox.com>
 
-Update the xargs call so that if your large repo contains
-symlinks, test-tool chmtime failure does not end the script.
-
-On Linux
-Test                                                          this tree           upstream/master
----------------------------------------------------------------------------------------------------------
-7519.4: status (fsmonitor=fsmonitor-watchman)                 0.52(0.43+0.10)     0.53(0.49+0.05) +1.9%
-7519.5: status -uno (fsmonitor=fsmonitor-watchman)            0.21(0.15+0.07)     0.22(0.13+0.09) +4.8%
-7519.6: status -uall (fsmonitor=fsmonitor-watchman)           1.65(0.93+0.71)     1.69(1.03+0.65) +2.4%
-7519.7: status (dirty) (fsmonitor=fsmonitor-watchman)         11.99(11.34+1.58)   11.95(11.02+1.79) -0.3%
-7519.8: diff (fsmonitor=fsmonitor-watchman)                   0.25(0.17+0.26)     0.25(0.18+0.26) +0.0%
-7519.9: diff HEAD (fsmonitor=fsmonitor-watchman)              0.39(0.25+0.34)     0.89(0.35+0.74) +128.2%
-7519.10: diff -- 0_files (fsmonitor=fsmonitor-watchman)       0.16(0.13+0.04)     0.16(0.12+0.05) +0.0%
-7519.11: diff -- 10_files (fsmonitor=fsmonitor-watchman)      0.16(0.12+0.05)     0.16(0.12+0.05) +0.0%
-7519.12: diff -- 100_files (fsmonitor=fsmonitor-watchman)     0.16(0.12+0.05)     0.16(0.12+0.05) +0.0%
-7519.13: diff -- 1000_files (fsmonitor=fsmonitor-watchman)    0.16(0.11+0.06)     0.16(0.12+0.05) +0.0%
-7519.14: diff -- 10000_files (fsmonitor=fsmonitor-watchman)   0.18(0.13+0.06)     0.17(0.10+0.08) -5.6%
-7519.15: add (fsmonitor=fsmonitor-watchman)                   2.25(1.53+0.68)     2.25(1.47+0.74) +0.0%
-7519.18: status (fsmonitor=disabled)                          0.88(0.73+1.03)     0.89(0.67+1.08) +1.1%
-7519.19: status -uno (fsmonitor=disabled)                     0.45(0.43+0.89)     0.45(0.34+0.98) +0.0%
-7519.20: status -uall (fsmonitor=disabled)                    1.88(1.16+1.58)     1.88(1.22+1.51) +0.0%
-7519.21: status (dirty) (fsmonitor=disabled)                  7.53(7.05+2.11)     7.53(6.98+2.04) +0.0%
-7519.22: diff (fsmonitor=disabled)                            0.42(0.37+0.92)     0.42(0.38+0.91) +0.0%
-7519.23: diff HEAD (fsmonitor=disabled)                       0.44(0.41+0.90)     0.44(0.40+0.91) +0.0%
-7519.24: diff -- 0_files (fsmonitor=disabled)                 0.13(0.09+0.05)     0.13(0.09+0.05) +0.0%
-7519.25: diff -- 10_files (fsmonitor=disabled)                0.13(0.10+0.04)     0.13(0.10+0.04) +0.0%
-7519.26: diff -- 100_files (fsmonitor=disabled)               0.13(0.09+0.05)     0.13(0.10+0.04) +0.0%
-7519.27: diff -- 1000_files (fsmonitor=disabled)              0.13(0.09+0.06)     0.13(0.09+0.05) +0.0%
-7519.28: diff -- 10000_files (fsmonitor=disabled)             0.14(0.11+0.05)     0.14(0.10+0.05) +0.0%
-7519.29: add (fsmonitor=disabled)                             2.43(1.61+1.64)     2.43(1.69+1.57) +0.0%
-
-On linux (2.29.2 vs w/ this patch):
-nipunn@nipunn-dbx:~/src/server3$ strace -f -c git diff 2>&1 | grep lstat
-  0.04    0.000063           3        20         6 lstat
-nipunn@nipunn-dbx:~/src/server3$ strace -f -c git diff HEAD 2>&1 | grep lstat
- 94.98    5.242262          10    523783        13 lstat
-nipunn@nipunn-dbx:~/src/server3$ strace -f -c ../git/bin-wrappers/git diff 2>&1 | grep lstat
-  0.38    0.000032           5         7         3 lstat
-nipunn@nipunn-dbx:~/src/server3$ strace -f -c ../git/bin-wrappers/git diff HEAD 2>&1 | grep lstat
- 99.44    0.741892           9     81634        10 lstat
-
-On mac (2.29.2 vs w/ this patch):
-nipunn-mbp:server nipunn$ sudo dtruss -L -f -c git diff 2>&1 | grep "^lstat64 "
-lstat64                                         8
-nipunn-mbp:server nipunn$ sudo dtruss -L -f -c git diff HEAD 2>&1 | grep "^lstat64 "
-lstat64                                    120242
-nipunn-mbp:server nipunn$ sudo dtruss -L -f -c ../git/bin-wrappers/git diff 2>&1 | grep "^lstat64 "
-lstat64                                         4
-nipunn-mbp:server nipunn$ sudo dtruss -L -f -c ../git/bin-wrappers/git diff HEAD 2>&1 | grep "^lstat64 "
-lstat64                                      4497
-
-There are still a bunch of lstats - on directories, but not every file. Progress!
+Validate that fsmonitor is valid to futureproof against bugs where
+check_removed might be called from places that haven't refreshed.
 
 Signed-off-by: Nipunn Koorapati <nipunn@dropbox.com>
 ---
- t/helper/test-chmtime.c   | 3 ++-
- t/perf/p7519-fsmonitor.sh | 4 ++++
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ diff-lib.c  | 18 +++++++++++-------
+ fsmonitor.h | 11 +++++++++++
+ 2 files changed, 22 insertions(+), 7 deletions(-)
 
-diff --git a/t/helper/test-chmtime.c b/t/helper/test-chmtime.c
-index aa22af48c2a6..a8b143d11ab7 100644
---- a/t/helper/test-chmtime.c
-+++ b/t/helper/test-chmtime.c
-@@ -111,7 +111,8 @@ int cmd__chmtime(int argc, const char **argv)
- 		if (stat(argv[i], &sb) < 0) {
- 			fprintf(stderr, "Failed to stat %s: %s\n",
- 			        argv[i], strerror(errno));
--			return 1;
-+			// Skip and move on - eg if it's a broken symlink
-+			continue;
- 		}
+diff --git a/diff-lib.c b/diff-lib.c
+index 3fb538ad18e9..e5a58c9259cf 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -28,8 +28,9 @@
+  * exists for ce that is a submodule -- it is a submodule that is not
+  * checked out).  Return negative for an error.
+  */
+-static int check_removed(const struct cache_entry *ce, struct stat *st)
++static int check_removed(const struct index_state *istate, const struct cache_entry *ce, struct stat *st)
+ {
++	assert(is_fsmonitor_refreshed(istate));
+ 	if (!(ce->ce_flags & CE_FSMONITOR_VALID) && lstat(ce->name, st) < 0) {
+ 		if (!is_missing_file_error(errno))
+ 			return -1;
+@@ -136,7 +137,7 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
+ 			memset(&(dpath->parent[0]), 0,
+ 			       sizeof(struct combine_diff_parent)*5);
  
- #ifdef GIT_WINDOWS_NATIVE
-diff --git a/t/perf/p7519-fsmonitor.sh b/t/perf/p7519-fsmonitor.sh
-index b657564aed60..5eb5044a103c 100755
---- a/t/perf/p7519-fsmonitor.sh
-+++ b/t/perf/p7519-fsmonitor.sh
-@@ -216,6 +216,10 @@ test_fsmonitor_suite() {
- 		git diff
- 	'
+-			changed = check_removed(ce, &st);
++			changed = check_removed(istate, ce, &st);
+ 			if (!changed)
+ 				wt_mode = ce_mode_from_stat(ce, st.st_mode);
+ 			else {
+@@ -216,7 +217,7 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
+ 		} else {
+ 			struct stat st;
  
-+	test_perf_w_drop_caches "diff HEAD ($DESC)" '
-+		git diff HEAD
-+	'
+-			changed = check_removed(ce, &st);
++			changed = check_removed(istate, ce, &st);
+ 			if (changed) {
+ 				if (changed < 0) {
+ 					perror(ce->name);
+@@ -278,7 +279,8 @@ static void diff_index_show_file(struct rev_info *revs,
+ 		       oid, oid_valid, ce->name, dirty_submodule);
+ }
+ 
+-static int get_stat_data(const struct cache_entry *ce,
++static int get_stat_data(const struct index_state *istate,
++			 const struct cache_entry *ce,
+ 			 const struct object_id **oidp,
+ 			 unsigned int *modep,
+ 			 int cached, int match_missing,
+@@ -290,7 +292,7 @@ static int get_stat_data(const struct cache_entry *ce,
+ 	if (!cached && !ce_uptodate(ce)) {
+ 		int changed;
+ 		struct stat st;
+-		changed = check_removed(ce, &st);
++		changed = check_removed(istate, ce, &st);
+ 		if (changed < 0)
+ 			return -1;
+ 		else if (changed) {
+@@ -321,12 +323,13 @@ static void show_new_file(struct rev_info *revs,
+ 	const struct object_id *oid;
+ 	unsigned int mode;
+ 	unsigned dirty_submodule = 0;
++	struct index_state *istate = revs->diffopt.repo->index;
+ 
+ 	/*
+ 	 * New file in the index: it might actually be different in
+ 	 * the working tree.
+ 	 */
+-	if (get_stat_data(new_file, &oid, &mode, cached, match_missing,
++	if (get_stat_data(istate, new_file, &oid, &mode, cached, match_missing,
+ 	    &dirty_submodule, &revs->diffopt) < 0)
+ 		return;
+ 
+@@ -342,8 +345,9 @@ static int show_modified(struct rev_info *revs,
+ 	unsigned int mode, oldmode;
+ 	const struct object_id *oid;
+ 	unsigned dirty_submodule = 0;
++	struct index_state *istate = revs->diffopt.repo->index;
+ 
+-	if (get_stat_data(new_entry, &oid, &mode, cached, match_missing,
++	if (get_stat_data(istate, new_entry, &oid, &mode, cached, match_missing,
+ 			  &dirty_submodule, &revs->diffopt) < 0) {
+ 		if (report_missing)
+ 			diff_index_show_file(revs, "-", old_entry,
+diff --git a/fsmonitor.h b/fsmonitor.h
+index 7f1794b90b00..c12f10117544 100644
+--- a/fsmonitor.h
++++ b/fsmonitor.h
+@@ -49,6 +49,17 @@ void refresh_fsmonitor(struct index_state *istate);
+  */
+ int fsmonitor_is_trivial_response(const struct strbuf *query_result);
+ 
++/*
++ * Check if refresh_fsmonitor has been called at least once.
++ * refresh_fsmonitor is idempotent. Returns true if fsmonitor is
++ * not enabled (since the state will be "fresh" w/ CE_FSMONITOR_VALID unset)
++ * This version is useful for assertions
++ */
++static inline int is_fsmonitor_refreshed(const struct index_state *istate)
++{
++    return !core_fsmonitor || istate->fsmonitor_has_run_once;
++}
 +
- 	test_perf_w_drop_caches "diff -- 0_files ($DESC)" '
- 		git diff -- 1_file
- 	'
+ /*
+  * Set the given cache entries CE_FSMONITOR_VALID bit. This should be
+  * called any time the cache entry has been updated to reflect the
 -- 
 gitgitgadget
+
