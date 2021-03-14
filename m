@@ -2,64 +2,65 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 582AAC43381
-	for <git@archiver.kernel.org>; Sun, 14 Mar 2021 16:56:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6AC3C433DB
+	for <git@archiver.kernel.org>; Sun, 14 Mar 2021 16:57:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 25E6764EEE
-	for <git@archiver.kernel.org>; Sun, 14 Mar 2021 16:56:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5942B64E33
+	for <git@archiver.kernel.org>; Sun, 14 Mar 2021 16:57:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233951AbhCNQzk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 14 Mar 2021 12:55:40 -0400
-Received: from mx.kolabnow.com ([95.128.36.40]:34092 "EHLO mx.kolabnow.com"
+        id S234014AbhCNQ5P (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 14 Mar 2021 12:57:15 -0400
+Received: from mx.kolabnow.com ([95.128.36.40]:35432 "EHLO mx.kolabnow.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233977AbhCNQzZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Mar 2021 12:55:25 -0400
+        id S232431AbhCNQ5B (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Mar 2021 12:57:01 -0400
 Received: from localhost (unknown [127.0.0.1])
-        by ext-mx-out001.mykolab.com (Postfix) with ESMTP id 6CF2DDB4;
-        Sun, 14 Mar 2021 17:55:14 +0100 (CET)
+        by ext-mx-out003.mykolab.com (Postfix) with ESMTP id E9DA94049B;
+        Sun, 14 Mar 2021 17:56:59 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kolabnow.com; h=
         content-transfer-encoding:content-language:content-type
         :content-type:in-reply-to:mime-version:date:date:message-id:from
         :from:references:subject:subject:received:received:received; s=
-        dkim20160331; t=1615740913; x=1617555314; bh=IPruyQ1PWTsDjE//YwH
-        vI+dhSh+OYH35Ej+wb61WaGo=; b=ZZ67vd+AhTEgIP8pKg7lekarfcP8w1XiVKd
-        RMiGve8oOwaBHIAEHAG0E/Tu9yIaZOkTnmz453i1IiRXIaqgPaNtyCDPQDrDgM7H
-        Qte17glm9NU3RPDQ6oL281/pbdWB86Da4Ewzg/NTOiDohlgaG84bdmpt1bPnzS2R
-        TME9aaWcN6q6F0aCeMCpZCd0V8MI5U4CqtqUdAOjSZ+5ON0CLMy5fsprM27cdFBY
-        kG+MfocoJzMt6UMLwWUlrAdWQ/nqec/w0SP06RE2hvdo08X+NVwBv6n5LgWqfec3
-        ADUsDEXKKWv4pWWJsogbPX1Cr1dI1/HJrrLR24Y2X7ue/TkIn2vHw25eHf0wWPe1
-        5jeIhWLHsNgKX9MlU2ZPfHLFVBW6FVcwh6mb9AMtTPV81LhDY47eg4Ht2qEzeidK
-        BKUnmgrCkIb+mQ/4wPx0B3EGrjVizd6GMIyReRKeS6DpMQmq1ZkGBwGVTPf/7NQp
-        VO6CN3fIiX7iNcaNEZ5jj9wNvr4DHzfYr+LdrMF8GJ2cyGKnyJJnzKRlmfUYLqRQ
-        wE4ZA+GknWc6N7ugj18Hyvz4J+rwRnW5Vl7jJnUcKry/9Flk4nSJEdr/aJL8orbA
-        DR7/KZ8bpnKUYzXJbbHiQkog1UQjTQigrlS1rF8BtV9KlHqKlWDbJdVUHwfaQ3U2
-        jr7lXaU0=
+        dkim20160331; t=1615741019; x=1617555420; bh=axADaeBpVHvov97jR+/
+        diQsS0IwCOOWEvfZ7Wh4nKeg=; b=eeTUdIpI5kJV6PPare4peW5cdRzzTMK+KeD
+        BA4+p6T9Ii6V6wN0cURKoej+fhgzffzDFctx/B9BCF1JCDaJN8SDl47dhT6CgNQR
+        2QcoQCRzcUATsADJeUEoeHV2uyWbIEoZrKKU4qKrv60WjIKKLH5eDv+tVcKQV1Mk
+        dQgfadtC99Upiq4yhcb6j68K4LAhyd1OvfPQOZDj8r6aQnWnLrZ3JFPXzSAXbFQx
+        ajJE2HvBGvWHsl6YSST9S7ehrqTgxKKBxNfGTbvsrzyqgRI2MVw07tO+74j1bf11
+        3urSsva6NR5nRlcPxucdM/8ecpBaQWt/rASHdJwkcpRrGBkBN69f8IhgJAIY34HV
+        5wrHvoHq13iad/GZQHG5sfI1jdjLBqoLNiOSZndMVFKxChhUVbwbvVNAEIn4f+Rd
+        21N4104ZYxpNqwJ+W+6KHjrN+inqwGaXe37YKLwsr/RD0AVrAABLdKMmBY3NbsRE
+        pRcJ80zAq82INdtWUeTdnKCC1t5rHWn1fwFjje6kGbVfVaxcDYSrdb/hPf1ZO3nk
+        LCQkutBWYogR0tndEr9qpZq59IVi2N0S3UccjEqHAsrElZlnRttucu3vTjedtkOO
+        siwdfONc6HnMqT7UeH/dK9v83PbcLCg4HptUGYXVkEFBosMMearUGURWgJLd6X/p
+        en55P2iE=
 X-Virus-Scanned: amavisd-new at mykolab.com
 Received: from mx.kolabnow.com ([127.0.0.1])
-        by localhost (ext-mx-out001.mykolab.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id iVNtAYXh7_hc; Sun, 14 Mar 2021 17:55:13 +0100 (CET)
+        by localhost (ext-mx-out003.mykolab.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id 3GQSkl5cw5RF; Sun, 14 Mar 2021 17:56:59 +0100 (CET)
 Received: from int-mx001.mykolab.com (unknown [10.9.13.1])
-        by ext-mx-out001.mykolab.com (Postfix) with ESMTPS id 79D70B00;
-        Sun, 14 Mar 2021 17:55:13 +0100 (CET)
+        by ext-mx-out003.mykolab.com (Postfix) with ESMTPS id 29B5840483;
+        Sun, 14 Mar 2021 17:56:58 +0100 (CET)
 Received: from ext-subm002.mykolab.com (unknown [10.9.6.2])
-        by int-mx001.mykolab.com (Postfix) with ESMTPS id EA168B1F;
-        Sun, 14 Mar 2021 17:55:11 +0100 (CET)
-Subject: Re: [PATCH 0/7] Fix all leaks in t0001
-To:     Junio C Hamano <gitster@pobox.com>,
+        by int-mx001.mykolab.com (Postfix) with ESMTPS id DAA0CB1B;
+        Sun, 14 Mar 2021 17:56:56 +0100 (CET)
+Subject: Re: [PATCH 3/7] clone: free or UNLEAK further pointers when finished
+To:     Jeff King <peff@peff.net>,
         Andrzej Hunt via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org
+Cc:     git@vger.kernel.org, Andrzej Hunt <ajrhunt@google.com>
 References: <pull.899.git.1615228580.gitgitgadget@gmail.com>
- <xmqqk0qh5v7v.fsf@gitster.c.googlers.com>
+ <107e98d00e1685e0144ee2415b8220c53542e5a3.1615228580.git.gitgitgadget@gmail.com>
+ <YEZ3Gf0f/NfXiwW2@coredump.intra.peff.net>
 From:   Andrzej Hunt <andrzej@ahunt.org>
-Message-ID: <a36441d6-4d9d-1cee-9227-272d5332f889@ahunt.org>
-Date:   Sun, 14 Mar 2021 17:55:09 +0100
+Message-ID: <9856ec4c-b8dc-3c93-ee20-f818672375b7@ahunt.org>
+Date:   Sun, 14 Mar 2021 17:56:54 +0100
 MIME-Version: 1.0
-In-Reply-To: <xmqqk0qh5v7v.fsf@gitster.c.googlers.com>
+In-Reply-To: <YEZ3Gf0f/NfXiwW2@coredump.intra.peff.net>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -67,66 +68,74 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 08/03/2021 19:57, Junio C Hamano wrote:
-> "Andrzej Hunt via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 08/03/2021 20:12, Jeff King wrote:
+> On Mon, Mar 08, 2021 at 06:36:16PM +0000, Andrzej Hunt via GitGitGadget wrote:
 > 
->> hand: fixing or suppressing these leaks should make it easier to spot leaks
->> that have more significant user impact (it's entirely plausible that no real
->> impactful leaks exist).
+>> @@ -1017,9 +1017,10 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+>>   	repo_name = argv[0];
+>>   
+>>   	path = get_repo_path(repo_name, &is_bundle);
+>> -	if (path)
+>> +	if (path) {
+>> +		free(path);
+>>   		repo = absolute_pathdup(repo_name);
 > 
-> Even if there is no leaks that matter exist now, to help maintain
-> that state, suppressing false positives would be useful, provided if
-> such checkers are run sufficiently often.
+> You mentioned that "path" gets reused again later. Should we use
+> FREE_AND_NULL() to make sure that nobody tries to look at it in the
+> meantime?
 
-Expanding on my thoughts in response to Peff's comments regarding 
-running leak checking under ASAN: I'm wondering whether it would be 
-acceptable to piggyback leak-checking on top of the existing ASAN test runs:
+That sounds sensible - I wasn't too sure at first because we are 
+unconditionally setting path later... but I can't see an reason not to 
+make this safer.
 
-- It looks like people are already running tests with ASAN from time to
-   time - enabling leak checking there would add leak-checking coverage
-   without having to run LSAN separately (this would have to be
-    restricted to those tests that are leak-free - more on that below).
-- I also saw some discussion around enabling ASAN in CI, although I
-   don't think that went anywhere yet [1]. I'd be interested in trying to
-   pick that up - ASAN seems quite valuable by itself, and running it
-   in CI would be a simple way to also get leak-checking in CI.
-   (Again, this would have to be limited to known leak-free tests.)
+But that makes me wonder if the definition of path should set it to NULL 
+too. Setting it to NULL after freeing it guarantees that we can't read 
+the old value anymore. However later code has no idea if path will be 
+NULL or merely initialised (at least until we overwrite it with the new 
+path).
 
-(I'm planning to run some benchmarks to see how much enabling 
-leak-checking with ASAN actually costs - I'm assuming it's fairly cheap 
-if you're already running ASAN, but I'd like to verify that.)
+I've provisionally updated my patch to also set path = NULL at point of 
+definition, but I don't know if that's idiomatic in this scenario.
 
-As to the mechanics of enabling leak-checking with ASAN: test-lib.sh 
-currently completely disables ASAN's leak-checking. Instead we could add 
-a simple allowlist, to enable leak-checking for those tests that don't - 
-Fix LSAN crashleak - this needn't be much more complex than:
+> 
+>> @@ -1393,6 +1394,12 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+>>   	strbuf_release(&reflog_msg);
+>>   	strbuf_release(&branch_top);
+>>   	strbuf_release(&key);
+>> +	free_refs(mapped_refs);
+>> +	free_refs((void *)remote_head_points_at);
+> 
+> We should avoid casting away constness when possible (because it is
+> often a sign that sometimes the variable _isn't_ pointing to owned
+> memory). In this case, I think freeing is the right thing; our
+> guess_remote_head() returns a copy of the struct (which is non-const).
+> Should remote_head_points_at just be declared without const?
 
-  $TEST_NUMBER <= highest_leak_free_test
+I think so - I'll change remote_head_points_at to non-const.
 
-I.e. something like this:
+>> +	free_refs((void *)refs);
+> 
+> This one is more questionable to me. It comes from
+> transport_get_remote_refs(), which does return a const pointer. And it
+> looks like that memory is owned by the transport struct. So presumably
+> we need to tell the transport code to clean itself up (or mark it with
+> UNLEAK). Or perhaps there's a bug in the transport code (e.g., should it
+> be freeing transport->remote_refs in transport_disconnect()? You'd want
+> to make sure that no other callers expect the ref list to live on past
+> the disconnect).
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index d3f6af6a65..cf9f1ad827 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -41,7 +41,13 @@ GIT_BUILD_DIR="$TEST_DIRECTORY"/..
-  # the noise level. This needs to happen at the start of the script,
-  # before we even do our "did we build git yet" check (since we don't
-  # want that one to complain to stderr).
--: ${ASAN_OPTIONS=detect_leaks=0:abort_on_error=1}
-+if test $TEST_NUMBER -le 10
-+then
-+    DETECT_LEAKS=1
-+else
-+    DETECT_LEAKS=0
-+fi
-+: ${ASAN_OPTIONS=detect_leaks=$DETECT_LEAKS:abort_on_error=1}
-  export ASAN_OPTIONS
+There are indeed multiple locations where we store the fetched refs, 
+followed by transport_disconnect(), followed by trying to use the refs 
+(that are nomimanlly owned by the now disconnected transport):
 
-  # If LSAN is in effect we _do_ want leak checking, but we still
+https://git.kernel.org/pub/scm/git/git.git/tree/builtin/remote.c?h=next#n953
+https://git.kernel.org/pub/scm/git/git.git/tree/builtin/ls-remote.c?h=next#n122
 
-(This would also require moving TEST_NUMBER a bit earlier in
-  test-lib.sh.)
+However all other locations could handle free()'ing during 
+transport_disconnect - and the 2 I've linked to above are easy enough to 
+fix. So I'll give up on free_refs() from cmd_clone(), and will move it 
+into transport_disconnect() as suggested. I've added a new patch to the 
+end of the series to take care of this change.
 
-[1] 
-https://public-inbox.org/git/20170710155831.3zxijp7bvbquvlau@sigill.intra.peff.net/
+(Which ultimately means we've now solved the same pattern of leak for 
+all 5 users of transport_get_remote_refs().)
