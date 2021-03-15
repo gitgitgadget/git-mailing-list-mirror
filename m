@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB723C4332D
-	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 21:09:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 12133C43331
+	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 21:09:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D04F964F3F
+	by mail.kernel.org (Postfix) with ESMTP id E569764F50
 	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 21:09:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233686AbhCOVIv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Mar 2021 17:08:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53354 "EHLO
+        id S233889AbhCOVIx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Mar 2021 17:08:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53376 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232691AbhCOVIf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Mar 2021 17:08:35 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79628C06175F
-        for <git@vger.kernel.org>; Mon, 15 Mar 2021 14:08:35 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id l12so9393993wry.2
-        for <git@vger.kernel.org>; Mon, 15 Mar 2021 14:08:35 -0700 (PDT)
+        with ESMTP id S233071AbhCOVIi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Mar 2021 17:08:38 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61942C06174A
+        for <git@vger.kernel.org>; Mon, 15 Mar 2021 14:08:38 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id y16so9408849wrw.3
+        for <git@vger.kernel.org>; Mon, 15 Mar 2021 14:08:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=/Lelo8/06j9WQIIf7GDhH+9BwIWlnOU4qaeio0Ut5GI=;
-        b=tvQtX6LsHaYuFO6dTDNtoRN6HVhLC37IISkXMxwq0Q1JGo59+OvqQ9+efz+0pyRdL8
-         HcurpavlgeAJB+XlNXrtIWe5Z+CpN9GvcOJ6V4U+XcDH/5aWO+IGZrHB08Ic9bRAd8jU
-         y1BB1zwOLcxNaS6owP1VaUIt7gFJDu7sEHnSDDBvU0GUEtTREzhgy/4mg1bL3z+CP9OD
-         X8fZQR4lb2ZF6sGfAhuH+YZhwRARNZ6vjk32gAP1Z8eSc00yAM2xNbk5mis+y/UyXd9F
-         YtgbmcFR6KEPbAVQUGtnNpNmNzNuDAgpZVChLcK8tZXJqG+gCzStKqBJ/oIaT6Ty2EcC
-         Z6JA==
+        bh=5Pdau/r0fcMGLYHt+z4JaTsxB8Kwqlni+GJpFcY8nBk=;
+        b=fFA+5iU/evQ+WE0k87hGw4ph6zzq6p8q5ZKsxWaeD+ptHrBPxm+tWn3gFbTa7htBRq
+         YSA86HM53OFoYZbMKaN5yKHOdNxPFqoXeYl3l9exPOmTO7HDSNWPmxIazqpsAbFyzDk+
+         szXsoIfk2K8E32+c0c87r0B+cEPmhXCAGSpJ7ysBjyl9dcL6ROgj6dpM7q45VvbsVLSe
+         nRQD0J61ra/GJQa6kKbSsT3iMstU9w2PdYo4pDMRNn44c2FC1i0i2nSbeT1vAz4ZSOpi
+         9vXU/J2q9zOKRx+s0CsAGLCgB2IwZ5kaKgFaBssg7IleE5mS5f2b5VKc4IoOPbiH4PPE
+         WUaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=/Lelo8/06j9WQIIf7GDhH+9BwIWlnOU4qaeio0Ut5GI=;
-        b=jvXZfaZ6dgkUcm18VHQ9zMyWhTHL7nvkh+VyEH1DYT4O7yEkO//LKu7aGkm+jNoB3Y
-         YCTN0GW6g/vGEsuBJj8NBy4lWZ4EXXtvJKqNVX/IfYtbCQbRxM/ePx0hOXXyanl0mNH7
-         hP9MwZBzs5WM+Rt6MuMwXEEnFcX7E6b5lTN8Z4L03YP/UCHhiGoh4pxDbTv7kaXJNcL/
-         7K9EdWkCdZsWCz7sgDo8ySZOF0xVwAM+T8cGQ6SJJsGssnz2Sds8XZ+3SQFIdnft47WI
-         wGbTXtHJJVtLm1+gl2l9HRSRwfE47q8YGbCMGOObykynXueVV6KIABZJ7YdGR737PwCX
-         gjyQ==
-X-Gm-Message-State: AOAM532TWVHQYDlWfTue0ZPHXVxCe/wVOcxJPxbxuD2Nz4hPJuDec5VC
-        G+wiIDiC+s5F5Jet56PyJJo5ZXJgyRY=
-X-Google-Smtp-Source: ABdhPJyGrH30o/oplQnd8HMDMzd06/PxC1sxQ8JQktGOMWy6IrsTf3TSaViH14hjw9pMOsiDQWhN1g==
-X-Received: by 2002:adf:ce0a:: with SMTP id p10mr1450604wrn.255.1615842514264;
-        Mon, 15 Mar 2021 14:08:34 -0700 (PDT)
+        bh=5Pdau/r0fcMGLYHt+z4JaTsxB8Kwqlni+GJpFcY8nBk=;
+        b=b7IXDyWP6w+Qzd0uSQx1Q7fYV1o7YY9hOsRm9TOL1k6q8tj1ZB3I82fmEZpdNqjXdZ
+         Ao8hyRjdMReM3LeWX//Phb4+1QYZgYO0xhi/bTdEPu979sSEIB4X12oSmmzdFAOWbOPG
+         nW0emnFpu87pjvkL2+IpoR5K4fX4eDQxW0rEmRdvEsFaRZBVWlJHMIK5fKSyzOsj2a1n
+         oe4uB9stuQ+/L2Ue7mvRZjkmk5Dg8ZLXhF/Hb2aYcXymjwLX6ZuHASppWfWS8JJSz6kB
+         1+2vfDBnxv/O0P7Cfm5yQN83CU0DgCe7a1bXFb0kZDKrgiQM/VawDG0Z7H0QCbrYFq4S
+         HFPA==
+X-Gm-Message-State: AOAM533ZRgVPxoeup4nfHKrQ7NwOVQt0XfaERnsi7u3lh3ygTbQmTgA7
+        F9r1e3Q52HpUePwri5QZcwAHGvulrdk=
+X-Google-Smtp-Source: ABdhPJwyXT+jYrKmprs5AyeB6BvOCfC3cteZd+JTryEedHxcZSlbnH3oeRPX1l2asmkWBTpU48jsIw==
+X-Received: by 2002:adf:90f0:: with SMTP id i103mr1430154wri.318.1615842517120;
+        Mon, 15 Mar 2021 14:08:37 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a8sm815372wmm.46.2021.03.15.14.08.33
+        by smtp.gmail.com with ESMTPSA id d204sm804085wmc.17.2021.03.15.14.08.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Mar 2021 14:08:33 -0700 (PDT)
-Message-Id: <f829feb2aa93937b2e2fc493e8ea647051960658.1615842510.git.gitgitgadget@gmail.com>
+        Mon, 15 Mar 2021 14:08:36 -0700 (PDT)
+Message-Id: <02c885fd623df3551c46aa270c23f87e7ef79af2.1615842510.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.766.v6.git.1615842509.gitgitgadget@gmail.com>
 References: <pull.766.v5.git.1615302157.gitgitgadget@gmail.com>
         <pull.766.v6.git.1615842509.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 15 Mar 2021 21:08:22 +0000
-Subject: [PATCH v6 05/12] simple-ipc: design documentation for new IPC
- mechanism
+Date:   Mon, 15 Mar 2021 21:08:27 +0000
+Subject: [PATCH v6 10/12] unix-stream-server: create unix domain socket under
+ lock
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,128 +83,240 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Brief design documentation for new IPC mechanism allowing
-foreground Git client to talk with an existing daemon process
-at a known location using a named pipe or unix domain socket.
+Create a wrapper class for `unix_stream_listen()` that uses a ".lock"
+lockfile to create the unix domain socket in a race-free manner.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Unix domain sockets have a fundamental problem on Unix systems because
+they persist in the filesystem until they are deleted.  This is
+independent of whether a server is actually listening for connections.
+Well-behaved servers are expected to delete the socket when they
+shutdown.  A new server cannot easily tell if a found socket is
+attached to an active server or is leftover cruft from a dead server.
+The traditional solution used by `unix_stream_listen()` is to force
+delete the socket pathname and then create a new socket.  This solves
+the latter (cruft) problem, but in the case of the former, it orphans
+the existing server (by stealing the pathname associated with the
+socket it is listening on).
+
+We cannot directly use a .lock lockfile to create the socket because
+the socket is created by `bind(2)` rather than the `open(2)` mechanism
+used by `tempfile.c`.
+
+As an alternative, we hold a plain lockfile ("<path>.lock") as a
+mutual exclusion device.  Under the lock, we test if an existing
+socket ("<path>") is has an active server.  If not, we create a new
+socket and begin listening.  Then we use "rollback" to delete the
+lockfile in all cases.
+
+This wrapper code conceptually exists at a higher-level than the core
+unix_stream_connect() and unix_stream_listen() routines that it
+consumes.  It is isolated in a wrapper class for clarity.
+
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- Documentation/technical/api-simple-ipc.txt | 105 +++++++++++++++++++++
- 1 file changed, 105 insertions(+)
- create mode 100644 Documentation/technical/api-simple-ipc.txt
+ Makefile                            |   1 +
+ contrib/buildsystems/CMakeLists.txt |   2 +-
+ unix-stream-server.c                | 125 ++++++++++++++++++++++++++++
+ unix-stream-server.h                |  33 ++++++++
+ 4 files changed, 160 insertions(+), 1 deletion(-)
+ create mode 100644 unix-stream-server.c
+ create mode 100644 unix-stream-server.h
 
-diff --git a/Documentation/technical/api-simple-ipc.txt b/Documentation/technical/api-simple-ipc.txt
+diff --git a/Makefile b/Makefile
+index d3c42d3f4f9f..012694276f6d 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1665,6 +1665,7 @@ ifdef NO_UNIX_SOCKETS
+ 	BASIC_CFLAGS += -DNO_UNIX_SOCKETS
+ else
+ 	LIB_OBJS += unix-socket.o
++	LIB_OBJS += unix-stream-server.o
+ endif
+ 
+ ifdef USE_WIN32_IPC
+diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+index 40c9e8e3bd9d..c94011269ebb 100644
+--- a/contrib/buildsystems/CMakeLists.txt
++++ b/contrib/buildsystems/CMakeLists.txt
+@@ -243,7 +243,7 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+ 
+ elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+ 	add_compile_definitions(PROCFS_EXECUTABLE_PATH="/proc/self/exe" HAVE_DEV_TTY )
+-	list(APPEND compat_SOURCES unix-socket.c)
++	list(APPEND compat_SOURCES unix-socket.c unix-stream-server.c)
+ endif()
+ 
+ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+diff --git a/unix-stream-server.c b/unix-stream-server.c
 new file mode 100644
-index 000000000000..d79ad323e675
+index 000000000000..efa2a207abcd
 --- /dev/null
-+++ b/Documentation/technical/api-simple-ipc.txt
-@@ -0,0 +1,105 @@
-+Simple-IPC API
-+==============
++++ b/unix-stream-server.c
+@@ -0,0 +1,125 @@
++#include "cache.h"
++#include "lockfile.h"
++#include "unix-socket.h"
++#include "unix-stream-server.h"
 +
-+The Simple-IPC API is a collection of `ipc_` prefixed library routines
-+and a basic communication protocol that allow an IPC-client process to
-+send an application-specific IPC-request message to an IPC-server
-+process and receive an application-specific IPC-response message.
++#define DEFAULT_LOCK_TIMEOUT (100)
 +
-+Communication occurs over a named pipe on Windows and a Unix domain
-+socket on other platforms.  IPC-clients and IPC-servers rendezvous at
-+a previously agreed-to application-specific pathname (which is outside
-+the scope of this design) that is local to the computer system.
++/*
++ * Try to connect to a unix domain socket at `path` (if it exists) and
++ * see if there is a server listening.
++ *
++ * We don't know if the socket exists, whether a server died and
++ * failed to cleanup, or whether we have a live server listening, so
++ * we "poke" it.
++ *
++ * We immediately hangup without sending/receiving any data because we
++ * don't know anything about the protocol spoken and don't want to
++ * block while writing/reading data.  It is sufficient to just know
++ * that someone is listening.
++ */
++static int is_another_server_alive(const char *path,
++				   const struct unix_stream_listen_opts *opts)
++{
++	int fd = unix_stream_connect(path, opts->disallow_chdir);
++	if (fd >= 0) {
++		close(fd);
++		return 1;
++	}
 +
-+The IPC-server routines within the server application process create a
-+thread pool to listen for connections and receive request messages
-+from multiple concurrent IPC-clients.  When received, these messages
-+are dispatched up to the server application callbacks for handling.
-+IPC-server routines then incrementally relay responses back to the
-+IPC-client.
++	return 0;
++}
 +
-+The IPC-client routines within a client application process connect
-+to the IPC-server and send a request message and wait for a response.
-+When received, the response is returned back the caller.
++int unix_ss_create(const char *path,
++		   const struct unix_stream_listen_opts *opts,
++		   long timeout_ms,
++		   struct unix_ss_socket **new_server_socket)
++{
++	struct lock_file lock = LOCK_INIT;
++	int fd_socket;
++	struct unix_ss_socket *server_socket;
 +
-+For example, the `fsmonitor--daemon` feature will be built as a server
-+application on top of the IPC-server library routines.  It will have
-+threads watching for file system events and a thread pool waiting for
-+client connections.  Clients, such as `git status` will request a list
-+of file system events since a point in time and the server will
-+respond with a list of changed files and directories.  The formats of
-+the request and response are application-specific; the IPC-client and
-+IPC-server routines treat them as opaque byte streams.
++	*new_server_socket = NULL;
 +
++	if (timeout_ms < 0)
++		timeout_ms = DEFAULT_LOCK_TIMEOUT;
 +
-+Comparison with sub-process model
-+---------------------------------
++	/*
++	 * Create a lock at "<path>.lock" if we can.
++	 */
++	if (hold_lock_file_for_update_timeout(&lock, path, 0, timeout_ms) < 0)
++		return -1;
 +
-+The Simple-IPC mechanism differs from the existing `sub-process.c`
-+model (Documentation/technical/long-running-process-protocol.txt) and
-+used by applications like Git-LFS.  In the LFS-style sub-process model
-+the helper is started by the foreground process, communication happens
-+via a pair of file descriptors bound to the stdin/stdout of the
-+sub-process, the sub-process only serves the current foreground
-+process, and the sub-process exits when the foreground process
-+terminates.
++	/*
++	 * If another server is listening on "<path>" give up.  We do not
++	 * want to create a socket and steal future connections from them.
++	 */
++	if (is_another_server_alive(path, opts)) {
++		rollback_lock_file(&lock);
++		errno = EADDRINUSE;
++		return -2;
++	}
 +
-+In the Simple-IPC model the server is a very long-running service.  It
-+can service many clients at the same time and has a private socket or
-+named pipe connection to each active client.  It might be started
-+(on-demand) by the current client process or it might have been
-+started by a previous client or by the OS at boot time.  The server
-+process is not associated with a terminal and it persists after
-+clients terminate.  Clients do not have access to the stdin/stdout of
-+the server process and therefore must communicate over sockets or
-+named pipes.
++	/*
++	 * Create and bind to a Unix domain socket at "<path>".
++	 */
++	fd_socket = unix_stream_listen(path, opts);
++	if (fd_socket < 0) {
++		int saved_errno = errno;
++		rollback_lock_file(&lock);
++		errno = saved_errno;
++		return -1;
++	}
 +
++	server_socket = xcalloc(1, sizeof(*server_socket));
++	server_socket->path_socket = strdup(path);
++	server_socket->fd_socket = fd_socket;
++	lstat(path, &server_socket->st_socket);
 +
-+Server startup and shutdown
-+---------------------------
++	*new_server_socket = server_socket;
 +
-+How an application server based upon IPC-server is started is also
-+outside the scope of the Simple-IPC design and is a property of the
-+application using it.  For example, the server might be started or
-+restarted during routine maintenance operations, or it might be
-+started as a system service during the system boot-up sequence, or it
-+might be started on-demand by a foreground Git command when needed.
++	/*
++	 * Always rollback (just delete) "<path>.lock" because we already created
++	 * "<path>" as a socket and do not want to commit_lock to do the atomic
++	 * rename trick.
++	 */
++	rollback_lock_file(&lock);
 +
-+Similarly, server shutdown is a property of the application using
-+the simple-ipc routines.  For example, the server might decide to
-+shutdown when idle or only upon explicit request.
++	return 0;
++}
 +
++void unix_ss_free(struct unix_ss_socket *server_socket)
++{
++	if (!server_socket)
++		return;
 +
-+Simple-IPC protocol
-+-------------------
++	if (server_socket->fd_socket >= 0) {
++		if (!unix_ss_was_stolen(server_socket))
++			unlink(server_socket->path_socket);
++		close(server_socket->fd_socket);
++	}
 +
-+The Simple-IPC protocol consists of a single request message from the
-+client and an optional response message from the server.  Both the
-+client and server messages are unlimited in length and are terminated
-+with a flush packet.
++	free(server_socket->path_socket);
++	free(server_socket);
++}
 +
-+The pkt-line routines (Documentation/technical/protocol-common.txt)
-+are used to simplify buffer management during message generation,
-+transmission, and reception.  A flush packet is used to mark the end
-+of the message.  This allows the sender to incrementally generate and
-+transmit the message.  It allows the receiver to incrementally receive
-+the message in chunks and to know when they have received the entire
-+message.
++int unix_ss_was_stolen(struct unix_ss_socket *server_socket)
++{
++	struct stat st_now;
 +
-+The actual byte format of the client request and server response
-+messages are application specific.  The IPC layer transmits and
-+receives them as opaque byte buffers without any concern for the
-+content within.  It is the job of the calling application layer to
-+understand the contents of the request and response messages.
++	if (!server_socket)
++		return 0;
 +
++	if (lstat(server_socket->path_socket, &st_now) == -1)
++		return 1;
 +
-+Summary
-+-------
++	if (st_now.st_ino != server_socket->st_socket.st_ino)
++		return 1;
++	if (st_now.st_dev != server_socket->st_socket.st_dev)
++		return 1;
 +
-+Conceptually, the Simple-IPC protocol is similar to an HTTP REST
-+request.  Clients connect, make an application-specific and
-+stateless request, receive an application-specific
-+response, and disconnect.  It is a one round trip facility for
-+querying the server.  The Simple-IPC routines hide the socket,
-+named pipe, and thread pool details and allow the application
-+layer to focus on the application at hand.
++	if (!S_ISSOCK(st_now.st_mode))
++		return 1;
++
++	return 0;
++}
+diff --git a/unix-stream-server.h b/unix-stream-server.h
+new file mode 100644
+index 000000000000..ae2712ba39b1
+--- /dev/null
++++ b/unix-stream-server.h
+@@ -0,0 +1,33 @@
++#ifndef UNIX_STREAM_SERVER_H
++#define UNIX_STREAM_SERVER_H
++
++#include "unix-socket.h"
++
++struct unix_ss_socket {
++	char *path_socket;
++	struct stat st_socket;
++	int fd_socket;
++};
++
++/*
++ * Create a Unix Domain Socket at the given path under the protection
++ * of a '.lock' lockfile.
++ *
++ * Returns 0 on success, -1 on error, -2 if socket is in use.
++ */
++int unix_ss_create(const char *path,
++		   const struct unix_stream_listen_opts *opts,
++		   long timeout_ms,
++		   struct unix_ss_socket **server_socket);
++
++/*
++ * Close and delete the socket.
++ */
++void unix_ss_free(struct unix_ss_socket *server_socket);
++
++/*
++ * Return 1 if the inode of the pathname to our socket changes.
++ */
++int unix_ss_was_stolen(struct unix_ss_socket *server_socket);
++
++#endif /* UNIX_STREAM_SERVER_H */
 -- 
 gitgitgadget
 
