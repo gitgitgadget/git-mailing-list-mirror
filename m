@@ -2,223 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 415DEC2BA1A
-	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 13:16:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EA570C433E0
+	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 13:37:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 218C764F23
-	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 13:16:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A653C60240
+	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 13:37:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230205AbhCONP1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Mar 2021 09:15:27 -0400
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:55021 "EHLO
-        out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229735AbhCONO6 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 15 Mar 2021 09:14:58 -0400
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.nyi.internal (Postfix) with ESMTP id 3D7365C0181;
-        Mon, 15 Mar 2021 09:14:58 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Mon, 15 Mar 2021 09:14:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
-        :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm3; bh=CO8sHZpWCOvOkCZLg12P0W2i+uC
-        a8Yy9gmypQy7z53I=; b=dj0No030ZcjKlIjoznC/CNf79z5MJeXMkWVTlZCeEtX
-        KNzh8Zil1I2JwsY1lltuJKapB+I2Z0k8a3La4nuyXcK1IqGPYXQ3CYJSxLmlvzkV
-        AIAilX3iRx/LT6KpUKVh7NXrZmKkXPzfFhmTrEGyrgY7hgbUW4P6F09PxjZ3VOn4
-        aCy9wkwdrDCGPtKiaA9pt3fjfA8zAvFszLpghYV88VywaS8T+y6zMbHTq+lfst2r
-        K/xAmoRTwRjWl4BUHGISKtKYmeuQ/u2aHPOVLE/u8GUhQzL03X8QZhbqKYG+1RgC
-        cXdXPvvnfQRWYijqyd3R9TD6c7DK6gNQPy6JohPdsAg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=CO8sHZ
-        pWCOvOkCZLg12P0W2i+uCa8Yy9gmypQy7z53I=; b=lTzUW0VUjmm3pbuk5jPKAC
-        m9qrLOZtbrbH0L37d8+/fglIHNiQIYYXPOYLGt4VaJCUMDxIzQmngVlNuXPVOnje
-        kitMI0PewT+fbF06cqS9tDNeI6kLcUMetLKNZcC6bCNuo/vWpNAlMSBLh788Iv9m
-        C9Ooc8K3b2Vh3OQTeIScMt5D4hNL9JMMnYc7Qa29w/tL2F4uDmr7wwVcz3PLUx66
-        2aHsGc1xT2OisqFCZcBOjzjg3nxtlJByRyQn+64A9/gjY4FdnUrGjIgWen80D0nj
-        2hqN8dSBIcaTfhayUHuT3gA+rwj7IUcUEAsI2iZSJeQghMy5L3sVX5Cw3gWZmvVA
-        ==
-X-ME-Sender: <xms:0l1PYFwxl4XgnEqgDOFDNcaN8McOq1btI54I4QmuRaQ427vEbeFIQg>
-    <xme:0l1PYFTIfkjzETBpye8-Kj3mC5d6c9QTSe-AcY49asTLgLtqUdF8xmXZ-Ya2P6gUY
-    fFK3s5beecg0HQ6OA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledruddvledggeelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeehgefhtdefueffheekgfffudelffejtdfhvdejkedthfehvdelgfetgfdvtedthfen
-    ucfkphepkeelrddugedrleeirddvgedunecuvehluhhsthgvrhfuihiivgepheenucfrrg
-    hrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:0l1PYPUbx0KtqByHJDiZVyIX59WpMe81nD6Nfo-ZZZ4WB4BIv77pAA>
-    <xmx:0l1PYHhxpNLjXB15qMN9ullimOsNMKdnp0TVmaJl4fHJcr8r1Jq38A>
-    <xmx:0l1PYHDk2VRKgzauYr28KQ4U8WOHWsYi269fUSBOgtgPmxLjN6kpkQ>
-    <xmx:0l1PYM4zW1OhPsayIg_Qa_Fy_5kQ74_qL4sqj0V6WhWFivS_SPBrfw>
-Received: from vm-mail.pks.im (dynamic-089-014-096-241.89.14.pool.telefonica.de [89.14.96.241])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 705A61080067;
-        Mon, 15 Mar 2021 09:14:57 -0400 (EDT)
-Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 8e93f94a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Mon, 15 Mar 2021 13:14:56 +0000 (UTC)
-Date:   Mon, 15 Mar 2021 14:14:55 +0100
-From:   Patrick Steinhardt <ps@pks.im>
-To:     git@vger.kernel.org
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>
-Subject: [PATCH v2 6/8] pack-bitmap: implement object type filter
-Message-ID: <8073ab665b07cf653478482f801a06e072233230.1615813673.git.ps@pks.im>
-References: <cover.1614600555.git.ps@pks.im>
- <cover.1615813673.git.ps@pks.im>
+        id S229518AbhCONhW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Mar 2021 09:37:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39694 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229506AbhCONgx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Mar 2021 09:36:53 -0400
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDBDBC06174A
+        for <git@vger.kernel.org>; Mon, 15 Mar 2021 06:36:52 -0700 (PDT)
+Received: by mail-ot1-x32d.google.com with SMTP id r24so6983324otp.12
+        for <git@vger.kernel.org>; Mon, 15 Mar 2021 06:36:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=H0IHIslo2ui2Lqa6gDYwy9G475HuOopPqRo75aMoLds=;
+        b=hR5onX65HIBa5Ec3AbPREe3CK25/L3n2kSmo+nvwIbPilHQo+NIvNgl3POsXOQUz6W
+         SZyPB+RGg2Q9oZ+xcNY8Gc8MXMwuupxYC4WyBN11J+TBrXSBVVSZafYW0dexPNJ/Lh+g
+         ZMKU3nTrkAF2c+0Ux6Xncnyy4bR5h/nh07XpWRuS8venOS80t1aZ0Wkv3SKzbP+wATli
+         OOg40uhbqnA2gm961g4Mal+vKPyqMepvqyO4IR8vA34S7ezppt8axH060hyX8Vi2FKpv
+         8M1MV9kVYwfZkv3fR17mL71/Dr92gxOREFFHO/rabAy30t8Gzp0NoMvV4Onwz68ecwrQ
+         RYcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=H0IHIslo2ui2Lqa6gDYwy9G475HuOopPqRo75aMoLds=;
+        b=IRGADfFzYHZM3CeBmR8OPI4wogXXw19NPKUxYvseJgVwZsbD9D2qKn9SGMpOi8BTNR
+         a7qIeKMJS1B4q7Jdb/CV0Om2NEpDfGPc472sgiu1jGh2EcDBTZ1W4PtKeaLDpet9XCMw
+         VeE9LcLIclyg2Vqag70aVMYUGeTBDUAX8BhcgP6JDRRWdb9k1F2q0k2h9B+trtc4NKxo
+         VNoKVl7KE8k1v8sB0PD4Hu9cksiYB23okOIQwiiLSnCozAabWv2goCkUbJCnmnCQm6sL
+         PkF03e53Hnx6z8FDry3RbrWgawzLaMdX3E0o4DBQB5TIZXBQ5AvgkaYJo0lMWoaFJXlc
+         G3mg==
+X-Gm-Message-State: AOAM531fMCCDf/K/gTlhjsU5auT+G77V1szXcn7wY+EpgjIDqoi0U+p7
+        L1K7a4KWWpXB6FCFRyyXTYo=
+X-Google-Smtp-Source: ABdhPJxRNgqvawe1VtMsHJOMRpiLxmvuqhKEOM5h5ybpDULHsFGDf+gTrXhZjJAsBQ2pz+JdsWiiHA==
+X-Received: by 2002:a05:6830:802:: with SMTP id r2mr13960402ots.110.1615815412208;
+        Mon, 15 Mar 2021 06:36:52 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:44e0:e2f9:fa7e:56fa? ([2600:1700:e72:80a0:44e0:e2f9:fa7e:56fa])
+        by smtp.gmail.com with ESMTPSA id 3sm7295369otw.58.2021.03.15.06.36.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 15 Mar 2021 06:36:51 -0700 (PDT)
+Subject: Re: [PATCH 16/20] sparse-checkout: toggle sparse index from builtin
+To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Elijah Newren <newren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= =?UTF-8?Q?_Duy?= 
+        <pclouds@gmail.com>, Jonathan Nieder <jrnieder@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.883.git.1614111270.gitgitgadget@gmail.com>
+ <6d6b230e3318007150aebefebc16dfb8b9b6c401.1614111270.git.gitgitgadget@gmail.com>
+ <CAN0heSqPTASn61KKGvWEA3ronaWEPWGP23LUg36JiMxxHEd0zQ@mail.gmail.com>
+ <466cb063-0481-cfa6-cc3e-8ca26d73c8fb@gmail.com>
+ <CAN0heSpu7mWCXTu3qUKN1VEiH3rqHpstEU_k1LktNhV-z8b2pQ@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <03e4b93d-cba7-1ee4-e22e-d3c5a5d56175@gmail.com>
+Date:   Mon, 15 Mar 2021 09:36:50 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="plESwGU/yN/XdxGN"
-Content-Disposition: inline
-In-Reply-To: <cover.1615813673.git.ps@pks.im>
+In-Reply-To: <CAN0heSpu7mWCXTu3qUKN1VEiH3rqHpstEU_k1LktNhV-z8b2pQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 3/14/2021 4:08 PM, Martin Ågren wrote:
+> On Tue, 9 Mar 2021 at 21:52, Derrick Stolee <stolee@gmail.com> wrote:
+>>
+>> I agree that the layers are confusing. We could rearrange and have
+>> a similar flow to what you recommend by mentioning the extension at
+>> the end:
+>>
+>> **WARNING:** Using a sparse index requires modifying the index in a way
+>> that is not completely understood by other tools. If you have trouble with
+>> this compatibility, then run `git sparse-checkout sparse-index disable` to
+>> rewrite your index to not be sparse. Older versions of Git will not
+>> understand the `sparseIndex` repository extension and may fail to interact
+>> with your repository until it is disabled.
+> 
+> I like it. I find this easier to read than the previous version. That
+> said, is `git sparse-index sparse-checkout disable` really the way to do
+> this? I don't see a "sparse-index" subcommand of git-sparse-checkout.
+> ... Hmm, no, after building and installing your patches, I get
+> 
+>   $ git sparse-checkout sparse-index disable
+>   usage: git sparse-checkout (init|list|set|add|reapply|disable) <options>
+> 
+> Should that be `git sparse-checkout init --no-sparse-index`? I just
+> tried that on a fresh, empty repo. It seems to work in the sense that it
+> drops the config item. I'm guessing re-initing a sparse checkout is a
+> safe and sane thing to do?
 
---plESwGU/yN/XdxGN
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Yes! Sorry I missed updating this instance when changing the
+design. Your suggestion is indeed the proper way to disable the
+sparse-index.
+ 
+> I don't find any tests for this. If re-initing should be ok and in
+> particular if it should allow toggling the use of sparse index, it might
+> be good having a test. At a minimum to see that the command passes and
+> that the config item goes away? And check that the actual index is
+> rewritten back to the "old" format? (Sorry if you have that already and
+> I'm just bad at finding it.)
 
-The preceding commit has added a new object filter for git-rev-list(1)
-which allows to filter objects by type. Implement the equivalent filter
-for packfile bitmaps so that we can answer these queries fast.
+We have tests already that 'git sparse-checkout init' will preserve
+existing sparse-checkout patterns.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- pack-bitmap.c                      | 28 +++++++++++++++++++++++++---
- t/t6113-rev-list-bitmap-filters.sh | 25 ++++++++++++++++++++++++-
- 2 files changed, 49 insertions(+), 4 deletions(-)
+I should definitely have a test to ensure that '--no-sparse-index'
+rewrites the index to be a full one. Thanks!
 
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 1f69b5fa85..196d38c91d 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -779,9 +779,6 @@ static void filter_bitmap_exclude_type(struct bitmap_in=
-dex *bitmap_git,
- 	eword_t mask;
- 	uint32_t i;
-=20
--	if (type !=3D OBJ_BLOB && type !=3D OBJ_TREE)
--		BUG("filter_bitmap_exclude_type: unsupported type '%d'", type);
--
- 	/*
- 	 * The non-bitmap version of this filter never removes
- 	 * objects which the other side specifically asked for,
-@@ -911,6 +908,23 @@ static void filter_bitmap_tree_depth(struct bitmap_ind=
-ex *bitmap_git,
- 				   OBJ_BLOB);
- }
-=20
-+static void filter_bitmap_object_type(struct bitmap_index *bitmap_git,
-+				      struct object_list *tip_objects,
-+				      struct bitmap *to_filter,
-+				      enum object_type object_type)
-+{
-+	enum object_type t;
-+
-+	if (object_type < OBJ_COMMIT || object_type > OBJ_TAG)
-+		BUG("filter_bitmap_object_type given invalid object");
-+
-+	for (t =3D OBJ_COMMIT; t <=3D OBJ_TAG; t++) {
-+		if (t =3D=3D object_type)
-+			continue;
-+		filter_bitmap_exclude_type(bitmap_git, tip_objects, to_filter, t);
-+	}
-+}
-+
- static int filter_bitmap(struct bitmap_index *bitmap_git,
- 			 struct object_list *tip_objects,
- 			 struct bitmap *to_filter,
-@@ -943,6 +957,14 @@ static int filter_bitmap(struct bitmap_index *bitmap_g=
-it,
- 		return 0;
- 	}
-=20
-+	if (filter->choice =3D=3D LOFC_OBJECT_TYPE) {
-+		if (bitmap_git)
-+			filter_bitmap_object_type(bitmap_git, tip_objects,
-+						  to_filter,
-+						  filter->object_type);
-+		return 0;
-+	}
-+
- 	/* filter choice not handled */
- 	return -1;
- }
-diff --git a/t/t6113-rev-list-bitmap-filters.sh b/t/t6113-rev-list-bitmap-f=
-ilters.sh
-index 3f889949ca..fb66735ac8 100755
---- a/t/t6113-rev-list-bitmap-filters.sh
-+++ b/t/t6113-rev-list-bitmap-filters.sh
-@@ -10,7 +10,8 @@ test_expect_success 'set up bitmapped repo' '
- 	test_commit much-larger-blob-one &&
- 	git repack -adb &&
- 	test_commit two &&
--	test_commit much-larger-blob-two
-+	test_commit much-larger-blob-two &&
-+	git tag tag
- '
-=20
- test_expect_success 'filters fallback to non-bitmap traversal' '
-@@ -75,4 +76,26 @@ test_expect_success 'tree:1 filter' '
- 	test_cmp expect actual
- '
-=20
-+test_expect_success 'object:type filter' '
-+	git rev-list --objects --filter=3Dobject:type=3Dtag tag >expect &&
-+	git rev-list --use-bitmap-index \
-+		     --objects --filter=3Dobject:type=3Dtag tag >actual &&
-+	test_cmp expect actual &&
-+
-+	git rev-list --objects --filter=3Dobject:type=3Dcommit tag >expect &&
-+	git rev-list --use-bitmap-index \
-+		     --objects --filter=3Dobject:type=3Dcommit tag >actual &&
-+	test_bitmap_traversal expect actual &&
-+
-+	git rev-list --objects --filter=3Dobject:type=3Dtree tag >expect &&
-+	git rev-list --use-bitmap-index \
-+		     --objects --filter=3Dobject:type=3Dtree tag >actual &&
-+	test_bitmap_traversal expect actual &&
-+
-+	git rev-list --objects --filter=3Dobject:type=3Dblob tag >expect &&
-+	git rev-list --use-bitmap-index \
-+		     --objects --filter=3Dobject:type=3Dblob tag >actual &&
-+	test_bitmap_traversal expect actual
-+'
-+
- test_done
---=20
-2.30.2
-
-
---plESwGU/yN/XdxGN
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmBPXc4ACgkQVbJhu7ck
-PpSRihAAqZJ1gBKLVraDmYqafs3X19UtEXo4UjDLwA8In6s/eqsZ695MfQdaeNz4
-+Q5BCjZWE4NcyfEvL4heEgqeKAA8k2dCnLDCZ9NN3+Q70UxEn9hdhMDhu5px4Ewa
-2Kwrp86BZX7UBv3vFSi1+hQ5GwJpIPpdTZvsbWlOi9nu9nQXJE5VYec/JNFk8PN5
-ksh89Vp6AROPo3oQGE65nl6NdLX7guTowhQByiYGuWFlRsAus1HiIXXJwyJIYhMh
-LRkpxnq1+VCqcQGZpFFzv577UUcWNVxzeKNub5jpffOFi80eW/c4D1FItI+99K9N
-6FMSRyF61hV6zoJE2A6Jb6CCJkleWdSjmCuPYcHoOwNE/6+tOsD7SQ3nkNbYRu8d
-JyWl2J4o1usYbC7IKPQPQ633rvt9ReyE503JKJVK8PufrEw1dKq9JNXPBSdYuP7L
-FkOSFEDFkNCiMAYk/j0SiIJtK0Wf2JstRc85t59QmeIdVpuOn/VIqZxZNOpKjHxf
-jbNJey4fC1ROv8cg+l4mAwtEuAvf4cByZSj6NoxOylPjmkTtfM+jcrfv9uhDh/FK
-umrkF6DcQfXNkdlP/cPaJQBDdXKt9qHzwxJXot84ToAnQtulkLYJ0fqc6/HRdOGR
-arghv0tWbfizWoSD3UI27p16hJfhiwxtoFPH8sOdlNSzfKnaOhk=
-=4kqI
------END PGP SIGNATURE-----
-
---plESwGU/yN/XdxGN--
+-Stolee
