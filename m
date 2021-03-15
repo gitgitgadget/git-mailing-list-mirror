@@ -2,73 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D88CFC433E0
-	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 22:52:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B9A0C433E6
+	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 23:08:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A3FAB64F5E
-	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 22:52:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6FF7764F5C
+	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 23:08:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231933AbhCOWvq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Mar 2021 18:51:46 -0400
-Received: from mail-ed1-f48.google.com ([209.85.208.48]:47029 "EHLO
-        mail-ed1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232002AbhCOWvc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Mar 2021 18:51:32 -0400
-Received: by mail-ed1-f48.google.com with SMTP id h10so19236556edt.13
-        for <git@vger.kernel.org>; Mon, 15 Mar 2021 15:51:32 -0700 (PDT)
+        id S231452AbhCOXHr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Mar 2021 19:07:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50722 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230467AbhCOXH0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Mar 2021 19:07:26 -0400
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76B10C06174A
+        for <git@vger.kernel.org>; Mon, 15 Mar 2021 16:07:26 -0700 (PDT)
+Received: by mail-pf1-x42a.google.com with SMTP id e26so7541779pfd.9
+        for <git@vger.kernel.org>; Mon, 15 Mar 2021 16:07:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=zo7yi15ZmiVPw60lfuHd4uU6Bcp9ZLfvx4gJvO2nm3Y=;
+        b=m+0AlWdSJPeI8jAYR0MI9WILflwT/QoBR1qyXjs66k57qRsXbSSHMnAy7ifA5brQm9
+         1LE1wOXuSxPBuXQ605KTrJeCm2kvFjqzV2KjdREGz4xiikS1+VBMnF9y9cl4LK+bS2ie
+         W7plfaiURqJlprS01KszT++nApMTON0lXw6VWEOeFEVOxYyCdhAshall4YgU3Dva3pSR
+         8xtTzEZJDxN/BPiepk7WaJIMCGRxUkkpb8ISivYQrelhFcCu4CDiZLhoev++iSDxV90z
+         op5RVVQY9qX2yav+BxuENfaqbS3E7AQQHiQUm8SOMM62DwhhAzZts9IOj+iMDKFRZJty
+         5xBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=L8O5e42ABfSCQqC1aN/gfiXKo+GV+52F/DMJVd5PTyw=;
-        b=iS3QdPFg+qaJ4vf4BidAf+oiaqN+VEs7FhzA2O7iMHbI/qUo/myYfGG8/q3BCqaA+I
-         HoB2ycMVwhysYaM6EFgNANUZJmW7BzlFcBdN/4iYHPZ/0TWLm6exHdbYC9ysZ+f6R+G7
-         QIdKgwDnprEDhcWhXEUc02OD0IAE2w1/zguxgbA8duAVXw2ctZrx0gFT4LgIca/oMdV+
-         v8TAasLU4ILj7TjDmXEFKFpyTR497upT5A20rStCPJqPf9lGQiqcWchW4sxyT3LNFRQM
-         Hk0ZUyb46KlLs/QQrTOXT67VyFG83oqGkVcLQZBv91pFAIAy6tvzNkT00GE8ewB6UJVZ
-         DF6w==
-X-Gm-Message-State: AOAM530zoPlapGpKVqyyx/b79QSsaHpTFtoi8XFOTS0IYZqdKUxl6vsb
-        rLVBtBjyVAQy8T3ZdhVVRvucLXTpJyR3WHuAQAfXP7+VMd8=
-X-Google-Smtp-Source: ABdhPJwOl+awhKpq9ZAShiEMmEGZLQp8o3edR3Tn3q0V2QSIPoYUNDNc2BW5tXltm29kof1ouFLL/iVZNH2z8HkwXEY=
-X-Received: by 2002:aa7:c551:: with SMTP id s17mr32767182edr.291.1615848691325;
- Mon, 15 Mar 2021 15:51:31 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=zo7yi15ZmiVPw60lfuHd4uU6Bcp9ZLfvx4gJvO2nm3Y=;
+        b=gvBQ5CckD0Vu9F1zz5t1oRkyBTPzsqd0LZGXO6QKTENSKpT4MVA89w5oTUMc3lOXHN
+         D+seHUNaQGiVpfIAsipY6wUgVYPxEQH2D2wGdsuzuf93O2wuB/1ojvSl6MhjezQ5c9a5
+         lMRANkbMkiHsPz7ywt6dOlly5iq0MhzakeZjdPSuKIVK4FJSYKByB/9j0bN49AhQ7HZf
+         UNh5e5iGZwyTbHwgP80FG+kTKpyCfZkci8YPhMKtU1qenS0yC4HJe/nkJ1BYfWXS3v+e
+         36KeLPNaDPy1Zo5263m11TFCP5ry5nUJjDWqWdctMZNOErpIghyHF7KmoQogcmoVWg9j
+         H+1A==
+X-Gm-Message-State: AOAM530WuiGWNj8JsN6UjxnZGa0R1UwlsWrKpb0C5lIW9Y3G6hQWBt0T
+        m56M07Vce3aBpebe+SZM6VlT7dY300U=
+X-Google-Smtp-Source: ABdhPJzpTNGaJAWPTlez/vBJ0rOSFrarOaP8Zskm3OYNgxXN9kwEwhrDcz/4J/YVl27/LVI4GXPbdg==
+X-Received: by 2002:a63:4753:: with SMTP id w19mr1150515pgk.394.1615849646044;
+        Mon, 15 Mar 2021 16:07:26 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:b1c9:41e8:dd7a:142b])
+        by smtp.gmail.com with ESMTPSA id 35sm13857899pgm.64.2021.03.15.16.07.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 Mar 2021 16:07:25 -0700 (PDT)
+Date:   Mon, 15 Mar 2021 16:07:23 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     =?utf-8?Q?Ren=C3=A9_Scharfe=2E?= <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] block-sha1: drop trailing semicolon from macro definition
+Message-ID: <YE/oq5dPDB6PvD22@google.com>
+References: <f8122736-e729-5d35-e1e1-78a213816d4a@web.de>
 MIME-Version: 1.0
-References: <pull.903.git.1615760258.gitgitgadget@gmail.com>
- <dda5b537a3f0706ebf933e2b2efd996267e9d9b1.1615760258.git.gitgitgadget@gmail.com>
- <CAPig+cT9aAPGzysqAz2OBrZP-7Ci+h+W5wFgnRm8bsde9K6zdw@mail.gmail.com> <CAN8Z4-VFekryNYczJBkFQpkLJngcHJ5JBH0tb5ObNsrc241uSw@mail.gmail.com>
-In-Reply-To: <CAN8Z4-VFekryNYczJBkFQpkLJngcHJ5JBH0tb5ObNsrc241uSw@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 15 Mar 2021 18:51:20 -0400
-Message-ID: <CAPig+cRzaQuu+GTdTky1vGyO9yCDHoQx2u9XXWm5HCfXAXDXwg@mail.gmail.com>
-Subject: Re: [PATCH 2/3] fsmonitor: add assertion that fsmonitor is valid to check_removed
-To:     Nipunn Koorapati <nipunn1313@gmail.com>
-Cc:     Nipunn Koorapati via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Nipunn Koorapati <nipunn@dropbox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <f8122736-e729-5d35-e1e1-78a213816d4a@web.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 15, 2021 at 6:01 PM Nipunn Koorapati <nipunn1313@gmail.com> wrote:
-> > Unusual 4-space indentation rather than typical 1-tab.
+René Scharfe. wrote:
+
+> 23119ffb4e (block-sha1: put expanded macro parameters in parentheses,
+> 2012-07-22) added a trailing semicolon to the definition of SHA_MIX
+> without explanation.  It doesn't matter with the current code, but make
+> sure to avoid potential surprises by removing it again.
 >
-> Thanks for identifying - will fix in the next patch series. Perhaps in
-> a separate patch we could add a unit test that validates the codebase
-> for such style?
+> This allows the macro to be used almost like a function: Users can
+> combine it with operators of their choice, but still must not pass an
+> expression with side-effects as a parameter, as it would be evaluated
+> multiple times.
+>
+> Signed-off-by: René Scharfe <l.s.r@web.de>
+> ---
+>  block-sha1/sha1.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-My guess is that a test which complains about existing style
-violations would not be particularly helpful since it's output likely
-would be noisy due to existing style violations. (For the same reason,
-we wouldn't want to complain about style violations in tests either
-since existing test scripts are full of violations.) What is more
-interesting than identifying existing violations is identifying
-violations before they make it into the codebase. For instance, you
-could run your patches through `checkpatch.pl`[1] before submitting
-them.
-
-[1]: https://github.com/torvalds/linux/blob/master/scripts/checkpatch.pl
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Yes, it was just a typo.
