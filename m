@@ -2,93 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E13A6C433E0
-	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 10:15:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F1CE6C433DB
+	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 10:26:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9992164E20
-	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 10:15:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A2EB964E0F
+	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 10:26:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229743AbhCOKOi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Mar 2021 06:14:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52426 "EHLO
+        id S229558AbhCOKZ1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Mar 2021 06:25:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229772AbhCOKON (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Mar 2021 06:14:13 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 047DBC061574
-        for <git@vger.kernel.org>; Mon, 15 Mar 2021 03:14:13 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id ox4so49537656ejb.11
-        for <git@vger.kernel.org>; Mon, 15 Mar 2021 03:14:12 -0700 (PDT)
+        with ESMTP id S229559AbhCOKZK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Mar 2021 06:25:10 -0400
+Received: from mail-vs1-xe33.google.com (mail-vs1-xe33.google.com [IPv6:2607:f8b0:4864:20::e33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B1E2C061574
+        for <git@vger.kernel.org>; Mon, 15 Mar 2021 03:25:10 -0700 (PDT)
+Received: by mail-vs1-xe33.google.com with SMTP id s8so16010080vsc.8
+        for <git@vger.kernel.org>; Mon, 15 Mar 2021 03:25:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=9R3mww1eOsmr/MKBS4c0sm9c2HZ/vh+2vJpoAUaHryk=;
-        b=QPmoLFa3wQi6ppDEI+KyJEKbs/NHvsbRD7O/ZkKTZioAC/rCr6n3z8Z9Iz94OsAZIB
-         oOQKBZpvR/f0EnjOd4UDw2VSjsxmPos263bRrH8DsHgoegaRUvo8K0ej50FqG8LJSV/E
-         vuoOMuq81mH/kVKQ7/u4Whoi5wwIeID9fsksr+peVPATS+Nl/ZV+Zejc/071v5aHSoIe
-         YN/IZp6Gz4D+kc72KLolDOBmPr3/xGpQSg2cFLdvcu+nK5eOz/SDLMm0C16EvFd3KeSD
-         r82xdZ8KJD1s+/D9qp3mljH4Ol3wZDWtKfwltvBvjM1gFdPqyUCdak9ggwxEoNUPdDFG
-         5yGA==
+         :cc:content-transfer-encoding;
+        bh=5UZQuVgo+OizUvLaCMD9KmFBCJ00swf4Uke/XtcODVI=;
+        b=nyDhXMG6Dxq2B7m4dOqqGkdbdOsJ59NBgll0XCsac2ovYXU1fUZtzm9FEp0cCWfRRT
+         faHJqtyM4DOJZVjiOMMSZj46SkhXUPZCsM/PY+c4Wmh6aIEIRuI3RsIvAhkqwgVtROGZ
+         gu1ew7LBxLRbfryAhn3iXwoX6HgWejRhrF9kAiojFkThXxCcVLWYkL5VRw/KKfiMV3jf
+         WThFZ67gMBoHG/32Rnj665SBt1RPaUufRnsyaMBT5F2C3JXZa4Te6t31qpfrtAMQZF9b
+         +sKDX/eUBc0ZoQPTL/hH/rIva4MfbtmnfTHnzElU/X+BDm9MtFcvmM0niqGweH8sS7lm
+         P/CQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=9R3mww1eOsmr/MKBS4c0sm9c2HZ/vh+2vJpoAUaHryk=;
-        b=SGfYkz4YDWawpGNkMAtcO+b7fXm3qrXEN35Z3g6tNMfFHZr/5lfRxisq3W16DjEUtI
-         EmRA5flQfzwENOTyDKxLw53we8kijVHIPm04xsuQJkckl4JXrVT3Gl1FSuH513FYUSQA
-         2NFbuwv3hNOShkwe133Klx1sVwsYbZNdQYAyDqJfNQbb3da9snF1YmDmMw0TOxpA1qur
-         z6CzeM3BJ2VOwFhYCpp8hJmuSW8TnzsD76gcOuQkpkyybzBvF/q2BHqeE2ZoT5wAFxpk
-         7KSwgJb/9sY8qPFg7E5iMBhoQD59afEQwjXxzl/9DadHUbNp4XZLU2RRYn+QXwUqWPS+
-         5YeA==
-X-Gm-Message-State: AOAM531ZtsL/zHT/hG8S0zWPCi97/2iMSp1BRtW+9IdkCKsIRPZ89M4/
-        DjewVBvPDkrcyBPNBKjlt1Kr6vn/0URz8esP0Xw=
-X-Google-Smtp-Source: ABdhPJwvhdwC4ajfNJdJkORI+8zW854kpmZAzlN6u1r5Lhw7/r/a+fk1k0OZHKoa5zW9PP3bHjsO44Y2/9jRXc6qnZQ=
-X-Received: by 2002:a17:906:c405:: with SMTP id u5mr22679640ejz.341.1615803251828;
- Mon, 15 Mar 2021 03:14:11 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=5UZQuVgo+OizUvLaCMD9KmFBCJ00swf4Uke/XtcODVI=;
+        b=WmCcfrcXzvTmVSlRb91BIwgtbOWsMheyMasXk/hPjK6GMoYFcqUSEax5hP+UO8S3Yx
+         dJ2Xm9v6ZFNbUBUK0T/fWad7WzPaOMZZusXGSMAh+1TsBe/b0YqSV+vy9mPAbCbUhxY1
+         /0p1+FwRHmuyS4ATJTYqjGNjaFrNmak0YSL20qid2o6GSTaINDUh0LfQMuyvFvNFCdqR
+         7YWqWI1/+6vWVmRe4J7h5TOzs7N9+y5UH4qzEjVBw7u5zOda7f/INf+5ObU0hC/a5HxW
+         03eQJMHuIwV4HGwQZ1NEZcA2bQD6hhoPAIdp8gdLpyDlHcocMD/XqwxFQ7Kxz7MdREOv
+         xRLQ==
+X-Gm-Message-State: AOAM531NO66kiccPmeT2YotpfwB9ZmT2HO59GxJJ8B0MfxgSsUyOfQEN
+        yMQz45TKwLgld6ykE00LK7Wr/64LoKfPViGbDpbRMQ==
+X-Google-Smtp-Source: ABdhPJxAsO67S6FMnXT5cLEiCi9qCGZ45771FXX9KNDS9soiOUtr5IL62cUwIFEzJr9XnMhVi2fmupfYtqexpayeUFw=
+X-Received: by 2002:a05:6102:c10:: with SMTP id x16mr13212514vss.54.1615803909570;
+ Mon, 15 Mar 2021 03:25:09 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.901.v6.git.1615790151073.gitgitgadget@gmail.com> <pull.901.v7.git.1615799304883.gitgitgadget@gmail.com>
-In-Reply-To: <pull.901.v7.git.1615799304883.gitgitgadget@gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 15 Mar 2021 11:14:00 +0100
-Message-ID: <CAP8UFD2CNAW4o8BF8NLA0pwWzNmBwZJAP7L5SGSib+LcVbSLBA@mail.gmail.com>
-Subject: Re: [PATCH v7] [GSOC] commit: add --trailer option
-To:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git <git@vger.kernel.org>,
-        "Bradley M. Kuhn" <bkuhn@sfconservancy.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Brandon Casey <drafnel@gmail.com>,
-        Shourya Shukla <periperidip@gmail.com>,
-        Rafael Silva <rafaeloliveira.cs@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>
+References: <xmqqa6r9efgh.fsf@gitster.g>
+In-Reply-To: <xmqqa6r9efgh.fsf@gitster.g>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Mon, 15 Mar 2021 11:24:58 +0100
+Message-ID: <CAFQ2z_OMLEWh_RBR3H_rV3VGmmdaqXFVUuBJnhayb3_=mj+e8w@mail.gmail.com>
+Subject: Re: [PATCH] SQUASH??? calloc(nmemb,size)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 15, 2021 at 10:08 AM ZheNing Hu via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
+On Thu, Mar 11, 2021 at 7:02 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Please squash this in to an appropriate step in your series;
+> otherwise it triggers a Coccinelle check when merged to 'seen'.
+>
 
->       + if (trailer_args.nr) {
->      -+         static struct child_process run_trailer = CHILD_PROCESS_INIT;
->      ++         struct child_process run_trailer = CHILD_PROCESS_INIT;
->       +
->       +         strvec_pushl(&run_trailer.args, "interpret-trailers",
->       +                      "--in-place", "--where=end", git_path_commit_editmsg(), NULL);
+folded in, thanks.
 
-Actually I don't think "--where=end" should be used here. "end" is the
-default for the "trailer.where" config variable, so by default if
-nothing has been configured, it will work as if "--where=end" was
-passed above.
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
 
-If a user has configured "trailer.where" or trailer.<token>.where,
-then this should be respected. And users should be able to override
-such config variable using for example:
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
 
-git -c trailer.where=start commit --trailer "Signed-off-by:C O Mitter
-<committer@example.com>"
+Registergericht und -nummer: Hamburg, HRB 86891
+
+Sitz der Gesellschaft: Hamburg
+
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
