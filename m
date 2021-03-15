@@ -7,77 +7,76 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9806BC43619
-	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 13:16:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 415DEC2BA1A
+	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 13:16:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5159A64F0C
-	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 13:16:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 218C764F23
+	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 13:16:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230332AbhCONPc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Mar 2021 09:15:32 -0400
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:50723 "EHLO
+        id S230205AbhCONP1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Mar 2021 09:15:27 -0400
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:55021 "EHLO
         out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S230142AbhCONPH (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 15 Mar 2021 09:15:07 -0400
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-        by mailout.nyi.internal (Postfix) with ESMTP id 7BB335C00AD;
-        Mon, 15 Mar 2021 09:15:07 -0400 (EDT)
+        by vger.kernel.org with ESMTP id S229735AbhCONO6 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 15 Mar 2021 09:14:58 -0400
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.nyi.internal (Postfix) with ESMTP id 3D7365C0181;
+        Mon, 15 Mar 2021 09:14:58 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Mon, 15 Mar 2021 09:15:07 -0400
+  by compute1.internal (MEProxy); Mon, 15 Mar 2021 09:14:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
         :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm3; bh=DR61WtGk8bsm/kzRdxcNYB6QvQI
-        qcUutzgQmPh1sYbA=; b=Gzo8S7RYB0xIAAt0knrezIxVCHEqAenH67mNipy3KLC
-        McPoycCnvEIgrlgJzPqFJdtHptD6Cb06k9pVckS+oruPKUY6ZfJQ3G5B+otxk6Hx
-        rWjG4iGTkNLuBQ8ztz/iZ1poPGYneUj/LujOeOG15sYGg/eQ788HTbWQvll6z35j
-        NCF6Ua8a5BA2iue8whl/adm3TzNm9TNWCgGiBXbIX8hl4UOnwYJ7rZ9IJg+Zqf2U
-        RKmef2v9NEUREVLU4ZRLu7VXxe1K8WrgznN+IrNQsqk5wWCrrIk5hUXJ9XcPH4KB
-        uI9tDMFrp+nZwZFoKXke1y5plqqI9vSsbBJtNgGzwdw==
+        :content-type:in-reply-to; s=fm3; bh=CO8sHZpWCOvOkCZLg12P0W2i+uC
+        a8Yy9gmypQy7z53I=; b=dj0No030ZcjKlIjoznC/CNf79z5MJeXMkWVTlZCeEtX
+        KNzh8Zil1I2JwsY1lltuJKapB+I2Z0k8a3La4nuyXcK1IqGPYXQ3CYJSxLmlvzkV
+        AIAilX3iRx/LT6KpUKVh7NXrZmKkXPzfFhmTrEGyrgY7hgbUW4P6F09PxjZ3VOn4
+        aCy9wkwdrDCGPtKiaA9pt3fjfA8zAvFszLpghYV88VywaS8T+y6zMbHTq+lfst2r
+        K/xAmoRTwRjWl4BUHGISKtKYmeuQ/u2aHPOVLE/u8GUhQzL03X8QZhbqKYG+1RgC
+        cXdXPvvnfQRWYijqyd3R9TD6c7DK6gNQPy6JohPdsAg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=DR61Wt
-        Gk8bsm/kzRdxcNYB6QvQIqcUutzgQmPh1sYbA=; b=mvIjtUeEejIydV6DY5Yrb8
-        fzDIyNDpK9Zq7VPPmLrbbgFecByjOT9y/+4j/hgMQdAVPB4w3wILTpsKMAiAEZt7
-        sE2IAsZmU98S2ZeTAYuapdIaXqG8cF2ZS9Ssza236ZHGJdKzR6e0O80emBtMDet3
-        O1m72G+5ypzVkX6tNhQOiJ+kP6QIBRKHyrGxTngreGlZM/hrDZomY18BfKnqfWex
-        q/0vTIFOErXz0SMgDweclCMQWWClcmjBUZOKRlPFfAysG7wgqhsE0hc0lwNXSNcr
-        RoOxcWIySH+AQKaJt38nyuCcx89EDZsApK17bbyZ5/tOpd7B4qMB+J683nPW7ibg
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=CO8sHZ
+        pWCOvOkCZLg12P0W2i+uCa8Yy9gmypQy7z53I=; b=lTzUW0VUjmm3pbuk5jPKAC
+        m9qrLOZtbrbH0L37d8+/fglIHNiQIYYXPOYLGt4VaJCUMDxIzQmngVlNuXPVOnje
+        kitMI0PewT+fbF06cqS9tDNeI6kLcUMetLKNZcC6bCNuo/vWpNAlMSBLh788Iv9m
+        C9Ooc8K3b2Vh3OQTeIScMt5D4hNL9JMMnYc7Qa29w/tL2F4uDmr7wwVcz3PLUx66
+        2aHsGc1xT2OisqFCZcBOjzjg3nxtlJByRyQn+64A9/gjY4FdnUrGjIgWen80D0nj
+        2hqN8dSBIcaTfhayUHuT3gA+rwj7IUcUEAsI2iZSJeQghMy5L3sVX5Cw3gWZmvVA
         ==
-X-ME-Sender: <xms:211PYKq64a0v13MH74vFMucu18eeddD06gCPTOiGzeD2HSrX6fIJ2A>
-    <xme:211PYPr2t7q8BaXOfxiY6scQih3UTrkt2f25HP3w0wHJ9XVCCoLEm1bNFxtFG6nAO
-    Jd_ikCD3EdTOjGzxg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledruddvledggeekucetufdoteggodetrfdotf
+X-ME-Sender: <xms:0l1PYFwxl4XgnEqgDOFDNcaN8McOq1btI54I4QmuRaQ427vEbeFIQg>
+    <xme:0l1PYFTIfkjzETBpye8-Kj3mC5d6c9QTSe-AcY49asTLgLtqUdF8xmXZ-Ya2P6gUY
+    fFK3s5beecg0HQ6OA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledruddvledggeelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpefgfeejuefgheegueeljeffteefuedthfdvvedugfevvdffleduueeiiefgvedtheen
-    ucffohhmrghinhepphgvnhguihhnghdrnhhrnecukfhppeekledrudegrdeliedrvdegud
-    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshes
-    phhkshdrihhm
-X-ME-Proxy: <xmx:211PYEPSmrAWWsqNsqZjQxJBU866T1YMhmZ3oGf5lEGCmjpFo6JR0w>
-    <xmx:211PYIzGtxOlqgTLg-_hUOwNopL84IBITNsbLmcapDYpm5hrh1HDcA>
-    <xmx:211PYFuH8p9U35o0yrJl5Om2dFn8qWWfswh0n66xGd3nscTvJ85eog>
-    <xmx:211PYHOMQ7Ecy_gTzN9yjebKnAgmJKhKcdabmcltYcxFQS5GMqHdqw>
+    hnpeehgefhtdefueffheekgfffudelffejtdfhvdejkedthfehvdelgfetgfdvtedthfen
+    ucfkphepkeelrddugedrleeirddvgedunecuvehluhhsthgvrhfuihiivgepheenucfrrg
+    hrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:0l1PYPUbx0KtqByHJDiZVyIX59WpMe81nD6Nfo-ZZZ4WB4BIv77pAA>
+    <xmx:0l1PYHhxpNLjXB15qMN9ullimOsNMKdnp0TVmaJl4fHJcr8r1Jq38A>
+    <xmx:0l1PYHDk2VRKgzauYr28KQ4U8WOHWsYi269fUSBOgtgPmxLjN6kpkQ>
+    <xmx:0l1PYM4zW1OhPsayIg_Qa_Fy_5kQ74_qL4sqj0V6WhWFivS_SPBrfw>
 Received: from vm-mail.pks.im (dynamic-089-014-096-241.89.14.pool.telefonica.de [89.14.96.241])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 76CE7108006C;
-        Mon, 15 Mar 2021 09:15:06 -0400 (EDT)
+        by mail.messagingengine.com (Postfix) with ESMTPA id 705A61080067;
+        Mon, 15 Mar 2021 09:14:57 -0400 (EDT)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 4c037072 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Mon, 15 Mar 2021 13:15:06 +0000 (UTC)
-Date:   Mon, 15 Mar 2021 14:15:05 +0100
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 8e93f94a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Mon, 15 Mar 2021 13:14:56 +0000 (UTC)
+Date:   Mon, 15 Mar 2021 14:14:55 +0100
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
 Cc:     Christian Couder <christian.couder@gmail.com>,
         Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>
-Subject: [PATCH v2 8/8] rev-list: allow filtering of provided items
-Message-ID: <0e26fee8b31e46e87fb9fa1ac599506502a9d622.1615813673.git.ps@pks.im>
+Subject: [PATCH v2 6/8] pack-bitmap: implement object type filter
+Message-ID: <8073ab665b07cf653478482f801a06e072233230.1615813673.git.ps@pks.im>
 References: <cover.1614600555.git.ps@pks.im>
  <cover.1615813673.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="IVOvDxKEvpsO+iRr"
+        protocol="application/pgp-signature"; boundary="plESwGU/yN/XdxGN"
 Content-Disposition: inline
 In-Reply-To: <cover.1615813673.git.ps@pks.im>
 Precedence: bulk
@@ -85,228 +84,116 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---IVOvDxKEvpsO+iRr
+--plESwGU/yN/XdxGN
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When providing an object filter, it is currently impossible to also
-filter provided items. E.g. when executing `git rev-list HEAD` , the
-commit this reference points to will be treated as user-provided and is
-thus excluded from the filtering mechanism. This makes it harder than
-necessary to properly use the new `--filter=3Dobject:type` filter given
-that even if the user wants to only see blobs, he'll still see commits
-of provided references.
-
-Improve this by introducing a new `--filter-provided` option to the
-git-rev-parse(1) command. If given, then all user-provided references
-will be subject to filtering.
+The preceding commit has added a new object filter for git-rev-list(1)
+which allows to filter objects by type. Implement the equivalent filter
+for packfile bitmaps so that we can answer these queries fast.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/rev-list.c                  | 14 +++++++++++
- list-objects-filter-options.c       |  4 ++++
- list-objects-filter-options.h       |  6 +++++
- pack-bitmap.c                       |  3 ++-
- t/t6112-rev-list-filters-objects.sh | 28 ++++++++++++++++++++++
- t/t6113-rev-list-bitmap-filters.sh  | 36 +++++++++++++++++++++++++++++
- 6 files changed, 90 insertions(+), 1 deletion(-)
+ pack-bitmap.c                      | 28 +++++++++++++++++++++++++---
+ t/t6113-rev-list-bitmap-filters.sh | 25 ++++++++++++++++++++++++-
+ 2 files changed, 49 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index b4d8ea0a35..0f959b266d 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -599,6 +599,10 @@ int cmd_rev_list(int argc, const char **argv, const ch=
-ar *prefix)
- 			list_objects_filter_set_no_filter(&filter_options);
- 			continue;
- 		}
-+		if (!strcmp(arg, "--filter-provided")) {
-+			filter_options.filter_wants =3D 1;
-+			continue;
-+		}
- 		if (!strcmp(arg, "--filter-print-omitted")) {
- 			arg_print_omitted =3D 1;
- 			continue;
-@@ -694,6 +698,16 @@ int cmd_rev_list(int argc, const char **argv, const ch=
-ar *prefix)
- 			return show_bisect_vars(&info, reaches, all);
- 	}
-=20
-+	if (filter_options.filter_wants) {
-+		struct commit_list *c;
-+		for (i =3D 0; i < revs.pending.nr; i++) {
-+			struct object_array_entry *pending =3D revs.pending.objects + i;
-+			pending->item->flags |=3D NOT_USER_GIVEN;
-+		}
-+		for (c =3D revs.commits; c; c =3D c->next)
-+			c->item->object.flags |=3D NOT_USER_GIVEN;
-+	}
-+
- 	if (arg_print_omitted)
- 		oidset_init(&omitted_objects, DEFAULT_OIDSET_SIZE);
- 	if (arg_missing_action =3D=3D MA_PRINT)
-diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
-index bb6f6577d5..2877aa9e96 100644
---- a/list-objects-filter-options.c
-+++ b/list-objects-filter-options.c
-@@ -242,6 +242,7 @@ static void transform_to_combine_type(
- 		memset(filter_options, 0, sizeof(*filter_options));
- 		filter_options->sub =3D sub_array;
- 		filter_options->sub_alloc =3D initial_sub_alloc;
-+		filter_options->filter_wants =3D sub_array[0].filter_wants;
- 	}
- 	filter_options->sub_nr =3D 1;
- 	filter_options->choice =3D LOFC_COMBINE;
-@@ -290,6 +291,9 @@ void parse_list_objects_filter(
- 		parse_error =3D gently_parse_list_objects_filter(
- 			&filter_options->sub[filter_options->sub_nr - 1], arg,
- 			&errbuf);
-+		if (!parse_error)
-+			filter_options->sub[filter_options->sub_nr - 1].filter_wants =3D
-+				filter_options->filter_wants;
- 	}
- 	if (parse_error)
- 		die("%s", errbuf.buf);
-diff --git a/list-objects-filter-options.h b/list-objects-filter-options.h
-index 4d0d0588cc..5e609e307a 100644
---- a/list-objects-filter-options.h
-+++ b/list-objects-filter-options.h
-@@ -42,6 +42,12 @@ struct list_objects_filter_options {
- 	 */
- 	enum list_objects_filter_choice choice;
-=20
-+	/*
-+	 * "--filter-provided" was given by the user, instructing us to also
-+	 * filter all explicitly provided objects.
-+	 */
-+	unsigned int filter_wants : 1;
-+
- 	/*
- 	 * Choice is LOFC_DISABLED because "--no-filter" was requested.
- 	 */
 diff --git a/pack-bitmap.c b/pack-bitmap.c
-index e33805e076..5ff800316b 100644
+index 1f69b5fa85..196d38c91d 100644
 --- a/pack-bitmap.c
 +++ b/pack-bitmap.c
-@@ -1101,7 +1101,8 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_i=
-nfo *revs,
- 	if (haves_bitmap)
- 		bitmap_and_not(wants_bitmap, haves_bitmap);
+@@ -779,9 +779,6 @@ static void filter_bitmap_exclude_type(struct bitmap_in=
+dex *bitmap_git,
+ 	eword_t mask;
+ 	uint32_t i;
 =20
--	filter_bitmap(bitmap_git, wants, wants_bitmap, filter);
-+	filter_bitmap(bitmap_git, (filter && filter->filter_wants) ? NULL : wants,
-+		      wants_bitmap, filter);
+-	if (type !=3D OBJ_BLOB && type !=3D OBJ_TREE)
+-		BUG("filter_bitmap_exclude_type: unsupported type '%d'", type);
+-
+ 	/*
+ 	 * The non-bitmap version of this filter never removes
+ 	 * objects which the other side specifically asked for,
+@@ -911,6 +908,23 @@ static void filter_bitmap_tree_depth(struct bitmap_ind=
+ex *bitmap_git,
+ 				   OBJ_BLOB);
+ }
 =20
- 	bitmap_git->result =3D wants_bitmap;
- 	bitmap_git->haves =3D haves_bitmap;
-diff --git a/t/t6112-rev-list-filters-objects.sh b/t/t6112-rev-list-filters=
--objects.sh
-index c79ec04060..47c558ab0e 100755
---- a/t/t6112-rev-list-filters-objects.sh
-+++ b/t/t6112-rev-list-filters-objects.sh
-@@ -207,6 +207,34 @@ test_expect_success 'verify object:type=3Dtag prints t=
-ag' '
- 	test_cmp expected actual
- '
++static void filter_bitmap_object_type(struct bitmap_index *bitmap_git,
++				      struct object_list *tip_objects,
++				      struct bitmap *to_filter,
++				      enum object_type object_type)
++{
++	enum object_type t;
++
++	if (object_type < OBJ_COMMIT || object_type > OBJ_TAG)
++		BUG("filter_bitmap_object_type given invalid object");
++
++	for (t =3D OBJ_COMMIT; t <=3D OBJ_TAG; t++) {
++		if (t =3D=3D object_type)
++			continue;
++		filter_bitmap_exclude_type(bitmap_git, tip_objects, to_filter, t);
++	}
++}
++
+ static int filter_bitmap(struct bitmap_index *bitmap_git,
+ 			 struct object_list *tip_objects,
+ 			 struct bitmap *to_filter,
+@@ -943,6 +957,14 @@ static int filter_bitmap(struct bitmap_index *bitmap_g=
+it,
+ 		return 0;
+ 	}
 =20
-+test_expect_success 'verify object:type=3Dblob prints only blob with --fil=
-ter-provided' '
-+	printf "%s blob\n" $(git -C object-type rev-parse HEAD:blob) >expected &&
-+	git -C object-type rev-list --objects \
-+		--filter=3Dobject:type=3Dblob --filter-provided HEAD >actual &&
-+	test_cmp expected actual
-+'
++	if (filter->choice =3D=3D LOFC_OBJECT_TYPE) {
++		if (bitmap_git)
++			filter_bitmap_object_type(bitmap_git, tip_objects,
++						  to_filter,
++						  filter->object_type);
++		return 0;
++	}
 +
-+test_expect_success 'verify object:type=3Dtree prints only tree with --fil=
-ter-provided' '
-+	printf "%s \n" $(git -C object-type rev-parse HEAD^{tree}) >expected &&
-+	git -C object-type rev-list --objects \
-+		--filter=3Dobject:type=3Dtree HEAD --filter-provided >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'verify object:type=3Dcommit prints only commit with -=
--filter-provided' '
-+	git -C object-type rev-parse HEAD >expected &&
-+	git -C object-type rev-list --objects \
-+		--filter=3Dobject:type=3Dcommit --filter-provided HEAD >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'verify object:type=3Dtag prints only tag with --filte=
-r-provided' '
-+	printf "%s tag\n" $(git -C object-type rev-parse tag) >expected &&
-+	git -C object-type rev-list --objects \
-+		--filter=3Dobject:type=3Dtag --filter-provided tag >actual &&
-+	test_cmp expected actual
-+'
-+
- # Test sparse:path=3D<path> filter.
- # !!!!
- # NOTE: sparse:path filter support has been dropped for security reasons,
+ 	/* filter choice not handled */
+ 	return -1;
+ }
 diff --git a/t/t6113-rev-list-bitmap-filters.sh b/t/t6113-rev-list-bitmap-f=
 ilters.sh
-index cb9db7df6f..9053ac5059 100755
+index 3f889949ca..fb66735ac8 100755
 --- a/t/t6113-rev-list-bitmap-filters.sh
 +++ b/t/t6113-rev-list-bitmap-filters.sh
-@@ -98,6 +98,28 @@ test_expect_success 'object:type filter' '
- 	test_bitmap_traversal expect actual
+@@ -10,7 +10,8 @@ test_expect_success 'set up bitmapped repo' '
+ 	test_commit much-larger-blob-one &&
+ 	git repack -adb &&
+ 	test_commit two &&
+-	test_commit much-larger-blob-two
++	test_commit much-larger-blob-two &&
++	git tag tag
  '
 =20
-+test_expect_success 'object:type filter with --filter-provided' '
-+	git rev-list --objects --filter-provided --filter=3Dobject:type=3Dtag tag=
- >expect &&
+ test_expect_success 'filters fallback to non-bitmap traversal' '
+@@ -75,4 +76,26 @@ test_expect_success 'tree:1 filter' '
+ 	test_cmp expect actual
+ '
+=20
++test_expect_success 'object:type filter' '
++	git rev-list --objects --filter=3Dobject:type=3Dtag tag >expect &&
 +	git rev-list --use-bitmap-index \
-+		     --objects --filter-provided --filter=3Dobject:type=3Dtag tag >actua=
-l &&
++		     --objects --filter=3Dobject:type=3Dtag tag >actual &&
 +	test_cmp expect actual &&
 +
-+	git rev-list --objects --filter-provided --filter=3Dobject:type=3Dcommit =
-tag >expect &&
++	git rev-list --objects --filter=3Dobject:type=3Dcommit tag >expect &&
 +	git rev-list --use-bitmap-index \
-+		     --objects --filter-provided --filter=3Dobject:type=3Dcommit tag >ac=
-tual &&
++		     --objects --filter=3Dobject:type=3Dcommit tag >actual &&
 +	test_bitmap_traversal expect actual &&
 +
-+	git rev-list --objects --filter-provided --filter=3Dobject:type=3Dtree ta=
-g >expect &&
++	git rev-list --objects --filter=3Dobject:type=3Dtree tag >expect &&
 +	git rev-list --use-bitmap-index \
-+		     --objects --filter-provided --filter=3Dobject:type=3Dtree tag >actu=
-al &&
++		     --objects --filter=3Dobject:type=3Dtree tag >actual &&
 +	test_bitmap_traversal expect actual &&
 +
-+	git rev-list --objects --filter-provided --filter=3Dobject:type=3Dblob ta=
-g >expect &&
++	git rev-list --objects --filter=3Dobject:type=3Dblob tag >expect &&
 +	git rev-list --use-bitmap-index \
-+		     --objects --filter-provided --filter=3Dobject:type=3Dblob tag >actu=
-al &&
++		     --objects --filter=3Dobject:type=3Dblob tag >actual &&
 +	test_bitmap_traversal expect actual
-+'
-+
- test_expect_success 'combine filter' '
- 	git rev-list --objects --filter=3Dblob:limit=3D1000 --filter=3Dobject:typ=
-e=3Dblob tag >expect &&
- 	git rev-list --use-bitmap-index \
-@@ -105,4 +127,18 @@ test_expect_success 'combine filter' '
- 	test_bitmap_traversal expect actual
- '
-=20
-+test_expect_success 'combine filter with --filter-provided' '
-+	git rev-list --objects --filter-provided --filter=3Dblob:limit=3D1000 --f=
-ilter=3Dobject:type=3Dblob tag >expect &&
-+	git rev-list --use-bitmap-index \
-+		     --objects --filter-provided --filter=3Dblob:limit=3D1000 --filter=
-=3Dobject:type=3Dblob tag >actual &&
-+	test_bitmap_traversal expect actual &&
-+
-+	git cat-file --batch-check=3D"%(objecttype) %(objectsize)" <actual >objec=
-ts &&
-+	while read objecttype objectsize
-+	do
-+		test "$objecttype" =3D blob || return 1
-+		test "$objectsize" -le 1000 || return 1
-+	done <objects
 +'
 +
  test_done
@@ -314,24 +201,24 @@ ts &&
 2.30.2
 
 
---IVOvDxKEvpsO+iRr
+--plESwGU/yN/XdxGN
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmBPXdgACgkQVbJhu7ck
-PpSemw/8DmHeLQeBUMNvWCXPnIPCGBx6nbbGQnDK54ir/8ilcFzF+K/ieXgXzKbt
-g8B56T7+CiaBJ9DZLeroGOC4EsQYv46sA+nuZNLnklsO/SgXhNU0KEw7zD7sQQfr
-u8HRRXbWWXfBZMidTJDEcJo7O6K6zJMsdjqsc6CeRqFi76aRJAoZ309NhNGu50hy
-ScV8deb0lVXKK+mqOPrd8riVHXusiI7J7tq6LIcV9xgWsMPD6C48ZPpYY9uf8yp9
-GIHEEbkLLBhW30A5/BjdlrlnMCzuuA6icsapAp00b0V3IjcIjRYe0OdANH0wzqzq
-tV0e36qqp2Imixubv+Cc/CKBccCvyvnZycPSeMb41yYmUL3316t+Pd7TxkvL3j2K
-idycyWSvab6oF4kkDQN9zRkesI/l9BgYt4D519i5bn0SWGvd16bTdzr0yTJ1sN5X
-o3VZu/r9xvqhOPPjxFhYBXpZMEiS/lVXqRMtVZo0ZBQpgryvn0ZS/L1o5fEaV7/L
-HXOE7YRqKq7l4zZJPOYz0FRCoZt1ItVH0dnPxgSs4JmlgShOHPR2FM0VHCIB8+D3
-ZFo5yakoAYk9UEEtAIfMZjyaB9LuVe/XjyZ1u+U0ZKr2SvWUoJ/DYE7udlEA5j41
-PCFOue0oAvqmSZdkHGIg35RXlgEfZhXoCZVLLEh5enSDtl1ubxg=
-=FDYm
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmBPXc4ACgkQVbJhu7ck
+PpSRihAAqZJ1gBKLVraDmYqafs3X19UtEXo4UjDLwA8In6s/eqsZ695MfQdaeNz4
++Q5BCjZWE4NcyfEvL4heEgqeKAA8k2dCnLDCZ9NN3+Q70UxEn9hdhMDhu5px4Ewa
+2Kwrp86BZX7UBv3vFSi1+hQ5GwJpIPpdTZvsbWlOi9nu9nQXJE5VYec/JNFk8PN5
+ksh89Vp6AROPo3oQGE65nl6NdLX7guTowhQByiYGuWFlRsAus1HiIXXJwyJIYhMh
+LRkpxnq1+VCqcQGZpFFzv577UUcWNVxzeKNub5jpffOFi80eW/c4D1FItI+99K9N
+6FMSRyF61hV6zoJE2A6Jb6CCJkleWdSjmCuPYcHoOwNE/6+tOsD7SQ3nkNbYRu8d
+JyWl2J4o1usYbC7IKPQPQ633rvt9ReyE503JKJVK8PufrEw1dKq9JNXPBSdYuP7L
+FkOSFEDFkNCiMAYk/j0SiIJtK0Wf2JstRc85t59QmeIdVpuOn/VIqZxZNOpKjHxf
+jbNJey4fC1ROv8cg+l4mAwtEuAvf4cByZSj6NoxOylPjmkTtfM+jcrfv9uhDh/FK
+umrkF6DcQfXNkdlP/cPaJQBDdXKt9qHzwxJXot84ToAnQtulkLYJ0fqc6/HRdOGR
+arghv0tWbfizWoSD3UI27p16hJfhiwxtoFPH8sOdlNSzfKnaOhk=
+=4kqI
 -----END PGP SIGNATURE-----
 
---IVOvDxKEvpsO+iRr--
+--plESwGU/yN/XdxGN--
