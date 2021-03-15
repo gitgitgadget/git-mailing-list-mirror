@@ -2,102 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DATE_IN_PAST_06_12,
+	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1736EC43333
-	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 13:58:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DBD64C433DB
+	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 14:20:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B755A64F2A
-	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 13:58:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AED2164F17
+	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 14:20:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232023AbhCON5f (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Mar 2021 09:57:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44052 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231799AbhCON5O (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Mar 2021 09:57:14 -0400
-Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 926A3C06175F
-        for <git@vger.kernel.org>; Mon, 15 Mar 2021 06:57:13 -0700 (PDT)
-Received: by mail-qk1-x732.google.com with SMTP id n79so31682012qke.3
-        for <git@vger.kernel.org>; Mon, 15 Mar 2021 06:57:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=/H1d/ElgBasviBSzYElrHMvd2gGz++gpQx9/pIoqlq4=;
-        b=OHSyMONEY9dCcA9vFxuThgHgT9E9CBGgTcmeofevUtRzm5tmMYdqmhOY6Z73WPga1r
-         iKWDdRfUm88BIWtFhfq5x+BHaNBC+pUgYtnr0NRGMAeug00r13IT1VOByZMSbrUuCFrZ
-         UBTGQMsO71hffJ5JLJmNxtSNtKNK3xd56N6b4wHlZedVN+Tr8cr4+5TqWNFrrPCi9cLx
-         BYx2GNGmUM3dbJIDsypXPevyubme1xp5leSlvkOr+CfgDT+XcGH6twj8lO97wsdwNdBZ
-         /Oun+FNhPS5lPfm3z/T/5mo5iNtssQVz3oq/EZx44HwPreUcndo9nXlyY8mi1h1KwW7H
-         MPNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=/H1d/ElgBasviBSzYElrHMvd2gGz++gpQx9/pIoqlq4=;
-        b=pIzGW4CxaI8f4n5W+Uec7j8lLq0RlUS2Ncg2bZ7iT+toe56rn7ucNOOLBSkYaV2r1j
-         fxABv6IIdFrQaPDT1kI70gpgTk499UAeBRn8zni/qUZt5WAkIgbWA4MfzsmUv1Sgj/jR
-         28kIOwRWQQzUNgfeFbPUscAOKTtlbetrCd2uz1WiuLaqLIVq/VKvpI31rdURnBW1QZSg
-         EQExvzi7v0/fRA4CsHJNJovu9wPRs83dZeCqqOmw34/5ekTu1jk17qn2UP7FA60DnFs6
-         W3veRhCfkv/lIsS5vaIFR7BCvLBl/neflt6NvqzT36y6KndIqKHdcsuZfZ6Bezx7jWI2
-         PLUw==
-X-Gm-Message-State: AOAM533fvrAFdY2zH4YCAiR/7wDcu8TGYTNc/0KJDOE+wJ8YxDF7kO+a
-        D1dozXLjz6m6cCT1fR2KM6w=
-X-Google-Smtp-Source: ABdhPJyC+TNV9gXwiVTUxLRqL0uq8SEr35Zb3zrDqrcmDhjoAdcovz9eBT1zADYJesaoVdOL5j0w/g==
-X-Received: by 2002:a37:89c7:: with SMTP id l190mr19207914qkd.361.1615816632803;
-        Mon, 15 Mar 2021 06:57:12 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:44e0:e2f9:fa7e:56fa? ([2600:1700:e72:80a0:44e0:e2f9:fa7e:56fa])
-        by smtp.gmail.com with ESMTPSA id t2sm10899799qtd.13.2021.03.15.06.57.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Mar 2021 06:57:12 -0700 (PDT)
-Subject: Re: [PATCH v3 0/8] Optimization batch 9: avoid detecting irrelevant
- renames
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        id S237614AbhCOOTh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Mar 2021 10:19:37 -0400
+Received: from mout.gmx.net ([212.227.17.20]:59717 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S237558AbhCOOTH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Mar 2021 10:19:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1615817929;
+        bh=hi7zo3wQlyTJwdysOkY+LFUn4fjP2EKIq/xzGvCGwiI=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=CZLe3WR5EcBX+dXajJBfiWCMqci/tPR8azhCxbczRUr36BiJpJmD5jHByyOddjqT2
+         ud6s9vDmxMZtJxT1G18A+w3IAya6Jcshw+pr+V+TcxGn2JGavWtcdQ45B/TJ8G+G4a
+         DbZMItIe7EynqAMhLLJ/mtPNdLmKSQID55U54UlY=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.30.201.226] ([213.196.212.127]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N8ofO-1lp0Gc3UyE-015tGs; Mon, 15
+ Mar 2021 15:18:48 +0100
+Date:   Mon, 15 Mar 2021 06:19:37 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Arun Sharma <arun@sharma-home.net>
+cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
         git@vger.kernel.org
-Cc:     Derrick Stolee <dstolee@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-References: <pull.845.v2.git.1615248599.gitgitgadget@gmail.com>
- <pull.845.v3.git.1615423111.gitgitgadget@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <4aed9cc6-b133-b398-353c-9618439c7b8b@gmail.com>
-Date:   Mon, 15 Mar 2021 09:57:11 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.1
+Subject: Re: bug report: mutual recursion in the git-subtree shell script
+In-Reply-To: <CAN7rbOuOaHY553KX1Qcr_XWGG6DFo1yUjdYVu5mn=HYPmOj6vQ@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2103150616410.50@tvgsbejvaqbjf.bet>
+References: <CAN7rbOve-EFOGPjr1wrD77r-3RQ+3+qso82_oV5Qud-skobL7w@mail.gmail.com> <YEzwOqgFcva4fmoV@camp.crustytoothpaste.net> <CAN7rbOuOaHY553KX1Qcr_XWGG6DFo1yUjdYVu5mn=HYPmOj6vQ@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <pull.845.v3.git.1615423111.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:ooFuzA2CM2K/MN7JaMymLP+i2HbGQ6sg6yoGgmWdyIQOs/KOy2Z
+ jcarsqN2wxdRAqIWh1UcCcfjivZR8N7j/O3APLMZ1Pv/26xWvr8SgFhUkK9lmE0FQhJOnaf
+ EG7kRe++IbFX73L18RpnXzLDNeXAOC5kp1JdVM1HR9xawixSK9I9RHvxjG0TG2S/Kg4fn7v
+ NAk5By+ed8Uf7NnVgctqw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:xsZG/QBoljU=:EYzYiMMi8VNaLAeNZIX3Fw
+ BMDfegjkJXYeeE2fXuXyby8x9c4z4bdE6i3rAQVYrgzrkE+feOABUgD5L47knp4S0VrqWeL4T
+ B8LL+RHjyf4LKy7+Cm6dlO3DPaHQ9WUrRX0G9Leecqf8Y91zn3A1QiG5aAXENL3W25gq/OtVh
+ CTQ+zBJ9fSncH1PYH8sAcrpRU8at8NQl1ej5LKS367z+zSoAmFaFT0C7l7MUrFKRloq2DhTnx
+ bzQv7h94T2s3ZZHMurvzVGYJbfMMkE6JN3xKRf+PlSCks/Vn62NYUme7Q5hw0K3fl3jNW+L2O
+ dC8u8/faOguxnls6++GAXd2qU3JoGxdxVBE/BVxy4O0ZWzylAmMn9bqvkqFHBgXhlmAlx02J3
+ 1LJOQ3KoeuBLPE4pNFmk03OdP22PBJQj8N+WN9W6wTQGTtCN+s7zVuu3GYJX/gTbIHFAVYZji
+ gNjQfiChyC7J4ddVAcY8qxOOjD7nd7MlYTSEPUVaWPtz4QiM92NOaqHs22Tzij/jkbL7cShzb
+ OmIrCjL38eHrkGoF9oiUV54LX0Mz6PMjBnWOU+W9SNQhKnWThwRGt00MpR5XjtZXbKOFNHRu/
+ DLIMVtzsN54hfqCVeB+l+D1YI8BoxuUtugBlcyMN1N8psyjqIMemRbAmV8Nf4O+mvaUH4hBOO
+ NdOtdFrxSzJIfH2owfxldKnsH345Yg+Nqzyx3T/b183HTpvPE7IayBxF8q5rNGgDDD4LNRg2s
+ /hbmCXCmc2JwePT335mF374qVjGKOVC3pKV8Q/To3CMtBz84SgZJUwGKsV84uR4Gnd7LH5Hr6
+ nzwMttR6rgciiVxC2dINeM+BbYZVOWO+4eyjUGL38k8hoTlCIjhmtQTw3NEuLd25BnuhHwBlP
+ VrZ2JG9Rg2WAb+CGMF5cEKfjUKQSFlgzZ4dzrnxUA=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/10/2021 7:38 PM, Elijah Newren via GitGitGadget wrote:
-> This series determines paths which meet special cases where detection of
-> renames is irrelevant, where the irrelevance is due to the fact that the
-> merge machinery will arrive at the same result regardless of whether a
-> rename is detected for any of those paths.
-> 
-> Changes since v2:
-> 
->  * Added an extended comment about filtering order to the first patch, to
->    address Stolee's question
->  * Added a new testcase that will fail if the critical "if (content_relevant
->    || location_relevant)" check only checks for one of those two or the
->    intersection of those two, as suggested by Stolee
->  * Fixed the other minor problems Stolee pointed out in his review (stray
->    newline, wording of comment)
+Hi,
 
-Thanks for these updates. This version works for me.
+On Sun, 14 Mar 2021, Arun Sharma wrote:
 
--Stolee
+> On Sat, Mar 13, 2021 at 9:03 AM brian m. carlson
+> <sandals@crustytoothpaste.net> wrote:
+> >
+> > I don't use git-subtree, but there's some additional information which
+> > would probably be helpful here to someone who does.  What OS are you
+> > using, what version of Git, and what shell is the shell you have as
+> > /bin/sh (or, if you've compiled using a custom shell, the shell you're
+> > using for that)?
+>
+> Thanks for the hint. I was using ubuntu 20.04.
+>
+> $ git --version
+> git version 2.25.1
+>
+> $ bash --version
+> GNU bash, version 5.0.16(1)-release (x86_64-pc-linux-gnu)
+>
+> To repro, you can try to split a week old version of:
+>
+> https://github.com/postgres/postgres (subtree: src/interfaces/libpq)
+>
+> It could take several minutes because of the size of the repo.
+>
+> And then try to pull the latest version and push the merged result
+> into the smaller subproject.
+
+Without having had the time to read the bug report in detail (let alone
+the time to try to reproduce), I nevertheless got reminded of this PR:
+https://github.com/gitgitgadget/git/pull/493
+
+The most recent iteration was sent here:
+https://lore.kernel.org/git/pull.493.v2.git.1602021913.gitgitgadget@gmail.=
+com/
+
+This patch series _might_ address the issue (IIRC it talked about removing
+a deep recursion). Arun, maybe you want to give it a swirl?
+
+Ciao,
+Johannes
