@@ -2,164 +2,167 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DF971C433E0
-	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 20:41:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AC559C433DB
+	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 21:09:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 93B9764F01
-	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 20:41:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6A3D464F0F
+	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 21:09:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232397AbhCOUlB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Mar 2021 16:41:01 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:41136 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S231688AbhCOUk6 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 15 Mar 2021 16:40:58 -0400
-Received: from camp.crustytoothpaste.net (c-98-201-97-178.hsd1.tx.comcast.net [98.201.97.178])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 462C86048E;
-        Mon, 15 Mar 2021 20:40:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1615840827;
-        bh=pwMLI8NN8G5JrNkHfq2p4DZL95+E8r8hpaU8KhvT8qA=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=oYHivwLX5mB3xzDmFKqvoncDIlYDgvNSDULGCA4uwP329tyo28nTkvYoJTgvVo/gs
-         k5/WgKFOVNnnaDpHqqZlj+WpE/HVYeoBpF0wJlKhT0OnC6j2w0T4bV65n48jKCSZAW
-         hUCIwAVE9KyQtATyB4s5z3gR0Yu1AkFuwZfXaGE2jpAKPDU+agShLBK99i3inXedZl
-         xj66vxYaxkwwSYkev5IynU+EgT8DInhynVdbpVfIS0cQVAlUR4DgIzx5qD3xXG3Ltc
-         0+batM8aG007OAXwzAIDTPw/cVy/5baJXWm5jwV93nkOSa6sm9m9Iw0RQgeVvttrzd
-         BF/jFYegLQrXjzF/yCCbtA20pY7ci+AZBPP3EIsoPYbhEav38yLr4Dl+igkkUI/uoB
-         hQHlzXFpGCZHlBUcnICr1gs1Pq6wtMS0Rn0tkCVyRxU1X4LvQrt1wH83DFsJLtMkSR
-         j+bhdoLj6B1KOGIICslxvbiK2nhqfirxjdzRqZebvfojRo3pIWt
-Date:   Mon, 15 Mar 2021 20:40:22 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/4] docs: add a question on syncing repositories to the
- FAQ
-Message-ID: <YE/GNoqt1Ja2xZU3@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20210227191813.96148-1-sandals@crustytoothpaste.net>
- <20210227191813.96148-2-sandals@crustytoothpaste.net>
- <87eeh0l52n.fsf@evledraar.gmail.com>
+        id S233386AbhCOVIs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Mar 2021 17:08:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53338 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231574AbhCOVId (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Mar 2021 17:08:33 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 112DCC06175F
+        for <git@vger.kernel.org>; Mon, 15 Mar 2021 14:08:33 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id 12so3894408wmf.5
+        for <git@vger.kernel.org>; Mon, 15 Mar 2021 14:08:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=a/Oyk2QmXqT5S9k11Fh4Qbmn3snKM0BOK/s/suNSi68=;
+        b=W266X6mKrCXDw9VQ5ofRNR3OjJaW1A/dYaPjWYgnt5/v0xKJD+cWz6VElWT9VefiC5
+         bpkYjco20uGDXeQepj1IzT0OQ/uXF4mSj2FNUWjRQc+iYAotlRxy46GwBiDsaeoDBqcH
+         fzKL9eCowc0yh3EAmjHeOhA7B+0/JcWXgTnY4P53hbf7Evrl/f7xs523bSKxFDSxvveL
+         EUvt5Qmpv4wt+Tx2bQDeJx8fqOB9T4CLc4dZthBX8752EUPFg/KCvown0PNdIbRrazeg
+         pjRNMYY9CCCqe80W/hSX+hGtom056ZBil29//r4fim58DpsJy0craZZrEqK5HOD0VK5P
+         TeJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=a/Oyk2QmXqT5S9k11Fh4Qbmn3snKM0BOK/s/suNSi68=;
+        b=CabAkpEYXQAJaeBgvMuevvokZHoKEMuuI/Kz54xdIvM+EuBJiboO7YjDblX0hBKwvO
+         Q7QUCpS4AhwpRGZLNfqIs0/CGPFzomv66r1wBQeavYPQ+b7AkEbqgMsB4nqZflRTyAOL
+         sjD/EWsF/5mrAr9juoTiIIYAogtwcvFQxfjk3ccb4rdikYeGUCKuF3rn7AtRBQQS1I9F
+         1hhK7CXPKBgVBROKFfWLu1SvUojj/KsbLgfDhK+UCf4bXBeAovHgx43Etv9RQGdq7GvS
+         IZoRkGA1UrcnLpClD5L7j3EpsaxaPZpkQL0cN/301BWv7qd0wYdcVtLsZpDbZ9FGXukx
+         3/1A==
+X-Gm-Message-State: AOAM530q4NO9x0QvupNH+aRxHBrL5yX2oW4NnPwNKNHI76UCx2jpgue8
+        35K7MXqSE/5aQJj23fzY/7h72T4JJ5E=
+X-Google-Smtp-Source: ABdhPJwuUQjHjjmdhjOoAiABh2gRFEgoA93HZz+dlaxvaTGZ9XNUleM5HnWw5IEUwXZeCBUKfxlYXQ==
+X-Received: by 2002:a7b:cb90:: with SMTP id m16mr1459853wmi.162.1615842511865;
+        Mon, 15 Mar 2021 14:08:31 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a131sm813950wmc.48.2021.03.15.14.08.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 Mar 2021 14:08:31 -0700 (PDT)
+Message-Id: <fe35dc3d292d0f13802f5ec646a3d4c5071920f2.1615842509.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.766.v6.git.1615842509.gitgitgadget@gmail.com>
+References: <pull.766.v5.git.1615302157.gitgitgadget@gmail.com>
+        <pull.766.v6.git.1615842509.gitgitgadget@gmail.com>
+From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 15 Mar 2021 21:08:18 +0000
+Subject: [PATCH v6 01/12] pkt-line: eliminate the need for static buffer in
+ packet_write_gently()
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="uMrnCNBEo7Di2px1"
-Content-Disposition: inline
-In-Reply-To: <87eeh0l52n.fsf@evledraar.gmail.com>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Jeff Hostetler <git@jeffhostetler.com>,
+        Jeff King <peff@peff.net>,
+        SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Chris Torek <chris.torek@gmail.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
---uMrnCNBEo7Di2px1
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Teach `packet_write_gently()` to write the pkt-line header and the actual
+buffer in 2 separate calls to `write_in_full()` and avoid the need for a
+static buffer, thread-safe scratch space, or an excessively large stack
+buffer.
 
-On 2021-02-28 at 13:01:04, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> make this more understandable by going to the heart of the matter, i.e.:
->=20
->  * We prefer push/pull/bundle to copy/replicate .git content
->=20
->  * Regardless, a .git directory can be copied across systems just fine
->    if you recursively guarantee snapshot integrity, e.g. it doesn't
->    depend on the endian-ness of the OS, or has anything like symlinks in
->    there made by git itself.
+Change `write_packetized_from_fd()` to allocate a temporary buffer rather
+than using a static buffer to avoid similar issues here.
 
-I'll revise to make this clearer.
+These changes are intended to make it easier to use pkt-line routines in
+a multi-threaded context with multiple concurrent writers writing to
+different streams.
 
->  * Anything which copies .git data on a concurrently updated repo can
->    lead to corruption, whether that's cp -R, rsync with any combination
->    of flags, some cloud syncing service that expects to present that
->    tree to two computers without guaranteeing POSIX fs semantics between
->    the two etc.
->=20
->  * A common pitfall with such copying of a .git directory is that file
->    deletions are also critical, e.g. rsync without --delete is almost
->    guaranteed to produce a corrupt .git if repeated enough times
->    (e.g. git might prefer stale loose refs over now-packed ones).
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+---
+ pkt-line.c | 28 ++++++++++++++++++++--------
+ 1 file changed, 20 insertions(+), 8 deletions(-)
 
-I'll include that as well.
+diff --git a/pkt-line.c b/pkt-line.c
+index d633005ef746..66bd0ddfd1d0 100644
+--- a/pkt-line.c
++++ b/pkt-line.c
+@@ -196,17 +196,26 @@ int packet_write_fmt_gently(int fd, const char *fmt, ...)
+ 
+ static int packet_write_gently(const int fd_out, const char *buf, size_t size)
+ {
+-	static char packet_write_buffer[LARGE_PACKET_MAX];
++	char header[4];
+ 	size_t packet_size;
+ 
+-	if (size > sizeof(packet_write_buffer) - 4)
++	if (size > LARGE_PACKET_DATA_MAX)
+ 		return error(_("packet write failed - data exceeds max packet size"));
+ 
+ 	packet_trace(buf, size, 1);
+ 	packet_size = size + 4;
+-	set_packet_header(packet_write_buffer, packet_size);
+-	memcpy(packet_write_buffer + 4, buf, size);
+-	if (write_in_full(fd_out, packet_write_buffer, packet_size) < 0)
++
++	set_packet_header(header, packet_size);
++
++	/*
++	 * Write the header and the buffer in 2 parts so that we do
++	 * not need to allocate a buffer or rely on a static buffer.
++	 * This also avoids putting a large buffer on the stack which
++	 * might have multi-threading issues.
++	 */
++
++	if (write_in_full(fd_out, header, 4) < 0 ||
++	    write_in_full(fd_out, buf, size) < 0)
+ 		return error(_("packet write failed"));
+ 	return 0;
+ }
+@@ -244,20 +253,23 @@ void packet_buf_write_len(struct strbuf *buf, const char *data, size_t len)
+ 
+ int write_packetized_from_fd(int fd_in, int fd_out)
+ {
+-	static char buf[LARGE_PACKET_DATA_MAX];
++	char *buf = xmalloc(LARGE_PACKET_DATA_MAX);
+ 	int err = 0;
+ 	ssize_t bytes_to_write;
+ 
+ 	while (!err) {
+-		bytes_to_write = xread(fd_in, buf, sizeof(buf));
+-		if (bytes_to_write < 0)
++		bytes_to_write = xread(fd_in, buf, LARGE_PACKET_DATA_MAX);
++		if (bytes_to_write < 0) {
++			free(buf);
+ 			return COPY_READ_ERROR;
++		}
+ 		if (bytes_to_write == 0)
+ 			break;
+ 		err = packet_write_gently(fd_out, buf, bytes_to_write);
+ 	}
+ 	if (!err)
+ 		err = packet_flush_gently(fd_out);
++	free(buf);
+ 	return err;
+ }
+ 
+-- 
+gitgitgadget
 
->  * It's OK to copy .git between system that differ in their support of
->    symbolic links, but the work tree may be in an inconsistent state and
->    need some manner of "git reset" to repair it.
-
-And this.
-
-> And, not sure if this is correct:
->=20
->  * It may be OK to edit a .git directory on a non-POSIX conforming fs
->    (but perhaps validate the result with "git fsck"). But it's not OK to
->    have two writing git processes work on such a repository at the same
->    time. Keep in mind that certain operations and default settings (such
->    as background gc, see `gc.autoDetach` in linkgit:git-config[1]) might
->    result in two processes working on the directory even if you're
->    changing it only in one terminal window at a time.
-
-I'll reflect the fact that only one process may modify the repository at
-a time.
-
-> I.e. to go a bit beyond the docs you have of basically saying "there be
-> dragons in non-POSIX" and describe the particular scenarios where it can
-> go wrong. Something like the above still leaves the door open to users
-> using cloud syncing services, which they can then judge for themselves
-> as being OK or not. I'm sure there's some that are far from POSIX
-> compliance that are OK in practice if the above warnings are observed.
-
-Unfortunately, it's a bit hard to make a concise entry that explains all
-the different ways that using a non-POSIX compliant file system can
-break things.  We've seen NFS where open(2) is broken, both with
-permissions and O_EXCL; cloud syncing services that restore files that
-have been deleted; DAV mounts that don't support the necessary
-semantics; systems where O_APPEND doesn't have POSIX semantics; and a
-whole host of other sadness.  I don't therefore think that we want to
-tell people that we think that using a file system that doesn't support
-POSIX semantics is okay, because in most cases, they are not.
-
-Users frequently try to judge for themselves what works and then they
-try one of the above things which clearly does not, so saying, "Try it
-and see if it breaks," just tends to result in users complaining about
-repository corruption later on.  I'm really tired of answering these
-same questions again and again and telling users that their repositories
-are hosed and that they've lost data, so I want to be definitive that we
-don't recommend or support these various broken environments and that
-users should not use them.  It may be in rare cases that users have
-extensive knowledge about the behavior of their file systems and Git's
-requirements and can make a sound judgment to use a non-POSIX file
-system, but the people on the planet who can do that effectively are
-almost all Git developers.  I will state that "File systems that don't
-provide POSIX semantics, such as DAV mounts, shouldn't be used without
-fully understanding the situation and requirements," which I think is
-the most generous recommendation we can safely give.
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
-
---uMrnCNBEo7Di2px1
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.27 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYE/GNgAKCRB8DEliiIei
-gbf9AP0fDdexRRPSd2kJANKwmB5wnZZC1UgfwEI6USOfyeDsbAEA2S7gZrr3RnEc
-G4THuloCuiU8J6PBklpPO2gtlyNi/gc=
-=62k7
------END PGP SIGNATURE-----
-
---uMrnCNBEo7Di2px1--
