@@ -1,76 +1,103 @@
 Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
-X-Spam-Level: **
-X-Spam-Status: No, score=2.9 required=3.0 tests=BAYES_50,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_ABUSE_SURBL,URIBL_BLACK autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Level: 
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D758C433E0
-	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 23:40:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E52CC433E9
+	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 23:42:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6DCEB64F5E
-	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 23:40:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0AC4164F64
+	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 23:42:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231919AbhCOXkW convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Mon, 15 Mar 2021 19:40:22 -0400
-Received: from [183.90.58.236] ([183.90.58.236]:47134 "EHLO ns1.zackeruz.tk"
-        rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-        id S233847AbhCOXkB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Mar 2021 19:40:01 -0400
-X-Greylist: delayed 20865 seconds by postgrey-1.27 at vger.kernel.org; Mon, 15 Mar 2021 19:40:01 EDT
-Received: from johnlewis.co.uk (unknown [192.168.20.1])
-        by ns1.zackeruz.tk (Postfix) with ESMTPSA id 718BF84BE0C
-        for <git@vger.kernel.org>; Mon, 15 Mar 2021 23:12:10 +0800 (+08)
-Reply-To: robturner.procurement@johnlewis-trade.com, rob76295@gmail.com
-From:   John Lewis Partnersip <robert-turner12@johnlewis.co.uk>
-To:     git@vger.kernel.org
-Subject:  3/15/2021 Order Inquiry (JL)
-Date:   15 Mar 2021 15:12:09 +0000
-Message-ID: <20210315110749.3C6A2E64967EBF2E@johnlewis.co.uk>
+        id S233399AbhCOXmA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Mar 2021 19:42:00 -0400
+Received: from mail-ej1-f50.google.com ([209.85.218.50]:33055 "EHLO
+        mail-ej1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229579AbhCOXlp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Mar 2021 19:41:45 -0400
+Received: by mail-ej1-f50.google.com with SMTP id jt13so69241082ejb.0
+        for <git@vger.kernel.org>; Mon, 15 Mar 2021 16:41:45 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=P1NwJUh/NluiQGiW8ixS3HBY3F47mcVQcmCruBbKFfY=;
+        b=flkYv2Y9piqaO+xR7yGXw6H7rwADcAUfDkqA3VKP6RftP8BU1mRfv37E4M3uCLGJNr
+         vREdtNtznpCCamV3bydzsqG3/uz21fAmlmk3afhx5SZHPyE6ECgCxmG53SMq7iQ6Ly0I
+         Bsy1u7WcRi8dfQ+JWArRJ582N3fgZvq039okcOzCshwRus2H0mSFkkRiNxcmfF43tsoO
+         1Ut4fQSHinlknciK3qUTaOxqgHB1rrBwUTOOq63hc6vLFAPtWZ/vttqOTjrveLIb2dVE
+         f9qZc1ysf6KG5qChrLDH13PDFCApE454s4QHVQwO89hb6ZeEZDnbNz0Yk3LDTEVtGJ27
+         tA1Q==
+X-Gm-Message-State: AOAM530+NJHL+PXs87b9R7/OZmUKlIE+GVBurRMfaD8taIc/Tes0vgHB
+        bdec0oKCbFklxD69bO9IIqrPsaELsA9A/bvy3+Y33c0F
+X-Google-Smtp-Source: ABdhPJwgdDbmDEdgw29KHPoernaGAic+yPPtXmKKhZw5phJNh4PyhCCg6ILZx6+kYnzEru6g9lTcQX078q38bt+1MCo=
+X-Received: by 2002:a17:906:d8c6:: with SMTP id re6mr25631677ejb.311.1615851704389;
+ Mon, 15 Mar 2021 16:41:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
+References: <pull.885.v3.git.1614859926974.gitgitgadget@gmail.com> <pull.885.v4.git.1614928211635.gitgitgadget@gmail.com>
+In-Reply-To: <pull.885.v4.git.1614928211635.gitgitgadget@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 15 Mar 2021 19:41:33 -0400
+Message-ID: <CAPig+cSd-e76bOQY8yoZnRDbuQbZ_FNHJ5TV6BC+dAofPmk7DQ@mail.gmail.com>
+Subject: Re: [PATCH v4] format-patch: allow a non-integral version numbers
+To:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Denton Liu <liu.denton@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear git
+On Fri, Mar 5, 2021 at 2:10 AM ZheNing Hu via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> Usually we can only use `format-patch -v<n>` to generate integral
+> version numbers patches, but sometimes a same fixup should be
+> labeled as a non-integral version like `v1.1`, so teach `format-patch`
+> to allow a non-integral version which may be helpful to send those
+> patches.
+>
+> `<n>` can be any string, such as `-v1.1`.  In the case where it
+> is a non-integral value, the "Range-diff" and "Interdiff"
+> headers will not include the previous version.
+>
+> Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+> ---
+> diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+> @@ -221,6 +221,7 @@ populated with placeholder text.
+>         `--reroll-count=4` may produce `v4-0001-add-makefile.patch`
+>         file that has "Subject: [PATCH v4 1/20] Add makefile" in it.
+> +       now can support non-integrated version number like `-v1.1`.
 
-The famous brand John Lewis Partnership, is UK's largest multi-
-channel retailer with over 126 shops and multiple expansion in 
-Africa furnished by European/Asian/American products. We are 
-sourcing
-new products to attract new customers and also retain our 
-existing ones, create new partnerships with companies dealing 
-with different kinds of goods globally.
+Let's drop "now" from the beginning of the sentence since it is only
+meaningful for people who have read this documentation previously, but
+not for people newly learning about the option. Perhaps just say:
 
-Your company's products are of interest to our market as we have 
-an amazing market for your products.
+    `<n>` may be a fractional number.
 
-Provide us your current catalog through email to review more. We 
-hope to be able to order with you and start a long-term friendly,
-respectable and solid business partnership. Please we would 
-appreciate it if you could send us your stock availability via 
-email if any.
+> diff --git a/builtin/log.c b/builtin/log.c
+> @@ -1862,11 +1863,13 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+> -       if (0 < reroll_count) {
+> +       if (reroll_count_string) {
+>                 struct strbuf sprefix = STRBUF_INIT;
+> +
+> +               strtol_i(reroll_count_string, 10, &reroll_count);
+> +               strbuf_addf(&sprefix, "%s v%s",
+> +                           rev.subject_prefix, reroll_count_string);
+> +               rev.reroll_count = reroll_count_string;
 
-Our payment terms are 15 days net in Europe, 30 days Net in UK 
-and 30 days net in Asia/USA as we operate with over 5297 
-suppliers around the globe for the past 50 years now. For 
-immediate response Send your reply to 
-robturner.procurement@johnlewis-trade.com for us to be able to 
-treat with care and urgency.
-
-On behalf of our entire team, we wish you a fruitful 2021. 
-
-Best Regards
-
-Rob Turner
-Head Of Procurement Operations
-John Lewis Partnership.
-robturner.procurement@johnlewis-trade.com
-Tel: +44-7451-274090
-WhatsApp: +447497483925
-www.johnlewis.com
-REGISTERED OFFICE: 171 VICTORIA STREET, LONDON SW1E 5NN  
+This code can be confusing to readers since it appears to ignore the
+result of strtol_i(), and it's difficult for the reader to understand
+the difference between `reroll_count` and `reroll_count_string` and
+why you need both variables. I was going to suggest that you write an
+/* in-code comment */ here explaining why you don't care if the reroll
+count parsed correctly as a number. However, now that I'm examining
+the code again, I think it would be clearer if you move the strtol_i()
+call into the diff_title() function since -- following your changes --
+that function is the only code which cares whether `reroll_count` can
+be parsed as a number (the rest of the code, after your change, just
+uses it as a string).
