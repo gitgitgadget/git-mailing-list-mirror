@@ -7,76 +7,77 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 28E9EC4332E
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD122C43332
 	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 13:15:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F3F2364EEB
-	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 13:15:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 785D764F0B
+	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 13:15:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230097AbhCONO5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Mar 2021 09:14:57 -0400
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:37161 "EHLO
+        id S230057AbhCONO4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Mar 2021 09:14:56 -0400
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:39355 "EHLO
         out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229746AbhCONOs (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 15 Mar 2021 09:14:48 -0400
+        by vger.kernel.org with ESMTP id S229734AbhCONOo (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 15 Mar 2021 09:14:44 -0400
 Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.nyi.internal (Postfix) with ESMTP id 68AB15C0099;
-        Mon, 15 Mar 2021 09:14:48 -0400 (EDT)
+        by mailout.nyi.internal (Postfix) with ESMTP id A195A5C012C;
+        Mon, 15 Mar 2021 09:14:43 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Mon, 15 Mar 2021 09:14:48 -0400
+  by compute1.internal (MEProxy); Mon, 15 Mar 2021 09:14:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
         :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm3; bh=KGl2MQyrZ179/4MwwiHddwZ3eDl
-        k4JtYeNlXls/gb7w=; b=il4c0AviapILfMyACW2QJ2eoEU7dsHIfRRzFYPk1UCJ
-        LyrieOSoSD7daH5jVaFe92c9NyvAathgxT7j+MyYoxM3J9Abi5ndhtcB6d+KIUIx
-        HwG50trAf2jMpNUtMsxzD2MLUWWr1YGtVQhaRzYcNhgRLXOgnPlKjnToZkPUvjk8
-        EtxHIr0MmMEh5fJvxsL5x8kjH5z6N9aUMIFaWH2C7uCcbJF3YdCc88CqlGOV2rOE
-        TooIOk1mSLOAgyTOOXNAO3837qG2VtJMKgsuuDWDijRLEvZNnYTZQNCDkWWhnhR0
-        ZBSCyey8B4qTcxbxOHSv6hxcjZ5iZpz5VHfzV5PQ1ew==
+        :content-type:in-reply-to; s=fm3; bh=utpoRoEnTPrLeARRCbgslW7vCl1
+        TYcgixior6fr3THU=; b=rELpKV5yKQwp7gXhijzWjZsiWZOj4PMdHP9y5ttVSRd
+        dCipsYOYvVx7l0Ewem3rHQEniHhgmJClGB5y1aQGJAbU7N+OJl4dKLq1dGkiEFi0
+        DzWxpIuVk+7cKNNSvQabuK9RfgMIxcYjl0M8oHWi3gATLiff3SeVg8f+6QpX/aPb
+        hP9xscyeA4QMjkT+9SychA+f3i5dRj2SkbibcfYjvBezoidnlUO2JzeXldPU7sak
+        zMXCLsgc/mgC44kpBOIpPgxNGV5LP5hz0R/Ah/SJhDSWs95+PA49zaHa+wUSX+km
+        ZBuimE7ncrNLUls0bKjCy53rCfafT8UdqWEe8yDEDpw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=KGl2MQ
-        yrZ179/4MwwiHddwZ3eDlk4JtYeNlXls/gb7w=; b=nSXFhSJ9jJ0KX6PzJ+XL81
-        Ri7XPaeyV6O0aGOIy3SySlZ7echVoxUZLKdvYKwXlNTKTyaaEP2XHbnJaPojllue
-        ekZHfXhUYTJULxBwvK5RU7TQV6nFPvMSq+e4MEtRXDDY2dHFOlA7w0gpBQ+SplZk
-        6Wh3Df80HUemBXTsa3YIXyqxX2lTfmYI7f4q9zgHJCccqlP4HiwbjlgxD7R/tivc
-        TOVgwUeoKivKpdJpSW0U/Kf1AKoanstjd1CSyHaFJL0J3tvt1/WojkSHh8kE7S+I
-        hw9NdBlme71DKvIQbp3iidLogROMCfef37sUAgtRaqhVuyKr/4Hahn1TtaHS0lVg
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=utpoRo
+        EnTPrLeARRCbgslW7vCl1TYcgixior6fr3THU=; b=GOS0zSRzXjuzSdhcZg348b
+        Q9cZlzu2GCBcjrr0L96rlMxQyEDi5hBjLc/+rWM6YvnzqdTlicUAJXFP3nQ+dkjU
+        z462k/DSgNEvVAYt6s4OsdUMYQf8KKG+3eFmirDIAfEMltPb0BUyMeS7y/MMy1J8
+        imwSHq3Qcqo6KfjUT+gEZ1wTRtHDgvudC+D3Zn/jaczPhjJeYfL1ZxIBl37znoP6
+        EYUGwByxmO5cHf9OXrrhZ320w1t4Dzv4YZNcd9lqZ7PWNN2u1ZLsxdtE+cgjBHbm
+        Pa2tbmRSe4YlElQS5zUIlfkJAoSceuI2ilkHZfqo8hNqdZqDHVGGse373DwBeEcA
         ==
-X-ME-Sender: <xms:yF1PYG4u6yHoUtBNdlTLtH9cz_llsio2HCqipAezgpceqZ87K9g79g>
-    <xme:yF1PYHWQE6B01BPx1OQaerMJ91guTWkaziUO34COmbXVCItcxhihPK6PT-WNRsqoG
-    o0qbdLGPeg7fHVIqw>
+X-ME-Sender: <xms:w11PYJ1hGnX4qE9HwwUdwTFlp0zs0agLUkMb0fZHovJ_Y3TOyO7AMA>
+    <xme:w11PYAG6oPqOsHC04yZV0E1-8FSwCVq-OGW0BZQ5E_CZhLvJqtxBIbMnv2q680Tq0
+    WuNbSAIeRH15oTzhQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledruddvledggeelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
     hnpeehgefhtdefueffheekgfffudelffejtdfhvdejkedthfehvdelgfetgfdvtedthfen
-    ucfkphepkeelrddugedrleeirddvgedunecuvehluhhsthgvrhfuihiivgepgeenucfrrg
+    ucfkphepkeelrddugedrleeirddvgedunecuvehluhhsthgvrhfuihiivgepfeenucfrrg
     hrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:yF1PYC2od5IhUYPm7uxjajevD4WEfhCWbwqY8rxpsH_T4vMzTBBWXg>
-    <xmx:yF1PYM2MUdbGOE9TYO3ioSHmq8sYp0henkHeI7s3p4YDY62im296Pw>
-    <xmx:yF1PYN-cloKniNO89B2rOLeP55vSdZAAq8FWmXRnuAO2Z2bKgasyVw>
-    <xmx:yF1PYE8M0MvQT8E93sV3ExgE4Q90Rh38eK1lEH1P5MA0awfGZksrMw>
+X-ME-Proxy: <xmx:w11PYJ5w2Gs99-j15N7YqmQsLcWZA_dnCmi4UJUoGx-EX5VOpeTJ9w>
+    <xmx:w11PYG1T4XqijFCXIVS6d72XAaXhZOmYPZyUi6azKbYWYX7c7aS-Cg>
+    <xmx:w11PYME3pG28_ruQkrShYG3wRpYvIinEB-lppQbihnd2buHthE7PeQ>
+    <xmx:w11PYGN_9KZF1ankQXXqLcqBonNokrD2r4EfGQWJ7jkmLiJlSikcQw>
 Received: from vm-mail.pks.im (dynamic-089-014-096-241.89.14.pool.telefonica.de [89.14.96.241])
-        by mail.messagingengine.com (Postfix) with ESMTPA id B4E921080066;
-        Mon, 15 Mar 2021 09:14:47 -0400 (EDT)
+        by mail.messagingengine.com (Postfix) with ESMTPA id DE96A1080067;
+        Mon, 15 Mar 2021 09:14:42 -0400 (EDT)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 782db972 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Mon, 15 Mar 2021 13:14:47 +0000 (UTC)
-Date:   Mon, 15 Mar 2021 14:14:45 +0100
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id ca555be9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Mon, 15 Mar 2021 13:14:42 +0000 (UTC)
+Date:   Mon, 15 Mar 2021 14:14:40 +0100
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
 Cc:     Christian Couder <christian.couder@gmail.com>,
         Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>
-Subject: [PATCH v2 4/8] list-objects: support filtering by tag and commit
-Message-ID: <5545c189c56cb44d0621fb24a531420c29de55d0.1615813673.git.ps@pks.im>
+Subject: [PATCH v2 3/8] list-objects: move tag processing into its own
+ function
+Message-ID: <d8da0b24f46cd305cb1be304251745b6d9da641b.1615813673.git.ps@pks.im>
 References: <cover.1614600555.git.ps@pks.im>
  <cover.1615813673.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="YzLfVvcDHiXxAQVI"
+        protocol="application/pgp-signature"; boundary="DeYHNGfvq3eKA6dC"
 Content-Disposition: inline
 In-Reply-To: <cover.1615813673.git.ps@pks.im>
 Precedence: bulk
@@ -84,183 +85,73 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---YzLfVvcDHiXxAQVI
+--DeYHNGfvq3eKA6dC
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Object filters currently only support filtering blobs or trees based on
-some criteria. This commit lays the foundation to also allow filtering
-of tags and commits.
-
-No change in behaviour is expected from this commit given that there are
-no filters yet for those object types.
+Move processing of tags into its own function to make the logic easier
+to extend when we're going to implement filtering for tags. No change in
+behaviour is expected from this commit.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- list-objects-filter.c | 40 ++++++++++++++++++++++++++++++++++++++++
- list-objects-filter.h |  2 ++
- list-objects.c        | 24 +++++++++++++++++++++---
- 3 files changed, 63 insertions(+), 3 deletions(-)
+ list-objects.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/list-objects-filter.c b/list-objects-filter.c
-index 4ec0041cfb..7def039435 100644
---- a/list-objects-filter.c
-+++ b/list-objects-filter.c
-@@ -82,6 +82,16 @@ static enum list_objects_filter_result filter_blobs_none(
- 	default:
- 		BUG("unknown filter_situation: %d", filter_situation);
-=20
-+	case LOFS_TAG:
-+		assert(obj->type =3D=3D OBJ_TAG);
-+		/* always include all tag objects */
-+		return LOFR_MARK_SEEN | LOFR_DO_SHOW;
-+
-+	case LOFS_COMMIT:
-+		assert(obj->type =3D=3D OBJ_COMMIT);
-+		/* always include all commit objects */
-+		return LOFR_MARK_SEEN | LOFR_DO_SHOW;
-+
- 	case LOFS_BEGIN_TREE:
- 		assert(obj->type =3D=3D OBJ_TREE);
- 		/* always include all tree objects */
-@@ -173,6 +183,16 @@ static enum list_objects_filter_result filter_trees_de=
-pth(
- 	default:
- 		BUG("unknown filter_situation: %d", filter_situation);
-=20
-+	case LOFS_TAG:
-+		assert(obj->type =3D=3D OBJ_TAG);
-+		/* always include all tag objects */
-+		return LOFR_MARK_SEEN | LOFR_DO_SHOW;
-+
-+	case LOFS_COMMIT:
-+		assert(obj->type =3D=3D OBJ_COMMIT);
-+		/* always include all commit objects */
-+		return LOFR_MARK_SEEN | LOFR_DO_SHOW;
-+
- 	case LOFS_END_TREE:
- 		assert(obj->type =3D=3D OBJ_TREE);
- 		filter_data->current_depth--;
-@@ -267,6 +287,16 @@ static enum list_objects_filter_result filter_blobs_li=
-mit(
- 	default:
- 		BUG("unknown filter_situation: %d", filter_situation);
-=20
-+	case LOFS_TAG:
-+		assert(obj->type =3D=3D OBJ_TAG);
-+		/* always include all tag objects */
-+		return LOFR_MARK_SEEN | LOFR_DO_SHOW;
-+
-+	case LOFS_COMMIT:
-+		assert(obj->type =3D=3D OBJ_COMMIT);
-+		/* always include all commit objects */
-+		return LOFR_MARK_SEEN | LOFR_DO_SHOW;
-+
- 	case LOFS_BEGIN_TREE:
- 		assert(obj->type =3D=3D OBJ_TREE);
- 		/* always include all tree objects */
-@@ -371,6 +401,16 @@ static enum list_objects_filter_result filter_sparse(
- 	default:
- 		BUG("unknown filter_situation: %d", filter_situation);
-=20
-+	case LOFS_TAG:
-+		assert(obj->type =3D=3D OBJ_TAG);
-+		/* always include all tag objects */
-+		return LOFR_MARK_SEEN | LOFR_DO_SHOW;
-+
-+	case LOFS_COMMIT:
-+		assert(obj->type =3D=3D OBJ_COMMIT);
-+		/* always include all commit objects */
-+		return LOFR_MARK_SEEN | LOFR_DO_SHOW;
-+
- 	case LOFS_BEGIN_TREE:
- 		assert(obj->type =3D=3D OBJ_TREE);
- 		dtype =3D DT_DIR;
-diff --git a/list-objects-filter.h b/list-objects-filter.h
-index cfd784e203..9e98814111 100644
---- a/list-objects-filter.h
-+++ b/list-objects-filter.h
-@@ -55,6 +55,8 @@ enum list_objects_filter_result {
- };
-=20
- enum list_objects_filter_situation {
-+	LOFS_COMMIT,
-+	LOFS_TAG,
- 	LOFS_BEGIN_TREE,
- 	LOFS_END_TREE,
- 	LOFS_BLOB
 diff --git a/list-objects.c b/list-objects.c
-index 093adf85b1..3b63dfd4f2 100644
+index e19589baa0..093adf85b1 100644
 --- a/list-objects.c
 +++ b/list-objects.c
-@@ -218,8 +218,16 @@ static void process_tag(struct traversal_context *ctx,
- 			struct strbuf *base,
- 			const char *name)
- {
--	tag->object.flags |=3D SEEN;
--	ctx->show_object(&tag->object, name, ctx->show_data);
-+	enum list_objects_filter_result r;
-+
-+	r =3D list_objects_filter__filter_object(ctx->revs->repo, LOFS_TAG,
-+					       &tag->object, base->buf,
-+					       &base->buf[base->len],
-+					       ctx->filter);
-+	if (r & LOFR_MARK_SEEN)
-+		tag->object.flags |=3D SEEN;
-+	if (r & LOFR_DO_SHOW)
-+		ctx->show_object(&tag->object, name, ctx->show_data);
+@@ -213,6 +213,15 @@ static void process_tree(struct traversal_context *ctx,
+ 	free_tree_buffer(tree);
  }
 =20
++static void process_tag(struct traversal_context *ctx,
++			struct tag *tag,
++			struct strbuf *base,
++			const char *name)
++{
++	tag->object.flags |=3D SEEN;
++	ctx->show_object(&tag->object, name, ctx->show_data);
++}
++
  static void mark_edge_parents_uninteresting(struct commit *commit,
-@@ -369,6 +377,12 @@ static void do_traverse(struct traversal_context *ctx)
- 	strbuf_init(&csp, PATH_MAX);
-=20
- 	while ((commit =3D get_revision(ctx->revs)) !=3D NULL) {
-+		enum list_objects_filter_result r;
-+
-+		r =3D list_objects_filter__filter_object(ctx->revs->repo,
-+				LOFS_COMMIT, &commit->object,
-+				NULL, NULL, ctx->filter);
-+
- 		/*
- 		 * an uninteresting boundary commit may not have its tree
- 		 * parsed yet, but we are not going to show them anyway
-@@ -383,7 +397,11 @@ static void do_traverse(struct traversal_context *ctx)
- 			die(_("unable to load root tree for commit %s"),
- 			      oid_to_hex(&commit->object.oid));
+ 					    struct rev_info *revs,
+ 					    show_edge_fn show_edge)
+@@ -334,8 +343,7 @@ static void traverse_trees_and_blobs(struct traversal_c=
+ontext *ctx,
+ 		if (obj->flags & (UNINTERESTING | SEEN))
+ 			continue;
+ 		if (obj->type =3D=3D OBJ_TAG) {
+-			obj->flags |=3D SEEN;
+-			ctx->show_object(obj, name, ctx->show_data);
++			process_tag(ctx, (struct tag *)obj, base, name);
+ 			continue;
  		}
--		ctx->show_commit(commit, ctx->show_data);
-+
-+		if (r & LOFR_MARK_SEEN)
-+			commit->object.flags |=3D SEEN;
-+		if (r & LOFR_DO_SHOW)
-+			ctx->show_commit(commit, ctx->show_data);
-=20
- 		if (ctx->revs->tree_blobs_in_commit_order)
- 			/*
+ 		if (!path)
 --=20
 2.30.2
 
 
---YzLfVvcDHiXxAQVI
+--DeYHNGfvq3eKA6dC
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmBPXcUACgkQVbJhu7ck
-PpQZJw/5AcxUAGM4xr44TcRAPFRB/qsH87anqAAG6WrybygxI0THW8eAAgOL3m9C
-YRAZrVrAQVBAYxSHehTO0pWTRtfxA+JISOFPUReGhUtIKGVLqYPnKIUy0kiYDb6X
-hfSkIZFss9/U7VTynOKpvLTwNWLI0dD6kfJoA0ESSg8VtdVATfnrB1yVaIalQNSF
-ASmtwrwQMrsFffvavj70pwxjAQoElnPXV5/z3Oy4SpiPVo74y9NLslailtveg2yy
-i7wcv2CCPPQ6es12N0LclXY2wR6s293mZjovZtU7E93iGDSrAZQZvh0vmdPXWQHI
-2/saGphBNLD1htSFeH+Wx6uihxX197c7fSbQY9rzF8XtFmgtPdjDJrV2NDe9tRzv
-rg5cSwHKBt5zrnfCZ6IsGMGpqKive0jZFttrFMF4iKeauJB21dUbW8vMM5qqphrk
-plGQRsGuc4rvmRZdF6XlqHa9Dv3Wr7YvsiD6BG0q1LFWSSwUIqk2Ga1ty8yScFoV
-V8eH+Z5nVtpT7plCAwWsvOc2dEik4uD7q7GQvBy/JWZNjoJbqNlhvBFeJhizq63V
-Lal+z7MOt2qz8kD8QvEgN4Rw8O3DIKACRKoFOKgznPT43+C19VIiQaWzsOW010Ee
-sHzihGlmKYV7sPih9yurZi81UHbHDIuu5b2ExAWtfsH/EqnUX7Y=
-=5HBn
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmBPXb8ACgkQVbJhu7ck
+PpTnWg/9E3mgHqG3zLo0VJsgw01JwAx7z91H5S8WPTpT1/etoXNZekH0QPFZ9yQP
+ebQXKhdnsVISklB3eI8H3RqHlMqhUGOnWtrJezCJurkmVY0z3ZhBl6lV8c55romF
+t7dxPvmGmol1zt9xJr9esMjA4xlKfy/oonewX4XEFboyEbp/EiCryZo42wYzR3j+
+Mn9DcQe6G7Tuexmd1OTYVkd98A8KGhnhglDqGKrEY7aF8R+JxzQplueH+o+ygg0V
+zk8ajtkH740tsl5l9Ah9vr8yQrfbBmc/OXFfVdwakyudosVqvKUNa5AHzK9Mst6x
+sAJwINXmdoFN4/3Ljqpjhv+znpwMg7D51L5L07W2RAno8SwLaQLvgAc1VV6VyqtP
+2ZKNSucjz5iY/+sjSlu3en+mWX7rfEyj5amaoYKmOaNM7kD1vYVcIIfGmUdSDX+w
+dnurdwMapXqdoHuJTRkC1G5wNbkAsIUsLH/IOqm5oKNhTxansjd+yFwRLYhQNCSS
+CSlN9xZPrAaa8rX+muKWkmVN69FimrWj9F3A9tRGif3dSc8o+nOibByk7nKGY//e
+S5D66UPnQ/MwyFb2+/zECK7uojFE4BRP+5bKOIDy6iKD5FRXLHvzRm+xcQAGScCI
+50hw2uwl+kr1tWw38jd8CI1H9D1s9MppzNAODQZSt9ujyec7pwQ=
+=NhC9
 -----END PGP SIGNATURE-----
 
---YzLfVvcDHiXxAQVI--
+--DeYHNGfvq3eKA6dC--
