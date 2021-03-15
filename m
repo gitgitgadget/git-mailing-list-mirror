@@ -2,115 +2,251 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.3 required=3.0 tests=BAYES_00,DATE_IN_PAST_06_12,
+	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EF879C433E6
-	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 11:33:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BA1BC433E0
+	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 12:23:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C4C3664E81
-	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 11:33:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C355064E86
+	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 12:23:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229512AbhCOLdD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Mar 2021 07:33:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41120 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229536AbhCOLcq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Mar 2021 07:32:46 -0400
-Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37737C061574
-        for <git@vger.kernel.org>; Mon, 15 Mar 2021 04:32:46 -0700 (PDT)
-Received: by mail-ot1-x32a.google.com with SMTP id f73-20020a9d03cf0000b02901b4d889bce0so4937319otf.12
-        for <git@vger.kernel.org>; Mon, 15 Mar 2021 04:32:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=4ytkhs4iSx2hVSBYLC8QzW1uvkOMEhcN4HT0z4Oi8eE=;
-        b=QMchMTPF6XAbiyDtqYyIlT3JOeGBeWg6jP3NIJjz3i9g7MNBu/sAoevwWK5qJ12vBv
-         jz4LWhfrU6gZEgOglebH2ZOswe/F9KcJpVBpfA73RO/gfDc3LhWGBePpAj6SUDyzN0G4
-         XUiVxAd5GKtqjsO+E191LbrDRfUFoDgL74h2L96miawl0y0D5rTo+tWbTbNshp68Muv8
-         kj14qbW3ske+DZAv0ebrnZ5YSXQZQC7liot9zhm06iGyqSJBWiBpJXIvKbIHM8/AThKW
-         v40gY9ZfsWPKA85D3G3sg1jbk7xF2ZkiJQHnXZ88MxyIYjvaFuke5Jw2Mb3PJPQgP4wU
-         ea3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=4ytkhs4iSx2hVSBYLC8QzW1uvkOMEhcN4HT0z4Oi8eE=;
-        b=bmXVUqbzd/PQkR0hJWkDfvRq1viERIPp6l5+6tPTLy1Rs4X4IeDIRoEEIVB6RX1TOw
-         j5hD0YYLc1LEBQx6RX7hvAG6yeZjRWdw5/qhlFOtQv4aO3YzkknwsNX3f2Ha4oFNPpZN
-         /rh2ySrDb+nofBLFCs5xyaB2fk2LIq87YWcjfk0idPTWzysDaeFiCT8m5DIQHS/NaA+R
-         xJs8Icy+P2xAG6UbiIaJponhRk6ABCM2ELF4viQiS7gff6sqcYs5arZzxWJek6Fx8OIn
-         ZMIandgQI5WmxhFflGHULLT3G2b0uXcFmmYAbxS8+nANGcF6LQOSlX/slW48bEyllCWq
-         szrw==
-X-Gm-Message-State: AOAM53322p0l5qDUupB+7OWOuhiAG1ifQyoacrbEzLE0iy4YyoBuMmHA
-        HQAHBh1UVz1UACQpGBcVcliqMuzHihEN43PHXzs=
-X-Google-Smtp-Source: ABdhPJxsWBlVPZKGpxPnCzHOH7zIUcSPDQAdi+0eZntCRTYMU05ulp6GkQxeZKiSCsVteufSxcz9v5pg4S3JizGrw+g=
-X-Received: by 2002:a9d:6ad6:: with SMTP id m22mr6157705otq.160.1615807965662;
- Mon, 15 Mar 2021 04:32:45 -0700 (PDT)
+        id S229520AbhCOMXK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Mar 2021 08:23:10 -0400
+Received: from mout.gmx.net ([212.227.15.19]:56159 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229862AbhCOMWj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Mar 2021 08:22:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1615810947;
+        bh=uJCixA8YreFuNfWnGJl6LwApOoYyEh0s114cDx526YQ=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Jh/n+VdjQB/klLMMVfUS+n9vTiTe55f2ujMYIM7iNOmT9iBjW+GRaIW9qk8jtoaGD
+         Hpz2sNT2MjxglIATN/YyLpa8c4TNlsUFwYnsU2jRLGPA4e8D8KRUhISdtFaJ55Tlzo
+         HUJG/3NkMSqNh2Mi6oPeaU5TIUqjxYj/D8UqCOtI=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.30.201.226] ([213.196.212.127]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M1Ygz-1lIlIm0SAl-0039Au; Mon, 15
+ Mar 2021 13:22:27 +0100
+Date:   Mon, 15 Mar 2021 04:23:16 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe=2E?= <l.s.r@web.de>
+cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] vcs-svn: remove header files as well
+In-Reply-To: <b937922d-8b56-c333-3f76-6e17a28210e3@web.de>
+Message-ID: <nycvar.QRO.7.76.6.2103150421520.50@tvgsbejvaqbjf.bet>
+References: <b937922d-8b56-c333-3f76-6e17a28210e3@web.de>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <pull.901.v6.git.1615790151073.gitgitgadget@gmail.com>
- <pull.901.v7.git.1615799304883.gitgitgadget@gmail.com> <CAP8UFD2CNAW4o8BF8NLA0pwWzNmBwZJAP7L5SGSib+LcVbSLBA@mail.gmail.com>
-In-Reply-To: <CAP8UFD2CNAW4o8BF8NLA0pwWzNmBwZJAP7L5SGSib+LcVbSLBA@mail.gmail.com>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Mon, 15 Mar 2021 19:32:34 +0800
-Message-ID: <CAOLTT8QTxnykacdDaMjZMkEqTHPSrPz6HH-bSgbECo5tUgf5Gg@mail.gmail.com>
-Subject: Re: [PATCH v7] [GSOC] commit: add --trailer option
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>,
-        "Bradley M. Kuhn" <bkuhn@sfconservancy.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Brandon Casey <drafnel@gmail.com>,
-        Shourya Shukla <periperidip@gmail.com>,
-        Rafael Silva <rafaeloliveira.cs@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-1068085971-1615778597=:50"
+X-Provags-ID: V03:K1:Vy0V6bksT5HKvWM7vQ+hNc1eafd/4vLG5HS1nzWE71As9hja7Hm
+ U/OS3vn2DsRd6dRyA4msFCZHNZKBhbGL8hm4Jm+FJVi3hanUlv2jlDaiBdS51nZAgYvEUjP
+ 3vuusHPisbAVKyokRCX6a0gd1f3fSlCMcUGisqyx/SfyBFx7swHA2v0S7njLv4FRFdJgZFC
+ poPsXACsdjWphpHVlVEYw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:p8gEaC8YZeA=:yt0CZXHjVHG5mIxq3Ih3+B
+ nCm2E+8AyhDFn7ieERr6+4TtZoG9WGHKf4+6JuCvTLJ7zTX9L30BkyzaUSvDRlWfl2LsNdukE
+ 8qMWer4NiOaZ3ZRoWesNWyT+ECVuYNm50Yu5oeBkvpDXIrAepdde1YNamnXxF3E1xb+kM1/sI
+ QyJxdnzKVvgtQR7ra2WusFcZWlkIr6FV9MXQRMC0+PnEsNHZiU8KmLcWLP/aMd7yn7f7ZrkM3
+ JcAysIjVqXOFtryd8R88VdoT6JqWcQcQjLuZbD4YHSIhaIa9sEIq14YfgtrueC3kFF899zWx+
+ TmL49A1JUUX3ZmMBUfh3D9XybgHbZVuWHKdjzUNeBv3NQ0/YhaE8lGLY8rcsOoW8496oyG+tE
+ 5W6mB9YB6N0lds7JwC4cNt6jfNy6Velzl3inHy48s5po5IDOcBiCIa1IEZKwdih3ItH1kDa4C
+ zg1qxHtlFHtHhJP0Z8bZDWK22Kcd/Niq+r0N72wLcZ/+e91YczVagoIN4pxuENDBypQ2V17FL
+ FDMZiOJGREksg7my9ZQkq5iMSYRbGZgkHZytTRv8EmlSdtbu0ffqdERpe9T9plACt8zfDHuX7
+ RpRHII63sa/FPtHqwp7QD/pwUPHM9iHXyNYQt1V9cbYaOxJ3Ar4zaKsF861NjXu8RZa7ekf+j
+ HOMmTHmmQuAPS34YAb9DNbmAFzjtpA81EWgioXOZk6BaXSzVy/qd/mCy+k8mhJ3XHHfWLpNgy
+ xrpsxBOwKMRlIqXliSIRT3J13GqJViwrKakUQmarfq1/D31qccwVGxkIEUSDygBgBGZC/llR/
+ Vl0ZDwy7lByd7WMrYNzUVOvkhchKowdAexVlCyZpys+EW4yjRrBm0WhyYzIXJG146Ns5T10ZB
+ psE7Y+pcTcncAU2W+Z0zSIr20fAl5TC8S2rCqFX1s=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> =E4=BA=8E2021=E5=B9=B43=E6=9C=
-=8815=E6=97=A5=E5=91=A8=E4=B8=80 =E4=B8=8B=E5=8D=886:14=E5=86=99=E9=81=93=
-=EF=BC=9A
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323328-1068085971-1615778597=:50
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+Hi Ren=C3=A9,
+
+On Sun, 14 Mar 2021, Ren=C3=A9 Scharfe. wrote:
+
+> fc47391e24 (drop vcs-svn experiment, 2020-08-13) removed most vcs-svn
+> files.  Drop the remaining header files as well, as they are no longer
+> used.
+
+While it is sad to say good-bye to the last chance of replacing the Perl
+script `git-svn` with anything that works with less problems on Windows, I
+agree it is the right thing to do.
+
+Thanks,
+Dscho
+
 >
-> On Mon, Mar 15, 2021 at 10:08 AM ZheNing Hu via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
+> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+> ---
+>  vcs-svn/fast_export.h    | 34 ----------------------------------
+>  vcs-svn/line_buffer.h    | 30 ------------------------------
+>  vcs-svn/sliding_window.h | 18 ------------------
+>  vcs-svn/svndiff.h        | 10 ----------
+>  vcs-svn/svndump.h        | 10 ----------
+>  5 files changed, 102 deletions(-)
+>  delete mode 100644 vcs-svn/fast_export.h
+>  delete mode 100644 vcs-svn/line_buffer.h
+>  delete mode 100644 vcs-svn/sliding_window.h
+>  delete mode 100644 vcs-svn/svndiff.h
+>  delete mode 100644 vcs-svn/svndump.h
 >
-> >       + if (trailer_args.nr) {
-> >      -+         static struct child_process run_trailer =3D CHILD_PROCE=
-SS_INIT;
-> >      ++         struct child_process run_trailer =3D CHILD_PROCESS_INIT=
+> diff --git a/vcs-svn/fast_export.h b/vcs-svn/fast_export.h
+> deleted file mode 100644
+> index 9dcf9337c1..0000000000
+> --- a/vcs-svn/fast_export.h
+> +++ /dev/null
+> @@ -1,34 +0,0 @@
+> -#ifndef FAST_EXPORT_H
+> -#define FAST_EXPORT_H
+> -
+> -struct strbuf;
+> -struct line_buffer;
+> -
+> -void fast_export_init(int fd);
+> -void fast_export_deinit(void);
+> -
+> -void fast_export_delete(const char *path);
+> -void fast_export_modify(const char *path, uint32_t mode, const char *da=
+taref);
+> -void fast_export_note(const char *committish, const char *dataref);
+> -void fast_export_begin_note(uint32_t revision, const char *author,
+> -		const char *log, timestamp_t timestamp, const char *note_ref);
+> -void fast_export_begin_commit(uint32_t revision, const char *author,
+> -			const struct strbuf *log, const char *uuid,const char *url,
+> -			timestamp_t timestamp, const char *local_ref);
+> -void fast_export_end_commit(uint32_t revision);
+> -void fast_export_data(uint32_t mode, off_t len, struct line_buffer *inp=
+ut);
+> -void fast_export_buf_to_data(const struct strbuf *data);
+> -void fast_export_blob_delta(uint32_t mode,
+> -			uint32_t old_mode, const char *old_data,
+> -			off_t len, struct line_buffer *input);
+> -
+> -/* If there is no such file at that rev, returns -1, errno =3D=3D ENOEN=
+T. */
+> -int fast_export_ls_rev(uint32_t rev, const char *path,
+> -			uint32_t *mode_out, struct strbuf *dataref_out);
+> -int fast_export_ls(const char *path,
+> -			uint32_t *mode_out, struct strbuf *dataref_out);
+> -
+> -void fast_export_copy(uint32_t revision, const char *src, const char *d=
+st);
+> -const char *fast_export_read_path(const char *path, uint32_t *mode_out)=
 ;
-> >       +
-> >       +         strvec_pushl(&run_trailer.args, "interpret-trailers",
-> >       +                      "--in-place", "--where=3Dend", git_path_co=
-mmit_editmsg(), NULL);
+> -
+> -#endif
+> diff --git a/vcs-svn/line_buffer.h b/vcs-svn/line_buffer.h
+> deleted file mode 100644
+> index e192aedea2..0000000000
+> --- a/vcs-svn/line_buffer.h
+> +++ /dev/null
+> @@ -1,30 +0,0 @@
+> -#ifndef LINE_BUFFER_H
+> -#define LINE_BUFFER_H
+> -
+> -#include "strbuf.h"
+> -
+> -#define LINE_BUFFER_LEN 10000
+> -
+> -struct line_buffer {
+> -	char line_buffer[LINE_BUFFER_LEN];
+> -	FILE *infile;
+> -};
+> -#define LINE_BUFFER_INIT { "", NULL }
+> -
+> -int buffer_init(struct line_buffer *buf, const char *filename);
+> -int buffer_fdinit(struct line_buffer *buf, int fd);
+> -int buffer_deinit(struct line_buffer *buf);
+> -
+> -int buffer_tmpfile_init(struct line_buffer *buf);
+> -FILE *buffer_tmpfile_rewind(struct line_buffer *buf);	/* prepare to wri=
+te. */
+> -long buffer_tmpfile_prepare_to_read(struct line_buffer *buf);
+> -
+> -int buffer_ferror(struct line_buffer *buf);
+> -char *buffer_read_line(struct line_buffer *buf);
+> -int buffer_read_char(struct line_buffer *buf);
+> -size_t buffer_read_binary(struct line_buffer *buf, struct strbuf *sb, s=
+ize_t len);
+> -/* Returns number of bytes read (not necessarily written). */
+> -off_t buffer_copy_bytes(struct line_buffer *buf, off_t len);
+> -off_t buffer_skip_bytes(struct line_buffer *buf, off_t len);
+> -
+> -#endif
+> diff --git a/vcs-svn/sliding_window.h b/vcs-svn/sliding_window.h
+> deleted file mode 100644
+> index a7fc0999cb..0000000000
+> --- a/vcs-svn/sliding_window.h
+> +++ /dev/null
+> @@ -1,18 +0,0 @@
+> -#ifndef SLIDING_WINDOW_H
+> -#define SLIDING_WINDOW_H
+> -
+> -#include "strbuf.h"
+> -
+> -struct sliding_view {
+> -	struct line_buffer *file;
+> -	off_t off;
+> -	size_t width;
+> -	off_t max_off;	/* -1 means unlimited */
+> -	struct strbuf buf;
+> -};
+> -
+> -#define SLIDING_VIEW_INIT(input, len)	{ (input), 0, 0, (len), STRBUF_IN=
+IT }
+> -
+> -int move_window(struct sliding_view *view, off_t off, size_t width);
+> -
+> -#endif
+> diff --git a/vcs-svn/svndiff.h b/vcs-svn/svndiff.h
+> deleted file mode 100644
+> index 625d950bb8..0000000000
+> --- a/vcs-svn/svndiff.h
+> +++ /dev/null
+> @@ -1,10 +0,0 @@
+> -#ifndef SVNDIFF_H
+> -#define SVNDIFF_H
+> -
+> -struct line_buffer;
+> -struct sliding_view;
+> -
+> -int svndiff0_apply(struct line_buffer *delta, off_t delta_len,
+> -		   struct sliding_view *preimage, FILE *postimage);
+> -
+> -#endif
+> diff --git a/vcs-svn/svndump.h b/vcs-svn/svndump.h
+> deleted file mode 100644
+> index 26faed5968..0000000000
+> --- a/vcs-svn/svndump.h
+> +++ /dev/null
+> @@ -1,10 +0,0 @@
+> -#ifndef SVNDUMP_H
+> -#define SVNDUMP_H
+> -
+> -int svndump_init(const char *filename);
+> -int svndump_init_fd(int in_fd, int back_fd);
+> -void svndump_read(const char *url, const char *local_ref, const char *n=
+otes_ref);
+> -void svndump_deinit(void);
+> -void svndump_reset(void);
+> -
+> -#endif
+> --
+> 2.30.2
 >
-> Actually I don't think "--where=3Dend" should be used here. "end" is the
-> default for the "trailer.where" config variable, so by default if
-> nothing has been configured, it will work as if "--where=3Dend" was
-> passed above.
 >
-> If a user has configured "trailer.where" or trailer.<token>.where,
-> then this should be respected. And users should be able to override
-> such config variable using for example:
->
-> git -c trailer.where=3Dstart commit --trailer "Signed-off-by:C O Mitter
-> <committer@example.com>"
 
-Thanks for reminding, generally speaking, we will put the trailer at the
-end of the commit messages.Take trailers in start, this should be
-something I haven't considered.
-
-I notice another question:
-if we commit this again with same trailer (even same email or same commiter=
-)
-`--trailer` will not work again, because in `interpret_trailers`,
-"if-exists" default
-set to "addIfDifferentNeighbor", I addvice enforce use "if-exists=3D"add".
-
-Thanks.
+--8323328-1068085971-1615778597=:50--
