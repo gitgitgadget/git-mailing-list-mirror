@@ -2,111 +2,146 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DATE_IN_PAST_06_12,
-	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DBD64C433DB
-	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 14:20:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 96A01C433DB
+	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 14:33:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AED2164F17
-	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 14:20:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6E68C64EFC
+	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 14:33:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237614AbhCOOTh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Mar 2021 10:19:37 -0400
-Received: from mout.gmx.net ([212.227.17.20]:59717 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237558AbhCOOTH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Mar 2021 10:19:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1615817929;
-        bh=hi7zo3wQlyTJwdysOkY+LFUn4fjP2EKIq/xzGvCGwiI=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=CZLe3WR5EcBX+dXajJBfiWCMqci/tPR8azhCxbczRUr36BiJpJmD5jHByyOddjqT2
-         ud6s9vDmxMZtJxT1G18A+w3IAya6Jcshw+pr+V+TcxGn2JGavWtcdQ45B/TJ8G+G4a
-         DbZMItIe7EynqAMhLLJ/mtPNdLmKSQID55U54UlY=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.30.201.226] ([213.196.212.127]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N8ofO-1lp0Gc3UyE-015tGs; Mon, 15
- Mar 2021 15:18:48 +0100
-Date:   Mon, 15 Mar 2021 06:19:37 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Arun Sharma <arun@sharma-home.net>
-cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        id S235520AbhCOObr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Mar 2021 10:31:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51434 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235498AbhCOObo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Mar 2021 10:31:44 -0400
+Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0ED80C06174A
+        for <git@vger.kernel.org>; Mon, 15 Mar 2021 07:31:44 -0700 (PDT)
+Received: by mail-ot1-x331.google.com with SMTP id k14-20020a9d7dce0000b02901b866632f29so5216895otn.1
+        for <git@vger.kernel.org>; Mon, 15 Mar 2021 07:31:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=WE8/OPQNyN1IovXzx6eVmmEczx3moZw1xz8cglSINpU=;
+        b=t7sF3nbtHEE3lzU9IM4v+JSpq69Q1SAigPfjakNU1YIkdKMYrQGAycFnwM0NHkRVcG
+         GEpJm7MIr5aue5JJSStxIiTSUl+qOo7bLrRjTCFSHZk1nByIvBbhJVSpHt+jecKunm2n
+         IAyMdAUvTw+7R1znrsNqleCGpeUWSliuo1IedXTFJ23YfuZlCGdDYrF8PwdvVTOaDkA2
+         22tafjYIYH5mFE1ON1pGSbHJHTYCDZmpW1GTfJ5pcojGXJQf4o0w133xykvnJEzU/y+l
+         2q76bOMWVvNEnWCzRYSpvBD9uJ/e8womsqDeaKtnhiJQl2vj0qf8zrtxh/JFZe2ABYMa
+         ehDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=WE8/OPQNyN1IovXzx6eVmmEczx3moZw1xz8cglSINpU=;
+        b=AefNyESzZEKKLVONLoOET6Md0Ng8G7k2p41spKCmDl9Sj1ahaxEZJ7NfRN7um+QJsF
+         lc7Ze14kSlUgl634mPZGocEjUQ1oJvvOdveqcrZJgUsOGReeq9HgXt3whglOQW8fu/y6
+         syj7eK9xRgxVgYE42XUiyZb4hKAhvw5aaDLK+LZ5KYjsSMUXhM2ZQ6dH+T01r6ZZWRq0
+         VbdzX1ZjVWOrH6+lvL0QWZu858ntQarNACk7N2/FzBRWmxSqjXDiwr/1igCwUx0hy/Gx
+         jOW3QY7NOKMyuoDOALJpUslA3fvx48tArw833pic5VBMC2jQtLA4fhhSjxMq9VbS9UHc
+         hd0Q==
+X-Gm-Message-State: AOAM533NgynUJbC/T/FMvXhIzLEQ4e/NILoMVs3CtIsZcQnW8fSRdA3n
+        4s84pXbuD1f7Z4Ycv2EGUp2KnqVq+C0xZA==
+X-Google-Smtp-Source: ABdhPJzAcItjBSpfV4x/ib3l27NfAIBTiZnzJ7py5QVsKmLdDOaW+NIzYp7mwtzUTw+Vy91nC6pqPw==
+X-Received: by 2002:a05:6830:1546:: with SMTP id l6mr14831183otp.139.1615818703311;
+        Mon, 15 Mar 2021 07:31:43 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:44e0:e2f9:fa7e:56fa? ([2600:1700:e72:80a0:44e0:e2f9:fa7e:56fa])
+        by smtp.gmail.com with ESMTPSA id h24sm7227496otg.20.2021.03.15.07.31.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 15 Mar 2021 07:31:42 -0700 (PDT)
+Subject: Re: [PATCH 3/8] merge-ort: record the reason that we want a rename
+ for a directory
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
-Subject: Re: bug report: mutual recursion in the git-subtree shell script
-In-Reply-To: <CAN7rbOuOaHY553KX1Qcr_XWGG6DFo1yUjdYVu5mn=HYPmOj6vQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2103150616410.50@tvgsbejvaqbjf.bet>
-References: <CAN7rbOve-EFOGPjr1wrD77r-3RQ+3+qso82_oV5Qud-skobL7w@mail.gmail.com> <YEzwOqgFcva4fmoV@camp.crustytoothpaste.net> <CAN7rbOuOaHY553KX1Qcr_XWGG6DFo1yUjdYVu5mn=HYPmOj6vQ@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+Cc:     Derrick Stolee <dstolee@microsoft.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Taylor Blau <me@ttaylorr.com>, Elijah Newren <newren@gmail.com>
+References: <pull.853.git.1615674128.gitgitgadget@gmail.com>
+ <05850cb49823ea9c6d6c7cfd3b4adbbc1c47abc6.1615674128.git.gitgitgadget@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <baca2700-0959-c4ca-6ba9-ceb5188f96f4@gmail.com>
+Date:   Mon, 15 Mar 2021 10:31:41 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ooFuzA2CM2K/MN7JaMymLP+i2HbGQ6sg6yoGgmWdyIQOs/KOy2Z
- jcarsqN2wxdRAqIWh1UcCcfjivZR8N7j/O3APLMZ1Pv/26xWvr8SgFhUkK9lmE0FQhJOnaf
- EG7kRe++IbFX73L18RpnXzLDNeXAOC5kp1JdVM1HR9xawixSK9I9RHvxjG0TG2S/Kg4fn7v
- NAk5By+ed8Uf7NnVgctqw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:xsZG/QBoljU=:EYzYiMMi8VNaLAeNZIX3Fw
- BMDfegjkJXYeeE2fXuXyby8x9c4z4bdE6i3rAQVYrgzrkE+feOABUgD5L47knp4S0VrqWeL4T
- B8LL+RHjyf4LKy7+Cm6dlO3DPaHQ9WUrRX0G9Leecqf8Y91zn3A1QiG5aAXENL3W25gq/OtVh
- CTQ+zBJ9fSncH1PYH8sAcrpRU8at8NQl1ej5LKS367z+zSoAmFaFT0C7l7MUrFKRloq2DhTnx
- bzQv7h94T2s3ZZHMurvzVGYJbfMMkE6JN3xKRf+PlSCks/Vn62NYUme7Q5hw0K3fl3jNW+L2O
- dC8u8/faOguxnls6++GAXd2qU3JoGxdxVBE/BVxy4O0ZWzylAmMn9bqvkqFHBgXhlmAlx02J3
- 1LJOQ3KoeuBLPE4pNFmk03OdP22PBJQj8N+WN9W6wTQGTtCN+s7zVuu3GYJX/gTbIHFAVYZji
- gNjQfiChyC7J4ddVAcY8qxOOjD7nd7MlYTSEPUVaWPtz4QiM92NOaqHs22Tzij/jkbL7cShzb
- OmIrCjL38eHrkGoF9oiUV54LX0Mz6PMjBnWOU+W9SNQhKnWThwRGt00MpR5XjtZXbKOFNHRu/
- DLIMVtzsN54hfqCVeB+l+D1YI8BoxuUtugBlcyMN1N8psyjqIMemRbAmV8Nf4O+mvaUH4hBOO
- NdOtdFrxSzJIfH2owfxldKnsH345Yg+Nqzyx3T/b183HTpvPE7IayBxF8q5rNGgDDD4LNRg2s
- /hbmCXCmc2JwePT335mF374qVjGKOVC3pKV8Q/To3CMtBz84SgZJUwGKsV84uR4Gnd7LH5Hr6
- nzwMttR6rgciiVxC2dINeM+BbYZVOWO+4eyjUGL38k8hoTlCIjhmtQTw3NEuLd25BnuhHwBlP
- VrZ2JG9Rg2WAb+CGMF5cEKfjUKQSFlgzZ4dzrnxUA=
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <05850cb49823ea9c6d6c7cfd3b4adbbc1c47abc6.1615674128.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On 3/13/2021 5:22 PM, Elijah Newren via GitGitGadget wrote:
+> From: Elijah Newren <newren@gmail.com>
+> 
+> When one side of history renames a directory, and the other side of
+> history added files to the old directory, directory rename detection is
+> used to warn about the location of the added files so the user can
+> move them to the old directory or keep them with the new one.
+> 
+> This sets up three different types of directories:
+>   * directories that had new files added to them
+>   * directories underneath a directory that had new files added to them
+>   * directories where no new files were added to it or any leading path
+> 
+> Save this information in dirs_removed; the next several commits will
+> make use of this information.
+...
+> +/* dir_rename_relevance: the reason we want rename information for a dir */
+> +enum dir_rename_relevance {
+> +	NOT_RELEVANT = 0,
+> +	RELEVANT_FOR_ANCESTOR = 1,
+> +	RELEVANT_FOR_SELF = 2
+> +};
 
-On Sun, 14 Mar 2021, Arun Sharma wrote:
+Is this potentially a flag list? It's hard to tell because we don't
+have another item (3 or 4?).
 
-> On Sat, Mar 13, 2021 at 9:03 AM brian m. carlson
-> <sandals@crustytoothpaste.net> wrote:
-> >
-> > I don't use git-subtree, but there's some additional information which
-> > would probably be helpful here to someone who does.  What OS are you
-> > using, what version of Git, and what shell is the shell you have as
-> > /bin/sh (or, if you've compiled using a custom shell, the shell you're
-> > using for that)?
->
-> Thanks for the hint. I was using ubuntu 20.04.
->
-> $ git --version
-> git version 2.25.1
->
-> $ bash --version
-> GNU bash, version 5.0.16(1)-release (x86_64-pc-linux-gnu)
->
-> To repro, you can try to split a week old version of:
->
-> https://github.com/postgres/postgres (subtree: src/interfaces/libpq)
->
-> It could take several minutes because of the size of the repo.
->
-> And then try to pull the latest version and push the merged result
-> into the smaller subproject.
+>  		unsigned sides = (0x07 - dirmask)/2;
+> +		unsigned relevance = (renames->dir_rename_mask == 0x07) ?
+> +					RELEVANT_FOR_ANCESTOR : NOT_RELEVANT;
+> +		/*
+> +		 * Record relevance of this directory.  However, note that
+> +		 * when collect_merge_info_callback() recurses into this
+> +		 * directory and calls collect_rename_info() on paths
+> +		 * within that directory, if we find a path that was added
+> +		 * to this directory on the other side of history, we will
+> +		 * upgrade this value to RELEVANT_FOR_SELF; see below.
+> +		 */
 
-Without having had the time to read the bug report in detail (let alone
-the time to try to reproduce), I nevertheless got reminded of this PR:
-https://github.com/gitgitgadget/git/pull/493
+This comment seems to imply that RELEVANT_FOR_SELF is "more important"
+than RELEVANT_FOR_ANCESTOR, so the value will just be changed (not a
+flag).
 
-The most recent iteration was sent here:
-https://lore.kernel.org/git/pull.493.v2.git.1602021913.gitgitgadget@gmail.=
-com/
+> +	/*
+> +	 * Here's the block that potentially upgrades to RELEVANT_FOR_SELF.
+> +	 * When we run across a file added to a directory.  In such a case,
+> +	 * find the directory of the file and upgrade its relevance.
+> +	 */
+> +	if (renames->dir_rename_mask == 0x07 &&
+> +	    (filemask == 2 || filemask == 4)) {
+> +		/*
+> +		 * Need directory rename for parent directory on other side
+> +		 * of history from added file.  Thus
+> +		 *    side = (~filemask & 0x06) >> 1
+> +		 * or
+> +		 *    side = 3 - (filemask/2).
+> +		 */
+> +		unsigned side = 3 - (filemask >> 1);
+> +		strintmap_set(&renames->dirs_removed[side], dirname,
+> +			      RELEVANT_FOR_SELF);
 
-This patch series _might_ address the issue (IIRC it talked about removing
-a deep recursion). Arun, maybe you want to give it a swirl?
+Yes, using "RELEVANT_FOR_SELF" here, not "relevance | RELEVANT_FOR_SELF".
+OK. This should make the later consumers simpler.
 
-Ciao,
-Johannes
+Thanks,
+-Stolee
