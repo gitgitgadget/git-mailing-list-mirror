@@ -2,271 +2,191 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 23BDEC433DB
-	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 06:37:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C15CBC433DB
+	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 07:55:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DF8BD64E38
-	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 06:36:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7B30D64E49
+	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 07:55:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229884AbhCOGgX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Mar 2021 02:36:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33676 "EHLO
+        id S230286AbhCOHzV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Mar 2021 03:55:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229607AbhCOGfy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Mar 2021 02:35:54 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92FDCC061574
-        for <git@vger.kernel.org>; Sun, 14 Mar 2021 23:35:53 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id d139-20020a1c1d910000b029010b895cb6f2so18744471wmd.5
-        for <git@vger.kernel.org>; Sun, 14 Mar 2021 23:35:53 -0700 (PDT)
+        with ESMTP id S230224AbhCOHzL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Mar 2021 03:55:11 -0400
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89A36C061574
+        for <git@vger.kernel.org>; Mon, 15 Mar 2021 00:55:11 -0700 (PDT)
+Received: by mail-pl1-x629.google.com with SMTP id u18so14859391plc.12
+        for <git@vger.kernel.org>; Mon, 15 Mar 2021 00:55:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=fRT/sfFZOZS3FjQ+0uREWQIQ1Tkt826sdrjqQw68TXY=;
-        b=slfUiHt+poklPQDuqYQgHEBb4gxYpFXMygg7dzVnu98K2v6U8GlnWHQ/8P0PG7pvYu
-         zq24++cTyp4+Fi/fz79/8QXY2/iY+74nx1Pw2ogxad7FE6We/MBkDsYhFENguPwjv692
-         kkZjwyO2GwwRmT65jJqF7GwS4q4kSVhmOkc6ITsD54lx8pipQPDagnoLs8oSbskItRvr
-         V6Lp01nPzkmeM/hZlY/3CmhXXuF+SiHXXML5mJH2VNv4WlOwVd4zWf4d9VFalKwGRbCo
-         cQ0lwz6H9KIV/FHzwMdf2uqlRAWCHGlaRoz8ua2njltgX+3cwN8OC9DR73BE82XCNpqk
-         FhRA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=JnDMvTZmmsh3j5QM0BXmAXTqXWplRHKbVyYCrx6N1x0=;
+        b=WwIGPU3L7WkVcHUajiM859nIMUgYd0GOb5L+xR385skXcU+cOqY1Cku3UDnIfbRvUf
+         n/0kWCLQEwFwuGcHI4Nd6fvydEP160dTzWRxs4uPmwZ0tR7tzfI7k5JEgo+QTkw8expy
+         C9PO1mZQlB5MseZS5ulclhM3SFlVTcqqbDZ/zGwkfixHvOf7wnuAm3l+Uiiga6BpKJZy
+         tn2jmwRLTdWdcyMPbipi+e9FwoPydtxlCtFEVqQp7pLdKOTstRsUg152TZNqcOvrvM8O
+         1J+1H0svMSFy9C3FWKu+U2MIiUTR8mMBA3iMY4Y7g7H8EcR+NHXMgYKps+MSWmgYjDs5
+         zdyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=fRT/sfFZOZS3FjQ+0uREWQIQ1Tkt826sdrjqQw68TXY=;
-        b=LXDdSMdWdPGA9sk/n4BNxBeaQUfNVNHOxfPxoDY2a2JWWkevmY5aptfMqrEQ6K28Jx
-         RnyGti8sarKqt0IzFUXYDYDIoTVDTogdYdrtRUiJaMiqYdKnerT4eWd0uHF0wFuk+aVu
-         Ebiy1x4SDBI4pRgfGEQ6qtFxMrKo7jcdnQrvKHgsaH4surGp0qykxtzbPYkNzV6U9BlK
-         HB7bZ3QtYTGDNCu/KdB4ZPQgk/oZzB0wrVHY1k0VlBCfgX2idpnr9Nl1x++CAqhDjZFi
-         nKhg62rR2B5gWU0o2/nMNd8r6RF5folgjCVHZntn0DV4z0el+os/YxQbWiTC06T5qwM4
-         WYzQ==
-X-Gm-Message-State: AOAM5338rcUHd8Th2lP9B//6lnV5ow+ydE7R3b2IhG2e6zOezlQfHG0G
-        6N7JRdRrORXbSu30OTQnJiv63ao+D2Q=
-X-Google-Smtp-Source: ABdhPJznzmPPM6fvgKpCC8dW3MpAgOQLdkAK4O8ygbw2vdDX4K1eOgVztoM2fIpW4dGN0LYBAgC9VQ==
-X-Received: by 2002:a1c:bac2:: with SMTP id k185mr24841115wmf.148.1615790152189;
-        Sun, 14 Mar 2021 23:35:52 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g202sm11324769wme.20.2021.03.14.23.35.51
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=JnDMvTZmmsh3j5QM0BXmAXTqXWplRHKbVyYCrx6N1x0=;
+        b=gUXFkNi+9aiq4xU7ojgtEn8RSN6KCVHHhuY1CkxxwtUEYBUO6L4FsXS7GdSVrrFqY1
+         pEMsJ9uzKUfm539WSSvDD5dGyah6oGRMAf33/bMWYQit6AMe4SyrfnEYb/4nJvwzlNaC
+         mcSxsBuoYA0K4Zm8RVBiCJerioFyKmBDCTRbbAseZL5mrkiHpU4+oOYYGKdFFGNjr8w0
+         wuRIisnjbudCaMOyzsVts8HVeKrI6FYEn1u7cLuKVDMCJ36ey44tN9cEAoXESYmy7zoy
+         tpWA+UEDHBatbGUNE/TOfWKpMEu9ZMqRD715zw/wu5qFHvcFyj0VCdAmKDfid0MlJhdJ
+         ANmg==
+X-Gm-Message-State: AOAM533ntewH8ISbvJKrAYyi3tHJK+60FoSjzs823q9FSwhXLzls4+aV
+        yMFOpQSiqHbdrnSr7FLAO4O97L7ePQ0tUw==
+X-Google-Smtp-Source: ABdhPJwicpOXg7FSsG/wlUQXvQo9FWmSfYE2/jnqjThXjBvECrxIpv/RKwcg21tVve52VCw3SucDGg==
+X-Received: by 2002:a17:90b:ece:: with SMTP id gz14mr11688750pjb.192.1615794910882;
+        Mon, 15 Mar 2021 00:55:10 -0700 (PDT)
+Received: from localhost.localdomain ([223.233.99.139])
+        by smtp.googlemail.com with ESMTPSA id fs9sm9350911pjb.40.2021.03.15.00.55.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 14 Mar 2021 23:35:51 -0700 (PDT)
-Message-Id: <pull.901.v6.git.1615790151073.gitgitgadget@gmail.com>
-In-Reply-To: <pull.901.v5.git.1615778692784.gitgitgadget@gmail.com>
-References: <pull.901.v5.git.1615778692784.gitgitgadget@gmail.com>
-From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 15 Mar 2021 06:35:50 +0000
-Subject: [PATCH v6] [GSOC] commit: add --trailer option
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        Mon, 15 Mar 2021 00:55:10 -0700 (PDT)
+From:   Charvi Mendiratta <charvi077@gmail.com>
 To:     git@vger.kernel.org
-Cc:     "Bradley M. Kuhn" <bkuhn@sfconservancy.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Brandon Casey <drafnel@gmail.com>,
-        Shourya Shukla <periperidip@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Rafael Silva <rafaeloliveira.cs@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>
+Cc:     gitster@pobox.com, sunshine@sunshineco.com,
+        christian.couder@gmail.com, phillip.wood123@gmail.com,
+        Charvi Mendiratta <charvi077@gmail.com>
+Subject: [PATCH v6 0/6][Outreachy] commit: Implementation of "amend!" commit
+Date:   Mon, 15 Mar 2021 13:24:30 +0530
+Message-Id: <20210315075435.18229-1-charvi077@gmail.com>
+X-Mailer: git-send-email 2.29.0.rc1
+In-Reply-To: <20210310194306.32565-1-charvi077@gmail.com>
+References: <20210310194306.32565-1-charvi077@gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: ZheNing Hu <adlternative@gmail.com>
+This patch series teaches `git commit --fixup` to create "amend!" commit
+as an alternative that works with `git rebase --autosquash`. It allows to
+fixup both the content and the commit message of the specified commit.
+Here we add two suboptions to the `--fixup`, first `amend` suboption that
+creates an "amend!" commit. It takes the staged changes and also allows to
+edit the commit message of the commit we are fixing.
+Example usuage:
+git commit --fixup=amend:<commit>
 
-Historically, Git has supported the 'Signed-off-by' commit trailer
-using the '--signoff' and the '-s' option from the command line.
-But users may need to provide other trailer information from the
-command line such as "Helped-by", "Reported-by", "Mentored-by",
+Secondly, `reword` suboption that creates an empty "amend!" commit i.e it
+ignores the staged changes and only allows to reword/edit the commit message
+of the commit we are fixing. `--fixup=reword:<commit>` is a short-hand of
+`--fixup=amend:<commit> --only`.
+Example usuage:
+git commit --fixup=reword:<commit>
 
-Now implement a new `--trailer <token>[(=|:)<value>]` option to pass
-other trailers to `interpret-trailers` and insert them into commit
-messages.
+** This work is rebased on the top of cm/rebase-i-updates.
 
-Signed-off-by: ZheNing Hu <adlternative@gmail.com>
----
-    [GSOC] commit: add --trailer option
-    
-    Now maintainers or developers can also use commit
-    --trailer="Signed-off-by:commiter<email>" from the command line to
-    provide trailers to commit messages. This solution may be more
-    generalized than v1.
+Charvi Mendiratta (6):
+  sequencer: export and rename subject_length()
+  commit: add amend suboption to --fixup to create amend! commit
+  commit: add a reword suboption to --fixup
+  t7500: add tests for --fixup=[amend|reword] options
+  t3437: use --fixup with options to create amend! commit
+  doc/git-commit: add documentation for fixup=[amend|reword] options
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-901%2Fadlternative%2Fcommit-with-multiple-signatures-v6
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-901/adlternative/commit-with-multiple-signatures-v6
-Pull-Request: https://github.com/gitgitgadget/git/pull/901
+ Documentation/git-commit.txt              |  45 +++++-
+ Documentation/git-rebase.txt              |  21 +--
+ builtin/commit.c                          | 122 +++++++++++++++--
+ commit.c                                  |  14 ++
+ commit.h                                  |   3 +
+ sequencer.c                               |  16 +--
+ t/t3437-rebase-fixup-options.sh           |  30 +---
+ t/t7500-commit-template-squash-signoff.sh | 159 ++++++++++++++++++++++
+ 8 files changed, 342 insertions(+), 68 deletions(-)
 
-Range-diff vs v5:
+Range-diff against v5:
+-:  ---------- > 1:  a2e89540ec sequencer: export and rename subject_length()
+1:  be2808a255 ! 2:  f3cdb3eb1e commit: add amend suboption to --fixup to create amend! commit
+    @@ builtin/commit.c: static int prepare_to_commit(const char *index_file, const cha
+      	} else if (!stat(git_path_merge_msg(the_repository), &statbuf)) {
+      		size_t merge_msg_start;
 
- 1:  ca91accb2852 ! 1:  c99ce75da792 [GSOC] commit: add --trailer option
-     @@ builtin/commit.c: static int config_commit_verbose = -1; /* unspecified */
-       static int no_post_rewrite, allow_empty_message, pathspec_file_nul;
-       static char *untracked_files_arg, *force_date, *ignore_submodule_arg, *ignored_arg;
-       static char *sign_commit, *pathspec_from_file;
-     -+struct child_process run_trailer = CHILD_PROCESS_INIT;
-      +struct strvec trailer_args = STRVEC_INIT;
-     -+static const char *trailer;
-       
-       /*
-        * The default commit message cleanup mode will remove the lines
-     @@ builtin/commit.c: static struct strbuf message = STRBUF_INIT;
-       
-      +static int opt_pass_trailer(const struct option *opt, const char *arg, int unset)
-      +{
-     -+	if (unset) {
-     -+		strvec_clear(&trailer_args);
-     -+		return -1;
-     -+	}
-     ++	BUG_ON_OPT_NEG(unset);
-     ++
-      +	strvec_pushl(&trailer_args, "--trailer", arg, NULL);
-      +	return 0;
-      +}
-     @@ builtin/commit.c: static int prepare_to_commit(const char *index_file, const cha
-       	fclose(s->fp);
-       
-      +	if (trailer_args.nr) {
-     ++		static struct child_process run_trailer = CHILD_PROCESS_INIT;
-     ++
-      +		strvec_pushl(&run_trailer.args, "interpret-trailers",
-      +			     "--in-place", "--where=end", git_path_commit_editmsg(), NULL);
-      +		strvec_pushv(&run_trailer.args, trailer_args.v);
-     @@ builtin/commit.c: int cmd_commit(int argc, const char **argv, const char *prefix
-       		OPT_STRING(0, "fixup", &fixup_message, N_("commit"), N_("use autosquash formatted message to fixup specified commit")),
-       		OPT_STRING(0, "squash", &squash_message, N_("commit"), N_("use autosquash formatted message to squash specified commit")),
-       		OPT_BOOL(0, "reset-author", &renew_authorship, N_("the commit is authored by me now (used with -C/-c/--amend)")),
-     -+		OPT_CALLBACK(0, "trailer", &trailer, N_("trailer"), N_("trailer(s) to add"), opt_pass_trailer),
-     ++		OPT_CALLBACK_F(0, "trailer", NULL, N_("trailer"), N_("trailer(s) to add"), PARSE_OPT_NONEG, opt_pass_trailer),
-       		OPT_BOOL('s', "signoff", &signoff, N_("add a Signed-off-by trailer")),
-       		OPT_FILENAME('t', "template", &template_file, N_("use specified template file")),
-       		OPT_BOOL('e', "edit", &edit_flag, N_("force edit of commit")),
+    -@@ builtin/commit.c: static void finalize_deferred_config(struct wt_status *s)
+    - 		s->ahead_behind_flags = AHEAD_BEHIND_FULL;
+    - }
+    -
+    -+/* returns the length of intial segment of alpha characters only */
+    -+static size_t skip_suboption(char *fixup_message) {
+    -+	const char alphas[] = "abcdefghijklmnopqrstuvwxyz";
+    -+	return strspn(fixup_message, alphas);
+    -+}
+    -+
+    - static int parse_and_validate_options(int argc, const char *argv[],
+    - 				      const struct option *options,
+    - 				      const char * const usage[],
+     @@ builtin/commit.c: static int parse_and_validate_options(int argc, const char *argv[],
+      	if (force_author && renew_authorship)
+      		die(_("Using both --reset-author and --author does not make sense"));
+    @@ builtin/commit.c: static int parse_and_validate_options(int argc, const char *ar
+     +		 *
+     +		 * Otherwise, we are dealing with --fixup=<commit>.
+     +		 */
+    -+		size_t len = skip_suboption(fixup_message);
+    -+		if (len && fixup_message[len] == ':') {
+    -+			fixup_message[len++] = '\0';
+    -+			fixup_commit = fixup_message + len;
+    ++		char *p = fixup_message;
+    ++		while (isalpha(*p))
+    ++			p++;
+    ++		if (p > fixup_message && *p == ':') {
+    ++			*p = '\0';
+    ++			fixup_commit = p + 1;
+     +			if (!strcmp("amend", fixup_message)) {
+     +				fixup_prefix = "amend";
+     +				allow_empty = 1;
+2:  f6217338c1 ! 3:  ded339706f commit: add a reword suboption to --fixup
+    @@ builtin/commit.c: static void finalize_deferred_config(struct wt_status *s)
+     +		die(_("reword option of --fixup is mutually exclusive with --patch/--interactive/--all/--include/--only"));
+     +}
+     +
+    - /* returns the length of intial segment of alpha characters only */
+    - static size_t skip_suboption(char *fixup_message) {
+    - 	const char alphas[] = "abcdefghijklmnopqrstuvwxyz";
+    + static int parse_and_validate_options(int argc, const char *argv[],
+    + 				      const struct option *options,
+    + 				      const char * const usage[],
+     @@ builtin/commit.c: static int parse_and_validate_options(int argc, const char *argv[],
+      		 * We limit --fixup's suboptions to only alpha characters.
+      		 * If the first character after a run of alpha is colon,
+    @@ builtin/commit.c: static int parse_and_validate_options(int argc, const char *ar
+      		 * Otherwise, we are dealing with --fixup=<commit>.
+      		 */
+     @@ builtin/commit.c: static int parse_and_validate_options(int argc, const char *argv[],
+    - 		if (len && fixup_message[len] == ':') {
+    - 			fixup_message[len++] = '\0';
+    - 			fixup_commit = fixup_message + len;
+    + 		if (p > fixup_message && *p == ':') {
+    + 			*p = '\0';
+    + 			fixup_commit = p + 1;
+     -			if (!strcmp("amend", fixup_message)) {
+     +			if (!strcmp("amend", fixup_message) ||
+     +			    !strcmp("reword", fixup_message)) {
+3:  1a127dc0b3 = 4:  ec6f3d5d7d t7500: add tests for --fixup=[amend|reword] options
+4:  be6f4fa0d1 = 5:  148087b133 t3437: use --fixup with options to create amend! commit
+5:  79c098df2c ! 6:  2b750d305e doc/git-commit: add documentation for fixup=[amend|reword] options
+    @@ Commit message
 
+         Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+         Mentored-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+    +    Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+         Helped-by: Junio C Hamano <gitster@pobox.com>
+         Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+         Signed-off-by: Charvi Mendiratta <charvi077@gmail.com>
+--
+2.29.0.rc1
 
- Documentation/git-commit.txt |  9 ++++++++-
- builtin/commit.c             | 22 ++++++++++++++++++++++
- t/t7502-commit-porcelain.sh  | 20 ++++++++++++++++++++
- 3 files changed, 50 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index 17150fa7eabe..73a7507db47f 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -14,7 +14,7 @@ SYNOPSIS
- 	   [--allow-empty-message] [--no-verify] [-e] [--author=<author>]
- 	   [--date=<date>] [--cleanup=<mode>] [--[no-]status]
- 	   [-i | -o] [--pathspec-from-file=<file> [--pathspec-file-nul]]
--	   [-S[<keyid>]] [--] [<pathspec>...]
-+	   [-S[<keyid>]] [--] [<pathspec>...] [(--trailer <token>[(=|:)<value>])...]
- 
- DESCRIPTION
- -----------
-@@ -166,6 +166,13 @@ The `-m` option is mutually exclusive with `-c`, `-C`, and `-F`.
- 
- include::signoff-option.txt[]
- 
-+--trailer <token>[(=|:)<value>]::
-+	Specify a (<token>, <value>) pair that should be applied as a
-+	trailer. (e.g. `git commit --trailer "Signed-off-by:C O Mitter \
-+	<committer@example.com>" --trailer "Helped-by:C O Mitter \
-+	<committer@example.com>"` will add the "Signed-off" trailer
-+	and the "Helped-by" trailer in the commit message.)
-+
- -n::
- --no-verify::
- 	This option bypasses the pre-commit and commit-msg hooks.
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 739110c5a7f6..726d2f4eaf5d 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -113,6 +113,7 @@ static int config_commit_verbose = -1; /* unspecified */
- static int no_post_rewrite, allow_empty_message, pathspec_file_nul;
- static char *untracked_files_arg, *force_date, *ignore_submodule_arg, *ignored_arg;
- static char *sign_commit, *pathspec_from_file;
-+struct strvec trailer_args = STRVEC_INIT;
- 
- /*
-  * The default commit message cleanup mode will remove the lines
-@@ -131,6 +132,14 @@ static struct strbuf message = STRBUF_INIT;
- 
- static enum wt_status_format status_format = STATUS_FORMAT_UNSPECIFIED;
- 
-+static int opt_pass_trailer(const struct option *opt, const char *arg, int unset)
-+{
-+	BUG_ON_OPT_NEG(unset);
-+
-+	strvec_pushl(&trailer_args, "--trailer", arg, NULL);
-+	return 0;
-+}
-+
- static int opt_parse_porcelain(const struct option *opt, const char *arg, int unset)
- {
- 	enum wt_status_format *value = (enum wt_status_format *)opt->value;
-@@ -958,6 +967,18 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 
- 	fclose(s->fp);
- 
-+	if (trailer_args.nr) {
-+		static struct child_process run_trailer = CHILD_PROCESS_INIT;
-+
-+		strvec_pushl(&run_trailer.args, "interpret-trailers",
-+			     "--in-place", "--where=end", git_path_commit_editmsg(), NULL);
-+		strvec_pushv(&run_trailer.args, trailer_args.v);
-+		run_trailer.git_cmd = 1;
-+		if (run_command(&run_trailer))
-+			strvec_clear(&run_trailer.args);
-+		strvec_clear(&trailer_args);
-+	}
-+
- 	/*
- 	 * Reject an attempt to record a non-merge empty commit without
- 	 * explicit --allow-empty. In the cherry-pick case, it may be
-@@ -1507,6 +1528,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 		OPT_STRING(0, "fixup", &fixup_message, N_("commit"), N_("use autosquash formatted message to fixup specified commit")),
- 		OPT_STRING(0, "squash", &squash_message, N_("commit"), N_("use autosquash formatted message to squash specified commit")),
- 		OPT_BOOL(0, "reset-author", &renew_authorship, N_("the commit is authored by me now (used with -C/-c/--amend)")),
-+		OPT_CALLBACK_F(0, "trailer", NULL, N_("trailer"), N_("trailer(s) to add"), PARSE_OPT_NONEG, opt_pass_trailer),
- 		OPT_BOOL('s', "signoff", &signoff, N_("add a Signed-off-by trailer")),
- 		OPT_FILENAME('t', "template", &template_file, N_("use specified template file")),
- 		OPT_BOOL('e', "edit", &edit_flag, N_("force edit of commit")),
-diff --git a/t/t7502-commit-porcelain.sh b/t/t7502-commit-porcelain.sh
-index 6396897cc818..0acf23799931 100755
---- a/t/t7502-commit-porcelain.sh
-+++ b/t/t7502-commit-porcelain.sh
-@@ -154,6 +154,26 @@ test_expect_success 'sign off' '
- 
- '
- 
-+test_expect_success 'trailer' '
-+	>file1 &&
-+	git add file1 &&
-+	git commit -s --trailer "Signed-off-by:C O Mitter1 <committer1@example.com>" \
-+		--trailer "Helped-by:C O Mitter2 <committer2@example.com>"  \
-+		--trailer "Reported-by:C O Mitter3 <committer3@example.com>" \
-+		--trailer "Mentored-by:C O Mitter4 <committer4@example.com>" \
-+		-m "hello" &&
-+	git cat-file commit HEAD >commit.msg &&
-+	sed -e "1,7d" commit.msg >actual &&
-+	cat >expected <<-\EOF &&
-+	Signed-off-by: C O Mitter <committer@example.com>
-+	Signed-off-by: C O Mitter1 <committer1@example.com>
-+	Helped-by: C O Mitter2 <committer2@example.com>
-+	Reported-by: C O Mitter3 <committer3@example.com>
-+	Mentored-by: C O Mitter4 <committer4@example.com>
-+	EOF
-+	test_cmp expected actual
-+'
-+
- test_expect_success 'multiple -m' '
- 
- 	>negative &&
-
-base-commit: 13d7ab6b5d7929825b626f050b62a11241ea4945
--- 
-gitgitgadget
