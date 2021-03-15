@@ -2,50 +2,64 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FA6BC433DB
-	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 04:42:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 090CDC433E0
+	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 05:25:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 472EF64E41
-	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 04:42:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C74A264E61
+	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 05:25:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229870AbhCOEmY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Mar 2021 00:42:24 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55088 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229844AbhCOEmT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Mar 2021 00:42:19 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 33449C1302;
-        Mon, 15 Mar 2021 00:42:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=5CPaWXXJGg9R
-        o+W/x69WlPzFJmY=; b=L/ep7mlXg1MAr3uMthorlmBp20Iza9b8SbR75uGJE9gG
-        Eb7/IW/DnSunuKxBDp7fILNkrZch+P5pppanhD5yShwTmv8Hf186+VUcRrIiYrH9
-        R+JXdpVapoIXPR5nagi0t9NYcOFec33DddwkVuW8VzeQLnYWC0tgjU/0Zy4ZxIc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=KDuAT3
-        fy2JAVlmBh8Q/+yESlIMccXyaeHdLKWc6kafqBpv+hYJwQf+dErnK+8KCgFGGtqy
-        TYLQvPsfGZUJwm0cIQnHM2Op8U+VnL1QHDxkEw3frg3RGaWgXprd7RQa7txD5z4f
-        oQAkdreb7uFQiX7YojycYyklHvns9pkIeqPow=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2AC72C1301;
-        Mon, 15 Mar 2021 00:42:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AAE56C12FF;
-        Mon, 15 Mar 2021 00:42:17 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     ZheNing Hu <adlternative@gmail.com>
+        id S229722AbhCOFLj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Mar 2021 01:11:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43772 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229594AbhCOFLT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Mar 2021 01:11:19 -0400
+Received: from mail-oo1-xc2a.google.com (mail-oo1-xc2a.google.com [IPv6:2607:f8b0:4864:20::c2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2BCAC061574
+        for <git@vger.kernel.org>; Sun, 14 Mar 2021 22:11:18 -0700 (PDT)
+Received: by mail-oo1-xc2a.google.com with SMTP id c13-20020a4ab18d0000b02901b5b67cff5eso3019167ooo.2
+        for <git@vger.kernel.org>; Sun, 14 Mar 2021 22:11:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=IAWcxd5rSEo6KAGhqEst9WWfHSt7JF5JAIi5mef9NVY=;
+        b=euMG4QUvaGEzAZEAbT8DhFfJstkzHPayfMJGBrYgW8fk0vE1rNRdlUlgOqQn1pErZK
+         89FYvxKOlMK9IOKZ49CKVfugTrZUiRXpkRIQfC8V3fS/kDoD3Orz4iDkR/iBDYB6QN8S
+         4jbEPcsGpAGeXpq/vBQRyqTyXCXKc9404muuEupY4byiep/Ovhy5xJmp9Kw1ZLo/v5RC
+         xqdvxcrfXVV/Z6iBrPrWiau5uLoYze6PV61F9LKaGMUfey+FxbnLPr0Nl/GiZCIZCbkD
+         EyQ8rnbvAoQkYKvsYvKTNxsa4dhAxf3etnlxCsSjND8aLabXOoqSqBjSzhSupL/Mzj7b
+         Z7oA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=IAWcxd5rSEo6KAGhqEst9WWfHSt7JF5JAIi5mef9NVY=;
+        b=ufLfEG5lkaDAGyBJ0supp1x/rxIQnZIjHQqjqMqlmtDW8QitTcWU5B0GQJTUP9n+0u
+         qi4OQB9C3NfP6evoBcRSOHMLgKRMFbLEBwFGvt7MJb+1u6MuhIHVt/15wMw/Zl4rz4TM
+         r753NpPA8wDiYpDk4Hp/JoE3Y770cqi1NLEQfcD12CWfylW/Xt9NkYdkCfWvK+9y0hSF
+         8+nhNzKW7pYGTttF+tsORymXPmfclXh7+esBIPllOShAeFw6CZTNuzoULBMKdqfdeFnq
+         2bwJQEfa+spTjNsvGLc37LtGgpCpHAIYwMA0Z5RC8wKiaA4nQrAVXoJEdYN7HzDLstgu
+         18+Q==
+X-Gm-Message-State: AOAM5332mGFI1bJOlVy12K3Q86/57PS22BuZeWst+es0ED6Jf0DxPVWI
+        v8z+8UB8//d4wYbcNrpAP6o7k493pnTpNwZOfp2nTlV4w7p1uVIs
+X-Google-Smtp-Source: ABdhPJxVGERKG5g81RKNba923qhEWSZvBGUXAGzxyz/pXTDkEbe4L+ytyHlGY3TsGrExzlbzbu0HuCTJwtxCDjGtTcA=
+X-Received: by 2002:a4a:bd97:: with SMTP id k23mr12061198oop.13.1615785078251;
+ Sun, 14 Mar 2021 22:11:18 -0700 (PDT)
+MIME-Version: 1.0
+References: <pull.901.v3.git.1615726978059.gitgitgadget@gmail.com>
+ <pull.901.v4.git.1615737505834.gitgitgadget@gmail.com> <xmqqczw12fqg.fsf@gitster.g>
+In-Reply-To: <xmqqczw12fqg.fsf@gitster.g>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Mon, 15 Mar 2021 13:11:07 +0800
+Message-ID: <CAOLTT8T9X8d-cY1sCmiFAKRo5t4pbxoLjjt8+Nm1htaKV6D6DA@mail.gmail.com>
+Subject: Re: [PATCH v4] [GSOC] commit: add --trailer option
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
         Git List <git@vger.kernel.org>,
         "Bradley M. Kuhn" <bkuhn@sfconservancy.org>,
@@ -53,49 +67,59 @@ Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
         Shourya Shukla <periperidip@gmail.com>,
         Christian Couder <christian.couder@gmail.com>,
         Rafael Silva <rafaeloliveira.cs@gmail.com>
-Subject: Re: [PATCH v4] [GSOC] commit: add --trailer option
-References: <pull.901.v3.git.1615726978059.gitgitgadget@gmail.com>
-        <pull.901.v4.git.1615737505834.gitgitgadget@gmail.com>
-        <xmqqh7ld2syx.fsf@gitster.g>
-        <CAOLTT8RNKFC_NzZXGvE4Zz+NmVHCUAn-jZFu-0Nm=7JAS0jBjA@mail.gmail.com>
-Date:   Sun, 14 Mar 2021 21:42:16 -0700
-In-Reply-To: <CAOLTT8RNKFC_NzZXGvE4Zz+NmVHCUAn-jZFu-0Nm=7JAS0jBjA@mail.gmail.com>
-        (ZheNing Hu's message of "Mon, 15 Mar 2021 09:27:28 +0800")
-Message-ID: <xmqq8s6p2fkn.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: D24A9A38-8548-11EB-8D36-D152C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-ZheNing Hu <adlternative@gmail.com> writes:
-
-> Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B43=E6=9C=8815=E6=
-=97=A5=E5=91=A8=E4=B8=80 =E4=B8=8A=E5=8D=887:52=E5=86=99=E9=81=93=EF=BC=9A
->> IOW this part would become ...
->>
->>         if (trailer_args.nr) {
->>                 strvec_pushl(&run_trailer.args, "interpret-trailers",
->>                              "--in-place", ...);
->>                 strvec_pushv(&run_trailer.args, trailer_args.v);
->>                 run_trailer.git_cmd =3D 1;
->>                 run_command(&run_trailer);
->>         }
->>
->> > +     } else
->> > +             strvec_clear(&run_trailer.args);
->>
->> ... and there is no need to have "else" that won't need to do
->> anything.
+Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B43=E6=9C=8815=E6=97=
+=A5=E5=91=A8=E4=B8=80 =E4=B8=8B=E5=8D=8812:38=E5=86=99=E9=81=93=EF=BC=9A
 >
-> Yes, but we also should clear "trailer_args" in "else" here, and check =
-the
-> return value of the "run_command()" for clear "run_trailer.args".
+> "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> One thing I forgot to mention.
+>
+> > +static int opt_pass_trailer(const struct option *opt, const char *arg,=
+ int unset)
+> > +{
+> > +     if (unset) {
+> > +             strvec_clear(&run_trailer.args);
+> > +             return -1;
+>
+> What input is this part of the code designed to handle, and what
+> outcome does it want to show to the user?
+>
+> Does the test added in this patch cover this codepath, where unset
+> is true?
+>
+> I think this codepath is reached when the command line says
+> "--no-trailer", and I am guessing that by clearing the code wants to
+> say "ignore the accumulated trailers and start accumulating afresh",
+> i.e.
+>
+>     git commit --trailer=3D'T1: V1' --trailer=3D'T2: V2' \
+>                 --no-trailer \
+>                 --trailer=3D'T3: V3'
+>
+> would want to add only the "T3: V3" trailer; which is a sensible
+> design, but I do not think returning -1 would be compatible with
+> that design.
+>
+> If on the other hand the code wants to say "--no-trailer is a
+> command line error", then using PARSE_OPT_NONEG to let the
+> parse-options API issue an error message and die would be more
+> appropriate.  That is an often used pattern for an option that can
+> appear on the command line only once without accumulating, which may
+> be less appropriate for the "--trailer", though.
+>
 
-No.  If you introduce the separate strvec, the "else" clause runs
-only when trailer_args haven't got anything, so there is nothing to
-clear.
-
+As you said, what I want to express is "--no-trailer is acommand line error=
+".
+`--no-trailer` may don't have any big benefits for users.
+I will follow you suggections.
+> > +     }
+> > +     strvec_pushl(&run_trailer.args, "--trailer", arg, NULL);
+> > +     return 0;
+> > +}
+>
