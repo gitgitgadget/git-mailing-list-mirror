@@ -2,114 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DATE_IN_PAST_06_12,
-	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 60856C433E0
-	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 12:43:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D3AF5C433E0
+	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 13:08:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 301DD64E4D
-	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 12:43:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 90CAC64EB6
+	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 13:08:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229731AbhCOMmo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Mar 2021 08:42:44 -0400
-Received: from mout.gmx.net ([212.227.17.20]:38127 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229570AbhCOMmY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Mar 2021 08:42:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1615812140;
-        bh=PjDylN/3GZuJFsZEWNOcuxNmu/LX9JxtZhsqIWeiUyQ=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=NBNhNEQthlNekWlak4P1JEiyV8LANZwNwWhSxyhg7tAgOf3Z7dKzLkyr6/OfAdqRh
-         wmOOujjfpm1DKAq2zGJNEXeXg1IV2nAjkB395GeFjj5bHlQ6rRoBoYsz+xFRyPUGh/
-         rjxtsrZfrA3RXTe75AycsKt5F78fpRRTvXDxYpFc=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.30.201.226] ([213.196.212.127]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mg6Zq-1lveXC1VoE-00hhFJ; Mon, 15
- Mar 2021 13:42:20 +0100
-Date:   Mon, 15 Mar 2021 04:43:09 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Mar 2021, #04; Sun, 14)
-In-Reply-To: <xmqq35wx2ccy.fsf@gitster.g>
-Message-ID: <nycvar.QRO.7.76.6.2103150436260.50@tvgsbejvaqbjf.bet>
-References: <xmqq35wx2ccy.fsf@gitster.g>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S229675AbhCONHy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Mar 2021 09:07:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33376 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229952AbhCONHk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Mar 2021 09:07:40 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 990C6C06174A
+        for <git@vger.kernel.org>; Mon, 15 Mar 2021 06:07:40 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id a18so8632064wrc.13
+        for <git@vger.kernel.org>; Mon, 15 Mar 2021 06:07:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=R9u7RzVesvZQV/HCbRbw0G4cYqV3V6qS/43euUrYGpo=;
+        b=a4zBPHPz5UK9+k0ZUBgLGtsYCvcvnDKcw1QAY0c4wzn51oCbXZEB3PZc49nGqUKLRY
+         AKNZ7DOddE6HZpOcbx64ZkhrKsxibkSmqpSC6ClWvVHQFyPTlk8yEgLV7KI8eiyytJ00
+         uvqy0QbLkhzB65BqaWT04S/AGmbQczUoe1NpFX6Xnz6OeKSp9JL+NkHEwxXcMPwoS0Pa
+         f/VjQYCKvPU8PYSUACWy6+raG7UIJx695psk7zTdvxECSfAj1jFA0/LRXba0GR2pWukn
+         nFhnUrnMnfgPYxNL6898xY5SPdQ6OGstM3PA3oSBZO/kcuyZipnJfanjjmHjXAisZJzb
+         8R8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=R9u7RzVesvZQV/HCbRbw0G4cYqV3V6qS/43euUrYGpo=;
+        b=ADLzGG8yxr/PhHPtVC3z+IH0EmmZd1d6TYXrW9ncvw9THhAdD0GFfl7D/yuiJfQsdA
+         oosk9mGwms9SvYMSrDwzF35vogMRMZUrYDLjirn4KRrfXWa6pKVheG5wUk5EI13wXU83
+         9YNrhodMvfr5EgYqgeD+oCrfJ1AlZ5CMQFiOBVc8HkXPpPJZ9E9VRokVu/ThAPRIZ9se
+         zN3Hy9C0OMI73KNkaYEPBV4N905PrBic7juau3ESUENiAWjeN+LQg6D6yXSWWIdEOBIi
+         rwNQPKo8aSA7UHzi2a+NfWYX6oFLVyZrfBjJHVkCTRmqR5IDeyh3coqRCuthH5YHurtY
+         3a1g==
+X-Gm-Message-State: AOAM533MuMv9PdkaF7GlXV5ismhLGxu2MCxEj0ATV8R9e2o8T2F7crm6
+        PP7ONcMmJdq5Vd84MI8t77+ohVjpbzY=
+X-Google-Smtp-Source: ABdhPJxzthuURV9YmnlO9eiQqP4y/n9GpMxVkodZR6c9Nvy34bmUzSBvca7r7gnK7ZfPgpjUOpJHHQ==
+X-Received: by 2002:a5d:534e:: with SMTP id t14mr26924731wrv.202.1615813659297;
+        Mon, 15 Mar 2021 06:07:39 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id d16sm18304105wrx.79.2021.03.15.06.07.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 Mar 2021 06:07:38 -0700 (PDT)
+Message-Id: <pull.901.v8.git.1615813658.gitgitgadget@gmail.com>
+In-Reply-To: <pull.901.v7.git.1615799304883.gitgitgadget@gmail.com>
+References: <pull.901.v7.git.1615799304883.gitgitgadget@gmail.com>
+From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 15 Mar 2021 13:07:35 +0000
+Subject: [PATCH v8 0/2] [GSOC] commit: add --trailer option
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:z1/u6FnROOY5oT5jAoZSrEPqnw0HJdEdLEmJFr3ax3IWJzM91To
- io6Kk85JnVyaRqgWo8sz9wCTJr0eUL7KdUH1x2CIpWtnD3EMk6nmwsUavU5LdpSS4P2iuSC
- Ho/QK3UaeFBZHokx8gUlcOen9p4rRdaSVT/AvB5ufQwLviQbK69trT3YUwiB63+CPOheRMW
- wvLj3n2HLYew966QA+N+w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:qGhifrHDe7M=:ylK7da/QRm4HjlTBuBWRBY
- Xadf7aXixESfwgYi8sQOgcavNdPQEab8R7WdmlbGiYwMn0Tu0PMaU5kyaJkjCFsCfi+Y0zGhS
- xuC/RQCTdvcmQCR8GvUtWc6xopLS1g/xp1lgxAycYXm+UYGKkZjCl1ejPfaqkX4ocaRexhZtl
- csTbhN451640SUTKpByQ+VRPmlNBEXZjhkalH5Pj6ZVXSoOoILKPkKT3re/L8LK7YoMGrSCkE
- CqfYsS+1NutcjCWgrT+6s7qkBCMLJeEMrPwI6BV7xm+iukj2Spa/BNw3R0RFf4U6SkV0v53th
- bXnf/Zc5tbkdtG3+Sn+6gMmaOgzT7hBLmh6+bbUIPFP8I4ILcoOl2BaqqMNYerZWtnabCS1CN
- 0ej2E3NoQkhb0drimygbiLBQj7rRgZSVZbRWHPw3wlXmR1IZ+ZcIIdpEBTssw9l5a/MO/6HFy
- QVNiCZhb7QaoYR87P6IZgyxu7Fr9NCDne3UrFtL3JS5QVNUeV9YUZ4XeOtdD/w+oIdNMVn9xi
- zrJPl8RQTGtLjBsYIkkH0qDANXFvl2XLXdygNoZnWz9nUfIrVdrMyq07OnLf68hopdME2uV3f
- Hft5r82b00jwbM6wer3lOJ1SQqD7StaVrjYFQG3yLIfeGBChzYoWgVZsPQkGR7nfTsp2JbEpZ
- RSKsxOQd4l8NE2XSb9/Rg82AliJSYpJZs/8JQJURO6RYJH4/tmb7okRH8M2hGDWCkmWIM9X9S
- kuI9f0WrkQOCg4cYgPDyqR/pdvy8DCftDAorH7b4Wywf73E9eashWcFV9rvfYuGiSWPPh1H6r
- igdMk0MLpH/1eb+AD3hBfF+PR7T8SYA9+g/5FCjDoIsNksS8d+FZ26t87q4KJ/DhkFijKkKNE
- yhgLK3ECaTIO63rtjyD74NgDadiqPrqhQAMV+1/fQ=
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     "Bradley M. Kuhn" <bkuhn@sfconservancy.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Brandon Casey <drafnel@gmail.com>,
+        Shourya Shukla <periperidip@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Rafael Silva <rafaeloliveira.cs@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Now maintainers or developers can also use commit
+--trailer="Signed-off-by:commiter<email>" from the command line to provide
+trailers to commit messages. This solution may be more generalized than v1.
 
-On Sun, 14 Mar 2021, Junio C Hamano wrote:
+ZheNing Hu (2):
+  [GSOC] commit: add --trailer option
+  interpret_trailers: for three options parse add warning
 
-> Here are the topics that have been cooking.  Commits prefixed with '-' a=
-re
-> only in 'seen' (formerly 'pu'---proposed updates) while commits prefixed
-> with '+' are in 'next'.  The ones marked with '.' do not appear in any o=
-f
-> the integration branches, but I am still holding onto them.
->
-> Git 2.31 final is expected to be tagged on Mar 15, 2021 (monday).
+ Documentation/git-commit.txt |  9 ++++++++-
+ builtin/commit.c             | 23 +++++++++++++++++++++++
+ builtin/interpret-trailers.c | 25 ++++++++++++++++++++++---
+ t/t7502-commit-porcelain.sh  | 20 ++++++++++++++++++++
+ 4 files changed, 73 insertions(+), 4 deletions(-)
 
-Okay, good.
 
-> [...]
->
-> --------------------------------------------------
-> [Graduated to 'master']
->
-> * jn/mergetool-hideresolved-is-optional (2021-03-13) 2 commits
->   (merged to 'next' on 2021-03-13 at 23f5a25716)
->  + doc: describe mergetool configuration in git-mergetool(1)
->  + mergetool: do not enable hideResolved by default
->
->  Disable the recent mergetool's hideresolved feature by default for
->  backward compatibility and safety.
+base-commit: 13d7ab6b5d7929825b626f050b62a11241ea4945
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-901%2Fadlternative%2Fcommit-with-multiple-signatures-v8
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-901/adlternative/commit-with-multiple-signatures-v8
+Pull-Request: https://github.com/gitgitgadget/git/pull/901
 
-I do not see this in `master`:
-https://github.com/gitster/git/commit/53204061acbf7a03a6ba050f381e0bf9b01e=
-3a78
-claims that it is in `jch`, `jn/mergetool-hideresolved-is-optional`,
-`next` and `seen`, but not in `master`.
+Range-diff vs v7:
 
-> * tb/pack-revindex-on-disk (2021-02-26) 1 commit
->   (merged to 'next' on 2021-03-12 at 7aa348d3b3)
->  + pack-revindex.c: don't close unopened file descriptors
->
->  Fix for a topic in 'master'.
+ 1:  3ce8e8cac24a ! 1:  f81b6e66a6ba [GSOC] commit: add --trailer option
+     @@ Documentation/git-commit.txt: The `-m` option is mutually exclusive with `-c`, `
+      +	Specify a (<token>, <value>) pair that should be applied as a
+      +	trailer. (e.g. `git commit --trailer "Signed-off-by:C O Mitter \
+      +	<committer@example.com>" --trailer "Helped-by:C O Mitter \
+     -+	<committer@example.com>"` will add the "Signed-off" trailer
+     ++	<committer@example.com>"` will add the "Signed-off-by" trailer
+      +	and the "Helped-by" trailer in the commit message.)
+     -+
+     ++	See linkgit:git-interpret-trailers[1] for details.
+       -n::
+       --no-verify::
+       	This option bypasses the pre-commit and commit-msg hooks.
+     @@ builtin/commit.c: static int prepare_to_commit(const char *index_file, const cha
+      +		struct child_process run_trailer = CHILD_PROCESS_INIT;
+      +
+      +		strvec_pushl(&run_trailer.args, "interpret-trailers",
+     -+			     "--in-place", "--where=end", git_path_commit_editmsg(), NULL);
+     ++			     "--in-place", "--if-exists=add",
+     ++			     git_path_commit_editmsg(), NULL);
+      +		strvec_pushv(&run_trailer.args, trailer_args.v);
+      +		run_trailer.git_cmd = 1;
+      +		if (run_command(&run_trailer))
+ -:  ------------ > 2:  68e0bd9e2d6f interpret_trailers: for three options parse add warning
 
-The same here, I cannot seem to find it in the `master` branch.
-
-Thank you for such a smooth -rc phase. Maybe I'm mistaken, but I found it
-very uneventful this time. Which is good ;-)
-
-Ciao,
-Dscho
+-- 
+gitgitgadget
