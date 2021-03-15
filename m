@@ -2,132 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EE449C4332D
-	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 15:34:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F396C41620
+	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 16:01:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C976A64E74
-	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 15:34:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E65D364EE9
+	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 16:01:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231197AbhCOPeY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Mar 2021 11:34:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36806 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230410AbhCOPeR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Mar 2021 11:34:17 -0400
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F111C06174A
-        for <git@vger.kernel.org>; Mon, 15 Mar 2021 08:34:17 -0700 (PDT)
-Received: by mail-ot1-x331.google.com with SMTP id n23so7214027otq.1
-        for <git@vger.kernel.org>; Mon, 15 Mar 2021 08:34:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=wyID7q2zemF0HbpRw52J7bY5gxc92O8hmRayboyIW7Q=;
-        b=cKm0v7L7yfIOlTTdgTg5TTqPPqnlOMaO1+gYGqWO0u8BE8vK93VkROEJDA8umMwUge
-         WvH9ShtsmpiJaMM1jrxc/rwl9vbe9dMc91DYnoke0zyq/c2APwZrJTAZb9Di091CCQ7+
-         UVafPa1mru0rt9hX/RIwYfNJMCEpuDi6yXqRFqjLfQU+xCPsGLsaqgCfCZ9fdIFU7tyU
-         ZkdrqBPLJSFcDvm9VT2NV15YPbo7P78Bb4V6V7+3jqEOIiHVxHRsq4qnTgzFwNEZeUoW
-         DvaNQq7CGXtmaXrvm8nz5ZA6fL/I2kOKAA8juh2ZlfTgcFIRnGdSnyC28esEDqjBU6/I
-         F1xA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=wyID7q2zemF0HbpRw52J7bY5gxc92O8hmRayboyIW7Q=;
-        b=aloK9IakC9uSIxlxYZuN1ulzsmWiOZLtYSbWm7Qhp2f4z7p+k+QX6YIm6mSt4fyrW0
-         Q2LIimu3tFVVIbB7QwvGDv0SAc4/5xQzEUsrW4Xf9UrOxc5TQ0WYCDEmYCc6/POSXgY+
-         kUqRpO6y3ngH6fYaj8LykkrU55aIK0jqxlbQ381zz/FeP/h0dM7ZdF2Df8+/xMh2kL2t
-         VHuXXa3Vk+iN5MKHDx8hzXLLCYehdtXeiJXQ6zOhJ0lzKFe5cisnDZbslnwWJF2ETQn3
-         FH0DkfGEt0Nqc9tk6C9e8jh+NuRT23Y5vg9VC9aKDw94WBqBP8vDoYP5yHz5/q/ESfvT
-         88TQ==
-X-Gm-Message-State: AOAM530g7UkeoU+SjxLXKdU11Fz7tlZRuLNoNf9im+qnCfhOXGqMq7jQ
-        0QP59hZJ+1vg92p6XM3xOy2fFh3l/4qOglFfMBnPcLrG2N4=
-X-Google-Smtp-Source: ABdhPJwVKaHNJjoYGdqFwWYA/oi5XryBLNPSGng18h8BV+yHDilhq12GZ1xjiRRYfLbcgfOhi/6VVWwh+McJGaQMTX4=
-X-Received: by 2002:a9d:8ae:: with SMTP id 43mr14265502otf.162.1615822456761;
- Mon, 15 Mar 2021 08:34:16 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.853.git.1615674128.gitgitgadget@gmail.com> <8422759a-a4a3-4dc6-4ae7-4a61896b9946@gmail.com>
-In-Reply-To: <8422759a-a4a3-4dc6-4ae7-4a61896b9946@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 15 Mar 2021 08:34:05 -0700
-Message-ID: <CABPp-BGBrmKhca9Lf7UF6AHkT7P5RD8uVpXQiqxhwMsQnRHeeg@mail.gmail.com>
-Subject: Re: [PATCH 0/8] Optimization batch 10: avoid detecting even more
- irrelevant renames
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Taylor Blau <me@ttaylorr.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S233208AbhCOQBQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Mar 2021 12:01:16 -0400
+Received: from mxo2.dft.dmz.twosigma.com ([208.77.212.182]:52059 "EHLO
+        mxo2.dft.dmz.twosigma.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232862AbhCOQAu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Mar 2021 12:00:50 -0400
+Received: from localhost (localhost [127.0.0.1])
+        by mxo2.dft.dmz.twosigma.com (Postfix) with ESMTP id 4Dzh3N5X09z8sfc;
+        Mon, 15 Mar 2021 16:00:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=twosigma.com;
+        s=202008; t=1615824048;
+        bh=AXSl4asU6KDfEL8WTAqCv3guly0aiKSFCUp9ZbV3vvo=;
+        h=From:To:CC:Subject:Date:References:From;
+        b=WcegfuznmstOZJFQzqXCB8TnjJdvPY7weZh7ppCdWe6xt62z1OsxhfbZCSH7GxyEq
+         FfmMbYxJtqWBgfwju92ePmuRdzPu3wzPyIrzz2oKF02NWIO7FMI5nPwdFUuRcHjMRf
+         PltAT3ZvR1w/oArskY2SaBFo/jrWdZ9hAy7fAAsRjo1Q+oxzl1Md/Ja7z63XKCVU6c
+         5yUaQGqagFFOkJBcguKVLDjhh6bCsCmoRNO8zBzyoinyOnqLSeY9l4021UFgZi4aYB
+         mgIEWK2CPNcdiiLtoC1WmO8HN90dQ3+7Oy8lU/o3MLQX8RACgw4Z2Dj+gq2AMRKQRT
+         NhLpIXJmiCVDg==
+X-Virus-Scanned: Debian amavisd-new at twosigma.com
+Received: from mxo2.dft.dmz.twosigma.com ([127.0.0.1])
+        by localhost (mxo2.dft.dmz.twosigma.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id rXBR8lCvyH37; Mon, 15 Mar 2021 16:00:48 +0000 (UTC)
+Received: from exmbdft8.ad.twosigma.com (exmbdft8.ad.twosigma.com [172.22.2.84])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mxo2.dft.dmz.twosigma.com (Postfix) with ESMTPS id 4Dzh3N4z4Gz8scy;
+        Mon, 15 Mar 2021 16:00:48 +0000 (UTC)
+Received: from EXMBDFT11.ad.twosigma.com (172.23.162.14) by
+ exmbdft8.ad.twosigma.com (172.22.2.84) with Microsoft SMTP Server (TLS) id
+ 15.0.1497.2; Mon, 15 Mar 2021 16:00:48 +0000
+Received: from exmbdft7.ad.twosigma.com (172.22.2.43) by
+ EXMBDFT11.ad.twosigma.com (172.23.162.14) with Microsoft SMTP Server (TLS) id
+ 15.0.1497.2; Mon, 15 Mar 2021 16:00:48 +0000
+Received: from exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955]) by
+ exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955%19]) with mapi id
+ 15.00.1497.012; Mon, 15 Mar 2021 16:00:48 +0000
+From:   David Turner <David.Turner@twosigma.com>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+CC:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: slow object packing during push
+Thread-Topic: slow object packing during push
+Thread-Index: AdcVJlVNhy4BoRPbT22BeCkXYnHixw==
+Date:   Mon, 15 Mar 2021 16:00:48 +0000
+Message-ID: <d23fa1d9c0a24241a1b9fe33744cf7eb@exmbdft7.ad.twosigma.com>
+References: <38b99459158a45b1bea09037f3dd092d@exmbdft7.ad.twosigma.com>
+ <87eegohvwi.fsf@evledraar.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [172.23.160.43]
+Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 15, 2021 at 8:21 AM Derrick Stolee <stolee@gmail.com> wrote:
->
-> On 3/13/2021 5:22 PM, Elijah Newren via GitGitGadget wrote:> =3D=3D=3D Re=
-sults =3D=3D=3D
-> >
-> > For the testcases mentioned in commit 557ac03 ("merge-ort: begin perfor=
-mance
-> > work; instrument with trace2_region_* calls", 2020-10-28), the changes =
-in
-> > just this series improves the performance as follows:
-> >
-> >                      Before Series           After Series
-> > no-renames:        5.680 s =C2=B1  0.096 s     5.665 s =C2=B1  0.129 s
-> > mega-renames:     13.812 s =C2=B1  0.162 s    11.435 s =C2=B1  0.158 s
-> > just-one-mega:   506.0  ms =C2=B1  3.9  ms   494.2  ms =C2=B1  6.1  ms
-> >
-> >
-> > While those results may look somewhat meager, it is important to note t=
-hat
-> > the previous optimizations have already reduced rename detection time t=
-o
-> > nearly 0 for these particular testcases so there just isn't much left t=
-o
-> > improve. The final patch in the series shows an alternate testcase wher=
-e the
-> > previous optimizations aren't as effective (a simple cherry-pick of a c=
-ommit
-> > that simply adds one new empty file), where there was a speedup factor =
-of
-> > approximately 3 due to this series:
-> >
-> >                      Before Series           After Series
-> > pick-empty:        1.936 s =C2=B1  0.024 s     688.1 ms =C2=B1  4.2 ms
-> >
-> >
-> > There was also another testcase at $DAYJOB where I saw a factor 7
-> > improvement from this particular optimization, so it certainly has the
-> > potential to help when the previous optimizations are not quite enough.
->
-> These performance numbers continue to be impressive.
->
-> I read through this series and found it clearly described. I can't
-> completely vouch for its correctness, because there are a lot of
-> moving parts at this point. I'll trust the test cases and Elijah's
-> additional manual testing at this point.
-
-Thanks for reading through it.  I understand the comment; in my
-opinion this was the most complex of the nine "Optimization batch"
-series to review (batch 8 was the second most complex, and batch 13
-will be the third); I tried to simplify it as much as possible, but
-there's just more stuff to simultaneously track in order to get this
-one implemented.  Thanks for reading through it.
-
-> Outside of me talking out loud about an enum (which you can ignore)
-> I didn't see anything unusual about the code.
-
-Ah, that answers my other question then.  :-)
-
-Thanks!
+On 3/9/21 9:14 PM, =C6var Arnfj=F6r=F0 Bjarmason wrote:=0A=
+> On Tue, Mar 09 2021, David Turner wrote:=0A=
+>=0A=
+>> I have a large, funny repository that has very slow pushes unless I=0A=
+>> set pack.usebitmaps=3Dfalse to false.=0A=
+> Good to see you on-list again! :)=0A=
+=0A=
+Thanks!=0A=
+=0A=
+>> First, a description of the repo: it's about 175GB, and was created by c=
+ombining about 40,000 smaller repositories.  Historically, these repos were=
+ submodules of one meta repository[2].  I have stitched together the submod=
+ules, and this is the repository in which the stitching was done - that is,=
+ it contains all of the objects from the smaller repos, plus all of the obj=
+ects from the meta repository, plus the newly-created trees & commits for t=
+he stitched repositories.  As new commits come into the meta repository (wh=
+ich have gitlinks to new submodule commits), we fetch from the meta reposit=
+ory (8s - it would be 2s if we were fetching into a normal clone without al=
+l of the other stuff), and the submodules (up to 10s per and embarrassingly=
+ parallel). Then we stitch (~0s), and push to the stitched "unity" reposito=
+ry (~2 minutes!!!).  The entire repo fits in RAM (yes, all 175G) and is in =
+fact in the disk cache (I prewarmed the cache before testing anything).  =
+=0A=
+>>=0A=
+>> The vast majority of the time appears to be spent in git pack-objects, a=
+nd in particular in the stack trace in [1].  If I set pack.usebitmaps=3Dfal=
+se, the push only takes 10s.   This seems like pack bitmaps are a severe pe=
+ssimization for my purposes.  This is true even immediately after a repack =
+(that is, almost all of the objects are in one giant pack, except the newly=
+-fetched ones).  I also tried setting up pack islands - one for each smalle=
+r repo, one for the stitched commits, and one for commits from the meta rep=
+o.  I'm not sure if this is necessary, but it's definitely not sufficient (=
+my current config has it turned on, because I didn't feel like repacking ag=
+ain after testing it, and I tested it before testing pack.usebimaps). =0A=
+>> [snip]=0A=
+> Without having carefully re-read it, I believe this issue is the same as=
+=0A=
+> what I reported here in 2019, and I think you'll find the resulting=0A=
+> discussion intresting:=0A=
+> https://lore.kernel.org/git/87zhoz8b9o.fsf@evledraar.gmail.com/=0A=
+>=0A=
+> Having skimmed it, I think you're probably omitting that this is a bare=
+=0A=
+> repo you're pushing from, and thus you're running into the combination=0A=
+> of repack.writeBitmaps being true by default on bare repos, and=0A=
+> pack.useBitmaps being true everywhere (but having no effect by default=0A=
+> unless you have a bare repo, unless you manually make bitmaps blah=0A=
+> blah).=0A=
+>=0A=
+> One of the semi-conclusions from the above thread was that we mostly=0A=
+> turned this on thinking that bare ~=3D server that accepts pushes, and=0A=
+> bitmaps are known to be worse (but not always!) for when you're pushing=
+=0A=
+> *from* your repo.=0A=
+=0A=
+Thanks, that does explain it.  We should probably consider a default=0A=
+that bitmaps aren't used on pushes.=0A=
+=0A=
