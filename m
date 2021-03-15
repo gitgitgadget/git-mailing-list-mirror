@@ -2,61 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 16559C433E0
-	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 10:01:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E13A6C433E0
+	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 10:15:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C3AD764E99
-	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 10:01:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9992164E20
+	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 10:15:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229562AbhCOKBJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Mar 2021 06:01:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49536 "EHLO
+        id S229743AbhCOKOi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Mar 2021 06:14:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52426 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229494AbhCOKAm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Mar 2021 06:00:42 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 341CAC061574
-        for <git@vger.kernel.org>; Mon, 15 Mar 2021 03:00:42 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id lr13so65141052ejb.8
-        for <git@vger.kernel.org>; Mon, 15 Mar 2021 03:00:42 -0700 (PDT)
+        with ESMTP id S229772AbhCOKON (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Mar 2021 06:14:13 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 047DBC061574
+        for <git@vger.kernel.org>; Mon, 15 Mar 2021 03:14:13 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id ox4so49537656ejb.11
+        for <git@vger.kernel.org>; Mon, 15 Mar 2021 03:14:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=foT1ohiqy1+uyhLW9sLQmXYOuc6vCZWXsTBuyJEISPc=;
-        b=ZVWY9FRdCq5hM7TaSnapGZ0/eICKh6EI7Fh9Y8eiMQSE85Ouao+TjhyET85Ie3Nxgz
-         7b4DXh2ktpw5ZPgX84yzh3pzKSOjKRtikmBwTSti4qY0EUzg+6lWbt3TfsCsvH9jJXhu
-         RUE7pfWuPKW6Ml2meTOtA4JvDMp+3/H+yGCFek3hKVF9o6ZyxwARsQ6KHOCHH+bBnx4P
-         EeIgDOmr1v4VO+i4yDv7AQX0db6XIBbz8xDqTKVJ/NV3kN1jaA4TG3VTltKyVH1n0Vsl
-         NhgWuBtvSvr29szwYVRMQ5muszptuZwhaVv/wYpf2saCj30M15xBp7T42NB4BMQ9GI49
-         TvTQ==
+        bh=9R3mww1eOsmr/MKBS4c0sm9c2HZ/vh+2vJpoAUaHryk=;
+        b=QPmoLFa3wQi6ppDEI+KyJEKbs/NHvsbRD7O/ZkKTZioAC/rCr6n3z8Z9Iz94OsAZIB
+         oOQKBZpvR/f0EnjOd4UDw2VSjsxmPos263bRrH8DsHgoegaRUvo8K0ej50FqG8LJSV/E
+         vuoOMuq81mH/kVKQ7/u4Whoi5wwIeID9fsksr+peVPATS+Nl/ZV+Zejc/071v5aHSoIe
+         YN/IZp6Gz4D+kc72KLolDOBmPr3/xGpQSg2cFLdvcu+nK5eOz/SDLMm0C16EvFd3KeSD
+         r82xdZ8KJD1s+/D9qp3mljH4Ol3wZDWtKfwltvBvjM1gFdPqyUCdak9ggwxEoNUPdDFG
+         5yGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=foT1ohiqy1+uyhLW9sLQmXYOuc6vCZWXsTBuyJEISPc=;
-        b=h+s95gCiG6fh2GP1r1hsSeboU2Zu5j+jTLSxBEo8TGNMFmOh9byQpIzacnPndquM5d
-         w9a2IOT2XXugHH7jEE8euF+6M7x0CoX6DdY/QrJXk0QeVw8In9CSjd4hraGxdmqrrFJn
-         sY/Uz15pigZHmTmtSezBev6DFn3lhzrbFmII/LXc+FJG5Gdkt6eOSoHrxBkwOdpB9aws
-         d8xpP21gJOZwE2iucfjfZlbRGOEIAIhwqLUCUEv4YNog63R7KeaJGZSV0kcIsLU03UEK
-         aGA+KDFm++FEMVI1PMLk4FH0kI89RwWpugGQkRxpftoECTDtR+r3fEo2hJFBo+tUmBAu
-         LvOA==
-X-Gm-Message-State: AOAM533YrbxoYIxmvnsipqofh5/L4fXHo3Bz08RYDQ+/1O3vekGO3WBD
-        AE/nwbt+5y83zPXdpjMkzec5tDxTxnBBl6zAcRgwPxR5eNyJKg==
-X-Google-Smtp-Source: ABdhPJyHYknopmrWnli1zJAG3XUe7MvSoNPiIoTVPg0YbVNHSFWN4UHbjguR3T28SoYU5AR83Z8LRHLY57YDAS3x+h4=
-X-Received: by 2002:a17:906:c405:: with SMTP id u5mr22610683ejz.341.1615802441018;
- Mon, 15 Mar 2021 03:00:41 -0700 (PDT)
+        bh=9R3mww1eOsmr/MKBS4c0sm9c2HZ/vh+2vJpoAUaHryk=;
+        b=SGfYkz4YDWawpGNkMAtcO+b7fXm3qrXEN35Z3g6tNMfFHZr/5lfRxisq3W16DjEUtI
+         EmRA5flQfzwENOTyDKxLw53we8kijVHIPm04xsuQJkckl4JXrVT3Gl1FSuH513FYUSQA
+         2NFbuwv3hNOShkwe133Klx1sVwsYbZNdQYAyDqJfNQbb3da9snF1YmDmMw0TOxpA1qur
+         z6CzeM3BJ2VOwFhYCpp8hJmuSW8TnzsD76gcOuQkpkyybzBvF/q2BHqeE2ZoT5wAFxpk
+         7KSwgJb/9sY8qPFg7E5iMBhoQD59afEQwjXxzl/9DadHUbNp4XZLU2RRYn+QXwUqWPS+
+         5YeA==
+X-Gm-Message-State: AOAM531ZtsL/zHT/hG8S0zWPCi97/2iMSp1BRtW+9IdkCKsIRPZ89M4/
+        DjewVBvPDkrcyBPNBKjlt1Kr6vn/0URz8esP0Xw=
+X-Google-Smtp-Source: ABdhPJwvhdwC4ajfNJdJkORI+8zW854kpmZAzlN6u1r5Lhw7/r/a+fk1k0OZHKoa5zW9PP3bHjsO44Y2/9jRXc6qnZQ=
+X-Received: by 2002:a17:906:c405:: with SMTP id u5mr22679640ejz.341.1615803251828;
+ Mon, 15 Mar 2021 03:14:11 -0700 (PDT)
 MIME-Version: 1.0
 References: <pull.901.v6.git.1615790151073.gitgitgadget@gmail.com> <pull.901.v7.git.1615799304883.gitgitgadget@gmail.com>
 In-Reply-To: <pull.901.v7.git.1615799304883.gitgitgadget@gmail.com>
 From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 15 Mar 2021 11:00:30 +0100
-Message-ID: <CAP8UFD1+Z=hV_6dLbg7fh4EntBdWdheO6gvbQjKtZFRgOAsrzw@mail.gmail.com>
+Date:   Mon, 15 Mar 2021 11:14:00 +0100
+Message-ID: <CAP8UFD2CNAW4o8BF8NLA0pwWzNmBwZJAP7L5SGSib+LcVbSLBA@mail.gmail.com>
 Subject: Re: [PATCH v7] [GSOC] commit: add --trailer option
 To:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git <git@vger.kernel.org>,
@@ -74,22 +74,21 @@ X-Mailing-List: git@vger.kernel.org
 On Mon, Mar 15, 2021 at 10:08 AM ZheNing Hu via GitGitGadget
 <gitgitgadget@gmail.com> wrote:
 
-> @@ -166,6 +166,13 @@ The `-m` option is mutually exclusive with `-c`, `-C`, and `-F`.
->
->  include::signoff-option.txt[]
->
-> +--trailer <token>[(=|:)<value>]::
-> +       Specify a (<token>, <value>) pair that should be applied as a
-> +       trailer. (e.g. `git commit --trailer "Signed-off-by:C O Mitter \
-> +       <committer@example.com>" --trailer "Helped-by:C O Mitter \
-> +       <committer@example.com>"` will add the "Signed-off" trailer
+>       + if (trailer_args.nr) {
+>      -+         static struct child_process run_trailer = CHILD_PROCESS_INIT;
+>      ++         struct child_process run_trailer = CHILD_PROCESS_INIT;
+>       +
+>       +         strvec_pushl(&run_trailer.args, "interpret-trailers",
+>       +                      "--in-place", "--where=end", git_path_commit_editmsg(), NULL);
 
-s/"Signed-off"/"Signed-off-by"/
+Actually I don't think "--where=end" should be used here. "end" is the
+default for the "trailer.where" config variable, so by default if
+nothing has been configured, it will work as if "--where=end" was
+passed above.
 
-> +       and the "Helped-by" trailer in the commit message.)
+If a user has configured "trailer.where" or trailer.<token>.where,
+then this should be respected. And users should be able to override
+such config variable using for example:
 
-It might be useful to point users to git interpret-trailers'
-documentation, for example by adding: "See
-linkgit:git-interpret-trailers[1]."
-
-Otherwise, this looks good to me!
+git -c trailer.where=start commit --trailer "Signed-off-by:C O Mitter
+<committer@example.com>"
