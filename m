@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CA02DC4332B
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EB723C4332D
 	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 21:09:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A449F64F50
+	by mail.kernel.org (Postfix) with ESMTP id D04F964F3F
 	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 21:09:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233525AbhCOVIu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Mar 2021 17:08:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53346 "EHLO
+        id S233686AbhCOVIv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Mar 2021 17:08:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53354 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232193AbhCOVIe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Mar 2021 17:08:34 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C219DC06174A
-        for <git@vger.kernel.org>; Mon, 15 Mar 2021 14:08:33 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id b2-20020a7bc2420000b029010be1081172so235930wmj.1
-        for <git@vger.kernel.org>; Mon, 15 Mar 2021 14:08:33 -0700 (PDT)
+        with ESMTP id S232691AbhCOVIf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Mar 2021 17:08:35 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79628C06175F
+        for <git@vger.kernel.org>; Mon, 15 Mar 2021 14:08:35 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id l12so9393993wry.2
+        for <git@vger.kernel.org>; Mon, 15 Mar 2021 14:08:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=/wnX5m6bv462aJ4/n7oQX2gdwOtnSjSdlOa61NW87Yg=;
-        b=u26zpwta2ep1L5Ko5iRYAzlLDu9sxrMUQODpUIb+oGrIL/2HH3owLBDlzVawO7ANtl
-         kWM+ht2LWWrTuiEByNCEHhW85eIk+/QmFUZ4EA/QMhj/7Xrfh91TqdB92an3GrWZ5pmc
-         Kjbep3F0QGCZV21i8XYg2xEM/Tgjw5JuFnL+yFA2sna7P/SrN55YX7LYtGcsIkriXTpa
-         Csm2c6GY0RL8rc8ODn2xcS9LzvzQL8WNy0h4cBGugCcjipYM3bbrDAN5dZVqmosh2bn0
-         4S+6bL9tqnEH7SDP7uTNtkA9HJvxLUDQtmpTWOFldHxQm/ehknSLhNEVIDLD6arPWTk2
-         av3Q==
+        bh=/Lelo8/06j9WQIIf7GDhH+9BwIWlnOU4qaeio0Ut5GI=;
+        b=tvQtX6LsHaYuFO6dTDNtoRN6HVhLC37IISkXMxwq0Q1JGo59+OvqQ9+efz+0pyRdL8
+         HcurpavlgeAJB+XlNXrtIWe5Z+CpN9GvcOJ6V4U+XcDH/5aWO+IGZrHB08Ic9bRAd8jU
+         y1BB1zwOLcxNaS6owP1VaUIt7gFJDu7sEHnSDDBvU0GUEtTREzhgy/4mg1bL3z+CP9OD
+         X8fZQR4lb2ZF6sGfAhuH+YZhwRARNZ6vjk32gAP1Z8eSc00yAM2xNbk5mis+y/UyXd9F
+         YtgbmcFR6KEPbAVQUGtnNpNmNzNuDAgpZVChLcK8tZXJqG+gCzStKqBJ/oIaT6Ty2EcC
+         Z6JA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=/wnX5m6bv462aJ4/n7oQX2gdwOtnSjSdlOa61NW87Yg=;
-        b=KfiDxGXck3jkTtx0sn88bJhSSwVMJi1x7/+RHq5XKKTpMmcRO1WaOkvQ8p/NpOrTIk
-         26wkN6ZoxiZca5Sxw1+CdL1Jc2nHOYQhAU5kuYH3ZReJBfTerAgyGXgfHXJ5kgeppbWx
-         +n4lLJ/moY1qQNnWH6XYZdGoys6oilJ1aIQL/C8/W/hA4EWLG4t9OkAONYkttps8fpZn
-         NdDUOmTot/v/IwSs5dSe6jvUAhYtr8MNmtWERbYApT+QvlJxBTZ9eFaKlWDZxiIvAzHr
-         BkFyaEBJJyAoPXSCyC+caQqaF71hFmmfwZvVwufbBDMjQXwcdvbvgWiAmMARiMbTv747
-         R8Hw==
-X-Gm-Message-State: AOAM532e78oPU6foueDiLZJ+cr2f6l8GyBCDdM3F0tYIxrE8MS+tV+kX
-        bGW1FXNTlmGixv0L2JUuU7sgkNfJ1TY=
-X-Google-Smtp-Source: ABdhPJzBbdBqkuNJYPhJrk4e33gcIBRY+/pOcOOAk88F3kJCNWrQec2A+S7l7RHelMYWYunBQ1uP+Q==
-X-Received: by 2002:a1c:c906:: with SMTP id f6mr1445726wmb.128.1615842512478;
-        Mon, 15 Mar 2021 14:08:32 -0700 (PDT)
+        bh=/Lelo8/06j9WQIIf7GDhH+9BwIWlnOU4qaeio0Ut5GI=;
+        b=jvXZfaZ6dgkUcm18VHQ9zMyWhTHL7nvkh+VyEH1DYT4O7yEkO//LKu7aGkm+jNoB3Y
+         YCTN0GW6g/vGEsuBJj8NBy4lWZ4EXXtvJKqNVX/IfYtbCQbRxM/ePx0hOXXyanl0mNH7
+         hP9MwZBzs5WM+Rt6MuMwXEEnFcX7E6b5lTN8Z4L03YP/UCHhiGoh4pxDbTv7kaXJNcL/
+         7K9EdWkCdZsWCz7sgDo8ySZOF0xVwAM+T8cGQ6SJJsGssnz2Sds8XZ+3SQFIdnft47WI
+         wGbTXtHJJVtLm1+gl2l9HRSRwfE47q8YGbCMGOObykynXueVV6KIABZJ7YdGR737PwCX
+         gjyQ==
+X-Gm-Message-State: AOAM532TWVHQYDlWfTue0ZPHXVxCe/wVOcxJPxbxuD2Nz4hPJuDec5VC
+        G+wiIDiC+s5F5Jet56PyJJo5ZXJgyRY=
+X-Google-Smtp-Source: ABdhPJyGrH30o/oplQnd8HMDMzd06/PxC1sxQ8JQktGOMWy6IrsTf3TSaViH14hjw9pMOsiDQWhN1g==
+X-Received: by 2002:adf:ce0a:: with SMTP id p10mr1450604wrn.255.1615842514264;
+        Mon, 15 Mar 2021 14:08:34 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y10sm20143567wrl.19.2021.03.15.14.08.32
+        by smtp.gmail.com with ESMTPSA id a8sm815372wmm.46.2021.03.15.14.08.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Mar 2021 14:08:32 -0700 (PDT)
-Message-Id: <de11b3036148104308b22a1af39fbdaa5f54b296.1615842509.git.gitgitgadget@gmail.com>
+        Mon, 15 Mar 2021 14:08:33 -0700 (PDT)
+Message-Id: <f829feb2aa93937b2e2fc493e8ea647051960658.1615842510.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.766.v6.git.1615842509.gitgitgadget@gmail.com>
 References: <pull.766.v5.git.1615302157.gitgitgadget@gmail.com>
         <pull.766.v6.git.1615842509.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 15 Mar 2021 21:08:19 +0000
-Subject: [PATCH v6 02/12] pkt-line: do not issue flush packets in
- write_packetized_*()
+From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 15 Mar 2021 21:08:22 +0000
+Subject: [PATCH v6 05/12] simple-ipc: design documentation for new IPC
+ mechanism
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,106 +76,135 @@ Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Chris Torek <chris.torek@gmail.com>,
         Jeff Hostetler <jeffhost@microsoft.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+        Jeff Hostetler <jeffhost@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Remove the `packet_flush_gently()` call in `write_packetized_from_buf() and
-`write_packetized_from_fd()` and require the caller to call it if desired.
-Rename both functions to `write_packetized_from_*_no_flush()` to prevent
-later merge accidents.
+Brief design documentation for new IPC mechanism allowing
+foreground Git client to talk with an existing daemon process
+at a known location using a named pipe or unix domain socket.
 
-`write_packetized_from_buf()` currently only has one caller:
-`apply_multi_file_filter()` in `convert.c`.  It always wants a flush packet
-to be written after writing the payload.
-
-However, we are about to introduce a caller that wants to write many
-packets before a final flush packet, so let's make the caller responsible
-for emitting the flush packet.
-
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- convert.c  | 8 ++++++--
- pkt-line.c | 8 ++------
- pkt-line.h | 4 ++--
- 3 files changed, 10 insertions(+), 10 deletions(-)
+ Documentation/technical/api-simple-ipc.txt | 105 +++++++++++++++++++++
+ 1 file changed, 105 insertions(+)
+ create mode 100644 Documentation/technical/api-simple-ipc.txt
 
-diff --git a/convert.c b/convert.c
-index ee360c2f07ce..976d4905cb3a 100644
---- a/convert.c
-+++ b/convert.c
-@@ -884,9 +884,13 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
- 		goto done;
- 
- 	if (fd >= 0)
--		err = write_packetized_from_fd(fd, process->in);
-+		err = write_packetized_from_fd_no_flush(fd, process->in);
- 	else
--		err = write_packetized_from_buf(src, len, process->in);
-+		err = write_packetized_from_buf_no_flush(src, len, process->in);
-+	if (err)
-+		goto done;
+diff --git a/Documentation/technical/api-simple-ipc.txt b/Documentation/technical/api-simple-ipc.txt
+new file mode 100644
+index 000000000000..d79ad323e675
+--- /dev/null
++++ b/Documentation/technical/api-simple-ipc.txt
+@@ -0,0 +1,105 @@
++Simple-IPC API
++==============
 +
-+	err = packet_flush_gently(process->in);
- 	if (err)
- 		goto done;
- 
-diff --git a/pkt-line.c b/pkt-line.c
-index 66bd0ddfd1d0..bb0fb0c3802c 100644
---- a/pkt-line.c
-+++ b/pkt-line.c
-@@ -251,7 +251,7 @@ void packet_buf_write_len(struct strbuf *buf, const char *data, size_t len)
- 	packet_trace(data, len, 1);
- }
- 
--int write_packetized_from_fd(int fd_in, int fd_out)
-+int write_packetized_from_fd_no_flush(int fd_in, int fd_out)
- {
- 	char *buf = xmalloc(LARGE_PACKET_DATA_MAX);
- 	int err = 0;
-@@ -267,13 +267,11 @@ int write_packetized_from_fd(int fd_in, int fd_out)
- 			break;
- 		err = packet_write_gently(fd_out, buf, bytes_to_write);
- 	}
--	if (!err)
--		err = packet_flush_gently(fd_out);
- 	free(buf);
- 	return err;
- }
- 
--int write_packetized_from_buf(const char *src_in, size_t len, int fd_out)
-+int write_packetized_from_buf_no_flush(const char *src_in, size_t len, int fd_out)
- {
- 	int err = 0;
- 	size_t bytes_written = 0;
-@@ -289,8 +287,6 @@ int write_packetized_from_buf(const char *src_in, size_t len, int fd_out)
- 		err = packet_write_gently(fd_out, src_in + bytes_written, bytes_to_write);
- 		bytes_written += bytes_to_write;
- 	}
--	if (!err)
--		err = packet_flush_gently(fd_out);
- 	return err;
- }
- 
-diff --git a/pkt-line.h b/pkt-line.h
-index 8c90daa59ef0..31012b9943bf 100644
---- a/pkt-line.h
-+++ b/pkt-line.h
-@@ -32,8 +32,8 @@ void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((f
- void packet_buf_write_len(struct strbuf *buf, const char *data, size_t len);
- int packet_flush_gently(int fd);
- int packet_write_fmt_gently(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
--int write_packetized_from_fd(int fd_in, int fd_out);
--int write_packetized_from_buf(const char *src_in, size_t len, int fd_out);
-+int write_packetized_from_fd_no_flush(int fd_in, int fd_out);
-+int write_packetized_from_buf_no_flush(const char *src_in, size_t len, int fd_out);
- 
- /*
-  * Read a packetized line into the buffer, which must be at least size bytes
++The Simple-IPC API is a collection of `ipc_` prefixed library routines
++and a basic communication protocol that allow an IPC-client process to
++send an application-specific IPC-request message to an IPC-server
++process and receive an application-specific IPC-response message.
++
++Communication occurs over a named pipe on Windows and a Unix domain
++socket on other platforms.  IPC-clients and IPC-servers rendezvous at
++a previously agreed-to application-specific pathname (which is outside
++the scope of this design) that is local to the computer system.
++
++The IPC-server routines within the server application process create a
++thread pool to listen for connections and receive request messages
++from multiple concurrent IPC-clients.  When received, these messages
++are dispatched up to the server application callbacks for handling.
++IPC-server routines then incrementally relay responses back to the
++IPC-client.
++
++The IPC-client routines within a client application process connect
++to the IPC-server and send a request message and wait for a response.
++When received, the response is returned back the caller.
++
++For example, the `fsmonitor--daemon` feature will be built as a server
++application on top of the IPC-server library routines.  It will have
++threads watching for file system events and a thread pool waiting for
++client connections.  Clients, such as `git status` will request a list
++of file system events since a point in time and the server will
++respond with a list of changed files and directories.  The formats of
++the request and response are application-specific; the IPC-client and
++IPC-server routines treat them as opaque byte streams.
++
++
++Comparison with sub-process model
++---------------------------------
++
++The Simple-IPC mechanism differs from the existing `sub-process.c`
++model (Documentation/technical/long-running-process-protocol.txt) and
++used by applications like Git-LFS.  In the LFS-style sub-process model
++the helper is started by the foreground process, communication happens
++via a pair of file descriptors bound to the stdin/stdout of the
++sub-process, the sub-process only serves the current foreground
++process, and the sub-process exits when the foreground process
++terminates.
++
++In the Simple-IPC model the server is a very long-running service.  It
++can service many clients at the same time and has a private socket or
++named pipe connection to each active client.  It might be started
++(on-demand) by the current client process or it might have been
++started by a previous client or by the OS at boot time.  The server
++process is not associated with a terminal and it persists after
++clients terminate.  Clients do not have access to the stdin/stdout of
++the server process and therefore must communicate over sockets or
++named pipes.
++
++
++Server startup and shutdown
++---------------------------
++
++How an application server based upon IPC-server is started is also
++outside the scope of the Simple-IPC design and is a property of the
++application using it.  For example, the server might be started or
++restarted during routine maintenance operations, or it might be
++started as a system service during the system boot-up sequence, or it
++might be started on-demand by a foreground Git command when needed.
++
++Similarly, server shutdown is a property of the application using
++the simple-ipc routines.  For example, the server might decide to
++shutdown when idle or only upon explicit request.
++
++
++Simple-IPC protocol
++-------------------
++
++The Simple-IPC protocol consists of a single request message from the
++client and an optional response message from the server.  Both the
++client and server messages are unlimited in length and are terminated
++with a flush packet.
++
++The pkt-line routines (Documentation/technical/protocol-common.txt)
++are used to simplify buffer management during message generation,
++transmission, and reception.  A flush packet is used to mark the end
++of the message.  This allows the sender to incrementally generate and
++transmit the message.  It allows the receiver to incrementally receive
++the message in chunks and to know when they have received the entire
++message.
++
++The actual byte format of the client request and server response
++messages are application specific.  The IPC layer transmits and
++receives them as opaque byte buffers without any concern for the
++content within.  It is the job of the calling application layer to
++understand the contents of the request and response messages.
++
++
++Summary
++-------
++
++Conceptually, the Simple-IPC protocol is similar to an HTTP REST
++request.  Clients connect, make an application-specific and
++stateless request, receive an application-specific
++response, and disconnect.  It is a one round trip facility for
++querying the server.  The Simple-IPC routines hide the socket,
++named pipe, and thread pool details and allow the application
++layer to focus on the application at hand.
 -- 
 gitgitgadget
 
