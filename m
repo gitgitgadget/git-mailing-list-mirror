@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DA3AC432C3
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D73AC43333
 	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 16:00:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 34ADB650FF
+	by mail.kernel.org (Postfix) with ESMTP id 4385364F5D
 	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 16:00:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238372AbhCPQAD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Mar 2021 12:00:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42640 "EHLO
+        id S238377AbhCPQAE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Mar 2021 12:00:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238269AbhCPP7A (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Mar 2021 11:59:00 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D898CC061756
-        for <git@vger.kernel.org>; Tue, 16 Mar 2021 08:58:59 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id r15-20020a05600c35cfb029010e639ca09eso1758047wmq.1
-        for <git@vger.kernel.org>; Tue, 16 Mar 2021 08:58:59 -0700 (PDT)
+        with ESMTP id S234381AbhCPP7B (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Mar 2021 11:59:01 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D02EDC06175F
+        for <git@vger.kernel.org>; Tue, 16 Mar 2021 08:59:00 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id j2so10720045wrx.9
+        for <git@vger.kernel.org>; Tue, 16 Mar 2021 08:59:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=L0ClHHaHWmiyRUgcgtl6GlTVSPLpbzbsFAP7kfmTqjc=;
-        b=ORNiQawy5dqb2QmOEwdCb1OxU23iRqIWM9MRUKQiV7HahM4A3yjh5fYw6roIl4zAuJ
-         8tQpQL0FEwxkbn/cg4V0GCMgWJtRairstKpGq31/yBCDZOoT1z+OLZjA2JsTmwtd2prp
-         6PGJ9+wT2W61UguKzw/Pc0W8jt96VztGG9q5hBUJurVm9Kc2OdbtPmlAi8GBhimSAUb2
-         6fWZRTT+mIZ1W6VxjKtnjeD6NfBfKuiiG+EB0HW/m1oQBP18gqfVg5kl0QIW/qhL9hBU
-         T3GnExCLTlpPLm/1TRI/xZwRubuuAktR6KuzIYKgfRpp10Vo7/wQio7bXapD4KEkpj9B
-         EBbg==
+        bh=B3YtwXPRsxlzFMIP5ADyz13R8HvJZqtr2T92nsoYjgo=;
+        b=GYxLH9wE8y7oFP6SuEsj9XdpUEs2gOobxbmoKQQj1nzh4jXoCZrHNs4BEXsnzFfzCZ
+         ol/Bo2GCpILtCukQu2YzO6kuVqlv1uBcUD6n0ozZpX1P0ikLaUy5HMQJMOXuu18sXnWX
+         ECWPm1jYpn0pt9NDwdKn25hoaqb9+QO7rvuYVIHme+r59Gr0cE2m+P5H0boXwnN3x++G
+         3A0Q35U2Eyq7gcNCPj9pTuOrKoVkIFPR3x/sWhCf0neRrE8dYe9w/YhSqonyiOpQEN4N
+         YHfphtjLXXuWMI4ASJOGFNM4CNUpvRiKyFQxrFLiWC2TSABJqHlPVoV3LHH2h9yTN2mi
+         xr4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=L0ClHHaHWmiyRUgcgtl6GlTVSPLpbzbsFAP7kfmTqjc=;
-        b=gnFmkqSc/FQWUcYKJRabaKiX0ecW/JE1pwkCuPiTYQVof76f96ouNI6wRDl+SxYv5U
-         xaS9mj5l2o7Qo0OisNlOB5WD2vnzrkRODhic2U0mnS0slDYmzfGL59LQwzIX8DfixQkM
-         IrmB0yDRstQ3FLUUVkEi9eRWlFaC+0IapqbxkWrGBb+5HUO6YabTJSCNvHcpElzHrCBX
-         XqELryZKxHvHzkdaA3rwa0+QQCmNSUgaIinEB5meAlY0YyTsxuPF0dgZ+jUlN3nXvmxx
-         dyFbQAteWvaStBaTgpoyS/1nCcGaBgCN4+ydXchSSU83ltJcTZvLQYEFBdhVLKD/2Fik
-         Da8A==
-X-Gm-Message-State: AOAM530gj3JoxosdRmoGMMqdcy9/dMrdvmPRRpIg56L3cXKBV6x6Su4s
-        e+nrxUQVbnsweTS6zRt3vil8Yw140Wrr6g==
-X-Google-Smtp-Source: ABdhPJwc4PYRPiTO09mroNlDgXFsHPDUMXg1gHYxceaFyWlrvXF5jn5/fK9IDuSADCgcHQOTT/4MZQ==
-X-Received: by 2002:a1c:a791:: with SMTP id q139mr336784wme.20.1615910338230;
-        Tue, 16 Mar 2021 08:58:58 -0700 (PDT)
+        bh=B3YtwXPRsxlzFMIP5ADyz13R8HvJZqtr2T92nsoYjgo=;
+        b=lIw93imJYu0Rb1MiNG7Jv2QGDlRoaWCvu3AFNZ8+2kCEgHbiHFkCHdvHKN5B1acJ7C
+         gSS0fLKIqIgPu4AbvDnA1gZttU1EMdVdxaxFZ8VY6oNBVHNjbKE/K1oIWK4qcD+k+JGh
+         AvYEJOvtwnm+QyWauN1Ft1duS+MnFlrNj76IuLsELfxYbWEYgCAaZhCd6YwRmMINcqM5
+         H4hHfzH9Mt1RGld9OgdqkYnV1yqlPEhze4YLx4cGWYdelXn2VfPmH1UdhQ3jZJwDw8ql
+         hnzeTDDLwpv9PgCHyWmn4IUlMdzOVxr7tB6Z1gIdmJSAQr5GSmZUuhcvUW6m1wc5w399
+         Z0cw==
+X-Gm-Message-State: AOAM533m5zyRXMbFawTl0DX2pmaG/twsQrZVAWR/ZI2s/iPSaNXKAyVj
+        IZL8v3GbC2S7QIxngcbeQMX2Rb1nh9vs+Q==
+X-Google-Smtp-Source: ABdhPJxmVppugtnWU0BcTFmIw/dvh8t2iDN3282GyOYBGWhhDYWa6Bne+Euq5gVCY0n/rSuwVRKthw==
+X-Received: by 2002:adf:8b45:: with SMTP id v5mr3274078wra.398.1615910339285;
+        Tue, 16 Mar 2021 08:58:59 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id m132sm3439060wmf.45.2021.03.16.08.58.57
+        by smtp.gmail.com with ESMTPSA id m132sm3439060wmf.45.2021.03.16.08.58.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Mar 2021 08:58:57 -0700 (PDT)
+        Tue, 16 Mar 2021 08:58:58 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -66,9 +66,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <pclouds@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 23/32] tree-walk.h API: rename get_tree_entry() to get_tree_entry_mode()
-Date:   Tue, 16 Mar 2021 16:58:20 +0100
-Message-Id: <20210316155829.31242-24-avarab@gmail.com>
+Subject: [PATCH v3 24/32] match-trees: use "tmp" for mode in shift_tree_by()
+Date:   Tue, 16 Mar 2021 16:58:21 +0100
+Message-Id: <20210316155829.31242-25-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.0.256.gf0ddda3145
 In-Reply-To: <20210316021312.13927-1-avarab@gmail.com>
 References: <20210316021312.13927-1-avarab@gmail.com>
@@ -79,265 +79,46 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rename the get_tree_entry() function to get_tree_entry_mode(). This
-change is only a search-replacement of the name and indentation of the
-argument lists.
+Refactor code added in 85e51b783c3 (Make "subtree" part more
+orthogonal to the rest of merge-recursive., 2008-06-30) to make it
+obvious that we don't care about the "mode" here outside of the if
+statement it appears in.
 
-A subsequent commits will add get_tree_entry_type() and
-get_tree_entry_all() functions. Those changes will be much easier to
-read if we do this rename first.
+That's opposed to the sub1 & sub2 variables, where we use the two
+object ids later in this function.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- archive.c              |  8 ++++----
- blame.c                |  6 +++---
- builtin/rm.c           |  2 +-
- builtin/update-index.c |  2 +-
- line-log.c             |  2 +-
- match-trees.c          |  6 +++---
- merge-recursive.c      | 18 +++++++++---------
- notes.c                |  2 +-
- object-name.c          |  6 +++---
- tree-walk.c            | 14 +++++++-------
- tree-walk.h            |  6 +++---
- 11 files changed, 36 insertions(+), 36 deletions(-)
+ match-trees.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/archive.c b/archive.c
-index 254e15c8d0..ab03107958 100644
---- a/archive.c
-+++ b/archive.c
-@@ -482,10 +482,10 @@ static void parse_treeish_arg(const char **argv,
- 		unsigned short mode;
- 		int err;
- 
--		err = get_tree_entry(ar_args->repo,
--				     &tree->object.oid,
--				     prefix, &tree_oid,
--				     &mode);
-+		err = get_tree_entry_mode(ar_args->repo,
-+					  &tree->object.oid,
-+					  prefix, &tree_oid,
-+					  &mode);
- 		if (err || !S_ISDIR(mode))
- 			die(_("current working directory is untracked"));
- 
-diff --git a/blame.c b/blame.c
-index 83babc41d0..9e0543e13d 100644
---- a/blame.c
-+++ b/blame.c
-@@ -102,8 +102,8 @@ static void verify_working_tree_path(struct repository *r,
- 		const struct object_id *commit_oid = &parents->item->object.oid;
- 		struct object_id blob_oid;
- 		unsigned short mode;
--		int ret = get_tree_entry(r, commit_oid, path, &blob_oid,
--					 &mode);
-+		int ret = get_tree_entry_mode(r, commit_oid, path, &blob_oid,
-+					      &mode);
- 
- 		if (!ret && oid_object_info(r, &blob_oid, NULL) == OBJ_BLOB)
- 			return;
-@@ -1239,7 +1239,7 @@ static int fill_blob_sha1_and_mode(struct repository *r,
- {
- 	if (!is_null_oid(&origin->blob_oid))
- 		return 0;
--	if (get_tree_entry(r, &origin->commit->object.oid, origin->path, &origin->blob_oid, &origin->mode))
-+	if (get_tree_entry_mode(r, &origin->commit->object.oid, origin->path, &origin->blob_oid, &origin->mode))
- 		goto error_out;
- 	if (oid_object_info(r, &origin->blob_oid, NULL) != OBJ_BLOB)
- 		goto error_out;
-diff --git a/builtin/rm.c b/builtin/rm.c
-index 4858631e0f..4617388b29 100644
---- a/builtin/rm.c
-+++ b/builtin/rm.c
-@@ -179,7 +179,7 @@ static int check_local_mod(struct object_id *head, int index_only)
- 		 * way as changed from the HEAD.
- 		 */
- 		if (no_head
--		     || get_tree_entry(the_repository, head, name, &oid, &mode)
-+		     || get_tree_entry_mode(the_repository, head, name, &oid, &mode)
- 		     || ce->ce_mode != create_ce_mode(mode)
- 		     || !oideq(&ce->oid, &oid))
- 			staged_changes = 1;
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index 79087bccea..070510d6a8 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -603,7 +603,7 @@ static struct cache_entry *read_one_ent(const char *which,
- 	struct object_id oid;
- 	struct cache_entry *ce;
- 
--	if (get_tree_entry(the_repository, ent, path, &oid, &mode)) {
-+	if (get_tree_entry_mode(the_repository, ent, path, &oid, &mode)) {
- 		if (which)
- 			error("%s: not in %s branch.", path, which);
- 		return NULL;
-diff --git a/line-log.c b/line-log.c
-index 75c8b1acff..4790dda460 100644
---- a/line-log.c
-+++ b/line-log.c
-@@ -503,7 +503,7 @@ static void fill_blob_sha1(struct repository *r, struct commit *commit,
- 	unsigned short mode;
- 	struct object_id oid;
- 
--	if (get_tree_entry(r, &commit->object.oid, spec->path, &oid, &mode))
-+	if (get_tree_entry_mode(r, &commit->object.oid, spec->path, &oid, &mode))
- 		die("There is no path %s in the commit", spec->path);
- 	fill_filespec(spec, &oid, 1, mode);
- 
 diff --git a/match-trees.c b/match-trees.c
-index f3e192ca74..0faacd8f4a 100644
+index 0faacd8f4a..e84f993a46 100644
 --- a/match-trees.c
 +++ b/match-trees.c
-@@ -293,7 +293,7 @@ void shift_tree(struct repository *r,
- 		if (!*del_prefix)
- 			return;
- 
--		if (get_tree_entry(r, hash2, del_prefix, shifted, &mode))
-+		if (get_tree_entry_mode(r, hash2, del_prefix, shifted, &mode))
- 			die("cannot find path %s in tree %s",
- 			    del_prefix, oid_to_hex(hash2));
- 		return;
-@@ -321,12 +321,12 @@ void shift_tree_by(struct repository *r,
+@@ -317,17 +317,17 @@ void shift_tree_by(struct repository *r,
+ 		   const char *shift_prefix)
+ {
+ 	struct object_id sub1, sub2;
+-	unsigned short mode1, mode2;
++	unsigned short tmp;
  	unsigned candidate = 0;
  
  	/* Can hash2 be a tree at shift_prefix in tree hash1? */
--	if (!get_tree_entry(r, hash1, shift_prefix, &sub1, &mode1) &&
-+	if (!get_tree_entry_mode(r, hash1, shift_prefix, &sub1, &mode1) &&
- 	    S_ISDIR(mode1))
+-	if (!get_tree_entry_mode(r, hash1, shift_prefix, &sub1, &mode1) &&
+-	    S_ISDIR(mode1))
++	if (!get_tree_entry_mode(r, hash1, shift_prefix, &sub1, &tmp) &&
++	    S_ISDIR(tmp))
  		candidate |= 1;
  
  	/* Can hash1 be a tree at shift_prefix in tree hash2? */
--	if (!get_tree_entry(r, hash2, shift_prefix, &sub2, &mode2) &&
-+	if (!get_tree_entry_mode(r, hash2, shift_prefix, &sub2, &mode2) &&
- 	    S_ISDIR(mode2))
+-	if (!get_tree_entry_mode(r, hash2, shift_prefix, &sub2, &mode2) &&
+-	    S_ISDIR(mode2))
++	if (!get_tree_entry_mode(r, hash2, shift_prefix, &sub2, &tmp) &&
++	    S_ISDIR(tmp))
  		candidate |= 2;
  
-diff --git a/merge-recursive.c b/merge-recursive.c
-index df4b369902..bbbb68e15b 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -487,7 +487,7 @@ static int get_tree_entry_if_blob(struct repository *r,
- {
- 	int ret;
- 
--	ret = get_tree_entry(r, tree, path, &dfs->oid, &dfs->mode);
-+	ret = get_tree_entry_mode(r, tree, path, &dfs->oid, &dfs->mode);
- 	if (S_ISDIR(dfs->mode)) {
- 		oidcpy(&dfs->oid, &null_oid);
- 		dfs->mode = 0;
-@@ -1886,9 +1886,9 @@ static int tree_has_path(struct repository *r, struct tree *tree,
- 	struct object_id hashy;
- 	unsigned short mode_o;
- 
--	return !get_tree_entry(r,
--			       &tree->object.oid, path,
--			       &hashy, &mode_o);
-+	return !get_tree_entry_mode(r,
-+				    &tree->object.oid, path,
-+				    &hashy, &mode_o);
- }
- 
- /*
-@@ -2541,11 +2541,11 @@ static void apply_directory_rename_modifications(struct merge_options *opt,
- 	 * the various handle_rename_*() functions update the index
- 	 * explicitly rather than relying on unpack_trees() to have done it.
- 	 */
--	get_tree_entry(opt->repo,
--		       &tree->object.oid,
--		       pair->two->path,
--		       &re->dst_entry->stages[stage].oid,
--		       &re->dst_entry->stages[stage].mode);
-+	get_tree_entry_mode(opt->repo,
-+			    &tree->object.oid,
-+			    pair->two->path,
-+			    &re->dst_entry->stages[stage].oid,
-+			    &re->dst_entry->stages[stage].mode);
- 
- 	/*
- 	 * Record the original change status (or 'type' of change).  If it
-diff --git a/notes.c b/notes.c
-index 688d03ee9c..ef13860614 100644
---- a/notes.c
-+++ b/notes.c
-@@ -1021,7 +1021,7 @@ void init_notes(struct notes_tree *t, const char *notes_ref,
- 		return;
- 	if (flags & NOTES_INIT_WRITABLE && read_ref(notes_ref, &object_oid))
- 		die("Cannot use notes ref %s", notes_ref);
--	if (get_tree_entry(the_repository, &object_oid, "", &oid, &mode))
-+	if (get_tree_entry_mode(the_repository, &object_oid, "", &oid, &mode))
- 		die("Failed to read notes tree referenced by %s (%s)",
- 		    notes_ref, oid_to_hex(&object_oid));
- 
-diff --git a/object-name.c b/object-name.c
-index 64202de60b..7e3b2d6d73 100644
---- a/object-name.c
-+++ b/object-name.c
-@@ -1704,7 +1704,7 @@ static void diagnose_invalid_oid_path(struct repository *r,
- 	if (is_missing_file_error(errno)) {
- 		char *fullname = xstrfmt("%s%s", prefix, filename);
- 
--		if (!get_tree_entry(r, tree_oid, fullname, &oid, &mode)) {
-+		if (!get_tree_entry_mode(r, tree_oid, fullname, &oid, &mode)) {
- 			die(_("path '%s' exists, but not '%s'\n"
- 			    "hint: Did you mean '%.*s:%s' aka '%.*s:./%s'?"),
- 			    fullname,
-@@ -1903,8 +1903,8 @@ static enum get_oid_result get_oid_with_context_1(struct repository *repo,
- 					filename, oid, &oc->symlink_path,
- 					&oc->mode);
- 			} else {
--				ret = get_tree_entry(repo, &tree_oid, filename, oid,
--						     &oc->mode);
-+				ret = get_tree_entry_mode(repo, &tree_oid, filename, oid,
-+							  &oc->mode);
- 				if (ret && only_to_die) {
- 					diagnose_invalid_oid_path(repo, prefix,
- 								   filename,
-diff --git a/tree-walk.c b/tree-walk.c
-index e88187e371..7819ff3e0e 100644
---- a/tree-walk.c
-+++ b/tree-walk.c
-@@ -591,17 +591,17 @@ static int find_tree_entry(struct repository *r, struct tree_desc *t,
- 			oidcpy(result, &oid);
- 			return 0;
- 		}
--		return get_tree_entry(r, &oid, name + entrylen, result,
--				      mode);
-+		return get_tree_entry_mode(r, &oid, name + entrylen, result,
-+					   mode);
- 	}
- 	return -1;
- }
- 
--int get_tree_entry(struct repository *r,
--		   const struct object_id *tree_oid,
--		   const char *name,
--		   struct object_id *oid,
--		   unsigned short *mode)
-+int get_tree_entry_mode(struct repository *r,
-+			const struct object_id *tree_oid,
-+			const char *name,
-+			struct object_id *oid,
-+			unsigned short *mode)
- {
- 	int retval;
- 	void *tree;
-diff --git a/tree-walk.h b/tree-walk.h
-index 478a659ee2..eb9b9de6cc 100644
---- a/tree-walk.h
-+++ b/tree-walk.h
-@@ -174,9 +174,9 @@ struct traverse_info {
-  * The third and fourth parameters are set to the entry's sha1 and
-  * mode respectively.
-  */
--int get_tree_entry(struct repository *, const struct object_id *, const char *,
--		   struct object_id *,
--		   unsigned short *);
-+int get_tree_entry_mode(struct repository *, const struct object_id *, const char *,
-+			struct object_id *,
-+			unsigned short *);
- 
- /**
-  * Generate the full pathname of a tree entry based from the root of the
+ 	if (candidate == 3) {
 -- 
 2.31.0.256.gf0ddda3145
 
