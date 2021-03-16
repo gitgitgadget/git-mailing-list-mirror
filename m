@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 931E1C43142
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ED44FC2BA4C
 	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 21:18:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 81CF164FB5
+	by mail.kernel.org (Postfix) with ESMTP id C64E664F9F
 	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 21:18:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233309AbhCPVSQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Mar 2021 17:18:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55880 "EHLO
+        id S233321AbhCPVSU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Mar 2021 17:18:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233087AbhCPVRf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Mar 2021 17:17:35 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12781C0613D9
-        for <git@vger.kernel.org>; Tue, 16 Mar 2021 14:17:34 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id d191so313317wmd.2
-        for <git@vger.kernel.org>; Tue, 16 Mar 2021 14:17:34 -0700 (PDT)
+        with ESMTP id S229907AbhCPVRn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Mar 2021 17:17:43 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3514BC061765
+        for <git@vger.kernel.org>; Tue, 16 Mar 2021 14:17:32 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id y16so11250459wrw.3
+        for <git@vger.kernel.org>; Tue, 16 Mar 2021 14:17:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=5C1rmeTZHP1Dom+BXHxQl5q3ACMKAOcfZGQJrPmzVp0=;
-        b=XLdLxkk+f0CLYXKteKl+tqR03mGWr+fQvc853kQHksCFnVWBAbMisxXZiObmylA8u1
-         uBAjLqHIOt1Mmy3849zJWCn0P56VoehEcpZxSBKCI91dvT0H/dp1LCivvv+6M002W4UH
-         jrPWIuN8TjWBb4WDTEVYfm2Nq1r8A8bQGtgVLUs3R96wQ8n6wfd4RhOl4oyYUtoNZCGU
-         I0Ie5W9IUIhit+gI2eIVoRcCTDGkJ6YJ4tjbCPA7cPiJ6G9FQvvBcHa/rA0MTmCbj1Fj
-         uiO/yRuSAdR9fDvzKUuThvhM7vsQAMF7BAYd0Kr6XP4Eir5ETO1bY8fNrTJFwsvNIDNJ
-         cNdQ==
+        bh=hu0/iar66qUjlCaAn1Eiz2QQN3SmGd2tkTGGsb/YzAM=;
+        b=itdFatmk6nsuxyyeXZZC0d31qMBK7w/frmTjQwF4dIjz/Juis75ocGewAKhXkYAdEg
+         aBGyw/0ha2Coq5Vos23QL0/my+ecNtH1iwRs83sIxlv0ddXXVa2JFhVSAxY+JBqJ231f
+         aEQ3wMJnkztjK/EtVVg1iQBfYcJ/AJuDo3ra/9nNyu5dnNEBuz/PoYRf0s00K+906ATJ
+         RAUulHvKenN+v0gv/kvcY3pBq+n2lASSShw6zFirLVvioMnCGk/R5crEUFMmYhLmOJMi
+         pmRzXS78FuLh7bvxsMCbDGCfXmfKG1h8cTapJ6JRvmVxAQKW3LKmQo8GzuvcXXtjHt+7
+         EmAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=5C1rmeTZHP1Dom+BXHxQl5q3ACMKAOcfZGQJrPmzVp0=;
-        b=Ge1nBNJACAJi816X9iQPlb1k9xZdUAwDPrleSjXOExGKQdOHNt2GemB/OIkkBwtZcY
-         4rAPlCeiwU857vmKYLjw5lDUbkb+mm7Og09az/moI4mDWUfdmfzJ8Qly76ibSejPCpJ1
-         2W8AkLbsD1Ffy0/n8wh7yQmz02oHtYpDdCIBT5Cd77Fj9Lo7hVKXvREUPwiigFkX0Lma
-         RCIBvORF8L355ps1fQxRO2EALMTMvMziEHJNFGphn97EO8w3JDhVFKTFjx6I1SSI5Hnd
-         rDmUT/mVEUsQGYN6SfpJ2c9HLGlU+RVjJIkBoIkAduOVQjKdVwsb8xOrMRBPCbrumb8g
-         cGbA==
-X-Gm-Message-State: AOAM533xdbfuN9KSxUWUzPOxRWejrMK1kxpgWZve1qsX2DdgD+a9k1mw
-        ATIv4YZyHg+FY83yLL+T/jBs3s2RDvE=
-X-Google-Smtp-Source: ABdhPJywSCPoGqp5+gjEE6mUKFwp2UMlj8VfPNL7xud6hq66sfaGbV84q6UuyBbLNZDGbOyrcIeTpw==
-X-Received: by 2002:a7b:cc0c:: with SMTP id f12mr655938wmh.111.1615929452852;
-        Tue, 16 Mar 2021 14:17:32 -0700 (PDT)
+        bh=hu0/iar66qUjlCaAn1Eiz2QQN3SmGd2tkTGGsb/YzAM=;
+        b=TO231VtNrJ0OLJZNjezQoAaryH1ZmmysR05GanDvzUXEJf19j+3d682BSVe5aTzXmo
+         z2yFLOavoLI1dCFoWYKn3MGaLZKPpO2xHVk16W+AqEDme6IHiJyBfVHKfcHQX1RookaL
+         d8Jia/3xdx/egtVF+IujPqsbi9s/7F5l8K1eRqm55TU0eHJRS8Iw4dQYohsFP1fhP6jn
+         7HJJwZHsD9qk3+LkwO/FG5oxRynDn001IbKUi9Ctv32kkDu7G+bwID4jKr6qSubfIPv6
+         YM7Jm+Y8JYHhR7hwpffkTndaiS0O08yi+DboQ5gOYcrnLLmUWl/IUHqh+LTKQcsd5YOg
+         4zSA==
+X-Gm-Message-State: AOAM531dbgfRqaP7M/mtnKcpXZKf2RIIdhwe0+4T1/8p9+yyBkHm4NMK
+        qRN5vO+6haCAgaKDqRCj+NAbxkFM9jQ=
+X-Google-Smtp-Source: ABdhPJxg4MKaUqOvxwURivuLq8m6OWiSOZGOoTu4O4uM2eljKSD1Cc4gINu+cSpB2Fg7AEd4KgkUrQ==
+X-Received: by 2002:a5d:4884:: with SMTP id g4mr915589wrq.191.1615929451065;
+        Tue, 16 Mar 2021 14:17:31 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h20sm505047wmm.19.2021.03.16.14.17.32
+        by smtp.gmail.com with ESMTPSA id q17sm18191181wrv.25.2021.03.16.14.17.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Mar 2021 14:17:32 -0700 (PDT)
-Message-Id: <39e8bea0c1cadaf2a59760bea13025415569476f.1615929436.git.gitgitgadget@gmail.com>
+        Tue, 16 Mar 2021 14:17:30 -0700 (PDT)
+Message-Id: <57d59825627f10c4383c2c4ee8ee449e2c50f865.1615929436.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.906.git.1615929435.gitgitgadget@gmail.com>
 References: <pull.906.git.1615929435.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 16 Mar 2021 21:17:12 +0000
-Subject: [PATCH 24/27] resolve-undo: ensure full index
+Date:   Tue, 16 Mar 2021 21:17:09 +0000
+Subject: [PATCH 21/27] merge-recursive: ensure full index
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,29 +81,21 @@ expanded to a full index to avoid unexpected behavior.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- resolve-undo.c | 2 ++
- 1 file changed, 2 insertions(+)
+ merge-recursive.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/resolve-undo.c b/resolve-undo.c
-index 236320f179cb..3ccd3f66f80f 100644
---- a/resolve-undo.c
-+++ b/resolve-undo.c
-@@ -172,6 +172,7 @@ void unmerge_marked_index(struct index_state *istate)
- 	if (!istate->resolve_undo)
- 		return;
+diff --git a/merge-recursive.c b/merge-recursive.c
+index b8de7a704eae..7954c7829d27 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -522,6 +522,7 @@ static struct string_list *get_unmerged(struct index_state *istate)
+ 
+ 	unmerged->strdup_strings = 1;
  
 +	ensure_full_index(istate);
  	for (i = 0; i < istate->cache_nr; i++) {
- 		const struct cache_entry *ce = istate->cache[i];
- 		if (ce->ce_flags & CE_MATCHED)
-@@ -186,6 +187,7 @@ void unmerge_index(struct index_state *istate, const struct pathspec *pathspec)
- 	if (!istate->resolve_undo)
- 		return;
- 
-+	ensure_full_index(istate);
- 	for (i = 0; i < istate->cache_nr; i++) {
- 		const struct cache_entry *ce = istate->cache[i];
- 		if (!ce_path_match(istate, ce, pathspec, NULL))
+ 		struct string_list_item *item;
+ 		struct stage_data *e;
 -- 
 gitgitgadget
 
