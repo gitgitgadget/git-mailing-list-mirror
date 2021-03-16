@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A102C433E0
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86061C433E9
 	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 02:14:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0353B64FB2
-	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 02:14:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4BF1C6501D
+	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 02:14:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231704AbhCPCNp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Mar 2021 22:13:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34174 "EHLO
+        id S231985AbhCPCNq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Mar 2021 22:13:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229862AbhCPCNe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Mar 2021 22:13:34 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65FC9C06174A
-        for <git@vger.kernel.org>; Mon, 15 Mar 2021 19:13:33 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id d191so9204711wmd.2
-        for <git@vger.kernel.org>; Mon, 15 Mar 2021 19:13:33 -0700 (PDT)
+        with ESMTP id S229952AbhCPCNf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Mar 2021 22:13:35 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30005C06174A
+        for <git@vger.kernel.org>; Mon, 15 Mar 2021 19:13:35 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id p19so298222wmq.1
+        for <git@vger.kernel.org>; Mon, 15 Mar 2021 19:13:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=/aNWj2V1Ehpk0RrxgV6qz0BtprnUwpnU1iLiOe/6wmM=;
-        b=qAkCBluX5ppO1IDxsh8QGtk15vEPK+Ovls1Qg75QZJWxyn0v7kpN00rxskHR6JEOVy
-         0gaYZ20WqR3dc1HJsRpw9hxzQlxNIbkwWuGWxeyD1GGyn2gIabqA4eIF8jndm9PWyw5q
-         x7Bj+cwEIckdB+LpqevRey2hzDD6YTkmHFh3+SURW6c3cgs169akP0RWqgpCW/Hd6HTI
-         H1Gm5lc+QVbYMAcdVA1E8xuYtXCVx2V53+wauPkV3jx8KxU4C2xL5BUXiayS4aUSF3Ou
-         k02HOxi5dVS04GtU1mMQ0LB/xOsNfCslzZsq4vXbE1PS8paXle6RIEdvvUnNhzz494j9
-         zZMQ==
+        bh=RxaQuxGuJTZzi1LlLL+4afGZBo2P7/482a+g5i2B/8o=;
+        b=ZGQ5Qn4da/3rS3Dg2jdA+Y88Q2z5nl1dcwNlu7fvv4ptuLXBGwb7eWapFHvzKBo61G
+         bkOVsj8MZOBj3Ad6DT5OfsZRMrfGcRjL0My469waOW58zHnIJwgq6uBVWKlNtZaXDMcm
+         j5OuotIQlaischyr9N/AW7qyYke5gK+Uu4YJg1+o5sWM+1lGV9KLigAbryB+NONyJV3Y
+         VWzbiXl/7N3g7LJOqrCOYwa+vMIXN6QvxOsMclYdxRFFvc/MnkDzcdtU+xS1X8utW2ls
+         cAXi43DtCbEnWjJnrGQYN8O79LOTJR7Yge8ySh/xVtu0eoMGn5VtLAO9TqqUENV/TAKd
+         PKAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=/aNWj2V1Ehpk0RrxgV6qz0BtprnUwpnU1iLiOe/6wmM=;
-        b=ETib+iFfIMXoES9xtQo9kHR8288d92gYOz+L7+ZdWaJx0h0nGTUkbK2z1auOEvNDZs
-         jTBU6D4Ic5UXlgF4JnEVaJCaZnO5KMyKMoYxfe8kos7y0oqbTpLPK+m23aEOpUn+KPUC
-         90TofvdT+9e7vRKyGGs7bGT9A0T0oe48dsqrpIFWQtQc+TSZ9E/9uZqBQqk1IdBgJXpk
-         8j0gTtCADSJWKqtlDzszMMxaTPDGQ94Pe/AJRF+8AInvE1rDEeINc/uoSfB++LKl+BGa
-         ChrQuLGV34hJjE9TAzON5L6UyPzou1PFh6CpBPeTomDA0cwXQ/vMkodHtuaZ/MtP+b6T
-         gTHg==
-X-Gm-Message-State: AOAM53340ZicHwsVO/imCEtei+u4gbD+h8kkDcWCj1LmGvYFCDCJsq25
-        NAXcj+dN5Ns0iXj/a3GqjCsyi/LsuHNQ5g==
-X-Google-Smtp-Source: ABdhPJxVVqGQeBPq/uNYhFq9uoIPJPZb2A7MvfuOgOy761w3OLCLzwQtCo9lN7XUiHh+2UQpxpnD6A==
-X-Received: by 2002:a1c:2308:: with SMTP id j8mr2321021wmj.45.1615860811373;
-        Mon, 15 Mar 2021 19:13:31 -0700 (PDT)
+        bh=RxaQuxGuJTZzi1LlLL+4afGZBo2P7/482a+g5i2B/8o=;
+        b=O6CbPmGox6pyKVaUYfXCMugOV5MT+FY1QTliefMazgpVz9gj3apTTTKGPw+snZvbC2
+         MPA9LmL64sWNGTAh3pCqdc5I1oWPdjsnGRe/NZmCz+iuO6WZBJj45syhlISOjeywv2KF
+         CEAmFUKdyDUwg1DkleiSNv0j4X3Aw9UV67jqrSsGSQzwY4Y8Zm5G044UR6o6vdxEwa8r
+         d6gE8wSaCNbC6xzI8OmVwAx8flkvAZNDkXJbiy9TmbEwtXm6cNhndf0UE7GasXFa2W8n
+         /C64h1GcOleDzal+r83MK8ttbGN0FrrBOzfzGvpxQQlC0o+wxD1wr9vHUy6aFygDXhTa
+         Uc/g==
+X-Gm-Message-State: AOAM5339CYURfn5opTJnCkDEklLJcNEmkzz98BihDj6cjJzB2nlzE2oq
+        cUcY5jaWrf9rofQ6UkCTc9bnt4WcFUiTGA==
+X-Google-Smtp-Source: ABdhPJxNrTfpsjPvPQ8x3HRfH2RNq4O21ZMO2HBcYFgHyEp2MKlwGtZ/R6FeODOsacV3RWJJNpNXyg==
+X-Received: by 2002:a1c:86:: with SMTP id 128mr2219962wma.41.1615860813613;
+        Mon, 15 Mar 2021 19:13:33 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id i8sm21092494wrx.43.2021.03.15.19.13.30
+        by smtp.gmail.com with ESMTPSA id i8sm21092494wrx.43.2021.03.15.19.13.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Mar 2021 19:13:30 -0700 (PDT)
+        Mon, 15 Mar 2021 19:13:33 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -66,9 +66,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <pclouds@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 00/29] tree-walk: mostly replace "mode" with "enum object_type"
-Date:   Tue, 16 Mar 2021 03:12:43 +0100
-Message-Id: <20210316021312.13927-1-avarab@gmail.com>
+Subject: [PATCH v2 03/29] cache.h: add a comment to object_type()
+Date:   Tue, 16 Mar 2021 03:12:46 +0100
+Message-Id: <20210316021312.13927-4-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.0.rc2.211.g1d0b8788b3
 In-Reply-To: <20210308150650.18626-1-avarab@gmail.com>
 References: <20210308150650.18626-1-avarab@gmail.com>
@@ -79,609 +79,48 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A v2 of the big tree-walk.[ch] refactoring series, goals etc. at the
-v1 at:
-https://lore.kernel.org/git/20210308150650.18626-1-avarab@gmail.com/
+Add a comment to the object_type() function to explain what it
+returns, and what the "mode" is in the "else" case.
 
-It is based on my just-re-rolled v3 read_tree_recursive() series:
-https://lore.kernel.org/git/20210315234344.28427-1-avarab@gmail.com/
+The object_type() function dates back to 4d1012c3709 (Fix rev-list
+when showing objects involving submodules, 2007-11-11). It's not
+immediately obvious to someone looking at its history and how it's
+come to be used.
 
-This version should address all the feedback on v1 for patces 1-27/30,
-thanks to Elijah for very valuable comments on v1.
+Despite what Linus noted in 4d1012c3709 (Fix rev-list when showing
+objects involving submodules, 2007-11-11) about wanting to move away
+from users of object_type() relying on S_ISLNK(mode) being true here
+we do currently rely on that. If this is changed to a condition to
+only return OBJ_BLOB on S_ISREG(mode) then t4008, t4023 and t7415 will
+have failing tests.
 
-It's mostly small nits here and there, except:
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ cache.h | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
- - I found that the change I'd made to update-index.c was buggy at the
-   point it was introduced in the series, the object_type would be
-   uninitialized. There were/are no tests for that, but I've moved
-   things around so we don't have that bug anymore.
-
- - Elijah had a comment on whether we needed oid_object_info() in
-   blame.c. As it turns out we don't need a "is blob?" check at all
-   there. There's a new 28/29 to refactor that small part of blame.c,
-   along with a test.
-
-What this re-roll *does not* include is the final 28-30/30 part of v1
-to s/mode/raw_mode/g and move canonical_mode() out of tree-walk.h.
-
-So a follow-up series will still be needed to fix the fsck.c check for
-bad modes, but I wanted to split that tricker change off from this
-rather big initial refactoring.
-
-Ævar Arnfjörð Bjarmason (29):
-  diff.c: remove redundant canon_mode() call
-  notes & match-trees: use name_entry's "pathlen" member
-  cache.h: add a comment to object_type()
-  tree-walk.h: add object_type member to name_entry
-  tree-walk.c: migrate to using new "object_type" field when possible
-  cache.h: have base_name_compare() take "is tree?", not "mode"
-  tree-walk.h users: switch object_type(...) to new .object_type
-  tree.h: format argument lists of read_tree_recursive() users
-  tree.h users: format argument lists in archive.c
-  archive: get rid of 'stage' parameter
-  tree.h API: make read_tree_fn_t take an "enum object_type"
-  tree-walk.h users: migrate "p->mode &&" pattern
-  tree-walk.h users: refactor chained "mode" if/else into switch
-  tree-walk.h users: migrate miscellaneous "mode" to "object_type"
-  merge-tree tests: test for the mode comparison in same_entry()
-  merge-ort: correct reference to test in 62fdec17a11
-  fsck.c: switch on "object_type" in fsck_walk_tree()
-  tree-walk.h users: use temporary variable(s) for "mode"
-  tree-walk.h API: formatting changes for subsequent commit
-  tree-walk.h API: rename get_tree_entry() to get_tree_entry_mode()
-  tree-walk.h API users: use "tmp" for mode in shift_tree_by()
-  tree-walk.h API: add get_tree_entry_type()
-  tree-walk.h API: document and format tree_entry_extract()
-  tree-entry.h API: rename tree_entry_extract() to
-    tree_entry_extract_mode()
-  tree-walk.h API: add a tree_entry_extract_all() function
-  tree-walk.h API: add get_tree_entry_all()
-  tree-walk.h API: add a get_tree_entry_path() function
-  blame: emit a better error on 'git blame directory'
-  tree-walk.h API: add a tree_entry_extract_type() function
-
- archive.c                       | 50 +++++++++---------
- blame.c                         |  9 ++--
- builtin/checkout.c              |  6 ++-
- builtin/fast-import.c           |  8 +--
- builtin/grep.c                  |  6 +--
- builtin/log.c                   |  7 +--
- builtin/ls-files.c              |  6 ++-
- builtin/ls-tree.c               | 14 +++---
- builtin/merge-tree.c            | 30 +++++++----
- builtin/mktree.c                |  4 +-
- builtin/pack-objects.c          |  6 +--
- builtin/reflog.c                |  3 +-
- builtin/rm.c                    |  2 +-
- builtin/update-index.c          |  6 ++-
- cache-tree.c                    |  2 +-
- cache.h                         | 11 ++--
- combine-diff.c                  |  8 +--
- delta-islands.c                 |  2 +-
- diff.c                          |  2 +-
- fsck.c                          | 23 ++++-----
- http-push.c                     |  6 ++-
- line-log.c                      |  2 +-
- list-objects.c                  | 20 +++++---
- match-trees.c                   | 52 +++++++++----------
- merge-ort.c                     | 13 ++---
- merge-recursive.c               | 33 ++++++------
- notes.c                         | 14 +++---
- object-name.c                   |  7 ++-
- pack-bitmap-write.c             |  8 +--
- read-cache.c                    | 16 +++---
- revision.c                      | 12 +++--
- t/t4300-merge-tree.sh           | 44 ++++++++++++++++
- t/t8004-blame-with-conflicts.sh | 20 ++++++++
- tree-diff.c                     | 30 +++++++----
- tree-walk.c                     | 89 ++++++++++++++++++++++++---------
- tree-walk.h                     | 63 ++++++++++++++++++++---
- tree.c                          | 19 ++++---
- tree.h                          |  5 +-
- unpack-trees.c                  | 24 +++++----
- walker.c                        | 22 ++++----
- 40 files changed, 460 insertions(+), 244 deletions(-)
-
-Range-diff:
- 1:  e5df57c3440 =  1:  f9bbc30f69f diff.c: remove redundant canon_mode() call
- 2:  8c2500bbf35 =  2:  187fc2c3e64 notes & match-trees: use name_entry's "pathlen" member
- 3:  3d98e0c132f !  3:  311637c5583 cache.h: add a comment to object_type()
-    @@ Commit message
-         cache.h: add a comment to object_type()
-     
-         Add a comment to the object_type() function to explain what it
-    -    returns, and whet the "mode" is in the "else" case.
-    +    returns, and what the "mode" is in the "else" case.
-     
-         The object_type() function dates back to 4d1012c3709 (Fix rev-list
-         when showing objects involving submodules, 2007-11-11). It's not
- 4:  ce5808b317c =  4:  fecfe3d462c tree-walk.h: add object_type member to name_entry
- 5:  18f26531acf =  5:  db961ab5e8d tree-walk.c: migrate to using new "object_type" field when possible
- 6:  55e2640b815 !  6:  df2fc76161d cache.h: have base_name_compare() take "is tree?", not "mode"
-    @@ cache.h: int repo_interpret_branch_name(struct repository *r,
-      
-     -int base_name_compare(const char *name1, int len1, int mode1, const char *name2, int len2, int mode2);
-     -int df_name_compare(const char *name1, int len1, int mode1, const char *name2, int len2, int mode2);
-    -+int base_name_compare(const char *name1, int len1, int isdir1, const char *name2, int len2, int isdir2);
-    -+int df_name_compare(const char *name1, int len1, int isdir1, const char *name2, int len2, int isdir2);
-    ++int base_name_compare(const char *name1, int len1, int istree1, const char *name2, int len2, int istree2);
-    ++int df_name_compare(const char *name1, int len1, int istree1, const char *name2, int len2, int istree2);
-      int name_compare(const char *name1, size_t len1, const char *name2, size_t len2);
-      int cache_name_stage_compare(const char *name1, int len1, int stage1, const char *name2, int len2, int stage2);
-      
-    @@ combine-diff.c
-      			  const struct diff_filespec *two)
-      {
-     -	if (!S_ISDIR(one->mode) && !S_ISDIR(two->mode))
-    -+	int isdir_one = S_ISDIR(one->mode);
-    -+	int isdir_two = S_ISDIR(two->mode);
-    -+	if (!isdir_one && !isdir_two)
-    ++	int istree_one = S_ISDIR(one->mode);
-    ++	int istree_two = S_ISDIR(two->mode);
-    ++	if (!istree_one && !istree_two)
-      		return strcmp(one->path, two->path);
-      
-     -	return base_name_compare(one->path, strlen(one->path), one->mode,
-     -				 two->path, strlen(two->path), two->mode);
-    -+	return base_name_compare(one->path, strlen(one->path), isdir_one,
-    -+				 two->path, strlen(two->path), isdir_two);
-    ++	return base_name_compare(one->path, strlen(one->path), istree_one,
-    ++				 two->path, strlen(two->path), istree_two);
-      }
-      
-      static int filename_changed(char status)
-    @@ match-trees.c: static void *fill_tree_desc_strict(struct tree_desc *desc,
-      {
-     -	return base_name_compare(a->path, tree_entry_len(a), a->mode,
-     -				 b->path, tree_entry_len(b), b->mode);
-    -+	int isdira = a->object_type == OBJ_TREE;
-    -+	int isdirb = b->object_type == OBJ_TREE;
-    -+	return base_name_compare(a->path, tree_entry_len(a), isdira,
-    -+				 b->path, tree_entry_len(b), isdirb);
-    ++	int istree_a = (a->object_type == OBJ_TREE);
-    ++	int istree_b = (b->object_type == OBJ_TREE);
-    ++	return base_name_compare(a->path, tree_entry_len(a), istree_a,
-    ++				 b->path, tree_entry_len(b), istree_b);
-      }
-      
-      /*
-    @@ read-cache.c: int ie_modified(struct index_state *istate,
-      
-     -int base_name_compare(const char *name1, int len1, int mode1,
-     -		      const char *name2, int len2, int mode2)
-    -+int base_name_compare(const char *name1, int len1, int isdir1,
-    -+		      const char *name2, int len2, int isdir2)
-    ++int base_name_compare(const char *name1, int len1, int istree1,
-    ++		      const char *name2, int len2, int istree2)
-      {
-      	unsigned char c1, c2;
-      	int len = len1 < len2 ? len1 : len2;
-    @@ read-cache.c: int base_name_compare(const char *name1, int len1, int mode1,
-      	c1 = name1[len];
-      	c2 = name2[len];
-     -	if (!c1 && S_ISDIR(mode1))
-    -+	if (!c1 && isdir1)
-    ++	if (!c1 && istree1)
-      		c1 = '/';
-     -	if (!c2 && S_ISDIR(mode2))
-    -+	if (!c2 && isdir2)
-    ++	if (!c2 && istree2)
-      		c2 = '/';
-      	return (c1 < c2) ? -1 : (c1 > c2) ? 1 : 0;
-      }
-    @@ read-cache.c: int base_name_compare(const char *name1, int len1, int mode1,
-       */
-     -int df_name_compare(const char *name1, int len1, int mode1,
-     -		    const char *name2, int len2, int mode2)
-    -+int df_name_compare(const char *name1, int len1, int isdir1,
-    -+		    const char *name2, int len2, int isdir2)
-    ++int df_name_compare(const char *name1, int len1, int istree1,
-    ++		    const char *name2, int len2, int istree2)
-      {
-      	int len = len1 < len2 ? len1 : len2, cmp;
-      	unsigned char c1, c2;
-    @@ read-cache.c: int df_name_compare(const char *name1, int len1, int mode1,
-      		return 0;
-      	c1 = name1[len];
-     -	if (!c1 && S_ISDIR(mode1))
-    -+	if (!c1 && isdir1)
-    ++	if (!c1 && istree1)
-      		c1 = '/';
-      	c2 = name2[len];
-     -	if (!c2 && S_ISDIR(mode2))
-    -+	if (!c2 && isdir2)
-    ++	if (!c2 && istree2)
-      		c2 = '/';
-      	if (c1 == '/' && !c2)
-      		return 0;
-    @@ tree-diff.c: static int tree_entry_pathcmp(struct tree_desc *t1, struct tree_des
-      {
-      	struct name_entry *e1, *e2;
-      	int cmp;
-    -+	int e1_is_tree, e2_is_tree;
-    ++	int istree_e1, istree_e2;
-      
-      	/* empty descriptors sort after valid tree entries */
-      	if (!t1->size)
-    @@ tree-diff.c: static int tree_entry_pathcmp(struct tree_desc *t1, struct tree_des
-      		return -1;
-      
-      	e1 = &t1->entry;
-    -+	e1_is_tree = e1->object_type == OBJ_TREE;
-    ++	istree_e1 = (e1->object_type == OBJ_TREE);
-      	e2 = &t2->entry;
-     -	cmp = base_name_compare(e1->path, tree_entry_len(e1), e1->mode,
-     -				e2->path, tree_entry_len(e2), e2->mode);
-    -+	e2_is_tree = e2->object_type == OBJ_TREE;
-    -+	cmp = base_name_compare(e1->path, tree_entry_len(e1), e1_is_tree,
-    -+				e2->path, tree_entry_len(e2), e2_is_tree);
-    ++	istree_e2 = (e2->object_type == OBJ_TREE);
-    ++	cmp = base_name_compare(e1->path, tree_entry_len(e1), istree_e1,
-    ++				e2->path, tree_entry_len(e2), istree_e2);
-      	return cmp;
-      }
-      
-    @@ unpack-trees.c: static int traverse_trees_recursive(int n, unsigned long dirmask
-      				      const struct traverse_info *info,
-      				      const char *name, size_t namelen,
-     -				      unsigned mode)
-    -+				      unsigned is_tree)
-    ++				      unsigned istree)
-      {
-      	int pathlen, ce_len;
-      	const char *ce_name;
-    @@ unpack-trees.c: static int do_compare_entry_piecewise(const struct cache_entry *
-      	ce_name = ce->name + pathlen;
-      
-     -	return df_name_compare(ce_name, ce_len, S_IFREG, name, namelen, mode);
-    -+	return df_name_compare(ce_name, ce_len, 0, name, namelen, is_tree);
-    ++	return df_name_compare(ce_name, ce_len, 0, name, namelen, istree);
-      }
-      
-      static int do_compare_entry(const struct cache_entry *ce,
-      			    const struct traverse_info *info,
-      			    const char *name, size_t namelen,
-     -			    unsigned mode)
-    -+			    unsigned is_tree)
-    ++			    unsigned istree)
-      {
-      	int pathlen, ce_len;
-      	const char *ce_name;
-    @@ unpack-trees.c: static int do_compare_entry(const struct cache_entry *ce,
-      	 */
-      	if (!info->traverse_path)
-     -		return do_compare_entry_piecewise(ce, info, name, namelen, mode);
-    -+		return do_compare_entry_piecewise(ce, info, name, namelen, is_tree);
-    ++		return do_compare_entry_piecewise(ce, info, name, namelen, istree);
-      
-      	cmp = strncmp(ce->name, info->traverse_path, info->pathlen);
-      	if (cmp)
-    @@ unpack-trees.c: static int do_compare_entry(const struct cache_entry *ce,
-      	ce_name = ce->name + pathlen;
-      
-     -	return df_name_compare(ce_name, ce_len, S_IFREG, name, namelen, mode);
-    -+	return df_name_compare(ce_name, ce_len, 0, name, namelen, is_tree);
-    ++	return df_name_compare(ce_name, ce_len, 0, name, namelen, istree);
-      }
-      
-      static int compare_entry(const struct cache_entry *ce, const struct traverse_info *info, const struct name_entry *n)
-      {
-     -	int cmp = do_compare_entry(ce, info, n->path, n->pathlen, n->mode);
-    -+	int is_tree = n->object_type == OBJ_TREE;
-    -+	int cmp = do_compare_entry(ce, info, n->path, n->pathlen, is_tree);
-    ++	int istree = (n->object_type == OBJ_TREE);
-    ++	int cmp = do_compare_entry(ce, info, n->path, n->pathlen, istree);
-      	if (cmp)
-      		return cmp;
-      
- 7:  abc128f6cb9 =  7:  49d5da8c086 tree-walk.h users: switch object_type(...) to new .object_type
- 8:  dcf13faf3cd !  8:  c9d209d496a tree.h: format argument lists of read_tree_recursive() users
-    @@ archive.c: static int check_attr_export_subst(const struct attr_check *check)
-     -		void *context)
-     +			       int baselen, const char *filename,
-     +			       unsigned mode,
-    -+			       int stage, void *context)
-    ++			       int stage,
-    ++			       void *context)
-      {
-      	static struct strbuf path = STRBUF_INIT;
-      	struct archiver_context *c = context;
-    @@ tree.h: struct tree *parse_tree_indirect(const struct object_id *oid);
-     +			      unsigned int,
-     +			      void *);
-      
-    - int read_tree_recursive(struct repository *r,
-    - 			struct tree *tree,
-    + int read_tree_at(struct repository *r,
-    + 		 struct tree *tree,
- 9:  b33fcf82349 !  9:  a6d2660fe14 tree.h users: format argument lists in archive.c
-    @@ Commit message
-         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-      ## archive.c ##
-    -@@ archive.c: static int check_attr_export_subst(const struct attr_check *check)
-    - static int write_archive_entry(const struct object_id *oid, const char *base,
-    - 			       int baselen, const char *filename,
-    - 			       unsigned mode,
-    --			       int stage, void *context)
-    -+			       int stage,
-    -+			       void *context)
-    - {
-    - 	static struct strbuf path = STRBUF_INIT;
-    - 	struct archiver_context *c = context;
-     @@ archive.c: static int write_archive_entry(const struct object_id *oid, const char *base,
-      }
-      
-10:  6a20d3c058f = 10:  15f7f89acca archive: get rid of 'stage' parameter
-11:  a7f7444917c ! 11:  7a71404ea3f tree.h API: make read_tree_fn_t take an "enum object_type"
-    @@ merge-recursive.c: static int save_files_dirs(const struct object_id *oid,
-      static void get_files_dirs(struct merge_options *opt, struct tree *tree)
-     
-      ## tree.c ##
-    -@@ tree.c: static int read_tree_1(struct repository *r,
-    +@@ tree.c: int read_tree_at(struct repository *r,
-      	init_tree_desc(&desc, tree->buffer, tree->size);
-      
-      	while (tree_entry(&desc, &entry)) {
-    @@ tree.c: static int read_tree_1(struct repository *r,
-      		if (retval != all_entries_interesting) {
-      			retval = tree_entry_interesting(r->index, &entry,
-      							base, 0, pathspec);
-    -@@ tree.c: static int read_tree_1(struct repository *r,
-    +@@ tree.c: int read_tree_at(struct repository *r,
-      		}
-      
-      		switch (fn(&entry.oid, base,
-    @@ tree.c: static int read_tree_1(struct repository *r,
-      		case 0:
-      			continue;
-      		case READ_TREE_RECURSIVE:
-    -@@ tree.c: static int read_tree_1(struct repository *r,
-    +@@ tree.c: int read_tree_at(struct repository *r,
-      			return -1;
-      		}
-      
-    @@ tree.c: static int read_tree_1(struct repository *r,
-      			commit = lookup_commit(r, &entry.oid);
-      			if (!commit)
-      				die("Commit %s in submodule path %s%s not found",
-    -@@ tree.c: static int read_tree_1(struct repository *r,
-    +@@ tree.c: int read_tree_at(struct repository *r,
-      				    base->buf, entry.path);
-      
-      			oidcpy(&oid, get_commit_tree_oid(commit));
-    @@ tree.h: int cmp_cache_name_compare(const void *a_, const void *b_);
-     +			      enum object_type, unsigned int,
-      			      void *);
-      
-    - int read_tree_recursive(struct repository *r,
-    + int read_tree_at(struct repository *r,
-12:  625c643513d ! 12:  64dc9364bae tree-walk.h users: migrate "p->mode &&" pattern
-    @@ Metadata
-      ## Commit message ##
-         tree-walk.h users: migrate "p->mode &&" pattern
-     
-    -    Change code that dpends on "p->mode" either being a valid mode or zero
-    -    to use a p->object_type comparison to "OBJ_NONE".
-    +    Change code that depends on "p->mode" either being a valid mode or
-    +    zero to use a p->object_type comparison to "OBJ_NONE".
-     
-    -    The object_type() function in cache.h will not return OBJ_NONE, but in
-    -    this these API users are implicitly relying on the memzero() that
-    -    happens in setup_traverse_info().
-    +    The object_type() function in cache.h will not return OBJ_NONE, but
-    +    these API users are implicitly relying on the memzero() that happens
-    +    in setup_traverse_info().
-     
-         Since OBJ_NONE is "0" we can also rely on that being zero'd out here,
-         along with the rest of the structure. I think this is slightly less
-13:  37b28c7feff = 13:  93ed3edbbd5 tree-walk.h users: refactor chained "mode" if/else into switch
-14:  e0b8ec6e291 = 14:  7aa48aa34c3 tree-walk.h users: migrate miscellaneous "mode" to "object_type"
-15:  0cd162c43d7 = 15:  3ae81621dcf merge-tree tests: test for the mode comparison in same_entry()
-16:  f8ce666d4a7 = 16:  4249ad5c4de merge-ort: correct reference to test in 62fdec17a11
-17:  4963902ba97 = 17:  e5e17505dde fsck.c: switch on "object_type" in fsck_walk_tree()
-18:  d74e6778009 = 18:  3f0b884f1fd tree-walk.h users: use temporary variable(s) for "mode"
-19:  d39db486d4e = 19:  174167613bb tree-walk.h API: formatting changes for subsequent commit
-20:  69eb956b1ab = 20:  ec76db613f2 tree-walk.h API: rename get_tree_entry() to get_tree_entry_mode()
-21:  cc56453e600 = 21:  11e34941729 tree-walk.h API users: use "tmp" for mode in shift_tree_by()
-22:  ca9e3b3ad00 ! 22:  b31c106557f tree-walk.h API: Add get_tree_entry_type()
-    @@ Metadata
-     Author: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-      ## Commit message ##
-    -    tree-walk.h API: Add get_tree_entry_type()
-    +    tree-walk.h API: add get_tree_entry_type()
-     
-         Add a get_tree_entry_type() helper function to compliment the existing
-    -    get_tree_entry(). Move those users of get_tree_entry_type() who didn't
-    -    care about the mode specifically, but just want to know whether the
-    -    tree entry is one of OBJ_{BLOB,COMMIT,TREE} over to it.
-    +    get_tree_entry(), and a static get_tree_entry_all() which it uses internally.
-    +
-    +    Move those users of get_tree_entry_type() who didn't care about the
-    +    mode specifically, but just want to know whether the tree entry is one
-    +    of OBJ_{BLOB,COMMIT,TREE} over to the new get_tree_entry_type().
-    +
-    +    The get_tree_entry_all() function itself will be made non-static in a
-    +    subsequent commit. I'm leaving its argument list indented accordingly
-    +    to reduce churn when I do so.
-     
-         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-    @@ archive.c: static void parse_treeish_arg(const char **argv,
-      
-      		tree = parse_tree_indirect(&tree_oid);
-     
-    - ## blame.c ##
-    -@@ blame.c: static void verify_working_tree_path(struct repository *r,
-    - 	for (parents = work_tree->parents; parents; parents = parents->next) {
-    - 		const struct object_id *commit_oid = &parents->item->object.oid;
-    - 		struct object_id blob_oid;
-    --		unsigned short mode;
-    --		int ret = get_tree_entry_mode(r, commit_oid, path, &blob_oid,
-    --					      &mode);
-    -+		enum object_type object_type;
-    -+		int ret = get_tree_entry_type(r, commit_oid, path, &blob_oid,
-    -+					      &object_type);
-    - 
-    --		if (!ret && oid_object_info(r, &blob_oid, NULL) == OBJ_BLOB)
-    -+		if (!ret && object_type == OBJ_BLOB)
-    - 			return;
-    - 	}
-    - 
-    -
-      ## match-trees.c ##
-     @@ match-trees.c: void shift_tree_by(struct repository *r,
-      		   const char *shift_prefix)
-    @@ match-trees.c: void shift_tree_by(struct repository *r,
-     
-      ## tree-walk.c ##
-     @@ tree-walk.c: struct dir_state {
-    + 	struct object_id oid;
-    + };
-      
-    ++static int get_tree_entry_all(struct repository *r,
-    ++			      const struct object_id *tree_oid,
-    ++			      const char *name,
-    ++			      struct object_id *oid,
-    ++			      unsigned short *mode,
-    ++			      enum object_type *object_type);
-    ++
-      static int find_tree_entry(struct repository *r, struct tree_desc *t,
-      			   const char *name, struct object_id *result,
-     -			   unsigned short *mode)
-    @@ tree-walk.c: static int find_tree_entry(struct repository *r, struct tree_desc *
-     -			const char *name,
-     -			struct object_id *oid,
-     -			unsigned short *mode)
-    -+int get_tree_entry_all(struct repository *r,
-    ++static int get_tree_entry_all(struct repository *r,
-     +		       const struct object_id *tree_oid,
-     +		       const char *name,
-     +		       struct object_id *oid,
-    @@ tree-walk.h: struct traverse_info {
-     - * The third and fourth parameters are set to the entry's sha1 and
-     - * mode respectively.
-     + * There are variants of this function depending on what fields in the
-    -+ * "struct name_entry" you'd like. You always need to pointer to an
-    ++ * "struct name_entry" you'd like. You always need a pointer to an
-     + * appropriate variable to fill in (NULL won't do!):
-     + *
-     + * get_tree_entry_mode(): unsigned int mode
-     + * get_tree_entry_type(): enum object_type
-    -+ * get_tree_entry_all(): unsigned int mode, enum object_type
-       */
-      int get_tree_entry_mode(struct repository *, const struct object_id *, const char *,
-      			struct object_id *,
-    @@ tree-walk.h: struct traverse_info {
-     +int get_tree_entry_type(struct repository *, const struct object_id *, const char *,
-     +			struct object_id *,
-     +			enum object_type *);
-    -+int get_tree_entry_all(struct repository *, const struct object_id *, const char *,
-    -+		       struct object_id *,
-    -+		       unsigned short *, enum object_type *);
-      
-      /**
-       * Generate the full pathname of a tree entry based from the root of the
-24:  5986f494aa1 ! 23:  304d5d4d1af tree-walk.h API: document and format tree_entry_extract()
-    @@ tree-walk.h: struct tree_desc {
-     - * `pathp` and `modep` arguments are set to the entry's pathname and mode
-     - * respectively.
-     + * `tree_desc's` `entry` member) and return the OID of the entry.
-    -+
-    ++ *
-     + * There are variants of this function depending on what fields in the
-    -+ * "struct name_entry" you'd like. You always need to pointer to an
-    ++ * "struct name_entry" you'd like. You always need a pointer to an
-     + * appropriate variable to fill in (NULL won't do!):
-     + *
-     + * tree_entry_extract_mode(): const char *path, unsigned int mode
-25:  9b604a193b8 ! 24:  346453df356 tree-entry.h API: rename tree_entry_extract() to tree_entry_extract_mode()
-    @@ tree-diff.c: static struct combine_diff_path *emit_path(struct combine_diff_path
-      
-      		isdir = S_ISDIR(mode);
-     
-    - ## tree-walk.c ##
-    -@@ tree-walk.c: static int find_tree_entry(struct repository *r, struct tree_desc *t,
-    - 		struct object_id oid;
-    - 		int entrylen, cmp;
-    - 
-    --		oidcpy(&oid, tree_entry_extract(t, &entry, mode));
-    -+		oidcpy(&oid, tree_entry_extract_mode(t, &entry, mode));
-    - 		entrylen = tree_entry_len(&t->entry);
-    - 		update_tree_entry(t);
-    - 		if (entrylen > namelen)
-    -
-      ## tree-walk.h ##
-     @@ tree-walk.h: struct tree_desc {
-       *
-26:  40878d04550 ! 25:  dd012b661e5 tree-walk.h API: add a tree_entry_extract_all() function
-    @@ Commit message
-     
-         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-    - ## builtin/update-index.c ##
-    -@@ builtin/update-index.c: static struct cache_entry *read_one_ent(const char *which,
-    - 					struct object_id *ent, const char *path,
-    - 					int namelen, int stage)
-    - {
-    -+	enum object_type object_type;
-    - 	unsigned short mode;
-    - 	struct object_id oid;
-    - 	struct cache_entry *ce;
-    - 
-    --	if (get_tree_entry_mode(the_repository, ent, path, &oid, &mode)) {
-    -+	if (get_tree_entry_all(the_repository, ent, path, &oid,
-    -+			       &mode, &object_type)) {
-    - 		if (which)
-    - 			error("%s: not in %s branch.", path, which);
-    - 		return NULL;
-    - 	}
-    --	if (mode == S_IFDIR) {
-    -+	if (object_type == OBJ_TREE) {
-    - 		if (which)
-    - 			error("%s: not a blob in %s branch.", path, which);
-    - 		return NULL;
-    -
-      ## tree-diff.c ##
-     @@ tree-diff.c: static struct combine_diff_path *emit_path(struct combine_diff_path *p,
-      	assert(t || tp);
-    @@ tree-diff.c: static struct combine_diff_path *emit_path(struct combine_diff_path
-     +		oid = tree_entry_extract_all(t, &path, &mode, &object_type);
-      		pathlen = tree_entry_len(&t->entry);
-     -		isdir = S_ISDIR(mode);
-    -+		isdir = object_type == OBJ_TREE;
-    ++		isdir = (object_type == OBJ_TREE);
-      	} else {
-      		/*
-      		 * a path was removed - take path from imin parent. Also take
-    @@ tree-walk.c: static int find_tree_entry(struct repository *r, struct tree_desc *
-      		struct object_id oid;
-      		int entrylen, cmp;
-      
-    --		oidcpy(&oid, tree_entry_extract_mode(t, &entry, mode));
-    +-		oidcpy(&oid, tree_entry_extract(t, &entry, mode));
-     +		oidcpy(&oid, tree_entry_extract_all(t, &entry, mode, object_type));
-    -+
-      		entrylen = tree_entry_len(&t->entry);
-      		update_tree_entry(t);
-      		if (entrylen > namelen)
- -:  ----------- > 26:  b6ee8410e38 tree-walk.h API: add get_tree_entry_all()
-23:  6b864e066d9 ! 27:  5c98afd9e7a tree-walk.h API: add a get_tree_entry_path() function
-    @@ tree-walk.c: int get_tree_entry_all(struct repository *r,
-     
-      ## tree-walk.h ##
-     @@ tree-walk.h: struct traverse_info {
-    -  * "struct name_entry" you'd like. You always need to pointer to an
-    +  * "struct name_entry" you'd like. You always need a pointer to an
-       * appropriate variable to fill in (NULL won't do!):
-       *
-     + * get_tree_entry_path(): <no extra argument, just get the common 'path'>
- -:  ----------- > 28:  3e7e0f7eb85 blame: emit a better error on 'git blame directory'
-27:  e4a6fae1ae0 = 29:  ac1ccf13570 tree-walk.h API: add a tree_entry_extract_type() function
-28:  766b4460a95 <  -:  ----------- tree-walk.h API users: rename "struct name_entry"'s "mode" to "raw_mode"
-29:  4bdf94ae5c1 <  -:  ----------- tree.h API users: rename read_tree_fn_t's "mode" to "raw_mode"
-30:  9d049fdbd00 <  -:  ----------- tree-walk.h API: move canon_mode() back out of decode_tree_entry()
+diff --git a/cache.h b/cache.h
+index c2f8a8eadf6..ae0c0bef5c2 100644
+--- a/cache.h
++++ b/cache.h
+@@ -451,11 +451,16 @@ enum object_type {
+ 	OBJ_MAX
+ };
+ 
++/*
++ * object_type() returns an object of a type that'll appear in a tree,
++ * so no OBJ_TAG is possible. This is mostly (and dates back to)
++ * consumers of the tree-walk.h API's "mode" field.
++ */
+ static inline enum object_type object_type(unsigned int mode)
+ {
+ 	return S_ISDIR(mode) ? OBJ_TREE :
+ 		S_ISGITLINK(mode) ? OBJ_COMMIT :
+-		OBJ_BLOB;
++		OBJ_BLOB; /* S_ISREG(mode) || S_ISLNK(mode) */
+ }
+ 
+ /* Double-check local_repo_env below if you add to this list. */
 -- 
 2.31.0.rc2.211.g1d0b8788b3
 
