@@ -2,152 +2,156 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D8BCC2BA83
-	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 15:18:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E4F55C433E9
+	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 15:53:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EE28B650DC
-	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 15:18:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BE50C650FB
+	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 15:53:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231351AbhCPPRr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Mar 2021 11:17:47 -0400
-Received: from cloud.peff.net ([104.130.231.41]:37794 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235396AbhCPPP7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Mar 2021 11:15:59 -0400
-Received: (qmail 19409 invoked by uid 109); 16 Mar 2021 15:15:56 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 16 Mar 2021 15:15:56 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28793 invoked by uid 111); 16 Mar 2021 15:15:56 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 16 Mar 2021 11:15:56 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 16 Mar 2021 11:15:55 -0400
-From:   Jeff King <peff@peff.net>
-To:     Andreas Schwab <schwab@linux-m68k.org>
-Cc:     Miriam Rubio <mirucam@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Pranit Bauva <pranit.bauva@gmail.com>, git@vger.kernel.org
-Subject: [PATCH] bisect: peel annotated tags to commits
-Message-ID: <YFDLq9mLbJtLqKea@coredump.intra.peff.net>
-References: <878s6nz1sg.fsf@igel.home>
- <YFDGX4EsrvHqZgPF@coredump.intra.peff.net>
+        id S232470AbhCPPxW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Mar 2021 11:53:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41222 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232804AbhCPPwt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Mar 2021 11:52:49 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE724C06174A
+        for <git@vger.kernel.org>; Tue, 16 Mar 2021 08:52:48 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id p19so1444673wmq.1
+        for <git@vger.kernel.org>; Tue, 16 Mar 2021 08:52:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=2+lbye5D96lhfpNssvIVr5DWRPUe+Uj9c/pg7GVqbtI=;
+        b=VuPQpFmGP2kjqEUmvRIk/0CfJKegBQgEpQB2nS8QSzX0wdpErHq0e8oKUDr4JOFH4o
+         xgkgbHOpMDJUkISEeg7EJl/rZAC9VLzvbus9YPijKOFc/xaM/HeeiNwJmEADlilfILEG
+         clzsZSWT+hbow5YC97B1ZN1Pn98/S7cMOhEhPcImcniMIdOL/GADXbPlJVdwn1iSElXR
+         zHZD6OQkSzLJI/jwSkW7j/hUhdYYnYmckHrviB+1kSssvjTEFfh/++ExeBoPkHa7VXwa
+         r0UTr+zuf1oynFcp+M947Z2pWOhiGUmkOUdqFV7UA4VWLaKPF355NfatoZSnEH3r756m
+         NDDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=2+lbye5D96lhfpNssvIVr5DWRPUe+Uj9c/pg7GVqbtI=;
+        b=hlWM3kxgC/y3cFo7fwqtszcllGgyo78mEmYbmTgidSdpaVe1W+bvv9JvQFJEnincPu
+         fVmxjXLFc0U37etPMnQlpekuT6J+QE870BQDJ+EsltqFg/QdrM54oisjJqh6HFR0T0dG
+         wPdBvIXNlzM+S/4Jik+Kk2p95+08coCzo6mQi6C2VtYATLc64vb1C4hifX1syBcmdYnm
+         jMnxd80q77hqO2zTbADQTDI0DPEBxPyJ7CR+BPZSOEkyY18N0o4IuYrtBX1bppj8s//A
+         WL1Rza+RWniAXHJ37hVVnC2+GGSZL/xOzbMzoSu20FJ26wKjCZybxl4EnX/nkCikVyqL
+         0rGQ==
+X-Gm-Message-State: AOAM530abeQFDKBZSJRkydCIUhDHXnfrg/+w1M3tCk1ILYhZLfcYRr/V
+        6wXy5VqrmqwP2FO6NQ2AW/4WGEFS5dt1rA==
+X-Google-Smtp-Source: ABdhPJwIQRNMubRTjiq3b7ebBGDB3RtlrWIR8VXU7svq8ONElSD/zx8fWFm/aoC5xO16Nlb9fEct0w==
+X-Received: by 2002:a1c:448a:: with SMTP id r132mr260218wma.157.1615909967371;
+        Tue, 16 Mar 2021 08:52:47 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id i11sm22224228wro.53.2021.03.16.08.52.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Mar 2021 08:52:46 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v4 0/9] read_tree() and read_tree_recursive() refactoring
+Date:   Tue, 16 Mar 2021 16:52:35 +0100
+Message-Id: <20210316155244.28328-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.31.0.256.gf0ddda3145
+In-Reply-To: <20210315234344.28427-1-avarab@gmail.com>
+References: <20210315234344.28427-1-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YFDGX4EsrvHqZgPF@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 16, 2021 at 10:53:19AM -0400, Jeff King wrote:
+The only changes since v3[1] is a fix for a small test nit by
+Elijah[2].
 
-> On Tue, Mar 16, 2021 at 02:05:51PM +0100, Andreas Schwab wrote:
-> 
-> > $ git --version
-> > git version 2.31.0
-> > $ git bisect start
-> > $ git bisect good v2.30.0
-> > $ git bisect bad v2.31.0
-> > 3e90d4b58f3819cfd58ac61cb8668e83d3ea0563 was both good and bad
-> 
-> Looks like it bisects to 27257bc466 (bisect--helper: reimplement
-> `bisect_state` & `bisect_head` shell functions in C, 2020-10-15), which
-> isn't too surprising. So it broke in v2.30, but nobody seems to have
-> noticed during the last cycle.
-> 
-> I'd guess it's just missing a call to peel the input oid.
+1. https://lore.kernel.org/git/20210315234344.28427-1-avarab@gmail.com/
+2. https://lore.kernel.org/git/CABPp-BHWDffkqXsisp9E-FJPR4PmByPWuxWkAir24WpqUu43Lg@mail.gmail.com/
 
-Yep. Here's a fix. Again, not new in v2.31, so we don't have to worry
-about a brown-bag fix for yesterday's release. But I do think it's worth
-trying to get onto a maint release. I prepared this patch on top of
-mr/bisect-in-c-3.
+Ævar Arnfjörð Bjarmason (9):
+  ls-files tests: add meaningful --with-tree tests
+  tree.c API: move read_tree() into builtin/ls-files.c
+  ls-files: don't needlessly pass around stage variable
+  ls-files: refactor away read_tree()
+  tree.h API: remove support for starting at prefix != ""
+  tree.h API: remove "stage" parameter from read_tree_recursive()
+  tree.h API: rename read_tree_recursive() to read_tree()
+  show tests: add test for "git show <tree>"
+  tree.h API: expose read_tree_1() as read_tree_at()
 
--- >8 --
-Subject: [PATCH] bisect: peel annotated tags to commits
+ archive.c                     |  19 +++---
+ builtin/checkout.c            |   8 +--
+ builtin/log.c                 |   8 +--
+ builtin/ls-files.c            |  76 +++++++++++++++++++++-
+ builtin/ls-tree.c             |   6 +-
+ cache.h                       |   2 +-
+ merge-recursive.c             |   6 +-
+ t/t3060-ls-files-with-tree.sh |  41 ++++++++++++
+ t/t7007-show.sh               |  39 ++++++++++++
+ tree.c                        | 117 ++++------------------------------
+ tree.h                        |  24 +++----
+ 11 files changed, 205 insertions(+), 141 deletions(-)
 
-This patch fixes a bug where git-bisect doesn't handle receiving
-annotated tags as "git bisect good <tag>", etc. It's a regression in
-27257bc466 (bisect--helper: reimplement `bisect_state` & `bisect_head`
-shell functions in C, 2020-10-15).
-
-The original shell code called:
-
-  sha=$(git rev-parse --verify "$rev^{commit}") ||
-          die "$(eval_gettext "Bad rev input: \$rev")"
-
-which will peel the input to a commit (or complain if that's not
-possible). But the C code just calls get_oid(), which will yield the oid
-of the tag.
-
-The fix is to peel to a commit. The error message here is a little
-non-idiomatic for Git (since it starts with a capital). I've mostly left
-it, as it matches the other converted messages (like the "Bad rev input"
-we print when get_oid() fails), though I did add an indication that it
-was the peeling that was the problem. It might be worth taking a pass
-through this converted code to modernize some of the error messages.
-
-Note also that the test does a bare "grep" (not i18ngrep) on the
-expected "X is the first bad commit" output message. This matches the
-rest of the test script.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/bisect--helper.c    |  9 ++++++++-
- t/t6030-bisect-porcelain.sh | 12 ++++++++++++
- 2 files changed, 20 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index fc6ca257a4..f0eeb4a2f0 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -876,12 +876,19 @@ static enum bisect_error bisect_state(struct bisect_terms *terms, const char **a
- 	 */
- 
- 	for (; argc; argc--, argv++) {
-+		struct commit *commit;
-+
- 		if (get_oid(*argv, &oid)){
- 			error(_("Bad rev input: %s"), *argv);
- 			oid_array_clear(&revs);
- 			return BISECT_FAILED;
- 		}
--		oid_array_append(&revs, &oid);
-+
-+		commit = lookup_commit_reference(the_repository, &oid);
-+		if (!commit)
-+			die(_("Bad rev input (not a commit): %s"), *argv);
-+
-+		oid_array_append(&revs, &commit->object.oid);
- 	}
- 
- 	if (strbuf_read_file(&buf, git_path_bisect_expected_rev(), 0) < the_hash_algo->hexsz ||
-diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-index b886529e59..9c389553a7 100755
---- a/t/t6030-bisect-porcelain.sh
-+++ b/t/t6030-bisect-porcelain.sh
-@@ -929,4 +929,16 @@ test_expect_success 'git bisect reset cleans bisection state properly' '
- 	test_path_is_missing "$GIT_DIR/BISECT_START"
- '
- 
-+test_expect_success 'bisect handles annotated tags' '
-+	test_commit commit-one &&
-+	git tag -m foo tag-one &&
-+	test_commit commit-two &&
-+	git tag -m foo tag-two &&
-+	git bisect start &&
-+	git bisect good tag-one &&
-+	git bisect bad tag-two >output &&
-+	bad=$(git rev-parse --verify tag-two^{commit}) &&
-+	grep "$bad is the first bad commit" output
-+'
-+
- test_done
+Range-diff:
+ -:  ---------- >  1:  b338f2c01a ls-files tests: add meaningful --with-tree tests
+ -:  ---------- >  2:  4578b83944 tree.c API: move read_tree() into builtin/ls-files.c
+ -:  ---------- >  3:  33656ff63b ls-files: don't needlessly pass around stage variable
+ -:  ---------- >  4:  1c96d5d361 ls-files: refactor away read_tree()
+ -:  ---------- >  5:  367cb99224 tree.h API: remove support for starting at prefix != ""
+ -:  ---------- >  6:  38e36780e2 tree.h API: remove "stage" parameter from read_tree_recursive()
+ -:  ---------- >  7:  859902ffd8 tree.h API: rename read_tree_recursive() to read_tree()
+ 1:  a63c9b49f1 !  8:  8a6bebde23 show tests: add test for "git show <tree>"
+    @@ t/t7007-show.sh: test_expect_success 'showing two commits' '
+     +
+     +test_expect_success 'showing two trees' '
+     +	cat >expected <<-EOF &&
+    -+	tree main1:
+    ++	tree main1^{tree}
+     +
+     +	main1.t
+     +
+    -+	tree main2:
+    ++	tree main2^{tree}
+     +
+     +	main1.t
+     +	main2.t
+     +	EOF
+    -+	git show main1: main2: >actual &&
+    ++	git show main1^{tree} main2^{tree} >actual &&
+     +	test_cmp expected actual
+     +'
+     +
+    @@ t/t7007-show.sh: test_expect_success 'showing two commits' '
+     +	mkdir not-recursive/a &&
+     +	test_commit -C not-recursive a/file &&
+     +	cat >expected <<-EOF &&
+    -+	tree a/file:
+    ++	tree HEAD^{tree}
+     +
+     +	a/
+     +	main1.t
+     +	EOF
+    -+	git -C not-recursive show a/file: >actual &&
+    ++	git -C not-recursive show HEAD^{tree} >actual &&
+     +	test_cmp expected actual
+     +'
+     +
+ 2:  570642c862 =  9:  29996dd82b tree.h API: expose read_tree_1() as read_tree_at()
 -- 
-2.31.0.559.g509d4a088b
+2.31.0.256.gf0ddda3145
 
