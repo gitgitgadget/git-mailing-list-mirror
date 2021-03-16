@@ -2,241 +2,214 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-19.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8920AC433E6
-	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 10:40:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 47523C433DB
+	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 10:56:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5E3F164F7F
-	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 10:40:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0D9086500F
+	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 10:56:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236707AbhCPKkE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Mar 2021 06:40:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58434 "EHLO
+        id S232271AbhCPKzb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Mar 2021 06:55:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33588 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236737AbhCPKjq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Mar 2021 06:39:46 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DEA0C06174A
-        for <git@vger.kernel.org>; Tue, 16 Mar 2021 03:39:46 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id m20-20020a7bcb940000b029010cab7e5a9fso1119160wmi.3
-        for <git@vger.kernel.org>; Tue, 16 Mar 2021 03:39:45 -0700 (PDT)
+        with ESMTP id S229793AbhCPKz0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Mar 2021 06:55:26 -0400
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31B91C06174A
+        for <git@vger.kernel.org>; Tue, 16 Mar 2021 03:55:25 -0700 (PDT)
+Received: by mail-pl1-x62c.google.com with SMTP id z5so16772278plg.3
+        for <git@vger.kernel.org>; Tue, 16 Mar 2021 03:55:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=97Z99WT+3sbXI6WEykDug3rQBY4V8uWzTV25E2jsRCI=;
-        b=FnR4EX7cW08Y6gSEmqgf0XZ06QqDGi702f6uQg0ARrXhOKwPyIX3Sk9J/XccQyYlsQ
-         OZkMqDCRGLavc78/KbOJXWNyU3O8d4QbiJPbEt5gNir0zKdD3FaETHw65qA+dWZ1Vfyh
-         iWcrK1dgVcJIUybFMkvlquUTT95gJJ16Igll8Cpy+pDUM4fi1Hw/0RJ447D8QmcCLE/7
-         pH2rWUHd+YDmWyY/mNODGWiR/hUrLnssS1u0jbljpg0qpMALm+XR7pyazLJ+yb0ccr3Y
-         gbHJqLOLH3jDEvV3AWLg/wnYTEJe2PHg9bWAJZlX4tuCj+KlpgiiwdJnUC64ro1n3HGv
-         pjXg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=fmR/NvuPtYu1d0XPuqx8WVkCHn2A+F34AxpPqgMgNlc=;
+        b=ohLo4+gjSDZDj3V2HxGovFzEd7sbVWr+2zL3gZ23eDMju4bcw4raGOKvGzoNREnWm/
+         9MD91bPCNsrAmRR0xb91BhBi4vehVkYEJeiJCGUc33S+w81W1tw0XA9K/t+bDjenae+C
+         koiW8q9Zo4RaKDACTjUB7Pt1mypwchiVOZyZLKt6b+U0IJGH/n9glkkaDftcpGqwSniL
+         M1tYjhZvxEnIEhcsssl9ZdoGOcCzxDnvuwtn4EXVHYsdQVRSp+APfWCm+UNC4CMl3V+5
+         /t2/+mh2a1GIs6FSUaLdRtQkvoSkOExd3AIpTHQ7knEkX6dGBsueqCJuJOPKW9h/3MJv
+         Az9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=97Z99WT+3sbXI6WEykDug3rQBY4V8uWzTV25E2jsRCI=;
-        b=sdWfs4uwfWVoYgGmBAt34OvHLhH+YyaMourbK9J+g3gqIikO1sFaup4jhyT/lqrzdx
-         zGoWqBKaJY1QhKi9zVsFg3vOgheujswZe3VAP+Imrt2zXBg4PV/XYvk5CWpscVo63DjO
-         oV6/dK6UsWKdje+Y2QHX3kH/tm7mxiToyIy2D3OAFK+pLX6peWeVVzVEkfOotjpCXVZf
-         MwW3W2v/PzIrMkyFA9t82Ot7+6ZC+79sVAR7KpIwQ7vfqusRj/zA65Okf8iX68uBInW8
-         0NKKWlrzhW5hlZCgzll1+SrREg/v/7F22DdMhQUWS2KTFeIgMmGARIMByXDIHbXNNA0o
-         pIQQ==
-X-Gm-Message-State: AOAM533/tXVnPZLejZHE0guYu7vWh7yxro8s3kRR2PkN4ZBgCtnGb9ge
-        plPKScPYxhRl3VFslUWQin/HZHbXT8M=
-X-Google-Smtp-Source: ABdhPJyEUiFZbqCvAYsZ2mRWHfCAll+e2DOzRd2A51MoXrDXLPH4HB1VtYTCxkkC00ccg1wTb25S+g==
-X-Received: by 2002:a05:600c:198c:: with SMTP id t12mr3944555wmq.183.1615891184579;
-        Tue, 16 Mar 2021 03:39:44 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h20sm2706441wmm.19.2021.03.16.03.39.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Mar 2021 03:39:44 -0700 (PDT)
-Message-Id: <pull.901.v9.git.1615891183320.gitgitgadget@gmail.com>
-In-Reply-To: <pull.901.v8.git.1615813658.gitgitgadget@gmail.com>
-References: <pull.901.v8.git.1615813658.gitgitgadget@gmail.com>
-From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 16 Mar 2021 10:39:42 +0000
-Subject: [PATCH v9] [GSOC] commit: add --trailer option
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=fmR/NvuPtYu1d0XPuqx8WVkCHn2A+F34AxpPqgMgNlc=;
+        b=ZgkKQge8SRNmAsuOVJVdxi0BXr0KvlWXG0Fjqn5Zb3m9UQmb6wb9oX0mDglWDBzfX9
+         lZ+qQ/3w8Q0x38bpzIEIGPikHrBa3XQjfnawnF4qwlK3ZPCMzTDAgItfGfBa/8Mp19Cx
+         px3e8Uru9A1pf3be8BN4wJUPRTkxbqLpBdTpeddiKuyX8DHLFrO44oJtLb+LMMzR6ZxW
+         uNEhrynRfgopQXdh0BaQ8sEo6al3qDRRUzi1jv/hPbi58oz1M8u8OrOznQ4fuKN3fTdS
+         2C0XlfEaPmPKLkypy6CxJIaakpcw/GyPcac0bzZ6ne/jLxXSSOnedq30ofouz37Qw+TN
+         PneA==
+X-Gm-Message-State: AOAM532mHM2TjQZEf0JdaWviwyvyK+crVio0ZxC1BPxHUONlpQZrC/7Q
+        opSJm9eOUtSh9AAKRc44Q79mu/YbodrzSA==
+X-Google-Smtp-Source: ABdhPJwvEF+zR2y0F1xxYiPjC1e8y6JViCDGtl3+tirDuAH3EuMi5dfBefpEmkXAl2YxXh5DXxxpFw==
+X-Received: by 2002:a17:903:102:b029:e5:fc29:de83 with SMTP id y2-20020a1709030102b02900e5fc29de83mr16065490plc.31.1615892124432;
+        Tue, 16 Mar 2021 03:55:24 -0700 (PDT)
+Received: from [192.168.43.80] (subs02-180-214-232-30.three.co.id. [180.214.232.30])
+        by smtp.gmail.com with ESMTPSA id n5sm16057543pfq.44.2021.03.16.03.55.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 16 Mar 2021 03:55:23 -0700 (PDT)
+Subject: Re: [PATCH] fsmonitor: avoid global-buffer-overflow READ when
+ checking trivial response
+To:     Andrzej Hunt via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Jeff Hostetler <jeffhost@microsoft.com>,
+        Andrzej Hunt <andrzej@ahunt.org>,
+        Andrzej Hunt <ajrhunt@google.com>, git@vger.kernel.org
+References: <pull.904.git.1615826363431.gitgitgadget@gmail.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <27cc2d6b-834f-e34b-0949-561b575544da@gmail.com>
+Date:   Tue, 16 Mar 2021 17:55:19 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     "Bradley M. Kuhn" <bkuhn@sfconservancy.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Brandon Casey <drafnel@gmail.com>,
-        Shourya Shukla <periperidip@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Rafael Silva <rafaeloliveira.cs@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>
+In-Reply-To: <pull.904.git.1615826363431.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: ZheNing Hu <adlternative@gmail.com>
+Applied the patch and worked as expected (no overflow  and passed the specified test).
 
-Historically, Git has supported the 'Signed-off-by' commit trailer
-using the '--signoff' and the '-s' option from the command line.
-But users may need to provide other trailer information from the
-command line such as "Helped-by", "Reported-by", "Mentored-by",
+Don't forget to add Tested-by trailer:
 
-Now implement a new `--trailer <token>[(=|:)<value>]` option to pass
-other trailers to `interpret-trailers` and insert them into commit
-messages.
+Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
 
-Signed-off-by: ZheNing Hu <adlternative@gmail.com>
----
-    [GSOC] commit: add --trailer option
-    
-    Now maintainers or developers can also use commit
-    --trailer="Signed-off-by:commiter<email>" from the command line to
-    provide trailers to commit messages. This solution may be more
-    generalized than v1.
+On 15/03/21 23.39, Andrzej Hunt via GitGitGadget wrote:
+> From: Andrzej Hunt <ajrhunt@google.com>
+> 
+> query_result can be be an empty strbuf (STRBUF_INIT) - in that case
+> trying to read 3 bytes triggers a buffer overflow read (as
+> query_result.buf = '\0').
+> 
+> Therefore we need to check query_result's length before trying to read 3
+> bytes.
+> 
+> This overflow was introduced in:
+>    940b94f35c (fsmonitor: log invocation of FSMonitor hook to trace2, 2021-02-03)
+> It was found when running the test-suite against ASAN, and can be most
+> easily reproduced with the following command:
+> 
+> make GIT_TEST_OPTS="-v" DEFAULT_TEST_TARGET="t7519-status-fsmonitor.sh" \
+> SANITIZE=address DEVELOPER=1 test
+> 
+> ==2235==ERROR: AddressSanitizer: global-buffer-overflow on address 0x0000019e6e5e at pc 0x00000043745c bp 0x7fffd382c520 sp 0x7fffd382bcc8
+> READ of size 3 at 0x0000019e6e5e thread T0
+>      #0 0x43745b in MemcmpInterceptorCommon(void*, int (*)(void const*, void const*, unsigned long), void const*, void const*, unsigned long) /home/abuild/rpmbuild/BUILD/llvm-11.0.0.src/build/../projects/compiler-rt/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:842:7
+>      #1 0x43786d in bcmp /home/abuild/rpmbuild/BUILD/llvm-11.0.0.src/build/../projects/compiler-rt/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:887:10
+>      #2 0x80b146 in fsmonitor_is_trivial_response /home/ahunt/oss-fuzz/git/fsmonitor.c:192:10
+>      #3 0x80b146 in query_fsmonitor /home/ahunt/oss-fuzz/git/fsmonitor.c:175:7
+>      #4 0x80a749 in refresh_fsmonitor /home/ahunt/oss-fuzz/git/fsmonitor.c:267:21
+>      #5 0x80bad1 in tweak_fsmonitor /home/ahunt/oss-fuzz/git/fsmonitor.c:429:4
+>      #6 0x90f040 in read_index_from /home/ahunt/oss-fuzz/git/read-cache.c:2321:3
+>      #7 0x8e5d08 in repo_read_index_preload /home/ahunt/oss-fuzz/git/preload-index.c:164:15
+>      #8 0x52dd45 in prepare_index /home/ahunt/oss-fuzz/git/builtin/commit.c:363:6
+>      #9 0x52a188 in cmd_commit /home/ahunt/oss-fuzz/git/builtin/commit.c:1588:15
+>      #10 0x4ce77e in run_builtin /home/ahunt/oss-fuzz/git/git.c:453:11
+>      #11 0x4ccb18 in handle_builtin /home/ahunt/oss-fuzz/git/git.c:704:3
+>      #12 0x4cb01c in run_argv /home/ahunt/oss-fuzz/git/git.c:771:4
+>      #13 0x4cb01c in cmd_main /home/ahunt/oss-fuzz/git/git.c:902:19
+>      #14 0x6aca8d in main /home/ahunt/oss-fuzz/git/common-main.c:52:11
+>      #15 0x7fb027bf5349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+>      #16 0x4206b9 in _start /home/abuild/rpmbuild/BUILD/glibc-2.26/csu/../sysdeps/x86_64/start.S:120
+> 
+> 0x0000019e6e5e is located 2 bytes to the left of global variable 'strbuf_slopbuf' defined in 'strbuf.c:51:6' (0x19e6e60) of size 1
+>    'strbuf_slopbuf' is ascii string ''
+> 0x0000019e6e5e is located 126 bytes to the right of global variable 'signals' defined in 'sigchain.c:11:31' (0x19e6be0) of size 512
+> SUMMARY: AddressSanitizer: global-buffer-overflow /home/abuild/rpmbuild/BUILD/llvm-11.0.0.src/build/../projects/compiler-rt/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:842:7 in MemcmpInterceptorCommon(void*, int (*)(void const*, void const*, unsigned long), void const*, void const*, unsigned long)
+> Shadow bytes around the buggy address:
+>    0x000080334d70: f9 f9 f9 f9 00 f9 f9 f9 f9 f9 f9 f9 00 00 00 00
+>    0x000080334d80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+>    0x000080334d90: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+>    0x000080334da0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+>    0x000080334db0: 00 00 00 00 00 00 00 00 00 00 00 00 f9 f9 f9 f9
+> =>0x000080334dc0: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9[f9]01 f9 f9 f9
+>    0x000080334dd0: f9 f9 f9 f9 03 f9 f9 f9 f9 f9 f9 f9 02 f9 f9 f9
+>    0x000080334de0: f9 f9 f9 f9 00 f9 f9 f9 f9 f9 f9 f9 04 f9 f9 f9
+>    0x000080334df0: f9 f9 f9 f9 01 f9 f9 f9 f9 f9 f9 f9 00 00 00 00
+>    0x000080334e00: f9 f9 f9 f9 00 00 00 00 f9 f9 f9 f9 01 f9 f9 f9
+>    0x000080334e10: f9 f9 f9 f9 04 f9 f9 f9 f9 f9 f9 f9 00 f9 f9 f9
+> Shadow byte legend (one shadow byte represents 8 application bytes):
+>    Addressable:           00
+>    Partially addressable: 01 02 03 04 05 06 07
+>    Heap left redzone:       fa
+>    Freed heap region:       fd
+>    Stack left redzone:      f1
+>    Stack mid redzone:       f2
+>    Stack right redzone:     f3
+>    Stack after return:      f5
+>    Stack use after scope:   f8
+>    Global redzone:          f9
+>    Global init order:       f6
+>    Poisoned by user:        f7
+>    Container overflow:      fc
+>    Array cookie:            ac
+>    Intra object redzone:    bb
+>    ASan internal:           fe
+>    Left alloca redzone:     ca
+>    Right alloca redzone:    cb
+>    Shadow gap:              cc
+> 
+> Signed-off-by: Andrzej Hunt <ajrhunt@google.com>
+> ---
+>      fsmonitor: fix overflow read
+>      
+>      This patch fixes a buffer overflow read in
+>      fsmonitor_is_trivial_response().
+>      
+>      I'm not super familiar with fsmonitor, so I'm not 100% sure what the
+>      empty response actually means. Based on my reading of the docs below,
+>      this can happen with fsmonitor-watchman v1 when no files have changed.
+>      But it could also happen for v2 if the implementation is broken (in
+>      which case we also shouldn't overflow)? Either way, I'm guessing the
+>      empty response doesn't count as trivial:
+>      https://git-scm.com/docs/githooks#_fsmonitor_watchman
+>      
+>      The other question I had is: can watchman V1 return "/\0" as the trivial
+>      response (as it has no token header) - and should we be recognising that
+>      too?
+>      
+>      ATB,
+>      
+>      Andrzej
+> 
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-904%2Fahunt%2Fasan-fsmonitor-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-904/ahunt/asan-fsmonitor-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/904
+> 
+>   fsmonitor.c | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/fsmonitor.c b/fsmonitor.c
+> index 23f8a0c97ebb..ab9bfc60b34e 100644
+> --- a/fsmonitor.c
+> +++ b/fsmonitor.c
+> @@ -185,10 +185,10 @@ static int query_fsmonitor(int version, const char *last_update, struct strbuf *
+>   int fsmonitor_is_trivial_response(const struct strbuf *query_result)
+>   {
+>   	static char trivial_response[3] = { '\0', '/', '\0' };
+> -	int is_trivial = !memcmp(trivial_response,
+> -				 &query_result->buf[query_result->len - 3], 3);
+>   
+> -	return is_trivial;
+> +	return query_result->len >= 3 &&
+> +		!memcmp(trivial_response,
+> +			&query_result->buf[query_result->len - 3], 3);
+>   }
+>   
+>   static void fsmonitor_refresh_callback(struct index_state *istate, char *name)
+> 
+> base-commit: 13d7ab6b5d7929825b626f050b62a11241ea4945
+> 
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-901%2Fadlternative%2Fcommit-with-multiple-signatures-v9
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-901/adlternative/commit-with-multiple-signatures-v9
-Pull-Request: https://github.com/gitgitgadget/git/pull/901
-
-Range-diff vs v8:
-
- 1:  f81b6e66a6ba ! 1:  e524c4ba5dc1 [GSOC] commit: add --trailer option
-     @@ builtin/commit.c: static int prepare_to_commit(const char *index_file, const cha
-      +		struct child_process run_trailer = CHILD_PROCESS_INIT;
-      +
-      +		strvec_pushl(&run_trailer.args, "interpret-trailers",
-     -+			     "--in-place", "--if-exists=add",
-     -+			     git_path_commit_editmsg(), NULL);
-     ++			     "--in-place", git_path_commit_editmsg(), NULL);
-      +		strvec_pushv(&run_trailer.args, trailer_args.v);
-      +		run_trailer.git_cmd = 1;
-      +		if (run_command(&run_trailer))
- 2:  68e0bd9e2d6f < -:  ------------ interpret_trailers: for three options parse add warning
-
-
- Documentation/git-commit.txt |  9 ++++++++-
- builtin/commit.c             | 22 ++++++++++++++++++++++
- t/t7502-commit-porcelain.sh  | 20 ++++++++++++++++++++
- 3 files changed, 50 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index 17150fa7eabe..f74d320f0c96 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -14,7 +14,7 @@ SYNOPSIS
- 	   [--allow-empty-message] [--no-verify] [-e] [--author=<author>]
- 	   [--date=<date>] [--cleanup=<mode>] [--[no-]status]
- 	   [-i | -o] [--pathspec-from-file=<file> [--pathspec-file-nul]]
--	   [-S[<keyid>]] [--] [<pathspec>...]
-+	   [-S[<keyid>]] [--] [<pathspec>...] [(--trailer <token>[(=|:)<value>])...]
- 
- DESCRIPTION
- -----------
-@@ -166,6 +166,13 @@ The `-m` option is mutually exclusive with `-c`, `-C`, and `-F`.
- 
- include::signoff-option.txt[]
- 
-+--trailer <token>[(=|:)<value>]::
-+	Specify a (<token>, <value>) pair that should be applied as a
-+	trailer. (e.g. `git commit --trailer "Signed-off-by:C O Mitter \
-+	<committer@example.com>" --trailer "Helped-by:C O Mitter \
-+	<committer@example.com>"` will add the "Signed-off-by" trailer
-+	and the "Helped-by" trailer in the commit message.)
-+	See linkgit:git-interpret-trailers[1] for details.
- -n::
- --no-verify::
- 	This option bypasses the pre-commit and commit-msg hooks.
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 739110c5a7f6..a002330d9d56 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -113,6 +113,7 @@ static int config_commit_verbose = -1; /* unspecified */
- static int no_post_rewrite, allow_empty_message, pathspec_file_nul;
- static char *untracked_files_arg, *force_date, *ignore_submodule_arg, *ignored_arg;
- static char *sign_commit, *pathspec_from_file;
-+static struct strvec trailer_args = STRVEC_INIT;
- 
- /*
-  * The default commit message cleanup mode will remove the lines
-@@ -131,6 +132,14 @@ static struct strbuf message = STRBUF_INIT;
- 
- static enum wt_status_format status_format = STATUS_FORMAT_UNSPECIFIED;
- 
-+static int opt_pass_trailer(const struct option *opt, const char *arg, int unset)
-+{
-+	BUG_ON_OPT_NEG(unset);
-+
-+	strvec_pushl(&trailer_args, "--trailer", arg, NULL);
-+	return 0;
-+}
-+
- static int opt_parse_porcelain(const struct option *opt, const char *arg, int unset)
- {
- 	enum wt_status_format *value = (enum wt_status_format *)opt->value;
-@@ -958,6 +967,18 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 
- 	fclose(s->fp);
- 
-+	if (trailer_args.nr) {
-+		struct child_process run_trailer = CHILD_PROCESS_INIT;
-+
-+		strvec_pushl(&run_trailer.args, "interpret-trailers",
-+			     "--in-place", git_path_commit_editmsg(), NULL);
-+		strvec_pushv(&run_trailer.args, trailer_args.v);
-+		run_trailer.git_cmd = 1;
-+		if (run_command(&run_trailer))
-+			strvec_clear(&run_trailer.args);
-+		strvec_clear(&trailer_args);
-+	}
-+
- 	/*
- 	 * Reject an attempt to record a non-merge empty commit without
- 	 * explicit --allow-empty. In the cherry-pick case, it may be
-@@ -1507,6 +1528,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 		OPT_STRING(0, "fixup", &fixup_message, N_("commit"), N_("use autosquash formatted message to fixup specified commit")),
- 		OPT_STRING(0, "squash", &squash_message, N_("commit"), N_("use autosquash formatted message to squash specified commit")),
- 		OPT_BOOL(0, "reset-author", &renew_authorship, N_("the commit is authored by me now (used with -C/-c/--amend)")),
-+		OPT_CALLBACK_F(0, "trailer", NULL, N_("trailer"), N_("trailer(s) to add"), PARSE_OPT_NONEG, opt_pass_trailer),
- 		OPT_BOOL('s', "signoff", &signoff, N_("add a Signed-off-by trailer")),
- 		OPT_FILENAME('t', "template", &template_file, N_("use specified template file")),
- 		OPT_BOOL('e', "edit", &edit_flag, N_("force edit of commit")),
-diff --git a/t/t7502-commit-porcelain.sh b/t/t7502-commit-porcelain.sh
-index 6396897cc818..0acf23799931 100755
---- a/t/t7502-commit-porcelain.sh
-+++ b/t/t7502-commit-porcelain.sh
-@@ -154,6 +154,26 @@ test_expect_success 'sign off' '
- 
- '
- 
-+test_expect_success 'trailer' '
-+	>file1 &&
-+	git add file1 &&
-+	git commit -s --trailer "Signed-off-by:C O Mitter1 <committer1@example.com>" \
-+		--trailer "Helped-by:C O Mitter2 <committer2@example.com>"  \
-+		--trailer "Reported-by:C O Mitter3 <committer3@example.com>" \
-+		--trailer "Mentored-by:C O Mitter4 <committer4@example.com>" \
-+		-m "hello" &&
-+	git cat-file commit HEAD >commit.msg &&
-+	sed -e "1,7d" commit.msg >actual &&
-+	cat >expected <<-\EOF &&
-+	Signed-off-by: C O Mitter <committer@example.com>
-+	Signed-off-by: C O Mitter1 <committer1@example.com>
-+	Helped-by: C O Mitter2 <committer2@example.com>
-+	Reported-by: C O Mitter3 <committer3@example.com>
-+	Mentored-by: C O Mitter4 <committer4@example.com>
-+	EOF
-+	test_cmp expected actual
-+'
-+
- test_expect_success 'multiple -m' '
- 
- 	>negative &&
-
-base-commit: 13d7ab6b5d7929825b626f050b62a11241ea4945
 -- 
-gitgitgadget
+An old man doll... just what I always wanted! - Clara
