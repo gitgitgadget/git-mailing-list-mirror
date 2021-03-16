@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 99D47C43381
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7938C4332E
 	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 21:17:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8577964FA8
+	by mail.kernel.org (Postfix) with ESMTP id C2F5E64FB3
 	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 21:17:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233196AbhCPVR2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Mar 2021 17:17:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55838 "EHLO
+        id S233238AbhCPVRa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Mar 2021 17:17:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55842 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233152AbhCPVRU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Mar 2021 17:17:20 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C15CC061756
-        for <git@vger.kernel.org>; Tue, 16 Mar 2021 14:17:20 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id k8so8163295wrc.3
+        with ESMTP id S233155AbhCPVRV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Mar 2021 17:17:21 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BCAFC06174A
+        for <git@vger.kernel.org>; Tue, 16 Mar 2021 14:17:21 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id a132-20020a1c668a0000b029010f141fe7c2so19637wmc.0
         for <git@vger.kernel.org>; Tue, 16 Mar 2021 14:17:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=0iz5/2sHB8WhhqvdKiv+NkDMDD7WdLz77MP6lFCbRfo=;
-        b=n/uOsSXSMvkAXxqOXfCF8mvkMxfY33HjP/yJ1LxnP6EiNIZ0Ahuj6E2cY+xiqQmu3k
-         aO0ITzEi/inHkcmOf4FBQEy1lEC9UWdgbMT+7Uvxu+yYzreMWCl9Hd6Wdu757kU1srhR
-         Hcd9U4+kvNX6iE9oX018AiDMpv9cPyF8OF0l2h/H+36TxAGg6VS914sIuwYWyDrkLbTK
-         N4DdE4H7WYjPB/NcoMpQV3T493SgxWtQNIWbbBoyrv3qdBzaysZyNGdAGtPoGzvWzZUg
-         1ssX1c9V5LAA8j9ADcNA5+UmAyRI1kjWGE2xJxuks4XkkRPMXk0Xpxk0ar0ypO/Esyh4
-         utSQ==
+        bh=BI76sl3lCMYZ2muS08vHRkaeFR9DdCcz1ssru/X4414=;
+        b=AyR+VzkFQSSnCtlGUOab0DXkPzSgxax+iJhippJaUDgwMbbTSM4MmZfgpfs4ckPbIx
+         DD1KHwg67BF3PC6r0pQqyMN4pkviLhN7owCycrykVU7M5OXuPV3Kwn7ctrfpGBRuipSd
+         QAIwqxM/5VxR8zSWzMXgb04qM73r5ttlUZr/JOCBer8OFy+cxgN2KGsltJKhTlAx3/kI
+         iMnRSLHrzOK8WEWBW6QoKE+yqYWVQr2G4UYc8mZYwI+XCmazA7BCtz7tNqM7HdSC3Yx0
+         EegI7tp1dwbr4M8XKAxWBESlA8c/PB4bsbwIlj9poEwTeZPpCUP4tE6Ql8GPWRL51I3S
+         Bn4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=0iz5/2sHB8WhhqvdKiv+NkDMDD7WdLz77MP6lFCbRfo=;
-        b=cQ+eLuNcsAI3U2wgAdkD/unrk2hj8cIIbFKu6Dvs4/8k8SODspqWSaVYq8oHSu4QSS
-         JFZ7Iq2cC5RQlzn8wI2B6iCYk50FoGeHbDz2mUJFnciVK43j9kWFP8KGPi67IBabJ4zn
-         9cjl1vMh+p1Zr8xGRffSxVrdZpjaJq8VklIvZyj6lOQeWRRUsN/F1FQz3dWyBXSAj+HP
-         ERGpgDF2ywR3VJmQEIcv2oYbS8APe6t4dntVNePZBHlonINJwbVJzQkddj9cVwAsOj2I
-         JGEtlq7AUBH3RIYMgrg9jI2/G/JQNFd1U8cmiLzvT0m6KpHbosOFi1eZwSVdV+EAdahd
-         MJqg==
-X-Gm-Message-State: AOAM531ZEtDmzYPfDIHBs+lOMhHjn6jflDF3I1vOhMs9h4VfisvkP9yA
-        2tvf4jRX8m/VF/Kt4aNPuzKH2Pur5HY=
-X-Google-Smtp-Source: ABdhPJx2TKzgfl4Slu7gGZzQJRzaIvoau82Yi/OrVlxuahTweMYmY7u+LvFJk7lj+LBhMpaAWWJA8Q==
-X-Received: by 2002:a5d:6c69:: with SMTP id r9mr927857wrz.11.1615929438958;
-        Tue, 16 Mar 2021 14:17:18 -0700 (PDT)
+        bh=BI76sl3lCMYZ2muS08vHRkaeFR9DdCcz1ssru/X4414=;
+        b=prmg670KpTCHAstgelpbAXVttFm+SCHQRqykqJR2DjsbwpOZ8ft9ocHju42WUbOAqi
+         ImeZtsfFkXg66JF/2HaDxAwuPJXngFj17AeqM7Phnlzoz15R3xepzDb1YXB9FzmcObip
+         UvSwgqAQ9u0osScEBCCIuSGcDcVjgFaHT1mIsku6pf5nrGhvfs7d1akUAyEVqJT1XUmU
+         3A39vAXrrfGDkb7+yQHwfyCqzdAxUDQ0T7yv2gkGCKvviLcxdqYp2X+p0Ik38IG3FEIN
+         +mQqbJswJQJl2nBGHANrwPvYL441/qZsgdWookxVHOdSEwBmbkb3M0gRitLJFJHUkw6w
+         A5gw==
+X-Gm-Message-State: AOAM530ffpS1Do6KbeBf4kxGU6CU2p39e7nAcBcHrC6zfB8oKSBGD0xM
+        9d61L2gWF5dRhpJiAQHyRIUluglNVWA=
+X-Google-Smtp-Source: ABdhPJwGpfhoUINjOSyNVZOl+GFMiUrDGA8USG5RDcrz863FO+ywnQ02Frr26A1Tf4/puiqMRm+m8A==
+X-Received: by 2002:a1c:7ed4:: with SMTP id z203mr622220wmc.89.1615929439854;
+        Tue, 16 Mar 2021 14:17:19 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s84sm520141wme.11.2021.03.16.14.17.18
+        by smtp.gmail.com with ESMTPSA id o11sm23298428wrq.74.2021.03.16.14.17.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Mar 2021 14:17:18 -0700 (PDT)
-Message-Id: <8e11e891701985729cd5ecd7737e59d5a18284ce.1615929436.git.gitgitgadget@gmail.com>
+        Tue, 16 Mar 2021 14:17:19 -0700 (PDT)
+Message-Id: <bbf19f8a2be599a3451469731eed2eada7d3456a.1615929436.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.906.git.1615929435.gitgitgadget@gmail.com>
 References: <pull.906.git.1615929435.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 16 Mar 2021 21:16:50 +0000
-Subject: [PATCH 02/27] read-cache: expand on query into sparse-directory entry
+Date:   Tue, 16 Mar 2021 21:16:51 +0000
+Subject: [PATCH 03/27] sparse-index: API protection strategy
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,61 +76,94 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-Callers to index_name_pos() or index_name_stage_pos() have a specific
-path in mind. If that happens to be a path with an ancestor being a
-sparse-directory entry, it can lead to unexpected results.
+Edit and expand the sparse-index design document with the plan for
+guarding index operations with ensure_full_index().
 
-In the case that we did not find the requested path, check to see if the
-position _before_ the inserted position is a sparse directory entry that
-matches the initial segment of the input path (including the directory
-separator at the end of the directory name). If so, then expand the
-index to be a full index and search again. This expansion will only
-happen once per index read.
+Notably, the plan has changed to not have an expand_to_path() method in
+favor of checking for a sparse-directory hit inside of the
+index_path_pos() API.
 
-Future enhancements could be more careful to expand only the necessary
-sparse directory entry, but then we would have a special "not fully
-sparse, but also not fully expanded" mode that could affect writing the
-index to file. Since this only occurs if a specific file is requested
-outside of the sparse checkout definition, this is unlikely to be a
-common situation.
+The changes that follow this one will incrementally add
+ensure_full_index() guards to iterations over all cache entries. Some
+iterations over the cache entries are not protected due to a few
+categories listed in the document. Since these are not being modified,
+here is a short list of the files and methods that will not receive
+these guards:
+
+Looking for non-zero stage:
+* builtin/add.c:chmod_pathspec()
+* builtin/merge.c:count_unmerged_entries()
+* read-cache.c:unmerged_index()
+* rerere.c:check_one_conflict(), find_conflict(), rerere_remaining()
+* revision.c:prepare_show_merge()
+* sequencer.c:append_conflicts_hint()
+* wt-status.c:wt_status_collect_changes_initial()
+
+Looking for submodules:
+* builtin/submodule--helper.c:module_list_compute()
+* submodule.c: several methods
+* worktree.c:validate_no_submodules()
+
+Part of the index API:
+* name-hash.c: lazy init methods
+* preload-index.c:preload_thread(), preload_index()
+* read-cache.c: file format methods
+
+Checking for correct order of cache entries:
+* read-cache.c:check_ce_order()
+
+Ignores SKIP_WORKTREE entries or already aware:
+* unpack-trees.c:mark_new_skip_worktree()
+* wt-status.c:wt_status_check_sparse_checkout()
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- read-cache.c | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ Documentation/technical/sparse-index.txt | 32 +++++++++++++++++++++---
+ 1 file changed, 29 insertions(+), 3 deletions(-)
 
-diff --git a/read-cache.c b/read-cache.c
-index dfec221d9128..b143277ed106 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -566,6 +566,27 @@ static int index_name_stage_pos(struct index_state *istate, const char *name, in
- 		}
- 		first = next+1;
- 	}
-+
-+	if (istate->sparse_index &&
-+	    first > 0) {
-+		/* Note: first <= istate->cache_nr */
-+		struct cache_entry *ce = istate->cache[first - 1];
-+
-+		/*
-+		 * If we are in a sparse-index _and_ the entry before the
-+		 * insertion position is a sparse-directory entry that is
-+		 * an ancestor of 'name', then we need to expand the index
-+		 * and search again. This will only trigger once, because
-+		 * thereafter the index is fully expanded.
-+		 */
-+		if (S_ISSPARSEDIR(ce->ce_mode) &&
-+		    ce_namelen(ce) < namelen &&
-+		    !strncmp(name, ce->name, ce_namelen(ce))) {
-+			ensure_full_index(istate);
-+			return index_name_stage_pos(istate, name, namelen, stage);
-+		}
-+	}
-+
- 	return -first-1;
- }
+diff --git a/Documentation/technical/sparse-index.txt b/Documentation/technical/sparse-index.txt
+index aa116406a016..7ab51bf6c441 100644
+--- a/Documentation/technical/sparse-index.txt
++++ b/Documentation/technical/sparse-index.txt
+@@ -82,9 +82,35 @@ also introduce other features that have been considered for improving the
+ index, as well.
  
+ Next, consumers of the index will be guarded against operating on a
+-sparse-index by inserting calls to `ensure_full_index()` or
+-`expand_index_to_path()`. After these guards are in place, we can begin
+-leaving sparse-directory entries in the in-memory index structure.
++sparse-index by inserting calls to `ensure_full_index()` before iterating
++over all cache entries. If a specific path is requested, then those will
++be protected from within the `index_file_exists()` and `index_name_pos()`
++API calls: they will call `ensure_full_index()` if necessary.
++
++During a scan of the codebase, not every iteration of the cache entries
++needs an `ensure_full_index()` check. The basic reasons include:
++
++1. The loop is scanning for entries with non-zero stage. These entries
++   are not collapsed into a sparse-directory entry.
++
++2. The loop is scanning for submodules. These entries are not collapsed
++   into a sparse-directory entry.
++
++3. The loop is part of the index API, especially around reading or
++   writing the format.
++
++4. The loop is checking for correct order of cache entries and that is
++   correct if and only if the sparse-directory entries are in the correct
++   location.
++
++5. The loop ignores entries with the `SKIP_WORKTREE` bit set, or is
++   otherwise already aware of sparse directory entries.
++
++6. The sparse-index is disabled at this point when using the split-index
++   feature, so no effort is made to protect the split-index API.
++
++After these guards are in place, we can begin leaving sparse-directory
++entries in the in-memory index structure.
+ 
+ Even after inserting these guards, we will keep expanding sparse-indexes
+ for most Git commands using the `command_requires_full_index` repository
 -- 
 gitgitgadget
 
