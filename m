@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67CFAC43619
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 58C2AC4361A
 	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 02:14:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 546ED6502D
+	by mail.kernel.org (Postfix) with ESMTP id 460AC6502F
 	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 02:14:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234622AbhCPCOd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Mar 2021 22:14:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34288 "EHLO
+        id S234607AbhCPCOb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Mar 2021 22:14:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234527AbhCPCOJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Mar 2021 22:14:09 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FDD7C06174A
+        with ESMTP id S234522AbhCPCN6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Mar 2021 22:13:58 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C86B8C061756
         for <git@vger.kernel.org>; Mon, 15 Mar 2021 19:13:57 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id v4so6653390wrp.13
-        for <git@vger.kernel.org>; Mon, 15 Mar 2021 19:13:56 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id e10so9657050wro.12
+        for <git@vger.kernel.org>; Mon, 15 Mar 2021 19:13:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=hGSBrufPIdTQhV4ed4Ysv4+ZD/klDo4S572DiBCs+Bw=;
-        b=Yr11lLzPVxczGt/MkyF7gPiTuESmw220Ars1qFLMB3yEo6jroLqlU89NhfWjSje3dI
-         YQE7l8o/ZWqVYzKdK1Pyaf1Q3cm5xtOPyHWriCFK9k5fRvWkJqAXv+dRmUDwKq3AEWMX
-         k+1ka2ufJ68Cex+MPMLcBUWAa7DCwjaB1u+FywCJ3pKa/piUxA0xwT1IFDlwnRTcOfQF
-         At4i6shfNfVQZFecpdlluE0yLvmW0gZvtD2vY3TTCD1zYqe57IchmKgKSdBMz/pQW774
-         KtS11chy/LAcBxpy74pYcyusql8fwgJbffpsNwqNcNMHKPzfCUUHibTBbyrVQkKZcL/B
-         iHDA==
+        bh=VvxRipLNGe2fsErHj83cDgVVJw2Y5Oy0thgH8t7TVoc=;
+        b=dKjWdeEtwCNdET1kJqQIV/b+l1Bnj5nGZT6WHM00Rg8aGLCGRpJDHfJj1RJWuYJlb3
+         xDVE/E88oHD23Bbd/1Fi438BZLju21Pb287uMZItf7er+dDDzuavT0Zod0P1yY0qBblF
+         KOQQC4JB9YGVmBzcbbLW3nRHcB86CIA26EhIkGD2Ct/LcM9cvNqACi1lQGsiQ5uvxlty
+         BKCRq7yxHD0cfpo+z5CyMsMDup/T+oHrBZLtoaLbsntiKF+M/R1gdmhG7X/ZYkoAPZJ5
+         /1YxbLzsedbdjfIJBMHxD37hsVKXkkn4SEWEulzxTzgNVtlBjYF126PiFhMktct+d3Fg
+         59TQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=hGSBrufPIdTQhV4ed4Ysv4+ZD/klDo4S572DiBCs+Bw=;
-        b=gz84IfHaQ1Jv27vCoNQ5F1hiTceic0JvwlxkCG/98yrHW4Rek9j67zh5NiT9ohPo3a
-         gwQhefqUExaO3Om1XqdPtbZ8a3LQY8CA7DBW/cHc3vbbg6xvUlClf/zz8FI0GeLNbkpZ
-         iDuLnEeAUmJpLViOdnrOxzUqytgbCsijjbIV0ox3i5e/oGusABH2wj+KCOxmybirxk7i
-         GMcU39TXOFqIwliJquE8GxV5oG2SXU0l2hcIdovB/lR/6Jyukt6COuIuOmAXq5/q3nJ0
-         EFR4UpKGh1BpqT20+QXqgC6D6ZO2IkzW6a1xxu5sauEjJMhiEFRXH2SnGW+ZppjRxYBw
-         21hw==
-X-Gm-Message-State: AOAM531OcYMAn6WvFWuwRB3lawL+8/869Bpiwvh82LMZKbi4RVbw0tR5
-        TQ/z8FlqmJleJLWn6ZgCQDcYdu6jMf3mmg==
-X-Google-Smtp-Source: ABdhPJwnbMj8SRN49o/68WBfppG/yvD7nUFpsoap7BQ6jkb7MWNSXcPhGlemugQyfTnaqWcKKSyZOA==
-X-Received: by 2002:a5d:4c85:: with SMTP id z5mr2234563wrs.208.1615860835611;
-        Mon, 15 Mar 2021 19:13:55 -0700 (PDT)
+        bh=VvxRipLNGe2fsErHj83cDgVVJw2Y5Oy0thgH8t7TVoc=;
+        b=QU2yVJ1ZsaAK2HdyjbZPoF4yIyRrplQ0OMCgYV6l1+BGdrasgX9zJOC6fT9sviH0q/
+         SQ1tQz4qPRMV9NaqwafhQh8MrsHfbCGNcJH/Xp7LmwDbN2uyO1hGwVl1+B0sKvhWC17g
+         hS7EZiA8v+kcNdR6yvVUkDMAdYKZiTIs+3uamPeq8dm709hLVu8FernzC1QU05371lCc
+         DsxrdUzxJDZ8Qk4bJAWkpqFAeTLoAPQrfZoI8ztV4ZBbMLZUYvKwECtn2ORX7uz+D1Wh
+         9bLjsm2gZMR77vysXHcOpL/TpAd2RtpdX8bkh1UqblY3GDQlhWCdHEYuIbN6KWySE+TN
+         US2A==
+X-Gm-Message-State: AOAM530qtsuradBwStYvVp3ibsfQEXQWsrArdXu6OlMFrdMyd7KFb+l4
+        O3dKEtU3vUeQPqbXa7v9GAqSzssHMr5pSg==
+X-Google-Smtp-Source: ABdhPJzxgmWFTw8WPD/zSNAQwu1hi7Yrd+EVlvBNAUTFxRyjADrxLPK0Bhl72U9eBpetIrVIsP4paQ==
+X-Received: by 2002:adf:f144:: with SMTP id y4mr2308920wro.408.1615860836329;
+        Mon, 15 Mar 2021 19:13:56 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id i8sm21092494wrx.43.2021.03.15.19.13.54
+        by smtp.gmail.com with ESMTPSA id i8sm21092494wrx.43.2021.03.15.19.13.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Mar 2021 19:13:54 -0700 (PDT)
+        Mon, 15 Mar 2021 19:13:55 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -66,9 +66,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <pclouds@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 28/29] blame: emit a better error on 'git blame directory'
-Date:   Tue, 16 Mar 2021 03:13:11 +0100
-Message-Id: <20210316021312.13927-29-avarab@gmail.com>
+Subject: [PATCH v2 29/29] tree-walk.h API: add a tree_entry_extract_type() function
+Date:   Tue, 16 Mar 2021 03:13:12 +0100
+Message-Id: <20210316021312.13927-30-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.0.rc2.211.g1d0b8788b3
 In-Reply-To: <20210308150650.18626-1-avarab@gmail.com>
 References: <20210308150650.18626-1-avarab@gmail.com>
@@ -79,72 +79,104 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change an early check for non-blobs in verify_working_tree_path() to
-let any such objects pass, and instead die shortly thereafter in the
-fake_working_tree_commit() caller's type check.
+Add and use a tree_entry_extract_type() function. There were callers
+of tree_entry_extract() which didn't care about the mode, but just the
+type in the tree entry.
 
-Now e.g. doing "git blame t" in git.git emits:
-
-    fatal: unsupported file type t
-
-Instead of:
-
-    fatal: no such path 't' in HEAD
+In emit_path() the "mode" variable was not used after the "isdir"
+assignment, as can be seen in the diff with it being set to 0.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- blame.c                         |  8 ++------
- t/t8004-blame-with-conflicts.sh | 20 ++++++++++++++++++++
- 2 files changed, 22 insertions(+), 6 deletions(-)
+ match-trees.c | 12 ++++++------
+ tree-diff.c   |  5 +++--
+ tree-walk.h   | 11 +++++++++++
+ 3 files changed, 20 insertions(+), 8 deletions(-)
 
-diff --git a/blame.c b/blame.c
-index 9e0543e13d4..7da162cd582 100644
---- a/blame.c
-+++ b/blame.c
-@@ -100,12 +100,8 @@ static void verify_working_tree_path(struct repository *r,
- 
- 	for (parents = work_tree->parents; parents; parents = parents->next) {
- 		const struct object_id *commit_oid = &parents->item->object.oid;
--		struct object_id blob_oid;
+diff --git a/match-trees.c b/match-trees.c
+index 25bfb46fb02..89109659aa3 100644
+--- a/match-trees.c
++++ b/match-trees.c
+@@ -143,11 +143,11 @@ static void match_trees(const struct object_id *hash1,
+ 	while (one.size) {
+ 		const char *path;
+ 		const struct object_id *elem;
 -		unsigned short mode;
--		int ret = get_tree_entry_mode(r, commit_oid, path, &blob_oid,
--					      &mode);
--
--		if (!ret && oid_object_info(r, &blob_oid, NULL) == OBJ_BLOB)
-+		struct object_id oid;
-+		if (!get_tree_entry_path(r, commit_oid, path, &oid))
- 			return;
++		enum object_type object_type;
+ 		int score;
+ 
+-		elem = tree_entry_extract_mode(&one, &path, &mode);
+-		if (!S_ISDIR(mode))
++		elem = tree_entry_extract_type(&one, &path, &object_type);
++		if (object_type != OBJ_TREE)
+ 			goto next;
+ 		score = score_trees(elem, hash2);
+ 		if (*best_score < score) {
+@@ -198,14 +198,14 @@ static int splice_tree(const struct object_id *oid1, const char *prefix,
+ 
+ 	rewrite_here = NULL;
+ 	while (desc.size) {
++		enum object_type object_type;
+ 		const char *name;
+-		unsigned short mode;
+ 		int len = tree_entry_len(&desc.entry);
+ 
+-		tree_entry_extract_mode(&desc, &name, &mode);
++		tree_entry_extract_type(&desc, &name, &object_type);
+ 		if (len == toplen &&
+ 		    !memcmp(name, prefix, toplen)) {
+-			if (!S_ISDIR(mode))
++			if (object_type != OBJ_TREE)
+ 				die("entry %s in tree %s is not a tree", name,
+ 				    oid_to_hex(oid1));
+ 
+diff --git a/tree-diff.c b/tree-diff.c
+index 918ad95fa61..8409374f0ba 100644
+--- a/tree-diff.c
++++ b/tree-diff.c
+@@ -208,10 +208,11 @@ static struct combine_diff_path *emit_path(struct combine_diff_path *p,
+ 		 * 1) all modes for tp[i]=tp[imin] should be the same wrt
+ 		 *    S_ISDIR, thanks to base_name_compare().
+ 		 */
+-		tree_entry_extract_mode(&tp[imin], &path, &mode);
++		enum object_type object_type;
++		tree_entry_extract_type(&tp[imin], &path, &object_type);
+ 		pathlen = tree_entry_len(&tp[imin].entry);
+ 
+-		isdir = S_ISDIR(mode);
++		isdir = object_type == OBJ_TREE;
+ 		oid = NULL;
+ 		mode = 0;
  	}
+diff --git a/tree-walk.h b/tree-walk.h
+index efcd7ccd10e..f5102ed5427 100644
+--- a/tree-walk.h
++++ b/tree-walk.h
+@@ -47,6 +47,7 @@ struct tree_desc {
+  * appropriate variable to fill in (NULL won't do!):
+  *
+  * tree_entry_extract_mode(): const char *path, unsigned int mode
++ * tree_entry_extract_type(): const char *path, enum object_type
+  * tree_entry_extract_all(): const char *path, unsigned int mode, enum object_type
+  */
+ static inline const struct object_id *tree_entry_extract_mode(struct tree_desc *desc,
+@@ -58,6 +59,16 @@ static inline const struct object_id *tree_entry_extract_mode(struct tree_desc *
+ 	return &desc->entry.oid;
+ }
  
-diff --git a/t/t8004-blame-with-conflicts.sh b/t/t8004-blame-with-conflicts.sh
-index 35414a53363..6caa504a0ea 100755
---- a/t/t8004-blame-with-conflicts.sh
-+++ b/t/t8004-blame-with-conflicts.sh
-@@ -73,4 +73,24 @@ test_expect_success 'blame does not crash with conflicted file in stages 1,3' '
- 	git blame file1
- '
- 
-+test_expect_success 'setup second case' '
-+	git merge --abort
-+'
++static inline const struct object_id *tree_entry_extract_type(struct tree_desc *desc,
++							      const char **pathp,
++							      enum object_type *object_typep)
++{
++	*pathp = desc->entry.path;
++	*object_typep = desc->entry.object_type;
++	return &desc->entry.oid;
++}
 +
-+test_expect_success 'blame on directory/file conflict' '
-+	mkdir d &&
-+	test_commit second &&
-+	test_commit d/file &&
-+	test_must_fail git blame d 2>expected &&
 +
-+	git reset --hard second &&
-+	>d &&
-+	git add d &&
-+	git commit -m"a not-a-dir" &&
-+	test_must_fail git merge d/file &&
-+
-+	test_must_fail git blame d 2>actual &&
-+	test_cmp expected actual
-+'
-+
- test_done
+ static inline const struct object_id *tree_entry_extract_all(struct tree_desc *desc,
+ 							     const char **pathp,
+ 							     unsigned short *modep,
 -- 
 2.31.0.rc2.211.g1d0b8788b3
 
