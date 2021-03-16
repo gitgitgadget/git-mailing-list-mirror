@@ -7,135 +7,93 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FD56C43381
-	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 16:59:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 05453C4332D
+	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 17:02:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5490F6510F
-	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 16:59:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E13636511D
+	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 17:02:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232041AbhCPQ73 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Mar 2021 12:59:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56106 "EHLO
+        id S237281AbhCPRCW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Mar 2021 13:02:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235117AbhCPQ7P (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Mar 2021 12:59:15 -0400
-Received: from mail-oo1-xc35.google.com (mail-oo1-xc35.google.com [IPv6:2607:f8b0:4864:20::c35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BC31C06174A
-        for <git@vger.kernel.org>; Tue, 16 Mar 2021 09:59:15 -0700 (PDT)
-Received: by mail-oo1-xc35.google.com with SMTP id j20-20020a4ad6d40000b02901b66fe8acd6so4322238oot.7
-        for <git@vger.kernel.org>; Tue, 16 Mar 2021 09:59:15 -0700 (PDT)
+        with ESMTP id S237292AbhCPRBx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Mar 2021 13:01:53 -0400
+Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E265C06174A
+        for <git@vger.kernel.org>; Tue, 16 Mar 2021 10:01:52 -0700 (PDT)
+Received: by mail-ot1-x333.google.com with SMTP id g8-20020a9d6c480000b02901b65ca2432cso7226074otq.3
+        for <git@vger.kernel.org>; Tue, 16 Mar 2021 10:01:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=uhWmFmlQZf2QjBuYa/YshFrI7d632/tKhJMhiablkec=;
-        b=PLURyR0fJi3NlMnrrgLeo8rwPIUIh87vsSw9z6Ed2AFe7fJctEslTyQ581b+Pc1JbG
-         h23XLc7rt+qab/38mmuUVeKg1SzmYmkpVC3zVRnLN4NLOwAJ5hmhSPHN8N59e8huJ8/m
-         jRUdibmVmeopzDfG6O/JfgvO7yxBstWfvGNWAqwI9xa45oalXVKtWkYUm0B/EA4F7KO9
-         tk1oMLYY+Bqw2ubL2f4GuvA/wCbDmkMhHwxkfpRiJhLE7EeaFTF+fbbPfkzPhGC5840A
-         IyHGrWTmZrvTiNblrmSEIS564cpoXxvAna5RzMUFG6jhCcN5yn8TkrnSvArmXXYk8zCX
-         uPjQ==
+        bh=WltcCabfx1FHkqRt0HvDWnfvSfa+6EGgUzObgHG4EOE=;
+        b=GKI+d65GXLsDW3LJv4uyxJjx6E1JU+g1fQddxbW5eADUlIwpCbis9KiakK9BcHMCGd
+         8tNyuCzkiH69qyzl/AUcle4t/MMM+U/7sV8gsH4K6/nsy6HWcK4bg02YldrMiAyFtrEW
+         0Ew6Gi3x/APHZd7coasdMWx9pdBbbJmxWUQLYz+KsDOnK3Mq8IjjyeTeCnylxggf9q49
+         SYMWGtabpRBwx92vNjPHwSdHKC4DaI/zNcNltwEKQS+fH7HB+nT5noboDFIWcOYIfyti
+         efPK8NbuUq3eiJdeWIGewLGwAxZMZVC6BhuEI6ifPm0k+gJuiaqLvzh9j6E6kYFj1XC2
+         HMew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=uhWmFmlQZf2QjBuYa/YshFrI7d632/tKhJMhiablkec=;
-        b=COgXOnz8A34hbMpH/8+BMZx2afXyxbWCvz0InSv+qFUjsxsbFkJ3ajEFBJHpPlkBxC
-         Pqx6nX2TrqbR3wNNVRE9s49O8amxpLpRWJ2Z+yFRzaPDTmGU2ReUQaqyt9Sb+1dXDpPb
-         lz5F+vjRtH3vtkt8iM7Cs9ES9I90ZCEUSAZpSuMNx2vsBb1Xao7GCXZSVxnWTfGnm+Rl
-         B+5xsu86nmDiRstng8q4HuOrY0glVKrVv+4ZDM0c6de2p5giR7HV5yPdsxlFol9aV64d
-         5l3PelWd+ceMQxYX+AzlSstOnofaghKxAcwzjjaQp+GLo8c8nB3t+H63hgu68CJryPIX
-         f79Q==
-X-Gm-Message-State: AOAM5311RKR0zfXkrhkADh6fCV4qrpPkNgT2QFuzIXO52SRuWaoeNDUl
-        aX0vxw5vdBjbkxwLVOSZaXg=
-X-Google-Smtp-Source: ABdhPJxlm3D1aowiNEojJvkBuNGagMe5h0zr0K8z9hyBwanqVhV9SDAn0pSCtgxm7SaPyIQYU8O5Fw==
-X-Received: by 2002:a4a:4843:: with SMTP id p64mr4564614ooa.9.1615913954759;
-        Tue, 16 Mar 2021 09:59:14 -0700 (PDT)
+        bh=WltcCabfx1FHkqRt0HvDWnfvSfa+6EGgUzObgHG4EOE=;
+        b=U3p+5RnqMq70slKKxiDNdGHFul9f3RbXICbzVhhajH45pbU4RLcc65Ty6OJztalaNn
+         as/bd6JtA/Ii7zTLDfsB6Kwb2HtV82fOaGFF2kxIjo4gIf3zCcseVmocRHTbqjFv9yH2
+         eA0XEZk1GFACqxyHK1q021RXxUV+3LBShtz1pTiy6m88hOeDd/ofEKg5/vCrmIAcNIoj
+         IX0CG7ncBCxqz5SZlh7zSdRGp0cu8Oe9ReONngAbx8oG0fq0C1/U2RUehZPS6U3NF8v5
+         WQYjKtGBxtoQYNYOK3IX6n7mZ9+SGEMuCSr5DlLsYF+M4TymYBORmNl16Eazs6Jt17pE
+         c/YA==
+X-Gm-Message-State: AOAM530xZEhpIktRdAed4YFVQZVHRUcd8/pvCLEY6Gmg5fAwqKhzQ5q7
+        nzQs4HTraxZJMFOIYv2ws6M=
+X-Google-Smtp-Source: ABdhPJyUhHcBjlu3C68GEiiuVxQq1pb6hopkYBz1lffAYzOFcU19+NaCYm+ej+/f7aqhgQHDtXCizQ==
+X-Received: by 2002:a05:6830:558:: with SMTP id l24mr4444423otb.209.1615914111913;
+        Tue, 16 Mar 2021 10:01:51 -0700 (PDT)
 Received: from ?IPv6:2600:1700:e72:80a0:fcd1:da21:8108:69bc? ([2600:1700:e72:80a0:fcd1:da21:8108:69bc])
-        by smtp.gmail.com with ESMTPSA id 18sm6648779oir.4.2021.03.16.09.59.13
+        by smtp.gmail.com with ESMTPSA id k24sm7400542oic.51.2021.03.16.10.01.50
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Mar 2021 09:59:13 -0700 (PDT)
-Subject: Re: [PATCH v3 00/20] Sparse Index: Design, Format, Tests
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Tue, 16 Mar 2021 10:01:51 -0700 (PDT)
+Subject: Re: [PATCH 0/2] Declare merge-ort ready for general usage
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
-Cc:     newren@gmail.com, gitster@pobox.com, pclouds@gmail.com,
-        jrnieder@gmail.com,
-        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+Cc:     Derrick Stolee <dstolee@microsoft.com>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
-References: <pull.883.v2.git.1615404664.gitgitgadget@gmail.com>
- <pull.883.v3.git.1615912983.gitgitgadget@gmail.com>
+        Taylor Blau <me@ttaylorr.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>
+References: <pull.905.git.1615867503.gitgitgadget@gmail.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <1ac21589-24c8-d24b-bee3-6682aa76e434@gmail.com>
-Date:   Tue, 16 Mar 2021 12:59:12 -0400
+Message-ID: <44487d2a-f591-7e0f-8532-41397ec805c9@gmail.com>
+Date:   Tue, 16 Mar 2021 13:01:50 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.8.1
 MIME-Version: 1.0
-In-Reply-To: <pull.883.v3.git.1615912983.gitgitgadget@gmail.com>
+In-Reply-To: <pull.905.git.1615867503.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/16/2021 12:42 PM, Derrick Stolee via GitGitGadget wrote:> Updates in V3
-> =============
+On 3/16/2021 12:05 AM, Elijah Newren via GitGitGadget wrote:
+> This tiny series depends on ort-perf-batch-10[1].
 > 
-> For this version, I took Ævar's latest patches and applied them to v2.31.0
-> and rebased this series on top. It uses his new "read_tree_at()" helper and
-> the associated changes to the function pointer type.
+> If the ort-remainder topic[2] is merged with this series, then the result is
+> a version of merge-ort ready for general usage. Users can select it by (a)
+> passing -sort to either git merge or git rebase, or (b) by setting
+> pull.twohead=ort [3], or (c) by setting GIT_TEST_MERGE_ALGORITHM=ort.
 
-Junio, I wanted to call your attention to this change in base.
+Does the other topic add GIT_TEST_MERGE_ALGORITHM=ort to the CI builds?
 
-Here is the relevant part of the range-diff:
-
->   5:  399ddb0bad56 !  5:  99292cdbaae4 sparse-index: implement ensure_full_index()
->      @@ sparse-index.c
->       +}
->       +
->       +static int add_path_to_index(const struct object_id *oid,
->      -+				struct strbuf *base, const char *path,
->      -+				unsigned int mode, int stage, void *context)
->      ++			     struct strbuf *base, const char *path,
->      ++			     unsigned int mode, void *context)
->       +{
->       +	struct index_state *istate = (struct index_state *)context;
->       +	struct cache_entry *ce;
->      @@ sparse-index.c
->       -	/* intentionally left blank */
->       +	int i;
->       +	struct index_state *full;
->      ++	struct strbuf base = STRBUF_INIT;
->       +
->       +	if (!istate || !istate->sparse_index)
->       +		return;
->      @@ sparse-index.c
->       +		ps.has_wildcard = 1;
->       +		ps.max_depth = -1;
->       +
->      -+		read_tree_recursive(istate->repo, tree,
->      -+				    ce->name, strlen(ce->name),
->      -+				    0, &ps,
->      -+				    add_path_to_index, full);
->      ++		strbuf_setlen(&base, 0);
->      ++		strbuf_add(&base, ce->name, strlen(ce->name));
->      ++
->      ++		read_tree_at(istate->repo, tree, &base, &ps,
->      ++			     add_path_to_index, full);
->       +
->       +		/* free directory entries. full entries are re-used */
->       +		discard_cache_entry(ce);
->      @@ sparse-index.c
->       +	istate->cache_nr = full->cache_nr;
->       +	istate->cache_alloc = full->cache_alloc;
->       +
->      ++	strbuf_release(&base);
->       +	free(full);
->       +
->       +	trace2_region_leave("index", "ensure_full_index", istate->repo);
-
-Thanks,
+Specifically, the Linux builds have a second run with some optional
+GIT_TEST_* environment variables. This seems like a nice addition.
+ Other than that extra request, this series was easy to review. LGTM.
 -Stolee
