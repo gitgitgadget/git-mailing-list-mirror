@@ -8,70 +8,68 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 405D7C4332E
-	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 16:00:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C496C433E0
+	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 16:18:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2569665101
-	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 16:00:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 26AE364FF2
+	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 16:18:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238417AbhCPQAZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Mar 2021 12:00:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42688 "EHLO
+        id S238568AbhCPQSP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Mar 2021 12:18:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236842AbhCPP7J (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Mar 2021 11:59:09 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A1C8C061764
-        for <git@vger.kernel.org>; Tue, 16 Mar 2021 08:59:07 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id c76-20020a1c9a4f0000b029010c94499aedso1780243wme.0
-        for <git@vger.kernel.org>; Tue, 16 Mar 2021 08:59:07 -0700 (PDT)
+        with ESMTP id S238588AbhCPQR4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Mar 2021 12:17:56 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9850C061756
+        for <git@vger.kernel.org>; Tue, 16 Mar 2021 09:17:55 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id e10so10766191wro.12
+        for <git@vger.kernel.org>; Tue, 16 Mar 2021 09:17:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=eeEFiBh5xL1C6rQuAtyHEhaYP3o7rbvIu1GaZvOlh5M=;
-        b=tS1Ufu9pk/mtES8qOVdDNAdvra8l1rjDy/4+REYRIQzsrOBp7wXIM/kv6u987YhFSN
-         DeE+1jC3h+kDvVbAlBKIMnQLyZwuzksI7eRgAPvF4qVFZCITayOLBDeFVo6Uo367J57C
-         6VeDsqAZfDY+ByPR0rw/nWDmkXxAhlCaZ1UdqCdMuE3bxMURSXGkK6tlb67cBhVj7HO2
-         0MqxNHuQZKPJwdhsm+UKYXCH7AYUHC8QeYyDCefeiTAnJJh5sc94kL0815Kx77RNgIAj
-         SmvAmp6mnqKcvF/wr+rMQbYmXdtEM4sdPSG2v1PQnJuvuEH9N05cACTzP2nJMo1pjLVO
-         TiXA==
+        bh=BrjHOAcGbWnM3qrLtxpCpFY34ylFHw5YWtJbZd8GhSg=;
+        b=mPEWm78hqvbBpmJphtSs4/O4emed9GHagk3FPTIUVPm0fR8TdFb35Fee1nXJYEDUUq
+         maDzGDlTkdnJCj3l0q+IuXdgxfVi8hj5tzDhXoVX4nFcr1O1zd4DVdA8pLeXcVTinTo0
+         VsSVS+3NA+nONUqMWKUn/cWw+T4epf/xoysckAQwFeTFkaOffZJAonsbuGMUVjkyb660
+         g3PIy1sUYBsM10G6rGO240q9YhmJ2APs/0nNa/u+iUswHbrOKvtS/+0qjv4mS0hC7J/F
+         y79dIp4Pof9TdgJrwXh1HbdSHZe8VdLKLv7xcpd6nMRsfN7yh4RS/ycZbJ79+ZQ2CcTX
+         lGww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=eeEFiBh5xL1C6rQuAtyHEhaYP3o7rbvIu1GaZvOlh5M=;
-        b=j0x01ad3ml6xblP4nLaEifofsDTwGcFwghnFazLrjEjtnaj+XAtOtQCa7DDieQwdpQ
-         HGa9zSfG4J9dm1lFryaippPdWQ82tqpvUvNV1eiuKYfRxD14FnaOaqfHLkjlwTe0CdjF
-         1SiKJwxZeq9GUMX+nk5lzjQsfwKTutHSQBIcnq9nFlV/PAoTqMQqQn738Tb2U5uK8yGq
-         OUpLe46yjacpJZLoj9bOMqgvq0myNGKrXEDvKY4XKf1K6VahqAQwpzcqGN7N/Kw6ftZp
-         qRhfd7OU8dsnxfV4em6Nbg7PyCzjfoPSxkzfZt0+gX4Ty5wXqYM/DvtEsxZfF8sdar2I
-         Ehtg==
-X-Gm-Message-State: AOAM5308nIHlR8zWrySj3e3VRrl9pzovbb1nZxVAk4Fw1ZgkKxrLBXjl
-        DXHEv3hXVXgISx11ldTHqhzeC5wqjd/now==
-X-Google-Smtp-Source: ABdhPJyffIP+3z25+Lz/jw0czLkqBQ1V5NBgtBQU30pIacKttZkhTOMvm+TTviCBnFM9ApDe2SYcVw==
-X-Received: by 2002:a05:600c:2204:: with SMTP id z4mr313192wml.31.1615910346267;
-        Tue, 16 Mar 2021 08:59:06 -0700 (PDT)
+        bh=BrjHOAcGbWnM3qrLtxpCpFY34ylFHw5YWtJbZd8GhSg=;
+        b=AtAUhi7KkYWDyBgjLr3Bb6BWF77cjc+zapH5rLvY7XzRjZNivRzovxYhROXjpivzjK
+         rVBL7Jgp0lK3FRbvZo8QAlisrzIr7xLogmvLmBi24rdfGzqjGbRzVHmgizYu8dlKBk7o
+         kpccyJC1itlpSwZ4l6g2WV/GU+Vocrl5z0wqDznaTFz/bzeZNbud8fStsd+Z0Hsop26N
+         SOfcvV0EwEZjOkX7ejbmVFY6YR6n4226fW98ZyFM9q9owdTSXufe1whwcGw+cTGQNkZY
+         B10uxB+qNUPKUh+ZrhTAVl0FtC4wi/bn1P/lCH2uYR99L5JmgdIazO8XEIt+qsh6SHFq
+         ZyNg==
+X-Gm-Message-State: AOAM533QmW2qmFCv88rwVnE4cjL32ep2qfSqsqN0Doa3e51cfO5FruYA
+        Tf15LIOWaktUzxjqY6gJi9KHGKQa+n1Nnw==
+X-Google-Smtp-Source: ABdhPJyo3GH0XHYPzLd29HcCUrmKmqTaPlXNOO4WwfaZodRg6ynlO21xqufUChjqmiO0dLfb0OssbQ==
+X-Received: by 2002:a5d:42ca:: with SMTP id t10mr5785896wrr.274.1615911474300;
+        Tue, 16 Mar 2021 09:17:54 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id m132sm3439060wmf.45.2021.03.16.08.59.05
+        by smtp.gmail.com with ESMTPSA id r11sm22369206wrx.37.2021.03.16.09.17.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Mar 2021 08:59:05 -0700 (PDT)
+        Tue, 16 Mar 2021 09:17:53 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>,
-        Kirill Smelkov <kirr@navytux.spb.ru>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>,
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Jonathan Tan <jonathantanmy@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 32/32] tree-walk.h API: add a tree_entry_extract_type() function
-Date:   Tue, 16 Mar 2021 16:58:29 +0100
-Message-Id: <20210316155829.31242-33-avarab@gmail.com>
-X-Mailer: git-send-email 2.31.0.256.gf0ddda3145
-In-Reply-To: <20210316021312.13927-1-avarab@gmail.com>
-References: <20210316021312.13927-1-avarab@gmail.com>
+Subject: [PATCH v4 01/22] fsck.h: update FSCK_OPTIONS_* for object_name
+Date:   Tue, 16 Mar 2021 17:17:17 +0100
+Message-Id: <20210316161738.30254-2-avarab@gmail.com>
+X-Mailer: git-send-email 2.31.0.260.g719c683c1d
+In-Reply-To: <20210306110439.27694-1-avarab@gmail.com>
+References: <20210306110439.27694-1-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,104 +77,30 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add and use a tree_entry_extract_type() function. There were callers
-of tree_entry_extract() which didn't care about the mode, but just the
-type in the tree entry.
-
-In emit_path() the "mode" variable was not used after the "isdir"
-assignment, as can be seen in the diff with it being set to 0.
+Add the object_name member to the initialization macro. This was
+omitted in 7b35efd734e (fsck_walk(): optionally name objects on the
+go, 2016-07-17) when the field was added.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- match-trees.c | 12 ++++++------
- tree-diff.c   |  5 +++--
- tree-walk.h   | 11 +++++++++++
- 3 files changed, 20 insertions(+), 8 deletions(-)
+ fsck.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/match-trees.c b/match-trees.c
-index 25bfb46fb0..89109659aa 100644
---- a/match-trees.c
-+++ b/match-trees.c
-@@ -143,11 +143,11 @@ static void match_trees(const struct object_id *hash1,
- 	while (one.size) {
- 		const char *path;
- 		const struct object_id *elem;
--		unsigned short mode;
-+		enum object_type object_type;
- 		int score;
+diff --git a/fsck.h b/fsck.h
+index 733378f126..2274843ba0 100644
+--- a/fsck.h
++++ b/fsck.h
+@@ -43,8 +43,8 @@ struct fsck_options {
+ 	kh_oid_map_t *object_names;
+ };
  
--		elem = tree_entry_extract_mode(&one, &path, &mode);
--		if (!S_ISDIR(mode))
-+		elem = tree_entry_extract_type(&one, &path, &object_type);
-+		if (object_type != OBJ_TREE)
- 			goto next;
- 		score = score_trees(elem, hash2);
- 		if (*best_score < score) {
-@@ -198,14 +198,14 @@ static int splice_tree(const struct object_id *oid1, const char *prefix,
+-#define FSCK_OPTIONS_DEFAULT { NULL, fsck_error_function, 0, NULL, OIDSET_INIT }
+-#define FSCK_OPTIONS_STRICT { NULL, fsck_error_function, 1, NULL, OIDSET_INIT }
++#define FSCK_OPTIONS_DEFAULT { NULL, fsck_error_function, 0, NULL, OIDSET_INIT, NULL }
++#define FSCK_OPTIONS_STRICT { NULL, fsck_error_function, 1, NULL, OIDSET_INIT, NULL }
  
- 	rewrite_here = NULL;
- 	while (desc.size) {
-+		enum object_type object_type;
- 		const char *name;
--		unsigned short mode;
- 		int len = tree_entry_len(&desc.entry);
- 
--		tree_entry_extract_mode(&desc, &name, &mode);
-+		tree_entry_extract_type(&desc, &name, &object_type);
- 		if (len == toplen &&
- 		    !memcmp(name, prefix, toplen)) {
--			if (!S_ISDIR(mode))
-+			if (object_type != OBJ_TREE)
- 				die("entry %s in tree %s is not a tree", name,
- 				    oid_to_hex(oid1));
- 
-diff --git a/tree-diff.c b/tree-diff.c
-index 918ad95fa6..8409374f0b 100644
---- a/tree-diff.c
-+++ b/tree-diff.c
-@@ -208,10 +208,11 @@ static struct combine_diff_path *emit_path(struct combine_diff_path *p,
- 		 * 1) all modes for tp[i]=tp[imin] should be the same wrt
- 		 *    S_ISDIR, thanks to base_name_compare().
- 		 */
--		tree_entry_extract_mode(&tp[imin], &path, &mode);
-+		enum object_type object_type;
-+		tree_entry_extract_type(&tp[imin], &path, &object_type);
- 		pathlen = tree_entry_len(&tp[imin].entry);
- 
--		isdir = S_ISDIR(mode);
-+		isdir = object_type == OBJ_TREE;
- 		oid = NULL;
- 		mode = 0;
- 	}
-diff --git a/tree-walk.h b/tree-walk.h
-index efcd7ccd10..f5102ed542 100644
---- a/tree-walk.h
-+++ b/tree-walk.h
-@@ -47,6 +47,7 @@ struct tree_desc {
-  * appropriate variable to fill in (NULL won't do!):
-  *
-  * tree_entry_extract_mode(): const char *path, unsigned int mode
-+ * tree_entry_extract_type(): const char *path, enum object_type
-  * tree_entry_extract_all(): const char *path, unsigned int mode, enum object_type
-  */
- static inline const struct object_id *tree_entry_extract_mode(struct tree_desc *desc,
-@@ -58,6 +59,16 @@ static inline const struct object_id *tree_entry_extract_mode(struct tree_desc *
- 	return &desc->entry.oid;
- }
- 
-+static inline const struct object_id *tree_entry_extract_type(struct tree_desc *desc,
-+							      const char **pathp,
-+							      enum object_type *object_typep)
-+{
-+	*pathp = desc->entry.path;
-+	*object_typep = desc->entry.object_type;
-+	return &desc->entry.oid;
-+}
-+
-+
- static inline const struct object_id *tree_entry_extract_all(struct tree_desc *desc,
- 							     const char **pathp,
- 							     unsigned short *modep,
+ /* descend in all linked child objects
+  * the return value is:
 -- 
-2.31.0.256.gf0ddda3145
+2.31.0.260.g719c683c1d
 
