@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E015EC433E9
-	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 15:59:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 277C0C43331
+	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 15:59:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CA87864FEA
-	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 15:59:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 109C364FEA
+	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 15:59:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238295AbhCPP7S (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Mar 2021 11:59:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42566 "EHLO
+        id S238301AbhCPP7T (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Mar 2021 11:59:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238251AbhCPP6s (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Mar 2021 11:58:48 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 844ADC061764
-        for <git@vger.kernel.org>; Tue, 16 Mar 2021 08:58:43 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id z2so7715977wrl.5
-        for <git@vger.kernel.org>; Tue, 16 Mar 2021 08:58:43 -0700 (PDT)
+        with ESMTP id S238254AbhCPP6u (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Mar 2021 11:58:50 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46953C0613D7
+        for <git@vger.kernel.org>; Tue, 16 Mar 2021 08:58:45 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id e18so7705225wrt.6
+        for <git@vger.kernel.org>; Tue, 16 Mar 2021 08:58:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=IXpQ/jRkC/QcIAOV4xkIQE1CbIuI96mg9DpitnJLhTk=;
-        b=OjYCXpWiS/zfLLmq1kM6QqwAAeraVs13DlB88LoujAU9FUd7EO7ZIhr1wc5yizmnbu
-         EZoJC4rbR30s7Bz+viJyIBraUtd2Furwf8sL8lGY2HNLmrzapYREtZc1EEB1l9VxdqX/
-         CmnJD2lQCaanx517Yo1ZTbscP5Hj9HxapaHC+LcsHntykZCX96AS+//C8up/D/07XLEP
-         m6Ku3fsUVyKuQRmjAxvCBY2k8gd4wpec6KBu+5COXHq+xNAE+ZT7JWX603unERd0yx7z
-         WEnGMMMVAA/jzIDN5MmmvehLuop1tMxbP8hVDaaXv0lsxry+t7FdruGqpUlsQGkiL1hg
-         QSHA==
+        bh=6zSKsCLQNz24hJmFrPJMkcXP/jg6YRPbN11deTsmjMc=;
+        b=JmaioLxXYrv7vgtJ702yvWfAjWnQigiY+LVcxeeg5DzcKwLicjyhSYW/0F1c2yIyxo
+         K+0M908Ih9cITRwMm+sHR0x43VRnkczNi2eYaWhcyLle7UaSf+DogSfbqukLe5hIyZxQ
+         b8RoNDhoGEpo8N3hg6xBiN/97dpPo0B3wuTf2hQwqLmhDsRTxzIhacLZBFrF7yVfgwFe
+         Olh02RibkIOTaOsDbqqdxulI1Gs19wykLvWpczl98uQOaD4bpg8Cqrwzs4veJKHnOwAs
+         h3XchvIa9x+jzhToQp0R1LotDTSS+bq5cIN3AmxGGvrFcNTJxb12BeiKXqud9LBwgQct
+         SvMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=IXpQ/jRkC/QcIAOV4xkIQE1CbIuI96mg9DpitnJLhTk=;
-        b=L5rO29W66ywXk35rnTSoCKi8222X8AEPFfldjr4AqPPW/sradvu21GAqVG4qcltOah
-         ydJ0+II26pMrVnL4Jym2pMG6txyRo+6gSoxuOkBmXsPmQNUpaMZkRgTyyB0/QdpWkjba
-         yr3Pd+m9fBa6UpotO6dYmdzBvQD1hlhvByX73biT+aawNuxXM/SqhLcrEbP3FqBOv92X
-         eukqtgnC7weKM2LxTVyaTG4QTHY47gGIIONLUhP8YDjOlMNF07LfTaVwngw0WVPEXYMR
-         mFOZe4fxAkB7yQ8Ao2dVQ62xKJEUFnYvR9w/sekTCfTOIw5tVgqT64OHV20aWQKvXpEq
-         0Gtg==
-X-Gm-Message-State: AOAM530rR0DZ1Ppz/+2Miyok2nUZTgAQm7upJQkevgucXLgMd/Byk3cL
-        LBg9RZtqzEMN7mmtXqd9X1tF4n5nqkQmGA==
-X-Google-Smtp-Source: ABdhPJwtCrdgh3gKWfnC0cHiN+LdUApdFSolQP9jJJ1y/UQk9e3Wg1wu5JQjWMVJ14Yycof5aSBW0Q==
-X-Received: by 2002:adf:f150:: with SMTP id y16mr5685295wro.414.1615910322005;
-        Tue, 16 Mar 2021 08:58:42 -0700 (PDT)
+        bh=6zSKsCLQNz24hJmFrPJMkcXP/jg6YRPbN11deTsmjMc=;
+        b=KnArCr9pY5CpmcAN6gHlJ5VwlTrwXPTNs9jdNFaNZQO+X/jo+QqmlKkxPYg3I4VXFF
+         YhiuRBA6cmfLoC3rEhhquas6LsOCUb0HUflzkxoVVQ49ivLdEtblFgPwuihSfTUUa1XY
+         TjTC6iZAzozL46YQ/VIfbKukTZ46LtixHy86bkyQ2YsdQB5DX/Nk/EbiV0nHSud4E1x5
+         Tmgj5kvpXwHyn2tkf/lSYAt7Q/irOJWyokqGyh7ObQXnKXihYEhyBomFNILFTv+/+5KD
+         /Y3Jxts6l6cPCKm4evdC/QYN7mSJeyQerAzBags/LyLXHtD2SfhzBnAeKGDCQ17XjPS6
+         8m9A==
+X-Gm-Message-State: AOAM532JM444le8aPfvEx3jnFu5EWDwfIrnpAdRGSw+wwowlLRfPIGDb
+        RVgZhDJPj8cR4I/gvw+Srbqyf25rtGpebQ==
+X-Google-Smtp-Source: ABdhPJyJPK8g+gZTGQtLrIqtDn0QVzPSCJB5/D+g6wfP1D7ZM4VjcqmUB4mLZZGsMFoCG4qMabR9ag==
+X-Received: by 2002:a5d:4523:: with SMTP id j3mr5878075wra.288.1615910323706;
+        Tue, 16 Mar 2021 08:58:43 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id m132sm3439060wmf.45.2021.03.16.08.58.41
+        by smtp.gmail.com with ESMTPSA id m132sm3439060wmf.45.2021.03.16.08.58.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Mar 2021 08:58:41 -0700 (PDT)
+        Tue, 16 Mar 2021 08:58:43 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -66,9 +66,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <pclouds@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 05/32] tree-walk.c: migrate to using new "object_type" field when possible
-Date:   Tue, 16 Mar 2021 16:58:02 +0100
-Message-Id: <20210316155829.31242-6-avarab@gmail.com>
+Subject: [PATCH v3 07/32] mktree tests: test that "mode" is passed when sorting
+Date:   Tue, 16 Mar 2021 16:58:04 +0100
+Message-Id: <20210316155829.31242-8-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.0.256.gf0ddda3145
 In-Reply-To: <20210316021312.13927-1-avarab@gmail.com>
 References: <20210316021312.13927-1-avarab@gmail.com>
@@ -79,109 +79,82 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Add a test for the mode being passed to ent_compare(). That code dates
+back to 83f50539a9 (git-mktree: reverse of git-ls-tree., 2006-02-20)
+and there's never been a test for that particular edge case. Now we
+have one.
+
+I don't see how anything could run into this in practice. In order for
+that mode sorting to matter as a tiebreaker we need to have a
+duplicate entry in the tree, i.e. two "foo" entries, one a blob and
+one a tree. This asserts that if that happens we'll sort on the modes
+we encounter in such an invalid entry, i.e. we expect the tree entry
+before the blob.
+
+As shown here we'd need to disable the fsck.duplicateEntries error to
+get to the point of running "mktree", so I doubt anyone's pushing this
+sort of data around.
+
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- tree-walk.c | 24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ t/t1450-fsck.sh | 44 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 44 insertions(+)
 
-diff --git a/tree-walk.c b/tree-walk.c
-index b210967b73..6e9161901d 100644
---- a/tree-walk.c
-+++ b/tree-walk.c
-@@ -521,7 +521,7 @@ int traverse_trees(struct index_state *istate,
- 			if (!entry[i].path)
- 				continue;
- 			mask |= 1ul << i;
--			if (S_ISDIR(entry[i].mode))
-+			if (entry[i].object_type == OBJ_TREE)
- 				dirmask |= 1ul << i;
- 			e = &entry[i];
- 		}
-@@ -892,8 +892,8 @@ static int match_entry(const struct pathspec_item *item,
- 		 * nothing else (to handle 'submod/' and 'submod'
- 		 * uniformly).
- 		 */
--		if (!S_ISDIR(entry->mode) &&
--		    (!S_ISGITLINK(entry->mode) || matchlen > pathlen + 1))
-+		if (entry->object_type != OBJ_TREE &&
-+		    (entry->object_type != OBJ_COMMIT || matchlen > pathlen + 1))
- 			return 0;
- 	}
+diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+index 5071ac63a5..46125190b4 100755
+--- a/t/t1450-fsck.sh
++++ b/t/t1450-fsck.sh
+@@ -318,6 +318,50 @@ test_expect_success 'tree entry with type mismatch' '
+ 	test_i18ngrep ! "dangling blob" out
+ '
  
-@@ -1038,7 +1038,7 @@ static enum interesting do_match(struct index_state *istate,
- 		    ps->max_depth == -1)
- 			return all_entries_interesting;
- 		return within_depth(base->buf + base_offset, baselen,
--				    !!S_ISDIR(entry->mode),
-+				    entry->object_type == OBJ_TREE,
- 				    ps->max_depth) ?
- 			entry_interesting : entry_not_interesting;
- 	}
-@@ -1071,7 +1071,7 @@ static enum interesting do_match(struct index_state *istate,
- 
- 			if (within_depth(base_str + matchlen + 1,
- 					 baselen - matchlen - 1,
--					 !!S_ISDIR(entry->mode),
-+					 entry->object_type == OBJ_TREE,
- 					 ps->max_depth))
- 				goto interesting;
- 			else
-@@ -1094,7 +1094,8 @@ static enum interesting do_match(struct index_state *istate,
- 				 * Match all directories. We'll try to
- 				 * match files later on.
- 				 */
--				if (ps->recursive && S_ISDIR(entry->mode))
-+				if (ps->recursive &&
-+				    entry->object_type == OBJ_TREE)
- 					return entry_interesting;
- 
- 				/*
-@@ -1105,7 +1106,7 @@ static enum interesting do_match(struct index_state *istate,
- 				 * be performed in the submodule itself.
- 				 */
- 				if (ps->recurse_submodules &&
--				    S_ISGITLINK(entry->mode) &&
-+				    entry->object_type == OBJ_COMMIT &&
- 				    !ps_strncmp(item, match + baselen,
- 						entry->path,
- 						item->nowildcard_len - baselen))
-@@ -1154,7 +1155,8 @@ static enum interesting do_match(struct index_state *istate,
- 		 * character.  More accurate matching can then
- 		 * be performed in the submodule itself.
- 		 */
--		if (ps->recurse_submodules && S_ISGITLINK(entry->mode) &&
-+		if (ps->recurse_submodules &&
-+		    entry->object_type == OBJ_COMMIT &&
- 		    !ps_strncmp(item, match, base->buf + base_offset,
- 				item->nowildcard_len)) {
- 			strbuf_setlen(base, base_offset + baselen);
-@@ -1170,7 +1172,7 @@ static enum interesting do_match(struct index_state *istate,
- 		 * in future, see
- 		 * https://lore.kernel.org/git/7vmxo5l2g4.fsf@alter.siamese.dyndns.org/
- 		 */
--		if (ps->recursive && S_ISDIR(entry->mode))
-+		if (ps->recursive && entry->object_type == OBJ_TREE)
- 			return entry_interesting;
- 		continue;
- interesting:
-@@ -1193,7 +1195,7 @@ static enum interesting do_match(struct index_state *istate,
- 			 * can probably return all_entries_interesting or
- 			 * all_entries_not_interesting here if matched.
- 			 */
--			if (S_ISDIR(entry->mode))
-+			if (entry->object_type == OBJ_TREE)
- 				return entry_interesting;
- 
- 			strbuf_add(base, entry->path, pathlen);
-@@ -1269,7 +1271,7 @@ enum interesting tree_entry_interesting(struct index_state *istate,
- 		return positive;
- 
- 	/* #15, #19 */
--	if (S_ISDIR(entry->mode) &&
-+	if (entry->object_type == OBJ_TREE &&
- 	    positive >= entry_interesting &&
- 	    negative == entry_interesting)
- 		return entry_interesting;
++test_expect_success 'tree entry with duplicate type mismatching objects' '
++	test_create_repo duplicate-entry &&
++	(
++		cd duplicate-entry &&
++		blob="$(printf "foo" | git hash-object -w --stdin)" &&
++		tree="$(printf "100644 blob $blob\tfoo" | git mktree)" &&
++		commit="$(git commit-tree $tree -m "first commit")" &&
++		git cat-file commit $commit >good-commit &&
++
++		# First bad commit, wrong type, but in the right order
++		printf "40000 A\0$(echo $tree | hex2oct)" >broken-tree-A &&
++		printf "100644 A\0$(echo $blob | hex2oct)" >broken-tree-B &&
++		cat broken-tree-A broken-tree-B >broken-tree.1 &&
++		broken_tree1="$(git hash-object -w --literally -t tree broken-tree.1)" &&
++		bad_commit1="$(git commit-tree $broken_tree1 -m "bad commit 1")" &&
++		git cat-file commit $bad_commit1 >bad-commit.1 &&
++		git update-ref refs/heads/broken-commit-1 $bad_commit1 &&
++
++		test_must_fail git fsck &&
++		git -c fsck.duplicateEntries=warn fsck 2>err &&
++		grep " in tree .*$broken_tree1: duplicateEntries" err &&
++
++		# Second bad commits, wrong types and order
++		cat broken-tree-B broken-tree-A >broken-tree.2 &&
++		broken_tree2="$(git hash-object -w --literally -t tree broken-tree.2)" &&
++		bad_commit2="$(git commit-tree $broken_tree2 -m "bad commit 2")" &&
++		git cat-file commit $bad_commit2 >bad-commit.2 &&
++		git update-ref refs/heads/broken-commit-2 $bad_commit2 &&
++
++		test_must_fail git fsck &&
++		git -c fsck.duplicateEntries=warn fsck 2>err &&
++		grep " in tree .*$broken_tree2: duplicateEntries" err &&
++
++		# git mktree should "fix" the order of this already broken data
++		git ls-tree broken-commit-1 >broken-tree-1-ls &&
++		git ls-tree broken-commit-2 >broken-tree-2-ls &&
++		! test_cmp broken-tree-1-ls broken-tree-2-ls &&
++
++		git mktree <broken-tree-1-ls >broken-mktree-1 &&
++		git mktree <broken-tree-2-ls >broken-mktree-2 &&
++		test_cmp broken-mktree-1 broken-mktree-2
++	)
++'
++
+ test_expect_success 'tag pointing to nonexistent' '
+ 	badoid=$(test_oid deadbeef) &&
+ 	cat >invalid-tag <<-EOF &&
 -- 
 2.31.0.256.gf0ddda3145
 
