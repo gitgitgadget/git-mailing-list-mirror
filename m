@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 12F56C43619
-	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 15:53:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F0B0CC43603
+	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 15:53:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F1001650F7
+	by mail.kernel.org (Postfix) with ESMTP id DC32B64DF3
 	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 15:53:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238170AbhCPPxi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Mar 2021 11:53:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41260 "EHLO
+        id S232511AbhCPPxh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Mar 2021 11:53:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41258 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237537AbhCPPw4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Mar 2021 11:52:56 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A22CEC061756
-        for <git@vger.kernel.org>; Tue, 16 Mar 2021 08:52:55 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id d139-20020a1c1d910000b029010b895cb6f2so1742003wmd.5
-        for <git@vger.kernel.org>; Tue, 16 Mar 2021 08:52:55 -0700 (PDT)
+        with ESMTP id S231952AbhCPPwz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Mar 2021 11:52:55 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A278BC06174A
+        for <git@vger.kernel.org>; Tue, 16 Mar 2021 08:52:54 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id e9so7695334wrw.10
+        for <git@vger.kernel.org>; Tue, 16 Mar 2021 08:52:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=2mC2vPY1WZARbtdAd0KpULssHVilyZ7jU13ldEkP2aA=;
-        b=qM8RJvh9rOvSGscmO2CQF9+YcBpADEXMbOl8q2l4aC8US+PEd8nJaQCVErHkYwvJ3T
-         pe9Kctu+cUECGeqCLk6YF7Agtpest3fGKygGZLHigogc245dFxXmqT3FTO8/aGBDch2v
-         UKfaP3UeHBAZNZcveSr24vH7PzIQxE5fV7zp5NJaJjVLwKE8oYkXppXrh8PM/K4y3Fwf
-         gNssPrOo5NeHOaL3MgrK/UMHQWVPB4/Rz6HQdnl6j65uUiLaD8NlW3NquvcHZXQ2w5DY
-         cmPtsepkfLVmNuPCmNXcrRyfSH9uYJfageOt5R13IfnLMwZxv7DK1h3+xu72MnIZ+8yV
-         hUug==
+        bh=5P88KfnVokmmTh/bsuQITrHC5fhnMvifuCi+n1JzeFA=;
+        b=DaCw/1h/cIiM1HWcCiiw37X9CWmWEDdJ75n/vTcKFPzRnYb/gTjuNikjH+KQjVfDlG
+         qQc/YRct76yO7Bi6CzhoN0LcrRfnyJheY2e3pmszbNFlG/oUa9OZNaX1iM9+oAHA48k4
+         y5LfA1m3NzsUBPiVrZkRZbYNb3zjTr9zzMqxuL9AmejbKOWBq4aqO07GJLCdrDc0owXx
+         nxBrpuw16iyF19sfoOtNYzUs9cQ6AjdBAiyZ2joUXpcOzjAVnYCNy/k/R68s7vLPV4sr
+         K8ssZ9mulegtSfPsxd/yI/LQNMAh8e8EjLGjkVJYOchV0j1o93LiSatQOd8xA8g/Jv/a
+         oTow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=2mC2vPY1WZARbtdAd0KpULssHVilyZ7jU13ldEkP2aA=;
-        b=r+1Mto9uriI0YxXaAycmgecEUhPiQWNtoMRIEcuCzdJKz/kImmfywaMnVBdzu9QhP9
-         iErox6FPexefqEjEj4fePrCvh9vQJKd0LlvsRzwyUXNKj+CdPqRapkb1V2dC3129Lkx3
-         1XmvgKc8lWXWCnYciK/QfV3tBTCAUA40eFXDaxdS3eqk5Qt9raU8h6myLiHbRmLKt8OA
-         bdC8rUNmzcru7ZrAn5ehhG1kh78KEVkOXgQkzagefSvGWgZqV4hClKiU6t4+2GVhc5SR
-         GEJILbBhiaABVDpSjcbYYN6JjTe1JM7zu1RrDK85+5bazIWU7GI1wuObwTX+t/N9BY8r
-         k8kQ==
-X-Gm-Message-State: AOAM5311NoCPo/GFYRGHpN5kaxXCL/IJAitE9MapPb7vThXLcuGRCuOq
-        59f2l0JXPp//6xvltnxGvkRFNC0QZIdZzA==
-X-Google-Smtp-Source: ABdhPJw+cnls1yXB4dX7xiy7SQEaYvhSX07k5uuu+sY3etWKM9Dc64A5OuVx100zFFjD+I9fIeHURQ==
-X-Received: by 2002:a1c:1d14:: with SMTP id d20mr324398wmd.36.1615909974112;
-        Tue, 16 Mar 2021 08:52:54 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id i11sm22224228wro.53.2021.03.16.08.52.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=5P88KfnVokmmTh/bsuQITrHC5fhnMvifuCi+n1JzeFA=;
+        b=g/+NdpjeLRplmFB8Bjvkl+SR3w8/agZ8T3wTbGBb9h3zRKqRhc1L3oMlTMGBRWhtSj
+         MdZ1nUepTFbEOsXtpwKplRp0IdTdaBZGw2lWaTEQi1ypUxkQn4gnWLfy/eoE3y6oNNvu
+         iKSBCa9/+UqheWCOtO9vWhaBueNuzIGgfKrW8Ph4QkkJm6cro/3Q/CHqrZxlURx/V7N9
+         05PHIyBf3PAACBTM8Lz59UCjpwINg324hwF/0OFgjDqSI5Fs4lhpu4ka+qGgZUsMc7Zt
+         9yp0EAtmweX7SW7gjxIZPpCiG0BWxWI4Zy3AlVS/ZLdp2EE/rrD3vFOrS52bDK7vkual
+         zrlg==
+X-Gm-Message-State: AOAM5333VfEXS78ctjcxvm6Fw6X2O5aY+ObjMniihY21DXPt02pzc5p6
+        11ycEohV1MvUjE7mwM9QyL9tZPOX/IMbYw==
+X-Google-Smtp-Source: ABdhPJxuHJN3odzWJ1C2znB92lJmts7e0XnkXVcyJ7s5E6QJWWtvSjCEFTOkUvNtppUg3nW20oKKUA==
+X-Received: by 2002:a5d:4688:: with SMTP id u8mr5622003wrq.39.1615909973004;
         Tue, 16 Mar 2021 08:52:53 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id i11sm22224228wro.53.2021.03.16.08.52.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Mar 2021 08:52:52 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -64,9 +64,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 7/9] tree.h API: rename read_tree_recursive() to read_tree()
-Date:   Tue, 16 Mar 2021 16:52:42 +0100
-Message-Id: <20210316155244.28328-8-avarab@gmail.com>
+Subject: [PATCH v4 6/9] tree.h API: remove "stage" parameter from read_tree_recursive()
+Date:   Tue, 16 Mar 2021 16:52:41 +0100
+Message-Id: <20210316155244.28328-7-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.0.256.gf0ddda3145
 In-Reply-To: <20210315234344.28427-1-avarab@gmail.com>
 References: <20210315234344.28427-1-avarab@gmail.com>
@@ -77,172 +77,280 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rename the read_tree_recursive() function to just read_tree(). We had
-another read_tree() function that I've refactored away in preceding
-steps, since all in-tree users read trees recursively with a callback
-we can change the name to signify that this is the norm.
+The read_tree_recursive() function took a "stage" parameter that is
+passed through as-is. As it turns out nothing used this parameter in a
+way that they couldn't just move to the callback function they
+defined, so let's get rid of it.
+
+If anyone needs to pass such information in the future they can use
+the "void *context" parameter.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- archive.c          | 14 +++++++-------
- builtin/checkout.c |  6 +++---
- builtin/log.c      |  6 +++---
- builtin/ls-files.c |  2 +-
+ archive.c          |  9 +++++----
+ builtin/checkout.c |  4 ++--
+ builtin/log.c      |  4 ++--
+ builtin/ls-files.c | 14 +++++++-------
  builtin/ls-tree.c  |  4 ++--
  merge-recursive.c  |  4 ++--
- tree.c             |  8 ++++----
- tree.h             |  8 ++++----
- 8 files changed, 26 insertions(+), 26 deletions(-)
+ tree.c             | 10 +++++-----
+ tree.h             |  4 ++--
+ 8 files changed, 27 insertions(+), 26 deletions(-)
 
 diff --git a/archive.c b/archive.c
-index 6669a4bd14..c19300ecb9 100644
+index 9394f170f7..6669a4bd14 100644
 --- a/archive.c
 +++ b/archive.c
-@@ -317,10 +317,10 @@ int write_archive_entries(struct archiver_args *args,
- 		git_attr_set_direction(GIT_ATTR_INDEX);
+@@ -231,9 +231,10 @@ static int write_directory(struct archiver_context *c)
+ 
+ static int queue_or_write_archive_entry(const struct object_id *oid,
+ 		struct strbuf *base, const char *filename,
+-		unsigned mode, int stage, void *context)
++		unsigned mode, void *context)
+ {
+ 	struct archiver_context *c = context;
++	int stage = 0;
+ 
+ 	while (c->bottom &&
+ 	       !(base->len >= c->bottom->len &&
+@@ -317,7 +318,7 @@ int write_archive_entries(struct archiver_args *args,
  	}
  
--	err = read_tree_recursive(args->repo, args->tree,
--				  &args->pathspec,
--				  queue_or_write_archive_entry,
--				  &context);
-+	err = read_tree(args->repo, args->tree,
-+			&args->pathspec,
-+			queue_or_write_archive_entry,
-+			&context);
+ 	err = read_tree_recursive(args->repo, args->tree,
+-				  0, &args->pathspec,
++				  &args->pathspec,
+ 				  queue_or_write_archive_entry,
+ 				  &context);
  	if (err == READ_TREE_RECURSIVE)
- 		err = 0;
- 	while (context.bottom) {
-@@ -406,9 +406,9 @@ static int path_exists(struct archiver_args *args, const char *path)
- 	ctx.args = args;
+@@ -378,7 +379,7 @@ struct path_exists_context {
+ 
+ static int reject_entry(const struct object_id *oid, struct strbuf *base,
+ 			const char *filename, unsigned mode,
+-			int stage, void *context)
++			void *context)
+ {
+ 	int ret = -1;
+ 	struct path_exists_context *ctx = context;
+@@ -406,7 +407,7 @@ static int path_exists(struct archiver_args *args, const char *path)
  	parse_pathspec(&ctx.pathspec, 0, 0, "", paths);
  	ctx.pathspec.recursive = 1;
--	ret = read_tree_recursive(args->repo, args->tree,
--				  &ctx.pathspec,
--				  reject_entry, &ctx);
-+	ret = read_tree(args->repo, args->tree,
-+			&ctx.pathspec,
-+			reject_entry, &ctx);
+ 	ret = read_tree_recursive(args->repo, args->tree,
+-				  0, &ctx.pathspec,
++				  &ctx.pathspec,
+ 				  reject_entry, &ctx);
  	clear_pathspec(&ctx.pathspec);
  	return ret != 0;
- }
 diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 2c2d58a230..0e66390520 100644
+index 21b742c0f0..2c2d58a230 100644
 --- a/builtin/checkout.c
 +++ b/builtin/checkout.c
-@@ -155,8 +155,8 @@ static int update_some(const struct object_id *oid, struct strbuf *base,
+@@ -114,7 +114,7 @@ static int post_checkout_hook(struct commit *old_commit, struct commit *new_comm
+ }
+ 
+ static int update_some(const struct object_id *oid, struct strbuf *base,
+-		const char *pathname, unsigned mode, int stage, void *context)
++		const char *pathname, unsigned mode, void *context)
+ {
+ 	int len;
+ 	struct cache_entry *ce;
+@@ -155,7 +155,7 @@ static int update_some(const struct object_id *oid, struct strbuf *base,
  
  static int read_tree_some(struct tree *tree, const struct pathspec *pathspec)
  {
--	read_tree_recursive(the_repository, tree,
--			    pathspec, update_some, NULL);
-+	read_tree(the_repository, tree,
-+		  pathspec, update_some, NULL);
+-	read_tree_recursive(the_repository, tree, 0,
++	read_tree_recursive(the_repository, tree,
+ 			    pathspec, update_some, NULL);
  
  	/* update the index with the given tree's info
- 	 * for all args, expanding wildcards, and exit
-@@ -322,7 +322,7 @@ static void mark_ce_for_checkout_overlay(struct cache_entry *ce,
- 	 * If it comes from the tree-ish, we already know it
- 	 * matches the pathspec and could just stamp
- 	 * CE_MATCHED to it from update_some(). But we still
--	 * need ps_matched and read_tree_recursive (and
-+	 * need ps_matched and read_tree (and
- 	 * eventually tree_entry_interesting) cannot fill
- 	 * ps_matched yet. Once it can, we can avoid calling
- 	 * match_pathspec() for _all_ entries when
 diff --git a/builtin/log.c b/builtin/log.c
-index 58acb2b76a..980de59063 100644
+index ffa3fb8c28..58acb2b76a 100644
 --- a/builtin/log.c
 +++ b/builtin/log.c
-@@ -681,9 +681,9 @@ int cmd_show(int argc, const char **argv, const char *prefix)
- 					diff_get_color_opt(&rev.diffopt, DIFF_COMMIT),
+@@ -599,7 +599,7 @@ static int show_tag_object(const struct object_id *oid, struct rev_info *rev)
+ 
+ static int show_tree_object(const struct object_id *oid,
+ 		struct strbuf *base,
+-		const char *pathname, unsigned mode, int stage, void *context)
++		const char *pathname, unsigned mode, void *context)
+ {
+ 	FILE *file = context;
+ 	fprintf(file, "%s%s\n", pathname, S_ISDIR(mode) ? "/" : "");
+@@ -682,7 +682,7 @@ int cmd_show(int argc, const char **argv, const char *prefix)
  					name,
  					diff_get_color_opt(&rev.diffopt, DIFF_RESET));
--			read_tree_recursive(the_repository, (struct tree *)o,
--					    &match_all, show_tree_object,
--					    rev.diffopt.file);
-+			read_tree(the_repository, (struct tree *)o,
-+				  &match_all, show_tree_object,
-+				  rev.diffopt.file);
+ 			read_tree_recursive(the_repository, (struct tree *)o,
+-					    0, &match_all, show_tree_object,
++					    &match_all, show_tree_object,
+ 					    rev.diffopt.file);
  			rev.shown_one = 1;
  			break;
- 		case OBJ_COMMIT:
 diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index fa9b01b6cc..13bcc2d847 100644
+index cd432ac03c..fa9b01b6cc 100644
 --- a/builtin/ls-files.c
 +++ b/builtin/ls-files.c
+@@ -425,7 +425,7 @@ static int read_one_entry_opt(struct index_state *istate,
+ 			      const struct object_id *oid,
+ 			      struct strbuf *base,
+ 			      const char *pathname,
+-			      unsigned mode, int stage, int opt)
++			      unsigned mode, int opt)
+ {
+ 	int len;
+ 	struct cache_entry *ce;
+@@ -437,7 +437,7 @@ static int read_one_entry_opt(struct index_state *istate,
+ 	ce = make_empty_cache_entry(istate, base->len + len);
+ 
+ 	ce->ce_mode = create_ce_mode(mode);
+-	ce->ce_flags = create_ce_flags(stage);
++	ce->ce_flags = create_ce_flags(1);
+ 	ce->ce_namelen = base->len + len;
+ 	memcpy(ce->name, base->buf, base->len);
+ 	memcpy(ce->name + base->len, pathname, len+1);
+@@ -446,12 +446,12 @@ static int read_one_entry_opt(struct index_state *istate,
+ }
+ 
+ static int read_one_entry(const struct object_id *oid, struct strbuf *base,
+-			  const char *pathname, unsigned mode, int stage,
++			  const char *pathname, unsigned mode,
+ 			  void *context)
+ {
+ 	struct index_state *istate = context;
+ 	return read_one_entry_opt(istate, oid, base, pathname,
+-				  mode, stage,
++				  mode,
+ 				  ADD_CACHE_OK_TO_ADD|ADD_CACHE_SKIP_DFCHECK);
+ }
+ 
+@@ -460,12 +460,12 @@ static int read_one_entry(const struct object_id *oid, struct strbuf *base,
+  * the stage that will conflict with the entry being added.
+  */
+ static int read_one_entry_quick(const struct object_id *oid, struct strbuf *base,
+-				const char *pathname, unsigned mode, int stage,
++				const char *pathname, unsigned mode,
+ 				void *context)
+ {
+ 	struct index_state *istate = context;
+ 	return read_one_entry_opt(istate, oid, base, pathname,
+-				  mode, stage,
++				  mode,
+ 				  ADD_CACHE_JUST_APPEND);
+ }
+ 
 @@ -523,7 +523,7 @@ void overlay_tree_on_index(struct index_state *istate,
  
  	if (!fn)
  		fn = read_one_entry_quick;
--	err = read_tree_recursive(the_repository, tree, &pathspec, fn, istate);
-+	err = read_tree(the_repository, tree, &pathspec, fn, istate);
+-	err = read_tree_recursive(the_repository, tree, 1, &pathspec, fn, istate);
++	err = read_tree_recursive(the_repository, tree, &pathspec, fn, istate);
  	if (err)
  		die("unable to read tree entries %s", tree_name);
  
 diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
-index dbb31217be..3a442631c7 100644
+index 7d3fb2e6d0..dbb31217be 100644
 --- a/builtin/ls-tree.c
 +++ b/builtin/ls-tree.c
+@@ -62,7 +62,7 @@ static int show_recursive(const char *base, int baselen, const char *pathname)
+ }
+ 
+ static int show_tree(const struct object_id *oid, struct strbuf *base,
+-		const char *pathname, unsigned mode, int stage, void *context)
++		const char *pathname, unsigned mode, void *context)
+ {
+ 	int retval = 0;
+ 	int baselen;
 @@ -185,6 +185,6 @@ int cmd_ls_tree(int argc, const char **argv, const char *prefix)
  	tree = parse_tree_indirect(&oid);
  	if (!tree)
  		die("not a tree object");
--	return !!read_tree_recursive(the_repository, tree,
--				     &pathspec, show_tree, NULL);
-+	return !!read_tree(the_repository, tree,
-+			   &pathspec, show_tree, NULL);
+-	return !!read_tree_recursive(the_repository, tree, 0,
++	return !!read_tree_recursive(the_repository, tree,
+ 				     &pathspec, show_tree, NULL);
  }
 diff --git a/merge-recursive.c b/merge-recursive.c
-index 1593f37449..3d9207455b 100644
+index fa7602ff0f..1593f37449 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -473,8 +473,8 @@ static void get_files_dirs(struct merge_options *opt, struct tree *tree)
+@@ -453,7 +453,7 @@ static void unpack_trees_finish(struct merge_options *opt)
+ 
+ static int save_files_dirs(const struct object_id *oid,
+ 			   struct strbuf *base, const char *path,
+-			   unsigned int mode, int stage, void *context)
++			   unsigned int mode, void *context)
+ {
+ 	struct path_hashmap_entry *entry;
+ 	int baselen = base->len;
+@@ -473,7 +473,7 @@ static void get_files_dirs(struct merge_options *opt, struct tree *tree)
  {
  	struct pathspec match_all;
  	memset(&match_all, 0, sizeof(match_all));
--	read_tree_recursive(opt->repo, tree,
--			    &match_all, save_files_dirs, opt);
-+	read_tree(opt->repo, tree,
-+		  &match_all, save_files_dirs, opt);
+-	read_tree_recursive(opt->repo, tree, 0,
++	read_tree_recursive(opt->repo, tree,
+ 			    &match_all, save_files_dirs, opt);
  }
  
- static int get_tree_entry_if_blob(struct repository *r,
 diff --git a/tree.c b/tree.c
-index fb4985f22c..f6de250d7f 100644
+index 04eb11aed3..fb4985f22c 100644
 --- a/tree.c
 +++ b/tree.c
-@@ -81,10 +81,10 @@ static int read_tree_1(struct repository *r,
- 	return 0;
- }
+@@ -13,7 +13,7 @@ const char *tree_type = "tree";
  
--int read_tree_recursive(struct repository *r,
--			struct tree *tree,
--			const struct pathspec *pathspec,
--			read_tree_fn_t fn, void *context)
-+int read_tree(struct repository *r,
-+	      struct tree *tree,
-+	      const struct pathspec *pathspec,
-+	      read_tree_fn_t fn, void *context)
+ static int read_tree_1(struct repository *r,
+ 		       struct tree *tree, struct strbuf *base,
+-		       int stage, const struct pathspec *pathspec,
++		       const struct pathspec *pathspec,
+ 		       read_tree_fn_t fn, void *context)
+ {
+ 	struct tree_desc desc;
+@@ -38,7 +38,7 @@ static int read_tree_1(struct repository *r,
+ 		}
+ 
+ 		switch (fn(&entry.oid, base,
+-			   entry.path, entry.mode, stage, context)) {
++			   entry.path, entry.mode, context)) {
+ 		case 0:
+ 			continue;
+ 		case READ_TREE_RECURSIVE:
+@@ -72,7 +72,7 @@ static int read_tree_1(struct repository *r,
+ 		strbuf_add(base, entry.path, len);
+ 		strbuf_addch(base, '/');
+ 		retval = read_tree_1(r, lookup_tree(r, &oid),
+-				     base, stage, pathspec,
++				     base, pathspec,
+ 				     fn, context);
+ 		strbuf_setlen(base, oldlen);
+ 		if (retval)
+@@ -83,13 +83,13 @@ static int read_tree_1(struct repository *r,
+ 
+ int read_tree_recursive(struct repository *r,
+ 			struct tree *tree,
+-			int stage, const struct pathspec *pathspec,
++			const struct pathspec *pathspec,
+ 			read_tree_fn_t fn, void *context)
  {
  	struct strbuf sb = STRBUF_INIT;
  	int ret;
+ 
+-	ret = read_tree_1(r, tree, &sb, stage, pathspec, fn, context);
++	ret = read_tree_1(r, tree, &sb, pathspec, fn, context);
+ 	strbuf_release(&sb);
+ 	return ret;
+ }
 diff --git a/tree.h b/tree.h
-index 1309ab997e..4fb713774a 100644
+index 5252b5139d..1309ab997e 100644
 --- a/tree.h
 +++ b/tree.h
-@@ -33,8 +33,8 @@ int cmp_cache_name_compare(const void *a_, const void *b_);
- #define READ_TREE_RECURSIVE 1
- typedef int (*read_tree_fn_t)(const struct object_id *, struct strbuf *, const char *, unsigned int, void *);
+@@ -31,10 +31,10 @@ struct tree *parse_tree_indirect(const struct object_id *oid);
+ int cmp_cache_name_compare(const void *a_, const void *b_);
  
--int read_tree_recursive(struct repository *r,
--			struct tree *tree,
--			const struct pathspec *pathspec,
--			read_tree_fn_t fn, void *context);
-+int read_tree(struct repository *r,
-+	      struct tree *tree,
-+	      const struct pathspec *pathspec,
-+	      read_tree_fn_t fn, void *context);
+ #define READ_TREE_RECURSIVE 1
+-typedef int (*read_tree_fn_t)(const struct object_id *, struct strbuf *, const char *, unsigned int, int, void *);
++typedef int (*read_tree_fn_t)(const struct object_id *, struct strbuf *, const char *, unsigned int, void *);
+ 
+ int read_tree_recursive(struct repository *r,
+ 			struct tree *tree,
+-			int stage, const struct pathspec *pathspec,
++			const struct pathspec *pathspec,
+ 			read_tree_fn_t fn, void *context);
  #endif /* TREE_H */
 -- 
 2.31.0.256.gf0ddda3145
