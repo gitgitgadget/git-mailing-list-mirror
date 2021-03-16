@@ -2,143 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 585C5C433DB
-	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 23:53:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F373CC433E6
+	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 00:53:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2440B64F5F
-	for <git@archiver.kernel.org>; Mon, 15 Mar 2021 23:53:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B9E9564F6C
+	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 00:53:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232638AbhCOXwi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Mar 2021 19:52:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60396 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232050AbhCOXwL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Mar 2021 19:52:11 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2608C06174A
-        for <git@vger.kernel.org>; Mon, 15 Mar 2021 16:52:10 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id w18so19406969edc.0
-        for <git@vger.kernel.org>; Mon, 15 Mar 2021 16:52:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=EtzcqEN8xSCl3poWwkl8mpSurk/1M+QOX+r55d/wT8Y=;
-        b=UBLD2QeOiD1QdRjk09TfPw7uYOxfLb+XSu0CaEWNN2gcpyoh5dZaxQbAPlzNuqvJ16
-         MQ4pp9LwsRr/7TcOe+Ll+mDQetocIrQQE7i3yt8djtzs4RWlT5U1KbZx8fYeqvHz+wfO
-         gziclEvGMQzE3qF1g//ugdYlregmMdbfFlUj8RRupeDMn3Y9na5fvJF0fSRoCcspbCZ/
-         ANp5UuYai/ttrpD1gOYmV9jGnZX8SYMjuD7are1eB1bc9Yf/rhJurdycpLtwCSkgJua3
-         kZg6M9ZJQ6Zxmru+psjrXX/YPJo2WJsxZa1iF2qkw3pbjPkaD1M6bDuxbfN+fSBRVryq
-         yLGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=EtzcqEN8xSCl3poWwkl8mpSurk/1M+QOX+r55d/wT8Y=;
-        b=j2EXVk5kiZ66WRnCnD2ms/yG7CR7KKbvvbY2Y9BFm3trOD7H/SVfgOAGP9ntOUckbX
-         h32RjLJRjjRhTMxxB3bGfWevGzeRGOC+5ExHXunFG8xsIgf+aysuk/tXbTUzg4otC6GK
-         2r6FZh5lTXtp4WQRej/HDcGmpCtJUkb0B8KIOrRTBPmiuyp0SjMs+VN4ejO18C0yuD6f
-         hEYHBIFO7OCH35E4jKXomy0LODZtmL5kSchwbBvK7wONg1ywk0tAb7kP10Xvaezkpc43
-         bmQyTselWaeaGTSFeovHic4O50zbVoslAaaa2npXOWzt3EAPovN63MTWYkOX4lIF3WMP
-         dDWw==
-X-Gm-Message-State: AOAM533dReI1yzR/fsfGAp7spkOZaubPae+bi3KWiiY+OeYOUsLsThtn
-        S5qiCy8+6MMFBpxOL0sIWl/mivdshcZyxg==
-X-Google-Smtp-Source: ABdhPJyyweoqzv4+B96tVEUm/JYer4ZHpfUFbTELxKmvhchT9YzcbuH6+I3spNBrYY85hVZdANVZnQ==
-X-Received: by 2002:aa7:cb4d:: with SMTP id w13mr32924972edt.249.1615852329560;
-        Mon, 15 Mar 2021 16:52:09 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id n25sm8825662edq.55.2021.03.15.16.52.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Mar 2021 16:52:09 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, newren@gmail.com, pclouds@gmail.com,
-        jrnieder@gmail.com,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v2 05/20] sparse-index: implement ensure_full_index()
-References: <pull.883.git.1614111270.gitgitgadget@gmail.com>
- <pull.883.v2.git.1615404664.gitgitgadget@gmail.com>
- <399ddb0bad56c69ff9d9591f5e8eacf52cf50a15.1615404665.git.gitgitgadget@gmail.com>
- <xmqq1rckc1cb.fsf@gitster.g>
- <c5e42675-5f03-728a-60ec-880da368085b@gmail.com>
- <xmqqft106sok.fsf@gitster.g>
- <c730cb8d-06ff-6f86-4eae-812472157327@gmail.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <c730cb8d-06ff-6f86-4eae-812472157327@gmail.com>
-Date:   Tue, 16 Mar 2021 00:52:08 +0100
-Message-ID: <87eeggf00n.fsf@evledraar.gmail.com>
+        id S232830AbhCPAwb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Mar 2021 20:52:31 -0400
+Received: from out2.migadu.com ([188.165.223.204]:43971 "EHLO out2.migadu.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231921AbhCPAwK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Mar 2021 20:52:10 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cmpwn.com; s=key1;
+        t=1615855922;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=JN4OKnllvXJx3bZoSPRWgro7UjF3/PV9BZ/FoxNc2Tw=;
+        b=aIgcCB5QZad4Lnx/hZeTKQHSVi8Q/x0O7B/h4nrw/Iskpc8DamKPDtRhvKt/0lFU30NwNx
+        Snj1Dhf8ncC2pKWDlGI1mQX54YfVLkBzoKsmRlTS/1fUX3wLeFY1p4YhMcLjp7qVvMNwXD
+        wE8VKkktNhZHzuFPX8+NULf/zr/VPH1B5ng539wujFLUbH5qX3lZlsQoTf/iF33tm6kpPq
+        E+sveR5PDjAMzsJ3NQCzJwYZmdowOQxWbHF949JQe99z7aphUjVFpYH/g8Sr0fvBlCA2sd
+        IsSXokPX9l8QDBo7kTJKw2Vkad01v8Mo0gjxOBbE9eTJaERcd4/IsS9i+28ZvQ==
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date:   Mon, 15 Mar 2021 20:52:01 -0400
+Message-Id: <C9YD4AEUH84L.29FP64NJJ1BPU@taiga>
+Cc:     "Jonathan Nieder" <jrnieder@gmail.com>, <git@vger.kernel.org>
+Subject: Re: Regarding the depreciation of ssh+git/git+ssh protocols
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From:   "Drew DeVault" <sir@cmpwn.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+References: <C9Y2DPYH4XO1.3KFD8LT770P2@taiga> <YE+ftT2WaKDzc+45@google.com>
+ <C9Y4NXXX6HRI.1IROIK8ZXK4S2@taiga>
+ <YE/ZSiuIsMs3ucVM@camp.crustytoothpaste.net>
+In-Reply-To: <YE/ZSiuIsMs3ucVM@camp.crustytoothpaste.net>
+X-Migadu-Flow: FLOW_OUT
+X-Migadu-Auth-User: sir@cmpwn.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Fri, Mar 12 2021, Derrick Stolee wrote:
-
-> On 3/12/2021 3:08 PM, Junio C Hamano wrote:
->> Derrick Stolee <stolee@gmail.com> writes:
->>=20
->>>> =C3=86var, the assumption that led to your e68237bb (tree.h API: remove
->>>> support for starting at prefix !=3D "", 2021-03-08) closes the door
->>>> for this code rather badly.  Please work with Derrick to figure out
->>>> what the best course of action would be.
->>>
->>> Thanks for pointing this out, Junio.
->>>
->>> My preference would be to drop "tree.h API: remove support for
->>> starting at prefix !=3D """, but it should be OK to keep "tree.h API:
->>> remove "stage" parameter from read_tree_recursive()" (currently
->>> b3a078863f6), even though it introduces a semantic conflict here.
->>>
->>> Since I haven't seen my sparse-index topic get picked up by a
->>> tracking branch, I'd be happy to rebase on top of =C3=86var's topic if
->>> I can still set a non-root prefix.
->> I think all the clean-up value e68237bb has are on the calling side
->> (they no longer have to pass constant ("", 0) to the function), and
->> we could rewrite e68237bb by
->>=20
->>  - renaming "read_tree_recursive()" to "read_tree_at()", with the
->>    non-empty prefix support.
->>=20
->>  - creating a new function "read_tree()", which lacks the support
->>    for prefix, as a thin-wrapper around "read_tree_at()".
->>=20
->>  - modifying the callers of "read_tree_recursive()" changed by
->>    e68237bb to instead call "read_tree()" (without prefix).
->>=20
->> to simplify majority of calling sites without losing functionality.
->>=20
->> Then your [05/20] can use the read_tree_at() to read with a prefix.
->>=20
->>=20
->> But that kind of details, I'd want to see you two figure out
->> yourselves.
+On Mon Mar 15, 2021 at 6:01 PM EDT, brian m. carlson wrote:
+> But you can't find whether a URL is useful for a particular purpose in
+> general. For example, if I see an HTTPS URL, that tells me nothing
+> about the resources that one might find at that URL.
 >
-> You've given us a great proposal. I'll wait for =C3=86var to chime in
-> (and probably update his topic) before I submit a new version.
+> In addition, it's possible that the data you want exists, but is not
+> suitable for you in whatever way (not in a language you understand, in
+> an unsuitable format, is illegal or offensive, etc.), or you are not
+> authorized to access it. You can't know any of this without making some
+> sort of request.
+>
+> All a URL can tell you is literally where a resource is located. Even
+> if we saw a URL that used the hypothetical https+git as the scheme, we
+> couldn't determine whether we could access the data, whether the data
+> even still exists, or, even if we knew all of those things, whether it
+> was using the smart or dumb protocol, without making a request.
 
-I've re-rolled my series just now at
-https://lore.kernel.org/git/20210315234344.28427-1-avarab@gmail.com/
-sorry for the delay.
+What we know is that we can pass it to git to deal with, and then git
+will determine the next steps. It will negotiate dumb or smart HTTP
+in-band, deal with errors that arise, and so on. It signals that git is
+the tool best equipped to deal with the situation, and without that we'd
+end up guessing.
 
-You should be able to rebase easily on top of it, although note that the
-new read_tree_at() uses a strbuf, but is otherwise the same as the old
-read_tree_recursive().
+> So I don't think this is a thing we can do, simply because in general
+> URLs aren't suitable for sharing this kind of information.
 
-Note that the pathspec can also be used to get to where
-read_tree_recursive() would have brought you. I haven't looked at
-whether there's reasons to convert in-tree (or this) code to pathspec
-use, or vice-versa convert some things that use pathspecs now
-(e.g. ls-tree with a path) to providing a prefix via the strbuf.
+That's simply not true. They are quite capable at this task, and are
+fulfilling this duty for a wide varitety of applications today.
+
+I don't really understand the disconnect here. No, URLs are not magic,
+but they are perfectly sufficient for this use-case.
