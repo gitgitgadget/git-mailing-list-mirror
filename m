@@ -2,126 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88F24C433E0
-	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 13:53:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B0AAC433DB
+	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 14:21:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5098C60232
-	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 13:53:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 46BAB65075
+	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 14:21:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235104AbhCPNxN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Mar 2021 09:53:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43424 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234413AbhCPNwu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Mar 2021 09:52:50 -0400
-Received: from mail-il1-x131.google.com (mail-il1-x131.google.com [IPv6:2607:f8b0:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 548A2C06174A
-        for <git@vger.kernel.org>; Tue, 16 Mar 2021 06:52:50 -0700 (PDT)
-Received: by mail-il1-x131.google.com with SMTP id g9so12749221ilc.3
-        for <git@vger.kernel.org>; Tue, 16 Mar 2021 06:52:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=Y82LxAaUWkgG2ulTWTXEFS6VX5p+SEiXEu8L8jD/chE=;
-        b=jI8LdyHC45mUpAZWe52+wwnFPTpJoy57vZjBKdM4HYT7chDsSUnbh+JMkQ4cb8aN4v
-         lsBLMtWuF/eDcvxGZ+3waSxmUmifHJZwCRq0vEzrD9OhH5gEhW3DVm7wv8rfDCZ7pJB1
-         3g85zfozWBGsna+ACQEJFle+6l4QXaNoP1tJIJmzND5Ydzc1NZk8O5suGEoJkWjNqipG
-         vKaGR/WMR5iQ3OHGvKVV8j0pvBzUonzJttKy57HL7cQLQX55SRPO5ogfaXqIAIqPGr42
-         3+DUi1N/y7eoawiT2Ya2+fvgLbAYxjJxUB6d9etGhVCgK0c+ZRPFR5SIyp5W5+Fjwik7
-         ZOdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=Y82LxAaUWkgG2ulTWTXEFS6VX5p+SEiXEu8L8jD/chE=;
-        b=VKfb1YJCacQlvpVb9/2qpbhsK++HybQ+We4+MSTbinGc5ohh/SCFDAJ4/ZNKMN483z
-         RtkAkB7vByiGnuir5qJDquIbn2R4jWT1yYPFVbUdsDkA7kH88hq4YMDeNwKwJUWai3wi
-         fw4OJ2XKv/Ye3TQ5VMjNLZaJKsGx7ziGjt2myjeltjV35o98YvfwZuWsCU2tHUNCYi9r
-         zZawfZWrL71kVkY1X0Rq8loEk3NaFwShjQMChoJQvLmaXDKAaqRzNH3s3+grMKTgwSe+
-         t4G76Bcp26lVdqQO/15urZrFgdncFaforB9iHz5hapTVcdt8IxcsmXQjm8Fx+lmu+lBM
-         V6uA==
-X-Gm-Message-State: AOAM533UDz120lpGNB6iDW9gTcHEYkoCUv4iEs8zCGUqNM8Ce0+3pEdX
-        vQSXtxJdjdryRB6u6XaWiMAIwg==
-X-Google-Smtp-Source: ABdhPJx7T2kP00fiW3+ZN8pWwyR2BuRFKh5gNrw2yj2NYnNplDg4hyLqonl15xPvUIlQNCFa2FVcVg==
-X-Received: by 2002:a92:6b0e:: with SMTP id g14mr3993044ilc.246.1615902769636;
-        Tue, 16 Mar 2021 06:52:49 -0700 (PDT)
-Received: from localhost ([2605:9480:22e:ff10:aa35:f9c6:aa86:b530])
-        by smtp.gmail.com with ESMTPSA id k125sm8702149iof.14.2021.03.16.06.52.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Mar 2021 06:52:49 -0700 (PDT)
-Date:   Tue, 16 Mar 2021 09:52:47 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Son Luong Ngoc <sluongng@gmail.com>
-Cc:     git <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: Tests failed with GIT_TEST_FAIL_PREREQS and/or
- GIT_TEST_PROTOCOL_VERSION
-Message-ID: <YFC33vfLb36pRCO6@nand.local>
-References: <CAL3xRKfSXDd0ucO4zaM5_WZeQfq10Hqpyk3nL+Zw8ttgfN0ZhA@mail.gmail.com>
+        id S236184AbhCPOVC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Mar 2021 10:21:02 -0400
+Received: from siwi.pair.com ([209.68.5.199]:12822 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230325AbhCPOUd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Mar 2021 10:20:33 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id C54FE3F404F;
+        Tue, 16 Mar 2021 10:20:30 -0400 (EDT)
+Received: from HCIPROD2.AZHCI.com (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 8CB243F4047;
+        Tue, 16 Mar 2021 10:20:30 -0400 (EDT)
+Subject: Re: [PATCH] fsmonitor: avoid global-buffer-overflow READ when
+ checking trivial response
+To:     Andrzej Hunt via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Jeff Hostetler <jeffhost@microsoft.com>,
+        Andrzej Hunt <andrzej@ahunt.org>,
+        Andrzej Hunt <ajrhunt@google.com>
+References: <pull.904.git.1615826363431.gitgitgadget@gmail.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <c34badb9-a3bc-a5fe-c6fc-c1bdce867e0d@jeffhostetler.com>
+Date:   Tue, 16 Mar 2021 10:20:29 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAL3xRKfSXDd0ucO4zaM5_WZeQfq10Hqpyk3nL+Zw8ttgfN0ZhA@mail.gmail.com>
+In-Reply-To: <pull.904.git.1615826363431.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
 
-On Tue, Mar 16, 2021 at 10:45:20AM +0100, Son Luong Ngoc wrote:
-> Hi folks,
->
-> Running the test suit with GIT_TEST_FAIL_PREREQS=1 on master (and
-> next) seem to result in some failures:
 
-Ack, thanks for reporting.
+On 3/15/21 12:39 PM, Andrzej Hunt via GitGitGadget wrote:
+> From: Andrzej Hunt <ajrhunt@google.com>
+> 
+> query_result can be be an empty strbuf (STRBUF_INIT) - in that case
+> trying to read 3 bytes triggers a buffer overflow read (as
+> query_result.buf = '\0').
+> 
+> Therefore we need to check query_result's length before trying to read 3
+> bytes.
+> 
+> This overflow was introduced in:
+>    940b94f35c (fsmonitor: log invocation of FSMonitor hook to trace2, 2021-02-03)
+> It was found when running the test-suite against ASAN, and can be most
+> easily reproduced with the following command:
 
-> A quick git-bisect run seems to point back to this commit:
->
-> 3b1ca60f8f317b483c8c1805ab500ff2b014cbec is the first bad commit
-> commit 3b1ca60f8f317b483c8c1805ab500ff2b014cbec
-> Author: Taylor Blau <me@ttaylorr.com>
-> Date:   Tue Dec 8 17:03:14 2020 -0500
+[...]
 
-Hmm. I get a different result.
+>      fsmonitor: fix overflow read
+>      
+>      This patch fixes a buffer overflow read in
+>      fsmonitor_is_trivial_response().
+>      
+>      I'm not super familiar with fsmonitor, so I'm not 100% sure what the
+>      empty response actually means. Based on my reading of the docs below,
+>      this can happen with fsmonitor-watchman v1 when no files have changed.
+>      But it could also happen for v2 if the implementation is broken (in
+>      which case we also shouldn't overflow)? Either way, I'm guessing the
+>      empty response doesn't count as trivial:
+>      https://git-scm.com/docs/githooks#_fsmonitor_watchman
+>      
+>      The other question I had is: can watchman V1 return "/\0" as the trivial
+>      response (as it has no token header) - and should we be recognising that
+>      too?
+>      
+>      ATB,
+>      
+>      Andrzej
 
-    $ cat run.sh
-    #!/bin/sh
-    make -j20 DEVELOPER=1 O=0 && cd t && GIT_TEST_FAIL_PREREQS=1 ./t5300-*.sh -i
-    $ git bisect start
-    $ git bisect bad
-    $ git bisect good v2.30.0
-    Bisecting: 453 revisions left to test after this (roughly 9 steps)
-    $ git bisect run $PWD/run.sh
-    [snip]
-    a926c4b904bdc339568c2898af955cdc61b31542 is the first bad commit
-    commit a926c4b904bdc339568c2898af955cdc61b31542
-    Author: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-    Date:   Thu Feb 11 02:53:51 2021 +0100
+[...]
 
-        tests: remove most uses of C_LOCALE_OUTPUT
+Looks good to me.  And thanks for catching this.
 
->     ewah/ewah_bitmap.c: avoid open-coding ALLOC_GROW()
+WRT your questions:
 
-I'll take a look at what's going on here, but Ævar (cc'd) will probably
-beat me to it.
+An empty response means no files have changed since the last query.
+The client can assume all cache-entries are valid and doesn't need
+to scan.
 
-Is it possible that your bisection script doesn't report success
-properly? Bisecting the same range (v2.30.0..v2.31.0) with
+A "trivial" response means that the monitor doesn't have enough
+information to answer the question. The client should assume that
+everything is invalid and do a full scan (as if no monitor were
+present).
 
-    $ cat run.sh
-    #!/bin/sh
-    false
+I added the `fsmonitor_is_trivial_response()` function with the
+tracing that I added in [1] in preparation for adding a builtin
+fsmonitor service (and currently only my tracing uses that function),
+but the concept of a trivial "/" response line has been present since
+the initial fsmonitor implementation [2].   See [3] and [4].
 
-does say that my 3b1ca60f8f (ewah/ewah_bitmap.c: avoid open-coding
-ALLOC_GROW(), 2020-12-08) is the first bad commit.
+[1] 940b94f35c (fsmonitor: log invocation of FSMonitor hook to trace2, 
+2021-02-03)
+[2] 883e248b8a (fsmonitor: teach git to optionally utilize a file system 
+monitor to speed up detecting new or changed files., 2017-09-22)
+[3] 
+https://github.com/git/git/blob/a5828ae6b52137b913b978e16cd2334482eb4c1f/fsmonitor.c#L304
+[4] 
+https://github.com/git/git/blob/a5828ae6b52137b913b978e16cd2334482eb4c1f/fsmonitor.c#L320
 
-Thanks,
-Taylor
+Thanks again for the review.
+Jeff
