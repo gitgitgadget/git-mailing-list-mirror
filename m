@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5AE22C433E6
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 73706C43381
 	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 00:55:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2633664F71
+	by mail.kernel.org (Postfix) with ESMTP id 3C6E264F6C
 	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 00:55:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233898AbhCPAyn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Mar 2021 20:54:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45432 "EHLO
+        id S233843AbhCPAyl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Mar 2021 20:54:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45440 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233624AbhCPAyf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Mar 2021 20:54:35 -0400
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C27B0C06174A
-        for <git@vger.kernel.org>; Mon, 15 Mar 2021 17:54:35 -0700 (PDT)
-Received: by mail-pl1-x62e.google.com with SMTP id u18so16126329plc.12
-        for <git@vger.kernel.org>; Mon, 15 Mar 2021 17:54:35 -0700 (PDT)
+        with ESMTP id S233626AbhCPAyg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Mar 2021 20:54:36 -0400
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD888C06174A
+        for <git@vger.kernel.org>; Mon, 15 Mar 2021 17:54:36 -0700 (PDT)
+Received: by mail-pj1-x1032.google.com with SMTP id k23-20020a17090a5917b02901043e35ad4aso420269pji.3
+        for <git@vger.kernel.org>; Mon, 15 Mar 2021 17:54:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=2AhOuynnxz3rTaWffeciWEZJbuzWh556g87pLPwc1po=;
-        b=Ra4tD3kRcenJaBmHG3YoL1SHp5GWfBE8V54PDYFhvs2YGKmCXPKxEsXS7AEPV9i8qy
-         8YwL+vTN/O5PvFAdEThEKqzWXUHAC9j/rbmdCAGLT/TBAvIWl0mhCzMpCXe/fhbyOl4/
-         Olfsq7YsMuozn9I71zlTADYErxyPk+0gk5zHDndwTvsxN+bUucJ07InnPZD6JRv3XRIB
-         1hvHUsAal31PTdDDvmnA6oqTKtUXmy9odayxHgGxJDzm1qwoUS70kE8YXXnlF8ZJQ+AD
-         F+W7xa+YOJS/gHWxlpyEzDGS9QjkiA1u8vkj6t0XK9cho/B5Bc6VN71OCLKXi7PaKeE/
-         o/ew==
+        bh=y/FyqYdUrIEtuuDrl3IU5HHgBCKoHDsokOpXAuTpXVA=;
+        b=lE4gJ5w76s3K1JFsiw+O4b7R3qWK8fGiXgrVdJaD3AEb193ft6E9kl/SlXesmcGhTD
+         zrf/C9r9WvngtuglGJnu4r3xnDnYQ/JLPMRTqd1FOncn9uHj+ym1f2DZkJRzVzIVlWC/
+         1bkPmQZLkAs6rpaHqnqEbMyxpeaj+rQ0xoCsdLFmctb2fQHdkzE7aH1OmR3/kLFWoIdH
+         WXsWYZwXxF+B9nFC+HnFEaiOEdn7LEaXr7QHk6uUFAyQ1OKkKyXzkYBieYj1JBnrdgsm
+         3fraLg/XTSAroykjOfZ72ZY6LjxCBSv090NnnU6GthtjZNdOwiNJtfJ4Eo0EWV6vzrlr
+         wLSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=2AhOuynnxz3rTaWffeciWEZJbuzWh556g87pLPwc1po=;
-        b=a17BZygC8cWvjipJwnoCdHadr2GrZihw9GUVkeyt1S9rXaor8TrYOPSnTh99/1cFaO
-         0G0+S7HAjLJ6AgkwqF1D1lUYr6HxdSKKS7nrLSCbcaN/UQeiuu7p+YwtnA6Y2Dd+wUOW
-         LIDhLP3fcuwvWilq3Zhybm9LWtEARmmkQXWXzFJOSi0C9wOqDRIgn183Jv+IPCYlrJ6u
-         jMyILXgGV4WFWEuM76sHM2bZY6pQOohMz77DvFremJK/rwposeRcsfa+3eJGCyQDX6eR
-         7sB2mauFYMr6raHOdhcWGtsVy1VgDwTehKaJTW1VMjQ4liO1cUEYcl9NYZN2wxRiHpv2
-         kDgQ==
-X-Gm-Message-State: AOAM532iEDDaf3lPhiSlyfowRna2kAmHnM7f+HC7Ig1DmgEiHflvzr00
-        6/07fmkfSg4NIzztXTv38ii6qBYUhug=
-X-Google-Smtp-Source: ABdhPJx906FRIVO7byzbGIGCpq5OG6q0mIR3Wt0QLdf4wD3fAm5SMEhOJ6zeFkfDpHu0GCYEA3luUw==
-X-Received: by 2002:a17:90b:1082:: with SMTP id gj2mr1873351pjb.155.1615856075138;
-        Mon, 15 Mar 2021 17:54:35 -0700 (PDT)
+        bh=y/FyqYdUrIEtuuDrl3IU5HHgBCKoHDsokOpXAuTpXVA=;
+        b=FIUvy/yM0m3J7USYhKamCJywGgp5xLe5+ZXDFr0DbjSpXNFZ9DyZUBcSklBHcJnVq5
+         yI8dJ/yl0m4/6r6+2rNkkBAkedRhRVnQ6tKsD4exZ9ETymQ/JA5lG2YOhuAvy+FxEcit
+         o4VfCQiMo4JcqMGByxVt875pCVj153XZYwrsFG3JiVDU9DNByUJVIEsEwTa03qy8acN6
+         cyad1/gcULNwBA9hz2+tn0Xze9biT0oAusDPliWfs6RbVzxv7PixZ9JlLNf32nhuIzYp
+         n+qFW4gXz1qVAn0uaxwExk5rnRvgxn5DOTMAIWBms7WH/XhO6xJagRxIdzb4yI7M2X2+
+         cR+w==
+X-Gm-Message-State: AOAM530VNg9UYA8tJOXTuJM3j1GegcIbLGxVLQXFl/s2Y7K4R0buHQbA
+        cVFc4MmGSkni9FOMg/TLHQFhISxKOcs=
+X-Google-Smtp-Source: ABdhPJyVc+AdAjoNL39aOUeu9R8X6qS66iAOjj+DpE1WtKkS/xJESPloEX533zP2xh73nV34pmG7Hg==
+X-Received: by 2002:a17:90a:9103:: with SMTP id k3mr1984654pjo.157.1615856076073;
+        Mon, 15 Mar 2021 17:54:36 -0700 (PDT)
 Received: from archbookpro.localdomain ([172.92.165.181])
-        by smtp.gmail.com with ESMTPSA id y24sm14449791pfn.213.2021.03.15.17.54.34
+        by smtp.gmail.com with ESMTPSA id y24sm14449791pfn.213.2021.03.15.17.54.35
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Mar 2021 17:54:34 -0700 (PDT)
+        Mon, 15 Mar 2021 17:54:35 -0700 (PDT)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH 2/3] git-completion.bash: fix `git <args>... stash branch` bug
-Date:   Mon, 15 Mar 2021 17:54:19 -0700
-Message-Id: <be727d0171b16e488a357a959176e60bf9210d40.1615855962.git.liu.denton@gmail.com>
+Subject: [PATCH 3/3] git-completion.bash: use __gitcomp_builtin() in _git_stash()
+Date:   Mon, 15 Mar 2021 17:54:20 -0700
+Message-Id: <d6deaecc1feb771b245f50bc8b9cb197bf693405.1615855962.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.31.0.rc2.261.g7f71774620
 In-Reply-To: <cover.1615855962.git.liu.denton@gmail.com>
 References: <cover.1615855962.git.liu.denton@gmail.com>
@@ -71,49 +71,113 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When completions are offered for `git stash branch<TAB>`, the user is
-supposed to receive refs. This works in the case where the main git
-command is called without arguments but if options are provided, such as
-`git -C dir stash branch<TAB>`, then the `$cword -eq 3` provides
-incorrect results.
+The completion for 'git stash' has not changed in a major way since it
+was converted from shell script to builtin. Now that it's a builtin, we
+can take advantage of the groundwork laid out by parse-options and use
+the generated options.
 
-Count the words relative to the first instance of "stash" so that we
-ignore arguments to the main git command.
+Rewrite _git_stash() to take use __gitcomp_builtin() to generate
+completions for subcommands.
 
-Unfortunately, this still does not work 100% correctly. For example, in
-the case of something like `git -C stash stash branch<TAB>`, this will
-incorrectly identify the first "stash" as the command. This seems to be
-an edge-case that we can ignore, though, as other functions, such as
-_git_worktree(), suffer from the same problem.
+The main `git stash` command does not take any arguments directly. If no
+subcommand is given, it automatically defaults to `git stash push`. This
+means that we can simplify the logic for when no subcommands have been
+given yet. We only have to offer subcommand completions when we're
+completing the word after "stash". Unfortunately, this does not work
+100% correctly. For example, in the case of something like `git -C stash
+stash<TAB>`, this will incorrectly identify the first "stash" as the
+command. This seems to be an edge-case that we can ignore, though, as
+other functions, such as _git_worktree(), suffer from the same problem.
+
+One area that this patch could improve upon is that the `git stash list`
+command accepts log-options. It would be nice if the completion for this
+were unified with that of _git_log() and _git_show() which would allow
+completions to be provided for options such as `--pretty` but that is
+outside the scope of this patch.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- contrib/completion/git-completion.bash | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ contrib/completion/git-completion.bash | 41 ++++++++++++--------------
+ 1 file changed, 19 insertions(+), 22 deletions(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index fe79f6b71c..da46f46e3c 100644
+index da46f46e3c..83b6415b13 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -3016,6 +3016,9 @@ _git_stash ()
- 	local save_opts='--all --keep-index --no-keep-index --quiet --patch --include-untracked'
+@@ -3013,29 +3013,21 @@ _git_sparse_checkout ()
+ 
+ _git_stash ()
+ {
+-	local save_opts='--all --keep-index --no-keep-index --quiet --patch --include-untracked'
  	local subcommands='push list show apply clear drop pop create branch'
  	local subcommand="$(__git_find_on_cmdline "$subcommands save")"
-+	local stash_idx="$(__git_find_on_cmdline --show-idx stash)"
-+	stash_idx="${stash_idx% *}"
-+
- 	if [ -z "$subcommand" -a -n "$(__git_find_on_cmdline "-p")" ]; then
- 		subcommand="push"
- 	fi
-@@ -3060,7 +3063,7 @@ _git_stash ()
+ 	local stash_idx="$(__git_find_on_cmdline --show-idx stash)"
+ 	stash_idx="${stash_idx% *}"
+ 
+-	if [ -z "$subcommand" -a -n "$(__git_find_on_cmdline "-p")" ]; then
+-		subcommand="push"
+-	fi
+ 	if [ -z "$subcommand" ]; then
+-		case "$cur" in
+-		--*)
+-			__gitcomp "$save_opts"
++		case "$((cword - stash_idx)),$cur" in
++		*,--*)
++			__gitcomp_builtin stash_push
+ 			;;
+-		sa*)
+-			if [ -z "$(__git_find_on_cmdline "$save_opts")" ]; then
+-				__gitcomp "save"
+-			fi
++		1,sa*)
++			__gitcomp "save"
+ 			;;
+-		*)
+-			if [ -z "$(__git_find_on_cmdline "$save_opts")" ]; then
+-				__gitcomp "$subcommands"
+-			fi
++		1,*)
++			__gitcomp "$subcommands"
+ 			;;
+ 		esac
+ 		return
+@@ -3043,24 +3035,29 @@ _git_stash ()
+ 
+ 	case "$subcommand,$cur" in
+ 	push,--*)
+-		__gitcomp "$save_opts --message"
++		__gitcomp_builtin stash_push
+ 		;;
+ 	save,--*)
+-		__gitcomp "$save_opts"
++		__gitcomp_builtin stash_save
+ 		;;
+-	apply,--*|pop,--*)
+-		__gitcomp "--index --quiet"
++	pop,--*)
++		__gitcomp_builtin stash_pop
++		;;
++	apply,--*)
++		__gitcomp_builtin stash_apply
+ 		;;
+ 	drop,--*)
+-		__gitcomp "--quiet"
++		__gitcomp_builtin stash_drop
+ 		;;
+ 	list,--*)
+-		__gitcomp "--name-status --oneline --patch-with-stat"
++		# NEEDSWORK: can we somehow unify this with the options in _git_log() and _git_show()
++		__gitcomp_builtin stash_list "$__git_log_common_options $__git_diff_common_options"
+ 		;;
+ 	show,--*)
+-		__gitcomp "$__git_diff_common_options"
++		__gitcomp_builtin stash_show "$__git_diff_common_options"
+ 		;;
  	branch,--*)
++		__gitcomp_builtin stash_branch
  		;;
  	branch,*)
--		if [ $cword -eq 3 ]; then
-+		if [ $((cword - stash_idx)) -eq 2 ]; then
- 			__git_complete_refs
- 		else
- 			__gitcomp_nl "$(__git stash list \
+ 		if [ $((cword - stash_idx)) -eq 2 ]; then
 -- 
 2.31.0.rc2.261.g7f71774620
 
