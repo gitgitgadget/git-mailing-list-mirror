@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EDB7CC4332D
-	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 16:18:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 42EE2C43331
+	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 16:18:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CE7256508A
+	by mail.kernel.org (Postfix) with ESMTP id 0058765105
 	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 16:18:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238619AbhCPQS3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Mar 2021 12:18:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47066 "EHLO
+        id S238626AbhCPQSc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Mar 2021 12:18:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47068 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238591AbhCPQSA (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S238592AbhCPQSA (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 16 Mar 2021 12:18:00 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6289CC06174A
-        for <git@vger.kernel.org>; Tue, 16 Mar 2021 09:17:59 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id w11so10752733wrr.10
-        for <git@vger.kernel.org>; Tue, 16 Mar 2021 09:17:59 -0700 (PDT)
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 427BFC06174A
+        for <git@vger.kernel.org>; Tue, 16 Mar 2021 09:18:00 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id u16so10789838wrt.1
+        for <git@vger.kernel.org>; Tue, 16 Mar 2021 09:18:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=t5GujOGyCc6XRlnwNp5URnFxXJJA8BzYLaOfJ3L3J4o=;
-        b=D+++QcDgGbOYfk62KwWfAKjySaxueeCTbE1G+pLwW2qZku0QLh2evL5EJdB3fgXt2o
-         bYClImydSKvOvf76eNGEhdudI7cLqXfNdTqz8Kfr9HW7M7FrcFlaGpaCEUpkNUN0Is1N
-         CvBj6xx7/q0PkpoCwHqeSJ1dpvOTf3/8vMqZMTiEGYF115msjhZEmFy3RN/XA5daReRa
-         pVxeIwdfTkTXnqU2iXneFHIHdcFRf499swXD9NfPs/Xx/dhVax8wbdj5AXTm7R47P8fm
-         pWIN5/JMOj4SHvKNExs4PUFxuZ/agNjIJ+wls+9j6gt4Fs0VZadeyQl6yEwyzrySc4e2
-         i8xQ==
+        bh=cBCmIkWtBmNrWWPR0WtxQafc5Roe9t3epbPWHb3M448=;
+        b=QMnlwdXpqLTxesGdLCIm3i4SVt18kgrGg/nU3xuKvJAxTO0NDD4k7N9FLUVJ88v2vS
+         1LjOpjORfNkGSTai5jXIksAvLj7XuE73VD6K4d/aiRCVrVmXXTZr7DiD48d+RtHjLLqz
+         Y77BGpZ1NG2a2s0Knv7lqQw7AoQRLwMo7nnnj46TA5TerM7tA4u7lWPhOP+mSwchddqD
+         +lHT+YWyozfDX++Fk5eSbo/KyRtEvXfxKgmKwDifnL0GA0B+NIr72QnhN9oaa7StVVyk
+         QWi3gbSBauEiVQFv+UdGcmT38qglSGhDrUSRb9tKdOHeXVMncwQasNTE4w3ujzJYcUs+
+         /WVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=t5GujOGyCc6XRlnwNp5URnFxXJJA8BzYLaOfJ3L3J4o=;
-        b=QGxcYbIpmQpy7hqGF24jGXHxcff3hBBUmwkQ1vjoSP4zrpUqB9SFTbuk4/YnX1bH/9
-         VDABKlzAXbn+L4qLKaTOXllgAxKHE27p86yu73P6p+WTigcPhlTLM7DhHn/IXGMlEVfn
-         mN2xU+G5tWTFxzpGthsUfBsLqzz+U3HM9FRKu5OxOEr9nViBxzgFD8oWoqlHMjBNxtsD
-         +vB8lHY9SYW94TWo9NMGoxCG+eBU1DN4BtEUEa0pocXTDlIlLDK+rl3/KzoGdy6grq9Z
-         D2HjA/Ui+yg/qYwOJ9xHUWo/BI8XbNRxzF7QwO39ZCaeRwi4vwVApll6gegNM6QZUXeD
-         wkgA==
-X-Gm-Message-State: AOAM530C1PNq+F5NWTfly/WA74RYXoATlkzWxHoC+cr+yF1SA2NDCiSG
-        5lU2HUpR41SeiQV9bEetPAMcSMbLcwvavA==
-X-Google-Smtp-Source: ABdhPJy0UdoHJulEekTmucCVEXzy4ZxRGjZEP5aH6oPf11ME/LRCEd241Ba7nQNliHHm28xgh1ibpg==
-X-Received: by 2002:adf:ab52:: with SMTP id r18mr5671106wrc.65.1615911477898;
-        Tue, 16 Mar 2021 09:17:57 -0700 (PDT)
+        bh=cBCmIkWtBmNrWWPR0WtxQafc5Roe9t3epbPWHb3M448=;
+        b=Y9hBxi4pmwmbLTX+rQyNdr2TDDynFQlq6Y4yTIW3B/2HkFAvHaNMgPOpLl64Y7rrA2
+         jPsaiVjIjXyECvFGwkJq8+e7qQjODaJq7ZxupTuHnAfUGN95FAeJmF8itoOHI2hQBsvv
+         dP7Ktu6nfJroSJTkZhO3vfCZh/uiRSUGQrwBcxPDwp5oYMZnJOzxIgNtlparO9cJuqhl
+         YnXqCQ63Yv/uF5Tnq1KEyq5/D0TKV69Dczuuw5V9lZ1qD1D/0CahTyHbYj1bZcKyiwTb
+         mgCn3ZEAgg+bJuoNHK14uZFmaB0G2dIoH5f2JwFBS6XnoQ5X3gixAxY7FLHxcFlaW8Ua
+         9dBA==
+X-Gm-Message-State: AOAM531DYVMFDPOb04cXeYH42rLf/1irS/zyZ4x2W31FtEd/QTVaxp1c
+        4QVpA66J8msIb5n+GTHerSOs5SQ1j+s/lQ==
+X-Google-Smtp-Source: ABdhPJzAO+kJtzcwQDBFcMOQvdte1bC60Ober8rSVB+Vs8/xsKWaiNVe3PZZ+Fd2bqQqTch0zjZSzA==
+X-Received: by 2002:adf:ee8f:: with SMTP id b15mr5686613wro.314.1615911478716;
+        Tue, 16 Mar 2021 09:17:58 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
         by smtp.gmail.com with ESMTPSA id r11sm22369206wrx.37.2021.03.16.09.17.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Mar 2021 09:17:57 -0700 (PDT)
+        Tue, 16 Mar 2021 09:17:58 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -64,9 +64,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Jonathan Tan <jonathantanmy@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 05/22] fsck.h: indent arguments to of fsck_set_msg_type
-Date:   Tue, 16 Mar 2021 17:17:21 +0100
-Message-Id: <20210316161738.30254-6-avarab@gmail.com>
+Subject: [PATCH v4 06/22] fsck.h: use "enum object_type" instead of "int"
+Date:   Tue, 16 Mar 2021 17:17:22 +0100
+Message-Id: <20210316161738.30254-7-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.0.260.g719c683c1d
 In-Reply-To: <20210306110439.27694-1-avarab@gmail.com>
 References: <20210306110439.27694-1-avarab@gmail.com>
@@ -77,24 +77,79 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Change the fsck_walk_func to use an "enum object_type" instead of an
+"int" type. The types are compatible, and ever since this was added in
+355885d5315 (add generic, type aware object chain walker, 2008-02-25)
+we've used entries from object_type (OBJ_BLOB etc.).
+
+So this doesn't really change anything as far as the generated code is
+concerned, it just gives the compiler more information and makes this
+easier to read.
+
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- fsck.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ builtin/fsck.c           | 3 ++-
+ builtin/index-pack.c     | 3 ++-
+ builtin/unpack-objects.c | 3 ++-
+ fsck.h                   | 3 ++-
+ 4 files changed, 8 insertions(+), 4 deletions(-)
 
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index 821e7798c7..68f0329e69 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -197,7 +197,8 @@ static int traverse_reachable(void)
+ 	return !!result;
+ }
+ 
+-static int mark_used(struct object *obj, int type, void *data, struct fsck_options *options)
++static int mark_used(struct object *obj, enum object_type object_type,
++		     void *data, struct fsck_options *options)
+ {
+ 	if (!obj)
+ 		return 1;
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index bad5748807..69f24fe9f7 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -212,7 +212,8 @@ static void cleanup_thread(void)
+ 	free(thread_data);
+ }
+ 
+-static int mark_link(struct object *obj, int type, void *data, struct fsck_options *options)
++static int mark_link(struct object *obj, enum object_type type,
++		     void *data, struct fsck_options *options)
+ {
+ 	if (!obj)
+ 		return -1;
+diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
+index dd4a75e030..ca54fd1668 100644
+--- a/builtin/unpack-objects.c
++++ b/builtin/unpack-objects.c
+@@ -187,7 +187,8 @@ static void write_cached_object(struct object *obj, struct obj_buffer *obj_buf)
+  * that have reachability requirements and calls this function.
+  * Verify its reachability and validity recursively and write it out.
+  */
+-static int check_object(struct object *obj, int type, void *data, struct fsck_options *options)
++static int check_object(struct object *obj, enum object_type type,
++			void *data, struct fsck_options *options)
+ {
+ 	struct obj_buffer *obj_buf;
+ 
 diff --git a/fsck.h b/fsck.h
-index dc35924cbf..5e488cef6b 100644
+index 5e488cef6b..f67edd8f1f 100644
 --- a/fsck.h
 +++ b/fsck.h
-@@ -11,7 +11,7 @@ struct fsck_options;
- struct object;
+@@ -23,7 +23,8 @@ int is_valid_msg_type(const char *msg_id, const char *msg_type);
+  *     <0	error signaled and abort
+  *     >0	error signaled and do not abort
+  */
+-typedef int (*fsck_walk_func)(struct object *obj, int type, void *data, struct fsck_options *options);
++typedef int (*fsck_walk_func)(struct object *obj, enum object_type object_type,
++			      void *data, struct fsck_options *options);
  
- void fsck_set_msg_type(struct fsck_options *options,
--		const char *msg_id, const char *msg_type);
-+		       const char *msg_id, const char *msg_type);
- void fsck_set_msg_types(struct fsck_options *options, const char *values);
- int is_valid_msg_type(const char *msg_id, const char *msg_type);
- 
+ /* callback for fsck_object, type is FSCK_ERROR or FSCK_WARN */
+ typedef int (*fsck_error)(struct fsck_options *o,
 -- 
 2.31.0.260.g719c683c1d
 
