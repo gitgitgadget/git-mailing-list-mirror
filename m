@@ -2,102 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BCBA6C433E0
-	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 01:03:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D6A9CC433DB
+	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 01:16:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7CD7164EB9
-	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 01:03:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8A13E64F71
+	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 01:16:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234098AbhCPBDM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Mar 2021 21:03:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47248 "EHLO
+        id S234184AbhCPBQA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Mar 2021 21:16:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49968 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231703AbhCPBCx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Mar 2021 21:02:53 -0400
-Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86689C06174A
-        for <git@vger.kernel.org>; Mon, 15 Mar 2021 18:02:53 -0700 (PDT)
-Received: by mail-pg1-x536.google.com with SMTP id n9so20549419pgi.7
-        for <git@vger.kernel.org>; Mon, 15 Mar 2021 18:02:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=UOsk5AZDDSlefhSwCNhIame9WamSw8IarNb160tKXo8=;
-        b=fVmRLbuKmbfJ8eDjbzxbVMDbI1bylmBOnhAB2/PeIMnq/1CzrACN9EaIhGe5x8E7qK
-         9ofij9FGf9Y5H4/rA/z2evZmR6NGMLc9EX+iRqEXMFPDISkLAOAUrLPLQpTanbpGH7wl
-         Jdp3O5YWgtou7RvuS+rhL/KN3lp7VIsDPKgx83svIDrhvHG/X9BPBx0/iRRfDjQzKN9/
-         MgKlJ7CgBYffo89gcdkPuaEXc8JecrmBko+MFxSss2TEO3HoFJ7Ij3FtWyiOVdxYYhb4
-         q89h+D1nBykwtiDJkYjn+L4huksJC8WiGinaqG6ZmxQUeaXssypeE7TLg+AWSHnwEYLi
-         l5zg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=UOsk5AZDDSlefhSwCNhIame9WamSw8IarNb160tKXo8=;
-        b=YdeHO8NLwIWhoO1rsIFv9W7FOIpVXgZ8pdrdsmWPAaDaS954ispjHN0d0ytrrXFQhU
-         d9DUGele6jX6UJEL9twD8r1E8fq3gu3VAAQaeDzQ9BUYfYGyrj8uINBhis47eOBv/AQL
-         X1pe0HvI7EgMHXWAFjGtrw4BNmgZJyh/yi3nS0OUFmIUHa3EWtSd/xpX3iC8C9o3quoY
-         kCZHE6hzLZQqKYJstRO/yrTPc1G5zO0M4fLYiJwaFvjKN9T44+YsErlJkEyCXwzWbayX
-         DCTKm6HCOf6b/lvzehpQ012OJkv6wi8THqyjX0ixFT3T6O+rRruXwLcQVcpuh0ntHVKF
-         9DFw==
-X-Gm-Message-State: AOAM533Zz3jaqIkqZ7b8RFTBMQADmQojp0u393iqUVkv4v2ejbRx+rMK
-        yk8fkwgb7IdFsGgvQWX86uWAONyEiUA=
-X-Google-Smtp-Source: ABdhPJxnwE7zG+EPeyQ7i2i9dtdHh6QELqu0pHSQgcIrisuJTvEeoA8eiqAU7je7sdk1zg6302TkHg==
-X-Received: by 2002:a63:7885:: with SMTP id t127mr1474438pgc.237.1615856573006;
-        Mon, 15 Mar 2021 18:02:53 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:b1c9:41e8:dd7a:142b])
-        by smtp.gmail.com with ESMTPSA id v27sm14452461pfi.89.2021.03.15.18.02.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Mar 2021 18:02:52 -0700 (PDT)
-Date:   Mon, 15 Mar 2021 18:02:50 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Drew DeVault <sir@cmpwn.com>
+        with ESMTP id S234315AbhCPBPh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Mar 2021 21:15:37 -0400
+X-Greylist: delayed 593 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 15 Mar 2021 18:15:37 PDT
+Received: from out0.migadu.com (out0.migadu.com [IPv6:2001:41d0:2:267::])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7AD2C06174A
+        for <git@vger.kernel.org>; Mon, 15 Mar 2021 18:15:37 -0700 (PDT)
+MIME-Version: 1.0
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cmpwn.com; s=key1;
+        t=1615856736;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=VCOcwuUm2Hlka/TS8/RaM4EEosdJfwQrO9uN6K7PAsI=;
+        b=OZ7WigxovkrnQWbsmgmvRUntUY1OovmhWxIyIBseFsUVx4DTQ4pN1pG/QRk41tZ4XhCGD7
+        F9ilz6dG633tndCBBLCYWZziLKSI8UbsfmlGPX4tDzkGjv167DgLEteDss0+YOiwPMrxL8
+        qWfL2xTIDQN2J2gn/3ZZEMxuHdE+j94wMInGtwmhzpK7RqonMviyJAad44PsJdrUj4kZ+G
+        x9YOPC2zOeVZpxEHEBGROSBQ6ergWexbcppRuNFBSF5egXFDbyMV/PpN4nD9IbEEFVhpW5
+        PFaiR+003qi+i5YnWieUNpha3yM+o3/kzKmTYReDVwTFC50ySMLdgwyLPV+/dQ==
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date:   Mon, 15 Mar 2021 21:05:34 -0400
+Message-Id: <C9YDEO8Z8J96.262IOS9IW6F39@taiga>
+To:     "Jonathan Nieder" <jrnieder@gmail.com>
 Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
+        <git@vger.kernel.org>
 Subject: Re: Regarding the depreciation of ssh+git/git+ssh protocols
-Message-ID: <YFADuptwV7iR76g5@google.com>
-References: <C9Y2DPYH4XO1.3KFD8LT770P2@taiga>
- <YE+ftT2WaKDzc+45@google.com>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From:   "Drew DeVault" <sir@cmpwn.com>
+References: <C9Y2DPYH4XO1.3KFD8LT770P2@taiga> <YE+ftT2WaKDzc+45@google.com>
  <C9Y4NXXX6HRI.1IROIK8ZXK4S2@taiga>
  <YE/ZSiuIsMs3ucVM@camp.crustytoothpaste.net>
- <C9YD4AEUH84L.29FP64NJJ1BPU@taiga>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <C9YD4AEUH84L.29FP64NJJ1BPU@taiga>
+ <C9YD4AEUH84L.29FP64NJJ1BPU@taiga> <YFADuptwV7iR76g5@google.com>
+In-Reply-To: <YFADuptwV7iR76g5@google.com>
+X-Migadu-Flow: FLOW_OUT
+X-Migadu-Auth-User: sir@cmpwn.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Drew DeVault wrote:
-> On Mon Mar 15, 2021 at 6:01 PM EDT, brian m. carlson wrote:
-
->> So I don't think this is a thing we can do, simply because in general
->> URLs aren't suitable for sharing this kind of information.
+On Mon Mar 15, 2021 at 9:02 PM EDT, Jonathan Nieder wrote:
+> I'm not sure it's a disconnect; instead, it just looks like we
+> disagree. That said, with more details about the use case it might be
+> possible to sway me in another direction.
 >
-> That's simply not true. They are quite capable at this task, and are
-> fulfilling this duty for a wide varitety of applications today.
->
-> I don't really understand the disconnect here. No, URLs are not magic,
-> but they are perfectly sufficient for this use-case.
+> To maintain the URI analogy: the URI does not tell me the content-type
+> of what I can access from there. Until I know that content-type, I
+> may not know what the best tool is to access it.
 
-I'm not sure it's a disconnect; instead, it just looks like we
-disagree.  That said, with more details about the use case it might be
-possible to sway me in another direction.
+git isn't a content type, it's a protocol. git over HTTP or git over SSH
+is a protocol in its own right, distinct from these base protocols, in
+the same sense that SSH lives on top of TCP which lives on top of IP
+which is transmitted to your computer over ethernet or 802.11. It's
+turtles all the way down.
 
-To maintain the URI analogy: the URI does not tell me the content-type
-of what I can access from there.  Until I know that content-type, I
-may not know what the best tool is to access it.
+> The root of the disagreement, though, is "Git URLs" looking like a URI
+> in the first place. They're not meant to be universal at all. They
+> are specifically for Git.
 
-The root of the disagreement, though, is "Git URLs" looking like a URI
-in the first place.  They're not meant to be universal at all.  They
-are specifically for Git.
-
-Thanks,
-Jonathan
+At worst I would call this a happy coincidence. We have this convenient
+universal format at our disposal, and we would be wise to take advantage
+of it. Rejecting it on the premise that we never wanted to have it
+doesn't make sense when we consider that (1) we do have it and (2) it
+can be of good use to us.
