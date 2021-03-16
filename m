@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 292BDC4332B
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D088C43331
 	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 21:18:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 04F9564F9F
+	by mail.kernel.org (Postfix) with ESMTP id 6DB6B64FA5
 	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 21:18:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232975AbhCPVSA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Mar 2021 17:18:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55862 "EHLO
+        id S233194AbhCPVSE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Mar 2021 17:18:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55868 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232904AbhCPVRY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Mar 2021 17:17:24 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9340BC06175F
-        for <git@vger.kernel.org>; Tue, 16 Mar 2021 14:17:23 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id x13so8168127wrs.9
-        for <git@vger.kernel.org>; Tue, 16 Mar 2021 14:17:23 -0700 (PDT)
+        with ESMTP id S233013AbhCPVRZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Mar 2021 17:17:25 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD666C061763
+        for <git@vger.kernel.org>; Tue, 16 Mar 2021 14:17:24 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id z6-20020a1c4c060000b029010f13694ba2so141772wmf.5
+        for <git@vger.kernel.org>; Tue, 16 Mar 2021 14:17:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=oJBeNoxpm/TGvI8RBIoAjug82bLPpj6LNmOLCNgg5HE=;
-        b=TLHko8lxtScCChPj3F4Zn1GsPichdRgaNqtlIXinelt/vBrIUbGatQAziisbHzX+N0
-         ZPIXtyQQBTxc+BTisZG/tmKZMGFL+jLfSM/c2dK5O05axSMzU0gY0Z3g0aHsfrP0q6gW
-         im0sG4f5z/vuPEC4MSBk9flptp1fkUTtLHdXFuaianHTotB5EMEQoWAZPHPGuE59A/ou
-         RkVl3+af0O//KF/EzWYQts5NffM3HtwGUDSrTT5R9ffQeuCdil6cHdSf/wlnXO2oCagJ
-         iH0LZYnWNNo2hJP3ByOGMxtVhRz7rWUxz0zwJgTLi2DGijoFunoxXByhbLqYY/SAFUjL
-         1bsw==
+        bh=GcgVq9D0WJp2irecxL+BYQvHP4e45tY3nVXbkIeJp6k=;
+        b=ASl0Umvt2uGtfIT68aLM1/3Y8SOjBZWm0cpTHlgF9ESq9aHz58dBoTvhK2nz6TfZou
+         lrdXrc7qEbtMxb2jCcOphKltpMz2pj6ZqeD2Qgj8sCqwLF41Yebcj9UsllV5agcX6+Dz
+         xt6IhSEJVoGm3aZrXl2q+oCfyyjO2JYgGmIJYbeqrfZCwqZGfRBfEIRZHhuEo6yzwXa6
+         BqBcbswEjrcU7nPja6AljT7eDvgZbJG7aVxzwbYujKHd1aMhS1KMP0yNOX/R5DvZ/WkN
+         329IYCQmutAhO19PIrDkbFrukIBhMKg1nAbB7gSlSj/qSlSIK8M3KKqTuWqXdanr7o+p
+         D13Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=oJBeNoxpm/TGvI8RBIoAjug82bLPpj6LNmOLCNgg5HE=;
-        b=tl3t/QCQqLFp/0w7Cwd5neNhwEItpmY8x12wjQD5MzDXRuNNwxc+LacFn9elyIt10k
-         CxQVvHICarH5UHOAbz4dz9OdVrgajlgCEyFoKOSMjkIXN7PTIe4ZkLdEZBu0Tt2eRKp4
-         JUIW2yXbbsQ1pjAj9uP/qjFd3O7IZnwmfy5afcttDoKmc1+VjSnKVbj2gTaW8wuyGkmK
-         fBrQOuPBXoSDkWxalLo/Gw4v12jar9v2timItJJz8z2IHSd8TnWNvlnt+UkiBkCgFLTV
-         U9YWkW1+7/QsZoymrb39rRr9ARTyWnYZxYN3XyoxV1TUz2chqxuqHo5hRQmSicQs4a1n
-         Vi7g==
-X-Gm-Message-State: AOAM530ErDdq6A/x+nYoGi3PQIC1IXkNWruFrXIhwOb+MkjGtY6CADnJ
-        JWIlGYYLYMEY6t2zgTBZ9JZlhisWd18=
-X-Google-Smtp-Source: ABdhPJzn7RV8VzVWj1moaFSky8k2qDLksoozXBlCzMTXpl5pW36FIFeJsk3sK0SXNHvXb6Jd14WKqg==
-X-Received: by 2002:adf:ef08:: with SMTP id e8mr1024566wro.200.1615929442396;
-        Tue, 16 Mar 2021 14:17:22 -0700 (PDT)
+        bh=GcgVq9D0WJp2irecxL+BYQvHP4e45tY3nVXbkIeJp6k=;
+        b=dxxtNFSHvQeE1Y/qMwqIDESJuUpUTQvyBBxqYYidxtKjW+4DTZb1qDVH5HWo2m7C01
+         aGv33ht00UG28ldVVC6jpsMCUC3hj1pZcGhwdHaALck7OeIQlJSk6AMSRB2ANYk6JY/K
+         vlOMLw1MB8mz/Zku+2gWpeziwiFnSbw6LWHwmHgvUzB5C893FENRFFI4iR/rL7LnJ7Jo
+         306RVEkHqmNGCUGJ3wkuShkKuWhwDqpD2xRCYpHvAxBO6X4YPqalhXd/DNzgLmFTpszY
+         eIXb2ZV980lnGYBc/XdRgmpHD01W0n1mXWd4HUbZjybJVVnK/1WIsaVsic4hOuW6r+lp
+         iyfA==
+X-Gm-Message-State: AOAM531eNuui1wrh/PhX+Lk0eatt8mCLJ66+XhaXtZUbSQOifQ5pF7PA
+        4N07qYMAMrq7P34U5zVGei8cJH535n0=
+X-Google-Smtp-Source: ABdhPJzXGSTxOEhFpCoPUEqqzd2kQN7zjUsfOJyHfEiRlwwN2MDx9izkwQmh+Bo/ZhgOIb/93cN6UQ==
+X-Received: by 2002:a1c:2049:: with SMTP id g70mr663898wmg.7.1615929443686;
+        Tue, 16 Mar 2021 14:17:23 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m15sm606502wrp.96.2021.03.16.14.17.21
+        by smtp.gmail.com with ESMTPSA id z25sm583431wmi.23.2021.03.16.14.17.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Mar 2021 14:17:22 -0700 (PDT)
-Message-Id: <1bb7b6117e41ecf84afc03a29727d65606601be4.1615929436.git.gitgitgadget@gmail.com>
+        Tue, 16 Mar 2021 14:17:23 -0700 (PDT)
+Message-Id: <83040e7558f3effac91e76352f259a5a7d367ed8.1615929436.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.906.git.1615929435.gitgitgadget@gmail.com>
 References: <pull.906.git.1615929435.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 16 Mar 2021 21:16:55 +0000
-Subject: [PATCH 07/27] checkout: ensure full index
+Date:   Tue, 16 Mar 2021 21:16:57 +0000
+Subject: [PATCH 09/27] difftool: ensure full index
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,34 +76,27 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-Before iterating over all cache entries in the checkout builtin, ensure
-that we have a full index to avoid any unexpected behavior.
+Before iterating over all cache entries, ensure that a sparse index has
+been expanded to a full one to avoid unexpected behavior.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- builtin/checkout.c | 2 ++
+ builtin/difftool.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 0e6639052001..2e64569d2e13 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -368,6 +368,7 @@ static int checkout_worktree(const struct checkout_opts *opts,
- 			       NULL);
+diff --git a/builtin/difftool.c b/builtin/difftool.c
+index 6e18e623fddf..1d62f77efa61 100644
+--- a/builtin/difftool.c
++++ b/builtin/difftool.c
+@@ -584,6 +584,8 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
+ 		setenv("GIT_DIFFTOOL_DIRDIFF", "true", 1);
+ 	rc = run_command_v_opt(helper_argv, flags);
  
- 	enable_delayed_checkout(&state);
-+	ensure_full_index(&the_index);
- 	for (pos = 0; pos < active_nr; pos++) {
- 		struct cache_entry *ce = active_cache[pos];
- 		if (ce->ce_flags & CE_MATCHED) {
-@@ -512,6 +513,7 @@ static int checkout_paths(const struct checkout_opts *opts,
- 	 * Make sure all pathspecs participated in locating the paths
- 	 * to be checked out.
- 	 */
-+	ensure_full_index(&the_index);
- 	for (pos = 0; pos < active_nr; pos++)
- 		if (opts->overlay_mode)
- 			mark_ce_for_checkout_overlay(active_cache[pos],
++	ensure_full_index(&wtindex);
++
+ 	/*
+ 	 * If the diff includes working copy files and those
+ 	 * files were modified during the diff, then the changes
 -- 
 gitgitgadget
 
