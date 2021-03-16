@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 18D03C4332B
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 290B9C43332
 	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 16:00:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0273C65103
-	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 16:00:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 12CBD650FF
+	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 16:00:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238361AbhCPP75 (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S238362AbhCPP75 (ORCPT <rfc822;git@archiver.kernel.org>);
         Tue, 16 Mar 2021 11:59:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42630 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238268AbhCPP67 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S238267AbhCPP67 (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 16 Mar 2021 11:58:59 -0400
 Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC293C061763
-        for <git@vger.kernel.org>; Tue, 16 Mar 2021 08:58:58 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id y124-20020a1c32820000b029010c93864955so1743126wmy.5
-        for <git@vger.kernel.org>; Tue, 16 Mar 2021 08:58:58 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69561C061762
+        for <git@vger.kernel.org>; Tue, 16 Mar 2021 08:58:57 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id u5-20020a7bcb050000b029010e9316b9d5so1764125wmj.2
+        for <git@vger.kernel.org>; Tue, 16 Mar 2021 08:58:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=6mfVU/pD6oqADQCq558uDybfj/kXtDOp8lLFUDNHcmw=;
-        b=HNgTTIcxBZKoVN/oDpwQ0x5Um2wv8piTdK2ZEQFxlD5LkXbgGklLY6r80qNA9RitOf
-         QSnz16PoMmdYIY6/vJQKykPaxSdQmEinpAd/Wb2NBSt8bzR5RaqOKnhd+SKSEZUPntku
-         ixA0DoPApnf9edT9tGwHyBsugEk5U1yYlZ9gGe8AZ4cKonxHwQvvXyPCwXeJD87nK5q6
-         +H8lEH84PHrLnCqF0xQPmJLu8Mv6T1QStrYQg4n9rdi+DMo/kl2nK6x6GfG2g6uGNg7Z
-         1J77i+OBkZW4TziC4TZzWFY+nK2kM89LXgdN+Whn4BRupGmfCCg01Vyf6O0nb3N3VGL5
-         Ks0g==
+        bh=GwmDG2ryu0ZbzFdor8XDEGf2S52zGtGXkeHiA4hIOZY=;
+        b=kfdTXbV/10adWTJ3rruao3JGfxt859jZrFK+vbzmOJeCHIBo0jbV358cIGYKXDhAd3
+         OkVQX6wIZP+AxJr9quiD4J11huPT0ebat0w+uerrJDwNaHE/HdAQQqkFPHyKQr/mUFW4
+         m21EnSSEC4W4vLV2RpayUm69PqWKNLOlHnCLHMJXeaV7eOLqc7HDJIG8tSVmaIq/yTsD
+         OFpSDlqCJoG/TjLKmt0tXfHXQyVOpV+WMWeFk3PD7xukTUFsCqiPuEdKxqhgNpwYKlC8
+         XdlAasliqNIri0jR7cWt3qovMRjzIPT18CRxLXF+xxGBe85+ffRszS44VXX5Ucm/7z7p
+         93Dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=6mfVU/pD6oqADQCq558uDybfj/kXtDOp8lLFUDNHcmw=;
-        b=pdjATfE/J/QusJMBQhXlCwJXFVaFsjic75ixlsgIGQa3ergU/z9Hd3/nWRGU0IcOFz
-         IRld4msHz0TkwZtSXCacuVHadVMYq2jFeWJuSiq6Mdy+7PBtjph/RPaOLJBUFVCuN0ry
-         X3u0G1ZUIrUCTvG/+oJGFUIe709G4LHMtMsytz1SVk8VYqVhA0uJKo2D+ai+wCGJS/Yw
-         JxDmkgOBsFd8KBToth/rtT5genIjUYtZckwIo/KLkJyTEAzB/fL5bknmPv0Ktn4x0eZY
-         nBfxHLR4uiP/Vv4RjNxsW4GJMQPtVuucX6PZFdkxYbk1X8a47wKwCAWbpObRAbgQezlr
-         drBQ==
-X-Gm-Message-State: AOAM533royVmH0u/uK7hFq0STF/q0JYr97MILzplivJ8UlSUXWIsMsnc
-        XGhX1lloxlLcDw9G4jq2A90TsrlpHW73SA==
-X-Google-Smtp-Source: ABdhPJwJuRvBU9xbKD6n5uqUO4Cy6iFvBN0mB6ng9qZD6NorATBV31sY9HLutLMH0aiv4f9lZugnKA==
-X-Received: by 2002:a1c:7406:: with SMTP id p6mr283146wmc.103.1615910337291;
-        Tue, 16 Mar 2021 08:58:57 -0700 (PDT)
+        bh=GwmDG2ryu0ZbzFdor8XDEGf2S52zGtGXkeHiA4hIOZY=;
+        b=Vo9Ht+b9i8bUTQ3n8HvOeBfQQQ3cL58XMah61IIqrcEIU0rgHJSoybPMYZHfHsxbKc
+         CpZj2xEt9jgVFabptvE7GAVh0lwosnRdwAm9iqt1niR0OnkYaCNEUtCzMkKMy84x70QO
+         C65pTNqPGVXKgyH7IqbjVTs9s4SBcEZZYJXVxVeDYyROS0o7Wtm6P5wxhDblJxeiVgu6
+         VUq8xObzYQzt9C4QM27xYXzxdqLBIOf5VAEpHRgkoBTDS+9ieMIdpLbvXntOmz2ilw9o
+         wkuN3mlPL+Cjv1FUwOwjdaR1INc8nO3IxD3LjlPCA+p05r7Pcb5zxsVSNb8ijF3b26eN
+         RTyg==
+X-Gm-Message-State: AOAM5302ro8wdfOfu/mihnSqWuaJElkQg+z+0jWWp23nM5vA/xqmj+MI
+        o1Lhfn02KrUa7E53pm7Ys1YCXpfgMBTC+g==
+X-Google-Smtp-Source: ABdhPJwE7Qrd7Y/NSHtch8+wiWkdGWX6zynybvNaDMvG1F59Fc+9FZYYv3rVbdUKGl45xA4dpze43Q==
+X-Received: by 2002:a1c:61c5:: with SMTP id v188mr336837wmb.20.1615910335947;
+        Tue, 16 Mar 2021 08:58:55 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id m132sm3439060wmf.45.2021.03.16.08.58.56
+        by smtp.gmail.com with ESMTPSA id m132sm3439060wmf.45.2021.03.16.08.58.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Mar 2021 08:58:56 -0700 (PDT)
+        Tue, 16 Mar 2021 08:58:55 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -66,9 +66,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <pclouds@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 22/32] tree-walk.h API: formatting changes for subsequent commit
-Date:   Tue, 16 Mar 2021 16:58:19 +0100
-Message-Id: <20210316155829.31242-23-avarab@gmail.com>
+Subject: [PATCH v3 20/32] fsck.c: switch on "object_type" in fsck_walk_tree()
+Date:   Tue, 16 Mar 2021 16:58:17 +0100
+Message-Id: <20210316155829.31242-21-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.0.256.gf0ddda3145
 In-Reply-To: <20210316021312.13927-1-avarab@gmail.com>
 References: <20210316021312.13927-1-avarab@gmail.com>
@@ -79,91 +79,66 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Do formatting (mainly whitespace) changes of code around the
-get_tree_entry() function to make a subsequent change where we'll add
-a sister function easier to read.
+Since 7146e66f086 (tree-walk: finally switch over tree descriptors to
+contain a pre-parsed entry, 2014-02-06) the "mode" is validated such
+that we'll never reach the "else" clause here.
+
+Good for us that fsck_tree() has its own FSCK_MSG_BAD_FILEMODE check
+which we can use, added way back in 64071805eda (git-fsck-cache: be
+stricter about "tree" objects, 2005-07-27).
+
+Except it really doesn't due to a regression in 7146e66f086. A
+follow-up commit will address that, but for now we can simply rewrite
+this code like the rest of the s/entry.mode/entry.object_type/g
+changes I'm making.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- blame.c     |  5 +++--
- tree-walk.c |  9 ++++++---
- tree-walk.h | 12 ++++++++----
- 3 files changed, 17 insertions(+), 9 deletions(-)
+ fsck.c | 21 +++++++++------------
+ 1 file changed, 9 insertions(+), 12 deletions(-)
 
-diff --git a/blame.c b/blame.c
-index a5044fcfaa..83babc41d0 100644
---- a/blame.c
-+++ b/blame.c
-@@ -102,9 +102,10 @@ static void verify_working_tree_path(struct repository *r,
- 		const struct object_id *commit_oid = &parents->item->object.oid;
- 		struct object_id blob_oid;
- 		unsigned short mode;
-+		int ret = get_tree_entry(r, commit_oid, path, &blob_oid,
-+					 &mode);
+diff --git a/fsck.c b/fsck.c
+index e3030f3b35..7c74c49d32 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -396,28 +396,25 @@ static int fsck_walk_tree(struct tree *tree, void *data, struct fsck_options *op
+ 		struct object *obj;
+ 		int result;
  
--		if (!get_tree_entry(r, commit_oid, path, &blob_oid, &mode) &&
--		    oid_object_info(r, &blob_oid, NULL) == OBJ_BLOB)
-+		if (!ret && oid_object_info(r, &blob_oid, NULL) == OBJ_BLOB)
- 			return;
- 	}
- 
-diff --git a/tree-walk.c b/tree-walk.c
-index 6e9161901d..e88187e371 100644
---- a/tree-walk.c
-+++ b/tree-walk.c
-@@ -591,7 +591,8 @@ static int find_tree_entry(struct repository *r, struct tree_desc *t,
- 			oidcpy(result, &oid);
- 			return 0;
+-		if (S_ISGITLINK(entry.mode))
++		switch (entry.object_type) {
++		case OBJ_COMMIT:
+ 			continue;
+-
+-		if (S_ISDIR(entry.mode)) {
++		case OBJ_TREE:
+ 			obj = (struct object *)lookup_tree(the_repository, &entry.oid);
+ 			if (name && obj)
+ 				fsck_put_object_name(options, &entry.oid, "%s%s/",
+ 						     name, entry.path);
+-			result = options->walk(obj, OBJ_TREE, data, options);
+-		}
+-		else if (S_ISREG(entry.mode) || S_ISLNK(entry.mode)) {
++			break;
++		case OBJ_BLOB:
+ 			obj = (struct object *)lookup_blob(the_repository, &entry.oid);
+ 			if (name && obj)
+ 				fsck_put_object_name(options, &entry.oid, "%s%s",
+ 						     name, entry.path);
+-			result = options->walk(obj, OBJ_BLOB, data, options);
+-		}
+-		else {
+-			result = error("in tree %s: entry %s has bad mode %.6o",
+-				       fsck_describe_object(options, &tree->object.oid),
+-				       entry.path, entry.mode);
++			break;
++		default:
++			BUG("unreachable");
  		}
--		return get_tree_entry(r, &oid, name + entrylen, result, mode);
-+		return get_tree_entry(r, &oid, name + entrylen, result,
-+				      mode);
- 	}
- 	return -1;
- }
-@@ -622,7 +623,8 @@ int get_tree_entry(struct repository *r,
- 	} else {
- 		struct tree_desc t;
- 		init_tree_desc(&t, tree, size);
--		retval = find_tree_entry(r, &t, name, oid, mode);
-+		retval = find_tree_entry(r, &t, name, oid,
-+					 mode);
- 	}
- 	free(tree);
- 	return retval;
-@@ -748,7 +750,8 @@ enum get_oid_result get_tree_entry_follow_symlinks(struct repository *r,
- 
- 		/* Look up the first (or only) path component in the tree. */
- 		find_result = find_tree_entry(r, &t, namebuf.buf,
--					      &current_tree_oid, mode);
-+					      &current_tree_oid,
-+					      mode);
- 		if (find_result) {
- 			goto done;
- 		}
-diff --git a/tree-walk.h b/tree-walk.h
-index 9f3825d277..478a659ee2 100644
---- a/tree-walk.h
-+++ b/tree-walk.h
-@@ -169,10 +169,14 @@ struct traverse_info {
- 
- /**
-  * Find an entry in a tree given a pathname and the sha1 of a tree to
-- * search. Returns 0 if the entry is found and -1 otherwise. The third
-- * and fourth parameters are set to the entry's sha1 and mode respectively.
-- */
--int get_tree_entry(struct repository *, const struct object_id *, const char *, struct object_id *, unsigned short *);
-+ * search. Returns 0 if the entry is found and -1 otherwise.
-+ *
-+ * The third and fourth parameters are set to the entry's sha1 and
-+ * mode respectively.
-+ */
-+int get_tree_entry(struct repository *, const struct object_id *, const char *,
-+		   struct object_id *,
-+		   unsigned short *);
- 
- /**
-  * Generate the full pathname of a tree entry based from the root of the
++		result = options->walk(obj, entry.object_type, data, options);
+ 		if (result < 0)
+ 			return result;
+ 		if (!res)
 -- 
 2.31.0.256.gf0ddda3145
 
