@@ -8,62 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F21B6C4332D
-	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 16:44:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 15280C43332
+	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 16:44:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DC6B365120
+	by mail.kernel.org (Postfix) with ESMTP id ED5556510B
 	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 16:44:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238926AbhCPQoe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Mar 2021 12:44:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52642 "EHLO
+        id S238999AbhCPQof (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Mar 2021 12:44:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52624 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238911AbhCPQnV (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S238912AbhCPQnV (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 16 Mar 2021 12:43:21 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 361A4C061762
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E08A9C061764
         for <git@vger.kernel.org>; Tue, 16 Mar 2021 09:43:20 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id j7so7785218wrd.1
-        for <git@vger.kernel.org>; Tue, 16 Mar 2021 09:43:19 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id f22-20020a7bc8d60000b029010c024a1407so1847695wml.2
+        for <git@vger.kernel.org>; Tue, 16 Mar 2021 09:43:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=UI+eRyRGiD8kv9ARhAds+wlgsXLrX8hcYHQH8XYkEp8=;
-        b=vT9xSflsdfhmlYebwruVUCX504dtE+qcEOpcayVwqMMD82PieErY1z6HSEDRGMU32X
-         AmkZhdx0omkzYs2WSXvlbD16ohCCvfxNX2pMpynfIT2T9mO9J6YA7z5zwVbrzfPpBRtn
-         Wpy9F2d32rR/5WLyatgmYwXBdAS5aMscF8jDEKniHQ1/87Xr7mEnpsi8tkOPoeDTPzAy
-         Id9bTl2t1dBkj2EFeTKUDQ3IuWPqAk1ZqCBwlfRgXjKOHlYGgZysXxpkd4C8rYnGc4KY
-         0LQmmvwellbt6tapI9UDTRu/ByYjXVjtcB3rUtstF2wJvstJBBjUvodtfE1igfdq4DlY
-         t9YA==
+        bh=LHUKWFc377nClgW8+NNh7YinD6CTjnUd3Jh5YVvBApg=;
+        b=m2r/lsesKg95SArBAc4TFT0pxdBhwECG5y5PhxqIK/4zwTgoIQnUc+RkJzK2ZX+nxy
+         nHyyqHqnc+xJhBpfjd9kcYyj/d9H1gbRXn2XTIIlLTazM8R0FA3c0V86E8+TXBzmUHJK
+         +bQrTlQrMobvXJzgW3Oc0V2RewUH43Zu5ORCTRlzt8PEAmkQ9PZgoQbf4jn8it7fFzpj
+         cYNaqr4+aKBAYskEHhk0yOF7sFWzhqxCS77pCQ8AIV5oNDYVJB4rCZ1NniplCjQve1z/
+         n6vZEerxKU4NlutXwNVoOHlyo12nj+ZWXsfIBr1ubP+nk7QuYGkjuUllCEawUVIzjLj0
+         XRDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=UI+eRyRGiD8kv9ARhAds+wlgsXLrX8hcYHQH8XYkEp8=;
-        b=PtIoYtNpm+lX6Ss1nron2xNYVmKaLmxeMLry8meuErLML/GjYib87zjO1AgUwYe33y
-         OaUmRBuCWWRTszfy0E5zBDjoe/lzoP4c6oSNjGvXThkYxQG3oXaMCJabkJbBdf9jg1di
-         nIDxB9VP0DfdpIhBBqT5YebDeml2IEFkBqehdLRadfx1dyXe0z/ufpt27t2EKa1wsWHL
-         zCOLowh3iuZINUUajH14FuTVmfBDC3siwZeJxdEIuU/pt1y3dH8I1iK0t8xrqIcHw91T
-         SMYICtf/3s+BlRc5kurQTLgd2UClFqIgndMWESkSbX85tbG7cqd8WZxV3AceUjVn9dLO
-         M0nA==
-X-Gm-Message-State: AOAM530y3MItTnJ55ZbHzi7YCvFS3ypudqHeMZnKdtkL4MKm0f9zgAgi
-        EKfvQ3YHy/4McBNJMy/NFU4Idi3Ag0w=
-X-Google-Smtp-Source: ABdhPJzkwg3mOZa4OnAslK9HHtiAz5/oByK5/vaRrQFbwE0b/EFz7TtNuF5EHus6bQs2bDnkhUWHpA==
-X-Received: by 2002:a5d:55c4:: with SMTP id i4mr5944425wrw.84.1615912998760;
-        Tue, 16 Mar 2021 09:43:18 -0700 (PDT)
+        bh=LHUKWFc377nClgW8+NNh7YinD6CTjnUd3Jh5YVvBApg=;
+        b=bEJpSqVK0UIen+veStjv/c1z/N/CUKOm0aOQ6YkxxbjU4akoOcgNmnBTW+VfhluH7s
+         k2MBvpRS74E6ZhI70WtOzzK+xW8/GvA6vIxGuC2o8QGXqrQ587CkaA2xcexVdAY5vcGh
+         W8ClTJQc9oD7Qr1sREXVZ+xd56w9cTqpyJBZ5h4MbpPu31kBbEAQ+WXe46s57Sdlw0Nc
+         yQqqndBXbqAQAp5Qp09/MbzMSEhcJeFqTcbe4Cmkd0HrcNpQACSoATlcXxj9SfzL+8Qk
+         eM3tvEcqaB5vytNAgAFmzoFUeabnoMfHVkEfvam6l6I6EprmahzAlvlD1b/RMCKYaF//
+         nMQw==
+X-Gm-Message-State: AOAM5339ciu5wgMnJVQZBMRRYmlOFHzfnN5zp5SpvCfKKQLXjHK9k9QL
+        vIZZ4ESGHk0hHxZgTwq472r1P5T/NeA=
+X-Google-Smtp-Source: ABdhPJz+7TK20VJSSs8qUt0DddIJTWAX8lGRSacVQePXIH8fAN92SQ1kLR3zvW6neK4WDRA4/gtUBA==
+X-Received: by 2002:a1c:bc06:: with SMTP id m6mr2302wmf.18.1615912999673;
+        Tue, 16 Mar 2021 09:43:19 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s11sm32355wme.22.2021.03.16.09.43.18
+        by smtp.gmail.com with ESMTPSA id h25sm23347wml.32.2021.03.16.09.43.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Mar 2021 09:43:18 -0700 (PDT)
-Message-Id: <6fdd9323c14ea42f805eaa1ace525d268fc3438c.1615912983.git.gitgitgadget@gmail.com>
+        Tue, 16 Mar 2021 09:43:19 -0700 (PDT)
+Message-Id: <3db06ac46dd5c61e83d7fc4747615d616fdbbdda.1615912983.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.883.v3.git.1615912983.gitgitgadget@gmail.com>
 References: <pull.883.v2.git.1615404664.gitgitgadget@gmail.com>
         <pull.883.v3.git.1615912983.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 16 Mar 2021 16:43:02 +0000
-Subject: [PATCH v3 19/20] sparse-index: loose integration with
- cache_tree_verify()
+Date:   Tue, 16 Mar 2021 16:43:03 +0000
+Subject: [PATCH v3 20/20] p2000: add sparse-index repos
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,76 +82,91 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The cache_tree_verify() method is run when GIT_TEST_CHECK_CACHE_TREE
-is enabled, which it is by default in the test suite. The logic must
-be adjusted for the presence of these directory entries.
+p2000-sparse-operations.sh compares different Git commands in
+repositories with many files at HEAD but using sparse-checkout to focus
+on a small portion of those files.
 
-For now, leave the test as a simple check for whether the directory
-entry is sparse. Do not go any further until needed.
+Add extra copies of the repository that use the sparse-index format so
+we can track how that affects the performance of different commands.
 
-This allows us to re-enable GIT_TEST_CHECK_CACHE_TREE in
-t1092-sparse-checkout-compatibility.sh. Further,
-p2000-sparse-operations.sh uses the test suite and hence this is enabled
-for all tests. We need to integrate with it before we run our
-performance tests with a sparse-index.
+At this point in time, the sparse-index is 100% overhead from the CPU
+front, and this is measurable in these tests:
+
+Test
+---------------------------------------------------------------
+2000.2: git status (full-index-v3)              0.59(0.51+0.12)
+2000.3: git status (full-index-v4)              0.59(0.52+0.11)
+2000.4: git status (sparse-index-v3)            1.40(1.32+0.12)
+2000.5: git status (sparse-index-v4)            1.41(1.36+0.08)
+2000.6: git add -A (full-index-v3)              2.32(1.97+0.19)
+2000.7: git add -A (full-index-v4)              2.17(1.92+0.14)
+2000.8: git add -A (sparse-index-v3)            2.31(2.21+0.15)
+2000.9: git add -A (sparse-index-v4)            2.30(2.20+0.13)
+2000.10: git add . (full-index-v3)              2.39(2.02+0.20)
+2000.11: git add . (full-index-v4)              2.20(1.94+0.16)
+2000.12: git add . (sparse-index-v3)            2.36(2.27+0.12)
+2000.13: git add . (sparse-index-v4)            2.33(2.21+0.16)
+2000.14: git commit -a -m A (full-index-v3)     2.47(2.12+0.20)
+2000.15: git commit -a -m A (full-index-v4)     2.26(2.00+0.17)
+2000.16: git commit -a -m A (sparse-index-v3)   3.01(2.92+0.16)
+2000.17: git commit -a -m A (sparse-index-v4)   3.01(2.94+0.15)
+
+Note that there is very little difference between the v3 and v4 index
+formats when the sparse-index is enabled. This is primarily due to the
+fact that the relative file sizes are the same, and the command time is
+mostly taken up by parsing tree objects to expand the sparse index into
+a full one.
+
+With the current file layout, the index file sizes are given by this
+table:
+
+       |  full index | sparse index |
+       +-------------+--------------+
+    v3 |     108 MiB |      1.6 MiB |
+    v4 |      80 MiB |      1.2 MiB |
+
+Future updates will improve the performance of Git commands when the
+index is sparse.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- cache-tree.c                             | 19 +++++++++++++++++++
- t/t1092-sparse-checkout-compatibility.sh |  3 ---
- 2 files changed, 19 insertions(+), 3 deletions(-)
+ t/perf/p2000-sparse-operations.sh | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
-diff --git a/cache-tree.c b/cache-tree.c
-index 950a9615db8f..11bf1fcae6e1 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -808,6 +808,19 @@ int cache_tree_matches_traversal(struct cache_tree *root,
- 	return 0;
- }
+diff --git a/t/perf/p2000-sparse-operations.sh b/t/perf/p2000-sparse-operations.sh
+index 2fbc81b22119..e527316e66d6 100755
+--- a/t/perf/p2000-sparse-operations.sh
++++ b/t/perf/p2000-sparse-operations.sh
+@@ -60,12 +60,29 @@ test_expect_success 'setup repo and indexes' '
+ 		git sparse-checkout set $SPARSE_CONE &&
+ 		git config index.version 4 &&
+ 		git update-index --index-version=4
++	) &&
++	git -c core.sparseCheckoutCone=true clone --branch=wide --sparse . sparse-index-v3 &&
++	(
++		cd sparse-index-v3 &&
++		git sparse-checkout init --cone --sparse-index &&
++		git sparse-checkout set $SPARSE_CONE &&
++		git config index.version 3 &&
++		git update-index --index-version=3
++	) &&
++	git -c core.sparseCheckoutCone=true clone --branch=wide --sparse . sparse-index-v4 &&
++	(
++		cd sparse-index-v4 &&
++		git sparse-checkout init --cone --sparse-index &&
++		git sparse-checkout set $SPARSE_CONE &&
++		git config index.version 4 &&
++		git update-index --index-version=4
+ 	)
+ '
  
-+static void verify_one_sparse(struct repository *r,
-+			      struct index_state *istate,
-+			      struct cache_tree *it,
-+			      struct strbuf *path,
-+			      int pos)
-+{
-+	struct cache_entry *ce = istate->cache[pos];
-+
-+	if (!S_ISSPARSEDIR(ce->ce_mode))
-+		BUG("directory '%s' is present in index, but not sparse",
-+		    path->buf);
-+}
-+
- static void verify_one(struct repository *r,
- 		       struct index_state *istate,
- 		       struct cache_tree *it,
-@@ -830,6 +843,12 @@ static void verify_one(struct repository *r,
- 
- 	if (path->len) {
- 		pos = index_name_pos(istate, path->buf, path->len);
-+
-+		if (pos >= 0) {
-+			verify_one_sparse(r, istate, it, path, pos);
-+			return;
-+		}
-+
- 		pos = -pos - 1;
- 	} else {
- 		pos = 0;
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index f14dc48924d2..d97bf9b64527 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -2,9 +2,6 @@
- 
- test_description='compare full workdir to sparse workdir'
- 
--# The verify_cache_tree() check is not sparse-aware (yet).
--# So, disable the check until that integration is complete.
--GIT_TEST_CHECK_CACHE_TREE=0
- GIT_TEST_SPLIT_INDEX=0
- GIT_TEST_SPARSE_INDEX=
- 
+ test_perf_on_all () {
+ 	command="$@"
+-	for repo in full-index-v3 full-index-v4
++	for repo in full-index-v3 full-index-v4 \
++		    sparse-index-v3 sparse-index-v4
+ 	do
+ 		test_perf "$command ($repo)" "
+ 			(
 -- 
 gitgitgadget
-
