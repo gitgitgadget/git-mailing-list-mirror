@@ -2,97 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 97C70C43331
-	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 00:57:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BCBA6C433E0
+	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 01:03:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7C15064F72
-	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 00:57:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7CD7164EB9
+	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 01:03:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234081AbhCPA4t (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Mar 2021 20:56:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45884 "EHLO
+        id S234098AbhCPBDM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Mar 2021 21:03:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47248 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234053AbhCPA4g (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Mar 2021 20:56:36 -0400
-Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88FC9C06174A
-        for <git@vger.kernel.org>; Mon, 15 Mar 2021 17:56:36 -0700 (PDT)
-Received: by mail-pg1-x529.google.com with SMTP id t37so10697877pga.11
-        for <git@vger.kernel.org>; Mon, 15 Mar 2021 17:56:36 -0700 (PDT)
+        with ESMTP id S231703AbhCPBCx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Mar 2021 21:02:53 -0400
+Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86689C06174A
+        for <git@vger.kernel.org>; Mon, 15 Mar 2021 18:02:53 -0700 (PDT)
+Received: by mail-pg1-x536.google.com with SMTP id n9so20549419pgi.7
+        for <git@vger.kernel.org>; Mon, 15 Mar 2021 18:02:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=rl6UGS6/fd//X5zLxmR7QzJOdstld3TQFF86qC9cwBc=;
-        b=QMSYgDP7PMprcLU2U9AYXij/r6Z3vtA26Rbkot8EYI2ryW6Di7Qr2jB9wR6lEJdZUr
-         UNMIYoPrbWzzZqUJlnXvUw9r/RDv5nE+i+BXukqK77SXTAmh1wwhYGE2ncSu5QRhs0rs
-         xFOXPiiKopTKp1jZq9z1nfck0JusinQh3BHULTqk3vjBxQsvUd23mRMi9amuPmAxcMrw
-         UyQeAmFsj8XRtzuX9Gx1rAOiL+ySCQsWtjxsgGzolAJ0t4z7koX4uZAKfP9iH1xdoa52
-         +8eXtpGNZLlFlOlSCI0Rree0HdeLA2v7XAV0vNXlaeXXX1e1aqLvLFun7aD1X5669rxy
-         fLgQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=UOsk5AZDDSlefhSwCNhIame9WamSw8IarNb160tKXo8=;
+        b=fVmRLbuKmbfJ8eDjbzxbVMDbI1bylmBOnhAB2/PeIMnq/1CzrACN9EaIhGe5x8E7qK
+         9ofij9FGf9Y5H4/rA/z2evZmR6NGMLc9EX+iRqEXMFPDISkLAOAUrLPLQpTanbpGH7wl
+         Jdp3O5YWgtou7RvuS+rhL/KN3lp7VIsDPKgx83svIDrhvHG/X9BPBx0/iRRfDjQzKN9/
+         MgKlJ7CgBYffo89gcdkPuaEXc8JecrmBko+MFxSss2TEO3HoFJ7Ij3FtWyiOVdxYYhb4
+         q89h+D1nBykwtiDJkYjn+L4huksJC8WiGinaqG6ZmxQUeaXssypeE7TLg+AWSHnwEYLi
+         l5zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=rl6UGS6/fd//X5zLxmR7QzJOdstld3TQFF86qC9cwBc=;
-        b=SG5oLhTtWVMUdrOosp6sQ70DJ0Mk0O8OhKaD284vkT9nlDzitYPemcN9qf3kX0Y/q/
-         1+u3GZ5LRTJbHT2e8w1RywtH86RPcXeFb/ZgS2qyMoQaGsQuGw4vRQfnGR7wrpmq60Dt
-         fo2f2VNShBgklG4IabE1vVJPUpfCDyjNhUp2B0BFvWAUEVdMuOiKyFR1LhEBBJoLHPAh
-         +1TjLn0rkJXhyj38Y55ybdTUirtwj79RXrom+dkA5cCNF8lAWrF0e49mw8/W4saBgaVP
-         Mkxu5xChciTkEQt+P3qBotbTqRo61Nc1cT/+J/GofGr1H6a2IqE4+BEA2YMtWG3zQgPj
-         4qTQ==
-X-Gm-Message-State: AOAM530s+ylFIcRDRDt5x8+JXRhbxE4Q7b6TAmBBQX7jcnJ0HAzE7lLT
-        kOpm4bjhdTf0Sm0R2JfNTMaVHx4Zxcw=
-X-Google-Smtp-Source: ABdhPJxFnnW+SSsI3P+3KAdgVM5U+GPM5dTdIZE05/i/xfDSJvmnj3iOCkKqbFaMdSwtgp893HoxMQ==
-X-Received: by 2002:a63:cd08:: with SMTP id i8mr1499980pgg.49.1615856195973;
-        Mon, 15 Mar 2021 17:56:35 -0700 (PDT)
-Received: from archbookpro.localdomain ([172.92.165.181])
-        by smtp.gmail.com with ESMTPSA id h186sm14670312pgc.38.2021.03.15.17.56.35
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=UOsk5AZDDSlefhSwCNhIame9WamSw8IarNb160tKXo8=;
+        b=YdeHO8NLwIWhoO1rsIFv9W7FOIpVXgZ8pdrdsmWPAaDaS954ispjHN0d0ytrrXFQhU
+         d9DUGele6jX6UJEL9twD8r1E8fq3gu3VAAQaeDzQ9BUYfYGyrj8uINBhis47eOBv/AQL
+         X1pe0HvI7EgMHXWAFjGtrw4BNmgZJyh/yi3nS0OUFmIUHa3EWtSd/xpX3iC8C9o3quoY
+         kCZHE6hzLZQqKYJstRO/yrTPc1G5zO0M4fLYiJwaFvjKN9T44+YsErlJkEyCXwzWbayX
+         DCTKm6HCOf6b/lvzehpQ012OJkv6wi8THqyjX0ixFT3T6O+rRruXwLcQVcpuh0ntHVKF
+         9DFw==
+X-Gm-Message-State: AOAM533Zz3jaqIkqZ7b8RFTBMQADmQojp0u393iqUVkv4v2ejbRx+rMK
+        yk8fkwgb7IdFsGgvQWX86uWAONyEiUA=
+X-Google-Smtp-Source: ABdhPJxnwE7zG+EPeyQ7i2i9dtdHh6QELqu0pHSQgcIrisuJTvEeoA8eiqAU7je7sdk1zg6302TkHg==
+X-Received: by 2002:a63:7885:: with SMTP id t127mr1474438pgc.237.1615856573006;
+        Mon, 15 Mar 2021 18:02:53 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:b1c9:41e8:dd7a:142b])
+        by smtp.gmail.com with ESMTPSA id v27sm14452461pfi.89.2021.03.15.18.02.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Mar 2021 17:56:35 -0700 (PDT)
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 7/7] ci/run-static-analysis.sh: make check-sort
-Date:   Mon, 15 Mar 2021 17:56:26 -0700
-Message-Id: <09c993a8f78d67bcff196c5b8173a8e5f6fd805b.1615856156.git.liu.denton@gmail.com>
-X-Mailer: git-send-email 2.31.0.rc2.261.g7f71774620
-In-Reply-To: <cover.1615856156.git.liu.denton@gmail.com>
-References: <cover.1615856156.git.liu.denton@gmail.com>
+        Mon, 15 Mar 2021 18:02:52 -0700 (PDT)
+Date:   Mon, 15 Mar 2021 18:02:50 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Drew DeVault <sir@cmpwn.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Subject: Re: Regarding the depreciation of ssh+git/git+ssh protocols
+Message-ID: <YFADuptwV7iR76g5@google.com>
+References: <C9Y2DPYH4XO1.3KFD8LT770P2@taiga>
+ <YE+ftT2WaKDzc+45@google.com>
+ <C9Y4NXXX6HRI.1IROIK8ZXK4S2@taiga>
+ <YE/ZSiuIsMs3ucVM@camp.crustytoothpaste.net>
+ <C9YD4AEUH84L.29FP64NJJ1BPU@taiga>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <C9YD4AEUH84L.29FP64NJJ1BPU@taiga>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-To ensure that lists in some files remain in sorted order, run the
-'check-sort' target as part of static-analysis.
+Drew DeVault wrote:
+> On Mon Mar 15, 2021 at 6:01 PM EDT, brian m. carlson wrote:
 
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
- ci/run-static-analysis.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+>> So I don't think this is a thing we can do, simply because in general
+>> URLs aren't suitable for sharing this kind of information.
+>
+> That's simply not true. They are quite capable at this task, and are
+> fulfilling this duty for a wide varitety of applications today.
+>
+> I don't really understand the disconnect here. No, URLs are not magic,
+> but they are perfectly sufficient for this use-case.
 
-diff --git a/ci/run-static-analysis.sh b/ci/run-static-analysis.sh
-index 1ae122fc70..92437c09df 100755
---- a/ci/run-static-analysis.sh
-+++ b/ci/run-static-analysis.sh
-@@ -26,7 +26,7 @@ then
- 	exit 1
- fi
- 
--make hdr-check check-builtins ||
-+make hdr-check check-builtins check-sort ||
- exit 1
- 
- save_good_tree
--- 
-2.31.0.rc2.261.g7f71774620
+I'm not sure it's a disconnect; instead, it just looks like we
+disagree.  That said, with more details about the use case it might be
+possible to sway me in another direction.
 
+To maintain the URI analogy: the URI does not tell me the content-type
+of what I can access from there.  Until I know that content-type, I
+may not know what the best tool is to access it.
+
+The root of the disagreement, though, is "Git URLs" looking like a URI
+in the first place.  They're not meant to be universal at all.  They
+are specifically for Git.
+
+Thanks,
+Jonathan
