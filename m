@@ -2,70 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4446CC43381
-	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 14:50:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D4900C433E6
+	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 14:53:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1FE7365086
-	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 14:50:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A557E6508E
+	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 14:53:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237420AbhCPOtn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Mar 2021 10:49:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55634 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229811AbhCPOtV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Mar 2021 10:49:21 -0400
-X-Greylist: delayed 510 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 16 Mar 2021 07:49:20 PDT
-Received: from out2.migadu.com (out2.migadu.com [IPv6:2001:41d0:2:aacc::])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B54D2C06174A
-        for <git@vger.kernel.org>; Tue, 16 Mar 2021 07:49:20 -0700 (PDT)
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kyleam.com; s=key1;
-        t=1615905649;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=rnpLrIjk4qjkM0csS5tr+VCI7HuV5Il2q63GBDiIbg8=;
-        b=hRjknxOCXI17BxoKb1yVcyD8dyyc1tqMM3FH7Lhr7EmC652upd0a2oUZFchG9SGS7P98eo
-        Y8PW/YotbSjqQGdWML97BLIAYNhldqTRFA5cz76izFaX/3Yv8MbrSA4YNzjqF/vTfhahI2
-        9eirgopv8mHMCqhOnNr4esD7CpSphUINn9jJFLzuRTeGy++LqzbImjEAfHHckJwn9AaMOK
-        fw89VIHgbPYmRVBOZxivl3tr8Z0G5xU7vC7ClD9e1KCiVAvFLrQRUXoCu4I3Xn7gpYfxI4
-        kW2CPzl0JDqpp+orrrdqfb8mkd0o1nvGknWmUbt1zW+9tz1fmxJumfNyWElz0A==
-From:   Kyle Meyer <kyle@kyleam.com>
-To:     git@vger.kernel.org
-Subject: [PATCH] config.txt: add missing period
-Date:   Tue, 16 Mar 2021 10:40:40 -0400
-Message-Id: <20210316144040.23976-1-kyle@kyleam.com>
+        id S237548AbhCPOxW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Mar 2021 10:53:22 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37762 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S235775AbhCPOxV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Mar 2021 10:53:21 -0400
+Received: (qmail 19311 invoked by uid 109); 16 Mar 2021 14:53:20 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 16 Mar 2021 14:53:20 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 28592 invoked by uid 111); 16 Mar 2021 14:53:20 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 16 Mar 2021 10:53:20 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 16 Mar 2021 10:53:19 -0400
+From:   Jeff King <peff@peff.net>
+To:     Andreas Schwab <schwab@linux-m68k.org>
+Cc:     Pranit Bauva <pranit.bauva@gmail.com>, git@vger.kernel.org
+Subject: Re: git bisect fails to handle annotated tags
+Message-ID: <YFDGX4EsrvHqZgPF@coredump.intra.peff.net>
+References: <878s6nz1sg.fsf@igel.home>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
-X-Migadu-Auth-User: kyle@kyleam.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <878s6nz1sg.fsf@igel.home>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Kyle Meyer <kyle@kyleam.com>
----
- Documentation/config.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On Tue, Mar 16, 2021 at 02:05:51PM +0100, Andreas Schwab wrote:
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 6ba50b1104..06615d840b 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -46,7 +46,7 @@ Subsection names are case sensitive and can contain any characters except
- newline and the null byte. Doublequote `"` and backslash can be included
- by escaping them as `\"` and `\\`, respectively. Backslashes preceding
- other characters are dropped when reading; for example, `\t` is read as
--`t` and `\0` is read as `0` Section headers cannot span multiple lines.
-+`t` and `\0` is read as `0`. Section headers cannot span multiple lines.
- Variables may belong directly to a section or to a given subsection. You
- can have `[section]` if you have `[section "subsection"]`, but you don't
- need to.
--- 
-2.31.0.rc2.327.gc8bc67eb22
+> $ git --version
+> git version 2.31.0
+> $ git bisect start
+> $ git bisect good v2.30.0
+> $ git bisect bad v2.31.0
+> 3e90d4b58f3819cfd58ac61cb8668e83d3ea0563 was both good and bad
 
+Looks like it bisects to 27257bc466 (bisect--helper: reimplement
+`bisect_state` & `bisect_head` shell functions in C, 2020-10-15), which
+isn't too surprising. So it broke in v2.30, but nobody seems to have
+noticed during the last cycle.
+
+I'd guess it's just missing a call to peel the input oid.
+
+-Peff
