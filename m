@@ -2,168 +2,307 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 780C2C43142
-	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 02:14:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3871C433E0
+	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 02:54:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 64D7C6502E
-	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 02:14:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6FAB764F9F
+	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 02:54:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234616AbhCPCOc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Mar 2021 22:14:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34236 "EHLO
+        id S234567AbhCPCxs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Mar 2021 22:53:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234523AbhCPCOA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Mar 2021 22:14:00 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F310C06175F
-        for <git@vger.kernel.org>; Mon, 15 Mar 2021 19:13:49 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id j2so9643303wrx.9
-        for <git@vger.kernel.org>; Mon, 15 Mar 2021 19:13:49 -0700 (PDT)
+        with ESMTP id S230416AbhCPCxk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Mar 2021 22:53:40 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91BA6C06174A
+        for <git@vger.kernel.org>; Mon, 15 Mar 2021 19:53:39 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id r15-20020a05600c35cfb029010e639ca09eso560253wmq.1
+        for <git@vger.kernel.org>; Mon, 15 Mar 2021 19:53:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=HKBmeL5mGNcpScmpi3Tdqxig2aOh0OKNdGErZBSD6RE=;
-        b=MAsvXle+cc1wCL92+QEitr8ULoRQK4Jjp95HPLyBCSqWRb0N3nRS1nHxf3oA6aHDCF
-         g8sD9DvNn/NJw2g11wCa8hsUT0YSeXsLXEmKvK05IEbnOTuVwbL8Gzx1Arik/1DeM0kk
-         F8DnRkl0Vv776PwkKjiSjlLOsDXCYgK6bHyXJyQR4spyX6aYrbgmcFO38yFBsEk+aFO3
-         vZhGsUC5D4GP4frwOFs0pW9d7WeTHS7A6IcVp89HewieIjt1nO1isBcyZqnk2FM0QDot
-         wzt4ojwf3Q0fTx9Z4eII14ReZgqLadZny71zsgvGSozo8OEJ2c+O8bAUFuUIzQCb06/p
-         dgCQ==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=FlNeQ/8aFJJEu9Hg5gsRCv1Hp9Ej+RgUvVAI7wAUwv0=;
+        b=OMZQkJLXsNrBml1DTB6OVroHKNcoHL2BjtEnpoAs40f73TyMUvVpeQkzzQuVJ4ZRFd
+         53HrhrMssC3TP68S34zEE0UcKE4Uot9PBoTLRBAee8zlViC9Si+nYrS2QsxCbbr2afvb
+         enSj2cMrlAJf7G0hppxb7s5sRhvofeiySaZ2u+Jw63a35Kkh1F4EgFXTzcaXuwXscU7E
+         D4nmWguqSwg3dqpFwLx3azs162qsddM6z7WRUKbd3ol64ngJs5YY5tIs33TrkqSwlcZG
+         qAYv+9fhc5ZKnCw+OF8BjDgx4sFyDSBR8vylRKbtNTbgRJaAd8IRzd74OS23tRqxeBzc
+         ywlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=HKBmeL5mGNcpScmpi3Tdqxig2aOh0OKNdGErZBSD6RE=;
-        b=qClURBaE7+md3Wu95AIGwOxjhBPovuDaXAIKPEfCa2+ryP3UZj38Oznnp8I0IhgNoy
-         Ze+9PdMDAKCXah+SxYy6BadbTW9nMkgGORxa1Fg9oJXFfgToFxfZUz9cLK8JgYrx+qV7
-         fYfX+mjozOoRYrrX1lA1UU5pWViX+56FHbEWmOc4I5oAfDrLneGY86AWi5oNJXOY0aJ3
-         6IijzXUBnze4mkv1/wMoWBDDirNA8NQtk9/wI3jdpMETvoMyTw9ur8AmxerZ5W5BLu2y
-         Al/6r/GAyzYXgvuHFggw3al57KClj4cZif8vmD261nV4AIrRSaJy/bdHTrT7PWNL58YF
-         tvSw==
-X-Gm-Message-State: AOAM532KPZfHo8JZ8w/2p6pHiAJJx5xeg7bVcvMutWGiwBhe8y0uNeQi
-        VY3g6Cif7kXj1j1ZICbh4+ErzbrKgdgdvQ==
-X-Google-Smtp-Source: ABdhPJxKcSOFMQN07DNOHPY6x+bdvkhx4fz1emEXt2/oKFgjRaOq3J47LoQY+nfCwlMqPyVPkFlGcw==
-X-Received: by 2002:adf:8b5c:: with SMTP id v28mr2254407wra.272.1615860827676;
-        Mon, 15 Mar 2021 19:13:47 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id i8sm21092494wrx.43.2021.03.15.19.13.46
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=FlNeQ/8aFJJEu9Hg5gsRCv1Hp9Ej+RgUvVAI7wAUwv0=;
+        b=E1KqCCH8v6khAch0A7gWSJusd4a0EE04+1ciIzZ6eqNw4of6wGf6NKuKFDDeL1sR08
+         NxLmcj9Ef31asvvgfL1Xw4oIfatGSCKIz6IbqGfqQ6XheNEZHGP+Gn7VrXJX6wJ76jil
+         tbJLuy7+FtZXmVVal/hwL1PrFuvlKjSiFS+VhXCuVjURBf3uRb78Llg9mTQufCSITmHd
+         +lfZJa77hlj+Sw9YiZOBdcR70A7/39bEevvcqChM6MG+WiDoZL2VHo1ZmX/P/Q3wmdbg
+         tVShiI03g2Mb+qAH4o/uaxlM1Xd1utQpTxsLaszoHBVAf0F9PUS3+Zl3iosnscdyExyz
+         6lwQ==
+X-Gm-Message-State: AOAM5311j0VlkqgynNt37Ga/p1RO/KdzRuFGGG7R3SS3qmJ+RB6GFApD
+        knmUaKe2P87oXsOYDkR5N68PefcttSk=
+X-Google-Smtp-Source: ABdhPJzmKlaWNdhKKX8HmAYRpB2EXlRDYLAzZDdi4/SKZM57hr9VyZ51eONk3yRFCNskr5ciy7Lwew==
+X-Received: by 2002:a1c:600a:: with SMTP id u10mr2338101wmb.139.1615863218383;
+        Mon, 15 Mar 2021 19:53:38 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id p16sm24486245wrt.54.2021.03.15.19.53.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Mar 2021 19:13:46 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>,
-        Kirill Smelkov <kirr@navytux.spb.ru>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 19/29] tree-walk.h API: formatting changes for subsequent commit
-Date:   Tue, 16 Mar 2021 03:13:02 +0100
-Message-Id: <20210316021312.13927-20-avarab@gmail.com>
-X-Mailer: git-send-email 2.31.0.rc2.211.g1d0b8788b3
-In-Reply-To: <20210308150650.18626-1-avarab@gmail.com>
-References: <20210308150650.18626-1-avarab@gmail.com>
-MIME-Version: 1.0
+        Mon, 15 Mar 2021 19:53:38 -0700 (PDT)
+Message-Id: <pull.890.git.1615863217226.gitgitgadget@gmail.com>
+From:   "SURA via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 16 Mar 2021 02:53:36 +0000
+Subject: [PATCH] builtin/fetch.c: clean tmp pack after receive signal
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     SURA <sura907@hotmail.com>, SURA <sura907@hotmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Do formatting (mainly whitespace) changes of code around the
-get_tree_entry() function to make a subsequent change where we'll add
-a sister function easier to read.
+From: SURA <sura907@hotmail.com>
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+In Gitee.com, I often use scripts to start a time-limited
+"git fetch". When the execution time of'git fetch' is too
+long, send a signal (such as SIGINT) to the'git fetch' process
+
+But I found that after the process exits, there are some
+files in the format of 'objects/pack/tmp_pack_XXXXXX' on the disk.
+They are usually very large (some of them exceed 5G), and'git gc'
+has no effect on them.
+
+These fetch_tmp_pack files will gradually fill up the disk.
+For a long time, I set F_WRLCK to the file to confirm whether the
+file is opened by other processes, and delete the file if it is not opened
+
+Obviously this is only a temporary solution, I think it should be fixed from git
+
+I found fetch will start a 'index-pack' sub-process, this sub-process
+create the tmp_pack
+  1. make 'index-pack' unlink tmp_pack when get signal
+  2. make 'fetch' send signal to 'index-pack' when get signal
+
+Signed-off-by: SURA <sura907@hotmail.com>
 ---
- blame.c     |  5 +++--
- tree-walk.c |  9 ++++++---
- tree-walk.h | 12 ++++++++----
- 3 files changed, 17 insertions(+), 9 deletions(-)
+    builtin/fetch.c: clean tmp pack after receive signal
+    
+    Clean tmp-pack after 'git fetch' process get signal(SIGINT, SIGHUP,
+    SIGTERM, SIGQUIT or SIGPIPE)
+    
+    Only for operations using ‘wire protocol version 2’ and ssh
+    
+    Signed-off-by: SURA sura907@hotmail.com
 
-diff --git a/blame.c b/blame.c
-index a5044fcfaa6..83babc41d08 100644
---- a/blame.c
-+++ b/blame.c
-@@ -102,9 +102,10 @@ static void verify_working_tree_path(struct repository *r,
- 		const struct object_id *commit_oid = &parents->item->object.oid;
- 		struct object_id blob_oid;
- 		unsigned short mode;
-+		int ret = get_tree_entry(r, commit_oid, path, &blob_oid,
-+					 &mode);
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-890%2FSURA907%2Fgit-fetch-tmp-pack-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-890/SURA907/git-fetch-tmp-pack-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/890
+
+ builtin/fetch-pack.c |  3 ++-
+ builtin/fetch.c      | 10 ++++++++++
+ builtin/index-pack.c | 18 ++++++++++++++++++
+ fetch-pack.c         |  7 +++++--
+ fetch-pack.h         |  3 ++-
+ transport.c          |  3 ++-
+ transport.h          |  6 ++++++
+ 7 files changed, 45 insertions(+), 5 deletions(-)
+
+diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
+index c2d96f4c89ab..49a3e0bf2ae3 100644
+--- a/builtin/fetch-pack.c
++++ b/builtin/fetch-pack.c
+@@ -56,6 +56,7 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
+ 	struct string_list deepen_not = STRING_LIST_INIT_DUP;
+ 	struct packet_reader reader;
+ 	enum protocol_version version;
++	pid_t index_pack_pid = -1;
  
--		if (!get_tree_entry(r, commit_oid, path, &blob_oid, &mode) &&
--		    oid_object_info(r, &blob_oid, NULL) == OBJ_BLOB)
-+		if (!ret && oid_object_info(r, &blob_oid, NULL) == OBJ_BLOB)
- 			return;
+ 	fetch_if_missing = 0;
+ 
+@@ -232,7 +233,7 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
  	}
  
-diff --git a/tree-walk.c b/tree-walk.c
-index 6e9161901d8..e88187e3714 100644
---- a/tree-walk.c
-+++ b/tree-walk.c
-@@ -591,7 +591,8 @@ static int find_tree_entry(struct repository *r, struct tree_desc *t,
- 			oidcpy(result, &oid);
- 			return 0;
- 		}
--		return get_tree_entry(r, &oid, name + entrylen, result, mode);
-+		return get_tree_entry(r, &oid, name + entrylen, result,
-+				      mode);
- 	}
- 	return -1;
+ 	ref = fetch_pack(&args, fd, ref, sought, nr_sought,
+-			 &shallow, pack_lockfiles_ptr, version);
++			 &shallow, pack_lockfiles_ptr, version, &index_pack_pid);
+ 	if (pack_lockfiles.nr) {
+ 		int i;
+ 
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 0b90de87c7a2..a87efa23ceb5 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -224,8 +224,18 @@ static void unlock_pack(void)
+ 		transport_unlock_pack(gsecondary);
  }
-@@ -622,7 +623,8 @@ int get_tree_entry(struct repository *r,
- 	} else {
- 		struct tree_desc t;
- 		init_tree_desc(&t, tree, size);
--		retval = find_tree_entry(r, &t, name, oid, mode);
-+		retval = find_tree_entry(r, &t, name, oid,
-+					 mode);
+ 
++static void send_signo_to_index_pack(int signo)
++{
++	if (gtransport && gtransport->index_pack_pid > 0)
++		kill(gtransport->index_pack_pid, signo);
++
++	if (gsecondary && gsecondary->index_pack_pid > 0)
++		kill(gsecondary->index_pack_pid, signo);
++}
++
+ static void unlock_pack_on_signal(int signo)
+ {
++	send_signo_to_index_pack(signo);
+ 	unlock_pack();
+ 	sigchain_pop(signo);
+ 	raise(signo);
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index bad57488079c..27d1ebba746e 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -15,10 +15,13 @@
+ #include "packfile.h"
+ #include "object-store.h"
+ #include "promisor-remote.h"
++#include "sigchain.h"
+ 
+ static const char index_pack_usage[] =
+ "git index-pack [-v] [-o <index-file>] [--keep | --keep=<msg>] [--[no-]rev-index] [--verify] [--strict] (<pack-file> | --stdin [--fix-thin] [<pack-file>])";
+ 
++static const char *tmp_pack_name;
++
+ struct object_entry {
+ 	struct pack_idx_entry idx;
+ 	unsigned long size;
+@@ -336,6 +339,7 @@ static const char *open_pack_file(const char *pack_name)
+ 			output_fd = odb_mkstemp(&tmp_file,
+ 						"pack/tmp_pack_XXXXXX");
+ 			pack_name = strbuf_detach(&tmp_file, NULL);
++			tmp_pack_name = pack_name;
+ 		} else {
+ 			output_fd = open(pack_name, O_CREAT|O_EXCL|O_RDWR, 0600);
+ 			if (output_fd < 0)
+@@ -353,6 +357,19 @@ static const char *open_pack_file(const char *pack_name)
+ 	return pack_name;
+ }
+ 
++static void remove_tmp_pack(void)
++{
++	if (tmp_pack_name) 
++		unlink_or_warn(tmp_pack_name);
++}
++
++static void remove_tmp_pack_on_signal(int signo)
++{
++	remove_tmp_pack();
++	sigchain_pop(signo);
++	raise(signo);
++}
++
+ static void parse_pack_header(void)
+ {
+ 	struct pack_header *hdr = fill(sizeof(struct pack_header));
+@@ -1911,6 +1928,7 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
  	}
- 	free(tree);
- 	return retval;
-@@ -748,7 +750,8 @@ enum get_oid_result get_tree_entry_follow_symlinks(struct repository *r,
  
- 		/* Look up the first (or only) path component in the tree. */
- 		find_result = find_tree_entry(r, &t, namebuf.buf,
--					      &current_tree_oid, mode);
-+					      &current_tree_oid,
-+					      mode);
- 		if (find_result) {
- 			goto done;
- 		}
-diff --git a/tree-walk.h b/tree-walk.h
-index 9f3825d2773..478a659ee2b 100644
---- a/tree-walk.h
-+++ b/tree-walk.h
-@@ -169,10 +169,14 @@ struct traverse_info {
+ 	curr_pack = open_pack_file(pack_name);
++	sigchain_push_common(remove_tmp_pack_on_signal);
+ 	parse_pack_header();
+ 	objects = xcalloc(st_add(nr_objects, 1), sizeof(struct object_entry));
+ 	if (show_stat)
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 6a61a464283e..bedbf69710f6 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -40,6 +40,7 @@ static struct shallow_lock shallow_lock;
+ static const char *alternate_shallow_file;
+ static struct strbuf fsck_msg_types = STRBUF_INIT;
+ static struct string_list uri_protocols = STRING_LIST_INIT_DUP;
++static pid_t *curr_index_pack_pid;
  
- /**
-  * Find an entry in a tree given a pathname and the sha1 of a tree to
-- * search. Returns 0 if the entry is found and -1 otherwise. The third
-- * and fourth parameters are set to the entry's sha1 and mode respectively.
-- */
--int get_tree_entry(struct repository *, const struct object_id *, const char *, struct object_id *, unsigned short *);
-+ * search. Returns 0 if the entry is found and -1 otherwise.
-+ *
-+ * The third and fourth parameters are set to the entry's sha1 and
-+ * mode respectively.
-+ */
-+int get_tree_entry(struct repository *, const struct object_id *, const char *,
-+		   struct object_id *,
-+		   unsigned short *);
+ /* Remember to update object flag allocation in object.h */
+ #define COMPLETE	(1U << 0)
+@@ -944,6 +945,7 @@ static int get_pack(struct fetch_pack_args *args,
+ 	cmd.git_cmd = 1;
+ 	if (start_command(&cmd))
+ 		die(_("fetch-pack: unable to fork off %s"), cmd_name);
++	*curr_index_pack_pid = cmd.pid;
+ 	if (do_keep && (pack_lockfiles || fsck_objects)) {
+ 		int is_well_formed;
+ 		char *pack_lockfile = index_pack_lockfile(cmd.out, &is_well_formed);
+@@ -1945,12 +1947,13 @@ struct ref *fetch_pack(struct fetch_pack_args *args,
+ 		       struct ref **sought, int nr_sought,
+ 		       struct oid_array *shallow,
+ 		       struct string_list *pack_lockfiles,
+-		       enum protocol_version version)
++		       enum protocol_version version,
++		       pid_t *index_pack_pid)
+ {
+ 	struct ref *ref_cpy;
+ 	struct shallow_info si;
+ 	struct oid_array shallows_scratch = OID_ARRAY_INIT;
+-
++	curr_index_pack_pid = index_pack_pid;
+ 	fetch_pack_setup();
+ 	if (nr_sought)
+ 		nr_sought = remove_duplicates_in_refs(sought, nr_sought);
+diff --git a/fetch-pack.h b/fetch-pack.h
+index 736a3dae467a..c05a2544bb06 100644
+--- a/fetch-pack.h
++++ b/fetch-pack.h
+@@ -78,7 +78,8 @@ struct ref *fetch_pack(struct fetch_pack_args *args,
+ 		       int nr_sought,
+ 		       struct oid_array *shallow,
+ 		       struct string_list *pack_lockfiles,
+-		       enum protocol_version version);
++		       enum protocol_version version,
++			   pid_t *index_pack_pid);
  
- /**
-  * Generate the full pathname of a tree entry based from the root of the
--- 
-2.31.0.rc2.211.g1d0b8788b3
+ /*
+  * Print an appropriate error message for each sought ref that wasn't
+diff --git a/transport.c b/transport.c
+index b13fab5dc3b1..b18f62e6bd23 100644
+--- a/transport.c
++++ b/transport.c
+@@ -391,7 +391,7 @@ static int fetch_refs_via_pack(struct transport *transport,
+ 	refs = fetch_pack(&args, data->fd,
+ 			  refs_tmp ? refs_tmp : transport->remote_refs,
+ 			  to_fetch, nr_heads, &data->shallow,
+-			  &transport->pack_lockfiles, data->version);
++			  &transport->pack_lockfiles, data->version, &transport->index_pack_pid);
+ 
+ 	close(data->fd[0]);
+ 	close(data->fd[1]);
+@@ -1095,6 +1095,7 @@ struct transport *transport_get(struct remote *remote, const char *url)
+ 	}
+ 
+ 	ret->hash_algo = &hash_algos[GIT_HASH_SHA1];
++	ret->index_pack_pid = -1;
+ 
+ 	return ret;
+ }
+diff --git a/transport.h b/transport.h
+index 24e15799e714..d25d76125784 100644
+--- a/transport.h
++++ b/transport.h
+@@ -118,6 +118,12 @@ struct transport {
+ 	enum transport_family family;
+ 
+ 	const struct git_hash_algo *hash_algo;
++
++	/*
++	 * Record the pid of the index_pack sub-process
++	 * used to send the signal to this sub-process after the main fetch process receives the signal
++	 */
++	pid_t index_pack_pid;
+ };
+ 
+ #define TRANSPORT_PUSH_ALL			(1<<0)
 
+base-commit: 13d7ab6b5d7929825b626f050b62a11241ea4945
+-- 
+gitgitgadget
