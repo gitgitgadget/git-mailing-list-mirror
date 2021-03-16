@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A765FC43381
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D00A6C4332B
 	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 15:59:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8249D64FE6
+	by mail.kernel.org (Postfix) with ESMTP id A2075650F8
 	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 15:59:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238275AbhCPP7M (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Mar 2021 11:59:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42532 "EHLO
+        id S238283AbhCPP7N (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Mar 2021 11:59:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42540 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236865AbhCPP6l (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Mar 2021 11:58:41 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4A31C06175F
-        for <git@vger.kernel.org>; Tue, 16 Mar 2021 08:58:40 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id o16so7701373wrn.0
-        for <git@vger.kernel.org>; Tue, 16 Mar 2021 08:58:40 -0700 (PDT)
+        with ESMTP id S236853AbhCPP6m (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Mar 2021 11:58:42 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6DB0C061762
+        for <git@vger.kernel.org>; Tue, 16 Mar 2021 08:58:41 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id o16so7701409wrn.0
+        for <git@vger.kernel.org>; Tue, 16 Mar 2021 08:58:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=MdeNALThxh+UgsUi+SbhDygj/MqiDi9xam9o7FK3Y1U=;
-        b=uVI3nl+vwLXhlKoD4ZmRMZDravl10UyQCevnVwhMe9O1FqrAmP1kukpYTDKu8/5brO
-         ed3pFdG+1iJJRm7lzSigzI5tIYp8CV3mB+VQQIsLJY/Ton/O8ErEv1yMtWq4m1ehp2QG
-         qYWdK4fvGdFCO3rJQU+wUC2gJq9GdMXUPndh6wRv9eTbCY9W4uQY386KR4Jk6CnPGxBn
-         sPUkG3U4E5UsAjeulcGa+wc98eTtAUAy7XjgJeo2+YPb8SBrV9K5H0ZBcgC8vEatW1pv
-         ZpGwJ0FnByFzrg6EWIi22+U0ast+Q+SKVeGsmuoFRTRAkd9TqcZurWAc+zXSM+cFvIzQ
-         kQ+A==
+        bh=PTKwzfpHpixOsZTgzJPo8ijwcC75UiHFYOs24mncvbc=;
+        b=gIHV7/0ZfrhEivPfZRJ/ZTHT3TcYYD2nvHOfcIPDylFdU8IFjpbU5w5lwiLbKWXla8
+         6ITn9TexpGJNblU/5lmkilb6fxJdTOB/15mD1ll46675j6SimKmDAAHNcrJffXjn3emG
+         LZ7ZW6ijUdNmowYp1dA7G4U4iHMvSJxDVO04pPkHWguhFUZVhvtPYxAVRsG9owmZstEG
+         h3AtTepzN/58a6VcaSXyWvTve51JsvENEmPh8dbLOdR3x7i/Kyx4cYhUJp14tye4qFd/
+         h9I+i8LAU5VyUPF25zObh3Wn2mjcuesOG/Xmz+uGzNir1BDG1uWAZnWkGL+fyvoNZbmZ
+         /omQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=MdeNALThxh+UgsUi+SbhDygj/MqiDi9xam9o7FK3Y1U=;
-        b=VuZQAeRofLPzKlueHW5XkWpQ5Q0HT514J4rVSAfU9pm4WzLazPJQDBUxHgyNrxkJyL
-         yZE2z9L1mkoKDVH5bgEsa9qcIFW0kqq9OIWz0uOIxAxvCB3IXabN9WbmzpYKgXe9Zhlo
-         cbqNFE52Y06KILbeNpkeGeLY1VdRZZ6qoH7BhydFKw2Zep+k0Scx6SAxy9lH1BRXeel1
-         BwkIKJOdZ9n8gRHJxOpJlmN+pTMxfLHGZtw4oLzswPCRjgQigAvXzlgR/SR1b5wyHScj
-         aUuvySRwsNL4gn/5H1KFEi/FDndjqIGOUouHIWnWd37ufoAhikIixVr6VrE3k/3Zn824
-         J36w==
-X-Gm-Message-State: AOAM533XBo+7B74rGw1iPBzd0Tn8ACr7ibHBhQYDeopM+VwDqeJ9UaIV
-        IJ2h9prtUhiY3gtx/OfTQ7Rw0IzHdoKfhA==
-X-Google-Smtp-Source: ABdhPJwyHwEDtHC6dN2nRMJb1WFgNfJTGbWLCLDmxxY6rveKOWt0JPiwihop1ospkdAEWqUrucBWGA==
-X-Received: by 2002:adf:f44b:: with SMTP id f11mr5737099wrp.345.1615910319128;
-        Tue, 16 Mar 2021 08:58:39 -0700 (PDT)
+        bh=PTKwzfpHpixOsZTgzJPo8ijwcC75UiHFYOs24mncvbc=;
+        b=ZuHHO4Eu1TDE/zxh1WSkCb+vqs4kzhTcU+/UHuT4X9ybzDPXG5bySBMJdXJ3GtNcll
+         doPjnNZrWknSmymeQaRwxd7XKYGYyPJWjgvtOc7m00B3rN5uWyKixbO06UrpulPaGIks
+         KxeaLaDF9ntegiGcXHTkPgKdCM5Q+B4kqRetDMupiK7SngYh+mNw9qHINpKKeRLDS3B6
+         ZRtVKPl2TY55t0Qo/iypwwDU4hJl+sBQKdVCpImrxoB6Vz3HoDBomDuWLTQB0a9DOYNY
+         u1+2gos8n5zBRJYZLoSDR1EnfgACUQxtDNTDaelCcIsSDmdehE2esdeKz3MagRk9BaY2
+         rgnw==
+X-Gm-Message-State: AOAM531/fs1TLKfoJbr1qenitSPu6I5UHIRy8mAptbAKwuFnRuMYa4Zd
+        q70G6uCC8YobcOt2EYsbbZJHsYiB4yOnWQ==
+X-Google-Smtp-Source: ABdhPJzLR0xa1T8J4+obworE2QBYYd9dZFXej6ElgSb08wiNzvmFDDDz3mWIu1oEBl8/BB3If0OGQg==
+X-Received: by 2002:a5d:4884:: with SMTP id g4mr5602315wrq.191.1615910320097;
+        Tue, 16 Mar 2021 08:58:40 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id m132sm3439060wmf.45.2021.03.16.08.58.38
+        by smtp.gmail.com with ESMTPSA id m132sm3439060wmf.45.2021.03.16.08.58.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Mar 2021 08:58:38 -0700 (PDT)
+        Tue, 16 Mar 2021 08:58:39 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -66,9 +66,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <pclouds@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 02/32] notes & match-trees: use name_entry's "pathlen" member
-Date:   Tue, 16 Mar 2021 16:57:59 +0100
-Message-Id: <20210316155829.31242-3-avarab@gmail.com>
+Subject: [PATCH v3 03/32] cache.h: add a comment to object_type()
+Date:   Tue, 16 Mar 2021 16:58:00 +0100
+Message-Id: <20210316155829.31242-4-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.0.256.gf0ddda3145
 In-Reply-To: <20210316021312.13927-1-avarab@gmail.com>
 References: <20210316021312.13927-1-avarab@gmail.com>
@@ -79,64 +79,48 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change code that was doing a strlen() on the "path" from a name_entry
-struct to instead use the pathlen given to us by decode_tree_entry().
+Add a comment to the object_type() function to explain what it
+returns, and what the "mode" is in the "else" case.
+
+The object_type() function dates back to 4d1012c3709 (Fix rev-list
+when showing objects involving submodules, 2007-11-11). It's not
+immediately obvious to someone looking at its history and how it's
+come to be used.
+
+Despite what Linus noted in 4d1012c3709 (Fix rev-list when showing
+objects involving submodules, 2007-11-11) about wanting to move away
+from users of object_type() relying on S_ISLNK(mode) being true here
+we do currently rely on that. If this is changed to a condition to
+only return OBJ_BLOB on S_ISREG(mode) then t4008, t4023 and t7415 will
+have failing tests.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- match-trees.c | 7 +++----
- notes.c       | 4 ++--
- 2 files changed, 5 insertions(+), 6 deletions(-)
+ cache.h | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/match-trees.c b/match-trees.c
-index f6c194c1cc..1011357ad0 100644
---- a/match-trees.c
-+++ b/match-trees.c
-@@ -197,9 +197,10 @@ static int splice_tree(const struct object_id *oid1, const char *prefix,
- 	while (desc.size) {
- 		const char *name;
- 		unsigned short mode;
-+		int len = tree_entry_len(&desc.entry);
+diff --git a/cache.h b/cache.h
+index c2f8a8eadf..ae0c0bef5c 100644
+--- a/cache.h
++++ b/cache.h
+@@ -451,11 +451,16 @@ enum object_type {
+ 	OBJ_MAX
+ };
  
- 		tree_entry_extract(&desc, &name, &mode);
--		if (strlen(name) == toplen &&
-+		if (len == toplen &&
- 		    !memcmp(name, prefix, toplen)) {
- 			if (!S_ISDIR(mode))
- 				die("entry %s in tree %s is not a tree", name,
-@@ -214,9 +215,7 @@ static int splice_tree(const struct object_id *oid1, const char *prefix,
- 			 *   - to discard the "const"; this is OK because we
- 			 *     know it points into our non-const "buf"
- 			 */
--			rewrite_here = (unsigned char *)(desc.entry.path +
--							 strlen(desc.entry.path) +
--							 1);
-+			rewrite_here = (unsigned char *)(name + len + 1);
- 			break;
- 		}
- 		update_tree_entry(&desc);
-diff --git a/notes.c b/notes.c
-index d5ac081e76..0a5b4fa1db 100644
---- a/notes.c
-+++ b/notes.c
-@@ -413,7 +413,7 @@ static void load_subtree(struct notes_tree *t, struct leaf_node *subtree,
- 	while (tree_entry(&desc, &entry)) {
- 		unsigned char type;
- 		struct leaf_node *l;
--		size_t path_len = strlen(entry.path);
-+		int path_len = entry.pathlen;
++/*
++ * object_type() returns an object of a type that'll appear in a tree,
++ * so no OBJ_TAG is possible. This is mostly (and dates back to)
++ * consumers of the tree-walk.h API's "mode" field.
++ */
+ static inline enum object_type object_type(unsigned int mode)
+ {
+ 	return S_ISDIR(mode) ? OBJ_TREE :
+ 		S_ISGITLINK(mode) ? OBJ_COMMIT :
+-		OBJ_BLOB;
++		OBJ_BLOB; /* S_ISREG(mode) || S_ISLNK(mode) */
+ }
  
- 		if (path_len == 2 * (hashsz - prefix_len)) {
- 			/* This is potentially the remainder of the SHA-1 */
-@@ -483,7 +483,7 @@ static void load_subtree(struct notes_tree *t, struct leaf_node *subtree,
- 				strbuf_addch(&non_note_path, *q++);
- 				strbuf_addch(&non_note_path, '/');
- 			}
--			strbuf_addstr(&non_note_path, entry.path);
-+			strbuf_add(&non_note_path, entry.path, path_len);
- 			add_non_note(t, strbuf_detach(&non_note_path, NULL),
- 				     entry.mode, entry.oid.hash);
- 		}
+ /* Double-check local_repo_env below if you add to this list. */
 -- 
 2.31.0.256.gf0ddda3145
 
