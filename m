@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 48C76C43331
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E254C43333
 	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 16:19:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 26BC46511C
+	by mail.kernel.org (Postfix) with ESMTP id 43A666511D
 	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 16:19:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238685AbhCPQTD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Mar 2021 12:19:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47130 "EHLO
+        id S238688AbhCPQTG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Mar 2021 12:19:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47120 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238606AbhCPQSL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Mar 2021 12:18:11 -0400
+        with ESMTP id S238563AbhCPQSP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Mar 2021 12:18:15 -0400
 Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20795C061764
-        for <git@vger.kernel.org>; Tue, 16 Mar 2021 09:18:10 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id o14so6976204wrm.11
-        for <git@vger.kernel.org>; Tue, 16 Mar 2021 09:18:10 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AF3DC0613D7
+        for <git@vger.kernel.org>; Tue, 16 Mar 2021 09:18:14 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id j2so10755757wrx.9
+        for <git@vger.kernel.org>; Tue, 16 Mar 2021 09:18:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=aOJ/WwzjdP5YoN4cI05g8XpERVSTnf1CtrzFMFsUeEA=;
-        b=ZGNGEMoqiaUq9Vgu5hIAzHwtBBvn1YwYePdhdtYG6YZG2fH/YA1a7HuNcY7vWxUTPV
-         k9o/EM/fxu5rcuylbx3Jvpj2x+OM7x3MQzS1hvYhU7wzJW/vlWEm3CtHvSLjTEWnMVnG
-         qkOa4avQB2hqJxy39D+wZxhddxZSv6LM4X6V7nfKwWUjMK5DfWserjurn3CMgaA+5iyy
-         0d+NC4sqbntDM7WztUMIOrLpKsF7Ya2fyNZ89Jjt1ziLLM95l3vi9PrBurPTrUx7ipXV
-         52s+q1EItQ+e4mksre8ksx0crpaTrvWIrZ3lcDZlZrFnGunPkqP6oh2I7Cl/F6rAgcoL
-         TMmQ==
+        bh=c1C4KLosOvfPC9ghnuM63DVZODr7o1/aob0+caMMMEY=;
+        b=BTc0P2oYY2jrNoq2bpTcI648myYc+U4LKEopaBBukxh1u2qu1NgQf4AiHX5OIgczPC
+         b8z+nB6ZSbJ68rQxzugrlwZu0w43BZ5fCs0Evpgq0gfDZc5h2sUEa8DPxl7f8v6OGiBc
+         HW4/sPqaxQTJp7N3cFIEJMvftmty3FT+Dkk4MqzNstY7oRNjZgze21ue2bLO86+Khd2b
+         fnFVcgAnCm8UIBPT3tPJTP5MTNV+n+tkNb0Aa2bIGUZBpAYfweRi8dmmTbWcVjNLzDLY
+         f33C6Hn3T84JBXnxK27zIPWm13M3qM8mVHBwatlxg6J+cpod1wM+P884+evUpfLcrmpG
+         OEhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=aOJ/WwzjdP5YoN4cI05g8XpERVSTnf1CtrzFMFsUeEA=;
-        b=fiwzCy2JU5Yf9b9ifG52wn3mJSsAiYnEwUydGF0PU6Cx7028nOUWQsXug7lbzZb+LI
-         jf5D+Gie4SxcvpuzVQKNoCyeO2cGbcMOs/pePgC4+SP0Z84JTeDllAcpTWY6wzTVO7Wz
-         qts1PHwYbujvd/G9vND2xJXYrUMezXC5SpCOi48S1wJsCbWf0BkWHV4w4hf35YioeJ+B
-         MIUBISYUY0cJSjpo5mNShduzYGuNB943jNISoT4InteKkB2FiZP6fQYdC7oolVyuLidM
-         a03qv/D3WVVmzTZ1h+AU5PlsYQfKTQDdn+UC2x7JMaYdCqfcaqekU7m0wWPOwT/rLgI5
-         NIew==
-X-Gm-Message-State: AOAM5324MilOYQbzCDI/7ImsQDR4cR3elSs4wwVnZEWs0J3VmscH/uX5
-        DxvhTS6fo+XzMHUbkie4MG1S/1FiAW7JIQ==
-X-Google-Smtp-Source: ABdhPJxoJYAYEudIBJbeFw1Apzy2SeJi1eRH8gvLAgw7+5GcS7twLHj76jGXD8embAkx/RJJQkVD+w==
-X-Received: by 2002:adf:dd0a:: with SMTP id a10mr5912459wrm.145.1615911488604;
-        Tue, 16 Mar 2021 09:18:08 -0700 (PDT)
+        bh=c1C4KLosOvfPC9ghnuM63DVZODr7o1/aob0+caMMMEY=;
+        b=PCD5FHykb5FHjApgPJNLhGg0IJQTcLvwmzmoikBIb+f1TgRfs3Y6OYqVmihNo985Bn
+         s2liO1RHVHANwILtHIX2FENgdFNMyDCgjICv21ajjJ5a9gvKK4oYJqN4POfGQmbOlZVn
+         /DiK3ok5fcLK6OQ6ClbJR96q4v/QdQJLD2vela1SGvOB3KSBXy4tZm4FeklnwBhnPnu8
+         IVKKxP66D+xy7dVU5P5uGFHdhOIU0zCJPfwNt1iRXimu4CDY5c0mOmsV2aIxsj759GrQ
+         5QRMgO1XvrFbMZl6nBUJQYYbZzI6ZFT7OD4pK6dkVbUuVTAc2koKwhRxFG9FMOKefumG
+         tOyA==
+X-Gm-Message-State: AOAM532marrX0xr7xoiTg/kjSqbEM2/9SVI2n2KBqJzHEovEv8jyIvjK
+        SnggNS7bNlwI5RDERbSPDS1olaI6xJVbyw==
+X-Google-Smtp-Source: ABdhPJw18OCH9WbMhfHjEB/8IsEuIgquNHOSxekLN0t5QyUMWHKva32kOL3ENmScBo4F9VXKiWySwQ==
+X-Received: by 2002:adf:fbc8:: with SMTP id d8mr5890168wrs.94.1615911492778;
+        Tue, 16 Mar 2021 09:18:12 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id r11sm22369206wrx.37.2021.03.16.09.18.07
+        by smtp.gmail.com with ESMTPSA id r11sm22369206wrx.37.2021.03.16.09.18.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Mar 2021 09:18:07 -0700 (PDT)
+        Tue, 16 Mar 2021 09:18:12 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -64,9 +64,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Jonathan Tan <jonathantanmy@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 17/22] fsck.c: pass along the fsck_msg_id in the fsck_error callback
-Date:   Tue, 16 Mar 2021 17:17:33 +0100
-Message-Id: <20210316161738.30254-18-avarab@gmail.com>
+Subject: [PATCH v4 22/22] fetch-pack: use new fsck API to printing dangling submodules
+Date:   Tue, 16 Mar 2021 17:17:38 +0100
+Message-Id: <20210316161738.30254-23-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.0.260.g719c683c1d
 In-Reply-To: <20210306110439.27694-1-avarab@gmail.com>
 References: <20210306110439.27694-1-avarab@gmail.com>
@@ -77,122 +77,190 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the fsck_error callback to also pass along the
-fsck_msg_id. Before this change the only way to get the message id was
-to parse it back out of the "message".
+Refactor the check added in 5476e1efde (fetch-pack: print and use
+dangling .gitmodules, 2021-02-22) to make use of us now passing the
+"msg_id" to the user defined "error_func". We can now compare against
+the FSCK_MSG_GITMODULES_MISSING instead of parsing the generated
+message.
 
-Let's pass it down explicitly for the benefit of callers that might
-want to use it, as discussed in [1].
+Let's also replace register_found_gitmodules() with directly
+manipulating the "gitmodules_found" member. A recent commit moved it
+into "fsck_options" so we could do this here.
 
-Passing the msg_type is now redundant, as you can always get it back
-from the msg_id, but I'm not changing that convention. It's really
-common to need the msg_type, and the report() function itself (which
-calls "fsck_error") needs to call fsck_msg_type() to discover
-it. Let's not needlessly re-do that work in the user callback.
+Add a fsck-cb.c file similar to parse-options-cb.c, the alternative
+would be to either define this directly in fsck.c as a public API, or
+to create some library shared by fetch-pack.c ad builtin/index-pack.
 
-1. https://lore.kernel.org/git/87blcja2ha.fsf@evledraar.gmail.com/
+I expect that there won't be many of these fsck utility functions in
+the future, so just having a single fsck-cb.c makes sense.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/fsck.c       | 4 +++-
- builtin/index-pack.c | 3 ++-
- builtin/mktag.c      | 1 +
- fsck.c               | 6 ++++--
- fsck.h               | 6 ++++--
- 5 files changed, 14 insertions(+), 6 deletions(-)
+ Makefile             |  1 +
+ builtin/index-pack.c | 21 +--------------------
+ fetch-pack.c         |  4 ++--
+ fsck-cb.c            | 16 ++++++++++++++++
+ fsck.c               |  5 -----
+ fsck.h               | 22 +++++++++++++++++++---
+ 6 files changed, 39 insertions(+), 30 deletions(-)
+ create mode 100644 fsck-cb.c
 
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index d6d745dc70..b71fac4cec 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -89,7 +89,9 @@ static int objerror(struct object *obj, const char *err)
- static int fsck_error_func(struct fsck_options *o,
- 			   const struct object_id *oid,
- 			   enum object_type object_type,
--			   enum fsck_msg_type msg_type, const char *message)
-+			   enum fsck_msg_type msg_type,
-+			   enum fsck_msg_id msg_id,
-+			   const char *message)
- {
- 	switch (msg_type) {
- 	case FSCK_WARN:
+diff --git a/Makefile b/Makefile
+index dfb0f1000f..3faa8bd0d3 100644
+--- a/Makefile
++++ b/Makefile
+@@ -882,6 +882,7 @@ LIB_OBJS += fetch-negotiator.o
+ LIB_OBJS += fetch-pack.o
+ LIB_OBJS += fmt-merge-msg.o
+ LIB_OBJS += fsck.o
++LIB_OBJS += fsck-cb.o
+ LIB_OBJS += fsmonitor.o
+ LIB_OBJS += gettext.o
+ LIB_OBJS += gpg-interface.o
 diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 56b8efaa89..2b2266a4b7 100644
+index 5ad80b85b4..11f0fafd33 100644
 --- a/builtin/index-pack.c
 +++ b/builtin/index-pack.c
-@@ -1717,6 +1717,7 @@ static int print_dangling_gitmodules(struct fsck_options *o,
- 				     const struct object_id *oid,
- 				     enum object_type object_type,
- 				     enum fsck_msg_type msg_type,
-+				     enum fsck_msg_id msg_id,
- 				     const char *message)
- {
- 	/*
-@@ -1727,7 +1728,7 @@ static int print_dangling_gitmodules(struct fsck_options *o,
- 		printf("%s\n", oid_to_hex(oid));
- 		return 0;
+@@ -120,7 +120,7 @@ static int nr_threads;
+ static int from_stdin;
+ static int strict;
+ static int do_fsck_object;
+-static struct fsck_options fsck_options = FSCK_OPTIONS_STRICT;
++static struct fsck_options fsck_options = FSCK_OPTIONS_MISSING_GITMODULES;
+ static int verbose;
+ static int show_resolving_progress;
+ static int show_stat;
+@@ -1713,24 +1713,6 @@ static void show_pack_info(int stat_only)
  	}
--	return fsck_error_function(o, oid, object_type, msg_type, message);
-+	return fsck_error_function(o, oid, object_type, msg_type, msg_id, message);
  }
  
+-static int print_dangling_gitmodules(struct fsck_options *o,
+-				     const struct object_id *oid,
+-				     enum object_type object_type,
+-				     enum fsck_msg_type msg_type,
+-				     enum fsck_msg_id msg_id,
+-				     const char *message)
+-{
+-	/*
+-	 * NEEDSWORK: Plumb the MSG_ID (from fsck.c) here and use it
+-	 * instead of relying on this string check.
+-	 */
+-	if (starts_with(message, "gitmodulesMissing")) {
+-		printf("%s\n", oid_to_hex(oid));
+-		return 0;
+-	}
+-	return fsck_error_function(o, oid, object_type, msg_type, msg_id, message);
+-}
+-
  int cmd_index_pack(int argc, const char **argv, const char *prefix)
-diff --git a/builtin/mktag.c b/builtin/mktag.c
-index 1834394a9b..dc989c356f 100644
---- a/builtin/mktag.c
-+++ b/builtin/mktag.c
-@@ -23,6 +23,7 @@ static int mktag_fsck_error_func(struct fsck_options *o,
- 				 const struct object_id *oid,
- 				 enum object_type object_type,
- 				 enum fsck_msg_type msg_type,
-+				 enum fsck_msg_id msg_id,
- 				 const char *message)
  {
- 	switch (msg_type) {
+ 	int i, fix_thin_pack = 0, verify = 0, stat_only = 0, rev_index;
+@@ -1761,7 +1743,6 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+ 
+ 	read_replace_refs = 0;
+ 	fsck_options.walk = mark_link;
+-	fsck_options.error_func = print_dangling_gitmodules;
+ 
+ 	reset_pack_idx_option(&opts);
+ 	git_config(git_index_pack_config, &opts);
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 229fd8e2c2..008a3facd4 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -38,7 +38,7 @@ static int server_supports_filtering;
+ static int advertise_sid;
+ static struct shallow_lock shallow_lock;
+ static const char *alternate_shallow_file;
+-static struct fsck_options fsck_options = FSCK_OPTIONS_STRICT;
++static struct fsck_options fsck_options = FSCK_OPTIONS_MISSING_GITMODULES;
+ static struct strbuf fsck_msg_types = STRBUF_INIT;
+ static struct string_list uri_protocols = STRING_LIST_INIT_DUP;
+ 
+@@ -998,7 +998,7 @@ static void fsck_gitmodules_oids(struct oidset *gitmodules_oids)
+ 
+ 	oidset_iter_init(gitmodules_oids, &iter);
+ 	while ((oid = oidset_iter_next(&iter)))
+-		register_found_gitmodules(&fsck_options, oid);
++		oidset_insert(&fsck_options.gitmodules_found, oid);
+ 	if (fsck_finish(&fsck_options))
+ 		die("fsck failed");
+ }
+diff --git a/fsck-cb.c b/fsck-cb.c
+new file mode 100644
+index 0000000000..465a49235a
+--- /dev/null
++++ b/fsck-cb.c
+@@ -0,0 +1,16 @@
++#include "git-compat-util.h"
++#include "fsck.h"
++
++int fsck_error_cb_print_missing_gitmodules(struct fsck_options *o,
++					   const struct object_id *oid,
++					   enum object_type object_type,
++					   enum fsck_msg_type msg_type,
++					   enum fsck_msg_id msg_id,
++					   const char *message)
++{
++	if (msg_id == FSCK_MSG_GITMODULES_MISSING) {
++		puts(oid_to_hex(oid));
++		return 0;
++	}
++	return fsck_error_function(o, oid, object_type, msg_type, msg_id, message);
++}
 diff --git a/fsck.c b/fsck.c
-index 8a66168e51..5a040eb4fd 100644
+index 565274a946..b0089844db 100644
 --- a/fsck.c
 +++ b/fsck.c
-@@ -245,7 +245,7 @@ static int report(struct fsck_options *options,
- 	va_start(ap, fmt);
- 	strbuf_vaddf(&sb, fmt, ap);
- 	result = options->error_func(options, oid, object_type,
--				     msg_type, sb.buf);
-+				     msg_type, msg_id, sb.buf);
- 	strbuf_release(&sb);
- 	va_end(ap);
+@@ -1214,11 +1214,6 @@ int fsck_error_function(struct fsck_options *o,
+ 	return 1;
+ }
  
-@@ -1198,7 +1198,9 @@ int fsck_object(struct object *obj, void *data, unsigned long size,
- int fsck_error_function(struct fsck_options *o,
- 			const struct object_id *oid,
- 			enum object_type object_type,
--			enum fsck_msg_type msg_type, const char *message)
-+			enum fsck_msg_type msg_type,
-+			enum fsck_msg_id msg_id,
-+			const char *message)
+-void register_found_gitmodules(struct fsck_options *options, const struct object_id *oid)
+-{
+-	oidset_insert(&options->gitmodules_found, oid);
+-}
+-
+ int fsck_finish(struct fsck_options *options)
  {
- 	if (msg_type == FSCK_WARN) {
- 		warning("object %s: %s", fsck_describe_object(o, oid), message);
+ 	int ret = 0;
 diff --git a/fsck.h b/fsck.h
-index c3d3b47b88..33ecf3f3f1 100644
+index bb59ef05b6..ae3107638a 100644
 --- a/fsck.h
 +++ b/fsck.h
-@@ -101,11 +101,13 @@ typedef int (*fsck_walk_func)(struct object *obj, enum object_type object_type,
- /* callback for fsck_object, type is FSCK_ERROR or FSCK_WARN */
- typedef int (*fsck_error)(struct fsck_options *o,
- 			  const struct object_id *oid, enum object_type object_type,
--			  enum fsck_msg_type msg_type, const char *message);
-+			  enum fsck_msg_type msg_type, enum fsck_msg_id msg_id,
-+			  const char *message);
+@@ -153,9 +153,6 @@ int fsck_walk(struct object *obj, void *data, struct fsck_options *options);
+ int fsck_object(struct object *obj, void *data, unsigned long size,
+ 	struct fsck_options *options);
  
- int fsck_error_function(struct fsck_options *o,
- 			const struct object_id *oid, enum object_type object_type,
--			enum fsck_msg_type msg_type, const char *message);
-+			enum fsck_msg_type msg_type, enum fsck_msg_id msg_id,
-+			const char *message);
+-void register_found_gitmodules(struct fsck_options *options,
+-			       const struct object_id *oid);
+-
+ /*
+  * fsck a tag, and pass info about it back to the caller. This is
+  * exposed fsck_object() internals for git-mktag(1).
+@@ -204,4 +201,23 @@ const char *fsck_describe_object(struct fsck_options *options,
+ int fsck_config_internal(const char *var, const char *value, void *cb,
+ 			 struct fsck_options *options);
  
- struct fsck_options {
- 	fsck_walk_func walk;
++/*
++ * Initializations for callbacks in fsck-cb.c
++ */
++#define FSCK_OPTIONS_MISSING_GITMODULES { \
++	.strict = 1, \
++	.error_func = fsck_error_cb_print_missing_gitmodules, \
++	FSCK_OPTIONS_COMMON \
++}
++
++/*
++ * Error callbacks in fsck-cb.c
++ */
++int fsck_error_cb_print_missing_gitmodules(struct fsck_options *o,
++					   const struct object_id *oid,
++					   enum object_type object_type,
++					   enum fsck_msg_type msg_type,
++					   enum fsck_msg_id msg_id,
++					   const char *message);
++
+ #endif
 -- 
 2.31.0.260.g719c683c1d
 
