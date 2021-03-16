@@ -2,123 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B0AAC433DB
-	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 14:21:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D0EC2C433DB
+	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 14:22:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 46BAB65075
-	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 14:21:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AA3466506E
+	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 14:22:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236184AbhCPOVC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Mar 2021 10:21:02 -0400
-Received: from siwi.pair.com ([209.68.5.199]:12822 "EHLO siwi.pair.com"
+        id S235212AbhCPOVe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Mar 2021 10:21:34 -0400
+Received: from out2.migadu.com ([188.165.223.204]:50932 "EHLO out2.migadu.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230325AbhCPOUd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Mar 2021 10:20:33 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id C54FE3F404F;
-        Tue, 16 Mar 2021 10:20:30 -0400 (EDT)
-Received: from HCIPROD2.AZHCI.com (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 8CB243F4047;
-        Tue, 16 Mar 2021 10:20:30 -0400 (EDT)
-Subject: Re: [PATCH] fsmonitor: avoid global-buffer-overflow READ when
- checking trivial response
-To:     Andrzej Hunt via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Jeff Hostetler <jeffhost@microsoft.com>,
-        Andrzej Hunt <andrzej@ahunt.org>,
-        Andrzej Hunt <ajrhunt@google.com>
-References: <pull.904.git.1615826363431.gitgitgadget@gmail.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <c34badb9-a3bc-a5fe-c6fc-c1bdce867e0d@jeffhostetler.com>
-Date:   Tue, 16 Mar 2021 10:20:29 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+        id S236185AbhCPOVV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Mar 2021 10:21:21 -0400
 MIME-Version: 1.0
-In-Reply-To: <pull.904.git.1615826363431.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cmpwn.com; s=key1;
+        t=1615904474;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=LMVjvY58pHI+g+kZ3jBquPi727Mo247uTplvjDdR2p0=;
+        b=BA10lej7/m2/SawMFsnpG6LEETV8c7Bkse8MfTQFm06bsAuN4BFqUbO/otXaF5DvXpO+cM
+        672/MroQhmX1L0rHflvCdgmkepaR+p96hWWKyNWlYiq2oXIUjx9jCcrHbAoL0aqe+hYRWw
+        VT7XqYjol5QB8DzjnteRZZUUlxwya8OvoHj6sue005qHcOPM9qp/qsAT7t4HJmYsV6pUnr
+        ILUg8/u6Flm4Fl/frnMhFw4MaM+1/pZIceX3xV9nBmQelXqPNNEiyFrUMRwnVj44NyBxt2
+        NZwBUt4NJzI9IkYAD35+5kt/od2OQW91H4IFN0Q4ONQsGsCaI5XML0LlteezAA==
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date:   Tue, 16 Mar 2021 10:21:13 -0400
+Message-Id: <C9YUBUYH7PWU.3PHDZR2YCUEOX@taiga>
+Cc:     "Jonathan Nieder" <jrnieder@gmail.com>, <git@vger.kernel.org>
+Subject: Re: Regarding the depreciation of ssh+git/git+ssh protocols
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From:   "Drew DeVault" <sir@cmpwn.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        "Eli Schwartz" <eschwartz@archlinux.org>
+References: <C9Y2DPYH4XO1.3KFD8LT770P2@taiga> <YE+ftT2WaKDzc+45@google.com>
+ <C9Y4NXXX6HRI.1IROIK8ZXK4S2@taiga>
+ <YE/ZSiuIsMs3ucVM@camp.crustytoothpaste.net>
+ <C9YD4AEUH84L.29FP64NJJ1BPU@taiga> <YFADuptwV7iR76g5@google.com>
+ <40740478-8b3c-b33e-8bb4-a2d68b83d385@archlinux.org>
+ <YFCckC8fHmEyOAnp@camp.crustytoothpaste.net>
+In-Reply-To: <YFCckC8fHmEyOAnp@camp.crustytoothpaste.net>
+X-Migadu-Flow: FLOW_OUT
+X-Migadu-Auth-User: sir@cmpwn.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue Mar 16, 2021 at 7:54 AM EDT, brian m. carlson wrote:
+> I believe this construct is nonstandard. It is better to use standard
+> URL syntax when possible because it makes it much, much easier for
+> people to use standard tooling to parse and handle URLs. Such tooling
+> may have special cases for the HTTP syntax that it doesn't use in MAILTO
+> syntax, so it's important to pick something that works automatically.
 
+It is standard - RFC 3986 section 3.1 permits the + character in
+URI schemes. The use of protocol "composition", e.g. git+https, is a
+convention, but not a standard.
+>
+> So I'm very much opposed to adding, expanding, or giving any sort of
+> official blessing to this syntax, especially when there are perfectly
+> valid and equivalent schemes that are already blessed and registered
+> with IANA.
 
-On 3/15/21 12:39 PM, Andrzej Hunt via GitGitGadget wrote:
-> From: Andrzej Hunt <ajrhunt@google.com>
-> 
-> query_result can be be an empty strbuf (STRBUF_INIT) - in that case
-> trying to read 3 bytes triggers a buffer overflow read (as
-> query_result.buf = '\0').
-> 
-> Therefore we need to check query_result's length before trying to read 3
-> bytes.
-> 
-> This overflow was introduced in:
->    940b94f35c (fsmonitor: log invocation of FSMonitor hook to trace2, 2021-02-03)
-> It was found when running the test-suite against ASAN, and can be most
-> easily reproduced with the following command:
+This convention is blessed by the IANA, given that they have
+accepted protocol registrations which use this convention:
 
-[...]
+https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml
 
->      fsmonitor: fix overflow read
->      
->      This patch fixes a buffer overflow read in
->      fsmonitor_is_trivial_response().
->      
->      I'm not super familiar with fsmonitor, so I'm not 100% sure what the
->      empty response actually means. Based on my reading of the docs below,
->      this can happen with fsmonitor-watchman v1 when no files have changed.
->      But it could also happen for v2 if the implementation is broken (in
->      which case we also shouldn't overflow)? Either way, I'm guessing the
->      empty response doesn't count as trivial:
->      https://git-scm.com/docs/githooks#_fsmonitor_watchman
->      
->      The other question I had is: can watchman V1 return "/\0" as the trivial
->      response (as it has no token header) - and should we be recognising that
->      too?
->      
->      ATB,
->      
->      Andrzej
+> It's difficult enough to handle parsing of SSH specifications and
+> distinguish them uniformly from Windows paths (think of an alias named
+> "c"), so I'd prefer we didn't add additional complexity to handle this
+> case.
 
-[...]
+There's no additional complexity here: git remotes are URIs, and any
+implementation which parses them as such already deals with this case
+correctly. Any implementation which doesn't may face all kinds of
+problems as a consequence: SSH without a user specified, HTTPS with
+Basic auth in the URI username/password fields (or just the password,
+which is also allowed), and so on. Any sane and correct implementation
+is pulling in a URI parser here, and if not, I don't think it's fair for
+git to constrain itself in order to work around some other project's
+bugs.
 
-Looks good to me.  And thanks for catching this.
+> Lest you think that only Git has to handle parsing these
 
-WRT your questions:
+I don't, given that my argument stems from making it easier for
+third-party applications to deal with git URIs :)
 
-An empty response means no files have changed since the last query.
-The client can assume all cache-entries are valid and doesn't need
-to scan.
+> Despite the fact that ssh+git is specified as deprecated, we had
+> people expect it to magically work and had to support it in Git LFS.
 
-A "trivial" response means that the monitor doesn't have enough
-information to answer the question. The client should assume that
-everything is invalid and do a full scan (as if no monitor were
-present).
-
-I added the `fsmonitor_is_trivial_response()` function with the
-tracing that I added in [1] in preparation for adding a builtin
-fsmonitor service (and currently only my tracing uses that function),
-but the concept of a trivial "/" response line has been present since
-the initial fsmonitor implementation [2].   See [3] and [4].
-
-[1] 940b94f35c (fsmonitor: log invocation of FSMonitor hook to trace2, 
-2021-02-03)
-[2] 883e248b8a (fsmonitor: teach git to optionally utilize a file system 
-monitor to speed up detecting new or changed files., 2017-09-22)
-[3] 
-https://github.com/git/git/blob/a5828ae6b52137b913b978e16cd2334482eb4c1f/fsmonitor.c#L304
-[4] 
-https://github.com/git/git/blob/a5828ae6b52137b913b978e16cd2334482eb4c1f/fsmonitor.c#L320
-
-Thanks again for the review.
-Jeff
+Aye, people do expect it to work. The problem is not going to go away.
