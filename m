@@ -2,147 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.0 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,PDS_BAD_THREAD_QP_64,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 39E08C433E6
-	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 18:54:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DF9B4C433DB
+	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 19:00:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EBE8765140
-	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 18:54:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B14B965070
+	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 19:00:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240202AbhCPSx6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Mar 2021 14:53:58 -0400
-Received: from proofpoint8.lanl.gov ([204.121.3.47]:38562 "EHLO
-        proofpoint8.lanl.gov" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229952AbhCPSxa (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Mar 2021 14:53:30 -0400
-Received: from pps.filterd (proofpoint8.lanl.gov [127.0.0.1])
-        by proofpoint8.lanl.gov (8.16.0.22/8.16.0.22) with SMTP id 12GIqAL3132303
-        for <git@vger.kernel.org>; Tue, 16 Mar 2021 12:53:24 -0600
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lanl.gov; h=from : to : cc :
- subject : date : message-id : content-type : content-transfer-encoding :
- mime-version; s=lanl; bh=3EtIQ+a3+osYNXD4TMK+aCn6FbpKOaVtYFS99WR7s8k=;
- b=KJ897SQC3p3KaZYiabDgbRQo5S4dB/2F6zDeFgTVmh9Tab3YNoz+4YdyUnv/eoxhTIR7
- yrYupzRCE/byR3IaKUVTjHWiZWq0O8fAtZf0Dlzvf4QsbMIaGgfL/lkgbQKl+26dGMWi
- 4Q74OaA2BtzFlZdd9/C3h+2oLwvrySDc4HxtpcP4blpmJDDY1j+xJiN36K0p6gQEF7OZ
- tOGR50rBNtESMFyr8ItJEZ5NTPlgh38OMkdGeXsWNMBF8fzrnznIbqjWXt5D9JP7WPah
- SDMRoOUvePH5MtBv1cLTuhDXGg6F/AxaLuTskzfpN/QeR4uGt7xww3CsGe7y0CNSjKH/ nw== 
-Received: from mailrelay2.lanl.gov (mailrelay2.lanl.gov [128.165.4.103])
-        by proofpoint8.lanl.gov with ESMTP id 37aj3n2bt5-1
-        for <git@vger.kernel.org>; Tue, 16 Mar 2021 12:53:24 -0600
-Received: from localhost (localhost [127.0.0.1])
-        by mailrelay2.lanl.gov (Postfix) with ESMTP id 989B91009B17
-        for <git@vger.kernel.org>; Tue, 16 Mar 2021 12:53:24 -0600 (MDT)
-X-NIE-2-Virus-Scanner: amavisd-new at mailrelay2.lanl.gov
-Received: from EXG16-P-MBX15.win.lanl.gov (exg16-p-mbx15.win.lanl.gov [128.165.106.225])
-        by mailrelay2.lanl.gov (Postfix) with ESMTP id 86F7E1009B15
-        for <git@vger.kernel.org>; Tue, 16 Mar 2021 12:53:24 -0600 (MDT)
-Received: from EXG16-P-MBX15.win.lanl.gov (128.165.106.225) by
- EXG16-P-MBX15.win.lanl.gov (128.165.106.225) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2106.2; Tue, 16 Mar 2021 12:53:24 -0600
-Received: from EXG16-P-MBX15.win.lanl.gov ([::1]) by
- EXG16-P-MBX15.win.lanl.gov ([fe80::619e:23ca:ccea:f767%4]) with mapi id
- 15.01.2106.013; Tue, 16 Mar 2021 12:53:24 -0600
-From:   "Lamborn, Peter Craig" <plamborn@lanl.gov>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-CC:     "Nielsen, Johnathan Patrick" <jnielsen@lanl.gov>,
-        "Herrera, Thomas Anthony" <taherrera@lanl.gov>
-Subject: GIT_SSH and mirror not working with git 2.30.1 
-Thread-Topic: GIT_SSH and mirror not working with git 2.30.1 
-Thread-Index: AQHXGpVWttDVu/7isEqFzJLw1g41sw==
-Date:   Tue, 16 Mar 2021 18:53:24 +0000
-Message-ID: <e39d23615e084671965fc96174ac881e@lanl.gov>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [128.165.106.210]
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+        id S240235AbhCPTAJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Mar 2021 15:00:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54158 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240222AbhCPS7l (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Mar 2021 14:59:41 -0400
+Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7B2CC06174A
+        for <git@vger.kernel.org>; Tue, 16 Mar 2021 11:59:40 -0700 (PDT)
+Received: by mail-qk1-x734.google.com with SMTP id n79so36397821qke.3
+        for <git@vger.kernel.org>; Tue, 16 Mar 2021 11:59:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=t/lv4/ZHCX0CpNJ6oUKe+zEH+eGrQbMxoDjnRlkMNsc=;
+        b=jhBk9JfkC2JEuFZ/R/0AUCdFUp9Rtx8GrveI2GAibNiibHvKQsbBZecZAc45OfvlbF
+         C1gn8TU/8GlMI+7PnXQAbXG2C11qA2KN5RxOcNeyee9sQegGuwD9mK1d6xMAl6Es1Q0c
+         WQOGxQVC1ZVGMcU/FAxEoZIYGiG+eS49Ljt7TGYkPydtWYclfCtofQdfaDkcvLWhBMDa
+         Z+Y5NnA0iS3CYCGG5LhFQCM3OWS89G8yYpWdi4nCLZcMoaAjbsl4nfKTVr+RUz/y8nlw
+         5KKjFEpObp1wemsJbh3dUz7/KMZHkkfr6nKUJX14jpqX2+qHfHwaWk/IfSmMOgvCqXbg
+         oa5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=t/lv4/ZHCX0CpNJ6oUKe+zEH+eGrQbMxoDjnRlkMNsc=;
+        b=Ai/4glqeoZ8lJJYJ5IjMztqIWifDlLuVueUuNjcuvAe6BBYmDBw8qPC5O/FLNfy1Cg
+         E+XjNnfZlxty0Y74xnJOuxyAG88sZWEmqFiqvCRSsA1hPY+TRCV/FZQ1h2qYqLGkYtBP
+         9uRZjMPz8XvYKHCSWe6m3BVeWOptL5ifC11bdsYIN8ZtOgWUzwcXBWTBzIkdfFXK4uNw
+         z4FBSSkbOX7oRsM4iTlLEOBMEipWZX5UAlgwc//y7xdeIjvi8irHQVE0R4RDt9/METWu
+         j3purFovxY9T0d4+tP7uA7Ec4q5+n8gvNPQ0O/wao7XNvzIKfDrgzKIh14i9Xzls9Q0J
+         Fi8A==
+X-Gm-Message-State: AOAM531hrCEOttH9fcBn6bL9uzCtybAuDXLUPx48mGKgVQ8xDqkdTvbB
+        XdW0/3ZDyT+Q9FbHYpT4QzU=
+X-Google-Smtp-Source: ABdhPJyHbHCOTZO/PsC4wVrw1DJZpADnTc9xRhONrvoDRDRQhuXWXyjMBhhDZawH/1IXab/HoR3zOw==
+X-Received: by 2002:a37:6c01:: with SMTP id h1mr585115qkc.182.1615921179834;
+        Tue, 16 Mar 2021 11:59:39 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:fcd1:da21:8108:69bc? ([2600:1700:e72:80a0:fcd1:da21:8108:69bc])
+        by smtp.gmail.com with ESMTPSA id n2sm13175810qta.61.2021.03.16.11.59.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 16 Mar 2021 11:59:38 -0700 (PDT)
+Subject: Re: [PATCH v4 02/22] fsck.h: use designed initializers for
+ FSCK_OPTIONS_{DEFAULT,STRICT}
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Jonathan Tan <jonathantanmy@google.com>
+References: <20210306110439.27694-1-avarab@gmail.com>
+ <20210316161738.30254-3-avarab@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <eba92c82-1a19-f1ea-1bad-a639b9eb98bd@gmail.com>
+Date:   Tue, 16 Mar 2021 14:59:38 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.369,18.0.761
- definitions=2021-03-16_06:2021-03-16,2021-03-16 signatures=0
-X-Proofpoint-Spam-Reason: safe
+In-Reply-To: <20210316161738.30254-3-avarab@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 3/16/2021 12:17 PM, Ævar Arnfjörð Bjarmason wrote:
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+>  fsck.h | 18 ++++++++++++++++--
+>  1 file changed, 16 insertions(+), 2 deletions(-)
+> 
+> diff --git a/fsck.h b/fsck.h
+> index 2274843ba0..40f3cb3f64 100644
+> --- a/fsck.h
+> +++ b/fsck.h
+> @@ -43,8 +43,22 @@ struct fsck_options {
+>  	kh_oid_map_t *object_names;
+>  };
+>  
+> -#define FSCK_OPTIONS_DEFAULT { NULL, fsck_error_function, 0, NULL, OIDSET_INIT, NULL }
+> -#define FSCK_OPTIONS_STRICT { NULL, fsck_error_function, 1, NULL, OIDSET_INIT, NULL }
 
-We have some machines behind firewalls and gateways that cannot access git =
-repos directly.  We have been using GIT_SSH and mirror to push and pull git=
- request through a less restricted machine.  This has been working for a wh=
-ile, specifically both git 2.24.1 and git 2.28 can handle the method we hav=
-e been doing.=20
+You just edited these lines in the previous patch. Seems unnecesary
+to split them. You can point out that the object_names portion was
+previously excluded in the message here.
 
+> +#define FSCK_OPTIONS_DEFAULT { \
+> +	.walk = NULL, \
+> +	.error_func = fsck_error_function, \
+> +	.strict = 0, \
+> +	.msg_type = NULL, \
+> +	.skiplist = OIDSET_INIT, \
+> +	.object_names = NULL, \
+> +}
+> +#define FSCK_OPTIONS_STRICT { \
+> +	.walk = NULL, \
+> +	.error_func = fsck_error_function, \
+> +	.strict = 1, \
+> +	.msg_type = NULL, \
+> +	.skiplist = OIDSET_INIT, \
+> +	.object_names = NULL, \
+> +}
 
-When you try the same thing with git 2.30.1, the "git push" commands still =
-succeed.  But "git pull" returns this:
+This explicit definition is better.
 
-
-$ git pull <mirror name>
-hint: Pulling without specifying how to reconcile divergent branches is
-hint: discouraged. You can squelch this message by running one of the follo=
-wing
-hint: commands sometime before your next pull:
-hint:
-hint:   git config pull.rebase false  # merge (the default strategy)
-hint:   git config pull.rebase true   # rebase
-hint:   git config pull.ff only       # fast-forward only
-hint:
-hint: You can replace "git config" with "git config --global" to set a defa=
-ult
-hint: preference for all repositories. You can also pass --rebase, --no-reb=
-ase,
-hint: or --ff-only on the command line to override the configured default p=
-er
-hint: invocation.
-
-
-ssh: connect to host <destination machine> port 22: Operation timed out
-fatal: Could not read from remote repository.
-
-Please make sure you have the correct access rights
-and the repository exists.
-$
-
-Does git 2.30.1 change something about mirrors and/or GIT_SSH that would ca=
-use git pulls to fail?  Do we need to adjust our current process?
-
-Our method:
-
-destination_machine$ mkdir <DZPATH>
-destination_machine$ cd <DZPATH>
-destination_machine$ git --bare init
-
-...
-
-workstation$ cat ssh-hop.sh
-#!/bin/bash
- =20
-MACHINE_REGEXP=3D"<...>"
- =20
-if [[ $1 =3D~ $MACHINE_REGEXP ]]; then
- =20
-  exec ssh <gateway> ssh "$@"
- =20
-else
-  exec ssh "$@"
-fi
-
-workstation$ chmod u+x ssh-hop.sh
-workstation$ export GIT_SSH=3D<path to>/ssh-hop.sh
-workstation$ cd <git repo>
-workstation$ git remote add --mirror <mirror name> <destination_machine>:<D=
-ZPATH>
-workstation$ git push <mirror name>
-workstation$ git pull <mirror name>
-
-
-
-Thank you,
-
-Peter=
+Thanks,
+-Stolee
