@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E7203C43331
-	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 02:14:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F329C4332E
+	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 02:14:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BFF1E65023
+	by mail.kernel.org (Postfix) with ESMTP id DE65765011
 	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 02:14:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234451AbhCPCNs (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S233902AbhCPCNs (ORCPT <rfc822;git@archiver.kernel.org>);
         Mon, 15 Mar 2021 22:13:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34222 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34208 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231202AbhCPCNl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Mar 2021 22:13:41 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40DC8C061756
-        for <git@vger.kernel.org>; Mon, 15 Mar 2021 19:13:41 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id u5-20020a7bcb050000b029010e9316b9d5so554686wmj.2
-        for <git@vger.kernel.org>; Mon, 15 Mar 2021 19:13:41 -0700 (PDT)
+        with ESMTP id S230363AbhCPCNj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Mar 2021 22:13:39 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36DC4C06174A
+        for <git@vger.kernel.org>; Mon, 15 Mar 2021 19:13:39 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id t9so6649884wrn.11
+        for <git@vger.kernel.org>; Mon, 15 Mar 2021 19:13:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=aKBnouamoZKDLxwb26iJhvZwaifN+S5prk789Jolf84=;
-        b=rBxXtms1m/3O70fmhiuehzWMeTl+b63TdXT6iD5HXF1jfYYMU19v4wz+8HWiGesicQ
-         S5BFeEDsidLctsuDItfU2p3O/nD/zd4P9niSq49UFG6+tdTYyumkHtD6Xv9oGlXg1xaA
-         JlD71LpRGklAtGktXB4DAshWjRVWyYJuVrPa9M2OjGnPPWXMLMLF4WoUANNuXqp/H/a/
-         l67hRPPbh9jSOVtyiG1xPWyImUfCrbzyKRfX4raf3yujOaxHW7LOVFwhdm2FPAHda+0R
-         UNaX3JNdDz7QuzYvLSSV9l7inTvPmowLv/vVYsANBcPl2x2mWtCxW7sndWXX8kO1VhDH
-         7GLA==
+        bh=hsTLM4dEWc+SVLRmC6+XrIVizPNiARELPTHr2aK+NRA=;
+        b=XgUpi6ZlhEiwgRhgdqL8zN3tJPvUZfnffgxqIzMY64Au4W+6XUzgEiMVZ5IPB6Od0o
+         +DuqrM/812zWW/ormTz4/S8fFQITfkjXC66WLG6fGB6tlYAZ8t2Y7740BK+/M/rTGn2Y
+         AkRNwOXTcN8VnGCAlymj4e/YJENy1wbD0SvAR/3uKF37pkE43/bBo3a26B36l44Y8Egz
+         tEcmbFc1N70i8vihkVF5h9GcRjnqVIq9J4xVMNtwRpJoUYUcXDjI9wosIxUQ+OsKpQE6
+         Exu+4jmGgFAUAgL7GawmaShFOlkZ+aPMD5RGw5Z60VKZcCOKaMZcvfBxyzJPSldyFNui
+         Fu8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=aKBnouamoZKDLxwb26iJhvZwaifN+S5prk789Jolf84=;
-        b=ButeNkVi5M65+OZdhpH2KcJnJRrbgCj6gex/TSJi76HvzFfrClpxL81PKaJ7QMsEvx
-         1itrQXypf3hEnVipqKf07QVRQBgCt8wgFB4IFdwfwEZ74Jizz7K+VU00OKhmstr790g0
-         CXSLxl2YSNIfPSVoo07uuWAKWw1BAjIDYbNlcrao9i+w4TSaspgTN8XXaoQt/Yuar9Xv
-         KUO1voMwtHBJa409iJV9igGC/bSvLA748sRR9/K0M9tfAwFB+qoC45xDvdQNx80tJeNR
-         w0rlms0kgtPMUCs9gSfplO0cuUjcptfWIh+8c9O26q2Ba8Zx9FpFVtjauh6iIb1Or3qM
-         v6lw==
-X-Gm-Message-State: AOAM532COVNOoYqGouxAeYUV+Injf1hdwHLEguwZQifQ7R57tBM0xWuk
-        YV2SrakAqY53EBWvtiisPAPOi2xd9syJzA==
-X-Google-Smtp-Source: ABdhPJxnLUe5sZoEoqLll1vnSN/eQsEjpEdj8lGrBLognqJzcaDqSzxVxWPNFiUPTZNWzfK2F+pPhw==
-X-Received: by 2002:a1c:2587:: with SMTP id l129mr2202309wml.135.1615860819619;
-        Mon, 15 Mar 2021 19:13:39 -0700 (PDT)
+        bh=hsTLM4dEWc+SVLRmC6+XrIVizPNiARELPTHr2aK+NRA=;
+        b=BF9xy+XoM2pe7b4zDgkGKLOboLV8hGkfIMwK2Bc9yx+RuZ4upUwQwm5+QWwYl+qyJh
+         7wVUBb8acCqNfeVGBvqrvPN2tRh4VcQ7rKUS6MlIKs7p67u7LDH/HhgztAFCiBPik91a
+         0htmptixTtWA9ErvT+2RJ1/UrW2pSja0vEk7sW72oQwG/7KKF77jR8mZTCGK6+CxVZ2a
+         yGvv/sw6R2f6LCymSwY5lCyRoEXfrHAp/OnnnfU25X8K4dBom7Y6CG1IaSVXFsLJHRQn
+         E3mOJXwbLDdB9xc+Zhcq9R/DbiMQrFy2Q1dR2tYqoYvnYXBovB/vrGrDhdQXAYZv+zgQ
+         X0Tw==
+X-Gm-Message-State: AOAM532gW9ApoyIr9xoq696Vitg8t/cjlyywZjfo3WD3vGzFbE9NEDqS
+        a69JQ8SRgrdEnVz3U0Z/iqFlCm7qAhcLbA==
+X-Google-Smtp-Source: ABdhPJy2HexLs3Wk3CFZ+Yrcwx4JPIsRCo26bvJ93N4kKO0klr8dSqKQHKULNu8OW4KZKuQU7A8y7g==
+X-Received: by 2002:a5d:6a4c:: with SMTP id t12mr2188004wrw.289.1615860817215;
+        Mon, 15 Mar 2021 19:13:37 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id i8sm21092494wrx.43.2021.03.15.19.13.38
+        by smtp.gmail.com with ESMTPSA id i8sm21092494wrx.43.2021.03.15.19.13.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Mar 2021 19:13:39 -0700 (PDT)
+        Mon, 15 Mar 2021 19:13:36 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -66,9 +66,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <pclouds@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 10/29] archive: get rid of 'stage' parameter
-Date:   Tue, 16 Mar 2021 03:12:53 +0100
-Message-Id: <20210316021312.13927-11-avarab@gmail.com>
+Subject: [PATCH v2 07/29] tree-walk.h users: switch object_type(...) to new .object_type
+Date:   Tue, 16 Mar 2021 03:12:50 +0100
+Message-Id: <20210316021312.13927-8-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.0.rc2.211.g1d0b8788b3
 In-Reply-To: <20210308150650.18626-1-avarab@gmail.com>
 References: <20210308150650.18626-1-avarab@gmail.com>
@@ -79,89 +79,129 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stop passing the "stage" parameter around in archive.c. This parameter
-existed because the read_tree_recursive() function used to provide it,
-but no longer does. See my in-flight commit to remove it. (tree.h API:
-remove "stage" parameter from read_tree_recursive(), 2021-03-06).
-
-As can be seen in 562e25abea9 (archive: centralize archive entry
-writing, 2008-07-14) and ed22b4173bd (archive: support filtering paths
-with glob, 2014-09-21) it was never used by this code. We simply added
-it as a boilerplate, and then later added it to our own "directory
-"struct.
+Change uses of object_type(entry.mode) to use the new
+entry.object_type field.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- archive.c | 8 --------
- 1 file changed, 8 deletions(-)
+ builtin/pack-objects.c |  2 +-
+ http-push.c            |  6 ++++--
+ pack-bitmap-write.c    |  8 +++++---
+ revision.c             | 12 ++++++++----
+ 4 files changed, 18 insertions(+), 10 deletions(-)
 
-diff --git a/archive.c b/archive.c
-index 8ff97751c23..529623167c9 100644
---- a/archive.c
-+++ b/archive.c
-@@ -107,7 +107,6 @@ struct directory {
- 	struct object_id oid;
- 	int baselen, len;
- 	unsigned mode;
--	int stage;
- 	char path[FLEX_ARRAY];
- };
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 6d62aaf59a0..d3ba1d4a4a6 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -1534,7 +1534,7 @@ static void add_pbase_object(struct tree_desc *tree,
+ 			return;
+ 		if (name[cmplen] != '/') {
+ 			add_object_entry(&entry.oid,
+-					 object_type(entry.mode),
++					 entry.object_type,
+ 					 fullname, 1);
+ 			return;
+ 		}
+diff --git a/http-push.c b/http-push.c
+index 6a4a43e07f2..234b79a5dba 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -1314,7 +1314,7 @@ static struct object_list **process_tree(struct tree *tree,
+ 	init_tree_desc(&desc, tree->buffer, tree->size);
  
-@@ -140,7 +139,6 @@ static int check_attr_export_subst(const struct attr_check *check)
- static int write_archive_entry(const struct object_id *oid, const char *base,
- 			       int baselen, const char *filename,
- 			       unsigned mode,
--			       int stage,
- 			       void *context)
- {
- 	static struct strbuf path = STRBUF_INIT;
-@@ -200,7 +198,6 @@ static int write_archive_entry(const struct object_id *oid, const char *base,
- static void queue_directory(const unsigned char *sha1,
- 			    struct strbuf *base, const char *filename,
- 			    unsigned mode,
--			    int stage,
- 			    struct archiver_context *c)
- {
- 	struct directory *d;
-@@ -209,7 +206,6 @@ static void queue_directory(const unsigned char *sha1,
- 	d->up	   = c->bottom;
- 	d->baselen = base->len;
- 	d->mode	   = mode;
--	d->stage   = stage;
- 	c->bottom  = d;
- 	d->len = xsnprintf(d->path, len, "%.*s%s/", (int)base->len, base->buf, filename);
- 	hashcpy(d->oid.hash, sha1);
-@@ -229,7 +225,6 @@ static int write_directory(struct archiver_context *c)
- 		write_archive_entry(&d->oid, d->path, d->baselen,
- 				    d->path + d->baselen,
- 				    d->mode,
--				    d->stage,
- 				    c) != READ_TREE_RECURSIVE;
- 	free(d);
- 	return ret ? -1 : 0;
-@@ -241,7 +236,6 @@ static int queue_or_write_archive_entry(const struct object_id *oid,
- 					void *context)
- {
- 	struct archiver_context *c = context;
--	int stage = 0;
+ 	while (tree_entry(&desc, &entry))
+-		switch (object_type(entry.mode)) {
++		switch (entry.object_type) {
+ 		case OBJ_TREE:
+ 			p = process_tree(lookup_tree(the_repository, &entry.oid),
+ 					 p);
+@@ -1323,9 +1323,11 @@ static struct object_list **process_tree(struct tree *tree,
+ 			p = process_blob(lookup_blob(the_repository, &entry.oid),
+ 					 p);
+ 			break;
+-		default:
++		case OBJ_COMMIT:
+ 			/* Subproject commit - not in this repository */
+ 			break;
++		default:
++			BUG("unreachable");
+ 		}
  
- 	while (c->bottom &&
- 	       !(base->len >= c->bottom->len &&
-@@ -265,7 +259,6 @@ static int queue_or_write_archive_entry(const struct object_id *oid,
- 			return 0;
- 		queue_directory(oid->hash, base, filename,
- 				mode,
--				stage,
- 				c);
- 		return READ_TREE_RECURSIVE;
+ 	free_tree_buffer(tree);
+diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+index 88d9e696a54..ac32bf2242c 100644
+--- a/pack-bitmap-write.c
++++ b/pack-bitmap-write.c
+@@ -353,7 +353,7 @@ static void fill_bitmap_tree(struct bitmap *bitmap,
+ 	init_tree_desc(&desc, tree->buffer, tree->size);
+ 
+ 	while (tree_entry(&desc, &entry)) {
+-		switch (object_type(entry.mode)) {
++		switch (entry.object_type) {
+ 		case OBJ_TREE:
+ 			fill_bitmap_tree(bitmap,
+ 					 lookup_tree(the_repository, &entry.oid));
+@@ -361,9 +361,11 @@ static void fill_bitmap_tree(struct bitmap *bitmap,
+ 		case OBJ_BLOB:
+ 			bitmap_set(bitmap, find_object_pos(&entry.oid));
+ 			break;
+-		default:
+-			/* Gitlink, etc; not reachable */
++		case OBJ_COMMIT:
++			/* submodule commit - not in this repository */
+ 			break;
++		default:
++			BUG("unreachable");
+ 		}
  	}
-@@ -274,7 +267,6 @@ static int queue_or_write_archive_entry(const struct object_id *oid,
- 		return -1;
- 	return write_archive_entry(oid, base->buf, base->len, filename,
- 				   mode,
--				   stage,
- 				   context);
- }
+ 
+diff --git a/revision.c b/revision.c
+index b78733f5089..1db4e4e90a2 100644
+--- a/revision.c
++++ b/revision.c
+@@ -72,16 +72,18 @@ static void mark_tree_contents_uninteresting(struct repository *r,
+ 
+ 	init_tree_desc(&desc, tree->buffer, tree->size);
+ 	while (tree_entry(&desc, &entry)) {
+-		switch (object_type(entry.mode)) {
++		switch (entry.object_type) {
+ 		case OBJ_TREE:
+ 			mark_tree_uninteresting(r, lookup_tree(r, &entry.oid));
+ 			break;
+ 		case OBJ_BLOB:
+ 			mark_blob_uninteresting(lookup_blob(r, &entry.oid));
+ 			break;
+-		default:
++		case OBJ_COMMIT:
+ 			/* Subproject commit - not in this repository */
+ 			break;
++		default:
++			BUG("unreachable");
+ 		}
+ 	}
+ 
+@@ -179,7 +181,7 @@ static void add_children_by_path(struct repository *r,
+ 
+ 	init_tree_desc(&desc, tree->buffer, tree->size);
+ 	while (tree_entry(&desc, &entry)) {
+-		switch (object_type(entry.mode)) {
++		switch (entry.object_type) {
+ 		case OBJ_TREE:
+ 			paths_and_oids_insert(map, entry.path, &entry.oid);
+ 
+@@ -196,9 +198,11 @@ static void add_children_by_path(struct repository *r,
+ 					child->object.flags |= UNINTERESTING;
+ 			}
+ 			break;
+-		default:
++		case OBJ_COMMIT:
+ 			/* Subproject commit - not in this repository */
+ 			break;
++		default:
++			BUG("unreachable");
+ 		}
+ 	}
  
 -- 
 2.31.0.rc2.211.g1d0b8788b3
