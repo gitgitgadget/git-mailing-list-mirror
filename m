@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F329C4332E
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 52FAAC432C3
 	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 02:14:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DE65765011
-	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 02:14:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1E15065028
+	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 02:14:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233902AbhCPCNs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Mar 2021 22:13:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34208 "EHLO
+        id S234504AbhCPCNt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Mar 2021 22:13:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34236 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230363AbhCPCNj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Mar 2021 22:13:39 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36DC4C06174A
-        for <git@vger.kernel.org>; Mon, 15 Mar 2021 19:13:39 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id t9so6649884wrn.11
-        for <git@vger.kernel.org>; Mon, 15 Mar 2021 19:13:39 -0700 (PDT)
+        with ESMTP id S231217AbhCPCNo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Mar 2021 22:13:44 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA246C06175F
+        for <git@vger.kernel.org>; Mon, 15 Mar 2021 19:13:43 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id r10-20020a05600c35cab029010c946c95easo549395wmq.4
+        for <git@vger.kernel.org>; Mon, 15 Mar 2021 19:13:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=hsTLM4dEWc+SVLRmC6+XrIVizPNiARELPTHr2aK+NRA=;
-        b=XgUpi6ZlhEiwgRhgdqL8zN3tJPvUZfnffgxqIzMY64Au4W+6XUzgEiMVZ5IPB6Od0o
-         +DuqrM/812zWW/ormTz4/S8fFQITfkjXC66WLG6fGB6tlYAZ8t2Y7740BK+/M/rTGn2Y
-         AkRNwOXTcN8VnGCAlymj4e/YJENy1wbD0SvAR/3uKF37pkE43/bBo3a26B36l44Y8Egz
-         tEcmbFc1N70i8vihkVF5h9GcRjnqVIq9J4xVMNtwRpJoUYUcXDjI9wosIxUQ+OsKpQE6
-         Exu+4jmGgFAUAgL7GawmaShFOlkZ+aPMD5RGw5Z60VKZcCOKaMZcvfBxyzJPSldyFNui
-         Fu8w==
+        bh=2amckh+dhS2K/852fVHZlKdBSe9NgrV6DohX2B/OcfU=;
+        b=VcBaCP8EIeg0nQtkRFLRC5CsZguGyPsI890kaACdTbfWWAEXn/kCxXtA/QuMqahXMH
+         NLo9UaZa5DprcQh/s0ZP316PLQ52DuYfTS+qPsGvREDEXEyz8/UsgdL1rWb/KwiWrUOj
+         1uA3ZuRQXi/qHHn3E6z20+dzinhdhfZUtANrqigMx6zQ4+LQ21IONT47lp+uRjLI5HB8
+         4eaA4F55QxrNK/27F6b9vm0uP+G1iw6r4kCZpYUCw3Fv4vOeNy5DcgZCjD8Z035ISo0l
+         oL0/7oJy3HlYqMrOqFYTOYb0P38mfsAGw5YhMztDHwBjAAQz23CVUSzhT6324tc2HqqK
+         c9Mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=hsTLM4dEWc+SVLRmC6+XrIVizPNiARELPTHr2aK+NRA=;
-        b=BF9xy+XoM2pe7b4zDgkGKLOboLV8hGkfIMwK2Bc9yx+RuZ4upUwQwm5+QWwYl+qyJh
-         7wVUBb8acCqNfeVGBvqrvPN2tRh4VcQ7rKUS6MlIKs7p67u7LDH/HhgztAFCiBPik91a
-         0htmptixTtWA9ErvT+2RJ1/UrW2pSja0vEk7sW72oQwG/7KKF77jR8mZTCGK6+CxVZ2a
-         yGvv/sw6R2f6LCymSwY5lCyRoEXfrHAp/OnnnfU25X8K4dBom7Y6CG1IaSVXFsLJHRQn
-         E3mOJXwbLDdB9xc+Zhcq9R/DbiMQrFy2Q1dR2tYqoYvnYXBovB/vrGrDhdQXAYZv+zgQ
-         X0Tw==
-X-Gm-Message-State: AOAM532gW9ApoyIr9xoq696Vitg8t/cjlyywZjfo3WD3vGzFbE9NEDqS
-        a69JQ8SRgrdEnVz3U0Z/iqFlCm7qAhcLbA==
-X-Google-Smtp-Source: ABdhPJy2HexLs3Wk3CFZ+Yrcwx4JPIsRCo26bvJ93N4kKO0klr8dSqKQHKULNu8OW4KZKuQU7A8y7g==
-X-Received: by 2002:a5d:6a4c:: with SMTP id t12mr2188004wrw.289.1615860817215;
-        Mon, 15 Mar 2021 19:13:37 -0700 (PDT)
+        bh=2amckh+dhS2K/852fVHZlKdBSe9NgrV6DohX2B/OcfU=;
+        b=pFnKrDcevcRr+/u9rYImmK1HbgvyVec0hAeQpS9J3Bly1HObp2PCb3bg9/9fndDN9I
+         VgXKBJlRkG5O7LNjCzgLhj7fTPxlvQHsXLt7atb2mD0oy6K1VCd07V+uxi9rkc0Z+fRb
+         6iWPRMHB878MyfkkmpTr7HnnF5cXJLo95g6XN26KHKrtGX3sMDCjMSCNWtjcAeQLiE+C
+         8AC7/tSurwfwjeclFZc1N3W180Npz+laxSNcHf0f/6/sZ6pjEnGbrPGmY0ABT09ockKc
+         ypZT4aBOT1W8eCIKyRNG4TwtozoWQ4QLWLo3Oenz6T/MCPNYAr5oIoxSbFeDtGu4Lc3Y
+         T5zQ==
+X-Gm-Message-State: AOAM530+kdXdvrniJoIg59j08J0ckTkFZsm983O4bF2/NlujxHJj7hKS
+        LFVGPftsKka3Mp9Jfp4pqTAm1IJBlu9n+w==
+X-Google-Smtp-Source: ABdhPJytB5+3zHhPbsal7ZVf7bPH9/bLFWggFC/pmEkf+6AiyUztMD40zfz5/8vdbyDmFYQf3TJt1g==
+X-Received: by 2002:a05:600c:3514:: with SMTP id h20mr2293880wmq.45.1615860822464;
+        Mon, 15 Mar 2021 19:13:42 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id i8sm21092494wrx.43.2021.03.15.19.13.36
+        by smtp.gmail.com with ESMTPSA id i8sm21092494wrx.43.2021.03.15.19.13.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Mar 2021 19:13:36 -0700 (PDT)
+        Mon, 15 Mar 2021 19:13:41 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -66,9 +66,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <pclouds@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 07/29] tree-walk.h users: switch object_type(...) to new .object_type
-Date:   Tue, 16 Mar 2021 03:12:50 +0100
-Message-Id: <20210316021312.13927-8-avarab@gmail.com>
+Subject: [PATCH v2 13/29] tree-walk.h users: refactor chained "mode" if/else into switch
+Date:   Tue, 16 Mar 2021 03:12:56 +0100
+Message-Id: <20210316021312.13927-14-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.0.rc2.211.g1d0b8788b3
 In-Reply-To: <20210308150650.18626-1-avarab@gmail.com>
 References: <20210308150650.18626-1-avarab@gmail.com>
@@ -79,130 +79,112 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change uses of object_type(entry.mode) to use the new
-entry.object_type field.
+Refactor a couple of "switch" statements that previously relied on
+"entry.mode" to switch on "entry.object_type" instead.
+
+This is more obvious, and allows us to explicitly handle all the OBJ_*
+cases, not just have a wildcard "else". That doesn't matter for the
+behavior of this code, but for its readability and maintainability.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/pack-objects.c |  2 +-
- http-push.c            |  6 ++++--
- pack-bitmap-write.c    |  8 +++++---
- revision.c             | 12 ++++++++----
- 4 files changed, 18 insertions(+), 10 deletions(-)
+ list-objects.c | 20 ++++++++++++++------
+ walker.c       | 22 +++++++++++++---------
+ 2 files changed, 27 insertions(+), 15 deletions(-)
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 6d62aaf59a0..d3ba1d4a4a6 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -1534,7 +1534,7 @@ static void add_pbase_object(struct tree_desc *tree,
- 			return;
- 		if (name[cmplen] != '/') {
- 			add_object_entry(&entry.oid,
--					 object_type(entry.mode),
-+					 entry.object_type,
- 					 fullname, 1);
- 			return;
- 		}
-diff --git a/http-push.c b/http-push.c
-index 6a4a43e07f2..234b79a5dba 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -1314,7 +1314,7 @@ static struct object_list **process_tree(struct tree *tree,
- 	init_tree_desc(&desc, tree->buffer, tree->size);
- 
- 	while (tree_entry(&desc, &entry))
--		switch (object_type(entry.mode)) {
-+		switch (entry.object_type) {
- 		case OBJ_TREE:
- 			p = process_tree(lookup_tree(the_repository, &entry.oid),
- 					 p);
-@@ -1323,9 +1323,11 @@ static struct object_list **process_tree(struct tree *tree,
- 			p = process_blob(lookup_blob(the_repository, &entry.oid),
- 					 p);
- 			break;
--		default:
-+		case OBJ_COMMIT:
- 			/* Subproject commit - not in this repository */
- 			break;
-+		default:
-+			BUG("unreachable");
- 		}
- 
- 	free_tree_buffer(tree);
-diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
-index 88d9e696a54..ac32bf2242c 100644
---- a/pack-bitmap-write.c
-+++ b/pack-bitmap-write.c
-@@ -353,7 +353,7 @@ static void fill_bitmap_tree(struct bitmap *bitmap,
+diff --git a/list-objects.c b/list-objects.c
+index e19589baa04..37434ba89d3 100644
+--- a/list-objects.c
++++ b/list-objects.c
+@@ -111,6 +111,9 @@ static void process_tree_contents(struct traversal_context *ctx,
  	init_tree_desc(&desc, tree->buffer, tree->size);
  
  	while (tree_entry(&desc, &entry)) {
--		switch (object_type(entry.mode)) {
-+		switch (entry.object_type) {
- 		case OBJ_TREE:
- 			fill_bitmap_tree(bitmap,
- 					 lookup_tree(the_repository, &entry.oid));
-@@ -361,9 +361,11 @@ static void fill_bitmap_tree(struct bitmap *bitmap,
- 		case OBJ_BLOB:
- 			bitmap_set(bitmap, find_object_pos(&entry.oid));
- 			break;
--		default:
--			/* Gitlink, etc; not reachable */
-+		case OBJ_COMMIT:
-+			/* submodule commit - not in this repository */
- 			break;
-+		default:
-+			BUG("unreachable");
++		struct tree *t;
++		struct blob *b;
++
+ 		if (match != all_entries_interesting) {
+ 			match = tree_entry_interesting(ctx->revs->repo->index,
+ 						       &entry, base, 0,
+@@ -121,8 +124,9 @@ static void process_tree_contents(struct traversal_context *ctx,
+ 				continue;
  		}
- 	}
  
-diff --git a/revision.c b/revision.c
-index b78733f5089..1db4e4e90a2 100644
---- a/revision.c
-+++ b/revision.c
-@@ -72,16 +72,18 @@ static void mark_tree_contents_uninteresting(struct repository *r,
- 
- 	init_tree_desc(&desc, tree->buffer, tree->size);
- 	while (tree_entry(&desc, &entry)) {
--		switch (object_type(entry.mode)) {
+-		if (S_ISDIR(entry.mode)) {
+-			struct tree *t = lookup_tree(ctx->revs->repo, &entry.oid);
 +		switch (entry.object_type) {
- 		case OBJ_TREE:
- 			mark_tree_uninteresting(r, lookup_tree(r, &entry.oid));
- 			break;
- 		case OBJ_BLOB:
- 			mark_blob_uninteresting(lookup_blob(r, &entry.oid));
- 			break;
--		default:
-+		case OBJ_COMMIT:
- 			/* Subproject commit - not in this repository */
- 			break;
-+		default:
-+			BUG("unreachable");
- 		}
- 	}
- 
-@@ -179,7 +181,7 @@ static void add_children_by_path(struct repository *r,
- 
- 	init_tree_desc(&desc, tree->buffer, tree->size);
- 	while (tree_entry(&desc, &entry)) {
--		switch (object_type(entry.mode)) {
-+		switch (entry.object_type) {
- 		case OBJ_TREE:
- 			paths_and_oids_insert(map, entry.path, &entry.oid);
- 
-@@ -196,9 +198,11 @@ static void add_children_by_path(struct repository *r,
- 					child->object.flags |= UNINTERESTING;
++		case OBJ_TREE:
++			t = lookup_tree(ctx->revs->repo, &entry.oid);
+ 			if (!t) {
+ 				die(_("entry '%s' in tree %s has tree mode, "
+ 				      "but is not a tree"),
+@@ -130,12 +134,13 @@ static void process_tree_contents(struct traversal_context *ctx,
  			}
- 			break;
--		default:
+ 			t->object.flags |= NOT_USER_GIVEN;
+ 			process_tree(ctx, t, base, entry.path);
+-		}
+-		else if (S_ISGITLINK(entry.mode))
++			break;
 +		case OBJ_COMMIT:
- 			/* Subproject commit - not in this repository */
- 			break;
+ 			process_gitlink(ctx, entry.oid.hash,
+ 					base, entry.path);
+-		else {
+-			struct blob *b = lookup_blob(ctx->revs->repo, &entry.oid);
++			break;
++		case OBJ_BLOB:
++			b = lookup_blob(ctx->revs->repo, &entry.oid);
+ 			if (!b) {
+ 				die(_("entry '%s' in tree %s has blob mode, "
+ 				      "but is not a blob"),
+@@ -143,6 +148,9 @@ static void process_tree_contents(struct traversal_context *ctx,
+ 			}
+ 			b->object.flags |= NOT_USER_GIVEN;
+ 			process_blob(ctx, b, base, entry.path);
++			break;
 +		default:
 +			BUG("unreachable");
  		}
  	}
+ }
+diff --git a/walker.c b/walker.c
+index 4984bf8b3d6..7ba757244e6 100644
+--- a/walker.c
++++ b/walker.c
+@@ -45,21 +45,25 @@ static int process_tree(struct walker *walker, struct tree *tree)
+ 	init_tree_desc(&desc, tree->buffer, tree->size);
+ 	while (tree_entry(&desc, &entry)) {
+ 		struct object *obj = NULL;
++		struct tree *tree;
++		struct blob *blob;
  
+-		/* submodule commits are not stored in the superproject */
+-		if (S_ISGITLINK(entry.mode))
++		switch (entry.object_type) {
++		case OBJ_COMMIT:
++			/* submodule commits are not stored in the superproject */
+ 			continue;
+-		if (S_ISDIR(entry.mode)) {
+-			struct tree *tree = lookup_tree(the_repository,
+-							&entry.oid);
++		case OBJ_TREE:
++			tree = lookup_tree(the_repository, &entry.oid);
+ 			if (tree)
+ 				obj = &tree->object;
+-		}
+-		else {
+-			struct blob *blob = lookup_blob(the_repository,
+-							&entry.oid);
++			break;
++		case OBJ_BLOB:
++			blob = lookup_blob(the_repository, &entry.oid);
+ 			if (blob)
+ 				obj = &blob->object;
++			break;
++		default:
++			BUG("unreachable");
+ 		}
+ 		if (!obj || process(walker, obj))
+ 			return -1;
 -- 
 2.31.0.rc2.211.g1d0b8788b3
 
