@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D554C4332B
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 399A1C43381
 	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 13:29:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DD4E264F30
+	by mail.kernel.org (Postfix) with ESMTP id 0D28F64F45
 	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 13:29:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231194AbhCQN2z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Mar 2021 09:28:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41848 "EHLO
+        id S231189AbhCQN2y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Mar 2021 09:28:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231148AbhCQN2m (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Mar 2021 09:28:42 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 589A1C06174A
-        for <git@vger.kernel.org>; Wed, 17 Mar 2021 06:28:33 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id b9so1819984wrt.8
-        for <git@vger.kernel.org>; Wed, 17 Mar 2021 06:28:33 -0700 (PDT)
+        with ESMTP id S231137AbhCQN2j (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Mar 2021 09:28:39 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AF3BC061760
+        for <git@vger.kernel.org>; Wed, 17 Mar 2021 06:28:38 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id y124-20020a1c32820000b029010c93864955so3377156wmy.5
+        for <git@vger.kernel.org>; Wed, 17 Mar 2021 06:28:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=K0BsB/MTQKmThdNTWgeIroFWqGYP7VzUtguCL0T1fOs=;
-        b=DM5xMDtZ5RlC3zf2PVU0340KFG0RSjlI8AEvgjYCoAa5ZfB5m2NvN9FhC7DKyut12l
-         TJI/wlJvm30Gt2cku3sQfMQm8zVI0MNmcroqH0zXoCMj+SD5tlRV/dJSEnyY++cV6J4f
-         T1Yj65lxLCJ1hVYaa/QLVfTttkhQclCt82Dki3UOVjPG8Ju5amJDMM+XKpRnpj4Nv3qt
-         uNs19P7Ux3CsToNr8a2DoyfQN28d5CECjWLn1Odd3wqzvt2t0ZMF700AeuRjzMNrkN3O
-         ix4zAqKG0XQQW1wniyB6hjZeFarB6dRrGllJoFqCfceI8JXUCTHe30m1iVRPr1xdNuOK
-         Tqdg==
+        bh=u3TFlgltYvc50tTPtlZGXggR2zaCmsjuG7+xA3uhBWE=;
+        b=Rm9f3LsleApTQ0dEmNS+U98fmBB781sZQylZuoysdRjTTMzNPwS+kNftJ1Caxx0syb
+         /c66b2qx8bzkAv0QlVRBzOAj33BzHid644QQTkUeJtm0ZMSMjXeVPJQBhzWFOWKFnKsh
+         qRDz0YZ9Q5up4LMwxR5/tkhB2bCL0R+xOJxw9ssXvozwCrUVVirMc59Esof4Z99hlfdw
+         ttd7FUYfNhqsIch3YyRZDnfqCpOIHoHzojR9chFKiwFFX4/Pcat4/mk6wkQIkNVr8jb9
+         QL0+ua8jHho0umeX4LLSon4SZNCBwDkQMvcXNrgKaCJ7JFu/9+EkOxNmmkjOSokj+BRg
+         gQ6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=K0BsB/MTQKmThdNTWgeIroFWqGYP7VzUtguCL0T1fOs=;
-        b=R2KxmkChUlN58RmCYRrLkW4dxyaqp9p8uEvBnnxA2/gsimorSi7CBhPorRV9XwumqU
-         C5B0JmKEBVp+m6vYMLiPu1F6pN/B55hWzb/JcNUao0hkiC3xhYHiRkausLH8XXHsIem/
-         OlBb5HFW5wvPaDn5wGPwS5rZwwVAL5TAvxTzj6Q0V9EhVlByiolPShKf9mYZW+7Rhj2L
-         PHEMitaVIrUZKStX+feB49EjApg5zFlhAeSO8esWMp+rTZsNH2b5XZ53aGjnl/4+YPI0
-         1/clSMZQfXN6wSP8Ek/R9Ccw3N7AGhil1cvdQPKrG2mHKygCbXlCINU9TVVXGhx9N0Vy
-         /r2A==
-X-Gm-Message-State: AOAM531oH+I72ZxbHs9eG+D5tw1dARoaj1nWcFIfFQZfIWziLNBtG2mQ
-        DUkEj6Ywj5sNVmvlOhZQhUdWhjn59RMhSg==
-X-Google-Smtp-Source: ABdhPJxltXYNv+FQf1lYemKgWE1BF1tdRqnea6asnaJzcysFjXDsGZOKBifBqaYwOzcjvjAr81lcog==
-X-Received: by 2002:adf:dfc9:: with SMTP id q9mr3055970wrn.200.1615987711482;
-        Wed, 17 Mar 2021 06:28:31 -0700 (PDT)
+        bh=u3TFlgltYvc50tTPtlZGXggR2zaCmsjuG7+xA3uhBWE=;
+        b=PXFowwLOdK1QWQhbyHWcs2fOA1zigBngi3Yi6sRzfybYDTBVNEz8DSNTVHj6ewYVx+
+         Vpn/nhpUSIVx8vthKcbCC5sOAXd/8za+wxdJgt6W4Sfkd9nDC67CVTJOoISv2bUYRdmU
+         S0bzwNIrTOY8rbV4afezjIelnav3M2iHnRgUjWY77z9nQZvGVLq9693u9SMgZZviEhyk
+         PbVbi1Ap7XazDNJ0HMd/0mYhpLrqWHlZv8WHQq5yJHn8mTGRClfDSKz4pPSFem4OgSzc
+         YghVcVNLGbMeJrJe1mmYrvohO4lAg48VdIfSuIGs9gz9BTMCbKUSEkx8flIj1r7yeq2A
+         WMGw==
+X-Gm-Message-State: AOAM530C+byyi3LuNZxdc6fuezW6pM0UpMZ/MOWwSBfQsyBf/TKFFgYO
+        HyA1kAF3SzzT36TvztHbrEcPyMRiTJEhQQ==
+X-Google-Smtp-Source: ABdhPJy6Iuudil9yGfh2mXIwczcO73RDv4VLb7vJqPJJXcAfP6fYOqQH3M9CERaMlsP3eSsxGcQRSQ==
+X-Received: by 2002:a7b:cb99:: with SMTP id m25mr3875340wmi.64.1615987716905;
+        Wed, 17 Mar 2021 06:28:36 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id z7sm26061448wrt.70.2021.03.17.06.28.30
+        by smtp.gmail.com with ESMTPSA id z7sm26061448wrt.70.2021.03.17.06.28.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Mar 2021 06:28:31 -0700 (PDT)
+        Wed, 17 Mar 2021 06:28:36 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -67,9 +67,9 @@ Cc:     newren@gmail.com, gitster@pobox.com, pclouds@gmail.com,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Derrick Stolee <derrickstolee@github.com>,
         dstolee@microsoft.com
-Subject: [RFC/PATCH 0/5] Re: [PATCH v3 07/20] test-read-cache: print cache entries with --table
-Date:   Wed, 17 Mar 2021 14:28:09 +0100
-Message-Id: <20210317132814.30175-1-avarab@gmail.com>
+Subject: [RFC/PATCH 5/5] test-tool: split up test-tool read-cache
+Date:   Wed, 17 Mar 2021 14:28:14 +0100
+Message-Id: <20210317132814.30175-6-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.0.260.g719c683c1d
 In-Reply-To: <dffe8821fde290a1e19b2968098b007b9ac213e6.1615912983.git.gitgitgadget@gmail.com>
 References: <dffe8821fde290a1e19b2968098b007b9ac213e6.1615912983.git.gitgitgadget@gmail.com>
@@ -80,98 +80,207 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> From: Derrick Stolee <dstolee@microsoft.com>
->
-> This table is helpful for discovering data in the index to ensure it is
-> being written correctly, especially as we build and test the
-> sparse-index. This table includes an output format similar to 'git
-> ls-tree', but should not be compared to that directly. The biggest
-> reasons are that 'git ls-tree' includes a tree entry for every
-> subdirectory, even those that would not appear as a sparse directory in
-> a sparse-index. Further, 'git ls-tree' does not use a trailing directory
-> separator for its tree rows.
->
-> This does not print the stat() information for the blobs. That could be
-> added in a future change with another option. The tests that are added
-> in the next few changes care only about the object types and IDs.
->
-> To make the option parsing slightly more robust, wrap the string
-> comparisons in a loop adapted from test-dir-iterator.c.
->
-> Care must be taken with the final check for the 'cnt' variable. We
-> continue the expectation that the numerical value is the final argument.
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  t/helper/test-read-cache.c | 55 +++++++++++++++++++++++++++++++-------
->  1 file changed, 45 insertions(+), 10 deletions(-)
->
-> diff --git a/t/helper/test-read-cache.c b/t/helper/test-read-cache.c
-> index 244977a29bdf..6cfd8f2de71c 100644
-> --- a/t/helper/test-read-cache.c
-> +++ b/t/helper/test-read-cache.c
-> @@ -1,36 +1,71 @@
->  #include "test-tool.h"
->  #include "cache.h"
->  #include "config.h"
-> +#include "blob.h"
-> +#include "commit.h"
-> +#include "tree.h"
-> +
-> +static void print_cache_entry(struct cache_entry *ce)
-> +{
-> +	const char *type;
-> +	printf("%06o ", ce->ce_mode & 0177777);
-> +
-> +	if (S_ISSPARSEDIR(ce->ce_mode))
-> +		type = tree_type;
-> +	else if (S_ISGITLINK(ce->ce_mode))
-> +		type = commit_type;
-> +	else
-> +		type = blob_type;
-> +
-> +	printf("%s %s\t%s\n",
-> +	       type,
-> +	       oid_to_hex(&ce->oid),
-> +	       ce->name);
-> +}
-> +
+Since the "test-tool read-cache" was originally added back in
+1ecb5ff141 (read-cache: add simple performance test, 2013-06-09) it's
+been growing all sorts of bells and whistles that aren't very
+conducive to performance testing the index, e.g. it learned how to
+read config.
 
-So we have a test tool that's mostly ls-files but mocks the output
-ls-tree would emit, won't these tests eventually care about what stage
-things are in?
+Let's split what remains of the "test-tool read-cache" into the two
+narrow use-cases it's used for.
 
-What follows is an RFC series on top that's the result of me wondering
-why if we're adding new index constructs we aren't updating our
-plumbing to emit that data, can we just add this to ls-files and drop
-this test helper?
-
-Turns out: Yes we can.
-
-Ævar Arnfjörð Bjarmason (5):
-  ls-files: defer read_index() after parse_options() etc.
-  ls-files: make "mode" in show_ce() loop a variable
-  ls-files: add and use a new --sparse option
-  test-tool read-cache: --table is redundant to ls-files
-  test-tool: split up test-tool read-cache
-
- Documentation/git-ls-files.txt           |  4 ++
- Makefile                                 |  3 +-
- builtin/ls-files.c                       | 29 +++++++--
- t/helper/test-read-cache-again.c         | 31 +++++++++
- t/helper/test-read-cache-perf.c          | 21 ++++++
- t/helper/test-read-cache.c               | 82 ------------------------
- t/helper/test-tool.c                     |  3 +-
- t/helper/test-tool.h                     |  3 +-
- t/perf/p0002-read-cache.sh               |  2 +-
- t/t1091-sparse-checkout-builtin.sh       |  9 +--
- t/t1092-sparse-checkout-compatibility.sh | 57 ++++++++++------
- t/t7519-status-fsmonitor.sh              |  2 +-
- 12 files changed, 131 insertions(+), 115 deletions(-)
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ Makefile                         |  3 ++-
+ t/helper/test-read-cache-again.c | 31 +++++++++++++++++++++++++
+ t/helper/test-read-cache-perf.c  | 21 +++++++++++++++++
+ t/helper/test-read-cache.c       | 39 --------------------------------
+ t/helper/test-tool.c             |  3 ++-
+ t/helper/test-tool.h             |  3 ++-
+ t/perf/p0002-read-cache.sh       |  2 +-
+ t/t7519-status-fsmonitor.sh      |  2 +-
+ 8 files changed, 60 insertions(+), 44 deletions(-)
  create mode 100644 t/helper/test-read-cache-again.c
  create mode 100644 t/helper/test-read-cache-perf.c
  delete mode 100644 t/helper/test-read-cache.c
 
+diff --git a/Makefile b/Makefile
+index 89b1d53741..a1bbb818d9 100644
+--- a/Makefile
++++ b/Makefile
+@@ -724,7 +724,8 @@ TEST_BUILTINS_OBJS += test-prio-queue.o
+ TEST_BUILTINS_OBJS += test-proc-receive.o
+ TEST_BUILTINS_OBJS += test-progress.o
+ TEST_BUILTINS_OBJS += test-reach.o
+-TEST_BUILTINS_OBJS += test-read-cache.o
++TEST_BUILTINS_OBJS += test-read-cache-again.o
++TEST_BUILTINS_OBJS += test-read-cache-perf.o
+ TEST_BUILTINS_OBJS += test-read-graph.o
+ TEST_BUILTINS_OBJS += test-read-midx.o
+ TEST_BUILTINS_OBJS += test-ref-store.o
+diff --git a/t/helper/test-read-cache-again.c b/t/helper/test-read-cache-again.c
+new file mode 100644
+index 0000000000..5e20ca1c8f
+--- /dev/null
++++ b/t/helper/test-read-cache-again.c
+@@ -0,0 +1,31 @@
++#include "test-tool.h"
++#include "cache.h"
++
++int cmd__read_cache_again(int argc, const char **argv)
++{
++	struct repository *r = the_repository;
++	int cnt;
++	const char *name;
++
++	if (argc != 2)
++		die("usage: test-tool read-cache-again <count> <file>");
++
++	cnt = strtol(argv[0], NULL, 0);
++	name = argv[2];
++
++	setup_git_directory();
++	while (cnt--) {
++		int pos;
++		repo_read_index(r);
++		refresh_index(r->index, REFRESH_QUIET,
++			      NULL, NULL, NULL);
++		pos = index_name_pos(r->index, name, strlen(name));
++		if (pos < 0)
++			die("%s not in index", name);
++		printf("%s is%s up to date\n", name,
++		       ce_uptodate(r->index->cache[pos]) ? "" : " not");
++		write_file(name, "%d\n", cnt);
++		discard_index(r->index);
++	}
++	return 0;
++}
+diff --git a/t/helper/test-read-cache-perf.c b/t/helper/test-read-cache-perf.c
+new file mode 100644
+index 0000000000..ac9c297efa
+--- /dev/null
++++ b/t/helper/test-read-cache-perf.c
+@@ -0,0 +1,21 @@
++#include "test-tool.h"
++#include "cache.h"
++
++int cmd__read_cache_perf(int argc, const char **argv)
++{
++	struct repository *r = the_repository;
++	int cnt = 1000;
++
++	if (argc == 1)
++		cnt = strtol(argv[0], NULL, 0);
++	else if (argc)
++		die("usage: test-tool read-cache-perf [<count>]");
++
++	setup_git_directory();
++	while (cnt--) {
++		repo_read_index(r);
++		discard_index(r->index);
++	}
++
++	return 0;
++}
+diff --git a/t/helper/test-read-cache.c b/t/helper/test-read-cache.c
+deleted file mode 100644
+index 2499999af3..0000000000
+--- a/t/helper/test-read-cache.c
++++ /dev/null
+@@ -1,39 +0,0 @@
+-#include "test-tool.h"
+-#include "cache.h"
+-#include "config.h"
+-
+-int cmd__read_cache(int argc, const char **argv)
+-{
+-	struct repository *r = the_repository;
+-	int i, cnt = 1;
+-	const char *name = NULL;
+-
+-	for (++argv, --argc; *argv && starts_with(*argv, "--"); ++argv, --argc) {
+-		if (skip_prefix(*argv, "--print-and-refresh=", &name))
+-			continue;
+-	}
+-
+-	if (argc == 1)
+-		cnt = strtol(argv[0], NULL, 0);
+-	setup_git_directory();
+-	git_config(git_default_config, NULL);
+-
+-	for (i = 0; i < cnt; i++) {
+-		repo_read_index(r);
+-
+-		if (name) {
+-			int pos;
+-
+-			refresh_index(r->index, REFRESH_QUIET,
+-				      NULL, NULL, NULL);
+-			pos = index_name_pos(r->index, name, strlen(name));
+-			if (pos < 0)
+-				die("%s not in index", name);
+-			printf("%s is%s up to date\n", name,
+-			       ce_uptodate(r->index->cache[pos]) ? "" : " not");
+-			write_file(name, "%d\n", i);
+-		}
+-		discard_index(r->index);
+-	}
+-	return 0;
+-}
+diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+index f97cd9f48a..1334fa25ba 100644
+--- a/t/helper/test-tool.c
++++ b/t/helper/test-tool.c
+@@ -52,7 +52,8 @@ static struct test_cmd cmds[] = {
+ 	{ "proc-receive", cmd__proc_receive},
+ 	{ "progress", cmd__progress },
+ 	{ "reach", cmd__reach },
+-	{ "read-cache", cmd__read_cache },
++	{ "read-cache-again", cmd__read_cache_again },
++	{ "read-cache-perf", cmd__read_cache_perf },
+ 	{ "read-graph", cmd__read_graph },
+ 	{ "read-midx", cmd__read_midx },
+ 	{ "ref-store", cmd__ref_store },
+diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+index 28072c0ad5..d70cde8574 100644
+--- a/t/helper/test-tool.h
++++ b/t/helper/test-tool.h
+@@ -41,7 +41,8 @@ int cmd__prio_queue(int argc, const char **argv);
+ int cmd__proc_receive(int argc, const char **argv);
+ int cmd__progress(int argc, const char **argv);
+ int cmd__reach(int argc, const char **argv);
+-int cmd__read_cache(int argc, const char **argv);
++int cmd__read_cache_again(int argc, const char **argv);
++int cmd__read_cache_perf(int argc, const char **argv);
+ int cmd__read_graph(int argc, const char **argv);
+ int cmd__read_midx(int argc, const char **argv);
+ int cmd__ref_store(int argc, const char **argv);
+diff --git a/t/perf/p0002-read-cache.sh b/t/perf/p0002-read-cache.sh
+index cdd105a594..d0ba5173fb 100755
+--- a/t/perf/p0002-read-cache.sh
++++ b/t/perf/p0002-read-cache.sh
+@@ -8,7 +8,7 @@ test_perf_default_repo
+ 
+ count=1000
+ test_perf "read_cache/discard_cache $count times" "
+-	test-tool read-cache $count
++	test-tool read-cache-perf $count
+ "
+ 
+ test_done
+diff --git a/t/t7519-status-fsmonitor.sh b/t/t7519-status-fsmonitor.sh
+index 45d025f960..3761a8781d 100755
+--- a/t/t7519-status-fsmonitor.sh
++++ b/t/t7519-status-fsmonitor.sh
+@@ -359,7 +359,7 @@ test_expect_success UNTRACKED_CACHE 'ignore .git changes when invalidating UNTR'
+ test_expect_success 'discard_index() also discards fsmonitor info' '
+ 	test_config core.fsmonitor "$TEST_DIRECTORY/t7519/fsmonitor-all" &&
+ 	test_might_fail git update-index --refresh &&
+-	test-tool read-cache --print-and-refresh=tracked 2 >actual &&
++	test-tool read-cache-again 2 tracked >actual &&
+ 	printf "tracked is%s up to date\n" "" " not" >expect &&
+ 	test_cmp expect actual
+ '
 -- 
 2.31.0.260.g719c683c1d
 
