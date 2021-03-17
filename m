@@ -4,66 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A720C43381
-	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 21:28:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FE5BC433E0
+	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 21:28:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C3D6764F2A
+	by mail.kernel.org (Postfix) with ESMTP id 3448664F04
 	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 21:28:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233557AbhCQV2a (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Mar 2021 17:28:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60998 "EHLO
+        id S230290AbhCQV2X (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Mar 2021 17:28:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232714AbhCQV2K (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Mar 2021 17:28:10 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8DD1C06174A
-        for <git@vger.kernel.org>; Wed, 17 Mar 2021 14:28:09 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id u5-20020a7bcb050000b029010e9316b9d5so2134728wmj.2
-        for <git@vger.kernel.org>; Wed, 17 Mar 2021 14:28:09 -0700 (PDT)
+        with ESMTP id S231705AbhCQV2I (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Mar 2021 17:28:08 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 290C3C06174A
+        for <git@vger.kernel.org>; Wed, 17 Mar 2021 14:28:08 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id v11so3306638wro.7
+        for <git@vger.kernel.org>; Wed, 17 Mar 2021 14:28:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=cnf/QEJ8oejThB9c252suJGw0HPP+Uh2G/Edw1V71cM=;
-        b=IUj9oilleaGCKClo9Pic7uBKHXoZVQ2AZ7dj520Iw/aUf4C8n2qve+NVtvsid9cjp8
-         s7ncL2savVBQsw9VKq0+X9WkefxafdExhR81sxqcIKk3xOHBuwKTfdv+0ksESXieD/xM
-         FCYhy3KLs2kXrDN4kZfAdlrHDXmsfXQgClXRXD4+p/8KjauutrYl3zyJjatI0F9IEjr6
-         9YSUO8fnZYSAGZ15qmm1+oek/EajpmyyN2lWTGwaAbb5x0YuvoxoB9HLduDNkp8yJdwK
-         JpZtkzGKH6ELk5+UUaU6ydwC/VHck7z71l3akKyOJQVZ+NjKKyHQ9gUHxWKZPBYN/fYU
-         cOKA==
+        bh=TBlYP2CJ6pLRR9Sp4z147sbxYMFo9SmaRYu2J+H/5aw=;
+        b=ZkSf04OTdTG74p0MLA1l0kriWXPFJNDKvfS7dTFTJMeBr7duk3A9SCcVrr0oEdpYXw
+         APWoL2IpRsCZlfTbTC7s5M5w/kABFgNgphCzDiCEdqRgRKizlqe0MTkDlt7nq5n93Q2F
+         0P94oSczeokLTFgxC30Wd3TSEJ9+/cT9yAkXK7r2gO8YPo8ybO22+kl/8pjJ48KEf6Xp
+         cYbFhPlT2albwqejUrEKNLRAIYXCanNksLT8J6I8wDs4dkJu1Xsiivxch4wtyIFJkwSW
+         uZoiRxuM4NLnJG/xf2anp8j4N2XF4fP+AalTDPi180U5dFd8crzes1JKIs+p+hbY264w
+         hsxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=cnf/QEJ8oejThB9c252suJGw0HPP+Uh2G/Edw1V71cM=;
-        b=q3A7HHk6kR8lFItGdmRHc4D6VU0aoGcjA7G9a3AGaj15PsFYir3d3Yi0bQg+8XsenD
-         Mnz6dwVTb6GNz0ljnxnpGUgoPBipEyBSW63B75I6GpZR3bACUAZJWrTBQDz5dN3kvOeJ
-         Aw6cVUbkjD6SuudbhTHGFhtlTj64HFmutigxCteByCTcO+dffbf15VZbeV2ItvNcSXI2
-         A1BTHfGQXrrZf8Vs+cqqQMchlDxhz4Fk++RyY+sC00mJs06c4zsirsftAqSNYgcB9lo1
-         J6OgN2lXDxC2eFByZnB6ya/cmGmVYoYlA400f6WPWjcx8tLnUHnA+3EnKPoe6JS6f0ze
-         BAGA==
-X-Gm-Message-State: AOAM530eNH0N3fSao5yW0V8fcZuDi4WfwMk+LR7/ix9z7vrUcVebevaC
-        F0A0foDaYXVpB7nBUefueudF0TCQCUo=
-X-Google-Smtp-Source: ABdhPJxm8a9sQ+/XmqDi/6lzgUvkCq/0b0mitggmRn/QaivWNdpbBJxdc5/Rb8od9J5zxsIG1MEiPg==
-X-Received: by 2002:a1c:318b:: with SMTP id x133mr674150wmx.154.1616016488685;
-        Wed, 17 Mar 2021 14:28:08 -0700 (PDT)
+        bh=TBlYP2CJ6pLRR9Sp4z147sbxYMFo9SmaRYu2J+H/5aw=;
+        b=TBwKT20R7yT1mjIIBHqgrxScplo+YAru6XhNAZIL6pf8n0FtaUKrzmlYAT51YD5Cxf
+         bkrJ1t4JWYiB0O1Cgq1KGce0yt8pNiv8kPGYZA6ZijEqDS+mMDcXEvYu04rIlzTdMbjW
+         JuBvutq+LqVWskwLctnrAZFG9QhSCkx3HNcnk4Afrs61O1rAXoW1LdCm3ZczRH9hLwxN
+         vIwRSBJ1T1HiP/NNVFToiA9jQcl5Q252rAOtGzppsm6zBvMTZIRCHC+IrB7PhLiF99oR
+         zYDYu5ixZCHf4QyZmClrgse2tid/fXWNGOJ9h+iyTe7B+w68av5Lvi7fDcILtG2Z+6jj
+         ZxNg==
+X-Gm-Message-State: AOAM530dh5f5KCtOctJrEchbCxc1TgdhL4FJO4GXAenfjy2y6HolFyn8
+        pRirnx1uxJk9vyqdSR3M60TiF1iSugY=
+X-Google-Smtp-Source: ABdhPJwMBreUIt1xxPe6tyDRKpP5eNFU4xn4zbjqvgVSQ3ECIg6HKjKIFqYFT2/4wz0NctZ3jabvUA==
+X-Received: by 2002:a5d:56c9:: with SMTP id m9mr6171630wrw.422.1616016486954;
+        Wed, 17 Mar 2021 14:28:06 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i3sm218989wra.66.2021.03.17.14.28.08
+        by smtp.gmail.com with ESMTPSA id t20sm123260wmi.15.2021.03.17.14.28.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Mar 2021 14:28:08 -0700 (PDT)
-Message-Id: <4ff23d2f52a0abd41d81076f9dfa3a93319deca5.1616016485.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.905.v2.git.1616016485.gitgitgadget@gmail.com>
+        Wed, 17 Mar 2021 14:28:06 -0700 (PDT)
+Message-Id: <pull.905.v2.git.1616016485.gitgitgadget@gmail.com>
+In-Reply-To: <pull.905.git.1615867503.gitgitgadget@gmail.com>
 References: <pull.905.git.1615867503.gitgitgadget@gmail.com>
-        <pull.905.v2.git.1616016485.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 17 Mar 2021 21:27:55 +0000
-Subject: [PATCH v2 03/13] merge-ort: have ll_merge() use a special attr_index
- for renormalization
+Date:   Wed, 17 Mar 2021 21:27:52 +0000
+Subject: [PATCH v2 00/13] Declare merge-ort ready for general usage
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,146 +77,92 @@ Cc:     Derrick Stolee <dstolee@microsoft.com>,
         Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <stolee@gmail.com>,
         Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
         Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+This series depends on ort-perf-batch-10[1], and obsoletes the ort-remainder
+topic[2] (that hadn't been picked up yet, so hopefully this doesn't cause
+any confusion)
 
-ll_merge() needs an index when renormalization is requested.  Create one
-specifically for just this purpose with just the one needed entry.  This
-fixes t6418.4 and t6418.5 under GIT_TEST_MERGE_ALGORITHM=ort.
+With this series, merge-ort is ready for general usage -- it passes all
+tests, passes dozens of tests that don't under merge-recursive, and
+merge-ort is is already significantly faster than merge-recursive when
+rename detection is involved. Users can select merge-ort by (a) passing
+-sort to either git merge or git rebase, or (b) by setting pull.twohead=ort
+[3], or (c) by setting GIT_TEST_MERGE_ALGORITHM=ort.
 
-NOTE 1: Even if the user has a working copy or a real index (which is
-not a given as merge-ort can be used in bare repositories), we
-explicitly ignore any .gitattributes file from either of these
-locations.  merge-ort can be used to merge two branches that are
-unrelated to HEAD, so .gitattributes from the working copy and current
-index should not be considered relevant.
+Changes since v1:
 
-NOTE 2: Since we are in the middle of merging, there is a risk that
-.gitattributes itself is conflicted...leaving us with an ill-defined
-situation about how to perform the rest of the merge.  It could be that
-the .gitattributes file does not even exist on one of the sides of the
-merge, or that it has been modified on both sides.  If it's been
-modified on both sides, it's possible that it could itself be merged
-cleanly, though it's also possible that it only merges cleanly if you
-use the right version of the .gitattributes file to drive the merge.  It
-gets kind of complicated.  The only test we ever had that attempted to
-test behavior in this area was seemingly unaware of the undefined
-behavior, but knew the test wouldn't work for lack of attribute handling
-support, marked it as test_expect_failure from the beginning, but
-managed to fail for several reasons unrelated to attribute handling.
-See commit 6f6e7cfb52 ("t6038: remove problematic test", 2020-08-03) for
-details.  So there are probably various ways to improve what
-initialize_attr_index() picks in the case of a conflicted .gitattributes
-but for now I just implemented something simple -- look for whatever
-.gitattributes file we can find in any of the higher order stages and
-use it.
+ * subsumed the ort-remainder topic (the first 10 patches), which has
+   already been reviewed by both Ævar and Stolee[2].
+ * the next two patches were the original v1, reviewed by Stolee
+ * the final patch is new and adds testing.
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- merge-ort.c | 64 +++++++++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 62 insertions(+), 2 deletions(-)
+[1]
+https://lore.kernel.org/git/pull.853.git.1615674128.gitgitgadget@gmail.com/
+[2]
+https://lore.kernel.org/git/pull.973.v2.git.git.1615271086.gitgitgadget@gmail.com/
+[3] See commit 14c4586c2d ("merge,rebase,revert: select ort or recursive by
+config or environment", 2020-11-02)
 
-diff --git a/merge-ort.c b/merge-ort.c
-index 3c606fa7e4b3..cdc1e2fe7a24 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -410,7 +410,7 @@ static void clear_or_reinit_internal_opts(struct merge_options_internal *opti,
- 	string_list_clear(&opti->paths_to_free, 0);
- 	opti->paths_to_free.strdup_strings = 0;
- 
--	if (opti->attr_index.cache_nr)
-+	if (opti->attr_index.cache_nr) /* true iff opt->renormalize */
- 		discard_index(&opti->attr_index);
- 
- 	/* Free memory used by various renames maps */
-@@ -1201,6 +1201,63 @@ static int merge_submodule(struct merge_options *opt,
- 	return 0;
- }
- 
-+static void initialize_attr_index(struct merge_options *opt)
-+{
-+	/*
-+	 * The renormalize_buffer() functions require attributes, and
-+	 * annoyingly those can only be read from the working tree or from
-+	 * an index_state.  merge-ort doesn't have an index_state, so we
-+	 * generate a fake one containing only attribute information.
-+	 */
-+	struct merged_info *mi;
-+	struct index_state *attr_index = &opt->priv->attr_index;
-+	struct cache_entry *ce;
-+
-+	attr_index->initialized = 1;
-+
-+	if (!opt->renormalize)
-+		return;
-+
-+	mi = strmap_get(&opt->priv->paths, GITATTRIBUTES_FILE);
-+	if (!mi)
-+		return;
-+
-+	if (mi->clean) {
-+		int len = strlen(GITATTRIBUTES_FILE);
-+		ce = make_empty_cache_entry(attr_index, len);
-+		ce->ce_mode = create_ce_mode(mi->result.mode);
-+		ce->ce_flags = create_ce_flags(0);
-+		ce->ce_namelen = len;
-+		oidcpy(&ce->oid, &mi->result.oid);
-+		memcpy(ce->name, GITATTRIBUTES_FILE, len);
-+		add_index_entry(attr_index, ce,
-+				ADD_CACHE_OK_TO_ADD | ADD_CACHE_OK_TO_REPLACE);
-+		get_stream_filter(attr_index, GITATTRIBUTES_FILE, &ce->oid);
-+	} else {
-+		int stage, len;
-+		struct conflict_info *ci;
-+
-+		ASSIGN_AND_VERIFY_CI(ci, mi);
-+		for (stage = 0; stage < 3; stage++) {
-+			unsigned stage_mask = (1 << stage);
-+
-+			if (!(ci->filemask & stage_mask))
-+				continue;
-+			len = strlen(GITATTRIBUTES_FILE);
-+			ce = make_empty_cache_entry(attr_index, len);
-+			ce->ce_mode = create_ce_mode(ci->stages[stage].mode);
-+			ce->ce_flags = create_ce_flags(stage);
-+			ce->ce_namelen = len;
-+			oidcpy(&ce->oid, &ci->stages[stage].oid);
-+			memcpy(ce->name, GITATTRIBUTES_FILE, len);
-+			add_index_entry(attr_index, ce,
-+					ADD_CACHE_OK_TO_ADD | ADD_CACHE_OK_TO_REPLACE);
-+			get_stream_filter(attr_index, GITATTRIBUTES_FILE,
-+					  &ce->oid);
-+		}
-+	}
-+}
-+
- static int merge_3way(struct merge_options *opt,
- 		      const char *path,
- 		      const struct object_id *o,
-@@ -1215,6 +1272,9 @@ static int merge_3way(struct merge_options *opt,
- 	char *base, *name1, *name2;
- 	int merge_status;
- 
-+	if (!opt->priv->attr_index.initialized)
-+		initialize_attr_index(opt);
-+
- 	ll_opts.renormalize = opt->renormalize;
- 	ll_opts.extra_marker_size = extra_marker_size;
- 	ll_opts.xdl_opts = opt->xdl_opts;
-@@ -1253,7 +1313,7 @@ static int merge_3way(struct merge_options *opt,
- 
- 	merge_status = ll_merge(result_buf, path, &orig, base,
- 				&src1, name1, &src2, name2,
--				opt->repo->index, &ll_opts);
-+				&opt->priv->attr_index, &ll_opts);
- 
- 	free(base);
- 	free(name1);
+Elijah Newren (13):
+  merge-ort: use STABLE_QSORT instead of QSORT where required
+  merge-ort: add a special minimal index just for renormalization
+  merge-ort: have ll_merge() use a special attr_index for
+    renormalization
+  merge-ort: let renormalization change modify/delete into clean delete
+  merge-ort: support subtree shifting
+  t6428: new test for SKIP_WORKTREE handling and conflicts
+  merge-ort: implement CE_SKIP_WORKTREE handling with conflicted entries
+  t: mark several submodule merging tests as fixed under merge-ort
+  merge-ort: write $GIT_DIR/AUTO_MERGE whenever we hit a conflict
+  merge-recursive: add a bunch of FIXME comments documenting known bugs
+  Revert "merge-ort: ignore the directory rename split conflict for now"
+  t6423: mark remaining expected failure under merge-ort as such
+  Add testing with merge-ort merge strategy
+
+ .github/workflows/main.yml                    |   1 +
+ branch.c                                      |   1 +
+ builtin/rebase.c                              |   1 +
+ ci/lib.sh                                     |   6 +
+ merge-ort.c                                   | 242 ++++++++++++++++--
+ merge-recursive.c                             |  37 +++
+ path.c                                        |   1 +
+ path.h                                        |   2 +
+ sequencer.c                                   |   5 +
+ t/t3512-cherry-pick-submodule.sh              |   7 +-
+ t/t3513-revert-submodule.sh                   |   5 +-
+ t/t5572-pull-submodule.sh                     |   7 +-
+ t/t6423-merge-rename-directories.sh           |   2 +-
+ t/t6428-merge-conflicts-sparse.sh             | 158 ++++++++++++
+ t/t6437-submodule-merge.sh                    |   5 +-
+ t/t6438-submodule-directory-file-conflicts.sh |   7 +-
+ 16 files changed, 449 insertions(+), 38 deletions(-)
+ create mode 100755 t/t6428-merge-conflicts-sparse.sh
+
+
+base-commit: ac0ba91ce275227f5df8f16fb986308ff88b198b
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-905%2Fgitgitgadget%2Fort-readiness-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-905/gitgitgadget/ort-readiness-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/905
+
+Range-diff vs v1:
+
+  -:  ------------ >  1:  e223f842748c merge-ort: use STABLE_QSORT instead of QSORT where required
+  -:  ------------ >  2:  6d34cc466bd5 merge-ort: add a special minimal index just for renormalization
+  -:  ------------ >  3:  4ff23d2f52a0 merge-ort: have ll_merge() use a special attr_index for renormalization
+  -:  ------------ >  4:  c1c9605c1932 merge-ort: let renormalization change modify/delete into clean delete
+  -:  ------------ >  5:  41fffcdd3b78 merge-ort: support subtree shifting
+  -:  ------------ >  6:  6aec1f499b80 t6428: new test for SKIP_WORKTREE handling and conflicts
+  -:  ------------ >  7:  fe3baf696785 merge-ort: implement CE_SKIP_WORKTREE handling with conflicted entries
+  -:  ------------ >  8:  f9325647a9fc t: mark several submodule merging tests as fixed under merge-ort
+  -:  ------------ >  9:  4a79e6134691 merge-ort: write $GIT_DIR/AUTO_MERGE whenever we hit a conflict
+  -:  ------------ > 10:  a37979454069 merge-recursive: add a bunch of FIXME comments documenting known bugs
+  1:  7a8e26638a16 = 11:  6bda855f2980 Revert "merge-ort: ignore the directory rename split conflict for now"
+  2:  0d41038fad91 = 12:  1c6361c9b88a t6423: mark remaining expected failure under merge-ort as such
+  -:  ------------ > 13:  d8536f56ab29 Add testing with merge-ort merge strategy
+
 -- 
 gitgitgadget
-
