@@ -2,127 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D0A2C433E0
-	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 17:55:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F1871C433DB
+	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 17:55:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6549364F10
-	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 17:55:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A025F64F17
+	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 17:55:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232859AbhCQRyk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Mar 2021 13:54:40 -0400
-Received: from cloud.peff.net ([104.130.231.41]:39678 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232847AbhCQRy0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Mar 2021 13:54:26 -0400
-Received: (qmail 26200 invoked by uid 109); 17 Mar 2021 17:54:25 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 17 Mar 2021 17:54:25 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10020 invoked by uid 111); 17 Mar 2021 17:54:25 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 17 Mar 2021 13:54:25 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 17 Mar 2021 13:54:24 -0400
-From:   Jeff King <peff@peff.net>
-To:     Son Luong Ngoc <sluongng@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        avarab@gmail.com, jonathantanmy@google.com, gitster@pobox.com
-Subject: Re: Tests failed with GIT_TEST_FAIL_PREREQS and/or
- GIT_TEST_PROTOCOL_VERSION
-Message-ID: <YFJCUOCQGKHX2/So@coredump.intra.peff.net>
-References: <CAL3xRKfSXDd0ucO4zaM5_WZeQfq10Hqpyk3nL+Zw8ttgfN0ZhA@mail.gmail.com>
- <YFC33vfLb36pRCO6@nand.local>
- <YFIGSo3U5u7zy9fq@C02YX140LVDN.corpad.adbkng.com>
+        id S232877AbhCQRzN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Mar 2021 13:55:13 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55597 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232701AbhCQRym (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Mar 2021 13:54:42 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5DCEDA84D9;
+        Wed, 17 Mar 2021 13:54:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=fiabnFcW03iR8O0xVhTM5PFPWEA=; b=VCbHt+
+        yxPsF/recQCj/zA5vyxlempTeWy1QJaX0l3zaaIxnZMUKlpWJ0fm1RByK6sQUDof
+        UvUJuOHA+d9y08JnLFlKGbqQo2OD7lM/fxNbCa1h6SArJwV4lM2468BCzs0aHSLD
+        5//I4uisi0wmW7ZxIeVIZTpWvJAqGNhgsqp7Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=EskACJjwgiH9kjEN3LxrZbYrANJwWpa2
+        H15PiHWg2hY6lR7tN9+c3k0rrK41qyM7QPIpEaFAeKuhNcoeV3/mzgEqxhHVvKMm
+        2F0ijViX6Sj8MJJUDKIUsePpx+CVozoRtGv42S4zQOPFxKs66dH/jMjo1LdWfXXw
+        sFQUOjzRl9c=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 54E8BA84D7;
+        Wed, 17 Mar 2021 13:54:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C0475A84D6;
+        Wed, 17 Mar 2021 13:54:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 4/7] test-tool.h: ASCII-sort list of functions
+References: <cover.1615856156.git.liu.denton@gmail.com>
+        <b817541c2754ec8fc4edc1ae774e460912e7c0a8.1615856156.git.liu.denton@gmail.com>
+Date:   Wed, 17 Mar 2021 10:54:41 -0700
+In-Reply-To: <b817541c2754ec8fc4edc1ae774e460912e7c0a8.1615856156.git.liu.denton@gmail.com>
+        (Denton Liu's message of "Mon, 15 Mar 2021 17:56:23 -0700")
+Message-ID: <xmqqczvxy8bi.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <YFIGSo3U5u7zy9fq@C02YX140LVDN.corpad.adbkng.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: D99AB3BA-8749-11EB-87B1-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 17, 2021 at 02:38:18PM +0100, Son Luong Ngoc wrote:
+Denton Liu <liu.denton@gmail.com> writes:
 
-> 1. For t7810 and t5300 failing when GIT_TEST_FAIL_PREREQS=1:
-> 
->     a926c4b904bdc339568c2898af955cdc61b31542 is the first bad commit
->     commit a926c4b904bdc339568c2898af955cdc61b31542
->     Author: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
->     Date:   Thu Feb 11 02:53:51 2021 +0100
-> 
->         tests: remove most uses of C_LOCALE_OUTPUT
-> 
->         As a follow-up to d162b25f956 (tests: remove support for
->         GIT_TEST_GETTEXT_POISON, 2021-01-20) remove those uses of the now
->         always true C_LOCALE_OUTPUT prerequisite from those tests which
->         declare it as an argument to test_expect_{success,failure}.
-> 
->         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
->         Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> The list of test-tool functions have, over time, gotten slightly out of
+> ASCII order. Sort this list to bring them back into order.
+>
+> ASCII sorting was chosen over strict alphabetical order for the same
+> reason as 805d9eaf5e (Makefile: ASCII-sort += lists, 2020-03-21): the
+> purpose of maintaining the sorted list is to ensure line insertions are
+> deterministic. By using ASCII ordering, it is more easily mechanically
+> reproducible in the future, such as by using :sort in Vim.
 
-I looked at the one in t5300, and I don't think it _ever_ worked, nor
-can it be made to work in this mode.
+Likewise.  The rationale 805d9eaf (Makefile: ASCII-sort += lists,
+2020-03-21) applies better for Makefile's "X += <name>" as the
+prefix before the <name> are all common, while in the header files,
+you have to depend on their return type being the same and '('
+sorting before '_'.
 
-It is expecting that running:
+Now I am inclined to say that it may be worth mentioning in the log,
+both for this step and the previous one.
 
-  git index-pack --threads=2
 
-will issue a warning in a build without pthread support. But in the fake
-"pretend the pthread prereq is not satisfied" mode, it will of course
-not do that, because the build itself is not aware that it's supposed to
-be pretending that pthreads aren't supported!
 
-Before the patch mentioned above, its prereqs were:
-
-  !PTHREADS,C_LOCALE_OUTPUT
-
-which would never be satisfied under the "pretend" mode, because
-it would _also_ disable C_LOCALE_OUTPUT, and we'd always skip it.
-
-So I think something like this creates a similar situation;
-
-diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-index d586fdc7a9..87d26bb70c 100755
---- a/t/t5300-pack-object.sh
-+++ b/t/t5300-pack-object.sh
-@@ -427,7 +427,8 @@ test_expect_success 'index-pack --strict <pack> works in non-repo' '
- 	test_path_is_file foo.idx
- '
- 
--test_expect_success !PTHREADS 'index-pack --threads=N or pack.threads=N warns when no pthreads' '
-+test_expect_success !PTHREADS,IGNORE_FAIL_PREREQS \
-+	'index-pack --threads=N or pack.threads=N warns when no pthreads' '
- 	test_must_fail git index-pack --threads=2 2>err &&
- 	grep ^warning: err >warnings &&
- 	test_line_count = 1 warnings &&
-@@ -445,7 +446,8 @@ test_expect_success !PTHREADS 'index-pack --threads=N or pack.threads=N warns wh
- 	grep -F "no threads support, ignoring pack.threads" err
- '
- 
--test_expect_success !PTHREADS 'pack-objects --threads=N or pack.threads=N warns when no pthreads' '
-+test_expect_success !PTHREADS,IGNORE_FAIL_PREREQS \
-+	'pack-objects --threads=N or pack.threads=N warns when no pthreads' '
- 	git pack-objects --threads=2 --stdout --all </dev/null >/dev/null 2>err &&
- 	grep ^warning: err >warnings &&
- 	test_line_count = 1 warnings &&
-
-but I think this points to a failing of the FAIL_PREREQS mode. It is
-generally OK to say "skip this test by pretending you do not have a
-prereq satisfied" (and that is the point: to see if skipping a test
-confuses later tests). But given a negated prereq here, it is not OK to
-say "run this test that we usually wouldn't", because it is almost
-certainly going to be mismatched with the actual build.
-
-So I think the FAIL_PREREQS mode should probably be treating negated
-prereqs differently (and always pretending that yes, we have them).
-
-I hadn't investigated the t7810 case yet, but looking at it now, it
-seems to be the exact same thing.
-
--Peff
+> This patch is best viewed with `--color-moved`.
+>
+> Signed-off-by: Denton Liu <liu.denton@gmail.com>
+> ---
+>  t/helper/test-tool.h | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+> index 28072c0ad5..9856e84149 100644
+> --- a/t/helper/test-tool.h
+> +++ b/t/helper/test-tool.h
+> @@ -22,14 +22,15 @@ int cmd__example_decorate(int argc, const char **argv);
+>  int cmd__fast_rebase(int argc, const char **argv);
+>  int cmd__genrandom(int argc, const char **argv);
+>  int cmd__genzeros(int argc, const char **argv);
+> -int cmd__hashmap(int argc, const char **argv);
+>  int cmd__hash_speed(int argc, const char **argv);
+> +int cmd__hashmap(int argc, const char **argv);
+>  int cmd__index_version(int argc, const char **argv);
+>  int cmd__json_writer(int argc, const char **argv);
+>  int cmd__lazy_init_name_hash(int argc, const char **argv);
+>  int cmd__match_trees(int argc, const char **argv);
+>  int cmd__mergesort(int argc, const char **argv);
+>  int cmd__mktemp(int argc, const char **argv);
+> +int cmd__oid_array(int argc, const char **argv);
+>  int cmd__oidmap(int argc, const char **argv);
+>  int cmd__online_cpus(int argc, const char **argv);
+>  int cmd__parse_options(int argc, const char **argv);
+> @@ -52,7 +53,6 @@ int cmd__run_command(int argc, const char **argv);
+>  int cmd__scrap_cache_tree(int argc, const char **argv);
+>  int cmd__serve_v2(int argc, const char **argv);
+>  int cmd__sha1(int argc, const char **argv);
+> -int cmd__oid_array(int argc, const char **argv);
+>  int cmd__sha256(int argc, const char **argv);
+>  int cmd__sigchain(int argc, const char **argv);
+>  int cmd__strcmp_offset(int argc, const char **argv);
+> @@ -62,8 +62,8 @@ int cmd__submodule_nested_repo_config(int argc, const char **argv);
+>  int cmd__subprocess(int argc, const char **argv);
+>  int cmd__trace2(int argc, const char **argv);
+>  int cmd__urlmatch_normalization(int argc, const char **argv);
+> -int cmd__xml_encode(int argc, const char **argv);
+>  int cmd__wildmatch(int argc, const char **argv);
+> +int cmd__xml_encode(int argc, const char **argv);
+>  #ifdef GIT_WINDOWS_NATIVE
+>  int cmd__windows_named_pipe(int argc, const char **argv);
+>  #endif
