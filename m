@@ -2,106 +2,158 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D459C433DB
-	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 23:37:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AD372C4332D
+	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 00:46:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 110F164EFD
-	for <git@archiver.kernel.org>; Tue, 16 Mar 2021 23:37:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6667B64F91
+	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 00:46:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229508AbhCPXgz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Mar 2021 19:36:55 -0400
-Received: from mail-ej1-f48.google.com ([209.85.218.48]:35776 "EHLO
-        mail-ej1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229490AbhCPXgv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Mar 2021 19:36:51 -0400
-Received: by mail-ej1-f48.google.com with SMTP id dx17so75033281ejb.2
-        for <git@vger.kernel.org>; Tue, 16 Mar 2021 16:36:51 -0700 (PDT)
+        id S229721AbhCQApp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Mar 2021 20:45:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45616 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229686AbhCQApP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Mar 2021 20:45:15 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD85AC06174A
+        for <git@vger.kernel.org>; Tue, 16 Mar 2021 17:45:14 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id 20so327312lfj.13
+        for <git@vger.kernel.org>; Tue, 16 Mar 2021 17:45:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=ZH9pXF6+3ttMx69S6FLSrGXaan8vmCyGzs3SSGTsVpA=;
+        b=IuIugct1t/rTvZQ6vueQV/UGLUzdOccJoq8b+6U1yCW1ugKochS/sXiSXm2fBPqZoA
+         7RatxGj+PHiImSBZuRUU+rNinomziyLtRbHErCNy2MbXqVXAl/M1zQP8cC5MsZPg4zXV
+         Zy34CyjeKikacFkaB/ftwzcKCfded4jrYkgZW4NeGjUSDiHCSHS3T2l8HjHwraeKCrG+
+         MQKty7EmhJuu/u5E/aC0FaBdyQQS/eyeNBEjMH6GHCJXSasILzOssVn8uf0arfpIbb0P
+         7q9F87vtu2gyjuuaWsbwFdMK9O2t6MCoPG+08MKIENSxX7RHCiWagOh/eTyQ1MiiALxM
+         L25g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=xvDaSS2mr9eifLZsYNyF2jxMZ95CPvvLt8Dtj7nWCtU=;
-        b=U1xZiNCT0c6VHLI+QimkR6ZMFsVb+jAYbIuxyAVKWNwD9gAPdVgCWhUv0l2ekyHphN
-         snBr5wIHm+L7eY76CZ0+DBDxpfFfP0DF+DhWnmUKJqK4BTMabUujq8BMMA73dUS4xmZ6
-         Bs/xQZY2OutOwddAj8+UZF49YwEo4DZlGjLYEmf4QtCOPToB8aL9I6LsDf5HwRN/6bWd
-         PLLrGzFTOrCHYsvtkTSYvFYvhErOm1MSNdUsPmq7D3TylncEDnhcUQnAnwF4tCHck65o
-         OmIeWb4jvpPwff4z8/3wGmdksOBUEPLkRsZ7J2h55bVavCdQJDmYEgZb8FgHOcGCo2xY
-         xaTg==
-X-Gm-Message-State: AOAM532r+Q845u6mTwQCqlTqyIzQBVUQ567xJFzgV7fX0F3t733zKxxG
-        vBrgFoD5g6nJXf/ggrUiP8x0cZejiOg9l1kBHUp1rTXCiBU=
-X-Google-Smtp-Source: ABdhPJzDc6+wFXNAbkuwDQ/3fGNdpD4KHyjWHPQpeiZxb1JlSAXO/J3kyQo9SzCeznlN4WoyVksVtwdUwtGpqjL5LVY=
-X-Received: by 2002:a17:906:68c5:: with SMTP id y5mr32705031ejr.371.1615937810523;
- Tue, 16 Mar 2021 16:36:50 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=ZH9pXF6+3ttMx69S6FLSrGXaan8vmCyGzs3SSGTsVpA=;
+        b=GdhdOHY6tn3EmwayAJHCi4X7ktcei7EQI01b7ZxCaryHxPXoxKm7lb6TGgKsUKRoBs
+         62fAtVqvJpA7wUg0Uje62whfSB6jMt/9b2dHkMHpdM18Jy2vGlUDM2yZ2WyYcuJ7X2JA
+         Eqb/YsMx1AG/6I4YerQm8OFt7S/T82IeUSh8T0nMgJe9itDIF58GkTZmOeLIP7d1y52G
+         nkhGmbv6k7u+sLCmF4RE5p9K9QUW1tjRrCBIdeNrJDHeDbeNnM/feEf5cDpxZsxc+5TE
+         IUKMZmfNtobarPFabtl7HjNZM7Ve48Veq8TZe3Khj+mYW+f6PPrJgd62uAYtVdPHTpvR
+         6kfg==
+X-Gm-Message-State: AOAM530f9dQmEx9jri5jjZu4v32WWSK29VO6OpDnxezhLV60t12uM3s2
+        3Mdn/GtA0YSYQf7EcSL6FqE1pIiyJkUe0g==
+X-Google-Smtp-Source: ABdhPJzKIfNmZ/41y+8DJejLi4hDfugiow2WfZ2OsQjIsgvqLMK7uQ41zZxPwd7ot1/gor7C23mNRw==
+X-Received: by 2002:a19:ed0e:: with SMTP id y14mr802053lfy.440.1615941913104;
+        Tue, 16 Mar 2021 17:45:13 -0700 (PDT)
+Received: from LAPTOP-ACER-ASPIRE-F5 (host-89-229-7-83.dynamic.mm.pl. [89.229.7.83])
+        by smtp.gmail.com with ESMTPSA id w28sm3211448lfk.185.2021.03.16.17.45.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Mar 2021 17:45:11 -0700 (PDT)
+From:   Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
+To:     "Drew DeVault" <sir@cmpwn.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        "Eli Schwartz" <eschwartz@archlinux.org>,
+        "Jonathan Nieder" <jrnieder@gmail.com>, <git@vger.kernel.org>
+Subject: Re: Regarding the depreciation of ssh+git/git+ssh protocols
+References: <C9Y2DPYH4XO1.3KFD8LT770P2@taiga> <YE+ftT2WaKDzc+45@google.com>
+        <C9Y4NXXX6HRI.1IROIK8ZXK4S2@taiga>
+        <YE/ZSiuIsMs3ucVM@camp.crustytoothpaste.net>
+        <C9YD4AEUH84L.29FP64NJJ1BPU@taiga> <YFADuptwV7iR76g5@google.com>
+        <40740478-8b3c-b33e-8bb4-a2d68b83d385@archlinux.org>
+        <YFCckC8fHmEyOAnp@camp.crustytoothpaste.net>
+        <C9YUBUYH7PWU.3PHDZR2YCUEOX@taiga>
+Date:   Wed, 17 Mar 2021 01:45:09 +0100
+In-Reply-To: <C9YUBUYH7PWU.3PHDZR2YCUEOX@taiga> (Drew DeVault's message of
+        "Tue, 16 Mar 2021 10:21:13 -0400")
+Message-ID: <85r1kewqui.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (windows-nt)
 MIME-Version: 1.0
-References: <pull.885.v4.git.1614928211635.gitgitgadget@gmail.com> <pull.885.v5.git.1615883137212.gitgitgadget@gmail.com>
-In-Reply-To: <pull.885.v5.git.1615883137212.gitgitgadget@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 16 Mar 2021 19:36:39 -0400
-Message-ID: <CAPig+cQSUewNPNRP95HORKLUDCrRsmX==r_bEHacNEuTUMwFQA@mail.gmail.com>
-Subject: Re: [PATCH v5] format-patch: allow a non-integral version numbers
-To:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Denton Liu <liu.denton@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 16, 2021 at 4:25 AM ZheNing Hu via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> Usually we can only use `format-patch -v<n>` to generate integral
-> version numbers patches, but sometimes a same fixup should be
-> labeled as a non-integral version like `v1.1`, so teach `format-patch`
-> to allow a non-integral version which may be helpful to send those
-> patches.
+"Drew DeVault" <sir@cmpwn.com> writes:
+> On Tue Mar 16, 2021 at 7:54 AM EDT, brian m. carlson wrote:
+
+>> I believe this construct is nonstandard. It is better to use standard
+>> URL syntax when possible because it makes it much, much easier for
+>> people to use standard tooling to parse and handle URLs. Such tooling
+>> may have special cases for the HTTP syntax that it doesn't use in MAILTO
+>> syntax, so it's important to pick something that works automatically.
 >
-> `<n>` can be any string, such as `-v1.1`.  In the case where it
-> is a non-integral value, the "Range-diff" and "Interdiff"
-> headers will not include the previous version.
+> It is standard - RFC 3986 section 3.1 permits the + character in
+> URI schemes. The use of protocol "composition", e.g. git+https, is a
+> convention, but not a standard.
+
+All right, that is true... but the Git itself and Git--related tools do
+not usually employ the full-fledged URI parser, as far as I know.  They
+just check for the few schemas they support if the repository location
+is given as an URI / URL.
+
+That said, if the RFC states it, then it is a standard construct.
+
+>> So I'm very much opposed to adding, expanding, or giving any sort of
+>> official blessing to this syntax, especially when there are perfectly
+>> valid and equivalent schemes that are already blessed and registered
+>> with IANA.
 >
-> Signed-off-by: ZheNing Hu <adlternative@gmail.com>
-> ---
-> diff --git a/builtin/log.c b/builtin/log.c
-> @@ -1662,13 +1662,19 @@ static void print_bases(struct base_tree_info *bases, FILE *file)
-> +static const char *diff_title(struct strbuf *sb,
-> +                             const char *reroll_count,
-> +                             const char *generic,
-> +                             const char *rerolled)
->  {
-> +       int reroll_count_int = -1;
-> +
-> +       if (reroll_count)
-> +               strtol_i(reroll_count, 10, &reroll_count_int);
-> +       if (reroll_count_int <= 0)
->                 strbuf_addstr(sb, generic);
->         else /* RFC may be v0, so allow -v1 to diff against v0 */
-> +               strbuf_addf(sb, rerolled, reroll_count_int - 1);
->         return sb->buf;
->  }
+> This convention is blessed by the IANA, given that they have
+> accepted protocol registrations which use this convention:
+>
+> https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml
 
-Thanks. The logic of this version is much easier to understand now
-that the number parsing has been moved into diff_title().
+Well, thara is a total of one protocol (CoAP) that uses '+' based
+schemas, namely: coap+tcp, coap+ws, coaps+tcp, coaps+ws (well at least
+out of those protocols that made it into IANA).
 
-It may still be a bit confusing for someone reading this code to
-understand why you don't check the return value of strtol_i().
-Therefore, it might be a good idea to add an /* in-code comment */
-explaining why you don't check whether the parse succeeded or failed.
-However, if we rewrite the code like this:
+Though it in this case neither of those parts of schema joined by the
+'+' sign is an application name...
 
-    int v;
-    if (reroll_count && !strtol_i(reroll_count, 10, &v))
-        strbuf_addf(sb, rerolled, v - 1);
-    else
-        strbuf_addstr(sb, generic);
-    return sb->buf;
+>> It's difficult enough to handle parsing of SSH specifications and
+>> distinguish them uniformly from Windows paths (think of an alias named
+>> "c"), so I'd prefer we didn't add additional complexity to handle this
+>> case.
+>
+> There's no additional complexity here: git remotes are URIs, and any
+> implementation which parses them as such already deals with this case
+> correctly. Any implementation which doesn't may face all kinds of
+> problems as a consequence: SSH without a user specified, HTTPS with
+> Basic auth in the URI username/password fields (or just the password,
+> which is also allowed), and so on. Any sane and correct implementation
+> is pulling in a URI parser here, and if not, I don't think it's fair for
+> git to constrain itself in order to work around some other project's
+> bugs.
 
-then the logic becomes obvious, and we don't even need a comment.
-(Notice that I also shortened the variable name since the code is just
-as clear with a short name as with a long spelled out name such as
-"reroll_count_int".)
+The Git documentation explicitly enumerates all possible URL types that
+you can use with Git.
+
+On the other hand Git-related tools can support more types of URL, for
+example ones for AWS S3 buckets.
+
+>
+>> Lest you think that only Git has to handle parsing these
+>
+> I don't, given that my argument stems from making it easier for
+> third-party applications to deal with git URIs :)
+>
+>> Despite the fact that ssh+git is specified as deprecated, we had
+>> people expect it to magically work and had to support it in Git LFS.
+>
+> Aye, people do expect it to work. The problem is not going to go away.
+
+To reiterate, the idea of "prefixed URLs", that is using git+https://
+and git+ssh:// is to denote that said URL is only usable by Git, without
+any additional out-of-band information (like other attributes on <a>
+element or its encompassing element)?
+
+Best,
+--
+Jakub Nar=C4=99bski
