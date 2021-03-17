@@ -2,111 +2,172 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DCCBC433E9
-	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 13:48:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 58E75C433E0
+	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 13:55:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0457064F69
-	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 13:48:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0478E64F67
+	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 13:55:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231423AbhCQNr4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Mar 2021 09:47:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45970 "EHLO
+        id S231232AbhCQNzZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Mar 2021 09:55:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231411AbhCQNrp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Mar 2021 09:47:45 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA40BC06174A
-        for <git@vger.kernel.org>; Wed, 17 Mar 2021 06:47:44 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id lr13so2697039ejb.8
-        for <git@vger.kernel.org>; Wed, 17 Mar 2021 06:47:44 -0700 (PDT)
+        with ESMTP id S231351AbhCQNyw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Mar 2021 09:54:52 -0400
+Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 534CCC06174A
+        for <git@vger.kernel.org>; Wed, 17 Mar 2021 06:54:52 -0700 (PDT)
+Received: by mail-oi1-x233.google.com with SMTP id t83so31844498oih.12
+        for <git@vger.kernel.org>; Wed, 17 Mar 2021 06:54:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=Hs2Fm0mgCwXAoZBLp3FZ99t9RZY6nVH8o1ABK1SDf9E=;
-        b=HjRav6MkQz/JILlQnjqD4eXPsPF0mM4fi6pp8+M1aPlPL4/oizLfQKa+ucIJAtCOSI
-         b+enVIjayeKVdcpOpvROzXTrY7aIoqBqgOgN/K9WjQbqO5hYEGcWJPy6omF7lZKMUocM
-         Wch9goE2K/0JbPa/VGYmCUfxj56zHlKjVakdwkH1QAuEYeAmftpjNu06Oy/lBPQGB1L4
-         gb83xvskw4BfSjLvhrWQBhcnw4YQK8ait18ADq81cahagJG9UMxvbFge7QZpiO/AWZdM
-         POWR7//q21jqywMY4CxyH3Ufh/7nIwcV1Nc4NietbikmnOY7OsOSudGFiVB0dEmF6MZr
-         Ky0Q==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=5nyZ+Vn4AmXf/GPB0+mU8urIe4L3iIXITYlQ0lHvpCM=;
+        b=DCeiRIq4WSe1SCjgQlhN+mkP6nXjmdTaxvtNt2+oCiEYOxbgCUPpDIKBL1XXw7Ml03
+         PiGGvcmRqiijClxZfePrVOoi9vD4GniqxwN2HI6EHECW7F7wfZnIbL1KhqxhKPZHLjQn
+         5VY//3BYXtLsgNJKPfWKjJ1AkQddyJhcAGLAuXywtaG/o/nRO2283rAAatiy16WryLAB
+         A+EIaWJ1ooBfUrBD+q9T8UtK4+lY8aov/0qEmuYM75msZKY1nGfp3xDL0NWhvuXZT+zm
+         hQJagyClawHVBPRTnl9NXQ5zmiAs5ehwiS8IT2S6OsHfQeEBAumWnOlGfB9+17TZLGIg
+         zjLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=Hs2Fm0mgCwXAoZBLp3FZ99t9RZY6nVH8o1ABK1SDf9E=;
-        b=LYzD//5WPG2XJtmctPQbsrUmFq1Ror+M82O9LkQTt2a/TwKigmI/UBgmeDJhEep7Po
-         F6/hifgRU+V0K166J1LIu4N9HRc/6LSv97ZTkeSFbjX2WqCzWfoiyKvaz2qq3joNUC7M
-         Fzx+h5/ncA9O3ITFyngeojEukSpBaHBkmC+ITBpHsQ3Jvq6mmLRSOrPdkt1C0/1pgP60
-         NLJWnUXFaINwKUqfpasIWVw3X4l3RO0IIieYx1VMLRJQFs2wVGrPqz3g8FLj1mFp8Enj
-         HqiSj3ewtHy+81hXTlB+HK/WMlXSXuqtbyJCQyivW43pgWDcfZdSdzyPBUfiVEIC6T3m
-         L8ZA==
-X-Gm-Message-State: AOAM5316J0KTPU8QnZrj6pEftJCkbYvUJDWe5hAxis73uFeuZ3d/waS5
-        HTcvbfUIpJvYd//dZFnHiH4=
-X-Google-Smtp-Source: ABdhPJxNm+zN6NW0iP3hyi7cFV5A6+MlmRdVcohycClfbh2Dju+SZ+YUWlZgCUNKwIQUU64AaqSV6A==
-X-Received: by 2002:a17:906:dbd0:: with SMTP id yc16mr35527121ejb.71.1615988863602;
-        Wed, 17 Mar 2021 06:47:43 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id lk12sm11482326ejb.14.2021.03.17.06.47.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Mar 2021 06:47:43 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH v4 22/22] fetch-pack: use new fsck API to printing
- dangling submodules
-References: <20210306110439.27694-1-avarab@gmail.com>
- <20210316161738.30254-23-avarab@gmail.com>
- <72b6e263-1e53-cc00-9545-cddd11820fe4@gmail.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <72b6e263-1e53-cc00-9545-cddd11820fe4@gmail.com>
-Date:   Wed, 17 Mar 2021 14:47:42 +0100
-Message-ID: <87tup9zybl.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=5nyZ+Vn4AmXf/GPB0+mU8urIe4L3iIXITYlQ0lHvpCM=;
+        b=LS1abjjsc+jxOiCgWundP7xRdvgEl/qFcFwJSYl+N9RQ8J6OaB/XJQBaFlQJjyVlLj
+         1Xm57n9Mo2tkzzSFRF1+rpcDzczK/z1Uq/hflY2p35rUMWRTnvUeywEMxYDc6il5OZnP
+         cTd5Y5gbSCoEWKVF9btTfmGaG/GkzLLYHJX1xfFF28t33e/sC3mWuzqEAsnnewi1NRAM
+         AFmC3DrgDtfceor894K2Qr15nE826rCRVhPt6HFWi5vhRLgd20zYU+zQdeYSMjKyx75B
+         VGIql4FqqxfMZME+yBuUSZxs5bF6x7lfxBkf+mbaNm+LgRs7fNc/axfNg2yIWHfqAaxN
+         1Q8w==
+X-Gm-Message-State: AOAM533E9CAdDDagCpXvEMSgLQSgGbXKm3V/HTyQPdCChrXN3Ca5GC9V
+        Z4TZxqNXaVnDnBLtnlomRpsThNhbhu4fXCgDe0M=
+X-Google-Smtp-Source: ABdhPJxnEDI4OKk9sRj4U40U6gtRlzFl2KX7nTk1p8QHZYH4SdMgOTPE+Md4lfVooWVvFIWz3/CIn5wG4vF6HUGuzUQ=
+X-Received: by 2002:aca:4c0f:: with SMTP id z15mr2988672oia.44.1615989289423;
+ Wed, 17 Mar 2021 06:54:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <pull.901.v7.git.1615799304883.gitgitgadget@gmail.com>
+ <pull.901.v8.git.1615813658.gitgitgadget@gmail.com> <f81b6e66a6ba6b2fc8e6307dbc5fba9cddcff181.1615813658.git.gitgitgadget@gmail.com>
+ <87zgz3dzvl.fsf@evledraar.gmail.com> <CAOLTT8RyCvs8bbedPaRSo44o566Tk1MK9BeLx=-APnFsHJtejw@mail.gmail.com>
+ <87wnu6dwxx.fsf@evledraar.gmail.com>
+In-Reply-To: <87wnu6dwxx.fsf@evledraar.gmail.com>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Wed, 17 Mar 2021 21:54:37 +0800
+Message-ID: <CAOLTT8SFd=Zg01kR9rvTO6yh+tSS5VbcLBjAcB+d_DX_NY_HOw@mail.gmail.com>
+Subject: Re: [PATCH v8 1/2] [GSOC] commit: add --trailer option
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        "Bradley M. Kuhn" <bkuhn@sfconservancy.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Brandon Casey <drafnel@gmail.com>,
+        Shourya Shukla <periperidip@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Rafael Silva <rafaeloliveira.cs@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Tue, Mar 16 2021, Derrick Stolee wrote:
-
-> On 3/16/2021 12:17 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> Refactor the check added in 5476e1efde (fetch-pack: print and use
->> dangling .gitmodules, 2021-02-22) to make use of us now passing the
->> "msg_id" to the user defined "error_func". We can now compare against
->> the FSCK_MSG_GITMODULES_MISSING instead of parsing the generated
->> message.
->>=20
->> Let's also replace register_found_gitmodules() with directly
->> manipulating the "gitmodules_found" member. A recent commit moved it
->> into "fsck_options" so we could do this here.
->>=20
->> Add a fsck-cb.c file similar to parse-options-cb.c, the alternative
->> would be to either define this directly in fsck.c as a public API, or
->> to create some library shared by fetch-pack.c ad builtin/index-pack.
->>=20
->> I expect that there won't be many of these fsck utility functions in
->> the future, so just having a single fsck-cb.c makes sense.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> =E4=BA=8E2021=E5=
+=B9=B43=E6=9C=8817=E6=97=A5=E5=91=A8=E4=B8=89 =E4=B8=8B=E5=8D=884:08=E5=86=
+=99=E9=81=93=EF=BC=9A
+> > Logically speaking, `interpret_trailers` should be dedicated to `commit=
+`
+> > or other sub-commands that require trailers.
+> >
+> > But I think that in the later stage, the parse_options of the `cmd_comm=
+it`
+> > can keep the unrecognized options, and then these choices can be direct=
+ly
+> > passed to the `interpret_trailers` backend.
 >
-> I'm not convinced that having a single cb function merits its
-> own file. But, if you expect this pattern to be expanded a
-> couple more times, then I would say it is worth it. Do you have
-> such plans?
+> We have this interaction with e.g. range-diff and "log", it's often
+> surprising. You add an option to one command and it appears in the
+> other.
+>
 
-Not really, well. Vague ones, but nothing I have even local patches for.
+All right, I'm wrong, I may have reference to an wrong experience
+of `difftool`-->`diff`.
 
-It just seemed odd to stick random callback functions shared by related
-programs into fsck.h's interface, but I guess with
-FSCK_OPTIONS_MISSING_GITMODULES I already did that.
+> >>    It seems to me to be a good idea to (at least for testing) convert
+> >>    the --signoff trailer to your implementation. We have plenty of tes=
+ts
+> >>    for it, does migrating it over pass or fail those?
+> >>
+> > I don=E2=80=99t know how to migrating yet, it may take a long time.
+> > Even I think I can leave it as #leftoverbit later.
+>
+> Sure, I mean (having looked at it) that at least for your own local
+> testing it would make sense to change it (even if just search-replacing
+> the --signoff in the test suite) to see if it behaves as you
+> expect. I.e. does the --trailer behavior mirror --signoff?
+>
+> >>  * I also agree with Junio that we shouldn't have a --fixed-by or
+> >>    whatever and wouldn't add --signoff today, but it seems very useful
+> >>    to me to have a shortcut like:
+> >>
+> >>        --trailer "Signed-off-by"
+> >>
+> >>    I.e. omitting the value, or:
+> >>
+> >>       --trailer "Signed-off-by=3D"
+> >>
+> >>    Or some other thing we deem sufficiently useful/sane
+> >>    syntax/unambiguous.n
+> >>
+> >>    Then the value would be provided by fmt_name(WANT_COMMITTER_IDENT)
+> >>    just as we do in append_signoff() now. I think a *very common* case
+> >>    for this would be something like:
+> >>
+> >>        git commit --amend -v --trailer "Reviewed-by"
+> >>
+> >>    And it would be useful to help that along and not have to do:
+> >>
+> >>        git commit --amend -v --trailer "Reviewed-by=3D$(git config use=
+r.name) <$(git config user.email)>"
+> >>
+> >>    Or worse yet, manually typo your name/e-mail address, as I'm sure I
+> >>    and many others will inevitably do when using this option...
+> >>
 
-Do you suggest just putting it into fsck.c?
+Well, that's what I think here:
+
+Now we can go through:
+
+$ git -c trailer.signoff.key =3D "Signed-off-by" commit --trailer
+"signoff =3D commiter <email>"
+
+to get a trailer: "Signed-off-by: commiter <email>", this means we
+can't just do simple string
+matching in `cmd_commit` to replace `--trailer=3D"Signed-off-by"` or
+`--trailer=3D"Reviewed-by"` to
+user's own identity, to replace the trailers which have omitting value
+ we passed in, but I think
+we can provide a new option to `commit` which can mandatory that
+trailers with no value can be
+ replaced with the identity of the user.
+
+e.g.
+
+$ git -c trailer.signoff.key =3D "Signed-off-by" commit --trailer
+"signoff" --trailer "Helped-by" \
+ --trailer "Helped-by =3D C <E>" --own_ident
+
+will output like this:
+
+Signed-off-by: $(git config user.name) <$(git config user.email)>
+Signed-off-by: $(git config user.name) <$(git config user.email)>
+Helped-by: $(git config user.name) <$(git config user.email)>
+Helped-by: C <E>
+
+I don't know if this idea is good, I will try to do it first.
+
+Thanks.
