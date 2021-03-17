@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7919C43331
-	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 20:57:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E796C4361A
+	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 20:57:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A530A64F33
-	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 20:57:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D890064F73
+	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 20:57:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233556AbhCQU5L (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Mar 2021 16:57:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54202 "EHLO
+        id S233572AbhCQU5O (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Mar 2021 16:57:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233519AbhCQU4q (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Mar 2021 16:56:46 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93528C06174A
-        for <git@vger.kernel.org>; Wed, 17 Mar 2021 13:56:45 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id x16so3243822wrn.4
-        for <git@vger.kernel.org>; Wed, 17 Mar 2021 13:56:45 -0700 (PDT)
+        with ESMTP id S233530AbhCQU44 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Mar 2021 16:56:56 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1C18C06174A
+        for <git@vger.kernel.org>; Wed, 17 Mar 2021 13:56:55 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id g25so2304097wmh.0
+        for <git@vger.kernel.org>; Wed, 17 Mar 2021 13:56:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=F8E0zk2iPmCQQ/aZZBxGH3DS75zZnTm6vEW52Nf5zpk=;
-        b=NUgVCr123EeDkRZnvMqw8Eo5hhIxYYiHjZOYaV2uwCzzeqmDAnpRq/ZapwpMZYD9NS
-         cjRxDzIpaIOnRv/YwGMgqF32ztw5/28Q1pIj6O5K2amkOBJCxPO0tsQ65jlp2YsFifxH
-         iQ2HpPDHw/4u8OZO7SFhlvDgC42rXv6ImSuJjQ9nC9iT8NOl/pVbuSotslxaAq0Pt21w
-         Fb2cDCvGMIrVyTP5ZWaEpTF3Ra70W+RqIGP5hls+41GIYtgj6VaIJcwLMDuz2jL8V5qR
-         QTG88qoAQQkzPFQ9Hh48gozcpKVB2F8jCFm8PxFoGSAsYdHq8tVnB4MIdme/Nj++ieys
-         AQPw==
+        bh=1DFlMB63W4F/A/eg4m30Yw+Qeg6+PBNVZ8sDqRX8T7g=;
+        b=F8iqGiUG+FZFUphsAtoPOswVkOfE5MOoCLYrgHw/SsTDm1W/wfnWMXAj6q7zK0v392
+         a30JN52eDCWEEhltNdm9jJcQIaQ8F4zKwmIuOvTP+fyNxRrMGlOGmtvtfI6GY4XMZztp
+         MnMYnSUxXbFTHg+bW1KDI27YmMbDelvP3DBRkzJrnVeDgzoRqLO59VykBY9/6I6phkpm
+         eXdRU1s7cGzXXSIUh2KO+y/PRw6gGl6wR9WrVqf8qBvwDoCq0Qt8QHsCwd1CxHzeGowD
+         wWo+Gfyaz1j1zK7P9nznL9GtPTBYWJPYbk6P0FDaulbm5xG+Uewo2u+PyfTLJcbmMJ1f
+         vWvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=F8E0zk2iPmCQQ/aZZBxGH3DS75zZnTm6vEW52Nf5zpk=;
-        b=N3j+14/+Mo1J9q8c54UVMnd1ND+312GfhwNNp/mhV94Fr6Opq0TvLEo4lzdhSDvwhE
-         TvVCD190YivUe8ZrjUFEpiE36bDMeNBBiZ2Fz59fcwkHasGcMaXNmxPemSXKFsZF4lsb
-         K1Ns4EvRJ0WNArz2Hnj5Z6ANcJ1PTUQfv2gb9jQi5R4VEMfVowcUR5nF32pe/mF4Q+tF
-         qT1nO11KidtYzmr2KOZSa0E7bPpZxLrMCrFRJuFZbFrZzVkcnCFr+Or92tYwFR7UI0BE
-         ORDnifjlsZGKFKRbJDdOwkc6dr7s4vue5ueHzkKhNGfy5VjR3q/SaIVXMyGkEMjk6yec
-         0z0A==
-X-Gm-Message-State: AOAM533xuB9JuT9X9VGXSzf06Y/AWMQKh6E0VMd+Pr4DvAuWsygLsIVH
-        ti1baCjovxzS+tu8vRGnK/6agarqdVo=
-X-Google-Smtp-Source: ABdhPJzA10D5JercSYhw3QQna5OJ9OwmZD+dBErUJYEhC/xKbSL0vskBTmeDSc2nF/D5SKMwzuEaKg==
-X-Received: by 2002:adf:c101:: with SMTP id r1mr6320870wre.38.1616014604431;
-        Wed, 17 Mar 2021 13:56:44 -0700 (PDT)
+        bh=1DFlMB63W4F/A/eg4m30Yw+Qeg6+PBNVZ8sDqRX8T7g=;
+        b=HKd1Hu60kk3A2ujZBnOxLWcXieQ2HSRvyqNZjP7UiyFzqX+j2+YNyaqxvX6jM/yZlK
+         cMqeKs92K8nd5RPqlK+ID3EyNq6eXq6sHJwcOQhUh+fo83cCF9Og4LWdLn9hLvuGb3i1
+         OJ4hSSuImXYHKA3D0nmtqj8jWvs9GToKpnsPyYiRoq56K0MciboGEAUiiJ3qHSRa275L
+         zf3q18HeHXOd9r7xN1VUCyTVWsRrejzEBqE0J1xYZVviEZI8A1/2Z2ZsgBKndPy0Mg9L
+         h2KljsB+oD7fIyHe9TKYq3mX5F63WsWKHHooWILESNmKG7LoRk7qYw0LqeHd29fgy1Sp
+         U/1g==
+X-Gm-Message-State: AOAM530zEqcxApmmm7z/g4aETI3t2bUsMi0bq3ermBaQjX7cxhs3HwFG
+        06/Az43WqzQSMuwV3STo4n4cUQ7BvNs=
+X-Google-Smtp-Source: ABdhPJy0c6IDnj92RRL5ssZq69PprAgfcs1Ub31yLvBoA85C/gU0aRSOfvzN2wnqatLJLJUkWcy1hQ==
+X-Received: by 2002:a05:600c:4f03:: with SMTP id l3mr553654wmq.149.1616014614538;
+        Wed, 17 Mar 2021 13:56:54 -0700 (PDT)
 Received: from ylate.lan (atoulouse-654-1-299-135.w86-199.abo.wanadoo.fr. [86.199.82.135])
-        by smtp.googlemail.com with ESMTPSA id g5sm158452wrq.30.2021.03.17.13.56.42
+        by smtp.googlemail.com with ESMTPSA id g5sm158452wrq.30.2021.03.17.13.56.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Mar 2021 13:56:43 -0700 (PDT)
+        Wed, 17 Mar 2021 13:56:54 -0700 (PDT)
 From:   Alban Gruin <alban.gruin@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
         Derrick Stolee <stolee@gmail.com>,
         Alban Gruin <alban.gruin@gmail.com>
-Subject: [PATCH v7 07/15] update-index: move add_cacheinfo() to read-cache.c
-Date:   Wed, 17 Mar 2021 21:49:31 +0100
-Message-Id: <20210317204939.17890-8-alban.gruin@gmail.com>
+Subject: [PATCH v7 14/15] sequencer: use the "resolve" strategy without forking
+Date:   Wed, 17 Mar 2021 21:49:38 +0100
+Message-Id: <20210317204939.17890-15-alban.gruin@gmail.com>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20210317204939.17890-1-alban.gruin@gmail.com>
 References: <20201124115315.13311-1-alban.gruin@gmail.com>
@@ -75,127 +75,46 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This moves the function add_cacheinfo() that already exists in
-update-index.c to update-index.c, renames it add_to_index_cacheinfo(),
-and adds an `istate' parameter.  The new cache entry is returned through
-a pointer passed in the parameters.  The return value is either 0
-(success), -1 (invalid path), or -2 (failed to add the file in the
-index).
-
-This will become useful in the next commit, when the three-way merge
-will need to call this function.
+This teaches the sequencer to invoke the "resolve" strategy with a
+function call instead of forking.
 
 Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
 ---
- builtin/update-index.c | 25 +++++++------------------
- cache.h                |  8 ++++++++
- read-cache.c           | 35 +++++++++++++++++++++++++++++++++++
- 3 files changed, 50 insertions(+), 18 deletions(-)
+ sequencer.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index 79087bccea..6b86e89840 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -404,27 +404,16 @@ static int process_path(const char *path, struct stat *st, int stat_errno)
- static int add_cacheinfo(unsigned int mode, const struct object_id *oid,
- 			 const char *path, int stage)
- {
--	int len, option;
--	struct cache_entry *ce;
-+	int res;
+diff --git a/sequencer.c b/sequencer.c
+index d2332d3e17..ec8e9bda22 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -34,6 +34,7 @@
+ #include "commit-reach.h"
+ #include "rebase-interactive.h"
+ #include "reset.h"
++#include "merge-strategies.h"
  
--	if (!verify_path(path, mode))
--		return error("Invalid path '%s'", path);
--
--	len = strlen(path);
--	ce = make_empty_cache_entry(&the_index, len);
--
--	oidcpy(&ce->oid, oid);
--	memcpy(ce->name, path, len);
--	ce->ce_flags = create_ce_flags(stage);
--	ce->ce_namelen = len;
--	ce->ce_mode = create_ce_mode(mode);
--	if (assume_unchanged)
--		ce->ce_flags |= CE_VALID;
--	option = allow_add ? ADD_CACHE_OK_TO_ADD : 0;
--	option |= allow_replace ? ADD_CACHE_OK_TO_REPLACE : 0;
--	if (add_cache_entry(ce, option))
-+	res = add_to_index_cacheinfo(&the_index, mode, oid, path, stage,
-+				     allow_add, allow_replace, NULL);
-+	if (res == ADD_TO_INDEX_CACHEINFO_INVALID_PATH)
-+		return error(_("Invalid path '%s'"), path);
-+	if (res == ADD_TO_INDEX_CACHEINFO_UNABLE_TO_ADD)
- 		return error("%s: cannot add to the index - missing --add option?",
- 			     path);
-+
- 	report("add '%s'", path);
- 	return 0;
- }
-diff --git a/cache.h b/cache.h
-index 6fda8091f1..41e30c0da2 100644
---- a/cache.h
-+++ b/cache.h
-@@ -832,6 +832,14 @@ int remove_file_from_index(struct index_state *, const char *path);
- int add_to_index(struct index_state *, const char *path, struct stat *, int flags);
- int add_file_to_index(struct index_state *, const char *path, int flags);
+ #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
  
-+#define ADD_TO_INDEX_CACHEINFO_INVALID_PATH (-1)
-+#define ADD_TO_INDEX_CACHEINFO_UNABLE_TO_ADD (-2)
-+
-+int add_to_index_cacheinfo(struct index_state *, unsigned int mode,
-+			   const struct object_id *oid, const char *path,
-+			   int stage, int allow_add, int allow_replace,
-+			   struct cache_entry **ce_ret);
-+
- int chmod_index_entry(struct index_state *, struct cache_entry *ce, char flip);
- int ce_same_name(const struct cache_entry *a, const struct cache_entry *b);
- void set_object_name_for_intent_to_add_entry(struct cache_entry *ce);
-diff --git a/read-cache.c b/read-cache.c
-index 1e9a50c6c7..b514523ca1 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1350,6 +1350,41 @@ int add_index_entry(struct index_state *istate, struct cache_entry *ce, int opti
- 	return 0;
- }
+@@ -2049,9 +2050,16 @@ static int do_pick_commit(struct repository *r,
  
-+int add_to_index_cacheinfo(struct index_state *istate, unsigned int mode,
-+			   const struct object_id *oid, const char *path,
-+			   int stage, int allow_add, int allow_replace,
-+			   struct cache_entry **ce_ret)
-+{
-+	int len, option;
-+	struct cache_entry *ce;
+ 		commit_list_insert(base, &common);
+ 		commit_list_insert(next, &remotes);
+-		res |= try_merge_command(r, opts->strategy,
+-					 opts->xopts_nr, (const char **)opts->xopts,
+-					common, oid_to_hex(&head), remotes);
 +
-+	if (!verify_path(path, mode))
-+		return ADD_TO_INDEX_CACHEINFO_INVALID_PATH;
++		if (!strcmp(opts->strategy, "resolve")) {
++			repo_read_index(r);
++			res |= merge_strategies_resolve(r, common, oid_to_hex(&head), remotes);
++		} else {
++			res |= try_merge_command(r, opts->strategy,
++						 opts->xopts_nr, (const char **)opts->xopts,
++						 common, oid_to_hex(&head), remotes);
++		}
 +
-+	len = strlen(path);
-+	ce = make_empty_cache_entry(istate, len);
-+
-+	oidcpy(&ce->oid, oid);
-+	memcpy(ce->name, path, len);
-+	ce->ce_flags = create_ce_flags(stage);
-+	ce->ce_namelen = len;
-+	ce->ce_mode = create_ce_mode(mode);
-+	if (assume_unchanged)
-+		ce->ce_flags |= CE_VALID;
-+	option = allow_add ? ADD_CACHE_OK_TO_ADD : 0;
-+	option |= allow_replace ? ADD_CACHE_OK_TO_REPLACE : 0;
-+
-+	if (add_index_entry(istate, ce, option)) {
-+		discard_cache_entry(ce);
-+		return ADD_TO_INDEX_CACHEINFO_UNABLE_TO_ADD;
-+	}
-+
-+	if (ce_ret)
-+		*ce_ret = ce;
-+
-+	return 0;
-+}
-+
- /*
-  * "refresh" does not calculate a new sha1 file or bring the
-  * cache up-to-date for mode/content changes. But what it
+ 		free_commit_list(common);
+ 		free_commit_list(remotes);
+ 	}
 -- 
 2.31.0
 
