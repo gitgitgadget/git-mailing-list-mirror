@@ -2,73 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_05,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BC419C433E0
-	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 10:24:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4295C4332B
+	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 11:02:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6393964E09
-	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 10:24:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7A49564F75
+	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 11:02:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229720AbhCQKXf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Mar 2021 06:23:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58122 "EHLO
+        id S231224AbhCQLCL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Mar 2021 07:02:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38520 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229817AbhCQKXC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Mar 2021 06:23:02 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D69E3C06174A
-        for <git@vger.kernel.org>; Wed, 17 Mar 2021 03:23:01 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id ci14so1680793ejc.7
-        for <git@vger.kernel.org>; Wed, 17 Mar 2021 03:23:01 -0700 (PDT)
+        with ESMTP id S231191AbhCQLBv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Mar 2021 07:01:51 -0400
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AB59C06174A
+        for <git@vger.kernel.org>; Wed, 17 Mar 2021 04:01:40 -0700 (PDT)
+Received: by mail-pj1-x1029.google.com with SMTP id x7-20020a17090a2b07b02900c0ea793940so3022189pjc.2
+        for <git@vger.kernel.org>; Wed, 17 Mar 2021 04:01:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=duel.me; s=google;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=3J/Yo98J/EVhgvjyvMcCvFkCFjDggNsFYUCanVfNaco=;
-        b=MX6FFe5I/Pw46ZFipzHigCVtRHLE8kitWhMidt4WErlMIhEE7pnZQ+0kHEvOSGzsy3
-         pE8SaU+pIKLTCTMiSqMJBmjz8Ok0iURV+qQ+vQ9LpmABZyGiUVgtLm6U6f4QaPPVdxIP
-         1N8JPRr6n95ZnZySRCwc6fDweA0ags5IyeE6rJRiZnnhaD64g0byxJxNnTx0PWqN21bq
-         0GDxujgULkeLKH+gsCsR9NKv9AQ1oN6ts8pkSjiSQzXXjQzOIJhi/R/o6Hek+b84TQQt
-         zyU2fB53F0olTgYkcy6W5Abs0QMYQe/r3kJNMR9pUAkleVqtT/3nsRzLywxaSm2IcrIP
-         8cxg==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=MDMB0YIr59wDFgXeTymwWYZIYusJTr1pXR+hbNE1O+w=;
+        b=Y8Wz/9rCpeRfJWPaobJDLF3CQheJtXkCtieEHSrpHvOmh/LwZ1Umd7ca5vzxDUMiz4
+         jrXf9hssRirqQ6ANdWVkUC8TyvhEwBQkZAEVYk0NLpooz1FP3O+JPiPpZfniE8t0e8TL
+         /P/uVtGvxM8YqCxRxXwMSUbau7JGaKS8gor1byeJyc2bFqu0LlsuIxPI6SCri8J1HO5W
+         +WGfGl6vKeit4xGpptDK8tlD3xUO7j4wKkYVgLLVR0hEsebaj9Ce/pYFs5/y5JFAcqiu
+         8l3E996iZ4jUDyFLdLKZjQK6Vw1qV0Wq+ifIA3LjR/lrO1tHMxxOUnOhGf1owiDZPG5u
+         ZXEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=3J/Yo98J/EVhgvjyvMcCvFkCFjDggNsFYUCanVfNaco=;
-        b=CVqsLlSt9Ky0HzcJ+YC86iez++iYjHAG2W0kgRAf+oIH3WhU0Pa/7DCNBP+SHKbVOE
-         C4a4TvEhhqXacOEUOcc/tn6Zt4HOef3ruZ2kyjiLSNkQgpeFj7Qq1QWjsXpA0m0imBBc
-         Uh9+xT0zRERLlGaUfX5cp40F4n9n+/w9Z6sutsjXjeFip+f5Jg2Y0T1fbnGquDs7Ny65
-         18u+608zydoJ4dh9GXQtlW5p4aB2Z1uieICWynKnOV/W9Ri4itbhOyLZFUEAyIzm4S7a
-         godNJtfiXuNAw7WAByqt+Ia0FSxm98FN0/njBYlYsd93XerX+DZPK9iI1ZoyTIAj+kqj
-         A0Dw==
-X-Gm-Message-State: AOAM531E4rM7nqrPbXC0ZFoa3DY1szPoQ9CWboK2gSARTxVGFI+jHKoZ
-        gIocS/dPSf7AyV+SUlr16kNXqF0W92tdlIdYJN1tUxqygdqksg==
-X-Google-Smtp-Source: ABdhPJxHv6HUozI0t9mn0dZkupljDyhPBhBiN6ZPuK6y3Li11BHVYw81WTuqopzDtCNfH1EBwDKmzjqs0ANgomLPJm0=
-X-Received: by 2002:a17:906:4150:: with SMTP id l16mr34874872ejk.90.1615976580522;
- Wed, 17 Mar 2021 03:23:00 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=MDMB0YIr59wDFgXeTymwWYZIYusJTr1pXR+hbNE1O+w=;
+        b=Y/jLg08MjrOOE9YS4848osUBfW6mfF6YNoma24D0PPtfBijN1dgmRyHZtMAUpDJkbT
+         w9WaI0tAIahB9CxUHcGpd2T6ozX3xMYAnL/cEHxv2ieeuGQVhHgP9Vg2UkcRW6V+Yv+H
+         veTHJpcRP46iq2C+o3mGpjeJsWYMEQSc+DLPmGCgmu0MQTGNw5d8/awof4c5kvbWcfOt
+         gZRmznh1tHxJOSG3j9RfZZxutwUyl1qyTipkCXXj5TgvSOPlChEew6YqQCBfpnN8BN0J
+         uYqGNyMluuGxTnd2tb9CN2CuUsK2UjDQra4m/sDe942Y1phkvwx9j722vnNDHfzPKjfw
+         Ewlw==
+X-Gm-Message-State: AOAM531QugjIeNUBP/MYCChsr/MAcu7Tmq7bx/VsHhis9RoNxRKgo+O/
+        dyiJM78QWtRVYFnodJjDd4TCX7HK/fuxxPGq
+X-Google-Smtp-Source: ABdhPJw0Qx7iGeZ8cjIsYEwfH+Wn7AXRpJ2DSt7w6UIKxpeZSRxFn3nqGzvQHQgshs1iBodPiVba7Q==
+X-Received: by 2002:a17:90a:1696:: with SMTP id o22mr3959913pja.0.1615978899885;
+        Wed, 17 Mar 2021 04:01:39 -0700 (PDT)
+Received: from [192.168.43.80] (subs02-180-214-232-82.three.co.id. [180.214.232.82])
+        by smtp.gmail.com with ESMTPSA id gk12sm2392839pjb.44.2021.03.17.04.01.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 17 Mar 2021 04:01:38 -0700 (PDT)
+Subject: Re: [PATCH 0/7] Sort lists and add static-analysis
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <cover.1615856156.git.liu.denton@gmail.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <f720a673-e477-3c77-a722-a780ff73a461@gmail.com>
+Date:   Wed, 17 Mar 2021 18:01:33 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
 MIME-Version: 1.0
-From:   Pete Boere <pete@duel.me>
-Date:   Wed, 17 Mar 2021 10:22:50 +0000
-Message-ID: <CAF8W_bFzE8strSWc0_eABdyfCxA+0CA6ph_uXgSyT7YRU-jO6A@mail.gmail.com>
-Subject: Re: Extra blank lines in "git status" output have been reduced
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <cover.1615856156.git.liu.denton@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-With the release of v2.23 I have noticed from the commit:
-7b098429355bb3271f9ffdf73b97f2ef82794fea
+On 16/03/21 07.56, Denton Liu wrote:
+> As a follow-up to [0], sort some file lists and create a static-analysis
+> check to ensure that those lists don't ever become un-sorted.
+> 
+> [0]: https://lore.kernel.org/git/nycvar.QRO.7.76.6.2010081156350.50@tvgsbejvaqbjf.bet/
 
-With message:
-"Extra blank lines in "git status" output have been reduced."
+Remark for future patches that touch these file lists: please try to keep the ASCII
+sort order when adding something.
 
-https://git.furworks.de/opensourcemirror/git/commit/7b098429355bb3271f9ffdf73b97f2ef82794fea
+But anyways, grazie Denton.
 
-Is there any chance of adding them back? The changed layout has been
-throwing me off ever since upgrading.
+> Denton Liu (7):
+>    Makefile: mark 'check-builtins' as a .PHONY target
+>    Makefile: ASCII-sort LIB_OBJS
+>    builtin.h: ASCII-sort list of functions
+>    test-tool.h: ASCII-sort list of functions
+>    Makefile: add 'check-sort' target
+>    ci/run-static-analysis.sh: make check-builtins
+>    ci/run-static-analysis.sh: make check-sort
+> 
+>   Makefile                  | 30 ++++++++++++++++++++++++++++--
+>   builtin.h                 | 22 +++++++++++-----------
+>   check-sort.perl           | 31 +++++++++++++++++++++++++++++++
+>   ci/run-static-analysis.sh |  2 +-
+>   t/helper/test-tool.h      |  6 +++---
+>   5 files changed, 74 insertions(+), 17 deletions(-)
+>   create mode 100755 check-sort.perl
+> 
 
-Thanks
-Pete Boere
+-- 
+An old man doll... just what I always wanted! - Clara
