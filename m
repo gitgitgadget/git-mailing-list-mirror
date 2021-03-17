@@ -7,320 +7,358 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 09662C433E0
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 657D9C43381
 	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 21:13:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BAEC264F21
+	by mail.kernel.org (Postfix) with ESMTP id 0AD7B61574
 	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 21:13:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231151AbhCQVNJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Mar 2021 17:13:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57650 "EHLO
+        id S233544AbhCQVNM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Mar 2021 17:13:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57672 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229460AbhCQVMi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Mar 2021 17:12:38 -0400
-Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 456B1C06174A
-        for <git@vger.kernel.org>; Wed, 17 Mar 2021 14:12:38 -0700 (PDT)
-Received: by mail-qk1-x72b.google.com with SMTP id t4so40505844qkp.1
-        for <git@vger.kernel.org>; Wed, 17 Mar 2021 14:12:38 -0700 (PDT)
+        with ESMTP id S230080AbhCQVMm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Mar 2021 17:12:42 -0400
+Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A78C6C06174A
+        for <git@vger.kernel.org>; Wed, 17 Mar 2021 14:12:42 -0700 (PDT)
+Received: by mail-qk1-x72c.google.com with SMTP id d20so40483512qkc.2
+        for <git@vger.kernel.org>; Wed, 17 Mar 2021 14:12:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp.br; s=usp-google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=khypbYbH+TPTKQyznBxaIP8Vxyo+9tWq0ssJVMs5nxk=;
-        b=ND4fL2qpCoeCugU68V5pMflNkRAUYHBhPhOupaKF2R9bBybmkT7A0cJJP7s1Srr7Xc
-         3Cl/Xrwb3jOjuQrxIytufPZ726OyyhAfMJT3MNhp2Nfa4th1ec+EVY5V2DYki/vmqKUg
-         rnkUq/DYcWmJelj12HSdsITWEyNAEP7Xydd8lySaWjK40CXsKJjW+oRXrUmimyEkG2UZ
-         Z1pjWJQAsCvfnDGhmv42IlVedtxUsYfaN/3GVGMENGcps4oGyzcXqP7NdGr01zG+Y87g
-         2prVs9gqnGe2BDKA8N8mPVOyWPLznUN2jar7W0ZiagyHajs54C/DWzFyG4sCR3DHhZcR
-         mcDQ==
+        bh=eHATZFn2z6Qgv9FfvO7Vu5nlW3Zqxc9+fTe7Jv24OEc=;
+        b=kWxBdT+urN3byXagNLhLLDcbqcYKc4elIWuuSLzNAWjK67PdbCcFqv3nYNJDdniIf9
+         MBJ5sNnqqKjexm/o9fKHCQ3jJnCJWmgANLkUhzKUkUW7qgaN1aR9UpMn/k9UsmfRemL5
+         m8T7mw8wmasa5Uls38t36oL9VQZElp8x/9FcdzHsAJXApZEInSCfD+nwI6U/LHxZeMjw
+         xzJwAu92tsHY9PAu6jFzkB4EGcD68UMD3asLXwATHdN1aXESlmr8zYnEMnuCoC8Rs2s+
+         myA3KDl6gF1j0qSWr1gOXB3nXBn/5XRcXgPPWexjHVBs5fVpKTpKktdbyGSzwlkwGDuR
+         /m3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=khypbYbH+TPTKQyznBxaIP8Vxyo+9tWq0ssJVMs5nxk=;
-        b=cv+chWPCP7iHTfGMp/A7wPnfnE2nCATC+bxk8bgTRD0s0sVeDWosBrffTjkxum78aK
-         K1puSuUzzZ3la9JVGEXVy5U7i8ZR7ujiwHs9Pba54L9y3C3c01NQzOZV0KbzCFhnb1mP
-         Wg2ZNk7SZOblZgugd9+IefJGcf3LaXpZkDriOwnLwB40yF08xRjsndc8HNp5F83ffQbB
-         cKWxKIX7SqAiq7FEYFyD1N2QwCDjT7Y8go9VvdzMy6Q+yxK0PA7jZTeluLqYlhXsZL6i
-         4MgwW3olzbjAT6IdybbIBEr6w/kLsITPN5Iglb8RUc4SfYcnK+CsyrHgsobTplzPVqsL
-         crPg==
-X-Gm-Message-State: AOAM533Sz6TL9rKwqzKQq8tYo548IyI8lY1l439aB28EuBo18y8tb2IN
-        3SXaVaK//PpVHy/24p0PGNpYZ+FX91ltsA==
-X-Google-Smtp-Source: ABdhPJwjSQEQMVjXkMArkSEUmF8eY4WH533DCY3lQ2N9w4XHZ57ws1B0oNfk7TveBe6y1eHbXaqX2w==
-X-Received: by 2002:a05:620a:15b7:: with SMTP id f23mr1282056qkk.58.1616015556872;
-        Wed, 17 Mar 2021 14:12:36 -0700 (PDT)
+        bh=eHATZFn2z6Qgv9FfvO7Vu5nlW3Zqxc9+fTe7Jv24OEc=;
+        b=NwvhyELewOL87DZuv+aKQ2T2kbpAC6Gpy4InGJ8z3HxlHZrTeKzjZXK/kYvTobbVd+
+         ayShaDtHspfoRo9YBASifDTA5GNfDhR4wOuPGS/mPF1Qg+EI1N/Ri0v/HaQ+fQsmGjoU
+         2fnre1bzxzrDLXBndrRkyVCLfvRXEA3rClc7ym3xPiwWanYLbH/0eA/IsumOKI6FMU/D
+         GLO40SOir/KU4TYvvzWyFxzY6tKLeGoHpa9vbB5GJk97dHeoF9no5AIEHuTvQTgz/h44
+         HDwf4+Cn9LAZZPNdQVQ4C2gnKLenHfovPufWsgbjqIjezlRGSjZdqw/FxKOt9bmRH+Hb
+         HaxQ==
+X-Gm-Message-State: AOAM530JiUC+R0hrS3mmgenhk29l+Myq8zzobSKceUXXTK2FnAPyZv2B
+        xh+JNAkOKWnJ/P7dxc7FNK6bjH2g0jzy0w==
+X-Google-Smtp-Source: ABdhPJxmp4L3SIo1g+KF46RGQhmn7xSzdFRJYjs7sjQeNkQe3QUmZcpz60hjDCLVyFruoXi4uvhZ/Q==
+X-Received: by 2002:a05:620a:641:: with SMTP id a1mr1198367qka.257.1616015561078;
+        Wed, 17 Mar 2021 14:12:41 -0700 (PDT)
 Received: from mango.meuintelbras.local ([177.32.118.149])
-        by smtp.gmail.com with ESMTPSA id f9sm131138qkk.115.2021.03.17.14.12.35
+        by smtp.gmail.com with ESMTPSA id f9sm131138qkk.115.2021.03.17.14.12.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Mar 2021 14:12:36 -0700 (PDT)
+        Wed, 17 Mar 2021 14:12:40 -0700 (PDT)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
 Cc:     christian.couder@gmail.com, gitster@pobox.com,
         git@jeffhostetler.com
-Subject: [PATCH 3/5] parallel-checkout: add configuration options
-Date:   Wed, 17 Mar 2021 18:12:21 -0300
-Message-Id: <8c83e92445b4131e9b8f8e2aa29b00717b257d13.1616015337.git.matheus.bernardino@usp.br>
+Subject: [PATCH 5/5] parallel-checkout: add design documentation
+Date:   Wed, 17 Mar 2021 18:12:23 -0300
+Message-Id: <0592740ec14c4ab72b8d46a7fecf1c66e7a497fd.1616015337.git.matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.30.1
 In-Reply-To: <cover.1616015337.git.matheus.bernardino@usp.br>
 References: <cover.1616015337.git.matheus.bernardino@usp.br>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Make parallel checkout configurable by introducing two new settings:
-checkout.workers and checkout.thresholdForParallelism. The first defines
-the number of workers (where one means sequential checkout), and the
-second defines the minimum number of entries to attempt parallel
-checkout.
-
-To decide the default value for checkout.workers, the parallel version
-was benchmarked during three operations in the linux repo, with cold
-cache: cloning v5.8, checking out v5.8 from v2.6.15 (checkout I) and
-checking out v5.8 from v5.7 (checkout II). The four tables below show
-the mean run times and standard deviations for 5 runs in: a local file
-system on SSD, a local file system on HDD, a Linux NFS server, and
-Amazon EFS (all on Linux). Each parallel checkout test was executed with
-the number of workers that brings the best overall results in that
-environment.
-
-Local SSD:
-             Sequential             10 workers            Speedup
-Clone        8.805 s ± 0.043 s      3.564 s ± 0.041 s     2.47 ± 0.03
-Checkout I   9.678 s ± 0.057 s      4.486 s ± 0.050 s     2.16 ± 0.03
-Checkout II  5.034 s ± 0.072 s      3.021 s ± 0.038 s     1.67 ± 0.03
-
-Local HDD:
-             Sequential             10 workers             Speedup
-Clone        32.288 s ± 0.580 s     30.724 s ± 0.522 s    1.05 ± 0.03
-Checkout I   54.172 s ±  7.119 s    54.429 s ± 6.738 s    1.00 ± 0.18
-Checkout II  40.465 s ± 2.402 s     38.682 s ± 1.365 s    1.05 ± 0.07
-
-Linux NFS server (v4.1, on EBS, single availability zone):
-
-             Sequential             32 workers            Speedup
-Clone        240.368 s ± 6.347 s    57.349 s ± 0.870 s    4.19 ± 0.13
-Checkout I   242.862 s ± 2.215 s    58.700 s ± 0.904 s    4.14 ± 0.07
-Checkout II  65.751 s ± 1.577 s     23.820 s ± 0.407 s    2.76 ± 0.08
-
-EFS (v4.1, replicated over multiple availability zones):
-
-             Sequential             32 workers            Speedup
-Clone        922.321 s ± 2.274 s    210.453 s ± 3.412 s   4.38 ± 0.07
-Checkout I   1011.300 s ± 7.346 s   297.828 s ± 0.964 s   3.40 ± 0.03
-Checkout II  294.104 s ± 1.836 s    126.017 s ± 1.190 s   2.33 ± 0.03
-
-The above benchmarks show that parallel checkout is most effective on
-repositories located on an SSD or over a distributed file system. For
-local file systems on spinning disks, and/or older machines, the
-parallelism does not always bring a good performance. For this reason,
-the default value for checkout.workers is one, a.k.a. sequential
-checkout.
-
-To decide the default value for checkout.thresholdForParallelism,
-another benchmark was executed in the "Local SSD" setup, where parallel
-checkout showed to be beneficial. This time, we compared the runtime of
-a `git checkout -f`, with and without parallelism, after randomly
-removing an increasing number of files from the Linux working tree. The
-"sequential fallback" column bellow corresponds to the executions where
-checkout.workers was 10 but checkout.thresholdForParallelism was equal
-to the number of to-be-updated files plus one (so that we end up writing
-sequentially). Each test case was sampled 15 times, and each sample had
-a randomly different set of files removed. Here are the results:
-
-             sequential fallback   10 workers           speedup
-10   files    772.3 ms ± 12.6 ms   769.0 ms ± 13.6 ms   1.00 ± 0.02
-20   files    780.5 ms ± 15.8 ms   775.2 ms ±  9.2 ms   1.01 ± 0.02
-50   files    806.2 ms ± 13.8 ms   767.4 ms ±  8.5 ms   1.05 ± 0.02
-100  files    833.7 ms ± 21.4 ms   750.5 ms ± 16.8 ms   1.11 ± 0.04
-200  files    897.6 ms ± 30.9 ms   730.5 ms ± 14.7 ms   1.23 ± 0.05
-500  files   1035.4 ms ± 48.0 ms   677.1 ms ± 22.3 ms   1.53 ± 0.09
-1000 files   1244.6 ms ± 35.6 ms   654.0 ms ± 38.3 ms   1.90 ± 0.12
-2000 files   1488.8 ms ± 53.4 ms   658.8 ms ± 23.8 ms   2.26 ± 0.12
-
-From the above numbers, 100 files seems to be a reasonable default value
-for the threshold setting.
-
-Note: Up to 1000 files, we observe a drop in the execution time of the
-parallel code with an increase in the number of files. This is a rather
-odd behavior, but it was observed in multiple repetitions. Above 1000
-files, the execution time increases according to the number of files, as
-one would expect.
-
-About the test environments: Local SSD tests were executed on an
-i7-7700HQ (4 cores with hyper-threading) running Manjaro Linux. Local
-HDD tests were executed on an Intel(R) Xeon(R) E3-1230 (also 4 cores
-with hyper-threading), HDD Seagate Barracuda 7200.14 SATA 3.1, running
-Debian. NFS and EFS tests were executed on an Amazon EC2 c5n.xlarge
-instance, with 4 vCPUs. The Linux NFS server was running on a m6g.large
-instance with 2 vCPUSs and a 1 TB EBS GP2 volume. Before each timing,
-the linux repository was removed (or checked out back to its previous
-state), and `sync && sysctl vm.drop_caches=3` was executed.
-
 Co-authored-by: Jeff Hostetler <jeffhost@microsoft.com>
 Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
 ---
- Documentation/config/checkout.txt | 21 +++++++++++++++++++++
- parallel-checkout.c               | 23 ++++++++++++++++++-----
- parallel-checkout.h               |  9 +++++++--
- unpack-trees.c                    | 10 +++++++---
- 4 files changed, 53 insertions(+), 10 deletions(-)
+ Documentation/Makefile                        |   1 +
+ Documentation/technical/parallel-checkout.txt | 262 ++++++++++++++++++
+ 2 files changed, 263 insertions(+)
+ create mode 100644 Documentation/technical/parallel-checkout.txt
 
-diff --git a/Documentation/config/checkout.txt b/Documentation/config/checkout.txt
-index 2cddf7b4b4..bfbca90f0e 100644
---- a/Documentation/config/checkout.txt
-+++ b/Documentation/config/checkout.txt
-@@ -21,3 +21,24 @@ checkout.guess::
- 	Provides the default value for the `--guess` or `--no-guess`
- 	option in `git checkout` and `git switch`. See
- 	linkgit:git-switch[1] and linkgit:git-checkout[1].
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 81d1bf7a04..af236927c9 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -90,6 +90,7 @@ TECH_DOCS += technical/multi-pack-index
+ TECH_DOCS += technical/pack-format
+ TECH_DOCS += technical/pack-heuristics
+ TECH_DOCS += technical/pack-protocol
++TECH_DOCS += technical/parallel-checkout
+ TECH_DOCS += technical/partial-clone
+ TECH_DOCS += technical/protocol-capabilities
+ TECH_DOCS += technical/protocol-common
+diff --git a/Documentation/technical/parallel-checkout.txt b/Documentation/technical/parallel-checkout.txt
+new file mode 100644
+index 0000000000..c7f6570f1c
+--- /dev/null
++++ b/Documentation/technical/parallel-checkout.txt
+@@ -0,0 +1,262 @@
++Parallel Checkout Design Notes
++==============================
 +
-+checkout.workers::
-+	The number of parallel workers to use when updating the working tree.
-+	The default is one, i.e. sequential execution. If set to a value less
-+	than one, Git will use as many workers as the number of logical cores
-+	available. This setting and `checkout.thresholdForParallelism` affect
-+	all commands that perform checkout. E.g. checkout, clone, reset,
-+	sparse-checkout, etc.
++The "Parallel Checkout" feature attempts to use multiple processes to
++parallelize the work of uncompressing, smudging, and writing blobs
++during a checkout operation. It can be used by all checkout-related
++commands, such as `clone`, `checkout`, `reset`, `sparse-checkout`, and
++others.
++
++These commands share the following basic structure:
++
++* Step 1: Read the current index file into memory.
++
++* Step 2: Modify the in-memory index based upon the command, and
++  temporarily mark all cache entries that need to be updated.
++
++* Step 3: Populate the working tree to match the new candidate index.
++  This includes iterating over all of the to-be-updated cache entries
++  and delete, create, or overwrite the associated files in the working
++  tree.
++
++* Step 4: Write the new index to disk.
++
++Step 3 is the focus of the "parallel checkout" effort described here.
++It dominates the execution time for most of the above command types.
++
++Sequential Implementation
++-------------------------
++
++For the purposes of discussion here, the current sequential
++implementation of Step 3 has 3 layers:
++
++* Step 3a: `unpack-trees.c:check_updates()` contains a series of
++  sequential loops iterating over the `cache_entry`'s array. The main
++  loop in this function calls the next layer for each of the
++  to-be-updated entries.
++
++* Step 3b: `entry.c:checkout_entry()` examines the existing working tree
++  for file conflicts, collisions, and unsaved changes. It removes files
++  and create leading directories as necessary. It calls the next layer
++  for each entry to be written.
++
++* Step 3c: `entry.c:write_entry()` loads the blob into memory, smudges
++  it if necessary, creates the file in the working tree, writes the
++  smudged contents, calls `fstat()` or `lstat()`, and updates the
++  associated `cache_entry` struct with the stat information gathered.
++
++It wouldn't be safe to perform Step 3b in parallel, as there could be
++race conditions between file creations and removals. Instead, the
++parallel checkout framework lets the sequential code handle Step 3b,
++and use parallel workers to replace the sequential
++`entry.c:write_entry()` calls from Step 3c.
++
++Rejected Multi-Threaded Solution
++--------------------------------
++
++The most "straightforward" implementation would be to spread the set of
++to-be-updated cache entries across multiple threads. But due to the
++thread-unsafe functions in the ODB code, we would have to use locks to
++coordinate the parallel operation. An early prototype of this solution
++showed that the multi-threaded checkout would bring performance
++improvements over the sequential code, but there was still too much lock
++contention. A `perf` profiling indicated that around 20% of the runtime
++during a local Linux clone (on an SSD) was spent in locking functions.
++For this reason this approach was rejected in favor of using multiple
++child processes, which led to a better performance.
++
++Multi-Process Solution
++----------------------
++
++Parallel checkout alters the aforementioned Step 3 to use multiple
++`checkout--helper` background processes to distribute the work. The
++long-running worker processes are controlled by the foreground Git
++command using the existing run-command API.
++
++Overview
++~~~~~~~~
++
++Step 3b is only slightly altered; for each entry to be checked out, the
++main process:
++
++* M1: Checks whether there is any untracked or unclean file in the
++  working tree which would be overwritten by this entry, and decides
++  whether to proceed (removing the file(s)) or not.
++
++* M2: Creates the leading directories.
++
++* M3: Loads the conversion attributes for the entry's path.
++
++* M4: Checks, based on the entry's type and conversion attributes,
++  whether the entry is eligible for parallel checkout (more on this
++  later). If it is eligible, enqueues the entry and the loaded
++  attributes to later write the entry in parallel. If not, writes the
++  entry right away, using the default sequential code.
++
++Note: we save the conversion attributes associated with each entry
++because the workers don't have access to the main process' index state,
++so they can't load the attributes by themselves (and the attributes are
++needed to properly smudge the entry). Additionally, this has a positive
++impact on performance as (1) we don't need to load the attributes twice
++and (2) the attributes machinery is optimized to handle paths in
++sequential order.
++
++After all entries have passed through the above steps, the main process
++checks if the number of enqueued entries is sufficient to spread among
++the workers. If not, it just writes them sequentially. Otherwise, it
++spawns the workers and distributes the queued entries uniformly in
++continuous chunks. This aims to minimize the chances of two workers
++writing to the same directory simultaneously, which could increase lock
++contention in the kernel.
++
++Then, for each assigned item, each worker:
++
++* W1: Checks if there is any non-directory file in the leading part of
++  the entry's path or if there already exists a file at the entry' path.
++  If so, mark the entry with `PC_ITEM_COLLIDED` and skip it (more on
++  this later).
++
++* W2: Creates the file (with O_CREAT and O_EXCL).
++
++* W3: Loads the blob into memory (inflating and delta reconstructing
++  it).
++
++* W4: Filters the blob.
++
++* W5: Writes the result to the file descriptor opened at W2.
++
++* W6: Calls `fstat()` or lstat()` on the just-written path, and sends
++  the result back to the main process, together with the end status of
++  the operation and the item's identification number.
++
++Note that steps W3 to W5 might actually be performed together, using the
++streaming interface.
++
++Also note that the workers *never* remove any files. As mentioned
++earlier, it is the responsibility of the main process to remove any
++files that block the checkout operation (or abort it). This is crucial
++to avoid race conditions and also to properly detect path collisions at
++Step W1.
++
++After the workers finish writing the items and sending back the required
++information, the main process handles the results in two steps:
++
++- First, it updates the in-memory index with the `lstat()` information
++  sent by the workers. (This must be done first as this information
++  might me required in the following step.)
++
++- Then it writes the items which collided on disk (i.e. items marked
++  with `PC_ITEM_COLLIDED`). More on this below.
++
++Path Collisions
++---------------
++
++Path collisions happen when two different paths correspond to the same
++entry in the file system. E.g. the paths 'a' and 'A' would collide in a
++case-insensitive file system.
++
++The sequential checkout deals with collisions in the same way that it
++deals with files that were already present in the working tree before
++checkout. Basically, it checks if the path that it wants to write
++already exists on disk, makes sure the existing file doesn't have
++unsaved data, and then overwrite it. (To be more pedantic: it deletes
++the existing file and creates the new one.) So, if there are multiple
++colliding files to be checked out, the sequential code will write each
++one of them but only the last will actually survive on disk.
++
++Parallel checkout aims to reproduce the same behavior. However, we
++cannot let the workers racily write to the same file on disk. Instead,
++the workers detect when the entry that they want to check out would
++collide with an existing file, and mark it with `PC_ITEM_COLLIDED`.
++Later, the main process can sequentially feed these entries back to
++`checkout_entry()` without the risk of race conditions. On clone, this
++also has the effect of marking the colliding entries to later emit a
++warning for the user, like the classic sequential checkout does.
++
++The workers are able to detect both collisions among the entries being
++concurrently written and collisions among parallel-eligible and
++ineligible entries. The general idea for collision detection is quite
++straightforward: for each parallel-eligible entry, the main process must
++remove all files that prevent this entry from being written (before
++enqueueing it). This includes any non-directory file in the leading path
++of the entry. Later, when a worker gets assigned the entry, it looks
++again for the non-directories files and for an already existent file at
++the entry's path. If any of these checks finds something, the worker
++knows that there was a path collision.
++
++Because parallel checkout can distinguish path collisions from the case
++where the file was already present in the working tree before checkout,
++we could alternatively choose to skip the checkout of colliding entries.
++However, each entry that doesn't get written would have NULL `lstat()`
++fields on the index. This could cause performance penalties for
++subsequent commands that need to refresh the index, as they would have
++to go to the file system to see if the entry is dirty. Thus, if we have
++N entries in a colliding group and we decide to write and `lstat()` only
++one of them, every subsequent `git-status` will have to read, convert,
++and hash the written file N - 1 times. By checking out all colliding
++entries (like the sequential code does), we only pay the overhead once,
++during checkout.
++
++Eligible Entries for Parallel Checkout
++--------------------------------------
++
++As previously mentioned, not all entries passed to `checkout_entry()`
++will be considered eligible for parallel checkout. More specifically, we
++exclude:
++
++- Symbolic links; to avoid race conditions that, in combination with
++  path collisions, could cause workers to write files at the wrong
++  place. For example, if we were to concurrently check out a symlink
++  'a' -> 'b' and a regular file 'A/f' in a case-insensitive file system,
++  we could potentially end up writing the file 'A/f' at 'a/f', due to a
++  race condition.
++
++- Regular files that require external filters (either "one shot" filters
++  or long-running process filters). These filters are black-boxes to Git
++  and may have their own internal locking or non-concurrent assumptions.
++  So it might not be safe to run multiple instances in parallel.
 ++
-+Note: parallel checkout usually delivers better performance for repositories
-+located on SSDs or over NFS. For repositories on spinning disks and/or machines
-+with a small number of cores, the default sequential checkout often performs
-+better. The size and compression level of a repository might also influence how
-+well the parallel version performs.
++Besides, long-running filters may use the delayed checkout feature to
++postpone the return of some filtered blobs. The delayed checkout queue
++and the parallel checkout queue are not compatible and should remain
++separated.
 +
-+checkout.thresholdForParallelism::
-+	When running parallel checkout with a small number of files, the cost
-+	of subprocess spawning and inter-process communication might outweigh
-+	the parallelization gains. This setting allows to define the minimum
-+	number of files for which parallel checkout should be attempted. The
-+	default is 100.
-diff --git a/parallel-checkout.c b/parallel-checkout.c
-index df447aa3a6..92f3872653 100644
---- a/parallel-checkout.c
-+++ b/parallel-checkout.c
-@@ -1,9 +1,11 @@
- #include "cache.h"
-+#include "config.h"
- #include "entry.h"
- #include "parallel-checkout.h"
- #include "pkt-line.h"
- #include "run-command.h"
- #include "streaming.h"
-+#include "thread-utils.h"
- 
- struct pc_worker {
- 	struct child_process cp;
-@@ -23,6 +25,19 @@ enum pc_status parallel_checkout_status(void)
- 	return parallel_checkout.status;
- }
- 
-+#define DEFAULT_THRESHOLD_FOR_PARALLELISM 100
++Ineligible entries are checked out by the classic sequential codepath
++*before* spawning workers.
 +
-+void get_parallel_checkout_configs(int *num_workers, int *threshold)
-+{
-+	if (git_config_get_int("checkout.workers", num_workers))
-+		*num_workers = 1;
-+	else if (*num_workers < 1)
-+		*num_workers = online_cpus();
++Note: submodules's files are also eligible for parallel checkout (as
++long as they don't fall into the two excluding categories mentioned
++above). But since each submodule is checked out in its own child
++process, we don't mix the superproject's and the submodules' files in
++the same parallel checkout process or queue.
 +
-+	if (git_config_get_int("checkout.thresholdForParallelism", threshold))
-+		*threshold = DEFAULT_THRESHOLD_FOR_PARALLELISM;
-+}
++The API
++-------
 +
- void init_parallel_checkout(void)
- {
- 	if (parallel_checkout.status != PC_UNINITIALIZED)
-@@ -554,11 +569,9 @@ static void write_items_sequentially(struct checkout *state)
- 		write_pc_item(&parallel_checkout.items[i], state);
- }
- 
--#define DEFAULT_NUM_WORKERS 2
--
--int run_parallel_checkout(struct checkout *state)
-+int run_parallel_checkout(struct checkout *state, int num_workers, int threshold)
- {
--	int ret, num_workers = DEFAULT_NUM_WORKERS;
-+	int ret;
- 
- 	if (parallel_checkout.status != PC_ACCEPTING_ENTRIES)
- 		BUG("cannot run parallel checkout: uninitialized or already running");
-@@ -568,7 +581,7 @@ int run_parallel_checkout(struct checkout *state)
- 	if (parallel_checkout.nr < num_workers)
- 		num_workers = parallel_checkout.nr;
- 
--	if (num_workers <= 1) {
-+	if (num_workers <= 1 || parallel_checkout.nr < threshold) {
- 		write_items_sequentially(state);
- 	} else {
- 		struct pc_worker *workers = setup_workers(state, num_workers);
-diff --git a/parallel-checkout.h b/parallel-checkout.h
-index 35e5e69a96..26f61ed2ac 100644
---- a/parallel-checkout.h
-+++ b/parallel-checkout.h
-@@ -17,6 +17,7 @@ enum pc_status {
- };
- 
- enum pc_status parallel_checkout_status(void);
-+void get_parallel_checkout_configs(int *num_workers, int *threshold);
- 
- /*
-  * Put parallel checkout into the PC_ACCEPTING_ENTRIES state. Should be used
-@@ -31,8 +32,12 @@ void init_parallel_checkout(void);
-  */
- int enqueue_checkout(struct cache_entry *ce, struct conv_attrs *ca);
- 
--/* Write all the queued entries, returning 0 on success.*/
--int run_parallel_checkout(struct checkout *state);
++The parallel checkout API was designed with the goal to minimize changes
++to the current users of the checkout machinery. This means that they
++don't have to call a different function for sequential or parallel
++checkout. As already mentioned, `checkout_entry()` will automatically
++insert the given entry in the parallel checkout queue when this feature
++is enabled and the entry is eligible; otherwise, it will just write the
++entry right away, using the sequential code. In general, callers of the
++parallel checkout API should look similar to this:
++
++----------------------------------------------
++int pc_workers, pc_threshold, err = 0;
++struct checkout state;
++
++get_parallel_checkout_configs(&pc_workers, &pc_threshold);
++
 +/*
-+ * Write all the queued entries, returning 0 on success. If the number of
-+ * entries is smaller than the specified threshold, the operation is performed
-+ * sequentially.
++ * This check is not strictly required, but it
++ * should save some time in sequential mode.
 + */
-+int run_parallel_checkout(struct checkout *state, int num_workers, int threshold);
- 
- /****************************************************************
-  * Interface with checkout--helper
-diff --git a/unpack-trees.c b/unpack-trees.c
-index b9548de96a..8bc5061487 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -399,7 +399,7 @@ static int check_updates(struct unpack_trees_options *o,
- 	int errs = 0;
- 	struct progress *progress;
- 	struct checkout state = CHECKOUT_INIT;
--	int i;
-+	int i, pc_workers, pc_threshold;
- 
- 	trace_performance_enter();
- 	state.force = 1;
-@@ -465,8 +465,11 @@ static int check_updates(struct unpack_trees_options *o,
- 		oid_array_clear(&to_fetch);
- 	}
- 
-+	get_parallel_checkout_configs(&pc_workers, &pc_threshold);
++if (pc_workers > 1)
++	init_parallel_checkout();
 +
- 	enable_delayed_checkout(&state);
--	init_parallel_checkout();
-+	if (pc_workers > 1)
-+		init_parallel_checkout();
- 	for (i = 0; i < index->cache_nr; i++) {
- 		struct cache_entry *ce = index->cache[i];
- 
-@@ -480,7 +483,8 @@ static int check_updates(struct unpack_trees_options *o,
- 		}
- 	}
- 	stop_progress(&progress);
--	errs |= run_parallel_checkout(&state);
-+	if (pc_workers > 1)
-+		errs |= run_parallel_checkout(&state, pc_workers, pc_threshold);
- 	errs |= finish_delayed_checkout(&state, NULL);
- 	git_attr_set_direction(GIT_ATTR_CHECKIN);
- 
++for (each cache_entry ce to-be-updated)
++	err |= checkout_entry(ce, &state, NULL, NULL);
++
++err |= run_parallel_checkout(&state, pc_workers, pc_threshold, NULL, NULL);
++----------------------------------------------
 -- 
 2.30.1
 
