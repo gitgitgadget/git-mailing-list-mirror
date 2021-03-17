@@ -2,108 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B2EF6C433E0
-	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 18:17:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F1A0FC433E0
+	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 18:19:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8EEE664F3A
-	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 18:17:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B34A764EB3
+	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 18:19:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233093AbhCQSQf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Mar 2021 14:16:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47812 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232735AbhCQSQS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Mar 2021 14:16:18 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC558C06174A
-        for <git@vger.kernel.org>; Wed, 17 Mar 2021 11:16:17 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id p8so4125085ejb.10
-        for <git@vger.kernel.org>; Wed, 17 Mar 2021 11:16:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=dK2j3pIgJ62qgt654zyuUvJE7DpfnyPF120ITJA4nkk=;
-        b=GGGGRv9aVStF53ib1+hVFrUOnhiue6u4BwoR902UdmE6+F1HAej3qIvmgx2ea0Vue4
-         puFyZoNmKGZ3eQgIRr2pJQQrxcNO0vPKvy2FrUz1vXXso3De9wuQ+O/L5FwSaxNtj+o7
-         hnSuJy1aj08WIa5tyb5JTKxI1yX1mMCst/cG7pGhJrW9b3djckWGE5D3PJghI3uJvdi3
-         kmJP2EG515sENeD1BnKmE/NLtyyTiRMCGC4icbu02fHdmApIjqEMqW3e2nq0wLm9vF3h
-         VnYGC33mjdF5NKF4A3c6WBBzhjnUswg6+hQTLiYbxvfIVW5t3LWlOk05/EjgRzsk1Wpx
-         wuWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=dK2j3pIgJ62qgt654zyuUvJE7DpfnyPF120ITJA4nkk=;
-        b=NSjIQyVYzVNI62nL97/z60qIyNbrHxNhW51w1U3yuKhrMpSmnJjbVBhT1RLfU9wU+i
-         sgVQn2hluvIPwIJS4K0l9MAsRL9hjq6rtfZly/ZR6NPHq4k0T9B6PHtUSekD5J+X6IED
-         JxhFBGZknufAihHgw8d0UWeWwRPi+D/Y1YK+TfGOrjHdPTqNZUzsbBBwD3pFP0HSS9bV
-         0tAUQZrW1ywenhVUG6zUjx1dsgUfgNgE6zEKiKHNMmYboNNO7JnL/Jtai0eipzcpoGAf
-         yJtm9PQwLBtGplbJlg+MKMYJkPjuqIcjZNiiddgQiDOok6JLvffAZyv+44CNlmruqepI
-         Yr+Q==
-X-Gm-Message-State: AOAM532SdaasTUOQqUfKoJ3yRYDvanWCamTeH40ViveyJuGm8FjjlzdJ
-        dAGYPYD02z9ODlIC2FHDBDI=
-X-Google-Smtp-Source: ABdhPJxjeArhZpsUHfSBQ8zjcHPOY4ElqXu//FUyZgJuLXd+uWaT7dxQ6IPTjKjRUxrjX7gUzTZrzg==
-X-Received: by 2002:a17:906:3488:: with SMTP id g8mr35858547ejb.282.1616004976582;
-        Wed, 17 Mar 2021 11:16:16 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id a12sm13415101edx.91.2021.03.17.11.16.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Mar 2021 11:16:16 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Denton Liu <liu.denton@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 5/7] Makefile: add 'check-sort' target
-References: <cover.1615856156.git.liu.denton@gmail.com>
- <5088e93d76e44de9d079b7b2296b8c810828a2f5.1615856156.git.liu.denton@gmail.com>
- <87mtv2dk18.fsf@evledraar.gmail.com> <xmqq1rcdy7zo.fsf@gitster.g>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <xmqq1rcdy7zo.fsf@gitster.g>
-Date:   Wed, 17 Mar 2021 19:16:15 +0100
-Message-ID: <87o8fhzlw0.fsf@evledraar.gmail.com>
+        id S231991AbhCQSTN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Mar 2021 14:19:13 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52778 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232946AbhCQSTB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Mar 2021 14:19:01 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A0C69A39B2;
+        Wed, 17 Mar 2021 14:19:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=7eZyv3gknplMGY1KaRdRj9U7wdY=; b=E+AeJl
+        GY1pYJnhPOkKLOtbWzZqWCn1syOzfqeogIYzPAXISjRbPnZWGjRZavNvZKLnBM02
+        P1Bu2eCbBQUSxYtwGVgxO3HcL/pMJT7p8mKH1xbWI194RAL8Zmgv6Qr17vdFHoiQ
+        OD5Tv5ZsNnjAgkh3II8D2UYNehdPR8+AJIQ9A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=kN22Hbs7NcLLUssVqF1EbL9a9SaYPlj+
+        bxESIB85btHCbNHdbxbRPqjlkNxemAuWV46MZIpQd7wfM1D5e4ZtlnYMeuBQwqT1
+        DSQ3hDzPrMR7tC9v+ouRsJhzAghvkqD9hGeg6J6ly9FlwjGrcymQqiJNuTKvD6tF
+        ON1LwJAIlsE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8A9DCA39B1;
+        Wed, 17 Mar 2021 14:19:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id ED2AFA39B0;
+        Wed, 17 Mar 2021 14:18:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, sluongng@gmail.com
+Subject: Re: [PATCH] t5606: run clone branch name test with protocol v2
+References: <YFIGSo3U5u7zy9fq@C02YX140LVDN.corpad.adbkng.com>
+        <20210317154200.2656837-1-jonathantanmy@google.com>
+Date:   Wed, 17 Mar 2021 11:18:59 -0700
+In-Reply-To: <20210317154200.2656837-1-jonathantanmy@google.com> (Jonathan
+        Tan's message of "Wed, 17 Mar 2021 08:42:00 -0700")
+Message-ID: <xmqqo8fhwsmk.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3EBF753E-874D-11EB-B45E-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-On Wed, Mar 17 2021, Junio C Hamano wrote:
-
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+> 4f37d45706 ("clone: respect remote unborn HEAD", 2021-02-05) introduces
+> a new feature (if the remote has an unborn HEAD, e.g. when the remote
+> repository is empty, use it as the name of the branch) that only works
+> in protocol v2, but did not ensure that one of its tests always uses
+> protocol v2, and thus that test would fail if
+> GIT_TEST_PROTOCOL_VERSION=0 (or 1) is used. Therefore, add "-c
+> protocol.version=2" to the appropriate test.
 >
->>> +	./check-sort.perl '\t\{ "[^"]*",' <git.c
->>
->> This last one you can IMO be done better as (or if we want to be more
->> anal, we could make git die on startup if it's not true):
->>=20=20=20=20=20
->>     diff --git a/t/t0012-help.sh b/t/t0012-help.sh
->>     index 5679e29c62..5bd2ebceca 100755
->>     --- a/t/t0012-help.sh
->>     +++ b/t/t0012-help.sh
->>     @@ -77,6 +77,11 @@ test_expect_success 'generate builtin list' '
->>             git --list-cmds=3Dbuiltins >builtins
->>      '
->>=20=20=20=20=20=20
->>     +test_expect_success 'list of builtins in git.c should be sorted' '
->>     +       sort builtins >sorted &&
->>     +       test_cmp sorted builtins
->>     +'
+> (The rest of the tests from that commit have "-c protocol.version=2"
+> already added.)
 >
-> "LANG=3DC LC_ALL=3DC sort ..."
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+> Thanks, Son Luong, for noticing this. Here's a fix for the
+> GIT_TEST_PROTOCOL_VERSION part. This was built on 4f37d45706 but also
+> applies cleanly on master.
+
+Makes sense.  And I do not see need for any other changes, like
+test_expect_failure with protocol 0 (or 1).
+
+Will queue as a candidate for maint-2.31.
+
+Thanks.
+
+
+
 >
-> I like this 100% better than the original ;-)
-
-We don't need to use "LANG=3DC LC_ALL=3DC sort", the test-lib.sh sets that
-already, so just "sort" works consistently.
-
-It's also why with GETTEXT_POISON gone we can just "grep" output,
-instead of worrying that it may be in the user's locale.
+>  t/t5606-clone-options.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/t/t5606-clone-options.sh b/t/t5606-clone-options.sh
+> index ca6339a5fb..5e30772735 100755
+> --- a/t/t5606-clone-options.sh
+> +++ b/t/t5606-clone-options.sh
+> @@ -106,7 +106,7 @@ test_expect_success 'chooses correct default initial branch name' '
+>  	git -c init.defaultBranch=foo init --bare empty &&
+>  	test_config -C empty lsrefs.unborn advertise &&
+>  	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME= \
+> -	git -c init.defaultBranch=up clone empty whats-up &&
+> +	git -c init.defaultBranch=up -c protocol.version=2 clone empty whats-up &&
+>  	test refs/heads/foo = $(git -C whats-up symbolic-ref HEAD) &&
+>  	test refs/heads/foo = $(git -C whats-up config branch.foo.merge)
+>  '
