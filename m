@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26C08C43381
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F6FAC4332D
 	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 20:57:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C8D0F64F40
-	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 20:57:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2BA8164F33
+	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 20:57:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233532AbhCQU5H (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Mar 2021 16:57:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54162 "EHLO
+        id S233539AbhCQU5J (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Mar 2021 16:57:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233501AbhCQU4i (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Mar 2021 16:56:38 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36CB3C06174A
-        for <git@vger.kernel.org>; Wed, 17 Mar 2021 13:56:38 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id y124-20020a1c32820000b029010c93864955so4164617wmy.5
-        for <git@vger.kernel.org>; Wed, 17 Mar 2021 13:56:38 -0700 (PDT)
+        with ESMTP id S233513AbhCQU4l (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Mar 2021 16:56:41 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F234C06174A
+        for <git@vger.kernel.org>; Wed, 17 Mar 2021 13:56:41 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id a132-20020a1c668a0000b029010f141fe7c2so1946981wmc.0
+        for <git@vger.kernel.org>; Wed, 17 Mar 2021 13:56:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=wRcBNXYW2gw2O82+WA1enNKfsLCGikFYVSt/sUey6j8=;
-        b=sAz0zjLEXfT0ZVqELp82GZIQ6WQ+PhWfc8bY6601/OGu9DaSbsKanB3lZmLbIX68Qa
-         TteSZV7Nov6hhkpIXkHbzAke0wBVY7zfPUScPZTJ1qvTqmdP1y+pdYZHuuqh2B9KSXlK
-         27uOTPv8X5ZkdHwDEO24Xg190rc8I+WQ4dxGgyBLVP8xbI1RF0gp9dD6s/XzVrhEiypv
-         20S2xeLdvTtj+0oEKBb7tMyp/HBbnvN+dbXTy/HHrWMPevvc+/ms0zOORHvzA8CygaWL
-         MuDCS/h7GleSjB5VnA772Zw6TdE68oGch1gHSLzEKw1Oph0W0jESiKA6426JyXy41Wk0
-         bgGw==
+        bh=wr6LrFyAd7ihfq5tqEFUsByYRH3eyhXKVadq9w+ENtg=;
+        b=ri2A7msKatQI6lc1F1Hq2+m4a4L5SzYKZ6Z1UKb6gI0Cmg7uzmdc0iIO+zAVNoGJLl
+         0reL72KPA20OLapINuhCjTieIuZzATdnDOYykfr4wtMU5NCzdSLVmjwjCozEdfrFg7ft
+         NEjHtryAY6zVfC1RbvzpEmdwg32CjITAUwYp9Mryc6/Y6fec2jEkJVfMHj61k9/qxNdj
+         bJwoXibwZwuDUT5JSzx5BGciPb5KaU41VNS6T0D6fMoYEvzK4iJHFcQ3rGPks80+gI1K
+         KsphsxfSjaHXBzw1t4HL3vPySbodOVKPMRFftCgxhUDzOG3iI0f+i3JCGpQZzqsWpo2X
+         256g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=wRcBNXYW2gw2O82+WA1enNKfsLCGikFYVSt/sUey6j8=;
-        b=lnrpBMWJxiwqDzOxNGlknEN4eTRkqykaRVk14WZuVEyTIrtceX3SvN3LMnpvzteq5c
-         S1CUDP7bvRAmxOpW6Vwnq2jsNJbvzxVBNMbjFBsHMfzsaxUweZhmnpAXANSI6K9ekGYM
-         XG+WtxVPVam1F0OWEf3BMiJ2cXnUdhKV57Eg/QwUeAOPZ7iB7V2KMwxPlAXEzxeQGPrz
-         iG7Ae1EAe1QW2CgJ2MyceEggrfmJCUNsQRe1AkcdN/ulMIGu7aPt8eMvGWx/eb11CYzK
-         arm3QOsb2OpKiOBd4Hut3QC6XuGC1vmbwAqKhY+mCr262zLs3hMFTBn1OJ9UDWHiPUJo
-         HZdg==
-X-Gm-Message-State: AOAM533SInjRVDe0A4WghpB6b/RQ6mmVf81ZRDunK1ISgf1plrQknHmh
-        yMjb/QXoSGSwYKkr3IG+7RvnWkwqLM8=
-X-Google-Smtp-Source: ABdhPJyNNIWInqvkxKpAoiJmwb4D8tirM9nkqyxVzN5JC8K0+IikSY3+x/TGzVz0Vf7PR/8ctJ8sBw==
-X-Received: by 2002:a7b:cd8f:: with SMTP id y15mr554937wmj.185.1616014596930;
-        Wed, 17 Mar 2021 13:56:36 -0700 (PDT)
+        bh=wr6LrFyAd7ihfq5tqEFUsByYRH3eyhXKVadq9w+ENtg=;
+        b=sMo3gw1U1pLe8T6lV2QAQnCHcYhBuYRuYYSmFQd0nWTLdUAHoO4RkHp0RBoaPFnj1t
+         uxVT+LhIzM/QrADMYas86f8lgRJjeoLvTn8Vn8RYIopR9+pD4ows1POfnag1Oxj//318
+         iv2aHcwtThguXwgGDqP99Fxsf7tC23pGHAg8varP4FxWMZBHq7pWCENCO7BLuz37YxjH
+         lGpjjrFVTAIj/0lleTmWsU61+BpI7OLVKayYBQDs5SSHGFbrs5rHxwx/di2UXx/8kgcy
+         Bn4HP9Own9Aj7AaIO+dn7RrTLVviJvkwStwkqhQX7f/ogsF+FIZ/uYQ4M7g828hcN3OZ
+         hmXg==
+X-Gm-Message-State: AOAM532HoHGx5vwlyqaoRMRdxoWrSy3KC18t7/0bkoh61wzw1TObMWez
+        oD57uU5m5CGUwj7l1Dn09JseOtySHsE=
+X-Google-Smtp-Source: ABdhPJxakeb6jyqT8o5VrOoOF84dg7eWQvNBEP8l9oWZbkjdFpI4rIxp7N1Xy068oyb2uVsh5/YyKQ==
+X-Received: by 2002:a05:600c:47d7:: with SMTP id l23mr557507wmo.155.1616014600123;
+        Wed, 17 Mar 2021 13:56:40 -0700 (PDT)
 Received: from ylate.lan (atoulouse-654-1-299-135.w86-199.abo.wanadoo.fr. [86.199.82.135])
-        by smtp.googlemail.com with ESMTPSA id g5sm158452wrq.30.2021.03.17.13.56.35
+        by smtp.googlemail.com with ESMTPSA id g5sm158452wrq.30.2021.03.17.13.56.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Mar 2021 13:56:36 -0700 (PDT)
+        Wed, 17 Mar 2021 13:56:39 -0700 (PDT)
 From:   Alban Gruin <alban.gruin@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
         Derrick Stolee <stolee@gmail.com>,
         Alban Gruin <alban.gruin@gmail.com>
-Subject: [PATCH v7 02/15] t6060: modify multiple files to expose a possible issue with merge-index
-Date:   Wed, 17 Mar 2021 21:49:26 +0100
-Message-Id: <20210317204939.17890-3-alban.gruin@gmail.com>
+Subject: [PATCH v7 04/15] merge-index: libify merge_one_path() and merge_all()
+Date:   Wed, 17 Mar 2021 21:49:28 +0100
+Message-Id: <20210317204939.17890-5-alban.gruin@gmail.com>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20210317204939.17890-1-alban.gruin@gmail.com>
 References: <20201124115315.13311-1-alban.gruin@gmail.com>
@@ -75,111 +75,279 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, merge-index iterates over every index entry, skipping stage0
-entries.  It will then count how many entries following the current one
-have the same name, then fork to do the merge.  It will then increase
-the iterator by the number of entries to skip them.  This behaviour is
-correct, as even if the subprocess modifies the index, merge-index does
-not reload it at all.
+The "resolve" and "octopus" merge strategies do not call directly `git
+merge-one-file', they delegate the work to another git command, `git
+merge-index', that will loop over files in the index and call the
+specified command.  Unfortunately, these functions are not part of
+libgit.a, which means that once rewritten, the strategies would still
+have to invoke `merge-one-file' by spawning a new process first.
 
-But when it will be rewritten to use a function, the index it will use
-will be modified and may shrink when a conflict happens or if a file is
-removed, so we have to be careful to handle such cases.
-
-Here is an example:
-
- *    Merge branches, file1 and file2 are trivially mergeable.
- |\
- | *  Modifies file1 and file2.
- * |  Modifies file1 and file2.
- |/
- *    Adds file1 and file2.
-
-When the merge happens, the index will look like that:
-
- i -> 0. file1 (stage1)
-      1. file1 (stage2)
-      2. file1 (stage3)
-      3. file2 (stage1)
-      4. file2 (stage2)
-      5. file2 (stage3)
-
-merge-index handles `file1' first.  As it appears 3 times after the
-iterator, it is merged.  The index is now stale, `i' is increased by 3,
-and the index now looks like this:
-
-      0. file1 (stage1)
-      1. file1 (stage2)
-      2. file1 (stage3)
- i -> 3. file2 (stage1)
-      4. file2 (stage2)
-      5. file2 (stage3)
-
-`file2' appears three times too, so it is merged.
-
-With a naive rewrite, the index would look like this:
-
-      0. file1 (stage0)
-      1. file2 (stage1)
-      2. file2 (stage2)
- i -> 3. file2 (stage3)
-
-`file2' appears once at the iterator or after, so it will be added,
-_not_ merged.  Which is wrong.
-
-A naive rewrite would lead to unproperly merged files, or even files not
-handled at all.
-
-This changes t6060 to reproduce this case, by creating 2 files instead
-of 1, to check the correctness of the soon-to-be-rewritten merge-index.
-The files are identical, which is not really important -- the factors
-that could trigger this issue are that they should be separated by at
-most one entry in the index, and that the first one in the index should
-be trivially mergeable.
+To avoid this, this moves and renames merge_one_path(), merge_all(), and
+their helpers to merge-strategies.c.  They also take a callback to
+dictate what they should do for each file.  For now, to preserve the
+behaviour of `merge-index', only one callback, launching a new process,
+is defined.
 
 Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
 ---
- t/t6060-merge-index.sh | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ Makefile              |  1 +
+ builtin/merge-index.c | 90 +++++++++++++++----------------------------
+ merge-strategies.c    | 75 ++++++++++++++++++++++++++++++++++++
+ merge-strategies.h    | 18 +++++++++
+ 4 files changed, 125 insertions(+), 59 deletions(-)
+ create mode 100644 merge-strategies.c
+ create mode 100644 merge-strategies.h
 
-diff --git a/t/t6060-merge-index.sh b/t/t6060-merge-index.sh
-index ddf34f0115..9e15ceb957 100755
---- a/t/t6060-merge-index.sh
-+++ b/t/t6060-merge-index.sh
-@@ -7,16 +7,19 @@ test_expect_success 'setup diverging branches' '
- 	for i in 1 2 3 4 5 6 7 8 9 10; do
- 		echo $i
- 	done >file &&
--	git add file &&
-+	cp file file2 &&
-+	git add file file2 &&
- 	git commit -m base &&
- 	git tag base &&
- 	sed s/2/two/ <file >tmp &&
- 	mv tmp file &&
-+	cp file file2 &&
- 	git commit -a -m two &&
- 	git tag two &&
- 	git checkout -b other HEAD^ &&
- 	sed s/10/ten/ <file >tmp &&
- 	mv tmp file &&
-+	cp file file2 &&
- 	git commit -a -m ten &&
- 	git tag ten
- '
-@@ -35,8 +38,11 @@ ten
- EOF
+diff --git a/Makefile b/Makefile
+index dfb0f1000f..1b1dc49e86 100644
+--- a/Makefile
++++ b/Makefile
+@@ -913,6 +913,7 @@ LIB_OBJS += merge-blobs.o
+ LIB_OBJS += merge-ort.o
+ LIB_OBJS += merge-ort-wrappers.o
+ LIB_OBJS += merge-recursive.o
++LIB_OBJS += merge-strategies.o
+ LIB_OBJS += merge.o
+ LIB_OBJS += mergesort.o
+ LIB_OBJS += midx.o
+diff --git a/builtin/merge-index.c b/builtin/merge-index.c
+index 38ea6ad6ca..70f440d9a0 100644
+--- a/builtin/merge-index.c
++++ b/builtin/merge-index.c
+@@ -1,74 +1,43 @@
+ #define USE_THE_INDEX_COMPATIBILITY_MACROS
+ #include "builtin.h"
++#include "merge-strategies.h"
+ #include "run-command.h"
  
- test_expect_success 'read-tree does not resolve content merge' '
-+	cat >expect <<-\EOF &&
-+	file
-+	file2
-+	EOF
- 	git read-tree -i -m base ten two &&
--	echo file >expect &&
- 	git diff-files --name-only --diff-filter=U >unmerged &&
- 	test_cmp expect unmerged
- '
+ static const char *pgm;
+-static int one_shot, quiet;
+-static int err;
+ 
+-static int merge_entry(int pos, const char *path)
++static int merge_one_file_spawn(struct index_state *istate,
++				const struct object_id *orig_blob,
++				const struct object_id *our_blob,
++				const struct object_id *their_blob, const char *path,
++				unsigned int orig_mode, unsigned int our_mode, unsigned int their_mode,
++				void *data)
+ {
+-	int found;
+-	const char *arguments[] = { pgm, "", "", "", path, "", "", "", NULL };
+-	char hexbuf[4][GIT_MAX_HEXSZ + 1];
+-	char ownbuf[4][60];
++	char oids[3][GIT_MAX_HEXSZ + 1] = {{0}};
++	char modes[3][10] = {{0}};
++	const char *arguments[] = { pgm, oids[0], oids[1], oids[2],
++				    path, modes[0], modes[1], modes[2], NULL };
+ 
+-	if (pos >= active_nr)
+-		die("git merge-index: %s not in the cache", path);
+-	found = 0;
+-	do {
+-		const struct cache_entry *ce = active_cache[pos];
+-		int stage = ce_stage(ce);
+-
+-		if (strcmp(ce->name, path))
+-			break;
+-		found++;
+-		oid_to_hex_r(hexbuf[stage], &ce->oid);
+-		xsnprintf(ownbuf[stage], sizeof(ownbuf[stage]), "%o", ce->ce_mode);
+-		arguments[stage] = hexbuf[stage];
+-		arguments[stage + 4] = ownbuf[stage];
+-	} while (++pos < active_nr);
+-	if (!found)
+-		die("git merge-index: %s not in the cache", path);
+-
+-	if (run_command_v_opt(arguments, 0)) {
+-		if (one_shot)
+-			err++;
+-		else {
+-			if (!quiet)
+-				die("merge program failed");
+-			exit(1);
+-		}
++	if (orig_blob) {
++		oid_to_hex_r(oids[0], orig_blob);
++		xsnprintf(modes[0], sizeof(modes[0]), "%06o", orig_mode);
+ 	}
+-	return found;
+-}
+-
+-static void merge_one_path(const char *path)
+-{
+-	int pos = cache_name_pos(path, strlen(path));
+ 
+-	/*
+-	 * If it already exists in the cache as stage0, it's
+-	 * already merged and there is nothing to do.
+-	 */
+-	if (pos < 0)
+-		merge_entry(-pos-1, path);
+-}
++	if (our_blob) {
++		oid_to_hex_r(oids[1], our_blob);
++		xsnprintf(modes[1], sizeof(modes[1]), "%06o", our_mode);
++	}
+ 
+-static void merge_all(void)
+-{
+-	int i;
+-	for (i = 0; i < active_nr; i++) {
+-		const struct cache_entry *ce = active_cache[i];
+-		if (!ce_stage(ce))
+-			continue;
+-		i += merge_entry(i, ce->name)-1;
++	if (their_blob) {
++		oid_to_hex_r(oids[2], their_blob);
++		xsnprintf(modes[2], sizeof(modes[2]), "%06o", their_mode);
+ 	}
++
++	return run_command_v_opt(arguments, 0);
+ }
+ 
+ int cmd_merge_index(int argc, const char **argv, const char *prefix)
+ {
+-	int i, force_file = 0;
++	int i, force_file = 0, err = 0, one_shot = 0, quiet = 0;
+ 
+ 	/* Without this we cannot rely on waitpid() to tell
+ 	 * what happened to our children.
+@@ -89,7 +58,9 @@ int cmd_merge_index(int argc, const char **argv, const char *prefix)
+ 		quiet = 1;
+ 		i++;
+ 	}
++
+ 	pgm = argv[i++];
++
+ 	for (; i < argc; i++) {
+ 		const char *arg = argv[i];
+ 		if (!force_file && *arg == '-') {
+@@ -98,14 +69,15 @@ int cmd_merge_index(int argc, const char **argv, const char *prefix)
+ 				continue;
+ 			}
+ 			if (!strcmp(arg, "-a")) {
+-				merge_all();
++				err |= merge_all_index(&the_index, one_shot, quiet,
++						       merge_one_file_spawn, NULL);
+ 				continue;
+ 			}
+ 			die("git merge-index: unknown option %s", arg);
+ 		}
+-		merge_one_path(arg);
++		err |= merge_index_path(&the_index, one_shot, quiet, arg,
++					merge_one_file_spawn, NULL);
+ 	}
+-	if (err && !quiet)
+-		die("merge program failed");
++
+ 	return err;
+ }
+diff --git a/merge-strategies.c b/merge-strategies.c
+new file mode 100644
+index 0000000000..c80f964612
+--- /dev/null
++++ b/merge-strategies.c
+@@ -0,0 +1,75 @@
++#include "cache.h"
++#include "merge-strategies.h"
++
++static int merge_entry(struct index_state *istate, int quiet, unsigned int pos,
++		       const char *path, int *err, merge_fn fn, void *data)
++{
++	int found = 0;
++	const struct object_id *oids[3] = {NULL};
++	unsigned int modes[3] = {0};
++
++	do {
++		const struct cache_entry *ce = istate->cache[pos];
++		int stage = ce_stage(ce);
++
++		if (strcmp(ce->name, path))
++			break;
++		found++;
++		oids[stage - 1] = &ce->oid;
++		modes[stage - 1] = ce->ce_mode;
++	} while (++pos < istate->cache_nr);
++	if (!found)
++		return error(_("%s is not in the cache"), path);
++
++	if (fn(istate, oids[0], oids[1], oids[2], path,
++	       modes[0], modes[1], modes[2], data)) {
++		if (!quiet)
++			error(_("Merge program failed"));
++		(*err)++;
++	}
++
++	return found;
++}
++
++int merge_index_path(struct index_state *istate, int oneshot, int quiet,
++		     const char *path, merge_fn fn, void *data)
++{
++	int pos = index_name_pos(istate, path, strlen(path)), ret, err = 0;
++
++	/*
++	 * If it already exists in the cache as stage0, it's
++	 * already merged and there is nothing to do.
++	 */
++	if (pos < 0) {
++		ret = merge_entry(istate, quiet || oneshot, -pos - 1, path, &err, fn, data);
++		if (ret == -1)
++			return -1;
++		else if (err)
++			return 1;
++	}
++	return 0;
++}
++
++int merge_all_index(struct index_state *istate, int oneshot, int quiet,
++		    merge_fn fn, void *data)
++{
++	int err = 0, ret;
++	unsigned int i;
++
++	for (i = 0; i < istate->cache_nr; i++) {
++		const struct cache_entry *ce = istate->cache[i];
++		if (!ce_stage(ce))
++			continue;
++
++		ret = merge_entry(istate, quiet || oneshot, i, ce->name, &err, fn, data);
++		if (ret > 0)
++			i += ret - 1;
++		else if (ret == -1)
++			return -1;
++
++		if (err && !oneshot)
++			return 1;
++	}
++
++	return err;
++}
+diff --git a/merge-strategies.h b/merge-strategies.h
+new file mode 100644
+index 0000000000..88f476f170
+--- /dev/null
++++ b/merge-strategies.h
+@@ -0,0 +1,18 @@
++#ifndef MERGE_STRATEGIES_H
++#define MERGE_STRATEGIES_H
++
++#include "object.h"
++
++typedef int (*merge_fn)(struct index_state *istate,
++			const struct object_id *orig_blob,
++			const struct object_id *our_blob,
++			const struct object_id *their_blob, const char *path,
++			unsigned int orig_mode, unsigned int our_mode, unsigned int their_mode,
++			void *data);
++
++int merge_index_path(struct index_state *istate, int oneshot, int quiet,
++		     const char *path, merge_fn fn, void *data);
++int merge_all_index(struct index_state *istate, int oneshot, int quiet,
++		    merge_fn fn, void *data);
++
++#endif /* MERGE_STRATEGIES_H */
 -- 
 2.31.0
 
