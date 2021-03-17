@@ -2,340 +2,197 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7FC7C433E0
-	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 08:09:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 82288C433DB
+	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 08:24:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 805C164F8F
-	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 08:09:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4F8B564F89
+	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 08:24:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229601AbhCQIIc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Mar 2021 04:08:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56458 "EHLO
+        id S229586AbhCQIXn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Mar 2021 04:23:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229526AbhCQII3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Mar 2021 04:08:29 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EAB8C06174A
-        for <git@vger.kernel.org>; Wed, 17 Mar 2021 01:08:29 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id w18so1158060edc.0
-        for <git@vger.kernel.org>; Wed, 17 Mar 2021 01:08:29 -0700 (PDT)
+        with ESMTP id S229648AbhCQIXT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Mar 2021 04:23:19 -0400
+Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25D35C06174A
+        for <git@vger.kernel.org>; Wed, 17 Mar 2021 01:23:19 -0700 (PDT)
+Received: by mail-pg1-x535.google.com with SMTP id 205so7364182pgh.9
+        for <git@vger.kernel.org>; Wed, 17 Mar 2021 01:23:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=NQdFP3m5vIbSh+WaVPrV2PsmxucDtDYntCR/ZLOfeZY=;
-        b=ioupAf5ku/x4N4Cldcjf0ylXTqqvEB89C7pBCvxJ2DeHHjYoIIUSGpOHHkwd9vwqfs
-         TvdhCeI3W0zg89LLlSqpXNduhupKf81LCQN7BhfHDUp5BcMMHoioFG/CIL68+Ngn2gaj
-         oOb+ZUTcXiERuQbV25iUQ6t+MO2N+/0RFjd6sEWhMuPnYbN1RGzILK9380mtVDW7qJq3
-         mgWELFFq64W/ZMDzq+7wHT7VBdEuDG8Tz5Rt2aV2XW/258uLDLtpquM67IL2XxPiTbjZ
-         pfZKRFWh2h2wG4Ff50AodB6vlKULGtJubVwfpniuKkORdxJbfyI91oc+9SLStyLeMJBJ
-         BIcg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=xwzImuyNcdfCUr6K1cJLszXiQokaDbMx9b2Syz8et4M=;
+        b=WplntkjZj0xk7lkLKHGtEUzYJ6GYRWLK/IlHzFgX+nlmXaM7NjIT8hvVvXGJ956Xoc
+         7aQ9DPFs1xyzWnzen1r1pCQK+cMnmo07jyWwRy1O6Skjb9uzHvw5cvGdShCeRbudWT16
+         tgxGptxVgbpoSSEZyHHef0ti+RTvXab8U7jVLXBr95oDHhJVGj2wJkmIueOTNbNqMFqX
+         xGI61Pcd3x7+z8kfxTAYO5cEwEP0TACGWcSMzTbVPo5GTPmT2AKTt1k6vojDZwXMg6ZF
+         KXoDgCe+OG+JBwkPz0emKxOZxXP7sm9e0L1aLN507gQxSAf6PxYANYASaqcg2CAVBgpC
+         mT/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=NQdFP3m5vIbSh+WaVPrV2PsmxucDtDYntCR/ZLOfeZY=;
-        b=i6wB3XzmHXpTnPQniP3ZvytiJaSznwB178JF10OOXZUeO+d5/2t7zImwKD648IQS4G
-         PQpMZObnafMfQIICNy2tCMb7cRf2RURi7ac7+UxjQb/mfs2C9UoJCsHKpbMuPGNhx97n
-         rPTINgHHZHvty/IdbwI4+RPbUEK0TByn5bqVFxoDDsKF4J+PrM4NJroln6HSvC54VKxc
-         flqU+OF1rv3B2eKjmFr+4Y1dvz5y8FvjDco2QUyJKRvvRgKG4+du4d91C8ZH8k3lYV4h
-         8CKGGhRau/Xd8MiIBpgGIz5p+T/t/ePcTdjZ0l/ZzXrmTJ29C/MsibfJ7VKx5c3Y6/Nn
-         /Iuw==
-X-Gm-Message-State: AOAM532OpUEYYAI3j9UkserSFc9xZS2ZOFf8NN2OduKN2equZbC/ftCF
-        ZVigGLnAu6cVsFls6bBj2dNwzGRX23d1Kg==
-X-Google-Smtp-Source: ABdhPJz5zjnxcEm3f9lSmL1YmeYIa/48XsGqu4KCNgNDxEaSnCnKItTAuzZG8ZjLfEnNogb5E8bs2g==
-X-Received: by 2002:aa7:c353:: with SMTP id j19mr40289920edr.263.1615968507540;
-        Wed, 17 Mar 2021 01:08:27 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id j14sm11708512edr.97.2021.03.17.01.08.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Mar 2021 01:08:26 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     ZheNing Hu <adlternative@gmail.com>
-Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        "Bradley M. Kuhn" <bkuhn@sfconservancy.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Brandon Casey <drafnel@gmail.com>,
-        Shourya Shukla <periperidip@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Rafael Silva <rafaeloliveira.cs@gmail.com>
-Subject: Re: [PATCH v8 1/2] [GSOC] commit: add --trailer option
-References: <pull.901.v7.git.1615799304883.gitgitgadget@gmail.com>
- <pull.901.v8.git.1615813658.gitgitgadget@gmail.com>
- <f81b6e66a6ba6b2fc8e6307dbc5fba9cddcff181.1615813658.git.gitgitgadget@gmail.com>
- <87zgz3dzvl.fsf@evledraar.gmail.com>
- <CAOLTT8RyCvs8bbedPaRSo44o566Tk1MK9BeLx=-APnFsHJtejw@mail.gmail.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <CAOLTT8RyCvs8bbedPaRSo44o566Tk1MK9BeLx=-APnFsHJtejw@mail.gmail.com>
-Date:   Wed, 17 Mar 2021 09:08:26 +0100
-Message-ID: <87wnu6dwxx.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=xwzImuyNcdfCUr6K1cJLszXiQokaDbMx9b2Syz8et4M=;
+        b=lhj1kJWRfxxB5PcoyKfIRwuze9XRGq11lQq2d4amHClu0tV3vRlta8xjYbUyMgDStZ
+         A+P5RHmh4ZYXEn30d1d2hHErgYUoaYj8bzot7jQGqEohQNRbMSA+Vfaiqqm+CUS6sXkc
+         PzSApc7jYXJfK1wF4ebfajAVkP5Rai5w0njHMoeSTuSDTuGCmWaU06B9ybOLcyeI70uB
+         GCTb4Wc5n17S2RvAcbTa6DtXF16LcC62SGmgkoqTW/YJfPxh7lDYMAxeuKYwgak7BSpm
+         jKvExFCxIEaot/PIbkxdQ5Xh5wbibj8s3y3zfTOp0C3+bBJL78mJBEaGoF6SFbUrx+Qf
+         S5LA==
+X-Gm-Message-State: AOAM5331mPCZhIk8XC71zrvjizFy7autSDnBRSvWLHxEerFvcJ/RAmg3
+        EcealLQkkuJT2peztz/lemX+Y0mt/M31nAuT
+X-Google-Smtp-Source: ABdhPJyiNMOAvXIuiOvG5BhpowQlkWXEu0JLbAokkghlqscMAfUsqJU+3Rb/Cx5Ogiq5yFVL4L4cgg==
+X-Received: by 2002:a65:5bc6:: with SMTP id o6mr1643119pgr.127.1615969397726;
+        Wed, 17 Mar 2021 01:23:17 -0700 (PDT)
+Received: from [192.168.43.80] (subs28-116-206-12-36.three.co.id. [116.206.12.36])
+        by smtp.gmail.com with ESMTPSA id z11sm19322966pgj.22.2021.03.17.01.23.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 17 Mar 2021 01:23:17 -0700 (PDT)
+Subject: Re: [PATCH] bisect: peel annotated tags to commits
+To:     Jeff King <peff@peff.net>, Andreas Schwab <schwab@linux-m68k.org>
+Cc:     Miriam Rubio <mirucam@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Pranit Bauva <pranit.bauva@gmail.com>, git@vger.kernel.org
+References: <878s6nz1sg.fsf@igel.home>
+ <YFDGX4EsrvHqZgPF@coredump.intra.peff.net>
+ <YFDLq9mLbJtLqKea@coredump.intra.peff.net>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <5c41383f-55b5-a68e-4e35-8b8dc4694375@gmail.com>
+Date:   Wed, 17 Mar 2021 15:23:13 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <YFDLq9mLbJtLqKea@coredump.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+I can reproduce this issue with v2.31.0 (as you mentioned).
 
-On Wed, Mar 17 2021, ZheNing Hu wrote:
+Applying the patch, bisecting between annotated tags now worked
+just before git bisect is rewritten in C.
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> =E4=BA=8E2021=
-=E5=B9=B43=E6=9C=8816=E6=97=A5=E5=91=A8=E4=BA=8C =E4=B8=8B=E5=8D=888:52=E5=
-=86=99=E9=81=93=EF=BC=9A
->> > +             if (run_command(&run_trailer))
->> > +                     strvec_clear(&run_trailer.args);
->>
->> This is git-commit, shouldn't we die() here instead of ignoring errors
->> in sub-processes?
->
-> After thinking about it carefully, your opinion is more
-> reasonable, because if the user uses the wrong `--trailer`
-> and does not get the information he needs, I think he will
-> have to use `--amend` to modify, and `die()` can exit
-> this commit directly.
+Thanks.
 
-Yeah, we don't want to silently lose data.
+Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
 
+On 16/03/21 22.15, Jeff King wrote:
+> On Tue, Mar 16, 2021 at 10:53:19AM -0400, Jeff King wrote:
+> 
+>> On Tue, Mar 16, 2021 at 02:05:51PM +0100, Andreas Schwab wrote:
 >>
->> > +             strvec_clear(&trailer_args);
->> > +     }
->> > +
->> >       /*
->> >        * Reject an attempt to record a non-merge empty commit without
->> >        * explicit --allow-empty. In the cherry-pick case, it may be
->> > @@ -1507,6 +1529,7 @@ int cmd_commit(int argc, const char **argv, cons=
-t char *prefix)
->> >               OPT_STRING(0, "fixup", &fixup_message, N_("commit"), N_(=
-"use autosquash formatted message to fixup specified commit")),
->> >               OPT_STRING(0, "squash", &squash_message, N_("commit"), N=
-_("use autosquash formatted message to squash specified commit")),
->> >               OPT_BOOL(0, "reset-author", &renew_authorship, N_("the c=
-ommit is authored by me now (used with -C/-c/--amend)")),
->> > +             OPT_CALLBACK_F(0, "trailer", NULL, N_("trailer"), N_("tr=
-ailer(s) to add"), PARSE_OPT_NONEG, opt_pass_trailer),
->> >               OPT_BOOL('s', "signoff", &signoff, N_("add a Signed-off-=
-by trailer")),
+>>> $ git --version
+>>> git version 2.31.0
+>>> $ git bisect start
+>>> $ git bisect good v2.30.0
+>>> $ git bisect bad v2.31.0
+>>> 3e90d4b58f3819cfd58ac61cb8668e83d3ea0563 was both good and bad
 >>
->> Not required for this change, but perhaps a change here to N_() (if we
->> can get it to fit) + doc update saying that we prefer
->> --trailer=3D"Signed-Off-By: to --signoff"? More on that later.
+>> Looks like it bisects to 27257bc466 (bisect--helper: reimplement
+>> `bisect_state` & `bisect_head` shell functions in C, 2020-10-15), which
+>> isn't too surprising. So it broke in v2.30, but nobody seems to have
+>> noticed during the last cycle.
 >>
->> >               OPT_FILENAME('t', "template", &template_file, N_("use sp=
-ecified template file")),
->> >               OPT_BOOL('e', "edit", &edit_flag, N_("force edit of comm=
-it")),
->> > diff --git a/t/t7502-commit-porcelain.sh b/t/t7502-commit-porcelain.sh
->> > index 6396897cc818..0acf23799931 100755
->> > --- a/t/t7502-commit-porcelain.sh
->> > +++ b/t/t7502-commit-porcelain.sh
->> > @@ -154,6 +154,26 @@ test_expect_success 'sign off' '
->> >
->> >  '
->> >
->> > +test_expect_success 'trailer' '
->> > +     >file1 &&
->> > +     git add file1 &&
->> > +     git commit -s --trailer "Signed-off-by:C O Mitter1 <committer1@e=
-xample.com>" \
->> > +             --trailer "Helped-by:C O Mitter2 <committer2@example.com=
->"  \
->> > +             --trailer "Reported-by:C O Mitter3 <committer3@example.c=
-om>" \
->> > +             --trailer "Mentored-by:C O Mitter4 <committer4@example.c=
-om>" \
->> > +             -m "hello" &&
->> > +     git cat-file commit HEAD >commit.msg &&
->> > +     sed -e "1,7d" commit.msg >actual &&
->> > +     cat >expected <<-\EOF &&
->> > +     Signed-off-by: C O Mitter <committer@example.com>
->> > +     Signed-off-by: C O Mitter1 <committer1@example.com>
->> > +     Helped-by: C O Mitter2 <committer2@example.com>
->> > +     Reported-by: C O Mitter3 <committer3@example.com>
->> > +     Mentored-by: C O Mitter4 <committer4@example.com>
->> > +     EOF
->> > +     test_cmp expected actual
->> > +'
->> > +
->>
->> How does this interact with cases where the user has configured
->> "trailer.separators" to have a value that doesn't contain ":"?  I
->> haven't tested, but my reading of git-interpret-trailers(1) is that if
->> you supplied "=3D" instead that case would just work:
->>
->>     By default only : is recognized as a trailer separator, except that
->>     =3D is always accepted on the command line for compatibility with
->>     other git commands.
->>
-> But interpret_trailers interface allow us use "=3D" instead of other sepa=
-rators.
->
-> I did a simple test and modified the configuration "trailer.separators"
-> and it still works. Now things are good here:
->
-> $ git -c trailer.separators=3D"@" commit --trailer=3D"Signed-off-by=3DC O=
- <email>"
->
-> or
->
-> $ git -c trailer.separators=3D"@" commit --trailer=3D"Signed-off-by@C O <=
-email>"
->
-> Both can work normally,
->
-> --trailer=3D"Signed-off-by@ C O <email>"
->
-> will output in the commit message.
->
->> I don't know if that does the right thing in the presence of
->> --if-exists=3Dadd.
->>
->
-> Yesterday, Christian Couder and I had already discussed this issue:
-> Your idea is correct, I should not add "--if-exists =3D add",  this will =
-destroy
-> the user's rights to configure by using `git -c trailer.if-exist`.
->
->> So it would be good to update these tests so you test:
->>
->>  * For the --if-exists=3Dadd case at all, there's no tests for it
->>    now. I.e. add some trailers manually to the commit (via -F or
->>    whatever) and then see if they get added to, replacet etc.
->>
->>  * Ditto but for the user having configured trailer.separators (see the
->>    test_config helper for how to set config in a test). I.e. if it's "=
-=3D"
->>    does adding trailers work, how about if it's "=3D" on the CLI but the
->>    config/commit message has ";" instead of ":" or something?
->>
->
-> As mentioned above, it works normally.
->
->>  * Hrm, actually I think tweaking "-c trailer.ifexists" won't work at
->>    all, since the CLI switch would override it. I honestly don't know,
->>    but why not not supply it and keep the addIfDifferentNeighbor
->>    default?
->>
->>    If it's essential that seems like a good test / documentation
->>    addition...
->>
->>  * For the above -c ... case I can't think of a good way to deal with it
->>    that doesn't involve pulling in git_trailer_config() into
->>    git_commit_config(), but perhaps the least nasty way is to just set a
->>    flag in git_commit_config() if we see a "trailer.ifexists" flag, and
->>    if so don't provide "--if-exists=3Dadd", if there's no config (this
->>    will include "git -c ... commit" we set provide "--if-exists=3Dadd" )
->>    or as noted above, maybe we can skip the whole thing and use the
->>    addIfDifferentNeighbor default.
->>
->
-> Has been restored to the default settings.
+>> I'd guess it's just missing a call to peel the input oid.
+> 
+> Yep. Here's a fix. Again, not new in v2.31, so we don't have to worry
+> about a brown-bag fix for yesterday's release. But I do think it's worth
+> trying to get onto a maint release. I prepared this patch on top of
+> mr/bisect-in-c-3.
+> 
+> -- >8 --
+> Subject: [PATCH] bisect: peel annotated tags to commits
+> 
+> This patch fixes a bug where git-bisect doesn't handle receiving
+> annotated tags as "git bisect good <tag>", etc. It's a regression in
+> 27257bc466 (bisect--helper: reimplement `bisect_state` & `bisect_head`
+> shell functions in C, 2020-10-15).
+> 
+> The original shell code called:
+> 
+>    sha=$(git rev-parse --verify "$rev^{commit}") ||
+>            die "$(eval_gettext "Bad rev input: \$rev")"
+> 
+> which will peel the input to a commit (or complain if that's not
+> possible). But the C code just calls get_oid(), which will yield the oid
+> of the tag.
+> 
+> The fix is to peel to a commit. The error message here is a little
+> non-idiomatic for Git (since it starts with a capital). I've mostly left
+> it, as it matches the other converted messages (like the "Bad rev input"
+> we print when get_oid() fails), though I did add an indication that it
+> was the peeling that was the problem. It might be worth taking a pass
+> through this converted code to modernize some of the error messages.
+> 
+> Note also that the test does a bare "grep" (not i18ngrep) on the
+> expected "X is the first bad commit" output message. This matches the
+> rest of the test script.
+> 
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>   builtin/bisect--helper.c    |  9 ++++++++-
+>   t/t6030-bisect-porcelain.sh | 12 ++++++++++++
+>   2 files changed, 20 insertions(+), 1 deletion(-)
+> 
+> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+> index fc6ca257a4..f0eeb4a2f0 100644
+> --- a/builtin/bisect--helper.c
+> +++ b/builtin/bisect--helper.c
+> @@ -876,12 +876,19 @@ static enum bisect_error bisect_state(struct bisect_terms *terms, const char **a
+>   	 */
+>   
+>   	for (; argc; argc--, argv++) {
+> +		struct commit *commit;
+> +
+>   		if (get_oid(*argv, &oid)){
+>   			error(_("Bad rev input: %s"), *argv);
+>   			oid_array_clear(&revs);
+>   			return BISECT_FAILED;
+>   		}
+> -		oid_array_append(&revs, &oid);
+> +
+> +		commit = lookup_commit_reference(the_repository, &oid);
+> +		if (!commit)
+> +			die(_("Bad rev input (not a commit): %s"), *argv);
+> +
+> +		oid_array_append(&revs, &commit->object.oid);
+>   	}
+>   
+>   	if (strbuf_read_file(&buf, git_path_bisect_expected_rev(), 0) < the_hash_algo->hexsz ||
+> diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+> index b886529e59..9c389553a7 100755
+> --- a/t/t6030-bisect-porcelain.sh
+> +++ b/t/t6030-bisect-porcelain.sh
+> @@ -929,4 +929,16 @@ test_expect_success 'git bisect reset cleans bisection state properly' '
+>   	test_path_is_missing "$GIT_DIR/BISECT_START"
+>   '
+>   
+> +test_expect_success 'bisect handles annotated tags' '
+> +	test_commit commit-one &&
+> +	git tag -m foo tag-one &&
+> +	test_commit commit-two &&
+> +	git tag -m foo tag-two &&
+> +	git bisect start &&
+> +	git bisect good tag-one &&
+> +	git bisect bad tag-two >output &&
+> +	bad=$(git rev-parse --verify tag-two^{commit}) &&
+> +	grep "$bad is the first bad commit" output
+> +'
+> +
+>   test_done
+> 
 
-To clarify: What I really mean is for all these things you've tested:
-let's add those to the tests as part of the patch.
-
->> And, not needed for this patch but worth thinking about:
->>
->>  * We pass through --trailer to git-interpret-trailers, what should we
->>    do about the other options? Should git-commit eventually support
->>    --trailer-where and pass it along as --where to
->>    git-interpret-trailers, or is "git -c trailer.where=3D... commit" good
->>    enough?
->>
-> Logically speaking, `interpret_trailers` should be dedicated to `commit`
-> or other sub-commands that require trailers.
->
-> But I think that in the later stage, the parse_options of the `cmd_commit`
-> can keep the unrecognized options, and then these choices can be directly
-> passed to the `interpret_trailers` backend.
-
-We have this interaction with e.g. range-diff and "log", it's often
-surprising. You add an option to one command and it appears in the
-other.
-
->>  * It would be good to test for and document if that "-c trailer.*"
->>    trick works (no reason it shouldn't). I.e. to add something like this
->>    after what you have (along with tests, and check if it's even true):
->>
->
-> I haven't tested them for the time being, but I will do it.
->
->>        Only the `--trailer` argument to
->>        linkgit:git-interpret-trailers[1] is supported. Other
->>        pass-through switches may be added in the future, but currently
->>        you'll need to pass arguments to
->>        linkgit:git-interpret-trailers[1] along as config, e.g. `git -c
->>        trailer.where=3Dstart commit [...] --trailer=3D[...]`.
->>
->
-> I think this is worth writing in the documentation.
->
->>  * We have a longer-term goal of having the .mailmap apply to trailers,
->>    it would be nice if git-interpret-trailers had some fuzzy-matching to
->>    check if the RHS of a trailer is a name/E-Mail pair, and if so did
->>    stricter validation on it with the ident functions we use for fsck
->>    etc. (that's copied & subtly different in several different places in
->>    the codebase, unfortunately[1]).
->>
->
-> I may not know much about fuzzy-matching, which may be worth studying lat=
-er.
->
->> More thoughts:
->>
->>  * Having written all the above I checked how --signoff is implemented.
->>
->>    It seems to me to be a good idea to (at least for testing) convert
->>    the --signoff trailer to your implementation. We have plenty of tests
->>    for it, does migrating it over pass or fail those?
->>
-> I don=E2=80=99t know how to migrating yet, it may take a long time.
-> Even I think I can leave it as #leftoverbit later.
-
-Sure, I mean (having looked at it) that at least for your own local
-testing it would make sense to change it (even if just search-replacing
-the --signoff in the test suite) to see if it behaves as you
-expect. I.e. does the --trailer behavior mirror --signoff?
-
->>  * I also agree with Junio that we shouldn't have a --fixed-by or
->>    whatever and wouldn't add --signoff today, but it seems very useful
->>    to me to have a shortcut like:
->>
->>        --trailer "Signed-off-by"
->>
->>    I.e. omitting the value, or:
->>
->>       --trailer "Signed-off-by=3D"
->>
->>    Or some other thing we deem sufficiently useful/sane
->>    syntax/unambiguous.n
->>
->>    Then the value would be provided by fmt_name(WANT_COMMITTER_IDENT)
->>    just as we do in append_signoff() now. I think a *very common* case
->>    for this would be something like:
->>
->>        git commit --amend -v --trailer "Reviewed-by"
->>
->>    And it would be useful to help that along and not have to do:
->>
->>        git commit --amend -v --trailer "Reviewed-by=3D$(git config user.=
-name) <$(git config user.email)>"
->>
->>    Or worse yet, manually typo your name/e-mail address, as I'm sure I
->>    and many others will inevitably do when using this option...
->>
-> I think this idea is very good and easy to implement.
-> We only need to do a simple string match when we get the "trailer" string,
-> If it can be completed, it can indeed bring great convenience to users.
->
->> 1. https://lore.kernel.org/git/87bld8ov9q.fsf@evledraar.gmail.com/
->
-> Thanks, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason!
-
-And thanks for working on this.
+-- 
+An old man doll... just what I always wanted! - Clara
