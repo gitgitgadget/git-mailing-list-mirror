@@ -8,117 +8,148 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2EB24C433E0
-	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 13:35:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AC86BC433DB
+	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 13:39:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D033E64F4F
-	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 13:35:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5F01464F50
+	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 13:39:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230378AbhCQNfV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Mar 2021 09:35:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43286 "EHLO
+        id S231232AbhCQNid (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Mar 2021 09:38:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43966 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231210AbhCQNfK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Mar 2021 09:35:10 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28A62C06174A
-        for <git@vger.kernel.org>; Wed, 17 Mar 2021 06:35:10 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id y6so2310963eds.1
-        for <git@vger.kernel.org>; Wed, 17 Mar 2021 06:35:10 -0700 (PDT)
+        with ESMTP id S231225AbhCQNi3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Mar 2021 09:38:29 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61807C06174A
+        for <git@vger.kernel.org>; Wed, 17 Mar 2021 06:38:22 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id r17so2616845ejy.13
+        for <git@vger.kernel.org>; Wed, 17 Mar 2021 06:38:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=L5gg9/PeMQWRRNGlL5ziaq1gOqAW7hUXT0OmZcofcyM=;
-        b=lY7PkMPQgBjrGvnm01qTOW/Ci835xUoyvPPkgitNEmVo09gMfQJseOZir/avJxiTfF
-         T4hST/OFsKSTmxC685Uk86HS35yXJeuj1lknZn+ur+VJIcKRd5q4uGCODe/Jw4jnVNsF
-         r0yArRxuLWDA3ha9I8km3UypopX7eZLwSAbLtEeYbzj1xcJHG1MYrm9HR30yKGx9/TpI
-         70yGuJ8GlIaw9puFDxZMmXF8ePI14IfCekkCp0dJGdR85PlQFeDpg01S53iKQ6oO8kTf
-         srEzgF1JlazIWTf4u4IKcbyg3Cz3l5rHnbedIRAS+nggOCm6EXf2IUiG35i/V9DNGk+H
-         FFZA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=D73dYZkT0WF0uMuNbY9aUyuG5Ce4xnXduTJbOXaQjSk=;
+        b=Ve8vNwhqRWEqn2RKuQOe8N1skEk9DzZg5eK/ogMDPG6MORlumneywumeC082TXNFH3
+         qP8CAmm6u8MePd4QRdl/EAkbLoyuIE0Qq9CFD6/cMji/5q30jUrmiHdYYcNIbobKuiUO
+         RVoZ8A0bKGItfyaPPsv9aD/lXBtGIRuScvMrhX11MOt6Qn8/+lBk9k66xt/kIiyh1hc1
+         MfJbPkaEHL6aNnIbcXkRnYVwTHYiAurxOWyTUKinDkp9QOxaT2YitcpTf2h6sh2hsWAa
+         iO+wvTdhvTCTi0S55oCFYw2VTSAt+jgqjJwPttNScpaH501goLofcLNxgOik6AJzQewa
+         JNbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=L5gg9/PeMQWRRNGlL5ziaq1gOqAW7hUXT0OmZcofcyM=;
-        b=nvDtFoYyywikGzOyXatx4Zs5PgqizmXOnmkOYh2i/p9nazX/2pUtvl/656sw1oqERI
-         HwXB5Xv5jvLaybP6Y1XCti0mreiYJbyvCj7RZ+wCK/wZy6W4RqMtULBTWDttwy7tDIrS
-         IG/Nhq673MnMDAl9Su87+97rC0RjjOoMBVXkQuR30ShG8mnySSvTfOT7oI7/QUTFEzra
-         FKQdA3lvmUs0j3AnYzotXeon/5/I1xlyiSK0vC1e+iuPluS8Gt5UojSHEOphk5Lz45lR
-         QXleLfo5sa/absRUIXYOV1GYkgjR3qjxvgmib0LyfMZcam4qRh0DFWAfcidx6wHLCHHX
-         rbkA==
-X-Gm-Message-State: AOAM533LcDuC8bKmUuq6ouiCNolDunl/p1Wtu8sHSZPiT0RBmy5RgbwV
-        dtrtkfF8PE6maMBYGPjFdUaPLw+Wn7b3cQ==
-X-Google-Smtp-Source: ABdhPJxLkXEuHtJZsP2LJh9Aj98D77rWaD/vpz4xrgrhGNBiK95fC4AQ70itttT48qgbMfIMTRP4OQ==
-X-Received: by 2002:aa7:c6da:: with SMTP id b26mr42460051eds.254.1615988108592;
-        Wed, 17 Mar 2021 06:35:08 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id u24sm11715808ejr.34.2021.03.17.06.35.08
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=D73dYZkT0WF0uMuNbY9aUyuG5Ce4xnXduTJbOXaQjSk=;
+        b=QGTqgF8L3ZLygYziBRnvpZ3/JAL4oxTJLLi62rHq0vhCKdVeXZVaMl7Rm8MAgwAn7k
+         /stRygkiNIDQi/cGhBWrFHpFtIofCkXx3zpXc1QIXPtp2DSppuRmTeZ7QK0As+w4QbrI
+         8ycjfJCurCm5iCzoVfQT5+mMCwnNOlJ3EaX3eEnL+de57BUMukuAUG2XHVJpL3uQR51R
+         cCtyLvFn4kqYJGXwA0p0EaSh1nJyTVLQ0RFfhg0lYxxjdERayifPg3tgNfdGHiy/v9Lv
+         0csAW9J7NmOLHVw876Mj3p+3yyyDtDrADWz837LyWJHsmWD/4SiXESEGH0wkU5J1KnQG
+         dVwg==
+X-Gm-Message-State: AOAM5309H5316NqsLr+QqsHY860RNtasqHSEDunuIHtJW8tNmODuzrAE
+        4gic18lgFMwOA/ohsz99SMg=
+X-Google-Smtp-Source: ABdhPJzrxi+d+awgBLgn95lBLkw/53VchoS/GK1S66rEYUphUTfOxLzDYecb4ow/pC9ad6euBYzpbw==
+X-Received: by 2002:a17:906:8614:: with SMTP id o20mr34345080ejx.386.1615988301086;
+        Wed, 17 Mar 2021 06:38:21 -0700 (PDT)
+Received: from C02YX140LVDN.corpad.adbkng.com ([5.57.21.48])
+        by smtp.gmail.com with ESMTPSA id cf4sm7037421edb.19.2021.03.17.06.38.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Mar 2021 06:35:08 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, newren@gmail.com, gitster@pobox.com,
-        pclouds@gmail.com, jrnieder@gmail.com,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v3 13/20] unpack-trees: allow sparse directories
-References: <pull.883.v2.git.1615404664.gitgitgadget@gmail.com>
- <pull.883.v3.git.1615912983.gitgitgadget@gmail.com>
- <4000c5cdd4cf6008358a02d1b0244b24e61b3e3e.1615912983.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <4000c5cdd4cf6008358a02d1b0244b24e61b3e3e.1615912983.git.gitgitgadget@gmail.com>
-Date:   Wed, 17 Mar 2021 14:35:07 +0100
-Message-ID: <87zgz1zywk.fsf@evledraar.gmail.com>
+        Wed, 17 Mar 2021 06:38:20 -0700 (PDT)
+Date:   Wed, 17 Mar 2021 14:38:18 +0100
+From:   Son Luong Ngoc <sluongng@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, avarab@gmail.com, jonathantanmy@google.com,
+        gitster@pobox.com
+Subject: Re: Tests failed with GIT_TEST_FAIL_PREREQS and/or
+ GIT_TEST_PROTOCOL_VERSION
+Message-ID: <YFIGSo3U5u7zy9fq@C02YX140LVDN.corpad.adbkng.com>
+References: <CAL3xRKfSXDd0ucO4zaM5_WZeQfq10Hqpyk3nL+Zw8ttgfN0ZhA@mail.gmail.com>
+ <YFC33vfLb36pRCO6@nand.local>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <YFC33vfLb36pRCO6@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Taylor,
 
-On Tue, Mar 16 2021, Derrick Stolee via GitGitGadget wrote:
+On Tue, Mar 16, 2021 at 09:52:47AM -0400, Taylor Blau wrote:
+> Hi,
+> 
+> Is it possible that your bisection script doesn't report success
+> properly? Bisecting the same range (v2.30.0..v2.31.0) with
+> 
+>     $ cat run.sh
+>     #!/bin/sh
+>     false
+> 
+> does say that my 3b1ca60f8f (ewah/ewah_bitmap.c: avoid open-coding
+> ALLOC_GROW(), 2020-12-08) is the first bad commit.
 
-> From: Derrick Stolee <dstolee@microsoft.com>
->
-> The index_pos_by_traverse_info() currently throws a BUG() when a
-> directory entry exists exactly in the index. We need to consider that it
-> is possible to have a directory in a sparse index as long as that entry
-> is itself marked with the skip-worktree bit.
->
-> The 'pos' variable is assigned a negative value if an exact match is not
-> found. Since a directory name can be an exact match, it is no longer an
-> error to have a nonnegative 'pos' value.
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  unpack-trees.c | 9 ++++++---
->  1 file changed, 6 insertions(+), 3 deletions(-)
->
-> diff --git a/unpack-trees.c b/unpack-trees.c
-> index 2da3e5ec77a1..e81d82d72d89 100644
-> --- a/unpack-trees.c
-> +++ b/unpack-trees.c
-> @@ -749,9 +749,12 @@ static int index_pos_by_traverse_info(struct name_entry *names,
->  	strbuf_make_traverse_path(&name, info, names->path, names->pathlen);
->  	strbuf_addch(&name, '/');
->  	pos = index_name_pos(o->src_index, name.buf, name.len);
-> -	if (pos >= 0)
-> -		BUG("This is a directory and should not exist in index");
-> -	pos = -pos - 1;
-> +	if (pos >= 0) {
-> +		if (!o->src_index->sparse_index ||
-> +		    !(o->src_index->cache[pos]->ce_flags & CE_SKIP_WORKTREE))
-> +			BUG("This is a directory and should not exist in index");
-> +	} else
-> +		pos = -pos - 1;
+You are spot on.  It was a busy day and I only had a few minutes to
+look at our internal pipeline of the test suite.  I guess I was doing
+something along the line of.
 
-Style nit: add {}'s to the "else" once the "if" gets one.
+      $ git bisect start HEAD v2.30.0
+      $ git bisect run 'cd t && GIT_TEST_PROTOCOL_VERSION=1 ./t5606-clone-options.sh'
 
->  	if (pos >= o->src_index->cache_nr ||
->  	    !starts_with(o->src_index->cache[pos]->name, name.buf) ||
->  	    (pos > 0 && starts_with(o->src_index->cache[pos-1]->name, name.buf)))
+Which does indeed errored out and pointed to your commit.
 
+> 
+> Thanks,
+> Taylor
+
+I have properly re-run the bisection in a './test.sh' bash script and
+here are the suspicious commits:
+
+1. For t7810 and t5300 failing when GIT_TEST_FAIL_PREREQS=1:
+
+    a926c4b904bdc339568c2898af955cdc61b31542 is the first bad commit
+    commit a926c4b904bdc339568c2898af955cdc61b31542
+    Author: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+    Date:   Thu Feb 11 02:53:51 2021 +0100
+
+        tests: remove most uses of C_LOCALE_OUTPUT
+
+        As a follow-up to d162b25f956 (tests: remove support for
+        GIT_TEST_GETTEXT_POISON, 2021-01-20) remove those uses of the now
+        always true C_LOCALE_OUTPUT prerequisite from those tests which
+        declare it as an argument to test_expect_{success,failure}.
+
+        Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+        Signed-off-by: Junio C Hamano <gitster@pobox.com>
+
+2. For failing t5606 while 'GIT_TEST_PROTOCOL_VERSION=1' was used:
+
+    4f37d45706514a4b3d0259d26f719678a0cf3521 is the first bad commit
+    commit 4f37d45706514a4b3d0259d26f719678a0cf3521
+    Author: Jonathan Tan <jonathantanmy@google.com>
+    Date:   Fri Feb 5 12:48:49 2021 -0800
+
+        clone: respect remote unborn HEAD
+
+        Teach Git to use the "unborn" feature introduced in a previous patch as
+        follows: Git will always send the "unborn" argument if it is supported
+        by the server. During "git clone", if cloning an empty repository, Git
+        will use the new information to determine the local branch to create. In
+        all other cases, Git will ignore it.
+
+        Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+        Signed-off-by: Junio C Hamano <gitster@pobox.com>
+
+     Documentation/config/init.txt |  2 +-
+     builtin/clone.c               | 16 ++++++++++++++--
+     connect.c                     | 28 ++++++++++++++++++++++++++--
+     t/t5606-clone-options.sh      |  8 +++++---
+     t/t5702-protocol-v2.sh        | 25 +++++++++++++++++++++++++
+     transport.h                   |  8 ++++++++
+     6 files changed, 79 insertions(+), 8 deletions(-)
+
+
+Thanks,
+Son Luong.
