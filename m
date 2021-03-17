@@ -2,94 +2,69 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CBAAC4332B
-	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 21:43:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E7A7C433DB
+	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 21:49:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3F5D964E64
-	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 21:43:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0CA0B64F20
+	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 21:49:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231665AbhCQVmb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Mar 2021 17:42:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35864 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231701AbhCQVmO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Mar 2021 17:42:14 -0400
-Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4C9EC06174A
-        for <git@vger.kernel.org>; Wed, 17 Mar 2021 14:42:13 -0700 (PDT)
-Received: by mail-ot1-x332.google.com with SMTP id h6-20020a0568300346b02901b71a850ab4so3244576ote.6
-        for <git@vger.kernel.org>; Wed, 17 Mar 2021 14:42:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=tn3aIPozr/DhapeR47zFY5oQ4bjvx2xvurJyNL2z3VE=;
-        b=PURF55dwq5iSRjkxJr23MfaIBbl44FbAFN7fao0a4x+S8filFvDTTvx9GfbiNdFmv5
-         DIBCdLEddj0CEZDB63cschYpeQOlYZqQi7x9++ASd2jr9U4mDXXyiCXP9tasHZHKsIqW
-         LM59hOVLikMVsWVxWk+JZIV3fDtD6R600/COEwr/s5AmlyuYPfDhwuIyhUEf7h1mePGY
-         yK4lO7cQZ2P5R7v7Su6Pzi0d5OLXw8io69akBkagI/KMacyP5cnqpk3hkvSWIds0w9zu
-         Yx/2CCVtvKbIexPB2bTnuxPPbHtdjsevku9/uKSUmR2ie/amtzgYrwIjJjHeL6fJEX1u
-         8ihQ==
+        id S229602AbhCQVsy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Mar 2021 17:48:54 -0400
+Received: from mail-ej1-f45.google.com ([209.85.218.45]:45947 "EHLO
+        mail-ej1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229460AbhCQVsa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Mar 2021 17:48:30 -0400
+Received: by mail-ej1-f45.google.com with SMTP id va9so704376ejb.12
+        for <git@vger.kernel.org>; Wed, 17 Mar 2021 14:48:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=tn3aIPozr/DhapeR47zFY5oQ4bjvx2xvurJyNL2z3VE=;
-        b=Y7enXGKG56DCgmLtxSA0nt3k30kKzsWeopLeC7gky/qsBh9Uxucd5w6JIs8LOfjzXS
-         OMi+isFw4xp0oJwuIuFCfHEPFskghTu8u9ZTOETsx8aP46Ppp/c0MFF1JLVdoRqVqe3t
-         StdibkCiWGzTGTVZ3fB4G4EK6ww9Jj7+eQmHnpnhiih6LKZ7x8k7ozO8aONG+/jI3pwr
-         l0Luagd2MwQnkKtHNwgB3OjO0IcA6KpAtVnAe2dW9NCzGnpb1GZ2MwmqJpZiINlRHJ/K
-         4YDYzu3iiO0L9Os31d4HJYuvbt44KobP/RKg4bPDto2Q4FQUgrdgLEE1FeQXob+j/2oL
-         lyCw==
-X-Gm-Message-State: AOAM530abTi/erl3ssIFKSCBMY6COFDeCD69NOe6hnmde92iojwU4k0w
-        G59shEyms5f/+EP9xITSXaMi/2hxJ0+xE9+Rn28=
-X-Google-Smtp-Source: ABdhPJziEGemMccuHctKJvWD5oDmIPbbzWfIb2/AmMQpNBiVurH1uvVVgvyqQbT9J2ke/fGuIEfQB9zJcEUgzI3CnTA=
-X-Received: by 2002:a9d:8d5:: with SMTP id 79mr4979419otf.345.1616017333246;
- Wed, 17 Mar 2021 14:42:13 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=DDXmSfKW3WC2I8AQFr4u5thaPC53lu9NDw+WFdqvYKk=;
+        b=hhQarIHQSt2bW5HAbC7N1fs+SyqUCWoraB1CiyYLVnFspx9XSTUYYO6CtygzL4S32Q
+         doCGNxwZf6euUdlIg8viUndxTwEm4rKxv7gjSOTW1tc1XVATy27asJMHndi4NDed1ahR
+         qbfdVHxmaZwFnwJ2nZloqxLTJP9cLVrwIrrBTrIr27jFqsyQ+r/rZVcnKVQ+G2tL5TFW
+         VHRVFTrkVMXfuhNicLwZqGkt2YBbBe/Z/p5pwy0KmArdfs1+SPnleZShgMq300XzDa6i
+         Q9dTRwiZpPxK/I3Evh2JsfksJ7TPph6FvCwnXKuVf+eO8B9wyYuNPKQb7sqnZXa9uKJQ
+         uZqQ==
+X-Gm-Message-State: AOAM532wsSuNupGpFngG9VxWce2ywTPaBfX72uQRdnGjLfZV2WlXg2hw
+        tS1TXE26uMo7hXGjeG6/Aikbxo5/kORzZij9fEo=
+X-Google-Smtp-Source: ABdhPJy3/wb6E7wzkD8Leed+ODKhqJ1QUSDwG7ncRYKkDVXittlpUiB6llEsm0d9p+dD7k9WuZS9iA9zNHZWUo+UiM4=
+X-Received: by 2002:a17:906:d8c6:: with SMTP id re6mr36541307ejb.311.1616017709452;
+ Wed, 17 Mar 2021 14:48:29 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.973.git.git.1614905738.gitgitgadget@gmail.com> <pull.973.v2.git.git.1615271086.gitgitgadget@gmail.com>
-In-Reply-To: <pull.973.v2.git.git.1615271086.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 17 Mar 2021 14:42:01 -0700
-Message-ID: <CABPp-BFArfpnirzWZYpX6PnsgLkE+2rcDVjycG6iRWz5Kz0H9g@mail.gmail.com>
-Subject: Re: [PATCH v2 00/10] Complete merge-ort implementation...almost
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
+References: <cover.1615856156.git.liu.denton@gmail.com> <5088e93d76e44de9d079b7b2296b8c810828a2f5.1615856156.git.liu.denton@gmail.com>
+ <87mtv2dk18.fsf@evledraar.gmail.com> <YFI9QzKMKLMXYoyz@coredump.intra.peff.net>
+In-Reply-To: <YFI9QzKMKLMXYoyz@coredump.intra.peff.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 17 Mar 2021 17:48:18 -0400
+Message-ID: <CAPig+cRk-fCLFtug47w3trYQFiPzZ3bD4g11Qu4fTd3Fh6_bCQ@mail.gmail.com>
+Subject: Re: [PATCH 5/7] Makefile: add 'check-sort' target
+To:     Jeff King <peff@peff.net>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Denton Liu <liu.denton@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 8, 2021 at 10:24 PM Elijah Newren via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> This series (nearly) completes the merge-ort implementation, cleaning up
-> testsuite failures. The exceptions are some t6423 failures being addresse=
-d
-> independently[1].
+On Wed, Mar 17, 2021 at 1:34 PM Jeff King <peff@peff.net> wrote:
+> TBH, I'm a little on the fence on whether automatically checking this is
+> even worth the hassle. Doing the make function above was a fun
+> diversion, but already I think this discussion has taken more time than
+> people actually spend resolving conflicts on unsorted Makefile lists.
 
-This series was subsumed into
-https://lore.kernel.org/git/pull.905.v2.git.1616016485.gitgitgadget@gmail.c=
-om/.
-So, ignore this topic and look for the changes over there.
-
-(Reasons for the curious: This series had fixed t6409 and t6418 and
-the submodule TODO passes, while the other series fixed t6423.  The
-other series could not have been included when this was submitted
-because it depended on the not-yet-submitted ort-perf-batch-10.  Why
-not just wait?  Well =C3=86var wanted a way to test his changes against
-merge-ort, this early submission provided that and helped him find a
-bug -- see https://lore.kernel.org/git/20210308150650.18626-1-avarab@gmail.=
-com/.
-Now that we can fix all the tests, I'm withdrawing this one and
-including it with the other fixes.)
+I had the same reaction. Like you, I jumped in for the fun diversion.
+It allowed me to flex my Perl muscle a bit which has atrophied, but an
+out-of-order item here and there is such a minor concern, especially
+since they don't impact correctness, that I worry that such a CI job
+would be more hassle than it's worth. Making the feedback loop
+tighter, as discussed elsewhere in this thread, makes the idea of the
+automated check a bit more palatable.
