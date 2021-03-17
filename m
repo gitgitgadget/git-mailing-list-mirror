@@ -2,205 +2,161 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B68FC433E6
-	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 08:48:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9BA2C433E0
+	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 09:51:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 196E064F26
-	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 08:48:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B3E9F64E21
+	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 09:51:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229590AbhCQIrb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Mar 2021 04:47:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37108 "EHLO
+        id S229796AbhCQJua (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Mar 2021 05:50:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50732 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229512AbhCQIrP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Mar 2021 04:47:15 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0027AC06174A
-        for <git@vger.kernel.org>; Wed, 17 Mar 2021 01:47:14 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id bm21so1271731ejb.4
-        for <git@vger.kernel.org>; Wed, 17 Mar 2021 01:47:14 -0700 (PDT)
+        with ESMTP id S230026AbhCQJuN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Mar 2021 05:50:13 -0400
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FB8AC06174A
+        for <git@vger.kernel.org>; Wed, 17 Mar 2021 02:50:13 -0700 (PDT)
+Received: by mail-pj1-x102a.google.com with SMTP id kr3-20020a17090b4903b02900c096fc01deso1029122pjb.4
+        for <git@vger.kernel.org>; Wed, 17 Mar 2021 02:50:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=m03pjouGBgwc5LnDysD4P5YuRDaznhcpeCZbh4JZuHA=;
-        b=mFGG6FfEtNzi4XsPOd7RuDC2PwuQ6FMhqEe7M5stfulFllsGrQb9KuZZMK83DDG8st
-         28u0fJuRHiK4GTHV00pObS+RsTkxB2vXChw+mUWWAdvri+NJzHHLObsWx4EP4h1fuDn+
-         7W+uKHWgFFm7qIezDdMnOy5mFGFfKqsjllrHzFZhfpYEynB7QFoKredPeDWUAe4Ev6L6
-         kJLbdqtxOpghUbE/bt5s7RzpjE4iAKf/xg2KuX/fJg/ldQXy+LNgLTexwqB1TyneUwIK
-         IcG7mJqwevjzMp1wtnJp3WLI5b7W788/vpUk78h1G0MTvf5woQsWqAlPDAmevOJRbQQF
-         PgvQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=9PMxqd8uUHdLoZxRxNF/DrMMeTWYwTJuz7CqDntF0oE=;
+        b=sfL/5yIFScc1h3OylLZ4moT5N4xeAAndK5M/z7Xpihbb5L/c3QSPjDv9d3l1kxy95K
+         z27HdVQu/Zv/vhB/jofbuANO8r2EmIVtMRsiy2iy5ElAsmGrPOlt0tL/SKt4QPpxmxsw
+         bCyhM5oowAO/yc59KAcqcLNVOTz+w5e2dUiZa+oRhUQ484aQ3x/BBEhXoENO0qbeAVuc
+         Bu5m/WUbr6dttd9NMXJESxzQYcab94bVaujtqAnhrSrELU7yMh42Qj2alnCQAsQ2wuzR
+         PXwU35bohQ+R3D8lkg0m5CQaAQng1cYeDRc55uy6gSQQAY6sJfGF4E0iny6yW4nW0ZGL
+         MGvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=m03pjouGBgwc5LnDysD4P5YuRDaznhcpeCZbh4JZuHA=;
-        b=S2Qi4r2T9qkzgCeP13RJjLhTUqG9N/QLGG3FWwzusvy8GC0leQu4DPjqM0BKRRw9rq
-         88H6BABiz7DlL5GTf9UqG8lN8FtJn5IbYT9xuly/zCXkwOaAb2k92JmPa9yRuOP/9Dm7
-         QhHmU0tSo1p5H2aI9e35NqkAAquSgr4E6ITYmfqNyn/240b7n+ciwYysyefelbcf4asd
-         bHtITfPuqGBJIQ8C9qtKvvVVIJ+5rXiBqV25jmU+TWpo0He9tSv+X+t6wvoPwSZltQEY
-         lSEvY2hTJjDG0sG5Yargrd8P1QacpXU0L/Ry8qAq8O42gn/WrN5CSEnjCiKOSBrSenzK
-         QchA==
-X-Gm-Message-State: AOAM532fn+7d996ZWroE6zxjFkSzVOtPNSo7vcu2S98v7tAN9Yb/LP+P
-        /H24f328DEeVANcBKVMfVwlAPn2LCX2XMw==
-X-Google-Smtp-Source: ABdhPJxGLZ9jSlB7Bqs4hxgP6wn1uueKEkkMwS6Xfk1mMb9NVUowi4/6v6Bu7iIgweQ26VdRddKsSg==
-X-Received: by 2002:a17:906:f0d0:: with SMTP id dk16mr34674816ejb.48.1615970833353;
-        Wed, 17 Mar 2021 01:47:13 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id cf4sm6232490edb.19.2021.03.17.01.47.12
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=9PMxqd8uUHdLoZxRxNF/DrMMeTWYwTJuz7CqDntF0oE=;
+        b=BX9ofh/WHw+RgagiIrtlcw3euQyMtXzMUYH1vf77v22lD5Rzc4EuT63/rN3LK4zE/2
+         2byATBIGgM6qKzwDvm0c6lQ0F9yIura3Y/iLBSUi6EXMlUtU7J98oyYfTKm0AgM9fISO
+         3g9zyhc11HHouuN3lNpBbCbz8SV+Hi6SPoKuv2XmcHc1xiqZOn3MuGqDZj5sJCFWVhGm
+         3dp0NhYtapx1YPwRpGWy1MJHREiBvQRo5zKSPuQ599uVAFka+uU2H2k1Hz712Qz/sQst
+         I+gjpudKMOhcEc3+x2Nu/IAwv0wi5kop+IbY0aKirW2AIrmZzvzxqF4Xb9cyppbj4ef0
+         7RZQ==
+X-Gm-Message-State: AOAM531+r3OmCSrOVAhFUXQ6eUUttiB3OXj3LgEf5une2b5TFmbX2oyt
+        LuqdsjuiA3HB53u8AcC9Pf57zfCXslc=
+X-Google-Smtp-Source: ABdhPJxIdFnnixi5fIhkluRgqHf6YO1//Rfccku8dRDpOIuK7Orczhd/pgiaUjEdXLUjJ8oaK3YI0A==
+X-Received: by 2002:a17:902:e884:b029:e5:fece:3bb0 with SMTP id w4-20020a170902e884b02900e5fece3bb0mr3880285plg.61.1615974612919;
+        Wed, 17 Mar 2021 02:50:12 -0700 (PDT)
+Received: from generichostname ([172.92.165.181])
+        by smtp.gmail.com with ESMTPSA id e65sm20101287pfe.9.2021.03.17.02.50.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Mar 2021 01:47:12 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, newren@gmail.com, gitster@pobox.com,
-        pclouds@gmail.com, jrnieder@gmail.com,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v3 03/20] t1092: clean up script quoting
-References: <pull.883.v2.git.1615404664.gitgitgadget@gmail.com>
- <pull.883.v3.git.1615912983.gitgitgadget@gmail.com>
- <d3cfd34b84184bef42fe0892790d80091c9ca01b.1615912983.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <d3cfd34b84184bef42fe0892790d80091c9ca01b.1615912983.git.gitgitgadget@gmail.com>
-Date:   Wed, 17 Mar 2021 09:47:12 +0100
-Message-ID: <87r1kedv5b.fsf@evledraar.gmail.com>
+        Wed, 17 Mar 2021 02:50:12 -0700 (PDT)
+Date:   Wed, 17 Mar 2021 02:50:09 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/7] Makefile: add 'check-sort' target
+Message-ID: <YFHQ0X5m58sTQb0g@generichostname>
+References: <cover.1615856156.git.liu.denton@gmail.com>
+ <5088e93d76e44de9d079b7b2296b8c810828a2f5.1615856156.git.liu.denton@gmail.com>
+ <CAPig+cRM2y15cH5gLvmn5dDa=rafBL53GPua8rmjsTsmkQAkPA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAPig+cRM2y15cH5gLvmn5dDa=rafBL53GPua8rmjsTsmkQAkPA@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Eric,
 
-On Tue, Mar 16 2021, Derrick Stolee via GitGitGadget wrote:
+On Tue, Mar 16, 2021 at 02:37:16AM -0400, Eric Sunshine wrote:
+> On Mon, Mar 15, 2021 at 8:57 PM Denton Liu <liu.denton@gmail.com> wrote:
+> > In the previous few commits, we sorted many lists into ASCII-order. In
+> > order to ensure that they remain that way, add the 'check-sort' target.
+> > [...]
+> > Signed-off-by: Denton Liu <liu.denton@gmail.com>
+> > ---
+> > +my @regexes = map { qr/^$_/ } @ARGV;
+> > +my $last_regex = 0;
+> > +my $last_line = '';
+> > +while (<STDIN>) {
+> > +       my $matched = 0;
+> > +       chomp;
+> > +       for my $regex (@regexes) {
+> > +               next unless $_ =~ $regex;
+> > +               if ($last_regex == $regex) {
+> > +                       die "duplicate lines: '$_'\n" unless $last_line ne $_;
+> > +                       die "unsorted lines: '$last_line' before '$_'\n" unless $last_line lt $_;
+> > +               }
+> > +               $matched = 1;
+> > +               $last_regex = $regex;
+> > +               $last_line = $_;
+> > +       }
+> > +       unless ($matched) {
+> > +               $last_regex = 0;
+> > +               $last_line = '';
+> > +       }
+> > +}
+> 
+> This is, of course, endlessly bikesheddable. Here is a shorter -- and,
+> at least for me, easier to understand -- way to do it:
+> 
+>     my $rc = 0;
+>     chomp(my @all = <STDIN>);
+>     foreach my $needle (@ARGV) {
+>         my @lines = grep(/^$needle/, @all);
+>         if (join("\n", @lines) ne join("\n", sort @lines)) {
+>             print "'$needle' lines not sorted\n";
+>             $rc = 1;
+>         }
+>     }
+>     exit $rc;
 
-> From: Derrick Stolee <dstolee@microsoft.com>
->
-> This test was introduced in 19a0acc83e4 (t1092: test interesting
-> sparse-checkout scenarios, 2021-01-23), but these issues with quoting
-> were not noticed until starting this follow-up series. The old mechanism
-> would drop quoting such as in
+That's pretty clever, thanks for showing me how it's done :)
 
-the "but these issues" follows a partial sentence where we haven't
-introduces "what issues?".
+However, the reason I wrote it out the way that I did is because my code
+ensures that consecutive lines matching the regex are sorted but if
+there are any breaks between matching regex lines, it will consider them
+separate blocks. Just taking all the lines fails in the case of
+`LIB_OBJS \+=` in Makefile since we have
 
-Perhaps leading with some summary about $@ v.s. $*:
+	LIB_OBJS += zlib.o
 
-    Fix a bug in the sparse checkout tests of "$@" being conflated with
-    "$*". The bug was introduced in 19a0acc83e4 ([...]), but had no
-    effect until now because XYZ ...
+	[... many intervening lines ...]
 
+	LIB_OBJS += $(COMPAT_OBJS)
 
->    test_all_match git commit -m "touch README.md"
->
-> The above happened to work because README.md is a file in the
-> repository, so 'git commit -m touch REAMDE.md' would succeed by
-> accident.
->
-> Other cases included quoting for no good reason, so clean that up now.
+and that is technically unsorted. That being said, I don't really like
+my current approach that much.
 
-Maybe just my taste, per your comment on another series of mine we might
-not have the same sense of splitting up commits, but...
+I think I have two better options:
 
-I think in this case it's clearer to have these be two commits. We have
-3 hunks fixing the bug, and 6 on an unrelated cleanup. It's a lot easier
-for eyeballing a fix to be able to glance just at the 3, especially with
-something like $@ v.s. $*.
+	1. Tighten up the regexes so that it excludes the
+	   $(COMPAT_OBJS). I don't want to be too strict, though,
+	   because if we end up not matching a line it might end up
+	   unsorted.
 
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  t/t1092-sparse-checkout-compatibility.sh | 20 ++++++++++----------
->  1 file changed, 10 insertions(+), 10 deletions(-)
->
-> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-> index 8cd3e5a8d227..3725d3997e70 100755
-> --- a/t/t1092-sparse-checkout-compatibility.sh
-> +++ b/t/t1092-sparse-checkout-compatibility.sh
-> @@ -96,20 +96,20 @@ init_repos () {
->  run_on_sparse () {
->  	(
->  		cd sparse-checkout &&
-> -		$* >../sparse-checkout-out 2>../sparse-checkout-err
-> +		"$@" >../sparse-checkout-out 2>../sparse-checkout-err
->  	)
->  }
->  
->  run_on_all () {
->  	(
->  		cd full-checkout &&
-> -		$* >../full-checkout-out 2>../full-checkout-err
-> +		"$@" >../full-checkout-out 2>../full-checkout-err
->  	) &&
-> -	run_on_sparse $*
-> +	run_on_sparse "$@"
->  }
->  
->  test_all_match () {
-> -	run_on_all $* &&
-> +	run_on_all "$@" &&
->  	test_cmp full-checkout-out sparse-checkout-out &&
->  	test_cmp full-checkout-err sparse-checkout-err
->  }
-> @@ -119,7 +119,7 @@ test_expect_success 'status with options' '
->  	test_all_match git status --porcelain=v2 &&
->  	test_all_match git status --porcelain=v2 -z -u &&
->  	test_all_match git status --porcelain=v2 -uno &&
-> -	run_on_all "touch README.md" &&
-> +	run_on_all touch README.md &&
->  	test_all_match git status --porcelain=v2 &&
->  	test_all_match git status --porcelain=v2 -z -u &&
->  	test_all_match git status --porcelain=v2 -uno &&
-> @@ -135,7 +135,7 @@ test_expect_success 'add, commit, checkout' '
->  	write_script edit-contents <<-\EOF &&
->  	echo text >>$1
->  	EOF
-> -	run_on_all "../edit-contents README.md" &&
-> +	run_on_all ../edit-contents README.md &&
->  
->  	test_all_match git add README.md &&
->  	test_all_match git status --porcelain=v2 &&
-> @@ -144,7 +144,7 @@ test_expect_success 'add, commit, checkout' '
->  	test_all_match git checkout HEAD~1 &&
->  	test_all_match git checkout - &&
->  
-> -	run_on_all "../edit-contents README.md" &&
-> +	run_on_all ../edit-contents README.md &&
->  
->  	test_all_match git add -A &&
->  	test_all_match git status --porcelain=v2 &&
-> @@ -153,7 +153,7 @@ test_expect_success 'add, commit, checkout' '
->  	test_all_match git checkout HEAD~1 &&
->  	test_all_match git checkout - &&
->  
-> -	run_on_all "../edit-contents deep/newfile" &&
-> +	run_on_all ../edit-contents deep/newfile &&
->  
->  	test_all_match git status --porcelain=v2 -uno &&
->  	test_all_match git status --porcelain=v2 &&
-> @@ -186,7 +186,7 @@ test_expect_success 'diff --staged' '
->  	write_script edit-contents <<-\EOF &&
->  	echo text >>README.md
->  	EOF
-> -	run_on_all "../edit-contents" &&
-> +	run_on_all ../edit-contents &&
->  
->  	test_all_match git diff &&
->  	test_all_match git diff --staged &&
-> @@ -280,7 +280,7 @@ test_expect_success 'clean' '
->  	echo bogus >>.gitignore &&
->  	run_on_all cp ../.gitignore . &&
->  	test_all_match git add .gitignore &&
-> -	test_all_match git commit -m ignore-bogus-files &&
-> +	test_all_match git commit -m "ignore bogus files" &&
->  
->  	run_on_sparse mkdir folder1 &&
->  	run_on_all touch folder1/bogus &&
+	2. Consider blank lines to be block separators and only consider
+	   it to be sorted if the text matching regexes within a block
+	   are sorted.
 
+Now that I've written that all out, I think I like option 1 more,
+although I could definitely be convinced to go either way.
+
+> By the way, it might be a good idea to also print the filename in
+> which the problem occurred. Such context can be important for the
+> person trying to track down the complaint. To do so, you'd probably
+> want to pass the filename as an argument, and open and read the file
+> rather than sending it only as standard-input.
+
+Agreed.
+
+Thanks,
+Denton
