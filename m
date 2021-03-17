@@ -2,110 +2,158 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D91EC433DB
-	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 22:52:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B3C3C433DB
+	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 23:14:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C964D64F07
-	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 22:51:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6E1BF64E77
+	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 23:14:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229545AbhCQWv1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Mar 2021 18:51:27 -0400
-Received: from avasout01.plus.net ([84.93.230.227]:38058 "EHLO
-        avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229505AbhCQWu7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Mar 2021 18:50:59 -0400
-X-Greylist: delayed 451 seconds by postgrey-1.27 at vger.kernel.org; Wed, 17 Mar 2021 18:50:58 EDT
-Received: from [10.0.2.15] ([147.147.167.73])
-        by smtp with ESMTPA
-        id MesvljwfE1iLSMeswlCzZ8; Wed, 17 Mar 2021 22:43:26 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-        t=1616021006; bh=f0W65uxLnnLh2EG6vmfeC3FayRcJHRsvEi3Zj4RlTFE=;
-        h=Subject:To:References:From:Date:In-Reply-To;
-        b=BsjOJDJ/kEHayij6pCgr0DGPUry3AW0whi3bFlV4/jpL+QWCvWB9Vb5m9f2fJb/yQ
-         J1Q/MpwJ3KOgfiJrrP02bFoR2m8J9RH3e8vsl7Uqyk+yNjqmmPbENmDi8W1h5W9V4b
-         iLxeAskVv7KI2O7zcblRl9emuJ2dXo3mBQSxdF+HTkga/yedwuBctBgss+TZHh/6Bn
-         TYdMfEOmMV2CY30L1AKzuXBY5S6dpn/iVQ+aP6VP560v8RGmmICAidYsFQBO5vt7y3
-         QoPVPPMnOkR9ZwloMcTdxUeI6wd4gIa59+DPF9cNcGtBKDICNyfdrmys2SAwU80Ii3
-         zCCQosjVVRioQ==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=IYUcpVia c=1 sm=1 tr=0
- a=nK5asC+3lBOC3EoKtwbYYg==:117 a=nK5asC+3lBOC3EoKtwbYYg==:17
- a=IkcTkHD0fZMA:10 a=VwQbUJbxAAAA:8 a=Oh2cFVv5AAAA:8 a=UlqV6C1OAAAA:20
- a=C8lbFo3dAAAA:20 a=K6LVqLdWAAAA:20 a=1i1UBQkp0uoN2HncmwYA:9
- a=QEXdDO2ut3YA:10 a=AjGcO6oz07-iQ99wixmX:22 a=7KeoIwV6GZqOttXkcoxL:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: What's cooking in git.git (Mar 2021, #05; Wed, 17)
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqblbhtoa6.fsf@gitster.g>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <9047c32c-de07-fae0-263a-0070b2a94ad8@ramsayjones.plus.com>
-Date:   Wed, 17 Mar 2021 22:43:25 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        id S229658AbhCQXNt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Mar 2021 19:13:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55480 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229494AbhCQXNj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Mar 2021 19:13:39 -0400
+Received: from mail-oo1-xc2a.google.com (mail-oo1-xc2a.google.com [IPv6:2607:f8b0:4864:20::c2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DA15C06174A
+        for <git@vger.kernel.org>; Wed, 17 Mar 2021 16:13:39 -0700 (PDT)
+Received: by mail-oo1-xc2a.google.com with SMTP id j10-20020a4ad18a0000b02901b677a0ba98so980351oor.1
+        for <git@vger.kernel.org>; Wed, 17 Mar 2021 16:13:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Ownfgpax+cKMPYsO5v6jVmywvyWmiqaQMYhKjaw1haw=;
+        b=gJ0eYH/rWBg8IBednl1KG7Xrw4pu2aYK4Uk4Tq0KBmQtLVwlM0baf8ZWT0w/CZSa35
+         4QLA738AggSCrqfo2CIvt+vkePjDZvL8181BkJshFe47svQ4miadP+GhPFf1p0sVkVYs
+         IkUcWURzPcgx4pr7chEfzNpdCpEltnElFZ8vgHDmUdqZnNxKX8iohkD/mfr4xXNYcqNG
+         AbH6rcYBo0Vhy95QWvIWZyTAuLVGM7VrSXsITlQF600+5gQVDUqwF8menJzhvdQegLGV
+         s+7fz3abIWuE/ILlHD3AsJ4YW379PQHZr3MTrPmbsG4t7hBt2kq0ndCp2eRgnzQyncQz
+         ww1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Ownfgpax+cKMPYsO5v6jVmywvyWmiqaQMYhKjaw1haw=;
+        b=M0DCjECbYJrX1h4g3P+UZlbUAw6/2Nsv3pnqp2SxBXMSxLqSqW5RQ5WZA2XnA6C2bG
+         mTXQlYRyZUSpe1vYrZ5wUknZ4KSVBm+KrDrw7JASpa4emKu26rJak6UqFZMFmx8TVsaU
+         1uSL4kRSUQDwEYaGuaB3+0osDNTmslWR5OX52+epGQBnCpjeRC2DtmbLdFEJ/FhLwUNX
+         FXaUPNdgKNn8/6fr+TvB/LmxGYtsyAZluBuxhqyB9hjNCth1pSMrxom97BwwwO+A+JFG
+         nCqfwLlcd8iKYe3vW509tkqbYwGvdgTYyh3o/EXL6Q1I6/DdEfH2v7U/mKQhcuqRxwQ9
+         q/sA==
+X-Gm-Message-State: AOAM531QUQ798CBUPaHJdYkV+h9huIDWOkiU2PY9DgYTeFRxmroXSsFz
+        YnTgtB2gb8KwHTPRQ7D7hMQki0GydCkc7iSOa8w8nTforwlKnw==
+X-Google-Smtp-Source: ABdhPJxpKCFxOsJCybEbg2d2EDkBAhnQx5+XSL6lCMqCcKyYezNQOCnZh2LdfXHcKLXslc66qgtgnGRswwsxXRtuBy8=
+X-Received: by 2002:a4a:eb8a:: with SMTP id d10mr5163956ooj.32.1616022818567;
+ Wed, 17 Mar 2021 16:13:38 -0700 (PDT)
 MIME-Version: 1.0
+References: <xmqqblbhtoa6.fsf@gitster.g>
 In-Reply-To: <xmqqblbhtoa6.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfHMi9uMm7jrYqgH5MaSYqOSwTveegfr6yVtL1hb1WxkUkzyEbzT1eaH9CIfu+vEyvg5iUUTjmeKLu1k6uK8aBSW9er4ARs1a/ekGvhQZE019NyPi/DPe
- F0CYghuIVJFh7LDifwryOAwjczslvKK1Pm+U8I3/NFb1xWylOGK6bWnQd9CNiS0lEs4t66zB1mM2qg==
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 17 Mar 2021 16:13:27 -0700
+Message-ID: <CABPp-BGkvUK3Xs6ZsWwv_C_tdJN-84ebBcxZCAoRu+sX7aWQ8g@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Mar 2021, #05; Wed, 17)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Mar 17, 2021 at 3:23 PM Junio C Hamano <gitster@pobox.com> wrote:
 
-
-On 17/03/2021 22:21, Junio C Hamano wrote:
-> Here are the topics that have been cooking.  Commits prefixed with '-' are
-> only in 'seen' (formerly 'pu'---proposed updates) while commits prefixed
-> with '+' are in 'next'.  The ones marked with '.' do not appear in any of
-> the integration branches, but I am still holding onto them.
-> 
-> Git 2.31 has been tagged.  We will hopefully either (1) not see
-> brown-paper-bag breakages at all, or (2) will see some but can
-> immediately deal with them, in coming couple of days.  After that,
-> the 2.32 cycle will gain steam, starting next week.  Let's see.
-> 
 > Many topics marked as "Will cook in 'next'" should be marked for
 > merging to 'master' now, but that hasn't happened yet.  Please
 > nominate those that should be kicked back from 'next' to 'seen', if
 > there are any.  Please also nominate those that should be among the
 > first batch of topics to be in 'master' (after a handful of 2.31
 > regression fixes go through 'next' down to 'master', that is).
-> 
-> Copies of the source code to Git live in many repositories, and the
-> following is a list of the ones I push into or their mirrors.  Some
-> repositories have only a subset of branches.
-> 
-> With maint, master, next, seen, todo:
-> 
-> 	git://git.kernel.org/pub/scm/git/git.git/
-> 	git://repo.or.cz/alt-git.git/
-> 	https://kernel.googlesource.com/pub/scm/git/git/
-> 	https://github.com/git/git/
-> 	https://gitlab.com/git-vcs/git/
-> 
-> With all the integration branches and topics broken out:
-> 
-> 	https://github.com/gitster/git/
-> 
-> Even though the preformatted documentation in HTML and man format
-> are not sources, they are published in these repositories for
-> convenience (replace "htmldocs" with "manpages" for the manual
-> pages):
-> 
-> 	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
-> 	https://github.com/gitster/git-htmldocs.git/
 
-Just FYI, the docs repos are still @ v2.31.0-rc2. (I built the
-docs locally for this release).
+Will do; I'll also point out a few topics that have been reviewed but
+haven't been picked up yet.
 
-ATB,
-Ramsay Jones
+> * en/ort-perf-batch-9 (2021-03-10) 8 commits
+>  - diffcore-rename: avoid doing basename comparisons for irrelevant sources
+>  - merge-ort: skip rename detection entirely if possible
+>  - merge-ort: use relevant_sources to filter possible rename sources
+>  - merge-ort: precompute whether directory rename detection is needed
+>  - merge-ort: introduce wrappers for alternate tree traversal
+>  - merge-ort: add data structures for an alternate tree traversal
+>  - merge-ort: precompute subset of sources for which we need rename detection
+>  - diffcore-rename: enable filtering possible rename sources
+>  (this branch uses en/ort-perf-batch-8.)
+>
+>  More ort.
 
+Can I suggest an alternate title?  "merge-ort optimization of skipping
+irrelevant renames" or anything that gets the idea of "skipping
+irrelevant renames" in there.
+
+>  Ready?
+
+Yeah, I think it's ready; I'm not aware of any needed changes.
+Reviewed by Stolee at [1] and [2]
+
+[1] https://lore.kernel.org/git/c4ce57f2-fc02-a70c-5ecb-0911a551192c@gmail.com/
+[2] https://lore.kernel.org/git/4aed9cc6-b133-b398-353c-9618439c7b8b@gmail.com/
+
+Sidenote: This patch series was the single best thing in all of
+merge-ort.  I was really hoping more people would read just the cover
+letter, even if they read none of the patches or even none of the
+other cover letters.  (As Stolee said, 'These are _very_ impressive
+numbers for such a "simple" idea.').
+
+
+> * en/ort-perf-batch-8 (2021-02-26) 10 commits
+>   (merged to 'next' on 2021-03-07 at f03b2c1acd)
+>  + diffcore-rename: compute dir_rename_guess from dir_rename_counts
+>  + diffcore-rename: limit dir_rename_counts computation to relevant dirs
+>  + diffcore-rename: compute dir_rename_counts in stages
+>  + diffcore-rename: extend cleanup_dir_rename_info()
+>  + diffcore-rename: move dir_rename_counts into dir_rename_info struct
+>  + diffcore-rename: add function for clearing dir_rename_count
+>  + Move computation of dir_rename_count from merge-ort to diffcore-rename
+>  + diffcore-rename: add a mapping of destination names to their indices
+>  + diffcore-rename: provide basic implementation of idx_possible_rename()
+>  + diffcore-rename: use directory rename guided basename comparisons
+>  (this branch is used by en/ort-perf-batch-9.)
+>
+>  Rename detection rework continues.
+>
+>  Will cook in 'next'.
+
+I think it's ready to merge to master.
+
+
+
+--------------------------------------------------
+[Not yet cooking]
+
+Here are some reviewed topics that haven't been cooking yet, that I
+personally think are worth picking up (at least for seen and probably
+for next rather soonish):
+
+
+* Matheus' add-rm-sparse-checkout work:
+https://lore.kernel.org/git/CABPp-BEriPaDY=84=j0tT62+U93jKePTyTKPZA4+dYtSFJaSTg@mail.gmail.com/
+
+* Stolee's first sparse-index series:
+https://lore.kernel.org/git/pull.883.v3.git.1615912983.gitgitgadget@gmail.com/
+
+* My ort-perf-batch-10 ("skip even more irrelevant renames") series:
+https://lore.kernel.org/git/8422759a-a4a3-4dc6-4ae7-4a61896b9946@gmail.com/;
+(the review comment there is addressed by the next patch series in
+this list)
+
+* My "declare merge-ort stable" series at
+https://lore.kernel.org/git/pull.905.v2.git.1616016485.gitgitgadget@gmail.com/
+(though most the reviews were on the separate-at-the-time topic at
+https://lore.kernel.org/git/pull.973.v2.git.git.1615271086.gitgitgadget@gmail.com/
+).  Actually, only the first 12 patches are reviewed, but the last one
+is testing code rather than source code, so close enough for at least
+picking up?
