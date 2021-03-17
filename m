@@ -2,133 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 96A26C4332B
-	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 19:32:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 38DC8C433DB
+	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 19:39:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6BBE864E98
-	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 19:32:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D863264EB6
+	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 19:39:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233106AbhCQTbj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Mar 2021 15:31:39 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56061 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232932AbhCQTbK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Mar 2021 15:31:10 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1C680A422C;
-        Wed, 17 Mar 2021 15:31:09 -0400 (EDT)
+        id S231378AbhCQTjJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Mar 2021 15:39:09 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62518 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233239AbhCQTio (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Mar 2021 15:38:44 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DADD1A9248;
+        Wed, 17 Mar 2021 15:38:43 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=alZvNu4iBzJbkCfwWG7IomcIB0E=; b=Kil2jW
-        zXz75KU3oRVcCvFq5z6k4IdLY1Cejqs0SrrX1fajWhfIMt88/UAz9wTIy7D2LVPT
-        iUC2qMw6vgImztDnE/ughI6YHC8Yr+hTi4ZrEpl59vrNjhVmmabPepGXzGugywT9
-        0hSPbbmBsDaMqz5mxvarJEsAZWl3tDwghsQhk=
+        :content-type; s=sasl; bh=CZwpugM0qVZ6YuItr6SyAinvr3s=; b=tlD7LZ
+        vyjoSoHH2SZO5/LUk52OepPt87+xyD71QuZwae00hgGBjvSZe6Ik1sm5ZgghLvwy
+        Ts7oO7yZn6UczORj4f7B8F7Ft7S9Stf6WeeTu0vcUrbDNDmVKWclnY1g6nOAQ3jn
+        E3aLdT6iI7I/inlWr4eeNt/qZ4f++przElqz8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=OP8b/KSNppbd6PT3Qt+pHY0VXfcMAFHr
-        eTSdJhah5M9R3fZGpQmjblRvwbrkJqi1COde7eacr5S/yZS9z426fnkFlXTkqbfy
-        1A/sw0rEgAXbQTYdY5HfCbRNKjaaTXaZvDNRhBGPyGN6JJtUtAfNVEImOzpLUsEo
-        hXmKlZpEODs=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1486AA422B;
-        Wed, 17 Mar 2021 15:31:09 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=oiFLfnjD8YE5b8T9IYGD/2A+wH3aJXwA
+        6ftHnr/IR1eBsPGujBh4R9ju48wWp6J/+giikKsC/Q2bXeHir9KRBxFYTU8DIMGV
+        ul5ra7pG57zNO1xHiqcXCPnsFMbTjgWBKNGdNqj0QRe8rG2uErMqJ9eJuINw6yps
+        3SGIz+iSK6s=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D2E34A9247;
+        Wed, 17 Mar 2021 15:38:43 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8A5E4A4229;
-        Wed, 17 Mar 2021 15:31:08 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 546CAA9246;
+        Wed, 17 Mar 2021 15:38:43 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Albert Cui via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Albert Cui <albertqcui@gmail.com>
-Subject: Re: [PATCH] fetch: show progress for packfile uri downloads
-References: <pull.907.git.1616007794513.gitgitgadget@gmail.com>
-Date:   Wed, 17 Mar 2021 12:31:07 -0700
-In-Reply-To: <pull.907.git.1616007794513.gitgitgadget@gmail.com> (Albert Cui
-        via GitGitGadget's message of "Wed, 17 Mar 2021 19:03:13 +0000")
-Message-ID: <xmqqsg4ttw5g.fsf@gitster.g>
+To:     Pete Boere <pete@duel.me>
+Cc:     git@vger.kernel.org, John Lin <johnlinp@gmail.com>
+Subject: Re: Extra blank lines in "git status" output have been reduced
+References: <CAF8W_bFzE8strSWc0_eABdyfCxA+0CA6ph_uXgSyT7YRU-jO6A@mail.gmail.com>
+Date:   Wed, 17 Mar 2021 12:38:42 -0700
+In-Reply-To: <CAF8W_bFzE8strSWc0_eABdyfCxA+0CA6ph_uXgSyT7YRU-jO6A@mail.gmail.com>
+        (Pete Boere's message of "Wed, 17 Mar 2021 10:22:50 +0000")
+Message-ID: <xmqqo8fhtvst.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 52CA419E-8757-11EB-9911-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 61DC7854-8758-11EB-8EBB-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Albert Cui via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Pete Boere <pete@duel.me> writes:
 
-> From: Albert Cui <albertqcui@gmail.com>
->
-> Git appears to hang when downloading packfiles as this part of the
-> fetch is silent, causing user confusion. This change implements
-> progress for the number of packfiles downloaded; a progress display
-> for bytes would involve deeper changes at the http-fetch layer
-> instead of fetch-pack, the caller.
+> With the release of v2.23 I have noticed from the commit:
+> 7b098429355bb3271f9ffdf73b97f2ef82794fea
+> ...
+> Is there any chance of adding them back? The changed layout has been
+> throwing me off ever since upgrading.
 
-... "hence we do not do so in this patch"?  
+Sorry, but it is way too late to complain, generally after a change
+hits a release, and especially after it got buried under 8 new major
+releases.  Unless a change was an unintended side-effect that we did
+not mean to make, in which case we would likely to fix it as a bug.
 
-That's probably a very sensible way to go.
+And the change in question b2f5171e (status: remove the empty line
+after hints, 2019-06-04) quite deliberately targets at removing
+these extra lines [*], so no, I do not think it is reasonable to
+expect reverting that commit that is more than a year old.
 
-I expect that http-fetch will in the longer term become a mere
-fallback default used by those who do not have anything better.
-Because we are not in the business of writing a performant HTTP
-downloader, we would be better off if we make it easy to plug an
-external HTTP downloader other people write in to this codepath.
+You may want to join the list discussion and stop whatever UI change
+you find undesirable before it materializes next time.
 
-> +	packfile_uri_progress = start_progress(_("Downloading packs"), packfile_uris.nr);
 
-OK, so we plan to count from 0 up to .nr; and the message is made
-localizable.  Good.
+[Reference]
 
-> @@ -1696,6 +1700,7 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
->  		const char *uri = packfile_uris.items[i].string +
->  			the_hash_algo->hexsz + 1;
->  
-> +		display_progress(packfile_uri_progress, i+1);
+commit b2f5171ecc2feb4192acd80f5a6b05c06e099e97
+Author: John Lin <johnlinp@gmail.com>
+Date:   Tue Jun 4 07:02:21 2019 -0700
 
-		display_progress(packfile_uri_progress, i + 1);
-
-> diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
-> index 2e1243ca40b0..8964a4003678 100755
-> --- a/t/t5702-protocol-v2.sh
-> +++ b/t/t5702-protocol-v2.sh
-> @@ -851,7 +851,8 @@ test_expect_success 'part of packfile response provided as URI' '
->  	GIT_TRACE=1 GIT_TRACE_PACKET="$(pwd)/log" GIT_TEST_SIDEBAND_ALL=1 \
->  	git -c protocol.version=2 \
->  		-c fetch.uriprotocols=http,https \
-> -		clone "$HTTPD_URL/smart/http_parent" http_child &&
-> +		clone "$HTTPD_URL/smart/http_parent" http_child \
-> +		--progress 2>progress &&
-
-Some existing tests use GIT_PROGRESS_DELAY to protect against an
-operation that is too quick to complete.  Don't we need to do the
-same?  If not, then perhaps we need to allow delaying the progress
-meter we add with this patch for "too quick" case, perhaps?
-
->  	# Ensure that my-blob and other-blob are in separate packfiles.
->  	for idx in http_child/.git/objects/pack/*.idx
-> @@ -875,6 +876,8 @@ test_expect_success 'part of packfile response provided as URI' '
->  	test -f hfound &&
->  	test -f h2found &&
->  
-> +	test_i18ngrep "Downloading packs" progress &&
-
-Also, I am not sure with all the terminal control junk, 'grep'
-should be expected to reliably pick this substring in the output.
-Are we expecting any other output to the standard error stream?
-Some tests in t5318 seem to just see if the output is non-empty, and
-I am wondering if that is an approach more appropriate here (not
-rhetorical---I simply do not know the answer).
-
->  	# Ensure that there are exactly 3 packfiles with associated .idx
->  	ls http_child/.git/objects/pack/*.pack \
->  	    http_child/.git/objects/pack/*.idx >filelist &&
->
-> base-commit: a5828ae6b52137b913b978e16cd2334482eb4c1f
+    status: remove the empty line after hints
+    
+    Before this patch, there is inconsistency between the status
+    messages with hints and the ones without hints: there is an
+    empty line between the title and the file list if hints are
+    presented, but there isn't one if there are no hints.
+    
+    This patch remove the inconsistency by removing the empty
+    lines even if hints are presented.
