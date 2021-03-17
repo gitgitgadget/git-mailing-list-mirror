@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1F1DC4321A
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A864BC43332
 	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 21:28:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AA16364F40
+	by mail.kernel.org (Postfix) with ESMTP id 80C8064F2A
 	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 21:28:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233573AbhCQV2d (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Mar 2021 17:28:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32788 "EHLO
+        id S233563AbhCQV2c (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Mar 2021 17:28:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32786 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233536AbhCQV2O (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Mar 2021 17:28:14 -0400
+        with ESMTP id S233535AbhCQV2N (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Mar 2021 17:28:13 -0400
 Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7AE1C06174A
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DBECC06174A
         for <git@vger.kernel.org>; Wed, 17 Mar 2021 14:28:13 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id x16so3313093wrn.4
+Received: by mail-wr1-x435.google.com with SMTP id z2so3308472wrl.5
         for <git@vger.kernel.org>; Wed, 17 Mar 2021 14:28:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=BUOkwACFk1ATS5lxNPwdjLfxguOc0uEUsQow7Zl+Re4=;
-        b=KueQR6GrcVidV1lymzKB36BMqpLNRH2N4uLCnjsHpOkOpKD9y8ARtk+EJZbQjcf156
-         9mO4UXfiC+8cmspAqk4b/1tlQXGWlV/rHunObrd9mSWdb6EubRNECx5ggurRAx5XrMl+
-         VGyHMAcfydSfE3MFft5lJ9LMdl0dK96HXiHLUTVvvlRc0epbOM9yqU5Ry/rfvdjqbLAM
-         c30ou6TgS2z2qLkJZNWcVzLed+sATs7ZvUZzFvP5OLC1EedcnSamw/wkiHsrgGT6yJDY
-         B40rHQXDrdfH7iT0rR2KGH0S1R+wUBVJDE7JVzuQDZTUoqqGHRmRn5t2V4Y+F6sFTXEl
-         HsNQ==
+        bh=YnhiuQV/2Wc+3z93qURlauJEUrKVi/jU9n84Rplg354=;
+        b=idINbWmy/vqaK2gzqcCZPoNf0zEchlmLVFq86fJpMQ4AaucN3K4Dbcq+F8tSohxFPv
+         gIagFWGvB+ukh6bag6fk5spH5GzkxNl8+sGM+knD6Sql5LnknI4JsmmP9EIwh6+rF6AY
+         BhbMjasmafuVGvnB/nxI8rfrqp27Bus4V4QUoRpQ5Ld6uzg4Xx7Sy1KtZL5FToObQDyF
+         mc/WJAFoAxI2A4gx3DhYu3FKP3AtVXQEMIQK6HU5xJf0eqTO6aNvEi+xlb0aoCbdmhqJ
+         cEhVJdfxzGrC1q2om4j4j+b+V50n/JaXFwhQRWr62Hk9yiNZE/5T1JMEM8ibAzKAjq1r
+         PQhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=BUOkwACFk1ATS5lxNPwdjLfxguOc0uEUsQow7Zl+Re4=;
-        b=LHmZCWoSTPF4OZJuWKCptSESfrecpEIYIaqYY4V7DorkRRgJzh+E1CAn4HBpxnXZGl
-         j8CUKlm+d3ij0FEotQQW2AavZgUeqUc1K53QqTHctYxLzWBnJLBDgQeqHcGsF76tM8By
-         aXlXEH5wyGH5iB2JtMew/dZ8M8eNrEWS1A5wLWD8f9SCrc7DOBqytgxAts1npExM3Ibm
-         K+i6NsXQNuJAubDvgKLTA+M0LW5hgS2XZ8cHExilVvL0P6od8K8DRE7KYKgpyO7qYxib
-         nc4YFXeyrFqlKu99gTTp8PlPnFbIK0L0dVk5cPetyYpvpNGA5SQ2M4+pb5n7l0TwjJRv
-         +iYQ==
-X-Gm-Message-State: AOAM532tu/gX9Ypp1yJZYqDsHxts2b6yOmNXmyU3EZ/W70yax9x4wpkn
-        rLC4ud1drmZNv1CrDc/TaYiuYZHMXQQ=
-X-Google-Smtp-Source: ABdhPJy/v0fAnr/43Ysf7Fy30FrBOxVtWe7k6/bEWFO8roYQTI59L0Uz1FRkyRNyeUbMbh9GcHdthQ==
-X-Received: by 2002:a5d:6b84:: with SMTP id n4mr6300352wrx.402.1616016492681;
+        bh=YnhiuQV/2Wc+3z93qURlauJEUrKVi/jU9n84Rplg354=;
+        b=DEn7g95QgZUb7s1mtlkuUlnKr9XnVcHTVjoLSHHAhZKwvcCppMnFfJe9e+MNlI5H2T
+         ffbQAgZrwgTjyAeH2U9fWN3eSkt9c7A5BaM+xaJv+5g1en1RAnkJmgQesfsq8J9qQfMy
+         p8G8sLB+Z1PSBYFZmdvdhGgJOFhkSfJYb4G7rVQc51OhoYJuGdr2H1txkua6DMnwlVaJ
+         IXdYii39dmwIVCe/EZqoycfys4q0/GB1a+a1fQxFTjRaBUWfs2+jB8C1YtPIbSKxgh/C
+         2E6/pzZKNAYaM/j3tnoCsiTeMBTQjVqn9/JWWyxznRhntqesY61bM+p07BWWt2yRrWwq
+         jRDg==
+X-Gm-Message-State: AOAM530Qy4snO1hhZy34NxU8lnUZvMe/IRHGHDqBaYIKYJCI2J8pbHB3
+        eZ5P2Ziv/+sDQa6QIUz7XdDAL6OAPac=
+X-Google-Smtp-Source: ABdhPJwo4tGE36BFcdCpE8pKNc/zn/kgsKuceJ6cnp2cgoJbYu9vs/jLcAp4RIj5dEVPUiRg61LJeg==
+X-Received: by 2002:a5d:44c5:: with SMTP id z5mr6033016wrr.319.1616016492063;
         Wed, 17 Mar 2021 14:28:12 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l4sm205155wrt.60.2021.03.17.14.28.12
+        by smtp.gmail.com with ESMTPSA id v189sm110243wme.39.2021.03.17.14.28.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Mar 2021 14:28:12 -0700 (PDT)
-Message-Id: <a37979454069eef830ff19e70a0e998522d30448.1616016485.git.gitgitgadget@gmail.com>
+        Wed, 17 Mar 2021 14:28:11 -0700 (PDT)
+Message-Id: <4a79e61346919291f49885298da4b8c714ee00ff.1616016485.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.905.v2.git.1616016485.gitgitgadget@gmail.com>
 References: <pull.905.git.1615867503.gitgitgadget@gmail.com>
         <pull.905.v2.git.1616016485.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 17 Mar 2021 21:28:02 +0000
-Subject: [PATCH v2 10/13] merge-recursive: add a bunch of FIXME comments
- documenting known bugs
+Date:   Wed, 17 Mar 2021 21:28:01 +0000
+Subject: [PATCH v2 09/13] merge-ort: write $GIT_DIR/AUTO_MERGE whenever we hit
+ a conflict
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -87,108 +87,162 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-The plan is to just delete merge-recursive, but not until everyone is
-comfortable with merge-ort as a replacement.  Given that I haven't
-switched all callers of merge-recursive over yet (e.g. git-am still uses
-merge-recursive), maybe there's some value documenting known bugs in the
-algorithm in case we end up keeping it or someone wants to dig it up in
-the future.
+There are a variety of questions users might ask while resolving
+conflicts:
+  * What changes have been made since the previous (first) parent?
+  * What changes are staged?
+  * What is still unstaged? (or what is still conflicted?)
+  * What changes did I make to resolve conflicts so far?
+The first three of these have simple answers:
+  * git diff HEAD
+  * git diff --cached
+  * git diff
+There was no way to answer the final question previously.  Adding one
+is trivial in merge-ort, since it works by creating a tree representing
+what should be written to the working copy complete with conflict
+markers.  Simply write that tree to .git/AUTO_MERGE, allowing users to
+answer the fourth question with
+  * git diff AUTO_MERGE
+
+I avoided using a name like "MERGE_AUTO", because that would be
+merge-specific (much like MERGE_HEAD, REBASE_HEAD, REVERT_HEAD,
+CHERRY_PICK_HEAD) and I wanted a name that didn't change depending on
+which type of operation the merge was part of.
+
+Ensure that paths which clean out other temporary operation-specific
+files (e.g. CHERRY_PICK_HEAD, MERGE_MSG, rebase-merge/ state directory)
+also clean out this AUTO_MERGE file.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-recursive.c | 37 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+ branch.c         |  1 +
+ builtin/rebase.c |  1 +
+ merge-ort.c      | 10 ++++++++++
+ path.c           |  1 +
+ path.h           |  2 ++
+ sequencer.c      |  5 +++++
+ 6 files changed, 20 insertions(+)
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index b052974f191c..99a197597db5 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -1075,6 +1075,11 @@ static int merge_3way(struct merge_options *opt,
- 	read_mmblob(&src1, &a->oid);
- 	read_mmblob(&src2, &b->oid);
+diff --git a/branch.c b/branch.c
+index 9c9dae1eae32..b71a2de29dbe 100644
+--- a/branch.c
++++ b/branch.c
+@@ -344,6 +344,7 @@ void remove_merge_branch_state(struct repository *r)
+ 	unlink(git_path_merge_rr(r));
+ 	unlink(git_path_merge_msg(r));
+ 	unlink(git_path_merge_mode(r));
++	unlink(git_path_auto_merge(r));
+ 	save_autostash(git_path_merge_autostash(r));
+ }
  
-+	/*
-+	 * FIXME: Using a->path for normalization rules in ll_merge could be
-+	 * wrong if we renamed from a->path to b->path.  We should use the
-+	 * target path for where the file will be written.
-+	 */
- 	merge_status = ll_merge(result_buf, a->path, &orig, base,
- 				&src1, name1, &src2, name2,
- 				opt->repo->index, &ll_opts);
-@@ -1154,6 +1159,8 @@ static void print_commit(struct commit *commit)
- 	struct strbuf sb = STRBUF_INIT;
- 	struct pretty_print_context ctx = {0};
- 	ctx.date_mode.type = DATE_NORMAL;
-+	/* FIXME: Merge this with output_commit_title() */
-+	assert(!merge_remote_util(commit));
- 	format_commit_message(commit, " %h: %m %s", &sb, &ctx);
- 	fprintf(stderr, "%s\n", sb.buf);
- 	strbuf_release(&sb);
-@@ -1177,6 +1184,11 @@ static int merge_submodule(struct merge_options *opt,
- 	int search = !opt->priv->call_depth;
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 840dbd7eb777..6c252d62758c 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -737,6 +737,7 @@ static int finish_rebase(struct rebase_options *opts)
+ 	int ret = 0;
  
- 	/* store a in result in case we fail */
-+	/* FIXME: This is the WRONG resolution for the recursive case when
-+	 * we need to be careful to avoid accidentally matching either side.
-+	 * Should probably use o instead there, much like we do for merging
-+	 * binaries.
-+	 */
- 	oidcpy(result, a);
- 
- 	/* we can not handle deletion conflicts */
-@@ -1301,6 +1313,13 @@ static int merge_mode_and_contents(struct merge_options *opt,
- 
- 	if ((S_IFMT & a->mode) != (S_IFMT & b->mode)) {
- 		result->clean = 0;
-+		/*
-+		 * FIXME: This is a bad resolution for recursive case; for
-+		 * the recursive case we want something that is unlikely to
-+		 * accidentally match either side.  Also, while it makes
-+		 * sense to prefer regular files over symlinks, it doesn't
-+		 * make sense to prefer regular files over submodules.
-+		 */
- 		if (S_ISREG(a->mode)) {
- 			result->blob.mode = a->mode;
- 			oidcpy(&result->blob.oid, &a->oid);
-@@ -1349,6 +1368,7 @@ static int merge_mode_and_contents(struct merge_options *opt,
- 			free(result_buf.ptr);
- 			if (ret)
- 				return ret;
-+			/* FIXME: bug, what if modes didn't match? */
- 			result->clean = (merge_status == 0);
- 		} else if (S_ISGITLINK(a->mode)) {
- 			result->clean = merge_submodule(opt, &result->blob.oid,
-@@ -2664,6 +2684,14 @@ static int process_renames(struct merge_options *opt,
- 	struct string_list b_by_dst = STRING_LIST_INIT_NODUP;
- 	const struct rename *sre;
- 
-+	/*
-+	 * FIXME: As string-list.h notes, it's O(n^2) to build a sorted
-+	 * string_list one-by-one, but O(n log n) to build it unsorted and
-+	 * then sort it.  Note that as we build the list, we do not need to
-+	 * check if the existing destination path is already in the list,
-+	 * because the structure of diffcore_rename guarantees we won't
-+	 * have duplicates.
-+	 */
- 	for (i = 0; i < a_renames->nr; i++) {
- 		sre = a_renames->items[i].util;
- 		string_list_insert(&a_by_dst, sre->pair->two->path)->util
-@@ -3602,6 +3630,15 @@ static int merge_recursive_internal(struct merge_options *opt,
- 			return err(opt, _("merge returned no commit"));
+ 	delete_ref(NULL, "REBASE_HEAD", NULL, REF_NO_DEREF);
++	unlink(git_path_auto_merge(the_repository));
+ 	apply_autostash(state_dir_path("autostash", opts));
+ 	close_object_store(the_repository->objects);
+ 	/*
+diff --git a/merge-ort.c b/merge-ort.c
+index 303e89414274..e8f1a435f99a 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -3496,6 +3496,9 @@ void merge_switch_to_result(struct merge_options *opt,
+ {
+ 	assert(opt->priv == NULL);
+ 	if (result->clean >= 0 && update_worktree_and_index) {
++		const char *filename;
++		FILE *fp;
++
+ 		trace2_region_enter("merge", "checkout", opt->repo);
+ 		if (checkout(opt, head, result->tree)) {
+ 			/* failure to function */
+@@ -3514,6 +3517,13 @@ void merge_switch_to_result(struct merge_options *opt,
+ 		}
+ 		opt->priv = NULL;
+ 		trace2_region_leave("merge", "record_conflicted", opt->repo);
++
++		trace2_region_enter("merge", "write_auto_merge", opt->repo);
++		filename = git_path_auto_merge(opt->repo);
++		fp = xfopen(filename, "w");
++		fprintf(fp, "%s\n", oid_to_hex(&result->tree->object.oid));
++		fclose(fp);
++		trace2_region_leave("merge", "write_auto_merge", opt->repo);
  	}
  
-+	/*
-+	 * FIXME: Since merge_recursive_internal() is only ever called by
-+	 * places that ensure the index is loaded first
-+	 * (e.g. builtin/merge.c, rebase/sequencer, etc.), in the common
-+	 * case where the merge base was unique that means when we get here
-+	 * we immediately discard the index and re-read it, which is a
-+	 * complete waste of time.  We should only be discarding and
-+	 * re-reading if we were forced to recurse.
-+	 */
- 	discard_index(opt->repo->index);
- 	if (!opt->priv->call_depth)
- 		repo_read_index(opt->repo);
+ 	if (display_update_msgs) {
+diff --git a/path.c b/path.c
+index 7b385e5eb282..9e883eb52446 100644
+--- a/path.c
++++ b/path.c
+@@ -1534,5 +1534,6 @@ REPO_GIT_PATH_FUNC(merge_rr, "MERGE_RR")
+ REPO_GIT_PATH_FUNC(merge_mode, "MERGE_MODE")
+ REPO_GIT_PATH_FUNC(merge_head, "MERGE_HEAD")
+ REPO_GIT_PATH_FUNC(merge_autostash, "MERGE_AUTOSTASH")
++REPO_GIT_PATH_FUNC(auto_merge, "AUTO_MERGE")
+ REPO_GIT_PATH_FUNC(fetch_head, "FETCH_HEAD")
+ REPO_GIT_PATH_FUNC(shallow, "shallow")
+diff --git a/path.h b/path.h
+index e7e77da6aaa5..251c78d98000 100644
+--- a/path.h
++++ b/path.h
+@@ -176,6 +176,7 @@ struct path_cache {
+ 	const char *merge_mode;
+ 	const char *merge_head;
+ 	const char *merge_autostash;
++	const char *auto_merge;
+ 	const char *fetch_head;
+ 	const char *shallow;
+ };
+@@ -191,6 +192,7 @@ const char *git_path_merge_rr(struct repository *r);
+ const char *git_path_merge_mode(struct repository *r);
+ const char *git_path_merge_head(struct repository *r);
+ const char *git_path_merge_autostash(struct repository *r);
++const char *git_path_auto_merge(struct repository *r);
+ const char *git_path_fetch_head(struct repository *r);
+ const char *git_path_shallow(struct repository *r);
+ 
+diff --git a/sequencer.c b/sequencer.c
+index d2332d3e1787..472cdd8c620d 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -2096,6 +2096,7 @@ static int do_pick_commit(struct repository *r,
+ 		refs_delete_ref(get_main_ref_store(r), "", "CHERRY_PICK_HEAD",
+ 				NULL, 0);
+ 		unlink(git_path_merge_msg(r));
++		unlink(git_path_auto_merge(r));
+ 		fprintf(stderr,
+ 			_("dropping %s %s -- patch contents already upstream\n"),
+ 			oid_to_hex(&commit->object.oid), msg.subject);
+@@ -2451,6 +2452,8 @@ void sequencer_post_commit_cleanup(struct repository *r, int verbose)
+ 		need_cleanup = 1;
+ 	}
+ 
++	unlink(git_path_auto_merge(r));
++
+ 	if (!need_cleanup)
+ 		return;
+ 
+@@ -4111,6 +4114,7 @@ static int pick_commits(struct repository *r,
+ 			unlink(rebase_path_stopped_sha());
+ 			unlink(rebase_path_amend());
+ 			unlink(git_path_merge_head(r));
++			unlink(git_path_auto_merge(r));
+ 			delete_ref(NULL, "REBASE_HEAD", NULL, REF_NO_DEREF);
+ 
+ 			if (item->command == TODO_BREAK) {
+@@ -4505,6 +4509,7 @@ static int commit_staged_changes(struct repository *r,
+ 		return error(_("could not commit staged changes."));
+ 	unlink(rebase_path_amend());
+ 	unlink(git_path_merge_head(r));
++	unlink(git_path_auto_merge(r));
+ 	if (final_fixup) {
+ 		unlink(rebase_path_fixup_msg());
+ 		unlink(rebase_path_squash_msg());
 -- 
 gitgitgadget
 
