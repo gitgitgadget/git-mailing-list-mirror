@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 42C55C4332D
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A393C4332E
 	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 21:28:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1978764F3B
-	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 21:28:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E5AF064F2B
+	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 21:28:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233561AbhCQV2b (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Mar 2021 17:28:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32774 "EHLO
+        id S233555AbhCQV23 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Mar 2021 17:28:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233508AbhCQV2L (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S233488AbhCQV2L (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 17 Mar 2021 17:28:11 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FBABC06174A
-        for <git@vger.kernel.org>; Wed, 17 Mar 2021 14:28:11 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id z2so3308393wrl.5
-        for <git@vger.kernel.org>; Wed, 17 Mar 2021 14:28:11 -0700 (PDT)
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E3C4C06175F
+        for <git@vger.kernel.org>; Wed, 17 Mar 2021 14:28:10 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id j7so3321150wrd.1
+        for <git@vger.kernel.org>; Wed, 17 Mar 2021 14:28:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=XXkada0tjiFQqfS5wUUxv6rDq4t4jraSD+9f2/tJEHk=;
-        b=oaf8fR86eWzgEkFRqQ5LoZ9n1F3z0VgxMGMvZJp2LW86C33/l1jtazG9cjZ1hrAnFR
-         cTATqqjzUfzqHqLkNnxhllAIa80pw9kFotYNwXeqz77cY9ii6g089G8r0JbmDG+1I9Rg
-         ZKrkIZEUEIGQkzuNx0Qvs/w2VEprBmYQXgu7avxmcUm5r5dyGDbCSKneOwYGnn3P+BrA
-         /qWFvKtLnmSXSlu2Kpnl62UF1YFuAN7JwZYxO5Rhv4Q6lWY6N54FFJ/7QYhEQ2T9mbmL
-         aFgPlThFl4oBbeurzgMa4U/3r3OzI5PJNs1rlQPHiNWDkwrptaXQqsDuNoaSz/66WzYe
-         J5Ug==
+        bh=k+yspLm/RWGBF4nOoRv16D5B6QfCBOFG70DbofWSpA0=;
+        b=oi7GE5wjCSRIGMVwW2TcopKpVAal/O7UCXHAxNHeBtefwXTK3jr06UjtsxPF804Ffs
+         lPKqRne3jKXSwXEGzeOpUT8bfxKFrpq1QwfEWgNj0O0TuQilXhZMamegW2jE2JTG7qKc
+         iqsj2BBmD3ZeP4UGoNI12GKfeMj6M0Hmq1rz7Y6b6z3iArfVabu+cm53M5bsdDW67Olw
+         b76PZL9aTBMv2P0RxLb+7NXlGd8qRgknJ7w4hpXvgLMAgpfRDxMDrX6pboP7upohX9PU
+         bhnSzLosAhEIdWt4Wzbs0rZVqCj/cnOzNZla7UxhlierkCfQvG9cFVMOyYD7rUH3vFxH
+         xLVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=XXkada0tjiFQqfS5wUUxv6rDq4t4jraSD+9f2/tJEHk=;
-        b=owcTRvqgGeMmFjVBX2lWSl52IIExBbE3ih9is0sfVzhmjwkJWu8J7AVoIEovXhqWDR
-         L5xK75c6DxksqTFDxqzu00D1hhi26ZVCnhBlfWHrYMK+IsbTo42tBbLS/qwTdimrjR5U
-         ckTjQep29yl99K+ONPNwFdHqVbavVY70e0qT4fB5ceyM/CK2eUK/BcEEXWC0FM8jcsEe
-         gp1h/Dp9AtZu/x09xYw0mpI0Xz6LBmWO2J7lPS84e+9xifjuGbBzfrD654dvyfEKXhIz
-         FL1OgiN1jDZnT2V061P0cl5qdbTs2t5zOW7Gijpix9UVPxRMuMhtyrfgbVtZLdU7mu+Q
-         aZGA==
-X-Gm-Message-State: AOAM533f623dqUn7QPohfcRzmUDWTn+RX8+n6vg40cbKiswFk4LNHDEV
-        EvTDycvxVUZqUVM/1GoFEh3AQ0pVz30=
-X-Google-Smtp-Source: ABdhPJwDUPhvSlCcTwnrGgNIUcQShzi+54R14946oxojkXhKvANE0Tod2upFg4V10R6MUZzDY8/yjg==
-X-Received: by 2002:adf:ff8c:: with SMTP id j12mr6261605wrr.297.1616016490289;
-        Wed, 17 Mar 2021 14:28:10 -0700 (PDT)
+        bh=k+yspLm/RWGBF4nOoRv16D5B6QfCBOFG70DbofWSpA0=;
+        b=lUBtJmy8mZYqnyyOWJQbte3yII4AUw5IjU/w1vEkZcH9v6+nE9zBDDby8ljCkwJMr7
+         FGpwsNlzIbhFKDFeRlgGdDa27hDyQY788eCCzSkmzP6XW7SbYfuQ1Iao6tBLd0K6485f
+         8yDvTPFqwf12oFAojqgjBJYOSMy5vWP2HOIRjdRVUcHdlPBgeiOiqMj1IUqTbxS2mMq6
+         YeP2+wJ0baKFKGEtgt5pOnvrlkpsHpSRLuKGOHMIgW9hNAxg/m7iwrPCqA1MmqIFbacb
+         FGrH3eSyKszdtIcpA7E55x0jEarIUXXgxpMUL1bdnBEATo40wPMpEO4jlK96k5cHo90X
+         BVGw==
+X-Gm-Message-State: AOAM530OX6wdg9NLtsiEfSHdKZaWBhEDiaHvP0eVfLtxKsj9PT0TQW2u
+        RuUiGymYi380K00CV4Cx8MYyL7Nciy0=
+X-Google-Smtp-Source: ABdhPJxDiIUzjYOAZ6s3W6GQoO62DAC5ItM0aG+OEoowiXQYUZIoyC34ngQLuurt3pXoH7EQIb+nCg==
+X-Received: by 2002:a5d:4dd2:: with SMTP id f18mr6296943wru.366.1616016489225;
+        Wed, 17 Mar 2021 14:28:09 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m17sm184629wrx.92.2021.03.17.14.28.09
+        by smtp.gmail.com with ESMTPSA id v9sm185837wrn.86.2021.03.17.14.28.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Mar 2021 14:28:10 -0700 (PDT)
-Message-Id: <6aec1f499b8068329b81fb1221717c2ee336fd8d.1616016485.git.gitgitgadget@gmail.com>
+        Wed, 17 Mar 2021 14:28:08 -0700 (PDT)
+Message-Id: <c1c9605c1932cab6191f47beb992a15c64ada237.1616016485.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.905.v2.git.1616016485.gitgitgadget@gmail.com>
 References: <pull.905.git.1615867503.gitgitgadget@gmail.com>
         <pull.905.v2.git.1616016485.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 17 Mar 2021 21:27:58 +0000
-Subject: [PATCH v2 06/13] t6428: new test for SKIP_WORKTREE handling and
- conflicts
+Date:   Wed, 17 Mar 2021 21:27:56 +0000
+Subject: [PATCH v2 04/13] merge-ort: let renormalization change modify/delete
+ into clean delete
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -87,183 +87,100 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-If there is a conflict during a merge for a SKIP_WORKTREE entry, we
-expect that file to be written to the working copy and have the
-SKIP_WORKTREE bit cleared in the index.  If the user had manually
-created a file in the working tree despite SKIP_WORKTREE being set, we
-do not want to clobber their changes to that file, but want to move it
-out of the way.  Add tests that check for these behaviors.
+When we have a modify/delete conflict, but the only change to the
+modification is e.g. change of line endings, then if renormalization is
+requested then we should be able to recognize such a case as a
+not-modified/delete and resolve the conflict automatically.
+
+This fixes t6418.10 under GIT_TEST_MERGE_ALGORITHM=ort.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t6428-merge-conflicts-sparse.sh | 158 ++++++++++++++++++++++++++++++
- 1 file changed, 158 insertions(+)
- create mode 100755 t/t6428-merge-conflicts-sparse.sh
+ merge-ort.c | 64 +++++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 62 insertions(+), 2 deletions(-)
 
-diff --git a/t/t6428-merge-conflicts-sparse.sh b/t/t6428-merge-conflicts-sparse.sh
-new file mode 100755
-index 000000000000..1bb52ff6f38c
---- /dev/null
-+++ b/t/t6428-merge-conflicts-sparse.sh
-@@ -0,0 +1,158 @@
-+#!/bin/sh
-+
-+test_description="merge cases"
-+
-+# The setup for all of them, pictorially, is:
-+#
-+#      A
-+#      o
-+#     / \
-+#  O o   ?
-+#     \ /
-+#      o
-+#      B
-+#
-+# To help make it easier to follow the flow of tests, they have been
-+# divided into sections and each test will start with a quick explanation
-+# of what commits O, A, and B contain.
-+#
-+# Notation:
-+#    z/{b,c}   means  files z/b and z/c both exist
-+#    x/d_1     means  file x/d exists with content d1.  (Purpose of the
-+#                     underscore notation is to differentiate different
-+#                     files that might be renamed into each other's paths.)
-+
-+. ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-merge.sh
-+
-+
-+# Testcase basic, conflicting changes in 'numerals'
-+
-+test_setup_numerals () {
-+	test_create_repo numerals_$1 &&
-+	(
-+		cd numerals_$1 &&
-+
-+		>README &&
-+		test_write_lines I II III >numerals &&
-+		git add README numerals &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		test_write_lines I II III IIII >numerals &&
-+		git add numerals &&
-+		test_tick &&
-+		git commit -m "A" &&
-+
-+		git checkout B &&
-+		test_write_lines I II III IV >numerals &&
-+		git add numerals &&
-+		test_tick &&
-+		git commit -m "B" &&
-+
-+		cat <<-EOF >expected-index &&
-+		H README
-+		M numerals
-+		M numerals
-+		M numerals
-+		EOF
-+
-+		cat <<-EOF >expected-merge
-+		I
-+		II
-+		III
-+		<<<<<<< HEAD
-+		IIII
-+		=======
-+		IV
-+		>>>>>>> B^0
-+		EOF
-+
-+	)
+diff --git a/merge-ort.c b/merge-ort.c
+index cdc1e2fe7a24..c7083e3769aa 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -2549,6 +2549,61 @@ static int string_list_df_name_compare(const char *one, const char *two)
+ 	return onelen - twolen;
+ }
+ 
++static int read_oid_strbuf(struct merge_options *opt,
++			   const struct object_id *oid,
++			   struct strbuf *dst)
++{
++	void *buf;
++	enum object_type type;
++	unsigned long size;
++	buf = read_object_file(oid, &type, &size);
++	if (!buf)
++		return err(opt, _("cannot read object %s"), oid_to_hex(oid));
++	if (type != OBJ_BLOB) {
++		free(buf);
++		return err(opt, _("object %s is not a blob"), oid_to_hex(oid));
++	}
++	strbuf_attach(dst, buf, size, size + 1);
++	return 0;
 +}
 +
-+test_expect_merge_algorithm success failure 'conflicting entries written to worktree even if sparse' '
-+	test_setup_numerals plain &&
-+	(
-+		cd numerals_plain &&
++static int blob_unchanged(struct merge_options *opt,
++			  const struct version_info *base,
++			  const struct version_info *side,
++			  const char *path)
++{
++	struct strbuf basebuf = STRBUF_INIT;
++	struct strbuf sidebuf = STRBUF_INIT;
++	int ret = 0; /* assume changed for safety */
++	const struct index_state *idx = &opt->priv->attr_index;
 +
-+		git checkout A^0 &&
++	if (!idx->initialized)
++		initialize_attr_index(opt);
 +
-+		test_path_is_file README &&
-+		test_path_is_file numerals &&
++	if (base->mode != side->mode)
++		return 0;
++	if (oideq(&base->oid, &side->oid))
++		return 1;
 +
-+		git sparse-checkout init &&
-+		git sparse-checkout set README &&
++	if (read_oid_strbuf(opt, &base->oid, &basebuf) ||
++	    read_oid_strbuf(opt, &side->oid, &sidebuf))
++		goto error_return;
++	/*
++	 * Note: binary | is used so that both renormalizations are
++	 * performed.  Comparison can be skipped if both files are
++	 * unchanged since their sha1s have already been compared.
++	 */
++	if (renormalize_buffer(idx, path, basebuf.buf, basebuf.len, &basebuf) |
++	    renormalize_buffer(idx, path, sidebuf.buf, sidebuf.len, &sidebuf))
++		ret = (basebuf.len == sidebuf.len &&
++		       !memcmp(basebuf.buf, sidebuf.buf, basebuf.len));
 +
-+		test_path_is_file README &&
-+		test_path_is_missing numerals &&
++error_return:
++	strbuf_release(&basebuf);
++	strbuf_release(&sidebuf);
++	return ret;
++}
 +
-+		test_must_fail git merge -s recursive B^0 &&
-+
-+		git ls-files -t >index_files &&
-+		test_cmp expected-index index_files &&
-+
-+		test_path_is_file README &&
-+		test_path_is_file numerals &&
-+
-+		test_cmp expected-merge numerals &&
-+
-+		# 4 other files:
-+		#   * expected-merge
-+		#   * expected-index
-+		#   * index_files
-+		#   * others
-+		git ls-files -o >others &&
-+		test_line_count = 4 others
-+	)
-+'
-+
-+test_expect_merge_algorithm failure failure 'present-despite-SKIP_WORKTREE handled reasonably' '
-+	test_setup_numerals in_the_way &&
-+	(
-+		cd numerals_in_the_way &&
-+
-+		git checkout A^0 &&
-+
-+		test_path_is_file README &&
-+		test_path_is_file numerals &&
-+
-+		git sparse-checkout init &&
-+		git sparse-checkout set README &&
-+
-+		test_path_is_file README &&
-+		test_path_is_missing numerals &&
-+
-+		echo foobar >numerals &&
-+
-+		test_must_fail git merge -s recursive B^0 &&
-+
-+		git ls-files -t >index_files &&
-+		test_cmp expected-index index_files &&
-+
-+		test_path_is_file README &&
-+		test_path_is_file numerals &&
-+
-+		test_cmp expected-merge numerals &&
-+
-+		# There should still be a file with "foobar" in it
-+		grep foobar * &&
-+
-+		# 5 other files:
-+		#   * expected-merge
-+		#   * expected-index
-+		#   * index_files
-+		#   * others
-+		#   * whatever name was given to the numerals file that had
-+		#     "foobar" in it
-+		git ls-files -o >others &&
-+		test_line_count = 5 others
-+	)
-+'
-+
-+test_done
+ struct directory_versions {
+ 	/*
+ 	 * versions: list of (basename -> version_info)
+@@ -3136,8 +3191,13 @@ static void process_entry(struct merge_options *opt,
+ 		modify_branch = (side == 1) ? opt->branch1 : opt->branch2;
+ 		delete_branch = (side == 1) ? opt->branch2 : opt->branch1;
+ 
+-		if (ci->path_conflict &&
+-		    oideq(&ci->stages[0].oid, &ci->stages[side].oid)) {
++		if (opt->renormalize &&
++		    blob_unchanged(opt, &ci->stages[0], &ci->stages[side],
++				   path)) {
++			ci->merged.is_null = 1;
++			ci->merged.clean = 1;
++		} else if (ci->path_conflict &&
++			   oideq(&ci->stages[0].oid, &ci->stages[side].oid)) {
+ 			/*
+ 			 * This came from a rename/delete; no action to take,
+ 			 * but avoid printing "modify/delete" conflict notice
 -- 
 gitgitgadget
 
