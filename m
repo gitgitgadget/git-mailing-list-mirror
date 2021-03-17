@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B1D1C432C3
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B23CC43332
 	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 18:21:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4DD0A64F5E
+	by mail.kernel.org (Postfix) with ESMTP id 3501064F41
 	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 18:21:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233093AbhCQSVb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Mar 2021 14:21:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48924 "EHLO
+        id S232137AbhCQSV3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Mar 2021 14:21:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48920 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232977AbhCQSVT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Mar 2021 14:21:19 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4952DC061760
-        for <git@vger.kernel.org>; Wed, 17 Mar 2021 11:21:19 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id u5-20020a7bcb050000b029010e9316b9d5so1881060wmj.2
-        for <git@vger.kernel.org>; Wed, 17 Mar 2021 11:21:19 -0700 (PDT)
+        with ESMTP id S232982AbhCQSVS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Mar 2021 14:21:18 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A177AC06174A
+        for <git@vger.kernel.org>; Wed, 17 Mar 2021 11:21:17 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id y124-20020a1c32820000b029010c93864955so3940660wmy.5
+        for <git@vger.kernel.org>; Wed, 17 Mar 2021 11:21:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Hrhe2HTJZB5eFPococ6oZHMr2amKORBZgobAnkFyO/8=;
-        b=Lm6GXR0uHf6oChGrgIZTz2IEFFtCRqh406FZBAsbwzLaWzjGMbi9jRiFiIpFfQmxf0
-         SO5QdB/YiI+E7DXgentSl+ZTDuB5at6PHbr+E3po6beY0Xp080KOFlMTA92plmG15wdV
-         xvAQpVgZjWsgJdC1SK0AX4N6TcLWPtoqKa5a6lSW3DBFsbDKEd+bQFlZrY2zET2Ag6SK
-         ZbC7l6Qtzm+KmckU0ogHurEyd50ORaXSoP1DPi+DrYQHgKxp+VBOB6JHVDU3a/8aK8Yn
-         oBqDa6Gbtzrk5rVTF3paCTrRa+zu7cbg3LRQ35hzf1/sUs/NHrVFsL4s8xOwA5xmvZo3
-         S5ww==
+        bh=jnJ3KDudFz8JR7MlAhUceLZ3oXaJi0ZT0ll69csfueg=;
+        b=q+vInioQkFgtwNqrxEdAvkgQ5cGYKk6X9IyRnPdHRQLz31ezIqw/sAN+/0CoCX0NB7
+         POTpFoyNToDhila3Q+i0rWdT9F4PRwiWSOlmqX/xiXBvffZz4xE8+JzCSy9i8FTGeOQn
+         Ib844d1CgKdoWxz0sbh03gzu7JS8crsgVq/jJBc0CPkvc2Bxa5K9h8ChAyfzFcO53YVR
+         bVKbHY62RXPrPPYg+IwYuU8POX+n+F0oTuxrejnp6QHZfGRk1bB2L9KYHZuPO45VmswA
+         4RdXu0dcMV8CdqzpKqParvGePu907x3kBaddJ7D6TPJ9lvyu8amkAsEmDAh608+znSjP
+         /L8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Hrhe2HTJZB5eFPococ6oZHMr2amKORBZgobAnkFyO/8=;
-        b=UD/iP2zn0mIbHZBWcCFPpwOAWCXCyYDa1pcrbDZZB7o9LMZY4JTkCxgo8gwOoSOJzn
-         weRqrM/7w/qjPRZ/DsbwmhvhLte2PRQNLvcK7Mahx6M+LuLTKebFdtiL6KwUKhYA6+YY
-         RGr7gM4kNn4/2pfg3VUCW9yQ4LUoNIyNj4tyqQE5WbpjhWR9UIdx0Rq4e73vmQh+8LFz
-         8BH7Eiz06r97qiFZ3KNBwk2c7pmXsix02T3aNHXCiTw/xDD0OgJXUiJJUZW0APOLakpM
-         W5gq9wbgiNGTAf6gR7wi2rYqLhmwLXc2nwHEgKhCRw0RThuY9RymL7hJ6WbqJBC8b3kB
-         pfMg==
-X-Gm-Message-State: AOAM532yWfew+Ifwv1JuIDwBvY/TbhEoY1uYz+saPZXOG7l7sEJ3bgZE
-        70FKrtCZgv14myxGBSOhLOpb/9oORXlHjQ==
-X-Google-Smtp-Source: ABdhPJxC02DRMhyzEwbBOsekDiC73SyyRuecceU1Y+33Yj25uCiveZaClWtydZZUdkV34uHZI6I3rQ==
-X-Received: by 2002:a1c:f702:: with SMTP id v2mr91030wmh.131.1616005277851;
-        Wed, 17 Mar 2021 11:21:17 -0700 (PDT)
+        bh=jnJ3KDudFz8JR7MlAhUceLZ3oXaJi0ZT0ll69csfueg=;
+        b=nwM5yhnod6AbBpYd/Ey497CT0SkUGB4PCJMusrDtmip3wtvECrTzKPqMoyUYdLgxHN
+         CXNtFpiWeU+YjeDuYYApyFSYGJ0Mh0r9HgfzTZiMMaxPcc4BrmemOxh/t14V8x5E5atH
+         6HcgiP/Dt0G1+BfU/plOS7k2m3cpL2g03VDQVn4jkkgkzDJnslvGsGMXKrJfuei9+aux
+         NgPS1yj8cSJN97bFd6Q9k9+udNLH1EntQaWM+zszb1/pgQyh5XcPXG78aDBB35owRxnM
+         imhcDVBtKWHqG5rpHmAtakIdHDkLBTRwobmpncjhEaQTOERy+RB4n/vIMVBVcMKJqzb8
+         kEIA==
+X-Gm-Message-State: AOAM533wwPa6gpJbtDZ/fV6joP/ns/VeIURqg7Rcy/Z7zUJFDpvX7awM
+        Hf9jcHNxhTh72hPY566JSyvYgsps77M64A==
+X-Google-Smtp-Source: ABdhPJx6v5e9RnkctBjPdCYu9F13af3CdfXpWygHxoTbPCoPLfnk/fHng5YtO4yZ2I9MPkjE+Lt1uA==
+X-Received: by 2002:a7b:cb89:: with SMTP id m9mr112554wmi.27.1616005276138;
+        Wed, 17 Mar 2021 11:21:16 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id x23sm3177205wmi.33.2021.03.17.11.21.16
+        by smtp.gmail.com with ESMTPSA id x23sm3177205wmi.33.2021.03.17.11.21.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Mar 2021 11:21:17 -0700 (PDT)
+        Wed, 17 Mar 2021 11:21:15 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 09/19] fsck.h: re-order and re-assign "enum fsck_msg_type"
-Date:   Wed, 17 Mar 2021 19:20:44 +0100
-Message-Id: <20210317182054.5986-10-avarab@gmail.com>
+Subject: [PATCH v5 07/19] fsck.c: refactor fsck_msg_type() to limit scope of "int msg_type"
+Date:   Wed, 17 Mar 2021 19:20:42 +0100
+Message-Id: <20210317182054.5986-8-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.0.260.g719c683c1d
 In-Reply-To: <20210316161738.30254-1-avarab@gmail.com>
 References: <20210316161738.30254-1-avarab@gmail.com>
@@ -78,48 +78,52 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the values in the "enum fsck_msg_type" from being manually
-assigned to using default C enum values.
+Refactor "if options->msg_type" and other code added in
+0282f4dced0 (fsck: offer a function to demote fsck errors to warnings,
+2015-06-22) to reduce the scope of the "int msg_type" variable.
 
-This means we end up with a FSCK_IGNORE=0, which was previously
-defined as "2".
+This is in preparation for changing its type in a subsequent commit,
+only using it in the "!options->msg_type" scope makes that change
 
-I'm confident that nothing relies on these values, we always compare
-them explicitly. Let's not omit "0" so it won't be assumed that we're
-using these as a boolean somewhere.
-
-This also allows us to re-structure the fields to mark which are
-"private" v.s. "public". See the preceding commit for a rationale for
-not simply splitting these into two enums, namely that this is used
-for both the private and public fsck API.
+This also brings the code in line with the fsck_set_msg_type()
+function (also added in 0282f4dced0), which does a similar check for
+"!options->msg_type". Another minor benefit is getting rid of the
+style violation of not having braces for the body of the "if".
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- fsck.h | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ fsck.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/fsck.h b/fsck.h
-index 0fff04373e..25c456bbd3 100644
---- a/fsck.h
-+++ b/fsck.h
-@@ -4,11 +4,13 @@
- #include "oidset.h"
+diff --git a/fsck.c b/fsck.c
+index a9a8783aeb..2f23255f99 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -167,19 +167,17 @@ void list_config_fsck_msg_ids(struct string_list *list, const char *prefix)
+ static int fsck_msg_type(enum fsck_msg_id msg_id,
+ 	struct fsck_options *options)
+ {
+-	int msg_type;
+-
+ 	assert(msg_id >= 0 && msg_id < FSCK_MSG_MAX);
  
- enum fsck_msg_type {
--	FSCK_INFO  = -2,
--	FSCK_FATAL = -1,
--	FSCK_ERROR = 1,
-+	/* for internal use only */
-+	FSCK_IGNORE,
-+	FSCK_INFO,
-+	FSCK_FATAL,
-+	/* "public", fed to e.g. error_func callbacks */
-+	FSCK_ERROR,
- 	FSCK_WARN,
--	FSCK_IGNORE
- };
+-	if (options->msg_type)
+-		msg_type = options->msg_type[msg_id];
+-	else {
+-		msg_type = msg_id_info[msg_id].msg_type;
++	if (!options->msg_type) {
++		int msg_type = msg_id_info[msg_id].msg_type;
++
+ 		if (options->strict && msg_type == FSCK_WARN)
+ 			msg_type = FSCK_ERROR;
++		return msg_type;
+ 	}
  
- struct fsck_options;
+-	return msg_type;
++	return options->msg_type[msg_id];
+ }
+ 
+ static int parse_msg_type(const char *str)
 -- 
 2.31.0.260.g719c683c1d
 
