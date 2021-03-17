@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,UPPERCASE_50_75,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9375DC433E0
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C2933C433DB
 	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 18:22:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5D4EA64F3B
+	by mail.kernel.org (Postfix) with ESMTP id 811CA64F44
 	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 18:22:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232600AbhCQSVz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Mar 2021 14:21:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48946 "EHLO
+        id S233105AbhCQSV5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Mar 2021 14:21:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232763AbhCQSVW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Mar 2021 14:21:22 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B49DC06174A
-        for <git@vger.kernel.org>; Wed, 17 Mar 2021 11:21:22 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id j18so2834209wra.2
-        for <git@vger.kernel.org>; Wed, 17 Mar 2021 11:21:22 -0700 (PDT)
+        with ESMTP id S232762AbhCQSVZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Mar 2021 14:21:25 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A70E7C06174A
+        for <git@vger.kernel.org>; Wed, 17 Mar 2021 11:21:24 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id z6-20020a1c4c060000b029010f13694ba2so1866235wmf.5
+        for <git@vger.kernel.org>; Wed, 17 Mar 2021 11:21:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=UH1WJ+qdg2KSq2/MhZ8gfhLaVf5mTg3uZPIoqOb3gp4=;
-        b=jKBdkRBsZzi55LXTf/24FSJ+969mp+aIZ9QA5cc5euosayMMMflJ2SoiHR1+gd02vq
-         crQwc6T8gowSN3cFbaOXHxDdz+c411sTaG0DvPH6zjfYHz0sWwHjzCbN7RsKWoXp/SQs
-         87CxkKFF9uMLvlx/QjDJEYbPxnjJPxowXz+FbRRNSLwCsm+aPazm5aavCp7xsH5dENUl
-         lQXglOgr/MTKs+3ca09Sinlr8oumDBhU5S5a41KpS+YBg/6z66dr6zlE42Ctpy1CDnJX
-         Usi1jU67p1ZVwrkh2mVIJy6p94hedvii7SZMm6QMae0PiUfqC5phFKuSVL1jsUVmZQhU
-         RpyA==
+        bh=YxXaQhKKDImbKww4WtZYHgS/NFxDHSbGo40ilOcOwRs=;
+        b=hIyLpHlrvsV/mrvORiM5tZ9kk4U+mcWRmvxLv6B1l1r5yGbIRiYvQqRt1x0aJDU193
+         T/LN+VTzP2b2v7vNWGzOiwvJJL8Nz4gujmoKaHP+qNNoMfP9db+kaElmyVFC/wtd6mPA
+         vnKe6NEXtHUlRn0taRp/g0z39xqoMZKxakcxEeBlo3DoOnSHjt9RL+SfMnevk3gTi2AG
+         T2F10cehLCcnEkFseVNFwUKi7zR7vK2K4CocYfdwhi3wL+T9XzwKfO4S7BxSP5nSds2w
+         SmTDYKAyw2JdpjMF+uoyeTM1VhAaqWg0wMyCbPopkEVBYYH8Xab1KJoyxZlldQVO1K+U
+         vBig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=UH1WJ+qdg2KSq2/MhZ8gfhLaVf5mTg3uZPIoqOb3gp4=;
-        b=tKOU7gl067bpQY9PPRsgolE06moue81NE3AUnYFS5aC8TWkr5DouGXW1bsE1yk+k5d
-         sfK+becxYKUnkseqhjEhk2b2F/o3Fz/+jK97VgVyRzpGsKFzSLovBh68y1boM/dH08jd
-         ofnH1kC9GkrbNPSuOHI3TvfwkD/9jFoX/SIiOSdZ/AlI0PDZsVjEXchT92fHn4Q5yq2+
-         cRYgWNbuRjgsbYrOuOzdGHfSMws2mvVZ27YED/i1NgRNppF1g9kHs58i2/0Z6e6oFNuq
-         TkIVLgwGc4YIoFOXbHFb0MIk6cIZ3ThgJDleoyQo79yZzDISCS0eT6etJL3E98PYBFWm
-         o28w==
-X-Gm-Message-State: AOAM530IcQgbcKN3mksXmzHJbhcilKpHEGBWbjlApRFUmJA7sSkjHHVf
-        HuFR3ISPQOzFRaeQfAkzigqotgBhtaxNCg==
-X-Google-Smtp-Source: ABdhPJwb48kJw0uwMqQS3cd5ru1XNxR44CNxHFGcUZObLXJRnvmveI4dC7KIGAL89QzBuB3W49dWtw==
-X-Received: by 2002:a05:6000:1363:: with SMTP id q3mr5781429wrz.74.1616005280814;
-        Wed, 17 Mar 2021 11:21:20 -0700 (PDT)
+        bh=YxXaQhKKDImbKww4WtZYHgS/NFxDHSbGo40ilOcOwRs=;
+        b=oqUOULORWDdpOJ5wlHW6MaJnn6bpnfYUNUQMRJ4/mVr1/dIu9mhDXGJsd3ZmA5DKQM
+         ShnBt3Q9I+MM/9h+/akt+q+uH4gNz/RXOGfeoQWePPIGgMkGPUMhX8JzLiiWMKJ/wS2E
+         cR2g5iyT0NTfyobwZX5enD52OAFSogootX6yd0I3qQ9J6Zhsjtt4cSNIPV/8TUyTMoFO
+         aOkM/UWTpg8ziflmMkrMRMt8TGTGooorl5ofztSYPicf5ZNetnsV6XsJMIzXgZMhGDFd
+         Es3cFZs1popDLAZpH477ol1lG9R9CAsxOUe605jLlt1ne0LlbuzLYjKp9jA+pCRLGyTP
+         Ot3Q==
+X-Gm-Message-State: AOAM531lQYUYTypqaxZDJlHb+eNj7orMltDYF7sQeY9bWSl8jNyyL4EW
+        AU9cnpWhA7DZmCJ061tabuXQf8epRQi1eg==
+X-Google-Smtp-Source: ABdhPJwx4z82rCE4YnE2QVUYkdZvRc8TLwzQJISc0S5PO9VSC5GHEnd1WXVkmsIGfWa5vnaUKwPwMQ==
+X-Received: by 2002:a1c:6a03:: with SMTP id f3mr85916wmc.179.1616005283195;
+        Wed, 17 Mar 2021 11:21:23 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id x23sm3177205wmi.33.2021.03.17.11.21.20
+        by smtp.gmail.com with ESMTPSA id x23sm3177205wmi.33.2021.03.17.11.21.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Mar 2021 11:21:20 -0700 (PDT)
+        Wed, 17 Mar 2021 11:21:22 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 13/19] fsck.[ch]: move FOREACH_FSCK_MSG_ID & fsck_msg_id from *.c to *.h
-Date:   Wed, 17 Mar 2021 19:20:48 +0100
-Message-Id: <20210317182054.5986-14-avarab@gmail.com>
+Subject: [PATCH v5 16/19] fsck.c: move gitmodules_{found,done} into fsck_options
+Date:   Wed, 17 Mar 2021 19:20:51 +0100
+Message-Id: <20210317182054.5986-17-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.0.260.g719c683c1d
 In-Reply-To: <20210316161738.30254-1-avarab@gmail.com>
 References: <20210316161738.30254-1-avarab@gmail.com>
@@ -78,170 +78,153 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move the FOREACH_FSCK_MSG_ID macro and the fsck_msg_id enum it helps
-define from fsck.c to fsck.h. This is in preparation for having
-non-static functions take the fsck_msg_id as an argument.
+Move the gitmodules_{found,done} static variables added in
+159e7b080bf (fsck: detect gitmodules files, 2018-05-02) into the
+fsck_options struct. It makes sense to keep all the context in the
+same place.
+
+This requires changing the recently added register_found_gitmodules()
+function added in 5476e1efde (fetch-pack: print and use dangling
+.gitmodules, 2021-02-22) to take fsck_options. That function will be
+removed in a subsequent commit, but as it'll require the new
+gitmodules_found attribute of "fsck_options" we need this intermediate
+step first.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- fsck.c | 66 ----------------------------------------------------------
- fsck.h | 66 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 66 insertions(+), 66 deletions(-)
+ fetch-pack.c |  2 +-
+ fsck.c       | 23 ++++++++++-------------
+ fsck.h       |  7 ++++++-
+ 3 files changed, 17 insertions(+), 15 deletions(-)
 
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 6a61a46428..82c3c2c043 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -998,7 +998,7 @@ static void fsck_gitmodules_oids(struct oidset *gitmodules_oids)
+ 
+ 	oidset_iter_init(gitmodules_oids, &iter);
+ 	while ((oid = oidset_iter_next(&iter)))
+-		register_found_gitmodules(oid);
++		register_found_gitmodules(&fo, oid);
+ 	if (fsck_finish(&fo))
+ 		die("fsck failed");
+ }
 diff --git a/fsck.c b/fsck.c
-index b64526ea35..49208ec636 100644
+index 307d454d92..00760b1f42 100644
 --- a/fsck.c
 +++ b/fsck.c
-@@ -22,72 +22,6 @@
- static struct oidset gitmodules_found = OIDSET_INIT;
- static struct oidset gitmodules_done = OIDSET_INIT;
+@@ -19,9 +19,6 @@
+ #include "credential.h"
+ #include "help.h"
  
--#define FOREACH_FSCK_MSG_ID(FUNC) \
--	/* fatal errors */ \
--	FUNC(NUL_IN_HEADER, FATAL) \
--	FUNC(UNTERMINATED_HEADER, FATAL) \
--	/* errors */ \
--	FUNC(BAD_DATE, ERROR) \
--	FUNC(BAD_DATE_OVERFLOW, ERROR) \
--	FUNC(BAD_EMAIL, ERROR) \
--	FUNC(BAD_NAME, ERROR) \
--	FUNC(BAD_OBJECT_SHA1, ERROR) \
--	FUNC(BAD_PARENT_SHA1, ERROR) \
--	FUNC(BAD_TAG_OBJECT, ERROR) \
--	FUNC(BAD_TIMEZONE, ERROR) \
--	FUNC(BAD_TREE, ERROR) \
--	FUNC(BAD_TREE_SHA1, ERROR) \
--	FUNC(BAD_TYPE, ERROR) \
--	FUNC(DUPLICATE_ENTRIES, ERROR) \
--	FUNC(MISSING_AUTHOR, ERROR) \
--	FUNC(MISSING_COMMITTER, ERROR) \
--	FUNC(MISSING_EMAIL, ERROR) \
--	FUNC(MISSING_NAME_BEFORE_EMAIL, ERROR) \
--	FUNC(MISSING_OBJECT, ERROR) \
--	FUNC(MISSING_SPACE_BEFORE_DATE, ERROR) \
--	FUNC(MISSING_SPACE_BEFORE_EMAIL, ERROR) \
--	FUNC(MISSING_TAG, ERROR) \
--	FUNC(MISSING_TAG_ENTRY, ERROR) \
--	FUNC(MISSING_TREE, ERROR) \
--	FUNC(MISSING_TREE_OBJECT, ERROR) \
--	FUNC(MISSING_TYPE, ERROR) \
--	FUNC(MISSING_TYPE_ENTRY, ERROR) \
--	FUNC(MULTIPLE_AUTHORS, ERROR) \
--	FUNC(TREE_NOT_SORTED, ERROR) \
--	FUNC(UNKNOWN_TYPE, ERROR) \
--	FUNC(ZERO_PADDED_DATE, ERROR) \
--	FUNC(GITMODULES_MISSING, ERROR) \
--	FUNC(GITMODULES_BLOB, ERROR) \
--	FUNC(GITMODULES_LARGE, ERROR) \
--	FUNC(GITMODULES_NAME, ERROR) \
--	FUNC(GITMODULES_SYMLINK, ERROR) \
--	FUNC(GITMODULES_URL, ERROR) \
--	FUNC(GITMODULES_PATH, ERROR) \
--	FUNC(GITMODULES_UPDATE, ERROR) \
--	/* warnings */ \
--	FUNC(BAD_FILEMODE, WARN) \
--	FUNC(EMPTY_NAME, WARN) \
--	FUNC(FULL_PATHNAME, WARN) \
--	FUNC(HAS_DOT, WARN) \
--	FUNC(HAS_DOTDOT, WARN) \
--	FUNC(HAS_DOTGIT, WARN) \
--	FUNC(NULL_SHA1, WARN) \
--	FUNC(ZERO_PADDED_FILEMODE, WARN) \
--	FUNC(NUL_IN_COMMIT, WARN) \
--	/* infos (reported as warnings, but ignored by default) */ \
--	FUNC(GITMODULES_PARSE, INFO) \
--	FUNC(BAD_TAG_NAME, INFO) \
--	FUNC(MISSING_TAGGER_ENTRY, INFO) \
--	/* ignored (elevated when requested) */ \
--	FUNC(EXTRA_HEADER_ENTRY, IGNORE)
--
--#define MSG_ID(id, msg_type) FSCK_MSG_##id,
--enum fsck_msg_id {
--	FOREACH_FSCK_MSG_ID(MSG_ID)
--	FSCK_MSG_MAX
--};
--#undef MSG_ID
+-static struct oidset gitmodules_found = OIDSET_INIT;
+-static struct oidset gitmodules_done = OIDSET_INIT;
 -
  #define STR(x) #x
  #define MSG_ID(id, msg_type) { STR(id), NULL, NULL, FSCK_##msg_type },
  static struct {
+@@ -624,7 +621,7 @@ static int fsck_tree(const struct object_id *oid,
+ 
+ 		if (is_hfs_dotgitmodules(name) || is_ntfs_dotgitmodules(name)) {
+ 			if (!S_ISLNK(mode))
+-				oidset_insert(&gitmodules_found, oid);
++				oidset_insert(&options->gitmodules_found, oid);
+ 			else
+ 				retval += report(options,
+ 						 oid, OBJ_TREE,
+@@ -638,7 +635,7 @@ static int fsck_tree(const struct object_id *oid,
+ 				has_dotgit |= is_ntfs_dotgit(backslash);
+ 				if (is_ntfs_dotgitmodules(backslash)) {
+ 					if (!S_ISLNK(mode))
+-						oidset_insert(&gitmodules_found, oid);
++						oidset_insert(&options->gitmodules_found, oid);
+ 					else
+ 						retval += report(options, oid, OBJ_TREE,
+ 								 FSCK_MSG_GITMODULES_SYMLINK,
+@@ -1150,9 +1147,9 @@ static int fsck_blob(const struct object_id *oid, const char *buf,
+ 	struct fsck_gitmodules_data data;
+ 	struct config_options config_opts = { 0 };
+ 
+-	if (!oidset_contains(&gitmodules_found, oid))
++	if (!oidset_contains(&options->gitmodules_found, oid))
+ 		return 0;
+-	oidset_insert(&gitmodules_done, oid);
++	oidset_insert(&options->gitmodules_done, oid);
+ 
+ 	if (object_on_skiplist(options, oid))
+ 		return 0;
+@@ -1217,9 +1214,9 @@ int fsck_error_function(struct fsck_options *o,
+ 	return 1;
+ }
+ 
+-void register_found_gitmodules(const struct object_id *oid)
++void register_found_gitmodules(struct fsck_options *options, const struct object_id *oid)
+ {
+-	oidset_insert(&gitmodules_found, oid);
++	oidset_insert(&options->gitmodules_found, oid);
+ }
+ 
+ int fsck_finish(struct fsck_options *options)
+@@ -1228,13 +1225,13 @@ int fsck_finish(struct fsck_options *options)
+ 	struct oidset_iter iter;
+ 	const struct object_id *oid;
+ 
+-	oidset_iter_init(&gitmodules_found, &iter);
++	oidset_iter_init(&options->gitmodules_found, &iter);
+ 	while ((oid = oidset_iter_next(&iter))) {
+ 		enum object_type type;
+ 		unsigned long size;
+ 		char *buf;
+ 
+-		if (oidset_contains(&gitmodules_done, oid))
++		if (oidset_contains(&options->gitmodules_done, oid))
+ 			continue;
+ 
+ 		buf = read_object_file(oid, &type, &size);
+@@ -1259,8 +1256,8 @@ int fsck_finish(struct fsck_options *options)
+ 	}
+ 
+ 
+-	oidset_clear(&gitmodules_found);
+-	oidset_clear(&gitmodules_done);
++	oidset_clear(&options->gitmodules_found);
++	oidset_clear(&options->gitmodules_done);
+ 	return ret;
+ }
+ 
 diff --git a/fsck.h b/fsck.h
-index 25c456bbd3..7c868410eb 100644
+index 344c3ddc74..b25ae9d8b9 100644
 --- a/fsck.h
 +++ b/fsck.h
-@@ -13,6 +13,72 @@ enum fsck_msg_type {
- 	FSCK_WARN,
+@@ -118,6 +118,8 @@ struct fsck_options {
+ 	unsigned strict:1;
+ 	enum fsck_msg_type *msg_type;
+ 	struct oidset skiplist;
++	struct oidset gitmodules_found;
++	struct oidset gitmodules_done;
+ 	kh_oid_map_t *object_names;
  };
  
-+#define FOREACH_FSCK_MSG_ID(FUNC) \
-+	/* fatal errors */ \
-+	FUNC(NUL_IN_HEADER, FATAL) \
-+	FUNC(UNTERMINATED_HEADER, FATAL) \
-+	/* errors */ \
-+	FUNC(BAD_DATE, ERROR) \
-+	FUNC(BAD_DATE_OVERFLOW, ERROR) \
-+	FUNC(BAD_EMAIL, ERROR) \
-+	FUNC(BAD_NAME, ERROR) \
-+	FUNC(BAD_OBJECT_SHA1, ERROR) \
-+	FUNC(BAD_PARENT_SHA1, ERROR) \
-+	FUNC(BAD_TAG_OBJECT, ERROR) \
-+	FUNC(BAD_TIMEZONE, ERROR) \
-+	FUNC(BAD_TREE, ERROR) \
-+	FUNC(BAD_TREE_SHA1, ERROR) \
-+	FUNC(BAD_TYPE, ERROR) \
-+	FUNC(DUPLICATE_ENTRIES, ERROR) \
-+	FUNC(MISSING_AUTHOR, ERROR) \
-+	FUNC(MISSING_COMMITTER, ERROR) \
-+	FUNC(MISSING_EMAIL, ERROR) \
-+	FUNC(MISSING_NAME_BEFORE_EMAIL, ERROR) \
-+	FUNC(MISSING_OBJECT, ERROR) \
-+	FUNC(MISSING_SPACE_BEFORE_DATE, ERROR) \
-+	FUNC(MISSING_SPACE_BEFORE_EMAIL, ERROR) \
-+	FUNC(MISSING_TAG, ERROR) \
-+	FUNC(MISSING_TAG_ENTRY, ERROR) \
-+	FUNC(MISSING_TREE, ERROR) \
-+	FUNC(MISSING_TREE_OBJECT, ERROR) \
-+	FUNC(MISSING_TYPE, ERROR) \
-+	FUNC(MISSING_TYPE_ENTRY, ERROR) \
-+	FUNC(MULTIPLE_AUTHORS, ERROR) \
-+	FUNC(TREE_NOT_SORTED, ERROR) \
-+	FUNC(UNKNOWN_TYPE, ERROR) \
-+	FUNC(ZERO_PADDED_DATE, ERROR) \
-+	FUNC(GITMODULES_MISSING, ERROR) \
-+	FUNC(GITMODULES_BLOB, ERROR) \
-+	FUNC(GITMODULES_LARGE, ERROR) \
-+	FUNC(GITMODULES_NAME, ERROR) \
-+	FUNC(GITMODULES_SYMLINK, ERROR) \
-+	FUNC(GITMODULES_URL, ERROR) \
-+	FUNC(GITMODULES_PATH, ERROR) \
-+	FUNC(GITMODULES_UPDATE, ERROR) \
-+	/* warnings */ \
-+	FUNC(BAD_FILEMODE, WARN) \
-+	FUNC(EMPTY_NAME, WARN) \
-+	FUNC(FULL_PATHNAME, WARN) \
-+	FUNC(HAS_DOT, WARN) \
-+	FUNC(HAS_DOTDOT, WARN) \
-+	FUNC(HAS_DOTGIT, WARN) \
-+	FUNC(NULL_SHA1, WARN) \
-+	FUNC(ZERO_PADDED_FILEMODE, WARN) \
-+	FUNC(NUL_IN_COMMIT, WARN) \
-+	/* infos (reported as warnings, but ignored by default) */ \
-+	FUNC(GITMODULES_PARSE, INFO) \
-+	FUNC(BAD_TAG_NAME, INFO) \
-+	FUNC(MISSING_TAGGER_ENTRY, INFO) \
-+	/* ignored (elevated when requested) */ \
-+	FUNC(EXTRA_HEADER_ENTRY, IGNORE)
-+
-+#define MSG_ID(id, msg_type) FSCK_MSG_##id,
-+enum fsck_msg_id {
-+	FOREACH_FSCK_MSG_ID(MSG_ID)
-+	FSCK_MSG_MAX
-+};
-+#undef MSG_ID
-+
- struct fsck_options;
- struct object;
+@@ -125,6 +127,8 @@ struct fsck_options {
+ 	.walk = NULL, \
+ 	.msg_type = NULL, \
+ 	.skiplist = OIDSET_INIT, \
++	.gitmodules_found = OIDSET_INIT, \
++	.gitmodules_done = OIDSET_INIT, \
+ 	.object_names = NULL,
+ #define FSCK_OPTIONS_COMMON_ERROR_FUNC \
+ 	FSCK_OPTIONS_COMMON \
+@@ -149,7 +153,8 @@ int fsck_walk(struct object *obj, void *data, struct fsck_options *options);
+ int fsck_object(struct object *obj, void *data, unsigned long size,
+ 	struct fsck_options *options);
  
+-void register_found_gitmodules(const struct object_id *oid);
++void register_found_gitmodules(struct fsck_options *options,
++			       const struct object_id *oid);
+ 
+ /*
+  * fsck a tag, and pass info about it back to the caller. This is
 -- 
 2.31.0.260.g719c683c1d
 
