@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 23FE9C433E9
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 06675C43381
 	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 18:22:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D3F1964F41
+	by mail.kernel.org (Postfix) with ESMTP id BB54564F50
 	for <git@archiver.kernel.org>; Wed, 17 Mar 2021 18:22:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233117AbhCQSV6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Mar 2021 14:21:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48968 "EHLO
+        id S233111AbhCQSV5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Mar 2021 14:21:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48956 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232942AbhCQSVZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Mar 2021 14:21:25 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7230EC06174A
-        for <git@vger.kernel.org>; Wed, 17 Mar 2021 11:21:25 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id v11so2832123wro.7
-        for <git@vger.kernel.org>; Wed, 17 Mar 2021 11:21:25 -0700 (PDT)
+        with ESMTP id S232979AbhCQSVY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Mar 2021 14:21:24 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE5CCC06175F
+        for <git@vger.kernel.org>; Wed, 17 Mar 2021 11:21:23 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id o16so2853272wrn.0
+        for <git@vger.kernel.org>; Wed, 17 Mar 2021 11:21:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=TTEfu+yAtM4EH9C+MXnOphrNzv2WHfSFRJGRl2nPKgQ=;
-        b=Yzf/sANpeOkx6Eb+sJZ7jpyZOOX8UINWUZ/G21RJ34K0BJsidg8ZXhapnAIN5Eyg2K
-         vjj0hnLDRijyWJ03FCUogykQdH/ah1bcZNR+J8ub1D+hyceChnpc7cKX2Njbs2eyLN2b
-         3sGUljqxHDAFrpSfkYiUGiTSm7QrRD833bAKV1x3Jf1zjHD19WO1dZ4IuJGvi6WIsREB
-         mVGDVNAFXhrCAtZiN5W8VXvRjhnYp37m8MbnZuqJV4+I14mgNZSUYiffoX4wdz6vboLQ
-         U0XhDWEM+pY6lFZ/onjPWW5yIq2Dv645cCUUrK25zekMVyZiOcfk1zOOSlA55P+bB+Ag
-         6c6Q==
+        bh=vo6qKEfgTN4WCdQ/POanr/8yE9eXgo9vYyLOSdibKJE=;
+        b=dRSwWtEqYMoxeoYQHk8ZTWakrJrdC3WPNJyuws3Fn+K+IIZnLzeal5iPo9C9Jxb0FE
+         t/OwH7HPZTjcsZWcLS3vSKqjNoHJ8Gec9f38RUfOjP8HxFSy59Pgei0uQ7EfMTDP9dFE
+         7rfm5zmTnPGD5p1FRZcY9JF9Q5BgJvQ6tbMYA+sfEnK8sUCGoW4IPFF9T4E9fW3z+L+F
+         fxfUjBZOk9r8Aj759X5FLILg0J0OeoGe4lYFsMyUO/QYWXL+gjIFRtUN4wE8WGT7+O2i
+         lVf28NvXRMd2ia6JW2RdYl9nTLvL8mrzRThhIWIHvjhbCAqb3Kup1EO/zphtAu2i/p1U
+         9Nhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=TTEfu+yAtM4EH9C+MXnOphrNzv2WHfSFRJGRl2nPKgQ=;
-        b=jIwbAqdpEDyyX0XS+/1cVyRrZV4TU4pg1Z6gDjDoXx/ctqIaORQhs7//2gevHSkvcw
-         E1ioHD5M8fvhTJybw6G2kA+9xUhZxvkJagLtlmyBPVglXLjK7U8OrgyjohRkOhW9mDjk
-         b/3XiPyXBC9C7LReoTuwoBwnwoeAnUmhjQuxvOFLQfBJATh2JExD0lzt/EUJq4tHBQwB
-         fp3R1PZcpyL7HE9Ktkg+nVfFCftwTGVRPuXt9oRyIc8unrLBrM2zcQg3mgLSWyOMhae5
-         aSrfagZE82scEtfVp1YQ+g708PGeV36mB/jyXzvrV3jC54rtCA0WfZm7bSSlYKxVrtmk
-         PThQ==
-X-Gm-Message-State: AOAM5305af3n11lb5Si7YpC8aw1WDiZhsWS0Gb1BvhwgojZf7PrLZvKI
-        8AWZfmXyS+NzPzjgWLDhEDTqWxHm7RO9QA==
-X-Google-Smtp-Source: ABdhPJxiovDT2QMUXjRs+rj6o5mhKK3MbF9yo2pK41w5H2lgQfahVdIYW5TRyvpcI8a/3DA2+vUf/Q==
-X-Received: by 2002:adf:dd48:: with SMTP id u8mr5661903wrm.139.1616005284010;
-        Wed, 17 Mar 2021 11:21:24 -0700 (PDT)
+        bh=vo6qKEfgTN4WCdQ/POanr/8yE9eXgo9vYyLOSdibKJE=;
+        b=II8LduC/AqXllKWwa35cKs97nm2DKD919Z6L/N8ntiHY0UdfNZMtuHvph6edO5RUhL
+         MGLsKaEapC46ISVn93gObqBubwu4wDvhcSCQFLj8PDY+/zDAYoZC6PjBsCQwmLoBs6mH
+         y98rDN0FMPoNhimhcBiaOJZ017Pu3R2b+ZhSpmpMGYMP4AMPDBcxmn3jmhvdMmgszzbc
+         dd14bw5ajZexwMF9CxQVSjIWzauqvIs8IYk6VlR3xv6q/YQO8mEefl+XXYBOI+hO5aqj
+         Bp5tQoXST3pMyZNxmrOXEyLGUFXcJJGYP081VsBvO0YJ5IY2/gm40XLfy/8ltLWxdsKS
+         hrGg==
+X-Gm-Message-State: AOAM532LYxYGJu2Xr9xLlMkJXn47WY3Z1yf4htazNul22ewtI5GHHbJx
+        fH0wJTTA8/JptDU9im94f0PGkoMN/2JaRw==
+X-Google-Smtp-Source: ABdhPJzrMJpYCv56aypgp+yeXRsnDYVam/akH3aepyN8QZA4pQINgQQ3pIOGckeUtBgxsv9DVSPmwg==
+X-Received: by 2002:adf:ef4c:: with SMTP id c12mr5827909wrp.112.1616005282436;
+        Wed, 17 Mar 2021 11:21:22 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id x23sm3177205wmi.33.2021.03.17.11.21.23
+        by smtp.gmail.com with ESMTPSA id x23sm3177205wmi.33.2021.03.17.11.21.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Mar 2021 11:21:23 -0700 (PDT)
+        Wed, 17 Mar 2021 11:21:21 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 17/19] fetch-pack: don't needlessly copy fsck_options
-Date:   Wed, 17 Mar 2021 19:20:52 +0100
-Message-Id: <20210317182054.5986-18-avarab@gmail.com>
+Subject: [PATCH v5 15/19] fsck.c: add an fsck_set_msg_type() API that takes enums
+Date:   Wed, 17 Mar 2021 19:20:50 +0100
+Message-Id: <20210317182054.5986-16-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.0.260.g719c683c1d
 In-Reply-To: <20210316161738.30254-1-avarab@gmail.com>
 References: <20210316161738.30254-1-avarab@gmail.com>
@@ -78,56 +78,101 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the behavior of the .gitmodules validation added in
-5476e1efde (fetch-pack: print and use dangling .gitmodules,
-2021-02-22) so we're using one "fsck_options".
+Change code I added in acf9de4c94e (mktag: use fsck instead of custom
+verify_tag(), 2021-01-05) to make use of a new API function that takes
+the fsck_msg_{id,type} types, instead of arbitrary strings that
+we'll (hopefully) parse into those types.
 
-I found that code confusing to read. One might think that not setting
-up the error_func earlier means that we're relying on the "error_func"
-not being set in some code in between the two hunks being modified
-here.
+At the time that the fsck_set_msg_type() API was introduced in
+0282f4dced0 (fsck: offer a function to demote fsck errors to warnings,
+2015-06-22) it was only intended to be used to parse user-supplied
+data.
 
-But we're not, all we're doing in the rest of "cmd_index_pack()" is
-further setup by calling fsck_set_msg_types(), and assigning to
-do_fsck_object.
-
-So there was no reason in 5476e1efde to make a shallow copy of the
-fsck_options struct before setting error_func. Let's just do this
-setup at the top of the function, along with the "walk" assignment.
+For things that are purely internal to the C code it makes sense to
+have the compiler check these arguments, and to skip the sanity
+checking of the data in fsck_set_msg_type() which is redundant to
+checks we get from the compiler.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/index-pack.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+ builtin/mktag.c |  3 ++-
+ fsck.c          | 27 +++++++++++++++++----------
+ fsck.h          |  3 +++
+ 3 files changed, 22 insertions(+), 11 deletions(-)
 
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 2b2266a4b7..5ad80b85b4 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -1761,6 +1761,7 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+diff --git a/builtin/mktag.c b/builtin/mktag.c
+index 96e63bc772..dddcccdd36 100644
+--- a/builtin/mktag.c
++++ b/builtin/mktag.c
+@@ -88,7 +88,8 @@ int cmd_mktag(int argc, const char **argv, const char *prefix)
+ 		die_errno(_("could not read from stdin"));
  
- 	read_replace_refs = 0;
- 	fsck_options.walk = mark_link;
-+	fsck_options.error_func = print_dangling_gitmodules;
+ 	fsck_options.error_func = mktag_fsck_error_func;
+-	fsck_set_msg_type(&fsck_options, "extraheaderentry", "warn");
++	fsck_set_msg_type_from_ids(&fsck_options, FSCK_MSG_EXTRA_HEADER_ENTRY,
++				   FSCK_WARN);
+ 	/* config might set fsck.extraHeaderEntry=* again */
+ 	git_config(git_fsck_config, &fsck_options);
+ 	if (fsck_tag_standalone(NULL, buf.buf, buf.len, &fsck_options,
+diff --git a/fsck.c b/fsck.c
+index 01b2724ac0..307d454d92 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -132,6 +132,22 @@ int is_valid_msg_type(const char *msg_id, const char *msg_type)
+ 	return 1;
+ }
  
- 	reset_pack_idx_option(&opts);
- 	git_config(git_index_pack_config, &opts);
-@@ -1951,13 +1952,8 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
- 	else
- 		close(input_fd);
++void fsck_set_msg_type_from_ids(struct fsck_options *options,
++				enum fsck_msg_id msg_id,
++				enum fsck_msg_type msg_type)
++{
++	if (!options->msg_type) {
++		int i;
++		enum fsck_msg_type *severity;
++		ALLOC_ARRAY(severity, FSCK_MSG_MAX);
++		for (i = 0; i < FSCK_MSG_MAX; i++)
++			severity[i] = fsck_msg_type(i, options);
++		options->msg_type = severity;
++	}
++
++	options->msg_type[msg_id] = msg_type;
++}
++
+ void fsck_set_msg_type(struct fsck_options *options,
+ 		       const char *msg_id_str, const char *msg_type_str)
+ {
+@@ -144,16 +160,7 @@ void fsck_set_msg_type(struct fsck_options *options,
+ 	if (msg_type != FSCK_ERROR && msg_id_info[msg_id].msg_type == FSCK_FATAL)
+ 		die("Cannot demote %s to %s", msg_id_str, msg_type_str);
  
--	if (do_fsck_object) {
--		struct fsck_options fo = fsck_options;
--
--		fo.error_func = print_dangling_gitmodules;
--		if (fsck_finish(&fo))
--			die(_("fsck error in pack objects"));
+-	if (!options->msg_type) {
+-		int i;
+-		enum fsck_msg_type *severity;
+-		ALLOC_ARRAY(severity, FSCK_MSG_MAX);
+-		for (i = 0; i < FSCK_MSG_MAX; i++)
+-			severity[i] = fsck_msg_type(i, options);
+-		options->msg_type = severity;
 -	}
-+	if (do_fsck_object && fsck_finish(&fsck_options))
-+		die(_("fsck error in pack objects"));
+-
+-	options->msg_type[msg_id] = msg_type;
++	fsck_set_msg_type_from_ids(options, msg_id, msg_type);
+ }
  
- 	free(objects);
- 	strbuf_release(&index_name_buf);
+ void fsck_set_msg_types(struct fsck_options *options, const char *values)
+diff --git a/fsck.h b/fsck.h
+index 80b1984f34..344c3ddc74 100644
+--- a/fsck.h
++++ b/fsck.h
+@@ -82,6 +82,9 @@ enum fsck_msg_id {
+ struct fsck_options;
+ struct object;
+ 
++void fsck_set_msg_type_from_ids(struct fsck_options *options,
++				enum fsck_msg_id msg_id,
++				enum fsck_msg_type msg_type);
+ void fsck_set_msg_type(struct fsck_options *options,
+ 		       const char *msg_id, const char *msg_type);
+ void fsck_set_msg_types(struct fsck_options *options, const char *values);
 -- 
 2.31.0.260.g719c683c1d
 
