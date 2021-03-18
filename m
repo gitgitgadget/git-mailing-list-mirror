@@ -2,121 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 62668C43381
-	for <git@archiver.kernel.org>; Thu, 18 Mar 2021 16:46:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BC80BC433E0
+	for <git@archiver.kernel.org>; Thu, 18 Mar 2021 17:00:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3225E64F70
-	for <git@archiver.kernel.org>; Thu, 18 Mar 2021 16:46:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8FA3D64DD8
+	for <git@archiver.kernel.org>; Thu, 18 Mar 2021 17:00:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232083AbhCRQpp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Mar 2021 12:45:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55716 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231806AbhCRQpV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Mar 2021 12:45:21 -0400
-Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54A2BC06174A
-        for <git@vger.kernel.org>; Thu, 18 Mar 2021 09:45:21 -0700 (PDT)
-Received: by mail-pg1-x536.google.com with SMTP id r17so1814159pgi.0
-        for <git@vger.kernel.org>; Thu, 18 Mar 2021 09:45:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=iKQVnYLYaljUyl3ZRqLrKtYES+s+pL/WpGpO++dbjVo=;
-        b=doh+Gds2IjJ57wIEC6gUZjqQLi1vJcDiTjaUIzGSOcfONmcSftgEbLdc6vmxBZH7oA
-         6L4lNmL1P27MpPE4bI0aptNM3Zw201IujOY5LOlQrq/xP1YZ7rIWdLwP3RehYjPDd0kC
-         K3vc7C7KDWICLRwViw0A4YC6r2ljc0AayQcZB1cgMoRu8mO5PuCU+8tG1dkF6WGL3MAs
-         iHK+VZHQFtefCVosqkc+uNT1f1ZTIZSrEKoMp+lkEv1GGt4HgXDzofROe1nHJJNIcyZm
-         ZSyn1nrj2Zld3j4wWmf9QTbOxJNYvzoUpC58lDzjWnWOpsNZnJvoL71UiI5Rq4e9pqW0
-         h3KA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=iKQVnYLYaljUyl3ZRqLrKtYES+s+pL/WpGpO++dbjVo=;
-        b=CTYCNpjjx1DHGlkxAmn/1LLt0KwtB4Y3d/rRm97DYLHEVMhfiSJPKpCfqutD6l/gbm
-         +GsQ9rOiulBIJFeZGfq0H7p5duBMR/496LZ/bzUOhOtj/xfLMihDqxIKUax5xhX4kuiD
-         0Mw7pIesRMuMNdix/gdApO+JhicO/gnG+396pmsQdlrM4y5SAcq4BYQVf5H/JeF8bx4F
-         k6DZQhgaLx+L63H0CppWjtpnJOaCHmazj1KW72NkUnw0+iyiuu791qeFHZbOqA3IKTfM
-         F5uyPrbRFUEWVUP4DslXmcG+xBF2mU6nSASRM3Cchh4SlBNlQlxZhoDXm2AJpYzjjzWI
-         PJAg==
-X-Gm-Message-State: AOAM533zpu3okHDnxzSZFouzJQtGi0JWJEQVbH/7M+4jnSvrpZA4eczV
-        ZJMhplNT3WBHP472xastQhDtsrfBb98=
-X-Google-Smtp-Source: ABdhPJwmEhYgsb19iI6LqjalP8IDO3UGRcCtgsXYqhQKagrgQyqhcqVgazlxun/GUWhEoIoXWPh6Iw==
-X-Received: by 2002:aa7:92d9:0:b029:1bb:b6de:c872 with SMTP id k25-20020aa792d90000b02901bbb6dec872mr4850208pfa.68.1616085920291;
-        Thu, 18 Mar 2021 09:45:20 -0700 (PDT)
-Received: from localhost ([2402:800:63b8:c037:a704:f99b:eeaa:7066])
-        by smtp.gmail.com with ESMTPSA id q25sm2771654pff.104.2021.03.18.09.45.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Mar 2021 09:45:19 -0700 (PDT)
-Date:   Thu, 18 Mar 2021 23:45:18 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, "Bradley M. Kuhn" <bkuhn@sfconservancy.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Brandon Casey <drafnel@gmail.com>,
-        Shourya Shukla <periperidip@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Rafael Silva <rafaeloliveira.cs@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>
-Subject: Re: [PATCH v10 2/3] interpret-trailers: add own-identity option
-Message-ID: <YFODnm4JKfqRn37H@danh.dev>
-References: <pull.901.v9.git.1615891183320.gitgitgadget@gmail.com>
- <pull.901.v10.git.1616066156.gitgitgadget@gmail.com>
- <42590e95deeece6ba65e0432c3a59746e717fee3.1616066156.git.gitgitgadget@gmail.com>
+        id S232083AbhCRRAV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Mar 2021 13:00:21 -0400
+Received: from cloud.peff.net ([104.130.231.41]:41276 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231853AbhCRRAF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Mar 2021 13:00:05 -0400
+Received: (qmail 32574 invoked by uid 109); 18 Mar 2021 17:00:05 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 18 Mar 2021 17:00:05 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 23290 invoked by uid 111); 18 Mar 2021 17:00:05 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 18 Mar 2021 13:00:05 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 18 Mar 2021 13:00:04 -0400
+From:   Jeff King <peff@peff.net>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Christian Strasser <christian@avr-fun.de>, git@vger.kernel.org
+Subject: Re: Git install crashed nearly whole System
+Message-ID: <YFOHFABji5/sDZod@coredump.intra.peff.net>
+References: <8aa7be071abc23371397f72b725babc4e4e90190.camel@avr-fun.de>
+ <YE5wFxE5RPew5zrJ@camp.crustytoothpaste.net>
+ <b805d53740429a26413cdd4e756db29f95c98052.camel@avr-fun.de>
+ <YFOA8ARUwa34tiTl@camp.crustytoothpaste.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <42590e95deeece6ba65e0432c3a59746e717fee3.1616066156.git.gitgitgadget@gmail.com>
+In-Reply-To: <YFOA8ARUwa34tiTl@camp.crustytoothpaste.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2021-03-18 11:15:55+0000, ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com> wrote:
-> From: ZheNing Hu <adlternative@gmail.com>
+On Thu, Mar 18, 2021 at 04:33:52PM +0000, brian m. carlson wrote:
+
+> > I'm a little confused. Is the instruction on "
+> > https://git-scm.com/book/en/v2/Getting-Started-Installing-Git" not the
+> > official one? As you can see there, the first part is how to install
+> > git with your package manager (git-all).
 > 
-> Beacuse `git commit --trailer="Signed-off-by: \
+> That is probably out of date, and I'd suggest reporting it to the
+> appropriate spot, which is _probably_ https://github.com/git/git-scm.com
+> (although it might be a separate repo).  The git-all package has had
+> this problem for some time now, so I wouldn't recommend it as the
+> default option.
 
-s/Beacuse/Because/
+The book content gets pulled in from a separate repo via an automated
+process. The right spot here is https://github.com/progit/progit2.
 
-And I think, it's easier to read if we write the command in its own
-(indented) line.
+We do recommend just "apt install git" on the downloads page:
 
-> $(git config user.name) <$(git config user.email)>"`
-> is difficult for users to add their own identities,
-> so teach interpret-trailers a new option `--own-identity`
-> which allow those trailers with no value add the user’s own
-> identity. This will help the use of `commit --trailer` as
-> easy as `--signoff`.
+  https://git-scm.com/download/linux
 
-Perhap, saying that we're optionalise <value> in --trailer, by
-substitute user's identity if missing instead?
+though that has created occasional confusion, too (e.g., some people
+expect gitk).
 
-> @@ -131,6 +144,7 @@ OPTIONS
->  	when you know your input contains just the commit message itself
->  	(and not an email or the output of `git format-patch`).
->  
-> +
+> > Should I remove everything form "git-all" and reinstall everything
+> > according to your advise? It seems no git daemon is working right now
+> > (systemctl | grep git).
+> 
+> If everything's working for you, there's no need to change it.  It's
+> _possible_ to install git-all and not have this problem, but because of
+> the way modern versions of Debian and the packages in question are
+> configured it ends up tending to have this problem by default.
+> 
+> In this case, it may be that git-daemon is installed but not configured
+> to start, or it may have been removed when you reinstalled GNOME since
+> it's not a hard dependency.
 
-I think it's better to not add this line change
+Yeah. I think fundamentally this is a packaging issue. It looks like
+"git-daemon-*" has been downgraded to "Suggests" in Debian unstable. It
+looks like this was done in 1:2.26.0-2 last April. From the changelog:
 
->  CONFIGURATION VARIABLES
->  -----------------------
->  
-> diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
-> index 84748eafc01b..be7f502a58d7 100644
-> --- a/builtin/interpret-trailers.c
-> +++ b/builtin/interpret-trailers.c
+    * debian/control: downgrade Recommends by git-all on git-daemon-run
+    to Suggests. The git-all package is a "batteries included" full
+    installation of Git. Automatically running a daemon is not useful
+    to most of its users.
 
--- 
-Danh
+So they are already aware of and addressed the problem, but older
+releases will still show it.
+
+-Peff
