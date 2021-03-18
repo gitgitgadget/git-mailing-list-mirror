@@ -2,112 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 241B4C433E6
-	for <git@archiver.kernel.org>; Thu, 18 Mar 2021 16:35:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 62668C43381
+	for <git@archiver.kernel.org>; Thu, 18 Mar 2021 16:46:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EEB8F64F38
-	for <git@archiver.kernel.org>; Thu, 18 Mar 2021 16:35:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3225E64F70
+	for <git@archiver.kernel.org>; Thu, 18 Mar 2021 16:46:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232065AbhCRQe6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Mar 2021 12:34:58 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:43770 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S230509AbhCRQe1 (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 18 Mar 2021 12:34:27 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:7d4e:cde:7c41:71c2])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 8C2D760457;
-        Thu, 18 Mar 2021 16:33:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1616085236;
-        bh=OQn+Devq5gOxW690nQ6hLZXU6X37lwAPikpy8qGV3Bc=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=IqEeb/qSVIpAm8j8L4o7ahGpqAAFgWxj/pl1I6mcm5QlIPazykH6xHoueaFek9xWY
-         K+yy1R0uw6ne3TYAm+Alq87folv0XiU8upGfKgT35JO/XU65DG4UtLdl8DeOO2xPhS
-         GCr0Ud4TLQTb4OfDK14KOjblhwkZqX98Lt+gX/8uODLM+1yFFr+bvXaz2s7AFtHKqp
-         g86WheEHMsYduMlXv72Skv8iTAMJWNldnA+Mcg9gBpxrVZAOF+hsItsbpWrUNQLxR2
-         0g/ZaosteGK13F0DlnB+hwG1RrqcUAOqoCuYPA1G5RPE/IntAYBYUaG8STA2XFkEw+
-         L/380PXwKMhfUNfK240kjlPWL4beQuER3O9eFaT7NIrGnOnKXAqQSGzhwWNePIA177
-         DsjM4k38dREVmBQp8j/DnoLZYvmOR1oGoOWXdzZtxos4lbR9nSQIuZ1pBkNdNT/NqO
-         lhHu2i/Ii/ocygvng3PXnqWjQq/hP7PBz6t0k/q6Lvv1cblywe5
-Date:   Thu, 18 Mar 2021 16:33:52 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Christian Strasser <christian@avr-fun.de>
-Cc:     git@vger.kernel.org
-Subject: Re: Git install crashed nearly whole System
-Message-ID: <YFOA8ARUwa34tiTl@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Christian Strasser <christian@avr-fun.de>, git@vger.kernel.org
-References: <8aa7be071abc23371397f72b725babc4e4e90190.camel@avr-fun.de>
- <YE5wFxE5RPew5zrJ@camp.crustytoothpaste.net>
- <b805d53740429a26413cdd4e756db29f95c98052.camel@avr-fun.de>
+        id S232083AbhCRQpp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Mar 2021 12:45:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55716 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231806AbhCRQpV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Mar 2021 12:45:21 -0400
+Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54A2BC06174A
+        for <git@vger.kernel.org>; Thu, 18 Mar 2021 09:45:21 -0700 (PDT)
+Received: by mail-pg1-x536.google.com with SMTP id r17so1814159pgi.0
+        for <git@vger.kernel.org>; Thu, 18 Mar 2021 09:45:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=iKQVnYLYaljUyl3ZRqLrKtYES+s+pL/WpGpO++dbjVo=;
+        b=doh+Gds2IjJ57wIEC6gUZjqQLi1vJcDiTjaUIzGSOcfONmcSftgEbLdc6vmxBZH7oA
+         6L4lNmL1P27MpPE4bI0aptNM3Zw201IujOY5LOlQrq/xP1YZ7rIWdLwP3RehYjPDd0kC
+         K3vc7C7KDWICLRwViw0A4YC6r2ljc0AayQcZB1cgMoRu8mO5PuCU+8tG1dkF6WGL3MAs
+         iHK+VZHQFtefCVosqkc+uNT1f1ZTIZSrEKoMp+lkEv1GGt4HgXDzofROe1nHJJNIcyZm
+         ZSyn1nrj2Zld3j4wWmf9QTbOxJNYvzoUpC58lDzjWnWOpsNZnJvoL71UiI5Rq4e9pqW0
+         h3KA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=iKQVnYLYaljUyl3ZRqLrKtYES+s+pL/WpGpO++dbjVo=;
+        b=CTYCNpjjx1DHGlkxAmn/1LLt0KwtB4Y3d/rRm97DYLHEVMhfiSJPKpCfqutD6l/gbm
+         +GsQ9rOiulBIJFeZGfq0H7p5duBMR/496LZ/bzUOhOtj/xfLMihDqxIKUax5xhX4kuiD
+         0Mw7pIesRMuMNdix/gdApO+JhicO/gnG+396pmsQdlrM4y5SAcq4BYQVf5H/JeF8bx4F
+         k6DZQhgaLx+L63H0CppWjtpnJOaCHmazj1KW72NkUnw0+iyiuu791qeFHZbOqA3IKTfM
+         F5uyPrbRFUEWVUP4DslXmcG+xBF2mU6nSASRM3Cchh4SlBNlQlxZhoDXm2AJpYzjjzWI
+         PJAg==
+X-Gm-Message-State: AOAM533zpu3okHDnxzSZFouzJQtGi0JWJEQVbH/7M+4jnSvrpZA4eczV
+        ZJMhplNT3WBHP472xastQhDtsrfBb98=
+X-Google-Smtp-Source: ABdhPJwmEhYgsb19iI6LqjalP8IDO3UGRcCtgsXYqhQKagrgQyqhcqVgazlxun/GUWhEoIoXWPh6Iw==
+X-Received: by 2002:aa7:92d9:0:b029:1bb:b6de:c872 with SMTP id k25-20020aa792d90000b02901bbb6dec872mr4850208pfa.68.1616085920291;
+        Thu, 18 Mar 2021 09:45:20 -0700 (PDT)
+Received: from localhost ([2402:800:63b8:c037:a704:f99b:eeaa:7066])
+        by smtp.gmail.com with ESMTPSA id q25sm2771654pff.104.2021.03.18.09.45.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 18 Mar 2021 09:45:19 -0700 (PDT)
+Date:   Thu, 18 Mar 2021 23:45:18 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, "Bradley M. Kuhn" <bkuhn@sfconservancy.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Brandon Casey <drafnel@gmail.com>,
+        Shourya Shukla <periperidip@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Rafael Silva <rafaeloliveira.cs@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
+Subject: Re: [PATCH v10 2/3] interpret-trailers: add own-identity option
+Message-ID: <YFODnm4JKfqRn37H@danh.dev>
+References: <pull.901.v9.git.1615891183320.gitgitgadget@gmail.com>
+ <pull.901.v10.git.1616066156.gitgitgadget@gmail.com>
+ <42590e95deeece6ba65e0432c3a59746e717fee3.1616066156.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="fwmvrpRb719fb6Mk"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <b805d53740429a26413cdd4e756db29f95c98052.camel@avr-fun.de>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <42590e95deeece6ba65e0432c3a59746e717fee3.1616066156.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 2021-03-18 11:15:55+0000, ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com> wrote:
+> From: ZheNing Hu <adlternative@gmail.com>
+> 
+> Beacuse `git commit --trailer="Signed-off-by: \
 
---fwmvrpRb719fb6Mk
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+s/Beacuse/Because/
 
-On 2021-03-18 at 10:37:04, Christian Strasser wrote:
-> Hello Brian,
->=20
-> First, I want to thank you for your detailed information.=20
->=20
-> I'm a little confused. Is the instruction on "
-> https://git-scm.com/book/en/v2/Getting-Started-Installing-Git" not the
-> official one? As you can see there, the first part is how to install
-> git with your package manager (git-all).
+And I think, it's easier to read if we write the command in its own
+(indented) line.
 
-That is probably out of date, and I'd suggest reporting it to the
-appropriate spot, which is _probably_ https://github.com/git/git-scm.com
-(although it might be a separate repo).  The git-all package has had
-this problem for some time now, so I wouldn't recommend it as the
-default option.
+> $(git config user.name) <$(git config user.email)>"`
+> is difficult for users to add their own identities,
+> so teach interpret-trailers a new option `--own-identity`
+> which allow those trailers with no value add the user’s own
+> identity. This will help the use of `commit --trailer` as
+> easy as `--signoff`.
 
-> Should I remove everything form "git-all" and reinstall everything
-> according to your advise? It seems no git daemon is working right now
-> (systemctl | grep git).
+Perhap, saying that we're optionalise <value> in --trailer, by
+substitute user's identity if missing instead?
 
-If everything's working for you, there's no need to change it.  It's
-_possible_ to install git-all and not have this problem, but because of
-the way modern versions of Debian and the packages in question are
-configured it ends up tending to have this problem by default.
+> @@ -131,6 +144,7 @@ OPTIONS
+>  	when you know your input contains just the commit message itself
+>  	(and not an email or the output of `git format-patch`).
+>  
+> +
 
-In this case, it may be that git-daemon is installed but not configured
-to start, or it may have been removed when you reinstalled GNOME since
-it's not a hard dependency.
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
+I think it's better to not add this line change
 
---fwmvrpRb719fb6Mk
-Content-Type: application/pgp-signature; name="signature.asc"
+>  CONFIGURATION VARIABLES
+>  -----------------------
+>  
+> diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
+> index 84748eafc01b..be7f502a58d7 100644
+> --- a/builtin/interpret-trailers.c
+> +++ b/builtin/interpret-trailers.c
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.27 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYFOA7gAKCRB8DEliiIei
-gWWkAQCnAWf/09HwI31/ht2jtfNmqH8KCA2oMjGFSabHGPoxfgD9HuDYaZ6UGYml
-QhY5h1ZL3p2BiXogGGTE7ymkQaPsVgg=
-=APDY
------END PGP SIGNATURE-----
-
---fwmvrpRb719fb6Mk--
+-- 
+Danh
