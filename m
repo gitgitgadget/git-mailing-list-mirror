@@ -2,128 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.4 required=3.0 tests=BAYES_50,DATE_IN_PAST_06_12,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E07CC433DB
-	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 03:25:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4FBA8C433E6
+	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 04:05:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DB73C64F04
-	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 03:25:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2077864E37
+	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 04:05:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231599AbhCSDZC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Mar 2021 23:25:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53442 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229948AbhCSDYq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Mar 2021 23:24:46 -0400
-Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C1E8C06174A
-        for <git@vger.kernel.org>; Thu, 18 Mar 2021 20:24:46 -0700 (PDT)
-Received: by mail-qk1-x733.google.com with SMTP id u190so1572466qkd.6
-        for <git@vger.kernel.org>; Thu, 18 Mar 2021 20:24:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp.br; s=usp-google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=1DHyU0Uq+/yHV8qGXXwunQy1aE44SNdjYvmeHC4x2/k=;
-        b=gah1y53no5pGtvSVYUsg3guBYwKkuFECgqaZ1hnlvZGvlQiI3gDQ2YjZUAG1f6DRqB
-         B6mI+Shjs90SUrmEKxQQ6d9H/dF9U+Eqmcv+5KljVnMHcjKLAhTZH7yji819n8QaruUU
-         bYAlfRaewv/8iP58Trf142qo9O5KsRa/VLmXB+rjnbn/g99i6PWXkeuPCfp6usk0m4B7
-         fug0d+nfXJtBsqGLhOUmgmVOQbZEvqHAbzBPLA1stVaFqux0dycC8hRiIW3BzfwzdJna
-         L80QbMBs4jE+gcXrJZ1nqjs2uh6iS9JGTyTO2GdlhP8RRKkw1M4vbQ2fUrFmW1Jt09yr
-         MLfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=1DHyU0Uq+/yHV8qGXXwunQy1aE44SNdjYvmeHC4x2/k=;
-        b=A8OrQibBzcHaXUVbm6DFYP7QpL+2uxXB4TA2SAdfGlqfQapxur76EYbnYg5hvtXFD1
-         s4zTGG5VBECJZ9O+oDpRbEjesm4q0opyLx/zu9SMwHnOvVmfR1kbb12ZxFGd2IrFb2Xd
-         b1GeePUk2Wofk2JHtXfdhGbBiZoAZPJ86XHx5mWofDFXRUCB08hsAn8QcgPxiSFzmle5
-         RC1BwbyltAm3SnjskI/QRvIUBYzTvRUvOhy250gUFzaFIBag/sE7W+JyiY3V0fREqGsp
-         wbeA6AXUoxaD7cgVDTj4Vxcyjdxq+QZxs8+sif5HxZ3sAz24f12x0RHXhHsm2/tMNjni
-         Ls+w==
-X-Gm-Message-State: AOAM532YF2fVfTegkmwJGg7Yj3P5W8pXrN57fkpzBsu6zBFk2al9EE/3
-        lsKBOsRoS9cPYfYkcJcxmBv8Wg==
-X-Google-Smtp-Source: ABdhPJyl+Y4k4wDRpdxFX5HK/5PPw8eM0r14OvetLzBey9fyR6Ey7x+rjXDNvWrumufeEfOvlEV3HQ==
-X-Received: by 2002:a05:620a:1669:: with SMTP id d9mr7476753qko.3.1616124285254;
-        Thu, 18 Mar 2021 20:24:45 -0700 (PDT)
-Received: from mango.meuintelbras.local ([177.32.118.149])
-        by smtp.gmail.com with ESMTPSA id e2sm2927715qto.50.2021.03.18.20.24.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Mar 2021 20:24:44 -0700 (PDT)
-From:   Matheus Tavares <matheus.bernardino@usp.br>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, christian.couder@gmail.com,
-        git@jeffhostetler.com
-Subject: Re: [PATCH 0/5] Parallel Checkout (part 2)
-Date:   Fri, 19 Mar 2021 00:24:38 -0300
-Message-Id: <19fee535ee0ec5211f22b2b69a4a9804816c2322.1616122653.git.matheus.bernardino@usp.br>
-X-Mailer: git-send-email 2.30.1
-In-Reply-To: <xmqqft0srxjc.fsf@gitster.g>
-References: <xmqqft0srxjc.fsf@gitster.g>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S233550AbhCSEEq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Mar 2021 00:04:46 -0400
+Received: from srv.gazetacaldas.com ([217.112.91.68]:52330 "EHLO
+        host.syrsecserve.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229447AbhCSEEU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Mar 2021 00:04:20 -0400
+X-Greylist: delayed 14442 seconds by postgrey-1.27 at vger.kernel.org; Fri, 19 Mar 2021 00:04:20 EDT
+Received: from syrsecserve.com (ec2-3-142-243-247.us-east-2.compute.amazonaws.com [3.142.243.247])
+        by host.syrsecserve.com (Postfix) with ESMTPA id B9648255B780
+        for <git@vger.kernel.org>; Thu, 18 Mar 2021 17:48:55 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 host.syrsecserve.com B9648255B780
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syrsecserve.com;
+        s=default; t=1616089737;
+        bh=SzZho7iX500NWujrxe0OF9Q1+ri/Wiu7SIarQ/92wfM=;
+        h=Reply-To:From:To:Subject:Date:From;
+        b=VLBIWFuo+IeKsO4AsdhO2YhNAOT7YB+DYWnKLvXLaB6PL6hNDwIhsqOnxkFtibixF
+         Zx+MUGfVsK/HQirCJUdDPk1otoYsO7/CDfSTPXybN8MEbGCNeKM0GR1NsCKIgU/qu7
+         pOoNq48GPCmatg6pwzO8P47w/19D59/Wbu2lyyHw=
+DKIM-Filter: OpenDKIM Filter v2.11.0 host.syrsecserve.com B9648255B780
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syrsecserve.com;
+        s=default; t=1616089737;
+        bh=SzZho7iX500NWujrxe0OF9Q1+ri/Wiu7SIarQ/92wfM=;
+        h=Reply-To:From:To:Subject:Date:From;
+        b=VLBIWFuo+IeKsO4AsdhO2YhNAOT7YB+DYWnKLvXLaB6PL6hNDwIhsqOnxkFtibixF
+         Zx+MUGfVsK/HQirCJUdDPk1otoYsO7/CDfSTPXybN8MEbGCNeKM0GR1NsCKIgU/qu7
+         pOoNq48GPCmatg6pwzO8P47w/19D59/Wbu2lyyHw=
+Reply-To: muhammadfaraz02@securesvsmail.com
+From:   M Faraz <muhammadfaraz02@syrsecserve.com>
+To:     git@vger.kernel.org
+Subject: Partnership
+Date:   19 Mar 2021 01:48:55 +0800
+Message-ID: <20210319014855.719DBF76C98CC2C0@syrsecserve.com>
+Mime-Version: 1.0
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 18, 2021 at 5:56 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Matheus Tavares <matheus.bernardino@usp.br> writes:
->
-> > This is the next step in the parallel checkout implementation. An
-> > overview of the complete series can be seen at [1].
-> >
-> > The last patch in this series adds a design doc, so it may help to
-> > review it first. Also, there is no need to have any familiarity with
-> > part-1, as this part doesn't have any semantic dependency with that.
-> >
-> > This series is based on the merge of 'mt/parallel-checkout-part-1' and
-> > 'master', so that it can use the "brew cast" fix and the latest security
-> > fix (both from master), to run the tests. (The merge is textually
-> > clean, but it needs a small semantic fix: the '#include "entry.h"'
-> > addition in builtin/stash.c).
->
-> Let's redo part-1 on top of 'master' first without such a merge; it
-> has been out of 'next' so we can do so easily without wanting for
-> the tip of 'next' to get rewound.
+Hello there,
 
-Thanks!
+Good day. I sent you an email a few days ago but I did not=20
+receive a reply. I am not sure if you got that email or not. I am=20
+Muhammad Faraz. I got your contact from an online business=20
+directory and I am contacting you because I have a proposition=20
+that could be of great interest to you. I want you to keep an=20
+open mind while reading this proposal. I represent the interest=20
+of my brother in-law who was a former minister in the Syrian=20
+Government. As you probably know, there is a lot of crisis going=20
+on currently in that part of the world and my brother in-law has=20
+been one of the few people to publicly oppose the Government's=20
+policy on this senseless war and killings of innocent citizens=20
+and have been trying to advocate for a more peaceful and=20
+prosperous country. Unfortunately, his unwavering support for the=20
+rebels who are fighting to put an end to the war has caused him=20
+to fall out with the ruling party and he now has reasons to be=20
+believe that his life is at risk. In order to ensure that his=20
+family is taken care of and protected incase anything happens to=20
+him, he has asked me to help him find a foreign partner with good=20
+business acumen that can help him secure and invest his assets=20
+that he has in Europe. This is why I have contacted you. I=20
+searched online and saw your profile so I thought you would be=20
+interested in this opportunity.
 
-I saw you've added the "entry.h" inclusion that was missing at
-builtin/stash when merging this branch on 'seen'. However, now that
-part-1 is based on 'master', the branch is no longer buildable without
-this fix. So could we perhaps squash this change directly into the
-relevant commit in this series? (I'm asking this mainly to allow me to
-later base part-3 directly on part-2; without having to base it on a
-merge again.)
+Do you have investment ideas or business projects that these=20
+funds can be invested into? Please note that he wants this done=20
+very discretely and I will be acting as his eyes and ears during=20
+the course of this transaction. He is also prepared to compensate=20
+you very much for your efforts so this would be worth your time.=20
+If this proposal interests you, kindly respond so that I can give=20
+you more details.
 
-If you agree, here is a fixup! to be squashed into part-1, for
-convenience:
+Regards,
 
--- >8 --
-Subject: [PATCH] fixup! entry: extract a header file for entry.c functions
-
----
- builtin/stash.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/builtin/stash.c b/builtin/stash.c
-index ba774cce67..11f3ae3039 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -15,6 +15,7 @@
- #include "log-tree.h"
- #include "diffcore.h"
- #include "exec-cmd.h"
-+#include "entry.h"
- 
- #define INCLUDE_ALL_FILES 2
- 
--- 
-2.30.1
-
+Muhammad.
