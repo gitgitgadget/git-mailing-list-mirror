@@ -3,128 +3,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C3FE3C433DB
-	for <git@archiver.kernel.org>; Thu, 18 Mar 2021 19:35:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F5ACC433DB
+	for <git@archiver.kernel.org>; Thu, 18 Mar 2021 19:48:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9611664F2A
-	for <git@archiver.kernel.org>; Thu, 18 Mar 2021 19:35:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0883664F18
+	for <git@archiver.kernel.org>; Thu, 18 Mar 2021 19:48:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232985AbhCRTfT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Mar 2021 15:35:19 -0400
-Received: from cloud.peff.net ([104.130.231.41]:41394 "EHLO cloud.peff.net"
+        id S232889AbhCRTrm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Mar 2021 15:47:42 -0400
+Received: from cloud.peff.net ([104.130.231.41]:41408 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232979AbhCRTfM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Mar 2021 15:35:12 -0400
-Received: (qmail 693 invoked by uid 109); 18 Mar 2021 19:35:11 -0000
+        id S231552AbhCRTr2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Mar 2021 15:47:28 -0400
+Received: (qmail 782 invoked by uid 109); 18 Mar 2021 19:47:28 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 18 Mar 2021 19:35:11 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 18 Mar 2021 19:47:28 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 24186 invoked by uid 111); 18 Mar 2021 19:35:12 -0000
+Received: (qmail 24262 invoked by uid 111); 18 Mar 2021 19:47:29 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 18 Mar 2021 15:35:12 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 18 Mar 2021 15:47:29 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 18 Mar 2021 15:35:10 -0400
+Date:   Thu, 18 Mar 2021 15:47:27 -0400
 From:   Jeff King <peff@peff.net>
 To:     Han-Wen Nienhuys <hanwen@google.com>
-Cc:     Martin Fick <mfick@codeaurora.org>, git <git@vger.kernel.org>
+Cc:     git <git@vger.kernel.org>
 Subject: Re: Distinguishing FF vs non-FF updates in the reflog?
-Message-ID: <YFOrbjeunnVfQNRC@coredump.intra.peff.net>
+Message-ID: <YFOuT6L0dsrCGTBk@coredump.intra.peff.net>
 References: <CAFQ2z_MefCwiWdhs0buJv5Zok+nsgaOvUCcsSnfm_PP0WozZKA@mail.gmail.com>
- <5359503.g8GvsOHjsp@mfick-lnx>
- <CAFQ2z_MavgAGDyJzc9-+j6zTDODP7hCdPHtB5dyx-reLMSLX3Q@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAFQ2z_MavgAGDyJzc9-+j6zTDODP7hCdPHtB5dyx-reLMSLX3Q@mail.gmail.com>
+In-Reply-To: <CAFQ2z_MefCwiWdhs0buJv5Zok+nsgaOvUCcsSnfm_PP0WozZKA@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 18, 2021 at 09:58:56AM +0100, Han-Wen Nienhuys wrote:
+On Wed, Mar 17, 2021 at 09:06:06PM +0100, Han-Wen Nienhuys wrote:
 
-> > 1) Not all updates make it to the reflogs
-> > 2) Reflogs can be edited or mucked with
-> > 3) On NFS reflogs can outright be wrong even when used properly as their are
-> > caching issues. We specifically have seen entries that appear to be FFs that
-> > were not.
+> I'm working on some extensions to Gerrit for which it would be very
+> beneficial if we could tell from the reflog if an update is a
+> fast-forward or not: if we find a SHA1 in the reflog, and see there
+> were only FF updates since, we can be sure that the SHA1 is reachable
+> from the branch, without having to open packfiles and decode commits.
+
+I left some numbers in another part of the thread, but IMHO performance
+isn't that compelling a reason to do this these days, if you are using
+commit-graphs.
+
+Just walking the reflog might be _slightly_ faster, though not
+necessarily (it depends on whether the depth of the object graph or the
+depth of the reflog chain is deeper). It might matter more if you are
+using a more exotic storage scheme, where switching from accessing
+reflogs to objects implies extra round-trips to a server (e.g., custom
+storage backends with JGit; I don't know the state of the art in what
+Google is doing there).
+
+> For the reftable format, I think we could store this easily by
+> introducing more record types. Today we have 0 = deletion, 1 = update,
+> and we could add 2 = FF update, 3 = non-FF update.
 > 
-> Can you tell a little more about 3) ? SInce we don't annotate non-FF
-> vs FF today, what does "appear to be FFs" mean?
+> However, the textual reflog format doesn't easily allow for this.
+> However, we might add a convention, eg. have the message start with
+> 'FF' or 'NFF' depending on the nature of the update.
 > 
-> But you are right: since the reflog for a branch is in a different
-> file from the branch head, there is no way to do an update to both of
-> them at the same time. I guess this will have to be a reftable-only
-> feature.
+> Does this make sense, and if yes is it worth proposing a change?
 
-Each individual reflog entry (in the branch reflog and the HEAD reflog)
-should still be consistent, though. They give the "before" and "after"
-object ids, and the ff-ness is an immutable property of those commit
-ids.
+At GitHub we do something similar. We don't generally use reflogs much
+at all, but we keep a custom "audit log": a single append-only file that
+records every ref update in the repository. And its format just happens
+to be one reflog entry per line, prefixed by the updated ref.
 
-> > I believe that today git can do very fast reachability checks without opening
-> > pack files by using some of its indexes (bitmap code or https://git-scm.com/
-> > docs/commit-graph ?). It probably makes sense to add this ability to jgit if
-> > that is what you need?
-> 
-> The bitmaps are generated by GC, and you can't GC all the time. JGit
-> has support for bitmaps, and its support actually predates C-Git's
-> support for it. (It was added to JGit by Colby Ranger who worked in
-> Shawn's team).
+And there we do generally annotate the FF-ness of an update by stuffing
+it into the free-form message field (in fact, we shove in a small JSON
+object, so we record multiple fields like the pushing id, IP, etc).
 
-Bitmaps can help with these checks, but we don't actually look at them
-in most of the algorithms one might use for computing ancestry. One of
-the reasons for that is that they often backfire as an optimization,
-because:
+But the main goal there isn't performance (and in fact we don't
+generally consult it for anything outside of debugging). The reason we
+record FF-ness is for later debugging or analysis. We don't prune from
+the audit log, and we don't consider it for reachability when we prune
+objects (since otherwise you'd never be able to prune anything!). So the
+objects sometimes aren't available later to compute, but we still want
+to know if the user did a force-push, etc.
 
-  - as you note, they are often not up to date because they require a
-    repack. So they won't help when asking about very recently added
-    commits (which people tend to ask about more than ancient ones).
-
-  - the bitmap file format doesn't have any index. So a reader has to
-    scan the whole thing upon opening to decide which commits have
-    bitmaps.
-
-For several years we had a patch at GitHub that checked for bitmaps
-during "--contains" traversals. Even though it did sometimes backfire,
-it was enough of a net win to be worth keeping, compared to actually
-opening commit objects to follow their parent pointers. But with
-commit-graphs, it was a strict loss, and we stopped using it entirely
-last year. (We do still look at bitmaps for our branch ahead/behind
-checks using a custom patch; I'm suspicious of its performance for the
-same reasons, but we haven't dug carefully into it).
-
-But...
-
-> I expect that the commit graph doesn't work for my intended use-case.
-
-...I think commit-graphs are a big win here. They are more often kept up
-to date, because they can be generated incrementally with effort
-proportional to the number of new commits. And they make a big
-difference if the traversal has to cover a lot of commits. E.g., here's
-the most extreme case in git.git, checking ancestry of the oldest
-commit:
-
-  $ time git merge-base --is-ancestor e83c5163316f89bfbde7d9ab23ca2e25604af290 HEAD; echo $?
-
-  real	0m0.014s
-  user	0m0.008s
-  sys	0m0.005s
-  0
-
-  $ time git -c core.commitgraph=false merge-base --is-ancestor e83c5163316f89bfbde7d9ab23ca2e25604af290 HEAD; echo $?
-
-  real	0m0.398s
-  user	0m0.369s
-  sys	0m0.028s
-  0
-
-Of course most results won't be so dramatic, because they wouldn't have
-to traverse many commits in the first place (so they are already pretty
-fast with or without the commit-graph).  But that 14ms should be an
-upper bound for this repo. And naturally that scales with the number of
-commits; in linux.git it's 43ms, compared to 8.7s without commit-graphs).
+I don't think that really applies to regular reflogs, because they do
+imply reachability (and they are not great for later analysis, because
+we may selectively expire unreachable entries).
 
 -Peff
