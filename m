@@ -2,135 +2,70 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB187C433DB
-	for <git@archiver.kernel.org>; Thu, 18 Mar 2021 22:44:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9C0CC433E6
+	for <git@archiver.kernel.org>; Thu, 18 Mar 2021 22:55:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7241E64EED
-	for <git@archiver.kernel.org>; Thu, 18 Mar 2021 22:44:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ADC1564E45
+	for <git@archiver.kernel.org>; Thu, 18 Mar 2021 22:55:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232620AbhCRWnw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Mar 2021 18:43:52 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:61457 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231846AbhCRWnS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Mar 2021 18:43:18 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 725F210F78F;
-        Thu, 18 Mar 2021 18:43:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=4nPjAkNvkfekF/YlqK1TvZVeNE8=; b=awAy77
-        R+fhVjb3rbIWo2fz3lGn3NElFet2qiNKxnisPRjN1foKzwDvF5Mzi351JmQkMEz6
-        wVSZEE4jozgbDzUaDWtvd+HJxA1KSgCtvoIEMlj+4V7/ZvrE5rOufwGo4dLsGgDB
-        3ajpIzR7uH2oxXj3LfvRE9UVybiv+V4SfYw4A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Iw+0nwM/4WwHg33Uc35fcm7cOXq/P4E7
-        7M/ZmUtNWIgiXCDt+LTBfYWnE6VNRvbJNnpQ7G2Zis4DWxznipDS5h8q/DaKhe9M
-        rnFp2fkdznFe7WD4lBxeEgN3x8ionIGDBkbJBppYUCEjcE5VSqzqlpXBWIt4Jt6G
-        kiym8Tt/RwA=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6B25610F78D;
-        Thu, 18 Mar 2021 18:43:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B2F6310F78C;
-        Thu, 18 Mar 2021 18:43:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (Mar 2021, #05; Wed, 17)
-References: <xmqqblbhtoa6.fsf@gitster.g>
-        <CABPp-BGkvUK3Xs6ZsWwv_C_tdJN-84ebBcxZCAoRu+sX7aWQ8g@mail.gmail.com>
-Date:   Thu, 18 Mar 2021 15:43:14 -0700
-In-Reply-To: <CABPp-BGkvUK3Xs6ZsWwv_C_tdJN-84ebBcxZCAoRu+sX7aWQ8g@mail.gmail.com>
-        (Elijah Newren's message of "Wed, 17 Mar 2021 16:13:27 -0700")
-Message-ID: <xmqqeegcqe0t.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S232657AbhCRWyu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Mar 2021 18:54:50 -0400
+Received: from cloud.peff.net ([104.130.231.41]:41664 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232676AbhCRWyo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Mar 2021 18:54:44 -0400
+Received: (qmail 1804 invoked by uid 109); 18 Mar 2021 22:54:43 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 18 Mar 2021 22:54:43 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 25966 invoked by uid 111); 18 Mar 2021 22:54:44 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 18 Mar 2021 18:54:44 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 18 Mar 2021 18:54:42 -0400
+From:   Jeff King <peff@peff.net>
+To:     Martin Fick <mfick@codeaurora.org>
+Cc:     Han-Wen Nienhuys <hanwen@google.com>, git <git@vger.kernel.org>
+Subject: Re: Distinguishing FF vs non-FF updates in the reflog?
+Message-ID: <YFPaMj9PVfXlp4bL@coredump.intra.peff.net>
+References: <CAFQ2z_MefCwiWdhs0buJv5Zok+nsgaOvUCcsSnfm_PP0WozZKA@mail.gmail.com>
+ <5359503.g8GvsOHjsp@mfick-lnx>
+ <CAFQ2z_MavgAGDyJzc9-+j6zTDODP7hCdPHtB5dyx-reLMSLX3Q@mail.gmail.com>
+ <21556546.pz8f0XPdgJ@mfick-lnx>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 53EDD2F4-883B-11EB-9FFB-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <21556546.pz8f0XPdgJ@mfick-lnx>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+On Thu, Mar 18, 2021 at 04:31:24PM -0600, Martin Fick wrote:
 
-> Will do; I'll also point out a few topics that have been reviewed but
-> haven't been picked up yet.
->
->> * en/ort-perf-batch-9 (2021-03-10) 8 commits
->>  - diffcore-rename: avoid doing basename comparisons for irrelevant sources
->>  - merge-ort: skip rename detection entirely if possible
->>  - merge-ort: use relevant_sources to filter possible rename sources
->>  - merge-ort: precompute whether directory rename detection is needed
->>  - merge-ort: introduce wrappers for alternate tree traversal
->>  - merge-ort: add data structures for an alternate tree traversal
->>  - merge-ort: precompute subset of sources for which we need rename detection
->>  - diffcore-rename: enable filtering possible rename sources
->>  (this branch uses en/ort-perf-batch-8.)
->>
->>  More ort.
->
-> Can I suggest an alternate title?  "merge-ort optimization of skipping
-> irrelevant renames" or anything that gets the idea of "skipping
-> irrelevant renames" in there.
+> On Thursday, March 18, 2021 9:58:56 AM MDT Han-Wen Nienhuys wrote:
+> > The bitmaps are generated by GC, and you can't GC all the time. 
+> 
+> I believe that I recently saw an effort to make this incremental, perhaps 
+> related to the geometric repacking series? If that were the case, you could gc 
+> much more often cheaply. Perhaps it could be something done on every upload at 
+> some point the way that reflog effectively does on every update?
 
-Thanks.
+That geometric repacking work is leading up to having a bitmap for a
+multi-pack-index. Which will make them _cheaper_, but still not
+especially cheap (because we've reordered the objects corresponding to
+each bit, and also because our writing process still does a lot of
+O(nr_commits) work).
 
->> * en/ort-perf-batch-8 (2021-02-26) 10 commits
->>   (merged to 'next' on 2021-03-07 at f03b2c1acd)
->>  + diffcore-rename: compute dir_rename_guess from dir_rename_counts
->>  + diffcore-rename: limit dir_rename_counts computation to relevant dirs
->>  + diffcore-rename: compute dir_rename_counts in stages
->>  + diffcore-rename: extend cleanup_dir_rename_info()
->>  + diffcore-rename: move dir_rename_counts into dir_rename_info struct
->>  + diffcore-rename: add function for clearing dir_rename_count
->>  + Move computation of dir_rename_count from merge-ort to diffcore-rename
->>  + diffcore-rename: add a mapping of destination names to their indices
->>  + diffcore-rename: provide basic implementation of idx_possible_rename()
->>  + diffcore-rename: use directory rename guided basename comparisons
->>  (this branch is used by en/ort-perf-batch-9.)
->>
->>  Rename detection rework continues.
->>
->>  Will cook in 'next'.
->
-> I think it's ready to merge to master.
+In the very long run, I think the way out would be to stop using pack or
+midx ordering as the basis of the bitmap, and instead have a stable
+object ordering that can be appended to. That would allow true
+incremental generation of the bitmaps (leaving old ones in place, and
+just adding a new ones to represent new commits). But that's such a big
+departure from the status quo that having a midx bitmap seemed like a
+more attainable middle ground in the meantime.
 
-When a "will merge to 'next'" topic is merged to 'next', its label
-is mechanically rewritten to "will merge to 'master'" outside the
-pre-release freeze, and to "will cook in 'next'" while pre-release
-freeze.  So for the topics labelled with "Will cook in 'next'", by
-default they should turn into "Will merge to 'master'".
-
-That was why I was specifically asking for topics to be KICKED OUT
-of 'next', to give them a fresh start without having to do "oops,
-this was a mistake, let's patch it up".
-
-> Here are some reviewed topics that haven't been cooking yet, that I
-> personally think are worth picking up (at least for seen and probably
-> for next rather soonish):
-
-Thanks for a useful list of topics.  At this point, topics that are
-not picked up are not because they are not ready/worth, but because
-there are too many of them sent during the pre-release freeze.
-
-> * My ort-perf-batch-10 ("skip even more irrelevant renames") series:
-> https://lore.kernel.org/git/8422759a-a4a3-4dc6-4ae7-4a61896b9946@gmail.com/;
-> (the review comment there is addressed by the next patch series in
-> this list)
-
-There are 8, 9 and now this 10 in flight, which is two topics too
-many to have in flight at the same time X-<.  Luckily -8 seems to be
-good for 'master', so there is no risk of having to rewind it
-anymore, which makes the burden of having to carry multiple dependent
-topics at the same time.
+-Peff
