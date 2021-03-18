@@ -2,122 +2,176 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 82587C43381
-	for <git@archiver.kernel.org>; Thu, 18 Mar 2021 12:54:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 932FCC433E6
+	for <git@archiver.kernel.org>; Thu, 18 Mar 2021 13:39:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 43B1464F65
-	for <git@archiver.kernel.org>; Thu, 18 Mar 2021 12:54:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4071864F1B
+	for <git@archiver.kernel.org>; Thu, 18 Mar 2021 13:39:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231316AbhCRMyI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Mar 2021 08:54:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33854 "EHLO
+        id S230247AbhCRNjF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Mar 2021 09:39:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43604 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230476AbhCRMxg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Mar 2021 08:53:36 -0400
-Received: from out1.migadu.com (out1.migadu.com [IPv6:2001:41d0:2:863f::])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB9FDC06174A
-        for <git@vger.kernel.org>; Thu, 18 Mar 2021 05:53:30 -0700 (PDT)
+        with ESMTP id S230477AbhCRNiu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Mar 2021 09:38:50 -0400
+Received: from mail-qv1-xf36.google.com (mail-qv1-xf36.google.com [IPv6:2607:f8b0:4864:20::f36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26F3FC06174A
+        for <git@vger.kernel.org>; Thu, 18 Mar 2021 06:38:50 -0700 (PDT)
+Received: by mail-qv1-xf36.google.com with SMTP id t5so3165854qvs.5
+        for <git@vger.kernel.org>; Thu, 18 Mar 2021 06:38:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:from:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=PfZfipJUn8r1MWTEfZ4n7urWAUOOgNm36jrZZnRc/wU=;
+        b=mAYfKWah//yVnneKSuqvuN9xjPL+J2m/HAp+XZ+K/0GyvZ6UnYsovk2I7b0y5M+of/
+         JOleP/oQvbw54NfyzU6A5gHmAkpYbg9RqZRT7qrWg4CqIUQYQns5AxKehdO3IvkoF2QC
+         ORXuJbECqcVDmG2ekgO3xtVNNlLK7m8y0kCqhetp91oQ3L3Lx8/WCQfvl9UYmGI+e+of
+         DuVmfQACT9nvN1/ILmI1/5NKYF7SliNpLjetn9s62ow9N2fqsum+Tm7eMdCyZ9gRaXy9
+         ToNtjwWycDLb6HLSuoENEclfBAVoannzqhu7C/Yt1UymYqNKFipvcgHSWna1xGhi4Amp
+         M2lQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=PfZfipJUn8r1MWTEfZ4n7urWAUOOgNm36jrZZnRc/wU=;
+        b=KhQJMoZtnOurMAGEkfRZCCZrUb/kAzR2/xdevYXdaoF3mnQx8qtkvXN843kioLPTtd
+         oCldr0jwC/xtcwCmiaSdI1mhdyW8jrW7zCy92yfSuuPd5qB/gQnlh+UJR5KsWa0BnPFs
+         R/znO22xeE8R8KhY9X70Nx6D6uyPw8eSeGv1JnxTcBP3CNrb8O9BGFzwRstt/sijNpio
+         qhJuVXpmJl6tbXeRYTrlk4a7c3GALDlK0ZTKshR5KsQqsZBfbutKcntOeT0xBQavzvO+
+         HjtVOY8ZPoG4RLr9G4UrZB9WyL0qu8MIKTbc1KPlni0rEg8+ZNoDvKezP0R9+ZY0fRpn
+         QJ5Q==
+X-Gm-Message-State: AOAM530BmJx1RtYEkr8wMm+G3ep2+WdLJ3Vx6W1Lmfjq9ddnlqnr/5BT
+        Scl7vb9AFgqIV9MOM65DTxXpQFBsEWqzETUn
+X-Google-Smtp-Source: ABdhPJw56u1weLoEJ3A+SYTvIjEqMitvTR/57ERyHopZL9jjuwBrxx4LMGO59tIWO0h/2eF6tRwvWQ==
+X-Received: by 2002:a05:6214:18d2:: with SMTP id cy18mr4358618qvb.50.1616074729096;
+        Thu, 18 Mar 2021 06:38:49 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:1571:3cc6:32d1:78e8? ([2600:1700:e72:80a0:1571:3cc6:32d1:78e8])
+        by smtp.gmail.com with ESMTPSA id 90sm1437091qtc.86.2021.03.18.06.38.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 18 Mar 2021 06:38:48 -0700 (PDT)
+Subject: Re: [PATCH v3 11/20] sparse-index: convert from full to sparse
+From:   Derrick Stolee <stolee@gmail.com>
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, newren@gmail.com, gitster@pobox.com,
+        pclouds@gmail.com, jrnieder@gmail.com,
+        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.883.v2.git.1615404664.gitgitgadget@gmail.com>
+ <pull.883.v3.git.1615912983.gitgitgadget@gmail.com>
+ <e41b14e03ebb143c874cc276adcbc36059f0c64e.1615912983.git.gitgitgadget@gmail.com>
+ <87wnu5zyif.fsf@evledraar.gmail.com>
+ <1de9bc8a-b0fd-596a-3ae2-2e055b37534b@gmail.com>
+Message-ID: <70fe8d2e-d648-a064-bd8a-9e0b813980a0@gmail.com>
+Date:   Thu, 18 Mar 2021 09:38:47 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cmpwn.com; s=key1;
-        t=1616072009;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=HipdoQqUmV0p5fvdeg4LH8i2KaoFdpaFigG2yG/IcEA=;
-        b=uT9VUrVV24dDpbJKGnKrghcRkbgoqFzPcOAkNfIBc5Ics5Rk0zL7Z93J6X5KBIwXjbPAXt
-        2P4CXPDmRmmEncM+1LiX8ban9WhoFPPuCTLWqaXmfkKMqbp6dSSUOebe3aKfsmwrMjhpRV
-        7F+pLeHDPR4l+x0y9XKU8Hu4/iBiMRQZ7PG5145V0BVdr3/FLlRZdLZ9Gqat+QTBGek9Po
-        n9VPbemaXmdqMMowzbO4VTf3tVDQ5WeV9LmK/auF7xtzSLugYInZHMcIKUW0MCDjf2OSIb
-        hhFDqteQSfbeLADKUUrK1zsp5h7fJAt+XQvPvf9lGccmBoxwxzoj4O21oiwDeQ==
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Thu, 18 Mar 2021 08:53:26 -0400
-Message-Id: <CA0HPQR98MZ8.HAL8GQYQ7QLD@taiga>
-Cc:     "Eli Schwartz" <eschwartz@archlinux.org>,
-        "Jonathan Nieder" <jrnieder@gmail.com>, <git@vger.kernel.org>
-Subject: Re: Regarding the depreciation of ssh+git/git+ssh protocols
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From:   "Drew DeVault" <sir@cmpwn.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-References: <C9Y2DPYH4XO1.3KFD8LT770P2@taiga> <YE+ftT2WaKDzc+45@google.com>
- <C9Y4NXXX6HRI.1IROIK8ZXK4S2@taiga>
- <YE/ZSiuIsMs3ucVM@camp.crustytoothpaste.net>
- <C9YD4AEUH84L.29FP64NJJ1BPU@taiga> <YFADuptwV7iR76g5@google.com>
- <40740478-8b3c-b33e-8bb4-a2d68b83d385@archlinux.org>
- <YFCckC8fHmEyOAnp@camp.crustytoothpaste.net>
- <C9YUBUYH7PWU.3PHDZR2YCUEOX@taiga>
- <YFJ9dI96TO5IdGRZ@camp.crustytoothpaste.net>
-In-Reply-To: <YFJ9dI96TO5IdGRZ@camp.crustytoothpaste.net>
-X-Migadu-Flow: FLOW_OUT
-X-Migadu-Auth-User: sir@cmpwn.com
+In-Reply-To: <1de9bc8a-b0fd-596a-3ae2-2e055b37534b@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I feel like the tone here is getting a bit hostile. Let's try to keep
-things friendly.
+On 3/17/2021 3:55 PM, Derrick Stolee wrote:
+> On 3/17/2021 9:43 AM, Ævar Arnfjörð Bjarmason wrote:
+>>
+>> On Tue, Mar 16 2021, Derrick Stolee via GitGitGadget wrote:
+>>> @@ -251,6 +251,8 @@ static inline unsigned int create_ce_mode(unsigned int mode)
+>>>  {
+>>>  	if (S_ISLNK(mode))
+>>>  		return S_IFLNK;
+>>> +	if (mode == S_IFDIR)
+>>> +		return S_IFDIR;
+>>
+>> Does this actually need to be mode == S_IFDIR v.s. S_ISDIR(mode)? Those
+>> aren't the same thing...
+>>
+>>>  	if (S_ISDIR(mode) || S_ISGITLINK(mode))
+>>>  		return S_IFGITLINK;
+>>
+>> ...and if it can be S_ISDIR(mode) then this becomes just
+>> S_ISGITLINK(mode), but losing the "if" there makes me suspect that some
+>> dir == submodule heuristic is being broken somewhere..
+>  
+> I have a vague recollection that I did that at one point, and
+> it didn't work. However, using the simpler
+> 
+> 	if (S_ISDIR(mode))
+> 		return S_IFDIR;
+> 	if (S_ISGITLINK(mode))
+> 		return S_IFGITLINK;
+> 
+> passes all of my tests.
 
-On Wed Mar 17, 2021 at 6:06 PM EDT, brian m. carlson wrote:
-> I assume that you're volunteering to write the RFC to register these
-> with IANA? If not, then they are indeed non-standard and will remain
-> so.
->
-> I should point out that I don't believe the IANA will accept such a
-> registration, because they will believe it to be duplicative of the
-> existing scheme. But if you want to go this route, we should only
-> proceed if we register them with IANA.
+I'm not sure why it was passing yesterday (maybe I was in the
+wrong worktree) but I _do_ get failures, such as this one in t2105:
 
-This is a needlessly high bar to set, and saying we can only proceed
-with the IANA's involvement seems like a convenient excuse to shut the
-conversation down entirely. Registering with IANA is nice, but there are
-thousands of protocols which don't bother.
+expecting success of 2105.4 'add gitlink to relative .git file': 
+        git update-index --add -- sub2
 
-In any case, this is not quite as high of a bar as you may believe (or
-hope?). The process is pretty straightforward, and a scheme with "+" in
-it meets the criteria laid forth in the RFC, and the argument is even
-stronger given that WHATWG standards make use of the convention these
-days. If this is truly desirable, we can do it after the feature lands,
-but given that the git:// protocol was registered as an apparent
-after-thought by a third-party from Microsoft with zero commits in the
-git tree, it just seems like a requirement put forth in bad faith.
++ git update-index --add -- sub2
+warning: index entry is a directory, but not sparse (00000000)
+error: Could not read 50e526bb426771f6036ad3a8b0c81d511d91fc2a
+BUG: read-cache.c:324: unsupported ce_mode: 40000
+Aborted (core dumped)
+error: last command exited with $?=134
+not ok 4 - add gitlink to relative .git file
+#
+#               git update-index --add -- sub2
+#
 
-> > > Lest you think that only Git has to handle parsing these
-> >=20
-> > I don't, given that my argument stems from making it easier for
-> > third-party applications to deal with git URIs :)
->
-> This does not make my life as a maintainer of said third-party
-> application easier. It complicates it significantly, because people
-> often upgrade Git without upgrading Git LFS and then are unhappy when
-> the five-year old version they use from their distro doesn't support
-> every new feature.
+In this case, the mode that is specified is equal to 040775,
+so we need to use the permission bits outside of __S_IFMT
+(0170000) to determine if this is a sparse directory or a
+submodule entry. Submodules will never be sparse, so
+permissions matter. Sparse directories never actually exist,
+so permissions don't matter.
 
-What third-party software do you represent? Can we make an objective
-estimation of the complexity of the change for your project in practice?
+Playing around with it, I still only see the exact equality
+as working for me.
 
-> Adding this feature which duplicates existing functionality
+I can, however, use this format for these if statements:
 
-What existing method is there to identify a URL as being a git remote?
+	if (S_ISSPARSEDIR(mode))
+		return S_IFDIR;
+	if (S_ISDIR(mode) || S_ISGITLINK(mode))
+		return S_IFGITLINK;
 
-> It also will inevitably confuse users who will want to know the relevant
-> difference between the URLs and which they should use. They will then
-> see the new type of URL and wonder why it does not work with the version
-> they are using. And many users already don't understand the difference
-> between HTTPS and SSH URLs, which is compounded by the fact that many
-> Windows users have never before and will never otherwise use SSH.
+The S_ISSPARSEDIR macro expands to the exact equality.
 
-As you explained, this confusion is already happening. If users don't
-know what a URI is, then they're already confused, and this is unlikely
-to make it worse. If anything, this could make it easier, as a URL which
-explicitly represents its relationship with git could hint at its
-intended usage.
+Now, if we intended to make this work differently, then a
+change would be required to construct_sparse_dir_entry()
+in sparse-index.c:
 
-And again, I don't expect users to actually be handing these URLs around
-to each other for regular use. This is specifically necessary in cases
-where software needs to handle multiple kinds of version control.
+static struct cache_entry *construct_sparse_dir_entry(
+				struct index_state *istate,
+				const char *sparse_dir,
+				struct cache_tree *tree)
+{
+	struct cache_entry *de;
+
+	de = make_cache_entry(istate, S_IFDIR, &tree->oid, sparse_dir, 0, 0);
+
+	de->ce_flags |= CE_SKIP_WORKTREE;
+	return de;
+}
+
+For instance, we could at this point assign de->ce_mode to
+be S_IFDIR directly. It seems like the wrong place to do that
+to me, but I'm open to suggestions.
+
+Thanks,
+-Stolee
