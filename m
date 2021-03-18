@@ -2,58 +2,73 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A6F09C4332B
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 24A9CC43381
 	for <git@archiver.kernel.org>; Thu, 18 Mar 2021 21:54:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7ECF064E05
-	for <git@archiver.kernel.org>; Thu, 18 Mar 2021 21:54:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F214364E05
+	for <git@archiver.kernel.org>; Thu, 18 Mar 2021 21:54:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231770AbhCRVxm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Mar 2021 17:53:42 -0400
-Received: from cloud.peff.net ([104.130.231.41]:41588 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230368AbhCRVxW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Mar 2021 17:53:22 -0400
-Received: (qmail 1515 invoked by uid 109); 18 Mar 2021 21:53:21 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 18 Mar 2021 21:53:21 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 25416 invoked by uid 111); 18 Mar 2021 21:53:22 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 18 Mar 2021 17:53:22 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 18 Mar 2021 17:53:20 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Son Luong Ngoc <sluongng@gmail.com>, Taylor Blau <me@ttaylorr.com>,
-        git@vger.kernel.org, avarab@gmail.com, jonathantanmy@google.com
-Subject: Re: [PATCH] t: annotate !PTHREADS tests with !FAIL_PREREQS
-Message-ID: <YFPL0F4C7mfDazOW@coredump.intra.peff.net>
-References: <CAL3xRKfSXDd0ucO4zaM5_WZeQfq10Hqpyk3nL+Zw8ttgfN0ZhA@mail.gmail.com>
- <YFC33vfLb36pRCO6@nand.local>
- <YFIGSo3U5u7zy9fq@C02YX140LVDN.corpad.adbkng.com>
- <YFJCUOCQGKHX2/So@coredump.intra.peff.net>
- <YFKG52H090l/GbP7@coredump.intra.peff.net>
- <xmqqblbgrwkg.fsf@gitster.g>
+        id S233197AbhCRVxk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Mar 2021 17:53:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38704 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230177AbhCRVxJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Mar 2021 17:53:09 -0400
+Received: from out2.migadu.com (out2.migadu.com [IPv6:2001:41d0:2:aacc::])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30A0EC06174A
+        for <git@vger.kernel.org>; Thu, 18 Mar 2021 14:53:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqblbgrwkg.fsf@gitster.g>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cmpwn.com; s=key1;
+        t=1616104382;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=7GLdOn9B7d2+Jd2CR4lm/Bzm1ASq6seMH+y9JAMMnbw=;
+        b=OCypESpKpAye5o2jJ3JRyLtpLQOVAg3uG3pzqIT3eNpUKWTqSS5CSJlTxu1zAY5pygswzX
+        uVrlJzBiB0MOFtVt5Idl96/aaX9A1Wg1TXxHs+aR+mcq0gB7tw+99FNiDiZagXIHyD6Uam
+        sMnfSMvnVijoRfFJlRFdb2h7D/Xr1HW5tkxujA0KjEYmJEst+5yCEu7GeRq6v2RIAs9Imw
+        BSLDWLqX2yYvUtokIEwpqSQyCMNFmWTohc1SKz5SGn+/iEkwmdFyv0/xqBlMYemLOXVBJc
+        IbaWrpFVgGRYBouq4rDpO5uima6bq6afj2eAgkWkCPXIKLIVdaDkBsKnyXW4CQ==
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date:   Thu, 18 Mar 2021 17:53:00 -0400
+Message-Id: <CA0T6V9YLG3X.1G7LSYGNW2TGY@taiga>
+To:     "Junio C Hamano" <gitster@pobox.com>, "Jeff King" <peff@peff.net>
+Cc:     "Jonathan Nieder" <jrnieder@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        <git@vger.kernel.org>
+Subject: Re: Regarding the depreciation of ssh+git/git+ssh protocols
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From:   "Drew DeVault" <sir@cmpwn.com>
+References: <C9Y2DPYH4XO1.3KFD8LT770P2@taiga> <YE+ftT2WaKDzc+45@google.com>
+ <C9Y4NXXX6HRI.1IROIK8ZXK4S2@taiga>
+ <YE/ZSiuIsMs3ucVM@camp.crustytoothpaste.net>
+ <C9YD4AEUH84L.29FP64NJJ1BPU@taiga> <YFADuptwV7iR76g5@google.com>
+ <C9YDEO8Z8J96.262IOS9IW6F39@taiga>
+ <YFEh2LxvsSP+x7d2@coredump.intra.peff.net> <xmqq4kh8rvy2.fsf@gitster.g>
+In-Reply-To: <xmqq4kh8rvy2.fsf@gitster.g>
+X-Migadu-Flow: FLOW_OUT
+X-Migadu-Auth-User: sir@cmpwn.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 18, 2021 at 02:17:19PM -0700, Junio C Hamano wrote:
+The status quo is similarly frustrating. We have no choice but to allow
+these strange unofficial +git URLs to proliferate among package managers
+and build systems. It has already caused confusion with users, and it
+can only cause more the longer it remains unaddressed upstream.
 
-> In short, the biggest mistake in the current FAIL_PREREQS design is
-> to hook into test_have_prereq while the stated objective only needs
-> to futz with the prerequisite given to the test_expect_* functions,
-> I would think.
+There are two options:
 
-Yeah, that matches my intuition of the problem, too.
-
--Peff
+1. We make the change, users are confused for a while, and software has
+   to be updated, but the confusion gradually diminishes over time as
+   the ecosystem adjusts and people learn the change.
+2. We don't make the change, and the inconsistency continues to require
+   special cases in new tools, with no central organization for keeping
+   them consistent from one to the next, and users will continue to stub
+   their toe on it indefinitely.
