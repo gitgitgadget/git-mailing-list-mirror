@@ -2,185 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B2A60C433C1
-	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 18:20:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2919DC433DB
+	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 18:38:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8B46B6195E
-	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 18:20:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EE01161988
+	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 18:38:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230324AbhCSSTk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Mar 2021 14:19:40 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63685 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230384AbhCSSTN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Mar 2021 14:19:13 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 24883BAF38;
-        Fri, 19 Mar 2021 14:19:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=rez4nMRG6BTc5uGc/CZnSP2vut0=; b=H3J28I
-        kC6PtgRB/IvnQg8KVQYjTN2u9kp6i9y7GmOUtx70CFl/PdhBWCPqAndJIlBr2wSk
-        2KCP0Q4YlVB/VbgwATDorvJMRVYAICbn/aB9gtwQYvUw7v7zcHRJ17FvDeSpjSsz
-        C9xbM2YclAr1o3fHXraOaGdBPUiNBYaxT6v58=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=OK/zAkZWasRQsxuMq75GApnVrNd3kNqP
-        FjI7+5Wx5Jq6IPbR12PNAhOOta5Ji14LXV8yCDQTQ3UjXl4Voa79l5urxVewkn6/
-        G7MHoAEDwtH8LQutM5GVzK88HCxChXCMAxgc1fzGWvZ9owYGMj18lrFfT2BUzYKH
-        UmsMdfP+liY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1D3F5BAF36;
-        Fri, 19 Mar 2021 14:19:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9634BBAF35;
-        Fri, 19 Mar 2021 14:19:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, peff@peff.net
-Subject: Re: [PATCH v1] builtin/pack-objects.c: ignore missing links with
- --stdin-packs
-References: <815623da67d283e8509fc4ac67e939c6140fc39a.1616168441.git.me@ttaylorr.com>
-Date:   Fri, 19 Mar 2021 11:19:11 -0700
-In-Reply-To: <815623da67d283e8509fc4ac67e939c6140fc39a.1616168441.git.me@ttaylorr.com>
-        (Taylor Blau's message of "Fri, 19 Mar 2021 11:40:52 -0400")
-Message-ID: <xmqqim5nm2g0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S230092AbhCSShu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Mar 2021 14:37:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52552 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229912AbhCSShl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Mar 2021 14:37:41 -0400
+Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F6BDC06174A
+        for <git@vger.kernel.org>; Fri, 19 Mar 2021 11:37:41 -0700 (PDT)
+Received: by mail-ot1-x336.google.com with SMTP id o19-20020a9d22130000b02901bfa5b79e18so9454137ota.0
+        for <git@vger.kernel.org>; Fri, 19 Mar 2021 11:37:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=6PR2ERHP/mxp/mnJiO0WiQtlarMEDz4U0XpyeabniuU=;
+        b=iHRapMvDSLNZmDwNvzEcSGC6y5bs8gzJNxHvO9wZHJ0jUFO231Ad/cWGElBxFt0qzF
+         dzv+H2rzmUGaM3KkWMKfskewF1LJu0c087V4JwPkY36+WYa/MKUWq0TGvwOL6Iu5pEe5
+         5ixiYWzfqCrvgFYfYHthQF9OkwQ+JTcmWPwGCbGQHZIBieazOT1ML3uC94MVZyj4+WZh
+         5wjLv9rL8/R48h5Rvrmrdh8CjKcpFbGihvnuy7RD4eAESSWzWFNxbMMWoScPARXU7f3q
+         DCLjMBr1RbTCXUC9eQs/RLtTCfhrIaa5+ueeYIHnoMP3He0hYc79gYIa559fHGP6jGwp
+         0/qw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=6PR2ERHP/mxp/mnJiO0WiQtlarMEDz4U0XpyeabniuU=;
+        b=ZImNvXtu97L5rec5glQ0f+mbciNTTqHftJK7iVjZjFfM5u+TIEo0xftvg1XXWuFL33
+         8nMV+gYy1cQCUJQvt5qvU5O6MMftzH0gXXXeGacYpgvRTNWe2XiZPJk7QV5p/eEHjaKU
+         j/2WZvvEzpwJSgnoLhO07XipVl161vztz2MrPHfcyslzpZduBtJEo2TUK0uSxGqB40Ps
+         vRhVoUNZbHH0MaePs3/YryNUCoXNMzDGN1m6AAl1b7I02CkxSZ9fQpyncpZ88WeG3jWP
+         +f37DsjX+bli6fLqNiOYyQh1EEWXDkUcmgb8T+psy9D/d4WcBrrvRmhxzlf3q9nr2tVB
+         OFLg==
+X-Gm-Message-State: AOAM531fiEZFJwf6XdZ+cJMJrhb6gF/bcJbfJdN9OhdtP5LoGQYT9pK8
+        snxcTGO+6vNO9qa1MDGWnl9KJUhn4xmOsA==
+X-Google-Smtp-Source: ABdhPJyAY8gwksDB4TzuIO4hZ/A7BH7AdTljwE+N6k4z/ceOJRMzqHbAmR4ElJAyFe/EPNH5RmbYYg==
+X-Received: by 2002:a05:6830:817:: with SMTP id r23mr2121738ots.234.1616179060558;
+        Fri, 19 Mar 2021 11:37:40 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:7c62:2958:a423:b37b? ([2600:1700:e72:80a0:7c62:2958:a423:b37b])
+        by smtp.gmail.com with ESMTPSA id w1sm1399100oop.1.2021.03.19.11.37.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 19 Mar 2021 11:37:40 -0700 (PDT)
+Subject: Re: [PATCH] Fix a typo in git-maintenance documentation
+To:     Junio C Hamano <gitster@pobox.com>,
+        Nils Leif Fischer via GitGitGadget <gitgitgadget@gmail.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Cc:     git@vger.kernel.org, Nils Leif Fischer <hello@nilsleiffischer.de>,
+        Nils Leif Fischer <nils.fischer@aei.mpg.de>
+References: <pull.984.git.git.1616149021392.gitgitgadget@gmail.com>
+ <xmqqv99nm3jy.fsf@gitster.g>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <8a73d5c2-831c-8e9e-5f21-2f8ef24dfa42@gmail.com>
+Date:   Fri, 19 Mar 2021 14:37:38 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9B1BB318-88DF-11EB-9B5E-D152C8D8090B-77302942!pb-smtp1.pobox.com
+In-Reply-To: <xmqqv99nm3jy.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+On 3/19/2021 1:55 PM, Junio C Hamano wrote:
+> "Nils Leif Fischer via GitGitGadget" <gitgitgadget@gmail.com>
+>>  gc::
+>>  	Clean up unnecessary files and optimize the local repository. "GC"
+>> -	stands for "garbage collection," but this task performs many
+>> +	stands for "garbage collection", but this task performs many
+> 
+> Isn't this merely an American style vs British style issue?
 
-> When 'git pack-objects --stdin-packs' encounters a commit in a pack, it
-> marks it as a starting point of a best-effort reachability traversal
-> that is used to populate the name-hash of the objects listed in the
-> given packs.
->
-> The traversal expects that it should be able to walk the ancestors of
-> all commits in a pack without issue. Ordinarily this is the case, but it
-> is possible to having missing parents from an unreachable part of the
-> repository. In that case, we'd consider any missing objects in the
-> unreachable portion of the graph to be junk.
+Yes, I believe so.
 
-Ah, OK.  So a pack that is being consolidated, or more likely a
-loose commit that is rolled into the smallest geometric group) may
-contain an unreachable commit, whose tree or blob has already been
-pruned, which is an expected state (i.e. tree or blob may have been
-older than the commit whose message may have been amended recently
-before the entire commit got abandoned).  And we do not want to alarm
-users by warning.
+> https://www.grammarly.com/blog/quotation-marks
+> https://www.thepunctuationguide.com/british-versus-american-style.html
+> https://owl.purdue.edu/owl/general_writing/punctuation/quotation_marks/more_quotation_mark_rules.html
 
-> This should be handled gracefully: since the traversal is best-effort
-> (i.e., we don't strictly need to fill in all of the name-hash fields),
-> we should simply ignore any missing links.
+Specifically, this quote from your first link:
 
-Or the entire set of objects that refer them can be omitted from the
-resulting set of objects (iow, consider a commit that lacks a tree
-or a blob to be checked out stale and prunable without downsides,
-and prune it and its remaining trees and blobs by leaving them out
-of the resulting pack), but I suspect that is a lot more involved
-change.
+  Commas and periods always go inside the quotation marks in
+  American English; dashes, colons, and semicolons almost always
+  go outside the quotation marks; question marks and exclamation
+  marks sometimes go inside, sometimes stay outside.
 
-> This patch does that (by setting the 'ignore_missing_links' bit on the
-> rev_info struct), and ensures we don't regress in the future by adding a
-> test which demonstrates this case.
->
-> It is a little over-eager, since it will also ignore missing links in
-> reachable parts of the packs (which would indicate a corrupted
-> repository), but '--stdin-packs' is explicitly *not* about reachability.
-> So this step isn't making anything worse for a repository which contains
-> packs missing reachable objects (since we never drop objects with
-> '--stdin-packs').
+The only time I break this is when the exact string matters,
+such as referencing an exact command with options. In those
+cases, I try to restructure the sentence to avoid having a
+comma or period outside of the quote.
 
-Yup.  I find the reasoning quite sensible.
-
-Thanks, will queue.
-
-> Signed-off-by: Taylor Blau <me@ttaylorr.com>
-> ---
-> I noticed a small number of repositories using geometric repacks
-> complained about missing links when doing the best-effort traversal to
-> fill in missing namehash fields with 'git pack-objects --stdin-packs'.
->
-> This patch takes care to handle that situation gracefully. It is based
-> on tb/geometric-repack, which is on 'next'.
->
->  builtin/pack-objects.c |  1 +
->  t/t5300-pack-object.sh | 38 ++++++++++++++++++++++++++++++++++++++
->  2 files changed, 39 insertions(+)
->
-> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-> index 8cb32763b7..f513138513 100644
-> --- a/builtin/pack-objects.c
-> +++ b/builtin/pack-objects.c
-> @@ -3122,6 +3122,7 @@ static void read_packs_list_from_stdin(void)
->  	revs.blob_objects = 1;
->  	revs.tree_objects = 1;
->  	revs.tag_objects = 1;
-> +	revs.ignore_missing_links = 1;
->
->  	while (strbuf_getline(&buf, stdin) != EOF) {
->  		if (!buf.len)
-> diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-> index 7138a54595..ab509e8c38 100755
-> --- a/t/t5300-pack-object.sh
-> +++ b/t/t5300-pack-object.sh
-> @@ -629,4 +629,42 @@ test_expect_success '--stdin-packs with loose objects' '
->  	)
->  '
->
-> +test_expect_success '--stdin-packs with broken links' '
-> +	(
-> +		cd stdin-packs &&
-> +
-> +		# make an unreachable object with a bogus parent
-> +		git cat-file -p HEAD >commit &&
-> +		sed "s/$(git rev-parse HEAD^)/$(test_oid zero)/" <commit |
-> +		git hash-object -w -t commit --stdin >in &&
-> +
-> +		git pack-objects .git/objects/pack/pack-D <in &&
-> +
-> +		PACK_A="$(basename .git/objects/pack/pack-A-*.pack)" &&
-> +		PACK_B="$(basename .git/objects/pack/pack-B-*.pack)" &&
-> +		PACK_C="$(basename .git/objects/pack/pack-C-*.pack)" &&
-> +		PACK_D="$(basename .git/objects/pack/pack-D-*.pack)" &&
-> +
-> +		git pack-objects test3 --stdin-packs --unpacked <<-EOF &&
-> +		$PACK_A
-> +		^$PACK_B
-> +		$PACK_C
-> +		$PACK_D
-> +		EOF
-> +
-> +		(
-> +			git show-index <$(ls .git/objects/pack/pack-A-*.idx) &&
-> +			git show-index <$(ls .git/objects/pack/pack-C-*.idx) &&
-> +			git show-index <$(ls .git/objects/pack/pack-D-*.idx) &&
-> +			git rev-list --objects --no-object-names \
-> +				refs/tags/C..refs/tags/D
-> +		) >expect.raw &&
-> +		git show-index <$(ls test3-*.idx) >actual.raw &&
-> +
-> +		cut -d" " -f2 <expect.raw | sort >expect &&
-> +		cut -d" " -f2 <actual.raw | sort >actual &&
-> +		test_cmp expect actual
-> +	)
-> +'
-> +
->  test_done
-> --
-> 2.30.0.667.g81c0cbc6fd
+Thanks,
+-Stolee
