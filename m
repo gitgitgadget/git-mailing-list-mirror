@@ -2,110 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=0.2 required=3.0 tests=BAYES_40,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4939DC433C1
-	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 19:32:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EBB38C433C1
+	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 19:33:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 16ACF61962
-	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 19:32:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B1A356197D
+	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 19:33:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230145AbhCSTcI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Mar 2021 15:32:08 -0400
-Received: from cloud.peff.net ([104.130.231.41]:42752 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230142AbhCSTb7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Mar 2021 15:31:59 -0400
-Received: (qmail 8916 invoked by uid 109); 19 Mar 2021 19:31:58 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 19 Mar 2021 19:31:58 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 5366 invoked by uid 111); 19 Mar 2021 19:31:59 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 19 Mar 2021 15:31:59 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 19 Mar 2021 15:31:58 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Subject: Re: [PATCH v1] builtin/pack-objects.c: ignore missing links with
- --stdin-packs
-Message-ID: <YFT8LqAcCqpG2wyl@coredump.intra.peff.net>
-References: <815623da67d283e8509fc4ac67e939c6140fc39a.1616168441.git.me@ttaylorr.com>
- <xmqqim5nm2g0.fsf@gitster.g>
+        id S230492AbhCSTcl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Mar 2021 15:32:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36230 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230218AbhCSTcH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Mar 2021 15:32:07 -0400
+Received: from mail-il1-x12e.google.com (mail-il1-x12e.google.com [IPv6:2607:f8b0:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FA35C06174A
+        for <git@vger.kernel.org>; Fri, 19 Mar 2021 12:32:07 -0700 (PDT)
+Received: by mail-il1-x12e.google.com with SMTP id l5so9069253ilv.9
+        for <git@vger.kernel.org>; Fri, 19 Mar 2021 12:32:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=UoYzIxYFONzeZgJReYCaGg+gEiitKhxNBFfTyIYo2CM=;
+        b=fE2eBTsiwiW6m6J+FdBszsQTee35DCdEmZJlQGv8hdXa/5AkaBXgOy0tHcpFRqhN3L
+         yWVTu1dsO0Ia2e+MivFWyeLnhQ4aVfGitPiZvPKK/24ALoWzr6+ja5q426d7slwJG26n
+         KWECcfKdiD60as2jpX4fDc28Ng2l2TNLIvaYIwXmzOp19hdR0JMoq0UMdZ1Ru9aiTmnD
+         Behd1JvcJT9ZGNOzMgOjw6h0jll4hflMLTqfeT7UdMn+WyDIoAuJmspR7f+8QEL8/WSQ
+         flwzZ1nJZ958AVMQ6pUp55ECdu9vYDXnKW9DJFI/5jNGTVhkxV40uE19alq7lEPda/sc
+         u1Lw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=UoYzIxYFONzeZgJReYCaGg+gEiitKhxNBFfTyIYo2CM=;
+        b=d41bW4EkjA8Y+y1uDr4JrjWhNGTDd8cHrPd6T2f2XQd17tDhf+XyzfwT9qgJS6Y7WQ
+         NrApSjDwX2+cn4oGldkhqB/ip3Oe+6t2y2OUVNDQ4ZruqaRcpsHigcZhK7PfGQ4JpCSo
+         iILZc4R1F/TUgb1jHF1feyz7mGHd9ZowbIrauuvja21K6NaroHJfFdHaolCntm6zaRAv
+         gv4LJxjUy/4C1qa8AqU0k8cUbVndUiVBDU1NaPX5VqjhgkeNepzI2mp7wXyJ+ukMV3wA
+         DFoRtIFvpNbpmJdTn6jY9OR+7INwYo6cmcc0J4+7h293WbSYKD/e0Hesodo0zNnqJYuM
+         gfeg==
+X-Gm-Message-State: AOAM5336WvMkHs3eOsLWqJJphZ5U4jeHyLhCsYInWfXJQuI2IO1tk/OD
+        nb+M70F9PknPlCXxdbpQEgtjvEX79D9Sb1KRngHBx+nzyj0=
+X-Google-Smtp-Source: ABdhPJzC8jTTHFNrZffZg26vqk3LwTs6NVHT83h8ExSL3QK5b0GpX+iyPiMHkSRangoeFm7qG95/O4twRlFsggvMWT0=
+X-Received: by 2002:a05:6e02:85:: with SMTP id l5mr1523544ilm.182.1616182326884;
+ Fri, 19 Mar 2021 12:32:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqim5nm2g0.fsf@gitster.g>
+From:   Christian Chavez <x10an14@gmail.com>
+Date:   Fri, 19 Mar 2021 20:31:56 +0100
+Message-ID: <CAF6oXFsnvvacvUY89s65us7-UprpvV-NaOQ3owGTF25xcJqnkg@mail.gmail.com>
+Subject: Are there any publicly known funders (companies or otherwise) of git development?
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 19, 2021 at 11:19:11AM -0700, Junio C Hamano wrote:
+Hi!
 
-> > The traversal expects that it should be able to walk the ancestors of
-> > all commits in a pack without issue. Ordinarily this is the case, but it
-> > is possible to having missing parents from an unreachable part of the
-> > repository. In that case, we'd consider any missing objects in the
-> > unreachable portion of the graph to be junk.
-> 
-> Ah, OK.  So a pack that is being consolidated, or more likely a
-> loose commit that is rolled into the smallest geometric group) may
-> contain an unreachable commit, whose tree or blob has already been
-> pruned, which is an expected state (i.e. tree or blob may have been
-> older than the commit whose message may have been amended recently
-> before the entire commit got abandoned).  And we do not want to alarm
-> users by warning.
+Idle curiosity question - stemming from an argument with somewhat
+inebriated co-worker(s):
+> How is the Git development (being an open-source product) pro bono? Done for free?
 
-Yes, though it is not just warning, but rather that before this patch
-we'd abort the whole repack.
+Or is there any (publically known - not just an employee "randomly"
+being told to upstream a bugfix) funded effort?
+Such as with the Linux kernel project - where companies/organizations
+put up money for X amount of time/efforts/projects?
 
-> > This should be handled gracefully: since the traversal is best-effort
-> > (i.e., we don't strictly need to fill in all of the name-hash fields),
-> > we should simply ignore any missing links.
-> 
-> Or the entire set of objects that refer them can be omitted from the
-> resulting set of objects (iow, consider a commit that lacks a tree
-> or a blob to be checked out stale and prunable without downsides,
-> and prune it and its remaining trees and blobs by leaving them out
-> of the resulting pack), but I suspect that is a lot more involved
-> change.
 
-It is safe to omit the whole set from the name-hash traversal, which is
-purely an optimization. But it would generally not be a good idea to
-leave them out of the resulting pack, since that would mean deleting
-them entirely from the repository (because we'll remove the old packs
-they were in after pack-objects completes).
-
-If they are truly unreachable, then it is not strictly wrong to delete
-them (i.e., we are not corrupting a repository unless it was already
-corrupted), but:
-
-  - if the repository _is_ already corrupted, we are definitely making
-    things worse
-
-  - we generally try to keep even unreachable parts of the graph
-    complete, doing things like keeping unreachable-but-old objects that
-    are reachable from unreachable-but-recent. Again, we know here that
-    the object graph is incomplete, so anybody pointing a ref at a
-    descendant of our broken commit is already corrupting the
-    repository. But it probably makes sense to follow the existing rules
-    as much as possible, and not make such a situation worse.
-
-> > It is a little over-eager, since it will also ignore missing links in
-> > reachable parts of the packs (which would indicate a corrupted
-> > repository), but '--stdin-packs' is explicitly *not* about reachability.
-> > So this step isn't making anything worse for a repository which contains
-> > packs missing reachable objects (since we never drop objects with
-> > '--stdin-packs').
-> 
-> Yup.  I find the reasoning quite sensible.
-> 
-> Thanks, will queue.
-
-I had seen and discussed the patch before it hit the list, but just to
-make it explicit: it also looks good to me. ;)
-
--Peff
+--
+Med vennlig hilsen/Kind regards,
+x10an14
