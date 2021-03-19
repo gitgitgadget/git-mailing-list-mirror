@@ -2,90 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 64E98C433C1
-	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 21:02:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 60435C433C1
+	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 21:04:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 243EB6197B
-	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 21:02:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 29F896191D
+	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 21:04:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230142AbhCSVCB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Mar 2021 17:02:01 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:53178 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230281AbhCSVBu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Mar 2021 17:01:50 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4307012C35B;
-        Fri, 19 Mar 2021 17:01:50 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Mr/8wlaWEirCvkwQQ3tTKNL4mKc=; b=H8XqtQ
-        xdGqxUkH+/1bhvzJKqLIgiLsYSR5Bo8uCpz0q+ffMcZnspqzfcHqyH6f9R9AUYcj
-        eim7eIhT/X2efg2fMyMVrmKS09mpo7KsULEV1SB0I0US2AKKfVUGx7qesLwawHzL
-        BjNQ0kF/3so0Ym09tTKWBn3HjCB5Sh++RtbOs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=uIZLoorrJw7QOj/qy7Mzhz8zaUOfoPMy
-        cRbUc+jYwvFnRIz+gPKaI3tDSe4ApAFq94XZCwOnPIWWIJcvOQ5zKnljYce/Vmyk
-        U7Ra+I+qPUhbnjFBrCqCub8prCwFT5lMM53e+wLDcLWoSwnXcMJcpCJN1gt8EOyD
-        VgfZCbqAK9I=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3C15612C35A;
-        Fri, 19 Mar 2021 17:01:50 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S230186AbhCSVDm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Mar 2021 17:03:42 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:44536 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229956AbhCSVDW (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 19 Mar 2021 17:03:22 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:7d4e:cde:7c41:71c2])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 7E1D312C359;
-        Fri, 19 Mar 2021 17:01:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, newren@gmail.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 01/27] *: remove 'const' qualifier for struct index_state
-References: <pull.906.git.1615929435.gitgitgadget@gmail.com>
-        <628e16dd3fc7be96d40a7b3201573a71ae7fbbd6.1615929436.git.gitgitgadget@gmail.com>
-Date:   Fri, 19 Mar 2021 14:01:45 -0700
-In-Reply-To: <628e16dd3fc7be96d40a7b3201573a71ae7fbbd6.1615929436.git.gitgitgadget@gmail.com>
-        (Derrick Stolee via GitGitGadget's message of "Tue, 16 Mar 2021
-        21:16:49 +0000")
-Message-ID: <xmqqwnu2lux2.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 90D5560479;
+        Fri, 19 Mar 2021 21:02:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1616187771;
+        bh=fsGmlCIVI2ypYt6RlNCql2prqGgoRD7ktSN8LO7WTSo=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=IvOZ+ohBB5Bf7sHy7esrvwXGw2rV54A4LNHJXpoJjwGL4ARs5UevYEEG0UdBLq5I/
+         yLXBP3BnhMMkOGKWIHoK7fIc/Pzra3midIcsgfXtP0X5l+Jmmf9Ne+lNtu7C/LPRoN
+         wtet0rk7Z8Odtxbgi4T23f92PA43pDmpOyCGJLkAykgOw4jbQkE9iHYHNya2HvVIjT
+         kaxjSrAkHFBRR3s0e8gUr1fV7R/q3d9E7JpALFDq5Rbmlg5nV2mLMZf4wM3tVmpj3M
+         KHhHeDDTR2Tw4ZomKiV7Ly9Pkl78UD/Tpjpj/GTLTeHfg5zfckX4WhddzZy4mfq/eS
+         Ko/2BLBSbnXt8TShh+wz8XsO4cjFixXk29oXC0MxViXDqAbcXWOv7HbIh3RZBSw18l
+         OyA2snA640RtzgJDoxuVJ/IIHm6SO8GkwtT5hg2r6H/zcgLc2dZBlwi5P9MOOAuOeT
+         4hmGiaDpQ2DydvXEnRrPk6/jsIGPFWI6wX4XLhzu8pkmm8rybRE
+Date:   Fri, 19 Mar 2021 21:02:46 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Christian Chavez <x10an14@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Are there any publicly known funders (companies or otherwise) of
+ git development?
+Message-ID: <YFURduetSoPW/Scd@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Christian Chavez <x10an14@gmail.com>, git@vger.kernel.org
+References: <CAF6oXFsnvvacvUY89s65us7-UprpvV-NaOQ3owGTF25xcJqnkg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 517B7812-88F6-11EB-9D85-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="Gd3ZdGApbD/kfq25"
+Content-Disposition: inline
+In-Reply-To: <CAF6oXFsnvvacvUY89s65us7-UprpvV-NaOQ3owGTF25xcJqnkg@mail.gmail.com>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> From: Derrick Stolee <dstolee@microsoft.com>
->
-> Several methods specify that they take a 'struct index_state' pointer
-> with the 'const' qualifier because they intend to only query the data,
-> not change it. However, we will be introducing a step very low in the
-> method stack that might modify a sparse-index to become a full index in
-> the case that our queries venture inside a sparse-directory entry.
->
-> This change only removes the 'const' qualifiers that are necessary for
-> the following change which will actually modify the implementation of
-> index_name_stage_pos().
+--Gd3ZdGApbD/kfq25
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-This step has a bit of interaction with Matheus's "git add/rm" work
-in sparse checkout (mt/add-rm-in-sparse-checkout), which I believe
-is still in a bit of flux.  I didn't check potential conflicts the
-remainder of the series may have with other in-flight topics.
+On 2021-03-19 at 19:31:56, Christian Chavez wrote:
+> Hi!
+>=20
+> Idle curiosity question - stemming from an argument with somewhat
+> inebriated co-worker(s):
+> > How is the Git development (being an open-source product) pro bono? Don=
+e for free?
+>=20
+> Or is there any (publically known - not just an employee "randomly"
+> being told to upstream a bugfix) funded effort?
+> Such as with the Linux kernel project - where companies/organizations
+> put up money for X amount of time/efforts/projects?
 
-So, I may throw review comments at the patches in this topic as if
-they are standalone, but please do not be upset if it didn't appear
-in the 'seen' topic.
+There are people in the Git development community who usually work on
+Git most or full time as part of their role.  That doesn't mean those
+patches immediately make it to the list (oftentimes they are tested and
+deployed internally first), but they do generally work on Git most of
+the time and their patches do eventually show up on the list.
 
-Thanks.
+There are also people who work on Git with their employer's 20% time.  I
+believe we have several such contributors here in this case.
+
+There are also people like me who usually contribute independently.  I
+have sent patches upstream that directly benefit my employer by fixing a
+direct need (in some cases written during work hours, in some cases not,
+depending on my employer at the time), but the vast majority of my work
+is independent and done on my own time.  There are others who just
+contribute independently altogether because they enjoy it.
+
+I would say that of the top 20 contributors historically, I know that 4
+fit into the first category, 2 fit into the second category, and 3 more
+have some other corporate affiliation known to me (but not into what
+category they fall).  There are others who have more recent
+contributions who are also known to send patches on behalf of their
+employer.  I just don't know about the rest, mostly because it hasn't
+come up in context and it's never been important to me.
+
+There are some employers that are well known to employ people in the
+first and second categories, as well as some that are known to have
+staff that send patches on behalf of their employer.
+
+Hopefully that answers your question reasonably well, even if it's a
+little vague because I lack all the details.
+--=20
+brian m. carlson (he/him or they/them)
+Houston, Texas, US
+
+--Gd3ZdGApbD/kfq25
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.27 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYFURdgAKCRB8DEliiIei
+gfWJAQDKcvL2WHMdvv47OWgEf7G2iGcFWw3fmiw50/rYigxxTAEA2IUpCBnuE1NR
+xwhFaDDR10AUlKZ5OW8WLTl2YaIrWgM=
+=XKIL
+-----END PGP SIGNATURE-----
+
+--Gd3ZdGApbD/kfq25--
