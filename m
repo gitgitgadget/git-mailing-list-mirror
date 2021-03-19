@@ -7,212 +7,139 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BECFC433E6
-	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 10:28:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 359ACC433DB
+	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 10:33:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5A04964F38
-	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 10:28:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0001A64F70
+	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 10:33:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229889AbhCSK1v (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Mar 2021 06:27:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59584 "EHLO
+        id S229991AbhCSKdN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Mar 2021 06:33:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60724 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229756AbhCSK1c (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Mar 2021 06:27:32 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E96DBC06174A
-        for <git@vger.kernel.org>; Fri, 19 Mar 2021 03:27:31 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id b7so8840422ejv.1
-        for <git@vger.kernel.org>; Fri, 19 Mar 2021 03:27:31 -0700 (PDT)
+        with ESMTP id S229796AbhCSKcm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Mar 2021 06:32:42 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CDFAC06174A
+        for <git@vger.kernel.org>; Fri, 19 Mar 2021 03:32:42 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id k10so8860500ejg.0
+        for <git@vger.kernel.org>; Fri, 19 Mar 2021 03:32:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=iNDq/XCJASOStJQxxsd7Dj9CeXUllB/bZOIsvAIKyWs=;
-        b=Qq8DLaGfM2dMfmjII1xhQ+Fi+Ild6yZ+4IfCZvK1RJyRkc3SlTFZGcV3mCweVdvhLU
-         8VKooNswV/iiG3ilxxinHbbYygNxfNyVeTdhWK5mwsARXMxyRRyq55ecTHwSPHQrv/wd
-         o+/P4z3U7801EoTbn/wc4cLfZgUvzjDyZ2bK4FZ0NmppmtxBtCXq1Q2Jba4F7MagbzAU
-         9OLZC9zV8w5QX/BD6v45X4OUaPcspnIjhab2s096Vi2MfnAPbPlJTeMMLyPEa3TQqEaB
-         9C+3VykJZFBxYFoJu3d0c8NfSENZNh33g8K4+/8PnI4wWntLLhmC9AOsFQ8apOksW6nI
-         GkGw==
+         :message-id:mime-version:content-transfer-encoding;
+        bh=+pw5mp768G9Um/LreKfHZ2wJI/Gm7u/2LEgXTHoCoho=;
+        b=ZzKJIxHRDm6mzezHtXt3+wfdVqijugqt8Wt0bXYZCDoawBqTIGoudZfh91RMQp/VQf
+         1G6AkDq+egDQNdVII3oacPtnt5pRLVb53s47bPo8kw27Jz6KqPxJtzpLyeb0NRAhRzJ7
+         CBivdNld3URDbMapBzArG67YdHrk+B5oayU1b7D0+cyfaplOD05oGrL7mEUPuQh6C7UE
+         8YCupI5ppHUd73tAyQgqEUR+jvarqqFiYVkKMMD4ZuJG/LdHBBceJZ0B/hV4a3IIosLt
+         Bk+ltkyRxkFxSDAiTn2SHW7c3tcfvNOt9TOapeaqa0fcyUKTmdItfhkdPpv8SkbMx3et
+         uaig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=iNDq/XCJASOStJQxxsd7Dj9CeXUllB/bZOIsvAIKyWs=;
-        b=sIZiifscMPLrl/j92lOPqO9ofR0lzsYwUVs+tNw2yOlH+pCXHdblzwIAOocqCcem1d
-         MRghUFWEOpJKMA72/U60W322GsI3Lx5t5BLHt0rL4V6AtUTNCV+vsnYFv0+kkX3GDnCi
-         d9SJvO0hoU4yh5m8s8CjVFv5d64j3mxNLunmnV4PA//xFu48I95fYHlsq6Y8SwGAspVF
-         wf4nAbTAj670iEZuV8shppdOzyKUCYwvW+XFwjTyUMoJ2/9mmwqFDRBdoMhhI6lYFgoz
-         L6tO84k6/S59FS402pP1IndDZJH3PL/AKlxBk2ZOh9GcvQGbiYvLWS3yUfP7udBeQ4CT
-         bdmw==
-X-Gm-Message-State: AOAM532sFJ8UgWgb9PMGGIHVcqjiMJje1Yqd7lkAFMW2EHbhU6+cBan3
-        ti/jOgJgionUZzgXqKIxX1OhYb3IwEw=
-X-Google-Smtp-Source: ABdhPJwkz13/nCIPNMQUr/zVCUVIvFG04vfETy6B1VtlPH8GkO4MRxSr+mV1pOGcACJbSB3ZQrgshw==
-X-Received: by 2002:a17:907:9709:: with SMTP id jg9mr3411047ejc.276.1616149650222;
-        Fri, 19 Mar 2021 03:27:30 -0700 (PDT)
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=+pw5mp768G9Um/LreKfHZ2wJI/Gm7u/2LEgXTHoCoho=;
+        b=XSMyIUqPE82z/MtXIraLSLcdFStf08Iho/xqRkzmUtYvonQ3IRjpyIbjedpZUBdLL5
+         WsnZc9kbgcv//xZyVkV5KYnLTYsX+FWf5s7t4t5GyoNTbBeIZy2OR0FpB9Srfh08/Nsh
+         41HwI16JhWRqAHTvM4KxwEBnlomGYz2c6akYp/7+WprmG1gUET4CE4OOjCQ7Z9s5dn/F
+         g6OcXjAN14MDiek0G8htoWoGk9zXCWVJbb4P4KTCtT+W6LlydT5/mtJ0UGvmbcDzQKhz
+         AiYJIQ6y3jK0tH7geQAW6GkaTiutm7173mdmv26XH1rOoVyKRN04AytHXdDGkCzpQy7+
+         Lvxw==
+X-Gm-Message-State: AOAM531DxSzecLXWmI1/0YeXcnSNFIpBa20DHWy7Yc5lmFSi7DUIbScH
+        XbZClcWrReE5+gsFy6jRN72BPdnzols=
+X-Google-Smtp-Source: ABdhPJyQhKLHa1IQa6f4qrFdMDAAqqSliBE8bA+50RvcsKnZ2XOk/dP6FYkZuWw0olcpHf5P6/BDng==
+X-Received: by 2002:a17:906:dfcc:: with SMTP id jt12mr3524533ejc.31.1616149960942;
+        Fri, 19 Mar 2021 03:32:40 -0700 (PDT)
 Received: from evledraar (77-60-191-25.biz.kpn.net. [77.60.191.25])
-        by smtp.gmail.com with ESMTPSA id w24sm3830672edt.44.2021.03.19.03.27.29
+        by smtp.gmail.com with ESMTPSA id j14sm3758124edr.97.2021.03.19.03.32.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Mar 2021 03:27:29 -0700 (PDT)
+        Fri, 19 Mar 2021 03:32:40 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Albert Cui via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Albert Cui <albertqcui@gmail.com>
-Subject: Re: [PATCH] hooks: propose repository owner configured hooks
-References: <pull.908.git.1616105016055.gitgitgadget@gmail.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?Q?Ren?= =?utf-8?Q?=C3=A9?= Scharfe <l.s.r@web.de>,
+        Jeff King <peff@peff.net>, Eric Wong <e@80x24.org>
+Subject: Re: [PATCH v2 5/4] Makefile/coccicheck: use
+ --include-headers-for-types
+References: <20210305170724.23859-5-avarab@gmail.com>
+ <20210306192525.15197-1-avarab@gmail.com>
+ <20210318204957.GA1938@szeder.dev>
 User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <pull.908.git.1616105016055.gitgitgadget@gmail.com>
-Date:   Fri, 19 Mar 2021 11:27:29 +0100
-Message-ID: <87im5nzbe6.fsf@evledraar.gmail.com>
+In-reply-to: <20210318204957.GA1938@szeder.dev>
+Date:   Fri, 19 Mar 2021 11:32:39 +0100
+Message-ID: <87ft0rzb5k.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Thu, Mar 18 2021, Albert Cui via GitGitGadget wrote:
+On Thu, Mar 18 2021, SZEDER G=C3=A1bor wrote:
 
-> We propose adding native Git functionality to allow project maintainers to
-> specify hooks that a user ought to install and utilize in their development
-> workflows. This patch documents the requirements we propose for this feature
-> as well as a design sketch for implementation.
+> On Sat, Mar 06, 2021 at 08:25:25PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>> Change the recently added --no-includes out for --all-includes
+>> --include-headers-for-types.
+>>=20
+>> When I moved from --all-includes to --no-includes I missed that rules
+>> that use "type T" such as the one added dbc540c7a58 (add QSORT,
+>> 2016-09-29) won't work as intended. See [1] for a report of that.
+>>=20
+>> So let's move back to --all-includes to potentially scour our includes
+>> for definitions, but supply --include-headers-for-types so we won't
+>> racily emit duplicate hunks. See [2] for more discussion about that
+>> issue.
+>>=20
+>> This undoes most of the optimization we gained with --no-includes,
+>> using a very basic benchmark script [3] I get these results:
+>>=20
+>>  * ~1m50s: --all-includes (before my recent patches)
+>>    38 files changed, 74 insertions(+), 78 deletions(-)
+>>  * ~55s:   --no-includes
+>>    27 files changed, 55 insertions(+), 57 deletions(-)
+>>  * ~1m35s: --all-includes --include-headers-for-types
+>>    38 files changed, 74 insertions(+), 78 deletions(-)
+>>  * ~1m20s: --local-includes --include-headers-for-types
+>>    36 files changed, 70 insertions(+), 72 deletions(-)
+>>  * ~1m20s: --local-includes --include-headers-for-types --no-loops
+>>    36 files changed, 70 insertions(+), 72 deletions(-)
+>
+> Where do these changes come from?  I can't reproduce it running your
+> script below, and get empty contrib/coccinelle/*.patch files for each
+> sets of options.
 
-I like this goal. It's something I proposed (off-list) before and did a
-small write-up of here:
-https://lore.kernel.org/git/87zi6eakkt.fsf@evledraar.gmail.com/
+It's from Ren=C3=A9's patch in <3aac381e-2ce9-e35e-498c-9c26df235aed@web.de>
+patch in the side-thread.
 
-As far as I recall the response in the room at the time was the expected
-combination of "sure that would be neat" and "let's see the
-patches". I.e. I don't think there's hard objections to the existence of
-such a facility, but of course the devel is in the details, and
-obviously I never followed-up with actually trying to implement it.
+I'll clarify that commit message in any re-roll, i.e. it should just be
+something like: Here's a test of a patch that applies widely to the
+tree, showing that using [options] it's the same or different as before,
+as expected.
 
-With config-based hooks this'll be much easier for the hook case, and
-I've tried to help that along[A]. I'd be interested in reviewing any
-effort in this area as well. The ".githooks/*" case in that proposal
-goes away with config-based hooks (since they wouldn't be special
-anymore, just config).
+>> And only the "--all-includes --include-headers-for-types" gets the
+>> same results as the previous "--all-includes", even with
+>> "--local-includes" we miss out on some definitions.
+>>=20
+>> 1. https://lore.kernel.org/git/3aac381e-2ce9-e35e-498c-9c26df235aed@web.=
+de/
+>> 2. https://lore.kernel.org/git/YENdUMLTM+cerfqJ@coredump.intra.peff.net/
+>> 3.
+>>    for flags in \
+>>        '--all-includes' \
+>>        '--no-includes' \
+>>        '--all-includes --include-headers-for-types' \
+>>        '--local-includes --include-headers-for-types' \
+>>        '--local-includes --include-headers-for-types --no-loops'
+>>    do
+>>    	git reset --hard &&
+>>            git clean -dxfq contrib/
+>>    	time make -j8 coccicheck SPATCH_FLAGS=3D"$flags --patch ." SPATCH_XA=
+RGS=3D"xargs -P 8 -n 16" 2>&1 | grep -v SPATCH
+>>    	cat contrib/coccinelle/*.patch | git apply
+>>    	git --no-pager diff --shortstat
+>>    	git --no-pager diff | git patch-id
+>>    done
 
-> +Example workflow
-> +^^^^^^^^^^^^^^^^
-> +
-> +* Perform fetch as normal
-> +
-> +* After fetch is complete, Git checks for a "magic" config branch (e.g.
-> ++origin/refs/recommended-config+) which contains information about config lines
-> +an end-user may want (including hooks).
-
-Why collapse the many-to-many branch/config relationship to many-one
-this way instead of having a .gitconfig at the top-level? Then you can
-seamlessly have per-branch config, and it'll work if you later locally
-clone the repo or just transport that branch (e.g. via bundle).
-
-But reading ahead...
-
-> +* As part of the fetch subcommand, Git prompts users to install the configs
-> +contained there.
-> +
-> +    ** User responses to that prompt could be "sticky" - e.g. a user could reply
-> +    "no (this time)", "no (never)", "yes (this time)", or "yes (always)".
-> +    Always/never indicate that the user trusts the remote this config is coming
-> +    from, and should not apply to configs fetched from other remotes.
-
-As noted in the proposal I linked I think anyone thinking about this
-would do well to examine the trade-off Emacs's implementation of this
-uses, since it manages to safely open arbitrary files that'll
-potentially run arbitrary code on-open, but only if the user opts-in.
-
-> +Later, we might want to do this before the initial clone is performed; that
-> +workflow looks like:
-> +
-> +* During clone, perform ls-refs as normal
-> +
-> +* If the server has a "magic" config branch, fetch only that config branch.
-
-...the reason for the magic branch is this before-clone use-case?
-
-Unless there's a really strong use-case for that I'd think the
-per-branch .gitconfig would be a better trade-off, but even then there
-would be ways to make that work obviously in the many-many case, and
-still e.g. have a branch advertise a config blob for its "main" branch
-as a special case or something.
-
-I also suspect an unstated constraint of having this in a magic branch
-is the limitation of some git hosting provider's ACL
-implementations. More on that later...
-
-> +* Prompt users as described above.
-> +
-> +* Perform the rest of the clone.
-> [...]
-> +* Repository owners have a method for providing recommended config for
-> +contributors.
-> +
-> +* Installation flow happens without additional user intervention.
-> +
-> +* Keeping config branch and history separate from code branch and history means
-> +it is versioned, but not tied to user's checkout.
-> +
-> +* Letting users specify "always" or "never" reduces amount of pain introduced by
-> +interactive "configuration wizard" flow.
-> +
-> +Cons
-> +^^^^
-> +
-> +* Requires addition of step to fetch (and later clone).
-> +
-> +* Turning a "set and forget" command like clone into an interactive session with
-> +the user is not ideal; care must be taken to avoid breaking bots.
-> +
-> +* Inflating configs and executables from a remote tracking branch which is never
-> +checked out could be slow.
-> +
-> +Future Work
-> +~~~~~~~~~~~
-> +
-> +* Extending this to allow repository owners to specify specific configurations
-> +in general e.g. this repository should use partial-clone with these parameters.
-
-I don't see why such a proposal should narrowly confine itself to hooks.
-
-Once we have config-based hooks then hooks are just configuration.
-
-If we're going to pick up arbitrary configuration from remotes/repos on
-request then we'd be starting with the most dangerous configuration.
-
-I think a better way to start such an effort incrementally would be:
-
-1. Audit git's config parser for the safety of parsing arbitrary config,
-   we parse .gitmodules now, do we feel it's safe enough to parse
-   arbitrary config (probably, but worth checking).
-
-2. Add reflection to git's own config variables. Right now we have this
-   in the binary generated via a grep from the documentation. Similar to
-   Emacs's implementation we should/could categorize all our known
-   config variables by safety.
-
-   Hooks are the least safe, something like a diff.context=N setting the
-   repo wants to suggest a -U<n> setting much safer (just tweaking our
-   existing diff algorithm) etc. But even in those cases we'd want to
-   proceed slowly, e.g. is that config parsing for that -U<n> defensive
-   enough to be safe for arbitrary data?
-
-3. Users should be able to e.g. configure "yes, for any repo I clone
-   they can tweak 'safe'" variables. This would reduce user dialog
-   fatigue, and thus increase safety. I.e. a repo who wants to set a
-   thing like hooks would stand out, but something that e.g. wants to
-   change the diff order would pass on existing global configuration.
-
-4. Smarter ACL that magic remote+magic branch: It seems like an obvious
-   thing to me to want that if I clone e.g. a random clone of git.git
-   that I'd want to setup config for it IFF the .gitconfig in it is
-   reachable from a tag GPG signed by <approved key>.
-
-   Git's a distributed system, so while I don't think it's bad to have
-   some feature like "I always trust config from this remote" (e.g. a
-   corporate environment where you know its .gitconfig is
-   guarded/audited) we should think about more distributed-friendly
-   solutions first and if possible guide users towards those.
-
-A. https://lore.kernel.org/git/87mtv8fww3.fsf@evledraar.gmail.com/
