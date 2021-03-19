@@ -6,90 +6,112 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D6BDFC433E0
-	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 18:05:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D146C433C1
+	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 18:12:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A50816194C
-	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 18:05:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3DF7361954
+	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 18:12:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230232AbhCSSEk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Mar 2021 14:04:40 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:61840 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230218AbhCSSEd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Mar 2021 14:04:33 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id D4CF2117138;
-        Fri, 19 Mar 2021 14:04:32 -0400 (EDT)
+        id S230317AbhCSSMK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Mar 2021 14:12:10 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:61610 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230310AbhCSSLt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Mar 2021 14:11:49 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id C351312B379;
+        Fri, 19 Mar 2021 14:11:48 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=DizlNPEfpMZObRPsBcr2C8z+C5Q=; b=H1U0eo
-        DmzDALkgETLSUL6fqoKYZWm1VRvkdlBLNJB1beRyB5uUAsE9bl8EuicjOrHPuHJd
-        9l8Ovm27bxio/ZlHW2c7lmASe6vK5trkx/rggEGmbqDbIFqBkKJizNGHOrNXbFeU
-        lgiLG0eGx8Bp2+u1flegR8Douhe9avU9a8O5g=
+        :content-type; s=sasl; bh=9LY4NyrSsyNB28L001OjQiKX7NI=; b=Bnjsdb
+        8PwFs39i6Y8BkhqSfGFt/0tFZ5q9jOgP5yzeF3dhAFljvx2wCIq2IRuj7uUFUUpz
+        eW8isJXU+0ruv7DY7EPH/NFlEl0fl9m3ihgOnFb7Km5PQL1Ec1tiJAFFRx34ofVg
+        aPAhhz0EqOk9U9nJTaTf0XRv8DfrDCfIZgPAo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=v2tHrA4JoqeNtrIiMYH0HAJ0Rxoa7sgx
-        YRkZCUhbemvJN7D+40eN16hoB54I9+lbtjvhmp7ilAMW3uaQW7IeF2f7IM6X1XCT
-        dIkEWjmgh3Hqvt8Bb4MDarQEPzlEpZsdoygOIq8UfRa+b/mdAROzOvSVh9QUeJGC
-        qg9juaFdIQI=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id CDB67117137;
-        Fri, 19 Mar 2021 14:04:32 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=nIpMQ2i4aClatfb+ZYM4SSfStbAvsBuN
+        dXBI0c2QOTI6kwSgBfbnxu+CUedmoSqXNND71BClVxtG3Rb9gbYnYJG5GbZMXmIJ
+        e3W1e44zYl9TaKFz3KEPYOCvbDJCjtH6VsX5CFnOhwraXX9qSvR94HkQQE+x0yjD
+        PfFgzBp/380=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id BBEEC12B378;
+        Fri, 19 Mar 2021 14:11:48 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C2902117136;
-        Fri, 19 Mar 2021 14:04:29 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id EF1A012B377;
+        Fri, 19 Mar 2021 14:11:45 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Krushnal Patel via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Krushnal Patel <krushnalpatel11@gmail.com>
-Subject: Re: [PATCH] replace test -f with test_path_is_file
-References: <pull.982.git.git.1616147527082.gitgitgadget@gmail.com>
-Date:   Fri, 19 Mar 2021 11:04:28 -0700
-In-Reply-To: <pull.982.git.git.1616147527082.gitgitgadget@gmail.com> (Krushnal
-        Patel via GitGitGadget's message of "Fri, 19 Mar 2021 09:52:06 +0000")
-Message-ID: <xmqqr1kbm34j.fsf@gitster.g>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     =?utf-8?B?6IOh5ZOy5a6B?= <adlternative@gmail.com>,
+        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: GitGitGadget and `next`, was Re: [PATCH v5 3/3] ls-files.c: add
+ --deduplicate option
+References: <pull.832.v4.git.1610856136.gitgitgadget@gmail.com>
+        <pull.832.v5.git.1611037846.gitgitgadget@gmail.com>
+        <e9c5318670658b032ba921129859f9fb3b2ca017.1611037846.git.gitgitgadget@gmail.com>
+        <xmqq7do7fggn.fsf@gitster.c.googlers.com>
+        <CAOLTT8R=fF00WCVBSTDKHG_3p5RcZaxM2AU-cUj1sNWvy=mhCQ@mail.gmail.com>
+        <xmqq1reec943.fsf@gitster.c.googlers.com>
+        <CAOLTT8Qp2NMpbk56U6PVEmFVyZYWN6gM83HD4z_nmPWV4Z_ruw@mail.gmail.com>
+        <nycvar.QRO.7.76.6.2101221702420.52@tvgsbejvaqbjf.bet>
+        <xmqq8s8kalz3.fsf@gitster.c.googlers.com>
+        <nycvar.QRO.7.76.6.2103191451460.57@tvgsbejvaqbjf.bet>
+Date:   Fri, 19 Mar 2021 11:11:44 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.2103191451460.57@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Fri, 19 Mar 2021 14:54:47 +0100 (CET)")
+Message-ID: <xmqqmtuzm2sf.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 8CE8BD42-88DD-11EB-BE8F-E43E2BB96649-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 90E48B0A-88DE-11EB-A415-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Krushnal Patel via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> From: krush11 <krushnalpatel11@gmail.com>
+> On Fri, 22 Jan 2021, Junio C Hamano wrote:
 >
-> Although  has the same functionality as test_path_is_file(), in
-> the case where test_path_is_file() fails, we get much better debugging
-> information.
+>> Just being curious, but when a series hits 'next', would the way in
+>> which the user interacts with GGG change?
 >
-> Replace  with test_path_is_file so that future developers
-> will have a better experience debugging these test cases.
+> My hunch is that we should probably tell new users (for who GitGitGadget
+> now uses the "new user" PR label) about the expectations of only adding
+> patches on top (i.e. in a new PR), unless the branch gets kicked out of
+> `next`.
+>
+>> With or without GGG, what is done on the local side is not all that
+>> different---you build new commits on top without disturbing the commits
+>> that are in 'next'. Then what?  Push it again (this time there is no
+>> need to force) and submit the additional ones via `/submit`?
+>
+> GitGitGadget would send the entire patch series, which is probably not a
+> good idea.
 
-While this change is not wrong per-se, in the context of this test
-script, I think the original use of "test -f" is not quite right to
-begin with.  These are all "even after running 'git clean', these
-paths should exist without getting removed by mistake", so the
-intent of these "test -f" invocations are actually "test -e".
+Thanks for a clarification.
 
-Similarly, the invocations of "test ! -f" we see (and there also is
-at least one "! test -d") mean to say "these paths should be gone as
-the result of running 'git clean'".  If by some accident a directory
-exists at the path that is checked with "test ! -f" due to a bug in
-'git clean', these tests will not catch such a bug, because a directory
-does not pass "test -f".
+While we are on the topic of GGG, if I may ask for a new feature or
+two (or perhaps such a feature already exists), it would be nice if
+contributors are allowed to tweak who are CC'ed in the outgoing
+patch mail in various ways:
 
-So most likely these negative tests this patch does not convert are
-better off being spelled as "! test -e", too.
+ - I may author a commit as <gitster@work.addre.ss> and make a pull
+   request on GitHub, but the <gitster@pobox.com> is the address
+   associated with the GitHub account making the pull request.  I
+   think GGG sends CC to the author (at work) as well as me, but I
+   may prefer to get correspondence on the patch at either one of my
+   addresses not both.  "Mr GGG, please compute the CC list the
+   normal way, and drop this address from the CC list" that I can
+   say when I say "/submit" might be a good way to do so.
 
-It would be more appropriate to use test_path_exists and
-test_path_is_missing to replace these "must exist as a file" and
-"must not exist as a file".
+ - Also, at "/submit" time, being able to say "Also CC: these
+   addresses" would be a good feature, without contaminating the
+   commit log message with CC: trailer lines.
 
 Thanks.
