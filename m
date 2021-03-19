@@ -2,103 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DBA47C433E9
-	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 12:23:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BE45C433E0
+	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 13:01:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B063D64F7F
-	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 12:23:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 31E3664ED1
+	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 13:01:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229991AbhCSMXY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Mar 2021 08:23:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56198 "EHLO
+        id S229933AbhCSNAa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Mar 2021 09:00:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231644AbhCSMXQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Mar 2021 08:23:16 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4FC5C06174A
-        for <git@vger.kernel.org>; Fri, 19 Mar 2021 05:23:15 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id z8so11665914ljm.12
-        for <git@vger.kernel.org>; Fri, 19 Mar 2021 05:23:15 -0700 (PDT)
+        with ESMTP id S229914AbhCSNAN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Mar 2021 09:00:13 -0400
+Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0A84C06174A
+        for <git@vger.kernel.org>; Fri, 19 Mar 2021 06:00:12 -0700 (PDT)
+Received: by mail-qk1-x72e.google.com with SMTP id v70so2693173qkb.8
+        for <git@vger.kernel.org>; Fri, 19 Mar 2021 06:00:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp.br; s=usp-google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=LbVO9WOJOCb5ScEqZhH1NnWT5ZaGiwM4cmbrIDMv0TY=;
-        b=yPj6kQ2DY5FQvUd7o2Q8PxBDprGYrNQVoGfmxSI4Lo3XbiJRCZp7WUy5H4zC9MORt6
-         TzyZJxNf5rOg2zX4/W1+KBrkN7SgcXpfxp/nl5kXV9AKlRHtIjVospgMcU4BabJ7o1x/
-         q5/XrGi0RmVJQNRyC9kFKB0b8xDm/S3WCQEvZwQpiNsLMxP6uPa1ykzWFGljEkPrbe5V
-         9QAvBpD7DPW4H/1iwjLh2qP6ISqUUOgBXYRQy2WzgmZfqPWLSSKjrgzlAPoLG8ga2vJ4
-         JhPCXlR10c1TAtixV0Tik/o3VVPaBOAAz0DrPYvUATl/z9ZJ5/NRZxRaTkqwHqDvrIIh
-         QqAQ==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=kczkwtoVkz5aCzka28zqP5FGQ2g/ngUQ28wV5C3zbH8=;
+        b=Bi44sSzcFm2Y3FoS0xIpk+OlYdXqfenUjB0vQ/o+N/Et+HkVW72bNnJiTvGF4m6NqG
+         ZgSpMz9NoCcktfJtBOZHH02BnOV/xPd+PyMsRnTic9vhwNN1ZgZDaiB9rUktrZ12LY1+
+         pom13UPxwmYocivhBkfFgo798gIbO7UTBcWXoS9x0ZXHmmABlXmbgRIuBq/DdEJqi+4Q
+         5X/1kbeA0r4gNKWJEj4J87bFnVxd/69CFBhQtcKg8xeL0MR9X1Em3YkZ9/fO3lv8UNp3
+         2w8JtxEw8V+rTbdeNpsAwSqyRw4MBPwXy+EHakpBYbLk0BXg+EtaZt9nD68EF4HW2qfG
+         /kpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=LbVO9WOJOCb5ScEqZhH1NnWT5ZaGiwM4cmbrIDMv0TY=;
-        b=np5sBEJoAWFCvf8REvWJew1eHGwqO/Ib9/xt9ZvWbwg2fi96Y6LZwSeN2r/2s2zBPg
-         tFNFezCg87wwUds+EQjO4+Oj6bUGO7tYp9D99M6CRyNN1HFt1KyfKKgKjpKUDPuoYFIl
-         ayJ9vjIjs7shegOW2lrXYnEQLdP50wg2YnqMtwu/DN6tlVIHpUa9jhjREa5RqNYSS8qc
-         OMNklS1NMvciORRTINmbE9S/152bk4XEmd/3ouEt02knWsp8fysqaqbX3cDjYCTOCulF
-         TUXWVRxnQgIbAYuWyNM1MaugIOxTAmfzruNmMlGER22UkOpSVuAjr6YGbhFu783G388L
-         pKfQ==
-X-Gm-Message-State: AOAM532Vux9wRyy2MKCGM7K7FvG3tYtOx/pdxrqYL8RNSBHF8iXzoqD0
-        DoEjKlCoBqOb5Ouj+24q5E79DEGhNKAex5FHJpIBPg==
-X-Google-Smtp-Source: ABdhPJwHfpV0YMJXia5o0DdsSK4Tqk9SqvbhQ956o7KNvIlqcJmS/w8pV2+g1zbQfaryTGhbDgNJ8ctnKVwV1feYKqU=
-X-Received: by 2002:a2e:7c17:: with SMTP id x23mr761505ljc.65.1616156594252;
- Fri, 19 Mar 2021 05:23:14 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=kczkwtoVkz5aCzka28zqP5FGQ2g/ngUQ28wV5C3zbH8=;
+        b=sIGCh+ZLXR7ii7J62Q6/jNZuOuefSz/Aj1xapmUQJNvQ/yJt1UWwTSro+oEFtPNfq3
+         pNWHkEJxMdSHrB762D68pwz3fshmr6zshO6mHwQSb8cw3IzpDWhMHpFnlOstA/gyIIFo
+         +UCP+BckeZXpNu26ng6Yt6yFFpDI5WWyKcMQQqtiRkKZSIldGmSSOZHs3tSrR9jNIXQn
+         once8uhkBtkK7EIIR12wOFefMulNokZS92GLzfVLa3brIcAW7xTbBOoUpscPXDUna/xO
+         aBA7TI07QeaHQAjpuvOX8fOJFskveXoCv36deMO862NJEPgAA/WKE51L822Pxdblappg
+         4s7g==
+X-Gm-Message-State: AOAM531kC5NxPvqP+HrmmKHacTRVtppol8LrQkuK9ZBi9V7qnpYQXHPH
+        4BeZ01riyopeZ3W2Y+aNsUM=
+X-Google-Smtp-Source: ABdhPJzqAHlU+l+iygL6TOCdr2LUp523nDkFdJReT1v7SII1bwvO1wtZTisLlWshidoNTODn8lBocw==
+X-Received: by 2002:a37:a643:: with SMTP id p64mr8840438qke.276.1616158812033;
+        Fri, 19 Mar 2021 06:00:12 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:7c62:2958:a423:b37b? ([2600:1700:e72:80a0:7c62:2958:a423:b37b])
+        by smtp.gmail.com with ESMTPSA id f12sm3669815qti.63.2021.03.19.06.00.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 19 Mar 2021 06:00:11 -0700 (PDT)
+Subject: Re: [PATCH v3 00/20] Sparse Index: Design, Format, Tests
+To:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, newren@gmail.com, pclouds@gmail.com,
+        jrnieder@gmail.com,
+        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>
+References: <pull.883.v2.git.1615404664.gitgitgadget@gmail.com>
+ <pull.883.v3.git.1615912983.gitgitgadget@gmail.com>
+ <xmqqzgz0qghd.fsf@gitster.g>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <bbb87aa6-5e81-2528-39bd-461c3537bb1a@gmail.com>
+Date:   Fri, 19 Mar 2021 09:00:11 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
 MIME-Version: 1.0
-References: <cover.1615588108.git.matheus.bernardino@usp.br>
- <34a61a0d03868c43d68a04bca8d86dd98de2aa28.1615588109.git.matheus.bernardino@usp.br>
- <xmqqsg4sowks.fsf@gitster.g> <xmqqo8fgovuz.fsf@gitster.g>
-In-Reply-To: <xmqqo8fgovuz.fsf@gitster.g>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Fri, 19 Mar 2021 09:23:03 -0300
-Message-ID: <CAHd-oW4V4_XrY7XfQO1gLEZZmzcLbG0_M2ys+Meh4Ysu0Psz0Q@mail.gmail.com>
-Subject: Re: [PATCH v3 5/7] refresh_index(): add REFRESH_DONT_MARK_SPARSE_MATCHES
- flag
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <xmqqzgz0qghd.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 18, 2021 at 9:00 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Junio C Hamano <gitster@pobox.com> writes:
->
-> > Matheus Tavares <matheus.bernardino@usp.br> writes:
-> >
-> >> refresh_index() optionally takes a seen[] array to mark the pathspec
-> >> items that had matches in the index. This is used by `git add --refresh`
-> >> to find out if there was any pathspec without matches, and display an
-> >> error accordingly.
-> >
-> > It smells a bit iffy in that this allows a path to "match" a pattern
-> > but yet not result in seen[] to record that the pattern participated
-> > in the match.  If the series is working towards certain operations
-> > not to touch paths that are outside the sparse checkout, shouldn't
-> > it be making these paths not to match the pattern, and by doing so
-> > it would automatically cause the pattern to be considered "not yet
-> > matching any path" when the matcher attempts to match the pattern to
-> > such a path?
->
-> In other words, the change makes me wonder why we are not adding a
-> flag that says "do we or do we not want to match paths outside the
-> sparse checkout cone?", with which the seen[] would automatically
-> record the right thing.
 
-Yeah, makes sense. I didn't want to make the flag skip the sparse
-paths unconditionally (i.e. without matching them) because then we
-would also skip the ce_stage() checkings below and the later
-ce_mark_uptodate(). And I wasn't sure whether this could cause any
-unwanted side effects.
 
-But thinking more carefully about this now, unmerged paths should
-never have the SKIP_WORKTREE bit set anyway, right? What about the
-CE_UPTODATE mark, would it be safe to skip it? I'm not very familiar
-with this code, but I'll try to investigate more later.
+On 3/18/2021 5:50 PM, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> For this version, I took Ævar's latest patches and applied them to v2.31.0
+>> and rebased this series on top. It uses his new "read_tree_at()" helper and
+>> the associated changes to the function pointer type.
+>>
+>>  * Fixed more typos. Thanks Martin and Elijah!
+>>  * Updated the test_sparse_match() macro to use "$@" instead of $*
+>>  * Added a test that git sparse-checkout init --no-sparse-index rewrites the
+>>    index to be full.
+> 
+> Thanks.  I expect ab/read-tree would be rerolled at least one more
+> time, if only to straighten out the "oops #5 was screwy, let's patch
+> it up on top with three more steps", but I do not expect the end
+> state would be all that different, so tentatively I'll queue these
+> patches on top of the latest iteration of the topic for now and
+> hope that the other topic will be updated soonish.
+
+Thanks. I'm grateful that it can spend some time in 'seen' if only
+to avoid these conflicts in the meantime.
+
+I'm waiting for that reroll of ab/read-tree before updating this
+version with the feedback from v3.
+
+Thanks,
+-Stolee
