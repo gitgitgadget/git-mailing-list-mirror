@@ -2,66 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E0C2C433E6
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 37D19C433DB
 	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 12:07:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 18B7E64EFD
+	by mail.kernel.org (Postfix) with ESMTP id 08A2B64F6B
 	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 12:07:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229903AbhCSMHJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S229889AbhCSMHJ (ORCPT <rfc822;git@archiver.kernel.org>);
         Fri, 19 Mar 2021 08:07:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52644 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229826AbhCSMGn (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229844AbhCSMGn (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 19 Mar 2021 08:06:43 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D88FBC06174A
-        for <git@vger.kernel.org>; Fri, 19 Mar 2021 05:06:42 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id m20-20020a7bcb940000b029010cab7e5a9fso7168384wmi.3
-        for <git@vger.kernel.org>; Fri, 19 Mar 2021 05:06:42 -0700 (PDT)
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6542DC06174A
+        for <git@vger.kernel.org>; Fri, 19 Mar 2021 05:06:43 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id t9so8846854wrn.11
+        for <git@vger.kernel.org>; Fri, 19 Mar 2021 05:06:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=kIg/amxIaWFylnxS9SJTUduq6TrFmQHZJj70pJ1w0aw=;
-        b=iQCrZs72J6BNhPNPJXM31Mkz+dYQbgbB/2B+9/NxsrUxhYe+LMvVpqsbECeJwHpjSH
-         b98KXhDn6HXEHtJIwzDKTP3PU2GXvhHGReY99EmFZ3Zx9jU3AHXpFI9H5IOhUSJ6SoAX
-         gdarAt9HliLfhnpaYvlC3GuSyd9VRh2e/jmUojUzvRXgCbR7kcyJYHYkhUmLI7TPHUBl
-         YZRDIV26Pfv9plapS/ovyJ4TXOCmUV37BTEVI1lX+a897H2hvp5YzM0s1NQrfOAK7fND
-         2k5ozoPH4dtkn1LURthYvNF5tTiDsqLTrdNa6rqG52BOw27OtSWcDF36nrmmgoc/Z/7j
-         dHYg==
+        bh=1dKb22szXjbLMQBLOaANBoXVCoH56kq1IWezYQwlCQU=;
+        b=KOg/SqWabgy+oQ2UL82QkCUW19LWdLMjjsKttGHKnxzdRYssz8E8wi5CH562G1YzeZ
+         LXRLT8Becl3NB9gO3OQZ3MdDF3XoIK54wjtg4i1VN9EGalnVJfxfGp88WEaWKx9tFi1/
+         Wn1pTrVlVO98zVeNDYR+IQG2B4sCxT5UDrjroLpTKiaWZEbEZev8XJtVpDcYq8ZcnzOJ
+         volSx9Zx5yAE65T9vfME4B/59JdZQgxRPJHotjrqaLpe7Di9Tml4nyZQ6y8EFqwoqFWe
+         jQZJD/YcOWsvtDyWloSYB5jtSAD4otS1akCHMob8DeY76C+cMgRaFZN3fOtf2Zgbh0Z8
+         Shuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=kIg/amxIaWFylnxS9SJTUduq6TrFmQHZJj70pJ1w0aw=;
-        b=ZR2Zie+Jxso1f8cHCRjlnifjgrk7Xtu3L7NEY1cioUhoYDyVNvKpsxTNktP9+hqmIk
-         MvVuiGlJ67AFxVw6TD/fXHV1PnOeXSjIF1WcQSMb+UJDYwsiZ7l43To1ep0u664hM80B
-         E1kOhOyJUsCRtQRddIstbXTJksbRGBKWbunt8SBtonUXEREKLCzDxu8cB/dG8EjgjVRu
-         ljKRGKBNkCkjHenVWBnTlxCLNaJl5oujLno0GTInC0X0UoDVTl5qFObcq7UDq2eG92Nh
-         Jpfw8fSo6Nrd3qIrzi17RN6MrwUE3S7qQB3kHpMvfGflfJ6wPGbg2gbkbu5eP1tSRSfA
-         zOaA==
-X-Gm-Message-State: AOAM530UQry5exft+NmNwLoiaRihI4HNIHNbSVlWbQwYCL0T5sa1AhZS
-        +u1Ca9ejLOSk89nzOsESZKg9QMJXd3k=
-X-Google-Smtp-Source: ABdhPJzB/YslTDsRA7f+OLig06UHVw15WjPZDMaJndU1a49KFOhCow5gR5dFuKHbI4Rc4ncVkucYEA==
-X-Received: by 2002:a1c:bc82:: with SMTP id m124mr3462052wmf.118.1616155601600;
-        Fri, 19 Mar 2021 05:06:41 -0700 (PDT)
+        bh=1dKb22szXjbLMQBLOaANBoXVCoH56kq1IWezYQwlCQU=;
+        b=QCSz8vnaSmHsFVIfxRMWBs5/oBU7zo+OkL7kSgeNtpusufO4WnQLWFBRI2tOxs2G/7
+         3P7VALgWHAoursjRQ39l8JvJIHgWoiuacT77FXNtrw9K8ffdCMWob+9Z/I4xLUpx35md
+         Jfx76c+LkJCV9X5zWDZtrNfT6CSFerg47NocxS/P34oQ/X1PQU1muPrTCxnGi2lJjWab
+         Sm92rkcsG0yEbWOcx/TvN/BMyt/kbO5jrEANw/ASenHIGIHUQysJRRXq1Sv2GpKbxi8J
+         Q2bO9o2OgkLAKajIIC+c2OFPAPUn0V0Er3tp5etSRpBkqfEKUIooRDSkbGPyRGBoBbi6
+         FLCw==
+X-Gm-Message-State: AOAM530Sk7Qvos2Yl/VTh5EWGV00Sf5pyKTx53NumDkTWyMdrMV60rAW
+        qKmYb/yCh8cntfnD0HN03Usm8HPG/0A=
+X-Google-Smtp-Source: ABdhPJxG93nZE64Z7ykDS9MfVIwNya0HxlHvxX3rvaYYhL9VBdpNdqJP0xLXzNNIPipJHYP1jg2F4g==
+X-Received: by 2002:a5d:5744:: with SMTP id q4mr4343935wrw.390.1616155602146;
+        Fri, 19 Mar 2021 05:06:42 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a13sm7807940wrp.31.2021.03.19.05.06.41
+        by smtp.gmail.com with ESMTPSA id j4sm5746479wmo.10.2021.03.19.05.06.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Fri, 19 Mar 2021 05:06:41 -0700 (PDT)
-Message-Id: <4406b8dc1d90e7524d6b9133647785c58510c3cf.1616155599.git.gitgitgadget@gmail.com>
+Message-Id: <a89f6d0717eed9ffadb58cbed15d8c2005c3d898.1616155599.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.909.git.1616155599.gitgitgadget@gmail.com>
 References: <pull.909.git.1616155599.gitgitgadget@gmail.com>
 From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 19 Mar 2021 12:06:38 +0000
-Subject: [PATCH 2/3] [GSOC] interpret-trailers: add own-identity option
+Date:   Fri, 19 Mar 2021 12:06:39 +0000
+Subject: [PATCH 3/3] [GSOC] commit: add own-identity option
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,166 +82,263 @@ X-Mailing-List: git@vger.kernel.org
 
 From: ZheNing Hu <adlternative@gmail.com>
 
-`git commit --trailer="Signed-off-by: \
-$(git config user.name) <$(git config user.email)>"`
-is difficult for users to add their own identities,
-so teach interpret-trailers a new option `--own-identity`
-which allow if we're optionalise <value> in `--trailer`,
-by substitute user's identity if missing. This will help
-the use of `commit --trailer` as easy as `commit --signoff`.
+Use the newly added option `--own-identity` in
+`interpret-trailers`, implement new commit option
+`--own-identity` to allow user optionalise <value>
+in `--trailer`, by substitute user's identity if
+missing. Using the `--own-identity` option, users
+can directly use `--trailer="Signed-off-by"` to
+generate a signoff trailer with their own identities
+in commit messages,
+
+The effect is basically the same as the `--signoff`
+option. However, users can add more useful options at
+the same time. e.g. `--trailer="Helped-by" --own-identity`
+can general `Helped-by: C O Mitter <committer@example.com>`,
+or through appropriate configuration:
+`git -c trailer.signoff.key="Signed-off-by" commit \
+--trailer="signoff" --own-identity`
+can also general their needs trailers with their favorite
+keys and their own identities.
 
 Signed-off-by: ZheNing Hu <adlternative@gmail.com>
 ---
- Documentation/git-interpret-trailers.txt | 13 +++++++++++++
- builtin/interpret-trailers.c             |  6 ++++--
- t/t7513-interpret-trailers.sh            | 12 ++++++++++++
- trailer.c                                | 18 ++++++++++++++++--
- trailer.h                                |  3 ++-
- 5 files changed, 47 insertions(+), 5 deletions(-)
+ Documentation/git-commit.txt          | 19 +++++-
+ builtin/commit.c                      |  8 +++
+ t/t7501-commit-basic-functionality.sh | 91 +++++++++++++++++++++++++++
+ t/t7502-commit-porcelain.sh           | 20 ++++++
+ 4 files changed, 136 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
-index 96ec6499f001..25f6732d9e6d 100644
---- a/Documentation/git-interpret-trailers.txt
-+++ b/Documentation/git-interpret-trailers.txt
-@@ -84,6 +84,19 @@ OPTIONS
- 	trailer to the input messages. See the description of this
- 	command.
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index 2ba2fe0dd10e..69b3e694eb20 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -14,8 +14,8 @@ SYNOPSIS
+ 	   [--allow-empty-message] [--no-verify] [-e] [--author=<author>]
+ 	   [--date=<date>] [--cleanup=<mode>] [--[no-]status]
+ 	   [-i | -o] [--pathspec-from-file=<file> [--pathspec-file-nul]]
+-	   [(--trailer <token>[(=|:)<value>])...] [-S[<keyid>]]
+-	   [--] [<pathspec>...]
++	   [(--trailer <token>[(=|:)<value>])... [--own-identity]]
++	   [-S[<keyid>]] [--] [<pathspec>...]
  
+ DESCRIPTION
+ -----------
+@@ -175,6 +175,21 @@ include::signoff-option.txt[]
+ 	and the "Helped-by" trailer in the commit message.)
+ 	Use `git -c trailer.* commit --trailer` to make the appropriate
+ 	configuration. See linkgit:git-interpret-trailers[1] for details.
++
 +--own-identity::
 +	Used with `--trailer`. Those trailers without value with the
 +	`--own-identity` option all will add the user's own identity.
-+	For example,` git interpret-trailers --trailer "A:B" --trailer \
-+	"Signed-off-by" --trailer "Helped-by" --own-identity --inplace a.txt`
++	For example, `git commit --trailer \
++	"A:B" --trailer	"Signed-off-by" --trailer "Helped-by" --own-identity`,
 +	will output:
 +	"
 +	A:B
 +	Signed-off-by: C O Mitter <committer@example.com>
 +	Helped-by: C O Mitter <committer@example.com>
 +	"
-+	in `a.txt`.
++	in commit messages.
++	See linkgit:git-interpret-trailers[1]for details.
 +
- --where <placement>::
- --no-where::
- 	Specify where all new trailers will be added.  A setting
-diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
-index 84748eafc01b..be7f502a58d7 100644
---- a/builtin/interpret-trailers.c
-+++ b/builtin/interpret-trailers.c
-@@ -47,6 +47,7 @@ static void new_trailers_clear(struct list_head *trailers)
- 	list_for_each_safe(pos, tmp, trailers) {
- 		item = list_entry(pos, struct new_trailer_item, list);
- 		list_del(pos);
-+		free(item->text);
- 		free(item);
- 	}
- }
-@@ -66,7 +67,7 @@ static int option_parse_trailer(const struct option *opt,
- 		return -1;
+ -n::
+ --no-verify::
+ 	This option bypasses the pre-commit and commit-msg hooks.
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 4b06672bd07d..dc2fc0dc46ff 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -114,6 +114,7 @@ static int no_post_rewrite, allow_empty_message, pathspec_file_nul;
+ static char *untracked_files_arg, *force_date, *ignore_submodule_arg, *ignored_arg;
+ static char *sign_commit, *pathspec_from_file;
+ static struct strvec trailer_args = STRVEC_INIT;
++static int own_identity;
  
- 	item = xmalloc(sizeof(*item));
--	item->text = arg;
-+	item->text = xstrdup(arg);
- 	item->where = where;
- 	item->if_exists = if_exists;
- 	item->if_missing = if_missing;
-@@ -94,7 +95,8 @@ int cmd_interpret_trailers(int argc, const char **argv, const char *prefix)
- 	struct option options[] = {
- 		OPT_BOOL(0, "in-place", &opts.in_place, N_("edit files in place")),
- 		OPT_BOOL(0, "trim-empty", &opts.trim_empty, N_("trim empty trailers")),
--
-+		OPT_BOOL(0, "own-identity", &opts.own_identity,
+ /*
+  * The default commit message cleanup mode will remove the lines
+@@ -972,6 +973,8 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 
+ 		strvec_pushl(&run_trailer.args, "interpret-trailers",
+ 			     "--in-place", git_path_commit_editmsg(), NULL);
++		if (own_identity)
++			strvec_push(&run_trailer.args, "--own-identity");
+ 		strvec_pushv(&run_trailer.args, trailer_args.v);
+ 		run_trailer.git_cmd = 1;
+ 		if (run_command(&run_trailer))
+@@ -1529,6 +1532,8 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 		OPT_STRING(0, "squash", &squash_message, N_("commit"), N_("use autosquash formatted message to squash specified commit")),
+ 		OPT_BOOL(0, "reset-author", &renew_authorship, N_("the commit is authored by me now (used with -C/-c/--amend)")),
+ 		OPT_CALLBACK_F(0, "trailer", NULL, N_("trailer"), N_("add custom trailer(s)"), PARSE_OPT_NONEG, opt_pass_trailer),
++		OPT_BOOL(0, "own-identity", &own_identity,
 +			     N_("specify the user's own identity for omitted trailers value")),
- 		OPT_CALLBACK(0, "where", NULL, N_("action"),
- 			     N_("where to place the new trailer"), option_parse_where),
- 		OPT_CALLBACK(0, "if-exists", NULL, N_("action"),
-diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
-index 6602790b5f4c..f82cee93bfb2 100755
---- a/t/t7513-interpret-trailers.sh
-+++ b/t/t7513-interpret-trailers.sh
-@@ -63,6 +63,18 @@ test_expect_success 'without config' '
+ 		OPT_BOOL('s', "signoff", &signoff, N_("add a Signed-off-by trailer")),
+ 		OPT_FILENAME('t', "template", &template_file, N_("use specified template file")),
+ 		OPT_BOOL('e', "edit", &edit_flag, N_("force edit of commit")),
+@@ -1605,6 +1610,9 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 	if (verbose == -1)
+ 		verbose = (config_commit_verbose < 0) ? 0 : config_commit_verbose;
+ 
++	if (own_identity && !trailer_args.nr)
++		die(_("--own_identity requires --trailer"));
++
+ 	if (dry_run)
+ 		return dry_run_commit(argv, prefix, current_head, &s);
+ 	index_file = prepare_index(argv, prefix, current_head, 0);
+diff --git a/t/t7501-commit-basic-functionality.sh b/t/t7501-commit-basic-functionality.sh
+index 512ae2781fe2..7ff74cf81e75 100755
+--- a/t/t7501-commit-basic-functionality.sh
++++ b/t/t7501-commit-basic-functionality.sh
+@@ -423,6 +423,25 @@ test_expect_success 'sign off (1)' '
+ 
+ '
+ 
++test_expect_success '--trailer="signoff" (1)' '
++
++	echo 1 >>positive &&
++	git add positive &&
++	git -c trailer.signoff.key="Signed-off-by" \
++		commit --trailer="signoff" --own-identity \
++		-m "thank you" &&
++	git cat-file commit HEAD >commit &&
++	sed -e "1,/^\$/d" commit >actual &&
++	(
++		echo thank you &&
++		echo &&
++		git var GIT_COMMITTER_IDENT >ident &&
++		sed -e "s/>.*/>/" -e "s/^/Signed-off-by: /" ident
++	) >expected &&
++	test_cmp expected actual
++
++'
++
+ test_expect_success 'sign off (2)' '
+ 
+ 	echo 2 >positive &&
+@@ -444,6 +463,30 @@ $existing" &&
+ 
+ '
+ 
++test_expect_success '--trailer="signoff" (2)' '
++
++	echo 2 >>positive &&
++	git add positive &&
++	existing="Signed-off-by: Watch This <watchthis@example.com>" &&
++	git -c trailer.signoff.key="Signed-off-by" \
++		commit --trailer="signoff" --own-identity \
++		-m "thank you
++
++$existing" &&
++	git cat-file commit HEAD >commit &&
++	sed -e "1,/^\$/d" commit >actual &&
++	(
++		echo thank you &&
++		echo &&
++		echo $existing &&
++		git var GIT_COMMITTER_IDENT >ident &&
++		sed -e "s/>.*/>/" -e "s/^/Signed-off-by: /" ident
++	) >expected &&
++	test_cmp expected actual
++
++'
++
++
+ test_expect_success 'signoff gap' '
+ 
+ 	echo 3 >positive &&
+@@ -464,6 +507,29 @@ $alt" &&
  	test_cmp expected actual
  '
  
-+test_expect_success 'without config with --own-identity' '
-+	cat >expected <<-\EOF &&
++test_expect_success '--trailer="signoff" gap' '
 +
-+	Acked-by: A B <C>
-+	Helped-by: C O Mitter <committer@example.com>
-+	Signed-off-by: C O Mitter <committer@example.com>
-+	EOF
-+	git interpret-trailers --trailer "Acked-by: A B <C>" --trailer "Helped-by" \
-+	--trailer "Signed-off-by" --own-identity empty >actual &&
++	echo 3 >>positive &&
++	git add positive &&
++	alt="Alt-RFC-822-Header: Value" &&
++	git -c trailer.signoff.key="Signed-off-by" \
++		commit --trailer="signoff" --own-identity \
++		-m "welcome
++
++$alt" &&
++	git cat-file commit HEAD >commit &&
++	sed -e "1,/^\$/d" commit >actual &&
++	(
++		echo welcome &&
++		echo &&
++		echo $alt &&
++		git var GIT_COMMITTER_IDENT >ident &&
++		sed -e "s/>.*/>/" -e "s/^/Signed-off-by: /" ident
++	) >expected &&
 +	test_cmp expected actual
 +'
 +
- test_expect_success 'without config in another order' '
- 	sed -e "s/ Z\$/ /" >expected <<-\EOF &&
- 
-diff --git a/trailer.c b/trailer.c
-index 249ed618ed8e..cd4f85e71c9a 100644
---- a/trailer.c
-+++ b/trailer.c
-@@ -690,8 +690,18 @@ static void add_arg_item(struct list_head *arg_head, char *tok, char *val,
- 	list_add_tail(&new_item->list, arg_head);
- }
- 
-+static void add_user_own_identity(struct new_trailer_item *item)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+	strbuf_addstr(&buf, item->text);
-+	strbuf_add(&buf, "=", 1);
-+	strbuf_addstr(&buf, fmt_name(WANT_COMMITTER_IDENT));
-+	free(item->text);
-+	item->text = buf.buf;
-+}
 +
- static void process_command_line_args(struct list_head *arg_head,
--				      struct list_head *new_trailer_head)
-+				      struct list_head *new_trailer_head, int own_identity)
- {
- 	struct arg_item *item;
- 	struct strbuf tok = STRBUF_INIT;
-@@ -728,6 +738,10 @@ static void process_command_line_args(struct list_head *arg_head,
- 			error(_("empty trailer token in trailer '%.*s'"),
- 			      (int) sb.len, sb.buf);
- 			strbuf_release(&sb);
-+		} else if (separator_pos == -1 && own_identity) {
-+				add_user_own_identity(tr);
-+				pos = pos->prev;
-+				continue;
- 		} else {
- 			parse_trailer(&tok, &val, &conf, tr->text,
- 				      separator_pos);
-@@ -1048,7 +1062,7 @@ void process_trailers(const char *file,
+ test_expect_success 'signoff gap 2' '
  
- 	if (!opts->only_input) {
- 		LIST_HEAD(arg_head);
--		process_command_line_args(&arg_head, new_trailer_head);
-+		process_command_line_args(&arg_head, new_trailer_head ,opts->own_identity);
- 		process_trailers_lists(&head, &arg_head);
- 	}
+ 	echo 4 >positive &&
+@@ -487,6 +553,31 @@ $alt" &&
+ 	test_cmp expected actual
+ '
  
-diff --git a/trailer.h b/trailer.h
-index 795d2fccfd95..235dfdfa1978 100644
---- a/trailer.h
-+++ b/trailer.h
-@@ -57,7 +57,7 @@ struct trailer_info {
- struct new_trailer_item {
- 	struct list_head list;
++test_expect_success '--trailer="signoff" gap 2' '
++
++	echo 4 >>positive &&
++	git add positive &&
++	alt="fixed: 34" &&
++	git -c trailer.signoff.key="Signed-off-by" \
++		commit --trailer="signoff" --own-identity \
++		-m "welcome
++
++We have now
++$alt" &&
++	git cat-file commit HEAD >commit &&
++	sed -e "1,/^\$/d" commit >actual &&
++	(
++		echo welcome &&
++		echo &&
++		echo We have now &&
++		echo $alt &&
++		echo &&
++		git var GIT_COMMITTER_IDENT >ident &&
++		sed -e "s/>.*/>/" -e "s/^/Signed-off-by: /" ident
++	) >expected &&
++	test_cmp expected actual
++'
++
+ test_expect_success 'signoff respects trailer config' '
  
--	const char *text;
-+	char *text;
+ 	echo 5 >positive &&
+diff --git a/t/t7502-commit-porcelain.sh b/t/t7502-commit-porcelain.sh
+index 024cf3c81b18..6c1387c943ff 100755
+--- a/t/t7502-commit-porcelain.sh
++++ b/t/t7502-commit-porcelain.sh
+@@ -489,6 +489,26 @@ test_expect_success 'commit --trailer with -c and ":=#" as separators' '
+ 	test_cmp expected actual
+ '
  
- 	enum trailer_where where;
- 	enum trailer_if_exists if_exists;
-@@ -73,6 +73,7 @@ struct process_trailer_options {
- 	int no_divider;
- 	int key_only;
- 	int value_only;
-+	int own_identity;
- 	const struct strbuf *separator;
- 	const struct strbuf *key_value_separator;
- 	int (*filter)(const struct strbuf *, void *);
++test_expect_success 'commit --trailer with -c and --own-identity' '
++	echo "fun" >>file1 &&
++	git add file1 &&
++	cat >expected <<-\EOF &&
++
++	Signed-off-by: C O Mitter <committer@example.com>
++	EOF
++	git -c trailer.signoff.key="Signed-off-by: " \
++		commit --trailer "signoff" --own-identity -m "abc" &&
++	git cat-file commit HEAD >commit.msg &&
++	sed -e "1,6d" commit.msg >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success 'commit --own-identity without --trailer' '
++	echo "fun" >>file1 &&
++	git add file1 &&
++	test_must_fail git -c commit --own-identity -m "abc"
++'
++
+ test_expect_success 'multiple -m' '
+ 
+ 	>negative &&
 -- 
 gitgitgadget
-
