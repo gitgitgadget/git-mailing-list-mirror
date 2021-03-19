@@ -6,91 +6,108 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9AFBC433DB
-	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 16:06:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 452BEC433E0
+	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 17:29:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AD3C161977
-	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 16:06:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1C09B6197B
+	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 17:29:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230289AbhCSQGM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Mar 2021 12:06:12 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60321 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229987AbhCSQFp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Mar 2021 12:05:45 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id AD115BA42E;
-        Fri, 19 Mar 2021 12:05:44 -0400 (EDT)
+        id S230055AbhCSR3S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Mar 2021 13:29:18 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:58604 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229806AbhCSR3B (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Mar 2021 13:29:01 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 17C07116CD0;
+        Fri, 19 Mar 2021 13:29:01 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=7yfL01AoqX4iHBLH09lGknUNs60=; b=a10XPo
-        Eg3+v4IZ7r4zg2/17tSNm07vzAPnOpfrTvh3bELyiLTWe8gC/O7CcJnAxVxYJZ8H
-        ngHS1PZsPcuhoyTOIXnMZ+E4mtp8TPkooTOCe2B7nfTrXf9RcSRNr0RWs4aoKgA0
-        PkDv+DpxZ/B8B3GDkar/lPl0yvt/JVBUntnUs=
+        :content-type; s=sasl; bh=EsFRtCmJp/q5PBBtM5xMsa9h7hA=; b=ezhuP2
+        5FNbJFHxfZdFL33dtc6lJHaOFCC8zmro7oirCVspoWAGIouQb9uRo4l0fbEdbzSP
+        tdkCW0AEtcT+AvZoV1n66jLKsiC9LEgBSmxTJ8owsZX6i5bVGL+mg2wXWQ0RilyW
+        ROUH3fftxQPNbQGDt9vIIZj4R/Cnds/k9O8SU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=xPqYYQozuaWHXxpyle65ZERs8UXSC16b
-        7O4qPO8crGzP/Y+3bWsOAuZHeNhbwaDEN+6gowWH83IiBvjqUxrJoazUnFrywdVp
-        8Mg2V5SJHxlQNnBORhlmUwSOO2aFvDjY92ilso6isXnrZRQUR/6mS81SxTv2a04r
-        X55wIaM47Dg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A4D63BA42D;
-        Fri, 19 Mar 2021 12:05:44 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=c53s7bGkKpokkUV84zD7zbpjKPlJbiF/
+        VoQK0Gf0WT6SkNKzxuWVYXlOkoRFnV2uDw9FCeehiPtXWcTBG7BUw1dwXt/uwbPz
+        DW92lcCr2KO/nZh085ABP1WFUVep3lDajeBxkk7VnZL20+4c1ppnSmgiTBjnZWtM
+        DpCbjfP/WUM=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 10863116CCF;
+        Fri, 19 Mar 2021 13:29:01 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1E2C2BA42C;
-        Fri, 19 Mar 2021 12:05:44 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 05AF3116CCA;
+        Fri, 19 Mar 2021 13:28:56 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Cc:     git <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v3 5/7] refresh_index(): add
- REFRESH_DONT_MARK_SPARSE_MATCHES flag
-References: <cover.1615588108.git.matheus.bernardino@usp.br>
-        <34a61a0d03868c43d68a04bca8d86dd98de2aa28.1615588109.git.matheus.bernardino@usp.br>
-        <xmqqsg4sowks.fsf@gitster.g> <xmqqo8fgovuz.fsf@gitster.g>
-        <CAHd-oW4V4_XrY7XfQO1gLEZZmzcLbG0_M2ys+Meh4Ysu0Psz0Q@mail.gmail.com>
-Date:   Fri, 19 Mar 2021 09:05:43 -0700
-In-Reply-To: <CAHd-oW4V4_XrY7XfQO1gLEZZmzcLbG0_M2ys+Meh4Ysu0Psz0Q@mail.gmail.com>
-        (Matheus Tavares Bernardino's message of "Fri, 19 Mar 2021 09:23:03
-        -0300")
-Message-ID: <xmqqlfajnn6w.fsf@gitster.g>
+To:     "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, ZheNing Hu <adlternative@gmail.com>
+Subject: Re: [PATCH v7] format-patch: allow a non-integral version numbers
+References: <pull.885.v6.git.1616047200968.gitgitgadget@gmail.com>
+        <pull.885.v7.git.1616152884317.gitgitgadget@gmail.com>
+Date:   Fri, 19 Mar 2021 10:28:55 -0700
+In-Reply-To: <pull.885.v7.git.1616152884317.gitgitgadget@gmail.com> (ZheNing
+        Hu via GitGitGadget's message of "Fri, 19 Mar 2021 11:21:23 +0000")
+Message-ID: <xmqq8s6jnjc8.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: F5AD29C8-88CC-11EB-BC51-D152C8D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 95AC6A00-88D8-11EB-B712-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matheus Tavares Bernardino <matheus.bernardino@usp.br> writes:
+"ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
->> In other words, the change makes me wonder why we are not adding a
->> flag that says "do we or do we not want to match paths outside the
->> sparse checkout cone?", with which the seen[] would automatically
->> record the right thing.
+> From: ZheNing Hu <adlternative@gmail.com>
 >
-> Yeah, makes sense. I didn't want to make the flag skip the sparse
-> paths unconditionally (i.e. without matching them) because then we
-> would also skip the ce_stage() checkings below and the later
-> ce_mark_uptodate(). And I wasn't sure whether this could cause any
-> unwanted side effects.
+> Usually we can only use `format-patch -v<n>` to generate integral
+> version numbers patches, but sometimes a same fixup should be
+
+I guess that you meant "a small fixup" here?
+
+> labeled as a non-integral version like `v1.1`, so teach `format-patch`
+> to allow a non-integral version which may be helpful to send those
+> patches.
 >
-> But thinking more carefully about this now, unmerged paths should
-> never have the SKIP_WORKTREE bit set anyway, right? What about the
-> CE_UPTODATE mark, would it be safe to skip it? I'm not very familiar
-> with this code, but I'll try to investigate more later.
+> `<n>` can be any string, such as `-v1.1`.
 
-I do not offhand know the answers to these questions you ask in the
-last paragraph myself, and it could turn out to be that the "let
-processing go as before, matching what those excluded paths by the
-matcher, but making the caller responsible for filtering out the
-paths excluded by sparcity out of the result from the matcher, but
-tweak seen[]" approach, however ugly, is the most practical, after
-your investigation.  But I'd prefer to see how bad the situation is
-first ;-).
+I would probably use "such as '3.1' or '4rev2'" (without the leading
+"-v", as that is how you introduce <n> in the first sentence)
+instead in the proposed log message, and give a pair of examples to
+show both fractional numbers and non numbers are accepted in the
+documentation, if I were doing this patch.
 
-Thanks.
+> In the case where it
+> is a non-integral value, the "Range-diff" and "Interdiff"
+> headers will not include the previous version.
+
+Which is rather unfortunate, but I do not care strongly enough (I
+would rather discurage use of partial rerolls with these fractinal 
+bits anyway).
+
+> Range-diff vs v6:
+>
+>  1:  d5f5e3f073de ! 1:  95cfe75ee7da format-patch: allow a non-integral version numbers
+>      @@ builtin/log.c: static void print_bases(struct base_tree_info *bases, FILE *file)
+>       +	int v;
+>       +
+>       +	/* RFC may be v0, so allow -v1 to diff against v0 */
+>      -+	if (reroll_count && !strtol_i(reroll_count, 10, &v))
+>      ++	if (reroll_count && !strtol_i(reroll_count, 10, &v) &&
+>      ++	    v >= 1)
+>       +		strbuf_addf(sb, rerolled, v - 1);
+>       +	else
+>        		strbuf_addstr(sb, generic);
+
+In one of your review responses earlier, you hinted that limiting
+the range of v like this was needed for correctness.  There should
+be a new test to cover the case that this change makes a difference.
