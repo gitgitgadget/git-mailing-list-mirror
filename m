@@ -2,171 +2,548 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BFD08C433E6
-	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 09:34:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 60D20C433E0
+	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 09:52:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9ECF364F68
-	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 09:34:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2A7BB64E21
+	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 09:52:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229720AbhCSJeI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Mar 2021 05:34:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47922 "EHLO
+        id S229872AbhCSJwX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Mar 2021 05:52:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229793AbhCSJdf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Mar 2021 05:33:35 -0400
-Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B0A2C06174A
-        for <git@vger.kernel.org>; Fri, 19 Mar 2021 02:33:35 -0700 (PDT)
-Received: by mail-oi1-x22e.google.com with SMTP id k25so4079093oic.4
-        for <git@vger.kernel.org>; Fri, 19 Mar 2021 02:33:35 -0700 (PDT)
+        with ESMTP id S229826AbhCSJwK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Mar 2021 05:52:10 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2606C06174A
+        for <git@vger.kernel.org>; Fri, 19 Mar 2021 02:52:09 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id o16so8463398wrn.0
+        for <git@vger.kernel.org>; Fri, 19 Mar 2021 02:52:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=KWEveqDT2rbkuQyBg+g4QF/rAH1BgzMu4TZzGdlQiEU=;
-        b=dUp/6egD4B1ZDQ4P6Jz/IWd/6n+fEbJDkdDoqgvESgSQV1xeeVzH0q4sODODzxMpZw
-         oR7DqunlujwehhZX/RyTT63sx3bKks18BXZ1Xr6tfakXTvgsOqhRN+qSpQgHPpjrtEx7
-         tQNSfFCVYnia0FVlnBw7GkW/Q62wcQlGcFGtEpp6mEpxXDFvMbZb2jXpjPkTzbCEJ4YR
-         6jbsiApZh0EFCLprnMZ0sDN6YKoiGiAriAkecDQW/Zs0isz4fasQCjXJoz70919qabND
-         BzBJLE8V6LLtjBh7kKckfQXfsZx2X/6V6ci34IUihJQsUBPbXWyHRl+2wKXVy+5d+/ut
-         2+/g==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=2sdiq539EQdDx8bHj3MZJsr3OZpOsNQhas7+zdZt0wo=;
+        b=AkpdOYuJ9ga99KkABcRCHNm4OaCwWr4xYXnZXan882tGzEP/XpfwG3ootphZB35XZL
+         iVjmIHUnaXhDRqp60yaCfGJvH8fr2/aN5scTdjt7KSPjlC2v0XcV45zx3KWSK1/vovl1
+         R/8BwY/FxqmLe+X+GzC8pMvlzRSx5JqDqgRgK5a1ohF5yLjT1k05C0CAtgQMaR5xKuBQ
+         +l3fTDwhTgBI+biCuwRjfC/8RZMia91Br+6PDSe2o6KzF+zg7zr73jnF4WnfcIXw2iXW
+         9/ZpTLsIsIIgDA08MHcgtVIW09dD7YpBg46qSeeNtyEWcMgx9Vu6QUuhnhY4uVNsTN2S
+         QUXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=KWEveqDT2rbkuQyBg+g4QF/rAH1BgzMu4TZzGdlQiEU=;
-        b=sykPMBJc3oyvE5ILFLXYGxUQAIEuF14wlavCrcIPZyxgS2mothp5xRUARNzCuzMkq4
-         LAd/7+AyoYDWMrb3izRYa2XDMhhtjBweTQf8gOs2EoqgZev1YBTCd5gY3Y1wdXzOWAR5
-         vV3esCICqk/z5pVHvaHY1ifJjI4wrsBesZh8lucvN3WAAJGdKh9GQ/F1qvzbKSg8Z5bZ
-         tGElDTaK02hst5UpWmAe+/YiHnOYsprEpVQ3mcX8FKvKkaJlxwucL9SF/mqI2T5WNVoz
-         YMG2HqjBysQfBZ1Fsb1T/su9nGOysnNeXo35Z+YmF89AJuWWQCL4czN0HxOCRQCppPl2
-         XHlQ==
-X-Gm-Message-State: AOAM532rI0nkHLFu+iTK1/1en04J+WyPZUISF5xnd2gzLgttGs3NN6/m
-        h79Wp7ZNu+dyy5PqZnAYjTt//3usZoBneJDrltk=
-X-Google-Smtp-Source: ABdhPJxq3R7Ut7809nP5ustuSLpfzpF0jcxUEXwSTmFJTLHeqVKDsE7EeNm3bdtJUV577lCxXKYYZHDK2qlly69kfTE=
-X-Received: by 2002:aca:4c0f:: with SMTP id z15mr363741oia.44.1616146414929;
- Fri, 19 Mar 2021 02:33:34 -0700 (PDT)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=2sdiq539EQdDx8bHj3MZJsr3OZpOsNQhas7+zdZt0wo=;
+        b=WQ/nF4zbuYU2opLKlJqcRcjU2aP4HBnFUPUkW9adzRubZa/aQQ4Rm4MCFv8aX6QdII
+         HkmNVlmLo/v0fvtkNVsQkJeIxg9x2edKl+0GRpjBBI8XOpNM5SISRaRPxm8ZgTwt2dD2
+         HXxrqSmazx38ywIrPKkDT8xqwUQhQRVnQDfh7/bdDSbvge+czk/NK2ECf3FAub3emKfB
+         IOAr+mbyaoKcyS74VjhQe4LQGaM5oWs+7H3YT29lqhU/4SgAurrCtltEzShIHGlO7iqx
+         mj7oT0xS8oB/Hc1NX1+nK9XdYU8NTmtQtbe+n+5xcPiW8e+NI8wamUv9oHxmfQ/gj+0a
+         PFjA==
+X-Gm-Message-State: AOAM531guuvFefqG1puFl+Bse7ysewxG81snx0WCrqgDLixx4cWLpWUl
+        SvVuzK3ZRBrwvqXmW+HxESQ95jwYoRA=
+X-Google-Smtp-Source: ABdhPJy51WORmIpZszy/vXdwKMWjypq0T+cEhJdBECfEjolTOYzDA6/nRgQ3eUSBLg7byo3jy5c9/w==
+X-Received: by 2002:adf:fd48:: with SMTP id h8mr3602118wrs.229.1616147528318;
+        Fri, 19 Mar 2021 02:52:08 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id r2sm6969191wrt.8.2021.03.19.02.52.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 19 Mar 2021 02:52:07 -0700 (PDT)
+Message-Id: <pull.982.git.git.1616147527082.gitgitgadget@gmail.com>
+From:   "Krushnal Patel via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 19 Mar 2021 09:52:06 +0000
+Subject: [PATCH] replace test -f with test_path_is_file
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.901.v9.git.1615891183320.gitgitgadget@gmail.com>
- <pull.901.v10.git.1616066156.gitgitgadget@gmail.com> <42590e95deeece6ba65e0432c3a59746e717fee3.1616066156.git.gitgitgadget@gmail.com>
- <xmqq1rcctgj7.fsf@gitster.g>
-In-Reply-To: <xmqq1rcctgj7.fsf@gitster.g>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Fri, 19 Mar 2021 17:33:23 +0800
-Message-ID: <CAOLTT8RzvQzD0baWPdJzRLK3Q+WeJR_HNA4RVHMxRmwHeym9QQ@mail.gmail.com>
-Subject: Re: [PATCH v10 2/3] interpret-trailers: add own-identity option
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        "Bradley M. Kuhn" <bkuhn@sfconservancy.org>,
-        Brandon Casey <drafnel@gmail.com>,
-        Shourya Shukla <periperidip@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Rafael Silva <rafaeloliveira.cs@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Krushnal Patel <krushnalpatel11@gmail.com>,
+        krush11 <krushnalpatel11@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B43=E6=9C=8819=E6=97=
-=A5=E5=91=A8=E4=BA=94 =E4=B8=8A=E5=8D=883:20=E5=86=99=E9=81=93=EF=BC=9A
->
-> "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > From: ZheNing Hu <adlternative@gmail.com>
-> >
-> > Beacuse `git commit --trailer=3D"Signed-off-by: \
-> > $(git config user.name) <$(git config user.email)>"`
-> > is difficult for users to add their own identities,
-> > so teach interpret-trailers a new option `--own-identity`
-> > which allow those trailers with no value add the user=E2=80=99s own
-> > identity. This will help the use of `commit --trailer` as
-> > easy as `--signoff`.
->
-> I have a suspicion that this is too narrowly focused to be useful in
-> practice, and I find that the proposed "--own-identity" is quite a
-> mouthful.
->
+From: krush11 <krushnalpatel11@gmail.com>
 
-Well, the original meaning of this `--trailer`and`--own-identity` option is=
- to
-imitate the behavior of `--signoff` to create other trailers, For the
-time being,
-it can only "imitation", it does not yet support the ability to provide mul=
-tiple
-identities instead of "own-identity".
+Although  has the same functionality as test_path_is_file(), in
+the case where test_path_is_file() fails, we get much better debugging
+information.
 
-If `--own-identity` is mouthful, is there a better name?
+Replace  with test_path_is_file so that future developers
+will have a better experience debugging these test cases.
 
-> > +--own-identity::
-> > +     Used with `--trailer`. Those trailers without value with the
-> > +     `--own-identity` option all will add the user's own identity.
->
-> So, the assumption here is that the name of the trailer tag alone,
-> without the ':' separator, can identify which trailer the user is
-> talking about, and it can be distinguished from the tag name plus ':'
-> and nothing else which is calling for a trailer entry with an empty
-> string as its value?
->
+Signed-off-by: Krushnal Patel  <krushnalpatel11@gmail.com>
+---
+    replace test -f with test_path_is_file
+    
+    Although has the same functionality as test_path_is_file(), in the case
+    where test_path_is_file() fails, we get much better debugging
+    information.
+    
+    Replace with test_path_is_file so that future developers will have a
+    better experience debugging these test cases.
 
-Yes. `--own-ident` is for trailers without a separator.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-982%2Fkrush11%2Fnext-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-982/krush11/next-v1
+Pull-Request: https://github.com/git/git/pull/982
 
-> OK.
->
-> The reason why this looks too narrowly focused on oneself alone to
-> be useful to me is because I often need to add various -by trailers
-> to incoming patches, and have a script to do exactly that (which
-> does not use interpret-trailers, as I do not think
-> interpret-trailers can accept a patch email as its input, and the
-> script predates interpret-trailers) but it will be useless if that
-> script were limited to add -by for myself.
->
+ t/t7300-clean.sh | 276 +++++++++++++++++++++++------------------------
+ 1 file changed, 138 insertions(+), 138 deletions(-)
 
-I understand it. But I think `--own-ident` is more inclined to add
-identities for users. If users want to add other people=E2=80=99s identitie=
-s,
-they need to use another method.
+diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
+index a74816ca8b46..a599c4210085 100755
+--- a/t/t7300-clean.sh
++++ b/t/t7300-clean.sh
+@@ -28,15 +28,15 @@ test_expect_success 'git clean with skip-worktree .gitignore' '
+ 	mkdir -p build docs &&
+ 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
+ 	git clean &&
+-	test -f Makefile &&
+-	test -f README &&
+-	test -f src/part1.c &&
+-	test -f src/part2.c &&
++	test_path_is_file Makefile &&
++	test_path_is_file README &&
++	test_path_is_file src/part1.c &&
++	test_path_is_file src/part2.c &&
+ 	test ! -f a.out &&
+ 	test ! -f src/part3.c &&
+-	test -f docs/manual.txt &&
+-	test -f obj.o &&
+-	test -f build/lib.so &&
++	test_path_is_file docs/manual.txt &&
++	test_path_is_file obj.o &&
++	test_path_is_file build/lib.so &&
+ 	git update-index --no-skip-worktree .gitignore &&
+ 	git checkout .gitignore
+ '
+@@ -46,15 +46,15 @@ test_expect_success 'git clean' '
+ 	mkdir -p build docs &&
+ 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
+ 	git clean &&
+-	test -f Makefile &&
+-	test -f README &&
+-	test -f src/part1.c &&
+-	test -f src/part2.c &&
++	test_path_is_file Makefile &&
++	test_path_is_file README &&
++	test_path_is_file src/part1.c &&
++	test_path_is_file src/part2.c &&
+ 	test ! -f a.out &&
+ 	test ! -f src/part3.c &&
+-	test -f docs/manual.txt &&
+-	test -f obj.o &&
+-	test -f build/lib.so
++	test_path_is_file docs/manual.txt &&
++	test_path_is_file obj.o &&
++	test_path_is_file build/lib.so
+ 
+ '
+ 
+@@ -63,15 +63,15 @@ test_expect_success 'git clean src/' '
+ 	mkdir -p build docs &&
+ 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
+ 	git clean src/ &&
+-	test -f Makefile &&
+-	test -f README &&
+-	test -f src/part1.c &&
+-	test -f src/part2.c &&
+-	test -f a.out &&
++	test_path_is_file Makefile &&
++	test_path_is_file README &&
++	test_path_is_file src/part1.c &&
++	test_path_is_file src/part2.c &&
++	test_path_is_file a.out &&
+ 	test ! -f src/part3.c &&
+-	test -f docs/manual.txt &&
+-	test -f obj.o &&
+-	test -f build/lib.so
++	test_path_is_file docs/manual.txt &&
++	test_path_is_file obj.o &&
++	test_path_is_file build/lib.so
+ 
+ '
+ 
+@@ -80,15 +80,15 @@ test_expect_success 'git clean src/ src/' '
+ 	mkdir -p build docs &&
+ 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
+ 	git clean src/ src/ &&
+-	test -f Makefile &&
+-	test -f README &&
+-	test -f src/part1.c &&
+-	test -f src/part2.c &&
+-	test -f a.out &&
++	test_path_is_file Makefile &&
++	test_path_is_file README &&
++	test_path_is_file src/part1.c &&
++	test_path_is_file src/part2.c &&
++	test_path_is_file a.out &&
+ 	test ! -f src/part3.c &&
+-	test -f docs/manual.txt &&
+-	test -f obj.o &&
+-	test -f build/lib.so
++	test_path_is_file docs/manual.txt &&
++	test_path_is_file obj.o &&
++	test_path_is_file build/lib.so
+ 
+ '
+ 
+@@ -97,16 +97,16 @@ test_expect_success 'git clean with prefix' '
+ 	mkdir -p build docs src/test &&
+ 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so src/test/1.c &&
+ 	(cd src/ && git clean) &&
+-	test -f Makefile &&
+-	test -f README &&
+-	test -f src/part1.c &&
+-	test -f src/part2.c &&
+-	test -f a.out &&
++	test_path_is_file Makefile &&
++	test_path_is_file README &&
++	test_path_is_file src/part1.c &&
++	test_path_is_file src/part2.c &&
++	test_path_is_file a.out &&
+ 	test ! -f src/part3.c &&
+-	test -f src/test/1.c &&
+-	test -f docs/manual.txt &&
+-	test -f obj.o &&
+-	test -f build/lib.so
++	test_path_is_file src/test/1.c &&
++	test_path_is_file docs/manual.txt &&
++	test_path_is_file obj.o &&
++	test_path_is_file build/lib.so
+ 
+ '
+ 
+@@ -162,16 +162,16 @@ test_expect_success 'git clean -d with prefix and path' '
+ 	mkdir -p build docs src/feature &&
+ 	touch a.out src/part3.c src/feature/file.c docs/manual.txt obj.o build/lib.so &&
+ 	(cd src/ && git clean -d feature/) &&
+-	test -f Makefile &&
+-	test -f README &&
+-	test -f src/part1.c &&
+-	test -f src/part2.c &&
+-	test -f a.out &&
+-	test -f src/part3.c &&
++	test_path_is_file Makefile &&
++	test_path_is_file README &&
++	test_path_is_file src/part1.c &&
++	test_path_is_file src/part2.c &&
++	test_path_is_file a.out &&
++	test_path_is_file src/part3.c &&
+ 	test ! -f src/feature/file.c &&
+-	test -f docs/manual.txt &&
+-	test -f obj.o &&
+-	test -f build/lib.so
++	test_path_is_file docs/manual.txt &&
++	test_path_is_file obj.o &&
++	test_path_is_file build/lib.so
+ 
+ '
+ 
+@@ -181,16 +181,16 @@ test_expect_success SYMLINKS 'git clean symbolic link' '
+ 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
+ 	ln -s docs/manual.txt src/part4.c &&
+ 	git clean &&
+-	test -f Makefile &&
+-	test -f README &&
+-	test -f src/part1.c &&
+-	test -f src/part2.c &&
++	test_path_is_file Makefile &&
++	test_path_is_file README &&
++	test_path_is_file src/part1.c &&
++	test_path_is_file src/part2.c &&
+ 	test ! -f a.out &&
+ 	test ! -f src/part3.c &&
+ 	test ! -f src/part4.c &&
+-	test -f docs/manual.txt &&
+-	test -f obj.o &&
+-	test -f build/lib.so
++	test_path_is_file docs/manual.txt &&
++	test_path_is_file obj.o &&
++	test_path_is_file build/lib.so
+ 
+ '
+ 
+@@ -198,13 +198,13 @@ test_expect_success 'git clean with wildcard' '
+ 
+ 	touch a.clean b.clean other.c &&
+ 	git clean "*.clean" &&
+-	test -f Makefile &&
+-	test -f README &&
+-	test -f src/part1.c &&
+-	test -f src/part2.c &&
++	test_path_is_file Makefile &&
++	test_path_is_file README &&
++	test_path_is_file src/part1.c &&
++	test_path_is_file src/part2.c &&
+ 	test ! -f a.clean &&
+ 	test ! -f b.clean &&
+-	test -f other.c
++	test_path_is_file other.c
+ 
+ '
+ 
+@@ -213,15 +213,15 @@ test_expect_success 'git clean -n' '
+ 	mkdir -p build docs &&
+ 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
+ 	git clean -n &&
+-	test -f Makefile &&
+-	test -f README &&
+-	test -f src/part1.c &&
+-	test -f src/part2.c &&
+-	test -f a.out &&
+-	test -f src/part3.c &&
+-	test -f docs/manual.txt &&
+-	test -f obj.o &&
+-	test -f build/lib.so
++	test_path_is_file Makefile &&
++	test_path_is_file README &&
++	test_path_is_file src/part1.c &&
++	test_path_is_file src/part2.c &&
++	test_path_is_file a.out &&
++	test_path_is_file src/part3.c &&
++	test_path_is_file docs/manual.txt &&
++	test_path_is_file obj.o &&
++	test_path_is_file build/lib.so
+ 
+ '
+ 
+@@ -230,15 +230,15 @@ test_expect_success 'git clean -d' '
+ 	mkdir -p build docs &&
+ 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
+ 	git clean -d &&
+-	test -f Makefile &&
+-	test -f README &&
+-	test -f src/part1.c &&
+-	test -f src/part2.c &&
++	test_path_is_file Makefile &&
++	test_path_is_file README &&
++	test_path_is_file src/part1.c &&
++	test_path_is_file src/part2.c &&
+ 	test ! -f a.out &&
+ 	test ! -f src/part3.c &&
+ 	test ! -d docs &&
+-	test -f obj.o &&
+-	test -f build/lib.so
++	test_path_is_file obj.o &&
++	test_path_is_file build/lib.so
+ 
+ '
+ 
+@@ -247,16 +247,16 @@ test_expect_success 'git clean -d src/ examples/' '
+ 	mkdir -p build docs examples &&
+ 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so examples/1.c &&
+ 	git clean -d src/ examples/ &&
+-	test -f Makefile &&
+-	test -f README &&
+-	test -f src/part1.c &&
+-	test -f src/part2.c &&
+-	test -f a.out &&
++	test_path_is_file Makefile &&
++	test_path_is_file README &&
++	test_path_is_file src/part1.c &&
++	test_path_is_file src/part2.c &&
++	test_path_is_file a.out &&
+ 	test ! -f src/part3.c &&
+ 	test ! -f examples/1.c &&
+-	test -f docs/manual.txt &&
+-	test -f obj.o &&
+-	test -f build/lib.so
++	test_path_is_file docs/manual.txt &&
++	test_path_is_file obj.o &&
++	test_path_is_file build/lib.so
+ 
+ '
+ 
+@@ -265,15 +265,15 @@ test_expect_success 'git clean -x' '
+ 	mkdir -p build docs &&
+ 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
+ 	git clean -x &&
+-	test -f Makefile &&
+-	test -f README &&
+-	test -f src/part1.c &&
+-	test -f src/part2.c &&
++	test_path_is_file Makefile &&
++	test_path_is_file README &&
++	test_path_is_file src/part1.c &&
++	test_path_is_file src/part2.c &&
+ 	test ! -f a.out &&
+ 	test ! -f src/part3.c &&
+-	test -f docs/manual.txt &&
++	test_path_is_file docs/manual.txt &&
+ 	test ! -f obj.o &&
+-	test -f build/lib.so
++	test_path_is_file build/lib.so
+ 
+ '
+ 
+@@ -282,10 +282,10 @@ test_expect_success 'git clean -d -x' '
+ 	mkdir -p build docs &&
+ 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
+ 	git clean -d -x &&
+-	test -f Makefile &&
+-	test -f README &&
+-	test -f src/part1.c &&
+-	test -f src/part2.c &&
++	test_path_is_file Makefile &&
++	test_path_is_file README &&
++	test_path_is_file src/part1.c &&
++	test_path_is_file src/part2.c &&
+ 	test ! -f a.out &&
+ 	test ! -f src/part3.c &&
+ 	test ! -d docs &&
+@@ -299,12 +299,12 @@ test_expect_success 'git clean -d -x with ignored tracked directory' '
+ 	mkdir -p build docs &&
+ 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
+ 	git clean -d -x -e src &&
+-	test -f Makefile &&
+-	test -f README &&
+-	test -f src/part1.c &&
+-	test -f src/part2.c &&
++	test_path_is_file Makefile &&
++	test_path_is_file README &&
++	test_path_is_file src/part1.c &&
++	test_path_is_file src/part2.c &&
+ 	test ! -f a.out &&
+-	test -f src/part3.c &&
++	test_path_is_file src/part3.c &&
+ 	test ! -d docs &&
+ 	test ! -f obj.o &&
+ 	test ! -d build
+@@ -316,15 +316,15 @@ test_expect_success 'git clean -X' '
+ 	mkdir -p build docs &&
+ 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
+ 	git clean -X &&
+-	test -f Makefile &&
+-	test -f README &&
+-	test -f src/part1.c &&
+-	test -f src/part2.c &&
+-	test -f a.out &&
+-	test -f src/part3.c &&
+-	test -f docs/manual.txt &&
++	test_path_is_file Makefile &&
++	test_path_is_file README &&
++	test_path_is_file src/part1.c &&
++	test_path_is_file src/part2.c &&
++	test_path_is_file a.out &&
++	test_path_is_file src/part3.c &&
++	test_path_is_file docs/manual.txt &&
+ 	test ! -f obj.o &&
+-	test -f build/lib.so
++	test_path_is_file build/lib.so
+ 
+ '
+ 
+@@ -333,13 +333,13 @@ test_expect_success 'git clean -d -X' '
+ 	mkdir -p build docs &&
+ 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
+ 	git clean -d -X &&
+-	test -f Makefile &&
+-	test -f README &&
+-	test -f src/part1.c &&
+-	test -f src/part2.c &&
+-	test -f a.out &&
+-	test -f src/part3.c &&
+-	test -f docs/manual.txt &&
++	test_path_is_file Makefile &&
++	test_path_is_file README &&
++	test_path_is_file src/part1.c &&
++	test_path_is_file src/part2.c &&
++	test_path_is_file a.out &&
++	test_path_is_file src/part3.c &&
++	test_path_is_file docs/manual.txt &&
+ 	test ! -f obj.o &&
+ 	test ! -d build
+ 
+@@ -350,13 +350,13 @@ test_expect_success 'git clean -d -X with ignored tracked directory' '
+ 	mkdir -p build docs &&
+ 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
+ 	git clean -d -X -e src &&
+-	test -f Makefile &&
+-	test -f README &&
+-	test -f src/part1.c &&
+-	test -f src/part2.c &&
+-	test -f a.out &&
++	test_path_is_file Makefile &&
++	test_path_is_file README &&
++	test_path_is_file src/part1.c &&
++	test_path_is_file src/part2.c &&
++	test_path_is_file a.out &&
+ 	test ! -f src/part3.c &&
+-	test -f docs/manual.txt &&
++	test_path_is_file docs/manual.txt &&
+ 	test ! -f obj.o &&
+ 	test ! -d build
+ 
+@@ -381,29 +381,29 @@ test_expect_success 'clean.requireForce and -n' '
+ 	mkdir -p build docs &&
+ 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
+ 	git clean -n &&
+-	test -f Makefile &&
+-	test -f README &&
+-	test -f src/part1.c &&
+-	test -f src/part2.c &&
+-	test -f a.out &&
+-	test -f src/part3.c &&
+-	test -f docs/manual.txt &&
+-	test -f obj.o &&
+-	test -f build/lib.so
++	test_path_is_file Makefile &&
++	test_path_is_file README &&
++	test_path_is_file src/part1.c &&
++	test_path_is_file src/part2.c &&
++	test_path_is_file a.out &&
++	test_path_is_file src/part3.c &&
++	test_path_is_file docs/manual.txt &&
++	test_path_is_file obj.o &&
++	test_path_is_file build/lib.so
+ 
+ '
+ 
+ test_expect_success 'clean.requireForce and -f' '
+ 
+ 	git clean -f &&
+-	test -f README &&
+-	test -f src/part1.c &&
+-	test -f src/part2.c &&
++	test_path_is_file README &&
++	test_path_is_file src/part1.c &&
++	test_path_is_file src/part2.c &&
+ 	test ! -f a.out &&
+ 	test ! -f src/part3.c &&
+-	test -f docs/manual.txt &&
+-	test -f obj.o &&
+-	test -f build/lib.so
++	test_path_is_file docs/manual.txt &&
++	test_path_is_file obj.o &&
++	test_path_is_file build/lib.so
+ 
+ '
+ 
+@@ -446,10 +446,10 @@ test_expect_success 'nested git work tree' '
+ 		test_commit deeply.nested deeper.world
+ 	) &&
+ 	git clean -f -d &&
+-	test -f foo/.git/index &&
+-	test -f foo/hello.world &&
+-	test -f baz/boo/.git/index &&
+-	test -f baz/boo/deeper.world &&
++	test_path_is_file foo/.git/index &&
++	test_path_is_file foo/hello.world &&
++	test_path_is_file baz/boo/.git/index &&
++	test_path_is_file baz/boo/deeper.world &&
+ 	! test -d bar
+ '
+ 
 
-> Wouldn't it be a lot more useful if
->
->         git commit --trailer=3D"Helped-by:@Ch.*Couder"
->
-> is expanded (note: I am not married to the syntax, but only for
-> illustration purposes, I am using "a value prefixed by @ triggers
-> the 'name expansion'" convention in this example.  People can come
-> up with better convention) by finding an author or a committer whose
-> name matches the given pattern from "git log"?  Then, instead of
->
->         git commit --own-identity --trailer=3DSigned-off-by
->
-> I can say
->
->         git commit --trailer=3DSigned-off-by:@gitster
->
-> and I can even add more than one, e.g.
->
->         git commit --trailer=3DHelped-by:@peff --trailer=3DSigned-off-by:=
-@gitster
->
-
-I agree that this idea can be extended again from "own-identity "
-mode to "multiple-identity mode",=E2=80=98@=E2=80=99 seems to have a lot of
- important meanings in git, but I don=E2=80=99t know how to design a soluti=
-on
- that is more suitable than yours for the time being.
-
- Another doubt  is what happens if one person corresponds to
- multiple mailboxes or one mailbox corresponds to multiple people?
-
-I think `--own-ident` may be a somewhat "narrow" option that can be
-kept. Also add a new option for interpret-trailers to resolve the identity
-of other people?
-
-Thanks for suggestions.
+base-commit: 576ba9dcdaf1007243f5a5cb4bf1a1e7b8fcf850
+-- 
+gitgitgadget
