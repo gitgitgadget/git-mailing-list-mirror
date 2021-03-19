@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67972C433C1
-	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 23:22:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FB86C433C1
+	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 23:37:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2956F6198B
-	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 23:22:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4E34961926
+	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 23:37:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229826AbhCSXWR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Mar 2021 19:22:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57554 "EHLO
+        id S229600AbhCSXgY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Mar 2021 19:36:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229818AbhCSXV4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Mar 2021 19:21:56 -0400
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E943C061760
-        for <git@vger.kernel.org>; Fri, 19 Mar 2021 16:21:56 -0700 (PDT)
-Received: by mail-ot1-x331.google.com with SMTP id w31-20020a9d36220000b02901f2cbfc9743so9797632otb.7
-        for <git@vger.kernel.org>; Fri, 19 Mar 2021 16:21:56 -0700 (PDT)
+        with ESMTP id S229512AbhCSXfv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Mar 2021 19:35:51 -0400
+Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5919EC061760
+        for <git@vger.kernel.org>; Fri, 19 Mar 2021 16:35:51 -0700 (PDT)
+Received: by mail-oi1-x229.google.com with SMTP id n8so6522175oie.10
+        for <git@vger.kernel.org>; Fri, 19 Mar 2021 16:35:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=or7Tnje+YkZ4h6GtFDUOUt7hW9wsnmcLoAAZn4RGYik=;
-        b=fShiVdrYhcABXsM0BcHSC3J7uIDm5MbFiQ8rsVOmmHnQhAGQiECgE4BhAefNO6e61z
-         Z9I0b7Ed2ojYXM6B6JmCkpyx9AShEnOEkcYoXfQD/sbZR/ky/egDcJ63R1naUec3hZA+
-         inwj7iETN34YrVg8B+2jMFPX3XpS+CnPd3w/AOPhzWW+W/eXk78vDN7UWJ2NnqWifuNl
-         M6nnA+npCrukQt09ZWpSk+94GJPqqFGSw1VSxVVdOFa8EDCU0nscHJQDVU6WMdWC+rbJ
-         CXLhvo2X5QkBSZQ4u4jBJ4UV3PRJcIRlLzQzlMjr9gjyp123zXbofsKpbTIIH+Om5/Kr
-         dASA==
+        bh=auQ6YW99YpIIm5UsY/go2iMIEoZmpjid0twWU98HTDM=;
+        b=TVFFXHgMeDS6iQs8e5CwKOd2F+H/yk8psYri4fCFkKZZflZwbg3epTiTI3wU9UOIsf
+         6EAtuUDw4uMyzklqwJ1GM2R3OEvsvo67FF0l4UDBEnmsrQ22oz5kRYswxWgmRX7lTDti
+         ad1oYXZIfbNt4QCQXWcJNeIBJ79KlHn21niKft3LiOf/pPA0d/e+BFzp1jMWPBpJCcqp
+         x47QErm8Lb2FCP1+/0IiujyNKtcOg5qGmlYE/zzLh84LDLM89kedbMPlqd/V6jpjvbXU
+         nKxlQc35KNZOMDDmYGGT78lJ5bhzl5cwczg6ayXPGBt22rLR+Hc0eazyWtLh3xFYnqbz
+         JfBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=or7Tnje+YkZ4h6GtFDUOUt7hW9wsnmcLoAAZn4RGYik=;
-        b=FFBqBzM8X7pNe5UgkoUZ1Q7sIzOZkMoH/+goVRhSYDvOBIdhQobJZZF8oj/wDGnBES
-         Q4qbR6qBgNtU4Wtyh4kJbPYziN+11kQelLjJ1KDfNwrqD71bue8xrJ2aNnQU6CgJXkBv
-         3RXTUeWG5jgaqGRi/WFJltixd3g/Lev1v5hywNcV/xKSImHZeEqm5pVlAaNukAVXgq/e
-         A1F2zIIE+ZYXG68OyT044HZL2ck7QUE61KzkRCsDQRyp0N96H3XYvRd6fHHwYRzBoh5D
-         MVIZJH28MrIaMq8m6IJS1tWcrAS0ryxToOUU0I0ATtW5N0Ilw158YrW2src3LPnSIgcp
-         e8Dw==
-X-Gm-Message-State: AOAM5300ZAUNQm8NMcFeFFmNlW6aXsXGpXhMYodLdv5q3C4FkHFLjmy9
-        F6mA0Y3B8Uw9qpLl2xuUHgTTyQH17D8YIj4SQkg=
-X-Google-Smtp-Source: ABdhPJylHFoYFmaHI2d+wKNOBJGdMVgiYXUvrtyiFdBdMkFLjDiCa1KSiDvt+gn8qOFek3tOMsx7Qhflm5FOZda0DWo=
-X-Received: by 2002:a9d:8d5:: with SMTP id 79mr2898388otf.345.1616196115965;
- Fri, 19 Mar 2021 16:21:55 -0700 (PDT)
+        bh=auQ6YW99YpIIm5UsY/go2iMIEoZmpjid0twWU98HTDM=;
+        b=WtsdjluNkPMpSwOPeWO9aTEfbeHiXiwvPhXOVBKL8g8DSvEAAtIi1KXw7uj5a3BcyN
+         PQWgpyRUyIgF6aM9A1OwhuXa7qMpAFmd9+qr/XA1PirpBQYzzkarWXddyr3tW61LQ4/L
+         ZyMk+QLXDVCTcSdM5A5JiIKoF/0Ptl59UOLlPZpYDTFqDaOHCKxzl+vjJISONNxY6lWI
+         xw9isJQs2erWBuARjLLjJKOTzijzqUIryJSWE8v8WeFEjuc7sD5mf/18HugfXOV8DkGf
+         YQNhrinoHeiUaEBd82BTWhJvaFB//MSdNM8gTbCBtoD7DAWezFdGnG55/dhWsh5GTquE
+         CLXw==
+X-Gm-Message-State: AOAM530cgLLFwL/wh3vSr9L26FgW+f/3Aa8Ylr+hjra90cQXSpI/pcYV
+        N7IN8Nn5NUeUUewVTHqNeaRt3JDkJBVjXRBKJdLtqUM663o=
+X-Google-Smtp-Source: ABdhPJyLqzghA+EV7/H12dW6XcUanVsYq6FiQRASVRt7UKoJisPGVm85XJfO7kMGwQaqqPX6JRnKfkyZOneqrf5DLEc=
+X-Received: by 2002:a05:6808:a8a:: with SMTP id q10mr2654580oij.167.1616196950729;
+ Fri, 19 Mar 2021 16:35:50 -0700 (PDT)
 MIME-Version: 1.0
 References: <pull.905.git.1615867503.gitgitgadget@gmail.com>
  <pull.905.v2.git.1616016485.gitgitgadget@gmail.com> <80cccc70-296a-05d2-94a8-0e005e4abe1d@gmail.com>
 In-Reply-To: <80cccc70-296a-05d2-94a8-0e005e4abe1d@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 19 Mar 2021 16:21:44 -0700
-Message-ID: <CABPp-BGm1R0OVywK50eMf9OWKv95nA+V2bzX6WLm2iFvfN_i9Q@mail.gmail.com>
+Date:   Fri, 19 Mar 2021 16:35:39 -0700
+Message-ID: <CABPp-BEFPCmr-_cn5bzoOefMN4LKARefKaoobcgJLjcRLBBoZg@mail.gmail.com>
 Subject: Re: [PATCH v2 00/13] Declare merge-ort ready for general usage
 To:     Derrick Stolee <stolee@gmail.com>
 Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
@@ -76,9 +76,14 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+One more thing...
+
 On Fri, Mar 19, 2021 at 6:09 AM Derrick Stolee <stolee@gmail.com> wrote:
 >
 > On 3/17/2021 5:27 PM, Elijah Newren via GitGitGadget wrote:
+
+^^^ Note: 18 hours, 42 minutes difference.
+
 > > This series depends on ort-perf-batch-10[1], and obsoletes the ort-rema=
 inder
 > > topic[2] (that hadn't been picked up yet, so hopefully this doesn't cau=
@@ -100,50 +105,11 @@ se
 > >  * the next two patches were the original v1, reviewed by Stolee
 > >  * the final patch is new and adds testing.
 >
-> Sorry for the delay in looking at this. I read the two series before
-> this, and found this to be a good union of them.
->
-> My only question on the final patch is a two parter:
->
-> 1. Did you mean to go this far?
+> Sorry for the delay in looking at this.
 
-At least, yes.
+Delay?!?  You only took a day and a half to respond!  That's a fast
+turnaround, not a delay.  Don't apologize for that, or you'll set
+unreasonably high expectations that'll scare the rest of us away.  :-)
 
-> 2. Did you want to go farther?
 
-I like your suggestion in the other email; I'll resubmit to take
-advantage of it.  :-)
-
-> Mostly: how much do we want to prepare for ORT as the default
-> strategy, at the expense of reducing testing of the recursive
-> strategy?
-
-We definitely should prepare for merge-ort as the default.  There's a
-question of how soon the switch should be, but no question in my mind
-that we should move towards it.
-
-What do others think is needed before we switch the default?
-Personally, I think there are three things:
-
-1) merge-ort must handle the same cases that merge-recursive does
-2) merge-ort must provide some benefit over merge-recursive
-3) folks on the mailing list need to be comfortable with the default switch=
-.
-
-What would others add?
-
-The first 2 conditions are already met, in spades.  For all the code
-that calls merge-ort, merge-ort handles all the same cases, is more
-correct, more performant, and more featureful than merge-recursive.  I
-was surprised by how smooth the roll-out was and has continued to be
-for internal users at $DAYJOB.
-
-The only question is item #3.  If it weren't for that, I'd say we
-should switch the default now, because AFAICT delaying the default
-switch will just delay when expanded testing occurs, and I have run
-out of other ways to expand testing.  But I realize I'm the only one
-who knows that and is comfortable with that.  So I'm not proposing a
-default switch yet; I want to hear feedback on what others want to see
-done before we switch.  (At some point in the future, say another year
-or two, I'll ask what needs to be done before we *delete*
-merge-recursive.[ch].  But that's still off in the distant future.)
+Thanks for all your review efforts; it's very much appreciated!
