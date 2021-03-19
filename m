@@ -8,131 +8,257 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 97CBFC433DB
-	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 07:26:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3007C433E6
+	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 07:57:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5E81864F62
-	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 07:26:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9B90F64F69
+	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 07:57:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234137AbhCSH0I (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Mar 2021 03:26:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48646 "EHLO
+        id S233819AbhCSH4w (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Mar 2021 03:56:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55256 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234479AbhCSH0H (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Mar 2021 03:26:07 -0400
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FFA2C06174A
-        for <git@vger.kernel.org>; Fri, 19 Mar 2021 00:26:07 -0700 (PDT)
-Received: by mail-oi1-x230.google.com with SMTP id d133so3801511oib.3
-        for <git@vger.kernel.org>; Fri, 19 Mar 2021 00:26:07 -0700 (PDT)
+        with ESMTP id S234078AbhCSH4n (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Mar 2021 03:56:43 -0400
+Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1466C06174A
+        for <git@vger.kernel.org>; Fri, 19 Mar 2021 00:56:43 -0700 (PDT)
+Received: by mail-oi1-x231.google.com with SMTP id a8so3870071oic.11
+        for <git@vger.kernel.org>; Fri, 19 Mar 2021 00:56:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=Fw2z9tDWqi2922MjRcfvlo4VkgWTGleQthnPPDDDZks=;
-        b=JYBn3yDr+94il167xjOXSUJf5zTKQCZGJiWab0FPNjBnJLgG5hKrkTN7iunmj8vZuw
-         TqnVQyONsaoItUdhFrnYAxt15fKR85Dnzjev+NuMCfMxC24wCeQDibTrTFP4MG41EUb7
-         L98WtzZ0CZqbRxtJIsoWDGQ1eTSA4bm9iuIASiar+hiFQ7GBsGH6ER9T2WltX2NSc/4c
-         PYO/xWxN3z1Ne+VdVp3TYHCm5eGUphO+MOl/SrDeH1wh45xeuSy2KqcszLNIK7KXhsxU
-         MNmsTuPPUhjrPNyKue2jP9Xyt+zectj8Nf5D/nccEyloBDP0b0t5m47XMoG/H2+KUTm/
-         J0EQ==
+        bh=WNN+NemvL4NhupPjcLfJVFtJwQ7r0JxtzPovrnr8vIs=;
+        b=kURUkAf+MLWuaThbmSv6t1eNn3d37Yw0HCQ7uws/r6S2Jr2SbgGYSYoKjYppIJXeIc
+         xHuD0BaW9JaKm50CsGgITaKrtEOFSsGUFnyGSemsAO1A9zqS4fV3Rys0QcZEbJAn6EOo
+         J5oXrPJgHk+h3Ycet4oZSY+OFiReJZCy43no5EOJqS4ScVJKYpYQkZCqDJspWuhJwN7q
+         mAPWQAF5iZ2HFa8uFb8ZF8rI61chtudGK9jtASlBM63eakc7SMchr7l9HavTNGWr4ezG
+         ZH71wp0hYpLAXZr1MONaSqaBw3ia9tTuIG8BKZ/L6BsijWE3G3fyAi8t9sTFd3bTKxlt
+         hnMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Fw2z9tDWqi2922MjRcfvlo4VkgWTGleQthnPPDDDZks=;
-        b=dnnL6i6mDchcA2+kwFXpihxRQVqLBmCCubjf7pFNfPsaPfRWtzMZd8wqBCRrfc2ZAz
-         eOn3Eka7caezrzM+o7bUlrQqUNw4SMjK6HC9fDipZUzq3nE2x6lwriXqorilea6JdI2Y
-         01MVfZvhTXGNKQtSf6awqOXimDYX9btmeAfEjFcIPtSK6H82XNixqIS+C9y1zBzP6udJ
-         eFCOMepzDlwYMFtqsPVV0TySupT2Ur4Mqsp/TgVZkWG87vXsN1AvjnwY3hKGDnI1LJbH
-         cH5Wk6r31Ha/j2VyJiW9iGyZWl172Pk2pCDU9aCsFH2qjl6CUPUrhNW9gg11OrsfqSg+
-         e+Gw==
-X-Gm-Message-State: AOAM5336TmNs5scLiHvSAGnfsM4+UUqUhwaZxfonGVaJrbQL873awZr8
-        sMMnf6udEEJbC5qQO/R/ERbaHJfMdWJ6J1BPAng=
-X-Google-Smtp-Source: ABdhPJwZNBbAe4MRs/SYgIPIwmgF+cv2VloxCyi4+mZh3kX655HUVIRKfKvkiYlzSsWaRGz0nL5J6SSrj16EmMiZPGg=
-X-Received: by 2002:aca:af10:: with SMTP id y16mr109470oie.120.1616138766724;
- Fri, 19 Mar 2021 00:26:06 -0700 (PDT)
+        bh=WNN+NemvL4NhupPjcLfJVFtJwQ7r0JxtzPovrnr8vIs=;
+        b=mOPYi2zSG8uCVKIIocVAEznqCAbN6QtW+Eku9I7u1qyyciBJk1N1SK7YyV1PCCS7QX
+         Y+hDAego0yUC6EGJZxCiFQ+NV33QELlYCO3IBA952sr+ueA9idF2/+sa0FJkThAziHXS
+         FnynQX1sUIy4j2l6kki2ixtb2VmriIPvEnhynNZRP2VLz192ue0FXRACXPKy7Bdch/3q
+         kV2BTHlcE1XBHB5QqrD4NxKHyfZBgoZzoLfsBYjsEGt+xBDbzmk3blyNsNdz0ZjF/KHR
+         FxX6I8ThDpXOFqJgpv1PEzw772LmixEJzbSar3TM3d7995gVh5c2YygYtz2iLKkgOxH4
+         TglA==
+X-Gm-Message-State: AOAM532DIAzvIkLDD1Izg5Hilm6WfugcBm9vphwMWFuKXtfOLGvx7Jbq
+        h/XEyGtO9EL7xE9EE5b3LCpYhJOpQdAXa6Y2rCA=
+X-Google-Smtp-Source: ABdhPJz23iymVjEewanhIxdyRRfb4Aj2O9Rxw6k/ZrB23i9s5877SFoWHr0hbqeEjYgRn+qu6O2bMISnHb0cGH/WA9M=
+X-Received: by 2002:aca:af10:: with SMTP id y16mr71630oie.120.1616140603206;
+ Fri, 19 Mar 2021 00:56:43 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.885.v5.git.1615883137212.gitgitgadget@gmail.com>
- <pull.885.v6.git.1616047200968.gitgitgadget@gmail.com> <CAPig+cTv55r+Nr9pb1jQh99YjzkWgjfeYFUEgcMr1LM9g=5xXA@mail.gmail.com>
-In-Reply-To: <CAPig+cTv55r+Nr9pb1jQh99YjzkWgjfeYFUEgcMr1LM9g=5xXA@mail.gmail.com>
+References: <pull.901.v9.git.1615891183320.gitgitgadget@gmail.com>
+ <pull.901.v10.git.1616066156.gitgitgadget@gmail.com> <949faf9ee56a3146a643ba634771779efa89bbc5.1616066156.git.gitgitgadget@gmail.com>
+ <YFOAAQmVqUVOpLK1@danh.dev>
+In-Reply-To: <YFOAAQmVqUVOpLK1@danh.dev>
 From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Fri, 19 Mar 2021 15:25:55 +0800
-Message-ID: <CAOLTT8SMW=UjXq5PJDe2w_ur=1JH-Kdhh4mKdkmRyXBG9HoEbQ@mail.gmail.com>
-Subject: Re: [PATCH v6] format-patch: allow a non-integral version numbers
-To:     Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 19 Mar 2021 15:56:31 +0800
+Message-ID: <CAOLTT8TQJPBRyjsuZ6sMBESfkpOT9moCbkOjdtPs7sDQJ-kd+A@mail.gmail.com>
+Subject: Re: [PATCH v10 1/3] [GSOC] commit: add --trailer option
+To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
 Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
         Git List <git@vger.kernel.org>,
+        "Bradley M. Kuhn" <bkuhn@sfconservancy.org>,
         Junio C Hamano <gitster@pobox.com>,
-        Denton Liu <liu.denton@gmail.com>,
-        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
+        Brandon Casey <drafnel@gmail.com>,
+        Shourya Shukla <periperidip@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Rafael Silva <rafaeloliveira.cs@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> =E4=BA=8E2021=E5=B9=B43=E6=9C=8819=
-=E6=97=A5=E5=91=A8=E4=BA=94 =E4=B8=8B=E5=8D=882:00=E5=86=99=E9=81=93=EF=BC=
-=9A
+=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh <congdanhqx@gmail.com> =E4=BA=8E=
+2021=E5=B9=B43=E6=9C=8819=E6=97=A5=E5=91=A8=E4=BA=94 =E4=B8=8A=E5=8D=8812:2=
+9=E5=86=99=E9=81=93=EF=BC=9A
 >
-> On Thu, Mar 18, 2021 at 2:00 AM ZheNing Hu via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> > Usually we can only use `format-patch -v<n>` to generate integral
-> > version numbers patches, but sometimes a same fixup should be
-> > labeled as a non-integral version like `v1.1`, so teach `format-patch`
-> > to allow a non-integral version which may be helpful to send those
-> > patches.
+> On 2021-03-18 11:15:54+0000, ZheNing Hu via GitGitGadget <gitgitgadget@gm=
+ail.com> wrote:
+> > From: ZheNing Hu <adlternative@gmail.com>
 > >
-> > `<n>` can be any string, such as `-v1.1`.  In the case where it
-> > is a non-integral value, the "Range-diff" and "Interdiff"
-> > headers will not include the previous version.
+> > Historically, Git has supported the 'Signed-off-by' commit trailer
+> > using the '--signoff' and the '-s' option from the command line.
+> > But users may need to provide other trailer information from the
+> > command line such as "Helped-by", "Reported-by", "Mentored-by",
+> >
+> > Now implement a new `--trailer <token>[(=3D|:)<value>]` option to pass
+> > other trailers to `interpret-trailers` and insert them into commit
+> > messages.
 > >
 > > Signed-off-by: ZheNing Hu <adlternative@gmail.com>
 > > ---
-> > diff --git a/builtin/log.c b/builtin/log.c
-> > @@ -1662,13 +1662,18 @@ static void print_bases(struct base_tree_info *=
-bases, FILE *file)
-> > +static const char *diff_title(struct strbuf *sb,
-> > +                             const char *reroll_count,
-> > +                             const char *generic,
-> > +                             const char *rerolled)
-> >  {
-> > -       if (reroll_count <=3D 0)
-> > +       int v;
+> >  Documentation/git-commit.txt |  10 +-
+> >  builtin/commit.c             |  23 +++
+> >  t/t7502-commit-porcelain.sh  | 336 +++++++++++++++++++++++++++++++++++
+> >  3 files changed, 368 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.tx=
+t
+> > index 17150fa7eabe..c5de981cd40d 100644
+> > --- a/Documentation/git-commit.txt
+> > +++ b/Documentation/git-commit.txt
+> > @@ -14,7 +14,7 @@ SYNOPSIS
+> >          [--allow-empty-message] [--no-verify] [-e] [--author=3D<author=
+>]
+> >          [--date=3D<date>] [--cleanup=3D<mode>] [--[no-]status]
+> >          [-i | -o] [--pathspec-from-file=3D<file> [--pathspec-file-nul]=
+]
+> > -        [-S[<keyid>]] [--] [<pathspec>...]
+> > +        [-S[<keyid>]] [--] [<pathspec>...] [(--trailer <token>[(=3D|:)=
+<value>])...]
+>
+> Please move all options before non-option arguments.
+> In other words, please move --trailer before [--].
+>
+> This form implies that there are no way to specify pathspec "--trailer"
+
+Thanks, I didn't pay attention to this little detail before.
+
+>
+> >
+> >  DESCRIPTION
+> >  -----------
+> > @@ -166,6 +166,14 @@ The `-m` option is mutually exclusive with `-c`, `=
+-C`, and `-F`.
+> >
+> >  include::signoff-option.txt[]
+> >
+> > +--trailer <token>[(=3D|:)<value>]::
+> > +     Specify a (<token>, <value>) pair that should be applied as a
+> > +     trailer. (e.g. `git commit --trailer "Signed-off-by:C O Mitter \
+> > +     <committer@example.com>" --trailer "Helped-by:C O Mitter \
+> > +     <committer@example.com>"` will add the "Signed-off-by" trailer
+> > +     and the "Helped-by" trailer in the commit message.)
+> > +     Use `git -c trailer.* commit --trailer` to make the appropriate
+> > +     configuration. See linkgit:git-interpret-trailers[1] for details.
+> >  -n::
+> >  --no-verify::
+> >       This option bypasses the pre-commit and commit-msg hooks.
+> > diff --git a/builtin/commit.c b/builtin/commit.c
+> > index 739110c5a7f6..7a79aae48f43 100644
+> > --- a/builtin/commit.c
+> > +++ b/builtin/commit.c
+> > @@ -113,6 +113,7 @@ static int config_commit_verbose =3D -1; /* unspeci=
+fied */
+> >  static int no_post_rewrite, allow_empty_message, pathspec_file_nul;
+> >  static char *untracked_files_arg, *force_date, *ignore_submodule_arg, =
+*ignored_arg;
+> >  static char *sign_commit, *pathspec_from_file;
+> > +static struct strvec trailer_args =3D STRVEC_INIT;
+> >
+> >  /*
+> >   * The default commit message cleanup mode will remove the lines
+> > @@ -131,6 +132,14 @@ static struct strbuf message =3D STRBUF_INIT;
+> >
+> >  static enum wt_status_format status_format =3D STATUS_FORMAT_UNSPECIFI=
+ED;
+> >
+> > +static int opt_pass_trailer(const struct option *opt, const char *arg,=
+ int unset)
+> > +{
+> > +     BUG_ON_OPT_NEG(unset);
 > > +
-> > +       /* RFC may be v0, so allow -v1 to diff against v0 */
-> > +       if (reroll_count && !strtol_i(reroll_count, 10, &v))
-> > +               strbuf_addf(sb, rerolled, v - 1);
-> > +       else
-> >                 strbuf_addstr(sb, generic);
-> > -       else /* RFC may be v0, so allow -v1 to diff against v0 */
-> > -               strbuf_addf(sb, rerolled, reroll_count - 1);
-> >         return sb->buf;
-> >  }
+> > +     strvec_pushl(&trailer_args, "--trailer", arg, NULL);
+> > +     return 0;
+> > +}
+> > +
+> >  static int opt_parse_porcelain(const struct option *opt, const char *a=
+rg, int unset)
+> >  {
+> >       enum wt_status_format *value =3D (enum wt_status_format *)opt->va=
+lue;
+> > @@ -958,6 +967,19 @@ static int prepare_to_commit(const char *index_fil=
+e, const char *prefix,
+> >
+> >       fclose(s->fp);
+> >
+> > +     if (trailer_args.nr) {
+> > +             struct child_process run_trailer =3D CHILD_PROCESS_INIT;
+> > +
+> > +             strvec_pushl(&run_trailer.args, "interpret-trailers",
+> > +                          "--in-place", git_path_commit_editmsg(), NUL=
+L);
+> > +             strvec_pushv(&run_trailer.args, trailer_args.v);
+> > +             run_trailer.git_cmd =3D 1;
+> > +             if (run_command(&run_trailer)) {
+> > +                     die(_("unable to pass tailers to --trailers"));
 >
-> The comment about RFC and v0 doesn't really make sense anymore. Its
-> original purpose was to explain why the `if` condition (which goes
-> away with this patch) was `<=3D0` rather than `<=3D1`. It might make sens=
-e
-> to keep the comment if the code is written like this:
->
->     if (reroll_count &&
->             !strtol_i(reroll_count, 10, &v) &&
->             reroll_count >=3D 1)
->         strbuf_addf(sb, rerolled, v - 1);
->     else
->         ...
->
-> However, I'm not sure it's worth re-rolling just to make this change.
+> s/tailers/trailers/ perhap?
+> Also we usually not put {} around single statement.
 >
 
-Well, after testing, I think it is still necessary to add "v-1 >=3D0" to
-the judgment
-condition. Because if we use `-v0`, "Range-diff against v-1:" will be outpu=
-t in
-the patch.
+OK.
 
-> Thanks.
+> > +             }
+> > +             strvec_clear(&trailer_args);
+> > +     }
+> > +
+> >       /*
+> >        * Reject an attempt to record a non-merge empty commit without
+> >        * explicit --allow-empty. In the cherry-pick case, it may be
+> > @@ -1507,6 +1529,7 @@ int cmd_commit(int argc, const char **argv, const=
+ char *prefix)
+> >               OPT_STRING(0, "fixup", &fixup_message, N_("commit"), N_("=
+use autosquash formatted message to fixup specified commit")),
+> >               OPT_STRING(0, "squash", &squash_message, N_("commit"), N_=
+("use autosquash formatted message to squash specified commit")),
+> >               OPT_BOOL(0, "reset-author", &renew_authorship, N_("the co=
+mmit is authored by me now (used with -C/-c/--amend)")),
+> > +             OPT_CALLBACK_F(0, "trailer", NULL, N_("trailer"), N_("add=
+ custom trailer(s)"), PARSE_OPT_NONEG, opt_pass_trailer),
+> >               OPT_BOOL('s', "signoff", &signoff, N_("add a Signed-off-b=
+y trailer")),
+> >               OPT_FILENAME('t', "template", &template_file, N_("use spe=
+cified template file")),
+> >               OPT_BOOL('e', "edit", &edit_flag, N_("force edit of commi=
+t")),
+> > diff --git a/t/t7502-commit-porcelain.sh b/t/t7502-commit-porcelain.sh
+> > index 6396897cc818..6df71fa00bcb 100755
+> > --- a/t/t7502-commit-porcelain.sh
+> > +++ b/t/t7502-commit-porcelain.sh
+> > @@ -154,6 +154,342 @@ test_expect_success 'sign off' '
+> >
+> >  '
+> >
+> > +test_expect_success 'commit --trailer without -c' '
+> > +     echo "fun" >>file &&
+> > +     git add file &&
+> > +     cat >expected <<-\EOF &&
+> > +
+> > +     Signed-off-by: C O Mitter <committer@example.com>
+> > +     Signed-off-by: C1 E1
+> > +     Helped-by: C2 E2
+> > +     Reported-by: C3 E3
+> > +     Mentored-by: C4 E4
+> > +     EOF
+> > +     git commit -s --trailer "Signed-off-by:C1 E1 " \
+> > +             --trailer "Helped-by:C2 E2 " \
+> > +             --trailer "Reported-by:C3 E3" \
+> > +             --trailer "Mentored-by:C4 E4" \
+> > +             -m "hello" &&
+>
+> It's documented that we're supporting --trailer <token>[(=3D|:)<value>]
+> However, only --trailer <token>:<value> is tested.
+> I think it's better to have
+>
+>         --trailer "Helped-by=3DC2 E2" --trailer "Reported-by"
+>
 
-Thanks.
+In fact, I want to test in `test_expect_success'commit --trailer with
+-c and "=3D" as separators'`,
+but some changes are needed.
+
+>
+> --
+> Danh
+
+--=20
+ZheNing Hu
