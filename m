@@ -2,76 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=0.2 required=3.0 tests=BAYES_40,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EBB38C433C1
-	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 19:33:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F3A0C433DB
+	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 20:20:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B1A356197D
-	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 19:33:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 013236197B
+	for <git@archiver.kernel.org>; Fri, 19 Mar 2021 20:20:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230492AbhCSTcl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Mar 2021 15:32:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36230 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230218AbhCSTcH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Mar 2021 15:32:07 -0400
-Received: from mail-il1-x12e.google.com (mail-il1-x12e.google.com [IPv6:2607:f8b0:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FA35C06174A
-        for <git@vger.kernel.org>; Fri, 19 Mar 2021 12:32:07 -0700 (PDT)
-Received: by mail-il1-x12e.google.com with SMTP id l5so9069253ilv.9
-        for <git@vger.kernel.org>; Fri, 19 Mar 2021 12:32:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=UoYzIxYFONzeZgJReYCaGg+gEiitKhxNBFfTyIYo2CM=;
-        b=fE2eBTsiwiW6m6J+FdBszsQTee35DCdEmZJlQGv8hdXa/5AkaBXgOy0tHcpFRqhN3L
-         yWVTu1dsO0Ia2e+MivFWyeLnhQ4aVfGitPiZvPKK/24ALoWzr6+ja5q426d7slwJG26n
-         KWECcfKdiD60as2jpX4fDc28Ng2l2TNLIvaYIwXmzOp19hdR0JMoq0UMdZ1Ru9aiTmnD
-         Behd1JvcJT9ZGNOzMgOjw6h0jll4hflMLTqfeT7UdMn+WyDIoAuJmspR7f+8QEL8/WSQ
-         flwzZ1nJZ958AVMQ6pUp55ECdu9vYDXnKW9DJFI/5jNGTVhkxV40uE19alq7lEPda/sc
-         u1Lw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=UoYzIxYFONzeZgJReYCaGg+gEiitKhxNBFfTyIYo2CM=;
-        b=d41bW4EkjA8Y+y1uDr4JrjWhNGTDd8cHrPd6T2f2XQd17tDhf+XyzfwT9qgJS6Y7WQ
-         NrApSjDwX2+cn4oGldkhqB/ip3Oe+6t2y2OUVNDQ4ZruqaRcpsHigcZhK7PfGQ4JpCSo
-         iILZc4R1F/TUgb1jHF1feyz7mGHd9ZowbIrauuvja21K6NaroHJfFdHaolCntm6zaRAv
-         gv4LJxjUy/4C1qa8AqU0k8cUbVndUiVBDU1NaPX5VqjhgkeNepzI2mp7wXyJ+ukMV3wA
-         DFoRtIFvpNbpmJdTn6jY9OR+7INwYo6cmcc0J4+7h293WbSYKD/e0Hesodo0zNnqJYuM
-         gfeg==
-X-Gm-Message-State: AOAM5336WvMkHs3eOsLWqJJphZ5U4jeHyLhCsYInWfXJQuI2IO1tk/OD
-        nb+M70F9PknPlCXxdbpQEgtjvEX79D9Sb1KRngHBx+nzyj0=
-X-Google-Smtp-Source: ABdhPJzC8jTTHFNrZffZg26vqk3LwTs6NVHT83h8ExSL3QK5b0GpX+iyPiMHkSRangoeFm7qG95/O4twRlFsggvMWT0=
-X-Received: by 2002:a05:6e02:85:: with SMTP id l5mr1523544ilm.182.1616182326884;
- Fri, 19 Mar 2021 12:32:06 -0700 (PDT)
+        id S230090AbhCSUTr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Mar 2021 16:19:47 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53076 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229912AbhCSUTn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Mar 2021 16:19:43 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 30122BBB0F;
+        Fri, 19 Mar 2021 16:19:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=WBbLd6aLjE1HwBHxAzekFhAM2XI=; b=PsQT5o
+        1AypLqJtt8x0PYkxoG21bb3kHUTYkyH7dx+La/CLTEvB6vjQtK3+8ZmJQlZIhSCW
+        c7YP10hi+AwzsQLwwK9eOfdl84QnUWv1aRGMZHkHwC5YSBnPxnO1gUICGADCpd3R
+        HLH/mCSViXnWkHp02drIfB1pv3qgxCvgvFdH4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=wHkbjXxKGL9tXjAinQeaifFONGhkuHbK
+        mxe/17htuKM53z5Tmup9uCKjvKTDzPG7LulPIO6ZZNuPRLyXh2OYf/xlts1uw36x
+        /lRZ6iL1BFnFj6geZFMMLbJw8fn2euWRN1VbdlWeliZMCezu4E0yiSY4rPtl00Wg
+        vnjO9NJavrk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 27035BBB0E;
+        Fri, 19 Mar 2021 16:19:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A823EBBB0D;
+        Fri, 19 Mar 2021 16:19:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Nils Leif Fischer via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org,
+        Nils Leif Fischer <hello@nilsleiffischer.de>,
+        Nils Leif Fischer <nils.fischer@aei.mpg.de>
+Subject: Re: [PATCH] Fix a typo in git-maintenance documentation
+References: <pull.984.git.git.1616149021392.gitgitgadget@gmail.com>
+        <xmqqv99nm3jy.fsf@gitster.g>
+Date:   Fri, 19 Mar 2021 13:19:41 -0700
+In-Reply-To: <xmqqv99nm3jy.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
+        19 Mar 2021 10:55:13 -0700")
+Message-ID: <xmqqa6qynbfm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-From:   Christian Chavez <x10an14@gmail.com>
-Date:   Fri, 19 Mar 2021 20:31:56 +0100
-Message-ID: <CAF6oXFsnvvacvUY89s65us7-UprpvV-NaOQ3owGTF25xcJqnkg@mail.gmail.com>
-Subject: Are there any publicly known funders (companies or otherwise) of git development?
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7091EDA4-88F0-11EB-803D-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi!
+Junio C Hamano <gitster@pobox.com> writes:
 
-Idle curiosity question - stemming from an argument with somewhat
-inebriated co-worker(s):
-> How is the Git development (being an open-source product) pro bono? Done for free?
+>>  gc::
+>>  	Clean up unnecessary files and optimize the local repository. "GC"
+>> -	stands for "garbage collection," but this task performs many
+>> +	stands for "garbage collection", but this task performs many
+>
+> Isn't this merely an American style vs British style issue?
 
-Or is there any (publically known - not just an employee "randomly"
-being told to upstream a bugfix) funded effort?
-Such as with the Linux kernel project - where companies/organizations
-put up money for X amount of time/efforts/projects?
+Having said that, I think a lot of existing documentation (and my
+gut feeling says "majority of", but I cannot claim anything like
+that without actually counting [*1*]) we have tend to stick to the
+"punctuation outside" British style [*2*].
+
+If somebody (not me, and probably not Derrick) is willing to do the
+counting and tree-wide style fixes, I am OK if we add some new text
+to Documentation/CodingGuidelines to declare which style we stick
+to, and enforce consistency throughout the documentation set.
 
 
---
-Med vennlig hilsen/Kind regards,
-x10an14
+[Footnote]
+
+*1* A quick count:
+
+    $ git grep -e '," ' Documentation/
+
+    gives just a single hit.  On the other hand, '", ' hits too many,
+    but many are sentences like 
+
+      "git clone -q", "git fetch -q", and the like are quiet.
+
+    which is not quite fair.
+
+    Don't try to do that for the comma replaced with period; you'd be
+    buried by "word..."  and the like.
+
+
+*2* After all, that is more "logical", for us CS types---opening and
+    closing quotes pair with each other, and the punctuation that
+    appears near the quoted portion is part of the larger sentence
+    structure.
