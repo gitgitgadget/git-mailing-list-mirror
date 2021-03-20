@@ -2,56 +2,55 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 688FAC433E3
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77555C433E5
 	for <git@archiver.kernel.org>; Sat, 20 Mar 2021 22:39:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3442B61936
+	by mail.kernel.org (Postfix) with ESMTP id 54FE061933
 	for <git@archiver.kernel.org>; Sat, 20 Mar 2021 22:39:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230242AbhCTWio (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 20 Mar 2021 18:38:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44712 "EHLO
+        id S230240AbhCTWin (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 20 Mar 2021 18:38:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229951AbhCTWiR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Mar 2021 18:38:17 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 436F6C061574
+        with ESMTP id S229991AbhCTWiS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Mar 2021 18:38:18 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0096AC061762
         for <git@vger.kernel.org>; Sat, 20 Mar 2021 15:38:17 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id g25so7392882wmh.0
+Received: by mail-wr1-x42e.google.com with SMTP id 61so12735647wrm.12
         for <git@vger.kernel.org>; Sat, 20 Mar 2021 15:38:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=AQ1zJhwHIJ7cjy6KjIaIobQ2Xqg8kbOZoXQJPv17mAY=;
-        b=UvzxxzhYbcmMtXoAvVafojCPBCxVRxytZb1MWduyv4WYsezxe2rQ2LFcw0K8uVw+dH
-         kA3XKofb+UfHr9liPTXVCQZRzzTgY+wZqYjIzEebgHcw5YUkadzMapd9SLQIGnWfXuks
-         PbfyHeVTm4l08T7WZrE3AH5Mn3no6UfTXWc+/2T8UM7I6HsBRw/y4wj/wGNyO8v3fvWp
-         BB7bfaozAEP/e1RkNORHi91uUDUhMFJcUR9/rZCAto6u5diqi9cFidKkUfdBy6nMqiA5
-         YQkDvN84EX/FLJru1WEavm16sup6XXdLaJsdu6UUKMTaJJCH3UXxPgjRjCxP3spHPFr0
-         lJEw==
+        bh=zEuGGild4oP8e7gGPK2bLUkBdBnkIKme8qfGa0xYagI=;
+        b=j5bQredPETDQUn54v1fZ/UBFNyYqv11DhV7aFY+X9PbeKUQ5H1aViMXPCFiIx1cA/V
+         oeD2vFOnu/lDH9OcanVhaaKbre+VRKKqdOnDZ2d2hnT/48S3atKN7s6Y1NwlIdkqcmB1
+         0+A33TaXd+2yeEnyP/CK86XEgwDqPg9EvJhmNIZS+tdRwwdth1dHQuATDpBkrmihssEJ
+         FdiNfJ6q47M0+5jkyTd3d2sSttIYI9kOBMyGhKt4muy9g5Xqh/8pIH2HfA4jtxLX4m1l
+         pSfdF8TSth4g0OccoJGJNPCiOLfsKzdX0tB6RV9aEbRa/96Zvr6u2Tz6B1hvwTnIOI/d
+         389A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=AQ1zJhwHIJ7cjy6KjIaIobQ2Xqg8kbOZoXQJPv17mAY=;
-        b=D2Y5oE9oH+4B2fmMQFBCJtw6bpc8QUOs93nqNYBWTXR1jR6zMuGQbOVXgJkHbt7PR3
-         J7uG8U2im5DM9welC+mp3A7bfGW/D1JWjrvXXW0qSHZka0qF1Lc1d2hVNgkpY/AJIv1r
-         z4Z/3EpZ9YEuO+2f2tMkyaZOoIC0n2TXOCt9wie/mvghGYQi+lIpxYBPNf8T3uYnWOsP
-         LrM2xfR8sSdQndyWdHlWcWq55ULzQN/hJACw/F2lFZweZ+8/5Lo80/UIAPxHNWegtuq5
-         DXhK/+phJJloYhqR5SAUuDLOWT/P9OCtGdep/S8MaNtUEjhCoFVqgtTYZKB85dbzwfue
-         pTpg==
-X-Gm-Message-State: AOAM530qASF5DDg0lQIE/DZkmaPbOwQJT5FBrVpi8PZAGd+Jmro0e7MJ
-        BULA9twXRPGciKuyPF13Wkl1uJeLy/oNgw==
-X-Google-Smtp-Source: ABdhPJx9kp5oXl8BUqNR1l+/txB4Nlf9r22XiKqyWUHMP6Aw787SML+yI+kkmneZVTbSpdZJrElySQ==
-X-Received: by 2002:a7b:c357:: with SMTP id l23mr9284208wmj.152.1616279895743;
-        Sat, 20 Mar 2021 15:38:15 -0700 (PDT)
+        bh=zEuGGild4oP8e7gGPK2bLUkBdBnkIKme8qfGa0xYagI=;
+        b=DoYder167iHrGqZ2TCSeO7Z7MGm3u56nIXxxI3Tsa1S7A2Yr1f+Dnm9uAH5ShKiZ1U
+         0kajTzetJ2SI7ufdoRDx8yCexj96FVMe268fcdMqqmDch5qFoW4bfUZA+Ou/eiW3qS+v
+         /k+BELrgtUds5S7+7Ur5gJOgzJc247TZCw1rYZGxjk47zbcCWI20pt1FSD7oB6qhfPJo
+         LruL8/zn4+WL2YCI5pfpzcKRaDijW3Oc4u5Zj7sgjGs4PBEb+Qt20qj6Kko6TK1z8BX9
+         x14GUhmFwjk0Z5ueup5AkI/7cSXMk5LFlf5oIuapcIO527ck1JS4K0jgK2RcReC8u3lM
+         pDFQ==
+X-Gm-Message-State: AOAM531EZX1mOjCq60K3oQUvSYA9nx/zEBrxQwMxWdEz07/4Drl7N1Yc
+        WNe+D0iHoFp561XqHTABzy8PJ9VwYOYlVA==
+X-Google-Smtp-Source: ABdhPJxMuA0CZB21MOoEjjLKhCtXcP/GmSFnmZobfWoPqsL5UgLvj+4GBU90Ta9NYqReKnShiFemgg==
+X-Received: by 2002:adf:b30f:: with SMTP id j15mr11204668wrd.132.1616279896572;
+        Sat, 20 Mar 2021 15:38:16 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
         by smtp.gmail.com with ESMTPSA id v2sm21472697wmj.1.2021.03.20.15.38.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
@@ -64,115 +63,97 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 6/8] archive: stop passing "stage" through read_tree_recursive()
-Date:   Sat, 20 Mar 2021 23:37:49 +0100
-Message-Id: <02c42be924953e7172639a82d8005bcb664bb8b4.1616279653.git.avarab@gmail.com>
+Subject: [PATCH v5 7/8] tree.h API: expose read_tree_1() as read_tree_at()
+Date:   Sat, 20 Mar 2021 23:37:50 +0100
+Message-Id: <d55e8d4042ba77f9fcc204afd74a8badfe83502d.1616279653.git.avarab@gmail.com>
 X-Mailer: git-send-email 2.31.0.286.gc175f2cb894
 In-Reply-To: <cover.1616279653.git.avarab@gmail.com>
 References: <xmqqpmzxy939.fsf@gitster.g> <cover.1616279653.git.avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The "stage" variable being passed around in the archive code has only
-ever been an elaborate way to hardcode the value "0".
+Rename the static read_tree_1() function to read_tree_at(). This
+function works just like read_tree_recursive(), except you provide
+your own strbuf.
 
-This code was added in its original form in e4fbbfe9ecc (Add
-git-zip-tree, 2006-08-26), at which point a hardcoded "0" would be
-passed down through read_tree_recursive() to write_zip_entry().
+This step doesn't make much sense now, but in follow-up commits I'll
+remove the base/baselen/stage arguments to read_tree_recursive(). At
+that point an anticipated in-tree user[1] for the old
+read_tree_recursive() couldn't provide a path to start the
+traversal.
 
-It was then diligently added to the "struct directory" in
-ed22b4173bd (archive: support filtering paths with glob, 2014-09-21),
-but we were still not doing anything except passing it around as-is.
+Let's give them a function to do so with an API that makes more sense
+for them, by taking a strbuf we should be able to avoid more casting
+and/or reallocations in the future.
 
-Let's stop doing that in the code internal to archive.c, we'll still
-feed "0" to read_tree_recursive() itself, but won't use it. That we're
-providing it at all to read_tree_recursive() will be changed in a
-follow-up commit.
-
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+1. https://lore.kernel.org/git/xmqqft106sok.fsf@gitster.g
 ---
- archive.c | 16 +++++++---------
- 1 file changed, 7 insertions(+), 9 deletions(-)
+ tree.c | 17 +++++++++--------
+ tree.h |  6 ++++++
+ 2 files changed, 15 insertions(+), 8 deletions(-)
 
-diff --git a/archive.c b/archive.c
-index 5919d9e5050..4f271331543 100644
---- a/archive.c
-+++ b/archive.c
-@@ -107,7 +107,6 @@ struct directory {
- 	struct object_id oid;
- 	int baselen, len;
- 	unsigned mode;
--	int stage;
- 	char path[FLEX_ARRAY];
- };
+diff --git a/tree.c b/tree.c
+index a6c12f2745a..f67c2153054 100644
+--- a/tree.c
++++ b/tree.c
+@@ -11,10 +11,11 @@
  
-@@ -138,7 +137,7 @@ static int check_attr_export_subst(const struct attr_check *check)
- }
+ const char *tree_type = "tree";
  
- static int write_archive_entry(const struct object_id *oid, const char *base,
--		int baselen, const char *filename, unsigned mode, int stage,
-+		int baselen, const char *filename, unsigned mode,
- 		void *context)
+-static int read_tree_1(struct repository *r,
+-		       struct tree *tree, struct strbuf *base,
+-		       int stage, const struct pathspec *pathspec,
+-		       read_tree_fn_t fn, void *context)
++int read_tree_at(struct repository *r,
++		 struct tree *tree, struct strbuf *base,
++		 int stage,
++		 const struct pathspec *pathspec,
++		 read_tree_fn_t fn, void *context)
  {
- 	static struct strbuf path = STRBUF_INIT;
-@@ -197,7 +196,7 @@ static int write_archive_entry(const struct object_id *oid, const char *base,
+ 	struct tree_desc desc;
+ 	struct name_entry entry;
+@@ -71,9 +72,9 @@ static int read_tree_1(struct repository *r,
+ 		len = tree_entry_len(&entry);
+ 		strbuf_add(base, entry.path, len);
+ 		strbuf_addch(base, '/');
+-		retval = read_tree_1(r, lookup_tree(r, &oid),
+-				     base, stage, pathspec,
+-				     fn, context);
++		retval = read_tree_at(r, lookup_tree(r, &oid),
++				      base, stage, pathspec,
++				      fn, context);
+ 		strbuf_setlen(base, oldlen);
+ 		if (retval)
+ 			return -1;
+@@ -91,7 +92,7 @@ int read_tree_recursive(struct repository *r,
+ 	int ret;
  
- static void queue_directory(const unsigned char *sha1,
- 		struct strbuf *base, const char *filename,
--		unsigned mode, int stage, struct archiver_context *c)
-+		unsigned mode, struct archiver_context *c)
- {
- 	struct directory *d;
- 	size_t len = st_add4(base->len, 1, strlen(filename), 1);
-@@ -205,7 +204,6 @@ static void queue_directory(const unsigned char *sha1,
- 	d->up	   = c->bottom;
- 	d->baselen = base->len;
- 	d->mode	   = mode;
--	d->stage   = stage;
- 	c->bottom  = d;
- 	d->len = xsnprintf(d->path, len, "%.*s%s/", (int)base->len, base->buf, filename);
- 	hashcpy(d->oid.hash, sha1);
-@@ -224,7 +222,7 @@ static int write_directory(struct archiver_context *c)
- 		write_directory(c) ||
- 		write_archive_entry(&d->oid, d->path, d->baselen,
- 				    d->path + d->baselen, d->mode,
--				    d->stage, c) != READ_TREE_RECURSIVE;
-+				    c) != READ_TREE_RECURSIVE;
- 	free(d);
- 	return ret ? -1 : 0;
+ 	strbuf_add(&sb, base, baselen);
+-	ret = read_tree_1(r, tree, &sb, stage, pathspec, fn, context);
++	ret = read_tree_at(r, tree, &sb, stage, pathspec, fn, context);
+ 	strbuf_release(&sb);
+ 	return ret;
  }
-@@ -256,14 +254,14 @@ static int queue_or_write_archive_entry(const struct object_id *oid,
- 		if (check_attr_export_ignore(check))
- 			return 0;
- 		queue_directory(oid->hash, base, filename,
--				mode, stage, c);
-+				mode, c);
- 		return READ_TREE_RECURSIVE;
- 	}
+diff --git a/tree.h b/tree.h
+index 6b0b1dc211a..123fc41efe6 100644
+--- a/tree.h
++++ b/tree.h
+@@ -33,6 +33,12 @@ int cmp_cache_name_compare(const void *a_, const void *b_);
+ #define READ_TREE_RECURSIVE 1
+ typedef int (*read_tree_fn_t)(const struct object_id *, struct strbuf *, const char *, unsigned int, int, void *);
  
- 	if (write_directory(c))
- 		return -1;
- 	return write_archive_entry(oid, base->buf, base->len, filename, mode,
--				   stage, context);
-+				   context);
- }
- 
- struct extra_file_info {
-@@ -377,8 +375,8 @@ struct path_exists_context {
- };
- 
- static int reject_entry(const struct object_id *oid, struct strbuf *base,
--			const char *filename, unsigned mode,
--			int stage, void *context)
-+			const char *filename, unsigned mode, int stage,
-+			void *context)
- {
- 	int ret = -1;
- 	struct path_exists_context *ctx = context;
++int read_tree_at(struct repository *r,
++		 struct tree *tree, struct strbuf *base,
++		 int stage,
++		 const struct pathspec *pathspec,
++		 read_tree_fn_t fn, void *context);
++
+ int read_tree_recursive(struct repository *r,
+ 			struct tree *tree,
+ 			const char *base, int baselen,
 -- 
 2.31.0.286.gc175f2cb894
 
