@@ -2,139 +2,149 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3378DC433DB
-	for <git@archiver.kernel.org>; Sat, 20 Mar 2021 11:14:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 63862C433E4
+	for <git@archiver.kernel.org>; Sat, 20 Mar 2021 11:15:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 068C3619A7
-	for <git@archiver.kernel.org>; Sat, 20 Mar 2021 11:14:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3C0F761972
+	for <git@archiver.kernel.org>; Sat, 20 Mar 2021 11:15:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230039AbhCTLOF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 20 Mar 2021 07:14:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39664 "EHLO
+        id S231208AbhCTLOj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 20 Mar 2021 07:14:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230354AbhCTLNr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Mar 2021 07:13:47 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8DE4C06178A
-        for <git@vger.kernel.org>; Sat, 20 Mar 2021 04:13:46 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id q29so13873075lfb.4
-        for <git@vger.kernel.org>; Sat, 20 Mar 2021 04:13:46 -0700 (PDT)
+        with ESMTP id S231285AbhCTLOc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Mar 2021 07:14:32 -0400
+Received: from mail-oo1-xc2e.google.com (mail-oo1-xc2e.google.com [IPv6:2607:f8b0:4864:20::c2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A5E8C05BD43
+        for <git@vger.kernel.org>; Sat, 20 Mar 2021 04:04:35 -0700 (PDT)
+Received: by mail-oo1-xc2e.google.com with SMTP id i20-20020a4a8d940000b02901bc71746525so2948401ook.2
+        for <git@vger.kernel.org>; Sat, 20 Mar 2021 04:04:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=aYckyjfeIHGLNZC2C9qy4WogFBLdJvm8e+1XMYW8Vn4=;
-        b=nDFEUYP7KX6rtou58LFE76pub+XXtVJjCuBe2AKJHQGbCAopE8aJs2vJAwURSfWarQ
-         Wtlz6VV5njUalu4ipCTU6kbhwL37jTkDfx47cm0k8B19SxVrnPFm318xlJZywfxbdo9n
-         YX0O3gCst/ODZkJqL1pHBdKmYDSJ1zQKeL+O+7Q6cQAqMEYQ12l6c6wVQrSF2I3ndbXY
-         N98CqBEZOjoqQCdKPahy+zdWzm2G7rZX0F/pbNbB2OGH7VTk78q2ue8QY5mkV8spSNle
-         Lxuoh/lJ1zqffBeQDOOWQSnSzQzlqo+s9WNt8FuDy6inob6/gVYyslYF6oNCNec2ViMo
-         9QMg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=PaFxpaVuZlRymXocucu7UB2t/Mr2ObHBr+jgtbgWeWs=;
+        b=Gh/aLw2gv4SGGZkPtyWCHiRWkHOKY/VNutHaOtsyLO2cJRt4I68vYr9upDCM0tompU
+         TxL2f8FWM4fosoUMzBclInb54BqddUIf/zUTzb5vAcE+4yWPH++BShqaeiosjpS5hnCv
+         dQpho3IX3SX81gJ+pyNzRWqB6N5wU+qeS6x7wq55wm9o/0LG/MLkDSY2vhxgdO+84Ezr
+         7oWrPVHV0vAWhfM2tSWCLCjUNAC4whmYnnaLaawHkm9oqyqUqk7hHh3xF5eIOLSN7WPx
+         NOOZopGQM0Sb3VD72hHlhoGNiW0e23QdPhrRfAL8gdX/A96+5+GoCaDoSBQEw5y13pdi
+         19Mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=aYckyjfeIHGLNZC2C9qy4WogFBLdJvm8e+1XMYW8Vn4=;
-        b=Wi2/cUYcKMeQp7CRoQva+YeVevgbbZMqVRZZXPRZpT5UKxiHIBCO/i1fttEN6Ccx8s
-         DAmYM8NGuNsW0RPfcC0apYqkwAk1R/mfi7gEaaczVEhe7se43u9hPUEGIoxWyhPOEztx
-         0h/v7ULjuAQPKkrKDnf992NvX8MnoU2/2NUhJTjuzNT+inm8cfU5lKYNG1/ts3FSmbOZ
-         pQ3YB9UnxzHuCSsRo/YA67kr1ArXouTFLJ6NoD46cl++xEEd1V2iPLOD7mtpIHUiTlQ9
-         z3VbTLK/3bnibcGa2IBRVjcWrymghyGTU9xB290cTA+CoP9CHez7AdyDWwjsXJm6nSwp
-         1wOw==
-X-Gm-Message-State: AOAM532EUfQXXFwwY00O/FwAIvuyZFHgRS4XHuuPhFUhDyfgOBSU6UZo
-        GlLwHceyCb6h7p0rgk69juhz+n8miTo=
-X-Google-Smtp-Source: ABdhPJxeaBilHBVsh47kPfNoJHgFk/f+8cKfF494OMGsCIuTDaQqk8AfGaSNya0/G/Zwwo5/ZOJnHQ==
-X-Received: by 2002:a17:906:53d7:: with SMTP id p23mr8933794ejo.140.1616231819124;
-        Sat, 20 Mar 2021 02:16:59 -0700 (PDT)
-Received: from evledraar (77-60-191-25.biz.kpn.net. [77.60.191.25])
-        by smtp.gmail.com with ESMTPSA id 90sm5857196edf.31.2021.03.20.02.16.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 20 Mar 2021 02:16:58 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH v4 01/22] fsck.h: update FSCK_OPTIONS_* for object_name
-References: <20210306110439.27694-1-avarab@gmail.com>
- <20210316161738.30254-2-avarab@gmail.com>
- <nycvar.QRO.7.76.6.2103191540330.57@tvgsbejvaqbjf.bet>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <nycvar.QRO.7.76.6.2103191540330.57@tvgsbejvaqbjf.bet>
-Date:   Sat, 20 Mar 2021 10:16:57 +0100
-Message-ID: <87czvuyyk6.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=PaFxpaVuZlRymXocucu7UB2t/Mr2ObHBr+jgtbgWeWs=;
+        b=Js1u4+xDaf1+3kOE0tFVWbcjbZ5sOpeYxa8jIpMbGQ3SVs2UtIvpmbyacjrIwKggO2
+         hN+FTa20V3dRoMnj3P7sk99LYuPMZpzIaIOcMWAX2N7tspHwd2VIiWAk95BUtxzmd5TK
+         VlBV9I2yVfouIqdiQQ7+s7j2sbT14w9hvqvtQchuHgEJNgzt8K/lKCpUO+YJfhgKVIGU
+         JAXmkMTx+oLHhhi0lyxOq+Lp8RNqsjSK9GMxnh0ii8/+i5WpgbphOe6ayNM0CLrEwk2E
+         l07B8yXVJSStE32Bs0i2Q47yL/KJCXksQU2BCQvPhFtw2xMA82oIzrS1Nx/5YUh1LokE
+         pJCg==
+X-Gm-Message-State: AOAM531CfYkk21Coo7bzWdAlUAIX1pEFcxQA0zmt0121M1vYZBnFx4iX
+        F+NITkxW0Ak/CLfgsXtmqMh08gGFqX5Rgtd3zZ9aPm42R7I0qQ==
+X-Google-Smtp-Source: ABdhPJzJBmZo6TXjeCOyaZ999aXxu/JcPR0svQxm8uyJhfjyJ7tiYr3Ukk1jIRe62H8IEqimJlvnirX8GcBEZzO80vs=
+X-Received: by 2002:a4a:bd97:: with SMTP id k23mr4469418oop.13.1616229811186;
+ Sat, 20 Mar 2021 01:43:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <pull.901.v9.git.1615891183320.gitgitgadget@gmail.com>
+ <pull.901.v10.git.1616066156.gitgitgadget@gmail.com> <42590e95deeece6ba65e0432c3a59746e717fee3.1616066156.git.gitgitgadget@gmail.com>
+ <xmqq1rcctgj7.fsf@gitster.g> <CAOLTT8RzvQzD0baWPdJzRLK3Q+WeJR_HNA4RVHMxRmwHeym9QQ@mail.gmail.com>
+ <xmqq7dm3p344.fsf@gitster.g> <CAOLTT8TQdT1PkdfuOk92U89Lgk9o_YhdeMyHb6SrE7GW+6PQJQ@mail.gmail.com>
+ <YFWCvePMGvBY/I9v@coredump.intra.peff.net> <xmqq4kh6l6fd.fsf@gitster.g>
+ <CAOLTT8RE6LOx2AUH8PJMzFdqp4_GJkiY41K0xE1YiSQNixKCRA@mail.gmail.com>
+ <CAOLTT8T54RHPm8P=mJ3vOKZPEwpJQgnbeU3VqczWbPSk36wZcA@mail.gmail.com> <xmqqzgyyjoyy.fsf@gitster.g>
+In-Reply-To: <xmqqzgyyjoyy.fsf@gitster.g>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Sat, 20 Mar 2021 16:43:20 +0800
+Message-ID: <CAOLTT8TUtYxciGr-HjRM9604HQfZDHSGrpTyVia-QUFjZvHrpA@mail.gmail.com>
+Subject: Re: [PATCH v10 2/3] interpret-trailers: add own-identity option
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>,
+        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        "Bradley M. Kuhn" <bkuhn@sfconservancy.org>,
+        Brandon Casey <drafnel@gmail.com>,
+        Shourya Shukla <periperidip@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Rafael Silva <rafaeloliveira.cs@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Fri, Mar 19 2021, Johannes Schindelin wrote:
-
-> Hi =C3=86var,
+Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B43=E6=9C=8820=E6=97=
+=A5=E5=91=A8=E5=85=AD =E4=B8=8B=E5=8D=882:53=E5=86=99=E9=81=93=EF=BC=9A
 >
-> just a general note: this patch, which is the first of v4, is marked as
-> replying to the cover letter of v3. That feels quite odd. If you use
-> threading, why not let it reply to the cover letter of the same patch
-> series iteration?
+> ZheNing Hu <adlternative@gmail.com> writes:
 >
-> In other words, would you mind using the `--thread=3Dshallow` option in t=
-he
-> future, for better structuring on the mailing list?
-
-Not at all, I've set it in my config now.
-
-I've just been using the default configuration of format-patch
---in-reply-to --cover-letter && send-email *.patch all this time.
-
-Looking around at other patch submissions (aside from GGG) this seems to
-be the norm though, but isn't documented in SubmittingPatches
-etc. AFAICT.
-
-So I wonder if I'm using some different process from the norm, or if
-most everyone else is just looking carefully at Message-ID/In-Reply-To
-norms before sending...
-
-> On Tue, 16 Mar 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> > In actually ,
+> >
+> > @@ -1071,6 +1071,7 @@ static const char *find_author_by_nickname(const
+> > char *name)
+> >                 strbuf_release(&buf);
+> >                 format_commit_message(commit, "%aN <%aE>", &buf, &ctx);
+> >                 clear_mailmap(&mailmap);
+> > +               reset_revision_walk();
+> >                 return strbuf_detach(&buf, NULL);
+> >         }
+> >
+> > then we can reuse this function.
+> >
+> > But I think I can give find_author_by_nickname another arg for choice i=
+f we want
+> >  `reset_revision_walk()`.
 >
->> Add the object_name member to the initialization macro. This was
->> omitted in 7b35efd734e (fsck_walk(): optionally name objects on the
->> go, 2016-07-17) when the field was added.
->>
->> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
->> ---
->>  fsck.h | 4 ++--
->>  1 file changed, 2 insertions(+), 2 deletions(-)
->>
->> diff --git a/fsck.h b/fsck.h
->> index 733378f126..2274843ba0 100644
->> --- a/fsck.h
->> +++ b/fsck.h
->> @@ -43,8 +43,8 @@ struct fsck_options {
->>  	kh_oid_map_t *object_names;
->>  };
->>
->> -#define FSCK_OPTIONS_DEFAULT { NULL, fsck_error_function, 0, NULL, OIDS=
-ET_INIT }
->> -#define FSCK_OPTIONS_STRICT { NULL, fsck_error_function, 1, NULL, OIDSE=
-T_INIT }
->> +#define FSCK_OPTIONS_DEFAULT { NULL, fsck_error_function, 0, NULL, OIDS=
-ET_INIT, NULL }
->> +#define FSCK_OPTIONS_STRICT { NULL, fsck_error_function, 1, NULL, OIDSE=
-T_INIT, NULL }
->>
->>  /* descend in all linked child objects
->>   * the return value is:
->> --
->> 2.31.0.260.g719c683c1d
->>
->>
+> That is half fixing and half breaking.  It would allow us to call
+> the helper number of times as long as there is no other revision
+> traversal is in progress; calling reset_revision_walk() would mean
+> any and all revision traversal in progress will be broken.  So we
+> cannot use the helper to tweak each and every commit we encounter
+> while running "git log", for example.  Imagine adding an option to
+> "git format-patch" to allow each commit it formats to be tweaked by
+> adding "--trailers=3Dfoo:@ZheNing" and the like.  There is one primary
+> traversal that is used to list which commit to format in what order,
+> and every time that primary traversal yields a commit, if we run
+> find_author_by_nickname(), we end up initiating another traversal,
+> and then by calling reset, we clear all object flags that are used
+> for revision traversal, thereby breaking the primary traversal.
+>
 
+I understand what you meaning. I may not be very thorough in considering
+ the potential problems. This is as dangerous as calling `list_del` in the
+ middle of `list_for_each`.
+
+> The only safe way to introduce a generally usable helper (without
+> rewriting the revision traversal machinery) is to spawn a subprocess
+> and do an equivalent of find_author_by_nickname() in it.
+>
+
+If I didn't notice what you mentioned later, I might think about it
+for a long time.
+Execute a child process specifically to execute `find_author_by_nickname()`=
+,
+which feels a bit wasteful.
+
+> A standalone "interpret-trailers" command, as long as it won't do
+> any other revision traversal, would not have such a problem, and
+> calling reset every time find_author_by_nickname() is called may be
+> sufficient.  The only thing I care about is *not* to pretend that
+> find_author_by_nickname() plus reset() is the generally reusable
+> helper function and advertise it as such, which will mislead future
+> developers into misusing the function in a context they shouldn't
+> (i.e. while they are performing their own revision traversal).
+>
+> Thanks.
+
+After listening to your previous explanation, I agree with this view.
+`interpret-trailers` alone as a process, as long as it does not traverse
+the revision externally, It is safe for us to call `reset_revision_walk()`
+after `find_author_by_nickname()` inside interpret-trailers.
+
+Thank you for your thoughts and answers.
