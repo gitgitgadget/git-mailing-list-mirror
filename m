@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D46E5C433E3
-	for <git@archiver.kernel.org>; Sat, 20 Mar 2021 00:05:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 10975C433E5
+	for <git@archiver.kernel.org>; Sat, 20 Mar 2021 00:05:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A2F6661986
+	by mail.kernel.org (Postfix) with ESMTP id E38ED61986
 	for <git@archiver.kernel.org>; Sat, 20 Mar 2021 00:05:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229811AbhCTAEl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Mar 2021 20:04:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38316 "EHLO
+        id S229854AbhCTAEo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Mar 2021 20:04:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38344 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229637AbhCTAEB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Mar 2021 20:04:01 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B8BBC061760
-        for <git@vger.kernel.org>; Fri, 19 Mar 2021 17:04:01 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id f22-20020a7bc8d60000b029010c024a1407so8132795wml.2
-        for <git@vger.kernel.org>; Fri, 19 Mar 2021 17:04:01 -0700 (PDT)
+        with ESMTP id S229723AbhCTAEG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Mar 2021 20:04:06 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81DE5C061762
+        for <git@vger.kernel.org>; Fri, 19 Mar 2021 17:04:05 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id j20-20020a05600c1914b029010f31e15a7fso102222wmq.1
+        for <git@vger.kernel.org>; Fri, 19 Mar 2021 17:04:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=k+yspLm/RWGBF4nOoRv16D5B6QfCBOFG70DbofWSpA0=;
-        b=qf4snRHsGDEmSs5oT/n5dgGI/RXLQKm695dg/7BFrXMirHTW7Ku/HleVvK06EKxNbZ
-         eeQqJrE8Q4NwrsM1tneKTU0OIlBu10rvuP6E5tbB5mphGAdZirYyROqU14ky3hxlpo5S
-         O96G+b1+vVu0X7zGyrvqkYSB4J/moiDUwTJVpx6AuaW5GzZ5J1m6RnyNlE0lKCYT0DYB
-         2kDFvJTgcfEVhlijegit52ThNXyO7Rdf6nNk0Fq+HdeOOcx0U4uS8lu3pot2S51p2exS
-         sG0Qi9Ar7aUH9mfbUFJIcY4QT3k0IoeWmDl0yjPenXZSHGCSpiz0WIgpyG8HZxTtouJa
-         Yk+Q==
+        bh=vNEoqUX4A42360elOoDcA6cH0Od98QxzvF2EIqCVNu4=;
+        b=IB1mRrJo7u6rMsbhRyzJApoc9prOSUMdzyfCun/KQ+e5DqULYuzeTYgEKHvObKffki
+         b4eO1Y78dG+EhcAS4RMJGyCmwRgwfERbtN7h/ZyQwyKmmsBNlUh4agA0MvmTg2fSsISK
+         FXs0Y1cULL4GZH4FrfXHwHXYAA1uIBDg3neDcG+cblt0xLxOwFORzhqDE9nQlHYittde
+         SUltb0OksGca0bFjbyJwFck36EoML+Na9nDseVFgm4jfuSw+9yTEB1iujemNVJAD5n7Y
+         lE1i5QIavTbQTeZL0Z80upSgL6nIFLosthC1p2ny3flEiPdtWq3XMtdHLgEDFG6tJhGg
+         HzXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=k+yspLm/RWGBF4nOoRv16D5B6QfCBOFG70DbofWSpA0=;
-        b=L+swBQWV72CWRFcKHIUEIJbBhBS2XuilyBvx94f/18o2eG0zJsjI9fLkwe0ako0/7e
-         zVVNH4n+vwVRc8zx1qNxDbhiOPrJLSAkahXtNYUrcOCjco4RcAoDHCoaU24GnR+lqvf/
-         2fUtsoNA/dQpUh2SAbKHh757CrtNJQjL9+ZbWi/xmwAGXBE4ubk8blnxtB6L+DY/jyTM
-         6iUsMTc1Xco8/SvpSuDzs2xHKaRCSJaBt5YMBszzP0Erui6Uyg5T799vBpWHn15mIbWl
-         e6yyBOdLUIiBZ4hEjcQC+a5Yh0i/6RL7iDepduytu+QxIxkELXrOmQmEsxdJ6Dvo+RMB
-         zDdA==
-X-Gm-Message-State: AOAM531EbmU/gmRcv2pzroMqLjfkz2kKyI+hFAUlnIimI+5p3Pny+LON
-        GvaJWoqWMUBysh62fg/9TL1NriKaDT0=
-X-Google-Smtp-Source: ABdhPJzML3AOYoMrCCZGk4+SiVZ6cXkqU04zeV7uEyVOvVchSSkXoI2BZ1ggIjFyYVe9iXrLcjno5w==
-X-Received: by 2002:a05:600c:4f44:: with SMTP id m4mr5672465wmq.175.1616198640284;
-        Fri, 19 Mar 2021 17:04:00 -0700 (PDT)
+        bh=vNEoqUX4A42360elOoDcA6cH0Od98QxzvF2EIqCVNu4=;
+        b=NHrMpKNcAcUyw5/hT3gcdiUBwSbhOTzviuhqCvjEMCrMruTbY67D2a/OYvbvQuj3VX
+         YHBYIqWcbKN8iXg6LcwYs+D/vcngdmepACfjBA4pxDsDrbE869JGHzOgZjcp4vAIi+Mp
+         +bplptI6IlpG9uifcPcYthV18WmHZebVV/jScqnBA0gwKB+rrJpULm4j0yiSR+IeCk0y
+         aZ8aq/u0wdSBfxs80P3EyxxvOd9b5Cce0geFyEr0ZFfvryzzxNeYcQySzyEW3PBS4U0c
+         lP7tZFeMAzPu5NASWPjXtdQ4KYvdK/mnVLMbk7eLrYvF6c3eUHxiv0S4BTFJEBrN81iO
+         NqKw==
+X-Gm-Message-State: AOAM530m9xRnS67VS8FGBcWGmTeuRo2vay2bNOnFWzP3v9PGRZKV7Ayi
+        OnnP4nVLmQokLqqHhdiKOnQb2N/Jtzk=
+X-Google-Smtp-Source: ABdhPJylJMN8IRWuFNxSmnpNwOk1ts2LQIedzP37/YbapJsiDpR2wUB1WP7+o17u7GGGy6d6mzNPNg==
+X-Received: by 2002:a05:600c:4f14:: with SMTP id l20mr5592961wmq.71.1616198644365;
+        Fri, 19 Mar 2021 17:04:04 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q9sm10019809wrp.79.2021.03.19.17.03.59
+        by smtp.gmail.com with ESMTPSA id h8sm9873457wrt.94.2021.03.19.17.04.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Mar 2021 17:04:00 -0700 (PDT)
-Message-Id: <c1c9605c1932cab6191f47beb992a15c64ada237.1616198636.git.gitgitgadget@gmail.com>
+        Fri, 19 Mar 2021 17:04:04 -0700 (PDT)
+Message-Id: <6bda855f29806475be14d133e185fec222c8b0be.1616198636.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.905.v3.git.1616198636.gitgitgadget@gmail.com>
 References: <pull.905.v2.git.1616016485.gitgitgadget@gmail.com>
         <pull.905.v3.git.1616198636.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 20 Mar 2021 00:03:47 +0000
-Subject: [PATCH v3 04/13] merge-ort: let renormalization change modify/delete
- into clean delete
+Date:   Sat, 20 Mar 2021 00:03:54 +0000
+Subject: [PATCH v3 11/13] Revert "merge-ort: ignore the directory rename split
+ conflict for now"
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -87,100 +87,43 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-When we have a modify/delete conflict, but the only change to the
-modification is e.g. change of line endings, then if renormalization is
-requested then we should be able to recognize such a case as a
-not-modified/delete and resolve the conflict automatically.
-
-This fixes t6418.10 under GIT_TEST_MERGE_ALGORITHM=ort.
+This reverts commit 5ced7c3da009090c5a926e3123a71314c7f28d42, which was
+put in place as a temporary measure to avoid optimizations unstably
+erroring out on no destination having a majority of the necessary
+renames for directories that had no new files and thus no need for
+directory rename detection anyway.  Now that optimizations are in place
+to prevent us from trying to compute directory rename count computations
+for directories that do not need it, we can undo this temporary measure.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 64 +++++++++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 62 insertions(+), 2 deletions(-)
+ merge-ort.c | 13 +------------
+ 1 file changed, 1 insertion(+), 12 deletions(-)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index cdc1e2fe7a24..c7083e3769aa 100644
+index e8f1a435f99a..8258d3fd621e 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -2549,6 +2549,61 @@ static int string_list_df_name_compare(const char *one, const char *two)
- 	return onelen - twolen;
- }
- 
-+static int read_oid_strbuf(struct merge_options *opt,
-+			   const struct object_id *oid,
-+			   struct strbuf *dst)
-+{
-+	void *buf;
-+	enum object_type type;
-+	unsigned long size;
-+	buf = read_object_file(oid, &type, &size);
-+	if (!buf)
-+		return err(opt, _("cannot read object %s"), oid_to_hex(oid));
-+	if (type != OBJ_BLOB) {
-+		free(buf);
-+		return err(opt, _("object %s is not a blob"), oid_to_hex(oid));
-+	}
-+	strbuf_attach(dst, buf, size, size + 1);
-+	return 0;
-+}
-+
-+static int blob_unchanged(struct merge_options *opt,
-+			  const struct version_info *base,
-+			  const struct version_info *side,
-+			  const char *path)
-+{
-+	struct strbuf basebuf = STRBUF_INIT;
-+	struct strbuf sidebuf = STRBUF_INIT;
-+	int ret = 0; /* assume changed for safety */
-+	const struct index_state *idx = &opt->priv->attr_index;
-+
-+	if (!idx->initialized)
-+		initialize_attr_index(opt);
-+
-+	if (base->mode != side->mode)
-+		return 0;
-+	if (oideq(&base->oid, &side->oid))
-+		return 1;
-+
-+	if (read_oid_strbuf(opt, &base->oid, &basebuf) ||
-+	    read_oid_strbuf(opt, &side->oid, &sidebuf))
-+		goto error_return;
-+	/*
-+	 * Note: binary | is used so that both renormalizations are
-+	 * performed.  Comparison can be skipped if both files are
-+	 * unchanged since their sha1s have already been compared.
-+	 */
-+	if (renormalize_buffer(idx, path, basebuf.buf, basebuf.len, &basebuf) |
-+	    renormalize_buffer(idx, path, sidebuf.buf, sidebuf.len, &sidebuf))
-+		ret = (basebuf.len == sidebuf.len &&
-+		       !memcmp(basebuf.buf, sidebuf.buf, basebuf.len));
-+
-+error_return:
-+	strbuf_release(&basebuf);
-+	strbuf_release(&sidebuf);
-+	return ret;
-+}
-+
- struct directory_versions {
- 	/*
- 	 * versions: list of (basename -> version_info)
-@@ -3136,8 +3191,13 @@ static void process_entry(struct merge_options *opt,
- 		modify_branch = (side == 1) ? opt->branch1 : opt->branch2;
- 		delete_branch = (side == 1) ? opt->branch2 : opt->branch1;
- 
--		if (ci->path_conflict &&
--		    oideq(&ci->stages[0].oid, &ci->stages[side].oid)) {
-+		if (opt->renormalize &&
-+		    blob_unchanged(opt, &ci->stages[0], &ci->stages[side],
-+				   path)) {
-+			ci->merged.is_null = 1;
-+			ci->merged.clean = 1;
-+		} else if (ci->path_conflict &&
-+			   oideq(&ci->stages[0].oid, &ci->stages[side].oid)) {
- 			/*
- 			 * This came from a rename/delete; no action to take,
- 			 * but avoid printing "modify/delete" conflict notice
+@@ -1636,18 +1636,7 @@ static void get_provisional_directory_renames(struct merge_options *opt,
+ 				 "no destination getting a majority of the "
+ 				 "files."),
+ 			       source_dir);
+-			/*
+-			 * We should mark this as unclean IF something attempts
+-			 * to use this rename.  We do not yet have the logic
+-			 * in place to detect if this directory rename is being
+-			 * used, and optimizations that reduce the number of
+-			 * renames cause this to falsely trigger.  For now,
+-			 * just disable it, causing t6423 testcase 2a to break.
+-			 * We'll later fix the detection, and when we do we
+-			 * will re-enable setting *clean to 0 (and thereby fix
+-			 * t6423 testcase 2a).
+-			 */
+-			/*   *clean = 0;   */
++			*clean = 0;
+ 		} else {
+ 			strmap_put(&renames->dir_renames[side],
+ 				   source_dir, (void*)best);
 -- 
 gitgitgadget
 
