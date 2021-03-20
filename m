@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5FD4C433E4
-	for <git@archiver.kernel.org>; Sat, 20 Mar 2021 00:05:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 362CAC433E8
+	for <git@archiver.kernel.org>; Sat, 20 Mar 2021 00:05:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 75D606198D
-	for <git@archiver.kernel.org>; Sat, 20 Mar 2021 00:05:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1395061991
+	for <git@archiver.kernel.org>; Sat, 20 Mar 2021 00:05:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229817AbhCTAEm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Mar 2021 20:04:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38324 "EHLO
+        id S229844AbhCTAEn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Mar 2021 20:04:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38330 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229648AbhCTAEC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Mar 2021 20:04:02 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 980C5C061760
-        for <git@vger.kernel.org>; Fri, 19 Mar 2021 17:04:02 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id e9so10741197wrw.10
-        for <git@vger.kernel.org>; Fri, 19 Mar 2021 17:04:02 -0700 (PDT)
+        with ESMTP id S229680AbhCTAEE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Mar 2021 20:04:04 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9D32C061761
+        for <git@vger.kernel.org>; Fri, 19 Mar 2021 17:04:03 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id k8so10733274wrc.3
+        for <git@vger.kernel.org>; Fri, 19 Mar 2021 17:04:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=XXkada0tjiFQqfS5wUUxv6rDq4t4jraSD+9f2/tJEHk=;
-        b=I1uYj36ygVoeGoLxiyWLDBuK6QcAuwzvZk3PejbKI7/1cgQvp05WVFyZkZuPQm8c7q
-         K6qSMjhm59fws14cOppQBHqh3qQNEBOpNBkul63AvZoUiVyfIdzbvRqqZu642xwBnq0v
-         oamFaR+gvWwpTOk1piTLysR11dBu7jztzlPeMRAuW9rXlYYAtSX07vdetKhS7K2pSWYK
-         5TEtViLbbtSsCn79DJw0IKiivBvCovqWtFZBLareoT4LdjoigvBoDZkc/y1OOx8XImWK
-         gkdG98Uu9+fn+fW2Zi0G5+kI8gLRZjcFlBpHTUIlXkhkUIGeXmochKaWDSk7k/Y4aJ1G
-         6TNA==
+        bh=RjXqIGfs6xg6JMfPfkR6AO1ReuEMf1tdF6If1ZnSgZM=;
+        b=R7mJs5a0OqDaxOX6HyKYOdUYSbUM2q/W4pgSKeRqmOn/mSi5BI9MdTGvrNljT0Rgwg
+         8Y9YUw7j9FCnR2D7fhodCaDU2UCJIXUwKlQgbqqYICzj30qHyUtGcyfKt1EHXHwU0OLh
+         6S+LSQOdsVkWwM9wVkPfHNO3t3dB/vFdVEV3I6igtYxGlQ0yYhwKPtR+TkNvcMSGCEzZ
+         w3CSr8CiUwJEaHIi6WLPx2wPWDk22O4F4WUR6Yw+okSeKe3qGBTnSog6TFGW3YhqP9kq
+         GdwtXK4MrTnmZGf43jG9BsbGsxBUITifLVQSpwv05Lc3cecIlHpRGAf2+II4NxAlOYpt
+         frzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=XXkada0tjiFQqfS5wUUxv6rDq4t4jraSD+9f2/tJEHk=;
-        b=IpNJ0KJwzc+fXmkWIlo7ep4vJwc/MR1oimXPAHMGyIAq6Vxa8xnrErb1Kiz/StTQVE
-         NjOtZg45TVV2/QHjgLtJoCJApBrjwihLPqKYI3jen1QMQ+DFBElWfcCn0Wo5wIa8oZPm
-         9FQsPeRtQ4Hyn+z6L1+AbKCg35bbLj6cfJux8AfEKdzmYzbFpMPO64vUUh+H4OUNkCLn
-         zI/GsmEOapG2UOplqam0FcFPCBove+phHj2vhs23M800AUrM8yRSC0U+XWMblyClZE+R
-         hSh3uoSkcSdzrubVjMaEHQOMcO/22nk0BZcSMC94OWHS+fEyE6e0aZFFcIQb94YIPVMa
-         lVCw==
-X-Gm-Message-State: AOAM533UMUHggInHp7Sv7ACZGK18BOv3hZZ7iRbWEXc222VO9KtKIyu/
-        qdjO7SfLdXOa1ZuCwIrC+KbAn82QFRE=
-X-Google-Smtp-Source: ABdhPJzQ4bpsnqk7Sb4bxkyW1IGXI65cIJEOMugwLm9HVNzDgFGUC86k49738XtrxVa6/eYK5Byrpg==
-X-Received: by 2002:adf:fb05:: with SMTP id c5mr7200274wrr.302.1616198641452;
-        Fri, 19 Mar 2021 17:04:01 -0700 (PDT)
+        bh=RjXqIGfs6xg6JMfPfkR6AO1ReuEMf1tdF6If1ZnSgZM=;
+        b=niJAWLPdHu4MQOCY5rAg1ejkWfZeMg+iCKSiY8066zm3iSnr/zyEjBANZWGo3QpG4p
+         L0/bFZuQqkKXlmdW3Ib5qJvmXUyftFFEX+ZQPwmyri9KBWSsU+cEJlJKEgHrPAmVvmT3
+         TS0SL2LbleiW5PtMp0COFt0R8X7AxM5XQ9NHC6oCfnrYpvj48nwp8ZRFusjHgqnZ6d3I
+         3Tfz37hWXNEyCnPBceyJvnDwO5hIAq9uhfM8ywvfWmYFovYYX/EOLNY40pPtxyRqiuCj
+         mB2EcuHlbIN2wgdrltaHtwwxE5s3zDzN/fFd+G34AciErY+zlEtT8qiNU0ircNcbeFvC
+         BOVQ==
+X-Gm-Message-State: AOAM530/tIDZeoYrt3h5RPGqktHiT28jVFkyEJ3BK8ttTxg1e6JfRx/6
+        c7xXKsX03iW8GCPEFEC2VHOy53EMZzo=
+X-Google-Smtp-Source: ABdhPJxGhK1Lrircu2+YerirUIFU5hV9p85ywTkfNK+ySkJpSkifV5xZLfBUppQ0i9zH6qbTMWgUxg==
+X-Received: by 2002:adf:f843:: with SMTP id d3mr6852521wrq.55.1616198642726;
+        Fri, 19 Mar 2021 17:04:02 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c8sm8044049wmb.34.2021.03.19.17.04.01
+        by smtp.gmail.com with ESMTPSA id f4sm8783214wrz.4.2021.03.19.17.04.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Mar 2021 17:04:01 -0700 (PDT)
-Message-Id: <6aec1f499b8068329b81fb1221717c2ee336fd8d.1616198636.git.gitgitgadget@gmail.com>
+        Fri, 19 Mar 2021 17:04:02 -0700 (PDT)
+Message-Id: <f9325647a9fca1471fead860c18db86aba34eb54.1616198636.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.905.v3.git.1616198636.gitgitgadget@gmail.com>
 References: <pull.905.v2.git.1616016485.gitgitgadget@gmail.com>
         <pull.905.v3.git.1616198636.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 20 Mar 2021 00:03:49 +0000
-Subject: [PATCH v3 06/13] t6428: new test for SKIP_WORKTREE handling and
- conflicts
+Date:   Sat, 20 Mar 2021 00:03:51 +0000
+Subject: [PATCH v3 08/13] t: mark several submodule merging tests as fixed
+ under merge-ort
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -87,183 +87,125 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-If there is a conflict during a merge for a SKIP_WORKTREE entry, we
-expect that file to be written to the working copy and have the
-SKIP_WORKTREE bit cleared in the index.  If the user had manually
-created a file in the working tree despite SKIP_WORKTREE being set, we
-do not want to clobber their changes to that file, but want to move it
-out of the way.  Add tests that check for these behaviors.
+merge-ort handles submodules (and directory/file conflicts in general)
+differently than merge-recursive does; it basically puts all the special
+handling for different filetypes into one place in the codebase instead
+of needing special handling for different filetypes in many different
+code paths.  This one code path in merge-ort could perhaps use some work
+still (there are still test_expect_failure cases in the testsuite), but
+it passes all the tests that merge-recursive does as well as 12
+additional ones that merge-recursive fails.  Mark those 12 tests as
+test_expect_success under merge-ort.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t6428-merge-conflicts-sparse.sh | 158 ++++++++++++++++++++++++++++++
- 1 file changed, 158 insertions(+)
- create mode 100755 t/t6428-merge-conflicts-sparse.sh
+ t/t3512-cherry-pick-submodule.sh              | 7 +++++--
+ t/t3513-revert-submodule.sh                   | 5 ++++-
+ t/t5572-pull-submodule.sh                     | 7 +++++--
+ t/t6437-submodule-merge.sh                    | 5 +++--
+ t/t6438-submodule-directory-file-conflicts.sh | 7 +++++--
+ 5 files changed, 22 insertions(+), 9 deletions(-)
 
-diff --git a/t/t6428-merge-conflicts-sparse.sh b/t/t6428-merge-conflicts-sparse.sh
-new file mode 100755
-index 000000000000..1bb52ff6f38c
---- /dev/null
-+++ b/t/t6428-merge-conflicts-sparse.sh
-@@ -0,0 +1,158 @@
-+#!/bin/sh
-+
-+test_description="merge cases"
-+
-+# The setup for all of them, pictorially, is:
-+#
-+#      A
-+#      o
-+#     / \
-+#  O o   ?
-+#     \ /
-+#      o
-+#      B
-+#
-+# To help make it easier to follow the flow of tests, they have been
-+# divided into sections and each test will start with a quick explanation
-+# of what commits O, A, and B contain.
-+#
-+# Notation:
-+#    z/{b,c}   means  files z/b and z/c both exist
-+#    x/d_1     means  file x/d exists with content d1.  (Purpose of the
-+#                     underscore notation is to differentiate different
-+#                     files that might be renamed into each other's paths.)
-+
-+. ./test-lib.sh
+diff --git a/t/t3512-cherry-pick-submodule.sh b/t/t3512-cherry-pick-submodule.sh
+index 822f2d4bfbd5..c657840db33b 100755
+--- a/t/t3512-cherry-pick-submodule.sh
++++ b/t/t3512-cherry-pick-submodule.sh
+@@ -8,8 +8,11 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-submodule-update.sh
+ 
+-KNOWN_FAILURE_NOFF_MERGE_DOESNT_CREATE_EMPTY_SUBMODULE_DIR=1
+-KNOWN_FAILURE_NOFF_MERGE_ATTEMPTS_TO_MERGE_REMOVED_SUBMODULE_FILES=1
++if test "$GIT_TEST_MERGE_ALGORITHM" != ort
++then
++	KNOWN_FAILURE_NOFF_MERGE_DOESNT_CREATE_EMPTY_SUBMODULE_DIR=1
++	KNOWN_FAILURE_NOFF_MERGE_ATTEMPTS_TO_MERGE_REMOVED_SUBMODULE_FILES=1
++fi
+ test_submodule_switch "cherry-pick"
+ 
+ test_expect_success 'unrelated submodule/file conflict is ignored' '
+diff --git a/t/t3513-revert-submodule.sh b/t/t3513-revert-submodule.sh
+index a759f12cbb1d..74cd96e58223 100755
+--- a/t/t3513-revert-submodule.sh
++++ b/t/t3513-revert-submodule.sh
+@@ -30,7 +30,10 @@ git_revert () {
+ 	git revert HEAD
+ }
+ 
+-KNOWN_FAILURE_NOFF_MERGE_DOESNT_CREATE_EMPTY_SUBMODULE_DIR=1
++if test "$GIT_TEST_MERGE_ALGORITHM" != ort
++then
++	KNOWN_FAILURE_NOFF_MERGE_DOESNT_CREATE_EMPTY_SUBMODULE_DIR=1
++fi
+ test_submodule_switch_func "git_revert"
+ 
+ test_done
+diff --git a/t/t5572-pull-submodule.sh b/t/t5572-pull-submodule.sh
+index 29537f4798ef..4f92a116e1f0 100755
+--- a/t/t5572-pull-submodule.sh
++++ b/t/t5572-pull-submodule.sh
+@@ -42,8 +42,11 @@ git_pull_noff () {
+ 	$2 git pull --no-ff
+ }
+ 
+-KNOWN_FAILURE_NOFF_MERGE_DOESNT_CREATE_EMPTY_SUBMODULE_DIR=1
+-KNOWN_FAILURE_NOFF_MERGE_ATTEMPTS_TO_MERGE_REMOVED_SUBMODULE_FILES=1
++if test "$GIT_TEST_MERGE_ALGORITHM" != ort
++then
++	KNOWN_FAILURE_NOFF_MERGE_DOESNT_CREATE_EMPTY_SUBMODULE_DIR=1
++	KNOWN_FAILURE_NOFF_MERGE_ATTEMPTS_TO_MERGE_REMOVED_SUBMODULE_FILES=1
++fi
+ test_submodule_switch_func "git_pull_noff"
+ 
+ test_expect_success 'pull --recurse-submodule setup' '
+diff --git a/t/t6437-submodule-merge.sh b/t/t6437-submodule-merge.sh
+index 0f92bcf326c8..e5e89c2045e7 100755
+--- a/t/t6437-submodule-merge.sh
++++ b/t/t6437-submodule-merge.sh
+@@ -6,6 +6,7 @@ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./test-lib.sh
 +. "$TEST_DIRECTORY"/lib-merge.sh
-+
-+
-+# Testcase basic, conflicting changes in 'numerals'
-+
-+test_setup_numerals () {
-+	test_create_repo numerals_$1 &&
-+	(
-+		cd numerals_$1 &&
-+
-+		>README &&
-+		test_write_lines I II III >numerals &&
-+		git add README numerals &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		test_write_lines I II III IIII >numerals &&
-+		git add numerals &&
-+		test_tick &&
-+		git commit -m "A" &&
-+
-+		git checkout B &&
-+		test_write_lines I II III IV >numerals &&
-+		git add numerals &&
-+		test_tick &&
-+		git commit -m "B" &&
-+
-+		cat <<-EOF >expected-index &&
-+		H README
-+		M numerals
-+		M numerals
-+		M numerals
-+		EOF
-+
-+		cat <<-EOF >expected-merge
-+		I
-+		II
-+		III
-+		<<<<<<< HEAD
-+		IIII
-+		=======
-+		IV
-+		>>>>>>> B^0
-+		EOF
-+
-+	)
-+}
-+
-+test_expect_merge_algorithm success failure 'conflicting entries written to worktree even if sparse' '
-+	test_setup_numerals plain &&
-+	(
-+		cd numerals_plain &&
-+
-+		git checkout A^0 &&
-+
-+		test_path_is_file README &&
-+		test_path_is_file numerals &&
-+
-+		git sparse-checkout init &&
-+		git sparse-checkout set README &&
-+
-+		test_path_is_file README &&
-+		test_path_is_missing numerals &&
-+
-+		test_must_fail git merge -s recursive B^0 &&
-+
-+		git ls-files -t >index_files &&
-+		test_cmp expected-index index_files &&
-+
-+		test_path_is_file README &&
-+		test_path_is_file numerals &&
-+
-+		test_cmp expected-merge numerals &&
-+
-+		# 4 other files:
-+		#   * expected-merge
-+		#   * expected-index
-+		#   * index_files
-+		#   * others
-+		git ls-files -o >others &&
-+		test_line_count = 4 others
-+	)
-+'
-+
-+test_expect_merge_algorithm failure failure 'present-despite-SKIP_WORKTREE handled reasonably' '
-+	test_setup_numerals in_the_way &&
-+	(
-+		cd numerals_in_the_way &&
-+
-+		git checkout A^0 &&
-+
-+		test_path_is_file README &&
-+		test_path_is_file numerals &&
-+
-+		git sparse-checkout init &&
-+		git sparse-checkout set README &&
-+
-+		test_path_is_file README &&
-+		test_path_is_missing numerals &&
-+
-+		echo foobar >numerals &&
-+
-+		test_must_fail git merge -s recursive B^0 &&
-+
-+		git ls-files -t >index_files &&
-+		test_cmp expected-index index_files &&
-+
-+		test_path_is_file README &&
-+		test_path_is_file numerals &&
-+
-+		test_cmp expected-merge numerals &&
-+
-+		# There should still be a file with "foobar" in it
-+		grep foobar * &&
-+
-+		# 5 other files:
-+		#   * expected-merge
-+		#   * expected-index
-+		#   * index_files
-+		#   * others
-+		#   * whatever name was given to the numerals file that had
-+		#     "foobar" in it
-+		git ls-files -o >others &&
-+		test_line_count = 5 others
-+	)
-+'
-+
-+test_done
+ 
+ #
+ # history
+@@ -328,7 +329,7 @@ test_expect_success 'setup file/submodule conflict' '
+ 	)
+ '
+ 
+-test_expect_failure 'file/submodule conflict' '
++test_expect_merge_algorithm failure success 'file/submodule conflict' '
+ 	test_when_finished "git -C file-submodule reset --hard" &&
+ 	(
+ 		cd file-submodule &&
+@@ -437,7 +438,7 @@ test_expect_failure 'directory/submodule conflict; keep submodule clean' '
+ 	)
+ '
+ 
+-test_expect_failure !FAIL_PREREQS 'directory/submodule conflict; should not treat submodule files as untracked or in the way' '
++test_expect_merge_algorithm failure success !FAIL_PREREQS 'directory/submodule conflict; should not treat submodule files as untracked or in the way' '
+ 	test_when_finished "git -C directory-submodule/path reset --hard" &&
+ 	test_when_finished "git -C directory-submodule reset --hard" &&
+ 	(
+diff --git a/t/t6438-submodule-directory-file-conflicts.sh b/t/t6438-submodule-directory-file-conflicts.sh
+index 04bf4be7d792..8df67a0ef99d 100755
+--- a/t/t6438-submodule-directory-file-conflicts.sh
++++ b/t/t6438-submodule-directory-file-conflicts.sh
+@@ -12,8 +12,11 @@ test_submodule_switch "merge --ff"
+ 
+ test_submodule_switch "merge --ff-only"
+ 
+-KNOWN_FAILURE_NOFF_MERGE_DOESNT_CREATE_EMPTY_SUBMODULE_DIR=1
+-KNOWN_FAILURE_NOFF_MERGE_ATTEMPTS_TO_MERGE_REMOVED_SUBMODULE_FILES=1
++if test "$GIT_TEST_MERGE_ALGORITHM" != ort
++then
++	KNOWN_FAILURE_NOFF_MERGE_DOESNT_CREATE_EMPTY_SUBMODULE_DIR=1
++	KNOWN_FAILURE_NOFF_MERGE_ATTEMPTS_TO_MERGE_REMOVED_SUBMODULE_FILES=1
++fi
+ test_submodule_switch "merge --no-ff"
+ 
+ test_done
 -- 
 gitgitgadget
 
