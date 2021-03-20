@@ -2,68 +2,68 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5703C433E2
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ED443C433E6
 	for <git@archiver.kernel.org>; Sat, 20 Mar 2021 00:05:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5A8F061989
+	by mail.kernel.org (Postfix) with ESMTP id CADBA61953
 	for <git@archiver.kernel.org>; Sat, 20 Mar 2021 00:05:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229826AbhCTAEm (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S229841AbhCTAEm (ORCPT <rfc822;git@archiver.kernel.org>);
         Fri, 19 Mar 2021 20:04:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38328 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38336 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229649AbhCTAED (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Mar 2021 20:04:03 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F010C061760
-        for <git@vger.kernel.org>; Fri, 19 Mar 2021 17:04:03 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id o16so10757416wrn.0
-        for <git@vger.kernel.org>; Fri, 19 Mar 2021 17:04:03 -0700 (PDT)
+        with ESMTP id S229708AbhCTAEE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Mar 2021 20:04:04 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AEDCC061760
+        for <git@vger.kernel.org>; Fri, 19 Mar 2021 17:04:04 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id k8so10733286wrc.3
+        for <git@vger.kernel.org>; Fri, 19 Mar 2021 17:04:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=eGphsfSLxSih+gC6ig10Nu03y71Itud2yHKKHLi8FMQ=;
-        b=oK2oMPhF4lUk2MiE6WI1Xqp68DOB9x83n5DkehRaGImRUqOfthwsBKhl+sf3m/g9Kl
-         QT8QGITFSQawXNJAyf9aP+vJUDHRynlb06GGC8sthP7qE8GyqTSON34IO/w2LMshIkUy
-         K2Y+HqC//qwB90QBokOEK7Le51q+yBL1SIPwRyNIBxbeowZmL+by9CVEkKCCGJoJsOmR
-         ge58LPw1OAlyRiBf/WTIUQgVFj9qpyiT2nqDbNcdO5Xw6EBVDqdCtHTl9MFEUBawat1v
-         4jzLdGbSx2BPXoMat669oItZIsWF+bv6TQOJFNO07CG/p/ggOc6NpdFopQttzbfFnT7X
-         WEVQ==
+        bh=YnhiuQV/2Wc+3z93qURlauJEUrKVi/jU9n84Rplg354=;
+        b=paUeqpjiHgo4LP4Z0WXf5rebstlyk9U6brawL7J8oOWqjSy97Xeo8p44xxJz13gn7u
+         JVMQPFM3jgYb2QH8kM5fvPhKUM/OVCJGAyr7JCHGUqJenRk9pARctLg83hO/823TIU5s
+         3Wqa6WmN6X+WPieLTvBQ7dBSHESRwTgtl7XN+uCvqEeSXvtsVTPJfBUB1z7I2XPb5+Xz
+         ysf9F1Lp/feQe74KRg6Yoq4RxZ1s7MnSCmi40QFNWeGu2LLT4MJEFJGtcXgx6fhb+fdT
+         CsU9FADv0F4tDeIlfSUa7uVQZqKUxPS9qv1t3fA0pRpem4q3nADxRb/Y+qtw2SLgQf1g
+         jGhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=eGphsfSLxSih+gC6ig10Nu03y71Itud2yHKKHLi8FMQ=;
-        b=U8LQbL/5M2Dxj4vzMVrY1xC6iXQ/XiPcwIC3cAEr7MEO8Vw1oA2/PS/hGyPuyjAdLQ
-         VZ6YqmxgIRZHV5Yu6w4+UWisNxie0/MPrUVIhlYs0j7Seiu4aPEhWp/F/7w9PURcaKxB
-         J99HmEVK9YZvZS9FzwqlqzhrdWSIFd/EvUf92vmXiqaztKkQ7FatBl/nu7ebO/OGgR0e
-         vDeb02bH0QAK4Rk25OPONNLiQnX0KZ0qq0820QqPyRSQqHqyfBRjuX2okM9j0yoOlUJ/
-         sx/uCL7YmjTfGWNCGh9IASQV/hh3DKu9TutyxAutSX12qbPte9hqyVTVpRgUT/81VFcF
-         b2Iw==
-X-Gm-Message-State: AOAM53052F+eNuEbJS1OTC7Byg0VeNZ73CJCW/bkt4RjwA6QfvAnOleP
-        R/xpoM0yewtMrLEJ3Uguoh5jocBoUlw=
-X-Google-Smtp-Source: ABdhPJy6wFcqYjq3kLHeJmkEnf9wj/Nhy+RA+rFATZH56pWd215n2kVh8/0/VbcC/+SbXZwbkAJdmA==
-X-Received: by 2002:a5d:6ca6:: with SMTP id a6mr6824005wra.179.1616198642026;
-        Fri, 19 Mar 2021 17:04:02 -0700 (PDT)
+        bh=YnhiuQV/2Wc+3z93qURlauJEUrKVi/jU9n84Rplg354=;
+        b=aKhevw5gIETGEibi4s+uCfYmA1bg0CZoAZkz9AXF0hAYLKqY6cjy4FrFtfAJ1LwoVM
+         fkPq/PQU4OS/nZ75eRzx7epYZ4WjCljqck5MDzfZ5DKHhHH4mi9k4I6b4JkksoymVZZq
+         UxeNTfOBNusTMBopY0TdI7ySsljZ+SaBjzaJO2UfS/bS38dHfR6EO1KwEYjkIygQZ39M
+         vbpBt6FSuE4XZq4fLqmXjj20LG8sA/1X2BmwCNta9pPjcKxaIsyOCjIMhfyyF7eHQ8gq
+         UZOs22DB7UTfEqZRaQd+rDT2QDsJ2U0v2mMXlKUC0otYU6RS/1ljIwpXvfrjL53B/kkJ
+         3acg==
+X-Gm-Message-State: AOAM532sHlv/G0BcnCSBTwVS5PVT02r85Dx0EOg78pz+RAnccuYPR3sn
+        qNAg3KbaNV1dA3+2a6lY4EcgF/i+rrg=
+X-Google-Smtp-Source: ABdhPJzPg20V7QmoGvsyWHq2BVSIAnkyCxNBRk7yXRKt26HOH1oeFBRllo10G2Ovr+O1gcwtqoHuNw==
+X-Received: by 2002:adf:e548:: with SMTP id z8mr7134869wrm.246.1616198643274;
+        Fri, 19 Mar 2021 17:04:03 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j30sm10730663wrj.62.2021.03.19.17.04.01
+        by smtp.gmail.com with ESMTPSA id a14sm9681857wrn.5.2021.03.19.17.04.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Mar 2021 17:04:01 -0700 (PDT)
-Message-Id: <fe3baf696785c4b7bee8ae93e4567c2ee2a03492.1616198636.git.gitgitgadget@gmail.com>
+        Fri, 19 Mar 2021 17:04:02 -0700 (PDT)
+Message-Id: <4a79e61346919291f49885298da4b8c714ee00ff.1616198636.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.905.v3.git.1616198636.gitgitgadget@gmail.com>
 References: <pull.905.v2.git.1616016485.gitgitgadget@gmail.com>
         <pull.905.v3.git.1616198636.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 20 Mar 2021 00:03:50 +0000
-Subject: [PATCH v3 07/13] merge-ort: implement CE_SKIP_WORKTREE handling with
- conflicted entries
+Date:   Sat, 20 Mar 2021 00:03:52 +0000
+Subject: [PATCH v3 09/13] merge-ort: write $GIT_DIR/AUTO_MERGE whenever we hit
+ a conflict
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -87,132 +87,162 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-When merge conflicts occur in paths removed by a sparse-checkout, we
-need to unsparsify those paths (clear the SKIP_WORKTREE bit), and write
-out the conflicted file to the working copy.  In the very unlikely case
-that someone manually put a file into the working copy at the location
-of the SKIP_WORKTREE file, we need to avoid overwriting whatever edits
-they have made and move that file to a different location first.
+There are a variety of questions users might ask while resolving
+conflicts:
+  * What changes have been made since the previous (first) parent?
+  * What changes are staged?
+  * What is still unstaged? (or what is still conflicted?)
+  * What changes did I make to resolve conflicts so far?
+The first three of these have simple answers:
+  * git diff HEAD
+  * git diff --cached
+  * git diff
+There was no way to answer the final question previously.  Adding one
+is trivial in merge-ort, since it works by creating a tree representing
+what should be written to the working copy complete with conflict
+markers.  Simply write that tree to .git/AUTO_MERGE, allowing users to
+answer the fourth question with
+  * git diff AUTO_MERGE
+
+I avoided using a name like "MERGE_AUTO", because that would be
+merge-specific (much like MERGE_HEAD, REBASE_HEAD, REVERT_HEAD,
+CHERRY_PICK_HEAD) and I wanted a name that didn't change depending on
+which type of operation the merge was part of.
+
+Ensure that paths which clean out other temporary operation-specific
+files (e.g. CHERRY_PICK_HEAD, MERGE_MSG, rebase-merge/ state directory)
+also clean out this AUTO_MERGE file.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c                       | 43 +++++++++++++++++++++----------
- t/t6428-merge-conflicts-sparse.sh |  4 +--
- 2 files changed, 32 insertions(+), 15 deletions(-)
+ branch.c         |  1 +
+ builtin/rebase.c |  1 +
+ merge-ort.c      | 10 ++++++++++
+ path.c           |  1 +
+ path.h           |  2 ++
+ sequencer.c      |  5 +++++
+ 6 files changed, 20 insertions(+)
 
-diff --git a/merge-ort.c b/merge-ort.c
-index c4fe234d8972..303e89414274 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -3369,23 +3369,27 @@ static int checkout(struct merge_options *opt,
- 	return ret;
+diff --git a/branch.c b/branch.c
+index 9c9dae1eae32..b71a2de29dbe 100644
+--- a/branch.c
++++ b/branch.c
+@@ -344,6 +344,7 @@ void remove_merge_branch_state(struct repository *r)
+ 	unlink(git_path_merge_rr(r));
+ 	unlink(git_path_merge_msg(r));
+ 	unlink(git_path_merge_mode(r));
++	unlink(git_path_auto_merge(r));
+ 	save_autostash(git_path_merge_autostash(r));
  }
  
--static int record_conflicted_index_entries(struct merge_options *opt,
--					   struct index_state *index,
--					   struct strmap *paths,
--					   struct strmap *conflicted)
-+static int record_conflicted_index_entries(struct merge_options *opt)
- {
- 	struct hashmap_iter iter;
- 	struct strmap_entry *e;
-+	struct index_state *index = opt->repo->index;
-+	struct checkout state = CHECKOUT_INIT;
- 	int errs = 0;
- 	int original_cache_nr;
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 840dbd7eb777..6c252d62758c 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -737,6 +737,7 @@ static int finish_rebase(struct rebase_options *opts)
+ 	int ret = 0;
  
--	if (strmap_empty(conflicted))
-+	if (strmap_empty(&opt->priv->conflicted))
- 		return 0;
- 
-+	/* If any entries have skip_worktree set, we'll have to check 'em out */
-+	state.force = 1;
-+	state.quiet = 1;
-+	state.refresh_cache = 1;
-+	state.istate = index;
- 	original_cache_nr = index->cache_nr;
- 
- 	/* Put every entry from paths into plist, then sort */
--	strmap_for_each_entry(conflicted, &iter, e) {
-+	strmap_for_each_entry(&opt->priv->conflicted, &iter, e) {
- 		const char *path = e->key;
- 		struct conflict_info *ci = e->value;
- 		int pos;
-@@ -3426,9 +3430,23 @@ static int record_conflicted_index_entries(struct merge_options *opt,
- 			 * the higher order stages.  Thus, we need override
- 			 * the CE_SKIP_WORKTREE bit and manually write those
- 			 * files to the working disk here.
--			 *
--			 * TODO: Implement this CE_SKIP_WORKTREE fixup.
- 			 */
-+			if (ce_skip_worktree(ce)) {
-+				struct stat st;
-+
-+				if (!lstat(path, &st)) {
-+					char *new_name = unique_path(&opt->priv->paths,
-+								     path,
-+								     "cruft");
-+
-+					path_msg(opt, path, 1,
-+						 _("Note: %s not up to date and in way of checking out conflicted version; old copy renamed to %s"),
-+						 path, new_name);
-+					errs |= rename(path, new_name);
-+					free(new_name);
-+				}
-+				errs |= checkout_entry(ce, &state, NULL, NULL);
-+			}
- 
- 			/*
- 			 * Mark this cache entry for removal and instead add
-@@ -3478,8 +3496,6 @@ void merge_switch_to_result(struct merge_options *opt,
+ 	delete_ref(NULL, "REBASE_HEAD", NULL, REF_NO_DEREF);
++	unlink(git_path_auto_merge(the_repository));
+ 	apply_autostash(state_dir_path("autostash", opts));
+ 	close_object_store(the_repository->objects);
+ 	/*
+diff --git a/merge-ort.c b/merge-ort.c
+index 303e89414274..e8f1a435f99a 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -3496,6 +3496,9 @@ void merge_switch_to_result(struct merge_options *opt,
  {
  	assert(opt->priv == NULL);
  	if (result->clean >= 0 && update_worktree_and_index) {
--		struct merge_options_internal *opti = result->priv;
--
++		const char *filename;
++		FILE *fp;
++
  		trace2_region_enter("merge", "checkout", opt->repo);
  		if (checkout(opt, head, result->tree)) {
  			/* failure to function */
-@@ -3489,13 +3505,14 @@ void merge_switch_to_result(struct merge_options *opt,
- 		trace2_region_leave("merge", "checkout", opt->repo);
- 
- 		trace2_region_enter("merge", "record_conflicted", opt->repo);
--		if (record_conflicted_index_entries(opt, opt->repo->index,
--						    &opti->paths,
--						    &opti->conflicted)) {
-+		opt->priv = result->priv;
-+		if (record_conflicted_index_entries(opt)) {
- 			/* failure to function */
-+			opt->priv = NULL;
- 			result->clean = -1;
- 			return;
+@@ -3514,6 +3517,13 @@ void merge_switch_to_result(struct merge_options *opt,
  		}
-+		opt->priv = NULL;
+ 		opt->priv = NULL;
  		trace2_region_leave("merge", "record_conflicted", opt->repo);
++
++		trace2_region_enter("merge", "write_auto_merge", opt->repo);
++		filename = git_path_auto_merge(opt->repo);
++		fp = xfopen(filename, "w");
++		fprintf(fp, "%s\n", oid_to_hex(&result->tree->object.oid));
++		fclose(fp);
++		trace2_region_leave("merge", "write_auto_merge", opt->repo);
  	}
  
-diff --git a/t/t6428-merge-conflicts-sparse.sh b/t/t6428-merge-conflicts-sparse.sh
-index 1bb52ff6f38c..7e8bf497f821 100755
---- a/t/t6428-merge-conflicts-sparse.sh
-+++ b/t/t6428-merge-conflicts-sparse.sh
-@@ -76,7 +76,7 @@ test_setup_numerals () {
- 	)
- }
+ 	if (display_update_msgs) {
+diff --git a/path.c b/path.c
+index 7b385e5eb282..9e883eb52446 100644
+--- a/path.c
++++ b/path.c
+@@ -1534,5 +1534,6 @@ REPO_GIT_PATH_FUNC(merge_rr, "MERGE_RR")
+ REPO_GIT_PATH_FUNC(merge_mode, "MERGE_MODE")
+ REPO_GIT_PATH_FUNC(merge_head, "MERGE_HEAD")
+ REPO_GIT_PATH_FUNC(merge_autostash, "MERGE_AUTOSTASH")
++REPO_GIT_PATH_FUNC(auto_merge, "AUTO_MERGE")
+ REPO_GIT_PATH_FUNC(fetch_head, "FETCH_HEAD")
+ REPO_GIT_PATH_FUNC(shallow, "shallow")
+diff --git a/path.h b/path.h
+index e7e77da6aaa5..251c78d98000 100644
+--- a/path.h
++++ b/path.h
+@@ -176,6 +176,7 @@ struct path_cache {
+ 	const char *merge_mode;
+ 	const char *merge_head;
+ 	const char *merge_autostash;
++	const char *auto_merge;
+ 	const char *fetch_head;
+ 	const char *shallow;
+ };
+@@ -191,6 +192,7 @@ const char *git_path_merge_rr(struct repository *r);
+ const char *git_path_merge_mode(struct repository *r);
+ const char *git_path_merge_head(struct repository *r);
+ const char *git_path_merge_autostash(struct repository *r);
++const char *git_path_auto_merge(struct repository *r);
+ const char *git_path_fetch_head(struct repository *r);
+ const char *git_path_shallow(struct repository *r);
  
--test_expect_merge_algorithm success failure 'conflicting entries written to worktree even if sparse' '
-+test_expect_success 'conflicting entries written to worktree even if sparse' '
- 	test_setup_numerals plain &&
- 	(
- 		cd numerals_plain &&
-@@ -112,7 +112,7 @@ test_expect_merge_algorithm success failure 'conflicting entries written to work
- 	)
- '
+diff --git a/sequencer.c b/sequencer.c
+index d2332d3e1787..472cdd8c620d 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -2096,6 +2096,7 @@ static int do_pick_commit(struct repository *r,
+ 		refs_delete_ref(get_main_ref_store(r), "", "CHERRY_PICK_HEAD",
+ 				NULL, 0);
+ 		unlink(git_path_merge_msg(r));
++		unlink(git_path_auto_merge(r));
+ 		fprintf(stderr,
+ 			_("dropping %s %s -- patch contents already upstream\n"),
+ 			oid_to_hex(&commit->object.oid), msg.subject);
+@@ -2451,6 +2452,8 @@ void sequencer_post_commit_cleanup(struct repository *r, int verbose)
+ 		need_cleanup = 1;
+ 	}
  
--test_expect_merge_algorithm failure failure 'present-despite-SKIP_WORKTREE handled reasonably' '
-+test_expect_merge_algorithm failure success 'present-despite-SKIP_WORKTREE handled reasonably' '
- 	test_setup_numerals in_the_way &&
- 	(
- 		cd numerals_in_the_way &&
++	unlink(git_path_auto_merge(r));
++
+ 	if (!need_cleanup)
+ 		return;
+ 
+@@ -4111,6 +4114,7 @@ static int pick_commits(struct repository *r,
+ 			unlink(rebase_path_stopped_sha());
+ 			unlink(rebase_path_amend());
+ 			unlink(git_path_merge_head(r));
++			unlink(git_path_auto_merge(r));
+ 			delete_ref(NULL, "REBASE_HEAD", NULL, REF_NO_DEREF);
+ 
+ 			if (item->command == TODO_BREAK) {
+@@ -4505,6 +4509,7 @@ static int commit_staged_changes(struct repository *r,
+ 		return error(_("could not commit staged changes."));
+ 	unlink(rebase_path_amend());
+ 	unlink(git_path_merge_head(r));
++	unlink(git_path_auto_merge(r));
+ 	if (final_fixup) {
+ 		unlink(rebase_path_fixup_msg());
+ 		unlink(rebase_path_squash_msg());
 -- 
 gitgitgadget
 
