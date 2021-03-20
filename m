@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86329C433DB
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3071C433E0
 	for <git@archiver.kernel.org>; Sat, 20 Mar 2021 14:42:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 54C4E61973
+	by mail.kernel.org (Postfix) with ESMTP id 6A2B861978
 	for <git@archiver.kernel.org>; Sat, 20 Mar 2021 14:42:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229995AbhCTOmR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 20 Mar 2021 10:42:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55894 "EHLO
+        id S229990AbhCTOmQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 20 Mar 2021 10:42:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55900 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229944AbhCTOlm (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Mar 2021 10:41:42 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 345CCC061762
+        with ESMTP id S229945AbhCTOln (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Mar 2021 10:41:43 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB59DC061763
         for <git@vger.kernel.org>; Sat, 20 Mar 2021 07:41:42 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id t5-20020a1c77050000b029010e62cea9deso6763089wmi.0
+Received: by mail-wm1-x32c.google.com with SMTP id 12so6964817wmf.5
         for <git@vger.kernel.org>; Sat, 20 Mar 2021 07:41:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=pvIZVxVoxgZLRQGOMV+gC6jnzSY3yK6WsNbKqr3zImY=;
-        b=WQWq8I6COLMA1bJF4tWo1RHhf/AMnDbHDWWP0eu+bzxXPrZRJKphPNinxtdtGJNTsG
-         xHDRbuuclhxxRQgc/b2zRu1lVHlSwbXlf5PoYtO4cAuvsYMqSEvgc5Em6m2duYPKYNHu
-         CrTATROBCAEt1fFBSN6VJF9g1Rt9VwXL6WmsqRSvD5KWWtF3erM5p5Yp0CCpUj43neAr
-         d8YnJTpLKEnrgGvVO4StiF2MUARCaW60Xpw3lpZkIUJeQzieIm+7pICuAiIEEUUmUmMl
-         Ktluhd6wxmk0BV6D/ujshkAH3XP09F9nwpUwRycy27K2iNt6sss88zNsJNPPEXJ00Cho
-         I/cg==
+        bh=vZt/+t9l9oG+sR6gIJ8aQSNoUZ4uRp47zepH4JSEPOc=;
+        b=mKh9IpuBHrmEqagRokQX6xWRhX2DB8e2pj946zftQkq5xNwxK6emd0muDGKKGVWbes
+         6siur1YwMQ+2OLRfaX3IwR43pboOAsXfQHYZ11jnoZlgHfy46KMD5r10LGYm3s9yGTv7
+         qGKB3k7nLfzAG2x4BVAtRUh1jHCwVvw9CElB2dpGKgVkPoT1wHo9RqulWlGIAfcDxNrb
+         rFQ2pwZ6EXPuHaWRG23KXEfuDjfcupbKn1UjqLbpasH0zLdVeEIsnX1S/SIWaMzprLKD
+         JG8rpOD63Jmq9QBhdLYJGKpGs3/6m586POHUK1VO46HpbMQaVsQUcBJevp9UZV/We648
+         4YqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=pvIZVxVoxgZLRQGOMV+gC6jnzSY3yK6WsNbKqr3zImY=;
-        b=On7yy/lgyJUxxT7U2gceZppr+GQA3zqQgUU9MwvtVN5oj8mS7KucTWdjMkewPBwsuP
-         6cwF5EXKjW5KXZltpxJSU7OZVUk8lzmmnjSW+oUnIPm4Cz0DaYs9+jqpwrK12TmI/9Gm
-         euAlK0kMEPnc0w1fcHf1AWPH4DXQvwk1Kv+rDEmvXW7b/Xn0IzaVKDK7rFRvVFX0t9Ag
-         qYEesQ4mj/ZAE2UBgmCD5N89jndT+WdKnT2DL0RYBDhl+7JL+EiOF/TekuF4GXxRcl04
-         eOKhSehR5tZ2OKrENe2yFxCXeORWCJcEu3NPjQCAoVysULBsk+aCfArFixOW6RWm+tgp
-         T/Lg==
-X-Gm-Message-State: AOAM533ljb1x4u/co0KNuOsVDanG2aqdb4xCv/yu/0o8SnQNS46p8O7t
-        GkHLiuIX5QRy21zVzbF1sMxx8jCOWsA=
-X-Google-Smtp-Source: ABdhPJx9FhhA02IW6ohLSNbqK1vac3rCClr3Gcezt3NZxvWrmthhmCXWGoLop69R9dT1LFIThhg6uA==
-X-Received: by 2002:a7b:c119:: with SMTP id w25mr7929966wmi.127.1616251300886;
-        Sat, 20 Mar 2021 07:41:40 -0700 (PDT)
+        bh=vZt/+t9l9oG+sR6gIJ8aQSNoUZ4uRp47zepH4JSEPOc=;
+        b=WnXF+HZQUhiuuEHz95Shs/pHC9GGP4iLkCQsrvfPz/79D4h6nDGNlD84bPfPmrnpKR
+         CC9XIZq2cpAer1AA84vgfTFEtafpKAaJyH3jEGCN2tzw1EjtYiPM2qi259pAemuczwkU
+         kEQ9nUyeGMkqW8tquhR4ASPV+YG5IUgL1Yy5Mdes8veWnpY9BsbwiV8Sqb7b3XoTb9g7
+         4sTBXqeyIY3HVxMSMesp5z9iorVa+zhQHZLp+fWfv0zOo3ldERYzGr4Aafjxp2YzLCKA
+         9fyTjA30zeWcNV+juxcX/RovfXoaH57voKofT+I3bmL6Qy4ay8PWBMHagML+FqaiTliQ
+         1oyA==
+X-Gm-Message-State: AOAM532Th18GCIStENoFdzQ3Kx9XNCBITTNIBNMSWz6UHulvqMRO0JYp
+        DMCP2igXDxdEu1iNULukUXmuHND9unY=
+X-Google-Smtp-Source: ABdhPJzZOt8c5RjUik0Msgp5R7ft4hjEyHN5q6zLRHbHDhRxeAFuo5XbYA08xgSUSuPbUnrhibnVzw==
+X-Received: by 2002:a1c:f20e:: with SMTP id s14mr8190072wmc.100.1616251301435;
+        Sat, 20 Mar 2021 07:41:41 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q9sm13122625wrp.79.2021.03.20.07.41.40
+        by smtp.gmail.com with ESMTPSA id v13sm14725798wrt.45.2021.03.20.07.41.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 20 Mar 2021 07:41:40 -0700 (PDT)
-Message-Id: <2378e3b4c1ae2a38b6cf7d11eea16c5d3c55da74.1616251299.git.gitgitgadget@gmail.com>
+        Sat, 20 Mar 2021 07:41:41 -0700 (PDT)
+Message-Id: <ca521d3c01d652e09e716fb447b0b26da1a014e8.1616251299.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.911.git.1616251299.gitgitgadget@gmail.com>
 References: <pull.911.git.1616251299.gitgitgadget@gmail.com>
 From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 20 Mar 2021 14:41:37 +0000
-Subject: [PATCH 1/2] [GSOC] commit: add --trailer option
+Date:   Sat, 20 Mar 2021 14:41:38 +0000
+Subject: [PATCH 2/2] [GSOC] interpret-trailer: easy parse trailer value
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -84,417 +84,276 @@ X-Mailing-List: git@vger.kernel.org
 
 From: ZheNing Hu <adlternative@gmail.com>
 
-Historically, Git has supported the 'Signed-off-by' commit trailer
-using the '--signoff' and the '-s' option from the command line.
-But users may need to provide other trailer information from the
-command line such as "Helped-by", "Reported-by", "Mentored-by",
+The original `-trailer` adding some trailers like
+"Signed-off-by:C O <Mister@email.com>" is often too
+verbose and error-prone.
 
-Now implement a new `--trailer <token>[(=|:)<value>]` option to pass
-other trailers to `interpret-trailers` and insert them into commit
-messages.
+Now add the syntax parse for the value of `--trailer`:
+e.g. "Signed-off-by:@Junio", git will fuzzy search in the
+commit history to find the latest one commit which matches
+`--author=Junio`, and get the "author <email>" pair
+`Junio C Hamano <gitster@pobox.com>` as the value of
+`--trailer`, it will be a easy way to add trailers.
+git commit --trailer` can also benefit from this.
 
 Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Helped-by: Jeff King <peff@peff.net>
 ---
- Documentation/git-commit.txt |  14 +-
- builtin/commit.c             |  22 +++
- t/t7502-commit-porcelain.sh  | 291 +++++++++++++++++++++++++++++++++++
- 3 files changed, 326 insertions(+), 1 deletion(-)
+ Documentation/git-interpret-trailers.txt | 23 ++++++++++++++++
+ builtin/commit.c                         | 33 -----------------------
+ commit.c                                 | 34 ++++++++++++++++++++++++
+ commit.h                                 |  2 ++
+ t/t7502-commit-porcelain.sh              | 28 +++++++++++++++++++
+ t/t7513-interpret-trailers.sh            | 23 ++++++++++++++++
+ trailer.c                                | 13 ++++++++-
+ 7 files changed, 122 insertions(+), 34 deletions(-)
 
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index 17150fa7eabe..3fe7ef33cb07 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -14,7 +14,8 @@ SYNOPSIS
- 	   [--allow-empty-message] [--no-verify] [-e] [--author=<author>]
- 	   [--date=<date>] [--cleanup=<mode>] [--[no-]status]
- 	   [-i | -o] [--pathspec-from-file=<file> [--pathspec-file-nul]]
--	   [-S[<keyid>]] [--] [<pathspec>...]
-+	   [(--trailer <token>[(=|:)<value>])...] [-S[<keyid>]]
-+	   [--] [<pathspec>...]
+diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
+index 96ec6499f001..33e76f2a58fb 100644
+--- a/Documentation/git-interpret-trailers.txt
++++ b/Documentation/git-interpret-trailers.txt
+@@ -69,6 +69,29 @@ Note that 'trailers' do not follow and are not intended to follow many
+ rules for RFC 822 headers. For example they do not follow
+ the encoding rules and probably many other rules.
  
- DESCRIPTION
- -----------
-@@ -166,6 +167,17 @@ The `-m` option is mutually exclusive with `-c`, `-C`, and `-F`.
- 
- include::signoff-option.txt[]
- 
-+--trailer <token>[(=|:)<value>]::
-+	Specify a (<token>, <value>) pair that should be applied as a
-+	trailer. (e.g. `git commit --trailer "Signed-off-by:C O Mitter \
-+	<committer@example.com>" --trailer "Helped-by:C O Mitter \
-+	<committer@example.com>"` will add the "Signed-off-by" trailer
-+	and the "Helped-by" trailer to the commit message.)
-+	The `trailer.*` configuration variables
-+	(linkgit:git-interpret-trailers[1]) can be used to define if
-+	a duplicated trailer is omitted, where in the run of trailers
-+	each trailer would appear, and other details.
++Support to replace the value in the form of `@nickname`, provided that the
++commit with nickname as the author can be found in the your repository's git
++log. For example, in git's source code repository you can use commands:
 +
- -n::
- --no-verify::
- 	This option bypasses the pre-commit and commit-msg hooks.
++`git log --author="Junio"  --pretty="%an <%ae>" | sort |uniq `
++
++to find Junio's "name <email>" pair:
++
++Junio C Hamano <gitster@pobox.com>
++Junio C Hamano <junio@hera.kernel.org>
++Junio C Hamano <junio@kernel.org>
++Junio C Hamano <junio@pobox.com>
++...
++
++If you want to add a `Helped-by` trailer with Junio "name <email>" pair,
++you can use:
++
++`git commit --trailers "Helped-by:@Junio"`
++
++to insert the trailer to your commit messages:
++
++Helped-by: Junio C Hamano <gitster@pobox.com>
++
+ OPTIONS
+ -------
+ --in-place::
 diff --git a/builtin/commit.c b/builtin/commit.c
-index 739110c5a7f6..4b06672bd07d 100644
+index 4b06672bd07d..58c020e3cfbf 100644
 --- a/builtin/commit.c
 +++ b/builtin/commit.c
-@@ -113,6 +113,7 @@ static int config_commit_verbose = -1; /* unspecified */
- static int no_post_rewrite, allow_empty_message, pathspec_file_nul;
- static char *untracked_files_arg, *force_date, *ignore_submodule_arg, *ignored_arg;
- static char *sign_commit, *pathspec_from_file;
-+static struct strvec trailer_args = STRVEC_INIT;
- 
- /*
-  * The default commit message cleanup mode will remove the lines
-@@ -131,6 +132,14 @@ static struct strbuf message = STRBUF_INIT;
- 
- static enum wt_status_format status_format = STATUS_FORMAT_UNSPECIFIED;
- 
-+static int opt_pass_trailer(const struct option *opt, const char *arg, int unset)
-+{
-+	BUG_ON_OPT_NEG(unset);
-+
-+	strvec_pushl(&trailer_args, "--trailer", arg, NULL);
-+	return 0;
-+}
-+
- static int opt_parse_porcelain(const struct option *opt, const char *arg, int unset)
- {
- 	enum wt_status_format *value = (enum wt_status_format *)opt->value;
-@@ -958,6 +967,18 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 
- 	fclose(s->fp);
- 
-+	if (trailer_args.nr) {
-+		struct child_process run_trailer = CHILD_PROCESS_INIT;
-+
-+		strvec_pushl(&run_trailer.args, "interpret-trailers",
-+			     "--in-place", git_path_commit_editmsg(), NULL);
-+		strvec_pushv(&run_trailer.args, trailer_args.v);
-+		run_trailer.git_cmd = 1;
-+		if (run_command(&run_trailer))
-+			die(_("unable to pass trailers to --trailers"));
-+		strvec_clear(&trailer_args);
-+	}
-+
- 	/*
- 	 * Reject an attempt to record a non-merge empty commit without
- 	 * explicit --allow-empty. In the cherry-pick case, it may be
-@@ -1507,6 +1528,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 		OPT_STRING(0, "fixup", &fixup_message, N_("commit"), N_("use autosquash formatted message to fixup specified commit")),
- 		OPT_STRING(0, "squash", &squash_message, N_("commit"), N_("use autosquash formatted message to squash specified commit")),
- 		OPT_BOOL(0, "reset-author", &renew_authorship, N_("the commit is authored by me now (used with -C/-c/--amend)")),
-+		OPT_CALLBACK_F(0, "trailer", NULL, N_("trailer"), N_("add custom trailer(s)"), PARSE_OPT_NONEG, opt_pass_trailer),
- 		OPT_BOOL('s', "signoff", &signoff, N_("add a Signed-off-by trailer")),
- 		OPT_FILENAME('t', "template", &template_file, N_("use specified template file")),
- 		OPT_BOOL('e', "edit", &edit_flag, N_("force edit of commit")),
-diff --git a/t/t7502-commit-porcelain.sh b/t/t7502-commit-porcelain.sh
-index 6396897cc818..74b1602c0ce6 100755
---- a/t/t7502-commit-porcelain.sh
-+++ b/t/t7502-commit-porcelain.sh
-@@ -38,6 +38,16 @@ check_summary_oneline() {
- 	test_cmp exp act
+@@ -1043,39 +1043,6 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 	return 1;
  }
  
-+trailer_commit_base () {
-+	echo "fun" >>file &&
-+	git add file &&
-+	git commit -s --trailer "Signed-off-by=C1 E1 " \
-+		--trailer "Helped-by:C2 E2 " \
-+		--trailer "Reported-by=C3 E3" \
-+		--trailer "Mentored-by:C4 E4" \
-+		-m "hello"
-+}
+-static const char *find_author_by_nickname(const char *name)
+-{
+-	struct rev_info revs;
+-	struct commit *commit;
+-	struct strbuf buf = STRBUF_INIT;
+-	struct string_list mailmap = STRING_LIST_INIT_NODUP;
+-	const char *av[20];
+-	int ac = 0;
+-
+-	repo_init_revisions(the_repository, &revs, NULL);
+-	strbuf_addf(&buf, "--author=%s", name);
+-	av[++ac] = "--all";
+-	av[++ac] = "-i";
+-	av[++ac] = buf.buf;
+-	av[++ac] = NULL;
+-	setup_revisions(ac, av, &revs, NULL);
+-	revs.mailmap = &mailmap;
+-	read_mailmap(revs.mailmap);
+-
+-	if (prepare_revision_walk(&revs))
+-		die(_("revision walk setup failed"));
+-	commit = get_revision(&revs);
+-	if (commit) {
+-		struct pretty_print_context ctx = {0};
+-		ctx.date_mode.type = DATE_NORMAL;
+-		strbuf_release(&buf);
+-		format_commit_message(commit, "%aN <%aE>", &buf, &ctx);
+-		clear_mailmap(&mailmap);
+-		return strbuf_detach(&buf, NULL);
+-	}
+-	die(_("--author '%s' is not 'Name <email>' and matches no existing author"), name);
+-}
+-
+ static void handle_ignored_arg(struct wt_status *s)
+ {
+ 	if (!ignored_arg)
+diff --git a/commit.c b/commit.c
+index 6ccd774841c6..e1aad52d2c4f 100644
+--- a/commit.c
++++ b/commit.c
+@@ -21,6 +21,7 @@
+ #include "commit-reach.h"
+ #include "run-command.h"
+ #include "shallow.h"
++#include "mailmap.h"
+ 
+ static struct commit_extra_header *read_commit_extra_header_lines(const char *buf, size_t len, const char **);
+ 
+@@ -1703,3 +1704,36 @@ int run_commit_hook(int editor_is_used, const char *index_file,
+ 
+ 	return ret;
+ }
 +
- test_expect_success 'output summary format' '
++const char *find_author_by_nickname(const char *name)
++{
++	struct rev_info revs;
++	struct commit *commit;
++	struct strbuf buf = STRBUF_INIT;
++	struct string_list mailmap = STRING_LIST_INIT_NODUP;
++	const char *av[20];
++	int ac = 0;
++
++	repo_init_revisions(the_repository, &revs, NULL);
++	strbuf_addf(&buf, "--author=%s", name);
++	av[++ac] = "--all";
++	av[++ac] = "-i";
++	av[++ac] = buf.buf;
++	av[++ac] = NULL;
++	setup_revisions(ac, av, &revs, NULL);
++	revs.mailmap = &mailmap;
++	read_mailmap(revs.mailmap);
++
++	if (prepare_revision_walk(&revs))
++		die(_("revision walk setup failed"));
++	commit = get_revision(&revs);
++	if (commit) {
++		struct pretty_print_context ctx = {0};
++		ctx.date_mode.type = DATE_NORMAL;
++		strbuf_release(&buf);
++		format_commit_message(commit, "%aN <%aE>", &buf, &ctx);
++		clear_mailmap(&mailmap);
++		return strbuf_detach(&buf, NULL);
++	}
++	die(_("--author '%s' is not 'Name <email>' and matches no existing author"), name);
++}
+diff --git a/commit.h b/commit.h
+index 49c0f503964e..970a73ccd5be 100644
+--- a/commit.h
++++ b/commit.h
+@@ -371,4 +371,6 @@ int parse_buffer_signed_by_header(const char *buffer,
+ 				  struct strbuf *signature,
+ 				  const struct git_hash_algo *algop);
  
- 	echo new >file1 &&
-@@ -154,6 +164,287 @@ test_expect_success 'sign off' '
- 
++const char *find_author_by_nickname(const char *name);
++
+ #endif /* COMMIT_H */
+diff --git a/t/t7502-commit-porcelain.sh b/t/t7502-commit-porcelain.sh
+index 74b1602c0ce6..143690e2833c 100755
+--- a/t/t7502-commit-porcelain.sh
++++ b/t/t7502-commit-porcelain.sh
+@@ -445,6 +445,34 @@ test_expect_success 'commit --trailer with -c and ":=#" as separators' '
+ 	test_cmp expected actual
  '
  
-+test_expect_success 'commit --trailer with "="' '
-+	trailer_commit_base &&
-+	cat >expected <<-\EOF &&
-+	hello
 +
-+	Signed-off-by: C O Mitter <committer@example.com>
-+	Signed-off-by: C1 E1
-+	Helped-by: C2 E2
-+	Reported-by: C3 E3
-+	Mentored-by: C4 E4
-+	EOF
-+	git cat-file commit HEAD >commit.msg &&
-+	sed -e "1,/^\$/d" commit.msg >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'commit --trailer with -c and "replace" as ifexists' '
-+	trailer_commit_base &&
-+	cat >expected <<-\EOF &&
-+	hello
-+
-+	Signed-off-by: C O Mitter <committer@example.com>
-+	Signed-off-by: C1 E1
-+	Reported-by: C3 E3
-+	Mentored-by: C4 E4
-+	Helped-by: C3 E3
-+	EOF
-+	git -c trailer.ifexists="replace" \
-+		commit --trailer "Mentored-by: C4 E4" \
-+		 --trailer "Helped-by: C3 E3" \
-+		--amend &&
-+	git cat-file commit HEAD >commit.msg &&
-+	sed -e "1,/^\$/d"  commit.msg >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'commit --trailer with -c and "add" as ifexists' '
-+	trailer_commit_base &&
-+	cat >expected <<-\EOF &&
-+	hello
-+
-+	Signed-off-by: C O Mitter <committer@example.com>
-+	Signed-off-by: C1 E1
-+	Helped-by: C2 E2
-+	Reported-by: C3 E3
-+	Mentored-by: C4 E4
-+	Reported-by: C3 E3
-+	Mentored-by: C4 E4
-+	EOF
-+	git -c trailer.ifexists="add" \
-+		commit --trailer "Reported-by: C3 E3" \
-+		--trailer "Mentored-by: C4 E4" \
-+		--amend &&
-+	git cat-file commit HEAD >commit.msg &&
-+	sed -e "1,/^\$/d"  commit.msg >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'commit --trailer with -c and "donothing" as ifexists' '
-+	trailer_commit_base &&
-+	cat >expected <<-\EOF &&
-+	hello
-+
-+	Signed-off-by: C O Mitter <committer@example.com>
-+	Signed-off-by: C1 E1
-+	Helped-by: C2 E2
-+	Reported-by: C3 E3
-+	Mentored-by: C4 E4
-+	Reviewed-by: C6 E6
-+	EOF
-+	git -c trailer.ifexists="donothing" \
-+		commit --trailer "Mentored-by: C5 E5" \
-+		--trailer "Reviewed-by: C6 E6" \
-+		--amend &&
-+	git cat-file commit HEAD >commit.msg &&
-+	sed -e "1,/^\$/d"  commit.msg >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'commit --trailer with -c and "addIfDifferent" as ifexists' '
-+	trailer_commit_base &&
-+	cat >expected <<-\EOF &&
-+	hello
-+
-+	Signed-off-by: C O Mitter <committer@example.com>
-+	Signed-off-by: C1 E1
-+	Helped-by: C2 E2
-+	Reported-by: C3 E3
-+	Mentored-by: C4 E4
-+	Mentored-by: C5 E5
-+	EOF
-+	git -c trailer.ifexists="addIfDifferent" \
-+		commit --trailer "Reported-by: C3 E3" \
-+		--trailer "Mentored-by: C5 E5" \
-+		--amend &&
-+	git cat-file commit HEAD >commit.msg &&
-+	sed -e "1,/^\$/d"  commit.msg >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'commit --trailer with -c and "addIfDifferentNeighbor" as ifexists' '
-+	trailer_commit_base &&
-+	cat >expected <<-\EOF &&
-+	hello
-+
-+	Signed-off-by: C O Mitter <committer@example.com>
-+	Signed-off-by: C1 E1
-+	Helped-by: C2 E2
-+	Reported-by: C3 E3
-+	Mentored-by: C4 E4
-+	Reported-by: C3 E3
-+	EOF
-+	git -c trailer.ifexists="addIfDifferentNeighbor" \
-+		commit --trailer "Mentored-by: C4 E4" \
-+		--trailer "Reported-by: C3 E3" \
-+		--amend &&
-+	git cat-file commit HEAD >commit.msg &&
-+	sed -e "1,/^\$/d"  commit.msg >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'commit --trailer with -c and "end" as where' '
-+	trailer_commit_base &&
-+	cat >expected <<-\EOF &&
-+	hello
-+
-+	Signed-off-by: C O Mitter <committer@example.com>
-+	Signed-off-by: C1 E1
-+	Helped-by: C2 E2
-+	Reported-by: C3 E3
-+	Mentored-by: C4 E4
-+	Reported-by: C3 E3
-+	Mentored-by: C4 E4
-+	EOF
-+	git -c trailer.where="end" \
-+		commit --trailer "Reported-by: C3 E3" \
-+		--trailer "Mentored-by: C4 E4" \
-+		--amend &&
-+	git cat-file commit HEAD >commit.msg &&
-+	sed -e "1,/^\$/d" commit.msg >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'commit --trailer with -c and "start" as where' '
-+	trailer_commit_base &&
-+	cat >expected <<-\EOF &&
-+	hello
-+
-+	Signed-off-by: C1 E1
-+	Signed-off-by: C O Mitter <committer@example.com>
-+	Signed-off-by: C1 E1
-+	Helped-by: C2 E2
-+	Reported-by: C3 E3
-+	Mentored-by: C4 E4
-+	EOF
-+	git -c trailer.where="start" \
-+		commit --trailer "Signed-off-by: C O Mitter <committer@example.com>" \
-+		--trailer "Signed-off-by: C1 E1" \
-+		--amend &&
-+	git cat-file commit HEAD >commit.msg &&
-+	sed -e "1,/^\$/d" commit.msg >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'commit --trailer with -c and "after" as where' '
-+	trailer_commit_base &&
-+	cat >expected <<-\EOF &&
-+	hello
-+
-+	Signed-off-by: C O Mitter <committer@example.com>
-+	Signed-off-by: C1 E1
-+	Helped-by: C2 E2
-+	Reported-by: C3 E3
-+	Mentored-by: C4 E4
-+	Mentored-by: C5 E5
-+	EOF
-+	git -c trailer.where="after" \
-+		commit --trailer "Mentored-by: C4 E4" \
-+		--trailer "Mentored-by: C5 E5" \
-+		--amend &&
-+	git cat-file commit HEAD >commit.msg &&
-+	sed -e "1,/^\$/d" commit.msg >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'commit --trailer with -c and "before" as where' '
-+	trailer_commit_base &&
-+	cat >expected <<-\EOF &&
-+	hello
-+
-+	Signed-off-by: C O Mitter <committer@example.com>
-+	Signed-off-by: C1 E1
-+	Helped-by: C2 E2
-+	Reported-by: C3 E3
-+	Mentored-by: C2 E2
-+	Mentored-by: C3 E3
-+	Mentored-by: C4 E4
-+	EOF
-+	git -c trailer.where="before" \
-+		commit --trailer "Mentored-by: C3 E3" \
-+		--trailer "Mentored-by: C2 E2" \
-+		--amend &&
-+	git cat-file commit HEAD >commit.msg &&
-+	sed -e "1,/^\$/d" commit.msg >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'commit --trailer with -c and "donothing" as ifmissing' '
-+	trailer_commit_base &&
-+	cat >expected <<-\EOF &&
-+	hello
-+
-+	Signed-off-by: C O Mitter <committer@example.com>
-+	Signed-off-by: C1 E1
-+	Helped-by: C2 E2
-+	Reported-by: C3 E3
-+	Mentored-by: C4 E4
-+	Helped-by: C5 E5
-+	EOF
-+	git -c trailer.ifmissing="donothing" \
-+		commit --trailer "Helped-by: C5 E5" \
-+		--trailer "Based-by: C6 E6" \
-+		--amend &&
-+	git cat-file commit HEAD >commit.msg &&
-+	sed -e "1,/^\$/d" commit.msg >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'commit --trailer with -c and "add" as ifmissing' '
-+	trailer_commit_base &&
-+	cat >expected <<-\EOF &&
-+	hello
-+
-+	Signed-off-by: C O Mitter <committer@example.com>
-+	Signed-off-by: C1 E1
-+	Helped-by: C2 E2
-+	Reported-by: C3 E3
-+	Mentored-by: C4 E4
-+	Helped-by: C5 E5
-+	Based-by: C6 E6
-+	EOF
-+	git -c trailer.ifmissing="add" \
-+		commit --trailer "Helped-by: C5 E5" \
-+		--trailer "Based-by: C6 E6" \
-+		--amend &&
-+	git cat-file commit HEAD >commit.msg &&
-+	sed -e "1,/^\$/d" commit.msg >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'commit --trailer with -c ack.key ' '
-+	echo "fun" >>file1 &&
++test_expect_success 'commit --trailer parse @nickname' '
++	echo "I love git" >file1 &&
 +	git add file1 &&
-+	cat >expected <<-\EOF &&
-+		hello
-+
-+		Acked-by: Peff
-+	EOF
-+	git -c trailer.ack.key="Acked-by" \
-+		commit --trailer "ack = Peff" -m "hello" &&
++	git commit -m "yly" --author="batman <email1>" &&
++	echo "I love git" >file2 &&
++	git add file2 &&
++	git commit -m "yly" --author="jocker <email2>" &&
++	echo "I love git" >file3 &&
++	git add file3 &&
++	git commit -m "yly" \
++	--trailer "Reviewed-by:@bat" \
++	--trailer "Signed-off-by:@jock" \
++	--trailer "Helped-by:@email1" \
++	--trailer "Mentored-by:@email2" &&
 +	git cat-file commit HEAD >commit.msg &&
 +	sed -e "1,/^\$/d" commit.msg >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'commit --trailer with -c and ":=#" as separators' '
-+	echo "fun" >>file1 &&
-+	git add file1 &&
 +	cat >expected <<-\EOF &&
-+		I hate bug
++	yly
 +
-+		Bug #42
++	Reviewed-by: batman <email1>
++	Signed-off-by: jocker <email2>
++	Helped-by: batman <email1>
++	Mentored-by: jocker <email2>
 +	EOF
-+	git -c trailer.separators=":=#" \
-+		-c trailer.bug.key="Bug #" \
-+		commit --trailer "bug = 42" -m "I hate bug" &&
-+	git cat-file commit HEAD >commit.msg &&
-+	sed -e "1,/^\$/d" commit.msg >actual &&
 +	test_cmp expected actual
 +'
 +
  test_expect_success 'multiple -m' '
  
  	>negative &&
+diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
+index 6602790b5f4c..f2f1ae3b2faf 100755
+--- a/t/t7513-interpret-trailers.sh
++++ b/t/t7513-interpret-trailers.sh
+@@ -63,6 +63,29 @@ test_expect_success 'without config' '
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'trailer parse @nickname' '
++	echo "I love git" >file1 &&
++	git add file1 &&
++	git commit -m "yly" --author="batman <email1>" &&
++	echo "I love git" >file2 &&
++	git add file2 &&
++	git commit -m "yly" --author="jocker <email2>" &&
++	git interpret-trailers \
++	--trailer "Reviewed-by:@bat" \
++	--trailer "Signed-off-by:@jock" \
++	--trailer "Helped-by:@email1" \
++	--trailer "Mentored-by:@email2" \
++	empty >actual &&
++	cat >expected <<-\EOF &&
++
++	Reviewed-by: batman <email1>
++	Signed-off-by: jocker <email2>
++	Helped-by: batman <email1>
++	Mentored-by: jocker <email2>
++	EOF
++	test_cmp expected actual
++'
++
+ test_expect_success 'without config in another order' '
+ 	sed -e "s/ Z\$/ /" >expected <<-\EOF &&
+ 
+diff --git a/trailer.c b/trailer.c
+index 249ed618ed8e..21f367e7b761 100644
+--- a/trailer.c
++++ b/trailer.c
+@@ -6,6 +6,7 @@
+ #include "tempfile.h"
+ #include "trailer.h"
+ #include "list.h"
++#include "revision.h"
+ /*
+  * Copyright (c) 2013, 2014 Christian Couder <chriscool@tuxfamily.org>
+  */
+@@ -633,11 +634,21 @@ static void parse_trailer(struct strbuf *tok, struct strbuf *val,
+ 	struct arg_item *item;
+ 	size_t tok_len;
+ 	struct list_head *pos;
++	const char *ae = NULL;
+ 
+ 	if (separator_pos != -1) {
+ 		strbuf_add(tok, trailer, separator_pos);
+ 		strbuf_trim(tok);
+-		strbuf_addstr(val, trailer + separator_pos + 1);
++		if (trailer[separator_pos + 1] == '@') {
++			ae = find_author_by_nickname(trailer + separator_pos + 2);
++			reset_revision_walk();
++			if (ae) {
++				strbuf_addstr(val, ae);
++				free((char*)ae);
++			} else
++				strbuf_addstr(val, trailer + separator_pos + 1);
++		} else
++			strbuf_addstr(val, trailer + separator_pos + 1);
+ 		strbuf_trim(val);
+ 	} else {
+ 		strbuf_addstr(tok, trailer);
 -- 
 gitgitgadget
-
