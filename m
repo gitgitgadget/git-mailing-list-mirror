@@ -2,128 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 39658C433DB
-	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 14:13:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78591C433C1
+	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 14:48:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0DAF661919
-	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 14:13:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2A3EB61494
+	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 14:48:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230151AbhCUON1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 21 Mar 2021 10:13:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45638 "EHLO
+        id S229946AbhCUOr6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 21 Mar 2021 10:47:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52958 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229949AbhCUONK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 Mar 2021 10:13:10 -0400
-Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18ECCC061574
-        for <git@vger.kernel.org>; Sun, 21 Mar 2021 07:13:10 -0700 (PDT)
-Received: by mail-ot1-x32a.google.com with SMTP id 31-20020a9d00220000b02901b64b9b50b1so13305621ota.9
-        for <git@vger.kernel.org>; Sun, 21 Mar 2021 07:13:10 -0700 (PDT)
+        with ESMTP id S229815AbhCUOr3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 Mar 2021 10:47:29 -0400
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0861AC061574
+        for <git@vger.kernel.org>; Sun, 21 Mar 2021 07:47:29 -0700 (PDT)
+Received: by mail-lj1-x22e.google.com with SMTP id u4so17876515ljo.6
+        for <git@vger.kernel.org>; Sun, 21 Mar 2021 07:47:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=usp.br; s=usp-google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=H2SRDpFUAr1Doq5sf9QePhDoqlW4v5u2uETm1oNzI6E=;
-        b=CwSSKheczjIyqE6MujaPzYEcoSJnaMX/L3yV/t3cTPkYrinxbmJNEWjvQRNKiOVQja
-         TLquWqmodCM8AzKT0a6H7kbEMtfwM4ldAoY1KnHdRj5MfsPQHplR58qA+pIjIUQlMJLH
-         1bf4YOkTHM1F3BVId51m1nol2TaeHaapO+IaG8/iIO/C2Jo6kyI6Ar5lBsaeyqZWq2jF
-         iK8biIlrf1+e4Q93WLH7exH0IdonChOK5Iut3BfyJ1FNKH5eInbOG3HAmaDFR95b7XAo
-         rU7qvE1COCO0ThaL8+Q3pOW/6oGhtt68zQqe+2Ldi+XkuW4lShBACqHq83M2CiMWuDKf
-         MKSQ==
+        bh=5/UzPQC7BzsidXfO3lYqBb38OQ7vVdqI6kd/9g9YB6g=;
+        b=H59JKm1r1D+Qqfbup1s+cmn7gFkhMvKVIxSo/IEQHfRBBy8EabQLxmXq/kN50A6W1G
+         OC1CyLBbOCFB4XHJZw8LrxaUPE/vVInQcm4FA2AS+F3V8l32GiizDmkv8iTycEeqf4jj
+         cKISx/M4MyIt2asQ75wWavQy1DxCZCra5sWy1x/9PEtn7Wx2g/WKBvoP75gLEEXpFPPU
+         rBRASWwz7oE2El1kI9U44I/tRbsRga+C2KKN7KI9hAYvJ62b3tQPgzWJsAAKVJ9HPWUL
+         4sJ+KBKm0AnmeQ00pToRMkLs4YAfUgzYzVwjq3PzS4aQow7pDm/istVWiMGnna/Hyz5H
+         NlQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=H2SRDpFUAr1Doq5sf9QePhDoqlW4v5u2uETm1oNzI6E=;
-        b=TrbqzA3kkjtL5B1GpDC+P41JFTPVl4rEANDlCG8DeaLQoSokdxZI1b3nHuUCpVjiaN
-         1DH9nNmaeehi6+lF2xcdb1Zcg+SC3OAshBX5Vw/Rw5ZypTCRW45PfWM2MlR3hGKdp4Wb
-         JR2WnpYtiT9hRlDYsWO0+p5WU/qsr/+A1nzz6Ignyh81r8kLHkc7/NVp5xFV0Gc5sPA4
-         VyizC/X9ZzICPXQ2E2553JnTiR6GajdAATJZd37U+Mp80WUtRBPbg+xLtujiWbm8GBHE
-         ESQmlWrLsYE0BYjcbZcRg+XfyMisbY8TJLuzemzcXO/gnh9fT0YNWiR1vZ78zUJizA0+
-         1ZPQ==
-X-Gm-Message-State: AOAM532KQhG3k0yeQLoUV2r99BejTbQlzvv5gPuuigAuIvy5PgG/yEN7
-        h66sXNbiQF/bpQA9KqiFHw8jY/AkfhDzpUmcJ/NS/JJgEjuqgg==
-X-Google-Smtp-Source: ABdhPJwjLAV8eO+pYRPVLoVx6JBZyvS74WEZ/uxX0eF/kjI47i9qYlhWp9R2rxZEmgWbd0hhPWisVYQ0kwh/vUnNe9c=
-X-Received: by 2002:a05:6830:17d7:: with SMTP id p23mr8173026ota.164.1616335989277;
- Sun, 21 Mar 2021 07:13:09 -0700 (PDT)
+        bh=5/UzPQC7BzsidXfO3lYqBb38OQ7vVdqI6kd/9g9YB6g=;
+        b=RY1oKgHsF/0JALC96C80mL59sMHvQ3blYc5VNQYtIIzyRrWTTOg1xrvfmtANjlhIX5
+         Wq2gd7BJxE9ozi+EVbOKBRLR6IKWbawnfoZ8e+kQsY2lgo3JYMSanihyfkn4AZbwlj4I
+         PnzDeDXMFqRWaK6KbuGeaPP0bXVeudtK49Op7M8XcwKLCN/pK5gWrIiBhw4EL8gzBiqa
+         u+Dd51EPxPg/9aqShCvKB1RtKFRLRuCPnYNKQJUMffclYkz7a2KB1HT3BXWPz60dhMmU
+         PH7/I/DlBhtpHWWD0iiBV81GJB3HbXUMl0e6yO+8lDQbjPSHFf2G6F20WkUWGa/1bYkM
+         bIRQ==
+X-Gm-Message-State: AOAM532d9BdqVLER6SspijSg8Fh1EW0BOcN0NsUD7W3hBv43OSgIPcUx
+        KQR1EGlCArRQQuZMndIGvQvJMkBC8GDkocAdrpTOc9rgoRE=
+X-Google-Smtp-Source: ABdhPJzhLFIAT1MBaUjfKlR/wGX5TudSQ9SWMzM+NRzmdgMl1YrOIJEktqUjvK9MXn87ZNyDFBu+/Kgu+W69NFKhXU8=
+X-Received: by 2002:a2e:88ca:: with SMTP id a10mr6755283ljk.55.1616338047259;
+ Sun, 21 Mar 2021 07:47:27 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.911.git.1616251299.gitgitgadget@gmail.com>
- <ca521d3c01d652e09e716fb447b0b26da1a014e8.1616251299.git.gitgitgadget@gmail.com>
- <xmqqft0pk018.fsf@gitster.g> <CAOLTT8Q7yNscYrYHWJQcsGn67MjWe15nd7SnCEd5QVUG0A6dRg@mail.gmail.com>
- <xmqq5z1kd2z1.fsf@gitster.g>
-In-Reply-To: <xmqq5z1kd2z1.fsf@gitster.g>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Sun, 21 Mar 2021 22:12:57 +0800
-Message-ID: <CAOLTT8SMUg+gmz84HM-XhGJYJMhYTtZaU5D5GSW34Fxn4o_6TQ@mail.gmail.com>
-Subject: Re: [PATCH 2/2] [GSOC] interpret-trailer: easy parse trailer value
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        "Bradley M. Kuhn" <bkuhn@sfconservancy.org>,
-        Brandon Casey <drafnel@gmail.com>,
-        Shourya Shukla <periperidip@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Rafael Silva <rafaeloliveira.cs@gmail.com>,
-        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <pull.983.git.git.1616323936790.gitgitgadget@gmail.com>
+In-Reply-To: <pull.983.git.git.1616323936790.gitgitgadget@gmail.com>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Sun, 21 Mar 2021 11:47:16 -0300
+Message-ID: <CAHd-oW6hOQ5Qim1xMOJ23kjcpo1M-K1dDvzGKYjBCD9XoT2G+A@mail.gmail.com>
+Subject: Re: [PATCH] fix null pointer dereference
+To:     =?UTF-8?Q?Kleber_Tarc=C3=ADsio_via_GitGitGadget?= 
+        <gitgitgadget@gmail.com>
+Cc:     git <git@vger.kernel.org>,
+        =?UTF-8?Q?Kleber_Tarc=C3=ADsio?= <klebertarcisio@yahoo.com.br>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B43=E6=9C=8821=E6=97=
-=A5=E5=91=A8=E6=97=A5 =E4=B8=8B=E5=8D=889:57=E5=86=99=E9=81=93=EF=BC=9A
->
-> ZheNing Hu <adlternative@gmail.com> writes:
->
-> > Do you think this is appropriate?
-> >
-> > @@ -370,5 +370,15 @@ int parse_buffer_signed_by_header(const char *buff=
-er,
-> >                                   struct strbuf *payload,
-> >                                   struct strbuf *signature,
-> >                                   const struct git_hash_algo *algop);
-> > +/*
-> > + * Calling `find_author_by_nickname` to find the "author <email>" pair
-> > + * in the most recent commit which matches "--author=3Dname".
-> > + *
-> > + * Note that `find_author_by_nickname` is not reusable, because it hav=
-en't
-> > + * reset flags for parsed objects. The only safe way to use
-> > `find_author_by_nickname`
-> > + * (without rewriting the revision traversal machinery) is to spawn a
-> > + * subprocess and do find_author_by_nickname() in it.
-> > + */
->
-> Telling people not to add any new caller is good, but everything
-> after "because" does not make sense to me.
->
-> I do not think calling find_author_by_nickname() in a subprocess
-> alone would not help somebody who wants to do this, either.  We'd be
-> doing a moral equivalent of that call, but the result has to be
-> communicated back to the parent process,
->
+Hi, Kleber. And welcome to the list!
 
-What I am thinking about here is that `commit --trailer` itself jumps to a
-sub-process to do this, but this does depend on the fact that
-`interpret-trailers`
- itself does not have a traversal, and indeed should not be arbitrarily cal=
-l it.
-
-> In the longer term, we'd probably want to have a pre-computed table
-> of contributors, like we have precomputed files for reachability
-> bitmaps, commit DAG topology, and such, but that is obviously far
-> outside of the scope of this series.
+On Sun, Mar 21, 2021 at 7:53 AM Kleber Tarc=C3=ADsio via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
+> From: =3D?UTF-8?q?Kleber=3D20Tarc=3DC3=3DADsio?=3D <klebertarcisio@yahoo.=
+com.br>
+>
+> The malloc function can return null when the memory allocation fails. Thi=
+s commit adds a condition to handle these cases properly. https://cwe.mitre=
+.org/data/definitions/476.html
 
-Indeed this will be a very big project. But `.mailmap` always makes me
-feel similar.
+If you are going to re-roll this series, please wrap the commit
+message body at 72 columns. This helps viewing the message in
+80-columns terminals. (For more info on this and other commit message
+conventions used by the Git project, please take a look at the
+corresponding sections at Documentation/MyFirstContribution.txt and
+Documentation/SubmittingPatches).
 
-> > +const char *find_author_by_nickname(const char *name);
+Thanks,
+Matheus
