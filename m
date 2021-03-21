@@ -2,67 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B8374C433DB
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7BC1C433E1
 	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 16:59:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6C87961947
+	by mail.kernel.org (Postfix) with ESMTP id 9CCDE61955
 	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 16:59:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230125AbhCUQ7N (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 21 Mar 2021 12:59:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52648 "EHLO
+        id S230113AbhCUQ7M (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 21 Mar 2021 12:59:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230046AbhCUQ6l (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 Mar 2021 12:58:41 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DC9DC061574
-        for <git@vger.kernel.org>; Sun, 21 Mar 2021 09:58:41 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id k128so5767648wmk.4
-        for <git@vger.kernel.org>; Sun, 21 Mar 2021 09:58:41 -0700 (PDT)
+        with ESMTP id S230010AbhCUQ6k (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 Mar 2021 12:58:40 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 573B9C061574
+        for <git@vger.kernel.org>; Sun, 21 Mar 2021 09:58:40 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id c8so1309844wrq.11
+        for <git@vger.kernel.org>; Sun, 21 Mar 2021 09:58:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=F0opQpe7BV1fXWQ5HltcF7A+GqCj/k0iJf9Vz5xKxgw=;
-        b=jgwol8JpYuA+fMGzEzBYEQWwMnROU8a4zGf9PMnH04YI0AFFRptLjgNyFgWyOaIR++
-         5kuSDiPgYcd+Qa1q0h+CxnZigTRwx7KPRjJU1XdbSYwsZeW434GBByQ8/hmOOE0pkakZ
-         5tt+GBvL/ar3+paRvnzVMBxLjZXryG16BIjwuhU+9gcczgpCK2dvRDvPkgjBYGh4BoRQ
-         RYD+fx0qg+3sBSGi6uR4LBeuO2ryALmTht3Po5Xf70zWVS/z1wFelAJBoVI07qI/2lur
-         jtxVzNvyGp1/KG5kCSJDVnN++zHNPuPSNFbuJdHu84eDSkbTprP1UY+NZN6WqCY+srOy
-         BQjQ==
+        bh=6u1d9hMpeb6mIlDbzHomCnZQAZgwNOWBAJtZh2PUvb8=;
+        b=eC1vZTvqTa1jbH5gIT+PZQJ2R+LBF6RRLOLkgXBGHwJkHWGLxwhdoAD0Oum0hFcsQ+
+         HVq3Earx+FacULyM8/uXgxZTOyPOTn90nTxvAmOiq3A7v8a9i0GlTnOJijtAcnr9P0m2
+         TOv3/zgpW60NtPub+fqYtGsBdZhWTemDbjyKNhjnxtLMLb42mPCl8rxUlkjzvX3l1fhR
+         xwJ7H+llsVXpGhtpCzXpyNXhizuO/I6irkVi29OVA3wYKE0THGEg2Hehk+QQVejKm8Mu
+         LnGaaID7cGOqNatVJG35nmpLKZQelfbQTjI7fyc4JMdnBbV3qogglOAnmr8BW38e0Fm/
+         CGGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=F0opQpe7BV1fXWQ5HltcF7A+GqCj/k0iJf9Vz5xKxgw=;
-        b=o9/RkaUi57jbj8QrUp1vp5vHkSBCTJtHQ7qzljJ9Dg33edxxokRY/p2MgtoU5wHT0O
-         p6g/yXamv7tB6hZmWYobBSKU5F2xtYyFT91tJoxzgOoOEm2aYaPNQ+xthqllyyz6Eyrp
-         jftnmhOOeO7ER1KNw61kewhdC2IYYIe51oG9r2HGpGl0qn9vkOfbgPmH9qUQ7Wz1yF7V
-         ebp0gKshpk10sALo6yewHC3247qrT/CbqBQkRFWN0rqJ74Ardz02+umrtqa6XL0UTSci
-         M0hlLzdH6IPjFGhlpAvBI9VKt0Znwk9LVuLrGypk7f9gMbpP8SwmqJysWy5840qdYD0W
-         E5/Q==
-X-Gm-Message-State: AOAM5325L+aOG1vy7JQCbwkYaZvIgp1UdU6SRosA7sgAKTj8Fo8PD5v4
-        b33SOHpWyzLpZ0b5YfwDxivBeAgw5dw=
-X-Google-Smtp-Source: ABdhPJwCyPT6hfr6TOUOfF0lRF7sD+YoZ6u4lRu5TsqZ4RCw0ZRS7EHJRQZhtp1FU6HsjyNxi8RetQ==
-X-Received: by 2002:a1c:df8a:: with SMTP id w132mr12440372wmg.53.1616345920218;
-        Sun, 21 Mar 2021 09:58:40 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j13sm16482671wrt.29.2021.03.21.09.58.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=6u1d9hMpeb6mIlDbzHomCnZQAZgwNOWBAJtZh2PUvb8=;
+        b=HpDnSVnsqCUDffEfISmwr+ENIkB3CcbZA3rxp9JmkIKc0LFZ+vbvxBNR05tXy7J33/
+         JavD7IXNk+g6t+DxHpyCBzFktmTremtEREUTpoQRPzXMcfDXgjpHpR0zBORAylcC3hsQ
+         10CsdgzAJO8JsCJfFisk97/xy/MstNJxjVbq0z8uLEIoG7Kl7OA/kdtMmEH0Lom0q8Br
+         sXfog0rInwn/y52zHTEUakU7CXLmmtG/4euL0d7kJSP4ytFkd+FzAOOHiUOTfOQwBdg9
+         sUoDqvocD6uYV+pKWVWIUiaZ3tsQnvb3Pg/9n/Ad/8lFL8SVXYGCDpx1ApayWpP8sApm
+         I1Zw==
+X-Gm-Message-State: AOAM531+o13Il3aSM7C4PwPPSBJWGjuL+t1/StqU1HnnF6zpV65rNYfc
+        3yfK4hrRYeeepZrV+RKR5s0c6aPqSN0=
+X-Google-Smtp-Source: ABdhPJwrWsi1/+a9+moI1r6Et6Tvnn6SvAtime3lwh69OWuAgwPYs7XBVKO2Q7+R36ErL8ZiNMzLYQ==
+X-Received: by 2002:a05:6000:18ab:: with SMTP id b11mr14199099wri.403.1616345919055;
         Sun, 21 Mar 2021 09:58:39 -0700 (PDT)
-Message-Id: <add6931b21383eb8fdf0f1f750a4dfc5d7688466.1616345918.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.899.v3.git.1616345918.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id c11sm17928647wrm.67.2021.03.21.09.58.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 21 Mar 2021 09:58:38 -0700 (PDT)
+Message-Id: <pull.899.v3.git.1616345918.gitgitgadget@gmail.com>
+In-Reply-To: <pull.899.v2.git.1615747662.gitgitgadget@gmail.com>
 References: <pull.899.v2.git.1615747662.gitgitgadget@gmail.com>
-        <pull.899.v3.git.1616345918.gitgitgadget@gmail.com>
 From:   "Andrzej Hunt via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 21 Mar 2021 16:58:30 +0000
-Subject: [PATCH v3 2/9] reset: free instead of leaking unneeded ref
+Date:   Sun, 21 Mar 2021 16:58:28 +0000
+Subject: [PATCH v3 0/9] Fix all leaks in t0001
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,54 +69,124 @@ MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Martin =?UTF-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Andrzej Hunt <andrzej@ahunt.org>,
-        Andrzej Hunt <ajrhunt@google.com>
+        Andrzej Hunt <andrzej@ahunt.org>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Andrzej Hunt <ajrhunt@google.com>
+V3:
 
-dwim_ref() allocs a new string into ref. Instead of setting to NULL to
-discard it, we can FREE_AND_NULL.
+ * Ensures we don't silently change enum values in "parse-options: convert
+   bitfield values to use binary shift". Instead we retain the original
+   values in that patch, and reuse the unused value in a later patch.
+ * Fixes some silly commit message typos.
 
-This leak appears to have been introduced in:
-4cf76f6bbf (builtin/reset: compute checkout metadata for reset, 2020-03-16)
+Thanks as always for the sharp-eyed reviews.
 
-This leak was found when running t0001 with LSAN, see also LSAN output below:
+ATB, Andrzej
 
-Direct leak of 5 byte(s) in 1 object(s) allocated from:
-    #0 0x486514 in strdup /home/abuild/rpmbuild/BUILD/llvm-11.0.0.src/build/../projects/compiler-rt/lib/asan/asan_interceptors.cpp:452:3
-    #1 0x9a7108 in xstrdup /home/ahunt/oss-fuzz/git/wrapper.c:29:14
-    #2 0x8add6b in expand_ref /home/ahunt/oss-fuzz/git/refs.c:670:12
-    #3 0x8ad777 in repo_dwim_ref /home/ahunt/oss-fuzz/git/refs.c:644:22
-    #4 0x6394af in dwim_ref /home/ahunt/oss-fuzz/git/./refs.h:162:9
-    #5 0x637e5c in cmd_reset /home/ahunt/oss-fuzz/git/builtin/reset.c:426:4
-    #6 0x4cd60d in run_builtin /home/ahunt/oss-fuzz/git/git.c:453:11
-    #7 0x4cb2da in handle_builtin /home/ahunt/oss-fuzz/git/git.c:704:3
-    #8 0x4ccc37 in run_argv /home/ahunt/oss-fuzz/git/git.c:771:4
-    #9 0x4cac29 in cmd_main /home/ahunt/oss-fuzz/git/git.c:902:19
-    #10 0x69c5ce in main /home/ahunt/oss-fuzz/git/common-main.c:52:11
-    #11 0x7f57ebb9d349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+Andrzej Hunt (9):
+  symbolic-ref: don't leak shortened refname in check_symref()
+  reset: free instead of leaking unneeded ref
+  clone: free or UNLEAK further pointers when finished
+  worktree: fix leak in dwim_branch()
+  init: remove git_init_db_config() while fixing leaks
+  init-db: silence template_dir leak when converting to absolute path
+  parse-options: convert bitfield values to use binary shift
+  parse-options: don't leak alias help messages
+  transport: also free remote_refs in transport_disconnect()
 
-Signed-off-by: Andrzej Hunt <ajrhunt@google.com>
----
- builtin/reset.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ builtin/clone.c        | 14 ++++++++++----
+ builtin/init-db.c      | 32 ++++++++++----------------------
+ builtin/ls-remote.c    |  4 ++--
+ builtin/remote.c       |  8 ++++----
+ builtin/reset.c        |  2 +-
+ builtin/symbolic-ref.c |  4 +++-
+ builtin/worktree.c     | 10 ++++++----
+ parse-options.c        | 19 ++++++++++++++++++-
+ parse-options.h        | 35 ++++++++++++++++++-----------------
+ transport.c            |  2 ++
+ 10 files changed, 74 insertions(+), 56 deletions(-)
 
-diff --git a/builtin/reset.c b/builtin/reset.c
-index c635b062c3a7..43e855cb8876 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -425,7 +425,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 
- 			dwim_ref(rev, strlen(rev), &dummy, &ref, 0);
- 			if (ref && !starts_with(ref, "refs/"))
--				ref = NULL;
-+				FREE_AND_NULL(ref);
- 
- 			err = reset_index(ref, &oid, reset_type, quiet);
- 			if (reset_type == KEEP && !err)
+
+base-commit: 98164e9585e02e31dcf1377a553efe076c15f8c6
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-899%2Fahunt%2Fleaksan-t0001-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-899/ahunt/leaksan-t0001-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/899
+
+Range-diff vs v2:
+
+  1:  c7bb403ae381 =  1:  6af157dfed79 symbolic-ref: don't leak shortened refname in check_symref()
+  2:  da05fc72b77a =  2:  add6931b2138 reset: free instead of leaking unneeded ref
+  3:  a74bbcae7363 =  3:  40c5c915fc1e clone: free or UNLEAK further pointers when finished
+  4:  a10ab9e68809 =  4:  963f291d5344 worktree: fix leak in dwim_branch()
+  5:  206a82200ca1 =  5:  b615fda790f0 init: remove git_init_db_config() while fixing leaks
+  6:  aa345e50782f =  6:  953cc8f29885 init-db: silence template_dir leak when converting to absolute path
+  7:  2b03785bd4cb !  7:  c2220434ab2c parse-options: convert bitfield values to use binary shift
+     @@ Commit message
+          Also add a trailing comma to the last enum entry to simplify addition of
+          new flags.
+      
+     -    This changee was originally suggested by Peff in:
+     +    This change was originally suggested by Peff in:
+          https://public-inbox.org/git/YEZ%2FBWWbpfVwl6nO@coredump.intra.peff.net/
+      
+          Signed-off-by: Andrzej Hunt <ajrhunt@google.com>
+     @@ parse-options.h: enum parse_opt_type {
+      +	PARSE_OPT_LASTARG_DEFAULT = 1 << 4,
+      +	PARSE_OPT_NODASH = 1 << 5,
+      +	PARSE_OPT_LITERAL_ARGHELP = 1 << 6,
+     -+	PARSE_OPT_SHELL_EVAL = 1 << 7,
+     -+	PARSE_OPT_NOCOMPLETE = 1 << 8,
+     -+	PARSE_OPT_COMP_ARG = 1 << 9,
+     -+	PARSE_OPT_CMDMODE = 1 << 10,
+     ++	PARSE_OPT_SHELL_EVAL = 1 << 8,
+     ++	PARSE_OPT_NOCOMPLETE = 1 << 9,
+     ++	PARSE_OPT_COMP_ARG = 1 << 10,
+     ++	PARSE_OPT_CMDMODE = 1 << 11,
+       };
+       
+       enum parse_opt_result {
+  8:  4397c1fd8020 !  8:  6e46cd332023 parse-options: don't leak alias help messages
+     @@ Commit message
+      
+          Signed-off-by: Andrzej Hunt <ajrhunt@google.com>
+      
+     -    fold
+     -
+       ## parse-options.c ##
+      @@ parse-options.c: static int show_gitcomp(const struct option *opts, int show_all)
+        *
+     @@ parse-options.c: static struct option *preprocess_options(struct parse_opt_ctx_t
+      +		return;
+      +
+      +	for (i = 0; options[i].type != OPTION_END; i++) {
+     -+		if (options[i].flags & PARSE_OPT_FROM_ALIAS) {
+     ++		if (options[i].flags & PARSE_OPT_FROM_ALIAS)
+      +			free((void *)options[i].help);
+     -+		}
+      +	}
+      +	free(options);
+      +}
+     @@ parse-options.c: int parse_options(int argc, const char **argv, const char *pref
+      
+       ## parse-options.h ##
+      @@ parse-options.h: enum parse_opt_option_flags {
+     - 	PARSE_OPT_NOCOMPLETE = 1 << 8,
+     - 	PARSE_OPT_COMP_ARG = 1 << 9,
+     - 	PARSE_OPT_CMDMODE = 1 << 10,
+     -+	PARSE_OPT_FROM_ALIAS = 1 << 11,
+     - };
+     - 
+     - enum parse_opt_result {
+     + 	PARSE_OPT_LASTARG_DEFAULT = 1 << 4,
+     + 	PARSE_OPT_NODASH = 1 << 5,
+     + 	PARSE_OPT_LITERAL_ARGHELP = 1 << 6,
+     ++	PARSE_OPT_FROM_ALIAS = 1 << 7,
+     + 	PARSE_OPT_SHELL_EVAL = 1 << 8,
+     + 	PARSE_OPT_NOCOMPLETE = 1 << 9,
+     + 	PARSE_OPT_COMP_ARG = 1 << 10,
+  9:  a907f2460d42 =  9:  50a2b9693aa3 transport: also free remote_refs in transport_disconnect()
+
 -- 
 gitgitgadget
-
