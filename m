@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B4F88C43470
-	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 00:02:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 175B0C433EB
+	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 00:02:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9C6BC61937
-	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 00:02:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EBE396193A
+	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 00:02:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230081AbhCUACh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 20 Mar 2021 20:02:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34318 "EHLO
+        id S229990AbhCUACO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 20 Mar 2021 20:02:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34214 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229933AbhCUABu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Mar 2021 20:01:50 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A0DDC061574
-        for <git@vger.kernel.org>; Sat, 20 Mar 2021 17:01:50 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id j4-20020a05600c4104b029010c62bc1e20so7163933wmi.3
-        for <git@vger.kernel.org>; Sat, 20 Mar 2021 17:01:50 -0700 (PDT)
+        with ESMTP id S229854AbhCUABd (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Mar 2021 20:01:33 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B260C061763
+        for <git@vger.kernel.org>; Sat, 20 Mar 2021 17:01:33 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id v4so12834260wrp.13
+        for <git@vger.kernel.org>; Sat, 20 Mar 2021 17:01:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=z3mnO3qhEMgg8gs0MModCdWFcXwab8OR7ro599Z03MA=;
-        b=Tc0NJF1gnPEQQ0hxMI8OGNIzDjW+5O7P356pEif50D75Wwcs81SR5ohfK3lUGgNzZm
-         NoYxmtmoQMQmSdQWPuERjBufu1SxrMNfxJl/yT/A82mxutwKKhlpq0VnxILeeYUSiZ8e
-         fQn10GouE7kGuvYF1JcPPx6yDogqM398QbykuMme20TGmbRgRsDg/I49tQc2Z/R5kkac
-         DfgZZozcGDT2Ip3z3Z5ccItNkhqJC5bsXcB7F+C2GESTNK8XzJNz2wFyIcuWTQMoRdzv
-         KfBGOt1vk9JfSlxJ3/ZaIoUIVAvp21qI1tfYqcN1MSnZmpmjTwMQmNVZAYTOPdWKyFdF
-         QZ0A==
+        bh=kKueBp07VfWt3ROhSSuTzbz2ru3R0c4WTLIHPrsWT1k=;
+        b=tal0JyIOYhmHnEm9F0JliVETz5WWNlgKpbBGnT39SZORbfCPJE394Des/ZJ+H+wsUU
+         ykwNaiIRv01ULwIYSeiFimGo2K5ZOlKNsk532+ktjplw+b7gCpsYCNM1Zb5mZfj6JDBb
+         Z6nU3b2EYL1sD3w69BcePMw5hU18blKSTuJOh5akKD8aBwnFU25IkeD3mFNxWK4EL52v
+         454rU0JeR7XZ+QoCVUR1LZuajCFCA4Es/GeDm+kYQ6ue/eVsbint8bca2IPUcJAsAXGQ
+         6RZy6WhOOQKKg/N4DdvDwsJzwyuTfHOcGiPnSLSYGjOrwj9tm3lX+lAkEwExY6WuFLqE
+         9F6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=z3mnO3qhEMgg8gs0MModCdWFcXwab8OR7ro599Z03MA=;
-        b=CfLErl+ksLHq21X/NCE1dJBQC++gPOxq8SiDSak+8vTG79C9TzaGlkLNy/ESt5guak
-         PG62EVwYQhLX43caF6TAu2Fz27rfaaiMG4msTWfILAgIOKO2VLh97SNBBHMMzJkCBBvR
-         x485XG/fGQDO/QPZs7bI2hg5phXo7MwklmNlTSTNDMuj+Is4UxTRQGSJL5us8QacuF3c
-         nHb5OT2UpSEp8RMAIC5FRPkuG+gsDg+Eq3aRKI/CtwJO6lnpp9HuroRdPhBWUGgYFN90
-         DwTZqcMzxVC4dDEtGDn0rzPd0f8sobaRLDAJki4sHRwo6Q/qtwCFP1zJV25X6zSt0kTI
-         6V0A==
-X-Gm-Message-State: AOAM531CzYZhf9U5MrJpamuq0k0lhs6dAhwNc225reZDQpFERBfDz+SW
-        dr5AwEA5ZY355B/hsTLagka2eTEMbrgrjQ==
-X-Google-Smtp-Source: ABdhPJyTujJSmK3GbUzfQ5FdqFrJIAP1zfJ6SkXNymY6iQuL7KaDKp5vbZrsNT5aPGKyBtH2GC/u2w==
-X-Received: by 2002:a7b:cd8f:: with SMTP id y15mr9669879wmj.185.1616284908715;
-        Sat, 20 Mar 2021 17:01:48 -0700 (PDT)
+        bh=kKueBp07VfWt3ROhSSuTzbz2ru3R0c4WTLIHPrsWT1k=;
+        b=k5MbKS4I7DqBbTBS6PNuSkN7/f/APHVC9yqaFwdDlGGmccxGGpxtMEYXf8GGX742gQ
+         TfTEK49vjdTd2nrj5suPLs4gHsDVueaeQwHdluuLrRK8zrAP64oXpogsqRERUlcI41/a
+         kgXNfAwcRam81npq2rIyZ2v/ANqGJPWRnD6CjTMGb+g6GO4fKkVmRQlHEtPBanXPrMB1
+         8k5qXw0YgtZOafPf//UYWoQ4/i9Jts5474UpCnUrbhX4guexX16uzEF0IYCAxETn6kLU
+         EzYgkHbSZxq1nXLNOypRoltQ1XC6ifakY6zh8eS6lqZY0Rd+ZwpalyT/TVDh62o2Wlww
+         0V7g==
+X-Gm-Message-State: AOAM5309Bop51SYgRYynhTi2hDAleol8U9whCYL75qyjh6Si5bFVyZ0B
+        fSLwWa9lTRrrLSgRnrn66wvqcrs/liNCxA==
+X-Google-Smtp-Source: ABdhPJw1t1mV+hUhyLCIQy58Ycj2X3tBbYcn510IF3k03chPSHQgCBR/BQjD1mXdBwasTma64cxBuQ==
+X-Received: by 2002:a5d:50c7:: with SMTP id f7mr11529806wrt.18.1616284891696;
+        Sat, 20 Mar 2021 17:01:31 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id g5sm15304834wrq.30.2021.03.20.17.01.48
+        by smtp.gmail.com with ESMTPSA id g5sm15304834wrq.30.2021.03.20.17.01.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 20 Mar 2021 17:01:48 -0700 (PDT)
+        Sat, 20 Mar 2021 17:01:31 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -66,9 +66,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <pclouds@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 29/29] tree-walk.h API: add a tree_entry_extract_type() function
-Date:   Sun, 21 Mar 2021 01:01:02 +0100
-Message-Id: <4d51da4ea39c11ac56972da8fa4e5becff7294f7.1616282534.git.avarab@gmail.com>
+Subject: [PATCH v4 07/29] diff tests: test that "mode" is passed when sorting
+Date:   Sun, 21 Mar 2021 01:00:40 +0100
+Message-Id: <73e92ac187d3bdf82fe81b3a0ccd97ebe1fefa11.1616282534.git.avarab@gmail.com>
 X-Mailer: git-send-email 2.31.0.282.gcc1ec606501
 In-Reply-To: <cover.1616282533.git.avarab@gmail.com>
 References: <20210316155829.31242-1-avarab@gmail.com> <cover.1616282533.git.avarab@gmail.com>
@@ -79,104 +79,63 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add and use a tree_entry_extract_type() function. There were callers
-of tree_entry_extract() which didn't care about the mode, but just the
-type in the tree entry.
+Piggy-back on the recently added fsck tests for mode comparisons in
+mktree and assert that diff-tree also does the right thing in this
+implausible scenario.
 
-In emit_path() the "mode" variable was not used after the "isdir"
-assignment, as can be seen in the diff with it being set to 0.
+As with the other tests I've added in preceding commits, these tests
+will fail if the mode is the same or reversed, respectively.
+
+The diff-tree code being tested here was originally added back in
+.9174026cfe (Add "diff-tree" program to show which files have changed
+between two trees., 2005-04-09).
+
+Unlike the other tests I've added there are existing tests for both of
+these scenarios. Breaking that function as described above will make
+tests in t4002-diff-basic.sh, t6409-merge-subtree.sh and
+t4037-diff-r-t-dirs.sh fail.
+
+I think it's good to have tests for this regardless, so let's add
+these.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- match-trees.c | 12 ++++++------
- tree-diff.c   |  5 +++--
- tree-walk.h   | 11 +++++++++++
- 3 files changed, 20 insertions(+), 8 deletions(-)
+ t/t1450-fsck.sh | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/match-trees.c b/match-trees.c
-index 25bfb46fb02..89109659aa3 100644
---- a/match-trees.c
-+++ b/match-trees.c
-@@ -143,11 +143,11 @@ static void match_trees(const struct object_id *hash1,
- 	while (one.size) {
- 		const char *path;
- 		const struct object_id *elem;
--		unsigned short mode;
-+		enum object_type object_type;
- 		int score;
+diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+index 46125190b45..5dd842bb82c 100755
+--- a/t/t1450-fsck.sh
++++ b/t/t1450-fsck.sh
+@@ -362,6 +362,28 @@ test_expect_success 'tree entry with duplicate type mismatching objects' '
+ 	)
+ '
  
--		elem = tree_entry_extract_mode(&one, &path, &mode);
--		if (!S_ISDIR(mode))
-+		elem = tree_entry_extract_type(&one, &path, &object_type);
-+		if (object_type != OBJ_TREE)
- 			goto next;
- 		score = score_trees(elem, hash2);
- 		if (*best_score < score) {
-@@ -198,14 +198,14 @@ static int splice_tree(const struct object_id *oid1, const char *prefix,
- 
- 	rewrite_here = NULL;
- 	while (desc.size) {
-+		enum object_type object_type;
- 		const char *name;
--		unsigned short mode;
- 		int len = tree_entry_len(&desc.entry);
- 
--		tree_entry_extract_mode(&desc, &name, &mode);
-+		tree_entry_extract_type(&desc, &name, &object_type);
- 		if (len == toplen &&
- 		    !memcmp(name, prefix, toplen)) {
--			if (!S_ISDIR(mode))
-+			if (object_type != OBJ_TREE)
- 				die("entry %s in tree %s is not a tree", name,
- 				    oid_to_hex(oid1));
- 
-diff --git a/tree-diff.c b/tree-diff.c
-index 918ad95fa61..8409374f0ba 100644
---- a/tree-diff.c
-+++ b/tree-diff.c
-@@ -208,10 +208,11 @@ static struct combine_diff_path *emit_path(struct combine_diff_path *p,
- 		 * 1) all modes for tp[i]=tp[imin] should be the same wrt
- 		 *    S_ISDIR, thanks to base_name_compare().
- 		 */
--		tree_entry_extract_mode(&tp[imin], &path, &mode);
-+		enum object_type object_type;
-+		tree_entry_extract_type(&tp[imin], &path, &object_type);
- 		pathlen = tree_entry_len(&tp[imin].entry);
- 
--		isdir = S_ISDIR(mode);
-+		isdir = object_type == OBJ_TREE;
- 		oid = NULL;
- 		mode = 0;
- 	}
-diff --git a/tree-walk.h b/tree-walk.h
-index efcd7ccd10e..f5102ed5427 100644
---- a/tree-walk.h
-+++ b/tree-walk.h
-@@ -47,6 +47,7 @@ struct tree_desc {
-  * appropriate variable to fill in (NULL won't do!):
-  *
-  * tree_entry_extract_mode(): const char *path, unsigned int mode
-+ * tree_entry_extract_type(): const char *path, enum object_type
-  * tree_entry_extract_all(): const char *path, unsigned int mode, enum object_type
-  */
- static inline const struct object_id *tree_entry_extract_mode(struct tree_desc *desc,
-@@ -58,6 +59,16 @@ static inline const struct object_id *tree_entry_extract_mode(struct tree_desc *
- 	return &desc->entry.oid;
- }
- 
-+static inline const struct object_id *tree_entry_extract_type(struct tree_desc *desc,
-+							      const char **pathp,
-+							      enum object_type *object_typep)
-+{
-+	*pathp = desc->entry.path;
-+	*object_typep = desc->entry.object_type;
-+	return &desc->entry.oid;
-+}
++test_expect_success 'diff-tree stressing tree-diff.c::tree_entry_pathcmp(), not the same type' '
++	zero=$(test_oid zero) &&
++	git -C duplicate-entry diff-tree broken-commit-1 broken-commit-2 >1-to-2 &&
++	grep "$zero" 1-to-2 >lines &&
++	test_line_count = 2 lines &&
 +
++	git -C duplicate-entry diff-tree broken-commit-2 broken-commit-1 >2-to-1 &&
++	grep "$zero" 2-to-1 >lines &&
++	test_line_count = 2 lines
++'
 +
- static inline const struct object_id *tree_entry_extract_all(struct tree_desc *desc,
- 							     const char **pathp,
- 							     unsigned short *modep,
++test_expect_success 'diff-tree stressing tree-diff.c::tree_entry_pathcmp(), types not reversed' '
++	blob_ok=$(git -C duplicate-entry rev-parse broken-commit-2:A) &&
++	git -C duplicate-entry diff-tree --diff-filter=A broken-commit-1 broken-commit-2 >1-to-2 &&
++	grep "$blob_ok" 1-to-2 &&
++	test_line_count = 1 1-to-2 &&
++
++	git -C duplicate-entry diff-tree --diff-filter=A broken-commit-2 broken-commit-1 >2-to-1 &&
++	grep "$blob_ok" 2-to-1 &&
++	test_line_count = 1 2-to-1
++'
++
+ test_expect_success 'tag pointing to nonexistent' '
+ 	badoid=$(test_oid deadbeef) &&
+ 	cat >invalid-tag <<-EOF &&
 -- 
 2.31.0.286.gc175f2cb894
 
