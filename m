@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 882BDC433F8
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20830C433ED
 	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 00:02:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6E2FB601FE
+	by mail.kernel.org (Postfix) with ESMTP id 08074601FE
 	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 00:02:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230014AbhCUACT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 20 Mar 2021 20:02:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34248 "EHLO
+        id S229996AbhCUACP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 20 Mar 2021 20:02:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34208 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229884AbhCUABj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Mar 2021 20:01:39 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5413AC061574
-        for <git@vger.kernel.org>; Sat, 20 Mar 2021 17:01:39 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id e9so12850721wrw.10
-        for <git@vger.kernel.org>; Sat, 20 Mar 2021 17:01:39 -0700 (PDT)
+        with ESMTP id S229846AbhCUABd (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Mar 2021 20:01:33 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66A16C061762
+        for <git@vger.kernel.org>; Sat, 20 Mar 2021 17:01:32 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id t4so2419516wrn.11
+        for <git@vger.kernel.org>; Sat, 20 Mar 2021 17:01:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=HACxaxtHfGPxTSK08wlnRVodGigvTfDuatPabd5wGhU=;
-        b=R0bHZ3md/okMJ9jLNgkYGwg73Kobvl1zkg2+Mf4rA6ObHI4sLO7Q20m02+nEJmpsAW
-         +UAZP/BA1LkWNXJNRDTrhQ/wI+T7RefOu2yIgkW8msg0uQpgx1d8O843vX776fM31izI
-         hUcufa78BPaVEf1KUy745iRcOJSXK/WCGcVoEM5LBgo1upIT3pemprGN6AeWxliF40Go
-         wAtApQAHzmyDUTKAhI/s/N10oa+hBhlyIqKUtyQBZSlJXaG2cxKFmkMl7QB7wpBnq1eT
-         wgmt+0aMZ8BXpC4BLGvJBqWTL9c4mbsCnTfLOfwReQWDVWujtndSYuFHsYL/YyuQhmDB
-         n90g==
+        bh=P6K9HooH2urrBKX6gfb+Z9MZ1cYKVhdJ/6XaBM0Rha4=;
+        b=ef4b3N+JLMIlOZ+FeA/Bh4VQrFigE7r3iKwz1fdDEqeZxh+uq8wwWBG+v0YoWQjwA7
+         6FHbygoIS2b94hzP4UxNG09UmEzXT0um9cwVpDu+XtEbAmfljQiXHfOVCwpL8/tSysqd
+         emAKBjVUJDA4vvSSkdP5E249oCfP2UJlFSU4L4usEEh4GDpVc1Lr/ceC+sI2sLSsY7Z+
+         UB4CsZX5Aq7Z0y4+bGd4TII9guvW/KajVkCnaieUdYTI+obuOYCu7kZHtOanlHzoDXdb
+         +z2Me5KfD9J/NDyxzz5ELZRbs9gZ9/GZZMVUmVgNlcepn2zgpOAqvUdySdzkeRYs5Lft
+         1FEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=HACxaxtHfGPxTSK08wlnRVodGigvTfDuatPabd5wGhU=;
-        b=pQspDLxRPhjiBgB0Ra7yCeYEZ6oSUCwNaInn9oztU+7E9xSFPNA/EcEQtDo7HAiQEU
-         aA2orTLkluMjgzuYs/u6bV1TaX8UTEV6OY2TRY0MRHsKOTL7sygCa5B66JOxVx+kYc6j
-         uznkQxq/2pLfZthJiGlf9jCU6i4OF5U9uK8jkDOWI4UNh7GmvMGzA3WEMr7OzOdO6A82
-         cp9WVOLMwJyjjngcH/XpBzV50RVj7kW0jjgt2R5aPboU+OkgZCLty4wDMbXOHvM+8JsU
-         jGeYW4oICOk4CEUHB0VCSir9kEMmQmgrJeS3hPtE9uyZI/eN9/5fSgj35+fFy5kbPilI
-         9OPg==
-X-Gm-Message-State: AOAM5334mD53yGGqKtbdl5MgxFEY5DCvGjkpryAtnAKZoPhkrj96rDgG
-        uwAZpk6keOZP5y+Ry2Z6L7sSpXhwPYxI8A==
-X-Google-Smtp-Source: ABdhPJygqAGKHp4J08HuoZ51fd6ys/xK7qH4x9AJF8oO/hZUzjYskNb4bkvp3PK8f4ZnaFys82eEfA==
-X-Received: by 2002:adf:fd48:: with SMTP id h8mr11261112wrs.229.1616284897898;
-        Sat, 20 Mar 2021 17:01:37 -0700 (PDT)
+        bh=P6K9HooH2urrBKX6gfb+Z9MZ1cYKVhdJ/6XaBM0Rha4=;
+        b=fB+8BUgCag1U5wCqGsu2NcYQG1hV7CbCUD+KkoF6Fxo83LCmC27bou0BYn0gANXatL
+         XfSvDCLf9T0Fmg6ZBtaHxeF1XlFUP6I28ppTGWJG+uM/TdsO0AxP+gKqVS0YpKS/43OC
+         +/mrJ0Nnn3RBHTJ4qAymp19C7WF9V4NIEFISwvK6TNskX1gkGv41RaKbLQXFRA7kWJTH
+         TLeSTbdZlL33Zuq4a/gdCBsfXlchzSoLmUAx7DQwXOp4ZSO5DjPZW9slWseBwJv89nFz
+         +/x3620tPR3uZHArk47G5sq+9rcuZgHK8tkrc1HJWSZ40CK7BMPvn32FfmfXHMIXEz+0
+         0tOQ==
+X-Gm-Message-State: AOAM533YQFnCw4Z3oEDLXod+WF1Ez1lVpk53ZiTA77OF8Tklepsd//WQ
+        rW8IajbymSmTQQ4IkNJdOCNY6G+lO7VsVw==
+X-Google-Smtp-Source: ABdhPJzfGOqu7RCcIEi0Uu/l47ZJQAIUfHNKTFmperKJiBXurtrQO2AWPJfWcT49pfXM5YVDfoT9Eg==
+X-Received: by 2002:adf:f148:: with SMTP id y8mr10990927wro.107.1616284890911;
+        Sat, 20 Mar 2021 17:01:30 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id g5sm15304834wrq.30.2021.03.20.17.01.37
+        by smtp.gmail.com with ESMTPSA id g5sm15304834wrq.30.2021.03.20.17.01.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 20 Mar 2021 17:01:37 -0700 (PDT)
+        Sat, 20 Mar 2021 17:01:30 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -66,9 +66,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <pclouds@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 15/29] merge-tree tests: test for the mode comparison in same_entry()
-Date:   Sun, 21 Mar 2021 01:00:48 +0100
-Message-Id: <592fecb7abc55ff17eed6b3bcc58a6d9991a337e.1616282534.git.avarab@gmail.com>
+Subject: [PATCH v4 06/29] mktree tests: test that "mode" is passed when sorting
+Date:   Sun, 21 Mar 2021 01:00:39 +0100
+Message-Id: <b0546197b1bf02db941eeb3aa818344452d21da9.1616282534.git.avarab@gmail.com>
 X-Mailer: git-send-email 2.31.0.282.gcc1ec606501
 In-Reply-To: <cover.1616282533.git.avarab@gmail.com>
 References: <20210316155829.31242-1-avarab@gmail.com> <cover.1616282533.git.avarab@gmail.com>
@@ -79,90 +79,82 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a test to stress the "a->mode == b->mode" comparison in
-merge-tree.c's same_entry().
+Add a test for the mode being passed to ent_compare(). That code dates
+back to 83f50539a9 (git-mktree: reverse of git-ls-tree., 2006-02-20)
+and there's never been a test for that particular edge case. Now we
+have one.
 
-That code was initially added by Linus in 33deb63a36f (Add
-"merge-tree" helper program. Maybe it's retarded, maybe it's helpful.,
-2005-04-14), and then again in its current form in
-492e0759bfe (Handling large files with GIT, 2006-02-14).
+I don't see how anything could run into this in practice. In order for
+that mode sorting to matter as a tiebreaker we need to have a
+duplicate entry in the tree, i.e. two "foo" entries, one a blob and
+one a tree. This asserts that if that happens we'll sort on the modes
+we encounter in such an invalid entry, i.e. we expect the tree entry
+before the blob.
 
-However, nothing was testing that we handled this case
-correctly. Simply removing the mode comparison left all tests passing,
-but as seen here it's important that we don't think a path with the
-same content but different modes is the same_entry().
-
-The rest of this series will touch code that's relevant to this, but
-won't change its behavior. This test is just something I came up with
-in testing whether the mode test in same_entry() was needed at all.
+As shown here we'd need to disable the fsck.duplicateEntries error to
+get to the point of running "mktree", so I doubt anyone's pushing this
+sort of data around.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t4300-merge-tree.sh | 44 +++++++++++++++++++++++++++++++++++++++++++
+ t/t1450-fsck.sh | 44 ++++++++++++++++++++++++++++++++++++++++++++
  1 file changed, 44 insertions(+)
 
-diff --git a/t/t4300-merge-tree.sh b/t/t4300-merge-tree.sh
-index e59601e5fe9..f783d784d02 100755
---- a/t/t4300-merge-tree.sh
-+++ b/t/t4300-merge-tree.sh
-@@ -40,6 +40,25 @@ test_expect_success 'file add A, B (same)' '
- 	test_must_be_empty actual
+diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+index 5071ac63a5b..46125190b45 100755
+--- a/t/t1450-fsck.sh
++++ b/t/t1450-fsck.sh
+@@ -318,6 +318,50 @@ test_expect_success 'tree entry with type mismatch' '
+ 	test_i18ngrep ! "dangling blob" out
  '
  
-+test_expect_success 'file add A, B (different mode)' '
-+	git reset --hard initial &&
-+	test_commit "add-a-b-same-diff-mode-A" "ONE" "AAA" &&
-+	git reset --hard initial &&
-+	echo AAA >ONE &&
-+	test_chmod +x ONE &&
-+	test_tick &&
-+	git commit -m"add-a-b-same-diff-mode-B" &&
-+	git tag "add-a-b-same-diff-mode-B" HEAD &&
-+	git merge-tree initial add-a-b-same-diff-mode-A add-a-b-same-diff-mode-B >actual &&
-+	cat >expected <<EXPECTED &&
-+added in both
-+  our    100644 $(git rev-parse add-a-b-same-diff-mode-A:ONE) ONE
-+  their  100755 $(git rev-parse add-a-b-same-diff-mode-B:ONE) ONE
-+EXPECTED
++test_expect_success 'tree entry with duplicate type mismatching objects' '
++	test_create_repo duplicate-entry &&
++	(
++		cd duplicate-entry &&
++		blob="$(printf "foo" | git hash-object -w --stdin)" &&
++		tree="$(printf "100644 blob $blob\tfoo" | git mktree)" &&
++		commit="$(git commit-tree $tree -m "first commit")" &&
++		git cat-file commit $commit >good-commit &&
 +
-+	test_cmp expected actual
++		# First bad commit, wrong type, but in the right order
++		printf "40000 A\0$(echo $tree | hex2oct)" >broken-tree-A &&
++		printf "100644 A\0$(echo $blob | hex2oct)" >broken-tree-B &&
++		cat broken-tree-A broken-tree-B >broken-tree.1 &&
++		broken_tree1="$(git hash-object -w --literally -t tree broken-tree.1)" &&
++		bad_commit1="$(git commit-tree $broken_tree1 -m "bad commit 1")" &&
++		git cat-file commit $bad_commit1 >bad-commit.1 &&
++		git update-ref refs/heads/broken-commit-1 $bad_commit1 &&
++
++		test_must_fail git fsck &&
++		git -c fsck.duplicateEntries=warn fsck 2>err &&
++		grep " in tree .*$broken_tree1: duplicateEntries" err &&
++
++		# Second bad commits, wrong types and order
++		cat broken-tree-B broken-tree-A >broken-tree.2 &&
++		broken_tree2="$(git hash-object -w --literally -t tree broken-tree.2)" &&
++		bad_commit2="$(git commit-tree $broken_tree2 -m "bad commit 2")" &&
++		git cat-file commit $bad_commit2 >bad-commit.2 &&
++		git update-ref refs/heads/broken-commit-2 $bad_commit2 &&
++
++		test_must_fail git fsck &&
++		git -c fsck.duplicateEntries=warn fsck 2>err &&
++		grep " in tree .*$broken_tree2: duplicateEntries" err &&
++
++		# git mktree should "fix" the order of this already broken data
++		git ls-tree broken-commit-1 >broken-tree-1-ls &&
++		git ls-tree broken-commit-2 >broken-tree-2-ls &&
++		! test_cmp broken-tree-1-ls broken-tree-2-ls &&
++
++		git mktree <broken-tree-1-ls >broken-mktree-1 &&
++		git mktree <broken-tree-2-ls >broken-mktree-2 &&
++		test_cmp broken-mktree-1 broken-mktree-2
++	)
 +'
 +
- test_expect_success 'file add A, B (different)' '
- 	git reset --hard initial &&
- 	test_commit "add-a-b-diff-A" "ONE" "AAA" &&
-@@ -61,6 +80,31 @@ EXPECTED
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'file add A, B (different and different mode)' '
-+	git reset --hard initial &&
-+	test_commit "add-a-b-diff-diff-mode-A" "ONE" "AAA" &&
-+	git reset --hard initial &&
-+	echo BBB >ONE &&
-+	test_chmod +x ONE &&
-+	test_tick &&
-+	git commit -m"add-a-b-diff-diff-mode-B" &&
-+	git tag "add-a-b-diff-diff-mode-B" &&
-+	git merge-tree initial add-a-b-diff-diff-mode-A add-a-b-diff-diff-mode-B >actual &&
-+	cat >expected <<EXPECTED &&
-+added in both
-+  our    100644 $(git rev-parse add-a-b-diff-diff-mode-A:ONE) ONE
-+  their  100755 $(git rev-parse add-a-b-diff-diff-mode-B:ONE) ONE
-+@@ -1 +1,5 @@
-++<<<<<<< .our
-+ AAA
-++=======
-++BBB
-++>>>>>>> .their
-+EXPECTED
-+
-+	test_cmp expected actual
-+'
-+
- test_expect_success 'file change A, !B' '
- 	git reset --hard initial &&
- 	test_commit "change-a-not-b" "initial-file" "BBB" &&
+ test_expect_success 'tag pointing to nonexistent' '
+ 	badoid=$(test_oid deadbeef) &&
+ 	cat >invalid-tag <<-EOF &&
 -- 
 2.31.0.286.gc175f2cb894
 
