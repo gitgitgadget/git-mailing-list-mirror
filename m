@@ -2,124 +2,172 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1,WIKI_IMG autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E1010C433E0
-	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 12:44:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 21490C433C1
+	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 13:06:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B4D7961959
-	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 12:44:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E28C861930
+	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 13:06:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229879AbhCUMo1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 21 Mar 2021 08:44:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54886 "EHLO
+        id S229897AbhCUNGQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 21 Mar 2021 09:06:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59530 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229870AbhCUMnz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 Mar 2021 08:43:55 -0400
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D92ACC061574
-        for <git@vger.kernel.org>; Sun, 21 Mar 2021 05:43:53 -0700 (PDT)
-Received: by mail-ed1-x52c.google.com with SMTP id x21so16077614eds.4
-        for <git@vger.kernel.org>; Sun, 21 Mar 2021 05:43:53 -0700 (PDT)
+        with ESMTP id S229894AbhCUNFn (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 Mar 2021 09:05:43 -0400
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47519C061574
+        for <git@vger.kernel.org>; Sun, 21 Mar 2021 06:05:43 -0700 (PDT)
+Received: by mail-pj1-x102b.google.com with SMTP id cl21-20020a17090af695b02900c61ac0f0e9so9968468pjb.1
+        for <git@vger.kernel.org>; Sun, 21 Mar 2021 06:05:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=5s7f2XFzM8RFuLLJF/YcG5Jn7EQCHhHTzFdo1ku/V2Y=;
-        b=Ym87oQBFri3VDO20C/RP7FNYvYJMBhab8sbIV4v8Wkt1mBT8essl7z7mrZRkJmpXxo
-         MA6LoAZhgqN8QXB2Wc20gBemFGCrd376QT9D6wfL9ObhmBonZsXxAFzxXzihoqdn/VKw
-         r+Ke/NcLo0gYcENiFi5MKka0RKt3F7+GEGH3MOk5BWAjRVhQ+wnSrjopP+qptGahzaUw
-         4b2Fk9f2guRWRHXKkhWWvreSms5Ksp4wKDttbIOHByfQxOTUCI2Xf0I4bkKXnDloG/mi
-         9oEBXPz9bQSNDR+XLN9yjEpYfVpceLIQcIR3haaYui2yd8mBPDtoajtxeHfJk8VELvEb
-         2hlA==
+        h=to:from:subject:message-id:date:user-agent:mime-version
+         :content-language:content-transfer-encoding;
+        bh=0on8O/8xkOC1YfpHv1MdK+C1s+mTuFklE36K7GHTSO0=;
+        b=tf3VueRDcuj4eYeyFJwRh8V+Fr3QQ0z3PNQyt088MHTu9e7tmFsJwBHkqUJKQs46dV
+         tup1Mhz+u7O2RFQDOeyYmgxKn1v6TIR4YFgZqT7Te+EHS3JP7hi0thLaOpafF7Jf3ZYu
+         SER7Qki4mBxj+B4qu4yysty1vbq+ZxeBuyYchWZEeXj6h41PsEVQO0vPAT+27A48YdQ7
+         zdEghk/9DiXS7v6eAxS+M2Szfk7li85evnP39upCHsSRHNLkMyLESzdu+HbzIyzycVA/
+         fpPd/DbigBswlRVG/7wyhLYt4OlLywK8Y3Mox4jYafl5AVN2zq0gAiCYzlpLIO8nzaPT
+         r40A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=5s7f2XFzM8RFuLLJF/YcG5Jn7EQCHhHTzFdo1ku/V2Y=;
-        b=Gg1rkpYnVq4PjiR0XvR6xJ+4GOdcEUI27f15CAkJ8Jgblr8p430kWvjk/0rhtsgN17
-         cBayARxcxloGzIxIfETkAQNLwjOP/E4XQxufFiR12vA7IuxQEQVsnCFYm1W/l8XZcPUH
-         W3sQdAZyF+SD5v8WHIPF6qKPtBqwk2rFcvVGNFooEawfdjSqY+Z5JWMKJnkHH6qUHXW5
-         JXgcowxOlEp7ifUiKC6xCAMPLR54YxaQPkb++dh/pU44YXfK0NXi0EvOI8oKKr/qBOsW
-         XLt14J6lgKpl+Zoe+TX4APeSZQlzQkwVZAIejGDuufxj41qLVdwhYNgtU+S3UkGaTtXc
-         GFLg==
-X-Gm-Message-State: AOAM530HSUZhtMYGu2ZCvZ1xptf5RpNtEl3FARGL99IwQkbcwKEB8X2s
-        +XAnhKivi6xFAfCMOcNMTRY=
-X-Google-Smtp-Source: ABdhPJxL2uSnWpMxAY5dVAIbkdgKjitcSFGX84f3yHm2M8XBVlNEs4bMyraSvXX3r8Mknu4WJv3TpQ==
-X-Received: by 2002:a05:6402:2695:: with SMTP id w21mr20477866edd.99.1616330632649;
-        Sun, 21 Mar 2021 05:43:52 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id de17sm6975667ejc.16.2021.03.21.05.43.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 21 Mar 2021 05:43:52 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Kleber =?utf-8?Q?Tarc=C3=ADsio?= via GitGitGadget 
-        <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Kleber =?utf-8?Q?Tarc=C3=ADsio?= <klebertarcisio@yahoo.com.br>
-Subject: Re: [PATCH] fix null pointer dereference
-References: <pull.983.git.git.1616323936790.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <pull.983.git.git.1616323936790.gitgitgadget@gmail.com>
-Date:   Sun, 21 Mar 2021 13:43:51 +0100
-Message-ID: <87tup4r81k.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+         :mime-version:content-language:content-transfer-encoding;
+        bh=0on8O/8xkOC1YfpHv1MdK+C1s+mTuFklE36K7GHTSO0=;
+        b=APajBSse6v0+oo3ApRAEaccMM0aWVHtbnpt0WoS1CGrBJuxMYZStpkVBqGC+s4l6Im
+         CkG1O6zOadie3SQlRuiFg/PwdI9HlT7F1j/Slsb8xPR+jfbdlYFse2LKFC2UsSxs6Lfa
+         ZabIJWo7jwAGS/MfQ7p5zpzzKYplw6gwAu38Ar71oeH1ITqrPLGGk/fHp47t546Lb1RT
+         FzpDM5ZR+n69CtOJlPXmA1N4tY1WDI5oWXD4/mJGCX24/kzDbU8nf3dAt3GlZ+E1rpR3
+         FiXNZ+fx7s+yzC+vzZt434uaZE76Dt/Yb9h6V/OZYhsizN1Bt5kVWqeQ7Umn0/I2mRSH
+         5XmQ==
+X-Gm-Message-State: AOAM533SEXD6R3ibkcrOnoT5jh3MOGG1RHoNWl1z3iKW1r8zl6e1ICPG
+        FDy+MkQKm484KU+J5TKQKPR9M1PDoWnrVOx+
+X-Google-Smtp-Source: ABdhPJxToJc1V6M+1ETEiPY7Cjq2l/NyziNqI/+SpVCGqx49TpCa8tDrwSzdp0je0tYVjI/uj2Gp6w==
+X-Received: by 2002:a17:90a:2a46:: with SMTP id d6mr8229343pjg.197.1616331942473;
+        Sun, 21 Mar 2021 06:05:42 -0700 (PDT)
+Received: from [192.168.43.80] (subs32-116-206-28-38.three.co.id. [116.206.28.38])
+        by smtp.gmail.com with ESMTPSA id c2sm11049286pfb.121.2021.03.21.06.05.41
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 21 Mar 2021 06:05:42 -0700 (PDT)
+To:     git@vger.kernel.org
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Subject: Blob hash of binary files in patches generated by git format patch
+ show in full form instead of short form
+Message-ID: <499c9922-eb42-c2a8-b4b4-8e5197ea0fc6@gmail.com>
+Date:   Sun, 21 Mar 2021 20:05:39 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-On Sun, Mar 21 2021, Kleber Tarc=C3=ADsio via GitGitGadget wrote:
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-> From: =3D?UTF-8?q?Kleber=3D20Tarc=3DC3=3DADsio?=3D <klebertarcisio@yahoo.=
-com.br>
->
-> The malloc function can return null when the memory allocation fails. Thi=
-s commit adds a condition to handle these cases properly. https://cwe.mitre=
-.org/data/definitions/476.html
->
-> Signed-off-by: Kleber Tarc=C3=ADsio <klebertarcisio@yahoo.com.br>
-> ---
->     Avoiding null pointer dereference
->=20=20=20=20=20
->     This pull request aims to fix null pointer dereference.
->=20=20=20=20=20
->     Null pointer dereference
->     [https://cwe.mitre.org/data/definitions/476.html]
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-983=
-%2Fklebertarcisio%2Fpatch-1-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-983/kl=
-ebertarcisio/patch-1-v1
-> Pull-Request: https://github.com/git/git/pull/983
->
->  builtin/submodule--helper.c | 2 ++
->  1 file changed, 2 insertions(+)
+I'm trying to do format-patch with binary files (images) in commits.
+In each commit, it adds an image and its alt description text in separated
+file.
 
-Thanks, from my brief grepping of the remaining code in git.git there is
-no other malloc() that doesn't have its return value checked
-appropriately.
+Full steps:
 
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index 9d505a6329c8..92349d715a78 100644
-> --- a/builtin/submodule--helper.c
-> +++ b/builtin/submodule--helper.c
-> @@ -1215,6 +1215,8 @@ static void submodule_summary_callback(struct diff_=
-queue_struct *q,
->  		if (!S_ISGITLINK(p->one->mode) && !S_ISGITLINK(p->two->mode))
->  			continue;
->  		temp =3D (struct module_cb*)malloc(sizeof(struct module_cb));
-> +		if (!temp)=20
-> +			die(_("out of memory"));
->  		temp->mod_src =3D p->one->mode;
->  		temp->mod_dst =3D p->two->mode;
->  		temp->oid_src =3D p->one->oid;
+   First, initialize empty repo and populate it with commits:
+   - cd /tmp
+   - mkdir bin-patch && cd bin-patch
+   - git init
+   - echo "test format-patch binary files" > README
+   - git add * && git commit -m "init README"
+   - git checkout -b test
+   - wget -c [1] -O stackoverflow.png && echo "Stack Overflow" > stackoverflow.alt
+   - git add * && git commit -m "Add Stack Overflow logo"
+   - wget -c [2] -O idntm.jpg && echo "Indonesia's Next Top Model cast" > idntm.alt
+   - git add * && git commit -m "Add IdNTM cast poster"
 
-When we just want to die if we can't allocate memory we should use the
-xmalloc() wrapper instead.
+   Now prepare patches as usual (with cover letter ignored for this purpose):
+   - git format-patch --cover-letter -M master
+
+   (image link):
+   [1]: https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Stack_Overflow_logo.svg/1280px-Stack_Overflow_logo.svg.png
+   [2]: https://upload.wikimedia.org/wikipedia/en/9/9f/IndonesiaNTM1Cast.jpg
+
+What did you expect to happen? (Expected behavior)
+
+Blob hash in the `index` header of generated patches for binary file (image)
+use short form (7 characters), just like for text file (alt description).
+
+What happened instead? (Actual behavior)
+Blob hash in the `index` stanza of generated patches for image use full
+(long) form.
+
+For first patch (Stack Overflow commit), diff header for the image read:
+```
+diff --git a/stackoverflow.png b/stackoverflow.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..969908ad3161a66af31f2441cfea4ae002a5ec67
+```
+
+while diff header for alt description read:
+```
+diff --git a/stackoverflow.alt b/stackoverflow.alt
+new file mode 100644
+index 0000000..9368417
+```
+
+Similarly, for the second patch (INTM poster), diff header for the image read:
+```
+diff --git a/idntm.jpg b/idntm.jpg
+new file mode 100644
+index 0000000000000000000000000000000000000000..8921ab9540e0a36a53f8c6632482fb04d5d0cc6c
+```
+
+while diff header for alt description read:
+```
+diff --git a/idntm.alt b/idntm.alt
+new file mode 100644
+index 0000000..719feb9
+```
+
+What's different between what you expected and what actually happened?
+
+Blob hash for binary files are shown in full form, as opposed to blob hash
+for text files.
+
+Anything else you want to add:
+(none)
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.31.0.29.g98164e9585
+cpu: x86_64
+built from commit: 98164e9585e02e31dcf1377a553efe076c15f8c6
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 5.11.6-kernelorg-upstream-generic #1 SMP Fri Mar 12 06:35:27 WIB 2021 x86_64
+compiler info: gnuc: 9.3
+libc info: glibc: 2.31
+$SHELL (typically, interactive shell): /bin/bash
+
+
+[Enabled Hooks]
+(none)
+
+-- 
+An old man doll... just what I always wanted! - Clara
