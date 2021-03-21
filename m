@@ -2,110 +2,139 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 71D0AC433E1
-	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 07:23:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97498C433E0
+	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 08:59:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1E69A6192E
-	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 07:23:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6AFDD61924
+	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 08:59:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229995AbhCUHWo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 21 Mar 2021 03:22:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43042 "EHLO
+        id S229955AbhCUI7N (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 21 Mar 2021 04:59:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35318 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229949AbhCUHWY (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 Mar 2021 03:22:24 -0400
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B064DC061574
-        for <git@vger.kernel.org>; Sun, 21 Mar 2021 00:22:23 -0700 (PDT)
-Received: by mail-oi1-x229.google.com with SMTP id w70so9674535oie.0
-        for <git@vger.kernel.org>; Sun, 21 Mar 2021 00:22:23 -0700 (PDT)
+        with ESMTP id S229871AbhCUI65 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 Mar 2021 04:58:57 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88E03C061574
+        for <git@vger.kernel.org>; Sun, 21 Mar 2021 01:58:57 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id n11-20020a05600c4f8bb029010e5cf86347so9895081wmq.1
+        for <git@vger.kernel.org>; Sun, 21 Mar 2021 01:58:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=5EUfCARXEx5KISEjok2HqEVmr7Ei6PBS3jf5j7BdAw4=;
-        b=o9JS519nyYrVGDHuxX3OzIDoQWAC606PqQjQx4f9VwuJGvoxXCIacSSV3EMu/+6EMy
-         fqfpJ2KLyXEp8iy5mTlGC7GCJ8jdnqQtGfJvSIUphA1Cd6tFPylFOa9+AmzJEgOIf5s1
-         ZcyhFSDGY6s0Fan2UMpH9N+N/gO92Hui18OIBhK5IT9dELiID88gErIBaq2mlzD4KzK5
-         WSabcdKwnDKJksO+MBHHd+f8SBiu3pPrLMkhQ9sIx+ERyGdfmEvsw7lgBL3UZZJb8nvG
-         ubDkV5EBzqMHmuN+mkODhwc9Sd1p77Pdvl8scwOljEacbIbPVl7UWB1ZGT5kHmrrshbo
-         GpTA==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=jOr7FT2FNF+xJfQavPqQ2BgdEUcYm99hmcWCL08YBgU=;
+        b=bpf1c7Bcreczk7l1QfsSBvc53MTvFCwrrTfniDKM4ZDLZQv/QuSdVZdV8fUBd7jhki
+         9QygN+/wTbtMkngZI5EBzXZQKh2RiOtv5OuHUm8qTUCtvECxk21ImHPAGQEHPrPuEuCr
+         whA+9OJuAAcTKDBqpENkAYZRBiSiqveRSJ5NAS7A0bPAH8MRkMl1KNKxmiJ9DJWz0yWT
+         SGNU0WKCXw6HvRMgXVJrJSXPn9KA8oT4dg9BJfFqD3YsJkXDYoQ5vuz8l8ylX5fUZlsr
+         g/bIUDIDRF85Qdi6L27upG0kcz+0ff400jR8xSLN36VXRMhjpnBe0p/dOI+8wjh6N+bG
+         nC4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=5EUfCARXEx5KISEjok2HqEVmr7Ei6PBS3jf5j7BdAw4=;
-        b=oknVfZCvQt8UkI0otHtfWBOA4luMYOI3E/7EyB8KPXBcheZuI3fHM2xZ2A79V9Gfvm
-         83JLir6HtuLc3H9MjwkjMXMh4D1LE4rKn6l8K959/NTLve8cn5XXO6MhrXeY5HtxQbWR
-         CZxWGFr0E5UTvl8v5GZcevYVBMU9ZlEoF/tOGheXQd0un9vtPxj3VKe6LijVzaEp5e0D
-         BH5+mcSRvitF5tp25tDSNLl5GcwS9X3IvhKrcQ1ynHshBU0fhM/9D/9A3NLe4owpBovb
-         SA3KDp+KashT1y0EY79MWUZ0CBPeTTfhJgSP6FauAP1+tn349tzdiVtvoZ2wT55wXCxq
-         +SVA==
-X-Gm-Message-State: AOAM530h5KKz2Fkh8QvRH+JZ1/YUlhllhDK0trIWb1jAn0FAUAYaEn/X
-        t0eq37Nao7rDyFO5Latom7C1uYXzBBTphGcD66M=
-X-Google-Smtp-Source: ABdhPJwFpy+rAZz/4vEUjBP3YaOUCSGd5fKcBQrSiOfgkie7J98LXFgrhEWyEcSuHtsCSPdtnhe2PAhHXQiis9mmDW0=
-X-Received: by 2002:aca:d68e:: with SMTP id n136mr6516382oig.179.1616311342905;
- Sun, 21 Mar 2021 00:22:22 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=jOr7FT2FNF+xJfQavPqQ2BgdEUcYm99hmcWCL08YBgU=;
+        b=K8fhMzRWUQSL1fVvuF9FjBsosfR8SPeQ12stU8f+c4kQ8zSwhxJRtFMs5E4oWwjf3Q
+         xBcXcQHMpe8d35DhC/Cdp7W0qo8yGxv+P/2Ctbpz6E9S+g0Xp309PEf8E1ve5gHlH7cs
+         VIcbDiHZTEdVqJIsaTgiOm6N6+N4IqOLfqHgVSZPYRTz2yIcthDkBUDxlr/jdVIuC4sp
+         b3pXxgRcFdYYlb3/CivJ/mmPC57hD2QLm1xdf7uMYYUj9a85+7w0zzBFyg/75HEaIYxw
+         KJ1Nd+yX/5HI3qBOW5AL+sRn3zOzWn/5uBwjEGHYuoAM6bxBVjY5kCdLvnPISBtpe6Mn
+         t+3Q==
+X-Gm-Message-State: AOAM532CMBDLlx/j0Ei7AqemJBXINLjg9yjExVFqG2crj4xC/IrzzEru
+        OX0mhUCQhoUmM1DsIV4yN+o9zD9QUbQ=
+X-Google-Smtp-Source: ABdhPJza90NGnwrlm96vUfprlrHDmZ8kL/mhMyHgI2WxLp3ctPD1xpt4hk1dhXQvwM417qtpxxIeMA==
+X-Received: by 2002:a1c:9845:: with SMTP id a66mr10818810wme.156.1616317136302;
+        Sun, 21 Mar 2021 01:58:56 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id g9sm16254644wrp.14.2021.03.21.01.58.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 21 Mar 2021 01:58:55 -0700 (PDT)
+Message-Id: <pull.911.v2.git.1616317134.gitgitgadget@gmail.com>
+In-Reply-To: <pull.911.git.1616251299.gitgitgadget@gmail.com>
+References: <pull.911.git.1616251299.gitgitgadget@gmail.com>
+From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sun, 21 Mar 2021 08:58:52 +0000
+Subject: [PATCH v2 0/2] [GSOC] interpret-trailer: easy parse trailer value
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.885.v7.git.1616152884317.gitgitgadget@gmail.com>
- <pull.885.v8.git.1616252178414.gitgitgadget@gmail.com> <CAPig+cQBATCe4XFt1k0_EfYvb61_RVgTO0NGy6Ykg7frNPbtpQ@mail.gmail.com>
-In-Reply-To: <CAPig+cQBATCe4XFt1k0_EfYvb61_RVgTO0NGy6Ykg7frNPbtpQ@mail.gmail.com>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Sun, 21 Mar 2021 15:22:11 +0800
-Message-ID: <CAOLTT8SbiYew=xEQou4oyfPQL+KYVuv03uk=So4NmL+3nvKKGA@mail.gmail.com>
-Subject: Re: [PATCH v8] format-patch: allow a non-integral version numbers
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
+To:     git@vger.kernel.org
+Cc:     "Bradley M. Kuhn" <bkuhn@sfconservancy.org>,
         Junio C Hamano <gitster@pobox.com>,
-        Denton Liu <liu.denton@gmail.com>,
-        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        Brandon Casey <drafnel@gmail.com>,
+        Shourya Shukla <periperidip@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Rafael Silva <rafaeloliveira.cs@gmail.com>,
+        =?UTF-8?Q?=C4=90o=C3=A0n_Tr=E1=BA=A7n_C=C3=B4ng?= Danh 
+        <congdanhqx@gmail.com>, Jeff King <peff@peff.net>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, ZheNing Hu <adlternative@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> =E4=BA=8E2021=E5=B9=B43=E6=9C=8821=
-=E6=97=A5=E5=91=A8=E6=97=A5 =E4=B8=8B=E5=8D=8812:05=E5=86=99=E9=81=93=EF=BC=
-=9A
->
-> On Sat, Mar 20, 2021 at 10:56 AM ZheNing Hu via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> > diff --git a/Documentation/git-format-patch.txt b/Documentation/git-for=
-mat-patch.txt
-> > @@ -221,6 +221,11 @@ populated with placeholder text.
-> > +        `<n>` may be a non-integer number.  E.g. `--reroll-count=3D4.4=
-`
-> > +       may produce `v4.4-0001-add-makefile.patch` file that has
-> > +       "Subject: [PATCH v4.4 1/20] Add makefile" in it.
-> > +       `--reroll-count=3D4rev2` may produce `v4rev2-0001-add-makefile.=
-patch`
-> > +       file that has "Subject: [PATCH v4rev2 1/20] Add makefile" in it=
-.
->
-> This new example raises the question about what happens if the
-> argument to --reroll-count contains characters which don't belong in
-> pathnames. For instance, what happens if `--reroll-count=3D1/2` is
-> specified? Most likely, it will fail trying to write the
-> "v1/2-whatever.patch" file to a nonexistent directory named "v1".
->
-> > diff --git a/log-tree.c b/log-tree.c
-> > @@ -369,8 +369,8 @@ void fmt_output_subject(struct strbuf *filename,
-> > +       if (info->reroll_count)
-> > +               strbuf_addf(filename, "v%s-", info->reroll_count);
-> >         strbuf_addf(filename, "%04d-%s", nr, subject);
->
-> To protect against that problem, you may need to call
-> format_sanitized_subject() manually after formatting "v%s-". (I'm just
-> looking at this code for the first time, so I could be hopelessly
-> wrong. There may be a better way to fix it.)
+Hope this can help commit --trailer more useful!
 
-Hi, Eric,
-This is a kind of "injection" problem,
-thank you for your discovery and solution method.
+Base on https://github.com/gitgitgadget/git/pull/901, The original patch
+series was too long so now split it into two.
+
+Helped by Junio and Jeff, Thanks.
+
+ZheNing Hu (2):
+  [GSOC] commit: add --trailer option
+  [GSOC] interpret-trailer: easy parse trailer value
+
+ Documentation/git-commit.txt             |  14 +-
+ Documentation/git-interpret-trailers.txt |  23 ++
+ builtin/commit.c                         |  55 ++--
+ commit.c                                 |  34 +++
+ commit.h                                 |  10 +
+ t/t7502-commit-porcelain.sh              | 319 +++++++++++++++++++++++
+ t/t7513-interpret-trailers.sh            |  23 ++
+ trailer.c                                |  13 +-
+ 8 files changed, 456 insertions(+), 35 deletions(-)
+
+
+base-commit: 13d7ab6b5d7929825b626f050b62a11241ea4945
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-911%2Fadlternative%2Ftrailer-easy-ident-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-911/adlternative/trailer-easy-ident-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/911
+
+Range-diff vs v1:
+
+ 1:  2378e3b4c1ae = 1:  2378e3b4c1ae [GSOC] commit: add --trailer option
+ 2:  ca521d3c01d6 ! 2:  8b8b236a4ffb [GSOC] interpret-trailer: easy parse trailer value
+     @@ commit.c: int run_commit_hook(int editor_is_used, const char *index_file,
+      
+       ## commit.h ##
+      @@ commit.h: int parse_buffer_signed_by_header(const char *buffer,
+     + 				  struct strbuf *payload,
+       				  struct strbuf *signature,
+       				  const struct git_hash_algo *algop);
+     - 
+     ++/*
+     ++ * Calling `find_author_by_nickname` to find the "author <email>" pair
+     ++ * in the most recent commit which matches "--author=name".
+     ++ *
+     ++ * Note that `find_author_by_nickname` is not reusable, because it haven't
+     ++ * reset flags for parsed objects. The only safe way to use `find_author_by_nickname`
+     ++ * (without rewriting the revision traversal machinery) is to spawn a
+     ++ * subprocess and do find_author_by_nickname() in it.
+     ++ */
+      +const char *find_author_by_nickname(const char *name);
+     -+
+     + 
+       #endif /* COMMIT_H */
+      
+       ## t/t7502-commit-porcelain.sh ##
+
+-- 
+gitgitgadget
