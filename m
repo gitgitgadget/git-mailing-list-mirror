@@ -2,163 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.0 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F5EFC433C1
-	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 09:18:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 58DB7C433E2
+	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 10:53:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4A0BD61933
-	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 09:18:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 249046193E
+	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 10:53:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229987AbhCUJRz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 21 Mar 2021 05:17:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39312 "EHLO
+        id S229905AbhCUKwl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 21 Mar 2021 06:52:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230010AbhCUJRm (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 Mar 2021 05:17:42 -0400
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3260C061574
-        for <git@vger.kernel.org>; Sun, 21 Mar 2021 02:17:42 -0700 (PDT)
-Received: by mail-pj1-x1031.google.com with SMTP id x7-20020a17090a2b07b02900c0ea793940so8866544pjc.2
-        for <git@vger.kernel.org>; Sun, 21 Mar 2021 02:17:42 -0700 (PDT)
+        with ESMTP id S229766AbhCUKwT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 Mar 2021 06:52:19 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 314D9C061574
+        for <git@vger.kernel.org>; Sun, 21 Mar 2021 03:52:19 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id j20-20020a05600c1914b029010f31e15a7fso1702858wmq.1
+        for <git@vger.kernel.org>; Sun, 21 Mar 2021 03:52:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=syqyEKA6gm7kM8XjkxvndldNB5b11qG+CaVExFEN4e8=;
-        b=tptEHv1MCbVjjZfOwbrZgBPKE1qAmmUcNWand0w/f+Mv5gpVObmULDpAf7hM3qbDxs
-         NxudPDpUpouO4N1vuhOAfRQBIlkzu6RETQ7mNYK4GzGxhi9RRA2DF0Qmbwnp5pZ0PpeN
-         CKu2MjLyW1ei8lxsxdqd00Ue+ihuLgm5osmCnOYDOaM5Wj77dnNAiDpgAPoFl8+PD54g
-         qIlV/W/VTziU9x5zLxhnRaLtP2XA4Cpw2wG7RJMrSIkxSsWRf+cekN2IWg3V6a8ml6fJ
-         t1HIQhiQv+64JQucmk117t8ziDjhnKDstZ7cyq4Bmby8PI7H7ENu/S80TPKxzKJjs+ec
-         IphQ==
+        h=message-id:from:date:subject:mime-version:content-transfer-encoding
+         :fcc:to:cc;
+        bh=iZFYel33nnXtoiKd9tiRbR8yDnaRmPCQOB2N6pAuDkg=;
+        b=IGrtKIVA8S3xDpbdKozot3eMu0Nkpy6TM0Sz74LfhCLmC+zhro6ZXaI/ILIHn7JdmZ
+         TvlexZOifFGMlDXgOa+SYl041S1OUQD1/A9Ojl+bNW52nNF8jFPyWZi3wTRqkrA7atmA
+         ktc9vUw8eWpqCeChz8CXhGjcz6k7f8xk0bBtZICmHeeprRwxeT6cBUax77G1DzATxS0C
+         qYpChmhim8uoBCv+B2jnyuFpJQQyfxnhGrjqaE0aUEcs4pWpUGAqeXwuwAcGM5hCgfzV
+         oDNdyapIMZZFDcDiaK4SN3RJzDtwF2Pyae013BOH8FTaKB0GWiiALYHUs/YeiBuXZfSC
+         gNrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=syqyEKA6gm7kM8XjkxvndldNB5b11qG+CaVExFEN4e8=;
-        b=CXfjKZhvJPUgEZDvuP64LGew/PTg8QRCl0Xk4x/y+0kGlGv9784vxQRsz8iknDWdAQ
-         Z0pbpRD0LeAfy9KogYkRVmszCcf7np9se2bA/4ycZ28ziiEC2/XrdgY/zs5fh+c8UyLs
-         esX/oVv56kzmzhxBh+2er5ce1V6h0E3BL+FhMidfP8k7hrbv1UscJJqKQ6oGficCpDk1
-         qVhwAOVLjzNCJstF6x+YoFR68v4dsxASeoDsMuDTXpN4GujnwGN1ABVZ5slDlJZRYxzR
-         WaDSxsWV8PF8NEo1m9a7wOdqzZ7Kf6FzaGfTexrKXUMXZGZ7htLOpe2S3dnQf3Df4yJq
-         Wj/A==
-X-Gm-Message-State: AOAM530tmJq4VQnGeP9+DNuQZO+AIYBZtVVJGHPvDt0VFOGJTj8lx2b+
-        3JcSooTxI5MTNc2ZkYxJ4s0TBONId3Bp78Fz
-X-Google-Smtp-Source: ABdhPJxxuOxNUHYIg8+oD0NHqBWZqlIWhh3C/P5eg9debJ4k9BKcOVYd5srNpXeaWG62wD2yn795kg==
-X-Received: by 2002:a17:90a:5d14:: with SMTP id s20mr7522192pji.6.1616318261931;
-        Sun, 21 Mar 2021 02:17:41 -0700 (PDT)
-Received: from [192.168.43.80] (subs02-180-214-232-76.three.co.id. [180.214.232.76])
-        by smtp.gmail.com with ESMTPSA id n16sm10317164pff.119.2021.03.21.02.17.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 21 Mar 2021 02:17:41 -0700 (PDT)
-Subject: Re: [PATCH v2 2/2] [GSOC] interpret-trailer: easy parse trailer value
-To:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     "Bradley M. Kuhn" <bkuhn@sfconservancy.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Brandon Casey <drafnel@gmail.com>,
-        Shourya Shukla <periperidip@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Rafael Silva <rafaeloliveira.cs@gmail.com>,
-        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>, git@vger.kernel.org
-References: <pull.911.git.1616251299.gitgitgadget@gmail.com>
- <pull.911.v2.git.1616317134.gitgitgadget@gmail.com>
- <8b8b236a4ffb81a8c6be3f320b878cea1d0f9d7a.1616317135.git.gitgitgadget@gmail.com>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-Message-ID: <1722fbad-6ff3-444f-ad3f-59e37b640fc7@gmail.com>
-Date:   Sun, 21 Mar 2021 16:17:37 +0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.1
+        h=x-gm-message-state:message-id:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=iZFYel33nnXtoiKd9tiRbR8yDnaRmPCQOB2N6pAuDkg=;
+        b=JjbeZ+mmSJJa2Hyn3QgX767xNJmTVWsO9fgFpaNTjHcrIzSRYUoM7zh/7kBfpCEspi
+         8V/+FxlBD+KF2cTcekqQxTiI4NaixYGvnqWsGmZuOQEaCvZLviNiSZfsiY1i10ELEBgN
+         4Dr9KSX42q7qlMHW60ycY8lImkciS9WiIzBSbC4RuTGxExrCCJUZejfgyJhj5Gz9RR5B
+         eY6YQrLaEdgB8WvSfP2t94Zf/eRcwOf6PUGlH1GqQB2lRLvHQ6xmb6OMmOEDylgSHTiW
+         V/fQfLsNWh3atDGb+8UMk+XwI/RVFzOxY30tF/AU6UcFStITNiYMtl0DRQNz61RpkojU
+         nUjg==
+X-Gm-Message-State: AOAM531qnupVI8r8CnGSOJQrrHKWcZCA0L6p9Q/xh47PU8FHr/lKBVCn
+        BJKr/LfQ27lnEJymRVb9+Od3cwJWhZg=
+X-Google-Smtp-Source: ABdhPJy7WBLjZaaJCx+Zp57ZziY46hqu/Tb7dOOSSTn8pLvF5pdW2fXXliPbOfyHYMsSjpjhCvNhKQ==
+X-Received: by 2002:a05:600c:358c:: with SMTP id p12mr11727781wmq.159.1616323937920;
+        Sun, 21 Mar 2021 03:52:17 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id w6sm15858805wrl.49.2021.03.21.03.52.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 21 Mar 2021 03:52:17 -0700 (PDT)
+Message-Id: <pull.983.git.git.1616323936790.gitgitgadget@gmail.com>
+From:   "Kleber =?UTF-8?Q?Tarc=C3=ADsio?= via GitGitGadget" 
+        <gitgitgadget@gmail.com>
+Date:   Sun, 21 Mar 2021 10:52:16 +0000
+Subject: [PATCH] fix null pointer dereference
 MIME-Version: 1.0
-In-Reply-To: <8b8b236a4ffb81a8c6be3f320b878cea1d0f9d7a.1616317135.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     Kleber =?UTF-8?Q?Tarc=C3=ADsio?= <klebertarcisio@yahoo.com.br>,
+        =?UTF-8?q?Kleber=20Tarc=C3=ADsio?= <klebertarcisio@yahoo.com.br>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: =?UTF-8?q?Kleber=20Tarc=C3=ADsio?= <klebertarcisio@yahoo.com.br>
 
-On 21/03/21 15.58, ZheNing Hu via GitGitGadget wrote:
-> +test_expect_success 'commit --trailer parse @nickname' '
-> +	echo "I love git" >file1 &&
-> +	git add file1 &&
-> +	git commit -m "yly" --author="batman <email1>" &&
-> +	echo "I love git" >file2 &&
-> +	git add file2 &&
-> +	git commit -m "yly" --author="jocker <email2>" &&
-> +	echo "I love git" >file3 &&
-> +	git add file3 &&
-> +	git commit -m "yly" \
-> +	--trailer "Reviewed-by:@bat" \
-> +	--trailer "Signed-off-by:@jock" \
-> +	--trailer "Helped-by:@email1" \
-> +	--trailer "Mentored-by:@email2" &&
-> +	git cat-file commit HEAD >commit.msg &&
-> +	sed -e "1,/^\$/d" commit.msg >actual &&
-> +	cat >expected <<-\EOF &&
-> +	yly
-> +
-> +	Reviewed-by: batman <email1>
-> +	Signed-off-by: jocker <email2>
-> +	Helped-by: batman <email1>
-> +	Mentored-by: jocker <email2>
-> +	EOF
-> +	test_cmp expected actual
-> +'
-> +
->   test_expect_success 'multiple -m' '
->   
->   	>negative &&
-> +test_expect_success 'trailer parse @nickname' '
-> +	echo "I love git" >file1 &&
-> +	git add file1 &&
-> +	git commit -m "yly" --author="batman <email1>" &&
-> +	echo "I love git" >file2 &&
-> +	git add file2 &&
-> +	git commit -m "yly" --author="jocker <email2>" &&
-> +	git interpret-trailers \
-> +	--trailer "Reviewed-by:@bat" \
-> +	--trailer "Signed-off-by:@jock" \
-> +	--trailer "Helped-by:@email1" \
-> +	--trailer "Mentored-by:@email2" \
-> +	empty >actual &&
-> +	cat >expected <<-\EOF &&
-> +
-> +	Reviewed-by: batman <email1>
-> +	Signed-off-by: jocker <email2>
-> +	Helped-by: batman <email1>
-> +	Mentored-by: jocker <email2>
-> +	EOF
-> +	test_cmp expected actual
-> +'
-> +
->   test_expect_success 'without config in another order' '
->   	sed -e "s/ Z\$/ /" >expected <<-\EOF &&
-I think please consider this case: When I add --trailer "Reviewed-by:@bat", and there are two
-identity pairs that match (`batman <email1>` and `batman <email2>`), I need to choose one that
-will be in the trailer (for example because <email1> is primary email). So a disambiguation
-prompt should be added, something like:
+The malloc function can return null when the memory allocation fails. This commit adds a condition to handle these cases properly. https://cwe.mitre.org/data/definitions/476.html
 
-```
-There are <N> identities that match, please choose one that will be added to the trailer:
-1) batman <email1>
-2) batman <email2>
-...
-n) batman <emailn>
-```
+Signed-off-by: Kleber Tarcísio <klebertarcisio@yahoo.com.br>
+---
+    Avoiding null pointer dereference
+    
+    This pull request aims to fix null pointer dereference.
+    
+    Null pointer dereference
+    [https://cwe.mitre.org/data/definitions/476.html]
 
-The prompt can be repeated for each trailer values that are non-unique.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-983%2Fklebertarcisio%2Fpatch-1-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-983/klebertarcisio/patch-1-v1
+Pull-Request: https://github.com/git/git/pull/983
 
-Thanks
+ builtin/submodule--helper.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 9d505a6329c8..92349d715a78 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -1215,6 +1215,8 @@ static void submodule_summary_callback(struct diff_queue_struct *q,
+ 		if (!S_ISGITLINK(p->one->mode) && !S_ISGITLINK(p->two->mode))
+ 			continue;
+ 		temp = (struct module_cb*)malloc(sizeof(struct module_cb));
++		if (!temp) 
++			die(_("out of memory"));
+ 		temp->mod_src = p->one->mode;
+ 		temp->mod_dst = p->two->mode;
+ 		temp->oid_src = p->one->oid;
+
+base-commit: a5828ae6b52137b913b978e16cd2334482eb4c1f
 -- 
-An old man doll... just what I always wanted! - Clara
+gitgitgadget
