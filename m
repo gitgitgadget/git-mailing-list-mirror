@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0166EC433E2
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C6D5FC433E0
 	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 16:59:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BDFF561959
+	by mail.kernel.org (Postfix) with ESMTP id 8594E6194C
 	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 16:59:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230134AbhCUQ7P (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 21 Mar 2021 12:59:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52658 "EHLO
+        id S230115AbhCUQ7N (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 21 Mar 2021 12:59:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230050AbhCUQ6n (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 Mar 2021 12:58:43 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 887FAC061762
+        with ESMTP id S230047AbhCUQ6m (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 Mar 2021 12:58:42 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05277C061574
         for <git@vger.kernel.org>; Sun, 21 Mar 2021 09:58:42 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id g25so8199095wmh.0
-        for <git@vger.kernel.org>; Sun, 21 Mar 2021 09:58:42 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id b9so14219609wrt.8
+        for <git@vger.kernel.org>; Sun, 21 Mar 2021 09:58:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=dsdlIfBIWjFjjQUFEJkLCxf+5hhOr4wPB3YEkStWjUU=;
-        b=sVBIpX4pKdzvaf2+JXwkFEktW1J0jaDZk/BHVjTT43iiTJOnIXEmhWO9H0nkYynIYR
-         d7q6rZfBUpOnmZqKTRpffzOIe37FfsMtFMSwo/uz3NdCv9XaWYftKUmho0V1Y744iMTQ
-         N+Pe9hmySpM8OFLGfMpejTzsovBeuB2CogPzzLxdMkqnPfZY9ob8rOVSixfqePQDiSx9
-         F60cCjX+UqCEmEDQt6STqe6bCZ8QYpwW1DpggWgtR4pFwqZKxdphYYeU4z/NtgoCDrvz
-         zWPtYveTOks7OzkYivuTNikSsuqGBMJoWokVHKXc6HOaDe2woidkGrUPDXxN8iVD2D5/
-         PjMw==
+        bh=n4+S2Pqpnjccom1Dygbobupx9Ufrm4jBnm7Kzcw1WCE=;
+        b=XLUtlmwajkIUgtD1VwWcx2iuS/NeqsdsFjyYHtEvjlZqyz2AOaPc/V/RjGVMTPlTWJ
+         GprlwxmQkE0uvtDipoohrQwdNGF9/V41dtR4+TfqRTsFNJQJRmLnV/bGMIgpsdqQLuWz
+         M2FvmAPg9mvhrzpcGmA37R+th4lqtSojui4PfBazbNqYt1tkdSzrcMS4Jz4xD1RjTe0g
+         2rs2hRk3vdcnI++CdEXpqYIrstHk4Wf1g3VW0HSgu76ldiiL7pOUv1D8Ub8mblHEn+Eq
+         kwqYRWZYhme1Ybq/etpiyHeTI1/FsrBZGgslqDpZyHqU7kEUkdQVEobeQKPfJ39LGwNW
+         ZC1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=dsdlIfBIWjFjjQUFEJkLCxf+5hhOr4wPB3YEkStWjUU=;
-        b=VPTKRIdkE5q1uKP+CslFxfuxdT07byj06Oht3wsF+wOHFwqyby2TlM0dBbpO8702ov
-         ZCC4CVSP07o4v30Z5gmYqpFPzMz94TkrIRiQeCMCkEQMBCHp3NsjoUnCsQCVda96xW73
-         p0dpe1rAGNMzbs3ryoVF/PDRt7oZwUnCPe2QKzr4+mviCZL3WK9scGbTmX4fbZ3zPbeW
-         xcRbPHJXXbEfVwKpAjo6Go9VLgnGFuHxZDZMsPMsJU2qaWX5q0jenuWJTW+108A4Rh3R
-         GCJ2nPB9TjgmsxfHkcWlRxTQ3Sqe1ZPpMsnsDLP80GVxIrc0Q1epmdYaOUg/C3rRCD1h
-         6EoA==
-X-Gm-Message-State: AOAM5315+CvdP5g/FXLBav8tEyrunt9eB2eR7S23VXTfgZo3VSo29hS2
-        AymtOLGJ9367hCSHvO4Y9K1cx9vuPcY=
-X-Google-Smtp-Source: ABdhPJxIjrI1xsGlshx7VWKxbV+iDvdWzWpNnVxFNb8c1YQiBIBCde7+l4hhb+IQHMdaU6h3gGl+Uw==
-X-Received: by 2002:a7b:cd8f:: with SMTP id y15mr12623662wmj.185.1616345921326;
-        Sun, 21 Mar 2021 09:58:41 -0700 (PDT)
+        bh=n4+S2Pqpnjccom1Dygbobupx9Ufrm4jBnm7Kzcw1WCE=;
+        b=bK3HglbvTP8+fOsynUNWDwF5muwegOk7sG2GMuntQ8IDV2kLIjh6l/kYqOYM9gMroo
+         FCmthk/kPNIGDHfV87VFzOQ7fjhTZK0CdzErwTHQYijb2PxEyOWORtW8rqIejEoSUwU2
+         cKeSj48tBvsv1EYDTmLsLXuDeHopPirJrfpvCmu0cZrdzkqx3Y6DAuiRx4o0yrZn7ftC
+         X5F9CjfhJkutKNkDxPIhJr5+gZEQsnEjR1gNr6JkKHBTnfpaa24qrMaPmc02YMiIN27h
+         2q6aWvF0CkHwOEWPB4mKOcNzkpu0Ak6Ra9AsCYRRpYKa/u/GKAWmA11RysoV0IqfMZ/+
+         5V9w==
+X-Gm-Message-State: AOAM532fTl0G0fIvB1OIJGDFvVrONXMvR2uZJq/D+lFDxDwvbiFWM+tz
+        w93/31Df/Ccqawza9URSuyxwaTruM0Q=
+X-Google-Smtp-Source: ABdhPJyEQYpadVsKmEZYb17Yxz9yN0gJCgAfigS73IMoHm77GrS0YDCH8fFABSlAdgnNaagsH2Jg+Q==
+X-Received: by 2002:adf:ab52:: with SMTP id r18mr14226823wrc.65.1616345920770;
+        Sun, 21 Mar 2021 09:58:40 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q19sm17835567wrg.80.2021.03.21.09.58.40
+        by smtp.gmail.com with ESMTPSA id j20sm13432249wmp.30.2021.03.21.09.58.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 21 Mar 2021 09:58:41 -0700 (PDT)
-Message-Id: <963f291d53444243c5ed183815729cefaceab323.1616345918.git.gitgitgadget@gmail.com>
+        Sun, 21 Mar 2021 09:58:40 -0700 (PDT)
+Message-Id: <40c5c915fc1e818661fc272cdc8c37678e8f3fcf.1616345918.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.899.v3.git.1616345918.gitgitgadget@gmail.com>
 References: <pull.899.v2.git.1615747662.gitgitgadget@gmail.com>
         <pull.899.v3.git.1616345918.gitgitgadget@gmail.com>
 From:   "Andrzej Hunt via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 21 Mar 2021 16:58:32 +0000
-Subject: [PATCH v3 4/9] worktree: fix leak in dwim_branch()
+Date:   Sun, 21 Mar 2021 16:58:31 +0000
+Subject: [PATCH v3 3/9] clone: free or UNLEAK further pointers when finished
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,73 +78,146 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Andrzej Hunt <ajrhunt@google.com>
 
-Make sure that we release the temporary strbuf during dwim_branch() for
-all codepaths (and not just for the early return).
+Most of these pointers can safely be freed when cmd_clone() completes,
+therefore we make sure to free them. The one exception is that we
+have to UNLEAK(repo) because it can point either to argv[0], or a
+malloc'd string returned by absolute_pathdup().
 
-This leak appears to have been introduced in:
-  f60a7b763f (worktree: teach "add" to check out existing branches, 2018-04-24)
+We also have to free(path) in the middle of cmd_clone(): later during
+cmd_clone(), path is unconditionally overwritten with a different path,
+triggering a leak. Freeing the first path immediately after use (but
+only in the case where it contains data) seems like the cleanest
+solution, as opposed to freeing it unconditionally before path is reused
+for another path. This leak appears to have been introduced in:
+  f38aa83f9a (use local cloning if insteadOf makes a local URL, 2014-07-17)
 
-Note that UNLEAK(branchname) is still needed: the returned result is
-used in add(), and is stored in a pointer which is used to point at one
-of:
-  - a string literal ("HEAD")
-  - member of argv (whatever the user specified in their invocation)
-  - or our newly allocated string returned from dwim_branch()
-Fixing the branchname leak isn't impossible, but does not seem
-worthwhile given that add() is called directly from cmd_main(), and
-cmd_main() returns immediately thereafter - UNLEAK is good enough.
+These leaks were found when running t0001 with LSAN, see also an excerpt
+of the LSAN output below (the full list is omitted because it's far too
+long, and mostly consists of indirect leakage of members of the refs we
+are freeing).
 
-This leak was found when running t0001 with LSAN, see also LSAN output
-below:
+Direct leak of 178 byte(s) in 1 object(s) allocated from:
+    #0 0x49a53d in malloc /home/abuild/rpmbuild/BUILD/llvm-11.0.0.src/build/../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:145:3
+    #1 0x9a6ff4 in do_xmalloc /home/ahunt/oss-fuzz/git/wrapper.c:41:8
+    #2 0x9a6fca in xmalloc /home/ahunt/oss-fuzz/git/wrapper.c:62:9
+    #3 0x8ce296 in copy_ref /home/ahunt/oss-fuzz/git/remote.c:885:8
+    #4 0x8d2ebd in guess_remote_head /home/ahunt/oss-fuzz/git/remote.c:2215:10
+    #5 0x51d0c5 in cmd_clone /home/ahunt/oss-fuzz/git/builtin/clone.c:1308:4
+    #6 0x4cd60d in run_builtin /home/ahunt/oss-fuzz/git/git.c:453:11
+    #7 0x4cb2da in handle_builtin /home/ahunt/oss-fuzz/git/git.c:704:3
+    #8 0x4ccc37 in run_argv /home/ahunt/oss-fuzz/git/git.c:771:4
+    #9 0x4cac29 in cmd_main /home/ahunt/oss-fuzz/git/git.c:902:19
+    #10 0x69c45e in main /home/ahunt/oss-fuzz/git/common-main.c:52:11
+    #11 0x7f6a459d5349 in __libc_start_main (/lib64/libc.so.6+0x24349)
 
-Direct leak of 60 byte(s) in 1 object(s) allocated from:
+Direct leak of 165 byte(s) in 1 object(s) allocated from:
+    #0 0x49a53d in malloc /home/abuild/rpmbuild/BUILD/llvm-11.0.0.src/build/../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:145:3
+    #1 0x9a6fc4 in do_xmalloc /home/ahunt/oss-fuzz/git/wrapper.c:41:8
+    #2 0x9a6f9a in xmalloc /home/ahunt/oss-fuzz/git/wrapper.c:62:9
+    #3 0x8ce266 in copy_ref /home/ahunt/oss-fuzz/git/remote.c:885:8
+    #4 0x51e9bd in wanted_peer_refs /home/ahunt/oss-fuzz/git/builtin/clone.c:574:21
+    #5 0x51cfe1 in cmd_clone /home/ahunt/oss-fuzz/git/builtin/clone.c:1284:17
+    #6 0x4cd60d in run_builtin /home/ahunt/oss-fuzz/git/git.c:453:11
+    #7 0x4cb2da in handle_builtin /home/ahunt/oss-fuzz/git/git.c:704:3
+    #8 0x4ccc37 in run_argv /home/ahunt/oss-fuzz/git/git.c:771:4
+    #9 0x4cac29 in cmd_main /home/ahunt/oss-fuzz/git/git.c:902:19
+    #10 0x69c42e in main /home/ahunt/oss-fuzz/git/common-main.c:52:11
+    #11 0x7f8fef0c2349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+
+Direct leak of 178 byte(s) in 1 object(s) allocated from:
+    #0 0x49a53d in malloc /home/abuild/rpmbuild/BUILD/llvm-11.0.0.src/build/../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:145:3
+    #1 0x9a6ff4 in do_xmalloc /home/ahunt/oss-fuzz/git/wrapper.c:41:8
+    #2 0x9a6fca in xmalloc /home/ahunt/oss-fuzz/git/wrapper.c:62:9
+    #3 0x8ce296 in copy_ref /home/ahunt/oss-fuzz/git/remote.c:885:8
+    #4 0x8d2ebd in guess_remote_head /home/ahunt/oss-fuzz/git/remote.c:2215:10
+    #5 0x51d0c5 in cmd_clone /home/ahunt/oss-fuzz/git/builtin/clone.c:1308:4
+    #6 0x4cd60d in run_builtin /home/ahunt/oss-fuzz/git/git.c:453:11
+    #7 0x4cb2da in handle_builtin /home/ahunt/oss-fuzz/git/git.c:704:3
+    #8 0x4ccc37 in run_argv /home/ahunt/oss-fuzz/git/git.c:771:4
+    #9 0x4cac29 in cmd_main /home/ahunt/oss-fuzz/git/git.c:902:19
+    #10 0x69c45e in main /home/ahunt/oss-fuzz/git/common-main.c:52:11
+    #11 0x7f6a459d5349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+
+Direct leak of 165 byte(s) in 1 object(s) allocated from:
+    #0 0x49a6b2 in calloc /home/abuild/rpmbuild/BUILD/llvm-11.0.0.src/build/../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:154:3
+    #1 0x9a72f2 in xcalloc /home/ahunt/oss-fuzz/git/wrapper.c:140:8
+    #2 0x8ce203 in alloc_ref_with_prefix /home/ahunt/oss-fuzz/git/remote.c:867:20
+    #3 0x8ce1a2 in alloc_ref /home/ahunt/oss-fuzz/git/remote.c:875:9
+    #4 0x72f63e in process_ref_v2 /home/ahunt/oss-fuzz/git/connect.c:426:8
+    #5 0x72f21a in get_remote_refs /home/ahunt/oss-fuzz/git/connect.c:525:8
+    #6 0x979ab7 in handshake /home/ahunt/oss-fuzz/git/transport.c:305:4
+    #7 0x97872d in get_refs_via_connect /home/ahunt/oss-fuzz/git/transport.c:339:9
+    #8 0x9774b5 in transport_get_remote_refs /home/ahunt/oss-fuzz/git/transport.c:1388:4
+    #9 0x51cf80 in cmd_clone /home/ahunt/oss-fuzz/git/builtin/clone.c:1271:9
+    #10 0x4cd60d in run_builtin /home/ahunt/oss-fuzz/git/git.c:453:11
+    #11 0x4cb2da in handle_builtin /home/ahunt/oss-fuzz/git/git.c:704:3
+    #12 0x4ccc37 in run_argv /home/ahunt/oss-fuzz/git/git.c:771:4
+    #13 0x4cac29 in cmd_main /home/ahunt/oss-fuzz/git/git.c:902:19
+    #14 0x69c45e in main /home/ahunt/oss-fuzz/git/common-main.c:52:11
+    #15 0x7f6a459d5349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+
+Direct leak of 105 byte(s) in 1 object(s) allocated from:
     #0 0x49a859 in realloc /home/abuild/rpmbuild/BUILD/llvm-11.0.0.src/build/../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:164:3
-    #1 0x9ab076 in xrealloc /home/ahunt/oss-fuzz/git/wrapper.c:126:8
-    #2 0x939fcd in strbuf_grow /home/ahunt/oss-fuzz/git/strbuf.c:98:2
-    #3 0x93af53 in strbuf_splice /home/ahunt/oss-fuzz/git/strbuf.c:239:3
-    #4 0x83559a in strbuf_check_branch_ref /home/ahunt/oss-fuzz/git/object-name.c:1593:2
-    #5 0x6988b9 in dwim_branch /home/ahunt/oss-fuzz/git/builtin/worktree.c:454:20
-    #6 0x695f8f in add /home/ahunt/oss-fuzz/git/builtin/worktree.c:525:19
-    #7 0x694a04 in cmd_worktree /home/ahunt/oss-fuzz/git/builtin/worktree.c:1036:10
-    #8 0x4cd60d in run_builtin /home/ahunt/oss-fuzz/git/git.c:453:11
-    #9 0x4cb2da in handle_builtin /home/ahunt/oss-fuzz/git/git.c:704:3
-    #10 0x4ccc37 in run_argv /home/ahunt/oss-fuzz/git/git.c:771:4
-    #11 0x4cac29 in cmd_main /home/ahunt/oss-fuzz/git/git.c:902:19
-    #12 0x69caee in main /home/ahunt/oss-fuzz/git/common-main.c:52:11
-    #13 0x7f7b7dd10349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+    #1 0x9a71f6 in xrealloc /home/ahunt/oss-fuzz/git/wrapper.c:126:8
+    #2 0x93622d in strbuf_grow /home/ahunt/oss-fuzz/git/strbuf.c:98:2
+    #3 0x937a73 in strbuf_addch /home/ahunt/oss-fuzz/git/./strbuf.h:231:3
+    #4 0x939fcd in strbuf_add_absolute_path /home/ahunt/oss-fuzz/git/strbuf.c:911:4
+    #5 0x69d3ce in absolute_pathdup /home/ahunt/oss-fuzz/git/abspath.c:261:2
+    #6 0x51c688 in cmd_clone /home/ahunt/oss-fuzz/git/builtin/clone.c:1021:10
+    #7 0x4cd60d in run_builtin /home/ahunt/oss-fuzz/git/git.c:453:11
+    #8 0x4cb2da in handle_builtin /home/ahunt/oss-fuzz/git/git.c:704:3
+    #9 0x4ccc37 in run_argv /home/ahunt/oss-fuzz/git/git.c:771:4
+    #10 0x4cac29 in cmd_main /home/ahunt/oss-fuzz/git/git.c:902:19
+    #11 0x69c45e in main /home/ahunt/oss-fuzz/git/common-main.c:52:11
+    #12 0x7f6a459d5349 in __libc_start_main (/lib64/libc.so.6+0x24349)
 
 Signed-off-by: Andrzej Hunt <ajrhunt@google.com>
 ---
- builtin/worktree.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ builtin/clone.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 1cd5c2016e3f..b0563aef685f 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -446,16 +446,18 @@ static void print_preparing_worktree_line(int detach,
- static const char *dwim_branch(const char *path, const char **new_branch)
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 51e844a2de0a..952fe3d8fc88 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -964,10 +964,10 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
  {
- 	int n;
-+	int branch_exists;
- 	const char *s = worktree_basename(path, &n);
- 	const char *branchname = xstrndup(s, n);
- 	struct strbuf ref = STRBUF_INIT;
+ 	int is_bundle = 0, is_local;
+ 	const char *repo_name, *repo, *work_tree, *git_dir;
+-	char *path, *dir, *display_repo = NULL;
++	char *path = NULL, *dir, *display_repo = NULL;
+ 	int dest_exists, real_dest_exists = 0;
+ 	const struct ref *refs, *remote_head;
+-	const struct ref *remote_head_points_at;
++	struct ref *remote_head_points_at = NULL;
+ 	const struct ref *our_head_points_at;
+ 	struct ref *mapped_refs;
+ 	const struct ref *ref;
+@@ -1017,9 +1017,10 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	repo_name = argv[0];
  
- 	UNLEAK(branchname);
--	if (!strbuf_check_branch_ref(&ref, branchname) &&
--	    ref_exists(ref.buf)) {
--		strbuf_release(&ref);
-+
-+	branch_exists = !strbuf_check_branch_ref(&ref, branchname) &&
-+	                ref_exists(ref.buf);
-+	strbuf_release(&ref);
-+	if (branch_exists)
- 		return branchname;
--	}
+ 	path = get_repo_path(repo_name, &is_bundle);
+-	if (path)
++	if (path) {
++		FREE_AND_NULL(path);
+ 		repo = absolute_pathdup(repo_name);
+-	else if (strchr(repo_name, ':')) {
++	} else if (strchr(repo_name, ':')) {
+ 		repo = repo_name;
+ 		display_repo = transport_anonymize_url(repo);
+ 	} else
+@@ -1393,6 +1394,11 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	strbuf_release(&reflog_msg);
+ 	strbuf_release(&branch_top);
+ 	strbuf_release(&key);
++	free_refs(mapped_refs);
++	free_refs(remote_head_points_at);
++	free(dir);
++	free(path);
++	UNLEAK(repo);
+ 	junk_mode = JUNK_LEAVE_ALL;
  
- 	*new_branch = branchname;
- 	if (guess_remote) {
+ 	strvec_clear(&transport_ls_refs_options.ref_prefixes);
 -- 
 gitgitgadget
 
