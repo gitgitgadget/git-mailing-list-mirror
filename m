@@ -2,130 +2,160 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RDNS_NONE,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,RDNS_NONE,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (unknown [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 223EAC433C1
-	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 02:12:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 17AABC433C1
+	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 02:12:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D8B876194C
+	by mail.kernel.org (Postfix) with ESMTP id EAF796194F
 	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 02:12:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229883AbhCUBRf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 20 Mar 2021 21:17:35 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:57685 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229791AbhCUBQt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Mar 2021 21:16:49 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 918021217CC;
-        Sat, 20 Mar 2021 21:16:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=QrZDk8bEKGmK
-        lM0EfZ5SibADCs8=; b=TFJSIiYC1w9Mf/Z9kAC5kj4IUDfuMU9sfaC2mQTAWBPZ
-        oivyxi5tTPMvoJsRk9x2Fuz4QQqbsiv8DuLMMmdn8IbrQ46XcwH+HDbm5r6VDRFu
-        J/dJM8hgcqIXqgm2mQAAmlW28rsWm9ef48d/ZqWi7SL+ZN3NvC55pW+6x/4VdB0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=KwcaN+
-        PasvNPn4D9Cz6X7GkPtM3js7ZWuUXZAfLv4ThhFpqvBIoalWFIp8oeQlcZceBnqY
-        SrYpU0xX5yJV+YQdmrvJ/wXmAjwlEKMu0gx0MWFelUgDARIpRLTaTyn9KuL5eQhS
-        hKh1ifX0RJUDy365S7McMFA0hJubbqBdP74Ho=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8ABF11217CB;
-        Sat, 20 Mar 2021 21:16:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S229826AbhCUB2h (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 20 Mar 2021 21:28:37 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:45290 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229791AbhCUB2S (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 20 Mar 2021 21:28:18 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:7d4e:cde:7c41:71c2])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D6A151217CA;
-        Sat, 20 Mar 2021 21:16:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 47DD26048E;
+        Sun, 21 Mar 2021 01:27:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1616290067;
+        bh=zdT1lvT8IoMDCLGca4tQXz1IUXRvAZBKv9O22ttTGTA=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=F0p0S5bVCEjF/hcOwC6vHrEyPZjg4T4woUhgK+RbeQNjyOfJxn+0zTvgyFgSj6kT1
+         wylzNB6EJn7diDvUS7T0mNwNL7g1Ir4uQXpePpJ6qzin3VQpBcZdRzCBuIVJekZkMT
+         u0nJ5UFoPeP3D+2k9v1BVwjBdFBlu1WwImIL0iaFhMvrEPQi9sL1f8Nuf5L0HDYFWl
+         fcg5TYxD7PkrtIsWMyHPTa+cay1j4Af41DaSessTZDQwVkadk4/7l30GxwKktoZufL
+         s32EiclvbDvWjvld8nQQddZgk+B2irn4NatmBcbpx1xraLUlG01neTHWFeL0xENbKi
+         C1QvEq+9ynNWaoJjzYKCJThadZUdoc6ftYcM8xpwgRMROsz6m2QF0bYrpjFvoWTA/x
+         wVn6ZW2qxJh+qf0bgEga5DugipqVPfimmFtL0FVONuj9i24yMoDPvFzicJyd6PKD5+
+         1CevbMJ62jr3f9ssFvloQw4yoU8w9AKMLPNXruEgtcOUZIZfCYt
+Date:   Sun, 21 Mar 2021 01:27:42 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-        Kirill Smelkov <kirr@navytux.spb.ru>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v4 00/29] tree-walk: mostly replace "mode" with "enum
- object_type"
-References: <20210316155829.31242-1-avarab@gmail.com>
-        <cover.1616282533.git.avarab@gmail.com>
-Date:   Sat, 20 Mar 2021 18:16:45 -0700
-In-Reply-To: <cover.1616282533.git.avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Sun, 21 Mar 2021 01:00:33 +0100")
-Message-ID: <xmqqtup5cnlu.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+Cc:     Georgios Kontaxis via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Georgios Kontaxis <geko1702+commits@99rst.org>
+Subject: Re: [PATCH] gitweb: redacted e-mail addresses feature.
+Message-ID: <YFahDtIkSmpLD2oZ@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Georgios Kontaxis via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Georgios Kontaxis <geko1702+commits@99rst.org>
+References: <pull.910.git.1616283780358.gitgitgadget@gmail.com>
+ <8735wpz699.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 1B06DF04-89E3-11EB-B26F-E43E2BB96649-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="WZgUSzCUfrfbcvXF"
+Content-Disposition: inline
+In-Reply-To: <8735wpz699.fsf@evledraar.gmail.com>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> A re-roll of v3 of this series[1] and on top of (and requires) my
-> just-submitted v5 re-roll of the read_tree() refactoring series[2].
->
-> There was a regression in 1/32 of the old series. Removing the
-> canon_mode() call in diff.c didn't account for us needing to
-> canonicalize "diff --no-index" modes. There were no tests for this,
-> and it failed or not depending on the FS modes in the git.git checkout
-> being tested. This fixes the CI smoke coming from this series.
+--WZgUSzCUfrfbcvXF
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Sorry, but quite honestly, I am not quite sure what value this
-entire code churn is trying to add to the codebase.
+On 2021-03-21 at 00:42:58, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>=20
+> On Sun, Mar 21 2021, Georgios Kontaxis via GitGitGadget wrote:
+>=20
+> > From: Georgios Kontaxis <geko1702+commits@99rst.org>
+> >
+> > Gitweb extracts content from the Git log and makes it accessible
+> > over HTTP. As a result, e-mail addresses found in commits are
+> > exposed to web crawlers. This may result in unsolicited messages.
+> > This is a feature for redacting e-mail addresses from the generated
+> > HTML content.
+> >
+> > This feature does not prevent someone from downloading the
+> > unredacted commit log and extracting information from it.
+> > It aims to hinder the low-effort bulk collection of e-mail
+> > addresses by web crawlers.
+>=20
+> So web crawlers that aren't going to obey robots.txt?
+>=20
+> I'm not opposed to this feature, but a glance at gitweb's documentation
+> seems to show that we don't discuss how to set robots.txt up for it at
+> all.
+>=20
+> Perhaps having that in the docs or otherwise in the default setup would
+> get us most of the win of this feature?
 
-The function signature of read_tree_fn_t callback function gets
-changed from the mode bits (which is capable to express differences
-between regular files, executable files and symbolic links) to "enum
-object_type" (which can only say "this is a blob"), which is a
-regression, no? =20
+I'm going to guess that the two features are orthogonal.  robots.txt is
+great for communicating to well-meaning actors what you do and don't
+want crawled.  For example, one might ask a web crawler not to crawl
+individual commits because that creates excessive load on the server.
 
-A callback can no longer do things like this, for example:
+This option is about preventing email harvesting, usually for the
+purposes of sending spam.  Spam is email abuse and all reasonable people
+know it's unacceptable, so by definition the people doing this are bad
+actors and are not likely to honor the robots.txt.  As someone who runs
+his own mail server, that is certainly my experience.
 
-static int add_path_to_index(const struct object_id *oid,
-			     struct strbuf *base, const char *path,
-			     unsigned int mode, void *context)
-{
-	struct index_state *istate =3D (struct index_state *)context;
-	struct cache_entry *ce;
-	size_t len =3D base->len;
+So I am in favor of this feature.  I think it mirrors what many other
+tools do in this space and having it as an option is valuable.
 
-	if (S_ISDIR(mode))
-		return READ_TREE_RECURSIVE;
+> > diff --git a/Documentation/gitweb.conf.txt b/Documentation/gitweb.conf.=
+txt
+> > index 7963a79ba98b..10653d8670a8 100644
+> > --- a/Documentation/gitweb.conf.txt
+> > +++ b/Documentation/gitweb.conf.txt
+> > @@ -896,6 +896,18 @@ same as of the snippet above:
+> >  It is an error to specify a ref that does not pass "git check-ref-form=
+at"
+> >  scrutiny. Duplicated values are filtered.
+> > =20
+> > +email_privacy::
+> > +    Redact e-mail addresses from the generated HTML, etc. content.
+> > +    This hides e-mail addresses found in the commit log from web crawl=
+ers.
+> > +    Enabled by default.
+> > ++
+> > +It is highly recommended to keep this feature enabled unless web crawl=
+ers
+> > +are hindered in some other way. You can disable this feature as shown =
+below:
+> > ++
+> > +----------------------------------------------------------------------=
+-----
+> > +$feature{'email_privacy'}{'default'} =3D [0];
+> > +----------------------------------------------------------------------=
+-----
+>=20
+> I think there's plenty of gitweb users that are going to be relying on
+> the current behavior, so doesn't it make more sense for this to be
+> opt-in rather than opt-out?
 
-	strbuf_addstr(base, path);
+I agree this make sense as an opt-in feature.  While many people will
+want to enable it, users who are performing an upgrade won't necessarily
+want the behavior to change right away.
+--=20
+brian m. carlson (he/him or they/them)
+Houston, Texas, US
 
-	ce =3D make_cache_entry(istate, mode, oid, base->buf, 0, 0);
-	ce->ce_flags |=3D CE_SKIP_WORKTREE;
-	set_index_entry(istate, istate->cache_nr++, ce);
+--WZgUSzCUfrfbcvXF
+Content-Type: application/pgp-signature; name="signature.asc"
 
-	strbuf_setlen(base, len);
-	return 0;
-}
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.27 (GNU/Linux)
 
-where executableness or symlinkshood is lost.
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYFahDQAKCRB8DEliiIei
+gZ4IAP0XH/a44c+BhQNqitdUnHVMnlqIqm8lVOfgdZOL7u9ImgEAzKQBbeesHszd
+FZ4sAMTkRAI+VmIIEQ8evgXphRd2UQA=
+=8ZUo
+-----END PGP SIGNATURE-----
 
-This probably is the third time I caught similar "let's lose
-information passed through the call chain as nobody seems to need
-it" mistakes in the iterations of this series, and that is two times
-too many.  We should learn from our earlier mistakes---tweaking of
-the API that happens to be still OK with the current codebase can be
-either a needless churn that loses useful expressiveness from the
-API, or a useful clean-up to kill dead parameter or excess
-flexibility.
-
-And these three incidents we have seen so far are the former.
-
-Thanks.
-
-
-
-
-
+--WZgUSzCUfrfbcvXF--
