@@ -8,62 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46167C433E8
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 64785C433E5
 	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 16:59:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 275596195D
+	by mail.kernel.org (Postfix) with ESMTP id 391266195F
 	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 16:59:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230145AbhCUQ7R (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S230150AbhCUQ7R (ORCPT <rfc822;git@archiver.kernel.org>);
         Sun, 21 Mar 2021 12:59:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52676 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52672 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230097AbhCUQ6p (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 Mar 2021 12:58:45 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B826C061574
-        for <git@vger.kernel.org>; Sun, 21 Mar 2021 09:58:45 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id 12so8163381wmf.5
+        with ESMTP id S230094AbhCUQ6o (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 Mar 2021 12:58:44 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86223C061762
+        for <git@vger.kernel.org>; Sun, 21 Mar 2021 09:58:44 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id o16so14240792wrn.0
         for <git@vger.kernel.org>; Sun, 21 Mar 2021 09:58:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=w6qLCctNTv8MpxBrRJRL/C5eJlKxXD1cvuh1dptgELc=;
-        b=uDd7vnOVrM79wSEqnIPcff8JrS1lvbMBAr6OXgz0Twzs+tLohuki3af8QOz5n92nwg
-         g6BXZOKPHneK/AKj7dh1EzCvy54zAni/dX2S67wK5xIBRWMaDrCrM1SsYmilMGKDP1oi
-         kUxhi/eCcF4gxHOvmK9IHDg/W/gYnG8Zmd93R29diVHl1ZjnzJbxtIyedfUmSRaoZU/Q
-         E4ACw4SPjx2r5WdhxwPiTZBI59H5cD2V+uY6rLIthQ1TeEfliQxf4IAUrl2vRnOuCHC0
-         hZn3ioysJuMgH4katLRSGmnxlqs+84A28u7Hz8lIpVdBZQ3Eg8Otk8YjeFZ0OL80Yzo7
-         IG7Q==
+        bh=s3sylX8C/0CkY7T2dJl90yJrHQwgZE3ujpf8j+jlFYk=;
+        b=XawBAEl12BMS4rOYDYjw80kgjTmJq9aFjTlDtg8krCjBjXQhSCksZXdQTcoj/8HF9K
+         6pJ7X8AJHp5iB1QIF8fJFmOOjD2D39c8JAu0BbdSeeaZ/mbckkVxqCL0YX9T3bgGZiBk
+         jpdOKP8vwowiZKRXdIV2QBYZVH59+WbecuqNXPRMNV2IvQiMVijrKXkOxF1H5gt7fSDN
+         0veqRJFxNmLf5513AkC4rYds4W8MwVTgSAM6od3KoekVLyvhy5/TF6icQwlDWjpZ0Eq7
+         LBI/MqxnM0hiLKGWfmExZZSB4IiTVTr0OwZUnVVzBEIcu8B0OKCO+4f+772FPHPt6hdg
+         xsyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=w6qLCctNTv8MpxBrRJRL/C5eJlKxXD1cvuh1dptgELc=;
-        b=e35+KiypLE6kDrPbAz314YCAxp1KWh9aAAQne0/LsohfjAZ67OZNKLq5k4wJPjMorA
-         B9vbBJYgo2z0nkeML4v09nqaZsV8STdsr7z5ow+yhOeV/Qjl6FSTUAw2rA4ZGvjnDpED
-         feAY/T+d3g07hqWfDJbo3FSspLSA7iKPY63avQqryioCf5jRPEmsMs5jdwMjth+B+JxI
-         RIa+AVj+Y1D2sB/EeuzPmTUp3ZFNzDbeRylUPob+KG9cRNt0ck/o0dbYd6uSXbW3Ri3M
-         rVzYBgjXveKJnEAo5V2JsJvZ8FnkiUphCRsNIEREAHFt6wb6EfB+fxGlfK6XP7ju+1m7
-         Jzyw==
-X-Gm-Message-State: AOAM533mXy80DcSDlDx2Wghu4xgSqZZqfnpDd5i11ZKXna5WLS6nTh3u
-        neilVj5uBocfhtaA9lVIXHV6RKf/C74=
-X-Google-Smtp-Source: ABdhPJzYk3soMqWfeAMFbMrTSkIKFlNBG29cWzrlVQNeJk++wC7F+X82kzXkOUiONWzLJ7GuahhnHg==
-X-Received: by 2002:a05:600c:203:: with SMTP id 3mr12299995wmi.88.1616345923867;
+        bh=s3sylX8C/0CkY7T2dJl90yJrHQwgZE3ujpf8j+jlFYk=;
+        b=Ir/R6ZDWwB46opbm7TDYambYventFJpAQZdKXi/7Mucm40rNLvQSB064HjtQiCTfHz
+         wNLb/IvpAQkm27GvrXFMFaUEfIcK4+AEROmZsqM/LyPEceLECq6WrDPdFD4Y4M4G3HaM
+         hlf+T8z8KGHz4NGb3AGiB8tB11RDqX5uv6bl+4nviKYfDwt4tX7E1E+rfu0tXj24lmNe
+         xK+fdVsdFTp9H1wI3x5zLtQSGxkTLRx5gZqgzg2vqUUR/sdRgu4alCKPGGebdLJOU64s
+         EPkF2TsnqPUb6YBJSOwtLxfjVYOdebN7bq6IY73c/jYzgk55FGdpWpuVUxw8zMeaA5Jx
+         myNA==
+X-Gm-Message-State: AOAM533T3M22VuMAzAFCDbc01wd7rraVQQJa6CU51t0PmoK6pId4x5Pk
+        45rHrIFql/sDQYz9mvotaZI/1RmN40U=
+X-Google-Smtp-Source: ABdhPJwj0EyRX2fVzv6/6VUMOeaXdKRRG6vZzM70KqBr+oHdQ3BnZ8RcG4RxyObDrihRB3dX/i7HKA==
+X-Received: by 2002:a05:6000:124f:: with SMTP id j15mr14341037wrx.263.1616345923389;
         Sun, 21 Mar 2021 09:58:43 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x6sm13891891wmj.32.2021.03.21.09.58.43
+        by smtp.gmail.com with ESMTPSA id s83sm14291566wmf.26.2021.03.21.09.58.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Sun, 21 Mar 2021 09:58:43 -0700 (PDT)
-Message-Id: <50a2b9693aa37b0907452054cb2ad98f8ecdc910.1616345918.git.gitgitgadget@gmail.com>
+Message-Id: <6e46cd332023a579ab0b4c682111c085a634dafb.1616345918.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.899.v3.git.1616345918.gitgitgadget@gmail.com>
 References: <pull.899.v2.git.1615747662.gitgitgadget@gmail.com>
         <pull.899.v3.git.1616345918.gitgitgadget@gmail.com>
 From:   "Andrzej Hunt via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 21 Mar 2021 16:58:37 +0000
-Subject: [PATCH v3 9/9] transport: also free remote_refs in
- transport_disconnect()
+Date:   Sun, 21 Mar 2021 16:58:36 +0000
+Subject: [PATCH v3 8/9] parse-options: don't leak alias help messages
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,115 +78,112 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Andrzej Hunt <ajrhunt@google.com>
 
-transport_get_remote_refs() can populate the transport struct's
-remote_refs. transport_disconnect() is already responsible for most of
-transport's cleanup - therefore we also take care of freeing remote_refs
-there.
+preprocess_options() allocates new strings for help messages for
+OPTION_ALIAS. Therefore we also need to clean those help messages up
+when freeing the returned options.
 
-There are 2 locations where transport_disconnect() is called before
-we're done using the returned remote_refs. This patch changes those
-callsites to only call transport_disconnect() after the returned refs
-are no longer being used - which is necessary to safely be able to
-free remote_refs during transport_disconnect().
+First introduced in:
+  7c280589cf (parse-options: teach "git cmd -h" to show alias as alias, 2020-03-16)
 
-This commit fixes the following leak which was found while running
-t0000, but is expected to also fix the same pattern of leak in all
-locations that use transport_get_remote_refs():
+The preprocessed options themselves no longer contain any indication
+that a given option is/was an alias - therefore we add a new flag to
+indicate former aliases. (An alternative approach would be to look back
+at the original options to determine which options are aliases - but
+that seems like a fragile approach. Or we could even look at the
+alias_groups list - which might be less fragile, but would be slower
+as it requires nested looping.)
 
-Direct leak of 165 byte(s) in 1 object(s) allocated from:
-    #0 0x49a6b2 in calloc /home/abuild/rpmbuild/BUILD/llvm-11.0.0.src/build/../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:154:3
-    #1 0x9a72f2 in xcalloc /home/ahunt/oss-fuzz/git/wrapper.c:140:8
-    #2 0x8ce203 in alloc_ref_with_prefix /home/ahunt/oss-fuzz/git/remote.c:867:20
-    #3 0x8ce1a2 in alloc_ref /home/ahunt/oss-fuzz/git/remote.c:875:9
-    #4 0x72f63e in process_ref_v2 /home/ahunt/oss-fuzz/git/connect.c:426:8
-    #5 0x72f21a in get_remote_refs /home/ahunt/oss-fuzz/git/connect.c:525:8
-    #6 0x979ab7 in handshake /home/ahunt/oss-fuzz/git/transport.c:305:4
-    #7 0x97872d in get_refs_via_connect /home/ahunt/oss-fuzz/git/transport.c:339:9
-    #8 0x9774b5 in transport_get_remote_refs /home/ahunt/oss-fuzz/git/transport.c:1388:4
-    #9 0x51cf80 in cmd_clone /home/ahunt/oss-fuzz/git/builtin/clone.c:1271:9
-    #10 0x4cd60d in run_builtin /home/ahunt/oss-fuzz/git/git.c:453:11
-    #11 0x4cb2da in handle_builtin /home/ahunt/oss-fuzz/git/git.c:704:3
-    #12 0x4ccc37 in run_argv /home/ahunt/oss-fuzz/git/git.c:771:4
-    #13 0x4cac29 in cmd_main /home/ahunt/oss-fuzz/git/git.c:902:19
-    #14 0x69c45e in main /home/ahunt/oss-fuzz/git/common-main.c:52:11
-    #15 0x7f6a459d5349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+As far as I can tell, parse_options() is only ever used once per
+command, and the help messages are small - hence this leak has very
+little impact.
+
+This leak was found while running t0001. LSAN output can be found below:
+
+Direct leak of 65 byte(s) in 1 object(s) allocated from:
+    #0 0x49a859 in realloc /home/abuild/rpmbuild/BUILD/llvm-11.0.0.src/build/../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:164:3
+    #1 0x9aae36 in xrealloc /home/ahunt/oss-fuzz/git/wrapper.c:126:8
+    #2 0x939d8d in strbuf_grow /home/ahunt/oss-fuzz/git/strbuf.c:98:2
+    #3 0x93b936 in strbuf_vaddf /home/ahunt/oss-fuzz/git/strbuf.c:392:3
+    #4 0x93b7ff in strbuf_addf /home/ahunt/oss-fuzz/git/strbuf.c:333:2
+    #5 0x86747e in preprocess_options /home/ahunt/oss-fuzz/git/parse-options.c:666:3
+    #6 0x866ed2 in parse_options /home/ahunt/oss-fuzz/git/parse-options.c:847:17
+    #7 0x51c4a7 in cmd_clone /home/ahunt/oss-fuzz/git/builtin/clone.c:989:9
+    #8 0x4cd60d in run_builtin /home/ahunt/oss-fuzz/git/git.c:453:11
+    #9 0x4cb2da in handle_builtin /home/ahunt/oss-fuzz/git/git.c:704:3
+    #10 0x4ccc37 in run_argv /home/ahunt/oss-fuzz/git/git.c:771:4
+    #11 0x4cac29 in cmd_main /home/ahunt/oss-fuzz/git/git.c:902:19
+    #12 0x69c9fe in main /home/ahunt/oss-fuzz/git/common-main.c:52:11
+    #13 0x7fdac42d4349 in __libc_start_main (/lib64/libc.so.6+0x24349)
 
 Signed-off-by: Andrzej Hunt <ajrhunt@google.com>
 ---
- builtin/ls-remote.c | 4 ++--
- builtin/remote.c    | 8 ++++----
- transport.c         | 2 ++
- 3 files changed, 8 insertions(+), 6 deletions(-)
+ parse-options.c | 19 ++++++++++++++++++-
+ parse-options.h |  1 +
+ 2 files changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
-index abfa9847374f..1794548c7117 100644
---- a/builtin/ls-remote.c
-+++ b/builtin/ls-remote.c
-@@ -124,8 +124,6 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- 		int hash_algo = hash_algo_by_ptr(transport_get_hash_algo(transport));
- 		repo_set_hash_algo(the_repository, hash_algo);
- 	}
--	if (transport_disconnect(transport))
--		return 1;
+diff --git a/parse-options.c b/parse-options.c
+index fbea16eaf5c2..e6f56768ca5d 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -625,6 +625,8 @@ static int show_gitcomp(const struct option *opts, int show_all)
+  *
+  * Right now this is only used to preprocess and substitute
+  * OPTION_ALIAS.
++ *
++ * The returned options should be freed using free_preprocessed_options.
+  */
+ static struct option *preprocess_options(struct parse_opt_ctx_t *ctx,
+ 					 const struct option *options)
+@@ -678,6 +680,7 @@ static struct option *preprocess_options(struct parse_opt_ctx_t *ctx,
+ 			newopt[i].short_name = short_name;
+ 			newopt[i].long_name = long_name;
+ 			newopt[i].help = strbuf_detach(&help, NULL);
++			newopt[i].flags |= PARSE_OPT_FROM_ALIAS;
+ 			break;
+ 		}
  
- 	if (!dest && !quiet)
- 		fprintf(stderr, "From %s\n", *remote->url);
-@@ -151,5 +149,7 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	ref_array_clear(&ref_array);
-+	if (transport_disconnect(transport))
-+		return 1;
- 	return status;
+@@ -693,6 +696,20 @@ static struct option *preprocess_options(struct parse_opt_ctx_t *ctx,
+ 	return newopt;
  }
-diff --git a/builtin/remote.c b/builtin/remote.c
-index d11a5589e49d..e31d9c99470e 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -938,9 +938,6 @@ static int get_remote_ref_states(const char *name,
- 				 struct ref_states *states,
- 				 int query)
- {
--	struct transport *transport;
--	const struct ref *remote_refs;
--
- 	states->remote = remote_get(name);
- 	if (!states->remote)
- 		return error(_("No such remote: '%s'"), name);
-@@ -948,10 +945,12 @@ static int get_remote_ref_states(const char *name,
- 	read_branches();
  
- 	if (query) {
-+		struct transport *transport;
-+		const struct ref *remote_refs;
++static void free_preprocessed_options(struct option *options)
++{
++	int i;
 +
- 		transport = transport_get(states->remote, states->remote->url_nr > 0 ?
- 			states->remote->url[0] : NULL);
- 		remote_refs = transport_get_remote_refs(transport, NULL);
--		transport_disconnect(transport);
++	if (!options)
++		return;
++
++	for (i = 0; options[i].type != OPTION_END; i++) {
++		if (options[i].flags & PARSE_OPT_FROM_ALIAS)
++			free((void *)options[i].help);
++	}
++	free(options);
++}
++
+ static int usage_with_options_internal(struct parse_opt_ctx_t *,
+ 				       const char * const *,
+ 				       const struct option *, int, int);
+@@ -870,7 +887,7 @@ int parse_options(int argc, const char **argv, const char *prefix,
+ 	}
  
- 		states->queried = 1;
- 		if (query & GET_REF_STATES)
-@@ -960,6 +959,7 @@ static int get_remote_ref_states(const char *name,
- 			get_head_names(remote_refs, states);
- 		if (query & GET_PUSH_REF_STATES)
- 			get_push_ref_states(remote_refs, states);
-+		transport_disconnect(transport);
- 	} else {
- 		for_each_ref(append_ref_to_tracked_list, states);
- 		string_list_sort(&states->tracked);
-diff --git a/transport.c b/transport.c
-index 1c4ab676d1b1..eb4b2d4e475f 100644
---- a/transport.c
-+++ b/transport.c
-@@ -1452,6 +1452,8 @@ int transport_disconnect(struct transport *transport)
- 	int ret = 0;
- 	if (transport->vtable->disconnect)
- 		ret = transport->vtable->disconnect(transport);
-+	if (transport->got_remote_refs)
-+		free_refs((void *)transport->remote_refs);
- 	free(transport);
- 	return ret;
+ 	precompose_argv_prefix(argc, argv, NULL);
+-	free(real_options);
++	free_preprocessed_options(real_options);
+ 	free(ctx.alias_groups);
+ 	return parse_options_end(&ctx);
  }
+diff --git a/parse-options.h b/parse-options.h
+index f2ddef18f7b0..a845a9d95274 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -44,6 +44,7 @@ enum parse_opt_option_flags {
+ 	PARSE_OPT_LASTARG_DEFAULT = 1 << 4,
+ 	PARSE_OPT_NODASH = 1 << 5,
+ 	PARSE_OPT_LITERAL_ARGHELP = 1 << 6,
++	PARSE_OPT_FROM_ALIAS = 1 << 7,
+ 	PARSE_OPT_SHELL_EVAL = 1 << 8,
+ 	PARSE_OPT_NOCOMPLETE = 1 << 9,
+ 	PARSE_OPT_COMP_ARG = 1 << 10,
 -- 
 gitgitgadget
+
