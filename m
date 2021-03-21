@@ -2,106 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB607C433E0
-	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 12:41:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E1010C433E0
+	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 12:44:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 88D7561952
-	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 12:41:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B4D7961959
+	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 12:44:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229874AbhCUMk1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 21 Mar 2021 08:40:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54020 "EHLO
+        id S229879AbhCUMo1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 21 Mar 2021 08:44:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229815AbhCUMj4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 Mar 2021 08:39:56 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1546EC061762
-        for <git@vger.kernel.org>; Sun, 21 Mar 2021 05:39:56 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id y124-20020a1c32820000b029010c93864955so9815894wmy.5
-        for <git@vger.kernel.org>; Sun, 21 Mar 2021 05:39:56 -0700 (PDT)
+        with ESMTP id S229870AbhCUMnz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 Mar 2021 08:43:55 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D92ACC061574
+        for <git@vger.kernel.org>; Sun, 21 Mar 2021 05:43:53 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id x21so16077614eds.4
+        for <git@vger.kernel.org>; Sun, 21 Mar 2021 05:43:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=qKqThk+JiOBkcx8UUac/HdTBNQet8ZCnWPCSJJszbpg=;
-        b=BSRfn8dv8urMS3dWpq+QozM07Tf9QM6PWGFI6u4ah2b7SF1ZM8tH2Mb0Skv04QdwXv
-         WIeyMxNNcwe/5p8dJqHWaiBENSRyTclvqfK1eKiFu89Qi2PGkmyWEwmpmniiHxRlApXu
-         7Q8hShOJHwFetBSByBB3S6i1PzZy6617UIw9M3lyGZmRMvTnPGU6BxRw4QxuQ1PvzcRz
-         IZDi5h2YOLYUOTTe1OSJyhwZkAClFg5MCLhYHF5i+fvyWcvL+HjMMybc+p1CA2ejYdi0
-         Y+TR8I+PiYul5k9F3+3NihelL6K6DASQh2e6YivlUeAN/z5EaCrXW5IoJUdR7JfQaRNK
-         3p/g==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=5s7f2XFzM8RFuLLJF/YcG5Jn7EQCHhHTzFdo1ku/V2Y=;
+        b=Ym87oQBFri3VDO20C/RP7FNYvYJMBhab8sbIV4v8Wkt1mBT8essl7z7mrZRkJmpXxo
+         MA6LoAZhgqN8QXB2Wc20gBemFGCrd376QT9D6wfL9ObhmBonZsXxAFzxXzihoqdn/VKw
+         r+Ke/NcLo0gYcENiFi5MKka0RKt3F7+GEGH3MOk5BWAjRVhQ+wnSrjopP+qptGahzaUw
+         4b2Fk9f2guRWRHXKkhWWvreSms5Ksp4wKDttbIOHByfQxOTUCI2Xf0I4bkKXnDloG/mi
+         9oEBXPz9bQSNDR+XLN9yjEpYfVpceLIQcIR3haaYui2yd8mBPDtoajtxeHfJk8VELvEb
+         2hlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=qKqThk+JiOBkcx8UUac/HdTBNQet8ZCnWPCSJJszbpg=;
-        b=lzZ9oSeNQG3jV0n+1brN1JqH6lExfU49YzMHGzxvZOjzaVMIpMJdihdaoCTVJt+bra
-         t4Lq0JIwuW9eP58Z8oYz2KFK5mjLdmIc9mRb+yOyyDUKCKRWSEGfwGnON17j+BrADjbA
-         k2iv5iVh1llbtORAMXRNtfCArK/Uv/JKvU0+NozNDw05d3XcF6ORSUgxcJbYIYzQcaVb
-         jnSnXomhrutB/lYZzEPeeFvMubs9oC6MN6M7tAcXj7lPu5hU4+xiGZ9ErBK9Ag2zBeK2
-         34d/0aqajYbGiJK7HW91MYGE5AExcKHMFtZs1J5e4JGAogWU5/cUPi/SsivnGJwumiJr
-         KK6w==
-X-Gm-Message-State: AOAM530xucWWO5hTcNm0b7xXKFvqEmsY2ULBLBZsE/KqjiYsEDhjwNFH
-        EGIvbnF51dqEtsPTgXBLwUGRaowvwSsIFg==
-X-Google-Smtp-Source: ABdhPJysgx3Nc2CJAF2U80Bwm2hd6DP6SEq777U0f/j2fxgJeMPR834nAN4M4IBLE1O94ZawlxO+7w==
-X-Received: by 2002:a05:600c:2f08:: with SMTP id r8mr11753910wmn.95.1616330394618;
-        Sun, 21 Mar 2021 05:39:54 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id m17sm16633279wrx.92.2021.03.21.05.39.53
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=5s7f2XFzM8RFuLLJF/YcG5Jn7EQCHhHTzFdo1ku/V2Y=;
+        b=Gg1rkpYnVq4PjiR0XvR6xJ+4GOdcEUI27f15CAkJ8Jgblr8p430kWvjk/0rhtsgN17
+         cBayARxcxloGzIxIfETkAQNLwjOP/E4XQxufFiR12vA7IuxQEQVsnCFYm1W/l8XZcPUH
+         W3sQdAZyF+SD5v8WHIPF6qKPtBqwk2rFcvVGNFooEawfdjSqY+Z5JWMKJnkHH6qUHXW5
+         JXgcowxOlEp7ifUiKC6xCAMPLR54YxaQPkb++dh/pU44YXfK0NXi0EvOI8oKKr/qBOsW
+         XLt14J6lgKpl+Zoe+TX4APeSZQlzQkwVZAIejGDuufxj41qLVdwhYNgtU+S3UkGaTtXc
+         GFLg==
+X-Gm-Message-State: AOAM530HSUZhtMYGu2ZCvZ1xptf5RpNtEl3FARGL99IwQkbcwKEB8X2s
+        +XAnhKivi6xFAfCMOcNMTRY=
+X-Google-Smtp-Source: ABdhPJxL2uSnWpMxAY5dVAIbkdgKjitcSFGX84f3yHm2M8XBVlNEs4bMyraSvXX3r8Mknu4WJv3TpQ==
+X-Received: by 2002:a05:6402:2695:: with SMTP id w21mr20477866edd.99.1616330632649;
+        Sun, 21 Mar 2021 05:43:52 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id de17sm6975667ejc.16.2021.03.21.05.43.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 21 Mar 2021 05:39:54 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 1/2] diff --no-index tests: add test for --exit-code
-Date:   Sun, 21 Mar 2021 13:39:22 +0100
-Message-Id: <a6e4ed6c3f1d37170d7e99a2fab9c90662cceb19.1616330120.git.avarab@gmail.com>
-X-Mailer: git-send-email 2.31.0.282.gcc1ec606501
-In-Reply-To: <cover.1616330120.git.avarab@gmail.com>
-References: <87wnu0r8tq.fsf@evledraar.gmail.com> <cover.1616330120.git.avarab@gmail.com>
+        Sun, 21 Mar 2021 05:43:52 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Kleber =?utf-8?Q?Tarc=C3=ADsio?= via GitGitGadget 
+        <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Kleber =?utf-8?Q?Tarc=C3=ADsio?= <klebertarcisio@yahoo.com.br>
+Subject: Re: [PATCH] fix null pointer dereference
+References: <pull.983.git.git.1616323936790.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
+In-reply-to: <pull.983.git.git.1616323936790.gitgitgadget@gmail.com>
+Date:   Sun, 21 Mar 2021 13:43:51 +0100
+Message-ID: <87tup4r81k.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a test for --exit-code working with --no-index. There's no reason
-to suppose it wouldn't, but we weren't testing for it anywhere in our
-tests. Let's fix that blind spot.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- t/t4053-diff-no-index.sh | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+On Sun, Mar 21 2021, Kleber Tarc=C3=ADsio via GitGitGadget wrote:
 
-diff --git a/t/t4053-diff-no-index.sh b/t/t4053-diff-no-index.sh
-index 0168946b639..9b7a8ebfd3f 100755
---- a/t/t4053-diff-no-index.sh
-+++ b/t/t4053-diff-no-index.sh
-@@ -16,7 +16,12 @@ test_expect_success 'setup' '
- 	echo 1 >non/git/b
- '
- 
--test_expect_success 'git diff --no-index directories' '
-+test_expect_success 'git diff --no-index --exit-code' '
-+	git diff --no-index --exit-code a/1 non/git/a &&
-+	test_expect_code 1 git diff --no-index --exit-code a/1 a/2
-+'
-+
-+Test_expect_success 'git diff --no-index directories' '
- 	test_expect_code 1 git diff --no-index a b >cnt &&
- 	test_line_count = 14 cnt
- '
--- 
-2.31.0.282.gcc1ec606501
+> From: =3D?UTF-8?q?Kleber=3D20Tarc=3DC3=3DADsio?=3D <klebertarcisio@yahoo.=
+com.br>
+>
+> The malloc function can return null when the memory allocation fails. Thi=
+s commit adds a condition to handle these cases properly. https://cwe.mitre=
+.org/data/definitions/476.html
+>
+> Signed-off-by: Kleber Tarc=C3=ADsio <klebertarcisio@yahoo.com.br>
+> ---
+>     Avoiding null pointer dereference
+>=20=20=20=20=20
+>     This pull request aims to fix null pointer dereference.
+>=20=20=20=20=20
+>     Null pointer dereference
+>     [https://cwe.mitre.org/data/definitions/476.html]
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-983=
+%2Fklebertarcisio%2Fpatch-1-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-983/kl=
+ebertarcisio/patch-1-v1
+> Pull-Request: https://github.com/git/git/pull/983
+>
+>  builtin/submodule--helper.c | 2 ++
+>  1 file changed, 2 insertions(+)
 
+Thanks, from my brief grepping of the remaining code in git.git there is
+no other malloc() that doesn't have its return value checked
+appropriately.
+
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index 9d505a6329c8..92349d715a78 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -1215,6 +1215,8 @@ static void submodule_summary_callback(struct diff_=
+queue_struct *q,
+>  		if (!S_ISGITLINK(p->one->mode) && !S_ISGITLINK(p->two->mode))
+>  			continue;
+>  		temp =3D (struct module_cb*)malloc(sizeof(struct module_cb));
+> +		if (!temp)=20
+> +			die(_("out of memory"));
+>  		temp->mod_src =3D p->one->mode;
+>  		temp->mod_dst =3D p->two->mode;
+>  		temp->oid_src =3D p->one->oid;
+
+When we just want to die if we can't allocate memory we should use the
+xmalloc() wrapper instead.
