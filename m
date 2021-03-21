@@ -2,188 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 64785C433E5
-	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 16:59:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D0A0C433DB
+	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 17:14:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 391266195F
-	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 16:59:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 164EB6192C
+	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 17:14:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230150AbhCUQ7R (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 21 Mar 2021 12:59:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52672 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230094AbhCUQ6o (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 Mar 2021 12:58:44 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86223C061762
-        for <git@vger.kernel.org>; Sun, 21 Mar 2021 09:58:44 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id o16so14240792wrn.0
-        for <git@vger.kernel.org>; Sun, 21 Mar 2021 09:58:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=s3sylX8C/0CkY7T2dJl90yJrHQwgZE3ujpf8j+jlFYk=;
-        b=XawBAEl12BMS4rOYDYjw80kgjTmJq9aFjTlDtg8krCjBjXQhSCksZXdQTcoj/8HF9K
-         6pJ7X8AJHp5iB1QIF8fJFmOOjD2D39c8JAu0BbdSeeaZ/mbckkVxqCL0YX9T3bgGZiBk
-         jpdOKP8vwowiZKRXdIV2QBYZVH59+WbecuqNXPRMNV2IvQiMVijrKXkOxF1H5gt7fSDN
-         0veqRJFxNmLf5513AkC4rYds4W8MwVTgSAM6od3KoekVLyvhy5/TF6icQwlDWjpZ0Eq7
-         LBI/MqxnM0hiLKGWfmExZZSB4IiTVTr0OwZUnVVzBEIcu8B0OKCO+4f+772FPHPt6hdg
-         xsyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=s3sylX8C/0CkY7T2dJl90yJrHQwgZE3ujpf8j+jlFYk=;
-        b=Ir/R6ZDWwB46opbm7TDYambYventFJpAQZdKXi/7Mucm40rNLvQSB064HjtQiCTfHz
-         wNLb/IvpAQkm27GvrXFMFaUEfIcK4+AEROmZsqM/LyPEceLECq6WrDPdFD4Y4M4G3HaM
-         hlf+T8z8KGHz4NGb3AGiB8tB11RDqX5uv6bl+4nviKYfDwt4tX7E1E+rfu0tXj24lmNe
-         xK+fdVsdFTp9H1wI3x5zLtQSGxkTLRx5gZqgzg2vqUUR/sdRgu4alCKPGGebdLJOU64s
-         EPkF2TsnqPUb6YBJSOwtLxfjVYOdebN7bq6IY73c/jYzgk55FGdpWpuVUxw8zMeaA5Jx
-         myNA==
-X-Gm-Message-State: AOAM533T3M22VuMAzAFCDbc01wd7rraVQQJa6CU51t0PmoK6pId4x5Pk
-        45rHrIFql/sDQYz9mvotaZI/1RmN40U=
-X-Google-Smtp-Source: ABdhPJwj0EyRX2fVzv6/6VUMOeaXdKRRG6vZzM70KqBr+oHdQ3BnZ8RcG4RxyObDrihRB3dX/i7HKA==
-X-Received: by 2002:a05:6000:124f:: with SMTP id j15mr14341037wrx.263.1616345923389;
-        Sun, 21 Mar 2021 09:58:43 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s83sm14291566wmf.26.2021.03.21.09.58.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 21 Mar 2021 09:58:43 -0700 (PDT)
-Message-Id: <6e46cd332023a579ab0b4c682111c085a634dafb.1616345918.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.899.v3.git.1616345918.gitgitgadget@gmail.com>
-References: <pull.899.v2.git.1615747662.gitgitgadget@gmail.com>
-        <pull.899.v3.git.1616345918.gitgitgadget@gmail.com>
-From:   "Andrzej Hunt via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 21 Mar 2021 16:58:36 +0000
-Subject: [PATCH v3 8/9] parse-options: don't leak alias help messages
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S230204AbhCURNl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 21 Mar 2021 13:13:41 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:58075 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230087AbhCURNY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 Mar 2021 13:13:24 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 769CE11A692;
+        Sun, 21 Mar 2021 13:13:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=D/iPNgxCYw+D
+        dORROALOeCvUlME=; b=YPVKPvFruXpyhwcPy+P78d2MVjfa5OJqng2hHTLFsQzw
+        DXlWN2H0Hj7wT446As07II1cgzbvGZYY5mx1SUjk8X8GNC5b3DyFAZMbaf5XKB46
+        n2ZmUNyTsVjUCf+93zJW65iN1AH9vUVfmPa4pGCwH5d2iasTtJlfPYjI/9HBbgI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=a23NVx
+        STvfMwTOX4HoTHTmFVkDeMQe92U/dCtJGsMIuWAeQizF2o0GXCfwb0m0VD9Bu0UM
+        c4Q6y4p9lpzLJmJDFYOtpB/Og/MiLVQ2s1QVETMAFOJzXhAmFCJ7N6hxBYiC0T4T
+        e4VbyE4mPSorVQ7XMJWxLMDIymC52Yo5+4OX0=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5D9B811A690;
+        Sun, 21 Mar 2021 13:13:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A111311A67A;
+        Sun, 21 Mar 2021 13:13:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+        Kirill Smelkov <kirr@navytux.spb.ru>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [PATCH v4 00/29] tree-walk: mostly replace "mode" with "enum
+ object_type"
+References: <20210316155829.31242-1-avarab@gmail.com>
+        <cover.1616282533.git.avarab@gmail.com> <xmqqtup5cnlu.fsf@gitster.g>
+        <87wnu0r8tq.fsf@evledraar.gmail.com>
+Date:   Sun, 21 Mar 2021 10:13:19 -0700
+In-Reply-To: <87wnu0r8tq.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Sun, 21 Mar 2021 13:26:57 +0100")
+Message-ID: <xmqqlfagbfbk.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Martin =?UTF-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Andrzej Hunt <andrzej@ahunt.org>,
-        Andrzej Hunt <ajrhunt@google.com>
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: BCFB6BB0-8A68-11EB-89FF-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Andrzej Hunt <ajrhunt@google.com>
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-preprocess_options() allocates new strings for help messages for
-OPTION_ALIAS. Therefore we also need to clean those help messages up
-when freeing the returned options.
+> Yes, that would be a serious regression. I agree that all these
+> functions/callbacks etc. should have a way to get at the mode bits.
+>
+> I'm adding "enum object_type", not removing the "mode" parameter in
+> read_tree_fn_t. This function (which is in "seen" as 03316f20347
+> (sparse-index: implement ensure_full_index(), 2021-03-16)) works just
+> fine in combination with this series.
+>
+> The other APIs modified here all retain the ability to give you the mod=
+e
+> bit, they (the tree-walk.h changes) just optionally give you the option
+> of getting just the type (or just the path), and as it turns out most
+> users of the API can be converted over to that.
 
-First introduced in:
-  7c280589cf (parse-options: teach "git cmd -h" to show alias as alias, 2020-03-16)
+I have a vague feeling that such an approach may be still repeating
+the same mistake.
 
-The preprocessed options themselves no longer contain any indication
-that a given option is/was an alias - therefore we add a new flag to
-indicate former aliases. (An alternative approach would be to look back
-at the original options to determine which options are aliases - but
-that seems like a fragile approach. Or we could even look at the
-alias_groups list - which might be less fragile, but would be slower
-as it requires nested looping.)
+If the original premise is that "unsigned mode" bit can be abused to
+feed impossible values like 0100653 to the system and the code
+should catch it, ...
 
-As far as I can tell, parse_options() is only ever used once per
-command, and the help messages are small - hence this leak has very
-little impact.
+> The current codebase will allow you to stick arbitrary mode bits in
+> trees, ...
 
-This leak was found while running t0001. LSAN output can be found below:
+... then I would understand it if the approach is to introduce a
+distinct type that enumerates all possible mode bit values (and
+nothing else), and have the compiler validate the callchain, so that
+nobody can pass bogus mode bits (and when reading mode bits fields
+in existing objects, the one that converts from the series of octal
+bytes to that distsinct type would notice and complain).  And we've
+already seen from this particular breakages that the "distinct type"
+appropriate to be used for that purpose is not "enum object_type".
+It is not expressive enough to enumerate all possible mode bit
+values (besides, an enum is interchangeable with an int, so there
+isn't much protection we would be getting from the compiler---we
+could use a small struct of a new type, and have one static const
+instance for each possible mode bit combination, I guess, but the
+point here is that insisting on using "enum object_type" seems to be
+the source of the problem).
 
-Direct leak of 65 byte(s) in 1 object(s) allocated from:
-    #0 0x49a859 in realloc /home/abuild/rpmbuild/BUILD/llvm-11.0.0.src/build/../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:164:3
-    #1 0x9aae36 in xrealloc /home/ahunt/oss-fuzz/git/wrapper.c:126:8
-    #2 0x939d8d in strbuf_grow /home/ahunt/oss-fuzz/git/strbuf.c:98:2
-    #3 0x93b936 in strbuf_vaddf /home/ahunt/oss-fuzz/git/strbuf.c:392:3
-    #4 0x93b7ff in strbuf_addf /home/ahunt/oss-fuzz/git/strbuf.c:333:2
-    #5 0x86747e in preprocess_options /home/ahunt/oss-fuzz/git/parse-options.c:666:3
-    #6 0x866ed2 in parse_options /home/ahunt/oss-fuzz/git/parse-options.c:847:17
-    #7 0x51c4a7 in cmd_clone /home/ahunt/oss-fuzz/git/builtin/clone.c:989:9
-    #8 0x4cd60d in run_builtin /home/ahunt/oss-fuzz/git/git.c:453:11
-    #9 0x4cb2da in handle_builtin /home/ahunt/oss-fuzz/git/git.c:704:3
-    #10 0x4ccc37 in run_argv /home/ahunt/oss-fuzz/git/git.c:771:4
-    #11 0x4cac29 in cmd_main /home/ahunt/oss-fuzz/git/git.c:902:19
-    #12 0x69c9fe in main /home/ahunt/oss-fuzz/git/common-main.c:52:11
-    #13 0x7fdac42d4349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+I am afraid that it is even worse to pass both object type and
+"unsigned mode" together.  It would still leave room for a bug to
+pass nonsense mode bits, which we said we wanted to catch in our
+original mission statement.  In addition, we now have a new room for
+a bug, which is to pass an inconsistent pair of object type and mode
+to the callchain.  Somebody would need to say "yuck, we got a mode
+100644 but the type says TREE" now, in addition to validating if the
+mode is sensible, which we should be doing somehow, no?
 
-Signed-off-by: Andrzej Hunt <ajrhunt@google.com>
----
- parse-options.c | 19 ++++++++++++++++++-
- parse-options.h |  1 +
- 2 files changed, 19 insertions(+), 1 deletion(-)
+So, I am not sure how these changes are making anything better.
 
-diff --git a/parse-options.c b/parse-options.c
-index fbea16eaf5c2..e6f56768ca5d 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -625,6 +625,8 @@ static int show_gitcomp(const struct option *opts, int show_all)
-  *
-  * Right now this is only used to preprocess and substitute
-  * OPTION_ALIAS.
-+ *
-+ * The returned options should be freed using free_preprocessed_options.
-  */
- static struct option *preprocess_options(struct parse_opt_ctx_t *ctx,
- 					 const struct option *options)
-@@ -678,6 +680,7 @@ static struct option *preprocess_options(struct parse_opt_ctx_t *ctx,
- 			newopt[i].short_name = short_name;
- 			newopt[i].long_name = long_name;
- 			newopt[i].help = strbuf_detach(&help, NULL);
-+			newopt[i].flags |= PARSE_OPT_FROM_ALIAS;
- 			break;
- 		}
- 
-@@ -693,6 +696,20 @@ static struct option *preprocess_options(struct parse_opt_ctx_t *ctx,
- 	return newopt;
- }
- 
-+static void free_preprocessed_options(struct option *options)
-+{
-+	int i;
-+
-+	if (!options)
-+		return;
-+
-+	for (i = 0; options[i].type != OPTION_END; i++) {
-+		if (options[i].flags & PARSE_OPT_FROM_ALIAS)
-+			free((void *)options[i].help);
-+	}
-+	free(options);
-+}
-+
- static int usage_with_options_internal(struct parse_opt_ctx_t *,
- 				       const char * const *,
- 				       const struct option *, int, int);
-@@ -870,7 +887,7 @@ int parse_options(int argc, const char **argv, const char *prefix,
- 	}
- 
- 	precompose_argv_prefix(argc, argv, NULL);
--	free(real_options);
-+	free_preprocessed_options(real_options);
- 	free(ctx.alias_groups);
- 	return parse_options_end(&ctx);
- }
-diff --git a/parse-options.h b/parse-options.h
-index f2ddef18f7b0..a845a9d95274 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -44,6 +44,7 @@ enum parse_opt_option_flags {
- 	PARSE_OPT_LASTARG_DEFAULT = 1 << 4,
- 	PARSE_OPT_NODASH = 1 << 5,
- 	PARSE_OPT_LITERAL_ARGHELP = 1 << 6,
-+	PARSE_OPT_FROM_ALIAS = 1 << 7,
- 	PARSE_OPT_SHELL_EVAL = 1 << 8,
- 	PARSE_OPT_NOCOMPLETE = 1 << 9,
- 	PARSE_OPT_COMP_ARG = 1 << 10,
--- 
-gitgitgadget
+> ... I had a
+> summary of this in v1, but should probably have provided a recap[1].
+
+Oh, absolutely.  When we iterate, we should be welcoming to those
+who missed earlier iterations.
 
