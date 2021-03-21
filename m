@@ -8,62 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6433AC433C1
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B8374C433DB
 	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 16:59:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2884761946
+	by mail.kernel.org (Postfix) with ESMTP id 6C87961947
 	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 16:59:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230104AbhCUQ7L (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 21 Mar 2021 12:59:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52646 "EHLO
+        id S230125AbhCUQ7N (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 21 Mar 2021 12:59:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52648 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230045AbhCUQ6l (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230046AbhCUQ6l (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 21 Mar 2021 12:58:41 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7A57C061762
-        for <git@vger.kernel.org>; Sun, 21 Mar 2021 09:58:40 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id t5-20020a1c77050000b029010e62cea9deso7960183wmi.0
-        for <git@vger.kernel.org>; Sun, 21 Mar 2021 09:58:40 -0700 (PDT)
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DC9DC061574
+        for <git@vger.kernel.org>; Sun, 21 Mar 2021 09:58:41 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id k128so5767648wmk.4
+        for <git@vger.kernel.org>; Sun, 21 Mar 2021 09:58:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=VRVig6r2OQ7VUMmLKHIM+DZFPJ7DwZl4ljHRZhrvI1M=;
-        b=KLcVGJFIhop4Tjs1KPrwc91AgN3gmcGixTw9Jj6ABtw2ua1vhr1DGQ8J48eH+yvgBY
-         Fi1GpCtC6bs+9HJ6nnSG0S9SYOG4AoOGbur2bR3B1DJlbxGilSs6cadWzjNasmRBpL63
-         MSzg5TaHTXsVamjH+8tx5/Qvz/vU9yy5MWNjvYBZ7kSE0YnpXrninm45hH7yzzL0ObKs
-         kpClLNisjnUfAwiHkjFAD0uct3MHkbg3hALZVBKRENG91EewY31AYX8ujBYxfZCcGi+s
-         YRdabhbd+0nOMIEAQsvTGXf0kYm6lxkT882BccK0+pSBaqlh7EyIarnIq+/CxI4ZS2Gp
-         9p5w==
+        bh=F0opQpe7BV1fXWQ5HltcF7A+GqCj/k0iJf9Vz5xKxgw=;
+        b=jgwol8JpYuA+fMGzEzBYEQWwMnROU8a4zGf9PMnH04YI0AFFRptLjgNyFgWyOaIR++
+         5kuSDiPgYcd+Qa1q0h+CxnZigTRwx7KPRjJU1XdbSYwsZeW434GBByQ8/hmOOE0pkakZ
+         5tt+GBvL/ar3+paRvnzVMBxLjZXryG16BIjwuhU+9gcczgpCK2dvRDvPkgjBYGh4BoRQ
+         RYD+fx0qg+3sBSGi6uR4LBeuO2ryALmTht3Po5Xf70zWVS/z1wFelAJBoVI07qI/2lur
+         jtxVzNvyGp1/KG5kCSJDVnN++zHNPuPSNFbuJdHu84eDSkbTprP1UY+NZN6WqCY+srOy
+         BQjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=VRVig6r2OQ7VUMmLKHIM+DZFPJ7DwZl4ljHRZhrvI1M=;
-        b=EKCqk9JshWH8oUfdjJI+KV8o5G3M++EQqKfcE8N0n9wwlYBpNddg0ExmpNqZAWG0tu
-         Lii1A+zrh5IBb8dsUN9+NltBOI+5xI/gJhiX7Y7UJu1+7aApQPSXgM9NDJzBJSmpgiKb
-         KSK0scQ0CbOl8YCfnkn8n4rM25wETajnRjYQNIGg/6h2QzlgExDeCH7oXGLaG2vfQ4St
-         DC2ksDG6R8EdsAKVF0DfBJL/NFti1jF1MhRB8sL2sPk139COyxiDdCbHFird/pbSvLfx
-         +8bksAvj/4v9RmbQ5en/DkRAUMbuPcW4jAKEsI0pKcFDzGshVAisTC7jXR8v8/lHevmR
-         qYnA==
-X-Gm-Message-State: AOAM532iYQ7vhaD+D8afs/cm0/06hyA7bDXYoOujIolF831R3ds3iKui
-        s6oW0OFUzqP8T24bytV2vKWUWVagUXU=
-X-Google-Smtp-Source: ABdhPJyP1YJxSwGlVzdUpg7YeS8RX4B79jjABS+UfC3a0b8IuNrrASTW3vyfHPz1jAxPzdlquxg70Q==
-X-Received: by 2002:a1c:600a:: with SMTP id u10mr12575028wmb.139.1616345919658;
-        Sun, 21 Mar 2021 09:58:39 -0700 (PDT)
+        bh=F0opQpe7BV1fXWQ5HltcF7A+GqCj/k0iJf9Vz5xKxgw=;
+        b=o9/RkaUi57jbj8QrUp1vp5vHkSBCTJtHQ7qzljJ9Dg33edxxokRY/p2MgtoU5wHT0O
+         p6g/yXamv7tB6hZmWYobBSKU5F2xtYyFT91tJoxzgOoOEm2aYaPNQ+xthqllyyz6Eyrp
+         jftnmhOOeO7ER1KNw61kewhdC2IYYIe51oG9r2HGpGl0qn9vkOfbgPmH9qUQ7Wz1yF7V
+         ebp0gKshpk10sALo6yewHC3247qrT/CbqBQkRFWN0rqJ74Ardz02+umrtqa6XL0UTSci
+         M0hlLzdH6IPjFGhlpAvBI9VKt0Znwk9LVuLrGypk7f9gMbpP8SwmqJysWy5840qdYD0W
+         E5/Q==
+X-Gm-Message-State: AOAM5325L+aOG1vy7JQCbwkYaZvIgp1UdU6SRosA7sgAKTj8Fo8PD5v4
+        b33SOHpWyzLpZ0b5YfwDxivBeAgw5dw=
+X-Google-Smtp-Source: ABdhPJwCyPT6hfr6TOUOfF0lRF7sD+YoZ6u4lRu5TsqZ4RCw0ZRS7EHJRQZhtp1FU6HsjyNxi8RetQ==
+X-Received: by 2002:a1c:df8a:: with SMTP id w132mr12440372wmg.53.1616345920218;
+        Sun, 21 Mar 2021 09:58:40 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m3sm15138932wme.40.2021.03.21.09.58.39
+        by smtp.gmail.com with ESMTPSA id j13sm16482671wrt.29.2021.03.21.09.58.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Sun, 21 Mar 2021 09:58:39 -0700 (PDT)
-Message-Id: <6af157dfed796508933793f6c4e7453764643fd4.1616345918.git.gitgitgadget@gmail.com>
+Message-Id: <add6931b21383eb8fdf0f1f750a4dfc5d7688466.1616345918.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.899.v3.git.1616345918.gitgitgadget@gmail.com>
 References: <pull.899.v2.git.1615747662.gitgitgadget@gmail.com>
         <pull.899.v3.git.1616345918.gitgitgadget@gmail.com>
 From:   "Andrzej Hunt via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 21 Mar 2021 16:58:29 +0000
-Subject: [PATCH v3 1/9] symbolic-ref: don't leak shortened refname in
- check_symref()
+Date:   Sun, 21 Mar 2021 16:58:30 +0000
+Subject: [PATCH v3 2/9] reset: free instead of leaking unneeded ref
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,51 +78,46 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Andrzej Hunt <ajrhunt@google.com>
 
-shorten_unambiguous_ref() returns an allocated string. We have to
-track it separately from the const refname.
+dwim_ref() allocs a new string into ref. Instead of setting to NULL to
+discard it, we can FREE_AND_NULL.
 
-This leak has existed since:
-9ab55daa55 (git symbolic-ref --delete $symref, 2012-10-21)
+This leak appears to have been introduced in:
+4cf76f6bbf (builtin/reset: compute checkout metadata for reset, 2020-03-16)
 
-This leak was found when running t0001 with LSAN, see also LSAN output
-below:
+This leak was found when running t0001 with LSAN, see also LSAN output below:
 
-Direct leak of 19 byte(s) in 1 object(s) allocated from:
+Direct leak of 5 byte(s) in 1 object(s) allocated from:
     #0 0x486514 in strdup /home/abuild/rpmbuild/BUILD/llvm-11.0.0.src/build/../projects/compiler-rt/lib/asan/asan_interceptors.cpp:452:3
-    #1 0x9ab048 in xstrdup /home/ahunt/oss-fuzz/git/wrapper.c:29:14
-    #2 0x8b452f in refs_shorten_unambiguous_ref /home/ahunt/oss-fuzz/git/refs.c
-    #3 0x8b47e8 in shorten_unambiguous_ref /home/ahunt/oss-fuzz/git/refs.c:1287:9
-    #4 0x679fce in check_symref /home/ahunt/oss-fuzz/git/builtin/symbolic-ref.c:28:14
-    #5 0x679ad8 in cmd_symbolic_ref /home/ahunt/oss-fuzz/git/builtin/symbolic-ref.c:70:9
+    #1 0x9a7108 in xstrdup /home/ahunt/oss-fuzz/git/wrapper.c:29:14
+    #2 0x8add6b in expand_ref /home/ahunt/oss-fuzz/git/refs.c:670:12
+    #3 0x8ad777 in repo_dwim_ref /home/ahunt/oss-fuzz/git/refs.c:644:22
+    #4 0x6394af in dwim_ref /home/ahunt/oss-fuzz/git/./refs.h:162:9
+    #5 0x637e5c in cmd_reset /home/ahunt/oss-fuzz/git/builtin/reset.c:426:4
     #6 0x4cd60d in run_builtin /home/ahunt/oss-fuzz/git/git.c:453:11
     #7 0x4cb2da in handle_builtin /home/ahunt/oss-fuzz/git/git.c:704:3
     #8 0x4ccc37 in run_argv /home/ahunt/oss-fuzz/git/git.c:771:4
     #9 0x4cac29 in cmd_main /home/ahunt/oss-fuzz/git/git.c:902:19
-    #10 0x69cc6e in main /home/ahunt/oss-fuzz/git/common-main.c:52:11
-    #11 0x7f98388a4349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+    #10 0x69c5ce in main /home/ahunt/oss-fuzz/git/common-main.c:52:11
+    #11 0x7f57ebb9d349 in __libc_start_main (/lib64/libc.so.6+0x24349)
 
 Signed-off-by: Andrzej Hunt <ajrhunt@google.com>
 ---
- builtin/symbolic-ref.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ builtin/reset.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/builtin/symbolic-ref.c b/builtin/symbolic-ref.c
-index 80237f0df10f..e547a08d6c7c 100644
---- a/builtin/symbolic-ref.c
-+++ b/builtin/symbolic-ref.c
-@@ -24,9 +24,11 @@ static int check_symref(const char *HEAD, int quiet, int shorten, int print)
- 			return 1;
- 	}
- 	if (print) {
-+		char *to_free = NULL;
- 		if (shorten)
--			refname = shorten_unambiguous_ref(refname, 0);
-+			refname = to_free = shorten_unambiguous_ref(refname, 0);
- 		puts(refname);
-+		free(to_free);
- 	}
- 	return 0;
- }
+diff --git a/builtin/reset.c b/builtin/reset.c
+index c635b062c3a7..43e855cb8876 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -425,7 +425,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 
+ 			dwim_ref(rev, strlen(rev), &dummy, &ref, 0);
+ 			if (ref && !starts_with(ref, "refs/"))
+-				ref = NULL;
++				FREE_AND_NULL(ref);
+ 
+ 			err = reset_index(ref, &oid, reset_type, quiet);
+ 			if (reset_type == KEEP && !err)
 -- 
 gitgitgadget
 
