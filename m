@@ -2,259 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E5BB4C433DB
-	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 01:05:20 +0000 (UTC)
+X-Spam-Status: No, score=-5.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RDNS_NONE,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+Received: from mail.kernel.org (unknown [198.145.29.99])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 223EAC433C1
+	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 02:12:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9D51161920
-	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 01:05:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D8B876194C
+	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 02:12:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229805AbhCUAnO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 20 Mar 2021 20:43:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43082 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229766AbhCUAnC (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Mar 2021 20:43:02 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE52FC061574
-        for <git@vger.kernel.org>; Sat, 20 Mar 2021 17:43:01 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id z1so15134903edb.8
-        for <git@vger.kernel.org>; Sat, 20 Mar 2021 17:43:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=NTh0zXRNv6K7wLxxmT5xUWkSsq6PsWETDAAinlK9eOg=;
-        b=vNpBtCSLGhXvgSctxCwzZJgH+GvPCHGwsrNC6JbOSfROD7Hm14xKmhFECZUBsgtF9Q
-         caK1xRab6vdzfV1vCuANODkSe4Ub4Xq4bLfxtev0plLtbygw3u73pZofq7hmhVRtnY3W
-         YCyIkqr+OCslKmcv16TnoOXgmE+VFLM8bjeTjrSQRJwtQS2fIIxT53XGkoTWm/JQxD1z
-         tGEwepvOSo7XC3pQOkRNer1qEaJMAdTC6m5SiUesM+8jMvnrMEw3lEU7NKDZYevtPfjV
-         1Sicy/B1ohLWPye7osEq5Sya3FtI7+j8Ymw8c+b99fbertlIcdrBVqxOQmpvfl605SWN
-         ANxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=NTh0zXRNv6K7wLxxmT5xUWkSsq6PsWETDAAinlK9eOg=;
-        b=delx72lbIgYL/huwk3tUXK/obuhV+y6PVIing1U+w5VMOAmeeYM701jiEHtQ3085/z
-         xIAYtHzrN8WVVveO+IY3JRiIaJW6at5OQqyIS1MGpnAtNH26xnKxbNlui9xAGU3qieHA
-         V0YYwQC6pAjMRKJ8+7XeUScr78xCNQ0qksKOrd+x+hxnyNPrT927aIpm6Bxws6B9Y13X
-         XNh0VgIKIe+tghOwkH7/VkHWjZBvROBZWn54VEUIfa9xHNGlirt0Luypo9YzM5kTmP2z
-         Gz1JxspOUty9gtcZFGl5RrymzmubOAQIhxXBh55B21CndQlJpTV1ntUnZ4QPrTSMTvXp
-         nxfw==
-X-Gm-Message-State: AOAM530gsbv+Jp6XDORMPW73Yqa9iGN5Ok/z/tw6P+DQ2+f1ELJRphBc
-        V/9TdMWcVQeLfWpKnYcXmivoGKpfv4jhKA==
-X-Google-Smtp-Source: ABdhPJxiD0LSt3NDpIRhjohVw/K9d1l3WtlcVqBonAHRFyWXHyQO76JC4D8p+S0lzrs97CcAsCh3nw==
-X-Received: by 2002:a05:6402:3487:: with SMTP id v7mr17887227edc.302.1616287380437;
-        Sat, 20 Mar 2021 17:43:00 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id i11sm6144542ejc.101.2021.03.20.17.42.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 20 Mar 2021 17:42:59 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Georgios Kontaxis via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Georgios Kontaxis <geko1702+commits@99rst.org>
-Subject: Re: [PATCH] gitweb: redacted e-mail addresses feature.
-References: <pull.910.git.1616283780358.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <pull.910.git.1616283780358.gitgitgadget@gmail.com>
-Date:   Sun, 21 Mar 2021 01:42:58 +0100
-Message-ID: <8735wpz699.fsf@evledraar.gmail.com>
+        id S229883AbhCUBRf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 20 Mar 2021 21:17:35 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:57685 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229791AbhCUBQt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Mar 2021 21:16:49 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 918021217CC;
+        Sat, 20 Mar 2021 21:16:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=QrZDk8bEKGmK
+        lM0EfZ5SibADCs8=; b=TFJSIiYC1w9Mf/Z9kAC5kj4IUDfuMU9sfaC2mQTAWBPZ
+        oivyxi5tTPMvoJsRk9x2Fuz4QQqbsiv8DuLMMmdn8IbrQ46XcwH+HDbm5r6VDRFu
+        J/dJM8hgcqIXqgm2mQAAmlW28rsWm9ef48d/ZqWi7SL+ZN3NvC55pW+6x/4VdB0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=KwcaN+
+        PasvNPn4D9Cz6X7GkPtM3js7ZWuUXZAfLv4ThhFpqvBIoalWFIp8oeQlcZceBnqY
+        SrYpU0xX5yJV+YQdmrvJ/wXmAjwlEKMu0gx0MWFelUgDARIpRLTaTyn9KuL5eQhS
+        hKh1ifX0RJUDy365S7McMFA0hJubbqBdP74Ho=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8ABF11217CB;
+        Sat, 20 Mar 2021 21:16:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D6A151217CA;
+        Sat, 20 Mar 2021 21:16:46 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+        Kirill Smelkov <kirr@navytux.spb.ru>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [PATCH v4 00/29] tree-walk: mostly replace "mode" with "enum
+ object_type"
+References: <20210316155829.31242-1-avarab@gmail.com>
+        <cover.1616282533.git.avarab@gmail.com>
+Date:   Sat, 20 Mar 2021 18:16:45 -0700
+In-Reply-To: <cover.1616282533.git.avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Sun, 21 Mar 2021 01:00:33 +0100")
+Message-ID: <xmqqtup5cnlu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 1B06DF04-89E3-11EB-B26F-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-On Sun, Mar 21 2021, Georgios Kontaxis via GitGitGadget wrote:
-
-> From: Georgios Kontaxis <geko1702+commits@99rst.org>
+> A re-roll of v3 of this series[1] and on top of (and requires) my
+> just-submitted v5 re-roll of the read_tree() refactoring series[2].
 >
-> Gitweb extracts content from the Git log and makes it accessible
-> over HTTP. As a result, e-mail addresses found in commits are
-> exposed to web crawlers. This may result in unsolicited messages.
-> This is a feature for redacting e-mail addresses from the generated
-> HTML content.
->
-> This feature does not prevent someone from downloading the
-> unredacted commit log and extracting information from it.
-> It aims to hinder the low-effort bulk collection of e-mail
-> addresses by web crawlers.
+> There was a regression in 1/32 of the old series. Removing the
+> canon_mode() call in diff.c didn't account for us needing to
+> canonicalize "diff --no-index" modes. There were no tests for this,
+> and it failed or not depending on the FS modes in the git.git checkout
+> being tested. This fixes the CI smoke coming from this series.
 
-So web crawlers that aren't going to obey robots.txt?
+Sorry, but quite honestly, I am not quite sure what value this
+entire code churn is trying to add to the codebase.
 
-I'm not opposed to this feature, but a glance at gitweb's documentation
-seems to show that we don't discuss how to set robots.txt up for it at
-all.
+The function signature of read_tree_fn_t callback function gets
+changed from the mode bits (which is capable to express differences
+between regular files, executable files and symbolic links) to "enum
+object_type" (which can only say "this is a blob"), which is a
+regression, no? =20
 
-Perhaps having that in the docs or otherwise in the default setup would
-get us most of the win of this feature?
+A callback can no longer do things like this, for example:
 
-> Signed-off-by: Georgios Kontaxis <geko1702+commits@99rst.org>
-> ---
+static int add_path_to_index(const struct object_id *oid,
+			     struct strbuf *base, const char *path,
+			     unsigned int mode, void *context)
+{
+	struct index_state *istate =3D (struct index_state *)context;
+	struct cache_entry *ce;
+	size_t len =3D base->len;
 
-Odd:
+	if (S_ISDIR(mode))
+		return READ_TREE_RECURSIVE;
 
->     gitweb: Redacted e-mail addresses feature.
->     
->     Gitweb extracts content from the Git log and makes it accessible over
->     HTTP. As a result, e-mail addresses found in commits are exposed to web
->     crawlers. This may result in unsolicited messages. This is a feature for
->     redacting e-mail addresses from the generated HTML content.
->     
->     This feature does not prevent someone from downloading the unredacted
->     commit log and extracting information from it. It aims to hinder the
->     low-effort bulk collection of e-mail addresses by web crawlers.
->     
->     Signed-off-by: Georgios Kontaxis geko1702+commits@99rst.org
+	strbuf_addstr(base, path);
 
-To have this duplication of the patch here below "---", some GGG feature
-gone awry?
+	ce =3D make_cache_entry(istate, mode, oid, base->buf, 0, 0);
+	ce->ce_flags |=3D CE_SKIP_WORKTREE;
+	set_index_entry(istate, istate->cache_nr++, ce);
 
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-910%2Fkontaxis%2Fkontaxis%2Femail_privacy-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-910/kontaxis/kontaxis/email_privacy-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/910
->
->  Documentation/gitweb.conf.txt | 12 ++++++++++++
->  gitweb/gitweb.perl            | 36 ++++++++++++++++++++++++++++++++---
->  2 files changed, 45 insertions(+), 3 deletions(-)
->
-> diff --git a/Documentation/gitweb.conf.txt b/Documentation/gitweb.conf.txt
-> index 7963a79ba98b..10653d8670a8 100644
-> --- a/Documentation/gitweb.conf.txt
-> +++ b/Documentation/gitweb.conf.txt
-> @@ -896,6 +896,18 @@ same as of the snippet above:
->  It is an error to specify a ref that does not pass "git check-ref-format"
->  scrutiny. Duplicated values are filtered.
->  
-> +email_privacy::
-> +    Redact e-mail addresses from the generated HTML, etc. content.
-> +    This hides e-mail addresses found in the commit log from web crawlers.
-> +    Enabled by default.
-> ++
-> +It is highly recommended to keep this feature enabled unless web crawlers
-> +are hindered in some other way. You can disable this feature as shown below:
-> ++
-> +---------------------------------------------------------------------------
-> +$feature{'email_privacy'}{'default'} = [0];
-> +---------------------------------------------------------------------------
+	strbuf_setlen(base, len);
+	return 0;
+}
 
-I think there's plenty of gitweb users that are going to be relying on
-the current behavior, so doesn't it make more sense for this to be
-opt-in rather than opt-out?
+where executableness or symlinkshood is lost.
 
->  
->  EXAMPLES
->  --------
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 0959a782eccb..9d21c2583e18 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -569,6 +569,15 @@ sub evaluate_uri {
->  		'sub' => \&feature_extra_branch_refs,
->  		'override' => 0,
->  		'default' => []},
-> +
-> +    # Redact e-mail addresses.
-> +
-> +    # To disable system wide have in $GITWEB_CONFIG
-> +    # $feature{'email_privacy'}{'default'} = [0];
-> +	'email_privacy' => {
-> +		'sub' => sub { feature_bool('email_privacy', @_) },
-> +		'override' => 0,
-> +		'default' => [1]},
->  );
-> [...]
->  sub gitweb_get_feature {
-> @@ -3471,6 +3480,10 @@ sub parse_tag {
->  			if ($tag{'author'} =~ m/^([^<]+) <([^>]*)>/) {
->  				$tag{'author_name'}  = $1;
->  				$tag{'author_email'} = $2;
-> +				if (gitweb_check_feature('email_privacy')) {
-> +					$tag{'author_email'} = "private";
-> +					$tag{'author'} =~ s/<([^>]+)>/<private>/;
-> +				}
->  			} else {
->  				$tag{'author_name'} = $tag{'author'};
->  			}
-> @@ -3519,6 +3532,10 @@ sub parse_commit_text {
->  			if ($co{'author'} =~ m/^([^<]+) <([^>]*)>/) {
->  				$co{'author_name'}  = $1;
->  				$co{'author_email'} = $2;
-> +				if (gitweb_check_feature('email_privacy')) {
-> +					$co{'author_email'} = "private";
-> +					$co{'author'} =~ s/<([^>]+)>/<private>/;
-> +				}
->  			} else {
->  				$co{'author_name'} = $co{'author'};
->  			}
-> @@ -3529,6 +3546,10 @@ sub parse_commit_text {
->  			if ($co{'committer'} =~ m/^([^<]+) <([^>]*)>/) {
->  				$co{'committer_name'}  = $1;
->  				$co{'committer_email'} = $2;
-> +				if (gitweb_check_feature('email_privacy')) {
-> +					$co{'committer_email'} = "private";
-> +					$co{'committer'} =~ s/<([^>]+)>/<private>/;
-> +				}
->  			} else {
->  				$co{'committer_name'} = $co{'committer'};
->  			}
-> @@ -3568,9 +3589,13 @@ sub parse_commit_text {
->  	if (! defined $co{'title'} || $co{'title'} eq "") {
->  		$co{'title'} = $co{'title_short'} = '(no commit message)';
->  	}
-> -	# remove added spaces
-> +	# remove added spaces, redact e-mail addresses if applicable.
->  	foreach my $line (@commit_lines) {
->  		$line =~ s/^    //;
-> +		if (gitweb_check_feature('email_privacy') &&
-> +			$line =~ m/^([^<]+) <([^>]*)>/) {
-> +			$line =~ s/<([^>]+)>/<private>/;
-> +		}
->  	}
->  	$co{'comment'} = \@commit_lines;
+This probably is the third time I caught similar "let's lose
+information passed through the call chain as nobody seems to need
+it" mistakes in the iterations of this series, and that is two times
+too many.  We should learn from our earlier mistakes---tweaking of
+the API that happens to be still OK with the current codebase can be
+either a needless churn that loses useful expressiveness from the
+API, or a useful clean-up to kill dead parameter or excess
+flexibility.
 
-All of these hunks (and the below) should use some new function that
-does this feature check + sanitizing instead of copy/pasting mostly the
-same code N times. e.g.:
-    
-    sub maybe_hide_email {
-        my $email = shift;
-        return $email unless gitweb_check_feature('email_privacy');
-        return hide_email($email);
-    }
+And these three incidents we have seen so far are the former.
 
-then:
-
-    $tag{author_email} = maybe_hide_email($2);
-
-Also it looks like this isn't a new issue, but does this need to
-implement its own E-Mail parser? We ship with Mail::Address for
-git-send-email, can gitweb (and the elided hide_email() function above)
-use that too?
+Thanks.
 
 
-> @@ -8060,8 +8085,13 @@ sub git_commitdiff {
->  		close $fd
->  			or print "Reading git-diff-tree failed\n";
->  	} elsif ($format eq 'patch') {
-> -		local $/ = undef;
-> -		print <$fd>;
-> +		while (my $line = <$fd>) {
-> +			if (gitweb_check_feature('email_privacy') &&
-> +				$line =~ m/^([^<]+) <([^>]*)>/) {
-> +				$line =~ s/<([^>]+)>/<private>/;
-> +			}
-> +			print $line;
-> +		}
->  		close $fd
->  			or print "Reading git-format-patch failed\n";
 
-Is that "patch" output meant for "git am"? Won't this severely break
-that use-case if so?
+
+
