@@ -2,106 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A7C7EC433C1
-	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 23:24:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F0037C433DB
+	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 00:40:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 64D9961926
-	for <git@archiver.kernel.org>; Sun, 21 Mar 2021 23:24:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B9CD36192C
+	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 00:40:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230334AbhCUXOu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 21 Mar 2021 19:14:50 -0400
-Received: from mx.99rst.org ([52.22.122.190]:39234 "EHLO mx.99rst.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230248AbhCUXOR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 Mar 2021 19:14:17 -0400
-Received: from mail.kodaksys.org (localhost [127.0.0.1])
-        by mx.99rst.org (Postfix) with ESMTP id 78D3142328;
-        Sun, 21 Mar 2021 23:14:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=99rst.org;
-        s=20161001; t=1616368454;
-        bh=yUV3m7YaBIfTrYrtG3edbZqgXqKeRmaNwwbS68fTqvc=;
-        h=In-Reply-To:References:Date:Subject:From:To:Cc:From;
-        b=cTydFLPpCu7sF1OP9ej2U5mIa3xhHHQJmjg/2rHlu967zYuafswDTD9atn/Kd5aCt
-         g/Tytafvr8Oo/DVpzom2YLgw1AtEp05HKnWR14t1v4UMqFqsNtAtlJKziEdEIALzOR
-         3Oa4VQUaAYm0jjHZr+/GQWtZ6K2CYhRK3S9cDd5uGIGa5k+lUMT8t3wrlsVkk5QwGi
-         3NAfMyjfQvdeMmcIyc92OTv9ei/tV1p3TsoeDLvKPxLYWexD5iKeQaUlj4oYdpRaVc
-         FK+papTUT3l/WCXcKxYF4VpVQ0rU/ntIw0Vcnu363Tw5UmBpgiD/WdTjKdGI218gIp
-         DzwqfO86O2gXQ==
-Received: by mail.kodaksys.org with HTTP;
-        Sun, 21 Mar 2021 23:14:14 -0000
-Message-ID: <14d3cda766b0212ca9d8204eba35aa4d.squirrel@mail.kodaksys.org>
-In-Reply-To: <xmqqmtuw884f.fsf@gitster.g>
-References: <pull.910.v2.git.1616297564158.gitgitgadget@gmail.com>
-    <pull.910.v3.git.1616347731514.gitgitgadget@gmail.com>
-    <xmqqzgyw9wn3.fsf@gitster.g>
-    <dfb1fe6cdf78788250009abe8e1489c8.squirrel@mail.kodaksys.org>
-    <xmqqmtuw884f.fsf@gitster.g>
-Date:   Sun, 21 Mar 2021 23:14:14 -0000
-Subject: Re: [PATCH v3] gitweb: redacted e-mail addresses feature.
-From:   "Georgios Kontaxis" <geko1702+commits@99rst.org>
-To:     "Junio C Hamano" <gitster@pobox.com>
-Cc:     "Georgios Kontaxis via GitGitGadget" <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        =?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7AgQmphcm1hc29uIg==?= 
-        <avarab@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-User-Agent: SquirrelMail
+        id S229692AbhCVAjh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 21 Mar 2021 20:39:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40232 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229579AbhCVAjV (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 Mar 2021 20:39:21 -0400
+Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A112BC061574
+        for <git@vger.kernel.org>; Sun, 21 Mar 2021 17:39:20 -0700 (PDT)
+Received: by mail-ot1-x335.google.com with SMTP id 68-20020a9d0f4a0000b02901b663e6258dso14293551ott.13
+        for <git@vger.kernel.org>; Sun, 21 Mar 2021 17:39:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=3BfcwI5C06hLJV6WUhFHAOSoRVkvColOTJrEYxDg7mw=;
+        b=PNYd5+Dhng2kaDTFHRN+CIpnPBMaARoDEIf153faSOGNMYo7nSK/Tt20gDHe9UPaZM
+         ZV/y8V7wulSHB4ecPQfnAiFddnuThUbOXWtZsx7meDfYQhA6nKKXci1sPCVjkrrs84De
+         WIF2twCToRq4ZLCOkwYoZP/MZQRkGd86ASx9SUGMoZVUURuctkuoM+X/1hrCeFXdC5bB
+         6490LO9glcUAyhlgjg9COovX/2lcte5ce8umWR0fdHEb6h/pIcbMvLVPIiYHwnd2LWLG
+         SXTnVMMjqZ06awKTd84SA2m7c1IWM2gJuYAJM0jA+dvgQ/rWp0jF/YZKygkXhtVEbuE8
+         WOlg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=3BfcwI5C06hLJV6WUhFHAOSoRVkvColOTJrEYxDg7mw=;
+        b=qwKqVc0ruMSk2wQAIaURTfJQA/FfbtQYIRFq9X/KiH4P8Li5TAN8GY616v+rkS32sT
+         VVpDZjth//ljvMCYKDz7WAIzpfCpYikvWC+7tW7uQkISPOtL/MCyZMoTP2FZPaYGeZk9
+         E4nsHbfFz3mdFtBnF5qtTDr9ZSebSqU2G9xLd2bcteG2JP9KDJ/qBprLayvhkW5LK66F
+         9G35GChq66Zib06KVkuGQsQV+5ZpF2T05vz6ZDM0TdQoWH+X246vmnDOma6wM8/qzRq9
+         hSFESmBHNG39tVTjRWXYinBn79paafedmZ145MQtSCF45A8Fdys9YGiKqH3liZHXhu++
+         73tA==
+X-Gm-Message-State: AOAM532jKIwHu8Ze53G3QSzoxpjL1yQDgL0FgAki0aG2QWry+xF1hOas
+        1S3jxmMM1jR5gxcvXpGcqr9uDqoE5XlalaCn6Oc=
+X-Google-Smtp-Source: ABdhPJxH04uazDzSnXwxybJIH1UgUrnde4zNjteD/FoVc/8g4iW2st0HsgKFLiZmuuBqeZGriFJNa0oBsz19styiYtQ=
+X-Received: by 2002:a05:6830:17d7:: with SMTP id p23mr9571833ota.164.1616373559877;
+ Sun, 21 Mar 2021 17:39:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Priority: 3 (Normal)
-Importance: Normal
+References: <pull.911.git.1616251299.gitgitgadget@gmail.com>
+ <pull.911.v2.git.1616317134.gitgitgadget@gmail.com> <8b8b236a4ffb81a8c6be3f320b878cea1d0f9d7a.1616317135.git.gitgitgadget@gmail.com>
+ <CAP8UFD1Oo-eWmoV-1mh1M=pA8+yRUYHy1wg8NvN3bthmCHBfvQ@mail.gmail.com> <xmqqwnu0bga9.fsf@gitster.g>
+In-Reply-To: <xmqqwnu0bga9.fsf@gitster.g>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Mon, 22 Mar 2021 08:39:08 +0800
+Message-ID: <CAOLTT8TU+XwLmDQRROHW6iumFgMKok9mi+_OBmN4FbvgWkNb7Q@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] [GSOC] interpret-trailer: easy parse trailer value
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>,
+        "Bradley M. Kuhn" <bkuhn@sfconservancy.org>,
+        Brandon Casey <drafnel@gmail.com>,
+        Shourya Shukla <periperidip@gmail.com>,
+        Rafael Silva <rafaeloliveira.cs@gmail.com>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> "Georgios Kontaxis" <geko1702+commits@99rst.org> writes:
+Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B43=E6=9C=8822=E6=97=
+=A5=E5=91=A8=E4=B8=80 =E4=B8=8A=E5=8D=8812:52=E5=86=99=E9=81=93=EF=BC=9A
 >
->>> ... so I doubt
->>> the wisdom of munging the patch part at all.
->>>
->>> I may be sympathetic to the cause of the patch, but, I do not agree
->>> with its execution in this iteration of the patch.
->>>
->> I see your point.
->>
->> It seems hiding e-mail addresses should be limited to the commit
->> message,
->> i.e., stop at the "---" line.
+> Christian Couder <christian.couder@gmail.com> writes:
 >
-> I doubt it makes sense to redact anything in the 'patch' view at
-> all, actually.  What kind of URL does the crawler need to formulate
-> and what pieces of information (like commit object names or branch
-> names) does it need to fill in the URL to get a series of patches
-> out of gitweb?  As long as it takes more effort than running "git
-> clone" against the repository, the crawler would not have much
-> incentive to crawl and harvest addresses from the 'patch' pages, and
-> even in the log message part, the downsides of butchering the
-> payload would outweigh the "privacy benefit", I would have to say.
+> >> "Signed-off-by:C O <Mister@email.com>" is often too
+> >> verbose and error-prone.
+> >
+> > The 'trailer.<token>.command' config option can already be used to
+> > help with that, for example:
+> >
+> > -------
+> > $ git config trailer.sign.key "Signed-off-by: "
+> > $ git config trailer.sign.ifexists replace
+> > $ git config trailer.sign.command "git log --author=3D'\$ARG' -1
+> > --format=3D'format:%aN <%aE>'"
+> > $ git interpret-trailers --trailer sign=3DLinus<<EOF
+> > subject
+> >
+> > body
+> > EOF
+> > subject
+> >
+> > body
+> >
+> > Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+> > -------
+> >
+> > So even without this patch, after your first patch that implements
+> > `git commit --trailer ...`, it should be easy to setup something less
+> > verbose and less error-prone.
 >
-No effort at all I would say.
-E..g, somehow the web crawler gets to git.kernel.org.
-It then follows every link, eventually arriving at a commitdiff page.
-It then follows every link, which includes the URL for the patch output.
-See how "wget --mirror" behaves for instance.
+> It is nice that it makes the complexity of 2/2 unnecessary ;-)
 
-Just to clarify, my goal is not to stop someone who wants to extract
-e-mail address from git.kernel.org specifically.
-They can just "git clone" the repositories and grep through the logs.
-My goal is to stop generic crawlers (pretty much "wget --mirror | grep"
-scripts) from making their way to the logs.
-
-> Quite honestly, if a site claims to offer a 'patch' download UI but
-> returns corrupt data back, I would say it is much worse than not
-> offering the service at all.  Perhaps disabling the 'patch' feature
-> in repositories that enable 'privacy' feature may be a much better
-> approach.
->
-Good point. I think I'll try that.
-
-
+A little frustrated, both `--own-identity` and `@nickname` seem to be
+ rejected. I will roll back to the first patch.
