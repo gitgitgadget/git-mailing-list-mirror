@@ -2,95 +2,217 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A5A8C433E0
-	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 21:56:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E823BC433DB
+	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 22:00:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4C2EE619A9
-	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 21:56:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B5616619AA
+	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 22:00:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229591AbhCVV4A (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Mar 2021 17:56:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60988 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230095AbhCVVzf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Mar 2021 17:55:35 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AD77C061756
-        for <git@vger.kernel.org>; Mon, 22 Mar 2021 14:55:33 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id k10so23783657ejg.0
-        for <git@vger.kernel.org>; Mon, 22 Mar 2021 14:55:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=H/xYGtC+yEMMFApi5ZnBOvSowR6uTULVvAdvufBXUqw=;
-        b=W+23tIvjzhhT89Rj7q+roFOhKrKWbjxtM/qdOXYWvm5ECqE0txAP85Mtp+EBtA7400
-         sRjZ5vXK1s7JeOn5NZCBmHV7ReaXcvtVu4ZVXf/IBZ26iri/hnCZApgEzbvnxQ4JrHWf
-         yizAA4BUZVStwdr6k1BVjBmZrbYOahQo7pk4+7DOpMxlVZ3Z+n0fuMKD0n7v9nhZskN7
-         u8WGgXyarHMH94PrhwMoCZj9M9sI19qf0EE4brlduD7pNIoSuU2JKU1JSNSL1aMIFyEw
-         8IUzhgXtbxdNYDnoLZ5dPfAqM+xEwFqCefSTfSTIN4lULOm1Xxly1qMWMMjoVteb28nR
-         fD+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=H/xYGtC+yEMMFApi5ZnBOvSowR6uTULVvAdvufBXUqw=;
-        b=gHo8+zozjq4JP4R5VYWntBa6zSLcvcUoyu3VlgKG9e7j+aYySURdTEpMAdyWGHPJcy
-         QIGYEn7dzrG1PyvpJTl8qRzPSHB3jmGj/tuT3fGqaqSH/sNgQMB+n4epk5sAb6bV/PmU
-         YmLLVThwcjPsL+E95f2On5n5RFJLAytYfjM/Iii4X6lj98NZIypuFwhDrnysc5+Us5GB
-         Gy1ULbnmuLwY1TgWrLVlUgbdLwZdDrLvAAQZgEGBjNTCahrvSkk1tpT11ug0GFQOFEtu
-         14yk1hIsQXords8Q7zKe1aCEA2To21qkdOhKbitnX41HUVGTjD3jm3UbnoiqXfSMVBi9
-         aSEw==
-X-Gm-Message-State: AOAM530ZKCJl3mlX3+h+pRFOuLgqIQG2sLamhbTKPZHQ5OSClSCEWsrQ
-        qKYjr//MbkwTEsUFhpNgqknxWavzktIv8KQUj9M=
-X-Google-Smtp-Source: ABdhPJxLUC40dyGMv9W+iHZcX49D6CtFytpwSJx5Kw3qB0xiIGzp2lECLY5T8CBG3uhTBj/ZWc1VJ4IHuN+40K7+y/c=
-X-Received: by 2002:a17:906:5acd:: with SMTP id x13mr1767784ejs.211.1616450131996;
- Mon, 22 Mar 2021 14:55:31 -0700 (PDT)
+        id S230022AbhCVV7p (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Mar 2021 17:59:45 -0400
+Received: from mout.gmx.net ([212.227.17.21]:35569 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229746AbhCVV7X (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Mar 2021 17:59:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1616450358;
+        bh=N1fUo2c8RSbe+FnbvX0gudYybrHlplMr3i8aYHymCM4=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=h/BUJvOknDKh7qG9a5dOGSVO0XtC7hLfFTPggFpamrQGWUN2+ZTGkaSYXukMJ6D3V
+         O6SGu/ORfxPZDfgM/DkqT4WjeoBJv8U8+hjSFa6g7Ymz174APjocg9amtlIQM+6Vdy
+         B6GHuLBW58hf9gV5bPrfGv3DtOLEOZ6jqRybyMlw=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.27.144.62] ([213.196.212.127]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MzQgC-1lbqh41nP6-00vMyw; Mon, 22
+ Mar 2021 22:59:18 +0100
+Date:   Mon, 22 Mar 2021 22:59:20 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Alban Gruin <alban.gruin@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v7 07/15] update-index: move add_cacheinfo() to
+ read-cache.c
+In-Reply-To: <20210317204939.17890-8-alban.gruin@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2103222255550.50@tvgsbejvaqbjf.bet>
+References: <20201124115315.13311-1-alban.gruin@gmail.com> <20210317204939.17890-1-alban.gruin@gmail.com> <20210317204939.17890-8-alban.gruin@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <pull.901.v12.git.1616247681211.gitgitgadget@gmail.com>
- <pull.901.v13.git.1616387093662.gitgitgadget@gmail.com> <CAP8UFD0rtX0m+fGcvGFtsFFKZ2LVyxHx8dptYFvM9kWnbxEwFA@mail.gmail.com>
- <CAOLTT8Ty5kabU6ivX946=FDWJ4SEXBzPinq2aG5t7Rp9jCCEPA@mail.gmail.com>
-In-Reply-To: <CAOLTT8Ty5kabU6ivX946=FDWJ4SEXBzPinq2aG5t7Rp9jCCEPA@mail.gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 22 Mar 2021 22:55:20 +0100
-Message-ID: <CAP8UFD275WiHC2sUJjsnLd1yonfMO-SVda=BZ6mMkgDxGs959g@mail.gmail.com>
-Subject: Re: [PATCH v13] [GSOC] commit: add --trailer option
-To:     ZheNing Hu <adlternative@gmail.com>
-Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>,
-        "Bradley M. Kuhn" <bkuhn@sfconservancy.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Brandon Casey <drafnel@gmail.com>,
-        Shourya Shukla <periperidip@gmail.com>,
-        Rafael Silva <rafaeloliveira.cs@gmail.com>,
-        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:nWB4i0XfQW9HkMaKPK9Gt/cLWrJVGWS8JcGaM2ptoQLTPif5ULU
+ nMIu66B4WsWn5zrGPNf5hCByL6SfoDapD0oNBRjdIxzPogqSNx0U3v9RSpy/JztXXIS8vZl
+ fLUeQf7xNomTratqeoEftn6yAXWvDQWkm1PNqW+PYqzVMvk9gJvG9Tw000xBE3ar5gemDIK
+ y0nMzWBKqXhYg0hFD2obw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:6TO61GzF+vg=:vZUFCPycDQLDfqWp/qPWWL
+ eA2d6C6ntxaqJ9cTHsoMe9jMQ3R3Yy++T9GiCQqtEpyjuMb6mSE/EIBapi9PmyLUF6VLab0it
+ XMv4su9dv4PgL1T90PWzW1iFZPDOUKSwAsXNAHjkOvg9+4VWyTacvkpK5KBd9iMO7/JQkZOWv
+ WX5mj9EaW46TlRNPh9vd+UfcFvzym/qO+IEUPq1+viVmDfLCoYhMXDphsRCr9A1Y3zb6BG6fP
+ SHv0FwBMm01hrP2R0PXiciZ2RBZq8bFWm9FQSX0/Kwk0KXzi/L2FHT6wA0B+zSbm+cEodKMmm
+ aoztBtW8mAX6rHavUrtJEY9LyNrLW04HbTr5A1yoHJ1TOiv2JdjryGV10faBZReoSeBCHm0mB
+ am1CMYjbg0FNqy+ldWuu1Hefkp2nTfi2nQhmwNbJTlRxT/vi345FOlK3FU5ymQT1q+i3Iz48N
+ /ute0GoTeKELx6HkkvBedF/6pqqt8PrffzbgCQLBZOdJgpGqC2DW0wVC/2aIne5GA+LEmfkdg
+ 4zXV2eZkRebWcZx7FATJkzOZj8/1vinH4taRpO3q6A6ZN0tpRTp7FAmFTTkG/5MAOEX3pSt/e
+ a3b+lOgvt+2stnrUsyvMsX/apgtx3oz2D5KlERSR992Ja1y3b2At8ELrhcKLfXtluFzfs78Se
+ XXR7o3P3JVej3Ay5smM77C14dlY4PpcWhDhoYHjTCJQ7ilGt3XszxFZtjp5hcZDHG04DJm2Uy
+ Hryq9XHmsuRRljKH8iQf4J4+HggL0BkaZM16Np72arItoePRn/BxQBE86cRbmhV346KKy18Nb
+ D2Gy+Z648O8GWF1MKCWryFdTlKBJ+Y6wyCKcztQ5Bx0bkIQarBefkL9wByiuVudAbPm25rTrb
+ BzspsM5BitoCUMJJkMddPltfBYFevnhShaZcSLtl0=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 22, 2021 at 11:23 AM ZheNing Hu <adlternative@gmail.com> wrote:
+Hi Alban,
 
-> 2.
-> `git interpret-trailers --in-place`  seem like work on git top-dir,
-> If I am in a sub-dir `b` and I want to change a file such as `d.c`,
-> then I must use `git interpret-trailers --in-place b/d.c` to add some
-> trailers.
+On Wed, 17 Mar 2021, Alban Gruin wrote:
 
-What happens without --in-place? Are the input files read correctly?
+> This moves the function add_cacheinfo() that already exists in
+> update-index.c to update-index.c, renames it add_to_index_cacheinfo(),
+> and adds an `istate' parameter.  The new cache entry is returned through
+> a pointer passed in the parameters.  The return value is either 0
+> (success), -1 (invalid path), or -2 (failed to add the file in the
+> index).
 
-> I think the original intention of `--in-place` is to modify a file similar to
-> "$COMMIT_MSG_FILE", so make it run at top-dir, but this is not reflected
-> in the git documentation. This at least confuses people who use this
-> option for the first time. Is it worth modifying? Or is there something
-> wrong with the design of `--in-place`?
+This paragraph still talks about magic numbers, but the code has constants
+for them. Maybe elevate the commit message to a more generic description
+that does not spend time on specifying the exact values, but rather lists
+the three outcomes in plain English?
 
-I haven't checked but there is perhaps a bug in
-create_in_place_tempfile() in "trailer.c".
+Other than that, this looks fine to me! Thanks,
+Dscho
+
+>
+> This will become useful in the next commit, when the three-way merge
+> will need to call this function.
+>
+> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
+> ---
+>  builtin/update-index.c | 25 +++++++------------------
+>  cache.h                |  8 ++++++++
+>  read-cache.c           | 35 +++++++++++++++++++++++++++++++++++
+>  3 files changed, 50 insertions(+), 18 deletions(-)
+>
+> diff --git a/builtin/update-index.c b/builtin/update-index.c
+> index 79087bccea..6b86e89840 100644
+> --- a/builtin/update-index.c
+> +++ b/builtin/update-index.c
+> @@ -404,27 +404,16 @@ static int process_path(const char *path, struct s=
+tat *st, int stat_errno)
+>  static int add_cacheinfo(unsigned int mode, const struct object_id *oid=
+,
+>  			 const char *path, int stage)
+>  {
+> -	int len, option;
+> -	struct cache_entry *ce;
+> +	int res;
+>
+> -	if (!verify_path(path, mode))
+> -		return error("Invalid path '%s'", path);
+> -
+> -	len =3D strlen(path);
+> -	ce =3D make_empty_cache_entry(&the_index, len);
+> -
+> -	oidcpy(&ce->oid, oid);
+> -	memcpy(ce->name, path, len);
+> -	ce->ce_flags =3D create_ce_flags(stage);
+> -	ce->ce_namelen =3D len;
+> -	ce->ce_mode =3D create_ce_mode(mode);
+> -	if (assume_unchanged)
+> -		ce->ce_flags |=3D CE_VALID;
+> -	option =3D allow_add ? ADD_CACHE_OK_TO_ADD : 0;
+> -	option |=3D allow_replace ? ADD_CACHE_OK_TO_REPLACE : 0;
+> -	if (add_cache_entry(ce, option))
+> +	res =3D add_to_index_cacheinfo(&the_index, mode, oid, path, stage,
+> +				     allow_add, allow_replace, NULL);
+> +	if (res =3D=3D ADD_TO_INDEX_CACHEINFO_INVALID_PATH)
+> +		return error(_("Invalid path '%s'"), path);
+> +	if (res =3D=3D ADD_TO_INDEX_CACHEINFO_UNABLE_TO_ADD)
+>  		return error("%s: cannot add to the index - missing --add option?",
+>  			     path);
+> +
+>  	report("add '%s'", path);
+>  	return 0;
+>  }
+> diff --git a/cache.h b/cache.h
+> index 6fda8091f1..41e30c0da2 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -832,6 +832,14 @@ int remove_file_from_index(struct index_state *, co=
+nst char *path);
+>  int add_to_index(struct index_state *, const char *path, struct stat *,=
+ int flags);
+>  int add_file_to_index(struct index_state *, const char *path, int flags=
+);
+>
+> +#define ADD_TO_INDEX_CACHEINFO_INVALID_PATH (-1)
+> +#define ADD_TO_INDEX_CACHEINFO_UNABLE_TO_ADD (-2)
+> +
+> +int add_to_index_cacheinfo(struct index_state *, unsigned int mode,
+> +			   const struct object_id *oid, const char *path,
+> +			   int stage, int allow_add, int allow_replace,
+> +			   struct cache_entry **ce_ret);
+> +
+>  int chmod_index_entry(struct index_state *, struct cache_entry *ce, cha=
+r flip);
+>  int ce_same_name(const struct cache_entry *a, const struct cache_entry =
+*b);
+>  void set_object_name_for_intent_to_add_entry(struct cache_entry *ce);
+> diff --git a/read-cache.c b/read-cache.c
+> index 1e9a50c6c7..b514523ca1 100644
+> --- a/read-cache.c
+> +++ b/read-cache.c
+> @@ -1350,6 +1350,41 @@ int add_index_entry(struct index_state *istate, s=
+truct cache_entry *ce, int opti
+>  	return 0;
+>  }
+>
+> +int add_to_index_cacheinfo(struct index_state *istate, unsigned int mod=
+e,
+> +			   const struct object_id *oid, const char *path,
+> +			   int stage, int allow_add, int allow_replace,
+> +			   struct cache_entry **ce_ret)
+> +{
+> +	int len, option;
+> +	struct cache_entry *ce;
+> +
+> +	if (!verify_path(path, mode))
+> +		return ADD_TO_INDEX_CACHEINFO_INVALID_PATH;
+> +
+> +	len =3D strlen(path);
+> +	ce =3D make_empty_cache_entry(istate, len);
+> +
+> +	oidcpy(&ce->oid, oid);
+> +	memcpy(ce->name, path, len);
+> +	ce->ce_flags =3D create_ce_flags(stage);
+> +	ce->ce_namelen =3D len;
+> +	ce->ce_mode =3D create_ce_mode(mode);
+> +	if (assume_unchanged)
+> +		ce->ce_flags |=3D CE_VALID;
+> +	option =3D allow_add ? ADD_CACHE_OK_TO_ADD : 0;
+> +	option |=3D allow_replace ? ADD_CACHE_OK_TO_REPLACE : 0;
+> +
+> +	if (add_index_entry(istate, ce, option)) {
+> +		discard_cache_entry(ce);
+> +		return ADD_TO_INDEX_CACHEINFO_UNABLE_TO_ADD;
+> +	}
+> +
+> +	if (ce_ret)
+> +		*ce_ret =3D ce;
+> +
+> +	return 0;
+> +}
+> +
+>  /*
+>   * "refresh" does not calculate a new sha1 file or bring the
+>   * cache up-to-date for mode/content changes. But what it
+> --
+> 2.31.0
+>
+>
