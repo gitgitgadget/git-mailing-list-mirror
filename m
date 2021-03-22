@@ -2,154 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A44D1C433E8
-	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 05:54:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 436AEC433C1
+	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 06:03:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 93B3461992
-	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 05:54:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 058A66192E
+	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 06:03:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229912AbhCVFxv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Mar 2021 01:53:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50696 "EHLO
+        id S229455AbhCVGCe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Mar 2021 02:02:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52544 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229884AbhCVFxY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Mar 2021 01:53:24 -0400
-Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77927C061574
-        for <git@vger.kernel.org>; Sun, 21 Mar 2021 22:53:23 -0700 (PDT)
-Received: by mail-pl1-x631.google.com with SMTP id o2so5965358plg.1
-        for <git@vger.kernel.org>; Sun, 21 Mar 2021 22:53:23 -0700 (PDT)
+        with ESMTP id S229931AbhCVGCE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Mar 2021 02:02:04 -0400
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9A3CC061574
+        for <git@vger.kernel.org>; Sun, 21 Mar 2021 23:02:03 -0700 (PDT)
+Received: by mail-pl1-x62c.google.com with SMTP id o2so5974917plg.1
+        for <git@vger.kernel.org>; Sun, 21 Mar 2021 23:02:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:cc:from:message-id:date:user-agent
+        h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Nwtkm98jexnWi6GfiEgKhFCC27so9AAC8jI/RmKqhR4=;
-        b=GCpiQZoUz4VGTtnghykfSADj0mgYvpQxa1moyYUzSeBS+ZrDPo7PZMqD9dYLWb8/Q/
-         zle4VehQ1AcwGhjGfphVDnRm2t+8zumEzRsAtB4Idr1ngNxY3ebg2QfBPWCXxjUSzhQq
-         1y85Lki4mO4b9uU6/kdU2PRzEmZ8AtC98e6NIRWMAFZb1pnUaOl2s2fWJeLfrtRHbUVc
-         YI3tNsvyXZ+T3K823C5agxfFrmOYJ2y3w5Qkn9UtVlnxmcfpB2zg+9tsEFwKBFzQOTtC
-         QN59cnU6F876A91iAbC+nMlyJuFNvPaIEWvUDAUNvd2NNHjmKT/1tH6aOTyZ7HBYzk8B
-         Abdg==
+        bh=ws/jnOT2QLUgSny3kdPhMtaeAVAKjAFbEirDx4tphL0=;
+        b=ZhwyNpS/R5uwOQmMKzHc5p6qCkcxMzz2Pz3o6ZkAF9+TKJ0msM26hmUsY30X++Totv
+         kFbdIHZ9wOkaqc7n8ViGGjntsKS8KuHYssGvGeSK6MCWNv8tCPbU+8SvzXGgdcRZjA5P
+         scpl45eenZNGCiIAcU3NjbpR38ip9nvjfXxdcqUfWfVjvbv3YX5dODccaTq3FXms+84x
+         6s4Quv76XDSz2xEP+IN7SgNX6MRXtf9H4DTVY0D9rKUp/ddejPj3iN99VSVWaL6V8VSC
+         sPmcehavgtX2N1W1JT8OSKl/PkbW5hWnRGoVmYZn4pM1TtwEUI/c3chxIqAurFsPx7Y5
+         SNBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=Nwtkm98jexnWi6GfiEgKhFCC27so9AAC8jI/RmKqhR4=;
-        b=YSPo5ETVnydlMb7j8lTW2k1tcaHprtuOeN483G6dl5nN0nO4/6HikpHX7wqojCIWu0
-         HYRRapqahEIBVICU1ClOo4wanOgHUhY+XybBFTv7XAwN7vMEY9TAkKYCw6UpENUghWG9
-         HBS2km+lsmveiXTdOgq5GlAQDRTNA7GB1NLo0vuVxmAWdSeOi5UMpfUG1mzSCSWDqtuW
-         gbDojzYdqgF5yaA0yuPNbU9f3IJG+LD2JoeyBxEZmwKa9bWTQ6YDggMZO3sXdeMuaXqC
-         MmrStCkL+Pvki2IbRrRE9LiDRUkmHkUirTCCgOPXYRITjEEbCsNcziOmPx5r2Bk8E/iW
-         z35Q==
-X-Gm-Message-State: AOAM533Vr2+RIijBxsrzuBsxggTdlwdCXBdsNuzgJKkmae6oNV6DxCRM
-        mrJkZjcZFckuGYVCcmRPIulHIWqUqFBKZikT
-X-Google-Smtp-Source: ABdhPJzzkQiCb6RAC10J0g9e25RFp8rNEbU3puqDmXhLHSTXV2P2DF0tWOVrEe+nmBQqd39T01teOA==
-X-Received: by 2002:a17:902:9306:b029:e6:ac65:468e with SMTP id bc6-20020a1709029306b02900e6ac65468emr25406695plb.16.1616392402853;
-        Sun, 21 Mar 2021 22:53:22 -0700 (PDT)
+        bh=ws/jnOT2QLUgSny3kdPhMtaeAVAKjAFbEirDx4tphL0=;
+        b=C30wc89vm6zmzEMumI46OkGbISFAKMIGTv4ceU+9ZA38tMTmecTofcrTAB39+sSgzj
+         7jLaGBBaCqvX5LYgzoL6WYxyQY/SrS2KCzuCIIqOhyKJqDKbItUDssi6LZ4ZtpTUxut8
+         N7XUOGGnb4NuVrqvFqXfM7iMiwutMf7CWvfQa1q/OfvhY6fXSRaQsswJI1BRFUQIEh1G
+         AB6ijui/O1hZyzJsh1HUSDBsTtFF32423cI8N+HQo30REHxgfbm2nwLFPzRnTH5F6tXI
+         FKFkVlbrLWHteyUBdb8U2xkXstpLdVBp51j8xySZlpZ1tEgyX5XZDQTEsr56cyhEPa91
+         9g9g==
+X-Gm-Message-State: AOAM531Ad5GDRmg26ZCwmDtWP/RlFacEstE4rJGJplLsTqCNFYLfQnjk
+        KnDLbuQgmtJZRNwvtMq05dDFWKM2yz7vIcgW
+X-Google-Smtp-Source: ABdhPJygJs3ktDTFSh1rZLeFrdFwrK6qbns5NvK9uC+wUmAw9bLscT5zJNzLDfWU3phWfJDyDM4YGQ==
+X-Received: by 2002:a17:90a:8c86:: with SMTP id b6mr11810733pjo.8.1616392923320;
+        Sun, 21 Mar 2021 23:02:03 -0700 (PDT)
 Received: from [192.168.43.80] (subs03-180-214-233-16.three.co.id. [180.214.233.16])
-        by smtp.gmail.com with ESMTPSA id p22sm12087131pjg.39.2021.03.21.22.53.21
+        by smtp.gmail.com with ESMTPSA id p7sm11016235pgj.2.2021.03.21.23.02.00
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 21 Mar 2021 22:53:22 -0700 (PDT)
-Subject: Re: git diff --text does not work during rebase for binary files
-To:     =?UTF-8?B?0JTQuNC70Y/QvSDQn9Cw0LvQsNGD0LfQvtCy?= 
-        <dilyan.palauzov@aegee.org>
-References: <6afc8f1365627f08247f73da7e7e362c0b8ea560.camel@aegee.org>
-Cc:     git@vger.kernel.org
+        Sun, 21 Mar 2021 23:02:03 -0700 (PDT)
+Subject: Re: [PATCH v2 2/2] [GSOC] interpret-trailer: easy parse trailer value
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        "Bradley M. Kuhn" <bkuhn@sfconservancy.org>,
+        Brandon Casey <drafnel@gmail.com>,
+        Shourya Shukla <periperidip@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Rafael Silva <rafaeloliveira.cs@gmail.com>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>, git@vger.kernel.org
+References: <pull.911.git.1616251299.gitgitgadget@gmail.com>
+ <pull.911.v2.git.1616317134.gitgitgadget@gmail.com>
+ <8b8b236a4ffb81a8c6be3f320b878cea1d0f9d7a.1616317135.git.gitgitgadget@gmail.com>
+ <1722fbad-6ff3-444f-ad3f-59e37b640fc7@gmail.com> <xmqq1rc8cv01.fsf@gitster.g>
 From:   Bagas Sanjaya <bagasdotme@gmail.com>
-Message-ID: <4ef94ca7-ec69-f350-1d76-6bb8745786f1@gmail.com>
-Date:   Mon, 22 Mar 2021 12:53:19 +0700
+Message-ID: <47e8a13f-ce96-f3f3-0f8e-efd685f58e60@gmail.com>
+Date:   Mon, 22 Mar 2021 13:01:58 +0700
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.8.1
 MIME-Version: 1.0
-In-Reply-To: <6afc8f1365627f08247f73da7e7e362c0b8ea560.camel@aegee.org>
+In-Reply-To: <xmqq1rc8cv01.fsf@gitster.g>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 21/03/21 23.49, Junio C Hamano wrote:
+> Bagas Sanjaya <bagasdotme@gmail.com> writes:
+> 
+>> will be in the trailer (for example because <email1> is primary email). So a disambiguation
+>> prompt should be added, something like:
+> 
+> No, it just should error out without going interactive.
+>
 
+I mean the error should be:
 
-On 22/03/21 00.30, Дилян Палаузов wrote:
-> Hello,
-> 
-> I create a small text file ending with \0 and add it to git:
+```
+error: @batman match multiple identities:
+1) batman <email1>
+2) batman <email2>
+...
+n) batman <emailn>
 
-Did you mean `echo -e "\0" >> a.txt`?
+Please disambiguate by running "git commit --trailer" with full identity, like:
+     git commit --trailer="<someone> <<email>>" <options>...
 
-> In .gitattributes I specify:
-> 
-> *.txt diff merge=text text
-> 
-> I create several commits by changing the small text file.
-> 
-> The result is at https://github.com/dilyanpalauzov/git-diff-biinary .
-> 
-> I do now
-> 
->    git rebase -i HEAD~2
-> and before the “second commit” type E to edit that commit.
-> 
-> I change the small file.
-> 
-> git add a.txt && git rebase --continue
-> 
-> git says:
-> 
-> [detached HEAD bc00e34] second commit
->   Date: Sun Mar 21 19:16:15 2021 +0200
->   1 file changed, 2 insertions(+), 1 deletion(-)
-> warning: Cannot merge binary files: a.txt (HEAD vs. 04c77de (third
-> commit))
-> Auto-merging a.txt
-> CONFLICT (content): Merge conflict in a.txt
-> error: could not apply 04c77de... third commit
-> Resolve all conflicts manually, mark them as resolved with
-> "git add/rm <conflicted_files>", then run "git rebase --continue".
-> You can instead skip this commit: run "git rebase --skip".
-> To abort and get back to the state before "git rebase", run "git rebase
-> --abort".
-> Could not apply 04c77de... third commit
-> 
-> 
-> 'git diff' and 'git diff --text' show:
-> 
-> diff --cc a.txt
-> index 7a61015,dc817ec..0000000
-> --- a/a.txt
-> +++ b/a.txt
-> 
-> The file does not contain <<HEAD===>>> markers, despite having
-> merge=text attribute.
-> 
-> HOW CAN I force git diff to show the differences and git merge to
-> include the <<<===>>> markers?
-> 
-> I have to say, that at different occassions git diff --text does work
-> ass expected (e.g. when I call git diff --cached --text).
-> 
-> I call now
-> git rebase --abort
-> git log -p
-> 
-> git shows the differences in the small text file ending with \0.  So
-> apparently log reads the option, but diff does not.
-> 
-> Using git 2.30.2.
-> 
-> Greetings
->    Дилян
-> 
-
-Does `file a.txt` shows it as being binary file? I do the similar and it just says "data".
+```
 
 -- 
 An old man doll... just what I always wanted! - Clara
