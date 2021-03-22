@@ -2,123 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE41EC433DB
-	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 12:33:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 53936C433E1
+	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 13:05:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B21C3619AF
-	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 12:33:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 19AB361606
+	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 13:05:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231384AbhCVMcg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Mar 2021 08:32:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51950 "EHLO
+        id S231721AbhCVNFU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Mar 2021 09:05:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58816 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230196AbhCVMbk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Mar 2021 08:31:40 -0400
-Received: from mail-ua1-x934.google.com (mail-ua1-x934.google.com [IPv6:2607:f8b0:4864:20::934])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC9C7C061574
-        for <git@vger.kernel.org>; Mon, 22 Mar 2021 05:31:39 -0700 (PDT)
-Received: by mail-ua1-x934.google.com with SMTP id c13so5456940uao.10
-        for <git@vger.kernel.org>; Mon, 22 Mar 2021 05:31:39 -0700 (PDT)
+        with ESMTP id S231760AbhCVNDk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Mar 2021 09:03:40 -0400
+Received: from mail-qv1-xf30.google.com (mail-qv1-xf30.google.com [IPv6:2607:f8b0:4864:20::f30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5776AC061574
+        for <git@vger.kernel.org>; Mon, 22 Mar 2021 06:03:40 -0700 (PDT)
+Received: by mail-qv1-xf30.google.com with SMTP id dc12so7643135qvb.4
+        for <git@vger.kernel.org>; Mon, 22 Mar 2021 06:03:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=YDcpXrnqAFdXQq1oayPkK57QSa4VmplCgQAUdxMg9AQ=;
-        b=BRXIJV94zmqf0Wnl42upybEfRd3//tNJcmvVTbzdENyNODiUHI6wmJLlt3TiYxowXI
-         +uEjPVmGgVLdwtxxRT7NksbItLjanZApUDY9XIPYtuswMUYz2VGOxfLQ3mBoM1FUycT0
-         q5SWSZ+LnY8IPLnzDFC6upOuh8c53Ej+0gAWKN547SLv/SK/EdPuwHPjBC769QprsN/n
-         zzOL7NInfJmLPkWJfsPl+oT9dYnZ/TvCxEkJJzQXAG4ClwFGViDAzk4HyKgJibW9/b2N
-         m4SfWhhqOGs1bNgLDWea2EyD+mpBukjr2I5/kgzIVK8y4Fr9ciE/Td/3owsxcfm3QkyM
-         S5Gw==
+        d=gmail.com; s=20161025;
+        h=sender:to:references:from:organization:subject:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=7JqBU/1X+LWu/Mlvnd0cl48lDuspB0Ckr3rRtGe7yAc=;
+        b=l7VySOtku16jRI6n3RtwA/5ANy39f/OtNZmXnMsOM4T4Pq88YsbwcTfuaFMYsMHDlp
+         H+2BJAiPioevdVK8Xia/3jJtyU9AR6/dDI7bEUhoptscwQClaIrExIka15Im7HArON5c
+         NPJtR/tF26Ieu/3xmBOA+uT4QPXcPXwD93+rAMZnJMIXGKgTb+pd1vt0cnzRSBOQbVz9
+         b0LLlzkB9UXc0QJSG0JhDFn2H4QLBdvm39f3KBdWLPourShgUa0p+wlmSHIu9lRVdV8l
+         75tBDaWc4IjM8EDTp72byN5jXOceo0YCpMWboI8wlgpUb/vYISK4RVektsbEaI3jkt1l
+         Nv6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=YDcpXrnqAFdXQq1oayPkK57QSa4VmplCgQAUdxMg9AQ=;
-        b=JK8iRaOO4R4DqxixzvcMhCjC3f/+8GcNWJMK55Zh1c7qfGDQI2WZ+ILHaP/ilelJvD
-         Wmwahag6qfj2dw4XEtQMSzvTjgQKuFvhyqepJwSUoytLqHQmkf7rMZdW4+2xdSUVDPBr
-         gF+meEikh41AYKyLVIDJASqmYA6CpUgQFj/YlsAkj0sGgZG+WvOeAT4bcqCym+kkFG41
-         bTiw4Eo6ByZAJeUsNCP5AMjnQ+0XhGEYs5FGc6RjbdjkjUY4twptzBFIgjTHWPwg0/S/
-         5D/dGIzg/9dj4ZxpZu6jerr+9M/bJBTJjF/NHGoTJ+2/uqy+98d/NYVTbQP2pZqs993a
-         yQGA==
-X-Gm-Message-State: AOAM533+PjOuqMekiOusYeu3xZ90L3ALcpIK/8zY1t1OcAUd9M8Pyayo
-        fLuo1jkeBThUlkYYS4N2r95+BKNm6vF0WDJlaQOXbOviDM8=
-X-Google-Smtp-Source: ABdhPJw2bLje1jo85rb6dATKqQqJ8lRLvx609H0PrxiNNVQNkCA64AfTOWVo18dc2BZjUIplb3PxdKDYQ5mtMwU9Fec=
-X-Received: by 2002:ab0:8b:: with SMTP id 11mr4370511uaj.83.1616416296522;
- Mon, 22 Mar 2021 05:31:36 -0700 (PDT)
+        h=x-gm-message-state:sender:to:references:from:organization:subject
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=7JqBU/1X+LWu/Mlvnd0cl48lDuspB0Ckr3rRtGe7yAc=;
+        b=l269ra8zzU/BfKO2VinGBI6KOgDdEp9MiNEKT2KOieV9q0z2aOtv2OqPRHtarVY37D
+         gqriPypdOBIAFP+CVhG1Wn1EjKPvqH3AU/UNct1usz7vPXgJXRirza4SP0Rermmdr5P6
+         ywcggZ8mGwUdzzBzKiklrg0CeL5doooYYNbPZDv2wppNahPPE/FfsvxiheDklR9IneHm
+         LPWb4+MqwSGUdknok6nWUeWnSrMaQLooFNlZlHsQacZ+EHXU1poVLVb6mDD8LccpL95W
+         fluhNvNT78OYWjEFxjcaCIuliCc696iaKRkyCQVF1tfBtW/KpMLTjXUxGawt+PwdkQAa
+         jIZw==
+X-Gm-Message-State: AOAM532zSi8kii6h3y8vcPhk1Q9PeX1FqY6foMEi9mJLrWCKawUBrGc2
+        9nbT9Pk9QA6evTWc7ucftVsQbofGhto=
+X-Google-Smtp-Source: ABdhPJwa7d4/zP3zc5Gw52oW7hQHRzPgnVIEl9dR/vQqkcc0syfNbwsBL2ubfItWan5/dQvwmolQuw==
+X-Received: by 2002:a05:6214:18d2:: with SMTP id cy18mr21029655qvb.50.1616418219295;
+        Mon, 22 Mar 2021 06:03:39 -0700 (PDT)
+Received: from mbp.home ([187.33.45.102])
+        by smtp.gmail.com with ESMTPSA id 17sm10925226qky.7.2021.03.22.06.03.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 22 Mar 2021 06:03:38 -0700 (PDT)
+Sender: Renato Botelho <garga.bsd@gmail.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+References: <4442fd0a-3306-a22b-3614-e3272f8f0be5@FreeBSD.org>
+ <YFUX+Rqdj3gteyql@camp.crustytoothpaste.net>
+From:   Renato Botelho <garga@FreeBSD.org>
+Organization: FreeBSD
+Subject: Re: --no-edit not respected after conflict
+Message-ID: <78c7bd2c-c487-756e-c85d-dcfe2866f5f4@FreeBSD.org>
+Date:   Mon, 22 Mar 2021 10:03:36 -0300
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:78.0)
+ Gecko/20100101 Thunderbird/78.8.1
 MIME-Version: 1.0
-References: <CAFQ2z_MefCwiWdhs0buJv5Zok+nsgaOvUCcsSnfm_PP0WozZKA@mail.gmail.com>
- <5359503.g8GvsOHjsp@mfick-lnx> <CAFQ2z_MavgAGDyJzc9-+j6zTDODP7hCdPHtB5dyx-reLMSLX3Q@mail.gmail.com>
- <4400050.5IlZNYTcJN@mfick-lnx>
-In-Reply-To: <4400050.5IlZNYTcJN@mfick-lnx>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Mon, 22 Mar 2021 13:31:25 +0100
-Message-ID: <CAFQ2z_NaXC-h5U3v2JtrFU8rGNHstTSN3CDoazUiUUk522sW7A@mail.gmail.com>
-Subject: Re: Distinguishing FF vs non-FF updates in the reflog?
-To:     Martin Fick <mfick@codeaurora.org>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <YFUX+Rqdj3gteyql@camp.crustytoothpaste.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 18, 2021 at 11:24 PM Martin Fick <mfick@codeaurora.org> wrote:
->
-> On Thursday, March 18, 2021 9:58:56 AM MDT Han-Wen Nienhuys wrote:
-> > On Wed, Mar 17, 2021 at 10:22 PM Martin Fick <mfick@codeaurora.org> wro=
-te:
-> > > On Wednesday, March 17, 2021 9:06:06 PM MDT Han-Wen Nienhuys wrote:
-> > > > I'm working on some extensions to Gerrit for which it would be very
-> > > > beneficial if we could tell from the reflog if an update is a
-> > > > fast-forward or not: if we find a SHA1 in the reflog, and see there
-> > > > were only FF updates since, we can be sure that the SHA1 is reachab=
-le
-> > > > from the branch, without having to open packfiles and decode commit=
-s.
-> > >
-> > > I don't think this would be reliable.
-> > >
-> > > 1) Not all updates make it to the reflogs
-> > > 2) Reflogs can be edited or mucked with
-> > > 3) On NFS reflogs can outright be wrong even when used properly as th=
-eir
-> > > are caching issues. We specifically have seen entries that appear to =
-be
-> > > FFs that were not.
-> >
-> > Can you tell a little more about 3) ? SInce we don't annotate non-FF
-> > vs FF today, what does "appear to be FFs" mean?
->
-> To be honest I don't recall for sure, but I will describe what I think ha=
-s
-> happened. I think that we have seen a server(A) update a branch from
-> C1 to C2A, and then later another server(B) update the same branch from C=
-1 to
-> C2B. Obviously the move from C2A to C2B is not a FF, but that move is not=
- what
-> is recorded. Each of those updates was a FF when viewed as separate entri=
-es,
+On 19/03/21 18:30, brian m. carlson wrote:
+> On 2021-03-19 at 14:44:30, Renato Botelho wrote:
+>> I was reverting multiple commits using --no-edit parameter and after one of
+>> those commits conflicted and I resolved using mergetool, no-edit option was
+>> not respected anymore and next commits opened editor for me to review commit
+>> message.
+> 
+> I'm not sure I understand what you're seeing here, and I think maybe if
+> I knew that I could provide more useful information.  Could you maybe
+> provide the set of commands that you're running up to and when you see
+> this problem, or even better, a reproduction testcase?
+> 
 
-I think those would fail with the way that Gerrit uses JGit, because
-C1 -> C2B would fail with LOCK_ERROR. I guess there are code paths in
-Git (?) that will execute force-push without checking if the update is
-FF or not.
+I ran `git revert --no-edit commit1 commit2 ... commitN` and one of 
+those reverts had a conflict and the process stopped waiting for a 
+resolution.
 
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
+I ran `git mergetool` and resolved the conflict, then ran `git revert 
+--continue` and then it ignored --no-edit parameter for all other 
+commits and opened $EDITOR for me to edit commit message.
 
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+I managed to reproduce it on a testing repository doing following steps:
 
-Registergericht und -nummer: Hamburg, HRB 86891
+% echo a > file
+% git init
+% git add file
+% git commit -m a
+% echo b > file; git commit -a -m b
+% echo c > file; git commit -a -m c
+% echo d > file; git commit -a -m d
+% echo e > file; git commit -a -m e
+% git log --oneline
 
-Sitz der Gesellschaft: Hamburg
+d3ec7fc e
+23ad2b7 d
+2265c82 c
+5e0c98a b
+b34f81a a
 
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+% git revert --no-edit d3ec7fc 2265c82 5e0c98a
+
+It will revert d3ec7fc without any interaction, as expected, then will 
+stop the process on 2265c82 due to conflict and after resolve conflict 
+when I do:
+
+% git revert --continue
+
+--no-edit parameter will be ignored when reverting 5e0c98a.
+
+-- 
+Renato Botelho
