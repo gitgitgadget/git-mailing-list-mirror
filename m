@@ -4,101 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ECA4DC433C1
-	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 18:42:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CCECAC433C1
+	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 18:46:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A7343619A0
-	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 18:42:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A0D2D61984
+	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 18:46:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231916AbhCVSm0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Mar 2021 14:42:26 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:50420 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231557AbhCVSly (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Mar 2021 14:41:54 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 97B5C123C63;
-        Mon, 22 Mar 2021 14:41:53 -0400 (EDT)
+        id S230266AbhCVSpf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Mar 2021 14:45:35 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:64810 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229591AbhCVSpW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Mar 2021 14:45:22 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id C4FC9117D21;
+        Mon, 22 Mar 2021 14:45:21 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=brGHHEzJ+yqc6+Q30R2BtsS+uro=; b=eA43GG
-        2bWey4h/i5ewLHNTmcReeKY7gayhPPHBfr1Qu8mBkdsdxBYX7LssyI44p4KUibdO
-        XvMmnZ3FlOU7HUAFF+F3+FhgrAz8Cx4Fp6rjA18XpbWpar00WjTZaaVft/D5+A64
-        mRChtToklSlRdzGsp9YuTkysKWyAXo6pXbfps=
+        :content-type; s=sasl; bh=O0XJa2cEIxT+3grfeAhRedAxEuA=; b=DQk/Bu
+        7n17SWR3bk5to6dSFpfTiKoXYcH/TsrkFYCTM2xeMtVbpFIOJdVisgmehnnSAC+s
+        E4AlbwPcXk1FZqfJRa3wurn07dgSzDQvceE60/CAS0GNDl3yMrcF1lxvHCPAMkPD
+        BvkXNLhNriQWOlzeeaF8PNsNNpFdVIEXL2Ba4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=osqgcpdBxyQqHjL1TxXv2rlYD4vDrq8x
-        h0DZLo9YdsidW7qn9uWRDHcC4t3m85av5Ls67CzZ7r7IMcGRbb4PebrUDysprs06
-        pRrDA61MQfeKxTSxHIJ2IV6evX5bVCTTTJjY46W7UV/tHQDO3EdLWcr081ay8R0W
-        k9H1K+uNMQ4=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 91666123C62;
-        Mon, 22 Mar 2021 14:41:53 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=fCTPX3r4Gx6931l43HDgDJzp4l3rCSFU
+        ZiPPrD+nV/Qw7OF7nzg2aK+pX44T7FyLeKrKnXUm+edNuK2qSUolzmgVGiP1ApGL
+        NOxIauSARjE3yXEPqbkrxZ7BJfZ9WgmLR14naRrWpymhp5LDg5iPHtllPQH2fYaP
+        VxVQ6xigt1U=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id BCA11117D20;
+        Mon, 22 Mar 2021 14:45:21 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D8407123C60;
-        Mon, 22 Mar 2021 14:41:50 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 12483117D1F;
+        Mon, 22 Mar 2021 14:45:18 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (Mar 2021, #06; Sat, 20)
-References: <xmqqzgyxijy6.fsf@gitster.g>
-        <CAHd-oW7zuRR2=2tU3J9NGeNCprE2p52aVK_RC0QSjsdzHLnZ=w@mail.gmail.com>
-Date:   Mon, 22 Mar 2021 11:41:49 -0700
-In-Reply-To: <CAHd-oW7zuRR2=2tU3J9NGeNCprE2p52aVK_RC0QSjsdzHLnZ=w@mail.gmail.com>
-        (Matheus Tavares Bernardino's message of "Mon, 22 Mar 2021 10:52:39
-        -0300")
-Message-ID: <xmqqa6qv6nf6.fsf@gitster.g>
+To:     Bagas Sanjaya <bagasdotme@gmail.com>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        "Bradley M. Kuhn" <bkuhn@sfconservancy.org>,
+        Brandon Casey <drafnel@gmail.com>,
+        Shourya Shukla <periperidip@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Rafael Silva <rafaeloliveira.cs@gmail.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, Jeff King <peff@peff.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] [GSOC] interpret-trailer: easy parse trailer value
+References: <pull.911.git.1616251299.gitgitgadget@gmail.com>
+        <pull.911.v2.git.1616317134.gitgitgadget@gmail.com>
+        <8b8b236a4ffb81a8c6be3f320b878cea1d0f9d7a.1616317135.git.gitgitgadget@gmail.com>
+        <1722fbad-6ff3-444f-ad3f-59e37b640fc7@gmail.com>
+        <xmqq1rc8cv01.fsf@gitster.g>
+        <47e8a13f-ce96-f3f3-0f8e-efd685f58e60@gmail.com>
+Date:   Mon, 22 Mar 2021 11:45:17 -0700
+In-Reply-To: <47e8a13f-ce96-f3f3-0f8e-efd685f58e60@gmail.com> (Bagas Sanjaya's
+        message of "Mon, 22 Mar 2021 13:01:58 +0700")
+Message-ID: <xmqq5z1j6n9e.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 43F04FE8-8B3E-11EB-81EC-D609E328BF65-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: C007D2F4-8B3E-11EB-BCA9-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matheus Tavares Bernardino <matheus.bernardino@usp.br> writes:
+Bagas Sanjaya <bagasdotme@gmail.com> writes:
 
-> Hi, Junio
+> I mean the error should be:
 >
-> On Sat, Mar 20, 2021 at 6:40 PM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> * mt/parallel-checkout-part-1 (2021-03-18) 9 commits
->>   (merged to 'next' on 2021-03-19 at a1bc83ad8e)
->>  + entry: add checkout_entry_ca() taking preloaded conv_attrs
->>  + entry: move conv_attrs lookup up to checkout_entry()
->>  + entry: extract update_ce_after_write() from write_entry()
->>  + entry: make fstat_output() and read_blob_entry() public
->>  + entry: extract a header file for entry.c functions
->>  + convert: add classification for conv_attrs struct
->>  + convert: add get_stream_filter_ca() variant
->>  + convert: add [async_]convert_to_working_tree_ca() variants
->>  + convert: make convert_attrs() and convert structs public
->>  (this branch is used by mt/parallel-checkout-part-2.)
->>
->>  Preparatory API changes for parallel checkout.
->>
->>  Will merge to 'master'.
+> ```
+> error: @batman match multiple identities:
+> 1) batman <email1>
+> 2) batman <email2>
+> ...
+> n) batman <emailn>
 >
-> Sorry for my confusion, but are you going to squash the `#include
-> "entry.h"` fix [1] or do you want me to re-roll this series with it?
+> Please disambiguate by running "git commit --trailer" with full identity, like:
+>     git commit --trailer="<someone> <<email>>" <options>...
+>
+> ```
 
-I was planning to merge that down to 'master' as-is, with exactly
-the same merge-fix to deal with the entry.h fallout that we have
-been successfully using while merging the topic to 'seen' and
-'next', without any need to have an explicit "oops, entry.h needs to
-be included these days", but I think you are right---it would be
-cleaner to keep the rebased series build by itself.
+Detecting error alone is probably prohibitively expensive, as it
+takes you to scan _all_ commits down to the beginning of time to
+pruve that a given pattern matches one and only one author ident.
 
-As we'll be rewinding and rebuilding 'next' soonish, let's kick the
-topic out of 'next' when it happens, so that we can replace it (and
-the part-2 topic that depends on it) with a reroll.
+Assuming that we would pay that cost (I doubt we would want to,
+though), additional cost to show all possible hits would be small
+and manageable, I think.
 
-Thanks.
