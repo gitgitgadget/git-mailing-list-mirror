@@ -2,180 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DF0DC433C1
-	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 04:54:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BAB4CC433DB
+	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 05:48:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 534A86196C
-	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 04:54:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 75E4461606
+	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 05:48:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229764AbhCVExo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Mar 2021 00:53:44 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60982 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229621AbhCVExj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Mar 2021 00:53:39 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 099D7AC5FA;
-        Mon, 22 Mar 2021 00:53:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Oj2G0yOW3MltwfqEgfXgYXRiAZA=; b=IPjIB1
-        kn/aiUpi+HiVOQjFMYbSeRebeqAV4IvaGwgccq06EbRQQOzXoQ2Npc7HI60d+qdI
-        REnKaKPtmQoy6fv1YZ7VNCk9jpXSkVggxpj8n23Vh6a7mp2gWzjxYlYpzWzXgSoI
-        vBemlmiyxhnNO+vv0SskouddCkST4MZ3kMWbI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=uN8WONadiRKoX0swC3+InmmbHQaKTYS2
-        7+qW46dKlz7m6t/cpZUpUphISYAfK733Fr9ODzYlJneJjtsBmIVzBBM1wFCIHXog
-        Kf3DzPag/xhCoDkxinFPVBwTgJ9/GIEypvfdyDff1yenpveTobCTDv8G6EeBDOSo
-        PVXH4tQeweg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 00362AC5F8;
-        Mon, 22 Mar 2021 00:53:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 76AB4AC5F7;
-        Mon, 22 Mar 2021 00:53:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Madhu <enometh@meer.net>
+        id S229728AbhCVFr5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Mar 2021 01:47:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49420 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229547AbhCVFrZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Mar 2021 01:47:25 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4529C061574
+        for <git@vger.kernel.org>; Sun, 21 Mar 2021 22:47:24 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id lr1-20020a17090b4b81b02900ea0a3f38c1so10556209pjb.0
+        for <git@vger.kernel.org>; Sun, 21 Mar 2021 22:47:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=hpT5SccL+IMXRptCgWM3YPnfvnZ6aiVHLdbFK5R9pyg=;
+        b=IwXlDnh7vGhsOxuGSflLBdMUL9BL8bVYnnWk0I1tAYbxOkmGFBJ9TWGHWfsGx2jZbo
+         THFi+QBItcqeSynGTKMlMVfUMSy2nUD2bzchZD2uKootUsK08/p18HWPwds0PcAcvZJV
+         dkCXBhrf1JvYLmZTcY95UkrKnOzEHQu/s6W84fS+V4Vx08KjIVQM1laHuEd75gwaFWXZ
+         rSD3ALfHBSb2Bq5gdbX857w5iQ0lODmoqmx7EmLHfBuwS0dseSfPiR/uf3pBNd3dZKuv
+         CIekx4kamRVnszjw9JAGmWU80rOUprIcD32X7NBl5fs8boy0OicSBT2PrqMHY1LH54hy
+         Gnng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=hpT5SccL+IMXRptCgWM3YPnfvnZ6aiVHLdbFK5R9pyg=;
+        b=q1PSQ1IbKaiPVrOoVXZOqyen33DyUm7soU6JwFG7f1EbvPIWqtKyLgkmSoSfoz84H/
+         AwTN4w7/cDWLyRxGjYMRNBaXh2vwLWGx9mYeQcENUzidFT5UIwud5TJDUqZssvYkEOe4
+         iiU07u0wLw5CMLsKE1laEgWQ9J6ed9jjeZijTGst9hzkoqSEhY4QDxJhO/FXm3vOS672
+         eq5whpdQQ4G0fhJ0w1XzQrSrN+kn7Ty7sQenk8nN351fjEzq6C5NGNWpJt+w0S1XQ7vt
+         PWRN7sHUiARDhbPgtNA0DsiVOZThjyBTBdAP8pvNtEEhguWR2byjTcHZ8V3mw/f+smIY
+         bu/A==
+X-Gm-Message-State: AOAM531rJa10WkmVfqRu3NW++TJB5HZ2dJrBM61B9SOm7Lu35pws5uQl
+        9N9XiaIRGtXV3+ICROwHngL/oJ69DtaXFDBE
+X-Google-Smtp-Source: ABdhPJww537gP11dy1HUb/1ykXdSyE7r3FYqDeUOO/ZtP2HD2zXwpzZjZAoIGex38R3Gs6D+9ay36g==
+X-Received: by 2002:a17:90a:7847:: with SMTP id y7mr11811185pjl.65.1616392044247;
+        Sun, 21 Mar 2021 22:47:24 -0700 (PDT)
+Received: from [192.168.43.80] (subs03-180-214-233-16.three.co.id. [180.214.233.16])
+        by smtp.gmail.com with ESMTPSA id b24sm11180225pgj.58.2021.03.21.22.47.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 21 Mar 2021 22:47:23 -0700 (PDT)
+Subject: Re: Blob hash of binary files in patches generated by git format
+ patch show in full form instead of short form
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] init: don't reset core.filemode on git-new-workdirs.
-References: <20210321.175821.1385189088303987287.enometh@meer.net>
-        <xmqq1rc89nk7.fsf@gitster.g>
-        <20210322.081043.1437207928602570397.enometh@meer.net>
-Date:   Sun, 21 Mar 2021 21:53:37 -0700
-In-Reply-To: <20210322.081043.1437207928602570397.enometh@meer.net> (Madhu's
-        message of "Mon, 22 Mar 2021 08:10:43 +0530 (IST)")
-Message-ID: <xmqq7dlz94by.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+References: <499c9922-eb42-c2a8-b4b4-8e5197ea0fc6@gmail.com>
+ <xmqqblbcbehd.fsf@gitster.g>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <56cde808-95c3-2e22-2dab-880061d51473@gmail.com>
+Date:   Mon, 22 Mar 2021 12:47:21 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 90F63C54-8ACA-11EB-8903-D152C8D8090B-77302942!pb-smtp1.pobox.com
+In-Reply-To: <xmqqblbcbehd.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Madhu <enometh@meer.net> writes:
-
->> I see that in a later part of the same function, we test if the
->> filesystem supports symbolic links but do so only when we are
->> running "git init" afresh.  Perhaps the filemode trustability check
->> and the config-set to record core.filemode should all be moved there
->> inside the "if (!reinit)" block.
+On 22/03/21 00.31, Junio C Hamano wrote:
+> Bagas Sanjaya <bagasdotme@gmail.com> writes:
+> 
+>> What's different between what you expected and what actually happened?
 >>
->> All of the above assumes that the problem being solved is about what
->> happens when "git init" is run in an already functioning working
->> tree.  If I misread what problem you are trying to solve, then none
->> of what I suggested in the above may apply.
->
-> I think you have understood the problem.  At present But doing the
-> filemode trustability check on .git/config assumes it is a regular
-> file anyway if it is to work at all.  My suggestion in the patch only
-> enforces that assumption explicitly.
+>> Blob hash for binary files are shown in full form, as opposed to blob hash
+>> for text files.
+> 
+> This is working as intended, designed and implemented.
+> 
+> The textual patch is meant to be applicable on target text that may
+> even have been slightly modified from the original from which the
+> patch was taken, and the abbreviated object name on the "index" line
+> is there mostly for human's sanity check and as a visual aid.
+> Ordinarily it is not used to actually find the matching blob object
+> (and it is not an error if there is no matching blob object in the
+> repository that a patch application is attempted in).
+> 
+> But the binary patch is designed to be applicable only to an exact
+> copy of the original and nowhere else.  The object name is given in
+> full, instead of using abbreviated form, to ensure that we do not
+> try to apply a binary patch to an object whose name is "similar".
+> 
+> Thanks.
+> 
 
-There are two points we should consider.
+Hmm... but I don't see that in the documentation for git format-patch.
+Maybe I need to send doc update.
 
- * Historically, we've used .git/config as the sample file to check,
-   but that was not because we wanted to make sure we can chmod the
-   config file, but because we knew the file has to be there.  If
-   .git/config is sometimes a symbolic link, and if chmod test
-   requires a regular file, we do not have to use .git/config as the
-   sample file.  We could instead switch to use a different,
-   temporary, file.  After all, the symlink check I pointed out in
-   the message you are responding to uses a brand new temporary
-   filename for that, and there is no reason why we shouldn't do the
-   same with a regular file for the filemode test.
-
- * If running "git init" in an already functioning repository can be
-   a useful way to "re-initialize" and/or "correct" various aspect
-   of the repository (e.g. perhaps core.filemode is incorrectly set
-   originally and running "git init" again corrects it), we would
-   want to allow that in a normal repository as well as in a
-   repository that is created by new-workdir the same way.  Or if it
-   is not useful and we want "re-initialize" not to touch the
-   filemode, we would want to skip the check in a normal repository
-   as well as in a new-workdir repository the same way.  That is why
-   "if symlink, then skip" is wrong---it targets the new-workdir
-   case specifically.
-
-I personally do not have a strong opinion either way, but to me, it
-seems that "does the filesystem support filemode?" and "does the
-filesystem support symbolic link?" are at about the same level and
-should be treated similarly unless there is a good reason not to.
-And the symlink check is never done in "reinit" case, so perhaps
-when "git init" is run again in an already functioning repository,
-we should not muck with the filemode, either.
-
-A natural conclusion of the line of thought is that we can move the
-"check filemode trustability" block (from the comment to concluding
-git_config_set()) inside the "if (!reinit)" that happens a bit later
-and we'd be fine---as an existing normal repository, as well as what
-new-workdir creates, won't have to do the "let's chmod +x/-x the
-config file and see what happens" code at all (perhaps the attached
-patch, which hasn't even been compile tested).
-
-On the other hand, if it is worth "fixing" the filemode setting
-while re-initializing, we probably should switch to use a temporary
-file instead of 'config'.  And we may want to reconsider the placement
-of the "is symlink supported?" check---which may also have to be
-redone to "fix" its existing value.
-
-
- builtin/init-db.c | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
-
-diff --git c/builtin/init-db.c w/builtin/init-db.c
-index dcc45bef51..61817a02a8 100644
---- c/builtin/init-db.c
-+++ w/builtin/init-db.c
-@@ -282,20 +282,6 @@ static int create_default_files(const char *template_path,
- 
- 	initialize_repository_version(fmt->hash_algo, 0);
- 
--	/* Check filemode trustability */
--	path = git_path_buf(&buf, "config");
--	filemode = TEST_FILEMODE;
--	if (TEST_FILEMODE && !lstat(path, &st1)) {
--		struct stat st2;
--		filemode = (!chmod(path, st1.st_mode ^ S_IXUSR) &&
--				!lstat(path, &st2) &&
--				st1.st_mode != st2.st_mode &&
--				!chmod(path, st1.st_mode));
--		if (filemode && !reinit && (st1.st_mode & S_IXUSR))
--			filemode = 0;
--	}
--	git_config_set("core.filemode", filemode ? "true" : "false");
--
- 	if (is_bare_repository())
- 		git_config_set("core.bare", "true");
- 	else {
-@@ -309,6 +295,20 @@ static int create_default_files(const char *template_path,
- 	}
- 
- 	if (!reinit) {
-+		/* Check filemode trustability */
-+		path = git_path_buf(&buf, "config");
-+		filemode = TEST_FILEMODE;
-+		if (TEST_FILEMODE && !lstat(path, &st1)) {
-+			struct stat st2;
-+			filemode = (!chmod(path, st1.st_mode ^ S_IXUSR) &&
-+					!lstat(path, &st2) &&
-+					st1.st_mode != st2.st_mode &&
-+					!chmod(path, st1.st_mode));
-+			if (filemode && !reinit && (st1.st_mode & S_IXUSR))
-+				filemode = 0;
-+		}
-+		git_config_set("core.filemode", filemode ? "true" : "false");
-+
- 		/* Check if symlink is supported in the work tree */
- 		path = git_path_buf(&buf, "tXXXXXX");
- 		if (!close(xmkstemp(path)) &&
+-- 
+An old man doll... just what I always wanted! - Clara
