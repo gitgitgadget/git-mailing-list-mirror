@@ -2,113 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9300AC433C1
-	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 02:41:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D533C433C1
+	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 03:07:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 62D6D6191A
-	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 02:41:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2BC7861939
+	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 03:07:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229915AbhCVClO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 21 Mar 2021 22:41:14 -0400
-Received: from smtp5.ctinetworks.com ([205.166.61.198]:49662 "EHLO
-        smtp5.ctinetworks.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229764AbhCVClH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 Mar 2021 22:41:07 -0400
-Received: from localhost (unknown [117.193.8.132])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: enometh@meer.net)
-        by smtp5.ctinetworks.com (Postfix) with ESMTPSA id DDC1C1636CF;
-        Sun, 21 Mar 2021 22:40:59 -0400 (EDT)
-Date:   Mon, 22 Mar 2021 08:10:43 +0530 (IST)
-Message-Id: <20210322.081043.1437207928602570397.enometh@meer.net>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] init: don't reset core.filemode on git-new-workdirs.
-From:   Madhu <enometh@meer.net>
-In-Reply-To: <xmqq1rc89nk7.fsf@gitster.g>
-References: <20210321.175821.1385189088303987287.enometh@meer.net>
-        <xmqq1rc89nk7.fsf@gitster.g>
-X-Mailer: Mew version 6.8 on Emacs 28.0
-Mime-Version: 1.0
-Content-Type: Text/Plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-ctinetworks-Information: Please contact the ISP for more information
-X-ctinetworks-MailScanner-ID: DDC1C1636CF.A78A3
-X-ctinetworks-VirusCheck: Found to be clean
-X-ctinetworks-SpamCheck: 
-X-ctinetworks-Watermark: 1617244865.34572@SkYJJuhb7zmsXkrj4fseIQ
+        id S229746AbhCVDHJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 21 Mar 2021 23:07:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43434 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229999AbhCVDGn (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 Mar 2021 23:06:43 -0400
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E090EC061574
+        for <git@vger.kernel.org>; Sun, 21 Mar 2021 20:06:42 -0700 (PDT)
+Received: by mail-pf1-x42b.google.com with SMTP id g15so9993132pfq.3
+        for <git@vger.kernel.org>; Sun, 21 Mar 2021 20:06:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=ydeT7JTILVu8eDcQXdB7Lwqiphd6qf+K7GCLIwf3FwI=;
+        b=LXahT9QdkucTrcN7WHEbr1mtmAgmYDwDzUxBzN8WDf20K8JGNg4CUy6CTVUufuaEMX
+         EFimpxRSCZM4BTkspugSrpSrChNwxMFBEUjVEv9TSv1dKRz86sMe+NlOE8gQR9oYleun
+         1EJtOv89oGI3jMBSLO0XDXuD+Ne5+7uq+r+7AmhpX9MgGU9qqKgToWjijQZzwA9NXoYg
+         imsgXkPJzjzKoRcyZST3rCg4pgVGlEd3xuAcwE29UsSqkM3qCVe7IWd75xi0NP7OahDa
+         sw2risMkW4ADKZpzkGYhiVKNN1L0p28ZoQBlkAaI48hRtqdPNoql9Sz/MFweePEGHXHY
+         XJZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=ydeT7JTILVu8eDcQXdB7Lwqiphd6qf+K7GCLIwf3FwI=;
+        b=W7udWjfcSds2wIVO3xPWJIMXQXxuuUrbGRQK99J7PD1evuQ03sqVw0o2FLBtI8b3DW
+         cHNGoXYr0UJjgBe/7VyG+DVqkIfEWQu3vSp6T+zWhk+g+ErIGUAv8FKv2C6VNcXi18VF
+         cfKJxSaRoPfwyK5XFoR2t1Gd4kBB2AP5twIrjM9VyRBExXjZVERCHjtEpwl9+fgwe0t1
+         6s/AuyEdMs93PmTcvuxPHbFyKem+vp2ImBi3c6tiV7Y9gukNXq+RU2Ic1ABRy0QAjgnL
+         6Qn5NquwmIyLLgGrXJEW6BpCSfamNttGyB/LYpXavh0zidJ95GcVQLZaCJ78U4SB/SwV
+         /IIg==
+X-Gm-Message-State: AOAM532Y2e0DDSBNQKESvR47at40WVBL/Ix2aChqb/LzfFh2GhnGZcDN
+        QECbhhrX3B9Xwt7GmCJveOnY0Xuo/YATg0nUzVBY77BVEwI=
+X-Google-Smtp-Source: ABdhPJyVerZ7kTETC1sj4a++2KaIrnmnVsoNwXURsfnsmOjiK201IA3PvHyxBwulo02v2AtiCTEtu5CVe/zyyuB4VAI=
+X-Received: by 2002:a63:141e:: with SMTP id u30mr21335338pgl.31.1616382402241;
+ Sun, 21 Mar 2021 20:06:42 -0700 (PDT)
+MIME-Version: 1.0
+From:   shadewither <shdwthr@gmail.com>
+Date:   Mon, 22 Mar 2021 11:06:31 +0800
+Message-ID: <CAKrd5586jDVOSF-aYqqtA=Dt-Qn=zC89MHXkpS=7hNHP779stg@mail.gmail.com>
+Subject: How to disable git verification of ssl proxy?
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-*  Junio C Hamano <gitster@pobox.com> <xmqq1rc89nk7.fsf@gitster.g>
-Wrote on Sun, 21 Mar 2021 14:58:16 -0700
-> Madhu <enometh@meer.net> writes:
->> If the .git/config file is a symlink (as is the case of a .git created
->> by the contrib/workdir/git-new-workdir script) then the filemode tests
->> fail, and the filemode is reset to be false.  To avoid this only munge
->> core.filemode if .git/config is a regular file.
->
-> Hmph, what's the sequence of events?  You let "git new-workdir" to
-> create a cheap copy of a working tree and then?  When new-workdir
-> returns, you already have a functional working tree with .git/
-> directory (in which there are many symbolic links).  So who wants or
-> needs to run "git init" there in the directory in the first place?
+git version 2.25.1 / Ubuntu 20.04
+http.sslverify=false does not work. git insists on verifying ssl proxy
+and complains.
+curl has an option of --proxy-insecure to disable proxy verification,
+what is the equivalent for git?
 
-In this case it was part of a script which created commits from
-tarballs.  If there was no .git git-init would create it. If there
-was, and it should ov harmlessly "re-initialized" it (whatever that
-means)
+$ GIT_CURL_VERBOSE=1 git ...
+* Couldn't find host github.com in the .netrc file; using defaults
+*   Trying 127.0.0.1:1088...
+* TCP_NODELAY set
+* Connected to 127.0.0.1 (127.0.0.1) port 1088 (#0)
+* found 391 certificates in /etc/ssl/certs
+* ALPN, offering http/1.1
+* SSL connection using TLS1.3 / ECDHE_RSA_AES_256_GCM_SHA384
+* server certificate verification OK
+* server certificate status verification SKIPPED
+* error fetching CN from cert:The requested data were not available.
+* SSL: certificate subject name () does not match target host name '127.0.0.1'
+* Closing connection 0
+fatal: unable to access 'https://github.com/gdabah/distorm.git/': SSL:
+certificate subject name () does not match target host name
+'127.0.0.1'
 
-> Is the problem being solved that running an unnecessary "git init"
-> in an already initialized repository does an unnecessary filemode
-> check?
-
-Yes the problem could have be avoided by not calling git-init in an
-existing repository.  But the docs say that if there is a .git
-directory, it would "reinitialize it".  Re-initialization was not
-expected to change the filemode incorrectly.
-
-git-new-workdir is extremly useful in this case. With no overhead I
-can create a .git without doing a checkout. Then i can move the .git
-into a directory where the tarball has been unpacked - do a "git add
--A -f", "git commit" I expect the commit to have the exact contents of
-the tarball. and by paying attention to commit info and dates i have a
-commit-sha1 reproducible history which can be created anywhere.
-
-If the filemode is being changed in .git/config without my knowledge
-all further commits in the repo are affected future tarball imports
-are corrupted.
-
-I was using this extensively to track changes to point releases and
-the impact is serious (personally) and I have a lot of useless
-repositories which I have been tracking for over a year whose
-histories are not commit-sha reproducible.
-
-> If that is the case, I am not sure if asking "is it a symlink?" to
-> avoid the filemode trustability check is a good approach.  At that
-> point in the code you are patching, we have already determined if we
-> are running the "git init" in an already initialized repository
-> (i.e. "reinit"), so shouldn't we be basing the decision on it
-> instead?
-
-> I see that in a later part of the same function, we test if the
-> filesystem supports symbolic links but do so only when we are
-> running "git init" afresh.  Perhaps the filemode trustability check
-> and the config-set to record core.filemode should all be moved there
-> inside the "if (!reinit)" block.
->
-> All of the above assumes that the problem being solved is about what
-> happens when "git init" is run in an already functioning working
-> tree.  If I misread what problem you are trying to solve, then none
-> of what I suggested in the above may apply.
-
-I think you have understood the problem.  At present But doing the
-filemode trustability check on .git/config assumes it is a regular
-file anyway if it is to work at all.  My suggestion in the patch only
-enforces that assumption explicitly.
+--
+yours,
+shdwthr@gmail.com
