@@ -2,108 +2,154 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BAB4CC433DB
-	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 05:48:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A44D1C433E8
+	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 05:54:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 75E4461606
-	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 05:48:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 93B3461992
+	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 05:54:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229728AbhCVFr5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Mar 2021 01:47:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49420 "EHLO
+        id S229912AbhCVFxv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Mar 2021 01:53:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50696 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229547AbhCVFrZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Mar 2021 01:47:25 -0400
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4529C061574
-        for <git@vger.kernel.org>; Sun, 21 Mar 2021 22:47:24 -0700 (PDT)
-Received: by mail-pj1-x102e.google.com with SMTP id lr1-20020a17090b4b81b02900ea0a3f38c1so10556209pjb.0
-        for <git@vger.kernel.org>; Sun, 21 Mar 2021 22:47:24 -0700 (PDT)
+        with ESMTP id S229884AbhCVFxY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Mar 2021 01:53:24 -0400
+Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77927C061574
+        for <git@vger.kernel.org>; Sun, 21 Mar 2021 22:53:23 -0700 (PDT)
+Received: by mail-pl1-x631.google.com with SMTP id o2so5965358plg.1
+        for <git@vger.kernel.org>; Sun, 21 Mar 2021 22:53:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
+        h=subject:to:references:cc:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=hpT5SccL+IMXRptCgWM3YPnfvnZ6aiVHLdbFK5R9pyg=;
-        b=IwXlDnh7vGhsOxuGSflLBdMUL9BL8bVYnnWk0I1tAYbxOkmGFBJ9TWGHWfsGx2jZbo
-         THFi+QBItcqeSynGTKMlMVfUMSy2nUD2bzchZD2uKootUsK08/p18HWPwds0PcAcvZJV
-         dkCXBhrf1JvYLmZTcY95UkrKnOzEHQu/s6W84fS+V4Vx08KjIVQM1laHuEd75gwaFWXZ
-         rSD3ALfHBSb2Bq5gdbX857w5iQ0lODmoqmx7EmLHfBuwS0dseSfPiR/uf3pBNd3dZKuv
-         CIekx4kamRVnszjw9JAGmWU80rOUprIcD32X7NBl5fs8boy0OicSBT2PrqMHY1LH54hy
-         Gnng==
+        bh=Nwtkm98jexnWi6GfiEgKhFCC27so9AAC8jI/RmKqhR4=;
+        b=GCpiQZoUz4VGTtnghykfSADj0mgYvpQxa1moyYUzSeBS+ZrDPo7PZMqD9dYLWb8/Q/
+         zle4VehQ1AcwGhjGfphVDnRm2t+8zumEzRsAtB4Idr1ngNxY3ebg2QfBPWCXxjUSzhQq
+         1y85Lki4mO4b9uU6/kdU2PRzEmZ8AtC98e6NIRWMAFZb1pnUaOl2s2fWJeLfrtRHbUVc
+         YI3tNsvyXZ+T3K823C5agxfFrmOYJ2y3w5Qkn9UtVlnxmcfpB2zg+9tsEFwKBFzQOTtC
+         QN59cnU6F876A91iAbC+nMlyJuFNvPaIEWvUDAUNvd2NNHjmKT/1tH6aOTyZ7HBYzk8B
+         Abdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=hpT5SccL+IMXRptCgWM3YPnfvnZ6aiVHLdbFK5R9pyg=;
-        b=q1PSQ1IbKaiPVrOoVXZOqyen33DyUm7soU6JwFG7f1EbvPIWqtKyLgkmSoSfoz84H/
-         AwTN4w7/cDWLyRxGjYMRNBaXh2vwLWGx9mYeQcENUzidFT5UIwud5TJDUqZssvYkEOe4
-         iiU07u0wLw5CMLsKE1laEgWQ9J6ed9jjeZijTGst9hzkoqSEhY4QDxJhO/FXm3vOS672
-         eq5whpdQQ4G0fhJ0w1XzQrSrN+kn7Ty7sQenk8nN351fjEzq6C5NGNWpJt+w0S1XQ7vt
-         PWRN7sHUiARDhbPgtNA0DsiVOZThjyBTBdAP8pvNtEEhguWR2byjTcHZ8V3mw/f+smIY
-         bu/A==
-X-Gm-Message-State: AOAM531rJa10WkmVfqRu3NW++TJB5HZ2dJrBM61B9SOm7Lu35pws5uQl
-        9N9XiaIRGtXV3+ICROwHngL/oJ69DtaXFDBE
-X-Google-Smtp-Source: ABdhPJww537gP11dy1HUb/1ykXdSyE7r3FYqDeUOO/ZtP2HD2zXwpzZjZAoIGex38R3Gs6D+9ay36g==
-X-Received: by 2002:a17:90a:7847:: with SMTP id y7mr11811185pjl.65.1616392044247;
-        Sun, 21 Mar 2021 22:47:24 -0700 (PDT)
+        bh=Nwtkm98jexnWi6GfiEgKhFCC27so9AAC8jI/RmKqhR4=;
+        b=YSPo5ETVnydlMb7j8lTW2k1tcaHprtuOeN483G6dl5nN0nO4/6HikpHX7wqojCIWu0
+         HYRRapqahEIBVICU1ClOo4wanOgHUhY+XybBFTv7XAwN7vMEY9TAkKYCw6UpENUghWG9
+         HBS2km+lsmveiXTdOgq5GlAQDRTNA7GB1NLo0vuVxmAWdSeOi5UMpfUG1mzSCSWDqtuW
+         gbDojzYdqgF5yaA0yuPNbU9f3IJG+LD2JoeyBxEZmwKa9bWTQ6YDggMZO3sXdeMuaXqC
+         MmrStCkL+Pvki2IbRrRE9LiDRUkmHkUirTCCgOPXYRITjEEbCsNcziOmPx5r2Bk8E/iW
+         z35Q==
+X-Gm-Message-State: AOAM533Vr2+RIijBxsrzuBsxggTdlwdCXBdsNuzgJKkmae6oNV6DxCRM
+        mrJkZjcZFckuGYVCcmRPIulHIWqUqFBKZikT
+X-Google-Smtp-Source: ABdhPJzzkQiCb6RAC10J0g9e25RFp8rNEbU3puqDmXhLHSTXV2P2DF0tWOVrEe+nmBQqd39T01teOA==
+X-Received: by 2002:a17:902:9306:b029:e6:ac65:468e with SMTP id bc6-20020a1709029306b02900e6ac65468emr25406695plb.16.1616392402853;
+        Sun, 21 Mar 2021 22:53:22 -0700 (PDT)
 Received: from [192.168.43.80] (subs03-180-214-233-16.three.co.id. [180.214.233.16])
-        by smtp.gmail.com with ESMTPSA id b24sm11180225pgj.58.2021.03.21.22.47.22
+        by smtp.gmail.com with ESMTPSA id p22sm12087131pjg.39.2021.03.21.22.53.21
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 21 Mar 2021 22:47:23 -0700 (PDT)
-Subject: Re: Blob hash of binary files in patches generated by git format
- patch show in full form instead of short form
-To:     Junio C Hamano <gitster@pobox.com>
+        Sun, 21 Mar 2021 22:53:22 -0700 (PDT)
+Subject: Re: git diff --text does not work during rebase for binary files
+To:     =?UTF-8?B?0JTQuNC70Y/QvSDQn9Cw0LvQsNGD0LfQvtCy?= 
+        <dilyan.palauzov@aegee.org>
+References: <6afc8f1365627f08247f73da7e7e362c0b8ea560.camel@aegee.org>
 Cc:     git@vger.kernel.org
-References: <499c9922-eb42-c2a8-b4b4-8e5197ea0fc6@gmail.com>
- <xmqqblbcbehd.fsf@gitster.g>
 From:   Bagas Sanjaya <bagasdotme@gmail.com>
-Message-ID: <56cde808-95c3-2e22-2dab-880061d51473@gmail.com>
-Date:   Mon, 22 Mar 2021 12:47:21 +0700
+Message-ID: <4ef94ca7-ec69-f350-1d76-6bb8745786f1@gmail.com>
+Date:   Mon, 22 Mar 2021 12:53:19 +0700
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.8.1
 MIME-Version: 1.0
-In-Reply-To: <xmqqblbcbehd.fsf@gitster.g>
+In-Reply-To: <6afc8f1365627f08247f73da7e7e362c0b8ea560.camel@aegee.org>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 22/03/21 00.31, Junio C Hamano wrote:
-> Bagas Sanjaya <bagasdotme@gmail.com> writes:
+
+
+On 22/03/21 00.30, Дилян Палаузов wrote:
+> Hello,
 > 
->> What's different between what you expected and what actually happened?
->>
->> Blob hash for binary files are shown in full form, as opposed to blob hash
->> for text files.
+> I create a small text file ending with \0 and add it to git:
+
+Did you mean `echo -e "\0" >> a.txt`?
+
+> In .gitattributes I specify:
 > 
-> This is working as intended, designed and implemented.
+> *.txt diff merge=text text
 > 
-> The textual patch is meant to be applicable on target text that may
-> even have been slightly modified from the original from which the
-> patch was taken, and the abbreviated object name on the "index" line
-> is there mostly for human's sanity check and as a visual aid.
-> Ordinarily it is not used to actually find the matching blob object
-> (and it is not an error if there is no matching blob object in the
-> repository that a patch application is attempted in).
+> I create several commits by changing the small text file.
 > 
-> But the binary patch is designed to be applicable only to an exact
-> copy of the original and nowhere else.  The object name is given in
-> full, instead of using abbreviated form, to ensure that we do not
-> try to apply a binary patch to an object whose name is "similar".
+> The result is at https://github.com/dilyanpalauzov/git-diff-biinary .
 > 
-> Thanks.
+> I do now
+> 
+>    git rebase -i HEAD~2
+> and before the “second commit” type E to edit that commit.
+> 
+> I change the small file.
+> 
+> git add a.txt && git rebase --continue
+> 
+> git says:
+> 
+> [detached HEAD bc00e34] second commit
+>   Date: Sun Mar 21 19:16:15 2021 +0200
+>   1 file changed, 2 insertions(+), 1 deletion(-)
+> warning: Cannot merge binary files: a.txt (HEAD vs. 04c77de (third
+> commit))
+> Auto-merging a.txt
+> CONFLICT (content): Merge conflict in a.txt
+> error: could not apply 04c77de... third commit
+> Resolve all conflicts manually, mark them as resolved with
+> "git add/rm <conflicted_files>", then run "git rebase --continue".
+> You can instead skip this commit: run "git rebase --skip".
+> To abort and get back to the state before "git rebase", run "git rebase
+> --abort".
+> Could not apply 04c77de... third commit
+> 
+> 
+> 'git diff' and 'git diff --text' show:
+> 
+> diff --cc a.txt
+> index 7a61015,dc817ec..0000000
+> --- a/a.txt
+> +++ b/a.txt
+> 
+> The file does not contain <<HEAD===>>> markers, despite having
+> merge=text attribute.
+> 
+> HOW CAN I force git diff to show the differences and git merge to
+> include the <<<===>>> markers?
+> 
+> I have to say, that at different occassions git diff --text does work
+> ass expected (e.g. when I call git diff --cached --text).
+> 
+> I call now
+> git rebase --abort
+> git log -p
+> 
+> git shows the differences in the small text file ending with \0.  So
+> apparently log reads the option, but diff does not.
+> 
+> Using git 2.30.2.
+> 
+> Greetings
+>    Дилян
 > 
 
-Hmm... but I don't see that in the documentation for git format-patch.
-Maybe I need to send doc update.
+Does `file a.txt` shows it as being binary file? I do the similar and it just says "data".
 
 -- 
 An old man doll... just what I always wanted! - Clara
