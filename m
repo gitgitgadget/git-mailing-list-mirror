@@ -2,111 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F1C26C433DB
-	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 09:35:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A828EC433C1
+	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 10:07:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A4FAF60233
-	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 09:35:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 649D961969
+	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 10:07:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229933AbhCVJep (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Mar 2021 05:34:45 -0400
-Received: from smtp1-g21.free.fr ([212.27.42.1]:41790 "EHLO smtp1-g21.free.fr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229547AbhCVJeT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Mar 2021 05:34:19 -0400
-Received: from zimbra39-e7.priv.proxad.net (unknown [172.20.243.189])
-        by smtp1-g21.free.fr (Postfix) with ESMTP id 1278FB00571;
-        Mon, 22 Mar 2021 10:33:48 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-        s=smtp-20201208; t=1616405628;
-        bh=rTIST2q5UQipnmJJGZaA7J1yCiPwHyus1iSRmP5ZMpA=;
-        h=Date:From:To:Cc:In-Reply-To:Subject:From;
-        b=KgxmG3eLFpfM5oboaxclxLjnUV4OS4BKnGOm+wd7dGjyq/lE92HzIHzuUZ8WiTY7e
-         XkUlR/VmDYiPgCBmCvKffvz7wmGgEv9MDlARIKbl4huL8yAkHcAh9xnt+BU9MWHhGk
-         OGPs9y65NEAWA01ltJAISBbOcqLtVSZIdvkggqVjSeLsWWrib4nwmp95RVOMKHa/WI
-         XEYeu3uwDmXy+R8DGDOk8qvbgjxiAaOejGsZPHdLqGeStsZjDrE54ANoBrZw8EosHf
-         /nw/JYPYEfrhcuRqD0WYpVqKZGSeoJJlXBpfgPMHP9b7sGVuKS52FLZhp5RNiATdUm
-         FrlJiMCYAnyLQ==
-Date:   Mon, 22 Mar 2021 10:33:48 +0100 (CET)
-From:   ydirson@free.fr
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Message-ID: <529810619.466659941.1616405628030.JavaMail.root@zimbra39-e7>
-In-Reply-To: <CAP8UFD3r+kJTxYCvaToyQXO59PNJiZOfOFwUz7FzTfs=hMuHWQ@mail.gmail.com>
-Subject: Re: [RFC] git-rebase-rewind, nested rebases, remembering stgit
+        id S229482AbhCVKHA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Mar 2021 06:07:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48720 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229760AbhCVKGj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Mar 2021 06:06:39 -0400
+Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DE2EC061574
+        for <git@vger.kernel.org>; Mon, 22 Mar 2021 03:06:39 -0700 (PDT)
+Received: by mail-pf1-x435.google.com with SMTP id q5so10594795pfh.10
+        for <git@vger.kernel.org>; Mon, 22 Mar 2021 03:06:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:from:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=vtOtns4rgYSn8/kHVULWT5G8XKRygCJdSwfCGcxDmtk=;
+        b=AJoNMfl13ZiySyPKmGIMLtPhLODglbnxFszblj8qn388z55zu2FPBMTJDcpHwcd+jg
+         G23aaA9Q82/dU9dxbv0IMM3igfxr1Ary/84chLUFH0btOyh2CJsOc1SWBBSuzGySnuqC
+         PBykyprnOeH2JHOCHwIwD2rAKofqH6V5RNhXu3Ob9LrA88aNLKw19xyHPO1ijTPTBy9d
+         WXxkEIFu210KM1ENb3IVqnxWp176Zhu3mFOcWjQwS2jSgpa/bzKIf4pSw+DYVLWCQzOH
+         b04ma4aDRbBiB5oTL543zOJIL6pYsY/+trPOrZ0vLYwkwGmxsoGPhrqM4IQ0uVtJmtTc
+         syTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=vtOtns4rgYSn8/kHVULWT5G8XKRygCJdSwfCGcxDmtk=;
+        b=alp2XvgFSPpBqnVUoGMU/uExSIL3CUHS8tXb4XIWtQExJNX8AtVuqekPK7iaGbuf34
+         znbjvsq07azLHxVbkqD4vmHzfteCTBLL8V0jqInefdzsRaP9QpsJ9fSHKNpF2IVYKkAs
+         RTIfH0mN9B6kcBN9LtLlIRcBO2+IT1y7INRCXu9vnvK7j2spd6Pg/LiToVlFxP1wg/3W
+         /wupa/PgGyz8sdTbuPF44tjxbZRDltsVfNElN9VV+0bp3gDtMSmQ7qLJidEWI+3gxRy0
+         Jvdg3xLeD5JkOMNARVP7jYOrdN0fR9s8oXnk8YnjfQeA1zNMCvC0szWRdG6oJNmxUCwu
+         O1Zg==
+X-Gm-Message-State: AOAM530LF0PtDe1NI4r0JTHY9cXSjk9EwyJD9/zn5MYy7qFBtYmv5fkW
+        6o1uc9Nz5SVl/6xD4QxZLncJRbe9HmCwvDFd
+X-Google-Smtp-Source: ABdhPJwZwuDBvoFtcC0RaAB4kqk781cjtMcDTVKLuPv4mgck+2kyUNcnODCaHnyehr5EK2GxRTw7aw==
+X-Received: by 2002:a63:f247:: with SMTP id d7mr7951604pgk.112.1616407598910;
+        Mon, 22 Mar 2021 03:06:38 -0700 (PDT)
+Received: from [192.168.43.80] (subs32-116-206-28-58.three.co.id. [116.206.28.58])
+        by smtp.gmail.com with ESMTPSA id 2sm12919937pfi.116.2021.03.22.03.06.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 22 Mar 2021 03:06:38 -0700 (PDT)
+Subject: Re: Blob hash of binary files in patches generated by git format
+ patch show in full form instead of short form
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+References: <499c9922-eb42-c2a8-b4b4-8e5197ea0fc6@gmail.com>
+ <xmqqblbcbehd.fsf@gitster.g> <56cde808-95c3-2e22-2dab-880061d51473@gmail.com>
+Message-ID: <a29052c9-b309-080a-537e-af6114116930@gmail.com>
+Date:   Mon, 22 Mar 2021 17:06:35 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [88.120.44.86]
-X-Mailer: Zimbra 7.2.0-GA2598 (ZimbraWebClient - FF3.0 (Linux)/7.2.0-GA2598)
-X-Authenticated-User: ydirson@free.fr
+In-Reply-To: <56cde808-95c3-2e22-2dab-880061d51473@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Christian,
+Oh oh oh, I see git diff format for generating patches in documentation for
+git diff-files.
 
-> De: "Christian Couder" <christian.couder@gmail.com>
-> =C3=80: "Yann Dirson" <ydirson@free.fr>
-> Cc: "git" <git@vger.kernel.org>
-> Envoy=C3=A9: Lundi 22 Mars 2021 09:49:23
-> Objet: Re: [RFC] git-rebase-rewind, nested rebases, remembering stgit
->=20
-> Hi Yann,
->=20
-> Nice to hear from you on the list!
->=20
-> On Sat, Mar 13, 2021 at 5:45 PM <ydirson@free.fr> wrote:
-> >
-> > Hello there,
-> >
-> > I often find myself doing iterative refactorings, which can lead to
-> > long branches, and while rebasing to edit HEAD~10 realize that I
-> > first
-> > need to edit HEAD~20 or to add more commits below that stack.
-> >
-> > If you've used stgit when it was a thing, you probably see how it
-> > helped doing that.  While git-rebase has grown to do much more than
-> > stgit in most areas, this is still one area where with a pain point
-> > for me.
-> >
-> > Here is a small git-rebase-rewind script I've been using for a few
-> > weeks,
-> > starting with my most common use-case: automate worklow "edit
-> > git-rebase-todo
-> > to prepend 'pick' commands for the N previous commits, then reset
-> > --hard HEAD~N".
-> >
-> > As you will see from the new needs revealed by using this script
-> > (see in the
-> > script header), I believe it would be valuable to integrate such a
-> > mechanism
-> > directly into git-rebase.  Notably, "git rebase -i" itself can be
-> > seen as a
-> > form of rewind, and this rewind feature would benefit from all the
-> > interactive
-> > rebase work.
-> >
-> > Does that sound like reasonable premises ?
->=20
-> Sorry for the late answer. It sounds reasonable to me.
->=20
-> It looks to me like a way to restart the whole interactive rebase
-> process though, so I wonder if calling it "--restart" would be better
-> than "--rewind".
+On 22/03/21 12.47, Bagas Sanjaya wrote:
+> On 22/03/21 00.31, Junio C Hamano wrote:
+>> Bagas Sanjaya <bagasdotme@gmail.com> writes:
+>>
+>>> What's different between what you expected and what actually happened?
+>>>
+>>> Blob hash for binary files are shown in full form, as opposed to blob hash
+>>> for text files.
+>>
+>> This is working as intended, designed and implemented.
+>>
+>> The textual patch is meant to be applicable on target text that may
+>> even have been slightly modified from the original from which the
+>> patch was taken, and the abbreviated object name on the "index" line
+>> is there mostly for human's sanity check and as a visual aid.
+>> Ordinarily it is not used to actually find the matching blob object
+>> (and it is not an error if there is no matching blob object in the
+>> repository that a patch application is attempted in).
+>>
+>> But the binary patch is designed to be applicable only to an exact
+>> copy of the original and nowhere else.  The object name is given in
+>> full, instead of using abbreviated form, to ensure that we do not
+>> try to apply a binary patch to an object whose name is "similar".
+>>
+>> Thanks.
+>>
+> 
+> Hmm... but I don't see that in the documentation for git format-patch.
+> Maybe I need to send doc update.
+> 
 
-Right, it is indeed like doing another interactive rebase while the
-current one is not finished.  Maybe just running "rebase -i" without
-more option could be sufficient ?  That could break the expectation
-when someone relies on rebase refusing to proceed while already rebasing,
-though it could be mitigated if a "rebase --abort" just aborts the
-most recent rebase.
-
-There are quite a few UI issues to be thought through around here :)
-
-
+-- 
+An old man doll... just what I always wanted! - Clara
