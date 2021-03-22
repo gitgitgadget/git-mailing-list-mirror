@@ -2,126 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 16471C433C1
-	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 21:37:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A5A8C433E0
+	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 21:56:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D8EF3619A3
-	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 21:37:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4C2EE619A9
+	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 21:56:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229904AbhCVVhO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Mar 2021 17:37:14 -0400
-Received: from mout.gmx.net ([212.227.15.15]:42809 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229647AbhCVVgu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Mar 2021 17:36:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1616449005;
-        bh=IqpPXd8HpmIJ7PcluGPYPvS7gMyZreW1BQ9yqVIEzMw=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=ItHvgZlyImSMajfdEJOSMLDHpxdoF7Pg2xM3hheDyq4XUSJPpgpDdnRe+/cY6sNU4
-         HxF1h/E9m6Iz/EmEa5SXuRLTWziovyBHvBdVFTwf3bk9fMKZApIi0BgI9BDH6PG2p4
-         iGSf7VD43PLzPzdDRWlgblNoHG70Zuin95RlaDnM=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.27.144.62] ([213.196.212.127]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MGhyS-1lTSQw46wk-00DnSB; Mon, 22
- Mar 2021 22:36:45 +0100
-Date:   Mon, 22 Mar 2021 22:36:46 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Alban Gruin <alban.gruin@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v7 03/15] t6060: add tests for removed files
-In-Reply-To: <20210317204939.17890-4-alban.gruin@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2103222235150.50@tvgsbejvaqbjf.bet>
-References: <20201124115315.13311-1-alban.gruin@gmail.com> <20210317204939.17890-1-alban.gruin@gmail.com> <20210317204939.17890-4-alban.gruin@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S229591AbhCVV4A (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Mar 2021 17:56:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60988 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230095AbhCVVzf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Mar 2021 17:55:35 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AD77C061756
+        for <git@vger.kernel.org>; Mon, 22 Mar 2021 14:55:33 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id k10so23783657ejg.0
+        for <git@vger.kernel.org>; Mon, 22 Mar 2021 14:55:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=H/xYGtC+yEMMFApi5ZnBOvSowR6uTULVvAdvufBXUqw=;
+        b=W+23tIvjzhhT89Rj7q+roFOhKrKWbjxtM/qdOXYWvm5ECqE0txAP85Mtp+EBtA7400
+         sRjZ5vXK1s7JeOn5NZCBmHV7ReaXcvtVu4ZVXf/IBZ26iri/hnCZApgEzbvnxQ4JrHWf
+         yizAA4BUZVStwdr6k1BVjBmZrbYOahQo7pk4+7DOpMxlVZ3Z+n0fuMKD0n7v9nhZskN7
+         u8WGgXyarHMH94PrhwMoCZj9M9sI19qf0EE4brlduD7pNIoSuU2JKU1JSNSL1aMIFyEw
+         8IUzhgXtbxdNYDnoLZ5dPfAqM+xEwFqCefSTfSTIN4lULOm1Xxly1qMWMMjoVteb28nR
+         fD+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=H/xYGtC+yEMMFApi5ZnBOvSowR6uTULVvAdvufBXUqw=;
+        b=gHo8+zozjq4JP4R5VYWntBa6zSLcvcUoyu3VlgKG9e7j+aYySURdTEpMAdyWGHPJcy
+         QIGYEn7dzrG1PyvpJTl8qRzPSHB3jmGj/tuT3fGqaqSH/sNgQMB+n4epk5sAb6bV/PmU
+         YmLLVThwcjPsL+E95f2On5n5RFJLAytYfjM/Iii4X6lj98NZIypuFwhDrnysc5+Us5GB
+         Gy1ULbnmuLwY1TgWrLVlUgbdLwZdDrLvAAQZgEGBjNTCahrvSkk1tpT11ug0GFQOFEtu
+         14yk1hIsQXords8Q7zKe1aCEA2To21qkdOhKbitnX41HUVGTjD3jm3UbnoiqXfSMVBi9
+         aSEw==
+X-Gm-Message-State: AOAM530ZKCJl3mlX3+h+pRFOuLgqIQG2sLamhbTKPZHQ5OSClSCEWsrQ
+        qKYjr//MbkwTEsUFhpNgqknxWavzktIv8KQUj9M=
+X-Google-Smtp-Source: ABdhPJxLUC40dyGMv9W+iHZcX49D6CtFytpwSJx5Kw3qB0xiIGzp2lECLY5T8CBG3uhTBj/ZWc1VJ4IHuN+40K7+y/c=
+X-Received: by 2002:a17:906:5acd:: with SMTP id x13mr1767784ejs.211.1616450131996;
+ Mon, 22 Mar 2021 14:55:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:gTnbjehJ2ZX+qj/DJdrb7x6K1rkfP7FgVP8Y0PcEVylXsKvBWmo
- XNcXbIRykJ4sc9oVj/cFjliapal7QcSZj5ZoF90T0ZLQ3v+auCZZudFzk/HixhpUUpXAPt/
- kqZznX3PjKDthER77YhWoaDuay/FWXpQKQnoC4rvgcCXO9fsQVVRSX25P5ipsVDDKZnHwXs
- C7d0R8cdtoL+qvziSYPAg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:u7pzhn3ettQ=:KECbE89V4wBOuYG2RZjwMP
- M7WoCi71jKMwTRcuE0XxBfRNdx554XigrIPKXRUwldnFqXHaMtv8WafuUriJpjXqbWC/kCs0z
- Pl37BkJ+ynHf76BCsLW3H5nphzmF6swrV+K5/qGK4nU7CJdwM8oYMsubyCoRWMPHDMGWgGUex
- Y1qs01FiepgfPvdvsF/VV6Q8CYYbf2Kq/nmbzz++fEyYDxPvpixRTsg8vnOlcA/7wssk5esih
- b0S8ZBj1RZxpWF2wpgqA63fSt0U9ZcGowYCD0VDG1f/kFsGLhFxDPFMnqrDcx0F4qg+1njfBh
- /1KGDIDzp4bN27DdADLriiUSRbAnzd5uKpL5xQFhibkF/jcQMTYt5zAigISMH3B24ElHqog2p
- LkZEdu2/Y3Dh8iYvVzEvfj+nRfAHktdO2ZTRBS8f2eUHimVJePjNoZuMlbg53z6vZZQQEoZSL
- NZtRR70CMFcSMxAJ2so4VeMUqm8F+D5gEgKM2m+ciMEf8wtq6VvImpItR1GY0zzoC7lwwtiSO
- 0LQDCSH/BGSFO4/9WMchoAWBHwZ/7kauGtB4O8NeqA9AizcGtGMn2mY1UMw3o1ruuALRpS/LB
- yTWabB7yRKLc64NFolc+GelyC3ehZ2EDS2R0vnrGtHmv88xwpgT8/BFTxLnnrVyTfZPJ3yso0
- oRibm7sBx0y14KQ19FJybUrAdoc9XeaKqS6m8OfA+qMtFIKCCu13Y69+bcLLTpBacqLX0a2aj
- cDrtMCRUmvq18K0/Hw96dZEdX3ZvM76m3/DcEP+0aZKTyq+13TCPWH9gwofl6FHwCeElbxq40
- aMba83q32ZT7+3bH34g3emEnANDpOaek/pe427Fc6J7I7NRCs76KFt4cbuT/7I4vYPSstHC/c
- 00TUoADlnXftLoICU+LxKSmeaV7UArMxTRiUpUZGg=
-Content-Transfer-Encoding: quoted-printable
+References: <pull.901.v12.git.1616247681211.gitgitgadget@gmail.com>
+ <pull.901.v13.git.1616387093662.gitgitgadget@gmail.com> <CAP8UFD0rtX0m+fGcvGFtsFFKZ2LVyxHx8dptYFvM9kWnbxEwFA@mail.gmail.com>
+ <CAOLTT8Ty5kabU6ivX946=FDWJ4SEXBzPinq2aG5t7Rp9jCCEPA@mail.gmail.com>
+In-Reply-To: <CAOLTT8Ty5kabU6ivX946=FDWJ4SEXBzPinq2aG5t7Rp9jCCEPA@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 22 Mar 2021 22:55:20 +0100
+Message-ID: <CAP8UFD275WiHC2sUJjsnLd1yonfMO-SVda=BZ6mMkgDxGs959g@mail.gmail.com>
+Subject: Re: [PATCH v13] [GSOC] commit: add --trailer option
+To:     ZheNing Hu <adlternative@gmail.com>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>,
+        "Bradley M. Kuhn" <bkuhn@sfconservancy.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Brandon Casey <drafnel@gmail.com>,
+        Shourya Shukla <periperidip@gmail.com>,
+        Rafael Silva <rafaeloliveira.cs@gmail.com>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Alban,
+On Mon, Mar 22, 2021 at 11:23 AM ZheNing Hu <adlternative@gmail.com> wrote:
 
-On Wed, 17 Mar 2021, Alban Gruin wrote:
+> 2.
+> `git interpret-trailers --in-place`  seem like work on git top-dir,
+> If I am in a sub-dir `b` and I want to change a file such as `d.c`,
+> then I must use `git interpret-trailers --in-place b/d.c` to add some
+> trailers.
 
-> Until now, t6060 did not not check git-mere-one-file's behaviour when a
+What happens without --in-place? Are the input files read correctly?
 
-Channeling my inner Eric Sunshine: s/mere-one/merge-one/ ;-)
+> I think the original intention of `--in-place` is to modify a file similar to
+> "$COMMIT_MSG_FILE", so make it run at top-dir, but this is not reflected
+> in the git documentation. This at least confuses people who use this
+> option for the first time. Is it worth modifying? Or is there something
+> wrong with the design of `--in-place`?
 
-> file is deleted in a branch.  To avoid regressions on this during the
-> conversion, this adds a new file, `file3', in the commit tagged as`base'=
-, and
-
-Maybe "during the conversion from shell script to C"?
-
-Other than that, looks good to me! Thanks,
-Dscho
-
-> deletes it in the commit tagged as `two'.
->
-> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
-> ---
->  t/t6060-merge-index.sh | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
->
-> diff --git a/t/t6060-merge-index.sh b/t/t6060-merge-index.sh
-> index 9e15ceb957..0cbd8a1f7f 100755
-> --- a/t/t6060-merge-index.sh
-> +++ b/t/t6060-merge-index.sh
-> @@ -8,12 +8,14 @@ test_expect_success 'setup diverging branches' '
->  		echo $i
->  	done >file &&
->  	cp file file2 &&
-> -	git add file file2 &&
-> +	cp file file3 &&
-> +	git add file file2 file3 &&
->  	git commit -m base &&
->  	git tag base &&
->  	sed s/2/two/ <file >tmp &&
->  	mv tmp file &&
->  	cp file file2 &&
-> +	git rm file3 &&
->  	git commit -a -m two &&
->  	git tag two &&
->  	git checkout -b other HEAD^ &&
-> @@ -41,6 +43,7 @@ test_expect_success 'read-tree does not resolve conten=
-t merge' '
->  	cat >expect <<-\EOF &&
->  	file
->  	file2
-> +	file3
->  	EOF
->  	git read-tree -i -m base ten two &&
->  	git diff-files --name-only --diff-filter=3DU >unmerged &&
-> --
-> 2.31.0
->
->
+I haven't checked but there is perhaps a bug in
+create_in_place_tempfile() in "trailer.c".
