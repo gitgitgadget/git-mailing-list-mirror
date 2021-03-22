@@ -2,154 +2,148 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 44B4EC433C1
-	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 21:14:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8542DC433DB
+	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 21:35:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F0AB461934
-	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 21:14:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 584686191D
+	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 21:35:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231411AbhCVVNw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Mar 2021 17:13:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51944 "EHLO
+        id S230008AbhCVVfC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Mar 2021 17:35:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56494 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230264AbhCVVNR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Mar 2021 17:13:17 -0400
-Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06A24C061574
-        for <git@vger.kernel.org>; Mon, 22 Mar 2021 14:13:17 -0700 (PDT)
-Received: by mail-pf1-x42c.google.com with SMTP id x126so12009527pfc.13
-        for <git@vger.kernel.org>; Mon, 22 Mar 2021 14:13:17 -0700 (PDT)
+        with ESMTP id S229467AbhCVVef (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Mar 2021 17:34:35 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E409C061574
+        for <git@vger.kernel.org>; Mon, 22 Mar 2021 14:34:35 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id hq27so23690465ejc.9
+        for <git@vger.kernel.org>; Mon, 22 Mar 2021 14:34:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=h88/hav2nx/qsl+BSBrF71MeDMvvkn+SjsYOnwlASnY=;
-        b=MjXDsEPlKdcUD/HT71Pz+YWj0l1W/L5fgxG6iS96djKHrj4MYxiMarDsEOv/+Hq8hN
-         mMVlEOypHv+9V2bgC4Xt7ssiuZsBv6MPRa1aHJciGCNkPdPDpwn2+90ypJHOUwqngW1Z
-         g7kSLN+K/VnJDmo9KOQLUFz4xGFAR+IV7hLfM9KFkjN7hIEu7nMJgK/4h3l5Bo0dQ0TD
-         zz4qYPkOTuw8Q3dIEshZbhWslGl3fmXrhB8N+RUidl2TpGrDc9zrbyNuH7kw3acxG72F
-         Q4bPKm7CoO3nXByt+mxGqNzI2IkOMCf/wlO+u52Ooquisb1spceNgoncoR1e45Nr0Vq8
-         mJ9g==
+        bh=LM57kOnr11HrH03RgGQ56tIitTFNvJsqsKOSA+zkW6k=;
+        b=PrYHyVcHADufhHPbw58zExFQKrJRfXQ6qvb59F9Z8i2CfO+nrcIGq8srTc3fFgFXcf
+         xsEPDaN+UoqaEYYXJyggW9U5cNdiw8D8pb3HXvGPJDG0Ze2G2/5SoII7m6qGKFBk2ZMv
+         EVwauVQRbN1m0DejflqM8fcrjhmb3W043mCMvy6NiiTX1b8Ei3jFJHRcXJn84/TKM2ip
+         BzVcXczv1D+pWyLNFgcYWBsSMw84SWpUVdEfkgFBueRjjNEKuYQOrDfiHdvvG8K6lzp3
+         8yTSbp0aFlUR3z+vAXrgvwMiY1dMKMjF+SMbQaNRHq234iAAby2m3GxIoja9gXAONyNC
+         JPjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=h88/hav2nx/qsl+BSBrF71MeDMvvkn+SjsYOnwlASnY=;
-        b=WomPGyc+iztaWFvmStcY5B6UNBP45dJCRaY2pvOOJ2HqrqBBXfchRasx9bDrbztpt+
-         /Q9uut2eKTXt/RiKRtQlwVi/cKGWMfnmtS57TOzXpH8HK/W0j6StiYFoDXfKLetZ3VKG
-         EWB4oWSZL8T3PTs4ZxwRvGgsrv7cCNeOcsXOzWza3nopUXicFvg3i1eMiZMI8CfdtKQe
-         U8p3i3dCvBO4PvAuhsRH/A6xvKLgE5RsCLdanGOTQ9fL47Rtd2JyElnhDzPPAofQuPuS
-         3CMy5Oz3IVyrmcF7B0EOtscJWUOGkg8AXzJCZL1G+GJsK2NIqI1N9rTHS1nspLWSD2gX
-         0tOw==
-X-Gm-Message-State: AOAM531I1vPH3NIOBcQYN9cOl9EdS/kNfgzBJv8beYvrPuCR51jUOFIP
-        IjgrKvYaPVZ+jqmUkunKW2Iabm8P7CaaRvv8P+W39eknsxxuYHPt/g8=
-X-Google-Smtp-Source: ABdhPJzGiRLNWIbFzu//B59W7SCFxOX4ATat5kNIXIBPpmrWKJzpK158yjkhN1RfQ4tyOr7T4tSn7BlRzE09QYeWEtA=
-X-Received: by 2002:a17:902:e752:b029:e6:822c:355c with SMTP id
- p18-20020a170902e752b02900e6822c355cmr1547937plf.69.1616447596560; Mon, 22
- Mar 2021 14:13:16 -0700 (PDT)
+        bh=LM57kOnr11HrH03RgGQ56tIitTFNvJsqsKOSA+zkW6k=;
+        b=lXWRBtw/2cTDysJvhOkbFRGTFsEpsPEcBZkaud13P6CVfFiOITtfZow+sfT0+CMalC
+         +3oHqCA3o7DXswJRqOG9JL27lqFnllD4+hVTuy7IT25JmxouyQkYrnk7lghcz0qw6x6J
+         Yg3qfJqic7CGbSWh38ZcOUf3zOQtLgMzSibIEp2bKTc4IHHeNecuLf3UzNwv+Z/tDzg7
+         cl6jyVR+Kjdd04GReU+RhB6TNUH5hZqlSevs281E17Fp4FFNMTN23+HdfXe6gc5UpgG+
+         fwjJkRMtUG19QNTIUbNKDiamI49DnaMZGqpScJ7qQK9PuDRirDq0OzR8747+3lsP61Z6
+         qt1g==
+X-Gm-Message-State: AOAM532dYXVOhu5/zz7flLT3opAeVfIYDgLUgGTGS1QL64LIed3whut2
+        WpV8J5ZjAUz2KfZBO9pd0fnI9eGBWy8g55/b3wc=
+X-Google-Smtp-Source: ABdhPJwjZGDg8G8/sMlCKwGZu+ZSkh0kq3QirQpce1HfRboOMpzMDV8HjnDG2DUMA0Q/E2genMAZ+mcL3XDbo4jT11o=
+X-Received: by 2002:a17:906:c405:: with SMTP id u5mr1716579ejz.341.1616448873812;
+ Mon, 22 Mar 2021 14:34:33 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210322162008.468779-1-robert.foss@linaro.org> <875z1jqgpq.fsf@evledraar.gmail.com>
-In-Reply-To: <875z1jqgpq.fsf@evledraar.gmail.com>
-From:   Robert Foss <robert.foss@linaro.org>
-Date:   Mon, 22 Mar 2021 22:13:05 +0100
-Message-ID: <CAG3jFysGE-Wq2ReXmNa2VGPOWMW_MDn++Xv_WvAYW9EiQjAbdA@mail.gmail.com>
-Subject: Re: [PATCH v1] git-send-email: Respect core.hooksPath setting
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Drew DeVault <sir@cmpwn.com>,
-        Rafael Aquini <aquini@redhat.com>,
-        =?UTF-8?Q?Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
+References: <pull.901.v12.git.1616247681211.gitgitgadget@gmail.com>
+ <pull.901.v13.git.1616387093662.gitgitgadget@gmail.com> <CAP8UFD0rtX0m+fGcvGFtsFFKZ2LVyxHx8dptYFvM9kWnbxEwFA@mail.gmail.com>
+ <CAOLTT8Ty5kabU6ivX946=FDWJ4SEXBzPinq2aG5t7Rp9jCCEPA@mail.gmail.com>
+In-Reply-To: <CAOLTT8Ty5kabU6ivX946=FDWJ4SEXBzPinq2aG5t7Rp9jCCEPA@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 22 Mar 2021 22:34:21 +0100
+Message-ID: <CAP8UFD3fYTc8=y+kru-mN5KmTsnqc6X8mf14VtyWf1Nj9CJ1EQ@mail.gmail.com>
+Subject: Re: [PATCH v13] [GSOC] commit: add --trailer option
+To:     ZheNing Hu <adlternative@gmail.com>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>,
+        "Bradley M. Kuhn" <bkuhn@sfconservancy.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Brandon Casey <drafnel@gmail.com>,
+        Shourya Shukla <periperidip@gmail.com>,
+        Rafael Silva <rafaeloliveira.cs@gmail.com>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey =C3=86var,
-
-Thank you for the quick feedback.
-
-On Mon, 22 Mar 2021 at 17:46, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avara=
-b@gmail.com> wrote:
+On Mon, Mar 22, 2021 at 11:23 AM ZheNing Hu <adlternative@gmail.com> wrote:
 >
->
-> On Mon, Mar 22 2021, Robert Foss wrote:
->
-> > get-send-email currently makes the assumption that the
-> > 'sendemail-validate' hook exists inside of the repository.
-> >
-> > Since the introduction of `core.hooksPath` configuration option in
-> > v2.9, this is no longer true.
-> >
-> > Instead of assuming a hardcoded repo relative path, query
-> > git for the actual path of the hooks directory.
-> >
-> > Signed-off-by: Robert Foss <robert.foss@linaro.org>
-> > ---
-> >
-> >
-> > This patch does not include a test for this bug fix.
-> > This is entirely due to me not being able to think up a way
-> > to test this. So I'm very much open to suggestions.
->
-> There's an "invoke hook" test in t9001-send-email.sh which should be
-> easy to tweak (or mostly copy/pasted to another test) to run the same
-> way once the hook is moved from .git/hooks to somedir/ and -c
-> core.hooksPath=3Dsomedir is set.
+> Christian Couder <christian.couder@gmail.com> =E4=BA=8E2021=E5=B9=B43=E6=
+=9C=8822=E6=97=A5=E5=91=A8=E4=B8=80 =E4=B8=8B=E5=8D=883:43=E5=86=99=E9=81=
+=93=EF=BC=9A
 
-Ack
-
-
+> > Nice that you have added such a test!
 >
-> >  git-send-email.perl | 5 +++--
-> >  1 file changed, 3 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/git-send-email.perl b/git-send-email.perl
-> > index 1f425c0809..3934dceb70 100755
-> > --- a/git-send-email.perl
-> > +++ b/git-send-email.perl
-> > @@ -1942,8 +1942,9 @@ sub validate_patch {
-> >       my ($fn, $xfer_encoding) =3D @_;
-> >
-> >       if ($repo) {
-> > -             my $validate_hook =3D catfile(catdir($repo->repo_path(), =
-'hooks'),
-> > -                                         'sendemail-validate');
-> > +             my $hook_path =3D $repo->command('rev-parse', '--git-path=
-', 'hooks');
-> > +             chomp($hook_path);
-> > +             my $validate_hook =3D catfile($hook_path, 'sendemail-vali=
-date');
+> Thanks.
 >
-> This looks like it work, small nits:
+> But at the same time I have two little doubt.
 >
-> 1. This would be better in perl/Git.pm, it already has various accessors
->    etc. for these rev-parse'd values. You could just pass a a new
->    GetHooksPath =3D> 1 to Git->repository() and if so populate this, then
->    call that as $repo->git_path_hooks.
-
-I reworked this, but being a level 1 perl coder I don't quite grok the
-"GetHooksPath =3D> 1 to Git->repository()" part of your suggestion.
-
-https://github.com/robertfoss/git/commit/9388d1f66b8d182f0dcc869f627736596a=
-f382da
-
-This is what I came up with.
-
+> 1.
+> If we have your config:
 >
-> 2. FWIW it's more idiomatic in perl to just do : chomp(my $x =3D y()); no=
-t
->    my $x =3D y(); chomp $x. The chomp operator works in-place, but once
->    you'd use the helpers in Git.pm for this they'd do all that for you.
+> $ git config trailer.sign.key "Signed-off-by: "
+> $ git config trailer.sign.ifexists replace
+> $ git config trailer.sign.command "git log --author=3D'\$ARG' -1
+> --format=3D'format:%aN <%aE>'"
 >
-> >               my $hook_error;
-> >               if (-x $validate_hook) {
-> >                       my $target =3D abs_path($fn);
+> Then I touch a test.c and use:
 >
+> $ git interpret-trailers --in-place test.c
+>
+> without `--trailer`, See what is happen:
+>
+> It seem like your local repo last commit "name <email>" pair
+> have been record in `test.c`.
+>
+> Could this be considered a bug?
 
-Ack
+First it seems strange to use `git interpret-trailers` on a "test.c"
+file. It's supposed to be used on commit messages.
+
+Then, as the doc says, every command specified by any
+"trailer.<token>.command" config option is run at least once when `git
+interpret-trailers` is run. This is because users might want to
+automatically add some trailers all the time.
+
+If you want nothing to happen when $ARG isn't set, you can change the
+config option to something like:
+
+$ git config trailer.sign.command "NAME=3D'\$ARG'; test -n \"\$NAME\" &&
+git log --author=3D\"\$NAME\" -1 --format=3D'format:%aN <%aE>' || true"
+
+(This is because it looks like $ARG is replaced only once with the
+actual value, which is perhaps a bug. Otherwise something like the
+following might work:
+
+git config trailer.sign.command "test -n '\$ARG' && git log
+--author=3D'\$ARG' -1 --format=3D'format:%aN <%aE>' || true")
+
+Then you can run `git interpret-trailers` with the --trim-empty option
+like this:
+
+------
+$ git interpret-trailers --trim-empty --trailer sign=3DLinus<<EOF
+EOF
+
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+------
+
+or like:
+
+------
+$ git interpret-trailers --trim-empty<<EOF
+> EOF
+
+------
