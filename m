@@ -2,115 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F0037C433DB
-	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 00:40:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76001C433DB
+	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 01:09:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B9CD36192C
-	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 00:40:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4823661937
+	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 01:09:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229692AbhCVAjh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 21 Mar 2021 20:39:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40232 "EHLO
+        id S229829AbhCVBIu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 21 Mar 2021 21:08:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229579AbhCVAjV (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 Mar 2021 20:39:21 -0400
-Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A112BC061574
-        for <git@vger.kernel.org>; Sun, 21 Mar 2021 17:39:20 -0700 (PDT)
-Received: by mail-ot1-x335.google.com with SMTP id 68-20020a9d0f4a0000b02901b663e6258dso14293551ott.13
-        for <git@vger.kernel.org>; Sun, 21 Mar 2021 17:39:20 -0700 (PDT)
+        with ESMTP id S229574AbhCVBIk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 Mar 2021 21:08:40 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D72A1C061574
+        for <git@vger.kernel.org>; Sun, 21 Mar 2021 18:08:39 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id y1so18977352ljm.10
+        for <git@vger.kernel.org>; Sun, 21 Mar 2021 18:08:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=usp.br; s=usp-google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=3BfcwI5C06hLJV6WUhFHAOSoRVkvColOTJrEYxDg7mw=;
-        b=PNYd5+Dhng2kaDTFHRN+CIpnPBMaARoDEIf153faSOGNMYo7nSK/Tt20gDHe9UPaZM
-         ZV/y8V7wulSHB4ecPQfnAiFddnuThUbOXWtZsx7meDfYQhA6nKKXci1sPCVjkrrs84De
-         WIF2twCToRq4ZLCOkwYoZP/MZQRkGd86ASx9SUGMoZVUURuctkuoM+X/1hrCeFXdC5bB
-         6490LO9glcUAyhlgjg9COovX/2lcte5ce8umWR0fdHEb6h/pIcbMvLVPIiYHwnd2LWLG
-         SXTnVMMjqZ06awKTd84SA2m7c1IWM2gJuYAJM0jA+dvgQ/rWp0jF/YZKygkXhtVEbuE8
-         WOlg==
+        bh=NP+Ri+oRDru6473xEDOSDrCzAyZHxDq2MO6gTKcKU40=;
+        b=oAFJLJmqDxEPID7RTdazf3i4zMWYO5x1MEdX6zY/WnQmNVGuz5QPBvbbPmngs2mhQG
+         vbwrpV9ji5gBhNcR7W19DZ5B85Y6wl3tmLnk3Hou128O/uCEWVgf/4P6GwX0zPDzLq4p
+         umKDGTzyo5n7/zo5tIP2AA33625URSsmNqp3AZJJgzsQJO0f0VDk/nQ0XAs3JqN66pMz
+         P+Af3GGwLtSizrXJ1FEtNxuiB75GA2KB7HdYxR7tum/LJs7b4tqC6xZ4Bwnt96jLTMQ5
+         pGpBzUePSHuX8ik1z4noNOinwZHQVzOWWKdUxKl/G6KXHHXATGYPROGyGflH9too+czV
+         Kh8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=3BfcwI5C06hLJV6WUhFHAOSoRVkvColOTJrEYxDg7mw=;
-        b=qwKqVc0ruMSk2wQAIaURTfJQA/FfbtQYIRFq9X/KiH4P8Li5TAN8GY616v+rkS32sT
-         VVpDZjth//ljvMCYKDz7WAIzpfCpYikvWC+7tW7uQkISPOtL/MCyZMoTP2FZPaYGeZk9
-         E4nsHbfFz3mdFtBnF5qtTDr9ZSebSqU2G9xLd2bcteG2JP9KDJ/qBprLayvhkW5LK66F
-         9G35GChq66Zib06KVkuGQsQV+5ZpF2T05vz6ZDM0TdQoWH+X246vmnDOma6wM8/qzRq9
-         hSFESmBHNG39tVTjRWXYinBn79paafedmZ145MQtSCF45A8Fdys9YGiKqH3liZHXhu++
-         73tA==
-X-Gm-Message-State: AOAM532jKIwHu8Ze53G3QSzoxpjL1yQDgL0FgAki0aG2QWry+xF1hOas
-        1S3jxmMM1jR5gxcvXpGcqr9uDqoE5XlalaCn6Oc=
-X-Google-Smtp-Source: ABdhPJxH04uazDzSnXwxybJIH1UgUrnde4zNjteD/FoVc/8g4iW2st0HsgKFLiZmuuBqeZGriFJNa0oBsz19styiYtQ=
-X-Received: by 2002:a05:6830:17d7:: with SMTP id p23mr9571833ota.164.1616373559877;
- Sun, 21 Mar 2021 17:39:19 -0700 (PDT)
+        bh=NP+Ri+oRDru6473xEDOSDrCzAyZHxDq2MO6gTKcKU40=;
+        b=WobkwLXYGfEpe0jMnnisTelrVRYPjnYWHf1YMB0J1elvg+qIM5GVkTWuw0tGrxIXuE
+         +2YtFqJtKj2T9REULodRgiLFrq8juvTlh+KVMm6aPTplAPwMkM3LZPIWMHaGl/yXDKAQ
+         jBnB71/XwM1900BF7U5sikdJ+bTiOCQ7vvxVJxFJytioTCLQZ+LX8czxPZXN8XG6ykOw
+         WxVHfA7JbUzC6+QyqJ0chNsU+pv3/9g0uf3Yc5TNrDKsaRueFiJnbKn5TNPNv5HbGe7X
+         U5Xt4zMGRaMi4ImvhMSHTM0eNvdi+pPj94AEMcBgvp4kSZn5tvqLeY4knJwWlawamF3u
+         GmdA==
+X-Gm-Message-State: AOAM530Z4Qj/ChF1Sw5ES/tD7C0FnTsFNowQ1YWRoe9ldkyYukr+3nor
+        W+UI/vU9HjPjHEy4F4nww2TgeAjsJAyNfLpkk7Esyw==
+X-Google-Smtp-Source: ABdhPJyoNpoemA9ta8Lmo33gTjpNvyn65cA7ySoTaf9d+D8Ki3y/xvBnYf/qaq8JK2I9fHJO4unrabl1APCFn84qhYk=
+X-Received: by 2002:a2e:9047:: with SMTP id n7mr8070716ljg.291.1616375318372;
+ Sun, 21 Mar 2021 18:08:38 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.911.git.1616251299.gitgitgadget@gmail.com>
- <pull.911.v2.git.1616317134.gitgitgadget@gmail.com> <8b8b236a4ffb81a8c6be3f320b878cea1d0f9d7a.1616317135.git.gitgitgadget@gmail.com>
- <CAP8UFD1Oo-eWmoV-1mh1M=pA8+yRUYHy1wg8NvN3bthmCHBfvQ@mail.gmail.com> <xmqqwnu0bga9.fsf@gitster.g>
-In-Reply-To: <xmqqwnu0bga9.fsf@gitster.g>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Mon, 22 Mar 2021 08:39:08 +0800
-Message-ID: <CAOLTT8TU+XwLmDQRROHW6iumFgMKok9mi+_OBmN4FbvgWkNb7Q@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] [GSOC] interpret-trailer: easy parse trailer value
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>,
-        "Bradley M. Kuhn" <bkuhn@sfconservancy.org>,
-        Brandon Casey <drafnel@gmail.com>,
-        Shourya Shukla <periperidip@gmail.com>,
-        Rafael Silva <rafaeloliveira.cs@gmail.com>,
-        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <cover.1615588108.git.matheus.bernardino@usp.br>
+ <d25ea10560b501d2ca77b567927a0bb9bc874a1e.1615588109.git.matheus.bernardino@usp.br>
+ <87h7l4qfdn.fsf@evledraar.gmail.com>
+In-Reply-To: <87h7l4qfdn.fsf@evledraar.gmail.com>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Sun, 21 Mar 2021 22:08:27 -0300
+Message-ID: <CAHd-oW7bycPCnAtme1+LnKxnBbUFdaoi11ff7J5OPgcfqExktw@mail.gmail.com>
+Subject: Re: [PATCH v3 7/7] rm: honor sparse checkout patterns
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B43=E6=9C=8822=E6=97=
-=A5=E5=91=A8=E4=B8=80 =E4=B8=8A=E5=8D=8812:52=E5=86=99=E9=81=93=EF=BC=9A
+On Sun, Mar 21, 2021 at 8:03 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 >
-> Christian Couder <christian.couder@gmail.com> writes:
 >
-> >> "Signed-off-by:C O <Mister@email.com>" is often too
-> >> verbose and error-prone.
-> >
-> > The 'trailer.<token>.command' config option can already be used to
-> > help with that, for example:
-> >
-> > -------
-> > $ git config trailer.sign.key "Signed-off-by: "
-> > $ git config trailer.sign.ifexists replace
-> > $ git config trailer.sign.command "git log --author=3D'\$ARG' -1
-> > --format=3D'format:%aN <%aE>'"
-> > $ git interpret-trailers --trailer sign=3DLinus<<EOF
-> > subject
-> >
-> > body
-> > EOF
-> > subject
-> >
-> > body
-> >
-> > Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-> > -------
-> >
-> > So even without this patch, after your first patch that implements
-> > `git commit --trailer ...`, it should be easy to setup something less
-> > verbose and less error-prone.
+> On Fri, Mar 12 2021, Matheus Tavares wrote:
 >
-> It is nice that it makes the complexity of 2/2 unnecessary ;-)
+> > +     test_expect_success "rm${opt:+ $opt} does not remove sparse entri=
+es" '
+> > +             git sparse-checkout set a &&
+> > +             test_must_fail git rm $opt b 2>stderr &&
+> > +             test_i18ncmp b_error_and_hint stderr &&
+> > +             git ls-files --error-unmatch b
+> > +     '
+> > +done
+> > +
+> > +test_expect_success 'recursive rm does not remove sparse entries' '
+> > +     git reset --hard &&
+> > +     git sparse-checkout set sub/dir &&
+> > +     git rm -r sub &&
+> > +     git status --porcelain -uno >actual &&
+> > +     echo "D  sub/dir/e" >expected &&
+> > +     test_cmp expected actual
+> > +'
+> > +
+> > +test_expect_success 'rm obeys advice.updateSparsePath' '
+> > +     git reset --hard &&
+> > +     git sparse-checkout set a &&
+> > +     test_must_fail git -c advice.updateSparsePath=3Dfalse rm b 2>stde=
+rr &&
+> > +     test_i18ncmp sparse_entry_b_error stderr
+>
+> Calls to the test_i18ncmp function should just be test_cmp now. See
+> 1108cea7f8e (tests: remove most uses of test_i18ncmp, 2021-02-11).
 
-A little frustrated, both `--own-identity` and `@nickname` seem to be
- rejected. I will roll back to the first patch.
+Thanks for letting me know, I'll fix it for the next version.
