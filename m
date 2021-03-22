@@ -4,90 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1873C433C1
-	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 18:37:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ECA4DC433C1
+	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 18:42:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9D1066196C
-	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 18:37:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A7343619A0
+	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 18:42:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231313AbhCVSgd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Mar 2021 14:36:33 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62623 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230517AbhCVSgM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Mar 2021 14:36:12 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DAA03B1AE2;
-        Mon, 22 Mar 2021 14:36:11 -0400 (EDT)
+        id S231916AbhCVSm0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Mar 2021 14:42:26 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:50420 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231557AbhCVSly (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Mar 2021 14:41:54 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 97B5C123C63;
+        Mon, 22 Mar 2021 14:41:53 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=248psW4DjXIh
-        5H19uY1AZICORhg=; b=i+w9BQwbfQ+rUZO2pdulgb6xCXxNIgSzuPSYeqmtgV9B
-        0TgeRka3ES6sXCZsB2SUuGLSEhkUUM9vaLtihH6tIARvCAiUTThUn9w1A9FT7dx2
-        zkMVnD6ga/LTjqCbUuFffWSBi73+2rznDGhBEcHONbvX3m1FgXafce738w/v86E=
+        :content-type; s=sasl; bh=brGHHEzJ+yqc6+Q30R2BtsS+uro=; b=eA43GG
+        2bWey4h/i5ewLHNTmcReeKY7gayhPPHBfr1Qu8mBkdsdxBYX7LssyI44p4KUibdO
+        XvMmnZ3FlOU7HUAFF+F3+FhgrAz8Cx4Fp6rjA18XpbWpar00WjTZaaVft/D5+A64
+        mRChtToklSlRdzGsp9YuTkysKWyAXo6pXbfps=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=rArG5u
-        Y9/ObISJBfJMwOH+U+qDZFkZjzEx3+Ez1TDKNeFUQbnQj/GQVgGF9jrX5gqpHnmv
-        qLJzJ1ZWa2pEiICSehBDMGf0OabS7OYil04a3WeBtnrAOrKLFXFNqZHJzImEmsJ6
-        5RcLjGCGeDr9QV46KPbbK4f+tN8zVxpqUhllI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D1A31B1AE1;
-        Mon, 22 Mar 2021 14:36:11 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=osqgcpdBxyQqHjL1TxXv2rlYD4vDrq8x
+        h0DZLo9YdsidW7qn9uWRDHcC4t3m85av5Ls67CzZ7r7IMcGRbb4PebrUDysprs06
+        pRrDA61MQfeKxTSxHIJ2IV6evX5bVCTTTJjY46W7UV/tHQDO3EdLWcr081ay8R0W
+        k9H1K+uNMQ4=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 91666123C62;
+        Mon, 22 Mar 2021 14:41:53 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5D7CFB1AE0;
-        Mon, 22 Mar 2021 14:36:11 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D8407123C60;
+        Mon, 22 Mar 2021 14:41:50 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Han-Wen Nienhuys <hanwen@google.com>, git <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>, Martin Fick <mfick@codeaurora.org>
-Subject: Re: Distinguishing FF vs non-FF updates in the reflog?
-References: <CAFQ2z_MefCwiWdhs0buJv5Zok+nsgaOvUCcsSnfm_PP0WozZKA@mail.gmail.com>
-        <87eeg7qpyr.fsf@evledraar.gmail.com>
-        <CAFQ2z_NSh3XxjGx56r=xBP2WBk7ggUjh4rXSb5ivPtkS_r4iBQ@mail.gmail.com>
-        <87blbbqju3.fsf@evledraar.gmail.com>
-        <CAFQ2z_ML8s0Gk4Zmg+2mxzkfP1AbL=zkeUG0yKEtoege7it-vA@mail.gmail.com>
-        <878s6fqgze.fsf@evledraar.gmail.com>
-Date:   Mon, 22 Mar 2021 11:36:10 -0700
-In-Reply-To: <878s6fqgze.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Mon, 22 Mar 2021 17:40:37 +0100")
-Message-ID: <xmqqh7l36nol.fsf@gitster.g>
+To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Cc:     git <git@vger.kernel.org>
+Subject: Re: What's cooking in git.git (Mar 2021, #06; Sat, 20)
+References: <xmqqzgyxijy6.fsf@gitster.g>
+        <CAHd-oW7zuRR2=2tU3J9NGeNCprE2p52aVK_RC0QSjsdzHLnZ=w@mail.gmail.com>
+Date:   Mon, 22 Mar 2021 11:41:49 -0700
+In-Reply-To: <CAHd-oW7zuRR2=2tU3J9NGeNCprE2p52aVK_RC0QSjsdzHLnZ=w@mail.gmail.com>
+        (Matheus Tavares Bernardino's message of "Mon, 22 Mar 2021 10:52:39
+        -0300")
+Message-ID: <xmqqa6qv6nf6.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 7994A2E4-8B3D-11EB-98FF-D152C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 43F04FE8-8B3E-11EB-81EC-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Matheus Tavares Bernardino <matheus.bernardino@usp.br> writes:
 
->> I'm confused.
->>
->> rows[0][1] =3D=3D "0f3a981cbd5be5f97e9504ab770cd88f988fe820"
->> rows[1][0] =3D=3D "0f3a981cbd5be5f97e9504ab770cd88f988fe820"
->>
->> they are the same. I don't understand your argument.
+> Hi, Junio
 >
-> Sorry, I mean same =3D ff update, not the same =3D non-ff. So I flipped
-> those around in describing it.
+> On Sat, Mar 20, 2021 at 6:40 PM Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> * mt/parallel-checkout-part-1 (2021-03-18) 9 commits
+>>   (merged to 'next' on 2021-03-19 at a1bc83ad8e)
+>>  + entry: add checkout_entry_ca() taking preloaded conv_attrs
+>>  + entry: move conv_attrs lookup up to checkout_entry()
+>>  + entry: extract update_ce_after_write() from write_entry()
+>>  + entry: make fstat_output() and read_blob_entry() public
+>>  + entry: extract a header file for entry.c functions
+>>  + convert: add classification for conv_attrs struct
+>>  + convert: add get_stream_filter_ca() variant
+>>  + convert: add [async_]convert_to_working_tree_ca() variants
+>>  + convert: make convert_attrs() and convert structs public
+>>  (this branch is used by mt/parallel-checkout-part-2.)
+>>
+>>  Preparatory API changes for parallel checkout.
+>>
+>>  Will merge to 'master'.
+>
+> Sorry for my confusion, but are you going to squash the `#include
+> "entry.h"` fix [1] or do you want me to re-roll this series with it?
 
-I am confused too.  Are you tacking something else, a gap in a run
-of reflog entries?  If I go from commit A to B to C, the first log
-entry would record the transtion from A->B, and the second entry
-would record the transition from B->C, and the lack of gap does not
-say anything about the relationship between A and B, or B and C.  A
-can be, and does not have to be, an ancestor of B, and B can be, and
-does not have to be, an ancestor of C.  Hopping from A to B to C would
-leave the same pair of reflog records and I do not think you can tell
-the reachability among A and B and C from them.
+I was planning to merge that down to 'master' as-is, with exactly
+the same merge-fix to deal with the entry.h fallout that we have
+been successfully using while merging the topic to 'seen' and
+'next', without any need to have an explicit "oops, entry.h needs to
+be included these days", but I think you are right---it would be
+cleaner to keep the rebased series build by itself.
 
+As we'll be rewinding and rebuilding 'next' soonish, let's kick the
+topic out of 'next' when it happens, so that we can replace it (and
+the part-2 topic that depends on it) with a reroll.
+
+Thanks.
