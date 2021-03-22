@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F35EFC433EA
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E2C34C433EB
 	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 10:31:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D4662619A3
+	by mail.kernel.org (Postfix) with ESMTP id C037B619A1
 	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 10:31:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230273AbhCVKaj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Mar 2021 06:30:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53814 "EHLO
+        id S230264AbhCVKai (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Mar 2021 06:30:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53812 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229962AbhCVK37 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230186AbhCVK37 (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 22 Mar 2021 06:29:59 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48496C061756
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E430FC061574
         for <git@vger.kernel.org>; Mon, 22 Mar 2021 03:29:58 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id v4so16065822wrp.13
+Received: by mail-wr1-x433.google.com with SMTP id b9so16075111wrt.8
         for <git@vger.kernel.org>; Mon, 22 Mar 2021 03:29:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=hZi6C6sQmeIRBlncuQOMliFiSKu+0LMYAJ0CX1WIRg0=;
-        b=HIwRE5akY/zr21XjS6Iskx7BfvRKgBveRccWYlBI/v1+S4CXRzUgpqXDqrAS1qw7ok
-         GobqTWflrrNArHJC4hbtiFhinjBRvEonmPRbqV6QQpelQxW9djC1znDb7qGffPfLCmwd
-         8EqkC5fBglFa9j2wzZmPAFrL0FyHRrkc+68I5fM7Thskr3VqRr19oJRQXMKh2tuscp2T
-         Frfcuve21vIFUzzTgmyl8GFh2LziHQBOAWL6X9nleMlrnp7p/5wRKxRwGjrC62k51VVZ
-         SyHUFJUxv00lycikdqgkOYd85ogga8Z3Osurmq9idcZiBKsdqYvTQQqqOtUcEgS6nAh3
-         E/xw==
+        bh=lHzIhsUhBoGLcHN3G24uN3UPY7gPzQXhJA11HE1H76c=;
+        b=ib+v/nqji2Mjpzs2h1I1/ewAV+wmHYp8j/qhC6/uobtUG4+RvL5e20AW5IKWymdNdF
+         QolZkdOexC/iet223hvzhAk0M5xZMRDj2yI+J1CXA5+xV5CS3HvAqJJiOxUpziAU8dxY
+         bHJ/VhtUpKGuoBxGazbAkOHNf14saiyVxY4llKvitUey4RUCi6BCgHErTO2HXweesSs4
+         v4iUWpj6KsGmjqCLPaK9RxG+0Bw9PsF0vEcujQKvcE2qI+nyvNfyJwj50GMtZAhRalzf
+         pP8hOSpDZGTpqhSeZJOLX2R9F/l9B7KdRqwsqZQ7LHy8Xhx/N3YGDRcBI7lJooMtyLqa
+         wvEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=hZi6C6sQmeIRBlncuQOMliFiSKu+0LMYAJ0CX1WIRg0=;
-        b=sOGtbM97/66XhoqE46rco3Y/920Mwjj99PWRE5j8YDzJUkgzJIy0qN1QlfuwubBetb
-         J8dIO8RuTFVD00ybSyOo68GUngdgsg/qBtTfBArBjrg52ZSNa0X5dYGDiWZAPPYLnyIK
-         zMrwu2C9M8+YcHuwjnTIAk+KLB0DOcivO789EP7lBiF+qlALWycl7LS0LylzqVCKLYgA
-         nXueVbF7WVVGPK2lbHsdhw9Hxhtcey7hjeiPHpSEPn6Jz9oHX/ozVYxKpB0TCvVDyBnI
-         R2EfpJGuBR+aAUpsRef41964F/m0lkUD4DuIIkmGpzfkBHVl3MlSBGAMglTWE2kSOXu5
-         eXdg==
-X-Gm-Message-State: AOAM530PEAgPKmokGo2OGbT1yXMZkq6x6rB6Oe3GT04Vz+9ttvtmp05W
-        +FZeLgWccxx0ATJk8vXNbYdbmjuBhhs=
-X-Google-Smtp-Source: ABdhPJxrLytsmx6eX1/qY8jJc/u1p5sQdy43KnWanjUUEBhA2N/OcCddywTifyc4iTAh2bzjvbyOmw==
-X-Received: by 2002:a5d:4341:: with SMTP id u1mr17520325wrr.88.1616408997117;
+        bh=lHzIhsUhBoGLcHN3G24uN3UPY7gPzQXhJA11HE1H76c=;
+        b=GMM9EfISPqEFjLQqbQbDLILRwic1iNuySkX2tPn7koY3sgdD67ORrN/+N5YjgGax0r
+         klPQpp6UCiezd9k6FnedhddlHM18Jk9Wb6WihcDpHCsJ9ihgQ13LpioLAhTaxM6d+jsw
+         0ZfPJ/QHliI0D6wRykhnXwdGEfeBi03+HIHliVbAJk2TFA/mOuv+MX9aGgZYQ6+Hh37G
+         fxuY0N54E5oN1BgyYVot28SODSvcraEIy3d9TNNTy3nnOpI4W2Y7zcAEPHW1kjXVKVsT
+         jqYzNJ4H2qsJgMCrDfVN8Eb7vM3gIQ6Lur7T3ua/Y0TSzxXVDl7+FUlpsYf0jgBYII5m
+         11QA==
+X-Gm-Message-State: AOAM531huc9kWfcR9THoS28S7llWwOpu3DvD1QBjZUWBfHI+RGeUFpSv
+        plASwfPuVrhdPDtuED7U9XMipeJ3Vzo=
+X-Google-Smtp-Source: ABdhPJxVTVxBUg+mOBTevYhSJ2H4P7E0hYkXGdsozQtJFu2segbaIvKn5bFJcKmIPAQ514BiDMbMqA==
+X-Received: by 2002:adf:b1de:: with SMTP id r30mr17856584wra.125.1616408997724;
         Mon, 22 Mar 2021 03:29:57 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n6sm22232080wrw.63.2021.03.22.03.29.56
+        by smtp.gmail.com with ESMTPSA id n1sm23043062wro.36.2021.03.22.03.29.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Mar 2021 03:29:56 -0700 (PDT)
-Message-Id: <3b71f52d862832f3eb65d4041baac4c3a9f3e153.1616408989.git.gitgitgadget@gmail.com>
+        Mon, 22 Mar 2021 03:29:57 -0700 (PDT)
+Message-Id: <5972a198361c153e000a9d11c05bec480cb9f4ce.1616408989.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.766.v7.git.1616408989.gitgitgadget@gmail.com>
 References: <pull.766.v6.git.1615842509.gitgitgadget@gmail.com>
         <pull.766.v7.git.1616408989.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 22 Mar 2021 10:29:44 +0000
-Subject: [PATCH v7 08/12] unix-socket: add backlog size option to
- unix_stream_listen()
+Date:   Mon, 22 Mar 2021 10:29:45 +0000
+Subject: [PATCH v7 09/12] unix-socket: disallow chdir() when creating unix
+ domain sockets
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,90 +83,109 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Update `unix_stream_listen()` to take an options structure to override
-default behaviors.  This commit includes the size of the `listen()` backlog.
+Calls to `chdir()` are dangerous in a multi-threaded context.  If
+`unix_stream_listen()` or `unix_stream_connect()` is given a socket
+pathname that is too long to fit in a `sockaddr_un` structure, it will
+`chdir()` to the parent directory of the requested socket pathname,
+create the socket using a relative pathname, and then `chdir()` back.
+This is not thread-safe.
+
+Teach `unix_sockaddr_init()` to not allow calls to `chdir()` when this
+flag is set.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- builtin/credential-cache--daemon.c |  3 ++-
- unix-socket.c                      | 11 +++++++++--
- unix-socket.h                      |  9 ++++++++-
- 3 files changed, 19 insertions(+), 4 deletions(-)
+ builtin/credential-cache.c |  2 +-
+ unix-socket.c              | 17 ++++++++++++-----
+ unix-socket.h              |  3 ++-
+ 3 files changed, 15 insertions(+), 7 deletions(-)
 
-diff --git a/builtin/credential-cache--daemon.c b/builtin/credential-cache--daemon.c
-index c61f123a3b81..4c6c89ab0de2 100644
---- a/builtin/credential-cache--daemon.c
-+++ b/builtin/credential-cache--daemon.c
-@@ -203,9 +203,10 @@ static int serve_cache_loop(int fd)
- 
- static void serve_cache(const char *socket_path, int debug)
+diff --git a/builtin/credential-cache.c b/builtin/credential-cache.c
+index 9b3f70990597..76a6ba37223f 100644
+--- a/builtin/credential-cache.c
++++ b/builtin/credential-cache.c
+@@ -14,7 +14,7 @@
+ static int send_request(const char *socket, const struct strbuf *out)
  {
-+	struct unix_stream_listen_opts opts = UNIX_STREAM_LISTEN_OPTS_INIT;
- 	int fd;
+ 	int got_data = 0;
+-	int fd = unix_stream_connect(socket);
++	int fd = unix_stream_connect(socket, 0);
  
--	fd = unix_stream_listen(socket_path);
-+	fd = unix_stream_listen(socket_path, &opts);
  	if (fd < 0)
- 		die_errno("unable to bind to '%s'", socket_path);
- 
+ 		return -1;
 diff --git a/unix-socket.c b/unix-socket.c
-index 69f81d64e9d5..012becd93d57 100644
+index 012becd93d57..e0be1badb58d 100644
 --- a/unix-socket.c
 +++ b/unix-socket.c
-@@ -1,6 +1,8 @@
- #include "cache.h"
- #include "unix-socket.h"
- 
-+#define DEFAULT_UNIX_STREAM_LISTEN_BACKLOG (5)
-+
- static int chdir_len(const char *orig, int len)
- {
- 	char *path = xmemdupz(orig, len);
-@@ -89,9 +91,11 @@ int unix_stream_connect(const char *path)
- 	return -1;
+@@ -30,16 +30,23 @@ static void unix_sockaddr_cleanup(struct unix_sockaddr_context *ctx)
  }
  
--int unix_stream_listen(const char *path)
-+int unix_stream_listen(const char *path,
-+		       const struct unix_stream_listen_opts *opts)
+ static int unix_sockaddr_init(struct sockaddr_un *sa, const char *path,
+-			      struct unix_sockaddr_context *ctx)
++			      struct unix_sockaddr_context *ctx,
++			      int disallow_chdir)
+ {
+ 	int size = strlen(path) + 1;
+ 
+ 	ctx->orig_dir = NULL;
+ 	if (size > sizeof(sa->sun_path)) {
+-		const char *slash = find_last_dir_sep(path);
++		const char *slash;
+ 		const char *dir;
+ 		struct strbuf cwd = STRBUF_INIT;
+ 
++		if (disallow_chdir) {
++			errno = ENAMETOOLONG;
++			return -1;
++		}
++
++		slash = find_last_dir_sep(path);
+ 		if (!slash) {
+ 			errno = ENAMETOOLONG;
+ 			return -1;
+@@ -65,13 +72,13 @@ static int unix_sockaddr_init(struct sockaddr_un *sa, const char *path,
+ 	return 0;
+ }
+ 
+-int unix_stream_connect(const char *path)
++int unix_stream_connect(const char *path, int disallow_chdir)
  {
  	int fd = -1, saved_errno;
-+	int backlog;
  	struct sockaddr_un sa;
  	struct unix_sockaddr_context ctx;
  
-@@ -106,7 +110,10 @@ int unix_stream_listen(const char *path)
- 	if (bind(fd, (struct sockaddr *)&sa, sizeof(sa)) < 0)
- 		goto fail;
+-	if (unix_sockaddr_init(&sa, path, &ctx) < 0)
++	if (unix_sockaddr_init(&sa, path, &ctx, disallow_chdir) < 0)
+ 		return -1;
+ 	fd = socket(AF_UNIX, SOCK_STREAM, 0);
+ 	if (fd < 0)
+@@ -101,7 +108,7 @@ int unix_stream_listen(const char *path,
  
--	if (listen(fd, 5) < 0)
-+	backlog = opts->listen_backlog_size;
-+	if (backlog <= 0)
-+		backlog = DEFAULT_UNIX_STREAM_LISTEN_BACKLOG;
-+	if (listen(fd, backlog) < 0)
- 		goto fail;
+ 	unlink(path);
  
- 	unix_sockaddr_cleanup(&ctx);
+-	if (unix_sockaddr_init(&sa, path, &ctx) < 0)
++	if (unix_sockaddr_init(&sa, path, &ctx, opts->disallow_chdir) < 0)
+ 		return -1;
+ 	fd = socket(AF_UNIX, SOCK_STREAM, 0);
+ 	if (fd < 0)
 diff --git a/unix-socket.h b/unix-socket.h
-index e271aeec5a07..ec2fb3ea7267 100644
+index ec2fb3ea7267..8542cdd7995d 100644
 --- a/unix-socket.h
 +++ b/unix-socket.h
-@@ -1,7 +1,14 @@
- #ifndef UNIX_SOCKET_H
- #define UNIX_SOCKET_H
+@@ -3,11 +3,12 @@
  
-+struct unix_stream_listen_opts {
-+	int listen_backlog_size;
-+};
-+
-+#define UNIX_STREAM_LISTEN_OPTS_INIT { 0 }
-+
- int unix_stream_connect(const char *path);
--int unix_stream_listen(const char *path);
-+int unix_stream_listen(const char *path,
-+		       const struct unix_stream_listen_opts *opts);
+ struct unix_stream_listen_opts {
+ 	int listen_backlog_size;
++	unsigned int disallow_chdir:1;
+ };
  
- #endif /* UNIX_SOCKET_H */
+ #define UNIX_STREAM_LISTEN_OPTS_INIT { 0 }
+ 
+-int unix_stream_connect(const char *path);
++int unix_stream_connect(const char *path, int disallow_chdir);
+ int unix_stream_listen(const char *path,
+ 		       const struct unix_stream_listen_opts *opts);
+ 
 -- 
 gitgitgadget
 
