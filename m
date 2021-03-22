@@ -2,164 +2,336 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=0.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 60641C433DB
-	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 13:27:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 84F04C433C1
+	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 13:47:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3157E6191F
-	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 13:27:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 568F76198C
+	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 13:47:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229979AbhCVN0p (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Mar 2021 09:26:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35540 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231355AbhCVN0j (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Mar 2021 09:26:39 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22E19C061574
-        for <git@vger.kernel.org>; Mon, 22 Mar 2021 06:26:39 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id dm8so19351338edb.2
-        for <git@vger.kernel.org>; Mon, 22 Mar 2021 06:26:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=4sB4oKuMK2L+P2CEg3CW9dLJurX8peiz/XPlnR27jG0=;
-        b=gTp/wRkkheK2kkYWvlfhUYe9qJYQ7+Ptud/yeMliWWL38YI5Idio09npN5ZH2tps+2
-         KspIN1hfx9MiUA04rvm+VSmJjEDvSzw6REwPbeyDQoX2SIJXcHdAECjSkXMq2ncGQjO0
-         HPkYOV4Nl0Fk6QoVFMcZPEx4C8FOczv30V77WB7zgbuqzr4Mrg6Bc+V7bAFaf5yKLgo0
-         cqdbdJe2homRQ6HfeFYgXdY1roNZHU5+zKa8GEQLso50eySytI0MOoZoPstkinAPucT8
-         SFcI4iUhirVpI1VM6TnQB8qJfjHPZScdvdEgc8cGxZxYblg82EsqlQfjhAlp5KH5fMcW
-         QMZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=4sB4oKuMK2L+P2CEg3CW9dLJurX8peiz/XPlnR27jG0=;
-        b=RXyNUMMmJxjk+q0PveBYGGi7Tg8f9MgP3JTCv+5Z1/BYmZx46w2zINxsHRhuK+Ridd
-         C0mAimpGilyjSl0grIUAnj4TcxMJxwj2BU6Dom0KuqlsTaFKo2m32iVbSlS72EbTrqfb
-         udRUaeBK3PCMWMW5qAtJ5vdPIUiM0QfRDF7fR+m996B2SyTNR2qzJNrLUjOi+wdyX7AY
-         KoNVl8v3QMF2n7PiN6qjVdw00YdtNCqlvV/DMzpKz60aD6rTUn6JeweoD3KpkCaa3+Z4
-         8tsjYrtQfFLyFvvX3hrX1YOrEEgyK7ENwYQ+D9QTNhJeFVvCLK4hR6u/eIv+RFvLSI12
-         gjzA==
-X-Gm-Message-State: AOAM530X8+aD5HV8UF5e37ESBW2u+sITi1cxgLRgGPLVYEiPEIzBX6Cc
-        /Xp2a4FzN9BVSOtJFYUiAfY=
-X-Google-Smtp-Source: ABdhPJwGw3MxBM7C0L/retTh7b9YhUpCZGbb3whZAJUBSZ/UatwwK11mrKL5v837w1ypwGQjOblZfQ==
-X-Received: by 2002:a05:6402:3486:: with SMTP id v6mr25469357edc.109.1616419597610;
-        Mon, 22 Mar 2021 06:26:37 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id b18sm9740375ejb.77.2021.03.22.06.26.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Mar 2021 06:26:36 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Han-Wen Nienhuys <hanwen@google.com>
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Martin Fick <mfick@codeaurora.org>
-Subject: Re: Distinguishing FF vs non-FF updates in the reflog?
-References: <CAFQ2z_MefCwiWdhs0buJv5Zok+nsgaOvUCcsSnfm_PP0WozZKA@mail.gmail.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <CAFQ2z_MefCwiWdhs0buJv5Zok+nsgaOvUCcsSnfm_PP0WozZKA@mail.gmail.com>
-Date:   Mon, 22 Mar 2021 14:26:36 +0100
-Message-ID: <87eeg7qpyr.fsf@evledraar.gmail.com>
+        id S229692AbhCVNrK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Mar 2021 09:47:10 -0400
+Received: from mout.gmx.net ([212.227.15.19]:43277 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230252AbhCVNqy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Mar 2021 09:46:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1616420795;
+        bh=3M9rh/WHMYlYnaVPDvEN5lSZm96cdSm+lW1on9Q4VBw=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=UDCKNf+3R6kUt6dMWw/89drDwhaa44MPs3wF/wdm2UXXZjMYOdgP12d9wuqsjolls
+         38H9qziOlLQsaF6chShylBc9KIccCRsCeGpXKDF6aOoO7yYyjUNR7JrU4QotD9GQcy
+         kKxXbHN46pQaSWBmaGSA/fNyrD7KtbvgWL6HlmyI=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.27.144.62] ([213.196.212.127]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MOiHl-1l268S2GoJ-00QCFT; Mon, 22
+ Mar 2021 14:46:35 +0100
+Date:   Mon, 22 Mar 2021 14:46:35 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>
+Subject: Re: [RFC/PATCH 7/7] test-lib: generate JUnit output via TAP
+In-Reply-To: <875z1lz6wl.fsf@evledraar.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2103221429200.50@tvgsbejvaqbjf.bet>
+References: <87r1kzj7xi.fsf@evledraar.gmail.com> <20210309160219.13779-8-avarab@gmail.com> <nycvar.QRO.7.76.6.2103191508280.57@tvgsbejvaqbjf.bet> <875z1lz6wl.fsf@evledraar.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-1245979093-1616420798=:50"
+X-Provags-ID: V03:K1:2+owf8qv7cUo2zWkNYSUH21QVEnaq35Gjlpkmi789azp8DkP0G3
+ NMmjrO6LwKie9GUof2sInUmvcZyzhmgKo7o32iE4q/e7xGMFnejBNijDtsZeTVG5iw6vnZQ
+ /E+Ry3KVFnwv/QS7alKYD5eZCBX1tILUpqzezz5536VEOJzu/8q6I9u08x27NY8wSkbozTC
+ 9qB+0Fc2Qmk56cHbs7Iog==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:9BJ8NYwtFug=:HDDBCLcYPBkscnCF5/O9jz
+ ieGNbWUDveO5C0kA8kQK848zlaFTSsBBg930TfwuJQzI0gRKjGNutwAa55uQMvYCeNxOX89s1
+ QqRhnODdBdi0x+i0mJbBiY+uDt88Yd/M4vjBJZtmBhrfQVEMvA7xI28bCBor+5R4n4sx7Zs5e
+ Xd1O0yuZRBkpHEuY+6EidFecrHz+olIihC57cv+veUGtIt3RD6L1w3VoI/YpLECu6aDEPE07g
+ ceiuD0uKPJr2x0WYbPVdBJqS5eQvoXYja2oqOtTaowuGXuNdvHKiuK/8yZ3hRuRETkCfzDm8H
+ A7BoeCADXRvlz5HgyQ454FIt+9kH8+83rS/PIpZydxP2aPNGkalhsEtd0t302U2UuL6GFPEAs
+ yAH3Rk0iTYPZLbDeYp+3ZjJVDhXH/0+4C6JHTGqqey7AfeoX5GIr7hoYQwUOD0K4E++vHEpuG
+ x9isrzyNNgRA8SQY8DyX9dr+hBpGDWmDMUi4h7uS9jS+ZsvCkxlAA2Ow4+HpjARev7Jyn172R
+ c4tlLsimkn286U6eu4uW++7wbDv56qUWZ4mPOsS3DMgFQXnJLmfbPRCcofYMnf+LOB6V0spd8
+ o8RxAInmbColHuM2T3vCtSOqOpU7jOd3SirOYZj+JzyYMED+5v8AwzRjzv4g+gjWJBrMGNJpC
+ uESVx6Q3sdtIjEpxJVBGLYEJg2crS7zFlLHc6n1+Nmp86vpoEBqfm2lltaci9oTERTKU9Dar6
+ f+rcwqGn+PXlhxYg0Qep3DE83fdFWffgpf216iSWVQVwTdh+V7TyN+vMj+3wp0TXA2FEUvN7O
+ tq/7TZyIUimF5Ic75hI/W80+EDEkv5wpFCB5IOigXO6WFH6VMG57c83ZiJolBZXL8frgzaJXW
+ agEOxSNLMZQSkjeP6wKd5YxpctS9bOo8+JpaWxdpc=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Wed, Mar 17 2021, Han-Wen Nienhuys wrote:
+--8323328-1245979093-1616420798=:50
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> Hi there,
+Hi =C3=86var,
+
+On Sun, 21 Mar 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+
+> On Fri, Mar 19 2021, Johannes Schindelin wrote:
 >
-> I'm working on some extensions to Gerrit for which it would be very
-> beneficial if we could tell from the reflog if an update is a
-> fast-forward or not: if we find a SHA1 in the reflog, and see there
-> were only FF updates since, we can be sure that the SHA1 is reachable
-> from the branch, without having to open packfiles and decode commits.
+> > On Tue, 9 Mar 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> >
+> >> Rewrite the home-brew JUnit output generation added in
+> >> 22231908151 (tests: optionally write results as JUnit-style .xml,
+> >> 2019-01-29) and other subsequent commits to be generated via the TAP
+> >> output.
+> >>
+> >> This is now possible that the TAP output emitted with --tee is
+> >> guaranteed to be valid TAP, see the preceding commit.
+> >>
+> >> The JUnit output is not bug-for-bug compatible with the previous
+> >> output, but it looks better to me.
+> >>
+> >> This also requires installing TAP::Formatter::JUnit[1], perhaps that'=
+s
+> >> not palatable to the users of the --write-junit-xml option.
+> >
+> > Indeed. I am trying to keep the dependencies required for the Windows =
+jobs
+> > of our CI/PR builds to a minimum.
 >
-> For the reftable format, I think we could store this easily by
-> introducing more record types. [snip].
+> I'm taking this to mean the dependency of the TAP::Formatter::JUnit CPAN
+> module. Since the tests already depend on Perl, and presumably that Perl
+> isn't so broken as to not have the built in TAP modules
+> (e.g. TAP::Parser).
 
-Aside from what others have mentioned here, you're talking about the
-log_type field are you not? I.e.:
-https://googlers.googlesource.com/sop/jgit/+/reftable/Documentation/technic=
-al/reftable.md#log-block-format
+I have no idea why you insist on modifying something that works quite
+well, but yeah, if you want to depend on the implementation detail that we
+_currently_ run even the Visual Studio tests (that do _not_ depend on
+`prove`) in an environment that has that dependency of `prove`, well, I
+guess I'll have to work on maintaining that state of affairs. Doesn't mean
+that it makes me happy. It really looks to me like a whole lot of work,
+without any benefit.
 
-Has that "log_type =3D 0x0" tombstone proven to be a worthwhile
-optimization past the stash case mention there (which is presumably not
-relevant to the vast majority of Google's use-cases).
+> > Note, also, that the JUnit output was mostly relevant for when we used
+> > Azure Pipelines: it has a specific UI to study test results, figure ou=
+t
+> > flaky tests, performance, etc.
+> >
+> > Now that we use GitHub Actions, we do not have such a nice test aggreg=
+ator
+> > anymore, but we might get one again in the future, who knows.
+>
+> So there's no known current active user of this JUnit output target, or
+> at least if such a user exists it's not you anymore?
+>
+> I'm guessing we'd be unlikely to miss someone targeting JUnit from
+> git.git's tests who's not on this list to chime in. So is it not used
+> currently & could be removed?
 
-I.e. it's redundant to looking at the record and seeing if new_id =3D
-ZERO_OID.
+No, I want to keep it because I hope that we'll get that lost
+functionality back some time soon.
 
-Similarly can't ff v.s. non-ff be deduced unambiguously by looking ahead
-to the next record, and seeing if the current record's "old_id" matches
-that of the last record's "new_id". If it does it's a FF, if not it's a
-non-FF (or a create/delete).
+Sorry for not spelling that out more clearly.
 
-I'm not arguing that a quicker lookup isn't needed, I'm just trying to
-dig at what "beneficial" here is. The format is ordered, and the common
-case is that the page we have in memory has the last record.
+> >> In any case, it'll be easy to whip up our own TAP emitter with a
+> >> TAP::Parser and TAP::Formatter, both of whom come with perl itself,
+> >> which we already rely on for tests.
+> >>
+> >> It should also be significantly faster on Windows,
+> >
+> > I really hate to have to harp on this when talking to you, but... well=
+,
+> > how can I say it? Perl is _slooooooooooooow_ on Windows.
+> >
+> > Like, _really_ slow. Ridiculously slow.
+> >
+> > I know, you recently got riled up when Jeff suggested that the Perl ho=
+ok
+> > calling FSMonior might be slow, but the truth is: it is super slow. It=
+'s
+> > not even funny how slow it is. And it fills me with no joy having to
+> > repeat it every time the question comes up whether running any part of=
+ Git
+> > that is written in Perl might affect performance on Windows. I really
+> > dislike having to be that messenger.
+>
+> Riled up? No, perplexed: yes. You're referring to
+> https://lore.kernel.org/git/87h7lgfchm.fsf@evledraar.gmail.com/
+>
+> So as an aside about that particular issue / slowness I haven't been
+> able to reproduce:
+>
+> If it's really a reference to some Windows-specific issue with Perl on
+> Windows in particular that would certainly be helpful for the rest of us
+> trying to follow along wondering where these wildly different
+> performance numbers come from.
+>
+> So not that we don't want to more to some other fsmonitor implementation
 
-What sort of case are we talking about where not unpacking the log_data
-segment is making a difference?
+ETOOMANYNEGATIONS, can't parse.
 
-> However, the textual reflog format doesn't easily allow for this.
-> However, we might add a convention, eg. have the message start with
-> 'FF' or 'NFF' depending on the nature of the update.
+> for other reasons, but the Perl part of that hook would be rather easy
+> to replace with some C JSON encoder or whatever.
 
-Maybe a bit ugly, but a ".." and "..." prefix would at least be
-consistent with "fetch" output. Or e.g. "commit:" and "+commit:" for ff
-and non-ff (and we could make it "\t commit:" v.s. "\t+commit:"
-v.s. current "\tcommit:" to distinguish all three in the current
-text-based format. Per "OUTPUT" in git-fetch(1).
+For the time being, I'd rather avoid discussing that because we already
+have an experimental, built-in FSMonitor that I personally use. That
+FSMonitor will nicely side-step all of the Perl slowness.
 
-> [=C3=86var: snipped from earlier] Today we have 0 =3D deletion, 1 =3D upd=
-ate,
-> and we could add 2 =3D FF update, 3 =3D non-FF update.
+> > I doubt that you will ever be able to replace my (admittedly slightly
+> > hacky) C helper with anything written in Perl that does even come clos=
+e to
+> > being faster.
+> >
+> > In other words, I fear that your work here might not have the outcome =
+you
+> > hoped for.
+>
+> We shell out to your C helper at least once for every test we run. By
+> converting the TAP after the full run we're only invoking Perl once
+> per-test.
+>
+> If that one Perl invocation is still much more expensive than doing that
+> ~20-50 times per-test we can easily move the loop to the Perl script and
+> invoke Perl once per test suite run. At that point you've got 1 run
+> v.s. >20k runs for the current helper being called in a loop by
+> test-lib.sh
+>
+> But I don't have access to a Windows test box. So maybe it's slower than
+> I'm imagining. How long do the equivalent of these take on Windows (not
+> sure if the time built-in is there)?:
+>
+>     $ time perl -MTAP::Harness -wE 'say "hello world"'
+>     hello world
+>
+>     real    0m0.018s
+>     user    0m0.013s
+>     sys     0m0.005s
+>
+>     $ time (echo hi | helper/test-tool xml-encode)
+>     hi&#x0a;
+>     real    0m0.002s
+>     user    0m0.001s
+>     sys     0m0.002s
 
-I've written log table implementations (a site table in a RDBMS) for git
-(one table for refs) which had:
+$ time perl -MTAP::Harness -wE 'say "hello world"'
+hello world
 
-    create, ff, non-ff, delete
+real    0m0.326s
+user    0m0.030s
+sys     0m0.124s
 
-I wonder if that quad-state would be useful for reftable too, with this
-proposed change you'd still need to unpack the record and see if the
-old_id is ZERO_OID to check if it's a creation, would you not?
+$ time perl -MTAP::Harness -wE 'say "hello world"'
+hello world
 
-I also wonder if it couldn't be:
+real    0m0.131s
+user    0m0.061s
+sys     0m0.046s
 
-    0 =3D deletion, 1 =3D non-ff-update, 2 =3D ff-update, 4 =3D creation
+$ time perl -MTAP::Harness -wE 'say "hello world"'
+hello world
 
-So the format wouldn't forever carry the historical wart of this not
-having been considered from the beginning.
+real    0m0.209s
+user    0m0.015s
+sys     0m0.156s
 
-It would mean that the few current reftable users (just Google?) would
-have to look at the record to see if it's *really* a non-ff-update, but
-presumably they need to do so now for ff v.s. non-ff, so they're no
-worse off than they are now.
+$ time (echo hi | t/helper/test-tool xml-encode)
+hi&#x0a;
+real    0m0.165s
+user    0m0.015s
+sys     0m0.093s
 
-Then when those users know they're on a version that distinguishes these
-they can hard rely on 1 not being a "ff for sure", not a "maybe" status
-for new updates. Presumably they either don't care about ancient reflog
-records, or a one-off migration of rewriting the records for older
-entries could be done.
+$ time (echo hi | t/helper/test-tool xml-encode)
+hi&#x0a;
+real    0m0.092s
+user    0m0.000s
+sys     0m0.047s
 
-Also between my [1] and this proposal we have at least a reftable v1.01
-in the wild (the filename locking behavior change discussed in [1]), and
-this would make it v1.02, but the only up-to-date spec is for v1.00 (and
-maybe JGit has other changes I haven't tracked).
+$ time (echo hi | t/helper/test-tool xml-encode)
+hi&#x0a;
+real    0m0.075s
+user    0m0.000s
+sys     0m0.046s
 
-That [1] change is minor, but still, a spec change.
+Completely unscientific, but maybe it gives you an idea.
 
-So just a *poke* that having some version where the spec is kept
-up-to-date with that and this change if it happens would be very useful,
-especially if the reftable-in-git.git lands one of these days.
+> In any case, I regret focusing on the TAP::Formatter::JUnit part in this
+> RFC. The real meaty part is being able to have stable TAP output, and
+> thus not having to add N number of output formats into test-lib.sh
+> itself.
+>
+> A tool that consumes that can then be e.g. Perl's TAP tooling, or just
+> some C program or shellscript that calls the code that the below quoted
+> diff is removing (aside from the test-lib.sh part, which would go away).
+>
+> But it would be easier to write such tools using Perl's tooling, as it
+> saves one from writing a parser for TAP.
+>
+> I'd be surprised if Perl was adding much overhead in that context, and I
+> see that the existing Windows CI jobs are running through "prove", so
+> presumably even on Windows e.g. this:
+>
+>     time make T=3Dt000*.sh DEFAULT_TEST_TARGET=3Dprove
+>
+> Is not much slower than:
+>
+>     time make T=3Dt000*.sh DEFAULT_TEST_TARGET=3Dtest
+>
+> I think this is the Nth time we've had some variant of this "Perl in
+> git's tests" discussion.
 
-1. https://lore.kernel.org/git/87k0tzulf1.fsf@evledraar.gmail.com/
+And it is still an issue because the Perl we use is running on top of a
+POSIX emulation layer which makes everything slow.
+
+> I'm all for finding solutions to whatever issues you have, but I find it
+> confusing that in these discussions you seem to conflate and jump
+> between some or all of (just the ones I'm remembering):
+>
+>  1. Some imagined future state where there's no Perl whatsoever in the
+>     test suite or git.git's build toolchain, which isn't the case now,
+>     or anywhere in the forseeable future.
+>
+>  2. A future state where GFW etc. don't need to ship a Perl to users (I
+>     believe this is either close or already there, I haven't kept up..)
+>
+>  3. The slowness of Perl for: tight loops, a few per test, once per test
+>     suite run.
+>
+>  4. How #3 e.g. in a tight loop compares to calling say sed or awk in a
+>     tight shell loop. Is perl uniquely bad on Windows, or is it really a
+>     gripe about our use of shellscripting in general?
+>
+>  6. Not wanting to (understandably) package any more non-core Perl
+>     stuff, understandable, but we always have the option of extending
+>     perl/FromCPAN/ if we find something truly useful (in this case just
+>     having a custom JUnit XML emitter, if it's actually needed by anyone
+>     anymore, should be rather easy).
+>
+> So e.g. in this case I can guess at some of the gaps and *think* that
+> some code in t/ that uses TAP::Parser (a perl core module) and was
+> invoked either once per test-lib.sh invocation, or better (but perhaps
+> not needed, as it would make it a bit more complex) once per test-suite
+> run should be fine.
+>
+> That code could even be implemented as a prove(1) plugin, at which point
+> we'd be invoking Perl exactly as many times as we are now, but I'd
+> rather not paint myself into that particular corner without good reason.
+
+Yes, I would be much happier if Perl was not required to run our tests. I
+would be even happier if we did not run our tests through shell,
+especially performance tests, because running performance tests through
+shell is like getting the most precise stop watch you can think of and
+then looking away from the athletes while timing their sprint.
+
+If you provide patches to bring us closer to that reality, I will try to
+set aside time to help. But this "let's remove the C helper that serves us
+well and instead use Perl, just to shuffle things around" business really
+looks like a lot of churn to me, and I want to spend my time elsewhere.
+
+Ciao,
+Dscho
+
+--8323328-1245979093-1616420798=:50--
