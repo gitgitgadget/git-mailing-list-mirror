@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4AC4BC433F1
-	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 10:31:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F35EFC433EA
+	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 10:31:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 28B42619B6
-	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 10:31:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D4662619A3
+	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 10:31:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230284AbhCVKal (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Mar 2021 06:30:41 -0400
+        id S230273AbhCVKaj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Mar 2021 06:30:39 -0400
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230185AbhCVK36 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Mar 2021 06:29:58 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5BC9C061574
-        for <git@vger.kernel.org>; Mon, 22 Mar 2021 03:29:57 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id o16so16096507wrn.0
-        for <git@vger.kernel.org>; Mon, 22 Mar 2021 03:29:57 -0700 (PDT)
+        with ESMTP id S229962AbhCVK37 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Mar 2021 06:29:59 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48496C061756
+        for <git@vger.kernel.org>; Mon, 22 Mar 2021 03:29:58 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id v4so16065822wrp.13
+        for <git@vger.kernel.org>; Mon, 22 Mar 2021 03:29:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=+bNP+0W/NmpTzg2fcka3X+P2W1SFHzm3DqEPSuLjvIc=;
-        b=CI1iHHQR+WicMFATyce2+jkUujtSX0x2SUYMLuYsZmWbEdVLKIDybkyJKmqqLlqqm3
-         zqJfG4o9/g2VHyikx5y0ScW6itM+Uq4KwzXYzIVELM36x2GbIxJXzASLQwnbggNllAMN
-         Z8ERc4j7lCq7n/Gde2SNXJatU7j69Vr0VzDxmbNHSgG0dmoZv+iZoj4jJNm5CclmFVj+
-         VSd81eGSaovg8GIG1QXO+wHeYDrxLR6sK8qPMeBkyMHVa0Xv2rOY3IfUWVHbwFCh/IHQ
-         +/UMwAiu/PllHnpgCj0Nj9Olca/pvupy4wflo7J5v916F/m40drBrxIwYdd+gpQwoFAJ
-         Uvvw==
+        bh=hZi6C6sQmeIRBlncuQOMliFiSKu+0LMYAJ0CX1WIRg0=;
+        b=HIwRE5akY/zr21XjS6Iskx7BfvRKgBveRccWYlBI/v1+S4CXRzUgpqXDqrAS1qw7ok
+         GobqTWflrrNArHJC4hbtiFhinjBRvEonmPRbqV6QQpelQxW9djC1znDb7qGffPfLCmwd
+         8EqkC5fBglFa9j2wzZmPAFrL0FyHRrkc+68I5fM7Thskr3VqRr19oJRQXMKh2tuscp2T
+         Frfcuve21vIFUzzTgmyl8GFh2LziHQBOAWL6X9nleMlrnp7p/5wRKxRwGjrC62k51VVZ
+         SyHUFJUxv00lycikdqgkOYd85ogga8Z3Osurmq9idcZiBKsdqYvTQQqqOtUcEgS6nAh3
+         E/xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=+bNP+0W/NmpTzg2fcka3X+P2W1SFHzm3DqEPSuLjvIc=;
-        b=RquQ00jJeEKuKOuLuF2y7GE51GI0EuM/D57kdZrpEamxMJKvyzeHpbOikGRzn7vvLD
-         qNj8pODYR3y3BiCirKERr0f8huJxnbadPJboyGoi4mZnV3Lewl9uyyJdgTfYPQRu1MuV
-         9lOYc0VJUiX4urKgCiSNFy+AjaHJbdWQdL+DvZfAQJr60K1E4ME1iDGFfm++ZlmIfwVM
-         Wj0Pt+I/NCKpXftN9miqAI+JgPaUzBjRayo+d0qNvOc8jVJEmLgKAWGjJp6Wfa+r5gpn
-         MtBGMO5H3IR6ieUHxfQNI2WlrhdMeLmdSr1dDPMs7TEHuj54og+1/joNCBYtKYrRieur
-         lJcQ==
-X-Gm-Message-State: AOAM530Eb4+WVZ7yPWl1pWIlIN8NC9KElVRH76Y5O8MrotFJ4mrp4/jx
-        v9DNm/X1eYK+2qzEaXSejnhgnY6hkOo=
-X-Google-Smtp-Source: ABdhPJxVV4T9C09wqyIdXgFToLx1vDvH9EOTwMrEoQxzSfC22EPkLnc3ugdN+n0B/1TwWMfqB3q/Pg==
-X-Received: by 2002:adf:e411:: with SMTP id g17mr17501684wrm.225.1616408996399;
-        Mon, 22 Mar 2021 03:29:56 -0700 (PDT)
+        bh=hZi6C6sQmeIRBlncuQOMliFiSKu+0LMYAJ0CX1WIRg0=;
+        b=sOGtbM97/66XhoqE46rco3Y/920Mwjj99PWRE5j8YDzJUkgzJIy0qN1QlfuwubBetb
+         J8dIO8RuTFVD00ybSyOo68GUngdgsg/qBtTfBArBjrg52ZSNa0X5dYGDiWZAPPYLnyIK
+         zMrwu2C9M8+YcHuwjnTIAk+KLB0DOcivO789EP7lBiF+qlALWycl7LS0LylzqVCKLYgA
+         nXueVbF7WVVGPK2lbHsdhw9Hxhtcey7hjeiPHpSEPn6Jz9oHX/ozVYxKpB0TCvVDyBnI
+         R2EfpJGuBR+aAUpsRef41964F/m0lkUD4DuIIkmGpzfkBHVl3MlSBGAMglTWE2kSOXu5
+         eXdg==
+X-Gm-Message-State: AOAM530PEAgPKmokGo2OGbT1yXMZkq6x6rB6Oe3GT04Vz+9ttvtmp05W
+        +FZeLgWccxx0ATJk8vXNbYdbmjuBhhs=
+X-Google-Smtp-Source: ABdhPJxrLytsmx6eX1/qY8jJc/u1p5sQdy43KnWanjUUEBhA2N/OcCddywTifyc4iTAh2bzjvbyOmw==
+X-Received: by 2002:a5d:4341:: with SMTP id u1mr17520325wrr.88.1616408997117;
+        Mon, 22 Mar 2021 03:29:57 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x25sm18700090wmj.14.2021.03.22.03.29.55
+        by smtp.gmail.com with ESMTPSA id n6sm22232080wrw.63.2021.03.22.03.29.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 22 Mar 2021 03:29:56 -0700 (PDT)
-Message-Id: <4e8c352fb366471c02d1cdf605d37e017eb3f507.1616408989.git.gitgitgadget@gmail.com>
+Message-Id: <3b71f52d862832f3eb65d4041baac4c3a9f3e153.1616408989.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.766.v7.git.1616408989.gitgitgadget@gmail.com>
 References: <pull.766.v6.git.1615842509.gitgitgadget@gmail.com>
         <pull.766.v7.git.1616408989.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 22 Mar 2021 10:29:43 +0000
-Subject: [PATCH v7 07/12] unix-socket: eliminate static unix_stream_socket()
- helper function
+Date:   Mon, 22 Mar 2021 10:29:44 +0000
+Subject: [PATCH v7 08/12] unix-socket: add backlog size option to
+ unix_stream_listen()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,94 +83,90 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-The static helper function `unix_stream_socket()` calls `die()`.  This
-is not appropriate for all callers.  Eliminate the wrapper function
-and make the callers propagate the error.
+Update `unix_stream_listen()` to take an options structure to override
+default behaviors.  This commit includes the size of the `listen()` backlog.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- unix-socket.c | 27 +++++++++++++--------------
- 1 file changed, 13 insertions(+), 14 deletions(-)
+ builtin/credential-cache--daemon.c |  3 ++-
+ unix-socket.c                      | 11 +++++++++--
+ unix-socket.h                      |  9 ++++++++-
+ 3 files changed, 19 insertions(+), 4 deletions(-)
 
+diff --git a/builtin/credential-cache--daemon.c b/builtin/credential-cache--daemon.c
+index c61f123a3b81..4c6c89ab0de2 100644
+--- a/builtin/credential-cache--daemon.c
++++ b/builtin/credential-cache--daemon.c
+@@ -203,9 +203,10 @@ static int serve_cache_loop(int fd)
+ 
+ static void serve_cache(const char *socket_path, int debug)
+ {
++	struct unix_stream_listen_opts opts = UNIX_STREAM_LISTEN_OPTS_INIT;
+ 	int fd;
+ 
+-	fd = unix_stream_listen(socket_path);
++	fd = unix_stream_listen(socket_path, &opts);
+ 	if (fd < 0)
+ 		die_errno("unable to bind to '%s'", socket_path);
+ 
 diff --git a/unix-socket.c b/unix-socket.c
-index 19ed48be9902..69f81d64e9d5 100644
+index 69f81d64e9d5..012becd93d57 100644
 --- a/unix-socket.c
 +++ b/unix-socket.c
-@@ -1,14 +1,6 @@
+@@ -1,6 +1,8 @@
  #include "cache.h"
  #include "unix-socket.h"
  
--static int unix_stream_socket(void)
--{
--	int fd = socket(AF_UNIX, SOCK_STREAM, 0);
--	if (fd < 0)
--		die_errno("unable to create socket");
--	return fd;
--}
--
++#define DEFAULT_UNIX_STREAM_LISTEN_BACKLOG (5)
++
  static int chdir_len(const char *orig, int len)
  {
  	char *path = xmemdupz(orig, len);
-@@ -73,13 +65,16 @@ static int unix_sockaddr_init(struct sockaddr_un *sa, const char *path,
- 
- int unix_stream_connect(const char *path)
- {
--	int fd, saved_errno;
-+	int fd = -1, saved_errno;
- 	struct sockaddr_un sa;
- 	struct unix_sockaddr_context ctx;
- 
- 	if (unix_sockaddr_init(&sa, path, &ctx) < 0)
- 		return -1;
--	fd = unix_stream_socket();
-+	fd = socket(AF_UNIX, SOCK_STREAM, 0);
-+	if (fd < 0)
-+		goto fail;
-+
- 	if (connect(fd, (struct sockaddr *)&sa, sizeof(sa)) < 0)
- 		goto fail;
- 	unix_sockaddr_cleanup(&ctx);
-@@ -87,15 +82,16 @@ int unix_stream_connect(const char *path)
- 
- fail:
- 	saved_errno = errno;
-+	if (fd != -1)
-+		close(fd);
- 	unix_sockaddr_cleanup(&ctx);
--	close(fd);
- 	errno = saved_errno;
+@@ -89,9 +91,11 @@ int unix_stream_connect(const char *path)
  	return -1;
  }
  
- int unix_stream_listen(const char *path)
+-int unix_stream_listen(const char *path)
++int unix_stream_listen(const char *path,
++		       const struct unix_stream_listen_opts *opts)
  {
--	int fd, saved_errno;
-+	int fd = -1, saved_errno;
+ 	int fd = -1, saved_errno;
++	int backlog;
  	struct sockaddr_un sa;
  	struct unix_sockaddr_context ctx;
  
-@@ -103,7 +99,9 @@ int unix_stream_listen(const char *path)
- 
- 	if (unix_sockaddr_init(&sa, path, &ctx) < 0)
- 		return -1;
--	fd = unix_stream_socket();
-+	fd = socket(AF_UNIX, SOCK_STREAM, 0);
-+	if (fd < 0)
-+		goto fail;
- 
+@@ -106,7 +110,10 @@ int unix_stream_listen(const char *path)
  	if (bind(fd, (struct sockaddr *)&sa, sizeof(sa)) < 0)
  		goto fail;
-@@ -116,8 +114,9 @@ int unix_stream_listen(const char *path)
  
- fail:
- 	saved_errno = errno;
-+	if (fd != -1)
-+		close(fd);
+-	if (listen(fd, 5) < 0)
++	backlog = opts->listen_backlog_size;
++	if (backlog <= 0)
++		backlog = DEFAULT_UNIX_STREAM_LISTEN_BACKLOG;
++	if (listen(fd, backlog) < 0)
+ 		goto fail;
+ 
  	unix_sockaddr_cleanup(&ctx);
--	close(fd);
- 	errno = saved_errno;
- 	return -1;
- }
+diff --git a/unix-socket.h b/unix-socket.h
+index e271aeec5a07..ec2fb3ea7267 100644
+--- a/unix-socket.h
++++ b/unix-socket.h
+@@ -1,7 +1,14 @@
+ #ifndef UNIX_SOCKET_H
+ #define UNIX_SOCKET_H
+ 
++struct unix_stream_listen_opts {
++	int listen_backlog_size;
++};
++
++#define UNIX_STREAM_LISTEN_OPTS_INIT { 0 }
++
+ int unix_stream_connect(const char *path);
+-int unix_stream_listen(const char *path);
++int unix_stream_listen(const char *path,
++		       const struct unix_stream_listen_opts *opts);
+ 
+ #endif /* UNIX_SOCKET_H */
 -- 
 gitgitgadget
 
