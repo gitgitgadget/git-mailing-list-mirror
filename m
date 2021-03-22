@@ -2,109 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D704C433DB
-	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 17:46:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A422AC433C1
+	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 18:03:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1DAF16197F
-	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 17:46:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 711846197F
+	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 18:03:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229930AbhCVRp5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Mar 2021 13:45:57 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:48482 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230133AbhCVRp0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Mar 2021 13:45:26 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1616435126; h=Content-Type: Content-Transfer-Encoding:
- MIME-Version: References: In-Reply-To: Message-ID: Date: Subject: Cc:
- To: From: Sender; bh=iOGF3xnocEvmHRDg7Ev+7jskVm0qtNQpjWe7BedBhEY=; b=rSGn261wYUKT2jluPve3znuGNgxfHxaer4WMV/6nZD9+EpBiNE/HI1wSzVN3rk5B4hp/crth
- QS7p5Wjs9BJ9CnqdJ3l2g7WUBCr54+gAcJGRpVLFuKqFytXyn2fWWjtIjXAQvtgz5edOD3iH
- j2x9vPhEBaHXMGCzjF0fX+aMcp4=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyJjNzk3NCIsICJnaXRAdmdlci5rZXJuZWwub3JnIiwgImJlOWU0YSJd
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 6058d7a2e2200c0a0d67a7d0 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 22 Mar 2021 17:45:06
- GMT
-Sender: mfick=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 9276BC433C6; Mon, 22 Mar 2021 17:45:06 +0000 (UTC)
-Received: from mfick-lnx.localnet (i-global254.qualcomm.com [199.106.103.254])
+        id S229746AbhCVSDH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Mar 2021 14:03:07 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64344 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230460AbhCVSCp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Mar 2021 14:02:45 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3D390B1753;
+        Mon, 22 Mar 2021 14:02:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=AICHpddQtTP4C8ksaSp7lT2G3qs=; b=hp+2lq
+        HtzlKlLO3fdDwZyNbR//gRkckIUwCONWDmYvTL5V8U/UJQJU58DfeVuuyyHkjU5l
+        NfO5BqI+bSNa5qaMtglP+RtF4ra4ayJ9NIA32m3T9yC3h9yfBLlE02604ekP+Tb1
+        r1AFBT3l7I9aNIy1grTTTaJeq6uFV3GlDU5NY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=QOxek7gfDVtuQAqkeDj0qdiFo/NfI2W9
+        Pm2GBrkOR0up8JRubXGcT7lrg+4ZLRkibr834G5Ky8w/VviI6AZ6Fr/bCHscEQ11
+        3Aqwzdkp2T57bKHKsLqgqfr5Kp9+Mt80IU7QgMZaiSDWIo7hmUxeZwOwo+aQWZsT
+        6a8D3/5xx6c=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3444AB1751;
+        Mon, 22 Mar 2021 14:02:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: mfick)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id E67FEC433CA;
-        Mon, 22 Mar 2021 17:45:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E67FEC433CA
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=mfick@codeaurora.org
-From:   Martin Fick <mfick@codeaurora.org>
-To:     Han-Wen Nienhuys <hanwen@google.com>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: Distinguishing FF vs non-FF updates in the reflog?
-Date:   Mon, 22 Mar 2021 11:45:04 -0600
-Message-ID: <3334455.nVGR68FYPA@mfick-lnx>
-User-Agent: KMail/5.2.3 (Linux/4.4.0-203-generic; KDE/5.36.0; x86_64; ; )
-In-Reply-To: <CAFQ2z_NaXC-h5U3v2JtrFU8rGNHstTSN3CDoazUiUUk522sW7A@mail.gmail.com>
-References: <CAFQ2z_MefCwiWdhs0buJv5Zok+nsgaOvUCcsSnfm_PP0WozZKA@mail.gmail.com> <4400050.5IlZNYTcJN@mfick-lnx> <CAFQ2z_NaXC-h5U3v2JtrFU8rGNHstTSN3CDoazUiUUk522sW7A@mail.gmail.com>
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B1122B174F;
+        Mon, 22 Mar 2021 14:02:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Madhu <enometh@meer.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] init: don't reset core.filemode on git-new-workdirs.
+References: <xmqq1rc89nk7.fsf@gitster.g>
+        <20210322.081043.1437207928602570397.enometh@meer.net>
+        <xmqq7dlz94by.fsf@gitster.g>
+        <20210322.143437.212295420302618690.enometh@meer.net>
+Date:   Mon, 22 Mar 2021 11:02:42 -0700
+In-Reply-To: <20210322.143437.212295420302618690.enometh@meer.net> (Madhu's
+        message of "Mon, 22 Mar 2021 14:34:37 +0530 (IST)")
+Message-ID: <xmqqr1k76p8d.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain
+X-Pobox-Relay-ID: CCEC6D5A-8B38-11EB-A983-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Monday, March 22, 2021 1:31:25 PM MDT Han-Wen Nienhuys wrote:
-> On Thu, Mar 18, 2021 at 11:24 PM Martin Fick <mfick@codeaurora.org> wrote:
-> > On Thursday, March 18, 2021 9:58:56 AM MDT Han-Wen Nienhuys wrote:
-> > > On Wed, Mar 17, 2021 at 10:22 PM Martin Fick <mfick@codeaurora.org> 
-wrote:
-> > > > On Wednesday, March 17, 2021 9:06:06 PM MDT Han-Wen Nienhuys wrote:
-> > > > > I'm working on some extensions to Gerrit for which it would be very
-> > > > > beneficial if we could tell from the reflog if an update is a
-> > > > > fast-forward or not: if we find a SHA1 in the reflog, and see there
-> > > > > were only FF updates since, we can be sure that the SHA1 is
-> > > > > reachable
-> > > > > from the branch, without having to open packfiles and decode
-> > > > > commits.
-> > > > 
-> > > > I don't think this would be reliable.
-> > > > 
-> > > > 1) Not all updates make it to the reflogs
-> > > > 2) Reflogs can be edited or mucked with
-> > > > 3) On NFS reflogs can outright be wrong even when used properly as
-> > > > their
-> > > > are caching issues. We specifically have seen entries that appear to
-> > > > be
-> > > > FFs that were not.
-> > > 
-> > > Can you tell a little more about 3) ? SInce we don't annotate non-FF
-> > > vs FF today, what does "appear to be FFs" mean?
-> > 
-> > To be honest I don't recall for sure, but I will describe what I think has
-> > happened. I think that we have seen a server(A) update a branch from
-> > C1 to C2A, and then later another server(B) update the same branch from C1
-> > to C2B. Obviously the move from C2A to C2B is not a FF, but that move is
-> > not what is recorded. Each of those updates was a FF when viewed as
-> > separate entries,
-> I think those would fail with the way that Gerrit uses JGit, because
-> C1 -> C2B would fail with LOCK_ERROR.
+Madhu <enometh@meer.net> writes:
 
-If jgit knew that the branch no longer pointed to C1, then yes it should fail 
-with LOCK_ERROR. However this situation is believed to arise due to jgit's 
-caching which could make it think that the branch still points to C1 even 
-thought it has already been advanced to C2A! :(
+> *  Junio C Hamano <gitster@pobox.com> <xmqq7dlz94by.fsf@gitster.g>
+>> ...
+>> And the symlink check is never done in "reinit" case, so perhaps
+>> when "git init" is run again in an already functioning repository,
+>> we should not muck with the filemode, either.
+>
+> I'd think so (on the last point)....
 
--Martin
+So, assuming that you are with me to think that reinit should not
+touch the filemode thing, ...
 
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code 
-Aurora Forum, hosted by The Linux Foundation
+>> A natural conclusion of the line of thought is that we can move the
+>> "check filemode trustability" block (from the comment to concluding
+>> git_config_set()) inside the "if (!reinit)" that happens a bit later
+>> and we'd be fine---as an existing normal repository, as well as what
+>> new-workdir creates, won't have to do the "let's chmod +x/-x the
+>> config file and see what happens" code at all (perhaps the attached
+>> patch, which hasn't even been compile tested).
+>> ...
+
+... wouldn't the illustration patch I gave, which removed the "check
+filemode" bit from the main codepath and moved it to inside an if
+block that is executed only when "if (!reinit)" is true, "skip" the
+problematic "check if config is a regular file whose executable bit
+can be flipped and flopped" code in your use case, i.e. in an existing
+repository?
+
+> I don't think the posted patch (snipped) would work as reinit is
+> always 1 and we are always a candidate for reiniting - I may be
+> missing something.
+
+In other words, yes, the illustration patch you are responding to
+assumes that the "reinit" variable is set correctly (i.e. the HEAD
+exists and sensibly readable if you run "git init" in an already
+functioning working tree) and we can use it to avoid the filemode
+check.
+
+> Using a new file for the filemode test would be a natural
+> improvement. 
+
+That becomes necessary only if we want to futz with core.filemode
+while doing "reinit", as .git/config can be a symlink.  When we are
+creating a repository from scratch, we always create a regular file
+to prepare .git/config, and there is no need to do that, if we are
+happy to set core.filemode the same way as core.symlinks, i.e. only
+check once when the repository is created.  No?
+
+Thanks.
+
 
