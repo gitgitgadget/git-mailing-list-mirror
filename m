@@ -4,64 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D4182C433E0
-	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 10:30:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 21E51C433DB
+	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 10:31:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8D981619A4
-	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 10:30:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E670D619A1
+	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 10:31:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230166AbhCVK3z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Mar 2021 06:29:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53774 "EHLO
+        id S230138AbhCVKaa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Mar 2021 06:30:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229472AbhCVK3x (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Mar 2021 06:29:53 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 961A1C061574
-        for <git@vger.kernel.org>; Mon, 22 Mar 2021 03:29:52 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id 61so16052525wrm.12
-        for <git@vger.kernel.org>; Mon, 22 Mar 2021 03:29:52 -0700 (PDT)
+        with ESMTP id S229904AbhCVK3z (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Mar 2021 06:29:55 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97D4FC061756
+        for <git@vger.kernel.org>; Mon, 22 Mar 2021 03:29:54 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id a132-20020a1c668a0000b029010f141fe7c2so8863842wmc.0
+        for <git@vger.kernel.org>; Mon, 22 Mar 2021 03:29:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=YUUrQa0DaczNHaXYIzbTbFy1ge0QSHxB5pLTiAloQ8w=;
-        b=ToEqFomv66CUr+hcbCaALX8t3uWmvH+1ZHCrJqLF1PtjXFyD1B6vf8ybdJ1qOpGN1e
-         srCVkkeYMRERdumR/Eq+G/FUe1dckMOYU9bOLu64aMY+zr2y33filTQXkPzBsFBKHnHt
-         Bh2EjFHRCG00KbaNFywrPYsI3nfWD9p5B1l9BSBICFZ9hDqDPM9Bitnb1HFe6QuoDrc4
-         zV/tOMP9YhuRkTR0ZasZFzDE25YI8dp0Oe983HdtssHjK2yRGzM9O9TVJ6TzG6ihHaQi
-         PyA0ty2a12dObUs9o0h8J3Tm8+9hwwXsgJl5KTIMEuzFgv7rU+kyC+7o3Y3bfH9nMSkr
-         z5Dg==
+        bh=Gx2HCnbaUgWpjCcl/3ugpx4J6eD/LX1CndW/0CSddwQ=;
+        b=OV23Fdmyp+qxAu+/E5MBSFkA3R0lcxeKIXlGqAsj1N+h3TZGTci6TMRvgV4+3Ghd7a
+         7ZoTjfYf4iM123coqyT+/rQb7nSg3af50QBNVA5Oa0GKxFnsaVKxRyWCzEkdpwXV2b43
+         zPPC9AMfZstjnAv32RCFMpGq1GLHLMzrQBnZvwksNVPOOCDpJNOciu27VAc6Vj0732Jh
+         md9sU9pGA7pV7X3NhcVYngwXEDwT3Iq4Y1cTX7yWTvEYTfeDYsJDXd/dzxuWnEbIc99s
+         5o16/u237IMF5JCu4xPRjoxLbAD1tD+olLCJYNF5E3NOoHmtdAN09apB7GAnuYJADnpC
+         hx0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=YUUrQa0DaczNHaXYIzbTbFy1ge0QSHxB5pLTiAloQ8w=;
-        b=X6hg0PzjHflb7eLWl0Kng+SP2mWYUyQKC7cOyZglus7+cdZV1ZMv4RP6xXoQhb+1gM
-         jVFOwkn7EYHX0o391f+IUtj2hxKNJcOIJEQEfixwvSCmg+ELZ8EtxJms4lDb8CtuXpvk
-         kRfjBSf3KMq6eqNK9H5gVBPH0Sm6z3M2NDCjmwFkx/2gBpxjiap4reWICXQmiO+Dci66
-         8PS8XVM4Npg7qVwJkRCZB51pp+zRz+lzphZx7J1BQ6JBz8VC6rGx6u8bLPg1ONDW9c1E
-         qcqB488UHNX5HGU91yJG0AH24J/g+xTqZIXrDOGBUO1qT1Jd+JrS39yt1i6v6lM/0fGV
-         1U9w==
-X-Gm-Message-State: AOAM533N7cYfbiSfTWiTU4nRQ/hbtZ63ZVBcQ6QLRS3FIJhuXeUzDdq9
-        wW2vONYLxh7TYAtNPLx6Z2BvhkABRrA=
-X-Google-Smtp-Source: ABdhPJx3ey1jjGrXBmRs6aoi807r8gbc75hjqLmMlMZYnGaCuPxUovebt6lFr0dX1GH8eSsYWXq5CA==
-X-Received: by 2002:adf:828e:: with SMTP id 14mr17489690wrc.123.1616408991327;
-        Mon, 22 Mar 2021 03:29:51 -0700 (PDT)
+        bh=Gx2HCnbaUgWpjCcl/3ugpx4J6eD/LX1CndW/0CSddwQ=;
+        b=eWIE8uQuG0FKZUey8kDWsdCr6npeCf4RkrjHfmOgehkJRdotFbCutSEPOZ5e0X+1iw
+         mXW4VZLyqJicBUBXklLLMfH4/tDYNrbHos3u2BUme+oYlZZa0LPLw/lWFw3AcSx0V0r+
+         saK7llgGok8v3YEVKmQNIvovkcwB42fYKyosKhS/5b9lYNxKccV+5pJjBtHlyMAq6ZIW
+         upKUHCloV7LNBbnxDGUeqI0h7y7l6JTGpD8lRyGTZLgd+P2X2NvcWvrS1ZWhCc3alaVH
+         NF9CifiM218a3dJZ6Clh/7VLD8o5gy1RReEanuGRlh0v1CpmGJgb6i5klmv1lRjm5y32
+         Nz7g==
+X-Gm-Message-State: AOAM53134GrXV5o4heUPRSau5eapKw9CCYaxcoBa96KdQjyY7NRfHNaa
+        QpffIRxp1PWaMAcdHIy85rY0HX2gF1A=
+X-Google-Smtp-Source: ABdhPJxLnslwla7LaWWqOrpKN4lBt3EAD8E31m1mwtfl4DaaRr3TLNxaajgIkCerGbRLJNV+aAiVqg==
+X-Received: by 2002:a05:600c:198c:: with SMTP id t12mr15211622wmq.183.1616408993370;
+        Mon, 22 Mar 2021 03:29:53 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r11sm19460187wrm.26.2021.03.22.03.29.50
+        by smtp.gmail.com with ESMTPSA id v18sm20416142wru.85.2021.03.22.03.29.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Mar 2021 03:29:50 -0700 (PDT)
-Message-Id: <pull.766.v7.git.1616408989.gitgitgadget@gmail.com>
-In-Reply-To: <pull.766.v6.git.1615842509.gitgitgadget@gmail.com>
+        Mon, 22 Mar 2021 03:29:53 -0700 (PDT)
+Message-Id: <3718da39da30ffc283e74eb94c942d0110eb9676.1616408989.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.766.v7.git.1616408989.gitgitgadget@gmail.com>
 References: <pull.766.v6.git.1615842509.gitgitgadget@gmail.com>
-From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 22 Mar 2021 10:29:36 +0000
-Subject: [PATCH v7 00/12] Simple IPC Mechanism
+        <pull.766.v7.git.1616408989.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 22 Mar 2021 10:29:39 +0000
+Subject: [PATCH v7 03/12] pkt-line: add PACKET_READ_GENTLE_ON_READ_ERROR
+ option
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,119 +75,120 @@ Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason
         SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Chris Torek <chris.torek@gmail.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Here is version V7 of my simple-ipc series. The only change from V6 is to
-squash in the CALLOC_ARRAY() suggestion.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-$ git range-diff v2.31.0-rc1..pr-766/jeffhostetler/simple-ipc-v6
-v2.31.0-rc1..HEAD 1: fe35dc3d29 = 1: fe35dc3d29 pkt-line: eliminate the need
-for static buffer in packet_write_gently() 2: de11b30361 = 2: de11b30361
-pkt-line: do not issue flush packets in write_packetized_*() 3: 3718da39da =
-3: 3718da39da pkt-line: add PACKET_READ_GENTLE_ON_READ_ERROR option 4:
-b43df7ad0b = 4: b43df7ad0b pkt-line: add options argument to
-read_packetized_to_strbuf() 5: f829feb2aa = 5: f829feb2aa simple-ipc: design
-documentation for new IPC mechanism 6: 58c3fb7cd7 = 6: 58c3fb7cd7
-simple-ipc: add win32 implementation 7: 4e8c352fb3 = 7: 4e8c352fb3
-unix-socket: eliminate static unix_stream_socket() helper function 8:
-3b71f52d86 = 8: 3b71f52d86 unix-socket: add backlog size option to
-unix_stream_listen() 9: 5972a19836 = 9: 5972a19836 unix-socket: disallow
-chdir() when creating unix domain sockets 10: 02c885fd62 = 10: 02c885fd62
-unix-stream-server: create unix domain socket under lock 11: 4c2199231d !
-11: eee5f4796d simple-ipc: add Unix domain socket implementation @@
-compat/simple-ipc/ipc-unix-socket.c (new) +
-pthread_cond_init(&server_data->work_available_cond, NULL); + +
-server_data->queue_size = nr_threads * FIFO_SCALE; -+ server_data->fifo_fds
-= xcalloc(server_data->queue_size, -+ sizeof(*server_data->fifo_fds)); ++
-CALLOC_ARRAY(server_data->fifo_fds, server_data->queue_size); + +
-server_data->accept_thread = + xcalloc(1,
-sizeof(*server_data->accept_thread)); 12: 132b6f3271 = 12: 8b5dcca684 t0052:
-add simple-ipc tests and t/helper/test-simple-ipc tool
+Introduce PACKET_READ_GENTLE_ON_READ_ERROR option to help libify the
+packet readers.
 
-Jeff
+So far, the (possibly indirect) callers of `get_packet_data()` can ask
+that function to return an error instead of `die()`ing upon end-of-file.
+However, random read errors will still cause the process to die.
 
-Jeff Hostetler (9):
-  pkt-line: eliminate the need for static buffer in
-    packet_write_gently()
-  simple-ipc: design documentation for new IPC mechanism
-  simple-ipc: add win32 implementation
-  unix-socket: eliminate static unix_stream_socket() helper function
-  unix-socket: add backlog size option to unix_stream_listen()
-  unix-socket: disallow chdir() when creating unix domain sockets
-  unix-stream-server: create unix domain socket under lock
-  simple-ipc: add Unix domain socket implementation
-  t0052: add simple-ipc tests and t/helper/test-simple-ipc tool
+So let's introduce an explicit option to tell the packet reader
+machinery to please be nice and only return an error on read errors.
 
-Johannes Schindelin (3):
-  pkt-line: do not issue flush packets in write_packetized_*()
-  pkt-line: add PACKET_READ_GENTLE_ON_READ_ERROR option
-  pkt-line: add options argument to read_packetized_to_strbuf()
+This change prepares pkt-line for use by long-running daemon processes.
+Such processes should be able to serve multiple concurrent clients and
+and survive random IO errors.  If there is an error on one connection,
+a daemon should be able to drop that connection and continue serving
+existing and future connections.
 
- Documentation/technical/api-simple-ipc.txt | 105 +++
- Makefile                                   |   9 +
- builtin/credential-cache--daemon.c         |   3 +-
- builtin/credential-cache.c                 |   2 +-
- compat/simple-ipc/ipc-shared.c             |  28 +
- compat/simple-ipc/ipc-unix-socket.c        | 999 +++++++++++++++++++++
- compat/simple-ipc/ipc-win32.c              | 751 ++++++++++++++++
- config.mak.uname                           |   2 +
- contrib/buildsystems/CMakeLists.txt        |   8 +-
- convert.c                                  |  11 +-
- pkt-line.c                                 |  59 +-
- pkt-line.h                                 |  17 +-
- simple-ipc.h                               | 239 +++++
- t/helper/test-simple-ipc.c                 | 787 ++++++++++++++++
- t/helper/test-tool.c                       |   1 +
- t/helper/test-tool.h                       |   1 +
- t/t0052-simple-ipc.sh                      | 122 +++
- unix-socket.c                              |  53 +-
- unix-socket.h                              |  12 +-
- unix-stream-server.c                       | 125 +++
- unix-stream-server.h                       |  33 +
- 21 files changed, 3315 insertions(+), 52 deletions(-)
- create mode 100644 Documentation/technical/api-simple-ipc.txt
- create mode 100644 compat/simple-ipc/ipc-shared.c
- create mode 100644 compat/simple-ipc/ipc-unix-socket.c
- create mode 100644 compat/simple-ipc/ipc-win32.c
- create mode 100644 simple-ipc.h
- create mode 100644 t/helper/test-simple-ipc.c
- create mode 100755 t/t0052-simple-ipc.sh
- create mode 100644 unix-stream-server.c
- create mode 100644 unix-stream-server.h
+This ability will be used by a Git-aware "Builtin FSMonitor" feature
+in a later patch series.
 
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+---
+ pkt-line.c | 19 +++++++++++++++++--
+ pkt-line.h | 11 ++++++++---
+ 2 files changed, 25 insertions(+), 5 deletions(-)
 
-base-commit: f01623b2c9d14207e497b21ebc6b3ec4afaf4b46
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-766%2Fjeffhostetler%2Fsimple-ipc-v7
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-766/jeffhostetler/simple-ipc-v7
-Pull-Request: https://github.com/gitgitgadget/git/pull/766
-
-Range-diff vs v6:
-
-  1:  fe35dc3d292d =  1:  fe35dc3d292d pkt-line: eliminate the need for static buffer in packet_write_gently()
-  2:  de11b3036148 =  2:  de11b3036148 pkt-line: do not issue flush packets in write_packetized_*()
-  3:  3718da39da30 =  3:  3718da39da30 pkt-line: add PACKET_READ_GENTLE_ON_READ_ERROR option
-  4:  b43df7ad0b7a =  4:  b43df7ad0b7a pkt-line: add options argument to read_packetized_to_strbuf()
-  5:  f829feb2aa93 =  5:  f829feb2aa93 simple-ipc: design documentation for new IPC mechanism
-  6:  58c3fb7cd776 =  6:  58c3fb7cd776 simple-ipc: add win32 implementation
-  7:  4e8c352fb366 =  7:  4e8c352fb366 unix-socket: eliminate static unix_stream_socket() helper function
-  8:  3b71f52d8628 =  8:  3b71f52d8628 unix-socket: add backlog size option to unix_stream_listen()
-  9:  5972a198361c =  9:  5972a198361c unix-socket: disallow chdir() when creating unix domain sockets
- 10:  02c885fd623d = 10:  02c885fd623d unix-stream-server: create unix domain socket under lock
- 11:  4c2199231d05 ! 11:  eee5f4796d37 simple-ipc: add Unix domain socket implementation
-     @@ compat/simple-ipc/ipc-unix-socket.c (new)
-      +	pthread_cond_init(&server_data->work_available_cond, NULL);
-      +
-      +	server_data->queue_size = nr_threads * FIFO_SCALE;
-     -+	server_data->fifo_fds = xcalloc(server_data->queue_size,
-     -+					sizeof(*server_data->fifo_fds));
-     ++	CALLOC_ARRAY(server_data->fifo_fds, server_data->queue_size);
-      +
-      +	server_data->accept_thread =
-      +		xcalloc(1, sizeof(*server_data->accept_thread));
- 12:  132b6f3271be = 12:  8b5dcca68440 t0052: add simple-ipc tests and t/helper/test-simple-ipc tool
-
+diff --git a/pkt-line.c b/pkt-line.c
+index bb0fb0c3802c..457ac4e151bb 100644
+--- a/pkt-line.c
++++ b/pkt-line.c
+@@ -306,8 +306,11 @@ static int get_packet_data(int fd, char **src_buf, size_t *src_size,
+ 		*src_size -= ret;
+ 	} else {
+ 		ret = read_in_full(fd, dst, size);
+-		if (ret < 0)
++		if (ret < 0) {
++			if (options & PACKET_READ_GENTLE_ON_READ_ERROR)
++				return error_errno(_("read error"));
+ 			die_errno(_("read error"));
++		}
+ 	}
+ 
+ 	/* And complain if we didn't get enough bytes to satisfy the read. */
+@@ -315,6 +318,8 @@ static int get_packet_data(int fd, char **src_buf, size_t *src_size,
+ 		if (options & PACKET_READ_GENTLE_ON_EOF)
+ 			return -1;
+ 
++		if (options & PACKET_READ_GENTLE_ON_READ_ERROR)
++			return error(_("the remote end hung up unexpectedly"));
+ 		die(_("the remote end hung up unexpectedly"));
+ 	}
+ 
+@@ -343,6 +348,9 @@ enum packet_read_status packet_read_with_status(int fd, char **src_buffer,
+ 	len = packet_length(linelen);
+ 
+ 	if (len < 0) {
++		if (options & PACKET_READ_GENTLE_ON_READ_ERROR)
++			return error(_("protocol error: bad line length "
++				       "character: %.4s"), linelen);
+ 		die(_("protocol error: bad line length character: %.4s"), linelen);
+ 	} else if (!len) {
+ 		packet_trace("0000", 4, 0);
+@@ -357,12 +365,19 @@ enum packet_read_status packet_read_with_status(int fd, char **src_buffer,
+ 		*pktlen = 0;
+ 		return PACKET_READ_RESPONSE_END;
+ 	} else if (len < 4) {
++		if (options & PACKET_READ_GENTLE_ON_READ_ERROR)
++			return error(_("protocol error: bad line length %d"),
++				     len);
+ 		die(_("protocol error: bad line length %d"), len);
+ 	}
+ 
+ 	len -= 4;
+-	if ((unsigned)len >= size)
++	if ((unsigned)len >= size) {
++		if (options & PACKET_READ_GENTLE_ON_READ_ERROR)
++			return error(_("protocol error: bad line length %d"),
++				     len);
+ 		die(_("protocol error: bad line length %d"), len);
++	}
+ 
+ 	if (get_packet_data(fd, src_buffer, src_len, buffer, len, options) < 0) {
+ 		*pktlen = -1;
+diff --git a/pkt-line.h b/pkt-line.h
+index 31012b9943bf..80ce0187e2ea 100644
+--- a/pkt-line.h
++++ b/pkt-line.h
+@@ -68,10 +68,15 @@ int write_packetized_from_buf_no_flush(const char *src_in, size_t len, int fd_ou
+  *
+  * If options contains PACKET_READ_DIE_ON_ERR_PACKET, it dies when it sees an
+  * ERR packet.
++ *
++ * If options contains PACKET_READ_GENTLE_ON_READ_ERROR, we will not die
++ * on read errors, but instead return -1.  However, we may still die on an
++ * ERR packet (if requested).
+  */
+-#define PACKET_READ_GENTLE_ON_EOF     (1u<<0)
+-#define PACKET_READ_CHOMP_NEWLINE     (1u<<1)
+-#define PACKET_READ_DIE_ON_ERR_PACKET (1u<<2)
++#define PACKET_READ_GENTLE_ON_EOF        (1u<<0)
++#define PACKET_READ_CHOMP_NEWLINE        (1u<<1)
++#define PACKET_READ_DIE_ON_ERR_PACKET    (1u<<2)
++#define PACKET_READ_GENTLE_ON_READ_ERROR (1u<<3)
+ int packet_read(int fd, char **src_buffer, size_t *src_len, char
+ 		*buffer, unsigned size, int options);
+ 
 -- 
 gitgitgadget
+
