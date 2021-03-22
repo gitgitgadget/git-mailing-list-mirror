@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 66DCEC433F2
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 17D77C433ED
 	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 10:31:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4B6DA619AF
-	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 10:31:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EB0A1619A6
+	for <git@archiver.kernel.org>; Mon, 22 Mar 2021 10:31:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230288AbhCVKam (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Mar 2021 06:30:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53828 "EHLO
+        id S230281AbhCVKak (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Mar 2021 06:30:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53812 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230194AbhCVKaB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Mar 2021 06:30:01 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72473C061574
-        for <git@vger.kernel.org>; Mon, 22 Mar 2021 03:30:00 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id o16so16096666wrn.0
-        for <git@vger.kernel.org>; Mon, 22 Mar 2021 03:30:00 -0700 (PDT)
+        with ESMTP id S230179AbhCVK36 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Mar 2021 06:29:58 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 430FEC0613D8
+        for <git@vger.kernel.org>; Mon, 22 Mar 2021 03:29:57 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id b2-20020a7bc2420000b029010be1081172so8943823wmj.1
+        for <git@vger.kernel.org>; Mon, 22 Mar 2021 03:29:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=h36MvPrkxYbI87PiJht3Uy6WAT/7y+IB8YI1O+bBO1k=;
-        b=LuhFGC3/C2f7Fjn/URNrUBqLjr/Bf0+a6phzt8wJSL4weC0wTUbZEw0CMgLbt7md3Z
-         eCEr2dd5IrEMyU+1Z13X6ptw+6wp+K95029CvF7OykUdBU+/El/n6Vxv9g1JNuuh4ums
-         ehBA5EgR4j2IVwom6aWRH1uNrS+0yEY34sK8THAfuiC6ES8M677l0hI9tb7C7KvosXLY
-         lXUITaV75hYW4X9DWOPrZToR5gL3wVOy0+QTXuG2EpOCLyFXQ5EFLJrRQRu6wOxBhd07
-         WO3H4XKPmP4diMf0NsxUxFEPm7v/Gj2kIHmALApdNGaEdt7Q0s+2k8n+apDxVwnKPDKO
-         Ej9A==
+        bh=HjvlbUxyN16fvG/kqda3cUTU+Hiv8kcfZdXOFrRWk5s=;
+        b=MyzVgnq+hflskV+ZBYVCC9fD173l4ewXywyNNN7DUFwVVADr28Cjq+vr9yQxvtjtjH
+         6yWAOsKXa+lfJd3ANzCalPoXKT43kPE+kGGmXl4C7LFP96hQ6g9/C27wiowf7Kgk/7BZ
+         Etjp0HHwlFBF8ggwPNbuzYXLYmrFC9+SHvk3wR4xbEErAVbVjjQ6xQOGRG3w0RSJ3vg5
+         vgLkkNjXO2RKkMhGuMwq4AGvXuNQRReV1s65vkxU0fqkck7LHSSDHu3oV+Q1psM6BXzW
+         varPS/loXz0uFn6Zlbio+QJoaOyx0yrGpLm7crmB7Eovt/c9oTz4KZPJjFiv3zJyg1WI
+         6FIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=h36MvPrkxYbI87PiJht3Uy6WAT/7y+IB8YI1O+bBO1k=;
-        b=mfe/TxNtecjwygY4YnvWFF0tTbu+wezDAn9EAzi7vXZD5e3nbA3dawV89JZ89xJSBj
-         uQHzyVrkYfpa4toeSgC25R9Xj7sc3cy/39Jfp+3B75VLLlqaXXZLjClGPNFth7jlZMQw
-         cWXxnh7CiDU1QFQOPd69MbRyGyAObcpiSw+qB9re7fYcwZ2FkjSGJGUCLwcQm1xmtk5k
-         h57eCOCzJ5aWaPYV4JLlZEcinNlkVDDn7rf2jmCSbfQBukcsCY7ydVLsrZyGAXdshkAF
-         uhDzr+lyQtvhEl7+g9kqoH6b3O9eG+Havr2kZGBrrsd2WPHisKa8S0gABJ4lEl8PX+eu
-         K1xw==
-X-Gm-Message-State: AOAM531UCUdpV4TVExMGjJa0asz0uVVFZ4yBlzdttgXGHOJ1RkiznFIq
-        7xKgAeoOJSr1QSz/B3Oj62DKKhVYxR4=
-X-Google-Smtp-Source: ABdhPJx1k/dNdB+UEfwENdvQCNdTfjD4nzmaSm1ArnOOG7P/t/V/Z6oMrLTg47HY1PdRHmsD3VE5QA==
-X-Received: by 2002:a05:6000:1210:: with SMTP id e16mr17610395wrx.19.1616408999019;
-        Mon, 22 Mar 2021 03:29:59 -0700 (PDT)
+        bh=HjvlbUxyN16fvG/kqda3cUTU+Hiv8kcfZdXOFrRWk5s=;
+        b=fINxHjcY79MaXwh5EkGLeY+1fXTuPR8v6r7Db/jyfEmCJMg0bB66HeuvR9qTQtRini
+         Guy5fnnU4r7aqphMNYpjLgvqHmhCbLBpO/wHaRvrXO7sgP/jipb0OoDkXIKWiznzUAYb
+         o1M8XTcKLeB+lydnRizfMV86iSO9OfX3iSU6SwpDdjJvnpzgzXWZaoU+TMCBMkaoJk7k
+         PGCIO79qem+tpPW83qF2dvvmNBN9RpKpwncSCgH7N/BMpWAg1Sv5sFnSp9gSjFmnkW33
+         u+PqSx+g9m59oZxX1IpJfKL7Y+196XClZ6usbMjzAteOYpCJjYmO9QAxq3f5vrqMa4L6
+         YeDg==
+X-Gm-Message-State: AOAM530189Z93PptEVBa3UKOJ+DF1lXFyToEaOkDXgJSAXhB+pGf8J4l
+        sHlY6RSmKB50jQwxvrOgC2C++pXnh3A=
+X-Google-Smtp-Source: ABdhPJyHvVubHebLTQRU4BjT9gNMdWT8VJSXc16jKcxzl1PJlL5A5u9iqC7PL0vQPgyIHtLIx2I1kA==
+X-Received: by 2002:a7b:c0d1:: with SMTP id s17mr15159572wmh.153.1616408995607;
+        Mon, 22 Mar 2021 03:29:55 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a14sm18894742wrn.5.2021.03.22.03.29.58
+        by smtp.gmail.com with ESMTPSA id m11sm18057945wrz.40.2021.03.22.03.29.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Mar 2021 03:29:58 -0700 (PDT)
-Message-Id: <eee5f4796d3772eb7f4b40c2e7ac600814ddbb0a.1616408989.git.gitgitgadget@gmail.com>
+        Mon, 22 Mar 2021 03:29:55 -0700 (PDT)
+Message-Id: <58c3fb7cd776600c2e859a7db23dcfe00b52c6f0.1616408989.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.766.v7.git.1616408989.gitgitgadget@gmail.com>
 References: <pull.766.v6.git.1615842509.gitgitgadget@gmail.com>
         <pull.766.v7.git.1616408989.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 22 Mar 2021 10:29:47 +0000
-Subject: [PATCH v7 11/12] simple-ipc: add Unix domain socket implementation
+Date:   Mon, 22 Mar 2021 10:29:42 +0000
+Subject: [PATCH v7 06/12] simple-ipc: add win32 implementation
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,183 +82,244 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Create Unix domain socket based implementation of "simple-ipc".
-
-A set of `ipc_client` routines implement a client library to connect
-to an `ipc_server` over a Unix domain socket, send a simple request,
-and receive a single response.  Clients use blocking IO on the socket.
-
-A set of `ipc_server` routines implement a thread pool to listen for
-and concurrently service client connections.
-
-The server creates a new Unix domain socket at a known location.  If a
-socket already exists with that name, the server tries to determine if
-another server is already listening on the socket or if the socket is
-dead.  If socket is busy, the server exits with an error rather than
-stealing the socket.  If the socket is dead, the server creates a new
-one and starts up.
-
-If while running, the server detects that its socket has been stolen
-by another server, it automatically exits.
+Create Windows implementation of "simple-ipc" using named pipes.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- Makefile                            |   2 +
- compat/simple-ipc/ipc-unix-socket.c | 999 ++++++++++++++++++++++++++++
- contrib/buildsystems/CMakeLists.txt |   2 +
- simple-ipc.h                        |  13 +-
- 4 files changed, 1015 insertions(+), 1 deletion(-)
- create mode 100644 compat/simple-ipc/ipc-unix-socket.c
+ Makefile                            |   5 +
+ compat/simple-ipc/ipc-shared.c      |  28 ++
+ compat/simple-ipc/ipc-win32.c       | 751 ++++++++++++++++++++++++++++
+ config.mak.uname                    |   2 +
+ contrib/buildsystems/CMakeLists.txt |   4 +
+ simple-ipc.h                        | 228 +++++++++
+ 6 files changed, 1018 insertions(+)
+ create mode 100644 compat/simple-ipc/ipc-shared.c
+ create mode 100644 compat/simple-ipc/ipc-win32.c
+ create mode 100644 simple-ipc.h
 
 diff --git a/Makefile b/Makefile
-index 012694276f6d..20dd65d19658 100644
+index dd08b4ced01c..d3c42d3f4f9f 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1666,6 +1666,8 @@ ifdef NO_UNIX_SOCKETS
- else
+@@ -1667,6 +1667,11 @@ else
  	LIB_OBJS += unix-socket.o
- 	LIB_OBJS += unix-stream-server.o
-+	LIB_OBJS += compat/simple-ipc/ipc-shared.o
-+	LIB_OBJS += compat/simple-ipc/ipc-unix-socket.o
  endif
  
- ifdef USE_WIN32_IPC
-diff --git a/compat/simple-ipc/ipc-unix-socket.c b/compat/simple-ipc/ipc-unix-socket.c
++ifdef USE_WIN32_IPC
++	LIB_OBJS += compat/simple-ipc/ipc-shared.o
++	LIB_OBJS += compat/simple-ipc/ipc-win32.o
++endif
++
+ ifdef NO_ICONV
+ 	BASIC_CFLAGS += -DNO_ICONV
+ endif
+diff --git a/compat/simple-ipc/ipc-shared.c b/compat/simple-ipc/ipc-shared.c
 new file mode 100644
-index 000000000000..38689b278df3
+index 000000000000..1edec8159532
 --- /dev/null
-+++ b/compat/simple-ipc/ipc-unix-socket.c
-@@ -0,0 +1,999 @@
++++ b/compat/simple-ipc/ipc-shared.c
+@@ -0,0 +1,28 @@
 +#include "cache.h"
 +#include "simple-ipc.h"
 +#include "strbuf.h"
 +#include "pkt-line.h"
 +#include "thread-utils.h"
-+#include "unix-socket.h"
-+#include "unix-stream-server.h"
 +
-+#ifdef NO_UNIX_SOCKETS
-+#error compat/simple-ipc/ipc-unix-socket.c requires Unix sockets
++#ifdef SUPPORTS_SIMPLE_IPC
++
++int ipc_server_run(const char *path, const struct ipc_server_opts *opts,
++		   ipc_server_application_cb *application_cb,
++		   void *application_data)
++{
++	struct ipc_server_data *server_data = NULL;
++	int ret;
++
++	ret = ipc_server_run_async(&server_data, path, opts,
++				   application_cb, application_data);
++	if (ret)
++		return ret;
++
++	ret = ipc_server_await(server_data);
++
++	ipc_server_free(server_data);
++
++	return ret;
++}
++
++#endif /* SUPPORTS_SIMPLE_IPC */
+diff --git a/compat/simple-ipc/ipc-win32.c b/compat/simple-ipc/ipc-win32.c
+new file mode 100644
+index 000000000000..8f89c02037e3
+--- /dev/null
++++ b/compat/simple-ipc/ipc-win32.c
+@@ -0,0 +1,751 @@
++#include "cache.h"
++#include "simple-ipc.h"
++#include "strbuf.h"
++#include "pkt-line.h"
++#include "thread-utils.h"
++
++#ifndef GIT_WINDOWS_NATIVE
++#error This file can only be compiled on Windows
 +#endif
++
++static int initialize_pipe_name(const char *path, wchar_t *wpath, size_t alloc)
++{
++	int off = 0;
++	struct strbuf realpath = STRBUF_INIT;
++
++	if (!strbuf_realpath(&realpath, path, 0))
++		return -1;
++
++	off = swprintf(wpath, alloc, L"\\\\.\\pipe\\");
++	if (xutftowcs(wpath + off, realpath.buf, alloc - off) < 0)
++		return -1;
++
++	/* Handle drive prefix */
++	if (wpath[off] && wpath[off + 1] == L':') {
++		wpath[off + 1] = L'_';
++		off += 2;
++	}
++
++	for (; wpath[off]; off++)
++		if (wpath[off] == L'/')
++			wpath[off] = L'\\';
++
++	strbuf_release(&realpath);
++	return 0;
++}
++
++static enum ipc_active_state get_active_state(wchar_t *pipe_path)
++{
++	if (WaitNamedPipeW(pipe_path, NMPWAIT_USE_DEFAULT_WAIT))
++		return IPC_STATE__LISTENING;
++
++	if (GetLastError() == ERROR_SEM_TIMEOUT)
++		return IPC_STATE__NOT_LISTENING;
++
++	if (GetLastError() == ERROR_FILE_NOT_FOUND)
++		return IPC_STATE__PATH_NOT_FOUND;
++
++	return IPC_STATE__OTHER_ERROR;
++}
 +
 +enum ipc_active_state ipc_get_active_state(const char *path)
 +{
-+	enum ipc_active_state state = IPC_STATE__OTHER_ERROR;
-+	struct ipc_client_connect_options options
-+		= IPC_CLIENT_CONNECT_OPTIONS_INIT;
-+	struct stat st;
-+	struct ipc_client_connection *connection_test = NULL;
++	wchar_t pipe_path[MAX_PATH];
 +
-+	options.wait_if_busy = 0;
-+	options.wait_if_not_found = 0;
-+
-+	if (lstat(path, &st) == -1) {
-+		switch (errno) {
-+		case ENOENT:
-+		case ENOTDIR:
-+			return IPC_STATE__NOT_LISTENING;
-+		default:
-+			return IPC_STATE__INVALID_PATH;
-+		}
-+	}
-+
-+	/* also complain if a plain file is in the way */
-+	if ((st.st_mode & S_IFMT) != S_IFSOCK)
++	if (initialize_pipe_name(path, pipe_path, ARRAY_SIZE(pipe_path)) < 0)
 +		return IPC_STATE__INVALID_PATH;
 +
-+	/*
-+	 * Just because the filesystem has a S_IFSOCK type inode
-+	 * at `path`, doesn't mean it that there is a server listening.
-+	 * Ping it to be sure.
-+	 */
-+	state = ipc_client_try_connect(path, &options, &connection_test);
-+	ipc_client_close_connection(connection_test);
-+
-+	return state;
++	return get_active_state(pipe_path);
 +}
 +
-+/*
-+ * Retry frequency when trying to connect to a server.
-+ *
-+ * This value should be short enough that we don't seriously delay our
-+ * caller, but not fast enough that our spinning puts pressure on the
-+ * system.
-+ */
 +#define WAIT_STEP_MS (50)
 +
-+/*
-+ * Try to connect to the server.  If the server is just starting up or
-+ * is very busy, we may not get a connection the first time.
-+ */
 +static enum ipc_active_state connect_to_server(
-+	const char *path,
-+	int timeout_ms,
++	const wchar_t *wpath,
++	DWORD timeout_ms,
 +	const struct ipc_client_connect_options *options,
 +	int *pfd)
 +{
-+	int k;
++	DWORD t_start_ms, t_waited_ms;
++	DWORD step_ms;
++	HANDLE hPipe = INVALID_HANDLE_VALUE;
++	DWORD mode = PIPE_READMODE_BYTE;
++	DWORD gle;
 +
 +	*pfd = -1;
 +
-+	for (k = 0; k < timeout_ms; k += WAIT_STEP_MS) {
-+		int fd = unix_stream_connect(path, options->uds_disallow_chdir);
++	for (;;) {
++		hPipe = CreateFileW(wpath, GENERIC_READ | GENERIC_WRITE,
++				    0, NULL, OPEN_EXISTING, 0, NULL);
++		if (hPipe != INVALID_HANDLE_VALUE)
++			break;
 +
-+		if (fd != -1) {
-+			*pfd = fd;
-+			return IPC_STATE__LISTENING;
-+		}
++		gle = GetLastError();
 +
-+		if (errno == ENOENT) {
++		switch (gle) {
++		case ERROR_FILE_NOT_FOUND:
 +			if (!options->wait_if_not_found)
 +				return IPC_STATE__PATH_NOT_FOUND;
++			if (!timeout_ms)
++				return IPC_STATE__PATH_NOT_FOUND;
 +
-+			goto sleep_and_try_again;
-+		}
++			step_ms = (timeout_ms < WAIT_STEP_MS) ?
++				timeout_ms : WAIT_STEP_MS;
++			sleep_millisec(step_ms);
 +
-+		if (errno == ETIMEDOUT) {
++			timeout_ms -= step_ms;
++			break; /* try again */
++
++		case ERROR_PIPE_BUSY:
 +			if (!options->wait_if_busy)
 +				return IPC_STATE__NOT_LISTENING;
-+
-+			goto sleep_and_try_again;
-+		}
-+
-+		if (errno == ECONNREFUSED) {
-+			if (!options->wait_if_busy)
++			if (!timeout_ms)
 +				return IPC_STATE__NOT_LISTENING;
 +
-+			goto sleep_and_try_again;
++			t_start_ms = (DWORD)(getnanotime() / 1000000);
++
++			if (!WaitNamedPipeW(wpath, timeout_ms)) {
++				if (GetLastError() == ERROR_SEM_TIMEOUT)
++					return IPC_STATE__NOT_LISTENING;
++
++				return IPC_STATE__OTHER_ERROR;
++			}
++
++			/*
++			 * A pipe server instance became available.
++			 * Race other client processes to connect to
++			 * it.
++			 *
++			 * But first decrement our overall timeout so
++			 * that we don't starve if we keep losing the
++			 * race.  But also guard against special
++			 * NPMWAIT_ values (0 and -1).
++			 */
++			t_waited_ms = (DWORD)(getnanotime() / 1000000) - t_start_ms;
++			if (t_waited_ms < timeout_ms)
++				timeout_ms -= t_waited_ms;
++			else
++				timeout_ms = 1;
++			break; /* try again */
++
++		default:
++			return IPC_STATE__OTHER_ERROR;
 +		}
-+
-+		return IPC_STATE__OTHER_ERROR;
-+
-+	sleep_and_try_again:
-+		sleep_millisec(WAIT_STEP_MS);
 +	}
 +
-+	return IPC_STATE__NOT_LISTENING;
++	if (!SetNamedPipeHandleState(hPipe, &mode, NULL, NULL)) {
++		CloseHandle(hPipe);
++		return IPC_STATE__OTHER_ERROR;
++	}
++
++	*pfd = _open_osfhandle((intptr_t)hPipe, O_RDWR|O_BINARY);
++	if (*pfd < 0) {
++		CloseHandle(hPipe);
++		return IPC_STATE__OTHER_ERROR;
++	}
++
++	/* fd now owns hPipe */
++
++	return IPC_STATE__LISTENING;
 +}
 +
 +/*
-+ * The total amount of time that we are willing to wait when trying to
-+ * connect to a server.
++ * The default connection timeout for Windows clients.
 + *
-+ * When the server is first started, it might take a little while for
-+ * it to become ready to service requests.  Likewise, the server may
-+ * be very (temporarily) busy and not respond to our connections.
++ * This is not currently part of the ipc_ API (nor the config settings)
++ * because of differences between Windows and other platforms.
 + *
-+ * We should gracefully and silently handle those conditions and try
-+ * again for a reasonable time period.
-+ *
-+ * The value chosen here should be long enough for the server
-+ * to reliably heal from the above conditions.
++ * This value was chosen at random.
 + */
-+#define MY_CONNECTION_TIMEOUT_MS (1000)
++#define WINDOWS_CONNECTION_TIMEOUT_MS (30000)
 +
 +enum ipc_active_state ipc_client_try_connect(
 +	const char *path,
 +	const struct ipc_client_connect_options *options,
 +	struct ipc_client_connection **p_connection)
 +{
++	wchar_t wpath[MAX_PATH];
 +	enum ipc_active_state state = IPC_STATE__OTHER_ERROR;
 +	int fd = -1;
 +
@@ -267,8 +328,11 @@ index 000000000000..38689b278df3
 +	trace2_region_enter("ipc-client", "try-connect", NULL);
 +	trace2_data_string("ipc-client", NULL, "try-connect/path", path);
 +
-+	state = connect_to_server(path, MY_CONNECTION_TIMEOUT_MS,
-+				  options, &fd);
++	if (initialize_pipe_name(path, wpath, ARRAY_SIZE(wpath)) < 0)
++		state = IPC_STATE__INVALID_PATH;
++	else
++		state = connect_to_server(wpath, WINDOWS_CONNECTION_TIMEOUT_MS,
++					  options, &fd);
 +
 +	trace2_data_intmax("ipc-client", NULL, "try-connect/state",
 +			   (intmax_t)state);
@@ -310,6 +374,8 @@ index 000000000000..38689b278df3
 +		goto done;
 +	}
 +
++	FlushFileBuffers((HANDLE)_get_osfhandle(connection->fd));
++
 +	if (read_packetized_to_strbuf(
 +		    connection->fd, answer,
 +		    PACKET_READ_GENTLE_ON_EOF | PACKET_READ_GENTLE_ON_READ_ERROR) < 0) {
@@ -324,7 +390,7 @@ index 000000000000..38689b278df3
 +
 +int ipc_client_send_command(const char *path,
 +			    const struct ipc_client_connect_options *options,
-+			    const char *message, struct strbuf *answer)
++			    const char *message, struct strbuf *response)
 +{
 +	int ret = -1;
 +	enum ipc_active_state state;
@@ -335,28 +401,42 @@ index 000000000000..38689b278df3
 +	if (state != IPC_STATE__LISTENING)
 +		return ret;
 +
-+	ret = ipc_client_send_command_to_connection(connection, message, answer);
++	ret = ipc_client_send_command_to_connection(connection, message, response);
 +
 +	ipc_client_close_connection(connection);
 +
 +	return ret;
 +}
 +
-+static int set_socket_blocking_flag(int fd, int make_nonblocking)
++/*
++ * Duplicate the given pipe handle and wrap it in a file descriptor so
++ * that we can use pkt-line on it.
++ */
++static int dup_fd_from_pipe(const HANDLE pipe)
 +{
-+	int flags;
++	HANDLE process = GetCurrentProcess();
++	HANDLE handle;
++	int fd;
 +
-+	flags = fcntl(fd, F_GETFL, NULL);
-+
-+	if (flags < 0)
++	if (!DuplicateHandle(process, pipe, process, &handle, 0, FALSE,
++			     DUPLICATE_SAME_ACCESS)) {
++		errno = err_win_to_posix(GetLastError());
 +		return -1;
++	}
 +
-+	if (make_nonblocking)
-+		flags |= O_NONBLOCK;
-+	else
-+		flags &= ~O_NONBLOCK;
++	fd = _open_osfhandle((intptr_t)handle, O_RDWR|O_BINARY);
++	if (fd < 0) {
++		errno = err_win_to_posix(GetLastError());
++		CloseHandle(handle);
++		return -1;
++	}
 +
-+	return fcntl(fd, F_SETFL, flags);
++	/*
++	 * `handle` is now owned by `fd` and will be automatically closed
++	 * when the descriptor is closed.
++	 */
++
++	return fd;
 +}
 +
 +/*
@@ -367,150 +447,115 @@ index 000000000000..38689b278df3
 + */
 +enum magic {
 +	MAGIC_SERVER_REPLY_DATA,
-+	MAGIC_WORKER_THREAD_DATA,
-+	MAGIC_ACCEPT_THREAD_DATA,
++	MAGIC_SERVER_THREAD_DATA,
 +	MAGIC_SERVER_DATA,
 +};
 +
 +struct ipc_server_reply_data {
 +	enum magic magic;
 +	int fd;
-+	struct ipc_worker_thread_data *worker_thread_data;
++	struct ipc_server_thread_data *server_thread_data;
 +};
 +
-+struct ipc_worker_thread_data {
++struct ipc_server_thread_data {
 +	enum magic magic;
-+	struct ipc_worker_thread_data *next_thread;
++	struct ipc_server_thread_data *next_thread;
 +	struct ipc_server_data *server_data;
 +	pthread_t pthread_id;
-+};
-+
-+struct ipc_accept_thread_data {
-+	enum magic magic;
-+	struct ipc_server_data *server_data;
-+
-+	struct unix_ss_socket *server_socket;
-+
-+	int fd_send_shutdown;
-+	int fd_wait_shutdown;
-+	pthread_t pthread_id;
++	HANDLE hPipe;
 +};
 +
 +/*
-+ * With unix-sockets, the conceptual "ipc-server" is implemented as a single
-+ * controller "accept-thread" thread and a pool of "worker-thread" threads.
-+ * The former does the usual `accept()` loop and dispatches connections
-+ * to an idle worker thread.  The worker threads wait in an idle loop for
-+ * a new connection, communicate with the client and relay data to/from
-+ * the `application_cb` and then wait for another connection from the
-+ * server thread.  This avoids the overhead of constantly creating and
-+ * destroying threads.
++ * On Windows, the conceptual "ipc-server" is implemented as a pool of
++ * n idential/peer "server-thread" threads.  That is, there is no
++ * hierarchy of threads; and therefore no controller thread managing
++ * the pool.  Each thread has an independent handle to the named pipe,
++ * receives incoming connections, processes the client, and re-uses
++ * the pipe for the next client connection.
++ *
++ * Therefore, the "ipc-server" only needs to maintain a list of the
++ * spawned threads for eventual "join" purposes.
++ *
++ * A single "stop-event" is visible to all of the server threads to
++ * tell them to shutdown (when idle).
 + */
 +struct ipc_server_data {
 +	enum magic magic;
 +	ipc_server_application_cb *application_cb;
 +	void *application_data;
 +	struct strbuf buf_path;
++	wchar_t wpath[MAX_PATH];
 +
-+	struct ipc_accept_thread_data *accept_thread;
-+	struct ipc_worker_thread_data *worker_thread_list;
-+
-+	pthread_mutex_t work_available_mutex;
-+	pthread_cond_t work_available_cond;
-+
-+	/*
-+	 * Accepted but not yet processed client connections are kept
-+	 * in a circular buffer FIFO.  The queue is empty when the
-+	 * positions are equal.
-+	 */
-+	int *fifo_fds;
-+	int queue_size;
-+	int back_pos;
-+	int front_pos;
-+
-+	int shutdown_requested;
++	HANDLE hEventStopRequested;
++	struct ipc_server_thread_data *thread_list;
 +	int is_stopped;
 +};
 +
-+/*
-+ * Remove and return the oldest queued connection.
-+ *
-+ * Returns -1 if empty.
-+ */
-+static int fifo_dequeue(struct ipc_server_data *server_data)
++enum connect_result {
++	CR_CONNECTED = 0,
++	CR_CONNECT_PENDING,
++	CR_CONNECT_ERROR,
++	CR_WAIT_ERROR,
++	CR_SHUTDOWN,
++};
++
++static enum connect_result queue_overlapped_connect(
++	struct ipc_server_thread_data *server_thread_data,
++	OVERLAPPED *lpo)
 +{
-+	/* ASSERT holding mutex */
++	if (ConnectNamedPipe(server_thread_data->hPipe, lpo))
++		goto failed;
 +
-+	int fd;
++	switch (GetLastError()) {
++	case ERROR_IO_PENDING:
++		return CR_CONNECT_PENDING;
 +
-+	if (server_data->back_pos == server_data->front_pos)
-+		return -1;
++	case ERROR_PIPE_CONNECTED:
++		SetEvent(lpo->hEvent);
++		return CR_CONNECTED;
 +
-+	fd = server_data->fifo_fds[server_data->front_pos];
-+	server_data->fifo_fds[server_data->front_pos] = -1;
++	default:
++		break;
++	}
 +
-+	server_data->front_pos++;
-+	if (server_data->front_pos == server_data->queue_size)
-+		server_data->front_pos = 0;
-+
-+	return fd;
++failed:
++	error(_("ConnectNamedPipe failed for '%s' (%lu)"),
++	      server_thread_data->server_data->buf_path.buf,
++	      GetLastError());
++	return CR_CONNECT_ERROR;
 +}
 +
 +/*
-+ * Push a new fd onto the back of the queue.
-+ *
-+ * Drop it and return -1 if queue is already full.
++ * Use Windows Overlapped IO to wait for a connection or for our event
++ * to be signalled.
 + */
-+static int fifo_enqueue(struct ipc_server_data *server_data, int fd)
++static enum connect_result wait_for_connection(
++	struct ipc_server_thread_data *server_thread_data,
++	OVERLAPPED *lpo)
 +{
-+	/* ASSERT holding mutex */
++	enum connect_result r;
++	HANDLE waitHandles[2];
++	DWORD dwWaitResult;
 +
-+	int next_back_pos;
++	r = queue_overlapped_connect(server_thread_data, lpo);
++	if (r != CR_CONNECT_PENDING)
++		return r;
 +
-+	next_back_pos = server_data->back_pos + 1;
-+	if (next_back_pos == server_data->queue_size)
-+		next_back_pos = 0;
++	waitHandles[0] = server_thread_data->server_data->hEventStopRequested;
++	waitHandles[1] = lpo->hEvent;
 +
-+	if (next_back_pos == server_data->front_pos) {
-+		/* Queue is full. Just drop it. */
-+		close(fd);
-+		return -1;
++	dwWaitResult = WaitForMultipleObjects(2, waitHandles, FALSE, INFINITE);
++	switch (dwWaitResult) {
++	case WAIT_OBJECT_0 + 0:
++		return CR_SHUTDOWN;
++
++	case WAIT_OBJECT_0 + 1:
++		ResetEvent(lpo->hEvent);
++		return CR_CONNECTED;
++
++	default:
++		return CR_WAIT_ERROR;
 +	}
-+
-+	server_data->fifo_fds[server_data->back_pos] = fd;
-+	server_data->back_pos = next_back_pos;
-+
-+	return fd;
-+}
-+
-+/*
-+ * Wait for a connection to be queued to the FIFO and return it.
-+ *
-+ * Returns -1 if someone has already requested a shutdown.
-+ */
-+static int worker_thread__wait_for_connection(
-+	struct ipc_worker_thread_data *worker_thread_data)
-+{
-+	/* ASSERT NOT holding mutex */
-+
-+	struct ipc_server_data *server_data = worker_thread_data->server_data;
-+	int fd = -1;
-+
-+	pthread_mutex_lock(&server_data->work_available_mutex);
-+	for (;;) {
-+		if (server_data->shutdown_requested)
-+			break;
-+
-+		fd = fifo_dequeue(server_data);
-+		if (fd >= 0)
-+			break;
-+
-+		pthread_cond_wait(&server_data->work_available_cond,
-+				  &server_data->work_available_mutex);
-+	}
-+	pthread_mutex_unlock(&server_data->work_available_mutex);
-+
-+	return fd;
 +}
 +
 +/*
@@ -536,103 +581,39 @@ index 000000000000..38689b278df3
 +						  reply_data->fd);
 +}
 +
-+/* A randomly chosen value. */
-+#define MY_WAIT_POLL_TIMEOUT_MS (10)
-+
-+/*
-+ * If the client hangs up without sending any data on the wire, just
-+ * quietly close the socket and ignore this client.
-+ *
-+ * This worker thread is committed to reading the IPC request data
-+ * from the client at the other end of this fd.  Wait here for the
-+ * client to actually put something on the wire -- because if the
-+ * client just does a ping (connect and hangup without sending any
-+ * data), our use of the pkt-line read routines will spew an error
-+ * message.
-+ *
-+ * Return -1 if the client hung up.
-+ * Return 0 if data (possibly incomplete) is ready.
-+ */
-+static int worker_thread__wait_for_io_start(
-+	struct ipc_worker_thread_data *worker_thread_data,
-+	int fd)
-+{
-+	struct ipc_server_data *server_data = worker_thread_data->server_data;
-+	struct pollfd pollfd[1];
-+	int result;
-+
-+	for (;;) {
-+		pollfd[0].fd = fd;
-+		pollfd[0].events = POLLIN;
-+
-+		result = poll(pollfd, 1, MY_WAIT_POLL_TIMEOUT_MS);
-+		if (result < 0) {
-+			if (errno == EINTR)
-+				continue;
-+			goto cleanup;
-+		}
-+
-+		if (result == 0) {
-+			/* a timeout */
-+
-+			int in_shutdown;
-+
-+			pthread_mutex_lock(&server_data->work_available_mutex);
-+			in_shutdown = server_data->shutdown_requested;
-+			pthread_mutex_unlock(&server_data->work_available_mutex);
-+
-+			/*
-+			 * If a shutdown is already in progress and this
-+			 * client has not started talking yet, just drop it.
-+			 */
-+			if (in_shutdown)
-+				goto cleanup;
-+			continue;
-+		}
-+
-+		if (pollfd[0].revents & POLLHUP)
-+			goto cleanup;
-+
-+		if (pollfd[0].revents & POLLIN)
-+			return 0;
-+
-+		goto cleanup;
-+	}
-+
-+cleanup:
-+	close(fd);
-+	return -1;
-+}
-+
 +/*
 + * Receive the request/command from the client and pass it to the
 + * registered request-callback.  The request-callback will compose
 + * a response and call our reply-callback to send it to the client.
++ *
++ * Simple-IPC only contains one round trip, so we flush and close
++ * here after the response.
 + */
-+static int worker_thread__do_io(
-+	struct ipc_worker_thread_data *worker_thread_data,
-+	int fd)
++static int do_io(struct ipc_server_thread_data *server_thread_data)
 +{
-+	/* ASSERT NOT holding lock */
-+
 +	struct strbuf buf = STRBUF_INIT;
 +	struct ipc_server_reply_data reply_data;
 +	int ret = 0;
 +
 +	reply_data.magic = MAGIC_SERVER_REPLY_DATA;
-+	reply_data.worker_thread_data = worker_thread_data;
++	reply_data.server_thread_data = server_thread_data;
 +
-+	reply_data.fd = fd;
++	reply_data.fd = dup_fd_from_pipe(server_thread_data->hPipe);
++	if (reply_data.fd < 0)
++		return error(_("could not create fd from pipe for '%s'"),
++			     server_thread_data->server_data->buf_path.buf);
 +
 +	ret = read_packetized_to_strbuf(
 +		reply_data.fd, &buf,
 +		PACKET_READ_GENTLE_ON_EOF | PACKET_READ_GENTLE_ON_READ_ERROR);
 +	if (ret >= 0) {
-+		ret = worker_thread_data->server_data->application_cb(
-+			worker_thread_data->server_data->application_data,
++		ret = server_thread_data->server_data->application_cb(
++			server_thread_data->server_data->application_data,
 +			buf.buf, do_io_reply_callback, &reply_data);
 +
 +		packet_flush_gently(reply_data.fd);
++
++		FlushFileBuffers((HANDLE)_get_osfhandle((reply_data.fd)));
 +	}
 +	else {
 +		/*
@@ -648,440 +629,251 @@ index 000000000000..38689b278df3
 +}
 +
 +/*
-+ * Block SIGPIPE on the current thread (so that we get EPIPE from
-+ * write() rather than an actual signal).
-+ *
-+ * Note that using sigchain_push() and _pop() to control SIGPIPE
-+ * around our IO calls is not thread safe:
-+ * [] It uses a global stack of handler frames.
-+ * [] It uses ALLOC_GROW() to resize it.
-+ * [] Finally, according to the `signal(2)` man-page:
-+ *    "The effects of `signal()` in a multithreaded process are unspecified."
++ * Handle IPC request and response with this connected client.  And reset
++ * the pipe to prepare for the next client.
 + */
-+static void thread_block_sigpipe(sigset_t *old_set)
++static int use_connection(struct ipc_server_thread_data *server_thread_data)
 +{
-+	sigset_t new_set;
-+
-+	sigemptyset(&new_set);
-+	sigaddset(&new_set, SIGPIPE);
-+
-+	sigemptyset(old_set);
-+	pthread_sigmask(SIG_BLOCK, &new_set, old_set);
-+}
-+
-+/*
-+ * Thread proc for an IPC worker thread.  It handles a series of
-+ * connections from clients.  It pulls the next fd from the queue
-+ * processes it, and then waits for the next client.
-+ *
-+ * Block SIGPIPE in this worker thread for the life of the thread.
-+ * This avoids stray (and sometimes delayed) SIGPIPE signals caused
-+ * by client errors and/or when we are under extremely heavy IO load.
-+ *
-+ * This means that the application callback will have SIGPIPE blocked.
-+ * The callback should not change it.
-+ */
-+static void *worker_thread_proc(void *_worker_thread_data)
-+{
-+	struct ipc_worker_thread_data *worker_thread_data = _worker_thread_data;
-+	struct ipc_server_data *server_data = worker_thread_data->server_data;
-+	sigset_t old_set;
-+	int fd, io;
 +	int ret;
 +
-+	trace2_thread_start("ipc-worker");
++	ret = do_io(server_thread_data);
 +
-+	thread_block_sigpipe(&old_set);
-+
-+	for (;;) {
-+		fd = worker_thread__wait_for_connection(worker_thread_data);
-+		if (fd == -1)
-+			break; /* in shutdown */
-+
-+		io = worker_thread__wait_for_io_start(worker_thread_data, fd);
-+		if (io == -1)
-+			continue; /* client hung up without sending anything */
-+
-+		ret = worker_thread__do_io(worker_thread_data, fd);
-+
-+		if (ret == SIMPLE_IPC_QUIT) {
-+			trace2_data_string("ipc-worker", NULL, "queue_stop_async",
-+					   "application_quit");
-+			/*
-+			 * The application layer is telling the ipc-server
-+			 * layer to shutdown.
-+			 *
-+			 * We DO NOT have a response to send to the client.
-+			 *
-+			 * Queue an async stop (to stop the other threads) and
-+			 * allow this worker thread to exit now (no sense waiting
-+			 * for the thread-pool shutdown signal).
-+			 *
-+			 * Other non-idle worker threads are allowed to finish
-+			 * responding to their current clients.
-+			 */
-+			ipc_server_stop_async(server_data);
-+			break;
-+		}
-+	}
-+
-+	trace2_thread_exit();
-+	return NULL;
-+}
-+
-+/* A randomly chosen value. */
-+#define MY_ACCEPT_POLL_TIMEOUT_MS (60 * 1000)
-+
-+/*
-+ * Accept a new client connection on our socket.  This uses non-blocking
-+ * IO so that we can also wait for shutdown requests on our socket-pair
-+ * without actually spinning on a fast timeout.
-+ */
-+static int accept_thread__wait_for_connection(
-+	struct ipc_accept_thread_data *accept_thread_data)
-+{
-+	struct pollfd pollfd[2];
-+	int result;
-+
-+	for (;;) {
-+		pollfd[0].fd = accept_thread_data->fd_wait_shutdown;
-+		pollfd[0].events = POLLIN;
-+
-+		pollfd[1].fd = accept_thread_data->server_socket->fd_socket;
-+		pollfd[1].events = POLLIN;
-+
-+		result = poll(pollfd, 2, MY_ACCEPT_POLL_TIMEOUT_MS);
-+		if (result < 0) {
-+			if (errno == EINTR)
-+				continue;
-+			return result;
-+		}
-+
-+		if (result == 0) {
-+			/* a timeout */
-+
-+			/*
-+			 * If someone deletes or force-creates a new unix
-+			 * domain socket at our path, all future clients
-+			 * will be routed elsewhere and we silently starve.
-+			 * If that happens, just queue a shutdown.
-+			 */
-+			if (unix_ss_was_stolen(
-+				    accept_thread_data->server_socket)) {
-+				trace2_data_string("ipc-accept", NULL,
-+						   "queue_stop_async",
-+						   "socket_stolen");
-+				ipc_server_stop_async(
-+					accept_thread_data->server_data);
-+			}
-+			continue;
-+		}
-+
-+		if (pollfd[0].revents & POLLIN) {
-+			/* shutdown message queued to socketpair */
-+			return -1;
-+		}
-+
-+		if (pollfd[1].revents & POLLIN) {
-+			/* a connection is available on server_socket */
-+
-+			int client_fd =
-+				accept(accept_thread_data->server_socket->fd_socket,
-+				       NULL, NULL);
-+			if (client_fd >= 0)
-+				return client_fd;
-+
-+			/*
-+			 * An error here is unlikely -- it probably
-+			 * indicates that the connecting process has
-+			 * already dropped the connection.
-+			 */
-+			continue;
-+		}
-+
-+		BUG("unandled poll result errno=%d r[0]=%d r[1]=%d",
-+		    errno, pollfd[0].revents, pollfd[1].revents);
-+	}
-+}
-+
-+/*
-+ * Thread proc for the IPC server "accept thread".  This waits for
-+ * an incoming socket connection, appends it to the queue of available
-+ * connections, and notifies a worker thread to process it.
-+ *
-+ * Block SIGPIPE in this thread for the life of the thread.  This
-+ * avoids any stray SIGPIPE signals when closing pipe fds under
-+ * extremely heavy loads (such as when the fifo queue is full and we
-+ * drop incomming connections).
-+ */
-+static void *accept_thread_proc(void *_accept_thread_data)
-+{
-+	struct ipc_accept_thread_data *accept_thread_data = _accept_thread_data;
-+	struct ipc_server_data *server_data = accept_thread_data->server_data;
-+	sigset_t old_set;
-+
-+	trace2_thread_start("ipc-accept");
-+
-+	thread_block_sigpipe(&old_set);
-+
-+	for (;;) {
-+		int client_fd = accept_thread__wait_for_connection(
-+			accept_thread_data);
-+
-+		pthread_mutex_lock(&server_data->work_available_mutex);
-+		if (server_data->shutdown_requested) {
-+			pthread_mutex_unlock(&server_data->work_available_mutex);
-+			if (client_fd >= 0)
-+				close(client_fd);
-+			break;
-+		}
-+
-+		if (client_fd < 0) {
-+			/* ignore transient accept() errors */
-+		}
-+		else {
-+			fifo_enqueue(server_data, client_fd);
-+			pthread_cond_broadcast(&server_data->work_available_cond);
-+		}
-+		pthread_mutex_unlock(&server_data->work_available_mutex);
-+	}
-+
-+	trace2_thread_exit();
-+	return NULL;
-+}
-+
-+/*
-+ * We can't predict the connection arrival rate relative to the worker
-+ * processing rate, therefore we allow the "accept-thread" to queue up
-+ * a generous number of connections, since we'd rather have the client
-+ * not unnecessarily timeout if we can avoid it.  (The assumption is
-+ * that this will be used for FSMonitor and a few second wait on a
-+ * connection is better than having the client timeout and do the full
-+ * computation itself.)
-+ *
-+ * The FIFO queue size is set to a multiple of the worker pool size.
-+ * This value chosen at random.
-+ */
-+#define FIFO_SCALE (100)
-+
-+/*
-+ * The backlog value for `listen(2)`.  This doesn't need to huge,
-+ * rather just large enough for our "accept-thread" to wake up and
-+ * queue incoming connections onto the FIFO without the kernel
-+ * dropping any.
-+ *
-+ * This value chosen at random.
-+ */
-+#define LISTEN_BACKLOG (50)
-+
-+static int create_listener_socket(
-+	const char *path,
-+	const struct ipc_server_opts *ipc_opts,
-+	struct unix_ss_socket **new_server_socket)
-+{
-+	struct unix_ss_socket *server_socket = NULL;
-+	struct unix_stream_listen_opts uslg_opts = UNIX_STREAM_LISTEN_OPTS_INIT;
-+	int ret;
-+
-+	uslg_opts.listen_backlog_size = LISTEN_BACKLOG;
-+	uslg_opts.disallow_chdir = ipc_opts->uds_disallow_chdir;
-+
-+	ret = unix_ss_create(path, &uslg_opts, -1, &server_socket);
-+	if (ret)
-+		return ret;
-+
-+	if (set_socket_blocking_flag(server_socket->fd_socket, 1)) {
-+		int saved_errno = errno;
-+		unix_ss_free(server_socket);
-+		errno = saved_errno;
-+		return -1;
-+	}
-+
-+	*new_server_socket = server_socket;
-+
-+	trace2_data_string("ipc-server", NULL, "listen-with-lock", path);
-+	return 0;
-+}
-+
-+static int setup_listener_socket(
-+	const char *path,
-+	const struct ipc_server_opts *ipc_opts,
-+	struct unix_ss_socket **new_server_socket)
-+{
-+	int ret, saved_errno;
-+
-+	trace2_region_enter("ipc-server", "create-listener_socket", NULL);
-+
-+	ret = create_listener_socket(path, ipc_opts, new_server_socket);
-+
-+	saved_errno = errno;
-+	trace2_region_leave("ipc-server", "create-listener_socket", NULL);
-+	errno = saved_errno;
++	FlushFileBuffers(server_thread_data->hPipe);
++	DisconnectNamedPipe(server_thread_data->hPipe);
 +
 +	return ret;
 +}
 +
 +/*
-+ * Start IPC server in a pool of background threads.
++ * Thread proc for an IPC server worker thread.  It handles a series of
++ * connections from clients.  It cleans and reuses the hPipe between each
++ * client.
 + */
++static void *server_thread_proc(void *_server_thread_data)
++{
++	struct ipc_server_thread_data *server_thread_data = _server_thread_data;
++	HANDLE hEventConnected = INVALID_HANDLE_VALUE;
++	OVERLAPPED oConnect;
++	enum connect_result cr;
++	int ret;
++
++	assert(server_thread_data->hPipe != INVALID_HANDLE_VALUE);
++
++	trace2_thread_start("ipc-server");
++	trace2_data_string("ipc-server", NULL, "pipe",
++			   server_thread_data->server_data->buf_path.buf);
++
++	hEventConnected = CreateEventW(NULL, TRUE, FALSE, NULL);
++
++	memset(&oConnect, 0, sizeof(oConnect));
++	oConnect.hEvent = hEventConnected;
++
++	for (;;) {
++		cr = wait_for_connection(server_thread_data, &oConnect);
++
++		switch (cr) {
++		case CR_SHUTDOWN:
++			goto finished;
++
++		case CR_CONNECTED:
++			ret = use_connection(server_thread_data);
++			if (ret == SIMPLE_IPC_QUIT) {
++				ipc_server_stop_async(
++					server_thread_data->server_data);
++				goto finished;
++			}
++			if (ret > 0) {
++				/*
++				 * Ignore (transient) IO errors with this
++				 * client and reset for the next client.
++				 */
++			}
++			break;
++
++		case CR_CONNECT_PENDING:
++			/* By construction, this should not happen. */
++			BUG("ipc-server[%s]: unexpeced CR_CONNECT_PENDING",
++			    server_thread_data->server_data->buf_path.buf);
++
++		case CR_CONNECT_ERROR:
++		case CR_WAIT_ERROR:
++			/*
++			 * Ignore these theoretical errors.
++			 */
++			DisconnectNamedPipe(server_thread_data->hPipe);
++			break;
++
++		default:
++			BUG("unandled case after wait_for_connection");
++		}
++	}
++
++finished:
++	CloseHandle(server_thread_data->hPipe);
++	CloseHandle(hEventConnected);
++
++	trace2_thread_exit();
++	return NULL;
++}
++
++static HANDLE create_new_pipe(wchar_t *wpath, int is_first)
++{
++	HANDLE hPipe;
++	DWORD dwOpenMode, dwPipeMode;
++	LPSECURITY_ATTRIBUTES lpsa = NULL;
++
++	dwOpenMode = PIPE_ACCESS_INBOUND | PIPE_ACCESS_OUTBOUND |
++		FILE_FLAG_OVERLAPPED;
++
++	dwPipeMode = PIPE_TYPE_MESSAGE | PIPE_READMODE_BYTE | PIPE_WAIT |
++		PIPE_REJECT_REMOTE_CLIENTS;
++
++	if (is_first) {
++		dwOpenMode |= FILE_FLAG_FIRST_PIPE_INSTANCE;
++
++		/*
++		 * On Windows, the first server pipe instance gets to
++		 * set the ACL / Security Attributes on the named
++		 * pipe; subsequent instances inherit and cannot
++		 * change them.
++		 *
++		 * TODO Should we allow the application layer to
++		 * specify security attributes, such as `LocalService`
++		 * or `LocalSystem`, when we create the named pipe?
++		 * This question is probably not important when the
++		 * daemon is started by a foreground user process and
++		 * only needs to talk to the current user, but may be
++		 * if the daemon is run via the Control Panel as a
++		 * System Service.
++		 */
++	}
++
++	hPipe = CreateNamedPipeW(wpath, dwOpenMode, dwPipeMode,
++				 PIPE_UNLIMITED_INSTANCES, 1024, 1024, 0, lpsa);
++
++	return hPipe;
++}
++
 +int ipc_server_run_async(struct ipc_server_data **returned_server_data,
 +			 const char *path, const struct ipc_server_opts *opts,
 +			 ipc_server_application_cb *application_cb,
 +			 void *application_data)
 +{
-+	struct unix_ss_socket *server_socket = NULL;
 +	struct ipc_server_data *server_data;
-+	int sv[2];
++	wchar_t wpath[MAX_PATH];
++	HANDLE hPipeFirst = INVALID_HANDLE_VALUE;
 +	int k;
-+	int ret;
++	int ret = 0;
 +	int nr_threads = opts->nr_threads;
 +
 +	*returned_server_data = NULL;
 +
-+	/*
-+	 * Create a socketpair and set sv[1] to non-blocking.  This
-+	 * will used to send a shutdown message to the accept-thread
-+	 * and allows the accept-thread to wait on EITHER a client
-+	 * connection or a shutdown request without spinning.
-+	 */
-+	if (socketpair(AF_UNIX, SOCK_STREAM, 0, sv) < 0)
-+		return -1;
-+
-+	if (set_socket_blocking_flag(sv[1], 1)) {
-+		int saved_errno = errno;
-+		close(sv[0]);
-+		close(sv[1]);
-+		errno = saved_errno;
++	ret = initialize_pipe_name(path, wpath, ARRAY_SIZE(wpath));
++	if (ret < 0) {
++		errno = EINVAL;
 +		return -1;
 +	}
 +
-+	ret = setup_listener_socket(path, opts, &server_socket);
-+	if (ret) {
-+		int saved_errno = errno;
-+		close(sv[0]);
-+		close(sv[1]);
-+		errno = saved_errno;
-+		return ret;
++	hPipeFirst = create_new_pipe(wpath, 1);
++	if (hPipeFirst == INVALID_HANDLE_VALUE) {
++		errno = EADDRINUSE;
++		return -2;
 +	}
 +
 +	server_data = xcalloc(1, sizeof(*server_data));
 +	server_data->magic = MAGIC_SERVER_DATA;
 +	server_data->application_cb = application_cb;
 +	server_data->application_data = application_data;
++	server_data->hEventStopRequested = CreateEvent(NULL, TRUE, FALSE, NULL);
 +	strbuf_init(&server_data->buf_path, 0);
 +	strbuf_addstr(&server_data->buf_path, path);
++	wcscpy(server_data->wpath, wpath);
 +
 +	if (nr_threads < 1)
 +		nr_threads = 1;
 +
-+	pthread_mutex_init(&server_data->work_available_mutex, NULL);
-+	pthread_cond_init(&server_data->work_available_cond, NULL);
-+
-+	server_data->queue_size = nr_threads * FIFO_SCALE;
-+	CALLOC_ARRAY(server_data->fifo_fds, server_data->queue_size);
-+
-+	server_data->accept_thread =
-+		xcalloc(1, sizeof(*server_data->accept_thread));
-+	server_data->accept_thread->magic = MAGIC_ACCEPT_THREAD_DATA;
-+	server_data->accept_thread->server_data = server_data;
-+	server_data->accept_thread->server_socket = server_socket;
-+	server_data->accept_thread->fd_send_shutdown = sv[0];
-+	server_data->accept_thread->fd_wait_shutdown = sv[1];
-+
-+	if (pthread_create(&server_data->accept_thread->pthread_id, NULL,
-+			   accept_thread_proc, server_data->accept_thread))
-+		die_errno(_("could not start accept_thread '%s'"), path);
-+
 +	for (k = 0; k < nr_threads; k++) {
-+		struct ipc_worker_thread_data *wtd;
++		struct ipc_server_thread_data *std;
 +
-+		wtd = xcalloc(1, sizeof(*wtd));
-+		wtd->magic = MAGIC_WORKER_THREAD_DATA;
-+		wtd->server_data = server_data;
++		std = xcalloc(1, sizeof(*std));
++		std->magic = MAGIC_SERVER_THREAD_DATA;
++		std->server_data = server_data;
++		std->hPipe = INVALID_HANDLE_VALUE;
 +
-+		if (pthread_create(&wtd->pthread_id, NULL, worker_thread_proc,
-+				   wtd)) {
-+			if (k == 0)
-+				die(_("could not start worker[0] for '%s'"),
-+				    path);
++		std->hPipe = (k == 0)
++			? hPipeFirst
++			: create_new_pipe(server_data->wpath, 0);
++
++		if (std->hPipe == INVALID_HANDLE_VALUE) {
 +			/*
-+			 * Limp along with the thread pool that we have.
++			 * If we've reached a pipe instance limit for
++			 * this path, just use fewer threads.
 +			 */
++			free(std);
 +			break;
 +		}
 +
-+		wtd->next_thread = server_data->worker_thread_list;
-+		server_data->worker_thread_list = wtd;
++		if (pthread_create(&std->pthread_id, NULL,
++				   server_thread_proc, std)) {
++			/*
++			 * Likewise, if we're out of threads, just use
++			 * fewer threads than requested.
++			 *
++			 * However, we just give up if we can't even get
++			 * one thread.  This should not happen.
++			 */
++			if (k == 0)
++				die(_("could not start thread[0] for '%s'"),
++				    path);
++
++			CloseHandle(std->hPipe);
++			free(std);
++			break;
++		}
++
++		std->next_thread = server_data->thread_list;
++		server_data->thread_list = std;
 +	}
 +
 +	*returned_server_data = server_data;
 +	return 0;
 +}
 +
-+/*
-+ * Gently tell the IPC server treads to shutdown.
-+ * Can be run on any thread.
-+ */
 +int ipc_server_stop_async(struct ipc_server_data *server_data)
 +{
-+	/* ASSERT NOT holding mutex */
++	if (!server_data)
++		return 0;
 +
-+	int fd;
++	/*
++	 * Gently tell all of the ipc_server threads to shutdown.
++	 * This will be seen the next time they are idle (and waiting
++	 * for a connection).
++	 *
++	 * We DO NOT attempt to force them to drop an active connection.
++	 */
++	SetEvent(server_data->hEventStopRequested);
++	return 0;
++}
++
++int ipc_server_await(struct ipc_server_data *server_data)
++{
++	DWORD dwWaitResult;
 +
 +	if (!server_data)
 +		return 0;
 +
-+	trace2_region_enter("ipc-server", "server-stop-async", NULL);
++	dwWaitResult = WaitForSingleObject(server_data->hEventStopRequested, INFINITE);
++	if (dwWaitResult != WAIT_OBJECT_0)
++		return error(_("wait for hEvent failed for '%s'"),
++			     server_data->buf_path.buf);
 +
-+	pthread_mutex_lock(&server_data->work_available_mutex);
++	while (server_data->thread_list) {
++		struct ipc_server_thread_data *std = server_data->thread_list;
 +
-+	server_data->shutdown_requested = 1;
++		pthread_join(std->pthread_id, NULL);
 +
-+	/*
-+	 * Write a byte to the shutdown socket pair to wake up the
-+	 * accept-thread.
-+	 */
-+	if (write(server_data->accept_thread->fd_send_shutdown, "Q", 1) < 0)
-+		error_errno("could not write to fd_send_shutdown");
-+
-+	/*
-+	 * Drain the queue of existing connections.
-+	 */
-+	while ((fd = fifo_dequeue(server_data)) != -1)
-+		close(fd);
-+
-+	/*
-+	 * Gently tell worker threads to stop processing new connections
-+	 * and exit.  (This does not abort in-process conversations.)
-+	 */
-+	pthread_cond_broadcast(&server_data->work_available_cond);
-+
-+	pthread_mutex_unlock(&server_data->work_available_mutex);
-+
-+	trace2_region_leave("ipc-server", "server-stop-async", NULL);
-+
-+	return 0;
-+}
-+
-+/*
-+ * Wait for all IPC server threads to stop.
-+ */
-+int ipc_server_await(struct ipc_server_data *server_data)
-+{
-+	pthread_join(server_data->accept_thread->pthread_id, NULL);
-+
-+	if (!server_data->shutdown_requested)
-+		BUG("ipc-server: accept-thread stopped for '%s'",
-+		    server_data->buf_path.buf);
-+
-+	while (server_data->worker_thread_list) {
-+		struct ipc_worker_thread_data *wtd =
-+			server_data->worker_thread_list;
-+
-+		pthread_join(wtd->pthread_id, NULL);
-+
-+		server_data->worker_thread_list = wtd->next_thread;
-+		free(wtd);
++		server_data->thread_list = std->next_thread;
++		free(std);
 +	}
 +
 +	server_data->is_stopped = 1;
@@ -1091,8 +883,6 @@ index 000000000000..38689b278df3
 +
 +void ipc_server_free(struct ipc_server_data *server_data)
 +{
-+	struct ipc_accept_thread_data * accept_thread_data;
-+
 +	if (!server_data)
 +		return;
 +
@@ -1100,90 +890,289 @@ index 000000000000..38689b278df3
 +		BUG("cannot free ipc-server while running for '%s'",
 +		    server_data->buf_path.buf);
 +
-+	accept_thread_data = server_data->accept_thread;
-+	if (accept_thread_data) {
-+		unix_ss_free(accept_thread_data->server_socket);
-+
-+		if (accept_thread_data->fd_send_shutdown != -1)
-+			close(accept_thread_data->fd_send_shutdown);
-+		if (accept_thread_data->fd_wait_shutdown != -1)
-+			close(accept_thread_data->fd_wait_shutdown);
-+
-+		free(server_data->accept_thread);
-+	}
-+
-+	while (server_data->worker_thread_list) {
-+		struct ipc_worker_thread_data *wtd =
-+			server_data->worker_thread_list;
-+
-+		server_data->worker_thread_list = wtd->next_thread;
-+		free(wtd);
-+	}
-+
-+	pthread_cond_destroy(&server_data->work_available_cond);
-+	pthread_mutex_destroy(&server_data->work_available_mutex);
-+
 +	strbuf_release(&server_data->buf_path);
 +
-+	free(server_data->fifo_fds);
++	if (server_data->hEventStopRequested != INVALID_HANDLE_VALUE)
++		CloseHandle(server_data->hEventStopRequested);
++
++	while (server_data->thread_list) {
++		struct ipc_server_thread_data *std = server_data->thread_list;
++
++		server_data->thread_list = std->next_thread;
++		free(std);
++	}
++
 +	free(server_data);
 +}
+diff --git a/config.mak.uname b/config.mak.uname
+index e22d4b6d67a3..2b3303f34be8 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -421,6 +421,7 @@ ifeq ($(uname_S),Windows)
+ 	RUNTIME_PREFIX = YesPlease
+ 	HAVE_WPGMPTR = YesWeDo
+ 	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
++	USE_WIN32_IPC = YesPlease
+ 	USE_WIN32_MMAP = YesPlease
+ 	MMAP_PREVENTS_DELETE = UnfortunatelyYes
+ 	# USE_NED_ALLOCATOR = YesPlease
+@@ -597,6 +598,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
+ 	RUNTIME_PREFIX = YesPlease
+ 	HAVE_WPGMPTR = YesWeDo
+ 	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
++	USE_WIN32_IPC = YesPlease
+ 	USE_WIN32_MMAP = YesPlease
+ 	MMAP_PREVENTS_DELETE = UnfortunatelyYes
+ 	USE_NED_ALLOCATOR = YesPlease
 diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index c94011269ebb..9897fcc8ea2a 100644
+index ac3dbc079af8..40c9e8e3bd9d 100644
 --- a/contrib/buildsystems/CMakeLists.txt
 +++ b/contrib/buildsystems/CMakeLists.txt
-@@ -248,6 +248,8 @@ endif()
- 
- if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
- 	list(APPEND compat_SOURCES compat/simple-ipc/ipc-shared.c compat/simple-ipc/ipc-win32.c)
-+else()
-+	list(APPEND compat_SOURCES compat/simple-ipc/ipc-shared.c compat/simple-ipc/ipc-unix-socket.c)
+@@ -246,6 +246,10 @@ elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+ 	list(APPEND compat_SOURCES unix-socket.c)
  endif()
  
++if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
++	list(APPEND compat_SOURCES compat/simple-ipc/ipc-shared.c compat/simple-ipc/ipc-win32.c)
++endif()
++
  set(EXE_EXTENSION ${CMAKE_EXECUTABLE_SUFFIX})
+ 
+ #header checks
 diff --git a/simple-ipc.h b/simple-ipc.h
-index ab5619e3d76f..dc3606e30bd6 100644
---- a/simple-ipc.h
+new file mode 100644
+index 000000000000..ab5619e3d76f
+--- /dev/null
 +++ b/simple-ipc.h
-@@ -5,7 +5,7 @@
-  * See Documentation/technical/api-simple-ipc.txt
-  */
- 
--#if defined(GIT_WINDOWS_NATIVE)
-+#if defined(GIT_WINDOWS_NATIVE) || !defined(NO_UNIX_SOCKETS)
- #define SUPPORTS_SIMPLE_IPC
- #endif
- 
-@@ -62,11 +62,17 @@ struct ipc_client_connect_options {
- 	 * the service and need to wait for it to become ready.
- 	 */
- 	unsigned int wait_if_not_found:1;
+@@ -0,0 +1,228 @@
++#ifndef GIT_SIMPLE_IPC_H
++#define GIT_SIMPLE_IPC_H
++
++/*
++ * See Documentation/technical/api-simple-ipc.txt
++ */
++
++#if defined(GIT_WINDOWS_NATIVE)
++#define SUPPORTS_SIMPLE_IPC
++#endif
++
++#ifdef SUPPORTS_SIMPLE_IPC
++#include "pkt-line.h"
++
++/*
++ * Simple IPC Client Side API.
++ */
++
++enum ipc_active_state {
++	/*
++	 * The pipe/socket exists and the daemon is waiting for connections.
++	 */
++	IPC_STATE__LISTENING = 0,
 +
 +	/*
-+	 * Disallow chdir() when creating a Unix domain socket.
++	 * The pipe/socket exists, but the daemon is not listening.
++	 * Perhaps it is very busy.
++	 * Perhaps the daemon died without deleting the path.
++	 * Perhaps it is shutting down and draining existing clients.
++	 * Perhaps it is dead, but other clients are lingering and
++	 * still holding a reference to the pathname.
 +	 */
-+	unsigned int uds_disallow_chdir:1;
- };
- 
- #define IPC_CLIENT_CONNECT_OPTIONS_INIT { \
- 	.wait_if_busy = 0, \
- 	.wait_if_not_found = 0, \
-+	.uds_disallow_chdir = 0, \
- }
- 
- /*
-@@ -159,6 +165,11 @@ struct ipc_server_data;
- struct ipc_server_opts
- {
- 	int nr_threads;
++	IPC_STATE__NOT_LISTENING,
 +
 +	/*
-+	 * Disallow chdir() when creating a Unix domain socket.
++	 * The requested pathname is bogus and no amount of retries
++	 * will fix that.
 +	 */
-+	unsigned int uds_disallow_chdir:1;
- };
- 
- /*
++	IPC_STATE__INVALID_PATH,
++
++	/*
++	 * The requested pathname is not found.  This usually means
++	 * that there is no daemon present.
++	 */
++	IPC_STATE__PATH_NOT_FOUND,
++
++	IPC_STATE__OTHER_ERROR,
++};
++
++struct ipc_client_connect_options {
++	/*
++	 * Spin under timeout if the server is running but can't
++	 * accept our connection yet.  This should always be set
++	 * unless you just want to poke the server and see if it
++	 * is alive.
++	 */
++	unsigned int wait_if_busy:1;
++
++	/*
++	 * Spin under timeout if the pipe/socket is not yet present
++	 * on the file system.  This is useful if we just started
++	 * the service and need to wait for it to become ready.
++	 */
++	unsigned int wait_if_not_found:1;
++};
++
++#define IPC_CLIENT_CONNECT_OPTIONS_INIT { \
++	.wait_if_busy = 0, \
++	.wait_if_not_found = 0, \
++}
++
++/*
++ * Determine if a server is listening on this named pipe or socket using
++ * platform-specific logic.  This might just probe the filesystem or it
++ * might make a trivial connection to the server using this pathname.
++ */
++enum ipc_active_state ipc_get_active_state(const char *path);
++
++struct ipc_client_connection {
++	int fd;
++};
++
++/*
++ * Try to connect to the daemon on the named pipe or socket.
++ *
++ * Returns IPC_STATE__LISTENING and a connection handle.
++ *
++ * Otherwise, returns info to help decide whether to retry or to
++ * spawn/respawn the server.
++ */
++enum ipc_active_state ipc_client_try_connect(
++	const char *path,
++	const struct ipc_client_connect_options *options,
++	struct ipc_client_connection **p_connection);
++
++void ipc_client_close_connection(struct ipc_client_connection *connection);
++
++/*
++ * Used by the client to synchronously send and receive a message with
++ * the server on the provided client connection.
++ *
++ * Returns 0 when successful.
++ *
++ * Calls error() and returns non-zero otherwise.
++ */
++int ipc_client_send_command_to_connection(
++	struct ipc_client_connection *connection,
++	const char *message, struct strbuf *answer);
++
++/*
++ * Used by the client to synchronously connect and send and receive a
++ * message to the server listening at the given path.
++ *
++ * Returns 0 when successful.
++ *
++ * Calls error() and returns non-zero otherwise.
++ */
++int ipc_client_send_command(const char *path,
++			    const struct ipc_client_connect_options *options,
++			    const char *message, struct strbuf *answer);
++
++/*
++ * Simple IPC Server Side API.
++ */
++
++struct ipc_server_reply_data;
++
++typedef int (ipc_server_reply_cb)(struct ipc_server_reply_data *,
++				  const char *response,
++				  size_t response_len);
++
++/*
++ * Prototype for an application-supplied callback to process incoming
++ * client IPC messages and compose a reply.  The `application_cb` should
++ * use the provided `reply_cb` and `reply_data` to send an IPC response
++ * back to the client.  The `reply_cb` callback can be called multiple
++ * times for chunking purposes.  A reply message is optional and may be
++ * omitted if not necessary for the application.
++ *
++ * The return value from the application callback is ignored.
++ * The value `SIMPLE_IPC_QUIT` can be used to shutdown the server.
++ */
++typedef int (ipc_server_application_cb)(void *application_data,
++					const char *request,
++					ipc_server_reply_cb *reply_cb,
++					struct ipc_server_reply_data *reply_data);
++
++#define SIMPLE_IPC_QUIT -2
++
++/*
++ * Opaque instance data to represent an IPC server instance.
++ */
++struct ipc_server_data;
++
++/*
++ * Control parameters for the IPC server instance.
++ * Use this to hide platform-specific settings.
++ */
++struct ipc_server_opts
++{
++	int nr_threads;
++};
++
++/*
++ * Start an IPC server instance in one or more background threads
++ * and return a handle to the pool.
++ *
++ * Returns 0 if the asynchronous server pool was started successfully.
++ * Returns -1 if not.
++ * Returns -2 if we could not startup because another server is using
++ * the socket or named pipe.
++ *
++ * When a client IPC message is received, the `application_cb` will be
++ * called (possibly on a random thread) to handle the message and
++ * optionally compose a reply message.
++ */
++int ipc_server_run_async(struct ipc_server_data **returned_server_data,
++			 const char *path, const struct ipc_server_opts *opts,
++			 ipc_server_application_cb *application_cb,
++			 void *application_data);
++
++/*
++ * Gently signal the IPC server pool to shutdown.  No new client
++ * connections will be accepted, but existing connections will be
++ * allowed to complete.
++ */
++int ipc_server_stop_async(struct ipc_server_data *server_data);
++
++/*
++ * Block the calling thread until all threads in the IPC server pool
++ * have completed and been joined.
++ */
++int ipc_server_await(struct ipc_server_data *server_data);
++
++/*
++ * Close and free all resource handles associated with the IPC server
++ * pool.
++ */
++void ipc_server_free(struct ipc_server_data *server_data);
++
++/*
++ * Run an IPC server instance and block the calling thread of the
++ * current process.  It does not return until the IPC server has
++ * either shutdown or had an unrecoverable error.
++ *
++ * The IPC server handles incoming IPC messages from client processes
++ * and may use one or more background threads as necessary.
++ *
++ * Returns 0 after the server has completed successfully.
++ * Returns -1 if the server cannot be started.
++ * Returns -2 if we could not startup because another server is using
++ * the socket or named pipe.
++ *
++ * When a client IPC message is received, the `application_cb` will be
++ * called (possibly on a random thread) to handle the message and
++ * optionally compose a reply message.
++ *
++ * Note that `ipc_server_run()` is a synchronous wrapper around the
++ * above asynchronous routines.  It effectively hides all of the
++ * server state and thread details from the caller and presents a
++ * simple synchronous interface.
++ */
++int ipc_server_run(const char *path, const struct ipc_server_opts *opts,
++		   ipc_server_application_cb *application_cb,
++		   void *application_data);
++
++#endif /* SUPPORTS_SIMPLE_IPC */
++#endif /* GIT_SIMPLE_IPC_H */
 -- 
 gitgitgadget
 
