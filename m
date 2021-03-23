@@ -2,173 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F72BC433E0
-	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 16:28:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BB82C433E3
+	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 16:38:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 62DFE619C6
-	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 16:28:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F0872619C6
+	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 16:38:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233169AbhCWQ16 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Mar 2021 12:27:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46462 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233267AbhCWQ1a (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Mar 2021 12:27:30 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11018C061574
-        for <git@vger.kernel.org>; Tue, 23 Mar 2021 09:27:30 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id u21so10137908ejo.13
-        for <git@vger.kernel.org>; Tue, 23 Mar 2021 09:27:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ZASMGZlddxvjtMgBhtL/L/0weEN62pes1S2Ay9JYkyw=;
-        b=MIop8mdDHOdotB1duUt5YhAlqX/cfobNEnfCkGz6kR/PBzoJkXWBQWa5rkVl2MNVRR
-         xrqgeWYePoPgXtOpo3g7pq0c8UySS/nRnhppDobDsQK4RmZKDsG7k01XgqtSwTz0xIfw
-         /xqN8AD6BJj1LjDQL/xGn2StgLg8TREyX1DY0IQHTuiI/I2JHQ0V5hiGMhbkTB5lW8ou
-         ZNC+F3vcLcig1a94GW0YKWLAbm2CkiHTu2+BoAJ2cNiljUDRE+Tu8DHvSIwTsUhnZYSe
-         oe9bRBDYQm5h9LCABTdVHlJRgtIyogtOR03TRsn0VLBASp/wqWj+DQ7mBMnb0Q11NxNa
-         xNnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ZASMGZlddxvjtMgBhtL/L/0weEN62pes1S2Ay9JYkyw=;
-        b=d4AhRkuULdG8MdtE5mGARrs49+dHYUbG7lQZGNhuLCsXTzUHOkCsbMTD+LbKLv3t+/
-         EsnRcIXl+sGKDytd/tY0DlCI6axdIu7mDVoxfqDqwrB0Z4PztfeMUJv+doCYUHDAqDSa
-         Mdig8V2yoabv1QD5lw5viNyLJD5XMQg2KVAl2ttXhS+4B/qvnFF6GqTa9v2xvwAgVpfC
-         CRzpXyXbh0jXhpy20dPuv7j/4wXoEOZLWrPQgXsISQZY6lxBmFxXifGIASYAmpG5uJ7u
-         lZ+8hlXJEytqmk476mOXrLZzXH/gK3PI4P9+J5PBpCrjksDLp5vLWAuDpyOa0jVt+2C7
-         Qk2A==
-X-Gm-Message-State: AOAM533r8tKGKeeSVwaRdd8JTpg98+AKeJ2ea0kV96XC2pJUTzEzBjey
-        O/Y2N1jzPlGRl3czuSUC9blJXA==
-X-Google-Smtp-Source: ABdhPJwFBITk0OdEUX57XjSAoidATFd5npfpmFDPh9+c7He5RN/SujSMJqmaNn97YgTwf1h0/O/Bcg==
-X-Received: by 2002:a17:907:2b03:: with SMTP id gc3mr5773542ejc.448.1616516848809;
-        Tue, 23 Mar 2021 09:27:28 -0700 (PDT)
-Received: from localhost.localdomain ([37.120.1.234])
-        by smtp.gmail.com with ESMTPSA id o6sm13111070edw.24.2021.03.23.09.27.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Mar 2021 09:27:28 -0700 (PDT)
-From:   Robert Foss <robert.foss@linaro.org>
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Cc:     Drew DeVault <sir@cmpwn.com>, Rafael Aquini <aquini@redhat.com>,
-        =?UTF-8?q?Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>,
-        Robert Foss <robert.foss@linaro.org>
-Subject: [PATCH v2] git-send-email: Respect core.hooksPath setting
-Date:   Tue, 23 Mar 2021 17:27:18 +0100
-Message-Id: <20210323162718.1143982-1-robert.foss@linaro.org>
-X-Mailer: git-send-email 2.31.0.30.g398dba342d.dirty
+        id S231225AbhCWQhh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Mar 2021 12:37:37 -0400
+Received: from mout.web.de ([212.227.17.11]:51133 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233435AbhCWQh1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Mar 2021 12:37:27 -0400
+X-Greylist: delayed 304 seconds by postgrey-1.27 at vger.kernel.org; Tue, 23 Mar 2021 12:37:26 EDT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1616517444;
+        bh=jdfApWxQwHxn1t9j5OvoeFqop3XEeUSCBZJ4UAtncbk=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=VX1oPmLrrZXchvifXabXkRg6pj942vSJgv1kqfgUcsC2sG9YId5jJ4pmzEltdRYVT
+         zbPBUkMW9BlYcPzovhrJFJpSWpTMtUT82dZUPu/6RANjEoRjmuq6Kixk3yy9VQF1/V
+         /wYuf5yafDkL3X4Fx+h47YoAdBGn3XyWPNWuTjD8=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MFJnX-1lRDzs47DN-00FRwj; Tue, 23
+ Mar 2021 17:32:18 +0100
+Date:   Tue, 23 Mar 2021 17:32:17 +0100
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     =?utf-8?B?5byg5Y2a5bmz?= <boping2010@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [MacOS 10.11]uninstall git client
+Message-ID: <20210323163217.2gbqphbw7dopvcxb@tb-raspi4>
+References: <CA+cd+tU8AMDoAdDNMP4cwgRFN+YP_PfGzDwHHzS3DOhQvUhpkg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CA+cd+tU8AMDoAdDNMP4cwgRFN+YP_PfGzDwHHzS3DOhQvUhpkg@mail.gmail.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:494eoB93iUYNro1AMxSeKGbrYJL1xH9CHrskT8Sr0Lvdjzrms43
+ Fh+pGpTk5IlFAtJ2MbYiiJBc+H6A4KtYDjGO+8JJALqf/E6ZdJbnKqY6SavA1jIgN4qUB0c
+ JlhyiG4LkUE//caBN4XHpVMjSZ9WftDVTMIncDB/IX8/kBDgdZajMRvxrbNq4ux6bUjdpVM
+ aWQS5wHgpJXkdGb4/KrMg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:kerqmKv11zY=:qXXhtN/Chwi/VwoGhiiuDI
+ EGplfPZoCQVUurO3xBl9WFA1RNhw6LdQ3eXkfNAj3GJVT3dQuBA8oVwPRtTQeyoIseGolLtOr
+ oDwhoUL8JWTKBqa3lUKJqtBQsIAB0z+MObRArBmXtn/dsp8rQbk22XdXvk2ypyjuaObgmCoud
+ bLxKh5fuhAyEATUdGMOzMUaIf/gvJeZeuMdJpMW6qHBk/8+TfA4T4D2t9XU+iWQYx6XYMA0+s
+ sdgY/Tv/wNXxR8k5oucONz1xdR8Mu+zcgkAWo1E0VHXD9RnTFazSd3SEMoHdZ/PptYWlxd3Fq
+ QsA4jMHV72LXGMQ9dKCXupgJTsNZcWRlicpmgemAcjav355VlLOzOc2wDXeFqcLafIuwqhsFk
+ 0JMLxbSuGeNZGAHurUbSW+o1g3nRC/imaSbO2UYjNyppc8pmA8wEcOJUbd174GrJF78Z0gdri
+ hdMJ3rSkqLWsYxKdzsrWUagHBWfNHpnLP+MmMR7uSoidULU4y+7MWslnF6C3uY+l629+7w6y3
+ Urt4rWBBPavMvfnYVVNSi0eJrz2b37FXtzxKgKUZtfXWVbnpUFzI1SxYfVJa3gXw2Xq5Ywl/+
+ DcQDsoMyQ6LyK1OQc0ebfqSFKgiCqx4tCHQhbf8i49x6GqdcjZICEU8WO5/ZAc1lj+hJvW2W+
+ XTPSWLieLAFK9nA6ygCsvs14mFUI7yXSCvUCq9llA5MYTx/+z7YlDfSEo7uTHAfty2bqvLHrp
+ ONu7aOVSDTkpS1DkdUXxC97/eqyEnT4z968sfmhSI5WjDSGfeF3L4Y9rSupI+YrFGfDkE8O8c
+ YE5UhMYZdCdYRxdeSaPmbfckcwi3n8b/4X+AUBVCQqX8fNG2Mm0p3T2Osl2T+OnTDFkZiY0Fy
+ NvQcbubaaS8KiB2vjytgGQDsvUxPLwoH+5hwY2AvDNSn5tTumnUDVGtOI0wwoojzw6ALxK+R+
+ USXhHXS8CJ+lc8PFurPkzQow37A4dhIlDzJPo6S4BjRPKTJPSj1MpgzGHhr+kt/ftAwih3125
+ 8u0Ggeybxpmu8q+5FUXPk1HQHXxFqEU9fPQj1VRrb1B5XYclr+9G/xKSq+9Z9X6H0VBELAaEQ
+ UvrpVZPPP5jhfqJdy/xWZkJPpKxitpJ6Zn6DKvouaGCfyK4tOzSAK1cRhkqaTrYt8qdeejx7Q
+ +BPLidXPESVYR9wZ1J6AvXDk8uS43b4Rub7PxV7XZ8jLV6a6Ee+JOff+2Ftm7GNdj8ato=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-get-send-email currently makes the assumption that the
-'sendemail-validate' hook exists inside of the repository.
+On Tue, Mar 23, 2021 at 02:20:25PM +0800, =E5=BC=A0=E5=8D=9A=E5=B9=B3 wrot=
+e:
+> How to uninstall git client in MacOS 10.11?
+>
+> I installed git client to /usr/bin/git, but I can't uninstall it.
+>
+> run 'sudo rm /usr/bin/git', NOPE.
+>
+> disabled 'csrutil' and remove again, NOPE.
+>
+> Do you have any shell script or some tools to uninstall it?
 
-Since the introduction of 'core.hooksPath' configuration option in
-v2.9, this is no longer true.
+What does
+/usr/bin/git --version
+say ?
 
-Instead of assuming a hardcoded repo relative path, query
-git for the actual path of the hooks directory.
+On an oldish MacBook it says:
+git version 2.10.1 (Apple Git-78)
 
-Signed-off-by: Robert Foss <robert.foss@linaro.org>
----
+So typically /usr/bin/git "belongs" to Apple
+- and that may be outside the scope of this list.
 
-Changes since v1:
- - Ævar: Add unit test
- - Ævar: Add support for getting the hooks_path() from Git perl module
- - Ævar: Use new hooks_path() instread of issuing git rev-parse in
-         git-send-email.perl
-
-
-Note: The test currently leaves a file in a mktemp directory
-in /tmp.
-
- git-send-email.perl   |  4 ++--
- perl/Git.pm           |  9 +++++++++
- t/t9001-send-email.sh | 16 ++++++++++++++++
- 3 files changed, 27 insertions(+), 2 deletions(-)
-
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 1f425c0809..c3dd825322 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -1942,8 +1942,8 @@ sub validate_patch {
- 	my ($fn, $xfer_encoding) = @_;
- 
- 	if ($repo) {
--		my $validate_hook = catfile(catdir($repo->repo_path(), 'hooks'),
--					    'sendemail-validate');
-+		my $hook_path = $repo->hooks_path();
-+		my $validate_hook = catfile($hook_path, 'sendemail-validate');
- 		my $hook_error;
- 		if (-x $validate_hook) {
- 			my $target = abs_path($fn);
-diff --git a/perl/Git.pm b/perl/Git.pm
-index 02eacef0c2..ac1fabff28 100644
---- a/perl/Git.pm
-+++ b/perl/Git.pm
-@@ -226,6 +226,8 @@ sub repository {
- 			$opts{Repository} = abs_path($dir);
- 		}
- 
-+                $opts{HooksPath} = $search->command_oneline('rev-parse', '--git-path', 'hooks');
-+
- 		delete $opts{Directory};
- 	}
- 
-@@ -619,6 +621,13 @@ sub _prompt {
- 
- sub repo_path { $_[0]->{opts}->{Repository} }
- 
-+=item hooks_path ()
-+
-+Return path to the hooks directory. Must be called on a repository instance.
-+
-+=cut
-+
-+sub hooks_path { $_[0]->{opts}->{HooksPath} }
- 
- =item wc_path ()
- 
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 4eee9c3dcb..73b3bc1ce6 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -513,6 +513,22 @@ do
- 
- done
- 
-+test_expect_success $PREREQ "--validate respects core.hooksPath setting" '
-+	clean_fake_sendmail &&
-+	tmp_dir=$(mktemp -d -t ci-XXXXXXXXXX) &&
-+	printf "#!/bin/sh" >> $tmp_dir/sendemail-validate &&
-+	printf "return 1" >> $tmp_dir/sendemail-validate &&
-+	chmod a+x $tmp_dir/sendemail-validate &&
-+	git -c core.hooksPath=$tmp_dir send-email \
-+		--from="Example <nobody@example.com>" \
-+		--to=nobody@example.com \
-+		--smtp-server="$(pwd)/fake.sendmail" \
-+		--validate \
-+		longline.patch \
-+		2>&1 >/dev/null | \
-+	grep "rejected by sendemail-validate"
-+'
-+
- for enc in 7bit 8bit quoted-printable base64
- do
- 	test_expect_success $PREREQ "--transfer-encoding=$enc produces correct header" '
--- 
-2.31.0.30.g398dba342d.dirty
-
+Out of curiosity:
+Why do you want to uninstall Git ?
