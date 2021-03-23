@@ -2,144 +2,225 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E16BC433C1
-	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 20:53:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B0148C433DB
+	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 20:54:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3721E60C3D
-	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 20:53:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 86B68619C2
+	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 20:54:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233354AbhCWUxM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Mar 2021 16:53:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47764 "EHLO
+        id S233228AbhCWUyT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Mar 2021 16:54:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233355AbhCWUwt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Mar 2021 16:52:49 -0400
-Received: from mail-vk1-xa33.google.com (mail-vk1-xa33.google.com [IPv6:2607:f8b0:4864:20::a33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F45CC061574
-        for <git@vger.kernel.org>; Tue, 23 Mar 2021 13:52:45 -0700 (PDT)
-Received: by mail-vk1-xa33.google.com with SMTP id 11so4962566vkx.6
-        for <git@vger.kernel.org>; Tue, 23 Mar 2021 13:52:45 -0700 (PDT)
+        with ESMTP id S230048AbhCWUxp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Mar 2021 16:53:45 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CA1FC061574
+        for <git@vger.kernel.org>; Tue, 23 Mar 2021 13:53:45 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id b2-20020a7bc2420000b029010be1081172so80103wmj.1
+        for <git@vger.kernel.org>; Tue, 23 Mar 2021 13:53:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=gTM5WXXmd6ZTnkdbRmmsJ8LXCjhiXSVX7UQGsOx521k=;
-        b=LNrnxaaNFghyATOYP//Bunqgp7iS5mwXDqYFr4DZzmiOjakORG1DwmykPqCRAZ+jmQ
-         VViGwktIlOMO/bVxYjc34VlG2SflsYWj8w9EaLh0ROcidhByO0vOpVEUdm/5kaEB6HXS
-         /AKjC2LKN8Hq9fzmrmt6RZZd+348o++iY6gtqGFnopXiCaaxXbzExsbljFORLrni3LEi
-         GlpCpKIf7rm/BWxAWm4Qupwal9S7lH9S9PQgx86gQTFUN0WGvqGJigv2Jzr0dKfB0abz
-         XLGLaEaJdS5bKXwxI9nWtvJEVVMh3P6q44WzlXjQWxTPhyKjRI3lWYXVTEUZVkiNuV/z
-         Hogg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=zYeT/OnP59/QQZjlKv5Nv6PHFNnnObi3H6FbcXAkN9I=;
+        b=qnrPrK2729auSWZNidauyFG5BKSnrqsCZRrzSVXarV90JwdOadeyjqeugvEfJhL3bD
+         gwWoQLhMmg5QtI76aaw+xC9u39jkqhXEduNka7LhwSyFT9tCsRnOrW1lnYCDiIexQxP4
+         qUsA8zzNigoZO69O35zTINbp0trCvnBWZ2QSbykXWiHZJjCX7WHFvhwXdeLNZNyHWniz
+         JTiv8kQgkxVBv3KP+8R8Ea6wF1RSiaTWFXR3Y0PGxOtHh76qYOLvC9h54hW2esXGCHgH
+         WNt/5WH1379EpwxV/YzZGEw69FI9OvinG/3fumFMApfWHAu0eJqkQ7BJS5KmXc+Hf208
+         rznw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=gTM5WXXmd6ZTnkdbRmmsJ8LXCjhiXSVX7UQGsOx521k=;
-        b=nlC/kiEGl91fAubNPI0nqrjghmEYLOhLe1JRce2JbdALLsiuf8iTS2AaI9kK81NyHB
-         t2T+6o5LV6Wn32wainmRkPoaJqD3CfLE0gP6Uzq46LTW+Ze7uvoQuVfy8NyFx9/zN/Db
-         T39w7veRlENxb/68giFe3mKqZaGJvYGFxS5YVjp1iC3/eWtGbblIJ7gvfFqLgzkGlO9A
-         kaqd4KpbEtKunFfpKozBCLrvOKwFfEdPbgb1ycA8+PeLGyRko7jQHoE/23lBw1zJAhFw
-         EB5IdaW08MD5XNkgnvbdxFG88CGn0sGsX/sILy2AhDJAjJ7WFcRBTEPx6WdHvz0UabX8
-         Os9g==
-X-Gm-Message-State: AOAM530llKE7jBY75yS0qHtBZv4UfI+fCxBFTjVQBiH/nG/fRn792Rpv
-        jDV5RMJqKYBZIleqbasNZU4bOZB4UKCGULdA7mo=
-X-Google-Smtp-Source: ABdhPJyRUIUNT1tosNr3KCmf6ihDxPALaok+5eAoNE+CJprKiMpkFl1R+uycU1INB4eKD/ZyV8NCmBmUTEk3iv78Zlw=
-X-Received: by 2002:a1f:aa43:: with SMTP id t64mr5511213vke.22.1616532762395;
- Tue, 23 Mar 2021 13:52:42 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=zYeT/OnP59/QQZjlKv5Nv6PHFNnnObi3H6FbcXAkN9I=;
+        b=EwBUCb+aDcyaeCKNLZHvwd4pC1uGJm2NIxIEv00/brkN0DoaBm0TUALHjF9M+anc+z
+         oAeoPMjhzHfWFirwrqbq1YdIIdgkEZK9YKtcqnVLeFG/VaOt0OQGTDlZ5GicZlHsTi0Y
+         yO2pipWNSguI6DDsOzh25AN0bFqbLS25J2xwYqJT0flioed9WvwZx+u01yZwd3yt+lcl
+         OyXnB0Y6pJ53ZN9JlJbiKN4U51B4nikuzshkqSHLgAaJ1zgNc7xDzEN+9y/i6EVpxDb4
+         hcgVo+Tv9xG5jg8h9lNDT6Pu0nT0E0RS7Tbq9P0e+BKgmf80kuN6brVJ4/697zDuc4He
+         tvLg==
+X-Gm-Message-State: AOAM533IWxUoN/jXRhYc51oGKHzxeR/XEWgX60yjchptQJR8Pc5y+w0Y
+        ANIDgCZilhKmsfC0Lgy8AzQ=
+X-Google-Smtp-Source: ABdhPJwjBZaohVyJoJAOL3+X9hyf9H7+xiVVJhXhlgzk0VQdydKkzdhmZFACi7Frfbb+sG+bghLjIw==
+X-Received: by 2002:a7b:ce16:: with SMTP id m22mr5132356wmc.65.1616532823982;
+        Tue, 23 Mar 2021 13:53:43 -0700 (PDT)
+Received: from [192.168.0.104] (atoulouse-654-1-370-45.w86-199.abo.wanadoo.fr. [86.199.105.45])
+        by smtp.gmail.com with ESMTPSA id t20sm58171wmi.15.2021.03.23.13.53.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 23 Mar 2021 13:53:43 -0700 (PDT)
+Subject: Re: [PATCH v7 08/15] merge-one-file: rewrite in C
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>
+References: <20201124115315.13311-1-alban.gruin@gmail.com>
+ <20210317204939.17890-1-alban.gruin@gmail.com>
+ <20210317204939.17890-9-alban.gruin@gmail.com>
+ <nycvar.QRO.7.76.6.2103222303210.50@tvgsbejvaqbjf.bet>
+From:   Alban Gruin <alban.gruin@gmail.com>
+Message-ID: <c968a6b8-bc0e-04f0-b72d-9fef05b60bd8@gmail.com>
+Date:   Tue, 23 Mar 2021 21:53:41 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.0
 MIME-Version: 1.0
-References: <xmqqk0px3dfu.fsf@gitster.g>
-In-Reply-To: <xmqqk0px3dfu.fsf@gitster.g>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Tue, 23 Mar 2021 13:52:31 -0700
-Message-ID: <CA+P7+xokjz-2nC5+F9HG0tBqS948uZcuq-1eY9uGuNyzbFGbZQ@mail.gmail.com>
-Subject: Re: Pass or not to pass config environment down...
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <nycvar.QRO.7.76.6.2103222303210.50@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=utf-8
+Content-Language: fr-FR
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 23, 2021 at 11:58 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> I was grepping around and found this piece of code today:
->
->         static void prepare_submodule_repo_env_no_git_dir(struct strvec *out)
->         {
->                 const char * const *var;
->
->                 for (var = local_repo_env; *var; var++) {
->                         if (strcmp(*var, CONFIG_DATA_ENVIRONMENT))
->                                 strvec_push(out, *var);
->                 }
->         }
->
-> which tries to "unsetenv" the environment variables that pertain to
-> the current repository listed in loocal_repo_env[], but makes
-> exception for GIT_CONFIG_PARAMETERS.
+Hi Johannes,
 
-Right. We need to unset some parameters, but not everything...
+Le 22/03/2021 à 23:20, Johannes Schindelin a écrit :
+> Hi Alban,
+> 
+> On Wed, 17 Mar 2021, Alban Gruin wrote:
+> 
 
->
-> It originally came from 14111fc4 (git: submodule honor -c
-> credential.* from command line, 2016-02-29) and later simplified by
-> 89044baa (submodule: stop sanitizing config options, 2016-05-04).
->
-> Now after d8d77153 (config: allow specifying config entries via
-> envvar pairs, 2021-01-12), we have yet another way to pass a set of
-> custom one-shot configuration via the environment variable, using
-> GIT_CONFIG_COUNT (which is in local_repo_env[] and will be removed
-> from the environment by this helper function), GIT_CONFIG_KEY_$n and
-> GIT_CONFIG_VALUE_$n (which are unbound set and naturally not in
-> local_repo_env[]).  Leaving the latter two exported will not hurt if
-> we do intend to hide the custom configuration from the subprocess by
-> unsetting GIT_CONFIG_COUNT, but should we be doing so?
->
+>> @@ -69,10 +69,13 @@ int cmd_merge_index(int argc, const char **argv, const char *prefix)
+>>
+>>  	if (skip_prefix(pgm, "--use=", &use_internal)) {
+>>  		if (!strcmp(use_internal, "merge-one-file"))
+>> -			pgm = "git-merge-one-file";
+>> +			merge_action = merge_one_file_func;
+>>  		else
+>>  			die(_("git merge-index: unknown internal program %s"), use_internal);
+>> -	}
+>> +
+>> +		repo_hold_locked_index(r, &lock, LOCK_DIE_ON_ERROR);
+>> +	} else
+>> +		merge_action = merge_one_file_spawn;
+> 
+> I would have a slight preference to keep the default initializer, because
+> that makes it easer to reason about. But if you _want_ to keep this patch
+> as-is, I won't object.
+> 
 
-I think it's a difficult question because if I recall, there was some
-question/concern about what values need to stay for the submodule vs
-which ones do not..?
+Yeah, not sure why I did this.  I'll change this.
 
-> There are many run_command() users that just pass local_repo_env[]
-> to the child.env when running a subprocess.  Given that the code
-> that works in a submodule, which presumably is THE primary target
-> of the "we do not want to pass environment variables that pertain to
-> the current repository but not to the repository the child process
-> works in" consideration that the local_repo_env[] is about, does *not*
-> want the GIT_CONFIG_PARAMETERS cleansed, I have to wonder if the
-> environment variables (the original GIT_CONFIG_PARAMETERS as well as
-> Patrick's GIT_CONFIG_{COUNT,KEY_$n,VALUE_$n}) should be in that
-> local_repo_env[] array in the first place.  If we remove them, the
-> above helper function can just go away and be replaced with the
-> usual child.env = local_repo_env assignment like everybody else.
->
+> It is a bit sad that the conversion cannot be done more incrementally, as
+> there is a lot to unpack in the many different cases that are handled. It
+> looks correct, though.
+> 
+> Just one thing:
+> 
+>>
+>>  	for (; i < argc; i++) {
+>>  		const char *arg = argv[i];
+>> diff --git a/builtin/merge-one-file.c b/builtin/merge-one-file.c
+>> new file mode 100644
+>> index 0000000000..ad99c6dbd4
+>> --- /dev/null
+>> +++ b/builtin/merge-one-file.c
+>> @@ -0,0 +1,94 @@
+>> +/*
+>> + * Builtin "git merge-one-file"
+>> + *
+>> + * Copyright (c) 2020 Alban Gruin
+>> + *
+>> + * Based on git-merge-one-file.sh, written by Linus Torvalds.
+>> + *
+>> + * This is the git per-file merge utility, called with
+>> + *
+>> + *   argv[1] - original file object name (or empty)
+>> + *   argv[2] - file in branch1 object name (or empty)
+>> + *   argv[3] - file in branch2 object name (or empty)
+>> + *   argv[4] - pathname in repository
+>> + *   argv[5] - original file mode (or empty)
+>> + *   argv[6] - file in branch1 mode (or empty)
+>> + *   argv[7] - file in branch2 mode (or empty)
+>> + *
+>> + * Handle some trivial cases. The _really_ trivial cases have been
+>> + * handled already by git read-tree, but that one doesn't do any merges
+>> + * that might change the tree layout.
+>> + */
+>> +
+>> +#include "cache.h"
+>> +#include "builtin.h"
+>> +#include "lockfile.h"
+>> +#include "merge-strategies.h"
+>> +
+>> +static const char builtin_merge_one_file_usage[] =
+>> +	"git merge-one-file <orig blob> <our blob> <their blob> <path> "
+>> +	"<orig mode> <our mode> <their mode>\n\n"
+>> +	"Blob ids and modes should be empty for missing files.";
+>> +
+>> +static int read_mode(const char *name, const char *arg, unsigned int *mode)
+>> +{
+>> +	char *last;
+>> +	int ret = 0;
+>> +
+>> +	*mode = strtol(arg, &last, 8);
+>> +
+>> +	if (*last)
+>> +		ret = error(_("invalid '%s' mode: expected nothing, got '%c'"), name, *last);
+>> +	else if (!(S_ISREG(*mode) || S_ISDIR(*mode) || S_ISLNK(*mode)))
+>> +		ret = error(_("invalid '%s' mode: %o"), name, *mode);
+>> +
+>> +	return ret;
+>> +}
+>> +
+>> +int cmd_merge_one_file(int argc, const char **argv, const char *prefix)
+>> +{
+>> +	struct object_id orig_blob, our_blob, their_blob,
+>> +		*p_orig_blob = NULL, *p_our_blob = NULL, *p_their_blob = NULL;
+>> +	unsigned int orig_mode = 0, our_mode = 0, their_mode = 0, ret = 0;
+>> +	struct lock_file lock = LOCK_INIT;
+>> +	struct repository *r = the_repository;
+>> +
+>> +	if (argc != 8)
+>> +		usage(builtin_merge_one_file_usage);
+>> +
+>> +	if (repo_read_index(r) < 0)
+>> +		die("invalid index");
+>> +
+>> +	repo_hold_locked_index(r, &lock, LOCK_DIE_ON_ERROR);
+>> +
+>> +	if (!get_oid_hex(argv[1], &orig_blob)) {
+>> +		p_orig_blob = &orig_blob;
+>> +		ret = read_mode("orig", argv[5], &orig_mode);
+>> +	} else if (!*argv[1] && *argv[5])
+>> +		ret = error(_("no 'orig' object id given, but a mode was still given."));
+> 
+> Here, it looks as if the case of an empty `argv[1]` is not handled
+> _explicitly_, but we rely on `get_oid_hex()` to return non-zero, and then
+> we rely on the second arm _also_ not re-assigning `orig_blob`.
+> 
+> I wonder whether this could be checked, and whether it would make sense to
+> fold this, along with most of these 5 lines, into the `read_mode()` helper
+> function (DRYing up the code even further).
+> 
 
-I think that makes a reasonable amount of sense. So if I understand
-right, this change makes it so that CONFIG_DATA_ENVIRONMENT and
-CONFIG_COUNT_ENVIRONMENT will no longer be forwarded? I guess I am a
-bit confused about the current status vs what we want here.
+Do you mean rewriting the first condition to read like this:
 
-> Comments?
->
->  environment.c | 2 --
->  1 file changed, 2 deletions(-)
->
-> diff --git c/environment.c w/environment.c
-> index 2f27008424..6dcee6a9c5 100644
-> --- c/environment.c
-> +++ w/environment.c
-> @@ -116,8 +116,6 @@ static char *super_prefix;
->  const char * const local_repo_env[] = {
->         ALTERNATE_DB_ENVIRONMENT,
->         CONFIG_ENVIRONMENT,
-> -       CONFIG_DATA_ENVIRONMENT,
-> -       CONFIG_COUNT_ENVIRONMENT,
->         DB_ENVIRONMENT,
->         GIT_DIR_ENVIRONMENT,
->         GIT_WORK_TREE_ENVIRONMENT,
+    if (*argv[1] && !get_oid_hex(argv[1], &orig_blob)) {
+
+?
+
+In which case yes, I can do that.
+
+BTW the two lasts calls to read_mode() should be like
+
+    err |= read_mode(…);
+
+Cheers,
+Alban
+
+> As for the rest of the patch, it is totally possible that I missed a bug,
+> but it looks correct to me, and the added regression tests give me a good
+> feeling about the patch, too.
+> 
+> Thanks,
+> Dscho
+> 
