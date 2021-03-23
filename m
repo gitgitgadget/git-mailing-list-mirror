@@ -2,94 +2,173 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C47E3C433DB
-	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 16:17:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F72BC433E0
+	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 16:28:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9C60D619BA
-	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 16:17:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 62DFE619C6
+	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 16:28:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233184AbhCWQQg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Mar 2021 12:16:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43962 "EHLO
+        id S233169AbhCWQ16 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Mar 2021 12:27:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46462 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233322AbhCWQQX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Mar 2021 12:16:23 -0400
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8C08C061574
-        for <git@vger.kernel.org>; Tue, 23 Mar 2021 09:16:22 -0700 (PDT)
-Received: by mail-oi1-x235.google.com with SMTP id n140so17571057oig.9
-        for <git@vger.kernel.org>; Tue, 23 Mar 2021 09:16:22 -0700 (PDT)
+        with ESMTP id S233267AbhCWQ1a (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Mar 2021 12:27:30 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11018C061574
+        for <git@vger.kernel.org>; Tue, 23 Mar 2021 09:27:30 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id u21so10137908ejo.13
+        for <git@vger.kernel.org>; Tue, 23 Mar 2021 09:27:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=ZpJshgAa8YNjv8Y/ynoJF/y3LOYbUVSsJibZrqTxSdQ=;
-        b=XmkptiWJlNa8zphrSwgjowEXDJF6cl+3bL5sgqRTJ8yer3+U3rzWUgbGNE9NhEEEwH
-         IuVZ5W76bmLaPBUjLvYjwQRuyxNZzbfh2hHCpsufY47ZozMyy7eTy555uFYX7InvfJI6
-         ubdY+/TXSu9clAHXuoiUTJlAiUsybPgquaEemvE5jl9gEnW7zG8Jiko3SBDzTuhE7GiG
-         9oR+se8rJiHpi7FZMS6p5GvlMtZasoQJX/+xRif4QnZGV/gfWoKVSlAJeQR91rEyNzAt
-         QrnrNySrxhqhAHD1d/aPOWGxC7S3FzDEKn178TaL2238FF9ElFbiQR5u0HaH7hXLWAQq
-         DJ+A==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ZASMGZlddxvjtMgBhtL/L/0weEN62pes1S2Ay9JYkyw=;
+        b=MIop8mdDHOdotB1duUt5YhAlqX/cfobNEnfCkGz6kR/PBzoJkXWBQWa5rkVl2MNVRR
+         xrqgeWYePoPgXtOpo3g7pq0c8UySS/nRnhppDobDsQK4RmZKDsG7k01XgqtSwTz0xIfw
+         /xqN8AD6BJj1LjDQL/xGn2StgLg8TREyX1DY0IQHTuiI/I2JHQ0V5hiGMhbkTB5lW8ou
+         ZNC+F3vcLcig1a94GW0YKWLAbm2CkiHTu2+BoAJ2cNiljUDRE+Tu8DHvSIwTsUhnZYSe
+         oe9bRBDYQm5h9LCABTdVHlJRgtIyogtOR03TRsn0VLBASp/wqWj+DQ7mBMnb0Q11NxNa
+         xNnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ZpJshgAa8YNjv8Y/ynoJF/y3LOYbUVSsJibZrqTxSdQ=;
-        b=DclnNfk8YMP4RbI/cgu24zY+oZjf4CHGMtkpTOl8kIC5o1rP2OZWFOGQTPG5x4O1/l
-         D121u8RFTAzRltBieL3kFEdV0bm/89p8TdHE2Y+nEw3cW34MnpCqLttOHb7cMZrIs0ln
-         1TiTaJEXGFtouYTiJYPsI8o2XY3uXPNTZh/GCfy2+BXgqc1n16PTaRm1uyE0HO6YSW8R
-         x592enc0qymZ1XICUJB2mmKAV9sTqGPVeZGf41KZlH2G6XSCkKDqI8jDUCQzdg+b3Nhp
-         RzIINWFY0SGiNJCYslulVdxw/jb/M58MOBZ+/YgtL1GiRcfApRWE1+SUyriw4WqUwKBP
-         ujPw==
-X-Gm-Message-State: AOAM531uroMqR8CpEORvA4jeGD3NdA7yPyzr9dDKzt4qSyEmvW8gMKcd
-        rCNfB29Eo3JLeOjL9tLxYjC2lDA5PfgX3f+w+pY=
-X-Google-Smtp-Source: ABdhPJzl5yDFDkUbcYWUKojkgfFDWaKLqkdtQc+AGtpxt0/7b9L975bWXhl5tZN2xcMSnNWPd2pE+uxFoaYiicdMIEs=
-X-Received: by 2002:a05:6808:a8a:: with SMTP id q10mr3817895oij.167.1616516182301;
- Tue, 23 Mar 2021 09:16:22 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ZASMGZlddxvjtMgBhtL/L/0weEN62pes1S2Ay9JYkyw=;
+        b=d4AhRkuULdG8MdtE5mGARrs49+dHYUbG7lQZGNhuLCsXTzUHOkCsbMTD+LbKLv3t+/
+         EsnRcIXl+sGKDytd/tY0DlCI6axdIu7mDVoxfqDqwrB0Z4PztfeMUJv+doCYUHDAqDSa
+         Mdig8V2yoabv1QD5lw5viNyLJD5XMQg2KVAl2ttXhS+4B/qvnFF6GqTa9v2xvwAgVpfC
+         CRzpXyXbh0jXhpy20dPuv7j/4wXoEOZLWrPQgXsISQZY6lxBmFxXifGIASYAmpG5uJ7u
+         lZ+8hlXJEytqmk476mOXrLZzXH/gK3PI4P9+J5PBpCrjksDLp5vLWAuDpyOa0jVt+2C7
+         Qk2A==
+X-Gm-Message-State: AOAM533r8tKGKeeSVwaRdd8JTpg98+AKeJ2ea0kV96XC2pJUTzEzBjey
+        O/Y2N1jzPlGRl3czuSUC9blJXA==
+X-Google-Smtp-Source: ABdhPJwFBITk0OdEUX57XjSAoidATFd5npfpmFDPh9+c7He5RN/SujSMJqmaNn97YgTwf1h0/O/Bcg==
+X-Received: by 2002:a17:907:2b03:: with SMTP id gc3mr5773542ejc.448.1616516848809;
+        Tue, 23 Mar 2021 09:27:28 -0700 (PDT)
+Received: from localhost.localdomain ([37.120.1.234])
+        by smtp.gmail.com with ESMTPSA id o6sm13111070edw.24.2021.03.23.09.27.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Mar 2021 09:27:28 -0700 (PDT)
+From:   Robert Foss <robert.foss@linaro.org>
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Cc:     Drew DeVault <sir@cmpwn.com>, Rafael Aquini <aquini@redhat.com>,
+        =?UTF-8?q?Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>,
+        Robert Foss <robert.foss@linaro.org>
+Subject: [PATCH v2] git-send-email: Respect core.hooksPath setting
+Date:   Tue, 23 Mar 2021 17:27:18 +0100
+Message-Id: <20210323162718.1143982-1-robert.foss@linaro.org>
+X-Mailer: git-send-email 2.31.0.30.g398dba342d.dirty
 MIME-Version: 1.0
-References: <pull.883.v3.git.1615912983.gitgitgadget@gmail.com> <pull.883.v4.git.1616507069.gitgitgadget@gmail.com>
-In-Reply-To: <pull.883.v4.git.1616507069.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 23 Mar 2021 09:16:11 -0700
-Message-ID: <CABPp-BFixOyd1oX5L-fn8PkYjn7wUx3npr5uZNZTarh3ap-FPw@mail.gmail.com>
-Subject: Re: [PATCH v4 00/20] Sparse Index: Design, Format, Tests
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 23, 2021 at 6:44 AM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> Here is the first full patch series submission coming out of the
-> sparse-index RFC [1].
->
-...
->
-> Updates in V4
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->
->  * Rebased onto the latest copy of ab/read-tree.
->  * Updated the design document as per Junio's comments.
->  * Updated the submodule handling in the performance test.
->  * Followed up on some other review from =C3=86var, mostly style or commi=
-t
->    message things.
+get-send-email currently makes the assumption that the
+'sendemail-validate' hook exists inside of the repository.
 
-Range-diff looks good to me; my Reviewed-by still holds.
+Since the introduction of 'core.hooksPath' configuration option in
+v2.9, this is no longer true.
+
+Instead of assuming a hardcoded repo relative path, query
+git for the actual path of the hooks directory.
+
+Signed-off-by: Robert Foss <robert.foss@linaro.org>
+---
+
+Changes since v1:
+ - Ævar: Add unit test
+ - Ævar: Add support for getting the hooks_path() from Git perl module
+ - Ævar: Use new hooks_path() instread of issuing git rev-parse in
+         git-send-email.perl
+
+
+Note: The test currently leaves a file in a mktemp directory
+in /tmp.
+
+ git-send-email.perl   |  4 ++--
+ perl/Git.pm           |  9 +++++++++
+ t/t9001-send-email.sh | 16 ++++++++++++++++
+ 3 files changed, 27 insertions(+), 2 deletions(-)
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 1f425c0809..c3dd825322 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -1942,8 +1942,8 @@ sub validate_patch {
+ 	my ($fn, $xfer_encoding) = @_;
+ 
+ 	if ($repo) {
+-		my $validate_hook = catfile(catdir($repo->repo_path(), 'hooks'),
+-					    'sendemail-validate');
++		my $hook_path = $repo->hooks_path();
++		my $validate_hook = catfile($hook_path, 'sendemail-validate');
+ 		my $hook_error;
+ 		if (-x $validate_hook) {
+ 			my $target = abs_path($fn);
+diff --git a/perl/Git.pm b/perl/Git.pm
+index 02eacef0c2..ac1fabff28 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -226,6 +226,8 @@ sub repository {
+ 			$opts{Repository} = abs_path($dir);
+ 		}
+ 
++                $opts{HooksPath} = $search->command_oneline('rev-parse', '--git-path', 'hooks');
++
+ 		delete $opts{Directory};
+ 	}
+ 
+@@ -619,6 +621,13 @@ sub _prompt {
+ 
+ sub repo_path { $_[0]->{opts}->{Repository} }
+ 
++=item hooks_path ()
++
++Return path to the hooks directory. Must be called on a repository instance.
++
++=cut
++
++sub hooks_path { $_[0]->{opts}->{HooksPath} }
+ 
+ =item wc_path ()
+ 
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index 4eee9c3dcb..73b3bc1ce6 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -513,6 +513,22 @@ do
+ 
+ done
+ 
++test_expect_success $PREREQ "--validate respects core.hooksPath setting" '
++	clean_fake_sendmail &&
++	tmp_dir=$(mktemp -d -t ci-XXXXXXXXXX) &&
++	printf "#!/bin/sh" >> $tmp_dir/sendemail-validate &&
++	printf "return 1" >> $tmp_dir/sendemail-validate &&
++	chmod a+x $tmp_dir/sendemail-validate &&
++	git -c core.hooksPath=$tmp_dir send-email \
++		--from="Example <nobody@example.com>" \
++		--to=nobody@example.com \
++		--smtp-server="$(pwd)/fake.sendmail" \
++		--validate \
++		longline.patch \
++		2>&1 >/dev/null | \
++	grep "rejected by sendemail-validate"
++'
++
+ for enc in 7bit 8bit quoted-printable base64
+ do
+ 	test_expect_success $PREREQ "--transfer-encoding=$enc produces correct header" '
+-- 
+2.31.0.30.g398dba342d.dirty
+
