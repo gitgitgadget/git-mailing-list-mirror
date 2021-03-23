@@ -2,121 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AFE3CC433C1
-	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 18:58:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A560C433DB
+	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 19:05:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 86FB6619C5
-	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 18:58:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B3B4F619A3
+	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 19:05:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232311AbhCWS6N (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Mar 2021 14:58:13 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57645 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232331AbhCWS6A (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Mar 2021 14:58:00 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D69C0B6586;
-        Tue, 23 Mar 2021 14:57:59 -0400 (EDT)
+        id S232929AbhCWTEh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Mar 2021 15:04:37 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:62046 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232918AbhCWTEN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Mar 2021 15:04:13 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3D5C51219D1;
+        Tue, 23 Mar 2021 15:04:13 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:date:message-id:mime-version:content-type; s=sasl; bh=k
-        yhCzzU2VuSypzAdiyw1GjEo1Rs=; b=xhFNKzwvZwH/imbSVv7c45Az8MIZoWmOE
-        rblHZKw94sb5VRiObYBoK7oEG9h6r4RhbORBDy4LdQ1rugptBcLNy/J4VNrCCOf9
-        egcwoIytAWI6fUht0KLi6c1VmvC5LdC7GgGz3j7vmCzcwr6U5I5C8dxcyBpFFhCo
-        4+JyeQ6/U8=
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=SZLtNYMrdKVQ82C3lLHNJynIfLU=; b=rwWzMf
+        lvQNspM+FasN/feZLDY6lrhrgD48xMbh7q3mx7xNiXmMljsND8uWeegunc0wdrL1
+        Fn7JvWJyeyfscI5CEoEE2wIz5nIipM1WbGRzOb3MgfpjYEibeE5TzofIA+tigyc7
+        muLTkvxrNrKYsh7C6fYp41QrgpsJyQdSj0NaI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:date:message-id:mime-version:content-type; q=dns; s=
-        sasl; b=RanNFxzS2IzFNdkpDmsNtk9lq+O7ASKbMVbeuh4iHZqPh1RX12kCdiLF
-        cmsgTFO32JEczkpXslPj6jA2UIFrUGQBONlc+lsw8E6aUwTlb/OdkFo67pCbv6+K
-        JN1mh1RhlohqnjKcRfgAI9DREjO2bLmU6PUMLoCFzIrKCgQ2MVY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CD45FB6585;
-        Tue, 23 Mar 2021 14:57:59 -0400 (EDT)
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=EJzGW+r6CMTGPkgzmJFUys6ovEpQi3q9
+        S0DtwksN6Ia2nRYcQHYKOHQRvfKtAwyMuq8QmJogbyEwPYoUrQ7mgjwgZpD5+39N
+        9KnhfGknFMa8zgDOqxRobibPOMF85FaOb+HPQ3d0MdPoX/29zG1u8VUdn7K3dG6q
+        hjrxfZh+/TU=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3589E1219D0;
+        Tue, 23 Mar 2021 15:04:13 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0B238B657F;
-        Tue, 23 Mar 2021 14:57:58 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 79A9E1219CC;
+        Tue, 23 Mar 2021 15:04:10 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>,
-        Jacob Keller <jacob.keller@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Pass or not to pass config environment down...
-Date:   Tue, 23 Mar 2021 11:57:57 -0700
-Message-ID: <xmqqk0px3dfu.fsf@gitster.g>
+To:     Linu Cherian <linuc.decode@gmail.com>
+Cc:     git@vger.kernel.org, Linu Cherian <lcherian@marvell.com>
+Subject: Re: Query on managing the order of commits in git merge
+References: <CAAHhmWjLAO7EBEvcizFd1otDJDq8yesaA3FyDEYPWpuSLuy=Kw@mail.gmail.com>
+Date:   Tue, 23 Mar 2021 12:04:08 -0700
+In-Reply-To: <CAAHhmWjLAO7EBEvcizFd1otDJDq8yesaA3FyDEYPWpuSLuy=Kw@mail.gmail.com>
+        (Linu Cherian's message of "Wed, 24 Mar 2021 00:04:49 +0530")
+Message-ID: <xmqqft0l3d5j.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: AED3619E-8C09-11EB-9D5E-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 8CD3169C-8C0A-11EB-B8BC-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I was grepping around and found this piece of code today:
+Linu Cherian <linuc.decode@gmail.com> writes:
 
-        static void prepare_submodule_repo_env_no_git_dir(struct strvec *out)
-        {
-                const char * const *var;
+> A has the following commits,
+> A ---> 1---2---3--4
+>
+> We do have another branch B, which is forked out of A and our
+> features/fixes has been added
+> on top of A.
+> B ---->1 --2--3--4--5--6
+>
+>
+> At a later stage, we sync branch A to the remote upstream branch
+> and it becomes,
+> A --> 1--2--3--4--7--8
+>
+> Now, when we merge A to B, the order in which the commits are merged
+> into can be different based on date of commit. CMIIW
+>
+> Like, case 1:
+>
+> B --> 1--2--3--4--5--6--7--8--M
+>
+> case 2:
+>
+> B-->1--2--3--4--7--8--5--6--M
+>
+> where M is the merge commit.
 
-                for (var = local_repo_env; *var; var++) {
-                        if (strcmp(*var, CONFIG_DATA_ENVIRONMENT))
-                                strvec_push(out, *var);
-                }
-        }
+Neither is showing you made a merge.  If you try gitk (or "git log
+--oneline --graph"), you'll see that a merge does not result in a
+single strand of pearls like the above.
 
-which tries to "unsetenv" the environment variables that pertain to
-the current repository listed in loocal_repo_env[], but makes
-exception for GIT_CONFIG_PARAMETERS.
+I think your merge is working perfectly correctly, without
+butchering the order each branch had its commits, and adding a
+single merge commit 'M' that is a child of the commits at the tip of
+these two branches.  It's just the order of commits you see when you
+tell the tool to show them linearly (e.g. "log" without "--graph").
 
-It originally came from 14111fc4 (git: submodule honor -c
-credential.* from command line, 2016-02-29) and later simplified by
-89044baa (submodule: stop sanitizing config options, 2016-05-04).
+There are "--topo-order" etc. options that you can influence the
+display order of the "log" output.
 
-Now after d8d77153 (config: allow specifying config entries via
-envvar pairs, 2021-01-12), we have yet another way to pass a set of
-custom one-shot configuration via the environment variable, using
-GIT_CONFIG_COUNT (which is in local_repo_env[] and will be removed
-from the environment by this helper function), GIT_CONFIG_KEY_$n and
-GIT_CONFIG_VALUE_$n (which are unbound set and naturally not in
-local_repo_env[]).  Leaving the latter two exported will not hurt if
-we do intend to hide the custom configuration from the subprocess by
-unsetting GIT_CONFIG_COUNT, but should we be doing so?
 
-There are many run_command() users that just pass local_repo_env[]
-to the child.env when running a subprocess.  Given that the code
-that works in a submodule, which presumably is THE primary target
-of the "we do not want to pass environment variables that pertain to
-the current repository but not to the repository the child process
-works in" consideration that the local_repo_env[] is about, does *not*
-want the GIT_CONFIG_PARAMETERS cleansed, I have to wonder if the
-environment variables (the original GIT_CONFIG_PARAMETERS as well as
-Patrick's GIT_CONFIG_{COUNT,KEY_$n,VALUE_$n}) should be in that
-local_repo_env[] array in the first place.  If we remove them, the
-above helper function can just go away and be replaced with the
-usual child.env = local_repo_env assignment like everybody else.
-
-Comments?
-
- environment.c | 2 --
- 1 file changed, 2 deletions(-)
-
-diff --git c/environment.c w/environment.c
-index 2f27008424..6dcee6a9c5 100644
---- c/environment.c
-+++ w/environment.c
-@@ -116,8 +116,6 @@ static char *super_prefix;
- const char * const local_repo_env[] = {
- 	ALTERNATE_DB_ENVIRONMENT,
- 	CONFIG_ENVIRONMENT,
--	CONFIG_DATA_ENVIRONMENT,
--	CONFIG_COUNT_ENVIRONMENT,
- 	DB_ENVIRONMENT,
- 	GIT_DIR_ENVIRONMENT,
- 	GIT_WORK_TREE_ENVIRONMENT,
