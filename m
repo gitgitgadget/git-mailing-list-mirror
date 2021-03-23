@@ -2,80 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CA15C433DB
-	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 04:51:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A862AC433DB
+	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 05:05:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EFC07619AB
-	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 04:51:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 64DF1619AE
+	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 05:05:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229482AbhCWEua (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Mar 2021 00:50:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36974 "EHLO
+        id S229437AbhCWFEi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Mar 2021 01:04:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39956 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229592AbhCWEuQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Mar 2021 00:50:16 -0400
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC394C061574
-        for <git@vger.kernel.org>; Mon, 22 Mar 2021 21:50:15 -0700 (PDT)
-Received: by mail-pj1-x102b.google.com with SMTP id x7-20020a17090a2b07b02900c0ea793940so11662380pjc.2
-        for <git@vger.kernel.org>; Mon, 22 Mar 2021 21:50:15 -0700 (PDT)
+        with ESMTP id S229548AbhCWFEP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Mar 2021 01:04:15 -0400
+Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FCABC061574
+        for <git@vger.kernel.org>; Mon, 22 Mar 2021 22:04:13 -0700 (PDT)
+Received: by mail-oi1-x22b.google.com with SMTP id l79so15731647oib.1
+        for <git@vger.kernel.org>; Mon, 22 Mar 2021 22:04:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=e3b8uize+I85FCFvksar/C9ahoaWjWXkNTdS3LD0Vqc=;
-        b=IIQG0e63UhUjLq0fQaXuF/zVmNTnCyGvbVX1Cp9vQKiNZUaCuf1+uqQICG+FpEMQ/U
-         F06GQySjk0SZ1P1s1IbJSTCz/yF54nj2nAB+kNv5pSqG1yVkIArVboL6h4nDFQoggVWC
-         TeADHurWeP2tHPtDOnGlNx1v7HgbPkM3ivSNP4TeKYax/WtkL7H7ALFbi7YxZQpAi+L3
-         OJY1fDN/+BF4/x4saL/44yb3+OxQbM12gnRb/k3L8HnjTxfmE5WV1QSOCyiSZz+yuaY+
-         0zdfH6grT/NZEpqVN/MUuz19LCD56wjXQEu/x8XsDrhYZvrKXVLSj3fF6DRUV8JRKHiS
-         RfRw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=XgILcHNsA68auY1s0t8ReuUAgE9KCPcN/fHb+ImloRE=;
+        b=d/vFU8yuI6EbJo5onASfXTkplMnnn/r3+ZmqQ6D5VLfDJ5q51Qqdnf+8acNgmv6uFL
+         S3Puo5neifjwd9AD/1SL+nEZDZ2hr94Gec7MmLzddBw/LQY4GDa8tWz4CJAxkERIK+8K
+         rykGJ44Mx/AJQuS+oihf/6eAvrTy4/yX5HPZ0qad3ZoheaFKKfAKnCfbNbzqhxVbsraa
+         SDrq8W0GFe/sc35WWgmtd5f+TDpMLUMGTIRyHiD2avHDyE0CMfobCysWTKr/ssjgNVAV
+         pbiYmzSvUxh2rC3FWoRIO5nvDVYCwA75Gv9WsSBNgoon7LtBuYQXLb10P+ALo0/Ob6MN
+         3U9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=e3b8uize+I85FCFvksar/C9ahoaWjWXkNTdS3LD0Vqc=;
-        b=FYfwxHM1ePL0Ba7jVEZl1hZcJ63l6CFwLTOoyITMZ219mDqFJycjpxeWDhOY0Wv9rp
-         pn3wL3AzF+x6Dnh07KtJ46DuH9iJdsOexz1hgZSJdmXre79We7miPdhLD+KlEUhLrb3h
-         vh24FRSwj8Ed3CTtRsGXl02ql+gVeAtzYw/vLXB+kBqPnfryoN9yxbTkgRSrMYTpWD+p
-         SNOzlfdqacu/RDCd7/9HKi61DzI1OnzZ7qKpeh1rO3i/6YrZdSGGrU2XPLzBsl/ooyxt
-         AiU+NDNt1N94CBtk1mooJmxK9fkTZrKYtzu6wlXR3H+Hx6URq7wulXPJA3Viuw5ijABU
-         deLA==
-X-Gm-Message-State: AOAM533Rm+cHdkwL7ldwKl2vewQw06AXFpHhtQmE8p0VxWv84liuLJ0d
-        E2qXUAQPhAFL29Nnkr/F7SXrJi+Sf6NnXw==
-X-Google-Smtp-Source: ABdhPJwj49Bh7M0TCNWMz1p7hJ/a/Qbg+1ackjaFwLkPHhmdn5MxE19U4bfEEWSnQi55ALzgmHHm+g==
-X-Received: by 2002:a17:90b:4b87:: with SMTP id lr7mr2416033pjb.5.1616475015205;
-        Mon, 22 Mar 2021 21:50:15 -0700 (PDT)
-Received: from localhost.localdomain ([2409:4052:2e1e:3747:744e:af84:93cf:1aaa])
-        by smtp.gmail.com with ESMTPSA id y2sm13563930pgf.7.2021.03.22.21.50.13
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Mar 2021 21:50:14 -0700 (PDT)
-From:   Prakhar Khandelwal <prakharcs01@gmail.com>
-To:     git@vger.kernel.org
-Subject: Regarding Git Hooks
-Date:   Tue, 23 Mar 2021 10:19:57 +0530
-Message-Id: <20210323044958.2744-1-prakharcs01@gmail.com>
-X-Mailer: git-send-email 2.28.0.windows.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=XgILcHNsA68auY1s0t8ReuUAgE9KCPcN/fHb+ImloRE=;
+        b=lJi+Qio3tqvQYQ5DzAitXvLJ8JSxccQt1jFzNY6F4uhzJd7Ebe2cvE5BwNS8HUw/ry
+         hkg4kloUo95fhFYB9eFoS5KlnIv07Uk8Ml3wWajticEXTM61/OE1zj7JGWOSMZx7jDay
+         QjimvEZDdOKM2dBLZj/mfzZMXsxNofnnL26gkcOCpLe+pIsrcDr048L4q18lRY14Eou0
+         VJ51Wi0O/DTAkn5NLlZiAaE24plBLISbYoU9Qmze8bMbgRpQK+mRfxZGfTPakhOMcV/M
+         bf0gNaZFmmKJ/PT5z1D1A4/+GYMp+7rLCR4we8p/8MCPOdm7VI4LgwUsMyIqKuVk07yz
+         sMRQ==
+X-Gm-Message-State: AOAM532raJ0jOniHlmoVvMxFtRBsbWw7MeGhZkplgRGAzvGo59Ie92pb
+        wbv7VdbtzmkR1t6QF7+/Sld/MB2pHGNV3TQVzAg=
+X-Google-Smtp-Source: ABdhPJy/GtVpvyVP7bx8VodFRM1sBX7NybGPDWFF+6O09rHGJatjjaLdYT8pVaCgfFcwpmE1f60W9R0EDq4QJVdVFRI=
+X-Received: by 2002:aca:d68e:: with SMTP id n136mr2029419oig.179.1616475852484;
+ Mon, 22 Mar 2021 22:04:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <pull.911.git.1616251299.gitgitgadget@gmail.com>
+ <pull.911.v2.git.1616317134.gitgitgadget@gmail.com> <8b8b236a4ffb81a8c6be3f320b878cea1d0f9d7a.1616317135.git.gitgitgadget@gmail.com>
+ <CAP8UFD1Oo-eWmoV-1mh1M=pA8+yRUYHy1wg8NvN3bthmCHBfvQ@mail.gmail.com>
+ <xmqqwnu0bga9.fsf@gitster.g> <CAOLTT8TU+XwLmDQRROHW6iumFgMKok9mi+_OBmN4FbvgWkNb7Q@mail.gmail.com>
+ <xmqqv99j6rt1.fsf@gitster.g>
+In-Reply-To: <xmqqv99j6rt1.fsf@gitster.g>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Tue, 23 Mar 2021 13:04:01 +0800
+Message-ID: <CAOLTT8SRbe8bked2X9uOVexPQPLW6E+ON=Fs66fPDLp9eOWn5g@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] [GSOC] interpret-trailer: easy parse trailer value
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>,
+        "Bradley M. Kuhn" <bkuhn@sfconservancy.org>,
+        Brandon Casey <drafnel@gmail.com>,
+        Shourya Shukla <periperidip@gmail.com>,
+        Rafael Silva <rafaeloliveira.cs@gmail.com>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey !!!
-Hope You are all good in this COVID-Pandemic
-I have a query..So, for explaining my query I am telling my used case
+Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B43=E6=9C=8823=E6=97=
+=A5=E5=91=A8=E4=BA=8C =E4=B8=8A=E5=8D=881:07=E5=86=99=E9=81=93=EF=BC=9A
+>
+> ZheNing Hu <adlternative@gmail.com> writes:
+>
+> > Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B43=E6=9C=8822=
+=E6=97=A5=E5=91=A8=E4=B8=80 =E4=B8=8A=E5=8D=8812:52=E5=86=99=E9=81=93=EF=BC=
+=9A
+> >>
+> >> Christian Couder <christian.couder@gmail.com> writes:
+> >> ...
+> >> > So even without this patch, after your first patch that implements
+> >> > `git commit --trailer ...`, it should be easy to setup something les=
+s
+> >> > verbose and less error-prone.
+> >>
+> >> It is nice that it makes the complexity of 2/2 unnecessary ;-)
+> >
+> > A little frustrated, both `--own-identity` and `@nickname` seem to be
+> >  rejected. I will roll back to the first patch.
+>
+> If existing functionality can be used to achieve the same end result
+> without any extra effort by end-users, that's a happy endgame, isn't
+> it?  There isn't a reason to be frustrated---the users benefit with
+> the new --trailer option without adding (hence having to learn) new
+> extra features like --own-ident or @name, which is a big plus.
+>
+>
 
-Used case-:
-
-I want that as soon as I do push my code to any CVCS(Centralized Version Control System) service provider  like github , I want to do something . It may be sending mail to someone  , sending notification on slack or maybe anything..But, when I made the use of post-commit hook on my local workstation it did not work..Then ,I searched on git hook documentation whether this hook exists or not and found that it doesn't..
-So, I want to say that if it exists then please correct me and if not then can I take this idea as  my GSoc'21 project ???
-Waiting For reply.....:)
-Thanks.....!!!
-
+Thanks, Junio, you are right :)
