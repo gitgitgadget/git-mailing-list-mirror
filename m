@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C2FD5C433E5
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CC4C8C433E6
 	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 13:45:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8DB42619BA
+	by mail.kernel.org (Postfix) with ESMTP id B0061619C3
 	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 13:45:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231462AbhCWNo6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Mar 2021 09:44:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38952 "EHLO
+        id S231645AbhCWNpB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Mar 2021 09:45:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38988 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231638AbhCWNoh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Mar 2021 09:44:37 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65552C061765
-        for <git@vger.kernel.org>; Tue, 23 Mar 2021 06:44:34 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id 61so20799745wrm.12
-        for <git@vger.kernel.org>; Tue, 23 Mar 2021 06:44:34 -0700 (PDT)
+        with ESMTP id S231694AbhCWNom (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Mar 2021 09:44:42 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 541D2C0613DE
+        for <git@vger.kernel.org>; Tue, 23 Mar 2021 06:44:40 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id p19so11089833wmq.1
+        for <git@vger.kernel.org>; Tue, 23 Mar 2021 06:44:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=3Sib70KHcBBpG3tPfAQlzsWFLwlZKFCZNLjdNCTGm0w=;
-        b=ioJZ0Zo7ErIVWxhF9S3tNtLYq1Dw9qIGNuABitMVQlITfTGMJcE8Z/IyhKzhBFibiX
-         lxnJbtbuwLdddchLQj6HZOeYaacRTBTrKe3sKWa2fwHfFtWkX5AgKAsotHKHTkhB7EUF
-         WPppTDSsluk2Kj0tM8Pyg6R81Syvgkit5TGEj06EvL3xUjZ8lYPHjFVgsai/JFAuHVTb
-         RXak4VHqb7GWlzhZ7cfYqakKJ7b3NMmODYbgmO0cbemMyTeB27LAGmbZqpyk/SL8jfkM
-         7ReNbITYJzDTFfE07cNGY89AG9EJWUjEXSmyFxWFN8A8DOGuQFiv7RB8kNUuInLAcnNK
-         aIDw==
+        bh=AkJvT4gY7lKLChaTErd6DbcmGyVraiVliS0HbBhNfCE=;
+        b=hmsbLSsNu2AJ/dXSUVQ6sgRDsjG2Yxtl1OUCUWZY/RQMw1BTRe4dMiy00CEd/d3aHv
+         P+/19o4bNglSPR+ZVzt35uPXk83C0jFW7RCeLXuux97CN9bs11btFuSFWhlUTIIfdJDW
+         0kzSJuN8aBEoUaoHGu7neWZsSmEc9WMav8bc7icDg7ntmN0uCJDFM3Mzrogot57jrfHt
+         dX2jZbf6j7mC43coaWDufJpjsIe2TUCdHpRd7APGJZt8hv1RwssIIJ8EyCEuLaC8b1JA
+         G7Qhhj64VLsP0hPJmddxt79Dvf6SpbxJmc1DezVHFUu5+kn1bLrADnCgFQqSedwx0B6o
+         AdZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=3Sib70KHcBBpG3tPfAQlzsWFLwlZKFCZNLjdNCTGm0w=;
-        b=NSFC8FQZJf2jXyZZxGV4NKcIScOBbeM8RMEjZdaRG29KWTpjqjQl8CgFb8X8p8zVSO
-         aL2rJ4CsypNBTRqYpF9+78HA/r8LWMDud+807HC2u6PMkIn5Dx/9krQ2C526fZTBRbpa
-         SJNIEl9+YPHFDlKQCqTDuWdXS5IZN/zoehbpI24sCHFQb/8GtiofzZEPQQL0ugS3BzLb
-         407mJYXn4KqfVN2I1GnIVW23riCwwgYOUBLvgcoh/cPzKcUUkRm0L6oYcvvoYrEdKXSF
-         /DGz3N8t78qhVS3CoMzStpCGEhV3eDKD3psbEJyqdwZ5zuHydLrVVWhl9/k6HsDET/qv
-         myoA==
-X-Gm-Message-State: AOAM5322hQYYsLRWnM+b9gWXLxneoV42fztgC2XW+7NeJe0lbgl4b5hV
-        04BPcXGCj9K5xjJ6HZYb1/Tv2LbyE0A=
-X-Google-Smtp-Source: ABdhPJzX8sM08l7zkZkMbLneuOLl544ArUSSZWiqktLSWeNMXL8gTCiBy+R/40Z9Cd1wgM8ofcEsXA==
-X-Received: by 2002:adf:90f0:: with SMTP id i103mr3993162wri.318.1616507073169;
-        Tue, 23 Mar 2021 06:44:33 -0700 (PDT)
+        bh=AkJvT4gY7lKLChaTErd6DbcmGyVraiVliS0HbBhNfCE=;
+        b=YOrx51vHFDL7Wx2PjwBOrp91KFyUgSf6PjK5akLAjOa4M/u9t8cH6BPZ1XJzO+9pZE
+         jCXfRiEmHtn9siyEcEffBMdDDZYRnjvSd6++L8xO8HHY2O7Pbf6w0AysiXeu1j2GlJ98
+         RhBWT7OIgU/W44iNLy9M8ZpwyAZjgKGdkZ2vyP6in3AN9FhtaUvvtCMH8ESFi40I51gr
+         NtHFROfcKbaZRnT4gyDnAg7eLrTVJN0a8IUg2BdRBzNFO5BcO8Hxr2l12yP82Vudbj+G
+         Uad+Qq4IqpWI+pHeBiSyYORi0qECREeslGljVclu6Nt3SCa+kvlhjVmr0MIOecKttlaB
+         Ra/Q==
+X-Gm-Message-State: AOAM530lfeIAjX7W6bb2AKqnrhyM108Y5bHW2DR1E5AeUQ/ARwBSYZyU
+        rnJ2WmpQbWTkx0q2eeNhAUeRAp6tEIw=
+X-Google-Smtp-Source: ABdhPJyBFrGeELZldiBqcSNQkdyeeUPtreRZYN0rYl2npSaZMxiITzjoPl8MUKPqgdmdJwSG7+ZtYA==
+X-Received: by 2002:a05:600c:9:: with SMTP id g9mr3568929wmc.134.1616507079083;
+        Tue, 23 Mar 2021 06:44:39 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r11sm23534943wrx.37.2021.03.23.06.44.32
+        by smtp.gmail.com with ESMTPSA id y1sm2573865wmq.29.2021.03.23.06.44.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Mar 2021 06:44:32 -0700 (PDT)
-Message-Id: <7eabc1d0586cfd2d6526b5b6e40b7a42f2495e06.1616507069.git.gitgitgadget@gmail.com>
+        Tue, 23 Mar 2021 06:44:38 -0700 (PDT)
+Message-Id: <7308c87697f179c06a6dc1abd85b64230060bc25.1616507069.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.883.v4.git.1616507069.gitgitgadget@gmail.com>
 References: <pull.883.v3.git.1615912983.gitgitgadget@gmail.com>
         <pull.883.v4.git.1616507069.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 23 Mar 2021 13:44:10 +0000
-Subject: [PATCH v4 02/20] t/perf: add performance test for sparse operations
+Date:   Tue, 23 Mar 2021 13:44:18 +0000
+Subject: [PATCH v4 10/20] sparse-checkout: hold pattern list in index
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,137 +82,103 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-Create a test script that takes the default performance test (the Git
-codebase) and multiplies it by 256 using four layers of duplicated
-trees of width four. This results in nearly one million blob entries in
-the index. Then, we can clone this repository with sparse-checkout
-patterns that demonstrate four copies of the initial repository. Each
-clone will use a different index format or mode so peformance can be
-tested across the different options.
+As we modify the sparse-checkout definition, we perform index operations
+on a pattern_list that only exists in-memory. This allows easy backing
+out in case the index update fails.
 
-Note that the initial repo is stripped of submodules before doing the
-copies. This preserves the expected data shape of the sparse index,
-because directories containing submodules are not collapsed to a sparse
-directory entry.
-
-Run a few Git commands on these clones, especially those that use the
-index (status, add, commit).
-
-Here are the results on my Linux machine:
-
-Test
---------------------------------------------------------------
-2000.2: git status (full-index-v3)             0.37(0.30+0.09)
-2000.3: git status (full-index-v4)             0.39(0.32+0.10)
-2000.4: git add -A (full-index-v3)             1.42(1.06+0.20)
-2000.5: git add -A (full-index-v4)             1.26(0.98+0.16)
-2000.6: git add . (full-index-v3)              1.40(1.04+0.18)
-2000.7: git add . (full-index-v4)              1.26(0.98+0.17)
-2000.8: git commit -a -m A (full-index-v3)     1.42(1.11+0.16)
-2000.9: git commit -a -m A (full-index-v4)     1.33(1.08+0.16)
-
-It is perhaps noteworthy that there is an improvement when using index
-version 4. This is because the v3 index uses 108 MiB while the v4
-index uses 80 MiB. Since the repeated portions of the directories are
-very short (f3/f1/f2, for example) this ratio is less pronounced than in
-similarly-sized real repositories.
+However, if the index write itself cares about the sparse-checkout
+pattern set, we need access to that in-memory copy. Place a pointer to
+a 'struct pattern_list' in the index so we can access this on-demand.
+This will be used in the next change which uses the sparse-checkout
+definition to filter out directories that are outside the sparse cone.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- t/perf/p2000-sparse-operations.sh | 84 +++++++++++++++++++++++++++++++
- 1 file changed, 84 insertions(+)
- create mode 100755 t/perf/p2000-sparse-operations.sh
+ builtin/sparse-checkout.c | 17 ++++++++++-------
+ cache.h                   |  2 ++
+ 2 files changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/t/perf/p2000-sparse-operations.sh b/t/perf/p2000-sparse-operations.sh
-new file mode 100755
-index 000000000000..dddd527b6330
---- /dev/null
-+++ b/t/perf/p2000-sparse-operations.sh
-@@ -0,0 +1,84 @@
-+#!/bin/sh
+diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+index 2306a9ad98e0..e00b82af727b 100644
+--- a/builtin/sparse-checkout.c
++++ b/builtin/sparse-checkout.c
+@@ -110,6 +110,8 @@ static int update_working_directory(struct pattern_list *pl)
+ 	if (is_index_unborn(r->index))
+ 		return UPDATE_SPARSITY_SUCCESS;
+ 
++	r->index->sparse_checkout_patterns = pl;
 +
-+test_description="test performance of Git operations using the index"
-+
-+. ./perf-lib.sh
-+
-+test_perf_default_repo
-+
-+SPARSE_CONE=f2/f4/f1
-+
-+test_expect_success 'setup repo and indexes' '
-+	git reset --hard HEAD &&
-+
-+	# Remove submodules from the example repo, because our
-+	# duplication of the entire repo creates an unlikely data shape.
-+	if git config --file .gitmodules --get-regexp "submodule.*.path" >modules
-+	then
-+		git rm $(awk "{print \$2}" modules) &&
-+		git commit -m "remove submodules" || return 1
-+	fi &&
-+
-+	echo bogus >a &&
-+	cp a b &&
-+	git add a b &&
-+	git commit -m "level 0" &&
-+	BLOB=$(git rev-parse HEAD:a) &&
-+	OLD_COMMIT=$(git rev-parse HEAD) &&
-+	OLD_TREE=$(git rev-parse HEAD^{tree}) &&
-+
-+	for i in $(test_seq 1 4)
-+	do
-+		cat >in <<-EOF &&
-+			100755 blob $BLOB	a
-+			040000 tree $OLD_TREE	f1
-+			040000 tree $OLD_TREE	f2
-+			040000 tree $OLD_TREE	f3
-+			040000 tree $OLD_TREE	f4
-+		EOF
-+		NEW_TREE=$(git mktree <in) &&
-+		NEW_COMMIT=$(git commit-tree $NEW_TREE -p $OLD_COMMIT -m "level $i") &&
-+		OLD_TREE=$NEW_TREE &&
-+		OLD_COMMIT=$NEW_COMMIT || return 1
-+	done &&
-+
-+	git sparse-checkout init --cone &&
-+	git branch -f wide $OLD_COMMIT &&
-+	git -c core.sparseCheckoutCone=true clone --branch=wide --sparse . full-index-v3 &&
-+	(
-+		cd full-index-v3 &&
-+		git sparse-checkout init --cone &&
-+		git sparse-checkout set $SPARSE_CONE &&
-+		git config index.version 3 &&
-+		git update-index --index-version=3
-+	) &&
-+	git -c core.sparseCheckoutCone=true clone --branch=wide --sparse . full-index-v4 &&
-+	(
-+		cd full-index-v4 &&
-+		git sparse-checkout init --cone &&
-+		git sparse-checkout set $SPARSE_CONE &&
-+		git config index.version 4 &&
-+		git update-index --index-version=4
-+	)
-+'
-+
-+test_perf_on_all () {
-+	command="$@"
-+	for repo in full-index-v3 full-index-v4
-+	do
-+		test_perf "$command ($repo)" "
-+			(
-+				cd $repo &&
-+				echo >>$SPARSE_CONE/a &&
-+				$command
-+			)
-+		"
-+	done
-+}
-+
-+test_perf_on_all git status
-+test_perf_on_all git add -A
-+test_perf_on_all git add .
-+test_perf_on_all git commit -a -m A
-+
-+test_done
+ 	memset(&o, 0, sizeof(o));
+ 	o.verbose_update = isatty(2);
+ 	o.update = 1;
+@@ -138,6 +140,7 @@ static int update_working_directory(struct pattern_list *pl)
+ 	else
+ 		rollback_lock_file(&lock_file);
+ 
++	r->index->sparse_checkout_patterns = NULL;
+ 	return result;
+ }
+ 
+@@ -517,19 +520,18 @@ static int modify_pattern_list(int argc, const char **argv, enum modify_type m)
+ {
+ 	int result;
+ 	int changed_config = 0;
+-	struct pattern_list pl;
+-	memset(&pl, 0, sizeof(pl));
++	struct pattern_list *pl = xcalloc(1, sizeof(*pl));
+ 
+ 	switch (m) {
+ 	case ADD:
+ 		if (core_sparse_checkout_cone)
+-			add_patterns_cone_mode(argc, argv, &pl);
++			add_patterns_cone_mode(argc, argv, pl);
+ 		else
+-			add_patterns_literal(argc, argv, &pl);
++			add_patterns_literal(argc, argv, pl);
+ 		break;
+ 
+ 	case REPLACE:
+-		add_patterns_from_input(&pl, argc, argv);
++		add_patterns_from_input(pl, argc, argv);
+ 		break;
+ 	}
+ 
+@@ -539,12 +541,13 @@ static int modify_pattern_list(int argc, const char **argv, enum modify_type m)
+ 		changed_config = 1;
+ 	}
+ 
+-	result = write_patterns_and_update(&pl);
++	result = write_patterns_and_update(pl);
+ 
+ 	if (result && changed_config)
+ 		set_config(MODE_NO_PATTERNS);
+ 
+-	clear_pattern_list(&pl);
++	clear_pattern_list(pl);
++	free(pl);
+ 	return result;
+ }
+ 
+diff --git a/cache.h b/cache.h
+index 136dd496c95d..8c4464420d0a 100644
+--- a/cache.h
++++ b/cache.h
+@@ -307,6 +307,7 @@ static inline unsigned int canon_mode(unsigned int mode)
+ struct split_index;
+ struct untracked_cache;
+ struct progress;
++struct pattern_list;
+ 
+ struct index_state {
+ 	struct cache_entry **cache;
+@@ -338,6 +339,7 @@ struct index_state {
+ 	struct mem_pool *ce_mem_pool;
+ 	struct progress *progress;
+ 	struct repository *repo;
++	struct pattern_list *sparse_checkout_patterns;
+ };
+ 
+ /* Name hashing */
 -- 
 gitgitgadget
 
