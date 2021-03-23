@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EB6DC433E1
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 75975C433E3
 	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 14:21:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2BEB4619C1
+	by mail.kernel.org (Postfix) with ESMTP id 51F22619A9
 	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 14:21:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232281AbhCWOVJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Mar 2021 10:21:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47026 "EHLO
+        id S232295AbhCWOVM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Mar 2021 10:21:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232231AbhCWOUb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Mar 2021 10:20:31 -0400
-Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 222E8C061574
-        for <git@vger.kernel.org>; Tue, 23 Mar 2021 07:20:30 -0700 (PDT)
-Received: by mail-qk1-x72f.google.com with SMTP id o5so14431895qkb.0
-        for <git@vger.kernel.org>; Tue, 23 Mar 2021 07:20:30 -0700 (PDT)
+        with ESMTP id S232139AbhCWOUg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Mar 2021 10:20:36 -0400
+Received: from mail-qv1-xf2d.google.com (mail-qv1-xf2d.google.com [IPv6:2607:f8b0:4864:20::f2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 714AFC061765
+        for <git@vger.kernel.org>; Tue, 23 Mar 2021 07:20:35 -0700 (PDT)
+Received: by mail-qv1-xf2d.google.com with SMTP id d10so10525178qve.7
+        for <git@vger.kernel.org>; Tue, 23 Mar 2021 07:20:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp.br; s=usp-google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=8wqRHpX/Y/qBjqxPYaRa5qF+S1sSb08MDfuRqljXIkA=;
-        b=T/f1/irC+mnAHbDVv1KW9sdjvDA55Np+reEzD3xUG4V3U5F7u2o7irLo/aJBJMloVT
-         GDz49+zgAlR0Mp95F1w8zuQsWPNm7XVWca5LvVHGO9KDFWqagF/Tk/8H9XIDuVIgdk5A
-         IMAAEYzupVl4Fa6rycg9opjeUjkBpoDA8nTkFfB8vfxlmYa7tQWCmHFitAjWAUjKhWYi
-         sDKYNVjcCiqoIa5OyN1j9rl6iMtv6s0YbI4ZYHu214kWNQwZMusKzeGtMhPxk/W8Urlc
-         D/RysPpw6JbZYgOMRlvluJ6Y0ImmK5awjxTP/o06ERDBLqE8Ezgj2GqKbjX+9sLjqA3F
-         m4bQ==
+        bh=o3ECagYgvOeZ3IfgS2wYqyttLxn1HpoK5ooW9+lNVTM=;
+        b=btZqkr03lVOh4Ib9NEPS+DR5huPkSVbIWoMTX4KRuWAd/UE6ldrwr/y+q93H7x7PHA
+         LDSCuBSbUC3BgRLHpE+gE0NaAzyLiRZ88U9d5vu1gFXF27KHHyXCDn6UI3yWGMaWPbg2
+         l+ZWh1B5JrqIhyc5OBDNfW9crMs2q7S3RysQxJllVfZLYDOC6xsrCjrv963Cdxz00d9/
+         rFqaNLhl4KXN5zo47EnByccklxWlE5z11oF+RTnla6E7TTnHRu7rL9ascFKTZX1+EWtR
+         Pz5EqaZai1LIeZE4dFPEFC1an43eNslUsVrOm+9OfIVdDGrnXqoZGp+AfJP/3UetQ2YH
+         hNiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=8wqRHpX/Y/qBjqxPYaRa5qF+S1sSb08MDfuRqljXIkA=;
-        b=N6CH858T/R8lCn+rt2gduHSnha6W92qf5nkjf/PdcHnoxuD+qaVaaWZdxJx/wvhWNM
-         mN1oFv2rlbwaBlpP5Kc1qFri8TFt7JDFStZTsDJxSFZVyXYdEL4TuAcSIYTlihugFn5P
-         DiPMCRMt5njZlgOaV4fSI7wnqpHEPrZbrtfeJQJyH14bB/SP28V0UUUe399Q9Dk/WRL2
-         SQyK25bfDi4qB02OEDxkgrrHj4rG7vYInY5P+DaTbI8PjZ/QSOZii62G/BD07QWiiKNn
-         fgktgZP9QkOsu4c8MgEdvhCJX62buL06zOKQwgnrs/WDRPW411iIzuP7uXK4mF7VC2d1
-         +rRA==
-X-Gm-Message-State: AOAM5311AjAJ6zLi+Mj0b3xdz9SI44EHa6mns1JGSstPFndAti++OpO1
-        /HVCDbsbu/wPXh+mr/3E6Yq9cKMFsG2Jeg==
-X-Google-Smtp-Source: ABdhPJz3hfzrTNw2fejBJMOdGah+nllkthPKjpYoDvyQuFXAR0y61fhOdrTMyh+kUlNFGHYlyNymJw==
-X-Received: by 2002:a05:620a:40e:: with SMTP id 14mr5572413qkp.200.1616509229323;
-        Tue, 23 Mar 2021 07:20:29 -0700 (PDT)
+        bh=o3ECagYgvOeZ3IfgS2wYqyttLxn1HpoK5ooW9+lNVTM=;
+        b=Rd6QYtaJTaD+O8lMZaJaetTd1qjfJMR+BP9QILoOU22T/njkVdu2hkxCFSVQIS1WSG
+         7XIqfaADWmuH9DIR8l5NFxcae6lgJ3tSO/cS9mcOuroKk61ULG4GszvhmhLoiYVI6vyz
+         RyulRNp8P/Q0sQyO8093aCTljOE2ODtekU3lqWDgmSa3jt/We6htXN7+SHCLAcs8zEPF
+         V5xhZV0i+mCahx9VGXZ3McwP1ASodr3U2ExLKVkZxSaMaPLa6hjTxdYorNYSETqAB/87
+         kYmsMLwUsaNEhInWv98hIbibb7D7Fym7hogZJMGXedFLU1UMTr57F97UT5X/n28kGdRl
+         stwQ==
+X-Gm-Message-State: AOAM532P8cTNSPafgDOJQ7YpfGah/2CKq/ni9N4bGIZvmRjrEF0mBpTG
+        R1d7j6vhQHn/1HA7sfMvDkRt4Q==
+X-Google-Smtp-Source: ABdhPJywQmXMA8HZ0JQ+mMpWdcQl7ePAAdLVpR5W/Moo9QERfNC2ghE73fbiFViRNBuA2hN8jR8ujQ==
+X-Received: by 2002:a0c:fa0d:: with SMTP id q13mr4936419qvn.15.1616509234655;
+        Tue, 23 Mar 2021 07:20:34 -0700 (PDT)
 Received: from mango.meuintelbras.local ([177.32.118.149])
-        by smtp.gmail.com with ESMTPSA id j12sm11011690qtn.36.2021.03.23.07.20.27
+        by smtp.gmail.com with ESMTPSA id j12sm11011690qtn.36.2021.03.23.07.20.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Mar 2021 07:20:28 -0700 (PDT)
+        Tue, 23 Mar 2021 07:20:34 -0700 (PDT)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v6 3/9] convert: add get_stream_filter_ca() variant
-Date:   Tue, 23 Mar 2021 11:19:30 -0300
-Message-Id: <ab1bf85b75118a205cb47db29143f997a08a931e.1616508954.git.matheus.bernardino@usp.br>
+Cc:     git@vger.kernel.org
+Subject: [PATCH v6 6/9] entry: make fstat_output() and read_blob_entry() public
+Date:   Tue, 23 Mar 2021 11:19:33 -0300
+Message-Id: <af8b1691cc7f634a9a9c0a65ab15dc22dc3b1007.1616508954.git.matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.30.1
 In-Reply-To: <cover.1616508954.git.matheus.bernardino@usp.br>
 References: <cover.1616508954.git.matheus.bernardino@usp.br>
@@ -70,96 +70,69 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhost@microsoft.com>
+These two functions will be used by the parallel checkout code, so let's
+make them public. Note: fstat_output() is renamed to
+fstat_checkout_output(), now that it has become public, seeking to avoid
+future name collisions.
 
-Like the previous patch, we will also need to call get_stream_filter()
-with a precomputed `struct conv_attrs`, when we add support for parallel
-checkout workers. So add the _ca() variant which takes the conversion
-attributes struct as a parameter.
-
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
 ---
- convert.c | 28 +++++++++++++++++-----------
- convert.h |  2 ++
- 2 files changed, 19 insertions(+), 11 deletions(-)
+ entry.c | 8 ++++----
+ entry.h | 3 +++
+ 2 files changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/convert.c b/convert.c
-index f2be014af8..3f39c62cac 100644
---- a/convert.c
-+++ b/convert.c
-@@ -1941,34 +1941,31 @@ static struct stream_filter *ident_filter(const struct object_id *oid)
+diff --git a/entry.c b/entry.c
+index c3e511bfb3..1e2d9f7baa 100644
+--- a/entry.c
++++ b/entry.c
+@@ -84,7 +84,7 @@ static int create_file(const char *path, unsigned int mode)
+ 	return open(path, O_WRONLY | O_CREAT | O_EXCL, mode);
  }
  
- /*
-- * Return an appropriately constructed filter for the path, or NULL if
-+ * Return an appropriately constructed filter for the given ca, or NULL if
-  * the contents cannot be filtered without reading the whole thing
-  * in-core.
-  *
-  * Note that you would be crazy to set CRLF, smudge/clean or ident to a
-  * large binary blob you would want us not to slurp into the memory!
+-static void *read_blob_entry(const struct cache_entry *ce, unsigned long *size)
++void *read_blob_entry(const struct cache_entry *ce, unsigned long *size)
+ {
+ 	enum object_type type;
+ 	void *blob_data = read_object_file(&ce->oid, &type, size);
+@@ -109,7 +109,7 @@ static int open_output_fd(char *path, const struct cache_entry *ce, int to_tempf
+ 	}
+ }
+ 
+-static int fstat_output(int fd, const struct checkout *state, struct stat *st)
++int fstat_checkout_output(int fd, const struct checkout *state, struct stat *st)
+ {
+ 	/* use fstat() only when path == ce->name */
+ 	if (fstat_is_reliable() &&
+@@ -132,7 +132,7 @@ static int streaming_write_entry(const struct cache_entry *ce, char *path,
+ 		return -1;
+ 
+ 	result |= stream_blob_to_fd(fd, &ce->oid, filter, 1);
+-	*fstat_done = fstat_output(fd, state, statbuf);
++	*fstat_done = fstat_checkout_output(fd, state, statbuf);
+ 	result |= close(fd);
+ 
+ 	if (result)
+@@ -346,7 +346,7 @@ static int write_entry(struct cache_entry *ce,
+ 
+ 		wrote = write_in_full(fd, new_blob, size);
+ 		if (!to_tempfile)
+-			fstat_done = fstat_output(fd, state, &st);
++			fstat_done = fstat_checkout_output(fd, state, &st);
+ 		close(fd);
+ 		free(new_blob);
+ 		if (wrote < 0)
+diff --git a/entry.h b/entry.h
+index acbbb90220..60df93ca78 100644
+--- a/entry.h
++++ b/entry.h
+@@ -39,4 +39,7 @@ int finish_delayed_checkout(struct checkout *state, int *nr_checkouts);
   */
--struct stream_filter *get_stream_filter(const struct index_state *istate,
--					const char *path,
--					const struct object_id *oid)
-+struct stream_filter *get_stream_filter_ca(const struct conv_attrs *ca,
-+					   const struct object_id *oid)
- {
--	struct conv_attrs ca;
- 	struct stream_filter *filter = NULL;
+ void unlink_entry(const struct cache_entry *ce);
  
--	convert_attrs(istate, &ca, path);
--	if (ca.drv && (ca.drv->process || ca.drv->smudge || ca.drv->clean))
-+	if (ca->drv && (ca->drv->process || ca->drv->smudge || ca->drv->clean))
- 		return NULL;
- 
--	if (ca.working_tree_encoding)
-+	if (ca->working_tree_encoding)
- 		return NULL;
- 
--	if (ca.crlf_action == CRLF_AUTO || ca.crlf_action == CRLF_AUTO_CRLF)
-+	if (ca->crlf_action == CRLF_AUTO || ca->crlf_action == CRLF_AUTO_CRLF)
- 		return NULL;
- 
--	if (ca.ident)
-+	if (ca->ident)
- 		filter = ident_filter(oid);
- 
--	if (output_eol(ca.crlf_action) == EOL_CRLF)
-+	if (output_eol(ca->crlf_action) == EOL_CRLF)
- 		filter = cascade_filter(filter, lf_to_crlf_filter());
- 	else
- 		filter = cascade_filter(filter, &null_filter_singleton);
-@@ -1976,6 +1973,15 @@ struct stream_filter *get_stream_filter(const struct index_state *istate,
- 	return filter;
- }
- 
-+struct stream_filter *get_stream_filter(const struct index_state *istate,
-+					const char *path,
-+					const struct object_id *oid)
-+{
-+	struct conv_attrs ca;
-+	convert_attrs(istate, &ca, path);
-+	return get_stream_filter_ca(&ca, oid);
-+}
++void *read_blob_entry(const struct cache_entry *ce, unsigned long *size);
++int fstat_checkout_output(int fd, const struct checkout *state, struct stat *st);
 +
- void free_stream_filter(struct stream_filter *filter)
- {
- 	filter->vtbl->free(filter);
-diff --git a/convert.h b/convert.h
-index a4838b5e5c..484b50965d 100644
---- a/convert.h
-+++ b/convert.h
-@@ -179,6 +179,8 @@ struct stream_filter; /* opaque */
- struct stream_filter *get_stream_filter(const struct index_state *istate,
- 					const char *path,
- 					const struct object_id *);
-+struct stream_filter *get_stream_filter_ca(const struct conv_attrs *ca,
-+					   const struct object_id *oid);
- void free_stream_filter(struct stream_filter *);
- int is_null_stream_filter(struct stream_filter *);
- 
+ #endif /* ENTRY_H */
 -- 
 2.30.1
 
