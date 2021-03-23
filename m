@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D5557C433F8
-	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 13:45:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B0566C433E3
+	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 13:45:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C4B2D619CA
-	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 13:45:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9E6036199F
+	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 13:45:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231644AbhCWNpJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Mar 2021 09:45:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39002 "EHLO
+        id S231511AbhCWNo7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Mar 2021 09:44:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231735AbhCWNoo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Mar 2021 09:44:44 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DE0BC061765
-        for <git@vger.kernel.org>; Tue, 23 Mar 2021 06:44:44 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id j18so20828219wra.2
-        for <git@vger.kernel.org>; Tue, 23 Mar 2021 06:44:44 -0700 (PDT)
+        with ESMTP id S231671AbhCWNol (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Mar 2021 09:44:41 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F7A9C0613DC
+        for <git@vger.kernel.org>; Tue, 23 Mar 2021 06:44:38 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id e9so20829325wrw.10
+        for <git@vger.kernel.org>; Tue, 23 Mar 2021 06:44:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=FJ1aCKqeDvQVAOCTaiUS1h7INWmwY3b0rShnfKBKEQI=;
-        b=Q7lgKzsr0EQ2/iExzn6Lm42PFTVIhQi+moA7OaZ/1ec4/vWZaNeIdLyUivgZL5BwmV
-         FcTNDuhNkYpjfdvx0mnwQ7KdRGcx8JA1zvMSIhWxhS50Qa0xLPx4VKsZDgfvFRTkbN3N
-         GU3qy9qt2IqB0kqccyEx9juL9JWfwZnsr52XIW83YTAgkxrqgXxM3RvG5IhkDjY1jq0h
-         MZBwVpe05KDpdilMlRO+LNUdscJh4fv9BDr3ZNbNnfszcCxG/6asM3sgr6Gz/2KIHl9c
-         WT8PfL9gVGk16b1mkdMLOjzYKorBG7IxI/E0r1Y3FSz9iostkxnOjWVIkPaC7VFhg36M
-         SZMA==
+        bh=b0SPiO5pLHpc3Yqb6Wr4cuzcLpirEqK37PQkp7wDU/s=;
+        b=hCAB/BHbIMPP40KnQ+jvcUWXuYNOWtQ9SVXWr9En7LPMY6AYanZX1WJRDU9eDxoEkR
+         4a71Ea5WcM7UwXZyb/geYBFkeyCG7xhxeKDOtfgTOSPvKB0zBQ4van19Nqu6qcjuhHGZ
+         ApztaNVcydkXkq2vfymrcaBjOumcEm8PW/kHvz8mfDr99wkQrbo+xuyuCfn0gZhzgTcF
+         0drNBBs4y80pNd19T/Xx/SN/60414G5p2yV9rvobAWAZ0ZRKFJpBXvZMmcjsbsMuMOVp
+         rqgNezNSCACBH924cSuw/6Holxl8JOLdpYzYMTcRgW2H4s+gnuaSIEn3XYrzzNaRpC+v
+         xDfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=FJ1aCKqeDvQVAOCTaiUS1h7INWmwY3b0rShnfKBKEQI=;
-        b=SPIxDU5P/moVN9lWKoElqHQWzXSfEMU438Py9UCwIFe9rwpsOVjCK46Dk9RAffI51G
-         7FpEiDIhhO6OwvrzXHevXdhX4e68K2ojT+DPAFvg1fM/8YiC6khHV36gvxharlfL7Wuc
-         tNZhpE93MfZRCtO3JtuUi5M0N9wUrbxQ/xQHpNmLIKlQkpajvO6GB27eZ5EECsc076IT
-         kZ8KWmAWtIdj1z6LJqdq3ZALcakJSL5LzUpZ0ej7oMRhJqmFeoSyGhHFXxL3OFGyOqOw
-         8BbjOm8176YTEBtpny+sTdv2tOhM+X7ssUAVaAIJoDfKlJmrQOAF3LgxP9VL/o8bg4ke
-         uIGA==
-X-Gm-Message-State: AOAM530lSwitMPnGo7E3XSQU9CvBET7TUROnpYOuODpGG8TlF6mR2hdt
-        E3VODIu9wcuAx0NGt58xqKu3r3K3gsU=
-X-Google-Smtp-Source: ABdhPJxQDLuVYwnazll96o9q5q8jLAqRAMT+NOxfpLMg6f97/wtXtRBmr9EuMD7KIBhVAP6lo7lezQ==
-X-Received: by 2002:a5d:6a4c:: with SMTP id t12mr3980588wrw.289.1616507082989;
-        Tue, 23 Mar 2021 06:44:42 -0700 (PDT)
+        bh=b0SPiO5pLHpc3Yqb6Wr4cuzcLpirEqK37PQkp7wDU/s=;
+        b=Kq5f5he7W26//IlVAsr2GmKyzzTPl8Ig2KynOij6x+y3FsgNKCUU0XXE5crp5ZESl6
+         OrFta5WnqDpHTZDmJ2g3sYNTL/Kz0e31eez+qg6UILVmPW7d2T4wObj0JBNMXzUKkG88
+         Qv3ZXCkr1uWin2awNUZpzqnpCHjzrdW9x1zJrjQC/j/aaacFU2kPvmyNqJqTU/KV43w+
+         eGl1BxtIP8aTEdZnWi/eGtp/pMTfSvddDID5+v9hh2K8opd58SQynPB5oIxOlp24hvpr
+         XLqgHFoi+YB2Yn+Y/Dmt8+Av2iwc1vgcynd53Bo9PvmZeThUe6/kTt9CUyHP4Mnvh+nL
+         wS7g==
+X-Gm-Message-State: AOAM531+329wOi2KWnkUhzgOiSgSFiPWFLESQNfBAXm9712ef0LDLK2a
+        u4Km0RDKVgd6HiNX2/mInSyQESXGjYc=
+X-Google-Smtp-Source: ABdhPJyugpXZAnyy/+euD7QrajCVC2PUJFZY1QloFYbcnNh/flyMU1SGt13PbHj+0qofhn6zWDdKgA==
+X-Received: by 2002:adf:ff8c:: with SMTP id j12mr4090812wrr.297.1616507077054;
+        Tue, 23 Mar 2021 06:44:37 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b12sm13378472wrf.39.2021.03.23.06.44.42
+        by smtp.gmail.com with ESMTPSA id y10sm24771261wrl.19.2021.03.23.06.44.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Mar 2021 06:44:42 -0700 (PDT)
-Message-Id: <6f38cef196b0e9dca92e92399532290f39d8cece.1616507069.git.gitgitgadget@gmail.com>
+        Tue, 23 Mar 2021 06:44:36 -0700 (PDT)
+Message-Id: <7ebd9570b1ad81720569a770526651c62c152b9f.1616507069.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.883.v4.git.1616507069.gitgitgadget@gmail.com>
 References: <pull.883.v3.git.1615912983.gitgitgadget@gmail.com>
         <pull.883.v4.git.1616507069.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 23 Mar 2021 13:44:23 +0000
-Subject: [PATCH v4 15/20] sparse-index: create extension for compatibility
+Date:   Tue, 23 Mar 2021 13:44:15 +0000
+Subject: [PATCH v4 07/20] test-read-cache: print cache entries with --table
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,161 +82,119 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-Previously, we enabled the sparse index format only using
-GIT_TEST_SPARSE_INDEX=1. This is not a feasible direction for users to
-actually select this mode. Further, sparse directory entries are not
-understood by the index formats as advertised.
+This table is helpful for discovering data in the index to ensure it is
+being written correctly, especially as we build and test the
+sparse-index. This table includes an output format similar to 'git
+ls-tree', but should not be compared to that directly. The biggest
+reasons are that 'git ls-tree' includes a tree entry for every
+subdirectory, even those that would not appear as a sparse directory in
+a sparse-index. Further, 'git ls-tree' does not use a trailing directory
+separator for its tree rows.
 
-We _could_ add a new index version that explicitly adds these
-capabilities, but there are nuances to index formats 2, 3, and 4 that
-are still valuable to select as options. Until we add index format
-version 5, create a repo extension, "extensions.sparseIndex", that
-specifies that the tool reading this repository must understand sparse
-directory entries.
+This does not print the stat() information for the blobs. That will be
+added in a future change with another option. The tests that are added
+in the next few changes care only about the object types and IDs.
+However, this future need for full index information justifies the need
+for this test helper over extending a user-facing feature, such as 'git
+ls-files'.
 
-This change only encodes the extension and enables it when
-GIT_TEST_SPARSE_INDEX=1. Later, we will add a more user-friendly CLI
-mechanism.
+To make the option parsing slightly more robust, wrap the string
+comparisons in a loop adapted from test-dir-iterator.c.
+
+Care must be taken with the final check for the 'cnt' variable. We
+continue the expectation that the numerical value is the final argument.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/config/extensions.txt |  8 ++++++
- cache.h                             |  1 +
- repo-settings.c                     |  7 ++++++
- repository.h                        |  3 ++-
- setup.c                             |  3 +++
- sparse-index.c                      | 38 +++++++++++++++++++++++++----
- 6 files changed, 54 insertions(+), 6 deletions(-)
+ t/helper/test-read-cache.c | 55 +++++++++++++++++++++++++++++++-------
+ 1 file changed, 45 insertions(+), 10 deletions(-)
 
-diff --git a/Documentation/config/extensions.txt b/Documentation/config/extensions.txt
-index 4e23d73cdcad..c02e09af0046 100644
---- a/Documentation/config/extensions.txt
-+++ b/Documentation/config/extensions.txt
-@@ -6,3 +6,11 @@ extensions.objectFormat::
- Note that this setting should only be set by linkgit:git-init[1] or
- linkgit:git-clone[1].  Trying to change it after initialization will not
- work and will produce hard-to-diagnose issues.
+diff --git a/t/helper/test-read-cache.c b/t/helper/test-read-cache.c
+index 244977a29bdf..6cfd8f2de71c 100644
+--- a/t/helper/test-read-cache.c
++++ b/t/helper/test-read-cache.c
+@@ -1,36 +1,71 @@
+ #include "test-tool.h"
+ #include "cache.h"
+ #include "config.h"
++#include "blob.h"
++#include "commit.h"
++#include "tree.h"
 +
-+extensions.sparseIndex::
-+	When combined with `core.sparseCheckout=true` and
-+	`core.sparseCheckoutCone=true`, the index may contain entries
-+	corresponding to directories outside of the sparse-checkout
-+	definition in lieu of containing each path under such directories.
-+	Versions of Git that do not understand this extension do not
-+	expect directory entries in the index.
-diff --git a/cache.h b/cache.h
-index 74b43aaa2bd1..8aede373aeb3 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1059,6 +1059,7 @@ struct repository_format {
- 	int worktree_config;
- 	int is_bare;
- 	int hash_algo;
-+	int sparse_index;
- 	char *work_tree;
- 	struct string_list unknown_extensions;
- 	struct string_list v1_only_extensions;
-diff --git a/repo-settings.c b/repo-settings.c
-index d63569e4041e..9677d50f9238 100644
---- a/repo-settings.c
-+++ b/repo-settings.c
-@@ -85,4 +85,11 @@ void prepare_repo_settings(struct repository *r)
- 	 * removed.
- 	 */
- 	r->settings.command_requires_full_index = 1;
-+
-+	/*
-+	 * Initialize this as off.
-+	 */
-+	r->settings.sparse_index = 0;
-+	if (!repo_config_get_bool(r, "extensions.sparseindex", &value) && value)
-+		r->settings.sparse_index = 1;
- }
-diff --git a/repository.h b/repository.h
-index e06a23015697..a45f7520fd9e 100644
---- a/repository.h
-+++ b/repository.h
-@@ -42,7 +42,8 @@ struct repo_settings {
- 
- 	int core_multi_pack_index;
- 
--	unsigned command_requires_full_index:1;
-+	unsigned command_requires_full_index:1,
-+		 sparse_index:1;
- };
- 
- struct repository {
-diff --git a/setup.c b/setup.c
-index c04cd25a30df..cd8394564613 100644
---- a/setup.c
-+++ b/setup.c
-@@ -500,6 +500,9 @@ static enum extension_result handle_extension(const char *var,
- 			return error("invalid value for 'extensions.objectformat'");
- 		data->hash_algo = format;
- 		return EXTENSION_OK;
-+	} else if (!strcmp(ext, "sparseindex")) {
-+		data->sparse_index = 1;
-+		return EXTENSION_OK;
- 	}
- 	return EXTENSION_UNKNOWN;
- }
-diff --git a/sparse-index.c b/sparse-index.c
-index 7631f7bd00b7..3a6df66faeab 100644
---- a/sparse-index.c
-+++ b/sparse-index.c
-@@ -102,19 +102,47 @@ static int convert_to_sparse_rec(struct index_state *istate,
- 	return num_converted - start_converted;
- }
- 
-+static int enable_sparse_index(struct repository *repo)
++static void print_cache_entry(struct cache_entry *ce)
 +{
-+	const char *config_path = repo_git_path(repo, "config.worktree");
++	const char *type;
++	printf("%06o ", ce->ce_mode & 0177777);
 +
-+	if (upgrade_repository_format(1) < 0) {
-+		warning(_("unable to upgrade repository format to enable sparse-index"));
-+		return -1;
-+	}
-+	git_config_set_in_file_gently(config_path,
-+				      "extensions.sparseIndex",
-+				      "true");
++	if (S_ISSPARSEDIR(ce->ce_mode))
++		type = tree_type;
++	else if (S_ISGITLINK(ce->ce_mode))
++		type = commit_type;
++	else
++		type = blob_type;
 +
-+	prepare_repo_settings(repo);
-+	repo->settings.sparse_index = 1;
-+	return 0;
++	printf("%s %s\t%s\n",
++	       type,
++	       oid_to_hex(&ce->oid),
++	       ce->name);
 +}
 +
- int convert_to_sparse(struct index_state *istate)
++static void print_cache(struct index_state *istate)
++{
++	int i;
++	for (i = 0; i < istate->cache_nr; i++)
++		print_cache_entry(istate->cache[i]);
++}
+ 
+ int cmd__read_cache(int argc, const char **argv)
  {
- 	if (istate->split_index || istate->sparse_index ||
- 	    !core_apply_sparse_checkout || !core_sparse_checkout_cone)
- 		return 0;
++	struct repository *r = the_repository;
+ 	int i, cnt = 1;
+ 	const char *name = NULL;
++	int table = 0;
  
-+	if (!istate->repo)
-+		istate->repo = the_repository;
-+
-+	/*
-+	 * The GIT_TEST_SPARSE_INDEX environment variable triggers the
-+	 * extensions.sparseIndex config variable to be on.
-+	 */
-+	if (git_env_bool("GIT_TEST_SPARSE_INDEX", 0)) {
-+		int err = enable_sparse_index(istate->repo);
-+		if (err < 0)
-+			return err;
-+	}
-+
- 	/*
--	 * For now, only create a sparse index with the
--	 * GIT_TEST_SPARSE_INDEX environment variable. We will relax
--	 * this once we have a proper way to opt-in (and later still,
--	 * opt-out).
-+	 * Only convert to sparse if extensions.sparseIndex is set.
- 	 */
--	if (!git_env_bool("GIT_TEST_SPARSE_INDEX", 0))
-+	prepare_repo_settings(istate->repo);
-+	if (!istate->repo->settings.sparse_index)
- 		return 0;
+-	if (argc > 1 && skip_prefix(argv[1], "--print-and-refresh=", &name)) {
+-		argc--;
+-		argv++;
++	for (++argv, --argc; *argv && starts_with(*argv, "--"); ++argv, --argc) {
++		if (skip_prefix(*argv, "--print-and-refresh=", &name))
++			continue;
++		if (!strcmp(*argv, "--table"))
++			table = 1;
+ 	}
  
- 	if (!istate->sparse_checkout_patterns) {
+-	if (argc == 2)
+-		cnt = strtol(argv[1], NULL, 0);
++	if (argc == 1)
++		cnt = strtol(argv[0], NULL, 0);
+ 	setup_git_directory();
+ 	git_config(git_default_config, NULL);
++
+ 	for (i = 0; i < cnt; i++) {
+-		read_cache();
++		repo_read_index(r);
+ 		if (name) {
+ 			int pos;
+ 
+-			refresh_index(&the_index, REFRESH_QUIET,
++			refresh_index(r->index, REFRESH_QUIET,
+ 				      NULL, NULL, NULL);
+-			pos = index_name_pos(&the_index, name, strlen(name));
++			pos = index_name_pos(r->index, name, strlen(name));
+ 			if (pos < 0)
+ 				die("%s not in index", name);
+ 			printf("%s is%s up to date\n", name,
+-			       ce_uptodate(the_index.cache[pos]) ? "" : " not");
++			       ce_uptodate(r->index->cache[pos]) ? "" : " not");
+ 			write_file(name, "%d\n", i);
+ 		}
+-		discard_cache();
++		if (table)
++			print_cache(r->index);
++		discard_index(r->index);
+ 	}
+ 	return 0;
+ }
 -- 
 gitgitgadget
 
