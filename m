@@ -2,183 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E8900C433E1
-	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 14:54:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DAFC5C433DB
+	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 15:19:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C6E3B61990
-	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 14:54:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B00FC619B9
+	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 15:19:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232415AbhCWOxw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Mar 2021 10:53:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54110 "EHLO
+        id S232415AbhCWPSb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Mar 2021 11:18:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59466 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232408AbhCWOxH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Mar 2021 10:53:07 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30F97C061574
-        for <git@vger.kernel.org>; Tue, 23 Mar 2021 07:53:05 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id j7so21090212wrd.1
-        for <git@vger.kernel.org>; Tue, 23 Mar 2021 07:53:05 -0700 (PDT)
+        with ESMTP id S232756AbhCWPR7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Mar 2021 11:17:59 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05996C061574
+        for <git@vger.kernel.org>; Tue, 23 Mar 2021 08:17:59 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id bx7so23872390edb.12
+        for <git@vger.kernel.org>; Tue, 23 Mar 2021 08:17:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=WRjJQCiWyDYLtSjmI6SBeivNOng0hmAhvJehsEpDjw0=;
-        b=uX9bZZrcilEfA0qrpftcS9o6iX4HcjxCoJ2PdZXj7ElSeDA2/huPZWi3hNn6wJvShO
-         FaaHpKAMhClmiwtp55WeGwuvo90kk5aY6GGyXvI08yjoMS2HVChoXrC1MZnTlPaySyHD
-         k04mbgUpOPxVCRm9W529gIScK8d8g2ZFh8MfDNx2SjWiSXZDPLzMql8mAmXVzgcBWCnM
-         GQPznYa6VEtpSI73DQH1C+1m54asBoX+IIa7Uv6IIndmlnuuLMPyTyQBezupYSAHwRdT
-         9yGVQOa1pYvuOooZJ9YwmtUPJpXPdmqkfcVG/pZ3WRxygEO/mIQ/Em9/NemKtjK4jYUu
-         HP9g==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=EDYhq587FBtv1gsiuHWy8HhKMxpTvcXpHFWuWrT7zO4=;
+        b=FoRbHImBwA+C2m9SOGG0atq1gfnT8/s/s1wDFn40PoQQSe/c0zoLio8lPOwh2OYWax
+         Ge96fCCbsFG9WYs7XLdYpBz1sqHMUg6zt08PFA+2K9zR7anjUrtIJ6iHMZ7W5/irESov
+         lvHuPKCwyFEmurVgKBWj6L9Lv0/pWMrUDtyFUPlcih9QRNOvcfQyV1JSfOmBJYvOdDmj
+         zZO0FmbrNWOM/tm8GE7B2ltrFqMZH4591H2swRjHjgR0NWtbPiTGHyM1pajz6+JWMEwU
+         gBZx8l8Ho/rqIpmBuwULNwlDhSwPuC36FkBxbUVoZbmT+dSAFKoLEq3B8L05OE8NDEh1
+         MKhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=WRjJQCiWyDYLtSjmI6SBeivNOng0hmAhvJehsEpDjw0=;
-        b=O0/FSrtww3jUX1xRDkyPYRNQ7D/G1QrNfmZLAdUSf3UUYpPm3NHq1oq5yB+yQq/64y
-         o/Zl1bfkFILtuZkHoJgUa7xtBqA/oWoBQgMB8KjhLfNQc4CU/QnikdPr3Xl4iYexgbRk
-         BoPm3UXLhmn7gm1tn7SL/x8iWzmka6+CaVfBmK6HFRfmj4RNAPkwtYgje9ld+hm1EigN
-         nj+O3EdEz/dwBLKaO6ffBQMj1Z3SKUzjr6D8CdRcIljW6Y8A3wwkCeuuAIUm/roWOGh5
-         wP4yZ4L+h6RU2G3F/HbYDuPrVapue0rg478f22LifG9q48RHISb9N+GOF/3bElc7Q835
-         GRtA==
-X-Gm-Message-State: AOAM533+VjGOkz4nrFQhcVdGpJDec+MwG/foiRWDymU/rl+yG6lYDCxP
-        9+4Q6T4rO9+Uv0Wm2jZRALIhdk+QvJI=
-X-Google-Smtp-Source: ABdhPJz73+IseA2Ou/JdVBe4JkrDBuMwGsIt5+l7lM2U+AmmK8yyFPyfHiTvshVdFqctPVxtxiKtzw==
-X-Received: by 2002:a5d:4fca:: with SMTP id h10mr4639391wrw.70.1616511183907;
-        Tue, 23 Mar 2021 07:53:03 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a8sm2671955wmm.46.2021.03.23.07.53.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Mar 2021 07:53:03 -0700 (PDT)
-Message-Id: <pull.913.git.1616511182942.gitgitgadget@gmail.com>
-From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 23 Mar 2021 14:53:02 +0000
-Subject: [PATCH] [GSOC]trailer: change $ARG to environment variable
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=EDYhq587FBtv1gsiuHWy8HhKMxpTvcXpHFWuWrT7zO4=;
+        b=d1bVqK8r5cTq5XR+Z5ZTkFf/Pw+09hpzlJDW49iu88uxwThgbla8ZaZ1vy6QkDRG1v
+         T0LPnTCV0plzPU55ldNsZ0Q0Ibsgh3RPozGO3+oT6TqlSbUy/NsyijpOWDLp+U7Z8kC0
+         0JbL0ol+G7bY1R8b2LEbnA+BiVdnBSAGr1RphiX12EC/I4VDxICB6wstttXLDY4qZhcD
+         HJ/UoGkvnssZYPeOuWwRez+prki2VhRnbJCixd3bmLB0XSqRTpQpitefSoZ/x+vsit6d
+         2NyP3U0rTVoxfg4nF4CX0lufGlnM+WbU1J6FhnaWWiVgsEM1p/TRFjcYOxY1O2JbNfZc
+         qeBg==
+X-Gm-Message-State: AOAM533ATN6L7jLcAPlT8VL5EY77xTNUZiuDHVRzmkxob0fupEiaxtZZ
+        gA++Z7U3VReRDjfeVLt+8hygkekI9++aRdObvFVZX8wsL2dL0A==
+X-Google-Smtp-Source: ABdhPJxW8MVXHhW0u76gNlX0/iH+hHYLLRjaB9u4qIPZWFrcSaLtYS3sU3aFGPS3pKnox5gzEUGFy9M1j+c7gzlPCks=
+X-Received: by 2002:aa7:d503:: with SMTP id y3mr5084986edq.142.1616512677689;
+ Tue, 23 Mar 2021 08:17:57 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        ZheNing Hu <adlternative@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>
+References: <CALz+XyW+XU++58eEYm5=jxTckK-VuuPoA-ecj4QCZw1o44JFUQ@mail.gmail.com>
+ <xmqqczx0sq1o.fsf@gitster.c.googlers.com> <YCwJ8tORQg2Air4r@nand.local>
+ <xmqqmtw3pzu3.fsf@gitster.c.googlers.com> <YCwhPG6RaAhU9ljg@nand.local>
+In-Reply-To: <YCwhPG6RaAhU9ljg@nand.local>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Tue, 23 Mar 2021 16:17:46 +0100
+Message-ID: <CAP8UFD1QG_b6ax-HodLRRcdLKgWJhPDghjLfjnyan1Zi80en7A@mail.gmail.com>
+Subject: Re: Bug Report: Multi-line trailers containing empty lines break parsing
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+        Matthias Buehlmann <Matthias.Buehlmann@mabulous.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: ZheNing Hu <adlternative@gmail.com>
+On Tue, Feb 16, 2021 at 8:47 PM Taylor Blau <me@ttaylorr.com> wrote:
+>
+> On Tue, Feb 16, 2021 at 11:39:00AM -0800, Junio C Hamano wrote:
+> > A few comments (not pointing out bugs, but just sharing
+> > observations).
+> >
+> >  - if the line before "trailer: single" were not an empty line but a
+> >    line with a single SP on it (which is is_blank_line()), would the
+> >    new logic get confused?
+>
+> Oof. That breaks the new test, but it makes me worried about whether
+> this can be parsed without ambiguity. I think not, but here I'd defer to
+> Christian or Jonathan Tan.
 
-In the original implementation of `trailer.<token>.command`,
-use `strbuf_replace` to replace `$ARG` in the <value> of the trailer,
-but it have a problem:`strbuf_replace` replace the `$ARG` in command
-only once, If the user's trailer command have used more then one `$ARG`,
-error will occur.
+Sorry for the late answer on this. It looks like this fell into my
+email reading cracks.
 
-So pass `$ARG` as an environment variable to the trailer command,
-all `$ARG` in the command will be replaced, which will fix this problem.
+My opinion, when I worked on this, was that it's very difficult to
+avoid ambiguity, so it's better if `git interpret-trailers` is strict
+by default, which could be relaxed later in special cases where there
+is not much risk of ambiguity.
 
-Signed-off-by: ZheNing Hu <adlternative@gmail.com>
----
-    [GSOC] trailer: change $ARG to environment variable
-    
-    In https://lore.kernel.org/git/xmqqv99i4ck2.fsf@gitster.g/ Junio and
-    Christian talked about the problem of using strbuf_replace() to replace
-    $ARG.
-    
-    The current new solution is to pass $ARG as an environment variable into
-    the command.
+It's especially ambiguous because many commit message subjects or even
+bodies can be of the form "area: change" which can look like a
+trailer. And some people might want to process whole commit messages,
+while others might want to process templates that might contain only
+trailers.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-913%2Fadlternative%2Ftrailer-pass-ARG-env-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-913/adlternative/trailer-pass-ARG-env-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/913
+So I thought that blank lines should not appear in the trailers. And
+if any appears, it means that the trailers should start after the last
+blank line. This might actually have been already relaxed a bit.
 
- Documentation/git-interpret-trailers.txt |  3 ++-
- t/t7513-interpret-trailers.sh            | 17 +++++++++++++++++
- trailer.c                                |  9 ++++++---
- 3 files changed, 25 insertions(+), 4 deletions(-)
+> >  - if the second "multi:" trailer did not have the funny blank line
+> >    before "_two", the expected output would still be "multi:"
+> >    followed by "one two three", iow, the line after the second
+> >    "multi: one" is a total no-op?  If we added many more " \n" lines
+> >    there, they are all absorbed and ignored?  It somehow feels wrong
+>
+> That's definitely the outcome of this patch, but I agree it feels wrong.
+> I'm not sure that we define the behavior that strictly in
+> git-interpret-trailers(1), so we have some wiggle room, I guess.
 
-diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
-index 96ec6499f001..7cf7c032a0e9 100644
---- a/Documentation/git-interpret-trailers.txt
-+++ b/Documentation/git-interpret-trailers.txt
-@@ -242,7 +242,8 @@ line, where <value> is taken to be the standard output of the
- specified command with any leading and trailing whitespace trimmed
- off.
- +
--If the command contains the `$ARG` string, this string will be
-+If the command contains the `$ARG` string (`$ARG` is an exported
-+environment variable), this string will be
- replaced with the <value> part of an existing trailer with the same
- <token>, if any, before the command is launched.
- +
-diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
-index 6602790b5f4c..d303cf0e4b36 100755
---- a/t/t7513-interpret-trailers.sh
-+++ b/t/t7513-interpret-trailers.sh
-@@ -1291,6 +1291,23 @@ test_expect_success 'with command using $ARG' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'with command using more than one $ARG' '
-+	git config trailer.fix.ifExists "replace" &&
-+	git config trailer.fix.command "test -n $ARG && git log -1 --oneline --format=\"%h (%s)\" --abbrev-commit --abbrev=14 \$ARG || true" &&
-+	FIXED=$(git log -1 --oneline --format="%h (%s)" --abbrev-commit --abbrev=14 HEAD) &&
-+	cat complex_message_body >expected &&
-+	sed -e "s/ Z\$/ /" >>expected <<-EOF &&
-+		Fixes: $FIXED
-+		Acked-by= Z
-+		Reviewed-by:
-+		Signed-off-by: Z
-+		Signed-off-by: A U Thor <author@example.com>
-+	EOF
-+	git interpret-trailers --trailer "review:" --trailer "fix=HEAD" \
-+		<complex_message >actual &&
-+	test_cmp expected actual
-+'
-+
- test_expect_success 'with failing command using $ARG' '
- 	git config trailer.fix.ifExists "replace" &&
- 	git config trailer.fix.command "false \$ARG" &&
-diff --git a/trailer.c b/trailer.c
-index be4e9726421c..42e3b818327a 100644
---- a/trailer.c
-+++ b/trailer.c
-@@ -44,7 +44,7 @@ static char *separators = ":";
- 
- static int configured;
- 
--#define TRAILER_ARG_STRING "$ARG"
-+#define TRAILER_ARG_STRING "ARG"
- 
- static const char *git_generated_prefixes[] = {
- 	"Signed-off-by: ",
-@@ -222,13 +222,16 @@ static char *apply_command(const char *command, const char *arg)
- 	struct strbuf buf = STRBUF_INIT;
- 	struct child_process cp = CHILD_PROCESS_INIT;
- 	char *result;
-+	const char *const *var;
- 
- 	strbuf_addstr(&cmd, command);
-+	for (var = local_repo_env; *var; var++)
-+		strvec_push(&cp.env_array, *var);
- 	if (arg)
--		strbuf_replace(&cmd, TRAILER_ARG_STRING, arg);
-+		strvec_pushf(&cp.env_array, "%s=%s", TRAILER_ARG_STRING, arg);
- 
- 	strvec_push(&cp.args, cmd.buf);
--	cp.env = local_repo_env;
-+
- 	cp.no_stdin = 1;
- 	cp.use_shell = 1;
- 
-
-base-commit: 142430338477d9d1bb25be66267225fb58498d92
--- 
-gitgitgadget
+Any patch to relax how blank lines and other aspects of trailers
+parsing in my opinion should come with some documentation change to
+explain what we now accept and what we don't accept, and also tests to
+enforce that.
