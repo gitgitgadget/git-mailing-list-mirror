@@ -7,71 +7,72 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7ABA2C433DB
-	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 20:44:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DC05EC433DB
+	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 20:45:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4A658619BA
-	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 20:44:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B4EC0619BF
+	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 20:45:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231351AbhCWUnn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Mar 2021 16:43:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45806 "EHLO
+        id S233279AbhCWUpU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Mar 2021 16:45:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233355AbhCWUnk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Mar 2021 16:43:40 -0400
+        with ESMTP id S233427AbhCWUpQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Mar 2021 16:45:16 -0400
 Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 594DBC061574
-        for <git@vger.kernel.org>; Tue, 23 Mar 2021 13:43:40 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id c8so9294991wrq.11
-        for <git@vger.kernel.org>; Tue, 23 Mar 2021 13:43:40 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7051EC061574
+        for <git@vger.kernel.org>; Tue, 23 Mar 2021 13:45:16 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id j7so22222750wrd.1
+        for <git@vger.kernel.org>; Tue, 23 Mar 2021 13:45:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=LTqm3mWhhSoCEV90PV6pouHEaV96TDy1zWhK7PPX5hE=;
-        b=BFt8PSJcuQQigG0F7Y5MqxbYO1oWpMCymkZiErqlFFpj+C/00zEaS7ANcXAffCkGSg
-         kutqk96JsrvflXHgutwHiR3fGFieVuf48RrCQDwg5NRdib/RrUFct3OaBf7H4w9RQ7oW
-         CUpVkrwjkV1BXlLGfFt60QbmodVTGDFZa4WbdGDSgnhmohvaOgM+LqGy3H6Vkjk2hmzy
-         ARzI8hn8jEaabsMAOV2kJeqBK7ucGXuAHGY9qhoLdg+ATVGPqA1esOwWO+3QF9aR5feh
-         kYcsWouaQ69tH+ZlzEbknx6hx/WboqY2/Pin+U1iXgkYHk0LAhRd8XFnJ0fCrXTdoI/d
-         ILcA==
+        bh=g26lcUSxrK66GNPXyMbDwk2r+d12vjmCSiHvKIT06Uc=;
+        b=b0TbKsGfrKcSf0Ocppemwb6WFUulIsqPA56rnuWQiReqDxfZYNMmzow3THq81JkoFZ
+         QTvFv/TaCmEMnVNe/jaql3Vo+SfpH+cvdw4mafTmY4tGCWoF7yAXiIRx1eBpQ/gYVzHJ
+         RMX1mLPo25Om6VKeeIN1xD8IegvgLmHjr/4sXYhz42E8yXU8nasJY1uXivSW1I9MI/BV
+         dbtJABXvV6IeNbZ/ZhQJxWloDBTU90NtJAiBl0vUJ1WLhcve8DFnoO8qDdklfeKTfYqZ
+         JvgZKDS5blzFIUP2lH2tSqpz9jQdZUH9Goxkbwe5X0UEayuiBNyNpsfo1FTnQm14s8hL
+         jLiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=LTqm3mWhhSoCEV90PV6pouHEaV96TDy1zWhK7PPX5hE=;
-        b=kESz9P0LSrv0V9dtvY5jpsyHJAgEhKb2SRPRS3DbpJ/7tfGujtf2JhozSKjjm8OHNt
-         oTWf8OweEM82Ru2w9CLl/m3Ha39mjB04Ww1soE/DgJn2gKr6K2+vBtIk5/ximZkrnEG9
-         0BPHiVby+obrZdpv/jGGIvbLdkH8TrtRvzsj5+v4WP9Fcbb8hMxwDhuZrothHHG/nJdd
-         K72xLXvatQIMrCgwic+pkuCNVZkr1WMziL6rrFnaJdPRWXSIByfGBFftXL25uyv0dJYq
-         yoymeU7YSW2dBL+ZgC47XQKE9O85CVc9eZVVLi/plTRHtctweRaHgAMS/3Zk+ruPfA7h
-         0Peg==
-X-Gm-Message-State: AOAM530zdo+GLvBxGdxGyB9nW4I9l6Tvsr4Ev3NI6xc4icH89Ocv6joO
-        3tuoFL6Fm8g/24zA3UiOyrYvNXMILTE=
-X-Google-Smtp-Source: ABdhPJzRcbw2FTv8fsJjkMbEMhvoH/hXq42ejNWZfixi5azaQPKnmJa6zVqGm2ZLC7kr9jWesE4QGw==
-X-Received: by 2002:adf:e5cf:: with SMTP id a15mr5706379wrn.226.1616532219110;
-        Tue, 23 Mar 2021 13:43:39 -0700 (PDT)
+        bh=g26lcUSxrK66GNPXyMbDwk2r+d12vjmCSiHvKIT06Uc=;
+        b=Ifpo8/U0fp6kVKeUL7lV73mMLVytnCCp1RqutB0RNYjWsnZLLNW2NBaBE34KxHQB9v
+         QVfuZUng5SYWOGGXBVQYiy0fQlYI8TjPXbpFsdkPGyD7kFeOw397tGOYXHv+cHvBOwvf
+         avOFNMdKD0NfNv3r2gPBDbSv0ayy7Zpk11NhL08uAc7XsH/OjW84d1OJAAgFGvmCGN4t
+         iFWRKHjiqyXwN7GeBm/frC8Mf9BsRMwHdNSqyPLhwgPVTF0v+eY2g+/ba4ry+nk3BuYG
+         8v0zqS/Nisv3RqQijDAeglhIGNTaDHq4pUKrSmSnsaunJ1LOrgVlIvzouwMn+UdztY2F
+         hWSA==
+X-Gm-Message-State: AOAM533p7v/n5XPbOS1s7vSBfp+xjCpu7OwY6dclA8p3AFzDwDiHDgAH
+        n+NIwTvyoGfYwURrUWkW1oU=
+X-Google-Smtp-Source: ABdhPJyWN71cBUYw5d96DaseOoVDUhVnTxnnX+5x1QwumIRz13Y2Y1ytwMynjKDrUftisbnWqiq5LA==
+X-Received: by 2002:a05:6000:c7:: with SMTP id q7mr5917099wrx.356.1616532315231;
+        Tue, 23 Mar 2021 13:45:15 -0700 (PDT)
 Received: from [192.168.0.104] (atoulouse-654-1-370-45.w86-199.abo.wanadoo.fr. [86.199.105.45])
-        by smtp.gmail.com with ESMTPSA id i26sm35900wmb.18.2021.03.23.13.43.38
+        by smtp.gmail.com with ESMTPSA id u2sm115347wrp.12.2021.03.23.13.45.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 Mar 2021 13:43:38 -0700 (PDT)
-Subject: Re: [PATCH v7 03/15] t6060: add tests for removed files
+        Tue, 23 Mar 2021 13:45:14 -0700 (PDT)
+Subject: Re: [PATCH v7 07/15] update-index: move add_cacheinfo() to
+ read-cache.c
 To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
         Derrick Stolee <stolee@gmail.com>
 References: <20201124115315.13311-1-alban.gruin@gmail.com>
  <20210317204939.17890-1-alban.gruin@gmail.com>
- <20210317204939.17890-4-alban.gruin@gmail.com>
- <nycvar.QRO.7.76.6.2103222235150.50@tvgsbejvaqbjf.bet>
+ <20210317204939.17890-8-alban.gruin@gmail.com>
+ <nycvar.QRO.7.76.6.2103222255550.50@tvgsbejvaqbjf.bet>
 From:   Alban Gruin <alban.gruin@gmail.com>
-Message-ID: <b9d48a96-7e76-8a83-4ca2-c47fca326123@gmail.com>
-Date:   Tue, 23 Mar 2021 21:43:29 +0100
+Message-ID: <8fc767c1-2b3e-8fbe-9efb-8e87d862cbfb@gmail.com>
+Date:   Tue, 23 Mar 2021 21:45:13 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.8.0
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.2103222235150.50@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.2103222255550.50@tvgsbejvaqbjf.bet>
 Content-Type: text/plain; charset=utf-8
 Content-Language: fr-FR
 Content-Transfer-Encoding: 8bit
@@ -81,30 +82,30 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Johannes,
 
-Le 22/03/2021 à 22:36, Johannes Schindelin a écrit :
+Le 22/03/2021 à 22:59, Johannes Schindelin a écrit :
 > Hi Alban,
 > 
 > On Wed, 17 Mar 2021, Alban Gruin wrote:
 > 
->> Until now, t6060 did not not check git-mere-one-file's behaviour when a
+>> This moves the function add_cacheinfo() that already exists in
+>> update-index.c to update-index.c, renames it add_to_index_cacheinfo(),
+>> and adds an `istate' parameter.  The new cache entry is returned through
+>> a pointer passed in the parameters.  The return value is either 0
+>> (success), -1 (invalid path), or -2 (failed to add the file in the
+>> index).
 > 
-> Channeling my inner Eric Sunshine: s/mere-one/merge-one/ ;-)
+> This paragraph still talks about magic numbers, but the code has constants
+> for them. Maybe elevate the commit message to a more generic description
+> that does not spend time on specifying the exact values, but rather lists
+> the three outcomes in plain English?
 > 
 
-Good catch.
-
->> file is deleted in a branch.  To avoid regressions on this during the
->> conversion, this adds a new file, `file3', in the commit tagged as`base', and
-> 
-> Maybe "during the conversion from shell script to C"?
-> 
-
-I'll rewrite it as "during the conversion from shell to C".
+Okay, I'll do this.
 
 Cheers,
 Alban
 
-> Other than that, looks good to me! Thanks,
+> Other than that, this looks fine to me! Thanks,
 > Dscho
 > 
 
