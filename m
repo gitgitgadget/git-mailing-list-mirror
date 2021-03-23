@@ -2,134 +2,214 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CAA8C433C1
-	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 14:21:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E0D77C433DB
+	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 14:21:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F131B6192E
-	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 14:21:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A913E619A9
+	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 14:21:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232282AbhCWOUe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Mar 2021 10:20:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46906 "EHLO
+        id S232148AbhCWOVD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Mar 2021 10:21:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47008 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232245AbhCWOUB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Mar 2021 10:20:01 -0400
-Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E6F7C061574
-        for <git@vger.kernel.org>; Tue, 23 Mar 2021 07:20:00 -0700 (PDT)
-Received: by mail-qt1-x832.google.com with SMTP id c6so15005648qtc.1
-        for <git@vger.kernel.org>; Tue, 23 Mar 2021 07:20:00 -0700 (PDT)
+        with ESMTP id S231980AbhCWOU0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Mar 2021 10:20:26 -0400
+Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5215DC061574
+        for <git@vger.kernel.org>; Tue, 23 Mar 2021 07:20:26 -0700 (PDT)
+Received: by mail-qt1-x82d.google.com with SMTP id s2so14992233qtx.10
+        for <git@vger.kernel.org>; Tue, 23 Mar 2021 07:20:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp.br; s=usp-google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=pSDuScO1lANtIurUGrIjjO8oLFXohueAM0HPRCi0A1w=;
-        b=ZEBsvKK8bV7SBPiZPf1YyKQGFt5431RhLXdwkufqy/wJ5YUUcMA3Q+2XR3OtiaiwN/
-         yBETwAtIHTfT2sO5MKqEm/beQKnfB78d4oQ35OrUe+RE6d7haN24mlGSerZefymUe62t
-         k5FL6u4AHJahITAuitsXpCLdtliVwe/Ao5W/4eMu4Rb9mxDTrh9v3ZH9swWRhMqoOGyJ
-         wO054VIOEZEMuVYSQsdV617uQHjQadRSbeeemsrOnPRtQmPTrc2eDWdKODAlMscaxieZ
-         3E4FaKuzYuj6Yei4glJHbnZ7MV347ykGUgLUVtoDllfmzufa6uTeP7PPIQup0GiVuCCH
-         bWHQ==
+        bh=KP8FuX2CGg2Ar0PYLslZ4LneJHEVXrslFdqU4j7m3eE=;
+        b=Si5v5jwkTsRGr2S/Mrf6yxtA1YHwVuhZy1tOVMCGZe0J/ncqw5QjGUyTKzG/OiN6B4
+         s2eAk4eKbYzGCRwjGLxNf5Am5HBN7vToQ9Y4Js+T4cWzmP9RAKL5ChE9RyvG9VJ45ITd
+         C3S28r7/uCGzAHSvgrlUyBHKftwjjeu6y3yHDIPF/g5SQMks6yGheE5VOg+9lkg8eUub
+         m3sHOJI+0KSXOVjr39tyZWwfW6XjnADM2zViVcFR0N+LNr/JjEPo1KdKiNN2RnRQ4YjT
+         MAD3fq3zHCs/Je7zK/oBhztv0/pUs9uBqrxAjd2mcgc4FbnngxFL32TYgADjjp8/5UZs
+         xSkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=pSDuScO1lANtIurUGrIjjO8oLFXohueAM0HPRCi0A1w=;
-        b=VjW83CZsmYnYCZRxCqbtV98WaXDyj4LUw27ed8yY+C/PqVKJDvaQ9KwDOmtdJdSzF1
-         DPCo9Lbf9dRCvoI53l7L1eH4IxsEqsdKylz4xGXnd7NhYoj6wh2cCKxa+Uj95+6qniAl
-         DM4WSQzJW+XH2uk6WBrtH+0lNmpxTTecSw22hFlx5Z4LKeJygp7cay5ZGuUuc5u+WfS8
-         P5elACRPDh5BVCQEm2e1Avs6EJWzevR7i0EsjP3q2kAlx2uR7p60LlYAz3iLTcVLkUsu
-         WFI3KUSgE4UWibOZbDaHySAL/wAQe8ejJWHGEgmy81bGBZcjvCqTxEW+4KF3lRjtavHo
-         l0oQ==
-X-Gm-Message-State: AOAM533bdgJ9CjPIh9yrmOKjrjMA6yp90FcMKbvvI6hw7sH5DEsMyfzm
-        qlDPkGW5pNuFptEyqI4EM6Ohuw==
-X-Google-Smtp-Source: ABdhPJysRA0PnpncOyjNFbcdTZWKsDYueTry8bLz8XCb3zQ7JzlqtL07zwcHrrcLOrzuD1WsczmaXA==
-X-Received: by 2002:ac8:57c4:: with SMTP id w4mr4355524qta.281.1616509199554;
-        Tue, 23 Mar 2021 07:19:59 -0700 (PDT)
+        bh=KP8FuX2CGg2Ar0PYLslZ4LneJHEVXrslFdqU4j7m3eE=;
+        b=k7VlpViChFZDZ8Wkwp12zo1bx7i+w0zsO0g/sm0dBWrOnTSm5sg99o7iRxI1+UUcs1
+         aOuSpwjRPeEaEPx5JleV8bcdTyDEGSidjiBEJpGlCO2lzo/yNWbhm/vFptw+3PT8H24u
+         sKPrV1tpVAW+7taU4ljvMuymjGVbvtFgUuMK6SZSIxcvj6Fmsno7tpSa+jK352FGxqWy
+         erXCth5c0orAYJB3OrkrrS+y7ClcpEmjslHGXbdl+Bw+AiKyT0/KkM35MwiMgdS9MACC
+         KDMGVA6Ao3oNrYFXPR8nb0jZfRQdv6bjK8sMXB2NpKrbZktf5QRNYlO11z3YQhPU3ani
+         HMgw==
+X-Gm-Message-State: AOAM533t2fkBAk3EFNGFhPfoOkuxn+Fa/Nf+t9369hW9PiDcbTOrelVX
+        QwYp8H9fo01oAK2DHQmrSkSX17S1dskJuw==
+X-Google-Smtp-Source: ABdhPJwmlh/wKjwsxZBq8VQBx4yVT3IETJWxLEb2IkEHYwB8i+1t9449RbJMjtfmM8lmsthWtjmcHQ==
+X-Received: by 2002:ac8:7b8d:: with SMTP id p13mr4486896qtu.367.1616509225553;
+        Tue, 23 Mar 2021 07:20:25 -0700 (PDT)
 Received: from mango.meuintelbras.local ([177.32.118.149])
-        by smtp.gmail.com with ESMTPSA id j12sm11011690qtn.36.2021.03.23.07.19.58
+        by smtp.gmail.com with ESMTPSA id j12sm11011690qtn.36.2021.03.23.07.20.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Mar 2021 07:19:59 -0700 (PDT)
+        Tue, 23 Mar 2021 07:20:25 -0700 (PDT)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     gitster@pobox.com
-Cc:     git@vger.kernel.org
-Subject: [PATCH v6 0/9] Parallel Checkout (part 1)
-Date:   Tue, 23 Mar 2021 11:19:27 -0300
-Message-Id: <cover.1616508954.git.matheus.bernardino@usp.br>
+Cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
+Subject: [PATCH v6 1/9] convert: make convert_attrs() and convert structs public
+Date:   Tue, 23 Mar 2021 11:19:28 -0300
+Message-Id: <5e8a1b6a1cb612dd5012a2d8866f16535e1edbf5.1616508954.git.matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.30.1
-In-Reply-To: <cover.1608128666.git.matheus.bernardino@usp.br>
-References: <cover.1608128666.git.matheus.bernardino@usp.br>
+In-Reply-To: <cover.1616508954.git.matheus.bernardino@usp.br>
+References: <cover.1616508954.git.matheus.bernardino@usp.br>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Preparatory API changes for parallel checkout. This version was rebased
-on top of 'master'. The only change required in this change of base was
-the `entry.h` inclusion on `builtin/stash.c`, at the commit that creates
-this header file.
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Jeff Hostetler (4):
-  convert: make convert_attrs() and convert structs public
-  convert: add [async_]convert_to_working_tree_ca() variants
-  convert: add get_stream_filter_ca() variant
-  convert: add classification for conv_attrs struct
+Move convert_attrs() declaration from convert.c to convert.h, together
+with the conv_attrs struct and the crlf_action enum. This function and
+the data structures will be used outside convert.c in the upcoming
+parallel checkout implementation. Note that crlf_action is renamed to
+convert_crlf_action, which is more appropriate for the global namespace.
 
-Matheus Tavares (5):
-  entry: extract a header file for entry.c functions
-  entry: make fstat_output() and read_blob_entry() public
-  entry: extract update_ce_after_write() from write_entry()
-  entry: move conv_attrs lookup up to checkout_entry()
-  entry: add checkout_entry_ca() taking preloaded conv_attrs
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
+---
+ convert.c | 35 ++++++++---------------------------
+ convert.h | 24 ++++++++++++++++++++++++
+ 2 files changed, 32 insertions(+), 27 deletions(-)
 
- apply.c                  |   1 +
- builtin/checkout-index.c |   1 +
- builtin/checkout.c       |   1 +
- builtin/difftool.c       |   1 +
- builtin/stash.c          |   1 +
- cache.h                  |  24 -------
- convert.c                | 143 ++++++++++++++++++++-------------------
- convert.h                |  96 +++++++++++++++++++++++---
- entry.c                  |  85 +++++++++++++----------
- entry.h                  |  59 ++++++++++++++++
- unpack-trees.c           |   1 +
- 11 files changed, 276 insertions(+), 137 deletions(-)
- create mode 100644 entry.h
-
-Range-diff against v5:
- 1:  9909ccee14 =  1:  5e8a1b6a1c convert: make convert_attrs() and convert structs public
- 2:  ec4e645aea =  2:  91d1a3063b convert: add [async_]convert_to_working_tree_ca() variants
- 3:  1834a54dfd =  3:  ab1bf85b75 convert: add get_stream_filter_ca() variant
- 4:  b26022af45 =  4:  01ac6176cc convert: add classification for conv_attrs struct
- 5:  837fccde5b !  5:  4d85af1579 entry: extract a header file for entry.c functions
-    @@ builtin/difftool.c
-      static int trust_exit_code;
-      
-     
-    + ## builtin/stash.c ##
-    +@@
-    + #include "log-tree.h"
-    + #include "diffcore.h"
-    + #include "exec-cmd.h"
-    ++#include "entry.h"
-    + 
-    + #define INCLUDE_ALL_FILES 2
-    + 
-    +
-      ## cache.h ##
-     @@ cache.h: const char *show_ident_date(const struct ident_split *id,
-       */
- 6:  231e81fb82 =  6:  af8b1691cc entry: make fstat_output() and read_blob_entry() public
- 7:  2fd8d35242 =  7:  b28e518c0d entry: extract update_ce_after_write() from write_entry()
- 8:  7531ad195b =  8:  87b9d4590a entry: move conv_attrs lookup up to checkout_entry()
- 9:  bf6b7259cb =  9:  aa36bfee87 entry: add checkout_entry_ca() taking preloaded conv_attrs
+diff --git a/convert.c b/convert.c
+index 2d3a5a713c..d0a1a4ad9b 100644
+--- a/convert.c
++++ b/convert.c
+@@ -24,17 +24,6 @@
+ #define CONVERT_STAT_BITS_TXT_CRLF  0x2
+ #define CONVERT_STAT_BITS_BIN       0x4
+ 
+-enum crlf_action {
+-	CRLF_UNDEFINED,
+-	CRLF_BINARY,
+-	CRLF_TEXT,
+-	CRLF_TEXT_INPUT,
+-	CRLF_TEXT_CRLF,
+-	CRLF_AUTO,
+-	CRLF_AUTO_INPUT,
+-	CRLF_AUTO_CRLF
+-};
+-
+ struct text_stat {
+ 	/* NUL, CR, LF and CRLF counts */
+ 	unsigned nul, lonecr, lonelf, crlf;
+@@ -172,7 +161,7 @@ static int text_eol_is_crlf(void)
+ 	return 0;
+ }
+ 
+-static enum eol output_eol(enum crlf_action crlf_action)
++static enum eol output_eol(enum convert_crlf_action crlf_action)
+ {
+ 	switch (crlf_action) {
+ 	case CRLF_BINARY:
+@@ -246,7 +235,7 @@ static int has_crlf_in_index(const struct index_state *istate, const char *path)
+ }
+ 
+ static int will_convert_lf_to_crlf(struct text_stat *stats,
+-				   enum crlf_action crlf_action)
++				   enum convert_crlf_action crlf_action)
+ {
+ 	if (output_eol(crlf_action) != EOL_CRLF)
+ 		return 0;
+@@ -499,7 +488,7 @@ static int encode_to_worktree(const char *path, const char *src, size_t src_len,
+ static int crlf_to_git(const struct index_state *istate,
+ 		       const char *path, const char *src, size_t len,
+ 		       struct strbuf *buf,
+-		       enum crlf_action crlf_action, int conv_flags)
++		       enum convert_crlf_action crlf_action, int conv_flags)
+ {
+ 	struct text_stat stats;
+ 	char *dst;
+@@ -585,8 +574,8 @@ static int crlf_to_git(const struct index_state *istate,
+ 	return 1;
+ }
+ 
+-static int crlf_to_worktree(const char *src, size_t len,
+-			    struct strbuf *buf, enum crlf_action crlf_action)
++static int crlf_to_worktree(const char *src, size_t len, struct strbuf *buf,
++			    enum convert_crlf_action crlf_action)
+ {
+ 	char *to_free = NULL;
+ 	struct text_stat stats;
+@@ -1247,7 +1236,7 @@ static const char *git_path_check_encoding(struct attr_check_item *check)
+ 	return value;
+ }
+ 
+-static enum crlf_action git_path_check_crlf(struct attr_check_item *check)
++static enum convert_crlf_action git_path_check_crlf(struct attr_check_item *check)
+ {
+ 	const char *value = check->value;
+ 
+@@ -1297,18 +1286,10 @@ static int git_path_check_ident(struct attr_check_item *check)
+ 	return !!ATTR_TRUE(value);
+ }
+ 
+-struct conv_attrs {
+-	struct convert_driver *drv;
+-	enum crlf_action attr_action; /* What attr says */
+-	enum crlf_action crlf_action; /* When no attr is set, use core.autocrlf */
+-	int ident;
+-	const char *working_tree_encoding; /* Supported encoding or default encoding if NULL */
+-};
+-
+ static struct attr_check *check;
+ 
+-static void convert_attrs(const struct index_state *istate,
+-			  struct conv_attrs *ca, const char *path)
++void convert_attrs(const struct index_state *istate,
++		   struct conv_attrs *ca, const char *path)
+ {
+ 	struct attr_check_item *ccheck = NULL;
+ 
+diff --git a/convert.h b/convert.h
+index e29d1026a6..5678e99922 100644
+--- a/convert.h
++++ b/convert.h
+@@ -63,6 +63,30 @@ struct checkout_metadata {
+ 	struct object_id blob;
+ };
+ 
++enum convert_crlf_action {
++	CRLF_UNDEFINED,
++	CRLF_BINARY,
++	CRLF_TEXT,
++	CRLF_TEXT_INPUT,
++	CRLF_TEXT_CRLF,
++	CRLF_AUTO,
++	CRLF_AUTO_INPUT,
++	CRLF_AUTO_CRLF
++};
++
++struct convert_driver;
++
++struct conv_attrs {
++	struct convert_driver *drv;
++	enum convert_crlf_action attr_action; /* What attr says */
++	enum convert_crlf_action crlf_action; /* When no attr is set, use core.autocrlf */
++	int ident;
++	const char *working_tree_encoding; /* Supported encoding or default encoding if NULL */
++};
++
++void convert_attrs(const struct index_state *istate,
++		   struct conv_attrs *ca, const char *path);
++
+ extern enum eol core_eol;
+ extern char *check_roundtrip_encoding;
+ const char *get_cached_convert_stats_ascii(const struct index_state *istate,
 -- 
 2.30.1
 
