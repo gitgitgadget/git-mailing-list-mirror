@@ -2,119 +2,166 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5A1FC433C1
-	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 16:54:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 258C7C433C1
+	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 17:11:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 763E2619B4
-	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 16:54:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EE156619C2
+	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 17:11:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233267AbhCWQyM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Mar 2021 12:54:12 -0400
-Received: from mout.web.de ([212.227.15.3]:46269 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231842AbhCWQxp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Mar 2021 12:53:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1616518416;
-        bh=2Lx0YAmVCzxiHbQ9CqIk/EfXgAfq4wby7VcJ7ee/sQM=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=MoXsWVonYRB1ia/M1fifKSKtsF58F3sXw8ik/XZ7GuSo4M7AmwwpoQ8AHeE6Q2s+B
-         CtOctSj3H0pqVmhCTk9Z3HrfrdMYQC1+PGvybbRIHotQZQWnVoLwlzKbVqgrkU1Ufu
-         3AgCv9WpzyD0jC82LD6XQL1ukWMqB1+3zDGNwAxw=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LdrkJ-1m6dpD28N1-00j2Eb; Tue, 23
- Mar 2021 17:53:36 +0100
-Date:   Tue, 23 Mar 2021 17:53:35 +0100
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Madhu <enometh@meer.net>, git@vger.kernel.org
-Subject: Re: [PATCH] init: don't reset core.filemode on git-new-workdirs.
-Message-ID: <20210323165335.urvvccwnhahxmokt@tb-raspi4>
-References: <xmqq7dlz94by.fsf@gitster.g>
- <20210322.143437.212295420302618690.enometh@meer.net>
- <xmqqr1k76p8d.fsf@gitster.g>
- <20210323.092748.1559327071188512317.enometh@meer.net>
- <xmqqr1k64bmk.fsf@gitster.g>
+        id S229962AbhCWRLZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Mar 2021 13:11:25 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:59274 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229653AbhCWRLL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Mar 2021 13:11:11 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id D41AB120B3C;
+        Tue, 23 Mar 2021 13:11:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=O9AFoGlI9zvotF5AfuxkWMwdX2w=; b=t9qZPb
+        jYRObEI0oTOb4nEuwpN1PBscZdoEYeINCFm4y5Xg5s2ZPIMR+zAys6y/Qk1XJDgW
+        uER7K+pgt7AqG635CYxpJ41tjZdGcoMXWgxVtr1gCwQgx9qEUCcU53HDJ7TKQlaJ
+        53fsC9vZvP9Udzp9RBZER3IpEq4BjtHXj86iM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=YX6AV/PYD0xsAbC/DiGlpofBd/OS2ENh
+        Y1s03I4RFx0loT5PFShp8jus6/y6RkCHsQPD6ZM1r/AjILehozKWZZGYLdM/E3y5
+        Ig9PsAtr6q1/XObz/uB+AyVYK2+sL1390ZgBwjwQDWUjDiz8LTz8aV4FC2VZc1wa
+        F9+NVe9ZH0I=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id CC8F0120B3B;
+        Tue, 23 Mar 2021 13:11:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 07BBD120B38;
+        Tue, 23 Mar 2021 13:11:06 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     ZheNing Hu <adlternative@gmail.com>,
+        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>,
+        "Bradley M. Kuhn" <bkuhn@sfconservancy.org>,
+        Brandon Casey <drafnel@gmail.com>,
+        Shourya Shukla <periperidip@gmail.com>,
+        Rafael Silva <rafaeloliveira.cs@gmail.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, Jeff King <peff@peff.net>,
+        =?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
+        <avarab@gmail.com>
+Subject: Re: [PATCH v13] [GSOC] commit: add --trailer option
+References: <pull.901.v12.git.1616247681211.gitgitgadget@gmail.com>
+        <pull.901.v13.git.1616387093662.gitgitgadget@gmail.com>
+        <CAP8UFD0rtX0m+fGcvGFtsFFKZ2LVyxHx8dptYFvM9kWnbxEwFA@mail.gmail.com>
+        <CAOLTT8Ty5kabU6ivX946=FDWJ4SEXBzPinq2aG5t7Rp9jCCEPA@mail.gmail.com>
+        <CAP8UFD3fYTc8=y+kru-mN5KmTsnqc6X8mf14VtyWf1Nj9CJ1EQ@mail.gmail.com>
+        <xmqqv99i4ck2.fsf@gitster.g>
+        <CAP8UFD0s4Gm3PgDPpsXC-8Gyrnn1JTMUBu60XGV7i8nRDCCJ2Q@mail.gmail.com>
+Date:   Tue, 23 Mar 2021 10:11:05 -0700
+In-Reply-To: <CAP8UFD0s4Gm3PgDPpsXC-8Gyrnn1JTMUBu60XGV7i8nRDCCJ2Q@mail.gmail.com>
+        (Christian Couder's message of "Tue, 23 Mar 2021 08:57:25 +0100")
+Message-ID: <xmqqeeg54wye.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqr1k64bmk.fsf@gitster.g>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:Fl8yShPWUnbNEyXEpQPrOSsQWndbkPbkrv0+k0B1YBi9CHBlQjv
- iE95y6TbcvQE8WkZ8diThgWnDjjQ++5uVWXVRSnZgbsOerZSOImqhNWUR2WT+iwf+Yc/q05
- ddsJXSB0tVGfQRgOnE0K9/oi362+4nbLn0Bmte/5Xvk6LtN6w2qHpGZg+GiB+yKCtDAtaKO
- 4avx5F57AmXb2/W+Bl2QQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:u+sIClq3/Q4=:L7N1PDbqCEnsuj77CKQRH8
- /KP+52ESJHWN9erXV1B6sqhAVeMKPPaZ77iMifRA50w1Ydu0Kjf6bNStSoaIKduiJfAgxyH5v
- 6brReH0/di6Wwb2K0ZjuH8rW008X3SCUIu7dgIuqGgjVEQoRCFQGpd4t8oLIKUm1q0AKPKruk
- 6ZRfs9rSTeTI8qHAbpxN9ye/BOZSX1cbEczcE8sjDq5FFh+cnRLLtviALlusY0nazuGpZwxh/
- rjlsuxk//+IZUl1YrkxoN9zIf1u0XS7CP/l962bDCvGYhiAlp2XHogRuCj5a+Ok8tkW6832j3
- O0vTFrHo1tmfxk7n4dacpNUMNYSpXUtFXU0ZpR7OGOVhyL0ReJxhkjYtuZQ9iQAoXsCoqWPK0
- qfQ2fAEisjA7YT0QXUAWMiy77xA1pKhFnzeade1UOgwxCcpJl76ZXCTFt8oawau3PPgxpGUym
- i241OPYdvdvvUku/t3vO7LNkiqK5SMIWWukExImgX+XRyrKJgFELCWGOKDhDF7dDREjZ1BIac
- aqPvdOWZGkEglmAqFaKOJJhhtztz6otsDEQoVvOfadaFPchc/ofjX9Y7VRQPUjSC1CvYJn9bQ
- HP/rCZ47n3uSh4HRWujhyQbbAWon/m5RL/WFWTGptXtCrq3KX20aI/2YvObrgD6qocAWj4YQ8
- pmSfrEuaXfUpJmA/VpklW6+s8Kg4ExJA8UHkXHCrIhcc66hWG3NcNYwzuU/q6vFnJUxP8HzKA
- UdcNZ3a2aJj/hw6bLZ41b82bHIpUNumqimIUX4A6965GL0smJfzHJ9XEuQMUT8rR3n8qzSQ1u
- dpmPNKijot8Xs53WjZVklKTNIuq22ogSzKWNuT/TAAZx5nHhOj8oYGf9rYVk00Xc8WXf0ItGJ
- Nm+b+6JLhIOcIY6gizcCHzts2iyi/YCKgA15wsQp/bOsDuw0RjhTb+H2rRfCws3qAyXcH0d8M
- Tzd0h9giuo2p5bK47TECtfcESI+mWLCrQO+gTeamzKA+L4s1jk8Gmv5hg70XgP/RQ3WMWO5S8
- Z9cgMdlDzFCCzE6x/61Cva9L0HnAOLutev27t+OLVgJ40rtXSGOz5VPxfUETPqXLLcPcfLrLB
- ylIxaB3Uk1f9jrI4NvebF/Xpq9HN1b2NG+2G8fj5UFbpFHy/7p+GMdMdUcgd3FDGnkNv77OLq
- sDzQWCsRdZAu23IY4zBwUIVxr3UXISxS9AKYuubcc2uHAbzfXfUWWm/UB/mY2IVMwTpBc=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: C191AF16-8BFA-11EB-8140-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 22, 2021 at 11:39:31PM -0700, Junio C Hamano wrote:
-> Madhu <enometh@meer.net> writes:
+Christian Couder <christian.couder@gmail.com> writes:
+
+> On Tue, Mar 23, 2021 at 7:19 AM Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> Christian Couder <christian.couder@gmail.com> writes:
+>>
+>> > If you want nothing to happen when $ARG isn't set, you can change the
+>> > config option to something like:
+>> >
+>> > $ git config trailer.sign.command "NAME='\$ARG'; test -n \"\$NAME\" &&
+>> > git log --author=\"\$NAME\" -1 --format='format:%aN <%aE>' || true"
+>> >
+>> > (This is because it looks like $ARG is replaced only once with the
+>> > actual value, which is perhaps a bug. Otherwise something like the
+>> > following might work:
+>>
+>> I do not know the origin of that code in trailers.c but it feels
+>> quite confused and error prone to use textual replacement with
+>> strbuf_replace().  Why doesn't the code, which knows it will use
+>> shell to execute the command line given by the end user in the
+>> configuration, to just export ARG as an environment variable and
+>> be done with it?  It would also avoid quoting problem etc.
 >
-> > Avoiding the filemode check completely during reinit is ok with me
-> > because it gave me wrong results.  I can't speak for the original
-> > author of the code - if his intention was to do it explicitly as part
-> > of "reinitialization".
->
-> As the original author of the code, I know I meant filemode check to
-> be done and redone upon reinitialization in 4f629539 (init-db: check
-> template and repository format., 2005-11-25).
->
-> But then when 75d24499 (git-init: autodetect core.symlinks,
-> 2007-08-31) started to autodetect symbolic link support, I somehow
-> ended up doing it only upon the repository creation.  Later,
-> 2455406a (git-init: autodetect core.ignorecase, 2008-05-11) imitated
-> to check case sensitivity in the same block, doing it only once.
->
-> Either of these two commits would have been a good chance for us to
-> realize that filemode check should be done the same way, but somehow
-> nobody noticed X-<.
->
+> Yeah, I agree that would be better.
 
-In the very long run, there may be room for improvements:
-While core.filemode works for a loal repo on a local disk,
-there are lots of cases where I whish a better handling.
+It probably would have been better to do so before the feature got
+unleased to the public, but doing such a change retroactively would
+introduce regression for those who were using ARG that happens to be
+safe from shell quoting rules.
 
-Exporting a git repo from e.g.
-Linux/ext4 to MacOs : Linux sees the execute-bit as is, MacOs has it alway=
-s on
-Linux/ext4 to Windows : Linux sees the execute-bit as is, MacOs has it alw=
-ays off
+For example, if the trailer.*.command were
 
-Visiting the same repo under Git-for-Windows and cygwin:
-cygwin supports the executable bit, Git-for-Windows does not.
+	echo '$ARG'
 
-And now we have the worktree (which may cross filesytem borders)
+and the argument 'h e l l o' were to be given to it, then the
+current code would have textually expanded $ARG with the argument
+and caused
 
-Today there are many use cases, where a single config variable is not idea=
-l.
+	echo 'h e l l o'
 
-If there is a chance to have a "core.filemode=3Dauto", which does probe th=
-e
-filemode for this very OS/filesytem/worktree combination:
-I would be happy to test/review/mentor such a code change.
+to run, which would have been "fine" [*1*].
+
+But exporting the environment ARG would "break" such a setting that
+has been "working perfectly well" for the user.  Because of the
+single-quotes around $ARG, the command now will give literal four
+letter string $ARG and not 'h e l l o'.
+
+We should think such potential ramifications of changing it (and
+also not changing it) through before deciding what to do about it.
+
+Although I have a feeling that not many people would miss '$ARG'
+inside a pair of single-quotes to be replaced textually and it would
+be OK to make a backward incompatible bugfix, the safer and better
+way is not all that difficult, so I am inclined to suggest going the
+usual "deprecate and replace and then later remove" dance.
+
+The normal sequence of replacing a "sort of works but not
+recommended" feature with a "better and safer, but can break a
+setting that has been 'working'" feature is:
+
+ - Announce deprecation of trailer.x.command and add and advertise a
+   similar traier.x.cmd that (1) exports environment variable ARG,
+   or (2) passes the argument as a positional parameter [*], as a
+   replacement.  Explain the reason for deprecation (i.e. unsafe
+   substitution that works only once).  When .cmd exists, .command
+   is ignored for the corresponding trailer.x
+
+ - Wait for a few releases and then remove trailer.x.command.
+
+and that is the safest way to fix this "bug".
+
+
+[Footnotes]
+
+*1* If the argument were 
+
+	';rm -rf .;'
+
+    then it wouldn't have been fine, though, and that is how the
+    current code solicited "Huh?"  reaction out of me.
+
+
+*2* If we passed the argument as a positional parameter, the example
+    you gave in the quoted part of the message would become
+    something like this:
+
+      [trailer "sign"]
+        cmd = test -n "$1" && git log --author="$1" -1 --format='%aN <%aE>'
