@@ -2,107 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ED8CBC433C1
-	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 12:21:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8A9CC433C1
+	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 12:42:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AB4BC6197F
-	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 12:21:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AF9F3619B2
+	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 12:42:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230267AbhCWMVL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Mar 2021 08:21:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48830 "EHLO
+        id S231152AbhCWMlm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Mar 2021 08:41:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53258 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229893AbhCWMUl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Mar 2021 08:20:41 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B9A5C061574
-        for <git@vger.kernel.org>; Tue, 23 Mar 2021 05:20:41 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id kt15so17252399ejb.12
-        for <git@vger.kernel.org>; Tue, 23 Mar 2021 05:20:41 -0700 (PDT)
+        with ESMTP id S230449AbhCWMlV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Mar 2021 08:41:21 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99F23C061574
+        for <git@vger.kernel.org>; Tue, 23 Mar 2021 05:41:20 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id e7so23204208edu.10
+        for <git@vger.kernel.org>; Tue, 23 Mar 2021 05:41:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=wPm0zxL+reP9DUkBoEjnoD7ABG9mrwzSOqWzCcv9PJs=;
-        b=Nb0HiJ99DxjJC9e0Bey2ApAOYjn0/jFKnjC+HqHL+Na/B3Rq8m87XeTTJrveiwRGx/
-         Smm4HtgP5uiVnFD3s7mGkLt84PBKJiiqZr/QkKimF+jKNGtQEKnYbRTHTLHTQIrJt72q
-         ZrUo6oj1ekqtLw9+i7KKtGK+6Y1Zj7e5rmh6dg1wmc+EdzJglfc1Q7YJAbPUkqWx/BKX
-         LVMyEJn5LW3l75LMnW4CTv1QlPwwPSkHV6uOJvcFG6JfKc3h/bp/9oYJKarx920LsQv3
-         Mnd8QqhS+SPNqw6pjlvfNzSNXum1saM9Lq5gIBINCJh1qwOpeTuh3Al/lk8Nnou0E532
-         /mfQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=e/eWw9yDhslg0sFux6yhTMrLlDqVaclIHuQiDGx6cY8=;
+        b=VlU7t0WpGeRx8ihpfo+WyPNM6VA1D5Dzsg+7cmz0NcK+ep7+vBEKn/YOK8uXqimahs
+         eALe6F7AoX6ko4GL24aEX6XwJpXBa9TTwigdsL8wAS+jD2DXdToa8Gj5pkj2uG6zKPYT
+         fobpsOf9svT/HcljCUtvaB+Vwtk3juTl5djhpHA+OOjTGihzRe+F5dhctXbQXowMaP2R
+         r4hWA9LOGmHk5rzbTiebsyGRlegUUo7YK/OnPFoBkz2aIsF6dewy/+a9j1VS7+HnShRS
+         B7bexmt7s0lGEdYISxWXiXezT4ROW8h0NKg2wusHC9jY2fuvvOf8D5PAi+Sby7tVnseo
+         bxmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=wPm0zxL+reP9DUkBoEjnoD7ABG9mrwzSOqWzCcv9PJs=;
-        b=Gfnhf8b5QUdj027E7TA7VwX2OmfaCFVw/YIqCx0rJU9JYV2Oz+YcJgTxLNYBzMv8gM
-         Vy7FIjXdWdeMAWkSHCzidZFZsyALvvRfOhU2/eN8ISWQAfkCqPAmz3MN/RcKhx+pHXtj
-         4G65HBMVa91bWZivVDCjzr9rw/GjjPqB2IkMyK0tMVibFpMjlN4v3KZQA6TBM+uA7lL5
-         PSZrh9nlvCQHZIlYEiwWSMeVR5Jnfmrwr4VR+ipu/EUID9o+ZloJs6cAz0R8oMqmjJ4T
-         D+ca5KHoOddSW9h3ujtVWXfD0ksX3DhtgVJa8m07hyB8SQg2HHXsPZRkmy3N115OFMz+
-         adfw==
-X-Gm-Message-State: AOAM5302h0pa3J/8a1g69iQh8PPsZJZKAjVZFn9rBexksDDm7dO3Th9S
-        BQ2b6MqGYGJ7a68iKIPPxYgrk3A7ofU=
-X-Google-Smtp-Source: ABdhPJzzY0TCyscQtwBJ178WEHsPmOWlLoTCUqHdxpQC0x50JwQVn9zIwNtOfO+w6flYtICqLNABLw==
-X-Received: by 2002:a17:906:da0e:: with SMTP id fi14mr4822668ejb.188.1616502039779;
-        Tue, 23 Mar 2021 05:20:39 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id p27sm10731684eja.79.2021.03.23.05.20.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Mar 2021 05:20:39 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>,
-        Jeff King <peff@peff.net>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Josh Steadmon <steadmon@google.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Patrick Steinhardt <ps@pks.im>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Han-Wen Nienhuys <hanwenn@gmail.com>
-Subject: Re: [PATCH v5 13/15] Reftable support for git-core
-References: <pull.847.v4.git.git.1607522429.gitgitgadget@gmail.com>
- <pull.847.v5.git.git.1615580397.gitgitgadget@gmail.com>
- <bdb19af22cc7c4f3383f03f42cb4906c3ec5c5f3.1615580397.git.gitgitgadget@gmail.com>
- <e754900a-1d5d-d4cc-aba6-737b37d66f74@gmail.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <e754900a-1d5d-d4cc-aba6-737b37d66f74@gmail.com>
-Date:   Tue, 23 Mar 2021 13:20:38 +0100
-Message-ID: <8735wmqcx5.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=e/eWw9yDhslg0sFux6yhTMrLlDqVaclIHuQiDGx6cY8=;
+        b=PfG9hpakIDQAx9xI4IsS2Bj84chGmRTqbTqHHOtV4PqtNBC9NZ3lqW4BgE0ZudMOkl
+         SZMFvWpWuSP4Ejg1fuN3ojRJw8u7asNqvpVXP2eFghhN5GeMFQ96HNdmg6QH1kmmtFM7
+         pvC620oCsXgohqpshkLA17WokGCERSCmIMOuR4cmGfrefjk1kbqMFK9nrWqd/fwLTQM1
+         Ps0WzP5lW3DrGMR+D0DmbgCKnatVyezy3r+DxM4miNpl9Qhf4DhqfbzrJPK+7Zn5kjHR
+         eBZGjDG/YnWzPuXhYeFfxFH/ugHGMvFLeJn21z+/xmuDAmyBQHYeHTX7R1Y7ktTjYj2t
+         sC4w==
+X-Gm-Message-State: AOAM530WFGdm1yzoNOq7L6H8emyYiz9XtkOQjpqou67UNl4FqvH/eGoJ
+        /pIZNa1EZ0BZostCblsj1E2+vFy+p9EigIiNU9h61ymxRzUd4g==
+X-Google-Smtp-Source: ABdhPJy4c64Yg1oyCanDHAwAgu+oD2Gg7ZyKzYiPVrsyGv4vEoTDm3dAygwvGPn7FBfQYUzXohjD9OgTZQ2CDeHLaB0=
+X-Received: by 2002:aa7:c4d1:: with SMTP id p17mr4412274edr.387.1616503279396;
+ Tue, 23 Mar 2021 05:41:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.901.v12.git.1616247681211.gitgitgadget@gmail.com>
+ <pull.901.v13.git.1616387093662.gitgitgadget@gmail.com> <CAP8UFD0rtX0m+fGcvGFtsFFKZ2LVyxHx8dptYFvM9kWnbxEwFA@mail.gmail.com>
+ <CAOLTT8Ty5kabU6ivX946=FDWJ4SEXBzPinq2aG5t7Rp9jCCEPA@mail.gmail.com>
+ <CAP8UFD3fYTc8=y+kru-mN5KmTsnqc6X8mf14VtyWf1Nj9CJ1EQ@mail.gmail.com>
+ <xmqqv99i4ck2.fsf@gitster.g> <CAOLTT8TKqDWnu3k1Xz=qBhmdZYFhM452WzVGG=OArgJL3z0yGQ@mail.gmail.com>
+In-Reply-To: <CAOLTT8TKqDWnu3k1Xz=qBhmdZYFhM452WzVGG=OArgJL3z0yGQ@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Tue, 23 Mar 2021 13:41:08 +0100
+Message-ID: <CAP8UFD2v=q45u_jttHmff_1=rBCANmam_-HbNE5Fg=SnhZ_3Hg@mail.gmail.com>
+Subject: Re: [PATCH v13] [GSOC] commit: add --trailer option
+To:     ZheNing Hu <adlternative@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>,
+        "Bradley M. Kuhn" <bkuhn@sfconservancy.org>,
+        Brandon Casey <drafnel@gmail.com>,
+        Shourya Shukla <periperidip@gmail.com>,
+        Rafael Silva <rafaeloliveira.cs@gmail.com>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Tue, Mar 23 2021, Derrick Stolee wrote:
-
-> On 3/12/2021 3:19 PM, Han-Wen Nienhuys via GitGitGadget wrote:
->> diff --git a/Documentation/config/extensions.txt b/Documentation/config/extensions.txt
->> index 4e23d73cdcad..82c5940f1434 100644
->> --- a/Documentation/config/extensions.txt
->> +++ b/Documentation/config/extensions.txt
->> @@ -6,3 +6,12 @@ extensions.objectFormat::
->>  Note that this setting should only be set by linkgit:git-init[1] or
->>  linkgit:git-clone[1].  Trying to change it after initialization will not
->>  work and will produce hard-to-diagnose issues.
->> ++
+On Tue, Mar 23, 2021 at 11:35 AM ZheNing Hu <adlternative@gmail.com> wrote:
 >
-> I noticed while resolving conflicts with my series, which also edits this
-> file, that the "+" line above should be removed. That likely munges the
-> fact that the config entry below should be its own list item, not a
-> continuation of the previous one.
+> Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B43=E6=9C=8823=E6=
+=97=A5=E5=91=A8=E4=BA=8C =E4=B8=8B=E5=8D=882:19=E5=86=99=E9=81=93=EF=BC=9A
 
-I haven't tested this patch, but just a plug for the very useful
-Documentation/doc-diff for discovering any such formatting errors when
-making non-trivial doc changes.
+> Maybe like this?
+
+Yeah, it's a good idea to work on this, but please make it an
+independent patch unrelated to adding --trailer to `git commit`.
+
+Also the documentation might need a bit of tweeking to tell that ARG
+is now an exported environment variable.
+
+> -#define TRAILER_ARG_STRING "$ARG"
+
+It might still be better to use a #define or a const char [] to avoid
+hard coding "ARG" below.
+
+> static const char *git_generated_prefixes[] =3D {
+>        "Signed-off-by: ",
+>        "(cherry picked from commit ",
+> @@ -222,13 +220,17 @@ static char *apply_command(const char *command,
+> const char *arg)
+>        struct strbuf buf =3D STRBUF_INIT;
+>        struct child_process cp =3D CHILD_PROCESS_INIT;
+>        char *result;
+> +       const char *const *var;
+>
+>        strbuf_addstr(&cmd, command);
+> -       if (arg)
+> -               strbuf_replace(&cmd, TRAILER_ARG_STRING, arg);
+> +       for (var =3D local_repo_env; *var; var++)
+> +               strvec_push(&cp.env_array, *var);
+> +       if (arg) {
+> +               strvec_pushf(&cp.env_array, "ARG=3D%s", arg);
+> +       }
+
+You can drop the "{" and "}" above.
+
+>        strvec_push(&cp.args, cmd.buf);
+> -       cp.env =3D local_repo_env;
+> +
+>        cp.no_stdin =3D 1;
+>        cp.use_shell =3D 1;
+
+Thanks!
