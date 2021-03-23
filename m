@@ -8,61 +8,62 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BC83AC433F4
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EAA11C433F7
 	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 13:45:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A155A619BA
+	by mail.kernel.org (Postfix) with ESMTP id D58CD619D3
 	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 13:45:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231767AbhCWNpH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Mar 2021 09:45:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38976 "EHLO
+        id S231774AbhCWNpK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Mar 2021 09:45:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231739AbhCWNoq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Mar 2021 09:44:46 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA8D7C0613D9
-        for <git@vger.kernel.org>; Tue, 23 Mar 2021 06:44:45 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id y124-20020a1c32820000b029010c93864955so13042225wmy.5
-        for <git@vger.kernel.org>; Tue, 23 Mar 2021 06:44:45 -0700 (PDT)
+        with ESMTP id S231745AbhCWNor (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Mar 2021 09:44:47 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45703C061574
+        for <git@vger.kernel.org>; Tue, 23 Mar 2021 06:44:47 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id k128so8686929wmk.4
+        for <git@vger.kernel.org>; Tue, 23 Mar 2021 06:44:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=h/Sv2nt7HYoFWjtNBIuIh6ZaRdlBye0GXuHQNudUZb8=;
-        b=e2PqLUKRaZNgnAWi6oEqFK59MUGSJ1Khi0LyP3UkxodskHkdmb4WLkC1Mo3ykCFP8X
-         +/w0Gfp666u0a/8RLcx8gTFdzFzQ69mbXqGixP4qhtNAZPC2z2F790tllDstLH4zAO8T
-         taa4Wabjl3lUAwRbWuBdHHYZ8xusHxrl0sUhmJhVqgygCaOrjkujorggI+p0ydRO5lFV
-         Wkb6l/YTFuC5Wyos4bhr0C+jEvaRtw8eB08Xa6cldkEAczN99V+YZtyLp713YXZHHvEg
-         MYnuQTijc9EXRM2Oba7sPAAeMuC7YaXtayB8Aeki+/EC6PWxlGH7GUiYDT7FxPgxRhpF
-         /PZQ==
+        bh=UI+eRyRGiD8kv9ARhAds+wlgsXLrX8hcYHQH8XYkEp8=;
+        b=A0qo39YYt+YMnbVkQCix6p5jPYDqE8Y/iTTtA3G0TBwbe0PbPGXVjDbnfCRzngwOyR
+         Pw9gIAOMoffGEDkxQ/tx3TLbzgaphNrMhnTvRLOu9romrPLbYLO+QaZFx0lb6Zt59R+h
+         3kW+GGBklWfOEYPf5j8nqjwFvj70I60iFtP3Ebg9Wgk5mEhn9+owcWLD6sSbbBv8kQ8b
+         tbqd6MAzIHqmVvyrxoYRF0H6OJlgbc1zHUbrVg4PaiSrfvmO0OkTXYvJkQpqHWxoxDtw
+         oKdqOmc1hfJ4k9ZKghxJhBckyYIfL44wKx1UcTW3p8tsNioaz8QjZaMuOfckXzEx9pQL
+         vX1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=h/Sv2nt7HYoFWjtNBIuIh6ZaRdlBye0GXuHQNudUZb8=;
-        b=kDcYLPyEMBDtHJhHNGsgpFrl1yx/S9vP/0w2qL/3EDE8LVKWotM53YowZns6lPkA+H
-         A+oJmafQcVbhjYQyuIlB1sNRCpxVIp8tJDbhwXmHT8mKGtDGWOLGhLcfJKlAy1uS2U5t
-         R95HHxvHKbrZ6JUaks9TA7tbigfe9lty7jxNd4SjBalO1tXFM663q5D2josoZ9daQ89Q
-         d/Jqd+z7la/m746h9H/3Fm4GsPBowrxifEPj/lpYt8kgAtgy9uxjRduK5XxsGZRth3RO
-         oFEOy1CCXDrWGa95ACVn1m2idm35bV6cxGBCzlh88WfTNvE5w9Kfr91tLG6enm59yZcO
-         XX/g==
-X-Gm-Message-State: AOAM533MTQWtEgfjYjnAyanaGORgo9+Q923inbH2plO/6l4QTamyvnwc
-        PvsirQ1Vmg1OVStNGq651sNS1BBjfWY=
-X-Google-Smtp-Source: ABdhPJy21vxcwkk4PYHAhAwqrdVALFPvYJsYY9OckYK+7WR5aWDiwlaUDmenI3YyImZd9MSKmIVTXw==
-X-Received: by 2002:a1c:7407:: with SMTP id p7mr3441058wmc.51.1616507084547;
-        Tue, 23 Mar 2021 06:44:44 -0700 (PDT)
+        bh=UI+eRyRGiD8kv9ARhAds+wlgsXLrX8hcYHQH8XYkEp8=;
+        b=svv0fsyDbrbi1qxEcbeX3bJ7KT8SN/XVrT22tElQX3Q0cQe69s3FIIZwp7y7KFMN66
+         dvUHiVp/Nk2CuWWO4zqm/6oENSpMyvJCfggXZeZ+X9AfF9r0H4NRbpBdRw1mtoHLVjRB
+         xV45Ee2/WMv0rpFNY59UXcid/Yxv3C3mdTXlNTnKYdDhvaje2rOXSg6cJL5DI9c2Bf21
+         FGSapMNuftYGzXvCHhG3wX7C0FYxWaGgL4eHAWzV/NGRJTKsdnTvYHiPmBzYRazBMY56
+         gs8gYP7q4yOBvqA5uGe7virYQRyuBHSbjQ5e/8vCtvb+tLW279JVUtEz6iEOiKLw8Txa
+         nJXw==
+X-Gm-Message-State: AOAM532ZSwCbRhVIxSD8sKUSD283W+YSw9+LGvUoz9ereRPtVNCipYKv
+        Y3G+HI3LQKxhaKBFnsgUiPDZlKmmerQ=
+X-Google-Smtp-Source: ABdhPJzm3/8ltfk2rBX3SHNJDpcfNdtxwlIc/0uL192bEIj4R7ExrVCkerWmhZzQN6+fojaKmqNamg==
+X-Received: by 2002:a7b:c20d:: with SMTP id x13mr3541026wmi.32.1616507086047;
+        Tue, 23 Mar 2021 06:44:46 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m10sm2726078wmh.13.2021.03.23.06.44.43
+        by smtp.gmail.com with ESMTPSA id a8sm2505354wmm.46.2021.03.23.06.44.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Mar 2021 06:44:44 -0700 (PDT)
-Message-Id: <6f1ad72c390dc56f9e4a4d724369a0e1c7ac3a94.1616507069.git.gitgitgadget@gmail.com>
+        Tue, 23 Mar 2021 06:44:45 -0700 (PDT)
+Message-Id: <e7190376b806dacf05a20c9dda921d7e1b223b06.1616507069.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.883.v4.git.1616507069.gitgitgadget@gmail.com>
 References: <pull.883.v3.git.1615912983.gitgitgadget@gmail.com>
         <pull.883.v4.git.1616507069.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 23 Mar 2021 13:44:25 +0000
-Subject: [PATCH v4 17/20] sparse-checkout: disable sparse-index
+Date:   Tue, 23 Mar 2021 13:44:27 +0000
+Subject: [PATCH v4 19/20] sparse-index: loose integration with
+ cache_tree_verify()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,96 +83,76 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-We use 'git sparse-checkout init --cone --sparse-index' to toggle the
-sparse-index feature. It makes sense to also disable it when running
-'git sparse-checkout disable'. This is particularly important because it
-removes the extensions.sparseIndex config option, allowing other tools
-to use this Git repository again.
+The cache_tree_verify() method is run when GIT_TEST_CHECK_CACHE_TREE
+is enabled, which it is by default in the test suite. The logic must
+be adjusted for the presence of these directory entries.
 
-This does mean that 'git sparse-checkout init' will not re-enable the
-sparse-index feature, even if it was previously enabled.
+For now, leave the test as a simple check for whether the directory
+entry is sparse. Do not go any further until needed.
 
-While testing this feature, I noticed that the sparse-index was not
-being written on the first run, but by a second. This was caught by the
-call to 'test-tool read-cache --table'. This requires adjusting some
-assignments to core_apply_sparse_checkout and pl.use_cone_patterns in
-the sparse_checkout_init() logic.
+This allows us to re-enable GIT_TEST_CHECK_CACHE_TREE in
+t1092-sparse-checkout-compatibility.sh. Further,
+p2000-sparse-operations.sh uses the test suite and hence this is enabled
+for all tests. We need to integrate with it before we run our
+performance tests with a sparse-index.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- builtin/sparse-checkout.c          | 10 +++++++++-
- t/t1091-sparse-checkout-builtin.sh | 13 +++++++++++++
- 2 files changed, 22 insertions(+), 1 deletion(-)
+ cache-tree.c                             | 19 +++++++++++++++++++
+ t/t1092-sparse-checkout-compatibility.sh |  3 ---
+ 2 files changed, 19 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-index ca63e2c64e95..585343fa1972 100644
---- a/builtin/sparse-checkout.c
-+++ b/builtin/sparse-checkout.c
-@@ -280,6 +280,9 @@ static int set_config(enum sparse_checkout_mode mode)
- 				      "core.sparseCheckoutCone",
- 				      mode == MODE_CONE_PATTERNS ? "true" : NULL);
- 
-+	if (mode == MODE_NO_PATTERNS)
-+		set_sparse_index_config(the_repository, 0);
-+
+diff --git a/cache-tree.c b/cache-tree.c
+index 950a9615db8f..11bf1fcae6e1 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -808,6 +808,19 @@ int cache_tree_matches_traversal(struct cache_tree *root,
  	return 0;
  }
  
-@@ -341,10 +344,11 @@ static int sparse_checkout_init(int argc, const char **argv)
- 		the_repository->index->updated_workdir = 1;
- 	}
- 
-+	core_apply_sparse_checkout = 1;
++static void verify_one_sparse(struct repository *r,
++			      struct index_state *istate,
++			      struct cache_tree *it,
++			      struct strbuf *path,
++			      int pos)
++{
++	struct cache_entry *ce = istate->cache[pos];
 +
- 	/* If we already have a sparse-checkout file, use it. */
- 	if (res >= 0) {
- 		free(sparse_filename);
--		core_apply_sparse_checkout = 1;
- 		return update_working_directory(NULL);
- 	}
- 
-@@ -366,6 +370,7 @@ static int sparse_checkout_init(int argc, const char **argv)
- 	add_pattern(strbuf_detach(&pattern, NULL), empty_base, 0, &pl, 0);
- 	strbuf_addstr(&pattern, "!/*/");
- 	add_pattern(strbuf_detach(&pattern, NULL), empty_base, 0, &pl, 0);
-+	pl.use_cone_patterns = init_opts.cone_mode;
- 
- 	return write_patterns_and_update(&pl);
- }
-@@ -632,6 +637,9 @@ static int sparse_checkout_disable(int argc, const char **argv)
- 	strbuf_addstr(&match_all, "/*");
- 	add_pattern(strbuf_detach(&match_all, NULL), empty_base, 0, &pl, 0);
- 
-+	prepare_repo_settings(the_repository);
-+	the_repository->settings.sparse_index = 0;
++	if (!S_ISSPARSEDIR(ce->ce_mode))
++		BUG("directory '%s' is present in index, but not sparse",
++		    path->buf);
++}
 +
- 	if (update_working_directory(&pl))
- 		die(_("error while refreshing working directory"));
+ static void verify_one(struct repository *r,
+ 		       struct index_state *istate,
+ 		       struct cache_tree *it,
+@@ -830,6 +843,12 @@ static void verify_one(struct repository *r,
  
-diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
-index fc64e9ed99f4..ff1ad570a255 100755
---- a/t/t1091-sparse-checkout-builtin.sh
-+++ b/t/t1091-sparse-checkout-builtin.sh
-@@ -205,6 +205,19 @@ test_expect_success 'sparse-checkout disable' '
- 	check_files repo a deep folder1 folder2
- '
+ 	if (path->len) {
+ 		pos = index_name_pos(istate, path->buf, path->len);
++
++		if (pos >= 0) {
++			verify_one_sparse(r, istate, it, path, pos);
++			return;
++		}
++
+ 		pos = -pos - 1;
+ 	} else {
+ 		pos = 0;
+diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+index f14dc48924d2..d97bf9b64527 100755
+--- a/t/t1092-sparse-checkout-compatibility.sh
++++ b/t/t1092-sparse-checkout-compatibility.sh
+@@ -2,9 +2,6 @@
  
-+test_expect_success 'sparse-index enabled and disabled' '
-+	git -C repo sparse-checkout init --cone --sparse-index &&
-+	test_cmp_config -C repo true extensions.sparseIndex &&
-+	test-tool -C repo read-cache --table >cache &&
-+	grep " tree " cache &&
-+
-+	git -C repo sparse-checkout disable &&
-+	test-tool -C repo read-cache --table >cache &&
-+	! grep " tree " cache &&
-+	git -C repo config --list >config &&
-+	! grep extensions.sparseindex config
-+'
-+
- test_expect_success 'cone mode: init and set' '
- 	git -C repo sparse-checkout init --cone &&
- 	git -C repo config --list >config &&
+ test_description='compare full workdir to sparse workdir'
+ 
+-# The verify_cache_tree() check is not sparse-aware (yet).
+-# So, disable the check until that integration is complete.
+-GIT_TEST_CHECK_CACHE_TREE=0
+ GIT_TEST_SPLIT_INDEX=0
+ GIT_TEST_SPARSE_INDEX=
+ 
 -- 
 gitgitgadget
 
