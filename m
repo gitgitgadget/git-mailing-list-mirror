@@ -2,110 +2,166 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A862AC433DB
-	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 05:05:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F534C433C1
+	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 05:32:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 64DF1619AE
-	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 05:05:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 13AB16198C
+	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 05:32:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229437AbhCWFEi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Mar 2021 01:04:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39956 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229548AbhCWFEP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Mar 2021 01:04:15 -0400
-Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FCABC061574
-        for <git@vger.kernel.org>; Mon, 22 Mar 2021 22:04:13 -0700 (PDT)
-Received: by mail-oi1-x22b.google.com with SMTP id l79so15731647oib.1
-        for <git@vger.kernel.org>; Mon, 22 Mar 2021 22:04:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=XgILcHNsA68auY1s0t8ReuUAgE9KCPcN/fHb+ImloRE=;
-        b=d/vFU8yuI6EbJo5onASfXTkplMnnn/r3+ZmqQ6D5VLfDJ5q51Qqdnf+8acNgmv6uFL
-         S3Puo5neifjwd9AD/1SL+nEZDZ2hr94Gec7MmLzddBw/LQY4GDa8tWz4CJAxkERIK+8K
-         rykGJ44Mx/AJQuS+oihf/6eAvrTy4/yX5HPZ0qad3ZoheaFKKfAKnCfbNbzqhxVbsraa
-         SDrq8W0GFe/sc35WWgmtd5f+TDpMLUMGTIRyHiD2avHDyE0CMfobCysWTKr/ssjgNVAV
-         pbiYmzSvUxh2rC3FWoRIO5nvDVYCwA75Gv9WsSBNgoon7LtBuYQXLb10P+ALo0/Ob6MN
-         3U9g==
+        id S229493AbhCWFbo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Mar 2021 01:31:44 -0400
+Received: from mail-ed1-f52.google.com ([209.85.208.52]:46825 "EHLO
+        mail-ed1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229437AbhCWFbT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Mar 2021 01:31:19 -0400
+Received: by mail-ed1-f52.google.com with SMTP id h10so21956486edt.13
+        for <git@vger.kernel.org>; Mon, 22 Mar 2021 22:31:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=XgILcHNsA68auY1s0t8ReuUAgE9KCPcN/fHb+ImloRE=;
-        b=lJi+Qio3tqvQYQ5DzAitXvLJ8JSxccQt1jFzNY6F4uhzJd7Ebe2cvE5BwNS8HUw/ry
-         hkg4kloUo95fhFYB9eFoS5KlnIv07Uk8Ml3wWajticEXTM61/OE1zj7JGWOSMZx7jDay
-         QjimvEZDdOKM2dBLZj/mfzZMXsxNofnnL26gkcOCpLe+pIsrcDr048L4q18lRY14Eou0
-         VJ51Wi0O/DTAkn5NLlZiAaE24plBLISbYoU9Qmze8bMbgRpQK+mRfxZGfTPakhOMcV/M
-         bf0gNaZFmmKJ/PT5z1D1A4/+GYMp+7rLCR4we8p/8MCPOdm7VI4LgwUsMyIqKuVk07yz
-         sMRQ==
-X-Gm-Message-State: AOAM532raJ0jOniHlmoVvMxFtRBsbWw7MeGhZkplgRGAzvGo59Ie92pb
-        wbv7VdbtzmkR1t6QF7+/Sld/MB2pHGNV3TQVzAg=
-X-Google-Smtp-Source: ABdhPJy/GtVpvyVP7bx8VodFRM1sBX7NybGPDWFF+6O09rHGJatjjaLdYT8pVaCgfFcwpmE1f60W9R0EDq4QJVdVFRI=
-X-Received: by 2002:aca:d68e:: with SMTP id n136mr2029419oig.179.1616475852484;
- Mon, 22 Mar 2021 22:04:12 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=Koogeao0Az8+Jx7pTZ1PUBDfiDVMw7/7w9xtDJqD9lY=;
+        b=d3AuNB8bBhTvOHrOYm71nNSiqWzVbVDApOnxmD3rhyRawv6YgBLmEqbyPFeGv/0OX7
+         DrCCe3jo7YGiZYEBvQZlm9nlck3HEBHXGnd9/VJFWW/xLnyJyj2MK0t8ObbsTtwB3ut6
+         DK1mwXo8HW5fuEObjk33c5qVtu5nB/d8qmdJ9WJ4m/qkcl+lSPPHndxAZMXAafNz4WpD
+         HLIedOFu8jcJ/wpNwzb4syw+n7LRLJpOLVvRSxxps961DHRnYj4KfTD7zyHcDNl+oNBz
+         Bu+LUxEDgzOlI1OXecLLJOpLMSKsyq34Fh2cu2uRTIa+zP90Ng1kRkRnMQGmFUx/WAZL
+         zesw==
+X-Gm-Message-State: AOAM530f+D9e9yx7S6kzKKqlgt1ZG/dRV9lGXR2srXxzW/xdF2kzqxYh
+        epUtwX8+DDErsv0lqX6HTwmDdjOpVRvftK1N/nf+ZIRSamg=
+X-Google-Smtp-Source: ABdhPJzeFsBVDdeC1V6iYqPBf//oTzISXp48ZEKjIucj048+ZveAERC+FhXCfLQPCKGB5b14G9GQxyL/z4XrIquxGgs=
+X-Received: by 2002:aa7:d0cb:: with SMTP id u11mr2784717edo.163.1616477478601;
+ Mon, 22 Mar 2021 22:31:18 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.911.git.1616251299.gitgitgadget@gmail.com>
- <pull.911.v2.git.1616317134.gitgitgadget@gmail.com> <8b8b236a4ffb81a8c6be3f320b878cea1d0f9d7a.1616317135.git.gitgitgadget@gmail.com>
- <CAP8UFD1Oo-eWmoV-1mh1M=pA8+yRUYHy1wg8NvN3bthmCHBfvQ@mail.gmail.com>
- <xmqqwnu0bga9.fsf@gitster.g> <CAOLTT8TU+XwLmDQRROHW6iumFgMKok9mi+_OBmN4FbvgWkNb7Q@mail.gmail.com>
- <xmqqv99j6rt1.fsf@gitster.g>
-In-Reply-To: <xmqqv99j6rt1.fsf@gitster.g>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Tue, 23 Mar 2021 13:04:01 +0800
-Message-ID: <CAOLTT8SRbe8bked2X9uOVexPQPLW6E+ON=Fs66fPDLp9eOWn5g@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] [GSOC] interpret-trailer: easy parse trailer value
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>,
-        "Bradley M. Kuhn" <bkuhn@sfconservancy.org>,
-        Brandon Casey <drafnel@gmail.com>,
-        Shourya Shukla <periperidip@gmail.com>,
-        Rafael Silva <rafaeloliveira.cs@gmail.com>,
+References: <pull.885.v8.git.1616252178414.gitgitgadget@gmail.com> <pull.885.v9.git.1616317225769.gitgitgadget@gmail.com>
+In-Reply-To: <pull.885.v9.git.1616317225769.gitgitgadget@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 23 Mar 2021 01:31:07 -0400
+Message-ID: <CAPig+cQ5jBc-fz69ygpWUP7uCVNAT8GT_01y6GnxDEa6XDNZ=g@mail.gmail.com>
+Subject: Re: [PATCH v9] format-patch: allow a non-integral version numbers
+To:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Denton Liu <liu.denton@gmail.com>,
         =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+        ZheNing Hu <adlternative@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B43=E6=9C=8823=E6=97=
-=A5=E5=91=A8=E4=BA=8C =E4=B8=8A=E5=8D=881:07=E5=86=99=E9=81=93=EF=BC=9A
->
-> ZheNing Hu <adlternative@gmail.com> writes:
->
-> > Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B43=E6=9C=8822=
-=E6=97=A5=E5=91=A8=E4=B8=80 =E4=B8=8A=E5=8D=8812:52=E5=86=99=E9=81=93=EF=BC=
-=9A
-> >>
-> >> Christian Couder <christian.couder@gmail.com> writes:
-> >> ...
-> >> > So even without this patch, after your first patch that implements
-> >> > `git commit --trailer ...`, it should be easy to setup something les=
-s
-> >> > verbose and less error-prone.
-> >>
-> >> It is nice that it makes the complexity of 2/2 unnecessary ;-)
-> >
-> > A little frustrated, both `--own-identity` and `@nickname` seem to be
-> >  rejected. I will roll back to the first patch.
->
-> If existing functionality can be used to achieve the same end result
-> without any extra effort by end-users, that's a happy endgame, isn't
-> it?  There isn't a reason to be frustrated---the users benefit with
-> the new --trailer option without adding (hence having to learn) new
-> extra features like --own-ident or @name, which is a big plus.
->
->
+On Sun, Mar 21, 2021 at 5:00 AM ZheNing Hu via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> [...]
+> Allow `format-patch` to take such a non-integral iteration
+> number.
+> [...]
+> Signed-off-by: ZheNing Hu <adlternative@gmail.com>
 
-Thanks, Junio, you are right :)
+Just a few nits below; nothing very important (except perhaps the
+final comment about the potential for people to get confused while
+reading the tests). Junio already has this marked as ready to merge to
+"next", so these nits may not be worth a re-roll.
+
+> diff --git a/log-tree.c b/log-tree.c
+> @@ -368,9 +368,14 @@ void fmt_output_subject(struct strbuf *filename,
+>         int max_len = start_len + info->patch_name_max - (strlen(suffix) + 1);
+> +       struct strbuf temp = STRBUF_INIT;
+>
+> +       if (info->reroll_count) {
+> +               strbuf_addf(&temp, "v%s", info->reroll_count);
+> +               format_sanitized_subject(filename, temp.buf, temp.len);
+> +               strbuf_addstr(filename, "-");
+> +               strbuf_release(&temp);
+> +       }
+
+The new `temp` strbuf is use only inside the conditional, so it
+could/should have been declared in that block rather than in the outer
+block:
+
+    if (info->reroll_count) {
+        struct strbuf temp = STRBUF_INIT;
+
+        strbuf_addf(&temp, "v%s", info->reroll_count);
+        ...
+    }
+
+> diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+> @@ -378,6 +378,22 @@ test_expect_success 'reroll count' '
+> +test_expect_success 'reroll count with a fractional number' '
+> +       rm -fr patches &&
+> +       git format-patch -o patches --cover-letter --reroll-count 4.4 main..side >list &&
+> +       ! grep -v "^patches/v4.4-000[0-3]-" list &&
+> +       sed -n -e "/^Subject: /p" $(cat list) >subjects &&
+> +       ! grep -v "^Subject: \[PATCH v4.4 [0-3]/3\] " subjects
+> +'
+> +
+> +test_expect_success 'reroll count with a non number' '
+> +       rm -fr patches &&
+> +       git format-patch -o patches --cover-letter --reroll-count 4rev2 main..side >list &&
+> +       ! grep -v "^patches/v4rev2-000[0-3]-" list &&
+> +       sed -n -e "/^Subject: /p" $(cat list) >subjects &&
+> +       ! grep -v "^Subject: \[PATCH v4rev2 [0-3]/3\] " subjects
+> +'
+
+The above two tests...
+
+> @@ -386,6 +402,38 @@ test_expect_success 'reroll count (-v)' '
+> +test_expect_success 'reroll count (-v) with a fractional number' '
+> +       rm -fr patches &&
+> +       git format-patch -o patches --cover-letter -v4.4 main..side >list &&
+> +       ! grep -v "^patches/v4.4-000[0-3]-" list &&
+> +       sed -n -e "/^Subject: /p" $(cat list) >subjects &&
+> +       ! grep -v "^Subject: \[PATCH v4.4 [0-3]/3\] " subjects
+> +'
+> +
+> +test_expect_success 'reroll (-v) count with a non number' '
+> +       rm -fr patches &&
+> +       git format-patch -o patches --cover-letter -v4rev2 main..side >list &&
+> +       ! grep -v "^patches/v4rev2-000[0-3]-" list &&
+> +       sed -n -e "/^Subject: /p" $(cat list) >subjects &&
+> +       ! grep -v "^Subject: \[PATCH v4rev2 [0-3]/3\] " subjects
+> +'
+
+... are repeated here with the only difference being `--reroll-count`
+versus `-v`. Since other tests have already established that
+`--reroll-count` and `-v` are identical, it's not really necessary to
+do that work again with these duplicate tests.
+
+> +test_expect_success 'reroll (-v) count with a "injection (1)"' '
+> +       rm -fr patches &&
+> +       git format-patch -o patches --cover-letter -v4..././../1/.2//  main..side >list &&
+> +       ! grep -v "^patches/v4.-.-.-1-.2-000[0-3]-" list &&
+> +       sed -n -e "/^Subject: /p" $(cat list) >subjects &&
+> +       ! grep -v "^Subject: \[PATCH v4..././../1/.2// [0-3]/3\] " subjects
+> +'
+
+A couple comments:
+
+The test title might be easier for other people to understand if it
+says "non-pathname character" or "non filename character" rather than
+"injection".
+
+Note that the `grep -v` is casting a wider net than it seems at first
+glance. The `.` matches any character, not just a period ".". To
+tighten the matching and make `.` match just a ".", you can use `grep
+-vF`.
+
+> +test_expect_success 'reroll (-v) count with a "injection (2)"' '
+> +       rm -fr patches &&
+> +       git format-patch -o patches --cover-letter -v4-----//1//--.--  main..side >list &&
+> +       ! grep -v "^patches/v4-1-000[0-3]-" list &&
+> +       sed -n -e "/^Subject: /p" $(cat list) >subjects &&
+> +       ! grep -v "^Subject: \[PATCH v4-----//1//--.-- [0-3]/3\] " subjects
+> +'
+
+Presumably the coverage of format_sanitized_subject() is already being
+tested elsewhere, so it's not clear that this second "injection" test
+adds any value over the first test. Moreover, this second test can
+confuse readers into thinking that it is testing something that the
+first test didn't cover, but that isn't the case (as far as I can
+tell).
