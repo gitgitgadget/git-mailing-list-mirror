@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A3FEC433E9
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 43D5BC433E4
 	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 13:45:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 15BB5619BA
+	by mail.kernel.org (Postfix) with ESMTP id 2CF04619C0
 	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 13:45:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231683AbhCWNpC (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S231665AbhCWNpC (ORCPT <rfc822;git@archiver.kernel.org>);
         Tue, 23 Mar 2021 09:45:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38984 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231673AbhCWNol (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S231683AbhCWNol (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 23 Mar 2021 09:44:41 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 045C6C0613DD
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99210C061574
         for <git@vger.kernel.org>; Tue, 23 Mar 2021 06:44:39 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id d8-20020a1c1d080000b029010f15546281so10718560wmd.4
-        for <git@vger.kernel.org>; Tue, 23 Mar 2021 06:44:38 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id o16so20846944wrn.0
+        for <git@vger.kernel.org>; Tue, 23 Mar 2021 06:44:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=3o+t5/dOGp5xpMAAQd/XUzGtlCJPY6SPrX9Z+uQ/DZ4=;
-        b=q5/GXqz8fE0GDjlPfyGY+fBiu+AoLJrWb1pFVh52sjAvU3nhwRrh8dBaCMasQAEGrf
-         /weBeiAKuLAJlQ1mK11uAlMs/iDWxPeb/FBfH9//VQf/jzzs6QXj7lB0szx3MXeStcRL
-         E8P9jsHiPewvAsJiufGeYY/1cwvhVSdxGnjh2wKKi+Kfn8JSdUkeakrCn8ucAGx8u2pk
-         UWgJaEeAC+Lrldlrtr6RsU3jfl/dtd+B2/4fzg3roaECdkbhF1xl82o8HSxNwotJ0jhi
-         3/QeeamOYlkyYKVpfGRP8ES6yR8/h8IsciG2GM25793z+qfCX92fDc25OxB6u7xAYfT1
-         1YUg==
+        bh=i+gKe8EgHfQlDyjY32XCjj4qcNKDY7Jfl7pEV2IN20w=;
+        b=oC7Iz2bkNx8t98Ww3+tqbux9qf824cDkVPz7V3HRB/3RRxugEnhkOkFooe4tY6R//S
+         6EbrxMaYLVL1skKLqUTrwuQx0dLWF7SdXmcnQ4UEzSM+MVnlHxmfVJafM6EAPtkl+Jk7
+         MuU0KG2nr1HK8BSFoSBbdWcKsUu0dQ/0/OLSY54i2wV355nXYfEu/iflZ/ZdY+ELaNta
+         Wo15PSkZTjinXCuBManIHiwVLJzZjR+WnEnDYFshz1Ev9YOWi6esLX6ZJaP/O3/aFH+n
+         1Hn0PlhHgivG9TyOWoSLMA3q2eECP5N50EgwodVOhLJAm94tLr4YKXW0pTDt4sDbjDdo
+         f2WQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=3o+t5/dOGp5xpMAAQd/XUzGtlCJPY6SPrX9Z+uQ/DZ4=;
-        b=d2AqijdldHvwwMoI0nM/c9ZNASa7zzYrWYxClxRbYtF4/j2sZkeWB88nzWhdL37s32
-         EaXWAVoIoMuFYIE6IkE4Ze8fXhYMM+OYd80S9s70uMT9xulJ1gQdTAN+pMYSZqtafSil
-         5CdFLjtzG6JD948tPKrwe2jKzUgVdyxUdOcOwMbkuqr1CjT9mjStK5BO30RVqTaHjbHv
-         NRzIk/GdJsyppN8Hktul/8i8ib2wyYXkXwM8dCz6r5Q0mNIOUSyTIXTbY3rCn5IiGe8r
-         278F+yAkgJAC+JYiXS+Z9kx5SBvBYpDbIFzPfBWFezaI43fMcaH/tcAYWYQXoKuqvHhZ
-         eyLg==
-X-Gm-Message-State: AOAM531Bnd5SWPF91h3VlgeNrEQ+cypjvag++g71JvnTl6zCiiyMEnSE
-        VZRL67km6GO6Xe5qBbr5TPgRbhpqDv0=
-X-Google-Smtp-Source: ABdhPJwnGi5ZKDDyB2vU4vWQmIs9WzLE2Xvt+hZROuRbZL+Ot2a3IEfSNlbDpg88SXffCCNNL+pHeA==
-X-Received: by 2002:a1c:10f:: with SMTP id 15mr3554184wmb.14.1616507077803;
-        Tue, 23 Mar 2021 06:44:37 -0700 (PDT)
+        bh=i+gKe8EgHfQlDyjY32XCjj4qcNKDY7Jfl7pEV2IN20w=;
+        b=AaE1hoGALDR4fmNY7utgZY/tpiAQGm45kVbWt7Br/P1eexvNM0JliQmx5BkYkhNB2b
+         kuOcBVtRNBAQqUa9DOUkwqUDEsXgVrfE/yFuNDaLpB1Gy98BSUpAZvkJ/jsLcr8N9UD2
+         FDUMKvzqIUYWEIajakK07rgOEzOCN2clzXuSaoeJkIOLyaQshAztt39EoVoB3Cgyr4+R
+         M6qDaa0tRKfUlAbgUgeLE901f7AiTCHtQw8rfcQBAPHJ9k0PkLu72IHc81YhqxyruoFf
+         LiCTNBPUnh4a5whukCDDZ9w/mUW4Uq+BdU69DIBG0tmhnndklOBhSccq2ot3CqWnB5AU
+         IaYQ==
+X-Gm-Message-State: AOAM531Nmm7A+WZQpH64Ehqwll1elbdTHVOnMBGS1mR/XsWpnDrZLa7r
+        L/peCSs2QicxVBBgprBj9N2Vh0vs7uc=
+X-Google-Smtp-Source: ABdhPJw1iJA4Kz5d96Hx6LV4t524Y50ARt7KjTOT/42X1Q2dvfHydryTinm+T+ZGKgj8h3UGA0rPTg==
+X-Received: by 2002:a5d:6c67:: with SMTP id r7mr4060627wrz.373.1616507078445;
+        Tue, 23 Mar 2021 06:44:38 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m11sm22132231wrz.40.2021.03.23.06.44.37
+        by smtp.gmail.com with ESMTPSA id l15sm23475893wru.38.2021.03.23.06.44.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Mar 2021 06:44:37 -0700 (PDT)
-Message-Id: <db7bbd06dbcc8ddab7811887a510b160686e4321.1616507069.git.gitgitgadget@gmail.com>
+        Tue, 23 Mar 2021 06:44:38 -0700 (PDT)
+Message-Id: <3ddd5e794b5edc862b6047328f61cad5e6134c9f.1616507069.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.883.v4.git.1616507069.gitgitgadget@gmail.com>
 References: <pull.883.v3.git.1615912983.gitgitgadget@gmail.com>
         <pull.883.v4.git.1616507069.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 23 Mar 2021 13:44:16 +0000
-Subject: [PATCH v4 08/20] test-tool: don't force full index
+Date:   Tue, 23 Mar 2021 13:44:17 +0000
+Subject: [PATCH v4 09/20] unpack-trees: ensure full index
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,79 +82,50 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-We will use 'test-tool read-cache --table' to check that a sparse
-index is written as part of init_repos. Since we will no longer always
-expand a sparse index into a full index, add an '--expand' parameter
-that adds a call to ensure_full_index() so we can compare a sparse index
-directly against a full index, or at least what the in-memory index
-looks like when expanded in this way.
+The next change will translate full indexes into sparse indexes at write
+time. The existing logic provides a way for every sparse index to be
+expanded to a full index at read time. However, there are cases where an
+index is written and then continues to be used in-memory to perform
+further updates.
+
+unpack_trees() is frequently called after such a write. In particular,
+commands like 'git reset' do this double-update of the index.
+
+Ensure that we have a full index when entering unpack_trees(), but only
+when command_requires_full_index is true. This is always true at the
+moment, but we will later relax that after unpack_trees() is updated to
+handle sparse directory entries.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- t/helper/test-read-cache.c               | 13 ++++++++++++-
- t/t1092-sparse-checkout-compatibility.sh |  5 +++++
- 2 files changed, 17 insertions(+), 1 deletion(-)
+ unpack-trees.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/t/helper/test-read-cache.c b/t/helper/test-read-cache.c
-index 6cfd8f2de71c..b52c174acc7a 100644
---- a/t/helper/test-read-cache.c
-+++ b/t/helper/test-read-cache.c
-@@ -4,6 +4,7 @@
- #include "blob.h"
- #include "commit.h"
- #include "tree.h"
-+#include "sparse-index.h"
- 
- static void print_cache_entry(struct cache_entry *ce)
+diff --git a/unpack-trees.c b/unpack-trees.c
+index f5f668f532d8..4dd99219073a 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -1567,6 +1567,7 @@ static int verify_absent(const struct cache_entry *,
+  */
+ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options *o)
  {
-@@ -35,13 +36,19 @@ int cmd__read_cache(int argc, const char **argv)
- 	struct repository *r = the_repository;
- 	int i, cnt = 1;
- 	const char *name = NULL;
--	int table = 0;
-+	int table = 0, expand = 0;
++	struct repository *repo = the_repository;
+ 	int i, ret;
+ 	static struct cache_entry *dfc;
+ 	struct pattern_list pl;
+@@ -1578,6 +1579,12 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+ 	trace_performance_enter();
+ 	trace2_region_enter("unpack_trees", "unpack_trees", the_repository);
+ 
++	prepare_repo_settings(repo);
++	if (repo->settings.command_requires_full_index) {
++		ensure_full_index(o->src_index);
++		ensure_full_index(o->dst_index);
++	}
 +
-+	initialize_the_repository();
-+	prepare_repo_settings(r);
-+	r->settings.command_requires_full_index = 0;
- 
- 	for (++argv, --argc; *argv && starts_with(*argv, "--"); ++argv, --argc) {
- 		if (skip_prefix(*argv, "--print-and-refresh=", &name))
- 			continue;
- 		if (!strcmp(*argv, "--table"))
- 			table = 1;
-+		else if (!strcmp(*argv, "--expand"))
-+			expand = 1;
- 	}
- 
- 	if (argc == 1)
-@@ -51,6 +58,10 @@ int cmd__read_cache(int argc, const char **argv)
- 
- 	for (i = 0; i < cnt; i++) {
- 		repo_read_index(r);
-+
-+		if (expand)
-+			ensure_full_index(r->index);
-+
- 		if (name) {
- 			int pos;
- 
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index de5d8461c993..a1aea141c62c 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -130,6 +130,11 @@ test_sparse_match () {
- 	test_cmp sparse-checkout-err sparse-index-err
- }
- 
-+test_expect_success 'expanded in-memory index matches full index' '
-+	init_repos &&
-+	test_sparse_match test-tool read-cache --expand --table
-+'
-+
- test_expect_success 'status with options' '
- 	init_repos &&
- 	test_all_match git status --porcelain=v2 &&
+ 	if (!core_apply_sparse_checkout || !o->update)
+ 		o->skip_sparse_checkout = 1;
+ 	if (!o->skip_sparse_checkout && !o->pl) {
 -- 
 gitgitgadget
 
