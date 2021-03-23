@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7599FC433E0
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 96BE3C433E1
 	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 13:45:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4E777619BA
+	by mail.kernel.org (Postfix) with ESMTP id 672DB619C1
 	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 13:45:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231191AbhCWNoy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Mar 2021 09:44:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38962 "EHLO
+        id S231388AbhCWNoz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Mar 2021 09:44:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229913AbhCWNoj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Mar 2021 09:44:39 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1A9EC0613DA
+        with ESMTP id S231645AbhCWNoh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Mar 2021 09:44:37 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FF63C0613D8
         for <git@vger.kernel.org>; Tue, 23 Mar 2021 06:44:35 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id k8so20819644wrc.3
+Received: by mail-wr1-x434.google.com with SMTP id v11so20815030wro.7
         for <git@vger.kernel.org>; Tue, 23 Mar 2021 06:44:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=tG7+YZdwAKze8gBAJEZBRIJJgY5B1vbHrx8V3JKD0do=;
-        b=D6gCBjxWoX+OJDvdh8yB2oGLPBwRq3G/tv/igkrqJlVmnJCi8kshCUEAnos/amZae5
-         srWQV+9iLEKn5O80p6DGrHDGrZ8NA3KgKLQsf8HQTyYaGwWWf6QNblA6lctJ+QJaEOaH
-         HgCLgOWfoBRmNFlX8xuqMA4fAR99VchhCdVgLdAYJhe3ONHnOpYlb1H+IOmQ6cQrhya3
-         3sSy1bDr1J+OgY1/+M/UzMpBkfsObGivXwVs1UOWkC5WDhDNa5c/q3uLyxRZQLxxhzww
-         pl6mbR/wSoa+bkSfwy0EETq4pbPDQKSx52BLb/TzQ5Eb2cFqhej3bgNWi4eE20QPhHxc
-         ahew==
+        bh=zT/KLSMEIY5jvVQ9z2xbPhRiUryKVuorFSgT+6Od1bg=;
+        b=uvLDpFGqoZskE+Jx3zNOlvp262dU/TxwSW2sk9bUSmOI6UeJAbkur09Cj9iLL8bMc6
+         wfX2hRW9tco6K1Ucnr0JdMy5acZtKVNu5xAUSJab+T++W5p3rvq5/EPDpI79ofiRGSZR
+         yXrueTZNwE3akfVX8Ee7tpiYN6nlfNf+tB6kdGn2WIaKatwqzb9Mtq+J2/NRrPfdhl3P
+         qVE75gXZ04RuJOv9t5P79vCUinTmGPo4r9G6bwkSuqRAXEEbx/vZ+KPeR7Gsey0NZn0I
+         aDhsvcNnIUKUNEf8SlSYtZOprZbjKR43c7kIDf2t+g4t/TIzqVwAtBzLcqIHxzU4oFq5
+         bSHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=tG7+YZdwAKze8gBAJEZBRIJJgY5B1vbHrx8V3JKD0do=;
-        b=TX3YW5Q/98hizTOh3U5Vy+ojrKSCqhpu6ntNT0H4fhsVLt4IrthEz23WFNrp90XUWC
-         9ycY1wslys36rm3QCykxEQXLuNoiYM6nqx9uKdVjW64DKIWiFsKelERwtzL2N5kE6Ibs
-         qr7xShhuPC8B5KsoagciWMq4Zx94E0tHpf6fM9eZ7MRD7tIfQsDlIeN+7Pev6kuBQZhp
-         AA7Ru4L27PSUiVXbCKk68+FuG5VqDj+5wWqtCuQWNgu5j4VisRmUUV6iHOH9eE4LkVlQ
-         0iedfYM+38GXokMKy7/aPuruI87JEvRBQGfc2WHcewwZ4EGdkHIdB9L0wd6wwS81cTRc
-         zE3A==
-X-Gm-Message-State: AOAM530j4udZSGuEChxuEeUtzdPL/VMXSRDuTS7FSm+XrZtmwo7g39Jj
-        ZK5Br+oCsNkXLmHyEgXnFs7ReHP5Ku8=
-X-Google-Smtp-Source: ABdhPJyLVqNeVNyWQD8UqG5gizS+5K6Aaqd587nCGAs7W18dXlVSRfRJjXkByFGWxQ7GdYgrd2QMcw==
-X-Received: by 2002:adf:f005:: with SMTP id j5mr3963293wro.423.1616507074606;
-        Tue, 23 Mar 2021 06:44:34 -0700 (PDT)
+        bh=zT/KLSMEIY5jvVQ9z2xbPhRiUryKVuorFSgT+6Od1bg=;
+        b=YsQd230hW1Ga+wttTiU4dH49hdxfR9tYCeD2ex/L6bqCM6ob9SLNTOMP0ONpv4C1jy
+         eGO8gbRmwuIAYCm3Z/wpd7kggkvFQbntkEJ0CctFLwYfVHiv4GLpgJCjCKlSbLASL9iA
+         f/NUmeEph6TD0BEn1TcE8UejJk4E1my6uZ6TVd6G9uLhrNpO/ZQCoCXla8fQ80jZgAIO
+         w/vxsV3ZSohYlPWshUOk7tROF/WJQrtiqDF3T7cJfGjwI0mUdQVkPasRlKkOEjLGa4n8
+         S3LlFD4mpRpu4Bnr8xYrKYNuphMQR2GkeYfy2unSUifhSn9kfRiUmtdcubw5sL4paqqN
+         rJPg==
+X-Gm-Message-State: AOAM532V/QNJnalYhQAr0tfEhC+SLHY+WvCJdJOHIWJUvFYTcENrod1v
+        X4C9GWpaAQbaJZUjfyFrUnDKueVnpQQ=
+X-Google-Smtp-Source: ABdhPJzcH/0uhEmJNTgyKySz36a+SEpEyUGSoB07va/vO1VXo/B//+nqfolIJNZoqYvNfa2IojOdJA==
+X-Received: by 2002:adf:e0d1:: with SMTP id m17mr4092687wri.90.1616507073917;
+        Tue, 23 Mar 2021 06:44:33 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q17sm23201715wrv.25.2021.03.23.06.44.34
+        by smtp.gmail.com with ESMTPSA id q4sm2577056wma.20.2021.03.23.06.44.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Mar 2021 06:44:34 -0700 (PDT)
-Message-Id: <03cdde7565630e43135028350092373917e6fa31.1616507069.git.gitgitgadget@gmail.com>
+        Tue, 23 Mar 2021 06:44:33 -0700 (PDT)
+Message-Id: <c9e21d78ecba46988e9e98ffecca96f1fcca6e79.1616507069.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.883.v4.git.1616507069.gitgitgadget@gmail.com>
 References: <pull.883.v3.git.1615912983.gitgitgadget@gmail.com>
         <pull.883.v4.git.1616507069.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 23 Mar 2021 13:44:12 +0000
-Subject: [PATCH v4 04/20] sparse-index: add guard to ensure full index
+Date:   Tue, 23 Mar 2021 13:44:11 +0000
+Subject: [PATCH v4 03/20] t1092: clean up script quoting
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,142 +82,107 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-Upcoming changes will introduce modifications to the index format that
-allow sparse directories. It will be useful to have a mechanism for
-converting those sparse index files into full indexes by walking the
-tree at those sparse directories. Name this method ensure_full_index()
-as it will guarantee that the index is fully expanded.
+This test was introduced in 19a0acc83e4 (t1092: test interesting
+sparse-checkout scenarios, 2021-01-23), but it contains issues with quoting
+that were not noticed until starting this follow-up series. The old
+mechanism would drop quoting such as in
 
-This method is not implemented yet, and instead we focus on the
-scaffolding to declare it and call it at the appropriate time.
+   test_all_match git commit -m "touch README.md"
 
-Add a 'command_requires_full_index' member to struct repo_settings. This
-will be an indicator that we need the index in full mode to do certain
-index operations. This starts as being true for every command, then we
-will set it to false as some commands integrate with sparse indexes.
+The above happened to work because README.md is a file in the
+repository, so 'git commit -m touch REAMDE.md' would succeed by
+accident.
 
-If 'command_requires_full_index' is true, then we will immediately
-expand a sparse index to a full one upon reading from disk. This
-suffices for now, but we will want to add more callers to
-ensure_full_index() later.
+Other cases included quoting for no good reason, so clean that up now.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Makefile        |  1 +
- repo-settings.c |  8 ++++++++
- repository.c    | 11 ++++++++++-
- repository.h    |  2 ++
- sparse-index.c  |  8 ++++++++
- sparse-index.h  |  7 +++++++
- 6 files changed, 36 insertions(+), 1 deletion(-)
- create mode 100644 sparse-index.c
- create mode 100644 sparse-index.h
+ t/t1092-sparse-checkout-compatibility.sh | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index dfb0f1000fa3..89b1d5374107 100644
---- a/Makefile
-+++ b/Makefile
-@@ -985,6 +985,7 @@ LIB_OBJS += setup.o
- LIB_OBJS += shallow.o
- LIB_OBJS += sideband.o
- LIB_OBJS += sigchain.o
-+LIB_OBJS += sparse-index.o
- LIB_OBJS += split-index.o
- LIB_OBJS += stable-qsort.o
- LIB_OBJS += strbuf.o
-diff --git a/repo-settings.c b/repo-settings.c
-index f7fff0f5ab83..d63569e4041e 100644
---- a/repo-settings.c
-+++ b/repo-settings.c
-@@ -77,4 +77,12 @@ void prepare_repo_settings(struct repository *r)
- 		UPDATE_DEFAULT_BOOL(r->settings.core_untracked_cache, UNTRACKED_CACHE_KEEP);
- 
- 	UPDATE_DEFAULT_BOOL(r->settings.fetch_negotiation_algorithm, FETCH_NEGOTIATION_DEFAULT);
-+
-+	/*
-+	 * This setting guards all index reads to require a full index
-+	 * over a sparse index. After suitable guards are placed in the
-+	 * codebase around uses of the index, this setting will be
-+	 * removed.
-+	 */
-+	r->settings.command_requires_full_index = 1;
- }
-diff --git a/repository.c b/repository.c
-index c98298acd017..a8acae002f71 100644
---- a/repository.c
-+++ b/repository.c
-@@ -10,6 +10,7 @@
- #include "object.h"
- #include "lockfile.h"
- #include "submodule-config.h"
-+#include "sparse-index.h"
- 
- /* The main repository */
- static struct repository the_repo;
-@@ -261,6 +262,8 @@ void repo_clear(struct repository *repo)
- 
- int repo_read_index(struct repository *repo)
- {
-+	int res;
-+
- 	if (!repo->index)
- 		repo->index = xcalloc(1, sizeof(*repo->index));
- 
-@@ -270,7 +273,13 @@ int repo_read_index(struct repository *repo)
- 	else if (repo->index->repo != repo)
- 		BUG("repo's index should point back at itself");
- 
--	return read_index_from(repo->index, repo->index_file, repo->gitdir);
-+	res = read_index_from(repo->index, repo->index_file, repo->gitdir);
-+
-+	prepare_repo_settings(repo);
-+	if (repo->settings.command_requires_full_index)
-+		ensure_full_index(repo->index);
-+
-+	return res;
+diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+index 8cd3e5a8d227..3725d3997e70 100755
+--- a/t/t1092-sparse-checkout-compatibility.sh
++++ b/t/t1092-sparse-checkout-compatibility.sh
+@@ -96,20 +96,20 @@ init_repos () {
+ run_on_sparse () {
+ 	(
+ 		cd sparse-checkout &&
+-		$* >../sparse-checkout-out 2>../sparse-checkout-err
++		"$@" >../sparse-checkout-out 2>../sparse-checkout-err
+ 	)
  }
  
- int repo_hold_locked_index(struct repository *repo,
-diff --git a/repository.h b/repository.h
-index b385ca3c94b6..e06a23015697 100644
---- a/repository.h
-+++ b/repository.h
-@@ -41,6 +41,8 @@ struct repo_settings {
- 	enum fetch_negotiation_setting fetch_negotiation_algorithm;
+ run_on_all () {
+ 	(
+ 		cd full-checkout &&
+-		$* >../full-checkout-out 2>../full-checkout-err
++		"$@" >../full-checkout-out 2>../full-checkout-err
+ 	) &&
+-	run_on_sparse $*
++	run_on_sparse "$@"
+ }
  
- 	int core_multi_pack_index;
-+
-+	unsigned command_requires_full_index:1;
- };
+ test_all_match () {
+-	run_on_all $* &&
++	run_on_all "$@" &&
+ 	test_cmp full-checkout-out sparse-checkout-out &&
+ 	test_cmp full-checkout-err sparse-checkout-err
+ }
+@@ -119,7 +119,7 @@ test_expect_success 'status with options' '
+ 	test_all_match git status --porcelain=v2 &&
+ 	test_all_match git status --porcelain=v2 -z -u &&
+ 	test_all_match git status --porcelain=v2 -uno &&
+-	run_on_all "touch README.md" &&
++	run_on_all touch README.md &&
+ 	test_all_match git status --porcelain=v2 &&
+ 	test_all_match git status --porcelain=v2 -z -u &&
+ 	test_all_match git status --porcelain=v2 -uno &&
+@@ -135,7 +135,7 @@ test_expect_success 'add, commit, checkout' '
+ 	write_script edit-contents <<-\EOF &&
+ 	echo text >>$1
+ 	EOF
+-	run_on_all "../edit-contents README.md" &&
++	run_on_all ../edit-contents README.md &&
  
- struct repository {
-diff --git a/sparse-index.c b/sparse-index.c
-new file mode 100644
-index 000000000000..82183ead563b
---- /dev/null
-+++ b/sparse-index.c
-@@ -0,0 +1,8 @@
-+#include "cache.h"
-+#include "repository.h"
-+#include "sparse-index.h"
-+
-+void ensure_full_index(struct index_state *istate)
-+{
-+	/* intentionally left blank */
-+}
-diff --git a/sparse-index.h b/sparse-index.h
-new file mode 100644
-index 000000000000..09a20d036c46
---- /dev/null
-+++ b/sparse-index.h
-@@ -0,0 +1,7 @@
-+#ifndef SPARSE_INDEX_H__
-+#define SPARSE_INDEX_H__
-+
-+struct index_state;
-+void ensure_full_index(struct index_state *istate);
-+
-+#endif
+ 	test_all_match git add README.md &&
+ 	test_all_match git status --porcelain=v2 &&
+@@ -144,7 +144,7 @@ test_expect_success 'add, commit, checkout' '
+ 	test_all_match git checkout HEAD~1 &&
+ 	test_all_match git checkout - &&
+ 
+-	run_on_all "../edit-contents README.md" &&
++	run_on_all ../edit-contents README.md &&
+ 
+ 	test_all_match git add -A &&
+ 	test_all_match git status --porcelain=v2 &&
+@@ -153,7 +153,7 @@ test_expect_success 'add, commit, checkout' '
+ 	test_all_match git checkout HEAD~1 &&
+ 	test_all_match git checkout - &&
+ 
+-	run_on_all "../edit-contents deep/newfile" &&
++	run_on_all ../edit-contents deep/newfile &&
+ 
+ 	test_all_match git status --porcelain=v2 -uno &&
+ 	test_all_match git status --porcelain=v2 &&
+@@ -186,7 +186,7 @@ test_expect_success 'diff --staged' '
+ 	write_script edit-contents <<-\EOF &&
+ 	echo text >>README.md
+ 	EOF
+-	run_on_all "../edit-contents" &&
++	run_on_all ../edit-contents &&
+ 
+ 	test_all_match git diff &&
+ 	test_all_match git diff --staged &&
+@@ -280,7 +280,7 @@ test_expect_success 'clean' '
+ 	echo bogus >>.gitignore &&
+ 	run_on_all cp ../.gitignore . &&
+ 	test_all_match git add .gitignore &&
+-	test_all_match git commit -m ignore-bogus-files &&
++	test_all_match git commit -m "ignore bogus files" &&
+ 
+ 	run_on_sparse mkdir folder1 &&
+ 	run_on_all touch folder1/bogus &&
 -- 
 gitgitgadget
 
