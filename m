@@ -2,152 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EA2B9C433C1
-	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 20:10:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AFB7CC433C1
+	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 20:13:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B0965619CE
-	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 20:10:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 86296619CB
+	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 20:13:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230452AbhCWUKa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Mar 2021 16:10:30 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58254 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231470AbhCWUKU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Mar 2021 16:10:20 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 55887BB68D;
-        Tue, 23 Mar 2021 16:10:19 -0400 (EDT)
+        id S230452AbhCWUNR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Mar 2021 16:13:17 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:60450 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230235AbhCWUMy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Mar 2021 16:12:54 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3653912D31A;
+        Tue, 23 Mar 2021 16:12:54 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=dvlfkcneF8atpdtNMz8kK3DzfrI=; b=njzLD4
-        qvYMRSalsvF3eKwx40Js6VmkL6bibC6K69KQfi7u7ktKecKuWE7PcRIfpb9iS1ZC
-        Al9wM6l57pmxqadPsUlnpgXMekZwCFD6yIDLLRR43lvcN/rcfydbmTSJ8GI93f9l
-        vJRg5GDBOOvfqRQSjj0NNLSIMHxvmgKhmIiWQ=
+        :content-type; s=sasl; bh=g78Vb86gNiapBMqL+vJQH9nHtSo=; b=t6S/c6
+        ErlMR5fMtkVGmzJL+sxIqwehxFIMxKdxqexj2Jq0X7Ob9Jsu6smuic1KwH+03u6Z
+        aXJm+hU9dURMPG4xLMk4QDKV929hR1XJ8AKhCSUuRptWQZCuzn0rL5Lft0FgI1CM
+        Dy+zCby1E7uRFmMBHo/lyc88JXsWwGbAp7wtU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ykMfr5zIha1Y2DLSnCKSr+iFPAuFj9IK
-        8bTt/UNyUvsYsaGqXrBBmG3ky1L1S4KI1a7CFBxeoxdmjykYe+AYnoo25rMulVm0
-        GwgYfzub1IBVEXN/kRl6nXHlILUCZnVF/FcNxgztGClPQgcA/NhNVVZbZhuTKk8V
-        tebv+uP3crU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4D74FBB68C;
-        Tue, 23 Mar 2021 16:10:19 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=F9MiyeAOKlQyZ6LWiWLiV2pwfPOGjM2p
+        4L4ZpBC4S/4m1ucYTc1d676EkdfIB0ZD3Q08y9faZz1Q5KxwLJxD8ARDcr62SGGO
+        7vfN734bwO1bXYUtx98+o7iTYFGJxwHdw+jbuNVn6HCG1bPNYvdAUPMmU5Uutmf/
+        IbHxbTraZ+M=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2E7D812D319;
+        Tue, 23 Mar 2021 16:12:54 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CA0BCBB68B;
-        Tue, 23 Mar 2021 16:10:18 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 57A3012D318;
+        Tue, 23 Mar 2021 16:12:50 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, newren@gmail.com, pclouds@gmail.com,
-        jrnieder@gmail.com,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>,
+        Jeff King <peff@peff.net>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Josh Steadmon <steadmon@google.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Patrick Steinhardt <ps@pks.im>,
         =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v3 01/20] sparse-index: design doc and format update
-References: <pull.883.v2.git.1615404664.gitgitgadget@gmail.com>
-        <pull.883.v3.git.1615912983.gitgitgadget@gmail.com>
-        <62ac13945bec13270e0898126756c3f947ae264b.1615912983.git.gitgitgadget@gmail.com>
-        <xmqqczvulnfn.fsf@gitster.g>
-        <97d57947-dd5f-bb06-cc40-37a23f1db5d9@gmail.com>
-Date:   Tue, 23 Mar 2021 13:10:18 -0700
-In-Reply-To: <97d57947-dd5f-bb06-cc40-37a23f1db5d9@gmail.com> (Derrick
-        Stolee's message of "Tue, 23 Mar 2021 07:16:33 -0400")
-Message-ID: <xmqq8s6d3a39.fsf@gitster.g>
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>
+Subject: Re: [PATCH v5 13/15] Reftable support for git-core
+References: <pull.847.v4.git.git.1607522429.gitgitgadget@gmail.com>
+        <pull.847.v5.git.git.1615580397.gitgitgadget@gmail.com>
+        <bdb19af22cc7c4f3383f03f42cb4906c3ec5c5f3.1615580397.git.gitgitgadget@gmail.com>
+        <e754900a-1d5d-d4cc-aba6-737b37d66f74@gmail.com>
+Date:   Tue, 23 Mar 2021 13:12:48 -0700
+In-Reply-To: <e754900a-1d5d-d4cc-aba6-737b37d66f74@gmail.com> (Derrick
+        Stolee's message of "Tue, 23 Mar 2021 07:40:24 -0400")
+Message-ID: <xmqq4kh139z3.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: CA22D902-8C13-11EB-A405-D152C8D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 2473BBD8-8C14-11EB-BB60-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Derrick Stolee <stolee@gmail.com> writes:
 
->>> +Three important scale dimensions for a Git worktree are:
->> 
->> s/worktree/working tree/; The former is the thing the "git worktree"
->> command deals with.  The latter is relevant even when "git worktree"
->> is not used (the traditional "git clone and you get a working tree
->> to work in").
+> On 3/12/2021 3:19 PM, Han-Wen Nienhuys via GitGitGadget wrote:
+>> diff --git a/Documentation/config/extensions.txt b/Documentation/config/extensions.txt
+>> index 4e23d73cdcad..82c5940f1434 100644
+>> --- a/Documentation/config/extensions.txt
+>> +++ b/Documentation/config/extensions.txt
+>> @@ -6,3 +6,12 @@ extensions.objectFormat::
+>>  Note that this setting should only be set by linkgit:git-init[1] or
+>>  linkgit:git-clone[1].  Trying to change it after initialization will not
+>>  work and will produce hard-to-diagnose issues.
+>> ++
 >
-> I guess I'm distracted by using SKIP_WORKTREE a lot, but "working
-> directory" is more specific and hence better.
+> I noticed while resolving conflicts with my series, which also edits this
+> file, that the "+" line above should be removed. That likely munges the
+> fact that the config entry below should be its own list item, not a
+> continuation of the previous one.
 
-Since the user's current working directory can be outside any
-working tree that is governed by any git repository, "working
-directory" is a term I try to avoid when describing the directory
-where a checkout of a revision lives.
-
-Documentation/glossary-content.txt is where the suggestion for
-"working tree" comes from.
-
-> I could rearrange things here. The important things to note are:
->
-> 1. Updating index entries is very fast, but adds up at large scale.
-
-This is the "checkout to match the index to the tree of HEAD" part,
-ignoring the cost of writing working tree files out?
-
-> 2. It is faster to write a file to disk from Git's object database
->    than it is to compare a file on disk to the copy in the database,
->    which is frequently necessary when the mtime on disk doesn't match
->    the mtime in the index.
-
-True.  But of course, not having to do either (i.e. having a fresh
-cached stat info) would be even faster ;-).
-
->> Also it
->> is unclear what you mean by "changing HEAD only require updating the
->> index".  Certainly when "git switch" flips HEAD from one commit to
->> another, you'd update the index and update the files in the working
->> tree (in the Populated part that is in the sparse-checkout cone) to
->> match, no?
->
-> This is unclear of me. I was thinking more on the lines of "git reset"
-> (soft mode) which updates HEAD without changing the files on disk.
-
-OK, and that is in line with your "updating index entries is very
-fast (but adds up)".
-
-> After all of this postulating, I think that the offending sentences
-> are better off deleted. They don't add clarity over what can be
-> inferred by an interested reader.
-
-OK.
-
-> I'm mixing terms incorrectly. I think what I really mean is
->
->   In fact, these loops expect to see a reference to every
->   staged file.
-
-OK.
-
->  The plan is to make all of these integrations "sparse aware" so
->  this expansion through tree parsing is unnecessary and they use
->  fewer resources than when using a full index.
-
-;-)
-
-> I meant by "serialized index file" is that the file written to disk has
-> the sparse directory entries, but the in-core copy will not (except for
-> a very brief moment in time, during do_read_index()).
-
-Nice.  That would probably mean cache-tree extension on-disk can go
-away, because we can populate in-core cache-tree from these entries.
-I've always hated the on-disk encoding of that extension.
-
-Or we are not doing this "extra tree" everywhere (i.e. limited only
-to the parts that are marked for "sparse checkout")?
-
-Thanks.
+Yup, I noticed them, too, while merging.  If I recall correctly,
+even though using a blank line to separate the list items is
+semantically more correct, using the plus-alone line produced either
+identical, or visually indistinguishable, rendering when I tested.
