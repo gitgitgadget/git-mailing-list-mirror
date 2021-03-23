@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 43D5BC433E4
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6CB7DC433EC
 	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 13:45:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2CF04619C0
+	by mail.kernel.org (Postfix) with ESMTP id 5419F619C0
 	for <git@archiver.kernel.org>; Tue, 23 Mar 2021 13:45:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231665AbhCWNpC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Mar 2021 09:45:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38986 "EHLO
+        id S231751AbhCWNpF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Mar 2021 09:45:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38990 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231683AbhCWNol (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Mar 2021 09:44:41 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99210C061574
-        for <git@vger.kernel.org>; Tue, 23 Mar 2021 06:44:39 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id o16so20846944wrn.0
-        for <git@vger.kernel.org>; Tue, 23 Mar 2021 06:44:39 -0700 (PDT)
+        with ESMTP id S231709AbhCWNom (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Mar 2021 09:44:42 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B75FFC0613E0
+        for <git@vger.kernel.org>; Tue, 23 Mar 2021 06:44:41 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id d191so11076806wmd.2
+        for <git@vger.kernel.org>; Tue, 23 Mar 2021 06:44:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=i+gKe8EgHfQlDyjY32XCjj4qcNKDY7Jfl7pEV2IN20w=;
-        b=oC7Iz2bkNx8t98Ww3+tqbux9qf824cDkVPz7V3HRB/3RRxugEnhkOkFooe4tY6R//S
-         6EbrxMaYLVL1skKLqUTrwuQx0dLWF7SdXmcnQ4UEzSM+MVnlHxmfVJafM6EAPtkl+Jk7
-         MuU0KG2nr1HK8BSFoSBbdWcKsUu0dQ/0/OLSY54i2wV355nXYfEu/iflZ/ZdY+ELaNta
-         Wo15PSkZTjinXCuBManIHiwVLJzZjR+WnEnDYFshz1Ev9YOWi6esLX6ZJaP/O3/aFH+n
-         1Hn0PlhHgivG9TyOWoSLMA3q2eECP5N50EgwodVOhLJAm94tLr4YKXW0pTDt4sDbjDdo
-         f2WQ==
+        bh=d57sN1iwbvl34esKzbNWg9awcmZQjE9yfjMflF8q+sQ=;
+        b=tqKL8bTbxiwYaOZYKcT/+olbKatvx19GCky8/rfPhjRp2nOIAcEtx9CimDBIcTyrMs
+         lXwTYJvxBqQ3bxsEicSt1kmPRm1ipY27xWkZuBTt6PppKc9MdJJjq+9w7GqBc+ImnJGn
+         4uS05PRP9x9KSXVBzNFvRN64mAlShQwUBNulUh1Kf8NN6D+sN+g8MCzJOANJ8Cutt00B
+         aDevv8y29lrSJAHJttL8KFwAdSRyPqY+RQuO5oPtyRCDzVYAX8q3idVWZ4wAiT6ScrOW
+         ZeCuGtYcrITbmruKUUHyBvKg3iE0bqnnODqPWMIlb9D6lSy56Mkf0NidxA2FFj43u6hf
+         nAyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=i+gKe8EgHfQlDyjY32XCjj4qcNKDY7Jfl7pEV2IN20w=;
-        b=AaE1hoGALDR4fmNY7utgZY/tpiAQGm45kVbWt7Br/P1eexvNM0JliQmx5BkYkhNB2b
-         kuOcBVtRNBAQqUa9DOUkwqUDEsXgVrfE/yFuNDaLpB1Gy98BSUpAZvkJ/jsLcr8N9UD2
-         FDUMKvzqIUYWEIajakK07rgOEzOCN2clzXuSaoeJkIOLyaQshAztt39EoVoB3Cgyr4+R
-         M6qDaa0tRKfUlAbgUgeLE901f7AiTCHtQw8rfcQBAPHJ9k0PkLu72IHc81YhqxyruoFf
-         LiCTNBPUnh4a5whukCDDZ9w/mUW4Uq+BdU69DIBG0tmhnndklOBhSccq2ot3CqWnB5AU
-         IaYQ==
-X-Gm-Message-State: AOAM531Nmm7A+WZQpH64Ehqwll1elbdTHVOnMBGS1mR/XsWpnDrZLa7r
-        L/peCSs2QicxVBBgprBj9N2Vh0vs7uc=
-X-Google-Smtp-Source: ABdhPJw1iJA4Kz5d96Hx6LV4t524Y50ARt7KjTOT/42X1Q2dvfHydryTinm+T+ZGKgj8h3UGA0rPTg==
-X-Received: by 2002:a5d:6c67:: with SMTP id r7mr4060627wrz.373.1616507078445;
-        Tue, 23 Mar 2021 06:44:38 -0700 (PDT)
+        bh=d57sN1iwbvl34esKzbNWg9awcmZQjE9yfjMflF8q+sQ=;
+        b=cuYBokqLtqMD/TSIm+gdhSmKM6XpUbXQU1SnDKY1Vx/7tZxBFjNEitDBqyoVjRoPZ6
+         2geN5pf3z6eqKmXOg0e3QAykLVhpAZp8cOKzGmyJLz0W2RlmuEA9cKzLlRenoFKkzlqz
+         pYANI/0Kh3jyKjRBbHcZwwXah4y1MVxtHh5PZKPpmK7hL42qsJlS1VnglR/r8oYyKxCP
+         3XQejPbK+0FH9bVZ+kVZwyZfgSBo2OQNnGtSh7UOnU9n9mz3keEU+Ad1w3vYrcPhCAO8
+         PYXWc53IDRbKWh/gWhb8jH7TMEvUCF88Q8CRPkzY3cW/GLGLmm/8R0YqrmJCPrXuxwZb
+         pr1Q==
+X-Gm-Message-State: AOAM5324OVxJvEhikPNaHC8qX/uQKaaDhop4vOOtoz9gp3gmKMrny2NH
+        CNnwpVWPG9KLhme1m3z8f8c88waToN8=
+X-Google-Smtp-Source: ABdhPJzi44E02l50hUTf725GXYQTvmHF7290Mn2zYYK8KiRhSpMWoPmzQJc9xJFUHS9dTTjDY1RcIg==
+X-Received: by 2002:a1c:a7d3:: with SMTP id q202mr3429558wme.93.1616507080483;
+        Tue, 23 Mar 2021 06:44:40 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l15sm23475893wru.38.2021.03.23.06.44.38
+        by smtp.gmail.com with ESMTPSA id j30sm25275163wrj.62.2021.03.23.06.44.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Mar 2021 06:44:38 -0700 (PDT)
-Message-Id: <3ddd5e794b5edc862b6047328f61cad5e6134c9f.1616507069.git.gitgitgadget@gmail.com>
+        Tue, 23 Mar 2021 06:44:40 -0700 (PDT)
+Message-Id: <6db36f33e960d6bfd4a156efc2e070dd9c23378b.1616507069.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.883.v4.git.1616507069.gitgitgadget@gmail.com>
 References: <pull.883.v3.git.1615912983.gitgitgadget@gmail.com>
         <pull.883.v4.git.1616507069.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 23 Mar 2021 13:44:17 +0000
-Subject: [PATCH v4 09/20] unpack-trees: ensure full index
+Date:   Tue, 23 Mar 2021 13:44:20 +0000
+Subject: [PATCH v4 12/20] submodule: sparse-index should not collapse links
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,50 +82,56 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The next change will translate full indexes into sparse indexes at write
-time. The existing logic provides a way for every sparse index to be
-expanded to a full index at read time. However, there are cases where an
-index is written and then continues to be used in-memory to perform
-further updates.
-
-unpack_trees() is frequently called after such a write. In particular,
-commands like 'git reset' do this double-update of the index.
-
-Ensure that we have a full index when entering unpack_trees(), but only
-when command_requires_full_index is true. This is always true at the
-moment, but we will later relax that after unpack_trees() is updated to
-handle sparse directory entries.
+A submodule is stored as a "Git link" that actually points to a commit
+within a submodule. Submodules are populated or not depending on
+submodule configuration, not sparse-checkout. To ensure that the
+sparse-index feature integrates correctly with submodules, we should not
+collapse a directory if there is a Git link within its range.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- unpack-trees.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ sparse-index.c                           |  1 +
+ t/t1092-sparse-checkout-compatibility.sh | 17 +++++++++++++++++
+ 2 files changed, 18 insertions(+)
 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index f5f668f532d8..4dd99219073a 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -1567,6 +1567,7 @@ static int verify_absent(const struct cache_entry *,
-  */
- int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options *o)
- {
-+	struct repository *repo = the_repository;
- 	int i, ret;
- 	static struct cache_entry *dfc;
- 	struct pattern_list pl;
-@@ -1578,6 +1579,12 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
- 	trace_performance_enter();
- 	trace2_region_enter("unpack_trees", "unpack_trees", the_repository);
+diff --git a/sparse-index.c b/sparse-index.c
+index 619ff7c2e217..7631f7bd00b7 100644
+--- a/sparse-index.c
++++ b/sparse-index.c
+@@ -52,6 +52,7 @@ static int convert_to_sparse_rec(struct index_state *istate,
+ 		struct cache_entry *ce = istate->cache[i];
  
-+	prepare_repo_settings(repo);
-+	if (repo->settings.command_requires_full_index) {
-+		ensure_full_index(o->src_index);
-+		ensure_full_index(o->dst_index);
-+	}
+ 		if (ce_stage(ce) ||
++		    S_ISGITLINK(ce->ce_mode) ||
+ 		    !(ce->ce_flags & CE_SKIP_WORKTREE))
+ 			can_convert = 0;
+ 	}
+diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+index 1e888d195122..cba5f89b1e96 100755
+--- a/t/t1092-sparse-checkout-compatibility.sh
++++ b/t/t1092-sparse-checkout-compatibility.sh
+@@ -376,4 +376,21 @@ test_expect_success 'clean' '
+ 	test_sparse_match test_path_is_dir folder1
+ '
+ 
++test_expect_success 'submodule handling' '
++	init_repos &&
 +
- 	if (!core_apply_sparse_checkout || !o->update)
- 		o->skip_sparse_checkout = 1;
- 	if (!o->skip_sparse_checkout && !o->pl) {
++	test_all_match mkdir modules &&
++	test_all_match touch modules/a &&
++	test_all_match git add modules &&
++	test_all_match git commit -m "add modules directory" &&
++
++	run_on_all git submodule add "$(pwd)/initial-repo" modules/sub &&
++	test_all_match git commit -m "add submodule" &&
++
++	# having a submodule prevents "modules" from collapse
++	test-tool -C sparse-index read-cache --table >cache &&
++	grep "100644 blob .*	modules/a" cache &&
++	grep "160000 commit $(git -C initial-repo rev-parse HEAD)	modules/sub" cache
++'
++
+ test_done
 -- 
 gitgitgadget
 
