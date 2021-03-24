@@ -2,178 +2,168 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AF79C433C1
-	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 00:53:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4831BC433C1
+	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 01:00:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E73BA619B3
-	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 00:53:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 15E01619D3
+	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 01:00:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233537AbhCXAxX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Mar 2021 20:53:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42760 "EHLO
+        id S233897AbhCXBAj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Mar 2021 21:00:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44294 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233460AbhCXAwq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Mar 2021 20:52:46 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A1C8C061763
-        for <git@vger.kernel.org>; Tue, 23 Mar 2021 17:52:45 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id w3so30102147ejc.4
-        for <git@vger.kernel.org>; Tue, 23 Mar 2021 17:52:45 -0700 (PDT)
+        with ESMTP id S230492AbhCXA75 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Mar 2021 20:59:57 -0400
+Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD8BCC061763
+        for <git@vger.kernel.org>; Tue, 23 Mar 2021 17:59:57 -0700 (PDT)
+Received: by mail-oi1-x233.google.com with SMTP id k25so19069697oic.4
+        for <git@vger.kernel.org>; Tue, 23 Mar 2021 17:59:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=xuX1F/0blj4GaNonLTkynmCTmxVYk7J6/Wv8N935Rxw=;
-        b=Lk+mAcaY3CD2hfOHVTjiwZjGlMThQ6B45CXadtT82q2Cu043x8luaVMXzHH1dGm42l
-         MaFPdJJv+l0G2KvMbUMEtOsMu78LScsgrUVebkNZqaql8g/Y65Ces4sYwlSEmgliwis5
-         ikKF7sByFAfNDlVgUWsRLjMI4X1XkFstzySowmb2uZQfRJgyMbaZIiJ8FRn8NTpv/7QL
-         HKF8JmTNXuajEnJFDOspgqeckvSl28K8VavoIYM96Tn4OoRM0gUW3VhvqJcPci6l1mdx
-         8+PbQnEwBkP/Yoki4slKjcmrQhcHHWYuU76fNdHpfBbe5JL/lc9fwCA0Cc51B6Pxs0jD
-         lAlw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=fJc8rh7bLpPEms45FFwaJalloNsPQ4jx+InrL/8Z5vk=;
+        b=c7qpQPT5GrAK+/InPCDoUYGWWMa4VadFSqw5RcoFW6NdJp6Qz6QqTqU1pJ4RXMRbJP
+         7ittuyld6ryvyrsAEl9q9tQXHP91tZK2RlNG6dhOZHQQWqvJxy/63pGirC0o3uNo7Qn+
+         zBsKf+/+B4d6ovPsz2N61bsqSQdu39xMn4Y/cF1JXa3GhLafCLksd3EwpbqSIjQ6gfl4
+         6J8PdZRIBbqisKYsZb2ITSfsI+ih8T3UirvHS4FmFEdESBIw2DvEJTaBHVj75bT8GXx6
+         90VIuLrEOTUPd8N51qVZnP77DRq2cahUc1/4fZi2PNm+xw2DIaArftyxz62yhU5vpG33
+         MPdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=xuX1F/0blj4GaNonLTkynmCTmxVYk7J6/Wv8N935Rxw=;
-        b=UwIc+TdB9dg1EPerkg2TyTWFUJlY6gT42B6GZdcy6vNV/rS8+nEKQ8dnd7edrX43yO
-         dxNBPwur/sXMtZvHuNx4XiBhGAyfQleyEryhqXsQyz+YvuxcbUrXROdeyGP7dtK3tQzN
-         DK07YqTz7C7NnWri+WG6DCIV47Xdk400BIocwRJeXolxwyp+P0i/TsOPthDAMX1Q25jv
-         HfEQmJZ74wqehwJO6amryG1VTTndsxngiEsTSxVOmq7drdWoubwMike0/AVLkK0cjP7D
-         gVZjLtmeo1paw6vgM9hVxJOb3i1N1leEKoYZlSfVEtbtE7if+/vBRy5Yk3L3kAgg+rpG
-         RLEw==
-X-Gm-Message-State: AOAM530ggcTAoHcu7pCfxFjrqXxP0nLDhDJB4WJlQbOt003eR2ukfyWJ
-        7r1jb+awCcoCFOOec2cqKEzgMXB5mIFl7g==
-X-Google-Smtp-Source: ABdhPJxDjGtpOWeTL72lPisAl85s9/n5XFiyY92YxUYio1AIkqe5uMr5rj7PjQDWivmxULz7vVe8eA==
-X-Received: by 2002:a17:906:8583:: with SMTP id v3mr898116ejx.361.1616547164045;
-        Tue, 23 Mar 2021 17:52:44 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id g12sm155001eje.120.2021.03.23.17.52.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Mar 2021 17:52:43 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org, newren@gmail.com, gitster@pobox.com,
-        pclouds@gmail.com, jrnieder@gmail.com,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        dstolee@microsoft.com
-Subject: Re: [RFC/PATCH 3/5] ls-files: add and use a new --sparse option
-References: <dffe8821fde290a1e19b2968098b007b9ac213e6.1615912983.git.gitgitgadget@gmail.com>
- <20210317132814.30175-4-avarab@gmail.com>
- <028fb838-f012-e8c7-eb8b-53c810802243@gmail.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <028fb838-f012-e8c7-eb8b-53c810802243@gmail.com>
-Date:   Wed, 24 Mar 2021 01:52:43 +0100
-Message-ID: <87tup1pe3o.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=fJc8rh7bLpPEms45FFwaJalloNsPQ4jx+InrL/8Z5vk=;
+        b=ZNYrctqM9DXC7+J7xUuVO8vo9fPU8UIYkCCdj00SaLJaVkxvC1dFTqIEfP+sVClcdG
+         YBJVdMWs80f4Hci2n7tV84ykblrM2mJ2rscQxXqanUB0cbvieAVuFDYxb0nluXHqbFYv
+         QoH0L3eIgfWpkco0bXcBtzKXkt5XvvZT9dXTXus0W/Vm8K0hjJIp4KIhAz0Re2fRHpjT
+         gimJto7xbHVlnxRP55ZTZnqcMtlfGHRJFkKZDhsnX4PHF5xIrXTIEN8haKguSp7VHaix
+         ek8PKV1TEMf2Fl0FC0xIuB8xb9OG3BaczA/c++fb10fCOi8kM2PJfUJijRaMuK2Cwr0l
+         9tYQ==
+X-Gm-Message-State: AOAM532ib1R2nVJAhF2dSUyGgnpLGc92jE6e3RVRPx7pQXXXKyaemrct
+        TU69DHYgs5PYQmRBYnPshn8GnSnpzU7LiDdX/+FkwflTf+w=
+X-Google-Smtp-Source: ABdhPJxQiGk79JCrB2s3Z/HiG/88PnHP/gwsuFbMc6iGjWUeH3BLpsmrd+S+39QF8LJgayYqd7TVRk0zmhNYCTF3Mjw=
+X-Received: by 2002:aca:6545:: with SMTP id j5mr573403oiw.31.1616547597030;
+ Tue, 23 Mar 2021 17:59:57 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+References: <4442fd0a-3306-a22b-3614-e3272f8f0be5@FreeBSD.org>
+ <YFUX+Rqdj3gteyql@camp.crustytoothpaste.net> <78c7bd2c-c487-756e-c85d-dcfe2866f5f4@FreeBSD.org>
+ <CABPp-BGZebutsk5c4kf9gAuu0zgSEptxRmbEBFFwNPE03D4R1g@mail.gmail.com>
+In-Reply-To: <CABPp-BGZebutsk5c4kf9gAuu0zgSEptxRmbEBFFwNPE03D4R1g@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 23 Mar 2021 17:59:46 -0700
+Message-ID: <CABPp-BEGEcws69sg6Z2=B1nihFG227mAsSx=boU3uSx2xDUEjg@mail.gmail.com>
+Subject: Re: --no-edit not respected after conflict
+To:     Renato Botelho <garga@freebsd.org>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Wed, Mar 17 2021, Derrick Stolee wrote:
-
-> On 3/17/2021 9:28 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>=
-> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-ch=
-eckout-compatibility.sh
+On Mon, Mar 22, 2021 at 10:14 AM Elijah Newren <newren@gmail.com> wrote:
 >
-> I want to learn from your suggested changes to the test, here,
-> so forgive my questions here:
->=20=20=20
->> +test_index_entry_like () {
->> +	dir=3D$1
->> +	shift
->> +	fmt=3D$1
->> +	shift
->> +	rev=3D$1
->> +	shift
->> +	entry=3D$1
->> +	shift
->> +	file=3D$1
->> +	shift
+> On Mon, Mar 22, 2021 at 6:09 AM Renato Botelho <garga@freebsd.org> wrote:
+> >
+> > On 19/03/21 18:30, brian m. carlson wrote:
+> > > On 2021-03-19 at 14:44:30, Renato Botelho wrote:
+> > >> I was reverting multiple commits using --no-edit parameter and after one of
+> > >> those commits conflicted and I resolved using mergetool, no-edit option was
+> > >> not respected anymore and next commits opened editor for me to review commit
+> > >> message.
+> > >
+> > > I'm not sure I understand what you're seeing here, and I think maybe if
+> > > I knew that I could provide more useful information.  Could you maybe
+> > > provide the set of commands that you're running up to and when you see
+> > > this problem, or even better, a reproduction testcase?
+> > >
+> >
+> > I ran `git revert --no-edit commit1 commit2 ... commitN` and one of
+> > those reverts had a conflict and the process stopped waiting for a
+> > resolution.
+> >
+> > I ran `git mergetool` and resolved the conflict, then ran `git revert
+> > --continue` and then it ignored --no-edit parameter for all other
+> > commits and opened $EDITOR for me to edit commit message.
+> >
+> > I managed to reproduce it on a testing repository doing following steps:
+> >
+> > % echo a > file
+> > % git init
+> > % git add file
+> > % git commit -m a
+> > % echo b > file; git commit -a -m b
+> > % echo c > file; git commit -a -m c
+> > % echo d > file; git commit -a -m d
+> > % echo e > file; git commit -a -m e
+> > % git log --oneline
+> >
+> > d3ec7fc e
+> > 23ad2b7 d
+> > 2265c82 c
+> > 5e0c98a b
+> > b34f81a a
+> >
+> > % git revert --no-edit d3ec7fc 2265c82 5e0c98a
+> >
+> > It will revert d3ec7fc without any interaction, as expected, then will
+> > stop the process on 2265c82 due to conflict and after resolve conflict
+> > when I do:
+> >
+> > % git revert --continue
+> >
+> > --no-edit parameter will be ignored when reverting 5e0c98a.
 >
-> Why all the shifts? Why not just use $1, $2, $3,...? My
-> guess is that you want to be able to insert a new parameter
-> in the middle in the future without changing the later
-> numbers, but that seems unlikely, and we could just add
-> the parameter at the end.
+> Thanks for the testcase.  I can reproduce.
+>
+> sequencer.c:save_opts() will only save non-zero values (and since
+> options.edit defaults to 1, it'll only save the default value).
+>
+> sequencer.c:continue_single_pick() was written assuming struct
+> replay_opts was not necessary, so even if opts->edit is 0, it just
+> runs a plain "git commit" anyway.  It should include --no-edit
+> --cleanup=strip.
+>
+> I've got a patch that fixes both issues, but need to make a proper
+> testcase and whatnot.  Maybe I'll have time to do that tonight.
 
-It's just crappy RFC-quality code. I probably copied some other function
-and went with it. No good reason. Yeah it's ugly.
+This turns out to be messier than I expected, and I still don't know
+what correct behavior is for two related cases.  As best I've figured,
+current behavior and expected behavior is as follows (note the
+question marks for two entries in the expected behavior table):
 
->> +	hash=3D$(git -C "$dir" rev-parse "$rev") &&
->> +	printf "$fmt\n" "$hash" "$entry" >expected &&
->> +	if grep "$entry" "$file" >line
->> +	then
->> +		test_cmp expected line
->> +	else
->> +		cat cache &&
->> +		false
->> +	fi
->> +}
->> +
->>  test_expect_success 'sparse-index contents' '
->>  	init_repos &&
->>=20=20
->> -	test-tool -C sparse-index read-cache --table >cache &&
->> +	git -C sparse-index ls-files --sparse >cache &&
->>  	for dir in folder1 folder2 x
->>  	do
->> -		TREE=3D$(git -C sparse-index rev-parse HEAD:$dir) &&
->> -		grep "040000 tree $TREE	$dir/" cache \
->> -			|| return 1
->> +		test_index_entry_like sparse-index "040000 %s 0\t%s" "HEAD:$dir" "$di=
-r/" cache || return 1
->
-> I see how this uses only one line, but it seems like the
-> test_index_entry_like is too generic to make it not a
-> complicated mess of format strings that need to copy
-> over and over again.
->
-> Perhaps instead it could be a "test_entry_is_tree"
-> and it only passes "$dir" and "cache"? Then we could drop the loop and
-> just have
->
-> 	test_entry_is_tree cache folder1 &&
-> 	test_entry_is_tree cache folder2 &&
-> 	test_entry_is_tree cache x &&
->
-> or we could still use the loop, especially when we test for four trees.
+=== Current behavior ===
+                   Non-conflict commits    Right after Conflict
+revert             Edit iff isatty(0)      Edit (ignore isatty(0))
+cherry-pick        No edit                 See above
+Specify --edit     Edit (ignore isatty(0)) See above
+Specify --no-edit  (*)                     See above
 
-Yeah that sounds good. Personally I don't mind 4x similar lines
-copy/pasted over a for-loop in the tests. You don't need to worry about
-the || return doing the right thing, and just setting up the for-loop is
-already 3 lines...
+(*) Before stopping for conflicts, No edit is the behavior.  After
+    stopping for conflicts, the --no-edit flag is not saved so see the
+    first two rows.
 
->> -	test-tool -C sparse-index read-cache --table >cache &&
->> +	git -C sparse-index ls-files --sparse >cache &&
->>  	for dir in deep/deeper2 folder1 folder2 x
->>  	do
->> -		TREE=3D$(git -C sparse-index rev-parse HEAD:$dir) &&
->> -		grep "040000 tree $TREE	$dir/" cache \
->> -			|| return 1
->> +		test_index_entry_like sparse-index "040000 %s 0\t%s" "HEAD:$dir" "$di=
-r/" cache || return 1
->>  	done &&
->>=20=20
->> +	grep 040000 cache >lines &&
->> +	test_line_count =3D 4 lines &&
->> +
->
-> The point here is to check that no other entries are trees? We know
-> that this number will be _at least_ 4 based on the loop above.
+=== Expected behavior ===
 
-It's exactly 4 because we have 4 folders we're checking. But you tell
-me. I was just trying to refactor this dependence on the ls-tree format
-while moving it over to ls-files without spending too much time on
-understanding all the specifics.
+                   Non-conflict commits    Right after Conflict
+revert             Edit iff isatty(0)      Edit (regardless of isatty(0)?)
+cherry-pick        No edit                 Edit (regardless of isatty(0)?)
+Specify --edit     Edit (ignore isatty(0)) Edit (ignore isatty(0))
+Specify --no-edit  No edit                 No edit
+
+
+The thing I'm unsure on is the !isatty(0) handling for revert &
+cherry-pick right after a conflict when neither --edit nor --no-edit
+are specified.  Should that attempt to launch an editor, which is
+likely to fail?  It does currently, but given that it ignored
+--no-edit previously it may have just been an oversight rather than
+intentional behavior.
+
+Thoughts?
