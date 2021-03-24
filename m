@@ -2,116 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=0.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A50DAC433E0
-	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 12:31:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EAACFC433C1
+	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 12:32:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7E82961A06
-	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 12:31:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AB854619B6
+	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 12:32:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232800AbhCXMbX (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S233151AbhCXMby (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Mar 2021 08:31:54 -0400
+Received: from mout.gmx.net ([212.227.17.21]:44985 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232658AbhCXMbX (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 24 Mar 2021 08:31:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52304 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230115AbhCXMay (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Mar 2021 08:30:54 -0400
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25C9AC061763
-        for <git@vger.kernel.org>; Wed, 24 Mar 2021 05:30:54 -0700 (PDT)
-Received: by mail-pj1-x102c.google.com with SMTP id mz6-20020a17090b3786b02900c16cb41d63so1116651pjb.2
-        for <git@vger.kernel.org>; Wed, 24 Mar 2021 05:30:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=QJK3jIQ1ELZfn8vekPFuUlXYx0CPXSfpa4cGSxfpWDs=;
-        b=oXiCcPciB7aWImRo1C59C+b73c3H2cBOamBC4Nx9dspco77cMXLSbkbe2Y9kZT9WgW
-         5JX7v41AylcaqUJdhmmzxFdLyIBS/IMouacAFIeCPiyWoBYBieAssdXQJ19eWVNHHvy0
-         wG+/l5tmLjxcms91tzktaEPiwU9DdXAd2r3Ut/UFsTKq3Ib5RzqzPsU62UF4bOE/jvE/
-         Xthq415JHmptpu8i2M/g8n3tlVUaJmp449rKtO7+xEpWmOFaMFFX9LPhLud5ylj1Z5Ow
-         LBHP33dCf1ni4gf5KeEUfJ1EI7pn4GOjk4sRpeV1JfsayfP6v3980D484MO3Sr1OywC1
-         KVAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=QJK3jIQ1ELZfn8vekPFuUlXYx0CPXSfpa4cGSxfpWDs=;
-        b=CSIGjgTf3Lrcq3GgMMWesmkRoj9jbXjdyPW2+efYDlz8bX+pm/7VyyTDHUqnTeG+BZ
-         xlZQKW4RhgE/O67B5RLn+LFIpEDqYXcH71O96m+yVdEb5/aHgJIrP73YlVOQndbx0S4q
-         u6kCs182ZDgspJ0/mBQURStfHlgnvNUgs2sZksOftrDWL0DGDNv4vrpS75+NVNt5POlI
-         P6i8mLebiAuHXgxIYL7pCGnlwUwu2Q41zcyfUbmxQWSiDDr7sVa9gaF5950O0UddlbMq
-         ANJ2mM8xz5gT4eyY0dF7JMJw969LHVqvDF+tsnl5BKy/GQmx+/eMwjYrqoZ/ddIIUc2U
-         gKpw==
-X-Gm-Message-State: AOAM531oqCcIy3cT9yTLl0zHl5tL6BJwaJOSpjNHnP6i//YCdsW2ybRR
-        1qsMPLICGNT0k3QBkDIg8dDjHitDPUGZVw==
-X-Google-Smtp-Source: ABdhPJweyruBVJ/Y3/zzgQ02Fqt5r6PNF6Nq5/MhDgdkK5O66lhTAP6GktS4CZBaD97Bt8xKhCtUaw==
-X-Received: by 2002:a17:90a:400f:: with SMTP id u15mr3230309pjc.80.1616589053579;
-        Wed, 24 Mar 2021 05:30:53 -0700 (PDT)
-Received: from ubuntu.mate (subs03-180-214-233-84.three.co.id. [180.214.233.84])
-        by smtp.gmail.com with ESMTPSA id c24sm2443299pjv.18.2021.03.24.05.30.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Mar 2021 05:30:53 -0700 (PDT)
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: [PATCH 2/2] git-format-patch: Document format for binary patch
-Date:   Wed, 24 Mar 2021 19:30:27 +0700
-Message-Id: <20210324123027.29460-3-bagasdotme@gmail.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210324123027.29460-1-bagasdotme@gmail.com>
-References: <20210324123027.29460-1-bagasdotme@gmail.com>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1616589079;
+        bh=7RbBHvwfyKtypWRnV+hfCrzPzBRHhS0t7OJ0ThfvMYk=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=g/PKUKE/pREqagNpVdVg8LgugUL0NwNiW621A/9egB6EF5t0uHAs65L29BiXn8/ov
+         nHjKmpaiKuF7Brwg2UysLFLZmnmJPGNGyJu6AzSllbk/cgG1xclVCaZUMMQHlysjqB
+         vfb53kSciLmoMtW4VtmkRlfDy5xEok8ELDB8ynJU=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.18.9.78] ([213.196.212.127]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N3bX1-1lomzk1QhP-010Zhv; Wed, 24
+ Mar 2021 13:31:19 +0100
+Date:   Wed, 24 Mar 2021 11:43:57 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: ag/merge-strategies-in-c, was Re: What's cooking in git.git (Mar
+ 2021, #07; Mon, 22)
+In-Reply-To: <xmqq35wm5y6d.fsf@gitster.g>
+Message-ID: <nycvar.QRO.7.76.6.2103241142220.50@tvgsbejvaqbjf.bet>
+References: <xmqq35wm5y6d.fsf@gitster.g>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:3ZyeOeQVfw4OKbk6f58eqlZHh+ennw8n2p5oWSBvqzbdy2yRYZN
+ Y3Uler6CC5XvvHTEEAbPqa5TRajFeHCWvZhDXCnIs9xSQxhxJUf65ezm/1T+toP7d812lQ7
+ Xy0TxW0cZWQxvZkqZu1DoGEnPvE2XjTXZ+Dyjmw1knB8kOmhHTYwJWcbps+Xj+ILM8L/zdu
+ uYuOh55cebknlr20pRJAw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:m+ReMBUD5ac=:3Fei9OHl01aYw6M8BdNfm5
+ nHpjnxrC70Axl9R0xt2ztZ135+dFys2jEA+tzWIqQPUC3DnN09Ffia+nTO7MUwEccV/xHx9/K
+ fbTUiIGRghc2PLMU3jNSpKU0cxRPTf8TLAmPiRt4sKSSc6NThQOnwFthd6MVyLDGFcmPoRA4g
+ 0WDlVGXGQlmjJHNoor2wzxJcINm8hzaOKpitq9OM1lgegkp17xecnqToEak5KcF1tu+738mDK
+ SK6w6CNtIX0RMykNWBHBR8UYG9q2nf23/zWmeNET2LGOWL1k4z4LInUnVTMcUPnBZDDQ7+FLe
+ Kci5Jt8TA500VDqJr4ZOhB8lpudWNvKkpz1mk7FDkH5nTIOvl2sPkJ5uWmCiz44WvPFgYLVGr
+ NVgYAk+DZnWMhVao0rFS3mBwkQmLcIh8W0d1YfbSzX0Fwc2DXMWpR8Pa83qvAWZ86aYPqY5Iz
+ YDMHwItwciyj2UIQ5RCmfMPEcTs2VL07SIfVAL2MpBGoT74/RpeAc8VPM2L0mJaYS5m5hW8To
+ tH5xjHDm3A3YwxrLJGvXJTqNrCE8RjFt540ClfuvKmjGRRala4y+qrz3G020j6SvRqkXmackS
+ IP1RiVjac34m68ao+rZfq4r0f0rTkvmIB+16BIUAHP1cBd9BrcpbzvaKHK/FqRYAM93qdwqBp
+ o1CmkcF6ISPWsgDCML2IKlUe/45bWr3lpATybrWZQtgHlDwMQgg+XovMzw71qsvpJ/eC5x9SL
+ 3MlVLXRp/5Hwz+eEU6sbKeQjMm0wY91Lx/JNS7ldiFzLhkLIlqk+VPZg25pAFRkaSwSIJvXOh
+ CtcLwpg1oKAXOb6hRviNiQWR3VPDA9juvl5G2nM2XcJ6fFvqLcdroghfXnRnTmf3sADgSZDQe
+ h1gFbbwNfXpkRDLzv2TUZrIF4UuK/pmayEcZ9X4f4=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Document binary file patch formats that are different from text file
-patch.
+Hi Junio,
 
-Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
----
- Documentation/git-format-patch.txt | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+On Mon, 22 Mar 2021, Junio C Hamano wrote:
 
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index 247033f8fc..8de172b1f4 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -725,6 +725,28 @@ diff format is described as below:
- 
- include::diff-generate-patch.txt[]
- 
-+Binary Files
-+~~~~~~~~~~~~
-+For binary files, the diff format have some differences compared to text
-+files:
-+
-+1. Object hashes in index header line (`index <hash>..<hash> <mode>`)
-+   are always given in full form, as binary patch is designed to be
-+   applied only to an exact copy of original file. This is to ensure
-+   that such patch don't apply to file with similar name but different
-+   hash.
-+
-+2. There are additional extended header lines specific to binary files:
-+
-+        GIT binary patch
-+        delta <bytes>
-+        literal <bytes>
-+
-+3. The diff body can be either delta or full (literal) content,
-+   whichever is the smallest size. It is encoded with base85 algorithm,
-+   and emitted in 64 characters each line. All but the last line in
-+   the body are prefixed with `z`.
-+
- SEE ALSO
- --------
- linkgit:git-am[1], linkgit:git-send-email[1]
--- 
-2.25.1
+> * ag/merge-strategies-in-c (2021-03-17) 15 commits
+>  - sequencer: use the "octopus" merge strategy without forking
+>  - sequencer: use the "resolve" strategy without forking
+>  - merge: use the "octopus" strategy without forking
+>  - merge: use the "resolve" strategy without forking
+>  - merge-octopus: rewrite in C
+>  - merge-recursive: move better_branch_name() to merge.c
+>  - merge-resolve: rewrite in C
+>  - merge-one-file: rewrite in C
+>  - update-index: move add_cacheinfo() to read-cache.c
+>  - merge-index: add a new way to invoke `git-merge-one-file'
+>  - merge-index: drop the index
+>  - merge-index: libify merge_one_path() and merge_all()
+>  - t6060: add tests for removed files
+>  - t6060: modify multiple files to expose a possible issue with merge-in=
+dex
+>  - t6407: modernise tests
+>
+>  The resolve and octopus merge strategy backends have been rewritten
+>  in C.
+>
+>  Ready?
 
+I set aside some time to review this, and based on my suggestions, Alban
+seems to be preparing one (final?) iteration. See e.g.
+<b9d48a96-7e76-8a83-4ca2-c47fca326123@gmail.com>
+
+Ciao,
+Dscho
