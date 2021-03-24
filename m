@@ -2,110 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CA8DC433C1
-	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 21:55:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86307C433E0
+	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 22:05:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F11D561A12
-	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 21:55:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4782761A1E
+	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 22:05:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234621AbhCXVyq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Mar 2021 17:54:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33968 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231899AbhCXVy2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Mar 2021 17:54:28 -0400
-Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6014C06174A
-        for <git@vger.kernel.org>; Wed, 24 Mar 2021 14:54:28 -0700 (PDT)
-Received: by mail-pg1-x535.google.com with SMTP id v2so15689238pgk.11
-        for <git@vger.kernel.org>; Wed, 24 Mar 2021 14:54:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=ORD9S0heHFl1uQy027i1cEK5Nl9w8ek4XLC3SLFX5yo=;
-        b=SyvSDjz6CzL54ZOHhA3euchSZhbZqUTxkJqjwKA7i4sNROiPy5COYMYlE5ioFCIac0
-         mNH5XzpqGT38RMkRKg8HeXpWqzC61bhpvISZD6jOSEteVot8j62VBeLZbdQEhm8fiSW3
-         zB/TQl2ZJZ3B+YiShfFPtv+vpv0GJ1OJ23BZN9Co73j79sNgVMX2NNcjZlPtixE23NgK
-         D/AuG5FnpKnZdNHaApQ+v1Ase2fSZfjswoi4CArf5yerAqiLJqcwhXyoh4L87c90EZWy
-         g5nahJ+y7gmLHeKioPiydYcT3cv6M5gHKvJqyQEn0KZej0fLBr+zg6Ze0VTuOhXNzLHg
-         Qz4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=ORD9S0heHFl1uQy027i1cEK5Nl9w8ek4XLC3SLFX5yo=;
-        b=B1XBvcToT6EwFyySPumaO8czhN2EydOx/twNil7D98jdzq3YX8bh5HxkUTAgEIPaFi
-         NuGJbcXrHbqCDWiiyON+hWdnhzKbxP4HJhtcNLKodfnrLbhXPn6vM0eVvvLjOKGfprYH
-         o7PCOfM+GtrwJKCWKkwGvF7oT38RxtQHcVrLV/CkonHhzUFU3VPVAYGZBMygGlNbmW8H
-         Ec7X1OR4WSQwXYNNMvn+fNkxIOBMMfD4V8aKWnVV/G/MRelpCpc4hR+WQpDPAc4wJvpk
-         bcS5WY2neVZpchk65/on3EUUMSnl+xecVTZjdWaXeAPnsl26ZJpKaWgIkEfEpMJ1UXpk
-         cQzg==
-X-Gm-Message-State: AOAM5303H5tBbpZv8eolxdsX+9DAF11LhlZHZpX/ckUncqxCZ+KNb2DP
-        7hy6RI3aUQKAyDW/M5Mti1PQuA==
-X-Google-Smtp-Source: ABdhPJwmW3atAgQ7c/a9h4BIjcEgdZ/1Z7PcNJth50fONq5Mo+G4DPuXgc5Si4WZthqWkN94KAOpCw==
-X-Received: by 2002:aa7:9293:0:b029:1df:4e2:c981 with SMTP id j19-20020aa792930000b02901df04e2c981mr4968116pfa.41.1616622868176;
-        Wed, 24 Mar 2021 14:54:28 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:0:d027:9201:1f66:e720])
-        by smtp.gmail.com with ESMTPSA id mz11sm3501358pjb.6.2021.03.24.14.54.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Mar 2021 14:54:27 -0700 (PDT)
-Date:   Wed, 24 Mar 2021 14:54:21 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v8 17/37] hooks: allow callers to capture output
-Message-ID: <YFu1DeF5PSiY8XR1@google.com>
-References: <20210311021037.3001235-1-emilyshaffer@google.com>
- <20210311021037.3001235-18-emilyshaffer@google.com>
- <874khghh8r.fsf@evledraar.gmail.com>
+        id S238554AbhCXWEk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Mar 2021 18:04:40 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62384 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231668AbhCXWEU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Mar 2021 18:04:20 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DBC07C46F4;
+        Wed, 24 Mar 2021 18:04:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=fOrfJANXuETkFpWv0JP/Ds2Ehb8=; b=RJL9Vz
+        6KUkv6SNqTcb00DA6gT2CmTQ2f+KSzQ5xN4S7yzr5woKFvo0thnx7LBW7xEYenVL
+        aQCdpdeFXHRGBCZU3mt9NE7K16N6NcsTR39iWqMvmmoOIwFFw3bGbb21MwBJ3VsR
+        PUzgmWuy9bulbLE4s1FNUqOixzFr7l2qjkFq4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=OBNOUprCFBSmRnbjSqz6N/qGv00YnWNV
+        HgrDlyg6Qxs3MmDf5zN9McAbaniAT8xlszxmZopr2qyzFHLidmVh9BwipeE+cUrB
+        KQOzcyQeFbI6hihzluEbUt5n5T3FjXeU5KvZccGKD0wIUm9e+1YQrrnoMLwir+ha
+        dgdZnlIRZnM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D3260C46F3;
+        Wed, 24 Mar 2021 18:04:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5F492C46F2;
+        Wed, 24 Mar 2021 18:04:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Taylor Blau <me@ttaylorr.com>, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 0/7] Optimization batch 11: avoid repeatedly detecting
+ same renames
+References: <pull.859.git.1616621553.gitgitgadget@gmail.com>
+Date:   Wed, 24 Mar 2021 15:04:16 -0700
+In-Reply-To: <pull.859.git.1616621553.gitgitgadget@gmail.com> (Elijah Newren
+        via GitGitGadget's message of "Wed, 24 Mar 2021 21:32:26 +0000")
+Message-ID: <xmqqv99gw6n3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <874khghh8r.fsf@evledraar.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: E0A5B7A6-8CEC-11EB-8C7E-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 12, 2021 at 10:08:04AM +0100, Ævar Arnfjörð Bjarmason wrote:
-> 
-> 
-> On Thu, Mar 11 2021, Emily Shaffer wrote:
-> 
-> > Some server-side hooks will require capturing output to send over
-> > sideband instead of printing directly to stderr. Expose that capability.
-> 
-> So added here in 17/37 and not used until 30/37. As a point on
-> readability (this isn't the first such patch) I think it would be better
-> to just squash those together with some "since we now need access to
-> consume_sideband in hooks, do that ...".
+"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Yeah. When I was putting together the series I had two thoughts on how
-best to organize it:
+> === Basic Optimization idea ===
+>
+> This series avoids repeatedly detecting the same renames in a sequence of
+> merges such as a rebase or cherry-pick of several commits. When there are
+> many renames between the old base and the new base, traditionally all those
+> renames are re-detected for every commit that is transplanted. This
+> optimization avoids redoing that work.
 
-1. Adding functionality just-in-time for the hook that needs it (like
-you describe)
-or
-2. Implementing the whole utility, then doing hook conversions in a
-separate chunk or series (what I went with).
+Unless this section is easily understandable, the readers have no
+incentive to read on, but the above is a bit too hand wavy.
 
-I chose 2 for a couple reasons: that it would be easier for people who
-just care "did a hook I use start working differently?" to review only
-the second chunk of the change, and that it would be easier if we wanted
-to adopt the library part into the codebase without converting the hooks
-to use it (this was listed as a step in the design doc, but I think we
-ended up abandoning it). The differentiation was certainly easier when I
-had the two "chunks" separated into a part I and part II series, but
-Junio asked me to combine them starting with this revision so it would
-be easier to merge to 'seen' (as I understood it).
+> This one adds a fourth (remember-renames), with some interesting properties:
+>
+>  * unlike basename-guided rename detection, there are no behavioral changes
+>    (there is no heuristic involved)[2].
+>
+>  * like skip-because-irrelevant, this optimization does not apply to all git
+>    commands using the rename machinery. In fact, this one is even more
+>    restrictive since it is ONLY useful for rebases and cherry-picks (not
+>    even merges), and only for second and later commits in a linear series.
 
-At this point, I'd prefer not to rearrange the series, though.
+So, is it correct to understand that one case this would help is
+this scenario?
 
- - Emily
+ ---o---o---o---X---o---o---o---O ours
+     \
+      A---B---C topic
+
+where there is a side branch A--B--C that touched some files, while
+on our side, there is a commit X that is unknown to the side branch
+that renamed these files.  Now we want to transplant the side topic
+to the tip of our history, replaying the changes A--B--C made to
+these files under their original name to the corresponding files
+that have been renamed.
+
+And each step in this "rebase" is a 3-way merge of commits A, B and
+C onto HEAD, using the parent of the commit being cherrk-picked as a
+virtual common ancestor.  Which means
+
+ - To transplant A (i.e. the first step), we'd compare the diff of
+   A^..O (i.e. what our side did, including the renames done at X)
+   and diff of A^..A (i.e. what the first commit did in the range),
+   and the former does quite a lot of rename detection.
+
+ - After transplanting B (i.e. the second step), then we'd compare
+   the diff of A^..A' (where A' is A cherry-picked on O, i.e. the
+   result of the previous step).  If we are lucky, O..A' did not
+   rename anything so the renames done in A^..O (i.e. what we
+   detected during the first step) and A^..A' (i.e. what we should
+   be computing for this second step) should be quite similar.
+
+   If we assume that the "quite similar" is good enough, then we can
+   blindly reuse the record of "<path in A^> correspnds to <path in
+   O>" as if it were "<path in A^> corresponds to <path in A'>".
+
+ - Do the same for C, pretending that renames discovered between A^
+   and O is identical to the renames between A^ and B' (i.e. the
+   result of cherry-picking A--B on top of O).
+
