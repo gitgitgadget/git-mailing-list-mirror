@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F128FC433E9
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9757C433EA
 	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 01:50:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D450A61A0B
+	by mail.kernel.org (Postfix) with ESMTP id A906F61A05
 	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 01:50:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234695AbhCXBti (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Mar 2021 21:49:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54856 "EHLO
+        id S234684AbhCXBth (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Mar 2021 21:49:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234566AbhCXBtW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Mar 2021 21:49:22 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F85DC061763
-        for <git@vger.kernel.org>; Tue, 23 Mar 2021 18:49:22 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id d191so12037077wmd.2
-        for <git@vger.kernel.org>; Tue, 23 Mar 2021 18:49:22 -0700 (PDT)
+        with ESMTP id S234538AbhCXBtU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Mar 2021 21:49:20 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7FE2C061763
+        for <git@vger.kernel.org>; Tue, 23 Mar 2021 18:49:19 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id j7so22800280wrd.1
+        for <git@vger.kernel.org>; Tue, 23 Mar 2021 18:49:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=4JJI6mrgDrZjzjDOJ5Xy9QAPcmKnnJhej81kxHwvsTs=;
-        b=N2ib4Ak4zr+nxirBkvD5IDm45wEeujusVj+T99mAnWyOYqaiB6OBALDfwbvWII+0JK
-         h0sudE/9VM8CiEzFNWgJgMYN9N6HWloGYCgo7/Yb16QLc4uCvDAutt/33HgO+KUsq6S4
-         fGAbGhnmHLDbK273a80JSmwl9K2sOAhdLSd3/FviUkXv+yeqYtaMQWbc8cBGbad7PRtc
-         ZKCU16h0U08HBypD9ybLTBxHmZhHTIui0VThQrMdOxBxQ1tDUNhWY87CBs07XFJl5ZUB
-         95WjwvBugnC4K58w0yhtr+8qYOTIoMouBqZW7d1bZP0fS10fvNllNs4/bagbs+fFJSON
-         yF9A==
+        bh=vX0F8KGVcvq+hsDOU41OxzxH57opIj1jV160QaiGkx0=;
+        b=t9DNyLIw51JKbG708TqkDdooqlO07ZAkQ4mVObmodimkQI6F+i7OYs3CuAZ6vjxPko
+         h/VNxAmHhqeUrL5uelKmGwKbCljAGE7RzSZdCw2VtTTEYouMQXLU6ZITPibQERBQzS62
+         dEGQHX1njqa1lTJ3VjGy8qGqqpE/2YXB9VeQHD4xYj0uyMZ5RbJoboyKNFdwxJPSCdO5
+         zEJn6W0HJetzKJmErrBS24Yw5KSWHQGVz2/Tz7w/f9eKA/UKBRJsk7/RAjsHft66ZiNE
+         Ft20RFYTNCtnk58wLy6tztENtn5OQjA8NQKZ5trDO2/PfXWI9Soyb7bn+l33rmBdsUNm
+         1VXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=4JJI6mrgDrZjzjDOJ5Xy9QAPcmKnnJhej81kxHwvsTs=;
-        b=BBwimyvvvPqPoNICpXEm0PKWJCcQZ9uOXuKlSUiwQNTnA+txCaJVwYcuG4TcsoJzbt
-         Z6vHA6MCfqCk5Td5WXgmQyxmEnl93od+O77QBWckkvA98sYhRYhf9LXbkt7QtNt2NKD5
-         XGn+L+cFVLYSVRKRhMU2seDTcb//wSx2UDJWjIieispFrbTgtqljnzOp8bEN0JmBfXlr
-         m88NIbRSY8fTPtB0eD/VpKw9BFxvxFsKfPn59pIIbzh6GAnvilQaDKm18QVR3ZHGaTvp
-         CLCGxAfMGoICMjGwsQysJlHNtz7bSkoF6c16muLk7d6mV094UfO+vcr1372tkecd2Cqd
-         y4qw==
-X-Gm-Message-State: AOAM531aqhJXX6vLQWHiNZuwVUgiGXptufFts/VAqjztrIW6q3TtaS7y
-        ibY19ODFMfxBMUCUcTYUKTO3n78PnzLB/w==
-X-Google-Smtp-Source: ABdhPJzXRJ6La0AYSgMhT8gqZ48I8CK+DX0BZpPSBNuDzjoRMQtstNobMrNI/XRHA0x0x4OR0uXR9A==
-X-Received: by 2002:a05:600c:2f08:: with SMTP id r8mr571204wmn.95.1616550560700;
-        Tue, 23 Mar 2021 18:49:20 -0700 (PDT)
+        bh=vX0F8KGVcvq+hsDOU41OxzxH57opIj1jV160QaiGkx0=;
+        b=CaBaZdZc2SQQY/6vlanEn9cb2Taw9H/GMyVLE5kJmueTkLo0gN8wDgb1SMNEmJtQdh
+         b/dGVroclXlVoIQtbJDuL4rVoKx/YZJnDNsfjMYuiaKnzIMjjcXtotMoyRwkOeoIwDRV
+         lPde2a99isHDg3c3aoJthGhQpKTT8RllESWaTJEVGonchOwQZ3VAmvMmxvoXKgr+Cm+9
+         OXaPVZ3kVmsEi0OrYeyfsshenF9U/oO69l/Vw+h82nrxbEwIXQWT+Znb0LK4kdrJZ/dm
+         SFTE7PAbExbP+ugczf28xoKNmDHWHk/nY6zoaYnIqKjJ+eh5WQ7qas2yds8aI6QaVvJ0
+         UncQ==
+X-Gm-Message-State: AOAM533XIoRcoteqDRJkhtK3Fw+a3RYCfi2MTXLB3ZjSIS//bAVli+fY
+        peHqUAOpomBT5+aX9tOg9vDepJO3RjkP0g==
+X-Google-Smtp-Source: ABdhPJwsb1DVKyLTys8e89WIMy/nNHVS7on4oscgv2M5KIwqk6hLh8DT+fuKiDh9+azujvBDPBlctg==
+X-Received: by 2002:a05:6000:1acb:: with SMTP id i11mr785726wry.68.1616550558360;
+        Tue, 23 Mar 2021 18:49:18 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id y205sm598177wmc.18.2021.03.23.18.49.20
+        by smtp.gmail.com with ESMTPSA id y205sm598177wmc.18.2021.03.23.18.49.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Mar 2021 18:49:20 -0700 (PDT)
+        Tue, 23 Mar 2021 18:49:17 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -68,9 +68,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
         Chris Torek <chris.torek@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 08/10] userdiff: remove support for "broken" tests
-Date:   Wed, 24 Mar 2021 02:48:50 +0100
-Message-Id: <patch-08.11-7755db95014-20210324T014604Z-avarab@gmail.com>
+Subject: [PATCH v4 05/10] userdiff: add and use for_each_userdiff_driver()
+Date:   Wed, 24 Mar 2021 02:48:47 +0100
+Message-Id: <patch-05.11-64ea5e8443f-20210324T014604Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.0.366.ga80606b22c1
 In-Reply-To: <cover-00.11-00000000000-20210324T014604Z-avarab@gmail.com>
 References: <20210224195129.4004-1-avarab@gmail.com> <cover-00.11-00000000000-20210324T014604Z-avarab@gmail.com>
@@ -81,49 +81,128 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There have been no "broken" tests since 75c3b6b2e8 (userdiff: improve
-Fortran xfuncname regex, 2020-08-12). Let's remove the test support
-for them.
+Refactor the userdiff_find_by_namelen() function so that a new
+for_each_userdiff_driver() API function does most of the work.
+
+This will be useful for the same reason we've got other for_each_*()
+API functions as part of various APIs, and will be used in a follow-up
+commit.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t4018-diff-funcname.sh | 8 +-------
- t/t4018/README           | 3 ---
- 2 files changed, 1 insertion(+), 10 deletions(-)
+ userdiff.c | 61 +++++++++++++++++++++++++++++++++++++++++++-----------
+ userdiff.h | 15 ++++++++++++++
+ 2 files changed, 64 insertions(+), 12 deletions(-)
 
-diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
-index 5bd82e09ab3..9aec9f8e6de 100755
---- a/t/t4018-diff-funcname.sh
-+++ b/t/t4018-diff-funcname.sh
-@@ -86,13 +86,7 @@ test_expect_success 'setup hunk header tests' '
- # check each individual file
- for i in $(git ls-files)
- do
--	if grep broken "$i" >/dev/null 2>&1
--	then
--		result=failure
--	else
--		result=success
--	fi
--	test_expect_$result "hunk header: $i" "
-+	test_expect_success "hunk header: $i" "
- 		git diff -U1 $i >actual &&
- 		grep '@@ .* @@.*RIGHT' actual
- 	"
-diff --git a/t/t4018/README b/t/t4018/README
-index 283e01cca1a..2d25b2b4fc9 100644
---- a/t/t4018/README
-+++ b/t/t4018/README
-@@ -7,9 +7,6 @@ at least two lines from the line that must appear in the hunk header.
- The text that must appear in the hunk header must contain the word
- "right", but in all upper-case, like in the title above.
+diff --git a/userdiff.c b/userdiff.c
+index 10a02d36209..55f4f769bd3 100644
+--- a/userdiff.c
++++ b/userdiff.c
+@@ -259,20 +259,32 @@ static struct userdiff_driver driver_false = {
+ 	{ NULL, 0 }
+ };
  
--To mark a test case that highlights a malfunction, insert the word
--BROKEN in all lower-case somewhere in the file.
--
- This text is a bit twisted and out of order, but it is itself a
- test case for the default hunk header pattern. Know what you are doing
- if you change it.
+-static struct userdiff_driver *userdiff_find_by_namelen(const char *k, size_t len)
++struct for_each_userdiff_driver_cb {
++	const char *k;
++	size_t len;
++	struct userdiff_driver *driver;
++};
++
++static int userdiff_find_by_namelen_cb(struct userdiff_driver *driver,
++				       enum userdiff_driver_type type, void *priv)
+ {
+-	int i;
+-	for (i = 0; i < ndrivers; i++) {
+-		struct userdiff_driver *drv = drivers + i;
+-		if (!strncmp(drv->name, k, len) && !drv->name[len])
+-			return drv;
+-	}
+-	for (i = 0; i < ARRAY_SIZE(builtin_drivers); i++) {
+-		struct userdiff_driver *drv = builtin_drivers + i;
+-		if (!strncmp(drv->name, k, len) && !drv->name[len])
+-			return drv;
++	struct for_each_userdiff_driver_cb *cb_data = priv;
++
++	if (!strncmp(driver->name, cb_data->k, cb_data->len) &&
++	    !driver->name[cb_data->len]) {
++		cb_data->driver = driver;
++		return -1; /* found it! */
+ 	}
+-	return NULL;
++	return 0;
++}
++
++static struct userdiff_driver *userdiff_find_by_namelen(const char *k, size_t len)
++{
++	struct for_each_userdiff_driver_cb udcbdata = { .k = k, .len = len, .driver = NULL };
++
++	for_each_userdiff_driver(userdiff_find_by_namelen_cb,
++				 USERDIFF_DRIVER_TYPE_UNSPECIFIED, &udcbdata);
++	return udcbdata.driver;
+ }
+ 
+ static int parse_funcname(struct userdiff_funcname *f, const char *k,
+@@ -373,3 +385,28 @@ struct userdiff_driver *userdiff_get_textconv(struct repository *r,
+ 
+ 	return driver;
+ }
++
++int for_each_userdiff_driver(each_userdiff_driver_fn fn,
++			     enum userdiff_driver_type type, void *cb_data)
++{
++	int i, ret;
++	if (type & (USERDIFF_DRIVER_TYPE_UNSPECIFIED | USERDIFF_DRIVER_TYPE_CUSTOM)) {
++
++		for (i = 0; i < ndrivers; i++) {
++			struct userdiff_driver *drv = drivers + i;
++			ret = fn(drv, USERDIFF_DRIVER_TYPE_CUSTOM, cb_data);
++			if (ret)
++				return ret;
++		}
++	}
++	if (type & (USERDIFF_DRIVER_TYPE_UNSPECIFIED | USERDIFF_DRIVER_TYPE_BUILTIN)) {
++
++		for (i = 0; i < ARRAY_SIZE(builtin_drivers); i++) {
++			struct userdiff_driver *drv = builtin_drivers + i;
++			ret = fn(drv, USERDIFF_DRIVER_TYPE_BUILTIN, cb_data);
++			if (ret)
++				return ret;
++		}
++	}
++	return 0;
++}
+diff --git a/userdiff.h b/userdiff.h
+index 203057e13e5..fe14014a775 100644
+--- a/userdiff.h
++++ b/userdiff.h
+@@ -21,6 +21,13 @@ struct userdiff_driver {
+ 	struct notes_cache *textconv_cache;
+ 	int textconv_want_cache;
+ };
++enum userdiff_driver_type {
++	USERDIFF_DRIVER_TYPE_UNSPECIFIED = 1<<0,
++	USERDIFF_DRIVER_TYPE_BUILTIN = 1<<1,
++	USERDIFF_DRIVER_TYPE_CUSTOM = 1<<2,
++};
++typedef int (*each_userdiff_driver_fn)(struct userdiff_driver *,
++				       enum userdiff_driver_type, void *);
+ 
+ int userdiff_config(const char *k, const char *v);
+ struct userdiff_driver *userdiff_find_by_name(const char *name);
+@@ -34,4 +41,12 @@ struct userdiff_driver *userdiff_find_by_path(struct index_state *istate,
+ struct userdiff_driver *userdiff_get_textconv(struct repository *r,
+ 					      struct userdiff_driver *driver);
+ 
++/*
++ * Iterate over each driver of type userdiff_driver_type, or
++ * USERDIFF_DRIVER_TYPE_UNSPECIFIED for all of them. Return non-zero
++ * to exit from the loop.
++ */
++int for_each_userdiff_driver(each_userdiff_driver_fn,
++			     enum userdiff_driver_type, void *);
++
+ #endif /* USERDIFF */
 -- 
 2.31.0.366.ga80606b22c1
 
