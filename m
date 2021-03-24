@@ -4,282 +4,207 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93506C433E4
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B41EC433E1
 	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 21:33:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6274861A21
+	by mail.kernel.org (Postfix) with ESMTP id 1AB2761A01
 	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 21:33:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238480AbhCXVco (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Mar 2021 17:32:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57434 "EHLO
+        id S238471AbhCXVcm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Mar 2021 17:32:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238492AbhCXVcj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Mar 2021 17:32:39 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C36D3C06174A
-        for <git@vger.kernel.org>; Wed, 24 Mar 2021 14:32:38 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id v11so236836wro.7
-        for <git@vger.kernel.org>; Wed, 24 Mar 2021 14:32:38 -0700 (PDT)
+        with ESMTP id S238489AbhCXVch (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Mar 2021 17:32:37 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0138CC06174A
+        for <git@vger.kernel.org>; Wed, 24 Mar 2021 14:32:37 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id 12so53968wmf.5
+        for <git@vger.kernel.org>; Wed, 24 Mar 2021 14:32:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=VLCX60xDN95R/hkisFQZbB0IPW28fZj3AYxdURJZx0A=;
-        b=ZghYytPJCxVJ1/yJ6O0ThMiacFfLRV00kXzDBwsgyCWtqr74ZoGOlsPmTrTMscBPah
-         Kft+yxYYPRWLxwa2rL74nHtcvmRBrhSUcm5T5JUQl3q7u6vaIIM7OhRVuFKmUBn4rVmz
-         g5QK3iDpMdrc13xUoQmiT4oti4giQFhm9p3BuWve/t/RQsVY1sjal23UF+YzcBZOkxUi
-         JRLO8MFmr5Cn3OAYAjxqsZhcykHT/8v9j+i4bbwI1ebuLtbjDRG/Km1q0bVrmz5Znl2+
-         sjvxWihcS33EeltmWO5LPXBxTFCF5YD2wMtN0fo+mSCjCS9KzpsnnZsZWmsQjVuL6CtY
-         a0Jw==
+        h=message-id:from:date:subject:mime-version:content-transfer-encoding
+         :fcc:to:cc;
+        bh=bnsolccDtQ8aCIxB67X/z562vK06NRfGV/+Iuo4hRWY=;
+        b=Mt60sMZ3r47xFfR1K9NSd7Hfv5MMTomAnagIr9pjjxkT9okIyBDHmmWv3e4yWDo6bd
+         VACkW5yfigXOguTiiEH4Yvu7Ok5W6E/K52vHhYboQkcDP/DoL+ZRwWIu5kuwsQfgd2Rh
+         bv4JUAgAaVf/cI54CUNgV9d3irse+QD+U9p1Wgdt382deCr+zh3P53V+pJ00M6nSEwxx
+         HLaBa4SlZ6fWDIuZAOxHZeO5ssqFsiV1M1AyDdsKBch15AciDm72aLgdOH9YOzb8VP60
+         5UUDuoLWx8LKZRMa1It+DiFF/7W6ybVidXCq1S09JIfPEgOXE/Q7DV612ttP2zxi2l/H
+         U+IA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=VLCX60xDN95R/hkisFQZbB0IPW28fZj3AYxdURJZx0A=;
-        b=mGsn33UlHmm4CsI11yyqc+GWUFb+6DODmrlAQQn81IvkguPZ6VVuFGbePG/zxzKAfH
-         gXO2y3ZqiKjtg0BJlibqgCIag9t83g5yBSyEPr7KV2sogbpPRv3RwN0ghcCM2aFnkmBr
-         Lo9FEFgvQ1nuxdc6AzASZy59t6wEW3Jxbgq2ZdFkRqCPFc+/MIFZinv6N6gOfTwabn39
-         1Lr/c2uX8u2n7JZqutWNu0H7vkvW1bM9o+5q78E3h+F6CcEK1ewzb8I2cA59162BvszM
-         BsLhu4l25Me3LCRnUYyLrp/jej8FXWK7pSodML9YCtFGzUjaDYAUuDnXmnd2JytVGJN3
-         Js1g==
-X-Gm-Message-State: AOAM530I1rAQY6ozVGrLObEiSVkD7T7etu6LJWEki25hmHZWQiT+G2Vb
-        7FieQbQetEig6QWPPd4zZgZDFxKGfCI=
-X-Google-Smtp-Source: ABdhPJxwMGJnBjYF/NwivnGDBpydUmkDa7qu7bq2ObKA9bi+WCMVzq5mLqeX+6hKpcNJWWn1fN58pQ==
-X-Received: by 2002:a5d:4904:: with SMTP id x4mr5440904wrq.69.1616621557509;
-        Wed, 24 Mar 2021 14:32:37 -0700 (PDT)
+        h=x-gm-message-state:message-id:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=bnsolccDtQ8aCIxB67X/z562vK06NRfGV/+Iuo4hRWY=;
+        b=fLfnpkgc9aGZbrgIQwG+GCuazNgeSV2q5ObnCtdINvOY5O1O0iMDQ0CzLDoBwpErdU
+         qIAGe2DLDLoE5eNloRNy91OyxLov8CbCUEcPvVcT2/mvJstlwPim39hF7hJMkTJrZxVf
+         gf4zLxUnmAOD6yJUstYiKHt2MiINQtlk6zf08Hk185qAfzp/c7xLvXhCziQUV1qmwYaN
+         SRBoZIAq0xkspUlNCoGd8ql3DpyB4HXWzLzhCf7a1S9uy4/p8XzOTQ7bP8yW72TVRMKo
+         WM1420URikdu8vq2luokkkHGHByqk1IjW80aXLcNo4Fi9wI8HBQfl9JrkNcTk46/SskI
+         a3OQ==
+X-Gm-Message-State: AOAM5327szntLKSHHk33gyyTCfe2LF5E/ewnY5kKtQojq5dMcmxZMsjC
+        LQz5ajZ8Do4F4SEJOpE0+hrarSvBOt4=
+X-Google-Smtp-Source: ABdhPJyqM6ji1LQ2hqf2PsGybQvRgZ4p460Hh53TMZpk2nmfTJiu/Awx0mEoKVsqRI4yU6i8++e1ww==
+X-Received: by 2002:a7b:ce06:: with SMTP id m6mr4655848wmc.38.1616621555587;
+        Wed, 24 Mar 2021 14:32:35 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a17sm3711509wmj.9.2021.03.24.14.32.37
+        by smtp.gmail.com with ESMTPSA id g16sm4901510wrs.76.2021.03.24.14.32.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Mar 2021 14:32:37 -0700 (PDT)
-Message-Id: <aa131c21d14f21a07d559b81300e5322b71a979c.1616621553.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.859.git.1616621553.gitgitgadget@gmail.com>
-References: <pull.859.git.1616621553.gitgitgadget@gmail.com>
+        Wed, 24 Mar 2021 14:32:34 -0700 (PDT)
+Message-Id: <pull.859.git.1616621553.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 24 Mar 2021 21:32:29 +0000
-Subject: [PATCH 3/7] merge-ort: add code to check for whether cached renames
- can be reused
-Fcc:    Sent
+Date:   Wed, 24 Mar 2021 21:32:26 +0000
+Subject: [PATCH 0/7] Optimization batch 11: avoid repeatedly detecting same renames
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+Fcc:    Sent
 To:     git@vger.kernel.org
 Cc:     Derrick Stolee <dstolee@microsoft.com>,
         Jonathan Tan <jonathantanmy@google.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+        Taylor Blau <me@ttaylorr.com>, Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+This series builds on ort-readiness, but it's semantically orthogonal to the
+previous series and represents a new independent optimization.
 
-We need to know when renames detected in a previous merge operation can
-be reused in a later merge operation.  Consider the following setup
-(from the git-rebase manpage):
+=== Basic Optimization idea ===
 
-                     A---B---C topic
-                    /
-               D---E---F---G master
+This series avoids repeatedly detecting the same renames in a sequence of
+merges such as a rebase or cherry-pick of several commits. When there are
+many renames between the old base and the new base, traditionally all those
+renames are re-detected for every commit that is transplanted. This
+optimization avoids redoing that work.
 
-After rebasing, this will appear as:
+This represents "Optimization #4" from my Git Merge 2020 talk[1]; the
+details are a bit more involved than I realized at the time, but the high
+level idea is the same.
 
-                             A'--B'--C' topic
-                            /
-               D---E---F---G master
+=== Comparison to previous series ===
 
-Further, let's say that 'oldfile' was renamed to 'newfile' between E
-and G.  The rebase or cherry-pick of A onto G will involve a three-way
-merge between E (as the merge base) and G and A.  After detecting the
-rename between E:oldfile and G:newfile, there will be a three-way
-content merge of the following:
-    E:oldfile
-    G:newfile
-    A:oldfile
-and produce a new result:
-    A':newfile
+I previously noted that we had three major rename-related optimizations:
 
-Now, when we want to pick B onto A', we will need to do a three-way
-merge between A (as the merge-base) and A' and B.  This will involve
-a three-way content merge of
-    A:oldfile
-    A':newfile
-    B:oldfile
-but only if we can detect that A:oldfile is similar enough to A':newfile
-to be used together in a three-way content merge, i.e. only if we can
-detect that A:oldfile and A':newfile are a rename.  But we already know
-that A:oldfile and A':newfile are similar enough to be used in a
-three-way content merge, because that is precisely where A':newfile came
-from in the previous merge.
+ * exact rename detection (applies when unmodified on renamed side)
+ * skip-because-irrelevant (applies when unmodified on unrenamed side)
+ * basename-guided rename detection (applies when basename unchanged)
 
-Note that A & A' both appear in both merges.  That gives us the
-condition under which we can reuse renames.
+This one adds a fourth (remember-renames), with some interesting properties:
 
-There are a couple important points about this optimization:
+ * unlike basename-guided rename detection, there are no behavioral changes
+   (there is no heuristic involved)[2].
 
-  - If the rebase or cherry-pick halts for user conflicts, these caches
-    are NOT saved anywhere.  Thus, resuming a halted rebase or
-    cherry-pick will result in no reused renames for the next commit.
-    This is intentional, as user resolution can change files
-    significantly and in ways that violate the similarity assumptions
-    here.
+ * like skip-because-irrelevant, this optimization does not apply to all git
+   commands using the rename machinery. In fact, this one is even more
+   restrictive since it is ONLY useful for rebases and cherry-picks (not
+   even merges), and only for second and later commits in a linear series.
 
-  - Technically, in a *very* narrow case this might give slightly
-    different results for rename detection.  Using the example above,
-    if:
-      * E:oldfile had 20 lines
-      * G:newfile added 10 new lines at the beginning of the file
-      * A:oldfile deleted all but the first three lines of the file
-    then
-      => A':newfile would have 13 lines, 3 of which matches those
-         in A:oldfile.
+ * unlike the three previous optimizations, there are no requirements about
+   the types of changes done to the file; it just caches renames on the
+   "upstream" side of history for subsequent commit picking.
 
-    Consider the two cases:
-      * Without this optimization:
-        - the next step of the rebase operation (moving B to B')
-          would not detect the rename betwen A:oldfile and A':newfile
-        - we'd thus get a modify/delete conflict with the rebase
-          operation halting for the user to resolve, and have both
-          A':newfile and B:oldfile sitting in the working tree.
-      * With this optimization:
-        - the rename between A:oldfile and A':newfile would be detected
-          via the cache of renames
-        - a three-way merge between A:oldfile, A':newfile, and B:oldfile
-          would commence and be written to A':newfile
+It's also worth noting despite wording about "remembering" or "caching"
+renames, that this optimization does NOT write this cache to disk; it's an
+in-memory only cache. When the rebase or cherry-pick completes (or hits a
+conflict and stops), the cache is discarded.
 
-    Now, is the difference in behavior a bug...or a bugfix?  I can't
-    tell.  Given that A:oldfile and A':newfile are not very similar,
-    when we three-way merge with B:oldfile it seems likely we'll hit a
-    conflict for the user to resolve.  And it shouldn't be too hard for
-    users to see why we did that three-way merge; oldfile and newfile
-    *were* renames somewhere in the sequence.  So, most of these corner
-    cases will still behave similarly -- namely, a conflict given to the
-    user to resolve.  Also, consider the interesting case when commit B
-    is a clean revert of commit A.  Without this optimization, a rebase
-    could not both apply a weird patch like A and then immediately
-    revert it; users would be forced to resolve merge conflicts.  With
-    this optimization, it would successfully apply the clean revert.
-    So, there is certainly at least one case that behaves better.  Even
-    if it's considered a "difference in behavior", I think both behaviors
-    are reasonable, and the time savings provided by this optimization
-    justify using the slightly altered rename heuristics.
+=== Results ===
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- merge-ort.c | 66 +++++++++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 64 insertions(+), 2 deletions(-)
+For the testcases mentioned in commit 557ac0350d ("merge-ort: begin
+performance work; instrument with trace2_region_* calls", 2020-10-28), the
+changes in just this series improves the performance as follows:
 
-diff --git a/merge-ort.c b/merge-ort.c
-index 2303d88e6a92..bb47fa91a339 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -139,6 +139,30 @@ struct rename_info {
- 	int callback_data_nr, callback_data_alloc;
- 	char *callback_data_traverse_path;
- 
-+	/*
-+	 * merge_trees: trees passed to the merge algorithm for the merge
-+	 *
-+	 * merge_trees records the trees passed to the merge algorithm.  But,
-+	 * this data also is stored in merge_result->priv.  If a sequence of
-+	 * merges are being done (such as when cherry-picking or rebasing),
-+	 * the next merge can look at this and re-use information from
-+	 * previous merges under certain cirumstances.
-+	 *
-+	 * See also all the cached_* variables.
-+	 */
-+	struct tree *merge_trees[3];
-+
-+	/*
-+	 * cached_pairs_valid_side: which side's cached info can be reused
-+	 *
-+	 * See the description for merge_trees.  For repeated merges, at most
-+	 * only one side's cached information can be used.  Valid values:
-+	 *   MERGE_SIDE2: cached data from side2 can be reused
-+	 *   MERGE_SIDE1: cached data from side1 can be reused
-+	 *   0:           no cached data can be reused
-+	 */
-+	int cached_pairs_valid_side;
-+
- 	/*
- 	 * cached_pairs: Caching of renames and deletions.
- 	 *
-@@ -461,6 +485,8 @@ static void clear_or_reinit_internal_opts(struct merge_options_internal *opti,
- 		strmap_func(&renames->cached_pairs[i], 1);
- 		strset_func(&renames->cached_irrelevant[i]);
- 	}
-+	renames->cached_pairs_valid_side = 0;
-+	renames->dir_rename_mask = 0;
- 
- 	if (!reinitialize) {
- 		struct hashmap_iter iter;
-@@ -483,8 +509,6 @@ static void clear_or_reinit_internal_opts(struct merge_options_internal *opti,
- 		strmap_clear(&opti->output, 0);
- 	}
- 
--	renames->dir_rename_mask = 0;
--
- 	/* Clean out callback_data as well. */
- 	FREE_AND_NULL(renames->callback_data);
- 	renames->callback_data_nr = renames->callback_data_alloc = 0;
-@@ -3792,6 +3816,35 @@ static void merge_start(struct merge_options *opt, struct merge_result *result)
- 	trace2_region_leave("merge", "allocate/init", opt->repo);
- }
- 
-+static void merge_check_renames_reusable(struct merge_options *opt,
-+					 struct merge_result *result,
-+					 struct tree *merge_base,
-+					 struct tree *side1,
-+					 struct tree *side2)
-+{
-+	struct rename_info *renames;
-+	struct tree **merge_trees;
-+	struct merge_options_internal *opti = result->priv;
-+
-+	if (!opti)
-+		return;
-+
-+	renames = &opti->renames;
-+	merge_trees = renames->merge_trees;
-+	/* merge_trees[0..2] will only be NULL if opti is */
-+	assert(merge_trees[0] && merge_trees[1] && merge_trees[2]);
-+
-+	/* Check if we meet a condition for re-using cached_pairs */
-+	if (     oideq(&merge_base->object.oid, &merge_trees[2]->object.oid) &&
-+		 oideq(     &side1->object.oid, &result->tree->object.oid))
-+		renames->cached_pairs_valid_side = MERGE_SIDE1;
-+	else if (oideq(&merge_base->object.oid, &merge_trees[1]->object.oid) &&
-+		 oideq(     &side2->object.oid, &result->tree->object.oid))
-+		renames->cached_pairs_valid_side = MERGE_SIDE2;
-+	else
-+		renames->cached_pairs_valid_side = 0; /* neither side valid */
-+}
-+
- /*** Function Grouping: merge_incore_*() and their internal variants ***/
- 
- /*
-@@ -3939,7 +3992,16 @@ void merge_incore_nonrecursive(struct merge_options *opt,
- 
- 	trace2_region_enter("merge", "merge_start", opt->repo);
- 	assert(opt->ancestor != NULL);
-+	merge_check_renames_reusable(opt, result, merge_base, side1, side2);
- 	merge_start(opt, result);
-+	/*
-+	 * Record the trees used in this merge, so if there's a next merge in
-+	 * a cherry-pick or rebase sequence it might be able to take advantage
-+	 * of the cached_pairs in that next merge.
-+	 */
-+	opt->priv->renames.merge_trees[0] = merge_base;
-+	opt->priv->renames.merge_trees[1] = side1;
-+	opt->priv->renames.merge_trees[2] = side2;
- 	trace2_region_leave("merge", "merge_start", opt->repo);
- 
- 	merge_ort_nonrecursive_internal(opt, merge_base, side1, side2, result);
+                     Before Series           After Series
+no-renames:        5.665 s ±  0.129 s     5.624 s ±  0.077 s 
+mega-renames:     11.435 s ±  0.158 s    10.213 s ±  0.032 s
+just-one-mega:   494.2  ms ±  6.1  ms   497.6  ms ±  5.3  ms
+
+
+By design, this optimization could not help the just-one-mega testcase. The
+gains for the other two testcases may look somewhat smaller than one would
+expect given the description (only ~10% for the mega-renames testcase), but
+the point was to spend less time detecting renames...and there just wasn't
+that much time spent in renames for these testcases before this series for
+us to remove. However, if we undid the basename-guided rename detection and
+skip-because-unnecessary optimizations, then this series alone would have
+improved performance as follows:
+
+                   Before Basename Series   After Just This Series
+    no-renames:      13.815 s ±  0.062 s      5.814 s ±  0.094 s
+    mega-renames:  1799.937 s ±  0.493 s    303.225 s ±  1.330 s
+
+
+Showing that this optimization has the ability to improve things when the
+other optimizations do not apply. In fact, when I originally implemented
+this optimization, it improved the mega-renames testcase by a factor of 2
+(at the time, I did not have all the optimizations from ort-perf-batch-7
+thru ort-perf-batch-10 in their current shape).
+
+As a reminder, before any merge-ort/diffcore-rename performance work, the
+performance results we started with were:
+
+no-renames-am:      6.940 s ±  0.485 s
+no-renames:        18.912 s ±  0.174 s
+mega-renames:    5964.031 s ± 10.459 s
+just-one-mega:    149.583 s ±  0.751 s
+
+
+=== Further discussion of results ===
+
+If we change our focus from absolute time taken, to the percentage of
+overall time spent on rename detection, then we find the following picture
+comparing our starting point at the beginning of the performance work to
+what we achieve at the end of this series:
+
+       Percentage of time spent on rename detection
+   
+                  commit 557ac0350d      After this Series
+no-renames:             39.4%                   0.2%
+mega-renames:           96.6%                   2.7%
+just-one-mega:          95.0%                   9.0%
+
+
+Since this optimization is only applicable for the first two testcases
+(because the third only involves rebasing a single commit), even if this
+optimization had removed all the remaining time in rename detection it would
+have only sped it up the mega-renames case by ~12% rather than the 10% it
+achieved. This table makes it clear that our attempts to accelerate rename
+detection have succeeded, and any further work to accelerate merges needs to
+start concentrating on other areas.
+
+[1]
+https://github.com/newren/presentations/blob/pdfs/merge-performance/merge-performance-slides.pdf
+
+[2] Well, almost no changes. There's technically a very narrow way that this
+could change the behavior; see the really long "Technically," bullet point
+in patch 3 for discussion of this.
+
+Elijah Newren (7):
+  merge-ort: add data structures for in-memory caching of rename
+    detection
+  merge-ort: populate caches of rename detection results
+  merge-ort: add code to check for whether cached renames can be reused
+  merge-ort: avoid accidental API mis-use
+  merge-ort: preserve cached renames for the appropriate side
+  merge-ort: add helper functions for using cached renames
+  merge-ort, diffcore-rename: employ cached renames when possible
+
+ diffcore-rename.c |  22 +++-
+ diffcore.h        |   3 +-
+ merge-ort.c       | 273 +++++++++++++++++++++++++++++++++++++++++++---
+ merge-ort.h       |   2 +
+ 4 files changed, 282 insertions(+), 18 deletions(-)
+
+
+base-commit: c2d2a1ccaea70b7dc8c0539ba9d3a132f9687040
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-859%2Fnewren%2Fort-perf-batch-11-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-859/newren/ort-perf-batch-11-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/859
 -- 
 gitgitgadget
-
