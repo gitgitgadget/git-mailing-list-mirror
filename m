@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CA4C7C433E5
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F128FC433E9
 	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 01:50:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7F0F0619EF
+	by mail.kernel.org (Postfix) with ESMTP id D450A61A0B
 	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 01:50:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234677AbhCXBtg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Mar 2021 21:49:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54834 "EHLO
+        id S234695AbhCXBti (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Mar 2021 21:49:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54856 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234534AbhCXBtT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Mar 2021 21:49:19 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C9A0C061763
-        for <git@vger.kernel.org>; Tue, 23 Mar 2021 18:49:19 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id t5-20020a1c77050000b029010e62cea9deso338621wmi.0
-        for <git@vger.kernel.org>; Tue, 23 Mar 2021 18:49:19 -0700 (PDT)
+        with ESMTP id S234566AbhCXBtW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Mar 2021 21:49:22 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F85DC061763
+        for <git@vger.kernel.org>; Tue, 23 Mar 2021 18:49:22 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id d191so12037077wmd.2
+        for <git@vger.kernel.org>; Tue, 23 Mar 2021 18:49:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=6PFl0iDxkj7zVlpuhq9V6NKTYKrJyJcPq1OwIosD244=;
-        b=tkTZSFk+wIeXTfgW6ok6IK57p0m9TmOlRt0bv3lywFVVbS60F70fbYGVUG6wVKw3Ja
-         t7YyuHUuQNGe0PvALxK44VD3x4z62TKiDqD/BM2cs2qd6DEaEC8FtMEX52oux+HcI6vB
-         pyO0qJprzfqr4YR4gPpPIjKgB/xP6TVSrScI1PDVuhz5hFy8lqA+8fn8uRQkrZAyrf2C
-         5zEivLsw9V4xhPnaxPxC/9LZ3XreUuk+cTDw/wBoeKPcXIEGpioec9IE5az0e2gcqKxt
-         wHiwI0ngPsDkFl/LClWX+4gS0lldiXIbfx3m8FKkWS0G+yC7q2EV9URAjbMO4vBNVAjc
-         b6EQ==
+        bh=4JJI6mrgDrZjzjDOJ5Xy9QAPcmKnnJhej81kxHwvsTs=;
+        b=N2ib4Ak4zr+nxirBkvD5IDm45wEeujusVj+T99mAnWyOYqaiB6OBALDfwbvWII+0JK
+         h0sudE/9VM8CiEzFNWgJgMYN9N6HWloGYCgo7/Yb16QLc4uCvDAutt/33HgO+KUsq6S4
+         fGAbGhnmHLDbK273a80JSmwl9K2sOAhdLSd3/FviUkXv+yeqYtaMQWbc8cBGbad7PRtc
+         ZKCU16h0U08HBypD9ybLTBxHmZhHTIui0VThQrMdOxBxQ1tDUNhWY87CBs07XFJl5ZUB
+         95WjwvBugnC4K58w0yhtr+8qYOTIoMouBqZW7d1bZP0fS10fvNllNs4/bagbs+fFJSON
+         yF9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=6PFl0iDxkj7zVlpuhq9V6NKTYKrJyJcPq1OwIosD244=;
-        b=J1yipEIwXx7U0Xv2Qc/y69llsi8Y93xjSiLLMokb1KhPYPDnLRgrL4wlQW3DLZ6npx
-         9MxdRQtT0TxQq5RbHfFPamyv96zXhvgLvjWtLWkHMAJhIcTPLEYBv6FaaELNa+ZCpRkI
-         Qj1R4KQnY29uoQEtbezAp+ZslI8ijc8YsHfEs+RSoc8hwxq9wgF9Bp8j3Q6dV7dFek7L
-         k5kW0eZFJrylhvayg3+0AR8Yn5TE2VuP7CrEBJLosvAk6+uvTTLh8CgkTC7OnapUpGMH
-         X9JFBRk9yI71oBEa255zlBbMP6AOU6a0LvpS+7NRFUQaahqLBz/HPXdkd79bYvm+dWpy
-         3bUw==
-X-Gm-Message-State: AOAM530crTUg+QctUJjrKB/MBPS3Lv9UrVu6D/6py2MlKIZ76ZrQ3fte
-        +gAA8Yj8pjBpnEY/DjGfIARn5ptr5BClWw==
-X-Google-Smtp-Source: ABdhPJxtRb0wJx6o8iepJE9NcY/peHSWpX6IyPv3mSXXc5mv1l9qT98bGTn5xVSOQJGuTZgWOpDVjw==
-X-Received: by 2002:a1c:a745:: with SMTP id q66mr587587wme.21.1616550557652;
-        Tue, 23 Mar 2021 18:49:17 -0700 (PDT)
+        bh=4JJI6mrgDrZjzjDOJ5Xy9QAPcmKnnJhej81kxHwvsTs=;
+        b=BBwimyvvvPqPoNICpXEm0PKWJCcQZ9uOXuKlSUiwQNTnA+txCaJVwYcuG4TcsoJzbt
+         Z6vHA6MCfqCk5Td5WXgmQyxmEnl93od+O77QBWckkvA98sYhRYhf9LXbkt7QtNt2NKD5
+         XGn+L+cFVLYSVRKRhMU2seDTcb//wSx2UDJWjIieispFrbTgtqljnzOp8bEN0JmBfXlr
+         m88NIbRSY8fTPtB0eD/VpKw9BFxvxFsKfPn59pIIbzh6GAnvilQaDKm18QVR3ZHGaTvp
+         CLCGxAfMGoICMjGwsQysJlHNtz7bSkoF6c16muLk7d6mV094UfO+vcr1372tkecd2Cqd
+         y4qw==
+X-Gm-Message-State: AOAM531aqhJXX6vLQWHiNZuwVUgiGXptufFts/VAqjztrIW6q3TtaS7y
+        ibY19ODFMfxBMUCUcTYUKTO3n78PnzLB/w==
+X-Google-Smtp-Source: ABdhPJzXRJ6La0AYSgMhT8gqZ48I8CK+DX0BZpPSBNuDzjoRMQtstNobMrNI/XRHA0x0x4OR0uXR9A==
+X-Received: by 2002:a05:600c:2f08:: with SMTP id r8mr571204wmn.95.1616550560700;
+        Tue, 23 Mar 2021 18:49:20 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id y205sm598177wmc.18.2021.03.23.18.49.16
+        by smtp.gmail.com with ESMTPSA id y205sm598177wmc.18.2021.03.23.18.49.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Mar 2021 18:49:16 -0700 (PDT)
+        Tue, 23 Mar 2021 18:49:20 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -68,9 +68,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
         Chris Torek <chris.torek@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 04/10] userdiff style: normalize pascal regex declaration
-Date:   Wed, 24 Mar 2021 02:48:46 +0100
-Message-Id: <patch-04.11-1e9ddcd1a9a-20210324T014604Z-avarab@gmail.com>
+Subject: [PATCH v4 08/10] userdiff: remove support for "broken" tests
+Date:   Wed, 24 Mar 2021 02:48:50 +0100
+Message-Id: <patch-08.11-7755db95014-20210324T014604Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.0.366.ga80606b22c1
 In-Reply-To: <cover-00.11-00000000000-20210324T014604Z-avarab@gmail.com>
 References: <20210224195129.4004-1-avarab@gmail.com> <cover-00.11-00000000000-20210324T014604Z-avarab@gmail.com>
@@ -81,32 +81,49 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Declare the pascal pattern consistently with how we declare the
-others, not having "\n" on one line by itself, but as part of the
-pattern, and when there are alterations have the "|" at the start, not
-end of the line.
+There have been no "broken" tests since 75c3b6b2e8 (userdiff: improve
+Fortran xfuncname regex, 2020-08-12). Let's remove the test support
+for them.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- userdiff.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ t/t4018-diff-funcname.sh | 8 +-------
+ t/t4018/README           | 3 ---
+ 2 files changed, 1 insertion(+), 10 deletions(-)
 
-diff --git a/userdiff.c b/userdiff.c
-index c7aaf7094f8..10a02d36209 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -175,9 +175,8 @@ PATTERNS("objc",
- 	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lL]?"
- 	 "|[-+*/<>%&^|=!]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\||::|->"),
- PATTERNS("pascal",
--	 "^(((class[ \t]+)?(procedure|function)|constructor|destructor|interface|"
--		"implementation|initialization|finalization)[ \t]*.*)$"
--	 "\n"
-+	 "^(((class[ \t]+)?(procedure|function)|constructor|destructor|interface"
-+	 "|implementation|initialization|finalization)[ \t]*.*)$\n"
- 	 "^(.*=[ \t]*(class|record).*)$",
- 	 /* -- */
- 	 "[a-zA-Z_][a-zA-Z0-9_]*"
+diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
+index 5bd82e09ab3..9aec9f8e6de 100755
+--- a/t/t4018-diff-funcname.sh
++++ b/t/t4018-diff-funcname.sh
+@@ -86,13 +86,7 @@ test_expect_success 'setup hunk header tests' '
+ # check each individual file
+ for i in $(git ls-files)
+ do
+-	if grep broken "$i" >/dev/null 2>&1
+-	then
+-		result=failure
+-	else
+-		result=success
+-	fi
+-	test_expect_$result "hunk header: $i" "
++	test_expect_success "hunk header: $i" "
+ 		git diff -U1 $i >actual &&
+ 		grep '@@ .* @@.*RIGHT' actual
+ 	"
+diff --git a/t/t4018/README b/t/t4018/README
+index 283e01cca1a..2d25b2b4fc9 100644
+--- a/t/t4018/README
++++ b/t/t4018/README
+@@ -7,9 +7,6 @@ at least two lines from the line that must appear in the hunk header.
+ The text that must appear in the hunk header must contain the word
+ "right", but in all upper-case, like in the title above.
+ 
+-To mark a test case that highlights a malfunction, insert the word
+-BROKEN in all lower-case somewhere in the file.
+-
+ This text is a bit twisted and out of order, but it is itself a
+ test case for the default hunk header pattern. Know what you are doing
+ if you change it.
 -- 
 2.31.0.366.ga80606b22c1
 
