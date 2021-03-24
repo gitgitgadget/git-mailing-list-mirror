@@ -7,130 +7,80 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 84462C433E0
-	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 19:58:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D53A3C433C1
+	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 20:02:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 56AA361A2B
-	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 19:58:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8901961A0D
+	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 20:02:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237898AbhCXT5t (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Mar 2021 15:57:49 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:65129 "EHLO
+        id S238053AbhCXUCJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Mar 2021 16:02:09 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:62292 "EHLO
         pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237780AbhCXT5U (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Mar 2021 15:57:20 -0400
+        with ESMTP id S238132AbhCXUBr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Mar 2021 16:01:47 -0400
 Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 198F5134F6E;
-        Wed, 24 Mar 2021 15:57:20 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 268A2134FDC;
+        Wed, 24 Mar 2021 16:01:47 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=JQASmgxQP6J1WIIwo+SVpKcXoEY=; b=TzArQG
-        xZ2Xt9kH8hCHDNK09g6P6M15al+LrInYM8sPmVFej6n+5ROoHyeMUlWh8TuQf3xo
-        kNPoSjw58daASMR12vDl/bL8CDqJlSNmgGZES7/y/jgmYDzPDUSqaJIwsFj6VQE9
-        Y6leJrXGzQuo2NPk7bpYKDbTEsEa0mLrr9NYw=
+        :content-type:content-transfer-encoding; s=sasl; bh=c8C4zBMT4lXT
+        P0XsAaUxloErDJM=; b=KMGggDlJfrKfiorI0sIUvB8ZlX8qk0SwyVjAxem1+pYc
+        1rflaCppaa2MYkheTs4H0A11xlrbDzVmlV3wxsaHAaeZwQGH+6QX96hg/bS5Yk3M
+        XNduYwU6TcpKko5qxvQAPs/F9ViBA7CRhwENQpw91p5H/trW7LNmf7oqbFYOq0g=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=yb5kbBRoYoJmjUcILFhyw3jDZ6yXBK0J
-        03bbkVQ/vPTQWyVg8mpqHZTwQUH5FjAVlRBaUdF7AodRPCxTqYuqtNni7T3fcLKg
-        scrU9sfmbsAp+XacjKkWHukUCu7efMEZJO3VOBXx/jLbBLwycauFmASvYfBNGgpv
-        dBmKMl5i4o8=
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=L5tGy2
+        DiW6dDrfI3WlKo1cB+abubo/qySZUTUzoQF7w+L9khacCokqCsbPhiz/BcQE9/gp
+        3gdBOGnW8gkHNHvJGqUkFeUn5Ez610K4R9gDkXnH64kgyg/iXQ2q9kHSMgasDT28
+        fJ61N5NDFka/b6YcFB4MDVZywIPOjO2D6CjAs=
 Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 11145134F6D;
-        Wed, 24 Mar 2021 15:57:20 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1FCC6134FDB;
+        Wed, 24 Mar 2021 16:01:47 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 57E54134F6C;
-        Wed, 24 Mar 2021 15:57:17 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E24B8134FDA;
+        Wed, 24 Mar 2021 16:01:43 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Adam Spiers <git@adamspiers.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Chris Torek <chris.torek@gmail.com>
-Subject: Re: [PATCH v4 05/10] userdiff: add and use for_each_userdiff_driver()
-References: <20210224195129.4004-1-avarab@gmail.com>
-        <cover-00.11-00000000000-20210324T014604Z-avarab@gmail.com>
-        <patch-05.11-64ea5e8443f-20210324T014604Z-avarab@gmail.com>
-        <YFuPMMMYicFK6A/S@coredump.intra.peff.net>
-Date:   Wed, 24 Mar 2021 12:57:15 -0700
-In-Reply-To: <YFuPMMMYicFK6A/S@coredump.intra.peff.net> (Jeff King's message
-        of "Wed, 24 Mar 2021 15:12:48 -0400")
-Message-ID: <xmqqsg4kxr38.fsf@gitster.g>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Git <git@vger.kernel.org>, jost.schulte@tutanota.com
+Subject: Re: Configure default merge message
+References: <MW_aJot--3-2@tutanota.com>
+Date:   Wed, 24 Mar 2021 13:01:42 -0700
+In-Reply-To: <MW_aJot--3-2@tutanota.com> (jost schulte's message of "Wed, 24
+        Mar 2021 19:57:29 +0100 (CET)")
+Message-ID: <xmqqk0pwxqvt.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 22C15076-8CDB-11EB-81CC-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: C1A41F3E-8CDB-11EB-90A0-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+jost.schulte@tutanota.com writes:
 
-> Our callback function does _one_ type of selection (based on a "type"
-> parameter), but not another (based on the name). That feels
-> inconsistent, but is also the reason we have this awkward struct.
-
-I wrote a very similar review but did not send it out, as I couldn't
-pinpoint where the awkwardness come from exactly.
-
-> Part
-> of my confusion is the name: this is not something to be generically
-> used with for_each_userdiff_driver(), but rather a type unique to
-> find_by_namelen() to be passed through the opaque void pointer.
+> Hello all,
 >
-> So "struct find_by_namelen_data" would have been a lot more
-> enlightening.
-
-Yes.  The callback parameter being "void *" is the API, and it is
-just this user that uses this particular structure.
-
-And while "type" could also be made a part of this structure and
-have the API always iterate over all entries regardless of "type",
-i.e. the callback function could be the one responsible for finding
-the entries in the table for one particular type, it is understandable
-that potential callers can be helped by having the pre-filtering
-based on the "type" thing on the API side.
-
->> +	if (!strncmp(driver->name, cb_data->k, cb_data->len) &&
->> +	    !driver->name[cb_data->len]) {
->> +		cb_data->driver = driver;
->> +		return -1; /* found it! */
->>  	}
+> I'm using git mainly with BitBucket repositories. When I pull from a re=
+mote, the default commit message will be "Merge branch 'source-branch-nam=
+e' of=C2=A0https://bitbucket.org/ <https://bitbucket.org/jibbletech/jibbl=
+e-2.0-client-web>repository-name into destination-branch-name".
 >
-> This "return -1" took me a while to grok, and the comment didn't help
-> all that much. The point is to stop traversing the list, but "-1" to me
-> signals error. I think returning "1" might be a bit more idiomatic, but
-> also a comment that says "tell the caller to stop iterating" would have
-> been more clear.
-
-And the fact that it becomes the return value of "for_each_()" iterator
-does not quite help to use a negative value, implying there was some
-error condition X-<.
-
-> Perhaps it would make more sense as:
+> I'd like to configure git to omit the "of=C2=A0https://bitbucket.org/re=
+pository-name" part. How can I do that?
 >
->   USERDIFF_DRIVER_TYPE_BUILTIN = 1<<0,
->   USERDIFF_DRIVER_TYPE_CUSTOM = 1<<0,
->   USERDIFF_DRIVER_TYPE_ALL = USERDIFF_DRIVER_TYPE_BUILTIN | USERDIFF_DRIVER_TYPE_CUSTOM
->
-> Or the one caller who wants "ALL" could even do the OR themselves.
+> Regards
+> Jost
 
-Great minds think alike ;-)
+=C3=86var, is this something we recently made it impossible with 4e168333
+(shortlog: remove unused(?) "repo-abbrev" feature, 2021-01-12), or
+is there more to it than resurrecting that "feature" to do what Jost
+seems to want?
 
-> I do kind of wonder if there's much value in having a single function
-> with a type field at all, though, given that there's no overlap in the
-> implementation. Would separate "for_each_custom" and "for_each_builtin"
-> functions make sense? And then the existing caller would just call them
-> sequentially.
-
-Or a single for_each_driver() that gives <name, length, type> tuple
-to the callback function, iterating over all drivers regardless of
-the type.
-
+Thanks.
