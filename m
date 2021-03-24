@@ -2,191 +2,177 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 48BF0C433E5
-	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 21:31:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FD80C433DB
+	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 21:33:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2F11161A01
-	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 21:31:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C723061A1F
+	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 21:33:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238376AbhCXVac (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Mar 2021 17:30:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56860 "EHLO
+        id S238474AbhCXVcn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Mar 2021 17:32:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57432 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233604AbhCXVaB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Mar 2021 17:30:01 -0400
-Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 554A9C06174A
-        for <git@vger.kernel.org>; Wed, 24 Mar 2021 14:30:01 -0700 (PDT)
-Received: by mail-pf1-x429.google.com with SMTP id j25so18433034pfe.2
-        for <git@vger.kernel.org>; Wed, 24 Mar 2021 14:30:01 -0700 (PDT)
+        with ESMTP id S238491AbhCXVci (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Mar 2021 17:32:38 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3146BC061763
+        for <git@vger.kernel.org>; Wed, 24 Mar 2021 14:32:38 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id n11-20020a05600c4f8bb029010e5cf86347so3403202wmq.1
+        for <git@vger.kernel.org>; Wed, 24 Mar 2021 14:32:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=PBCUd/rYi3Pn6HO/qppD4Ka7VKta/we3hiow1pcw6DA=;
-        b=tnn+xZ92imsuK3zMUB7BXcWoHP5To8w3uV1/L1xx+pzKy/zGgLG2H7G2+heS/E1Zy5
-         fersIHf/2Dd4Nuhdh5e38XmAxMjfz9H1zlj6t7OmiPgl/HhLOrgsG+WD8Xd/TB+PoOdJ
-         e9JM68RjjBxdaQ3tgKSS+kUCMQdXIsUfSS7hTzApMvo5UtVxlQgb7Bz9vhIiPPMj47LD
-         EUbYzEc7kBKb4Yfp32V+/7e9V9O2Lq3WbHytxy43KyLknDXyb+Zyu7MXsPh1LDm/VfAw
-         AYfR/iOARNFX5gQ2ijU2BIj/1CG862C4Glgs1+w/K5gZ4IPzkyeVmZAFj45f9Gglre2h
-         zLbg==
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=7nRedVQaoNiBIqDox5yv7uQyk1IOzoWKCIVl/e4A2oo=;
+        b=Naokp0511WwvonJZeH4ujKsAALYPawDa46mLn3Wg9Z18A1YLh2vOfacLA0z+BKyibu
+         y2S4nf3ZfZwPYO3EjU0S1wox6SZXzREeRblIGutqKOJ8TUfPLrPETsfKNJAAP8DvCl1r
+         MxuCnPFERbHWDT6slYD83YCXvcCTsqGTZLSesjbKY/JpXAJlQNylRVeGJgR65Zouf22p
+         jn2PY/2xGE+5poqw0eUM/AlIbGpPcxKouL26YXsBFfDJZDAGlMFIYYZeyu0t6MCCSbXH
+         6R3yrMmH3FtaS7eOPGvkx/nkS/QZ3j2bi3LojfJMktc6F4t23zUqZayf3O9G/vjAuCLA
+         NUzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=PBCUd/rYi3Pn6HO/qppD4Ka7VKta/we3hiow1pcw6DA=;
-        b=D/dbdZqzY5jlgUncCvSEO1gg26PBC8GbaAeDep8zBMPRsPAw7bz5uzvm/sgENMs52v
-         ZEtpWTlH2W3xvKb/4Mv2u+AA13+lHuHlDjhpsboRRtmAQHAQU5N55sgvAqx5g4RooqHA
-         am3A9Ey+iqUowgxsj6rp/1w61aQio8notfo6pAYbJsNpScoz93yhuCWsF8QRVbbZooEe
-         RNiiMjUSFzplA4EEQPL0NAUGPbEMUnMLotor3vNh7bptY8Rie4Vb/opCgGd1ugDuHdzB
-         bn4n/SANdtDHpTbJq+fR+Y31ZVhBRszTW5iiyUVX9dVFoLKiPFb1mpM8+WKJhfMwwQ6f
-         5pmw==
-X-Gm-Message-State: AOAM532ByzTwu0BOO7ugVV3oHpavJDeFwu7npnHrjAMkiNyuh36vr73e
-        ZTZH8M2ThtZjYwlG8xf7AApmUetHFexcCg==
-X-Google-Smtp-Source: ABdhPJyB3Ls8fD0dq95UTCdGgstXeogezPVBEjmiduK479Ta/1jPDf08oVUiol41P7Sgb4oqLsZ1/w==
-X-Received: by 2002:a63:6c9:: with SMTP id 192mr4704626pgg.302.1616621400631;
-        Wed, 24 Mar 2021 14:30:00 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:0:d027:9201:1f66:e720])
-        by smtp.gmail.com with ESMTPSA id u79sm3684031pfc.207.2021.03.24.14.29.59
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=7nRedVQaoNiBIqDox5yv7uQyk1IOzoWKCIVl/e4A2oo=;
+        b=o/nxxKdnju32/tqEDJ9THuBN0FVt6NCg06hOzc1N2m6pq9dF7n2Yon+spdkox74/5/
+         OPx7jSaZ8pRxOv7HCbdUbbabLLKU7WJaNwEzg8XnA31Dw799nrDAOFpvMDn8DmkQdRWr
+         FUBhcelhpq5cN3Du3IGbid2emzl1ewaiTgRaDT6gINDQlZBACMG2EmjBNEXJYZB9x5gG
+         BSbkBpQsHUN9iHXI9oYtK3XzdLIU15yXYn8XSxqQBer6ihudS0KaaJj8u0XEL20jUnIy
+         MYzRz8tuqA+ebDYsbrL8a5ia16Tdc09AhwVirWDsH/qY6Meod4VHTLCZPYhLMXZW2ZdR
+         p1vw==
+X-Gm-Message-State: AOAM530bx7UXz7aE09f6SxcvpfEpMMp4YJNK3VrHXhBKD5EcNhn0bj3q
+        taC+K+Lk5HTRsNGml4CfXpk8kdvNPZg=
+X-Google-Smtp-Source: ABdhPJzrFut4ecnEqtqn/bTiTumTgv6LU9VvTrtNUxzukBbs7n64Y43AR5kN/SJWU2F/YARfEw4NDQ==
+X-Received: by 2002:a05:600c:3647:: with SMTP id y7mr4808743wmq.17.1616621556883;
+        Wed, 24 Mar 2021 14:32:36 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id e8sm3762716wme.14.2021.03.24.14.32.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Mar 2021 14:29:59 -0700 (PDT)
-Date:   Wed, 24 Mar 2021 14:29:54 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v8 08/37] hook: add 'run' subcommand
-Message-ID: <YFuvUlMOaJ0qAxzk@google.com>
-References: <20210311021037.3001235-1-emilyshaffer@google.com>
- <20210311021037.3001235-9-emilyshaffer@google.com>
- <87a6r8hhvf.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+        Wed, 24 Mar 2021 14:32:36 -0700 (PDT)
+Message-Id: <5f34332c96053f28eeae0b7ba43e4c65c7896899.1616621553.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.859.git.1616621553.gitgitgadget@gmail.com>
+References: <pull.859.git.1616621553.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 24 Mar 2021 21:32:28 +0000
+Subject: [PATCH 2/7] merge-ort: populate caches of rename detection results
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87a6r8hhvf.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Derrick Stolee <dstolee@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 12, 2021 at 09:54:28AM +0100, Ævar Arnfjörð Bjarmason wrote:
-> 
-> 
-> On Thu, Mar 11 2021, Emily Shaffer wrote:
-> 
-> >  'git hook' list <hook-name>
-> > +'git hook' run [(-e|--env)=<var>...] [(-a|--arg)=<arg>...] <hook-name>
-> 
-> [...]
-> 
-> > +	switch (cfg)
-> > +	{
-> > +		case HOOKDIR_ERROR:
-> 
-> Overly indented case statements again.
-Thanks. Probably need to fix my autoformatter or something.
-> 
-> > +			fprintf(stderr, _("Skipping legacy hook at '%s'\n"),
-> > +				path);
-> > +			/* FALLTHROUGH */
-> > +		case HOOKDIR_NO:
-> > +			return 0;
-> > +		case HOOKDIR_WARN:
-> > +			fprintf(stderr, _("Running legacy hook at '%s'\n"),
-> > +				path);
-> > +			return 1;
-> > +		case HOOKDIR_INTERACTIVE:
-> > +			do {
-> > +				/*
-> > +				 * TRANSLATORS: Make sure to include [Y] and [n]
-> > +				 * in your translation. Only English input is
-> > +				 * accepted. Default option is "yes".
-> > +				 */
-> > +				fprintf(stderr, _("Run '%s'? [Yn] "), path);
-> 
-> Nit: [Y/n]
-ACK
+From: Elijah Newren <newren@gmail.com>
 
-> 
-> > +				} else if (starts_with(prompt.buf, "y")) {
-> 
-> So also "Y", "yes" and "yellow"...
-That's also how add-patch.c:prompt_yesno(),
-builtin/bisect--helper.c:decide_next(), and
-git-add--interactive.perl:prompt_yesno (assuming I'm grokking the perl
-correctly) work. builtin/clean.c:ask_each_cmd checks that the user's
-reply matches a substring anchored to the beginning (e.g. "y", "ye",
-"yes").  git-diftool--helper.sh:launch_merge_tool just checks for "not
-'n'". And git-send-email.perl:ask just checks for "'y' or not".
+Fill in cache_pairs, cached_target_names, and cached_irrelevant based on
+rename detection results.  Future commits will make use of these values.
 
-So I think there's a little flexibility :) But I like builtin/clean.c's
-approach most out of these, so I'll switch.
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ merge-ort.c | 54 +++++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 52 insertions(+), 2 deletions(-)
 
-> 
-> > [...]
-> >  	git hook list pre-commit >actual &&
-> >  	# the hookdir annotation is translated
-> > -	test_i18ncmp expected actual
-> > +	test_i18ncmp expected actual &&
-> > +
-> > +	test_write_lines n | git hook run pre-commit 2>actual &&
-> > +	! grep "Legacy Hook" actual &&
-> > +
-> > +	test_write_lines y | git hook run pre-commit 2>actual &&
-> > +	grep "Legacy Hook" actual
-> > +'
-> > +
-> > +test_expect_success 'inline hook definitions execute oneliners' '
-> > +	test_config hook.pre-commit.command "echo \"Hello World\"" &&
-> > +
-> > +	echo "Hello World" >expected &&
-> > +
-> > +	# hooks are run with stdout_to_stderr = 1
-> > +	git hook run pre-commit 2>actual &&
-> > +	test_cmp expected actual
-> > +'
-> > +
-> > +test_expect_success 'inline hook definitions resolve paths' '
-> > +	write_script sample-hook.sh <<-EOF &&
-> > +	echo \"Sample Hook\"
-> > +	EOF
-> > +
-> > +	test_when_finished "rm sample-hook.sh" &&
-> > +
-> > +	test_config hook.pre-commit.command "\"$(pwd)/sample-hook.sh\"" &&
-> > +
-> > +	echo \"Sample Hook\" >expected &&
-> > +
-> > +	# hooks are run with stdout_to_stderr = 1
-> > +	git hook run pre-commit 2>actual &&
-> > +	test_cmp expected actual
-> > +'
-> > +
-> > +test_expect_success 'hookdir hook included in git hook run' '
-> > +	setup_hookdir &&
-> > +
-> > +	echo \"Legacy Hook\" >expected &&
-> > +
-> > +	# hooks are run with stdout_to_stderr = 1
-> > +	git hook run pre-commit 2>actual &&
-> > +	test_cmp expected actual
-> > +'
-> > +
-> > +test_expect_success 'out-of-repo runs excluded' '
-> > +	setup_hooks &&
-> > +
-> > +	nongit test_must_fail git hook run pre-commit
-> >  '
-> >  
-> >  test_expect_success 'hook.runHookDir is tolerant to unknown values' '
-> 
-> No tests for --env or --arg?
+diff --git a/merge-ort.c b/merge-ort.c
+index 0774152ea64a..2303d88e6a92 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -2333,6 +2333,47 @@ static void resolve_diffpair_statuses(struct diff_queue_struct *q)
+ 	}
+ }
+ 
++static void possibly_cache_new_pair(struct rename_info *renames,
++				    struct diff_filepair *p,
++				    unsigned side,
++				    char *new_path)
++{
++	char *old_value;
++
++	if (!new_path) {
++		int val = strintmap_get(&renames->relevant_sources[side],
++					p->one->path);
++		if (val == 0) {
++			assert(p->status == 'D');
++			strset_add(&renames->cached_irrelevant[side],
++				   p->one->path);
++		}
++		if (val <= 0)
++			return;
++	}
++	if (p->status == 'D') {
++		/*
++		 * If we already had this delete, we'll just set it's value
++		 * to NULL again, so no harm.
++		 */
++		strmap_put(&renames->cached_pairs[side], p->one->path, NULL);
++	} else if (p->status == 'R') {
++		if (!new_path)
++			new_path = p->two->path;
++		new_path = xstrdup(new_path);
++		old_value = strmap_put(&renames->cached_pairs[side],
++				       p->one->path, new_path);
++		strset_add(&renames->cached_target_names[side], new_path);
++		free(old_value);
++	} else if (p->status == 'A' && new_path) {
++		new_path = xstrdup(new_path);
++		old_value = strmap_put(&renames->cached_pairs[side],
++				       p->two->path, new_path);
++		strset_add(&renames->cached_target_names[side], new_path);
++		assert(!old_value);
++	}
++}
++
+ static int compare_pairs(const void *a_, const void *b_)
+ {
+ 	const struct diff_filepair *a = *((const struct diff_filepair **)a_);
+@@ -2414,6 +2455,7 @@ static int collect_renames(struct merge_options *opt,
+ 		struct diff_filepair *p = side_pairs->queue[i];
+ 		char *new_path; /* non-NULL only with directory renames */
+ 
++		possibly_cache_new_pair(renames, p, side_index, NULL);
+ 		if (p->status != 'A' && p->status != 'R') {
+ 			diff_free_filepair(p);
+ 			continue;
+@@ -2430,7 +2472,7 @@ static int collect_renames(struct merge_options *opt,
+ 			diff_free_filepair(p);
+ 			continue;
+ 		}
+-
++		possibly_cache_new_pair(renames, p, side_index, new_path);
+ 		if (new_path)
+ 			apply_directory_rename_modifications(opt, p, new_path);
+ 
+@@ -3709,8 +3751,16 @@ static void merge_start(struct merge_options *opt, struct merge_result *result)
+ 					 NULL, 1);
+ 		strmap_init_with_options(&renames->dir_renames[i],
+ 					 NULL, 0);
++		/*
++		 * relevant_sources uses -1 for the default, because we need
++		 * to be able to distinguish not-in-strintmap from valid
++		 * relevant_source values from enum file_rename_relevance.
++		 * In particular, possibly_cache_new_pair() expects a negative
++		 * value for not-found entries.
++		 */
+ 		strintmap_init_with_options(&renames->relevant_sources[i],
+-					    0, NULL, 0);
++					    -1 /* explicitly invalid */,
++					    NULL, 0);
+ 		strmap_init_with_options(&renames->cached_pairs[i],
+ 					 NULL, 1);
+ 		strset_init_with_options(&renames->cached_irrelevant[i],
+-- 
+gitgitgadget
 
-Yikes, I guess not. Thanks, will add.
-
- - Emily
