@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2537FC433C1
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A50DAC433E0
 	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 12:31:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ED78561A06
-	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 12:31:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7E82961A06
+	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 12:31:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230481AbhCXMbV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Mar 2021 08:31:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52296 "EHLO
+        id S232800AbhCXMbX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Mar 2021 08:31:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229957AbhCXMaw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Mar 2021 08:30:52 -0400
-Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDC62C061763
-        for <git@vger.kernel.org>; Wed, 24 Mar 2021 05:30:51 -0700 (PDT)
-Received: by mail-pf1-x42f.google.com with SMTP id j25so17204508pfe.2
-        for <git@vger.kernel.org>; Wed, 24 Mar 2021 05:30:51 -0700 (PDT)
+        with ESMTP id S230115AbhCXMay (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Mar 2021 08:30:54 -0400
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25C9AC061763
+        for <git@vger.kernel.org>; Wed, 24 Mar 2021 05:30:54 -0700 (PDT)
+Received: by mail-pj1-x102c.google.com with SMTP id mz6-20020a17090b3786b02900c16cb41d63so1116651pjb.2
+        for <git@vger.kernel.org>; Wed, 24 Mar 2021 05:30:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=KFrmTRm9LjfQ2udU42UgiYhQZLOYOIWYgf2r13I5TZM=;
-        b=u/+oW9us4Ja8+rsxLdt7IF2IkfOKbzZL8/sq5AF6pz/yksGeRyZnU0eOx78cvsojMc
-         ZGFpaBJuLRgKsMNWFFBLiQXBYtLKht+XtHedXo4qXfNyZ2vdVUuZVx3YXkWSG1E0buDn
-         V5I5JIGfsNSgxuYswCpi8Cti2cZ6jAIdZ3PnRBE7OBWaIXxfZgX28VauBzPCAC0wWe6m
-         3ikwCLtlIS5VO8kz0Bj51qdXb8+JLrrsH5A/LWePD5cxYfCMMOffkNQMaf+K6JoUbf3e
-         +yla76JldJRfSshl3zQyr8DQRpqPQTsVIkLSMmdMm7gZGZFUwuysZKTa1LboZiTaQi3G
-         XAkw==
+        bh=QJK3jIQ1ELZfn8vekPFuUlXYx0CPXSfpa4cGSxfpWDs=;
+        b=oXiCcPciB7aWImRo1C59C+b73c3H2cBOamBC4Nx9dspco77cMXLSbkbe2Y9kZT9WgW
+         5JX7v41AylcaqUJdhmmzxFdLyIBS/IMouacAFIeCPiyWoBYBieAssdXQJ19eWVNHHvy0
+         wG+/l5tmLjxcms91tzktaEPiwU9DdXAd2r3Ut/UFsTKq3Ib5RzqzPsU62UF4bOE/jvE/
+         Xthq415JHmptpu8i2M/g8n3tlVUaJmp449rKtO7+xEpWmOFaMFFX9LPhLud5ylj1Z5Ow
+         LBHP33dCf1ni4gf5KeEUfJ1EI7pn4GOjk4sRpeV1JfsayfP6v3980D484MO3Sr1OywC1
+         KVAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=KFrmTRm9LjfQ2udU42UgiYhQZLOYOIWYgf2r13I5TZM=;
-        b=FNADr/6rZ4h6PdSUwlDPvkmfYfqxAcJRHKRet2T8eOPo5HHcK85sfwiwmvfojAacoe
-         NrbIfILvCnhas4KLzC92GAM9EdoMaw1Z8e0XtbzExqQXryLEU6IiHYTd80xep8Nyskzo
-         ErZn3bNh852DEK7Iv2UTqewBpk3rhuw6A8iOFzaVT5Va1QMxDDH/cwrzc1NAOhpEs1hg
-         cQR/LnhHEA4Jzbtvbrh4uUQ48Gh73WapZ5rLJVmBWcaMDVx4UIdxlNR6ger9LX94h7fs
-         oWtk+RX5nYbRmWALRXSae2sFQbChwNJKRnj5BUdai1g9/0wgMTDxIGmjUXunIpTS/hn5
-         51lQ==
-X-Gm-Message-State: AOAM5328kciC00t7hYWXmXfkaI2lMSbDfdTy6WSrhHaRburJQ+KsDTVq
-        p00FhjLXKVxFAOfVDdgPKl4MDhnL+bf8oQ==
-X-Google-Smtp-Source: ABdhPJzEaWosQuSs5yzY4zFc+hibeNlPDA+SOwMl4rRVmoGgH1vfbdAUlExwaak6KTjms573VTQl3g==
-X-Received: by 2002:aa7:9ecf:0:b029:1f4:f737:12d6 with SMTP id r15-20020aa79ecf0000b02901f4f73712d6mr2835181pfq.8.1616589050373;
-        Wed, 24 Mar 2021 05:30:50 -0700 (PDT)
+        bh=QJK3jIQ1ELZfn8vekPFuUlXYx0CPXSfpa4cGSxfpWDs=;
+        b=CSIGjgTf3Lrcq3GgMMWesmkRoj9jbXjdyPW2+efYDlz8bX+pm/7VyyTDHUqnTeG+BZ
+         xlZQKW4RhgE/O67B5RLn+LFIpEDqYXcH71O96m+yVdEb5/aHgJIrP73YlVOQndbx0S4q
+         u6kCs182ZDgspJ0/mBQURStfHlgnvNUgs2sZksOftrDWL0DGDNv4vrpS75+NVNt5POlI
+         P6i8mLebiAuHXgxIYL7pCGnlwUwu2Q41zcyfUbmxQWSiDDr7sVa9gaF5950O0UddlbMq
+         ANJ2mM8xz5gT4eyY0dF7JMJw969LHVqvDF+tsnl5BKy/GQmx+/eMwjYrqoZ/ddIIUc2U
+         gKpw==
+X-Gm-Message-State: AOAM531oqCcIy3cT9yTLl0zHl5tL6BJwaJOSpjNHnP6i//YCdsW2ybRR
+        1qsMPLICGNT0k3QBkDIg8dDjHitDPUGZVw==
+X-Google-Smtp-Source: ABdhPJweyruBVJ/Y3/zzgQ02Fqt5r6PNF6Nq5/MhDgdkK5O66lhTAP6GktS4CZBaD97Bt8xKhCtUaw==
+X-Received: by 2002:a17:90a:400f:: with SMTP id u15mr3230309pjc.80.1616589053579;
+        Wed, 24 Mar 2021 05:30:53 -0700 (PDT)
 Received: from ubuntu.mate (subs03-180-214-233-84.three.co.id. [180.214.233.84])
-        by smtp.gmail.com with ESMTPSA id c24sm2443299pjv.18.2021.03.24.05.30.48
+        by smtp.gmail.com with ESMTPSA id c24sm2443299pjv.18.2021.03.24.05.30.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Mar 2021 05:30:50 -0700 (PDT)
+        Wed, 24 Mar 2021 05:30:53 -0700 (PDT)
 From:   Bagas Sanjaya <bagasdotme@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: [PATCH 1/2] git-format-patch: Include diff-generate-patch documentation
-Date:   Wed, 24 Mar 2021 19:30:26 +0700
-Message-Id: <20210324123027.29460-2-bagasdotme@gmail.com>
+Subject: [PATCH 2/2] git-format-patch: Document format for binary patch
+Date:   Wed, 24 Mar 2021 19:30:27 +0700
+Message-Id: <20210324123027.29460-3-bagasdotme@gmail.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20210324123027.29460-1-bagasdotme@gmail.com>
 References: <20210324123027.29460-1-bagasdotme@gmail.com>
@@ -71,27 +71,43 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-diff-generate-patch explains format of generated patch for text files.
+Document binary file patch formats that are different from text file
+patch.
 
 Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
 ---
- Documentation/git-format-patch.txt | 7 +++++++
- 1 file changed, 7 insertions(+)
+ Documentation/git-format-patch.txt | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
 diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index 3e49bf2210..247033f8fc 100644
+index 247033f8fc..8de172b1f4 100644
 --- a/Documentation/git-format-patch.txt
 +++ b/Documentation/git-format-patch.txt
-@@ -718,6 +718,13 @@ use it only when you know the recipient uses Git to apply your patch.
- $ git format-patch -3
- ------------
+@@ -725,6 +725,28 @@ diff format is described as below:
  
-+GENERATED DIFF FORMAT
-+---------------------
-+git-format-patch emits diff in generated patches. For text files, the
-+diff format is described as below:
+ include::diff-generate-patch.txt[]
+ 
++Binary Files
++~~~~~~~~~~~~
++For binary files, the diff format have some differences compared to text
++files:
 +
-+include::diff-generate-patch.txt[]
++1. Object hashes in index header line (`index <hash>..<hash> <mode>`)
++   are always given in full form, as binary patch is designed to be
++   applied only to an exact copy of original file. This is to ensure
++   that such patch don't apply to file with similar name but different
++   hash.
++
++2. There are additional extended header lines specific to binary files:
++
++        GIT binary patch
++        delta <bytes>
++        literal <bytes>
++
++3. The diff body can be either delta or full (literal) content,
++   whichever is the smallest size. It is encoded with base85 algorithm,
++   and emitted in 64 characters each line. All but the last line in
++   the body are prefixed with `z`.
 +
  SEE ALSO
  --------
