@@ -8,61 +8,60 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CB3EC433E2
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C1DE4C433E3
 	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 21:33:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3D40F61A24
+	by mail.kernel.org (Postfix) with ESMTP id 9A60261A33
 	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 21:33:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238476AbhCXVcn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Mar 2021 17:32:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57430 "EHLO
+        id S238501AbhCXVcq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Mar 2021 17:32:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238490AbhCXVci (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Mar 2021 17:32:38 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D69AC06174A
-        for <git@vger.kernel.org>; Wed, 24 Mar 2021 14:32:37 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id x16so249910wrn.4
-        for <git@vger.kernel.org>; Wed, 24 Mar 2021 14:32:37 -0700 (PDT)
+        with ESMTP id S238493AbhCXVck (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Mar 2021 17:32:40 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81D02C06174A
+        for <git@vger.kernel.org>; Wed, 24 Mar 2021 14:32:39 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id y124-20020a1c32820000b029010c93864955so1989958wmy.5
+        for <git@vger.kernel.org>; Wed, 24 Mar 2021 14:32:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=2rWkcFDLnOgbEh3iq32tzYD1sEh6ZH0IimGam4RIGZE=;
-        b=DsQpXNDAYhCbfq/KaApdsa77mp/GStDHCAPeARt8hzzNo6roX4dywzpI72oFS1bCxA
-         Jyos7Q07Lpybuz1shjSm22XjxbnNv1MBZpAC7r6KPEPeD+lSwymctYgHjjbKrzoeZ1w3
-         HFSes+8QMoDh2elEJZHJxkM+sCKTGLRCrVg3XSlNACAYMGv/ruPBdRyBdX6/QPN5OzEQ
-         xg76PVHC/cTJ12u8QE/5ezQ7ZadDYXdmSTipuXa2+zGMaghUE81o+lYiG6CB+zg46DwT
-         nTJsWbQE3B2BuhLVM38ElqWxTBb/rpkMCH0ITUMQibDjJ2UNzwIZ9PuWsa5/JZdN+RGD
-         4mvA==
+        bh=MlU//xxMNdCKgYSkstMNl9UIw6xYo68RnWfaUVnXDfo=;
+        b=F4BpLJOlOjp8E/+26AQCqklZ7zzvnS7nw/vEAR0aZBVfWsjO2AuqNJ+stQ7YTdB90n
+         vYqQLrKgGO2K625JleLjZ2LPCkWpKZJks6kenHU6LUvwF6TyzCLVCJjC9xos2aO7XGPE
+         WoQ30fegyQ+BX3P9aKfjB/MY9NzEVLxn7NYJ4OUUtlKym2Rw/yB4qNfJ0I8wGYJr6o7R
+         g+RAB/2VVXqTGNeIeYEKWLbHWjnC22p1jrvvsd8ojlFoMo4G799hBtf2NG1itpCJUYQ9
+         cuvjzwAH8EBTGIVQMJ2DPc91Da6fXGjfPnNzwtALuA6mg+VVGA8dGUTh+NL1JtwDAoey
+         yCdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=2rWkcFDLnOgbEh3iq32tzYD1sEh6ZH0IimGam4RIGZE=;
-        b=HLEbtSogf2eOzIkYU1JLmAEqL2P9dDGoZlY3AtPU3Y3NtgdXceNoqlceB3iIN4hcsQ
-         +M4YBQPyb25z8z1GHtWtX7TCs3xZbEHOkKazPYH6QDTZ7JiG9jZBn9dRt5lvNBcYJqqb
-         X66H1cqngOxCkw6trdLRWUQDTVSxX08aWNhEtCdwo54GaovKjc/cJYIaGRQWxPtxHTTj
-         MO5YknHsyz8IlLjEjOsCtgYCmk/+Nbg8v/KuxIZAp9l3PzfgyVf38F8Jh/rv0pBP08Q0
-         6pxGhaKSZkcOc68ix8Q+wOtJkNhtq/a+i4ibwPfE7M3DtTlU8xbTBNICHB77t0b6Rb4h
-         5GEA==
-X-Gm-Message-State: AOAM532ToM/0jCXeFpSCXQfsLC+ruLPmQFQVZORCSvw7WDC8PkGsbmBE
-        01M9CK81mwKXxvBfSQBnX1ELdT5b7H8=
-X-Google-Smtp-Source: ABdhPJz7zmGI8HBTKBcM/7sSUF9igy3fik9SYVxpfPS8wc5gVIqVHW8WQKmh/08IlrsvT5/YON4B0A==
-X-Received: by 2002:a5d:58c9:: with SMTP id o9mr5545465wrf.181.1616621556322;
-        Wed, 24 Mar 2021 14:32:36 -0700 (PDT)
+        bh=MlU//xxMNdCKgYSkstMNl9UIw6xYo68RnWfaUVnXDfo=;
+        b=m9uqUVw69Ehgbft7YmCfxQOlgC+Na1k81tSCL6qKfx5V7IXLjKZVG0yPT+TvgtQzaa
+         RHXezW8QEL4qwW60ZB1I7PRonuiw6DrON4p/94eqGBNpbUr0sMSQpVajgEmWocwzIAQf
+         qFUP+GUBO0sOuOD369d37smQiTuv47LJrOwirLC5Jh4lWGyMK4/ab7BTq+h7riLAR2Kq
+         6kfEIrLw9jjH90aZZWP2SbStRk8cKCT1HKa1sDpBTB5OifC9LMBPpf/lyJRBmjcuo2my
+         shRiJ8pi1ffrdMZZV5Be8/kUP08G0i1/ElNzR6sUx/dNa+hymFjEfNF4VbmjyDMEV8Xe
+         C4+Q==
+X-Gm-Message-State: AOAM532Qyi0cVOd21B+hN6SJ5mU6Z5tdBSmbua1EMkdzBHaxhPQsvfac
+        gjW4sL2WlJUUmZ0bZobuF+EjTAZprhI=
+X-Google-Smtp-Source: ABdhPJykr4T/7u044u9IQObietsIN74I0edjSgeUyKwRiY+cwcvZ39yySLEQ0HIND9X2sxSZCZRNMw==
+X-Received: by 2002:a1c:21c3:: with SMTP id h186mr4676515wmh.32.1616621558233;
+        Wed, 24 Mar 2021 14:32:38 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s3sm3769431wmd.21.2021.03.24.14.32.35
+        by smtp.gmail.com with ESMTPSA id l1sm3190709wrv.87.2021.03.24.14.32.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Mar 2021 14:32:35 -0700 (PDT)
-Message-Id: <689a7de56483fd9dbd87ad9cc358ccf671ccc1a7.1616621553.git.gitgitgadget@gmail.com>
+        Wed, 24 Mar 2021 14:32:37 -0700 (PDT)
+Message-Id: <df12cb5a158e9acedac92dbc8f146d89025b4301.1616621553.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.859.git.1616621553.gitgitgadget@gmail.com>
 References: <pull.859.git.1616621553.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 24 Mar 2021 21:32:27 +0000
-Subject: [PATCH 1/7] merge-ort: add data structures for in-memory caching of
- rename detection
+Date:   Wed, 24 Mar 2021 21:32:30 +0000
+Subject: [PATCH 4/7] merge-ort: avoid accidental API mis-use
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,97 +78,76 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-When there are many renames between the old base of a series of commits
-and the new base for a series of commits, the sequence of merges
-employed to transplant those commits (from a cherry-pick or rebase
-operation) will repeatedly detect the exact same renames.  This is
-wasted effort.
+Previously, callers of the merge-ort API could have passed an
+uninitialized value for struct merge_result *result.  However, we want
+to check result to see if it has cached renames from a previous merge
+that we can reuse; such values would be found behind result->priv.
+However, if result->priv is uninitialized, attempting to access behind
+it will give a segfault.  So, we need result->priv to be NULL (which
+will be the case if the caller does a memset(&result, 0)), or be written
+by a previous call to the merge-ort machinery.  Documenting this
+requirement may help, but despite being the person who introduced this
+requirement, I still missed it once and it did not fail in a very clear
+way and led to a long debugging session.
 
-Add data structures which will be used to cache rename detection
-results, along with the initialization and deallocation of these data
-structures.  Future commits will populate these caches, detect the
-appropriate circumstances when they can be used, and employ them to
-avoid re-detecting the same renames repeatedly.
+Add a _properly_initialized field to merge_result; that value will be
+0 if the caller zero'ed the merge_result, it will be set to a very
+specific value by a previous run by the merge-ort machinery, and if it's
+uninitialized it will most likely either be 0 or some value that does
+not match the specific one we'd expect allowing us to throw a much more
+meaningful error.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 42 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 42 insertions(+)
+ merge-ort.c | 7 +++++++
+ merge-ort.h | 2 ++
+ 2 files changed, 9 insertions(+)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index 8258d3fd621e..0774152ea64a 100644
+index bb47fa91a339..5d56b0f90128 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -139,6 +139,37 @@ struct rename_info {
- 	int callback_data_nr, callback_data_alloc;
- 	char *callback_data_traverse_path;
+@@ -52,6 +52,8 @@ enum merge_side {
+ 	MERGE_SIDE2 = 2
+ };
  
-+	/*
-+	 * cached_pairs: Caching of renames and deletions.
-+	 *
-+	 * These are mappings recording renames and deletions of individual
-+	 * files (not directories).  They are thus a map from an old
-+	 * filename to either NULL (for deletions) or a new filename (for
-+	 * renames).
-+	 */
-+	struct strmap cached_pairs[3];
++static unsigned RESULT_INITIALIZED = 0x1abe11ed; /* unlikely accidental value */
 +
-+	/*
-+	 * cached_target_names: just the destinations from cached_pairs
-+	 *
-+	 * We sometimes want a fast lookup to determine if a given filename
-+	 * is one of the destinations in cached_pairs.  cached_target_names
-+	 * is thus duplicative information, but it provides a fast lookup.
-+	 */
-+	struct strset cached_target_names[3];
-+
-+	/*
-+	 * cached_irrelevant: Caching of rename_sources that aren't relevant.
-+	 *
-+	 * cached_pairs records both renames and deletes.  Sometimes we
-+	 * do not know if a path is a rename or a delete because we pass
-+	 * RELEVANT_LOCATION to diffcore_rename_extended() and based on
-+	 * various optimizations it returns without detecting whether that
-+	 * path is actually a rename or a delete.  We need to cache such
-+	 * paths too, but separately from cached_pairs.
-+	 */
-+	struct strset cached_irrelevant[3];
-+
- 	/*
- 	 * needed_limit: value needed for inexact rename detection to run
- 	 *
-@@ -381,6 +412,8 @@ static void clear_or_reinit_internal_opts(struct merge_options_internal *opti,
- 		reinitialize ? strmap_partial_clear : strmap_clear;
- 	void (*strintmap_func)(struct strintmap *) =
- 		reinitialize ? strintmap_partial_clear : strintmap_clear;
-+	void (*strset_func)(struct strset *) =
-+		reinitialize ? strset_partial_clear : strset_clear;
+ struct traversal_callback_data {
+ 	unsigned long mask;
+ 	unsigned long dirmask;
+@@ -3736,6 +3738,10 @@ static void merge_start(struct merge_options *opt, struct merge_result *result)
+ 	assert(opt->obuf.len == 0);
  
- 	/*
- 	 * We marked opti->paths with strdup_strings = 0, so that we
-@@ -424,6 +457,9 @@ static void clear_or_reinit_internal_opts(struct merge_options_internal *opti,
- 		strmap_func(&renames->dir_renames[i], 0);
- 
- 		strintmap_func(&renames->relevant_sources[i]);
-+		strset_func(&renames->cached_target_names[i]);
-+		strmap_func(&renames->cached_pairs[i], 1);
-+		strset_func(&renames->cached_irrelevant[i]);
+ 	assert(opt->priv == NULL);
++	if (result->_properly_initialized != 0 &&
++	    result->_properly_initialized != RESULT_INITIALIZED)
++		BUG("struct merge_result passed to merge_incore_*recursive() must be zeroed or filled with values from a previous run");
++	assert(!!result->priv == !!result->_properly_initialized);
+ 	if (result->priv) {
+ 		opt->priv = result->priv;
+ 		result->priv = NULL;
+@@ -3895,6 +3901,7 @@ static void merge_ort_nonrecursive_internal(struct merge_options *opt,
+ 	result->clean &= strmap_empty(&opt->priv->conflicted);
+ 	if (!opt->priv->call_depth) {
+ 		result->priv = opt->priv;
++		result->_properly_initialized = RESULT_INITIALIZED;
+ 		opt->priv = NULL;
  	}
+ }
+diff --git a/merge-ort.h b/merge-ort.h
+index d53a0a339f33..c011864ffeb1 100644
+--- a/merge-ort.h
++++ b/merge-ort.h
+@@ -29,6 +29,8 @@ struct merge_result {
+ 	 * !clean) and to print "CONFLICT" messages.  Not for external use.
+ 	 */
+ 	void *priv;
++	/* Also private */
++	unsigned _properly_initialized;
+ };
  
- 	if (!reinitialize) {
-@@ -3675,6 +3711,12 @@ static void merge_start(struct merge_options *opt, struct merge_result *result)
- 					 NULL, 0);
- 		strintmap_init_with_options(&renames->relevant_sources[i],
- 					    0, NULL, 0);
-+		strmap_init_with_options(&renames->cached_pairs[i],
-+					 NULL, 1);
-+		strset_init_with_options(&renames->cached_irrelevant[i],
-+					 NULL, 1);
-+		strset_init_with_options(&renames->cached_target_names[i],
-+					 NULL, 0);
- 	}
- 
- 	/*
+ /*
 -- 
 gitgitgadget
 
