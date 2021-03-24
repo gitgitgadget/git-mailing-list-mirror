@@ -8,72 +8,68 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7BBBAC433E6
-	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 01:50:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C04D0C433DB
+	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 02:13:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6C60B619EC
-	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 01:50:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 734AE619E5
+	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 02:13:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234662AbhCXBtf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Mar 2021 21:49:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54830 "EHLO
+        id S234781AbhCXCMQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Mar 2021 22:12:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234332AbhCXBtS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Mar 2021 21:49:18 -0400
+        with ESMTP id S231685AbhCXCL6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Mar 2021 22:11:58 -0400
 Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47198C061763
-        for <git@vger.kernel.org>; Tue, 23 Mar 2021 18:49:18 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id k8so22771377wrc.3
-        for <git@vger.kernel.org>; Tue, 23 Mar 2021 18:49:18 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5E34C061763
+        for <git@vger.kernel.org>; Tue, 23 Mar 2021 19:11:57 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id x7so350954wrw.10
+        for <git@vger.kernel.org>; Tue, 23 Mar 2021 19:11:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=aMawoFm7GuNo/SuXnBFOHXnnMr5j69BXZz5LvaNVzL4=;
-        b=nTOPBhMZiBIBFPaRYlb2XNLhXiv9f9UQjNa226DEsqw4Jr9v38AdrnwYAR0jqE3OE6
-         IHqyQf1osf6IofGc97l3MkaqllRL7UnlPpxRAI2aA1XezNYYcdffy1ejb50DijaNfsWW
-         PChID3JTty+7/QD17GpeG7h9bmxJaxDG73Q3MRH6yobj+46LImDTcGGxeimQaw3HU7/u
-         /6EA+2390stp0fQOgfvOTMjG2/rpByyeRcTj4IUV9XUV1BB6D8gaQNEIFnzmfKuOE+2q
-         6/sOqWLLU1PBCO6RZp1wXWmVCKByb9inXElWZ1O/J4DsDFetgnXucu6D8fFfcgoxGYiX
-         tncw==
+        bh=r6hVvQr/cjZyW4ZvfYhU2vv9+OswGqpRE8PnXiZt9DM=;
+        b=KjSRp1vvxIeALjqetwQxARgUTKlPfFcg6CYdcFcV2QfndXHn1ICU/lAJ8qgH4E4+J0
+         BflRCUOVRqZ6HL43un+r6HqQ6mEbbUxJ6MQTMezWxTm2I/woV1Kl8h7eVbrVz4rX07dk
+         o4YFf4DAM3hVa+hz1IEkcG+r0zYLThVLRHx9dLZHj/PKT/Szn6HI5QEZopscJfcsqLdw
+         M2G74soQzwNHddpstcF5gmpFkP744AjxIHNTPcv2LD1yX1A88gzJD6mVqNfCnAsG3Xy2
+         B8wtZ5NcJ7GeBVdINUsOqfG7+WlA813IXUVAStI7Wrfy8kMhbHvMc0SZduMVnSG3pgVf
+         nuJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=aMawoFm7GuNo/SuXnBFOHXnnMr5j69BXZz5LvaNVzL4=;
-        b=MIo9CKVzM0X7SAPE67noN4zgJlifNjpyV20mZjGBTj6Fb20loVkhoauGUMhsynlDE5
-         D7qqcpuWx0lZdZCCuxT9teYk1wH85pGc3GFJDsR1tpPu4kXMSm9A8Qb4zRVBHeF7AOFy
-         umLD00m++wG7nBmiueNpsLS+IVTBLJZes5JYXqekQntg/rCh0Av5iv6pwmP1iQ2/sTOk
-         pZFJBsFeoQzg5f4nG8ysp/CbC027F+h1Pb5memuX2DFMCs+6EqGiM39DrqPbDTNKR5rV
-         eRw3Mr2hKuWfUPXzeWRU+mnoDt2xExrCCmQJo0n7SJO358Xa9aJQwbTtpxziyzi5ZXS5
-         3WhA==
-X-Gm-Message-State: AOAM533C3rRCSpyPWArzHJ8NoRa3rT6b10LNQY6aUrkwxhv6LMaThfbp
-        ulfbyOdrIJbK6Ar6DWmDDrcFmijdVgKN+Q==
-X-Google-Smtp-Source: ABdhPJzif3w+WlVRzhRb0dJFAJXpcjgBNADS6ekt9k9AAeKGIv6aURXjb0SKxZn21LKEj+ELk0Kp5w==
-X-Received: by 2002:a5d:4d09:: with SMTP id z9mr724825wrt.426.1616550556713;
-        Tue, 23 Mar 2021 18:49:16 -0700 (PDT)
+        bh=r6hVvQr/cjZyW4ZvfYhU2vv9+OswGqpRE8PnXiZt9DM=;
+        b=FjsdaozoQ4uZB7B2lv0SZuFy+ew+pEesLlf/VUkBUOAjnjBSQoLy0paVooOICP2FaG
+         ChhFUjQYzRNaS4TCnpgkYcmAbneg4KHTnfPrvnaYXxbVD0d3qXB06TJqv1wUCe3Z1+9J
+         /fgtQu1LhI1DsUr9zafnOav7IoDmKk9KHM+5DXrVPEWJ0WMI6hfqXBDP7g7Q8MTk5owK
+         hQuq7p0Z1ZyxL9UX0O0pW/dGPZwpm7ODuSbb8zkgq7LLGRnD5/rWoV06/2wyN2exPpHo
+         vOwTAa1oDLcYa9S7kjC6xh72OE6fAK/i5K/dNCFldyyIjiRM5OpHWZN3nxaiCnWAmVTk
+         QIUQ==
+X-Gm-Message-State: AOAM533YZE7Dc+7nGAafo2w7gYexuk9JOZQnn/3c/atQSi2NDAVFiFB3
+        VOd+47k+UE3Ojb2K8LgHtw/ubrxwo207Qg==
+X-Google-Smtp-Source: ABdhPJymciKMiYJ6howXfSB4MmvFkSkK5piD7xxecBJn91/rEdxqEml1W288Y0qxr7mIjKLFUGJEvQ==
+X-Received: by 2002:a05:6000:1789:: with SMTP id e9mr801361wrg.237.1616551916231;
+        Tue, 23 Mar 2021 19:11:56 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id y205sm598177wmc.18.2021.03.23.18.49.15
+        by smtp.gmail.com with ESMTPSA id v2sm4876947wmj.1.2021.03.23.19.11.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Mar 2021 18:49:16 -0700 (PDT)
+        Tue, 23 Mar 2021 19:11:55 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-        Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Adam Spiers <git@adamspiers.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Chris Torek <chris.torek@gmail.com>,
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        ric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 03/10] userdiff style: declare patterns with consistent style
-Date:   Wed, 24 Mar 2021 02:48:45 +0100
-Message-Id: <patch-03.11-faf1a824f05-20210324T014604Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.31.0.366.ga80606b22c1
-In-Reply-To: <cover-00.11-00000000000-20210324T014604Z-avarab@gmail.com>
-References: <20210224195129.4004-1-avarab@gmail.com> <cover-00.11-00000000000-20210324T014604Z-avarab@gmail.com>
+Subject: [PATCH v2] mktag tests: fix broken "&&" chain
+Date:   Wed, 24 Mar 2021 03:11:52 +0100
+Message-Id: <patch-1.1-0b43e43b949-20210324T021049Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.31.0.354.gc8cbd507b5a
+In-Reply-To: <20210307132905.14212-1-avarab@gmail.com>
+References: <20210307132905.14212-1-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,87 +77,47 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change those patterns which were declared with a regex on the same
-line as the "PATTERNS()" line to put that regex on the next line, and
-add missing "/* -- */" separator comments between the pattern and
-word_regex.
+Remove a stray "xb" I inadvertently introduced in 780aa0a21e0 (tests:
+remove last uses of GIT_TEST_GETTEXT_POISON=false, 2021-02-11).
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- userdiff.c | 20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/userdiff.c b/userdiff.c
-index c92cbcc0540..c7aaf7094f8 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -44,7 +44,9 @@ PATTERNS("bash",
- 	 /* -- */
- 	 /* Characters not in the default $IFS value */
- 	 "[^ \t]+"),
--PATTERNS("bibtex", "(@[a-zA-Z]{1,}[ \t]*\\{{0,1}[ \t]*[^ \t\"@',\\#}{~%]*).*$",
-+PATTERNS("bibtex",
-+	 "(@[a-zA-Z]{1,}[ \t]*\\{{0,1}[ \t]*[^ \t\"@',\\#}{~%]*).*$",
-+	 /* -- */
- 	 "[={}\"]|[^={}\" \t]+"),
- PATTERNS("cpp",
- 	 /* Jump targets or access declarations */
-@@ -121,7 +123,9 @@ IPATTERN("fortran",
- 	  * they would have been matched above as a variable anyway. */
- 	 "|[-+]?[0-9.]+([AaIiDdEeFfLlTtXx][Ss]?[-+]?[0-9.]*)?(_[a-zA-Z0-9][a-zA-Z0-9_]*)?"
- 	 "|//|\\*\\*|::|[/<>=]="),
--IPATTERN("fountain", "^((\\.[^.]|(int|ext|est|int\\.?/ext|i/e)[. ]).*)$",
-+IPATTERN("fountain",
-+	 "^((\\.[^.]|(int|ext|est|int\\.?/ext|i/e)[. ]).*)$",
-+	 /* -- */
- 	 "[^ \t-]+"),
- PATTERNS("golang",
- 	 /* Functions */
-@@ -132,7 +136,9 @@ PATTERNS("golang",
- 	 "[a-zA-Z_][a-zA-Z0-9_]*"
- 	 "|[-+0-9.eE]+i?|0[xX]?[0-9a-fA-F]+i?"
- 	 "|[-+*/<>%&^|=!:]=|--|\\+\\+|<<=?|>>=?|&\\^=?|&&|\\|\\||<-|\\.{3}"),
--PATTERNS("html", "^[ \t]*(<[Hh][1-6]([ \t].*)?>.*)$",
-+PATTERNS("html",
-+	 "^[ \t]*(<[Hh][1-6]([ \t].*)?>.*)$",
-+	 /* -- */
- 	 "[^<>= \t]+"),
- PATTERNS("java",
- 	 "!^[ \t]*(catch|do|for|if|instanceof|new|return|switch|throw|while)\n"
-@@ -144,6 +150,7 @@ PATTERNS("java",
- 	 "|--|\\+\\+|<<=?|>>>?=?|&&|\\|\\|"),
- PATTERNS("markdown",
- 	 "^ {0,3}#{1,6}[ \t].*",
-+	 /* -- */
- 	 "[^<>= \t]+"),
- PATTERNS("matlab",
- 	 /*
-@@ -152,6 +159,7 @@ PATTERNS("matlab",
- 	  * that is understood by both.
- 	  */
- 	 "^[[:space:]]*((classdef|function)[[:space:]].*)$|^(%%%?|##)[[:space:]].*$",
-+	 /* -- */
- 	 "[a-zA-Z_][a-zA-Z0-9_]*|[-+0-9.e]+|[=~<>]=|\\.[*/\\^']|\\|\\||&&"),
- PATTERNS("objc",
- 	 /* Negate C statements that can look like functions */
-@@ -212,13 +220,15 @@ PATTERNS("php",
- 	 "[a-zA-Z_][a-zA-Z0-9_]*"
- 	 "|[-+0-9.e]+|0[xXbB]?[0-9a-fA-F]+"
- 	 "|[-+*/<>%&^|=!.]=|--|\\+\\+|<<=?|>>=?|===|&&|\\|\\||::|->"),
--PATTERNS("python", "^[ \t]*((class|(async[ \t]+)?def)[ \t].*)$",
-+PATTERNS("python",
-+	 "^[ \t]*((class|(async[ \t]+)?def)[ \t].*)$",
- 	 /* -- */
- 	 "[a-zA-Z_][a-zA-Z0-9_]*"
- 	 "|[-+0-9.e]+[jJlL]?|0[xX]?[0-9a-fA-F]+[lL]?"
- 	 "|[-+*/<>%&^|=!]=|//=?|<<=?|>>=?|\\*\\*=?"),
- 	 /* -- */
--PATTERNS("ruby", "^[ \t]*((class|module|def)[ \t].*)$",
-+PATTERNS("ruby",
-+	 "^[ \t]*((class|module|def)[ \t].*)$",
- 	 /* -- */
- 	 "(@|@@|\\$)?[a-zA-Z_][a-zA-Z0-9_]*"
- 	 "|[-+0-9.e]+|0[xXbB]?[0-9a-fA-F]+|\\?(\\\\C-)?(\\\\M-)?."
+A v2 of a stray patch of mine that wasn't picked up during the release window.
+
+Range-diff:
+1:  bd8235ead3c ! 1:  0b43e43b949 mktag tests: fix broken "&&" chain
+    @@ Commit message
+         mktag tests: fix broken "&&" chain
+     
+         Remove a stray "xb" I inadvertently introduced in 780aa0a21e0 (tests:
+    -    remove last uses of GIT_TEST_GETTEXT_POISON=false, 2021-02-11). This
+    -    would have been a failed attempt to type "C-x C-b" that snuck into the
+    -    code.
+    -
+    -    The chainlint check did not catch this one, but I don't know where to
+    -    start patching the wall-of-sed that is chainlint.sed to fix that.
+    +    remove last uses of GIT_TEST_GETTEXT_POISON=false, 2021-02-11).
+     
+         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+
+ t/t3800-mktag.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/t/t3800-mktag.sh b/t/t3800-mktag.sh
+index 60a666da595..6275c98523f 100755
+--- a/t/t3800-mktag.sh
++++ b/t/t3800-mktag.sh
+@@ -17,7 +17,7 @@ check_verify_failure () {
+ 		grep '$2' message &&
+ 		if test '$3' != '--no-strict'
+ 		then
+-			test_must_fail git mktag --no-strict <tag.sig 2>message.no-strict &&xb
++			test_must_fail git mktag --no-strict <tag.sig 2>message.no-strict &&
+ 			grep '$2' message.no-strict
+ 		fi
+ 	"
 -- 
-2.31.0.366.ga80606b22c1
+2.31.0.354.gc8cbd507b5a
 
