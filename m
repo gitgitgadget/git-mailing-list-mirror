@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03CC1C433EC
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F6D0C433EB
 	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 01:50:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C250A61A08
+	by mail.kernel.org (Postfix) with ESMTP id E6E75619EE
 	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 01:50:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234697AbhCXBtj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Mar 2021 21:49:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54854 "EHLO
+        id S234713AbhCXBtk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Mar 2021 21:49:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234558AbhCXBtW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Mar 2021 21:49:22 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 813F9C061763
-        for <git@vger.kernel.org>; Tue, 23 Mar 2021 18:49:21 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id 61so22753002wrm.12
-        for <git@vger.kernel.org>; Tue, 23 Mar 2021 18:49:21 -0700 (PDT)
+        with ESMTP id S234572AbhCXBtZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Mar 2021 21:49:25 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57E2EC061765
+        for <git@vger.kernel.org>; Tue, 23 Mar 2021 18:49:25 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id j18so22779148wra.2
+        for <git@vger.kernel.org>; Tue, 23 Mar 2021 18:49:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=gWtikGjuuVQovMXEyb53c5CWTA76npJiin+jNTR9+m4=;
-        b=jJiGUmPalEqD1XgcE0ruJcixuScTdaZW8Vu/BHs1N+ZeVVALbYjAikOVVH4Jgva5Dp
-         2TSHGPgqDiLh8adp2RAsryWMWV1fEq8t/3WXfjiZmSc8t7pj41uFsd7cmw0qOoPyFuQG
-         TZqMAakWj6GxyotW98vZOQy8EYssrZrVVgMvZiu73vhpgVc5AmrJGtXz18Bozx5pILWV
-         8OhShVu9z4/dpNwzJrCQzV4ip4nclfXPoEkBGBP0+YU7y4z6R383Bd7pDq2VVjCRN+sr
-         M8uRTGQVLfCZstUHM8T+XRycX3sPeq/taHo6p7wzwoU+XAMCa+WJnJ+Fn6Cs+1O7zW+T
-         l+ww==
+        bh=kwY7Ff1LK+qRoAEygm3Q7zxo1H3BriXLKXHAtD8oaIc=;
+        b=rF4jFsyMfIgse0KiXFhGvakVcKxhHWVgn2koIQdf48tcWstvQhJ2sA3+/zEnxbLNsk
+         k5B8HIoSj6slA3j4tQXaG0glWe3itQiV0ShorLv3iMhpUaqUUuWfBN6CWquZNJsrDchQ
+         QXWGqyfQ6wjLl4/PyC+880uSgJjS63b2ykpA3s7smYsGbMCzhYILfCb0TimVZ1w1FOeO
+         0BsGctg9ZmAQ0Z8NWvcD5eruni11PVlJIGUN4vkf3N5LPtVb07ZInefmNT7FMZbu82Oe
+         ThI4RVAzjvf6JsFJQAX0gm1qnceQz9yIqRd0VqQNCHe/79bp0EiWf3+owyrhWq1LMZYC
+         +kng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=gWtikGjuuVQovMXEyb53c5CWTA76npJiin+jNTR9+m4=;
-        b=A20MSEA7kg/h4Wlae0BAXj+36oKNOQ3ehWLqax4R2DKoU+u5Ib444H76F1ttkTIpnw
-         d/am/z34Wbnf1EoGrEmOIwhuaDFbltX642wDrYyFDROhaPVYq6YAOb781732hOHpo3Vy
-         1rWzgCuL+GryBibAzussoKixgrmPiL0HPPAN0yLxmFGGXCGl1uiVyDRjJu0Qv159/axo
-         e34I87giWOFELwiaO0D6nXV4+j5OemankyFGk7NleXpNNgUlQMyS6tlVuO4D3xyF5heO
-         XHpMW2PHaWrzkFYLCojuYD6v5yD+u3d8u7dc9Z1gUUH+yMuXBi2or6aB6fLeVrBhA8Ma
-         sRQw==
-X-Gm-Message-State: AOAM531GssVsUmfTXcXUGnX+2X4tdCBTAhTgum4LJveMpmmstsxhG1SN
-        kTnmkY/0DkeBaHRvk40STBuLUXZp8p+83g==
-X-Google-Smtp-Source: ABdhPJxxj7rF00B0JAWlJdgiTSN0eW2zydp9b+gkDafOuEY33VOpqGutD8lVmIRAetYPFaKbaP6x5Q==
-X-Received: by 2002:adf:a59a:: with SMTP id g26mr721252wrc.271.1616550559973;
-        Tue, 23 Mar 2021 18:49:19 -0700 (PDT)
+        bh=kwY7Ff1LK+qRoAEygm3Q7zxo1H3BriXLKXHAtD8oaIc=;
+        b=g83sjyPij0hQevw4OD055Ld5l502NO3tcSCzxfBz/ddY+4AlBI3cUfCl1tgb4hFjqL
+         z/R07MTMiuDWsWAszDIXAoWKFNmXluuoksRwSF1lJlPmQctx8nvtrve6LT4lE1EwnRrt
+         JsnTTSnrfK7Gt8x9KvKMgb31ndQ8m4tvQHQzpRHB46DhS5XK7w+L6g5Dza/2nCVTaXWA
+         ya+PhVEO2aw4uATTl+j4DxHNSNtNIzbmebUeo4Ih7N2PFcrixTxkJykSGPdTGKcdG+/A
+         E7WheDXeadx0UlHpX96UugOjgUnS9c8bdIe3bOirjinQXU/goz8qTsmPv8rtPZqLHUYt
+         siUw==
+X-Gm-Message-State: AOAM531tYIgxSdfvWQdbZ7nBnd2o0sFhvc9EMgVizmaMH1nV3qBHTb1q
+        ISjDpn7kCzFr3CAX5m2n9i6KqWPt1vQqQA==
+X-Google-Smtp-Source: ABdhPJwLybF1Pm7+qJqLEM1nf34ICOwSt4VAhv6g23VOCol4ZBr8f/9G4gndwiJ9N0gGY8rwZAcdfg==
+X-Received: by 2002:adf:f0cb:: with SMTP id x11mr735081wro.206.1616550562446;
+        Tue, 23 Mar 2021 18:49:22 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id y205sm598177wmc.18.2021.03.23.18.49.19
+        by smtp.gmail.com with ESMTPSA id y205sm598177wmc.18.2021.03.23.18.49.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Mar 2021 18:49:19 -0700 (PDT)
+        Tue, 23 Mar 2021 18:49:22 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -68,9 +68,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
         Chris Torek <chris.torek@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 07/10] userdiff tests: list builtin drivers via test-tool
-Date:   Wed, 24 Mar 2021 02:48:49 +0100
-Message-Id: <patch-07.11-22a07591b76-20210324T014604Z-avarab@gmail.com>
+Subject: [PATCH v4 10/10] blame tests: simplify userdiff driver test
+Date:   Wed, 24 Mar 2021 02:48:52 +0100
+Message-Id: <patch-10.11-ce98c61bf40-20210324T014604Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.0.366.ga80606b22c1
 In-Reply-To: <cover-00.11-00000000000-20210324T014604Z-avarab@gmail.com>
 References: <20210224195129.4004-1-avarab@gmail.com> <cover-00.11-00000000000-20210324T014604Z-avarab@gmail.com>
@@ -81,150 +81,84 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the userdiff test to list the builtin drivers via the
-test-tool, using the new for_each_userdiff_driver() API function.
+Simplify the test added in 9466e3809d (blame: enable funcname blaming
+with userdiff driver, 2020-11-01) to use the --author support recently
+added in 999cfc4f45 (test-lib functions: add --author support to
+test_commit, 2021-01-12).
 
-This gets rid of the need to modify this part of the test every time a
-new pattern is added, see 2ff6c34612 (userdiff: support Bash,
-2020-10-22) and 09dad9256a (userdiff: support Markdown, 2020-05-02)
-for two recent examples.
+We also did not need the full fortran-external-function content. Let's
+cut it down to just the important parts.
 
-I only need the "list-builtin-drivers "argument here, but let's add
-"list-custom-drivers" and "list-drivers" too, just because it's easy.
+I'm modifying it to demonstrate that the fortran-specific userdiff
+function is in effect by adding "DO NOT MATCH ..." and "AS THE ..."
+lines surrounding the "RIGHT" one.
+
+This is to check that we're using the userdiff "fortran" driver, as
+opposed to the default driver which would match on those lines as part
+of the general heuristic of matching a line that doesn't begin with
+whitespace.
+
+The test had also been leaving behind a .gitattributes file for later
+tests to possibly trip over, let's clean it up with
+"test_when_finished".
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Makefile                 |  1 +
- t/helper/test-tool.c     |  1 +
- t/helper/test-tool.h     |  1 +
- t/helper/test-userdiff.c | 31 +++++++++++++++++++++++++++++++
- t/t4018-diff-funcname.sh | 32 ++++++++------------------------
- 5 files changed, 42 insertions(+), 24 deletions(-)
- create mode 100644 t/helper/test-userdiff.c
+ t/annotate-tests.sh | 36 +++++++++++++++---------------------
+ 1 file changed, 15 insertions(+), 21 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index f3dc2178324..3e2568d68da 100644
---- a/Makefile
-+++ b/Makefile
-@@ -744,6 +744,7 @@ TEST_BUILTINS_OBJS += test-submodule-nested-repo-config.o
- TEST_BUILTINS_OBJS += test-subprocess.o
- TEST_BUILTINS_OBJS += test-trace2.o
- TEST_BUILTINS_OBJS += test-urlmatch-normalization.o
-+TEST_BUILTINS_OBJS += test-userdiff.o
- TEST_BUILTINS_OBJS += test-wildmatch.o
- TEST_BUILTINS_OBJS += test-windows-named-pipe.o
- TEST_BUILTINS_OBJS += test-write-cache.o
-diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index f97cd9f48a6..dcb05ca6e5e 100644
---- a/t/helper/test-tool.c
-+++ b/t/helper/test-tool.c
-@@ -71,6 +71,7 @@ static struct test_cmd cmds[] = {
- 	{ "submodule-nested-repo-config", cmd__submodule_nested_repo_config },
- 	{ "subprocess", cmd__subprocess },
- 	{ "trace2", cmd__trace2 },
-+	{ "userdiff", cmd__userdiff },
- 	{ "urlmatch-normalization", cmd__urlmatch_normalization },
- 	{ "xml-encode", cmd__xml_encode },
- 	{ "wildmatch", cmd__wildmatch },
-diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index 28072c0ad5a..589f2e8ac67 100644
---- a/t/helper/test-tool.h
-+++ b/t/helper/test-tool.h
-@@ -61,6 +61,7 @@ int cmd__submodule_config(int argc, const char **argv);
- int cmd__submodule_nested_repo_config(int argc, const char **argv);
- int cmd__subprocess(int argc, const char **argv);
- int cmd__trace2(int argc, const char **argv);
-+int cmd__userdiff(int argc, const char **argv);
- int cmd__urlmatch_normalization(int argc, const char **argv);
- int cmd__xml_encode(int argc, const char **argv);
- int cmd__wildmatch(int argc, const char **argv);
-diff --git a/t/helper/test-userdiff.c b/t/helper/test-userdiff.c
-new file mode 100644
-index 00000000000..f173a4f18af
---- /dev/null
-+++ b/t/helper/test-userdiff.c
-@@ -0,0 +1,31 @@
-+#include "test-tool.h"
-+#include "cache.h"
-+#include "userdiff.h"
-+
-+static int driver_cb(struct userdiff_driver *driver,
-+		     enum userdiff_driver_type type, void *priv)
-+{
-+	if (driver->funcname.pattern)
-+		puts(driver->name);
-+	return 0;
-+}
-+
-+static int list_what(enum userdiff_driver_type type)
-+{
-+	return for_each_userdiff_driver(driver_cb, type, NULL);
-+}
-+
-+int cmd__userdiff(int argc, const char **argv)
-+{
-+	if (argc != 2)
-+		return 1;
-+
-+	if (!strcmp(argv[1], "list-drivers"))
-+		return list_what(USERDIFF_DRIVER_TYPE_UNSPECIFIED);
-+	else if (!strcmp(argv[1], "list-builtin-drivers"))
-+		return list_what(USERDIFF_DRIVER_TYPE_BUILTIN);
-+	else if (!strcmp(argv[1], "list-custom-drivers"))
-+		return list_what(USERDIFF_DRIVER_TYPE_CUSTOM);
-+	else
-+		return error("unknown argument %s", argv[1]);
-+}
-diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
-index cefe329aea7..5bd82e09ab3 100755
---- a/t/t4018-diff-funcname.sh
-+++ b/t/t4018-diff-funcname.sh
-@@ -8,6 +8,13 @@ test_description='Test custom diff function name patterns'
- . ./test-lib.sh
- 
- test_expect_success 'setup' '
-+	# Make sure additions to builtin_drivers are sorted
-+	test_when_finished "rm builtin-drivers.sorted" &&
-+	test-tool userdiff list-builtin-drivers >builtin-drivers &&
-+	test_file_not_empty builtin-drivers &&
-+	sort <builtin-drivers >builtin-drivers.sorted &&
-+	test_cmp builtin-drivers.sorted builtin-drivers &&
-+
- 	# a non-trivial custom pattern
- 	git config diff.custom1.funcname "!static
- !String
-@@ -26,30 +33,7 @@ test_expect_success 'setup' '
+diff --git a/t/annotate-tests.sh b/t/annotate-tests.sh
+index 04a2c58594c..d3b299e75cb 100644
+--- a/t/annotate-tests.sh
++++ b/t/annotate-tests.sh
+@@ -479,32 +479,26 @@ test_expect_success 'blame -L ^:RE (absolute: end-of-file)' '
+ 	check_count -f hello.c -L$n -L^:ma.. F 4 G 1 H 1
  '
  
- diffpatterns="
--	ada
--	bash
--	bibtex
--	cpp
--	csharp
--	css
--	dts
--	elixir
--	fortran
--	fountain
--	golang
--	html
--	java
--	markdown
--	matlab
--	objc
--	pascal
--	perl
--	php
--	python
--	ruby
--	rust
--	tex
--	default
-+	$(cat builtin-drivers)
- 	custom1
- 	custom2
- 	custom3
+-test_expect_success 'setup -L :funcname with userdiff driver' '
+-	echo "fortran-* diff=fortran" >.gitattributes &&
+-	fortran_file=fortran-external-function &&
+-	cat >$fortran_file <<-\EOF &&
++test_expect_success 'blame -L :funcname with userdiff driver' '
++	cat >file.template <<-\EOF &&
++	DO NOT MATCH THIS LINE
+ 	function RIGHT(a, b) result(c)
++	AS THE DEFAULT DRIVER WOULD
+ 
+ 	integer, intent(in) :: ChangeMe
+-	integer, intent(in) :: b
+-	integer, intent(out) :: c
+-
+-	c = a+b
+-
+-	end function RIGHT
+ 	EOF
+-	git add "$fortran_file" &&
+-	GIT_AUTHOR_NAME="A" GIT_AUTHOR_EMAIL="A@test.git" \
+-	git commit -m "add fortran file" &&
+-	sed -e "s/ChangeMe/IWasChanged/" <"$fortran_file" >"$fortran_file".tmp &&
+-	mv "$fortran_file".tmp "$fortran_file" &&
+-	git add "$fortran_file" &&
+-	GIT_AUTHOR_NAME="B" GIT_AUTHOR_EMAIL="B@test.git" \
+-	git commit -m "change fortran file"
+-'
+ 
+-test_expect_success 'blame -L :funcname with userdiff driver' '
+-	check_count -f fortran-external-function -L:RIGHT A 7 B 1
++	fortran_file=file.f03 &&
++	test_when_finished "rm .gitattributes" &&
++	echo "$fortran_file diff=fortran" >.gitattributes &&
++
++	test_commit --author "A <A@test.git>" \
++		"add" "$fortran_file" \
++		"$(cat file.template)" &&
++	test_commit --author "B <B@test.git>" \
++		"change" "$fortran_file" \
++		"$(cat file.template | sed -e s/ChangeMe/IWasChanged/)" &&
++	check_count -f "$fortran_file" -L:RIGHT A 3 B 1
+ '
+ 
+ test_expect_success 'setup incremental' '
 -- 
 2.31.0.366.ga80606b22c1
 
