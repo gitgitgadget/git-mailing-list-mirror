@@ -2,153 +2,155 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-23.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B236C433E0
-	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 17:57:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C5668C433E1
+	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 18:09:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DD48261A20
-	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 17:57:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9A51261A26
+	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 18:09:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237281AbhCXR4k (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Mar 2021 13:56:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38676 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237176AbhCXR4J (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Mar 2021 13:56:09 -0400
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8625C0613DE
-        for <git@vger.kernel.org>; Wed, 24 Mar 2021 10:56:08 -0700 (PDT)
-Received: by mail-pj1-x102c.google.com with SMTP id mz6-20020a17090b3786b02900c16cb41d63so1629349pjb.2
-        for <git@vger.kernel.org>; Wed, 24 Mar 2021 10:56:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=1Nd6VBuEfYg8YCAcySDHw+ctfMCUYlDF3hA3mGA42KI=;
-        b=V6AKbe6VfTiIqns7CoQu03EvYTb9HIbM881rXXyaMe8ZvpsN7W49ThEIvzGCwoYIDy
-         geOa+pH9rzQWkOcMP7vdFmlycg3ocfbkVcA/HA22KRcfp5Qyx0s7umTDmhGOv1sMR3i2
-         31QxraEdncSiZ2ILh0iG6TfKiErdwM5VF3r/OEq2EDtxJPsysP9lQnHkxOicig7UJi+p
-         jmScnSNHs6IM0QfBJOBECfEMZ/bxupwicCfZ3i/WORLkOIafO76TwpCSMF0sgAI+q14z
-         EQanwLXpndsIbSHIZcuOpbDBIry7yZeuwqVEX/PvA7R4wBUKX8Q3p8HU8AQM0m3N83Xv
-         BxNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=1Nd6VBuEfYg8YCAcySDHw+ctfMCUYlDF3hA3mGA42KI=;
-        b=o76x0t7oRtIVmbYjafB21txVt/Xz4xqbmI2prnTgDxeiyQt5m8gM+x8DSIKEzJHvdo
-         y5pR2RJFpjV7l5CnLkhLUnFPBRV78wsNl7KayOu6vNKQySfRFbb/DQnoYCmv4TYIwwLd
-         g1ixbko1XedAAYmR6xZh4TYv1fr7PXK1Do0lWKWxAizzbL6Wq11tiHp/k/dtTJoTw45w
-         eX4FIlUcMGqY8gr58pgbIqZyRcjZh9VnLlOFTf4mK4aT/pdbdrG4qzzqLk2C5prKrDiA
-         1EtKLD0qbX5z1y9budU+jDCKZGGNER7gtjJYsrZ+wEV77eA9luFW2Zh9ZHNk9wCkHzMm
-         2biw==
-X-Gm-Message-State: AOAM530cYdZMqpCNWPR38e/Mjaw02KhdzxjB9rLx8FliClGf90UQrhhD
-        p/I74qoj2Sk6MRn8e4yU9KkEBRLXkeN5Bg==
-X-Google-Smtp-Source: ABdhPJxzMB34nz13G46YwkJ9v8uTfJKLMq/2Rq7Q36nb6IunV3UQ2VEzTfnpzWBQYt/QLznSOQpOJA==
-X-Received: by 2002:a17:903:31ca:b029:e6:65f:ca87 with SMTP id v10-20020a17090331cab02900e6065fca87mr4694766ple.85.1616608568130;
-        Wed, 24 Mar 2021 10:56:08 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:0:d027:9201:1f66:e720])
-        by smtp.gmail.com with ESMTPSA id i14sm3210010pjh.17.2021.03.24.10.56.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Mar 2021 10:56:07 -0700 (PDT)
-Date:   Wed, 24 Mar 2021 10:56:01 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v8 04/37] hook: include hookdir hook in list
-Message-ID: <YFt9MQsJAJsjWqo2@google.com>
-References: <20210311021037.3001235-1-emilyshaffer@google.com>
- <20210311021037.3001235-5-emilyshaffer@google.com>
- <87lfashj03.fsf@evledraar.gmail.com>
+        id S237297AbhCXSIe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Mar 2021 14:08:34 -0400
+Received: from bsmtp5.bon.at ([195.3.86.187]:41697 "EHLO bsmtp5.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S237397AbhCXSIH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Mar 2021 14:08:07 -0400
+X-Greylist: delayed 2880 seconds by postgrey-1.27 at vger.kernel.org; Wed, 24 Mar 2021 14:08:06 EDT
+Received: from bsmtp1.bon.at (unknown [192.168.181.103])
+        by bsmtp5.bon.at (Postfix) with ESMTPS id 4F5FNj2zhlz5tpW
+        for <git@vger.kernel.org>; Wed, 24 Mar 2021 18:20:05 +0100 (CET)
+Received: from [192.168.0.98] (unknown [93.83.142.38])
+        by bsmtp1.bon.at (Postfix) with ESMTPSA id 4F5FNW215jz5tl9;
+        Wed, 24 Mar 2021 18:19:55 +0100 (CET)
+Subject: Re: [PATCH v4 00/10] userdiff: refactor + test improvements
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Adam Spiers <git@adamspiers.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Chris Torek <chris.torek@gmail.com>
+References: <20210224195129.4004-1-avarab@gmail.com>
+ <cover-00.11-00000000000-20210324T014604Z-avarab@gmail.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <7c560336-c087-5159-06c2-5b22e949902e@kdbg.org>
+Date:   Wed, 24 Mar 2021 18:19:54 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+In-Reply-To: <cover-00.11-00000000000-20210324T014604Z-avarab@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87lfashj03.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 12, 2021 at 09:30:04AM +0100, �var Arnfj�r� Bjarmason wrote:
+Am 24.03.21 um 02:48 schrieb Ævar Arnfjörð Bjarmason:
+> This is a restart of the 35-patch v3 of this topic at
+> https://lore.kernel.org/git/20210224195129.4004-1-avarab@gmail.com/
 > 
+> I still plan on submitting the rest of it, but wanted to start with
+> the early parts of that series that hasn't been controversial or has
+> outstanding feedback I haven't addressed.
 > 
-> On Thu, Mar 11 2021, Emily Shaffer wrote:
-> 
-> > Historically, hooks are declared by placing an executable into
-> > $GIT_DIR/hooks/$HOOKNAME (or $HOOKDIR/$HOOKNAME). Although hooks taken
-> > from the config are more featureful than hooks placed in the $HOOKDIR,
-> > those hooks should not stop working for users who already have them.
-> > Let's list them to the user, but instead of displaying a config scope
-> > (e.g. "global: blah") we can prefix them with "hookdir:".
-> >
-> > Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-> > ---
-> >
-> > Notes:
-> >     Since v7, fix some nits from Jonathan Tan. The largest is to move reference to
-> >     "hookdir annotation" from this commit to the next one which introduces the
-> >     hook.runHookDir option.
-> >
-> >  builtin/hook.c                | 11 +++++++++--
-> >  hook.c                        | 17 +++++++++++++++++
-> >  hook.h                        |  1 +
-> >  t/t1360-config-based-hooks.sh | 19 +++++++++++++++++++
-> >  4 files changed, 46 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/builtin/hook.c b/builtin/hook.c
-> > index bb64cd77ca..c8fbfbb39d 100644
-> > --- a/builtin/hook.c
-> > +++ b/builtin/hook.c
-> > @@ -40,10 +40,15 @@ static int list(int argc, const char **argv, const char *prefix)
-> >  
-> >  	list_for_each(pos, head) {
-> >  		struct hook *item = list_entry(pos, struct hook, list);
-> > -		if (item)
-> > +		item = list_entry(pos, struct hook, list);
-> > +		if (item) {
-> > +			/* Don't translate 'hookdir' - it matches the config */
-> 
-> Let's prefix comments for translators with /* TRANSLATORS: .., see the
-> coding style doc. That's what they'll see, and this is useful to them.
-> 
-> Better yet have a note here about the first argument being 'system',
-> 'local' etc., which I had to source spelunge for, and translators won't
-> have any idea about unless the magic parameter is documented.
+> The range-diff to v3 is just for those patches I'm re-rolling here.
 
-It's not a comment for translators. It's a comment for someone helpful
-who comes later and says "oh, none of this is marked for translation,
-I'd better fix that."
+I'm mostly relying on the interdiff below. I think I had no comments on
+these patches in the earlier round, so:
+
+Acked-by: Johannes Sixt <j6t@kdbg.org>
 
 > 
-> > +setup_hookdir () {
-> > +	mkdir .git/hooks
-> > +	write_script .git/hooks/pre-commit <<-EOF
-> > +	echo \"Legacy Hook\"
+> Ævar Arnfjörð Bjarmason (10):
+>   userdiff: refactor away the parse_bool() function
+>   userdiff style: re-order drivers in alphabetical order
+>   userdiff style: declare patterns with consistent style
+>   userdiff style: normalize pascal regex declaration
+>   userdiff: add and use for_each_userdiff_driver()
+>   userdiff tests: explicitly test "default" pattern
+>   userdiff tests: list builtin drivers via test-tool
+>   userdiff: remove support for "broken" tests
+>   blame tests: don't rely on t/t4018/ directory
+>   blame tests: simplify userdiff driver test
 > 
-> Nit, "'s not needed, but it also seems nothing uses this, so if it's
-> just a pass-through script either "exit 0", or actually check if it's
-> run or something?
-
-The output is checked in the run tests later on. I can remove it for
-this commit if you want.
-
+>  Makefile                 |   1 +
+>  t/annotate-tests.sh      |  34 ++++----
+>  t/helper/test-tool.c     |   1 +
+>  t/helper/test-tool.h     |   1 +
+>  t/helper/test-userdiff.c |  31 +++++++
+>  t/t4018-diff-funcname.sh |  39 ++-------
+>  t/t4018/README           |   3 -
+>  userdiff.c               | 178 ++++++++++++++++++++++++---------------
+>  userdiff.h               |  15 ++++
+>  9 files changed, 186 insertions(+), 117 deletions(-)
+>  create mode 100644 t/helper/test-userdiff.c
 > 
-> > [...]
-> > +test_expect_success 'git hook list shows hooks from the hookdir' '
-> > +	setup_hookdir &&
-> > +
-> > +	cat >expected <<-EOF &&
-> > +	hookdir: $(pwd)/.git/hooks/pre-commit
-> > +	EOF
-> > +
-> > +	git hook list pre-commit >actual &&
-> > +	test_cmp expected actual
-> > +'
+> Range-diff:
+>  1:  0be132b05e2 =  1:  fb7346cd296 userdiff: refactor away the parse_bool() function
+>  2:  d1e00a739ac =  2:  149387155bc userdiff style: re-order drivers in alphabetical order
+>  3:  b99bd158d45 =  3:  faf1a824f05 userdiff style: declare patterns with consistent style
+>  4:  9ce6d47021c =  4:  1e9ddcd1a9a userdiff style: normalize pascal regex declaration
+>  5:  369fbdcee83 =  5:  64ea5e8443f userdiff: add and use for_each_userdiff_driver()
+>  6:  70d62a97211 =  6:  862f6ab5d66 userdiff tests: explicitly test "default" pattern
+>  7:  792421a2f8b =  7:  22a07591b76 userdiff tests: list builtin drivers via test-tool
+>  8:  9081e2a152e !  8:  7755db95014 userdiff: remove support for "broken" tests
+>     @@ Commit message
+>      
+>          There have been no "broken" tests since 75c3b6b2e8 (userdiff: improve
+>          Fortran xfuncname regex, 2020-08-12). Let's remove the test support
+>     -    for them, this is in preparation for a more general refactoring of the
+>     -    tests.
+>     +    for them.
+>      
+>          Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+>      
+>  9:  d3652f95d5e !  9:  4e0b4b42e16 blame tests: don't rely on t/t4018/ directory
+>     @@ Commit message
+>          with userdiff driver, 2020-11-01) so that the blame tests don't rely
+>          on stealing the contents of "t/t4018/fortran-external-function".
+>      
+>     -    I'm about to change that file in a subsequent commit. Just moving the
+>     -    relevant test file here inline is the easiest solution, and I think
+>     -    also the most readable.
+>     +    I have another patch series that'll possibly (or not) refactor that
+>     +    file, but having this test inter-dependency makes things simple in any
+>     +    case by making this test more readable.
+>      
+>          Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+>      
+> 10:  35d12779ea1 ! 10:  ce98c61bf40 blame tests: simplify userdiff driver test
+>     @@ Commit message
+>          test_commit, 2021-01-12).
+>      
+>          We also did not need the full fortran-external-function content. Let's
+>     -    cut it down to just the important parts, and further modify it to
+>     -    demonstrate that the fortran-specific userdiff function is in effect
+>     -    by adding "DO NOT MATCH ..." and "AS THE ..." lines surrounding the
+>     -    "RIGHT" one. This is to check that we're using the userdiff "fortran"
+>     -    driver, as opposed to the default driver.
+>     +    cut it down to just the important parts.
+>      
+>     -    The test also left behind a .gitattributes files, let's clean it up
+>     -    with "test_when_finished".
+>     +    I'm modifying it to demonstrate that the fortran-specific userdiff
+>     +    function is in effect by adding "DO NOT MATCH ..." and "AS THE ..."
+>     +    lines surrounding the "RIGHT" one.
+>     +
+>     +    This is to check that we're using the userdiff "fortran" driver, as
+>     +    opposed to the default driver which would match on those lines as part
+>     +    of the general heuristic of matching a line that doesn't begin with
+>     +    whitespace.
+>     +
+>     +    The test had also been leaving behind a .gitattributes file for later
+>     +    tests to possibly trip over, let's clean it up with
+>     +    "test_when_finished".
+>      
+>          Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+>      
 > 
-> Ah, so it's just checking if it exists...
