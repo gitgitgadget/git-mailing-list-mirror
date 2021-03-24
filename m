@@ -2,155 +2,153 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5668C433E1
-	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 18:09:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E24BEC433DB
+	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 18:41:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9A51261A26
-	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 18:09:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B574461A16
+	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 18:41:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237297AbhCXSIe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Mar 2021 14:08:34 -0400
-Received: from bsmtp5.bon.at ([195.3.86.187]:41697 "EHLO bsmtp5.bon.at"
+        id S237624AbhCXSkh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Mar 2021 14:40:37 -0400
+Received: from cloud.peff.net ([104.130.231.41]:47720 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237397AbhCXSIH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Mar 2021 14:08:07 -0400
-X-Greylist: delayed 2880 seconds by postgrey-1.27 at vger.kernel.org; Wed, 24 Mar 2021 14:08:06 EDT
-Received: from bsmtp1.bon.at (unknown [192.168.181.103])
-        by bsmtp5.bon.at (Postfix) with ESMTPS id 4F5FNj2zhlz5tpW
-        for <git@vger.kernel.org>; Wed, 24 Mar 2021 18:20:05 +0100 (CET)
-Received: from [192.168.0.98] (unknown [93.83.142.38])
-        by bsmtp1.bon.at (Postfix) with ESMTPSA id 4F5FNW215jz5tl9;
-        Wed, 24 Mar 2021 18:19:55 +0100 (CET)
-Subject: Re: [PATCH v4 00/10] userdiff: refactor + test improvements
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Adam Spiers <git@adamspiers.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Chris Torek <chris.torek@gmail.com>
-References: <20210224195129.4004-1-avarab@gmail.com>
- <cover-00.11-00000000000-20210324T014604Z-avarab@gmail.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <7c560336-c087-5159-06c2-5b22e949902e@kdbg.org>
-Date:   Wed, 24 Mar 2021 18:19:54 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.0
+        id S237896AbhCXSjz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Mar 2021 14:39:55 -0400
+Received: (qmail 14147 invoked by uid 109); 24 Mar 2021 18:39:52 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 24 Mar 2021 18:39:52 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 20626 invoked by uid 111); 24 Mar 2021 18:39:52 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 24 Mar 2021 14:39:52 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 24 Mar 2021 14:39:51 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jacob Keller <jacob.keller@gmail.com>,
+        Patrick Steinhardt <ps@pks.im>,
+        Git mailing list <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>
+Subject: Re: Pass or not to pass config environment down...
+Message-ID: <YFuHd1MMlJAvtdzb@coredump.intra.peff.net>
+References: <xmqqk0px3dfu.fsf@gitster.g>
+ <CA+P7+xokjz-2nC5+F9HG0tBqS948uZcuq-1eY9uGuNyzbFGbZQ@mail.gmail.com>
+ <xmqqmtut1qyj.fsf@gitster.g>
+ <CA+P7+xo9rUYWzCT0YZFU5Nz1ojP1qRt8VfGtK08-LmYV9KK0hw@mail.gmail.com>
+ <xmqqim5h1otg.fsf@gitster.g>
 MIME-Version: 1.0
-In-Reply-To: <cover-00.11-00000000000-20210324T014604Z-avarab@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <xmqqim5h1otg.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 24.03.21 um 02:48 schrieb Ævar Arnfjörð Bjarmason:
-> This is a restart of the 35-patch v3 of this topic at
-> https://lore.kernel.org/git/20210224195129.4004-1-avarab@gmail.com/
-> 
-> I still plan on submitting the rest of it, but wanted to start with
-> the early parts of that series that hasn't been controversial or has
-> outstanding feedback I haven't addressed.
-> 
-> The range-diff to v3 is just for those patches I'm re-rolling here.
+On Tue, Mar 23, 2021 at 03:35:07PM -0700, Junio C Hamano wrote:
 
-I'm mostly relying on the interdiff below. I think I had no comments on
-these patches in the earlier round, so:
+> > So, I think this direction is good. I imagine a full patch would
+> > include also dropping the specialized helper function that is no
+> > longer needed, and possibly adding new tests for the behavior of
+> > GIT_CONFIG_COUNT?
+> 
+> Yeah, coding that is the easiest part.  Thinking through
+> ramifications of making (or not making) such a change is much
+> harder.
+> 
+> I said "assuming" number of times, because I am not so sure if the
+> subprocesses spawned from other codepaths do or do not want to see
+> the one-shot custom configuration settings.  If that assumption
+> turns out to be wrong and the processes spawned using the helper in
+> various helper functions in submodule.c are the oddball cases that
+> want to see the custom configuration, then such a change would break
+> existing users.
 
-Acked-by: Johannes Sixt <j6t@kdbg.org>
+I think it really depends on the command being spawned. But keep in mind
+that the local_repo_env list is not limited just to callers inside of
+Git. We expose it to the user via rev-parse, so scripts can do:
 
+  unset $(git rev-parse --local-env-vars)
+  cd /some/other/repo
+
+I'm hesitant to change the output there, since we don't know exactly how
+it's used in the wild[1]. Changing what our internal callers do is less
+risky, though I'd generally avoid doing so unless there is a known
+benefit. And I'm sure what the benefit is; I think this came up mostly
+because you were looking at harmonizing the behavior of the two config
+systems (and I think that _is_ worth doing, but I'd probably choose the
+historical behavior for the new system).
+
+I also think it really depends on the specific config the user is
+expecting to get passed. Remember we used to have a whitelist for "this
+config is OK to pass to submodules", but it was such a mess that we did
+away with it in 89044baa8b (submodule: stop sanitizing config options,
+2016-05-04).
+
+> I _think_ the one in connect.c, which runs either the ssh transport
+> (for which the processes that run on the other side in the other
+> repository won't be affected by our environment anyway) or the file
+> transport that runs another process and talks with it over a pipe is
+> probably OK if the configuration on the "client" side leaks through
+> to the "server" side, e.g.
 > 
-> Ævar Arnfjörð Bjarmason (10):
->   userdiff: refactor away the parse_bool() function
->   userdiff style: re-order drivers in alphabetical order
->   userdiff style: declare patterns with consistent style
->   userdiff style: normalize pascal regex declaration
->   userdiff: add and use for_each_userdiff_driver()
->   userdiff tests: explicitly test "default" pattern
->   userdiff tests: list builtin drivers via test-tool
->   userdiff: remove support for "broken" tests
->   blame tests: don't rely on t/t4018/ directory
->   blame tests: simplify userdiff driver test
+>     $ git -c advice.ignoredHook=false clone file:///the/repo.git/ here
 > 
->  Makefile                 |   1 +
->  t/annotate-tests.sh      |  34 ++++----
->  t/helper/test-tool.c     |   1 +
->  t/helper/test-tool.h     |   1 +
->  t/helper/test-userdiff.c |  31 +++++++
->  t/t4018-diff-funcname.sh |  39 ++-------
->  t/t4018/README           |   3 -
->  userdiff.c               | 178 ++++++++++++++++++++++++---------------
->  userdiff.h               |  15 ++++
->  9 files changed, 186 insertions(+), 117 deletions(-)
->  create mode 100644 t/helper/test-userdiff.c
+> would probably want the other end (i.e. the one that runs upload-pack
+> in /the/repo.git/ directory) to see the one-shot configuration, too.
+
+That example is one of the reasons I prefer _not_ to pass config here.
+It only works over local-process invocations! Not over ssh://, nor
+git://, nor https://. Even though it will do what you want in this case,
+the overall behavior is more confusing.
+
+The more-consistent (or less inconsistent, perhaps) way is:
+
+  git clone -u 'git -c advice.ignoredHook=false upload-pack' \
+    file:///the/repo.git
+
+which also works with ssh. It of course _doesn't_ work with other
+protocols, but I think the technique at least makes it more clear why
+that is the case (you do not get to specify arbitrary shell commands to
+https servers).
+
+> I do not think it makes much difference to the use of local_repo_env
+> in object-file.c::for_each_alternate_ref() either way; it could be
+> used (via core.alternateRefsCommand) an arbitrary command in each
+> alternate repository, but by default it runs for-each-ref in them,
+> and I do not think of any configuration variables that would be
+> useful on "the other side".
 > 
-> Range-diff:
->  1:  0be132b05e2 =  1:  fb7346cd296 userdiff: refactor away the parse_bool() function
->  2:  d1e00a739ac =  2:  149387155bc userdiff style: re-order drivers in alphabetical order
->  3:  b99bd158d45 =  3:  faf1a824f05 userdiff style: declare patterns with consistent style
->  4:  9ce6d47021c =  4:  1e9ddcd1a9a userdiff style: normalize pascal regex declaration
->  5:  369fbdcee83 =  5:  64ea5e8443f userdiff: add and use for_each_userdiff_driver()
->  6:  70d62a97211 =  6:  862f6ab5d66 userdiff tests: explicitly test "default" pattern
->  7:  792421a2f8b =  7:  22a07591b76 userdiff tests: list builtin drivers via test-tool
->  8:  9081e2a152e !  8:  7755db95014 userdiff: remove support for "broken" tests
->     @@ Commit message
->      
->          There have been no "broken" tests since 75c3b6b2e8 (userdiff: improve
->          Fortran xfuncname regex, 2020-08-12). Let's remove the test support
->     -    for them, this is in preparation for a more general refactoring of the
->     -    tests.
->     +    for them.
->      
->          Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
->      
->  9:  d3652f95d5e !  9:  4e0b4b42e16 blame tests: don't rely on t/t4018/ directory
->     @@ Commit message
->          with userdiff driver, 2020-11-01) so that the blame tests don't rely
->          on stealing the contents of "t/t4018/fortran-external-function".
->      
->     -    I'm about to change that file in a subsequent commit. Just moving the
->     -    relevant test file here inline is the easiest solution, and I think
->     -    also the most readable.
->     +    I have another patch series that'll possibly (or not) refactor that
->     +    file, but having this test inter-dependency makes things simple in any
->     +    case by making this test more readable.
->      
->          Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
->      
-> 10:  35d12779ea1 ! 10:  ce98c61bf40 blame tests: simplify userdiff driver test
->     @@ Commit message
->          test_commit, 2021-01-12).
->      
->          We also did not need the full fortran-external-function content. Let's
->     -    cut it down to just the important parts, and further modify it to
->     -    demonstrate that the fortran-specific userdiff function is in effect
->     -    by adding "DO NOT MATCH ..." and "AS THE ..." lines surrounding the
->     -    "RIGHT" one. This is to check that we're using the userdiff "fortran"
->     -    driver, as opposed to the default driver.
->     +    cut it down to just the important parts.
->      
->     -    The test also left behind a .gitattributes files, let's clean it up
->     -    with "test_when_finished".
->     +    I'm modifying it to demonstrate that the fortran-specific userdiff
->     +    function is in effect by adding "DO NOT MATCH ..." and "AS THE ..."
->     +    lines surrounding the "RIGHT" one.
->     +
->     +    This is to check that we're using the userdiff "fortran" driver, as
->     +    opposed to the default driver which would match on those lines as part
->     +    of the general heuristic of matching a line that doesn't begin with
->     +    whitespace.
->     +
->     +    The test had also been leaving behind a .gitattributes file for later
->     +    tests to possibly trip over, let's clean it up with
->     +    "test_when_finished".
->      
->          Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
->      
+> And I suspect that trailers.c::apply_command() excludes these
+> environment variables just out of habit without much deep thinking.
+> It is not going in a different repository to run the command, and
+> santitizing the environment that pertains to this repository should
+> not have any meaningful effect [*].
 > 
+> So, I would not be surprised if it were a totally safe change, but I
+> am not yet sure.
+
+My suspicion is that for most cases, nobody cares that much either way
+(which is why we have not seen people ask "hey, why is my config not
+passed down" in any context _except_ submodules).
+
+-Peff
+
+[1] The one place I have used "rev-parse --local-env-vars" is in scripts
+    to handle alternates storage. When we "sync" from a fork to the
+    shared-object repo, there are some Git commands that must run in
+    one, and some in the other. Likewise, there is "do maintenance"
+    script which can be triggered from a fork, but then moves into the
+    shared repo. Some of those sites explicitly allow config by doing:
+
+      unset $(git rev-parse --local-env-vars | grep -v '^GIT_CONFIG')
+
+    because we want "git -c pack.threads=17 do-the-maintenance" to
+    respect that config after moving into the shared repo to do the
+    repack. But others don't. _Probably_ nothing would go too wrong if
+    we retained config, but I'd want to look at each. Which makes me
+    concerned that other scripts in the wild would likewise be
+    potentially surprised by this.
