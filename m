@@ -2,82 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03BA9C433E4
-	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 19:15:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C2BAFC433C1
+	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 19:20:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D58D761A02
-	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 19:15:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8C1E5619E3
+	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 19:20:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237967AbhCXTPW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Mar 2021 15:15:22 -0400
-Received: from cloud.peff.net ([104.130.231.41]:47842 "EHLO cloud.peff.net"
+        id S237886AbhCXTT5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Mar 2021 15:19:57 -0400
+Received: from cloud.peff.net ([104.130.231.41]:47860 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237864AbhCXTOx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Mar 2021 15:14:53 -0400
-Received: (qmail 14502 invoked by uid 109); 24 Mar 2021 19:14:53 -0000
+        id S237843AbhCXTTp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Mar 2021 15:19:45 -0400
+Received: (qmail 14552 invoked by uid 109); 24 Mar 2021 19:19:45 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 24 Mar 2021 19:14:53 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 24 Mar 2021 19:19:45 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20987 invoked by uid 111); 24 Mar 2021 19:14:53 -0000
+Received: (qmail 21033 invoked by uid 111); 24 Mar 2021 19:19:46 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 24 Mar 2021 15:14:53 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 24 Mar 2021 15:19:46 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Wed, 24 Mar 2021 15:14:52 -0400
+Date:   Wed, 24 Mar 2021 15:19:44 -0400
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Adam Spiers <git@adamspiers.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Chris Torek <chris.torek@gmail.com>
-Subject: Re: [PATCH v4 00/10] userdiff: refactor + test improvements
-Message-ID: <YFuPrJUgAY3B0nRw@coredump.intra.peff.net>
-References: <20210224195129.4004-1-avarab@gmail.com>
- <cover-00.11-00000000000-20210324T014604Z-avarab@gmail.com>
- <7c560336-c087-5159-06c2-5b22e949902e@kdbg.org>
- <xmqq5z1gz869.fsf@gitster.g>
+To:     =?utf-8?Q?Ren=C3=A9_Scharfe=2E?= <l.s.r@web.de>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        Eric Wong <e@80x24.org>
+Subject: Re: [PATCH v4 2/4] Makefile/coccicheck: speed up and fix bug with
+ duplicate hunks
+Message-ID: <YFuQ0K7o2Yy/RoWs@coredump.intra.peff.net>
+References: <20210306192525.15197-1-avarab@gmail.com>
+ <cover.1616414951.git.avarab@gmail.com>
+ <3bca3239cb84488a1638f2bb269392f47f78c6da.1616414951.git.avarab@gmail.com>
+ <365dd12a-b96e-8daf-ba34-bc7d40f39634@web.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqq5z1gz869.fsf@gitster.g>
+In-Reply-To: <365dd12a-b96e-8daf-ba34-bc7d40f39634@web.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 24, 2021 at 12:02:54PM -0700, Junio C Hamano wrote:
+On Mon, Mar 22, 2021 at 07:05:06PM +0100, René Scharfe. wrote:
 
-> Johannes Sixt <j6t@kdbg.org> writes:
+> > This change speeds up the runtime of "make -j8 coccicheck" from ~1m50s
+> > to ~1m20s for me. See [2] for more timings.
 > 
-> > Am 24.03.21 um 02:48 schrieb Ævar Arnfjörð Bjarmason:
-> >> This is a restart of the 35-patch v3 of this topic at
-> >> https://lore.kernel.org/git/20210224195129.4004-1-avarab@gmail.com/
-> >> 
-> >> I still plan on submitting the rest of it, but wanted to start with
-> >> the early parts of that series that hasn't been controversial or has
-> >> outstanding feedback I haven't addressed.
-> >> 
-> >> The range-diff to v3 is just for those patches I'm re-rolling here.
-> >
-> > I'm mostly relying on the interdiff below. I think I had no comments on
-> > these patches in the earlier round, so:
-> >
-> > Acked-by: Johannes Sixt <j6t@kdbg.org>
+> Without this patch, /usr/bin/time -l reports:
 > 
-> Thanks.  I've read through everything in the patch this round,
-> ignoring anything that came before, and them looked mostly fine.
-> Peff's comment on 01/10 to make it if/else if cascade does make
-> sense to me, too, though.
+>        95.08 real       598.29 user        32.62 sys
+>            103727104  maximum resident set size
+> 
+> With --include-headers-for-types, I get this:
+> 
+>        76.37 real       483.83 user        26.77 sys
+>             97107968  maximum resident set size
+> 
+> This is similar to your numbers.  And adding that option to the demo
+> script in your [1] gives consistent results for all xargs -n values,
+> so that option alone fixes the subtle bug you refer to above, right?
+> 
+> However, with the second part of this patch also applied (adding %.h
+> to FOUND_C_SOURCES), I get this:
+> 
+>        90.38 real       558.38 user        38.32 sys
+>            100073472  maximum resident set size
+> 
+> Is this still necessary?
 
-I left some other comments on patch 4, mostly about clarity. But just to
-be clear, I don't think there's anything incorrect there, and I wouldn't
-be offended if it gets picked up as-is.
+If I understand what the spatch options are doing (and I'm not at all
+sure that I do), then with --include-headers-for-types, aren't we
+avoiding looking for transformations in the included files?
+
+In which case not adding *.h to the list of files we pass means that
+we'd fail to find instances in the header files that need to be
+mentioned in the output.
 
 -Peff
