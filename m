@@ -2,122 +2,68 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C04D0C433DB
-	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 02:13:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CCDADC433DB
+	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 03:59:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 734AE619E5
-	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 02:13:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8B5DC619B2
+	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 03:59:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234781AbhCXCMQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Mar 2021 22:12:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59756 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231685AbhCXCL6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Mar 2021 22:11:58 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5E34C061763
-        for <git@vger.kernel.org>; Tue, 23 Mar 2021 19:11:57 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id x7so350954wrw.10
-        for <git@vger.kernel.org>; Tue, 23 Mar 2021 19:11:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=r6hVvQr/cjZyW4ZvfYhU2vv9+OswGqpRE8PnXiZt9DM=;
-        b=KjSRp1vvxIeALjqetwQxARgUTKlPfFcg6CYdcFcV2QfndXHn1ICU/lAJ8qgH4E4+J0
-         BflRCUOVRqZ6HL43un+r6HqQ6mEbbUxJ6MQTMezWxTm2I/woV1Kl8h7eVbrVz4rX07dk
-         o4YFf4DAM3hVa+hz1IEkcG+r0zYLThVLRHx9dLZHj/PKT/Szn6HI5QEZopscJfcsqLdw
-         M2G74soQzwNHddpstcF5gmpFkP744AjxIHNTPcv2LD1yX1A88gzJD6mVqNfCnAsG3Xy2
-         B8wtZ5NcJ7GeBVdINUsOqfG7+WlA813IXUVAStI7Wrfy8kMhbHvMc0SZduMVnSG3pgVf
-         nuJg==
+        id S235178AbhCXD7S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Mar 2021 23:59:18 -0400
+Received: from mail-ej1-f50.google.com ([209.85.218.50]:35331 "EHLO
+        mail-ej1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235159AbhCXD7J (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Mar 2021 23:59:09 -0400
+Received: by mail-ej1-f50.google.com with SMTP id jy13so30558073ejc.2
+        for <git@vger.kernel.org>; Tue, 23 Mar 2021 20:59:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=r6hVvQr/cjZyW4ZvfYhU2vv9+OswGqpRE8PnXiZt9DM=;
-        b=FjsdaozoQ4uZB7B2lv0SZuFy+ew+pEesLlf/VUkBUOAjnjBSQoLy0paVooOICP2FaG
-         ChhFUjQYzRNaS4TCnpgkYcmAbneg4KHTnfPrvnaYXxbVD0d3qXB06TJqv1wUCe3Z1+9J
-         /fgtQu1LhI1DsUr9zafnOav7IoDmKk9KHM+5DXrVPEWJ0WMI6hfqXBDP7g7Q8MTk5owK
-         hQuq7p0Z1ZyxL9UX0O0pW/dGPZwpm7ODuSbb8zkgq7LLGRnD5/rWoV06/2wyN2exPpHo
-         vOwTAa1oDLcYa9S7kjC6xh72OE6fAK/i5K/dNCFldyyIjiRM5OpHWZN3nxaiCnWAmVTk
-         QIUQ==
-X-Gm-Message-State: AOAM533YZE7Dc+7nGAafo2w7gYexuk9JOZQnn/3c/atQSi2NDAVFiFB3
-        VOd+47k+UE3Ojb2K8LgHtw/ubrxwo207Qg==
-X-Google-Smtp-Source: ABdhPJymciKMiYJ6howXfSB4MmvFkSkK5piD7xxecBJn91/rEdxqEml1W288Y0qxr7mIjKLFUGJEvQ==
-X-Received: by 2002:a05:6000:1789:: with SMTP id e9mr801361wrg.237.1616551916231;
-        Tue, 23 Mar 2021 19:11:56 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id v2sm4876947wmj.1.2021.03.23.19.11.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Mar 2021 19:11:55 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        ric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2] mktag tests: fix broken "&&" chain
-Date:   Wed, 24 Mar 2021 03:11:52 +0100
-Message-Id: <patch-1.1-0b43e43b949-20210324T021049Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.31.0.354.gc8cbd507b5a
-In-Reply-To: <20210307132905.14212-1-avarab@gmail.com>
-References: <20210307132905.14212-1-avarab@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=qqWjuhZOM2veN7sfWF7O80UlKpmiWfhBaTEAbFul5EY=;
+        b=jesg3viV6INRCWRUSfdhdoAVmgH1sOX5kVE1tHtPCoHmKgE9A5OFZqC+Seb2WTc1lN
+         ca5C2VBEDQNyPDczojqECOohsPp2wIH9gtaCN7hC+J2Hzgk7M8QbRxHrktUikVwMKFv6
+         8/PPiUwFOwDI1/ePMRhYYSM2fIr23BCILYgv6MCMGHDW6bbHbctJ7+2Ig+NzhMC502M4
+         vXKeYS0ht9VgTKxjNt9BTiFNGavFDR4bDQXYY0L93a7FupUvYxsGoFrmugwMvJiwBGgl
+         gaoHXBX7npid3AP4OuieF+uj7HB4QRcq9vSQqMbHMiwcf5LOuLznUCih2rHc+H6/pt4S
+         RUpQ==
+X-Gm-Message-State: AOAM531T6VHTfw0CpXOOibiNwtgPaIJ1bBIVDKyns3hNy5S460X37Z5m
+        YYdyDR2VqchnPDs12T83Sfy8KgCEpKRO3yNY/u8=
+X-Google-Smtp-Source: ABdhPJz/by42GPOBZVT1babyPaGM7QUELi1Guly0Shoau7j3BXr+/vC//pdeIAPcY9b7MFqSpbG5q6ZMDlwXZBLKzP4=
+X-Received: by 2002:a17:906:7c48:: with SMTP id g8mr1537066ejp.138.1616558348473;
+ Tue, 23 Mar 2021 20:59:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <pull.885.v9.git.1616317225769.gitgitgadget@gmail.com> <pull.885.v10.git.1616497946427.gitgitgadget@gmail.com>
+In-Reply-To: <pull.885.v10.git.1616497946427.gitgitgadget@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 23 Mar 2021 23:58:57 -0400
+Message-ID: <CAPig+cQJ6q21PB9rBuw13q-j-YAEKz5bmk7_+yXQtggqHzRRcw@mail.gmail.com>
+Subject: Re: [PATCH v10] format-patch: allow a non-integral version numbers
+To:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Denton Liu <liu.denton@gmail.com>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Remove a stray "xb" I inadvertently introduced in 780aa0a21e0 (tests:
-remove last uses of GIT_TEST_GETTEXT_POISON=false, 2021-02-11).
+On Tue, Mar 23, 2021 at 7:12 AM ZheNing Hu via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> [...]
+> Allow `format-patch` to take such a non-integral iteration
+> number.
+> [...]
+> Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+> ---
+>     [GSOC] format-patch: allow a non-integral version numbers
+>     A rollback was performed again under Eric's suggestion.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
+Thanks. I think this version addresses my previous review comments.
 
-A v2 of a stray patch of mine that wasn't picked up during the release window.
-
-Range-diff:
-1:  bd8235ead3c ! 1:  0b43e43b949 mktag tests: fix broken "&&" chain
-    @@ Commit message
-         mktag tests: fix broken "&&" chain
-     
-         Remove a stray "xb" I inadvertently introduced in 780aa0a21e0 (tests:
-    -    remove last uses of GIT_TEST_GETTEXT_POISON=false, 2021-02-11). This
-    -    would have been a failed attempt to type "C-x C-b" that snuck into the
-    -    code.
-    -
-    -    The chainlint check did not catch this one, but I don't know where to
-    -    start patching the wall-of-sed that is chainlint.sed to fix that.
-    +    remove last uses of GIT_TEST_GETTEXT_POISON=false, 2021-02-11).
-     
-         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-
- t/t3800-mktag.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/t/t3800-mktag.sh b/t/t3800-mktag.sh
-index 60a666da595..6275c98523f 100755
---- a/t/t3800-mktag.sh
-+++ b/t/t3800-mktag.sh
-@@ -17,7 +17,7 @@ check_verify_failure () {
- 		grep '$2' message &&
- 		if test '$3' != '--no-strict'
- 		then
--			test_must_fail git mktag --no-strict <tag.sig 2>message.no-strict &&xb
-+			test_must_fail git mktag --no-strict <tag.sig 2>message.no-strict &&
- 			grep '$2' message.no-strict
- 		fi
- 	"
--- 
-2.31.0.354.gc8cbd507b5a
-
+I did not find anything to comment about in this version.
