@@ -2,233 +2,215 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67E9FC433C1
-	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 23:05:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F3B0C433C1
+	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 23:26:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3386661A10
-	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 23:05:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5435461A16
+	for <git@archiver.kernel.org>; Wed, 24 Mar 2021 23:26:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229734AbhCXXFX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Mar 2021 19:05:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49176 "EHLO
+        id S233948AbhCXX0P (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Mar 2021 19:26:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53726 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234124AbhCXXFM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Mar 2021 19:05:12 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 505FFC06174A
-        for <git@vger.kernel.org>; Wed, 24 Mar 2021 16:05:12 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id u9so35590690ejj.7
-        for <git@vger.kernel.org>; Wed, 24 Mar 2021 16:05:12 -0700 (PDT)
+        with ESMTP id S233587AbhCXX0B (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Mar 2021 19:26:01 -0400
+Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD301C06174A
+        for <git@vger.kernel.org>; Wed, 24 Mar 2021 16:26:00 -0700 (PDT)
+Received: by mail-ot1-x335.google.com with SMTP id s11-20020a056830124bb029021bb3524ebeso269960otp.0
+        for <git@vger.kernel.org>; Wed, 24 Mar 2021 16:26:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=JMPrr8xva6srItE/MoYZPZwyEK3X6g8nEXAvfLveSxU=;
-        b=Lufq0R1nDQVF1LSwMTPrdsbCUD19o71i3ecJjf/MGewj/xySV27nE8+Tt5mDjLVltF
-         GY6NMFgVNDXIEu4b4utxttxNJg8tORznl1kBbnGYoA+ogoCUbFS4W3H5kXLLUBvho2c8
-         2g8HrRn8v8OUos684hZtE/JjMFSF2EVbaE9C7SYEV8UyvEAn7I5SXg3efUczVkXS2fzO
-         gz3y0QObZmfjP6eKLe7ZE8jqfHQjmmn+/eHUAgCHBg6HbKE31PLRyF/CN3GUeOHtWzwZ
-         UgcJvrrYDgABna2xN1thytvAnGOe4e/WiYGrdF5Xknm+eFzuJIQzdsrzmDafJ9mdd+fu
-         IzGA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=zyMUJ8NQ57UqMjzkZyGdSrzmFOaJaUvF2KoDm60Ymtw=;
+        b=MXy4uADxrNsDkRsa8zAuujTE2tRycFjo5qhBvbMXGP0N7iTKR5MzE9ATTYYqmU/TR+
+         ljaS0JlaZrnwzy4/F9RHl71Qu/4lB2eV+AV+o58399C6RgvDF3hiWmKgv/Rwc+a+FZQ0
+         Up+vJefy11m7PN0vheAekiXUV3iL4uh5mXa9M1wVZKZIx78mVmCnoEN/hJJWuvytLPPP
+         TaJSYey4BpE1kBtKZJe/qWgUDuira9Zf1umAv2s9W3F5VRLpbUv9yS+k3Jd4oVBKsG3T
+         tYy/qfsMX1gR+QNkAniF5ZvIGojh7lYrYT0dsyTNKmqu0cIzSh24f1kB3iIup+hyc0eF
+         oVeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=JMPrr8xva6srItE/MoYZPZwyEK3X6g8nEXAvfLveSxU=;
-        b=WzO/uA3j65S/JVcoAV6WFH/3gpHW6Re0x1Orbp1Y9OGIkQgoGaYjThoV0r61/6L9Wk
-         R/NAxXszjgpwvJgeIer5MFWsXgIamxrn8GSJ4t4Xhk8V/yRQDCKfavEYVGr3RW43bgL1
-         N2DfJ529OG8XblChsEKGM8lwUzE4zB1bxPGPoivecbSaS2HT2ZJn0mcjvfgrygR2mn4P
-         e94zDC3Mo3+Nymn/p7lpODxuvr6aE0znHoR5hf5CpHTrYwQnUJvrks5AvukRyfEYKYO+
-         L0q2b3kOfF3WlgfrGeCRr5ZKS5sv4hoybRUP1qUrnOlLLeWRuHdThGXi7ksp7QkJvkQ8
-         AMdA==
-X-Gm-Message-State: AOAM531RXtL6KaH9pmJjqvT8VKvHYwrS+JAoRNGhGHOIsA9d7B29jPOC
-        gBw+lmqeu/EpMt72LfJKXqph6cVMyfBY3Q==
-X-Google-Smtp-Source: ABdhPJwXyySl/7M4cBLBfgE2mvRdpDVW//5xGbsUwyDkqNXWAW6O6ODAt50js5+iEblG0u7ererUiA==
-X-Received: by 2002:a17:907:248b:: with SMTP id zg11mr6096268ejb.364.1616627110798;
-        Wed, 24 Mar 2021 16:05:10 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id y17sm1561838ejf.116.2021.03.24.16.05.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Mar 2021 16:05:10 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Adam Spiers <git@adamspiers.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Chris Torek <chris.torek@gmail.com>
-Subject: Re: [PATCH v4 05/10] userdiff: add and use for_each_userdiff_driver()
-References: <20210224195129.4004-1-avarab@gmail.com>
- <cover-00.11-00000000000-20210324T014604Z-avarab@gmail.com>
- <patch-05.11-64ea5e8443f-20210324T014604Z-avarab@gmail.com>
- <YFuPMMMYicFK6A/S@coredump.intra.peff.net>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <YFuPMMMYicFK6A/S@coredump.intra.peff.net>
-Date:   Thu, 25 Mar 2021 00:05:09 +0100
-Message-ID: <87im5gp2ze.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=zyMUJ8NQ57UqMjzkZyGdSrzmFOaJaUvF2KoDm60Ymtw=;
+        b=iPRPRfuBiqgAcvLUcs1ooI+7XDiJ5Y5+id4eSKVSRMpTwU2jd20Klb1qGeCtp6rxZ+
+         v4nVbh09NYBuEx6hn1PhNqsE7+6rMxF0kcCIEme4mDyj8fvvDbOM2EAJ4yoxZIMlUdmZ
+         YXv0nzJGLX4qJGAw5qpRlE3mdXt7YvSfhjPMaOvw3dxTg0kiTJT1YqwuoWhHAXj3gTRQ
+         n8KC6eraxogMfHwT6ETq+9sxryxroeERrznz/UZpG8HI27oV7PEV3H4/KE5BDDPr2U0o
+         k+Ewg0yrkUyYSM8+vXgkyVsF9WSbKioXVG0Se2HTanbT56QggUka+E3NB4z2kG4Ds4T0
+         gfnA==
+X-Gm-Message-State: AOAM5329x1kbWkpmwz8WuOncRcFaWx0sEMAODkZUI0mIXoDkW38/+km6
+        lDAyAxc5p57HKB/MUsu5XznCN9QXQcmW2iU1iSY=
+X-Google-Smtp-Source: ABdhPJwmQKB5JcO7m6RaSHkVHlr1IodbolKvIKM1vu2KNZ/J8PSaT0O2vtDUDy23ihDVRLfllCDZcY0m5bkzeaT3M3k=
+X-Received: by 2002:a9d:8d5:: with SMTP id 79mr5129807otf.345.1616628360209;
+ Wed, 24 Mar 2021 16:26:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+References: <pull.859.git.1616621553.gitgitgadget@gmail.com> <xmqqv99gw6n3.fsf@gitster.g>
+In-Reply-To: <xmqqv99gw6n3.fsf@gitster.g>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 24 Mar 2021 16:25:48 -0700
+Message-ID: <CABPp-BGMhyn1ricXzx539n-09+BYRHPeruNd4MG2PyQzWaRKow@mail.gmail.com>
+Subject: Re: [PATCH 0/7] Optimization batch 11: avoid repeatedly detecting
+ same renames
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Taylor Blau <me@ttaylorr.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Mar 24, 2021 at 3:04 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > === Basic Optimization idea ===
+> >
+> > This series avoids repeatedly detecting the same renames in a sequence of
+> > merges such as a rebase or cherry-pick of several commits. When there are
+> > many renames between the old base and the new base, traditionally all those
+> > renames are re-detected for every commit that is transplanted. This
+> > optimization avoids redoing that work.
+>
+> Unless this section is easily understandable, the readers have no
+> incentive to read on, but the above is a bit too hand wavy.
 
-On Wed, Mar 24 2021, Jeff King wrote:
+Oh, yeah, it's very hand wavy.  I figured the commit messages were the
+right place to include the details, and just wanted to give a flavor
+of the idea in the cover letter.
 
-> On Wed, Mar 24, 2021 at 02:48:47AM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
+> > This one adds a fourth (remember-renames), with some interesting properties:
+> >
+> >  * unlike basename-guided rename detection, there are no behavioral changes
+> >    (there is no heuristic involved)[2].
+> >
+> >  * like skip-because-irrelevant, this optimization does not apply to all git
+> >    commands using the rename machinery. In fact, this one is even more
+> >    restrictive since it is ONLY useful for rebases and cherry-picks (not
+> >    even merges), and only for second and later commits in a linear series.
 >
->> Refactor the userdiff_find_by_namelen() function so that a new
->> for_each_userdiff_driver() API function does most of the work.
->>=20
->> This will be useful for the same reason we've got other for_each_*()
->> API functions as part of various APIs, and will be used in a follow-up
->> commit.
+> So, is it correct to understand that one case this would help is
+> this scenario?
 >
-> The refactorings up to here all made sense, but TBH this one makes the
-> code more confusing to follow to me.
+>  ---o---o---o---X---o---o---o---O ours
+>      \
+>       A---B---C topic
 >
-> Perhaps part of it is just that the diff is messy, but I had to read it
-> several times to understand what's going on. Here's what I think were
-> the tricky parts:
+> where there is a side branch A--B--C that touched some files, while
+> on our side, there is a commit X that is unknown to the side branch
+> that renamed these files.  Now we want to transplant the side topic
+> to the tip of our history, replaying the changes A--B--C made to
+> these files under their original name to the corresponding files
+> that have been renamed.
 >
->> -static struct userdiff_driver *userdiff_find_by_namelen(const char *k, =
-size_t len)
->> +struct for_each_userdiff_driver_cb {
->> +	const char *k;
->> +	size_t len;
->> +	struct userdiff_driver *driver;
->> +};
->
-> Our callback function does _one_ type of selection (based on a "type"
-> parameter), but not another (based on the name). That feels
-> inconsistent, but is also the reason we have this awkward struct.  Part
-> of my confusion is the name: this is not something to be generically
-> used with for_each_userdiff_driver(), but rather a type unique to
-> find_by_namelen() to be passed through the opaque void pointer.
->
-> So "struct find_by_namelen_data" would have been a lot more
-> enlightening.
->
-> The fact that callbacks are awkward in general in C might not be
-> solvable, at least not without duplicating some iteration code.
->
->> +static int userdiff_find_by_namelen_cb(struct userdiff_driver *driver,
->> +				       enum userdiff_driver_type type, void *priv)
->>  {
->> [...]
->> +	if (!strncmp(driver->name, cb_data->k, cb_data->len) &&
->> +	    !driver->name[cb_data->len]) {
->> +		cb_data->driver =3D driver;
->> +		return -1; /* found it! */
->>  	}
->
-> This "return -1" took me a while to grok, and the comment didn't help
-> all that much. The point is to stop traversing the list, but "-1" to me
-> signals error. I think returning "1" might be a bit more idiomatic, but
-> also a comment that says "tell the caller to stop iterating" would have
-> been more clear.
+> And each step in this "rebase" is a 3-way merge of commits A, B and
+> C onto HEAD, using the parent of the commit being cherrk-picked as a
+> virtual common ancestor.  Which means
 
-*nod*
+You generated nearly the same description and diagram I used in the
+commit message (the one in 3/7) describing this.  :-)
 
-Also thanks for all the reviewing so far both, I'm not replying to all
-of it point-by-point here, will respond with a re-roll at some point.
+>  - To transplant A (i.e. the first step), we'd compare the diff of
+>    A^..O (i.e. what our side did, including the renames done at X)
+>    and diff of A^..A (i.e. what the first commit did in the range),
+>    and the former does quite a lot of rename detection.
+>
+>  - After transplanting B (i.e. the second step), then we'd compare
+>    the diff of A^..A' (where A' is A cherry-picked on O, i.e. the
 
->> +int for_each_userdiff_driver(each_userdiff_driver_fn fn,
->> +			     enum userdiff_driver_type type, void *cb_data)
->> +{
->> +	int i, ret;
->> +	if (type & (USERDIFF_DRIVER_TYPE_UNSPECIFIED | USERDIFF_DRIVER_TYPE_CU=
-STOM)) {
->> +
->> +		for (i =3D 0; i < ndrivers; i++) {
->> +			struct userdiff_driver *drv =3D drivers + i;
->> +			ret =3D fn(drv, USERDIFF_DRIVER_TYPE_CUSTOM, cb_data);
->> +			if (ret)
->> +				return ret;
->> +		}
->> +	}
->> +	if (type & (USERDIFF_DRIVER_TYPE_UNSPECIFIED | USERDIFF_DRIVER_TYPE_BU=
-ILTIN)) {
->> +
->> +		for (i =3D 0; i < ARRAY_SIZE(builtin_drivers); i++) {
->> +			struct userdiff_driver *drv =3D builtin_drivers + i;
->> +			ret =3D fn(drv, USERDIFF_DRIVER_TYPE_BUILTIN, cb_data);
->> +			if (ret)
->> +				return ret;
->> +		}
->> +	}
->> +	return 0;
->> +}
->
-> I spent a while scratching my head at these types, and what they would
-> be used for, since this caller doesn't introduce any. Looking at patch 7
-> helped, though it's unclear to me why we need to distinguish between
-> custom and builtin drivers there. As you note there, nobody calls
-> list-custom-drivers nor list-drivers. And if we haven't configured
-> anything, then wouldn't list-drivers be the same as list-builtin-drivers?
-> Or for the purposes of that test, if we _did_ configure something,
->
->   As an aside, it feels like this is something we ought to be able to
->   ask git-config about, rather than having a test-helper. This is
->   basically "baked-in" config, and if we represented it as such, and
->   parsed it into a struct just like regular config, then probably "git
->   config --list --source" could be used to find it (and differentiate it
->   from user-provided config). Possible downsides:
->
->     1. Would people find it confusing that "git config --list" suddenly
->        gets way bigger? Maybe we'd want an "--include-baked-in" option
->        or something.
->
->     2. Is the cost of parsing the config measurably bad? Obviously a
->        user could provide the same content and we'd have to parse it,
->        but there's a lot more rules here than most users would probably
->        provide.
+Close, but for transplanting B we do the diff of B^..A', not A^...A'.
+(And in this diagram, B^ is A.)  That's critical below...
 
-Also:
+>    result of the previous step).  If we are lucky, O..A' did not
+>    rename anything so the renames done in A^..O (i.e. what we
+>    detected during the first step) and A^..A' (i.e. what we should
+>    be computing for this second step) should be quite similar.
 
- 3. Only the PATTERNS() macro translates as-is to config syntax. We
-    don't have a way to do what IPATTERN() does in the config syntax
-    currently.
+Again, B^..A' rather than A^..A'.
 
-    We could add a ifuncname and xifuncname or whatever for it I guess,
-    but currently the ICASE behavior in the C code is magic.
+Luck is not involved here.  If O..A' did rename anything, it's one of
+two reasons:
 
->> +enum userdiff_driver_type {
->> +	USERDIFF_DRIVER_TYPE_UNSPECIFIED =3D 1<<0,
->> +	USERDIFF_DRIVER_TYPE_BUILTIN =3D 1<<1,
->> +	USERDIFF_DRIVER_TYPE_CUSTOM =3D 1<<2,
->> +};
->
-> I was confused by these being bits, because some of them seem mutually
-> exclusive (e.g., UNSPECIFIED and anything else).
->
-> Perhaps it would make more sense as:
->
->   USERDIFF_DRIVER_TYPE_BUILTIN =3D 1<<0,
->   USERDIFF_DRIVER_TYPE_CUSTOM =3D 1<<0,
->   USERDIFF_DRIVER_TYPE_ALL =3D USERDIFF_DRIVER_TYPE_BUILTIN | USERDIFF_DR=
-IVER_TYPE_CUSTOM
->
-> Or the one caller who wants "ALL" could even do the OR themselves.
->
-> I do kind of wonder if there's much value in having a single function
-> with a type field at all, though, given that there's no overlap in the
-> implementation. Would separate "for_each_custom" and "for_each_builtin"
-> functions make sense? And then the existing caller would just call them
-> sequentially.
->
-> I dunno. I know a lot of this is nit-picking, and I don't think there's
-> anything incorrect in this patch. I just found it surprisingly hard to
-> read for something that purports to be refactoring / cleaning the code.
->
-> -Peff
+- There were conflicts when trying to transplant A, and when we stop
+for conflict resolution, the user added some renames at that point.
+- There were renames in A^..A.
 
+In the first case, the presence of conflicts means we drop the cache
+and this optimization doesn't try to kick in.  In the second case,
+those renames in A' came from A.  Even without this optimization,
+since those renames in A' came from A, doing rename detection on A..A'
+wouldn't re-detect them and transplanting wouldn't try to reapply
+them, so they just aren't relevant anymore -- with or without this
+optimization.
+
+>    If we assume that the "quite similar" is good enough, then we can
+>    blindly reuse the record of "<path in A^> correspnds to <path in
+>    O>" as if it were "<path in A^> corresponds to <path in A'>".
+
+Again, B^ rather than A^ on the last line.
+
+I disagree with the use of the term "blindly" here.  As spelled out in
+the third commit message, the transplant of A involved a three-way
+content merge of the form:
+    A^:oldfile
+    O:newfile
+    A:oldfile
+and produce a new result:
+    A':newfile
+
+The point of rename detection is to determine what files are similar
+enough to use in a three-way content merge.  In particular, we'd use
+rename detection when transplanting B to notice the oldfile -> newfile
+rename so that we can do a three-way content merge of the form:
+    A:oldfile
+    A':newfile
+    B:oldfile
+and produce a new result:
+    B':newfile
+
+But, instead of asking rename detection whether A:oldfile and
+A':newfile are similar enough to use together in a three-way content
+merge, we could ask ourselves -- do we have any _other_ reason to
+believe these files are similar enough to be used in a three-way
+content merge?  And the answer that comes back is: these files were
+*already* involved in the same three-way content merge -- the one that
+A':newfile came from.  It was a three-way content merge with no
+conflicts.  (Because when conflicts are triggered we turn this
+optimization off.)
+
+>  - Do the same for C, pretending that renames discovered between A^
+>    and O is identical to the renames between A^ and B' (i.e. the
+>    result of cherry-picking A--B on top of O).
+
+Now you've changed your off-by-one mistake to an off-by-two mistake;
+the rename detection is between C^ and B', not A^ and B'.  I think
+this error might be critical to why you used terms like "pretend" and
+"blindly" and "lucky".  I agree that it would require
+luck/blindness/pretending to assume that the renames between A^ and O
+are identical to those between A^ and B', but that's not what the
+original algorithm would have been using for computing renames; it
+would be using C^ and B'.
+
+It's actually quite difficult to generate a case where this
+optimization gets a possibly different result.  It requires there were
+changes to the content on both sides of history that merge cleanly,
+and in particular that need a significant size reduction of the file
+by the unrenamed side of history.  If you take the changes on the
+*renamed* side of history, which represent <50% changes since it was
+detected as a rename, those same changes need to represent a >50%
+change when applied to the smaller file.  This is discussed in the
+third commit message, as noted in the cover letter:
+
+>> [2] Well, almost no changes. There's technically a very narrow way that this
+>> could change the behavior; see the really long "Technically," bullet point
+>> in patch 3 for discussion of this.
