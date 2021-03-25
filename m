@@ -2,157 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=0.2 required=3.0 tests=BAYES_20,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DAFBC433DB
-	for <git@archiver.kernel.org>; Thu, 25 Mar 2021 22:58:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9679AC433E3
+	for <git@archiver.kernel.org>; Thu, 25 Mar 2021 23:10:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C037661A41
-	for <git@archiver.kernel.org>; Thu, 25 Mar 2021 22:58:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 580C5619F9
+	for <git@archiver.kernel.org>; Thu, 25 Mar 2021 23:10:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231272AbhCYW5f (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 25 Mar 2021 18:57:35 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64794 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231252AbhCYW5W (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Mar 2021 18:57:22 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C744DA5EE5;
-        Thu, 25 Mar 2021 18:57:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=CK+FxtG8UBS0lMx0VKzSYB4QFRk=; b=TLxDzj
-        T43kE7SsZViA9/5I3AAZSK9zneT0iLbtWHOL4VYOd8cnz39UBVFFdds0XP2twUZx
-        jHB56GLhbNth1SAjEBkbeeKjCnilbdAyF5l/pvd3vIzaGImzpZPqGlJu/b7Nu8Cd
-        ndux+stskIxDTM0zrNzMfMVJ9IRPxR+sT0zIM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=jEbZWMfTq9W/jchgwikguP6v4+/q0FQR
-        X8mywLgwsosA4Rbk1/F2TL1O22KQ4p0cwFUOahTxORL4TwdSg0rp5zhtnqGF4Sbf
-        cc6D0LhzhJPQ/5Cn7cPuYRqpytLTrlfNhI8ZWRvo4+bm7ndgsHkK2ofuBWLZz+PE
-        k8mfRLRipTk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A1718A5EE4;
-        Thu, 25 Mar 2021 18:57:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DC7C0A5EE3;
-        Thu, 25 Mar 2021 18:57:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Li Linchao via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-        dscho <johannes.schindelin@gmx.de>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Li Linchao <lilinchao@oschina.cn>
-Subject: Re: [PATCH v7] builtin/clone.c: add --reject-shallow option
-References: <pull.865.v6.git.1614878345754.gitgitgadget@gmail.com>
-        <pull.865.v7.git.1616670558261.gitgitgadget@gmail.com>
-Date:   Thu, 25 Mar 2021 15:57:19 -0700
-In-Reply-To: <pull.865.v7.git.1616670558261.gitgitgadget@gmail.com> (Li
-        Linchao via GitGitGadget's message of "Thu, 25 Mar 2021 11:09:17
-        +0000")
-Message-ID: <xmqqmtuqu9io.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S231261AbhCYXKA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 25 Mar 2021 19:10:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50914 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230486AbhCYXJp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Mar 2021 19:09:45 -0400
+Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83DEFC06174A
+        for <git@vger.kernel.org>; Thu, 25 Mar 2021 16:09:45 -0700 (PDT)
+Received: by mail-io1-xd36.google.com with SMTP id x17so3609600iog.2
+        for <git@vger.kernel.org>; Thu, 25 Mar 2021 16:09:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:reply-to:from:date:message-id
+         :subject:to;
+        bh=SXYGyxVmBgZaECCNeLu0vdtJOktkPvLx3EUIcTgzynI=;
+        b=H5g7PAallpE5yb+C0Oj0fU1CMb9i1KLMD4XSi2H9I88uPm8obKMnzWBHEStRa1ZM0E
+         EF60TCUNeIiK5sr3c2Nqm7V0U9nS+hgwG2Z12Pgl6aqc9lP6w6KDs02X5ZjwUWVEBVqP
+         Wk4vFhaUqj0V0dOIvxgaAO3OmKf885UOjxpIzgJ1e1yKxpVxMuN26la7XwmySyuYGIrj
+         BhninLRXIt5jONtsqaERKx6RVYe5wWtww2jwVvsk5G5QFqDdTcnGOT223aCcNxFmB76R
+         k1tjl7paGZXvfgWLkr8OZG+GSeMlJ08aNQhs3UtRLDqKXx5EEXIzwiC9F2Lp1+TlWXW8
+         YIYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
+         :from:date:message-id:subject:to;
+        bh=SXYGyxVmBgZaECCNeLu0vdtJOktkPvLx3EUIcTgzynI=;
+        b=EHsQMjalnLBo6lcSUnJonZIHHp0XyFTcCZZa/O9QiEWXQ112WnUHwG10Fn82OTpEP2
+         cHIUM6ReudGgmkdJVt0G14pHlnGrzZnjc8E6Q3jvKGfOQ/RgMNsLPI8ZZdexsnXymqOE
+         pau8okfZMONU9ueEb0xet7TeknQnwufKtibCquXyZXBwL51WwK6Xx0U19QxeEpl+iFjH
+         o+4X5MjvspZnxmnzjHOH/5uiLDOQ2F8H4ZdwCyHPriTBV3PgrJg10Kaz1b/b9+DrCdGE
+         sePXgmBLqClZYTZq+pHr4VvZ+cErscEK8vk1n/Q3klaBJNEKF6H0e2FDhHe1Ki368m/I
+         wJag==
+X-Gm-Message-State: AOAM531yvUM2aSNbU1y9mLTpA8+kAFQjlqtyspbu/Cpt+UxVsS6wGlDz
+        TGuq+lq4gYpJHu38OH2DOhdNQUWAW98T2jKCc/acGznsZJY=
+X-Google-Smtp-Source: ABdhPJw9b4KcU99y3O0X/Xbnu7OVs9U+xr/JGDT7Wa1G2L2JliWBlQlhugRhyvcWsIPOHYHFfhwOserHybHs0ihfUV0=
+X-Received: by 2002:a5d:9c50:: with SMTP id 16mr8349524iof.66.1616713784813;
+ Thu, 25 Mar 2021 16:09:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 74974DAA-8DBD-11EB-ACE2-D152C8D8090B-77302942!pb-smtp1.pobox.com
+References: <CAH8yC8mnaEpnw8xCKsyBg0XXsuwhiE10AFXFDBdH2AW0qUP3HQ@mail.gmail.com>
+In-Reply-To: <CAH8yC8mnaEpnw8xCKsyBg0XXsuwhiE10AFXFDBdH2AW0qUP3HQ@mail.gmail.com>
+Reply-To: noloader@gmail.com
+From:   Jeffrey Walton <noloader@gmail.com>
+Date:   Thu, 25 Mar 2021 19:09:19 -0400
+Message-ID: <CAH8yC8nr-zhT-T2UK6q1cvFRzpi0fvyYuh8iydNscEse75X=gA@mail.gmail.com>
+Subject: Re: not ok 47 - log.decorate configuration
+To:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Li Linchao via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Thu, Mar 25, 2021 at 3:57 AM Jeffrey Walton <noloader@gmail.com> wrote:
+>
+> Hi Everyone,
+>
+> I'm testing 2.31.0 tarball on an Apple M1:
+>
+> not ok 47 - log.decorate configuration
+> #
+> #               git log --oneline --no-decorate >expect.none &&
+> #               git log --oneline --decorate >expect.short &&
+> #               git log --oneline --decorate=full >expect.full &&
+> #
+> #               echo "[log] decorate" >>.git/config &&
+> #               git log --oneline >actual &&
+> #               test_cmp expect.short actual &&
+> #
+> #               test_config log.decorate true &&
+> #               git log --oneline >actual &&
+> #               test_cmp expect.short actual &&
+> #               git log --oneline --decorate=full >actual &&
+> #               test_cmp expect.full actual &&
+> #               git log --oneline --decorate=no >actual &&
+> #               test_cmp expect.none actual &&
+> #
+> #               test_config log.decorate no &&
+> #               git log --oneline >actual &&
+> #               test_cmp expect.none actual &&
+> #               git log --oneline --decorate >actual &&
+> #               test_cmp expect.short actual &&
+> #               git log --oneline --decorate=full >actual &&
+> #               test_cmp expect.full actual &&
+> #
+> #               test_config log.decorate 1 &&
+> #               git log --oneline >actual &&
+> #               test_cmp expect.short actual &&
+> #               git log --oneline --decorate=full >actual &&
+> #               test_cmp expect.full actual &&
+> #               git log --oneline --decorate=no >actual &&
+> #               test_cmp expect.none actual &&
+> #
+> #               test_config log.decorate short &&
+> #               git log --oneline >actual &&
+> #               test_cmp expect.short actual &&
+> #               git log --oneline --no-decorate >actual &&
+> #               test_cmp expect.none actual &&
+> #               git log --oneline --decorate=full >actual &&
+> #               test_cmp expect.full actual &&
+> #
+> #               test_config log.decorate full &&
+> #               git log --oneline >actual &&
+> #               test_cmp expect.full actual &&
+> #               git log --oneline --no-decorate >actual &&
+> #               test_cmp expect.none actual &&
+> #               git log --oneline --decorate >actual &&
+> #               test_cmp expect.short actual &&
+> #
+> #               test_unconfig log.decorate &&
+> #               git log --pretty=raw >expect.raw &&
+> #               test_config log.decorate full &&
+> #               git log --pretty=raw >actual &&
+> #               test_cmp expect.raw actual
 
-> @@ -1216,6 +1234,10 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
->  		if (filter_options.choice)
->  			warning(_("--filter is ignored in local clones; use file:// instead."));
->  		if (!access(mkpath("%s/shallow", path), F_OK)) {
-> +			if (reject_shallow)
-> +				die(_("source repository is shallow, reject to clone."));
-> +			else
-> +				warning(_("source repository is shallow."));
+Cancel this. It just tested OK a second time around.
 
-Hmph, is it an improvement to warn() when the user does not mind
-cloning a shallow repository?
-
-	$ git clone --depth=3 $URL clone-1
-	$ git clone file://$(pwd)/clone-1 clone-2
-
-would give us clone-2 that is just as functional as clone-1 is, no?
-clone-1 may be missing objects that is needed far into the past, and
-clone-2 would lack the same set of objects as clone-1 does, but a
-user who is happily using clone-1 would be happy with clone-2 the
-same way, no?
-
-> diff --git a/fetch-pack.c b/fetch-pack.c
-> index fb04a76ca263..72b378449a07 100644
-> --- a/fetch-pack.c
-> +++ b/fetch-pack.c
-> @@ -1129,9 +1129,13 @@ static struct ref *do_fetch_pack(struct fetch_pack_args *args,
->  	if (args->deepen)
->  		setup_alternate_shallow(&shallow_lock, &alternate_shallow_file,
->  					NULL);
-> -	else if (si->nr_ours || si->nr_theirs)
-> +	else if (si->nr_ours || si->nr_theirs) {
-> +		if (args->remote_shallow)
-> +			die(_("source repository is shallow, reject to clone."));
-
-Stopping early before calling get_pack() would significantly reduce
-the overhead, which is good.
-
-> +		else
-> +			warning(_("source repository is shallow."));
-
-The same question on the wisdom of warning here.
-
-> @@ -1498,10 +1502,14 @@ static void receive_shallow_info(struct fetch_pack_args *args,
->  		 * rejected (unless --update-shallow is set); do the same.
->  		 */
->  		prepare_shallow_info(si, shallows);
-> -		if (si->nr_ours || si->nr_theirs)
-> +		if (si->nr_ours || si->nr_theirs) {
-> +			if (args->remote_shallow)
-> +				die(_("source repository is shallow, reject to clone."));
-> +			else
-> +				warning(_("source repository is shallow."));
-
-OK, so, this is the equivalent of the above for protocol-v2?  The
-same comments apply, then.
-
-> diff --git a/t/t5606-clone-options.sh b/t/t5606-clone-options.sh
-> index 428b0aac93fa..2863b8b28d44 100755
-> --- a/t/t5606-clone-options.sh
-> +++ b/t/t5606-clone-options.sh
-> @@ -5,6 +5,8 @@ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
->  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
->  
->  . ./test-lib.sh
-> +. "$TEST_DIRECTORY"/lib-httpd.sh
-> +start_httpd
->  
->  test_expect_success 'setup' '
->  
-> @@ -45,6 +47,51 @@ test_expect_success 'disallows --bare with --separate-git-dir' '
->  
->  '
->  
-> +test_expect_success 'fail to clone http shallow repository' '
-
-s/fail to clone/reject cloning/, perhaps.
-
-> +test_expect_success 'clone shallow repository with --no-reject-shallow' '
-> +	rm -rf shallow-repo &&
-> +	git clone --depth=1 --no-local parent shallow-repo &&
-> +	git clone --no-reject-shallow --no-local shallow-repo clone-repo
-
-OK.  Also without "--no-reject-shallow" option, the command would
-successfully clone from the shallow-repo, I presume?
-
-The changes look more-or-less good to me, except for the "warning()"
-bit, which I do not think is a good idea.
+Jeff
