@@ -2,107 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E0FEC433C1
-	for <git@archiver.kernel.org>; Thu, 25 Mar 2021 06:23:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 82485C433E3
+	for <git@archiver.kernel.org>; Thu, 25 Mar 2021 07:54:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0D92A619C2
-	for <git@archiver.kernel.org>; Thu, 25 Mar 2021 06:23:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5124D619FE
+	for <git@archiver.kernel.org>; Thu, 25 Mar 2021 07:54:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229619AbhCYGXN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 25 Mar 2021 02:23:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58328 "EHLO
+        id S230056AbhCYHxe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 25 Mar 2021 03:53:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229664AbhCYGWm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Mar 2021 02:22:42 -0400
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67282C06174A
-        for <git@vger.kernel.org>; Wed, 24 Mar 2021 23:22:42 -0700 (PDT)
-Received: by mail-pf1-x42d.google.com with SMTP id q5so957588pfh.10
-        for <git@vger.kernel.org>; Wed, 24 Mar 2021 23:22:42 -0700 (PDT)
+        with ESMTP id S230042AbhCYHxR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Mar 2021 03:53:17 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F03C0C061760
+        for <git@vger.kernel.org>; Thu, 25 Mar 2021 00:53:16 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id l18so1313241edc.9
+        for <git@vger.kernel.org>; Thu, 25 Mar 2021 00:53:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=VCKkh/a7na6jxobubZBxQkQ5LmttQ71iMp6VkoO+Ymk=;
-        b=iSX6886D702kLoKbbHEQCHhHicDaPBnJxL0qRCJkgd5uzLPrzeOxjrT4ZsdRmvdZe/
-         em3n8CMQOaC6yXEELCQL+nWh496ifxlhOv4mjuIKbTb+nkRzOQnn9G0MILM+r6UPpVza
-         mapevOnMxYFOQyrWYMmUaYMwoSixlYw8/B0PkoH32hW4zoJRXNjiqF8Oxk74UaNpxTDc
-         nXPHoYAU+8llxyjRWW6xnFgcAIfBvetP4RM2mQlQnmcD8UHeTIgJEtZJ7TChNhUEQtLc
-         Dd5zoiMfucOIitSWhyNYc4apyT9jJQEMB2oK5EQQuxbFZheccMzVXtKXDIa88n4KJUsT
-         TPIw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=XFRD7SAbKAbUNyNdW73s4EjMLMqrQMF2EC/4u1Mq4IA=;
+        b=MDq+SUCrSwEK7+jOJG0YvB0U8JJgsOwCcsFAyI4nDFtygs9vrO8yI/X1TZEp02ERpP
+         VSEjQHPSCz+ila6U2C7ZtM3pLLuVjlidj9X5C4awx9WlEEZ7fNYGXOaO2OqC0yeFblPy
+         YHhaiAroIhjP1r2vVgy+kzU9TjYjTYT4FAOwklh/Fd0Mp+qAav0DCquEHTdMurYfwpPd
+         bHB3mZa3g17dm2DdfO7unAACN5FZq2j3m0hoJFN9ezqHvKqEIy2798GXgaZuJ2bcXqdQ
+         02fOy4NR5a3qe41taWLKs0Lh5V2WgnWYqtDL0amSQfidMNt1GkepcGDpa9y11QGPSYoP
+         5pWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=VCKkh/a7na6jxobubZBxQkQ5LmttQ71iMp6VkoO+Ymk=;
-        b=mD94pXjzac5eA0nVYFP0sAWi3gwVlTk3P4Nw4+CtEW3IJOVhSJWIWj5pulmgit5C9P
-         jynt3gAf6Lv5JyZN4+R5AL3Y3sXRjuxwaDoxKvz7fEnxfgNSMhvP9Kc8E4/yxnN2gE8w
-         3hEQnAed1aKRs4UDPMALyng6JXFHK8+pWEH6FtmSOxwbYOLzkfzfc5h3UI9B8StqNjLl
-         kiUqrfYlG9pWi9ViQDCIb8nvamR8vqKQG1i0Ki/M/5yo7Cyxy4G98ia+dje+pWPFZjX7
-         Sbs5E+zdzSyARca1G4C1INHXHDNsJXtY6pdTJuuTKjbm8xZesNucZqFonq2lue50wW5f
-         a87g==
-X-Gm-Message-State: AOAM533Vg7XhW2j7gRGlLGIsVNhInJWw8Tz10sz9Y4J1hE1W6GQ8Jh0I
-        U2lU9tTx9vw4fa+wZhO43gQ=
-X-Google-Smtp-Source: ABdhPJwx4hG93qkSB5X5iK1WlGyv1YuTPOYDb3VVzg+ZuvNDOwMU2CJuDrDPsJ2Sr4+Se/MMcqTTYA==
-X-Received: by 2002:a63:1266:: with SMTP id 38mr4567598pgs.427.1616653361899;
-        Wed, 24 Mar 2021 23:22:41 -0700 (PDT)
-Received: from [192.168.43.80] (subs32-116-206-28-30.three.co.id. [116.206.28.30])
-        by smtp.gmail.com with ESMTPSA id k5sm4673352pfg.215.2021.03.24.23.22.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 24 Mar 2021 23:22:41 -0700 (PDT)
-Subject: Re: [PATCH 2/2] git-format-patch: Document format for binary patch
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20210324123027.29460-1-bagasdotme@gmail.com>
- <20210324123027.29460-3-bagasdotme@gmail.com> <xmqqa6qszbdv.fsf@gitster.g>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-Message-ID: <678c0fa9-8ae5-f8ae-b93a-3d68c7c11c8f@gmail.com>
-Date:   Thu, 25 Mar 2021 13:22:37 +0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=XFRD7SAbKAbUNyNdW73s4EjMLMqrQMF2EC/4u1Mq4IA=;
+        b=UQE0bcvBiW/yYtFdcguTKL0iD4qKGhmfcrbBwDwN2XL0hf4PEYDry+t8Qett0NrVFE
+         Pm9uv7Fc/WqKEMj0UETyQoktgsIKleSKGSA8+rlw0gNdbvR1SgAlSqkgxTG1VCe2KSZn
+         OcHr++Lkpe01WsLsg8crwu7IzyQhxRTnX/IlNa5YxT85L0G1vcPJEzHNWlcg1arLqGWa
+         y8f2SNUmrLcroAk+w9PpUPUN3b8y1VUpNbLhr7SYWemKZoI3KydyuRBh1XyPp4HpK+h+
+         8sMxE1+xQQcE4l6zJ/cGfrnF7DcbBlTTSg5a+O/j55l+nBxTmCaCBvtHJ8ym5rS05RG2
+         B+6Q==
+X-Gm-Message-State: AOAM530EBSLwNSi4Qde/cLRAKhHLvH1UG+j8BYk50elNbE714SF4j7Yl
+        F6j9DmRwn6rA/lZEmfXXrTbiGVU4bGmcXCjrkk4=
+X-Google-Smtp-Source: ABdhPJzYnFS/vKM09squFRsLZ/YHM2tVnB3I+Gy6YjH6tM29zEtf9HYpZ4OFb5nizm/Rgpzebtr2IfGdgg6WC9N6w8E=
+X-Received: by 2002:a05:6402:48c:: with SMTP id k12mr7628810edv.237.1616658795704;
+ Thu, 25 Mar 2021 00:53:15 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqqa6qszbdv.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <CALz+XyW+XU++58eEYm5=jxTckK-VuuPoA-ecj4QCZw1o44JFUQ@mail.gmail.com>
+ <xmqqczx0sq1o.fsf@gitster.c.googlers.com> <YCwJ8tORQg2Air4r@nand.local>
+ <xmqqmtw3pzu3.fsf@gitster.c.googlers.com> <YCwhPG6RaAhU9ljg@nand.local>
+ <CAP8UFD1QG_b6ax-HodLRRcdLKgWJhPDghjLfjnyan1Zi80en7A@mail.gmail.com> <xmqqsg4l3h32.fsf@gitster.g>
+In-Reply-To: <xmqqsg4l3h32.fsf@gitster.g>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 25 Mar 2021 08:53:04 +0100
+Message-ID: <CAP8UFD0rRff7oCMH=DeTQ-tZw7STLwSHLecWxRr_rQVyHuxJuA@mail.gmail.com>
+Subject: Re: Bug Report: Multi-line trailers containing empty lines break parsing
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, git <git@vger.kernel.org>,
+        Matthias Buehlmann <Matthias.Buehlmann@mabulous.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 25/03/21 00.53, Junio C Hamano wrote:
-> I do not think this is all that useful; it clutters the description
-> for a reader who is not interested in reimplementing an encoder or a
-> decoder from the document.
-> 
-> And it is way too insufficient for a reader who wants to reimplement
-> an encoder or a decoder.  For example,
-> 
->   - It does not say anything about what the delta is and how it is
->     computed.
-> 
->   - The 'z' is redundant; the more important is to say that the first
->     byte signals how many bytes are on that line and it is a mere
->     artifact that we cram up to 52 bytes on a line.
-> 
->   - It does not say anything about how the binary patch ensures that
->     it is reversible (i.e. can be given to "git apply -R").
-> 
-> Thanks.
-> 
-Hmmm...
+On Tue, Mar 23, 2021 at 6:39 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Christian Couder <christian.couder@gmail.com> writes:
+>
+> > So I thought that blank lines should not appear in the trailers. And
+> > if any appears, it means that the trailers should start after the last
+> > blank line.
+>
+> I think that is a good principle to stick to.
+>
+> >> >  - if the second "multi:" trailer did not have the funny blank line
+> >> >    before "_two", the expected output would still be "multi:"
+> >> >    followed by "one two three", iow, the line after the second
+> >> >    "multi: one" is a total no-op?  If we added many more " \n" lines
+> >> >    there, they are all absorbed and ignored?  It somehow feels wrong
+> >>
+> >> That's definitely the outcome of this patch, but I agree it feels wrong.
+> >> I'm not sure that we define the behavior that strictly in
+> >> git-interpret-trailers(1), so we have some wiggle room, I guess.
+> >
+> > Any patch to relax how blank lines and other aspects of trailers
+> > parsing in my opinion should come with some documentation change to
+> > explain what we now accept and what we don't accept, and also tests to
+> > enforce that.
+>
+> OK.  But do we document clearly what we accept and we don't before
+> any change?
 
-I write this patch from "naive" observation of git format-patch's
-behavior when given binary files in the commit.
+Maybe it's not enough, but the doc already has the following:
 
-Perhaps someone which is more familiar in base85 {en,de}coder and binary
-patch in general can write better documentation than what I send here.
+------
+Existing trailers are extracted from the input message by looking for
+a group of one or more lines that (i) is all trailers, or (ii) contains at
+least one Git-generated or user-configured trailer and consists of at
+least 25% trailers.
+The group must be preceded by one or more empty (or whitespace-only) lines.
+The group must either be at the end of the message or be the last
+non-whitespace lines before a line that starts with '---' (followed by a
+space or the end of the line). Such three minus signs start the patch
+part of the message. See also `--no-divider` below.
 
--- 
-An old man doll... just what I always wanted! - Clara
+When reading trailers, there can be whitespaces after the
+token, the separator and the value. There can also be whitespaces
+inside the token and the value. The value may be split over multiple lines with
+each subsequent line starting with whitespace, like the "folding" in RFC 822.
+------
