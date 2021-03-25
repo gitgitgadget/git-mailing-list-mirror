@@ -2,309 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D8EBC433E0
-	for <git@archiver.kernel.org>; Thu, 25 Mar 2021 19:49:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A557EC433C1
+	for <git@archiver.kernel.org>; Thu, 25 Mar 2021 20:02:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 26D2661A39
-	for <git@archiver.kernel.org>; Thu, 25 Mar 2021 19:49:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7C42061A36
+	for <git@archiver.kernel.org>; Thu, 25 Mar 2021 20:02:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229977AbhCYTtW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 25 Mar 2021 15:49:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36096 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229576AbhCYTs5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Mar 2021 15:48:57 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB7E8C06174A
-        for <git@vger.kernel.org>; Thu, 25 Mar 2021 12:48:56 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id c8so3463006wrq.11
-        for <git@vger.kernel.org>; Thu, 25 Mar 2021 12:48:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=/mhlDtWgyzr0SPTD0uwgpoBlXewxPGypcM5mkC9EG24=;
-        b=OzFm1WPfDZJh9qlGjl4eEGwg+a05hqlX7YRxd10fyiAus34pvNSqQTlAWwbpKGG9AB
-         yOfBlNORMbkSU5C2HXKzZek03ruBkuyO563kttBgeEEW3nel/Qwgj+ys89Nuhy2XY1sF
-         6l0vVRcxRHQHMNRjrW+LhwwKect4uAZ/HqnqvNAAcOnG5rvgZWCmD37v38ePmpZySAmu
-         Q5wL+CTkLoVR+UhTHjgiOL9xehErSC0gF8/DsE9IK8RxtCM5zr8EMxy3C9S0gw/zLkOw
-         zg2fUXNcxaH1E3fcUAPjLrE7dw2sVBIzr+swVhQOydP7KVNQT/HvTnQSkVvt8y/ezUFz
-         Dqfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=/mhlDtWgyzr0SPTD0uwgpoBlXewxPGypcM5mkC9EG24=;
-        b=jIAjUDzqpsB6aiqkJzgKxmjJgHLXqMKqao4jU/Uadt8alnJcZ4Y4pos5pKgVhiMrHP
-         Tg3SdhKX2jsAm/bmj5JqCShVa4ILFB4uV2jTiNOZZ25Fb57NJUbX4J5kbxn5xVAv1LJG
-         3xMHHTBkUaMp+Szisd5aEHOiVA1O/r1cM/REnCmBI0TPrWfHTj+mILBV6beoEnmbhA/s
-         FSVwJDntycEeab0tTn7vhcxOt5U5O7U5LUIHDvt9Vi+TDsiI12vcrDc5Pqvvusxpxfiz
-         z+qYbmtKf955tjkldRa3ZMedFddrySrLm3vNLuzjvT5U1Bya4FghOK1gx4u9wznvm6/p
-         FfFQ==
-X-Gm-Message-State: AOAM533Ob9ThyGHhRKP8iRhyaR6mSaT7q4BU++QtE1pVeEtih/FHKBHG
-        PAYGV2NTYe4KBGXbvzx4BFJvE52elq8=
-X-Google-Smtp-Source: ABdhPJx63BKX7WX+y2wqtrUi64g6GEw+lsh+UvaaKNmMHS4eutosVLY5a2mJjVWw5OTTtGr7if1fbQ==
-X-Received: by 2002:adf:f8cd:: with SMTP id f13mr10365593wrq.27.1616701735493;
-        Thu, 25 Mar 2021 12:48:55 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m15sm8308014wrp.96.2021.03.25.12.48.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Mar 2021 12:48:55 -0700 (PDT)
-Message-Id: <pull.915.git.1616701733901.gitgitgadget@gmail.com>
-From:   "Chinmoy via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 25 Mar 2021 19:48:53 +0000
-Subject: [PATCH] cache-tree.c: remove implicit dependency on the_repository
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S230354AbhCYUC1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 25 Mar 2021 16:02:27 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:51971 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230347AbhCYUCO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Mar 2021 16:02:14 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id DB96710E136;
+        Thu, 25 Mar 2021 16:02:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=YzhZRic4hEIA
+        hpVzHTU4Eb+Jf9Y=; b=aCJ1sv27Cho4nAJy0VFuOQPAcFM/iWm/ilEJviPViACg
+        xKeCV+xIfvvBv2C2ggowek1L66omXILHgD+n4rLkCAJ92/DYuh1P2i3uu0VF+ffD
+        v3lQJs2s/vjceyVeiKESSaswpgUCf9Nx8SX6hbxRJ1Vq7jmT1Eg0aN9TKLNftLk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=YRjv0W
+        jXmRxxgN9hykQcGr0QwSY7BV72P90RytPF7n5VibyjSb2J2NknU7n/eb5bvS/Qb4
+        J1PDOQAVB5+mNfNJEjShLR/znmbO7FUChX5xN1vUvqI48T+quItCJ/I3Q+EI9Djk
+        hiagyQR1DNi/h+87lvstR50VpKY4IbncRVj90=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D413010E135;
+        Thu, 25 Mar 2021 16:02:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 1218610E134;
+        Thu, 25 Mar 2021 16:02:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [PATCH] config.c: remove last remnant of GIT_TEST_GETTEXT_POISON
+References: <20210111144740.6092-3-avarab@gmail.com>
+        <patch-1.1-ea968affa8c-20210324T233254Z-avarab@gmail.com>
+        <YFvbE1K2tZ5ych7z@coredump.intra.peff.net>
+        <87ft0kox24.fsf@evledraar.gmail.com>
+Date:   Thu, 25 Mar 2021 13:02:09 -0700
+In-Reply-To: <87ft0kox24.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Thu, 25 Mar 2021 02:13:07 +0100")
+Message-ID: <xmqqv99fuhmm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Chinmoy <chinmoy12c@gmail.com>,
-        Chinmoy Chakraborty <chinmoy12c@gmail.com>
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: FC3C6024-8DA4-11EB-A119-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Chinmoy Chakraborty <chinmoy12c@gmail.com>
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-This kills the_repository dependency in cache_tree_update(),
-but for unpack_trees(), they still assume the_repository
-(which also means the_index).
+>>> diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+>>> index e0dd5d65ced..2280c2504ac 100755
+>>> --- a/t/t1300-config.sh
+>>> +++ b/t/t1300-config.sh
+>>> @@ -679,7 +679,7 @@ test_expect_success 'invalid unit boolean' '
+>>>  	git config commit.gpgsign "1true" &&
+>>>  	test_cmp_config 1true commit.gpgsign &&
+>>>  	test_must_fail git config --bool --get commit.gpgsign 2>actual &&
+>>> -	test_i18ngrep "bad boolean config value .1true. for .commit.gpgsign=
+." actual
+>>> +	grep "bad boolean config value .1true. for .commit.gpgsign." actual
+>>>  '
+>>
+>> why are we losing test_i18ngrep here? The message is still marked for
+>> translation. I know we've discussed dropping all of the test_i18n
+>> helpers, but that seems unrelated to the rest of the patch.
+>
+> For new tests we're suggesting not to use it, so while I'm holding off
+> on some general s/test_i18ngrep/grep/ refactoring, it seemed natural to
+> adjust the test added by the commit whose code I'm modifying.
 
-Unfortunately the widespread use of unpack_trees() will make
-it hard to make the conversion now.
+It would have been understandable if the proposed log message said
 
-The `update_main_cache_tree()` method uses `cache_tree_update(r, r->index, flags)`.
-`r->index` is easily deduced from `r` but the signature of `cache_tree_update()`
-is not changed to take `struct repository *` instead of `struct index_state *`
-because there can be temporary indexes. Therefore, one might want to update
-the cache tree for an index other than `r->index`.
+    Remove a use of GIT_TEST_GETTEXT_POISON added in f276e2a4694 (config:
+    improve error message for boolean config, 2021-02-11), together with
+    a new test added.
 
-Signed-off-by: Chinmoy Chakraborty <chinmoy12c@gmail.com>
----
-    Replace the_repository with r
-    
-    There are multiple files that try to reference the repository and
-    the_index directly. To follow a more object-oriented convention these
-    references should be replaced with r and index and passed through
-    functions.
-    
-    Signed-off-by: Chinmoy Chakraborty chinmoy12c@gmail.com
-    
-    
-    Related issue
-    =============
-    
-    #379
+and removed the test.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-915%2Fchinmoy12c%2Fissue_379-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-915/chinmoy12c/issue_379-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/915
+But the test still has value for the remaining codebase, just like
+all the other tests that happen to use test_i18n{grep,cmp}.  In a
+sense, the original mixed two separate things into one commit
+(i.e. use of TEST_GETTEXT_POISON to decide if the message given to
+die() is localized, and a test to see how "git config --bool --get"
+behaves when a malformed boolean value is given), and that may have
+been justifiable back in the world where GETTEXT_POISON was a thing,
+making these two things closely interrelated.  Since we left that
+world behind, I think we should treat them as two separate things.
 
- builtin/checkout.c              |  3 ++-
- cache-tree.c                    | 12 ++++++------
- cache-tree.h                    |  6 ++++--
- sequencer.c                     |  6 +++---
- t/helper/test-dump-cache-tree.c |  2 +-
- unpack-trees.c                  | 14 ++++++++------
- 6 files changed, 24 insertions(+), 19 deletions(-)
+In short, I do not think "The C code we are removing was added in
+the same commit" is a good excuse for this "while at it" change.
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 2d6550bc3c86..3bc630ef64e7 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -684,6 +684,7 @@ static int merge_working_tree(const struct checkout_opts *opts,
- 	int ret;
- 	struct lock_file lock_file = LOCK_INIT;
- 	struct tree *new_tree;
-+	struct repository *r = the_repository;
- 
- 	hold_locked_index(&lock_file, LOCK_DIE_ON_ERROR);
- 	if (read_cache_preload(NULL) < 0)
-@@ -822,7 +823,7 @@ static int merge_working_tree(const struct checkout_opts *opts,
- 	}
- 
- 	if (!cache_tree_fully_valid(active_cache_tree))
--		cache_tree_update(&the_index, WRITE_TREE_SILENT | WRITE_TREE_REPAIR);
-+		cache_tree_update(r, r->index, WRITE_TREE_SILENT | WRITE_TREE_REPAIR);
- 
- 	if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
- 		die(_("unable to write new index file"));
-diff --git a/cache-tree.c b/cache-tree.c
-index add1f0771317..7ce33dc87cf7 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -433,7 +433,7 @@ static int update_one(struct cache_tree *it,
- 	return i;
- }
- 
--int cache_tree_update(struct index_state *istate, int flags)
-+int cache_tree_update(struct repository *r, struct index_state *istate, int flags)
- {
- 	int skip, i;
- 
-@@ -446,10 +446,10 @@ int cache_tree_update(struct index_state *istate, int flags)
- 		istate->cache_tree = cache_tree();
- 
- 	trace_performance_enter();
--	trace2_region_enter("cache_tree", "update", the_repository);
-+	trace2_region_enter("cache_tree", "update", r);
- 	i = update_one(istate->cache_tree, istate->cache, istate->cache_nr,
- 		       "", 0, &skip, flags);
--	trace2_region_leave("cache_tree", "update", the_repository);
-+	trace2_region_leave("cache_tree", "update", r);
- 	trace_performance_leave("cache_tree_update");
- 	if (i < 0)
- 		return i;
-@@ -638,7 +638,7 @@ static int write_index_as_tree_internal(struct object_id *oid,
- 		cache_tree_valid = 0;
- 	}
- 
--	if (!cache_tree_valid && cache_tree_update(index_state, flags) < 0)
-+	if (!cache_tree_valid && cache_tree_update(the_repository, index_state, flags) < 0)
- 		return WRITE_TREE_UNMERGED_INDEX;
- 
- 	if (prefix) {
-@@ -746,13 +746,13 @@ void prime_cache_tree(struct repository *r,
- 		      struct index_state *istate,
- 		      struct tree *tree)
- {
--	trace2_region_enter("cache-tree", "prime_cache_tree", the_repository);
-+	trace2_region_enter("cache-tree", "prime_cache_tree", r);
- 	cache_tree_free(&istate->cache_tree);
- 	istate->cache_tree = cache_tree();
- 
- 	prime_cache_tree_rec(r, istate->cache_tree, tree);
- 	istate->cache_changed |= CACHE_TREE_CHANGED;
--	trace2_region_leave("cache-tree", "prime_cache_tree", the_repository);
-+	trace2_region_leave("cache-tree", "prime_cache_tree", r);
- }
- 
- /*
-diff --git a/cache-tree.h b/cache-tree.h
-index 8efeccebfc9f..80cc38f176c2 100644
---- a/cache-tree.h
-+++ b/cache-tree.h
-@@ -33,7 +33,7 @@ void cache_tree_write(struct strbuf *, struct cache_tree *root);
- struct cache_tree *cache_tree_read(const char *buffer, unsigned long size);
- 
- int cache_tree_fully_valid(struct cache_tree *);
--int cache_tree_update(struct index_state *, int);
-+int cache_tree_update(struct repository *, struct index_state *, int);
- void cache_tree_verify(struct repository *, struct index_state *);
- 
- /* bitmasks to write_index_as_tree flags */
-@@ -62,9 +62,11 @@ static inline int write_cache_as_tree(struct object_id *oid, int flags, const ch
- 
- static inline int update_main_cache_tree(int flags)
- {
-+	struct repository *r = the_repository;
-+
- 	if (!the_index.cache_tree)
- 		the_index.cache_tree = cache_tree();
--	return cache_tree_update(&the_index, flags);
-+	return cache_tree_update(r, r->index, flags);
- }
- #endif
- 
-diff --git a/sequencer.c b/sequencer.c
-index 848204d3dc3f..dee2d2aac5d6 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -677,10 +677,10 @@ static int do_recursive_merge(struct repository *r,
- 	return !clean;
- }
- 
--static struct object_id *get_cache_tree_oid(struct index_state *istate)
-+static struct object_id *get_cache_tree_oid(struct repository *r, struct index_state *istate)
- {
- 	if (!cache_tree_fully_valid(istate->cache_tree))
--		if (cache_tree_update(istate, 0)) {
-+		if (cache_tree_update(r, istate, 0)) {
- 			error(_("unable to update cache tree"));
- 			return NULL;
- 		}
-@@ -710,7 +710,7 @@ static int is_index_unchanged(struct repository *r)
- 	if (parse_commit(head_commit))
- 		return -1;
- 
--	if (!(cache_tree_oid = get_cache_tree_oid(istate)))
-+	if (!(cache_tree_oid = get_cache_tree_oid(r, istate)))
- 		return -1;
- 
- 	return oideq(cache_tree_oid, get_commit_tree_oid(head_commit));
-diff --git a/t/helper/test-dump-cache-tree.c b/t/helper/test-dump-cache-tree.c
-index 6a3f88f5f5d4..e6d57f9900f6 100644
---- a/t/helper/test-dump-cache-tree.c
-+++ b/t/helper/test-dump-cache-tree.c
-@@ -64,6 +64,6 @@ int cmd__dump_cache_tree(int ac, const char **av)
- 		die("unable to read index file");
- 	istate = the_index;
- 	istate.cache_tree = another;
--	cache_tree_update(&istate, WRITE_TREE_DRY_RUN);
-+	cache_tree_update(the_repository, &istate, WRITE_TREE_DRY_RUN);
- 	return dump_cache_tree(active_cache_tree, another, "");
- }
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 9af8e796b338..54bf9a7300b8 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -1574,12 +1574,13 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
- 	static struct cache_entry *dfc;
- 	struct pattern_list pl;
- 	int free_pattern_list = 0;
-+	struct repository *r = the_repository;
- 
- 	if (len > MAX_UNPACK_TREES)
- 		die("unpack_trees takes at most %d trees", MAX_UNPACK_TREES);
- 
- 	trace_performance_enter();
--	trace2_region_enter("unpack_trees", "unpack_trees", the_repository);
-+	trace2_region_enter("unpack_trees", "unpack_trees", r);
- 
- 	if (!core_apply_sparse_checkout || !o->update)
- 		o->skip_sparse_checkout = 1;
-@@ -1654,9 +1655,9 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
- 		}
- 
- 		trace_performance_enter();
--		trace2_region_enter("unpack_trees", "traverse_trees", the_repository);
-+		trace2_region_enter("unpack_trees", "traverse_trees", r);
- 		ret = traverse_trees(o->src_index, len, t, &info);
--		trace2_region_leave("unpack_trees", "traverse_trees", the_repository);
-+		trace2_region_leave("unpack_trees", "traverse_trees", r);
- 		trace_performance_leave("traverse_trees");
- 		if (ret < 0)
- 			goto return_failed;
-@@ -1724,9 +1725,10 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
- 		move_index_extensions(&o->result, o->src_index);
- 		if (!ret) {
- 			if (git_env_bool("GIT_TEST_CHECK_CACHE_TREE", 0))
--				cache_tree_verify(the_repository, &o->result);
-+				cache_tree_verify(r, &o->result);
- 			if (!cache_tree_fully_valid(o->result.cache_tree))
--				cache_tree_update(&o->result,
-+				cache_tree_update(r,
-+						  &o->result,
- 						  WRITE_TREE_SILENT |
- 						  WRITE_TREE_REPAIR);
- 		}
-@@ -1742,7 +1744,7 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
- done:
- 	if (free_pattern_list)
- 		clear_pattern_list(&pl);
--	trace2_region_leave("unpack_trees", "unpack_trees", the_repository);
-+	trace2_region_leave("unpack_trees", "unpack_trees", r);
- 	trace_performance_leave("unpack_trees");
- 	return ret;
- 
+Putting it another way, imagine back then there was the t1300 test
+and there was no die_bad_bool().  The test may have been expecting
+"bad numeric" or "invalid unit", with grep (with a known bug that
+the test would not pass under GETTEXT_POISON).
 
-base-commit: 142430338477d9d1bb25be66267225fb58498d92
--- 
-gitgitgadget
+In such an alternative past, the change you are reverting may have
+been only to config.c to make the die(_()) work correctly with
+GETTEXT_POISON, and turned grep to test_i18ngrep.  And your "we are
+reverting the whole commit" may have made more sense.
+
+But we are not living in such an alternative world.
+
+Having said all that, I do not particularly care when, in which
+exact commit, a use of test_i18n* in t/ among 1100+ of them lost
+its i18n-ness (it just felt a bit out of place in this particular
+commit, that's all).
+
+Thanks.
