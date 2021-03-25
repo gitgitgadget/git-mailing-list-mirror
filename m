@@ -2,166 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4FC0EC433E1
-	for <git@archiver.kernel.org>; Thu, 25 Mar 2021 10:24:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9DD2C433C1
+	for <git@archiver.kernel.org>; Thu, 25 Mar 2021 10:56:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 01DBE61A27
-	for <git@archiver.kernel.org>; Thu, 25 Mar 2021 10:24:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A2EB761A27
+	for <git@archiver.kernel.org>; Thu, 25 Mar 2021 10:56:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230147AbhCYKXm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 25 Mar 2021 06:23:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54012 "EHLO
+        id S230250AbhCYKza (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 25 Mar 2021 06:55:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230156AbhCYKXZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Mar 2021 06:23:25 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76A8BC06174A
-        for <git@vger.kernel.org>; Thu, 25 Mar 2021 03:23:24 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id c8so1682200wrq.11
-        for <git@vger.kernel.org>; Thu, 25 Mar 2021 03:23:24 -0700 (PDT)
+        with ESMTP id S230306AbhCYKzB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Mar 2021 06:55:01 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB655C06174A
+        for <git@vger.kernel.org>; Thu, 25 Mar 2021 03:55:01 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id s21so882017pjq.1
+        for <git@vger.kernel.org>; Thu, 25 Mar 2021 03:55:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=7Ql/rxzkmkcs8FV1o735Sm62HWeS6s3XmCyGFw2GbTI=;
-        b=qrSDYRXW4fIChJ5eS4gWOezbnqTdkpk7xzT6/vfvYDOdSYU6ugsFD6m3GPxcutHaYM
-         5nngg77K17IhBqwpw6OewLcrlXW/nWqjE2ByHj/vGAPDG8lllvjHLB85ucpjrKBh13Ya
-         s5/lFGBs6f9SJXuD1M4ec2Sy/tJj/r0+kaadeelwDRKURIFeVrWsVc9dH7yG56tqOR2m
-         jp3Iu2RunZmis7quQUDkjuwnb6q2js8mnR9pxMjAqMmxiJsCEQ1U6w8jwBcU8FdA7XUX
-         AjI1al2rBBuw//dBEYaHUD5ikQ5XTghu/AS2mLrG67DWUzpgHUg7Dt9pmWdQ7Ke78DK5
-         aI2Q==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=jic6PqGnWmiycsInb3CXyEQ090je9Xoy1b/7O1SET68=;
+        b=VD1SgOgGPrvN2rRsyvI9at154EkQyGT0g7TJqQg7eRyaAZBAfnT8kETJm3TGby2Gy2
+         zMRiG5YfxvSc5OTKK270mSV6ca7BvEEWiYvnEP4mvNVSf3Kd0huad86rupNRLMUUiHvt
+         3YBjy8PC1lBOcwezPLmzPNWqof8W3wTBu5Vj8EoJxAhxG/3f+I40sRQvTy9m5r6XjNGN
+         vQIh1OGvV/4TvN2LPvmxf9CAWQU1coNDOFjENrbzPGrHas+/94WOmgfAKCPzthgXReTD
+         jql0i/OemOvoJ9VV5BBkj4aAroWml+1vK1fx/e3ISnkxeN/F+lpzeTN317M/X/UlUzZR
+         65IA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=7Ql/rxzkmkcs8FV1o735Sm62HWeS6s3XmCyGFw2GbTI=;
-        b=B7QAqqep3ObTwJ9aNsrDrLqwwogjhCOHoEhDaLdOYndV3IlaaVldN0F4DS4taALL6r
-         /VURm+b+45pO8hPs/FILSjqI2FcM2fSullCh4H6Iy0mwbEv0by3EsKIs/mtbw0CPWQdO
-         z1zbcjTNRPvDqsUUzS78sXhvw6AcqIcdJbVpzugG0/K9kdKLuZV6awIzs4okU+JFh9dN
-         +yL/sufJ0Ym/1t6xozI/9rAFBgHnNr/eSe1DkRbb73ssVv6sizpKIEyj3hiZ5sN9zZFj
-         KrxYahuVMu7KcQ1VKwnpSm4vjlK0DEwY9IPcpPeEGLEHaRxpNyRckyogWWxVZO06i3HQ
-         iHPA==
-X-Gm-Message-State: AOAM531brK7aOtwueB2hX8eqNeTYeUCYF1rKXxBijbqytC1edS7L14jM
-        /orb0jToJRhIkmZOCashGvwVfQLbr8eKElXwN60=
-X-Google-Smtp-Source: ABdhPJw4KsG8Rn87+KCV3t0Q1UdJNARvKhyXQ7K8XGQyruw+ZWmqyq0jNWgUsh88fu7FZ8oSv03hpg==
-X-Received: by 2002:a5d:404d:: with SMTP id w13mr8106209wrp.230.1616667802806;
-        Thu, 25 Mar 2021 03:23:22 -0700 (PDT)
-Received: from localhost.localdomain ([2a02:85f:2a0a:9300:501f:ca6d:3b18:1e72])
-        by smtp.googlemail.com with ESMTPSA id k13sm7633376wri.27.2021.03.25.03.23.21
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=jic6PqGnWmiycsInb3CXyEQ090je9Xoy1b/7O1SET68=;
+        b=hy5jnrFwq5HwPVWeNe2wcsS1sGpaIbsMLWrQttx5TvyFBXKnVpzlXp0gg0wY/6Uybq
+         Rb+Q7Qlp5z06dKlW0zCMxGe319+yLE2BE9ZqPhxKS6kCkZXaZjnB9Fj9ETdCy2LLvoL6
+         /Eiov67VcA8PMzDARnkDxQHa3W3qo5IEQDx2tV1BD4/pJwtBU5eomSfozLbUoEvdfwPK
+         hZEyjXrZG0jnGTq9hDXb9I+n1dgUOA+28vPmYeYv2vDWo8pnAtqM3kpLBQqyfHzhYSAj
+         oORGLiuhhY8dbcKvdiesI8EajXMTRT+4hxAZFhrsK3eE/O58uYjsrWuORBxmlKfPdKi9
+         XrUQ==
+X-Gm-Message-State: AOAM532Q1DJBoXDj/6Q8rEGOpa4EhLmUgkVQdPowej3Q8oGyAjrvdGub
+        6lyUI4GYhnD5bxc5wUsFBTqpxvhVBr1Hvg==
+X-Google-Smtp-Source: ABdhPJysF7PiBE+Vfq3YovkQI30g8340gtSy4TBuZOb/AVB/HBubERKKWsFS214y2QrK18AlIPfyKg==
+X-Received: by 2002:a17:90a:4d07:: with SMTP id c7mr8277936pjg.104.1616669701190;
+        Thu, 25 Mar 2021 03:55:01 -0700 (PDT)
+Received: from ubuntu.mate (subs32-116-206-28-39.three.co.id. [116.206.28.39])
+        by smtp.gmail.com with ESMTPSA id p1sm5420067pfn.22.2021.03.25.03.54.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Mar 2021 03:23:22 -0700 (PDT)
-From:   =?UTF-8?q?=CE=A3=CF=84=CE=B1=CF=8D=CF=81=CE=BF=CF=82=20=CE=9D=CF=84=CE=AD=CE=BD=CF=84=CE=BF=CF=82?= 
-        <stdedos@gmail.com>
-To:     git <git@vger.kernel.org>
-Cc:     =?UTF-8?q?=CE=A3=CF=84=CE=B1=CF=8D=CF=81=CE=BF=CF=82=20=CE=9D=CF=84=CE=AD=CE=BD=CF=84=CE=BF=CF=82?= 
-        <stdedos@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>,
-        Stavros Ntentos <133706+stdedos@users.noreply.github.com>
-Subject: [PATCH v1 1/1] pathspec: warn for a no-glob entry that contains `**`
-Date:   Thu, 25 Mar 2021 12:22:28 +0200
-Message-Id: <20210325102228.14901-2-stdedos@gmail.com>
-X-Mailer: git-send-email 2.31.0
-In-Reply-To: <20210325102228.14901-1-stdedos@gmail.com>
-References: <xmqqft1iquka.fsf@gitster.g>
- <20210325102228.14901-1-stdedos@gmail.com>
+        Thu, 25 Mar 2021 03:55:00 -0700 (PDT)
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] format-patch: give an overview of what a "patch" message is
+Date:   Thu, 25 Mar 2021 17:54:34 +0700
+Message-Id: <20210325105433.43310-1-bagasdotme@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Stavros Ntentos <133706+stdedos@users.noreply.github.com>
+The text says something called a "patch" is prepared one for each
+commit, it is suitable for e-mail submission, and "am" is the
+command to use it, but does not say what the "patch" really is.  The
+description in the page also refers to "three-dash" line, but that
+is totally unclear unless the reader is given a more detailed
+overview of what the "patch" the first paragraph refers to.
 
-If a pathspec is given that contains `**`, chances are that someone is
-naively expecting that it will do what the manual has told him that `**`
-will match (i.e. 0-or-more directories).
-
-However, without an explicit `:(glob)` magic, that will fall out the sky:
-the two `**` will merge into one star, which surrounded by slashes, will
-match any directory name.
-
-These changes attempt to bring awareness to this issue.
-
-Signed-off-by: Stavros Ntentos <133706+stdedos@users.noreply.github.com>
+Co-authored-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
 ---
- pathspec.c                 | 13 +++++++++++++
- pathspec.h                 |  1 +
- t/t6130-pathspec-noglob.sh | 13 +++++++++++++
- 3 files changed, 27 insertions(+)
 
-diff --git a/pathspec.c b/pathspec.c
-index 7a229d8d22..9b5066d9d9 100644
---- a/pathspec.c
-+++ b/pathspec.c
-@@ -1,3 +1,4 @@
-+#include <string.h>
- #include "cache.h"
- #include "config.h"
- #include "dir.h"
-@@ -588,6 +589,8 @@ void parse_pathspec(struct pathspec *pathspec,
+This patch is from discussion on [1]. Junio said that rather than
+add a new section describing the format of format-patch generated
+patches, extend the first paragraph of Description to better
+reflect that format.
+
+[1]: https://lore.kernel.org/git/xmqqeeg4zbyz.fsf@gitster.g/
+
+ Documentation/git-format-patch.txt | 21 +++++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index 3e49bf2210..5cd8578b6f 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -36,11 +36,28 @@ SYNOPSIS
+ DESCRIPTION
+ -----------
  
- 		init_pathspec_item(item + i, flags, prefix, prefixlen, entry);
+-Prepare each commit with its patch in
+-one file per commit, formatted to resemble UNIX mailbox format.
++Prepare each commit with its "patch" in
++one "message" per commit, formatted to resemble a UNIX mailbox.
+ The output of this command is convenient for e-mail submission or
+ for use with 'git am'.
  
-+		check_missing_glob(entry, item[i].magic);
++A "message" generated by the command consists of three parts:
 +
- 		if (item[i].magic & PATHSPEC_EXCLUDE)
- 			nr_exclude++;
- 		if (item[i].magic & magic_mask)
-@@ -739,3 +742,13 @@ int match_pathspec_attrs(const struct index_state *istate,
++* A brief metadata header that begins with `From <commit>`
++  with a fixed `Mon Sep 17 00:00:00 2001` datestamp to help programs
++  like "file(1)" to recognize that the file is an output from this
++  command, fields that record the author identity, the author date,
++  and the title of the change (taken from the first paragraph of the
++  commit log message).
++
++* The second and subsequent paragraphs of the commit log message.
++
++* The "patch", which is the "diff -p --stat" output (see
++  linkgit:git-diff[1]) between the commit and its parent.
++
++The log message and the patch is separated by a line with a
++three-dash line.
++
+ There are two ways to specify which commits to operate on.
  
- 	return 1;
- }
-+
-+void check_missing_glob(const char *entry, int flags) {
-+	if (flags & (PATHSPEC_GLOB | PATHSPEC_LITERAL)) {
-+		return;
-+	}
-+
-+	if (strstr(entry, "**")) {
-+		warning(_("Pathspec provided contains `**`, but no :(glob) magic.\n\tIt will not match 0 or more directories!"));
-+	}
-+}
-diff --git a/pathspec.h b/pathspec.h
-index 454ce364fa..913518ebd3 100644
---- a/pathspec.h
-+++ b/pathspec.h
-@@ -157,5 +157,6 @@ char *find_pathspecs_matching_against_index(const struct pathspec *pathspec,
- int match_pathspec_attrs(const struct index_state *istate,
- 			 const char *name, int namelen,
- 			 const struct pathspec_item *item);
-+void check_missing_glob(const char* pathspec_entry, int flags);
- 
- #endif /* PATHSPEC_H */
-diff --git a/t/t6130-pathspec-noglob.sh b/t/t6130-pathspec-noglob.sh
-index ba7902c9cd..1cd5efef5a 100755
---- a/t/t6130-pathspec-noglob.sh
-+++ b/t/t6130-pathspec-noglob.sh
-@@ -157,4 +157,17 @@ test_expect_success '**/ does not work with :(literal) and --glob-pathspecs' '
- 	test_must_be_empty actual
- '
- 
-+cat > expected <<"EOF"
-+warning: Pathspec provided contains `**`, but no glob magic.
-+EOF
-+test_expect_success '** without :(glob) warns of lacking glob magic' '
-+	test_might_fail git stash -- "**/bar" 2>warns &&
-+	grep -Ff expected warns
-+'
-+
-+test_expect_success '** with    :(literal) does not warn of lacking glob magic' '
-+	test_might_fail git stash -- ":(literal)**/bar" 2>warns &&
-+	! grep -Ff expected warns
-+'
-+
- test_done
+ 1. A single commit, <since>, specifies that the commits leading
 -- 
-2.31.0
+2.25.1
 
