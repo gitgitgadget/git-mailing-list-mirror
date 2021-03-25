@@ -2,526 +2,275 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 12A37C433E2
-	for <git@archiver.kernel.org>; Thu, 25 Mar 2021 11:54:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DA6D0C433C1
+	for <git@archiver.kernel.org>; Thu, 25 Mar 2021 11:56:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D1583619EE
-	for <git@archiver.kernel.org>; Thu, 25 Mar 2021 11:54:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 92CDD619FE
+	for <git@archiver.kernel.org>; Thu, 25 Mar 2021 11:56:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230156AbhCYLxc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 25 Mar 2021 07:53:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45276 "EHLO
+        id S230134AbhCYL4O (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 25 Mar 2021 07:56:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229734AbhCYLxY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Mar 2021 07:53:24 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C24F0C06174A
-        for <git@vger.kernel.org>; Thu, 25 Mar 2021 04:53:23 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id v4so1946808wrp.13
-        for <git@vger.kernel.org>; Thu, 25 Mar 2021 04:53:23 -0700 (PDT)
+        with ESMTP id S230419AbhCYLz6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Mar 2021 07:55:58 -0400
+Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A5B7C06175F
+        for <git@vger.kernel.org>; Thu, 25 Mar 2021 04:55:58 -0700 (PDT)
+Received: by mail-ot1-x334.google.com with SMTP id w31-20020a9d36220000b02901f2cbfc9743so1632834otb.7
+        for <git@vger.kernel.org>; Thu, 25 Mar 2021 04:55:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=FJPQ61cJcXyfVDV0AjWyuTg53vLr2wwIY7u8y8djYUE=;
-        b=RizxcSQw6F6q6/SBXl6fwA+q7WK37czoTXfSPKhXq1K5si7uIl/yF0GOzh0T/DdcTp
-         lsyRouqXUtsM2WWNRhh8SFuX5J0Df5dJK6rf2lo8aZitFf0sPeoR1XAmop7wSvrsojb4
-         mImkkVUDQUMxO/sITNV/fa6iVgFwOKX1arr5GarAr3H1XYbz2n9ImyLEHQcstjOMOoUd
-         kW9wSsE01Py8n7SQSIrVbf94f/JRvaQA96wF74azhBTGV9PLkq2CSH2yz02X3M+hhZSh
-         W/0B4N0zJ1/J9BdzSq4Zyb3wO0yKoOr8Aifqr6oz2TsTHT7MTHNJME0+TTUaZ0oFoFPn
-         xVGA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=/Ds8jUcRhYHqoE06sHjGFxf2KdzypXyy+r1WTu0G6Ew=;
+        b=gdA/hbCkUx+PRPU85X0gpnkGHCgWLfG4zEUSHvGCCCnQb+DhNU/YNG3cSl/lSAgc9j
+         7c+zLSAcpanRag7BjqRWVc11v1KWGLN1scMz5uvDprVMUcLNDqnJw+cyxO5qWbxU0CWu
+         klgH7ndBFa6Y3kiAvhwfECla2hsweyrFKXGLn2WT1wd8PPlO33Z1a4YfyANItUEFK+nw
+         gq/RphoLHFcwVXbyph+edBT5X+ZxIfqUL8+wKc91JrNZbPjOf6Orj6nFNSibgKuPtr3n
+         qQtCMDCeck0iVgCmwl/GwtV/LTFViMq6nruevljooqrJ+YbB3rF97hUj5Djdsq7Rt3XD
+         Nszw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=FJPQ61cJcXyfVDV0AjWyuTg53vLr2wwIY7u8y8djYUE=;
-        b=Copd5xOv6jLJtE349j9XFgb44R7+Ge0yWlhHa9RH4HR8rcNdJLQGg+otxWmuzrqHl+
-         7HWwfMAcL3HZDlU+ZjO0uYkh5QKgKUxxkZokkqjlHryu6Syz08amulHOMQTOUpyPkMon
-         y0VaQrQyzSNZJxDRPiwgqM0VPnBtRZLUWDKQ9A3PBw5/8BQ0xD8N9LZ+lzSXQ6HQvNUs
-         r/NtoWvr8UqUO4/ruyltnoL9a36OcoJwvka1P0k+JmYxGD9sgqvk28Of2omEyxWNVXDF
-         TRhe5T1ohXZq7gd+Ad6++6DZSlYSNRW9aTY40B4Ns5fiOtfXUTVsJxF7G9b86kJT6uyn
-         /lBA==
-X-Gm-Message-State: AOAM5323ndjM4ZORT25bRKYrjOut/owo4Th2SdEqO0GYrZoOs7bLnU8q
-        qwUxalIaAyyKp21S/JSRvKJJcTbDRxU=
-X-Google-Smtp-Source: ABdhPJx0NDXshrgeA+7ob1WA/nseW/D4loBEAncyGpGAZxr+V8Ir+lAdn9f9mL0rtjh2WuwEtHG+7g==
-X-Received: by 2002:a5d:6342:: with SMTP id b2mr8460499wrw.421.1616673202471;
-        Thu, 25 Mar 2021 04:53:22 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h9sm6115054wmb.35.2021.03.25.04.53.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Mar 2021 04:53:21 -0700 (PDT)
-Message-Id: <pull.913.v3.git.1616673200809.gitgitgadget@gmail.com>
-In-Reply-To: <pull.913.v2.git.1616600555906.gitgitgadget@gmail.com>
-References: <pull.913.v2.git.1616600555906.gitgitgadget@gmail.com>
-From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 25 Mar 2021 11:53:20 +0000
-Subject: [PATCH v3] [GSOC]trailer: pass arg as positional parameter
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=/Ds8jUcRhYHqoE06sHjGFxf2KdzypXyy+r1WTu0G6Ew=;
+        b=pOZGkWmpGaA8ackNleMaxObw2XxlUnEa0y3keNLDB2hK5YKos1x7lWyKAzG1eqyIhf
+         Se68zVC5wxKYNBgxtMf7xaH6VGMv+X9/DQMAApaQiEdyEg6nAm5U2+wfVyknVE3ABsYv
+         HHxGVgIgJQRDXHhsOO4ZAFZlGSdBAvqk9W2b0WB7KPXPuyRueRpX4NDYmpmkSmogQpDA
+         8GFWr+LDbymZ3DWvLkixXr4jyn0WwfdaIcNQXmI2QIuZ8EHRpmHlyrZRcOUtc098yK1e
+         ueJRcbBNmosxj0FKNkWxyQ6wfDatGgi+iIXVhhRcWHs/8mg2XTmOzdj4/Dyy3SwDb4t7
+         Y86w==
+X-Gm-Message-State: AOAM530fQVc9scfp48p1SsonRtZUsmn8rqwbqAMUdnvmXnlrvlcVW2VF
+        r2MqivQ8wUiFIgJz4kaAVso=
+X-Google-Smtp-Source: ABdhPJxVHxa3QiApflx/pY43vMuDxF0+RYLNILWsmivT6MPd7tqD0Yz2/BJhQlcawzvTL8NPtnSWrg==
+X-Received: by 2002:a05:6830:22c3:: with SMTP id q3mr7198851otc.56.1616673357681;
+        Thu, 25 Mar 2021 04:55:57 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:d03a:8334:249:e6fd? ([2600:1700:e72:80a0:d03a:8334:249:e6fd])
+        by smtp.gmail.com with ESMTPSA id g13sm1296778otq.3.2021.03.25.04.55.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 25 Mar 2021 04:55:57 -0700 (PDT)
+Subject: Re: [PATCH] csum-file: flush less often
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     gitster@pobox.com, peff@peff.net, me@ttaylorr.com,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.914.git.1616608219602.gitgitgadget@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <84ccabca-0bd3-d0cb-6b38-f96d75c0bbd6@gmail.com>
+Date:   Thu, 25 Mar 2021 07:55:55 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <pull.914.git.1616608219602.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-Fcc:    Sent
-To:     git@vger.kernel.org
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        ZheNing Hu <adlternative@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: ZheNing Hu <adlternative@gmail.com>
+On 3/24/2021 1:50 PM, Derrick Stolee via GitGitGadget wrote:
+> From: Derrick Stolee <dstolee@microsoft.com>
 
-Original implementation of `trailer.<token>.command` use
-`strbuf_replace` to replace $ARG in command with the <value>
-of the trailer, but it have a problem: `strbuf_replace`
-replace the $ARG only once, If the user's trailer command
-have used more than one $ARG, the remaining replacement will
-fail.
+Let me walk this back a bit.
 
-If directly modify the implementation of the original
-`trailer.<token>.command`, The user’s previous `'$ARG'` in
-trailer command will not be replaced. So now add new config
-"trailer.<token>.cmd", pass trailer's value as positional
-parameter 1 to the user's command, the user can use $1 as
-trailer's value, to implement original variable replacement.
+> Next, I inspected the buffering code itself, and found an important
+> difference. Specifically, every call to hashwrite() was causing a flush
+> of the filestream, even if it was a very small write. With many callers
+> using helpers like hashwrite_be32() to write integers in network-byte
+> order, this was leading to many more file flushes than necessary.
 
-If the user has these two configuration: "trailer.<token>.cmd"
-and "trailer.<token>.command", "cmd" will execute and "command"
-will not executed.
+This is incorrect. I misinterpreted the logic inside the loop, and I
+later confirmed using trace2 that the number of flushes is the same
+between versions.
 
-Original `trailer.<token>.command` can still be used until git
-completely abandoned it.
+So, what happened with my performance tests?
 
-Signed-off-by: ZheNing Hu <adlternative@gmail.com>
----
-    [GSOC]trailer: pass arg as positional parameter
+> As for performance, I focused on known commands that spend a significant
+> amount of time writing through the hashfile API, especially if using
+> small buffers as in hashwrite_be32(). 'git multi-pack-index write' was
+> an excellent example (deleting the multi-pack-index file between runs)
+> and demonstrated this performance change in the Linux kernal repo:
+...
+> Summary
+>   'new' ran
+>     1.03 ± 0.07 times faster than 'old'
+> 
+> Similarly, the same command on the Git repository gave these numbers:
+...
+> Summary
+>   'new' ran
+>     1.05 ± 0.04 times faster than 'old'
+> 
+> Finally, to demonstrate that performance holds when frequently using
+> large buffers, the numbers below are for 'git pack-objects' packing all
+> objects in the Git repository between v2.30.0 and v2.31.1:
+...
+> Summary
+>   'new' ran
+>     1.03 ± 0.06 times faster than 'old'
+>
+> With these consistent improvements of 3-5%, ...
+
+These numbers seems consistent, across repos and test commands. They
+seem to be the inverse of the slowdown I was seeing in the index
+refactor. These caused me to use confirmation bias to assume I had
+done something clever.
+
+I was using hyperfine to run these numbers, with the hope that it
+provides a consistent scenario worthy of testing. I used this command,
+roughly (in a script):
+
+hyperfine \
+        -n "old" "$1 && $OLD_GIT $2 <input" \
+        -n "new" "$1 && $NEW_GIT $2 <input" \
+        --warmup=3 \
+        --min-runs=20
+
+where I would pass some preparatory step as "$1" and the Git commands
+to run as "$2", and have an input file (necessary for the pack-objects
+command).
+
+The first thing I did when confronted with the flush problem was swap
+the order of the "old" and "new" lines, and that caused the performance
+difference to go away, hinting that the number of warmups needed to
+increase. Changing to "--warmup=20" and "--min-runs=50", the change in
+timing went away entirely.
+
+I did the same with my draft changes to the index write code, and that
+caused the 1-2% performance drop go away, too. So, this whole adventure
+was based on a faulty performance test.
+
+But...is there something we could still do here?
+
+My confusion about flushing is mostly due to my error, but upon
+reflection the loop is doing a lot of different things, but most of
+the time we know which behavior we need at the start, in the middle,
+and at the end:
+
+     1. Fill the existing buffer with the beginning of 'buf'. If the
+        hashfile's buffer is full, then flush.
     
-    In https://lore.kernel.org/git/xmqqv99i4ck2.fsf@gitster.g/ Junio and
-    Christian talked about the problem of using strbuf_replace() to replace
-    $ARG.
+     2. Flush sizeof(f->buffer) chunks directly out of 'buf' as long as
+        possible.
     
-    Now pass trailer value as $1 to the trailer command with another
-    trailer.<token>.cmd config.
+     3. Copy the remaining byes out of 'buf' into the hashfile's buffer.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-913%2Fadlternative%2Ftrailer-pass-ARG-env-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-913/adlternative/trailer-pass-ARG-env-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/913
+Here is a rewrite that more explicitly follows this flow:
 
-Range-diff vs v2:
+void hashwrite(struct hashfile *f, const void *buf, unsigned int count)
+{
+	const int full_buffer = sizeof(f->buffer);
+	unsigned left = full_buffer - f->offset;
+	unsigned nr = count > left ? left : count;
 
- 1:  185356d6fc90 ! 1:  b268ecd7b395 [GSOC]trailer: pass arg as positional parameter
-     @@ Metadata
-       ## Commit message ##
-          [GSOC]trailer: pass arg as positional parameter
-      
-     -    In the original implementation of `trailer.<token>.command`,
-     -    use `strbuf_replace` to replace $ARG in the <value> of the
-     -    trailer, but it have a problem: `strbuf_replace` replace the
-     -    $ARG in command only once, If the user's trailer command have
-     -    used more than one $ARG, error will occur.
-     +    Original implementation of `trailer.<token>.command` use
-     +    `strbuf_replace` to replace $ARG in command with the <value>
-     +    of the trailer, but it have a problem: `strbuf_replace`
-     +    replace the $ARG only once, If the user's trailer command
-     +    have used more than one $ARG, the remaining replacement will
-     +    fail.
-      
-          If directly modify the implementation of the original
-          `trailer.<token>.command`, The user’s previous `'$ARG'` in
-     -    trailer command will not be replaced. So now add new
-     -    config "trailer.<token>.cmd", pass trailer's value as
-     -    positional parameter 1 to the user's command, users can
-     -    use $1 as trailer's value, to implement original variable
-     -    replacement.
-     +    trailer command will not be replaced. So now add new config
-     +    "trailer.<token>.cmd", pass trailer's value as positional
-     +    parameter 1 to the user's command, the user can use $1 as
-     +    trailer's value, to implement original variable replacement.
-     +
-     +    If the user has these two configuration: "trailer.<token>.cmd"
-     +    and "trailer.<token>.command", "cmd" will execute and "command"
-     +    will not executed.
-      
-          Original `trailer.<token>.command` can still be used until git
-          completely abandoned it.
-     @@ Documentation/git-interpret-trailers.txt: also be executed for each of these arg
-      +trailer.<token>.cmd::
-      +	Similar to 'trailer.<token>.command'. But the difference is that
-      +	`$1` is used in the command to replace the value of the trailer
-     -+	instead of the original `$ARG`, which means that we can quote the
-     ++	instead of the original `$ARG`, which means that we can pass the
-      +	trailer value multiple times in the command.
-     -+	E.g. `trailer.sign.cmd="test -n \"$1\" && echo \"$1\" || true "`
-     ++	E.g. `git config trailer.sign.cmd "test -n \"$1\" && echo \"$1\" || true "`.
-     ++	If the user has these two configuration: "trailer.<token>.cmd"
-     ++	and "trailer.<token>.command", "cmd" will be executed and "command"
-     ++	will not be executed.
-      +
-       EXAMPLES
-       --------
-     @@ t/t7513-interpret-trailers.sh: test_expect_success 'setup a commit' '
-       	git commit -m "Add file a.txt"
-       '
-       
-     -+test_expect_success 'with cmd using $1' '
-     ++test_expect_success 'with cmd and $1' '
-      +	test_when_finished "git config --unset trailer.fix.cmd" &&
-      +	git config trailer.fix.ifExists "replace" &&
-      +	git config trailer.fix.cmd "test -n \"\$1\" && git log -1 --oneline --format=\"%h (%s)\" \
-     @@ t/t7513-interpret-trailers.sh: test_expect_success 'setup a commit' '
-      +		<complex_message >actual2 &&
-      +	test_cmp expected2 actual2
-      +'
-     ++
-     ++test_expect_success 'cmd takes precedence over command' '
-     ++	test_when_finished "git config --unset trailer.fix.cmd" &&
-     ++	git config trailer.fix.ifExists "replace" &&
-     ++	git config trailer.fix.cmd "test -n \"\$1\" && git log -1 --oneline --format=\"%h (%aN)\" \
-     ++		--abbrev-commit --abbrev=14 \"\$1\" || true" &&
-     ++	git config trailer.fix.command "git log -1 --oneline --format=\"%h (%s)\" \
-     ++		--abbrev-commit --abbrev=14 \$ARG" &&
-     ++	FIXED=$(git log -1 --oneline --format="%h (%aN)" --abbrev-commit --abbrev=14 HEAD) &&
-     ++	cat complex_message_body >expected2 &&
-     ++	sed -e "s/ Z\$/ /" >>expected2 <<-EOF &&
-     ++		Fixes: $FIXED
-     ++		Acked-by= Z
-     ++		Reviewed-by:
-     ++		Signed-off-by: Z
-     ++		Signed-off-by: A U Thor <author@example.com>
-     ++	EOF
-     ++	git interpret-trailers --trailer "review:" --trailer "fix=HEAD" \
-     ++		<complex_message >actual2 &&
-     ++	test_cmp expected2 actual2
-     ++'
-      +
-       test_expect_success 'with command using $ARG' '
-       	git config trailer.fix.ifExists "replace" &&
-     @@ trailer.c: struct conf_info {
-       	char *name;
-       	char *key;
-       	char *command;
-     -+	int is_new_cmd;
-     ++	char *cmd;
-       	enum trailer_where where;
-       	enum trailer_if_exists if_exists;
-       	enum trailer_if_missing if_missing;
-     +@@ trailer.c: static void free_arg_item(struct arg_item *item)
-     + 	free(item->conf.name);
-     + 	free(item->conf.key);
-     + 	free(item->conf.command);
-     ++	free(item->conf.cmd);
-     + 	free(item->token);
-     + 	free(item->value);
-     + 	free(item);
-      @@ trailer.c: static int check_if_different(struct trailer_item *in_tok,
-       	return 1;
-       }
-       
-      -static char *apply_command(const char *command, const char *arg)
-     -+static char *apply_command(const char *command, int is_new_cmd , const char *arg)
-     ++static char *apply_command(const char *command, const char *cmd_, const char *arg)
-       {
-       	struct strbuf cmd = STRBUF_INIT;
-       	struct strbuf buf = STRBUF_INIT;
-     -@@ trailer.c: static char *apply_command(const char *command, const char *arg)
-     + 	struct child_process cp = CHILD_PROCESS_INIT;
-       	char *result;
-       
-     - 	strbuf_addstr(&cmd, command);
-     +-	strbuf_addstr(&cmd, command);
-      -	if (arg)
-      -		strbuf_replace(&cmd, TRAILER_ARG_STRING, arg);
-      -
-     - 	strvec_push(&cp.args, cmd.buf);
-     -+	if (arg) {
-     -+		if (is_new_cmd)
-     +-	strvec_push(&cp.args, cmd.buf);
-     ++	if (cmd_) {
-     ++		strbuf_addstr(&cmd, cmd_);
-     ++		strvec_push(&cp.args, cmd.buf);
-     ++		if (arg)
-      +			strvec_push(&cp.args, arg);
-     -+		else
-     ++	} else if (command) {
-     ++		strbuf_addstr(&cmd, command);
-     ++		strvec_push(&cp.args, cmd.buf);
-     ++		if (arg)
-      +			strbuf_replace(&cmd, TRAILER_ARG_STRING, arg);
-      +	}
-       	cp.env = local_repo_env;
-       	cp.no_stdin = 1;
-       	cp.use_shell = 1;
-     +@@ trailer.c: static char *apply_command(const char *command, const char *arg)
-     + 
-     + static void apply_item_command(struct trailer_item *in_tok, struct arg_item *arg_tok)
-     + {
-     +-	if (arg_tok->conf.command) {
-     ++	if (arg_tok->conf.command || arg_tok->conf.cmd) {
-     + 		const char *arg;
-     + 		if (arg_tok->value && arg_tok->value[0]) {
-     + 			arg = arg_tok->value;
-      @@ trailer.c: static void apply_item_command(struct trailer_item *in_tok, struct arg_item *arg
-       			else
-       				arg = xstrdup("");
-       		}
-      -		arg_tok->value = apply_command(arg_tok->conf.command, arg);
-     -+		arg_tok->value = apply_command(arg_tok->conf.command, arg_tok->conf.is_new_cmd, arg);
-     ++		arg_tok->value = apply_command(arg_tok->conf.command, arg_tok->conf.cmd, arg);
-       		free((char *)arg);
-       	}
-       }
-     +@@ trailer.c: static void duplicate_conf(struct conf_info *dst, const struct conf_info *src)
-     + 	dst->name = xstrdup_or_null(src->name);
-     + 	dst->key = xstrdup_or_null(src->key);
-     + 	dst->command = xstrdup_or_null(src->command);
-     ++	dst->cmd = xstrdup_or_null(src->cmd);
-     + }
-     + 
-     + static struct arg_item *get_conf_item(const char *name)
-      @@ trailer.c: static struct arg_item *get_conf_item(const char *name)
-       	return item;
-       }
-     @@ trailer.c: static struct {
-       	{ "ifexists", TRAILER_IF_EXISTS },
-       	{ "ifmissing", TRAILER_IF_MISSING }
-      @@ trailer.c: static int git_trailer_config(const char *conf_key, const char *value, void *cb)
-     - 	case TRAILER_COMMAND:
-     - 		if (conf->command)
-       			warning(_("more than one %s"), conf_key);
-     -+		conf->is_new_cmd = 0;
-     -+		conf->command = xstrdup(value);
-     -+		break;
-     -+	case TRAILER_CMD:
-     -+		if (conf->command)
-     -+			warning(_("more than one %s"), conf_key);
-     -+		conf->is_new_cmd = 1;
-       		conf->command = xstrdup(value);
-       		break;
-     ++	case TRAILER_CMD:
-     ++		if (conf->cmd)
-     ++			warning(_("more than one %s"), conf_key);
-     ++		conf->cmd = xstrdup(value);
-     ++		break;
-       	case TRAILER_WHERE:
-     + 		if (trailer_set_where(&conf->where, value))
-     + 			warning(_("unknown value '%s' for key '%s'"), value, conf_key);
-     +@@ trailer.c: static void process_command_line_args(struct list_head *arg_head,
-     + 	/* Add an arg item for each configured trailer with a command */
-     + 	list_for_each(pos, &conf_head) {
-     + 		item = list_entry(pos, struct arg_item, list);
-     +-		if (item->conf.command)
-     ++		if (item->conf.cmd || item->conf.command)
-     + 			add_arg_item(arg_head,
-     + 				     xstrdup(token_from_item(item, NULL)),
-     + 				     xstrdup(""),
+	/*
+	 * Initially fill the buffer in a batch until it
+	 * is full, then flush.
+	 */
+	if (f->do_crc)
+		f->crc32 = crc32(f->crc32, buf, nr);
 
+	memcpy(f->buffer + f->offset, buf, nr);
+	f->offset += nr;
+	count -= nr;
+	buf = (char *) buf + nr;
 
- Documentation/git-interpret-trailers.txt | 10 ++++++
- t/t7513-interpret-trailers.sh            | 43 +++++++++++++++++++++++-
- trailer.c                                | 37 ++++++++++++++------
- 3 files changed, 78 insertions(+), 12 deletions(-)
+	if (left == nr)
+		hashflush(f);
 
-diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
-index 96ec6499f001..f796041514bf 100644
---- a/Documentation/git-interpret-trailers.txt
-+++ b/Documentation/git-interpret-trailers.txt
-@@ -252,6 +252,16 @@ also be executed for each of these arguments. And the <value> part of
- these arguments, if any, will be used to replace the `$ARG` string in
- the command.
- 
-+trailer.<token>.cmd::
-+	Similar to 'trailer.<token>.command'. But the difference is that
-+	`$1` is used in the command to replace the value of the trailer
-+	instead of the original `$ARG`, which means that we can pass the
-+	trailer value multiple times in the command.
-+	E.g. `git config trailer.sign.cmd "test -n \"$1\" && echo \"$1\" || true "`.
-+	If the user has these two configuration: "trailer.<token>.cmd"
-+	and "trailer.<token>.command", "cmd" will be executed and "command"
-+	will not be executed.
-+
- EXAMPLES
- --------
- 
-diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
-index 6602790b5f4c..059beec0c0de 100755
---- a/t/t7513-interpret-trailers.sh
-+++ b/t/t7513-interpret-trailers.sh
-@@ -1274,9 +1274,50 @@ test_expect_success 'setup a commit' '
- 	git commit -m "Add file a.txt"
- '
- 
-+test_expect_success 'with cmd and $1' '
-+	test_when_finished "git config --unset trailer.fix.cmd" &&
-+	git config trailer.fix.ifExists "replace" &&
-+	git config trailer.fix.cmd "test -n \"\$1\" && git log -1 --oneline --format=\"%h (%s)\" \
-+		--abbrev-commit --abbrev=14 \"\$1\" || true" &&
-+	FIXED=$(git log -1 --oneline --format="%h (%s)" --abbrev-commit --abbrev=14 HEAD) &&
-+	cat complex_message_body >expected2 &&
-+	sed -e "s/ Z\$/ /" >>expected2 <<-EOF &&
-+		Fixes: $FIXED
-+		Acked-by= Z
-+		Reviewed-by:
-+		Signed-off-by: Z
-+		Signed-off-by: A U Thor <author@example.com>
-+	EOF
-+	git interpret-trailers --trailer "review:" --trailer "fix=HEAD" \
-+		<complex_message >actual2 &&
-+	test_cmp expected2 actual2
-+'
-+
-+test_expect_success 'cmd takes precedence over command' '
-+	test_when_finished "git config --unset trailer.fix.cmd" &&
-+	git config trailer.fix.ifExists "replace" &&
-+	git config trailer.fix.cmd "test -n \"\$1\" && git log -1 --oneline --format=\"%h (%aN)\" \
-+		--abbrev-commit --abbrev=14 \"\$1\" || true" &&
-+	git config trailer.fix.command "git log -1 --oneline --format=\"%h (%s)\" \
-+		--abbrev-commit --abbrev=14 \$ARG" &&
-+	FIXED=$(git log -1 --oneline --format="%h (%aN)" --abbrev-commit --abbrev=14 HEAD) &&
-+	cat complex_message_body >expected2 &&
-+	sed -e "s/ Z\$/ /" >>expected2 <<-EOF &&
-+		Fixes: $FIXED
-+		Acked-by= Z
-+		Reviewed-by:
-+		Signed-off-by: Z
-+		Signed-off-by: A U Thor <author@example.com>
-+	EOF
-+	git interpret-trailers --trailer "review:" --trailer "fix=HEAD" \
-+		<complex_message >actual2 &&
-+	test_cmp expected2 actual2
-+'
-+
- test_expect_success 'with command using $ARG' '
- 	git config trailer.fix.ifExists "replace" &&
--	git config trailer.fix.command "git log -1 --oneline --format=\"%h (%s)\" --abbrev-commit --abbrev=14 \$ARG" &&
-+	git config trailer.fix.command "git log -1 --oneline --format=\"%h (%s)\" \
-+		--abbrev-commit --abbrev=14 \$ARG" &&
- 	FIXED=$(git log -1 --oneline --format="%h (%s)" --abbrev-commit --abbrev=14 HEAD) &&
- 	cat complex_message_body >expected &&
- 	sed -e "s/ Z\$/ /" >>expected <<-EOF &&
-diff --git a/trailer.c b/trailer.c
-index be4e9726421c..634d3f1ff04a 100644
---- a/trailer.c
-+++ b/trailer.c
-@@ -14,6 +14,7 @@ struct conf_info {
- 	char *name;
- 	char *key;
- 	char *command;
-+	char *cmd;
- 	enum trailer_where where;
- 	enum trailer_if_exists if_exists;
- 	enum trailer_if_missing if_missing;
-@@ -127,6 +128,7 @@ static void free_arg_item(struct arg_item *item)
- 	free(item->conf.name);
- 	free(item->conf.key);
- 	free(item->conf.command);
-+	free(item->conf.cmd);
- 	free(item->token);
- 	free(item->value);
- 	free(item);
-@@ -216,18 +218,24 @@ static int check_if_different(struct trailer_item *in_tok,
- 	return 1;
- }
- 
--static char *apply_command(const char *command, const char *arg)
-+static char *apply_command(const char *command, const char *cmd_, const char *arg)
- {
- 	struct strbuf cmd = STRBUF_INIT;
- 	struct strbuf buf = STRBUF_INIT;
- 	struct child_process cp = CHILD_PROCESS_INIT;
- 	char *result;
- 
--	strbuf_addstr(&cmd, command);
--	if (arg)
--		strbuf_replace(&cmd, TRAILER_ARG_STRING, arg);
--
--	strvec_push(&cp.args, cmd.buf);
-+	if (cmd_) {
-+		strbuf_addstr(&cmd, cmd_);
-+		strvec_push(&cp.args, cmd.buf);
-+		if (arg)
-+			strvec_push(&cp.args, arg);
-+	} else if (command) {
-+		strbuf_addstr(&cmd, command);
-+		strvec_push(&cp.args, cmd.buf);
-+		if (arg)
-+			strbuf_replace(&cmd, TRAILER_ARG_STRING, arg);
-+	}
- 	cp.env = local_repo_env;
- 	cp.no_stdin = 1;
- 	cp.use_shell = 1;
-@@ -247,7 +255,7 @@ static char *apply_command(const char *command, const char *arg)
- 
- static void apply_item_command(struct trailer_item *in_tok, struct arg_item *arg_tok)
- {
--	if (arg_tok->conf.command) {
-+	if (arg_tok->conf.command || arg_tok->conf.cmd) {
- 		const char *arg;
- 		if (arg_tok->value && arg_tok->value[0]) {
- 			arg = arg_tok->value;
-@@ -257,7 +265,7 @@ static void apply_item_command(struct trailer_item *in_tok, struct arg_item *arg
- 			else
- 				arg = xstrdup("");
- 		}
--		arg_tok->value = apply_command(arg_tok->conf.command, arg);
-+		arg_tok->value = apply_command(arg_tok->conf.command, arg_tok->conf.cmd, arg);
- 		free((char *)arg);
- 	}
- }
-@@ -430,6 +438,7 @@ static void duplicate_conf(struct conf_info *dst, const struct conf_info *src)
- 	dst->name = xstrdup_or_null(src->name);
- 	dst->key = xstrdup_or_null(src->key);
- 	dst->command = xstrdup_or_null(src->command);
-+	dst->cmd = xstrdup_or_null(src->cmd);
- }
- 
- static struct arg_item *get_conf_item(const char *name)
-@@ -454,8 +463,8 @@ static struct arg_item *get_conf_item(const char *name)
- 	return item;
- }
- 
--enum trailer_info_type { TRAILER_KEY, TRAILER_COMMAND, TRAILER_WHERE,
--			 TRAILER_IF_EXISTS, TRAILER_IF_MISSING };
-+enum trailer_info_type { TRAILER_KEY, TRAILER_COMMAND, TRAILER_CMD,
-+			TRAILER_WHERE, TRAILER_IF_EXISTS, TRAILER_IF_MISSING };
- 
- static struct {
- 	const char *name;
-@@ -463,6 +472,7 @@ static struct {
- } trailer_config_items[] = {
- 	{ "key", TRAILER_KEY },
- 	{ "command", TRAILER_COMMAND },
-+	{ "cmd", TRAILER_CMD },
- 	{ "where", TRAILER_WHERE },
- 	{ "ifexists", TRAILER_IF_EXISTS },
- 	{ "ifmissing", TRAILER_IF_MISSING }
-@@ -542,6 +552,11 @@ static int git_trailer_config(const char *conf_key, const char *value, void *cb)
- 			warning(_("more than one %s"), conf_key);
- 		conf->command = xstrdup(value);
- 		break;
-+	case TRAILER_CMD:
-+		if (conf->cmd)
-+			warning(_("more than one %s"), conf_key);
-+		conf->cmd = xstrdup(value);
-+		break;
- 	case TRAILER_WHERE:
- 		if (trailer_set_where(&conf->where, value))
- 			warning(_("unknown value '%s' for key '%s'"), value, conf_key);
-@@ -708,7 +723,7 @@ static void process_command_line_args(struct list_head *arg_head,
- 	/* Add an arg item for each configured trailer with a command */
- 	list_for_each(pos, &conf_head) {
- 		item = list_entry(pos, struct arg_item, list);
--		if (item->conf.command)
-+		if (item->conf.cmd || item->conf.command)
- 			add_arg_item(arg_head,
- 				     xstrdup(token_from_item(item, NULL)),
- 				     xstrdup(""),
+	/*
+	 * After filling the hashfile's buffer and flushing, take
+	 * batches of full_buffer bytes directly from the input
+	 * buffer.
+	 */
+	while (count >= full_buffer) {
+		if (f->do_crc)
+			f->crc32 = crc32(f->crc32, buf, full_buffer);
 
-base-commit: 142430338477d9d1bb25be66267225fb58498d92
--- 
-gitgitgadget
+		the_hash_algo->update_fn(&f->ctx, buf, full_buffer);
+		flush(f, buf, full_buffer);
+
+		count -= full_buffer;
+		buf = (char *) buf + full_buffer;
+	}
+
+	/*
+	 * Capture any remaining bytes at the end of the input buffer
+	 * into the hashfile's buffer. We do not need to flush because
+	 * count is strictly less than full_buffer here.
+	 */
+	if (count) {
+		if (f->do_crc)
+			f->crc32 = crc32(f->crc32, buf, count);
+
+		memcpy(f->buffer + f->offset, buf, count);
+		f->offset = count;
+	}
+	
+	if (f->base)
+		hashwrite(f->base, buf, count);
+}
+
+With this implementation (and the more robust performance test), the
+performance for pack-objects and index-pack remains constant, but
+there is a slight improvement for 'git multi-pack-index write', which
+is mostly translating data from the pack-indexes into a multi-pack-
+index:
+
+    Using the Git repository:
+    
+    Benchmark #1: old
+      Time (mean ± σ):     270.4 ms ±   6.9 ms    [User: 184.6 ms, System: 38.6 ms]
+      Range (min … max):   258.6 ms … 283.2 ms    50 runs
+    
+    Benchmark #2: new
+      Time (mean ± σ):     265.3 ms ±   6.0 ms    [User: 180.9 ms, System: 37.8 ms]
+      Range (min … max):   257.4 ms … 282.0 ms    50 runs
+    
+    Summary
+      'new' ran
+        1.02 ± 0.03 times faster than 'old'
+    
+    Using the Linux kernel repository:
+    
+    Benchmark #1: old
+      Time (mean ± σ):      2.321 s ±  0.011 s    [User: 1.538 s, System: 0.335 s]
+      Range (min … max):    2.301 s …  2.353 s    50 runs
+    
+    Benchmark #2: new
+      Time (mean ± σ):      2.290 s ±  0.011 s    [User: 1.513 s, System: 0.329 s]
+      Range (min … max):    2.273 s …  2.318 s    50 runs
+    
+    Summary
+      'new' ran
+        1.01 ± 0.01 times faster than 'old'
+
+Again, variance might be at play here, but after running this
+test multiple times, I was never able to see less than 1% reported
+here.
+
+So, I'm of two minds here:
+
+ 1. This is embarassing. I wasted everyone's time for nothing. I can retract
+    this patch.
+
+ 2. This is embarassing. I overstated the problem here. But we might be able
+    to eke out a tiny performance boost here.
+
+I'm open to either. I think we should default to dropping this patch unless
+someone thinks the rewrite above is a better organization of the logic. (I
+can then send a v2 including that version and an updated commit message.)
+
+Thanks,
+-Stolee
+
+P.S. Special thanks to Peff who pointed out my error in private.
