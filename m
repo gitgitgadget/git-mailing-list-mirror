@@ -8,70 +8,68 @@ X-Spam-Status: No, score=-19.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D4993C433DB
-	for <git@archiver.kernel.org>; Thu, 25 Mar 2021 11:01:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 445D6C433E1
+	for <git@archiver.kernel.org>; Thu, 25 Mar 2021 11:04:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8C0EF61A28
-	for <git@archiver.kernel.org>; Thu, 25 Mar 2021 11:01:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 01FB661A31
+	for <git@archiver.kernel.org>; Thu, 25 Mar 2021 11:04:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229989AbhCYLBB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 25 Mar 2021 07:01:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33786 "EHLO
+        id S230231AbhCYLEX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 25 Mar 2021 07:04:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34568 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229716AbhCYLAe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Mar 2021 07:00:34 -0400
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBE9EC06174A
-        for <git@vger.kernel.org>; Thu, 25 Mar 2021 04:00:33 -0700 (PDT)
-Received: by mail-pj1-x1035.google.com with SMTP id il9-20020a17090b1649b0290114bcb0d6c2so2573922pjb.0
-        for <git@vger.kernel.org>; Thu, 25 Mar 2021 04:00:33 -0700 (PDT)
+        with ESMTP id S229788AbhCYLEQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Mar 2021 07:04:16 -0400
+Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C94E2C06174A
+        for <git@vger.kernel.org>; Thu, 25 Mar 2021 04:04:14 -0700 (PDT)
+Received: by mail-pf1-x42f.google.com with SMTP id c17so1674766pfn.6
+        for <git@vger.kernel.org>; Thu, 25 Mar 2021 04:04:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=CBtRcZbieH/K8AMB3UtVcE9RaRr8gyIjxydCfXufZRw=;
-        b=P+MORVxQI9PQAQPAKUcptCcVD25m18G2V1/9w866KJnJrlItf0FsLf+HWj6ppAgEWV
-         bZaIW0gdthjR6OtbT0gQaAWWESX0+zUDuB9Bq/HqfMn9OVuNMRCWdHVTrlfTkQGAsm5E
-         Msb3VDC7NTlvRH+J1FIYIGfQB4s6ezEhYm9JT8WxXYidRhFrwLXgS3QvMjyGQKOuVXNf
-         iQAlbcWnYKcIWLl735XD4rB3gxhtjcC5zCnXX7CFB6Pdf4JsHHtEfRV78uCBTfDZ2vwv
-         uPDi3YPn2mw7m4OnZYuNgoB+7Hp+/SjcDMs8QiJrkocs8sgAEPBx6NeJMQn7w5qEPX17
-         7FlA==
+        bh=MXdgl4sGCtpeqkU0oFf+aQcnEqApRk5BPIOm1oT4Eys=;
+        b=jfyKZFTljo+DOhdfXWw9ev8DfhL4YihLRvfmj/AvveogieeLe5c2lzhaYgzjLPaNTu
+         n8L5z/3PD5qT4wpZC3m0NvRXGa9xalP7EZUWMBKBeTkvhKke4HeR8+ez23qvK+rXKEAs
+         iFTbWbi5gpJz0mRrmVkyDAx4oTtE190w6Od85dtMzCOcERTREd/jxzvitMx1eikpoPzi
+         S2mM7A4UynTpJRAVRte0P+wRecEWK3/SILd+4P6mnO5NlViX5SwCVKo461UAUZ8Dfryc
+         Bj/cHycHBucV8yEq941F9/YQ9jar6kNlZfOvl6jgedzzzLWmFMiIhHeK9PXCg8/6/+3y
+         2mlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=CBtRcZbieH/K8AMB3UtVcE9RaRr8gyIjxydCfXufZRw=;
-        b=jGfJJNKns879U60VjYv313FRdWZH1TIqlVoDvJXiunF0o/VEZtvqZyaFQZDOnpTWlS
-         QLb2tjTc56T4JRivD/+C1xRC/7Cs9z7qFGjOn1L0y6lIHym0IVJx0qCN/liNQBjY5vtt
-         B/crqfkpgx+GsmtIwU5kiDGLNgaQSwwd4swPvgF4xinoyUEQdZtgYSlBVQAvQRUuEI8I
-         KABPuhqjm0LsS3/57RoKAl1t5NQM8xb0v+dx63moZo3t9BzddUINoYcgb6Tj3wXBC94m
-         exhs+HnVl4upNkOebRYtMU0EJtHjk2pVa/7f4mf9DgzmJsYWHyJ3u1LSNAmhnkn/iDHm
-         DylA==
-X-Gm-Message-State: AOAM533ZxwhjLjZlDSd24hBBtP/g5gifJ0HMgxz+yAt05oup5CSsaL9Z
-        FaFCfw6V1dCU9wXiD2LFsigcMmfFQuvrXi/A
-X-Google-Smtp-Source: ABdhPJyNNMYrvsmq7/F8m6tmoUfcgXsElPQKsUO0YXifR/3BOw2cIOp/i5jqOfsDhtx7DdYH1n19mA==
-X-Received: by 2002:a17:90b:4395:: with SMTP id in21mr8229001pjb.201.1616670033291;
-        Thu, 25 Mar 2021 04:00:33 -0700 (PDT)
+        bh=MXdgl4sGCtpeqkU0oFf+aQcnEqApRk5BPIOm1oT4Eys=;
+        b=SqZbgJ1utb2ZAjEB6a0IFJUNggPWUFydWxAzBmYl0H778qPIsqqD1+R5NzcwPrNIAQ
+         ZNtOeIS2QbOb852s+Md6fcqGTI6xxn5+Nn9cJvLoVlbzK9qPOgFZbnxQiGB/188MgDKN
+         JytTys/AdQ076HKWywiowP3eHvi2/WjAQUiQMfK7xnF4Qy45yMz+u36NEemwTwhymoyN
+         yMus8Oq+gajCxU+Z8q6H8YoblxvoFXz9CtVh1Nwqv/esH3HfWG9rtKEwLcaylrWZxx7b
+         YjuqE2svSD4kqbW7kt49PgUn1JzP5mbKu3CXIgxcUTmR1jaOyg8+R4DesVKbl0rnupCn
+         uTdA==
+X-Gm-Message-State: AOAM531gFAtyryPjMBfTqJcnXsrtpre+ewF4OGAgDVtCjsK91Xpl/fLZ
+        rtBDveeEF6POoAIWdHlSbK8x+nFDeUa1NQ==
+X-Google-Smtp-Source: ABdhPJwPcHCr0BXFY+JfFSmOekXT+EGmarECb9Xj6NooopUAmYQ8bYbQwrVl4xptVkti0sWpvLEeKA==
+X-Received: by 2002:a17:903:230d:b029:e7:1052:a94d with SMTP id d13-20020a170903230db02900e71052a94dmr8156260plh.0.1616670254153;
+        Thu, 25 Mar 2021 04:04:14 -0700 (PDT)
 Received: from [192.168.43.80] (subs32-116-206-28-39.three.co.id. [116.206.28.39])
-        by smtp.gmail.com with ESMTPSA id y193sm5727310pfc.72.2021.03.25.04.00.31
+        by smtp.gmail.com with ESMTPSA id o9sm6142935pfh.47.2021.03.25.04.04.12
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 25 Mar 2021 04:00:33 -0700 (PDT)
+        Thu, 25 Mar 2021 04:04:13 -0700 (PDT)
 Subject: Re: [PATCH v1 1/1] pathspec: warn for a no-glob entry that contains
  `**`
 To:     =?UTF-8?B?zqPPhM6xz43Pgc6/z4Igzp3PhM6tzr3PhM6/z4I=?= 
         <stdedos@gmail.com>
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>,
-        Stavros Ntentos <133706+stdedos@users.noreply.github.com>,
-        git@vger.kernel.org
+        <pclouds@gmail.com>, git@vger.kernel.org
 References: <xmqqft1iquka.fsf@gitster.g>
  <20210325102228.14901-1-stdedos@gmail.com>
  <20210325102228.14901-2-stdedos@gmail.com>
 From:   Bagas Sanjaya <bagasdotme@gmail.com>
-Message-ID: <0eeedc6c-cf47-41ac-a1f2-242d33963aa8@gmail.com>
-Date:   Thu, 25 Mar 2021 18:00:29 +0700
+Message-ID: <af50b7e9-3594-ac46-ed1b-23f3143fe11e@gmail.com>
+Date:   Thu, 25 Mar 2021 18:04:10 +0700
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.8.1
 MIME-Version: 1.0
@@ -134,7 +132,7 @@ On 25/03/21 17.22, Σταύρος Ντέντος wrote:
 > +	if (strstr(entry, "**")) {
 > +		warning(_("Pathspec provided contains `**`, but no :(glob) magic.\n\tIt will not match 0 or more directories!"));
 > +	}
-Why did you add an extra \t? I think it is unnecessary indentation.
+Why an extra \t? Unnecessary indentation?
 > +}
 > diff --git a/pathspec.h b/pathspec.h
 > index 454ce364fa..913518ebd3 100644
@@ -164,7 +162,7 @@ Why did you add an extra \t? I think it is unnecessary indentation.
 > +'
 > +
 > +test_expect_success '** with    :(literal) does not warn of lacking glob magic' '
-Padding maybe?
+Padding with without test above?
 > +	test_might_fail git stash -- ":(literal)**/bar" 2>warns &&
 > +	! grep -Ff expected warns
 > +'
