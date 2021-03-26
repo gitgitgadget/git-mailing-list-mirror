@@ -2,368 +2,278 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-20.3 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CECCC433DB
-	for <git@archiver.kernel.org>; Fri, 26 Mar 2021 12:45:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B782C433DB
+	for <git@archiver.kernel.org>; Fri, 26 Mar 2021 12:49:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1F82E61934
-	for <git@archiver.kernel.org>; Fri, 26 Mar 2021 12:45:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D9BEC619B8
+	for <git@archiver.kernel.org>; Fri, 26 Mar 2021 12:49:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229986AbhCZMpY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 26 Mar 2021 08:45:24 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:54747 "EHLO smtp.hosts.co.uk"
+        id S229951AbhCZMtM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 26 Mar 2021 08:49:12 -0400
+Received: from smtp.hosts.co.uk ([85.233.160.19]:30881 "EHLO smtp.hosts.co.uk"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229935AbhCZMpX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Mar 2021 08:45:23 -0400
-X-Greylist: delayed 1046 seconds by postgrey-1.27 at vger.kernel.org; Fri, 26 Mar 2021 08:45:22 EDT
+        id S229773AbhCZMsr (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Mar 2021 08:48:47 -0400
 Received: from host-92-1-139-132.as43234.net ([92.1.139.132] helo=[192.168.1.37])
         by smtp.hosts.co.uk with esmtpa (Exim)
         (envelope-from <philipoakley@iee.email>)
-        id 1lPlZC-00043w-9r; Fri, 26 Mar 2021 12:27:55 +0000
-Subject: Re: [PATCH] sequencer: fix edit handling for cherry-pick and revert
- messages
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        id 1lPltM-0002OA-6O; Fri, 26 Mar 2021 12:48:45 +0000
+Subject: Re: [PATCH 4/5] doc lint: fix bugs in, simplify and improve lint
+ script
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>
-References: <pull.988.git.git.1616742969145.gitgitgadget@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+References: <cover-0.6-00000000000-20210326T103454Z-avarab@gmail.com>
+ <patch-4.6-5c8e8f21495-20210326T103454Z-avarab@gmail.com>
 From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <eda509dd-d2d5-0856-0c75-094d67257d54@iee.email>
-Date:   Fri, 26 Mar 2021 12:27:54 +0000
+Message-ID: <a7e1bbc1-eb3e-72d0-ef65-24cc38346a04@iee.email>
+Date:   Fri, 26 Mar 2021 12:48:45 +0000
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.9.0
 MIME-Version: 1.0
-In-Reply-To: <pull.988.git.git.1616742969145.gitgitgadget@gmail.com>
+In-Reply-To: <patch-4.6-5c8e8f21495-20210326T103454Z-avarab@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Content-Language: en-GB
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-minor nit on a code comment
+Hi Ævar,
+ minor naming comment.
 
-On 26/03/2021 07:16, Elijah Newren via GitGitGadget wrote:
-> From: Elijah Newren <newren@gmail.com>
+On 26/03/2021 10:36, Ævar Arnfjörð Bjarmason wrote:
+> The lint-gitlink.perl script added in ab81411ced (ci: validate
+> "linkgit:" in documentation, 2016-05-04) was more complex than it
+> needed to be. It:
 >
-> save_opts() should save any non-default values.  It was intended to do
-> this, but since most options in struct replay_opts default to 0, it only
-> saved non-zero values.  Unfortunatley, this does not always work for
-> options.edit.  Roughly speaking, options.edit had a default value of 0
-> for cherry-pick but a default value of 1 for revert.  Make save_opts()
-> record a value whenever it differs from the default.
+>  - Was using File::Find to recursively find *.txt files in
+>    Documentation/, let's instead use the Makefile as a source of truth
+>    for *.txt files, and pass it down to the script.
 >
-> options.edit was also overly simplistic; we had more than two cases.
-> The behavior that previously existed was as follows:
+>  - We now don't lint linkgit:* in RelNotes/* or technical/*, which we
+>    shouldn't have been doing in the first place anyway.
 >
->                        Non-conflict commits    Right after Conflict
->     revert             Edit iff isatty(0)      Edit (ignore isatty(0))
->     cherry-pick        No edit                 See above
->     Specify --edit     Edit (ignore isatty(0)) See above
->     Specify --no-edit  (*)                     See above
+>  - When the doc-diff script was added in beb188e22a (add a script to
+>    diff rendered documentation, 2018-08-06) we started sometimes having
+>    a "git worktree" under "documentation". This tree contains a full
+>    checkout of git.git, as a result the "lint" script would recurse into
+>    that, and lint any *.txt file found in that entire repository.
 >
->     (*) Before stopping for conflicts, No edit is the behavior.  After
->         stopping for conflicts, the --no-edit flag is not saved so see
->         the first two rows.
+>    In practice the only in-tree "linkgit" outside of the
+>    Documentation/ tree is contrib/contacts/git-contacts.txt and
+>    contrib/subtree/git-subtree.txt, so this wouldn't emit any errors
 >
-> However, the expected behavior is:
+> Now we instead simply trust the Makefile to give us *.txt files, and
+> since the Makefile also knows what sections each page should be in we
+> don't have to open the files ourselves and try to parse that out. As a
+> bonus this will also catch bugs with the section line in the file
+> being incorrect.
 >
->                        Non-conflict commits    Right after Conflict
->     revert             Edit iff isatty(0)      Edit iff isatty(0)
->     cherry-pick        No edit                 Edit iff isatty(0)
->     Specify --edit     Edit (ignore isatty(0)) Edit (ignore isatty(0))
->     Specify --no-edit  No edit                 No edit
+> The structure of the new script is mostly based on
+> t/check-non-portable-shell.pl. As an added bonus it will also use
+> pos() to print where the problems it finds are, e.g. given an issue
+> like:
 >
-> In order to get the expected behavior, we need to change options.edit
-> to a tri-state: unspecified, false, or true.  When specified, we follow
-> what it says.  When unspecified, we need to check whether the current
-> commit being created is resolving a conflict as well as consulting
-> options.action and isatty(0).  While at it, add a should_edit() utility
-> function that compresses options.edit down to a boolean based on the
-> additional information for the non-conflict case.
+>     diff --git a/Documentation/git-cherry.txt b/Documentation/git-cherry.txt
+>     [...]
+>      and line numbers.  git-cherry therefore detects when commits have been
+>     -"copied" by means of linkgit:git-cherry-pick[1], linkgit:git-am[1] or
+>     -linkgit:git-rebase[1].
+>     +"copied" by means of linkgit:git-cherry-pick[2], linkgit:git-am[3] or
+>     +linkgit:git-rebase[4].
 >
-> Make continue_single_pick() (which is the function responsible for
-> resuming after conflict cases) stop assuming edit behavior in all cases,
-> so that it can correctly handle !isatty(0) and specific requests to not
-> edit the commit message.
+> We'll now emit:
 >
-> Reported-by: Renato Botelho <garga@freebsd.org>
-> Signed-off-by: Elijah Newren <newren@gmail.com>
+>     git-cherry.txt:20: error: git-cherry-pick[2]: wrong section (should be 1), shown with 'HERE' below:
+>     git-cherry.txt:20:      "copied" by means of linkgit:git-cherry-pick[2]' <-- HERE
+>     git-cherry.txt:20: error: git-am[3]: wrong section (should be 1), shown with 'HERE' below:
+>     git-cherry.txt:20:      "copied" by means of linkgit:git-cherry-pick[2], linkgit:git-am[3]' <-- HERE
+>     git-cherry.txt:21: error: git-rebase[4]: wrong section (should be 1), shown with 'HERE' below:
+>     git-cherry.txt:21:      linkgit:git-rebase[4]' <-- HERE
+>
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 > ---
->     sequencer: fix edit handling for cherry-pick and revert messages
->     
->     save_opts() should save any non-default values. It was intended to do
->     this, but since most options in struct replay_opts default to 0, it only
->     saved non-zero values. Unfortunatley, this does not always work for
->     options.edit. Roughly speaking, options.edit had a default value of 0
->     for cherry-pick but a default value of 1 for revert. Make save_opts()
->     record a value whenever it differs from the default.
->     
->     options.edit was also overly simplistic; we had more than two cases. The
->     behavior that previously existed was as follows:
->     
->                        Non-conflict commits    Right after Conflict
->     revert             Edit iff isatty(0)      Edit (ignore isatty(0))
->     cherry-pick        No edit                 See above
->     Specify --edit     Edit (ignore isatty(0)) See above
->     Specify --no-edit  (*)                     See above
->     
->     (*) Before stopping for conflicts, No edit is the behavior.  After
->         stopping for conflicts, the --no-edit flag is not saved so see
->         the first two rows.
->     
->     
->     However, the expected behavior is:
->     
->                        Non-conflict commits    Right after Conflict
->     revert             Edit iff isatty(0)      Edit iff isatty(0)
->     cherry-pick        No edit                 Edit iff isatty(0)
->     Specify --edit     Edit (ignore isatty(0)) Edit (ignore isatty(0))
->     Specify --no-edit  No edit                 No edit
->     
->     
->     In order to get the expected behavior, we need to change options.edit to
->     a tri-state: unspecified, false, or true. When specified, we follow what
->     it says. When unspecified, we need to check whether the current commit
->     being created is resolving a conflict as well as consulting
->     options.action and isatty(0). While at it, add a should_edit() utility
->     function that compresses options.edit down to a boolean based on the
->     additional information for the non-conflict case.
->     
->     Make continue_single_pick() (which is the function responsible for
->     resuming after conflict cases) stop assuming edit behavior in all cases,
->     so that it can correctly handle !isatty(0) and specific requests to not
->     edit the commit message.
->     
->     Reported-by: Renato Botelho garga@freebsd.org Signed-off-by: Elijah
->     Newren newren@gmail.com
+>  Documentation/Makefile          |  14 ++++-
+>  Documentation/lint-gitlink.perl | 108 +++++++++++++++-----------------
+>  2 files changed, 65 insertions(+), 57 deletions(-)
 >
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-988%2Fnewren%2Ffix-sequencer-no-edit-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-988/newren/fix-sequencer-no-edit-v1
-> Pull-Request: https://github.com/git/git/pull/988
->
->  builtin/revert.c                |  4 +--
->  sequencer.c                     | 55 ++++++++++++++++++++++++++-------
->  sequencer.h                     |  6 ++--
->  t/t3510-cherry-pick-sequence.sh | 32 ++++++++++++++++++-
->  4 files changed, 80 insertions(+), 17 deletions(-)
->
-> diff --git a/builtin/revert.c b/builtin/revert.c
-> index 314a86c5621b..81441020231a 100644
-> --- a/builtin/revert.c
-> +++ b/builtin/revert.c
-> @@ -182,7 +182,7 @@ static int run_sequencer(int argc, const char **argv, struct replay_opts *opts)
->  				"--signoff", opts->signoff,
->  				"--no-commit", opts->no_commit,
->  				"-x", opts->record_origin,
-> -				"--edit", opts->edit,
-> +				"--edit", opts->edit == 1,
->  				NULL);
->  
->  	if (cmd) {
-> @@ -230,8 +230,6 @@ int cmd_revert(int argc, const char **argv, const char *prefix)
->  	struct replay_opts opts = REPLAY_OPTS_INIT;
->  	int res;
->  
-> -	if (isatty(0))
-> -		opts.edit = 1;
->  	opts.action = REPLAY_REVERT;
->  	sequencer_init_config(&opts);
->  	res = run_sequencer(argc, argv, &opts);
-> diff --git a/sequencer.c b/sequencer.c
-> index 848204d3dc3f..2fe0e0eff7e6 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -1860,14 +1860,26 @@ static void record_in_rewritten(struct object_id *oid,
->  		flush_rewritten_pending();
->  }
->  
-> +static int should_edit(struct replay_opts *opts) {
-> +	assert(opts->edit >= -1 && opts->edit <= 1);
-> +	if (opts->edit == -1)
-> +		/*
-> +		 * Note the we only handle the case of non-conflicted
+> diff --git a/Documentation/Makefile b/Documentation/Makefile
+> index 7313956d73f..6bfd8c75772 100644
+> --- a/Documentation/Makefile
+> +++ b/Documentation/Makefile
+> @@ -4,6 +4,7 @@ MAN5_TXT =
+>  MAN7_TXT =
+>  HOWTO_TXT =
+>  INCLUDE_TARGETS_TXT =
+> +ALL_TXT =
 
-This 'Note the we' doesn't parse for me.
---
+Maybe LINT_TXT would better clarify its use, rather than squatting on
+the generic "ALL"?
+-- 
 Philip
-> +		 * commits; continue_single_pick() handles the conflicted
-> +		 * commits itself instead of calling this function.
-> +		 */
-> +		return (opts->action == REPLAY_REVERT && isatty(0)) ? 1 : 0;
-> +	return opts->edit;
-> +}
+>  TECH_DOCS =
+>  ARTICLES =
+>  SP_ARTICLES =
+> @@ -49,6 +50,13 @@ HOWTO_TXT += $(wildcard howto/*.txt)
+>  INCLUDE_TARGETS_TXT += $(wildcard *.txt)
+>  INCLUDE_TARGETS_TXT += $(wildcard config/*.txt)
+>  
+> +# For linting
+> +ALL_TXT += $(MAN1_TXT)
+> +ALL_TXT += $(MAN5_TXT)
+> +ALL_TXT += $(MAN7_TXT)
+> +ALL_TXT += $(HOWTO_TXT)
+> +ALL_TXT += $(INCLUDE_TARGETS_TXT)
 > +
->  static int do_pick_commit(struct repository *r,
->  			  enum todo_command command,
->  			  struct commit *commit,
->  			  struct replay_opts *opts,
->  			  int final_fixup, int *check_todo)
->  {
-> -	unsigned int flags = opts->edit ? EDIT_MSG : 0;
-> -	const char *msg_file = opts->edit ? NULL : git_path_merge_msg(r);
-> +	unsigned int flags = should_edit(opts) ? EDIT_MSG : 0;
-> +	const char *msg_file = should_edit(opts) ? NULL : git_path_merge_msg(r);
->  	struct object_id head;
->  	struct commit *base, *next, *parent;
->  	const char *base_label, *next_label;
-> @@ -3101,9 +3113,9 @@ static int save_opts(struct replay_opts *opts)
->  	if (opts->no_commit)
->  		res |= git_config_set_in_file_gently(opts_file,
->  					"options.no-commit", "true");
-> -	if (opts->edit)
-> -		res |= git_config_set_in_file_gently(opts_file,
-> -					"options.edit", "true");
-> +	if (opts->edit != -1)
-> +		res |= git_config_set_in_file_gently(opts_file, "options.edit",
-> +						     opts->edit ? "true" : "false");
->  	if (opts->allow_empty)
->  		res |= git_config_set_in_file_gently(opts_file,
->  					"options.allow-empty", "true");
-> @@ -4077,7 +4089,7 @@ static int pick_commits(struct repository *r,
->  	prev_reflog_action = xstrdup(getenv(GIT_REFLOG_ACTION));
->  	if (opts->allow_ff)
->  		assert(!(opts->signoff || opts->no_commit ||
-> -			 opts->record_origin || opts->edit ||
-> +			 opts->record_origin || should_edit(opts) ||
->  			 opts->committer_date_is_author_date ||
->  			 opts->ignore_date));
->  	if (read_and_refresh_cache(r, opts))
-> @@ -4370,14 +4382,35 @@ static int pick_commits(struct repository *r,
->  	return sequencer_remove_state(opts);
+>  ifdef MAN_FILTER
+>  MAN_TXT = $(filter $(MAN_FILTER),$(MAN1_TXT) $(MAN5_TXT) $(MAN7_TXT))
+>  else
+> @@ -477,7 +485,11 @@ print-man1:
+>  	@for i in $(MAN1_TXT); do echo $$i; done
+>  
+>  lint-docs::
+> -	$(QUIET_LINT)$(PERL_PATH) lint-gitlink.perl
+> +	$(QUIET_LINT)$(PERL_PATH) lint-gitlink.perl \
+> +		--section=1 $(MAN1_TXT) \
+> +		--section=5 $(MAN5_TXT) \
+> +		--section=7 $(MAN7_TXT)	\
+> +		--to-lint $(ALL_TXT)
+>  
+>  ifeq ($(wildcard po/Makefile),po/Makefile)
+>  doc-l10n install-l10n::
+> diff --git a/Documentation/lint-gitlink.perl b/Documentation/lint-gitlink.perl
+> index 35230875c24..d42f154e024 100755
+> --- a/Documentation/lint-gitlink.perl
+> +++ b/Documentation/lint-gitlink.perl
+> @@ -2,72 +2,68 @@
+>  
+>  use strict;
+>  use warnings;
+> -use File::Find;
+> -use Getopt::Long;
+>  
+> -my $basedir = ".";
+> -GetOptions("basedir=s" => \$basedir)
+> -	or die("Cannot parse command line arguments\n");
+> +# Parse arguments, a simple state machine for input like:
+> +#
+> +# --section=1 git.txt git-add.txt [...] --to-lint git-add.txt a-file.txt [...]
+> +my %TXT;
+> +my %SECTION;
+> +my $section;
+> +my $lint_these = 0;
+> +for my $arg (@ARGV) {
+> +	if (my ($sec) = $arg =~ /^--section=(\d+)$/s) {
+> +		$section = $sec;
+> +		next;
+> +	} elsif ($arg eq '--to-lint') {
+> +		$lint_these = 1;
+> +		next;
+> +	}
+>  
+> -my $found_errors = 0;
+> +	my ($name) = $arg =~ /^(.*?)\.txt$/s;
+> +	if ($lint_these) {
+> +		$TXT{$name} = $arg;
+> +		next;
+> +	}
+>  
+> -sub report {
+> -	my ($where, $what, $error) = @_;
+> -	print "$where: $error: $what\n";
+> -	$found_errors = 1;
+> +	$SECTION{$name} = $section;
 >  }
 >  
-> -static int continue_single_pick(struct repository *r)
-> +static int continue_single_pick(struct repository *r, struct replay_opts *opts)
->  {
-> -	const char *argv[] = { "commit", NULL };
-> +	struct strvec argv = STRVEC_INIT;
-> +	int want_edit;
-> +	int ret;
->  
->  	if (!refs_ref_exists(get_main_ref_store(r), "CHERRY_PICK_HEAD") &&
->  	    !refs_ref_exists(get_main_ref_store(r), "REVERT_HEAD"))
->  		return error(_("no cherry-pick or revert in progress"));
-> -	return run_command_v_opt(argv, RUN_GIT_CMD);
-> +
-> +	strvec_push(&argv, "commit");
-> +
-> +	/*
-> +	 * continue_single_pick() handles the case of recovering from a
-> +	 * conflict.  should_edit() doesn't handle that case; for a conflict,
-> +	 * we want to edit if the user asked for it, or if they didn't specify
-> +	 * and stdin is a tty.
-> +	 */
-> +	want_edit = (opts->edit == 1) || ((opts->edit == -1) && isatty(0));
-> +	if (!want_edit)
-> +		/*
-> +		 * Include --cleanup=strip as well because we don't want the
-> +		 * "# Conflicts:" messages.
-> +		 */
-> +		strvec_pushl(&argv, "--no-edit", "--cleanup=strip", NULL);
-> +
-> +	ret = run_command_v_opt(argv.v, RUN_GIT_CMD);
-> +	strvec_clear(&argv);
-> +	return ret;
+> -sub grab_section {
+> -	my ($page) = @_;
+> -	open my $fh, "<", "$basedir/$page.txt";
+> -	my $firstline = <$fh>;
+> -	chomp $firstline;
+> -	close $fh;
+> -	my ($section) = ($firstline =~ /.*\((\d)\)$/);
+> -	return $section;
+> +my $exit_code = 0;
+> +sub report {
+> +	my ($pos, $line, $target, $msg) = @_;
+> +	substr($line, $pos) = "' <-- HERE";
+> +	$line =~ s/^\s+//;
+> +	print "$ARGV:$.: error: $target: $msg, shown with 'HERE' below:\n";
+> +	print "$ARGV:$.:\t$line\n";
+> +	$exit_code = 1;
 >  }
 >  
->  static int commit_staged_changes(struct repository *r,
-> @@ -4547,7 +4580,7 @@ int sequencer_continue(struct repository *r, struct replay_opts *opts)
->  			goto release_todo_list;
+> -sub lint {
+> -	my ($file) = @_;
+> -	open my $fh, "<", $file
+> -		or return;
+> -	while (<$fh>) {
+> -		my $where = "$file:$.";
+> -		while (s/linkgit:((.*?)\[(\d)\])//) {
+> -			my ($target, $page, $section) = ($1, $2, $3);
+> +@ARGV = sort values %TXT;
+> +while (<>) {
+> +	my $line = $_;
+> +	while ($line =~ m/linkgit:((.*?)\[(\d)\])/g) {
+> +		my $pos = pos $line;
+> +		my ($target, $page, $section) = ($1, $2, $3);
+>  
+> -			# De-AsciiDoc
+> -			$page =~ s/{litdd}/--/g;
+> +		# De-AsciiDoc
+> +		$page =~ s/{litdd}/--/g;
+>  
+> -			if ($page !~ /^git/) {
+> -				report($where, $target, "nongit link");
+> -				next;
+> -			}
+> -			if (! -f "$basedir/$page.txt") {
+> -				report($where, $target, "no such source");
+> -				next;
+> -			}
+> -			my $real_section = grab_section($page);
+> -			if ($real_section != $section) {
+> -				report($where, $target,
+> -					"wrong section (should be $real_section)");
+> -				next;
+> -			}
+> +		if (!exists $TXT{$page}) {
+> +			report($pos, $line, $target, "link outside of our own docs");
+> +			next;
+> +		}
+> +		if (!exists $SECTION{$page}) {
+> +			report($pos, $line, $target, "link outside of our sectioned docs");
+> +			next;
+> +		}
+> +		my $real_section = $SECTION{$page};
+> +		if ($section != $SECTION{$page}) {
+> +			report($pos, $line, $target, "wrong section (should be $real_section)");
+> +			next;
 >  		}
->  	} else if (!file_exists(get_todo_path(opts)))
-> -		return continue_single_pick(r);
-> +		return continue_single_pick(r, opts);
->  	else if ((res = read_populate_todo(r, &todo_list, opts)))
->  		goto release_todo_list;
+>  	}
+> -	close $fh;
+> -}
+> -
+> -sub lint_it {
+> -	lint($File::Find::name) if -f && /\.txt$/;
+> -}
+> -
+> -if (!@ARGV) {
+> -	find({ wanted => \&lint_it, no_chdir => 1 }, $basedir);
+> -} else {
+> -	for (@ARGV) {
+> -		lint($_);
+> -	}
+> +	# this resets our $. for each file
+> +	close ARGV if eof;
+>  }
 >  
-> @@ -4556,7 +4589,7 @@ int sequencer_continue(struct repository *r, struct replay_opts *opts)
->  		if (refs_ref_exists(get_main_ref_store(r),
->  				    "CHERRY_PICK_HEAD") ||
->  		    refs_ref_exists(get_main_ref_store(r), "REVERT_HEAD")) {
-> -			res = continue_single_pick(r);
-> +			res = continue_single_pick(r, opts);
->  			if (res)
->  				goto release_todo_list;
->  		}
-> diff --git a/sequencer.h b/sequencer.h
-> index f8b2e4ab8527..d57d8ea23d7a 100644
-> --- a/sequencer.h
-> +++ b/sequencer.h
-> @@ -31,8 +31,10 @@ enum commit_msg_cleanup_mode {
->  struct replay_opts {
->  	enum replay_action action;
->  
-> -	/* Boolean options */
-> +	/* Tri-state options: unspecified, false, or true */
->  	int edit;
-> +
-> +	/* Boolean options */
->  	int record_origin;
->  	int no_commit;
->  	int signoff;
-> @@ -71,7 +73,7 @@ struct replay_opts {
->  	/* Only used by REPLAY_NONE */
->  	struct rev_info *revs;
->  };
-> -#define REPLAY_OPTS_INIT { .action = -1, .current_fixups = STRBUF_INIT }
-> +#define REPLAY_OPTS_INIT { .edit = -1, .action = -1, .current_fixups = STRBUF_INIT }
->  
->  /*
->   * Note that ordering matters in this enum. Not only must it match the mapping
-> diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
-> index b76cb6de91d0..49010aa9469d 100755
-> --- a/t/t3510-cherry-pick-sequence.sh
-> +++ b/t/t3510-cherry-pick-sequence.sh
-> @@ -65,7 +65,7 @@ test_expect_success 'cherry-pick persists opts correctly' '
->  	# gets interrupted, use a high-enough number that is larger
->  	# than the number of parents of any commit we have created
->  	mainline=4 &&
-> -	test_expect_code 128 git cherry-pick -s -m $mainline --strategy=recursive -X patience -X ours initial..anotherpick &&
-> +	test_expect_code 128 git cherry-pick -s -m $mainline --strategy=recursive -X patience -X ours --edit initial..anotherpick &&
->  	test_path_is_dir .git/sequencer &&
->  	test_path_is_file .git/sequencer/head &&
->  	test_path_is_file .git/sequencer/todo &&
-> @@ -84,6 +84,36 @@ test_expect_success 'cherry-pick persists opts correctly' '
->  	ours
->  	EOF
->  	git config --file=.git/sequencer/opts --get-all options.strategy-option >actual &&
-> +	test_cmp expect actual &&
-> +	echo "true" >expect &&
-> +	git config --file=.git/sequencer/opts --get-all options.edit >actual &&
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'revert persists opts correctly' '
-> +	pristine_detach initial &&
-> +	# to make sure that the session to revert a sequence
-> +	# gets interrupted, revert commits that are not in the history
-> +	# of HEAD.
-> +	test_expect_code 1 git revert -s --strategy=recursive -X patience -X ours --no-edit picked yetanotherpick &&
-> +	test_path_is_dir .git/sequencer &&
-> +	test_path_is_file .git/sequencer/head &&
-> +	test_path_is_file .git/sequencer/todo &&
-> +	test_path_is_file .git/sequencer/opts &&
-> +	echo "true" >expect &&
-> +	git config --file=.git/sequencer/opts --get-all options.signoff >actual &&
-> +	test_cmp expect actual &&
-> +	echo "recursive" >expect &&
-> +	git config --file=.git/sequencer/opts --get-all options.strategy >actual &&
-> +	test_cmp expect actual &&
-> +	cat >expect <<-\EOF &&
-> +	patience
-> +	ours
-> +	EOF
-> +	git config --file=.git/sequencer/opts --get-all options.strategy-option >actual &&
-> +	test_cmp expect actual &&
-> +	echo "false" >expect &&
-> +	git config --file=.git/sequencer/opts --get-all options.edit >actual &&
->  	test_cmp expect actual
->  '
->  
->
-> base-commit: 98164e9585e02e31dcf1377a553efe076c15f8c6
+> -exit $found_errors;
+> +exit $exit_code;
 
