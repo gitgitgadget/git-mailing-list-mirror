@@ -2,198 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AD9C0C433DB
-	for <git@archiver.kernel.org>; Fri, 26 Mar 2021 19:55:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A33FC433E2
+	for <git@archiver.kernel.org>; Fri, 26 Mar 2021 20:17:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AE0DC619C7
-	for <git@archiver.kernel.org>; Fri, 26 Mar 2021 19:55:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1C87B61A28
+	for <git@archiver.kernel.org>; Fri, 26 Mar 2021 20:17:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230187AbhCZTyy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 26 Mar 2021 15:54:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37266 "EHLO
+        id S230231AbhCZUQc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 26 Mar 2021 16:16:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230114AbhCZTyV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Mar 2021 15:54:21 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74799C0613AA
-        for <git@vger.kernel.org>; Fri, 26 Mar 2021 12:54:21 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id x21so7628677eds.4
-        for <git@vger.kernel.org>; Fri, 26 Mar 2021 12:54:21 -0700 (PDT)
+        with ESMTP id S229933AbhCZUQH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Mar 2021 16:16:07 -0400
+Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8336DC0613AA
+        for <git@vger.kernel.org>; Fri, 26 Mar 2021 13:16:07 -0700 (PDT)
+Received: by mail-qk1-x72c.google.com with SMTP id y5so6523451qkl.9
+        for <git@vger.kernel.org>; Fri, 26 Mar 2021 13:16:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=GewOPkwShpv/MXvDrbXESMReD+nle1goPbcuGPqYFPk=;
-        b=TxepCQ6wi2TPP4COvq7TxHS6GmOc8BEj55Nl32xvjAaKkznMEdbqh2+8adP4iVL5OD
-         lqmUsXHEc/tYjGV9saLLRP6frjrhhc/whV9dw5zUQnsaAq6JdUPBZgoFF6qUktRVofkw
-         +A+7Pz9JLJqsI1kRYNtK0/DUuMfgclY+klyO/ypXiXp/zxUnEhZtOL7ECn6gXFYjr9gi
-         sXmipl+jxSfXO/ikG8haUt5rn3YtAuh85cMB+hAvGLdbdlBQZE5b5sYQIKDOGdRyE42g
-         vLFQUUmtkVDE+kiF2xdYEc8jdsC2oLXpXIrv35kqvX+CjwEtodlgzMQFmOvsMkPF4yMe
-         D1kA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=JPpW3PAK8HPW7DgQ4+GxZL+QMykTaKHV6xca7moCQlc=;
+        b=Eo1iyJBuH83oYRz+8VY1yp/9zskrVoqV0EvuNzlYCgmGwdZ7RHuMdFMdpC42dF3800
+         kqPN3cFyrJFibZwMitSKCl6e592UGa2XJE4+F30u7IQYxsJPvCr2kwfN/8eR6jB25olM
+         pN6CuZ97tvv1lytlqUDqxtavaLWLQTBudbD2HcSQrpLR/KnyHe/K7XO6y1MrhkIptjZG
+         AwmRUS8qWuO83Sk0UrijQViSJk7KDW6LOMUrnMgc5Y6ng9DFRSCriIMeWWWKl1lszcXu
+         QtTIi5stXZHgIklxI938Xr+lsCKk7IKXhRVk+hPXqcF2QRczQXO+KbcAhUN7WGkUzvJG
+         0ONg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=GewOPkwShpv/MXvDrbXESMReD+nle1goPbcuGPqYFPk=;
-        b=Y+V5N0aKAwKDBxp96pPPn4zonst7k36wPBIcdEKhXwxRrsURoWcxj/ezfHDKETyddv
-         O8cV8Od7zTmfPg9RdI60wjNqoVQ/pNYD8+vrny5mycDaNUoXq1xExK9txZ5Z40AjljTm
-         Oe686/85tBdkSSCZZMGvEqZG8f8T+Y8jjYDMedDmoI1Bg9C3K8CJo072MLJ4iaqTqd/D
-         9u3v7kYjYvcMVnWZCoEVnIFnebbykupkAxGkZSS6DhapOn92nzB+LMkFDXXEWnkcXavA
-         UhdMoxvn92DNyjKrFA9UzrwtZRk56Ha4H5UjWym+q1GpgZiyk2szqjw+YckGeqxyeQLq
-         8YYg==
-X-Gm-Message-State: AOAM533uNKq3gwv6hxp5TU9gUZivsUiNPPQdCC9Aigy/GfwPiMmRErQ0
-        n7uGcdxBHYa9cWzYo1i4wIU=
-X-Google-Smtp-Source: ABdhPJwk+MTJobPbaQg0iuzjLHG1I2CrrDLC7EWF256epm31fnGu6kB1Ufa+28NRYz8YZ/o4vw/oiw==
-X-Received: by 2002:a05:6402:4245:: with SMTP id g5mr17189008edb.306.1616788460250;
-        Fri, 26 Mar 2021 12:54:20 -0700 (PDT)
-Received: from szeder.dev (84-236-109-92.pool.digikabel.hu. [84.236.109.92])
-        by smtp.gmail.com with ESMTPSA id eo22sm4289268ejc.0.2021.03.26.12.54.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Mar 2021 12:54:19 -0700 (PDT)
-Date:   Fri, 26 Mar 2021 20:54:17 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v6 16/21] mingw: try to work around issues with the test
- cleanup
-Message-ID: <20210326195417.GB2271@szeder.dev>
-References: <pull.31.v5.git.gitgitgadget@gmail.com>
- <pull.31.v6.git.gitgitgadget@gmail.com>
- <991b41afa4a83a73f59a72504d269d64d12ecf8f.1548771561.git.gitgitgadget@gmail.com>
- <87zgzbgp1i.fsf@evledraar.gmail.com>
- <nycvar.QRO.7.76.6.2103191515430.57@tvgsbejvaqbjf.bet>
- <87a6qxzocs.fsf@evledraar.gmail.com>
- <nycvar.QRO.7.76.6.2103241257580.50@tvgsbejvaqbjf.bet>
- <20210324212051.GA2271@szeder.dev>
- <87lfacp3bp.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=JPpW3PAK8HPW7DgQ4+GxZL+QMykTaKHV6xca7moCQlc=;
+        b=KprkSzlH1mIy2W5ZZ706fdMgk9/BNYDnpAV1gMFfwn9Fj6Sl/avS9V5tV3DSdfk2tr
+         ZB70z7L7UB6+Prtc6FJDH7jf8SW+xOHrf7oCcmENhf/hqz5GyrKVONISfu0SgP/zPNel
+         XhMFWyCz/sfQ5dNjcubW7fLMcgmq6aMmL51lhwlGvrtqdhrR272Gb0y5G0sGlVk02K/O
+         k5vnsMD0B7vTZs22uuHRDDBw9HrLffD/HbOuCbVSI+CSHgwCjhJHhAsgJ3iBj8K8lc91
+         JTke6PAUN6Rxke0Rma/7Kk/qd62eIyCfHqKZfx+UJsYLhUWUEjfzLLpUkHQOQQv46MUW
+         byhQ==
+X-Gm-Message-State: AOAM531sP9Q/pNtA3V2wpIatqBwNW8aSq1apE6wxRCZtMC7Th69KXWCr
+        kL03VpEiP9sSIcvNhe/ERxcdW8us0v3JoQ==
+X-Google-Smtp-Source: ABdhPJxVruocn9TfVN20txnV5achALTBVkC6edadnQ+jMBsa1F25bvfRpfg9AV0dhaM1TcUbNjyimQ==
+X-Received: by 2002:a37:8443:: with SMTP id g64mr15013648qkd.185.1616789766664;
+        Fri, 26 Mar 2021 13:16:06 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:21ff:ce2b:b4cd:16f6? ([2600:1700:e72:80a0:21ff:ce2b:b4cd:16f6])
+        by smtp.gmail.com with ESMTPSA id t24sm6445675qto.23.2021.03.26.13.16.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 26 Mar 2021 13:16:05 -0700 (PDT)
+Subject: Re: [PATCH 0/3] Convert index writes to use hashfile API
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     gitster@pobox.com, peff@peff.net, git@jeffhostetler.com,
+        Derrick Stolee <derrickstolee@github.com>
+References: <pull.916.git.1616785928.gitgitgadget@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <01c1c74d-cc8a-0541-5193-723c41dd877c@gmail.com>
+Date:   Fri, 26 Mar 2021 16:16:05 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.9.0
 MIME-Version: 1.0
+In-Reply-To: <pull.916.git.1616785928.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87lfacp3bp.fsf@evledraar.gmail.com>
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 24, 2021 at 11:57:46PM +0100, Ævar Arnfjörð Bjarmason wrote:
+On 3/26/2021 3:12 PM, Derrick Stolee via GitGitGadget wrote:
+> As I prepare some ideas on index v5, one thing that strikes me as an
+> interesting direction to try is to use the chunk-format API. This would make
+> our extension model extremely simple (they become optional chunks, easily
+> identified by the table of contents).
 > 
-> On Wed, Mar 24 2021, SZEDER Gábor wrote:
+> But there is a huge hurdle to even starting that investigation: the index
+> uses its own hashing methods, separate from the hashfile API in csum-file.c!
 > 
-> > On Wed, Mar 24, 2021 at 01:01:49PM +0100, Johannes Schindelin wrote:
-> >> Hi Ævar,
-> >> 
-> >> On Sat, 20 Mar 2021, Ævar Arnfjörð Bjarmason wrote:
-> >> 
-> >> > On Fri, Mar 19 2021, Johannes Schindelin wrote:
-> >> >
-> >> > >> On Tue, Jan 29 2019, Johannes Schindelin via GitGitGadget wrote:
-> >> > >>
-> >> > >> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >> > >> >
-> >> > >> > It seems that every once in a while in the Git for Windows SDK, there
-> >> > >> > are some transient file locking issues preventing the test clean up to
-> >> > >> > delete the trash directory. Let's be gentle and try again five seconds
-> >> > >> > later, and only error out if it still fails the second time.
-> >> > >> >
-> >> > >> > This change helps Windows, and does not hurt any other platform
-> >> > >> > (normally, it is highly unlikely that said deletion fails, and if it
-> >> > >> > does, normally it will fail again even 5 seconds later).
-> >> > >> >
-> >> > >> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >> > >> > ---
-> >> > >> >  t/test-lib.sh | 6 +++++-
-> >> > >> >  1 file changed, 5 insertions(+), 1 deletion(-)
-> >> > >> >
-> >> > >> > diff --git a/t/test-lib.sh b/t/test-lib.sh
-> >> > >> > index f31a1c8f79..9c0ca5effb 100644
-> >> > >> > --- a/t/test-lib.sh
-> >> > >> > +++ b/t/test-lib.sh
-> >> > >> > @@ -1104,7 +1104,11 @@ test_done () {
-> >> > >> >  			error "Tests passed but trash directory already removed before test cleanup; aborting"
-> >> > >> >
-> >> > >> >  			cd "$TRASH_DIRECTORY/.." &&
-> >> > >> > -			rm -fr "$TRASH_DIRECTORY" ||
-> >> > >> > +			rm -fr "$TRASH_DIRECTORY" || {
-> >> > >> > +				# try again in a bit
-> >> > >> > +				sleep 5;
-> >> > >> > +				rm -fr "$TRASH_DIRECTORY"
-> >> > >> > +			} ||
-> >> > >> >  			error "Tests passed but test cleanup failed; aborting"
-> >> > >> >  		fi
-> >> > >> >  		test_at_end_hook_
-> >> > >>
-> >> > >> I saw this sleep while reading some test-lib.sh code, doesn't this break
-> >> > >> df4c0d1a79 (test-lib: abort when can't remove trash directory,
-> >> > >> 2017-04-20) for non-Windows platforms?
-> >> > >
-> >> > > It does not really break it, it just delays the inevitable failure.
-> >> 
-> >> I still think this is the best answer to this (implicit) question:
-> >> 
-> >> > In any case, your patch clearly undoes whatever canary for gc issues
-> >> > df4c0d1a792 was trying to put into the test-lib, but didn't say so in
-> >> > its commit message.
-> >> 
-> >> I was not _really_ paying attention to that commit when I implemented the
-> >> work-around you mentioned above. At the same time I think it does _not_
-> >> undo the canary. If the trash directory cannot be removed via `rm -fr`,
-> >> and if that is an indicator for something fishy going on, chances are that
-> >> the second `rm -fr` a couple seconds later will _also_ fail, and we still
-> >> get that error message.
-> >> 
-> >> The only reason why the second `rm` should succeed, at least that I can
-> >> think of, is that something on Windows blocked those files from being
-> >> deleted, and it is no longer blocking after a couple seconds, and that
-> >> usually means that an anti-malware scanned those files.
-> >
-> > Both commits referenced in df4c0d1a79's log message fixed races
-> > between 'test_done's cleanup and a still running background 'git gc',
-> > and df4c0d1a79 was meant to draw our attention to similar issues in
-> > the future.  And it did:
-> >
-> >   https://public-inbox.org/git/20190602091919.GN951@szeder.dev/
-> >   
-> > So no, the failure is not inevitable, there are other reasons why the
-> > second 'rm' might still succeed after the first failed, even just a
-> > fraction of a second later.  And yes, that 'sleep' added in the patch
-> > above did unquestionably break that canary,
-> 
-> Having read that thread now I agree, but I also left with a "who cares?"
-> and "so let's keep the sleep then?".
-> 
-> I.e. is this a problem that any of the software we're maintaining is
-> going to care about in the wild, it's not like people are expecting gc,
-> repack, fast-import etc. to behave well in the face of rm -rfing the
-> directory they're operating on.
-> 
-> So it seems like just an issue that crops up because of how our test
-> suite manages and removes per-test trash directories.
+> The internals of the algorithms are mostly identical. The only possible
+> change is that the buffer sizes are different: 8KB for hashfile and 128KB in
+> read-cache.c. I was unable to find a performance difference in these two
+> implementations, despite testing on several repo sizes.
 
-Not at all.  The real problem is that some stray background git
-process is *still* actively writing to the test repository when the
-test script is already supposed to be finished.
+Of course, shortly after I send this series (thinking I've checked all the
+details carefully) I notice that I was using "git update-index --really-refresh"
+for testing, but what I really wanted was "git update-index --force-write".
 
-> So it seems better
-> to:
-> 
->  1. Just keep that "sleep a bit" and retry hack
-> 
->  2. Maybe on some/most platforms we can use cgroups or whatever passes
->     for a reliable "I started a process tree starting at this PID, kill
->     -9 the whole thing please" before cleanup these days.
+In this case, I _do_ see a performance degradation using the hashfile API.
+I will investigate whether this is just a poor implementation of the nesting
+hashfile, or something else more tricky. Changing the buffer size doesn't do
+the trick.
 
-What really seems better:
+Please ignore this series for now. Sorry for the noise.
 
-  3. Keep that "sleep a bit" hack only on platforms that can't delete
-     opened files.
-
+-Stolee
