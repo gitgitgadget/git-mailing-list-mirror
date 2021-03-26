@@ -2,114 +2,196 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 76C56C433DB
-	for <git@archiver.kernel.org>; Fri, 26 Mar 2021 03:50:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 699E9C433C1
+	for <git@archiver.kernel.org>; Fri, 26 Mar 2021 04:12:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 363B661A33
-	for <git@archiver.kernel.org>; Fri, 26 Mar 2021 03:50:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2AB8B61A42
+	for <git@archiver.kernel.org>; Fri, 26 Mar 2021 04:12:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230304AbhCZDu0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 25 Mar 2021 23:50:26 -0400
-Received: from smtp38.hk.chengmail.me ([113.10.190.104]:37243 "EHLO
-        smtp38.hk.chengmail.me" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230239AbhCZDuC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Mar 2021 23:50:02 -0400
-X-CHENGMAILHOST: 113.10.190.104
-X-CHENGMAIL-INSTANCEID: 322f.605d59df.740a5.0
-Date:   Fri, 26 Mar 2021 11:49:52 +0800
-From:   "lilinchao@oschina.cn" <lilinchao@oschina.cn>
-To:     "Junio C Hamano" <gitster@pobox.com>,
-        "Li Linchao via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git <git@vger.kernel.org>, "Derrick Stolee" <stolee@gmail.com>,
-        dscho <johannes.schindelin@gmx.de>,
-        "Jonathan Tan" <jonathantanmy@google.com>
-Subject: Re: Re: [PATCH v7] builtin/clone.c: add --reject-shallow option
-References: <pull.865.v6.git.1614878345754.gitgitgadget@gmail.com>, 
-        <pull.865.v7.git.1616670558261.gitgitgadget@gmail.com>, 
-        <7a71c96c8dbd11eb8bb0d4ae5278bc1296681@pobox.com>
-X-Priority: 3
-X-GUID: 6CAF5D4E-12F3-434A-A7FC-8CB414630342
-X-Has-Attach: no
-X-Mailer: Foxmail 7.2.19.158[cn]
-Mime-Version: 1.0
-X-source-message-id: <2021032611485180646623@oschina.cn>
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: base64
-Message-ID: <552b26168de611eb8af90024e87935e7@oschina.cn>
+        id S230135AbhCZEMI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 26 Mar 2021 00:12:08 -0400
+Received: from cloud.peff.net ([104.130.231.41]:49444 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229446AbhCZELg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Mar 2021 00:11:36 -0400
+Received: (qmail 28451 invoked by uid 109); 26 Mar 2021 04:11:35 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 26 Mar 2021 04:11:35 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 7316 invoked by uid 111); 26 Mar 2021 04:11:36 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 26 Mar 2021 00:11:36 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 26 Mar 2021 00:11:34 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        Eric Wong <e@80x24.org>
+Subject: Re: [PATCH v4 3/4] Makefile/coccicheck: allow for setting xargs
+ concurrency
+Message-ID: <YF1e9mIQUKEOPSbn@coredump.intra.peff.net>
+References: <20210306192525.15197-1-avarab@gmail.com>
+ <cover.1616414951.git.avarab@gmail.com>
+ <9d5814dacdc281389c4cb163ddbe4b749e6c0852.1616414951.git.avarab@gmail.com>
+ <YFuSSqbAjTmaEMCB@coredump.intra.peff.net>
+ <877dlwotjc.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <877dlwotjc.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-VGhhbmtzIGZvciB5b3VyIHJldmlldy4KCgotLS0tLS0tLS0tLS0tLQpsaWxpbmNoYW9Ab3NjaGlu
-YS5jbgo+IkxpIExpbmNoYW8gdmlhIEdpdEdpdEdhZGdldCIgPGdpdGdpdGdhZGdldEBnbWFpbC5j
-b20+IHdyaXRlczoKPgo+PiBAQCAtMTIxNiw2ICsxMjM0LDEwIEBAIGludCBjbWRfY2xvbmUoaW50
-IGFyZ2MsIGNvbnN0IGNoYXIgKiphcmd2LCBjb25zdCBjaGFyICpwcmVmaXgpCj4+wqAgaWYgKGZp
-bHRlcl9vcHRpb25zLmNob2ljZSkKPj7CoCB3YXJuaW5nKF8oIi0tZmlsdGVyIGlzIGlnbm9yZWQg
-aW4gbG9jYWwgY2xvbmVzOyB1c2UgZmlsZTovLyBpbnN0ZWFkLiIpKTsKPj7CoCBpZiAoIWFjY2Vz
-cyhta3BhdGgoIiVzL3NoYWxsb3ciLCBwYXRoKSwgRl9PSykpIHsKPj4gKwlpZiAocmVqZWN0X3No
-YWxsb3cpCj4+ICsJZGllKF8oInNvdXJjZSByZXBvc2l0b3J5IGlzIHNoYWxsb3csIHJlamVjdCB0
-byBjbG9uZS4iKSk7Cj4+ICsJZWxzZQo+PiArCXdhcm5pbmcoXygic291cmNlIHJlcG9zaXRvcnkg
-aXMgc2hhbGxvdy4iKSk7Cj4KPkhtcGgsIGlzIGl0IGFuIGltcHJvdmVtZW50IHRvIHdhcm4oKSB3
-aGVuIHRoZSB1c2VyIGRvZXMgbm90IG1pbmQKPmNsb25pbmcgYSBzaGFsbG93IHJlcG9zaXRvcnk/
-Cj4gClVoLCB0aGUgaWRlYSB0byB3YXJuIGNvbWVzIGZyb20gcHJldmlvdXMgY29tbWVudHMgSSB3
-cm90ZSAyNSBkYXlzIGFnbzoKCsKgICJhbmQgbWF5YmUgd2UgY291bGQgd2FybiBjbGllbnQgaW4g
-ZmV0Y2gtcGFjayBzdGFnZSwgaWYgd2UgZG9uJ3TCoGNob29zZSAKwqAgwqB0byByZWplY3Qgc2hh
-bGxvdyBjbG9uaW5nLiIKCnRoZW4gbm8gb25lIHJlc3BvbnNlIHRvIHRoYXQgcG9pbnQsIHNvIEkg
-dGhpbmsgaXMgb2sgdG8gYXBwbHkgaXQuCk5vdywgaXQgc2VlbXMgbGlrZSBhIGJhZCBpZGVhLiBJ
-IHdpbGwgcmVtb3ZlIGl0LgoKCj4JJCBnaXQgY2xvbmUgLS1kZXB0aD0zICRVUkwgY2xvbmUtMQo+
-CSQgZ2l0IGNsb25lIGZpbGU6Ly8kKHB3ZCkvY2xvbmUtMSBjbG9uZS0yCj4KPndvdWxkIGdpdmUg
-dXMgY2xvbmUtMiB0aGF0IGlzIGp1c3QgYXMgZnVuY3Rpb25hbCBhcyBjbG9uZS0xIGlzLCBubz8K
-PmNsb25lLTEgbWF5IGJlIG1pc3Npbmcgb2JqZWN0cyB0aGF0IGlzIG5lZWRlZCBmYXIgaW50byB0
-aGUgcGFzdCwgYW5kCj5jbG9uZS0yIHdvdWxkIGxhY2sgdGhlIHNhbWUgc2V0IG9mIG9iamVjdHMg
-YXMgY2xvbmUtMSBkb2VzLCBidXQgYQo+dXNlciB3aG8gaXMgaGFwcGlseSB1c2luZyBjbG9uZS0x
-IHdvdWxkIGJlIGhhcHB5IHdpdGggY2xvbmUtMiB0aGUKPnNhbWUgd2F5LCBubz8KPgo+PiBkaWZm
-IC0tZ2l0IGEvZmV0Y2gtcGFjay5jIGIvZmV0Y2gtcGFjay5jCj4+IGluZGV4IGZiMDRhNzZjYTI2
-My4uNzJiMzc4NDQ5YTA3IDEwMDY0NAo+PiAtLS0gYS9mZXRjaC1wYWNrLmMKPj4gKysrIGIvZmV0
-Y2gtcGFjay5jCj4+IEBAIC0xMTI5LDkgKzExMjksMTMgQEAgc3RhdGljIHN0cnVjdCByZWYgKmRv
-X2ZldGNoX3BhY2soc3RydWN0IGZldGNoX3BhY2tfYXJncyAqYXJncywKPj7CoCBpZiAoYXJncy0+
-ZGVlcGVuKQo+PsKgIHNldHVwX2FsdGVybmF0ZV9zaGFsbG93KCZzaGFsbG93X2xvY2ssICZhbHRl
-cm5hdGVfc2hhbGxvd19maWxlLAo+PsKgIE5VTEwpOwo+PiAtCWVsc2UgaWYgKHNpLT5ucl9vdXJz
-IHx8IHNpLT5ucl90aGVpcnMpCj4+ICsJZWxzZSBpZiAoc2ktPm5yX291cnMgfHwgc2ktPm5yX3Ro
-ZWlycykgewo+PiArCWlmIChhcmdzLT5yZW1vdGVfc2hhbGxvdykKPj4gKwlkaWUoXygic291cmNl
-IHJlcG9zaXRvcnkgaXMgc2hhbGxvdywgcmVqZWN0IHRvIGNsb25lLiIpKTsKPgo+U3RvcHBpbmcg
-ZWFybHkgYmVmb3JlIGNhbGxpbmcgZ2V0X3BhY2soKSB3b3VsZCBzaWduaWZpY2FudGx5IHJlZHVj
-ZQo+dGhlIG92ZXJoZWFkLCB3aGljaCBpcyBnb29kLgo+Cj4+ICsJZWxzZQo+PiArCXdhcm5pbmco
-Xygic291cmNlIHJlcG9zaXRvcnkgaXMgc2hhbGxvdy4iKSk7Cj4KPlRoZSBzYW1lIHF1ZXN0aW9u
-IG9uIHRoZSB3aXNkb20gb2Ygd2FybmluZyBoZXJlLiAKPgo+PiBAQCAtMTQ5OCwxMCArMTUwMiwx
-NCBAQCBzdGF0aWMgdm9pZCByZWNlaXZlX3NoYWxsb3dfaW5mbyhzdHJ1Y3QgZmV0Y2hfcGFja19h
-cmdzICphcmdzLAo+PsKgICogcmVqZWN0ZWQgKHVubGVzcyAtLXVwZGF0ZS1zaGFsbG93IGlzIHNl
-dCk7IGRvIHRoZSBzYW1lLgo+PsKgICovCj4+wqAgcHJlcGFyZV9zaGFsbG93X2luZm8oc2ksIHNo
-YWxsb3dzKTsKPj4gLQlpZiAoc2ktPm5yX291cnMgfHwgc2ktPm5yX3RoZWlycykKPj4gKwlpZiAo
-c2ktPm5yX291cnMgfHwgc2ktPm5yX3RoZWlycykgewo+PiArCWlmIChhcmdzLT5yZW1vdGVfc2hh
-bGxvdykKPj4gKwlkaWUoXygic291cmNlIHJlcG9zaXRvcnkgaXMgc2hhbGxvdywgcmVqZWN0IHRv
-IGNsb25lLiIpKTsKPj4gKwllbHNlCj4+ICsJd2FybmluZyhfKCJzb3VyY2UgcmVwb3NpdG9yeSBp
-cyBzaGFsbG93LiIpKTsKPgo+T0ssIHNvLCB0aGlzIGlzIHRoZSBlcXVpdmFsZW50IG9mIHRoZSBh
-Ym92ZSBmb3IgcHJvdG9jb2wtdjI/wqAgVGhlCj5zYW1lIGNvbW1lbnRzIGFwcGx5LCB0aGVuLiAK
-ClllcywgdGhpcyBpcyBmb3IgcHJvdG9jb2wgdjIuCj4KPj4gZGlmZiAtLWdpdCBhL3QvdDU2MDYt
-Y2xvbmUtb3B0aW9ucy5zaCBiL3QvdDU2MDYtY2xvbmUtb3B0aW9ucy5zaAo+PiBpbmRleCA0Mjhi
-MGFhYzkzZmEuLjI4NjNiOGIyOGQ0NCAxMDA3NTUKPj4gLS0tIGEvdC90NTYwNi1jbG9uZS1vcHRp
-b25zLnNoCj4+ICsrKyBiL3QvdDU2MDYtY2xvbmUtb3B0aW9ucy5zaAo+PiBAQCAtNSw2ICs1LDgg
-QEAgR0lUX1RFU1RfREVGQVVMVF9JTklUSUFMX0JSQU5DSF9OQU1FPW1haW4KPj7CoCBleHBvcnQg
-R0lUX1RFU1RfREVGQVVMVF9JTklUSUFMX0JSQU5DSF9OQU1FCj4+wqAKPj7CoCAuIC4vdGVzdC1s
-aWIuc2gKPj4gKy4gIiRURVNUX0RJUkVDVE9SWSIvbGliLWh0dHBkLnNoCj4+ICtzdGFydF9odHRw
-ZAo+PsKgCj4+wqAgdGVzdF9leHBlY3Rfc3VjY2VzcyAnc2V0dXAnICcKPj7CoAo+PiBAQCAtNDUs
-NiArNDcsNTEgQEAgdGVzdF9leHBlY3Rfc3VjY2VzcyAnZGlzYWxsb3dzIC0tYmFyZSB3aXRoIC0t
-c2VwYXJhdGUtZ2l0LWRpcicgJwo+PsKgCj4+wqAgJwo+PsKgCj4+ICt0ZXN0X2V4cGVjdF9zdWNj
-ZXNzICdmYWlsIHRvIGNsb25lIGh0dHAgc2hhbGxvdyByZXBvc2l0b3J5JyAnCj4KPnMvZmFpbCB0
-byBjbG9uZS9yZWplY3QgY2xvbmluZy8sIHBlcmhhcHMuIAoKT2ssIHdpbGwgZG8uCj4KPj4gK3Rl
-c3RfZXhwZWN0X3N1Y2Nlc3MgJ2Nsb25lIHNoYWxsb3cgcmVwb3NpdG9yeSB3aXRoIC0tbm8tcmVq
-ZWN0LXNoYWxsb3cnICcKPj4gKwlybSAtcmYgc2hhbGxvdy1yZXBvICYmCj4+ICsJZ2l0IGNsb25l
-IC0tZGVwdGg9MSAtLW5vLWxvY2FsIHBhcmVudCBzaGFsbG93LXJlcG8gJiYKPj4gKwlnaXQgY2xv
-bmUgLS1uby1yZWplY3Qtc2hhbGxvdyAtLW5vLWxvY2FsIHNoYWxsb3ctcmVwbyBjbG9uZS1yZXBv
-Cj4KPk9LLsKgIEFsc28gd2l0aG91dCAiLS1uby1yZWplY3Qtc2hhbGxvdyIgb3B0aW9uLCB0aGUg
-Y29tbWFuZCB3b3VsZAo+c3VjY2Vzc2Z1bGx5IGNsb25lIGZyb20gdGhlIHNoYWxsb3ctcmVwbywg
-SSBwcmVzdW1lPyAKClllcywgZXhhY3RseS4KPgo+VGhlIGNoYW5nZXMgbG9vayBtb3JlLW9yLWxl
-c3MgZ29vZCB0byBtZSwgZXhjZXB0IGZvciB0aGUgIndhcm5pbmcoKSIKPmJpdCwgd2hpY2ggSSBk
-byBub3QgdGhpbmsgaXMgYSBnb29kIGlkZWEuIAoKSSB3aWxsIHJlbW92ZSB0aGUgdW5uZWNlc3Nh
-cnkgd2FybmluZygpIHBhcnQuCgpUaGFua3MhCgoK
+On Thu, Mar 25, 2021 at 03:29:11AM +0100, Ævar Arnfjörð Bjarmason wrote:
 
+> > I don't understand this 9999 comment. The original was sometimes setting
+> > $limit to the empty string, and then doing:
+> >
+> >  xargs $limit
+> >
+> > How is that any different than setting SPATCH_XARGS to just "xargs" for
+> > the unlimited case?
+> 
+> The "over multiple lines" is important. But it seems not
+> anymore. I.e. in an earlier version I had:
+> 
+>     $(XARGS) \
+>         $(XARGS_FLAGS) \
+>         $(SPATCH)
+> 
+> And it would brek if XARGS_FLAGS was empty. So I set it to -n 9999 as a
+> fallback.
+
+Ah, OK, that makes more sense. Though I'm still slightly confused, just
+because I think the Makefile will eat those backslashed newlines, and
+the shell will just see extra whitespace. I.e.:
+
+  $ cat Makefile
+  foo:
+  	echo \
+  		$(A) \
+  		$(B) \
+  		$(C)
+
+  $ make foo A=one C=three
+  echo \
+  	one \
+  	 \
+  	three
+  one three
+
+I suspect whatever you wrote that hit the problem was just slightly
+different. I doubt this is worth thinking about any further, but it is a
+weird curiosity to me. So feel free to explore and respond if you find
+it interesting, but don't feel compelled to. :)
+
+> > As I mentioned in the last round, using "-P" is racy. I'm not sure if
+> > it's something we should be recommending to people.
+> 
+> Yes, this would need to use N tempfiles we'd cat together at the end to
+> be POSIX-reliable.
+> 
+> In practice I've never seen this sort of thing be unreliable for a case
+> like this.
+> 
+> POSIX just guarantees that the output won't be interleaved up to
+> PIPE_BUF, which is typically 4k. We certainly get patches bigger than
+> that from spatch in some cases.
+
+One nit (because I spent quite a long time looking into this a while ago
+for an unrelated thing): POSIX only talks about PIPE_BUF for pipes. For
+regular files in O_APPEND mode (or two processes sharing a descriptor
+from their parent, as we'd have here), I think write() is allowed to do
+a short write, at which point you'd lose atomicity.
+
+In practice, I'd expect most small-ish (say, less than a page) writes to
+happen in a single go, especially on modern operating systems. But I
+wouldn't be too surprised if it depends on details of the filesystem, or
+even the file you're writing into. E.g., if there are 20 bytes left in a
+filesystem block that the end of the file is currently pointing to, and
+you ask to write 30 bytes, it seems plausible that we might write the
+first 20 to fill out the block, and then have a point where we could get
+interrupted by a signal and return early, etc.
+
+> But from the OS's perspective emitting this output happens at a glacial
+> pace. So even if it crosses that boundary it's unlikely to be
+> interleaved.
+
+Yes, I think even if it's possible to race, the general lack of volume
+of writes is likely to save us.
+
+Everything below is more curiosity, so again, don't sink time into it if
+it's not an interesting tangent for you.
+
+> Even:
+> 
+>     perl -wE 'print "a" for 1..1024*1024*100' >1
+>     perl -wE 'print "b" for 1..1024*1024*100' >2
+>     perl -wE 'print "\n" for 1..1024*1024*100' >3
+>     $ du -shc 1 2 3
+>     100M    1
+>     100M    2
+>     100M    3
+>     300M    total
+> 
+> Which at least on this computer I can't get to not print:
+> 
+>     $ echo 1 2 3 | xargs -P 3 -n 1 cat|wc -l
+>     104857600
+> 
+> Suggesting that even for output of that size the \n's aren't mixed
+> up. YMMV.
+
+I don't think this is telling us much, for two reasons:
+
+  - it's a pipe, not a file, so PIPE_BUF _does_ count here
+
+  - "wc -l" is counting the number of newlines, which always will be the
+    same, whether there are interleaved blocks or not. The interesting
+    thing is whether a single write() from one of the "cat" calls is
+    interleaved with another, but we can't tell that without knowing how
+    big a block cat is using.
+
+A more interesting test is something like:
+
+  for i in a b c; do
+    perl -e '
+      syswrite(STDOUT,"this is $ARGV[0]\n") for 1..1024*1024*10
+    ' $i &
+  done >out
+  wait
+  sort <out | uniq -c
+
+We are writing to a shared file here, and we care whether each
+individual syswrite ever got interleaved with another (which we would
+notice because our sort/uniq output would have more than the expected
+three lines).
+
+We can even spice it up with some signals on one of the processes by
+putting:
+
+  $SIG{ALRM} = sub { print STDERR "alarm $ARGV[0]\n" };
+
+into the perl, and then doing:
+
+  for t in $(seq 1000); do
+    kill -ALRM %1
+    sleep 0.01
+  done
+
+before the wait. But at least on Linux (with ext4), that seems to always produce
+atomic results for each write(). Even if I increase the size of the
+message to 4k or larger.
+
+So it seems pretty solid there, but I'm not sure I would guarantee it on
+other platforms or filesystems.
+
+-Peff
