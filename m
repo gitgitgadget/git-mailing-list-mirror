@@ -2,302 +2,165 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49648C433E4
-	for <git@archiver.kernel.org>; Fri, 26 Mar 2021 10:37:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B8568C433C1
+	for <git@archiver.kernel.org>; Fri, 26 Mar 2021 10:43:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1C6CA61A49
-	for <git@archiver.kernel.org>; Fri, 26 Mar 2021 10:37:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7145B61A49
+	for <git@archiver.kernel.org>; Fri, 26 Mar 2021 10:43:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230001AbhCZKhO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 26 Mar 2021 06:37:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57830 "EHLO
+        id S229871AbhCZKnL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 26 Mar 2021 06:43:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59166 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229969AbhCZKhA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Mar 2021 06:37:00 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACB6DC0613AA
-        for <git@vger.kernel.org>; Fri, 26 Mar 2021 03:36:59 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id j4-20020a05600c4104b029010c62bc1e20so2720433wmi.3
-        for <git@vger.kernel.org>; Fri, 26 Mar 2021 03:36:59 -0700 (PDT)
+        with ESMTP id S229580AbhCZKnF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Mar 2021 06:43:05 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8968C0613AA
+        for <git@vger.kernel.org>; Fri, 26 Mar 2021 03:43:04 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id b16so5760924eds.7
+        for <git@vger.kernel.org>; Fri, 26 Mar 2021 03:43:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=MxAd/wAjnEerUZSW3pCLd9DpQGnc9iMa8X/PBzxEmAw=;
-        b=IHecP3iOHOZsQyyyn26UpDvVAMp31apyv0GPwmEsH7i3atz/H6m3iyowbdWxrOGW2b
-         bHxNG7VbJUtMttujht8GTLcTYFBitFJSYoakfZX+0zXc54jhc23g8J/JfjC4826jaPNc
-         t1UdOJlqSgt42P9rsaLo3LAnN3n42BWbGLlWwvq85BvKHfWClhIcM/lIyN9GrV9N9aHg
-         74dcwzJyHrDt5QjGf/SFO81+aWL0PKK8KsBq5+ONt6FlVsRSs+9yXYnXDEOtEjGZ0F44
-         3mSDGpwP/UQEycmT16vFDAtONZw7rl2I4SYwbWAQprxH3n+Ctb5sBC/gEK+Z18Nli/mA
-         MdgQ==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=/ph4ALhCB3mINVigumZEEguBAGzdDdl8xTTt361rSrw=;
+        b=j+ZmIh66F9WtYfzbCrHsyIK67H8LCsPhAhd/hZFKEqyxJP2Yb9bSq9eVwkbtcCa5l1
+         lP8YVtwd7F+kY8U7h6n3j+p8nqgTEsnKt6uEnRSZSa7HAheXN9vOUOzVDzlfWDVkvt/s
+         tdh1K+ZHuVDtnc7jZwHEFbHHQJApS3Jj0FlexNfVi585/ViBUG6196KAra5jZWFAYr3M
+         /wLNWgo/krVUSS+eXXD1YhGd68cHdK4W2UIMEzLd4SZomkiJLFWMAqAnlJHKY3VegH/v
+         1zVxG52P0nUkhEkmnYtUay646wniyWCWSsazTmLCjwMUSknQy4xp/rZ42JxkeBCdIm1+
+         EUQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=MxAd/wAjnEerUZSW3pCLd9DpQGnc9iMa8X/PBzxEmAw=;
-        b=ZpBd9T2DFtcKx2QXNnUjKypG3jLtaPKYRERTRib7hM7VXv8hQSNhKkOjbvFg+5AVzW
-         EimWkfUFFPgcBo15+1b4VdyOgkrg/XyN0vnuWte1L+mKCUgiwyErV1WCt8aQZQEZpR24
-         IG9r7nHEtfQaWILm0Q3hmRhnVScPmDjBPQQCkJ1dfdvIt6vQLYawOF1okby5d9wgRshh
-         +iyyDxHmHzm8rKWREKJUkWPsuUPqXtQN0ZyP6eHwq39AT1cOxkDeX3YMjZL5BiapdgCg
-         cMkPrqm/W/6tb9duMUdroge/TPaeoDt8tHhUyNv5OHU+NPJyNCWPfqcpRicpteZ3ejtz
-         epDA==
-X-Gm-Message-State: AOAM530aDJCBAkpnG9ohwRzt86CHJQ2pmX1EmEy3J166sk3pijGZwBs2
-        yWt6+3INPOWVXSw+GqFUuK3k6csqojOjbg==
-X-Google-Smtp-Source: ABdhPJzZg7Rl9TXzpoWs/pHVyUaoZEAJhuLsk7vJHk0CRduLbD3FHBPD/K0iZhElkCSEDXEfD/GElw==
-X-Received: by 2002:a05:600c:2946:: with SMTP id n6mr12357842wmd.52.1616755018011;
-        Fri, 26 Mar 2021 03:36:58 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id o2sm1752563wmr.10.2021.03.26.03.36.57
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=/ph4ALhCB3mINVigumZEEguBAGzdDdl8xTTt361rSrw=;
+        b=McckbTlBL2zpTCo/ecPVM/eQzmuhA2W0Kp8KcD/gF6u9RE03Mv89wpJYDesDAI2OL+
+         m0eTmpEj7GcY+qVsRfu1r1E3SVIz8CwtgVnyC8wvFld7spvfW6Pgo4/ToiaDlcjyDfz0
+         m9uawZxCPquO04JF7aXqkyLg/H7r7KmW9SbsDXOeg1DzYo5Npaog5dxDQTpAFMgHMh2g
+         VsqKPXPBw6wWvyokIGBcslv1YA1Z/p4ugq0bjhzsYjVLcSg8B+Fb8STbMl5ToFI/JPug
+         WBrqOCuRaGN7ZDXu7u5//rX2aeBi35CBKjFXHpX3YSpwbIFRLvxOattaRokPVEuku0+x
+         Bamw==
+X-Gm-Message-State: AOAM533C4OkbXl+ORsb2wBxcE3ssmzq4WjSTd8OG1tkFEUk07qPn/p2G
+        T0NaqnhHcKBWd+LMVJ/3VsM=
+X-Google-Smtp-Source: ABdhPJwMbXxUuqcurgSgd+NrSrEoSF1T1WteKseSxb+eBzALga+OLp9Dg4by6Zos47iHcY2xYstWYw==
+X-Received: by 2002:aa7:dc49:: with SMTP id g9mr13891070edu.60.1616755383332;
+        Fri, 26 Mar 2021 03:43:03 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id b4sm3663556eja.47.2021.03.26.03.43.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Mar 2021 03:36:57 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 4/5] doc lint: fix bugs in, simplify and improve lint script
-Date:   Fri, 26 Mar 2021 11:36:49 +0100
-Message-Id: <patch-4.6-5c8e8f21495-20210326T103454Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.31.0.419.gfc6e4cae13
-In-Reply-To: <cover-0.6-00000000000-20210326T103454Z-avarab@gmail.com>
-References: <cover-0.6-00000000000-20210326T103454Z-avarab@gmail.com>
+        Fri, 26 Mar 2021 03:43:02 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     jost.schulte@tutanota.com
+Cc:     Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
+Subject: Re: Configure default merge message
+References: <MW_aJot--3-2@tutanota.com> <xmqqk0pwxqvt.fsf@gitster.g>
+ <87a6qsourb.fsf@evledraar.gmail.com> <MWhDNa_--3-2@tutanota.com>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
+In-reply-to: <MWhDNa_--3-2@tutanota.com>
+Date:   Fri, 26 Mar 2021 11:43:02 +0100
+Message-ID: <87v99enqkp.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The lint-gitlink.perl script added in ab81411ced (ci: validate
-"linkgit:" in documentation, 2016-05-04) was more complex than it
-needed to be. It:
 
- - Was using File::Find to recursively find *.txt files in
-   Documentation/, let's instead use the Makefile as a source of truth
-   for *.txt files, and pass it down to the script.
+On Fri, Mar 26 2021, jost.schulte@tutanota.com wrote:
 
- - We now don't lint linkgit:* in RelNotes/* or technical/*, which we
-   shouldn't have been doing in the first place anyway.
+> 25 Mar 2021, 03:02 by avarab@gmail.com:
+>
+>>
+>> On Wed, Mar 24 2021, Junio C Hamano wrote:
+>>
+>>> jost.schulte@tutanota.com writes:
+>>>
+>>>> Hello all,
+>>>>
+>>>> I'm using git mainly with BitBucket repositories. When I pull from a r=
+emote, the default commit message will be "Merge branch 'source-branch-name=
+' of https://bitbucket.org/ <https://bitbucket.org/jibbletech/jibble-2.0-cl=
+ient-web>repository-name into destination-branch-name".
+>>>>
+>>>> I'd like to configure git to omit the "of https://bitbucket.org/reposi=
+tory-name" part. How can I do that?
+>>>>
+>>>> Regards
+>>>> Jost
+>>>>
+>>>
+>>> =C3=86var, is this something we recently made it impossible with 4e1683=
+33
+>>> (shortlog: remove unused(?) "repo-abbrev" feature, 2021-01-12), or
+>>> is there more to it than resurrecting that "feature" to do what Jost
+>>> seems to want?
+>>>
+>>
+>> Perhaps I'm using it incorrectly, but I don't see how that repo-abbrev
+>> feature ever resulted in the insertion of this munged content into the
+>> actual commit object.
+>>
+>> The shortlog examples of "..." in 4e168333 are of shortlog's output
+>> being modified on the fly. Not of them being inserted into commits.
+>>
+>> You can run "git merge" with "--log" which says it inserts "shortlog"
+>> output. So I thought that maybe lines that were not the first "Merge
+>> ... into" line in the message could have gotten munged in this way
+>> before my change.
+>>
+>> But I don't think that happened either, and reverting 4e168333 and doing
+>> a merge --log locally with e.g. "# repo-abbrev: branch" does not munge
+>> the string "branch" in either the subject or the body, it's retained,
+>> e.g.:
+>>=20=20
+>>  commit 02c864e58da (HEAD)
+>>  Merge: 353c73510dc c6d63de00ff
+>>  Author: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+>>  Date:   Thu Mar 25 03:00:21 2021 +0100
+>>=20=20
+>>  Merge branch 'to-merge' into HEAD
+>>=20=20
+>>  * to-merge:
+>>  Merge this branch blah blah
+>>=20=20
+>>
+>> That's because "merge" never used the munging.
+>>
+>> If you look at the code in 7595e2ee6ef (git-shortlog: make common
+>> repository prefix configurable with .mailmap, 2006-11-25) when this
+>> repo-abbrev feature was first added the "merge" would use
+>> builtin-fmt-merge-msg.c to format the "shortlog", which implemented its
+>> own function to do so, and didn't use the mailmap.
+>>
+>> As to Jost's question. I think the way to do this is to use
+>> fmt-merge-msg, see 2102440c17f (fmt-merge-msg -m to override merge
+>> title, 2010-08-17) for an example.
+>>
+>> That seems like it would also be simpler than Jeff King's suggestion in
+>> the side-thread in <YFvAJU3Euxhjb+uw@coredump.intra.peff.net>.
+>>
+>
+> Thank you for the detailed explanation. Where can I see the commits
+> that you mention?
 
- - When the doc-diff script was added in beb188e22a (add a script to
-   diff rendered documentation, 2018-08-06) we started sometimes having
-   a "git worktree" under "documentation". This tree contains a full
-   checkout of git.git, as a result the "lint" script would recurse into
-   that, and lint any *.txt file found in that entire repository.
+[It's good practice on this mailing list not to top-post]
 
-   In practice the only in-tree "linkgit" outside of the
-   Documentation/ tree is contrib/contacts/git-contacts.txt and
-   contrib/subtree/git-subtree.txt, so this wouldn't emit any errors
+4e168333 is a commit in your copy of the git.git repository.
 
-Now we instead simply trust the Makefile to give us *.txt files, and
-since the Makefile also knows what sections each page should be in we
-don't have to open the files ourselves and try to parse that out. As a
-bonus this will also catch bugs with the section line in the file
-being incorrect.
+The 02c864e58da, 353c73510dc and c6d63de00ff are just something that was
+part of a throwaway experiment I ran locally.
 
-The structure of the new script is mostly based on
-t/check-non-portable-shell.pl. As an added bonus it will also use
-pos() to print where the problems it finds are, e.g. given an issue
-like:
+I created two branches based on git.git's 238803cb409 (the commit before
+4e168333), one added a repo-abbrev line to .mailmap, the other had a
+string in the subject/body that would match that repo-abbrev.
 
-    diff --git a/Documentation/git-cherry.txt b/Documentation/git-cherry.txt
-    [...]
-     and line numbers.  git-cherry therefore detects when commits have been
-    -"copied" by means of linkgit:git-cherry-pick[1], linkgit:git-am[1] or
-    -linkgit:git-rebase[1].
-    +"copied" by means of linkgit:git-cherry-pick[2], linkgit:git-am[3] or
-    +linkgit:git-rebase[4].
-
-We'll now emit:
-
-    git-cherry.txt:20: error: git-cherry-pick[2]: wrong section (should be 1), shown with 'HERE' below:
-    git-cherry.txt:20:      "copied" by means of linkgit:git-cherry-pick[2]' <-- HERE
-    git-cherry.txt:20: error: git-am[3]: wrong section (should be 1), shown with 'HERE' below:
-    git-cherry.txt:20:      "copied" by means of linkgit:git-cherry-pick[2], linkgit:git-am[3]' <-- HERE
-    git-cherry.txt:21: error: git-rebase[4]: wrong section (should be 1), shown with 'HERE' below:
-    git-cherry.txt:21:      linkgit:git-rebase[4]' <-- HERE
-
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- Documentation/Makefile          |  14 ++++-
- Documentation/lint-gitlink.perl | 108 +++++++++++++++-----------------
- 2 files changed, 65 insertions(+), 57 deletions(-)
-
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 7313956d73f..6bfd8c75772 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -4,6 +4,7 @@ MAN5_TXT =
- MAN7_TXT =
- HOWTO_TXT =
- INCLUDE_TARGETS_TXT =
-+ALL_TXT =
- TECH_DOCS =
- ARTICLES =
- SP_ARTICLES =
-@@ -49,6 +50,13 @@ HOWTO_TXT += $(wildcard howto/*.txt)
- INCLUDE_TARGETS_TXT += $(wildcard *.txt)
- INCLUDE_TARGETS_TXT += $(wildcard config/*.txt)
- 
-+# For linting
-+ALL_TXT += $(MAN1_TXT)
-+ALL_TXT += $(MAN5_TXT)
-+ALL_TXT += $(MAN7_TXT)
-+ALL_TXT += $(HOWTO_TXT)
-+ALL_TXT += $(INCLUDE_TARGETS_TXT)
-+
- ifdef MAN_FILTER
- MAN_TXT = $(filter $(MAN_FILTER),$(MAN1_TXT) $(MAN5_TXT) $(MAN7_TXT))
- else
-@@ -477,7 +485,11 @@ print-man1:
- 	@for i in $(MAN1_TXT); do echo $$i; done
- 
- lint-docs::
--	$(QUIET_LINT)$(PERL_PATH) lint-gitlink.perl
-+	$(QUIET_LINT)$(PERL_PATH) lint-gitlink.perl \
-+		--section=1 $(MAN1_TXT) \
-+		--section=5 $(MAN5_TXT) \
-+		--section=7 $(MAN7_TXT)	\
-+		--to-lint $(ALL_TXT)
- 
- ifeq ($(wildcard po/Makefile),po/Makefile)
- doc-l10n install-l10n::
-diff --git a/Documentation/lint-gitlink.perl b/Documentation/lint-gitlink.perl
-index 35230875c24..d42f154e024 100755
---- a/Documentation/lint-gitlink.perl
-+++ b/Documentation/lint-gitlink.perl
-@@ -2,72 +2,68 @@
- 
- use strict;
- use warnings;
--use File::Find;
--use Getopt::Long;
- 
--my $basedir = ".";
--GetOptions("basedir=s" => \$basedir)
--	or die("Cannot parse command line arguments\n");
-+# Parse arguments, a simple state machine for input like:
-+#
-+# --section=1 git.txt git-add.txt [...] --to-lint git-add.txt a-file.txt [...]
-+my %TXT;
-+my %SECTION;
-+my $section;
-+my $lint_these = 0;
-+for my $arg (@ARGV) {
-+	if (my ($sec) = $arg =~ /^--section=(\d+)$/s) {
-+		$section = $sec;
-+		next;
-+	} elsif ($arg eq '--to-lint') {
-+		$lint_these = 1;
-+		next;
-+	}
- 
--my $found_errors = 0;
-+	my ($name) = $arg =~ /^(.*?)\.txt$/s;
-+	if ($lint_these) {
-+		$TXT{$name} = $arg;
-+		next;
-+	}
- 
--sub report {
--	my ($where, $what, $error) = @_;
--	print "$where: $error: $what\n";
--	$found_errors = 1;
-+	$SECTION{$name} = $section;
- }
- 
--sub grab_section {
--	my ($page) = @_;
--	open my $fh, "<", "$basedir/$page.txt";
--	my $firstline = <$fh>;
--	chomp $firstline;
--	close $fh;
--	my ($section) = ($firstline =~ /.*\((\d)\)$/);
--	return $section;
-+my $exit_code = 0;
-+sub report {
-+	my ($pos, $line, $target, $msg) = @_;
-+	substr($line, $pos) = "' <-- HERE";
-+	$line =~ s/^\s+//;
-+	print "$ARGV:$.: error: $target: $msg, shown with 'HERE' below:\n";
-+	print "$ARGV:$.:\t$line\n";
-+	$exit_code = 1;
- }
- 
--sub lint {
--	my ($file) = @_;
--	open my $fh, "<", $file
--		or return;
--	while (<$fh>) {
--		my $where = "$file:$.";
--		while (s/linkgit:((.*?)\[(\d)\])//) {
--			my ($target, $page, $section) = ($1, $2, $3);
-+@ARGV = sort values %TXT;
-+while (<>) {
-+	my $line = $_;
-+	while ($line =~ m/linkgit:((.*?)\[(\d)\])/g) {
-+		my $pos = pos $line;
-+		my ($target, $page, $section) = ($1, $2, $3);
- 
--			# De-AsciiDoc
--			$page =~ s/{litdd}/--/g;
-+		# De-AsciiDoc
-+		$page =~ s/{litdd}/--/g;
- 
--			if ($page !~ /^git/) {
--				report($where, $target, "nongit link");
--				next;
--			}
--			if (! -f "$basedir/$page.txt") {
--				report($where, $target, "no such source");
--				next;
--			}
--			my $real_section = grab_section($page);
--			if ($real_section != $section) {
--				report($where, $target,
--					"wrong section (should be $real_section)");
--				next;
--			}
-+		if (!exists $TXT{$page}) {
-+			report($pos, $line, $target, "link outside of our own docs");
-+			next;
-+		}
-+		if (!exists $SECTION{$page}) {
-+			report($pos, $line, $target, "link outside of our sectioned docs");
-+			next;
-+		}
-+		my $real_section = $SECTION{$page};
-+		if ($section != $SECTION{$page}) {
-+			report($pos, $line, $target, "wrong section (should be $real_section)");
-+			next;
- 		}
- 	}
--	close $fh;
--}
--
--sub lint_it {
--	lint($File::Find::name) if -f && /\.txt$/;
--}
--
--if (!@ARGV) {
--	find({ wanted => \&lint_it, no_chdir => 1 }, $basedir);
--} else {
--	for (@ARGV) {
--		lint($_);
--	}
-+	# this resets our $. for each file
-+	close ARGV if eof;
- }
- 
--exit $found_errors;
-+exit $exit_code;
--- 
-2.31.0.419.gfc6e4cae13
+So the merge shows that the "branch" string was not replaced with "...".
 
