@@ -2,138 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D56DDC433DB
-	for <git@archiver.kernel.org>; Fri, 26 Mar 2021 06:25:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B0704C433DB
+	for <git@archiver.kernel.org>; Fri, 26 Mar 2021 06:31:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AC2C561A3F
-	for <git@archiver.kernel.org>; Fri, 26 Mar 2021 06:25:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 851D261A36
+	for <git@archiver.kernel.org>; Fri, 26 Mar 2021 06:31:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230093AbhCZGYe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 26 Mar 2021 02:24:34 -0400
-Received: from cloud.peff.net ([104.130.231.41]:49560 "EHLO cloud.peff.net"
+        id S229580AbhCZGa7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 26 Mar 2021 02:30:59 -0400
+Received: from w4.tutanota.de ([81.3.6.165]:42048 "EHLO w4.tutanota.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229768AbhCZGYE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Mar 2021 02:24:04 -0400
-Received: (qmail 28646 invoked by uid 109); 26 Mar 2021 06:24:04 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 26 Mar 2021 06:24:04 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 8298 invoked by uid 111); 26 Mar 2021 06:24:05 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 26 Mar 2021 02:24:05 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 26 Mar 2021 02:24:02 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     lilinchao@oschina.cn, git@vger.kernel.org
-Subject: Re: [PATCH 2/2] remote-curl.c: handle v1 when check_smart_http
-Message-ID: <YF1+AjgfA6gnAGga@coredump.intra.peff.net>
-References: <20210324053648.25584-1-lilinchao@oschina.cn>
- <006547b28c6311eb93820024e87935e7@oschina.cn>
- <xmqq7dlwxpn3.fsf@gitster.g>
+        id S229782AbhCZGah (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Mar 2021 02:30:37 -0400
+Received: from w3.tutanota.de (unknown [192.168.1.164])
+        by w4.tutanota.de (Postfix) with ESMTP id 48B3A10603BA;
+        Fri, 26 Mar 2021 06:30:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1616740235;
+        s=s1; d=tutanota.com;
+        h=From:From:To:To:Subject:Subject:Content-Description:Content-ID:Content-Type:Content-Type:Content-Transfer-Encoding:Content-Transfer-Encoding:Cc:Cc:Date:Date:In-Reply-To:In-Reply-To:MIME-Version:MIME-Version:Message-ID:Message-ID:Reply-To:References:References:Sender;
+        bh=RnKpefgU87yufweG4HEaywupyHQ59HKEfZqxShfxjts=;
+        b=Ek6U4qxd3jFmYqXUK4Bkyu4b8DoJ5J/NSTCwtYGlKcR8hhwIuCJnxqhRfm5hY0D8
+        HSIfdaXs0modB8FRb8mvzxLoPHrtduEYSJgYO+Rl4ljIqzSw3xl7ju/Ke3GewvxwikX
+        NDe+pxneA7/ZpBlZeIo39opZ7emPSDvnyaU2iRxOvSJLwZ2O2OoJ7696UrhiTaQU0bN
+        aBt1WDy5upNu5R+4rrC+TlUxwea6mIaY64Ry27kvanJi6l3WPWS0Qb/l4+RTiheMtl8
+        d8qX8NFz+XvpbJGM637kUYgw5XXKgud28/asqukrAfCr0DhbdiD/+1ryvzJUqmgxkoO
+        U7g62pxYVA==
+Date:   Fri, 26 Mar 2021 07:30:35 +0100 (CET)
+From:   jost.schulte@tutanota.com
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
+Message-ID: <MWhDYQt--3-2@tutanota.com>
+In-Reply-To: <87a6qsourb.fsf@evledraar.gmail.com>
+References: <MW_aJot--3-2@tutanota.com> <xmqqk0pwxqvt.fsf@gitster.g> <87a6qsourb.fsf@evledraar.gmail.com>
+Subject: Re: Configure default merge message
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq7dlwxpn3.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 24, 2021 at 01:28:32PM -0700, Junio C Hamano wrote:
+Thank you for the detailed explanation. Where can I see the commits that yo=
+u mention?
 
-> > +	} else if (!strcmp(reader.line, "version 1")) {
-> > +		die(_("v1 is just the original protocol with a version string, use v0 or v2 instead."));
-> 
-> The user may no longer get "invalid response; got 'version 1'", but
-> the above does not still explain why v1 is bad and v0 or v2 is
-> welcome, either.  IOW, I do not think the patch improves the message
-> to achieve what it attempted to do, i.e.
-> 
->     ... but the other side just treat it as "invalid response", this
->     can't explain why is not ok.
-> 
-> I wonder if it is a sensible and better alternative to treat v1
-> response as if we got v0 (if v1 is truly the same as v0 except for
-> the initial version advertisement).
-> 
-> Input from those who are familiar with the protocol versions is very
-> much appreciated.
+25 Mar 2021, 03:02 by avarab@gmail.com:
 
-Yes, "v1" is supposed to behave just like v0, except with the version
-advertisement (it is true that there is no point in normal people using
-it, but the purpose was to make sure the version advertisement worked).
-
-I am not sure who is rejecting it, though. Our test suite passes with
-GIT_TEST_PROTOCOL_VERSION=1. Running something like:
-
-  $ GIT_TRACE_PACKET=1 git -c protocol.version=1 ls-remote https://github.com/git/git
-
-yields a conversation like (cut down for clarity):
-
-  git< # service=git-upload-pack
-  git< 0000
-  git< version 1
-  git< 1234abcd[...etc, this is a normal v0/v1 advertisement]
-
-So the version string is there, but it does not trigger the problem
-described by this patch. That's because check_smart_http(), after seeing
-the "# service" line and the flush, takes all the rest of the packetized
-data and gives it to parse_git_refs(), which handles the version field
-line via discover_version().
-
-  Aside: on gitlab.com, the v1 response looks like a v0 response, with
-  no extra header. I guess they did not bother to implement v1, which is
-  OK, since it was not useful after the initial experiment.
-
-So everything seems to be working as intended. Is there some particular
-server that returns "version 1" in the wrong way, triggering the die()?
-
-One curiosity is that for v2, the response from github.com does include
-the "service" line. So it follows the same path as v1, and never hits
-the "version 2" line check here. But http-backend omits the "service"
-line, due to 237ffedd46 (http: eliminate "# service" line when using
-protocol v2, 2018-03-15).
-
-So it's interesting that GitHub behaves differently than http-backend
-here. It's not surprising, since the HTTP framing is all done by a
-custom server there, which implemented off the spec.  What _is_
-surprising is that the client seems perfectly happy to see either form,
-and nobody has noticed the difference until just now.
-
-IMHO the spec is very unclear here; it says "client makes a smart
-info/refs request as described in http-protocol.txt", but doesn't call
-out the difference in the response. It's only implied by the example:
-
-  A v2 server would reply:
-
-     S: 200 OK
-     S: <Some headers>
-     S: ...
-     S:
-     S: 000eversion 2\n
-     S: <capability-advertisement>
-
-where it is unclear whether the blank line is separating HTTP headers
-from the body (and thus "..." is some headers), or if it is separating
-the "# service" line and matching flush from the rest of the response
-body.
-
-I note that gitlab.com also returns the "service" line for v2 (I don't
-know anything about their implementation, but I would not be at all
-surprised if they also use a custom HTTP endpoint; apache+http-backend
-is not very flexible or scalable).
-
-Anyway, that's all just an interesting side note. The client is happy
-with either form (though it might be nice if we had tests for the "#
-service" form; I suspect our tests don't cover that because they are all
-using http-backend).
-
-Getting back to the patch at hand, if there is a server saying "version
-1" without a "service" line, then I think that is a bug in that server.
-
--Peff
+>
+> On Wed, Mar 24 2021, Junio C Hamano wrote:
+>
+>> jost.schulte@tutanota.com writes:
+>>
+>>> Hello all,
+>>>
+>>> I'm using git mainly with BitBucket repositories. When I pull from a re=
+mote, the default commit message will be "Merge branch 'source-branch-name'=
+ of https://bitbucket.org/ <https://bitbucket.org/jibbletech/jibble-2.0-cli=
+ent-web>repository-name into destination-branch-name".
+>>>
+>>> I'd like to configure git to omit the "of https://bitbucket.org/reposit=
+ory-name" part. How can I do that?
+>>>
+>>> Regards
+>>> Jost
+>>>
+>>
+>> =C3=86var, is this something we recently made it impossible with 4e16833=
+3
+>> (shortlog: remove unused(?) "repo-abbrev" feature, 2021-01-12), or
+>> is there more to it than resurrecting that "feature" to do what Jost
+>> seems to want?
+>>
+>
+> Perhaps I'm using it incorrectly, but I don't see how that repo-abbrev
+> feature ever resulted in the insertion of this munged content into the
+> actual commit object.
+>
+> The shortlog examples of "..." in 4e168333 are of shortlog's output
+> being modified on the fly. Not of them being inserted into commits.
+>
+> You can run "git merge" with "--log" which says it inserts "shortlog"
+> output. So I thought that maybe lines that were not the first "Merge
+> ... into" line in the message could have gotten munged in this way
+> before my change.
+>
+> But I don't think that happened either, and reverting 4e168333 and doing
+> a merge --log locally with e.g. "# repo-abbrev: branch" does not munge
+> the string "branch" in either the subject or the body, it's retained,
+> e.g.:
+> =20
+>  commit 02c864e58da (HEAD)
+>  Merge: 353c73510dc c6d63de00ff
+>  Author: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+>  Date:   Thu Mar 25 03:00:21 2021 +0100
+> =20
+>  Merge branch 'to-merge' into HEAD
+> =20
+>  * to-merge:
+>  Merge this branch blah blah
+> =20
+>
+> That's because "merge" never used the munging.
+>
+> If you look at the code in 7595e2ee6ef (git-shortlog: make common
+> repository prefix configurable with .mailmap, 2006-11-25) when this
+> repo-abbrev feature was first added the "merge" would use
+> builtin-fmt-merge-msg.c to format the "shortlog", which implemented its
+> own function to do so, and didn't use the mailmap.
+>
+> As to Jost's question. I think the way to do this is to use
+> fmt-merge-msg, see 2102440c17f (fmt-merge-msg -m to override merge
+> title, 2010-08-17) for an example.
+>
+> That seems like it would also be simpler than Jeff King's suggestion in
+> the side-thread in <YFvAJU3Euxhjb+uw@coredump.intra.peff.net>.
+>
