@@ -2,103 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A33FC433E2
-	for <git@archiver.kernel.org>; Fri, 26 Mar 2021 20:17:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9023FC433DB
+	for <git@archiver.kernel.org>; Fri, 26 Mar 2021 20:32:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1C87B61A28
-	for <git@archiver.kernel.org>; Fri, 26 Mar 2021 20:17:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7089961A10
+	for <git@archiver.kernel.org>; Fri, 26 Mar 2021 20:32:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230231AbhCZUQc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 26 Mar 2021 16:16:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41950 "EHLO
+        id S230027AbhCZUaY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 26 Mar 2021 16:30:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229933AbhCZUQH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Mar 2021 16:16:07 -0400
-Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8336DC0613AA
-        for <git@vger.kernel.org>; Fri, 26 Mar 2021 13:16:07 -0700 (PDT)
-Received: by mail-qk1-x72c.google.com with SMTP id y5so6523451qkl.9
-        for <git@vger.kernel.org>; Fri, 26 Mar 2021 13:16:07 -0700 (PDT)
+        with ESMTP id S229957AbhCZU3o (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Mar 2021 16:29:44 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 672ACC0613AA
+        for <git@vger.kernel.org>; Fri, 26 Mar 2021 13:29:44 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id hq27so10257608ejc.9
+        for <git@vger.kernel.org>; Fri, 26 Mar 2021 13:29:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=JPpW3PAK8HPW7DgQ4+GxZL+QMykTaKHV6xca7moCQlc=;
-        b=Eo1iyJBuH83oYRz+8VY1yp/9zskrVoqV0EvuNzlYCgmGwdZ7RHuMdFMdpC42dF3800
-         kqPN3cFyrJFibZwMitSKCl6e592UGa2XJE4+F30u7IQYxsJPvCr2kwfN/8eR6jB25olM
-         pN6CuZ97tvv1lytlqUDqxtavaLWLQTBudbD2HcSQrpLR/KnyHe/K7XO6y1MrhkIptjZG
-         AwmRUS8qWuO83Sk0UrijQViSJk7KDW6LOMUrnMgc5Y6ng9DFRSCriIMeWWWKl1lszcXu
-         QtTIi5stXZHgIklxI938Xr+lsCKk7IKXhRVk+hPXqcF2QRczQXO+KbcAhUN7WGkUzvJG
-         0ONg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=4/eeoDMpbLT5UmHhOeMGUvn59iQQ0gJ0IjI2MQw9t0Q=;
+        b=tW0FxtMsdkex/ptCtgAEMGOaQOObM7I4SlnsFc/dvBzkcneQ5x6arfpnG601cUkKgU
+         W3jsT0FkY4ZQNtM2ypZZWGpbtUSf3X+Q6+QTYXVanzcMGdgPRLqB7vWK1kg/Hdwf61uO
+         dmJyEaif8Sv5mv3l/CGuujx6p4MV7TD1mH+vPWdWLnqvZyu3Zlq4Dplh3jsJp7t0WQxT
+         UM/hewsQRn9rRZEpPpmAKjS8VEtXInFApRiI59JOY8dDTM+x+zeJct1zJrGVcm34kQAz
+         HnoFVSQ3Ca7zSsFdQsijNhi4AvDAxCKNyrFad2tso1J07Dm2eUnGeGGOHofT0WXMqfla
+         bCKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=JPpW3PAK8HPW7DgQ4+GxZL+QMykTaKHV6xca7moCQlc=;
-        b=KprkSzlH1mIy2W5ZZ706fdMgk9/BNYDnpAV1gMFfwn9Fj6Sl/avS9V5tV3DSdfk2tr
-         ZB70z7L7UB6+Prtc6FJDH7jf8SW+xOHrf7oCcmENhf/hqz5GyrKVONISfu0SgP/zPNel
-         XhMFWyCz/sfQ5dNjcubW7fLMcgmq6aMmL51lhwlGvrtqdhrR272Gb0y5G0sGlVk02K/O
-         k5vnsMD0B7vTZs22uuHRDDBw9HrLffD/HbOuCbVSI+CSHgwCjhJHhAsgJ3iBj8K8lc91
-         JTke6PAUN6Rxke0Rma/7Kk/qd62eIyCfHqKZfx+UJsYLhUWUEjfzLLpUkHQOQQv46MUW
-         byhQ==
-X-Gm-Message-State: AOAM531sP9Q/pNtA3V2wpIatqBwNW8aSq1apE6wxRCZtMC7Th69KXWCr
-        kL03VpEiP9sSIcvNhe/ERxcdW8us0v3JoQ==
-X-Google-Smtp-Source: ABdhPJxVruocn9TfVN20txnV5achALTBVkC6edadnQ+jMBsa1F25bvfRpfg9AV0dhaM1TcUbNjyimQ==
-X-Received: by 2002:a37:8443:: with SMTP id g64mr15013648qkd.185.1616789766664;
-        Fri, 26 Mar 2021 13:16:06 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:21ff:ce2b:b4cd:16f6? ([2600:1700:e72:80a0:21ff:ce2b:b4cd:16f6])
-        by smtp.gmail.com with ESMTPSA id t24sm6445675qto.23.2021.03.26.13.16.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 Mar 2021 13:16:05 -0700 (PDT)
-Subject: Re: [PATCH 0/3] Convert index writes to use hashfile API
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net, git@jeffhostetler.com,
-        Derrick Stolee <derrickstolee@github.com>
-References: <pull.916.git.1616785928.gitgitgadget@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <01c1c74d-cc8a-0541-5193-723c41dd877c@gmail.com>
-Date:   Fri, 26 Mar 2021 16:16:05 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.9.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=4/eeoDMpbLT5UmHhOeMGUvn59iQQ0gJ0IjI2MQw9t0Q=;
+        b=flqFz5PzKxMJ3UFCGE8/wpo2n24h6a8866OP3RYawjKiNV4sVMOyd0VnS16u+2iMop
+         A4GB1PiBpsSLfPy8yQZ961+FK3Cj6vniGluKUXIVNhjp0a6pkpRd5eYvvCaOWw+vaFa2
+         2j+4u+6UoZsklkWMaP+JMljHaHOCYU3DPxAIL5dk4Bg7XcT3ARAYg/2/9+UYviURHcj3
+         xmj/gwyJzUHQepJIXulDOWanMPysSHnLAVHTPJotwa6mTfPRyvPJKb8XoYGNnvVFUD49
+         v6JswQymEHRqMhJGi9hJPp969c0kdiwHxZ0vIKeVzIArfCa8+EmrXogbahn3GObulM+K
+         fwUQ==
+X-Gm-Message-State: AOAM532+JzBvPzl7mQJZYkRTAZfaBpUDjbNpjIUHf8Ko+G4JNEZEmpTV
+        o8xMM5lMcjlRdtdmq4a0Uzw=
+X-Google-Smtp-Source: ABdhPJy/RFaaogVNEosQ9mOzqtdywmviUExjGKEJ69IQntBtII+w5loA+BqCulk0zLvg0JfdGktePA==
+X-Received: by 2002:a17:906:5689:: with SMTP id am9mr16658432ejc.298.1616790583058;
+        Fri, 26 Mar 2021 13:29:43 -0700 (PDT)
+Received: from szeder.dev (84-236-109-92.pool.digikabel.hu. [84.236.109.92])
+        by smtp.gmail.com with ESMTPSA id z17sm4327241eju.27.2021.03.26.13.29.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 26 Mar 2021 13:29:42 -0700 (PDT)
+Date:   Fri, 26 Mar 2021 21:29:40 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, newren@gmail.com, gitster@pobox.com,
+        pclouds@gmail.com, jrnieder@gmail.com,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v4 01/20] sparse-index: design doc and format update
+Message-ID: <20210326202940.GC2271@szeder.dev>
+References: <pull.883.v3.git.1615912983.gitgitgadget@gmail.com>
+ <pull.883.v4.git.1616507069.gitgitgadget@gmail.com>
+ <6426a5c60e53e30091360c00c61c9123803fe9c1.1616507069.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <pull.916.git.1616785928.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+In-Reply-To: <6426a5c60e53e30091360c00c61c9123803fe9c1.1616507069.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/26/2021 3:12 PM, Derrick Stolee via GitGitGadget wrote:
-> As I prepare some ideas on index v5, one thing that strikes me as an
-> interesting direction to try is to use the chunk-format API. This would make
-> our extension model extremely simple (they become optional chunks, easily
-> identified by the table of contents).
-> 
-> But there is a huge hurdle to even starting that investigation: the index
-> uses its own hashing methods, separate from the hashfile API in csum-file.c!
-> 
-> The internals of the algorithms are mostly identical. The only possible
-> change is that the buffer sizes are different: 8KB for hashfile and 128KB in
-> read-cache.c. I was unable to find a performance difference in these two
-> implementations, despite testing on several repo sizes.
+On Tue, Mar 23, 2021 at 01:44:09PM +0000, Derrick Stolee via GitGitGadget wrote:
+> Currently, the index format is only updated in the presence of
+> extensions.sparseIndex instead of increasing a file format version
+> number. This is temporary, and index v5 is part of the plan for future
+> work in this area.
 
-Of course, shortly after I send this series (thinking I've checked all the
-details carefully) I notice that I was using "git update-index --really-refresh"
-for testing, but what I really wanted was "git update-index --force-write".
+> diff --git a/Documentation/technical/sparse-index.txt b/Documentation/technical/sparse-index.txt
+> new file mode 100644
+> index 000000000000..62f6dc225a44
+> --- /dev/null
+> +++ b/Documentation/technical/sparse-index.txt
 
-In this case, I _do_ see a performance degradation using the hashfile API.
-I will investigate whether this is just a poor implementation of the nesting
-hashfile, or something else more tricky. Changing the buffer size doesn't do
-the trick.
+> +To start, we use a new repository extension, `extensions.sparseIndex`, to
+> +allow inserting sparse-directory entries into indexes with file format
+> +versions 2, 3, and 4. This prevents Git versions that do not understand
+> +the sparse-index from operating on one, but it also prevents other
+> +operations that do not use the index at all.
 
-Please ignore this series for now. Sorry for the noise.
+Why is this not a non-optional index extension?  That would allow
+older Git versions and other implementations not understanding sparse
+directory entries to still perform any operation that doesn't involve
+the index.  More importantly, that would prevent older Git versions
+and other implementations not understanding repository extensions from
+potentially wreaking havoc when the index contains sparse directory
+entries.  Notably JGit's current version (5.11.0.202103091610-r) does
+still completely ignore repository extensions, and e.g. happily
+attempts any operations on a SHA256 repository, so it would do the
+same in the presence of 'extensions.sparseIndex' as well.  JGit does
+respect non-optional index extensions, see e.g. 87a6bb701a
+(t5310-pack-bitmaps: make JGit tests work with GIT_TEST_SPLIT_INDEX,
+2018-05-10).
 
--Stolee
+This really should be a non-optional index extension.
+
+> A new format, index v5, will
+> +be introduced that includes sparse-directory entries by default. It might
+> +also introduce other features that have been considered for improving the
+> +index, as well.
