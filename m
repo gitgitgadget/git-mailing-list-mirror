@@ -2,121 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 97AB4C433C1
-	for <git@archiver.kernel.org>; Fri, 26 Mar 2021 21:39:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 760C7C433E1
+	for <git@archiver.kernel.org>; Fri, 26 Mar 2021 22:13:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6C70161A28
-	for <git@archiver.kernel.org>; Fri, 26 Mar 2021 21:39:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6FD2061A2A
+	for <git@archiver.kernel.org>; Fri, 26 Mar 2021 22:13:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230076AbhCZVin (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 26 Mar 2021 17:38:43 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:52589 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229969AbhCZViL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Mar 2021 17:38:11 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 271BBAEFEF;
-        Fri, 26 Mar 2021 17:38:09 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=YORw4qLCfFLTp2SxDkYkEEcVFQs=; b=NWB6Rk
-        FWF6AzWbpFIlh8Iyf7HtVuSCT6wSiwNKYcfr6CdvooVu5luNE8SmZd5yi3wMnAHD
-        yD3K8DNy+blDkO9VJjGmsJNOZm9Y6UOsZifGsXyIp6K/830IhD08MltH0MKVD2wu
-        jWrinR7XCIwoqn+KG+oPq5B+DsCbCPspfRS1s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=HFNMbinQ9iGM2C/Ze7x2psb5E93EKo7y
-        jO81ZVVs3ihyruNxBbf3yt7Mxje06Xx2tCjC3DW9T/vMbWsDWwpYvqYLVeCp+X49
-        z533wlw3qwfSvbhr9lUCrh1szrJyfe2pWZA5jerosVPamPhin/qU+EGninC+1TsH
-        vzUnZfqxpzE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DC879AEFEE;
-        Fri, 26 Mar 2021 17:38:08 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C306AAEFED;
-        Fri, 26 Mar 2021 17:38:04 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, peff@peff.net, me@ttaylorr.com,
-        Derrick Stolee <stolee@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v2] csum-file: make hashwrite() more readable
-References: <pull.914.git.1616608219602.gitgitgadget@gmail.com>
-        <pull.914.v2.git.1616762291574.gitgitgadget@gmail.com>
-Date:   Fri, 26 Mar 2021 14:38:03 -0700
-In-Reply-To: <pull.914.v2.git.1616762291574.gitgitgadget@gmail.com> (Derrick
-        Stolee via GitGitGadget's message of "Fri, 26 Mar 2021 12:38:11
-        +0000")
-Message-ID: <xmqqlfa9siis.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S230423AbhCZWNQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 26 Mar 2021 18:13:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38730 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230043AbhCZWMu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Mar 2021 18:12:50 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAD0FC0613AA
+        for <git@vger.kernel.org>; Fri, 26 Mar 2021 15:12:49 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id o16so7064276wrn.0
+        for <git@vger.kernel.org>; Fri, 26 Mar 2021 15:12:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=YnuYvr9aj0HCHaXB+QOVOSGhueMZrichoFn61B10LOA=;
+        b=N+OFKc0hDdFbgl/Ao4xS6HbfAJ0aBGoOxX+TSY59+J9bfxHdh3+yRyaWJ7ZUQHq/fg
+         3Y6RZIPucQshHhBsfDyJ0m8+1kkRJ0bBYTH2pL3/SBa6sYyukLwKGAJofOzd2Y/2gTSw
+         R16LOgHY80e96azb9dNRyl/TFU3suI8G/h2brGymV8yDMAkYOxCU/trmvsf+SjtvoC/E
+         Az4L9rAJ9z1wsV80F6KkoogRHUtJAyzaew9kKpmHALQvAvKB4MPpUuP2sCUQwAKlCCCn
+         LrAONgThrrO8usNk5bZmBpo7A6ZKt2XEdkKIuvJApr5thnQmQh2lAq9SsiZZjSq3mj8n
+         mn0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=YnuYvr9aj0HCHaXB+QOVOSGhueMZrichoFn61B10LOA=;
+        b=jAyHoksLbHqSj3W7Zdn1IZrmptSvlBtJbDpet10u7qx7TJPlBPluxeg/OB25Op7LeR
+         DLyQYCt2iKNrwqrwBTvce05M2nPHSJaq8rvbqN6ugWiyLKQbTBg8pPta9fZKw8EHUGEw
+         YdYDefG8PwLiCNNQbh286OtLZTQr6l3pSeON33NNVTM43W63muYKXq9Du42uWy6IVlIc
+         DqH5o5Hkot8uBABCflHbbeQbNmFkMGmsP1VlLLqqrmmdqoVic/QRIkq3WwPNrZymcoyL
+         CjKg/bQqnY91/HFdX1YxEprlWsCi514OjrdNUWvwwbk2fRbhuSDNeyhYRtW8ct+zyQR8
+         fl1Q==
+X-Gm-Message-State: AOAM533TXRNPgcFMgY/+s1UYWDlcwouvlumS3euAUpS0Mpu6nHFydylo
+        Y4Mu1XacU/m1M9nu9N3MDdChGYX2yMw=
+X-Google-Smtp-Source: ABdhPJzN7+OnOG5jvO4+w3PW/ePwuxo5wqmT8xyZKhYahsGblDZVajRad0nMeqwIcvVLrnqsKEOEVw==
+X-Received: by 2002:adf:f742:: with SMTP id z2mr3009103wrp.130.1616796768531;
+        Fri, 26 Mar 2021 15:12:48 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id j14sm14436995wrw.69.2021.03.26.15.12.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 26 Mar 2021 15:12:47 -0700 (PDT)
+Message-Id: <pull.917.git.1616796767.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 26 Mar 2021 22:12:44 +0000
+Subject: [PATCH 0/2] Describe Git's security policy
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8C432C08-8E7B-11EB-B41C-D152C8D8090B-77302942!pb-smtp1.pobox.com
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On GitHub, SECURITY.md files are the recommended way to describe how to
+report vulnerabilities, and to set expectations how far back maintenance
+tracks are updated with security bug fixes.
 
->  		if (nr == sizeof(f->buffer)) {
-> -			/* process full buffer directly without copy */
-> -			data = buf;
-> +			/*
-> +			 * Flush a full batch worth of data directly
-> +			 * from the input, skipping the memcpy() to
-> +			 * the hashfile's buffer. In this block,
-> +			 * f->offset is necessarily zero.
-> +			 */
+For example, when navigating to https://github.com/git/git/security/ users
+would be guided to that SECURITY.md file. If it exists.
 
-What made me a bit confused was the fact that, in order to exercise
-the "bypass memcpy and take a full bufferful from the incoming data
-directly" optimization, there are two preconditions.  The incoming
-data must be large enough, and we do not have anything kept in the
-buffer that needs to be emitted before the incoming data.  And the
-cleverness of the original code was that both are checked by this
-single "nr == sizeof(f->buffer)" condition.
+The purpose of this patch series is to add this file, describing Git's
+security policy.
 
-So I do appreciate this extra comment, and I think future readers of
-the code will, too.
+While at it, I also want to document the process how to coordinate the
+ensuing embargoed releases. This is what the second patch is all about.
 
-> +			the_hash_algo->update_fn(&f->ctx, buf, nr);
-> +			flush(f, buf, nr);
->  		} else {
-> -			memcpy(f->buffer + offset, buf, nr);
-> -			data = f->buffer;
-> +			/*
-> +			 * Copy to the hashfile's buffer, flushing only
-> +			 * if it became full.
-> +			 */
-> +			memcpy(f->buffer + f->offset, buf, nr);
-> +			f->offset += nr;
-> +			left -= nr;
-> +			if (!left)
-> +				hashflush(f);
->  		}
->  
->  		count -= nr;
-> -		offset += nr;
->  		buf = (char *) buf + nr;
-> -		left -= nr;
-> -		if (!left) {
-> -			the_hash_algo->update_fn(&f->ctx, data, offset);
-> -			flush(f, data, offset);
-> -			offset = 0;
-> -		}
-> -		f->offset = offset;
->  	}
->  }
->  
->
-> base-commit: 142430338477d9d1bb25be66267225fb58498d92
+The reason for that is quite selfish, as I did two of them, and while I am
+happy that such embargoed releases do not happen all that often, the
+downside is that I keep forgetting all the details. So this document is not
+only meant for knowledge sharing, but in particular to help me the next
+time(s) I coordinate an embargoed release.
+
+Many thanks to Junio who reviewed the first draft of this patch series
+(where I had not yet separated out
+Documentation/howto/coordinate-embargoed-releases.txt).
+
+Johannes Schindelin (2):
+  SECURITY: describe how to report vulnerabilities
+  Document how we do embargoed releases
+
+ Documentation/Makefile                        |   1 +
+ .../howto/coordinate-embargoed-releases.txt   | 131 ++++++++++++++++++
+ SECURITY.md                                   |  51 +++++++
+ 3 files changed, 183 insertions(+)
+ create mode 100644 Documentation/howto/coordinate-embargoed-releases.txt
+ create mode 100644 SECURITY.md
+
+
+base-commit: e6362826a0409539642a5738db61827e5978e2e4
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-917%2Fdscho%2Fsecurity-policy-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-917/dscho/security-policy-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/917
+-- 
+gitgitgadget
