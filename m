@@ -2,91 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9369C433DB
-	for <git@archiver.kernel.org>; Fri, 26 Mar 2021 03:03:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F6DAC433DB
+	for <git@archiver.kernel.org>; Fri, 26 Mar 2021 03:17:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A2A9661A3F
-	for <git@archiver.kernel.org>; Fri, 26 Mar 2021 03:03:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 192BC61A0D
+	for <git@archiver.kernel.org>; Fri, 26 Mar 2021 03:17:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230269AbhCZDCy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 25 Mar 2021 23:02:54 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59677 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230158AbhCZDCd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Mar 2021 23:02:33 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AD22BC950B;
-        Thu, 25 Mar 2021 23:02:32 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=G0YneWhkMwrG65pnvBoq5DqNrFQ=; b=JDfbq2
-        9INyoK2yg/wbk52nC+gPDtoqMTR0GWsaO/U4UaNmjV80jNMlp9Q+qUcE7dnHbutV
-        oEQ1JRJXDWWb8s00bP+k+AUi5HTYemE9bGfwoR+XiUEkR0EokvxKncu03iKzQEio
-        m12OLu8jXXNI/1ZYXlLxPoBVGIyoKk5V/zj3I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=wGlHEnSXapsqrcWuEgaituLYqlEcTS+l
-        oYUC67HnSclkaZGbvQnTKpNJbAKPGE1yLrb0cD7mEuy5Pqv4md27KhqzAv4ZSlnC
-        PD6nm2fCF2fHJVBGNysGMT/Av64wE/saCzC6l08YTbIak8S+LTrN0OklvpRT85bc
-        pKHFbnv59HA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A598DC950A;
-        Thu, 25 Mar 2021 23:02:32 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 336ACC9509;
-        Thu, 25 Mar 2021 23:02:32 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     =?utf-8?B?zqPPhM6xz43Pgc6/z4Igzp3PhM6tzr3PhM6/z4I=?= 
-        <stdedos@gmail.com>, git <git@vger.kernel.org>,
-        =?utf-8?B?zqPPhM6xz43Pgc6/z4Igzp3PhM6tzr3PhM6/z4I=?= 
-        <stdedos+git@gmail.com>, Jeff King <peff@peff.net>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: Re: [PATCH v2 1/1] pathspec: warn for a no-glob entry that contains
- `**`
-References: <xmqqft1iquka.fsf@gitster.g>
-        <20210325233648.31162-2-stdedos+git@gmail.com>
-        <xmqq35wiu4om.fsf@gitster.g>
-        <CAPig+cT3xprHLxDkvfgHpHY7t5_5_A2xyGKB5S2KiqW=3Lk-TQ@mail.gmail.com>
-Date:   Thu, 25 Mar 2021 20:02:31 -0700
-In-Reply-To: <CAPig+cT3xprHLxDkvfgHpHY7t5_5_A2xyGKB5S2KiqW=3Lk-TQ@mail.gmail.com>
-        (Eric Sunshine's message of "Thu, 25 Mar 2021 21:32:02 -0400")
-Message-ID: <xmqqtuoysjlk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S230415AbhCZDRD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 25 Mar 2021 23:17:03 -0400
+Received: from cloud.peff.net ([104.130.231.41]:49386 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230273AbhCZDQy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Mar 2021 23:16:54 -0400
+Received: (qmail 28361 invoked by uid 109); 26 Mar 2021 03:16:54 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 26 Mar 2021 03:16:54 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6971 invoked by uid 111); 26 Mar 2021 03:16:55 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 25 Mar 2021 23:16:55 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 25 Mar 2021 23:16:53 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, me@ttaylorr.com,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH] csum-file: flush less often
+Message-ID: <YF1SJRhb8hz7NP0/@coredump.intra.peff.net>
+References: <pull.914.git.1616608219602.gitgitgadget@gmail.com>
+ <84ccabca-0bd3-d0cb-6b38-f96d75c0bbd6@gmail.com>
+ <xmqq8s6bvzpf.fsf@gitster.g>
+ <xmqq4kgzvzf6.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B534F85E-8DDF-11EB-A8F4-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq4kgzvzf6.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+On Thu, Mar 25, 2021 at 11:52:29AM -0700, Junio C Hamano wrote:
 
-> I haven't been following the discussion, but is there a reason we need
-> to penalize the user with a warning rather than helping, for instance
-> by inferring ":(glob)" in the presence of `/**/` if not otherwise
-> countermanded by ":(literal)" or whatnot?
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> >> So, I'm of two minds here:
+> >>
+> >>  1. This is embarassing. I wasted everyone's time for nothing. I can retract
+> >>     this patch.
+> >>
+> >>  2. This is embarassing. I overstated the problem here. But we might be able
+> >>     to eke out a tiny performance boost here.
+> >>
+> >> I'm open to either. I think we should default to dropping this patch unless
+> >> someone thinks the rewrite above is a better organization of the logic. (I
+> >> can then send a v2 including that version and an updated commit message.)
+> >
+> > 3. The current code around "if (nr == sizeof(f->buffer))" might be a
+> >    bit too clever for readers who try to understand what is going
+> >    on, and the whole "while" loop may deserve a comment based on
+> >    what you wrote before your replacement implementation.
 
-Two reasons I can think of offhand are
+Yes, my first thought on reading Stolee's post-image was: wait, how do
+we know when data needed flushed from the buffer? But that is not new in
+his patch. It is confusing before and after. :)
 
- - How /**/ is interpreted is not the only thing that is different
-   between the normal mode and the glob magic mode.  IIRC, an
-   asterisk * or a question mark ? matches slash in normal mode (it
-   started out as fnmatch() without FNM_PATHNAME).  Should we warn
-   about ":(glob)" if somebody asks for "foo*", "*foo", or
-   "foo*bar".  If not, why shouldn't?
+> Having said all that, comparing the original and the version updated
+> with your "flush less often" patch, I find the latter quite easier
+> to read, so as long as the update does not give us 1% slowdown, it
+> may be worth adopting for the readability improvement alone.
+> 
+> Of course, if we were to go that route, the sales pitch in the log
+> message needs to be updated.
 
- - Thers is no explicit magic that says "there is no magic" to
-   countermand such a DWIM.
+Yeah, I am OK with either version, as long as it is justified correctly
+in the commit message. IMHO the big difference is that the original is
+using local data/offset variables in order to provide a layer of
+indirection when we get to the hash+flush code. And Stolee's patch is
+calling the same code in the two places instead.
 
+It's quite possible that gives the compiler slightly more opportunity to
+micro-optimize (which doesn't matter if you are feeding big blocks, but
+may if you are feeding 4 bytes at a time as in the midx code; though in
+that case it is entirely possible that the caller allocating a single
+array, writing it, and then feeding it to hashwrite() would be faster
+still, though a little more cumbersome).
+
+-Peff
