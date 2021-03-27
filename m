@@ -2,95 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	PDS_TONAME_EQ_TOLOCAL_SHORT,SPF_HELO_NONE,SPF_PASS autolearn=no
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DAEF2C433DB
-	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 08:31:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 191E2C433E1
+	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 09:10:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 925B0619F9
-	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 08:31:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D765A619FC
+	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 09:10:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230323AbhC0IbK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 27 Mar 2021 04:31:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57432 "EHLO
+        id S230424AbhC0JIn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 27 Mar 2021 05:08:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37198 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230249AbhC0Iat (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Mar 2021 04:30:49 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86912C0613B1
-        for <git@vger.kernel.org>; Sat, 27 Mar 2021 01:30:49 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id a7so11882192ejs.3
-        for <git@vger.kernel.org>; Sat, 27 Mar 2021 01:30:49 -0700 (PDT)
+        with ESMTP id S230415AbhC0JIT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Mar 2021 05:08:19 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 061ABC0613B1
+        for <git@vger.kernel.org>; Sat, 27 Mar 2021 02:08:19 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id d8-20020a1c1d080000b029010f15546281so6059796wmd.4
+        for <git@vger.kernel.org>; Sat, 27 Mar 2021 02:08:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=YAdGbpUA5SEBf2zKrv5hV+kt4J3SQiClm+OIRIW66G8=;
-        b=vYeqeNOErNvMEo9TI+jvhJhqUdC7i849hqE9szIPKPWaXA6pJ97vRxAEsKzuPHWW1Y
-         g3sxRAFKOdasQq6FQVEAGPRVyTBo9d0dZx+4qX4vaN1K+RAz10VHDT1Jpj/Eu2sxTLYd
-         +63J+2p5DmfkTTbRV8OodCEjIaIpmG3LubtRRCly9fnOW+n8yJFdPCEyiyVDlUiMyqhh
-         tZ30dNmVU+9woqefpMpEMLqMl5wVgzJzRbUOGDEro6IKBG3ey7a5NxM60A/dNnWRn66U
-         bE32EMrC+TvPySZOb+GbnmstEn8P6XemGMiVBZJm8uqV/gN8H4nDOIvo7Ej0BnZbLGqA
-         kfgg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=N24qMB61IMIChz9K0ObioVXXmugFQd5V8mm7c6gI/9s=;
+        b=QdPcx5U7f56qZe4bLJ9vQyIof4S4GqQ/oZuiAO4ImwQIhu4wki22JbfF2ISoT9UpMz
+         L85YuNFWHs2ytOlcVBkA98ZQcKRXOPYoFiwozNgWNVekhQuRgF1b7i+5Wqn0FVud3QuC
+         q7+uvOhGgBe5h0n+H08q6alcEi4oVHRcPPBDh7bobpiMZJjC9LmhkoGjTrEcsR1f7GC4
+         ontawEM7jBLhoZlsQB92EawMqQ6MohMxTn7ZZYoX7sOU1A/wAWvkTesG2A3PXPrCLPeJ
+         lzOdZRewlMX1kwGyM6TYxr8P+vsgUlfK0lc7j/yyGS6LGAHa52E3jzL7HblquYoDKLWF
+         Ao+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=YAdGbpUA5SEBf2zKrv5hV+kt4J3SQiClm+OIRIW66G8=;
-        b=phSR1VqWaC3XH3tg0y8LS/ENHhy3BHnFYi0smXqdSkBXzD4Sg3c0qssTlFj+3K0Kgj
-         wu4nJbKNkeNx1CiNyms5/4/kS8N03HwZ+L46kMrb12NmLR3bGmj8AJawlU648qytTG9S
-         C5NQkkGEs2XGLn/xkqndGKGmUJOptIYXSKlNNxsUXiu9yBv31JkBtY/jG1CtuQcHuEaH
-         Scth63d9nhaGTomhrK1AV60GWrlPsEEjR4PdpaecJNaLlBQeEwYFZ8cU97uFNmWzAA2T
-         UBTouwMCLaHRsT1aHKnbCZAklLguq8aC8QSEW42UU77w5er05W/9ZHSthT1TlPJRXXTY
-         r9zA==
-X-Gm-Message-State: AOAM532YbpsssVtBvujhiq+NTO/mENo5xK0t8IApy6CHOBrdNCQHtNDU
-        wfgJFcahnwOkB+ndREJyHmpdQgpKofQLmx1ksxOLJ++DQgE0Lg==
-X-Google-Smtp-Source: ABdhPJxzRCQLfQaOvZ8fXszW5Av9dE/fIe4246F9ICrF11OVtgp+2l4HW3YKCE4s9jCcw6CySr0jX9N1jDDg64dHBVE=
-X-Received: by 2002:a17:906:5d06:: with SMTP id g6mr19215009ejt.216.1616833847082;
- Sat, 27 Mar 2021 01:30:47 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=N24qMB61IMIChz9K0ObioVXXmugFQd5V8mm7c6gI/9s=;
+        b=TjfcdzJzw5SUOgcbvz1P8QYb10OoNB8pGFy6qSjnbfga5JVYjIj6ZWCCgLz9q730nf
+         tVTIZsWp2fbFG05OaaVJnXvmSK5xAMEqN+7eeup1njVuGMnMAuP63vDZdklRrctfOtqQ
+         jb+L0koqePCArX14GNApgq8Gx4kxpeSNtAxaPqwCWpf6yTH3OhcpPXlqc3vhYpslYpSx
+         pX1baK12lnPAPB8NZ7PijeOFuo6q3cIKZoNjE4vdyuMpBBa2Fc8nlClhVL94BkqHeZKK
+         L2vcRzt3y5oUwRAuY2cUw3hMIbi5LnWWC65PFKhnJmpvXXVi4tmL032ongevZeKrovBi
+         qI6Q==
+X-Gm-Message-State: AOAM5324TD63KmeRLqfFuLxPXLUun01LIlQA8QNpup4odQeGxRMafb+0
+        tsuW37HEmZfIOHw+lHwW8Jk=
+X-Google-Smtp-Source: ABdhPJw/e/1RybF2zC67rDGdWdrce2bnJh4qMaSo1Llk+tesU/Kbvse6vCRVdRrAvLmixOPtOt4T7w==
+X-Received: by 2002:a1c:e912:: with SMTP id q18mr16589117wmc.59.1616836097132;
+        Sat, 27 Mar 2021 02:08:17 -0700 (PDT)
+Received: from localhost.localdomain ([2a02:85f:2a0a:9300:501f:ca6d:3b18:1e72])
+        by smtp.googlemail.com with ESMTPSA id x25sm17346619wmj.14.2021.03.27.02.08.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 27 Mar 2021 02:08:16 -0700 (PDT)
+From:   Stavros Ntentos <stdedos@gmail.com>
+X-Google-Original-From: Stavros Ntentos <133706+stdedos@users.noreply.github.com>
+To:     bagasdotme@gmail.com
+Cc:     git@vger.kernel.org, gitster@pobox.com, stdedos+git@gmail.com
+Subject: Re: [PATCH v1 1/1] ci: facilitate dev to mimic a CI environment
+Date:   Sat, 27 Mar 2021 11:08:13 +0200
+Message-Id: <20210327090813.7847-1-133706+stdedos@users.noreply.github.com>
+X-Mailer: git-send-email 2.31.0
+In-Reply-To: <5196a86c-1153-8998-a8cb-c8bd20687150@gmail.com>
+References: <5196a86c-1153-8998-a8cb-c8bd20687150@gmail.com>
 MIME-Version: 1.0
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sat, 27 Mar 2021 09:30:36 +0100
-Message-ID: <CAP8UFD3Sv7d+raNdY6fnjnw+8bLh__8B2peojNDbNK0V4RgzFQ@mail.gmail.com>
-Subject: [ANNOUNCE] Git Rev News edition 73
-To:     git <git@vger.kernel.org>
-Cc:     lwn@lwn.net, Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Taylor Blau <me@ttaylorr.com>, Patrick Steinhardt <ps@pks.im>,
-        Yaron Wittenstein <yaron.wittenstein@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        Charvi Mendiratta <charvi077@gmail.com>,
-        Joey Salazar <jgsal@protonmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone,
+> > diff --git a/Documentation/howto/setup-local-dev-environment-docker.sh b/Documentation/howto/setup-local-dev-environment-docker.sh
+> > new file mode 100644
+> > index 0000000000..265602ea55
+> > --- /dev/null
+> > +++ b/Documentation/howto/setup-local-dev-environment-docker.sh
+> > @@ -0,0 +1,43 @@
+> > +#!/bin/false
+> Wait, why did you make this documentation /bin/false script? I think
+> it is better to be in Asciidoc format (.txt)
 
-The 73rd edition of Git Rev News is now published:
+My full intention was to actually _create_ a script that would put a
+wanna-be developer (me) from (a) looking at my terminal inside git/,
+to (b) have a ci-like environment, inside an abstraction layer (docker)
+with linked sources (i.e. the "${PWD}:/usr/src/git" part).
 
-  https://git.github.io/rev_news/2021/03/27/edition-73/
+However, the way sources and docker invocation are defined, I find it hard
+to create "the script". Also because (again) my docker knowledge is limited.
 
-Thanks a lot to =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason and Matheus Tavares =
-Bernardino
-who helped this month!
+I want future nitpick-fixers (hopefully with more docker experience),
+to look at this script with such agenda in mind - and not to "just"
+document their findings alongside mine.
 
-Enjoy,
-Christian, Jakub, Markus and Kaartic.
+`#!/bin/false` is simply my way of saying "it's not ready to be run yet",
+and I used `.sh` to get formatting / syntax highlighting cheaper than
+running a fully-fledged .md file.
 
-PS: An issue for the next edition is already opened and contributions
-are welcome:
-
-https://github.com/git/git.github.io/issues/484
+If you still insist it's no good as a ".sh",
+my intention would be to make it .md (to get some formatting in it).
