@@ -2,231 +2,148 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C893FC433C1
-	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 19:54:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A403CC433DB
+	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 22:51:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 96D456192A
-	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 19:54:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 696416198B
+	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 22:51:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230114AbhC0Txq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 27 Mar 2021 15:53:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33398 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230002AbhC0TxZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Mar 2021 15:53:25 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B391C0613B1
-        for <git@vger.kernel.org>; Sat, 27 Mar 2021 12:53:24 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id hq27so13420051ejc.9
-        for <git@vger.kernel.org>; Sat, 27 Mar 2021 12:53:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=QcJ/hL/KZLTqWKf1W+cGu5KIiDZS9ajmFVSDV2QM8T8=;
-        b=PM4ZtRPVkprDDGbzikzkOIWigNSC30r60cS4GoMqZOa159LpEsJ/DkcT6w2BjbzNrb
-         LiIcg4xJKxHOU3GBvsFH6d5BK3vc664tI24cUu4mpPl2I6mCJAftnVoXhxRw/aeFt1nK
-         2FMmS9aZIoOTsUfsy2aWlt4pQErCZeIey82jSPYmrx3c7LbXAs9IixuQToRDTU5XDWTr
-         g1NyuFrBrUsVB0RqJwbmccdkB4HGZeLoL2TMEGRpXCiVzK5rXN5PZJP620YqPD6XrAy3
-         YoYeAgHw1GW4Ti6ewyu/aKf6WC4YdDx3oROyQvAXRyAEyoO+y+s0ChdXYoZXKwcRvqru
-         apJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=QcJ/hL/KZLTqWKf1W+cGu5KIiDZS9ajmFVSDV2QM8T8=;
-        b=HCdKWfOtC/E1KWlr923r06u2tfbXgJyPfHl4aDFlDSczCgmwJvTBu0bseT70aVGJV9
-         NyIm9lQ6S4LtNGHfvU/roziA7nWqm3ao95SQLUjT2x+PVE81YyGy3+D1+ZZ7EzzGnQpO
-         mNfQrh0HHBRKO+HilJOCTUA9DHFkCjAus0D2Lxvm2z0yGtegzSU3+1H7R4zFHQZNhprj
-         DTdhjHdMvKNhqExow8oooK0RZZ6UGJeyIK7XEem57lWxRfrhG+X2w9w0LuGFCkcsur+B
-         h3+ZIFg+JrrdFNcEPnbU+CyJVSq3ThenpiXmsz2SwDzgVfRFgid6aFsSMg0D0ryW2uDy
-         67RQ==
-X-Gm-Message-State: AOAM5309EQBqiWlwBA0fyLpZVRKo8NzGMaXFiwMUUKOjDllNXKiBiWzf
-        iDJ6ia+th767SA74d2+pnf1tDJqLCmkp5HVRdO4TIy9zZjhp2A==
-X-Google-Smtp-Source: ABdhPJy5k8VQ9ikkYt88d1PubEckBai3YFoBArwXbJhJRp0K2ocbya2CADkBcnYlTvKCUNLnPLM/EdSpUIQdEaC2aDg=
-X-Received: by 2002:a17:907:68a:: with SMTP id wn10mr21782595ejb.551.1616874803107;
- Sat, 27 Mar 2021 12:53:23 -0700 (PDT)
+        id S230487AbhC0Wu4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 27 Mar 2021 18:50:56 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62119 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230176AbhC0Wu0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Mar 2021 18:50:26 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 771F9B7434;
+        Sat, 27 Mar 2021 18:50:25 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=vEmAwaQonlH9EQvgvHVi/TRehBA=; b=IgZsVY
+        07ll8jjfnMWYrs+L3a8h60MU1uha6OXYcoPP4bCcVTBFhogBkb61cL4JVMtCFQ8N
+        +YSFRrje1jt8798+FMDEfyzAAA+LIvyreVvuTTR2rbRZripx0zsuGILvg6r3QQzi
+        0VJJiYJ8TT0RRfucmAp4KhSrtIoSY6bblnMcY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Y3xdC8wYmgCSCOmMw2HbHkk4p2bL40SX
+        BmXlRrL6lEV+n8ExUP92Mar6d/3YfB3zb1GMAJQUWuFrBiBSziUL7h/wpHNI3msx
+        lRWAaM8fBGSI9XSwvtQ573kCc+JTKXh2hplWQi4eeOFLyTT4rKgJvjFzZz+1g1qW
+        RoiIu2LBNFU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6F9DDB7433;
+        Sat, 27 Mar 2021 18:50:25 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F195FB7430;
+        Sat, 27 Mar 2021 18:50:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Atharva Raykar <raykar.ath@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [GSOC][PATCH] userdiff: add support for Scheme
+References: <20210327173938.59391-1-raykar.ath@gmail.com>
+Date:   Sat, 27 Mar 2021 15:50:24 -0700
+In-Reply-To: <20210327173938.59391-1-raykar.ath@gmail.com> (Atharva Raykar's
+        message of "Sat, 27 Mar 2021 23:09:38 +0530")
+Message-ID: <xmqq5z1cqki7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.913.v3.git.1616673200809.gitgitgadget@gmail.com>
- <pull.913.v4.git.1616775185562.gitgitgadget@gmail.com> <xmqqk0psqxqo.fsf@gitster.g>
-In-Reply-To: <xmqqk0psqxqo.fsf@gitster.g>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sat, 27 Mar 2021 20:53:11 +0100
-Message-ID: <CAP8UFD26YaoDGs_8eUhuRCytDMyOhFM-Egs-Srk83iMpZxbKxA@mail.gmail.com>
-Subject: Re: [PATCH v4] [GSOC]trailer: pass arg as positional parameter
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, ZheNing Hu <adlternative@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: D1810208-8F4E-11EB-80DF-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 27, 2021 at 7:04 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > @@ -252,6 +252,16 @@ also be executed for each of these arguments. And the <value> part of
-> >  these arguments, if any, will be used to replace the `$ARG` string in
-> >  the command.
-> >
-> > +trailer.<token>.cmd::
-> > +     The command specified by this configuration variable is run
-> > +     with a single parameter, which is the <value> part of an
-> > +     existing trailer with the same <token>.  The output from the
-> > +     command is then used as the value for the <token> in the
-> > +     resulting trailer.
-> > +     The command is expected to replace `trailer.<token>.cmd`.
+Atharva Raykar <raykar.ath@gmail.com> writes:
 
-s/trailer.<token>.cmd/trailer.<token>.command/
+> diff --git a/t/t4018/scheme-define-syntax b/t/t4018/scheme-define-syntax
+> new file mode 100644
+> index 0000000000..603b99cea4
+> --- /dev/null
+> +++ b/t/t4018/scheme-define-syntax
+> @@ -0,0 +1,8 @@
+> +(define-syntax define-test-suite RIGHT
+> +  (syntax-rules ()
+> +    ((_ suite-name (name test) ChangeMe ...)
+> +     (define suite-name
+> +       (let ((tests
+> +              `((name . ,test) ...)))
+> +         (lambda ()
+> +           (ChangeMe 'suite-name tests)))))))
+> \ No newline at end of file
 
-> > +     When both .cmd and .command are given for the same <token>,
-> > +        .cmd is used and .command is ignored.
->
-> Christian, because ".cmd" is trying to eventually replace it, I find
-> it a bit disturbing that the description we give here looks a lot
-> smaller compared to the one for ".command".  I am afraid that we may
-> have failed to reproduce something important from the description of
-> the ".command" for the above; care to rend a hand or two here to
-> complete the description?
+Is there a good reason to leave the final line incomplete?  If there
+isn't, complete it (applies to other newly-created files in the patch).
 
-Yeah, sure. I just saw that you already asked about this in this
-thread. Sorry for not answering earlier.
+> diff --git a/userdiff.c b/userdiff.c
+> index 3f81a2261c..c51a8c98ba 100644
+> --- a/userdiff.c
+> +++ b/userdiff.c
+> @@ -191,6 +191,14 @@ PATTERNS("rust",
+>  	 "[a-zA-Z_][a-zA-Z0-9_]*"
+>  	 "|[0-9][0-9_a-fA-Fiosuxz]*(\\.([0-9]*[eE][+-]?)?[0-9_fF]*)?"
+>  	 "|[-+*\\/<>%&^|=!:]=|<<=?|>>=?|&&|\\|\\||->|=>|\\.{2}=|\\.{3}|::"),
+> +PATTERNS("scheme",
+> +         "^[\t ]*(\\(define-?.*)$",
 
-> As I cannot grok what the description for ".command" is trying to
-> say, especially around this part:
->
->     When this option is specified, the behavior is as if a special
->     '<token>=<value>' argument were added at the beginning of the command
->     line, where <value> is ...
+Didn't "git diff HEAD" before committing (or "git show") highlighted
+these whitespace errors?
 
-This is because when a number of trailers are passed on the command
-line, and some other trailers are in the input file, the order in
-which the different trailers are processed and their priorities can be
-important. So by saying the above, people can get an idea about at
-which point and with which priority a trailer coming from such a
-config option will be processed.
+.git/rebase-apply/patch:183: indent with spaces.
+         "^[\t ]*(\\(define-?.*)$",
+.git/rebase-apply/patch:184: trailing whitespace, indent with spaces.
+         /* 
+.git/rebase-apply/patch:185: indent with spaces.
+          * Scheme allows symbol names to have any character,
+.git/rebase-apply/patch:186: indent with spaces.
+          * as long as it is not a form of a parenthesis.
+.git/rebase-apply/patch:187: indent with spaces.
+          * The spaces must be escaped.
+warning: squelched 2 whitespace errors
+warning: 7 lines applied after fixing whitespace errors.
 
-> and
->
->     If some '<token>=<value>' arguments are also passed on the command
->     line, when a 'trailer.<token>.command' is configured, the command will
->     also be executed for each of these arguments.
 
-Yeah, this means that when a 'trailer.foo.command' is configured, it
-is always executed at least once. The first time it is executed, it is
-passed nothing ($ARG is replaced with the empty string). Then for each
-'foo=<value>' argument passed on the command line, it is executed once
-more with $ARG replaced by <value>.
+> +         /* 
+> +          * Scheme allows symbol names to have any character,
+> +          * as long as it is not a form of a parenthesis.
+> +          * The spaces must be escaped.
+> +          */
+> +         "(\\.|[^][)(\\}\\{ ])+"),
 
-The reason it is always executed first with $ARG replaced with the
-empty string is that this way it makes it possible to set up commands
-that will always be executed when `git interpret-trailers` is run.
-This makes it possible to automatically add some trailers if they are
-missing for example.
+One or more "dot or anything other than SP or parentheses"?  But
+a dot "." is neither a space or any {bra-ce} letter, so would the
+above be equivalent to
 
-Another way to do it would be to have another config option called
-`trailer.<token>.alwaysRunCmd` to tell if the cmd specified by
-`trailer.<token>.cmd` should be run even if no '<token>=<value>'
-argument is passed on the command line. As we are introducing
-`trailer.<token>.cmd`, it's a good time to wonder if this would be a
-better design. But this issue is quite complex, because of the fact
-that 'trailer.<token>.ifMissing' and 'trailer.<token>.ifExists' also
-take a part in deciding if the command will be run.
+	"[^][()\\{\\} \t]+"
 
-This mechanism is the reason why a trick, when setting up a
-'trailer.foo.command' trailer, is to also set 'trailer.foo.ifexists'
-to "replace", so that the first time the command is run (with $ARG
-replaced with the empty string) it will add a foo trailer with a
-default value, and if it is run another time, because a 'foo=bar'
-argument is passed on the command line, then the trailer with the
-default value will be replaced by the value computed from running the
-command again with $ARG replaced with "bar".
+I wonder...
 
-Another trick is to have the command output nothing when $ARG is the
-empty string along with using --trim-empty. This way the command will
-create an empty trailer, when it is run the first time, and if it's
-not another time, then this empty trailer will be removed because of
---trim-empty.
+I am also trying to figure out what you wanted to achieve by
+mentioning "The spaces must be escaped.".  Did you mean something
+like (string->symbol "a symbol with SP in it") is a symbol?  Even
+so, I cannot quite guess the significance of that fact wrt the
+regexp you added here?
 
-> I cannot quite judge if what we came up with in the above
-> description is sufficient.
+As we are trying to catch program identifiers (symbols in scheme)
+and numeric literals, treating any group of non-whitespace letters
+that is delimited by one or more whitespaces as a "word" would be a
+good first-order approximation, but in addition, as can be seen in
+an example like (a(b(c))), parentheses can also serve as such "word
+delimiters" in addition to whitespaces.  So the regexp given above
+makes sense to me from that angle, especially if you do not limit
+the whitespace to only SP, but include HT (\t) as well.  But was
+that how you came up with the regexp?
 
-I don't think it's sufficient. I think that, while we are at it, a bit
-more thinking/discussion is required to make sure we want to keep the
-same design as 'trailer.<token>.command'.
+Thanks.
 
-> > -* Configure a 'sign' trailer with a command to automatically add a
-> > +* Configure a 'sign' trailer with a cmd to automatically add a
-> >    'Signed-off-by: ' with the author information only if there is no
-> >    'Signed-off-by: ' already, and show how it works:
-> >  +
-> > @@ -309,7 +319,7 @@ $ git interpret-trailers --trailer 'Cc: Alice <alice@example.com>' --trailer 'Re
-> >  $ git config trailer.sign.key "Signed-off-by: "
-> >  $ git config trailer.sign.ifmissing add
-> >  $ git config trailer.sign.ifexists doNothing
-> > -$ git config trailer.sign.command 'echo "$(git config user.name) <$(git config user.email)>"'
-> > +$ git config trailer.sign.cmd 'echo "$(git config user.name) <$(git config user.email)>"'
-> >  $ git interpret-trailers <<EOF
-> >  > EOF
->
-> This change would definitely be needed when the support for
-> ".command" is removed after deprecation period.  As it does not take
-> any argument, .cmd and .command should behave identically, so making
-> this change now, without waiting, may make sense.
-
-By the way the above example is an example of why we might want any
-configured command to be executed at least once, even when no
-corresponding '<token>=<value>' argument is passed on the command
-line.
-
-> > @@ -333,14 +343,14 @@ subject
-> >  Fix #42
-> >  ------------
-> >
-> > -* Configure a 'see' trailer with a command to show the subject of a
-> > +* Configure a 'see' trailer with a cmd to show the subject of a
-> >    commit that is related, and show how it works:
-> >  +
-> >  ------------
-> >  $ git config trailer.see.key "See-also: "
-> >  $ git config trailer.see.ifExists "replace"
-> >  $ git config trailer.see.ifMissing "doNothing"
-> > -$ git config trailer.see.command "git log -1 --oneline --format=\"%h (%s)\" --abbrev-commit --abbrev=14 \$ARG"
-> > +$ git config trailer.see.cmd "test -n \"\$1\" && git log -1 --oneline --format=\"%h (%s)\" --abbrev-commit --abbrev=14 \"\$1\"|| true "
-> >  $ git interpret-trailers <<EOF
-> >  > subject
->
-> This, too, but until ".command" is removed, wouldn't it be better
-> for readers to keep both variants, as the distinction between $ARG
-> and $1 needs to be illustrated?
->
-> Besides, the examples given here are not equivalent.  The original
-> assumes that ARG is there, or it is OK to default to HEAD; the new
-> one gives no output when $ARG/$1 is not supplied.
-
-Yeah, I agree they are not equivalent.
-
-> It would confuse
-> readers to give two too-similar-but-subtly-different examles, as
-> they will be forced to wonder if the difference is something needed
-> to transition from .command to .cmd (and I am guessing that it is
-> not).
-
-I agree.
-
-> Rewriting both to use "--pretty=reference" may be worth doing.  As
-> can be seen in these examples:
->
-> git show -s --pretty=reference \$1
-> git log -1 --oneline --format=\"%h (%s)\" --abbrev-commit --abbrev=14 \$1
->
-> that it makes the result much easier to read.
-
-Yeah, thanks for the good suggestion.
+>  PATTERNS("bibtex", "(@[a-zA-Z]{1,}[ \t]*\\{{0,1}[ \t]*[^ \t\"@',\\#}{~%]*).*$",
+>  	 "[={}\"]|[^={}\" \t]+"),
+>  PATTERNS("tex", "^(\\\\((sub)*section|chapter|part)\\*{0,1}\\{.*)$",
