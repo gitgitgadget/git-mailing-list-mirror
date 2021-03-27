@@ -2,164 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 950F6C433DB
-	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 18:05:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BFCEDC433DB
+	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 18:31:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 68A1961965
-	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 18:05:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9D44A619B1
+	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 18:31:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230298AbhC0SFJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 27 Mar 2021 14:05:09 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54866 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230274AbhC0SEe (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Mar 2021 14:04:34 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id CB7AFB5A6A;
-        Sat, 27 Mar 2021 14:04:33 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Tps4WpD9Yl6sN3HXuBb8gX9EJvI=; b=kTmHS8
-        0cdvZy4cOFv6bArrsZjxJj9AR9GTSvna0+iRD21hVRbsjTw8H8SSNo9uY6s02kNn
-        3sYRqdBOHz/pgjpxVaZkP67kfgwus6iE7ZL+ZHiUQqJ60eQF9zLlMlFzW2zEP+iM
-        QrR7nJvDZ8kCd7R8Dn4BfhziugcpqEqat+RaM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=PHMCpjKZfuyMTkcQnBDt/wBGcdDKdNru
-        rfbwMBfBpIlrhLUYGgGdYQUQ5UmhnqWE0jq+/C9LjOKXMvkVT3dDrBnJSBqF2jus
-        x2AlFnY0CsuPyW3WXUYkvXxuPeuokm3F/Cki0blXM3CSEfL6Fo7o/WPUq+lof8UW
-        HsYjzFTBEGY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C3E7FB5A69;
-        Sat, 27 Mar 2021 14:04:33 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4AF44B5A68;
-        Sat, 27 Mar 2021 14:04:33 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>
-Subject: Re: [PATCH v4] [GSOC]trailer: pass arg as positional parameter
-References: <pull.913.v3.git.1616673200809.gitgitgadget@gmail.com>
-        <pull.913.v4.git.1616775185562.gitgitgadget@gmail.com>
-Date:   Sat, 27 Mar 2021 11:04:31 -0700
-In-Reply-To: <pull.913.v4.git.1616775185562.gitgitgadget@gmail.com> (ZheNing
-        Hu via GitGitGadget's message of "Fri, 26 Mar 2021 16:13:05 +0000")
-Message-ID: <xmqqk0psqxqo.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E24E451E-8F26-11EB-BB08-D152C8D8090B-77302942!pb-smtp1.pobox.com
+        id S230176AbhC0SbW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 27 Mar 2021 14:31:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44172 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230105AbhC0SbO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Mar 2021 14:31:14 -0400
+Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7BF8C0613B1
+        for <git@vger.kernel.org>; Sat, 27 Mar 2021 11:31:13 -0700 (PDT)
+Received: by mail-qv1-xf2b.google.com with SMTP id q9so4599576qvm.6
+        for <git@vger.kernel.org>; Sat, 27 Mar 2021 11:31:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:content-transfer-encoding:mime-version:subject:message-id:date
+         :to;
+        bh=S8mugO9vpbWaLmzeM66qN5LHbIdx+z0JxcLcv53wIJ4=;
+        b=WAHOxKT3rWWtEGFFa25EgFahvQaKhJWh3xL7dyadAxO2Uvpa0XEWzJEq0rGMhELUar
+         CRB+ulQv0nHOtI5CRddXFzlrhKvNXr+u/YLsoLbVU/G208Bsmuh32JiMra7eWtVX3+I9
+         v2/sSbwNRstmmzvVmnxhe/znVsSgDvVrj/b3mrnOuM0IxCdT3yYl/zzdieyTdwOkemNS
+         gHZvjOlm+AxPgTq5N7Ofivsb/afAqAumAfBa/kS6D3b0cB1O8dHBh6Oq59/Hkf+N6ooz
+         2mokn7ZAU4msFO2nSXqa/812jYL/za9RGedwe0cxBVRFi1uayidrJGYZSvp5LbxQByF3
+         fnag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:content-transfer-encoding:mime-version
+         :subject:message-id:date:to;
+        bh=S8mugO9vpbWaLmzeM66qN5LHbIdx+z0JxcLcv53wIJ4=;
+        b=CaYaZ5yHWRPguJANvPLvwOE+ux/boJjpDmiBYAg+Qpvp1ct6LmtfoCDbbubenpKRGV
+         UG5IcJ7j/5JqFOdnAyf6e+hx8+8WycY8BEqEzp+vrhwWfjAFpulQGJPMGbgv26MwLYon
+         X746ZisiYG66Gzhw5qYw6WnZUl5q9IepwWENdTxXSoCiEzqDjbqPiDRpEC3vVvcHMyOW
+         eaCzM50I7wj/tTPwrPoExQgDtiiPsS/KOBstYpU6CThlbfHh7VBBGZOqtr+8pCKtudc+
+         lGwcYvu9XpiKYGyZwNiGCvZrJDcXqYc/B0/TFz+NTnvujrMKvpNc/LH9QgfPIUASUstX
+         3Kjg==
+X-Gm-Message-State: AOAM531BZvHGEtgwq2ryFposkZMv4usI0MVYvERpXF3gouVnIahRLHoU
+        KuiNHYaW12JWlXWoN4UZCOybOcqs3DL6lg==
+X-Google-Smtp-Source: ABdhPJzVMFWTwG4GZazwvh98J1H79YudnusJm6y8L4fsoRR3OLNB+7L+SvOvA8wOPtZCjpgmjuUE5A==
+X-Received: by 2002:a05:6214:4ae:: with SMTP id w14mr18482838qvz.45.1616869872528;
+        Sat, 27 Mar 2021 11:31:12 -0700 (PDT)
+Received: from [192.168.103.12] (cpe00fc8d50b7d3-cm00fc8d50b7d0.cpe.net.fido.ca. [72.141.221.184])
+        by smtp.gmail.com with ESMTPSA id s6sm9505100qke.44.2021.03.27.11.31.11
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 27 Mar 2021 11:31:12 -0700 (PDT)
+From:   Utku <ugultopu@gmail.com>
+Content-Type: text/plain;
+        charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.4\))
+Subject: [BUG] Git is not using the configured SSH key when there is another
+ SSH key added to the SSH agent
+Message-Id: <967BFF88-A8E1-4EEC-B298-668012E42C03@gmail.com>
+Date:   Sat, 27 Mar 2021 14:31:10 -0400
+To:     git@vger.kernel.org
+X-Mailer: Apple Mail (2.3608.120.23.2.4)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
+# Versions
 
-> @@ -252,6 +252,16 @@ also be executed for each of these arguments. And the <value> part of
->  these arguments, if any, will be used to replace the `$ARG` string in
->  the command.
->  
-> +trailer.<token>.cmd::
-> +	The command specified by this configuration variable is run
-> +	with a single parameter, which is the <value> part of an
-> +	existing trailer with the same <token>.  The output from the
-> +	command is then used as the value for the <token> in the
-> +	resulting trailer.
-> +	The command is expected to replace `trailer.<token>.cmd`.
-> +	When both .cmd and .command are given for the same <token>,
-> +        .cmd is used and .command is ignored.
+- Git 2.30.1
+- macOS 10.15.7
 
-Christian, because ".cmd" is trying to eventually replace it, I find
-it a bit disturbing that the description we give here looks a lot
-smaller compared to the one for ".command".  I am afraid that we may
-have failed to reproduce something important from the description of
-the ".command" for the above; care to rend a hand or two here to
-complete the description?
+# Steps to Reproduce
 
-As I cannot grok what the description for ".command" is trying to
-say, especially around this part:
+- Have two SSH key pairs on your machine, one with a passphrase and
+other without. The keys were created by running `ssh-keygen` in my
+case.
 
-    When this option is specified, the behavior is as if a special
-    '<token>=<value>' argument were added at the beginning of the command
-    line, where <value> is ...
+- Add the key with a passphrase to the SSH agent by running `ssh-add`
+and entering the passphrase.
 
-and
+- Have an entry like the following in your `~/.ssh/config`:
 
-    If some '<token>=<value>' arguments are also passed on the command
-    line, when a 'trailer.<token>.command' is configured, the command will
-    also be executed for each of these arguments.
+      Host someName
+          HostName bitbucket.org
+          User git
+          IdentityFile ~/.ssh/private-key-of-the-pair-without-a-passphrase
 
-I cannot quite judge if what we came up with in the above
-description is sufficient.
 
-> -* Configure a 'sign' trailer with a command to automatically add a
-> +* Configure a 'sign' trailer with a cmd to automatically add a
->    'Signed-off-by: ' with the author information only if there is no
->    'Signed-off-by: ' already, and show how it works:
->  +
-> @@ -309,7 +319,7 @@ $ git interpret-trailers --trailer 'Cc: Alice <alice@example.com>' --trailer 'Re
->  $ git config trailer.sign.key "Signed-off-by: "
->  $ git config trailer.sign.ifmissing add
->  $ git config trailer.sign.ifexists doNothing
-> -$ git config trailer.sign.command 'echo "$(git config user.name) <$(git config user.email)>"'
-> +$ git config trailer.sign.cmd 'echo "$(git config user.name) <$(git config user.email)>"'
->  $ git interpret-trailers <<EOF
->  > EOF
+- Add the public key of the pair without a passphrase to your BitBucket
+account.
 
-This change would definitely be needed when the support for
-".command" is removed after deprecation period.  As it does not take
-any argument, .cmd and .command should behave identically, so making
-this change now, without waiting, may make sense.
+- Run `git clone someName:path/to/your/repository.git`. You will get a
+not authorized error. As far as I can tell, this means that Git has
+tried to use the key with the passphrase (which is added to the SSH
+agent). Since this key is **not** the key that was added to the
+BitBucket account, we received a not authorized error.
 
-> @@ -333,14 +343,14 @@ subject
->  Fix #42
->  ------------
->  
-> -* Configure a 'see' trailer with a command to show the subject of a
-> +* Configure a 'see' trailer with a cmd to show the subject of a
->    commit that is related, and show how it works:
->  +
->  ------------
->  $ git config trailer.see.key "See-also: "
->  $ git config trailer.see.ifExists "replace"
->  $ git config trailer.see.ifMissing "doNothing"
-> -$ git config trailer.see.command "git log -1 --oneline --format=\"%h (%s)\" --abbrev-commit --abbrev=14 \$ARG"
-> +$ git config trailer.see.cmd "test -n \"\$1\" && git log -1 --oneline --format=\"%h (%s)\" --abbrev-commit --abbrev=14 \"\$1\"|| true "
->  $ git interpret-trailers <<EOF
->  > subject
+- Add the key without a passphrase to your SSH agent by running
+`ssh-add` and try the same command (`git-clone`) again. It will work.
 
-This, too, but until ".command" is removed, wouldn't it be better
-for readers to keep both variants, as the distinction between $ARG
-and $1 needs to be illustrated?
+- Now, remove both keys from the SSH agent by running `ssh-add -D` and
+try and try the same command (`git-clone`) again. It will still work.
 
-Besides, the examples given here are not equivalent.  The original
-assumes that ARG is there, or it is OK to default to HEAD; the new
-one gives no output when $ARG/$1 is not supplied.  It would confuse
-readers to give two too-similar-but-subtly-different examles, as
-they will be forced to wonder if the difference is something needed
-to transition from .command to .cmd (and I am guessing that it is
-not).
+I didn't test but don't believe this has something to do with the key
+having a passphrase or not. Also, I believe that I'm not using macOS
+Keychain to store the decrypted keys.
 
-Rewriting both to use "--pretty=reference" may be worth doing.  As
-can be seen in these examples:
+# Expected Behavior
 
-git show -s --pretty=reference \$1
-git log -1 --oneline --format=\"%h (%s)\" --abbrev-commit --abbrev=14 \$1
+The `git-clone` command to work as expected, regardless of which keys
+are present in the SSH agent, since the information that I provide to
+Git (via the `Host` information in the `~/.ssh/config` file) is
+sufficient.
 
-that it makes the result much easier to read.
+# Actual Behavior
 
-Thanks.  Do not send a reroll prematurely; I want to see area
-expert's input at this point.
-
+Git is trying to use the SSH key that is present in the SSH agent,
+instead of using the SSH key which is explicitly declared in the
+`~/.ssh/config` file.
 
