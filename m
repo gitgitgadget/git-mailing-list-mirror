@@ -2,102 +2,294 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D946C433C1
-	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 10:28:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 265CEC433DB
+	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 17:41:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D5C2661A0A
-	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 10:28:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E9A1F619BA
+	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 17:41:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230322AbhC0K2S (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 27 Mar 2021 06:28:18 -0400
-Received: from mout.gmx.net ([212.227.15.19]:54905 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229875AbhC0K2R (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Mar 2021 06:28:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1616840894;
-        bh=UGAUC6npkAVM8dFMmno99eL1kk/eJMYQUe2q4gbDkiM=;
-        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
-        b=VAY0F6b0UnVrSm5I+CU6wShtjAGAvtF7eocWpSNVL+ffwkX3x2flbRcXVSTxaycBp
-         sRRBER1b4i6nW4vyYYIFHpwu3Ku6DvQepiZ9AtZvtFnbrdnPWgVB0MDEaz1UQ54Y+c
-         pTpnSfJdAETqsUpqn4/V5L9fj8kSnMjd2GgN6b4g=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from fv-az47-642.ff3z2rg2h4zubkhjibippcjctb.ex.internal.cloudapp.net
- ([52.162.33.163]) by mail.gmx.net (mrgmx005 [212.227.17.190]) with ESMTPSA
- (Nemesis) id 1N4hvR-1loot03T6N-011kil; Sat, 27 Mar 2021 11:28:14 +0100
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
-        git-packagers@googlegroups.com
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.31.1
-Date:   Sat, 27 Mar 2021 10:28:11 +0000
-Message-Id: <20210327102811.6951-1-johannes.schindelin@gmx.de>
-X-Mailer: git-send-email 2.31.1
-Content-Type: text/plain; charset=UTF-8
+        id S230224AbhC0Rk4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 27 Mar 2021 13:40:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33354 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230043AbhC0Rkh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Mar 2021 13:40:37 -0400
+Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7859BC0613B1
+        for <git@vger.kernel.org>; Sat, 27 Mar 2021 10:40:37 -0700 (PDT)
+Received: by mail-pl1-x62b.google.com with SMTP id y2so2430642plg.5
+        for <git@vger.kernel.org>; Sat, 27 Mar 2021 10:40:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GZfZmN7sV8qVqb16Z857vnnxLRoq/f8xdeCst0XD72g=;
+        b=malfMfI7LVrXcjNRRIq1hZd4m1nZjLRMPwibRoMO+1oYkOS98zR0R/5piwNaTYlDIv
+         3DBpQnkkgLoX33IqFJsKxjq7BLoa5ELzyJcVJiFGS9zCOB0/Rv2eVlyPSd2qlDvk+QU4
+         yHHGOEXV2ODJQldW6jXVstf1taeQdepqS5C7jV/1efYgmaIo0qPAUGzZOw8bUKpwTj1R
+         o+tvrcAedPBDyX5yXMnRFO/mMoYq7pU4WF1yyXZRhvC1a0I/wpbKiX9mGnPrsg/9l41d
+         bjQMJrQb+rch4iArvqADBQz+8H3SyKIKQFYfHerWONWXHBUNVgATEkPIwtAopnoUUFjz
+         PMXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GZfZmN7sV8qVqb16Z857vnnxLRoq/f8xdeCst0XD72g=;
+        b=Iu97FB0efFrzxyfO69ZG7KgQmRuOj1PzFLdIC+n81S8hviXeuBQ8goTORQTW9Lhf8t
+         jlqVyNpa30N9BuAhp7nUETBnEMYq8uS3SVLHB3B0VFTle2dkF08XJ60MXGxclgYe1dqO
+         scXLHWh25Fq4ZmAdrPODmsd6K7tbG3ZjbeptFruU1bWp28isLNRm7vpfIme9GNbjkhUj
+         sbX/hk57YhyHNI3uzbZ3YScJLCKv1fhAVEmbFiuaII/M8JiJcgp/RmHp5OmZsPa0SZ1C
+         Xu9nra3l7SfaFjNXzqclpDDtxpAefbx26SEIC7KtI4dUd+wArXBnZr6ZU3E+rZpwggpw
+         ooow==
+X-Gm-Message-State: AOAM532I0sRJJWzaRmgg6YEMIGtOFMEf1+F+DHhMMZKQh9lWh1S4rqQ0
+        kRtwOaaTvlczGRHRs/856pFoN5WKpJUB2g==
+X-Google-Smtp-Source: ABdhPJwWTZCKuNcGxS9VkNEZXiYOfb+f8R2DIz1/QL/xNgrLudkxMxSvhkiOGrKI2ZgtEu3ftyZ4uA==
+X-Received: by 2002:a17:90a:6be4:: with SMTP id w91mr20345088pjj.68.1616866835392;
+        Sat, 27 Mar 2021 10:40:35 -0700 (PDT)
+Received: from Atharvas-Air.Dlink ([119.82.121.20])
+        by smtp.gmail.com with ESMTPSA id s28sm13116782pfd.155.2021.03.27.10.40.33
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 27 Mar 2021 10:40:35 -0700 (PDT)
+From:   Atharva Raykar <raykar.ath@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Atharva Raykar <raykar.ath@gmail.com>
+Subject: [GSOC][PATCH] userdiff: add support for Scheme
+Date:   Sat, 27 Mar 2021 23:09:38 +0530
+Message-Id: <20210327173938.59391-1-raykar.ath@gmail.com>
+X-Mailer: git-send-email 2.31.0
 MIME-Version: 1.0
-Fcc:    Sent
-X-Provags-ID: V03:K1:e5ZFJDa60VEZ7PJ1ZYXu4Fl+GdjyL4QZ+jbsTHFcSB06o9OVh/Q
- QCuE75hI4bPbhQ/LdRSJ23O0mtGwvK8qhIg5yqrX0TkYTxlKlZD/y6qhHGIyKibhiYVVBUR
- t4XgNGOU3F4SXntLfglh0IHyqwXbLqTwNBYeK4UcSI4478Cmkfssm5qSr5DJhTnV/DFaPF5
- wxkIV7eSbgW0KIClHDyDQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:360ls4JdXWs=:dUyf91aPEu1nwYQyDqc58s
- vBiq6iR+HbMxixUkxj/6uDojTl01nfc1UQ9nIdAVjrmkUDRF0eIY7Cgi/nvUgEoNTmWitAK0n
- 7I40zDkffC0zmSeIWs/vm3COBpNbW/+YhE4Bn1bzYCzN5+dEyPwWC8Aik97tRp/IqT8/wGPXE
- dZ0fNTO/46qmfYG9M3GZsImOX5orHkSEtqSPDzc/ohkQDlzb/9FxfSQCuGz1IoVYwXwxmit+a
- qx7CRvG/Mb5tP2FCtD/qe6TW60ExEqJV8RkcRZXr+kg46TM1zpkay7Qg/sBS2zs6+7rXm7c/M
- bgadCAtpiXHNHWnltuovfxn1mRDuM9bDMqa6O4O92pBzN0ilinJfEpEWCBQfXLGF1beS0e8VI
- 0iX223CKh5H1fLm8s0r5noLR2a0wP0kQKjMtKrLpZClcT/YWymFF9QHt96t/wBSukzbQN/Bd7
- 9osv6rktdWSw6eLnVVrTvenkgl7U69jcaeXTSzfg36GahQqtzEUEV0514olivwzesTWr8c8ff
- sH7/YwVy5ECX6AeaSD1sP+SCUo+2La2VeRz0rZdvoHps3kQMuSmpVkY6NWZ6VMCjYkuhZkI2T
- H62rHiuJfE/9tzKZHwTqv+gtJ+1cJuKYeOES9xqm9mJFpO2A+ubuSPgwlpbGCd1Lg40WULNj8
- VAGkm8o9Eko7PdjJNQkOrL375Td/alJzlfMGaNmWBPxyrJax0N/y55936YxjV0fucGMT1yQl/
- aNwgLZG/G7b/bFtNKGo9Guv6Ryqmfxb65XBlqrAqnVzeSF1/pS37Ir0L+owJvBTCkStwupCpU
- dnJVgEhSUP+iEz04Q9vl9+yoFdI6v2JgFuVEUZj+NBeIMA4F/ICvou+fiNMoYutaZbzKrZ6Wv
- VQzxJaFgtNbqfar3YEDn3DyMlNohbhb8Tor4cAXeqFB6Ifjk0QAolkO8OnTHhbH/rB94Q6Fxr
- EF8jKvqZmUP943Agpbdhfx1PWD3rFbuBcNoiKYxvqbE+gd+EvFlkxlRAEUB1b3tFWC58HLqEw
- z5cxyqGZMiqK20NHGeHjLZsgu0Syj/q/DWgXVGbeZW/wlnl9ZwD2nN3i2f5QPXfAKJoq2M3lV
- 1hELIVCgwQ3EzVrrG6KjE8do9lzHm+scGHK0HkFFa1CQKXELfQ0posJ191XfoGrpjXC22kpSu
- hcSW/GaRcfwmAhiiw6V+lcs9xxe97w4F57lnBiI2W9Knh+tRI44JyOB/ZlzFSbf9u8sV0v1Pj
- /oaIQsnWgI+HIH8tU
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Git users,
+Add a diff driver for Scheme (R5RS and R6RS) which
+recognizes top level and local `define` forms,
+whether it is a function definition, binding, syntax
+definition or a user-defined `define-xyzzy` form.
 
-I hereby announce that Git for Windows 2.31.1 is available from:
+The rationale for picking `define` forms for the
+hunk headers is because it is usually the only
+significant form for defining the structure of the
+program, and it is a common pattern for schemers to
+have local function definitions to hide their
+visibility, so it is not only the top level
+`define`'s that are of interest. Schemers also
+extend the language with macros to provide their
+own define forms (for example, something like a
+`define-test-suite`) which is also captured in the
+hunk header.
 
-    https://gitforwindows.org/
+The word regex is a best-effort attempt to conform
+to R6RS[1] valid identifiers, symbols and numbers.
 
-Changes since Git for Windows v2.31.0 (March 15th 2021)
+[1] http://www.r6rs.org/final/html/r6rs/r6rs-Z-H-7.html#node_chap_4
 
-New Features
+Signed-off-by: Atharva Raykar <raykar.ath@gmail.com>
+---
 
-  * Comes with Git v2.31.1.
-  * Comes with GNU Privacy Guard v2.2.27.
-  * Comes with OpenSSL v1.1.1k.
-  * Comes with Git LFS v2.13.3.
+Hi, first-time contributor here, I wanted to have a go at this as
+a microproject.
 
-Bug Fixes
+A few things I had to consider:
+ - Going through the mailing list, there have already been two other
+   patches that are for lispy languages that have taken slightly
+   different approaches: Elisp[1] and Clojure[2]. Would it make any
+   sense to have a single userdiff driver for lisp that just captures
+   all top level forms in the hunk? I personally felt it's better to
+   differentiate the drivers for each language, as they have different
+   constructs.
 
-  * It is now possible to execute the Windows Store version of
-    python3.exe from Git Bash.
+ - It was hard to decide exactly which forms should appear on the hunk
+   headers. Having programmed in a Scheme before, I went with the forms I
+   would have liked to see when looking at git diffs, which would be the
+   nearest `define` along with `define-syntax` and other define forms that
+   are created as user-defined macros. I am willing to ask around in
+   certain active scheme communities for some kind of consensus, but there
+   is no single large consolidated group of schemers (the closest is
+   probably comp.lang.scheme?).
 
-Git-2.31.1-64-bit.exe | c43611eb73ad1f17f5c8cc82ae51c3041a2e7279e0197ccf5f739e9129ce426e
-Git-2.31.1-32-bit.exe | 6abc8c83945ee8046c7337d2376c4dcb1e4d63ed9614e161b42a30a5fe9dc6ec
-PortableGit-2.31.1-64-bit.7z.exe | fce2161a8891c4deefdb8d215ab76498c245072f269843ef1a489c4312baef52
-PortableGit-2.31.1-32-bit.7z.exe | d6d48e16e3f0ecbc0a45d410ad3ebae15e5618202855ebe72cd9757e4d35b880
-MinGit-2.31.1-64-bit.zip | a07739b564ac37b9ac6267205a80af99d518b0d4b7520f1934e31c9fe7cfc599
-MinGit-2.31.1-32-bit.zip | 871462ccd94315f490197163afe6903ba65b8460081579d8985c434b3531745d
-MinGit-2.31.1-busybox-64-bit.zip | d97a2f116692e78266fbf10976183d57a4193868df1a94de7d40d371e358b6f3
-MinGit-2.31.1-busybox-32-bit.zip | d3156def84d48bfacc6242f5386c3c7addc4d2752da078cab2da709f8820c9fc
-Git-2.31.1-64-bit.tar.bz2 | c70934e84fd610cf8f492bdfe858d4738b8af09f5b5dc734795d2b40d99bcb53
-Git-2.31.1-32-bit.tar.bz2 | ee941492fe76c6813edc054c637ce4af2c488e6b5ee220306916cd34956e2253
+ - By best-effort attempt at the wordregex, I mean that it is a little
+   more permissive than it has to be, as it accepts a few words that are
+   technically invalid in Scheme.
+   Making it handle all cases like numbers and identifiers with separate
+   regexen would be greatly complicated (Eg: #x#e10.2f3 is a valid number
+   but #x#f10.2e3 is not; 10t1 is a valid identifier, but 10s1 is a number
+   -- my wordregex just clubs all of these into a generic 'word match' which
+   trades of granularity for simplicity, and it usually does the right thing).
 
-Ciao,
-Johannes
+[1] http://public-inbox.org/git/20210213192447.6114-1-git@adamspiers.org/
+[2] http://public-inbox.org/git/pull.902.git.1615667191368.gitgitgadget@gmail.com/
+
+ Documentation/gitattributes.txt    | 2 ++
+ t/t4018-diff-funcname.sh           | 1 +
+ t/t4018/scheme-define-syntax       | 8 ++++++++
+ t/t4018/scheme-local-define        | 4 ++++
+ t/t4018/scheme-top-level-define    | 4 ++++
+ t/t4018/scheme-user-defined-define | 6 ++++++
+ t/t4034-diff-words.sh              | 1 +
+ t/t4034/scheme/expect              | 9 +++++++++
+ t/t4034/scheme/post                | 4 ++++
+ t/t4034/scheme/pre                 | 4 ++++
+ userdiff.c                         | 8 ++++++++
+ 11 files changed, 51 insertions(+)
+ create mode 100644 t/t4018/scheme-define-syntax
+ create mode 100644 t/t4018/scheme-local-define
+ create mode 100644 t/t4018/scheme-top-level-define
+ create mode 100644 t/t4018/scheme-user-defined-define
+ create mode 100644 t/t4034/scheme/expect
+ create mode 100644 t/t4034/scheme/post
+ create mode 100644 t/t4034/scheme/pre
+
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index 0a60472bb5..cfcfa800c2 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -845,6 +845,8 @@ patterns are available:
+ 
+ - `rust` suitable for source code in the Rust language.
+ 
++- `scheme` suitable for source code in the Scheme language.
++
+ - `tex` suitable for source code for LaTeX documents.
+ 
+ 
+diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
+index 9675bc17db..823ea96acb 100755
+--- a/t/t4018-diff-funcname.sh
++++ b/t/t4018-diff-funcname.sh
+@@ -48,6 +48,7 @@ diffpatterns="
+ 	python
+ 	ruby
+ 	rust
++	scheme
+ 	tex
+ 	custom1
+ 	custom2
+diff --git a/t/t4018/scheme-define-syntax b/t/t4018/scheme-define-syntax
+new file mode 100644
+index 0000000000..603b99cea4
+--- /dev/null
++++ b/t/t4018/scheme-define-syntax
+@@ -0,0 +1,8 @@
++(define-syntax define-test-suite RIGHT
++  (syntax-rules ()
++    ((_ suite-name (name test) ChangeMe ...)
++     (define suite-name
++       (let ((tests
++              `((name . ,test) ...)))
++         (lambda ()
++           (ChangeMe 'suite-name tests)))))))
+\ No newline at end of file
+diff --git a/t/t4018/scheme-local-define b/t/t4018/scheme-local-define
+new file mode 100644
+index 0000000000..90e75dcce8
+--- /dev/null
++++ b/t/t4018/scheme-local-define
+@@ -0,0 +1,4 @@
++(define (higher-order)
++  (define local-function RIGHT
++    (lambda (x)
++     (car "this is" "ChangeMe"))))
+\ No newline at end of file
+diff --git a/t/t4018/scheme-top-level-define b/t/t4018/scheme-top-level-define
+new file mode 100644
+index 0000000000..03acdc628d
+--- /dev/null
++++ b/t/t4018/scheme-top-level-define
+@@ -0,0 +1,4 @@
++(define (some-func x y z) RIGHT
++  (let ((a x)
++        (b y))
++        (ChangeMe a b)))
+\ No newline at end of file
+diff --git a/t/t4018/scheme-user-defined-define b/t/t4018/scheme-user-defined-define
+new file mode 100644
+index 0000000000..401093bac3
+--- /dev/null
++++ b/t/t4018/scheme-user-defined-define
+@@ -0,0 +1,6 @@
++(define-test-suite record-case-tests RIGHT
++  (record-case-1 (lambda (fail)
++                   (let ((a (make-foo 1 2)))
++                     (record-case a
++                       ((bar x) (ChangeMe))
++                       ((foo a b) (+ a b)))))))
+\ No newline at end of file
+diff --git a/t/t4034-diff-words.sh b/t/t4034-diff-words.sh
+index 56f1e62a97..ee7721ab91 100755
+--- a/t/t4034-diff-words.sh
++++ b/t/t4034-diff-words.sh
+@@ -325,6 +325,7 @@ test_language_driver perl
+ test_language_driver php
+ test_language_driver python
+ test_language_driver ruby
++test_language_driver scheme
+ test_language_driver tex
+ 
+ test_expect_success 'word-diff with diff.sbe' '
+diff --git a/t/t4034/scheme/expect b/t/t4034/scheme/expect
+new file mode 100644
+index 0000000000..eed21e803c
+--- /dev/null
++++ b/t/t4034/scheme/expect
+@@ -0,0 +1,9 @@
++<BOLD>diff --git a/pre b/post<RESET>
++<BOLD>index 6a5efba..7c4a6b4 100644<RESET>
++<BOLD>--- a/pre<RESET>
++<BOLD>+++ b/post<RESET>
++<CYAN>@@ -1,4 +1,4 @@<RESET>
++(define (<RED>myfunc a b<RESET><GREEN>my-func first second<RESET>)
++  ; This is a <RED>really<RESET><GREEN>(moderately)<RESET> cool function.
++  (let ((c (<RED>+ a b<RESET><GREEN>add1 first<RESET>)))
++    (format "one more than the total is %d" (<RED>add1<RESET><GREEN>+<RESET> c <GREEN>second<RESET>))))
+diff --git a/t/t4034/scheme/post b/t/t4034/scheme/post
+new file mode 100644
+index 0000000000..7c4a6b4f3d
+--- /dev/null
++++ b/t/t4034/scheme/post
+@@ -0,0 +1,4 @@
++(define (my-func first second)
++  ; This is a (moderately) cool function.
++  (let ((c (add1 first)))
++    (format "one more than the total is %d" (+ c second))))
+\ No newline at end of file
+diff --git a/t/t4034/scheme/pre b/t/t4034/scheme/pre
+new file mode 100644
+index 0000000000..6a5efbae61
+--- /dev/null
++++ b/t/t4034/scheme/pre
+@@ -0,0 +1,4 @@
++(define (myfunc a b)
++  ; This is a really cool function.
++  (let ((c (+ a b)))
++    (format "one more than the total is %d" (add1 c))))
+\ No newline at end of file
+diff --git a/userdiff.c b/userdiff.c
+index 3f81a2261c..c51a8c98ba 100644
+--- a/userdiff.c
++++ b/userdiff.c
+@@ -191,6 +191,14 @@ PATTERNS("rust",
+ 	 "[a-zA-Z_][a-zA-Z0-9_]*"
+ 	 "|[0-9][0-9_a-fA-Fiosuxz]*(\\.([0-9]*[eE][+-]?)?[0-9_fF]*)?"
+ 	 "|[-+*\\/<>%&^|=!:]=|<<=?|>>=?|&&|\\|\\||->|=>|\\.{2}=|\\.{3}|::"),
++PATTERNS("scheme",
++         "^[\t ]*(\\(define-?.*)$",
++         /* 
++          * Scheme allows symbol names to have any character,
++          * as long as it is not a form of a parenthesis.
++          * The spaces must be escaped.
++          */
++         "(\\.|[^][)(\\}\\{ ])+"),
+ PATTERNS("bibtex", "(@[a-zA-Z]{1,}[ \t]*\\{{0,1}[ \t]*[^ \t\"@',\\#}{~%]*).*$",
+ 	 "[={}\"]|[^={}\" \t]+"),
+ PATTERNS("tex", "^(\\\\((sub)*section|chapter|part)\\*{0,1}\\{.*)$",
+-- 
+2.31.0
+
