@@ -8,128 +8,128 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AA2E1C433DB
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D2A2BC433E0
 	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 23:07:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 89CA96195D
+	by mail.kernel.org (Postfix) with ESMTP id B0A896196B
 	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 23:07:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231255AbhC0XHD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 27 Mar 2021 19:07:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46382 "EHLO
+        id S231265AbhC0XHE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 27 Mar 2021 19:07:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231246AbhC0XGa (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Mar 2021 19:06:30 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 723B8C0613B2
-        for <git@vger.kernel.org>; Sat, 27 Mar 2021 16:06:30 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id j18so9120709wra.2
-        for <git@vger.kernel.org>; Sat, 27 Mar 2021 16:06:30 -0700 (PDT)
+        with ESMTP id S231239AbhC0XGc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Mar 2021 19:06:32 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA0DDC0613B1
+        for <git@vger.kernel.org>; Sat, 27 Mar 2021 16:06:31 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id g25so4771272wmh.0
+        for <git@vger.kernel.org>; Sat, 27 Mar 2021 16:06:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=w4z13lrFm8eQHtmeqHGeX7tukeDUIH5vi7ZPya4DiIQ=;
-        b=ZwmZmdFWXPJBJ3adRUGryvfYBTRHTb0Klk4VsAW/pJkTvDvgohqFh8jlpgD4ZBW+NM
-         unmjl8nZjFhDBzK0C0O4YnSpgTueLcObV8AZ2TI6w+JrQg/UIXvcE/xGVjSBBapgWEhi
-         yYGHJPATWUldDAjqQtxwroFGopr1t6M7IVfl1JyPTa0ltrZw0ljlZ0dkTBqvP2WnF1KP
-         bM/5IStFq+XpQro+kBZiL0DQNEOap2RtSPBj67cMWNjI4ZVM9Nm9/DncHh0y9FLXGKOX
-         FTGJhkcCRHgmUd6/LQ1MuTVIyK73d8RxmTE7fQ5tmRlE5mptQZwL/CjxKrFp+kIJ/NeK
-         Ld4Q==
+        bh=opsNyEE4aI9Bz5Q1Rt42EQ/sekQvuO0cfEjnauxiO0E=;
+        b=jEzPix3t9UuibClfYrzrrfef0DVujA/Rfmc8NJQLlr+ixPxB6dWkWnbV9y2QVn3Lzl
+         snwpioB+shuzzsjjQZF2IrljEWTBRw19aoTvQyptT+n7wcr+1Hy7TXhTyBksnWsWRDk1
+         cdgjo6qVrsX/nIY8TcrIeokmf1jnxYL70Di60IYglPk3GVLSLyO1/SK0dI7DtsuOtAJt
+         CR6Ffzqe5j+ZbmELZjvb2S0uQtzsBfeR1xrRDRsLiSBMQ5F6X12jXIBc8gzGYAVMeRVY
+         j0LkyRNlmibjsfzKtB1c8jeSBeGqhgJmtwCVi+t+o5p2hdS7o+yOjhIWEPBGpqRuyAfA
+         oaZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=w4z13lrFm8eQHtmeqHGeX7tukeDUIH5vi7ZPya4DiIQ=;
-        b=Z14CLet/zvM3UOrNUZQZLq641oPE/sE69mkg1TiRtpP5dc72ExBJwL981dg0MLf3v7
-         OHMWz/lX5KO3Y6N+mJSQvmdQXp1SZxC2RKEG45Sdbe9n8bWEU1LNmFGRNqNkf0tS6Xu+
-         78KGriwksOeBxr/0mlMrSoomRvsHCweH1LAXk8uHAPVczYgsGlXmrwMXBDYMvsGM/Wjq
-         eE/HhPfDZis4J4e2kSHY/iDV+WVbL+kCyLgz5O99kYQhfH1ob+7o/elrWZiTuPfNtFZ3
-         ttX5ZU8SbvU6SCa7YKe5eXETpBmmu2dnTKHMiXx8InMoqnAwa9OazIGtCoVf6xzbwO10
-         IK6Q==
-X-Gm-Message-State: AOAM531B7xc8McN5MCuGhc8fuZSb9iLq2usDX2qvmX9Uy2gSFlmUSICG
-        jgnAFl7XSvoz+mn+LIIM9Dt2+IegzdQ=
-X-Google-Smtp-Source: ABdhPJw2HQz3PC1J9uLlRgz08PIlZIvt6eMRNlQ1whiWQSrBYFvoTJIz3GR2+49LtxW1vhGPbGELbQ==
-X-Received: by 2002:adf:ecc8:: with SMTP id s8mr20854307wro.11.1616886389306;
-        Sat, 27 Mar 2021 16:06:29 -0700 (PDT)
+        bh=opsNyEE4aI9Bz5Q1Rt42EQ/sekQvuO0cfEjnauxiO0E=;
+        b=SXEqYMLJCCUTewYUfY4I9jX+v0t8Ws0pfUOyxLEzjAhDvDc2kdKbAs6rsAhXGeFZgy
+         lOxwA1v3K9aqHnKvzIi/4q+2YQR5VGyRh0N/jgPTkTnGwKUSRmQVz/71m1FPnYGxs35N
+         hwtNxjUJujgB8KTPwltF+ea7Rr9z9NZXn1Ez6PG1OCgpz+sFQIDdQRjwtYmSjv40Sjsi
+         BcLs29zoKiGDW4XLeDFrbUIlYVliw0rf1jQF+mTT/lLhp5sSZpttzu5n5Zg+hbpSzBNX
+         bHvMLH7BqF3Qp0LsNXwibOz6HCvzyFsd1W+IgikRoHaZT7TbkUTp+2JpQkIuoZ/Ete7E
+         1reA==
+X-Gm-Message-State: AOAM532fFA2Yr9/NcVefMb/Q251QHYYqe7yBO/XUhOVyJKUObVYG9jAt
+        JOr3DXDKekI0G5aaTBCGjNVtuxFksyU=
+X-Google-Smtp-Source: ABdhPJyQeZ2xiJoLN8DsCRtOn2Vcu/zFT899yruwi8KNRia1SVtutjFstckTiixPvBJ+gCcey/vOVw==
+X-Received: by 2002:a7b:c931:: with SMTP id h17mr18937948wml.4.1616886390727;
+        Sat, 27 Mar 2021 16:06:30 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 81sm17891465wmc.11.2021.03.27.16.06.28
+        by smtp.gmail.com with ESMTPSA id h10sm21327268wrp.22.2021.03.27.16.06.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Sat, 27 Mar 2021 16:06:29 -0700 (PDT)
-Message-Id: <543fd0f5d7e5ee297364d1d28091f2004a35f2d0.1616886386.git.gitgitgadget@gmail.com>
+Message-Id: <4b183c7def5839ddf679605ff74f7f3280d957d0.1616886386.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.887.git.1616886386.gitgitgadget@gmail.com>
 References: <pull.887.git.1616886386.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 27 Mar 2021 23:06:24 +0000
-Subject: [PATCH 3/4] cmake: add a preparatory work-around to accommodate
- `vcpkg`
+From:   "Dennis Ameling via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 27 Mar 2021 23:06:25 +0000
+Subject: [PATCH 4/4] cmake(install): include vcpkg dlls
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+        Dennis Ameling <dennis@dennisameling.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+From: Dennis Ameling <dennis@dennisameling.com>
 
-We are about to add support for installing the `.dll` files of Git's
-dependencies (such as libcurl) in the CMake configuration. The `vcpkg`
-ecosystem from which we get said dependencies makes that relatively
-easy: simply turn on `X_VCPKG_APPLOCAL_DEPS_INSTALL`.
+Our CMake configuration generates not only build definitions, but also
+install definitions: After building Git using `msbuild git.sln`, the
+built artifacts can be installed via `msbuild INSTALL.vcxproj`.
 
-However, current `vcpkg` introduces a limitation if one does that:
-While it is totally cool with CMake to specify multiple targets within
-one invocation of `install(TARGETS ...) (at least according to
-https://cmake.org/cmake/help/latest/command/install.html#command:install),
-`vcpkg`'s parser insists on a single target per `install(TARGETS ...)`
-invocation.
+To specify _where_ the files should be installed, the
+`-DCMAKE_INSTALL_PREFIX=<path>` option can be used when running CMake.
 
-Well, that's easily accomplished: Let's feed the targets individually to
-the `install(TARGETS ...)` function in a `foreach()` look.
+However, this process would really only install the files that were just
+built. On Windows, we need more than that: We also need the `.dll` files
+of the dependencies (such as libcurl). The `vcpkg` ecosystem, which we
+use to obtain those dependencies, can be asked to install said `.dll`
+files really easily, so let's do that.
 
-This also has the advantage that we do not have to manually cull off the
-two entries from the `${PROGRAMS_BUILT}` array before scheduling the
-remainder to be installed into `libexec/git-core`. Instead, we iterate
-through the array and decide for each entry where it wants to go.
+This requires more than just the built `vcpkg` artifacts in the CI build
+definition; We now clone the `vcpkg` repository so that the relevant
+CMake scripts are available, in particular the ones related to defining
+the toolchain.
 
+Signed-off-by: Dennis Ameling <dennis@dennisameling.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- contrib/buildsystems/CMakeLists.txt | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ .github/workflows/main.yml          | 5 +++++
+ contrib/buildsystems/CMakeLists.txt | 4 ++++
+ 2 files changed, 9 insertions(+)
 
+diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+index f6885e88ee6b..c13afe2bf058 100644
+--- a/.github/workflows/main.yml
++++ b/.github/workflows/main.yml
+@@ -186,6 +186,11 @@ jobs:
+         ## Unzip and remove the artifact
+         unzip artifacts.zip
+         rm artifacts.zip
++    - name: initialize vcpkg
++      uses: actions/checkout@v2
++      with:
++        repository: 'microsoft/vcpkg'
++        path: 'compat/vcbuild/vcpkg'
+     - name: download vcpkg artifacts
+       shell: powershell
+       run: |
 diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index da2811ae3aad..a166be0eb1b8 100644
+index a166be0eb1b8..98b2507f222e 100644
 --- a/contrib/buildsystems/CMakeLists.txt
 +++ b/contrib/buildsystems/CMakeLists.txt
-@@ -811,15 +811,19 @@ list(TRANSFORM git_shell_scripts PREPEND "${CMAKE_BINARY_DIR}/")
- list(TRANSFORM git_perl_scripts PREPEND "${CMAKE_BINARY_DIR}/")
+@@ -58,6 +58,10 @@ if(WIN32)
  
- #install
--install(TARGETS git git-shell
-+foreach(program ${PROGRAMS_BUILT})
-+if(${program} STREQUAL git OR ${program} STREQUAL git-shell)
-+install(TARGETS ${program}
- 	RUNTIME DESTINATION bin)
-+else()
-+install(TARGETS ${program}
-+	RUNTIME DESTINATION libexec/git-core)
-+endif()
-+endforeach()
+ 	# In the vcpkg edition, we need this to be able to link to libcurl
+ 	set(CURL_NO_CURL_CMAKE ON)
 +
- install(PROGRAMS ${CMAKE_BINARY_DIR}/git-cvsserver
- 	DESTINATION bin)
++	# Copy the necessary vcpkg DLLs (like iconv) to the install dir
++	set(X_VCPKG_APPLOCAL_DEPS_INSTALL ON)
++	set(CMAKE_TOOLCHAIN_FILE ${VCPKG_DIR}/scripts/buildsystems/vcpkg.cmake CACHE STRING "Vcpkg toolchain file")
+ endif()
  
--list(REMOVE_ITEM PROGRAMS_BUILT git git-shell)
--install(TARGETS ${PROGRAMS_BUILT}
--	RUNTIME DESTINATION libexec/git-core)
--
- set(bin_links
- 	git-receive-pack git-upload-archive git-upload-pack)
- 
+ find_program(SH_EXE sh PATHS "C:/Program Files/Git/bin")
 -- 
 gitgitgadget
-
