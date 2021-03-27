@@ -2,364 +2,160 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E255C433C1
-	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 03:57:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ED791C433DB
+	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 06:35:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 660A661A18
-	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 03:57:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AA07A619B4
+	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 06:35:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231270AbhC0D4m (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 26 Mar 2021 23:56:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55592 "EHLO
+        id S230198AbhC0Gew (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 27 Mar 2021 02:34:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60904 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229901AbhC0D4b (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Mar 2021 23:56:31 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B8F0C0613AA
-        for <git@vger.kernel.org>; Fri, 26 Mar 2021 20:56:30 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id t5-20020a1c77050000b029010e62cea9deso3975084wmi.0
-        for <git@vger.kernel.org>; Fri, 26 Mar 2021 20:56:30 -0700 (PDT)
+        with ESMTP id S230111AbhC0Gec (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Mar 2021 02:34:32 -0400
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C88DC0613AA
+        for <git@vger.kernel.org>; Fri, 26 Mar 2021 23:34:32 -0700 (PDT)
+Received: by mail-pj1-x1030.google.com with SMTP id k23-20020a17090a5917b02901043e35ad4aso5269976pji.3
+        for <git@vger.kernel.org>; Fri, 26 Mar 2021 23:34:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=+hJnX/uCEvVahpyK9RNm4lW8kHb5XB9qnCbFbi1wqo0=;
-        b=BEkzPS130nIN1KkM9rLCJIRWAC6sDwcW95ARZkAwqv78Poohrm8tr6t61DtPVDpGyA
-         uutcdmYS1E25PNK30tC7mfD3FNiCJGSpX8GbkqClecvyTTMuwYufWwhDqMwGNPxoysBQ
-         i9N7N++LY3fvrwlK6TdRFfti0lm/m7LQLG5zrcjZqdTo72mBZYpbFvQQhBh770ggsp2m
-         UfNJNv+9nDmBVnxGE9eqB63CjARQPJ3drFiJ1jTM5Wa9uWWlspCaC0FPXcTId04t/WwZ
-         KM0iplvEbicOI8fbwm2oJAptw1X55kCWaF0jTvTtClrynCx4lUALlRmYCAKV5V/Q3/Bn
-         IuCQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=LGCy75rs+vSteGyNU6haHWMFvRs8sl0fPwMJ9TH2WkQ=;
+        b=TDsQDLAOL4jtjtQQPLxtx74gGUygkK9uTN0QZGShpiMNd2Aw5uMmpGZZQ/7OUbJnWT
+         GvypnR2k+AfTn+3k6bMvRX7PYYnRzFV1LvSClVz8j9YdGEipNIci66Ob2ILzJqtdTQbS
+         IrHYZuPiAC7K4S+XNuac2pe31kfUV1GCFX5ieasmeck7mzYXnDdJasQozr5XUjyXpvN3
+         JiMJSbqXASlBP01HLN+q1hbTtoj9ceaJyA5yMqm2pODOwQbhdYgXMfB1QujOjzedHBZF
+         NPZ2E9hu3hRe4zcp+lyX4MT+BE5XWERHpRmPTsT67cg9MMrDDm6BR3x/jC9T5Wwl//Pl
+         AU3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=+hJnX/uCEvVahpyK9RNm4lW8kHb5XB9qnCbFbi1wqo0=;
-        b=ZUuZWEOtTOs+40NUYck+61+NwOxz1yd1ezUPbR+VeW++7VTQzCJkArjL+4HZRov3tw
-         WnbJaEgdHRDNokGZEnWIjUe2iJdNs9BHcas5jrvx87tBR7hAOZURyzSHqG8JoYBxc8aV
-         nUr9bZIvz682N/oVrS6AJSeuH1ggdx5NzBLcc7h8ihKO2Y4mU0yaURBtSMQX7Cq2VLL7
-         MkWUyo/wb8MGIuYipOkwzftTIKs7Uty7cpDiRrxYDp3hPIIeYXdLnVZg0e3y9AY7F5vo
-         zLjij7FY2twD/kOfkXXOGNAUx6UmxTPKI2Y2Fpr1qgtREDdLNtjTWmJZ37Sc104k3uu5
-         5Chw==
-X-Gm-Message-State: AOAM530Y2ZT1az7yz8N9BNuXfCUfWoGpqfynUDeG+z2OosCKhJH2O+Ym
-        s5GPcuruXbtQRVnZXJCaIIJbWSep3qM=
-X-Google-Smtp-Source: ABdhPJxhEvPae+u5o2h/+2kNQ/c0yaBYLppXotGKu2pk0VwPGdjgmfocEPjTmlTKxEYe8U1Dn/ThvA==
-X-Received: by 2002:a7b:c047:: with SMTP id u7mr15687341wmc.98.1616817388860;
-        Fri, 26 Mar 2021 20:56:28 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c2sm14513982wmr.22.2021.03.26.20.56.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Mar 2021 20:56:28 -0700 (PDT)
-Message-Id: <pull.910.v5.git.1616817387441.gitgitgadget@gmail.com>
-In-Reply-To: <pull.910.v4.git.1616396267010.gitgitgadget@gmail.com>
-References: <pull.910.v4.git.1616396267010.gitgitgadget@gmail.com>
-From:   "Georgios Kontaxis via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 27 Mar 2021 03:56:26 +0000
-Subject: [PATCH v5] gitweb: redacted e-mail addresses feature.
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=LGCy75rs+vSteGyNU6haHWMFvRs8sl0fPwMJ9TH2WkQ=;
+        b=C6x8R++eZl521oAsvfe5+nu5ILLLoIIcsf4qzUz13jC9HQc2IsbtesTc/F5scXlXba
+         dOLLqKcSgL+pMc/lTOhDotDScPZPcRbRVB460yvupNHHWmtu1tu2uxGrPrTK2+soiPS5
+         7xtbOb1EimLdXIDkNB39d2CHj7NgNpD1tU2x5C806Wgg+X4T7AjOoCNkafBM9hQRbwBM
+         rmfUyKRdwYWkVPMbBwXS8nUF1o71pLaOaxO8qtNGrcBs3Ui3uf1W1eRHdTacmiLY+S6w
+         Lk+TAaXoqRWbhmivG91Q7kc3OgFEI0lbB1pPp4PDqouK1ueN8j5ifi9LpOQ/+z/axog7
+         pt4g==
+X-Gm-Message-State: AOAM533oy7RURF322TGCgjTVWOWdbgLwEXPrAeGudZbjnvrEb2yqr7Nc
+        +aFGpAznOkSZFJ+N5WWYYUXm3Yh9jmPUFw==
+X-Google-Smtp-Source: ABdhPJzJCJBUvz3LWk5gqN5w5c+97Z8fuNvTOTQHFFc3NpmOUhe6bjYyxkmd1jUZWwQXwoEiUjHzQA==
+X-Received: by 2002:a17:90a:a613:: with SMTP id c19mr17390722pjq.141.1616826871352;
+        Fri, 26 Mar 2021 23:34:31 -0700 (PDT)
+Received: from [192.168.43.80] (subs32-116-206-28-35.three.co.id. [116.206.28.35])
+        by smtp.gmail.com with ESMTPSA id l25sm11275507pgu.72.2021.03.26.23.34.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 26 Mar 2021 23:34:31 -0700 (PDT)
+Subject: Re: [PATCH 1/2] SECURITY: describe how to report vulnerabilities
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org
+References: <pull.917.git.1616796767.gitgitgadget@gmail.com>
+ <2c9f5725d96fe45aa5d1a6bbc522f9ed6161173c.1616796767.git.gitgitgadget@gmail.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <4f715120-3cd3-9f14-a291-0eb6e83a940e@gmail.com>
+Date:   Sat, 27 Mar 2021 13:34:28 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Georgios Kontaxis <geko1702+commits@99rst.org>,
-        Georgios Kontaxis <geko1702+commits@99rst.org>
+In-Reply-To: <2c9f5725d96fe45aa5d1a6bbc522f9ed6161173c.1616796767.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Georgios Kontaxis <geko1702+commits@99rst.org>
+On 27/03/21 05.12, Johannes Schindelin via GitGitGadget wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> 
+> In the same document, describe that Git does not have Long Term Support
+> (LTS) release trains, although security fixes are always applied to a
+> few of the most recent release trains.
+> 
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>   SECURITY.md | 51 +++++++++++++++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 51 insertions(+)
+>   create mode 100644 SECURITY.md
+> 
+> diff --git a/SECURITY.md b/SECURITY.md
+> new file mode 100644
+> index 000000000000..282790164e78
+> --- /dev/null
+> +++ b/SECURITY.md
+> @@ -0,0 +1,51 @@
+> +# Security Policy
+> +
+> +## Reporting a vulnerability
+> +
+> +Please send a detailed mail to git-security@googlegroups.com to
+> +report vulnerabilities in Git.
+> +
+> +Even when unsure whether the bug in question is an exploitable
+> +vulnerability, it is recommended to send the report to
+> +git-security@googlegroups.com (and obviously not to discuss the
+> +issue anywhere else).
+What about using reference word (`... it is recommended to send the
+report to that mailing list`)?
+> +Vulnerabilities are expected to be discussed _only_ on that
+> +list, and not in public, until the official announcement on the
+> +Git mailing list on the release date.
+> +
+> +Examples for details to include:
+> +
+> +- Ideally a short description (or a script) to demonstrate an
+> +  exploit.
+> +- The affected platforms and scenarios (the vulnerability might
+> +  only affect setups with case-sensitiv file systems, for
+> +  example).
+Oops, s/case-sensitiv/case-sensitive/
+> +- The name and affiliation of the security researchers who are
+> +  involved in the discovery, if any.
+> +- Whether the vulnerability has already been disclosed.
+> +- How long an embargo would be required to be safe.
+> +
+> +## Supported Versions
+The header should be `Supported Versions and How Maintenance
+Releases are Made`.
+> +
+> +There are no official "Long Term Support" versions in Git.
+> +Instead, the maintenance track (i.e. the versions based on the
+> +most recently published feature release, also known as ".0"
+> +version) sees occasional updates with bug fixes.
+> +
+> +Fixes to vulnerabilities are made for the maintenance track for
+> +the latest feature release and merged up to the in-development
+> +branches. The Git project makes no formal guarantee for any
+> +older maintenance tracks to receive updates. In practice,
+> +though, critical vulnerability fixes are applied not only to the
+> +most recent track, but to at least a couple more maintenance
+> +tracks.
+> +
+> +This is typically done by making the fix on the oldest and still
+> +relevant maintenance track, and merging it upwards to newer and
+> +newer maintenance tracks.
+AFAIK, maint branch are based on latest feature release (say v2.24),
+and any bugfixes there are cherry-picked to relevant older releases,
+but does it mean resetting maint branch to that older release, and
+then resetting back to before that? Or how tagged maintenance release
+are made without resetting maint?
+> +For example, v2.24.1 was released to address a couple of
+> +[CVEs](https://cve.mitre.org/), and at the same time v2.14.6,
+> +v2.15.4, v2.16.6, v2.17.3, v2.18.2, v2.19.3, v2.20.2, v2.21.1,
+> +v2.22.2 and v2.23.1 were released.
+> 
 
-Gitweb extracts content from the Git log and makes it accessible
-over HTTP. As a result, e-mail addresses found in commits are
-exposed to web crawlers and they may not respect robots.txt.
-This can result in unsolicited messages.
-
-Introduce an 'email-privacy' feature which redacts e-mail addresses
-from the generated HTML content. Specifically, obscure addresses
-retrieved from the the author/committer and comment sections of the
-Git log. The feature is off by default.
-
-This feature does not prevent someone from downloading the
-unredacted commit log, e.g., by cloning the repository, and
-extracting information from it. It aims to hinder the low-
-effort, bulk collection of e-mail addresses by web crawlers.
-
-Signed-off-by: Georgios Kontaxis <geko1702+commits@99rst.org>
----
-    gitweb: redacted e-mail addresses feature.
-    
-    Changes since v1:
-    
-     * Turned off the feature by default.
-     * Removed duplicate code.
-     * Added note about Gitweb consumers receiving redacted logs.
-    
-    Changes since v2:
-    
-     * The feature can be set on a per-project basis. ('override' => 1)
-    
-    Changes since v3:
-    
-     * Renamed feature to "email-privacy" and improved documentation.
-     * Removed UI elements for git-format-patch since it won't be redacted.
-     * Simplified calls to the address redaction logic.
-     * Mail::Address is now used to reduce false-positive redactions.
-    
-    Changes since v4:
-    
-     * Rephrased the commit comment.
-     * hide_mailaddrs_if_private is slighly more compact.
-    
-    Signed-off-by: Georgios Kontaxis geko1702+commits@99rst.org
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-910%2Fkontaxis%2Fkontaxis%2Femail_privacy-v5
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-910/kontaxis/kontaxis/email_privacy-v5
-Pull-Request: https://github.com/gitgitgadget/git/pull/910
-
-Range-diff vs v4:
-
- 1:  03a3f41c37ef ! 1:  1427231f9db5 gitweb: redacted e-mail addresses feature.
-     @@ Commit message
-          Gitweb extracts content from the Git log and makes it accessible
-          over HTTP. As a result, e-mail addresses found in commits are
-          exposed to web crawlers and they may not respect robots.txt.
-     -    This may result in unsolicited messages.
-     -    This is a feature for redacting e-mail addresses
-     -    from the generated HTML, etc. content.
-     +    This can result in unsolicited messages.
-     +
-     +    Introduce an 'email-privacy' feature which redacts e-mail addresses
-     +    from the generated HTML content. Specifically, obscure addresses
-     +    retrieved from the the author/committer and comment sections of the
-     +    Git log. The feature is off by default.
-      
-          This feature does not prevent someone from downloading the
-          unredacted commit log, e.g., by cloning the repository, and
-     -    extracting information from it.
-     -    It aims to hinder the low-effort bulk collection of e-mail
-     -    addresses by web crawlers.
-     +    extracting information from it. It aims to hinder the low-
-     +    effort, bulk collection of e-mail addresses by web crawlers.
-      
-          Signed-off-by: Georgios Kontaxis <geko1702+commits@99rst.org>
-      
-     @@ Documentation/gitweb.conf.txt: default font sizes or lineheights are changed (e.
-       
-      +email-privacy::
-      +	Redact e-mail addresses from the generated HTML, etc. content.
-     -+	This hides e-mail addresses found in the commit log from HTTP clients.
-     ++	This obscures e-mail addresses retrieved from the author/committer
-     ++	and comment sections of the Git log.
-      +	It is meant to hinder web crawlers that harvest and abuse addresses.
-      +	Such crawlers may not respect robots.txt.
-     -+	Note that users and user tools also see the addresses redacted.
-     ++	Note that users and user tools also see the addresses as redacted.
-      +	If Gitweb is not the final step in a workflow then subsequent steps
-      +	may misbehave because of the redacted information they receive.
-      +	Disabled by default.
-     @@ gitweb/gitweb.perl: sub parse_date {
-      +		if (!is_mailaddr($match)) {
-      +			next;
-      +		}
-     -+		my $offset = pos $line;
-     -+		my $head = substr $line, 0, $offset - length($match);
-     ++		my $match_offset = pos($line) - length($match);
-     ++		pos $line = $match_offset;
-     ++
-      +		my $redaction = "<redacted>";
-     -+		my $tail = substr $line, $offset;
-     -+		$line = $head . $redaction . $tail;
-     -+		pos $line = length($head) + length($redaction);
-     ++		$line =~ s/\G(<[^>]+>)/$redaction/;
-     ++
-     ++		pos $line = $match_offset + length($redaction);
-      +	}
-      +	return $line;
-      +}
-
-
- Documentation/gitweb.conf.txt | 11 +++++++
- gitweb/gitweb.perl            | 55 ++++++++++++++++++++++++++++++-----
- t/lib-gitweb.sh               |  3 ++
- 3 files changed, 62 insertions(+), 7 deletions(-)
-
-diff --git a/Documentation/gitweb.conf.txt b/Documentation/gitweb.conf.txt
-index 7963a79ba98b..34b1d6e22435 100644
---- a/Documentation/gitweb.conf.txt
-+++ b/Documentation/gitweb.conf.txt
-@@ -751,6 +751,17 @@ default font sizes or lineheights are changed (e.g. via adding extra
- CSS stylesheet in `@stylesheets`), it may be appropriate to change
- these values.
- 
-+email-privacy::
-+	Redact e-mail addresses from the generated HTML, etc. content.
-+	This obscures e-mail addresses retrieved from the author/committer
-+	and comment sections of the Git log.
-+	It is meant to hinder web crawlers that harvest and abuse addresses.
-+	Such crawlers may not respect robots.txt.
-+	Note that users and user tools also see the addresses as redacted.
-+	If Gitweb is not the final step in a workflow then subsequent steps
-+	may misbehave because of the redacted information they receive.
-+	Disabled by default.
-+
- highlight::
- 	Server-side syntax highlight support in "blob" view.  It requires
- 	`$highlight_bin` program to be available (see the description of
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 0959a782eccb..fe1dbc266ea7 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -21,6 +21,7 @@
- use File::Basename qw(basename);
- use Time::HiRes qw(gettimeofday tv_interval);
- use Digest::MD5 qw(md5_hex);
-+use Git::LoadCPAN::Mail::Address;
- 
- binmode STDOUT, ':utf8';
- 
-@@ -569,6 +570,15 @@ sub evaluate_uri {
- 		'sub' => \&feature_extra_branch_refs,
- 		'override' => 0,
- 		'default' => []},
-+
-+	# Redact e-mail addresses.
-+
-+	# To enable system wide have in $GITWEB_CONFIG
-+	# $feature{'email-privacy'}{'default'} = [1];
-+	'email-privacy' => {
-+		'sub' => sub { feature_bool('email-privacy', @_) },
-+		'override' => 1,
-+		'default' => [0]},
- );
- 
- sub gitweb_get_feature {
-@@ -3449,6 +3459,33 @@ sub parse_date {
- 	return %date;
- }
- 
-+sub is_mailaddr {
-+	my @addrs = Mail::Address->parse(shift);
-+	if (!@addrs || !$addrs[0]->host || !$addrs[0]->user) {
-+		return 0;
-+	}
-+	return 1;
-+}
-+
-+sub hide_mailaddrs_if_private {
-+	my $line = shift;
-+	return $line unless gitweb_check_feature('email-privacy');
-+	while ($line =~ m/(<[^>]+>)/g) {
-+		my $match = $1;
-+		if (!is_mailaddr($match)) {
-+			next;
-+		}
-+		my $match_offset = pos($line) - length($match);
-+		pos $line = $match_offset;
-+
-+		my $redaction = "<redacted>";
-+		$line =~ s/\G(<[^>]+>)/$redaction/;
-+
-+		pos $line = $match_offset + length($redaction);
-+	}
-+	return $line;
-+}
-+
- sub parse_tag {
- 	my $tag_id = shift;
- 	my %tag;
-@@ -3465,7 +3502,7 @@ sub parse_tag {
- 		} elsif ($line =~ m/^tag (.+)$/) {
- 			$tag{'name'} = $1;
- 		} elsif ($line =~ m/^tagger (.*) ([0-9]+) (.*)$/) {
--			$tag{'author'} = $1;
-+			$tag{'author'} = hide_mailaddrs_if_private($1);
- 			$tag{'author_epoch'} = $2;
- 			$tag{'author_tz'} = $3;
- 			if ($tag{'author'} =~ m/^([^<]+) <([^>]*)>/) {
-@@ -3513,7 +3550,7 @@ sub parse_commit_text {
- 		} elsif ((!defined $withparents) && ($line =~ m/^parent ($oid_regex)$/)) {
- 			push @parents, $1;
- 		} elsif ($line =~ m/^author (.*) ([0-9]+) (.*)$/) {
--			$co{'author'} = to_utf8($1);
-+			$co{'author'} = hide_mailaddrs_if_private(to_utf8($1));
- 			$co{'author_epoch'} = $2;
- 			$co{'author_tz'} = $3;
- 			if ($co{'author'} =~ m/^([^<]+) <([^>]*)>/) {
-@@ -3523,7 +3560,7 @@ sub parse_commit_text {
- 				$co{'author_name'} = $co{'author'};
- 			}
- 		} elsif ($line =~ m/^committer (.*) ([0-9]+) (.*)$/) {
--			$co{'committer'} = to_utf8($1);
-+			$co{'committer'} = hide_mailaddrs_if_private(to_utf8($1));
- 			$co{'committer_epoch'} = $2;
- 			$co{'committer_tz'} = $3;
- 			if ($co{'committer'} =~ m/^([^<]+) <([^>]*)>/) {
-@@ -3568,9 +3605,10 @@ sub parse_commit_text {
- 	if (! defined $co{'title'} || $co{'title'} eq "") {
- 		$co{'title'} = $co{'title_short'} = '(no commit message)';
- 	}
--	# remove added spaces
-+	# remove added spaces, redact e-mail addresses if applicable.
- 	foreach my $line (@commit_lines) {
- 		$line =~ s/^    //;
-+		$line = hide_mailaddrs_if_private($line);
- 	}
- 	$co{'comment'} = \@commit_lines;
- 
-@@ -7489,7 +7527,8 @@ sub git_log_generic {
- 			         -accesskey => "n", -title => "Alt-n"}, "next");
- 	}
- 	my $patch_max = gitweb_get_feature('patches');
--	if ($patch_max && !defined $file_name) {
-+	if ($patch_max && !defined $file_name &&
-+		!gitweb_check_feature('email-privacy')) {
- 		if ($patch_max < 0 || @commitlist <= $patch_max) {
- 			$paging_nav .= " &sdot; " .
- 				$cgi->a({-href => href(action=>"patches", -replay=>1)},
-@@ -7550,7 +7589,8 @@ sub git_commit {
- 			} @$parents ) .
- 			')';
- 	}
--	if (gitweb_check_feature('patches') && @$parents <= 1) {
-+	if (gitweb_check_feature('patches') && @$parents <= 1 &&
-+		!gitweb_check_feature('email-privacy')) {
- 		$formats_nav .= " | " .
- 			$cgi->a({-href => href(action=>"patch", -replay=>1)},
- 				"patch");
-@@ -7863,7 +7903,8 @@ sub git_commitdiff {
- 		$formats_nav =
- 			$cgi->a({-href => href(action=>"commitdiff_plain", -replay=>1)},
- 			        "raw");
--		if ($patch_max && @{$co{'parents'}} <= 1) {
-+		if ($patch_max && @{$co{'parents'}} <= 1 &&
-+			!gitweb_check_feature('email-privacy')) {
- 			$formats_nav .= " | " .
- 				$cgi->a({-href => href(action=>"patch", -replay=>1)},
- 					"patch");
-diff --git a/t/lib-gitweb.sh b/t/lib-gitweb.sh
-index 1f32ca66ea51..77fc1298d4c6 100644
---- a/t/lib-gitweb.sh
-+++ b/t/lib-gitweb.sh
-@@ -67,6 +67,9 @@ gitweb_run () {
- 	GITWEB_CONFIG=$(pwd)/gitweb_config.perl
- 	export GITWEB_CONFIG
- 
-+	PERL5LIB="$GIT_BUILD_DIR/perl:$GIT_BUILD_DIR/perl/FromCPAN"
-+	export PERL5LIB
-+
- 	# some of git commands write to STDERR on error, but this is not
- 	# written to web server logs, so we are not interested in that:
- 	# we are interested only in properly formatted errors/warnings
-
-base-commit: a5828ae6b52137b913b978e16cd2334482eb4c1f
 -- 
-gitgitgadget
+An old man doll... just what I always wanted! - Clara
