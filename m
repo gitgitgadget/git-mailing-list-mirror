@@ -2,150 +2,164 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87E5FC433DB
-	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 17:57:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 950F6C433DB
+	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 18:05:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4F3846196D
-	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 17:57:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 68A1961965
+	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 18:05:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230043AbhC0R5T (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 27 Mar 2021 13:57:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36828 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230127AbhC0R5A (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Mar 2021 13:57:00 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 881B4C0613B1
-        for <git@vger.kernel.org>; Sat, 27 Mar 2021 10:56:57 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id ce10so13201578ejb.6
-        for <git@vger.kernel.org>; Sat, 27 Mar 2021 10:56:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=hgePWV5vuhgmXv1uBzIWg86+M/wbZLYO63rNw1UQNus=;
-        b=OMshOZOCaEgRpy0yJhvfIEeYJQEWqUjgkEnTSrllxYE1CC7HDzHQF+Wq1y0lk1rgsh
-         DS2tTybO99LczlFJ/9k95xOb/89QO21o1+saJJSuYtqmrET++7M2uaUo/lrb2Mm5TLNA
-         /NhqktBlkp3axLVzv3bFpzFQ91CwpGrl2GFX4m13ubO6kOnRKK9Olk0JyoO4ZBzsLr4R
-         6svb9CQxa2U88fzxKzvsqsAK/oRTMwA4xwp8C5qem0IQWiAYivg/kFX4VSnq3Idj24I+
-         LMX0uFvJOYYrgSCwenaapZm9uN400MQ+40dyWTsk+Hlw0d83MeilvX86MAd36g61wIrn
-         N7Ew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=hgePWV5vuhgmXv1uBzIWg86+M/wbZLYO63rNw1UQNus=;
-        b=e3gO7x97VLWcpnshIwWQDjN8p/Ot2otQk9+AplLL4cy0lL4va8jez4sfVEGeFISMtF
-         F/SL+AhDCoSBc5OzBjukGIkk0Pk1eOVeQLgH81UsPC4HoDupR/qNgqEIs5qqqEZmZfh3
-         6AzmneuX/dnBpshSnS42gc+pYRfVi/y0AjvVpywnZRGMpThyvw6ZsuLBYvl2EbBoXAfU
-         W5JnHoFmm9m2Us7DfxHTgZidSoK+0d4E0I6mmExy8Qgi+T18IUyykK0qHyKO7IZVCPAk
-         ml9Kyp0fg7ZCuPDbpAygo7hufx1MoQeA5di0+S/3gGyfhxktuQHHMa0w0R59FF4a11pt
-         7JTA==
-X-Gm-Message-State: AOAM531Gt+ck4rxMsw7i58FbgJG5H3JyWqerO+W6wBnhRD87QA/dlTXl
-        eIfihs23LTfv7urYOzpDywY=
-X-Google-Smtp-Source: ABdhPJyNRMMsFVyFWTCfr2xWLF99yXLwU+NFt2Na3iOeH4dlCy6jlJMiroFx0LNmeMlkdJfbqP1UKQ==
-X-Received: by 2002:a17:906:8a65:: with SMTP id hy5mr21658815ejc.250.1616867816176;
-        Sat, 27 Mar 2021 10:56:56 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id wr20sm5460660ejb.111.2021.03.27.10.56.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 27 Mar 2021 10:56:55 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, peff@peff.net, stolee@gmail.com,
-        gitster@pobox.com, jeffhost@microsoft.com
-Subject: Re: [PATCH v2] usage: trace2 BUG() invocations
-References: <20210205054914.104640-1-jonathantanmy@google.com>
- <20210205200908.805639-1-jonathantanmy@google.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <20210205200908.805639-1-jonathantanmy@google.com>
-Date:   Sat, 27 Mar 2021 18:56:49 +0100
-Message-ID: <87mtuoo4ym.fsf@evledraar.gmail.com>
+        id S230298AbhC0SFJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 27 Mar 2021 14:05:09 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54866 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230274AbhC0SEe (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Mar 2021 14:04:34 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CB7AFB5A6A;
+        Sat, 27 Mar 2021 14:04:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Tps4WpD9Yl6sN3HXuBb8gX9EJvI=; b=kTmHS8
+        0cdvZy4cOFv6bArrsZjxJj9AR9GTSvna0+iRD21hVRbsjTw8H8SSNo9uY6s02kNn
+        3sYRqdBOHz/pgjpxVaZkP67kfgwus6iE7ZL+ZHiUQqJ60eQF9zLlMlFzW2zEP+iM
+        QrR7nJvDZ8kCd7R8Dn4BfhziugcpqEqat+RaM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=PHMCpjKZfuyMTkcQnBDt/wBGcdDKdNru
+        rfbwMBfBpIlrhLUYGgGdYQUQ5UmhnqWE0jq+/C9LjOKXMvkVT3dDrBnJSBqF2jus
+        x2AlFnY0CsuPyW3WXUYkvXxuPeuokm3F/Cki0blXM3CSEfL6Fo7o/WPUq+lof8UW
+        HsYjzFTBEGY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C3E7FB5A69;
+        Sat, 27 Mar 2021 14:04:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4AF44B5A68;
+        Sat, 27 Mar 2021 14:04:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
+Subject: Re: [PATCH v4] [GSOC]trailer: pass arg as positional parameter
+References: <pull.913.v3.git.1616673200809.gitgitgadget@gmail.com>
+        <pull.913.v4.git.1616775185562.gitgitgadget@gmail.com>
+Date:   Sat, 27 Mar 2021 11:04:31 -0700
+In-Reply-To: <pull.913.v4.git.1616775185562.gitgitgadget@gmail.com> (ZheNing
+        Hu via GitGitGadget's message of "Fri, 26 Mar 2021 16:13:05 +0000")
+Message-ID: <xmqqk0psqxqo.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
+X-Pobox-Relay-ID: E24E451E-8F26-11EB-BB08-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-On Fri, Feb 05 2021, Jonathan Tan wrote:
-
-> die() messages are traced in trace2, but BUG() messages are not. Anyone
-> tracking die() messages would have even more reason to track BUG().
-> Therefore, write to trace2 when BUG() is invoked.
-> [...]
-> +# Verb 007bug
-> +#
-> +# Check that BUG writes to trace2
-> +
-> +test_expect_success 'normal stream, exit code 1' '
-> +	test_when_finished "rm trace.normal actual expect" &&
-> +	test_must_fail env GIT_TRACE2="$(pwd)/trace.normal" test-tool trace2 007bug &&
-> +	perl "$TEST_DIRECTORY/t0210/scrub_normal.perl" <trace.normal >actual &&
-> +	cat >expect <<-EOF &&
-> +		version $V
-> +		start _EXE_ trace2 007bug
-> +		cmd_name trace2 (trace2)
-> +		error the bug message
-> +		exit elapsed:_TIME_ code:99
-> +		atexit elapsed:_TIME_ code:99
-> +	EOF
-> +	test_cmp expect actual
-> +'
-> +
->  sane_unset GIT_TRACE2_BRIEF
+> @@ -252,6 +252,16 @@ also be executed for each of these arguments. And the <value> part of
+>  these arguments, if any, will be used to replace the `$ARG` string in
+>  the command.
 >  
->  # Now test without environment variables and get all Trace2 settings
-> diff --git a/usage.c b/usage.c
-> index 1868a24f7a..1b206de36d 100644
-> --- a/usage.c
-> +++ b/usage.c
-> @@ -266,6 +266,10 @@ int BUG_exit_code;
->  static NORETURN void BUG_vfl(const char *file, int line, const char *fmt, va_list params)
->  {
->  	char prefix[256];
-> +	va_list params_copy;
-> +	static int in_bug;
-> +
-> +	va_copy(params_copy, params);
+> +trailer.<token>.cmd::
+> +	The command specified by this configuration variable is run
+> +	with a single parameter, which is the <value> part of an
+> +	existing trailer with the same <token>.  The output from the
+> +	command is then used as the value for the <token> in the
+> +	resulting trailer.
+> +	The command is expected to replace `trailer.<token>.cmd`.
+> +	When both .cmd and .command are given for the same <token>,
+> +        .cmd is used and .command is ignored.
+
+Christian, because ".cmd" is trying to eventually replace it, I find
+it a bit disturbing that the description we give here looks a lot
+smaller compared to the one for ".command".  I am afraid that we may
+have failed to reproduce something important from the description of
+the ".command" for the above; care to rend a hand or two here to
+complete the description?
+
+As I cannot grok what the description for ".command" is trying to
+say, especially around this part:
+
+    When this option is specified, the behavior is as if a special
+    '<token>=<value>' argument were added at the beginning of the command
+    line, where <value> is ...
+
+and
+
+    If some '<token>=<value>' arguments are also passed on the command
+    line, when a 'trailer.<token>.command' is configured, the command will
+    also be executed for each of these arguments.
+
+I cannot quite judge if what we came up with in the above
+description is sufficient.
+
+> -* Configure a 'sign' trailer with a command to automatically add a
+> +* Configure a 'sign' trailer with a cmd to automatically add a
+>    'Signed-off-by: ' with the author information only if there is no
+>    'Signed-off-by: ' already, and show how it works:
+>  +
+> @@ -309,7 +319,7 @@ $ git interpret-trailers --trailer 'Cc: Alice <alice@example.com>' --trailer 'Re
+>  $ git config trailer.sign.key "Signed-off-by: "
+>  $ git config trailer.sign.ifmissing add
+>  $ git config trailer.sign.ifexists doNothing
+> -$ git config trailer.sign.command 'echo "$(git config user.name) <$(git config user.email)>"'
+> +$ git config trailer.sign.cmd 'echo "$(git config user.name) <$(git config user.email)>"'
+>  $ git interpret-trailers <<EOF
+>  > EOF
+
+This change would definitely be needed when the support for
+".command" is removed after deprecation period.  As it does not take
+any argument, .cmd and .command should behave identically, so making
+this change now, without waiting, may make sense.
+
+> @@ -333,14 +343,14 @@ subject
+>  Fix #42
+>  ------------
 >  
->  	/* truncation via snprintf is OK here */
->  	if (file)
-> @@ -274,6 +278,13 @@ static NORETURN void BUG_vfl(const char *file, int line, const char *fmt, va_lis
->  		snprintf(prefix, sizeof(prefix), "BUG: ");
->  
->  	vreportf(prefix, fmt, params);
-> +
-> +	if (in_bug)
-> +		abort();
-> +	in_bug = 1;
-> +
-> +	trace2_cmd_error_va(fmt, params_copy);
-> +
->  	if (BUG_exit_code)
->  		exit(BUG_exit_code);
->  	abort();
+> -* Configure a 'see' trailer with a command to show the subject of a
+> +* Configure a 'see' trailer with a cmd to show the subject of a
+>    commit that is related, and show how it works:
+>  +
+>  ------------
+>  $ git config trailer.see.key "See-also: "
+>  $ git config trailer.see.ifExists "replace"
+>  $ git config trailer.see.ifMissing "doNothing"
+> -$ git config trailer.see.command "git log -1 --oneline --format=\"%h (%s)\" --abbrev-commit --abbrev=14 \$ARG"
+> +$ git config trailer.see.cmd "test -n \"\$1\" && git log -1 --oneline --format=\"%h (%s)\" --abbrev-commit --abbrev=14 \"\$1\"|| true "
+>  $ git interpret-trailers <<EOF
+>  > subject
 
-I see it's an existing bug/misfeature of this whole part of trace2 that
-error()/warning()/usage() etc. don't pass down the file and line number
-of their callers. We'd need to make all of those functions a macro for
-that to work.
+This, too, but until ".command" is removed, wouldn't it be better
+for readers to keep both variants, as the distinction between $ARG
+and $1 needs to be illustrated?
 
-But it can work for BUG(), since we have the file/line parameters
-there. Any reason that's not passed down to trace2 in this case, instead
-of calling trace2_cmd_error_va() which'll lose that information?
+Besides, the examples given here are not equivalent.  The original
+assumes that ARG is there, or it is OK to default to HEAD; the new
+one gives no output when $ARG/$1 is not supplied.  It would confuse
+readers to give two too-similar-but-subtly-different examles, as
+they will be forced to wonder if the difference is something needed
+to transition from .command to .cmd (and I am guessing that it is
+not).
 
-I.e. if you change your test to use GIT_TRACE2_EVENT you'll see that you
-get an event like:
+Rewriting both to use "--pretty=reference" may be worth doing.  As
+can be seen in these examples:
 
-    {"event":"error"[...]"file":"usage.c","line":308,
-    "msg":"the bug message","fmt":"the bug message"}
+git show -s --pretty=reference \$1
+git log -1 --oneline --format=\"%h (%s)\" --abbrev-commit --abbrev=14 \$1
 
-It seems that currently the only way to tell these error events apart
-now is to hardcode those known usage.c line numbers on the consumer
-side, unless I'm missing something.
+that it makes the result much easier to read.
+
+Thanks.  Do not send a reroll prematurely; I want to see area
+expert's input at this point.
+
+
