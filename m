@@ -2,126 +2,240 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BFCEDC433DB
-	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 18:31:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 350DAC433C1
+	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 18:37:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9D44A619B1
-	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 18:31:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EE951619B1
+	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 18:36:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230176AbhC0SbW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 27 Mar 2021 14:31:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44172 "EHLO
+        id S230127AbhC0SgR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 27 Mar 2021 14:36:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230105AbhC0SbO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Mar 2021 14:31:14 -0400
-Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7BF8C0613B1
-        for <git@vger.kernel.org>; Sat, 27 Mar 2021 11:31:13 -0700 (PDT)
-Received: by mail-qv1-xf2b.google.com with SMTP id q9so4599576qvm.6
-        for <git@vger.kernel.org>; Sat, 27 Mar 2021 11:31:13 -0700 (PDT)
+        with ESMTP id S230105AbhC0Sf6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Mar 2021 14:35:58 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B440C0613B1
+        for <git@vger.kernel.org>; Sat, 27 Mar 2021 11:35:58 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id w3so13291429ejc.4
+        for <git@vger.kernel.org>; Sat, 27 Mar 2021 11:35:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:content-transfer-encoding:mime-version:subject:message-id:date
-         :to;
-        bh=S8mugO9vpbWaLmzeM66qN5LHbIdx+z0JxcLcv53wIJ4=;
-        b=WAHOxKT3rWWtEGFFa25EgFahvQaKhJWh3xL7dyadAxO2Uvpa0XEWzJEq0rGMhELUar
-         CRB+ulQv0nHOtI5CRddXFzlrhKvNXr+u/YLsoLbVU/G208Bsmuh32JiMra7eWtVX3+I9
-         v2/sSbwNRstmmzvVmnxhe/znVsSgDvVrj/b3mrnOuM0IxCdT3yYl/zzdieyTdwOkemNS
-         gHZvjOlm+AxPgTq5N7Ofivsb/afAqAumAfBa/kS6D3b0cB1O8dHBh6Oq59/Hkf+N6ooz
-         2mokn7ZAU4msFO2nSXqa/812jYL/za9RGedwe0cxBVRFi1uayidrJGYZSvp5LbxQByF3
-         fnag==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=wneLxoIGAlPLDBWpsMzpL4VQNmUfzhin696RLJPetg4=;
+        b=GwoqT+3PUwh0YilGZEYVsvmQ+VA+tYXdxtR4I6DNYOl7nOA22MYfedasVVDjrm/gSp
+         T+X+SA311VM3/9j+bQ5/JKuYRq+GjpLHw92hIo7u0M0qwoB9S8e4W5vIdW6kEHbx9LIF
+         k7pmqZPywrGirtdq3X3dXDot4el9Gnibefb41h5MHJofGE2Tp8GUyqLFdiqWHToT3EiN
+         7vZODF8V2vDZJ63w10mHmXcLrvi4ZJ8zMrsJipYb3NqgGDPFI/cMDFrKVs1wcRqvpPrl
+         +Bo/vSWBFF4wkzvBN393klBnZmq1evAd0DnHoM9ENaQo4oefzRnmWlobkHMv6/dkzHXz
+         CE0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:mime-version
-         :subject:message-id:date:to;
-        bh=S8mugO9vpbWaLmzeM66qN5LHbIdx+z0JxcLcv53wIJ4=;
-        b=CaYaZ5yHWRPguJANvPLvwOE+ux/boJjpDmiBYAg+Qpvp1ct6LmtfoCDbbubenpKRGV
-         UG5IcJ7j/5JqFOdnAyf6e+hx8+8WycY8BEqEzp+vrhwWfjAFpulQGJPMGbgv26MwLYon
-         X746ZisiYG66Gzhw5qYw6WnZUl5q9IepwWENdTxXSoCiEzqDjbqPiDRpEC3vVvcHMyOW
-         eaCzM50I7wj/tTPwrPoExQgDtiiPsS/KOBstYpU6CThlbfHh7VBBGZOqtr+8pCKtudc+
-         lGwcYvu9XpiKYGyZwNiGCvZrJDcXqYc/B0/TFz+NTnvujrMKvpNc/LH9QgfPIUASUstX
-         3Kjg==
-X-Gm-Message-State: AOAM531BZvHGEtgwq2ryFposkZMv4usI0MVYvERpXF3gouVnIahRLHoU
-        KuiNHYaW12JWlXWoN4UZCOybOcqs3DL6lg==
-X-Google-Smtp-Source: ABdhPJzVMFWTwG4GZazwvh98J1H79YudnusJm6y8L4fsoRR3OLNB+7L+SvOvA8wOPtZCjpgmjuUE5A==
-X-Received: by 2002:a05:6214:4ae:: with SMTP id w14mr18482838qvz.45.1616869872528;
-        Sat, 27 Mar 2021 11:31:12 -0700 (PDT)
-Received: from [192.168.103.12] (cpe00fc8d50b7d3-cm00fc8d50b7d0.cpe.net.fido.ca. [72.141.221.184])
-        by smtp.gmail.com with ESMTPSA id s6sm9505100qke.44.2021.03.27.11.31.11
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 27 Mar 2021 11:31:12 -0700 (PDT)
-From:   Utku <ugultopu@gmail.com>
-Content-Type: text/plain;
-        charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.4\))
-Subject: [BUG] Git is not using the configured SSH key when there is another
- SSH key added to the SSH agent
-Message-Id: <967BFF88-A8E1-4EEC-B298-668012E42C03@gmail.com>
-Date:   Sat, 27 Mar 2021 14:31:10 -0400
-To:     git@vger.kernel.org
-X-Mailer: Apple Mail (2.3608.120.23.2.4)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=wneLxoIGAlPLDBWpsMzpL4VQNmUfzhin696RLJPetg4=;
+        b=Eq0/zLLBqj3appzVsbPeqGcfoAQH0Q51fHs/1xZYTzkiyVZkLfoij8FAE3hNuk6C0R
+         2OLqZN/mhbSNqmAd5HD1nd1sGoQo/WCHpmJEo+8bw8Sj3+o3TxXruXa3grYMvEVeHvBX
+         D5mmXLOnzyQUvcESuNCVJeFTNLupHhiCTu2qAWjW/cmNhjEdGG7X6AjT4TdYWksA7vb9
+         m8xV91R42YuQHjheuCtwDgHbky5iSU+qcZ1DhCBs/iRKv/IQi2x0sYmTaHWh4TMN72+w
+         j533NKSJj2DH/h9tBNRYG8ERueEOWdufjKKkAfi3S850OGEoknWDWuBSluUP3yuSKQYZ
+         KAww==
+X-Gm-Message-State: AOAM531n74Styt8+rW/Tkukg/b02fOoSnZMYvoydP6h6LIHTEqp07zKS
+        9mFYFtc4nkOhoOvbruyQCr0=
+X-Google-Smtp-Source: ABdhPJwnOe5Ju0Rz5gTdzIQfyFIizfR5kxBGJyMbpPfGUUVu/D1MLESyRjf35SQBOMtZcy1cnNr02w==
+X-Received: by 2002:a17:906:1986:: with SMTP id g6mr21151870ejd.533.1616870156774;
+        Sat, 27 Mar 2021 11:35:56 -0700 (PDT)
+Received: from szeder.dev (84-236-109-92.pool.digikabel.hu. [84.236.109.92])
+        by smtp.gmail.com with ESMTPSA id r4sm5514273ejd.125.2021.03.27.11.35.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 27 Mar 2021 11:35:56 -0700 (PDT)
+Date:   Sat, 27 Mar 2021 19:35:54 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/3] git-completion.bash: pass $__git_subcommand_idx
+ from __git_main()
+Message-ID: <20210327183554.GD2271@szeder.dev>
+References: <cover.1615855962.git.liu.denton@gmail.com>
+ <cover.1616574955.git.liu.denton@gmail.com>
+ <e4aa3e8cd7f64512ce0d72906f4d15f1f0dc0a60.1616574955.git.liu.denton@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <e4aa3e8cd7f64512ce0d72906f4d15f1f0dc0a60.1616574955.git.liu.denton@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-# Versions
+Nit: I don't like the word "pass" in the subject line, because
+you don't actually "pass" that variable as a parameter, but simly set
+it, and it will be visible in all called functions, because that's how
+shell variables work.
 
-- Git 2.30.1
-- macOS 10.15.7
+On Wed, Mar 24, 2021 at 01:36:27AM -0700, Denton Liu wrote:
+> Many completion functions perform hardcoded comparisons with $cword.
+> This fails in the case where the main git command is given arguments
+> (e.g. `git -C . bundle<TAB>` would fail to complete its subcommands).
 
-# Steps to Reproduce
+It's not just the hardcoded comparison with $cword, but the hardcoded
+indices into the $words array that causes these problems:
 
-- Have two SSH key pairs on your machine, one with a passphrase and
-other without. The keys were created by running `ssh-keygen` in my
-case.
+> Even _git_worktree(), which uses __git_find_on_cmdline(), could still
+> fail. With something like `git -C add worktree move<TAB>`, the
+> subcommand would be incorrectly identified as "add" instead of "move".
+> 
+> Assign $__git_subcommand_idx in __git_main(), where the git subcommand
 
-- Add the key with a passphrase to the SSH agent by running `ssh-add`
-and entering the passphrase.
+In 'git -C add worktree move this there' we invoke the 'worktree'
+command's 'move' subcommand.  Therefore, this variable should be
+called $__git_command_idx.  Or perhaps $__git_cmd_idx, to spare some
+keystrokes without sacrificing readability?
 
-- Have an entry like the following in your `~/.ssh/config`:
+> is actually found and the corresponding completion function is called.
+> Use this variable to replace hardcoded comparisons with $cword.
+> 
+> Signed-off-by: Denton Liu <liu.denton@gmail.com>
+> ---
+>  contrib/completion/git-completion.bash | 23 +++++++++++------------
+>  1 file changed, 11 insertions(+), 12 deletions(-)
 
-      Host someName
-          HostName bitbucket.org
-          User git
-          IdentityFile ~/.ssh/private-key-of-the-pair-without-a-passphrase
+This patch leaves a couple of accesses to $words and $cword unchanged,
+though they still suffer from the same issues and should be changed,
+e.g.:
+
+__git_complete_remote_or_refspec() assumes that ${words[1]} is the
+command and starts looking for options starting at index 2, so e.g.
+'git fetch <TAB>' lists configured remotes, but 'git -C . fetch <TAB>'
+doesn't.
+
+_git_branch() is curious, because, just like the "main" 'git' command,
+'git branch' has '-c' and '-C' options, and as a result 'git branch
+o<TAB>' lists branches from 'origin', but 'git -c foo.bar=baz -C .
+branch o<TAB>' doesn't.
+
+It's debatable whether __git_find_on_cmdline() and its friends should
+be changed.  If we only look at the function's name, then no, because
+it implicitly implies that it searches through the whole command line.
+However, if we look at how we actually use it, then we'll find that we
+only use it to check for the presence of subcommands or certain
+options of a command or subcommand.  This means that we only want to
+search the words following the command, but since it starts its scan
+at ${words[1]}, it leads to that issue with 'git worktree' that you
+described in the commit message, but it affects all other commands
+with subcommands as well.
+
+I haven't looked closely at the other cases, but I'm inclinened to
+think that all _git_cmd() functions and any helper functions invoked
+by them should only concern themselves with words after the git
+command.
 
 
-- Add the public key of the pair without a passphrase to your BitBucket
-account.
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index 7dc6cd8eb8..a2f1b5e916 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -1474,12 +1474,12 @@ _git_branch ()
+>  
+>  _git_bundle ()
+>  {
+> -	local cmd="${words[2]}"
+> +	local cmd="${words[__git_subcommand_idx+1]}"
+>  	case "$cword" in
+> -	2)
+> +	$((__git_subcommand_idx+1)))
+>  		__gitcomp "create list-heads verify unbundle"
+>  		;;
+> -	3)
+> +	$((__git_subcommand_idx+2)))
+>  		# looking for a file
+>  		;;
+>  	*)
+> @@ -1894,7 +1894,7 @@ _git_grep ()
+>  	esac
+>  
+>  	case "$cword,$prev" in
+> -	2,*|*,-*)
+> +	$((__git_subcommand_idx+1)),*|*,-*)
+>  		__git_complete_symbol && return
+>  		;;
+>  	esac
+> @@ -3058,7 +3058,7 @@ _git_stash ()
+>  		branch,--*)
+>  			;;
+>  		branch,*)
+> -			if [ $cword -eq 3 ]; then
+> +			if [ $cword -eq $((__git_subcommand_idx+2)) ]; then
+>  				__git_complete_refs
+>  			else
+>  				__gitcomp_nl "$(__git stash list \
+> @@ -3277,11 +3277,9 @@ __git_complete_worktree_paths ()
+>  _git_worktree ()
+>  {
+>  	local subcommands="add list lock move prune remove unlock"
+> -	local subcommand subcommand_idx
+> +	local subcommand
+>  
+> -	subcommand="$(__git_find_on_cmdline --show-idx "$subcommands")"
+> -	subcommand_idx="${subcommand% *}"
+> -	subcommand="${subcommand#* }"
+> +	subcommand="$(__git_find_on_cmdline "$subcommands")"
+>  
+>  	case "$subcommand,$cur" in
+>  	,*)
+> @@ -3306,7 +3304,7 @@ _git_worktree ()
+>  			# be either the 'add' subcommand, the unstuck
+>  			# argument of an option (e.g. branch for -b|-B), or
+>  			# the path for the new worktree.
+> -			if [ $cword -eq $((subcommand_idx+1)) ]; then
+> +			if [ $cword -eq $((__git_subcommand_idx+2)) ]; then
+>  				# Right after the 'add' subcommand: have to
+>  				# complete the path, so fall back to Bash
+>  				# filename completion.
+> @@ -3330,7 +3328,7 @@ _git_worktree ()
+>  		__git_complete_worktree_paths
+>  		;;
+>  	move,*)
+> -		if [ $cword -eq $((subcommand_idx+1)) ]; then
+> +		if [ $cword -eq $((__git_subcommand_idx+2)) ]; then
+>  			# The first parameter must be an existing working
+>  			# tree to be moved.
+>  			__git_complete_worktree_paths
 
-- Run `git clone someName:path/to/your/repository.git`. You will get a
-not authorized error. As far as I can tell, this means that Git has
-tried to use the key with the passphrase (which is added to the SSH
-agent). Since this key is **not** the key that was added to the
-BitBucket account, we received a not authorized error.
+I don't like these changes to _git_worktree(), because they implicitly
+assume that 'git worktree' doesn't have any --options, and it would
+then start to misbehave if we added one.
 
-- Add the key without a passphrase to your SSH agent by running
-`ssh-add` and try the same command (`git-clone`) again. It will work.
+And these changes wouldn't be necessary if __git_find_on_cmdline()
+started its search at $__git_cmd_idx instead of at ${words[1]}.
 
-- Now, remove both keys from the SSH agent by running `ssh-add -D` and
-try and try the same command (`git-clone`) again. It will still work.
+> @@ -3398,6 +3396,7 @@ __git_main ()
+>  {
+>  	local i c=1 command __git_dir __git_repo_path
+>  	local __git_C_args C_args_count=0
+> +	local __git_subcommand_idx
+>  
+>  	while [ $c -lt $cword ]; do
+>  		i="${words[c]}"
+> @@ -3412,7 +3411,7 @@ __git_main ()
+>  			__git_C_args[C_args_count++]="${words[c]}"
+>  			;;
+>  		-*) ;;
+> -		*) command="$i"; break ;;
+> +		*) command="$i"; __git_subcommand_idx="$c"; break ;;
 
-I didn't test but don't believe this has something to do with the key
-having a passphrase or not. Also, I believe that I'm not using macOS
-Keychain to store the decrypted keys.
+See what variable is $i assigned to?  $command, not $subcommand.
 
-# Expected Behavior
-
-The `git-clone` command to work as expected, regardless of which keys
-are present in the SSH agent, since the information that I provide to
-Git (via the `Host` information in the `~/.ssh/config` file) is
-sufficient.
-
-# Actual Behavior
-
-Git is trying to use the SSH key that is present in the SSH agent,
-instead of using the SSH key which is explicitly declared in the
-`~/.ssh/config` file.
-
+>  		esac
+>  		((c++))
+>  	done
+> -- 
+> 2.31.0.rc2.261.g7f71774620
+> 
