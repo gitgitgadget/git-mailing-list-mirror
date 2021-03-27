@@ -2,148 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A403CC433DB
-	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 22:51:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4B06C433F1
+	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 23:07:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 696416198B
-	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 22:51:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7DB5F6196B
+	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 23:07:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230487AbhC0Wu4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 27 Mar 2021 18:50:56 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62119 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230176AbhC0Wu0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Mar 2021 18:50:26 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 771F9B7434;
-        Sat, 27 Mar 2021 18:50:25 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=vEmAwaQonlH9EQvgvHVi/TRehBA=; b=IgZsVY
-        07ll8jjfnMWYrs+L3a8h60MU1uha6OXYcoPP4bCcVTBFhogBkb61cL4JVMtCFQ8N
-        +YSFRrje1jt8798+FMDEfyzAAA+LIvyreVvuTTR2rbRZripx0zsuGILvg6r3QQzi
-        0VJJiYJ8TT0RRfucmAp4KhSrtIoSY6bblnMcY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Y3xdC8wYmgCSCOmMw2HbHkk4p2bL40SX
-        BmXlRrL6lEV+n8ExUP92Mar6d/3YfB3zb1GMAJQUWuFrBiBSziUL7h/wpHNI3msx
-        lRWAaM8fBGSI9XSwvtQ573kCc+JTKXh2hplWQi4eeOFLyTT4rKgJvjFzZz+1g1qW
-        RoiIu2LBNFU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6F9DDB7433;
-        Sat, 27 Mar 2021 18:50:25 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F195FB7430;
-        Sat, 27 Mar 2021 18:50:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Atharva Raykar <raykar.ath@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [GSOC][PATCH] userdiff: add support for Scheme
-References: <20210327173938.59391-1-raykar.ath@gmail.com>
-Date:   Sat, 27 Mar 2021 15:50:24 -0700
-In-Reply-To: <20210327173938.59391-1-raykar.ath@gmail.com> (Atharva Raykar's
-        message of "Sat, 27 Mar 2021 23:09:38 +0530")
-Message-ID: <xmqq5z1cqki7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S231254AbhC0XGd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 27 Mar 2021 19:06:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46376 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231240AbhC0XG3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Mar 2021 19:06:29 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CF91C0613B2
+        for <git@vger.kernel.org>; Sat, 27 Mar 2021 16:06:29 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id y124-20020a1c32820000b029010c93864955so6659178wmy.5
+        for <git@vger.kernel.org>; Sat, 27 Mar 2021 16:06:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=mBomVH3n81sCIinB/7VwuVE+KhoqAwdBvQfxo7+GDEo=;
+        b=UuJQjAHdxRrid3IUvnGvukxq32I8eCkEVwdC2jDT2uLgbCuF1RIYRC+mgm689I04pu
+         TQr6hfuTWSPS1SvMCrc6ujkPAuf1a07koOo/Llt37/chzRFrXGXZ7aAHRqdvxjXeXwJ8
+         NP4S9tC60+E/11Iac3BcFhr5m8ZxmQ1LCGW7zT71MMW7CR+E43oOjsn6gCTUGFgcss0w
+         VVdI/QrJZLgKO7lFjJm8V6pifXn+HsmecaBgWipaSGkAx03lqu4b2CGwEGeQclam/q8l
+         n3x0XB4d6h1TausE2Q2P++NsTUHI/Mjd5JoZ5bODSy6aHf6HFMGuisMirumWBj7lrxjx
+         ySwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=mBomVH3n81sCIinB/7VwuVE+KhoqAwdBvQfxo7+GDEo=;
+        b=rOrDrQvpKqCyhzB5XON60a5T8dUdmy+TbpTTRNdmkYo8jv65CGscY5tU4sI35HUjlz
+         GyKjdKf9G6u5xaMvwNl6laKyyzDAnfNdvwTZRJLCoM5ZfvKPwLWHU2KgrbgOopTxhu3M
+         kA0dkQ82SKU9bXKrzqcZFzUlqyI7nNfbtsSxjBWe2YmN3e57YAdpYqAlT3RqeWqbsWjs
+         7P0s7icdURndB1pthH00pxslpFhuFKUwMswpJIgPcad8a60uJOMvwTQKY1HIOnfemMnu
+         P8GtqU/iQi94Vtphd9J5/j5wAsgOOJ5cH3nk79lEuHGG9JhM19IQPYmx2wQVuq8mBqq1
+         uP3Q==
+X-Gm-Message-State: AOAM531tdHtvuylWjrvkbjBhpTJ/owfQxI5BMkZzJN8OC0R024VdMyQS
+        g9S7arGYSmtKiTwjOvIr4rUk0qM1Tkg=
+X-Google-Smtp-Source: ABdhPJzF73M/buEXHCYDoaCWYcWMvwxwP/pOsFDOvSGODSoAGBQhGhX1sXCTcL+Zo7itxc33lLqBQQ==
+X-Received: by 2002:a05:600c:3506:: with SMTP id h6mr19000676wmq.168.1616886388219;
+        Sat, 27 Mar 2021 16:06:28 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id c9sm19419793wrr.78.2021.03.27.16.06.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 27 Mar 2021 16:06:27 -0700 (PDT)
+Message-Id: <ff7e8121d7a47e318954c2c115f281b56f8be21f.1616886386.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.887.git.1616886386.gitgitgadget@gmail.com>
+References: <pull.887.git.1616886386.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 27 Mar 2021 23:06:22 +0000
+Subject: [PATCH 1/4] cmake: support SKIP_DASHED_BUILT_INS
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D1810208-8F4E-11EB-80DF-D152C8D8090B-77302942!pb-smtp1.pobox.com
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Atharva Raykar <raykar.ath@gmail.com> writes:
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-> diff --git a/t/t4018/scheme-define-syntax b/t/t4018/scheme-define-syntax
-> new file mode 100644
-> index 0000000000..603b99cea4
-> --- /dev/null
-> +++ b/t/t4018/scheme-define-syntax
-> @@ -0,0 +1,8 @@
-> +(define-syntax define-test-suite RIGHT
-> +  (syntax-rules ()
-> +    ((_ suite-name (name test) ChangeMe ...)
-> +     (define suite-name
-> +       (let ((tests
-> +              `((name . ,test) ...)))
-> +         (lambda ()
-> +           (ChangeMe 'suite-name tests)))))))
-> \ No newline at end of file
+Just like the Makefile-based build learned to skip hard-linking the
+dashed built-ins in 179227d6e21 (Optionally skip linking/copying the
+built-ins, 2020-09-21), this patch teaches the CMake-based build the
+same trick.
 
-Is there a good reason to leave the final line incomplete?  If there
-isn't, complete it (applies to other newly-created files in the patch).
+Note: In contrast to the Makefile-based process, the built-ins would
+only be linked during installation, not already when Git is built.
+Therefore, the CMake-based build that we use in our CI builds _already_
+does not link those built-ins (because the files are not installed
+anywhere, they are used to run the test suite in-place).
 
-> diff --git a/userdiff.c b/userdiff.c
-> index 3f81a2261c..c51a8c98ba 100644
-> --- a/userdiff.c
-> +++ b/userdiff.c
-> @@ -191,6 +191,14 @@ PATTERNS("rust",
->  	 "[a-zA-Z_][a-zA-Z0-9_]*"
->  	 "|[0-9][0-9_a-fA-Fiosuxz]*(\\.([0-9]*[eE][+-]?)?[0-9_fF]*)?"
->  	 "|[-+*\\/<>%&^|=!:]=|<<=?|>>=?|&&|\\|\\||->|=>|\\.{2}=|\\.{3}|::"),
-> +PATTERNS("scheme",
-> +         "^[\t ]*(\\(define-?.*)$",
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ contrib/buildsystems/CMakeLists.txt | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-Didn't "git diff HEAD" before committing (or "git show") highlighted
-these whitespace errors?
+diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+index c151dd7257f3..12c40a72bfff 100644
+--- a/contrib/buildsystems/CMakeLists.txt
++++ b/contrib/buildsystems/CMakeLists.txt
+@@ -685,13 +685,17 @@ endif()
+ 
+ parse_makefile_for_executables(git_builtin_extra "BUILT_INS")
+ 
++option(SKIP_DASHED_BUILT_INS "Skip hardlinking the dashed versions of the built-ins")
++
+ #Creating hardlinks
++if(NOT SKIP_DASHED_BUILT_INS)
+ foreach(s ${git_SOURCES} ${git_builtin_extra})
+ 	string(REPLACE "${CMAKE_SOURCE_DIR}/builtin/" "" s ${s})
+ 	string(REPLACE ".c" "" s ${s})
+ 	file(APPEND ${CMAKE_BINARY_DIR}/CreateLinks.cmake "file(CREATE_LINK git${EXE_EXTENSION} git-${s}${EXE_EXTENSION})\n")
+ 	list(APPEND git_links ${CMAKE_BINARY_DIR}/git-${s}${EXE_EXTENSION})
+ endforeach()
++endif()
+ 
+ if(CURL_FOUND)
+ 	set(remote_exes
+-- 
+gitgitgadget
 
-.git/rebase-apply/patch:183: indent with spaces.
-         "^[\t ]*(\\(define-?.*)$",
-.git/rebase-apply/patch:184: trailing whitespace, indent with spaces.
-         /* 
-.git/rebase-apply/patch:185: indent with spaces.
-          * Scheme allows symbol names to have any character,
-.git/rebase-apply/patch:186: indent with spaces.
-          * as long as it is not a form of a parenthesis.
-.git/rebase-apply/patch:187: indent with spaces.
-          * The spaces must be escaped.
-warning: squelched 2 whitespace errors
-warning: 7 lines applied after fixing whitespace errors.
-
-
-> +         /* 
-> +          * Scheme allows symbol names to have any character,
-> +          * as long as it is not a form of a parenthesis.
-> +          * The spaces must be escaped.
-> +          */
-> +         "(\\.|[^][)(\\}\\{ ])+"),
-
-One or more "dot or anything other than SP or parentheses"?  But
-a dot "." is neither a space or any {bra-ce} letter, so would the
-above be equivalent to
-
-	"[^][()\\{\\} \t]+"
-
-I wonder...
-
-I am also trying to figure out what you wanted to achieve by
-mentioning "The spaces must be escaped.".  Did you mean something
-like (string->symbol "a symbol with SP in it") is a symbol?  Even
-so, I cannot quite guess the significance of that fact wrt the
-regexp you added here?
-
-As we are trying to catch program identifiers (symbols in scheme)
-and numeric literals, treating any group of non-whitespace letters
-that is delimited by one or more whitespaces as a "word" would be a
-good first-order approximation, but in addition, as can be seen in
-an example like (a(b(c))), parentheses can also serve as such "word
-delimiters" in addition to whitespaces.  So the regexp given above
-makes sense to me from that angle, especially if you do not limit
-the whitespace to only SP, but include HT (\t) as well.  But was
-that how you came up with the regexp?
-
-Thanks.
-
->  PATTERNS("bibtex", "(@[a-zA-Z]{1,}[ \t]*\\{{0,1}[ \t]*[^ \t\"@',\\#}{~%]*).*$",
->  	 "[={}\"]|[^={}\" \t]+"),
->  PATTERNS("tex", "^(\\\\((sub)*section|chapter|part)\\*{0,1}\\{.*)$",
