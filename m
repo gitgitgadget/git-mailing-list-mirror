@@ -2,134 +2,287 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2A2BC433E0
-	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 23:07:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 375F3C433DB
+	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 23:09:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B0A896196B
-	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 23:07:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 049E461971
+	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 23:09:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231265AbhC0XHE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 27 Mar 2021 19:07:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46390 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231239AbhC0XGc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Mar 2021 19:06:32 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA0DDC0613B1
-        for <git@vger.kernel.org>; Sat, 27 Mar 2021 16:06:31 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id g25so4771272wmh.0
-        for <git@vger.kernel.org>; Sat, 27 Mar 2021 16:06:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=opsNyEE4aI9Bz5Q1Rt42EQ/sekQvuO0cfEjnauxiO0E=;
-        b=jEzPix3t9UuibClfYrzrrfef0DVujA/Rfmc8NJQLlr+ixPxB6dWkWnbV9y2QVn3Lzl
-         snwpioB+shuzzsjjQZF2IrljEWTBRw19aoTvQyptT+n7wcr+1Hy7TXhTyBksnWsWRDk1
-         cdgjo6qVrsX/nIY8TcrIeokmf1jnxYL70Di60IYglPk3GVLSLyO1/SK0dI7DtsuOtAJt
-         CR6Ffzqe5j+ZbmELZjvb2S0uQtzsBfeR1xrRDRsLiSBMQ5F6X12jXIBc8gzGYAVMeRVY
-         j0LkyRNlmibjsfzKtB1c8jeSBeGqhgJmtwCVi+t+o5p2hdS7o+yOjhIWEPBGpqRuyAfA
-         oaZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=opsNyEE4aI9Bz5Q1Rt42EQ/sekQvuO0cfEjnauxiO0E=;
-        b=SXEqYMLJCCUTewYUfY4I9jX+v0t8Ws0pfUOyxLEzjAhDvDc2kdKbAs6rsAhXGeFZgy
-         lOxwA1v3K9aqHnKvzIi/4q+2YQR5VGyRh0N/jgPTkTnGwKUSRmQVz/71m1FPnYGxs35N
-         hwtNxjUJujgB8KTPwltF+ea7Rr9z9NZXn1Ez6PG1OCgpz+sFQIDdQRjwtYmSjv40Sjsi
-         BcLs29zoKiGDW4XLeDFrbUIlYVliw0rf1jQF+mTT/lLhp5sSZpttzu5n5Zg+hbpSzBNX
-         bHvMLH7BqF3Qp0LsNXwibOz6HCvzyFsd1W+IgikRoHaZT7TbkUTp+2JpQkIuoZ/Ete7E
-         1reA==
-X-Gm-Message-State: AOAM532fFA2Yr9/NcVefMb/Q251QHYYqe7yBO/XUhOVyJKUObVYG9jAt
-        JOr3DXDKekI0G5aaTBCGjNVtuxFksyU=
-X-Google-Smtp-Source: ABdhPJyQeZ2xiJoLN8DsCRtOn2Vcu/zFT899yruwi8KNRia1SVtutjFstckTiixPvBJ+gCcey/vOVw==
-X-Received: by 2002:a7b:c931:: with SMTP id h17mr18937948wml.4.1616886390727;
-        Sat, 27 Mar 2021 16:06:30 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h10sm21327268wrp.22.2021.03.27.16.06.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 27 Mar 2021 16:06:29 -0700 (PDT)
-Message-Id: <4b183c7def5839ddf679605ff74f7f3280d957d0.1616886386.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.887.git.1616886386.gitgitgadget@gmail.com>
-References: <pull.887.git.1616886386.gitgitgadget@gmail.com>
-From:   "Dennis Ameling via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 27 Mar 2021 23:06:25 +0000
-Subject: [PATCH 4/4] cmake(install): include vcpkg dlls
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S230490AbhC0XJM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 27 Mar 2021 19:09:12 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53040 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230245AbhC0XJI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Mar 2021 19:09:08 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 208FDB768E;
+        Sat, 27 Mar 2021 19:09:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Meheh7N1jfD41VYqX61DzBLXDFg=; b=VBWPm6
+        frlSmv+7+Za5il7VWfIXsBcNWE2WuCFF7gwWOYK1m3gzWgo4WuEUmnM22M4DaKTP
+        reRyImt4zTEsR5k6feBWrce74dp4rAkJMEeKGhY8xd3r8WZGiGcfDiqJAhMKW5DO
+        7MDhhEbwa7ichWC2TFCLO38/nSeEO52pUMfbo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=fMG9jKUpcKTowaASv/2eslwnUahKIzeo
+        FNGsp6d88y8S0nkwGOnLQonepcjmuX9GYdo5ky1BUW2pqfNdmjICvI2no8mAHt1p
+        wZABxjnFoDgticEAajYXfBx2TM9yrEReHnWlo7LpccwPWJIRJdp83jvUWAs/FnMd
+        oKJQO5iZYmA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 04669B768D;
+        Sat, 27 Mar 2021 19:09:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3EA68B768B;
+        Sat, 27 Mar 2021 19:09:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Atharva Raykar <raykar.ath@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [GSOC][PATCH] userdiff: add support for Scheme
+References: <20210327173938.59391-1-raykar.ath@gmail.com>
+        <xmqq5z1cqki7.fsf@gitster.g>
+Date:   Sat, 27 Mar 2021 16:09:06 -0700
+In-Reply-To: <xmqq5z1cqki7.fsf@gitster.g> (Junio C. Hamano's message of "Sat,
+        27 Mar 2021 15:50:24 -0700")
+Message-ID: <xmqq1rc0qjn1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Dennis Ameling <dennis@dennisameling.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6E6D499E-8F51-11EB-A9C9-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Dennis Ameling <dennis@dennisameling.com>
+Junio C Hamano <gitster@pobox.com> writes:
 
-Our CMake configuration generates not only build definitions, but also
-install definitions: After building Git using `msbuild git.sln`, the
-built artifacts can be installed via `msbuild INSTALL.vcxproj`.
+> Atharva Raykar <raykar.ath@gmail.com> writes:
+> ...
+>> +           (ChangeMe 'suite-name tests)))))))
+>> \ No newline at end of file
+>
+> Is there a good reason to leave the final line incomplete?  ...
+> I am also trying to figure out what you wanted to achieve ...
 
-To specify _where_ the files should be installed, the
-`-DCMAKE_INSTALL_PREFIX=<path>` option can be used when running CMake.
+Taking all of them together, here is what I hope you may agree as
+its improved version.  The only differences from what you posted are
+corrections to all the "\ No newline at end of file" and the simplification
+of the pattern (remove "a dot" from the alternative and add \t next
+to SP).  Without changes, the new tests still pass so ... ;-)
 
-However, this process would really only install the files that were just
-built. On Windows, we need more than that: We also need the `.dll` files
-of the dependencies (such as libcurl). The `vcpkg` ecosystem, which we
-use to obtain those dependencies, can be asked to install said `.dll`
-files really easily, so let's do that.
+    diff --git c/userdiff.c w/userdiff.c
+    index 5fd0eb31ec..685fe712aa 100644
+    --- c/userdiff.c
+    +++ w/userdiff.c
+    @@ -193,12 +193,8 @@ PATTERNS("rust",
+             "|[-+*\\/<>%&^|=!:]=|<<=?|>>=?|&&|\\|\\||->|=>|\\.{2}=|\\.{3}|::"),
+     PATTERNS("scheme",
+             "^[\t ]*(\\(define-?.*)$",
+    -	 /*
+    -	  * Scheme allows symbol names to have any character,
+    -	  * as long as it is not a form of a parenthesis.
+    -	  * The spaces must be escaped.
+    -	  */
+    -	 "(\\.|[^][)(\\}\\{ ])+"),
+    +	 /* whitespace separated tokens, but parentheses also can delimit words */
+    +	 "([^][)(\\}\\{ \t])+"),
+     PATTERNS("bibtex", "(@[a-zA-Z]{1,}[ \t]*\\{{0,1}[ \t]*[^ \t\"@',\\#}{~%]*).*$",
+             "[={}\"]|[^={}\" \t]+"),
+     PATTERNS("tex", "^(\\\\((sub)*section|chapter|part)\\*{0,1}\\{.*)$",
 
-This requires more than just the built `vcpkg` artifacts in the CI build
-definition; We now clone the `vcpkg` repository so that the relevant
-CMake scripts are available, in particular the ones related to defining
-the toolchain.
+----- >8 ---------- >8 ---------- >8 ---------- >8 ---------- >8 -----
+From: Atharva Raykar <raykar.ath@gmail.com>
+Date: Sat, 27 Mar 2021 23:09:38 +0530
+Subject: [PATCH] userdiff: add support for Scheme
 
-Signed-off-by: Dennis Ameling <dennis@dennisameling.com>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Add a diff driver for Scheme (R5RS and R6RS) which
+recognizes top level and local `define` forms,
+whether it is a function definition, binding, syntax
+definition or a user-defined `define-xyzzy` form.
+
+The rationale for picking `define` forms for the
+hunk headers is because it is usually the only
+significant form for defining the structure of the
+program, and it is a common pattern for schemers to
+have local function definitions to hide their
+visibility, so it is not only the top level
+`define`'s that are of interest. Schemers also
+extend the language with macros to provide their
+own define forms (for example, something like a
+`define-test-suite`) which is also captured in the
+hunk header.
+
+Since the identifier syntax is quite forgiving, we start
+our word regexp from "words delimited by whitespaces" and
+then loosen to include various forms of parentheses characters
+to word-delimiters.
+
+Signed-off-by: Atharva Raykar <raykar.ath@gmail.com>
+[jc: simplified word regex and its explanation; fixed whitespace errors]
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- .github/workflows/main.yml          | 5 +++++
- contrib/buildsystems/CMakeLists.txt | 4 ++++
- 2 files changed, 9 insertions(+)
+ Documentation/gitattributes.txt    | 2 ++
+ t/t4018-diff-funcname.sh           | 1 +
+ t/t4018/scheme-define-syntax       | 8 ++++++++
+ t/t4018/scheme-local-define        | 4 ++++
+ t/t4018/scheme-top-level-define    | 4 ++++
+ t/t4018/scheme-user-defined-define | 6 ++++++
+ t/t4034-diff-words.sh              | 1 +
+ t/t4034/scheme/expect              | 9 +++++++++
+ t/t4034/scheme/post                | 4 ++++
+ t/t4034/scheme/pre                 | 4 ++++
+ userdiff.c                         | 4 ++++
+ 11 files changed, 47 insertions(+)
+ create mode 100644 t/t4018/scheme-define-syntax
+ create mode 100644 t/t4018/scheme-local-define
+ create mode 100644 t/t4018/scheme-top-level-define
+ create mode 100644 t/t4018/scheme-user-defined-define
+ create mode 100644 t/t4034/scheme/expect
+ create mode 100644 t/t4034/scheme/post
+ create mode 100644 t/t4034/scheme/pre
 
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index f6885e88ee6b..c13afe2bf058 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -186,6 +186,11 @@ jobs:
-         ## Unzip and remove the artifact
-         unzip artifacts.zip
-         rm artifacts.zip
-+    - name: initialize vcpkg
-+      uses: actions/checkout@v2
-+      with:
-+        repository: 'microsoft/vcpkg'
-+        path: 'compat/vcbuild/vcpkg'
-     - name: download vcpkg artifacts
-       shell: powershell
-       run: |
-diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index a166be0eb1b8..98b2507f222e 100644
---- a/contrib/buildsystems/CMakeLists.txt
-+++ b/contrib/buildsystems/CMakeLists.txt
-@@ -58,6 +58,10 @@ if(WIN32)
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index 0a60472bb5..cfcfa800c2 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -845,6 +845,8 @@ patterns are available:
  
- 	# In the vcpkg edition, we need this to be able to link to libcurl
- 	set(CURL_NO_CURL_CMAKE ON)
+ - `rust` suitable for source code in the Rust language.
+ 
++- `scheme` suitable for source code in the Scheme language.
 +
-+	# Copy the necessary vcpkg DLLs (like iconv) to the install dir
-+	set(X_VCPKG_APPLOCAL_DEPS_INSTALL ON)
-+	set(CMAKE_TOOLCHAIN_FILE ${VCPKG_DIR}/scripts/buildsystems/vcpkg.cmake CACHE STRING "Vcpkg toolchain file")
- endif()
+ - `tex` suitable for source code for LaTeX documents.
  
- find_program(SH_EXE sh PATHS "C:/Program Files/Git/bin")
+ 
+diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
+index 9675bc17db..823ea96acb 100755
+--- a/t/t4018-diff-funcname.sh
++++ b/t/t4018-diff-funcname.sh
+@@ -48,6 +48,7 @@ diffpatterns="
+ 	python
+ 	ruby
+ 	rust
++	scheme
+ 	tex
+ 	custom1
+ 	custom2
+diff --git a/t/t4018/scheme-define-syntax b/t/t4018/scheme-define-syntax
+new file mode 100644
+index 0000000000..33fa50c844
+--- /dev/null
++++ b/t/t4018/scheme-define-syntax
+@@ -0,0 +1,8 @@
++(define-syntax define-test-suite RIGHT
++  (syntax-rules ()
++    ((_ suite-name (name test) ChangeMe ...)
++     (define suite-name
++       (let ((tests
++              `((name . ,test) ...)))
++         (lambda ()
++           (ChangeMe 'suite-name tests)))))))
+diff --git a/t/t4018/scheme-local-define b/t/t4018/scheme-local-define
+new file mode 100644
+index 0000000000..bc6d8aebbe
+--- /dev/null
++++ b/t/t4018/scheme-local-define
+@@ -0,0 +1,4 @@
++(define (higher-order)
++  (define local-function RIGHT
++    (lambda (x)
++     (car "this is" "ChangeMe"))))
+diff --git a/t/t4018/scheme-top-level-define b/t/t4018/scheme-top-level-define
+new file mode 100644
+index 0000000000..624743c22b
+--- /dev/null
++++ b/t/t4018/scheme-top-level-define
+@@ -0,0 +1,4 @@
++(define (some-func x y z) RIGHT
++  (let ((a x)
++        (b y))
++        (ChangeMe a b)))
+diff --git a/t/t4018/scheme-user-defined-define b/t/t4018/scheme-user-defined-define
+new file mode 100644
+index 0000000000..70e403c5e2
+--- /dev/null
++++ b/t/t4018/scheme-user-defined-define
+@@ -0,0 +1,6 @@
++(define-test-suite record-case-tests RIGHT
++  (record-case-1 (lambda (fail)
++                   (let ((a (make-foo 1 2)))
++                     (record-case a
++                       ((bar x) (ChangeMe))
++                       ((foo a b) (+ a b)))))))
+diff --git a/t/t4034-diff-words.sh b/t/t4034-diff-words.sh
+index 56f1e62a97..ee7721ab91 100755
+--- a/t/t4034-diff-words.sh
++++ b/t/t4034-diff-words.sh
+@@ -325,6 +325,7 @@ test_language_driver perl
+ test_language_driver php
+ test_language_driver python
+ test_language_driver ruby
++test_language_driver scheme
+ test_language_driver tex
+ 
+ test_expect_success 'word-diff with diff.sbe' '
+diff --git a/t/t4034/scheme/expect b/t/t4034/scheme/expect
+new file mode 100644
+index 0000000000..eed21e803c
+--- /dev/null
++++ b/t/t4034/scheme/expect
+@@ -0,0 +1,9 @@
++<BOLD>diff --git a/pre b/post<RESET>
++<BOLD>index 6a5efba..7c4a6b4 100644<RESET>
++<BOLD>--- a/pre<RESET>
++<BOLD>+++ b/post<RESET>
++<CYAN>@@ -1,4 +1,4 @@<RESET>
++(define (<RED>myfunc a b<RESET><GREEN>my-func first second<RESET>)
++  ; This is a <RED>really<RESET><GREEN>(moderately)<RESET> cool function.
++  (let ((c (<RED>+ a b<RESET><GREEN>add1 first<RESET>)))
++    (format "one more than the total is %d" (<RED>add1<RESET><GREEN>+<RESET> c <GREEN>second<RESET>))))
+diff --git a/t/t4034/scheme/post b/t/t4034/scheme/post
+new file mode 100644
+index 0000000000..28f59c6584
+--- /dev/null
++++ b/t/t4034/scheme/post
+@@ -0,0 +1,4 @@
++(define (my-func first second)
++  ; This is a (moderately) cool function.
++  (let ((c (add1 first)))
++    (format "one more than the total is %d" (+ c second))))
+diff --git a/t/t4034/scheme/pre b/t/t4034/scheme/pre
+new file mode 100644
+index 0000000000..4bd0069493
+--- /dev/null
++++ b/t/t4034/scheme/pre
+@@ -0,0 +1,4 @@
++(define (myfunc a b)
++  ; This is a really cool function.
++  (let ((c (+ a b)))
++    (format "one more than the total is %d" (add1 c))))
+diff --git a/userdiff.c b/userdiff.c
+index 3f81a2261c..685fe712aa 100644
+--- a/userdiff.c
++++ b/userdiff.c
+@@ -191,6 +191,10 @@ PATTERNS("rust",
+ 	 "[a-zA-Z_][a-zA-Z0-9_]*"
+ 	 "|[0-9][0-9_a-fA-Fiosuxz]*(\\.([0-9]*[eE][+-]?)?[0-9_fF]*)?"
+ 	 "|[-+*\\/<>%&^|=!:]=|<<=?|>>=?|&&|\\|\\||->|=>|\\.{2}=|\\.{3}|::"),
++PATTERNS("scheme",
++	 "^[\t ]*(\\(define-?.*)$",
++	 /* whitespace separated tokens, but parentheses also can delimit words */
++	 "([^][)(\\}\\{ \t])+"),
+ PATTERNS("bibtex", "(@[a-zA-Z]{1,}[ \t]*\\{{0,1}[ \t]*[^ \t\"@',\\#}{~%]*).*$",
+ 	 "[={}\"]|[^={}\" \t]+"),
+ PATTERNS("tex", "^(\\\\((sub)*section|chapter|part)\\*{0,1}\\{.*)$",
 -- 
-gitgitgadget
+2.31.1-255-g3df2b433e7
+
