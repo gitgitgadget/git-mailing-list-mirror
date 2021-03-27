@@ -6,60 +6,85 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D35CCC433DB
-	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 09:49:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 16D76C433DB
+	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 09:51:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A4B80619E4
-	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 09:49:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CFACF619AB
+	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 09:51:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231382AbhC0Jsh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 27 Mar 2021 05:48:37 -0400
-Received: from cloud.peff.net ([104.130.231.41]:50642 "EHLO cloud.peff.net"
+        id S231304AbhC0Juw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 27 Mar 2021 05:50:52 -0400
+Received: from cloud.peff.net ([104.130.231.41]:50648 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230427AbhC0JsG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Mar 2021 05:48:06 -0400
-Received: (qmail 13335 invoked by uid 109); 27 Mar 2021 09:48:04 -0000
+        id S231209AbhC0JuV (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Mar 2021 05:50:21 -0400
+Received: (qmail 13371 invoked by uid 109); 27 Mar 2021 09:50:21 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 27 Mar 2021 09:48:04 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 27 Mar 2021 09:50:21 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16203 invoked by uid 111); 27 Mar 2021 09:48:04 -0000
+Received: (qmail 16241 invoked by uid 111); 27 Mar 2021 09:50:21 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 27 Mar 2021 05:48:04 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 27 Mar 2021 05:50:20 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Sat, 27 Mar 2021 05:48:04 -0400
+Date:   Sat, 27 Mar 2021 05:50:20 -0400
 From:   Jeff King <peff@peff.net>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/5] small doc make and lint fixes
-Message-ID: <YF7/VJmb+B1eH6Ro@coredump.intra.peff.net>
+Subject: Re: [PATCH 5/5] doc lint: lint and fix missing "GIT" end sections
+Message-ID: <YF7/3GN4H/agNaxH@coredump.intra.peff.net>
 References: <cover-0.6-00000000000-20210326T103454Z-avarab@gmail.com>
- <YF3AGsFFX3FQ1/ew@coredump.intra.peff.net>
- <87sg4indt1.fsf@evledraar.gmail.com>
+ <patch-5.6-d4004b6a7cb-20210326T103454Z-avarab@gmail.com>
+ <YF2/xPMvwhm+OOVz@coredump.intra.peff.net>
+ <87pmzmnd5h.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87sg4indt1.fsf@evledraar.gmail.com>
+In-Reply-To: <87pmzmnd5h.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 26, 2021 at 04:18:50PM +0100, Ævar Arnfjörð Bjarmason wrote:
+On Fri, Mar 26, 2021 at 04:32:58PM +0100, Ævar Arnfjörð Bjarmason wrote:
 
-> >> A small stand-alone series of doc infrastructure fixes. 5/6 fixes an
-> >> interesting bug that's been missed since doc-diff was introduced.
+> > This is a definite improvement. Two thoughts come to mind, though:
 > >
-> > I'm not sure what you mean about doc-diff here. Patch 5 (of 5?) doesn't
-> > seem related. Patch 4 is related only tangentially, in that you might
-> > have more stuff in your Documentation directory.
+> >   1. Do we need a separate script for this? Couldn't the existing linter
+> >      script check this while it is reading all of the files (it knows
+> >      which ones are supposed to be manpages because they are annotated
+> >      with the --section option).
 > 
-> That's how it's related, the lint script recursively looks for all *.txt
-> under Documentation/, before doc-diff we could safely assume this was
-> *.txt at that version of the repository, after doc-diff our recursively
-> search leads us to a different checkout at a different revision.
-> 
-> I don't think it had any practical effect, just say'n.
+> It's not needed, but I think it's better, one is iterating a
+> line-at-time, one slurps all lines, they have different sorts of error
+> reporting (one quotes the whole line).
+> [...]
 
-OK, thanks. I just wanted to make sure I wasn't missing something.
+OK. As the person who looked at all of it much more closely, I'll trust
+your judgement there.
+
+> >   2. Instead of linting, could we just be automatically sticking this
+> >      boilerplate in as part of the build (either through some asciidoc
+> >      magic, or even just a plain old "cat")? Even better than being
+> >      reminded that you forgot something is making it impossible to
+> >      forget it in the first place.
+> 
+> Whenever I take an aborted effort at the docs I end up with some aborted
+> effort to migrte them to texinfo, so I'm sympathetic to the automatic
+> generation part of this.
+> 
+> But for something trivial like this I think there's more value in having
+> a 1=1 match between WYS and WYG, not adding magic blurbs by the build
+> system for something so trivial.
+> 
+> That being said I wouldn't mind it much, just seemed like an obvious
+> thing to add a lint for as it stands now...
+
+Yeah, I agree that complicating the build may create its own problems.
+If we were already munging the *.txt files it may not be a big deal to
+add further munging, but it would be a jump from the current state of
+"we feed it directly to asciidoc".
+
+I'm OK to forget about it for now and see if other useful applications
+of such munging come up.
 
 -Peff
