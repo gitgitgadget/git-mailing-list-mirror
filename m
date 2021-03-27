@@ -2,155 +2,137 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C105C433C1
-	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 18:37:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0057EC433C1
+	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 18:56:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 29BC7619B1
-	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 18:37:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BCB01619AB
+	for <git@archiver.kernel.org>; Sat, 27 Mar 2021 18:56:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230214AbhC0ShB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 27 Mar 2021 14:37:01 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50635 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230043AbhC0SgW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Mar 2021 14:36:22 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D93E7B5D4B;
-        Sat, 27 Mar 2021 14:36:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=UWRwrGCferfkp+eBLYLU7qTyArI=; b=IeeVpF
-        /RENsAI1YWpPKmdfd4HggM+UOvU1dxbXoRnj6i1pyPnfPwtsykmp3vsiXypPZS3X
-        Aui3TXiXUpDJAtXH/4pBOA0xPZ3IRnBER0V3hsJXhngyTJxw84THilFkga/jyzn1
-        N9fLdU+YbzwABwG5PXQMPDhzI5kz6idLShlSk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=wbQQkUpTEhrL+FuVQ3ehI36DOzS9C4S9
-        E3Con20HziIinDMJDfzL+XYczHzkgHFAlXC1X8kbz51dhDRcZkSGay8vC+Z9u0ot
-        oaYwoWvZfFAsAmZXfUAbDRHBfQ0xanVHeuz1wQBWzAUG40C9ohu0r8/A4/OqpEad
-        BC1A0lapPxc=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D1F98B5D4A;
-        Sat, 27 Mar 2021 14:36:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S230126AbhC0Szh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 27 Mar 2021 14:55:37 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:49484 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S230015AbhC0SzE (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 27 Mar 2021 14:55:04 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 65548B5D49;
-        Sat, 27 Mar 2021 14:36:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Stavros Ntentos <stdedos@gmail.com>, bagasdotme@gmail.com,
-        git@vger.kernel.org, stdedos+git@gmail.com
-Subject: Re: [RFC PATCH v1 1/2] pathspec: warn: long and short forms are
- incompatible
-References: <YF1w/xKbozpQn7Vf@coredump.intra.peff.net>
-        <20210326161626.28648-1-133706+stdedos@users.noreply.github.com>
-        <YF792/TkS3Ssw9NS@coredump.intra.peff.net>
-Date:   Sat, 27 Mar 2021 11:36:20 -0700
-In-Reply-To: <YF792/TkS3Ssw9NS@coredump.intra.peff.net> (Jeff King's message
-        of "Sat, 27 Mar 2021 05:41:47 -0400")
-Message-ID: <xmqqa6qoqw9n.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A201A6048E;
+        Sat, 27 Mar 2021 18:55:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1616871303;
+        bh=pSq8E+36IhDfCBewZwyWY5bKb4liU8iKZSKzkDpL9GQ=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=w/gjH/LLjYERB6YczNDuppsjZCeocNHRNiIJL8S14GwrnaWAM5tjVlwhvps8Yfhpy
+         NvKd4cD2nQqORK+s5zpORxhENylMzJoo6D/XL8HIECNKt599R0ocuhn0YOcMMxnE2a
+         CV5SvFGdNEov/mHaokugSIti3dmUawWGpC9+oOC0dxVWGquaM2v9D3hEE74Zl+lf6R
+         g5rffV2n0O9OGxYMqgED3nL1YfsKM3HDgjyRMrOHGXYL1VGFK6JwPotXDekoGUoxCf
+         MJdPur9dldhDUZBz4solum/kQwv/QN0YN1VvvEBtlTF0MyirgoLHu7WrxqaGu2GhR/
+         ktO6BI5p20oZu1//3NHcZPEKSeXvR5dJBXgZ+ltqCIvGzkwJTv3elL8k3MA/bfDIst
+         qKoqPZm0+aPlrIqXSPw8OaAl5wugmwg2Dn6F65xKw3M2y/6Ok4UgqKuYYUcLV3TyH5
+         C63WCU7DWVyBYR7ZwyMq7qrnM/7KygVj1VBMgbde2tdzjdHDXI8
+Date:   Sat, 27 Mar 2021 18:54:56 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Utku <ugultopu@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [BUG] Git is not using the configured SSH key when there is
+ another SSH key added to the SSH agent
+Message-ID: <YF9/gCIWaFBicdpo@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Utku <ugultopu@gmail.com>, git@vger.kernel.org
+References: <967BFF88-A8E1-4EEC-B298-668012E42C03@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 53A09D62-8F2B-11EB-A8D2-D152C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="jQE9PzqZGbCWjBbm"
+Content-Disposition: inline
+In-Reply-To: <967BFF88-A8E1-4EEC-B298-668012E42C03@gmail.com>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
 
-> It also feels like any checks like this should be relying on the
-> existing pathspec-magic parser a bit more. I don't know the pathspec
-> code that well, but surely at some point it has a notion of which parts
-> are magic flags (e.g., after parse_element_magic in init_pathspec_item).
+--jQE9PzqZGbCWjBbm
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Absolutely.  parse_element_magic() decides, by looking at the
-character after the initial ':', the we are looking at the longhand
-form when magic sequence is introduced by ":(".
+On 2021-03-27 at 18:31:10, Utku wrote:
+> # Versions
+>=20
+> - Git 2.30.1
+> - macOS 10.15.7
+>=20
+> # Steps to Reproduce
+>=20
+> - Have two SSH key pairs on your machine, one with a passphrase and
+> other without. The keys were created by running `ssh-keygen` in my
+> case.
+>=20
+> - Add the key with a passphrase to the SSH agent by running `ssh-add`
+> and entering the passphrase.
+>=20
+> - Have an entry like the following in your `~/.ssh/config`:
+>=20
+>       Host someName
+>           HostName bitbucket.org
+>           User git
+>           IdentityFile ~/.ssh/private-key-of-the-pair-without-a-passphrase
+>=20
+>=20
+> - Add the public key of the pair without a passphrase to your BitBucket
+> account.
+>=20
+> - Run `git clone someName:path/to/your/repository.git`. You will get a
+> not authorized error. As far as I can tell, this means that Git has
+> tried to use the key with the passphrase (which is added to the SSH
+> agent). Since this key is **not** the key that was added to the
+> BitBucket account, we received a not authorized error.
+>=20
+> - Add the key without a passphrase to your SSH agent by running
+> `ssh-add` and try the same command (`git-clone`) again. It will work.
+>=20
+> - Now, remove both keys from the SSH agent by running `ssh-add -D` and
+> try and try the same command (`git-clone`) again. It will still work.
+>=20
+> I didn't test but don't believe this has something to do with the key
+> having a passphrase or not. Also, I believe that I'm not using macOS
+> Keychain to store the decrypted keys.
 
-Otherwise, : must be followed by shorthand form, where the only
-usable ones are '/' (synonym for top), '!' and '^' (synonym for
-exclude), and ':' (end of short-form marker), but most importantly,
-'(' will *never* be a valid shorthand form (because it is not part
-of the GIT_PATHSPEC_MAGIC class of bytes).
+This behavior is completely due to SSH.  Git doesn't tell OpenSSH to
+behave in any particular way; instead, it tells it to make a connection
+with the specified parameters to the specified server, and OpenSSH makes
+its own decision about what that means.
 
-So, presumably, inside parse_short_magic(), you could detect '('
-and complain it as an attempt to switch to longform.
+In your case, the option you want is "IdentitiesOnly yes".  This tells
+OpenSSH to always use the specified identity, even if a different one is
+available in the agent.  You can add it to the configuration that you
+have above and things should work.
 
-Here is to illustrate where to hook the check.  With this, I can get
-something like this:
+You can also see an example of this configuration in the FAQ:
+https://git-scm.com/docs/gitfaq#multiple-accounts-ssh
+--=20
+brian m. carlson (he/him or they/them)
+Houston, Texas, US
 
-    $ git show -s --oneline -- ':!/(foobar)frotz' ':/(bar)nitfol' .
-    warning: :!/: cannot mix shortform magic with longform like (exclude)
-    warning: :/: cannot mix shortform magic with longform like (exclude)
-    84d06cdc06 Sync with v2.31.1
+--jQE9PzqZGbCWjBbm
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Note that this illustration does not show the best warning message.
-To improve it to a bit more useful level, I think two things need to
-happen on top.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.27 (GNU/Linux)
 
- * Use advice to allow users sequelch.
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYF9/fwAKCRB8DEliiIei
+gYHnAQC8Rl9T55uzZaG++jqWoNcg5K0fDXpItGIHiFyx4HwL3gD/cSi0QEzwCzGT
+mbu95GXQHscxgOsbZ1/wm/d+YMlLDwU=
+=OC35
+-----END PGP SIGNATURE-----
 
- * Show a few letters after '(' (but pay attention to the end of the
-   string, which ends with either '\0' or ':'), and lose the
-   substring "like (exclude)" from the message.
-
-That would have given
-
-    hint: ":!/(foo...": cannot mix shortform and longform magic
-
-for the above example.
-
-I initially thought it might make it even better if we looked ahead
-of what comes after '(', took the substring before ',' or ')', and
-looked up pathspec_magic[] array, BUT I do not think it is a good
-idea.  It would be confusing if we do not give the same advice to
-":!(literol)" when the user does get one for ":!(literal)".  So the
-above "two things need to happen" list deliberately excludes an
-"improvement" doing so.
-
-
- pathspec.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
-
-diff --git i/pathspec.c w/pathspec.c
-index 18b3be362a..cd343d5b54 100644
---- i/pathspec.c
-+++ w/pathspec.c
-@@ -336,6 +336,9 @@ static const char *parse_long_magic(unsigned *magic, int *prefix_len,
- 	return pos;
- }
- 
-+static const char mixed_pathspec_magic[] =
-+	N_("%.*s: cannot mix shortform magic with longform like (exclude)");
-+
- /*
-  * Parse the pathspec element looking for short magic
-  *
-@@ -356,6 +359,16 @@ static const char *parse_short_magic(unsigned *magic, const char *elem)
- 			continue;
- 		}
- 
-+		if (ch == '(') {
-+			/*
-+			 * a possible common mistake: once you started
-+			 * a shortform you cannot add (longform), e.g.
-+			 * ":!(top)"
-+			 */
-+			warning(_(mixed_pathspec_magic),
-+				(int)(pos-elem), elem);
-+		}
-+
- 		if (!is_pathspec_magic(ch))
- 			break;
- 
-
+--jQE9PzqZGbCWjBbm--
