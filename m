@@ -2,176 +2,155 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-19.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89F37C433C1
-	for <git@archiver.kernel.org>; Sun, 28 Mar 2021 06:42:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E48C8C433DB
+	for <git@archiver.kernel.org>; Sun, 28 Mar 2021 07:02:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5B71661971
-	for <git@archiver.kernel.org>; Sun, 28 Mar 2021 06:42:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AB5D861974
+	for <git@archiver.kernel.org>; Sun, 28 Mar 2021 07:02:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231128AbhC1GmR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 28 Mar 2021 02:42:17 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62720 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230517AbhC1GmI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 Mar 2021 02:42:08 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 81DA4B9891;
-        Sun, 28 Mar 2021 02:42:07 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=2g2Yj+dsU7TS
-        RV6CV2O2bM66TUw=; b=QkSqonAE2vVbGpUBVIOQuAB8xrtz/ORsLS/XPmVpDRku
-        x5K+Oe9XihXz18TVOEhtwcT6gkDQgLSa9vU48CvHexcB3Czvu8w5Uj6W+PdSS2yv
-        bJbjv2TCLfudE22L0o4RI2XlJQEPuOz7aebTM1va7+k/oxJdSHXcqhftVnRawLE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=k2leWu
-        yGJgq1xlabx+QmVYt95ZdyLpxDJTv6ymqUaFhEMnU1Da0aBqC4sh/NdvMAF95rBG
-        83RPVfXUgTC8rAqTFwUNYf6krLSa0/IsQ2K2yYV5SJFo6rcS+dKW8lnnHAsSzeZC
-        CvM1NdiH3xxPWBzv0Duu3UPULz3Ajjh9pELe8=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7A959B9890;
-        Sun, 28 Mar 2021 02:42:07 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CB098B988F;
-        Sun, 28 Mar 2021 02:42:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 5/5] doc lint: lint and fix missing "GIT" end sections
-References: <cover-0.6-00000000000-20210326T103454Z-avarab@gmail.com>
-        <patch-5.6-d4004b6a7cb-20210326T103454Z-avarab@gmail.com>
-Date:   Sat, 27 Mar 2021 23:42:06 -0700
-In-Reply-To: <patch-5.6-d4004b6a7cb-20210326T103454Z-avarab@gmail.com>
- (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 26 Mar
- 2021 11:36:50 +0100")
-Message-ID: <xmqqr1jzn5j5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S229647AbhC1G4s (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 28 Mar 2021 02:56:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33340 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229485AbhC1G4b (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 Mar 2021 02:56:31 -0400
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0336C061762
+        for <git@vger.kernel.org>; Sat, 27 Mar 2021 23:56:09 -0700 (PDT)
+Received: by mail-pl1-x62c.google.com with SMTP id v8so2894096plz.10
+        for <git@vger.kernel.org>; Sat, 27 Mar 2021 23:56:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=JelILj+HeP3atK90aSNkhyjsNyHyw77JpjJ0VMs+jLo=;
+        b=VRz1RgjGIMQeVdcBWATEYODzbmZ3Faj3N36SIPjn66EX010waZOtk540QWcKNfQOo9
+         PFY35ecvlLrgzzBVsHbDoP/GSxti1uY1BOt4zmcFPEn5QlL0JTy5oAgJNkFFKoRqbGZ/
+         8UvPXgD1qHfRQCdbKxn6eymls4Lvw30k8SPoc57GGKU/0GmceB6svSDrJyCsiGJj8TGz
+         9Y4Ox2LFN0all4G+seX3Dh+m9WzzYJdKJcujTOyaaIdxvClDYZpScAiDW24TxBc11Hrs
+         +OutqSdyW/C4bgQOVmPqYXjdZvSbhrtmmcqMMEVkHfJ1AJMLQrTecsM7qDeQU3Qpr07t
+         cPZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=JelILj+HeP3atK90aSNkhyjsNyHyw77JpjJ0VMs+jLo=;
+        b=QCkxKBWnLFBxUHu3+5L03+YlSeNTEn80acf9Rn/SZDFw+j2qybClphpJavGzy5o0cm
+         R2shvut9O9EfMnB9d3z2uYr7z4wuXVjdcEYODLCLZKUfpYgTGNA6ybWCVGzsI1UtVBCi
+         Rl3Xr+goGiwjTP6oFi6igtB85j4stjW22ZIhtR164FhG2uaax0JRefqWjJDje7bjukL9
+         uNwA1gOsJ/GXtn5kmnQU8j2tJbstFTO5weIYctKPEmzinlHBN2Xu1YOUCZy3alJVXMiw
+         9LApsMrBC6txUNao7/ou+WHkMbblVyTjmJCZC0jYnGQcHl/ggQcdVsCJGzbfhTmJXBjO
+         Z1zg==
+X-Gm-Message-State: AOAM533HAiWWaCKylLwQcnZllu3kCWPxzA8oG1UQYKguupp0pbqmMi88
+        pATjxZLeNFeBx8+7iDswS05IA7HNxTAsJw==
+X-Google-Smtp-Source: ABdhPJxYqOYCw8eJ9cfpHS+CG6BbMg7qTlzDFB1A99/gMWZQfvr/Mv8FA8U+tbfRBDOk5NLR/uqTsA==
+X-Received: by 2002:a17:902:263:b029:e7:35d8:4554 with SMTP id 90-20020a1709020263b02900e735d84554mr7329543plc.83.1616914567702;
+        Sat, 27 Mar 2021 23:56:07 -0700 (PDT)
+Received: from [192.168.43.80] (subs32-116-206-28-8.three.co.id. [116.206.28.8])
+        by smtp.gmail.com with ESMTPSA id a29sm10741305pfg.130.2021.03.27.23.56.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 27 Mar 2021 23:56:07 -0700 (PDT)
+Subject: Re: [PATCH] Documentation: amended usages of various (sub)commands
+To:     Chinmoy via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Chinmoy <chinmoy12c@gmail.com>, git@vger.kernel.org
+References: <pull.920.git.1616913298624.gitgitgadget@gmail.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <e85a653c-2650-313d-b5ca-5874559d9528@gmail.com>
+Date:   Sun, 28 Mar 2021 13:56:04 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: B6B77258-8F90-11EB-98D4-D152C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <pull.920.git.1616913298624.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
-
-> Lint for and fix the three manual pages that were missing the standard
-> "Part of the linkgit:git[1] suite" end section.
->
-> We only do this for the man[157] section documents (we don't have
-> anything outside those sections), not files to be included,
-> howto *.txt files etc.
-
-OK.  Alternatively we could drop the footer from all pages.  IIRC,
-we used to have another footer section to credit primary authors,
-which we dropped years ago.  I doubt "git-foo is part of git suite"
-is something worth repeating over and over.
-
-Thanks.
-
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
+On 28/03/21 13.34, Chinmoy via GitGitGadget wrote:
+> From: Chinmoy Chakraborty <chinmoy12c@gmail.com>
+> 
+> The Git suite option parsing API's Technical Documentation suggests this
+> about the option descriptions of a (sub)command:
+> 
+> `description` is a short string to describe the effect of the option.
+> It shall begin with a lower-case letter and a full stop (.) shall be
+> omitted at the end.
+> 
+> Various (sub)commands' option arrays don't follow the guideline provided
+> by the parse_options Documentation regarding the descriptions.
+> 
+> Signed-off-by: Chinmoy Chakraborty <chinmoy12c@gmail.com>
 > ---
->  Documentation/Makefile           |  2 ++
->  Documentation/git-credential.txt |  4 ++++
->  Documentation/git-p4.txt         |  4 ++++
->  Documentation/gitnamespaces.txt  |  4 ++++
->  Documentation/lint-man-txt.perl  | 24 ++++++++++++++++++++++++
->  5 files changed, 38 insertions(+)
->  create mode 100755 Documentation/lint-man-txt.perl
->
-> diff --git a/Documentation/Makefile b/Documentation/Makefile
-> index 6bfd8c75772..2b6cd0f7be2 100644
-> --- a/Documentation/Makefile
-> +++ b/Documentation/Makefile
-> @@ -490,6 +490,8 @@ lint-docs::
->  		--section=3D5 $(MAN5_TXT) \
->  		--section=3D7 $(MAN7_TXT)	\
->  		--to-lint $(ALL_TXT)
-> +	$(QUIET_LINT)$(PERL_PATH) lint-man-txt.perl \
-> +		$(MAN1_TXT) $(MAN5_TXT) $(MAN7_TXT)
-> =20
->  ifeq ($(wildcard po/Makefile),po/Makefile)
->  doc-l10n install-l10n::
-> diff --git a/Documentation/git-credential.txt b/Documentation/git-crede=
-ntial.txt
-> index 31c81c4c026..206e3c5f407 100644
-> --- a/Documentation/git-credential.txt
-> +++ b/Documentation/git-credential.txt
-> @@ -159,3 +159,7 @@ empty string.
->  +
->  Components which are missing from the URL (e.g., there is no
->  username in the example above) will be left unset.
-> +
-> +GIT
-> +---
-> +Part of the linkgit:git[1] suite
-> diff --git a/Documentation/git-p4.txt b/Documentation/git-p4.txt
-> index f89e68b424c..38e5257b2a4 100644
-> --- a/Documentation/git-p4.txt
-> +++ b/Documentation/git-p4.txt
-> @@ -762,3 +762,7 @@ IMPLEMENTATION DETAILS
->    message indicating the p4 depot location and change number.  This
->    line is used by later 'git p4 sync' operations to know which p4
->    changes are new.
-> +
-> +GIT
-> +---
-> +Part of the linkgit:git[1] suite
-> diff --git a/Documentation/gitnamespaces.txt b/Documentation/gitnamespa=
-ces.txt
-> index b614969ad2c..1c8d2ecc358 100644
-> --- a/Documentation/gitnamespaces.txt
-> +++ b/Documentation/gitnamespaces.txt
-> @@ -62,3 +62,7 @@ git clone ext::'git --namespace=3Dfoo %s /tmp/prefixe=
-d.git'
->  ----------
-> =20
->  include::transfer-data-leaks.txt[]
-> +
-> +GIT
-> +---
-> +Part of the linkgit:git[1] suite
-> diff --git a/Documentation/lint-man-txt.perl b/Documentation/lint-man-t=
-xt.perl
-> new file mode 100755
-> index 00000000000..d69312e5db5
-> --- /dev/null
-> +++ b/Documentation/lint-man-txt.perl
-> @@ -0,0 +1,24 @@
-> +#!/usr/bin/perl
-> +
-> +use strict;
-> +use warnings;
-> +
-> +my $exit_code =3D 0;
-> +sub report {
-> +	my ($target, $msg) =3D @_;
-> +	print "error: $target: $msg\n";
-> +	$exit_code =3D 1;
-> +}
-> +
-> +local $/;
-> +while (my $slurp =3D <>) {
-> +	report($ARGV, "has no 'Part of the linkgit:git[1] suite' end blurb")
-> +		unless $slurp =3D~ m[
-> +		^GIT\n
-> +		 ---\n
-> +		\QPart of the linkgit:git[1] suite\E \n
-> +		\z
-> +	]mx;
-> +}
-> +
-> +exit $exit_code;
+>      Documentation: amended usages of various (sub)commands
+>      
+>      The Git suite option parsing API's Technical Documentation suggests this
+>      about the option descriptions of a (sub)command:
+>      
+>      description is a short string to describe the effect of the option. It
+>      shall begin with a lower-case letter and a full stop (.) shall be
+>      omitted at the end.
+>      
+>      Various (sub)commands' option arrays don't follow the guideline provided
+>      by the parse_options Documentation regarding the descriptions.
+>      
+>      Signed-off-by: Chinmoy Chakraborty chinmoy12c@gmail.com
+> 
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-920%2Fchinmoy12c%2Fissue_636-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-920/chinmoy12c/issue_636-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/920
+> 
+>   builtin/column.c     | 8 ++++----
+>   builtin/range-diff.c | 2 +-
+>   2 files changed, 5 insertions(+), 5 deletions(-)
+> 
+> diff --git a/builtin/column.c b/builtin/column.c
+> index e815e148aa18..40d4b3bee2dd 100644
+> --- a/builtin/column.c
+> +++ b/builtin/column.c
+> @@ -27,10 +27,10 @@ int cmd_column(int argc, const char **argv, const char *prefix)
+>   		OPT_STRING(0, "command", &real_command, N_("name"), N_("lookup config vars")),
+>   		OPT_COLUMN(0, "mode", &colopts, N_("layout to use")),
+>   		OPT_INTEGER(0, "raw-mode", &colopts, N_("layout to use")),
+> -		OPT_INTEGER(0, "width", &copts.width, N_("Maximum width")),
+> -		OPT_STRING(0, "indent", &copts.indent, N_("string"), N_("Padding space on left border")),
+> -		OPT_INTEGER(0, "nl", &copts.nl, N_("Padding space on right border")),
+> -		OPT_INTEGER(0, "padding", &copts.padding, N_("Padding space between columns")),
+> +		OPT_INTEGER(0, "width", &copts.width, N_("maximum width")),
+> +		OPT_STRING(0, "indent", &copts.indent, N_("string"), N_("padding space on left border")),
+> +		OPT_INTEGER(0, "nl", &copts.nl, N_("padding space on right border")),
+> +		OPT_INTEGER(0, "padding", &copts.padding, N_("padding space between columns")),
+>   		OPT_END()
+>   	};
+>   
+> diff --git a/builtin/range-diff.c b/builtin/range-diff.c
+> index 78bc9fa77062..50318849d657 100644
+> --- a/builtin/range-diff.c
+> +++ b/builtin/range-diff.c
+> @@ -25,7 +25,7 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
+>   	struct option range_diff_options[] = {
+>   		OPT_INTEGER(0, "creation-factor",
+>   			    &range_diff_opts.creation_factor,
+> -			    N_("Percentage by which creation is weighted")),
+> +			    N_("percentage by which creation is weighted")),
+>   		OPT_BOOL(0, "no-dual-color", &simple_color,
+>   			    N_("use simple diff colors")),
+>   		OPT_PASSTHRU_ARGV(0, "notes", &other_arg,
+> 
+> base-commit: 84d06cdc06389ae7c462434cb7b1db0980f63860
+> 
+Wait, I expected that this patch touches Documentation/* (as the title implied),
+but it seems like the patch content is something else (not related).
+
+Totally wrong patch submitted here.
+
+-- 
+An old man doll... just what I always wanted! - Clara
