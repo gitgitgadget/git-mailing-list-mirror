@@ -2,131 +2,144 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
+X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CA76C433DB
-	for <git@archiver.kernel.org>; Sun, 28 Mar 2021 06:29:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78502C433C1
+	for <git@archiver.kernel.org>; Sun, 28 Mar 2021 06:35:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DC8206197C
-	for <git@archiver.kernel.org>; Sun, 28 Mar 2021 06:29:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4BABF61924
+	for <git@archiver.kernel.org>; Sun, 28 Mar 2021 06:35:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229543AbhC1G2f (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 28 Mar 2021 02:28:35 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64841 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229489AbhC1G2J (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 Mar 2021 02:28:09 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 81203B9839;
-        Sun, 28 Mar 2021 02:28:08 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=J5e8Wq+0TbL3
-        w326MVqEf7q003k=; b=cixAN9EKkXSG9VCi7sPrUQ901izi6gzjZP7w7iHWNr0Y
-        K7ZMsok6DcPc3Sp4BeSD/Nm4gOZMDV5oSvb6OqzfRmqCNW+UlgB9ZXfUqv5kgHps
-        Qevc0bP90Y85V7JTHuSeXjwXUlR/mTTQeQQkM6vUkpiF6acFgzB972gqoZHgplQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=vRaBDg
-        YI1OTcfiQeJeuZqBaolVG/Mbb72qDIagMvzZYPECTsyZys2iFpDxK3JjxpSwYiam
-        AVVzrRu2dwS2EgJ8Rt+i/sUoNkrvjvB4vZqk0msdlGtdJguEId1GVwAZ/X1ha/vL
-        AwtYTD4fDQBa1IYasc5ox0ixO74eVHpJseNRc=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 67E11B9838;
-        Sun, 28 Mar 2021 02:28:08 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8E044B9837;
-        Sun, 28 Mar 2021 02:28:07 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/5] Documentation/Makefile: make $(wildcard <doc deps>)
- a var
-References: <cover-0.6-00000000000-20210326T103454Z-avarab@gmail.com>
-        <patch-2.6-fdc55a86cf4-20210326T103454Z-avarab@gmail.com>
-Date:   Sat, 27 Mar 2021 23:28:06 -0700
-In-Reply-To: <patch-2.6-fdc55a86cf4-20210326T103454Z-avarab@gmail.com>
- (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 26 Mar
- 2021 11:36:47 +0100")
-Message-ID: <xmqq7dlrokqx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S229489AbhC1GfF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 28 Mar 2021 02:35:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57062 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229538AbhC1GfB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 Mar 2021 02:35:01 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86EB2C061762
+        for <git@vger.kernel.org>; Sat, 27 Mar 2021 23:35:00 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id d8-20020a1c1d080000b029010f15546281so6914639wmd.4
+        for <git@vger.kernel.org>; Sat, 27 Mar 2021 23:35:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=7RElJ4AdSvAUR6FYwpxIcE6M0X0aJjnK9HjCuIeqpB4=;
+        b=kK/GUc+/tNqZQdYw9515wvLTSwHWys0M99jkCuYUm3vTnGNfqYmsnlHAvIerxu5lu1
+         AUMB5YkTqMCZXOWwh0qUCjAd+jQvB5kxm/4De9mpdbZubh2+Mb/wVUr8vZxxJQrLhDCx
+         FPoMeLRczYgAC4WPLXVCIWCvzDVyci+byZeYupHWaXeKltE5JZFK40Fz75K61qOjjWrL
+         S5S8/isiN9xsg18NCrKtjK7NDZI/lig7xTGdIg1cdHoAa73Ce6/etr55NZmUjk+iU9X0
+         kpP9d/QHNqoWFk1NmWp27WgLZD3qR5YMrS4mpbs53QRjQFaXcaHd7HyuySSma83DLVEU
+         aTYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=7RElJ4AdSvAUR6FYwpxIcE6M0X0aJjnK9HjCuIeqpB4=;
+        b=swlgah9tmP9zPjpmdZQ7wftIgIVTmTcw/+0TT0NsMzKtdFffaYauuOwmukHFe3FeeL
+         uJ9kw9sJf7t2gX/5tEMM54mYMKhA57EmK92RMViGMlKUpaoyJ36DnaaOu8dYSzpq3yQt
+         O4O4mT9I2aEVUxZxuzlfcDnfVP/2vKw2I3OtTcGciSckE+/W9SjYUPPPNdzBQ92Rz57o
+         R3rYcDivhHpQDjX+bUGA1GzuS714OLS4awQXV/46+ac2jur98KlckbnRAk4xMf6wobHB
+         WgyiWQ1HfTSsxAMzI5rqlgarjmIibnxKsIqlO1OdC5Y+d0PicX2t/t+/HyeaPU3Db9V6
+         6j/A==
+X-Gm-Message-State: AOAM531176JPra7LrHKX7LBmUOyrfk4QHIzLLyLcAROUQkfCGCVvJY2U
+        A7dPfTDeLcpYQkls8NQGbNZfRl91zZs=
+X-Google-Smtp-Source: ABdhPJx9gfhTtq2G/GJI6saORiegJO9pLjFPWW8J6rqCPdhH2cE36VW4BcE7J/SsfG31C/OR7MiCtQ==
+X-Received: by 2002:a05:600c:2f08:: with SMTP id r8mr19851337wmn.95.1616913299379;
+        Sat, 27 Mar 2021 23:34:59 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id y205sm23354949wmc.18.2021.03.27.23.34.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 27 Mar 2021 23:34:59 -0700 (PDT)
+Message-Id: <pull.920.git.1616913298624.gitgitgadget@gmail.com>
+From:   "Chinmoy via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sun, 28 Mar 2021 06:34:58 +0000
+Subject: [PATCH] Documentation: amended usages of various (sub)commands
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: C27C8076-8F8E-11EB-9025-D152C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Chinmoy <chinmoy12c@gmail.com>,
+        Chinmoy Chakraborty <chinmoy12c@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+From: Chinmoy Chakraborty <chinmoy12c@gmail.com>
 
-> Refactor the wildcard we'll scan for "include" directives into a
-> single INCLUDE_TARGETS_TXT variable for readability, consistency.
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
-> ---
->  Documentation/Makefile | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
->
-> diff --git a/Documentation/Makefile b/Documentation/Makefile
-> index 0ba7564be93..7313956d73f 100644
-> --- a/Documentation/Makefile
-> +++ b/Documentation/Makefile
-> @@ -3,6 +3,7 @@ MAN1_TXT =3D
->  MAN5_TXT =3D
->  MAN7_TXT =3D
->  HOWTO_TXT =3D
-> +INCLUDE_TARGETS_TXT =3D
->  TECH_DOCS =3D
->  ARTICLES =3D
->  SP_ARTICLES =3D
-> @@ -45,6 +46,9 @@ MAN7_TXT +=3D gitworkflows.txt
-> =20
->  HOWTO_TXT +=3D $(wildcard howto/*.txt)
-> =20
-> +INCLUDE_TARGETS_TXT +=3D $(wildcard *.txt)
-> +INCLUDE_TARGETS_TXT +=3D $(wildcard config/*.txt)
-> +
->  ifdef MAN_FILTER
->  MAN_TXT =3D $(filter $(MAN_FILTER),$(MAN1_TXT) $(MAN5_TXT) $(MAN7_TXT)=
-)
->  else
-> @@ -287,7 +291,7 @@ docdep_prereqs =3D \
->  	mergetools-list.made $(mergetools_txt) \
->  	cmd-list.made $(cmds_txt)
-> =20
-> -doc.dep : $(docdep_prereqs) $(wildcard *.txt) $(wildcard config/*.txt)=
- build-docdep.perl
-> +doc.dep : $(docdep_prereqs) $(INCLUDE_TARGETS_TXT) build-docdep.perl
->  	$(QUIET_GEN)$(RM) $@+ $@ && \
->  	$(PERL_PATH) ./build-docdep.perl >$@+ $(QUIET_STDERR) && \
->  	mv $@+ $@
+The Git suite option parsing API's Technical Documentation suggests this
+about the option descriptions of a (sub)command:
 
-While this may not break anything per-se, I find the name of the new
-macro not quite intuitive.
+`description` is a short string to describe the effect of the option.
+It shall begin with a lower-case letter and a full stop (.) shall be
+omitted at the end.
 
-The build-docdep script opens $(wildcard *.txt) itself (without
-getting them fed from Makefile) to find what other files are used
-via "include::", and then it recursively scans more files that are
-used via "include::" to build dependencies.  Makefile assumes the
-"include::" chain would pull in $(wildcard config/*.txt) files, but
-this assumption may not prevent other *.txt files from getting
-pulled in (not a new problem introduced by this patch).
+Various (sub)commands' option arrays don't follow the guideline provided
+by the parse_options Documentation regarding the descriptions.
 
-I am not sure what these *.txt files involved in the process should
-be called, but "include targets" sounds something else.  Na=C3=AFvely, I
-would say "we rebuild documentation dependency any time any source
-text file changes", so if this were called "ALL_TXT" or something
-like that, I wouldn't have such a reaction.
+Signed-off-by: Chinmoy Chakraborty <chinmoy12c@gmail.com>
+---
+    Documentation: amended usages of various (sub)commands
+    
+    The Git suite option parsing API's Technical Documentation suggests this
+    about the option descriptions of a (sub)command:
+    
+    description is a short string to describe the effect of the option. It
+    shall begin with a lower-case letter and a full stop (.) shall be
+    omitted at the end.
+    
+    Various (sub)commands' option arrays don't follow the guideline provided
+    by the parse_options Documentation regarding the descriptions.
+    
+    Signed-off-by: Chinmoy Chakraborty chinmoy12c@gmail.com
 
-Thanks.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-920%2Fchinmoy12c%2Fissue_636-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-920/chinmoy12c/issue_636-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/920
 
+ builtin/column.c     | 8 ++++----
+ builtin/range-diff.c | 2 +-
+ 2 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/builtin/column.c b/builtin/column.c
+index e815e148aa18..40d4b3bee2dd 100644
+--- a/builtin/column.c
++++ b/builtin/column.c
+@@ -27,10 +27,10 @@ int cmd_column(int argc, const char **argv, const char *prefix)
+ 		OPT_STRING(0, "command", &real_command, N_("name"), N_("lookup config vars")),
+ 		OPT_COLUMN(0, "mode", &colopts, N_("layout to use")),
+ 		OPT_INTEGER(0, "raw-mode", &colopts, N_("layout to use")),
+-		OPT_INTEGER(0, "width", &copts.width, N_("Maximum width")),
+-		OPT_STRING(0, "indent", &copts.indent, N_("string"), N_("Padding space on left border")),
+-		OPT_INTEGER(0, "nl", &copts.nl, N_("Padding space on right border")),
+-		OPT_INTEGER(0, "padding", &copts.padding, N_("Padding space between columns")),
++		OPT_INTEGER(0, "width", &copts.width, N_("maximum width")),
++		OPT_STRING(0, "indent", &copts.indent, N_("string"), N_("padding space on left border")),
++		OPT_INTEGER(0, "nl", &copts.nl, N_("padding space on right border")),
++		OPT_INTEGER(0, "padding", &copts.padding, N_("padding space between columns")),
+ 		OPT_END()
+ 	};
+ 
+diff --git a/builtin/range-diff.c b/builtin/range-diff.c
+index 78bc9fa77062..50318849d657 100644
+--- a/builtin/range-diff.c
++++ b/builtin/range-diff.c
+@@ -25,7 +25,7 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
+ 	struct option range_diff_options[] = {
+ 		OPT_INTEGER(0, "creation-factor",
+ 			    &range_diff_opts.creation_factor,
+-			    N_("Percentage by which creation is weighted")),
++			    N_("percentage by which creation is weighted")),
+ 		OPT_BOOL(0, "no-dual-color", &simple_color,
+ 			    N_("use simple diff colors")),
+ 		OPT_PASSTHRU_ARGV(0, "notes", &other_arg,
+
+base-commit: 84d06cdc06389ae7c462434cb7b1db0980f63860
+-- 
+gitgitgadget
