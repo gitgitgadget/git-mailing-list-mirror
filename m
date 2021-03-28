@@ -2,104 +2,162 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 84644C433C1
-	for <git@archiver.kernel.org>; Sun, 28 Mar 2021 09:28:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A83DC433C1
+	for <git@archiver.kernel.org>; Sun, 28 Mar 2021 10:17:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5752E6196E
-	for <git@archiver.kernel.org>; Sun, 28 Mar 2021 09:28:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 524856196C
+	for <git@archiver.kernel.org>; Sun, 28 Mar 2021 10:17:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231256AbhC1J1j (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 28 Mar 2021 05:27:39 -0400
-Received: from cloud.peff.net ([104.130.231.41]:34626 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230233AbhC1J1R (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 Mar 2021 05:27:17 -0400
-Received: (qmail 2454 invoked by uid 109); 28 Mar 2021 09:26:40 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 28 Mar 2021 09:26:40 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2492 invoked by uid 111); 28 Mar 2021 09:27:16 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 28 Mar 2021 05:27:16 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Sun, 28 Mar 2021 05:27:15 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Elijah Newren <newren@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2 00/10] improve reporting of unexpected objects
-Message-ID: <YGBL88lYheyFmwCg@coredump.intra.peff.net>
-References: <20210308200426.21824-1-avarab@gmail.com>
- <cover-00.11-00000000000-20210328T021238Z-avarab@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+        id S231137AbhC1KQj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 28 Mar 2021 06:16:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47676 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229503AbhC1KQ1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 Mar 2021 06:16:27 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E761C061762
+        for <git@vger.kernel.org>; Sun, 28 Mar 2021 03:16:26 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id d191so5121055wmd.2
+        for <git@vger.kernel.org>; Sun, 28 Mar 2021 03:16:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=EssuilH+zUMe0VyEIVnUWERlDaZ2QkcokXyO95KJ2Vk=;
+        b=AP/X2+GT7sO3cn8lrw7ffxldUJCJVguousrcPXkzfkzv/WQQHZwiXtx8ZK6qwp7DzE
+         p8JB7qjWJ1BRqZVt8R28EXJbE4h5eyWltJuF91KiInBW4wWfIZS+aOvIqi3EjLt1BaYu
+         OPmwOM2AEhn44WrzL2uSz3FuA4a2tYmXHQIKKryxIt3xZNkEwqoW27nvGEnqy7vslYD0
+         7ZAy5ADmcEaMUlQqvD/i5FdiKG8zvgwh3lOe7p5uL2xJ005UdrrYcHyoDLecrZWBhcfh
+         4yFI5LLTWbiA5KewCewzCyUfC/CGSH9JMngQVLwPb4uM3xEY4xtNp5PfE6JGDWqFIF9b
+         H5/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=EssuilH+zUMe0VyEIVnUWERlDaZ2QkcokXyO95KJ2Vk=;
+        b=NxJX/7jDIec8CpYU0J5IPrbv9MTx0uQQ4tfRj4Oi1+C5egH3qr+vQULmjQxV5EFrJ0
+         MI12aIEBzQ7sDqMqL0RS/lUeWwXj2SMsSjgeH1AGhucwbtyE9JjsxKbrj7PgCj8O4IqE
+         RMo9jivIvsHc16pH8+RyXWNxz2U/gSXA2RQ1auGUECoML9gQ7n9VH0xOxz72FuwGfeSl
+         7B4hqpMuuz/kz+hEiO1Ay8UDKH9uhviSuADJWaV2J2tCYwkTl9GB4BsBGhNowo3+PnV+
+         Mkj4MMA3P34ewqP3Ec4rIIdbVyInChv33UeodFYwS9vIZDeVN5mp99dbfFS7NDOHnwN1
+         YAwQ==
+X-Gm-Message-State: AOAM531/dRS5Vlg3V24wkrap7LmEPf+fquCV1qDiRJDzjBfJ+cfj/8rw
+        JjBghpT7bjH9+yeORhotkZyYqpoI/3w=
+X-Google-Smtp-Source: ABdhPJzNW/bUiK99/khvVBiJDtcIokbNowECVuLxBdP8608FvbsBq2YdunvkKCGSXTxkR/qLXjdMyg==
+X-Received: by 2002:a05:600c:3796:: with SMTP id o22mr12659552wmr.139.1616926583836;
+        Sun, 28 Mar 2021 03:16:23 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id j14sm22744144wrw.69.2021.03.28.03.16.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 28 Mar 2021 03:16:23 -0700 (PDT)
+Message-Id: <pull.920.v2.git.1616926582735.gitgitgadget@gmail.com>
+In-Reply-To: <pull.920.git.1616913298624.gitgitgadget@gmail.com>
+References: <pull.920.git.1616913298624.gitgitgadget@gmail.com>
+From:   "Chinmoy via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sun, 28 Mar 2021 10:16:22 +0000
+Subject: [PATCH v2] Documentation: make (sub)command options conform to TD of
+ option parsing
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <cover-00.11-00000000000-20210328T021238Z-avarab@gmail.com>
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
+        Chinmoy <chinmoy12c@gmail.com>,
+        Chinmoy Chakraborty <chinmoy12c@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Mar 28, 2021 at 04:13:30AM +0200, Ævar Arnfjörð Bjarmason wrote:
+From: Chinmoy Chakraborty <chinmoy12c@gmail.com>
 
-> Ævar Arnfjörð Bjarmason (10):
->   object.c: stop supporting len == -1 in type_from_string_gently()
->   object.c: refactor type_from_string_gently()
->   object.c: make type_from_string() return "enum object_type"
->   object-file.c: make oid_object_info() return "enum object_type"
->   object-name.c: make dependency on object_type order more obvious
->   tree.c: fix misindentation in parse_tree_gently()
->   object.c: add a utility function for "expected type X, got Y"
->   object.c: add and use oid_is_type_or_die_msg() function
->   object tests: add test for unexpected objects in tags
->   tag: don't misreport type of tagged objects in errors
+The Git suite option parsing API's Technical Documentation suggests this
+about the option descriptions of a (sub)command:
 
-I'm somewhat skeptical of the final patch, given my comments (just now)
-in:
+`description` is a short string to describe the effect of the option.
+It shall begin with a lower-case letter and a full stop (.) shall be
+omitted at the end.
 
-  https://lore.kernel.org/git/YGBHH7sAVsPpVKWd@coredump.intra.peff.net/
+Various (sub)commands' option arrays don't follow the guideline provided
+by the parse_options Documentation regarding the descriptions.
 
-I'll quote them here:
+Signed-off-by: Chinmoy Chakraborty <chinmoy12c@gmail.com>
+---
+    Documentation: make (sub)command options conform to TD of option parsing
+    
+    The Git suite option parsing API's Technical Documentation suggests this
+    about the option descriptions of a (sub)command:
+    
+    description is a short string to describe the effect of the option. It
+    shall begin with a lower-case letter and a full stop (.) shall be
+    omitted at the end.
+    
+    Various (sub)commands' option arrays don't follow the guideline provided
+    by the parse_options Documentation regarding the descriptions.
+    
+    Signed-off-by: Chinmoy Chakraborty chinmoy12c@gmail.com
 
-> Because when we call, say, lookup_blob() and find that the object is
-> already in memory as a non-blob, we don't know who the culprit is.
-> Perhaps an earlier part of the code called parse_object(), found that it
-> really is a blob on disk, and used that type. But it may equally have
-> been the case that we saw a reference to the object as a commit, called
-> lookup_commit() on it, and now our lookup_blob() call is unhappy,
-> thinking it is really a commit. In that case, one of those references is
-> wrong, but we don't know which.
->
-> I think a robust solution would be one of:
->
->   - make the message more precise: "saw object X as a commit, but
->     previously it was referred to as a blob". Or vice versa.
->
->   - when we see such a mismatch, go to the object database to say "aha,
->     on disk it is really a blob". That's expensive, but this is an error
->     case, so we can afford to be slow. But it does produce unsatisfying
->     results when it was the earlier lookup_commit() call that was wrong.
->     Because we have to say "object X is really a blob, but some object
->     earlier referred to it as a commit. No idea who did that, though!".
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-920%2Fchinmoy12c%2Fissue_636-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-920/chinmoy12c/issue_636-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/920
 
-Looking at the final patch, I think you side-step the issue to some
-degree because it is only touching the parse_object() code paths, where
-we really have looked at the bytes in the object database. So it
-basically is doing the second thing above (which is "free" because we
-were accessing the odb anyway).
+Range-diff vs v1:
 
-But I think it still has the "oops, somebody made a wrong reference much
-earlier" problem. The actual bug is in some other object entirely, whose
-identity is long forgotten. I think we would be much better off to say
-something like "somebody expected X to be a commit, but now somebody
-else expects it to be a blob", which is all that we can reliably say.
-And the next step really ought to be running "git fsck" to figure out
-what is going on (and we should perhaps even say so via advise()).
+ 1:  817b25caa931 ! 1:  b032c2fa5b28 Documentation: amended usages of various (sub)commands
+     @@ Metadata
+      Author: Chinmoy Chakraborty <chinmoy12c@gmail.com>
+      
+       ## Commit message ##
+     -    Documentation: amended usages of various (sub)commands
+     +    Documentation: make (sub)command options conform to TD of option parsing
+      
+          The Git suite option parsing API's Technical Documentation suggests this
+          about the option descriptions of a (sub)command:
 
--Peff
+
+ builtin/column.c     | 8 ++++----
+ builtin/range-diff.c | 2 +-
+ 2 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/builtin/column.c b/builtin/column.c
+index e815e148aa18..40d4b3bee2dd 100644
+--- a/builtin/column.c
++++ b/builtin/column.c
+@@ -27,10 +27,10 @@ int cmd_column(int argc, const char **argv, const char *prefix)
+ 		OPT_STRING(0, "command", &real_command, N_("name"), N_("lookup config vars")),
+ 		OPT_COLUMN(0, "mode", &colopts, N_("layout to use")),
+ 		OPT_INTEGER(0, "raw-mode", &colopts, N_("layout to use")),
+-		OPT_INTEGER(0, "width", &copts.width, N_("Maximum width")),
+-		OPT_STRING(0, "indent", &copts.indent, N_("string"), N_("Padding space on left border")),
+-		OPT_INTEGER(0, "nl", &copts.nl, N_("Padding space on right border")),
+-		OPT_INTEGER(0, "padding", &copts.padding, N_("Padding space between columns")),
++		OPT_INTEGER(0, "width", &copts.width, N_("maximum width")),
++		OPT_STRING(0, "indent", &copts.indent, N_("string"), N_("padding space on left border")),
++		OPT_INTEGER(0, "nl", &copts.nl, N_("padding space on right border")),
++		OPT_INTEGER(0, "padding", &copts.padding, N_("padding space between columns")),
+ 		OPT_END()
+ 	};
+ 
+diff --git a/builtin/range-diff.c b/builtin/range-diff.c
+index 78bc9fa77062..50318849d657 100644
+--- a/builtin/range-diff.c
++++ b/builtin/range-diff.c
+@@ -25,7 +25,7 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
+ 	struct option range_diff_options[] = {
+ 		OPT_INTEGER(0, "creation-factor",
+ 			    &range_diff_opts.creation_factor,
+-			    N_("Percentage by which creation is weighted")),
++			    N_("percentage by which creation is weighted")),
+ 		OPT_BOOL(0, "no-dual-color", &simple_color,
+ 			    N_("use simple diff colors")),
+ 		OPT_PASSTHRU_ARGV(0, "notes", &other_arg,
+
+base-commit: 84d06cdc06389ae7c462434cb7b1db0980f63860
+-- 
+gitgitgadget
