@@ -6,113 +6,126 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 61E06C433C1
-	for <git@archiver.kernel.org>; Sun, 28 Mar 2021 18:07:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EB2F9C433DB
+	for <git@archiver.kernel.org>; Sun, 28 Mar 2021 18:26:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 37B5C6197C
-	for <git@archiver.kernel.org>; Sun, 28 Mar 2021 18:07:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B6E6E61972
+	for <git@archiver.kernel.org>; Sun, 28 Mar 2021 18:26:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231247AbhC1SGz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 28 Mar 2021 14:06:55 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:65312 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229593AbhC1SGT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 Mar 2021 14:06:19 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D190EBCD50;
-        Sun, 28 Mar 2021 14:06:18 -0400 (EDT)
+        id S231149AbhC1SZ0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 28 Mar 2021 14:25:26 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:62800 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229593AbhC1SZK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 Mar 2021 14:25:10 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 062071278EE;
+        Sun, 28 Mar 2021 14:25:10 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=dcjA+lHhI/DhqdzTOHDVMn714vE=; b=IQVRAw
-        iKieBQIpcO73SjXyPyJSYSaMvxhlno3XsJMyGmd3LXATDqlvty8LDQl2yedfNJmf
-        EVdKnOO7hf2YZG0SRbJjrulYWZi5+0Z+xHGjn23aZVUjN68V48E1BB9LDMcSE53h
-        P/gAq1Z5uoIDXbksq84Ar9xcKzA7T1NWaWgdw=
+        :content-type:content-transfer-encoding; s=sasl; bh=1n/jCBjlv1uQ
+        4grjq0pS29Nn2dg=; b=F5hyF/5ElwrEt05zKXvy43RBzwq0dM5hwJbDTpk5ZkTo
+        zNppG+uFm1MrB0h5zM6y1NuiMxvexl2OUGFIoD5xpWwVyLYTj1nwjdVOlQXPfyJ0
+        g2E+Gw2k1RkFsfhXYNicyBq9KUKKsVw4uK5RZJAIFk2lrhmYbX9Y3MBuIc6AZfk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=rgMn3sgq3F7kdAo7tvwkGauVxsBElpKY
-        IE9TQwFX0qgU9BiZJ4xNk7b4V9Ldwgbx5QkojPvpbb/vpa9tzYAi+A4Ml9q2vddZ
-        sRGDCozGdvnE/329EehfoEy99hAUsCUtfUh3WZwhyFvMkt1zUugLYBQY17S9HE8z
-        6K6qh+mUWCM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C8F86BCD46;
-        Sun, 28 Mar 2021 14:06:18 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=uS0fwF
+        A+t7Wuc7Pmh45WJknMZgc2x+Hfq3hGVdNmdk4F8KrzOyfadSJCchnrPr6VgOMcVO
+        gnwsND+JiGCFbGQQChZBowxo4hGniwGe2q0obZM8sodgiTmxuH4wRF8gPVSCf2S9
+        E06ldVb6x7K7NfZuTcT0iUK8v+sORbXcU8wpc=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id F01651278ED;
+        Sun, 28 Mar 2021 14:25:09 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 59707BCD45;
-        Sun, 28 Mar 2021 14:06:18 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 392571278EC;
+        Sun, 28 Mar 2021 14:25:07 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Atharva Raykar <raykar.ath@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [GSOC][PATCH] userdiff: add support for Scheme
-References: <20210327173938.59391-1-raykar.ath@gmail.com>
-        <xmqq5z1cqki7.fsf@gitster.g>
-        <EBC020E6-BE8B-4332-8225-A988CB7CFA69@gmail.com>
-Date:   Sun, 28 Mar 2021 11:06:17 -0700
-In-Reply-To: <EBC020E6-BE8B-4332-8225-A988CB7CFA69@gmail.com> (Atharva
-        Raykar's message of "Sun, 28 Mar 2021 17:21:16 +0530")
-Message-ID: <xmqqft0fm9uu.fsf@gitster.g>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Taylor Blau <me@ttaylorr.com>,
+        Elijah Newren <newren@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 01/10] object.c: stop supporting len == -1 in
+ type_from_string_gently()
+References: <20210308200426.21824-1-avarab@gmail.com>
+        <cover-00.11-00000000000-20210328T021238Z-avarab@gmail.com>
+        <patch-01.11-e51c860a65d-20210328T021238Z-avarab@gmail.com>
+        <xmqqy2e7on7d.fsf@gitster.g> <87zgynmgbk.fsf@evledraar.gmail.com>
+Date:   Sun, 28 Mar 2021 11:25:05 -0700
+In-Reply-To: <87zgynmgbk.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Sun, 28 Mar 2021 17:46:39 +0200")
+Message-ID: <xmqq8s67m8zi.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4B564466-8FF0-11EB-A995-D152C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: EC321430-8FF2-11EB-B2C8-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Atharva Raykar <raykar.ath@gmail.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
->>> +         "(\\.|[^][)(\\}\\{ ])+"),
->> 
->> One or more "dot or anything other than SP or parentheses"?  But
->> a dot "." is neither a space or any {bra-ce} letter, so would the
->> above be equivalent to
->> 
->> 	"[^][()\\{\\} \t]+"
->> 
->> I wonder...
+>> At least, replacing an already queued topic with v2 would not
+>> increase the number of topics that are supposedly in-flight but not
+>> quite moving due to lack of reviews and responses, unlike bunch of
+>> totally new patches ;-)
 >
-> A backslash is allowed in scheme identifiers, and I erroneously thought that
-> the first part handles the case for identifiers such as `component\new` or 
-> `\"id-with-quotes\"`. (I tested it with a regex engine that behaves differently
-> than the one git is using, my bad.)
-
-Ah, perhaps you didn't have enough backslashes.  A half of the
-doubled one before the dot is eaten by the C compiler, so the regexp
-engine is seeing only a single backslash before the dot, which means
-"literally a single dot".  If you meant "literally a single
-backslash, followed by any single char", you probably would write 4
-backslashes and a dot---half of the backslashes would be eaten by
-the compiler, so you'd be passing two backslashes and a dot, which
-is probably what you meant.
-
-Having said that, two further points.
-
- - the "anything but whitespaces and various forms of parentheses"
-   set would include backslash, so 'component\new' would be taken as
-   a single word with "[^][()\\{\\} \t]+", wouldn't it?
-
- - how common is the use of backslashes in identifiers?  I am trying
-   to see if the additional complexity needed to support them is
-   worth the benefit.
-
-> But somehow, the regexp you suggested, ie:
+> I'm not sure what to do to improve things in that area.
 >
-> 	"[^][()\\{\\} \t]+"
+> I'm obviously for increasing the net velocity of my patches making it t=
+o
+> master, but if it's held up my number of reviews a submission of Y won'=
+t
+> necessarily make X worse, since people who've got an interest in Y will
+> be different than those with an interest in X.
 >
-> does not handle the case of make\foo -> make\bar (it will only diff on foo).
-> I am not too sure why it treats backslashes as delimiters.
+> But some of it's definitely on my end, e.g. re-rolls sometimes taking m=
+e
+> longer than I'd prefer. It's a different activity to dissect outstandin=
+g
+> reviews & re-roll than writing code, and sometimes I'm interested in on=
+e
+> over the other...
 
-Perhaps because you have included two backslashes inside [] to say
-"backslash is not a word character" in the original, and I blindly
-copied that?  IOW, do you need to quote {} inside []?
+What I'd like to encourage contributors to think is the velocity in
+the whole project, not only their own patches.  The changes proposed
+on the list would consume the review bandwidth, which is
+unfortunately not an infinite resource.
 
-> Yes, this is exactly what I was trying to express. All words should be
-> delimited by either whitespace or a parenthesis, and all other special
-> characters should be accepted as part of the word.
+To balance the supply and the consumption, one way might be to
+throttle incoming patches to restrict consumption and distribute the
+supply more evenly among authors.  But a more desirable way that
+would benefit the community more would be to increase the supply.
 
-That sentence after "All words should be..." would be a good comment
-to replace what you wrote in the original, then ;-).
+If all of those who consume the review bandwidth tip in by reviewing
+others' patches, not limited to the area they are interested in but
+more in the "I am not so familiar with the area, but I've been here
+long enough and know general principles, so let's polish your patch
+together" spirit, that would help the community greatly, I would
+think, by:
+
+ - replenishing review bandwidth they consumed from the pool;
+
+ - throttling their patch flow that consume review bandwidth (while
+   they are reviewing others patches, they won't be throwing new
+   patches at the list to consume even more review bandwidth);
+
+ - helping the reviewers themselves become more familiar with the
+   parts of the code they are not working in right now.
+
+I am reasonably sure I and a few others on the list are net
+suppliers of the reviewer bandwidth.  I do not expect all the
+prolific contributors to become net suppliers; after all, designing
+and writing their own stuff is always fun.  But I wish that the most
+prominent contributors in the community to be reviewing others'
+topics and ushering these topics to completion from time to time,
+and I am hoping to see that happen more.
+
+Thanks.
