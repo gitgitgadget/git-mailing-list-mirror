@@ -2,144 +2,150 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 78502C433C1
-	for <git@archiver.kernel.org>; Sun, 28 Mar 2021 06:35:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D3AF5C433C1
+	for <git@archiver.kernel.org>; Sun, 28 Mar 2021 06:39:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4BABF61924
-	for <git@archiver.kernel.org>; Sun, 28 Mar 2021 06:35:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 99A7B61971
+	for <git@archiver.kernel.org>; Sun, 28 Mar 2021 06:39:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229489AbhC1GfF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 28 Mar 2021 02:35:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57062 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229538AbhC1GfB (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 Mar 2021 02:35:01 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86EB2C061762
-        for <git@vger.kernel.org>; Sat, 27 Mar 2021 23:35:00 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id d8-20020a1c1d080000b029010f15546281so6914639wmd.4
-        for <git@vger.kernel.org>; Sat, 27 Mar 2021 23:35:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=7RElJ4AdSvAUR6FYwpxIcE6M0X0aJjnK9HjCuIeqpB4=;
-        b=kK/GUc+/tNqZQdYw9515wvLTSwHWys0M99jkCuYUm3vTnGNfqYmsnlHAvIerxu5lu1
-         AUMB5YkTqMCZXOWwh0qUCjAd+jQvB5kxm/4De9mpdbZubh2+Mb/wVUr8vZxxJQrLhDCx
-         FPoMeLRczYgAC4WPLXVCIWCvzDVyci+byZeYupHWaXeKltE5JZFK40Fz75K61qOjjWrL
-         S5S8/isiN9xsg18NCrKtjK7NDZI/lig7xTGdIg1cdHoAa73Ce6/etr55NZmUjk+iU9X0
-         kpP9d/QHNqoWFk1NmWp27WgLZD3qR5YMrS4mpbs53QRjQFaXcaHd7HyuySSma83DLVEU
-         aTYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=7RElJ4AdSvAUR6FYwpxIcE6M0X0aJjnK9HjCuIeqpB4=;
-        b=swlgah9tmP9zPjpmdZQ7wftIgIVTmTcw/+0TT0NsMzKtdFffaYauuOwmukHFe3FeeL
-         uJ9kw9sJf7t2gX/5tEMM54mYMKhA57EmK92RMViGMlKUpaoyJ36DnaaOu8dYSzpq3yQt
-         O4O4mT9I2aEVUxZxuzlfcDnfVP/2vKw2I3OtTcGciSckE+/W9SjYUPPPNdzBQ92Rz57o
-         R3rYcDivhHpQDjX+bUGA1GzuS714OLS4awQXV/46+ac2jur98KlckbnRAk4xMf6wobHB
-         WgyiWQ1HfTSsxAMzI5rqlgarjmIibnxKsIqlO1OdC5Y+d0PicX2t/t+/HyeaPU3Db9V6
-         6j/A==
-X-Gm-Message-State: AOAM531176JPra7LrHKX7LBmUOyrfk4QHIzLLyLcAROUQkfCGCVvJY2U
-        A7dPfTDeLcpYQkls8NQGbNZfRl91zZs=
-X-Google-Smtp-Source: ABdhPJx9gfhTtq2G/GJI6saORiegJO9pLjFPWW8J6rqCPdhH2cE36VW4BcE7J/SsfG31C/OR7MiCtQ==
-X-Received: by 2002:a05:600c:2f08:: with SMTP id r8mr19851337wmn.95.1616913299379;
-        Sat, 27 Mar 2021 23:34:59 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y205sm23354949wmc.18.2021.03.27.23.34.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 27 Mar 2021 23:34:59 -0700 (PDT)
-Message-Id: <pull.920.git.1616913298624.gitgitgadget@gmail.com>
-From:   "Chinmoy via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 28 Mar 2021 06:34:58 +0000
-Subject: [PATCH] Documentation: amended usages of various (sub)commands
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S229485AbhC1Gi4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 28 Mar 2021 02:38:56 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:64315 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229499AbhC1Gio (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 Mar 2021 02:38:44 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7F2C4123BFE;
+        Sun, 28 Mar 2021 02:38:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=mMDazou/AyAv
+        y9yEdaoWefH+7hk=; b=LRgDG8rAGYFKBIWhjpZRoI2rPh2sKTJ0E7C0NIMYqCem
+        FuGCPe5StcrQhi+2KRFcGbdLiRvo5a/qnvQXlWYCbayH6GXDztzxydPzEPQa8yBD
+        lO7CaHHZfH2JGBHtJcDuD2RB3T8uuOSOckuFmI6D34tohuBwcer4ktAGRAGgDTk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=qdX9i8
+        nFSECSdtqDHFTAFgAnh3owFAyyV78tJGf70pFNkisW9fCrUrDAY0c64H9CvZUpFv
+        MouRZkGKC+RcNs4TjYCJNiybk4g/JAQ54bwJt/WMrphohTjQ+QqqpkyaUNAbcC/I
+        HrLvwSNu37m5VI3nolrD/yvrAfAQTkkIgwfMM=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7812F123BFC;
+        Sun, 28 Mar 2021 02:38:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C050C123BFB;
+        Sun, 28 Mar 2021 02:38:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 4/5] doc lint: fix bugs in, simplify and improve lint
+ script
+References: <cover-0.6-00000000000-20210326T103454Z-avarab@gmail.com>
+        <patch-4.6-5c8e8f21495-20210326T103454Z-avarab@gmail.com>
+Date:   Sat, 27 Mar 2021 23:38:40 -0700
+In-Reply-To: <patch-4.6-5c8e8f21495-20210326T103454Z-avarab@gmail.com>
+ (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 26 Mar
+ 2021 11:36:49 +0100")
+Message-ID: <xmqqv99bn5ov.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Chinmoy <chinmoy12c@gmail.com>,
-        Chinmoy Chakraborty <chinmoy12c@gmail.com>
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 3C7FCE7C-8F90-11EB-85B9-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Chinmoy Chakraborty <chinmoy12c@gmail.com>
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-The Git suite option parsing API's Technical Documentation suggests this
-about the option descriptions of a (sub)command:
+>  - Was using File::Find to recursively find *.txt files in
+>    Documentation/, let's instead use the Makefile as a source of truth
+>    for *.txt files, and pass it down to the script.
 
-`description` is a short string to describe the effect of the option.
-It shall begin with a lower-case letter and a full stop (.) shall be
-omitted at the end.
+OK.
 
-Various (sub)commands' option arrays don't follow the guideline provided
-by the parse_options Documentation regarding the descriptions.
+>  - We now don't lint linkgit:* in RelNotes/* or technical/*, which we
+>    shouldn't have been doing in the first place anyway.
 
-Signed-off-by: Chinmoy Chakraborty <chinmoy12c@gmail.com>
----
-    Documentation: amended usages of various (sub)commands
-    
-    The Git suite option parsing API's Technical Documentation suggests this
-    about the option descriptions of a (sub)command:
-    
-    description is a short string to describe the effect of the option. It
-    shall begin with a lower-case letter and a full stop (.) shall be
-    omitted at the end.
-    
-    Various (sub)commands' option arrays don't follow the guideline provided
-    by the parse_options Documentation regarding the descriptions.
-    
-    Signed-off-by: Chinmoy Chakraborty chinmoy12c@gmail.com
+I understand RelNotes (which I consider is plain text file), but are
+technical/* documentation forbidden from referring to our manual
+pages for the commands they talk about?
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-920%2Fchinmoy12c%2Fissue_636-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-920/chinmoy12c/issue_636-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/920
+>  - When the doc-diff script was added in beb188e22a (add a script to
+>    diff rendered documentation, 2018-08-06) we started sometimes having
+>    a "git worktree" under "documentation". This tree contains a full
+>    checkout of git.git, as a result the "lint" script would recurse int=
+o
+>    that, and lint any *.txt file found in that entire repository.
 
- builtin/column.c     | 8 ++++----
- builtin/range-diff.c | 2 +-
- 2 files changed, 5 insertions(+), 5 deletions(-)
+Ouch.
 
-diff --git a/builtin/column.c b/builtin/column.c
-index e815e148aa18..40d4b3bee2dd 100644
---- a/builtin/column.c
-+++ b/builtin/column.c
-@@ -27,10 +27,10 @@ int cmd_column(int argc, const char **argv, const char *prefix)
- 		OPT_STRING(0, "command", &real_command, N_("name"), N_("lookup config vars")),
- 		OPT_COLUMN(0, "mode", &colopts, N_("layout to use")),
- 		OPT_INTEGER(0, "raw-mode", &colopts, N_("layout to use")),
--		OPT_INTEGER(0, "width", &copts.width, N_("Maximum width")),
--		OPT_STRING(0, "indent", &copts.indent, N_("string"), N_("Padding space on left border")),
--		OPT_INTEGER(0, "nl", &copts.nl, N_("Padding space on right border")),
--		OPT_INTEGER(0, "padding", &copts.padding, N_("Padding space between columns")),
-+		OPT_INTEGER(0, "width", &copts.width, N_("maximum width")),
-+		OPT_STRING(0, "indent", &copts.indent, N_("string"), N_("padding space on left border")),
-+		OPT_INTEGER(0, "nl", &copts.nl, N_("padding space on right border")),
-+		OPT_INTEGER(0, "padding", &copts.padding, N_("padding space between columns")),
- 		OPT_END()
- 	};
- 
-diff --git a/builtin/range-diff.c b/builtin/range-diff.c
-index 78bc9fa77062..50318849d657 100644
---- a/builtin/range-diff.c
-+++ b/builtin/range-diff.c
-@@ -25,7 +25,7 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
- 	struct option range_diff_options[] = {
- 		OPT_INTEGER(0, "creation-factor",
- 			    &range_diff_opts.creation_factor,
--			    N_("Percentage by which creation is weighted")),
-+			    N_("percentage by which creation is weighted")),
- 		OPT_BOOL(0, "no-dual-color", &simple_color,
- 			    N_("use simple diff colors")),
- 		OPT_PASSTHRU_ARGV(0, "notes", &other_arg,
+>    In practice the only in-tree "linkgit" outside of the
+>    Documentation/ tree is contrib/contacts/git-contacts.txt and
+>    contrib/subtree/git-subtree.txt, so this wouldn't emit any errors
 
-base-commit: 84d06cdc06389ae7c462434cb7b1db0980f63860
--- 
-gitgitgadget
+Hmm, the nested copy of git has Documentation/ subdirectory of its
+own, and we do not want to scan it, I think.
+
+That is a problem worth fixing.  Thanks for noticing it.
+
+> Now we instead simply trust the Makefile to give us *.txt files, and
+> since the Makefile also knows what sections each page should be in we
+> don't have to open the files ourselves and try to parse that out. As a
+> bonus this will also catch bugs with the section line in the file
+> being incorrect.
+
+OK.
+
+> diff --git a/Documentation/Makefile b/Documentation/Makefile
+> index 7313956d73f..6bfd8c75772 100644
+> --- a/Documentation/Makefile
+> +++ b/Documentation/Makefile
+> @@ -4,6 +4,7 @@ MAN5_TXT =3D
+>  MAN7_TXT =3D
+>  HOWTO_TXT =3D
+>  INCLUDE_TARGETS_TXT =3D
+> +ALL_TXT =3D
+>  TECH_DOCS =3D
+>  ARTICLES =3D
+>  SP_ARTICLES =3D
+> @@ -49,6 +50,13 @@ HOWTO_TXT +=3D $(wildcard howto/*.txt)
+>  INCLUDE_TARGETS_TXT +=3D $(wildcard *.txt)
+>  INCLUDE_TARGETS_TXT +=3D $(wildcard config/*.txt)
+> =20
+> +# For linting
+> +ALL_TXT +=3D $(MAN1_TXT)
+> +ALL_TXT +=3D $(MAN5_TXT)
+> +ALL_TXT +=3D $(MAN7_TXT)
+> +ALL_TXT +=3D $(HOWTO_TXT)
+> +ALL_TXT +=3D $(INCLUDE_TARGETS_TXT)
+
+The "INCLUDE_TARGETS_TXT" looks more and more like "all txt
+sources", which is a superset of MAN1_TXT and its friends.
+
+Listing all of them in ALL_TXT duplicated feels somewhat iffy.
+
+>  ifdef MAN_FILTER
+>  MAN_TXT =3D $(filter $(MAN_FILTER),$(MAN1_TXT) $(MAN5_TXT) $(MAN7_TXT)=
+)
+>  else
+> @@ -477,7 +485,11 @@ print-man1:
+>  	@for i in $(MAN1_TXT); do echo $$i; done
+> =20
+>  lint-docs::
+> -	$(QUIET_LINT)$(PERL_PATH) lint-gitlink.perl
+> +	$(QUIET_LINT)$(PERL_PATH) lint-gitlink.perl \
+> +		--section=3D1 $(MAN1_TXT) \
+> +		--section=3D5 $(MAN5_TXT) \
+> +		--section=3D7 $(MAN7_TXT)	\
+> +		--to-lint $(ALL_TXT)
