@@ -2,64 +2,63 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 55977C433C1
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D31BC433DB
 	for <git@archiver.kernel.org>; Sun, 28 Mar 2021 06:17:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 24293619AA
-	for <git@archiver.kernel.org>; Sun, 28 Mar 2021 06:17:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E93F46198F
+	for <git@archiver.kernel.org>; Sun, 28 Mar 2021 06:17:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229499AbhC1GOL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 28 Mar 2021 02:14:11 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:61639 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229503AbhC1GOG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 Mar 2021 02:14:06 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id D0B69123AD8;
-        Sun, 28 Mar 2021 02:14:05 -0400 (EDT)
+        id S230517AbhC1F5D (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 28 Mar 2021 01:57:03 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:61903 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229538AbhC1F4d (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 Mar 2021 01:56:33 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id B04F1117285;
+        Sun, 28 Mar 2021 01:56:32 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=ozXmf3J1BRj/
-        BT3/X4DgtFjiA7s=; b=weB1596HdsbGaKjTtX1nq4k1IsVfQOTB6Kn/L4g7aLoX
-        P2cH8HAH/MYetivE/VlAGkhNFNNZUQkqsWjGi1/iR9XeFbI26sazi8Grw4NeHs1K
-        +bSa6cmc9z62uZY2c6B3Km63rdRGsEwGP9NWu6mQ6BBiLBpRRanOgfnrjjWSvws=
+        :content-type:content-transfer-encoding; s=sasl; bh=mhowdm8k+6YW
+        tW6f5oXN7rdrr10=; b=Jwa7h/VG76ocsStYollz9+i6I+oZ7pJDk8MtQQ5qZJsz
+        iXOnoHQBoXfcGzUGungulwGcpRQDZe5JV0wXCGd70r4sxzNh6oiQeALyWoFEd7fo
+        ET372O+hIklX2NLotWt+9zO5el9vUAXY9R90C2jhZGPgLpfXdZYDdzirMwRydow=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=HtqyDk
-        hwpI4hXvZPmpRyoS+I3n+4FjgDQ4Q3EhSUazHzYraIL73C4NqRDFqE8bZNhsvgZz
-        XQkwdKZxwTmC14su6iLiO6pvU1Qq+NNkWQXwr4TW59Pq8Ay1PO9xA8Jj5QIwxABw
-        S+8cvJrUAMxjBCkdZcWmWRxSh27h01T9UrA4k=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id CA0FE123AD5;
-        Sun, 28 Mar 2021 02:14:05 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=oJsVzO
+        AvuDQ7kP1jvDRfY2Bjfrv3QnNfoqA+9db87xuIMtAu4Glv+8gfY83NvWNWEjWWQ+
+        jZJETcutRLspjCk/iI2H6CGSHrPJANK3ahtKlEhER5y4r87fNkVUKxz1UxF3E1Uy
+        b9zi2cFBAPwmxTxhjr0a4aLcDuuxRzGABjGfM=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9C559117284;
+        Sun, 28 Mar 2021 01:56:32 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 1F1ED123AC9;
-        Sun, 28 Mar 2021 02:14:03 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D884B11727A;
+        Sun, 28 Mar 2021 01:56:29 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/5] Documentation/Makefile: make $(wildcard
- howto/*.txt) a var
-References: <cover-0.6-00000000000-20210326T103454Z-avarab@gmail.com>
-        <patch-1.6-a5ec5fe4bdb-20210326T103454Z-avarab@gmail.com>
-Date:   Sat, 27 Mar 2021 23:14:01 -0700
-In-Reply-To: <patch-1.6-a5ec5fe4bdb-20210326T103454Z-avarab@gmail.com>
- (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 26 Mar
- 2021 11:36:46 +0100")
-Message-ID: <xmqqczvjolee.fsf@gitster.g>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] Makefile: add QUIET_GEN to "tags" and "TAGS" targets
+References: <patch-1.1-afd0c18ca86-20210328T021814Z-avarab@gmail.com>
+Date:   Sat, 27 Mar 2021 22:56:28 -0700
+In-Reply-To: <patch-1.1-afd0c18ca86-20210328T021814Z-avarab@gmail.com>
+ (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Sun, 28 Mar
+ 2021 04:18:34 +0200")
+Message-ID: <xmqqpmzjom7n.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: CB260596-8F8C-11EB-8F0A-D609E328BF65-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 575EB970-8F8A-11EB-AB16-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -67,7 +66,52 @@ X-Mailing-List: git@vger.kernel.org
 
 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> Refactor occurrences of $(wildcard howto/*.txt) into a single
-> HOWTO_TXT variable for readability and consistency.
+> Don't show the very verbose $(FIND_SOURCE_FILES) command on every
+> "make TAGS" invocation. Let's also use the "cmd >x+ && mv x+ x"
+> pattern here so we don't momentarily clobber the file.
 
-OK.
+We do not "redirect" ctags and etags output into x+. =20
+
+	Let's use "generate into temporary and rename to the final
+	after seeing the command that generated the output finished
+	successfully" pattern.
+
+Please also correct the explanation of why it is a good idea to use
+the pattern in this case.  It is not about avoiding momentarily
+clobbering the output.  It is to avoid leaving an incorrect output
+generated by a failed command in the file with the filename that
+consumers expect.
+
+Thanks for making our Makefile a bit less noisy.  Anybody who makes
+"clean" and its friends quiet will get a gold star ;-)
+
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
+> ---
+>  Makefile | 11 +++++++----
+>  1 file changed, 7 insertions(+), 4 deletions(-)
+>
+> diff --git a/Makefile b/Makefile
+> index 55c8035fa80..f317af1b602 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -2690,12 +2690,15 @@ FIND_SOURCE_FILES =3D ( \
+>  	)
+> =20
+>  $(ETAGS_TARGET): FORCE
+> -	$(RM) $(ETAGS_TARGET)
+> -	$(FIND_SOURCE_FILES) | xargs etags -a -o $(ETAGS_TARGET)
+> +	echo $(ALL_SOURCE_FILES)
+> +	$(QUIET_GEN)$(RM) "$(ETAGS_TARGET)+" && \
+> +	$(FIND_SOURCE_FILES) | xargs etags -a -o "$(ETAGS_TARGET)+" && \
+> +	mv "$(ETAGS_TARGET)+" "$(ETAGS_TARGET)"
+> =20
+>  tags: FORCE
+> -	$(RM) tags
+> -	$(FIND_SOURCE_FILES) | xargs ctags -a
+> +	$(QUIET_GEN)$(RM) tags+ && \
+> +	$(FIND_SOURCE_FILES) | xargs ctags -a -o tags+ && \
+> +	mv tags+ tags
+> =20
+>  cscope:
+>  	$(RM) cscope*
