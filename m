@@ -2,102 +2,132 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BC368C433C1
-	for <git@archiver.kernel.org>; Sun, 28 Mar 2021 22:36:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C93DC433C1
+	for <git@archiver.kernel.org>; Sun, 28 Mar 2021 23:08:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 806306192F
-	for <git@archiver.kernel.org>; Sun, 28 Mar 2021 22:36:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0696761929
+	for <git@archiver.kernel.org>; Sun, 28 Mar 2021 23:08:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231205AbhC1Wfi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 28 Mar 2021 18:35:38 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64530 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229656AbhC1WfT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 Mar 2021 18:35:19 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B7A63AFE4E;
-        Sun, 28 Mar 2021 18:35:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=zrEOqovih3hmAoZUwmLzZlVE5JE=; b=p2NirD
-        sFwTrcUWHeSzOBPvyHEYAOn3e/gaaB533nqn31LogY2MrMEsgf6IL80SHr6bZWpa
-        csXXfs3rgt9LxJTkdv9qw9zY2NfqK/BvHlE0YSN5sJHtKyzpF1hW9njmx4sCrudp
-        QS4DY5U+2Cc60nIdb+SPR4FW0jTiUx06Ka6gQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=dl1/UJt1GaLqkSuYbZvv18AEGWb5UF+d
-        YIL6fxh6BZ6rauvdlBE5ldQgnq6u17t9ReyLkRAiNfv8P4XxMtcdyE0+oB5AF6jk
-        DgtLIIEurrnkoelQ5cB5Fv0PH4VXXnuBsZsz8b47yXmqNmosrE+S1uT3SdeZkI0J
-        RUdiAIEQ7p4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AF39AAFE4D;
-        Sun, 28 Mar 2021 18:35:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3C391AFE4C;
-        Sun, 28 Mar 2021 18:35:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Georgios Kontaxis" <geko1702+commits@99rst.org>
-Cc:     "Georgios Kontaxis via GitGitGadget" <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v4] gitweb: redacted e-mail addresses feature.
-References: <pull.910.v3.git.1616347731514.gitgitgadget@gmail.com>
-        <pull.910.v4.git.1616396267010.gitgitgadget@gmail.com>
-        <xmqqlfaf6nu9.fsf@gitster.g>
-        <6f656f62497fb7c9322432b5eb151b86.squirrel@mail.kodaksys.org>
-        <xmqqczvkoxzx.fsf@gitster.g>
-        <14ebc48b8b7bee23dbcf19942f1f9029.squirrel@mail.kodaksys.org>
-Date:   Sun, 28 Mar 2021 15:35:17 -0700
-In-Reply-To: <14ebc48b8b7bee23dbcf19942f1f9029.squirrel@mail.kodaksys.org>
-        (Georgios Kontaxis's message of "Sun, 28 Mar 2021 21:43:16 -0000")
-Message-ID: <xmqqft0elxei.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S231613AbhC1XHu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 28 Mar 2021 19:07:50 -0400
+Received: from mx0b-00256a01.pphosted.com ([67.231.153.242]:2146 "EHLO
+        mx0b-00256a01.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229656AbhC1XHe (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 28 Mar 2021 19:07:34 -0400
+Received: from pps.filterd (m0119692.ppops.net [127.0.0.1])
+        by mx0b-00256a01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id 12SN4xaH188433
+        for <git@vger.kernel.org>; Sun, 28 Mar 2021 19:07:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nyu.edu; h=date : from : to : cc :
+ subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=20180315; bh=aqUeypM8qu2Ms8PFfRDcDDgYquSfKf0V8/PCIkA4Stk=;
+ b=Do+LkYIW+rvjXbIAteBp1DATdfJ/+kbFugJymiH/gx2cl9piAjbLbeLytbjL6PCE+/39
+ LOnfj0gjZeFvj6uQKF4xl+dgtmHYdAsuta8bfNuOkuVdgiP896V2TMSLBOtFCd2glxzT
+ loTwaNOsU+Vw0iMS+iW0l19eGLEcYH6oCgGASPvfN9zXyDv/0WLFa44RvipsS2IBry94
+ 28k5E6+thHWly7YzA0ViidPqKAmPCI+aFiusgP109no+EbBilBkRRXUoLXl/Khhxtzty
+ V/bmGnDQ4mW4OFsyT62Z26biA8UVAkFF//bTXZGGj4EsEpXYp0IYkOCjyWS0sqWTcfFA cQ== 
+Received: from mail-io1-f70.google.com (mail-io1-f70.google.com [209.85.166.70])
+        by mx0b-00256a01.pphosted.com with ESMTP id 37jja4hwv2-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+        for <git@vger.kernel.org>; Sun, 28 Mar 2021 19:07:33 -0400
+Received: by mail-io1-f70.google.com with SMTP id s6so9635103iom.21
+        for <git@vger.kernel.org>; Sun, 28 Mar 2021 16:07:33 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=aqUeypM8qu2Ms8PFfRDcDDgYquSfKf0V8/PCIkA4Stk=;
+        b=h4/uwkE80XnG4g4txBTOrCHXMLVMaYOFVd8kMm8GtCuX3OHNHz0IjEAThmKMUcQKFK
+         CDJHreND+41Rw7NxfbA4ko11LzfddBqfqFfA9/uBBSYFv35qVe8ewQcYMlO2fEqhN3My
+         D0cy3zpXE7peruSr3W+EYK6l6DyRuH+MFl1qUVLySu6/FMSuQ8ogqBF1AyLQ+lAh1aBI
+         doa0bKuaM6euzBDHDQrNEV6tKFjaZwSzhE2KFkYGEs7KCOiOZNWUZoIa1EecmeRRnUFD
+         JdOAQXTiA1K9Fzq7y9k5xPdxAcnnnlT3Ngcsri9EoDLro5A4VvJ6HY5GzWuB4lhoGjeG
+         cBbg==
+X-Gm-Message-State: AOAM531kyOWI/PvGmWh1dmF1ljaPJXjZNvdXXAGjt3fWF4icdIFujOhq
+        ARs+dtuD1VhTGPwkkwvCtHHqp6b2Jyf34YZcaQcj7sNCfUcTjKa57yqMlYU4a0Tcnyc2n9sxXyR
+        zjPi4o4NaMNg=
+X-Received: by 2002:a05:6638:210d:: with SMTP id n13mr3076578jaj.100.1616972852976;
+        Sun, 28 Mar 2021 16:07:32 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJyoezwQrulVNo53o6g5xNlatf41EdZA+l3OKC8cd3B25X/x+o8xKWQYo7frggReR4m41iQ8xA==
+X-Received: by 2002:a05:6638:210d:: with SMTP id n13mr3076568jaj.100.1616972852793;
+        Sun, 28 Mar 2021 16:07:32 -0700 (PDT)
+Received: from meme-cluster (69-174-157-65.symrinaa.metronetinc.net. [69.174.157.65])
+        by smtp.gmail.com with ESMTPSA id l14sm6696944ilj.14.2021.03.28.16.07.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 28 Mar 2021 16:07:31 -0700 (PDT)
+Date:   Sun, 28 Mar 2021 19:07:31 -0400
+From:   Santiago Torres Arias <santiago@nyu.edu>
+To:     ama bamo <pythoncontrol@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: exporting git commands in parsable format for constructing
+ language-specific API for git CLI
+Message-ID: <YGEMMyAYVlzgv79G@meme-cluster>
+References: <CAJxd1DPcCD96NSqzXvh3cgA93d1nCNFQbFWduTCqfx1zi_1o=w@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: DF751DE6-9015-11EB-9418-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="ksOyZTFZ5LsQ7Me5"
+Content-Disposition: inline
+In-Reply-To: <CAJxd1DPcCD96NSqzXvh3cgA93d1nCNFQbFWduTCqfx1zi_1o=w@mail.gmail.com>
+X-Proofpoint-ORIG-GUID: Y3zSxuFw9lXXZWD4WEysCEdHn4B85ReX
+X-Proofpoint-GUID: Y3zSxuFw9lXXZWD4WEysCEdHn4B85ReX
+X-Orig-IP: 209.85.166.70
+X-Proofpoint-Spam-Details: rule=outbound_bp_notspam policy=outbound_bp score=0 mlxlogscore=784
+ spamscore=0 priorityscore=1501 mlxscore=0 suspectscore=0 impostorscore=0
+ phishscore=0 bulkscore=0 clxscore=1015 malwarescore=0 adultscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2103250000 definitions=main-2103280178
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Georgios Kontaxis" <geko1702+commits@99rst.org> writes:
 
-> It's not clear if you think it's overkill because we have to depend on an
-> external module or because we don't need accurate parsing.
+--ksOyZTFZ5LsQ7Me5
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-It is neither; what we need to parse is not exactly 'e-mail
-addresses' as known to Mail::Address.
+On Sat, Mar 27, 2021 at 01:42:09AM +0100, ama bamo wrote:
+> While using git commands in my applications and reimplementing the
+> same stuff i found out i can just parse git docs then generate
+> structures and classes based on that; i have done similiar for
+> wordpress and its `wp-cli`, for example see:
+> https://github.com/bukowa/gowpcli/tree/master/generated
+>=20
+> But `wp-cli` allows exporting all of the commands in a json format,
+> see: https://github.com/bukowa/gowpcli/blob/master/generate/dump.json
 
-The thing is, unlike send-email that needs to interact with the
-real-world MTAs and e-mail addresses, the codepaths we are talking
-about are mostly about author/committer ident, where the definition
-is quite narrower than the Mail::Address's "has to cover all the
-possible ways to spell e-mail addresses under the sun" requirement.
+I'm not entirely sure if something like this exists in git, and I'm
+alsot unsure of what exactly is the benefit of doing so vs an actual API
+(e.g., git2go[1]). Could you help us by elaborating what this is meant to
+achieve? Maybe that way we can figure out if something exists...
 
-Having said all that ...
+Cheers!
+-Santiago
 
-> If we prefer accurate parsing but don't like depending on Mail::Address,
-> it's easy to write complete expressions ourselves. (In a separate,
-> internal, Perl module)
+[1] https://github.com/libgit2/git2go
 
-... I do not have strong opinions either way.  I won't have the
-final say on the way things are done in Perl and what is done to
-Gitweb.
+--ksOyZTFZ5LsQ7Me5
+Content-Type: application/pgp-signature; name="signature.asc"
 
-It was just that what I saw earlier with the offsets and manual
-parsing instead of s///g operator did not smell not like a Perl
-program to me, and the message you are responding to was my reaction
-to it.
+-----BEGIN PGP SIGNATURE-----
 
-Thanks.
+iQIzBAABCAAdFiEEkDurc2QOttZVM+/zRo8SLOgWIpUFAmBhDC0ACgkQRo8SLOgW
+IpWY0Q/+PMFZYeKKWmAn4p02g9WpmIJKmarpUQWzszNIdX+GVgAt0J2nNyMprrp/
+h9qodIybr7QzWou6P0twvOvJO00VbtYtE0li9UoGGsfc8dqIlh06tw7W94jonBMi
+QsP4/GjlKqY9uo8aUkQsCxLhdiBDxkD9W+g5uOUteXGUesPKmxlI2SHsbm4g6Tz+
+ioIfMTA6oyho21SOOFGmB20Bh9R+1zhdZwlE9BHuqLM8zTWSSl6cdTndPohNBQUm
+wm1vRE6LVvpfP3Nd29xUpGTjiwvfgJvOMIhyKdfrZFHeT70GfC7k5vfkj7jOxM+z
+fBbf/pthaIT1mhHHro3UdqCFDbUpg2B/X80rVXscsSeL7aUh39yc6aX2O05h0uIZ
+H1cHQBC/pWM5FKvBW7pGitbAaS3KaP6RCm6n+s7yjG8jpueVEL/c4YbMOoMScL8z
+GOIhmCw8sydBzv/gGNIOIembBRK9RxYcGgypCK9xAUZ+5phlY75PY7zZch+is37D
+lMPf8paoJ+8ReKOdAeH6IETn899PJYkKnF0fUGTgpCkVMtriaZx6iqSZiUMMP42Z
+kQFwLYVoc56S+/jjaCN+bsYtEEFZ93581aroTpGpz7ZgnAqXgGgm1BUEAPRQ23Tf
+iS56FUFlH9bZCxYm48oYkpHDePbZvyzgP9VsrN75/zpY2EAaUng=
+=qYpr
+-----END PGP SIGNATURE-----
+
+--ksOyZTFZ5LsQ7Me5--
