@@ -7,91 +7,97 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D6D6CC433DB
-	for <git@archiver.kernel.org>; Sun, 28 Mar 2021 01:36:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9033C433C1
+	for <git@archiver.kernel.org>; Sun, 28 Mar 2021 01:42:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A0A2F6198D
-	for <git@archiver.kernel.org>; Sun, 28 Mar 2021 01:36:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9AE0C6198D
+	for <git@archiver.kernel.org>; Sun, 28 Mar 2021 01:42:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230516AbhC1BgS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 27 Mar 2021 21:36:18 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54012 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230451AbhC1Bfv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Mar 2021 21:35:51 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 128A7B8188;
-        Sat, 27 Mar 2021 21:35:51 -0400 (EDT)
+        id S230526AbhC1BmP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 27 Mar 2021 21:42:15 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61308 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231150AbhC1Blz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Mar 2021 21:41:55 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2466AA8B4C;
+        Sat, 27 Mar 2021 21:41:55 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=AQ+vp9dw9ZEe
-        NXqb9zNt5OWsLjE=; b=dV3QFKFUBaWj/+hGYMZ2gZiXwXPXd/dgrRfCDjanUlkb
-        g1fKnpsmpsvUR7RWMeykut1iYVYuEjWDU91crXcPXyr80OHY+7ixzTojyckLHR8q
-        eSDcisWilmRf00ocXHIw0DIUMpbj8gNyipZ2m4XhnUJjOTqaLkE0p9IcEUY+B2k=
+        :content-type; s=sasl; bh=hErOEezOBefC0DyYxSzMML4yZys=; b=M+20Qn
+        r0odRUl0xtp9oYI3HKrp6MpWzvKiGrNB9txVUp8DVQjg4mKpBu+SsCDAaAcSVf+m
+        X349/cutbmsGk3C3EkW4xXXF2zYYCzwe8ucEcCi5yPH86syYFbZv8ODP0ZxnUM45
+        R0qcrFR2WkHq1uU0itL8LEqL3ZbYw46JaBkTU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=mn2ghW
-        RSYP63r6lTUSUvhLpM5PiCNQSOytng1nqg6mEkEWuWD2CFsFahRoKeKexswp7rfr
-        TShh/HgwsZGcbVU1ppgmLFE4r/t2MHMtKzqRQAxymBjGnJ1YAn8Ln1qlptkF++bu
-        DI9u4ElTBcldtWeYXGArleup8+SdRzJLYHEzA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id ECD76B8186;
-        Sat, 27 Mar 2021 21:35:50 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=kd02tl0G5BH3K7DTmg9omppSsVtrXQlE
+        FdwVKpsViZ9cEkY1eUp1ciTBNw1u0mVrbR1ir6FHc00eoz9JBYeSH0XC1JGBEnZ1
+        E5huDVHFVEYAEEuiLt4rr6K1kiFaebgLx2alMfIasvbR4I+1JhHxgEqD5FcPxayR
+        nUe/Hpr4HaM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1C635A8B4B;
+        Sat, 27 Mar 2021 21:41:55 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 60724B8185;
-        Sat, 27 Mar 2021 21:35:50 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9C890A8B4A;
+        Sat, 27 Mar 2021 21:41:54 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 4/5] doc lint: fix bugs in, simplify and improve lint
- script
-References: <cover-0.6-00000000000-20210326T103454Z-avarab@gmail.com>
-        <patch-4.6-5c8e8f21495-20210326T103454Z-avarab@gmail.com>
-        <YF2+4I4rH9CQ1A2F@coredump.intra.peff.net>
-Date:   Sat, 27 Mar 2021 18:35:49 -0700
-In-Reply-To: <YF2+4I4rH9CQ1A2F@coredump.intra.peff.net> (Jeff King's message
-        of "Fri, 26 Mar 2021 07:00:48 -0400")
-Message-ID: <xmqqk0psoya2.fsf@gitster.g>
+To:     "Georgios Kontaxis" <geko1702+commits@99rst.org>
+Cc:     "Georgios Kontaxis via GitGitGadget" <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v4] gitweb: redacted e-mail addresses feature.
+References: <pull.910.v3.git.1616347731514.gitgitgadget@gmail.com>
+        <pull.910.v4.git.1616396267010.gitgitgadget@gmail.com>
+        <xmqqlfaf6nu9.fsf@gitster.g>
+        <6f656f62497fb7c9322432b5eb151b86.squirrel@mail.kodaksys.org>
+Date:   Sat, 27 Mar 2021 18:41:54 -0700
+In-Reply-To: <6f656f62497fb7c9322432b5eb151b86.squirrel@mail.kodaksys.org>
+        (Georgios Kontaxis's message of "Mon, 22 Mar 2021 18:58:41 -0000")
+Message-ID: <xmqqczvkoxzx.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: ED81D6A0-8F65-11EB-8188-D152C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: C69D9A8C-8F66-11EB-BC18-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+"Georgios Kontaxis" <geko1702+commits@99rst.org> writes:
 
-> On Fri, Mar 26, 2021 at 11:36:49AM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 =
-Bjarmason wrote:
->
->>  lint-docs::
->> -	$(QUIET_LINT)$(PERL_PATH) lint-gitlink.perl
->> +	$(QUIET_LINT)$(PERL_PATH) lint-gitlink.perl \
->> +		--section=3D1 $(MAN1_TXT) \
->> +		--section=3D5 $(MAN5_TXT) \
->> +		--section=3D7 $(MAN7_TXT)	\
->> +		--to-lint $(ALL_TXT)
->
-> This is probably bikeshedding, but I would have expected the invocation
-> to be:
->
->   link-gitlink.perl \
->     $(HOWTO_TXT) $(INCLUDE_TARGETS_TXT) \
->     --section=3D1 $(MAN1_TXT) \
->     --section=3D5 $(MAN5_TXT) \
->     --section=3D7 $(MAN7_TXT)
->
-> I.e., list each filename only once, with the previous --section giving
-> the expected section (and if before any --section, then expect no
-> section).
+>> I'll defer to others who are more familiar with gitweb and Perl
+>> ecosystem if this is warranted, but I have a feeling that importing
+>> and using Mail::Address->parse() only because we want to see if a
+>> given "<string>" is an address is a bit overkill and it might be
+>> sufficient to do something as crude as m/^<[^@>]+@[a-z0-9-.]+>$/i
+>> ...
+>>> +	while ($line =~ m/(<[^>]+>)/g) {
+>>> +		my $match = $1;
+>>> +		if (!is_mailaddr($match)) {
+>>> +			next;
+>>> +		}
+>>> +		my $offset = pos $line;
+>>> +		my $head = substr $line, 0, $offset - length($match);
+>>> +		my $redaction = "<redacted>";
+>>> +		my $tail = substr $line, $offset;
+>>> +		$line = $head . $redaction . $tail;
+>>> +		pos $line = length($head) + length($redaction);
+>>
+>> Hmmmm, Perl suggestions from others?  It looks quite strange to see
+>> that s/// operator is not used and replacement is done manually with
+>> byte position in a Perl script.
+>>
+> If there's a more elegant way to do the above we can certain do that instead.
 
-Makes more sense than the presented patch.  Optionally "--section=3D"
-could be used to cancel the section that was previously given.
+For example, if we do not insist on using overkill Mail::Address->parse(),
+we could do something silly like this:
+
+	$line =~ s/<[^@>]+@[a-z0-9-.]+>/<redacted@address>/ig;
+
+no?
