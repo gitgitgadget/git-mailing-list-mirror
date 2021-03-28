@@ -2,77 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 01E60C433DB
-	for <git@archiver.kernel.org>; Sun, 28 Mar 2021 17:16:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4002FC433DB
+	for <git@archiver.kernel.org>; Sun, 28 Mar 2021 17:54:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C73F061966
-	for <git@archiver.kernel.org>; Sun, 28 Mar 2021 17:16:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F41EF61930
+	for <git@archiver.kernel.org>; Sun, 28 Mar 2021 17:54:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230184AbhC1RPe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 28 Mar 2021 13:15:34 -0400
-Received: from avasout06.plus.net ([212.159.14.18]:33495 "EHLO
-        avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231438AbhC1RPY (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 Mar 2021 13:15:24 -0400
-Received: from satellite ([147.147.167.73])
-        by smtp with ESMTPA
-        id QZ0RlG479HBkXQZ0Ul44Ch; Sun, 28 Mar 2021 18:15:23 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-        t=1616951723; bh=ftuEv1q/AeZpyRFQZLFROgX4ZwRkAXSehkTY5uRew1c=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=YfVg/o6hsnz5Vag0O2p6o65skbMnB6B8/zTbduVMLzWAjIJWuGtqgW78lFaSFPUsC
-         KX3OiURxFV9K7reL06KnrSMCJzVoy0Rvvbd1VidA8tVISk48BjC6NEwAxcgs7Grv06
-         C+8silOkzJL2djyn6jz/eEOSDIfTU3VedFYOQrd7Tqy2Gz/RIkGMLtajSt3qa0D7vk
-         xrELXEkf7lOaS8rExEdj1ufNuPolH+Zrj0qGq/USfhUbswN0VirDjVZDuUOqq0xMqU
-         4Vmw5NYEDo3Q7CNsIE6JMLTFAuPxQYUm/VKJxrbYswevTgvrwu2ml2zzFPSJ70vtrJ
-         BrwP+Tfzae/hA==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=fI+iIaSe c=1 sm=1 tr=0
- a=nK5asC+3lBOC3EoKtwbYYg==:117 a=nK5asC+3lBOC3EoKtwbYYg==:17
- a=8nJEP1OIZ-IA:10 a=oinIv3hAYFYkefFDG_QA:9 a=wPNLvfGTeEIA:10
- a=fCgQI5UlmZDRPDxm0A3o:22 a=pHzHmUro8NiASowvMSCR:22 a=n87TN5wuljxrRezIQYnT:22
-X-AUTH: ramsayjones@:2500
-Date:   Sun, 28 Mar 2021 18:15:19 +0100
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v6 02/19] fsck.h: use designed initializers for
- FSCK_OPTIONS_{DEFAULT,STRICT}
-Message-ID: <YGC5pzAOycCePCU6@satellite>
-References: <20210317182054.5986-1-avarab@gmail.com>
- <cover-00.20-00000000000-20210328T130947Z-avarab@gmail.com>
- <patch-02.20-b17c982293e-20210328T130947Z-avarab@gmail.com>
+        id S230350AbhC1RyP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 28 Mar 2021 13:54:15 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60247 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230092AbhC1Rxr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 Mar 2021 13:53:47 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 21EA5BCB30;
+        Sun, 28 Mar 2021 13:53:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=ZyOy+lURUluj
+        h7DhuDJRuvWAEOE=; b=qaDMi3/KSCgp1ELnoSBaekDBVl7ifhqWn9pQOJdpVM8c
+        6M+ouf44KXCezj7zbfKHLc69jW/WbcaXHkElzdKApzflTwkGtAg/OxuXEQojHw3n
+        91FSSeQMTwoaQg6wWoIyUzx5p7mXRQMkDN3jITTKmyslvKvvcAck19kr7Fp7EC0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=VL+Qib
+        /q4g1IcymKRTncRBqdAaUWGp6pVBAMJEGgXsIyI7RBGf+m473Rw6JCy/g1RiwimO
+        Kfm3ZpavhehMk699/kywGrULprWug1hXUo8/+49XLr0bH9LEwSeHEZ0HLCs7GA91
+        AofY7SUr9UVCsvKyiH5M4ZboYo4BTnHMVS+a0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1809BBCB2F;
+        Sun, 28 Mar 2021 13:53:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 991EDBCB2E;
+        Sun, 28 Mar 2021 13:53:46 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 5/5] doc lint: lint and fix missing "GIT" end sections
+References: <cover-0.6-00000000000-20210326T103454Z-avarab@gmail.com>
+        <patch-5.6-d4004b6a7cb-20210326T103454Z-avarab@gmail.com>
+        <xmqqr1jzn5j5.fsf@gitster.g>
+Date:   Sun, 28 Mar 2021 10:53:45 -0700
+In-Reply-To: <xmqqr1jzn5j5.fsf@gitster.g> (Junio C. Hamano's message of "Sat,
+        27 Mar 2021 23:42:06 -0700")
+Message-ID: <xmqqk0prmafq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <patch-02.20-b17c982293e-20210328T130947Z-avarab@gmail.com>
-X-CMAE-Envelope: MS4wfLv2/xCz1IOyc8ClLIjuLGoN8FV3VcCNxcelO6d5u4jQuEpE56U6UyXMOkErOwh3AmGx7EHVPkqsAREJkR+Zzlzq6LscwfhAV+G2HE/XBXRctl+LF3hL
- jynTrVuv1w/5Ni7GrElvcNTOyniiE9vK4KewCylgpYpBOGweQomtTA0iVIkUjR+8+A9x3Vw0B7vsmA==
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 8B448E0E-8FEE-11EB-8B17-D152C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Mar 28, 2021 at 03:15:34PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> Refactor the definitions of FSCK_OPTIONS_{DEFAULT,STRICT} to use
-> designated initializers. This allows us to omit those fields that
-> aren't initialized to zero or NULL.
+Junio C Hamano <gitster@pobox.com> writes:
 
-s/aren't/are/
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+>
+>> Lint for and fix the three manual pages that were missing the standard
+>> "Part of the linkgit:git[1] suite" end section.
+>>
+>> We only do this for the man[157] section documents (we don't have
+>> anything outside those sections), not files to be included,
+>> howto *.txt files etc.
+>
+> OK.  Alternatively we could drop the footer from all pages.  IIRC,
+> we used to have another footer section to credit primary authors,
+> which we dropped years ago.  I doubt "git-foo is part of git suite"
+> is something worth repeating over and over.
+>
+> Thanks.
 
-[I apologize in advance - I am using mutt for the first time to reply
-to a ML post and I don't know if I should be using L-ist-reply or a
-g-roup-reply! :D ]
-
-ATB,
-Ramsay Jones
+Having said that, making sure all pages consistently have them is
+fine, too.  It is just the repetition, even though my eyes have
+learned to take it as perfectly normal state of affairs, did not
+seem to be adding that much value.
 
