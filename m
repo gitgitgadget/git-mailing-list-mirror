@@ -4,100 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D9033C433C1
-	for <git@archiver.kernel.org>; Sun, 28 Mar 2021 01:42:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9372DC433C1
+	for <git@archiver.kernel.org>; Sun, 28 Mar 2021 01:48:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9AE0C6198D
-	for <git@archiver.kernel.org>; Sun, 28 Mar 2021 01:42:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 30439619A0
+	for <git@archiver.kernel.org>; Sun, 28 Mar 2021 01:48:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230526AbhC1BmP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 27 Mar 2021 21:42:15 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61308 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231150AbhC1Blz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Mar 2021 21:41:55 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2466AA8B4C;
-        Sat, 27 Mar 2021 21:41:55 -0400 (EDT)
+        id S230519AbhC1BrX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 27 Mar 2021 21:47:23 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:59442 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230451AbhC1BrP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Mar 2021 21:47:15 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8A6AB122510;
+        Sat, 27 Mar 2021 21:47:15 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=hErOEezOBefC0DyYxSzMML4yZys=; b=M+20Qn
-        r0odRUl0xtp9oYI3HKrp6MpWzvKiGrNB9txVUp8DVQjg4mKpBu+SsCDAaAcSVf+m
-        X349/cutbmsGk3C3EkW4xXXF2zYYCzwe8ucEcCi5yPH86syYFbZv8ODP0ZxnUM45
-        R0qcrFR2WkHq1uU0itL8LEqL3ZbYw46JaBkTU=
+        :content-type:content-transfer-encoding; s=sasl; bh=4orKzZC/D1pG
+        ID2chbjhPoJmD+0=; b=k0URHjwqevDW1Jgmv65LwHoWvh+GUFjQ8wQKxueu3KHl
+        JM/vr22pD0D/TrAsLpgqNRWNRlwsOUUJhNriz4XT2DO5C2dYwLnmPtQ5CA8MKA+N
+        nsLLE5k7ciuDeRh44j8ifYGXTZwrf6EjWuw5TCNE3vCelI8MNl8isRVBi3b6unA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=kd02tl0G5BH3K7DTmg9omppSsVtrXQlE
-        FdwVKpsViZ9cEkY1eUp1ciTBNw1u0mVrbR1ir6FHc00eoz9JBYeSH0XC1JGBEnZ1
-        E5huDVHFVEYAEEuiLt4rr6K1kiFaebgLx2alMfIasvbR4I+1JhHxgEqD5FcPxayR
-        nUe/Hpr4HaM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1C635A8B4B;
-        Sat, 27 Mar 2021 21:41:55 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=LRS+Iq
+        0G2G9SIe1H65W6SBfD77+8mlv6paBBZ2243SVVSpEY/1jtbmZNLfEVY/7/uYIvX6
+        sNhj8bfwYbUm10Hq8q1HaYaTFzsME5U5RHSPXwKH0fIkLfLJnraHcYV7KEzM7VXx
+        EAdba8RU8AGUVuf61c6C5NqqC4kqo53zkKjSA=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8238412250F;
+        Sat, 27 Mar 2021 21:47:15 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9C890A8B4A;
-        Sat, 27 Mar 2021 21:41:54 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id CB57D12250E;
+        Sat, 27 Mar 2021 21:47:12 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Georgios Kontaxis" <geko1702+commits@99rst.org>
-Cc:     "Georgios Kontaxis via GitGitGadget" <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v4] gitweb: redacted e-mail addresses feature.
-References: <pull.910.v3.git.1616347731514.gitgitgadget@gmail.com>
-        <pull.910.v4.git.1616396267010.gitgitgadget@gmail.com>
-        <xmqqlfaf6nu9.fsf@gitster.g>
-        <6f656f62497fb7c9322432b5eb151b86.squirrel@mail.kodaksys.org>
-Date:   Sat, 27 Mar 2021 18:41:54 -0700
-In-Reply-To: <6f656f62497fb7c9322432b5eb151b86.squirrel@mail.kodaksys.org>
-        (Georgios Kontaxis's message of "Mon, 22 Mar 2021 18:58:41 -0000")
-Message-ID: <xmqqczvkoxzx.fsf@gitster.g>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, newren@gmail.com, pclouds@gmail.com,
+        jrnieder@gmail.com,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v4 01/20] sparse-index: design doc and format update
+References: <pull.883.v3.git.1615912983.gitgitgadget@gmail.com>
+        <pull.883.v4.git.1616507069.gitgitgadget@gmail.com>
+        <6426a5c60e53e30091360c00c61c9123803fe9c1.1616507069.git.gitgitgadget@gmail.com>
+        <20210326202940.GC2271@szeder.dev>
+Date:   Sat, 27 Mar 2021 18:47:11 -0700
+In-Reply-To: <20210326202940.GC2271@szeder.dev> ("SZEDER =?utf-8?Q?G=C3=A1?=
+ =?utf-8?Q?bor=22's?= message of
+        "Fri, 26 Mar 2021 21:29:40 +0100")
+Message-ID: <xmqq8s68oxr4.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C69D9A8C-8F66-11EB-BC18-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 84460C9A-8F67-11EB-9FF2-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Georgios Kontaxis" <geko1702+commits@99rst.org> writes:
+SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
 
->> I'll defer to others who are more familiar with gitweb and Perl
->> ecosystem if this is warranted, but I have a feeling that importing
->> and using Mail::Address->parse() only because we want to see if a
->> given "<string>" is an address is a bit overkill and it might be
->> sufficient to do something as crude as m/^<[^@>]+@[a-z0-9-.]+>$/i
->> ...
->>> +	while ($line =~ m/(<[^>]+>)/g) {
->>> +		my $match = $1;
->>> +		if (!is_mailaddr($match)) {
->>> +			next;
->>> +		}
->>> +		my $offset = pos $line;
->>> +		my $head = substr $line, 0, $offset - length($match);
->>> +		my $redaction = "<redacted>";
->>> +		my $tail = substr $line, $offset;
->>> +		$line = $head . $redaction . $tail;
->>> +		pos $line = length($head) + length($redaction);
->>
->> Hmmmm, Perl suggestions from others?  It looks quite strange to see
->> that s/// operator is not used and replacement is done manually with
->> byte position in a Perl script.
->>
-> If there's a more elegant way to do the above we can certain do that instead.
+>> +To start, we use a new repository extension, `extensions.sparseIndex`=
+, to
+>> +allow inserting sparse-directory entries into indexes with file forma=
+t
+>> +versions 2, 3, and 4. This prevents Git versions that do not understa=
+nd
+>> +the sparse-index from operating on one, but it also prevents other
+>> +operations that do not use the index at all.
+>
+> Why is this not a non-optional index extension?  ...
+> This really should be a non-optional index extension.
 
-For example, if we do not insist on using overkill Mail::Address->parse(),
-we could do something silly like this:
+Yeah, the index extension mechanism was designed with optional and
+required kinds because we wanted to support exactly a use case like
+this one.
 
-	$line =~ s/<[^@>]+@[a-z0-9-.]+>/<redacted@address>/ig;
-
-no?
+Thanks for pointing it out.
