@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C128AC433C1
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C2A3C433E0
 	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 16:33:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A11D56196E
+	by mail.kernel.org (Postfix) with ESMTP id 5F6AE6196E
 	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 16:33:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229711AbhC2Qcl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Mar 2021 12:32:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43904 "EHLO
+        id S229674AbhC2Qch (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Mar 2021 12:32:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231434AbhC2QcG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Mar 2021 12:32:06 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93FB4C061765
-        for <git@vger.kernel.org>; Mon, 29 Mar 2021 09:32:02 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id x7so13482642wrw.10
-        for <git@vger.kernel.org>; Mon, 29 Mar 2021 09:32:02 -0700 (PDT)
+        with ESMTP id S230437AbhC2QcA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Mar 2021 12:32:00 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1568EC061756
+        for <git@vger.kernel.org>; Mon, 29 Mar 2021 09:32:00 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id x16so13486002wrn.4
+        for <git@vger.kernel.org>; Mon, 29 Mar 2021 09:32:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=jkvCA0dVkWiNgRt+3sEDl776FHd+IQgnZObblA0wNSg=;
-        b=aIRVI/+ZX3CXdwxA/Hx80USmqzHm7bIP9TOHv6P63yASCUze81gkSZSsmDv53BaJ0y
-         qzLVtwON6PBZnNCabK3vqScPUnxBxEYq5W9AwAJ0JEGYU7DZLNHcpsELdfXNoPPUCxC/
-         lnZTfBbRbcCN8DMAtV30oQhJnbNihwTXSspNwcTBdSTRovK2OPnVjpXGzley3tBgHnoc
-         fuDSdEdbuQndeqq2O/C+LS+OJO88mFeBgY0V4WMGTTyYaMcVoGLMD4zFC2WI5JZYVFzB
-         V3ow/2fDnrq0jdzGdDoOttOWNBhj9ztPOC7Ra0RN/IFdgxwdGXOlibYXulRyat2BKjPJ
-         9ipg==
+        bh=AICi09NDsUABqA5U7BcLjJnZgkFQBrDKkIZgWOBSbTE=;
+        b=hiUNAaE5CZssLxirk10FhSdT+vHjYjiMIqclb57JzaRtgEPHPruedRo+pom42ViJst
+         gJXHeGCLre3mrdTm5yNrJio1T/vFZ5zaBQF+G1tnLhZZMFjOgqPuclUYuSEwHRdO5AxV
+         RPUdP9PYwuUSdGBDZ10jhEISQGnUuEVejaWeaG6QvERjUXGF6EQGcqt6SlZNMPdqQKHJ
+         ttFKp4oAIMXeBIlGCwmQd6OGtjaY32tC8ag+1NTuT6bBL/yQX/zAJ4FGfondSz0z5Bye
+         VPRN9SBbo+fB4P6wbnxPTeD7YCuZeoMzyn05YJGhoF7nKRVy6lFGE9WXPxbaWFxYzIIt
+         WnZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=jkvCA0dVkWiNgRt+3sEDl776FHd+IQgnZObblA0wNSg=;
-        b=r3ZPE2iH2xJ0J2aboIwqk+p88mKuRsnM4uL2rLJ0LhLHHthDRivqKSCZNqR7k6c76U
-         aYCdvmmXM3bAkRadkmQj73mYngQ4nln8yp8l93a/xtXDpqUfkVIADML3niEftOhdVux7
-         mHF/zvScsYdzCLYFPh8ntm8FovyMZxeEMTJFgYs7vROjK8q6SHnMvMWhHgwrmBaTS2fi
-         E4Ze1ziSCBkjRWQOBYpZvzDS4cvjRtLsWTRj1KmGgD5KkU4U/zJn/aianch6eGedj7J1
-         WnaBr2cb9sug5vd4EMU+sF0UfJboldFiCw90kcI7xMAgyoMWIRBOE4bdXoV+BwvkJirz
-         DYXQ==
-X-Gm-Message-State: AOAM5335ixSt54v5Z5OIOgHWVmCs2zAcUIeS6PzRLBcYFuBWE0Ety/Hg
-        J+CuOcRsUCB1+Cn3JKEyRtOzEQAgt9r16Q==
-X-Google-Smtp-Source: ABdhPJwUbA2tmVLI9Qe/g9JUAdFcbrD5KCOwWstbLqIYF2x+XtyMM7jD1FnM5RQViPuq0j5tr7xG2w==
-X-Received: by 2002:a05:6000:18cd:: with SMTP id w13mr29205747wrq.20.1617035521090;
-        Mon, 29 Mar 2021 09:32:01 -0700 (PDT)
+        bh=AICi09NDsUABqA5U7BcLjJnZgkFQBrDKkIZgWOBSbTE=;
+        b=rubUbTrzIB6N3/J1qOBqYJ5XRR0c77x5SDbE4g2nLYCe0m/eVRUYnyRZNH8dvx5SvL
+         NbglAox6KRYFVBV0/MygENLvlpeagYPPWjcBkeJXUQAx/SO7+Ip6Rc12Ow1NhkxwZ+Wu
+         DjqhBRQddVfGS+qTa/7Pz7+i1XiLSK8cajbqZ+P/PMpUh+c+rthNSOp+se1snh7n8sH+
+         ecyXIAjkrvAEHP76HRAfXy5IShf0an4GHjrq9oWOS03CXGAsPKyw1bMynY3YymDs0M2a
+         F8in+RzQoff7snF5F/WGOcLmlhnKv4Ag6ZheP5em0gSFGpzjMX/vB+wbCjRWFfGPeWhd
+         268w==
+X-Gm-Message-State: AOAM532aQgAM5E2FHANr3Du4YWNIa7ox2MCyDBAZ9ZBGc7lFYNLkfRiz
+        3x7XWCE5LwmTbLkaKyyoRhzf0ZBHvdbK8w==
+X-Google-Smtp-Source: ABdhPJxkaLEhJh72Iet3j91apwprz6B6AnITIJZZSwXvV7CKdhyUuuzi7dyFP+dqk+7WOV0WrkcoyQ==
+X-Received: by 2002:adf:8b58:: with SMTP id v24mr28745669wra.160.1617035518534;
+        Mon, 29 Mar 2021 09:31:58 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id l21sm25410464wmg.41.2021.03.29.09.32.00
+        by smtp.gmail.com with ESMTPSA id l21sm25410464wmg.41.2021.03.29.09.31.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Mar 2021 09:32:00 -0700 (PDT)
+        Mon, 29 Mar 2021 09:31:57 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -64,9 +64,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 6/6] Makefile: add a INSTALL_FALLBACK_LN_CP mode
-Date:   Mon, 29 Mar 2021 18:31:44 +0200
-Message-Id: <patch-6.7-9ada8979890-20210329T162327Z-avarab@gmail.com>
+Subject: [PATCH 3/6] Makefile: refactor out "ln || ln -s || cp" pattern
+Date:   Mon, 29 Mar 2021 18:31:41 +0200
+Message-Id: <patch-3.7-bde9de756b4-20210329T162327Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.1.461.gd47399f6574
 In-Reply-To: <cover-0.7-00000000000-20210329T162327Z-avarab@gmail.com>
 References: <cover-0.6-00000000000-20210329T161723Z-avarab@gmail.com> <cover-0.7-00000000000-20210329T162327Z-avarab@gmail.com>
@@ -77,139 +77,190 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the default behavior on "make install" where we fallback
-through a chain of "ln || ln -s || cp" to instead error out when we
-can't symlink or hardlink, and not then fallback on a "cp" (or from a
-symlink to hardlink etc.).
+Refactor out the hard-to-read and maintain "ln || ln -s || cp"
+pattern.
 
-The fallback behavior was introduced in 3e073dc5611 (Makefile: always
-provide a fallback when hardlinks fail, 2008-08-25), since then we've
-gained the ability to specify e.g. that we'd like symlinks via the
-INSTALL_SYMLINKS setting.
+This was initially added in 3e073dc5611 (Makefile: always provide a
+fallback when hardlinks fail, 2008-08-25), but since then it's become
+a lot more complex as we've added:
 
-It doesn't make sense as a default to silently fall back if we can't
-satisfy those settings. We should instead error out, at which point
-the developer/builder/sysadmin can set one or more of the relevant
-hardlink or symlink settings.
+ * 3426e34fedd (Add NO_CROSS_DIRECTORY_HARDLINKS support to the
+   Makefile, 2009-05-11)
 
-This also changes the behavior for the build (not install!) to always
-use the new strict mode. This will theoretically break things for
-someone who can't make symlinks or hardlinks in their git checkout
-when building.
+ * NO_INSTALL_HARDLINKS in 70de5e65e8c (Makefile:
+   NO_INSTALL_HARDLINKS, 2012-05-02)
 
-That part of this change would break building on Windows and other
-platforms that don't support symlinks if INSTALL_SYMLINKS were to
-become the default, but it's not on by default, so we should be fine
-here. If and when INSTALL_SYMLINKS ever becomes the default the right
-way to deal with this would be to tweak config.mak.uname
-appropriately, not to silently fall back on a copy.
+ * INSTALL_SYMLINKS in ad874608d8c (Makefile: optionally symlink
+   libexec/git-core binaries to bin/git, 2018-03-13)
+
+ * SKIP_DASHED_BUILT_INS 179227d6e21 (Optionally skip linking/copying
+   the built-ins, 2020-09-21)
+
+Each of those commits had to add a new special-case to this code,
+resulting in quite an unmaintainable mess for adding any sort of new
+option.
+
+Let's use the newly introduced ln-or-cp.sh script instead, note that
+we only sometimes pass the --no-cross-directory-hardlinks option, per
+the previous behavior. The target of the "ln -s" is also another
+special snowflake, but we're careful to carry that forward.
+
+As in an earlier commit this also changes the behavior to emit any
+errors to stdout. In that earlier case that was done to simplify the
+script so that it can use one "ln -s" instead of the two, likewise
+we're now unconditionally emitting to stderr if ln (without -s, to
+create the hardlink) fails. We always emitted to stderr if "cp"
+failed.
+
+As in that earlier commit let's let that pass for now, yes it might be
+very verbose in some scenarios, but we're working our way towards a
+simpler end-state here.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Makefile    | 11 +++++++++++
- ln-or-cp.sh | 29 ++++++++++++++++++++++++++++-
- 2 files changed, 39 insertions(+), 1 deletion(-)
+ Makefile    | 41 +++++++++++++++++-----------------
+ ln-or-cp.sh | 63 ++++++++++++++++++++++++++++++++++++++++++++++++++---
+ 2 files changed, 81 insertions(+), 23 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 466df1a8e90..ccbded79093 100644
+index cfc87d7734d..a4784f28f5b 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -350,6 +350,13 @@ all::
- # or if that fails fall back on a "cp" instead of a "ln". Useful for
- # when you don't want hardlinks at all.
- #
-+# Define INSTALL_FALLBACK_LN_CP if you'd like your
-+# "INSTALL_SYMLINKS=Y" to fall back on hardlinks if we can't run "ln
-+# -s", and for "ln" to fall back on "NO_INSTALL_HARDLINKS=Y" if we
-+# can't perform a "ln" and need to fall-back to a "cp". This used to
-+# be the default behavior, but we'll now error if we can't satisfy
-+# your INSTALL_SYMLINKS, NO_INSTALL_HARDLINKS etc. settings.
-+#
- # Define SKIP_DASHED_BUILT_INS if you do not need the dashed versions of the
- # built-ins to be linked/copied at all.
- #
-@@ -3020,6 +3027,7 @@ endif
+@@ -3007,40 +3007,41 @@ endif
  	{ test "$$bindir/" = "$$execdir/" || \
  	  for p in git$X $(filter $(install_bindir_programs),$(ALL_PROGRAMS)); do \
- 		./ln-or-cp.sh \
-+			--install-fallback-ln-cp "$(INSTALL_FALLBACK_LN_CP)" \
- 			--install-symlinks "$(INSTALL_SYMLINKS)" \
- 			--no-install-hardlinks "$(NO_INSTALL_HARDLINKS)" \
- 			--no-cross-directory-hardlinks "$(NO_CROSS_DIRECTORY_HARDLINKS)" \
-@@ -3029,6 +3037,7 @@ endif
+ 		$(RM) "$$execdir/$$p" && \
+-		test -n "$(INSTALL_SYMLINKS)" && \
+-		ln -s "$$destdir_from_execdir_SQ/$(bindir_relative_SQ)/$$p" "$$execdir/$$p" || \
+-		{ test -z "$(NO_INSTALL_HARDLINKS)$(NO_CROSS_DIRECTORY_HARDLINKS)" && \
+-		  ln "$$bindir/$$p" "$$execdir/$$p" 2>/dev/null || \
+-		  cp "$$bindir/$$p" "$$execdir/$$p" || exit; } \
++		./ln-or-cp.sh \
++			--install-symlinks "$(INSTALL_SYMLINKS)" \
++			--no-install-hardlinks "$(NO_INSTALL_HARDLINKS)" \
++			--no-cross-directory-hardlinks "$(NO_CROSS_DIRECTORY_HARDLINKS)" \
++			--symlink-target "$$destdir_from_execdir_SQ/$(bindir_relative_SQ)/$$p" \
++			"$$bindir/$$p" "$$execdir/$$p"; \
+ 	  done; \
  	} && \
  	for p in $(filter $(install_bindir_programs),$(BUILT_INS)); do \
- 		./ln-or-cp.sh \
-+			--install-fallback-ln-cp "$(INSTALL_FALLBACK_LN_CP)" \
- 			--install-symlinks "$(INSTALL_SYMLINKS)" \
- 			--no-install-hardlinks "$(NO_INSTALL_HARDLINKS)" \
- 			--symlink-target "git$X" \
-@@ -3038,6 +3047,7 @@ endif
+ 		$(RM) "$$bindir/$$p" && \
+-		test -n "$(INSTALL_SYMLINKS)" -o "$(NO_INSTALL_HARDLINKS)" && \
+-		ln -s "git$X" "$$bindir/$$p" || \
+-		{ test -z "$(NO_INSTALL_HARDLINKS)" && \
+-		  ln "$$bindir/git$X" "$$bindir/$$p" 2>/dev/null || \
+-		  cp "$$bindir/git$X" "$$bindir/$$p" || exit; }; \
++		./ln-or-cp.sh \
++			--install-symlinks "$(INSTALL_SYMLINKS)" \
++			--no-install-hardlinks "$(NO_INSTALL_HARDLINKS)" \
++			--symlink-target "git$X" \
++			"$$bindir/git$X" "$$bindir/$$p"; \
+ 	done && \
+ 	for p in $(BUILT_INS); do \
+ 		$(RM) "$$execdir/$$p" && \
  		if test -z "$(SKIP_DASHED_BUILT_INS)"; \
  		then \
- 			./ln-or-cp.sh \
-+				--install-fallback-ln-cp "$(INSTALL_FALLBACK_LN_CP)" \
- 				--install-symlinks "$(INSTALL_SYMLINKS)" \
- 				--no-install-hardlinks "$(NO_INSTALL_HARDLINKS)" \
- 				--symlink-target "$$destdir_from_execdir_SQ/$(bindir_relative_SQ)/git$X" \
-@@ -3047,6 +3057,7 @@ endif
+-			test -n "$(INSTALL_SYMLINKS)" -o "$(NO_INSTALL_HARDLINKS)" && \
+-			ln -s "$$destdir_from_execdir_SQ/$(bindir_relative_SQ)/git$X" "$$execdir/$$p" || \
+-			{ test -z "$(NO_INSTALL_HARDLINKS)" && \
+-			  ln "$$execdir/git$X" "$$execdir/$$p" 2>/dev/null || \
+-			  cp "$$execdir/git$X" "$$execdir/$$p" || exit; }; \
++			./ln-or-cp.sh \
++				--install-symlinks "$(INSTALL_SYMLINKS)" \
++				--no-install-hardlinks "$(NO_INSTALL_HARDLINKS)" \
++				--symlink-target "$$destdir_from_execdir_SQ/$(bindir_relative_SQ)/git$X" \
++				"$$execdir/git$X" "$$execdir/$$p"; \
+ 		fi \
+ 	done && \
  	remote_curl_aliases="$(REMOTE_CURL_ALIASES)" && \
  	for p in $$remote_curl_aliases; do \
- 		./ln-or-cp.sh \
-+			--install-fallback-ln-cp "$(INSTALL_FALLBACK_LN_CP)" \
- 			--install-symlinks "$(INSTALL_SYMLINKS)" \
- 			--no-install-hardlinks "$(NO_INSTALL_HARDLINKS)" \
- 			--symlink-target "git-remote-http$X" \
+ 		$(RM) "$$execdir/$$p" && \
+-		test -n "$(INSTALL_SYMLINKS)" -o "$(NO_INSTALL_HARDLINKS)" && \
+-		ln -s "git-remote-http$X" "$$execdir/$$p" || \
+-		{ test -z "$(NO_INSTALL_HARDLINKS)" && \
+-		  ln "$$execdir/git-remote-http$X" "$$execdir/$$p" 2>/dev/null || \
+-		  cp "$$execdir/git-remote-http$X" "$$execdir/$$p" || exit; } \
++		./ln-or-cp.sh \
++			--install-symlinks "$(INSTALL_SYMLINKS)" \
++			--no-install-hardlinks "$(NO_INSTALL_HARDLINKS)" \
++			--symlink-target "git-remote-http$X" \
++			"$$execdir/git-remote-http$X" "$$execdir/$$p"; \
+ 	done && \
+ 	./check_bindir "z$$bindir" "z$$execdir" "$$bindir/git-add$X"
+ 
 diff --git a/ln-or-cp.sh b/ln-or-cp.sh
-index 37380993c64..f77dad71bdb 100755
+index de79cd85a81..663ffd0489d 100755
 --- a/ln-or-cp.sh
 +++ b/ln-or-cp.sh
-@@ -1,5 +1,6 @@
+@@ -1,8 +1,65 @@
  #!/bin/sh
  
-+install_fallback_ln_cp=
- install_symlinks=
- no_install_hardlinks=
- no_cross_directory_hardlinks=
-@@ -7,6 +8,10 @@ symlink_target=
- while test $# != 0
- do
- 	case "$1" in
-+	--install-fallback-ln-cp)
-+		install_fallback_ln_cp="$2"
++install_symlinks=
++no_install_hardlinks=
++no_cross_directory_hardlinks=
++symlink_target=
++while test $# != 0
++do
++	case "$1" in
++	--install-symlinks)
++		install_symlinks="$2"
 +		shift
 +		;;
- 	--install-symlinks)
- 		install_symlinks="$2"
- 		shift
-@@ -61,4 +66,26 @@ main_with_fallbacks () {
- 	fi
- }
++	--no-install-hardlinks)
++		no_install_hardlinks="$2"
++		shift
++		;;
++	--no-cross-directory-hardlinks)
++		no_cross_directory_hardlinks="$2"
++		shift
++		;;
++	--symlink-target)
++		symlink_target="$2"
++		shift
++		;;
++	*)
++		break
++		;;
++	esac
++	shift
++done
++
+ target="$1"
++if test -z "$symlink_target"
++then
++	symlink_target="$target"
++fi
+ link="$2"
  
--main_with_fallbacks
-+main_no_fallbacks () {
-+	if test -n "$no_install_hardlinks" -a -z "$install_symlinks"
+-ln "$target" "$link" 2>/dev/null ||
+-ln -s "$target" "$link" 2>/dev/null ||
+-cp "$target" "$link"
++hardlink_or_cp () {
++	if test -z "$no_install_hardlinks" -a -z "$no_cross_directory_hardlinks"
 +	then
-+		cp "$target" "$link"
-+	elif test -n "$install_symlinks" -o -n "$no_cross_directory_hardlinks"
-+	then
-+		ln -f -s "$symlink_target" "$link"
-+	elif test -n "$no_install_hardlinks"
-+	then
-+		cp "$target" "$link"
++		if ! ln "$target" "$link"
++		then
++			cp "$target" "$link"
++		fi
++
 +	else
-+		ln -f "$target" "$link"
++		cp "$target" "$link"
 +	fi
 +}
 +
-+if test -z "$install_fallback_ln_cp"
-+then
-+	# The stricter mode, where we know what we want
-+	main_no_fallbacks
-+else
-+	main_with_fallbacks
++main_with_fallbacks () {
++	if test -n "$install_symlinks" -o -n "$no_install_hardlinks"
++	then
++		if ! ln -s "$symlink_target" "$link"
++		then
++			hardlink_or_cp
++		fi
++	else
++		hardlink_or_cp
++	fi
++}
 +
-+fi
++main_with_fallbacks
 -- 
 2.31.1.461.gd47399f6574
 
