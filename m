@@ -2,210 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 229E8C433C1
-	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 20:01:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 112F3C433C1
+	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 20:39:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E818F6192F
-	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 20:01:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E3FFA61969
+	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 20:39:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231725AbhC2UAm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Mar 2021 16:00:42 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52462 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231747AbhC2UAV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Mar 2021 16:00:21 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 39588B7F3C;
-        Mon, 29 Mar 2021 16:00:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=kQR1vnAukThcNjf94G8ju9DCVbY=; b=nBH1T4
-        txFz6r+NczgfgDHSAkjA9Oy90urC5MVEDBFyaFpOGJiih4ITE6bSyP7MWPUBHc3S
-        /VPllOqQpZ+ROrDd0UjMmBHm0Etxvdfl7Xn/JUEz4z9Na/PyP4Jo2p+Yr2rDBDC8
-        AVq/Ss/6aVWMglY7FTlnPjGKlVm/d2oCFbXrw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=aRwenJbk1X1RFsWKre09iJiwzRe/KlE7
-        c+XcoQeJEAotA+kcDqLvcC89JOWIETSvXM+88zQ87OtoyN19sn//W+rKzCd48EiS
-        mHhDHp+a+OhevQumRl+GpPOe8U9JL8Bz7QdRzzgDX8j/DxTNXUiduRPHByMBXPSJ
-        NkAF8BRyBfo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2DFEFB7F3A;
-        Mon, 29 Mar 2021 16:00:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 625BBB7F39;
-        Mon, 29 Mar 2021 16:00:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Georgios Kontaxis via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Georgios Kontaxis <geko1702+commits@99rst.org>
-Subject: Re: [PATCH v6] gitweb: redacted e-mail addresses feature.
-References: <pull.910.v5.git.1616817387441.gitgitgadget@gmail.com>
-        <pull.910.v6.git.1616973963862.gitgitgadget@gmail.com>
-Date:   Mon, 29 Mar 2021 13:00:17 -0700
-In-Reply-To: <pull.910.v6.git.1616973963862.gitgitgadget@gmail.com> (Georgios
-        Kontaxis via GitGitGadget's message of "Sun, 28 Mar 2021 23:26:03
-        +0000")
-Message-ID: <xmqq5z19k9wu.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S229689AbhC2UjA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Mar 2021 16:39:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40566 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230381AbhC2Uig (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Mar 2021 16:38:36 -0400
+Received: from mail-il1-x133.google.com (mail-il1-x133.google.com [IPv6:2607:f8b0:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EAC8C061574
+        for <git@vger.kernel.org>; Mon, 29 Mar 2021 13:38:36 -0700 (PDT)
+Received: by mail-il1-x133.google.com with SMTP id d10so12351896ils.5
+        for <git@vger.kernel.org>; Mon, 29 Mar 2021 13:38:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=LvxVMwjdWmT/ZmBvU29lMauvDaWa+ym6jD2TsTazmmM=;
+        b=qGe0MgFvV2lbhyN1lwCSFfUJlcpb+Myv2BuXlU3sKtuqnqUnh1tQrW2N//ofulrv7F
+         xwLHvv/hhocyJOWNmXqc0ZQpGWIVPMGSMtQAjeLuZIAsjsn8YN9K/fYTT1jbr1LezdN6
+         53DTQpVQzqulvQ1VmGsAFpQkvcHMInU9q1nIY12bEmCi1ZosF+mUxutm9P0TWi1t+MAe
+         VEv25jBM69+/QMttASNgYuMkKD7DrdbvMZyuZrhs77jlvdaYYLfGRr9UAeBwMBMsDubt
+         C2It5rz37pTSnOSyoGBKSvX9yj/vZ2MnTlhhqNrJ8SG76sZoNd8yrO4pVhFOb8wVx1ot
+         SQQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=LvxVMwjdWmT/ZmBvU29lMauvDaWa+ym6jD2TsTazmmM=;
+        b=mlUmm85VgyqEbVhrovM6uk545EAfylDUmom92L5nEryeCz6+xAAO1oH4l6jtSC1x2h
+         qjWLeoCNClWg8syxhmnu63KvkxzCj978FbPNl0DGfx+qXPPbJRE0ACQmGFOyzbtHD7MR
+         +l9KyNFGAjRbsKW2tjXL0+FHobgBPq6Tu5YTAsPcdQM2LrDGcggK6+nurcMbsO2OX61n
+         gPG76gcyD2HkyjFHq9U1s4fPzsqyvKrbzUvrq20rXZSh54FfcZOTDMiavppDqrTDAF8a
+         1SCyVoMaZkXKc3rdOxWMlGMR6rLwrNX3A3D9LtJMZdHVT9b9X6M6NLjBq7EXwn3dHUf1
+         VZUg==
+X-Gm-Message-State: AOAM533t4iwO3hR5WP8BZkqtUy7MHk281OkK2ZlX7cxz5Juia9pk7TTe
+        /ZENMTPkiC1LbCPgzuJ6vcki4pU5LquiYA==
+X-Google-Smtp-Source: ABdhPJyZD2YFVsjWZf6yT1jRJ+PfirC5dFntEsrjOeg0iEuWChqU/jJbguO1c8GhedYlijxxx5ID7A==
+X-Received: by 2002:a05:6e02:92b:: with SMTP id o11mr5381631ilt.279.1617050315893;
+        Mon, 29 Mar 2021 13:38:35 -0700 (PDT)
+Received: from localhost ([2605:9480:22e:ff10:7b00:4f79:8763:6261])
+        by smtp.gmail.com with ESMTPSA id z10sm7737695ilq.38.2021.03.29.13.38.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Mar 2021 13:38:35 -0700 (PDT)
+Date:   Mon, 29 Mar 2021 16:38:33 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, avarab@gmail.com, dstolee@microsoft.com,
+        gitster@pobox.com, jonathantanmy@google.com
+Subject: Re: [PATCH v3 04/16] builtin/multi-pack-index.c: split sub-commands
+Message-ID: <YGI6ySogGoYZi66A@nand.local>
+References: <cover.1612998106.git.me@ttaylorr.com>
+ <cover.1615482270.git.me@ttaylorr.com>
+ <d084f90466813597feb27975654e57de36eb62a4.1615482270.git.me@ttaylorr.com>
+ <YGG7tWBzo5NGl2+g@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 62BB967C-90C9-11EB-BA30-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YGG7tWBzo5NGl2+g@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Georgios Kontaxis via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+On Mon, Mar 29, 2021 at 07:36:21AM -0400, Jeff King wrote:
+> This is definitely a harmless leak in the sense that we are going to
+> exit the program after midx_repack() returns anyway. But it might be
+> worth keeping things tidy, as we've recently seen a renewed effort to do
+> some leak-checking of the test suite. I _think_ we can just free the
+> options struct (even though we are still using the values themselves, we
+> don't care about the "struct options" anymore). But even if not, an
+> UNLEAK(options) annotation would do it.
 
-> From: Georgios Kontaxis <geko1702+commits@99rst.org>
->
-> Gitweb extracts content from the Git log and makes it accessible
-> over HTTP. As a result, e-mail addresses found in commits are
-> exposed to web crawlers and they may not respect robots.txt.
-> This can result in unsolicited messages.
->
-> Introduce an 'email-privacy' feature which redacts e-mail addresses
-> from the generated HTML content. Specifically, obscure addresses
-> retrieved from the the author/committer and comment sections of the
-> Git log. The feature is off by default.
->
-> This feature does not prevent someone from downloading the
-> unredacted commit log, e.g., by cloning the repository, and
-> extracting information from it. It aims to hinder the low-
-> effort, bulk collection of e-mail addresses by web crawlers.
->
-> Signed-off-by: Georgios Kontaxis <geko1702+commits@99rst.org>
-> ---
+I see what you're saying. Let me make sure that I got the right idea in
+mind after reading your email. I'm thinking of squashing the following
+diff into this patch. For what it's worth, it causes 'valgrind
+--leak-check=full ./git-multi-pack-index repack' to exit cleanly (when
+it didn't before).
 
-> @@ -751,6 +751,17 @@ default font sizes or lineheights are changed (e.g. via adding extra
->  CSS stylesheet in `@stylesheets`), it may be appropriate to change
->  these values.
->  
-> +email-privacy::
-> +	Redact e-mail addresses from the generated HTML, etc. content.
-> +	This obscures e-mail addresses retrieved from the author/committer
-> +	and comment sections of the Git log.
-> +	It is meant to hinder web crawlers that harvest and abuse addresses.
-> +	Such crawlers may not respect robots.txt.
-> +	Note that users and user tools also see the addresses as redacted.
-> +	If Gitweb is not the final step in a workflow then subsequent steps
-> +	may misbehave because of the redacted information they receive.
-> +	Disabled by default.
+Does this match your expectations?
 
-OK.  I still think everything after "Note that" is a bit redandant
-(as any intelligent reader can read what the feature does and reach
-its natural consequence themselves), but I do not strongly oppose
-leaving it in.
+--- >8 ---
 
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 0959a782eccb..01c6faf88006 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -569,6 +569,15 @@ sub evaluate_uri {
->  		'sub' => \&feature_extra_branch_refs,
->  		'override' => 0,
->  		'default' => []},
-> +
-> +	# Redact e-mail addresses.
-> +
-> +	# To enable system wide have in $GITWEB_CONFIG
-> +	# $feature{'email-privacy'}{'default'} = [1];
-> +	'email-privacy' => {
-> +		'sub' => sub { feature_bool('email-privacy', @_) },
-> +		'override' => 1,
-> +		'default' => [0]},
->  );
+diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
+index 23e51dfeb4..a78640c061 100644
+--- a/builtin/multi-pack-index.c
++++ b/builtin/multi-pack-index.c
+@@ -56,9 +56,7 @@ static struct option common_opts[] = {
 
-Sensible.
+ static struct option *add_common_options(struct option *prev)
+ {
+-	struct option *with_common = parse_options_concat(common_opts, prev);
+-	free(prev);
+-	return with_common;
++	return parse_options_concat(common_opts, prev);
+ }
 
-While reviewing this part, I noticed a few things
+ static int cmd_multi_pack_index_write(int argc, const char **argv)
+@@ -112,8 +110,7 @@ static int cmd_multi_pack_index_repack(int argc, const char **argv)
+ 		OPT_END(),
+ 	};
 
- - A few other features explain how to toggle it system wide and
-   nothing else, like this one does.
+-	options = parse_options_dup(builtin_multi_pack_index_repack_options);
+-	options = add_common_options(options);
++	options = add_common_options(builtin_multi_pack_index_repack_options);
 
- - Others explain, in addition, talk about how to toggle per
-   repository (which may necessitate explaining how to toggle the
-   override bit if the default is false).
+ 	argc = parse_options(argc, argv, NULL,
+ 			     options,
+@@ -123,6 +120,8 @@ static int cmd_multi_pack_index_repack(int argc, const char **argv)
+ 		usage_with_options(builtin_multi_pack_index_repack_usage,
+ 				   options);
 
-It might be a good idea to standardise the explanation somehow.
-
-This is just an observation (in other words, nothing needs to be
-done in this patch).
-
-
-> @@ -3449,6 +3458,13 @@ sub parse_date {
->  	return %date;
->  }
->  
-> +sub hide_mailaddrs_if_private {
-> +	my $line = shift;
-> +	return $line unless gitweb_check_feature('email-privacy');
-> +	$line =~ s/<[^@>]+@[^>]+>/<redacted>/ig;
-> +	return $line;
-> +}
-
-OK.  The "this catches AUTHOR_EMAIL" pattern is a bit embarrassing
-(my fault); "s/<[^@>]+@[-a-z0-9.]+>/<redacted>/ig" might be less
-embarrassing but I do not care deeply enough either way.  The version
-in this patch is probably closer to what ident.c uses anyway ;-)
-
-> @@ -7489,7 +7506,8 @@ sub git_log_generic {
->  			         -accesskey => "n", -title => "Alt-n"}, "next");
->  	}
->  	my $patch_max = gitweb_get_feature('patches');
-> -	if ($patch_max && !defined $file_name) {
-> +	if ($patch_max && !defined $file_name &&
-> +		!gitweb_check_feature('email-privacy')) {
->  		if ($patch_max < 0 || @commitlist <= $patch_max) {
-
-An observation unrelated to this change.  I think checking for
-negative patch_max is a bug in the original code.  Everywhere else,
-the way to disable the 'patch' view is to set it to 0, not negative,
-and this block is already protected with "if ($patch_max".
-
-> @@ -7550,7 +7568,8 @@ sub git_commit {
->  			} @$parents ) .
->  			')';
->  	}
-> -	if (gitweb_check_feature('patches') && @$parents <= 1) {
-> +	if (gitweb_check_feature('patches') && @$parents <= 1 &&
-> +		!gitweb_check_feature('email-privacy')) {
->  		$formats_nav .= " | " .
->  			$cgi->a({-href => href(action=>"patch", -replay=>1)},
->  				"patch");
-> @@ -7863,7 +7882,8 @@ sub git_commitdiff {
->  		$formats_nav =
->  			$cgi->a({-href => href(action=>"commitdiff_plain", -replay=>1)},
->  			        "raw");
-> -		if ($patch_max && @{$co{'parents'}} <= 1) {
-> +		if ($patch_max && @{$co{'parents'}} <= 1 &&
-> +			!gitweb_check_feature('email-privacy')) {
->  			$formats_nav .= " | " .
->  				$cgi->a({-href => href(action=>"patch", -replay=>1)},
->  					"patch");
-
-I see your wish is "we do not show any link to a patch page, but
-anybody who knows what a link to the patch page looks like can craft
-and ask", but I am not sure if that is worth the above three hunks.
-It still feels more robust to just disable the 'patches' feature
-when the email-privacy feature is enabled, but that may be just me.
-
-Will queue as-is.  Input from those who are more adept at Perl
-and/or interested in helping polish gitweb are still welcome, but at
-my level of interest on the topic, this version looks as good as it
-gets ;-)
-
-Thanks.
++	FREE_AND_NULL(options);
++
+ 	return midx_repack(the_repository, opts.object_dir,
+ 			   (size_t)opts.batch_size, opts.flags);
+ }
