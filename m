@@ -2,442 +2,178 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EEB1C433C1
-	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 23:21:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4051C433E1
+	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 23:25:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1946861989
-	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 23:21:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9CE0161990
+	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 23:25:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229910AbhC2XVF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Mar 2021 19:21:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47158 "EHLO
+        id S230306AbhC2XYv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Mar 2021 19:24:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48054 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229441AbhC2XUn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Mar 2021 19:20:43 -0400
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07126C061762
-        for <git@vger.kernel.org>; Mon, 29 Mar 2021 16:20:42 -0700 (PDT)
-Received: by mail-pf1-x432.google.com with SMTP id q5so10857481pfh.10
-        for <git@vger.kernel.org>; Mon, 29 Mar 2021 16:20:42 -0700 (PDT)
+        with ESMTP id S229950AbhC2XYt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Mar 2021 19:24:49 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D8E2C061762
+        for <git@vger.kernel.org>; Mon, 29 Mar 2021 16:24:49 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id j3so15999988edp.11
+        for <git@vger.kernel.org>; Mon, 29 Mar 2021 16:24:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=4gqFvfqcMnd1pG/gn1EOS08boXlxxXT/pcWS98CCNRY=;
-        b=RyXzuiTe5ykUHKZckHJnNz9swlUdLosjubcp7r/xTzn64CemgEUACZl2/vhvgP0VKv
-         7lnzZeZCM4zf4pnREPCO4++qp4AfAHTW5d9qaZ9Q2dPAI4276SRrXUcjCXsVfPZ7pA2M
-         cLaWtn4EWuY6wSjba1MfCfX3vJ3RIRK29PEQJAnv4zdziAVFihWcGKZHZqVxYqWZj6zm
-         wXziQKLUVl9PTzZjBilrR/4eyNnsb2gR2MYuRgPaobSAaH9qEoKLkkRuIOtHaC4Sikj1
-         ctjivtrVMfTUqSJojKhZpDqa4zw65FjNnb7APP7smaZ/TGE48Wk3hDmQdxxWfaFAGjX4
-         M8/w==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=w4oiJjN44zmOe49S7QkRNJxagLA+gXJLn0JhcwDzhto=;
+        b=bVmgkPLnlJe1z+RF7CJfxRoDhDuV1qlel814j3jHZIDDtJtVT1w274mbJJKjjLEP9t
+         WzcL63FvwrGwYn8e4KmkagOmlWrmEnwNk9fM3DXd5qgR1DBOA7zK4XMH54x5TvNWKhPf
+         cuQshktg5NOcNcfjyGtvGtskTbC/84MwlkXaHQN1WD6P6eAxfTVochGrIO8ToPeM544u
+         UkOuzlCD3SDJwcnJoP7H5SjGgtDzAofn0TN6DhkxPzP/L0/RtIKrKKgbDehdPhHDPRGO
+         bDgrW8uW2nrddtnm1ODMiUBGOy9At8tbtq1QwfgpPfD9/Vt2P0XDeUTvpjj0V/K67eh4
+         tXcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=4gqFvfqcMnd1pG/gn1EOS08boXlxxXT/pcWS98CCNRY=;
-        b=tpiOFJw0fQOYrEj+DkcVwztsDVe58YiZ+TIKXk0tHvVh3WeT1WcVdZsh+VV7ZYi0To
-         aBGJQvVrz4BJWOSXjLRDnRkaE28ikN1I6n4jmDnZxmRrdWzl6c4Pb9YHzAT+z37JlvnM
-         kmM8nivYuNFFnd7qla2oNH2aF07KxogqjNp4E3iVrb2/oraV5hidGzyohGvoouGYNbE8
-         dt383AAhcXK7yOGlAlQZbxpDudZtrPl9lYmw7E4IFYjWMgZV5rncNdoHhQqyoAWWgite
-         82qf3wBvBgINvvlOcsBke3bkpflc/J2Mu6JoMLbXh26/mzufxtpGCvGu3zErsTQuQo0V
-         xuRA==
-X-Gm-Message-State: AOAM532rrC76Clpnp5D22a6PNleJJIldmB50cqhJ4iXA725dv+cXUobG
-        sRiHNyPQtSVjrsr4KBL+HCHx4A==
-X-Google-Smtp-Source: ABdhPJyMD8NBIiuiTE+a+3HvSypCl0dJNbE2mSyxLxiQq9ZUvzes8ejey3Q+wT2bIKnz0bX+zlP2Hw==
-X-Received: by 2002:a65:63d6:: with SMTP id n22mr26349766pgv.393.1617060042001;
-        Mon, 29 Mar 2021 16:20:42 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:0:282c:288a:2054:f194])
-        by smtp.gmail.com with ESMTPSA id h6sm18738157pfb.157.2021.03.29.16.20.40
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=w4oiJjN44zmOe49S7QkRNJxagLA+gXJLn0JhcwDzhto=;
+        b=tv21/tp8vkmGlcr9lcj03qhcOqf9pBhrtVel4Dznui3NJIdJf24ywOSh2TqyCMyUCy
+         SNJfKf5rn3cAkKPTK33DGscEXywdcVNPcTd2rRi5zgq7foWShCHu8Njo7McsIFLen2xi
+         YZzEpwj6EYPKs2oeTWKnrps7n6PSdPFJWgKGgjcY9Z4CZV8WfWvLfEu4aIRKU6jgseDV
+         8QMEm5I0TPXaIKg12ldBipCFAkMlrI2a3AXvXNGZu0XpCP2nrgQ2dIMTygLQWtyfUcSz
+         DDc2ij6F2acmDb+giFWWVYSzQfIpRhTN/gExbh0qfAhkchGdphDDU7F07yCwSqu7c7j7
+         pFvA==
+X-Gm-Message-State: AOAM531KfqfaF5uATs7zjfv9UHhMzBBXySoPSwMhwnFfwWofL2kj99Zk
+        hcbpGSQtUglk9Lbj+CN/ojidKBJyMvXjyA==
+X-Google-Smtp-Source: ABdhPJwnRdzVueGCihyegKy4FeRqx6IUSV9nVNGss6uAjlcsvvLik4LLShBZbfelDeLfZ3zVl/XO6w==
+X-Received: by 2002:aa7:d917:: with SMTP id a23mr30932272edr.122.1617060288098;
+        Mon, 29 Mar 2021 16:24:48 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id cf4sm9819327edb.19.2021.03.29.16.24.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Mar 2021 16:20:41 -0700 (PDT)
-Date:   Mon, 29 Mar 2021 16:20:35 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Albert Cui via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Albert Cui <albertqcui@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v2] hooks: propose project configured hooks
-Message-ID: <YGJgw5QPKFyv4HSG@google.com>
-References: <pull.908.git.1616105016055.gitgitgadget@gmail.com>
- <pull.908.v2.git.1616723016659.gitgitgadget@gmail.com>
+        Mon, 29 Mar 2021 16:24:47 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2 1/5] Makefile: rename objects in-place, don't clobber
+References: <20210307132001.7485-1-avarab@gmail.com>
+ <cover-0.6-00000000000-20210329T161723Z-avarab@gmail.com>
+ <patch-1.6-3330cdbccc0-20210329T161723Z-avarab@gmail.com>
+ <xmqqy2e5kegv.fsf@gitster.g>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
+In-reply-to: <xmqqy2e5kegv.fsf@gitster.g>
+Date:   Tue, 30 Mar 2021 01:24:47 +0200
+Message-ID: <87ft0dmtkw.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <pull.908.v2.git.1616723016659.gitgitgadget@gmail.com>
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 26, 2021 at 01:43:36AM +0000, Albert Cui via GitGitGadget wrote:
-
-> Change-Id: I5f6747524b97c51dfe5fa28e48ea03981b2da5b8
-Oops :)
-
-I avoid this by setting gerrit.createChangeId = false in my global
-config and adding an alias:
-  alias.gerrit-commit = "-c gerrit.createChangeId=true commit"
-
-> +Server-side vs Local Checks
-> +^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> +
-> +* Helps developers catch issues earlier: typically developers need to push to
-> +the remote to trigger server-side checks. Local hooks can be run anytime the
-> +developer wants. This is especially useful if the project has slow
-> +server-checks; catching issues locally can save the developer a lot of time
-> +waiting for CI. They are also useful for locally reproducing an issue identified
-> +in CI, helping resolve issues faster.
-
-Big +1 to this - I hate having to wait for a push and CI build, possibly
-queued behind someone else's work or an earlier mistaken push, to check
-whether my stuff is right. :)
-
-> +In the ideal world, developers and project maintainers use both local and server
-> +side checks in their workflow. However, for many smaller projects, this may not
-> +be possible: CI may be too expensive to run or configure. The number of local
-> +solutions to this use case speaks to this need (see <<prior-art, Prior Art>>).
-> +Bringing this natively to Git can give all these developers a well-supported,
-            ^~~~
-This is a little vague here. It sounds like you might be suggesting to
-standardize server-side CI config in Git-controlled projects.
-> +secure implementation opposed to the fragmentation we see today.
-
-The point about solution fragmentation is a strong one and I wonder
-whether it's being emphasized enough. There is obviously a need, or else
-people wouldn't keep writing all these things in the Prior Art section
-:)
-
-> +Security Considerations and Design Principles
-> +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> +
-[snip]
-> +  ** Since developers will likely build their local clone in their development
-> +  process, at some point, arbitrary code from the repository will be executed.
-> +  In this sense, hooks _with user consent_ do not introduce a new attack surface.
-
-It might be worth saying that we want to make configuration of
-project-configured hooks to be approximately as easy/automatic as
-building (that is, the user still has to explicitly run a build, and
-isn't prompted at the end of their clone whether they want to build it
-right away).
-> +
-> +* Give users visibility: Git must allow users to make informed decisions. This
-> +means surfacing essential information to the user in a visible manner e.g. what
-> +remotes the hooks are coming from, whether the hooks have changed in the latest
-> +checkout.
-   ^~~~~~~~
-Better say "fetch", if we are proposing this magic branch thing.
-
-> +* This configuration should only apply if it was received over HTTPS
-
-Meaning, non-HTTPS fetches should just not update this special branch?
-
-> +* A setup command for users to set up hooks
-AIUI, this is proposed to be part of `git hook`, right?
-
-I don't think it needs to be part of this doc but it'd be nice to also
-support installing just a subset, like:
-
-  git hook setup pre-commit
-  git hook setup --interactive
-
-> +* Users must explicitly approve hooks at least once
-> +
-> +    ** Running the setup command should count as approval, including if the user
-> +    consented during the clone
-> +
-> +    ** When a hook command changes, a user should re-approve execution (note:
-> +    implementation should not interfere with requirement listed in “Fast
-> +    Follows")
-> +
-> +* Automation is able to continue to use clone and other commands
-> +non-interactively
-
-One interesting point - by using an advice instead of an interactive
-prompt at clone time, we get this for free.
-
-> +Fast Follows
-> +^^^^^^^^^^^^
-> +
-> +* When prompted to execute a hook, users can specify always or never, even if
-> +the hook updates
-
-I think we want to base this on the remote URL, right? I know we talked
-a little offline about how to mitigate vs. malicious maintainer (for
-example this whole mess with The Great Suspender) and I'm not sure what
-solution there might be.
-
-I wonder if it's worth it to notify users that their always-okayed hooks
-were updated during fetch?
-
-> +
-> +Nice to Haves
-> +^^^^^^^^^^^^^
-> +
-> +* A method to skip hook execution i.e. `--no-verify` works everywhere
-
-This part I'd like to discuss more on-list - I think it would need to
-happen as an argument to git.c (e.g. git --no-verify commit blah), or
-else we'd have the problems we have with --no-verify today. But is that
-too ugly? I think everything else (even teaching parse-options to grab
---no-verify regardless, which, ick) would still be prone to issues,
-since not everybody uses parse-options and not every subcommand
-implementor knows their subcommand will invoke a hook. (For example, the
-nice surprise when rebase started using some different strategy and
-invoking the post-commit hook way more often, off the top of my head so
-details may not be correct.)
-
-> +* Support a “warnings only mode” where hooks run but don’t block commands from
-> +executing
-
-Same as --no-verify. I wonder whether it's "good enough" to do these two
-as configs? hook.skip-all=true, hook.ignore-result=true?
-
-> +Implementation Exploration: Check "magic" branch for configs at fetch time
-> +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> +
-> +Example User Experience
-> +^^^^^^^^^^^^^^^^^^^^^^^
-> +
-> +===== Case 1: Consent through clone
-> +
-> +....
-> +$ git clone --setup-hooks
-> +...
-> +
-> +The following hooks were installed from remote `origin` ($ORIGIN_URL):
-> +
-> +pre-commit: git-secrets --pre_commit_hook
-> +pre-push:  $GIT_ROOT/pre_push.sh
-
-Hm, I thought we wanted to consider storing the hook body in the magic
-branch as well? To avoid changing hook implementation during bisect, for
-example?
-
-> +....
-> +
-> +===== Case 2: Prompting after clone
-> +....
-> +$ git clone
-> +...
-> +
-> +Remote `origin` ($ORIGIN_URL) suggest installing the following hooks:
-> +
-> +pre-commit: git-secrets --pre_commit_hook
-> +pre-push:  $GIT_ROOT/pre_push.sh
-> +
-> +# instead of prompting, we could give users commands to run instead
-> +# see case 3
-
-Yep, I think this is a better idea - I glued together the two UXen below
-:)
-
-> +
-> +Do you wish to install them?
-> +1. Yes (this time)
-> +2. Yes (always from origin)
-> +3. No (not this time)
-> +4. No (never)
-> +....
-
-Offline when we discussed this, it seems like users will just smash 2
-("whatever gets you to stop bothering me") regardless of whether the
-hooks are actually coming from a source the user trusts. So I would
-prefer something like:
-
-  $ git clone
-  ....
-  Remote `origin` ($ORIGIN_URL) suggest installing the following hooks:
-
-  pre-commit: git-secrets --pre_commit_hook
-  pre-push:  $GIT_ROOT/pre_push.sh
-
-  If you wish to install them, run `git hook setup origin`.
-
-> +===== Case 3: Re-prompting when hooks change
-> +....
-> +$ git pull
-> +
-> +The following hooks were updated from remote `origin` ($ORIGIN_URL):
-> +
-> +pre-push:  $GIT_ROOT/pre_push.sh
-> +
-> +If you wish to install them, run `git hook setup origin`.
-> +
-> +If you wish to always accept hooks from `origin`, run `git hook setup --always
-> +origin`. You should only do this if you trust code changes from origin.
-> +
-> +To always ignore hooks from `origin`, run `git hook ignore origin`.
-> +....
-> +
-> +===== Case 4: Nudging when hooks weren't installed
-> +....
-> +$ git commit
-> +advice: The repository owner has recommended a 'pre-commit' hook that was not run.
-> +To view it, run `git show origin/refs/recommended-config:some-pre-commit`. To install it, run `git hook setup origin pre-commit`
-> +
-> +Turn off this advice by setting config variable advice.missingHook to false."
-> +....
-
-(Full disclosure: this was my idea.)
-I realize that some folks upstream may find this is too chatty for
-general use. I'm hoping being able to shut off the advice globally might
-be enough of a mitigation; maybe we can gate it behind an experimental
-config or something if folks aren't so sure?
-
-> +Implementation Sketch
-> +^^^^^^^^^^^^^^^^^^^^^
-> +
-> +* Perform fetch as normal
-> +
-> +* After fetch is complete, Git checks for a "magic" config branch (e.g.
-> ++origin/refs/recommended-config+) which contains information about config lines
-> +an end-user may want (including hooks).
-> +
-> +* As part of the fetch subcommand, Git prompts users to install the configs
-> +contained there.
-
-Like I mentioned above, I think we probably want to drop the entire
-interactive installer wizard concept...
-
-> +    ** User responses to that prompt could be "sticky" - e.g. a user could reply
-> +    "no (this time)", "no (never)", "yes (this time)", or "yes (always)".
-> +    Always/never indicate that the user trusts the remote this config is coming
-> +    from, and should not apply to configs fetched from other remotes.
-
-...which also means that we can drop trying to express this briefly and
-instead say something wordy in a flag to `git hook setup` (or whatever
-we call it).
-
-> +Later, we might want to do this before the initial clone is performed; that
-> +workflow looks like:
-> +
-> +* During clone, perform ls-refs as normal
-> +
-> +* If the server has a "magic" config branch, fetch only that config branch.
-> +
-> +* Prompt users as described above.
-> +
-> +* Perform the rest of the clone.
-
-This part I'm still interested in, although I'm not sure how to
-reconcile not wanting an interactive prompt with wanting an early step
-like this during clone. Maybe that's what this `git clone --setup-hooks`
-(or maybe, `git clone --with-recommended-configs`) is for?
-
-> +Pros
-> +^^^^
-> +
-> +* Repository owners have a method for providing recommended config for
-> +contributors.
-> +
-> +* Installation flow happens without additional user intervention.
-
-I think when we wrote this bullet point it was to express "the user
-doesn't have to run something else to discover these hooks exist". But I
-don't think "without additional user intervention" fully describes
-what's proposed here, either. Hrm.
-
-> +
-> +* Keeping config branch and history separate from code branch and history means
-> +it is versioned, but not tied to user's checkout.
-
-Probably worth discussing/including that we intend hook contents to also
-live in the config branch, to make sure we're running the same hook
-regardless of checkout/bisect state/inspection/have been working on a
-feature for 6 months and have been fetching but not rebasing/etc. I'm
-not sure I see that explicitly called out here...
-
-Actually, I found the following (pasting from much earlier in the doc):
-
-  +    ** This could be a path to a script/binary within the repository
-  +
-  +    ** This could be a path to a script/binary contained within
-  submodules of
-  +    the repository
-  +
-  +    ** This could be a user installed command or script/binary that
-  exists
-  +    outside of the repository and is present in `$PATH`
-
-Maybe this part needs to be modified to explicitly refer to the hook
-executable being tracked in the magic branch?
-
-> +Cons
-> +^^^^
-[snip]
-> +* Turning a "set and forget" command like clone into an interactive session with
-> +the user is not ideal; care must be taken to avoid breaking bots.
-
-If we notify and nag, but don't interactively prompt, then we get happy
-bots for free ;)
-
-> +
-> +* Inflating configs and executables from a remote tracking branch which is never
-> +checked out could be slow.
-
-I wonder about this. This seems to me like something that might be
-drastically slower or faster depending on platform. Hmmm.
-
-> +Future Work
-> +~~~~~~~~~~~
-> +
-> +* Extending this to allow repository owners to specify specific configurations
-> +in general e.g. this repository should use partial-clone with these parameters.
-
-Offline I think there was a little discussion with Stolee about whether
-it made more sense to *only* approach this specific problem with this
-document, as the hooks are also config, and so they could come later.
-But I think if we want to store the executable in the magic branch (and
-I do... since I keep bringing it up :) ) then it doesn't make sense to
-say "build it for config and everything else will follow".
-
-> +* Extending this to support submodules: We want to make sure this works in a way
-> +that's easy to adapt to submodules, who would likely need to run the same hooks
-> +as the superproject; for example, submodules could inherit the superproject
-> +config.
-
-I'm hoping to send an RFC patch introducing such an inherited
-superproject config ... very soon. I hope. So there wasn't much detail
-provided here, intentionally.
-
-> +* Sandboxing hook execution to provide higher levels of security.
-
-I think this says: "Can we run a user hook in a container that only has
-access to the repo in question?"
-
-It sounds like a complicated answer. I could see legitimate reasons to
-want wider access than just the container - for example, some
-hook-specific configuration that doesn't fit the Git config format, or
-even something like updating a stats file to keep a record of how many
-commits I made/pushed/whatever every day, stored in a central location
-for reference at performance review time :) But I also don't know alllll
-that much about containerization - I think there are ways to hand over
-access to other needed files like this, right?
-
-But then, I also feel yucky thinking about Debian telling me that my Git
-install also needs me to install Docker... :)
-
-Worth thinking about and discussing at a later date, I'd guess.
-
-> +[[prior-art]]
-> +Prior Art
-> +~~~~~~~~~
-
-I wonder whether it's useful to mention (in mails, I guess, not in
-the checked in doc) why these are bad - do they duplicate work between
-each other? Are they engaging in bad practices when interfacing with
-Git? etc.?
-
-It would be a lot of work to collect, so maybe it's not that useful..
-
-
-Thanks for writing up v2 / mailing it, Albert.
-
- - Emily
+
+On Mon, Mar 29 2021, Junio C Hamano wrote:
+
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+>
+>> Per the log of changes to the Makfile and Junio's recent comment about
+>> [1] why that pattern got introduced it was for a different reason
+>> entirely, i.e. ("[]" edits are mine, for brevity):
+>>
+>>     [T]hat age old convention [...] is spelled [as]:
+>>
+>>     	thing:
+>>     		rm -f thing thing+
+>>     		prepare contents for thing >thing+
+>
+> Did I say that?  I recall I specifically avoided the "redirection"
+> because this is *NOT* shell-script only principle.  If a command is
+> so broken that "cmd -o thing" that fails to work correctly leaves a
+> broken output in thing, then the pattern should be applied and made
+> to "cmd -o thing+ && mv thing+ thing".
+
+[I see this was already noted downthread...]
+
+> On the other hand, if "cmd" refrains from leaving a half-baked
+> result in "-o thing" (and I believe $(CC) is well-behaved even on
+> AIX), I do not think it is a good idea to use that pattern.  One
+> version of AIX may refuse to overwrite a file in use because
+> creat("thing") that is necessary for "-o thing" may fail while
+> "thing" is in use), but another system may refuse to rename over a
+> file in use (i.e. "-o thing+" into a brand new "thing+" may be OK
+> but the final "mv thing+ thing" may fail).  So pretending that it is
+> a cure for broken use case is cluttering Makefile for no real
+> benefit and leading readers into confused thinking.
+
+It does fix this issue entirely on AIX. So it's a cure for the broken
+case.
+
+I can assure you that not having to regularly log in to the GCC farm AIX
+box and remember how to deal with IBM's ps/kill etc. just to do another
+build/test is a real benefit :)
+
+Whereas maybe there's another system we're not fixing with this patch,
+but does it matter? I don't see how it would make things worse for that
+OS, if it exists. But it sounds like it's just a hypothetical.
+
+>>     		mv thing+ thing
+>>
+>>     It protects us from a failure mode where "prepare contents for
+>>     thing" step is broken and leaves a "thing" that does not work, but
+>>     confuses make that make does not need to rebuild it, if you wrote it
+>>     as such:
+>>
+>>     	thing:
+>>     		prepare contents for thing >thing
+>>
+>>     [It might leave behind a corrupt 'thing'.] In any case, it is not
+>>     "we are trying to make thing available while it is being
+>>     rewritten" at all.
+>>
+>> That makes perfect sense for shellscripts, but as this change shows
+>> there's other good reasons to use this age old convention that weren't
+>> considered at the time.
+>
+> So, no, the age old convention may have considered and does not
+> apply to such a use case.
+
+The reason I mentioned this was to specifically address the implied "why
+would we need this?" part of your E-Mail that you're quoting.
+
+I think that started out as us talking past one another, so let me try
+to summarize.
+
+I was basically saying "here's a well-known command idiom" that can be
+used for XYZ.
+
+I think you're basically saying "in git.git, I introduced this idiom to
+deal with problem ABC".
+
+ABC and XYZ aren't incompatible. I'm just saying this can and does solve
+both problems[continued below].
+
+>>  git$X: git.o GIT-LDFLAGS $(BUILTIN_OBJS) $(GITLIBS)
+>> -	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) \
+>> -		$(filter %.o,$^) $(LIBS)
+>> +	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@+ $(ALL_LDFLAGS) \
+>> +		$(filter %.o,$^) $(LIBS) && \
+>> +	mv $@+ $@
+>
+> Really, does anybody else use "$(CC) -o $@" in such a way in their
+> Makefile?  Having to do this smells simply crazy (I am not saying
+> you are crazy---the platform that forces you to write such a thing
+> is crazy).
+
+Yes, if you do say a Google search for "Cannot open or remove a file
+containing a running program" you'll find that there's 15k results of
+people basically (re)discovering this problem in porting their software
+to AIX, and the solutions being some variant of "yes AIX sucks, just use
+this 'cmd >x+ && mv x+ x' trick".
+
+You can also invoke a "slibclean" program to reticulate AIX's splines,
+but I thought this sucked less.
