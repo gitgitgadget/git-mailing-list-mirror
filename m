@@ -2,123 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D88A6C433E0
-	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 21:31:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0CFA8C433E8
+	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 21:35:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A2E8F6198F
-	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 21:31:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E5B066198E
+	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 21:35:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230280AbhC2Var (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Mar 2021 17:30:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51758 "EHLO
+        id S231656AbhC2Vem (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Mar 2021 17:34:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230467AbhC2Vad (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Mar 2021 17:30:33 -0400
-Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9B1CC061574
-        for <git@vger.kernel.org>; Mon, 29 Mar 2021 14:30:32 -0700 (PDT)
-Received: by mail-qk1-x729.google.com with SMTP id q26so13944512qkm.6
-        for <git@vger.kernel.org>; Mon, 29 Mar 2021 14:30:32 -0700 (PDT)
+        with ESMTP id S231613AbhC2VeY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Mar 2021 17:34:24 -0400
+Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C637C061574
+        for <git@vger.kernel.org>; Mon, 29 Mar 2021 14:34:24 -0700 (PDT)
+Received: by mail-qv1-xf2e.google.com with SMTP id g8so7206779qvx.1
+        for <git@vger.kernel.org>; Mon, 29 Mar 2021 14:34:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=F5W4yuzcvwH9xQxP7SxMRastaaucdexjHgqHYaz5ukw=;
-        b=gTBvZSTE6k2ubQTOUmifDaWVjoHrdfa6xG5ap4yLjDdOzMXjyuIDe9SWU2Wh5823wP
-         PKruty0JBJN7maAfeZwaPZcv1M9z655KiVHl4rqS20vfqodZgbMZeUZuSISQp0f96Sqi
-         1/tTO26IIUevrgIFBDqmL2aztXAVGHngJzu6ZrX4tJdTMcmosTkGJRvWJ9F3lmjMuK9S
-         sL0uwRL7rt0B1d7/46emo4sevfka7V1+mafOjGLLe/p6YYiobDnBtA0F8531dlA4vBuQ
-         llQQvFWX32iUP7YBywI5BQOyiMUDjRcQ/M91ZIUZjxTAvrweplIvurswiQWQA4i7YGic
-         zTAw==
+        bh=G7OayzxrfFVbcMN84/1yINFzN49s9Su5Hydbta07fag=;
+        b=LdD1TE+oK0UgWNbmuMp5uvGDVlLnTzTeMlyowIoCuU3feXGN2KzIJU1QTpzg9TgRHH
+         2PTNyc2bZaTrTo+0EErsHEtkxPTZ3Y2zEZ/6ARvJmhIIZ0gHa9nPsMkvl0JUM0nhLHSI
+         G/HkOVpNkKAwTDcCPShireVOtUkfqhTn1zN1oJyIC2RoFrVOlhvLzuusCc9//0NsD8uC
+         JR3D/B3UTpESah8sMoqtNPmsnqGW0Bu6i/R/mN/3McuAl7gvfXyaR0ffxCBMr8Oc3hzx
+         XKeVdbl9o8uAzODGYSwv8/02peAqPgCj3IcHn9ipfB3d12tLoUB8/XedMrB/M9YA/MIj
+         0zwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=F5W4yuzcvwH9xQxP7SxMRastaaucdexjHgqHYaz5ukw=;
-        b=tKTz3s/XClGdeCqtzQLWhkBzmB4wFwX0ZNmKprNKf30OSIvON8GeaapxLtCx3DcxCz
-         diAJUdfpeXnDFP76OhYlJWOnUtHZCPgdgINM4Tw2EAXrxabwbqdxU4Dg4NTx89YkMyDT
-         qTJvAe1ZUI7r0FpEWmbCFQGZzUKNNcRCZ6rnT10kt41AT1fAdkA+1dYOgJ+YSiYf1Mm4
-         jylV9hofBQur+9wE7Hd59ByvvTa5m+dgbHfJ7Lg5YiWSjleFAc4VtyQe6LzqTgb7OOuj
-         AFYFSiLsT/nyoWn5hhVEO3y6eBzSFVK53dUDT4/gVBYEC3EheSha+ITJJgEvzziUe6lr
-         RVpw==
-X-Gm-Message-State: AOAM530CprDXxjg+Xcn87FYKPutgGbUSvyGLuhTkYpgTzjQBaNrV7pNR
-        K66jz/0fCZvgb7VIuTH2RbAHUg==
-X-Google-Smtp-Source: ABdhPJyzAQnPyzXZ66zM2PHUz4x863S/DHK+akmhdFLiumF0H7GMBsqK2AlYlpDQrFA2csvac9c0eA==
-X-Received: by 2002:a37:660e:: with SMTP id a14mr26331502qkc.35.1617053431870;
-        Mon, 29 Mar 2021 14:30:31 -0700 (PDT)
+        bh=G7OayzxrfFVbcMN84/1yINFzN49s9Su5Hydbta07fag=;
+        b=rZbYaDlOr//n4UY5U0AUD8DFNEBeOUbbhjLjbQ+F/HtQSfgNP5mPgFg08gmkLTu0KF
+         ee6IDXQs1IXaB/HO6i+d9GR0kuQhXTiKeSlkyxLvIs7Zq4gkbCUFyymD3iJt1BDKo2hM
+         sqOzpxiQmxYgfmeqQZdPCGNbUa4+5X9xjtYgbqhwRmFqwYeSmsMjqFl62LXoe6bOaXUz
+         jySB5imrV3AdA9GAXoYJZCV4bwXreahLK6l7I+xT6yC8kOiCR3BWLo4IqC7ZCvsyaEA2
+         XazKcaA+06kpcPFQFwN5zkCjwVuTR7SqMi6+PjBuO7D3Hb3AEGwj0Qs2+1KK9QgcPyOk
+         wgGQ==
+X-Gm-Message-State: AOAM532zNxCAdEuy02uk/+DuiJc1Sh+LhkxTIHgkQrC3wT7XZaLjIcYx
+        RHMpcAz2aQdu5Pl7dtE5x7IRS2kkv6iTfQ==
+X-Google-Smtp-Source: ABdhPJy+ngWLIdI0HAKgiLzVfLCV+RzujeHRXzijGP1q3vHBHjOti8KV16t6WPpcvNJSS7+oCjgL3w==
+X-Received: by 2002:a0c:c342:: with SMTP id j2mr27093174qvi.41.1617053662589;
+        Mon, 29 Mar 2021 14:34:22 -0700 (PDT)
 Received: from localhost ([2605:9480:22e:ff10:7b00:4f79:8763:6261])
-        by smtp.gmail.com with ESMTPSA id g4sm11965546qtg.86.2021.03.29.14.30.31
+        by smtp.gmail.com with ESMTPSA id o21sm11769314qtp.72.2021.03.29.14.34.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Mar 2021 14:30:31 -0700 (PDT)
-Date:   Mon, 29 Mar 2021 17:30:30 -0400
+        Mon, 29 Mar 2021 14:34:22 -0700 (PDT)
+Date:   Mon, 29 Mar 2021 17:34:21 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     Jeff King <peff@peff.net>
 Cc:     git@vger.kernel.org, avarab@gmail.com, dstolee@microsoft.com,
         gitster@pobox.com, jonathantanmy@google.com
-Subject: Re: [PATCH v3 15/16] pack-revindex: write multi-pack reverse indexes
-Message-ID: <YGJG9sALir6FuW44@nand.local>
+Subject: Re: [PATCH v3 16/16] midx.c: improve cache locality in
+ midx_pack_order_cmp()
+Message-ID: <YGJH3fzQXL6TvPK2@nand.local>
 References: <cover.1612998106.git.me@ttaylorr.com>
  <cover.1615482270.git.me@ttaylorr.com>
- <fa3acb5d5af3aab46dd2a9703e4da03928625346.1615482270.git.me@ttaylorr.com>
- <YGHNwin9zcrP00dI@coredump.intra.peff.net>
+ <550e785f10ba14f166958501c007b75a04052a0d.1615482270.git.me@ttaylorr.com>
+ <YGHPINrwIZ1mKK+y@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <YGHNwin9zcrP00dI@coredump.intra.peff.net>
+In-Reply-To: <YGHPINrwIZ1mKK+y@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 29, 2021 at 08:53:22AM -0400, Jeff King wrote:
-> On Thu, Mar 11, 2021 at 12:05:38PM -0500, Taylor Blau wrote:
+On Mon, Mar 29, 2021 at 08:59:12AM -0400, Jeff King wrote:
+> On Thu, Mar 11, 2021 at 12:05:42PM -0500, Taylor Blau wrote:
 >
-> > Implement the writing half of multi-pack reverse indexes. This is
-> > nothing more than the format describe a few patches ago, with a new set
-> > of helper functions that will be used to clear out stale .rev files
-> > corresponding to old MIDXs.
->
-> Looks good.
->
-> > +struct clear_midx_data {
-> > +	char *keep;
-> > +	const char *ext;
-> > +};
-> > +
-> > +static void clear_midx_file_ext(const char *full_path, size_t full_path_len,
-> > +				const char *file_name, void *_data)
->
-> This will clean up _any_ stale midx .rev file. So even if we miss one
-> when writing a new midx (due to a bug, race, power loss, etc), we'll
-> catch it later.
->
-> We _might_ want to also teach various tempfile-cleanup code run by gc to
-> likewise look for unattached midx .rev files, but I don't think we
-> necessarily have to do it now.
-
-Agreed there on both counts.
-
-> >  void clear_midx_file(struct repository *r)
-> >  {
-> >  	char *midx = get_midx_filename(r->objects->odb->path);
-> > @@ -1049,6 +1162,8 @@ void clear_midx_file(struct repository *r)
-> >  	if (remove_path(midx))
-> >  		die(_("failed to clear multi-pack-index at %s"), midx);
+> > From: Jeff King <peff@peff.net>
 > >
-> > +	clear_midx_files_ext(r, ".rev", NULL);
-> > +
-> >  	free(midx);
+> > There is a lot of pointer dereferencing in the pre-image version of
+> > 'midx_pack_order_cmp()', which this patch gets rid of.
+> >
+> > Instead of comparing the pack preferred-ness and then the pack id, both
+> > of these checks are done at the same time by using the high-order bit of
+> > the pack id to represent whether it's preferred. Then the pack id and
+> > offset are compared as usual.
+> >
+> > This produces the same result so long as there are less than 2^31 packs,
+> > which seems like a likely assumption to make in practice.
 >
-> The sole caller now doesn't pass the "keep" hash, so we'd always delete
-> all of them. I guess we'll see that change once somebody starts actually
-> writing them.
+> Obviously this patch is brilliant. ;)
 
-That's right. I hope that the benefits of splitting the MIDX bitmaps
-topic into two series has generally outweighed the drawbacks, but in
-instances like these it can be kind of annoying.
+Obviously.
+
+> Did we record any numbers to show the improvement here? I don't think it
+> can be demonstrated with this series (since most of the code is dead),
+> but I recall that this was motivated by a noticeable slowdown.
+
+Looking through our messages, you wrote that this seemed to produce a
+.8 second speed-up on a large-ish repository that we were testing.
+That's not significant overall, the fact that we were spending so long
+probably caught our attention when looking at a profiler.
+
+I could go either way on mentioning it. It does feel a little like
+cheating to say, "well, if you applied these other patches it would make
+it about this much faster". So I'm mostly happy to just keep it vague
+and say that it makes things a little faster, unless you feel strongly
+otherwise.
+
+> I briefly wondered whether the complicated midx_pack_order_cmp() in
+> pack-revindex.c, which is used for the bsearch() there, could benefit
+> from the same speedup. It's only log(n), of course, instead of n*log(n),
+> but one might imagine making "n" calls to it. I don't think it makes
+> sense, though. The pointer dereferencing there is into the midx mmap
+> itself. Creating an auxiliary array would defeat the purpose.
+
+Right.
+
+> -Peff
 
 Thanks,
 Taylor
