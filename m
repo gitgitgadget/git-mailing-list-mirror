@@ -2,93 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EF16C433C1
-	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 20:42:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 07ACEC433E0
+	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 20:48:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 00EB461990
-	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 20:42:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C6E5E619AA
+	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 20:48:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230447AbhC2Ulj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Mar 2021 16:41:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41166 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231297AbhC2UlW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Mar 2021 16:41:22 -0400
-Received: from mail-il1-x12f.google.com (mail-il1-x12f.google.com [IPv6:2607:f8b0:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B237C061574
-        for <git@vger.kernel.org>; Mon, 29 Mar 2021 13:41:21 -0700 (PDT)
-Received: by mail-il1-x12f.google.com with SMTP id d2so12325912ilm.10
-        for <git@vger.kernel.org>; Mon, 29 Mar 2021 13:41:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=DxFwa00NekH79iIr8oCNL7gww0CSanpJJijmyO6vsUk=;
-        b=qdn8d9+cnDstgs46BBwI6NHA6pubDyRgy9nyeSHU0U8s+H2CfDCtCZh/+W0XucBmwV
-         bJ4sjLWOAyRe3MX9S3Bfvzuup2XV+4hdYdGv63Lz+hVUwB2GX6a/OHsroy2wOQ62iJUB
-         jjqNxZM6SimNFkF/oGT49lXb1yX+GNscg4o2iZc9L664aEwBJaywi3d1HzPzIMWTrPza
-         v5a98hu84vtkl/6LGFyF4bUtYJGzdkLpSuOjAyLJss8h8XYTTyfs8eTtuBUkkcujB6m+
-         mx1oiWR21+IBJq9C52PWYs9Q9nk9828bxwr/fMCd9JOMEKLPr88zhZEHdiWiz15ySQo9
-         OS3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=DxFwa00NekH79iIr8oCNL7gww0CSanpJJijmyO6vsUk=;
-        b=KqOLw8sdORd2gwruWdAdl4CA2c9xgVJg9gTYx2EFPeyp9IFnNHs9nFUl6FQwCkVyIy
-         unHsQbhmi75MKeElCMHhfaHm/cLRHAyziQFUdw1eEYUfxIwGqtkQh5znzrG0PbPlh9/7
-         MW2VXQjynPQNRc7RL9Z5FeAeWAlxWklS5ny/hSXlh4/tE57LpqzA7/UpHJe1Xn+Yodb+
-         8Jpxh30e6CwwRd8itmxRNGSExDrxjixYEe29Iq5xCwWrUcoQB7pAeZn2kWj/is1an57A
-         +++TagChLcegvvBpg9gQnY9tvriS/ZxgWqergGV6LWFKb9SoIjCyDdD64jREshOXlAHf
-         7Rgg==
-X-Gm-Message-State: AOAM53207q1CYvvstSioYIUrvlwr2xotTNoZpJgh6kPliwqMTgd1ehOQ
-        ctErrHduDhxOQEGn0Pt3F5Yx7A==
-X-Google-Smtp-Source: ABdhPJysnHQr7FB6a9CKkaJChQ7gBAoYYrEqYNikii2nUlKmDI3tVz7AITqyUQykvNBpbncqwViv6w==
-X-Received: by 2002:a05:6e02:1348:: with SMTP id k8mr23553905ilr.277.1617050480920;
-        Mon, 29 Mar 2021 13:41:20 -0700 (PDT)
-Received: from localhost ([2605:9480:22e:ff10:7b00:4f79:8763:6261])
-        by smtp.gmail.com with ESMTPSA id a12sm10376693ilt.53.2021.03.29.13.41.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Mar 2021 13:41:20 -0700 (PDT)
-Date:   Mon, 29 Mar 2021 16:41:19 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, avarab@gmail.com, dstolee@microsoft.com,
-        gitster@pobox.com, jonathantanmy@google.com
-Subject: Re: [PATCH v3 06/16] builtin/multi-pack-index.c: display usage on
- unrecognized command
-Message-ID: <YGI7b1xTYOQeyEy3@nand.local>
-References: <cover.1612998106.git.me@ttaylorr.com>
- <cover.1615482270.git.me@ttaylorr.com>
- <f117e442c3460661dc88beba6f1853d6c388b0fd.1615482270.git.me@ttaylorr.com>
- <YGG9GogdjlijGxSF@coredump.intra.peff.net>
+        id S230523AbhC2UsI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Mar 2021 16:48:08 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54702 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231340AbhC2UrZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Mar 2021 16:47:25 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 75CCFB84E0;
+        Mon, 29 Mar 2021 16:47:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=PYQ7KXcAz80UEmd73dJCMt/UAqc=; b=a8jNwb
+        pZpP0In/pgIzqyi3vUrFlG4sgkyvrKgACBeL9lLlZ11KmnuZ5T7b449oBNvp5oaY
+        oEOq1Gp0dlpIqhdbWERMXfhykq/StFyPXz2LvyrPi9CILHXybdFPGJbLX69SWi4f
+        do6U6uDnYqSlftEjglC8owFLr8AnS7n/11aiY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Z5zPTnyllZ9dTb7z6lwoOR+FG9WNwEbC
+        HXgDuG1WH/W5PqL1c9t1qyCVesGFG8qeF+lTLn0HcwEwva0QTW81ACjbjZmyTgNo
+        4yjO/r1Cpdc1QUEj5YDUSl0E66omj+TBnrUJI1UicxL+J3rd3+umlyaBbc2lrcJI
+        1xyiG+/i11I=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6D6A0B84DF;
+        Mon, 29 Mar 2021 16:47:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D8035B84DE;
+        Mon, 29 Mar 2021 16:47:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Atharva Raykar <raykar.ath@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [GSOC][PATCH] userdiff: add support for Scheme
+References: <20210327173938.59391-1-raykar.ath@gmail.com>
+        <xmqq5z1cqki7.fsf@gitster.g>
+        <EBC020E6-BE8B-4332-8225-A988CB7CFA69@gmail.com>
+        <xmqqft0fm9uu.fsf@gitster.g>
+        <562DCDA0-EAE6-408F-97D7-127689DE5559@gmail.com>
+Date:   Mon, 29 Mar 2021 13:47:17 -0700
+In-Reply-To: <562DCDA0-EAE6-408F-97D7-127689DE5559@gmail.com> (Atharva
+        Raykar's message of "Mon, 29 Mar 2021 13:42:22 +0530")
+Message-ID: <xmqq1rbxk7qi.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YGG9GogdjlijGxSF@coredump.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: F3DE7E52-90CF-11EB-BDC5-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 29, 2021 at 07:42:18AM -0400, Jeff King wrote:
-> I.e., I'd suggest changing this:
->
-> >  	else
-> > -		die(_("unrecognized subcommand: %s"), argv[0]);
-> > +usage:
-> > +		usage_with_options(builtin_multi_pack_index_usage,
-> > +				   builtin_multi_pack_index_options);
->
-> to:
->
->   error(_("unrecognized subcommand: %s"), argv[0]);
->   usage_with_options(...);
+Atharva Raykar <raykar.ath@gmail.com> writes:
 
-Thanks, that's a helpful suggestion (and pretty easy to change, too).
+>> Having said that, two further points.
+>> 
+>> - the "anything but whitespaces and various forms of parentheses"
+>>   set would include backslash, so 'component\new' would be taken as
+>>   a single word with "[^][()\\{\\} \t]+", wouldn't it?
+>> 
+>> - how common is the use of backslashes in identifiers?  I am trying
+>>   to see if the additional complexity needed to support them is
+>>   worth the benefit.
+>
+> I have refined the regex, and now it is much simpler and does all of what
+> I want it to:
+>
+> 	"([^][)(}{[:space:]])+"
 
-Thanks,
-Taylor
+OK, [:space:] is already used elsewhere, so it would be OK.
+
+In practice, the only difference from "[ \t]" (which is used in many
+other patterns in the same file) is that [:space:] class includes
+form-feed (\Ctrl-L); nobody would write vertical-tab in the code,
+and the matching is done one line at a time, so the fact that LF (or
+CRLF) is in the [:space:] class does not make a difference anyway.
+
+> I did not have to escape the various parentheses, so I avoided the need to
+> handle backslashes separately. The "\\t" was causing problems as well because
+
+If you spelled "\\t" that would have caused a problem of your own
+making ;-)
+
+I think what I gave in the message you are responding to was a
+single backslash followed by a 't', to let the compiler turn them
+into a single HT character, and that wouldn't have had such a
+problem---in fact "[ \t]" is used in many other existing rules in
+the same file.
+
+Thanks.
+
