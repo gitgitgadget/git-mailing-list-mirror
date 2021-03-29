@@ -2,103 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 94BC5C433C1
-	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 12:13:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A1CB6C433C1
+	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 12:16:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6A0E460235
-	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 12:13:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 53EA660235
+	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 12:16:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230209AbhC2MND (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Mar 2021 08:13:03 -0400
-Received: from cloud.peff.net ([104.130.231.41]:35450 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229555AbhC2MMk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Mar 2021 08:12:40 -0400
-Received: (qmail 10578 invoked by uid 109); 29 Mar 2021 12:12:40 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 29 Mar 2021 12:12:40 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 13242 invoked by uid 111); 29 Mar 2021 12:12:39 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 29 Mar 2021 08:12:39 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 29 Mar 2021 08:12:39 -0400
-From:   Jeff King <peff@peff.net>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, avarab@gmail.com, dstolee@microsoft.com,
-        gitster@pobox.com, jonathantanmy@google.com
-Subject: Re: [PATCH v3 12/16] Documentation/technical: describe multi-pack
- reverse indexes
-Message-ID: <YGHEN6rcao2tJ006@coredump.intra.peff.net>
-References: <cover.1612998106.git.me@ttaylorr.com>
- <cover.1615482270.git.me@ttaylorr.com>
- <4745bb8590f5cdc24445618dd63ba6bd541227b4.1615482270.git.me@ttaylorr.com>
+        id S230204AbhC2MPo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Mar 2021 08:15:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44294 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230098AbhC2MPa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Mar 2021 08:15:30 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9A28C061574
+        for <git@vger.kernel.org>; Mon, 29 Mar 2021 05:15:29 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id u21so19029644ejo.13
+        for <git@vger.kernel.org>; Mon, 29 Mar 2021 05:15:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=vHJ6fcSglUASdAl6QO2RL+3+1qMlmw+UNHVZ1O1ODMU=;
+        b=CIyANWOTdsyvGnvbSf1eYDHXiBLcV/IEMsn99eR1ptUO2YKj+9o4t3RCnrglsU24wE
+         qsAiU3g9wvdngi+xOOqdyee7Nz0xTkTNWhVG3T0dYbBUJzjxkQuFepRg9i+A4SydTT/l
+         1GrBkgy7El3GiNvkvQZdhXASjz/3qWcH+yyNhkIDlgg5YUVolJfDrS9YXjhr7ywceVXH
+         e/C3B7/XWT7G314WBE7Yk9QSEENLXIiK2+g/+K1IxR1pL9K/yJGym4ApqUMEb+Tzkpeh
+         sa0v5s4guhKI3Sr33n1QhdECJcvSmptwNhk4XuDLYksyYz7ggy2sPIxBa5VOwUCygX2g
+         pJzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=vHJ6fcSglUASdAl6QO2RL+3+1qMlmw+UNHVZ1O1ODMU=;
+        b=KWO+Zyb0WpTlY5tgyw7m5vg46gEj125HXo45rKdE7dJelN2wqFV2UAbCifvnqqmoIt
+         CP+tDYofZeSWhQ/9AWLjjdksbNOtpFXjGXND7PpYcQ9r6mzEL4JZGtDsqtlzTo8M1oN/
+         8fZSS5ydsEtIo3v9CKgcWC7hxb3MykMh0QNw8Mq3vpywFPQMV2SHa6v0nRNsExjLn+/M
+         lGBfkddU8s5ipxMyHYHUSwXKzAYCCIPCg3UW+n1v6+eYP7e1SO+qAWqAlfauVFRdM0SM
+         RTh+s/xCJH0txcgq1U46Gi2lQP4J7eQ7VL4gdhDU8RHAvCxDrQwq3CIEI03yz+pQ2qU3
+         B8sw==
+X-Gm-Message-State: AOAM532CRxSEj4Wk6/U1nMQ1ZgdImYS+A1majYCizo+H1blkHGkakN6m
+        JT0Odk+WhnHZ2W24Z1kG7JGIeWh0bP+lrye8SNJ2UAOUM5k/VA==
+X-Google-Smtp-Source: ABdhPJymaOYZHAzMzH1WQryEjWhRh4A3HuRGJyHZNk0AvyxpOAIYZWI3D24uRU5SZzcUwTuqQmaQE2QbLqnf05Bh/h8=
+X-Received: by 2002:a17:907:68a:: with SMTP id wn10mr28539935ejb.551.1617020128490;
+ Mon, 29 Mar 2021 05:15:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <4745bb8590f5cdc24445618dd63ba6bd541227b4.1615482270.git.me@ttaylorr.com>
+References: <0e32b0af-cd05-39a9-51a9-4d983e7085cc@gmail.com>
+In-Reply-To: <0e32b0af-cd05-39a9-51a9-4d983e7085cc@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 29 Mar 2021 14:15:17 +0200
+Message-ID: <CAP8UFD1TmckvQLVQ7eWMKakMKOF76J+Z+E25vUCGkWveXMWv1g@mail.gmail.com>
+Subject: Re: Upstreaming Reviewed-by to git.git
+To:     Bagas Sanjaya <bagasdotme@gmail.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 11, 2021 at 12:05:25PM -0500, Taylor Blau wrote:
+Hi,
 
-> As a prerequisite to implementing multi-pack bitmaps, motivate and
-> describe the format and ordering of the multi-pack reverse index.
+On Mon, Mar 29, 2021 at 1:03 PM Bagas Sanjaya <bagasdotme@gmail.com> wrote:
 
-Nicely written overall. I found a few typos / formatting issues.
+> I had reviewing patches here, but how can my reviews be credited with
+> Reviewed-by tags to the applicable patches on git.git (Git SCM)
+> repo (upstream)?
 
-> +One solution is to let bits occupy the same position in the oid-sorted
-> +index stored by the MIDX. But because oids are effectively random, there
+When you have reviewed a patch or a patch series, you can tell the
+reviewer you are ok with the patch or patch series, and that you are
+ok with them adding your "Reviewed-by: yourname <youremail>" to it.
 
-s/there/their/
-
-> +Given the list of packs and their counts of objects, you can
-> +na&iuml;vely reconstruct that pseudo-pack ordering (e.g., the object at
-
-An HTML entity seems to have snuck in. The source is utf8, so we can
-just say ï.
-
-> +position 27 must be (c,1) because packs "a" and "b" consumed 25 of the
-> +slots). But there's a catch. Objects may be duplicated between packs, in
-> +which case the MIDX only stores one pointer to the object (and thus we'd
-> +want only one slot in the bitmap).
-> +
-> +Callers could handle duplicates themselves by reading objects in order
-> +of their bit-position, but that's linear in the number of objects, and
-> +much too expensive for ordinary bitmap lookups. Building a reverse index
-> +solves this, since it is the logical inverse of the index, and that
-> +index has already removed duplicates. But, building a reverse index on
-> +the fly can be expensive. Since we already have an on-disk format for
-> +pack-based reverse indexes, let's reuse it for the MIDX's pseudo-pack,
-> +too.
-
-Yep, I think this nicely builds up the logic explaining the need for the
-midx .rev file.
-
-> +Objects from the MIDX are ordered as follows to string together the
-> +pseudo-pack. Let _pack(o)_ return the pack from which _o_ was selected
-> +by the MIDX, and define an ordering of packs based on their numeric ID
-> +(as stored by the MIDX). Let _offset(o)_ return the object offset of _o_
-> +within _pack(o)_. Then, compare _o~1~_ and _o~2~_ as follows:
-
-I guess the asciidoc-formatted version of this makes these nicely
-italicized and subscripted. Personally I think pack(o) and o1 would be
-more readable in the source (which is what I would tend to read). Or
-maybe backticks if you want to be fancy.
-
-> +  - If _pack(o~1~) &ne; pack(o~2~)_, then sort the two objects in
-> +    descending order based on the pack ID.
-> +
-> +  - Otherwise, _pack(o~1~) &equals; pack(o~2~)_, and the objects are
-> +    sorted in pack-order (i.e., _o~1~_ sorts ahead of _o~2~_ exactly
-> +    when _offset(o~1~) &lt; offset(o~2~)_).
-
-A few more HTML bits in the comparison operators.
-
--Peff
+If you are applying to the GSoC or other such program, you can also
+put links to the discussions you participated in in your proposal.
