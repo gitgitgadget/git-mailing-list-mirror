@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C7CFDC433DB
-	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 16:32:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8438DC433DB
+	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 16:33:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9CF6261970
-	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 16:32:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 41BAB6196C
+	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 16:33:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231396AbhC2QcE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Mar 2021 12:32:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43880 "EHLO
+        id S230271AbhC2Qce (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Mar 2021 12:32:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43902 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231367AbhC2Qb6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Mar 2021 12:31:58 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40FCCC061574
-        for <git@vger.kernel.org>; Mon, 29 Mar 2021 09:31:58 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id k8so13505554wrc.3
-        for <git@vger.kernel.org>; Mon, 29 Mar 2021 09:31:58 -0700 (PDT)
+        with ESMTP id S231358AbhC2QcF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Mar 2021 12:32:05 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C085CC061764
+        for <git@vger.kernel.org>; Mon, 29 Mar 2021 09:32:01 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id j9so11776148wrx.12
+        for <git@vger.kernel.org>; Mon, 29 Mar 2021 09:32:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ZIF5VpYdYM3efNsRkPetV0hHOT254q5eciARxbBdoBc=;
-        b=Wj/dnUsN3B7bpxrvqYEkVTmbzT50sV6u7BgxpCunv8fmRlq8JI7OnuO57wkbNz3vc8
-         kw2/JOK8LNDaYtyizBB/kSS+g6V/XhS2y+zyBsQ+2Eu3Xnf3jzH+vooukZmizjdwYftI
-         tQKfXVx1Q1ZjBvmNibkmzjbaC0HbWH7oHorYoH2NiG4GxUjoV5QaFw9MEVeY3oZMN5RH
-         e9gxaKoHu5xSWJuuGaElN0webFO86q81UlkRWar87JNuo/MqhRcgp4i66kP9Jl1Zd24R
-         iUdttZuZCgyOtjTmw/F3LUMvI4OWFQ1hXkfRiwq142tR46z6dbR6bUIb08lPBNtNgUSr
-         +qhw==
+        bh=grBhtkkdpxxEo3tdbaS++MIc5r/3IQpDNol0/r/2tcs=;
+        b=FoUQ94z89Ne+Rv1+xBBnPuHOM39O3aUP/Lq6rZqnhtITpj45S2EnAg3i0yDaAYuD+e
+         WbhmXbAlQS3wy0LGBh00L+JiSAyWioooDbuKwV3yMtofULTM7YZDYMx7kZO7t97a7seZ
+         2YKmnb3/mjX23Prty+nGCzg1x3XfZJZ2LHlu9TuE0W0mnqPLPnh6fSIw0WoTuIutpQCi
+         LhDHBznqcWSB7/i9xGAN9yE0Ti1kr1Pu6vKf28UhISPztj/+U8ILcabIDKCK2PIammSX
+         9sGcW4vRdATjBWjBlmh21hPi67wVN5y4x/yygnZDEGscLaLeRvZMdQuJE1LSdK0iRRXE
+         bVXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ZIF5VpYdYM3efNsRkPetV0hHOT254q5eciARxbBdoBc=;
-        b=VHE1yV5eSf18QWMaZHt3xN1MgXdX9z39qTGf4WRKzjS/VjWh4KmoJhi4rBr/YUBKKz
-         qaAIuatNl/i9Kk4qBsCwIHMLPWOdJdjz5EO2OJT3zjjqwtIcJPG9OkFgrQbM7FTDBFel
-         UUsG8p8+2Kss1xKD1AqsMsPQAa5Qs16qxALh+itwpr1XEZzhrOBhW3opt9e3yu4bMSJY
-         z3pReXLRUq1kJu8cz4EMORQ4evq8NwY7N5zA6OHqzrgkgqjyVaZUK1SvLXXlHez07naq
-         RqjMNfyh/oNJc1mbe3Uc5iRJfCUGs+pb1vajSrvJJSSvgxMMmfwMwg7HsC2md52lkI12
-         JCfg==
-X-Gm-Message-State: AOAM531wDrdAwIWMWO2wyQAZS91CccF6F9s9F1hZU/VqG1KAE90oMHla
-        mL4453QNdhCq/wB8j42DqEgY9xcd6ByAOQ==
-X-Google-Smtp-Source: ABdhPJwd9VdzIWd4pOv8zoSKKtGkvcKuyv4KorC3XOPX0b5I4q6VeqR+JMsLvFgbzCPWbmvpq1vewA==
-X-Received: by 2002:adf:9d48:: with SMTP id o8mr29696016wre.183.1617035516746;
-        Mon, 29 Mar 2021 09:31:56 -0700 (PDT)
+        bh=grBhtkkdpxxEo3tdbaS++MIc5r/3IQpDNol0/r/2tcs=;
+        b=N1G3sFRSXHg6CLN+3xDM9fOApVf88r1f8iMSjJnDpRilRG+wdXGy5BityLR+EYrY7g
+         BHf/fWeGai6cq86Yg8dY/i+r4urEIlkPjZpHqwx/kI1OO2ImvVr8aKEtJXwjDi49EBkA
+         QlopLPIDtg3lJr8ggTdiYjmywyg7vxBveF4BhK/73rMwS/B6rgzCJFB4cZIXralJjc8o
+         l3VUKMEZz0yd3oTKNl+0cR+UdGMyJhuqMl3yVOgOG/zMsJqv6wLFMT3McGWvfq/9sdND
+         elKpywc5Itub3R3ZmliNvDAwPaw78i1/bDBeW69U7NSjT3YGxSRz2ZKFQWfFSZS/ctvh
+         n8BQ==
+X-Gm-Message-State: AOAM531MfqqvIKx/CGXVa2vWWBQAJKIj97I2t+jefl+D0chbLoFRCpJ2
+        eA2P7ql1PLw74r6UO/JI8PpfSCTqIEzFnw==
+X-Google-Smtp-Source: ABdhPJyawr2tP+QNaQso7mliQBOK3CIg6eoB5fT+5gll13UZ7Ljw/G8BsQEuqIAAlDJri5Ke9DWFXg==
+X-Received: by 2002:a5d:4904:: with SMTP id x4mr29201302wrq.69.1617035520307;
+        Mon, 29 Mar 2021 09:32:00 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id l21sm25410464wmg.41.2021.03.29.09.31.56
+        by smtp.gmail.com with ESMTPSA id l21sm25410464wmg.41.2021.03.29.09.31.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Mar 2021 09:31:56 -0700 (PDT)
+        Mon, 29 Mar 2021 09:31:59 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -64,9 +64,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 1/6] Makefile: symlink the same way under "symlinks" and "no hardlinks"
-Date:   Mon, 29 Mar 2021 18:31:39 +0200
-Message-Id: <patch-1.7-39926acb0d1-20210329T162327Z-avarab@gmail.com>
+Subject: [PATCH 5/6] Makefile: use "ln -f" instead of "rm && ln"
+Date:   Mon, 29 Mar 2021 18:31:43 +0200
+Message-Id: <patch-5.7-f81708f6120-20210329T162327Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.1.461.gd47399f6574
 In-Reply-To: <cover-0.7-00000000000-20210329T162327Z-avarab@gmail.com>
 References: <cover-0.6-00000000000-20210329T161723Z-avarab@gmail.com> <cover-0.7-00000000000-20210329T162327Z-avarab@gmail.com>
@@ -77,105 +77,102 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When the INSTALL_SYMLINKS option was added in ad874608d8c (Makefile:
-optionally symlink libexec/git-core binaries to bin/git, 2018-03-13)
-we retained bug-for-bug compatibility with how the old
-NO_INSTALL_HARDLINKS=Y would selectively fall back on symlinks.
+Change the invocations and behavior of "ln-or-cp.sh" to not assume
+that we're going to "rm" the file in question beforehand.
 
-In particular INSTALL_SYMLINKS=Y will result in a link tree like:
-
-    bin/git
-    libexec/git -> ../bin/git
-    libexec/git-add -> ../bin/git
-
-Whereas NO_INSTALL_HARDLINKS=Y in cases where the "ln" would fail would result in:
-
-    bin/git
-    libexec/git
-    libexec/git-add -> git
-
-I.e. we duplicated the "git" between the bin/ and libexec/
-directories (by default they're hardlinked), and potentially had had
-e.g. "git-add" pointing at the libexec/git hardlink (or more likely if
-"ln" is failing, a copy), instead of the bin/git.
-
-Now we'll instead use the same symlinks to point to the bindir. I
-don't see any reason not to do so, and no breakage related to this has
-been reported with INSTALL_SYMLINKS in all this time. I just did it
-this way to maintain bug-for-bug compatibility at the time.
-
-There is a behavior change here, if the "ln -s" fails we'll no longer
-direct it to stderr. Supporting that edge case would be painful, and
-as we'll see in subsequent commits that difference is going away
-anyway, so let's proceed for now without retaining it.
+This reduces the complexity of these rules, and as a bonus means it's
+now safe to "make install" on a system that may have running "git"
+programs, before this we'd be racing the "rm && ln/cp" and wouldn't
+have a working "git" (or one of the built-ins) in the interim.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Makefile | 18 ++++++++----------
- 1 file changed, 8 insertions(+), 10 deletions(-)
+ Makefile    | 10 ++--------
+ ln-or-cp.sh |  5 ++---
+ 2 files changed, 4 insertions(+), 11 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index ce76c476a3c..1e59d90a8d2 100644
+index 29d9bade5a8..466df1a8e90 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -334,15 +334,16 @@ all::
- # Define INSTALL_SYMLINKS if you prefer to have everything that can be
- # symlinked between bin/ and libexec/ to use relative symlinks between
- # the two. This option overrides NO_CROSS_DIRECTORY_HARDLINKS and
--# NO_INSTALL_HARDLINKS which will also use symlinking by indirection
--# within the same directory in some cases, INSTALL_SYMLINKS will
-+# NO_INSTALL_HARDLINKS. This will not produce any indirect symlinks, we will
- # always symlink to the final target directly.
- #
- # Define NO_CROSS_DIRECTORY_HARDLINKS if you plan to distribute the installed
- # programs as a tar, where bin/ and libexec/ might be on different file systems.
- #
--# Define NO_INSTALL_HARDLINKS if you prefer to use either symbolic links or
--# copies to install built-in git commands e.g. git-cat-file.
-+# Define NO_INSTALL_HARDLINKS if you'd like to have programs in bin/
-+# and libexec/ either symlinked (we try with INSTALL_SYMLINKS first),
-+# or if that fails fall back on a "cp" instead of a "ln". Useful for
-+# when you don't want hardlinks at all.
- #
- # Define SKIP_DASHED_BUILT_INS if you do not need the dashed versions of the
- # built-ins to be linked/copied at all.
-@@ -3019,33 +3020,30 @@ endif
+@@ -2204,8 +2204,7 @@ version.sp version.s version.o: EXTRA_CPPFLAGS = \
+ 
+ $(BUILT_INS): GIT-LNCPFLAGS
+ $(BUILT_INS): git$X
+-	$(QUIET_BUILT_IN)$(RM) $@ && \
+-	./ln-or-cp.sh \
++	$(QUIET_BUILT_IN)./ln-or-cp.sh \
+ 		--install-symlinks "$(INSTALL_SYMLINKS)" \
+ 		$< $@
+ 
+@@ -2558,8 +2557,7 @@ git-http-push$X: http.o http-push.o GIT-LDFLAGS $(GITLIBS)
+ 
+ $(REMOTE_CURL_ALIASES): GIT-LNCPFLAGS
+ $(REMOTE_CURL_ALIASES): $(REMOTE_CURL_PRIMARY)
+-	$(QUIET_LNCP)$(RM) $@ && \
+-	./ln-or-cp.sh \
++	$(QUIET_LNCP)./ln-or-cp.sh \
+ 		--install-symlinks "$(INSTALL_SYMLINKS)" \
+ 		$< $@
+ 
+@@ -3021,7 +3019,6 @@ endif
+ 	destdir_from_execdir_SQ=$$(echo '$(gitexecdir_relative_SQ)' | sed -e 's|[^/][^/]*|..|g') && \
+ 	{ test "$$bindir/" = "$$execdir/" || \
+ 	  for p in git$X $(filter $(install_bindir_programs),$(ALL_PROGRAMS)); do \
+-		$(RM) "$$execdir/$$p" && \
+ 		./ln-or-cp.sh \
+ 			--install-symlinks "$(INSTALL_SYMLINKS)" \
+ 			--no-install-hardlinks "$(NO_INSTALL_HARDLINKS)" \
+@@ -3031,7 +3028,6 @@ endif
+ 	  done; \
  	} && \
  	for p in $(filter $(install_bindir_programs),$(BUILT_INS)); do \
- 		$(RM) "$$bindir/$$p" && \
--		test -n "$(INSTALL_SYMLINKS)" && \
-+		test -n "$(INSTALL_SYMLINKS)" -o "$(NO_INSTALL_HARDLINKS)" && \
- 		ln -s "git$X" "$$bindir/$$p" || \
- 		{ test -z "$(NO_INSTALL_HARDLINKS)" && \
- 		  ln "$$bindir/git$X" "$$bindir/$$p" 2>/dev/null || \
--		  ln -s "git$X" "$$bindir/$$p" 2>/dev/null || \
- 		  cp "$$bindir/git$X" "$$bindir/$$p" || exit; }; \
+-		$(RM) "$$bindir/$$p" && \
+ 		./ln-or-cp.sh \
+ 			--install-symlinks "$(INSTALL_SYMLINKS)" \
+ 			--no-install-hardlinks "$(NO_INSTALL_HARDLINKS)" \
+@@ -3039,7 +3035,6 @@ endif
+ 			"$$bindir/git$X" "$$bindir/$$p"; \
  	done && \
  	for p in $(BUILT_INS); do \
- 		$(RM) "$$execdir/$$p" && \
+-		$(RM) "$$execdir/$$p" && \
  		if test -z "$(SKIP_DASHED_BUILT_INS)"; \
  		then \
--			test -n "$(INSTALL_SYMLINKS)" && \
-+			test -n "$(INSTALL_SYMLINKS)" -o "$(NO_INSTALL_HARDLINKS)" && \
- 			ln -s "$$destdir_from_execdir_SQ/$(bindir_relative_SQ)/git$X" "$$execdir/$$p" || \
- 			{ test -z "$(NO_INSTALL_HARDLINKS)" && \
- 			  ln "$$execdir/git$X" "$$execdir/$$p" 2>/dev/null || \
--			  ln -s "git$X" "$$execdir/$$p" 2>/dev/null || \
- 			  cp "$$execdir/git$X" "$$execdir/$$p" || exit; }; \
- 		fi \
+ 			./ln-or-cp.sh \
+@@ -3051,7 +3046,6 @@ endif
  	done && \
  	remote_curl_aliases="$(REMOTE_CURL_ALIASES)" && \
  	for p in $$remote_curl_aliases; do \
- 		$(RM) "$$execdir/$$p" && \
--		test -n "$(INSTALL_SYMLINKS)" && \
-+		test -n "$(INSTALL_SYMLINKS)" -o "$(NO_INSTALL_HARDLINKS)" && \
- 		ln -s "git-remote-http$X" "$$execdir/$$p" || \
- 		{ test -z "$(NO_INSTALL_HARDLINKS)" && \
- 		  ln "$$execdir/git-remote-http$X" "$$execdir/$$p" 2>/dev/null || \
--		  ln -s "git-remote-http$X" "$$execdir/$$p" 2>/dev/null || \
- 		  cp "$$execdir/git-remote-http$X" "$$execdir/$$p" || exit; } \
- 	done && \
- 	./check_bindir "z$$bindir" "z$$execdir" "$$bindir/git-add$X"
+-		$(RM) "$$execdir/$$p" && \
+ 		./ln-or-cp.sh \
+ 			--install-symlinks "$(INSTALL_SYMLINKS)" \
+ 			--no-install-hardlinks "$(NO_INSTALL_HARDLINKS)" \
+diff --git a/ln-or-cp.sh b/ln-or-cp.sh
+index 663ffd0489d..37380993c64 100755
+--- a/ln-or-cp.sh
++++ b/ln-or-cp.sh
+@@ -40,11 +40,10 @@ link="$2"
+ hardlink_or_cp () {
+ 	if test -z "$no_install_hardlinks" -a -z "$no_cross_directory_hardlinks"
+ 	then
+-		if ! ln "$target" "$link"
++		if ! ln -f "$target" "$link"
+ 		then
+ 			cp "$target" "$link"
+ 		fi
+-
+ 	else
+ 		cp "$target" "$link"
+ 	fi
+@@ -53,7 +52,7 @@ hardlink_or_cp () {
+ main_with_fallbacks () {
+ 	if test -n "$install_symlinks" -o -n "$no_install_hardlinks"
+ 	then
+-		if ! ln -s "$symlink_target" "$link"
++		if ! ln -f -s "$symlink_target" "$link"
+ 		then
+ 			hardlink_or_cp
+ 		fi
 -- 
 2.31.1.461.gd47399f6574
 
