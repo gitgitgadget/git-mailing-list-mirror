@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8438DC433DB
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D3E0C433E1
 	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 16:33:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 41BAB6196C
+	by mail.kernel.org (Postfix) with ESMTP id 6F8A161976
 	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 16:33:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230271AbhC2Qce (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Mar 2021 12:32:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43902 "EHLO
+        id S231237AbhC2Qcj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Mar 2021 12:32:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231358AbhC2QcF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Mar 2021 12:32:05 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C085CC061764
+        with ESMTP id S231318AbhC2QcB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Mar 2021 12:32:01 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 025D4C061762
         for <git@vger.kernel.org>; Mon, 29 Mar 2021 09:32:01 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id j9so11776148wrx.12
-        for <git@vger.kernel.org>; Mon, 29 Mar 2021 09:32:01 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id c8so13472433wrq.11
+        for <git@vger.kernel.org>; Mon, 29 Mar 2021 09:32:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=grBhtkkdpxxEo3tdbaS++MIc5r/3IQpDNol0/r/2tcs=;
-        b=FoUQ94z89Ne+Rv1+xBBnPuHOM39O3aUP/Lq6rZqnhtITpj45S2EnAg3i0yDaAYuD+e
-         WbhmXbAlQS3wy0LGBh00L+JiSAyWioooDbuKwV3yMtofULTM7YZDYMx7kZO7t97a7seZ
-         2YKmnb3/mjX23Prty+nGCzg1x3XfZJZ2LHlu9TuE0W0mnqPLPnh6fSIw0WoTuIutpQCi
-         LhDHBznqcWSB7/i9xGAN9yE0Ti1kr1Pu6vKf28UhISPztj/+U8ILcabIDKCK2PIammSX
-         9sGcW4vRdATjBWjBlmh21hPi67wVN5y4x/yygnZDEGscLaLeRvZMdQuJE1LSdK0iRRXE
-         bVXQ==
+        bh=z6GjVG4X5zPQsq1bHz1xHKvB4uYAlRO2v7eHkNeoN/U=;
+        b=NPE2SK8M9YYMt9puXFmIE+4i4pVddX31f/71pqnXjVYZuuGHy4zPO1f6Lg1QVnB1h+
+         E9UfY3MuGC/tGgHoGsakg/JIdiEV2WgmtrMfubPbJF2Dw6ZMEEZgY1jyJ+4Ix2C2sYY4
+         YhVRDcNlX+4JuXQNTgLYudONOvH9q8/qYXlT2yUKhmFtmY+KZtOsJVz1cB67rMkBgX0j
+         EH5+cj5w29X8e3JDTZXcHy9Wriabnoh3fLp2JBqFCwFl2SPpCV5MKzvlWWCbPOuCxnLl
+         uTYbjRG8bVlzkPQrGQ5e9knF7YW6QF8sD9rlzQkMMGNRRzFUbV5MRhJ2igMBbievoPAc
+         Mqcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=grBhtkkdpxxEo3tdbaS++MIc5r/3IQpDNol0/r/2tcs=;
-        b=N1G3sFRSXHg6CLN+3xDM9fOApVf88r1f8iMSjJnDpRilRG+wdXGy5BityLR+EYrY7g
-         BHf/fWeGai6cq86Yg8dY/i+r4urEIlkPjZpHqwx/kI1OO2ImvVr8aKEtJXwjDi49EBkA
-         QlopLPIDtg3lJr8ggTdiYjmywyg7vxBveF4BhK/73rMwS/B6rgzCJFB4cZIXralJjc8o
-         l3VUKMEZz0yd3oTKNl+0cR+UdGMyJhuqMl3yVOgOG/zMsJqv6wLFMT3McGWvfq/9sdND
-         elKpywc5Itub3R3ZmliNvDAwPaw78i1/bDBeW69U7NSjT3YGxSRz2ZKFQWfFSZS/ctvh
-         n8BQ==
-X-Gm-Message-State: AOAM531MfqqvIKx/CGXVa2vWWBQAJKIj97I2t+jefl+D0chbLoFRCpJ2
-        eA2P7ql1PLw74r6UO/JI8PpfSCTqIEzFnw==
-X-Google-Smtp-Source: ABdhPJyawr2tP+QNaQso7mliQBOK3CIg6eoB5fT+5gll13UZ7Ljw/G8BsQEuqIAAlDJri5Ke9DWFXg==
-X-Received: by 2002:a5d:4904:: with SMTP id x4mr29201302wrq.69.1617035520307;
-        Mon, 29 Mar 2021 09:32:00 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id l21sm25410464wmg.41.2021.03.29.09.31.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=z6GjVG4X5zPQsq1bHz1xHKvB4uYAlRO2v7eHkNeoN/U=;
+        b=jtAY2lSlHh3Mh2FU9isPjor/5fWueSnqYmIojNoC6n42Q70Wr/ptLCnESXLzmBQkQp
+         Bm/dyK8cG1qZd4/xoCU1Aph9xCYKiws7syDXeHPgMAoFJ24ybFZNH3DsbhG9pB2n45Qr
+         1YO+myi+8yu/Wpi1WxZiZnm/7GHRu6oMaFc4K9PbxP660lNNmwlpWBGyXO1s4TxH8Ukj
+         ksW33wTPxgdOD0jPWH56hVXYgzvlmwywJo6JXwV6HuVuTOGcq8iWwffuF8DLi1wYUAuQ
+         h6/a9hdTNNhm+ezbKAt74EfMISOl07WPrwExv35WCo9qUxls4CIYZ/EoNTImGahhLkzW
+         Kq/w==
+X-Gm-Message-State: AOAM531kB9O63gO5UX/T+ZtCdI+xKHx5qiZs083e/Ei/qGngqXEtz7uc
+        7gP1yUHGb0erbs1idgKG671LyVsXVQY3Eg==
+X-Google-Smtp-Source: ABdhPJxd7S+BTiAyN4P17YpCSEfdOkBa53+BFVB5sF0myHUutJQbZrdkGpkHrZEbzyehoVGFpqKX2g==
+X-Received: by 2002:a5d:654a:: with SMTP id z10mr29302133wrv.335.1617035519424;
         Mon, 29 Mar 2021 09:31:59 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id l21sm25410464wmg.41.2021.03.29.09.31.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Mar 2021 09:31:58 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -64,9 +64,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 5/6] Makefile: use "ln -f" instead of "rm && ln"
-Date:   Mon, 29 Mar 2021 18:31:43 +0200
-Message-Id: <patch-5.7-f81708f6120-20210329T162327Z-avarab@gmail.com>
+Subject: [PATCH 4/6] Makefile: make INSTALL_SYMLINKS affect the build directory
+Date:   Mon, 29 Mar 2021 18:31:42 +0200
+Message-Id: <patch-4.7-1089ca3d184-20210329T162327Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.1.461.gd47399f6574
 In-Reply-To: <cover-0.7-00000000000-20210329T162327Z-avarab@gmail.com>
 References: <cover-0.6-00000000000-20210329T161723Z-avarab@gmail.com> <cover-0.7-00000000000-20210329T162327Z-avarab@gmail.com>
@@ -77,102 +77,119 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the invocations and behavior of "ln-or-cp.sh" to not assume
-that we're going to "rm" the file in question beforehand.
+Change the INSTALL_SYMLINKS flag to also affect whether a built-in
+like e.g. git-fetch is a symlink or not in git's build directory.
 
-This reduces the complexity of these rules, and as a bonus means it's
-now safe to "make install" on a system that may have running "git"
-programs, before this we'd be racing the "rm && ln/cp" and wouldn't
-have a working "git" (or one of the built-ins) in the interim.
+This doesn't matter for anything other than as an aid to developers
+who might be confused about their build not matching the installation,
+and who'd like to be reminded that e.g. "git-fetch" is a built-in by
+"ls" coloring appropriately it as a symlink.
+
+In order to make this work we need to rebuild the relevant programs
+when the INSTALL_SYMLINKS flag changes. This also ensures that we'll
+install the right thing, we don't want a different "INSTALL_SYMLINKS"
+setting during "make all" and "make install" to result in a broken
+installation.
+
+We will do the wrong thing here if both the SKIP_DASHED_BUILT_INS and
+INSTALL_SYMLINKS are being flipped. But that's not a new bug:
+
+A build with "INSTALL_SYMLINKS=Y SKIP_DASHED_BUILT_INS=" will result
+in e.g. "git-fetch" being a symlink. When building again with
+"INSTALL_SYMLINKS= SKIP_DASHED_BUILT_INS=Y", only unconditionally
+built programs such as "git-upload-pack" will correctly be flipped to
+a hardlink, but e.g. "git-fetch" will be left as a symlink.
+
+That's an existing bug (or unexpected behavior) in the
+SKIP_DASHED_BUILT_INS flag, not something new being introduced or made
+worse here. It's a bit more noticeable now as we might not expect
+these now-stale symlinks to be left behind, and "ls" (in some
+configurations) will color them prominently.
+
+But we'll still do the right thing on "make install" since we'll
+ignore the likes of "git-fetch" there under "SKIP_DASHED_BUILT_INS=Y".
+Under "SKIP_DASHED_BUILT_INS=" we'll correctly flip the symlink to a
+hardlink or vice-versa if needed before installation.
+
+Still, we should get around to fixing that SKIP_DASHED_BUILT_INS. You
+can't reliably set that flag to "Y" for checking whether the tests
+rely on the now-skipped dashed built-ins without first running "make
+clean" (or knowing you've always been building with
+SKIP_DASHED_BUILT_INS=Y).
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Makefile    | 10 ++--------
- ln-or-cp.sh |  5 ++---
- 2 files changed, 4 insertions(+), 11 deletions(-)
+ .gitignore |  1 +
+ Makefile   | 19 +++++++++++++++++--
+ 2 files changed, 18 insertions(+), 2 deletions(-)
 
+diff --git a/.gitignore b/.gitignore
+index 3dcdb6bb5ab..f90aa21b23b 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -5,6 +5,7 @@
+ /GIT-BUILD-OPTIONS
+ /GIT-CFLAGS
+ /GIT-LDFLAGS
++/GIT-LNCPFLAGS
+ /GIT-PREFIX
+ /GIT-PERL-DEFINES
+ /GIT-PERL-HEADER
 diff --git a/Makefile b/Makefile
-index 29d9bade5a8..466df1a8e90 100644
+index a4784f28f5b..29d9bade5a8 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -2204,8 +2204,7 @@ version.sp version.s version.o: EXTRA_CPPFLAGS = \
+@@ -337,6 +337,11 @@ all::
+ # NO_INSTALL_HARDLINKS. This will not produce any indirect symlinks, we will
+ # always symlink to the final target directly.
+ #
++# NO_INSTALL_HARDLINKS which will also use symlinking by indirection
++# within the same directory in some cases, INSTALL_SYMLINKS will
++# always symlink to the final target directly. This option also
++# affects dashed built-ins in the build directory pre-installation.
++#
+ # Define NO_CROSS_DIRECTORY_HARDLINKS if you plan to distribute the installed
+ # programs as a tar, where bin/ and libexec/ might be on different file systems.
+ #
+@@ -2197,9 +2202,12 @@ version.sp version.s version.o: EXTRA_CPPFLAGS = \
+ 		GIT_CEILING_DIRECTORIES="$(CURDIR)/.." \
+ 		git rev-parse -q --verify HEAD 2>/dev/null)"'
  
- $(BUILT_INS): GIT-LNCPFLAGS
++$(BUILT_INS): GIT-LNCPFLAGS
  $(BUILT_INS): git$X
--	$(QUIET_BUILT_IN)$(RM) $@ && \
--	./ln-or-cp.sh \
-+	$(QUIET_BUILT_IN)./ln-or-cp.sh \
- 		--install-symlinks "$(INSTALL_SYMLINKS)" \
- 		$< $@
+ 	$(QUIET_BUILT_IN)$(RM) $@ && \
+-	./ln-or-cp.sh $< $@
++	./ln-or-cp.sh \
++		--install-symlinks "$(INSTALL_SYMLINKS)" \
++		$< $@
  
-@@ -2558,8 +2557,7 @@ git-http-push$X: http.o http-push.o GIT-LDFLAGS $(GITLIBS)
+ config-list.h: generate-configlist.sh
  
- $(REMOTE_CURL_ALIASES): GIT-LNCPFLAGS
+@@ -2548,9 +2556,12 @@ git-http-push$X: http.o http-push.o GIT-LDFLAGS $(GITLIBS)
+ 		$(CURL_LIBCURL) $(EXPAT_LIBEXPAT) $(LIBS) && \
+ 	mv $@+ $@
+ 
++$(REMOTE_CURL_ALIASES): GIT-LNCPFLAGS
  $(REMOTE_CURL_ALIASES): $(REMOTE_CURL_PRIMARY)
--	$(QUIET_LNCP)$(RM) $@ && \
--	./ln-or-cp.sh \
-+	$(QUIET_LNCP)./ln-or-cp.sh \
- 		--install-symlinks "$(INSTALL_SYMLINKS)" \
- 		$< $@
+ 	$(QUIET_LNCP)$(RM) $@ && \
+-	./ln-or-cp.sh $< $@
++	./ln-or-cp.sh \
++		--install-symlinks "$(INSTALL_SYMLINKS)" \
++		$< $@
  
-@@ -3021,7 +3019,6 @@ endif
- 	destdir_from_execdir_SQ=$$(echo '$(gitexecdir_relative_SQ)' | sed -e 's|[^/][^/]*|..|g') && \
- 	{ test "$$bindir/" = "$$execdir/" || \
- 	  for p in git$X $(filter $(install_bindir_programs),$(ALL_PROGRAMS)); do \
--		$(RM) "$$execdir/$$p" && \
- 		./ln-or-cp.sh \
- 			--install-symlinks "$(INSTALL_SYMLINKS)" \
- 			--no-install-hardlinks "$(NO_INSTALL_HARDLINKS)" \
-@@ -3031,7 +3028,6 @@ endif
- 	  done; \
- 	} && \
- 	for p in $(filter $(install_bindir_programs),$(BUILT_INS)); do \
--		$(RM) "$$bindir/$$p" && \
- 		./ln-or-cp.sh \
- 			--install-symlinks "$(INSTALL_SYMLINKS)" \
- 			--no-install-hardlinks "$(NO_INSTALL_HARDLINKS)" \
-@@ -3039,7 +3035,6 @@ endif
- 			"$$bindir/git$X" "$$bindir/$$p"; \
- 	done && \
- 	for p in $(BUILT_INS); do \
--		$(RM) "$$execdir/$$p" && \
- 		if test -z "$(SKIP_DASHED_BUILT_INS)"; \
- 		then \
- 			./ln-or-cp.sh \
-@@ -3051,7 +3046,6 @@ endif
- 	done && \
- 	remote_curl_aliases="$(REMOTE_CURL_ALIASES)" && \
- 	for p in $$remote_curl_aliases; do \
--		$(RM) "$$execdir/$$p" && \
- 		./ln-or-cp.sh \
- 			--install-symlinks "$(INSTALL_SYMLINKS)" \
- 			--no-install-hardlinks "$(NO_INSTALL_HARDLINKS)" \
-diff --git a/ln-or-cp.sh b/ln-or-cp.sh
-index 663ffd0489d..37380993c64 100755
---- a/ln-or-cp.sh
-+++ b/ln-or-cp.sh
-@@ -40,11 +40,10 @@ link="$2"
- hardlink_or_cp () {
- 	if test -z "$no_install_hardlinks" -a -z "$no_cross_directory_hardlinks"
- 	then
--		if ! ln "$target" "$link"
-+		if ! ln -f "$target" "$link"
- 		then
- 			cp "$target" "$link"
- 		fi
--
- 	else
- 		cp "$target" "$link"
- 	fi
-@@ -53,7 +52,7 @@ hardlink_or_cp () {
- main_with_fallbacks () {
- 	if test -n "$install_symlinks" -o -n "$no_install_hardlinks"
- 	then
--		if ! ln -s "$symlink_target" "$link"
-+		if ! ln -f -s "$symlink_target" "$link"
- 		then
- 			hardlink_or_cp
- 		fi
+ $(REMOTE_CURL_PRIMARY): remote-curl.o http.o http-walker.o GIT-LDFLAGS $(GITLIBS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@+ $(ALL_LDFLAGS) $(filter %.o,$^) \
+@@ -2742,6 +2753,10 @@ GIT-LDFLAGS: FORCE
+ 		echo "$$FLAGS" >GIT-LDFLAGS; \
+             fi
+ 
++GIT-LNCPFLAGS: FORCE
++	@echo INSTALL_SYMLINKS=\''$(subst ','\'',$(subst ','\'',$(INSTALL_SYMLINKS)))'\' >$@+
++	@if cmp $@+ $@ >/dev/null 2>&1; then $(RM) $@+; else mv $@+ $@; fi
++
+ # We need to apply sq twice, once to protect from the shell
+ # that runs GIT-BUILD-OPTIONS, and then again to protect it
+ # and the first level quoting from the shell that runs "echo".
 -- 
 2.31.1.461.gd47399f6574
 
