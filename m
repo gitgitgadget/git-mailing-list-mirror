@@ -7,94 +7,78 @@ X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D65BC433DB
-	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 21:04:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1FBAAC433DB
+	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 21:06:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5531061976
-	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 21:04:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EEE1F6198A
+	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 21:06:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231383AbhC2VE1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Mar 2021 17:04:27 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53003 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231158AbhC2VDz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Mar 2021 17:03:55 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A1AFAC5F3C;
-        Mon, 29 Mar 2021 17:03:54 -0400 (EDT)
+        id S231455AbhC2VGF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Mar 2021 17:06:05 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53706 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230472AbhC2VFf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Mar 2021 17:05:35 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 812E7B8671;
+        Mon, 29 Mar 2021 17:05:33 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=E6b31dAVDmNzw1B2JrlM42BEWFk=; b=mFWApq
-        RXjY6vp+bl8mitPPjcLAG/kCQJztF8mfM4xTI1H5KnQ1TrcBkX0XxHFnFc0kmc10
-        zuuerwFCEN47JDy2R4j7f/dJGDM8sZ04ZTadH11HOq9qsPUZcAi9vqOpDW17JVOS
-        jJpyQmLpqVURSWq13DUtAkXryokwUFNzatYVk=
+        :content-type; s=sasl; bh=D2M1ngNXczCtNaSL2kvSUGTnJR4=; b=rG2Ypy
+        lvAqaphX06maLDgckzhNVB0g0/vgKT2LqAxjPjyKFyZ3OwT3FM5wCOOEZGaVnyIU
+        OZJf2ptqyWNqKQm8BMtGttDI4Kx5ev3hlq2piIWfoY1EQFQAGpYYn9Eu2H4iB1pC
+        Uu1gjVrOYYwqJorvya8pqROI+mun1dQvh+ta4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=oaTJiJb+2hzNlFkaN60/GFzAZRmtukmC
-        RUJ1nKg9mhQoNwpN1vxjiHp+ew8YyVaixRQLNpZ+y0/Z4WBssi/jk3MRVtmsU9yY
-        GXCRIYgWzr17OPUXzMHVvvkn75oNXiCSbrUQDmEhO8TDkLtz/hXGmX+YfOP5Lh46
-        v9ubqW1fgkQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9A448C5F3B;
-        Mon, 29 Mar 2021 17:03:54 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=J+TsgvyaGLn3jbv3mscQurAor8aeof54
+        6uhGAEjFlQvpz8Xt/S9F/IUGh/B9+b/HIT8bbxsoI1IvHwXAiK+AXBLrpESFPXer
+        ANn/XVb6EHzAUWt8modGlVSF0MsczIgjG/CYjpgH776kzR6qTgXOlexaqo7nTOGP
+        jjLJnRCA06M=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 79466B8670;
+        Mon, 29 Mar 2021 17:05:33 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 24ED4C5F3A;
-        Mon, 29 Mar 2021 17:03:54 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 013D7B866F;
+        Mon, 29 Mar 2021 17:05:32 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Bagas Sanjaya <bagasdotme@gmail.com>, git <git@vger.kernel.org>
-Subject: Re: Upstreaming Reviewed-by to git.git
-References: <0e32b0af-cd05-39a9-51a9-4d983e7085cc@gmail.com>
-        <CAP8UFD1TmckvQLVQ7eWMKakMKOF76J+Z+E25vUCGkWveXMWv1g@mail.gmail.com>
-Date:   Mon, 29 Mar 2021 14:03:53 -0700
-In-Reply-To: <CAP8UFD1TmckvQLVQ7eWMKakMKOF76J+Z+E25vUCGkWveXMWv1g@mail.gmail.com>
-        (Christian Couder's message of "Mon, 29 Mar 2021 14:15:17 +0200")
-Message-ID: <xmqqr1jxisee.fsf@gitster.g>
+To:     "Chinmoy via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Chinmoy <chinmoy12c@gmail.com>
+Subject: Re: [PATCH v4] column, range-diff: downcase option description
+References: <pull.920.v3.git.1617014753305.gitgitgadget@gmail.com>
+        <pull.920.v4.git.1617029194872.gitgitgadget@gmail.com>
+Date:   Mon, 29 Mar 2021 14:05:32 -0700
+In-Reply-To: <pull.920.v4.git.1617029194872.gitgitgadget@gmail.com> (Chinmoy
+        via GitGitGadget's message of "Mon, 29 Mar 2021 14:46:34 +0000")
+Message-ID: <xmqqmtulisbn.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 4518D554-90D2-11EB-BD04-D152C8D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 80044E28-90D2-11EB-A624-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+"Chinmoy via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> On Mon, Mar 29, 2021 at 1:03 PM Bagas Sanjaya <bagasdotme@gmail.com> wrote:
+> From: Chinmoy Chakraborty <chinmoy12c@gmail.com>
 >
->> I had reviewing patches here, but how can my reviews be credited with
->> Reviewed-by tags to the applicable patches on git.git (Git SCM)
->> repo (upstream)?
+> It is customary not to begin the help text for each option given to
+> the parse-options API with a capital letter. Various (sub)commands'
+> option arrays don't follow the guideline provided by the parse_options
+> Documentation regarding the descriptions.
 >
-> When you have reviewed a patch or a patch series, you can tell the
-> reviewer you are ok with the patch or patch series, and that you are
-> ok with them adding your "Reviewed-by: yourname <youremail>" to it.
+> Downcase the first word of some option descriptions for "column"
+> and "range-diff".
+>
+> Signed-off-by: Chinmoy Chakraborty <chinmoy12c@gmail.com>
+> ---
 
-I think you meant "you can tell the reviewEE", not reviewer.
+Thanks, Chinmoy, Bagas and Philip.  Will queue.
 
-In general, anybody can review a patch, but a review by somebody who
-is not all that familiar with the codebase does not carry a lot of
-weight.  Reviews from those who have already invested a lot in the
-code that is being fixed or extended would obviously be very
-helpful, as they are expected to know how the current code is
-supposed to work well, and reviews from those who have worked on
-other parts of the system that depend on the code that is being
-fixed or extended would also be usefl, as they know what the callers
-of the code being changed expect out of it.
-
-So my suggestion to Bagas is not to worry too much about
-"Reviewed-by" with your name, until you have your own code in the
-codebase (and while doing so, you should worry about adding
-reviewed-by by others).
-
-In any case, reading others' patch, together with the original
-version before the patch changed, is a great opportunity to learn
-the codebase and how the project work in general.  It is highly
-recommended.
-
-Thanks.
