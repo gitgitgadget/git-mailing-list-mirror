@@ -7,115 +7,132 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CB3A6C433C1
-	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 13:12:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F1C18C433DB
+	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 13:26:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9541B6193A
-	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 13:12:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C3ABE6193A
+	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 13:26:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231766AbhC2NMV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Mar 2021 09:12:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56900 "EHLO
+        id S231371AbhC2NZq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Mar 2021 09:25:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59720 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231753AbhC2NMK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Mar 2021 09:12:10 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D660C061574
-        for <git@vger.kernel.org>; Mon, 29 Mar 2021 06:12:10 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id h13so14153720eds.5
-        for <git@vger.kernel.org>; Mon, 29 Mar 2021 06:12:10 -0700 (PDT)
+        with ESMTP id S229971AbhC2NZN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Mar 2021 09:25:13 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98E90C061574
+        for <git@vger.kernel.org>; Mon, 29 Mar 2021 06:25:12 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id r12so19441224ejr.5
+        for <git@vger.kernel.org>; Mon, 29 Mar 2021 06:25:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=zQR1HZDNJI6XXeyRhE7TiGU6VCNHpkab8yD3Q8WYCpg=;
-        b=LyBtWD0JsL6vFhFwtL3Ncu0KyD44UPGaFSd0+9gntvFU37cTZojD6P66/sQJ+XpaSv
-         IMMnFqHMdc6ksJBA1U2pNwb262yk1GKBUthh0g5rHIj1n/bjTnVplCasz4d9nSElWPKt
-         Rp6JQApMfnE1JfhIY/U1XbwQ0rs6zhidiU+Yi0d0hTSGn50L2SrxZ6Df+JpYA70ty/LH
-         m25HWt4Cf0LekMu9pESv62VegMK+e/p+Hq+BKOYz7hmLz3cgHvpgj3gg9/dEj0tbrcWs
-         sPIUNVXzXsIm18HzfQtD2gSLh9HdTmYM58gXsd3Eq7NCTR6OE9UnLOSe89SKueP2KcOC
-         e4Og==
+         :message-id:mime-version:content-transfer-encoding;
+        bh=bbBi2KsVqw3sxTZcMw2KLYO+k21j9JWiWFU/8ayKmHE=;
+        b=m1Z8QwWLr9UVKFAoSGuV7N7aCnkVFL/1PvxT8bUT6SPluCH/zdA8WJGp2MdwIpVOCz
+         XAb9oQWsVKpzta3uU/AxXQlJ4gie9yiG4V9E7K4g2d9x7Wo3D2s+Bt0rGVZqm28TY6Vv
+         65z5N59OAKvgq1Cb1CWNUKzK7fxwHXmgHbQZxhoZQtQeFt8l4wR4UJYQA2EE2tOpCCyJ
+         Lvzx4GwQbzhGjYGz6DXwqqVjm5uMf37fyFUaW8htzHgsnDcuYpUOSemxHq9tt/+X0dOA
+         WZwLEyZxaLKAvqjGibXqcLBVsSTRWQBbV+8STtWl5W8JuGzwmbz3KbUX29dI8laa7au2
+         ZIgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=zQR1HZDNJI6XXeyRhE7TiGU6VCNHpkab8yD3Q8WYCpg=;
-        b=FBmpsV6NxmUpcSC/3cR0TTjgmjn2ZYy6iFcOmxm7Ea6CSEKz8HjvgXcjclwiO0IbC2
-         8Yc2uB9BlT9W+Op5FW9aei2XdO6uwepiSeZjTWVViZhlLiWYXBp0ETLu2zTn7Gt5VoC0
-         bKMGqqm1Q6LH0k3Xdus8v7v5tW96X/sru2H6Adai4hFN+S0+SXjOB2xmULfo9674BAfk
-         wtriN2s2xaMCIjbJBMS4P+tAaolRSHzXWpO/bLicsnd5OmlW5+lsixfJVrq69ysO7Jyr
-         t4uqCfbYz2hbwP22pEDEfBctbnqmGRinUyYk9WruTLPF/sznPweoEkKYLN57X2XXn3To
-         HnQg==
-X-Gm-Message-State: AOAM532VReX1HHhQasX+pHDAfM1PHn74/K5KyZ4EhqJXhLYIfNs5hj1J
-        IL+C0tvyuZb3fG04NHB1CK8=
-X-Google-Smtp-Source: ABdhPJwKh/JbgoyjZ12vXf7KPkv1ovau6qTKhW1ba7RDWBgK54JKUJ2iAGfJjDnVm5GS/3ypmWVjEA==
-X-Received: by 2002:aa7:c1d0:: with SMTP id d16mr28053902edp.153.1617023529193;
-        Mon, 29 Mar 2021 06:12:09 -0700 (PDT)
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=bbBi2KsVqw3sxTZcMw2KLYO+k21j9JWiWFU/8ayKmHE=;
+        b=jjOF4Mf/4lBnKA1uJmSDba8QCUVjDIKbiWe/Ijz+DsVqFNBiKQbp46chkkT1zjOzoS
+         pccUiQEELi+id23onDqYcklApEoVG8HTjv00FppluHTrQiPSvGd9OIhVhTv3ow793Ffh
+         G8rdXtbTr9T64fXZ5fn5E4MYXldIQS3D7djio8aPyta2cSja2V+USVeYS8YZYGxYPMTc
+         OYm7BQ9c4BR4m+Q62Oud38FaXASjCHWd2GNT+1HV4NLlD3mNI2c7TpjzXHuC2Z8w0SIP
+         lCXbTZoVtR1JrZsvdzC1OyvIKQ7ZzSUkgrJWYPIZOtztQJNnfcDiU7J2uDaLPZFxhSCD
+         z4+w==
+X-Gm-Message-State: AOAM532I4ZA1rs46bVFRrRwztqtVeUCt4zv5436p3gnBaHJUUfbkVSVU
+        anybZc4ur7/T5ukTE7LtkJMKXvtzMzk=
+X-Google-Smtp-Source: ABdhPJxelR83/R4x6B+B5wPEqX1eFI8wSlqKsDRR/QSnXiwSndm2zJVZSIfaohvOEF/FuueqEjax5w==
+X-Received: by 2002:a17:906:b817:: with SMTP id dv23mr29055287ejb.281.1617024310663;
+        Mon, 29 Mar 2021 06:25:10 -0700 (PDT)
 Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id p19sm9140236edr.57.2021.03.29.06.12.08
+        by smtp.gmail.com with ESMTPSA id kj3sm8309653ejc.117.2021.03.29.06.25.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Mar 2021 06:12:08 -0700 (PDT)
+        Mon, 29 Mar 2021 06:25:10 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Phillip Wood <phillip.wood123@gmail.com>,
-        Atharva Raykar <raykar.ath@gmail.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [GSOC][PATCH] userdiff: add support for Scheme
-References: <20210327173938.59391-1-raykar.ath@gmail.com>
- <3def82fd-71a7-3ad9-0fa2-48598bfd3313@kdbg.org>
- <5BA00FC6-9810-49AB-8DE2-D4F4010E2F82@gmail.com>
- <09678471-b2a2-8504-2293-e2b34a3a96e8@gmail.com>
- <71c34328-9814-2777-3a9d-f908602dd36f@kdbg.org>
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH 4/4] usage.c: add a non-fatal bug() function to go with
+ BUG()
+References: <cover-0.5-00000000000-20210328T022343Z-avarab@gmail.com>
+ <patch-4.5-515d146cac8-20210328T022343Z-avarab@gmail.com>
+ <xmqqh7kvolgn.fsf@gitster.g> <YGAtkW2YWNbcAn8m@coredump.intra.peff.net>
 User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <71c34328-9814-2777-3a9d-f908602dd36f@kdbg.org>
-Date:   Mon, 29 Mar 2021 15:12:08 +0200
-Message-ID: <87wntqm7dj.fsf@evledraar.gmail.com>
+In-reply-to: <YGAtkW2YWNbcAn8m@coredump.intra.peff.net>
+Date:   Mon, 29 Mar 2021 15:25:09 +0200
+Message-ID: <87tuoum6ru.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Mon, Mar 29 2021, Johannes Sixt wrote:
+On Sun, Mar 28 2021, Jeff King wrote:
 
-> Am 29.03.21 um 12:18 schrieb Phillip Wood:
->> It would be nice to include indented define forms but including them
->> means that any change to the body of a function is attributed to the
->> last internal definition rather than the actual function. For example
->> 
->> (define (f arg)
->>   (define (g x)
->>     (+ 1 x))
->> 
->>   (some-func ...)
->>   ;;any change here will have '(define (g x)' in the hunk header, not
->> '(define (f arg)'
->> 
->> I don't think this can be avoided as we rely on regexs rather than
->> parsing the source so it is probably best to only match toplevel defines.
+> On Sat, Mar 27, 2021 at 11:12:40PM -0700, Junio C Hamano wrote:
 >
-> There can be two rules, one that matches '(define-' that is indented,
-> and another one that matches all non-indented forms of definitions. If
-> that is what you mean.
+>> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+>>=20
+>> > Add a bug() function that works like error() except the message is
+>> > prefixed with "bug:" instead of "error:".
+>> >
+>> > The reason this is needed is for e.g. the fsck code. If we encounter
+>> > what we'd consider a BUG() in the middle of fsck traversal we'd still
+>> > like to try as hard as possible to go past that object and complete
+>> > the fsck, instead of hard dying. A follow-up commit will introduce
+>> > such a use in object-file.c.
+>>=20
+>> Reading the description above, i.e. "to go past that object", the
+>> assumed use case seems to be to deal with a data error, not a
+>> program bug (which is where we use BUG()---e.g. one helper function
+>> in the fsck code detected that the caller wasn't careful enough to
+>> vet the data it has and called it with incoherent data).  If we find
+>> a tree entry whose mode bits implies that the object recorded in the
+>> entry ought to be a blob, and later find out that the object turns
+>> out to be a tree, that is a corrupt repository and the code that
+>> detected is not buggy (and we shouldn't use BUG(), of course).
+>>=20
+>> So, ... I am skeptical.  If the code is prepared to handle breakage,
+>> we would not want to die, but then I am not sure why it has to be
+>> different from error().
+>
+> Yeah, this seems like it is missing the point of BUG() completely.  I
+> took a peek at patch 5/5 of the follow-on, which uses bug(). It looks
+> like it should really be an error() return or similar. The root cause
+> would be open_istream() on a loose object failing (which might be
+> corruption, or might even be a transient OS error!).
 
-Yes, but that doesn't help in these sorts of cases because what a rule
-like that really wants is some version of "don't match this line, but
-only if you can reasonably match this other rule".
+I don't feel strongly about this bug() thing, I'll drop it if you two
+don't like it.
 
-We can only do rule precedence on a per-line basis via the inverted
-matches.
+But that's not why I added it, yes you can now carefully read the code
+and reason that this code is unreachable now, as I think it is.
 
-So for languages like cl/elisp/scheme and others where it's common to
-have nested function definitions (then -W would like the top-level) *OR*
-similarly looking nested function definitions, but the top-level isn't a
-function but a (setq) or whatever we're basically stuck with picking one
-or the other.
+But it may not stay that way, refactoring how we handle I/O errors
+etc. further down the stack is the sort of thing that if this bug()
+wasn't there would cause us to otherwise silently lose the
+error. I.e. does check_object_signature() always promise to return
+non-zero *only* if the signature isn't OK?
 
-I've pondered how to get around this problem in my userdiff.c hacking
-without resorting to supporting some general-purpose Turing machine, and
-have so far come up with nothing.
+So maybe we are happy to just make that promise, in which case yes, this
+should/could be an error() in this case.
 
-You can see lots of prior art by grepping Emacs's source code for
-beginning-of-defun, it solves this problem by exposing a Turing machine
-:)
+But isn't this also useful for multi-threaded code? E.g. let's say fsck
+learns to map-reduce its fsck-ing of objects across threads. One of them
+encounters a BUG(). Do we want to hard kill the whole thing or try to
+limp ahead and report partial results from the other thread(s)?
+
+We have than now with pack-objects/grep, but I'm struggling to find a
+use-case for a partial grep result if e.g. PCRE fails with a BUG(...)
+...
+
