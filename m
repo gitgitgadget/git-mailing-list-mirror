@@ -2,112 +2,163 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AE313C433DB
-	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 22:03:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E866C433C1
+	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 22:18:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8097461969
-	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 22:03:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 66EE86196E
+	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 22:18:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230444AbhC2WCw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Mar 2021 18:02:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58546 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230161AbhC2WCV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Mar 2021 18:02:21 -0400
-Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86049C061574
-        for <git@vger.kernel.org>; Mon, 29 Mar 2021 15:02:21 -0700 (PDT)
-Received: by mail-ot1-x336.google.com with SMTP id h6-20020a0568300346b02901b71a850ab4so13739918ote.6
-        for <git@vger.kernel.org>; Mon, 29 Mar 2021 15:02:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=uFksony7Qyr+5u+X0/14dRSRGgUd+fx0Sgn7Q2abP0w=;
-        b=pB0A01smC4WEsDo6M6WIqPxqGKCtwonn39NKCtI3FxbWpFwvjp1CE7ddh0YkuZrRIW
-         I4XHOsOhKvubkvpkv5qbOAwVq5qnmP0nV6pc98yEJLQf0AwwMA0AnyifbIBteTvL2ysV
-         myfEg4Kw0xgPWxcH1JJF8DNqsUJO4az2OujgWz3btZXO+p2lpDj2+YfXBJktULSIQlIW
-         cK95rHn8ZhE2K26zGTO+LAtdNis0LrdGKA6OdybSD8T9rbD2CPL5WhG7J2FxSiSPlQSI
-         P9K0NYBX5IqTLVuH2WTaSf5o+5jBZsLcgvf49HNrfKnWushCWxzU6DPiCCj9IgVjFW90
-         hChA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=uFksony7Qyr+5u+X0/14dRSRGgUd+fx0Sgn7Q2abP0w=;
-        b=mvBBrZn7S7p/tfWcxC6cScI0nlxCT3TT/2u91VYlZBNHxd3/89QtNZvGzBxMryKFf2
-         8cNMSNykcg9a74+u5ZdXJ2QeHnPc1n/RWCuSJBLx5dmjyacya/Zu/hZLX+fA0QbyLJHm
-         BkztPcn6nPHC2TUjBa12q1cYRpjZNqsOK5W7P4NNKN+3+GWLKss7XKRAUIBNdBE7O5ui
-         Uc3McwzBdHRBf4C4PQvxQTQMqp+xVcdm/h8jNRqa9I2sP8qdH6bQa0SXVKD3ncuLRoAq
-         gobnQj6W8p1RqpYgkA97qg0Jk5QM4bGeHQdlpuJIn1C2d0BTvmDobSNFPGPb+uKQhrWQ
-         Oq8g==
-X-Gm-Message-State: AOAM532TdZFCppLwciWc/B1dD8rfmSJTtNWZH8OifDWDDr1zjnVLORmC
-        8Ob08iTtjKjO4d70fz0wdYUTvLB5ZUkUSn+Yfho=
-X-Google-Smtp-Source: ABdhPJwP9T8txmS75/uqcnwOnyGFWtB1MEZygLUnz0HeJY0wvRk4dKElSBH1iXH8QicOBqWstvahntIrRZJ5U2i4g8Y=
-X-Received: by 2002:a9d:8d5:: with SMTP id 79mr24831120otf.345.1617055340915;
- Mon, 29 Mar 2021 15:02:20 -0700 (PDT)
+        id S231185AbhC2WR5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Mar 2021 18:17:57 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59601 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231372AbhC2WRg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Mar 2021 18:17:36 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 36336B8E63;
+        Mon, 29 Mar 2021 18:17:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=lv4PRZ4XGmTT
+        lYcMFUFgL7NQ064=; b=nV476mZjj5uOiz3jOFFlRyrUCO0xTJEyhwWv/esD5uFE
+        OlFk+srlgzAtv0eMl+9pMYox9ADrxTrYLOJ4yoIJB6B42Bh+Lmrn5ScmP75APPkF
+        bSe1l3uHDVn5fsOBb6C/v6c2v5puhHEhJ+YGiQQfzzoDoyiJqBvl+ZpyCRbFpR0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=rT+9kF
+        BOJTzoRESlItAvgGrry+5mva3N7qo1x50sswfn6qiLcZj+1c+Mrkhc9zp5y2RrSf
+        faqcvIz/hIGMUF/V1phcexPQG335CEhCey1zgNHGSSIGip2HM4ZmURvFFFL9GCRZ
+        IyqFgzAYSElFRK4n3DD8mGRphc2jXxWakmlKw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2D0B7B8E62;
+        Mon, 29 Mar 2021 18:17:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A9955B8E61;
+        Mon, 29 Mar 2021 18:17:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Andreas =?utf-8?Q?F?= =?utf-8?Q?=C3=A4rber?= 
+        <andreas.faerber@web.de>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/6] Makefile: symlink the same way under "symlinks" and
+ "no hardlinks"
+References: <cover-0.6-00000000000-20210329T161723Z-avarab@gmail.com>
+        <cover-0.7-00000000000-20210329T162327Z-avarab@gmail.com>
+        <patch-1.7-39926acb0d1-20210329T162327Z-avarab@gmail.com>
+Date:   Mon, 29 Mar 2021 15:17:34 -0700
+In-Reply-To: <patch-1.7-39926acb0d1-20210329T162327Z-avarab@gmail.com>
+ (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Mon, 29 Mar
+ 2021 18:31:39 +0200")
+Message-ID: <xmqq1rbxiozl.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.883.v3.git.1615912983.gitgitgadget@gmail.com>
- <pull.883.v4.git.1616507069.gitgitgadget@gmail.com> <7ebd9570b1ad81720569a770526651c62c152b9f.1616507069.git.gitgitgadget@gmail.com>
- <87r1k5pcmx.fsf@evledraar.gmail.com> <ca8a96a4-5897-2484-b195-57e5b3820576@gmail.com>
- <874kgzq4qi.fsf@evledraar.gmail.com> <CABPp-BGRwxn73sntpX8Q5aD-O192RZmOOy_jiU3SQp4-erivtg@mail.gmail.com>
- <87eeg0ng78.fsf@evledraar.gmail.com>
-In-Reply-To: <87eeg0ng78.fsf@evledraar.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 29 Mar 2021 15:02:09 -0700
-Message-ID: <CABPp-BF=WQhMMARF0Groump1LSXGHWkV8SXZ-_Fqd=d-8Nn35g@mail.gmail.com>
-Subject: Re: [PATCH v4 07/20] test-read-cache: print cache entries with --table
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 908ABFFC-90DC-11EB-B25B-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-On Sun, Mar 28, 2021 at 8:31 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
+> In particular INSTALL_SYMLINKS=3DY will result in a link tree like:
 >
-> On Fri, Mar 26 2021, Elijah Newren wrote:
+>     bin/git
+>     libexec/git -> ../bin/git
+>     libexec/git-add -> ../bin/git
 >
-[...]
-> > You are correct that this will span multiple releases; Stolee already
-> > said he was planning to be working on this for most of 2021.  But just
-> > because pieces of the code exist and are shipped doesn't mean it'll be
-> > announced or supported.  For example, the git-2.30 and git-2.31
-> > release notes were completely silent about merge-ort.  It existed in
-> > both releases; in fact, the version that ships in git-2.31, could
-> > theoretically be used successfully by the vast majority of users for
-> > their daily workflow.  (But it does have known shortcomings and test
-> > failures so I definitely did *not* want it to be announced at that
-> > time.)
+> Whereas NO_INSTALL_HARDLINKS=3DY in cases where the "ln" would fail wou=
+ld result in:
 >
-> Yes, and that's fine. But if you'd been bending over backwards to add
-> merge-ort to t/helper/ "because it's not ready yet" or something I'd
-> have probably commented to the effect of "can't we just add it as part
-> of builtins but not advertise it?" which is what you did :)
+>     bin/git
+>     libexec/git
+>     libexec/git-add -> git
+>
+> I.e. we duplicated the "git" between the bin/ and libexec/
+> directories (by default they're hardlinked), and potentially had had
+> e.g. "git-add" pointing at the libexec/git hardlink (or more likely if
+> "ln" is failing, a copy), instead of the bin/git.
+>
+> Now we'll instead use the same symlinks to point to the bindir. I
+> don't see any reason not to do so, and no breakage related to this has
+> been reported with INSTALL_SYMLINKS in all this time. I just did it
+> this way to maintain bug-for-bug compatibility at the time.
 
-Actually, I did add a t/helper/test-fast-rebase.c (which is a few
-hundred lines long) as part of the work on merge-ort, because
-merge-ort wasn't ready and because rewiring sequencer.c was a huge
-amount of work that I didn't want to get distracted by at the time.  I
-originally suggested making fast-rebase a non-advertised builtin, but
-multiple reviewers suggested the test helper route instead.
+Makes sense.  I do not see a reason why libexec/git-add that points
+at ../bin/git would cause problems, either.
 
-=C2=AF\_(=E3=83=84)_/=C2=AF
+> +# Define NO_INSTALL_HARDLINKS if you'd like to have programs in bin/
+> +# and libexec/ either symlinked (we try with INSTALL_SYMLINKS first),
+> +# or if that fails fall back on a "cp" instead of a "ln". Useful for
+> +# when you don't want hardlinks at all.
+
+So without INSTALL_SYMLINKS and with NO_INSTALL_HARDLINKS, the only
+remaining choice is "cp".  With both set, we favour "ln -s" over
+"cp" and do not allow "ln".  With INSTALL_SYMLINKS and without
+NO_INSTALL_HARDLINKS, we try "ln -s", "ln" and finally "cp".  With
+neither, we try "ln" and fall back to "cp"?
+
+That precedence order does make sense.
+
+> @@ -3019,33 +3020,30 @@ endif
+>  	} && \
+>  	for p in $(filter $(install_bindir_programs),$(BUILT_INS)); do \
+>  		$(RM) "$$bindir/$$p" && \
+> -		test -n "$(INSTALL_SYMLINKS)" && \
+> +		test -n "$(INSTALL_SYMLINKS)" -o "$(NO_INSTALL_HARDLINKS)" && \
+
+I had an impression that we avoid -o/-a used with "test" (instead
+we'd use "test && test" or "test || test")?
+
+In either case, if we are told to favor "ln -s", or told not to use
+"ln", we try "ln -s"?  That does not make much sense to me, though.
+
+What do I need to do if I do not ever want symbolic links?  Is it
+impossible now?
+
+>  		ln -s "git$X" "$$bindir/$$p" || \
+>  		{ test -z "$(NO_INSTALL_HARDLINKS)" && \
+>  		  ln "$$bindir/git$X" "$$bindir/$$p" 2>/dev/null || \
+> -		  ln -s "git$X" "$$bindir/$$p" 2>/dev/null || \
+>  		  cp "$$bindir/git$X" "$$bindir/$$p" || exit; }; \
+>  	done && \
+>  	for p in $(BUILT_INS); do \
+>  		$(RM) "$$execdir/$$p" && \
+>  		if test -z "$(SKIP_DASHED_BUILT_INS)"; \
+>  		then \
+> -			test -n "$(INSTALL_SYMLINKS)" && \
+> +			test -n "$(INSTALL_SYMLINKS)" -o "$(NO_INSTALL_HARDLINKS)" && \
+
+Perhaps the same comment applies here and to the next hunk, too?
+
+>  			ln -s "$$destdir_from_execdir_SQ/$(bindir_relative_SQ)/git$X" "$$ex=
+ecdir/$$p" || \
+>  			{ test -z "$(NO_INSTALL_HARDLINKS)" && \
+>  			  ln "$$execdir/git$X" "$$execdir/$$p" 2>/dev/null || \
+> -			  ln -s "git$X" "$$execdir/$$p" 2>/dev/null || \
+>  			  cp "$$execdir/git$X" "$$execdir/$$p" || exit; }; \
+>  		fi \
+>  	done && \
+>  	remote_curl_aliases=3D"$(REMOTE_CURL_ALIASES)" && \
+>  	for p in $$remote_curl_aliases; do \
+>  		$(RM) "$$execdir/$$p" && \
+> -		test -n "$(INSTALL_SYMLINKS)" && \
+> +		test -n "$(INSTALL_SYMLINKS)" -o "$(NO_INSTALL_HARDLINKS)" && \
+>  		ln -s "git-remote-http$X" "$$execdir/$$p" || \
+>  		{ test -z "$(NO_INSTALL_HARDLINKS)" && \
+>  		  ln "$$execdir/git-remote-http$X" "$$execdir/$$p" 2>/dev/null || \
+> -		  ln -s "git-remote-http$X" "$$execdir/$$p" 2>/dev/null || \
+>  		  cp "$$execdir/git-remote-http$X" "$$execdir/$$p" || exit; } \
+>  	done && \
+>  	./check_bindir "z$$bindir" "z$$execdir" "$$bindir/git-add$X"
