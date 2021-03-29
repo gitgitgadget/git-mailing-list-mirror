@@ -2,123 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0CFA8C433E8
-	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 21:35:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 04003C433DB
+	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 21:37:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E5B066198E
-	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 21:35:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BBE0561987
+	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 21:37:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231656AbhC2Vem (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Mar 2021 17:34:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52592 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231613AbhC2VeY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Mar 2021 17:34:24 -0400
-Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C637C061574
-        for <git@vger.kernel.org>; Mon, 29 Mar 2021 14:34:24 -0700 (PDT)
-Received: by mail-qv1-xf2e.google.com with SMTP id g8so7206779qvx.1
-        for <git@vger.kernel.org>; Mon, 29 Mar 2021 14:34:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=G7OayzxrfFVbcMN84/1yINFzN49s9Su5Hydbta07fag=;
-        b=LdD1TE+oK0UgWNbmuMp5uvGDVlLnTzTeMlyowIoCuU3feXGN2KzIJU1QTpzg9TgRHH
-         2PTNyc2bZaTrTo+0EErsHEtkxPTZ3Y2zEZ/6ARvJmhIIZ0gHa9nPsMkvl0JUM0nhLHSI
-         G/HkOVpNkKAwTDcCPShireVOtUkfqhTn1zN1oJyIC2RoFrVOlhvLzuusCc9//0NsD8uC
-         JR3D/B3UTpESah8sMoqtNPmsnqGW0Bu6i/R/mN/3McuAl7gvfXyaR0ffxCBMr8Oc3hzx
-         XKeVdbl9o8uAzODGYSwv8/02peAqPgCj3IcHn9ipfB3d12tLoUB8/XedMrB/M9YA/MIj
-         0zwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=G7OayzxrfFVbcMN84/1yINFzN49s9Su5Hydbta07fag=;
-        b=rZbYaDlOr//n4UY5U0AUD8DFNEBeOUbbhjLjbQ+F/HtQSfgNP5mPgFg08gmkLTu0KF
-         ee6IDXQs1IXaB/HO6i+d9GR0kuQhXTiKeSlkyxLvIs7Zq4gkbCUFyymD3iJt1BDKo2hM
-         sqOzpxiQmxYgfmeqQZdPCGNbUa4+5X9xjtYgbqhwRmFqwYeSmsMjqFl62LXoe6bOaXUz
-         jySB5imrV3AdA9GAXoYJZCV4bwXreahLK6l7I+xT6yC8kOiCR3BWLo4IqC7ZCvsyaEA2
-         XazKcaA+06kpcPFQFwN5zkCjwVuTR7SqMi6+PjBuO7D3Hb3AEGwj0Qs2+1KK9QgcPyOk
-         wgGQ==
-X-Gm-Message-State: AOAM532zNxCAdEuy02uk/+DuiJc1Sh+LhkxTIHgkQrC3wT7XZaLjIcYx
-        RHMpcAz2aQdu5Pl7dtE5x7IRS2kkv6iTfQ==
-X-Google-Smtp-Source: ABdhPJy+ngWLIdI0HAKgiLzVfLCV+RzujeHRXzijGP1q3vHBHjOti8KV16t6WPpcvNJSS7+oCjgL3w==
-X-Received: by 2002:a0c:c342:: with SMTP id j2mr27093174qvi.41.1617053662589;
-        Mon, 29 Mar 2021 14:34:22 -0700 (PDT)
-Received: from localhost ([2605:9480:22e:ff10:7b00:4f79:8763:6261])
-        by smtp.gmail.com with ESMTPSA id o21sm11769314qtp.72.2021.03.29.14.34.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Mar 2021 14:34:22 -0700 (PDT)
-Date:   Mon, 29 Mar 2021 17:34:21 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, avarab@gmail.com, dstolee@microsoft.com,
-        gitster@pobox.com, jonathantanmy@google.com
-Subject: Re: [PATCH v3 16/16] midx.c: improve cache locality in
- midx_pack_order_cmp()
-Message-ID: <YGJH3fzQXL6TvPK2@nand.local>
-References: <cover.1612998106.git.me@ttaylorr.com>
- <cover.1615482270.git.me@ttaylorr.com>
- <550e785f10ba14f166958501c007b75a04052a0d.1615482270.git.me@ttaylorr.com>
- <YGHPINrwIZ1mKK+y@coredump.intra.peff.net>
+        id S230362AbhC2Vgu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Mar 2021 17:36:50 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:56530 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231131AbhC2VgZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Mar 2021 17:36:25 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3F18A125831;
+        Mon, 29 Mar 2021 17:36:25 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=inV/dpFL4L9dfEat7klDnDfOyiM=; b=uvHFyQ
+        c7NmHFrDFz6CgaYtc4dS+RT78RPrAgmtzmmic1tn7cd/VI+KZDUpPoUVyEfuKKfz
+        A8d8SBEjKdgEtuZfEUEsCnJRHdDY6dsst8/PQlwm7tOi12/iohukNViD/OY8Ns30
+        vW5m7ArGM8evODRLUUIgjPSgslTuOAg2HwV20=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ATEc3EUHVP0A2ElYCD99PtPGKrFkwWsE
+        56NthRmHp4ugnpW8ohRbg7STCBam5V68ZPcm0SontyYaaZJZsFW4cC8SCxeuxD6q
+        6ijvGzkMA0WMYOVILexiL9Np231C1wlG/XuQZwjklOY4fc5Xzjcps97PtZwhI+kn
+        B7ChtJJN0wA=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 375E5125830;
+        Mon, 29 Mar 2021 17:36:25 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 72FB912582E;
+        Mon, 29 Mar 2021 17:36:22 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Li Linchao via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+        dscho <johannes.schindelin@gmx.de>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Li Linchao <lilinchao@oschina.cn>
+Subject: Re: [PATCH v8] builtin/clone.c: add --reject-shallow option
+References: <pull.865.v7.git.1616670558261.gitgitgadget@gmail.com>
+        <pull.865.v8.git.1617013145206.gitgitgadget@gmail.com>
+Date:   Mon, 29 Mar 2021 14:36:20 -0700
+In-Reply-To: <pull.865.v8.git.1617013145206.gitgitgadget@gmail.com> (Li
+        Linchao via GitGitGadget's message of "Mon, 29 Mar 2021 10:19:04
+        +0000")
+Message-ID: <xmqqa6qliqwb.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YGHPINrwIZ1mKK+y@coredump.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: CE61C2CC-90D6-11EB-BF18-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 29, 2021 at 08:59:12AM -0400, Jeff King wrote:
-> On Thu, Mar 11, 2021 at 12:05:42PM -0500, Taylor Blau wrote:
->
-> > From: Jeff King <peff@peff.net>
-> >
-> > There is a lot of pointer dereferencing in the pre-image version of
-> > 'midx_pack_order_cmp()', which this patch gets rid of.
-> >
-> > Instead of comparing the pack preferred-ness and then the pack id, both
-> > of these checks are done at the same time by using the high-order bit of
-> > the pack id to represent whether it's preferred. Then the pack id and
-> > offset are compared as usual.
-> >
-> > This produces the same result so long as there are less than 2^31 packs,
-> > which seems like a likely assumption to make in practice.
->
-> Obviously this patch is brilliant. ;)
+"Li Linchao via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Obviously.
+>     Changes since v6:
+>     
+>      * use _() for warning/die statement
 
-> Did we record any numbers to show the improvement here? I don't think it
-> can be demonstrated with this series (since most of the code is dead),
-> but I recall that this was motivated by a noticeable slowdown.
+This round tweaks a few test titles and drops warning() that was
+given in v7 when the feature is not in use.
 
-Looking through our messages, you wrote that this seemed to produce a
-.8 second speed-up on a large-ish repository that we were testing.
-That's not significant overall, the fact that we were spending so long
-probably caught our attention when looking at a profiler.
+Comments from other reviewers who are more familiar with the
+transport layer than I am?  As far as I see, this version is
+done cleanly enough to call it ready for 'next'.
 
-I could go either way on mentioning it. It does feel a little like
-cheating to say, "well, if you applied these other patches it would make
-it about this much faster". So I'm mostly happy to just keep it vague
-and say that it makes things a little faster, unless you feel strongly
-otherwise.
-
-> I briefly wondered whether the complicated midx_pack_order_cmp() in
-> pack-revindex.c, which is used for the bsearch() there, could benefit
-> from the same speedup. It's only log(n), of course, instead of n*log(n),
-> but one might imagine making "n" calls to it. I don't think it makes
-> sense, though. The pointer dereferencing there is into the midx mmap
-> itself. Creating an auxiliary array would defeat the purpose.
-
-Right.
-
-> -Peff
-
-Thanks,
-Taylor
+Thanks.
