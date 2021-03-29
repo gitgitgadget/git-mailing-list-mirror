@@ -2,165 +2,152 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5CDEC433C1
-	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 13:34:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 09B1EC433E1
+	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 13:36:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 85A776191B
-	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 13:34:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C00516195B
+	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 13:36:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231458AbhC2NeT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Mar 2021 09:34:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33406 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230244AbhC2NeG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Mar 2021 09:34:06 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55A7AC061574
-        for <git@vger.kernel.org>; Mon, 29 Mar 2021 06:34:06 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id dm8so14260579edb.2
-        for <git@vger.kernel.org>; Mon, 29 Mar 2021 06:34:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=NYODdjiduAjf7cVHXTVZaKbTUE2pwWxk8enoiWG81RU=;
-        b=C/ksJbmq1fK+Jwk4pZQkxlfLjVB4XbqAikAIhBtAmviER3cgMPuwnYVGEWke19/J29
-         56E7kW+Wi5iSlvAZ9zv+Nh/wSf1Yd2RcdTaXX/3AdS2gzj3m+RZ/pbZs5GzjNYwsvfW9
-         dBPEos9RkMMKaaPhPIIFJF4D9Feb60Ir2EFsEpEJb3uYfW80X60LjXhsCCAUk9SILJiU
-         nDArvUi0x+gfZt7O+UT33hxOKKM0R0V92unDrrUATmzHqf4xYtJa24LnjdqgHUIXwCLO
-         6FBXdXTYxp2xjoTnGff+Cydl1ZL0S3AHr0EpTSlL9dWu8ubqcFeG5jJNGYnMrNh/Ut0m
-         Gzlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=NYODdjiduAjf7cVHXTVZaKbTUE2pwWxk8enoiWG81RU=;
-        b=Z+zMNNdv3fVcPasShWzzO/CEk3CLMGnzglG+cDs/qJ6HBtBejNIgZdFRR7e86LAgDC
-         cplCN9NVSPBukeY5GqGmpXLppI5Ny9KRRY6m0saO3GCKqfkbR9yWMNDlGAdElSWQRm4P
-         G1kZZMLusSG39yYnnDK0eMyD6cRByuRqud+a7LkNH32781Ozzn1ftN/ejVVpH8Xs8fGg
-         N9kvkWDfm15xyEnFJET3rlGArdHQiPheOdHhb6KKD3wFVCDYBT3Bm5qwx9xCsJXIJrIY
-         e5776xpw/nuaKSyRfUy/07OS7hIeLmOiCI/VOm+Yih005Sknb+qG/S4nngvy7+LRqVmn
-         y0eQ==
-X-Gm-Message-State: AOAM5323kx2o/aB/MxBZd/o7rIIiwhsLUHOGjTHShl+ClSrBbFGUXpBi
-        c93L640USyNsg68UBI63oa7wPFjIO5E=
-X-Google-Smtp-Source: ABdhPJznvxVmN2oPGmcO+Vd1edMcHgZBO7D9qRtopIcOKC7pp5c1BG3CiYe3pMhEuoNw8yRTbOyWgw==
-X-Received: by 2002:aa7:ca04:: with SMTP id y4mr28416079eds.339.1617024844972;
-        Mon, 29 Mar 2021 06:34:04 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id cw14sm9201393edb.8.2021.03.29.06.34.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Mar 2021 06:34:04 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Elijah Newren <newren@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2 00/10] improve reporting of unexpected objects
-References: <20210308200426.21824-1-avarab@gmail.com>
- <cover-00.11-00000000000-20210328T021238Z-avarab@gmail.com>
- <YGBL88lYheyFmwCg@coredump.intra.peff.net>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <YGBL88lYheyFmwCg@coredump.intra.peff.net>
-Date:   Mon, 29 Mar 2021 15:34:03 +0200
-Message-ID: <87r1jym6d0.fsf@evledraar.gmail.com>
+        id S231544AbhC2NgZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Mar 2021 09:36:25 -0400
+Received: from mout.gmx.net ([212.227.17.22]:56425 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231549AbhC2NgE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Mar 2021 09:36:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1617024961;
+        bh=ZF0JU8UXxQG4gtaxCXKluOVvuKapyUgLoln94OXfWZg=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=ZE102NUMSARkDXgADt+12KYw3gKvTypydPkaHGYOADN58f7mzeBAFLRP1+kdDjJYG
+         gl6IDHLVlZXjFNr4ZJhGyQlMgfys6KIv0Jpo2VX4U3YCaT2MJHK1wIowe+kezMveuj
+         PnlaHUWuXK5HyroiGB2MZnHzXrAwKX2TOssfT1zg=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.18.207.193] ([89.1.213.153]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MTRQq-1l3k571zdE-00TlS9; Mon, 29
+ Mar 2021 15:36:01 +0200
+Date:   Mon, 29 Mar 2021 15:36:01 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?=C4=90o=C3=A0n_Tr=E1=BA=A7n_C=C3=B4ng_Danh?= 
+        <congdanhqx@gmail.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 3/4] cmake: add a preparatory work-around to accommodate
+ `vcpkg`
+In-Reply-To: <YF/117C6LcNGQ7sm@danh.dev>
+Message-ID: <nycvar.QRO.7.76.6.2103291535220.53@tvgsbejvaqbjf.bet>
+References: <pull.887.git.1616886386.gitgitgadget@gmail.com> <543fd0f5d7e5ee297364d1d28091f2004a35f2d0.1616886386.git.gitgitgadget@gmail.com> <YF/117C6LcNGQ7sm@danh.dev>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-1876820553-1617024963=:53"
+X-Provags-ID: V03:K1:rK/VGXR7L+cHIamu9JVDUBugNcnP02xmk4zpJwqMZgxEA6erLBW
+ HcKi/c2sAm4weP1XPJbCqvBh61rBoiSdqlOas8UkTM/s3FsV+cnbCjhjp+1nIPlBslzjW93
+ 7MCn1rAFi+mutyaesy2kJr5o5bBdaYuS/lIP8NFDO//epA5Yq0sOXBlrMVsCjEsElNkyK56
+ RwVY9CZ3Kuz+Nnq2jskNQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:dZGQpaoeIDU=:d6hLVKZcujV13/3rtCI7ml
+ lezizkBU6+iEoqgoqt3M9WBPC0heLEXn7sraoaQOadTgUNpTCUWSXYb0VDqO8Em+u4LiDKfrx
+ IEpq4Yx/VZaAArpwuV/E7RKCjByU2+7kxvke6xyOZ/REJnbdjdjqiZ3pwMyvBY9GB7WMLDWXo
+ Y2rlE+yqym3wWWAq85StJc3lRBuIHJh30zVgxKGJvILFDGC9Q74Uxp9aKeKUjeLpjiKM3yBxc
+ YCsvLz6Ezn8l6yNo9gXqL6npcXjhFSdDwFzulDwANeRPJ823zQOLd3U5c+Pqw0KfZMA9qlvhI
+ d5ogTYDwj9bci8VXNL7Uy6CjNXXxpjSiUCd0fqhS9Rkq7KHAi7KKycy9c7bn0xRs1PqiS+1K6
+ Tjn3M+MGKTnX+GEs7PH0rzVbmhbzI+jemkrB+X+zPpHI6a7g3ZaO1KpN7KBDsiL4PD9MZO9yy
+ MVAwlShgnSY9z0Icp7lyJ4/a5cAexD8v8X5wFt5ltxUaS/lBsc8pZPQfrzWW5FUv3BQLz3BOR
+ f67U+LuMhKJwmNiXkFX/yCT3D/JSbB/NhJjXw1+Mhf8BprtAiGUhDXcjkjNQYRTX6uxPzOD4/
+ Y4rQRukS/y0oon/XIju4mk3QRvyEdjMhKMlHpiAjYSBiT+9QyCoMRvZxm0vA/0bOqiK1r9Aw4
+ 8vsL4g1Zv3qjGM4K+AszGjF1CKEpqfKM0z0txEJR/nJEFTMttomTRUKeUcmC8mpWvmxNH+Sqn
+ 4Hkh4SOYnrMbcm5GUSlOgK3LiDoIXj2hx8fP3ByrAJCazk/wEpiHAe6yZbijMiIwm/kV9UItz
+ u0+o21k4evvkQHxi9REdm87o7ZLMg7Ukwy/UhADz2q1dpjxUOOiZ+Q7CzJiFzUZnlkIkUwrNY
+ /Hebxb3u66UuMHZ2UrpoLCiYato/ug0NJ3a457boxQCFJxBmRPwLcTTwoIU2p8mKx1s7q/AkQ
+ bikFU6Y6AjyFmkPIRUOT8mrZD+VpdufgPPJEPz9M24d44xtIIDD22Vo0XUTVAjnTAeMr4MHkH
+ /Lrziq422HTTxxZwatse9bBmTCUav0mKJd5aCwCufnFy6yYYd4g11aDpWVpbBPPylZoTiTCeq
+ Stz1Y6k9Ce2Nj1mgNrSpq/4TpkmxUySuBR1v8DmwoPDageEyEZ/KmPAOAzuwLwd8ttB5PcFrY
+ fe30ncCDM75XHy7zHxbT7ZBi1spVqQ3aGHe1yXHv83uLH6uw5o/qc1jEom6vOm8tkAiKju3NU
+ okejiqYTb5Ovw5KUs
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Sun, Mar 28 2021, Jeff King wrote:
+--8323328-1876820553-1617024963=:53
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> On Sun, Mar 28, 2021 at 04:13:30AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
+Hi Danh,
+
+On Sun, 28 Mar 2021, =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh wrote:
+
+> On 2021-03-27 23:06:24+0000, Johannes Schindelin via GitGitGadget <gitgi=
+tgadget@gmail.com> wrote:
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > We are about to add support for installing the `.dll` files of Git's
+> > dependencies (such as libcurl) in the CMake configuration. The `vcpkg`
+> > ecosystem from which we get said dependencies makes that relatively
+> > easy: simply turn on `X_VCPKG_APPLOCAL_DEPS_INSTALL`.
+> >
+> > However, current `vcpkg` introduces a limitation if one does that:
+> > While it is totally cool with CMake to specify multiple targets within
+> > one invocation of `install(TARGETS ...) (at least according to
+> > https://cmake.org/cmake/help/latest/command/install.html#command:insta=
+ll),
+> > `vcpkg`'s parser insists on a single target per `install(TARGETS ...)`
+> > invocation.
+> >
+> > Well, that's easily accomplished: Let's feed the targets individually =
+to
+> > the `install(TARGETS ...)` function in a `foreach()` look.
+> >
+> > This also has the advantage that we do not have to manually cull off t=
+he
+> > two entries from the `${PROGRAMS_BUILT}` array before scheduling the
+> > remainder to be installed into `libexec/git-core`. Instead, we iterate
+> > through the array and decide for each entry where it wants to go.
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  contrib/buildsystems/CMakeLists.txt | 14 +++++++++-----
+> >  1 file changed, 9 insertions(+), 5 deletions(-)
+> >
+> > diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystem=
+s/CMakeLists.txt
+> > index da2811ae3aad..a166be0eb1b8 100644
+> > --- a/contrib/buildsystems/CMakeLists.txt
+> > +++ b/contrib/buildsystems/CMakeLists.txt
+> > @@ -811,15 +811,19 @@ list(TRANSFORM git_shell_scripts PREPEND "${CMAK=
+E_BINARY_DIR}/")
+> >  list(TRANSFORM git_perl_scripts PREPEND "${CMAKE_BINARY_DIR}/")
+> >
+> >  #install
+> > -install(TARGETS git git-shell
+> > +foreach(program ${PROGRAMS_BUILT})
+> > +if(${program} STREQUAL git OR ${program} STREQUAL git-shell)
 >
->> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (10):
->>   object.c: stop supporting len =3D=3D -1 in type_from_string_gently()
->>   object.c: refactor type_from_string_gently()
->>   object.c: make type_from_string() return "enum object_type"
->>   object-file.c: make oid_object_info() return "enum object_type"
->>   object-name.c: make dependency on object_type order more obvious
->>   tree.c: fix misindentation in parse_tree_gently()
->>   object.c: add a utility function for "expected type X, got Y"
->>   object.c: add and use oid_is_type_or_die_msg() function
->>   object tests: add test for unexpected objects in tags
->>   tag: don't misreport type of tagged objects in errors
+> Please don't use `${}` around variable inside `if()`, and quote the
+> string. CMake has a quirk with the `${}` inside if (expanded variable
+> will be treated as a variable if it is defined, or string otherwise).
+> Unquoted string will be seen as a variable if it's defined, string
+> otherwise. IOW, suggested command:
 >
-> I'm somewhat skeptical of the final patch, given my comments (just now)
-> in:
+> 	if (program STREQUAL "git" OR program STREQUAL "git-shell")
 >
->   https://lore.kernel.org/git/YGBHH7sAVsPpVKWd@coredump.intra.peff.net/
+> We also have another problem with quoted arguments could be interpreted
+> as variable or keyword if CMP0054 policy not enabled, too.
+> I think it's better to have it enabled, but it's not in the scope of
+> this patch.
 >
-> I'll quote them here:
+>  https://cmake.org/cmake/help/latest/policy/CMP0054.html
 
-Picking up where we left off in
-http://lore.kernel.org/git/8735wfnv7i.fsf@evledraar.gmail.com ...
+Thank you for this information! I've sent out v2 based on your suggestion.
 
->> Because when we call, say, lookup_blob() and find that the object is
->> already in memory as a non-blob, we don't know who the culprit is.
->> Perhaps an earlier part of the code called parse_object(), found that it
->> really is a blob on disk, and used that type. But it may equally have
->> been the case that we saw a reference to the object as a commit, called
->> lookup_commit() on it, and now our lookup_blob() call is unhappy,
->> thinking it is really a commit. In that case, one of those references is
->> wrong, but we don't know which.
->>
->> I think a robust solution would be one of:
->>
->>   - make the message more precise: "saw object X as a commit, but
->>     previously it was referred to as a blob". Or vice versa.
->>
->>   - when we see such a mismatch, go to the object database to say "aha,
->>     on disk it is really a blob". That's expensive, but this is an error
->>     case, so we can afford to be slow. But it does produce unsatisfying
->>     results when it was the earlier lookup_commit() call that was wrong.
->>     Because we have to say "object X is really a blob, but some object
->>     earlier referred to it as a commit. No idea who did that, though!".
->
-> Looking at the final patch, I think you side-step the issue to some
-> degree because it is only touching the parse_object() code paths, where
-> we really have looked at the bytes in the object database. So it
-> basically is doing the second thing above (which is "free" because we
-> were accessing the odb anyway).
->
-> But I think it still has the "oops, somebody made a wrong reference much
-> earlier" problem. The actual bug is in some other object entirely, whose
-> identity is long forgotten. I think we would be much better off to say
-> something like "somebody expected X to be a commit, but now somebody
-> else expects it to be a blob", which is all that we can reliably say.
-> And the next step really ought to be running "git fsck" to figure out
-> what is going on (and we should perhaps even say so via advise()).
+Thanks,
+Dscho
 
-Yes I'm totally side-stepping the issue, but I don't see a way around
-that that doesn't make the whole object lookup code either much slower,
-or more complex.
-
-I.e. the whole thing is an emergent effect of us seeing a tag object,
-and noting in-memory that we saw a given OID of type X, but we don't
-even know if we can look it up at that point, or that it's not type Y.
-
-I don't think it's guaranteed that we're neatly in one single object
-traversal at that point (e.g. if we're looking at N tags, and only later
-dereferencing their "object" pointers). So passing a "object A which I
-have now says B is a X, assert!" wouldn't work.
-
-We could eagerly get the object from disk when parsing tags (slow?), or
-have a void* in the object struct or whatever to say "this is the OID
-that claimed you were XYZ" (ew!).
-
-Or, which I think makes sense here, just don't worry about it and error
-with the limited info we have at hand. Yes we can't report who the
-ultimate culprit is without an fsck, but that's not different than a lot
-of other error() and die() messages in the object code now.
-
-So if we're going to emit an advise() that seems generally useful for
-many of those error()/die() messages, and not something we should tack
-onto this incremental improvement to one error.
+--8323328-1876820553-1617024963=:53--
