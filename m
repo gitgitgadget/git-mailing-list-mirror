@@ -2,85 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0310FC433C1
-	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 18:52:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D2FEC433DB
+	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 19:11:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B239561968
-	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 18:52:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1F2EB6196E
+	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 19:11:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230224AbhC2Svm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Mar 2021 14:51:42 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:54264 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230346AbhC2SvJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Mar 2021 14:51:09 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id D342A12FC7D;
-        Mon, 29 Mar 2021 14:51:08 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=nplD3vman5Mn
-        ipOgZvpdZBzhJ7Q=; b=nlxYKPprIWRGEVG7n4iYYMmS5WCQDv2QztDw4ghhH3ie
-        3hMy2fDlx4EmnaWmTD8Fn9V8kmQcTYsfTfQgUEQdkWOx4s7OugWHErp4SpzwXwca
-        B5J5B4OJhtNw1XF13qB+oSztwP92prU6Je2qZrz/7Rp2JxzjbXa0UoZPEroG7Pw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=M6uJwt
-        aEBNTm2VzxCVX3ejqJ3qTwBc/7wzAfmOpS2bqz4mbaAhBhE270GmVZGAskmV/TNN
-        RFf5sbnNRfqDd4HgZJg4x49PA+Hc+oN3nKhzx+/lsFqJZgGDCX0U3JqML5lLDDII
-        PIgGNneq3hVM2J4E7CyOQI7PKujdz/ByPeZz4=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C473312FC7C;
-        Mon, 29 Mar 2021 14:51:08 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0C01212FC7B;
-        Mon, 29 Mar 2021 14:51:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2 4/5] Makefile: add the ".DELETE_ON_ERROR" flag
-References: <20210307132001.7485-1-avarab@gmail.com>
-        <cover-0.6-00000000000-20210329T161723Z-avarab@gmail.com>
-        <patch-4.6-2ff6359c273-20210329T161723Z-avarab@gmail.com>
-Date:   Mon, 29 Mar 2021 11:51:04 -0700
-In-Reply-To: <patch-4.6-2ff6359c273-20210329T161723Z-avarab@gmail.com>
- (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Mon, 29 Mar
- 2021 18:20:11 +0200")
-Message-ID: <xmqqblb1kd47.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S231672AbhC2TKp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Mar 2021 15:10:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49874 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231684AbhC2TKb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Mar 2021 15:10:31 -0400
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4092AC061574
+        for <git@vger.kernel.org>; Mon, 29 Mar 2021 12:10:30 -0700 (PDT)
+Received: by mail-ot1-x32a.google.com with SMTP id y19-20020a0568301d93b02901b9f88a238eso13289021oti.11
+        for <git@vger.kernel.org>; Mon, 29 Mar 2021 12:10:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:from:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=E4Ax2TUy0zFyvFXWE6NIQ03WdLfL8j+mDq6rZ0SjQSI=;
+        b=u/J6ez/VrkSb8k3LmySdixQHVxVXr4zJe5LsiBX/AGENKmVmNk092TSBrlk5s2m8PR
+         yHdCBumiijT6FQHiOVtpcSarKInDsIG5WRFcKZwAKbIp5JJlgw/J+h23dI0IJNDPsa66
+         YTS+hL6iHba9Uo2nvhAnwAIaTX5Ab7BS/wx7nzqzEHyixzkYQYXqBteAbVqhU1GZTCLP
+         LPeErxft9e+XUynosKldmiTPDeVfiC3+/RiXecMKKg88lpnFC1yqm4DB8QfwbSlAmSpR
+         leTHRPe2Gq2w6gneS2vGrd/XAViONSqRe1WFfSK4JJiwCVyNPdz/Hh4OuajVKPvfUECk
+         8s/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=E4Ax2TUy0zFyvFXWE6NIQ03WdLfL8j+mDq6rZ0SjQSI=;
+        b=CX//cnkT82BXsG7Ur4UkEsy30i5WuWn02xEubQKvGD2d9TvOTpJ6hNXS2qHnEaisrE
+         yN/zUH95coUymQHEkpZX+yTlJpMM57UVCn7QmpAme+1rtl4xJHMDanOJ4EcLGPvZchA8
+         Sb2Lq/PbkE8WZxCUzIbNMSZpBtXtE7FK6o/EUrHVnJIgg8DXaV3quwZWJJ+sDkTjOJdD
+         v1J9elEu0rVobyTUVRYaWquNrmdFZu+pd10BRn+MYqIMBWDvcXFmbF0P2KFM4EpugqFK
+         UcJ9Bpea4AiTV0zBpa0bGvUpft1QdAhVy5rp0d9YFMWEoT+zIklXcEuJ5yCj6a9WmjB2
+         Rfww==
+X-Gm-Message-State: AOAM53383ZloNWwHPZz8Pt+oeR6zQ5uPs/i/4QuNmi/tlkA5+xjDhPNZ
+        P5MzSmIBloMeAV3DGgtyVdg=
+X-Google-Smtp-Source: ABdhPJz3tdSrkefpJzTevq98AqOaxBUfDxSe+aJ0MMCX4CvDM67TBOj8Q9Qk997rOKtWuGf4vRoXfg==
+X-Received: by 2002:a05:6830:1093:: with SMTP id y19mr23716641oto.337.1617045029508;
+        Mon, 29 Mar 2021 12:10:29 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:18fb:da6e:ec24:b27d? ([2600:1700:e72:80a0:18fb:da6e:ec24:b27d])
+        by smtp.gmail.com with ESMTPSA id w21sm3624175oiw.33.2021.03.29.12.10.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 29 Mar 2021 12:10:28 -0700 (PDT)
+Subject: Re: [PATCH 2/3] read-cache: use hashfile instead of git_hash_ctx
+From:   Derrick Stolee <stolee@gmail.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     gitster@pobox.com, peff@peff.net, git@jeffhostetler.com,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.916.git.1616785928.gitgitgadget@gmail.com>
+ <e2611bbc007a4583af55e006136c2bc74351a7de.1616785928.git.gitgitgadget@gmail.com>
+ <8b368872-bb36-db61-20d7-47aa5af0ec37@gmail.com>
+Message-ID: <244d8b93-9d53-d660-ce08-d8b2362f75a8@gmail.com>
+Date:   Mon, 29 Mar 2021 15:10:27 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.9.0
 MIME-Version: 1.0
+In-Reply-To: <8b368872-bb36-db61-20d7-47aa5af0ec37@gmail.com>
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: B7BC135E-90BF-11EB-9713-D609E328BF65-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+On 3/29/2021 11:04 AM, Derrick Stolee wrote:
+> On 3/26/2021 3:12 PM, Derrick Stolee via GitGitGadget wrote:
+>>  
+>> -	if (ce_flush(&c, newfd, istate->oid.hash))
+>> -		return -1;
+>> +	finalize_hashfile(f, istate->oid.hash, CSUM_FSYNC | CSUM_HASH_IN_STREAM);
+>>  	if (close_tempfile_gently(tempfile)) {
+>>  		error(_("could not close '%s'"), get_tempfile_path(tempfile));
+>>  		return -1;
+> 
+> It was bothering me all weekend why this change made index writes
+> slower. The reason was this CSUM_FSYNC. Other performance measurement
+> (instructions, branches, branch misses, etc.) are all really close to
+> the old code, so this I/O is the only explanation. And truly, it is
+> the case.
+> 
+> It seems that we avoid an fsync() on the index exactly for this perf
+> reason, but we don't on other applications of the hashfile API because
+> writes are not critical paths.
+> 
+> I'll update this series in a v2 soon that has some other improvements
+> that I noticed while digging deep into things.
 
-> Use the GNU make ".DELETE_ON_ERROR" flag.
+Small update: the pull request [1] has the latest changes that I
+think will work for these needs. However, they will conflict with
+the upcoming changes to ds/sparse-index to use index extensions.
 
-Yay!
+[1] https://github.com/gitgitgadget/git/pull/916
 
-With versions of $(MAKE) where this feature is available, it is far
-more preferrable to use it than "generate into temporary and rename
-to the final" dance.
+I'll pause this series and re-send on top of ds/sparse-index
+after it solidifies.
 
-We do require / depend on GNU but I do not offhand know if this is
-available in all versions that still matter.  If we know we can
-assume the presence of this feature the I do not mind if we jump
-directly to this step without those "do the same for $(CC)" steps
-(which I deem crazy) before it.
-
-
+Thanks,
+-Stolee
