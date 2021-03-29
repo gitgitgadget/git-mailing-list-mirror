@@ -6,101 +6,87 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 07ACEC433E0
-	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 20:48:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 69D76C433DB
+	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 20:54:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C6E5E619AA
-	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 20:48:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2418761883
+	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 20:54:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230523AbhC2UsI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Mar 2021 16:48:08 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54702 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231340AbhC2UrZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Mar 2021 16:47:25 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 75CCFB84E0;
-        Mon, 29 Mar 2021 16:47:19 -0400 (EDT)
+        id S230394AbhC2Uxb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Mar 2021 16:53:31 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53626 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230472AbhC2Uw7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Mar 2021 16:52:59 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B28ECC5E5B;
+        Mon, 29 Mar 2021 16:52:58 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=PYQ7KXcAz80UEmd73dJCMt/UAqc=; b=a8jNwb
-        pZpP0In/pgIzqyi3vUrFlG4sgkyvrKgACBeL9lLlZ11KmnuZ5T7b449oBNvp5oaY
-        oEOq1Gp0dlpIqhdbWERMXfhykq/StFyPXz2LvyrPi9CILHXybdFPGJbLX69SWi4f
-        do6U6uDnYqSlftEjglC8owFLr8AnS7n/11aiY=
+        :content-type; s=sasl; bh=dI1utStn/mcdwnD501cvc9HG53Y=; b=E10IYZ
+        OpANqqiW3BfkBUFubuWKCjyUVtMhf59plz/duW1zC07CNRZ84PSDCvHQmg8NTM57
+        7prGsoewtuuN01ORfg7bV5gI9E4ZuPff3aZjYSNpFvUWklKa1j5I9LHDpi5ZWl5R
+        cXNmVtiwu6IpykvN1kkvK++yTmQP3f3D5YGzw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Z5zPTnyllZ9dTb7z6lwoOR+FG9WNwEbC
-        HXgDuG1WH/W5PqL1c9t1qyCVesGFG8qeF+lTLn0HcwEwva0QTW81ACjbjZmyTgNo
-        4yjO/r1Cpdc1QUEj5YDUSl0E66omj+TBnrUJI1UicxL+J3rd3+umlyaBbc2lrcJI
-        1xyiG+/i11I=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6D6A0B84DF;
-        Mon, 29 Mar 2021 16:47:19 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=eig+ShBPiWs1r7wau6KG37UUKYp6fsTL
+        bdaCZFVYt005hFLtJr0o7zkC0hia0T3x3kGmrCLPMhg8RVaVzjI7EkDWumalBL4J
+        KdBq/gYwmRlpaaG+h9zmL11Vqxue43wdMfGvmqvE/RKX/tN0sDEK2RwnJrPBQjl5
+        gz+CUt0Lt8U=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id AA339C5E5A;
+        Mon, 29 Mar 2021 16:52:58 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D8035B84DE;
-        Mon, 29 Mar 2021 16:47:18 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3347FC5E59;
+        Mon, 29 Mar 2021 16:52:58 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Atharva Raykar <raykar.ath@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [GSOC][PATCH] userdiff: add support for Scheme
-References: <20210327173938.59391-1-raykar.ath@gmail.com>
-        <xmqq5z1cqki7.fsf@gitster.g>
-        <EBC020E6-BE8B-4332-8225-A988CB7CFA69@gmail.com>
-        <xmqqft0fm9uu.fsf@gitster.g>
-        <562DCDA0-EAE6-408F-97D7-127689DE5559@gmail.com>
-Date:   Mon, 29 Mar 2021 13:47:17 -0700
-In-Reply-To: <562DCDA0-EAE6-408F-97D7-127689DE5559@gmail.com> (Atharva
-        Raykar's message of "Mon, 29 Mar 2021 13:42:22 +0530")
-Message-ID: <xmqq1rbxk7qi.fsf@gitster.g>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH] sequencer: fix edit handling for cherry-pick and revert
+ messages
+References: <pull.988.git.git.1616742969145.gitgitgadget@gmail.com>
+        <440980f5-81c9-4201-61a4-29acb0346c65@gmail.com>
+Date:   Mon, 29 Mar 2021 13:52:57 -0700
+In-Reply-To: <440980f5-81c9-4201-61a4-29acb0346c65@gmail.com> (Phillip Wood's
+        message of "Mon, 29 Mar 2021 10:23:08 +0100")
+Message-ID: <xmqqwntpiswm.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: F3DE7E52-90CF-11EB-BDC5-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: BE1FF222-90D0-11EB-B01C-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Atharva Raykar <raykar.ath@gmail.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
->> Having said that, two further points.
->> 
->> - the "anything but whitespaces and various forms of parentheses"
->>   set would include backslash, so 'component\new' would be taken as
->>   a single word with "[^][()\\{\\} \t]+", wouldn't it?
->> 
->> - how common is the use of backslashes in identifiers?  I am trying
->>   to see if the additional complexity needed to support them is
->>   worth the benefit.
+> On 26/03/2021 07:16, Elijah Newren via GitGitGadget wrote:
+>> From: Elijah Newren <newren@gmail.com>
+>> save_opts() should save any non-default values.  It was intended to
+>> do
+>> this, but since most options in struct replay_opts default to 0, it only
+>> saved non-zero values.  Unfortunatley,
 >
-> I have refined the regex, and now it is much simpler and does all of what
-> I want it to:
->
-> 	"([^][)(}{[:space:]])+"
+> s/Unfortunatley/Unfortunately/ also s/iff/if/ in a few places below.
 
-OK, [:space:] is already used elsewhere, so it would be OK.
+I think the latter is delibrate use of common abbreviation of "if
+and only if".
 
-In practice, the only difference from "[ \t]" (which is used in many
-other patterns in the same file) is that [:space:] class includes
-form-feed (\Ctrl-L); nobody would write vertical-tab in the code,
-and the matching is done one line at a time, so the fact that LF (or
-CRLF) is in the [:space:] class does not make a difference anyway.
+> It might be worth emphasizing that despite its name
+> continue_single_pick() is used to commit conflict resolutions
+> regardless of the number of picks - I had to check the code to see
+> what it was doing in the multi-pick case.
 
-> I did not have to escape the various parentheses, so I avoided the need to
-> handle backslashes separately. The "\\t" was causing problems as well because
+metoo ;-)
 
-If you spelled "\\t" that would have caused a problem of your own
-making ;-)
+> I was surprised how big a change was required to the existing code but
+> it seems this is surprising tricky to get right - I cannot think of
+> any simplifications.
 
-I think what I gave in the message you are responding to was a
-single backslash followed by a 't', to let the compiler turn them
-into a single HT character, and that wouldn't have had such a
-problem---in fact "[ \t]" is used in many other existing rules in
-the same file.
-
-Thanks.
-
+Thanks for a review.
