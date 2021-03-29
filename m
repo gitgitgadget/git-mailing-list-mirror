@@ -2,132 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 619F3C433E0
-	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 16:34:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 54027C433E1
+	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 16:45:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2A69E6190A
-	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 16:34:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2348861987
+	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 16:45:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229628AbhC2QeH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Mar 2021 12:34:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43882 "EHLO
+        id S231173AbhC2QpT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Mar 2021 12:45:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46760 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231372AbhC2Qb7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Mar 2021 12:31:59 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AF88C061574
-        for <git@vger.kernel.org>; Mon, 29 Mar 2021 09:31:59 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id b9so13471412wrt.8
-        for <git@vger.kernel.org>; Mon, 29 Mar 2021 09:31:59 -0700 (PDT)
+        with ESMTP id S231165AbhC2QpN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Mar 2021 12:45:13 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80F28C061574
+        for <git@vger.kernel.org>; Mon, 29 Mar 2021 09:45:12 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id x16so13528190wrn.4
+        for <git@vger.kernel.org>; Mon, 29 Mar 2021 09:45:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=DJJJnW3236iXJ0q65RjPclqblo37dyZ/mlcnzsAct/w=;
-        b=hwJhK3NDkZwWVtfm6wqgQHkdKR/ZoKrOuRB72AM0svS0ffXfnBZzcwPZ2e8TWV1PAx
-         Ze9Yf+/XoTlUjeYAYJgGzWXmPVZGeqpwUiJggZYbmx9rKT1aTZgr4MBTzEabSLoOHVaC
-         dng+aG/VNyDTp5hHr4gEDNFFqHs8azVCi9YojYjK4/pbKfIPz4qzVM/1rmdu8BHgN4I6
-         pC0ZEaL3Ti7hfIasAf92S/3EddKZF+ad4iq7VUvZirEZzG7GSe3lzD9LFZQH5va2Os0y
-         B2/UgWNkqU7h0abCoW6R1Whrjih7Lb+QwkjPyp3G3La1NJIxFnrGmH7O1992Mid9nHdk
-         29KA==
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=RQdmschoPOFkac+QU2c3IMeth/e+LBTR2gnf6BD0fjA=;
+        b=hXXkO8bvrYaSjvdyFd1BDxzn2HWUxJ13nSTK2XtvOJ/6JY3+plUqzScu7kdr7Si4WS
+         05laZ0O/qrqQ3FWW2X98Ecvg1HBDn2PH0UsNn8MR7G07+ycaWhW0BhNGUd0+9f92fFgT
+         0jFRtIfS60rhF7lHzhRcAe3P3N1cpcRbt4iDi6/ShtK+dt841GWKdBTlv7lu9fou70FM
+         1klpp9+9ZVzbrJVKrbYDHufnU13qqehBW/zwzW2p/ii1qpeIOlEu65iI5U/AOGH/VzbO
+         Uh1CRheBQZAR4bA6kAksXrjlgOPIVjOABSL6Rv6ZvmEDoLpdVaUgEVzYXHWwT5rFzjny
+         +dpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=DJJJnW3236iXJ0q65RjPclqblo37dyZ/mlcnzsAct/w=;
-        b=SniiK8sFHnEFYjhGg7pPbzOdGSgpumYgEh+nQXa1bronhzB+FD3pP2nUM36+pb3350
-         6Jpb/vcPy2oQyzsJN812oWY4ZwbntRbWjahTSibPwJy5SalsmGKOkcnFzYGoeGD4TOWN
-         rzRx+t+3s1kIHubhDR/SdeSET27B3caiaTuVlOvtKCLy5H76nTZylQlv4Bq4UAq1OIp2
-         S2zprtbhZK7zOB2xoBlLyLi5RjIxJNP+HwPVtXi+eEuzNeOfmDLGuNHRiCQY2p9mn5Ar
-         XOmB8ndGNs0+BOGfSve8/3rN9yPH4vS7xMLdwSqxzc/OLvzoJDjyUSYS4v8Yll7OtPRr
-         RcuQ==
-X-Gm-Message-State: AOAM530GvqhKjHIrxyX3htDJwAmlC5L1CH8dCqDK15YRlbHHzP2v8c0H
-        DFDznSS+LfTqvq2N6H0atiDpql6YXurB4w==
-X-Google-Smtp-Source: ABdhPJwyDbG8AKlyeZW/YFGBjdZ6XVzeRJydedxdwU9MDIkmFcd0C9KkkdSan8haUr/mEN9FvjPECQ==
-X-Received: by 2002:a5d:468e:: with SMTP id u14mr29931470wrq.359.1617035517684;
-        Mon, 29 Mar 2021 09:31:57 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id l21sm25410464wmg.41.2021.03.29.09.31.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Mar 2021 09:31:56 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?q?Andreas=20F=C3=A4rber?= <andreas.faerber@web.de>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 2/6] Makefile: begin refactoring out "ln || ln -s || cp" pattern
-Date:   Mon, 29 Mar 2021 18:31:40 +0200
-Message-Id: <patch-2.7-5f59121dd0f-20210329T162327Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.31.1.461.gd47399f6574
-In-Reply-To: <cover-0.7-00000000000-20210329T162327Z-avarab@gmail.com>
-References: <cover-0.6-00000000000-20210329T161723Z-avarab@gmail.com> <cover-0.7-00000000000-20210329T162327Z-avarab@gmail.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=RQdmschoPOFkac+QU2c3IMeth/e+LBTR2gnf6BD0fjA=;
+        b=nIGk359gbDeL4EpE3bwLgHPCS8CrLgAoeFbV3/BflFxk0SrdiRnU1wFK3P/tQFg+7z
+         5bf3cMa92t1L6/XK8OtKJamvl4Hzf+CfSTh217YXAQdAJGcFwIvwfCXr+v4SgK/f4Dep
+         pTt1q70cxGwRsL+8vJosLW2PxhnP1TdOG2hOVvUKwPRZQvhOWtSTUfPiuirA1qgUCdZf
+         BnHdUt8vBGZxkdX4jgKfYiubHHlOhsry5s0FTY/e3+ySf9XnDkYRQ7iuZjTTKSV+R1zz
+         U7lLGSNGgYnvz+++0xb6wDhYRLMpHk4g3XlPLS2eyq9U3ayuVViE6BWw73djWFkw6Yml
+         On8w==
+X-Gm-Message-State: AOAM532AlgPa3yWK6PLqX5pV24j/l+LH+tk4QfwC/Efof3XV/+PZbhID
+        25DrcFxwOYyiGeGVrzf+fFegKC3jtaDBvV9gEAZ2SQUyiHw=
+X-Google-Smtp-Source: ABdhPJyrslaWm5XMmAcPbw6zU9nRrGr6MQT2AQoVcL76NaBebRPPYj/vG+OgB2ZDu1TwnOUdLFm2+s4A3+cRtUrt5l8=
+X-Received: by 2002:a5d:4307:: with SMTP id h7mr29218663wrq.227.1617036311100;
+ Mon, 29 Mar 2021 09:45:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+From:   Clement Moyroud <clement.moyroud@gmail.com>
+Date:   Mon, 29 Mar 2021 09:45:00 -0700
+Message-ID: <CABXAcUx0uWyk1e0UCaTwGt1VwVZkj1sV-OapSgZJOv3eS88eng@mail.gmail.com>
+Subject: Running scheduled maintenance in quiet mode
+To:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Begin refactoring out the "ln || ln -s || cp" pattern in the Makefile
-into a script. For now this is trivial, but in subsequent commits
-it'll simplify things a lot.
+Hello,
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- Makefile    | 8 ++------
- ln-or-cp.sh | 8 ++++++++
- 2 files changed, 10 insertions(+), 6 deletions(-)
- create mode 100755 ln-or-cp.sh
+Now that Git v2.31.0 has the fix for 'git maintenance register' on
+bare repositories, I've enabled it. I'm now getting a fairly useless
+daily e-mail with a couple of hashes listed (no other info).
 
-diff --git a/Makefile b/Makefile
-index 1e59d90a8d2..cfc87d7734d 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2199,9 +2199,7 @@ version.sp version.s version.o: EXTRA_CPPFLAGS = \
- 
- $(BUILT_INS): git$X
- 	$(QUIET_BUILT_IN)$(RM) $@ && \
--	ln $< $@ 2>/dev/null || \
--	ln -s $< $@ 2>/dev/null || \
--	cp $< $@
-+	./ln-or-cp.sh $< $@
- 
- config-list.h: generate-configlist.sh
- 
-@@ -2552,9 +2550,7 @@ git-http-push$X: http.o http-push.o GIT-LDFLAGS $(GITLIBS)
- 
- $(REMOTE_CURL_ALIASES): $(REMOTE_CURL_PRIMARY)
- 	$(QUIET_LNCP)$(RM) $@ && \
--	ln $< $@ 2>/dev/null || \
--	ln -s $< $@ 2>/dev/null || \
--	cp $< $@
-+	./ln-or-cp.sh $< $@
- 
- $(REMOTE_CURL_PRIMARY): remote-curl.o http.o http-walker.o GIT-LDFLAGS $(GITLIBS)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@+ $(ALL_LDFLAGS) $(filter %.o,$^) \
-diff --git a/ln-or-cp.sh b/ln-or-cp.sh
-new file mode 100755
-index 00000000000..de79cd85a81
---- /dev/null
-+++ b/ln-or-cp.sh
-@@ -0,0 +1,8 @@
-+#!/bin/sh
-+
-+target="$1"
-+link="$2"
-+
-+ln "$target" "$link" 2>/dev/null ||
-+ln -s "$target" "$link" 2>/dev/null ||
-+cp "$target" "$link"
--- 
-2.31.1.461.gd47399f6574
+I'd like to disable this e-mail and get the configuration to stick -
+changing my Crontab with either --quiet or a /dev/null redirect works,
+but the next time 'git maintenance start' is called, this will be
+rewritten.
 
+I could not find a 'maintenance.quiet' option (or similar) in the
+config. Is there a way to do this currently?
+
+Thanks,
+
+Cl=C3=A9ment
