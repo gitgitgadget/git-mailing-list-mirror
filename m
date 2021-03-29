@@ -2,81 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 04003C433DB
-	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 21:37:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D81CC433DB
+	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 21:37:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BBE0561987
-	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 21:37:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 75BBA61988
+	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 21:37:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230362AbhC2Vgu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Mar 2021 17:36:50 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:56530 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231131AbhC2VgZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Mar 2021 17:36:25 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3F18A125831;
-        Mon, 29 Mar 2021 17:36:25 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=inV/dpFL4L9dfEat7klDnDfOyiM=; b=uvHFyQ
-        c7NmHFrDFz6CgaYtc4dS+RT78RPrAgmtzmmic1tn7cd/VI+KZDUpPoUVyEfuKKfz
-        A8d8SBEjKdgEtuZfEUEsCnJRHdDY6dsst8/PQlwm7tOi12/iohukNViD/OY8Ns30
-        vW5m7ArGM8evODRLUUIgjPSgslTuOAg2HwV20=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ATEc3EUHVP0A2ElYCD99PtPGKrFkwWsE
-        56NthRmHp4ugnpW8ohRbg7STCBam5V68ZPcm0SontyYaaZJZsFW4cC8SCxeuxD6q
-        6ijvGzkMA0WMYOVILexiL9Np231C1wlG/XuQZwjklOY4fc5Xzjcps97PtZwhI+kn
-        B7ChtJJN0wA=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 375E5125830;
-        Mon, 29 Mar 2021 17:36:25 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 72FB912582E;
-        Mon, 29 Mar 2021 17:36:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Li Linchao via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-        dscho <johannes.schindelin@gmx.de>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Li Linchao <lilinchao@oschina.cn>
-Subject: Re: [PATCH v8] builtin/clone.c: add --reject-shallow option
-References: <pull.865.v7.git.1616670558261.gitgitgadget@gmail.com>
-        <pull.865.v8.git.1617013145206.gitgitgadget@gmail.com>
-Date:   Mon, 29 Mar 2021 14:36:20 -0700
-In-Reply-To: <pull.865.v8.git.1617013145206.gitgitgadget@gmail.com> (Li
-        Linchao via GitGitGadget's message of "Mon, 29 Mar 2021 10:19:04
-        +0000")
-Message-ID: <xmqqa6qliqwb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S230520AbhC2VhT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Mar 2021 17:37:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53168 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230361AbhC2VhE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Mar 2021 17:37:04 -0400
+Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1FAAC061574
+        for <git@vger.kernel.org>; Mon, 29 Mar 2021 14:37:03 -0700 (PDT)
+Received: by mail-qt1-x82f.google.com with SMTP id y2so10429927qtw.13
+        for <git@vger.kernel.org>; Mon, 29 Mar 2021 14:37:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=yZtOXVl36W5qKJRXdcpeD5mD0t55xnz9WC9dCiTXnl0=;
+        b=UwxdL8Peww81MFlWSxxHFfrpSwG0ggc2CM9aPAQnD2X8ysPpYeifGJg6EDLfk4XkkT
+         F93fUgIPf+ll/v8H2B5Y9W3SOrsm2SWmWS1M7BbXf4lYyEd0tQQu6n18ADBWW+M7Zeeu
+         q8KU/d4IyTZsn+TRgI9+zfe1D3Mu0mHEZNc5rVLPd/BdmMBQKUXoOIbwi0YbP87OslnV
+         IN8lZ+FfJHYSLShvbXyK9kKPuNquIa7HxFVn+7E1BwTHTKwpHEYg9ErvCtntkNZzMEHW
+         qLHt7rFUK4u1PL4vm06g1CdfLlEzkcclfonj3v9M8LqWDkNQPAbvDR55uGuKQ4Iek2aA
+         YS1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=yZtOXVl36W5qKJRXdcpeD5mD0t55xnz9WC9dCiTXnl0=;
+        b=BC3FHezrLsY95VBeApN6YXdVtyZlkCW1CWDQ0eSWG7fUMKG91Ec8frYPuM4a+78Mgb
+         P4P6gfQckNU+yBcX7PWB4tMeB/TAJgk+URvsqxCq5qIOE4GXxJtG7O7kF2R0eyBL84G+
+         umR2qPV2GeSB/9Jkxlu8BkAmPqlTGOOCBLxcIL3jgvrqaXeh3WhO22dUmbwPCP5Gpi8a
+         I9WC4Dkfflr66uueL0oxu/7xCcAV+OFhtvwpWn4orfL9Xr8S50NpVRz/DUteDG68H48R
+         SZS2LlFReuReVGY7kZ9dKK35O5bsgeK/cZRHvDe1YK5CPeb/gTRDDGJg+1qGnyuC+Pi8
+         +R4Q==
+X-Gm-Message-State: AOAM532M8Snaow8rSXa49VAMh9gb5zpxkHSc1+blRAkQLWApzB19/CXC
+        FWBMStthYKK/muF75D9phOzzHg==
+X-Google-Smtp-Source: ABdhPJyArE53KqzgSRE2rbFHgxN+/E5PabGCcweoTbBuT/6AZBb6/xJk77VEa3xtMQUMizi8iWVZEQ==
+X-Received: by 2002:ac8:6690:: with SMTP id d16mr24835081qtp.312.1617053823058;
+        Mon, 29 Mar 2021 14:37:03 -0700 (PDT)
+Received: from localhost ([2605:9480:22e:ff10:7b00:4f79:8763:6261])
+        by smtp.gmail.com with ESMTPSA id d68sm14417169qkf.93.2021.03.29.14.37.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Mar 2021 14:37:02 -0700 (PDT)
+Date:   Mon, 29 Mar 2021 17:37:01 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, avarab@gmail.com, dstolee@microsoft.com,
+        gitster@pobox.com, jonathantanmy@google.com
+Subject: Re: [PATCH v3 00/16] midx: implement a multi-pack reverse index
+Message-ID: <YGJIfdyghSUrq/0I@nand.local>
+References: <cover.1612998106.git.me@ttaylorr.com>
+ <cover.1615482270.git.me@ttaylorr.com>
+ <YGHQnQ9/ulXd+jgu@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: CE61C2CC-90D6-11EB-BF18-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YGHQnQ9/ulXd+jgu@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Li Linchao via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Mon, Mar 29, 2021 at 09:05:33AM -0400, Jeff King wrote:
+> On Thu, Mar 11, 2021 at 12:04:31PM -0500, Taylor Blau wrote:
+>
+> > Here is another reroll of my series to implement a reverse index in
+> > preparation for multi-pack reachability bitmaps. The previous version
+> > was based on 'ds/chunked-file-api', but that topic has since been merged
+> > to 'master'. This series is now built directly on top of 'master'.
+>
+> I gave the whole thing another careful read. Most of what I found were
+> small nits, but enough that I think one more re-roll is worth it.
 
->     Changes since v6:
->     
->      * use _() for warning/die statement
+Thanks. I agree that another re-roll is worth it. I have one prepared
+locally, and I just had one outstanding question in:
 
-This round tweaks a few test titles and drops warning() that was
-given in v7 when the feature is not in use.
+    https://lore.kernel.org/git/YGI6ySogGoYZi66A@nand.local/
 
-Comments from other reviewers who are more familiar with the
-transport layer than I am?  As far as I see, this version is
-done cleanly enough to call it ready for 'next'.
+that I'll wait on your reply to before sending a reroll.
 
-Thanks.
+> The biggest question is what we want to happen next. As you note, the
+> concept of a midx .rev file is useless until we have the matching
+> .bitmap file. So we _could_ let this sit in next while the dependent
+> bitmap topic is reviewed, and then merge them down together. But I'm
+> inclined to treat this as an independent topic that can get merged to
+> master on its own, since the early cleanups are valuable on their own,
+> and the .rev parts at the end, even if dead, won't hurt anything.
+
+That matches what I was hoping for. I think the clean-ups are worth it
+on their own, but I also think it's a good idea to take the whole
+series, since it means there's one less long-running branch in flight
+while we review the MIDX bitmaps topic.
+
+(FWIW, I can also see an argument in the other direction along the lines
+of "we may discover something later on that requires us to change the
+way multi-pack .rev files work". I think that such an outcome is fairly
+unlikely, but worth considering anyway).
+
+Thanks,
+Taylor
