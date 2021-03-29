@@ -2,111 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D81CC433DB
-	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 21:37:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D5B3C433C1
+	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 21:45:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 75BBA61988
-	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 21:37:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 31E5A6192F
+	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 21:45:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230520AbhC2VhT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Mar 2021 17:37:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53168 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230361AbhC2VhE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Mar 2021 17:37:04 -0400
-Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1FAAC061574
-        for <git@vger.kernel.org>; Mon, 29 Mar 2021 14:37:03 -0700 (PDT)
-Received: by mail-qt1-x82f.google.com with SMTP id y2so10429927qtw.13
-        for <git@vger.kernel.org>; Mon, 29 Mar 2021 14:37:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=yZtOXVl36W5qKJRXdcpeD5mD0t55xnz9WC9dCiTXnl0=;
-        b=UwxdL8Peww81MFlWSxxHFfrpSwG0ggc2CM9aPAQnD2X8ysPpYeifGJg6EDLfk4XkkT
-         F93fUgIPf+ll/v8H2B5Y9W3SOrsm2SWmWS1M7BbXf4lYyEd0tQQu6n18ADBWW+M7Zeeu
-         q8KU/d4IyTZsn+TRgI9+zfe1D3Mu0mHEZNc5rVLPd/BdmMBQKUXoOIbwi0YbP87OslnV
-         IN8lZ+FfJHYSLShvbXyK9kKPuNquIa7HxFVn+7E1BwTHTKwpHEYg9ErvCtntkNZzMEHW
-         qLHt7rFUK4u1PL4vm06g1CdfLlEzkcclfonj3v9M8LqWDkNQPAbvDR55uGuKQ4Iek2aA
-         YS1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=yZtOXVl36W5qKJRXdcpeD5mD0t55xnz9WC9dCiTXnl0=;
-        b=BC3FHezrLsY95VBeApN6YXdVtyZlkCW1CWDQ0eSWG7fUMKG91Ec8frYPuM4a+78Mgb
-         P4P6gfQckNU+yBcX7PWB4tMeB/TAJgk+URvsqxCq5qIOE4GXxJtG7O7kF2R0eyBL84G+
-         umR2qPV2GeSB/9Jkxlu8BkAmPqlTGOOCBLxcIL3jgvrqaXeh3WhO22dUmbwPCP5Gpi8a
-         I9WC4Dkfflr66uueL0oxu/7xCcAV+OFhtvwpWn4orfL9Xr8S50NpVRz/DUteDG68H48R
-         SZS2LlFReuReVGY7kZ9dKK35O5bsgeK/cZRHvDe1YK5CPeb/gTRDDGJg+1qGnyuC+Pi8
-         +R4Q==
-X-Gm-Message-State: AOAM532M8Snaow8rSXa49VAMh9gb5zpxkHSc1+blRAkQLWApzB19/CXC
-        FWBMStthYKK/muF75D9phOzzHg==
-X-Google-Smtp-Source: ABdhPJyArE53KqzgSRE2rbFHgxN+/E5PabGCcweoTbBuT/6AZBb6/xJk77VEa3xtMQUMizi8iWVZEQ==
-X-Received: by 2002:ac8:6690:: with SMTP id d16mr24835081qtp.312.1617053823058;
-        Mon, 29 Mar 2021 14:37:03 -0700 (PDT)
-Received: from localhost ([2605:9480:22e:ff10:7b00:4f79:8763:6261])
-        by smtp.gmail.com with ESMTPSA id d68sm14417169qkf.93.2021.03.29.14.37.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Mar 2021 14:37:02 -0700 (PDT)
-Date:   Mon, 29 Mar 2021 17:37:01 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, avarab@gmail.com, dstolee@microsoft.com,
-        gitster@pobox.com, jonathantanmy@google.com
-Subject: Re: [PATCH v3 00/16] midx: implement a multi-pack reverse index
-Message-ID: <YGJIfdyghSUrq/0I@nand.local>
-References: <cover.1612998106.git.me@ttaylorr.com>
- <cover.1615482270.git.me@ttaylorr.com>
- <YGHQnQ9/ulXd+jgu@coredump.intra.peff.net>
+        id S230364AbhC2Voa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Mar 2021 17:44:30 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:65167 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229910AbhC2VoM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Mar 2021 17:44:12 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4B98CB8B44;
+        Mon, 29 Mar 2021 17:44:11 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=olLCOMRCN/xAOW0zlbFMRiZlbHo=; b=Oc3T5a
+        A84vPtvnn5GllQRTx0JuOFTKa+F/tFdlUeOauehqE66r/E/UiYydDI0tVk/s5cwA
+        xN5vwRLpxp3OuH0Kkpvwz7aF7qhVKObiDKwc3aVVHbm4HoIJ2AaKSnboatX1im4j
+        35cXX3wAdoY42ar5PztuiqVV/cBabrME9tKC4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ik1I4Y3E/Blfziin7Youh0d6otHExT28
+        cwtSPGBAPsMofE2VH5DtTMGoII7w/oEKyYaIXccYRpKxGBYGRu0O9iV4llGXie0b
+        fT6pqooBDKxJbAuERJzYbMjsidXXbyDqtMO/KQvhac7fEfX0Om32D5QmPZhkqpwx
+        LFzu93amYNI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4052BB8B43;
+        Mon, 29 Mar 2021 17:44:11 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C30F8B8B42;
+        Mon, 29 Mar 2021 17:44:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v4 07/20] test-read-cache: print cache entries with --table
+References: <pull.883.v3.git.1615912983.gitgitgadget@gmail.com>
+        <pull.883.v4.git.1616507069.gitgitgadget@gmail.com>
+        <7ebd9570b1ad81720569a770526651c62c152b9f.1616507069.git.gitgitgadget@gmail.com>
+        <87r1k5pcmx.fsf@evledraar.gmail.com>
+        <ca8a96a4-5897-2484-b195-57e5b3820576@gmail.com>
+        <874kgzq4qi.fsf@evledraar.gmail.com>
+        <CABPp-BGRwxn73sntpX8Q5aD-O192RZmOOy_jiU3SQp4-erivtg@mail.gmail.com>
+        <87eeg0ng78.fsf@evledraar.gmail.com>
+        <b1eee802-f20c-5381-366c-729755bfac8a@gmail.com>
+Date:   Mon, 29 Mar 2021 14:44:10 -0700
+In-Reply-To: <b1eee802-f20c-5381-366c-729755bfac8a@gmail.com> (Derrick
+        Stolee's message of "Mon, 29 Mar 2021 15:46:32 -0400")
+Message-ID: <xmqq5z19iqj9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YGHQnQ9/ulXd+jgu@coredump.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: E587BD2A-90D7-11EB-96D0-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 29, 2021 at 09:05:33AM -0400, Jeff King wrote:
-> On Thu, Mar 11, 2021 at 12:04:31PM -0500, Taylor Blau wrote:
->
-> > Here is another reroll of my series to implement a reverse index in
-> > preparation for multi-pack reachability bitmaps. The previous version
-> > was based on 'ds/chunked-file-api', but that topic has since been merged
-> > to 'master'. This series is now built directly on top of 'master'.
->
-> I gave the whole thing another careful read. Most of what I found were
-> small nits, but enough that I think one more re-roll is worth it.
+Derrick Stolee <stolee@gmail.com> writes:
 
-Thanks. I agree that another re-roll is worth it. I have one prepared
-locally, and I just had one outstanding question in:
+> I think changing 'ls-files' before the sparse index has stabilized is
+> premature. I said that a series like the RFC you sent would be
+> appropriate after this concept is more stable. I do _not_ recommend
+> trying to juggle it on top of the work while the patches are in flight.
 
-    https://lore.kernel.org/git/YGI6ySogGoYZi66A@nand.local/
+I do not have a problem with either of approaches to help debugging
+(i.e. extending "ls-files --debug" or a new test helper), but I am
+curious to be reminded what the plan for "git ls-files [-s]" output
+is, when run in a repository in which sparse cone checkout is used.
 
-that I'll wait on your reply to before sending a reroll.
+Do we see trees and paths outside the cone omitted, or does the act
+of running "ls-files" dehydrate the trees into their constituent
+blobs?
 
-> The biggest question is what we want to happen next. As you note, the
-> concept of a midx .rev file is useless until we have the matching
-> .bitmap file. So we _could_ let this sit in next while the dependent
-> bitmap topic is reviewed, and then merge them down together. But I'm
-> inclined to treat this as an independent topic that can get merged to
-> master on its own, since the early cleanups are valuable on their own,
-> and the .rev parts at the end, even if dead, won't hurt anything.
-
-That matches what I was hoping for. I think the clean-ups are worth it
-on their own, but I also think it's a good idea to take the whole
-series, since it means there's one less long-running branch in flight
-while we review the MIDX bitmaps topic.
-
-(FWIW, I can also see an argument in the other direction along the lines
-of "we may discover something later on that requires us to change the
-way multi-pack .rev files work". I think that such an outcome is fairly
-unlikely, but worth considering anyway).
-
-Thanks,
-Taylor
+Thanks.
