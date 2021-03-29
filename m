@@ -2,187 +2,135 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8147EC433C1
-	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 13:42:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F9BDC433C1
+	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 13:43:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 46FB361554
-	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 13:42:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 63FEC6188B
+	for <git@archiver.kernel.org>; Mon, 29 Mar 2021 13:43:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230415AbhC2Nlo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Mar 2021 09:41:44 -0400
-Received: from mout.gmx.net ([212.227.17.21]:52095 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230434AbhC2Nlo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Mar 2021 09:41:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1617025302;
-        bh=u0j1yIPNwkr82uh3XPsDo1aH21pjWNW6Zk3meyX+VkA=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=U6Zay+5nfM8XynmAePqvUWx2LX8554P+wNirM9fg4eqeudVesuxPjlk6CPmd2Nurq
-         dVwJiMZvR5wd24vseCBugoi9r8w93kCVjdCI73a0J8k564IevCYQzVEldiyvlbXY3P
-         04mrfVNHSr2w6S6MAXBBoowammpn6U44IrmE/eeo=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.18.207.193] ([89.1.213.153]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MUosT-1l0AEO3aG9-00QjDT; Mon, 29
- Mar 2021 15:41:41 +0200
-Date:   Mon, 29 Mar 2021 15:41:42 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 1/2] SECURITY: describe how to report vulnerabilities
-In-Reply-To: <4f715120-3cd3-9f14-a291-0eb6e83a940e@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2103291537290.53@tvgsbejvaqbjf.bet>
-References: <pull.917.git.1616796767.gitgitgadget@gmail.com> <2c9f5725d96fe45aa5d1a6bbc522f9ed6161173c.1616796767.git.gitgitgadget@gmail.com> <4f715120-3cd3-9f14-a291-0eb6e83a940e@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S231591AbhC2NnV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Mar 2021 09:43:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35404 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231446AbhC2NnI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Mar 2021 09:43:08 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A993CC061574
+        for <git@vger.kernel.org>; Mon, 29 Mar 2021 06:43:07 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id j18so12929693wra.2
+        for <git@vger.kernel.org>; Mon, 29 Mar 2021 06:43:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=UkpWPxGjdPSP9bG6kv7wZPaxquPMOv1C+c+gpL/8XFA=;
+        b=Yci7Cx02wD881BDjDeUB0X7NywqtkM1gT/AvHz1S0nAxfSW+cd6JBOo9AMTC0/rwAe
+         rp62TboNIs003CpakXYrEZodDFfX4o7878ZZkJrCEybouO/e20L0hNO8KxAMOJC989h5
+         AD8cw6uj8KV0HNGLp0QDccivbJF5NClyw+kGzHqU1A6XD7pHWl/4sgs//zQV18k/OgtY
+         DglEUDHk/hiNa7L4/2d0CcuGW4sg5GSRJyrEr41hv87dCROI6aDLnag5mAE4449+2muK
+         2nV9h6veygoWLQdpArv1Lm6oRsl0Ilri0RHk/JsRDbT1Htc91pd5b2A7QOin3VxFu5R8
+         nbTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=UkpWPxGjdPSP9bG6kv7wZPaxquPMOv1C+c+gpL/8XFA=;
+        b=auFglmQtT+UVY5l902eSaPe1noGtD75JtqD/R9jmaecVukeEySaR66uuy24Xmqxo79
+         VK1g5Rg+7TBGNSk8XSHnKabOJurY5sNCvLq2JSpn16uS40ZlL8CGrqSHnf3A3iilrTCv
+         xbmxeCSUqVU2kULALmvSIBDSsWNNx3hHcEgwwjuIc5GG6aPcH9wxHqFztE0x3Q2JcBN+
+         2qQhovyb7r8cPikUhk30rFtPT1ZaPRYJUYyIegJoJjfbqO7n6Aqwj/uvsnWQN14Hv1ZK
+         iY2PMkk29CwWaBg5854i94O9nljGe1odgMHzTlZhPcpgbstQzE9AdOKBoGCHSqnv9iwe
+         8OIA==
+X-Gm-Message-State: AOAM531GHDjz5QIG4UCbnLKmmRwnS0hLDiHT4ADHg2bimtQ6GS1qQ0QY
+        yOlmZQ3Mtx/5YHFz10tA8o8/PEb+0mw=
+X-Google-Smtp-Source: ABdhPJw5n4fcY2RL+JGSg0hvsnd2vMO5Q69/8Pgab0bEyb530c+zDeyx/tb+Elj0gN5Y7QnCbG8s1g==
+X-Received: by 2002:adf:b313:: with SMTP id j19mr28065485wrd.188.1617025386501;
+        Mon, 29 Mar 2021 06:43:06 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id j14sm29152674wrw.69.2021.03.29.06.43.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Mar 2021 06:43:05 -0700 (PDT)
+Message-Id: <pull.917.v2.git.1617025385.gitgitgadget@gmail.com>
+In-Reply-To: <pull.917.git.1616796767.gitgitgadget@gmail.com>
+References: <pull.917.git.1616796767.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 29 Mar 2021 13:43:02 +0000
+Subject: [PATCH v2 0/2] Describe Git's security policy
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:FzpH1tAfXn2BfrdEGctjwui+pQ/ycWrgR2T2pOdP1BLaR9VlIUR
- sDZeiY2Q0Q3vNtpUtZ00TY6FpsmzAvGO7TCS+R7lq67OeBgpE5mznKeZ1eiifBAiQS6jg4T
- xbc19RIkoTA7W9HfzRKEmzgJebwV0qU70Vnxcu/yGtcXhVSie0sfiUmObne5dfb03s+PyaY
- GZIHdgnukUI5rZ9CGksUA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ahGVeV5+z/Q=:1pGMMKkA52ZK3hqXonYM/Y
- Serrn5qKMP+eZtNKjib5XUEdW3Y5V60ayqykmweDeHP4Da5nY+Q1vlWiy3FqLJKVTsj31gNub
- ov+lCv5Kllwmj3zYUGbBMQaK6huRXUZO8/0jhEps9C26C1aWz9K4N11X5GigTM+EK0m+t+69g
- Aft/9NXfnLcyEXEZaJF3yARPr/P0cyiSfjZKBKmOsS+ZzXCC/lP9kDkEGdwQyCikuEa33PAAp
- XlpSwp2043uOhYZOQnZvXnuOp02dV6wrrLvqvEnB8t7FW1pg8i56ppWTIdjkzZjZhD9NzEgUb
- 3uD0YC3m5fWWN8ucvzZ6jD7cdWcYPleBL9CAzZhFH78pDRDs+pnTTeEvvAhfgaAeMl6k9pZv+
- OnRuZmtCZxuoC+ncwdv1jvsn5vMaqsBoSY5VDrTsto/XaSheKO6H/bTEkBHY0LixWg4t1c7Qf
- 4qERm8bvdvtV7mD495YeeTXswNetxBGFtMvv1YYiJTkPYbUQtTa9x3NpjAubA/h1fA3VHNsgu
- 0aixVi6WtmyH0TKEo0NDDS1BhHi16/D7pfklKQhLRM/YSEjtdLokGYbUXbqJw7Xgiwe2ciRK9
- TIFTI6qWQqVjn2Vdg1d4F9TBaexDJLjyG06ctYqU600V9uMfqBYAKs82buLFmOTqp1O7Basjy
- PyMDobrtOKrLqh3gDDdpVV7+mZGybn2+XDItSSKAi/NobpmK6HTbTKlNDflZxh2ijd1O6HSqE
- Rzh2XIqSUYIHk1bR8IajU57Lg5yVT+ec6rNH4QOJ1kC26pofxhTukU1RAnQIl58ry6gXXrBc/
- TwCTD526rb99cA/nzdlWr+rlksNrCyGTWWgh4GWlrbKlJPn+pvyZitk4i03QbIBAkqsuYeetE
- P30xu8dPxw0qWfQHVfQJwP37zfgk52MT5fZ5zKkUISkUWp7RRDXR9NFrQGXFVjsHn9rl0akSC
- PrIGmA0eKF4xctJt+nAfnGDjybwODTLsH3/Lg7/8KYoUZMOvr0wqEZtEjZ55qF+BTZ3y6zpJG
- UxB1HvXH3YOmXbw8Pbxf5eq0U2twGbGYTfFul5h4hqRKO7KkMOzO/fHJMVRCaXi+L49rJgvYr
- 9OXMoA7ZdgbQbQArWB6NwRpCXWfNGh/LVWXe5YdLyYIq0YUjL/KXJgYjVRhO4LzGRdA6Tf9o8
- OZGnz9IqbUoVg2vqhIII9BgBP07yP+xUbyzzzzuXelfd/hl1HvadQi+gSEaNTL5CBKP7NjjPq
- /anjphMfOa7iKh/ZB
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Denton Liu <liu.denton@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Bagas,
+On GitHub, SECURITY.md files are the recommended way to describe how to
+report vulnerabilities, and to set expectations how far back maintenance
+tracks are updated with security bug fixes.
 
-On Sat, 27 Mar 2021, Bagas Sanjaya wrote:
+For example, when navigating to https://github.com/git/git/security/ users
+would be guided to that SECURITY.md file. If it exists.
 
-> On 27/03/21 05.12, Johannes Schindelin via GitGitGadget wrote:
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > In the same document, describe that Git does not have Long Term Suppor=
-t
-> > (LTS) release trains, although security fixes are always applied to a
-> > few of the most recent release trains.
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >   SECURITY.md | 51 +++++++++++++++++++++++++++++++++++++++++++++++++++
-> >   1 file changed, 51 insertions(+)
-> >   create mode 100644 SECURITY.md
-> >
-> > diff --git a/SECURITY.md b/SECURITY.md
-> > new file mode 100644
-> > index 000000000000..282790164e78
-> > --- /dev/null
-> > +++ b/SECURITY.md
-> > @@ -0,0 +1,51 @@
-> > +# Security Policy
-> > +
-> > +## Reporting a vulnerability
-> > +
-> > +Please send a detailed mail to git-security@googlegroups.com to
-> > +report vulnerabilities in Git.
-> > +
-> > +Even when unsure whether the bug in question is an exploitable
-> > +vulnerability, it is recommended to send the report to
-> > +git-security@googlegroups.com (and obviously not to discuss the
-> > +issue anywhere else).
->
-> What about using reference word (`... it is recommended to send the
-> report to that mailing list`)?
+The purpose of this patch series is to add this file, describing Git's
+security policy.
 
-I would really like to repeat the email address here, to make really
-certain that the reader uses the correct one.
+While at it, I also want to document the process how to coordinate the
+ensuing embargoed releases. This is what the second patch is all about.
 
-> > +Vulnerabilities are expected to be discussed _only_ on that
-> > +list, and not in public, until the official announcement on the
-> > +Git mailing list on the release date.
-> > +
-> > +Examples for details to include:
-> > +
-> > +- Ideally a short description (or a script) to demonstrate an
-> > +  exploit.
-> > +- The affected platforms and scenarios (the vulnerability might
-> > +  only affect setups with case-sensitiv file systems, for
-> > +  example).
->
-> Oops, s/case-sensitiv/case-sensitive/
+The reason for that is quite selfish, as I did two of them, and while I am
+happy that such embargoed releases do not happen all that often, the
+downside is that I keep forgetting all the details. So this document is not
+only meant for knowledge sharing, but in particular to help me the next
+time(s) I coordinate an embargoed release.
 
-Yes, thanks, it will be fixed in v2.
+Many thanks to Junio who reviewed the first draft of this patch series
+(where I had not yet separated out
+Documentation/howto/coordinate-embargoed-releases.txt).
 
-> > +- The name and affiliation of the security researchers who are
-> > +  involved in the discovery, if any.
-> > +- Whether the vulnerability has already been disclosed.
-> > +- How long an embargo would be required to be safe.
-> > +
-> > +## Supported Versions
->
-> The header should be `Supported Versions and How Maintenance
-> Releases are Made`.
+Changes since v1:
 
-Not really. The maintenance is described in
-Documentation/howto/maintain-git.txt. It is not the purpose of
-`SECURITY.md` to document that, it just so happens that we hint a bit at
-it while talking about which branches get security updates.
+ * Fixed typo
 
-> > +
-> > +There are no official "Long Term Support" versions in Git.
-> > +Instead, the maintenance track (i.e. the versions based on the
-> > +most recently published feature release, also known as ".0"
-> > +version) sees occasional updates with bug fixes.
-> > +
-> > +Fixes to vulnerabilities are made for the maintenance track for
-> > +the latest feature release and merged up to the in-development
-> > +branches. The Git project makes no formal guarantee for any
-> > +older maintenance tracks to receive updates. In practice,
-> > +though, critical vulnerability fixes are applied not only to the
-> > +most recent track, but to at least a couple more maintenance
-> > +tracks.
-> > +
-> > +This is typically done by making the fix on the oldest and still
-> > +relevant maintenance track, and merging it upwards to newer and
-> > +newer maintenance tracks.
->
-> AFAIK, maint branch are based on latest feature release (say v2.24),
-> and any bugfixes there are cherry-picked to relevant older releases,
-> but does it mean resetting maint branch to that older release, and
-> then resetting back to before that? Or how tagged maintenance release
-> are made without resetting maint?
+Johannes Schindelin (2):
+  SECURITY: describe how to report vulnerabilities
+  Document how we do embargoed releases
 
-There are `maint-<maintenance-track>` branches, e.g. `maint-2.30`,
-`maint-2.29`, etc.
+ Documentation/Makefile                        |   1 +
+ .../howto/coordinate-embargoed-releases.txt   | 131 ++++++++++++++++++
+ SECURITY.md                                   |  51 +++++++
+ 3 files changed, 183 insertions(+)
+ create mode 100644 Documentation/howto/coordinate-embargoed-releases.txt
+ create mode 100644 SECURITY.md
 
-But it really is not even interesting in the context of security updates
-how those maintenance branches are called, it is only interesting which
-versions will receive updates (and the updates come in the form of a
-newly-tagged version, not in the form of an updated `maint-<track>`
-branch; The latter just _happens_ to also happen, for maintenance
-reasons).
 
-> > +For example, v2.24.1 was released to address a couple of
-> > +[CVEs](https://cve.mitre.org/), and at the same time v2.14.6,
-> > +v2.15.4, v2.16.6, v2.17.3, v2.18.2, v2.19.3, v2.20.2, v2.21.1,
-> > +v2.22.2 and v2.23.1 were released.
+base-commit: e6362826a0409539642a5738db61827e5978e2e4
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-917%2Fdscho%2Fsecurity-policy-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-917/dscho/security-policy-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/917
 
-Thank you for your review!
-Johannes
+Range-diff vs v1:
+
+ 1:  2c9f5725d96f ! 1:  3f5d866de195 SECURITY: describe how to report vulnerabilities
+     @@ SECURITY.md (new)
+      +- Ideally a short description (or a script) to demonstrate an
+      +  exploit.
+      +- The affected platforms and scenarios (the vulnerability might
+     -+  only affect setups with case-sensitiv file systems, for
+     ++  only affect setups with case-sensitive file systems, for
+      +  example).
+      +- The name and affiliation of the security researchers who are
+      +  involved in the discovery, if any.
+ 2:  41efaaf62864 = 2:  565d7982d870 Document how we do embargoed releases
+
+-- 
+gitgitgadget
