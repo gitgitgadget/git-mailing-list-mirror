@@ -2,288 +2,180 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D9148C433DB
-	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 10:14:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 56490C433E2
+	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 10:23:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B08BE61959
-	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 10:14:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 18263619B7
+	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 10:23:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231574AbhC3KOK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Mar 2021 06:14:10 -0400
-Received: from mout.gmx.net ([212.227.15.19]:40213 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231552AbhC3KNh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Mar 2021 06:13:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1617099215;
-        bh=RJDSclSAO86BAAnO/z4qLgJRlt5d1gm1U2DUDLwY1GM=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=MbyQPZzNQlBdWn/NAlL46EE7UEI5raF3UhTVfwKLr0+t+Wb6+JjVLYhcxH1VyXcC3
-         WsAm05O7B1r7R6G/LjzHtwOo9dMdKT9fHBnZ94tk5Hn1kbTcSVl0alIrx+544EpBPe
-         PLPQ2Gm89LG8WAgeSUxQol2p9+LakXg43j3lznXw=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.22.127.121] ([213.196.213.200]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M5wLZ-1lXTyH2xwp-007SSI; Tue, 30
- Mar 2021 12:13:34 +0200
-Date:   Tue, 30 Mar 2021 12:13:33 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, Philip Oakley <philipoakley@iee.email>,
-        Elijah Newren <newren@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2] sequencer: fix edit handling for cherry-pick and
- revert messages
-In-Reply-To: <pull.988.v2.git.git.1617070174458.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2103301200020.52@tvgsbejvaqbjf.bet>
-References: <pull.988.git.git.1616742969145.gitgitgadget@gmail.com> <pull.988.v2.git.git.1617070174458.gitgitgadget@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ZO2JKo/ZHRXBqab6OiyCLN/jag3Z5Azlol4fTnNjR1ncX8/T4aH
- 908cUYB8GiVDgkODq7DHKcC6Pm8ROufP6cGaRD6eKTfCJm7ieyCXNOlhw+76zE07TRWVDjs
- WieqoL7jny7Nry0jl4M1aKG18jNe0DgE4nhLFKBTU10EMkP6R6Ost4qfu30BWfkQNIkkQNn
- WYMnPfAatBhEG0IkbISeA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:1cTdwMJFs6s=:gpjg4/vkVNFbhu7//WERk8
- Tf1s8u8KzArsGJBulM/yu1t9bhO4hCVlokBv36Ff7B2/EHsHpEFCELL8PLOYvpiEi0Vy58XL9
- NNqZqrt3TwL6rzwwVs9n0ketVYcY5SEv9NY4QPo3Xf2fUdbb3SrUZfS2pe7MR9YfWX53jIJj4
- vd5rpZYVs4YrXVhBtncjgXTvYpACRZpDhTgwjnIKnK++V21x93YJ5YiQVvJuape7Ncvvq43WQ
- suDCZqod6hUG8YyeoGiFkEgGiiOD2JtTFOres9ORcWPi22HmmErsexffgAVgIrJiJtKnl9HMN
- bwsp58FSwOfLaAJmJrJQ8uotFyxKzRiEE8qUz1h/D37TG5ENiafWHWMcAbw2E/xcRDnTzy+NF
- in8HUBcdBZ0QmKF+CxT0awWO0cHWrZWI3BFJhJS2ubkhN4qfNipY43YG3UVt+nHN9gnuGIK+T
- XS1UT4gHfOHUucBq62dWOQ/1fifGVhRM7WSqbXaBBpimEVKS65WZSJZKzAE/TGsfz7NId12jL
- r9MmC3GBl7MRXjFGYhRBZLpCJnBgEVHoJrz1pxSKEu/ddPkzx95b1STnw4PU/IPVWWgm0g6ie
- byrNRMgj4E+E5r/ksWjOAZT1IfFtTaUy1McKpG/1I9k1KEQegh7nwYeWGEfN1L1Kmu0ViMLN2
- pVHI1ZhH6GozOjrbDKzARqsd3HdUxK/9ZkukcQQzx0lOUxSLyJvnqb5vLiKVddQ/7qZWCuB7M
- siDyd9tu8h+uYBjtHmdMCMzMVNTHm6VoE5gPN6QQxzUuw92QApbAduPJSFplNw5vy5tZasEAW
- PKwY+M/OK4L0PBc6fevUNKhOm9d9Du0kmckVX1UzQZnekGHSwGIO5vqW1J93HIlUdyJFIQ+LE
- JUT99QtRlCaakhbOn2/jvCZ4xHwZK4eQlTcYPbcOYFPw2nsGny4gLjHeNmjF60fI6QWd2qrEJ
- 8oSehErGWtdQAocXewrft9qhNYSR9nlkhWW17WA1RGqY9thC/mJjkTyXCWl0JjbJZ7FXzrPGT
- wSCJlxQMYI1qOkhJNZE45YhPKXajVXuAK6WHFi7hYBLIaV30OfaDn3CVOh2t79F5Y8V9xlUbG
- 23mqJ/2QRIPcbsaCjVARw7tElle0RsUkQ1rjRRTqR9XpUgFxb6vR8ORdnwJZAYKvy2hUO3CRm
- PNOgbZwXf39fawmN8Yvp+yC11BX56ba1VJQwj31HSoyihzP5r3uuAMF6Xxkmc4/eTIQoHS7Fu
- M5BQILWBP6KPkigyC
+        id S231878AbhC3KXZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Mar 2021 06:23:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48376 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231848AbhC3KW4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Mar 2021 06:22:56 -0400
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1BC8C061574
+        for <git@vger.kernel.org>; Tue, 30 Mar 2021 03:22:55 -0700 (PDT)
+Received: by mail-pj1-x1036.google.com with SMTP id j6-20020a17090adc86b02900cbfe6f2c96so7432217pjv.1
+        for <git@vger.kernel.org>; Tue, 30 Mar 2021 03:22:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=O5cyMC2OgOgVvuu7akCFbd9r4+FSO7elDeBJQvpz5kA=;
+        b=rFFJmCysMaprYaP83fLtyBbLur6wgdcJbBcc11O1GA7DQ8Xc497hR+yZCxMyxmHVBw
+         GUi72VvsHHpjIVzeSC4p2nQLu5A0PddNxyr292UmAEhx6qKkFZ/IxNwSFFoPnfcecP5P
+         QfrgVj78Xoshb4Ws1Obe61QUMHTe+tt82TooErJEnUzD8iQqzBgJLLUEVHfBuZNLb1GJ
+         BUHVsJMtCxhv8jhzbnjwOdDvxSCAs4PgrCzICz+oA/VOlPWXZrYhRWL+rvzQFZBkiFrA
+         1lwIRQ2u7N2SyQh1aN4tJsbsGikEFuDhnlaR80IHpGNdHnPL8/ys7behSeZ/2L+C7z2p
+         KJJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=O5cyMC2OgOgVvuu7akCFbd9r4+FSO7elDeBJQvpz5kA=;
+        b=BRV4liELIiHbgutQe1o0vOmz7z4LKBAp8dFT5zbXCAMgGxJWmPD3otlKAMerPCBJ7a
+         /IT8Ei217zWFwY64uLpBXjWKnqC7Ss2G09cMX+aSxWXY3ItNbl7RkNnqbAKXqXThj/tN
+         fVOWhdV9i5ljD7Qoib+HeLblz14y5roGsWOhoMKyhqLbFxHXLKbmj3BdSn60l7CQRYl3
+         yaarBz0xDd1Yx3edDgDOkDvL0jw5/YjtRJPyNmaEo6y0gxaE0w/98HsRDp9XfyzRLfes
+         1PYRe59V5pDYa6WC2yQIFa3n2PuwvR1AD/GIekPG8Eh/2+G8VSDyESZULa9jTxhKlHRV
+         /QpQ==
+X-Gm-Message-State: AOAM531B9GW8YvjxieOFo7ou/9/q4t6ekBNaquE4biAc24s4yjK18oiQ
+        AhK+YDbNprZTd+3Atxuheck=
+X-Google-Smtp-Source: ABdhPJzdFuAa5uaw2jB0yEOkLxB5d8QVzmpAZ2I9xsz0nWmIHHzno0h9Rkj5gku6z3dqZk0zayGSqQ==
+X-Received: by 2002:a17:90a:6906:: with SMTP id r6mr3635100pjj.235.1617099774894;
+        Tue, 30 Mar 2021 03:22:54 -0700 (PDT)
+Received: from atharva-on-air.dlink ([119.82.121.20])
+        by smtp.gmail.com with ESMTPSA id m16sm18416185pgj.26.2021.03.30.03.22.53
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 30 Mar 2021 03:22:54 -0700 (PDT)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.60.0.2.21\))
+Subject: Re: [GSOC][PATCH] userdiff: add support for Scheme
+From:   Atharva Raykar <raykar.ath@gmail.com>
+In-Reply-To: <D8256AFA-898E-4388-8FCC-7D3D340C001E@gmail.com>
+Date:   Tue, 30 Mar 2021 15:52:51 +0530
+Cc:     Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>
 Content-Transfer-Encoding: quoted-printable
+Message-Id: <A3C3DD12-3C00-49ED-B427-37AAB4211C2A@gmail.com>
+References: <20210327173938.59391-1-raykar.ath@gmail.com>
+ <3def82fd-71a7-3ad9-0fa2-48598bfd3313@kdbg.org>
+ <5BA00FC6-9810-49AB-8DE2-D4F4010E2F82@gmail.com>
+ <09678471-b2a2-8504-2293-e2b34a3a96e8@gmail.com>
+ <D8256AFA-898E-4388-8FCC-7D3D340C001E@gmail.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+X-Mailer: Apple Mail (2.3654.60.0.2.21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah,
 
-On Tue, 30 Mar 2021, Elijah Newren via GitGitGadget wrote:
 
-> From: Elijah Newren <newren@gmail.com>
->
-> save_opts() should save any non-default values.  It was intended to do
-> this, but since most options in struct replay_opts default to 0, it only
-> saved non-zero values.  Unfortunately, this does not always work for
-> options.edit.  Roughly speaking, options.edit had a default value of 0
-> for cherry-pick but a default value of 1 for revert.  Make save_opts()
-> record a value whenever it differs from the default.
->
-> options.edit was also overly simplistic; we had more than two cases.
-> The behavior that previously existed was as follows:
->
->                        Non-conflict commits    Right after Conflict
->     revert             Edit iff isatty(0)      Edit (ignore isatty(0))
->     cherry-pick        No edit                 See above
->     Specify --edit     Edit (ignore isatty(0)) See above
->     Specify --no-edit  (*)                     See above
->
->     (*) Before stopping for conflicts, No edit is the behavior.  After
->         stopping for conflicts, the --no-edit flag is not saved so see
->         the first two rows.
->
-> However, the expected behavior is:
->
->                        Non-conflict commits    Right after Conflict
->     revert             Edit iff isatty(0)      Edit iff isatty(0)
->     cherry-pick        No edit                 Edit iff isatty(0)
->     Specify --edit     Edit (ignore isatty(0)) Edit (ignore isatty(0))
->     Specify --no-edit  No edit                 No edit
->
-> In order to get the expected behavior, we need to change options.edit
-> to a tri-state: unspecified, false, or true.  When specified, we follow
-> what it says.  When unspecified, we need to check whether the current
-> commit being created is resolving a conflict as well as consulting
-> options.action and isatty(0).  While at it, add a should_edit() utility
-> function that compresses options.edit down to a boolean based on the
-> additional information for the non-conflict case.
->
-> continue_single_pick() is the function responsible for resuming after
-> conflict cases, regardless of whether there is one commit being picked
-> or many.  Make this function stop assuming edit behavior in all cases,
-> so that it can correctly handle !isatty(0) and specific requests to not
-> edit the commit message.
+> On 30-Mar-2021, at 12:34, Atharva Raykar <raykar.ath@gmail.com> wrote:
+>=20
+>=20
+>=20
+>> On 29-Mar-2021, at 15:48, Phillip Wood <phillip.wood123@gmail.com> =
+wrote:
+>>=20
+>> Hi Atharva
+>>=20
+>> On 28/03/2021 13:23, Atharva Raykar wrote:
+>>> On 28-Mar-2021, at 05:16, Johannes Sixt <j6t@kdbg.org> wrote:
+>>> [...]
+>>>>> diff --git a/t/t4018/scheme-local-define =
+b/t/t4018/scheme-local-define
+>>>>> new file mode 100644
+>>>>> index 0000000000..90e75dcce8
+>>>>> --- /dev/null
+>>>>> +++ b/t/t4018/scheme-local-define
+>>>>> @@ -0,0 +1,4 @@
+>>>>> +(define (higher-order)
+>>>>> +  (define local-function RIGHT
+>>>>=20
+>>>> ... this one, which is also indented and *is* marked as RIGHT.
+>>> In this test case, I was explicitly testing for an indented =
+'(define'
+>>> whereas in the former, I was testing for the top-level =
+'(define-syntax',
+>>> which happened to have an internal define (which will inevitably =
+show up
+>>> in a lot of scheme code).
+>>=20
+>> It would be nice to include indented define forms but including them =
+means that any change to the body of a function is attributed to the =
+last internal definition rather than the actual function. For example
+>>=20
+>> (define (f arg)
+>> (define (g x)
+>>   (+ 1 x))
+>>=20
+>> (some-func ...)
+>> ;;any change here will have '(define (g x)' in the hunk header, not =
+'(define (f arg)'
+>=20
+> The reason I went for this over the top level forms, is because
+> I felt it was useful to see the nearest definition for internal
+> functions that often have a lot of the actual business logic of
+> the program (at least a lot of SICP seems to follow this pattern).
+> The disadvantage is as you said, it might also catch trivial inner
+> functions and the developer might lose context.
 
-Nicely explained!
+Never mind this message, I had misunderstood the problem you were trying =
+to
+demonstrate. I wholeheartedly agree with what you are trying to say, and
+the indentation heuristic discussed does look interesting. I shall have =
+a
+glance at the RFC you linked in the other reply.
 
-I'll allow myself one tangent: the subject of the sequencer's Unix shell
-script heritage seems to come up with an increasing frequency, in
-particular the awful "let's write out one file per setting" strategy.
+> The disadvantage is as you said, it might also catch trivial inner
+> functions and the developer might lose context.
 
-I would _love_ for `save_opts()` to write a JSON instead (or an INI via
-the `git_config_*()` family of functions, as is done already by the
-cherry-pick/revert stuff), now that we no longer have any shell script
-backend (apart from `--preserve-merges`, but that one is on its way out
-anyway).
+Feel free to disregard me misquoting you here. You did not say that (:
 
-The one thing that concerns me with this idea is that I know for a fact
-that some enterprisey users play games with those files inside
-`<GIT_DIR>/rebase-merge` that should be considered internal implementation
-details. Not sure how to deprecate that properly, I don't think we have a
-sane way to detect whether users rely on these implementation details
-other than breaking their expectations, which is not really a gentle way
-to ask them to update their scripts.
+> Another problem is it may match more trivial bindings, like:
+>=20
+> (define (some-func things)
+>  ...
+>  (define items '(eggs
+>                  ham
+>                  peanut-butter))
+>  ...)
+>=20
+> What I have noticed *anecdotally* is that this is not common enough
+> to be too much of a problem, and local define bindings seem to be more
+> favoured in Racket than other Schemes, that use 'let' more often.
+>=20
+>> I don't think this can be avoided as we rely on regexs rather than =
+parsing the source so it is probably best to only match toplevel =
+defines.
+>=20
+> The other issue with only matching top level defines is that a
+> lot of scheme programs are library definitions, something like
+>=20
+> (library
+>    (foo bar)
+>  (export ...)
+>  (define ...)
+>  (define ...)
+>  ;; and a bunch of other definitions...
+> )
+>=20
+> Only matching top level defines will completely ignore matching all
+> the definitions in these files.
 
-> diff --git a/builtin/revert.c b/builtin/revert.c
-> index 314a86c5621b..81441020231a 100644
-> --- a/builtin/revert.c
-> +++ b/builtin/revert.c
-> @@ -182,7 +182,7 @@ static int run_sequencer(int argc, const char **argv=
-, struct replay_opts *opts)
->  				"--signoff", opts->signoff,
->  				"--no-commit", opts->no_commit,
->  				"-x", opts->record_origin,
-> -				"--edit", opts->edit,
-> +				"--edit", opts->edit =3D=3D 1,
+That said, I still stand by the fact that only catching top level =
+defines
+will lead to a lot of definitions being ignored. Maybe the occasional
+mismatch may be worth the gain in the number of function contexts being
+detected?
 
-Honestly, I'd prefer `> 0` here.
 
->  				NULL);
->
->  	if (cmd) {
-> @@ -230,8 +230,6 @@ int cmd_revert(int argc, const char **argv, const ch=
-ar *prefix)
->  	struct replay_opts opts =3D REPLAY_OPTS_INIT;
->  	int res;
->
-> -	if (isatty(0))
-> -		opts.edit =3D 1;
->  	opts.action =3D REPLAY_REVERT;
->  	sequencer_init_config(&opts);
->  	res =3D run_sequencer(argc, argv, &opts);
-> diff --git a/sequencer.c b/sequencer.c
-> index 848204d3dc3f..d444c778a097 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -1860,14 +1860,26 @@ static void record_in_rewritten(struct object_id=
- *oid,
->  		flush_rewritten_pending();
->  }
->
-> +static int should_edit(struct replay_opts *opts) {
-> +	assert(opts->edit >=3D -1 && opts->edit <=3D 1);
-
-Do we really want to introduce more of these useless `assert()`s? I know
-that we stopped converting them to `BUG()`, but I really dislike
-introducing new ones: they have very little effect, being no-ops by
-default in most setups.
-
-> +	if (opts->edit =3D=3D -1)
-
-Maybe `< 0`, as we do elsewhere for "not specified"?
-
-> +		/*
-> +		 * Note that we only handle the case of non-conflicted
-> +		 * commits; continue_single_pick() handles the conflicted
-> +		 * commits itself instead of calling this function.
-> +		 */
-> +		return (opts->action =3D=3D REPLAY_REVERT && isatty(0)) ? 1 : 0;
-
-Apart from the extra parentheses, that makes sense to me.
-
-> +	return opts->edit;
-> +}
-> +
->  static int do_pick_commit(struct repository *r,
->  			  enum todo_command command,
->  			  struct commit *commit,
->  			  struct replay_opts *opts,
->  			  int final_fixup, int *check_todo)
->  {
-> -	unsigned int flags =3D opts->edit ? EDIT_MSG : 0;
-> -	const char *msg_file =3D opts->edit ? NULL : git_path_merge_msg(r);
-> +	unsigned int flags =3D should_edit(opts) ? EDIT_MSG : 0;
-> +	const char *msg_file =3D should_edit(opts) ? NULL : git_path_merge_msg=
-(r);
->  	struct object_id head;
->  	struct commit *base, *next, *parent;
->  	const char *base_label, *next_label;
-> @@ -3101,9 +3113,9 @@ static int save_opts(struct replay_opts *opts)
->  	if (opts->no_commit)
->  		res |=3D git_config_set_in_file_gently(opts_file,
->  					"options.no-commit", "true");
-> -	if (opts->edit)
-> -		res |=3D git_config_set_in_file_gently(opts_file,
-> -					"options.edit", "true");
-> +	if (opts->edit !=3D -1)
-
-s/!=3D -1/>=3D 0/
-
-> +		res |=3D git_config_set_in_file_gently(opts_file, "options.edit",
-> +						     opts->edit ? "true" : "false");
->  	if (opts->allow_empty)
->  		res |=3D git_config_set_in_file_gently(opts_file,
->  					"options.allow-empty", "true");
-> @@ -4077,7 +4089,7 @@ static int pick_commits(struct repository *r,
->  	prev_reflog_action =3D xstrdup(getenv(GIT_REFLOG_ACTION));
->  	if (opts->allow_ff)
->  		assert(!(opts->signoff || opts->no_commit ||
-> -			 opts->record_origin || opts->edit ||
-> +			 opts->record_origin || should_edit(opts) ||
->  			 opts->committer_date_is_author_date ||
->  			 opts->ignore_date));
->  	if (read_and_refresh_cache(r, opts))
-> @@ -4370,14 +4382,35 @@ static int pick_commits(struct repository *r,
->  	return sequencer_remove_state(opts);
->  }
->
-> -static int continue_single_pick(struct repository *r)
-> +static int continue_single_pick(struct repository *r, struct replay_opt=
-s *opts)
->  {
-> -	const char *argv[] =3D { "commit", NULL };
-> +	struct strvec argv =3D STRVEC_INIT;
-> +	int want_edit;
-
-Do we really want that extra `want_edit` variable? I think the code would
-be easier to read without it, and still be obvious enough.
-
-> +	int ret;
->
->  	if (!refs_ref_exists(get_main_ref_store(r), "CHERRY_PICK_HEAD") &&
->  	    !refs_ref_exists(get_main_ref_store(r), "REVERT_HEAD"))
->  		return error(_("no cherry-pick or revert in progress"));
-> -	return run_command_v_opt(argv, RUN_GIT_CMD);
-> +
-> +	strvec_push(&argv, "commit");
-> +
-> +	/*
-> +	 * continue_single_pick() handles the case of recovering from a
-> +	 * conflict.  should_edit() doesn't handle that case; for a conflict,
-> +	 * we want to edit if the user asked for it, or if they didn't specify
-> +	 * and stdin is a tty.
-> +	 */
-> +	want_edit =3D (opts->edit =3D=3D 1) || ((opts->edit =3D=3D -1) && isat=
-ty(0));
-> +	if (!want_edit)
-
-Here is what I would prefer:
-
-	if (!opts->edit || (opts->edit < 0 && !isatty(0)))
-
-The rest looks good, and the comments are _really_ helpful.
-
-And the remainder of the patch also looks good, so I will spare readers
-time by not even quoting it.
-
-Thank you!
-Dscho
