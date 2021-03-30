@@ -2,152 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 94DC2C433DB
-	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 00:12:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BF71C433C1
+	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 00:22:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5BE3361996
-	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 00:12:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 36BE361996
+	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 00:22:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229655AbhC3ALh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Mar 2021 20:11:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57966 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230202AbhC3ALC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Mar 2021 20:11:02 -0400
-Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B12A6C061762
-        for <git@vger.kernel.org>; Mon, 29 Mar 2021 17:11:01 -0700 (PDT)
-Received: by mail-pg1-x535.google.com with SMTP id l76so10464645pga.6
-        for <git@vger.kernel.org>; Mon, 29 Mar 2021 17:11:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=w3DEZT2vOO/uDRlWRzLDxq7PaGvtTPrW6kZfQ/D4RQE=;
-        b=ehJKEH76VovCYkTyDBAfak0vNsfu+cyUQMNvHN4Ygy/rY0Kmvng30rXgFsHMaDBOE/
-         pIv2fifZ8gtwTcVwg0iUe/8X5x3Q81tKW+VQKE5I/Qv0fNVE2EwWdRS/OrVOepZda1J1
-         7iB0TJe6seF3m8O10Dl0/NlEgm+V6UtW4ls5hwHEIFAw/00KM269NAZgRRs+5jCKz+xX
-         +0bvHqzcyAjJT3pOfoI4tGl3hwgdO3iBk3Sug6hcLywFs5X+1mHfnPxUUHkO0faZK6HF
-         OKn23KsqOmTXgRdjJynM2LLUkvOqZCtg4/athN9YB/St3K6pr3EupKAQVHqFlm4Aaaom
-         i2jQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=w3DEZT2vOO/uDRlWRzLDxq7PaGvtTPrW6kZfQ/D4RQE=;
-        b=b+FSjJUNCtN0At6o2Vnnr9TyRWkIiRgKu6LCT3fZs84BugqLDWAkUFPpE2b5LY66Ly
-         UMoIuDU00AdP5XkKLjIiyWX7FwClDUFfiZ7Te/Pb6fXlvTJnJgZBSXp+JbzhPwhxJz/O
-         x3qGqbTosNJOPAEWsHpqoYJjZppCOhhK/2PT4jqg9gUAkyXB/+E0lDGEdIvmxhGWEjfU
-         1XC8y1Y4kIBk0n5MumMpuiQG8VTzmNEpwAQ3ClGejiQaRtMLSacySCklWfCdOlh8oYcV
-         PxV4eydLFeZpUqvVHn83cYVjo4fpwd6SHby+6fIHWYFyKNvCjExH5FdoQ9n2kh05dwys
-         274Q==
-X-Gm-Message-State: AOAM5339gwJNGfzv1jxd49zdDZrKLc6+tu6SMqIH5VKVPODIkTEHPT2v
-        8gHYadEuMnhV4mNdcWjyxSlnxw==
-X-Google-Smtp-Source: ABdhPJw94axZjvZaiEWGVLaJIGyR8LB9K77ottLOiHk9okrUy2nyJsp5wymE587p2bygwsIoiYodlA==
-X-Received: by 2002:a62:168b:0:b029:20d:69a5:189 with SMTP id 133-20020a62168b0000b029020d69a50189mr27408529pfw.57.1617063060888;
-        Mon, 29 Mar 2021 17:11:00 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:0:282c:288a:2054:f194])
-        by smtp.gmail.com with ESMTPSA id o76sm16861470pfg.217.2021.03.29.17.10.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Mar 2021 17:11:00 -0700 (PDT)
-Date:   Mon, 29 Mar 2021 17:10:54 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v8 37/37] docs: unify githooks and git-hook manpages
-Message-ID: <YGJsjgEngx8z6wDk@google.com>
-References: <20210311021037.3001235-1-emilyshaffer@google.com>
- <20210311021037.3001235-38-emilyshaffer@google.com>
- <87sg50g1nz.fsf@evledraar.gmail.com>
+        id S229861AbhC3AWA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Mar 2021 20:22:00 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57732 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230213AbhC3AVj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Mar 2021 20:21:39 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 05F06B9AE6;
+        Mon, 29 Mar 2021 20:21:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=FnmxfPQcUo8W
+        RflswP0ajDbQnpU=; b=GyAQeWWlXgOrd89ZfkXf5ATM4R9A4qCsQRiZosE8mlgQ
+        JzjWShN8SwFZo/pBt7pByIzY9bCbL5Z2mY6/ioPvXop1RUridBf5T1rPDVqiyOiL
+        dSbYZreJISllyGfy/sPOQLTgnsvx+TcLwR89HX/iqPORTL6Z2CLb97XSLluhLdw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=n2PPhq
+        iXMj1iI+YeMyk36k/yqi5cCkmeDVWj18heH5H+hQ03G9996YPJEThGyEG776mHWx
+        Pfl3qNKSsMAOfjkZ3RUGZM/kwUDGXM8YLpOS+hUbq2knrydY1s/CxQbzBp+qbah/
+        sItKstm+1qiRy+u2CvoWK2hXY64QB5XC6mVg8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id EBD6DB9AE5;
+        Mon, 29 Mar 2021 20:21:38 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 582D9B9AE1;
+        Mon, 29 Mar 2021 20:21:38 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2 1/5] Makefile: rename objects in-place, don't clobber
+References: <20210307132001.7485-1-avarab@gmail.com>
+        <cover-0.6-00000000000-20210329T161723Z-avarab@gmail.com>
+        <patch-1.6-3330cdbccc0-20210329T161723Z-avarab@gmail.com>
+        <xmqqy2e5kegv.fsf@gitster.g> <87ft0dmtkw.fsf@evledraar.gmail.com>
+Date:   Mon, 29 Mar 2021 17:21:37 -0700
+In-Reply-To: <87ft0dmtkw.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Tue, 30 Mar 2021 01:24:47 +0200")
+Message-ID: <xmqqh7ktfq3y.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87sg50g1nz.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: E4B7A0DE-90ED-11EB-AA77-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 12, 2021 at 10:29:52AM +0100, Ævar Arnfjörð Bjarmason wrote:
-> 
-> 
-> On Thu, Mar 11 2021, Emily Shaffer wrote:
-> 
-> > By showing the list of all hooks in 'git help hook' for users to refer
-> > to, 'git help hook' becomes a one-stop shop for hook authorship. Since
-> > some may still have muscle memory for 'git help githooks', though,
-> > reference the 'git hook' commands and otherwise don't remove content.
-> 
-> I think this should at least have something like what my b6a8d09f6d8 (gc
-> docs: include the "gc.*" section from "config" in "gc", 2019-04-07) has
-> on top, i.e.:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-Yeah, this seems reasonable.
+>> Really, does anybody else use "$(CC) -o $@" in such a way in their
+>> Makefile?  Having to do this smells simply crazy (I am not saying
+>> you are crazy---the platform that forces you to write such a thing
+>> is crazy).
+>
+> Yes, if you do say a Google search for "Cannot open or remove a file
+> containing a running program" you'll find that there's 15k results of
+> people basically (re)discovering this problem in porting their software
+> to AIX, and the solutions being some variant of "yes AIX sucks, just us=
+e
+> this 'cmd >x+ && mv x+ x' trick".
 
->     
->     diff --git a/Documentation/git-hook.txt b/Documentation/git-hook.txt
->     index 4ad31ac360a..5c9af30b43e 100644
->     --- a/Documentation/git-hook.txt
->     +++ b/Documentation/git-hook.txt
->     @@ -150,10 +150,18 @@ message body and cannot be parallelized.
->      
->      CONFIGURATION
->      -------------
->     +
->     +The below documentation is the same as what's found in
->     +linkgit:git-config[1]:
->     +
->      include::config/hook.txt[]
->      
->      HOOKS
->      -----
->     +
->     +The below documentation is the same as what's found in
->     +linkgit:githooks[5]:
->     +
->      include::native-hooks.txt[]
->      
->      GIT
-> 
-> But I also don't think we should demote githooks(5) as the canonical doc
-> page for the hooks themselves.
-> 
-> If you run this in your terminal:
-> 
->     man 5 git<TAB>
-> 
-> You'll get:
-> 
->     gitattributes         gitignore             gitmailmap            gitrepository-layout  
->     githooks              git-lfs-config        gitmodules            gitweb.conf 
-> 
-> (Well, maybe not the lfs-part, but whatever...).
-> 
-> We should move more in the direction of splitting up our "file format"
-> docs from implementation, like the git-hook runner.
-> 
-> I'm somewhat negative on including it at all in git-hook(1). For the
-> config section it makes sense, and it's consistent with established doc
-> convention.
-> 
-> But including githooks(5) is around 2/3 of the resulting manpage, I
-> think just a link is better.
+What I meant was if there are well known upstream projects whose
+Makefile actually use
 
-Maybe so. What I really would like would be if `git help githooks` //
-`man githooks` opened `git-hook` manpage, but I had trouble getting it to do
-that and still publish to the `githooks` manpage (because the command
-doc format doesn't match the guide format). (Or, really, if `git help
-githooks` didn't exist so we didn't need to split the docs up. But that
-ship has sailed.)
+	$(CC) -o $@+ ...
+	mv $@+ $@
 
-Regardless, I won't complain that much about using a link instead. I'll
-make this change for v9.
+I wouldn't be surprised if AIX community maintained collections of
+patches to many projects to turn
 
- - Emily
+	$(CC) -o $@ ...
+
+in the Makefiles taken from upstream projects into
+
+	$(CC) -o $@+ ...
+	mv $@+ $@
+
+to work AIX around.  As an upstream, however, I am not interested in
+forcing that pattern on users of other platforms.
+
+In any case, I do not care too much about the "I am building a new
+binary while running, without installing, the one I built" use case
+and do not agree with the idea of making the Makefile ugly only to
+support such a use case.  That is where my comments are coming from
+on this topic.  FWIW, AIX developers who do not do the "build, run
+without installing, and rebuild while the old one is still running"
+will not need the "$(CC) -o $@+ && mv $@+ $@" either, right?
+
+
 
