@@ -2,67 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ED22DC433FB
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B17E6C433F8
 	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 13:12:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CAA72619C7
+	by mail.kernel.org (Postfix) with ESMTP id A138A619D0
 	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 13:12:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232281AbhC3NLx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Mar 2021 09:11:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56714 "EHLO
+        id S232280AbhC3NLw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Mar 2021 09:11:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232063AbhC3NLU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Mar 2021 09:11:20 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99940C061765
-        for <git@vger.kernel.org>; Tue, 30 Mar 2021 06:11:19 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id o16so16251963wrn.0
-        for <git@vger.kernel.org>; Tue, 30 Mar 2021 06:11:19 -0700 (PDT)
+        with ESMTP id S232038AbhC3NLV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Mar 2021 09:11:21 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E7D1C061574
+        for <git@vger.kernel.org>; Tue, 30 Mar 2021 06:11:20 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id a132-20020a1c668a0000b029010f141fe7c2so10305631wmc.0
+        for <git@vger.kernel.org>; Tue, 30 Mar 2021 06:11:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=HXXyCb3008cEuxUb0eFiCeUe/gRR165/1lETbl5mS4A=;
-        b=dAoYrdzuJv9tphGjjQdH3rhj79cI4b1WzxoA3VhwPoiwc5SvVyE3EEGYmxCN9333tL
-         dxHbOwFcuchDC1O37st1nhvtM5QihFGk/SkbglNg4u4Ipn+OaAuYgQA7nWjZZ1Drjw/i
-         L152b2o9OZBJM/DtxT7W7r6ZxXjI9Pv7YkmlQR/n/exN/tlk0MUAZ5wYSY2MGUeoKOYy
-         0itJv4Ud0d56foRc943oP+HDPq+XLZvo1SZDP1aRSQ2MZd5t3Pgq7LrUIwZ6pmX460ig
-         cHx41p7owWsRqHlqslJDfE0P0fHCi6RbldJQ35C0wn6u1cRtGljUyRAhaS1USfPqkeEn
-         Rdkg==
+        bh=ik/sbiJcgAItjz8wBWyJm4savRMM9zWovCm7yugKB3U=;
+        b=mBLlzaFyqgXQ81HHHoolXqEv1kHeTIMGr6gfDm2M8xjw3ef2OfgiBvIpJEgRCmGsMh
+         pnAzjL9TZWDDuX8jdrsGgn2fFWDED4IKDOAV6fl3MY0mzU+LUAlCv4sL4cBwXpG8i87c
+         Uje5C63x29kpIrtEimPIHOd+Gi0B9b/ujRH+vDgC2aDt9m7QpY7JDHyXfo7qCQdFTVx2
+         oI9j/QSACL2V7grUqcFJRWL4v9uZaNu5jRKaBJ8CEZZBpE1+GxcWNdH1RPolB+grY2fB
+         k1J+3ciaJviDuw5bs0OzaNihPBVe1zJMI131kurdyjEShEcp2dZHUqNXSUdsuHiygR5e
+         FnEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=HXXyCb3008cEuxUb0eFiCeUe/gRR165/1lETbl5mS4A=;
-        b=mvvaisOlqnh3K+VRfPY8KGfQod5HsXZfkBn5Fc37Jdelkmoi0u+vNbd82WKFMDi5Y4
-         kvwW9U74rKHHdELUqvxTI5NsPlJUHRIKw4QYW7oqc3YXY/uoavJzY5bfTg5IqRaQsTyb
-         iJVI9+/IE+u/t++sBsx+JzRvCuxk6BTMuEEWHWrCKQcArqm/0W1tNQhjEK2gf5+G62fA
-         8p7Dv+i6TU+3PbzKgiEFDWhQpe1WOwx9IV4HZLapsZd8XpKYQse8Hk+iHp/hLkd2gU/6
-         hrnK8agZHrGLbJ7JNaOJttvPVg2hh6E2StJ0CK/gEEU5hUh+2naJhxvVXRcjalbOHjIs
-         vUvg==
-X-Gm-Message-State: AOAM531RU/N2P08/7QYf9T4gczqnrymJmCxn+m36DmCtP/TZJ11LuRdo
-        TRbja/ByqmvV2obLQhEDXwIMOOqugWY=
-X-Google-Smtp-Source: ABdhPJymsnrA4SNnV6NSDx9eRVCKV20rOOUtTA6RvRQprxHqrKLQU/PBTS5p+Bs1zhNjsQKslorOLQ==
-X-Received: by 2002:a05:6000:5:: with SMTP id h5mr34748939wrx.97.1617109878367;
-        Tue, 30 Mar 2021 06:11:18 -0700 (PDT)
+        bh=ik/sbiJcgAItjz8wBWyJm4savRMM9zWovCm7yugKB3U=;
+        b=cyhvyeufoohZE7t6T4mNt1IX76NZp943yC7CZZ+mYCM/LuxvSCxonkTYWxFTULmzmX
+         LOVHxiqzTToqsP7UQRgAyFd8Mi63OU8ZiRBLX3sCHRMX86WsfS9BY3CtkmlyazSuTm2n
+         gtsA0ajmZfxCo4hL/yzFXg2GxZVl+rRXFXeKbwE/5out1q/5JO5Jabz8xQg9Fk+KZmPy
+         jO6NRaH2s3X2+0YAlqS86WrSNDctKp4HeS91xy1Pnwrb6dKJoaMrwp57jB35OOkd/SDM
+         xMawbos/nDUZ5JG28akPkvrX4Bt0ukzvHXrMODhtkPXrhQNn0B8rRMYuNqmRpYh/2OHN
+         HbGg==
+X-Gm-Message-State: AOAM532OYABzVK2QcgC4xQ5CaYzoLs/3kwqq1PRQN5c2kB5r38oXWEjV
+        udlg/V/JrEvQVbeqlZrqwW5d2Qil49s=
+X-Google-Smtp-Source: ABdhPJwfX3KRtrzmRUNFYayMPDClSFij1ckJlxG8br1uzBKzrBBvWcgVgePNo9yFjKEic8RlMN4M5Q==
+X-Received: by 2002:a05:600c:198c:: with SMTP id t12mr3986129wmq.183.1617109879072;
+        Tue, 30 Mar 2021 06:11:19 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g15sm3421388wmq.31.2021.03.30.06.11.17
+        by smtp.gmail.com with ESMTPSA id h13sm3220872wmq.29.2021.03.30.06.11.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Mar 2021 06:11:17 -0700 (PDT)
-Message-Id: <57be9b4a728b2bb16c841d3bad3c9c876a8839e0.1617109865.git.gitgitgadget@gmail.com>
+        Tue, 30 Mar 2021 06:11:18 -0700 (PDT)
+Message-Id: <c22b4111e49ef810810c54d4afba25db342c24a6.1617109865.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.883.v5.git.1617109864.gitgitgadget@gmail.com>
 References: <pull.883.v4.git.1616507069.gitgitgadget@gmail.com>
         <pull.883.v5.git.1617109864.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 30 Mar 2021 13:10:58 +0000
-Subject: [PATCH v5 15/21] sparse-index: check index conversion happens
+Date:   Tue, 30 Mar 2021 13:10:59 +0000
+Subject: [PATCH v5 16/21] sparse-index: add index.sparse config option
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,45 +82,129 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-Add a test case that uses test_region to ensure that we are truly
-expanding a sparse index to a full one, then converting back to sparse
-when writing the index. As we integrate more Git commands with the
-sparse index, we will convert these commands to check that we do _not_
-convert the sparse index to a full index and instead stay sparse the
-entire time.
+When enabled, this config option signals that index writes should
+attempt to use sparse-directory entries.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- t/t1092-sparse-checkout-compatibility.sh | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ Documentation/config/index.txt |  5 +++++
+ cache.h                        |  1 +
+ repo-settings.c                |  7 +++++++
+ repository.h                   |  3 ++-
+ sparse-index.c                 | 34 +++++++++++++++++++++++++++++-----
+ 5 files changed, 44 insertions(+), 6 deletions(-)
 
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index cba5f89b1e96..47f983217852 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -393,4 +393,22 @@ test_expect_success 'submodule handling' '
- 	grep "160000 commit $(git -C initial-repo rev-parse HEAD)	modules/sub" cache
- '
+diff --git a/Documentation/config/index.txt b/Documentation/config/index.txt
+index 7cb50b37e98d..75f3a2d10541 100644
+--- a/Documentation/config/index.txt
++++ b/Documentation/config/index.txt
+@@ -14,6 +14,11 @@ index.recordOffsetTable::
+ 	Defaults to 'true' if index.threads has been explicitly enabled,
+ 	'false' otherwise.
  
-+test_expect_success 'sparse-index is expanded and converted back' '
-+	init_repos &&
++index.sparse::
++	When enabled, write the index using sparse-directory entries. This
++	has no effect unless `core.sparseCheckout` and
++	`core.sparseCheckoutCone` are both enabled. Defaults to 'false'.
 +
-+	(
-+		GIT_TEST_SPARSE_INDEX=1 &&
-+		export GIT_TEST_SPARSE_INDEX &&
-+		GIT_TRACE2_EVENT="$(pwd)/trace2.txt" GIT_TRACE2_EVENT_NESTING=10 \
-+			git -C sparse-index -c core.fsmonitor="" reset --hard &&
-+		test_region index convert_to_sparse trace2.txt &&
-+		test_region index ensure_full_index trace2.txt &&
+ index.threads::
+ 	Specifies the number of threads to spawn when loading the index.
+ 	This is meant to reduce index load time on multiprocessor machines.
+diff --git a/cache.h b/cache.h
+index 74b43aaa2bd1..8aede373aeb3 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1059,6 +1059,7 @@ struct repository_format {
+ 	int worktree_config;
+ 	int is_bare;
+ 	int hash_algo;
++	int sparse_index;
+ 	char *work_tree;
+ 	struct string_list unknown_extensions;
+ 	struct string_list v1_only_extensions;
+diff --git a/repo-settings.c b/repo-settings.c
+index d63569e4041e..0cfe8b787db2 100644
+--- a/repo-settings.c
++++ b/repo-settings.c
+@@ -85,4 +85,11 @@ void prepare_repo_settings(struct repository *r)
+ 	 * removed.
+ 	 */
+ 	r->settings.command_requires_full_index = 1;
 +
-+		rm trace2.txt &&
-+		GIT_TRACE2_EVENT="$(pwd)/trace2.txt" GIT_TRACE2_EVENT_NESTING=10 \
-+			git -C sparse-index -c core.fsmonitor="" status -uno &&
-+		test_region index ensure_full_index trace2.txt
-+	)
-+'
++	/*
++	 * Initialize this as off.
++	 */
++	r->settings.sparse_index = 0;
++	if (!repo_config_get_bool(r, "index.sparse", &value) && value)
++		r->settings.sparse_index = 1;
+ }
+diff --git a/repository.h b/repository.h
+index e06a23015697..a45f7520fd9e 100644
+--- a/repository.h
++++ b/repository.h
+@@ -42,7 +42,8 @@ struct repo_settings {
+ 
+ 	int core_multi_pack_index;
+ 
+-	unsigned command_requires_full_index:1;
++	unsigned command_requires_full_index:1,
++		 sparse_index:1;
+ };
+ 
+ struct repository {
+diff --git a/sparse-index.c b/sparse-index.c
+index 7631f7bd00b7..6f4d95d35b1e 100644
+--- a/sparse-index.c
++++ b/sparse-index.c
+@@ -102,19 +102,43 @@ static int convert_to_sparse_rec(struct index_state *istate,
+ 	return num_converted - start_converted;
+ }
+ 
++static int enable_sparse_index(struct repository *repo)
++{
++	const char *config_path = repo_git_path(repo, "config.worktree");
 +
- test_done
++	git_config_set_in_file_gently(config_path,
++				      "index.sparse",
++				      "true");
++
++	prepare_repo_settings(repo);
++	repo->settings.sparse_index = 1;
++	return 0;
++}
++
+ int convert_to_sparse(struct index_state *istate)
+ {
+ 	if (istate->split_index || istate->sparse_index ||
+ 	    !core_apply_sparse_checkout || !core_sparse_checkout_cone)
+ 		return 0;
+ 
++	if (!istate->repo)
++		istate->repo = the_repository;
++
++	/*
++	 * The GIT_TEST_SPARSE_INDEX environment variable triggers the
++	 * index.sparse config variable to be on.
++	 */
++	if (git_env_bool("GIT_TEST_SPARSE_INDEX", 0)) {
++		int err = enable_sparse_index(istate->repo);
++		if (err < 0)
++			return err;
++	}
++
+ 	/*
+-	 * For now, only create a sparse index with the
+-	 * GIT_TEST_SPARSE_INDEX environment variable. We will relax
+-	 * this once we have a proper way to opt-in (and later still,
+-	 * opt-out).
++	 * Only convert to sparse if index.sparse is set.
+ 	 */
+-	if (!git_env_bool("GIT_TEST_SPARSE_INDEX", 0))
++	prepare_repo_settings(istate->repo);
++	if (!istate->repo->settings.sparse_index)
+ 		return 0;
+ 
+ 	if (!istate->sparse_checkout_patterns) {
 -- 
 gitgitgadget
 
