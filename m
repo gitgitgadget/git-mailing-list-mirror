@@ -2,119 +2,149 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E2892C433DB
-	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 12:07:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 47CDBC433C1
+	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 12:57:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BA36D6195B
-	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 12:07:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1D3FA619BC
+	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 12:57:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231894AbhC3MHW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Mar 2021 08:07:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42718 "EHLO
+        id S231984AbhC3M5L (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Mar 2021 08:57:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53466 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232155AbhC3MHD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Mar 2021 08:07:03 -0400
-Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D61D3C061574
-        for <git@vger.kernel.org>; Tue, 30 Mar 2021 05:07:02 -0700 (PDT)
-Received: by mail-qv1-xf2e.google.com with SMTP id c3so6811968qvz.7
-        for <git@vger.kernel.org>; Tue, 30 Mar 2021 05:07:02 -0700 (PDT)
+        with ESMTP id S231622AbhC3M4j (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Mar 2021 08:56:39 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDDCAC061574
+        for <git@vger.kernel.org>; Tue, 30 Mar 2021 05:56:38 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id jy13so24712588ejc.2
+        for <git@vger.kernel.org>; Tue, 30 Mar 2021 05:56:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=WYg4owy9leD1PtAdeljwWQX5R89IF0ELQLt9Knes6Ng=;
-        b=iJH78XgJQ0bqoFGqNi+gQ0YEWg7fNVJWtx4xXK0TxqEOJunsRx7OVqzYP57xCL11hR
-         5VBo5VCwxjl1mozajhjOHWVPLyoy6GgACd0+rztXZ9U+GN7qdEaojGPV10Qrhg6Kc3Eg
-         jRbLqZeua2XchUMB6SfvnG0p5pmCpYzCnWh49ptJXyGJ56U+eY7bMw8K23FPICeL59Fc
-         sm21xWhbPHvM2m/q1UzwNJIgCNgu9lIzQaohy63X2Xr2pBQmAXcBo+kxojcQezETIP5K
-         kjDj65yHOWXEZiIYtS3cpVN+mGXom4u6wIlmhsqpw2msBYnGzJ+llQVKUl+Wk03if1vF
-         aoMw==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=zsz0K7pYeQy+0Cb3rd3QFHqQtZICW7WoX1BZNyTVHp4=;
+        b=WAi/jZgzgsM36OlkXNHRzxbXr4iTgOqYKw882Q0DVhJHKqM7r5qBe3OB7B0PtGEy13
+         S1uwvdc0FBsfAKUiarC4Mpp+cuVIdlW7G0rKAdMPVUQiqTHZmICLBISka41+hC8zrs4d
+         QSZCunRSumFseswhZYQ1dsy1PS4WqMbkP/E4Yg++qGeckVzHRyzQkWhG5L+BeiK63AwZ
+         KxPxy6WrfYP9eoXKy7l86Q7FckDhgdelG25gYjn1M7TSUESdmvZxS7NfkvFoBsehJTwG
+         2fRx1a40Yubnmsfe3ediVOWPhxJhq/2RXlc9ZU2QNx5AY5gKvbOESWbSdPAuGChgXgoV
+         rhzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=WYg4owy9leD1PtAdeljwWQX5R89IF0ELQLt9Knes6Ng=;
-        b=aadhEeoFsEiN8px6pEVxWs1ixoYobT//8Xn//Y2Mt5vyTY+J9XNsVkZnvkptHEN3au
-         Tf9Rlaeh9G19NWgg1hPj5TZsV+HWIhdf7WJaANwE/o6pNzrP/oCNJy/Rp2GOG/7y9y1k
-         Jt5aYj32K+yv29owiy/dZrzqf0Yf2PTgJhpPjZsHlYf1TdsM1Y6Kr69ccidrWAb+bvHi
-         N++4FaMNd5ayO2BWnYh3CHwEqRW05Fr38joaY6Q8tSHBe+Qd1SEa5OWi3KczaadFi9gI
-         FQQcGrpmDvcRVNf6g5RnqohhNJN8UJVljTMMc128SEgDuCz5sbMZyOtoLSGbTQELPjGe
-         Iuvg==
-X-Gm-Message-State: AOAM532D7oMW7rDcUtRUR8PRkUyVQC0izSPBf3Uykw5kSSsL6CCDM957
-        ZgL2V6LMJtFNEZoTCwIp2gA=
-X-Google-Smtp-Source: ABdhPJwnpc5ih46a2lACnPTE6273SI2f4zeF5/xCM/5BtHWeuBUZACCa3OPsbMxAHJQxona4TBYP1A==
-X-Received: by 2002:a0c:e148:: with SMTP id c8mr29656349qvl.56.1617106022047;
-        Tue, 30 Mar 2021 05:07:02 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:51d7:1436:793b:b3c9? ([2600:1700:e72:80a0:51d7:1436:793b:b3c9])
-        by smtp.gmail.com with ESMTPSA id n2sm12440198qta.61.2021.03.30.05.07.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 Mar 2021 05:07:01 -0700 (PDT)
-Subject: Re: [PATCH 0/7] Optimization batch 11: avoid repeatedly detecting
- same renames
-To:     Elijah Newren <newren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Taylor Blau <me@ttaylorr.com>
-References: <pull.859.git.1616621553.gitgitgadget@gmail.com>
- <xmqqv99gw6n3.fsf@gitster.g>
- <CABPp-BGMhyn1ricXzx539n-09+BYRHPeruNd4MG2PyQzWaRKow@mail.gmail.com>
- <xmqqzgyrukic.fsf@gitster.g>
- <CABPp-BGrevGj+xrm9bVcX5bp_WRv9cYP+g0hrAtjZK0u=sTHzQ@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <6ef0eb33-05c8-6793-b53f-9bd60a20f9f3@gmail.com>
-Date:   Tue, 30 Mar 2021 08:07:00 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.9.0
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=zsz0K7pYeQy+0Cb3rd3QFHqQtZICW7WoX1BZNyTVHp4=;
+        b=GJYGP50vFpXhLyJj1SYIL/WLxsg4c9hLIbSh7C4aZ5duC/tl3LrxFsXdnL7MFIc3KF
+         ANl5DaBsGEhmrwgh87f+84ZLe2gl9tECTPw9HQx03iqE3X5lOrPIjlH8hF73JTZUMU/V
+         wGr4bNUTcFN/3MaO0LNjkHObzLkw4024fv8WAZUPKqvwKcdMKGGx2lLYxRyBOEohvQV0
+         4C4+WGbdGAQhc64uufwxaDRDHEEGIHJNn3kCxSPN2MFMIh4yDujQR15QRCbZJWh4PIiB
+         edgyR2Rjae5ewlYz6hQxEr1RKa5apiESik4lPVnp4Mr2nqjy2QZ/k30souc4LPt8Q2AH
+         J8TA==
+X-Gm-Message-State: AOAM532GQUb4fW5t4aknkeqjXDG2Q2aNQaRxIYxvU86i6sJWN1owuzfL
+        UGj1tyTYXtazxlddsWkHG+U=
+X-Google-Smtp-Source: ABdhPJwu4IrjCynoBLxHDcPVjwGLtTPcuqA/EC+K7NGXVOHQngs1SHiHZPvNdNWUnbIb2AnRny0NTA==
+X-Received: by 2002:a17:906:1985:: with SMTP id g5mr32774369ejd.285.1617108997610;
+        Tue, 30 Mar 2021 05:56:37 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id t6sm10879700edq.48.2021.03.30.05.56.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 Mar 2021 05:56:37 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Atharva Raykar <raykar.ath@gmail.com>
+Cc:     Phillip Wood <phillip.wood123@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [GSOC][PATCH] userdiff: add support for Scheme
+References: <20210327173938.59391-1-raykar.ath@gmail.com>
+ <xmqq5z1cqki7.fsf@gitster.g> <xmqq1rc0qjn1.fsf@gitster.g>
+ <87blb4nf2n.fsf@evledraar.gmail.com>
+ <578FC14B-CB72-41CA-A8FD-1480EBCCB968@gmail.com>
+ <62695830-2f9e-c3b5-856c-01b97eb2c3af@gmail.com>
+ <59DFC82F-A3EA-4637-94AE-4042697448FF@gmail.com>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
+In-reply-to: <59DFC82F-A3EA-4637-94AE-4042697448FF@gmail.com>
+Date:   Tue, 30 Mar 2021 14:56:36 +0200
+Message-ID: <874kgsn6kb.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CABPp-BGrevGj+xrm9bVcX5bp_WRv9cYP+g0hrAtjZK0u=sTHzQ@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/29/2021 6:34 PM, Elijah Newren wrote:...
-> After sending the initial series, I decided to type up a more thorough
-> document that
->   * spelled out in more detail how the sequence of cherry-picks work
->   * proved why the renames in one pick are always a superset of the
-> renames in the next
->   * proved why the renames in one pick are _almost_ always also a
-> rename in the next
->   * discussed the counterexample cases in more detail, and why the
-> optimization is still reasonable
-> I figured the more extended document would be useful in case people
-> decide to change how things work in the future (e.g. what if someone
-> wants to turn on break detection?), and wants to be able to check
-> whether all the conditions and cases still hold.
-> 
-> I then also added details about how things work with directory
-> renames, in the case that merge.directoryRenames is not the default of
-> "conflict" (which is trivially handled by stopping and dropping the
-> cache) but is set to true...and found a case that needed more care due
-> to interactions with some of the earlier optimizations.  (The earlier
-> optimizations could result in bypassing directory rename detection in
-> one merge because there was no file added to the old directory, but
-> the no-directory-rename would be cached for subsequent rebases.)
-> 
-> So I need to get that fixed up and resubmit this series.
 
-I look forward to that document. I attempted reading this series
-yesterday, but did not have the mental energy to convince myself
-of the correctness (because of things like not knowing this logic
-that you plan to document). Instead, I'll promise to give round 2
-a quicker response.
+On Tue, Mar 30 2021, Atharva Raykar wrote:
 
-Thanks,
--Stolee
+> On 29-Mar-2021, at 15:38, Phillip Wood <phillip.wood123@gmail.com> wrote:
+>> On 28/03/2021 13:40, Atharva Raykar wrote:
+>>> On 28-Mar-2021, at 08:46, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avara=
+b@gmail.com> wrote:
+>>>> The "define-?.*" can be simplified to just "define.*", but looking at
+>>>> the tests is that the intent? From the tests it looks like "define[- ]"
+>>>> is what the author wants, unless this is meant to also match
+>>>> "(definements".
+>>> Yes, you captured my intent correctly. Will fix it.
+>>>> Has this been tested on some real-world scheme code? E.g. I have guile
+>>>> installed locally, and it has really large top-level eval-when
+>>>> blocks. These rules would jump over those to whatever the function abo=
+ve
+>>>> them is.
+>>> I do not have a large scheme codebase on my own, I usually use Racket,
+>>> which is a much larger language with many more forms. Other Schemes like
+>>> Guile also extend the language a lot, like in your example, eval-when is
+>>> an extension provided by Guile (and Chicken and Chez), but not a part of
+>>> the R6RS document when I searched its index.
+>>> So the 'define' forms are the only one that I know would reliably be pr=
+esent
+>>> across all schemes. But one can also make a case where some of these no=
+n-standard
+>>> forms may be common enough that they are worth adding in. In that case =
+which
+>>> forms to include? Should we consider everything in the SRFI's[1]? Shoul=
+d the
+>>> various module definitions of Racket be included? It's a little tricky =
+to know
+>>> where to stop.
+>>=20
+>> If there are some common forms such as eval-when then it would be good t=
+o include them, otherwise we end up needing a different rule for each schem=
+e implementation as they all seem to tweak something. Gerbil uses 'def...' =
+e.g def, defsyntax, defstruct, defrules rather than define, define-syntax, =
+define-record etc. I'm not user if we want to accommodate that or not.
+>
+> Yes, this is the part that is hard for me to figure out. I am going by
+> two heuristics: what Scheme communities in other places would generally
+> prefer, and what patterns I see happen more often in scheme code.
+>
+> The former is tricky to do. I posted to a few mailing lists about this,
+> but they don't seem active enough to garner any responses.
+>
+> The latter is a little easier to measure quickly. I did a GitHub search,
+> where I filtered results to only consider Scheme files (language:scheme).
+>
+> Some armchair stats, just for a broad understanding:
+>
+>   Total number of scheme files: 529,339
+>   No. of times a construct is used in those files:
+>     define and its variants : 431,090 (81.4%)
+>     def and its variants    :  18,466 ( 3.5%)
+>     eval-when               :   3,375 ( 0.6%)
+>
+> There was no way for me to quickly know which of these uses are at the top
+> level, but either way of the more structural forms that do show up in Sch=
+eme
+> code, define and its variants seem like a clear winner. I am not sure if
+> it's worth adding more rules to check for def and its variants, given that
+> they are not nearly as common.
+
+In those cases we should veer on the side of inclusion. The only problem
+we'll have is if "eval-when" is a "setq"-like function top-level form in
+some other scheme dialect, so we'll have a conflict.
+
+Otherwise it's fine, programs that only use "define" won't be bothered
+by an eval-when rule.
