@@ -2,114 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D74B9C433DB
-	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 05:51:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D2AB0C433C1
+	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 06:06:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ADDA161585
-	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 05:51:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8E43F6198F
+	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 06:06:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230316AbhC3Fu5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Mar 2021 01:50:57 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:64369 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229530AbhC3FuY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Mar 2021 01:50:24 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id ABE6612881C;
-        Tue, 30 Mar 2021 01:50:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=sewPToxKYEeW
-        FszcqxHPcXeNURQ=; b=LF1TYW6QpeLhW6PSucGfVOMaShkrTRONHNqvm6jp6t2B
-        d81es+gLvE7sMVqmxQKWGsYhv7qFeZ8MM1j/6AE94MmnvQWoj2cUoF+C8wsor7mI
-        rmWxZ4ojrEqd2QaMnYNuNwgLJZoi2/lUzvrnq3G4CVyp1JOVd+5E9aYYUWsimz8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=kixI3Q
-        HP29JxVEccOgLOc42u4j7Mrko2pyyH/LK7bt0Wppk4JTPAS+R/5r/vbne9PCmUqL
-        5pGB7xZ+J2KUp5uzAtomXNvkiHemZqe36Ybx5CjsGh82CCcq9GY0pSsRn4bxQxce
-        h0I7dYLNvwjBAWGt0Skb4t2Nr8tXq0qrb3clY=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9898312881B;
-        Tue, 30 Mar 2021 01:50:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id AC99712881A;
-        Tue, 30 Mar 2021 01:50:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Taylor Blau <me@ttaylorr.com>,
-        Elijah Newren <newren@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2 10/10] tag: don't misreport type of tagged objects in
- errors
-References: <20210308200426.21824-1-avarab@gmail.com>
-        <cover-00.11-00000000000-20210328T021238Z-avarab@gmail.com>
-        <patch-10.11-a84f670ac24-20210328T021238Z-avarab@gmail.com>
-Date:   Mon, 29 Mar 2021 22:50:18 -0700
-In-Reply-To: <patch-10.11-a84f670ac24-20210328T021238Z-avarab@gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Sun, 28 Mar
- 2021 04:13:40
-        +0200")
-Message-ID: <xmqq35wdfaw5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S230077AbhC3GFv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Mar 2021 02:05:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49114 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229479AbhC3GFS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Mar 2021 02:05:18 -0400
+Received: from mail-oo1-xc2f.google.com (mail-oo1-xc2f.google.com [IPv6:2607:f8b0:4864:20::c2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D2A6C061762
+        for <git@vger.kernel.org>; Mon, 29 Mar 2021 23:05:18 -0700 (PDT)
+Received: by mail-oo1-xc2f.google.com with SMTP id p2-20020a4aa8420000b02901bc7a7148c4so3518953oom.11
+        for <git@vger.kernel.org>; Mon, 29 Mar 2021 23:05:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=oQxcnqv4WqAWIhmY4K6Fn/vqla88rqPbtWM9LkNh7fM=;
+        b=kJJ3wnoJgcdm1LY8R/z++GC7nPIbZyC6BEBA+OU1ZTT6hj1ZKwTRrBPhh+QPx1YyUz
+         +85UUFOm0M5BFX3ejbRnLm7D/vIomQr1Nz6JcPapnp4FfeEHQk2QnQchjjB+tNUv+W0u
+         VS5WyQRTqoXACmUzkqX/bPitEGXiWaCCLYtyzXBtxjEZbUDE3bIz4RNZeOAOlhmED8mb
+         1mI18X9WlsAuP3C4Qssk4ucJ7fn3jzLir26bSI0trwE0K2N2gl1yUyBSQOAhJ8pB2dje
+         P4gznxrxd69NDjW+cfrCcmUT5+JFypSxxX3rUQYwz9y1Vv3B0OZu6Z2r66YR8fz86GTp
+         2grQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=oQxcnqv4WqAWIhmY4K6Fn/vqla88rqPbtWM9LkNh7fM=;
+        b=EwITLEj1NRYwa3DuEx/GFBR2TCBFGzCNNg6HKfewpv3OiAaW74Wdq0QnYNSP5HE5++
+         zg9PbH0QGwuhXe7NHJqeSlNc3AipzTFBDVWuW2iFrxDJFtTdBT7khS+GsZL2C2WcOK+a
+         P9+oEkCF0t9+LpPki/XhNiO5VI4X94DbVdpOhLsKer/tIqsmU1KeoFuvBV0BfaOaH1J7
+         4JIGiSSno4isLn3Y35dCRZC1FaBGU1WrYwAZ+G6xaZr8+4UftTSTYMVlvMdMWBmIGIK0
+         pfQBYpoTU0Xg9pDrOmakh6ukmVp7LewvqTRrqW7MJz97HvfmaNUmLEG02juH5fILYCBq
+         PqAA==
+X-Gm-Message-State: AOAM530LRsatOj17YwSqNz40YpyGlSRnc/LjqHW1brVLVSKv8Wc0lMro
+        4HqKMipIHk80pRTvh33OcntUQTNdvE7jKj5GG1bqsjk33y+iIA==
+X-Google-Smtp-Source: ABdhPJyXhp6EfGwDxIw1Yvb265MJiG0bKeKaF8KgtwB1/Q5vG5rcgft3/E/ByomFOZ9L26JFPgc4Z18q+r1YM0Ns32g=
+X-Received: by 2002:a4a:df08:: with SMTP id i8mr14126481oou.32.1617084316495;
+ Mon, 29 Mar 2021 23:05:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: D02621B2-911B-11EB-A2C8-E43E2BB96649-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 29 Mar 2021 23:05:05 -0700
+Message-ID: <CABPp-BEAbN05+hCtK=xhGg5uZFqbUvH9hMcCNMcBWp5JWLqzPw@mail.gmail.com>
+Subject: Bug report: git branch behaves as if --no-replace-objects is passed
+To:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Hi,
 
-> Fix a regression in 89e4202f982 ([PATCH] Parse tags for absent
-> objects, 2005-06-21) (yes, that ancient!) and correctly report an
-> error on a tag like:
->
->     object <a tree hash>
->     type commit
->
-> As:
->
->     error: object <a tree hash> is tree, not a commit
->
-> Instead of our long-standing misbehavior of inverting the two, and
-> reporting:
->
->     error: object <a tree hash> is commit, not a tree
->
-> Which, as can be trivially seen with 'git cat-file -t <a tree hash>'
-> is incorrect.
+Forwarding a report from
+https://github.com/newren/git-filter-repo/issues/229, with a few more
+details...
 
-Hmph, I've always thought it is just "supposed to be a" missing in
-the sentence ;-)
+log, diff, etc. seem to all support replace objects nicely:
 
-> Hence the non-intuitive solution of adding a
-> lookup_{blob,commit,tag,tree}_type() function. It's to distinguish
-> calls from parse_object_buffer() where we actually know the type, from
-> a parse_tag_buffer() where we're just guessing about the type.
+    git init -b main whatever
+    cd whatever/
+    >empty
+    git add empty
+    git commit -m initial
+    git replace -f deadbeefdeadbeefdeadbeefdeadbeefdeadbeef $(git
+rev-parse main)
 
-I think it makes sense to allow the caller to express distinction
-between "I know that this object is a blob, because I just read its
-object header" and "Another object tells me that this object must be
-a blob, because it is in a tree entry whose mode bits are 100644".
+    echo stuff >>empty
 
-I wish we found a set of names better than lookup_<type>_type() for
-that, though.  It's just between
+Now, If I try to use this replace object:
 
-      lookup_tag_type(r, oid, OBJ_NONE);
-      lookup_tag_type(r, oid, OBJ_TAG);
+    $ git diff --stat deadbeefdeadbeefdeadbeefdeadbeefdeadbeef
+     empty | 1 +
+     1 file changed, 1 insertion(+)
+    $ git log --oneline deadbeefdeadbeefdeadbeefdeadbeefdeadbeef
+    deadbee (replaced) initial
 
-I cannot quite tell which one is which.  I also wonder if the last
-arg should just be a boolean ("I know it is a tag" vs "I heard it
-must be a tag").
+it all works well.  BUT, if I try to use it with branch it doesn't work:
+
+    $ git branch --contains deadbeefdeadbeefdeadbeefdeadbeefdeadbeef
+    $
+
+and possibly worse, if I create a new branch based on it and use it:
+
+    $ git branch foobar deadbeefdeadbeefdeadbeefdeadbeefdeadbeef
+    $ git checkout foobar
+    $ echo stuff >empty
+    $ git add empty
+    $ git commit -m more
+
+then it's clear that branch created foobar pointing to the replaced
+object rather than the replacement object -- despite the fact that the
+replaced object doesn't even exist within this repo:
+
+    $ git cat-file -p HEAD
+    tree 18108bae26dc91af2055bc66cc9fea278012dbd3
+    parent deadbeefdeadbeefdeadbeefdeadbeefdeadbeef
+    author Elijah Newren <newren@gmail.com> 1617083739 -0700
+    committer Elijah Newren <newren@gmail.com> 1617083739 -0700
+
+    more
+
+I poked around in the code a little but it is not at all clear to me
+why some parts of the code (log, diff) translate replace refs
+correctly, while others (branch) don't.  It is clear from the output
+that log is aware that the refs are replaced, which makes me wonder if
+every caller needs to be aware of replace refs for them to work
+correctly everywhere, because I couldn't find a missing environment
+setup for "branch".
