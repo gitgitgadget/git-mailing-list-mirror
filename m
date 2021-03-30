@@ -4,110 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BF71C433C1
-	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 00:22:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 35057C433C1
+	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 00:44:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 36BE361996
-	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 00:22:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EE10E61987
+	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 00:44:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229861AbhC3AWA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Mar 2021 20:22:00 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57732 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230213AbhC3AVj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Mar 2021 20:21:39 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 05F06B9AE6;
-        Mon, 29 Mar 2021 20:21:39 -0400 (EDT)
+        id S230220AbhC3Ann (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Mar 2021 20:43:43 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:55117 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229628AbhC3AnM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Mar 2021 20:43:12 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0328B126B78;
+        Mon, 29 Mar 2021 20:43:12 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=FnmxfPQcUo8W
-        RflswP0ajDbQnpU=; b=GyAQeWWlXgOrd89ZfkXf5ATM4R9A4qCsQRiZosE8mlgQ
-        JzjWShN8SwFZo/pBt7pByIzY9bCbL5Z2mY6/ioPvXop1RUridBf5T1rPDVqiyOiL
-        dSbYZreJISllyGfy/sPOQLTgnsvx+TcLwR89HX/iqPORTL6Z2CLb97XSLluhLdw=
+        :content-type; s=sasl; bh=jDfJv1CJA2jI29/Ko4gT1KMke8A=; b=eBXJL5
+        Brvs7cssVsukEKpQdIw/HamwRdAccs/mB0gS+m65HXMwAHc9AgqzVr86QhOw8Gj3
+        /v6s2AYSTst1AMTDs73UWK687Um1gW8E4R0WEwZd3bFWp0DtLGkaKy5Al/tjXlAI
+        uGsbc7t81gz2JjD338g6WemGDvfq72sCEGvsk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=n2PPhq
-        iXMj1iI+YeMyk36k/yqi5cCkmeDVWj18heH5H+hQ03G9996YPJEThGyEG776mHWx
-        Pfl3qNKSsMAOfjkZ3RUGZM/kwUDGXM8YLpOS+hUbq2knrydY1s/CxQbzBp+qbah/
-        sItKstm+1qiRy+u2CvoWK2hXY64QB5XC6mVg8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id EBD6DB9AE5;
-        Mon, 29 Mar 2021 20:21:38 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=btkbExp5StY97XQYVgSTFE8A12jWSjgp
+        rdqnquWGOmVuSl5J8sGS9wjiVueY8o1yDpqXb7aM9MkmBLpVel++7a7ovnGsEXRR
+        rmS1tkHIxjQyJLFVCPSpr5QpHyKtT2PwA80w35mtTcw07acN57BAH6PS0F1pL7jc
+        Lscxd5doHTI=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id F0AF8126B77;
+        Mon, 29 Mar 2021 20:43:11 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 582D9B9AE1;
-        Mon, 29 Mar 2021 20:21:38 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 32DBE126B75;
+        Mon, 29 Mar 2021 20:43:09 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2 1/5] Makefile: rename objects in-place, don't clobber
-References: <20210307132001.7485-1-avarab@gmail.com>
-        <cover-0.6-00000000000-20210329T161723Z-avarab@gmail.com>
-        <patch-1.6-3330cdbccc0-20210329T161723Z-avarab@gmail.com>
-        <xmqqy2e5kegv.fsf@gitster.g> <87ft0dmtkw.fsf@evledraar.gmail.com>
-Date:   Mon, 29 Mar 2021 17:21:37 -0700
-In-Reply-To: <87ft0dmtkw.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Tue, 30 Mar 2021 01:24:47 +0200")
-Message-ID: <xmqqh7ktfq3y.fsf@gitster.g>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Bagas Sanjaya <bagasdotme@gmail.com>, git <git@vger.kernel.org>
+Subject: Re: Upstreaming Reviewed-by to git.git
+References: <0e32b0af-cd05-39a9-51a9-4d983e7085cc@gmail.com>
+        <CAP8UFD1TmckvQLVQ7eWMKakMKOF76J+Z+E25vUCGkWveXMWv1g@mail.gmail.com>
+        <xmqqr1jxisee.fsf@gitster.g>
+Date:   Mon, 29 Mar 2021 17:43:07 -0700
+In-Reply-To: <xmqqr1jxisee.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+        29 Mar 2021 14:03:53 -0700")
+Message-ID: <xmqqczvhfp44.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: E4B7A0DE-90ED-11EB-AA77-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: E61E63EC-90F0-11EB-9B9B-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
->> Really, does anybody else use "$(CC) -o $@" in such a way in their
->> Makefile?  Having to do this smells simply crazy (I am not saying
->> you are crazy---the platform that forces you to write such a thing
->> is crazy).
->
-> Yes, if you do say a Google search for "Cannot open or remove a file
-> containing a running program" you'll find that there's 15k results of
-> people basically (re)discovering this problem in porting their software
-> to AIX, and the solutions being some variant of "yes AIX sucks, just us=
-e
-> this 'cmd >x+ && mv x+ x' trick".
+> In any case, reading others' patch, together with the original
+> version before the patch changed, is a great opportunity to learn
+> the codebase and how the project work in general.  It is highly
+> recommended.
 
-What I meant was if there are well known upstream projects whose
-Makefile actually use
+Addendum.  The above makes it sound as if I am encouraging new
+people to only read to learn silently, but that is not what I meant.
 
-	$(CC) -o $@+ ...
-	mv $@+ $@
+Reading and then expressing what you read in the patch in your own
+words is a good way for you to learn the system.  And it is also a
+good way for the patch author to ensure what was written in the
+patch is understandable.  For somebody who is totally new to the
+codebase, any patch that is more complex than the most trivial might
+not be hard to understand and that is not a patch author's fault,
+but once contributors have learned the codebase enough, even before
+they have their own changes to our codebase, a new patch should be
+written in such a way to understandable by them without getting
+misunderstood.  So a mere "this looks good to me" by new people may
+not add much value to the discussion, but thinking aloud in more
+detail, expressing why they think the patch is good, e.g. "I think
+this change tries to do X by doing Y.  If I were doing so, I might
+do so by Z, but I think Y would be a better approach than that"
+would help others to see that what is written in the patch was truly
+understandable (if what the new person said was to the point) or
+misleading (otherwise).
 
-I wouldn't be surprised if AIX community maintained collections of
-patches to many projects to turn
-
-	$(CC) -o $@ ...
-
-in the Makefiles taken from upstream projects into
-
-	$(CC) -o $@+ ...
-	mv $@+ $@
-
-to work AIX around.  As an upstream, however, I am not interested in
-forcing that pattern on users of other platforms.
-
-In any case, I do not care too much about the "I am building a new
-binary while running, without installing, the one I built" use case
-and do not agree with the idea of making the Makefile ugly only to
-support such a use case.  That is where my comments are coming from
-on this topic.  FWIW, AIX developers who do not do the "build, run
-without installing, and rebuild while the old one is still running"
-will not need the "$(CC) -o $@+ && mv $@+ $@" either, right?
-
-
-
+Thanks.
