@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 59556C433F2
-	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 13:12:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1DDCBC43445
+	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 13:12:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3D8E5619C8
-	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 13:12:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0A4E1619F4
+	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 13:12:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232258AbhC3NLr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Mar 2021 09:11:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56662 "EHLO
+        id S232187AbhC3NLz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Mar 2021 09:11:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56726 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232101AbhC3NLL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Mar 2021 09:11:11 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B84CC061765
-        for <git@vger.kernel.org>; Tue, 30 Mar 2021 06:11:10 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id j7so16228530wrd.1
-        for <git@vger.kernel.org>; Tue, 30 Mar 2021 06:11:10 -0700 (PDT)
+        with ESMTP id S232170AbhC3NLW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Mar 2021 09:11:22 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C7F5C061574
+        for <git@vger.kernel.org>; Tue, 30 Mar 2021 06:11:21 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id v11so16161920wro.7
+        for <git@vger.kernel.org>; Tue, 30 Mar 2021 06:11:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=zT/KLSMEIY5jvVQ9z2xbPhRiUryKVuorFSgT+6Od1bg=;
-        b=lbeHtc1/XMa2y3e0mqj3gkqn/XHLITwQJicXv2HYUgYlb6dYQiwIYihm5AnqSkARIb
-         bYqi2aBqj2hPhSqtWAvfisZXSB87VV/i+Cb255GTzieKA9VZXxZuuixMTXIMsdw9Y56B
-         QGhHC3S6zeIHoAb7adTBduSkJ1eLnJIpepf5vNPNQTIAOwIvblwcq9tEi2Guy3M5o5vt
-         YwfQwrD16/jHpQoDvMIaksQR1WPeOe6ZL7+RbqHOuW+mUVpOOGCoXRjJDKidy+hL+1xN
-         zNALj1tKBsLcQe3E+gEtoQNbbCcHxZ97hMguAxOMd7VWLXVUKC4Q+wCIcfKHRViv+H+z
-         fneg==
+        bh=NjgXkWn7l+CyODn0S0i+uIkYbiIeO7IGgnPTtD2hg6A=;
+        b=Bmjn3jGOqaMIqp1nhUkwIX3d6BhaaLncttynQumjsuUJEP/U8dCDpFGuYN10hF6Zkl
+         d206XUmHq0ZVp3rIwouvgXdyhgwngAElPgR5aJSRS8w+/kLRLbzd9h/sCFxIim0X6lZu
+         qguMaelJ/FACKBHlCMRLHdlgGi/C0etZaw3MQgfURLJNGWpsIKA7DvMcV0PaFTj6tNA8
+         qiGfx9u2oAqQZ2rxXSzBwm5xULe1geZAt0qkxIvknqOeEoOx9tzZBidIEEphzJa5n6Cb
+         7IrXhN+w7Y4/eQzxq8VNQhnGBV0TjuknOVr/ZlZ/rj9RhHc92zsdUqxDuagQSlJFWIWi
+         LEyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=zT/KLSMEIY5jvVQ9z2xbPhRiUryKVuorFSgT+6Od1bg=;
-        b=Dfr5MRQJRFBTDnL3ya5dw9iy+86HmaNCIpSObhydXpOfLT4N1ffl7d4WsDhhqys2Nh
-         yrFW8pEIxwfJt34/rXm5n3XxXCmzLp0OvzgE2+NA3C9DcLPuGWtizmUxtUj91ACnxnBu
-         MGe7pRQnAe9d2NkAdqpKH/730KBGTzvcOLWUHT5rZpJWMQrXzOQIu0RAjG+3wF5x7nU4
-         0fDIFGwYWk3rXd8C7wtApcpr0luI5T9GkpapCrV2Tl3bGmgYDIJpjWiArnzqyd6oIhm8
-         tz3AZO76QZT31fDrjXukG8JjKtXbKFTcab1HNEVnKS36xysyd2agiPgyQOtU7KIkWZ3v
-         daoA==
-X-Gm-Message-State: AOAM530vgj2JL0/vMnwO51bkA/rP94mUrttBLh8ssBdqDLrDxEnW7IeO
-        tJuhUwwZNphGIlqujN6Lds/V+ggB20A=
-X-Google-Smtp-Source: ABdhPJw5D2FNPAaPY9whDDZsl/K3UvDromw4u+yDlg764+QM+jQGEMsPoCy+U5bMGDppQ/51lqBL/A==
-X-Received: by 2002:adf:e5cd:: with SMTP id a13mr33115463wrn.65.1617109868882;
-        Tue, 30 Mar 2021 06:11:08 -0700 (PDT)
+        bh=NjgXkWn7l+CyODn0S0i+uIkYbiIeO7IGgnPTtD2hg6A=;
+        b=Kq0ELyxbppNm3pk8g5tUvyojL732/NdAGJMcczJ1Wy3SndWbZtE5Kx3Rxss0iwVVV2
+         dg3fxnMqoBh/PvffexttCrdg3Tnqv53DDra4B/8vP8ZIsqoVNIxn8mOCgvogmdEu22JI
+         KkU6I+qt6Z1RK6BS1/27kniC+uyPB8iiFqQZ5Ptez7nbOKtBSR3IzUXgPXknmPrl9a3g
+         GVkl0bEixVOOi4zNyJGufu7mK79kQ0SD+y9UesC1UbRs0UFaJqvuQoI3e4ola59R3NRd
+         i4KWRR2EQlSsPZBhg6JjosTy1jDS6oHbKTjjJk+H3GAOyOZhAZQGfL2f9z/Plm8N52kG
+         HufA==
+X-Gm-Message-State: AOAM532j9zsbbSVHJzgl/oyX2qA+nb7bga5gsiCCdfDIn1GxPDkn56pd
+        N6edPI2EnTBz4JAQbdETIORSh4orMKQ=
+X-Google-Smtp-Source: ABdhPJzYjkhDfbgux0Wy2wg/4vPsitOz84HSrAQJY4GMLIIfx+IbSgQudli/OB1fWyIIVeImQm3xmA==
+X-Received: by 2002:a05:6000:18d2:: with SMTP id w18mr34147286wrq.88.1617109880459;
+        Tue, 30 Mar 2021 06:11:20 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j20sm3363396wmp.30.2021.03.30.06.11.08
+        by smtp.gmail.com with ESMTPSA id m3sm3884205wme.40.2021.03.30.06.11.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Mar 2021 06:11:08 -0700 (PDT)
-Message-Id: <437a0f144e57cd4d0811ff652e760cb961b1db1e.1617109864.git.gitgitgadget@gmail.com>
+        Tue, 30 Mar 2021 06:11:20 -0700 (PDT)
+Message-Id: <7f55a232e6479b62efc7b97d04cdf3ad11a0623d.1617109865.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.883.v5.git.1617109864.gitgitgadget@gmail.com>
 References: <pull.883.v4.git.1616507069.gitgitgadget@gmail.com>
         <pull.883.v5.git.1617109864.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 30 Mar 2021 13:10:46 +0000
-Subject: [PATCH v5 03/21] t1092: clean up script quoting
+Date:   Tue, 30 Mar 2021 13:11:01 +0000
+Subject: [PATCH v5 18/21] sparse-checkout: disable sparse-index
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,107 +82,96 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-This test was introduced in 19a0acc83e4 (t1092: test interesting
-sparse-checkout scenarios, 2021-01-23), but it contains issues with quoting
-that were not noticed until starting this follow-up series. The old
-mechanism would drop quoting such as in
+We use 'git sparse-checkout init --cone --sparse-index' to toggle the
+sparse-index feature. It makes sense to also disable it when running
+'git sparse-checkout disable'. This is particularly important because it
+removes the extensions.sparseIndex config option, allowing other tools
+to use this Git repository again.
 
-   test_all_match git commit -m "touch README.md"
+This does mean that 'git sparse-checkout init' will not re-enable the
+sparse-index feature, even if it was previously enabled.
 
-The above happened to work because README.md is a file in the
-repository, so 'git commit -m touch REAMDE.md' would succeed by
-accident.
-
-Other cases included quoting for no good reason, so clean that up now.
+While testing this feature, I noticed that the sparse-index was not
+being written on the first run, but by a second. This was caught by the
+call to 'test-tool read-cache --table'. This requires adjusting some
+assignments to core_apply_sparse_checkout and pl.use_cone_patterns in
+the sparse_checkout_init() logic.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- t/t1092-sparse-checkout-compatibility.sh | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ builtin/sparse-checkout.c          | 10 +++++++++-
+ t/t1091-sparse-checkout-builtin.sh | 13 +++++++++++++
+ 2 files changed, 22 insertions(+), 1 deletion(-)
 
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index 8cd3e5a8d227..3725d3997e70 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -96,20 +96,20 @@ init_repos () {
- run_on_sparse () {
- 	(
- 		cd sparse-checkout &&
--		$* >../sparse-checkout-out 2>../sparse-checkout-err
-+		"$@" >../sparse-checkout-out 2>../sparse-checkout-err
- 	)
+diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+index ca63e2c64e95..585343fa1972 100644
+--- a/builtin/sparse-checkout.c
++++ b/builtin/sparse-checkout.c
+@@ -280,6 +280,9 @@ static int set_config(enum sparse_checkout_mode mode)
+ 				      "core.sparseCheckoutCone",
+ 				      mode == MODE_CONE_PATTERNS ? "true" : NULL);
+ 
++	if (mode == MODE_NO_PATTERNS)
++		set_sparse_index_config(the_repository, 0);
++
+ 	return 0;
  }
  
- run_on_all () {
- 	(
- 		cd full-checkout &&
--		$* >../full-checkout-out 2>../full-checkout-err
-+		"$@" >../full-checkout-out 2>../full-checkout-err
- 	) &&
--	run_on_sparse $*
-+	run_on_sparse "$@"
+@@ -341,10 +344,11 @@ static int sparse_checkout_init(int argc, const char **argv)
+ 		the_repository->index->updated_workdir = 1;
+ 	}
+ 
++	core_apply_sparse_checkout = 1;
++
+ 	/* If we already have a sparse-checkout file, use it. */
+ 	if (res >= 0) {
+ 		free(sparse_filename);
+-		core_apply_sparse_checkout = 1;
+ 		return update_working_directory(NULL);
+ 	}
+ 
+@@ -366,6 +370,7 @@ static int sparse_checkout_init(int argc, const char **argv)
+ 	add_pattern(strbuf_detach(&pattern, NULL), empty_base, 0, &pl, 0);
+ 	strbuf_addstr(&pattern, "!/*/");
+ 	add_pattern(strbuf_detach(&pattern, NULL), empty_base, 0, &pl, 0);
++	pl.use_cone_patterns = init_opts.cone_mode;
+ 
+ 	return write_patterns_and_update(&pl);
  }
+@@ -632,6 +637,9 @@ static int sparse_checkout_disable(int argc, const char **argv)
+ 	strbuf_addstr(&match_all, "/*");
+ 	add_pattern(strbuf_detach(&match_all, NULL), empty_base, 0, &pl, 0);
  
- test_all_match () {
--	run_on_all $* &&
-+	run_on_all "$@" &&
- 	test_cmp full-checkout-out sparse-checkout-out &&
- 	test_cmp full-checkout-err sparse-checkout-err
- }
-@@ -119,7 +119,7 @@ test_expect_success 'status with options' '
- 	test_all_match git status --porcelain=v2 &&
- 	test_all_match git status --porcelain=v2 -z -u &&
- 	test_all_match git status --porcelain=v2 -uno &&
--	run_on_all "touch README.md" &&
-+	run_on_all touch README.md &&
- 	test_all_match git status --porcelain=v2 &&
- 	test_all_match git status --porcelain=v2 -z -u &&
- 	test_all_match git status --porcelain=v2 -uno &&
-@@ -135,7 +135,7 @@ test_expect_success 'add, commit, checkout' '
- 	write_script edit-contents <<-\EOF &&
- 	echo text >>$1
- 	EOF
--	run_on_all "../edit-contents README.md" &&
-+	run_on_all ../edit-contents README.md &&
++	prepare_repo_settings(the_repository);
++	the_repository->settings.sparse_index = 0;
++
+ 	if (update_working_directory(&pl))
+ 		die(_("error while refreshing working directory"));
  
- 	test_all_match git add README.md &&
- 	test_all_match git status --porcelain=v2 &&
-@@ -144,7 +144,7 @@ test_expect_success 'add, commit, checkout' '
- 	test_all_match git checkout HEAD~1 &&
- 	test_all_match git checkout - &&
+diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
+index fc64e9ed99f4..38fc8340f5c9 100755
+--- a/t/t1091-sparse-checkout-builtin.sh
++++ b/t/t1091-sparse-checkout-builtin.sh
+@@ -205,6 +205,19 @@ test_expect_success 'sparse-checkout disable' '
+ 	check_files repo a deep folder1 folder2
+ '
  
--	run_on_all "../edit-contents README.md" &&
-+	run_on_all ../edit-contents README.md &&
- 
- 	test_all_match git add -A &&
- 	test_all_match git status --porcelain=v2 &&
-@@ -153,7 +153,7 @@ test_expect_success 'add, commit, checkout' '
- 	test_all_match git checkout HEAD~1 &&
- 	test_all_match git checkout - &&
- 
--	run_on_all "../edit-contents deep/newfile" &&
-+	run_on_all ../edit-contents deep/newfile &&
- 
- 	test_all_match git status --porcelain=v2 -uno &&
- 	test_all_match git status --porcelain=v2 &&
-@@ -186,7 +186,7 @@ test_expect_success 'diff --staged' '
- 	write_script edit-contents <<-\EOF &&
- 	echo text >>README.md
- 	EOF
--	run_on_all "../edit-contents" &&
-+	run_on_all ../edit-contents &&
- 
- 	test_all_match git diff &&
- 	test_all_match git diff --staged &&
-@@ -280,7 +280,7 @@ test_expect_success 'clean' '
- 	echo bogus >>.gitignore &&
- 	run_on_all cp ../.gitignore . &&
- 	test_all_match git add .gitignore &&
--	test_all_match git commit -m ignore-bogus-files &&
-+	test_all_match git commit -m "ignore bogus files" &&
- 
- 	run_on_sparse mkdir folder1 &&
- 	run_on_all touch folder1/bogus &&
++test_expect_success 'sparse-index enabled and disabled' '
++	git -C repo sparse-checkout init --cone --sparse-index &&
++	test_cmp_config -C repo true index.sparse &&
++	test-tool -C repo read-cache --table >cache &&
++	grep " tree " cache &&
++
++	git -C repo sparse-checkout disable &&
++	test-tool -C repo read-cache --table >cache &&
++	! grep " tree " cache &&
++	git -C repo config --list >config &&
++	! grep index.sparse config
++'
++
+ test_expect_success 'cone mode: init and set' '
+ 	git -C repo sparse-checkout init --cone &&
+ 	git -C repo config --list >config &&
 -- 
 gitgitgadget
 
