@@ -7,143 +7,117 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B4673C433C1
-	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 18:52:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EE7DC433E4
+	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 18:59:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7C43061985
-	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 18:52:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 74BA261987
+	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 18:59:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232913AbhC3Sv5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Mar 2021 14:51:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46264 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232865AbhC3Sva (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Mar 2021 14:51:30 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAC2FC061574
-        for <git@vger.kernel.org>; Tue, 30 Mar 2021 11:51:29 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id o10so25286335lfb.9
-        for <git@vger.kernel.org>; Tue, 30 Mar 2021 11:51:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp.br; s=usp-google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=DyDPHP4R48+XlST+S53CN3rCp2KNfjT7QMfzh/aqioE=;
-        b=Iam1IRexN1nu/UcnhSpLPav/8XDXsTvIyUrN17DIJUn6OHTdJ4tuYOiPQK/xDz++Sz
-         9EXXy+HHhD6SNErUnCvwE2wPKHLCoTqGylGlsRPYF/DpvdAsxtis6gZOUVMQGgXUUzSI
-         NPS5lK03JC2IC2cnBGBYEzwrIZkheDqGnbSMue2WZ/7UvXDV72IKc0lKJfoXjmDzdFt0
-         FSMJWKblyyGUWx9ii2PyanQJR5gD1pWffZbztCtkM4PFHjVgmWQktPBPXLBCsdi2RAeY
-         a3kywUkiA734nqpshUVSXIU4kgscAJerCs8s0iA3bxHN1X6pYUt7huDPa68eGvr79MQz
-         +0ow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=DyDPHP4R48+XlST+S53CN3rCp2KNfjT7QMfzh/aqioE=;
-        b=g8HfvHeIUf/WJ4UytECV9prHhZ/6z5RL0Go7658zgKY+dq9UFLbXSwDqIUvTBjSm/m
-         iUEY846T++VF2sjQkeTLUoAYq82RzRplnYUr8tev/a/O91vUG47mCOC8s4AZ7xg66abz
-         LkNEDQcTZyqpj6zL7datqSdNU+6QSbal1xj5ia/ep3Z4X+qSqEqsZxC+3aw2U2w0T2J8
-         bafJEyRrXhPM9Eqr+bvow9ace2yvdKRxob5enNt+n61wzx+yLjBgHwwaLz79NrYlXGq7
-         NdouQZv8NWaSszydeGnS1JXJ7l4GuYlvESdI0I7uB4mW5/K6Fo4S6qQxAiI0z7kB3GJ0
-         B1Dw==
-X-Gm-Message-State: AOAM5325dSQ8zzJC6wr9TpZSJeXgjAyQHuy8etneomrTpmHP+E9T0Jp8
-        v5jTcmYiN/FUF4LD8rz1I0LavlcoFvrUKnOEJ6nXVw==
-X-Google-Smtp-Source: ABdhPJz0UqkSZb4m6zs85w0uTrlEkD0oaTIfXn3XRSJuNCSBClYFmGX+pliDbb2IZsOAD6cp4tZL2jC0u3US69dsXn8=
-X-Received: by 2002:ac2:5446:: with SMTP id d6mr19995402lfn.527.1617130288386;
- Tue, 30 Mar 2021 11:51:28 -0700 (PDT)
+        id S232978AbhC3S7I (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Mar 2021 14:59:08 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:61225 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232950AbhC3S6q (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Mar 2021 14:58:46 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 14EA6119C59;
+        Tue, 30 Mar 2021 14:58:46 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=L7Q4DsAgv7VvY4HTLUOMQXY8Eno=; b=eEYPGr
+        Zef+uA4TlD+KKdL1Tap8RYp/WgFI75CDBnQXE2XZPjEaEwg97Ib0NJtnsjabD892
+        C2z1PSe0uaJWa8Fd9mjEQ1R2AaUeYz6qQh2OcD4O5blYJL4I2vF0Z1mLolCFQ1xG
+        HGzS2pcA4a2/07rnR9qD4XZzM6cqVjJWlxcqM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=q4hUBVC7efM2KH8RvJ2pdrxyaWIlWsLS
+        QZSA1Dmpn5Lh5aASUuKJ/582n2v1jsP/3JFeu+wcNw/V9LiEiC4SoTZKLItPdHxX
+        1qPweQu3K9yB/hHWmlprbkFdESbz0HpvDuivK8TCIS38wxiIzx49kcSimKFr55Ui
+        RlY/lb5/mz4=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0E357119C58;
+        Tue, 30 Mar 2021 14:58:46 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 46503119C57;
+        Tue, 30 Mar 2021 14:58:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: Bug report: git branch behaves as if --no-replace-objects is
+ passed
+References: <CABPp-BEAbN05+hCtK=xhGg5uZFqbUvH9hMcCNMcBWp5JWLqzPw@mail.gmail.com>
+        <YGLNBFJv8NKmrbvz@coredump.intra.peff.net>
+Date:   Tue, 30 Mar 2021 11:58:41 -0700
+In-Reply-To: <YGLNBFJv8NKmrbvz@coredump.intra.peff.net> (Jeff King's message
+        of "Tue, 30 Mar 2021 03:02:28 -0400")
+Message-ID: <xmqq35wceae6.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-References: <cover.1615588108.git.matheus.bernardino@usp.br>
- <34a61a0d03868c43d68a04bca8d86dd98de2aa28.1615588109.git.matheus.bernardino@usp.br>
- <xmqqsg4sowks.fsf@gitster.g> <xmqqo8fgovuz.fsf@gitster.g> <CAHd-oW4V4_XrY7XfQO1gLEZZmzcLbG0_M2ys+Meh4Ysu0Psz0Q@mail.gmail.com>
- <xmqqlfajnn6w.fsf@gitster.g>
-In-Reply-To: <xmqqlfajnn6w.fsf@gitster.g>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Tue, 30 Mar 2021 15:51:17 -0300
-Message-ID: <CAHd-oW4kRLjV9Sq3CFt-V1Ot9pYFzJggU1zPp3Hcuw=qWfq7Mg@mail.gmail.com>
-Subject: Re: [PATCH v3 5/7] refresh_index(): add REFRESH_DONT_MARK_SPARSE_MATCHES
- flag
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: F2AF277E-9189-11EB-ACAE-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 19, 2021 at 1:05 PM Junio C Hamano <gitster@pobox.com> wrote:
+Jeff King <peff@peff.net> writes:
+
+> ... though if we go that route, I suspect we ought to be adding both the
+> original _and_ the replacement.
+
+So "branch --contains X" would ask "which of these branches reach X
+or its replacement?" and "branch --no-contains X" would ask "which
+of these do not reach X nor its replacement?" --- I guess the result
+is still internally consistent (meaning: any and all branches fall
+into either "--contains X" or "--no-contains X" camp).
+
+> I'm not entirely sure this is a good direction, though.
 >
-> Matheus Tavares Bernardino <matheus.bernardino@usp.br> writes:
+>> and possibly worse, if I create a new branch based on it and use it:
+>> 
+>>     $ git branch foobar deadbeefdeadbeefdeadbeefdeadbeefdeadbeef
+>>     $ git checkout foobar
+>>     $ echo stuff >empty
+>>     $ git add empty
+>>     $ git commit -m more
+>> 
+>> then it's clear that branch created foobar pointing to the replaced
+>> object rather than the replacement object -- despite the fact that the
+>> replaced object doesn't even exist within this repo:
+>> 
+>>     $ git cat-file -p HEAD
+>>     tree 18108bae26dc91af2055bc66cc9fea278012dbd3
+>>     parent deadbeefdeadbeefdeadbeefdeadbeefdeadbeef
+>>     author Elijah Newren <newren@gmail.com> 1617083739 -0700
+>>     committer Elijah Newren <newren@gmail.com> 1617083739 -0700
+>> 
+>>     more
 >
-> >> In other words, the change makes me wonder why we are not adding a
-> >> flag that says "do we or do we not want to match paths outside the
-> >> sparse checkout cone?", with which the seen[] would automatically
-> >> record the right thing.
-> >
-> > Yeah, makes sense. I didn't want to make the flag skip the sparse
-> > paths unconditionally (i.e. without matching them) because then we
-> > would also skip the ce_stage() checkings below and the later
-> > ce_mark_uptodate(). And I wasn't sure whether this could cause any
-> > unwanted side effects.
-> >
-> > But thinking more carefully about this now, unmerged paths should
-> > never have the SKIP_WORKTREE bit set anyway, right? What about the
-> > CE_UPTODATE mark, would it be safe to skip it? I'm not very familiar
-> > with this code, but I'll try to investigate more later.
+> Yeah, that's pretty horrible.
 
-Sorry I haven't given any update on this yet. From what I could see so
-far, it seems OK to ignore the skip_worktree entries in
-refresh_index() when it is called from `git add --refresh`. But
-because we would no longer mark the skip_worktree entries that match
-the pathspec with CE_UPTODATE, do_write_index() would start checking
-if they are racy clean (this is only done when `!ce_uptodate(ce)`),
-which could add some lstat() overhead.
+I am not sure.  As you analize below, the replace mechanism is about
+telling Git: when anybody refers to deadbeef, use its replacement if
+defined instead.
 
-However, this made me think what happens today if we do have a racy
-clean entry with the skip_worktree bit set... `git add --refresh` will
-probably update the index without noticing that the entry is racy
-clean (because it won't check CE_UPTODATE entries, and skip_worktree
-entries will have this bit set in refresh_index()). Thus the entries'
-size won't be truncated to zero when writing the index, and the entry
-will appear unchanged even if we later unset the skip_worktree bit.
+And one of the points in the mechanism is to allow to do so even
+retroactively, so the HEAD object there may be referring to deadbeef
+that may not exist does not matter, as long as the object that is to
+replace deadbeef is available.  If not, that is a repository
+corruption.  After all, the commit object you cat-file'ed may have
+been created by somebody else in a separate repository that had
+deadbeef before they were told by Elijah that the object is obsolete
+and to be replaced by something else (Git supports distributed
+development) and then pulled into Elijah's repository, and we should
+be prepared to seeing "parent deadbeef" in such a commit.  As long as
+replacement happens when accessing the contents, that would be OK.
 
-But can we have a "racy clean skip_worktree entry"? Yes, this seems
-possible e.g. if the following sequence happens fast enough for mtime
-to be the same before and after the update:
+So, I do not see it as "pretty horrible", but I may be missing
+something.
 
-  echo x >file
-  git update-index --refresh --skip-worktree file
-  echo y>file
 
-Here is a more complete example which artificially creates a "racy
-clean skip_worktree entry", runs `git add --refresh`, and shows that
-the racy clean entry was not detected:
 
-# Setup
-echo sparse >sparse
-echo dense >dense
-git add .
-git commit -m files
-
-# Emulate a racy clean situation
-touch -d yesterday date
-touch -r date sparse
-git update-index --refresh --skip-worktree sparse
-touch -r date .git/index
-echo xparse >sparse
-touch -r date sparse
-
-# `git add` will now write a new index without checking if
-# `sparse` is racy clean nor truncating its size
-touch -r date dense
-git add --refresh .
-
-git update-index --no-skip-worktree sparse
-git status
-<doesn't show that `sparse` was modified>
-
-This situation feels rather uncommon, but perhaps the same could
-happen with `git sparse-checkout set` instead of `git update-index
---refresh --skip-worktree`? IDK. This made me think whether
-refresh_index() should really mark skip_worktree entries with
-CE_UPTODATE, in the first place.
-
-Any thoughts?
