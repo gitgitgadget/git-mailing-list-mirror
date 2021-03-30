@@ -2,204 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-14.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B06DC433C1
-	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 13:48:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 293CFC433C1
+	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 13:54:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F0FB061929
-	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 13:48:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EEF84619AB
+	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 13:54:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232122AbhC3NsY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Mar 2021 09:48:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36514 "EHLO
+        id S231882AbhC3Nxx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Mar 2021 09:53:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231882AbhC3NsJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Mar 2021 09:48:09 -0400
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDC43C061574
-        for <git@vger.kernel.org>; Tue, 30 Mar 2021 06:48:08 -0700 (PDT)
-Received: by mail-pj1-x1033.google.com with SMTP id bt4so7768924pjb.5
-        for <git@vger.kernel.org>; Tue, 30 Mar 2021 06:48:08 -0700 (PDT)
+        with ESMTP id S230369AbhC3NxR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Mar 2021 09:53:17 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21E6DC061574
+        for <git@vger.kernel.org>; Tue, 30 Mar 2021 06:53:17 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id l18so18317307edc.9
+        for <git@vger.kernel.org>; Tue, 30 Mar 2021 06:53:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=LPnyDns0COHnuxZTaT+6wvZvDmVMobic/NSw7rTPh08=;
-        b=lJwHl3PzgE5TQDcS3gNg8q0mKZv9akbzsb29vsxiFOrUUpaTMl67GVjNvsXdlNK7p6
-         bgnJrYzQrT1I68haPlYNw+AOCPOMazdgZ+CQWe9WwbnBUcVvrXEDAc+og5rYKAaA6hAT
-         k44jeJyPqp1MRp1aj/pCRe9Z8ujayIvvVzCU7SY0Term7Vq9Doa9WnIYZADSe38aYOwV
-         1kizDY3PWLrAJZeClouWmgFfnlbVYhuUK9dE44RrZXpjnd4M8dOixEW4w5yZ/OQTUOSi
-         QC4sgC/2inR4KvV+RfUy+uqsz2nyrpABIWnjjuzjo5XA+HMo8p/6usxF06CKxS3eaBaI
-         tS5w==
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=IILrqEO9bxTMerXSAkjNOBoZdZPXlhseEmFl6QIyMHM=;
+        b=ar9mfuxAQk61wxUkpnahpB1Bf1MPtCcdwa7ArfTIzoJiZZbEwlKOqXH9A6xznj9AK7
+         7W5dIqElTS/9BGkHY+MiLCO3bpUvPAXBUb6Nv/7fGeGG1kDt+GYP7pmixsaUdgJ4JOVD
+         Yj90Dbi8k7BIgpXKnD/pABAau9PulWpDTmliA4AMSnhctJkVg4qovv7Zf8SLvReZnAFU
+         W/GeOW5jZq1mHk1pKcp6saJUkbS0agU+aDcZRydI2IQT8lH3TPJrxX7MuZaV+5zSCa/0
+         La3A7wPCl4JckEQYNddMkoSn18T2kNqwGtsWbsUoMjINJ06hCXgf6En7baCi/11LA5gn
+         B7PQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=LPnyDns0COHnuxZTaT+6wvZvDmVMobic/NSw7rTPh08=;
-        b=OZuLHJXlASrOldpZgU0GUQbJadrU3y+691mca2nzqBx1jJLs4aAOcvcXGRbV56huEQ
-         yqkw69+K//FUHfU2Znh3W1CH8cDIJDV4oar+iDnaphnPIp7+S3IBlUS7RKVjUfCUeh3s
-         yEzNFJSUbd5as4Tv9MepZEqDy5AeiWfLgWZiZl+0q5k60LTqOBRFWhA3bMWuBeLgtjZ6
-         t/Exk8QAKvGYo4E3KcpryWe+4HOgo7aE251Qy/ptstC1L/zOBxqQs6yqDTkjD10Nt8Q/
-         qgsaJPJu0Z0MvmN+qfkw3SqSg4km9DM9c7KPTMk+gy/pE69WqdsL9YgjFRNF1DE/8faD
-         qAjg==
-X-Gm-Message-State: AOAM530Q/pXT0mwCQ08PggEZ+zsXhbM6Ii+7NPSG9EHXTAKsFt0xQ6YB
-        SkmqUIu5GfTX5/8ZKxdH/IXBIro7dFEVGraw
-X-Google-Smtp-Source: ABdhPJyP+46Y6H9in4V9PO0r8fO16K4+cGzjLAq6yLQH/+zk6vz7GJu14xaQgk2ilOhWKVPxSP8JEQ==
-X-Received: by 2002:a17:902:f54e:b029:e6:3d74:eb3 with SMTP id h14-20020a170902f54eb02900e63d740eb3mr33836146plf.14.1617112088209;
-        Tue, 30 Mar 2021 06:48:08 -0700 (PDT)
-Received: from atharva-on-air.dlink ([119.82.121.20])
-        by smtp.gmail.com with ESMTPSA id mr5sm2923493pjb.53.2021.03.30.06.48.06
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 30 Mar 2021 06:48:07 -0700 (PDT)
-Content-Type: text/plain;
-        charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.60.0.2.21\))
-Subject: Re: [GSOC][PATCH] userdiff: add support for Scheme
-From:   Atharva Raykar <raykar.ath@gmail.com>
-In-Reply-To: <874kgsn6kb.fsf@evledraar.gmail.com>
-Date:   Tue, 30 Mar 2021 19:18:04 +0530
-Cc:     Phillip Wood <phillip.wood123@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <88DF47D5-F104-4677-A2E4-7B23FEFCF022@gmail.com>
-References: <20210327173938.59391-1-raykar.ath@gmail.com>
- <xmqq5z1cqki7.fsf@gitster.g> <xmqq1rc0qjn1.fsf@gitster.g>
- <87blb4nf2n.fsf@evledraar.gmail.com>
- <578FC14B-CB72-41CA-A8FD-1480EBCCB968@gmail.com>
- <62695830-2f9e-c3b5-856c-01b97eb2c3af@gmail.com>
- <59DFC82F-A3EA-4637-94AE-4042697448FF@gmail.com>
- <874kgsn6kb.fsf@evledraar.gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-X-Mailer: Apple Mail (2.3654.60.0.2.21)
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=IILrqEO9bxTMerXSAkjNOBoZdZPXlhseEmFl6QIyMHM=;
+        b=Aa9Df/aESffRNh9aK3FyiJ3AukYQxXb+DjgjDvLp5XkfAWqp2ww2FPmHPfJ/Ef9qP4
+         LqzyHlY5m0KOmp5Qon4mYr6C+zXRVJ4kiHarGySWPwwtsEjEeWMt6dcHre/jUhB4Ua/R
+         BffXmHZkXU5koehIY4nJnEP8XK9mHkXqlU/3FpoDEczbL2RTLO4nFa26jteWCXbBeAJv
+         TXs+giDurYqNRT95AII9PPKcZg2gFH9KRL0ocWbE5ybiPf1uAETaqtVhIP80thxJtdqm
+         EHl5w4sC52maHq/+ul3GkrbbuDKcoONwxuLXdOLUk1VAzNBD4xbSBApWHh+K+3dgKWFI
+         lueA==
+X-Gm-Message-State: AOAM5308+Ci6ML8skvmFj23SkLPE5sMXcXzdCIE/8KtTBGh4Kg2/sMhn
+        IihXm+h1amm+QEDrLMqwGyM=
+X-Google-Smtp-Source: ABdhPJyHgBQkF51+yG7BO59xcaB7G1LKPzX07PszfHt5uXVOX0alW47ohqg4q8mDQwYTwgXC5N9fSg==
+X-Received: by 2002:aa7:d294:: with SMTP id w20mr34147266edq.68.1617112395787;
+        Tue, 30 Mar 2021 06:53:15 -0700 (PDT)
+Received: from [192.168.1.240] (243.20.198.146.dyn.plus.net. [146.198.20.243])
+        by smtp.gmail.com with ESMTPSA id p27sm10009388eja.79.2021.03.30.06.53.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 30 Mar 2021 06:53:15 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 2/3] rebase tests: use test_unconfig after test_config
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <873d1fda948855510b07f9cb75d374c03d60a94e.1544468695.git.gitgitgadget@gmail.com>
+ <cover.1616411973.git.avarab@gmail.com>
+ <330b33e7a8e87e528aec43c306753cdf573ed8af.1616411973.git.avarab@gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <53e9be89-db1e-b9ee-e93d-d8c8195480d4@gmail.com>
+Date:   Tue, 30 Mar 2021 14:53:14 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.0
+MIME-Version: 1.0
+In-Reply-To: <330b33e7a8e87e528aec43c306753cdf573ed8af.1616411973.git.avarab@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 30-Mar-2021, at 18:26, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason =
-<avarab@gmail.com> wrote:
->=20
->=20
-> On Tue, Mar 30 2021, Atharva Raykar wrote:
->=20
->> On 29-Mar-2021, at 15:38, Phillip Wood <phillip.wood123@gmail.com> =
-wrote:
->>> On 28/03/2021 13:40, Atharva Raykar wrote:
->>>> On 28-Mar-2021, at 08:46, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason =
-<avarab@gmail.com> wrote:
->>>>> The "define-?.*" can be simplified to just "define.*", but looking =
-at
->>>>> the tests is that the intent? =46rom the tests it looks like =
-"define[- ]"
->>>>> is what the author wants, unless this is meant to also match
->>>>> "(definements".
->>>> Yes, you captured my intent correctly. Will fix it.
->>>>> Has this been tested on some real-world scheme code? E.g. I have =
-guile
->>>>> installed locally, and it has really large top-level eval-when
->>>>> blocks. These rules would jump over those to whatever the function =
-above
->>>>> them is.
->>>> I do not have a large scheme codebase on my own, I usually use =
-Racket,
->>>> which is a much larger language with many more forms. Other Schemes =
-like
->>>> Guile also extend the language a lot, like in your example, =
-eval-when is
->>>> an extension provided by Guile (and Chicken and Chez), but not a =
-part of
->>>> the R6RS document when I searched its index.
->>>> So the 'define' forms are the only one that I know would reliably =
-be present
->>>> across all schemes. But one can also make a case where some of =
-these non-standard
->>>> forms may be common enough that they are worth adding in. In that =
-case which
->>>> forms to include? Should we consider everything in the SRFI's[1]? =
-Should the
->>>> various module definitions of Racket be included? It's a little =
-tricky to know
->>>> where to stop.
->>>=20
->>> If there are some common forms such as eval-when then it would be =
-good to include them, otherwise we end up needing a different rule for =
-each scheme implementation as they all seem to tweak something. Gerbil =
-uses 'def...' e.g def, defsyntax, defstruct, defrules rather than =
-define, define-syntax, define-record etc. I'm not user if we want to =
-accommodate that or not.
->>=20
->> Yes, this is the part that is hard for me to figure out. I am going =
-by
->> two heuristics: what Scheme communities in other places would =
-generally
->> prefer, and what patterns I see happen more often in scheme code.
->>=20
->> The former is tricky to do. I posted to a few mailing lists about =
-this,
->> but they don't seem active enough to garner any responses.
->>=20
->> The latter is a little easier to measure quickly. I did a GitHub =
-search,
->> where I filtered results to only consider Scheme files =
-(language:scheme).
->>=20
->> Some armchair stats, just for a broad understanding:
->>=20
->>  Total number of scheme files: 529,339
->>  No. of times a construct is used in those files:
->>    define and its variants : 431,090 (81.4%)
->>    def and its variants    :  18,466 ( 3.5%)
->>    eval-when               :   3,375 ( 0.6%)
->>=20
->> There was no way for me to quickly know which of these uses are at =
-the top
->> level, but either way of the more structural forms that do show up in =
-Scheme
->> code, define and its variants seem like a clear winner. I am not sure =
-if
->> it's worth adding more rules to check for def and its variants, given =
-that
->> they are not nearly as common.
->=20
-> In those cases we should veer on the side of inclusion. The only =
-problem
-> we'll have is if "eval-when" is a "setq"-like function top-level form =
-in
-> some other scheme dialect, so we'll have a conflict.
->=20
-> Otherwise it's fine, programs that only use "define" won't be bothered
-> by an eval-when rule.
+Hi Ævar
 
-I would like some clarification, since my knowledge of Common Lisp's =
-setq
-and Guile's/Other's eval-when is pretty surface level.
+On 22/03/2021 11:48, Ævar Arnfjörð Bjarmason wrote:
+> Fix a test added in 906b63942ac (rebase --am: ignore
+> rebase.rescheduleFailedExec, 2019-07-01) to reset its config after it
+> runs. This doesn't matter now since it's the last test in the file,
+> but will in a subsequent commit where I'll add new tests after this
+> one.
+> 
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+>   t/t3418-rebase-continue.sh | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
+> index fe407e63cf1..ea14ef496cb 100755
+> --- a/t/t3418-rebase-continue.sh
+> +++ b/t/t3418-rebase-continue.sh
+> @@ -283,6 +283,7 @@ test_expect_success '--reschedule-failed-exec' '
+>   '
+>   
+>   test_expect_success 'rebase.rescheduleFailedExec only affects `rebase -i`' '
+> +	test_when_finished "test_unconfig rebase.rescheduleFailedExec" &&
 
-> The only problem we'll have is if "eval-when" is a "setq"-like =
-function
-> top-level form in some other scheme dialect, so we'll have a conflict.
+I think test_config adds this test_when_finished line itself.  See 
+test-lib-functions.sh:
 
-I am not sure what you mean when you say if "eval-when" is a "setq"-like
-top level form, and exactly what kind of problem it may cause.
+# Set git config, automatically unsetting it after the test is over.
+test_config () {
+	config_dir=
+	if test "$1" = -C
+	then
+		shift
+		config_dir=$1
+		shift
+	fi
+	test_when_finished "test_unconfig ${config_dir:+-C '$config_dir'} '$1'" &&
+	git ${config_dir:+-C "$config_dir"} config "$@"
+}
 
-I also realized from my understanding of the Guile Documentation[1],
-that "eval-when" is used to tell the compiler which expressions should =
-be
-made available during the expansion phase.
+Best Wishes
 
-It does not seem to have anything that may help identify the location of =
-the
-hunk, which I understand is the primary purpose of these hunk headers.
-All uses of "eval-when" would be some variation of:
+Phillip
 
-	(eval-when (expand load eval) ; no identifier in this form
-	  ...)
 
-unlike a "define" which will always name the nearest function, which =
-helps as
-a landmark.
+Best Wishes
 
-Would that be a valid reason to exclude "eval-when"?
+Phillip
 
+>   	test_config rebase.rescheduleFailedExec true &&
+>   	test_must_fail git rebase -x false HEAD^ &&
+>   	grep "^exec false" .git/rebase-merge/git-rebase-todo &&
+> 
