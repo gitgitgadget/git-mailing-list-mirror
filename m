@@ -2,152 +2,149 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9988BC433DB
-	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 06:42:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 27EA1C433C1
+	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 07:03:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 70B5E61994
-	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 06:42:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D7BCA61989
+	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 07:03:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230463AbhC3Glw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Mar 2021 02:41:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56890 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230202AbhC3Glh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Mar 2021 02:41:37 -0400
-Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A71F2C061762
-        for <git@vger.kernel.org>; Mon, 29 Mar 2021 23:41:37 -0700 (PDT)
-Received: by mail-pg1-x52e.google.com with SMTP id f10so10986586pgl.9
-        for <git@vger.kernel.org>; Mon, 29 Mar 2021 23:41:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=1cAa0bF5sYe4eKRzs3nivL08Sroqru2c6aXB0fg12Os=;
-        b=kcOhUq30lt8TmdebdqO0cBkT/x94QHxPshTqSwyT9xPgVfn/G6XjzRQQqL0jKSm6Cj
-         NZkNJ30o6Rr3HJvlL02bY0qe6tN5zvV8iFwKD5YULusnh+0w06bNddiHohRRWCdHwVZO
-         ELYGqqUeqpHAgq/uKPnS3CeItOQ2oCposol7oUTM8llnDm7U1C9IldJZ8PLCT0xW+CAj
-         zSAJsixevi9Grp9/r0V5cflcgkcelMK7chAYZDFw8D8isdn0bxwsodw7R7QwNl8XPvv2
-         RZi0rlg8KBb+32EytySIpnOtcSyoDHopbYTxHHvCol8m8vsDZMsCgnWr0qvSHu1RW6K3
-         oS5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=1cAa0bF5sYe4eKRzs3nivL08Sroqru2c6aXB0fg12Os=;
-        b=nxekCs7XBTOHAD+bSCzv9clyG24uJ0sxVngVqisHVINd8FyVdOXbhLcx5Qlr4JhngV
-         gCW4R6sdD9ODJLvNgFWj6Xx6d9Ajis8S33HYMz+T71JI7+OTkbJ6BNzhFLIFyCXEM+hK
-         gLdR9TtMu8wugP+c+FPObLZgd1GL/0QGUgljm+uLC9WmU/ARhl6k2z1sa/HqogbKWu4v
-         1FHltqZLqzNEKOLGJ8KJwFTNwlylbl23crrqN3us/GoHCnmYutriF26knoOxxWTBg9l3
-         /nbXcnu6ze2Yu5Wd+C0GnM9+D5IKRFkYJDvaGo12qIa9jxUcuGVhZaf0jhsd/aF7DoOt
-         YUBg==
-X-Gm-Message-State: AOAM531pSVMqZ2RTZb4upHIV5OKwSo7m3vbzQIxab2jkOBgw2BZA9rEe
-        oREPKxIBRxIsQdOPhyoput0=
-X-Google-Smtp-Source: ABdhPJwxD3FXl7L34AZ6FZ8yY16fhuD8zp53h5FcRrx2LqFqaTMJK8uiV/xidsiAum4HOLI1ClvBTQ==
-X-Received: by 2002:a62:5e05:0:b029:20b:241e:4e18 with SMTP id s5-20020a625e050000b029020b241e4e18mr28843218pfb.1.1617086495587;
-        Mon, 29 Mar 2021 23:41:35 -0700 (PDT)
-Received: from atharva-on-air.dlink ([119.82.121.20])
-        by smtp.gmail.com with ESMTPSA id d21sm14704400pgj.62.2021.03.29.23.41.33
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 29 Mar 2021 23:41:35 -0700 (PDT)
-Content-Type: text/plain;
-        charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.60.0.2.21\))
-Subject: Re: [GSOC][PATCH] userdiff: add support for Scheme
-From:   Atharva Raykar <raykar.ath@gmail.com>
-In-Reply-To: <62695830-2f9e-c3b5-856c-01b97eb2c3af@gmail.com>
-Date:   Tue, 30 Mar 2021 12:11:31 +0530
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <59DFC82F-A3EA-4637-94AE-4042697448FF@gmail.com>
-References: <20210327173938.59391-1-raykar.ath@gmail.com>
- <xmqq5z1cqki7.fsf@gitster.g> <xmqq1rc0qjn1.fsf@gitster.g>
- <87blb4nf2n.fsf@evledraar.gmail.com>
- <578FC14B-CB72-41CA-A8FD-1480EBCCB968@gmail.com>
- <62695830-2f9e-c3b5-856c-01b97eb2c3af@gmail.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-X-Mailer: Apple Mail (2.3654.60.0.2.21)
+        id S229633AbhC3HCo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Mar 2021 03:02:44 -0400
+Received: from cloud.peff.net ([104.130.231.41]:36698 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229468AbhC3HCd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Mar 2021 03:02:33 -0400
+Received: (qmail 18008 invoked by uid 109); 30 Mar 2021 07:02:31 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 30 Mar 2021 07:02:31 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 21900 invoked by uid 111); 30 Mar 2021 07:02:30 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 30 Mar 2021 03:02:30 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 30 Mar 2021 03:02:28 -0400
+From:   Jeff King <peff@peff.net>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: Bug report: git branch behaves as if --no-replace-objects is
+ passed
+Message-ID: <YGLNBFJv8NKmrbvz@coredump.intra.peff.net>
+References: <CABPp-BEAbN05+hCtK=xhGg5uZFqbUvH9hMcCNMcBWp5JWLqzPw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CABPp-BEAbN05+hCtK=xhGg5uZFqbUvH9hMcCNMcBWp5JWLqzPw@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Mar 29, 2021 at 11:05:05PM -0700, Elijah Newren wrote:
 
-On 29-Mar-2021, at 15:38, Phillip Wood <phillip.wood123@gmail.com> =
-wrote:
-> On 28/03/2021 13:40, Atharva Raykar wrote:
->> On 28-Mar-2021, at 08:46, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason =
-<avarab@gmail.com> wrote:
->>> The "define-?.*" can be simplified to just "define.*", but looking =
-at
->>> the tests is that the intent? =46rom the tests it looks like =
-"define[- ]"
->>> is what the author wants, unless this is meant to also match
->>> "(definements".
->> Yes, you captured my intent correctly. Will fix it.
->>> Has this been tested on some real-world scheme code? E.g. I have =
-guile
->>> installed locally, and it has really large top-level eval-when
->>> blocks. These rules would jump over those to whatever the function =
-above
->>> them is.
->> I do not have a large scheme codebase on my own, I usually use =
-Racket,
->> which is a much larger language with many more forms. Other Schemes =
-like
->> Guile also extend the language a lot, like in your example, eval-when =
-is
->> an extension provided by Guile (and Chicken and Chez), but not a part =
-of
->> the R6RS document when I searched its index.
->> So the 'define' forms are the only one that I know would reliably be =
-present
->> across all schemes. But one can also make a case where some of these =
-non-standard
->> forms may be common enough that they are worth adding in. In that =
-case which
->> forms to include? Should we consider everything in the SRFI's[1]? =
-Should the
->> various module definitions of Racket be included? It's a little =
-tricky to know
->> where to stop.
->=20
-> If there are some common forms such as eval-when then it would be good =
-to include them, otherwise we end up needing a different rule for each =
-scheme implementation as they all seem to tweak something. Gerbil uses =
-'def...' e.g def, defsyntax, defstruct, defrules rather than define, =
-define-syntax, define-record etc. I'm not user if we want to accommodate =
-that or not.
+> it all works well.  BUT, if I try to use it with branch it doesn't work:
+> 
+>     $ git branch --contains deadbeefdeadbeefdeadbeefdeadbeefdeadbeef
+>     $
 
-Yes, this is the part that is hard for me to figure out. I am going by
-two heuristics: what Scheme communities in other places would generally
-prefer, and what patterns I see happen more often in scheme code.
+I'm not surprised here. The replace mechanism is usually "if you are
+trying to access object X, then access the contents of Y instead". But I
+don't think we generally rewrite references from other objects. So in
+that sense, no ref "contains" deadbeef, because nobody points to it as
+an ancestor.
 
-The former is tricky to do. I posted to a few mailing lists about this,
-but they don't seem active enough to garner any responses.
+I guess "branch --contains" could convert the mention of the replaced
+object on the command-line, something like this:
 
-The latter is a little easier to measure quickly. I did a GitHub search,
-where I filtered results to only consider Scheme files =
-(language:scheme).
+diff --git a/parse-options-cb.c b/parse-options-cb.c
+index 4542d4d3f9..200be4e3d2 100644
+--- a/parse-options-cb.c
++++ b/parse-options-cb.c
+@@ -6,6 +6,7 @@
+ #include "string-list.h"
+ #include "strvec.h"
+ #include "oid-array.h"
++#include "replace-object.h"
+ 
+ /*----- some often used options -----*/
+ 
+@@ -84,6 +85,7 @@ int parse_opt_verbosity_cb(const struct option *opt, const char *arg,
+ int parse_opt_commits(const struct option *opt, const char *arg, int unset)
+ {
+ 	struct object_id oid;
++	const struct object_id *replace;
+ 	struct commit *commit;
+ 
+ 	BUG_ON_OPT_NEG(unset);
+@@ -92,7 +94,9 @@ int parse_opt_commits(const struct option *opt, const char *arg, int unset)
+ 		return -1;
+ 	if (get_oid(arg, &oid))
+ 		return error("malformed object name %s", arg);
+-	commit = lookup_commit_reference(the_repository, &oid);
++
++	replace = lookup_replace_object(the_repository, &oid);
++	commit = lookup_commit_reference(the_repository, replace);
+ 	if (!commit)
+ 		return error("no such commit %s", arg);
+ 	commit_list_insert(commit, opt->value);
 
-Some armchair stats, just for a broad understanding:
+though if we go that route, I suspect we ought to be adding both the
+original _and_ the replacement.
 
-  Total number of scheme files: 529,339
-  No. of times a construct is used in those files:
-    define and its variants : 431,090 (81.4%)
-    def and its variants    :  18,466 ( 3.5%)
-    eval-when               :   3,375 ( 0.6%)
+I'm not entirely sure this is a good direction, though.
 
-There was no way for me to quickly know which of these uses are at the =
-top
-level, but either way of the more structural forms that do show up in =
-Scheme
-code, define and its variants seem like a clear winner. I am not sure if
-it's worth adding more rules to check for def and its variants, given =
-that
-they are not nearly as common.=
+> and possibly worse, if I create a new branch based on it and use it:
+> 
+>     $ git branch foobar deadbeefdeadbeefdeadbeefdeadbeefdeadbeef
+>     $ git checkout foobar
+>     $ echo stuff >empty
+>     $ git add empty
+>     $ git commit -m more
+> 
+> then it's clear that branch created foobar pointing to the replaced
+> object rather than the replacement object -- despite the fact that the
+> replaced object doesn't even exist within this repo:
+> 
+>     $ git cat-file -p HEAD
+>     tree 18108bae26dc91af2055bc66cc9fea278012dbd3
+>     parent deadbeefdeadbeefdeadbeefdeadbeefdeadbeef
+>     author Elijah Newren <newren@gmail.com> 1617083739 -0700
+>     committer Elijah Newren <newren@gmail.com> 1617083739 -0700
+> 
+>     more
+
+Yeah, that's pretty horrible. I do think you're using replace objects in
+a way they weren't really intended for, in two ways:
+
+  - usually you'd actually have deadbeef, and you just want to rewrite
+    it to something else
+
+  - you wouldn't usually work directly with the replace object on the
+    command line like this. Usually the intent is to patch some old
+    section of history to get a different view.
+
+None of which is an excuse exactly. But just to say that I'm not too
+surprised that the "replace" mechanism is a bit half-baked, and there
+are probably a lot of weird implications nobody has thought through.
+
+Patches welcome, of course, though I suspect it may be a rabbit hole
+that isn't worth your time. :)
+
+> I poked around in the code a little but it is not at all clear to me
+> why some parts of the code (log, diff) translate replace refs
+> correctly, while others (branch) don't.  It is clear from the output
+> that log is aware that the refs are replaced, which makes me wonder if
+> every caller needs to be aware of replace refs for them to work
+> correctly everywhere, because I couldn't find a missing environment
+> setup for "branch".
+
+Right. To work as you expect above, basically everything that is going
+to look at an oid would need to consider whether to use a replace ref.
+Shoving the lookup into get_oid() would "fix" that, but I suspect would
+confuse some other callers. Right now the rule is "when you access the
+object contents, pretend as if it had X instead of Y", so we can enforce
+that at the layer of accessing the object database.
+
+-Peff
