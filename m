@@ -6,94 +6,90 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9254C433DB
-	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 23:04:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3532AC433C1
+	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 23:13:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5251B619D0
-	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 23:04:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D6A48619CD
+	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 23:13:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232981AbhC3XEZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Mar 2021 19:04:25 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:51530 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233052AbhC3XEF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Mar 2021 19:04:05 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 86CB411B785;
-        Tue, 30 Mar 2021 19:04:05 -0400 (EDT)
+        id S232967AbhC3XMe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Mar 2021 19:12:34 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:54188 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232883AbhC3XMD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Mar 2021 19:12:03 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 416E112EA69;
+        Tue, 30 Mar 2021 19:12:01 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=9F3Vu5YuEKSyat/No0GoFoHEPlU=; b=iys2Zn
-        6VDQgzvuymkhGeVmjqB1WpBpy+ZmGthBTl0gPh8PJDc0eEj8G/yg++OpgDquVG8e
-        ngjpU+UQEMbmX2BHX2U2H4IgKpKrzg96yTe5QaPHRMRraqF3IYAAIwCbCJDYk92A
-        Fx+VS8ZkcfHEXipAxGO3Y0eWTr/fvdDs+zZpk=
+        :content-type:content-transfer-encoding; s=sasl; bh=LpoBIrAnPO/j
+        geiDJb8KjSfX+Ik=; b=lP6obZqcORAZCx18HWPNLhdS/JvzPsnTDVFiA5BOaaPl
+        T21Q/hlHbGM5VHR4QJ93sQpzPetqOb2IgezimRK9WIqlZvicJTflusLB2KRR+cHR
+        sweMg9hTTzt9jNizbSWksljgds8+zwwwq9prdvtIVeAyqKkwKJ3gfUN0GnjyXIg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=s550ykYhgWsl6AJawUA6JxGayp6eXQRp
-        Kf7y+ntmzcz+LeFvMC4KRZzptV+uC5Tg6/+GGzY5j9/0ey7WYdKwqOgVjSaaVDeR
-        kMNxgH4ed/h6zk+Dy+QnKnwE99KU8J41iKzQ4riKO4hPoPa0qUMC+iWvrI3Vd3NJ
-        RNvegO0ZedA=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7F7C811B784;
-        Tue, 30 Mar 2021 19:04:05 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=cTVz40
+        xX0OBIFg1tLDhq1vAYhaoY/2wphXBjNSdgfTxjGQ5vx82g0JrfsOOKJF0a+41w9A
+        b/ZsuLM1Uyi8Q4cxmKZAVxoIjfegNa+JwlXLs6NobLUPhQ5+IL18wyghggiNRz+s
+        YsnUG5JM6Hzx1bPbZwWDu2nDgQLV6BdUfyET0=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 348A212EA68;
+        Tue, 30 Mar 2021 19:12:01 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B447D11B77E;
-        Tue, 30 Mar 2021 19:04:02 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5E53D12EA66;
+        Tue, 30 Mar 2021 19:11:58 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
-Subject: Re: Bug report: git branch behaves as if --no-replace-objects is
- passed
-References: <CABPp-BEAbN05+hCtK=xhGg5uZFqbUvH9hMcCNMcBWp5JWLqzPw@mail.gmail.com>
-        <YGLNBFJv8NKmrbvz@coredump.intra.peff.net>
-        <xmqq35wceae6.fsf@gitster.g>
-        <CABPp-BEE0eksCJSAviDh5GyqsOu=i_mW3VY6SEULa4kx0NsUMg@mail.gmail.com>
-        <xmqqa6qkcnqa.fsf@gitster.g>
-        <CABPp-BEVFi+EsGMCv=qEhe_OGwmWwXF-mg9rjWYNuF0tDZnASg@mail.gmail.com>
-Date:   Tue, 30 Mar 2021 16:04:01 -0700
-In-Reply-To: <CABPp-BEVFi+EsGMCv=qEhe_OGwmWwXF-mg9rjWYNuF0tDZnASg@mail.gmail.com>
-        (Elijah Newren's message of "Tue, 30 Mar 2021 15:43:32 -0700")
-Message-ID: <xmqqlfa4b5we.fsf@gitster.g>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
+        <carenas@gmail.com>
+Subject: Re: [PATCH v2 04/22] test-lib functions: add --printf option to
+ test_commit
+References: <20210203032811.14979-1-avarab@gmail.com>
+        <20210216115801.4773-5-avarab@gmail.com>
+Date:   Tue, 30 Mar 2021 16:11:56 -0700
+In-Reply-To: <20210216115801.4773-5-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Tue, 16 Feb 2021 12:57:43 +0100")
+Message-ID: <xmqqh7ksb5j7.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3828EDFE-91AC-11EB-A704-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 53AB7046-91AD-11EB-BA42-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> Your "as long as" is I think the assumption that's violated in the
-> workflow in question.  You may have the replace ref defined, but
-> others don't[1].  Neither party has the actual original deadbeef
-> commit[2].  Having deadbeef in refs/heads/foobar leads eventually to
-> creating commits with deadbeef as an explicit parent, as we discussed
-> above.  While that's internally consistent, as you point out, can you
-> push your new commit elsewhere without pushing the replace refs too?
+>  test_expect_success 'can parse blob ending with CR' '
+> -	printf "[some]key =3D value\\r" >config &&
+> -	git add config &&
+> -	git commit -m CR &&
+> +	test_commit --printf CR config "[some]key =3D value\\r" &&
 
-I think the change to "branch --contains" would be an improvement
-whether you actually have deadbeef or not, but in any case, defining
-(eh, rather, being able to define) a replacement for something you
-do not have is the ultimate source of the problem.  And that "bug"
-has not very much specific to how "branch --contains" should behave.
+OK, the first arg becomes the commit title, and the second one is
+used for the filename, and the next arg is the string given to
+printf, I guess.
 
-> Why does `git branch` (in conjunction with one user deciding to fetch
-> replace refs) make it so easy to create a branch that cannot readily
-> be shared with others?
+>  test_expect_success 'rerere forget (binary)' '
+>  	git checkout -f side &&
+> -	printf "a\0c" >binary &&
+> -	git commit -a -m binary &&
+> +	test_commit binary binary "a\0c" &&
 
-In other words, I do not think it is "git branch" or "git checkout -b"
-that brought your repository into a broken state.  The "replace"
-mechanism may have room for improvement to avoid such a corruption.
+This lacks --printf.  Are we breaking the test but "test-must-fail"
+is hiding the breakage here?
 
-IIRC, the original "graft" mechanism did not even have any UI, so it
-was pretty much "you can graft any parent to any child, and if you
-break the repository you can keep both halves".  Now "replace" has a
-dedicated UI component in the form of "git replace" command, we should
-be able to teach it how to record replacement more safely.
+>  	test_must_fail git merge second &&
+>  	git rerere forget binary
+>  '
 
