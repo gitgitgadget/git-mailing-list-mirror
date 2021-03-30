@@ -2,282 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50C36C433E4
-	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 15:05:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CBDEAC433C1
+	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 15:08:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 34FB9619D0
-	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 15:05:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9CDB6619CA
+	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 15:08:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232321AbhC3PE7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Mar 2021 11:04:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53142 "EHLO
+        id S231650AbhC3PID (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Mar 2021 11:08:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53812 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232257AbhC3PEf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Mar 2021 11:04:35 -0400
-Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D575C061574
-        for <git@vger.kernel.org>; Tue, 30 Mar 2021 08:04:35 -0700 (PDT)
-Received: by mail-qk1-x731.google.com with SMTP id c4so16152448qkg.3
-        for <git@vger.kernel.org>; Tue, 30 Mar 2021 08:04:35 -0700 (PDT)
+        with ESMTP id S231750AbhC3PHf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Mar 2021 11:07:35 -0400
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37F10C061574
+        for <git@vger.kernel.org>; Tue, 30 Mar 2021 08:07:35 -0700 (PDT)
+Received: by mail-ot1-x32d.google.com with SMTP id h6-20020a0568300346b02901b71a850ab4so15886115ote.6
+        for <git@vger.kernel.org>; Tue, 30 Mar 2021 08:07:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=2VZuxjpFKVQ5urOrPRWad94MAn0l3QPVsVA9sXDgayg=;
-        b=CI9Fy4cmp0H26Bp6cM1HyTWE+SlVQPxywvOeru0WXgTl9cmkWuTR8nkpJeO+hLjPtr
-         UkOKeCnF6HIbo8DzZ2FIkYe4LqfSOaXHBltlEcHu7YbuTbrVbZorzP7lWnMBdIgXrGUf
-         fkxxpFHvLfR9SKf9g/a//zprmE+tS/n4pHcvFgLm+RAkTpxffoUyRBCvtkEAO4TIlEIj
-         yXijZofaGThBZGZZU1QKpoN2+cDgfVsYzg2BgT8WyQs7FLuQctC/UauZ2iLlCrE7HPOR
-         pBetmkpnTTQxqnYrJBsYKGZkUf9YMkWE00zPef7iQBCZtuHzgmTxVgaYMw9JQkTYD/AA
-         vfDw==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=zYTSd1gYE59kSmrYcDV5ESVJu/q0+xd/IU1X6CV/+Nk=;
+        b=TtnvqzoJ4mb/lmcVmOHqqZiJJsWzCSrPhTb1pCAfCR5RD/MjIjy3+3doQYbzGp1jfC
+         Ko4twIea8h2QR/B0a8vgmGeF+F4OcNS5sG4t0F07OSeFTOaFIXM2SwxbfOLygrDnVa87
+         MJ4Q0gXwcK+YDWWMJ5lwkVHH5K0tO5kwfP4khyChqc2xjKzEkCYT0KXLddIyAG7vPEmU
+         iJcrd4gFHeb+uWcloLQgjXmbyYt7a6hWLYEBvyWfMKvB6uMQuekFRlyi9/7RPMlvYksB
+         3KeBi9BbHtTsSc6a1VcSox4bHb5LGKLe6BJVJx4133AIEGWx6VRpH/lqIkqsSRailyHM
+         DSLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=2VZuxjpFKVQ5urOrPRWad94MAn0l3QPVsVA9sXDgayg=;
-        b=WW49K3NsLR0Bc/DRZb9njNg+AxZq+Cf66qhNIKRJTZdOMZbv/fqjXhZPEq/FgcIL6q
-         KlUwWCJnm7OP0QCc9G60UpI3FlmwMpAoq3kBLyTyYtCciIGipvAxLUygBPXOiikpKZfe
-         EjltjJ2qlGMhcjObA6MaEsLL+iXB6EuoMtP4yRAe83+Zw6Ai4/pqQyaNirtLDBjcpIPD
-         fWp/Ot4UK1WzX3FqzZdS4iAXOlf4FK0s+qzBQIedfI4zURktLz/T42InBfWVLt/ftYSK
-         FxzNqf2aysha8lUgZJoYlwpfbhETA0SrGk9fHxD/g1s7y5lhNZKgyBnjv+7xseUbXQDv
-         ZB0Q==
-X-Gm-Message-State: AOAM533WQMgS/IP+exQR7g4m8uTj4ncmQXISPEGopWpc/+7fXscD9QGY
-        k7OWAWtQiDfKBXGMl41059hrGEdR4QFBNQ==
-X-Google-Smtp-Source: ABdhPJzybHNZQAbpi4TyFljMqaAummq7Upa+X51AlMDFrN/8aroSDATSq6f1uhsbcTHJZXSfCd6DAg==
-X-Received: by 2002:a37:a390:: with SMTP id m138mr29487828qke.59.1617116674388;
-        Tue, 30 Mar 2021 08:04:34 -0700 (PDT)
-Received: from localhost ([2605:9480:22e:ff10:7b00:4f79:8763:6261])
-        by smtp.gmail.com with ESMTPSA id d70sm15893460qkg.30.2021.03.30.08.04.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Mar 2021 08:04:33 -0700 (PDT)
-Date:   Tue, 30 Mar 2021 11:04:32 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net, dstolee@microsoft.com,
-        jonathantanmy@google.com
-Subject: [PATCH v4 15/16] pack-revindex: write multi-pack reverse indexes
-Message-ID: <47409cc50835fb03d535d3817f01d62a68512144.1617116623.git.me@ttaylorr.com>
-References: <cover.1612998106.git.me@ttaylorr.com>
- <cover.1617116623.git.me@ttaylorr.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=zYTSd1gYE59kSmrYcDV5ESVJu/q0+xd/IU1X6CV/+Nk=;
+        b=T+qOaeAgGXv3zaqe/G0Jl4WuQzGJT2qvotuXMW8CNQXrm6ec5YJYh+GT/QEx5mHU/J
+         4c7xy5J7FNcCpyfSCSlWBC/iWCGkUWq4SqBPY053asoExqavcJXrMSfUnZf25DDBrsrB
+         6Ch3FRWsLr9ZHYG1FFnmVdEsT1pHNcjSeGPfa1xQ6/6zzpYeZW/VhqqPYaCvXr12oI63
+         kUS9QxHCgOah1YOPacLxSIep/QHWfvAMjQc7UV17bE0XuH55MnJ1UZMZwiDm0YpprQAM
+         jjJUGiJFi0hbQYh7UuxA/2uJ7W0rDhOZX3nXv3E6dqKWXXhAqfM926Tj/27mRmfDjS50
+         lwlg==
+X-Gm-Message-State: AOAM531hkhhpMnEF5zdj41AF26LnJuz1r01ECF1N/0n8LWRn3DhWluiE
+        FK9uIJOuuf71aSqH59tLBz+2lVOsynP1GHPoNZU=
+X-Google-Smtp-Source: ABdhPJwl1aVXia8bn43xQkl2Sq4oFRccwloXC1NzFJ2Up0ef60pwR7dO0KH0hiVAnkbczAIWmToufzon3s6+5c8HZNM=
+X-Received: by 2002:a05:6830:17d7:: with SMTP id p23mr27759618ota.164.1617116854526;
+ Tue, 30 Mar 2021 08:07:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1617116623.git.me@ttaylorr.com>
+References: <pull.913.v3.git.1616673200809.gitgitgadget@gmail.com>
+ <pull.913.v4.git.1616775185562.gitgitgadget@gmail.com> <xmqqk0psqxqo.fsf@gitster.g>
+ <CAP8UFD26YaoDGs_8eUhuRCytDMyOhFM-Egs-Srk83iMpZxbKxA@mail.gmail.com>
+ <CAOLTT8Ryrp90xJ0=Y2avndYpf_2JvabK=XAuc+hactk8idyv1w@mail.gmail.com>
+ <CAP8UFD0OMJfkuX_JoDros7h0B20D8sm0ZbtkVpL3dCYRV_M=OA@mail.gmail.com>
+ <CAOLTT8RAe0HhTL6p6MXeqbSazaJF0=PtnDKvh06-FXXBB+w94A@mail.gmail.com>
+ <CAP8UFD1XSTAq28LrBe-q+M_Vs78gZhr58mHM6EgYt9g3pPuPDg@mail.gmail.com> <CAOLTT8SfOKS41uJDHAMAmhWZXc3qZsngfFtsbzXxdNP1cEObzg@mail.gmail.com>
+In-Reply-To: <CAOLTT8SfOKS41uJDHAMAmhWZXc3qZsngfFtsbzXxdNP1cEObzg@mail.gmail.com>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Tue, 30 Mar 2021 23:07:19 +0800
+Message-ID: <CAOLTT8SPRArgwwd_isw48gWQysgqJ9JJpn9JNGH+=9aY+0=SPA@mail.gmail.com>
+Subject: Re: [PATCH v4] [GSOC]trailer: pass arg as positional parameter
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Implement the writing half of multi-pack reverse indexes. This is
-nothing more than the format describe a few patches ago, with a new set
-of helper functions that will be used to clear out stale .rev files
-corresponding to old MIDXs.
+Hi, Junio,
 
-Unfortunately, a very similar comparison function as the one implemented
-recently in pack-revindex.c is reimplemented here, this time accepting a
-MIDX-internal type. An effort to DRY these up would create more
-indirection and overhead than is necessary, so it isn't pursued here.
+ZheNing Hu <adlternative@gmail.com> =E4=BA=8E2021=E5=B9=B43=E6=9C=8830=E6=
+=97=A5=E5=91=A8=E4=BA=8C =E4=B8=8B=E5=8D=887:22=E5=86=99=E9=81=93=EF=BC=9A
+>
+> In addition, I now found a small bug in ".cmd",
+>
+> git config -l |grep bug
+> trailer.bug.key=3Dbug-descibe:
+> trailer.bug.ifexists=3Dreplace
+> trailer.bug.cmd=3Decho 123
+>
+> see what will happen:
+>
+> git interpret-trailers --trailer=3D"bug:text" <<-EOF
+> `heredocd> EOF
+>
+> bug-descibe:123 text
+>
+> "text" seem print to stdout.
+>
+> I'm looking at what's going on here.
+>
 
-Currently, there are no callers which pass the MIDX_WRITE_REV_INDEX
-flag, meaning that this is all dead code. But, that won't be the case
-for long, since subsequent patches will introduce the multi-pack bitmap,
-which will begin passing this field.
+Here I may need to think with you whether it is reasonable to pass "$1".
 
-(In midx.c:write_midx_internal(), the two adjacent if statements share a
-conditional, but are written separately since the first one will
-eventually also handle the MIDX_WRITE_BITMAP flag, which does not yet
-exist.)
+I found that we passed the parameters in the above situation like this:
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- midx.c | 115 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- midx.h |   1 +
- 2 files changed, 116 insertions(+)
+(gdb) print cp.args.v[0]
+$7 =3D 0x5555558f4e20 "echo \"123\""
+(gdb) print cp.args.v[1]
+$8 =3D 0x5555558ee150 "text"
 
-diff --git a/midx.c b/midx.c
-index c04e794888..b96eaa12fb 100644
---- a/midx.c
-+++ b/midx.c
-@@ -12,6 +12,7 @@
- #include "run-command.h"
- #include "repository.h"
- #include "chunk-format.h"
-+#include "pack.h"
- 
- #define MIDX_SIGNATURE 0x4d494458 /* "MIDX" */
- #define MIDX_VERSION 1
-@@ -462,6 +463,7 @@ struct write_midx_context {
- 	uint32_t entries_nr;
- 
- 	uint32_t *pack_perm;
-+	uint32_t *pack_order;
- 	unsigned large_offsets_needed:1;
- 	uint32_t num_large_offsets;
- 
-@@ -816,6 +818,70 @@ static int write_midx_large_offsets(struct hashfile *f,
- 	return 0;
- }
- 
-+static int midx_pack_order_cmp(const void *va, const void *vb, void *_ctx)
-+{
-+	struct write_midx_context *ctx = _ctx;
-+
-+	struct pack_midx_entry *a = &ctx->entries[*(const uint32_t *)va];
-+	struct pack_midx_entry *b = &ctx->entries[*(const uint32_t *)vb];
-+
-+	uint32_t perm_a = ctx->pack_perm[a->pack_int_id];
-+	uint32_t perm_b = ctx->pack_perm[b->pack_int_id];
-+
-+	/* Sort objects in the preferred pack ahead of any others. */
-+	if (a->preferred > b->preferred)
-+		return -1;
-+	if (a->preferred < b->preferred)
-+		return 1;
-+
-+	/* Then, order objects by which packs they appear in. */
-+	if (perm_a < perm_b)
-+		return -1;
-+	if (perm_a > perm_b)
-+		return 1;
-+
-+	/* Then, disambiguate by their offset within each pack. */
-+	if (a->offset < b->offset)
-+		return -1;
-+	if (a->offset > b->offset)
-+		return 1;
-+
-+	return 0;
-+}
-+
-+static uint32_t *midx_pack_order(struct write_midx_context *ctx)
-+{
-+	uint32_t *pack_order;
-+	uint32_t i;
-+
-+	ALLOC_ARRAY(pack_order, ctx->entries_nr);
-+	for (i = 0; i < ctx->entries_nr; i++)
-+		pack_order[i] = i;
-+	QSORT_S(pack_order, ctx->entries_nr, midx_pack_order_cmp, ctx);
-+
-+	return pack_order;
-+}
-+
-+static void write_midx_reverse_index(char *midx_name, unsigned char *midx_hash,
-+				     struct write_midx_context *ctx)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+	const char *tmp_file;
-+
-+	strbuf_addf(&buf, "%s-%s.rev", midx_name, hash_to_hex(midx_hash));
-+
-+	tmp_file = write_rev_file_order(NULL, ctx->pack_order, ctx->entries_nr,
-+					midx_hash, WRITE_REV);
-+
-+	if (finalize_object_file(tmp_file, buf.buf))
-+		die(_("cannot store reverse index file"));
-+
-+	strbuf_release(&buf);
-+}
-+
-+static void clear_midx_files_ext(struct repository *r, const char *ext,
-+				 unsigned char *keep_hash);
-+
- static int write_midx_internal(const char *object_dir, struct multi_pack_index *m,
- 			       struct string_list *packs_to_drop,
- 			       const char *preferred_pack_name,
-@@ -1001,6 +1067,14 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
- 
- 	finalize_hashfile(f, midx_hash, CSUM_FSYNC | CSUM_HASH_IN_STREAM);
- 	free_chunkfile(cf);
-+
-+	if (flags & MIDX_WRITE_REV_INDEX)
-+		ctx.pack_order = midx_pack_order(&ctx);
-+
-+	if (flags & MIDX_WRITE_REV_INDEX)
-+		write_midx_reverse_index(midx_name, midx_hash, &ctx);
-+	clear_midx_files_ext(the_repository, ".rev", midx_hash);
-+
- 	commit_lock_file(&lk);
- 
- cleanup:
-@@ -1015,6 +1089,7 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
- 	free(ctx.info);
- 	free(ctx.entries);
- 	free(ctx.pack_perm);
-+	free(ctx.pack_order);
- 	free(midx_name);
- 	return result;
- }
-@@ -1027,6 +1102,44 @@ int write_midx_file(const char *object_dir,
- 				   flags);
- }
- 
-+struct clear_midx_data {
-+	char *keep;
-+	const char *ext;
-+};
-+
-+static void clear_midx_file_ext(const char *full_path, size_t full_path_len,
-+				const char *file_name, void *_data)
-+{
-+	struct clear_midx_data *data = _data;
-+
-+	if (!(starts_with(file_name, "multi-pack-index-") &&
-+	      ends_with(file_name, data->ext)))
-+		return;
-+	if (data->keep && !strcmp(data->keep, file_name))
-+		return;
-+
-+	if (unlink(full_path))
-+		die_errno(_("failed to remove %s"), full_path);
-+}
-+
-+static void clear_midx_files_ext(struct repository *r, const char *ext,
-+				 unsigned char *keep_hash)
-+{
-+	struct clear_midx_data data;
-+	memset(&data, 0, sizeof(struct clear_midx_data));
-+
-+	if (keep_hash)
-+		data.keep = xstrfmt("multi-pack-index-%s%s",
-+				    hash_to_hex(keep_hash), ext);
-+	data.ext = ext;
-+
-+	for_each_file_in_pack_dir(r->objects->odb->path,
-+				  clear_midx_file_ext,
-+				  &data);
-+
-+	free(data.keep);
-+}
-+
- void clear_midx_file(struct repository *r)
- {
- 	char *midx = get_midx_filename(r->objects->odb->path);
-@@ -1039,6 +1152,8 @@ void clear_midx_file(struct repository *r)
- 	if (remove_path(midx))
- 		die(_("failed to clear multi-pack-index at %s"), midx);
- 
-+	clear_midx_files_ext(r, ".rev", NULL);
-+
- 	free(midx);
- }
- 
-diff --git a/midx.h b/midx.h
-index 0a8294d2ee..8684cf0fef 100644
---- a/midx.h
-+++ b/midx.h
-@@ -40,6 +40,7 @@ struct multi_pack_index {
- };
- 
- #define MIDX_PROGRESS     (1 << 0)
-+#define MIDX_WRITE_REV_INDEX (1 << 1)
- 
- char *get_midx_rev_filename(struct multi_pack_index *m);
- 
--- 
-2.30.0.667.g81c0cbc6fd
+At this time, our idea is base on that v[0] will be the content of the shel=
+l,
+and v[1] will be the $1 of the shell.
 
+But in fact, git handles shell subprocesses in a special way:
+
+The `prepare_shell_cmd()` in "run-command.c" seem to use "$@" to pass
+shell args.
+
+Before exec:
+
+(gdb) print argv.v[1]
+$22 =3D 0x5555558edfd0 "/bin/sh"
+(gdb) print argv.v[2]
+$23 =3D 0x5555558f4c80 "-c"
+(gdb) print argv.v[3]
+$24 =3D 0x5555558ed4b0 "echo \"123\" \"$@\""
+(gdb) print argv.v[4]
+$25 =3D 0x5555558f5980 "echo \"123\""
+(gdb) print argv.v[5]
+$26 =3D 0x5555558edab0 "abc"
+(gdb) print argv.v[6]
+$27 =3D 0x0
+
+Some unexpected things happened here.
+Maybe "abc" was wrongly used as the parameter of "echo"?
+Looking forward to your reply.
+
+--
+ZheNing Hu
