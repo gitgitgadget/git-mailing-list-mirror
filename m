@@ -2,158 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CE18C43459
-	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 13:12:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 90834C433C1
+	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 13:38:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 28A40619F6
-	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 13:12:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5A55E619D0
+	for <git@archiver.kernel.org>; Tue, 30 Mar 2021 13:38:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232296AbhC3NL6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Mar 2021 09:11:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56774 "EHLO
+        id S232294AbhC3Nho (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Mar 2021 09:37:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34100 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232136AbhC3NLd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Mar 2021 09:11:33 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E442C061574
-        for <git@vger.kernel.org>; Tue, 30 Mar 2021 06:11:32 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id ap14so11613723ejc.0
-        for <git@vger.kernel.org>; Tue, 30 Mar 2021 06:11:32 -0700 (PDT)
+        with ESMTP id S232215AbhC3NhM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Mar 2021 09:37:12 -0400
+Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2813AC061762
+        for <git@vger.kernel.org>; Tue, 30 Mar 2021 06:37:12 -0700 (PDT)
+Received: by mail-io1-xd32.google.com with SMTP id n21so16443171ioa.7
+        for <git@vger.kernel.org>; Tue, 30 Mar 2021 06:37:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=XMbMRlWDrV8aVVqgf/9ul8+2o5nutHV7Qcnd8W2n8Vg=;
-        b=m/1irrU56wjoQIc2X11D1GwZpNuBg9BdZBaufdg62uMJcolqeEuuUpmzzneUhN82kP
-         4psVLT8fPCtia/23J9tRKUQZ9pVxNkZYuYh3u2Fo5nFeMEqFLD/0hc4yLCMR+Jsit22T
-         tfS5rVWTvOgploM+rOAHkN6xna5pc/q8M5tVKSAGXRlZZa91H0MbSFfVVS4zVGJCJZZ1
-         dPvQR+VT1/PJ1HffB7wEzIeHfCzZmhlLfFKgLf8Q1Vy7JahDnDewjIfRtgB5pAVdsovh
-         mcbipmTjGbRbdfvd/m8Ldq+ZVIggZYIUB+c1+V4FrF42yrn1x8vcHidnIdnJFZcUe1BI
-         hE4w==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=QCleCaLOjaopznQ+DYApEqjF1wD86igCPFYo2eL5n7g=;
+        b=yimp0RSRaa4tYKAbIH5YHXiPTIA3a4buxfT6kdOFBmYehMCs1kcq1KcKoNMRCT0f5z
+         H6xT2DLfdcev7PYUNmhcA/lDBE5BMrqbEaxNN3QkkbEcECB6xsbTBw0m3fRjMPmaWnWd
+         IM/h+dcI1/3ZBYvg8DZ+O/I3bJRNFq2+YJfyAc/rFToD8ucRLBz6wfk5Tgu3q0EXmEHU
+         yeGH+4m5YDU90NZcmuprEBOoye6KAq58fdqNxSqSQo41ma3xGYOQVC061p31T9usjYG5
+         XrF+K7Tt8kjNHMTYQNYJdUSzxFJEiSD93lMrkRleMZYhsczqYvCqRAm5LDk3Qv3XhY9R
+         /GZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=XMbMRlWDrV8aVVqgf/9ul8+2o5nutHV7Qcnd8W2n8Vg=;
-        b=QFRcWblpTsE+15y3G9ULj103wIF6fMz/9hXbJgWxk33s+p/If7a4LFYcwpMbyMqshA
-         Wn9SjZ6w2BbUY0gBJcAxhtfVFJ56hvj3IZ7AMj1iLOcVDAUwtoAJZHI64ziMBxPuBduI
-         mAY+Kjc7pq3SEzjM00im48QgDk18IEx8BrCRUEOjQO4eFdtNhYYtxyd9biZxOxYI/7NM
-         axI6wJx7AfUZ1PUl8TVATONAHdbLrDeXZCO8KmYAS7APcPTOSHXS8xocBQ3n27F2O3uV
-         ufILU4uadlZtTOVSnQ0J1vaxqkbE2y0ddFKC5LZvdiB+ptLQYc1Nc7NFUMamesKtKEO/
-         t6Ug==
-X-Gm-Message-State: AOAM531WxmQtd+0z+0DrlwuqJD6esLvZnyJsjGh/7fieloLmICHhvgxH
-        zipeCR4GTfYUSaO6Fzm2kUUimTkefTw=
-X-Google-Smtp-Source: ABdhPJw4AXbwhMnyt2lMcIs33hXWDMPA40TixaebTjG85ZvPc/NdSu6UJESKhq4R3pMBvygL3zVpPA==
-X-Received: by 2002:adf:f143:: with SMTP id y3mr26969245wro.198.1617109881153;
-        Tue, 30 Mar 2021 06:11:21 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s83sm3649712wmf.26.2021.03.30.06.11.20
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=QCleCaLOjaopznQ+DYApEqjF1wD86igCPFYo2eL5n7g=;
+        b=sl4C1/BRx9lCmD59+pBqNpdcgYwOx47Z+rZ+sGJ2TuWpW2Iar31dYOhcrTjdnAiEW/
+         ajPFw2okgGrz4ROcfuhSUkR0zyq6GeUjzHfrpvupyKH/M0JTetUt3kUPdcPAKCTIHntQ
+         eUqXV8H7iqyYGhfUK4w88q87Mk09QIwKX8aGUVg5gCIdvDYxoXWlPwYPd5Zu1YKQo/Tp
+         ajcKQR2pmBFw1cbI0intGSeazifE/B02urW47UcNwyfOjXAxN62xwo4Y8zbKx5vLUrCp
+         8IaJg/r6NNMxpXmUKGuL67JEjjxoVhhHZSCHxIwx7ZsL4fyntCDuSQAVRWloa+Ow44+C
+         m2vQ==
+X-Gm-Message-State: AOAM531mfvoQ7phZoBlbfi3K7TR4jtBVKlUCLfDVlzzyT95jxhnfSose
+        CjGKA21/eCvLtXcbF5f2eyrLwQ==
+X-Google-Smtp-Source: ABdhPJy2wZUzzxTEAqcqsopsHAYXwMRvUfWmED6Hc5Z/zfJ/8VR98qTyHhNLsmT4+9iSaE6Pp2TM0g==
+X-Received: by 2002:a6b:3118:: with SMTP id j24mr24171980ioa.205.1617111431460;
+        Tue, 30 Mar 2021 06:37:11 -0700 (PDT)
+Received: from localhost ([2605:9480:22e:ff10:7b00:4f79:8763:6261])
+        by smtp.gmail.com with ESMTPSA id x20sm11396277ilc.88.2021.03.30.06.37.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Mar 2021 06:11:20 -0700 (PDT)
-Message-Id: <365901809d9d43f1229ac3e81990853b06b8fb35.1617109865.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.883.v5.git.1617109864.gitgitgadget@gmail.com>
-References: <pull.883.v4.git.1616507069.gitgitgadget@gmail.com>
-        <pull.883.v5.git.1617109864.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 30 Mar 2021 13:11:02 +0000
-Subject: [PATCH v5 19/21] cache-tree: integrate with sparse directory entries
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Tue, 30 Mar 2021 06:37:10 -0700 (PDT)
+Date:   Tue, 30 Mar 2021 09:37:09 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        avarab@gmail.com, dstolee@microsoft.com, gitster@pobox.com,
+        jonathantanmy@google.com
+Subject: Re: [PATCH v3 00/16] midx: implement a multi-pack reverse index
+Message-ID: <YGMphbVWLp6X6TYS@nand.local>
+References: <cover.1612998106.git.me@ttaylorr.com>
+ <cover.1615482270.git.me@ttaylorr.com>
+ <YGHQnQ9/ulXd+jgu@coredump.intra.peff.net>
+ <YGJIfdyghSUrq/0I@nand.local>
+ <YGLP9oE4HtgLudg4@coredump.intra.peff.net>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     newren@gmail.com, gitster@pobox.com, pclouds@gmail.com,
-        jrnieder@gmail.com,
-        Martin =?UTF-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YGLP9oE4HtgLudg4@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+On Tue, Mar 30, 2021 at 03:15:02AM -0400, Jeff King wrote:
+> On Mon, Mar 29, 2021 at 05:37:01PM -0400, Taylor Blau wrote:
+> > (FWIW, I can also see an argument in the other direction along the lines
+> > of "we may discover something later on that requires us to change the
+> > way multi-pack .rev files work". I think that such an outcome is fairly
+> > unlikely, but worth considering anyway).
+>
+> That would be my general worry, too, but in this case I am not too
+> concerned because I know the code has received substantial exercise
+> already on real-world production servers. So while we may clean up some
+> cosmetic bits or respond to review as it goes upstream, I'm much less
+> worried about seeing some brown-paper-bag bug that would be sufficient
+> to make us want to re-roll these .rev commits. And hopefully the
+> existing rounds have addressed the cosmetic/review bits.
 
-The cache-tree extension was previously disabled with sparse indexes.
-However, the cache-tree is an important performance feature for commands
-like 'git status' and 'git add'. Integrate it with sparse directory
-entries.
+Yes. Another benefit is that it should give us substantial confidence in
+the correctness not just of this topic, but of the multi-pack bitmaps
+that are built on top, too.
 
-When writing a sparse index, completely clear and recalculate the cache
-tree. By starting from scratch, the only integration necessary is to
-check if we hit a sparse directory entry and create a leaf of the
-cache-tree that has an entry_count of one and no subtrees.
-
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- cache-tree.c   | 18 ++++++++++++++++++
- sparse-index.c | 10 +++++++++-
- 2 files changed, 27 insertions(+), 1 deletion(-)
-
-diff --git a/cache-tree.c b/cache-tree.c
-index 5f07a39e501e..950a9615db8f 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -256,6 +256,24 @@ static int update_one(struct cache_tree *it,
- 
- 	*skip_count = 0;
- 
-+	/*
-+	 * If the first entry of this region is a sparse directory
-+	 * entry corresponding exactly to 'base', then this cache_tree
-+	 * struct is a "leaf" in the data structure, pointing to the
-+	 * tree OID specified in the entry.
-+	 */
-+	if (entries > 0) {
-+		const struct cache_entry *ce = cache[0];
-+
-+		if (S_ISSPARSEDIR(ce->ce_mode) &&
-+		    ce->ce_namelen == baselen &&
-+		    !strncmp(ce->name, base, baselen)) {
-+			it->entry_count = 1;
-+			oidcpy(&it->oid, &ce->oid);
-+			return 1;
-+		}
-+	}
-+
- 	if (0 <= it->entry_count && has_object_file(&it->oid))
- 		return it->entry_count;
- 
-diff --git a/sparse-index.c b/sparse-index.c
-index 4c73772c6d6c..95ea17174da3 100644
---- a/sparse-index.c
-+++ b/sparse-index.c
-@@ -172,7 +172,11 @@ int convert_to_sparse(struct index_state *istate)
- 	istate->cache_nr = convert_to_sparse_rec(istate,
- 						 0, 0, istate->cache_nr,
- 						 "", 0, istate->cache_tree);
--	istate->drop_cache_tree = 1;
-+
-+	/* Clear and recompute the cache-tree */
-+	cache_tree_free(&istate->cache_tree);
-+	cache_tree_update(istate, 0);
-+
- 	istate->sparse_index = 1;
- 	trace2_region_leave("index", "convert_to_sparse", istate->repo);
- 	return 0;
-@@ -273,5 +277,9 @@ void ensure_full_index(struct index_state *istate)
- 	strbuf_release(&base);
- 	free(full);
- 
-+	/* Clear and recompute the cache-tree */
-+	cache_tree_free(&istate->cache_tree);
-+	cache_tree_update(istate, 0);
-+
- 	trace2_region_leave("index", "ensure_full_index", istate->repo);
- }
--- 
-gitgitgadget
-
+Thanks,
+Taylor
