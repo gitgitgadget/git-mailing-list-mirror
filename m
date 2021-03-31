@@ -2,179 +2,173 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 16047C433DB
-	for <git@archiver.kernel.org>; Wed, 31 Mar 2021 09:15:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9CABC433DB
+	for <git@archiver.kernel.org>; Wed, 31 Mar 2021 10:06:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DB53D619BB
-	for <git@archiver.kernel.org>; Wed, 31 Mar 2021 09:15:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 852EC61964
+	for <git@archiver.kernel.org>; Wed, 31 Mar 2021 10:06:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234622AbhCaJPC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 31 Mar 2021 05:15:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33992 "EHLO
+        id S234545AbhCaKFy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 31 Mar 2021 06:05:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45362 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234648AbhCaJOl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Mar 2021 05:14:41 -0400
-Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D96E2C061574
-        for <git@vger.kernel.org>; Wed, 31 Mar 2021 02:14:40 -0700 (PDT)
-Received: by mail-oi1-x22e.google.com with SMTP id w70so19430998oie.0
-        for <git@vger.kernel.org>; Wed, 31 Mar 2021 02:14:40 -0700 (PDT)
+        with ESMTP id S234666AbhCaKFv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Mar 2021 06:05:51 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CB22C06174A
+        for <git@vger.kernel.org>; Wed, 31 Mar 2021 03:05:51 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id b2-20020a7bc2420000b029010be1081172so857368wmj.1
+        for <git@vger.kernel.org>; Wed, 31 Mar 2021 03:05:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=QRx3nI6obSAtCJJ7xCPfOKkoO94cmDacAPDJZtFRjgs=;
-        b=GWmwczvBphPNLaeLYz5mYx140oxro7iBC3jtSqvEqZOK4KGqLqxDE3vpe4T/rrkfJI
-         dukvSzKZPobwu1rPRgzC48VZ6Pw/osECRnUoTCDMQ4zIG6qALuVqcukM9AjKBXeBUpK7
-         m9KBqwARPslDJV/tolvTJ5z25cLwA5ksukl3sCqGX41vDUKQi6jj85QQ1TuI9f9Z19ra
-         RmFr8jSs5Pq4XU/yIfrnJ/UwRVJpFWdjQNagEm5VFk+0rYic8gBhxJnaFGCkoN3p9CX4
-         j3RHNghdTHFEhD+/uREyeTaRkxvcr+FWRNNDgXk/mwpCNOn8f9WkH4uh7Y3vlUVYwDMT
-         +e+w==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=T0xjrZujx9SUCLKrBQ0Q0tNcS3+AJRic7R9alexEAb0=;
+        b=DGBy6vFKeLsKjRLEE2cuJgt2NFwj1FSvQgXZQx8EqAIaSSj878eHWL5YXejQtStc1U
+         WIewzdSKhpLlyOyn0tj0snxvBB1SDpiULLVrjljQGu6HRB1F/fN5H99BN7B1H4pjG0B8
+         bwEz7HRKbnzskNPnbtFWId2VXBQYh6S1C8sb5gkCul9IadPm1Gue6zU4B6eHbv2srSFQ
+         VRlFw4tEVINtavzvKa2AEQuYz5eoH39jRdDHYHROZFSUU63f0UMN1LWcjRztKuz1E2t2
+         /3BvmJ7jk+tvOTe546ai5+ruY9aTCjn/GaB0FhzqdOa+OwnXRMsOMV3/9rakEhtb7xhl
+         AH3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=QRx3nI6obSAtCJJ7xCPfOKkoO94cmDacAPDJZtFRjgs=;
-        b=e/7W1lXlhsAVFT4WPTxCk/+lX2athcGqGW15ab8016JdS5GDhI4rzP+Kux1K00aaSF
-         X74bUnb+KmlIKec+B7T9ALfW24FT9KqpYo1TLcd9os62LBSqwSzHEaaDfJY3ac6x7vEZ
-         xESaxOU3kRU3UF/EmDlIlEKURUpf90Qi5EFLvSiBqBvd+ve4XDUIrBcRPqLdfzMNDepb
-         0ObOp/rOuJEOqzHhIss9TqStDFEFnaY42j/xNNp6ZxPWPap9Ae0rc7LajoUIIQTteplY
-         TFGQ++Ko6Dfajo4fDEuwupiU2vQYlY/dRM0ipuCu23aGjGQD8dANOKOqm9C1RrBtXJEI
-         z4Kg==
-X-Gm-Message-State: AOAM530TlFKPw3CJMbIao38PTAi9WYsP84QwJ9JfcRbd81cZ14VzLMnX
-        sRzaGyN1jep1/NTrnZkoaCGk5Z2omiPsVVgSi0vyDjanSmc=
-X-Google-Smtp-Source: ABdhPJye6JD9GhewggpIjFslk2gvAzPpG9RxyydXMpVK0WDP6rG+9DEi4yfHda8pXjrH72cIXA5dbiyJbA1xmohju4Q=
-X-Received: by 2002:aca:6545:: with SMTP id j5mr1612717oiw.31.1617182080283;
- Wed, 31 Mar 2021 02:14:40 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=T0xjrZujx9SUCLKrBQ0Q0tNcS3+AJRic7R9alexEAb0=;
+        b=rpdkHESWAhK86jWmnDcHLwXH+2SdQsvfcSQK9Wu+1YXvi2PHDccn1JKt36ReqcbdUQ
+         Zlv2A+gUCl4nXyKe5ryW5E9SWtw4/7XzMcvQ9E1sQSqjnRmjGYeul3EhRIs6HOkiguNm
+         mHTOkX8aHRdbYKLjb9wv4W1UhAbN25XDjusPeym8NCqYvNFx3I2FjQ/u+dBr5ImB0yk8
+         JTbuYYEK+EfqmYOCliX2+EY12d8RUcvjTlUUzkPlWvGH8x+iYOVkTnKbZiGmoCvDcgWH
+         vh7qHoNRYAP3oF7imOkdeY3wSegV2QjN5JD0Nzkqw0T1Cn7Y7N4FIvessmr9PjXFTvAO
+         wdDQ==
+X-Gm-Message-State: AOAM531P+hE4KlAcJ+DHMvnMwoKYjwZBZQU8d8FkNAzzvuoyR9xwIS9/
+        lkmC1S4+WOnvUnY6ZvTvn+1+aSORcaA=
+X-Google-Smtp-Source: ABdhPJyg90SxfkRFQOXuYFx1bnvmfxF4/KLLsoG/BjFHciVSqd5gbUqpRTsWKbkRsbfQz2Pb7bSC/Q==
+X-Received: by 2002:a1c:8010:: with SMTP id b16mr2491061wmd.49.1617185149893;
+        Wed, 31 Mar 2021 03:05:49 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id j12sm3536291wrx.59.2021.03.31.03.05.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 31 Mar 2021 03:05:49 -0700 (PDT)
+Message-Id: <4c59cab53a0d9bb7c9cccfaf5544ae5c904bb2ba.1617185147.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.913.v5.git.1617185147.gitgitgadget@gmail.com>
+References: <pull.913.v4.git.1616775185562.gitgitgadget@gmail.com>
+        <pull.913.v5.git.1617185147.gitgitgadget@gmail.com>
+From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 31 Mar 2021 10:05:46 +0000
+Subject: [PATCH v5 1/2] [GSOC] run-command: add shell_no_implicit_args option
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <cover.1615588108.git.matheus.bernardino@usp.br>
- <34a61a0d03868c43d68a04bca8d86dd98de2aa28.1615588109.git.matheus.bernardino@usp.br>
- <xmqqsg4sowks.fsf@gitster.g> <xmqqo8fgovuz.fsf@gitster.g> <CAHd-oW4V4_XrY7XfQO1gLEZZmzcLbG0_M2ys+Meh4Ysu0Psz0Q@mail.gmail.com>
- <xmqqlfajnn6w.fsf@gitster.g> <CAHd-oW4kRLjV9Sq3CFt-V1Ot9pYFzJggU1zPp3Hcuw=qWfq7Mg@mail.gmail.com>
-In-Reply-To: <CAHd-oW4kRLjV9Sq3CFt-V1Ot9pYFzJggU1zPp3Hcuw=qWfq7Mg@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 31 Mar 2021 02:14:29 -0700
-Message-ID: <CABPp-BGjuz1ZEriCOhrpakQCQ8AZ12ovir5Vm233nadvywcWcA@mail.gmail.com>
-Subject: Re: [PATCH v3 5/7] refresh_index(): add REFRESH_DONT_MARK_SPARSE_MATCHES
- flag
-To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        ZheNing Hu <adlternative@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+From: ZheNing Hu <adlternative@gmail.com>
 
-On Tue, Mar 30, 2021 at 11:51 AM Matheus Tavares Bernardino
-<matheus.bernardino@usp.br> wrote:
->
-> On Fri, Mar 19, 2021 at 1:05 PM Junio C Hamano <gitster@pobox.com> wrote:
-> >
-> > Matheus Tavares Bernardino <matheus.bernardino@usp.br> writes:
-> >
-> > >> In other words, the change makes me wonder why we are not adding a
-> > >> flag that says "do we or do we not want to match paths outside the
-> > >> sparse checkout cone?", with which the seen[] would automatically
-> > >> record the right thing.
-> > >
-> > > Yeah, makes sense. I didn't want to make the flag skip the sparse
-> > > paths unconditionally (i.e. without matching them) because then we
-> > > would also skip the ce_stage() checkings below and the later
-> > > ce_mark_uptodate(). And I wasn't sure whether this could cause any
-> > > unwanted side effects.
-> > >
-> > > But thinking more carefully about this now, unmerged paths should
-> > > never have the SKIP_WORKTREE bit set anyway, right? What about the
-> > > CE_UPTODATE mark, would it be safe to skip it? I'm not very familiar
-> > > with this code, but I'll try to investigate more later.
->
-> Sorry I haven't given any update on this yet. From what I could see so
-> far, it seems OK to ignore the skip_worktree entries in
-> refresh_index() when it is called from `git add --refresh`. But
-> because we would no longer mark the skip_worktree entries that match
-> the pathspec with CE_UPTODATE, do_write_index() would start checking
-> if they are racy clean (this is only done when `!ce_uptodate(ce)`),
-> which could add some lstat() overhead.
->
-> However, this made me think what happens today if we do have a racy
-> clean entry with the skip_worktree bit set... `git add --refresh` will
-> probably update the index without noticing that the entry is racy
-> clean (because it won't check CE_UPTODATE entries, and skip_worktree
-> entries will have this bit set in refresh_index()). Thus the entries'
-> size won't be truncated to zero when writing the index, and the entry
-> will appear unchanged even if we later unset the skip_worktree bit.
->
-> But can we have a "racy clean skip_worktree entry"? Yes, this seems
-> possible e.g. if the following sequence happens fast enough for mtime
-> to be the same before and after the update:
->
->   echo x >file
->   git update-index --refresh --skip-worktree file
->   echo y>file
->
-> Here is a more complete example which artificially creates a "racy
-> clean skip_worktree entry", runs `git add --refresh`, and shows that
-> the racy clean entry was not detected:
->
-> # Setup
-> echo sparse >sparse
-> echo dense >dense
-> git add .
-> git commit -m files
->
-> # Emulate a racy clean situation
-> touch -d yesterday date
-> touch -r date sparse
-> git update-index --refresh --skip-worktree sparse
-> touch -r date .git/index
-> echo xparse >sparse
-> touch -r date sparse
->
-> # `git add` will now write a new index without checking if
-> # `sparse` is racy clean nor truncating its size
-> touch -r date dense
-> git add --refresh .
->
-> git update-index --no-skip-worktree sparse
-> git status
-> <doesn't show that `sparse` was modified>
->
-> This situation feels rather uncommon, but perhaps the same could
-> happen with `git sparse-checkout set` instead of `git update-index
-> --refresh --skip-worktree`? IDK. This made me think whether
-> refresh_index() should really mark skip_worktree entries with
-> CE_UPTODATE, in the first place.
->
-> Any thoughts?
+When we use subprocess to run a shell-script, if we have any
+args, git will add extra $@ to the end of the shell-script,
+This can pass positional parameters correctly, But if we just
+want to use some of these passed parameters, git will still
+add an extra "$@", which contains all positional parameters we
+passed. This does not meet our expectations.
 
-Wow, that's a weird one.  Nice digging.  I don't understand the racily
-clean stuff that well, or the CE_UPTODATE handling...but based on my
-meager understanding of these things I'd say that marking
-skip_worktree entries with CE_UPTODATE seems wrong and I'd agree with
-your hunch that we shouldn't be updating it for those files.  If an
-entry is skip_worktree, it's assumed to not be present in the working
-tree and that we'll treat it as "unchanged".  So, when the filehappens
-to be present despite that bit being set, checking the files' stat
-information or pretending to have done so so we can claim it is up to
-date seems wrong to me.  In fact, I'd say the mere recognition that
-the file is present in the working tree despite being SKIP_WORKTREE to
-me implies it's not "up-to-date" for at least one definition of that
-term.
+E.g. our shell-script is:
+"echo \"\$1\""
+and pass $1 "abc", git will change our script to:
+"echo \"\$1\" \"$@\""
 
-I suspect that if someone flips the skip-worktree bit on and off for a
-file without removing it from the working tree, not marking
-skip_worktree entries with CE_UPTODATE as you mention above might
-force us to incur the cost of an extra stat on said file when we run
-"git status" later.  If so, I think that's a totally reasonable cost,
-so if that was your worry, I'd say that this is shifting the cost
-where it belongs.
+The positional parameters we entered will be printed
+repeatedly. So let add a new `shell_no_implicit_args`
+to `struct child_process`, which can suppress the
+joining of $@ if `shell_no_implicit_args` is set to 1,
+this will allow us to use only few of positional args
+in multi-parameter shell script, instead of using all
+of them.
 
-But, like I said, I'm not very familiar with the racily clean code or
-CE_UPTODATE, so it's possible I said something above that doesn't even
-make sense.  Does my reasoning help at all?
+Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+---
+ run-command.c | 8 ++++----
+ run-command.h | 1 +
+ trailer.c     | 1 +
+ 3 files changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/run-command.c b/run-command.c
+index be6bc128cd9d..a2cf6177f522 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -264,7 +264,7 @@ int sane_execvp(const char *file, char * const argv[])
+ 	return -1;
+ }
+ 
+-static const char **prepare_shell_cmd(struct strvec *out, const char **argv)
++static const char **prepare_shell_cmd(struct strvec *out, const char **argv, int shell_no_implicit_args)
+ {
+ 	if (!argv[0])
+ 		BUG("shell command is empty");
+@@ -281,7 +281,7 @@ static const char **prepare_shell_cmd(struct strvec *out, const char **argv)
+ 		 * If we have no extra arguments, we do not even need to
+ 		 * bother with the "$@" magic.
+ 		 */
+-		if (!argv[1])
++		if (!argv[1] || shell_no_implicit_args)
+ 			strvec_push(out, argv[0]);
+ 		else
+ 			strvec_pushf(out, "%s \"$@\"", argv[0]);
+@@ -416,7 +416,7 @@ static int prepare_cmd(struct strvec *out, const struct child_process *cmd)
+ 	if (cmd->git_cmd) {
+ 		prepare_git_cmd(out, cmd->argv);
+ 	} else if (cmd->use_shell) {
+-		prepare_shell_cmd(out, cmd->argv);
++		prepare_shell_cmd(out, cmd->argv, cmd->shell_no_implicit_args);
+ 	} else {
+ 		strvec_pushv(out, cmd->argv);
+ 	}
+@@ -929,7 +929,7 @@ int start_command(struct child_process *cmd)
+ 	if (cmd->git_cmd)
+ 		cmd->argv = prepare_git_cmd(&nargv, cmd->argv);
+ 	else if (cmd->use_shell)
+-		cmd->argv = prepare_shell_cmd(&nargv, cmd->argv);
++		cmd->argv = prepare_shell_cmd(&nargv, cmd->argv, cmd->shell_no_implicit_args);
+ 
+ 	cmd->pid = mingw_spawnvpe(cmd->argv[0], cmd->argv, (char**) cmd->env,
+ 			cmd->dir, fhin, fhout, fherr);
+diff --git a/run-command.h b/run-command.h
+index d08414a92e73..9597c987c5bb 100644
+--- a/run-command.h
++++ b/run-command.h
+@@ -133,6 +133,7 @@ struct child_process {
+ 	 * argv[1], etc, do not need to be shell-quoted.
+ 	 */
+ 	unsigned use_shell:1;
++	unsigned shell_no_implicit_args:1;
+ 
+ 	unsigned stdout_to_stderr:1;
+ 	unsigned clean_on_exit:1;
+diff --git a/trailer.c b/trailer.c
+index be4e9726421c..35dd0f4c8512 100644
+--- a/trailer.c
++++ b/trailer.c
+@@ -231,6 +231,7 @@ static char *apply_command(const char *command, const char *arg)
+ 	cp.env = local_repo_env;
+ 	cp.no_stdin = 1;
+ 	cp.use_shell = 1;
++	cp.shell_no_implicit_args = 1;
+ 
+ 	if (capture_command(&cp, &buf, 1024)) {
+ 		error(_("running trailer command '%s' failed"), cmd.buf);
+-- 
+gitgitgadget
+
