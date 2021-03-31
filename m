@@ -8,52 +8,52 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8B0EC4361B
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 98511C43618
 	for <git@archiver.kernel.org>; Wed, 31 Mar 2021 19:10:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 977A961056
+	by mail.kernel.org (Postfix) with ESMTP id 82E216101E
 	for <git@archiver.kernel.org>; Wed, 31 Mar 2021 19:10:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235985AbhCaTKe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 31 Mar 2021 15:10:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50102 "EHLO
+        id S235973AbhCaTKc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 31 Mar 2021 15:10:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235492AbhCaTKR (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S235503AbhCaTKR (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 31 Mar 2021 15:10:17 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FC30C061761
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3D18C061762
         for <git@vger.kernel.org>; Wed, 31 Mar 2021 12:10:05 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id t5-20020a1c77050000b029010e62cea9deso1704149wmi.0
-        for <git@vger.kernel.org>; Wed, 31 Mar 2021 12:10:04 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id k8so20731281wrc.3
+        for <git@vger.kernel.org>; Wed, 31 Mar 2021 12:10:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Wk1XFXdKxAaohWFNfiUHUwwBDhbxGHCpa+8TS7P6tZ8=;
-        b=DZ0sDvQVpKVwis3fhvuvKEQeC/GY9GH8pRHL9Xy/X3nrjbKy2O78aIK4xcXHbtR41P
-         6OQtdllozLmNQmZ4SBp2xaSUTdlvzE6yHNNT0VoiyJH3WoaAqmTlngob1lmF4Pd920hM
-         jElBrT1ScMSUMTaJ+VokpTxJ1V0U7x9de0/Dkx53IKEee6WTza0AECgbiFNoGgkC7twS
-         RsNTL+7elgKnHV4SiMdXYaFDm73BgcB6UTp0k736ShxTQKdVbhGOA2fwclZSn5hqLlIz
-         3kA+XzkGiKc8o3CUS9+DD+iFlx5xsvfy+r/xcj/Oyh3eGFVDTycznu1Dx/nThne8DL0T
-         Xrdw==
+        bh=GCbl2rVABtsV4dddLtM5ybaHdfu1dwL7iDs2zWd0Wiw=;
+        b=jRtC5e+S6A8Q7LssoET33yvoVllsewu6fZAoWHCW4BXu1HhOYizSlrqK3gsTHdg3J2
+         2+Ku+Oh3iX8PNJpwhvOcxfhITyzowEAqn5Ag/jz31q3FWqRsmZzBo4GsJiWV0rzIhkGE
+         aDb8byjxsxV/7arPbCxTdBgSgnunm/oXD5FaWmg/0TllE/5Ox+pkLe2gpgQXcVHS6j8a
+         GGUiP9J/kOQzxu0pyBS1cAHGYB7qmSm+bQIlcBaqtCXutIouGzlo20Sx2iRrsl2giN+h
+         E/PgU1v/waVGPqdaHxLmTm2LYME8jUlNkq4tVVkES0Xfn8oN/mzKH1T4ognELEYeOuIV
+         jlTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Wk1XFXdKxAaohWFNfiUHUwwBDhbxGHCpa+8TS7P6tZ8=;
-        b=omZcBvf09+umf/2gZ1aiS5CF2X//r+wk7nTq4JYaQlaN6GH04z2AEyUNEUNcvXZtgd
-         /FZLI2ekoguKqSMq4oQgbFhIZxSXh1QN04bhCo0a/G9K8lJl1bMwAqbLV7pQa1wlZ+Bt
-         HAwLY5lAUjWwkwAFEiJOBdYYsTJ8nv/pK8S+DFdhIW4tG2yTTxlXzfzKQBfSPmquRcZj
-         uj7/OQPIYgWfC3xKMYY2ifUZKjd0UTZ5j97ASFpOaIKf4l187Q7y8eft8ndPzGvvGSmS
-         Fb8FmdLH4a49MBy26Y4pu/VCpE1JLRByKytpCgzfeCthb9GGZ/ld0/fMJQu5Vmebo42G
-         ImZA==
-X-Gm-Message-State: AOAM531ZQfZ2TI7VaX1OEiNQjvENT0xPLzv8yQ3WkMC65ZH8GybwQ6BP
-        rJ9OYXjG73Jvy1LebfzzRW+5YNZ1OCDGpA==
-X-Google-Smtp-Source: ABdhPJzOy+H+WTGOVqvwrzPh+NolkPmEvcRsGM8l8kpsGy4CrjtAq485JIYMSV1hKdJ9man7/6wt5A==
-X-Received: by 2002:a1c:df46:: with SMTP id w67mr4442771wmg.176.1617217803460;
-        Wed, 31 Mar 2021 12:10:03 -0700 (PDT)
+        bh=GCbl2rVABtsV4dddLtM5ybaHdfu1dwL7iDs2zWd0Wiw=;
+        b=VOBYUb5bOHLTtrstyt2FVZARfByutf4bjq8Y5fHVPuJ6yzCxPPksNNmp9A36sVri+9
+         0ymfHkBdRzR4YnnGXAAUWzHLJlhwxA7hIBAGfXRM1T8AJYWFPuZi4bJuq6fV+/9H+tgt
+         7iMLJ811KluvCsXVO9JA6Djqs2VXM5m79gKVD/g70U56RAw+6UwieKW6tuVW+BqEomju
+         vd+O8g+Lm37yOU3Ern1X/9sqWhlErrUXevSVrY3a9Dwc6hEDW9mxtREE9FYa9pCBSmM/
+         H8521vEwF79E/VqnOx/C3arDq5/MG08JKBirktFJ68A7WWxOknmUKB8/LNHaRaBBoh0x
+         AUZQ==
+X-Gm-Message-State: AOAM533pwq0rU+tgaZ9B+GGIUcw2fhK//2iEYXq3wlLJQ4QgIJ/QrT7t
+        dClRfUf26u4R+Hf2cnSD7WpCMDcoDbYjxg==
+X-Google-Smtp-Source: ABdhPJyvbQ2YMg69hkt7wJi/h07oyisSSLZ/M1qwTXH6fx0MLt4EwQksi5/xd/wc3kzGhIfAYnDKJw==
+X-Received: by 2002:a5d:6945:: with SMTP id r5mr5225943wrw.367.1617217804461;
+        Wed, 31 Mar 2021 12:10:04 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id l8sm6019268wrx.83.2021.03.31.12.10.02
+        by smtp.gmail.com with ESMTPSA id l8sm6019268wrx.83.2021.03.31.12.10.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 31 Mar 2021 12:10:03 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -63,9 +63,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Elijah Newren <newren@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 16/18] tree-walk.h API: add a get_tree_entry_path() function
-Date:   Wed, 31 Mar 2021 21:09:44 +0200
-Message-Id: <patch-16.19-3ba77fd3a47-20210331T190531Z-avarab@gmail.com>
+Subject: [PATCH v5 17/18] tree-walk.h API: document and format tree_entry_extract()
+Date:   Wed, 31 Mar 2021 21:09:45 +0200
+Message-Id: <patch-17.19-dc895822828-20210331T190531Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.1.474.g72d45d12706
 In-Reply-To: <cover-00.19-00000000000-20210331T190531Z-avarab@gmail.com>
 References: <87o8fcqrg8.fsf@evledraar.gmail.com> <cover-00.19-00000000000-20210331T190531Z-avarab@gmail.com>
@@ -76,151 +76,40 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a get_tree_entry_path() variant in addition to
-get_tree_entry_path_mode(). This is for those callers that don't need
-the "mode" filled for them.
-
-There are callers here which don't need the "struct object_id" filled
-either, but let's leave that for now. I'm focusing downstream code
-that depends on "mode" (or "enum object_type").
-
-The code being modified here was introduced in:
-
- - shift_tree(): 68faf68938e (A new merge stragety[sic] 'subtree'.,
-    2007-02-15) for the shift_tree()
-
- - tree_has_path(): 96e7ffbdc31 (merge-recursive: check for directory
-   level conflicts, 2018-04-19)
-
- - init_notes(): fd53c9eb445 (Speed up git notes lookup, 2009-10-09)
-
- - diagnose_invalid_oid_path(): 009fee4774d (Detailed diagnosis when
-   parsing an object name fails., 2009-12-07)
+Document and format the argument list of the tree_entry_extract()
+function in preparation for eventually adding a sister function.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- match-trees.c     | 4 +---
- merge-recursive.c | 6 ++----
- notes.c           | 3 +--
- object-name.c     | 3 +--
- tree-walk.c       | 9 +++++++++
- tree-walk.h       | 3 +++
- 6 files changed, 17 insertions(+), 11 deletions(-)
+ tree-walk.h | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/match-trees.c b/match-trees.c
-index d4457eba997..240922f7080 100644
---- a/match-trees.c
-+++ b/match-trees.c
-@@ -288,12 +288,10 @@ void shift_tree(struct repository *r,
- 
- 	if (add_score < del_score) {
- 		/* We need to pick a subtree of two */
--		unsigned short mode;
--
- 		if (!*del_prefix)
- 			return;
- 
--		if (get_tree_entry_mode(r, hash2, del_prefix, shifted, &mode))
-+		if (get_tree_entry_path(r, hash2, del_prefix, shifted))
- 			die("cannot find path %s in tree %s",
- 			    del_prefix, oid_to_hex(hash2));
- 		return;
-diff --git a/merge-recursive.c b/merge-recursive.c
-index c2e9f5d22d0..28ed69ddfaa 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -1882,11 +1882,9 @@ static int tree_has_path(struct repository *r, struct tree *tree,
- 			 const char *path)
- {
- 	struct object_id hashy;
--	unsigned short mode_o;
--
--	return !get_tree_entry_mode(r,
-+	return !get_tree_entry_path(r,
- 				    &tree->object.oid, path,
--				    &hashy, &mode_o);
-+				    &hashy);
- }
- 
- /*
-diff --git a/notes.c b/notes.c
-index e6244624055..6766b1b478f 100644
---- a/notes.c
-+++ b/notes.c
-@@ -994,7 +994,6 @@ void init_notes(struct notes_tree *t, const char *notes_ref,
- 		combine_notes_fn combine_notes, int flags)
- {
- 	struct object_id oid, object_oid;
--	unsigned short mode;
- 	struct leaf_node root_tree;
- 
- 	if (!t)
-@@ -1021,7 +1020,7 @@ void init_notes(struct notes_tree *t, const char *notes_ref,
- 		return;
- 	if (flags & NOTES_INIT_WRITABLE && read_ref(notes_ref, &object_oid))
- 		die("Cannot use notes ref %s", notes_ref);
--	if (get_tree_entry_mode(the_repository, &object_oid, "", &oid, &mode))
-+	if (get_tree_entry_path(the_repository, &object_oid, "", &oid))
- 		die("Failed to read notes tree referenced by %s (%s)",
- 		    notes_ref, oid_to_hex(&object_oid));
- 
-diff --git a/object-name.c b/object-name.c
-index 7e3b2d6d739..9ff5f83c1ff 100644
---- a/object-name.c
-+++ b/object-name.c
-@@ -1693,7 +1693,6 @@ static void diagnose_invalid_oid_path(struct repository *r,
- 				      int object_name_len)
- {
- 	struct object_id oid;
--	unsigned short mode;
- 
- 	if (!prefix)
- 		prefix = "";
-@@ -1704,7 +1703,7 @@ static void diagnose_invalid_oid_path(struct repository *r,
- 	if (is_missing_file_error(errno)) {
- 		char *fullname = xstrfmt("%s%s", prefix, filename);
- 
--		if (!get_tree_entry_mode(r, tree_oid, fullname, &oid, &mode)) {
-+		if (!get_tree_entry_path(r, tree_oid, fullname, &oid)) {
- 			die(_("path '%s' exists, but not '%s'\n"
- 			    "hint: Did you mean '%.*s:%s' aka '%.*s:./%s'?"),
- 			    fullname,
-diff --git a/tree-walk.c b/tree-walk.c
-index 30e3bb64e49..d0dc0c35318 100644
---- a/tree-walk.c
-+++ b/tree-walk.c
-@@ -628,6 +628,15 @@ int get_tree_entry_mode(struct repository *r,
- 	return retval;
- }
- 
-+int get_tree_entry_path(struct repository *r,
-+			const struct object_id *tree_oid,
-+			const char *name,
-+			struct object_id *oid)
-+{
-+	unsigned short mode;
-+	return get_tree_entry_mode(r, tree_oid, name, oid, &mode);
-+}
-+
- /*
-  * This is Linux's built-in max for the number of symlinks to follow.
-  * That limit, of course, does not affect git, but it's a reasonable
 diff --git a/tree-walk.h b/tree-walk.h
-index a01f2f226ec..c60667cba8f 100644
+index c60667cba8f..52eb0d6b5b3 100644
 --- a/tree-walk.h
 +++ b/tree-walk.h
-@@ -172,8 +172,11 @@ struct traverse_info {
-  * You always need a pointer to an appropriate variable to fill in
-  * (NULL won't do!). That variable is:
-  *
-+ * get_tree_entry_path(): <no extra argument, just get the common 'path'>
-  * get_tree_entry_mode(): unsigned short mode
+@@ -38,11 +38,17 @@ struct tree_desc {
+ 
+ /**
+  * Decode the entry currently being visited (the one pointed to by
+- * `tree_desc's` `entry` member) and return the sha1 of the entry. The
+- * `pathp` and `modep` arguments are set to the entry's pathname and mode
+- * respectively.
++ * `tree_desc's` `entry` member) and return the OID of the entry.
++ *
++ * There are variants of this function depending on what fields in the
++ * "struct name_entry" you'd like. You always need a pointer to an
++ * appropriate variable to fill in (NULL won't do!):
++ *
++ * tree_entry_extract(): const char *path, unsigned int mode
   */
-+int get_tree_entry_path(struct repository *, const struct object_id *, const char *,
-+			struct object_id *);
- int get_tree_entry_mode(struct repository *, const struct object_id *, const char *,
- 			struct object_id *,
- 			unsigned short *);
+-static inline const struct object_id *tree_entry_extract(struct tree_desc *desc, const char **pathp, unsigned short *modep)
++static inline const struct object_id *tree_entry_extract(struct tree_desc *desc,
++							 const char **pathp,
++							 unsigned short *modep)
+ {
+ 	*pathp = desc->entry.path;
+ 	*modep = desc->entry.mode;
 -- 
 2.31.1.474.g72d45d12706
 
