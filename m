@@ -2,131 +2,142 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81CAAC433B4
-	for <git@archiver.kernel.org>; Wed, 31 Mar 2021 13:31:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 66DD3C43460
+	for <git@archiver.kernel.org>; Wed, 31 Mar 2021 13:52:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5326261987
-	for <git@archiver.kernel.org>; Wed, 31 Mar 2021 13:31:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 36E6660D07
+	for <git@archiver.kernel.org>; Wed, 31 Mar 2021 13:52:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235634AbhCaNao (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 31 Mar 2021 09:30:44 -0400
-Received: from mout.gmx.net ([212.227.15.18]:57455 "EHLO mout.gmx.net"
+        id S235842AbhCaNvt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 31 Mar 2021 09:51:49 -0400
+Received: from mout.gmx.net ([212.227.15.15]:58055 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235755AbhCaNaQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Mar 2021 09:30:16 -0400
+        id S235630AbhCaNvU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Mar 2021 09:51:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1617197409;
-        bh=kXIj4RZfCj+ygI4dXo5aLf4n5oxFI3JPAuLWL9FkkP8=;
+        s=badeba3b8450; t=1617198678;
+        bh=A8Gp3zeR/bQ1qGL+jsNovf7IUr0kaDDEZPmBKsCKj5k=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=EyQnfPs15VHjPEN+nzCucS5GAzECmgQi4RB1g7HxjOmijE8utNvj/ZGAejhlsVR4Q
-         0lGghNK220Jsq8QtkKIwSM1buOKbT3sByCQbNrV38m0AK2OXw5NS1EbNYGw7+69xoT
-         kUFLtCSv/8zTQnIimKCmbnWWpvtFlh5zUloLJU4E=
+        b=W5kQ95RpW9R1EwkXJ3imo7Qqfj8ctW+hlhS81+GsBM22T6msEDYTbCqxyEmIvRRrD
+         1CGUryMfZgINBf0Z5BBV1p6V9jtWyX46/toDvA7FgmAt5GEI50+K1aunepvnt1LH97
+         EMeV5lCFSD4FTfUmcPUlZh3yAZcAv+fv4aqGZcVU=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.22.127.121] ([213.196.212.198]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N8XPn-1lf5KS1Gyn-014UJJ; Wed, 31
- Mar 2021 15:30:09 +0200
-Date:   Wed, 31 Mar 2021 15:30:06 +0200 (CEST)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MOiDd-1lGE2508Lf-00QEI8; Wed, 31
+ Mar 2021 15:51:18 +0200
+Date:   Wed, 31 Mar 2021 15:48:25 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Li Linchao via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Li Linchao <lilinchao@oschina.cn>
-Subject: Re: [PATCH v8] builtin/clone.c: add --reject-shallow option
-In-Reply-To: <xmqqk0poedr4.fsf@gitster.g>
-Message-ID: <nycvar.QRO.7.76.6.2103311146210.52@tvgsbejvaqbjf.bet>
-References: <pull.865.v7.git.1616670558261.gitgitgadget@gmail.com> <pull.865.v8.git.1617013145206.gitgitgadget@gmail.com> <nycvar.QRO.7.76.6.2103301110040.52@tvgsbejvaqbjf.bet> <xmqqk0poedr4.fsf@gitster.g>
+To:     Elijah Newren <newren@gmail.com>
+cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Philip Oakley <philipoakley@iee.email>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Subject: unifying sequencer's options persisting, was Re: [PATCH v2] sequencer:
+ fix edit handling for cherry-pick and revert messages
+In-Reply-To: <CABPp-BGwAtpsQJ8U5N1q21PMkideptY2MB2PNgbPqvya+XuyHg@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2103311533340.52@tvgsbejvaqbjf.bet>
+References: <pull.988.git.git.1616742969145.gitgitgadget@gmail.com> <pull.988.v2.git.git.1617070174458.gitgitgadget@gmail.com> <nycvar.QRO.7.76.6.2103301200020.52@tvgsbejvaqbjf.bet> <CABPp-BGwAtpsQJ8U5N1q21PMkideptY2MB2PNgbPqvya+XuyHg@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:oFDZWdclcABPZ8dPZMBLlTdPhDg0zQOc37lwdFGvaqLWAQDli6n
- rgR283in0l9eaF/gdpffyI1a5ea7CjNXZz57SEWnZUxTMWJOBrQWzeX6XXvTigSBr3Z/Tib
- WLvi+3Ncb5nW5HozoJfNmT/xp5QW+dW7HCgWLEmvRi6YrXHdLNPaYrUQr/lrsSnAAty2/fA
- KHICvWyplaW8L7h0BIDIQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:DpNa55ZIgRQ=:p2O/kjgr8Wat9gcTyY79hU
- 9k8hksDwFAgG9LapMN2GteiiaR/PyBbzjgMsXKDazl+UlwLg5VfvHHfmefrxe0qMLJa7VWyaQ
- m8+BWzUMLFGqWUvLgoOWAVWKMOReLQD5wn6AQe9qLX26WQ0+G3+NxUgjqXq7Y6P/Q3p8EVkBB
- mDq2gVBhJyRxYGN6WjLZ9GTbuYhadAnLbepPwXM0y8j18psgr4Q+dgNnPrYURr+BmOt9Sh51X
- FwFML3vCx3n1IwpjOPDqgNZt8aXAegjFnuIeqpYb8YF4d/BwkZcfO3m2xRQL2PPTZAPRxUa5X
- ClE15B9Ttjz2yS6Q2m2X19u0RXc2l26hGacImda/P+eWXmv8BSUx66WP+0ScYSpCsWD2cwbma
- /SA/aLXQUathPw1JO1xd2VxXzFcxtFe5Dd/gdrXdP90djex6dC0jKW+Kee/huzSWXMNV5K2d2
- hf07Iv8/yy7wDw3PVnpXQBIghED6FJq9Zyx2YhnUx+aoSsynJgHyfeWZxRxw7Kx9A7lKleaVI
- Bd62Dn4HdN7BrqlFXYKpMBEjkNh2SMeAktKcw9cuzBsqp7aFFR5h6DEwtu0kLiKZRO4EDleHg
- r4rzzHSPnvhlD/1gs8eaQ5dcgp74wpilSx1P0/0qGhBilJ1dXCOfJzakRtear9C6kSKJykvJp
- vcvpfn7VQQ+Sv3jcvGZaMxXMisENsPH9968omPQzrQOOXOM0S38Wz+gchH32R4TyxBU4+0OX1
- eUwe+/cOfvPjf+S+F6pYSMcq2BdaRLYo+FYjKj420+92zTnbxiAbjAkVynwEVGPXNQxbFSGwl
- 89+jYNKjHMA5CsJbJHKWt8XZjWOiYijvGJbLxdliGjxBvI7jOkKZ7VmbPXtfxS+pGzKcSHdgn
- 7gyNU4O6ke80UVh8LJURKr6ICKK5HxUXpkl73mYtnNpu2mSICYHf7tde18BAKbAi6B8JFaWo4
- yf3eYmSQ01K7Y1/uiNzpV6o9lMMqDlf3qxvATE+LbgKuUIHxXjFgFtoUJ8+aMDw+kYK/ogTqV
- FPUXd9jWKA3MNLCYQMGzLyPF++x4Ec0tb7QGQYXMUWT1E5VPytO7THdhTgugcoUD4jcpgeWvj
- TfRsC58ynKxAAcncunUwErKQQQW+DoCDSWytwCPXCAj9e4R+QTT7l/NKH9a6WpjM+7wYJOV7U
- X1nYi65qpolHPA+gnG/V9mu+ot3Sy5eYCeqmswRfGkMDnmkCLiZoC/j2h6nKPZGQlfIzu/yhJ
- /e4iSK7/e53OEOzNQ
+X-Provags-ID: V03:K1:HnX8E9zxgTYIyvL5xrpU9V8AL4HMsFyO7C3bHvjEeVh9Xko9a7a
+ +5s1J14rEEGRf8Y66wmE69j6wvWE9gON9/RksU/YQqbdvRrf8hFUAEzaiGHukIhR/GcMl+u
+ P3LcIGbdRFRym26VHdUjB3RJb1ec2M3iRmuvbiwEAAo/dhssNdwOMKmJlvX/uRXn8WSI+WU
+ UbpYmtWrm3rEcLbozw5KQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Rri3aBxRcW4=:xf9HtnnOYb8fKEufVC8a6O
+ Hb3y/Xjb+w/QFZRBsaYfWisjbH+NaGaSddLm6WjdghiM4EJtU8vhBMokCXs3pIEu2Zj6x1Y2F
+ q8nMsXo0pdNRaqu6kZwPFTXeKBBPbbr+ej+jibV1ejv/aqKs+Co9s/nek3+y+QBELEtpJtCG8
+ KyTnbkA9fSXmjdDSfUpfrDJzdj1aQjJaXaNXTyRmlgS6Jbpr3LpMFCPr/33xNhotSz58Haw/i
+ 3jQefM35xZsbT2nXYXA/qr4zymsHkzIPpttnMnwly3zzuYb0x2mFpQ1pSzFE5x2RwZK0yVb1x
+ S5JJBL5gngWa2mXUWPHINFG7RTGoKxMgKkUAQTmL07H/5TufKr7YUbVeHHdwPMSXRf9QHE/Q/
+ cW7aIlH1r9+O5N5Rp6p4paeLlZVTOWwLuTD0aJGiffaxFJh19vJCpD7LdaP5bMyN8WJunMolk
+ XG/q32pBry36VaLPYFbrVG3ICZ0QkJb5PSdc+ydUe81snwEi/zDWAo4py2nyvYnMaaJbp6vm6
+ A6bx9mOApXl+dr82n3381izZzEfgU/fs5Sp/AXRtieVG1vpFkm52KYT7GlQCgLX4rOCE2E0/J
+ 3ljDZH1myQBfxd/heFHBBdiy3W5yy/wNpyH1wv55wsEsRsiwFpZ4lccLkFdsnkHXhisXq/bY1
+ auOzBiiXDtDBsFnJKyJcaHR7zF5UbncsPbZBIvsnE+vu3jLYn2kOzrSqBbFKiJ5Jc4GxSd+9T
+ Nlh4UauJwgNSn8X7MVqMxeD84NOAtggeaMmetTDOuIKy37jAF3cXzpgzf7qXJj5A87stWIl5u
+ WGvU7XchYrqLoOIoMYXI7ikG+tBb2aSgUCtY3+9gn1JF+7FRX+YIeeZX5RojH/FsXY+ZNf6h8
+ m95RoUz6Htp2RwEyucIInBNVXiMZa8OWOZOLKdyY3TV3SMk054cCupPwseyotqXdQl0jZn6Wl
+ Mq8z6ToG3mnNrWOj7drv6QthScOy2E4pACxZIxiP756m9oSqDze7YNWCCFDiLVWKr7NIm7O0a
+ WhmCNDp4xt644tPW3MspScqOirxiSzmKsE6aVlQZwRPLHEcft6uQ27sysfEOiQOk32e1Ik6Ld
+ qJ5N73qAdbhRq9tFucnKYU7bk7aLElXkszUnnkzcT5IL5G/zFcGuuWAzXWkFmJljpVyUy1oOB
+ tG4y5pXt4NZWRaeOAfOvIZ7J4XujOf3ARFvv77SEOw6A4/VppJzca0XLlg5JfwbFXP2Xzvbwa
+ +WKskqhUHjel72Qu5
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi,
 
-On Tue, 30 Mar 2021, Junio C Hamano wrote:
+On Tue, 30 Mar 2021, Elijah Newren wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> On Tue, Mar 30, 2021 at 3:13 AM Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
 >
-> > ... repository has been initialized. Note that my suggestion still wor=
-ks with
-> > that: if either the original config, or the new config set
-> > `clone.rejectShallow`, it is picked up correctly, with the latter
-> > overriding the former if both configs want to set it.
->
-> All four combinations ("set it to true" vs "set it to false" makes
-> two, and before and after doubles that to four)?
-
-I don't think we need to test all four combinations, that's part of my
-point. We only need to verify that we can reject a shallow clone, and that
-we can allow it, and that the command-line option overrides the config
-option. That's three ;-)
-
-> >> diff --git a/t/t5606-clone-options.sh b/t/t5606-clone-options.sh
-> >> index 428b0aac93fa..de1cd85983ed 100755
-> >> --- a/t/t5606-clone-options.sh
-> >> +++ b/t/t5606-clone-options.sh
-> >> @@ -5,6 +5,8 @@ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
-> >>  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-> >>
-> >>  . ./test-lib.sh
-> >> +. "$TEST_DIRECTORY"/lib-httpd.sh
-> >> +start_httpd
+> > I'll allow myself one tangent: the subject of the sequencer's Unix
+> > shell script heritage seems to come up with an increasing frequency,
+> > in particular the awful "let's write out one file per setting"
+> > strategy.
 > >
-> > That's not good. What happens if there is no `httpd`? Then the rest of=
- the
-> > tests are either skipped, or if `GIT_TEST_HTTPD` is set to `true`, we
-> > fail. The failure is intentional, but the skipping is not. There are m=
-any
-> > tests in t5606 that do not require a running HTTP daemon, and we shoul=
-d
-> > not skip them (for example, in our CI runs, there are quite a few jobs
-> > that run without any working `httpd`).
+> > I would _love_ for `save_opts()` to write a JSON instead (or an INI
+> > via the `git_config_*()` family of functions, as is done already by
+> > the cherry-pick/revert stuff), now that we no longer have any shell
+> > script backend (apart from `--preserve-merges`, but that one is on its
+> > way out anyway).
 > >
-> > A much better alternative, I think, would be to move those new test ca=
-ses
-> > that require `httpd` to be running to t5601 (which _already_ calls
-> > `start_httpd`, near the end, so as to not skip any tests that do not
-> > require `httpd`).
+> > The one thing that concerns me with this idea is that I know for a
+> > fact that some enterprisey users play games with those files inside
+> > `<GIT_DIR>/rebase-merge` that should be considered internal
+> > implementation details. Not sure how to deprecate that properly, I
+> > don't think we have a sane way to detect whether users rely on these
+> > implementation details other than breaking their expectations, which
+> > is not really a gentle way to ask them to update their scripts.
 >
-> Or move the tests that require httpd, and use of httpd library, to
-> the end of this script.
+> Ooh, I'm glad you took this tangent.  May I follow it for a second?
+> I'd really, really like this too, for three reasons:
+>
+> 1) I constantly get confused about the massive duplication and
+> difference in control structures and which ones affect which type of
+> operations in sequencer.c.  Having them both use an ini-file would
+> allow us to remove lots of that duplication.  I'm sure there'll still
+> be some rebase-specific or cherry-pick-specific options, but we don't
+> need a separate parallel structure for every piece of config.
+>
+> 2) In my merge-ort optimization work, rebasing 35 commits in linux.git
+> across a massive set of 26K upstream renames has dropped rename
+> detection time from the top spot.  And it also dropped several other
+> things in the merge machinery from their spots as well.  Do you know
+> what's the slowest now?  Wasted time from sequencer.c: the unnecessary
+> process forking and all the useless disk writing (which I suspect is
+> mostly updating the index and working directory but also writing all
+> the individual control files under .git/rebase-merge/).  And this
+> stuff from sequencer.c is not just barely the slowest part, it's the
+> slowest by a wide margin.
+>
+> 3) I also want to allow cherry-picking or rebasing branches that
+> aren't even checked out (assuming no conflicts are triggered;
+> otherwise an error can be shown with the user asked to repeat with the
+> operation connected to an active working directory).  For such an
+> operation, the difference between "cherry-pick" and "rebase" is nearly
+> irrelevant so you'd expect the code to be the same; every time I look
+> at the code, though, it seems that the control structures are
+> separating these two types of operations in more areas than just the
+> reading and writing of the config.
 
-In the interest of saving some time during the already-quite-long test
-runs, I would recommend piggy-backing onto a script that _already_ spins
-up its own Apache server.
+Excellent, we're in agreement, then.
 
-Thanks,
+The remaining question is: how do we want to go about it? Do we just want
+to codify the notion that these are internal details that are nobody's
+business, and if they are using the exact file system layout of the
+current sequencer, then it's their responsibility to adapt?
+
+Ciao,
 Dscho
