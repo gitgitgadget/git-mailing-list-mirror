@@ -3,109 +3,169 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6869DC43617
-	for <git@archiver.kernel.org>; Wed, 31 Mar 2021 19:10:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0560C433ED
+	for <git@archiver.kernel.org>; Wed, 31 Mar 2021 19:15:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 456D660FE4
-	for <git@archiver.kernel.org>; Wed, 31 Mar 2021 19:10:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8940261002
+	for <git@archiver.kernel.org>; Wed, 31 Mar 2021 19:15:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235965AbhCaTKc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 31 Mar 2021 15:10:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50098 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235549AbhCaTKR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Mar 2021 15:10:17 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9313DC06175F
-        for <git@vger.kernel.org>; Wed, 31 Mar 2021 12:10:03 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id b2-20020a7bc2420000b029010be1081172so1677645wmj.1
-        for <git@vger.kernel.org>; Wed, 31 Mar 2021 12:10:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=tRuIHBiBcFDrXHJnqUdgI2cJKp7LrkE73m3TRVeOi6c=;
-        b=JLk/xMMekBhfga5rCm/RQEleTqbX9L9jF8ePVBEY2kQSAelcRhxvoIz+PNU1a1fFyi
-         iDjO/lHDfxxtV8giUwphGpXhPATmyeNtUSgD5BNFb7HyIoQKzeOMGmGZigKigE6gijY4
-         CYxzXrawxUOYTtIqC7WCmK3n3M/vWqYrbYafSnG3ArG9EijLoni3g+6fdQ/OQNDxxieM
-         Nm7x8VKAKUweM6mz+xqT5OSj9Udu3IIJfM5niO5zRXDAsGZ00e4jn5eMJGXgmObhyQ/u
-         iYlVD36j4lBxsQmQqy3+8QGhlCT83K/7dp1beBHuxMGZ6yrymHdva22rGQbJxra/s7ri
-         k8jw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=tRuIHBiBcFDrXHJnqUdgI2cJKp7LrkE73m3TRVeOi6c=;
-        b=Tqxtq4ua2/KU0c4z3EQXfsNK487wQGTWH2MH/tU7wbrc++ffrCnNqUMYvnpNLM3LZh
-         XoiprBsBGvxVhIM2viQc3lZrdC3jDYoCYsW9HRP+xITgxMRSR5oSUpe2xJ4s6OT1Uiw5
-         +Uu7th87tSMT9TVnraq60A1Bv3Lch7Mm3YvaZ6Wty/GCz2bZJwGvk+rz73keirgydfV2
-         MYi2T59OlprO5xd071QbeZW8Z4M4R2xl4csnGDxGJgq7Exn159GrgY7gUv0EqY0fVLl7
-         rB25uIrl/r2Ol6TdRQYP/LqmD96mrxSFz24XG1KwMX+PixaRNmkcAO1qIsN8XykTu2Re
-         BRwQ==
-X-Gm-Message-State: AOAM530/UPsZI331EGc017RVfTBaFf4TRym8Hq9w0NkIWC58ofmHfNTM
-        /qQFkRUjWqeXF+T1ePlzSiN/50cd+YIJuQ==
-X-Google-Smtp-Source: ABdhPJxWXxcQJ3HDTBQ4CorFeBpcCd5plmUJsTz7Y+xbcudpGw833W44ANJBSyZ0OLPLiCjt40DThA==
-X-Received: by 2002:a7b:c112:: with SMTP id w18mr4441527wmi.28.1617217801905;
-        Wed, 31 Mar 2021 12:10:01 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id l8sm6019268wrx.83.2021.03.31.12.10.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Mar 2021 12:10:01 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v5 14/18] tree-walk.h API doc: improve documentation of get_tree_entry()
-Date:   Wed, 31 Mar 2021 21:09:42 +0200
-Message-Id: <patch-14.19-44f16d74426-20210331T190531Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.31.1.474.g72d45d12706
-In-Reply-To: <cover-00.19-00000000000-20210331T190531Z-avarab@gmail.com>
-References: <87o8fcqrg8.fsf@evledraar.gmail.com> <cover-00.19-00000000000-20210331T190531Z-avarab@gmail.com>
+        id S236302AbhCaTPP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 31 Mar 2021 15:15:15 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:56407 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236238AbhCaTO4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Mar 2021 15:14:56 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 26D251232CE;
+        Wed, 31 Mar 2021 15:14:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=AS2juRznbvpFcAjuJcM/eAIp8kU=; b=v3PjLJ
+        IZ9kq/jR6YEzQ2LChHrgy1UmPtweHOMWhkhJ1RUv317qbdqoW+9mq/HZ4Olbl4gS
+        rkaWEeOqu9ol44EuckpwlXp0aP17a58eB5B10zitTffJMbIKNPHkpR3C0aDqsb8n
+        2gv69Hmetr4HzwF4/OJd+v3Psyn4Gq3cqy9oA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=rxHNzPWKIgaN1fuXjh4RmrbL2030trVt
+        FSYSqxzR9PDI3UthKe4+S1/gBubvHtKMiohUYsLO7TsoV7Q1CV0vNv2wPowDYfka
+        1QMQs6mrCNzvdBnf7RHybmkSglKejCGwX/QeMSpKI0whJZ+08FPa10DChssLKjwq
+        y8jxDFFIoFE=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1ED461232CD;
+        Wed, 31 Mar 2021 15:14:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B52181232CC;
+        Wed, 31 Mar 2021 15:14:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "lilinchao via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+        dscho <johannes.schindelin@gmx.de>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        lilinchao <lilinchao@oschina.cn>
+Subject: Re: [PATCH v9] builtin/clone.c: add --reject-shallow option
+References: <pull.865.v8.git.1617013145206.gitgitgadget@gmail.com>
+        <pull.865.v9.git.1617205915876.gitgitgadget@gmail.com>
+Date:   Wed, 31 Mar 2021 12:14:48 -0700
+In-Reply-To: <pull.865.v9.git.1617205915876.gitgitgadget@gmail.com> (lilinchao
+        via GitGitGadget's message of "Wed, 31 Mar 2021 15:51:55 +0000")
+Message-ID: <xmqqim576spj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5DBE956A-9255-11EB-8FD4-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change a mention of sha1 to OID and change the comment to a listing of
-functions discussed below, right now there's only one function, but
-subsequent commits will add more.
+"lilinchao via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- tree-walk.h | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+> From: lilinchao <lilinchao@oschina.cn>
 
-diff --git a/tree-walk.h b/tree-walk.h
-index 09e40d9221d..cd8da84f56c 100644
---- a/tree-walk.h
-+++ b/tree-walk.h
-@@ -166,11 +166,13 @@ struct traverse_info {
- };
- 
- /**
-- * Find an entry in a tree given a pathname and the sha1 of a tree to
-+ * Find an entry in a tree given a pathname and the OID of a tree to
-  * search. Returns 0 if the entry is found and -1 otherwise.
-  *
-- * The third and fourth parameters are set to the entry's sha1 and
-- * mode respectively.
-+ * You always need a pointer to an appropriate variable to fill in
-+ * (NULL won't do!). That variable is:
-+ *
-+ * get_tree_entry(): unsigned short mode
-  */
- int get_tree_entry(struct repository *, const struct object_id *, const char *,
- 		   struct object_id *,
--- 
-2.31.1.474.g72d45d12706
+This is not corrected, and no longer matches your sign-off.
+
+I can edit your 'From:' to match this time, but please make sure
+they match for the next time.
+
+> In some scenarios, users may want more history than the repository
+> offered for cloning, which happens to be a shallow repository, can
+> give them. But because users don't know it is a shallow repository
+> until they download it to local, users should have the option to
+
+I find the "should" too strong, but let's keep reading.
+
+> refuse to clone this kind of repository, and may want to exit the
+> process immediately without creating any unnecessary files.
+
+Yes, that is too strong and also redundant.
+
+> Althought there is an option '--depth=x' for users to decide how
+> deep history they can fetch, but as the unshallow cloning's depth
+
+"Although"; if you begin with "although", you shouldn't write "but".
+
+> is INFINITY, we can't know exactly the minimun 'x' value that can
+> satisfy the minimum integrity,
+> so we can't pass 'x' value to --depth,
+> and expect this can obtain a complete history of a repository.
+
+If the argument were "we might start with depth x, and the source
+may be deep enough to give us x right now, but we may want to deepen
+more than they can offer, and such a user would want to be able to
+say 'I want depth=x now, but make sure they are not shallow'", I
+would understand it, but I do not see where the "minimum integrity"
+comes from---there doesn't appear to be anything related to
+integrity here.
+
+> In other scenarios, if we have an API that allow us to import external
+
+"allows"
+
+> repository, and then perform various operations on the repo.
+> But if the imported is a shallow one(which is actually possible), it
+> will affect the subsequent operations. So we can choose to refuse to
+> clone, and let's just import a normal repository.
+
+I'd suggest dropping this entire paragraph.  That is not any new
+scenario at all.  API or not, you essentially just said "you can do
+various things on your clone once you have it, but some things you
+may want to do you would want a full history".  That is what you
+started the whole discussion above and does not add any new
+information.
+
+> This patch offers a new option '--reject-shallow' that can reject to
+> clone a shallow repository.
+
+	Teach '--reject-shallow' option to "git clone" to abort as
+	soon as we find out that we are cloning from a shallow
+	repository.
+
+perhaps?  cf. Documentation/SubmittingPatches[[describe-changes]]
+especially [[imperative-mood]].
+
+
+> Signed-off-by: Li Linchao <lilinchao@oschina.cn>
+> ---
+>     builtin/clone.c: add --reject-shallow option
+>     
+>     Changes since v1:
+>...
+>     Changes since v6:
+>     
+>      * use _() for warning/die statement
+
+What are the more recent changes?
+
+>     Signed-off-by: lilinchao lilinchao@oschina.cn
+
+> @@ -858,6 +861,9 @@ static int git_clone_config(const char *k, const char *v, void *cb)
+>  		free(remote_name);
+>  		remote_name = xstrdup(v);
+>  	}
+> +	if (!strcmp(k, "clone.rejectshallow") && option_reject_shallow < 0)
+> +		option_reject_shallow = git_config_bool(k, v);
+
+Does this "single variable is enough" really work?
+
+Imagine that the first time around we'd read from $HOME/.gitconfig
+that says true (flips the variable from "unspecified").  Further
+imagine that we are running "git clone -c config.rejectShallow=no"
+to countermand the global config.  We call write_config() to write
+the extra configuration value out, and then call git_config() to
+read from the repository configuration again.
+
+Because of the value taken from $HOME/.gitconfig, however, the
+attempt to override is silently ignored, isn't it?
+
+Other than that, the changes to the code from the previous round
+looked sensible.
+
 
