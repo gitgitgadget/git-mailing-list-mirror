@@ -2,117 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BCC7C433ED
-	for <git@archiver.kernel.org>; Wed, 31 Mar 2021 19:02:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 73C31C433ED
+	for <git@archiver.kernel.org>; Wed, 31 Mar 2021 19:10:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5EA7F6101E
-	for <git@archiver.kernel.org>; Wed, 31 Mar 2021 19:02:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 275BE6101E
+	for <git@archiver.kernel.org>; Wed, 31 Mar 2021 19:10:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235933AbhCaTCJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 31 Mar 2021 15:02:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48256 "EHLO
+        id S235727AbhCaTKX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 31 Mar 2021 15:10:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50028 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233888AbhCaTBg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Mar 2021 15:01:36 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18C7CC061574
-        for <git@vger.kernel.org>; Wed, 31 Mar 2021 12:01:36 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id r12so31657678ejr.5
-        for <git@vger.kernel.org>; Wed, 31 Mar 2021 12:01:36 -0700 (PDT)
+        with ESMTP id S234311AbhCaTJx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Mar 2021 15:09:53 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E62DC061574
+        for <git@vger.kernel.org>; Wed, 31 Mar 2021 12:09:52 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id x7so20713366wrw.10
+        for <git@vger.kernel.org>; Wed, 31 Mar 2021 12:09:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=RkUl5lf6PUNyUoD/OGqSgjfhHi+36TBTCxGwGVWEcMY=;
-        b=qM37zaY+9DOthMJabpU8NmUV7ACRcwrnsjJ6+/j8piCcywE1kl0IxkQaSAuC+jM0lF
-         QDb8pqBQ9JesVG2BEaeDtY73bX+xI+ILiQ7k96CsipXp5th0UaMvN/h+jZywoA7/nrlE
-         vv11eIqlCLiDfWJfXrblm63wap05tWHNImoPZ11+B22+XYplRbfaNaLYOwg3tO6jhAWI
-         TU+qC5jL5z1PeK1q6fqT/mhZITOC2XQHU5SyDGY75u500SJeqaRkqNfRVyBDGpZTxTE8
-         w9Z8lXXvuqyen3qzm/roQdNEwf25onGmU1GvXTPb4EYEDHwvGVEOZrHJvoenLhsfLhJE
-         kDKQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=izlfikeTUxr9Jkoa3DD/0HWJy/aPE3X1uWVO1FZ1YoQ=;
+        b=IhA7F7xkQcfxnaa+VuRaEjXHDTTk7lLU/skvd2POO74PnurcyfN8s7UNuowQotrj85
+         2s4WivxJpgstsZlEbi7cGQd3K/wQvnulF3z54L2jRHVDWf6bUqhyuoyMGdaxtIqFXtiC
+         c9dOfvoct5gi3pnbZy+Qe/T4IUySRQrYcBUib8DobG26R0Imb+Q+OypDGZfqkDnYl2d6
+         JQ0B9NnMdFThOwkXiLhpaKpw+NU53BLtR/ZoqMueJ80xw2fUYQZEjkqe3asC7YM/PHCy
+         7zY9I4UV8H/yYCX6ynmxJgrvja9g5olL8BmJgOEZbKYhIHbcBdE5+YNB4f8dglGz2qud
+         2Azg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=RkUl5lf6PUNyUoD/OGqSgjfhHi+36TBTCxGwGVWEcMY=;
-        b=LmFD1GjmJ+/0lY+fPWWj2YcogoDjx3dDVaKkV3mSwie65yRlhLdctF0eFa5OO1VXFs
-         BFZpfvtbW2enTzLlRNS9QCQjnFtfZS0lXUjFpSPu0ztvpAom8cAdIwPKJMTJTSzNayj1
-         fK/ax3vwekTD+2lMk4GOwuBkQoJNqISm+qX9IxBD7wZZdmrqhe1s0V2ciKW28yo47dT9
-         CMl5n76r+fVOBJ44RxziX5neuuVl91Oi6vCKas1wyboa7KgF0YkvcPDSMoFoXO40Bbgd
-         oLDfZuJNpCROCb81odDq5k2m67djEccxMtvKJgNHbKDsQmjeRp9aRK3yOVrheM/YSTVm
-         /ZeQ==
-X-Gm-Message-State: AOAM5311oowPugOEiDOAlnBoN+s2BGtG4oVClCulp/RwBhcJP9xLStFP
-        ZLIo8wOSQb3hfqfLjJw7r9w=
-X-Google-Smtp-Source: ABdhPJzjhv5f584Lj1Z+5BZphMjlh0YYPhIUA2RsgINa2G1NcnY0TfTYbzB7rD1xy3R7nYh+CM+Lmg==
-X-Received: by 2002:a17:907:248b:: with SMTP id zg11mr5089964ejb.364.1617217294771;
-        Wed, 31 Mar 2021 12:01:34 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id u24sm1693358ejn.5.2021.03.31.12.01.34
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=izlfikeTUxr9Jkoa3DD/0HWJy/aPE3X1uWVO1FZ1YoQ=;
+        b=TCP/I9bxwUS0gX9tG1ZRZUiVMLJN1DDCTWvLWyduNtfG5StywClsVIxHp8j+f1ezTC
+         Wk1DHSbWFekG+sD0BFuIFy4sbiYByrYLXsgv1laBKYB96PN55rsrZgVoyWUa4WlX/1Ml
+         xZ039+5DI8Jj7U5EahzGgiWC05PUYC+ym9vGEj9x85UuAJVXfIV+2PhgwKrGSAUH6R17
+         dZazD/YTYuQw/yiEHzIN+gd0ZyjpoDuquOR6wcomo0hS0m1/urPOnS4B/zbVDd80BR4r
+         Tm59Py4FwJVepvPOCnRUR+qV1iyO21wa9rDj3dVI7GSfqBLIZpP2q3HSVcV5rfInuVS/
+         NrSQ==
+X-Gm-Message-State: AOAM532M0aTWIyxZYHzZpnlv3nT2LtbVJc8hZxL+3uvblZNkRM60oYRI
+        eJoqiklaI3voEBsos968Jih0Ya25D8OWfg==
+X-Google-Smtp-Source: ABdhPJzihmhz4uQQIqGhMRd6yh5pXP/4lBTfYDuGNJ10Mup3IH/Tc49ZXKMfZ/NNXyg/kPDyOGGppA==
+X-Received: by 2002:a5d:5083:: with SMTP id a3mr5437891wrt.38.1617217790464;
+        Wed, 31 Mar 2021 12:09:50 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id l8sm6019268wrx.83.2021.03.31.12.09.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Mar 2021 12:01:34 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Andreas =?utf-8?Q?F?= =?utf-8?Q?=C3=A4rber?= 
-        <andreas.faerber@web.de>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 6/6] Makefile: add a INSTALL_FALLBACK_LN_CP mode
-References: <cover-0.6-00000000000-20210329T161723Z-avarab@gmail.com>
-        <cover-0.7-00000000000-20210329T162327Z-avarab@gmail.com>
-        <patch-6.7-9ada8979890-20210329T162327Z-avarab@gmail.com>
-        <xmqqeefxh8rl.fsf@gitster.g> <87v997l8sl.fsf@evledraar.gmail.com>
-        <xmqqr1jv6u2u.fsf@gitster.g>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <xmqqr1jv6u2u.fsf@gitster.g>
-Date:   Wed, 31 Mar 2021 21:01:33 +0200
-Message-ID: <87h7krkv02.fsf@evledraar.gmail.com>
+        Wed, 31 Mar 2021 12:09:50 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v5 01/18] cache.h: add a comment to object_type()
+Date:   Wed, 31 Mar 2021 21:09:29 +0200
+Message-Id: <patch-01.19-a74e02ff0ba-20210331T190531Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.31.1.474.g72d45d12706
+In-Reply-To: <cover-00.19-00000000000-20210331T190531Z-avarab@gmail.com>
+References: <87o8fcqrg8.fsf@evledraar.gmail.com> <cover-00.19-00000000000-20210331T190531Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Add a comment to the object_type() function to explain what it
+returns, and what the "mode" is in the "else" case.
 
-On Wed, Mar 31 2021, Junio C Hamano wrote:
+The object_type() function dates back to 4d1012c3709 (Fix rev-list
+when showing objects involving submodules, 2007-11-11). It's not
+immediately obvious to someone looking at its history and how it's
+come to be used.
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
->>> So I would understand if there are two orthogonal knobs
->>>
->>>  - the order of preference (e.g. hardlink > symlink > copy)
->>>  - which ones are allowed (e.g. "no symlinks please")
->>>
->>> but I cannot quite imagine how a system without any fallback would
->>> be useful.
->>
->> Because with explicit knobs I'd like to tell it what to do and not have
->> it auto-guess.
->
-> So how would I explicitly tell "I want hardlinks for everything
-> else, but use cp when going between /usr/bin and /usr/libexec"
-> (because /usr/bin and /usr/libexec is not on the same filesystem
-> on this particular box---I'll tell you to use hardlink everywhere
-> on another box of mine where they reside on the same filesystem)?
+Despite what Linus noted in 4d1012c3709 (Fix rev-list when showing
+objects involving submodules, 2007-11-11) about wanting to move away
+from users of object_type() relying on S_ISLNK(mode) being true here
+we do currently rely on that. If this is changed to a condition to
+only return OBJ_BLOB on S_ISREG(mode) then t4008, t4023 and t7415 will
+have failing tests.
 
-Just as you would now:
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ cache.h | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-    make NO_CROSS_DIRECTORY_HARDLINKS=3DY install
+diff --git a/cache.h b/cache.h
+index 57f2285bba9..41e99bd9c63 100644
+--- a/cache.h
++++ b/cache.h
+@@ -451,11 +451,16 @@ enum object_type {
+ 	OBJ_MAX
+ };
+ 
++/*
++ * object_type() returns an object of a type that'll appear in a tree,
++ * so no OBJ_TAG is possible. This is mostly (and dates back to)
++ * consumers of the tree-walk.h API's "mode" field.
++ */
+ static inline enum object_type object_type(unsigned int mode)
+ {
+ 	return S_ISDIR(mode) ? OBJ_TREE :
+ 		S_ISGITLINK(mode) ? OBJ_COMMIT :
+-		OBJ_BLOB;
++		OBJ_BLOB; /* S_ISREG(mode) || S_ISLNK(mode) */
+ }
+ 
+ /* Double-check local_repo_env below if you add to this list. */
+-- 
+2.31.1.474.g72d45d12706
 
-That'll get you hardlinks within bin/ and libexec, but copies between
-them, and no symlinks.
-
-The behavior change in this series is if your "ln" errors out we'll no
-longer silently plow ahead and e.g. not hardlink *within* bin and
-libexec in that case.
-
-> Your argument or analogy with openssl does not make much sense to me
-> in this case.
-
-The point is the Makefile shouldn't be second-guessing explicit
-requests. That's what defaults are for.
