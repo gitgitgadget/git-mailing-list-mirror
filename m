@@ -2,140 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 34F04C433B4
-	for <git@archiver.kernel.org>; Wed, 31 Mar 2021 21:47:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F38A3C433B4
+	for <git@archiver.kernel.org>; Wed, 31 Mar 2021 22:07:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EF0EC61076
-	for <git@archiver.kernel.org>; Wed, 31 Mar 2021 21:47:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C5FDC61059
+	for <git@archiver.kernel.org>; Wed, 31 Mar 2021 22:07:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229968AbhCaVr0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 31 Mar 2021 17:47:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56156 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232532AbhCaVrN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Mar 2021 17:47:13 -0400
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF81EC061574
-        for <git@vger.kernel.org>; Wed, 31 Mar 2021 14:47:12 -0700 (PDT)
-Received: by mail-pj1-x1029.google.com with SMTP id ha17so10230347pjb.2
-        for <git@vger.kernel.org>; Wed, 31 Mar 2021 14:47:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=xdh1x4An4MHbiPOW9EWnW630C2CEgnb0sbmcYJ1X2Xs=;
-        b=agmwqHJ55/kcIuwevmP9fyvCrzci0frADnuiJWn2mMfZdusEdw4yD6BJaRpDGuKc0P
-         aVCgvhojLXiYGBl/P8tz2AGlzljKUXHz2rS9v+qa+ZPurOy13516xqNyk5frLFYNhmLG
-         ZzXq09+avfi1JcWK3aTIE9Ya/OG8bz8EG4bA1Ni8CP9Y/DMNuyu22b1mF+iJCg6atyQt
-         rVctW4o5M8WfCoWmAx3LbOCZLOO9oZ+oI1Bjxb/GYRNQvlAFmosFenn/2B1oTeC0qROv
-         Y4xndqksy1y6Nci3V1SGI7wT7V3iDY6EwjVVaXs2liuUp9ti15DS19x51Pe4ip9PhQYB
-         97xw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=xdh1x4An4MHbiPOW9EWnW630C2CEgnb0sbmcYJ1X2Xs=;
-        b=KiFXuhDLQcQcRjLtvQxY1xNMBm0ulTk1A69mQ2xKVx/uO8QJqJsCje68Np9L5L7gc4
-         aPAg4M9hk39LCZ3vp2kpRwboNPVVf6lSDMvtQpMmWZVGFb5GdJMKh03zMW06haSSs2Es
-         hSXnV9MqLdNYwGYCDpa8WAzxSUGrAVLsjyk6TI1t0T8T92bxU6Ig1c8Id3xIUS1QblKr
-         sK4Kvfj5l2kbKn4NLR7NL6ETVn1yrc2DSabVwHeF/A5ExFzCujYP1As2O+MbORRuc3sA
-         hywBZrbqepw+zSLe73FTt/QiVESA6sKbrVpfcBjXg340u9U/iQlqeTYBAGJKeEYB2Nmi
-         5hjA==
-X-Gm-Message-State: AOAM531KdUh3FW29mXfXAUup8CFaGTuzFOsIwlhRIGL/vq2oe9fv0YZw
-        XmkiPIKklFGYM5i1eWnzj2ZA/tc0PZCA4Q==
-X-Google-Smtp-Source: ABdhPJwkW8au8dq4gkjGXEiiWeMrLkuXIgespNkQZ9iqpf2nwoMZ8rW/d8KcJF6y5rQNkX2Zr6S+zw==
-X-Received: by 2002:a17:90a:c207:: with SMTP id e7mr5350205pjt.188.1617227232242;
-        Wed, 31 Mar 2021 14:47:12 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:0:8953:f79c:c1c7:b282])
-        by smtp.gmail.com with ESMTPSA id j2sm3640233pgh.39.2021.03.31.14.47.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Mar 2021 14:47:11 -0700 (PDT)
-Date:   Wed, 31 Mar 2021 14:47:05 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org
+        id S232221AbhCaWGj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 31 Mar 2021 18:06:39 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:61188 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231488AbhCaWGS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Mar 2021 18:06:18 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4F5D81246EE;
+        Wed, 31 Mar 2021 18:06:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=atkAwh7RkqDV
+        AnXTSUIYneQ7THM=; b=B3WuRmJlPe3h8tsFh8HYeLP2mXVgZIxrMWccVNEXwCXb
+        Qsi/s3CtXCN0tW10hbk4f6wzHKf+AzfUJFj0MlkI4R1szN7dBZ9GuNOU+QSrY5qb
+        jJ2A3jCVBkND2SJsUmjtlPhxytga4kHPKaXMBQhERrTCSmIZeQNa5L9OTDQ83gg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=pqHjEB
+        qf/4KgD++OMMTu2KGrKLEQplKhqHR6aAv5ydpUJCwfwaH0ihezaxJaRnDiM8/UgR
+        ovQRzgFoKM0oVSyAZh0FS+61ijG8b2OaRnbDwxtET/8nymWH0eiiCRT3z/LjxvH/
+        MledAqQa2vOoSI25hk+ap9nmnbedUXEs5GWMo=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 393961246ED;
+        Wed, 31 Mar 2021 18:06:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 37B6D1246EA;
+        Wed, 31 Mar 2021 18:06:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org
 Subject: Re: [PATCH v8 35/37] git-send-email: use 'git hook run' for
  'sendemail-validate'
-Message-ID: <YGTt2cNwq3BlpB7n@google.com>
 References: <20210311021037.3001235-1-emilyshaffer@google.com>
- <20210311021037.3001235-36-emilyshaffer@google.com>
- <87y2esg22j.fsf@evledraar.gmail.com>
+        <20210311021037.3001235-36-emilyshaffer@google.com>
+        <87y2esg22j.fsf@evledraar.gmail.com> <YGTt2cNwq3BlpB7n@google.com>
+Date:   Wed, 31 Mar 2021 15:06:12 -0700
+In-Reply-To: <YGTt2cNwq3BlpB7n@google.com> (Emily Shaffer's message of "Wed,
+        31 Mar 2021 14:47:05 -0700")
+Message-ID: <xmqqy2e3567f.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87y2esg22j.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 4F2DEA24-926D-11EB-A0F4-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 12, 2021 at 10:21:08AM +0100, Ævar Arnfjörð Bjarmason wrote:
-> > +	my $target = abs_path($fn);
-> > +	return "rejected by sendemail-validate hook"
-> > +		if system(("git", "hook", "run", "sendemail-validate", "-a",
-> > +				$target));
-> 
-> I see it's just moving code around, but since we're touching this:
-> 
-> This conflates the hook exit code with a general failure to invoke it,
-> Perl's system().
+Emily Shaffer <emilyshaffer@google.com> writes:
 
-Ah, at first I thought you meant "hook exit code vs. failure in 'git
-hook run'" - but I think you are saying "system() can also exit
-unhappily".
+> On Fri, Mar 12, 2021 at 10:21:08AM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 =
+Bjarmason wrote:
+>> > +	my $target =3D abs_path($fn);
+>> > +	return "rejected by sendemail-validate hook"
+>> > +		if system(("git", "hook", "run", "sendemail-validate", "-a",
+>> > +				$target));
+>>=20
+>> I see it's just moving code around, but since we're touching this:
+>>=20
+>> This conflates the hook exit code with a general failure to invoke it,
+>> Perl's system().
+>
+> Ah, at first I thought you meant "hook exit code vs. failure in 'git
+> hook run'" - but I think you are saying "system() can also exit
+> unhappily".
+>
+> I had a look in 'perldoc -f system' like you suggested and saw that in
+> addition to $? & 127, it seems like I also should check $? =3D=3D -1
+> ("system() couldn't start the child process") and ($? >> 8) (the rc
+> from the child hangs out in the top byte). So then it seems like I want
+> something like so:
+>
+>   system("git", "hook", "run", "sendemail-validate",
+>           "-j1", "-a", $target);
+>
+>   return "git-send-email failed to launch hook process: $!"
+>           if ($? =3D=3D -1) || ($? & 127))
+>   return "git-send-email invoked git-hook run incorrectly"
+>           if (($? >> 8) =3D=3D 129);
+>   return "Rejected by 'sendemail-validate' hook"
+>           if ($? >> 8);
+>
 
-I had a look in 'perldoc -f system' like you suggested and saw that in
-addition to $? & 127, it seems like I also should check $? == -1
-("system() couldn't start the child process") and ($? >> 8) (the rc
-from the child hangs out in the top byte). So then it seems like I want
-something like so:
+The example in "perldoc -f system" distinguishes these two like so:
 
-  system("git", "hook", "run", "sendemail-validate",
-          "-j1", "-a", $target);
+        if ($? =3D=3D -1) {
+                print "failed to execute: $!\n";
+        }
+        elsif ($? & 127) {
+                printf "child died with signal %d, %s coredump\n",
+                    ($? & 127), ($? & 128) ? 'with' : 'without';
+        }
+        else {
+                printf "child exited with value %d\n", $? >> 8;
+        }
 
-  return "git-send-email failed to launch hook process: $!"
-          if ($? == -1) || ($? & 127))
-  return "git-send-email invoked git-hook run incorrectly"
-          if (($? >> 8) == 129);
-  return "Rejected by 'sendemail-validate' hook"
-          if ($? >> 8);
+> That seems really verbose, though. I guess ($? >> 8) includes -1 as wel=
+l (since
+> 0xFF... will meet that conditional), but do we care about the differenc=
+e between
+> "system() couldn't run my thing" and "my thing returned upset"?
 
-That seems really verbose, though. I guess ($? >> 8) includes -1 as well (since
-0xFF... will meet that conditional), but do we care about the difference between
-"system() couldn't run my thing" and "my thing returned upset"?
+If we classify the failure cases into three using the sample code in
+the doc, I think the last one is the only case that we know the
+logic in the hook is making a decision for us.  In the first case,
+the hook did not even have a chance to decide for us, and in the
+second case, the hook died with signal, most likely before it had a
+chance to make a decision.  If we want to be conservative (sending
+a message out is something you cannot easily undo), then it may make
+sense to take the first two failure cases, even though the hook may
+have said it is OK to send it out if it ran successfully, as a denial
+to be safe, I would think.
 
-In this case, "my thing returned upset" - that is, $? >> 8 reflects an
-error code from the hook exec - should already have some user output
-associated with it, from the hook exec itself, but it's not guaranteed -
-neither builtin/hook.c:run() nor hook.c:run_hooks() prints anything to
-the user if rc != 0, because they're counting on either the hook execs
-or the process that invoked the hook to do the tattling.
+Thanks.
 
-I think that means that it's a good idea to differentiate all these
-things to the user:
-
- 1. system() broke or your hook got a SIGINT (write a bug report or take
-    out the infinite loop/memory violation from the hook you're
-    developing)
- 2. builtin/hook.c:run() wasn't invoked properly (fix the change you made
-    to git-send-email.perl)
- 3. your hook rejected your email (working as intended, fix the file you
-    want to email)
-
-I'd not expect users to encounter (1) or (2) so it seems fine to me to
-include them; if (3) isn't present *and* the hook author did a bad job
-communicating what failed, then I think the user experience would be
-very confusing - even though they'd see some warning telling them their
-patches didn't send, it wouldn't be clear whether it's because of an
-issue in git-send-email or an issue with their patch.
-
-Phew. I think I convinced myself that the wordy rc checking is OK. But I
-am a perl noob so please correct me if I am wrong :)
-
- - Emily
