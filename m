@@ -2,118 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 498ADC433B4
-	for <git@archiver.kernel.org>; Wed, 31 Mar 2021 22:25:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3BC2CC433B4
+	for <git@archiver.kernel.org>; Wed, 31 Mar 2021 22:29:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1563161077
-	for <git@archiver.kernel.org>; Wed, 31 Mar 2021 22:25:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E8DF261008
+	for <git@archiver.kernel.org>; Wed, 31 Mar 2021 22:29:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232549AbhCaWZC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 31 Mar 2021 18:25:02 -0400
-Received: from mout.gmx.net ([212.227.17.22]:45465 "EHLO mout.gmx.net"
+        id S232532AbhCaW3X (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 31 Mar 2021 18:29:23 -0400
+Received: from mout.gmx.net ([212.227.17.21]:36779 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229812AbhCaWYr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Mar 2021 18:24:47 -0400
+        id S230380AbhCaW3P (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Mar 2021 18:29:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1617229476;
-        bh=vj4Q9//ik3SpX1nqAD+AV0PFJiLOYXwhVaQDwSclyQc=;
+        s=badeba3b8450; t=1617229745;
+        bh=zSafgBnq9WChy+9zJG79FsFXjz+gQQrbsStwaO3zRdk=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=LMXfiqf2CebA4n5NxV7jQmisWPXT4dzZGIxLey7wfapEj0QXiKz25I/9YfrtWTFUd
-         a/yR3l8rpoaa1NDr91Sn+toRuXUOG0mViASaezJ5U9/O+GJvZBTUZ0T/70Vyd6iLwd
-         wdl/KGpcYFvG017ifzMSPN7tWPpQ9nkagsX/Ds7s=
+        b=EsdAH3RKjycGY7BQCZZxfW9Xxd8CvJhcBHb5kXFgy5YQF/WQKC4HP0jWHUPfhjNtK
+         dpRN101k2OCh31mhS37paHo1JAKacN5R9qzMO9MIHByBjSGLHSSr/IRRtVUSclF8HA
+         IR0zivb4o2dboiiYUm5Xvg0e/AvVyZfFBPunChoA=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.17.1.223] ([213.196.212.198]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mof9F-1lyp1Z0FIX-00p5iP; Thu, 01
- Apr 2021 00:24:36 +0200
-Date:   Thu, 1 Apr 2021 00:24:32 +0200 (CEST)
+Received: from [172.17.1.223] ([213.196.212.198]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MhD6g-1m5iiJ0pz0-00eNoS; Thu, 01
+ Apr 2021 00:29:05 +0200
+Date:   Thu, 1 Apr 2021 00:29:03 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Junio C Hamano <gitster@pobox.com>
-cc:     lilinchao via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        lilinchao <lilinchao@oschina.cn>
-Subject: Re: [PATCH v9] builtin/clone.c: add --reject-shallow option
-In-Reply-To: <xmqqim576spj.fsf@gitster.g>
-Message-ID: <nycvar.QRO.7.76.6.2104010021510.54@tvgsbejvaqbjf.bet>
-References: <pull.865.v8.git.1617013145206.gitgitgadget@gmail.com> <pull.865.v9.git.1617205915876.gitgitgadget@gmail.com> <xmqqim576spj.fsf@gitster.g>
+cc:     Jeff King <peff@peff.net>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, git@vger.kernel.org,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2 4/5] Makefile: add the ".DELETE_ON_ERROR" flag
+In-Reply-To: <xmqq35wb891a.fsf@gitster.g>
+Message-ID: <nycvar.QRO.7.76.6.2104010026440.54@tvgsbejvaqbjf.bet>
+References: <20210307132001.7485-1-avarab@gmail.com> <cover-0.6-00000000000-20210329T161723Z-avarab@gmail.com> <patch-4.6-2ff6359c273-20210329T161723Z-avarab@gmail.com> <xmqqblb1kd47.fsf@gitster.g> <87a6qlmt9f.fsf@evledraar.gmail.com> <YGM/i+k4r0q8FKg2@coredump.intra.peff.net>
+ <xmqqft0cebft.fsf@gitster.g> <YGQdpkHAcFR/zNOx@coredump.intra.peff.net> <xmqq35wb891a.fsf@gitster.g>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:qRTeoJmlIoNgyTBx0pvXmyjjViQGYJAi5wExXfZV4I1WqN35VnH
- YuYmyjEDcjgbBZ9L3CEZUOmpHNzvs82p3ydaqMEAYc5KRPaHBM/Ge04BYRO1NRELM9YdNMA
- eYsJY2+nAeuAOV2PSy0hCNkW2zZyorc9o72KfGMKOwLcqWcptcbSfRzQBGEvsNHBitekTgQ
- /KLtEVdzMeGJvA8z5iGzA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Wb05w6oXUvU=:WL5gKvtAJYEcLgdk2g+3VT
- MphVNmzmPwUcUSUnDLk14D9e5Xp3Vijurvz7vcaWP4HOfgI0vOxNrjYDEIT6wcAMGtzmDo5oS
- 8qrhsYIJI55yBsHPOwEBmG7oYV4/5rPcgRl7HITaitp5AIUZS3LoLu0ZJ9B4ahdipBhZm52O6
- p3hnZFJp1Vz8eMavIwUDd1qKkj3a3qnaJbivj07NoBkszmwHpvz+8oZFDWW+BwaCeKquUDjeL
- Y6kNILQPCHHRnUf/LbUkgwUHJ4AMaTw0WVg7GY68mrh0DlWzq0Q0/cM7YekhAQWXQSD0gKzpQ
- XsvsyyLNG/BCDH+zterIIEcy7ZaclyC0tR0Nre9waANjAF1D+p7kmYaGm0893Zms/ZOGV87zR
- DGLv/2NTFMvKhetqQ9UDBzVJACNyrRFCCUR/3dH1QULbt6vyOL/EGij6NAkVvYeAguRnOZUed
- 9bfeJxWTr5aGNSIfV4d44C++evAfXrw/s8fZ4ynJb+e/xTW0RKcVkWvRk1TN5JhHwDS1FT0VH
- 7rT+jWyAEekWxRjeqYHWNiBQ7AAzKUkZLD9lw2lxNFYSQudiznMnOmoaXA5XvIg186rR7C4AB
- 10pKp37SbkVVG/M1EceJGoxaA3kehmhcETihTmwhHzziGauiy6pcjIL+M/Mcr6f3Q89kc3oFE
- CXUb7uRBiG0VXKlvUNvEU/GOe5Cat0gmKsFWRTz2gMZ+NwSDckw/bwJskrDmpN0v+RKqowgZP
- 4r2XG2S5bSn7P+a2PWPxCOU8DBjIqmyrvYJY9AO5KaKhA/LOIeo3aCqpEdHFzv2LoW0wdHNT6
- Wz1Jx4PCBbtVzuM0Eudm0y432U77e1Cz6mCLcp+ML2uXXHJ4dYiQa4HT0iL718HOy3dYesYWI
- ucx2I25HOKWrsjZUANheojsvDvtoS9NhdZyFxSCRexfrKk6+mY1FOdqcbJTFhwGr8B7LXEPoA
- QhnvH1vpYuBOdOwJrAZvyOSEFXAggbqgW4aijU9C3b4WNcOtgKDukuY6/JlReLZgn6yUlzUx4
- F/AoPymdbIecT4DdfBl7sZfui+pznqYMIdZzaYcK7yZo9M44+MBcbwyv6AShvuv2LxJA7fn1T
- l5IkUGhsTxVrhypDRQyXxbx252kfRPklH6XS1vMbOgZw09OvN4pGjBjGNXg8p2FO6c/TkUBrV
- gkMD83n3FjTepSSV/WpDw0IsURazRk5UMm88fYh18LqGTg57rdCGRpbUF9cq2JNH50ooW/FEL
- QnbUlPSawPD2KULjg
+X-Provags-ID: V03:K1:eiwuhjCxCnSbGo2ZxHmy9pSSjeP128RRpP5MSvVw1/duGGB0QCu
+ 5QpC0RV7ipRwgpqmdZrAvDvWC1mlyneqIqbqfchz7KTnqqLr3y8LqRvDAYWNccnCP7U6Zrc
+ Oh4LDW1bF47G68reRPyeyGKRxlMkxBVvFhp041IFpxOHv6H68TX8dfNomQiFlkMZo6vl1WG
+ Uo1yj6DAK4kl0PaextEVw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:zoZ5OGi8A7c=:npDnaniqA+hbWpdqlmCfXd
+ cEAbIJ9R7zZWJgZFNe+AvjkQCPfqeUAfv6WPdxbejoFnlcQV+wx2SvHtqjk7XXXQb93D+KIEn
+ Rw5FMftFInzFN50W+UKLdFnx28wK4yWxcxhXvJ18NpbGAeAFdvKbxE2rP1CC8Aw8cmKrqJlef
+ V0O1JwjYWQvgHTPRUzlV5VZemUYXGZO+ANfr82qD+qOmDeV3VnnpLUTAsWX8Dv7EK5932PeGR
+ 8M6bv8gKoQkpjfC3S6pZP1NApu2o8d4U3zkb7soWBF3/1dFfrEdlG+D/W5QeIuVc0r2V+WKOi
+ 13syl0rKHMDIbcixgwGaI9GUwgmfnpAbdfL+EfTfBAN8n6BYa5r9skboRigIqhI8j5lYCulwC
+ /QA9slB7WSLXXWW6H4jG3pu7y91+Zm5qyzNy/PP/MmII7q2ACjouB+een/BS93Ip/GnkEr4n4
+ NB/oxOa236f2WBBMibnT/iZjWdPPZGmeCOh9rrAYRnL8unIb+ulkappN2L9nCPzJCmfuFsUur
+ qYBXWfuLgKWKQ+xOZsFyoDdvVUZmZ57wcK7Lg5TYh13iphCGxxYuvrT8DFX8d58FiTOtZ5UV1
+ 6usdYl3Gf9nfSVDUkTl+lolCvlxjpkL1AVR1pxaDahGQFWjIhx2Zt/wJfXQAS+qhhV0yzlOwt
+ +5oD7sjSDcAKhlxoZD++aUBStNEhUYhQClWAMJgMmzjIYg2cKIoIa7Scl9D4cXGa73ExU0gjW
+ Vt8r+h2LGQ2BR+/F1CBPl2V1Zcm+wJANy4iiylzGyk5HM0DCFvscHqUo6On/kZ6B4xuse2onI
+ +Pcvel0S8d+Eows7EiiZ9ZKN4uCrQ4t9ak+lbBfAARERDBq0FdHbUo43FCELh7yZaTpud/UIw
+ ktlEzachUzsDXOUMYGbH2oN4Iia156w2kBzjFF+VU0p5q+T4IhHCmZlJc1nNpuXREML3pwpPl
+ xvBo+zna/EaVRqRJFrEzzoU8tZbHX0Z++CBxpKPACKPQM4kD5bBSD1364t2B4zyk25zDz44IY
+ +MF9XN7TzJGj/eEbEMHC6JaUGWl7Tjji34nD3FSqTyk4nRQ2VlriiKWwXx69HvzqQO3T8whgp
+ NYDLeAUpNdzRVEmdlSIy36YZY50DlBU/1C8Bd3BDnnfEPHtx1LX+GXxPTah2Osw/rJtsY8K/W
+ lYwgM9Ja8QcILIBbs9XW4NkXMaHAUbBt9tBvmr2ZaRgdJuCbT07L0aaa0I/MsNuTr+S9K2VMK
+ UBcDLEyrqMac+BIQp
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi,
 
 On Wed, 31 Mar 2021, Junio C Hamano wrote:
 
-> > @@ -858,6 +861,9 @@ static int git_clone_config(const char *k, const c=
-har *v, void *cb)
-> >  		free(remote_name);
-> >  		remote_name =3D xstrdup(v);
-> >  	}
-> > +	if (!strcmp(k, "clone.rejectshallow") && option_reject_shallow < 0)
-> > +		option_reject_shallow =3D git_config_bool(k, v);
+> Jeff King <peff@peff.net> writes:
 >
-> Does this "single variable is enough" really work?
+> > I don't know how paranoid we want to be about this, especially the
+> > latter. My general inclination is to prefer "commit" systems as more
+> > robust, but it is just a Makefile.
 >
-> Imagine that the first time around we'd read from $HOME/.gitconfig
-> that says true (flips the variable from "unspecified").  Further
-> imagine that we are running "git clone -c config.rejectShallow=3Dno"
-> to countermand the global config.  We call write_config() to write
-> the extra configuration value out, and then call git_config() to
-> read from the repository configuration again.
+> ;-)
 >
-> Because of the value taken from $HOME/.gitconfig, however, the
-> attempt to override is silently ignored, isn't it?
+> As an old timer, I've written "gen >$@+ && mv $@+ $@" all the time
+> myself, but it is ugly and felt a bit too conservative.  I do not
+> think it is wise to overnight remove all the existing "generate in
+> temporary, move to the final" patterns and delegate $(MAKE) to take
+> care of failed generator with this mechanism, but I actually would
+> feel it probably gives us a cleaner Makefile in the longer term.  At
+> least "bugs in $(MAKE)" won't be our sole problem (i.e. all other
+> projects that rely on the feature would share the incentives to see
+> them fixed).
 
-That's my mistake, and you don't even need a second config to see the
-problem:
+Another point in favor of removing that hack is this: `+` is not a valid
+character in Windows' filenames. It just so _happens_ that Cygwin (and
+therefore the MSYS2 Bash/`make` we use to compile Git for Windows)
+_pretends_ that it is a valid filename character, but regular Win32
+programs cannot read/write such files, and it would preclude Git from
+being compiled with more native versions of a POSIX shell or `make`.
 
-	[clone]
-		rejectShallow =3D false
-		rejectShallow =3D true
-
-Clearly, the second one should override the first one, but the code I
-suggested (and which was integrated into this iteration) simply does not
-work correctly.
-
-So yes, I think you're right, and we need to have that second variable,
-and then do something like this:
-
-	if (option_reject_shallow < 0)
-		option_reject_shallow =3D config_reject_shallow;
-
-Sorry for the trouble!
+Ciao,
 Dscho
