@@ -7,193 +7,348 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E9E6C433DB
-	for <git@archiver.kernel.org>; Wed, 31 Mar 2021 05:15:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F02BEC433C1
+	for <git@archiver.kernel.org>; Wed, 31 Mar 2021 05:37:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C55DB619D7
-	for <git@archiver.kernel.org>; Wed, 31 Mar 2021 05:15:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C2380619D6
+	for <git@archiver.kernel.org>; Wed, 31 Mar 2021 05:37:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231392AbhCaFPL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 31 Mar 2021 01:15:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38740 "EHLO
+        id S233595AbhCaFgz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 31 Mar 2021 01:36:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229852AbhCaFPK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Mar 2021 01:15:10 -0400
-Received: from mail-il1-x136.google.com (mail-il1-x136.google.com [IPv6:2607:f8b0:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57391C061574
-        for <git@vger.kernel.org>; Tue, 30 Mar 2021 22:15:10 -0700 (PDT)
-Received: by mail-il1-x136.google.com with SMTP id f5so7241271ilr.9
-        for <git@vger.kernel.org>; Tue, 30 Mar 2021 22:15:10 -0700 (PDT)
+        with ESMTP id S233478AbhCaFgQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Mar 2021 01:36:16 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 986ADC061574
+        for <git@vger.kernel.org>; Tue, 30 Mar 2021 22:36:15 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id jy13so28202724ejc.2
+        for <git@vger.kernel.org>; Tue, 30 Mar 2021 22:36:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=xf6xtpV2LtmNSCgliGwrXEMgy0vvRcNGMUrMeH/VUXQ=;
-        b=LTPiILiVV4kFJMAS1+uKoN4vZf5rLmnBvuTsnlaB6oZYK7TLp/RjVnq9xKQzdnhJnn
-         5JiokafjLIoyMvkKtBrxig3nL/cNeMRGMi2lXVS8HAk2HiOllv1q7ffiw1nniOtsTGTX
-         IUVr5a34Mb51cVRfwwyjP55oNf2um4ZdHDT8JFKygrcM/uN2ZPNU0asZhphme6WngJrW
-         8bdFfjWhhhBYVYhdmNE2qrcR9I7ADGDPDtcDurwXQXBB3mOF8/jP9tjCGQgx3Gx2/eHm
-         uzmVquI1FigdTu7iS8jTwyooghMMNK1Ltr0He0Q5Enrw9NgaiHbznzCCGhYfyO/oO3ru
-         BIvg==
+         :cc;
+        bh=mOxpSHUGQySxYteW7WriMnYsygBUeD8NHkTbYOPDdDU=;
+        b=Jv6Lzn78HWw5b/BIfGThXumSEbfXrhlZlAPBGa6q9HaVMgN7cU5Aa57hxar3wUTCGu
+         qapMpbucaqOt79Kc1wcF/kCgWj1qQxqmmDZX8Vl3UJjtSZKpr3Qa6kiaZr+KHD/EP9Yd
+         cmra1LbtWdPE8YbcWwLQ5yzcHnt1xZL2eHCMitTPgbRnRhY8Fe/g1b/H6xLjVT5HaPX0
+         oO5tSfScaWP/F15/WerLMfUnq0qUQM1enjxis40LmA2AMD3WcZVUxBXCNeQCslFAQLAZ
+         IBNGhQG5fg6NIItMm6DU1YDADon2vqwzHBS9/WZAZ+LSj1rrYw5aFaBt1a320XCGiZIh
+         bNRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=xf6xtpV2LtmNSCgliGwrXEMgy0vvRcNGMUrMeH/VUXQ=;
-        b=CqAYChMVuLfoCku+qdEHz3/FjgdgKPK+pp93rwAZ+r50zAG1GG+7rqXtQWM/OVemOp
-         oycwpZc2bvd/uDB5+4ESPPntGFmlyTU83PGlV6SrYkgZLEb4O43GQrCG+66ebamIbf+/
-         fSIp+UGRa5iRxseGOUovy+Zli/dSueA8Y83XaRHLlFEI3ILVKpOAvtz8uBI+93EriYAc
-         ZbC5GT76PTRmnkU18hd8XRKjHqQVVNiAePnD17+n/Gf1r1kmZd5S+xahBw8vQVhR+d4L
-         FrDwve01VUeNnppnurYv3kIJEmjeZiY6HFhxcucb85Rdh9G947Wg+WpTCz7wlbT6KGfB
-         r7lg==
-X-Gm-Message-State: AOAM532NMQH/61lTES9VMOC8yH+39cU96vxwcNr9o3h2ObdSSzwNXHO2
-        6rece8baI/G00x/aaFrS0uG/lHTx8usj499m0mI=
-X-Google-Smtp-Source: ABdhPJzn9AyKx8omNKlVpTKUClnYQRzbSChsndtVqaYXEDgDlKQ7jHawS9HSUuoC18jRWCwvOuH3wi5J/UTjWCfXQVo=
-X-Received: by 2002:a05:6e02:15c6:: with SMTP id q6mr1321709ilu.17.1617167709681;
- Tue, 30 Mar 2021 22:15:09 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=mOxpSHUGQySxYteW7WriMnYsygBUeD8NHkTbYOPDdDU=;
+        b=byYWvayvdZvYU3qpfY58a49VCuJpY/jMxsodZXDgatJPQsE2Hkm0YhR+ln+m3AJQW+
+         cO+JosLbHLIBlXtzlHEVmnrJEfMySsbyI6ZQWS8jsFUACqWqeILIKlf5pkVaV2GP8M7F
+         joffuEg82TpjrvSVKGebBP0VvRMaIL8u4XTbGFBrRIGme2pgWd5b/ULYv9yXgq9iAlMa
+         fH/4Ln6Zc2HfPbikAKbQwlyDBVtk66syVWNtbo7Edy+3HGkmP+WyGFEZcRsVN4y0namy
+         6esFOUwNAf93RcQ0bgxPSdsLUu9nBy0zrq78t70gH6fFnn9RbUGCMRkJiojSek+48Cua
+         oCCg==
+X-Gm-Message-State: AOAM531P5M0CkSniLpdJ7QwmpoEpCbecvPrMxPHhj/j5pQ0bCihA73A5
+        3zEr1/7hzVJrY/JDwOayorUBr6/TkeAgsaP8RKbQsqU+39lnmw==
+X-Google-Smtp-Source: ABdhPJzsqZcZuhe5Yb2mEoKv6/vaujqRHT4loYmOAZfF0UzON53ts+vPz3+pv/rTG+gto/EoPL+5VMykt1WGugE5yA4=
+X-Received: by 2002:a17:906:2795:: with SMTP id j21mr1663909ejc.283.1617168974151;
+ Tue, 30 Mar 2021 22:36:14 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.913.v3.git.1616673200809.gitgitgadget@gmail.com>
- <pull.913.v4.git.1616775185562.gitgitgadget@gmail.com> <xmqqk0psqxqo.fsf@gitster.g>
- <CAP8UFD26YaoDGs_8eUhuRCytDMyOhFM-Egs-Srk83iMpZxbKxA@mail.gmail.com>
- <CAOLTT8Ryrp90xJ0=Y2avndYpf_2JvabK=XAuc+hactk8idyv1w@mail.gmail.com>
- <CAP8UFD0OMJfkuX_JoDros7h0B20D8sm0ZbtkVpL3dCYRV_M=OA@mail.gmail.com>
- <CAOLTT8RAe0HhTL6p6MXeqbSazaJF0=PtnDKvh06-FXXBB+w94A@mail.gmail.com>
- <CAP8UFD1XSTAq28LrBe-q+M_Vs78gZhr58mHM6EgYt9g3pPuPDg@mail.gmail.com>
- <CAOLTT8SfOKS41uJDHAMAmhWZXc3qZsngfFtsbzXxdNP1cEObzg@mail.gmail.com>
- <CAOLTT8SPRArgwwd_isw48gWQysgqJ9JJpn9JNGH+=9aY+0=SPA@mail.gmail.com> <xmqqwntoef81.fsf@gitster.g>
-In-Reply-To: <xmqqwntoef81.fsf@gitster.g>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Wed, 31 Mar 2021 13:14:57 +0800
-Message-ID: <CAOLTT8SLX7wVfND9ru8NPx_YhvP2Ed17UcuRdY6Uioj9XSFmwQ@mail.gmail.com>
-Subject: Re: [PATCH v4] [GSOC]trailer: pass arg as positional parameter
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>
+References: <cover.1616015337.git.matheus.bernardino@usp.br> <0592740ec14c4ab72b8d46a7fecf1c66e7a497fd.1616015337.git.matheus.bernardino@usp.br>
+In-Reply-To: <0592740ec14c4ab72b8d46a7fecf1c66e7a497fd.1616015337.git.matheus.bernardino@usp.br>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Wed, 31 Mar 2021 07:36:02 +0200
+Message-ID: <CAP8UFD3XkU6H==pHCFLpchKrb9cNj8fFnmF4HmCG-SaYj8C-Vg@mail.gmail.com>
+Subject: Re: [PATCH 5/5] parallel-checkout: add design documentation
+To:     Matheus Tavares <matheus.bernardino@usp.br>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff Hostetler <git@jeffhostetler.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B43=E6=9C=8831=E6=97=
-=A5=E5=91=A8=E4=B8=89 =E4=B8=8A=E5=8D=881:14=E5=86=99=E9=81=93=EF=BC=9A
->
-> ZheNing Hu <adlternative@gmail.com> writes:
->
-> > The `prepare_shell_cmd()` in "run-command.c" seem to use "$@" to pass
-> > shell args.
->
-> Yes. "$@" is a way to write "$1" "$2" "$3"...
-> Since you are passing only one,
->
->         echo "$@"
->
-> and
->
->         echo "$1"
->
-> would be the equivalent.
->
-> I am not sure what program you fed to the gdb (and remote debugging
-> over e-mail is not my forte ;-), but let's see.
->
+On Wed, Mar 17, 2021 at 10:12 PM Matheus Tavares
+<matheus.bernardino@usp.br> wrote:
 
+> +For the purposes of discussion here, the current sequential
+> +implementation of Step 3 has 3 layers:
 
+You refer to these layers as "steps" below, so you might want to use
+"sub-steps" instead of "layers".
 
-> > Before exec:
-> >
-> > (gdb) print argv.v[1]
-> > $22 =3D 0x5555558edfd0 "/bin/sh"
-> > (gdb) print argv.v[2]
-> > $23 =3D 0x5555558f4c80 "-c"
-> > (gdb) print argv.v[3]
-> > $24 =3D 0x5555558ed4b0 "echo \"123\" \"$@\""
-> > (gdb) print argv.v[4]
-> > $25 =3D 0x5555558f5980 "echo \"123\""
-> > (gdb) print argv.v[5]
-> > $26 =3D 0x5555558edab0 "abc"
-> > (gdb) print argv.v[6]
-> > $27 =3D 0x0
-> >
-> > Some unexpected things happened here.
-> > Maybe "abc" was wrongly used as the parameter of "echo"?
-> > Looking forward to your reply.
->
-> Observe
->
->         $ sh -c '
->                 echo "\$0 =3D=3D $0"
->                 count=3D0
->                 for arg in "$@"
->                 do
->                         count=3D$(( $count + 1 ))
->                         echo "\$$count =3D=3D $arg"
->                 done
->         ' 0 1 2
->         $0 =3D=3D 0
->         $1 =3D=3D 1
->         $2 =3D=3D 2
->
-> i.e. the first arg after
->
->         argv[1] =3D "/bin/sh"
->         argv[2] =3D "-c"
->         argv[3] =3D "script"
->
-> is used to give the script the name of the program ($0).  Are we
-> getting hit by this common confusion?
->
-> It is customery to write such an invocation with '-' as the "name of
-> the program" thing, so that ordinary positional parameters are
-> available starting at $1, not $0, like so:
->
->         sh -c 'script' - arg1 arg2 ...
+> +* Step 3a: `unpack-trees.c:check_updates()` contains a series of
+> +  sequential loops iterating over the `cache_entry`'s array. The main
+> +  loop in this function calls the next layer for each of the
 
-The configuration is like this:
-trailer.bug.key=3DBUG:
-trailer.bug.ifexists=3Dadd
-trailer.bug.cmd=3Decho "123"
+Not sure what "layer" means here. Does it mean Step 3b below? In this
+case I would suggest using "Step 3b" instead of "layer".
 
-And use:
+> +  to-be-updated entries.
+> +
+> +* Step 3b: `entry.c:checkout_entry()` examines the existing working tree
+> +  for file conflicts, collisions, and unsaved changes. It removes files
+> +  and create leading directories as necessary. It calls the next layer
 
-$ git interpret-trailers --trailer=3D"bug:456" --trailer=3D"bug:789"<<-EOF
-EOF
+s/create/creates/
 
-BUG: 123
-BUG: 123 456
-BUG: 123 789
+I guess the "next layer" is Step 3c below.
 
-I just want three "BUG: 123", but "456" and "789" appeared...
+> +  for each entry to be written.
+> +
+> +* Step 3c: `entry.c:write_entry()` loads the blob into memory, smudges
+> +  it if necessary, creates the file in the working tree, writes the
+> +  smudged contents, calls `fstat()` or `lstat()`, and updates the
+> +  associated `cache_entry` struct with the stat information gathered.
+> +
+> +It wouldn't be safe to perform Step 3b in parallel, as there could be
+> +race conditions between file creations and removals. Instead, the
+> +parallel checkout framework lets the sequential code handle Step 3b,
+> +and use parallel workers to replace the sequential
+> +`entry.c:write_entry()` calls from Step 3c.
 
-In fact, I think about this problem like this way:
-When we execute a child process that runs the shell,
-the function`prepare_shell_cmd()` will actively add "$@" to the end of our
-shell command when we have more than zero args ,
+Ok.
 
-e.g.
+> +Rejected Multi-Threaded Solution
+> +--------------------------------
+> +
+> +The most "straightforward" implementation would be to spread the set of
+> +to-be-updated cache entries across multiple threads. But due to the
+> +thread-unsafe functions in the ODB code, we would have to use locks to
+> +coordinate the parallel operation. An early prototype of this solution
+> +showed that the multi-threaded checkout would bring performance
+> +improvements over the sequential code, but there was still too much lock
+> +contention. A `perf` profiling indicated that around 20% of the runtime
+> +during a local Linux clone (on an SSD) was spent in locking functions.
+> +For this reason this approach was rejected in favor of using multiple
+> +child processes, which led to a better performance.
 
-"echo \"123\"" "abc"
+Nice explanation.
 
-will turn to
+> +Multi-Process Solution
+> +----------------------
+> +
+> +Parallel checkout alters the aforementioned Step 3 to use multiple
+> +`checkout--helper` background processes to distribute the work. The
+> +long-running worker processes are controlled by the foreground Git
+> +command using the existing run-command API.
+> +
+> +Overview
+> +~~~~~~~~
+> +
+> +Step 3b is only slightly altered; for each entry to be checked out, the
+> +main process:
 
- "echo \"123\" \"$@\"" "echo \"123\"" "abc"
+Maybe: s/main process:/main process performs the following steps:/
 
-Normally, $@ should not cause any problems because it passes arguments
-to the script what we provide.
+If you apply this suggestion, you may also want the following below:
 
-But now, what we actually want is take any $1 that appears in the script as=
- an
-argument, the automatically added $@ causes $1 to be implicitly included.
-And the original $ARG does not have this problem, Or if we pass environment
-variables, this kind of problem will not occur.
+s/M1: Checks/M1: Check/
+s/and decides/and decide/
+s/M2: Creates/M2: Create/
+...
 
-Or If we want to avoid this problem, should we add one new options in
-`struct child_process` , such as: "shell_no_implicit_args" , let git not ad=
-d
- extra "$@" before we run the shell script?
+> +* M1: Checks whether there is any untracked or unclean file in the
+> +  working tree which would be overwritten by this entry, and decides
+> +  whether to proceed (removing the file(s)) or not.
+> +
+> +* M2: Creates the leading directories.
+> +
+> +* M3: Loads the conversion attributes for the entry's path.
+> +
+> +* M4: Checks, based on the entry's type and conversion attributes,
+> +  whether the entry is eligible for parallel checkout (more on this
+> +  later). If it is eligible, enqueues the entry and the loaded
+> +  attributes to later write the entry in parallel. If not, writes the
+> +  entry right away, using the default sequential code.
+> +
+> +Note: we save the conversion attributes associated with each entry
+> +because the workers don't have access to the main process' index state,
+> +so they can't load the attributes by themselves (and the attributes are
+> +needed to properly smudge the entry). Additionally, this has a positive
+> +impact on performance as (1) we don't need to load the attributes twice
+> +and (2) the attributes machinery is optimized to handle paths in
+> +sequential order.
 
-Thanks.
+Nice!
 
---
-ZheNing Hu
+> +After all entries have passed through the above steps, the main process
+> +checks if the number of enqueued entries is sufficient to spread among
+> +the workers. If not, it just writes them sequentially. Otherwise, it
+> +spawns the workers and distributes the queued entries uniformly in
+> +continuous chunks. This aims to minimize the chances of two workers
+> +writing to the same directory simultaneously, which could increase lock
+> +contention in the kernel.
+> +
+> +Then, for each assigned item, each worker:
+> +
+> +* W1: Checks if there is any non-directory file in the leading part of
+> +  the entry's path or if there already exists a file at the entry' path.
+> +  If so, mark the entry with `PC_ITEM_COLLIDED` and skip it (more on
+> +  this later).
+> +
+> +* W2: Creates the file (with O_CREAT and O_EXCL).
+> +
+> +* W3: Loads the blob into memory (inflating and delta reconstructing
+> +  it).
+> +
+> +* W4: Filters the blob.
+
+Not sure what "Filters" means here. Is this related to the smudge filter?
+
+> +* W5: Writes the result to the file descriptor opened at W2.
+> +
+> +* W6: Calls `fstat()` or lstat()` on the just-written path, and sends
+> +  the result back to the main process, together with the end status of
+> +  the operation and the item's identification number.
+> +
+> +Note that steps W3 to W5 might actually be performed together, using the
+> +streaming interface.
+
+Not sure what "performed together" means here. Does it mean by a
+single function or set of functions?
+
+> +Also note that the workers *never* remove any files. As mentioned
+
+Maybe: s/any files/any file/
+
+> +earlier, it is the responsibility of the main process to remove any
+> +files that block the checkout operation (or abort it). This is crucial
+
+Maybe: s/files/file/ and s/block/blocks/ and s/abort/aborts/
+
+> +to avoid race conditions and also to properly detect path collisions at
+> +Step W1.
+> +
+> +After the workers finish writing the items and sending back the required
+> +information, the main process handles the results in two steps:
+> +
+> +- First, it updates the in-memory index with the `lstat()` information
+> +  sent by the workers. (This must be done first as this information
+> +  might me required in the following step.)
+> +
+> +- Then it writes the items which collided on disk (i.e. items marked
+> +  with `PC_ITEM_COLLIDED`). More on this below.
+> +
+> +Path Collisions
+> +---------------
+> +
+> +Path collisions happen when two different paths correspond to the same
+> +entry in the file system. E.g. the paths 'a' and 'A' would collide in a
+> +case-insensitive file system.
+> +
+> +The sequential checkout deals with collisions in the same way that it
+> +deals with files that were already present in the working tree before
+> +checkout. Basically, it checks if the path that it wants to write
+> +already exists on disk, makes sure the existing file doesn't have
+> +unsaved data, and then overwrite it. (To be more pedantic: it deletes
+
+s/overwrite/overwrites/
+
+> +the existing file and creates the new one.) So, if there are multiple
+> +colliding files to be checked out, the sequential code will write each
+> +one of them but only the last will actually survive on disk.
+> +
+> +Parallel checkout aims to reproduce the same behavior. However, we
+> +cannot let the workers racily write to the same file on disk. Instead,
+> +the workers detect when the entry that they want to check out would
+> +collide with an existing file, and mark it with `PC_ITEM_COLLIDED`.
+> +Later, the main process can sequentially feed these entries back to
+> +`checkout_entry()` without the risk of race conditions. On clone, this
+> +also has the effect of marking the colliding entries to later emit a
+> +warning for the user, like the classic sequential checkout does.
+> +
+> +The workers are able to detect both collisions among the entries being
+> +concurrently written and collisions among parallel-eligible and
+> +ineligible entries. The general idea for collision detection is quite
+> +straightforward: for each parallel-eligible entry, the main process must
+> +remove all files that prevent this entry from being written (before
+> +enqueueing it). This includes any non-directory file in the leading path
+> +of the entry. Later, when a worker gets assigned the entry, it looks
+> +again for the non-directories files and for an already existent file at
+
+Maybe: s/existent/existing/
+
+> +the entry's path. If any of these checks finds something, the worker
+> +knows that there was a path collision.
+> +
+> +Because parallel checkout can distinguish path collisions from the case
+> +where the file was already present in the working tree before checkout,
+> +we could alternatively choose to skip the checkout of colliding entries.
+> +However, each entry that doesn't get written would have NULL `lstat()`
+> +fields on the index. This could cause performance penalties for
+> +subsequent commands that need to refresh the index, as they would have
+> +to go to the file system to see if the entry is dirty. Thus, if we have
+> +N entries in a colliding group and we decide to write and `lstat()` only
+> +one of them, every subsequent `git-status` will have to read, convert,
+> +and hash the written file N - 1 times. By checking out all colliding
+> +entries (like the sequential code does), we only pay the overhead once,
+> +during checkout.
+> +
+> +Eligible Entries for Parallel Checkout
+> +--------------------------------------
+> +
+> +As previously mentioned, not all entries passed to `checkout_entry()`
+> +will be considered eligible for parallel checkout. More specifically, we
+> +exclude:
+> +
+> +- Symbolic links; to avoid race conditions that, in combination with
+> +  path collisions, could cause workers to write files at the wrong
+> +  place. For example, if we were to concurrently check out a symlink
+> +  'a' -> 'b' and a regular file 'A/f' in a case-insensitive file system,
+> +  we could potentially end up writing the file 'A/f' at 'a/f', due to a
+> +  race condition.
+> +
+> +- Regular files that require external filters (either "one shot" filters
+> +  or long-running process filters). These filters are black-boxes to Git
+> +  and may have their own internal locking or non-concurrent assumptions.
+> +  So it might not be safe to run multiple instances in parallel.
+> ++
+> +Besides, long-running filters may use the delayed checkout feature to
+> +postpone the return of some filtered blobs. The delayed checkout queue
+> +and the parallel checkout queue are not compatible and should remain
+> +separated.
+
+Are files that require some other internal filters eligible though?
+
+> +Ineligible entries are checked out by the classic sequential codepath
+> +*before* spawning workers.
+> +
+> +Note: submodules's files are also eligible for parallel checkout (as
+> +long as they don't fall into the two excluding categories mentioned
+> +above). But since each submodule is checked out in its own child
+> +process, we don't mix the superproject's and the submodules' files in
+> +the same parallel checkout process or queue.
+
+Ok.
+
+> +The API
+> +-------
+> +
+> +The parallel checkout API was designed with the goal to minimize changes
+> +to the current users of the checkout machinery. This means that they
+> +don't have to call a different function for sequential or parallel
+> +checkout. As already mentioned, `checkout_entry()` will automatically
+> +insert the given entry in the parallel checkout queue when this feature
+> +is enabled and the entry is eligible; otherwise, it will just write the
+> +entry right away, using the sequential code. In general, callers of the
+> +parallel checkout API should look similar to this:
+> +
+> +----------------------------------------------
+> +int pc_workers, pc_threshold, err = 0;
+> +struct checkout state;
+> +
+> +get_parallel_checkout_configs(&pc_workers, &pc_threshold);
+> +
+> +/*
+> + * This check is not strictly required, but it
+> + * should save some time in sequential mode.
+> + */
+
+It might be nice if this comment was also in front of the real code.
+
+> +if (pc_workers > 1)
+> +       init_parallel_checkout();
+> +
+> +for (each cache_entry ce to-be-updated)
+> +       err |= checkout_entry(ce, &state, NULL, NULL);
+> +
+> +err |= run_parallel_checkout(&state, pc_workers, pc_threshold, NULL, NULL);
