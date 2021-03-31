@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AFB03C43462
-	for <git@archiver.kernel.org>; Wed, 31 Mar 2021 19:10:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8B0EC4361B
+	for <git@archiver.kernel.org>; Wed, 31 Mar 2021 19:10:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 89D676101E
-	for <git@archiver.kernel.org>; Wed, 31 Mar 2021 19:10:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 977A961056
+	for <git@archiver.kernel.org>; Wed, 31 Mar 2021 19:10:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235737AbhCaTKY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 31 Mar 2021 15:10:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50040 "EHLO
+        id S235985AbhCaTKe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 31 Mar 2021 15:10:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50102 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235071AbhCaTJy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Mar 2021 15:09:54 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E811C061574
-        for <git@vger.kernel.org>; Wed, 31 Mar 2021 12:09:54 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id v11so20692948wro.7
-        for <git@vger.kernel.org>; Wed, 31 Mar 2021 12:09:54 -0700 (PDT)
+        with ESMTP id S235492AbhCaTKR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Mar 2021 15:10:17 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FC30C061761
+        for <git@vger.kernel.org>; Wed, 31 Mar 2021 12:10:05 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id t5-20020a1c77050000b029010e62cea9deso1704149wmi.0
+        for <git@vger.kernel.org>; Wed, 31 Mar 2021 12:10:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ifhv4bjfpJnv6R2ihf0/Sxn/1DpqcHrXAZtIJ+tN2T0=;
-        b=WF/yYDgc3k8gLaoSYYiC+V3JaUOs9Cz6+Fhawg22lZ+kyQnRIBUMNh9BTwjAXg9YEe
-         zpZzll77D+8frqYb3F2IghmptRCuCwgy87xvFdrBihBQsJrX46f1NH3qYZPxh4AtDECG
-         XJ5yeGj0BDvakNQLI8GqOVM7+yxgkrM4UvaTynVZs5+PcIadWJQ+H0ghPaUl9UXYGeIP
-         Mn7CoNLKRDd+YytVkpEJ5ojhQSGCMiwOJSB7SAQistvy5kdr3+tOoyeQRmlTHn8EvRZb
-         6hXM535ZnPjn4b3Pi7aAurDq59bbrT2dxJXsSy4JFwIsFPw49dxk/O6/3qPEi3vVxczo
-         vpEg==
+        bh=Wk1XFXdKxAaohWFNfiUHUwwBDhbxGHCpa+8TS7P6tZ8=;
+        b=DZ0sDvQVpKVwis3fhvuvKEQeC/GY9GH8pRHL9Xy/X3nrjbKy2O78aIK4xcXHbtR41P
+         6OQtdllozLmNQmZ4SBp2xaSUTdlvzE6yHNNT0VoiyJH3WoaAqmTlngob1lmF4Pd920hM
+         jElBrT1ScMSUMTaJ+VokpTxJ1V0U7x9de0/Dkx53IKEee6WTza0AECgbiFNoGgkC7twS
+         RsNTL+7elgKnHV4SiMdXYaFDm73BgcB6UTp0k736ShxTQKdVbhGOA2fwclZSn5hqLlIz
+         3kA+XzkGiKc8o3CUS9+DD+iFlx5xsvfy+r/xcj/Oyh3eGFVDTycznu1Dx/nThne8DL0T
+         Xrdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ifhv4bjfpJnv6R2ihf0/Sxn/1DpqcHrXAZtIJ+tN2T0=;
-        b=ts0DfrWZ8RRNpsYtA00r8uXZNDOnl53N72lvGMLrlQZtZl6TayCnvhZUYM+ujAo/gm
-         iMHIAA/hSQ0A8Ydm7ihF53s8BIJA6GGancLidP3kt96sRFPe2r1pNaN20olpKKgT4xxX
-         /Bo3T1VKc2fMcwzTLNTQidVEq9rQKvt0n2B4Vmf/Uv/PZABFnR3GBNQvznmfNepSdyQ0
-         ym0VLJ5mdvnzoD7RhvKdtcH6tObKHl7LF/IKeowat6Bzs56Dyx2n1/2690aMsrGQiaSl
-         N/Y90vT4trqRGyEE/BaerUqaSXsIqYx/m72BfcsRfXMNU9XdAVJKFbWeM21GrLOVsMPe
-         R8/A==
-X-Gm-Message-State: AOAM530ehsemfCfT/juqzYnpdUpdOu/2KmwqwqnKzT7F9kduDRKx3U88
-        5M1PkCEOrEYrMOAyt5Yyd2uNsYGpQ14Ojg==
-X-Google-Smtp-Source: ABdhPJw02qpph+EdppkBzH97mlgckJxN5ptlIAZ27ILNpkLZtl0RaiWpRxPiysEGPVvrYvVrsKK18w==
-X-Received: by 2002:adf:c64a:: with SMTP id u10mr5357966wrg.412.1617217792516;
-        Wed, 31 Mar 2021 12:09:52 -0700 (PDT)
+        bh=Wk1XFXdKxAaohWFNfiUHUwwBDhbxGHCpa+8TS7P6tZ8=;
+        b=omZcBvf09+umf/2gZ1aiS5CF2X//r+wk7nTq4JYaQlaN6GH04z2AEyUNEUNcvXZtgd
+         /FZLI2ekoguKqSMq4oQgbFhIZxSXh1QN04bhCo0a/G9K8lJl1bMwAqbLV7pQa1wlZ+Bt
+         HAwLY5lAUjWwkwAFEiJOBdYYsTJ8nv/pK8S+DFdhIW4tG2yTTxlXzfzKQBfSPmquRcZj
+         uj7/OQPIYgWfC3xKMYY2ifUZKjd0UTZ5j97ASFpOaIKf4l187Q7y8eft8ndPzGvvGSmS
+         Fb8FmdLH4a49MBy26Y4pu/VCpE1JLRByKytpCgzfeCthb9GGZ/ld0/fMJQu5Vmebo42G
+         ImZA==
+X-Gm-Message-State: AOAM531ZQfZ2TI7VaX1OEiNQjvENT0xPLzv8yQ3WkMC65ZH8GybwQ6BP
+        rJ9OYXjG73Jvy1LebfzzRW+5YNZ1OCDGpA==
+X-Google-Smtp-Source: ABdhPJzOy+H+WTGOVqvwrzPh+NolkPmEvcRsGM8l8kpsGy4CrjtAq485JIYMSV1hKdJ9man7/6wt5A==
+X-Received: by 2002:a1c:df46:: with SMTP id w67mr4442771wmg.176.1617217803460;
+        Wed, 31 Mar 2021 12:10:03 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id l8sm6019268wrx.83.2021.03.31.12.09.51
+        by smtp.gmail.com with ESMTPSA id l8sm6019268wrx.83.2021.03.31.12.10.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Mar 2021 12:09:51 -0700 (PDT)
+        Wed, 31 Mar 2021 12:10:03 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -63,9 +63,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Elijah Newren <newren@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 03/18] cache.h: have base_name_compare() take "is tree?", not "mode"
-Date:   Wed, 31 Mar 2021 21:09:31 +0200
-Message-Id: <patch-03.19-44c3fdd0085-20210331T190531Z-avarab@gmail.com>
+Subject: [PATCH v5 16/18] tree-walk.h API: add a get_tree_entry_path() function
+Date:   Wed, 31 Mar 2021 21:09:44 +0200
+Message-Id: <patch-16.19-3ba77fd3a47-20210331T190531Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.1.474.g72d45d12706
 In-Reply-To: <cover-00.19-00000000000-20210331T190531Z-avarab@gmail.com>
 References: <87o8fcqrg8.fsf@evledraar.gmail.com> <cover-00.19-00000000000-20210331T190531Z-avarab@gmail.com>
@@ -76,311 +76,151 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the base_name_compare() API and the related df_name_compare()
-function to take a boolean argument indicating whether the entry is a
-tree or not, instead of having them call S_ISDIR(mode) on their own.
+Add a get_tree_entry_path() variant in addition to
+get_tree_entry_path_mode(). This is for those callers that don't need
+the "mode" filled for them.
 
-This introduces no functional change, but makes later (not part of
-this series) changes to abstract away "object_type" from "mode" more
-readable.
+There are callers here which don't need the "struct object_id" filled
+either, but let's leave that for now. I'm focusing downstream code
+that depends on "mode" (or "enum object_type").
 
-The API being modified here was originally added way back in
-958ba6c96eb (Introduce "base_name_compare()" helper function,
-2005-05-20).
+The code being modified here was introduced in:
 
-None of these comparison functions used to have tests, but with
-preceding commits some of them now do. I thought the remainder was
-trivial enough to review without tests, and didn't want to spend more
-time on them.
+ - shift_tree(): 68faf68938e (A new merge stragety[sic] 'subtree'.,
+    2007-02-15) for the shift_tree()
+
+ - tree_has_path(): 96e7ffbdc31 (merge-recursive: check for directory
+   level conflicts, 2018-04-19)
+
+ - init_notes(): fd53c9eb445 (Speed up git notes lookup, 2009-10-09)
+
+ - diagnose_invalid_oid_path(): 009fee4774d (Detailed diagnosis when
+   parsing an object name fails., 2009-12-07)
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/fast-import.c | 12 ++++++++----
- builtin/mktree.c      |  4 ++--
- cache.h               |  4 ++--
- combine-diff.c        |  8 +++++---
- match-trees.c         |  6 ++++--
- merge-ort.c           |  4 ++--
- merge-recursive.c     |  6 +++---
- read-cache.c          | 16 ++++++++--------
- tree-diff.c           |  7 +++++--
- unpack-trees.c        | 15 ++++++++-------
- 10 files changed, 47 insertions(+), 35 deletions(-)
+ match-trees.c     | 4 +---
+ merge-recursive.c | 6 ++----
+ notes.c           | 3 +--
+ object-name.c     | 3 +--
+ tree-walk.c       | 9 +++++++++
+ tree-walk.h       | 3 +++
+ 6 files changed, 17 insertions(+), 11 deletions(-)
 
-diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-index 3afa81cf9ac..2fb56d6e9b7 100644
---- a/builtin/fast-import.c
-+++ b/builtin/fast-import.c
-@@ -1287,18 +1287,22 @@ static int tecmp0 (const void *_a, const void *_b)
- {
- 	struct tree_entry *a = *((struct tree_entry**)_a);
- 	struct tree_entry *b = *((struct tree_entry**)_b);
-+	int istree_a = S_ISDIR(a->versions[0].mode);
-+	int istree_b = S_ISDIR(b->versions[0].mode);
- 	return base_name_compare(
--		a->name->str_dat, a->name->str_len, a->versions[0].mode,
--		b->name->str_dat, b->name->str_len, b->versions[0].mode);
-+		a->name->str_dat, a->name->str_len, istree_a,
-+		b->name->str_dat, b->name->str_len, istree_b);
- }
- 
- static int tecmp1 (const void *_a, const void *_b)
- {
- 	struct tree_entry *a = *((struct tree_entry**)_a);
- 	struct tree_entry *b = *((struct tree_entry**)_b);
-+	int istree_a = S_ISDIR(a->versions[1].mode);
-+	int istree_b = S_ISDIR(b->versions[1].mode);
- 	return base_name_compare(
--		a->name->str_dat, a->name->str_len, a->versions[1].mode,
--		b->name->str_dat, b->name->str_len, b->versions[1].mode);
-+		a->name->str_dat, a->name->str_len, istree_a,
-+		b->name->str_dat, b->name->str_len, istree_b);
- }
- 
- static void mktree(struct tree_content *t, int v, struct strbuf *b)
-diff --git a/builtin/mktree.c b/builtin/mktree.c
-index 891991b00d6..2c1973229ac 100644
---- a/builtin/mktree.c
-+++ b/builtin/mktree.c
-@@ -37,8 +37,8 @@ static int ent_compare(const void *a_, const void *b_)
- {
- 	struct treeent *a = *(struct treeent **)a_;
- 	struct treeent *b = *(struct treeent **)b_;
--	return base_name_compare(a->name, a->len, a->mode,
--				 b->name, b->len, b->mode);
-+	return base_name_compare(a->name, a->len, S_ISDIR(a->mode),
-+				 b->name, b->len, S_ISDIR(b->mode));
- }
- 
- static void write_tree(struct object_id *oid)
-diff --git a/cache.h b/cache.h
-index 41e99bd9c63..3bcea022ad2 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1506,8 +1506,8 @@ int repo_interpret_branch_name(struct repository *r,
- 
- int validate_headref(const char *ref);
- 
--int base_name_compare(const char *name1, int len1, int mode1, const char *name2, int len2, int mode2);
--int df_name_compare(const char *name1, int len1, int mode1, const char *name2, int len2, int mode2);
-+int base_name_compare(const char *name1, int len1, int istree1, const char *name2, int len2, int istree2);
-+int df_name_compare(const char *name1, int len1, int istree1, const char *name2, int len2, int istree2);
- int name_compare(const char *name1, size_t len1, const char *name2, size_t len2);
- int cache_name_stage_compare(const char *name1, int len1, int stage1, const char *name2, int len2, int stage2);
- 
-diff --git a/combine-diff.c b/combine-diff.c
-index 06635f91bc2..155d52971e6 100644
---- a/combine-diff.c
-+++ b/combine-diff.c
-@@ -16,11 +16,13 @@
- static int compare_paths(const struct combine_diff_path *one,
- 			  const struct diff_filespec *two)
- {
--	if (!S_ISDIR(one->mode) && !S_ISDIR(two->mode))
-+	int istree_one = S_ISDIR(one->mode);
-+	int istree_two = S_ISDIR(two->mode);
-+	if (!istree_one && !istree_two)
- 		return strcmp(one->path, two->path);
- 
--	return base_name_compare(one->path, strlen(one->path), one->mode,
--				 two->path, strlen(two->path), two->mode);
-+	return base_name_compare(one->path, strlen(one->path), istree_one,
-+				 two->path, strlen(two->path), istree_two);
- }
- 
- static int filename_changed(char status)
 diff --git a/match-trees.c b/match-trees.c
-index f6c194c1cca..48f3e0ed526 100644
+index d4457eba997..240922f7080 100644
 --- a/match-trees.c
 +++ b/match-trees.c
-@@ -67,8 +67,10 @@ static void *fill_tree_desc_strict(struct tree_desc *desc,
- static int base_name_entries_compare(const struct name_entry *a,
- 				     const struct name_entry *b)
+@@ -288,12 +288,10 @@ void shift_tree(struct repository *r,
+ 
+ 	if (add_score < del_score) {
+ 		/* We need to pick a subtree of two */
+-		unsigned short mode;
+-
+ 		if (!*del_prefix)
+ 			return;
+ 
+-		if (get_tree_entry_mode(r, hash2, del_prefix, shifted, &mode))
++		if (get_tree_entry_path(r, hash2, del_prefix, shifted))
+ 			die("cannot find path %s in tree %s",
+ 			    del_prefix, oid_to_hex(hash2));
+ 		return;
+diff --git a/merge-recursive.c b/merge-recursive.c
+index c2e9f5d22d0..28ed69ddfaa 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -1882,11 +1882,9 @@ static int tree_has_path(struct repository *r, struct tree *tree,
+ 			 const char *path)
  {
--	return base_name_compare(a->path, tree_entry_len(a), a->mode,
--				 b->path, tree_entry_len(b), b->mode);
-+	int istree_a = S_ISDIR(a->mode);
-+	int istree_b = S_ISDIR(b->mode);
-+	return base_name_compare(a->path, tree_entry_len(a), istree_a,
-+				 b->path, tree_entry_len(b), istree_b);
+ 	struct object_id hashy;
+-	unsigned short mode_o;
+-
+-	return !get_tree_entry_mode(r,
++	return !get_tree_entry_path(r,
+ 				    &tree->object.oid, path,
+-				    &hashy, &mode_o);
++				    &hashy);
  }
  
  /*
-diff --git a/merge-ort.c b/merge-ort.c
-index dd1f38e3c32..97b8670c0a5 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -2257,8 +2257,8 @@ static int tree_entry_order(const void *a_, const void *b_)
+diff --git a/notes.c b/notes.c
+index e6244624055..6766b1b478f 100644
+--- a/notes.c
++++ b/notes.c
+@@ -994,7 +994,6 @@ void init_notes(struct notes_tree *t, const char *notes_ref,
+ 		combine_notes_fn combine_notes, int flags)
+ {
+ 	struct object_id oid, object_oid;
+-	unsigned short mode;
+ 	struct leaf_node root_tree;
  
- 	const struct merged_info *ami = a->util;
- 	const struct merged_info *bmi = b->util;
--	return base_name_compare(a->string, strlen(a->string), ami->result.mode,
--				 b->string, strlen(b->string), bmi->result.mode);
-+	return base_name_compare(a->string, strlen(a->string), S_ISDIR(ami->result.mode),
-+				 b->string, strlen(b->string), S_ISDIR(bmi->result.mode));
+ 	if (!t)
+@@ -1021,7 +1020,7 @@ void init_notes(struct notes_tree *t, const char *notes_ref,
+ 		return;
+ 	if (flags & NOTES_INIT_WRITABLE && read_ref(notes_ref, &object_oid))
+ 		die("Cannot use notes ref %s", notes_ref);
+-	if (get_tree_entry_mode(the_repository, &object_oid, "", &oid, &mode))
++	if (get_tree_entry_path(the_repository, &object_oid, "", &oid))
+ 		die("Failed to read notes tree referenced by %s (%s)",
+ 		    notes_ref, oid_to_hex(&object_oid));
+ 
+diff --git a/object-name.c b/object-name.c
+index 7e3b2d6d739..9ff5f83c1ff 100644
+--- a/object-name.c
++++ b/object-name.c
+@@ -1693,7 +1693,6 @@ static void diagnose_invalid_oid_path(struct repository *r,
+ 				      int object_name_len)
+ {
+ 	struct object_id oid;
+-	unsigned short mode;
+ 
+ 	if (!prefix)
+ 		prefix = "";
+@@ -1704,7 +1703,7 @@ static void diagnose_invalid_oid_path(struct repository *r,
+ 	if (is_missing_file_error(errno)) {
+ 		char *fullname = xstrfmt("%s%s", prefix, filename);
+ 
+-		if (!get_tree_entry_mode(r, tree_oid, fullname, &oid, &mode)) {
++		if (!get_tree_entry_path(r, tree_oid, fullname, &oid)) {
+ 			die(_("path '%s' exists, but not '%s'\n"
+ 			    "hint: Did you mean '%.*s:%s' aka '%.*s:./%s'?"),
+ 			    fullname,
+diff --git a/tree-walk.c b/tree-walk.c
+index 30e3bb64e49..d0dc0c35318 100644
+--- a/tree-walk.c
++++ b/tree-walk.c
+@@ -628,6 +628,15 @@ int get_tree_entry_mode(struct repository *r,
+ 	return retval;
  }
  
- static void write_tree(struct object_id *result_oid,
-diff --git a/merge-recursive.c b/merge-recursive.c
-index ed31f9496cb..97520a88646 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -554,12 +554,12 @@ static int string_list_df_name_compare(const char *one, const char *two)
- 	 *
- 	 * To achieve this, we sort with df_name_compare and provide
- 	 * the mode S_IFDIR so that D/F conflicts will sort correctly.
--	 * We use the mode S_IFDIR for everything else for simplicity,
-+	 * We say we have a directory for everything else for simplicity,
- 	 * since in other cases any changes in their order due to
- 	 * sorting cause no problems for us.
- 	 */
--	int cmp = df_name_compare(one, onelen, S_IFDIR,
--				  two, twolen, S_IFDIR);
-+	int cmp = df_name_compare(one, onelen, 1, two, twolen, 1);
++int get_tree_entry_path(struct repository *r,
++			const struct object_id *tree_oid,
++			const char *name,
++			struct object_id *oid)
++{
++	unsigned short mode;
++	return get_tree_entry_mode(r, tree_oid, name, oid, &mode);
++}
 +
- 	/*
- 	 * Now that 'foo' and 'foo/bar' compare equal, we have to make sure
- 	 * that 'foo' comes before 'foo/bar'.
-diff --git a/read-cache.c b/read-cache.c
-index 5a907af2fb5..6e0b41ed175 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -462,8 +462,8 @@ int ie_modified(struct index_state *istate,
- 	return 0;
- }
- 
--int base_name_compare(const char *name1, int len1, int mode1,
--		      const char *name2, int len2, int mode2)
-+int base_name_compare(const char *name1, int len1, int istree1,
-+		      const char *name2, int len2, int istree2)
- {
- 	unsigned char c1, c2;
- 	int len = len1 < len2 ? len1 : len2;
-@@ -474,9 +474,9 @@ int base_name_compare(const char *name1, int len1, int mode1,
- 		return cmp;
- 	c1 = name1[len];
- 	c2 = name2[len];
--	if (!c1 && S_ISDIR(mode1))
-+	if (!c1 && istree1)
- 		c1 = '/';
--	if (!c2 && S_ISDIR(mode2))
-+	if (!c2 && istree2)
- 		c2 = '/';
- 	return (c1 < c2) ? -1 : (c1 > c2) ? 1 : 0;
- }
-@@ -491,8 +491,8 @@ int base_name_compare(const char *name1, int len1, int mode1,
-  * This is used by routines that want to traverse the git namespace
-  * but then handle conflicting entries together when possible.
+ /*
+  * This is Linux's built-in max for the number of symlinks to follow.
+  * That limit, of course, does not affect git, but it's a reasonable
+diff --git a/tree-walk.h b/tree-walk.h
+index a01f2f226ec..c60667cba8f 100644
+--- a/tree-walk.h
++++ b/tree-walk.h
+@@ -172,8 +172,11 @@ struct traverse_info {
+  * You always need a pointer to an appropriate variable to fill in
+  * (NULL won't do!). That variable is:
+  *
++ * get_tree_entry_path(): <no extra argument, just get the common 'path'>
+  * get_tree_entry_mode(): unsigned short mode
   */
--int df_name_compare(const char *name1, int len1, int mode1,
--		    const char *name2, int len2, int mode2)
-+int df_name_compare(const char *name1, int len1, int istree1,
-+		    const char *name2, int len2, int istree2)
- {
- 	int len = len1 < len2 ? len1 : len2, cmp;
- 	unsigned char c1, c2;
-@@ -504,10 +504,10 @@ int df_name_compare(const char *name1, int len1, int mode1,
- 	if (len1 == len2)
- 		return 0;
- 	c1 = name1[len];
--	if (!c1 && S_ISDIR(mode1))
-+	if (!c1 && istree1)
- 		c1 = '/';
- 	c2 = name2[len];
--	if (!c2 && S_ISDIR(mode2))
-+	if (!c2 && istree2)
- 		c2 = '/';
- 	if (c1 == '/' && !c2)
- 		return 0;
-diff --git a/tree-diff.c b/tree-diff.c
-index 7cebbb327e2..644b4656421 100644
---- a/tree-diff.c
-+++ b/tree-diff.c
-@@ -50,6 +50,7 @@ static int tree_entry_pathcmp(struct tree_desc *t1, struct tree_desc *t2)
- {
- 	struct name_entry *e1, *e2;
- 	int cmp;
-+	int istree_e1, istree_e2;
- 
- 	/* empty descriptors sort after valid tree entries */
- 	if (!t1->size)
-@@ -58,9 +59,11 @@ static int tree_entry_pathcmp(struct tree_desc *t1, struct tree_desc *t2)
- 		return -1;
- 
- 	e1 = &t1->entry;
-+	istree_e1 = S_ISDIR(e1->mode);
- 	e2 = &t2->entry;
--	cmp = base_name_compare(e1->path, tree_entry_len(e1), e1->mode,
--				e2->path, tree_entry_len(e2), e2->mode);
-+	istree_e2 = S_ISDIR(e2->mode);
-+	cmp = base_name_compare(e1->path, tree_entry_len(e1), istree_e1,
-+				e2->path, tree_entry_len(e2), istree_e2);
- 	return cmp;
- }
- 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 29029f34ed6..23c1640ae9a 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -925,7 +925,7 @@ static int traverse_trees_recursive(int n, unsigned long dirmask,
- static int do_compare_entry_piecewise(const struct cache_entry *ce,
- 				      const struct traverse_info *info,
- 				      const char *name, size_t namelen,
--				      unsigned mode)
-+				      unsigned istree)
- {
- 	int pathlen, ce_len;
- 	const char *ce_name;
-@@ -933,7 +933,7 @@ static int do_compare_entry_piecewise(const struct cache_entry *ce,
- 	if (info->prev) {
- 		int cmp = do_compare_entry_piecewise(ce, info->prev,
- 						     info->name, info->namelen,
--						     info->mode);
-+						     S_ISDIR(info->mode));
- 		if (cmp)
- 			return cmp;
- 	}
-@@ -947,13 +947,13 @@ static int do_compare_entry_piecewise(const struct cache_entry *ce,
- 	ce_len -= pathlen;
- 	ce_name = ce->name + pathlen;
- 
--	return df_name_compare(ce_name, ce_len, S_IFREG, name, namelen, mode);
-+	return df_name_compare(ce_name, ce_len, 0, name, namelen, istree);
- }
- 
- static int do_compare_entry(const struct cache_entry *ce,
- 			    const struct traverse_info *info,
- 			    const char *name, size_t namelen,
--			    unsigned mode)
-+			    unsigned istree)
- {
- 	int pathlen, ce_len;
- 	const char *ce_name;
-@@ -965,7 +965,7 @@ static int do_compare_entry(const struct cache_entry *ce,
- 	 * it is quicker to use the precomputed version.
- 	 */
- 	if (!info->traverse_path)
--		return do_compare_entry_piecewise(ce, info, name, namelen, mode);
-+		return do_compare_entry_piecewise(ce, info, name, namelen, istree);
- 
- 	cmp = strncmp(ce->name, info->traverse_path, info->pathlen);
- 	if (cmp)
-@@ -980,12 +980,13 @@ static int do_compare_entry(const struct cache_entry *ce,
- 	ce_len -= pathlen;
- 	ce_name = ce->name + pathlen;
- 
--	return df_name_compare(ce_name, ce_len, S_IFREG, name, namelen, mode);
-+	return df_name_compare(ce_name, ce_len, 0, name, namelen, istree);
- }
- 
- static int compare_entry(const struct cache_entry *ce, const struct traverse_info *info, const struct name_entry *n)
- {
--	int cmp = do_compare_entry(ce, info, n->path, n->pathlen, n->mode);
-+	int istree = S_ISDIR(n->mode);
-+	int cmp = do_compare_entry(ce, info, n->path, n->pathlen, istree);
- 	if (cmp)
- 		return cmp;
- 
++int get_tree_entry_path(struct repository *, const struct object_id *, const char *,
++			struct object_id *);
+ int get_tree_entry_mode(struct repository *, const struct object_id *, const char *,
+ 			struct object_id *,
+ 			unsigned short *);
 -- 
 2.31.1.474.g72d45d12706
 
