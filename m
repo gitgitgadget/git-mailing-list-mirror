@@ -7,59 +7,58 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6204C433ED
-	for <git@archiver.kernel.org>; Thu,  1 Apr 2021 09:59:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 95C24C433ED
+	for <git@archiver.kernel.org>; Thu,  1 Apr 2021 10:03:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6DB8B610A5
-	for <git@archiver.kernel.org>; Thu,  1 Apr 2021 09:59:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4EC996100C
+	for <git@archiver.kernel.org>; Thu,  1 Apr 2021 10:03:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233858AbhDAJ6j (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Apr 2021 05:58:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44464 "EHLO
+        id S233701AbhDAKC5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Apr 2021 06:02:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45412 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233643AbhDAJ6T (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Apr 2021 05:58:19 -0400
-Received: from mail-il1-x130.google.com (mail-il1-x130.google.com [IPv6:2607:f8b0:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5992DC0613E6
-        for <git@vger.kernel.org>; Thu,  1 Apr 2021 02:58:19 -0700 (PDT)
-Received: by mail-il1-x130.google.com with SMTP id c17so1540633ilj.7
-        for <git@vger.kernel.org>; Thu, 01 Apr 2021 02:58:19 -0700 (PDT)
+        with ESMTP id S233954AbhDAKCX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Apr 2021 06:02:23 -0400
+Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DEFDC0613E6
+        for <git@vger.kernel.org>; Thu,  1 Apr 2021 03:02:23 -0700 (PDT)
+Received: by mail-io1-xd31.google.com with SMTP id j26so1580136iog.13
+        for <git@vger.kernel.org>; Thu, 01 Apr 2021 03:02:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=UAXiiRPCjIUWY0N7hn0k7gwsXtKI9ill7G1KCyCvZ98=;
-        b=jVPfncwya1DzG/5zej762/KROSFVtuwdzpYRqiOOYiDn9UzE/qKfOgpuZNkyafjD8R
-         nOUKEJ1c0eHc8Z0i5FDGIFjIYacUIeC02CqVf3fMq+iJ/YhiybGrwFSYuk1xQEYE6dQl
-         nnXDe64H6Kod4nGkSCp72ekpocLN9oS5EAkWUNsWfCPALjjxYkuazxSgJpzieRK8Cvcp
-         k2kn/HBtCG9crxxOxB4fZq9lRJJ98Smk+/A+p6AXPiSoV5anO5jeho78Tu8gIlCfuucV
-         c7skGpJztXgLjDWNfBHaRD7Y/7FREKE9upokOdte5JJOUWFgVmQ1D2A6LzMWlGTMONAS
-         1Whw==
+        bh=irOIipm+6KC9uAvffhyjobBC+BQdq71imxBfugRemyo=;
+        b=WuRIW5Lvuvx3v2OGMWYzMv8W1tH5HU2lwd0WSoQowFn9dv0abcRxZ+ljwODHWi2NmF
+         smzH1kW3WHlWbWNF4XteF5ZQrRD13JwdsS/l5iQn4gJrg5i0Khz94WmIN0zvlqJvJmaL
+         a2UckDH8KevQounB42FyW4nwPan92agVTXdVMD+JVd8PR0l/FsIS19otxzxVqwHnOwhg
+         9yYLhbfgM/fVjBO3r6j1vD7Ryqs6aGJ7bsWGDoDHCgzU6RM+pRl+BplnIJaGVnCL8wyu
+         LTXHYOgbHMfUwR0zhTpdgrNIhg+CoppEbgIlhCIbmAVMCZFR0qbzifBhkPc8IXv1LvFU
+         sPHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=UAXiiRPCjIUWY0N7hn0k7gwsXtKI9ill7G1KCyCvZ98=;
-        b=kytVzA8Kff1i4E1zaWsXItDYQmBAhFtqPtdKYtkE19AcxGOIQGEsAIxtXlAV55vGob
-         ZaR2S7Qr19fL3l3E5jjDBklJdWlyWiRFK+h6fvkZUMx5G9ATS/ruA7ux1Gt1gBy1D0Kk
-         nYCBccFtCJ29YpS0YuYgq57vL7RSL9VUfxCXjVBod40vjVYChC456eflqfeIWVf+1vFz
-         Gj2h+8Vj8uzxA2DchKaE4sL0w5zz4FYfYIm8rZn7sVTGqxLC0gGPH0lBKCiih56bYGBI
-         AuLLlqU/iR4DpvBqEL9STiXygRM+0cwJQUS+LoHEb8zYvYkbnlpwackrsV8vK+4xb/vR
-         7R6Q==
-X-Gm-Message-State: AOAM530p5luhlvJZeTFDD/EAtYhtzx9uaLVlr1GfEK+OUkCHU698sLgB
-        jIo062T1aC8st7Y+t+XLtDH41CMBZUx4XSM1B6s=
-X-Google-Smtp-Source: ABdhPJwqejQ2UDewZIJtdU1zcgxuV6QQWwEtuL/9lnHSn74W1OLRvyOcjrHXcUMgSDniK45uw7qgZGwWPkdaYN91aVE=
-X-Received: by 2002:a05:6e02:1d8e:: with SMTP id h14mr5917264ila.301.1617271098800;
- Thu, 01 Apr 2021 02:58:18 -0700 (PDT)
+        bh=irOIipm+6KC9uAvffhyjobBC+BQdq71imxBfugRemyo=;
+        b=mvbj8xvFNmlUEsbe1kHH8XpF1B0sI9iJDnFuCSSKDH98D9MBxCAHnHshg59GX05qgX
+         It+PfNsSkzxe4tDGO6cL9BnzQJ1ryQfOFVY0YYm8bCRVzh5t908IhJDrj5n4uzgeiax6
+         lfy2K+ppA92mP8UpuiHs2bRVBAbiZGKuZGL5Iw1EtzWTU5IK7SvdRR3tsxbMMMZ1+7lk
+         Hq46B4+loFOZyvTRjd7xhvszgM7qduidfoLnfnPxtXVeFxX+EriO/ixYbXQ+bUM+4da2
+         a0KYctZBO7Me2ChF49+lZ6+c78kuauF++AjzgMfVuoW4sGrf3h3/lLqmoJoK1dnt6KE3
+         yyvA==
+X-Gm-Message-State: AOAM532364BBqGcWYNuGwwrMroxcHR2rmc9nqZMFA4rqtv5V8MSgjt5H
+        KLziYCirKWk1c2vbReZkHu/Oj2ZiAXlQ5ecsOPY9eXhXCOh3o/94
+X-Google-Smtp-Source: ABdhPJz/mL0/2EGdmeQ9BK1S4JMqNjj36CT+OrUU0u8cCbv6rsUVzmxRmFI2ZCy3wXGW38ryPJhE8zSQJefN8Gwgydw=
+X-Received: by 2002:a5d:848a:: with SMTP id t10mr6055875iom.68.1617271342831;
+ Thu, 01 Apr 2021 03:02:22 -0700 (PDT)
 MIME-Version: 1.0
 References: <pull.913.v4.git.1616775185562.gitgitgadget@gmail.com>
- <pull.913.v5.git.1617185147.gitgitgadget@gmail.com> <4c59cab53a0d9bb7c9cccfaf5544ae5c904bb2ba.1617185147.git.gitgitgadget@gmail.com>
- <CAP8UFD2tb6Fca58YPiFejqGKm3Mu+NaMA8YU3HQj+c2L-AH-Yw@mail.gmail.com>
-In-Reply-To: <CAP8UFD2tb6Fca58YPiFejqGKm3Mu+NaMA8YU3HQj+c2L-AH-Yw@mail.gmail.com>
+ <pull.913.v5.git.1617185147.gitgitgadget@gmail.com> <CAP8UFD0a_HQ9bEQLASn_D1jj+ut+okENJs=aENDxTDL1f2VZKQ@mail.gmail.com>
+In-Reply-To: <CAP8UFD0a_HQ9bEQLASn_D1jj+ut+okENJs=aENDxTDL1f2VZKQ@mail.gmail.com>
 From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Thu, 1 Apr 2021 17:58:07 +0800
-Message-ID: <CAOLTT8QUwjpb5AqKR0FgxWH_ESPzy8-fkDJk18uggO_SkT4Fzg@mail.gmail.com>
-Subject: Re: [PATCH v5 1/2] [GSOC] run-command: add shell_no_implicit_args option
+Date:   Thu, 1 Apr 2021 18:02:09 +0800
+Message-ID: <CAOLTT8QxB==BPfwBVex5uof=3EBGdEoTPci7PP1K0mfkQY-5aQ@mail.gmail.com>
+Subject: Re: [PATCH v5 0/2] [GSOC]trailer: pass arg as positional parameter
 To:     Christian Couder <christian.couder@gmail.com>
 Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
         git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
@@ -70,66 +69,37 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Christian Couder <christian.couder@gmail.com> =E4=BA=8E2021=E5=B9=B44=E6=9C=
-=881=E6=97=A5=E5=91=A8=E5=9B=9B =E4=B8=8B=E5=8D=883:22=E5=86=99=E9=81=93=EF=
+=881=E6=97=A5=E5=91=A8=E5=9B=9B =E4=B8=8B=E5=8D=883:28=E5=86=99=E9=81=93=EF=
 =BC=9A
 >
 > On Wed, Mar 31, 2021 at 12:05 PM ZheNing Hu via GitGitGadget
 > <gitgitgadget@gmail.com> wrote:
 > >
-> > From: ZheNing Hu <adlternative@gmail.com>
-> >
-> > When we use subprocess to run a shell-script, if we have any
+> > In https://lore.kernel.org/git/xmqqv99i4ck2.fsf@gitster.g/ Junio and
+> > Christian talked about the problem of using strbuf_replace() to replace
+> > $ARG.
 >
-> Maybe: s/subprocess/a subprocess/
+> It's better to sum up a bit the discussions. It's nice to provide a
+> link to the discussions though.
 >
-> > args, git will add extra $@ to the end of the shell-script,
-> > This can pass positional parameters correctly, But if we just
-> > want to use some of these passed parameters, git will still
-> > add an extra "$@", which contains all positional parameters we
-> > passed. This does not meet our expectations.
+> > Now pass trailer value as $1 to the trailer command with another
+> > trailer.<token>.cmd config.
 >
-> I am not sure explaining things using $@ is the best way to make this
-> as clear as possible. I don't have a clear alternative right now
-> though.
+> If this patch series introduces a new trailer.<token>.cmd config
+> option, then I would expect one of the patch in the series to have a
+> subject like "trailer: add new trailer.<token>.cmd config option".
 >
-> > E.g. our shell-script is:
-> > "echo \"\$1\""
-> > and pass $1 "abc",
+> > ZheNing Hu (2):
+> >   [GSOC] run-command: add shell_no_implicit_args option
+> >   [GSOC]trailer: pass arg as positional parameter
 >
-> Maybe: s/pass $1 "abc"/we pass "abc" as $1/
+> I guess the "trailer: pass arg as positional parameter" is the one
+> introducing the new trailer.<token>.cmd config option.
 >
-> > git will change our script to:
-> > "echo \"\$1\" \"$@\""
->
-> Where will "abc" appear then?
->
-> > The positional parameters we entered will be printed
-> > repeatedly.
->
-> If you take us passing "abc" in $1 as an example, then I think it's a
-> good idea to show us the result of that.
->
-> > So let add a new `shell_no_implicit_args`
->
-> Maybe: s/`shell_no_implicit_args`/`shell_no_implicit_args` flag/
->
+> Also it seems strange that there is no space between "[GSOC]" and "traile=
+r".
 
-Thanks for these grammar corrections.
-
-> > to `struct child_process`, which can suppress the
-> > joining of $@ if `shell_no_implicit_args` is set to 1,
-> > this will allow us to use only few of positional args
-> > in multi-parameter shell script, instead of using all
-> > of them.
->
-> I think our goal is more to have each argument we pass be passed just onc=
-e.
-
-More accurately, we only want those explicit positional
-parameters to be replaced.
-But Junio probably thinks it's OK to put on a layer of
-"sh -c"  to "absorb" the "$@". I think it works, but it may
-cause some trouble for users.
+Thanks, I'll fix them.
 
 --
 ZheNing Hu
