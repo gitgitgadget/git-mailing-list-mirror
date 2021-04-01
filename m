@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 52486C4363F
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7474AC433ED
 	for <git@archiver.kernel.org>; Thu,  1 Apr 2021 01:51:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3DF42610CB
+	by mail.kernel.org (Postfix) with ESMTP id 5F955610CD
 	for <git@archiver.kernel.org>; Thu,  1 Apr 2021 01:51:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233227AbhDABun (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 31 Mar 2021 21:50:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51860 "EHLO
+        id S233258AbhDABuq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 31 Mar 2021 21:50:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51872 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233076AbhDABuR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Mar 2021 21:50:17 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B032C061574
-        for <git@vger.kernel.org>; Wed, 31 Mar 2021 18:50:17 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id u5-20020a7bcb050000b029010e9316b9d5so84256wmj.2
-        for <git@vger.kernel.org>; Wed, 31 Mar 2021 18:50:17 -0700 (PDT)
+        with ESMTP id S233090AbhDABuS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Mar 2021 21:50:18 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58C79C061762
+        for <git@vger.kernel.org>; Wed, 31 Mar 2021 18:50:18 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id d8-20020a1c1d080000b029010f15546281so2019061wmd.4
+        for <git@vger.kernel.org>; Wed, 31 Mar 2021 18:50:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=gXHTyk/0rr+wbe8rzhDt1uZ1A0ElBNbmaZcI4hkvDxk=;
-        b=SVviZ/TDvWySctTT/qISNXo45/+Drbc20zla6Zl/lEC8NK2gudLs6MxVjxqrQdDQD7
-         UGDocQ7cVn59tGh+gQZB5TnKEYg27GX41ZyQa8nykW0RRZLkn9E0fUEuYpBLrNkAEwc5
-         FeqgrKxeWhQWBu5gp0gw81iesPDo1aDJvoAfnC/sYdKWcYp/Ijfd6u5Ea/6GsFEq4YAI
-         TEEfenhOqMVospcraDoEXqppagVYlHoCUcL2MySgdGuR2DGOFiD+Wfx9y+jY6TBicmZM
-         /+D5r+KekuNA/L1Agqq4RV4g7nccqrTHr5L4VX4kkaSdQa07Mtjq0td0KHL4LJe24IE9
-         9Blg==
+        bh=hhLYYq4GDu3XvoSbcr7sJoPjWfM0oLCRJFTPz+pdmsw=;
+        b=QpV5QV25g58QUP/MAYM0mY0gTg4s9x9928neRIwYNhc0KGC1a2NoLCAQaNF3mFBhDZ
+         +whNEq4AuyAP9yADrXeovr9hA1ccc+AhexbRVIgQXWy0DA086slXP50w6OIgurt2Jmo3
+         nl2MYqb0XsB4zP1E/rvLOfqPV1nuivjzKGuTkaqBensFVjcXbPYxOh738J59q0BZ6mGD
+         gDu8H+ZbdICUzwVyYBUQLDWxLH38NQf2N1iHZp83ImYqEIqSvyFY0s6f9QuibiAPbOGh
+         CAfYlw5s//9AOBb7Jv2xYYQaC1bxZPPwnEIvIbmI4VVjhH6T8s7isGAR4+KEg6p5IXrs
+         bU3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=gXHTyk/0rr+wbe8rzhDt1uZ1A0ElBNbmaZcI4hkvDxk=;
-        b=uhlQsVbsU6gpLBGsxkS6ciuA0LMGgPb2X1BBpv0UPXazVcIV+F9e2LpHRgoD9m5VBm
-         mPdw51OIDb7nnZEhHlNVwzCbf/VKaNTAiLTG/vMRoX8ylYVch0if/Kukj1CX8H1g9TI9
-         2CIFNwofYKc5gR13QkOMQS+2hyv9FExwuOIHJPXMi1eOygrwJ88RqmxTKrTrZ3tKNdhG
-         y9qO8cIFOn1j2gP5p1r27R56yRldrrHo4N2PDJioF9WcTgQPkllncRSGfnvjHBC27mwi
-         B4+SaXNs2D220n/gWR25BdPv+KEZ+NavOCf7T8RMcG5H4IK0qTnPIL+erPL4GQEuc+RY
-         ipyQ==
-X-Gm-Message-State: AOAM533+DEmH+zDtOzcL9yjQH294WLGEqMSvZvXbrzOommZM0n2sN764
-        HL9kkcZ/lQL6F2nJ/5NrgzKMKxdAakc=
-X-Google-Smtp-Source: ABdhPJzkgSo8XuUgsubdBFn+0mJxvIOCs8qdCa1IWXufqWP+4eJhsWcFEabCq+4brBMoob/eOU3jIw==
-X-Received: by 2002:a05:600c:3647:: with SMTP id y7mr5604917wmq.17.1617241816130;
-        Wed, 31 Mar 2021 18:50:16 -0700 (PDT)
+        bh=hhLYYq4GDu3XvoSbcr7sJoPjWfM0oLCRJFTPz+pdmsw=;
+        b=gCscttpS6kzb6DKq+49MieHNYGRwUwwlbI1qEpeUI0hLmypLYaMdkMBjtzgs1JhpF4
+         dneo8V854dsN2PE/eDpNu4oUynb6ZRNlDd4nSO3I3kGuIy63OYE9jNQHGxDHq6iAkz0n
+         5KvcYkQoT6ZJrHL0uRS98TBdTjoFapub82DAfBjMkxFNacWzhHwt5KYXRAZkGs6kntX5
+         vrStXcYijA1PRTzpVR++kSRJCzZa9mMPihlOpbc2WE52Hk6k83TzVVxyc0CO1MVDauoF
+         vTmB0thwVrC1g8UVAJoHyljOs6njTDK4g3QQHZHxzj3Yjf41QMmKEbHHxSl6WxCBXMsc
+         njdQ==
+X-Gm-Message-State: AOAM5334uiC50F23qZnNSic3XCAKi8FHjRkwR0RNXi2Zd4BTMMApzi1d
+        bpocvFIAMRBlI9G5VOSI7LJ5juVju2Y=
+X-Google-Smtp-Source: ABdhPJz4099SZwDfJe1eiJE0xRHXZDGbvISvOr/Qma19i0mE/fEgcGOO35hSDYA4Jtpl+uo7U+1gkw==
+X-Received: by 2002:a05:600c:2312:: with SMTP id 18mr5526393wmo.8.1617241817188;
+        Wed, 31 Mar 2021 18:50:17 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x14sm7046382wrw.13.2021.03.31.18.50.15
+        by smtp.gmail.com with ESMTPSA id v18sm7854442wrf.41.2021.03.31.18.50.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Mar 2021 18:50:15 -0700 (PDT)
-Message-Id: <ebfffdbdd6ad7fcefc47a3581a335df96f930539.1617241803.git.gitgitgadget@gmail.com>
+        Wed, 31 Mar 2021 18:50:16 -0700 (PDT)
+Message-Id: <3144114d1a75a8515fc35ea9625a7d088652b178.1617241803.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.906.v2.git.1617241802.gitgitgadget@gmail.com>
 References: <pull.906.git.1615929435.gitgitgadget@gmail.com>
         <pull.906.v2.git.1617241802.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 01 Apr 2021 01:49:58 +0000
-Subject: [PATCH v2 21/25] read-cache: ensure full index
+Date:   Thu, 01 Apr 2021 01:50:00 +0000
+Subject: [PATCH v2 23/25] revision: ensure full index
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,36 +79,30 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-Before iterating over all cache entries, ensure that a sparse index is
-expanded to a full index to avoid unexpected behavior.
+Before iterating over all index entries, ensure that a sparse index is
+expanded to a full index to avoid unexpected behavior. This case could
+be integrated later by ensuring that we walk the tree in the
+sparse-directory entry, but the current behavior is only expecting
+blobs. Save this integration for later when it can be properly tested.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- read-cache.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ revision.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/read-cache.c b/read-cache.c
-index 3698bc7bf77d..a9dcf0ab4f78 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1577,6 +1577,8 @@ int refresh_index(struct index_state *istate, unsigned int flags,
- 	 */
- 	preload_index(istate, pathspec, 0);
- 	trace2_region_enter("index", "refresh", NULL);
+diff --git a/revision.c b/revision.c
+index b78733f5089b..b72e0ac1bdca 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1680,6 +1680,8 @@ static void do_add_index_objects_to_pending(struct rev_info *revs,
+ {
+ 	int i;
+ 
 +	/* TODO: audit for interaction with sparse-index. */
 +	ensure_full_index(istate);
  	for (i = 0; i < istate->cache_nr; i++) {
- 		struct cache_entry *ce, *new_entry;
- 		int cache_errno = 0;
-@@ -2498,6 +2500,8 @@ int repo_index_has_changes(struct repository *repo,
- 		diff_flush(&opt);
- 		return opt.flags.has_changes != 0;
- 	} else {
-+		/* TODO: audit for interaction with sparse-index. */
-+		ensure_full_index(istate);
- 		for (i = 0; sb && i < istate->cache_nr; i++) {
- 			if (i)
- 				strbuf_addch(sb, ' ');
+ 		struct cache_entry *ce = istate->cache[i];
+ 		struct blob *blob;
 -- 
 gitgitgadget
 
