@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5269FC41602
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3DB58C43140
 	for <git@archiver.kernel.org>; Thu,  1 Apr 2021 01:51:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2E779610A6
+	by mail.kernel.org (Postfix) with ESMTP id 10F67610A4
 	for <git@archiver.kernel.org>; Thu,  1 Apr 2021 01:51:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233235AbhDABuo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 31 Mar 2021 21:50:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51858 "EHLO
+        id S233223AbhDABum (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 31 Mar 2021 21:50:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233070AbhDABuR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Mar 2021 21:50:17 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2A23C061761
-        for <git@vger.kernel.org>; Wed, 31 Mar 2021 18:50:16 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id j20-20020a05600c1914b029010f31e15a7fso2034724wmq.1
-        for <git@vger.kernel.org>; Wed, 31 Mar 2021 18:50:16 -0700 (PDT)
+        with ESMTP id S233049AbhDABuP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Mar 2021 21:50:15 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93115C061574
+        for <git@vger.kernel.org>; Wed, 31 Mar 2021 18:50:15 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id j9so167015wrx.12
+        for <git@vger.kernel.org>; Wed, 31 Mar 2021 18:50:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=xOPUNFGXkgQBSC36MohDBVpe4Y/fE1xOn5Zg727kSss=;
-        b=Tp3bjBNEdl4AFXDb+nzhbi4PDdC99yvaD8ZC70RsviWBMBQeu9N1jQg1IPFEf2vneU
-         1HUTkCiM/HXhCmtKs2VCjsPomzF9IMIOtXTKulpzG0GqWzQKxfV60Eo/aTrS05TCZH65
-         So3eavzkB6s56to7aBAdB+JPqJIdXKN1WDzmMgrf9ByJfTdgV0m3AU7rXF+7kEAOH5qY
-         qY5MZ74KfHkKICIaYGC+das7ggmIT4CnvbZ1qGB/BHnqA7SI/kxKI9TGGEDRVhncFj1w
-         LLEFS8QVTB3FLW0lvZYHjdaTLOtBTtXWBgyiiFV2uHwR0hkt+h/FldSH0Jm/N5W3f4NB
-         n47A==
+        bh=DN0bJRJEdqZFG9ILPnNiBkEoj0NZzXfi9k5Yav8/FLY=;
+        b=BB1NuVv6QsOMAxK0gOhFggd6jXhYYCy2tCDSy1EXKxCIBInaNzxZlOTtoShPVtdlNa
+         tD95NM2pouqachIbrMg7oSRH1ndDy3smprNVehKmxGsUlq6zPc/69IkMrH/9/GxnrKam
+         V/v8n+RAHQy6cqFaAFNyXmV5bSGNvQc7LzJj1ZqkKhZnTrPULaGqB1uuZPaCTzGn4mzd
+         aR+H69EI9spIHAT7XruW8yCKBOLT+DBLBBHQTPlEUdugXk8MCBZo2MXJxMXh8baBaY7f
+         2ThkGfarRi7Uta+60RLdiVeGmCGzul4OBN+xXVasH16VqF6CCJYXWkhRXLS1dItQZYKS
+         1LdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=xOPUNFGXkgQBSC36MohDBVpe4Y/fE1xOn5Zg727kSss=;
-        b=rODgpc37IelcAd+U2X8Rdl6sEs/UdGfP82PzAqQjRF6ekjD72D1+KmmHRnTGRKrqcj
-         yqXBJnhf/mhM493ll5qChcIEDfzuMbrd/RG44QGmE7Cmim7qZLU1cH3AI0GqPij5WmVu
-         /80/NZIHbwzyDYx/N3gOip7tNPDfgcAX+90zcQK30XYUik4Gm6bkfLq/vDjgSTCRa3Ap
-         RnCvQzHlU+SyuZkOKMdHyDzRkQpEh6/M2Oq5h4HUN2mpuMbOUoqvYRV1n/JUzs6SYgxW
-         3llYvvbEjmgLf7J1VbhLhziWyqCBYCfnsJX6FyYHlbCOuxV2NTzxcL2DC+gb4HqbXTBq
-         eVAg==
-X-Gm-Message-State: AOAM530d9pg1VLS0vg+IK7z0u/07nkWOVO2A07ox2j2M4hkXrgqm7X3U
-        0HPcve786esRCgZX2AngbeKQod1YZis=
-X-Google-Smtp-Source: ABdhPJwRBrVVfQf2VFeBGMCbq9AQv51iVTpzPUH7WZ63obdzQHozRTvmmT6Swr94xbM77yeTnxFfow==
-X-Received: by 2002:a1c:7e16:: with SMTP id z22mr5542475wmc.74.1617241815577;
-        Wed, 31 Mar 2021 18:50:15 -0700 (PDT)
+        bh=DN0bJRJEdqZFG9ILPnNiBkEoj0NZzXfi9k5Yav8/FLY=;
+        b=TbrWlra+IFKXkbGJR2aDfq4PRwaehKP/Lr5a7hrIfq6TUXW7LX+WPWR6SLLZ22/W4g
+         cUuR4Re3+73cbewslVSoKBz2k9yArvjb1O619jDCUyRxAH7aDUpwm8GpUQRWYaxydCXm
+         ginqI2XAKxMX9oijpH/Rd4XXuQvtMObuwnoOMr3UQI9Ap23W441HUTzfPfmoOdqL50vc
+         kuF8TcvYhYR5II1pMNg4yJUFfKHjsVGxFqCFplEAYo3ECUzvQ1kRNQjh+RfO4ZVBKxzt
+         y5bKZCksHfApeQ6B/z5OtR+MD9nQAgFL5hX6UwxFITo2TTYi+Lfmf5LCA8nlri+wE/W1
+         LXUg==
+X-Gm-Message-State: AOAM533za2Zaq9g91Go0LDwzHNkhs1UPvcCrCxSOZCC0TRmJKSInEFq0
+        8Mj8gMAQ/hrkiG3oU7KbDBg0hA+i6jg=
+X-Google-Smtp-Source: ABdhPJz8oRms8/JHmIVaUQrWCjpCrJdD7BPHnp/TimsdepRvZwDtopa/D/KxVDOCKd/mq+OeDijPZg==
+X-Received: by 2002:adf:f54c:: with SMTP id j12mr6684173wrp.264.1617241814457;
+        Wed, 31 Mar 2021 18:50:14 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v7sm6439081wme.47.2021.03.31.18.50.15
+        by smtp.gmail.com with ESMTPSA id m11sm7061629wri.44.2021.03.31.18.50.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Mar 2021 18:50:15 -0700 (PDT)
-Message-Id: <e62a597a972582828356d2d270554bec52e8ff96.1617241803.git.gitgitgadget@gmail.com>
+        Wed, 31 Mar 2021 18:50:14 -0700 (PDT)
+Message-Id: <2b9180ee77d30c797f58f7e50ff9174e70797069.1617241803.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.906.v2.git.1617241802.gitgitgadget@gmail.com>
 References: <pull.906.git.1615929435.gitgitgadget@gmail.com>
         <pull.906.v2.git.1617241802.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 01 Apr 2021 01:49:57 +0000
-Subject: [PATCH v2 20/25] pathspec: ensure full index
+Date:   Thu, 01 Apr 2021 01:49:55 +0000
+Subject: [PATCH v2 18/25] entry: ensure full index
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -84,22 +84,22 @@ expanded to a full index to avoid unexpected behavior.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- pathspec.c | 2 ++
+ entry.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/pathspec.c b/pathspec.c
-index b6e333965cb4..d67688bab74b 100644
---- a/pathspec.c
-+++ b/pathspec.c
-@@ -36,6 +36,8 @@ void add_pathspec_matches_against_index(const struct pathspec *pathspec,
- 			num_unmatched++;
- 	if (!num_unmatched)
- 		return;
+diff --git a/entry.c b/entry.c
+index 7b9f43716f76..891e4ba2b45a 100644
+--- a/entry.c
++++ b/entry.c
+@@ -412,6 +412,8 @@ static void mark_colliding_entries(const struct checkout *state,
+ 
+ 	ce->ce_flags |= CE_MATCHED;
+ 
 +	/* TODO: audit for interaction with sparse-index. */
-+	ensure_full_index(istate);
- 	for (i = 0; i < istate->cache_nr; i++) {
- 		const struct cache_entry *ce = istate->cache[i];
- 		ce_path_match(istate, ce, pathspec, seen);
++	ensure_full_index(state->istate);
+ 	for (i = 0; i < state->istate->cache_nr; i++) {
+ 		struct cache_entry *dup = state->istate->cache[i];
+ 
 -- 
 gitgitgadget
 
