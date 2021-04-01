@@ -5,64 +5,64 @@ X-Spam-Level:
 X-Spam-Status: No, score=-10.5 required=3.0 tests=BAYES_00,
 	DKIM_ADSP_CUSTOM_MED,DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,
 	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	INCLUDES_PATCH,MAILING_LIST_MULTI autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92F98C001EA
-	for <git@archiver.kernel.org>; Thu,  1 Apr 2021 17:43:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CE84C4363E
+	for <git@archiver.kernel.org>; Thu,  1 Apr 2021 17:44:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A9BF761284
-	for <git@archiver.kernel.org>; Thu,  1 Apr 2021 17:43:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2968761383
+	for <git@archiver.kernel.org>; Thu,  1 Apr 2021 17:44:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235834AbhDARnP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Apr 2021 13:43:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57162 "EHLO
+        id S235720AbhDARnI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Apr 2021 13:43:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234744AbhDARjk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Apr 2021 13:39:40 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22B37C02D549
-        for <git@vger.kernel.org>; Thu,  1 Apr 2021 08:41:21 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id r10-20020a05600c35cab029010c946c95easo1125419wmq.4
-        for <git@vger.kernel.org>; Thu, 01 Apr 2021 08:41:21 -0700 (PDT)
+        with ESMTP id S234536AbhDARh4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Apr 2021 13:37:56 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FBAFC0225B8
+        for <git@vger.kernel.org>; Thu,  1 Apr 2021 08:41:10 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id x13so2256179wrs.9
+        for <git@vger.kernel.org>; Thu, 01 Apr 2021 08:41:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=CnoTzJHVAuf871k/UDSVW/LJi9azU3ymhIRK0wnLjGI=;
-        b=NKBBA8Lvp3ABGuM7fVb+z3V367lL7uubSNMT9o+n7mmE9XO9Hm7IzypRZ2WqDOtc6T
-         QW0nYBe7MKBQONyZurQyXyRQKusv9aVrWYAgEacAoO+M6+HRcYfR1JmquAAnv3XwHfOP
-         i7aOeEp1XADLe3uHn85vnZ6zrEfmiSJDYEm+AxRQzu3JNh2Z5vE5J8tcEQFgrg7hao1m
-         0ebRKuVKSCGoaMMsb1Xim+ZNxDmViWk96z72tcLQIkP795m11QgaZDgNYPESj69DXbKh
-         C0w7KVa6bvlxyjQfg8qeC4/75GCZFQVeE12QoCHMA9gGvUz4V8p0a9JuEbA2FEG3bUfG
-         JP1A==
+        bh=nXaGyCwufbowQyx7IWi+icYC2uFsuA2bq1r9jyL4u28=;
+        b=jqHEzr0eNE0jErZPk0nCnCxSdo5hRdyfDqHWudoVsC3nMZK5vNjwWRTw9ar8s77H3c
+         n85fGCrd4w8nvNpF8JB6LtywVElUVsqpVWbv7v+2oiD0Xxi6ItN9Q9XBGpiHSvC+HF/h
+         5Vv9hrAZ4Pb+WbEDKC1lXh17LfZuHIgez+FSbav6NCpDbj1hA88GJWmD5thm4t4GPwWE
+         P62IqB/GtjdlFWwkZ9FjHr5cL/QB3IoqRRFmUW0HnGm1IY8J25J9Vf+dDdL4Z8oQCGKQ
+         KJIVILeE1vKC9nRntnl5ETVJRV9toLFzk2KG6SfsZHGFGMXePNSuuSFs/EDezD5bfnM0
+         albg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=CnoTzJHVAuf871k/UDSVW/LJi9azU3ymhIRK0wnLjGI=;
-        b=jDUmWh80vGK/knmLeMVyQl8z/u1V7UTEe7c6Retj7xqzb5X0AJ1t2FYztqINiAsSJP
-         xhn2s2h01kM0hIYv/wVRuSjaMDNiYaW2OgvWZUhqPx8URZ8w4Mg4/3IrwqGKBlCjoD7b
-         BKzHmWBsSc1hqPmbsBRZ0ylXJk6XjE/U3lbqIzfEzFwVxXFtDSQR9+xY/DGh+1skID42
-         UA/FGy6qFlhg4pJ+yJOl9cQmP53GAoC7aTBvVCn0OUnvoq/wlr3492YUZgP9UJUHvlBU
-         TO/3uIHeuJRaEhMSs0lvL4IHoEg7Lz+D9iUe0bdVEadv+/4v0kLY7D3DaEgQztFAhcOx
-         C+bg==
-X-Gm-Message-State: AOAM531oh3kmDPII2z5ca/a1dTWTyoe4NEUf7gwFd3ukuCV35abUxI8B
-        zGoDizedzS2AVJsz3RT+JMQ+SaEWsW0=
-X-Google-Smtp-Source: ABdhPJxo12OlRmrooRgedRL64mkuImYPCfRdFrX4dRDVKlZCRQ36kvQpCDsGtxzCMYSw4O/wmbIjpA==
-X-Received: by 2002:a7b:c75a:: with SMTP id w26mr8905703wmk.49.1617291679866;
-        Thu, 01 Apr 2021 08:41:19 -0700 (PDT)
+        bh=nXaGyCwufbowQyx7IWi+icYC2uFsuA2bq1r9jyL4u28=;
+        b=SIrXQnt6R4fiHkBm0zD8eSLB8CMxGWPpxOSvoAWP+lJlwm3YkxE1X9LOPu9QA6OrsB
+         MWr1Au9EXZGSvmgP884/Ho2k4Np9mCjxTTg0E6xCfQtZNnE6QJAOY3H05HnOVT6ynVEh
+         VeW9qqLYGQ9iCEz7hxGT9LYzSBv/L0qv+WX2dSXELkqbngmSaQNYlR8BUP8vokcMdQQ9
+         43m4+uWj7XLVnKKOQhPC344Cz2fy+vYG/ZZbRxtD66NCzasf9MKkxffQTmWx2//injzr
+         /cr8oKlu55xOTh2xFDUBAKy9SF14iUdD8R5Lg6G9c8O7dvjBncycoT0GFPE8JG5SnDkF
+         1ptA==
+X-Gm-Message-State: AOAM533pdFyC5ZnB7pfjlCqSTdAuBogOYQqoJTNVnCoF1Evm3rQ8xjkW
+        Vs/rxT82OqWfNM0O11ZY8feWdLhzzrY=
+X-Google-Smtp-Source: ABdhPJzt+MHmEtuTXM6rzczAM50dvv6wd9ThgGxcRN4OvlusEgqsR1lZabZl2I41PqG+kud0WmULNQ==
+X-Received: by 2002:adf:fcc7:: with SMTP id f7mr10533138wrs.400.1617291669339;
+        Thu, 01 Apr 2021 08:41:09 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n9sm10157966wrx.46.2021.04.01.08.41.19
+        by smtp.gmail.com with ESMTPSA id w22sm9500129wmi.22.2021.04.01.08.41.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Apr 2021 08:41:19 -0700 (PDT)
-Message-Id: <038b62dc6744e8d8004f3f8423a40066821c0f1b.1617291666.git.gitgitgadget@gmail.com>
+        Thu, 01 Apr 2021 08:41:09 -0700 (PDT)
+Message-Id: <3dac63eae201e6d0b949680e682238625cad59bd.1617291666.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.923.git.1617291666.gitgitgadget@gmail.com>
 References: <pull.923.git.1617291666.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 01 Apr 2021 15:41:01 +0000
-Subject: [PATCH 19/23] fsmonitor--daemon: use a cookie file to sync with file
- system
+Date:   Thu, 01 Apr 2021 15:40:44 +0000
+Subject: [PATCH 02/23] fsmonitor-ipc: create client routines for
+ git-fsmonitor--daemon
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,319 +76,265 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Teach fsmonitor--daemon client threads to create a cookie file
-inside the .git directory and then wait until FS events for the
-cookie are observed by the FS listener thread.
+Create client routines to spawn a fsmonitor daemon and send it an IPC
+request using `simple-ipc`.
 
-This helps address the racy nature of file system events by
-blocking the client response until the kernel has drained any
-event backlog.
-
-This is especially important on MacOS where kernel events are
-only issued with a limited frequency.  See the `latency` argument
-of `FSeventStreamCreate()`.  The kernel only signals every `latency`
-seconds, but does not guarantee that the kernel queue is completely
-drained, so we may have to wait more than one interval.  If we
-increase the frequency, the system is more likely to drop events.
-We avoid these issues by having each client thread create a unique
-cookie file and then wait until it is seen in the event stream.
-
-Co-authored-by: Kevin Willford <Kevin.Willford@microsoft.com>
-Co-authored-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- builtin/fsmonitor--daemon.c | 198 ++++++++++++++++++++++++++++++++++++
- fsmonitor--daemon.h         |   5 +
- 2 files changed, 203 insertions(+)
+ Makefile        |   1 +
+ fsmonitor-ipc.c | 153 ++++++++++++++++++++++++++++++++++++++++++++++++
+ fsmonitor-ipc.h |  48 +++++++++++++++
+ help.c          |   4 ++
+ 4 files changed, 206 insertions(+)
+ create mode 100644 fsmonitor-ipc.c
+ create mode 100644 fsmonitor-ipc.h
 
-diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
-index 0cb09ef0b984..d6b59a98cedd 100644
---- a/builtin/fsmonitor--daemon.c
-+++ b/builtin/fsmonitor--daemon.c
-@@ -150,6 +150,149 @@ static int do_as_client__send_flush(void)
- 	return 0;
- }
- 
-+enum fsmonitor_cookie_item_result {
-+	FCIR_ERROR = -1, /* could not create cookie file ? */
-+	FCIR_INIT = 0,
-+	FCIR_SEEN,
-+	FCIR_ABORT,
-+};
+diff --git a/Makefile b/Makefile
+index a6a73c574191..50977911d41a 100644
+--- a/Makefile
++++ b/Makefile
+@@ -891,6 +891,7 @@ LIB_OBJS += fetch-pack.o
+ LIB_OBJS += fmt-merge-msg.o
+ LIB_OBJS += fsck.o
+ LIB_OBJS += fsmonitor.o
++LIB_OBJS += fsmonitor-ipc.o
+ LIB_OBJS += gettext.o
+ LIB_OBJS += gpg-interface.o
+ LIB_OBJS += graph.o
+diff --git a/fsmonitor-ipc.c b/fsmonitor-ipc.c
+new file mode 100644
+index 000000000000..b0dc334ff02d
+--- /dev/null
++++ b/fsmonitor-ipc.c
+@@ -0,0 +1,153 @@
++#include "cache.h"
++#include "fsmonitor.h"
++#include "fsmonitor-ipc.h"
++#include "run-command.h"
++#include "strbuf.h"
++#include "trace2.h"
 +
-+struct fsmonitor_cookie_item {
-+	struct hashmap_entry entry;
-+	const char *name;
-+	enum fsmonitor_cookie_item_result result;
-+};
-+
-+static int cookies_cmp(const void *data, const struct hashmap_entry *he1,
-+		     const struct hashmap_entry *he2, const void *keydata)
-+{
-+	const struct fsmonitor_cookie_item *a =
-+		container_of(he1, const struct fsmonitor_cookie_item, entry);
-+	const struct fsmonitor_cookie_item *b =
-+		container_of(he2, const struct fsmonitor_cookie_item, entry);
-+
-+	return strcmp(a->name, keydata ? keydata : b->name);
-+}
-+
-+static enum fsmonitor_cookie_item_result fsmonitor_wait_for_cookie(
-+	struct fsmonitor_daemon_state *state)
-+{
-+	int fd;
-+	struct fsmonitor_cookie_item cookie;
-+	struct strbuf cookie_pathname = STRBUF_INIT;
-+	struct strbuf cookie_filename = STRBUF_INIT;
-+	const char *slash;
-+	int my_cookie_seq;
-+
-+	pthread_mutex_lock(&state->main_lock);
-+
-+	my_cookie_seq = state->cookie_seq++;
-+
-+	strbuf_addbuf(&cookie_pathname, &state->path_cookie_prefix);
-+	strbuf_addf(&cookie_pathname, "%i-%i", getpid(), my_cookie_seq);
-+
-+	slash = find_last_dir_sep(cookie_pathname.buf);
-+	if (slash)
-+		strbuf_addstr(&cookie_filename, slash + 1);
-+	else
-+		strbuf_addbuf(&cookie_filename, &cookie_pathname);
-+	cookie.name = strbuf_detach(&cookie_filename, NULL);
-+	cookie.result = FCIR_INIT;
-+	// TODO should we have case-insenstive hash (and in cookie_cmp()) ??
-+	hashmap_entry_init(&cookie.entry, strhash(cookie.name));
-+
-+	/*
-+	 * Warning: we are putting the address of a stack variable into a
-+	 * global hashmap.  This feels dodgy.  We must ensure that we remove
-+	 * it before this thread and stack frame returns.
-+	 */
-+	hashmap_add(&state->cookies, &cookie.entry);
-+
-+	trace_printf_key(&trace_fsmonitor, "cookie-wait: '%s' '%s'",
-+			 cookie.name, cookie_pathname.buf);
-+
-+	/*
-+	 * Create the cookie file on disk and then wait for a notification
-+	 * that the listener thread has seen it.
-+	 */
-+	fd = open(cookie_pathname.buf, O_WRONLY | O_CREAT | O_EXCL, 0600);
-+	if (fd >= 0) {
-+		close(fd);
-+		unlink_or_warn(cookie_pathname.buf);
-+
-+		while (cookie.result == FCIR_INIT)
-+			pthread_cond_wait(&state->cookies_cond,
-+					  &state->main_lock);
-+
-+		hashmap_remove(&state->cookies, &cookie.entry, NULL);
-+	} else {
-+		error_errno(_("could not create fsmonitor cookie '%s'"),
-+			    cookie.name);
-+
-+		cookie.result = FCIR_ERROR;
-+		hashmap_remove(&state->cookies, &cookie.entry, NULL);
-+	}
-+
-+	pthread_mutex_unlock(&state->main_lock);
-+
-+	free((char*)cookie.name);
-+	strbuf_release(&cookie_pathname);
-+	return cookie.result;
-+}
++#ifdef HAVE_FSMONITOR_DAEMON_BACKEND
++#define FSMONITOR_DAEMON_IS_SUPPORTED 1
++#else
++#define FSMONITOR_DAEMON_IS_SUPPORTED 0
++#endif
 +
 +/*
-+ * Mark these cookies as _SEEN and wake up the corresponding client threads.
++ * A trivial function so that this source file always defines at least
++ * one symbol even when the feature is not supported.  This quiets an
++ * annoying compiler error.
 + */
-+static void fsmonitor_cookie_mark_seen(struct fsmonitor_daemon_state *state,
-+				       const struct string_list *cookie_names)
++int fsmonitor_ipc__is_supported(void)
 +{
-+	/* assert state->main_lock */
-+
-+	int k;
-+	int nr_seen = 0;
-+
-+	for (k = 0; k < cookie_names->nr; k++) {
-+		struct fsmonitor_cookie_item key;
-+		struct fsmonitor_cookie_item *cookie;
-+
-+		key.name = cookie_names->items[k].string;
-+		hashmap_entry_init(&key.entry, strhash(key.name));
-+
-+		cookie = hashmap_get_entry(&state->cookies, &key, entry, NULL);
-+		if (cookie) {
-+			trace_printf_key(&trace_fsmonitor, "cookie-seen: '%s'",
-+					 cookie->name);
-+			cookie->result = FCIR_SEEN;
-+			nr_seen++;
-+		}
-+	}
-+
-+	if (nr_seen)
-+		pthread_cond_broadcast(&state->cookies_cond);
++	return FSMONITOR_DAEMON_IS_SUPPORTED;
 +}
 +
-+/*
-+ * Set _ABORT on all pending cookies and wake up all client threads.
-+ */
-+static void fsmonitor_cookie_abort_all(struct fsmonitor_daemon_state *state)
++#ifdef HAVE_FSMONITOR_DAEMON_BACKEND
++
++GIT_PATH_FUNC(fsmonitor_ipc__get_path, "fsmonitor")
++
++enum ipc_active_state fsmonitor_ipc__get_state(void)
 +{
-+	/* assert state->main_lock */
-+
-+	struct hashmap_iter iter;
-+	struct fsmonitor_cookie_item *cookie;
-+	int nr_aborted = 0;
-+
-+	hashmap_for_each_entry(&state->cookies, &iter, cookie, entry) {
-+		trace_printf_key(&trace_fsmonitor, "cookie-abort: '%s'",
-+				 cookie->name);
-+		cookie->result = FCIR_ABORT;
-+		nr_aborted++;
-+	}
-+
-+	if (nr_aborted)
-+		pthread_cond_broadcast(&state->cookies_cond);
++	return ipc_get_active_state(fsmonitor_ipc__get_path());
 +}
 +
- static int lookup_client_test_delay(void)
- {
- 	static int delay_ms = -1;
-@@ -435,6 +578,9 @@ static void fsmonitor_free_token_data(struct fsmonitor_token_data *token)
-  *     We should create a new token and start fresh (as if we just
-  *     booted up).
-  *
-+ * [2] Some of those lost events may have been for cookie files.  We
-+ *     should assume the worst and abort them rather letting them starve.
-+ *
-  * If there are no readers of the the current token data series, we
-  * can free it now.  Otherwise, let the last reader free it.  Either
-  * way, the old token data series is no longer associated with our
-@@ -454,6 +600,8 @@ void fsmonitor_force_resync(struct fsmonitor_daemon_state *state)
- 			 state->current_token_data->token_id.buf,
- 			 new_one->token_id.buf);
- 
-+	fsmonitor_cookie_abort_all(state);
++static int spawn_daemon(void)
++{
++	const char *args[] = { "fsmonitor--daemon", "--start", NULL };
 +
- 	if (state->current_token_data->client_ref_count == 0)
- 		free_me = state->current_token_data;
- 	state->current_token_data = new_one;
-@@ -526,6 +674,7 @@ static int do_handle_client(struct fsmonitor_daemon_state *state,
- 	kh_str_t *shown;
- 	int hash_ret;
- 	int result;
-+	enum fsmonitor_cookie_item_result cookie_result;
- 
- 	/*
- 	 * We expect `command` to be of the form:
-@@ -654,6 +803,39 @@ static int do_handle_client(struct fsmonitor_daemon_state *state,
- 		goto send_trivial_response;
- 	}
- 
-+	pthread_mutex_unlock(&state->main_lock);
++	return run_command_v_opt_tr2(args, RUN_COMMAND_NO_STDIN | RUN_GIT_CMD,
++				    "fsmonitor");
++}
 +
-+	/*
-+	 * Write a cookie file inside the directory being watched in an
-+	 * effort to flush out existing filesystem events that we actually
-+	 * care about.  Suspend this client thread until we see the filesystem
-+	 * events for this cookie file.
-+	 */
-+	cookie_result = fsmonitor_wait_for_cookie(state);
-+	if (cookie_result != FCIR_SEEN) {
-+		error(_("fsmonitor: cookie_result '%d' != SEEN"),
-+		      cookie_result);
-+		result = 0;
-+		goto send_trivial_response;
-+	}
++int fsmonitor_ipc__send_query(const char *since_token,
++			      struct strbuf *answer)
++{
++	int ret = -1;
++	int tried_to_spawn = 0;
++	enum ipc_active_state state = IPC_STATE__OTHER_ERROR;
++	struct ipc_client_connection *connection = NULL;
++	struct ipc_client_connect_options options
++		= IPC_CLIENT_CONNECT_OPTIONS_INIT;
 +
-+	pthread_mutex_lock(&state->main_lock);
++	options.wait_if_busy = 1;
++	options.wait_if_not_found = 0;
 +
-+	if (strcmp(requested_token_id.buf,
-+		   state->current_token_data->token_id.buf)) {
++	trace2_region_enter("fsm_client", "query", NULL);
++
++	trace2_data_string("fsm_client", NULL, "query/command",
++			   since_token);
++
++try_again:
++	state = ipc_client_try_connect(fsmonitor_ipc__get_path(), &options,
++				       &connection);
++
++	switch (state) {
++	case IPC_STATE__LISTENING:
++		ret = ipc_client_send_command_to_connection(
++			connection, since_token, answer);
++		ipc_client_close_connection(connection);
++
++		trace2_data_intmax("fsm_client", NULL,
++				   "query/response-length", answer->len);
++
++		if (fsmonitor_is_trivial_response(answer))
++			trace2_data_intmax("fsm_client", NULL,
++					   "query/trivial-response", 1);
++
++		goto done;
++
++	case IPC_STATE__NOT_LISTENING:
++		ret = error(_("fsmonitor_ipc__send_query: daemon not available"));
++		goto done;
++
++	case IPC_STATE__PATH_NOT_FOUND:
++		if (tried_to_spawn)
++			goto done;
++
++		tried_to_spawn++;
++		if (spawn_daemon())
++			goto done;
++
 +		/*
-+		 * Ack! The listener thread lost sync with the filesystem
-+		 * and created a new token while we were waiting for the
-+		 * cookie file to be created!  Just give up.
++		 * Try again, but this time give the daemon a chance to
++		 * actually create the pipe/socket.
++		 *
++		 * Granted, the daemon just started so it can't possibly have
++		 * any FS cached yet, so we'll always get a trivial answer.
++		 * BUT the answer should include a new token that can serve
++		 * as the basis for subsequent requests.
 +		 */
-+		pthread_mutex_unlock(&state->main_lock);
++		options.wait_if_not_found = 1;
++		goto try_again;
 +
-+		trace_printf_key(&trace_fsmonitor,
-+				 "lost filesystem sync");
-+		result = 0;
-+		goto send_trivial_response;
++	case IPC_STATE__INVALID_PATH:
++		ret = error(_("fsmonitor_ipc__send_query: invalid path '%s'"),
++			    fsmonitor_ipc__get_path());
++		goto done;
++
++	case IPC_STATE__OTHER_ERROR:
++	default:
++		ret = error(_("fsmonitor_ipc__send_query: unspecified error on '%s'"),
++			    fsmonitor_ipc__get_path());
++		goto done;
 +	}
 +
- 	/*
- 	 * We're going to hold onto a pointer to the current
- 	 * token-data while we walk the list of batches of files.
-@@ -982,6 +1164,9 @@ void fsmonitor_publish(struct fsmonitor_daemon_state *state,
- 		}
++done:
++	trace2_region_leave("fsm_client", "query", NULL);
++
++	return ret;
++}
++
++int fsmonitor_ipc__send_command(const char *command,
++				struct strbuf *answer)
++{
++	struct ipc_client_connection *connection = NULL;
++	struct ipc_client_connect_options options
++		= IPC_CLIENT_CONNECT_OPTIONS_INIT;
++	int ret;
++	enum ipc_active_state state;
++
++	strbuf_reset(answer);
++
++	options.wait_if_busy = 1;
++	options.wait_if_not_found = 0;
++
++	state = ipc_client_try_connect(fsmonitor_ipc__get_path(), &options,
++				       &connection);
++	if (state != IPC_STATE__LISTENING) {
++		die("fsmonitor--daemon is not running");
++		return -1;
++	}
++
++	ret = ipc_client_send_command_to_connection(connection, command, answer);
++	ipc_client_close_connection(connection);
++
++	if (ret == -1) {
++		die("could not send '%s' command to fsmonitor--daemon",
++		    command);
++		return -1;
++	}
++
++	return 0;
++}
++
++#endif
+diff --git a/fsmonitor-ipc.h b/fsmonitor-ipc.h
+new file mode 100644
+index 000000000000..7d21c1260151
+--- /dev/null
++++ b/fsmonitor-ipc.h
+@@ -0,0 +1,48 @@
++#ifndef FSMONITOR_IPC_H
++#define FSMONITOR_IPC_H
++
++/*
++ * Returns true if a filesystem notification backend is defined
++ * for this platform.  This symbol must always be visible and
++ * outside of the HAVE_ ifdef.
++ */
++int fsmonitor_ipc__is_supported(void);
++
++#ifdef HAVE_FSMONITOR_DAEMON_BACKEND
++#include "run-command.h"
++#include "simple-ipc.h"
++
++/*
++ * Returns the pathname to the IPC named pipe or Unix domain socket
++ * where a `git-fsmonitor--daemon` process will listen.  This is a
++ * per-worktree value.
++ */
++const char *fsmonitor_ipc__get_path(void);
++
++/*
++ * Try to determine whether there is a `git-fsmonitor--daemon` process
++ * listening on the IPC pipe/socket.
++ */
++enum ipc_active_state fsmonitor_ipc__get_state(void);
++
++/*
++ * Connect to a `git-fsmonitor--daemon` process via simple-ipc
++ * and ask for the set of changed files since the given token.
++ *
++ * This DOES NOT use the hook interface.
++ *
++ * Spawn a daemon process in the background if necessary.
++ */
++int fsmonitor_ipc__send_query(const char *since_token,
++			      struct strbuf *answer);
++
++/*
++ * Connect to a `git-fsmonitor--daemon` process via simple-ipc and
++ * send a command verb.  If no daemon is available, we DO NOT try to
++ * start one.
++ */
++int fsmonitor_ipc__send_command(const char *command,
++				struct strbuf *answer);
++
++#endif /* HAVE_FSMONITOR_DAEMON_BACKEND */
++#endif /* FSMONITOR_IPC_H */
+diff --git a/help.c b/help.c
+index 3c3bdec21356..e22ba1d246a5 100644
+--- a/help.c
++++ b/help.c
+@@ -11,6 +11,7 @@
+ #include "version.h"
+ #include "refs.h"
+ #include "parse-options.h"
++#include "fsmonitor-ipc.h"
+ 
+ struct category_description {
+ 	uint32_t category;
+@@ -664,6 +665,9 @@ void get_version_info(struct strbuf *buf, int show_build_options)
+ 		strbuf_addf(buf, "sizeof-size_t: %d\n", (int)sizeof(size_t));
+ 		strbuf_addf(buf, "shell-path: %s\n", SHELL_PATH);
+ 		/* NEEDSWORK: also save and output GIT-BUILD_OPTIONS? */
++
++		if (fsmonitor_ipc__is_supported())
++			strbuf_addstr(buf, "feature: fsmonitor--daemon\n");
  	}
- 
-+	if (cookie_names->nr)
-+		fsmonitor_cookie_mark_seen(state, cookie_names);
-+
- 	pthread_mutex_unlock(&state->main_lock);
  }
- 
-@@ -1071,7 +1256,9 @@ static int fsmonitor_run_daemon(void)
- 
- 	memset(&state, 0, sizeof(state));
- 
-+	hashmap_init(&state.cookies, cookies_cmp, NULL, 0);
- 	pthread_mutex_init(&state.main_lock, NULL);
-+	pthread_cond_init(&state.cookies_cond, NULL);
- 	state.error_code = 0;
- 	state.current_token_data = fsmonitor_new_token_data();
- 	state.test_client_delay_ms = lookup_client_test_delay();
-@@ -1094,6 +1281,15 @@ static int fsmonitor_run_daemon(void)
- 		state.nr_paths_watching = 2;
- 	}
- 
-+	/*
-+	 * We will write filesystem syncing cookie files into
-+	 * <gitdir>/<cookie-prefix><pid>-<seq>.
-+	 */
-+	strbuf_init(&state.path_cookie_prefix, 0);
-+	strbuf_addbuf(&state.path_cookie_prefix, &state.path_gitdir_watch);
-+	strbuf_addch(&state.path_cookie_prefix, '/');
-+	strbuf_addstr(&state.path_cookie_prefix, FSMONITOR_COOKIE_PREFIX);
-+
- 	/*
- 	 * Confirm that we can create platform-specific resources for the
- 	 * filesystem listener before we bother starting all the threads.
-@@ -1106,6 +1302,7 @@ static int fsmonitor_run_daemon(void)
- 	err = fsmonitor_run_daemon_1(&state);
- 
- done:
-+	pthread_cond_destroy(&state.cookies_cond);
- 	pthread_mutex_destroy(&state.main_lock);
- 	fsmonitor_fs_listen__dtor(&state);
- 
-@@ -1113,6 +1310,7 @@ static int fsmonitor_run_daemon(void)
- 
- 	strbuf_release(&state.path_worktree_watch);
- 	strbuf_release(&state.path_gitdir_watch);
-+	strbuf_release(&state.path_cookie_prefix);
- 
- 	return err;
- }
-diff --git a/fsmonitor--daemon.h b/fsmonitor--daemon.h
-index 06563b6ed56c..4e580e285ed6 100644
---- a/fsmonitor--daemon.h
-+++ b/fsmonitor--daemon.h
-@@ -45,6 +45,11 @@ struct fsmonitor_daemon_state {
- 
- 	struct fsmonitor_token_data *current_token_data;
- 
-+	struct strbuf path_cookie_prefix;
-+	pthread_cond_t cookies_cond;
-+	int cookie_seq;
-+	struct hashmap cookies;
-+
- 	int error_code;
- 	struct fsmonitor_daemon_backend_data *backend_data;
  
 -- 
 gitgitgadget
