@@ -2,142 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 35EC3C43460
-	for <git@archiver.kernel.org>; Thu,  1 Apr 2021 08:33:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B6204C433ED
+	for <git@archiver.kernel.org>; Thu,  1 Apr 2021 09:59:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E7FA361001
-	for <git@archiver.kernel.org>; Thu,  1 Apr 2021 08:33:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6DB8B610A5
+	for <git@archiver.kernel.org>; Thu,  1 Apr 2021 09:59:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233605AbhDAIdA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Apr 2021 04:33:00 -0400
-Received: from cloud.peff.net ([104.130.231.41]:39586 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233509AbhDAIc0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Apr 2021 04:32:26 -0400
-Received: (qmail 7452 invoked by uid 109); 1 Apr 2021 08:32:25 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 01 Apr 2021 08:32:24 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12274 invoked by uid 111); 1 Apr 2021 08:32:25 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 01 Apr 2021 04:32:25 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 1 Apr 2021 04:32:24 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Olga Telezhnaya <olyatelezhnaya@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Taylor Blau <me@ttaylorr.com>,
-        Elijah Newren <newren@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] ref-filter: fix NULL check for parse object failure
-Message-ID: <YGWFGMdGcKeaqCQF@coredump.intra.peff.net>
-References: <20210308200426.21824-1-avarab@gmail.com>
- <cover-00.11-00000000000-20210328T021238Z-avarab@gmail.com>
- <patch-10.11-a84f670ac24-20210328T021238Z-avarab@gmail.com>
- <xmqq35wdfaw5.fsf@gitster.g>
- <YGRWqX+qF+Rtqr20@coredump.intra.peff.net>
- <87k0pnkwej.fsf@evledraar.gmail.com>
- <YGTGgFI19fS7Uv6I@coredump.intra.peff.net>
- <87eefvkq5d.fsf@evledraar.gmail.com>
- <YGV8UOsYUQt7Lpto@coredump.intra.peff.net>
+        id S233858AbhDAJ6j (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Apr 2021 05:58:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44464 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233643AbhDAJ6T (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Apr 2021 05:58:19 -0400
+Received: from mail-il1-x130.google.com (mail-il1-x130.google.com [IPv6:2607:f8b0:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5992DC0613E6
+        for <git@vger.kernel.org>; Thu,  1 Apr 2021 02:58:19 -0700 (PDT)
+Received: by mail-il1-x130.google.com with SMTP id c17so1540633ilj.7
+        for <git@vger.kernel.org>; Thu, 01 Apr 2021 02:58:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=UAXiiRPCjIUWY0N7hn0k7gwsXtKI9ill7G1KCyCvZ98=;
+        b=jVPfncwya1DzG/5zej762/KROSFVtuwdzpYRqiOOYiDn9UzE/qKfOgpuZNkyafjD8R
+         nOUKEJ1c0eHc8Z0i5FDGIFjIYacUIeC02CqVf3fMq+iJ/YhiybGrwFSYuk1xQEYE6dQl
+         nnXDe64H6Kod4nGkSCp72ekpocLN9oS5EAkWUNsWfCPALjjxYkuazxSgJpzieRK8Cvcp
+         k2kn/HBtCG9crxxOxB4fZq9lRJJ98Smk+/A+p6AXPiSoV5anO5jeho78Tu8gIlCfuucV
+         c7skGpJztXgLjDWNfBHaRD7Y/7FREKE9upokOdte5JJOUWFgVmQ1D2A6LzMWlGTMONAS
+         1Whw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=UAXiiRPCjIUWY0N7hn0k7gwsXtKI9ill7G1KCyCvZ98=;
+        b=kytVzA8Kff1i4E1zaWsXItDYQmBAhFtqPtdKYtkE19AcxGOIQGEsAIxtXlAV55vGob
+         ZaR2S7Qr19fL3l3E5jjDBklJdWlyWiRFK+h6fvkZUMx5G9ATS/ruA7ux1Gt1gBy1D0Kk
+         nYCBccFtCJ29YpS0YuYgq57vL7RSL9VUfxCXjVBod40vjVYChC456eflqfeIWVf+1vFz
+         Gj2h+8Vj8uzxA2DchKaE4sL0w5zz4FYfYIm8rZn7sVTGqxLC0gGPH0lBKCiih56bYGBI
+         AuLLlqU/iR4DpvBqEL9STiXygRM+0cwJQUS+LoHEb8zYvYkbnlpwackrsV8vK+4xb/vR
+         7R6Q==
+X-Gm-Message-State: AOAM530p5luhlvJZeTFDD/EAtYhtzx9uaLVlr1GfEK+OUkCHU698sLgB
+        jIo062T1aC8st7Y+t+XLtDH41CMBZUx4XSM1B6s=
+X-Google-Smtp-Source: ABdhPJwqejQ2UDewZIJtdU1zcgxuV6QQWwEtuL/9lnHSn74W1OLRvyOcjrHXcUMgSDniK45uw7qgZGwWPkdaYN91aVE=
+X-Received: by 2002:a05:6e02:1d8e:: with SMTP id h14mr5917264ila.301.1617271098800;
+ Thu, 01 Apr 2021 02:58:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <YGV8UOsYUQt7Lpto@coredump.intra.peff.net>
+References: <pull.913.v4.git.1616775185562.gitgitgadget@gmail.com>
+ <pull.913.v5.git.1617185147.gitgitgadget@gmail.com> <4c59cab53a0d9bb7c9cccfaf5544ae5c904bb2ba.1617185147.git.gitgitgadget@gmail.com>
+ <CAP8UFD2tb6Fca58YPiFejqGKm3Mu+NaMA8YU3HQj+c2L-AH-Yw@mail.gmail.com>
+In-Reply-To: <CAP8UFD2tb6Fca58YPiFejqGKm3Mu+NaMA8YU3HQj+c2L-AH-Yw@mail.gmail.com>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Thu, 1 Apr 2021 17:58:07 +0800
+Message-ID: <CAOLTT8QUwjpb5AqKR0FgxWH_ESPzy8-fkDJk18uggO_SkT4Fzg@mail.gmail.com>
+Subject: Re: [PATCH v5 1/2] [GSOC] run-command: add shell_no_implicit_args option
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 01, 2021 at 03:54:56AM -0400, Jeff King wrote:
+Christian Couder <christian.couder@gmail.com> =E4=BA=8E2021=E5=B9=B44=E6=9C=
+=881=E6=97=A5=E5=91=A8=E5=9B=9B =E4=B8=8B=E5=8D=883:22=E5=86=99=E9=81=93=EF=
+=BC=9A
+>
+> On Wed, Mar 31, 2021 at 12:05 PM ZheNing Hu via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+> >
+> > From: ZheNing Hu <adlternative@gmail.com>
+> >
+> > When we use subprocess to run a shell-script, if we have any
+>
+> Maybe: s/subprocess/a subprocess/
+>
+> > args, git will add extra $@ to the end of the shell-script,
+> > This can pass positional parameters correctly, But if we just
+> > want to use some of these passed parameters, git will still
+> > add an extra "$@", which contains all positional parameters we
+> > passed. This does not meet our expectations.
+>
+> I am not sure explaining things using $@ is the best way to make this
+> as clear as possible. I don't have a clear alternative right now
+> though.
+>
+> > E.g. our shell-script is:
+> > "echo \"\$1\""
+> > and pass $1 "abc",
+>
+> Maybe: s/pass $1 "abc"/we pass "abc" as $1/
+>
+> > git will change our script to:
+> > "echo \"\$1\" \"$@\""
+>
+> Where will "abc" appear then?
+>
+> > The positional parameters we entered will be printed
+> > repeatedly.
+>
+> If you take us passing "abc" in $1 as an example, then I think it's a
+> good idea to show us the result of that.
+>
+> > So let add a new `shell_no_implicit_args`
+>
+> Maybe: s/`shell_no_implicit_args`/`shell_no_implicit_args` flag/
+>
 
-> On Wed, Mar 31, 2021 at 10:46:22PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> 
-> > > Neither of those types is the correct one. And the segfault is just a
-> > > bonus! :)
-> > >
-> > > I'd expect similar cases with parsing commit parents and tree pointers.
-> > > And probably tree entries whose modes are wrong.
-> > 
-> > So the segfault happens without my patches,
-> 
-> Yeah, sorry if that was unclear. It is definitely a pre-existing bug.
+Thanks for these grammar corrections.
 
-Here's a patch to fix it. This is mostly orthogonal to your patch
-series. It happens to use a similar recipe to reproduce, but that is not
-the only way to do it, and the fix and the test shouldn't conflict
-textually or semantically.
+> > to `struct child_process`, which can suppress the
+> > joining of $@ if `shell_no_implicit_args` is set to 1,
+> > this will allow us to use only few of positional args
+> > in multi-parameter shell script, instead of using all
+> > of them.
+>
+> I think our goal is more to have each argument we pass be passed just onc=
+e.
 
--- >8 --
-Subject: [PATCH] ref-filter: fix NULL check for parse object failure
+More accurately, we only want those explicit positional
+parameters to be replaced.
+But Junio probably thinks it's OK to put on a layer of
+"sh -c"  to "absorb" the "$@". I think it works, but it may
+cause some trouble for users.
 
-After we run parse_object_buffer() to get an object's contents, we try
-to check that the return value wasn't NULL. However, since our "struct
-object" is a pointer-to-pointer, and we assign like:
-
-  *obj = parse_object_buffer(...);
-
-it's not correct to check:
-
-  if (!obj)
-
-That will always be true, since our double pointer will continue to
-point to the single pointer (which is itself NULL). This is a regression
-that was introduced by aa46a0da30 (ref-filter: use oid_object_info() to
-get object, 2018-07-17); since that commit we'll segfault on a parse
-failure, as we try to look at the NULL object pointer.
-
-There are many ways a parse could fail, but most of them are hard to set
-up in the tests (it's easy to make a bogus object, but update-ref will
-refuse to point to it). The test here uses a tag which points to a wrong
-object type. A parse of just the broken tag object will succeed, but
-seeing both tag objects in the same process will lead to a parse error
-(since we'll see the pointed-to object as both types).
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- ref-filter.c            |  2 +-
- t/t6300-for-each-ref.sh | 10 ++++++++++
- 2 files changed, 11 insertions(+), 1 deletion(-)
-
-diff --git a/ref-filter.c b/ref-filter.c
-index f0bd32f714..a0adb4551d 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -1608,7 +1608,7 @@ static int get_object(struct ref_array_item *ref, int deref, struct object **obj
- 
- 	if (oi->info.contentp) {
- 		*obj = parse_object_buffer(the_repository, &oi->oid, oi->type, oi->size, oi->content, &eaten);
--		if (!obj) {
-+		if (!*obj) {
- 			if (!eaten)
- 				free(oi->content);
- 			return strbuf_addf_ret(err, -1, _("parse_object_buffer failed on %s for %s"),
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index cac7f443d0..2e7c32d50c 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -1134,4 +1134,14 @@ test_expect_success 'for-each-ref --ignore-case works on multiple sort keys' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'for-each-ref reports broken tags' '
-+	git tag -m "good tag" broken-tag-good HEAD &&
-+	git cat-file tag broken-tag-good >good &&
-+	sed s/commit/blob/ <good >bad &&
-+	bad=$(git hash-object -w -t tag bad) &&
-+	git update-ref refs/tags/broken-tag-bad $bad &&
-+	test_must_fail git for-each-ref --format="%(*objectname)" \
-+		refs/tags/broken-tag-*
-+'
-+
- test_done
--- 
-2.31.1.478.g72c5357f0d
-
+--
+ZheNing Hu
