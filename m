@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9659C43618
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FCA6C43616
 	for <git@archiver.kernel.org>; Thu,  1 Apr 2021 01:51:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 99E9E6023F
+	by mail.kernel.org (Postfix) with ESMTP id 7964361090
 	for <git@archiver.kernel.org>; Thu,  1 Apr 2021 01:51:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233153AbhDABug (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 31 Mar 2021 21:50:36 -0400
+        id S233139AbhDABuf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 31 Mar 2021 21:50:35 -0400
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233026AbhDABuM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Mar 2021 21:50:12 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E71BDC061574
-        for <git@vger.kernel.org>; Wed, 31 Mar 2021 18:50:11 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id z2so189830wrl.5
-        for <git@vger.kernel.org>; Wed, 31 Mar 2021 18:50:11 -0700 (PDT)
+        with ESMTP id S233015AbhDABuK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Mar 2021 21:50:10 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA683C061762
+        for <git@vger.kernel.org>; Wed, 31 Mar 2021 18:50:09 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id x13so174883wrs.9
+        for <git@vger.kernel.org>; Wed, 31 Mar 2021 18:50:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=AqzgF3ydQhx2SGKGBO9a/JEpTg8x4sKJCQWGxp4c3hY=;
-        b=fN88q7UJGQffTF18jUED8/zfp2PAl6MCduHfnLKQbBZWRLr4SLa82m85UHfXWfH0SF
-         OULuBmQFJQustz1ouY08t7SsDwyu9A6Qc62xcqQFA7Io57hRjmNB+1DVV1XRImwfLBh/
-         Y6dNLOV2LkVe3yfcCsJmYObHYsx0U8I4M4uR3lYoi7RCiBxmN3z6COAg9QuujZYUZxZQ
-         hsLIfTzTrMVNLDKOD450RMBuOGh6vyKipjncLN8N+uzjozpcVTkQXHx2D3Xf1g9mOyvi
-         /8I83dMK1pNPgZ62tcThYmyk04TDqHy6W83O25gnykuznPdNdN+5eyITYcJ9A2FiC4if
-         7WQw==
+        bh=rzO06S1ief0qGjiR3z1dlgur8sjPW9z+JkmBA4FJEXI=;
+        b=FkP2dQCFQxNP5RU7x5TH+yakq5+nQRO1K24j1RjBaijghGPUQlkXDrNW5VbxO3Ldza
+         TQV49VhJPo3knJ0Cirfb9TptbP3Siajx1h55TfyeausVUH3TJrkzW8VLokW2YCIQDOcm
+         a526mGubfuzGDAQ/7RqWYgFFlLfr4BqMIPi9n3VXsG7+vlXz2D5mhJU0dwwzsGnaiZSN
+         ZgCCOhVI/akaz9XDDfT1yj+6coW5aM0T99BEbf67gR1WGtK4dQQ5Bce0mkdj0M9CR4Is
+         AqLd+FE4eUE+h+44z+Sg8JG1PrtVLKXnoa6Bkmr9ULWSghlx8gmH40A7RpGyanBrVCmi
+         4Q5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=AqzgF3ydQhx2SGKGBO9a/JEpTg8x4sKJCQWGxp4c3hY=;
-        b=pEm5g0PuVJ5hABhrUQUV/MwnP3d/LHLvWOZec8IsHvGwZPPa0PTnryNVr9VAvW1DJK
-         T7LXSjSmGSKZRh9c9zq/WAtqr5LuPQEFEqlc9o4FJlGFzyocdIgPb47XL5N89krws3TN
-         zfwLkj0aZCrOyWbU6XUyJFrSfU6WjepEmVK5rqh2jTRTjIaz5FFC76fRkoo6iK1Y5HH1
-         HWZj5xasXY1L0enAGy4dhDISXV+MDgI9fl4BswQab2ioaQMntiNN2pSmaBB1pkCL8tKZ
-         17BxbsvkbpRV24UYAUuP2aIlhMCddZn4DWf+XltEUJ7NoCWTqktgUBdEEe1MGZowZEqu
-         oZPw==
-X-Gm-Message-State: AOAM532Xmkz5WK9LlMRYiIFNM291dwvcGlCD11LqeNSDEvK3zuWz9hGX
-        3U+68Raj/wNLQlLWprVwGhjq7cWPbPs=
-X-Google-Smtp-Source: ABdhPJxFNRHbzB6qtwp9fo9zTg3sAROqaWTERr7kEWB48WGShcRcK1zqXfrvZOIEWkXu2ydAowdzgA==
-X-Received: by 2002:a5d:410b:: with SMTP id l11mr6727379wrp.16.1617241810791;
-        Wed, 31 Mar 2021 18:50:10 -0700 (PDT)
+        bh=rzO06S1ief0qGjiR3z1dlgur8sjPW9z+JkmBA4FJEXI=;
+        b=nMCNqaOAycI0lkAAkjhem/c8pKdc3s3TpX5Q1qIpyXB1HLJXMfsWqG263BV7VEpLRB
+         UTeIEoX74xwXAU4bxttRdlQFRATfy90sCNdaBErii4iQJO82NLTPIsgEARNxgbD/2M0x
+         Tyjc6nnWpeFMRFEDFm5AegPvjdhasm/ZG8gqnbRCPeD8ZmhkQs5rX/gx2ShQdhVcpZMG
+         NLSSswoRlJs3i/HLi+votgJRXlV/wIQkLdKVBD26aE/bk3xyN1FMmmvJpHKLbdSdC3bS
+         qnoe4hi84ki61JOAhnlhkEDXCVv4ERygKhr8f6MA6vi0rDgIFQfq/AraeJKX88lMKhLo
+         A9yQ==
+X-Gm-Message-State: AOAM531+/rlNVKhR4Hl29Mv+a1xjmlWjOgi8awdNv36vYiQTQ0OBN/eI
+        OKZD9Bbe3lbHAMcCOMjoRiGlx7Xrv38=
+X-Google-Smtp-Source: ABdhPJw0bbCxbiaefF9NyI0gGJSLJvCM0ItX9DXmcJbjt/56pNE510RaQ9OcJN0WWctBbmMe1e3gdQ==
+X-Received: by 2002:adf:b355:: with SMTP id k21mr6725711wrd.156.1617241808608;
+        Wed, 31 Mar 2021 18:50:08 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n6sm7362554wrt.1.2021.03.31.18.50.10
+        by smtp.gmail.com with ESMTPSA id t14sm6783151wru.64.2021.03.31.18.50.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Mar 2021 18:50:10 -0700 (PDT)
-Message-Id: <8c0d377054fa126f6b7426f8d87cd9bd57f5328c.1617241803.git.gitgitgadget@gmail.com>
+        Wed, 31 Mar 2021 18:50:08 -0700 (PDT)
+Message-Id: <fd04adbb3f79b3dc2e7f36fb4ddf852ba3165f5b.1617241803.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.906.v2.git.1617241802.gitgitgadget@gmail.com>
 References: <pull.906.git.1615929435.gitgitgadget@gmail.com>
         <pull.906.v2.git.1617241802.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 01 Apr 2021 01:49:48 +0000
-Subject: [PATCH v2 11/25] grep: ensure full index
+Date:   Thu, 01 Apr 2021 01:49:44 +0000
+Subject: [PATCH v2 07/25] checkout: ensure full index
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,28 +79,37 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-Before iterating over all cache entries, ensure that a sparse index is
-expanded to a full one so we do not miss blobs to scan. Later, this can
-integrate more carefully with sparse indexes with proper testing.
+Before iterating over all cache entries in the checkout builtin, ensure
+that we have a full index to avoid any unexpected behavior.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- builtin/grep.c | 2 ++
- 1 file changed, 2 insertions(+)
+ builtin/checkout.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 4e91a253ac3b..c2d40414e975 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -504,6 +504,8 @@ static int grep_cache(struct grep_opt *opt,
- 	if (repo_read_index(repo) < 0)
- 		die(_("index file corrupt"));
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 0e6639052001..d0dbe63ea119 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -368,6 +368,9 @@ static int checkout_worktree(const struct checkout_opts *opts,
+ 			       NULL);
  
+ 	enable_delayed_checkout(&state);
++
 +	/* TODO: audit for interaction with sparse-index. */
-+	ensure_full_index(repo->index);
- 	for (nr = 0; nr < repo->index->cache_nr; nr++) {
- 		const struct cache_entry *ce = repo->index->cache[nr];
- 
++	ensure_full_index(&the_index);
+ 	for (pos = 0; pos < active_nr; pos++) {
+ 		struct cache_entry *ce = active_cache[pos];
+ 		if (ce->ce_flags & CE_MATCHED) {
+@@ -512,6 +515,8 @@ static int checkout_paths(const struct checkout_opts *opts,
+ 	 * Make sure all pathspecs participated in locating the paths
+ 	 * to be checked out.
+ 	 */
++	/* TODO: audit for interaction with sparse-index. */
++	ensure_full_index(&the_index);
+ 	for (pos = 0; pos < active_nr; pos++)
+ 		if (opts->overlay_mode)
+ 			mark_ce_for_checkout_overlay(active_cache[pos],
 -- 
 gitgitgadget
 
