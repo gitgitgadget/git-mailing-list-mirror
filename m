@@ -2,109 +2,176 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BE5CC4363E
-	for <git@archiver.kernel.org>; Thu,  1 Apr 2021 18:10:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 04767C433ED
+	for <git@archiver.kernel.org>; Thu,  1 Apr 2021 18:22:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DD53D6135A
-	for <git@archiver.kernel.org>; Thu,  1 Apr 2021 18:10:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CB73760240
+	for <git@archiver.kernel.org>; Thu,  1 Apr 2021 18:22:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238189AbhDASJT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Apr 2021 14:09:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34266 "EHLO
+        id S234872AbhDASWH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Apr 2021 14:22:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237866AbhDASEp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Apr 2021 14:04:45 -0400
-Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD06BC08EAC2
-        for <git@vger.kernel.org>; Thu,  1 Apr 2021 06:32:08 -0700 (PDT)
-Received: by mail-ot1-x332.google.com with SMTP id 68-20020a9d0f4a0000b02901b663e6258dso2052371ott.13
-        for <git@vger.kernel.org>; Thu, 01 Apr 2021 06:32:08 -0700 (PDT)
+        with ESMTP id S236945AbhDASLl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Apr 2021 14:11:41 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58E62C08EC8E
+        for <git@vger.kernel.org>; Thu,  1 Apr 2021 06:56:35 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id j4-20020a05600c4104b029010c62bc1e20so956393wmi.3
+        for <git@vger.kernel.org>; Thu, 01 Apr 2021 06:56:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=t9Vvj8L3bVa6+vF10GK0wnGHz4AcGXNHubmS3Y8silI=;
-        b=B0yoYm0HRWJK3JT0OHe2kQLKkE6CFFhL2wF3TexBl1yIzypeURgyf9Wi3aROzQjsgx
-         /9OVSk+kbjDtFg520UI8zf6PDvoJOTdTMEJM17ovp4FQXt41kHAyi3/c5C6SoWp1EJfx
-         rBwBn6pGHrjkcBKqKt8gQLZBXdrcmTioman7qtbS97Ad8qXKqfjg2a9uuP1JPZqNcRAx
-         qgn6AHga40QlI3yugU8WoAZZsXN4I+/x9wPWQqMwhY4V5GwRWPQVvL/ZLSHrndcc5Pc5
-         jpraqOBOkoO6reTBMk7JxWp0F5xb41qBF0iS8Fd/n2wMSWZzrDZkKqzAtu0vnV4pLNCt
-         BIBg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=YUkClUtBHqyFtezG5BSofLtJe1qr33osTtTOOT7zrwk=;
+        b=Fnnu2anxlaoG5OJ6Cvrt5zlJOWIU/poIh0mG/pNof2f5gazmmM6JO09DJ5E5n4+ItP
+         kjSpPiV1LKjJvsZaUxkDWJSAEGlyapkh401sVatxcvtTz/WJpXafgsY/lPHFA07Iij+H
+         j+86RRQCfAh0QbuJU6tW6uqDoQm30m6cMrwpS7V3A8xT5NjnY1fUJSp/+QBInEFu6XLH
+         aauYDQaI7TboyqzZRHYNdJie7dpl/d7pxHQJUSYphKI79fAxwydDyT1IxzIuJMPvdUIG
+         uhYFkwqzSoHIC4Pmcr3uW2V4YHTQ+ZwMmloX2v959rOvznSxYK/hat1O2w6fpMgj9BS4
+         IUrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=t9Vvj8L3bVa6+vF10GK0wnGHz4AcGXNHubmS3Y8silI=;
-        b=grkUcdgyib3Cg3r9N9iJ+eYL/Z0PHuOJ9Aee9s2USg5XC0zDa1D/QH+kIfNGguJgDx
-         J6/FRCPoN+nvgqKzE0ps4ACC+Ls6LkE9bxSMP+nP8T27E2wka7AYO66MbmtbytY/Ru4a
-         Qs21t1Hifld0IwqzQCS/DYfgkQ0BCLtZ86DlKQAqsZuPjBR3b1P6YSzAyxCaaDxUe8mV
-         5dNxFdPF+3BbwW43xBC1C47UecQTaNnwflYZP6s5IC2hNdoiM0TaTQl4AcPfwz7loQLX
-         W/HuViYBejiupemMuUT3QHlYDIIm2Q/PanlFwZU/0YG7USbQ27CUvJFZy5WaFaGKdBPF
-         8dyA==
-X-Gm-Message-State: AOAM533iv2AGPia/T7YnW/3OKl6HDZR6CFIBsEoPan5Y8reUYHETHZMc
-        gpchWkDlbtb8OElfZ9o3Svk=
-X-Google-Smtp-Source: ABdhPJyeQL3Lx/piUWFa7FPEJwypctVdLNk0FvE764CeRRv86nsfhRxnmL82DA+7P0xu1sxPmoAyYg==
-X-Received: by 2002:a9d:d45:: with SMTP id 63mr6945819oti.238.1617283928000;
-        Thu, 01 Apr 2021 06:32:08 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:1cff:cd17:c59a:654? ([2600:1700:e72:80a0:1cff:cd17:c59a:654])
-        by smtp.gmail.com with ESMTPSA id s4sm1048451oic.3.2021.04.01.06.32.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 01 Apr 2021 06:32:07 -0700 (PDT)
-Subject: Re: [PATCH v2 00/25] Sparse Index: API protections
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, newren@gmail.com,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        Derrick Stolee <derrickstolee@github.com>
-References: <pull.906.git.1615929435.gitgitgadget@gmail.com>
- <pull.906.v2.git.1617241802.gitgitgadget@gmail.com>
- <xmqqv99632lh.fsf@gitster.g>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <9137b585-0184-3bc2-0d65-5e04a3469e92@gmail.com>
-Date:   Thu, 1 Apr 2021 09:32:04 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.9.0
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=YUkClUtBHqyFtezG5BSofLtJe1qr33osTtTOOT7zrwk=;
+        b=FNg/uepvXo5Fck/mUBNOxrBlSM0B1B3n+l5fTCUC8YV9jS7ukeVfg4FZFwjaYKlBJn
+         apWrGyrxzJK1WF3SjZiITVE3ccRMN0vVMutpc3uPJipFjyy4pEI9RUIBCcA8UauJB8mI
+         MXtWC/86atmsyyQ3VsII3dnCTtMifj/Sa013AZl9udOje2birwANd0aFzCvV2iHUzgXc
+         cEFliv2rqZraOX1tecMT6kB7IThUMj1pxwI28RXdFGtOCLTCYpRvjwkv5gNqcipLIfgG
+         hUUQsjCOznLA63RHOM2oMunxEYx5z4+V+pI3I/uU3EA++D2xdAfyw5jOLKuQryZzPcld
+         Dbgg==
+X-Gm-Message-State: AOAM532TKmNiHet7RaHKItxeikY6OsiFKBtaTAaS0Fc0pdPcYY+bXcKQ
+        AFq2Pal1JkNEZGycBuE632nG1MUea1+yVg==
+X-Google-Smtp-Source: ABdhPJwjbvoWV19/juP/9mR/qxj6eQy8brnkecFGB3HV/gO+WOdZQAeVjsnzLvBwvxBHe2M/EsyVpQ==
+X-Received: by 2002:a05:600c:21ca:: with SMTP id x10mr8313900wmj.48.1617285393549;
+        Thu, 01 Apr 2021 06:56:33 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id n7sm10145770wrv.71.2021.04.01.06.56.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 01 Apr 2021 06:56:32 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Olga Telezhnaya <olyatelezhnaya@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 0/5] mktag tests & fix for-each-ref segfault
+Date:   Thu,  1 Apr 2021 15:56:25 +0200
+Message-Id: <cover-0.6-00000000000-20210401T135419Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.31.1.474.g72d45d12706
+In-Reply-To: <YGWFGMdGcKeaqCQF@coredump.intra.peff.net>
+References: <YGWFGMdGcKeaqCQF@coredump.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <xmqqv99632lh.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/1/2021 3:07 AM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> Here is the second patch series submission coming out of the sparse-index
->> RFC [1].
-> 
-> Queued.  There were a few conflicts with new codepaths and I've
-> touched up a few of them (Alban's merge-strategies-in-c moves some
-> code that needs to dehydrate the sparse index entries from
-> builtin/merge-index.c to a new file, Elijah's ort has "const"
-> pointer to the istate that you need to be writable), but there may
-> be more that I missed.  Please check the tip of 'seen' when it gets
-> pushed out.
+On Thu, Apr 01 2021, Jeff King wrote:
 
-Thank you for dealing with these complicated merges. I promise
-that the series after this one are much more focused in their
-code footprint. Thus, they should be easier to merge with
-ongoing topics.
+> On Thu, Apr 01, 2021 at 03:54:56AM -0400, Jeff King wrote:
+>
+>> On Wed, Mar 31, 2021 at 10:46:22PM +0200, Ævar Arnfjörð Bjarmason wrote:
+>> 
+>> > > Neither of those types is the correct one. And the segfault is just a
+>> > > bonus! :)
+>> > >
+>> > > I'd expect similar cases with parsing commit parents and tree pointers.
+>> > > And probably tree entries whose modes are wrong.
+>> > 
+>> > So the segfault happens without my patches,
+>> 
+>> Yeah, sorry if that was unclear. It is definitely a pre-existing bug.
+>
+> Here's a patch to fix it. This is mostly orthogonal to your patch
+> series. It happens to use a similar recipe to reproduce, but that is not
+> the only way to do it, and the fix and the test shouldn't conflict
+> textually or semantically.
 
-I validated your merge by rebasing the rest of my current work
-in this area onto 'seen'. The tests for 'git status' and 'git
-add' with sparse-indexes adds to the confidence of the merge.
+Here's a proposed v2. We test the same case, but I thought it made
+sense to test this more exhaustively.
 
-I did see a small conflict with mt/add-rm-in-sparse-checkout
-in one of my future patches because of an adjacent edit. I'll
-be sure to base my next submission on a merge with that topic.
+The v1 will also leave t6300 in a bad state for whoever adds the next
+test, trivial to fix with a test_create_repo, but this seems better.
 
-Thanks,
--Stolee
+Jeff King (1):
+  ref-filter: fix NULL check for parse object failure
+
+Ævar Arnfjörð Bjarmason (4):
+  mktag tests: parse out options in helper
+  mktag tests: invert --no-strict test
+  mktag tests: do fsck on failure
+  mktag tests: test for maybe segfaulting for-each-ref
+
+ ref-filter.c     |  2 +-
+ t/t3800-mktag.sh | 90 +++++++++++++++++++++++++++++++++++++++---------
+ 2 files changed, 75 insertions(+), 17 deletions(-)
+
+Range-diff:
+-:  ----------- > 1:  45e0f100613 mktag tests: parse out options in helper
+-:  ----------- > 2:  dd71740447d mktag tests: invert --no-strict test
+-:  ----------- > 3:  688d7456843 mktag tests: do fsck on failure
+-:  ----------- > 4:  403024b1cca mktag tests: test for maybe segfaulting for-each-ref
+1:  9358541ce1f ! 5:  2ffe8f9fe3c ref-filter: fix NULL check for parse object failure
+    @@ Commit message
+     
+         There are many ways a parse could fail, but most of them are hard to set
+         up in the tests (it's easy to make a bogus object, but update-ref will
+    -    refuse to point to it). The test here uses a tag which points to a wrong
+    -    object type. A parse of just the broken tag object will succeed, but
+    -    seeing both tag objects in the same process will lead to a parse error
+    -    (since we'll see the pointed-to object as both types).
+    +    refuse to point to it).
+    +
+    +    A minimal stand-alone test can be found at, but let's use the newly
+    +    amended t3800-mktag.sh tests to test these cases exhaustively on all
+    +    sorts of bad tags.
+    +
+    +    1. http://lore.kernel.org/git/YGWFGMdGcKeaqCQF@coredump.intra.peff.net
+     
+         Signed-off-by: Jeff King <peff@peff.net>
+    +    Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+      ## ref-filter.c ##
+     @@ ref-filter.c: static int get_object(struct ref_array_item *ref, int deref, struct object **obj
+    @@ ref-filter.c: static int get_object(struct ref_array_item *ref, int deref, struc
+      				free(oi->content);
+      			return strbuf_addf_ret(err, -1, _("parse_object_buffer failed on %s for %s"),
+     
+    - ## t/t6300-for-each-ref.sh ##
+    -@@ t/t6300-for-each-ref.sh: test_expect_success 'for-each-ref --ignore-case works on multiple sort keys' '
+    - 	test_cmp expect actual
+    - '
+    + ## t/t3800-mktag.sh ##
+    +@@ t/t3800-mktag.sh: check_verify_failure () {
+    + 		git -C bad-tag for-each-ref "$tag_ref" >actual &&
+    + 		test_cmp expected actual &&
+    + 		# segfaults!
+    +-		! git -C bad-tag for-each-ref --format="%(*objectname)"
+    ++		test_must_fail git -C bad-tag for-each-ref --format="%(*objectname)"
+    + 	'
+    + }
+      
+    -+test_expect_success 'for-each-ref reports broken tags' '
+    -+	git tag -m "good tag" broken-tag-good HEAD &&
+    -+	git cat-file tag broken-tag-good >good &&
+    -+	sed s/commit/blob/ <good >bad &&
+    -+	bad=$(git hash-object -w -t tag bad) &&
+    -+	git update-ref refs/tags/broken-tag-bad $bad &&
+    -+	test_must_fail git for-each-ref --format="%(*objectname)" \
+    -+		refs/tags/broken-tag-*
+    -+'
+    -+
+    - test_done
+-- 
+2.31.1.474.g72d45d12706
+
