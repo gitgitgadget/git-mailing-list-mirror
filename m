@@ -2,77 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AE904C433ED
-	for <git@archiver.kernel.org>; Thu,  1 Apr 2021 07:07:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ECB05C43460
+	for <git@archiver.kernel.org>; Thu,  1 Apr 2021 07:23:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6C29860FE9
-	for <git@archiver.kernel.org>; Thu,  1 Apr 2021 07:07:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BD10A61002
+	for <git@archiver.kernel.org>; Thu,  1 Apr 2021 07:23:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233465AbhDAHHQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Apr 2021 03:07:16 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:54791 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233151AbhDAHHL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Apr 2021 03:07:11 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id CECC5127A45;
-        Thu,  1 Apr 2021 03:07:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=NyZfJCYyCLyGzyVhRvizXGuKK4k=; b=InE/AzZtMXIjN+EuPmSM
-        qnmxGgz9LMZE5Mgb5TkOYDzEcL0RJBj5e/iviKQQmOKcrt8D3AEcAZd62VQ/bF0Q
-        8DwM5vv0J6GAPJCwi9/hGFIYAf7eowXe9Pk+QlRv34ApO7sFpt8kjy1dk2yik5Gp
-        WzNNmmUDOqr50ATkqQWFJSc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         q=dns; s=sasl; b=LuY8ANAyJU6kdPp2gH+V/2Zlm9ExfYzM1B57kV0M95XHH4
-        7rPDSqwk+UvhG4y1bn+zGfPS50pDheluWygGzcB+yMUALTc9k7VZziiFasiWS/Fm
-        MMU3W9h422hEQ5kqHPmRR10awkdIKNMRhBCBj9dFpj/0PklKnz+jkp99NJaGs=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C7537127A44;
-        Thu,  1 Apr 2021 03:07:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 09D07127A43;
-        Thu,  1 Apr 2021 03:07:07 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, newren@gmail.com,
-        Derrick Stolee <stolee@gmail.com>,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v2 00/25] Sparse Index: API protections
-References: <pull.906.git.1615929435.gitgitgadget@gmail.com>
-        <pull.906.v2.git.1617241802.gitgitgadget@gmail.com>
-Date:   Thu, 01 Apr 2021 00:07:06 -0700
-Message-ID: <xmqqv99632lh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S233283AbhDAHWg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Apr 2021 03:22:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38512 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233394AbhDAHWX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Apr 2021 03:22:23 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB3CEC0613E6
+        for <git@vger.kernel.org>; Thu,  1 Apr 2021 00:22:22 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id r12so1372523ejr.5
+        for <git@vger.kernel.org>; Thu, 01 Apr 2021 00:22:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=gaWVKEVO7+6XZZB3dJ8bZ8qHpSzaKE6KsOvhJhBK8jY=;
+        b=aWisHPZLK4beJ1o4w936DzFDS0a2NySvHTz48iXXLtnuUVXfNTXZKxoZVuFd4QO/1Q
+         bWC/IL+VNSQvWLgrjl1rzGn3B+1EOcOcnBnoL41PORwcrGWzRXaBkcfy4HN2T/e2r9ap
+         QWRJ/oALxysVx2s5enzr/ZDXhVu4qIahrr0gh7lN4yKfk/U32Jxg9dXs4TqnOiXtnTqJ
+         ioEdZTX3ci1f4N5ujAt7Vcs1KaTn/dveAiEcybARODLnd4zTK2yKzCIoYpugb+BxCL5g
+         775RWodlbxfybx+/u/34bORAXAYp6rRJTExanXjjjLfZDEWLFlYw79/V2LIMbrX02Mtf
+         0Txw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=gaWVKEVO7+6XZZB3dJ8bZ8qHpSzaKE6KsOvhJhBK8jY=;
+        b=b9Ojf3Q/UVtONlxlXw+i4OBRBjJ18BvELtrz5vNM3j/eVz4bxF+nkefKfg49NIa4XL
+         h7XZHMaJz1wSxMiox7U/B33XLmHF1czF2yRU987GaP4z3gL+1++dbclqs6Ss4TACX0TO
+         1pGbZ9NLuLGmXTNbvaRwydYKxaM7BHeriAO79XKu+Ncwy4zDrD1iEPfZpIiq6VG6lsUu
+         2sfpXN3uVAj6BYnr2Lpkw9mzuBEOv8B+v2CX6QniNxQONFg4FopjQ88Rl7s5igCAAIZm
+         F/XPHseFUisZ7SKwfYC7qkXzC//p3dhw2UaF6HHdTdOQke+6PdKHV47BSx4G3GiX8Bip
+         TEZQ==
+X-Gm-Message-State: AOAM531r6FjzOoujmzQ0JXHdyDEFqb5zPxiWM1zAY7+lPiQo3vceDWz6
+        cRmKaDj6YJTiHgQA9BQ66zzRxaG+CdR4bVP3wo8=
+X-Google-Smtp-Source: ABdhPJwHE9CHPgd79f5A2VZV+xQXjWoeQkdZV/DUHNROIQ9chxpkXxaO5a2bP+eNwuQ4Ffwxh1jIj84y6/QItaW8SWA=
+X-Received: by 2002:a17:907:68a:: with SMTP id wn10mr7839957ejb.551.1617261741535;
+ Thu, 01 Apr 2021 00:22:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: DF28CC66-92B8-11EB-82E1-D609E328BF65-77302942!pb-smtp21.pobox.com
+References: <pull.913.v4.git.1616775185562.gitgitgadget@gmail.com>
+ <pull.913.v5.git.1617185147.gitgitgadget@gmail.com> <4c59cab53a0d9bb7c9cccfaf5544ae5c904bb2ba.1617185147.git.gitgitgadget@gmail.com>
+In-Reply-To: <4c59cab53a0d9bb7c9cccfaf5544ae5c904bb2ba.1617185147.git.gitgitgadget@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 1 Apr 2021 09:22:10 +0200
+Message-ID: <CAP8UFD2tb6Fca58YPiFejqGKm3Mu+NaMA8YU3HQj+c2L-AH-Yw@mail.gmail.com>
+Subject: Re: [PATCH v5 1/2] [GSOC] run-command: add shell_no_implicit_args option
+To:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        ZheNing Hu <adlternative@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Wed, Mar 31, 2021 at 12:05 PM ZheNing Hu via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> From: ZheNing Hu <adlternative@gmail.com>
+>
+> When we use subprocess to run a shell-script, if we have any
 
-> Here is the second patch series submission coming out of the sparse-index
-> RFC [1].
+Maybe: s/subprocess/a subprocess/
 
-Queued.  There were a few conflicts with new codepaths and I've
-touched up a few of them (Alban's merge-strategies-in-c moves some
-code that needs to dehydrate the sparse index entries from
-builtin/merge-index.c to a new file, Elijah's ort has "const"
-pointer to the istate that you need to be writable), but there may
-be more that I missed.  Please check the tip of 'seen' when it gets
-pushed out.
+> args, git will add extra $@ to the end of the shell-script,
+> This can pass positional parameters correctly, But if we just
+> want to use some of these passed parameters, git will still
+> add an extra "$@", which contains all positional parameters we
+> passed. This does not meet our expectations.
 
-Thanks.
+I am not sure explaining things using $@ is the best way to make this
+as clear as possible. I don't have a clear alternative right now
+though.
+
+> E.g. our shell-script is:
+> "echo \"\$1\""
+> and pass $1 "abc",
+
+Maybe: s/pass $1 "abc"/we pass "abc" as $1/
+
+> git will change our script to:
+> "echo \"\$1\" \"$@\""
+
+Where will "abc" appear then?
+
+> The positional parameters we entered will be printed
+> repeatedly.
+
+If you take us passing "abc" in $1 as an example, then I think it's a
+good idea to show us the result of that.
+
+> So let add a new `shell_no_implicit_args`
+
+Maybe: s/`shell_no_implicit_args`/`shell_no_implicit_args` flag/
+
+> to `struct child_process`, which can suppress the
+> joining of $@ if `shell_no_implicit_args` is set to 1,
+> this will allow us to use only few of positional args
+> in multi-parameter shell script, instead of using all
+> of them.
+
+I think our goal is more to have each argument we pass be passed just once.
