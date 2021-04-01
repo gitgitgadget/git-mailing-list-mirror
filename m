@@ -2,109 +2,201 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F3CFBC433B4
-	for <git@archiver.kernel.org>; Thu,  1 Apr 2021 17:53:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C621C43461
+	for <git@archiver.kernel.org>; Thu,  1 Apr 2021 17:53:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D4CC960FE7
-	for <git@archiver.kernel.org>; Thu,  1 Apr 2021 17:53:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 780C86112E
+	for <git@archiver.kernel.org>; Thu,  1 Apr 2021 17:53:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235351AbhDARx0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Apr 2021 13:53:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59966 "EHLO
+        id S234236AbhDARxf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Apr 2021 13:53:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236070AbhDARtU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Apr 2021 13:49:20 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40D8EC08EC93
-        for <git@vger.kernel.org>; Thu,  1 Apr 2021 06:56:38 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id e18so1920526wrt.6
-        for <git@vger.kernel.org>; Thu, 01 Apr 2021 06:56:38 -0700 (PDT)
+        with ESMTP id S237113AbhDARu3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Apr 2021 13:50:29 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C6D9C02D54D
+        for <git@vger.kernel.org>; Thu,  1 Apr 2021 08:41:23 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id b9so2265968wrt.8
+        for <git@vger.kernel.org>; Thu, 01 Apr 2021 08:41:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=GTM5X/k5avj5ohBB3J/UAr0QKLyPsqv39X2A1+E5YaU=;
-        b=dXW0L9NXJ6JWa+8gXNm1zQKBKXrWj9IGNDbCw6uXxtXraRTGq7hbEDXJdvY689RMxr
-         okQaj/m5V0HAPmWEpFitisKBGoRPAkwMO0diUhjGHno+gFO2wapmeLAyhWWtqYabzbai
-         pQ7b35dD4QUzDZvUc0drDO5rwHPnBqa7uXkkakJMTKdE3dwI4F23IGKBNgbuBmNkYCGU
-         UQrIG2WtwnWmVLfvf2djlLIaeveiCFUVAvSv2a2qbdaQ66JMq58WjDcXgitUVZIX0s7t
-         XdEWOBZupQDEv38IWVmlyjvFDvneinv7Kwjd77xM3H2zTRsMA9f3IcGF7UjRstlfZlwt
-         6z0g==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=tUFUaBwZpxy4xLgtQxuoUKmW481VJeosYXJytJus27E=;
+        b=YMkW3J/gK9W2l0WseD22dnmv51vLx7TWPywe4k0teYR3/6m89IQTFPtfVTHosXPhBP
+         fWvpplu025+6Xhsnq1lplPa16q4DJScoXglXDpY8PJhPIr3lSbYtI6okOPjQwpqbSnCl
+         FXhRIFdNL8cO4sjbo9zNw/GzySQpZex0vmhGB9KecvKBpB/ZDhZ9bHp5khkb6mwF4y2z
+         PLMsK1B3e7RcFRh68Dx+hono6zyZOpqZuAtouM2nQ41cl7qMS3CptBC0E2bTGJptsX9Z
+         U91CauaWVMfEOESf1Z6QbyRdcvZjC9tgZCm180rxwQkGdx4FiBASumxwHWTv5ybQEHpd
+         GvsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=GTM5X/k5avj5ohBB3J/UAr0QKLyPsqv39X2A1+E5YaU=;
-        b=BKlR1BYJtIDFfttcWNvRC5fOQAtVigx9fZMpgXqYrE2G83Wd/oCxSTZNLY9oQWlPQW
-         7vlEmicDdbABTin5XgyVSeW3YY0aXEFZDEZ4M1ORWOC6qNKD/99zqO9OguZFKh2z4LBe
-         a9O0iECeR6gO/IwjOXL+Y9QSeoCPFmLg4HeMT6PvTF6a2Nrro/xfNlv4JimyIYhrI8Ls
-         ORoOmAY4VxTpt9/EaE/8skDQyGvwKXT8u9f8U41BoDhsHqzP8JxyaZ9Up5HPNUY6c+0L
-         e+0QqlEuoGLWZdpGuqx8igvwyYh0d46ynMtqXhSmrvYyRwiwGicRsyneM6B2gmWh5gVm
-         Mo+g==
-X-Gm-Message-State: AOAM533NxLO31EDv2b5Ul2IQkTUk7wHJP2uutDIruTxi6mwQpWxhKCt/
-        R8pFJ9vbEaKp/iEpe6E6yGra6nuMaw7IzA==
-X-Google-Smtp-Source: ABdhPJyRkOMy6p5UsDnVJRoCP4q97k60yjztL7ckEtqn55L/5vh17pFOAm3JBF83Blz4XX5kprf8yQ==
-X-Received: by 2002:adf:9d82:: with SMTP id p2mr9895279wre.234.1617285396756;
-        Thu, 01 Apr 2021 06:56:36 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n7sm10145770wrv.71.2021.04.01.06.56.35
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=tUFUaBwZpxy4xLgtQxuoUKmW481VJeosYXJytJus27E=;
+        b=WVd5E2fCn1u8mygA1ZhhouoOZrMtb4aH0cajnZV0rm2jmW4Vj3gfYwifbyG3TTfOFt
+         7BBFOcnG/S5/foYE2epJXCw8QCRm0G8OnDB+eDy0LGSnT1iscCnEOynoGF3LHRXVYI2t
+         cNCsu6eshuOosRyd2JuRYtrk3PLebkbMPvEL5i382ugVdmu9MRibuM8B1yGZd2Bhrfu4
+         PcGcBDh2sH8U/fmz9TGQ9lK/nae8YbJx1QwCBTtbZmlEOsLvoM7BtvVBbzmOqVpdt9MC
+         E7+cNypFUE/lAUpkqTK0tldIEptR9VRKdJxl7kVhOAzTLbYCJA/C2oW0ASkGJk2jXVVq
+         5WVw==
+X-Gm-Message-State: AOAM531ReANqlzJC8L5BZTiNSDeUFeBnZ3fjdctBJCCI3kRRwrirHcsO
+        EffCH94kISxNdygJ5MUZSeOYxec9nGI=
+X-Google-Smtp-Source: ABdhPJzUtQJmO7k9ZrgffRkB7THUa4/+SPBldp7G5Ee8OAbZGIu2YIIr95upyU5AgaEUlulgiEw/gA==
+X-Received: by 2002:a5d:6a87:: with SMTP id s7mr10434368wru.312.1617291682022;
+        Thu, 01 Apr 2021 08:41:22 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id m10sm8815883wmh.13.2021.04.01.08.41.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Apr 2021 06:56:36 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Olga Telezhnaya <olyatelezhnaya@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 4/5] mktag tests: test for maybe segfaulting for-each-ref
-Date:   Thu,  1 Apr 2021 15:56:29 +0200
-Message-Id: <patch-4.6-403024b1cca-20210401T135419Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.31.1.474.g72d45d12706
-In-Reply-To: <cover-0.6-00000000000-20210401T135419Z-avarab@gmail.com>
-References: <YGWFGMdGcKeaqCQF@coredump.intra.peff.net> <cover-0.6-00000000000-20210401T135419Z-avarab@gmail.com>
-MIME-Version: 1.0
+        Thu, 01 Apr 2021 08:41:21 -0700 (PDT)
+Message-Id: <3eafd0b5cb09dbba8af2abf1a8d602ad27ad3bc4.1617291666.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.923.git.1617291666.gitgitgadget@gmail.com>
+References: <pull.923.git.1617291666.gitgitgadget@gmail.com>
+From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 01 Apr 2021 15:41:05 +0000
+Subject: [PATCH 23/23] t7527: test status with untracked-cache and
+ fsmonitor--daemon
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Jeff Hostetler <jeffhost@microsoft.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a test to check that "for-each-ref" fails on a repository with a
-bad tag, this test intentionally uses "! " instead of "test_must_fail
-" to hide a segfault. We'll fix the underlying bug in a subsequent
-commit and convert it to "test_must_fail".
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Create 2x2 test matrix with the untracked-cache and fsmonitor--daemon
+features and a series of edits and verify that status output is
+identical.
+
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- t/t3800-mktag.sh | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ t/t7527-builtin-fsmonitor.sh | 97 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 97 insertions(+)
 
-diff --git a/t/t3800-mktag.sh b/t/t3800-mktag.sh
-index 4673235b1fd..10e4fde28de 100755
---- a/t/t3800-mktag.sh
-+++ b/t/t3800-mktag.sh
-@@ -58,7 +58,13 @@ check_verify_failure () {
- 		# The update-ref command itself might fail, but we are
- 		# not testing that
- 		echo "$bad_tag" >"bad-tag/.git/$tag_ref" &&
--		test_must_fail git -C bad-tag fsck
-+		test_must_fail git -C bad-tag fsck &&
-+
-+		printf "%s tag\t%s\n" "$bad_tag" "$tag_ref" >expected &&
-+		git -C bad-tag for-each-ref "$tag_ref" >actual &&
-+		test_cmp expected actual &&
-+		# segfaults!
-+		! git -C bad-tag for-each-ref --format="%(*objectname)"
- 	'
- }
+diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
+index 1fd230f1d4c6..ad2188169db7 100755
+--- a/t/t7527-builtin-fsmonitor.sh
++++ b/t/t7527-builtin-fsmonitor.sh
+@@ -163,6 +163,8 @@ test_expect_success 'setup' '
+ 	.gitignore
+ 	expect*
+ 	actual*
++	flush*
++	trace*
+ 	EOF
  
+ 	git -c core.useBuiltinFSMonitor= add . &&
+@@ -482,4 +484,99 @@ test_expect_success 'worktree with .git file' '
+ 	test_must_fail git -C wt-secondary fsmonitor--daemon --is-running
+ '
+ 
++# TODO Repeat one of the "edit" tests on wt-secondary and confirm that
++# TODO we get the same events and behavior -- that is, that fsmonitor--daemon
++# TODO correctly listens to events on both the working directory and to the
++# TODO referenced GITDIR.
++
++test_expect_success 'cleanup worktrees' '
++	kill_repo wt-secondary &&
++	kill_repo wt-base
++'
++
++# The next few tests perform arbitrary/contrived file operations and
++# confirm that status is correct.  That is, that the data (or lack of
++# data) from fsmonitor doesn't cause incorrect results.  And doesn't
++# cause incorrect results when the untracked-cache is enabled.
++
++test_lazy_prereq UNTRACKED_CACHE '
++	{ git update-index --test-untracked-cache; ret=$?; } &&
++	test $ret -ne 1
++'
++
++test_expect_success 'Matrix: setup for untracked-cache,fsmonitor matrix' '
++	test_might_fail git config --unset core.useBuiltinFSMonitor &&
++	git update-index --no-fsmonitor &&
++	test_might_fail git fsmonitor--daemon --stop
++'
++
++matrix_clean_up_repo () {
++	git reset --hard HEAD
++	git clean -fd
++}
++
++matrix_try () {
++	uc=$1
++	fsm=$2
++	fn=$3
++
++	test_expect_success "Matrix[uc:$uc][fsm:$fsm] $fn" '
++		matrix_clean_up_repo &&
++		$fn &&
++		if test $uc = false -a $fsm = false
++		then
++			git status --porcelain=v1 >.git/expect.$fn
++		else
++			git status --porcelain=v1 >.git/actual.$fn
++			test_cmp .git/expect.$fn .git/actual.$fn
++		fi
++	'
++
++	return $?
++}
++
++uc_values="false"
++test_have_prereq UNTRACKED_CACHE && uc_values="false true"
++for uc_val in $uc_values
++do
++	if test $uc_val = false
++	then
++		test_expect_success "Matrix[uc:$uc_val] disable untracked cache" '
++			git config core.untrackedcache false &&
++			git update-index --no-untracked-cache
++		'
++	else
++		test_expect_success "Matrix[uc:$uc_val] enable untracked cache" '
++			git config core.untrackedcache true &&
++			git update-index --untracked-cache
++		'
++	fi
++
++	fsm_values="false true"
++	for fsm_val in $fsm_values
++	do
++		if test $fsm_val = false
++		then
++			test_expect_success "Matrix[uc:$uc_val][fsm:$fsm_val] disable fsmonitor" '
++				test_might_fail git config --unset core.useBuiltinFSMonitor &&
++				git update-index --no-fsmonitor &&
++				test_might_fail git fsmonitor--daemon --stop 2>/dev/null
++			'
++		else
++			test_expect_success "Matrix[uc:$uc_val][fsm:$fsm_val] enable fsmonitor" '
++				git config core.useBuiltinFSMonitor true &&
++				git fsmonitor--daemon --start &&
++				git update-index --fsmonitor
++			'
++		fi
++
++		matrix_try $uc_val $fsm_val edit_files
++		matrix_try $uc_val $fsm_val delete_files
++		matrix_try $uc_val $fsm_val create_files
++		matrix_try $uc_val $fsm_val rename_files
++		matrix_try $uc_val $fsm_val file_to_directory
++		matrix_try $uc_val $fsm_val directory_to_file
++	done
++done
++
+ test_done
 -- 
-2.31.1.474.g72d45d12706
-
+gitgitgadget
