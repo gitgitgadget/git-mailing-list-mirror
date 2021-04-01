@@ -8,62 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7167C433B4
-	for <git@archiver.kernel.org>; Thu,  1 Apr 2021 01:51:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D405C43461
+	for <git@archiver.kernel.org>; Thu,  1 Apr 2021 01:51:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AAC4D6101E
+	by mail.kernel.org (Postfix) with ESMTP id D4C946108C
 	for <git@archiver.kernel.org>; Thu,  1 Apr 2021 01:51:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232944AbhDABub (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 31 Mar 2021 21:50:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51792 "EHLO
+        id S232982AbhDABuc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 31 Mar 2021 21:50:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232984AbhDABuI (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232989AbhDABuI (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 31 Mar 2021 21:50:08 -0400
 Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B31F4C061761
-        for <git@vger.kernel.org>; Wed, 31 Mar 2021 18:50:07 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id j18so198783wra.2
-        for <git@vger.kernel.org>; Wed, 31 Mar 2021 18:50:07 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 353C6C061574
+        for <git@vger.kernel.org>; Wed, 31 Mar 2021 18:50:08 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id k8so195514wrc.3
+        for <git@vger.kernel.org>; Wed, 31 Mar 2021 18:50:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=gJLBcZut5BdoZ62MD0BUa+X2VnGfeSA3JBLk1DbzHGQ=;
-        b=RiLHpllmzBRpvpSNNHUm1faX0KOVHTK1BCTqiedeqkx4CnGQXC9bE3BZh+XnwzbvaY
-         4lZqKtmLvHqy8YL2eG4i41VjYLy7k8XZiMYXaYUYP7uZKwNKdch8YVxzK7A7Inrq3J0I
-         FE8thFX2lBiedgEQRsSGb1huPup/q2JfoJQwcVfjQOAkfL4WFMWsCNZlF+IZOv8MslnM
-         eYz/fse/Sva+FRz6XrvlEEt10ozO4q7vELKtujfhplRQTNa1+GNrjbiHs0EfxA9RJpU7
-         urew5ypk/EEzX5BiEsDj5Lax5WsCHfgpBmACkcBXTVY+Mwk0HY9W8id8OwcVzs3W5XH6
-         1PRA==
+        bh=icvbxp/b5Ftybmb6oGJlzeU1p7Pw4+4yErHEotpNNtc=;
+        b=IUWz1fU36WdSnA7SuNbfbSVZLkzbqdv1jGqePNUDzJjwZoXw4F5WzlV/5DGARkuph4
+         bhewh2cBQt6O1dVEGay/eB011qI1zmBQ1MA7p/ROM6Nsi26MjF+B4zrQIDFvKN0s192L
+         g3M7OcqQpevbj/BxyW+J5VQKRv0rdtTkNXN1XT+bfz3chrDmUh0HkIO2yER27fgZlM6Q
+         l+TenWCTCElk/Jg+B3FQIdta7dCtLkA6dxfHneWfYddBfZRDRbtnyf3/QO8+GM3Uq335
+         h9ufs/vag+01Q8YdNXmWIIPudVqRWFzp7iYwIgUGS9lU6bZUEcPf2e4E2BrA2CxOPS80
+         0zCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=gJLBcZut5BdoZ62MD0BUa+X2VnGfeSA3JBLk1DbzHGQ=;
-        b=p8piZQynJow5GnTGfWrBIiFisYkJdMQzZBSjOb+ts+4MeHxRwD6IQDD3C1MmUphv3A
-         U3iKFSbFHV9WVduHecVvgvIC5bjpTrDZxvtDMuDT1jizknhRuBy8r8nXF/oxjuJoKVkd
-         KzUBOXBBZ0zINEB1MUXSMNCwobQty5UKIpOt2nvb0r3H9u4bR0yr+p+0LjEKcIND8rM7
-         ZZpvdvW/ilftDMDlgv2VCvTyFHAdQibQyU2XL2NX6ZJCR3tK1E6Xo/0wXS4YjfNEaouP
-         x8dcV4VNwJ2YuCrl7xTTG/uciOZXOfpkWJQ6PrXkZ4eE9/oSoJQwXryVV0u3ZgEBWADk
-         2DxQ==
-X-Gm-Message-State: AOAM53309L84ImN72AzAfKRVpECPjBhXr2HQGKEM39YyVI5ob2RSqyXq
-        BSvVHRN/7RMFodNgsGsrijSeCaKCCK4=
-X-Google-Smtp-Source: ABdhPJynMIj3mYWDJaOBxbcIDknr/r9xrY9gVs+pFuB4jw5LsM7ASIjBqSgDF5gGNdN0+M+RYTgwDQ==
-X-Received: by 2002:a5d:5088:: with SMTP id a8mr6737356wrt.294.1617241806578;
-        Wed, 31 Mar 2021 18:50:06 -0700 (PDT)
+        bh=icvbxp/b5Ftybmb6oGJlzeU1p7Pw4+4yErHEotpNNtc=;
+        b=Z0oNpV7AsN55byeM5vvGVySTeKG/KfMtgSaYzTLETfMlYPydUz6n3MoeZ7G5S2CzTU
+         jkCX/8Zt34KJR74XVx1nJeqMgmy9qmZHK8a2LwcHf6R8XJGTTn+3NT7YM0SG95UqUUnv
+         rtOME3ApQ2zBZ6cVeNKtYKBBds9WzEjc41FVUapYcZNN39IcqcH2F3Gt6ZZk7DgfH+Sm
+         aJoIsrS60trCCFAH5uxbzxqzH3ieyTVWS5Grp/19TdR8RzBtX5WKosnGovzYyaIUv5ZL
+         AeGQYDkQl+x4/mjllOdeH4LQxuyTV0H/ZL3SMsn0zLCRPeNXSxzkYAjlZj1bGxX/lw4w
+         KYHg==
+X-Gm-Message-State: AOAM530D84IEghMIFdY/KdWMv8tSwi+O5zmp8mAmC/Yzekb0/joExyeU
+        PYU6eLb5i93MW7Z+wJBCjN8Uaft96Jo=
+X-Google-Smtp-Source: ABdhPJwgCKZLCSCQRoAtlXZpn3UPAPitPzDKQ1zVcblziclc2D7UTSBwBo3ayIC7ocNnzGFfEvPHSQ==
+X-Received: by 2002:adf:e412:: with SMTP id g18mr6834167wrm.159.1617241807061;
+        Wed, 31 Mar 2021 18:50:07 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h9sm6208369wmb.35.2021.03.31.18.50.06
+        by smtp.gmail.com with ESMTPSA id e8sm6210936wme.14.2021.03.31.18.50.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 31 Mar 2021 18:50:06 -0700 (PDT)
-Message-Id: <737d27e18d64d7151447eca90e74bf58451cc9a6.1617241803.git.gitgitgadget@gmail.com>
+Message-Id: <db5c100f3e2bc9841e922acca916555eeba194c5.1617241803.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.906.v2.git.1617241802.gitgitgadget@gmail.com>
 References: <pull.906.git.1615929435.gitgitgadget@gmail.com>
         <pull.906.v2.git.1617241802.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 01 Apr 2021 01:49:40 +0000
-Subject: [PATCH v2 03/25] read-cache: expand on query into sparse-directory
- entry
+Date:   Thu, 01 Apr 2021 01:49:41 +0000
+Subject: [PATCH v2 04/25] cache: move ensure_full_index() to cache.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,61 +79,41 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-Callers to index_name_pos() or index_name_stage_pos() have a specific
-path in mind. If that happens to be a path with an ancestor being a
-sparse-directory entry, it can lead to unexpected results.
-
-In the case that we did not find the requested path, check to see if the
-position _before_ the inserted position is a sparse directory entry that
-matches the initial segment of the input path (including the directory
-separator at the end of the directory name). If so, then expand the
-index to be a full index and search again. This expansion will only
-happen once per index read.
-
-Future enhancements could be more careful to expand only the necessary
-sparse directory entry, but then we would have a special "not fully
-sparse, but also not fully expanded" mode that could affect writing the
-index to file. Since this only occurs if a specific file is requested
-outside of the sparse checkout definition, this is unlikely to be a
-common situation.
+Soon we will insert ensure_full_index() calls across the codebase.
+Instead of also adding include statements for sparse-index.h, let's just
+use the fact that anything that cares about the index already has
+cache.h in its includes.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- read-cache.c | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ cache.h        | 1 +
+ sparse-index.h | 1 -
+ 2 files changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/read-cache.c b/read-cache.c
-index 3ad94578095e..3698bc7bf77d 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -567,6 +567,27 @@ static int index_name_stage_pos(struct index_state *istate, const char *name, in
- 		}
- 		first = next+1;
- 	}
-+
-+	if (istate->sparse_index &&
-+	    first > 0) {
-+		/* Note: first <= istate->cache_nr */
-+		struct cache_entry *ce = istate->cache[first - 1];
-+
-+		/*
-+		 * If we are in a sparse-index _and_ the entry before the
-+		 * insertion position is a sparse-directory entry that is
-+		 * an ancestor of 'name', then we need to expand the index
-+		 * and search again. This will only trigger once, because
-+		 * thereafter the index is fully expanded.
-+		 */
-+		if (S_ISSPARSEDIR(ce->ce_mode) &&
-+		    ce_namelen(ce) < namelen &&
-+		    !strncmp(name, ce->name, ce_namelen(ce))) {
-+			ensure_full_index(istate);
-+			return index_name_stage_pos(istate, name, namelen, stage);
-+		}
-+	}
-+
- 	return -first-1;
- }
+diff --git a/cache.h b/cache.h
+index 5006278c13ca..b7e20e9778db 100644
+--- a/cache.h
++++ b/cache.h
+@@ -350,6 +350,7 @@ void add_name_hash(struct index_state *istate, struct cache_entry *ce);
+ void remove_name_hash(struct index_state *istate, struct cache_entry *ce);
+ void free_name_hash(struct index_state *istate);
  
++void ensure_full_index(struct index_state *istate);
+ 
+ /* Cache entry creation and cleanup */
+ 
+diff --git a/sparse-index.h b/sparse-index.h
+index 39dcc859735e..0268f38753c0 100644
+--- a/sparse-index.h
++++ b/sparse-index.h
+@@ -2,7 +2,6 @@
+ #define SPARSE_INDEX_H__
+ 
+ struct index_state;
+-void ensure_full_index(struct index_state *istate);
+ int convert_to_sparse(struct index_state *istate);
+ 
+ struct repository;
 -- 
 gitgitgadget
 
