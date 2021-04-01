@@ -2,287 +2,177 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9ACFCC433B4
-	for <git@archiver.kernel.org>; Thu,  1 Apr 2021 01:33:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A7F5FC433ED
+	for <git@archiver.kernel.org>; Thu,  1 Apr 2021 01:51:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 79A5D61002
-	for <git@archiver.kernel.org>; Thu,  1 Apr 2021 01:33:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7158660FE9
+	for <git@archiver.kernel.org>; Thu,  1 Apr 2021 01:51:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232623AbhDABcs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 31 Mar 2021 21:32:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48004 "EHLO
+        id S231620AbhDABua (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 31 Mar 2021 21:50:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232953AbhDABcR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Mar 2021 21:32:17 -0400
-Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2417C061574
-        for <git@vger.kernel.org>; Wed, 31 Mar 2021 18:32:17 -0700 (PDT)
-Received: by mail-qk1-x72b.google.com with SMTP id q3so733415qkq.12
-        for <git@vger.kernel.org>; Wed, 31 Mar 2021 18:32:17 -0700 (PDT)
+        with ESMTP id S232958AbhDABuH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Mar 2021 21:50:07 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DC2CC061761
+        for <git@vger.kernel.org>; Wed, 31 Mar 2021 18:50:06 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id v11so182317wro.7
+        for <git@vger.kernel.org>; Wed, 31 Mar 2021 18:50:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=uuLMa4xusjA/p9UCyIkXDIqKqZCHc3VpkTT4qOnH+Z8=;
-        b=Ysw3tnjaH+SaBrKA23rwQBJSeTxm3y+RoKabgdrpJ5kHDKbn/hahOHCWS1s6x+ugPO
-         hLs3KaBH6orSqM559gdDkBtf0kkaM547vzj3lIv+iQwZ7yJMxluGDTbs1mH/gIq2a5s6
-         T0Y8bdqb/kAUNR8E7SK/hU2Z4bdWz9u2Hq231gbb3BRD2HU2+sGrBeZoamIaM7016rt4
-         NSMeKYfHzrghFGA369KjyN/1i2y6e3xIDZ4GEmKCYckse9vcYGX+PutC9iGsXR7Z4tyW
-         NIYv/Dy+NUCy6NmLK+sQ6NDr9FZWhKGET39mLf60oWcbyv99n1+JHLwd0QBMT3DY1ywK
-         KXZQ==
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=EEiLnZcxBnalSrtS0KgvDP7CGUo9RluvCjn0alofKlM=;
+        b=c9Sl1w7XA5U8s4eBcfSa5OIgRuRr+AOzgoZuqZ72V6W6drRQ887VkVRwBXBiTeqMqr
+         hWNIDTSfHj0xOJXdnEyLS3WgWGBPX/RtXwDtiYeF8xn/l7OxVFeofVQdGAMlvN0X2TI9
+         6bZOxd+lLfHdf9mtxkfx5J4FBBKOKKKYfZRhGDJv1Pc42P3KIbkUAfNEHtZ1XbMiVh5l
+         aWnUk7pKUYycKJ53ADxZskOCojaIipQsGGNGD2gD8aDyBNGlw3CIM+E4VFMelrgHrSpu
+         aSpqofR786ju8WaxhfpXZLIQPpyr+9F0TFzcClahfebqABD+VtTVE8WVgOmJAyiwknGU
+         o+vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=uuLMa4xusjA/p9UCyIkXDIqKqZCHc3VpkTT4qOnH+Z8=;
-        b=AFot66DhvtSm6pC4SCLLt/171+u4/fwToQGtFYYabVkQMkdoPF8TqrmBQsv4N6DnMJ
-         SFpk72x7bDNOlRRInO4HboxlHDkXQCsnsLv1is7VSuN2ppDlNYKlivuWufZxLUSWm2lH
-         74taSTcwVgr7h1fOOdREpvsf3eg8b/9nefeDNsdg5UDmR1DWDXYu6YT25GIYewo4p0Hd
-         NvbWS+GCczRpCQlO8QSvFpqMAJRfiBxe1JNYWhP+zP3kIsm2ZD0WZZhqxKx3vQ8VKsXv
-         p0j/97RDlyXX/Oo1pOKAseaQMOZxw8V3+M0HHJ6fYJDCWWpzWQKioK6+JvP+U6hIGocW
-         hY4w==
-X-Gm-Message-State: AOAM531s8Nmxr8jNg0A5pEZyNhRmUG8cfqCozUCqkuqSigi87iQi8zC1
-        N2hCNYAUrrYmVjQlxz44Rjo0RRR7/oAFjg==
-X-Google-Smtp-Source: ABdhPJytyu09bO1pmfh7RfxY2l36jZ8RuSQp+bAviZJUZpdrLoh6zsf7XA5AACo6vK3LZ9TG0nvy2A==
-X-Received: by 2002:a05:620a:954:: with SMTP id w20mr6151983qkw.208.1617240736479;
-        Wed, 31 Mar 2021 18:32:16 -0700 (PDT)
-Received: from localhost ([2605:9480:22e:ff10:90ff:e0f0:a41:6c5a])
-        by smtp.gmail.com with ESMTPSA id l16sm2780929qkg.91.2021.03.31.18.32.15
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=EEiLnZcxBnalSrtS0KgvDP7CGUo9RluvCjn0alofKlM=;
+        b=Hte92g2Qp9A+3PGXt+crqGRyDTZZAF20dxWr+bhyJRsqmvGYBH/lR7ruoJAjXmUyih
+         duXsiuGtZSPy31FhovMEuv0m1BnkbwXnBKSSHKihZnDy7/768MCRCNV045HJelsUIQJO
+         kHWnzvqEF9MpRI7HJdINv1ozLOFT9wmTfYTAl/PjrqkiKKojY7FL0rALYfeBB5EXLw9S
+         7SZcrFUJ7rjsvDWknmyK7evlK9Zw+t8yOp1QkhQoN0yvAoXQdxReWNhdo/kaSarHw04j
+         YZy8N6wKyhV24JvoSV5kZOTbEBBniiDGi40SkZDMJ75xAe8CpZwEboZWsscosX5L7+up
+         raGQ==
+X-Gm-Message-State: AOAM531HGzOnTNC3bApxfkfaZMxdCmiSGpNIoGvswBgo3x1ht14RF+GC
+        zlESfS8xG6UK0R+GFyZcHZB926VO/aw=
+X-Google-Smtp-Source: ABdhPJzn8jqXZi2mj+VqymEzh0HdCaUqJ36vRoffamDVkH8+GRbuJb/8q1CkDk7GkHkY0MsLkXuV4w==
+X-Received: by 2002:adf:fb0b:: with SMTP id c11mr6716770wrr.425.1617241805392;
+        Wed, 31 Mar 2021 18:50:05 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id p16sm9304963wrt.54.2021.03.31.18.50.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Mar 2021 18:32:16 -0700 (PDT)
-Date:   Wed, 31 Mar 2021 21:32:14 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net
-Subject: [PATCH 3/3] builtin/pack-objects.c: respect 'pack.preferBitmapTips'
-Message-ID: <5e10199dae5e342c0482497b038b3299a8ed046b.1617240723.git.me@ttaylorr.com>
-References: <cover.1617240723.git.me@ttaylorr.com>
+        Wed, 31 Mar 2021 18:50:05 -0700 (PDT)
+Message-Id: <7484e085e3426fbcc696e8122de512ab3a846c09.1617241802.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.906.v2.git.1617241802.gitgitgadget@gmail.com>
+References: <pull.906.git.1615929435.gitgitgadget@gmail.com>
+        <pull.906.v2.git.1617241802.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 01 Apr 2021 01:49:38 +0000
+Subject: [PATCH v2 01/25] sparse-index: API protection strategy
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1617240723.git.me@ttaylorr.com>
+To:     git@vger.kernel.org
+Cc:     newren@gmail.com, gitster@pobox.com,
+        Derrick Stolee <stolee@gmail.com>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When writing a new pack with a bitmap, it is sometimes convenient to
-indicate some reference prefixes which should receive priority when
-selecting which commits to receive bitmaps.
+From: Derrick Stolee <dstolee@microsoft.com>
 
-A truly motivated caller could accomplish this by setting
-'pack.islandCore', (since all commits in the core island are similarly
-marked as preferred) but this requires callers to opt into using delta
-islands, which they may or may not want to do.
+Edit and expand the sparse-index design document with the plan for
+guarding index operations with ensure_full_index().
 
-Introduce a new multi-valued configuration, 'pack.preferBitmapTips' to
-allow callers to specify a list of reference prefixes. All references
-which have a prefix contained in 'pack.preferBitmapTips' will mark their
-tips as "preferred" in the same way as commits are marked as preferred
-for selection by 'pack.islandCore'.
+Notably, the plan has changed to not have an expand_to_path() method in
+favor of checking for a sparse-directory hit inside of the
+index_path_pos() API.
 
-The choice of the verb "prefer" is intentional: marking the NEEDS_BITMAP
-flag on an object does *not* guarantee that that object will receive a
-bitmap. It merely guarantees that that commit will receive a bitmap over
-any *other* commit in the same window by bitmap_writer_select_commits().
+The changes that follow this one will incrementally add
+ensure_full_index() guards to iterations over all cache entries. Some
+iterations over the cache entries are not protected due to a few
+categories listed in the document. Since these are not being modified,
+here is a short list of the files and methods that will not receive
+these guards:
 
-The test this patch adds reflects this quirk, too. It only tests that
-a commit (which didn't receive bitmaps by default) is selected for
-bitmaps after changing the value of 'pack.preferBitmapTips' to include
-it. Other commits may lose their bitmaps as a byproduct of how the
-selection process works (bitmap_writer_select_commits() ignores the
-remainder of a window after seeing a commit with the NEEDS_BITMAP flag).
+Looking for non-zero stage:
+* builtin/add.c:chmod_pathspec()
+* builtin/merge.c:count_unmerged_entries()
+* merge-ort.c:record_conflicted_index_entries()
+* read-cache.c:unmerged_index()
+* rerere.c:check_one_conflict(), find_conflict(), rerere_remaining()
+* revision.c:prepare_show_merge()
+* sequencer.c:append_conflicts_hint()
+* wt-status.c:wt_status_collect_changes_initial()
 
-This configuration will aide in selecting important references for
-multi-pack bitmaps, since they do not respect the same pack.islandCore
-configuration. (They could, but doing so may be confusing, since it is
-packs--not bitmaps--which are influenced by the delta-islands
-configuration).
+Looking for submodules:
+* builtin/submodule--helper.c:module_list_compute()
+* submodule.c: several methods
+* worktree.c:validate_no_submodules()
 
-In a fork network repository (one which lists all forks of a given
-repository as remotes), for example, it is useful to set
-pack.preferBitmapTips to 'refs/remotes/<root>/heads' and
-'refs/remotes/<root>/tags', where '<root>' is an opaque identifier
-referring to the repository which is at the base of the fork chain.
+Part of the index API:
+* name-hash.c: lazy init methods
+* preload-index.c:preload_thread(), preload_index()
+* read-cache.c: file format methods
 
-Suggested-by: Jeff King <peff@peff.net>
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
+Checking for correct order of cache entries:
+* read-cache.c:check_ce_order()
+
+Ignores SKIP_WORKTREE entries or already aware:
+* unpack-trees.c:mark_new_skip_worktree()
+* wt-status.c:wt_status_check_sparse_checkout()
+
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/config/pack.txt | 15 ++++++++++++++
- builtin/pack-objects.c        | 34 +++++++++++++++++++++++++++++++
- pack-bitmap.c                 |  6 ++++++
- pack-bitmap.h                 |  3 +++
- t/t5310-pack-bitmaps.sh       | 38 +++++++++++++++++++++++++++++++++++
- 5 files changed, 96 insertions(+)
+ Documentation/technical/sparse-index.txt | 37 ++++++++++++++++++++++--
+ 1 file changed, 35 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/config/pack.txt b/Documentation/config/pack.txt
-index 3da4ea98e2..c0844d8d8e 100644
---- a/Documentation/config/pack.txt
-+++ b/Documentation/config/pack.txt
-@@ -122,6 +122,21 @@ pack.useSparse::
- 	commits contain certain types of direct renames. Default is
- 	`true`.
+diff --git a/Documentation/technical/sparse-index.txt b/Documentation/technical/sparse-index.txt
+index 8d3d80804604..3b24c1a219f8 100644
+--- a/Documentation/technical/sparse-index.txt
++++ b/Documentation/technical/sparse-index.txt
+@@ -85,8 +85,41 @@ index, as well.
  
-+pack.preferBitmapTips::
-+	When selecting which commits will receive bitmaps, prefer a
-+	commit at the tip of any reference that is a suffix of any value
-+	of this configuration over any other commits in the "selection
-+	window".
-++
-+Note that setting this configuration to `refs/foo` does not mean that
-+the commits at the tips of `refs/foo/bar` and `refs/foo/baz` will
-+necessarily be selected. This is because commits are selected for
-+bitmaps from within a series of windows of variable length.
-++
-+If a commit at the tip of any reference which is a suffix of any value
-+of this configuration is seen in a window, it is immediately given
-+preference over any other commit in that window.
+ Next, consumers of the index will be guarded against operating on a
+ sparse-index by inserting calls to `ensure_full_index()` or
+-`expand_index_to_path()`. After these guards are in place, we can begin
+-leaving sparse-directory entries in the in-memory index structure.
++`expand_index_to_path()`. If a specific path is requested, then those will
++be protected from within the `index_file_exists()` and `index_name_pos()`
++API calls: they will call `ensure_full_index()` if necessary. The
++intention here is to preserve existing behavior when interacting with a
++sparse-checkout. We don't want a change to happen by accident, without
++tests. Many of these locations may not need any change before removing the
++guards, but we should not do so without tests to ensure the expected
++behavior happens.
 +
- pack.writeBitmaps (deprecated)::
- 	This is a deprecated synonym for `repack.writeBitmaps`.
++It may be desirable to _change_ the behavior of some commands in the
++presence of a sparse index or more generally in any sparse-checkout
++scenario. In such cases, these should be carefully communicated and
++tested. No such behavior changes are intended during this phase.
++
++During a scan of the codebase, not every iteration of the cache entries
++needs an `ensure_full_index()` check. The basic reasons include:
++
++1. The loop is scanning for entries with non-zero stage. These entries
++   are not collapsed into a sparse-directory entry.
++
++2. The loop is scanning for submodules. These entries are not collapsed
++   into a sparse-directory entry.
++
++3. The loop is part of the index API, especially around reading or
++   writing the format.
++
++4. The loop is checking for correct order of cache entries and that is
++   correct if and only if the sparse-directory entries are in the correct
++   location.
++
++5. The loop ignores entries with the `SKIP_WORKTREE` bit set, or is
++   otherwise already aware of sparse directory entries.
++
++6. The sparse-index is disabled at this point when using the split-index
++   feature, so no effort is made to protect the split-index API.
  
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 525c2d8552..a1e33d7507 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -3547,6 +3547,37 @@ static void record_recent_commit(struct commit *commit, void *data)
- 	oid_array_append(&recent_objects, &commit->object.oid);
- }
- 
-+static int mark_bitmap_preferred_tip(const char *refname,
-+				     const struct object_id *oid, int flags,
-+				     void *_data)
-+{
-+	struct object_id peeled;
-+	struct object *object;
-+
-+	if (!peel_iterated_oid(oid, &peeled))
-+		oid = &peeled;
-+
-+	object = parse_object_or_die(oid, refname);
-+	if (object->type == OBJ_COMMIT)
-+		object->flags |= NEEDS_BITMAP;
-+
-+	return 0;
-+}
-+
-+static void mark_bitmap_preferred_tips(void)
-+{
-+	struct string_list_item *item;
-+	const struct string_list *preferred_tips;
-+
-+	preferred_tips = bitmap_preferred_tips(the_repository);
-+	if (!preferred_tips)
-+		return;
-+
-+	for_each_string_list_item(item, preferred_tips) {
-+		for_each_ref_in(item->string, mark_bitmap_preferred_tip, NULL);
-+	}
-+}
-+
- static void get_object_list(int ac, const char **av)
- {
- 	struct rev_info revs;
-@@ -3601,6 +3632,9 @@ static void get_object_list(int ac, const char **av)
- 	if (use_delta_islands)
- 		load_delta_islands(the_repository, progress);
- 
-+	if (write_bitmap_index)
-+		mark_bitmap_preferred_tips();
-+
- 	if (prepare_revision_walk(&revs))
- 		die(_("revision walk setup failed"));
- 	mark_edges_uninteresting(&revs, show_edge, sparse);
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 7554510b14..bfe2943a9b 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -13,6 +13,7 @@
- #include "repository.h"
- #include "object-store.h"
- #include "list-objects-filter-options.h"
-+#include "config.h"
- 
- /*
-  * An entry on the bitmap index, representing the bitmap for a given
-@@ -1529,3 +1530,8 @@ off_t get_disk_usage_from_bitmap(struct bitmap_index *bitmap_git,
- 
- 	return total;
- }
-+
-+const struct string_list *bitmap_preferred_tips(struct repository *r)
-+{
-+	return repo_config_get_value_multi(r, "pack.preferbitmaptips");
-+}
-diff --git a/pack-bitmap.h b/pack-bitmap.h
-index c3cdd80756..78f2b3ff79 100644
---- a/pack-bitmap.h
-+++ b/pack-bitmap.h
-@@ -5,6 +5,7 @@
- #include "khash.h"
- #include "pack.h"
- #include "pack-objects.h"
-+#include "string-list.h"
- 
- struct commit;
- struct repository;
-@@ -91,4 +92,6 @@ void bitmap_writer_finish(struct pack_idx_entry **index,
- 			  const char *filename,
- 			  uint16_t options);
- 
-+const struct string_list *bitmap_preferred_tips(struct repository *r);
-+
- #endif
-diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
-index 40b9f63244..f53efc8229 100755
---- a/t/t5310-pack-bitmaps.sh
-+++ b/t/t5310-pack-bitmaps.sh
-@@ -554,4 +554,42 @@ test_expect_success 'fetch with bitmaps can reuse old base' '
- 	)
- '
- 
-+test_expect_success 'pack.preferBitmapTips' '
-+	git init repo &&
-+	test_when_finished "rm -fr repo" &&
-+	(
-+		cd repo &&
-+
-+		# create enough commits that not all are receive bitmap
-+		# coverage even if they are all at the tip of some reference.
-+		test_commit_bulk --message="%s" 103 &&
-+
-+		git rev-list HEAD >commits.raw &&
-+		sort <commits.raw >commits &&
-+
-+		git log --format="create refs/tags/%s %H" HEAD >refs &&
-+		git update-ref --stdin <refs &&
-+
-+		git repack -adb &&
-+		test-tool bitmap list-commits | sort >bitmaps &&
-+
-+		# remember which commits did not receive bitmaps
-+		comm -13 bitmaps commits >before &&
-+		test_file_not_empty before &&
-+
-+		# mark the commits which did not receive bitmaps as preferred,
-+		# and generate the bitmap again
-+		perl -pe "s{^}{create refs/tags/include/$. }" <before |
-+			git update-ref --stdin &&
-+		git -c pack.preferBitmapTips=refs/tags/include repack -adb &&
-+
-+		# finally, check that the commit(s) without bitmap coverage
-+		# are not the same ones as before
-+		test-tool bitmap list-commits | sort >bitmaps &&
-+		comm -13 bitmaps commits >after &&
-+
-+		! test_cmp before after
-+	)
-+'
-+
- test_done
+ Even after inserting these guards, we will keep expanding sparse-indexes
+ for most Git commands using the `command_requires_full_index` repository
 -- 
-2.31.1.163.ga65ce7f831
+gitgitgadget
+
