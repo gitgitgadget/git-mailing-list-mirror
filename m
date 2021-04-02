@@ -2,113 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
+X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A08DDC433B4
-	for <git@archiver.kernel.org>; Fri,  2 Apr 2021 21:36:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 505B9C433ED
+	for <git@archiver.kernel.org>; Fri,  2 Apr 2021 21:37:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 592026115C
-	for <git@archiver.kernel.org>; Fri,  2 Apr 2021 21:36:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 18DCB610CE
+	for <git@archiver.kernel.org>; Fri,  2 Apr 2021 21:37:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234161AbhDBVgw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Apr 2021 17:36:52 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:51297 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231149AbhDBVgw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Apr 2021 17:36:52 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id BC3F112FA66;
-        Fri,  2 Apr 2021 17:36:50 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=s2ZDqa2djAPd
-        5c1GUJE4hNjTrKg=; b=nNHOBTbSEWVB4abox6k+BwfBnsrD1uCMeXvBSs8111lH
-        3LcW+yMBkX7XCaKX+J3sBQCY304oEyw8/sXwgYQXlNnD8b3I+LvHfET4c+1ssOkY
-        VrRgo4mBPl1yoHvod5Pg3rEMfz4wmURxNn6ni0LdSiF2oq9aV0OlvbfrpQSqDik=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=jw0JWa
-        h4Zxg2ghARCmaCEVraQRLb1rQs95ZcmGojvB0DfkjV0bKqgmnAh66EAe2LJqfP0C
-        RO0k1Fy0I8uvMKBV0qPpdcdJs4fhulW8x7G6vZuF9deaWh7VpHubs4VNekpBNvoL
-        hYO2NJafHTJ1JXe//C6uWdIJhO2cBOup1R/pw=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B500A12FA65;
-        Fri,  2 Apr 2021 17:36:50 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id EB6BB12FA64;
-        Fri,  2 Apr 2021 17:36:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>
-Subject: Re: [PATCH 2/2] git-send-email: refactor duplicate $? checks into a
- function
+        id S234526AbhDBVhk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Apr 2021 17:37:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54278 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231149AbhDBVhj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Apr 2021 17:37:39 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAE49C0613E6
+        for <git@vger.kernel.org>; Fri,  2 Apr 2021 14:37:37 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id gv19-20020a17090b11d3b029014c516f4eb5so1309508pjb.0
+        for <git@vger.kernel.org>; Fri, 02 Apr 2021 14:37:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=QPhiu3OjoLkm8NdseEMM9KoVcg7uLnU+TennWne3k/4=;
+        b=gzTjZBMoHxvDDNJjIJP5AjqqwZhlb0D7WeQiGvBhxAvG4EjBBpcrwyMQFXt5BmYF3e
+         7QrTixiJgZyrvkwy7Z17+CRmjXMezhSMuvD5ioFAETd4k0Ze3d4jbVY7/ts2+oZmyJ99
+         mwMRu/fvsqcPMKLmvjwR9wOlLtDDXciz7iVTxaHSV9UN5ku/FiyKglpzfI2p2MWBJskz
+         3orGGnnKFyu9jSil6LxWjmoJjUKMo+RYjCytPobl81Z7tLetL1nMNzT2fdUb9Bj++x4v
+         d1oWHGqgd6VNMvaECoD/yFsCYZj2NM2OT/o32wHELhecnJ9HiNqXIv/fqiIzDPlzMlNk
+         QLEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=QPhiu3OjoLkm8NdseEMM9KoVcg7uLnU+TennWne3k/4=;
+        b=InR3Ap27fIFPdfZg+j3vF5lWQIrNuZNObuVcPK0ci3sU9XRHwZBu3XYsRuMQxqNNSo
+         i7iPPpuYrtMYYuvuNVXKoXL62WPzUwLceIcfHs4x6ZKChfG3FZDNk0iT1MP6i2O2HoNC
+         uKOJBGX1d7tnDzZAYOUCzk6kRHdvTQPq1BjECEREgM8NQhbWh3oMzEJC7mSyPENMPYMM
+         wWbIQGT/g/WJR8uDhkitXk3hef3ZZNxw6c+56KFa1UbvS8hXulq520+/pmJVB/meIELl
+         nkyneYNPzD02PMtyIVwGRvCeppZjB8zL7T6JgWfOEIro5nxnV16hBS+cXSJFBpgP0Jvm
+         lrMA==
+X-Gm-Message-State: AOAM533xvKQownVqCRQjrkIYURXzCdm2mUl1bMk3NN8TeG9lZS/b0x4U
+        bsJrkMRamNPoKcl+yxGuS5s84g==
+X-Google-Smtp-Source: ABdhPJweHMWXZToWAu6N32JJ+h94giynTo1Kskvlk5uU/K+05oPXSUBat4q0S4dGtI3bR2THe2gQbg==
+X-Received: by 2002:a17:902:e312:b029:e7:3f29:c06d with SMTP id q18-20020a170902e312b02900e73f29c06dmr14516207plc.85.1617399457094;
+        Fri, 02 Apr 2021 14:37:37 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:0:98b6:d0f8:7d1:479a])
+        by smtp.gmail.com with ESMTPSA id gz12sm8970146pjb.33.2021.04.02.14.37.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 02 Apr 2021 14:37:36 -0700 (PDT)
+Date:   Fri, 2 Apr 2021 14:37:31 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 1/2] git-send-email: replace "map" in void context with
+ "for"
+Message-ID: <YGeOm+VNro9yofo6@google.com>
 References: <YGTt2cNwq3BlpB7n@google.com>
-        <cover-0.3-00000000000-20210402T112946Z-avarab@gmail.com>
-        <patch-2.3-f4bace5607c-20210402T112946Z-avarab@gmail.com>
-Date:   Fri, 02 Apr 2021 14:36:46 -0700
-In-Reply-To: <patch-2.3-f4bace5607c-20210402T112946Z-avarab@gmail.com>
- (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 2 Apr
- 2021 13:34:34 +0200")
-Message-ID: <xmqqk0pk2wsx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+ <cover-0.3-00000000000-20210402T112946Z-avarab@gmail.com>
+ <patch-1.3-bea11504a67-20210402T112946Z-avarab@gmail.com>
+ <xmqqo8ew2x1h.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 873B1420-93FB-11EB-BD81-E43E2BB96649-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqo8ew2x1h.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+On Fri, Apr 02, 2021 at 02:31:38PM -0700, Junio C Hamano wrote:
+> 
+> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+> 
+> > While using "map" instead of "for" or "map" instead of "grep" and
+> > vice-versa makes for interesting trivia questions when interviewing
+> > Perl programmers, it doesn't make for very readable code. Let's
+> > refactor this loop initially added in 8fd5bb7f44b (git send-email: add
+> > --annotate option, 2008-11-11) to be a for-loop instead.
+> 
+> ;-)
+> 
+> Will queue.  Thanks.
 
-> Refactor the duplicate checking of $? into a function. There's an
-> outstanding series[1] wanting to add a third use of system() in this
-> file, let's not copy this boilerplate anymore when that happens.
->
-> 1. http://lore.kernel.org/git/87y2esg22j.fsf@evledraar.gmail.com
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
-> ---
->  git-send-email.perl | 49 +++++++++++++++++++++++++++++----------------
->  1 file changed, 32 insertions(+), 17 deletions(-)
->
-> diff --git a/git-send-email.perl b/git-send-email.perl
-> index 6893c8e5808..901c935455d 100755
-> --- a/git-send-email.perl
-> +++ b/git-send-email.perl
-> @@ -212,22 +212,30 @@ sub format_2822_time {
->  my $multiedit;
->  my $editor;
-> =20
-> +sub system_or_msg {
-> +	my ($args, $msg) =3D @_;
-> +	system(@$args);
-> +	return unless (($? & 127) || ($? >> 8));
-> +
-> +	die $msg if $msg;
-> +	return sprintf(__("failed to run command %s, died with code %d"),
-> +		       "@$args", $? >> 8);
-> +}
-
-That sounds more like system_and_die_or_msg to me.  More
-importantly, the name of the helper makes it clear what difference
-this has with ...
-
-> +sub system_or_die {
-> +	my $msg =3D system_or_msg(@_);
-> +	die $msg if $msg;
-> +}
-
-... this one.  The former does nto die but returns message only when
-X?  If that X were in its name, readers who look at the caller of
-system_or_msg vs system_or_die would immediately know that why the
-callsite is using one and not the other variant.
+Oh cool, thanks both :)
