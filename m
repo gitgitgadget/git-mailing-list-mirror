@@ -6,91 +6,96 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3140CC433ED
-	for <git@archiver.kernel.org>; Fri,  2 Apr 2021 20:51:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DAFCC433ED
+	for <git@archiver.kernel.org>; Fri,  2 Apr 2021 21:01:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F418261155
-	for <git@archiver.kernel.org>; Fri,  2 Apr 2021 20:51:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 362FE6100C
+	for <git@archiver.kernel.org>; Fri,  2 Apr 2021 21:01:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231443AbhDBUvu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Apr 2021 16:51:50 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55851 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229722AbhDBUvt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Apr 2021 16:51:49 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 572EFBA379;
-        Fri,  2 Apr 2021 16:51:47 -0400 (EDT)
+        id S231577AbhDBVBZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Apr 2021 17:01:25 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:53975 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231149AbhDBVBY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Apr 2021 17:01:24 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4ED35133C77;
+        Fri,  2 Apr 2021 17:01:23 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=POcdP1riLmmp
-        rSnkgqGPrXjF4Sc=; b=P2Lowbp2N1VGZTtkDw0e6BNrtDyETnchYvvvS/aPQthL
-        pEQDvynyQJ9Zuu2ZaYn+WYFIkhdczZkYtuiolTUZZPZ6GghD8QkEC5IFO5KfVxnZ
-        senouMuf0HXOBr915zcAkU9VTGJii7nQ7sO9Xg9aFkctHc5dhwSQbqkLxkOudf8=
+        :content-type; s=sasl; bh=QdL66Ky7u7qP7wFFHmQ6w/dsubc=; b=XRmJSn
+        pmpmoVyLfpQn9JpP8bz+CypZShIvPfjQrHZw55UwEy2m9OVJice47E/NnNoCOswL
+        cn75DtdPl5jZGHzuFaOwJCnyJydKWDjke78Mz1hplT/hjUb7SSMDEmeIhtwwwzj6
+        josi1xEYzIAD2zDGKAsRYzK5+u03YuxF0Htmg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=QQMqj4
-        WFkB5gK9vMiQrN0LGbeEcPlCIw2lA/sGp1k7H1ePIcIDw0ujJY/WbNQNMNauRYtR
-        32/3XDFyNkBmEJSNB+S/ZmT2SWjr5+QIvzQ1VckO58x7hqQT/ZmaV/WA/lV1pLBC
-        PvcuczrGyEjYlEN9v9R9Rys1tofqoHsjd9zCs=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4D697BA378;
-        Fri,  2 Apr 2021 16:51:47 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=MhnhxLNO4fPLRDu8a0Pn69lIBIQ8kiR/
+        pJ08SoX5NS0YT56qvFJ0alsCyuO1EQBuN738kGlO57c/LPSnpdH1Q7+o2d3gfbPr
+        OveGH3K0v7HaLg/r6DL+xGZTuVvAv4x275kUFth/zxu/4vZqhHLGGVR0wExP6qM7
+        XCDZUASM2t8=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 480E8133C76;
+        Fri,  2 Apr 2021 17:01:23 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C58E9BA377;
-        Fri,  2 Apr 2021 16:51:46 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 639ED133C73;
+        Fri,  2 Apr 2021 17:01:19 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Olga Telezhnaya <olyatelezhnaya@gmail.com>
-Subject: Re: [PATCH v2 0/5] mktag tests & fix for-each-ref segfault
-References: <YGWFGMdGcKeaqCQF@coredump.intra.peff.net>
-        <cover-0.6-00000000000-20210401T135419Z-avarab@gmail.com>
-        <xmqqczvd3hkb.fsf@gitster.g> <87wntkkjcd.fsf@evledraar.gmail.com>
-Date:   Fri, 02 Apr 2021 13:51:45 -0700
-In-Reply-To: <87wntkkjcd.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Fri, 02 Apr 2021 13:37:54 +0200")
-Message-ID: <xmqqeefs4dge.fsf@gitster.g>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Elijah Newren <newren@gmail.com>,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Philip Oakley <philipoakley@iee.email>
+Subject: Re: unifying sequencer's options persisting, was Re: [PATCH v2]
+ sequencer: fix edit handling for cherry-pick and revert messages
+References: <pull.988.git.git.1616742969145.gitgitgadget@gmail.com>
+        <pull.988.v2.git.git.1617070174458.gitgitgadget@gmail.com>
+        <nycvar.QRO.7.76.6.2103301200020.52@tvgsbejvaqbjf.bet>
+        <CABPp-BGwAtpsQJ8U5N1q21PMkideptY2MB2PNgbPqvya+XuyHg@mail.gmail.com>
+        <nycvar.QRO.7.76.6.2103311533340.52@tvgsbejvaqbjf.bet>
+        <3b117e65-bf9f-af13-b093-28bbbd6f9bb3@gmail.com>
+Date:   Fri, 02 Apr 2021 14:01:17 -0700
+In-Reply-To: <3b117e65-bf9f-af13-b093-28bbbd6f9bb3@gmail.com> (Phillip Wood's
+        message of "Fri, 2 Apr 2021 12:28:43 +0100")
+Message-ID: <xmqqa6qg4d0i.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 3D385CF8-93F5-11EB-A3CD-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 92831FEE-93F6-11EB-A3B2-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> On Thu, Apr 01 2021, Junio C Hamano wrote:
->
->> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
->>
->>> Here's a proposed v2. We test the same case, but I thought it made
->>> sense to test this more exhaustively.
->>
->> Let's first make a targetted fix that can be applied to maint and
->> below.  After that is merged to 'master', you are free to add more
->> tests on top,=20
->
-> Makes sense. I based Jeff's patch on top of mine to demonstrate that
-> those tests also catch the segfault.
->
->> but let's avoid to have more and more topics that go overboard.
->
-> So "submit a new version on-top" or "maybe deal with your existing
-> topics first as you're overflowing my inbox" ? :) I suspect the latter.=
-.
+> I think we would save a lot by only syncing the state to disk when we
+> stop or run an exec command (the state needs to be synced so exec 
+> commands can alter the todo list). In those cases we need to write the
+> index and possibly run an external process so writing a couple of
+> files is probably insignificant.
 
-What I meant is...
+The optimization opportunity of this may be a lot smaller than you
+would think---you must cater to not just exec but hook scripts that
+are run while a new commit is made, which means every step you'd
+need to write anyway.
 
-Comparing the five-patch series with Peff's small fix that is more
-to the point, I have a feeling that the five-patch series, like many
-other series from you, may be made unnecessarily large by not
-resisting the temptation to including unessential "while at it"
-changes.
+> Where I think we can usefully consolidate is the one-line files which
+> store the options rather than state - these are read an written much 
+> less frequently so I don't think they have much of a performance hit
+> but it would be much nicer to just serialize the options to a single
+> file.
+
+Would that break external scripts, hooks, etc.?  I am not sure if we
+even have any rough consensus for allowing other people to peek into
+the .git/rebase-*/ directories, but I am inclined to say that it
+sounds more like a solution looking for a problem than a good idea
+to solve some concrete problem.
+
+
+
+
