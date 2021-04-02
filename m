@@ -2,214 +2,676 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73B87C433ED
-	for <git@archiver.kernel.org>; Fri,  2 Apr 2021 13:10:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 66EA4C433ED
+	for <git@archiver.kernel.org>; Fri,  2 Apr 2021 13:26:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4442C610A0
-	for <git@archiver.kernel.org>; Fri,  2 Apr 2021 13:10:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3FC886112E
+	for <git@archiver.kernel.org>; Fri,  2 Apr 2021 13:26:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235459AbhDBNKV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Apr 2021 09:10:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57124 "EHLO
+        id S235480AbhDBN0S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Apr 2021 09:26:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229599AbhDBNKV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Apr 2021 09:10:21 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3939C0613E6
-        for <git@vger.kernel.org>; Fri,  2 Apr 2021 06:10:19 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id f8so1382894edd.11
-        for <git@vger.kernel.org>; Fri, 02 Apr 2021 06:10:19 -0700 (PDT)
+        with ESMTP id S229932AbhDBN0R (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Apr 2021 09:26:17 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6991C0613E6
+        for <git@vger.kernel.org>; Fri,  2 Apr 2021 06:26:15 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id j7so4770492wrd.1
+        for <git@vger.kernel.org>; Fri, 02 Apr 2021 06:26:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=s//WqQEIJGsyTTGrGTsvqk2dbFg8cPRvy5YIyFdh1Lk=;
-        b=pTuILbBkUzY2L6Exg4HXTxO7OdH97H2TwUdSAeB4RSj/zeNr9mqDRjdURka3EhEs+L
-         qLK24q9F6jynA6tEO+etvsG+VJC1DlFCzRtYV6VOotSvJH4AWWhNhIoWJlgFd7Vmpxfr
-         BxZhTDrQP1aypfOPrGs2RZge/LkcQnRzONcGakuSXWXpPVZbfj0q4Mdtj49eH1iiAOlM
-         jIFzo8AYbCnPMf9xG1os1mt/fZ5Xs7P/DrKtj+4WnnUL39+33AbSyT1nYNXmzHlZATaQ
-         mcD295NmajqsY+NGdG8lWNIaFfcqgAtFK5VuxCFOVPDa2M0qSl4dPuUWwFD6FQ8Jktq6
-         RrDQ==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=KjJU8WVw3Z9OE3lFyQMc3oMftTmNEBPaB3cgHB7EVxk=;
+        b=ea8yUM5g71ap8SDrqrJOK7U7KgL8qCnzFCQrCzE/J0BJ1ljYIri4UtavmPCl+eCohY
+         L4P52rW6JDGMHPr8HOZeEJ0FUG9bhq64Yr2OfM53yL8uefEXvLBp5ZuIfYi7dr+XcU+6
+         OCGw6S8FI7Ciy5YBfT1zXELHVAIgaG1iTqb/Ob/37e7TIYcGW8RelLjWwdGe08yGlpsq
+         nl4biFDJeuHFHXHu4nRNiIyH1eZFyOWpO3NQFiARID4+v3nB3zyh+7436XeV5Kp0EXwt
+         VJGeNNwwvUrM+ZkVifzG9fZGqUEjNAQoooCLonff9ydsJWZxCbmI8iqdKJAkzCVrNLLd
+         W9xQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=s//WqQEIJGsyTTGrGTsvqk2dbFg8cPRvy5YIyFdh1Lk=;
-        b=iJS0dOid8gdMFKY+NcFMItArjGdd4O8gVvtapoOIaYtb0549bIXRB8rv2QOkGUB02J
-         m2zNyAQn/J5G/3s/cnGqeyEKvX4Nmxfc6ho324Hp09eJkqpb9jjKJRmmh/jqbAAa3/cF
-         eUNwPvNnH2UNkgP8UsDBXiJGzDNQaurAAHirx2wzm99E9RJIDXgKNFdZKW6z1vjoA6NX
-         Kg7OOpGH5zPGlpwnQpvHhg8ba2rOsShZJTmYynQYL3BK7PNlZ3FpZ9twsnRikzvtHf66
-         avWN7UNezVvQEcB21Jb0vzaXRRJAHnTi5zDxg3xCR5Z3vlLA6eDSsLMpGv3iAopAo+zD
-         VzsQ==
-X-Gm-Message-State: AOAM533OwKIolvciI2WdGzDwe9LhSON43J68a3Pdr7s72H6WK3htnz2C
-        iph0KR/CS/c96jy+4uprYwE=
-X-Google-Smtp-Source: ABdhPJw9PT3VIExAWaWTi3YxVyuPGQQUPykC9wkjKU+buKxxe5c0Srs4fkE5tJya836bX/6q8PwsIQ==
-X-Received: by 2002:a05:6402:3495:: with SMTP id v21mr15138017edc.117.1617369018558;
-        Fri, 02 Apr 2021 06:10:18 -0700 (PDT)
-Received: from [192.168.1.201] (243.20.198.146.dyn.plus.net. [146.198.20.243])
-        by smtp.googlemail.com with ESMTPSA id d1sm4191142eje.26.2021.04.02.06.10.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 02 Apr 2021 06:10:17 -0700 (PDT)
-Subject: Re: unifying sequencer's options persisting, was Re: [PATCH v2]
- sequencer: fix edit handling for cherry-pick and revert messages
-From:   Phillip Wood <phillip.wood123@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Elijah Newren <newren@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Philip Oakley <philipoakley@iee.email>
-References: <pull.988.git.git.1616742969145.gitgitgadget@gmail.com>
- <pull.988.v2.git.git.1617070174458.gitgitgadget@gmail.com>
- <nycvar.QRO.7.76.6.2103301200020.52@tvgsbejvaqbjf.bet>
- <CABPp-BGwAtpsQJ8U5N1q21PMkideptY2MB2PNgbPqvya+XuyHg@mail.gmail.com>
- <nycvar.QRO.7.76.6.2103311533340.52@tvgsbejvaqbjf.bet>
- <3b117e65-bf9f-af13-b093-28bbbd6f9bb3@gmail.com>
-Message-ID: <b0375013-e287-06b1-2718-3736fc1b73e7@gmail.com>
-Date:   Fri, 2 Apr 2021 14:10:16 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.0
-MIME-Version: 1.0
-In-Reply-To: <3b117e65-bf9f-af13-b093-28bbbd6f9bb3@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=KjJU8WVw3Z9OE3lFyQMc3oMftTmNEBPaB3cgHB7EVxk=;
+        b=RgnyXZdmNdTfFFi6wPYr6dTMHl+0Nio5z881VBrQ/nHYbBRQkvOPSQsQTyyAQkA5rN
+         hL/nDKZH+8FIufIzwhJxtKgChV5jHbdco60qUwA/G51V+9lRk6db1t3HZ2E5hyAxZexr
+         C6RRxoll7dmqMNpwFBAp8AnrANGlHspjISeoL1n/2Bb1Ukf3ggPu3mLIQBpwDwNX9/+o
+         TWLIqUtsnSe3bQGtbmYUrz+i0Cfv6o7gTbSl2vYnKosEeLdNjAIKbHPTPJKrYn9Y8PHV
+         Kn2rl5xKb7BDAA3SJzXFmEdiP14JTVENwvlKR+ydlkCatFxSiuSRKdbfLl+gyCk6GCmf
+         P9aA==
+X-Gm-Message-State: AOAM531NsFdutbZXqtCsL4mu4vfGUKH0NUlzlmbcPneWcg5SuFNfBSUG
+        mZSuws1KXRVnq3comvWyd383Hed9OEM=
+X-Google-Smtp-Source: ABdhPJwHfW6xSDRypzW4XVLJ87fxI/ZQIqBBJOfwN4Ei1ENtWIj7043pUNGztehlPiichRs/NlC9Ww==
+X-Received: by 2002:a5d:5487:: with SMTP id h7mr15637053wrv.348.1617369974544;
+        Fri, 02 Apr 2021 06:26:14 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id z15sm15002841wrw.50.2021.04.02.06.26.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 02 Apr 2021 06:26:14 -0700 (PDT)
+Message-Id: <pull.913.v6.git.1617369973328.gitgitgadget@gmail.com>
+In-Reply-To: <pull.913.v5.git.1617185147.gitgitgadget@gmail.com>
+References: <pull.913.v5.git.1617185147.gitgitgadget@gmail.com>
+From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 02 Apr 2021 13:26:12 +0000
+Subject: [PATCH v6] [GSOC] trailer: add new trailer.<token>.cmd config option
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        ZheNing Hu <adlternative@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-one more thought below...
+From: ZheNing Hu <adlternative@gmail.com>
 
-On 02/04/2021 12:28, Phillip Wood wrote:
-> Hi Dscho and Elijah
-> 
-> On 31/03/2021 14:48, Johannes Schindelin wrote:
->> Hi,
->>
->> On Tue, 30 Mar 2021, Elijah Newren wrote:
->>
->>> On Tue, Mar 30, 2021 at 3:13 AM Johannes Schindelin
->>> <Johannes.Schindelin@gmx.de> wrote:
->>>
->>>> I'll allow myself one tangent: the subject of the sequencer's Unix
->>>> shell script heritage seems to come up with an increasing frequency,
->>>> in particular the awful "let's write out one file per setting"
->>>> strategy.
->>>>
->>>> I would _love_ for `save_opts()` to write a JSON instead (or an INI
->>>> via the `git_config_*()` family of functions, as is done already by
->>>> the cherry-pick/revert stuff), now that we no longer have any shell
->>>> script backend (apart from `--preserve-merges`, but that one is on its
->>>> way out anyway).
->>>>
->>>> The one thing that concerns me with this idea is that I know for a
->>>> fact that some enterprisey users play games with those files inside
->>>> `<GIT_DIR>/rebase-merge` that should be considered internal
->>>> implementation details. Not sure how to deprecate that properly, I
->>>> don't think we have a sane way to detect whether users rely on these
->>>> implementation details other than breaking their expectations, which
->>>> is not really a gentle way to ask them to update their scripts.
-> 
-> I think it depends if users are just reading the files or writing to 
-> them. If they are reading them (which my scripts do) then we could 
-> continue to write the important files along side the new single-file 
-> that git actually reads. I think there is a distinction between the 
-> files such as git-rebase-todo which hold state and the one-line files 
-> which hold the options passed by the user. For example I have scripts 
-> that read git-rebase-todo, rewritten-pending, rewritten-list, amend-head 
-> and check that author-script exists. If a script starts a rebase then it 
-> should know what options are in effect without reading them from 
-> .git/rebase-merge.
-> 
->>> Ooh, I'm glad you took this tangent.  May I follow it for a second?
->>> I'd really, really like this too, for three reasons:
->>>
->>> 1) I constantly get confused about the massive duplication and
->>> difference in control structures and which ones affect which type of
->>> operations in sequencer.c.  Having them both use an ini-file would
->>> allow us to remove lots of that duplication.  I'm sure there'll still
->>> be some rebase-specific or cherry-pick-specific options, but we don't
->>> need a separate parallel structure for every piece of config.
+The `trailer.<token>.command` configuration variable
+specifies a command (run via the shell, so it does not have
+to be a single name of or path to the command, but can be a
+shell script), and the first occurrence of substring $ARG is
+replaced with the value given to the `interpret-trailer`
+command for the token.  This has two downsides:
 
-One thing to bear in mind is that you can cherry-pick or revert a 
-sequence of commits while rebasing - I think that means we need to store 
-the state for rebase in a separate location to that for cherry-pick/revert
+* The use of $ARG in the mechanism misleads the users that
+the value is passed in the shell variable, and tempt them
+to use $ARG more than once, but that would not work, as
+the second and subsequent $ARG are not replaced.
 
-Best Wishes
+* Because $ARG is textually replaced without regard to the
+shell language syntax, even '$ARG' (inside a single-quote
+pair), which a user would expect to stay intact, would be
+replaced, and worse, if the value had an unmatching single
+quote (imagine a name like "O'Connor", substituted into
+NAME='$ARG' to make it NAME='O'Connor), it would result in
+a broken command that is not syntactically correct (or
+worse).
 
-Phillip
+Introduce a new `trailer.<token>.cmd` configuration that
+takes higher precedence to deprecate and eventually remove
+`trailer.<token>.command`, which passes the value as a
+parameter to the command.  Instead of "$ARG", the users will
+refer to the value as positional argument, $1, in their
+scripts.
 
->>> 2) In my merge-ort optimization work, rebasing 35 commits in linux.git
->>> across a massive set of 26K upstream renames has dropped rename
->>> detection time from the top spot.  And it also dropped several other
->>> things in the merge machinery from their spots as well.  Do you know
->>> what's the slowest now?  Wasted time from sequencer.c: the unnecessary
->>> process forking and all the useless disk writing (which I suspect is
->>> mostly updating the index and working directory but also writing all
->>> the individual control files under .git/rebase-merge/).  And this
->>> stuff from sequencer.c is not just barely the slowest part, it's the
->>> slowest by a wide margin.
-> 
-> I think we do a lot of needless writing which is unrelated to whether we 
-> write to one file or may files. For example from memory picking a commit 
-> involves writing the 'message', 'author-script', 'rewritten-pending' 
-> (which is often immediately deleted), 'rewritten-list' (we append to 
-> that one) 'CHERRY_PICK_HEAD' (which is immediately deleted unless the 
-> pick has become empty), 'git-rebase-todo' is completely rewritten, and 
-> 'done' is appended to. None of this is necessary. For rewording and 
-> merges the only thing that needs to be written is the commit message for 
-> the external process to use. Fixup and squash add a couple more files 
-> into the mix.
-> 
-> I think we would save a lot by only syncing the state to disk when we 
-> stop or run an exec command (the state needs to be synced so exec 
-> commands can alter the todo list). In those cases we need to write the 
-> index and possibly run an external process so writing a couple of files 
-> is probably insignificant.
-> 
-> Where I think we can usefully consolidate is the one-line files which 
-> store the options rather than state - these are read an written much 
-> less frequently so I don't think they have much of a performance hit but 
-> it would be much nicer to just serialize the options to a single file.
-> 
->>>
->>> 3) I also want to allow cherry-picking or rebasing branches that
->>> aren't even checked out (assuming no conflicts are triggered;
->>> otherwise an error can be shown with the user asked to repeat with the
->>> operation connected to an active working directory).
-> 
-> Exciting!
-> 
->>>  For such an
->>> operation, the difference between "cherry-pick" and "rebase" is nearly
->>> irrelevant so you'd expect the code to be the same; every time I look
->>> at the code, though, it seems that the control structures are
->>> separating these two types of operations in more areas than just the
->>> reading and writing of the config.
-> 
-> Yes this can be confusing, for example rebase and cherry-pick handle the 
-> todo list differently. Rebase removes the command before trying to pick 
-> the commit and adds it back if the pick fails for a non-conflict reason, 
-> cherry-pick only removes the command if the pick is successful.
-> 
-> Best Wishes
-> 
-> Phillip
-> 
->> Excellent, we're in agreement, then.
->>
->> The remaining question is: how do we want to go about it? Do we just want
->> to codify the notion that these are internal details that are nobody's
->> business, and if they are using the exact file system layout of the
->> current sequencer, then it's their responsibility to adapt?
->>
->> Ciao,
->> Dscho
->>
-> 
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Helped-by: Christian Couder <christian.couder@gmail.com>
+Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+---
+    [GSOC] trailer: add new trailer..cmd config option
+    
+    In https://lore.kernel.org/git/xmqqv99i4ck2.fsf@gitster.g/ Junio and
+    Christian talked about the problem of using strbuf_replace() to replace
+    $ARG:
+    
+     1. if user's script have more than one $ARG, only the first one will be
+        replaced, which is incorrected.
+     2. $ARG is textually replaced without shell syntax, which may result a
+        broken command when $ARG include some unmatching single quote, very
+        unsafe.
+    
+    Now pass trailer value as $1 to the trailer command with another
+    trailer.<token>.cmd config, to solve these above two problems,
 
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-913%2Fadlternative%2Ftrailer-pass-ARG-env-v6
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-913/adlternative/trailer-pass-ARG-env-v6
+Pull-Request: https://github.com/gitgitgadget/git/pull/913
+
+Range-diff vs v5:
+
+ 1:  4c59cab53a0d < -:  ------------ [GSOC] run-command: add shell_no_implicit_args option
+ 2:  5894d8c4b364 ! 1:  3aed77d077b9 [GSOC]trailer: pass arg as positional parameter
+     @@ Metadata
+      Author: ZheNing Hu <adlternative@gmail.com>
+      
+       ## Commit message ##
+     -    [GSOC]trailer: pass arg as positional parameter
+     +    [GSOC] trailer: add new trailer.<token>.cmd config option
+      
+          The `trailer.<token>.command` configuration variable
+          specifies a command (run via the shell, so it does not have
+     @@ Documentation/git-interpret-trailers.txt: subject
+       Fix #42
+       ------------
+       
+     -+* Configure a 'see' trailer with a cmd to show the subject of a
+     -+  commit that is related, and show how it works:
+     ++* Configure a 'see' trailer with a cmd use a global script `git-one`
+     ++  to show the subject of a commit that is related, and show how it works:
+      ++
+      +------------
+     ++$ cat ~/bin/git-one
+     ++#!/bin/sh
+     ++git show -s --pretty=reference "$1"
+      +$ git config trailer.see.key "See-also: "
+      +$ git config trailer.see.ifExists "replace"
+      +$ git config trailer.see.ifMissing "doNothing"
+     -+$ git config trailer.see.cmd "git show -s --pretty=reference \"\$1\""
+     ++$ git config trailer.see.cmd "~/bin/git-one"
+      +$ git interpret-trailers <<EOF
+      +> subject
+      +> 
+     @@ Documentation/git-interpret-trailers.txt: subject
+      +
+      +message
+      +
+     -+See-also: fe3187489d69c4 (subject of related commit, 2021-3-20)
+     ++See-also: fe3187e (subject of related commit, 2021-4-2)
+      +------------
+      +
+     -+* Configure a 'bug' trailer with a cmd to show when and where
+     -+  was the bug introduced, and show how it works:
+     ++* Configure a 'who' trailer with a cmd use a global script `git-who`
+     ++  to find the recent matching "author <mail>" pair in git log and
+     ++  show how it works:
+      ++
+      +------------
+     -+$ git config trailer.bug.key "Bug-from: "
+     -+$ git config trailer.bug.ifExists "replace"
+     -+$ git config trailer.bug.cmd "git log --grep \"\$1\" -1 --pretty=\"%h %aD\""
+     -+$ git interpret-trailers --trailer="bug:the information manager from hell" <<EOF
+     ++$ cat ~/bin/git-who
+     ++ #!/bin/sh
+     ++    git log -1 --format="%an <%ae>" --author="$1"
+     ++$ git config trailer.help.key "Helped-by: "
+     ++$ git config trailer.help.ifExists "replace"
+     ++$ git config trailer.help.cmd "~/bin/git-who"
+     ++$ git interpret-trailers --trailer="help:gitster@" <<EOF
+      +> subject
+      +> 
+      +> message
+     @@ Documentation/git-interpret-trailers.txt: subject
+      +
+      +message
+      +
+     -+Bug-from: 57d84f8d93 Mon, 6 Aug 2012 18:27:09 +0700
+     ++Helped-by: Junio C Hamano <gitster@pobox.com>
+      +------------
+      +
+       * Configure a 'see' trailer with a command to show the subject of a
+     @@ t/t7513-interpret-trailers.sh: test_expect_success 'setup' '
+       
+      +test_expect_success 'with cmd' '
+      +	test_when_finished "git config --unset trailer.bug.key && \
+     -+	git config --unset trailer.bug.ifExists && \
+     -+	git config --unset trailer.bug.cmd" &&
+     ++			    git config --unset trailer.bug.ifExists && \
+     ++			    git config --unset trailer.bug.cmd" &&
+      +	git config trailer.bug.key "Bug-maker: " &&
+      +	git config trailer.bug.ifExists "add" &&
+     -+	git config trailer.bug.cmd "echo \"\$@\"" &&
+     -+	cat >>expected2 <<-EOF &&
+     ++	git config trailer.bug.cmd "echo \"maybe is\"" &&
+     ++	cat >expected2 <<-EOF &&
+      +
+     -+	Bug-maker: 
+     -+	Bug-maker: jocker
+     -+	Bug-maker: batman
+     ++	Bug-maker: maybe is
+     ++	Bug-maker: maybe is him
+     ++	Bug-maker: maybe is me
+      +	EOF
+     -+	git interpret-trailers --trailer "bug: jocker" --trailer "bug:batman" \
+     ++	git interpret-trailers --trailer "bug: him" --trailer "bug:me" \
+     ++		>actual2 &&
+     ++	test_cmp expected2 actual2
+     ++'
+     ++
+     ++test_expect_success 'with cmd and $1' '
+     ++	test_when_finished "git config --unset trailer.bug.key && \
+     ++			    git config --unset trailer.bug.ifExists && \
+     ++			    git config --unset trailer.bug.cmd" &&
+     ++	git config trailer.bug.key "Bug-maker: " &&
+     ++	git config trailer.bug.ifExists "replace" &&
+     ++	git config trailer.bug.cmd "echo \"\$1\" is" &&
+     ++	cat >expected2 <<-EOF &&
+     ++
+     ++	Bug-maker: me is me
+     ++	EOF
+     ++	git interpret-trailers --trailer "bug: him" --trailer "bug:me" \
+     ++		>actual2 &&
+     ++	test_cmp expected2 actual2
+     ++'
+     ++
+     ++test_expect_success 'with cmd and $1 with sh -c' '
+     ++	test_when_finished "git config --unset trailer.bug.key && \
+     ++			    git config --unset trailer.bug.ifExists && \
+     ++			    git config --unset trailer.bug.cmd" &&
+     ++	git config trailer.bug.key "Bug-maker: " &&
+     ++	git config trailer.bug.ifExists "replace" &&
+     ++	git config trailer.bug.cmd "sh -c \"echo who is \"\$1\"\"" &&
+     ++	cat >expected2 <<-EOF &&
+     ++
+     ++	Bug-maker: who is me
+     ++	EOF
+     ++	git interpret-trailers --trailer "bug: him" --trailer "bug:me" \
+     ++		>actual2 &&
+     ++	test_cmp expected2 actual2
+     ++'
+     ++
+     ++test_expect_success 'with cmd and $1 with shell script' '
+     ++	test_when_finished "git config --unset trailer.bug.key && \
+     ++			    git config --unset trailer.bug.ifExists && \
+     ++			    git config --unset trailer.bug.cmd" &&
+     ++	git config trailer.bug.key "Bug-maker: " &&
+     ++	git config trailer.bug.ifExists "replace" &&
+     ++	git config trailer.bug.cmd "./echoscript" &&
+     ++	cat >expected2 <<-EOF &&
+     ++
+     ++	Bug-maker: who is me
+     ++	EOF
+     ++	cat >echoscript <<-EOF &&
+     ++	#!/bin/sh
+     ++	echo who is "\$1"
+     ++	EOF
+     ++	chmod +x echoscript &&
+     ++	git interpret-trailers --trailer "bug: him" --trailer "bug:me" \
+      +		>actual2 &&
+      +	test_cmp expected2 actual2
+      +'
+     @@ t/t7513-interpret-trailers.sh: test_expect_success 'setup a commit' '
+       	git commit -m "Add file a.txt"
+       '
+       
+     -+test_expect_success 'with cmd and $1' '
+     -+	test_when_finished "git config --unset trailer.fix.cmd" &&
+     -+	git config trailer.fix.ifExists "replace" &&
+     -+	git config trailer.fix.cmd "test -n \"\$1\" && git log -1 --oneline --format=\"%h (%s)\" \
+     -+		--abbrev-commit --abbrev=14 \"\$1\" || true" &&
+     -+	FIXED=$(git log -1 --oneline --format="%h (%s)" --abbrev-commit --abbrev=14 HEAD) &&
+     -+	cat complex_message_body >expected2 &&
+     -+	sed -e "s/ Z\$/ /" >>expected2 <<-EOF &&
+     -+		Fixes: $FIXED
+     -+		Acked-by= Z
+     -+		Reviewed-by:
+     -+		Signed-off-by: Z
+     -+		Signed-off-by: A U Thor <author@example.com>
+     -+	EOF
+     -+	git interpret-trailers --trailer "review:" --trailer "fix=HEAD" \
+     -+		<complex_message >actual2 &&
+     -+	test_cmp expected2 actual2
+     -+'
+     -+
+      +test_expect_success 'cmd takes precedence over command' '
+      +	test_when_finished "git config --unset trailer.fix.cmd" &&
+      +	git config trailer.fix.ifExists "replace" &&
+     @@ trailer.c: static int check_if_different(struct trailer_item *in_tok,
+      -
+      -	strvec_push(&cp.args, cmd.buf);
+      +	if (conf->cmd) {
+     -+		cp.shell_no_implicit_args = 1;
+     ++		// cp.shell_no_implicit_args = 1;
+      +		strbuf_addstr(&cmd, conf->cmd);
+      +		strvec_push(&cp.args, cmd.buf);
+      +		if (arg)
+     @@ trailer.c: static int check_if_different(struct trailer_item *in_tok,
+       	cp.env = local_repo_env;
+       	cp.no_stdin = 1;
+       	cp.use_shell = 1;
+     --	cp.shell_no_implicit_args = 1;
+     - 
+     - 	if (capture_command(&cp, &buf, 1024)) {
+     - 		error(_("running trailer command '%s' failed"), cmd.buf);
+      @@ trailer.c: static char *apply_command(const char *command, const char *arg)
+       
+       static void apply_item_command(struct trailer_item *in_tok, struct arg_item *arg_tok)
+
+
+ Documentation/git-interpret-trailers.txt | 82 +++++++++++++++++---
+ t/t7513-interpret-trailers.sh            | 95 +++++++++++++++++++++++-
+ trailer.c                                | 38 +++++++---
+ 3 files changed, 193 insertions(+), 22 deletions(-)
+
+diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
+index 96ec6499f001..67649ec6134c 100644
+--- a/Documentation/git-interpret-trailers.txt
++++ b/Documentation/git-interpret-trailers.txt
+@@ -236,21 +236,34 @@ trailer.<token>.command::
+ 	be called to automatically add or modify a trailer with the
+ 	specified <token>.
+ +
+-When this option is specified, the behavior is as if a special
+-'<token>=<value>' argument were added at the beginning of the command
+-line, where <value> is taken to be the standard output of the
+-specified command with any leading and trailing whitespace trimmed
+-off.
++When this option is specified, the first occurrence of substring $ARG is
++replaced with the value given to the `interpret-trailer` command for the
++same token.
+ +
+-If the command contains the `$ARG` string, this string will be
+-replaced with the <value> part of an existing trailer with the same
+-<token>, if any, before the command is launched.
++".command" has been deprecated due to the $ARG in the user's command can
++only be replaced once and the original way of replacing $ARG was not safe.
++Now the preferred option is using "trailer.<token>.cmd", which use position
++argument to pass the value.
+++
++When both .cmd and .command are given for the same <token>,
++.cmd is used and .command is ignored.
++
++trailer.<token>.cmd::
++	The command specified by this configuration variable is run
++	with a single parameter, which is the <value> part of an
++	existing trailer with the same <token>.  The output from the
++	command is then used as the value for the <token> in the
++	resulting trailer.
+++
++When this option is specified, If there is no trailer with same <token>,
++the behavior is as if a special '<token>=<value>' argument were added at
++the beginning of the command, <value> will be passed to the user's
++command as an empty value.
+ +
+ If some '<token>=<value>' arguments are also passed on the command
+ line, when a 'trailer.<token>.command' is configured, the command will
+ also be executed for each of these arguments. And the <value> part of
+-these arguments, if any, will be used to replace the `$ARG` string in
+-the command.
++these arguments, if any, will be passed to the command as first parameter.
+ 
+ EXAMPLES
+ --------
+@@ -333,6 +346,55 @@ subject
+ Fix #42
+ ------------
+ 
++* Configure a 'see' trailer with a cmd use a global script `git-one`
++  to show the subject of a commit that is related, and show how it works:
+++
++------------
++$ cat ~/bin/git-one
++#!/bin/sh
++git show -s --pretty=reference "$1"
++$ git config trailer.see.key "See-also: "
++$ git config trailer.see.ifExists "replace"
++$ git config trailer.see.ifMissing "doNothing"
++$ git config trailer.see.cmd "~/bin/git-one"
++$ git interpret-trailers <<EOF
++> subject
++> 
++> message
++> 
++> see: HEAD~2
++> EOF
++subject
++
++message
++
++See-also: fe3187e (subject of related commit, 2021-4-2)
++------------
++
++* Configure a 'who' trailer with a cmd use a global script `git-who`
++  to find the recent matching "author <mail>" pair in git log and
++  show how it works:
+++
++------------
++$ cat ~/bin/git-who
++ #!/bin/sh
++    git log -1 --format="%an <%ae>" --author="$1"
++$ git config trailer.help.key "Helped-by: "
++$ git config trailer.help.ifExists "replace"
++$ git config trailer.help.cmd "~/bin/git-who"
++$ git interpret-trailers --trailer="help:gitster@" <<EOF
++> subject
++> 
++> message
++> 
++> EOF
++subject
++
++message
++
++Helped-by: Junio C Hamano <gitster@pobox.com>
++------------
++
+ * Configure a 'see' trailer with a command to show the subject of a
+   commit that is related, and show how it works:
+ +
+diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
+index 6602790b5f4c..923923e57573 100755
+--- a/t/t7513-interpret-trailers.sh
++++ b/t/t7513-interpret-trailers.sh
+@@ -51,6 +51,77 @@ test_expect_success 'setup' '
+ 	EOF
+ '
+ 
++test_expect_success 'with cmd' '
++	test_when_finished "git config --unset trailer.bug.key && \
++			    git config --unset trailer.bug.ifExists && \
++			    git config --unset trailer.bug.cmd" &&
++	git config trailer.bug.key "Bug-maker: " &&
++	git config trailer.bug.ifExists "add" &&
++	git config trailer.bug.cmd "echo \"maybe is\"" &&
++	cat >expected2 <<-EOF &&
++
++	Bug-maker: maybe is
++	Bug-maker: maybe is him
++	Bug-maker: maybe is me
++	EOF
++	git interpret-trailers --trailer "bug: him" --trailer "bug:me" \
++		>actual2 &&
++	test_cmp expected2 actual2
++'
++
++test_expect_success 'with cmd and $1' '
++	test_when_finished "git config --unset trailer.bug.key && \
++			    git config --unset trailer.bug.ifExists && \
++			    git config --unset trailer.bug.cmd" &&
++	git config trailer.bug.key "Bug-maker: " &&
++	git config trailer.bug.ifExists "replace" &&
++	git config trailer.bug.cmd "echo \"\$1\" is" &&
++	cat >expected2 <<-EOF &&
++
++	Bug-maker: me is me
++	EOF
++	git interpret-trailers --trailer "bug: him" --trailer "bug:me" \
++		>actual2 &&
++	test_cmp expected2 actual2
++'
++
++test_expect_success 'with cmd and $1 with sh -c' '
++	test_when_finished "git config --unset trailer.bug.key && \
++			    git config --unset trailer.bug.ifExists && \
++			    git config --unset trailer.bug.cmd" &&
++	git config trailer.bug.key "Bug-maker: " &&
++	git config trailer.bug.ifExists "replace" &&
++	git config trailer.bug.cmd "sh -c \"echo who is \"\$1\"\"" &&
++	cat >expected2 <<-EOF &&
++
++	Bug-maker: who is me
++	EOF
++	git interpret-trailers --trailer "bug: him" --trailer "bug:me" \
++		>actual2 &&
++	test_cmp expected2 actual2
++'
++
++test_expect_success 'with cmd and $1 with shell script' '
++	test_when_finished "git config --unset trailer.bug.key && \
++			    git config --unset trailer.bug.ifExists && \
++			    git config --unset trailer.bug.cmd" &&
++	git config trailer.bug.key "Bug-maker: " &&
++	git config trailer.bug.ifExists "replace" &&
++	git config trailer.bug.cmd "./echoscript" &&
++	cat >expected2 <<-EOF &&
++
++	Bug-maker: who is me
++	EOF
++	cat >echoscript <<-EOF &&
++	#!/bin/sh
++	echo who is "\$1"
++	EOF
++	chmod +x echoscript &&
++	git interpret-trailers --trailer "bug: him" --trailer "bug:me" \
++		>actual2 &&
++	test_cmp expected2 actual2
++'
++
+ test_expect_success 'without config' '
+ 	sed -e "s/ Z\$/ /" >expected <<-\EOF &&
+ 
+@@ -1274,9 +1345,31 @@ test_expect_success 'setup a commit' '
+ 	git commit -m "Add file a.txt"
+ '
+ 
++test_expect_success 'cmd takes precedence over command' '
++	test_when_finished "git config --unset trailer.fix.cmd" &&
++	git config trailer.fix.ifExists "replace" &&
++	git config trailer.fix.cmd "test -n \"\$1\" && git log -1 --oneline --format=\"%h (%aN)\" \
++		--abbrev-commit --abbrev=14 \"\$1\" || true" &&
++	git config trailer.fix.command "git log -1 --oneline --format=\"%h (%s)\" \
++		--abbrev-commit --abbrev=14 \$ARG" &&
++	FIXED=$(git log -1 --oneline --format="%h (%aN)" --abbrev-commit --abbrev=14 HEAD) &&
++	cat complex_message_body >expected2 &&
++	sed -e "s/ Z\$/ /" >>expected2 <<-EOF &&
++		Fixes: $FIXED
++		Acked-by= Z
++		Reviewed-by:
++		Signed-off-by: Z
++		Signed-off-by: A U Thor <author@example.com>
++	EOF
++	git interpret-trailers --trailer "review:" --trailer "fix=HEAD" \
++		<complex_message >actual2 &&
++	test_cmp expected2 actual2
++'
++
+ test_expect_success 'with command using $ARG' '
+ 	git config trailer.fix.ifExists "replace" &&
+-	git config trailer.fix.command "git log -1 --oneline --format=\"%h (%s)\" --abbrev-commit --abbrev=14 \$ARG" &&
++	git config trailer.fix.command "git log -1 --oneline --format=\"%h (%s)\" \
++		--abbrev-commit --abbrev=14 \$ARG" &&
+ 	FIXED=$(git log -1 --oneline --format="%h (%s)" --abbrev-commit --abbrev=14 HEAD) &&
+ 	cat complex_message_body >expected &&
+ 	sed -e "s/ Z\$/ /" >>expected <<-EOF &&
+diff --git a/trailer.c b/trailer.c
+index be4e9726421c..6aeff6a1bd33 100644
+--- a/trailer.c
++++ b/trailer.c
+@@ -14,6 +14,7 @@ struct conf_info {
+ 	char *name;
+ 	char *key;
+ 	char *command;
++	char *cmd;
+ 	enum trailer_where where;
+ 	enum trailer_if_exists if_exists;
+ 	enum trailer_if_missing if_missing;
+@@ -127,6 +128,7 @@ static void free_arg_item(struct arg_item *item)
+ 	free(item->conf.name);
+ 	free(item->conf.key);
+ 	free(item->conf.command);
++	free(item->conf.cmd);
+ 	free(item->token);
+ 	free(item->value);
+ 	free(item);
+@@ -216,18 +218,25 @@ static int check_if_different(struct trailer_item *in_tok,
+ 	return 1;
+ }
+ 
+-static char *apply_command(const char *command, const char *arg)
++static char *apply_command(struct conf_info *conf, const char *arg)
+ {
+ 	struct strbuf cmd = STRBUF_INIT;
+ 	struct strbuf buf = STRBUF_INIT;
+ 	struct child_process cp = CHILD_PROCESS_INIT;
+ 	char *result;
+ 
+-	strbuf_addstr(&cmd, command);
+-	if (arg)
+-		strbuf_replace(&cmd, TRAILER_ARG_STRING, arg);
+-
+-	strvec_push(&cp.args, cmd.buf);
++	if (conf->cmd) {
++		// cp.shell_no_implicit_args = 1;
++		strbuf_addstr(&cmd, conf->cmd);
++		strvec_push(&cp.args, cmd.buf);
++		if (arg)
++			strvec_push(&cp.args, arg);
++	} else if (conf->command) {
++		strbuf_addstr(&cmd, conf->command);
++		strvec_push(&cp.args, cmd.buf);
++		if (arg)
++			strbuf_replace(&cmd, TRAILER_ARG_STRING, arg);
++	}
+ 	cp.env = local_repo_env;
+ 	cp.no_stdin = 1;
+ 	cp.use_shell = 1;
+@@ -247,7 +256,7 @@ static char *apply_command(const char *command, const char *arg)
+ 
+ static void apply_item_command(struct trailer_item *in_tok, struct arg_item *arg_tok)
+ {
+-	if (arg_tok->conf.command) {
++	if (arg_tok->conf.command || arg_tok->conf.cmd) {
+ 		const char *arg;
+ 		if (arg_tok->value && arg_tok->value[0]) {
+ 			arg = arg_tok->value;
+@@ -257,7 +266,7 @@ static void apply_item_command(struct trailer_item *in_tok, struct arg_item *arg
+ 			else
+ 				arg = xstrdup("");
+ 		}
+-		arg_tok->value = apply_command(arg_tok->conf.command, arg);
++		arg_tok->value = apply_command(&arg_tok->conf, arg);
+ 		free((char *)arg);
+ 	}
+ }
+@@ -430,6 +439,7 @@ static void duplicate_conf(struct conf_info *dst, const struct conf_info *src)
+ 	dst->name = xstrdup_or_null(src->name);
+ 	dst->key = xstrdup_or_null(src->key);
+ 	dst->command = xstrdup_or_null(src->command);
++	dst->cmd = xstrdup_or_null(src->cmd);
+ }
+ 
+ static struct arg_item *get_conf_item(const char *name)
+@@ -454,8 +464,8 @@ static struct arg_item *get_conf_item(const char *name)
+ 	return item;
+ }
+ 
+-enum trailer_info_type { TRAILER_KEY, TRAILER_COMMAND, TRAILER_WHERE,
+-			 TRAILER_IF_EXISTS, TRAILER_IF_MISSING };
++enum trailer_info_type { TRAILER_KEY, TRAILER_COMMAND, TRAILER_CMD,
++			TRAILER_WHERE, TRAILER_IF_EXISTS, TRAILER_IF_MISSING };
+ 
+ static struct {
+ 	const char *name;
+@@ -463,6 +473,7 @@ static struct {
+ } trailer_config_items[] = {
+ 	{ "key", TRAILER_KEY },
+ 	{ "command", TRAILER_COMMAND },
++	{ "cmd", TRAILER_CMD },
+ 	{ "where", TRAILER_WHERE },
+ 	{ "ifexists", TRAILER_IF_EXISTS },
+ 	{ "ifmissing", TRAILER_IF_MISSING }
+@@ -542,6 +553,11 @@ static int git_trailer_config(const char *conf_key, const char *value, void *cb)
+ 			warning(_("more than one %s"), conf_key);
+ 		conf->command = xstrdup(value);
+ 		break;
++	case TRAILER_CMD:
++		if (conf->cmd)
++			warning(_("more than one %s"), conf_key);
++		conf->cmd = xstrdup(value);
++		break;
+ 	case TRAILER_WHERE:
+ 		if (trailer_set_where(&conf->where, value))
+ 			warning(_("unknown value '%s' for key '%s'"), value, conf_key);
+@@ -708,7 +724,7 @@ static void process_command_line_args(struct list_head *arg_head,
+ 	/* Add an arg item for each configured trailer with a command */
+ 	list_for_each(pos, &conf_head) {
+ 		item = list_entry(pos, struct arg_item, list);
+-		if (item->conf.command)
++		if (item->conf.cmd || item->conf.command)
+ 			add_arg_item(arg_head,
+ 				     xstrdup(token_from_item(item, NULL)),
+ 				     xstrdup(""),
+
+base-commit: 142430338477d9d1bb25be66267225fb58498d92
+-- 
+gitgitgadget
