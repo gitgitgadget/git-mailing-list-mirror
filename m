@@ -2,300 +2,201 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B2133C433ED
-	for <git@archiver.kernel.org>; Fri,  2 Apr 2021 10:30:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E343C433B4
+	for <git@archiver.kernel.org>; Fri,  2 Apr 2021 11:28:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8E8AD610E8
-	for <git@archiver.kernel.org>; Fri,  2 Apr 2021 10:30:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5BC79610CF
+	for <git@archiver.kernel.org>; Fri,  2 Apr 2021 11:28:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231160AbhDBKaz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Apr 2021 06:30:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50982 "EHLO
+        id S234161AbhDBL2s (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Apr 2021 07:28:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35244 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229599AbhDBKax (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Apr 2021 06:30:53 -0400
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 204A5C061788
-        for <git@vger.kernel.org>; Fri,  2 Apr 2021 03:30:51 -0700 (PDT)
-Received: by mail-ed1-x52c.google.com with SMTP id z1so5004196edb.8
-        for <git@vger.kernel.org>; Fri, 02 Apr 2021 03:30:51 -0700 (PDT)
+        with ESMTP id S229599AbhDBL2r (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Apr 2021 07:28:47 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CB47C0613E6
+        for <git@vger.kernel.org>; Fri,  2 Apr 2021 04:28:46 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id w3so7036994ejc.4
+        for <git@vger.kernel.org>; Fri, 02 Apr 2021 04:28:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=x+GLz9vpxD7kGGEre47MrlNRPJEXFyiEHBQbm4Yy1N4=;
-        b=hiT6GH3Ax37MAWaQbSdJDRrnK0bXwVezEw25o7hPHIdpoz8iYmpG75AO6mkx8rl41H
-         LTCCElpS+cAn0lGHVLeYX468GRtnc5fhrpRZHJ7Qiz8FH6wFYH9J67TQWUtfX8MUIWVh
-         irVjV/xuD4Fx8axkIXeH2of2GcPsfRZEaP0JQOoOIGPG/GkbiaH/QtfRrqbf1B/KYZ0a
-         kqFCpSZ0lTya+0cMHjjj8fbNCJjnwMGtFuE/qQdkNGVIBcUuhYe9IQYgc7dOWI6tIDMk
-         axw+l4/WTSRIVm02WNK5EInqRcssZ6Wf6uKHDDGnyCal3DhcslsrbnTfEZoGa7O2oSiW
-         ropQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=El+n7/WaamfEKl0WEwGC6I0fjkMj6ya+834zO0eQdc8=;
+        b=X29Yn8VW+7rYgNeB1HM5YO6CUUuy0p8QZ0oFFVYMlwQgzYD4QC+5GNQhlrF8LLUZcX
+         4juSPUv0zOZ8qZdRKJExXL70gUyfTpQXxzMUInvOUasCIMFBaydarVr+LRT7AI9S8rlm
+         32aE8oyl4ES36hTnTwe3MmnnYiap8BTAPOuaBAvxbEteFzXKNuRpIIXJpYFXEeZySJaD
+         XgWdC6gT8Yf/7EEd/AUGHQAO40PCRkSEoEmvU57DzC8S3N202ci5RJaoOSGfU0mbFZ4C
+         NW5f0t0utxFDQ+HJxeAJ/QK4MIDkW3n7bF5Jpl/R0Xw8wEtYpitiyl/wiBCiZgIqXOvm
+         23xQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=x+GLz9vpxD7kGGEre47MrlNRPJEXFyiEHBQbm4Yy1N4=;
-        b=qWCBCiBLTjC5ruj6K5ThOVKt98+yigzK7l4GgVfz9mlxrEBbQi31ly5ZHRDtGiVl0d
-         sYTh4nuIC8MNJYpVBwXL9/ZTahfLzR/OiCIP/p6rAUbe+Foe74kxl6jSwAJCAWXvgI+b
-         oLhGAGQRxga4JjvqS5+AouZRUAjR939KfY02I0Y78D5aeoqVC6jfRTcxToabXcO9eX4o
-         9F7gIjHEt76sAqeC2ttDS5svn+HVSfyNSC8PopGs65uVpbrcBwAXFO21D1fGTiX72FRl
-         4PNgC9ERAlATAC8i4LqI6IuoFMOuOxIrExies5dlNF8lrj2wFeCUh4lGkhu7L9X0HKuc
-         ry9Q==
-X-Gm-Message-State: AOAM533cPYqqY9apFIAGbrl5VYeTSvaMxtAzWRUp2oii7gDVLsJHZR+D
-        k6FnYgvOHfUrnirfq5ig4xRX2diwmEpYnA==
-X-Google-Smtp-Source: ABdhPJzGnHmBmob6/3j7PdXCaxYiE9ZMOHviPyR6JnulZx1mBvOw6bF3UiDU1sO4HSTpVYcTKd4zIQ==
-X-Received: by 2002:a50:9ea4:: with SMTP id a33mr15062715edf.295.1617359448979;
-        Fri, 02 Apr 2021 03:30:48 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id r24sm5099344edw.11.2021.04.02.03.30.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Apr 2021 03:30:48 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Albert Cui via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Albert Cui <albertqcui@gmail.com>
-Subject: Re: [PATCH v2] hooks: propose project configured hooks
-References: <pull.908.git.1616105016055.gitgitgadget@gmail.com>
- <pull.908.v2.git.1616723016659.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <pull.908.v2.git.1616723016659.gitgitgadget@gmail.com>
-Date:   Fri, 02 Apr 2021 12:30:48 +0200
-Message-ID: <87zgyhj7vr.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=El+n7/WaamfEKl0WEwGC6I0fjkMj6ya+834zO0eQdc8=;
+        b=kw0DR7/ke02EAfxVoo3p7PST5G1CxRs6oLRkeWdZAXGzkMG5DCAQeT9GVexJMiz3X+
+         lIaCT6LGFpORcjTMiOzxbv7i/HOBsL3x8JvXBzxDDfq+5dssf2COYgGW1/QS5fX+fp40
+         BjVbf2cMfC9SJTHT47oJGR0YUmmKcYq2C5g7e0hM3jhSbUWBrXbtgRoRR33nSkwVwx1P
+         +pjikZQ5Nbvc+fv1Jez+oGDkwIXAE4lUT9msZ8Gq8IKKUmjvzXEi5160/aUOwiNvgPEh
+         0Ans/rXcf/cu/0UlCUbUdPET4FLBflEChTS3VpdvLNvkV0mb5GCX5T4ggE4GS8p/UCg4
+         xDrg==
+X-Gm-Message-State: AOAM5313cHDL08vuF720HEJHLP2OJw44tIwVRfA3GbY78wxjChdSxTNM
+        ds2BeJqfnI7cOr+D8q9vCsI=
+X-Google-Smtp-Source: ABdhPJzJ2ibf3VfHJ8hDwZ1cRtftWEPsUTh1y1k256wuwPAS76imhI4d1sqsNoyvATxQk0mKUT3MnA==
+X-Received: by 2002:a17:906:2c44:: with SMTP id f4mr13183202ejh.508.1617362925047;
+        Fri, 02 Apr 2021 04:28:45 -0700 (PDT)
+Received: from [192.168.1.201] (243.20.198.146.dyn.plus.net. [146.198.20.243])
+        by smtp.googlemail.com with ESMTPSA id la15sm4050809ejb.46.2021.04.02.04.28.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 02 Apr 2021 04:28:44 -0700 (PDT)
+Subject: Re: unifying sequencer's options persisting, was Re: [PATCH v2]
+ sequencer: fix edit handling for cherry-pick and revert messages
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Elijah Newren <newren@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Philip Oakley <philipoakley@iee.email>
+References: <pull.988.git.git.1616742969145.gitgitgadget@gmail.com>
+ <pull.988.v2.git.git.1617070174458.gitgitgadget@gmail.com>
+ <nycvar.QRO.7.76.6.2103301200020.52@tvgsbejvaqbjf.bet>
+ <CABPp-BGwAtpsQJ8U5N1q21PMkideptY2MB2PNgbPqvya+XuyHg@mail.gmail.com>
+ <nycvar.QRO.7.76.6.2103311533340.52@tvgsbejvaqbjf.bet>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <3b117e65-bf9f-af13-b093-28bbbd6f9bb3@gmail.com>
+Date:   Fri, 2 Apr 2021 12:28:43 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <nycvar.QRO.7.76.6.2103311533340.52@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Dscho and Elijah
 
-On Fri, Mar 26 2021, Albert Cui via GitGitGadget wrote:
+On 31/03/2021 14:48, Johannes Schindelin wrote:
+> Hi,
+> 
+> On Tue, 30 Mar 2021, Elijah Newren wrote:
+> 
+>> On Tue, Mar 30, 2021 at 3:13 AM Johannes Schindelin
+>> <Johannes.Schindelin@gmx.de> wrote:
+>>
+>>> I'll allow myself one tangent: the subject of the sequencer's Unix
+>>> shell script heritage seems to come up with an increasing frequency,
+>>> in particular the awful "let's write out one file per setting"
+>>> strategy.
+>>>
+>>> I would _love_ for `save_opts()` to write a JSON instead (or an INI
+>>> via the `git_config_*()` family of functions, as is done already by
+>>> the cherry-pick/revert stuff), now that we no longer have any shell
+>>> script backend (apart from `--preserve-merges`, but that one is on its
+>>> way out anyway).
+>>>
+>>> The one thing that concerns me with this idea is that I know for a
+>>> fact that some enterprisey users play games with those files inside
+>>> `<GIT_DIR>/rebase-merge` that should be considered internal
+>>> implementation details. Not sure how to deprecate that properly, I
+>>> don't think we have a sane way to detect whether users rely on these
+>>> implementation details other than breaking their expectations, which
+>>> is not really a gentle way to ask them to update their scripts.
 
-> From: Albert Cui <albertqcui@gmail.com>
->
-> Hooks today are configured at the repository level, making it difficult to
-> share hooks across repositories. Configuration-based hook management, by
-> moving hooks configuration to the config, makes this much easier. However,
-> there is still no good way for project maintainers to encourage or enforce
-> adoption of specific hook commands on specific hook events in a repository.
-> As such, there are many tools that provide this functionality on top of Git.
->
-> This patch documents the requirements we propose for this feature as well as
-> a design sketch for implementation.
+I think it depends if users are just reading the files or writing to 
+them. If they are reading them (which my scripts do) then we could 
+continue to write the important files along side the new single-file 
+that git actually reads. I think there is a distinction between the 
+files such as git-rebase-todo which hold state and the one-line files 
+which hold the options passed by the user. For example I have scripts 
+that read git-rebase-todo, rewritten-pending, rewritten-list, amend-head 
+and check that author-script exists. If a script starts a rebase then it 
+should know what options are in effect without reading them from 
+.git/rebase-merge.
 
-I had comments on the v1 that are still unanswered by this re-roll:
-https://lore.kernel.org/git/87im5nzbe6.fsf@evledraar.gmail.com/
+>> Ooh, I'm glad you took this tangent.  May I follow it for a second?
+>> I'd really, really like this too, for three reasons:
+>>
+>> 1) I constantly get confused about the massive duplication and
+>> difference in control structures and which ones affect which type of
+>> operations in sequencer.c.  Having them both use an ini-file would
+>> allow us to remove lots of that duplication.  I'm sure there'll still
+>> be some rebase-specific or cherry-pick-specific options, but we don't
+>> need a separate parallel structure for every piece of config.
+>>
+>> 2) In my merge-ort optimization work, rebasing 35 commits in linux.git
+>> across a massive set of 26K upstream renames has dropped rename
+>> detection time from the top spot.  And it also dropped several other
+>> things in the merge machinery from their spots as well.  Do you know
+>> what's the slowest now?  Wasted time from sequencer.c: the unnecessary
+>> process forking and all the useless disk writing (which I suspect is
+>> mostly updating the index and working directory but also writing all
+>> the individual control files under .git/rebase-merge/).  And this
+>> stuff from sequencer.c is not just barely the slowest part, it's the
+>> slowest by a wide margin.
 
-I think a more productive way to handle such proposals is to reply to
-such general discussion and /then/ re-roll the series.
+I think we do a lot of needless writing which is unrelated to whether we 
+write to one file or may files. For example from memory picking a commit 
+involves writing the 'message', 'author-script', 'rewritten-pending' 
+(which is often immediately deleted), 'rewritten-list' (we append to 
+that one) 'CHERRY_PICK_HEAD' (which is immediately deleted unless the 
+pick has become empty), 'git-rebase-todo' is completely rewritten, and 
+'done' is appended to. None of this is necessary. For rewording and 
+merges the only thing that needs to be written is the commit message for 
+the external process to use. Fixup and squash add a couple more files 
+into the mix.
 
-I'm not going to repeat the outstanding points there (but would like you
-to reply to it, and having just read Derrick Stolee's E-Mail downthread
-there's another significant point of feedback to reply to.
+I think we would save a lot by only syncing the state to disk when we 
+stop or run an exec command (the state needs to be synced so exec 
+commands can alter the todo list). In those cases we need to write the 
+index and possibly run an external process so writing a couple of files 
+is probably insignificant.
 
-So just comments on the range-diff below. I think for any one paragraph
-reading ahead helps, because it's a bit of stream-of-conciousness as I
-try to make sense of things that are then hinted at in later parts of
-the document (which itself is a suggestion to maybe re-arrange some of
-it).
+Where I think we can usefully consolidate is the one-line files which 
+store the options rather than state - these are read an written much 
+less frequently so I don't think they have much of a performance hit but 
+it would be much nicer to just serialize the options to a single file.
 
->      -+* The `pre-commit` hook event: before committing, a developer may want to lint
->      -+their changes to enforce certain code style and quality. If there are style
->      -+issues, the developer may want the commit to fail so that they can fix the
->      -+issues.
->      ++* The `pre-commit` hook event:
->       +
->      -+* The `commit-msg` hook event: after committing, repository owners may want to
->      -+enforce a certain commit message style. This may be out of necessity:
->      ++  ** A developer may want to lint their changes to enforce certain code style
->      ++  and quality. The project may want the commit to fail so that commits that
->      ++  violate the project's style don't get uploaded.
->      ++
->      ++  ** The project may want to prevent developers from committing passwords or
->      ++  other sensitive information e.g. via
->      ++  https://github.com/awslabs/git-secrets[git-secrets].
+>>
+>> 3) I also want to allow cherry-picking or rebasing branches that
+>> aren't even checked out (assuming no conflicts are triggered;
+>> otherwise an error can be shown with the user asked to repeat with the
+>> operation connected to an active working directory).
 
-Why does the project want to prevent developers from *committing* such
-information by default? I commit such stuff all the time, it's only a
-problem once it's pushed.
+Exciting!
 
-The genesis of this series seems to be need within the
-Google-plex. Having operated a similar central-repository corporate
-setup before I'm surprised that you're even trying to prevent such
-things on local computers, surely you'll have to re-do such checks
-on-push on the server, so just have them live there?
+>>  For such an
+>> operation, the difference between "cherry-pick" and "rebase" is nearly
+>> irrelevant so you'd expect the code to be the same; every time I look
+>> at the code, though, it seems that the control structures are
+>> separating these two types of operations in more areas than just the
+>> reading and writing of the config.
 
-But I think this is answered below:
+Yes this can be confusing, for example rebase and cherry-pick handle the 
+todo list differently. Rebase removes the command before trying to pick 
+the commit and adds it back if the pick fails for a non-conflict reason, 
+cherry-pick only removes the command if the pick is successful.
 
->      ++Server-side vs Local Checks
->      ++^^^^^^^^^^^^^^^^^^^^^^^^^^^
->      ++
->      ++A large motivation for this change is providing projects a method to enable
->      ++local checks of code e.g. linting. As documented in
->      ++https://git-scm.com/docs/gitfaq#_hooks[gitfaq], in some cases, server-side
->      ++checks may be more appropriate, especially since developers can always skip
->      ++local hook execution. We think there are still benefits to local checks:
->      ++
->      ++* Ensuring commit message style and preventing the committing of sensitive data,
->      ++as described above. In particular, if CI results are public, as with many open
->      ++source projects, server side checks are useless for guarding against leaking
->      ++sensitive data.
+Best Wishes
 
-So what you really mean is you want a pre-commit hook as an alternative
-to some "once we've accpted the push and CI runs we notice naughty
-data", not as a pre-receive hook alternative?
+Phillip
 
->      ++
->      ++* Helps developers catch issues earlier: typically developers need to push to
->      ++the remote to trigger server-side checks. Local hooks can be run anytime the
->      ++developer wants. This is especially useful if the project has slow
->      ++server-checks; catching issues locally can save the developer a lot of time
->      ++waiting for CI. They are also useful for locally reproducing an issue identified
->      ++in CI, helping resolve issues faster.
->      ++
->      ++* Since the typical goal of developers to submit changes to a central
->      ++repository, their interests are aligned with the project maintainers'; while
->      ++they can choose to skip local hook execution, it is in their interest to allow
->      ++hooks to run at least before proposing code for submission to the central
->      ++repository to increase the chances of the code getting accepted.
+> Excellent, we're in agreement, then.
+> 
+> The remaining question is: how do we want to go about it? Do we just want
+> to codify the notion that these are internal details that are nobody's
+> business, and if they are using the exact file system layout of the
+> current sequencer, then it's their responsibility to adapt?
+> 
+> Ciao,
+> Dscho
+> 
 
-This all makes sense, but is really missing how this problem isn't adequately solved by:
-
-    $ HACKING
-    Welcome to project XYZ, first you'll be much more productive with
-    our hooks, run:
-
-        ./setup-hooks.sh
-
-    [...]
-
-Presumably developers working on some central repo are the ones least
-served by this type of thing, since such setups usually have established
-setup scripts etc. that you (mostly) go through once.
-
->      ++In the ideal world, developers and project maintainers use both local and server
->      ++side checks in their workflow. However, for many smaller projects, this may not
->      ++be possible: CI may be too expensive to run or configure. The number of local
->      ++solutions to this use case speaks to this need (see <<prior-art, Prior Art>>).
->      ++Bringing this natively to Git can give all these developers a well-supported,
->      ++secure implementation opposed to the fragmentation we see today.
-
-The end-goal of this series combined with Emily's configurable hook is
-basically to have less friction when it comes to setting up and
-maintaining hooks.
-
-I don't see how it would help with "CI may be too expensive to run or
-configure" though. We're basically talking about auto-updating a script
-in .git/hooks, which today is essentially a ./setup-hooks.sh, and the
-script checking for a new version of itself when it runs at
-origin/myscripts:myname.sh, no?
-
->      -+* As a repository owner / project maintainer,
->      ++* As a project maintainer,
->       +
->       +    ** I want to enforce code style so I require developers to use a
->       +    standardized linter.
->       +
->      -+    ** I want to prevent leaks / share code widely so I check that developers
->      -+    are uploading code to the right place.
->      ++    ** I want to prevent sensitive data from getting checked in.
->       +
->      -+    ** I want this to just work for all the developers in my repository, without
->      ++    ** I want to prevent leaks so I check that developers are uploading code to
->      ++    the right private central repository. Conversely, I may want to encourage
->      ++    more open source development and encourage developers to push to public
->      ++    central repositories.
-
-I think I'm beginning to get the gist of this, so it's really also a
-proposed workaround for projects that host on platforms like github.com
-and whatnot where you can run arbitrary code in a CI, but you can't
-install a custom pre-receive hook?
-
-I think it might be worth explicitly spelling that out. E.g. if those
-platforms gained a feature (which isn't that hard to imagine) of hiding
-your ref until after some pre-receive part of a CI check has run (which
-would not have public logs, so you could "safely" check/push passwords)
-it seems to me that a large part of the immediate need for this would go
-away.
-
-Which doesn't per-se mean we shouldn't do it, just that assumptions,
-constaints etc. should be documented.
-
->      ++* Trust comes from the central repository:
->      ++  ** Most users don't have the time or expertise to properly audit every hook
->      ++  and what it does. There must be trust between the user and the remote that the
->      ++  code came from, and the Git project should ensure trust to the degree it can
->      ++  e.g. enforce HTTPS for its integrity guarantees.
-
-I won't belabor the point but in my feedback on v1 I suggested an
-alternate mechanism of doing this which I think is more
-distributed-friendly and more safe:
-https://lore.kernel.org/git/87im5nzbe6.fsf@evledraar.gmail.com/
-
-...
-
->      ++Example User Experience
->      ++^^^^^^^^^^^^^^^^^^^^^^^
->      ++
->      ++===== Case 1: Consent through clone
->      ++
->      ++....
->      ++$ git clone --setup-hooks
->      ++...
->      ++
->      ++The following hooks were installed from remote `origin` ($ORIGIN_URL):
->      ++
->      ++pre-commit: git-secrets --pre_commit_hook
->      ++pre-push:  $GIT_ROOT/pre_push.sh
->      ++....
->      ++
->      ++===== Case 2: Prompting after clone
->      ++....
->      ++$ git clone
->      ++...
->      ++
->      ++Remote `origin` ($ORIGIN_URL) suggest installing the following hooks:
->      ++
->      ++pre-commit: git-secrets --pre_commit_hook
->      ++pre-push:  $GIT_ROOT/pre_push.sh
->      ++
->      ++# instead of prompting, we could give users commands to run instead
->      ++# see case 3
->      ++
->      ++Do you wish to install them?
->      ++1. Yes (this time)
->      ++2. Yes (always from origin)
->      ++3. No (not this time)
->      ++4. No (never)
->      ++....
->      ++
->      ++===== Case 3: Re-prompting when hooks change
->      ++....
->      ++$ git pull
->      ++
->      ++The following hooks were updated from remote `origin` ($ORIGIN_URL):
->      ++
->      ++pre-push:  $GIT_ROOT/pre_push.sh
->      ++
->      ++If you wish to install them, run `git hook setup origin`.
->      ++
->      ++If you wish to always accept hooks from `origin`, run `git hook setup --always
->      ++origin`. You should only do this if you trust code changes from origin.
->      ++
->      ++To always ignore hooks from `origin`, run `git hook ignore origin`.
->      ++....
->      ++
-
-That alternate security model I suggested above would make this much
-less painful. I.e. you could say "I'll trust updates as long as the
-whole chain is signed by XYZ authority".
-
-> [...]
-
-Snip the rest of the doc, which as noted I've god unreplied-to feedback
-on in https://lore.kernel.org/git/87im5nzbe6.fsf@evledraar.gmail.com/
