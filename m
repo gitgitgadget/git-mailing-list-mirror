@@ -2,63 +2,64 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90342C433ED
-	for <git@archiver.kernel.org>; Fri,  2 Apr 2021 14:39:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 18356C433B4
+	for <git@archiver.kernel.org>; Fri,  2 Apr 2021 14:42:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5F0376100C
-	for <git@archiver.kernel.org>; Fri,  2 Apr 2021 14:39:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E972A60200
+	for <git@archiver.kernel.org>; Fri,  2 Apr 2021 14:42:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235523AbhDBOjr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Apr 2021 10:39:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48130 "EHLO
+        id S235307AbhDBOmm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Apr 2021 10:42:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235584AbhDBOjp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Apr 2021 10:39:45 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48CCFC0613E6
-        for <git@vger.kernel.org>; Fri,  2 Apr 2021 07:39:43 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id d13so7872595lfg.7
-        for <git@vger.kernel.org>; Fri, 02 Apr 2021 07:39:43 -0700 (PDT)
+        with ESMTP id S229932AbhDBOml (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Apr 2021 10:42:41 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E645BC0613E6
+        for <git@vger.kernel.org>; Fri,  2 Apr 2021 07:42:38 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id r20so5837456ljk.4
+        for <git@vger.kernel.org>; Fri, 02 Apr 2021 07:42:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp.br; s=usp-google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=gG7ZY95BWxRn7sDw2GVuje/QANKyz7kVWqSlfrTGJtM=;
-        b=zAiQ2ecVffS9jKUoKIi0TSMOSJiyAS4hwLWkXLah/wmt2t68JaJukgI+PC8yKiEuqH
-         S/irOHUsa1PQ8Y+RvGbnHMsHFUSqxO/7ZZgHgc1cK7nL/AzOmKapAFylDHJvOxPwtcOO
-         rbN/ocDqN3j7SPHNLcK38cCAnwUrduaOyRw0vXN3nFwuxgQ9dpAuaP0f3g4h6TW2wpV6
-         Hjk3zCNehUuq8e+ryZ/2lbbz3MsOsM5MCpLxl11oOAHoiujPOHdHwVJ7Y06kVm3cJ1wA
-         xa3DV8peuQWnS/80jNCfbFm7Slm7+5Vol8PV6uc6hqQi7ps1ghsuUhCMe0+6ztJfxWLV
-         hEhA==
+        bh=3BM+ffRbSEKqdNt0dI/IxPBI63cemClWFIlv1zb2NMg=;
+        b=t3LDV29uGT2It8cJaZA/2sT9ClJU6QgTaKbl6H0QKU3aQMUFIgeqxd47szraMYzEwN
+         2ufuBdRA3UM8aWl3/BfQsUCMTGmwsTUtWcDGFk/5zz/dTS/DyLrFJEFwr7CCr12ARGFS
+         9KBP4qiaT0RaCbd7NhpLW1+Os+Zq+GQH+14/u+uVYwpruAfXDpxt9b8WlAOxcaPVhqPB
+         QpG6m1a+d6PZgft2GxGDVetTihVPpgujHqzrlHJ6tC2F3Dv6xupwHVBoefHRTdilCxUT
+         orEB1nvi5P0EiZyaLMKXPw8HX51nzsiKMXJOk+6O9pxD35OU6h3QwLu9d/XBXxsB81h6
+         xxWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=gG7ZY95BWxRn7sDw2GVuje/QANKyz7kVWqSlfrTGJtM=;
-        b=YgTEm3+jHD9BeXVrmgqAgsTOtu7ckqrrdPPKvJhN8PaE8mLkEqklh8QwrZ9goNwRLU
-         kLlmvrG0nFxSlEEX6iRNn7mXOUtcP3nYIU2501snvEM+IGDhiFMy2bKlBG072jwIMjRV
-         IGNVqx5Ke8E3lHLkHcXFnJ95J5msK9FD4Mk6NU1w7dnKSBQaXl9rGp9PnYrL8C+5M9gI
-         4c24RxIqRXsQfWkG5dkR+HJxvexozlbP3WQwnXXzMFawoKHLAx20xoKtIChF5FKFhyRv
-         qk7dBr4F86HD6Qd25gqk/21lfuSnKisQdGjOuRZFlbm8yzkcmygMqP8/0+G1GtdQvGch
-         zdKA==
-X-Gm-Message-State: AOAM532HXTGytoeKe58SswrwQw+yqU67WDjKTFzejnbNUXRp1kLsbHMW
-        0drGI+CzLVgKLDyelMemlnkWbbVI+OFCz+MNkB4w/g==
-X-Google-Smtp-Source: ABdhPJzPVbEG9Xw38NfDEN/0LwMYg9jQ1H68cD8Al7gXqe9Zp9l/9iH3NrxMlbxgr+ZwTPatdzaZ1HhBV+oMK7WCzOQ=
-X-Received: by 2002:ac2:5a11:: with SMTP id q17mr9172772lfn.354.1617374381640;
- Fri, 02 Apr 2021 07:39:41 -0700 (PDT)
+        bh=3BM+ffRbSEKqdNt0dI/IxPBI63cemClWFIlv1zb2NMg=;
+        b=bg2JEUn+ZTdlh6w6xMbhZghLL+PUNxzuU8e6Lx3j7KS8YceOZr+XZ5txQqYssr8MfF
+         UXBmxOE98XkzpDeazkR5bOBmXSIWDyT+35xXI0lFXLxr0zzQVy5dmQYaqobizcAURmyy
+         TJ5CKqpJpy+7FocwWDrBOoz5BpwcNa3FY0hHMtbXQdmGzsE6gvRaY7y12yG8tR+Q6QPw
+         ogNiQsukNOI31INcPiIxBCskyX8/BF/9hWv5VERx1YXpmu7hdEwDtI8RzJUV4bWhKw7Q
+         4se0RlmudYIX+XsxEYgoRMPVhNMWhFTBGhyp1Gb7TpnPFCsoWSXdbY0XNVifPCWxVwB6
+         Ms8A==
+X-Gm-Message-State: AOAM530akWL9aVoHVeLeGZ61zxKMC+r/M8qlwSLvrAlcdESMCkoz6tlx
+        futRpBEwhKT1XSfWlKUaZZmp3CJ7iP7fJ58RMZN42A==
+X-Google-Smtp-Source: ABdhPJxovsJ77MLzrTWDbgTHpCjFqqrUnsTsaI+Evg9/RGUHFZaysGdiGphBjLzSczmgXUrGxyITmm5cwPYB/bixK9M=
+X-Received: by 2002:a2e:88ca:: with SMTP id a10mr8474649ljk.55.1617374557351;
+ Fri, 02 Apr 2021 07:42:37 -0700 (PDT)
 MIME-Version: 1.0
 References: <cover.1616015337.git.matheus.bernardino@usp.br>
- <a3383042e2ee6c454e024db7a9154dc979a5af9e.1616015337.git.matheus.bernardino@usp.br>
- <CAP8UFD2eaaQEuytk6cPoYco2_dfdbsM3aAvJyYFqgYSfkZ487g@mail.gmail.com>
-In-Reply-To: <CAP8UFD2eaaQEuytk6cPoYco2_dfdbsM3aAvJyYFqgYSfkZ487g@mail.gmail.com>
+ <fca797698c78e2248bd2645bd0dce23ec4df35ae.1616015337.git.matheus.bernardino@usp.br>
+ <CAP8UFD0CmPmvK7a-+5fKk0e0=te_e7cCFf6_-vSFrX9COTBg-w@mail.gmail.com>
+In-Reply-To: <CAP8UFD0CmPmvK7a-+5fKk0e0=te_e7cCFf6_-vSFrX9COTBg-w@mail.gmail.com>
 From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Fri, 2 Apr 2021 11:39:30 -0300
-Message-ID: <CAHd-oW7TYmbJAx9Jrzwsfb0zsdT=KmhumJnOJygk0yTWTW3i=Q@mail.gmail.com>
-Subject: Re: [PATCH 1/5] unpack-trees: add basic support for parallel checkout
+Date:   Fri, 2 Apr 2021 11:42:26 -0300
+Message-ID: <CAHd-oW7+x17uf2AuCrdYWUv9Ln2bq+V4rMPKo3VoYe3ZouQjLA@mail.gmail.com>
+Subject: Re: [PATCH 2/5] parallel-checkout: make it truly parallel
 To:     Christian Couder <christian.couder@gmail.com>
 Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
         Jeff Hostetler <git@jeffhostetler.com>
@@ -67,159 +68,149 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 31, 2021 at 1:22 AM Christian Couder
+On Wed, Mar 31, 2021 at 1:32 AM Christian Couder
 <christian.couder@gmail.com> wrote:
 >
 > On Wed, Mar 17, 2021 at 10:12 PM Matheus Tavares
 > <matheus.bernardino@usp.br> wrote:
 >
-> > +struct parallel_checkout_item {
-> > +       /* pointer to a istate->cache[] entry. Not owned by us. */
-> > +       struct cache_entry *ce;
-> > +       struct conv_attrs ca;
-> > +       struct stat st;
-> > +       enum pc_item_status status;
-> > +};
-> > +
-> > +struct parallel_checkout {
-> > +       enum pc_status status;
-> > +       struct parallel_checkout_item *items;
-> > +       size_t nr, alloc;
-> > +};
+> > diff --git a/.gitignore b/.gitignore
+> > index 3dcdb6bb5a..26f8ddfc55 100644
+> > --- a/.gitignore
+> > +++ b/.gitignore
+> > @@ -33,6 +33,7 @@
+> >  /git-check-mailmap
+> >  /git-check-ref-format
+> >  /git-checkout
+> > +/git-checkout--helper
 >
-> It looks like this struct parallel_checkout contains what is called
-> the parallel checkout queue in many places. It would be a bit better
-> if a name or at least a comment could make that clear.
+> I wonder if "checkout--worker" would be better than "checkout--helper".
+
+Yeah, good idea, I'll change that.
+
+> >  /git-checkout-index
+> >  /git-cherry
+> >  /git-cherry-pick
+>
+> [...]
+>
+> > +#define ASSERT_PC_ITEM_RESULT_SIZE(got, exp) \
+> > +{ \
+> > +       if (got != exp) \
+> > +               BUG("corrupted result from checkout worker (got %dB, exp %dB)", \
+>
+> Maybe precompilers are smart enough to not replace the "got" and "exp"
+> in the above string, but it might be a bit confusing for readers.
+> Anway I wonder if this macro could just be a regular (possibly inline)
+> function.
+
+Ok, I will replace this with an inline function.
+
+> > +                   got, exp); \
+> > +} while(0)
+>
+> > +static void parse_and_save_result(const char *line, int len,
+> > +                                 struct pc_worker *worker)
+> > +{
+> > +       struct pc_item_result *res;
+> > +       struct parallel_checkout_item *pc_item;
+> > +       struct stat *st = NULL;
+> > +
+> > +       if (len < PC_ITEM_RESULT_BASE_SIZE)
+> > +               BUG("too short result from checkout worker (got %dB, exp %dB)",
+> > +                   len, (int)PC_ITEM_RESULT_BASE_SIZE);
+> > +
+> > +       res = (struct pc_item_result *)line;
+> > +
+> > +       /*
+> > +        * Worker should send either the full result struct on success, or
+> > +        * just the base (i.e. no stat data), otherwise.
+> > +        */
+> > +       if (res->status == PC_ITEM_WRITTEN) {
+> > +               ASSERT_PC_ITEM_RESULT_SIZE(len, (int)sizeof(struct pc_item_result));
+> > +               st = &res->st;
+> > +       } else {
+> > +               ASSERT_PC_ITEM_RESULT_SIZE(len, (int)PC_ITEM_RESULT_BASE_SIZE);
+> > +       }
+> > +
+> > +       if (!worker->nr_items_to_complete || res->id != worker->next_item_to_complete)
+>
+> Nit: maybe it could be useful to distinguish between these 2 potential
+> bugs and have a specific BUG() for each one.
 
 Right, will do.
 
-> > +       case CA_CLASS_INCORE_PROCESS:
-> > +               /*
-> > +                * The parallel queue and the delayed queue are not compatible,
-> > +                * so they must be kept completely separated. And we can't tell
-> > +                * if a long-running process will delay its response without
-> > +                * actually asking it to perform the filtering. Therefore, this
-> > +                * type of filter is not allowed in parallel checkout.
-> > +                *
-> > +                * Furthermore, there should only be one instance of the
-> > +                * long-running process filter as we don't know how it is
-> > +                * managing its own concurrency. So, spreading the entries that
-> > +                * requisite such a filter among the parallel workers would
-> > +                * require a lot more inter-process communication. We would
-> > +                * probably have to designate a single process to interact with
-> > +                * the filter and send all the necessary data to it, for each
-> > +                * entry.
-> > +                */
-> > +               return 0;
->
-> So it looks like we don't process entries that need filtering. It's a
-> bit disappointing as the commit message says:
->
-> "This new interface allows us to enqueue some of the entries being
-> checked out to later uncompress, smudge, and write them in parallel."
->
-> So it seems to say that entries could be smudged in parallel. Or maybe
-> I am missing something?
-
-Good point, this part of the commit message is indeed misleading. Only
-internal filters, like re-encoding and end-of-line conversions, can be
-performed in parallel. I'll rephrase that sentence, thanks!
-
-> > +static int handle_results(struct checkout *state)
-[...]
-> > +
-> > +       if (have_pending)
-> > +               error(_("parallel checkout finished with pending entries"));
->
-> Is this an error that can actually happen? Or is it a bug? If this can
-> actually happen what is the state of the working directory [...] ?
-
-This could happen both due to a bug or due to an actual error, e.g. if
-one of the workers die()s or gets killed before finishing its work
-queue. In these cases, the files associated with the unfinished items
-will be missing from the working tree, and their index entries will
-have null stat() information.
-
-> [...] and what
-> can the user do? Start another checkout with an option to do it
-> sequentially?
-
-Hmm, it depends on what caused the error. For example, if the user
-accidentally killed one of the workers, starting another checkout
-(either parallel or sequential) should be able to create the missing
-files. But that might not be the case if the error was caused by a
-fatal condition in one of the workers which led it to die() (like a
-packet write failure or corrupted object).
-
-Nevertheless, I think it might be interesting to rephrase the error
-message here to be more explicit about the outcome state. Perhaps even
-mention how many entries will be missing.
-
-> [...]
->
-> > +static int write_pc_item_to_fd(struct parallel_checkout_item *pc_item, int fd,
-> > +                              const char *path)
+> > +static void gather_results_from_workers(struct pc_worker *workers,
+> > +                                       int num_workers)
 > > +{
-> > +       int ret;
-> > +       struct stream_filter *filter;
-> > +       struct strbuf buf = STRBUF_INIT;
-> > +       char *new_blob;
-> > +       unsigned long size;
->
-> I thought that we shouldn't use unsigned long anymore for sizes, but
-> unfortunately it looks like that's what read_blob_entry() expects.
->
-> > +       size_t newsize = 0;
->
-> I don't think we need to initialize newsize. Also we could perhaps
-> declare it closer to where it is used below.
->
-> > +       ssize_t wrote;
+> > +       int i, active_workers = num_workers;
+> > +       struct pollfd *pfds;
 > > +
-> > +       /* Sanity check */
-> > +       assert(is_eligible_for_parallel_checkout(pc_item->ce, &pc_item->ca));
-> > +
-> > +       filter = get_stream_filter_ca(&pc_item->ca, &pc_item->ce->oid);
-> > +       if (filter) {
-> > +               if (stream_blob_to_fd(fd, &pc_item->ce->oid, filter, 1)) {
-> > +                       /* On error, reset fd to try writing without streaming */
-> > +                       if (reset_fd(fd, path))
-> > +                               return -1;
-> > +               } else {
-> > +                       return 0;
-> > +               }
+> > +       CALLOC_ARRAY(pfds, num_workers);
+> > +       for (i = 0; i < num_workers; i++) {
+> > +               pfds[i].fd = workers[i].cp.out;
+> > +               pfds[i].events = POLLIN;
 > > +       }
 > > +
-> > +       new_blob = read_blob_entry(pc_item->ce, &size);
-> > +       if (!new_blob)
-> > +               return error("unable to read sha1 file of %s (%s)", path,
->
-> With the support of sha256, I guess we should avoid talking about
-> sha1. Maybe: s/sha1/object/ Or maybe we could just say that we
-> couldn't read the object, as read_blob_entry() would perhaps read it
-> from a pack-file and not from a loose file?
-
-Good point, thanks!
-
-> > +                            oid_to_hex(&pc_item->ce->oid));
+> > +       while (active_workers) {
+> > +               int nr = poll(pfds, num_workers, -1);
 > > +
+> > +               if (nr < 0) {
+> > +                       if (errno == EINTR)
+> > +                               continue;
+> > +                       die_errno("failed to poll checkout workers");
+> > +               }
+> > +
+> > +               for (i = 0; i < num_workers && nr > 0; i++) {
+>
+> Is it possible that nr is 0? If that happens, it looks like we would
+> be in an infinite `while (active_workers) { ... }` loop.
+>
+> Actually in poll(2) there is: "A value of 0 indicates that the call
+> timed out and no file descriptors were ready." So it seems that it
+> could, at least theorically, happen.
+
+I think a 0 return might not be possible in this case because we call
+poll() with -1 as the timeout, which means "infinite timeout". So the
+call should block until either an error occurs (negative return code)
+or there is a file descriptor available for reading (positive return
+code).
+
+> > +enum pc_item_status {
+> > +       PC_ITEM_PENDING = 0,
+> > +       PC_ITEM_WRITTEN,
 > > +       /*
-> > +        * checkout metadata is used to give context for external process
-> > +        * filters. Files requiring such filters are not eligible for parallel
-> > +        * checkout, so pass NULL.
+> > +        * The entry could not be written because there was another file
+> > +        * already present in its path or leading directories. Since
+> > +        * checkout_entry_ca() removes such files from the working tree before
+> > +        * enqueueing the entry for parallel checkout, it means that there was
+> > +        * a path collision among the entries being written.
 > > +        */
-> > +       ret = convert_to_working_tree_ca(&pc_item->ca, pc_item->ce->name,
-> > +                                        new_blob, size, &buf, NULL);
+> > +       PC_ITEM_COLLIDED,
+> > +       PC_ITEM_FAILED,
+> > +};
 > > +
-> > +       if (ret) {
-> > +               free(new_blob);
-> > +               new_blob = strbuf_detach(&buf, &newsize);
-> > +               size = newsize;
+> > +struct parallel_checkout_item {
+> > +       /*
+> > +        * In main process ce points to a istate->cache[] entry. Thus, it's not
+> > +        * owned by us. In workers they own the memory, which *must be* released.
+> > +        */
+> > +       struct cache_entry *ce;
+> > +       struct conv_attrs ca;
+> > +       size_t id; /* position in parallel_checkout.items[] of main process */
+> > +
+> > +       /* Output fields, sent from workers. */
+> > +       enum pc_item_status status;
+> > +       struct stat st;
+> > +};
 >
-> "newsize" seems to be used only here. It would be nice if we could get
-> rid of it and pass "&size" to strbuf_detach(), but maybe we cannot
-> because of the unsigned long/size_t type mismatch. At least we could
-> declare "newsize" in this scope though.
+> Maybe the previous patch could have declared both 'enum
+> pc_item_status' and 'struct parallel_checkout_item' here, in
+> parallel-checkout.h, so that this patch wouldn't need to move them
+> here.
 
-Sure, I'll move "newsize" down to this block and remove the
-initialization, thanks.
+Yeah, while I was writing this patch I went back and forth on whether
+to declare these here from the start. But because I wanted to have the
+"parallel-checkout users" / "checkout--helper interface" division in
+parallel-checkout.h, I thought it would be better to move the structs
+to this header only after the checkout--helper was introduced.
