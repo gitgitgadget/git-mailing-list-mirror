@@ -2,111 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF60AC433B4
-	for <git@archiver.kernel.org>; Fri,  2 Apr 2021 21:07:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 04CA5C433B4
+	for <git@archiver.kernel.org>; Fri,  2 Apr 2021 21:08:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 97187610CC
-	for <git@archiver.kernel.org>; Fri,  2 Apr 2021 21:07:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CA38161029
+	for <git@archiver.kernel.org>; Fri,  2 Apr 2021 21:08:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231443AbhDBVHQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Apr 2021 17:07:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47742 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231406AbhDBVHP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Apr 2021 17:07:15 -0400
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EF68C0613E6
-        for <git@vger.kernel.org>; Fri,  2 Apr 2021 14:07:13 -0700 (PDT)
-Received: by mail-oi1-x233.google.com with SMTP id i81so6015404oif.6
-        for <git@vger.kernel.org>; Fri, 02 Apr 2021 14:07:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=6N+P2BoJP9k4fVcSuuNpNh6JU7Xvxwbh6/9frYPv/RY=;
-        b=C8GczqIdcyV6J+PkcxANjZ7S2rqzk9bam8wqFTJ5urwFbn3q0vqy7qdc7WpmToCwDD
-         DUJO/OJSSsH3HDcTmrzCePmbz6BMCx5tzv1MVu/zHpG/ugoFBUgA4tjZgiezA7iOUFKL
-         H387gPTCmSy+YV16Tgs9EPXr+UapShRuoU/NUfBiDmGiM25BqC9ZvimJj58GS5QIzoUM
-         2i+f/PvlJ503x8+ChddQLY1Eo+KHxWNNgTqCkVYwZF/1zOvO5chiCbFlORRonqwQ+Ddg
-         ZSFCM6p2H6WgvZoBruhdEk1yPJhj+xHB6SB5tMdhSd1GjEs2pPzYH2rEoF+Xd1nzkU+F
-         zg7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=6N+P2BoJP9k4fVcSuuNpNh6JU7Xvxwbh6/9frYPv/RY=;
-        b=UytR7yB3JnIDEDIozmPqn0urOH7Et3ZK0/fmi3sju384vXcYK6i/sHD8qDbcWYZb49
-         D4h/fcpPjtnXyvV7Gl319B9YwZFHdH+oLIZl79ZsSSJzHZBc/3zMkbnqjAI01gi+MkNs
-         DsaGSqPAbObTGhPOGm1/hEVimhB1m3Q8wVsZSs8aocTiyI3AK2a7gx394Kl4XmDK5rvO
-         FboWbwc1MpNDwbeuHnwDShJHrgOd1WshGvUPiUpystqdiTPxch97uKDFxhsV965mXQY9
-         9VHHNR/xfFbk/TAeqCbMnIS+Y/iReFtxBiX3jSqqsCqsGrGOtobjOJtKghqC+G8FDWfu
-         XM4A==
-X-Gm-Message-State: AOAM531DK9pyC1gETqtrwuJD/8eqK7zoJq/Cp2zola5lYS+yaV4B61S3
-        cta9MnGYDPDSClJXZ0uKpDHmu1BU3KEdyQ==
-X-Google-Smtp-Source: ABdhPJzv1tQv+rD5XPBSr3DbE5r86bl6SHiXHtelnyc8ZyoQHJwH5RLnkSgI52ueQc1dzoWgKjNbZQ==
-X-Received: by 2002:aca:4188:: with SMTP id o130mr10906920oia.101.1617397631171;
-        Fri, 02 Apr 2021 14:07:11 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:d5a8:1a30:4466:1b29? ([2600:1700:e72:80a0:d5a8:1a30:4466:1b29])
-        by smtp.gmail.com with ESMTPSA id u194sm1870528oia.27.2021.04.02.14.07.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 02 Apr 2021 14:07:10 -0700 (PDT)
-Subject: Re: should git maintenance prefetch be taught to honor remote.fetch
- refspec?
-From:   Derrick Stolee <stolee@gmail.com>
-To:     Tom Saeger <tom.saeger@oracle.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <20210401184914.qmr7jhjbhp2mt3h6@dhcp-10-154-148-175.vpn.oracle.com>
- <d246df21-fdaa-a391-847a-e03e8e664af1@gmail.com> <xmqq8s613gqa.fsf@gitster.g>
- <3bfd9a88-10f9-df71-bf96-f9c5654e48eb@gmail.com>
- <20210402182716.trbaflsjcvouff2y@brm-x62-17.us.oracle.com>
- <41dc2961-7ba5-a882-3416-45631e2cbb33@gmail.com>
-Message-ID: <a4cf3e48-aed5-ba1f-298d-1f2cc2359be2@gmail.com>
-Date:   Fri, 2 Apr 2021 17:07:09 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.9.0
+        id S234984AbhDBVIa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Apr 2021 17:08:30 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:53249 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231577AbhDBVI3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Apr 2021 17:08:29 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9BB3812F7C0;
+        Fri,  2 Apr 2021 17:08:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=pIBAtcIAA3NM
+        wp66bJ5DiiyVyhg=; b=EVKA5ZSP9vS9Kf0uFpvueqmxLs4WaLqyBZmgSHjPSHxY
+        KiYbmB/vTolFE93zExEHSsz9jExlbyzdVj1k0FN+D6NSOB+US5cbRxlc08R9n547
+        C1A5LDJXydKqFNBqbc08w/ckR9xU/cfpBURRGXuOoY65F2bM0oFCoYibfvy5h7E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=gQiQRQ
+        Sebr8sVaWWuDSgL+s7s8T2aq9YuJHjzcR0JE3G/D0v804iRzWwRita/Rb+wScucM
+        zZZ6QDdmSDF3JIY+X5iT4g8cBuyppwN9N59p5Qut6Af8tctfquPv1g7KgLxswD+S
+        hi2xSubPS3Kc4WaE016n0Mfq2gcfpa2sgHqVc=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8D81612F7BF;
+        Fri,  2 Apr 2021 17:08:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7B56112F7BB;
+        Fri,  2 Apr 2021 17:08:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v5 08/18] blame: emit a better error on 'git blame
+ directory'
+References: <87o8fcqrg8.fsf@evledraar.gmail.com>
+        <cover-00.19-00000000000-20210331T190531Z-avarab@gmail.com>
+        <patch-08.19-3c2ca98716d-20210331T190531Z-avarab@gmail.com>
+        <xmqqwntm52ht.fsf@gitster.g> <87blaxkpg6.fsf@evledraar.gmail.com>
+Date:   Fri, 02 Apr 2021 14:08:22 -0700
+In-Reply-To: <87blaxkpg6.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Fri, 02 Apr 2021 11:26:01 +0200")
+Message-ID: <xmqq5z144cop.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <41dc2961-7ba5-a882-3416-45631e2cbb33@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+X-Pobox-Relay-ID: 8FE3F096-93F7-11EB-A211-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/2/2021 4:43 PM, Derrick Stolee wrote:
-> On 4/2/2021 2:27 PM, Tom Saeger wrote:
->> generally isn't it still changing the right-hand side of refspec?
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+
+> On Thu, Apr 01 2021, Junio C Hamano wrote:
+>
+>> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 >>
->> replacing ":refs/" with ":refs/prefetch/"
-> 
-> Right, this substring replacement might be easiest to achieve. The
-> 'struct refspec' doesn't make it incredibly easy. Perhaps skipping
-> the refspec parsing and just doing that substring swap directly from
-> the config value might be the best approach.
-> 
->> This would still work for refspecs with negative patterns right?
-> 
-> One of the issues is that negative patterns have no ":refs/"
-> substring.
-> 
-> The other issue is that exact matches (no "*") have an exact
-> string in the destination, too, so replacing the _entire_
-> destination with "refs/prefetch/<remote>/*" breaks the refspec.
-> I think the substring approach will still work here.
+>>> Change an early check for non-blobs in verify_working_tree_path() to
+>>> let any such objects pass, and instead die shortly thereafter in the
+>>> fake_working_tree_commit() caller's type check.
+>>>
+>>> Now e.g. doing "git blame t" in git.git emits:
+>>>
+>>>     fatal: unsupported file type t
+>>>
+>>> Instead of:
+>>>
+>>>     fatal: no such path 't' in HEAD
+>>
+>> Sorry, but I fail to see why "unsupported file type t" is quite an
+>> improvement.  Is this one of these irrelevant clean-up while at it
+>> whose benefit is unclear until much later, I have to wonder.
+>
+> Because "t" is directory we can stat() and which exists in the index, s=
+o
+> it makes more sense to fall through to the stat() codepath.
 
-I updated my branch with the substring approach, which is
-probably the better solution. Please give it a try. I don't
-expect that change to help the FreeBSD build, but we will see.
- 
-> [1] https://github.com/gitgitgadget/git/pull/924
-> [2] https://github.com/gitgitgadget/git/pull/924/checks?check_run_id=2256079534
+'t' is not in the index, even though many things with 't/' prefix
+may.
 
-Thanks,
--Stolee
+But my understanding of the point of that loop is to catch cases
+where one side may have 't' as a directory, the other side may have
+it as a blob, and we have a 't' regular file during a process of
+resolving a conflicted merge (perhaps the tentative resolution has
+already been "git add"ed to the index).  So "git blame t" would want
+to start from the "working tree state", which is made into a virtual
+commit, with two "virtual" parents, one is HEAD that has 't' as a
+directory but the other MERGE_HEAD may have 't' as a regular file,
+so "blame" should be able to follow the history of that regular file
+through the merge in progress.
+
+If we change, like the proposed patch does, the loop to exit
+immediately after we notice 't' exists in HEAD (as a tree), without
+even looking at the second parent to notice that it is a regular
+file there, wouldn't that change the behaviour?
+
+> I think the "unsupported file type" message is a bit odd, but it's the
+> existing one, perhaps changing it while we're at it to something like:
+>
+>     fatal: cannot 'blame' a directory
+>
+> Would be better,...
+
+Sure.  As long as the change does not break the original use case
+the loop intended to support, that is fine, and the message would be
+a lot better than the "unsupported file type t".
