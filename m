@@ -2,135 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A2AEC43462
-	for <git@archiver.kernel.org>; Fri,  2 Apr 2021 15:02:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 443F0C433ED
+	for <git@archiver.kernel.org>; Fri,  2 Apr 2021 15:39:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3179160FEF
-	for <git@archiver.kernel.org>; Fri,  2 Apr 2021 15:02:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 17CC3610CC
+	for <git@archiver.kernel.org>; Fri,  2 Apr 2021 15:39:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235220AbhDBPCQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Apr 2021 11:02:16 -0400
-Received: from siwi.pair.com ([209.68.5.199]:49696 "EHLO siwi.pair.com"
+        id S235351AbhDBPj4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Apr 2021 11:39:56 -0400
+Received: from cloud.peff.net ([104.130.231.41]:40602 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235077AbhDBPCP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Apr 2021 11:02:15 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 63D633F4162;
-        Fri,  2 Apr 2021 11:02:14 -0400 (EDT)
-Received: from ATP-Win2012.bjwce.com (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 315623F414D;
-        Fri,  2 Apr 2021 11:02:14 -0400 (EDT)
-Subject: Re: Detecting when bulk file-system operations complete
-To:     Derrick Stolee <stolee@gmail.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Drew Noakes <drew@drewnoakes.com>, git@vger.kernel.org,
-        Jeff Hostetler <jeffhost@microsoft.com>
-References: <CAJd66x6XT7m5Njg2kRyGJ80rU6WNcLifijS98=onJeBz+74rrA@mail.gmail.com>
- <5a1abc6b-52a3-fc12-166f-8af5e7bdff48@iee.email>
- <9c09459b-2d27-6997-63c1-46c8df52eda7@gmail.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <365c1b90-73f4-18de-ae37-a13e52104e9c@jeffhostetler.com>
-Date:   Fri, 2 Apr 2021 11:02:13 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+        id S235304AbhDBPjz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Apr 2021 11:39:55 -0400
+Received: (qmail 15591 invoked by uid 109); 2 Apr 2021 15:39:54 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 02 Apr 2021 15:39:54 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 26413 invoked by uid 111); 2 Apr 2021 15:39:53 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 02 Apr 2021 11:39:53 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 2 Apr 2021 11:39:53 -0400
+From:   Jeff King <peff@peff.net>
+To:     ZheNing Hu <adlternative@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Hariom verma <hariom18599@gmail.com>,
+        Shourya Shukla <periperidip@gmail.com>,
+        olyatelezhnaya@gmail.com
+Subject: Re: GSoC Git Proposal Draft - ZheNing Hu
+Message-ID: <YGc6ybE1wD1ck0uB@coredump.intra.peff.net>
+References: <CAOLTT8RfE4nn5NnjZh7xuF09-5=+K+_j_2kP0327HVdR4x_wAQ@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <9c09459b-2d27-6997-63c1-46c8df52eda7@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAOLTT8RfE4nn5NnjZh7xuF09-5=+K+_j_2kP0327HVdR4x_wAQ@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Apr 02, 2021 at 05:03:17PM +0800, ZheNing Hu wrote:
 
-
-On 4/1/21 9:10 AM, Derrick Stolee wrote:
-> On 3/31/2021 12:03 PM, Philip Oakley wrote:
->> Hi Drew,
->>
->> On 31/03/2021 04:39, Drew Noakes wrote:
->>> Hi,
->>>
->>> I develop IDE tooling that watches a repo's workspace and reacts to changes.
->>>
->>> Bulk file-system changes (i.e. branch switch, rebase, merge,
->>> cherry-pick) trigger lots of file system events, and my tooling should
->>> ignore intermediary updates. Currently I debounce events with a fixed
->>> time span, but would like a more reliable and performant approach to
->>> scheduling this reactive work.
->>>
->>> Can this be done by monitoring the GITDIR in some way? For example, is
->>> there a file that's present when these operations are in flight, and
->>> which is removed when they complete?
->>>
->>> If an operation is interrupted (i.e. merge or rebase that hits a
->>> conflict) my tooling should consider the bulk operation as complete.
->>> This means that detecting a git-rebase-todo file or
->>> rebase-merge/rebase-apply folder is not adequate.
->>>
->>> Any help appreciated. Thanks!
->>>
->>> Drew.
->> You may want to look at the various bits of work on `fsmonitor` etc on
->> the mailing list archive
->>
->> https://lore.kernel.org/git/?q=fsmonitor
->>
->> to ensure that all the different approaches inter-operate with
->> reasonable efficiency..
+> * Because part of the feature of `git for-each-ref` is very similar to
+> that of `git cat-file`, I think `git cat-file` can learn some feasible
+> solutions from it.
 > 
-> This is an important suggestion. There is an issue with the current
-> approach of using FS Monitor with Watchman along with Visual Studio
-> Code and certain Git plugins:
+> #### My possible solutions:
 > 
-> 1. When "git status" runs, the FS Monitor hook asks Watchman for
->     changes. Watchman puts a "cookie file" in the working directory
->     so it knows when the file system events are flushed.
-> 
-> 2. VS Code notices this cookie file was written, so it interprets
->     that a file was changed in the working directory. It calls
->     "git status" to update its markers on the modified files.
-> 
-> This loops forever.
-> 
-> The new version of FS Monitor that Jeff Hostetler is working on
-> writes the cookie file into the .git directory, which VS Code (and
-> hopefully other IDEs) do not consider a trigger for running commands
-> like "git status".
-> 
-> This is just one example of the trickiness that ensues when using
-> filesystem events.
+> 1. Same [solution](https://github.com/git/git/pull/568/commits/cc40c464e813fc7a6bd93a01661646114d694d76)
+> as Olga, add member `struct ref_format format` in `struct
+> batch_options`.
+> 2. Use the function
+> [`verify_ref_format()`](https://github.com/gitgitgadget/git/blob/84d06cdc06389ae7c462434cb7b1db0980f63860/ref-filter.c#L904)
+> to replace the first `expand_format()` for parsing format strings.
+> 3. Write a function like
+> [`format_ref_array_item()`](https://github.com/gitgitgadget/git/blob/84d06cdc06389ae7c462434cb7b1db0980f63860/ref-filter.c#L2392),
+> get information about objects, and use `get_object()` to grub the
+> information which we prefer (or just use `grab_common_value()`).
+> 4. The migration of `%(rest)` may require learning the handling of
+> `%(if)` ,`%(else)`.
 
-It sounds like you want to watch the contents of the .git directory
-for creation/deletion of various control files.  Something like a
-begin- and end-transaction marker.  I'm not sure that Git has such
-a clear marker.  Git commands often invoke child commands, rebase
-might invoke checkout and then run some other commands for example,
-so the marker would need to be recursive.  And some commands can be
-paused, an interactive rebase can stop and let the user edit a command
-and then continue with the next step in the rebase.
+I think one thing to keep an eye on here is the performance of cat-file.
+The formatting code used by for-each-ref is rather slow (it may load
+more of the object details than is necessary, it is too eager to
+allocate intermediate strings, and so on). That's usually not _too_ big
+a problem for ref-filter, because the number of refs tends to be much
+smaller than the number of total objects. But I'd expect that moving to
+the ref-filter code would make something like:
 
-So you would have to decide what the boundaries are that you want
-to bracket between your GUI refreshes -- do you freeze during the
-whole rebase, or do you incrementally update the display after each
-checkout or merge within the rebase?
+ git cat-file --batch-all-objects --batch-check='%(objectname) %(objecttype)'
 
-Having said that, you might look at the `.git/index.lock`.  That file
-is present when a particular command is running and modifying things.
-It is a start, but probably not sufficient.  And it is possible for
-commands to abort (crash) and fail to delete that file, so be careful.
+measurably slower.
 
-You could have a FS watcher to keep track of the contents of the .git
-directory.  But you'd have to do some research on which control files
-are created and when and see what makes sense for your application.
-I'm not saying it is impossible, but it probably won't be easy to
-get right.
+IMHO the right path forward is not to try porting cat-file to use the
+ref-filter code, but to start first with writing a universal formatting
+module that takes the best of both implementations (and the commit
+pretty-printer):
 
-Jeff
+  - separate the format-parsing stage from formatting actual items, as
+    ref-filter does. This lets us have more complex formats without
+    paying a per-item runtime cost while formatting. This should also
+    allow us to handle multiple syntaxes for the same thing (e.g.,
+    ref-filter %(authorname) vs pretty.c %an).
+
+  - figure out which data will be needed for each item based on the
+    parsed format, and then do the minimum amount of work to get that
+    data (using "oid_object_info_extended()" helps here, because it
+    likewise tries to do as little work as possible to satisfy the
+    request, but there are many elements that it doesn't know about)
+
+  - likewise avoid doing any intermediate work we can; as much as
+    possible, format the result directly into a result strbuf, rather
+    than allocating many sub-strings and assembling them (as cat-file
+    does).
+
+  - handle formats where the necessary item data may or may not be
+    present. E.g., if we're given a refname, then "%(refname)" makes
+    sense. But in cat-file we'd not have a refname, and just an object.
+    We should still be able to use the same formatting code to handle
+    "%(objecttype)", etc. Likewise for formats which require a specific
+    type (say %(authorname) for a commit, but the object is a blob).
+    Ref-filter does this to some degree for things like authorname, but
+    we'd be extending it to the case that we don't even have a refname.
+
+-Peff
