@@ -2,130 +2,143 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 655EEC433B4
-	for <git@archiver.kernel.org>; Sat,  3 Apr 2021 01:34:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 62C71C43460
+	for <git@archiver.kernel.org>; Sat,  3 Apr 2021 01:34:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2F4FD6117A
-	for <git@archiver.kernel.org>; Sat,  3 Apr 2021 01:34:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2122A611AC
+	for <git@archiver.kernel.org>; Sat,  3 Apr 2021 01:34:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236077AbhDCBee (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Apr 2021 21:34:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48604 "EHLO
+        id S236105AbhDCBef (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Apr 2021 21:34:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235924AbhDCBe3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Apr 2021 21:34:29 -0400
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAF1CC0613E6
-        for <git@vger.kernel.org>; Fri,  2 Apr 2021 18:34:25 -0700 (PDT)
-Received: by mail-pj1-x1031.google.com with SMTP id kr3-20020a17090b4903b02900c096fc01deso3259266pjb.4
-        for <git@vger.kernel.org>; Fri, 02 Apr 2021 18:34:25 -0700 (PDT)
+        with ESMTP id S235942AbhDCBea (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Apr 2021 21:34:30 -0400
+Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7B00C061788
+        for <git@vger.kernel.org>; Fri,  2 Apr 2021 18:34:27 -0700 (PDT)
+Received: by mail-pg1-x532.google.com with SMTP id k8so4512413pgf.4
+        for <git@vger.kernel.org>; Fri, 02 Apr 2021 18:34:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=skydio.com; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=R3/k2ydrpYzswL5VuqvsxddLTE33oL2m+3D/xvRyTPg=;
-        b=LZA9ChNjFANF8YmgdNliCLMgJc5q9NMpDbzL+KUm+lJAkoJ1QfXPBc/GyhDP20cMI0
-         z/dg89zGF7aEffFi3+Mmd/iPH1XexOQxbA8SnBOV4ZVzZsdph0FYComk/6WaFETNJN7N
-         4Wci6Og7jVMcBvPgMnEqtbNfUB4OCMFiBBR1Q3D4NWDAASDFjojsMtL1qBBknWY63F/o
-         FMsCS6JZ+ZGHEu2qxCjLJFi1y8yrPEsOHHkpEtwMi2XzPvr8pxphQ1iiI63eOVQCPuPY
-         QKXQzRc0qOoXK7cfgPq268ZZ7v3CCWkBp86Ai9eNSNtcxPC8G/h+uE8Ca95ibwphAymw
-         In5Q==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=WgB4kq8zCISBt2PQozTVeL58VOa2FVRGGaZSpMm0CHY=;
+        b=3PejQqjaHbYCgLt7WuaTG5+7XniwdY2lJR7KDBg0HLaDNGdDNYRUvkxFgjYKLfmEH7
+         6qX1oSZTKYHWW6h9UXI8QkYSWE4BmAWIkA2pOiMIvESX4WEXEZhIALwOKrocrhQmgldO
+         dsVnMTi3EGWrp/6ehpHvK5SIibqQ3K2uw95e1zOP0QkInFqbSkp1Xd06eb+LAElppqiu
+         cnz93rTEA/ODWtfSTyZN+Idsgxg0yTHj4ALzofpPyA1txpTdKuvh7GGsROcOVdxKaGyd
+         ItqOT3SyZzL4NYauJg5o/tiTSCKNlm/CGeTTWD/6MzjpwIwE+Dkkk8sdHGxs8mUcoMx+
+         EQzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=R3/k2ydrpYzswL5VuqvsxddLTE33oL2m+3D/xvRyTPg=;
-        b=PGyOOlpDrLVR536st5lGuzfaYQGTPODofDPbC4TFZovb0vPnIqyLm5jNP7JFFTlb39
-         vdVsfKc7SiBGBs/CqS+S0IOxpVShZh1nnXELCnKJpnVHqdRtdM4m8+UcVrIW6E2o6bgJ
-         1Jwg91W9kUN81IxlX0kBIftwGvSzLlGEoGcAyAZv48rrQcc13w8U8XnKJvJrmVepAmh4
-         1/SYi/UsaMriA9Gw0SHAxMXyqT+jgGZ2ml90eACeQrN+eHGiU9n8Hpy3tkvMmwPCu1KC
-         fiwSqqXrAUUmPLWBgbAH07H7ghHG7r7g2p1gB2PpV2DFfotDngpkjRIuObwwD0BsJy5C
-         iy8Q==
-X-Gm-Message-State: AOAM531WIvpKvTUTvEcwSWWQnH9nZw9SQAcdLWCcxS6Cov1+yOq27Kdi
-        DiuhKxY8eEpiGFp6aP4T8GdVMRKLpZo1XmAg2kA=
-X-Google-Smtp-Source: ABdhPJyCJFvIbZ7euuVka4lW0inr7+NduLeQtoWG1NOIa37yyqWKDfbMULEjohbMyX2fg3qrWu0DNw==
-X-Received: by 2002:a17:902:8347:b029:e7:4a2d:6589 with SMTP id z7-20020a1709028347b02900e74a2d6589mr15409475pln.64.1617413664991;
-        Fri, 02 Apr 2021 18:34:24 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=WgB4kq8zCISBt2PQozTVeL58VOa2FVRGGaZSpMm0CHY=;
+        b=gCQF1XDa6nIut9/f07LgydbH96wAqP8cI3APRyhXTI5M5RG4X56YMHwFMYjatdka5U
+         DYmYn5j++5C9tTZBfj4qJnzbiRm2yIwECe4/h0/mpciqGoNOe+y6UGq9nPwXBzZF9OHc
+         OvvnjTUwH3Qv77toL7Sbed+4mpxgPiouTGaf8mC6fBcayma5twXMLx9dOObRd7ZKA6xS
+         vnPQKb3ZtQv7SKEXRJbJSOj2m8nFEGScsSuPsTLiy+U9P/C/SUQljcnLsuAWVGcY0M2P
+         +bGOFjYvR2Isp/a9buF8p7jzFt8blvRd2k651XwnPYJKIkpFtGvOv+3pohHrQRhpddFA
+         yeww==
+X-Gm-Message-State: AOAM532UDKyHIsN2uYAXJhHMfjQ6YMIwaYoIKwyTkgcbqneweTQe7X52
+        D0YSNZGiJFyTUG7DZaz2Y6rt3Qbtt1XeOdmlxSc=
+X-Google-Smtp-Source: ABdhPJwDg7W/Rsu32YmV+odb4K6V3swyFR9dlzX06allwDWMuVugP43w7DOvPb6MkLOOgPDvmwGjOA==
+X-Received: by 2002:aa7:8a58:0:b029:1fb:8ab:866e with SMTP id n24-20020aa78a580000b02901fb08ab866emr14736316pfa.0.1617413666896;
+        Fri, 02 Apr 2021 18:34:26 -0700 (PDT)
 Received: from jerry-desktop.localdomain ([50.236.240.214])
-        by smtp.gmail.com with ESMTPSA id ot17sm8937518pjb.50.2021.04.02.18.34.24
+        by smtp.gmail.com with ESMTPSA id ot17sm8937518pjb.50.2021.04.02.18.34.26
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 02 Apr 2021 18:34:24 -0700 (PDT)
+        Fri, 02 Apr 2021 18:34:26 -0700 (PDT)
 From:   Jerry Zhang <jerry@skydio.com>
 To:     git@vger.kernel.org
 Cc:     ross@skydio.com, abe@skydio.com, brian.kubisiask@skydio.com,
-        Jerry Zhang <jerry@skydio.com>
-Subject: [PATCH 0/1] git-apply: Allow simultaneous --cached and --3way options
-Date:   Fri,  2 Apr 2021 18:34:09 -0700
-Message-Id: <20210403013410.32064-1-jerry@skydio.com>
+        Jerry Zhang <jerry@skydio.com>,
+        Jerry Zhang <jerryxzha@googlemail.com>
+Subject: [PATCH 1/1] git-apply: Allow simultaneous --cached and --3way options
+Date:   Fri,  2 Apr 2021 18:34:10 -0700
+Message-Id: <20210403013410.32064-2-jerry@skydio.com>
 X-Mailer: git-send-email 2.31.1.164.g5aa78b22ae
+In-Reply-To: <20210403013410.32064-1-jerry@skydio.com>
+References: <20210403013410.32064-1-jerry@skydio.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I'm creating a script/tool that will be able to cherry-pick 
-multiple commits from a single branch, rebase them onto a
-base commit, and push those references to a remote. 
+Previously, --cached and --3way were not
+allowed to be used together, since --3way
+wrote conflict markers into the working tree.
 
-Ex. with a branch like "origin/master -> A -> B -> C"
-The tool will create "master -> A", "master -> B",
-"master -> C" and either make local branches or
-push them to a remote. This can be useful since code
-review tools like github use branches as the basis
-for pull requests.
+These changes change semantics so that if
+these flags are given together and there is
+a conflict, the conflict markers are added
+directly to cache. If there is no conflict,
+the patch is applied directly to cache as
+expected.
 
-A key feature here is that the above happens without
-any changes to the user's working directory or cache.
-This is important since those operations will add
-time and generate build churn. We use these steps
-for synthesizing a "cherry-pick" of B to master.
-
-1. cp .git/index index.temp
-2. set GIT_INDEX_FILE=index.temp
-3. git reset master -- . (git read-tree also works here, but is a bit slower)
-4. git format-patch --full-index B~..B
-5. git apply --cached B.patch
-6. git write-tree
-7. git commit-tree {output of 6} -p master -m "message"
-8. either `git symbolic-ref` to make a branch or `git push` to remote
-
-I'm looking to improve the git apply step in #5. 
-Currently we can't use --cached in combination with
---3way, which limits some of the usefulness of this method.
-There are many diffs that will block applying a patch
-that a 3 way merge can resolve without conflicts. Even
-in the case where there are real conflicts, performing
-a 3 way merge will allow us to show the user the lines
-where the conflict occurred. 
-
-With the above in mind, I've created a small patch that
-implements the behavior I'd like. Rather than disallow
-the cached and 3way flags to be combined, we allow them,
-but write any conflicts directly to the cached file. Since 
-we're unable to modify the working directory, it seems
-reasonable in this case to not actually present the user
-with any options to resolve conflicts. Instead, a script
-or tool using this command can diff the temporary cache
-to get the source of the conflict.
-
-Happy to address any feedback. After I address any major
-changes I will add new tests for this path.
-
-All tests passed locally.
-
-Jerry Zhang (1):
-  git-apply: Allow simultaneous --cached and --3way options
-
+Signed-off-by: Jerry Zhang <jerry@skydio.com>
+Signed-off-by: Jerry Zhang <jerryxzha@googlemail.com>
+---
  Documentation/git-apply.txt |  4 +++-
  apply.c                     | 13 +++++++------
  2 files changed, 10 insertions(+), 7 deletions(-)
 
+diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
+index 91d9a8601c..3dc0085066 100644
+--- a/Documentation/git-apply.txt
++++ b/Documentation/git-apply.txt
+@@ -89,7 +89,9 @@ OPTIONS
+ 	and we have those blobs available locally, possibly leaving the
+ 	conflict markers in the files in the working tree for the user to
+ 	resolve.  This option implies the `--index` option, and is incompatible
+-	with the `--reject` and the `--cached` options.
++	with the `--reject` option. When used with the --cached option, any
++	conflict markers are added directly to the cache rather than the
++	working tree.
+ 
+ --build-fake-ancestor=<file>::
+ 	Newer 'git diff' output has embedded 'index information'
+diff --git a/apply.c b/apply.c
+index 6695a931e9..fc94ca0e99 100644
+--- a/apply.c
++++ b/apply.c
+@@ -133,8 +133,6 @@ int check_apply_state(struct apply_state *state, int force_apply)
+ 
+ 	if (state->apply_with_reject && state->threeway)
+ 		return error(_("--reject and --3way cannot be used together."));
+-	if (state->cached && state->threeway)
+-		return error(_("--cached and --3way cannot be used together."));
+ 	if (state->threeway) {
+ 		if (is_not_gitdir)
+ 			return error(_("--3way outside a repository"));
+@@ -4490,13 +4488,16 @@ static int create_file(struct apply_state *state, struct patch *patch)
+ 
+ 	if (!mode)
+ 		mode = S_IFREG | 0644;
+-	if (create_one_file(state, path, mode, buf, size))
+-		return -1;
++	if (!state->cached) {
++		if (create_one_file(state, path, mode, buf, size))
++			return -1;
++	}
+ 
+-	if (patch->conflicted_threeway)
++	if (patch->conflicted_threeway && !state->cached)
+ 		return add_conflicted_stages_file(state, patch);
+-	else if (state->update_index)
++	else if (state->update_index) {
+ 		return add_index_file(state, path, mode, buf, size);
++	}
+ 	return 0;
+ }
+ 
 -- 
 2.29.0
 
