@@ -2,125 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-19.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B68CAC433ED
-	for <git@archiver.kernel.org>; Sat,  3 Apr 2021 09:59:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7BA7DC433B4
+	for <git@archiver.kernel.org>; Sat,  3 Apr 2021 10:42:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 86A4061206
-	for <git@archiver.kernel.org>; Sat,  3 Apr 2021 09:59:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 33CA26121D
+	for <git@archiver.kernel.org>; Sat,  3 Apr 2021 10:42:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235604AbhDCJ7X (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 3 Apr 2021 05:59:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43228 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232178AbhDCJ7W (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Apr 2021 05:59:22 -0400
-Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 979E7C0613E6
-        for <git@vger.kernel.org>; Sat,  3 Apr 2021 02:59:18 -0700 (PDT)
-Received: by mail-pl1-x630.google.com with SMTP id a6so196805pls.1
-        for <git@vger.kernel.org>; Sat, 03 Apr 2021 02:59:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=F1VAyL48gPMK65NXcuyl243gqPwiv4LbmZg8zLTee1M=;
-        b=rkk7YEcT4ipPQC5jpyZgBjeogxjkk+QWz9Bpv3kxf1pKiYx+94zrgmPcBj845ruW1y
-         X0k4kvUlhYI4kDWlWjfBJGR+4lpByumh/pLd7Va3ZM1UcEgo0+FYcfUQXcqlngB0aOrB
-         HRJRlz5xaQ825BKjxxcMqDDKzi0JQmrc24UOjrBoNRCIsnI5H5JS8gUMu7DhlHZv5lJI
-         bPViY5m4Kz/bwYA7FhOMJEi35WfhQqZm+A8AMq34Kp62tkaux6ayJhay3ieYC6CgvMmi
-         5jRRLSlQwJyYzwnCQvuzWnrmYAfnjstG6Siq43iy+QOT5KQzqiDLqQmJ1qRdpB2v6SID
-         ZM0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=F1VAyL48gPMK65NXcuyl243gqPwiv4LbmZg8zLTee1M=;
-        b=k13Z+3XO59WuODGibSBpxBKycnsk+4FPQAyYZkf7Xalkqy1fbfCAxbT8hMKglFy4Uk
-         cwh4faJM9rDEUtf1uE9atw32ZCKUIR0GoaczEJSUGRDIDaamxti/EdKBlTEmW0qxSxl+
-         KYjXNnsfT+pvjqIxGOjtKfM7QYf32EcmDKJekma4jDIYSJIM6RA/hU9OD/mwW4LlMM4T
-         aLAtVhGDTF94f8ulvkJH+qPX1Mnr8MOBjiaD6WizytBHcTC2SKAmeZFVjubHV5TyQorE
-         ASRuf4eZLu7bPjLoqHIOXzS1HZRoTCCav4IA8uv7RqbpGh3Z8Lbhn/RkYNAJvDMSUEEF
-         R2EA==
-X-Gm-Message-State: AOAM5302p/O9e3TPiTulg4tXmudrXCkrUvJFEKN0saSeVm+g6SFtlInL
-        J60kvmYzOSntZS69g6IZBUI=
-X-Google-Smtp-Source: ABdhPJxfeCybS5XWZJg5v3JKMI10Ts8XPtEp5cjk9+L68tW4O/2jzTu+Vu4BbT0rZppCuefVUdvvDw==
-X-Received: by 2002:a17:902:8f8d:b029:e7:4a2f:1950 with SMTP id z13-20020a1709028f8db02900e74a2f1950mr15968135plo.77.1617443957939;
-        Sat, 03 Apr 2021 02:59:17 -0700 (PDT)
-Received: from [192.168.43.80] (subs28-116-206-12-32.three.co.id. [116.206.12.32])
-        by smtp.gmail.com with ESMTPSA id w17sm10393110pgg.41.2021.04.03.02.59.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 03 Apr 2021 02:59:17 -0700 (PDT)
-Subject: Re: [PATCH] gitk: fix selection color not persistent
-To:     gh acct via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     gh acct <tony@viulogix.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>
-References: <pull.926.git.1617391375445.gitgitgadget@gmail.com>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-Message-ID: <1c869676-d818-c789-5df4-b6d6075ebafb@gmail.com>
-Date:   Sat, 3 Apr 2021 16:59:14 +0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.9.0
+        id S236412AbhDCKmc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 3 Apr 2021 06:42:32 -0400
+Received: from smtp1-g21.free.fr ([212.27.42.1]:9518 "EHLO smtp1-g21.free.fr"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S235604AbhDCKmc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Apr 2021 06:42:32 -0400
+Received: from zimbra39-e7.priv.proxad.net (unknown [172.20.243.189])
+        by smtp1-g21.free.fr (Postfix) with ESMTP id DAF4CB00535
+        for <git@vger.kernel.org>; Sat,  3 Apr 2021 12:42:28 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+        s=smtp-20201208; t=1617446548;
+        bh=IampWIG1ku8z6KbI+qz2AaO5RrgsuqgVKjYn5Dp6rIU=;
+        h=Date:From:To:In-Reply-To:Subject:From;
+        b=F2/KI0KhKtC5ojIG/XzC8cc+W6APsu9sS66XPuv1H7mq70fJVyeaX9YVoW+vqxKX4
+         sipP0MD6Ph/U82eXC3c4ofQ/t6Yix80uW3ej/vga44mYEXCkTh+1AqctiLXdxTpox4
+         xpS1lh5Li9ygYEVMx30yLAU0j3uOjsCKnr3sitLtIZQAN8rWifjxBMUMJgdowclcKr
+         UJvQHscFBmb3mWvT0tgvy2xIdNWKl2mR38W+wfcWmjgL/hBv+yJmOx2sR8Nhr0bLL/
+         vuR5hGQAPyH0TtfRGM7/JqqKXAUfQMYePjiffv1IkUx5gqlimfiPpx0xTxQ0da3GSZ
+         cROFhU3k2YnxQ==
+Date:   Sat, 3 Apr 2021 12:42:28 +0200 (CEST)
+From:   ydirson@free.fr
+To:     git <git@vger.kernel.org>
+Message-ID: <1054682599.520899173.1617446548600.JavaMail.root@zimbra39-e7>
+In-Reply-To: <1874143044.520636715.1617442122946.JavaMail.root@zimbra39-e7>
+Subject: git rebase --rebase-merges information loss (and other woes)
 MIME-Version: 1.0
-In-Reply-To: <pull.926.git.1617391375445.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [88.120.44.86]
+X-Mailer: Zimbra 7.2.0-GA2598 (ZimbraWebClient - FF3.0 (Linux)/7.2.0-GA2598)
+X-Authenticated-User: ydirson@free.fr
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/04/21 02.22, gh acct via GitGitGadget wrote:
-> From: ghacct <tony@viulogix.com>
-Is it anonymous contribution?
+I've been going through a couple of "rebase -i -r" lately, and would
+like to share a couple of thoughts, starting with something looking
+like a bug.
 
-> Dear git community,
-> Is it possible please for the gitk selection color setting to be persistent?  Since 2015 this has been working for me.
-> Thank you for considering!
-The patch/commit message seems like question asking for something,
-but you should instead describe why you made this patch, as our
-convention here.
-  
-> Signed-off-by: tgomez <tgomez@usa.wtbts.net>
-> Signed-off-by: ghacct <tony@viulogix.com>
-I asked to you: Is tgomez co-authored this patch or just helping?
+1. when a merge has been done with "-s ours", rebase replays it without
+any special options, I proceed with the manual resolution, and if I just
+--continue, the rebase mechanism believes I want to drop the commit, which
+could not be more wrong.  I can still be careful myself, and use "git commit
+--allow-empty" before --continue, but this feels awkward.
 
-> ---
->      gitk: fix selection color not persistent
->      
->      Dear git community, Is it possible please for the gitk selection color
->      setting to be persistent? Since 2015 this has been working for me. Thank
->      you for considering!
-> 
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-926%2Fghacct%2Fpatch-1-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-926/ghacct/patch-1-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/926
-> 
->   gitk-git/gitk | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/gitk-git/gitk b/gitk-git/gitk
-> index 23d9dd1fe0d0..d255654b02fd 100755
-> --- a/gitk-git/gitk
-> +++ b/gitk-git/gitk
-> @@ -2412,6 +2412,7 @@ proc makewindow {} {
->       text $ctext -background $bgcolor -foreground $fgcolor \
->           -state disabled -undo 0 -font textfont \
->           -yscrollcommand scrolltext -wrap none \
-> +        -selectbackground $selectbgcolor -selectforeground $fgcolor \
->           -xscrollcommand ".bleft.bottom.sbhorizontal set"
->       if {$have_tk85} {
->           $ctext conf -tabstyle wordprocessor
-> 
-> base-commit: a65ce7f831aa5fcc596c6d23fcde543d98b39bd7
-> 
-[CC] Junio, what do you think about this patch?
+Is there any compelling reason not record the merge here ?
+
+
+2. more generally, when a merge has been done with special options, it
+would be a useful help in solving conflicts if rebase could use the same
+options.  Maybe we could allow the rebase "merge" instruction to use more
+merge options.  The user would still have to edit the instruction sheet
+manually for those, however, and we could then want "rebase -i" to fill
+them automatically, but that would seem to require recording the merge
+options somewhere to start with - maybe in a note.
+
+
+3. while it's made clear that any conflict resolution and amendments
+have to be redone, maybe we could provide some support for a common
+use case, namely "sink that commit/fixup down".  The conflict
+resolution would then be like "checkout $OLD && cherry-pick -n $FIXUP".
+
+Maybe this could be activated by a merge option in rebase-interactive
+instructions, like "merge -C$OLD --fixup $F1 --fixup $F2".
+
+Would that seem reasonable ?
 
 -- 
-An old man doll... just what I always wanted! - Clara
+Yann
