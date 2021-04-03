@@ -8,163 +8,152 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D748C433ED
-	for <git@archiver.kernel.org>; Sat,  3 Apr 2021 03:22:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A320C433ED
+	for <git@archiver.kernel.org>; Sat,  3 Apr 2021 03:46:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2A89F6115A
-	for <git@archiver.kernel.org>; Sat,  3 Apr 2021 03:22:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 053B96113E
+	for <git@archiver.kernel.org>; Sat,  3 Apr 2021 03:46:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235604AbhDCDWm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Apr 2021 23:22:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43344 "EHLO
+        id S235538AbhDCDrA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Apr 2021 23:47:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234908AbhDCDWm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Apr 2021 23:22:42 -0400
-Received: from mail-il1-x136.google.com (mail-il1-x136.google.com [IPv6:2607:f8b0:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 711D8C0613E6
-        for <git@vger.kernel.org>; Fri,  2 Apr 2021 20:22:38 -0700 (PDT)
-Received: by mail-il1-x136.google.com with SMTP id d10so6007215ils.5
-        for <git@vger.kernel.org>; Fri, 02 Apr 2021 20:22:38 -0700 (PDT)
+        with ESMTP id S234488AbhDCDq7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Apr 2021 23:46:59 -0400
+Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B84CC0613E6
+        for <git@vger.kernel.org>; Fri,  2 Apr 2021 20:46:56 -0700 (PDT)
+Received: by mail-ot1-x336.google.com with SMTP id m21-20020a9d7ad50000b02901b83efc84a0so6479954otn.10
+        for <git@vger.kernel.org>; Fri, 02 Apr 2021 20:46:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=O8925oh6s+fAUnbR8jUfbhzMdbI4FGJResN+yxXt1PA=;
-        b=L3cwmnbD8XEn4DbL+6g9/dhLQiOWdOlCTIYb5wjLtWocG8QQkuh+5U9piZ/Q7EAfiZ
-         sIPbbCkw0dK5qfzWyQCXEvZ6B7ZtHyjPu7swNSEIF+C91yU5tguz2EXaChqgSGLO79XU
-         ch6OfL2O7mGk4jBgwBul+HZEFTEWgI/FAVd4bFrltVv9DQDEETbKUlTj4UsegqZw6TPI
-         hr2rhJxGVic9UocbAlKobpi6+EIMIlJicQK9zmtrZRg50KI9lBBgzsxtl+LxutBBTpgn
-         N6Cd26NmOwukJfqya5y2qVtRr7MOeRgHPajdaItqwfkljTzCwBkkHLl1EOGCaD0CYBom
-         k45w==
+         :cc;
+        bh=NTAjnEI0vA99qOG1qYuVrxg5DPjXWSyfIL7xe+xWdEY=;
+        b=SdWhAu419CL7PPjGivv0VS6aq5GKppYnie1JKA/ck42tQvsXEmaHF+XjEyx4fwY85k
+         gODu4C3x4qrdkNFz1ebCoNawJJeeWTfLw/WS49j/n3ep5Wcj0kqlzm+eF0Ii5z+Ej81v
+         rn98UFHOx1fazwrL8QCXsTsnx5aLXp+vQ+MpfCGRISFF3C25cfGFWMiO7iKYkvxT+K5t
+         ieaZxXqlXwjkRYlRdi4j2YkDyick0xEDMoG+hXdzVIyrr6Me6sMIy+o7Lz6gtaqf0r21
+         k+LPrX0+3YiP1hXeoVrl10PCW1pZIz8B4LvSUUwfsdwajj9t1LEZ4mAYXYR6eXqfo+f7
+         ortw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=O8925oh6s+fAUnbR8jUfbhzMdbI4FGJResN+yxXt1PA=;
-        b=LVc907gR7QlSmQ8OW6jyWeGgv873VKsWXvYrlvQJcqerANl5/13D7X9fa9i+lhbE8i
-         Yy0EVkZ8ufhJA/GPPMmsdlWJNUcUapInYVgGgC02ALq8ofKu1YD3GD1YYEiwNgFHstD3
-         Hcjplxkos7PWpCTs1iN6AUUtWjKi/XqFJ7sSzaj+Gqmt8JnyLV8ef6SE8Sd87ax52JrF
-         AljyuANAmX4T396k6HDgaUZykptCqtEm3OapgtO87GXLmxaQA7a+xySKN0MgjdOOrIvI
-         DAJJ6AjpX4z0nw3cty6Sm+Ca8OW0+wG7A7qXNn5a0ZqJL5Gc89YTnNpJy5VlU0BD7ebz
-         Wn9g==
-X-Gm-Message-State: AOAM532pK6SDIYtTf+m+BM7p6kA49Sx79lUS5aweL+t4lioAWOh/UJya
-        ippRZ2FNFDcIgifvW+zYYfrpmhlsmcyiJSqn8no=
-X-Google-Smtp-Source: ABdhPJyvjfqVx7wSTHyWOJEwzQBXp7FZpQKgaYXDDYIP36aYIikiI3aZtfYeeyCwjx2PBgVXTUuaE+5qHbFnLMVXxuw=
-X-Received: by 2002:a05:6e02:f41:: with SMTP id y1mr12286310ilj.259.1617420157829;
- Fri, 02 Apr 2021 20:22:37 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=NTAjnEI0vA99qOG1qYuVrxg5DPjXWSyfIL7xe+xWdEY=;
+        b=dFXmuwuxqTLMdehezw0/Trr9RDlv6soAvZGTz1J3Nmf0B2GBXlyHkWK0LU0dI13HWy
+         E2GVJ8NEoptxADy7AvRP5HkyoU+tLTm+dZfQo966XkbDrdKVsxF3OHgd9kcQvlCxxq1p
+         Ll5h/TIde+XD1jHwqcST+2m25EInzvuwfstsJ9qixXAMpkc4KHLNErmNLneLVomVZiWT
+         N5cX/cVzMjqBcDBjVBHhrzZqF+s05y7VpkiOHpSChw3rgCmXxe7pHjOYkejgIotU0yd9
+         S2AJy2oAdhD6FkImoHVmw5z74rF3aKjPNS0628Li8590JcnXAYAXOq8CreSmEVCEMbRN
+         JYXw==
+X-Gm-Message-State: AOAM531Rxfp/nVWy4u/SSKSWXbeCYkijH3SPObVez+CAA/n+UNeYNbQ7
+        m6qxOGPECNtLhWP1svCYbP+LNzOg673jA95eP5I=
+X-Google-Smtp-Source: ABdhPJyAlVnWYY+QVbJSfmxNRsrjz2Q0ecL1b9z/6uVDirHThEoBnCP8gzuj1ZUVS2kqyE+GB6xMzQ2p9vJzsT/3T0c=
+X-Received: by 2002:a9d:8ae:: with SMTP id 43mr13606424otf.162.1617421615388;
+ Fri, 02 Apr 2021 20:46:55 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.913.v5.git.1617185147.gitgitgadget@gmail.com>
- <pull.913.v6.git.1617369973328.gitgitgadget@gmail.com> <xmqq35w82qvu.fsf@gitster.g>
-In-Reply-To: <xmqq35w82qvu.fsf@gitster.g>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Sat, 3 Apr 2021 11:22:26 +0800
-Message-ID: <CAOLTT8TaUkfdOhD4+P=VVxuy3dPCaf4KNC8+1hBQnxSjpvO4HQ@mail.gmail.com>
-Subject: Re: [PATCH v6] [GSOC] trailer: add new trailer.<token>.cmd config option
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>
+References: <20210403013410.32064-1-jerry@skydio.com> <20210403013410.32064-2-jerry@skydio.com>
+In-Reply-To: <20210403013410.32064-2-jerry@skydio.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 2 Apr 2021 20:46:44 -0700
+Message-ID: <CABPp-BGhvQF9k1Jw9NPbZWMkNSffqR777-4S-y-Sh=Etvw-SAA@mail.gmail.com>
+Subject: Re: [PATCH 1/1] git-apply: Allow simultaneous --cached and --3way options
+To:     Jerry Zhang <jerry@skydio.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, ross@skydio.com,
+        abe@skydio.com, brian.kubisiask@skydio.com,
+        Jerry Zhang <jerryxzha@googlemail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B44=E6=9C=883=E6=97=
-=A5=E5=91=A8=E5=85=AD =E4=B8=8A=E5=8D=887:44=E5=86=99=E9=81=93=EF=BC=9A
->
-> "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > From: ZheNing Hu <adlternative@gmail.com>
-> >
-> > The `trailer.<token>.command` configuration variable
-> > specifies a command (run via the shell, so it does not have
-> > to be a single name of or path to the command, but can be a
-> > shell script), and the first occurrence of substring $ARG is
-> > replaced with the value given to the `interpret-trailer`
-> > command for the token.  This has two downsides:
-> > ...
-> >
-> >  Documentation/git-interpret-trailers.txt | 82 +++++++++++++++++---
-> >  t/t7513-interpret-trailers.sh            | 95 +++++++++++++++++++++++-
-> >  trailer.c                                | 38 +++++++---
-> >  3 files changed, 193 insertions(+), 22 deletions(-)
->
-> Merging this to anything that has zh/commit-trailer (which extends
-> the tests in t7502) seems to break t7502.  Running the test with the
-> "-i -v" option ends like so.
->
-> expecting success of 7502.24 'commit --trailer with -c and command':
->         trailer_commit_base &&
->         cat >expected <<-\EOF &&
->         hello
->
->         Signed-off-by: C O Mitter <committer@example.com>
->         Signed-off-by: C1 E1
->         Helped-by: C2 E2
->         Mentored-by: C4 E4
->         Reported-by: A U Thor <author@example.com>
->         EOF
->         git -c trailer.report.key=3D"Reported-by: " \
->                 -c trailer.report.ifexists=3D"replace" \
->                 -c trailer.report.command=3D"NAME=3D\"\$ARG\"; test -n \"=
-\$NAME\" && \
->                 git log --author=3D\"\$NAME\" -1 --format=3D\"format:%aN =
-<%aE>\" || true" \
->                 commit --trailer "report =3D author" --amend &&
->         git cat-file commit HEAD >commit.msg &&
->         sed -e "1,/^\$/d" commit.msg >actual &&
->         test_cmp expected actual
->
-> [main 6b1e5e9] hello
->  Author: A U Thor <author@example.com>
->  1 file changed, 1 insertion(+)
-> [main 97c7a39] hello
->  Author: A U Thor <author@example.com>
->  Date: Thu Apr 7 15:22:13 2005 -0700
->  1 file changed, 1 insertion(+)
-> --- expected    2021-04-02 23:43:10.649082950 +0000
-> +++ actual      2021-04-02 23:43:10.673085111 +0000
-> @@ -4,4 +4,4 @@
->  Signed-off-by: C1 E1
->  Helped-by: C2 E2
->  Mentored-by: C4 E4
-> -Reported-by: A U Thor <author@example.com>
-> +Reported-by:
-> not ok 24 - commit --trailer with -c and command
-> #
-> #               trailer_commit_base &&
-> #               cat >expected <<-\EOF &&
-> #               hello
-> #
-> #               Signed-off-by: C O Mitter <committer@example.com>
-> #               Signed-off-by: C1 E1
-> #               Helped-by: C2 E2
-> #               Mentored-by: C4 E4
-> #               Reported-by: A U Thor <author@example.com>
-> #               EOF
-> #               git -c trailer.report.key=3D"Reported-by: " \
-> #                       -c trailer.report.ifexists=3D"replace" \
-> #                       -c trailer.report.command=3D"NAME=3D\"\$ARG\"; te=
-st -n \"\$NAME\" && \
-> #                       git log --author=3D\"\$NAME\" -1 --format=3D\"for=
-mat:%aN <%aE>\" || true" \
-> #                       commit --trailer "report =3D author" --amend &&
-> #               git cat-file commit HEAD >commit.msg &&
-> #               sed -e "1,/^\$/d" commit.msg >actual &&
-> #               test_cmp expected actual
-> #
+I'm not that familiar with apply.c, but let me attempt to take a look...
 
-Little bug, Change it like this will work:
+On Fri, Apr 2, 2021 at 6:36 PM Jerry Zhang <jerry@skydio.com> wrote:
+>
+> Previously, --cached and --3way were not
+> allowed to be used together, since --3way
+> wrote conflict markers into the working tree.
+>
+> These changes change semantics so that if
+> these flags are given together and there is
+> a conflict, the conflict markers are added
+> directly to cache. If there is no conflict,
+> the patch is applied directly to cache as
+> expected.
+>
+> Signed-off-by: Jerry Zhang <jerry@skydio.com>
+> Signed-off-by: Jerry Zhang <jerryxzha@googlemail.com>
+> ---
+>  Documentation/git-apply.txt |  4 +++-
+>  apply.c                     | 13 +++++++------
+>  2 files changed, 10 insertions(+), 7 deletions(-)
+>
+> diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
+> index 91d9a8601c..3dc0085066 100644
+> --- a/Documentation/git-apply.txt
+> +++ b/Documentation/git-apply.txt
+> @@ -89,7 +89,9 @@ OPTIONS
+>         and we have those blobs available locally, possibly leaving the
+>         conflict markers in the files in the working tree for the user to
+>         resolve.  This option implies the `--index` option, and is incompatible
+> -       with the `--reject` and the `--cached` options.
+> +       with the `--reject` option. When used with the --cached option, any
+> +       conflict markers are added directly to the cache rather than the
+> +       working tree.
+>
+>  --build-fake-ancestor=<file>::
+>         Newer 'git diff' output has embedded 'index information'
+> diff --git a/apply.c b/apply.c
+> index 6695a931e9..fc94ca0e99 100644
+> --- a/apply.c
+> +++ b/apply.c
+> @@ -133,8 +133,6 @@ int check_apply_state(struct apply_state *state, int force_apply)
+>
+>         if (state->apply_with_reject && state->threeway)
+>                 return error(_("--reject and --3way cannot be used together."));
+> -       if (state->cached && state->threeway)
+> -               return error(_("--cached and --3way cannot be used together."));
+>         if (state->threeway) {
+>                 if (is_not_gitdir)
+>                         return error(_("--3way outside a repository"));
+> @@ -4490,13 +4488,16 @@ static int create_file(struct apply_state *state, struct patch *patch)
+>
+>         if (!mode)
+>                 mode = S_IFREG | 0644;
+> -       if (create_one_file(state, path, mode, buf, size))
+> -               return -1;
+> +       if (!state->cached) {
 
-        } else if (conf->command) {
-                strbuf_addstr(&cmd, conf->command);
--               strvec_push(&cp.args, cmd.buf);
-                if (arg)
-                        strbuf_replace(&cmd, TRAILER_ARG_STRING, arg);
-+               strvec_push(&cp.args, cmd.buf);
-        }
+Why add this check?  create_one_file() already has an early return if
+state->cached is true.
 
-thanks.
---
-ZheNing Hu
+> +               if (create_one_file(state, path, mode, buf, size))
+> +                       return -1;
+> +       }
+>
+> -       if (patch->conflicted_threeway)
+> +       if (patch->conflicted_threeway && !state->cached)
+>                 return add_conflicted_stages_file(state, patch);
+> -       else if (state->update_index)
+> +       else if (state->update_index) {
+>                 return add_index_file(state, path, mode, buf, size);
+
+So if something had conflicts, you ignore the various conflicted
+modes, and just add it to the index as it stands.  What if it was
+deleted upstream and modified locally?  Doesn't that just ignore the
+conflict, make it invisible to the user, and add the locally modified
+version?  Similarly if it was renamed upstream and modified locally,
+doesn't that end up in both files being present?  And if there's a
+directory/file conflict, due to the lack of ADD_CACHE_SKIP_DFCHECK (or
+whatever it's called), the add is just going to fail, but perhaps
+that's the most reasonable case as it'd print an error message and
+return -1, I think.
+
+Again, I didn't test any of this out and I'm not so familiar with this
+code, so I'm guessing at these scenarios.  If I'm wrong about how this
+works, the commit message probably deserves an explanation about why
+they work, and we'd definitely need a few testcases for these types of
+scenarios.  If I'm right, the current implementation is problematic at
+least if not the idea of using these options together.
