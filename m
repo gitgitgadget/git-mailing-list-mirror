@@ -2,412 +2,325 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C806C433ED
-	for <git@archiver.kernel.org>; Sat,  3 Apr 2021 14:08:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 956B2C433ED
+	for <git@archiver.kernel.org>; Sat,  3 Apr 2021 14:13:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 63F4C611ED
-	for <git@archiver.kernel.org>; Sat,  3 Apr 2021 14:08:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 60B57611EE
+	for <git@archiver.kernel.org>; Sat,  3 Apr 2021 14:13:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236720AbhDCOIx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 3 Apr 2021 10:08:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40248 "EHLO
+        id S236364AbhDCONG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 3 Apr 2021 10:13:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41152 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236380AbhDCOIw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Apr 2021 10:08:52 -0400
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 275A5C0613E6
-        for <git@vger.kernel.org>; Sat,  3 Apr 2021 07:08:50 -0700 (PDT)
-Received: by mail-pj1-x1034.google.com with SMTP id il9-20020a17090b1649b0290114bcb0d6c2so5830839pjb.0
-        for <git@vger.kernel.org>; Sat, 03 Apr 2021 07:08:50 -0700 (PDT)
+        with ESMTP id S230319AbhDCONF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Apr 2021 10:13:05 -0400
+Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0407DC0613E6
+        for <git@vger.kernel.org>; Sat,  3 Apr 2021 07:13:03 -0700 (PDT)
+Received: by mail-pg1-x535.google.com with SMTP id y3so975084pgi.0
+        for <git@vger.kernel.org>; Sat, 03 Apr 2021 07:13:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:content-transfer-encoding:mime-version:subject:message-id:date
-         :cc:to;
-        bh=xCoBc+j1m6Hs+3UG/4uX4i9TaxW0SNygGt9LA+eAoNI=;
-        b=rGZCdCP8lJPb0etU9MAHtKaKcmookTx1UylNVELNXvcl5Psv89dthrCmCKLyv5/4Kz
-         NRE6SFxBuxtd8/mFrrEbzxANK2Eb1b5e5/ckC7yomwmRhNoM84bH6knwwWolCLqz+Fpr
-         ZYGU2cGPiaYDru0VHEZkoMRC2POwotWsRdhO5dTD0VRV+LItNY/5fwr9TQbILGVuwdKk
-         GnPMpCTUAjZNsISYdSdmsS9CEYY2Roce4LZL+1TDMuHnVdcWw03BDPDLFY1LpM9HV71o
-         if1NbaCMP6r3f3Z9PAS0z1BzpAl2F3/tam6z8r7Ndc1DSEW3+dqrpcj720AHYfxw2X0e
-         5NNw==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-transfer-encoding:content-language;
+        bh=n/pt/SPtPgp0uEAKMhqbFoAi7UHIeKrUbNBcewCPUio=;
+        b=puRQp0ZFADAofIyxXDgC0tfwyiE7tRM8O45ctiVCnEMuQ5Y8DxOkLyENTeTr522APO
+         vn0q9PcuheJW3ZbE9hwWgnGeErQlizR1eFebSxkoYJlRieY4uACcyoMF9Jkj+VgyHpGr
+         GhN16j92qzYq2NvE3mX7FxA4tLoW+s+JrGe036brB6j5mZnneehdMuu4gLGqeJHZm18G
+         vj/xpbDYfdlm8yfh7P1A56spBKBfSi/EjlwQBvT9jIiGFFdAaNWvW8mwc+0wrvH5AgwV
+         9ov9mZp5GFeFvZ4YU5sV2xihXx4Qu2rO4VBf+Wb7zfyYDF6Z6WGTDMLadqegFyygEv2m
+         /GJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:mime-version
-         :subject:message-id:date:cc:to;
-        bh=xCoBc+j1m6Hs+3UG/4uX4i9TaxW0SNygGt9LA+eAoNI=;
-        b=hK3K/gvDXaPrK+5d0F+XwVU1LVh7e/3/f7j5w6guKzMUcOV9zgC4aJHP/aCkrg6Hts
-         Y/yrwpdVCxacFPmAbOCrp6WIazG8XDc/5kglyZ2+s8Wy2dPRcEWCujHwzrMM28gOCRPF
-         QsXs35ruI4TZxbvC7dBjvW6ZecB6Cd1+L4mvS6BL8eLqcNI790L3lSo7361lpwstxCUu
-         z+PDo08lOWhiHO43alrDwyKoQNh7huabIPJ1NMDICIr+PGVnjsAv7PuWfr5D7tzxyF/k
-         Hl4fI66RnsJGhY2u6EkegvpDoO30GOjBr73aTsP0AKW3zNoL1+LrZdIxRHSC0zM5NBmX
-         YU4Q==
-X-Gm-Message-State: AOAM5311aOgkg+7S2Yq1Aw5pbzNTZoa4d0zPdsXIkuxS9ZVMpeYnXx+I
-        9SLftTFwTcrH5asIjk6zrA5/BM33+8Lq2w==
-X-Google-Smtp-Source: ABdhPJw2xXDWFBQeCpdQCIGnIgYjbKhjKid18DDts1Tdf0sToLutWSl2PbELUU+R5kqTJZ6nsXpqKA==
-X-Received: by 2002:a17:902:fe07:b029:e6:6cba:d95a with SMTP id g7-20020a170902fe07b02900e66cbad95amr16908728plj.70.1617458928123;
-        Sat, 03 Apr 2021 07:08:48 -0700 (PDT)
-Received: from atharva-on-air.dlink ([119.82.121.20])
-        by smtp.gmail.com with ESMTPSA id w7sm6602786pff.208.2021.04.03.07.08.46
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 03 Apr 2021 07:08:47 -0700 (PDT)
-From:   Atharva Raykar <raykar.ath@gmail.com>
-Content-Type: text/plain;
-        charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.60.0.2.21\))
-Subject: [GSoC][Draft Proposal] Finish converting git submodule to builtin
-Message-Id: <E6E88000-9C18-4035-9A14-8B406617351A@gmail.com>
-Date:   Sat, 3 Apr 2021 19:38:43 +0530
-Cc:     christian.couder@gmail.com, shouryashukla.oo@gmail.com,
-        periperidip@gmail.com
-To:     git@vger.kernel.org
-X-Mailer: Apple Mail (2.3654.60.0.2.21)
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=n/pt/SPtPgp0uEAKMhqbFoAi7UHIeKrUbNBcewCPUio=;
+        b=UcljvICcuqIwgYEYW/mjp4IbfYye6PZXHLV+fe7g0OrhjjxpOa4IPVe3DvVOZT4+88
+         1+HyalWAblZ+hnm537ynUvlwQBgf/IC6bwivz2pahPHEfCFgPVm6WpORmjoyLT5mhwDV
+         iQsXFGKXcxaRBxZRU5f2l2/pZDcm5nwq7csxmOgN4Npv93cf7R3WG5tbXG+CA+d9WwDI
+         QEVw/IAIAILeYCdeIX/aedVoPy2GlhHFUcJNC2Kzc3FWg15Xdi8HDkZtwLfFXwWfzBi4
+         mUMvKXBax+Iz3O6Kw9ZNT1zb0Xnk8hWk6wxgPMvBcpJToE6aX894OTrHBXTwdOWkqZem
+         JYLw==
+X-Gm-Message-State: AOAM531thOvQIVs6WmGtvF8a6D9ZpWooId4yL2UPrYq1JDadsXkF4nGb
+        nU52ZI35nKAXOxPBCmtoyqYVnOi4+XtItWngSnM=
+X-Google-Smtp-Source: ABdhPJz3qLsgqRLPLrwCJOYS5wCOeGA5rA1/bJteozRBHCDFPNmPdwc6Y2l+oGqNpF7OYPGmjjbJUg==
+X-Received: by 2002:aa7:99c6:0:b029:1f5:c49d:dce7 with SMTP id v6-20020aa799c60000b02901f5c49ddce7mr16189749pfi.78.1617459181904;
+        Sat, 03 Apr 2021 07:13:01 -0700 (PDT)
+Received: from [192.168.10.22] ([182.19.8.85])
+        by smtp.gmail.com with ESMTPSA id j92sm10712506pja.29.2021.04.03.07.13.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 03 Apr 2021 07:13:01 -0700 (PDT)
+Subject: Re: [GSoC] Draft Proposal (Convert submodule to builtin)
+To:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
+References: <195bf718-6226-43c9-8c58-167388d3d99b@gmail.com>
+ <f5b9ea24-e2f7-6c54-b4ff-86cef27527f7@gmail.com>
+ <CAP8UFD1PC=vQCXLLoECPzFc8BGGfQxptHE5+Et11F-=3-twZYg@mail.gmail.com>
+From:   Chinmoy Chakraborty <chinmoy12c@gmail.com>
+Message-ID: <769c7c48-a518-2636-10be-1479997e8f15@gmail.com>
+Date:   Sat, 3 Apr 2021 19:44:24 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.9.0
+MIME-Version: 1.0
+In-Reply-To: <CAP8UFD1PC=vQCXLLoECPzFc8BGGfQxptHE5+Et11F-=3-twZYg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
-
-Below is my draft of my GSoC proposal. I have noticed that Chinmoy has =
-already
-submitted a proposal for the same idea before me, so would that be =
-considered
-"taken"? (I don't think I can submit another proposal for the other idea =
-either,
-because someone has already sent one for that as well)
-
-Since I have already put my effort into this for a while, I thought I =
-might as
-well send it, but I'll accept whatever the mentors say about the =
-eligibility of
-this proposal.
+Here is a textual format of the draft proposal.
 
-Here is a prettier markdown version:
-https://gist.github.com/tfidfwastaken/0c6ca9ef2a452f110a416351541e0f19
 
+Convert submodule to builtin
+March 2021
 
-=
---8<-----8<-----8<-----8<-----8<-----8<-----8<-----8<-----8<-----8<-----8<=
---
+==================================================
+##Personal Information##
 
-                          ___________________
 
-                           GSOC GIT PROPOSAL
+Name - Chinmoy Chakraborty
+E-mail - chinmoy12c@gmail.com
+Github - https://github.com/chinmoy12c
+Linkedin - https://www.linkedin.com/in/chinmoy12c/
+Major - Information Technology
+Time Zone - IST (UTC+05:30)
+=================================================
 
-                             Atharva Raykar
-                          ___________________
-
-
-Table of Contents
-_________________
-
-1. Personal Details
-2. Background
-3. Me and Git
-.. 1. Current knowledge of git
-4. The Project: Finish converting `git submodule' to builtin
-5. Prior work
-6. General implementation strategy
-7. Timeline (using the format dd/mm)
-8. Beyond GSoC
-9. Blogging
-10. Final Remarks: A little more about me
-
-
-1 Personal Details
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-  Name        : Atharva Raykar
-  Major       : Computer Science and Engineering
-  Email       : raykar.ath@gmail.com
-  IRC nick    : atharvaraykar on #git and #git-devel
-  Address     : RB 103, Purva Riviera, Marathahalli, Bangalore
-  Postal Code : 560037
-  Time Zone   : IST (UTC+5:30)
-  GitHub      : http://github.com/tfidfwastaken
-
-
-2 Background
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-  I am Atharva Raykar, currently in my third year of studying Computer
-  Science and Engineering at PES University, Bangalore. I have always
-  enjoyed programming since a young age, but my deep appreciation for
-  good program design and creating the right abstractions came during my
-  exploration of the various rabbitholes of knowledge originating from
-  communities around the internet. I have personally enjoyed learning
-  about Functional Programming, Database Architecture and Operating
-  Systems, and my interests keep expanding as I explore more in this
-  field.
-
-  I owe my appreciation of this rich field to these communities, and I
-  always wanted to give back. With that goal, I restarted the [PES Open
-  Source] community in our campus, with the goal of creating spaces
-  where members could share knowledge, much in the same spirit as the
-  communities that kickstarted my journey in Computer Science. I learnt
-  a lot about collaborating in the open, maintainership, and reviewing
-  code. While I have made many small contributions to projects in the
-  past, I am hoping GSoC will help me make the leap to a larger and more
-  substantial contribution to one of my favourite projects that made it
-  all possible in my journey with Open Source.
-
-
-[PES Open Source] <https://pesos.github.io>
-
-
-3 Me and Git
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-  Here are the various forms of contributions that I have made to Git:
-
-  - [Microproject] userdiff: userdiff: add support for Scheme Status: In
-    progress, patch v2 pending List:
-    =
-<https://public-inbox.org/git/20210327173938.59391-1-raykar.ath@gmail.com/=
->
-
-  - [Git Education] Conducted a workshop with attendance of hundreds of
-    students new to git, and increased the prevalence of of git's usage
-    in my campus.
-    Photos: <https://photos.app.goo.gl/T7CPk1zkHdK7mx6v7> and
-    <https://photos.app.goo.gl/bzTgdHMttxDen6z9A>
-
-  I intend to continue helping people out on the mailing list and IRC
-  and tending to patches wherever possible in the meantime.
-
-
-3.1 Current knowledge of git
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-  I use git almost daily in some form, and I am fairly comfortable with
-  it. I have already read and understood the chapters from the Git
-  Book about submodules along with the one on objects, references,
-  packfiles and the refspec.
-
-
-4 The Project: Finish converting `git submodule' to builtin
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-  Git has historically had many components implemented in the form of
-  shell scripts. This was less than ideal for several reasons:
-  - Portability: Non-POSIX systems like Windows don't play nice with
-    shell script commands like grep, cd and printf, to name a few, and
-    these commands have to be reimplemented for the system. There are
-    also POSIX to Windows path conversion issues.
-  - No direct access to plumbing: Shell commands do not have direct
-    access to the low level git API, and a separate shell is spawned to
-    just to carry out their operations.
-  - Performance: Shell scripts tend to create a lot of child processes
-    which slows down the functioning of these commands, especially with
-    large repositories.
-  Over the years, many GSoC students have converted the shell versions
-  of these commands to C. Git `submodule' is the last of these to be
-  converted.
-
-
-5 Prior work
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-  I will be taking advantage of the knowledge that was gained in the
-  process of the converting the previous scripts and avoiding all the
-  gotchas that may be present in the process. There may be a bunch of
-  useful helper functions in the previous patches that can be reused as
-  well (more investigation needed to determine what exactly is
-  reusable).
-
-  Currently the only other commands left to be completed for `submodule'
-  are `add' and `update'. Work for `add' has already been started by a
-  previous GSoCer, Shourya Shukla, and needs to picked up from there.
-
-  Reference:
-  =
-<https://github.com/gitgitgadget/git/issues/541#issuecomment-769245064>
-
-  I'll have these as my references when I am working on the project:
-  His blog about his progress:
-  <https://shouryashukla.blogspot.com/2020/08/the-final-report.html>
-  (more has been implemented since)
-  Shourya's latest patch for `submodule add':
-  =
-<https://lore.kernel.org/git/20201007074538.25891-1-shouryashukla.oo@gmail=
-.com/>
-
-  For the most part, the implementation looks fairly complete, but there
-  seems to be a segfault occurring, along with a few changes suggested
-  by the reviewers. It will be helpful to contact Shourya to fully
-  understand what needs to be done.
-
-  Prathamesh's previous conversion work:
-  =
-<https://lore.kernel.org/git/20170724203454.13947-1-pc44800@gmail.com/#t>
-
-
-6 General implementation strategy
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D
-
-  The way to port the shell to C code for `submodule' will largely
-  remain the same. There already exists the builtin
-  `submodule--helper.c' which contains most of the previous commands'
-  ports. All that the shell script for `git-submodule.sh' is doing for
-  the previously completed ports is parsing the flags and then calling
-  the helper, which does all the business logic.
-
-  So I will be moving out all the business logic that the shell script
-  is performing to `submodule--helper.c'. Any reusable functionality
-  that is introduced during the port will be added to `submodule.c' in
-  the top level.
-
-  For example: The general strategy for converting `cmd_update()' would
-  be to have a call to `submodule--helper' in the shell script to a
-  function which would resemble something like `module_update()' which
-  would perform the work being done by the shell script past the flags
-  being parsed and make the necessary calls to `update_clone()', and the
-  git interface in C for performing the merging, checkout and rebase
-  where necessary.
-
-  After this process, the builtin is added to the commands array in
-  `submodule--helper.c'. And since these two functions are the last bit
-  of functionality left to convert in submodules, an extended goal can
-  be to get rid of the shell script altogether, and make the helper into
-  the actual builtin [1].
-
-  [1]
-  =
-<https://lore.kernel.org/git/nycvar.QRO.7.76.6.2011191327320.56@tvgsbejvaq=
-bjf.bet/>
-
-
-7 Timeline (using the format dd/mm)
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-  Periods of limited availability (read: hectic chaos):
-  - =46rom 13/04 to 20/04 I will be having project evaluations and lab
-    assessments for five of my courses.
-  - =46rom 20/04 to 01/05 I have my in-semester exams.
-  - For a period of two weeks in the range of 08/05 to 29/05 I will be
-    having my end-semester exams.
-  My commitment: I will still have time during my finals to help people
-  out on the mailing list, get acquainted with the community and its
-  processes, and even review patches if I can. This is because we get
-  holidays between each exam, and my grades are good enough to that I
-  can prioritise git over my studies ;-)
-
-  And on the safe side, I will still engage with the community from now
-  till 07/06 so that the community bonding period is not compromised in
-  any way.
-
-  Periods of abundant availability: After 29/05 all the way to the first
-  week of August, I will be having my summer break, so I can dedicate
-  myself to git full-time :-)
-
-  I would have also finished all my core courses, so even after that, I
-  will have enough of time to give back to git past my GSoC period.
-
-  Phase 1: 07/06 to 14/06 -- Investigate and devise a strategy to port
-  the submodule functions
-  - This phase will be more diagrams in my notebook than code in my
-    editor -- I will go through all the methods used to port the other
-    submodule functions and see how to do the same for what is left.
-  - I will find the C equivalents of all the shell invocations in
-    `git-submodule.sh', and see what invocations have /no/ equivalent
-    and need to be created as helpers in C (Eg: What is the equivalent
-    to the `ensure-core-worktree' invocation in C?). For all the helpers
-    and new functionality that I do introduce, I will need to create the
-    testing strategy for the same.
-  - I will go through all the work done by Shourya in his patch, and try
-    to understand it properly. I will also see the mistakes that were
-    caught in all the reviews for previous submodule conversion patches
-    and try to learn from them before I jump to the code.
-  - Deliverable: I will create a checklist for all the work that needs
-    to be done with as much detail as I can with the help of inputs from
-    my mentor and all the knowledge I have gained in the process.
-
-  Phase 2: 14/06 to 28/06 -- Convert `add' to builtin in C
-  - I will work on completing `git submodule add'. One strategy would be
-    to either reimplement the whole thing using what was learnt in
-    Shourya's attempt, but it is probably wiser to just take his patch
-    and modify it. I would know what to do by the time I reach this
-    phase.
-  - I will also add tests for this functionality. I will also document
-    my changes when required. These would be unit tests for the helpers
-    introduced, and integration of `add' with the other commands.
-  - Deliverable: Completely port `add' to C!
-
-  Phase 3: 28/06 to 16/08 -- Convert `update' to builtin
-  - Some work has already been done by Stephan Beller that moves the
-    functionality of `update' to `submodule--helper.c':
-    =
-<https://github.com/git/git/commit/48308681b072a1d32e1361c255347324a8ad151=
-e>,
-    but a lot of the business logic of going into the submodule and
-    checking out or merging or rebasing needs to still be converted.
-    Plenty to do here.
-  - As with `add', all of the appropriate tests need to be written and
-    the changes documented. As I have learnt from the Pro Git Book,
-    there are a lot of subtleties with how update does its work that I
-    need to watch out for.
-  - Deliverable: Completely port `update' to C!
-
-  Bonus Phase: If I am ahead of time -- Remove the need for a
-  `submodule--helper', and make it a proper C builtin.
-  - Once all the submodule functionality is ported, the shell script is
-    not really doing much more than parsing the arguments and passing it
-    to the helper. We won't need this anymore if it is implemented.
-
-
-8 Beyond GSoC
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-  I love the process of working as a community more than anything else,
-  and I already felt very welcomed by the git community the moment I
-  started sending in my microproject patch series. Whether I am selected
-  or not, I will continue giving back to git wherever I can. Since my
-  final year is light on coursework, I will be able to mentor people and
-  help expand the git developer community through all the ways I can (be
-  it code review, helping people find the right resources or evangelism
-  of git).
-
-
-9 Blogging
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-  I will be blogging about my progress on a weekly basis and either post
-  it on my website at <https://atharvaraykar.me> (probably will tuck it
-  away in a /gsoc path). Technical blogging is not particularly new to
-  me, and I hope my posts can help future contributors of git.
-
-
-10 Final Remarks: A little more about me
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-  These are some of my core values that I believe will be important to
-  pull off this project and make the most of my time in GSoC:
-  - Hard problems don't frustrate me, rather they excite me. Bugs make
-    my brain perk up (this sentence best left with context). I love
-    learning.
-  - I am pro-transparency. If I am having some trouble, I will be open
-    about it. I don't hesitate to ask questions and dig deep if I need
-    to.
-  - At the same time, when I ask a question, I only do so after I have
-    struggled with the problem for enough time and done my due diligence
-    in trying to solve it. Clear communication is very important to make
-    this work.
-  - I am also very comfortable with learning things all on my own (I
-    have barely known any other way), and working in a remote,
-    asynchronous setting.
-  I hope to make the world better in my own small way by contributing to
-  a tool that everyone uses and I like. It's more rewarding than any
-  internship that my peers are doing this year. I look forward to
-  learning more.
+##Work Environment##
+
+I am fluent in C, Java, Python, and Shell script. I use Git as my VCS, 
+Visual Studio Code
+as my primary code editor, and Kali Linux as my primary OS.
+=================================================
+
+##Git Contributions##
+
+[Microproject] Replace instances of `the_repository` with ‘r’. (Learning 
+the ropes)
+Pull request: https://github.com/gitgitgadget/git/pull/915
+Mailing List: 
+https://lore.kernel.org/git/pull.915.git.1616701733901.gitgitgadget@gmail.com/
+
+
+[column, range-diff] downcase option description
+Pull request: https://github.com/gitgitgadget/git/pull/920
+Mailing List: 
+https://lore.kernel.org/git/pull.920.git.1616913298624.gitgitgadget@gmail.com/
+
+
+[Documentation] updated documentation for git commit --date
+Pull request: https://github.com/gitgitgadget/git/pull/918
+Mailing List: 
+https://lore.kernel.org/git/pull.918.git.1616926790227.gitgitgadget@gmail.com/
+=================================================
+
+##Project Outline##
+
+A few components of git, like `git-submodule.sh`
+are in the form of shell scripts. This causes
+problems in production code in multiple platforms
+like windows. The goal of this project is to
+convert the shell script version of `git-submodule.sh`
+to portable c code. The end goal would be
+to completely remove `git-submodule.sh` and rename
+`builtin/submodule--helper.c` to `builtin/submodule.c`.
+=================================================
+
+##Why is the project required?##
+
+"Issues with the portability of code"
+
+The submodule shell script uses shell commands like
+`echo`, `grep`, `test`, `printf` etc. When switching
+to non-POSIX compliant systems, one will have
+to re-implement these commands specifically for the
+system. There are also POSIX-to-Windows path conversion
+issues. To fix these issues, it was decided to convert
+these scripts into portable C code.
+
+"Large overhead in calling the command"
+
+The commands implemented in shell scripts are not builtins, so
+they call `fork()` and `exec()` multiple times, hence creating
+additional shells. This adds to the overhead in using the
+commands in terms of time and memory.
+
+"No access to low-level API"
+
+The shell commands don’t have access to low level commands
+like `git hash-object`, `git cat-file` etc. As these commands
+are internally required for submodule commands to work, the shell
+script needs to spawn a separate shell to execute these commands.
+=================================================
+
+##How have I prepared?##
+
+I have gone through all the previous works and read through their
+code to make myself accustomed to the intricacies of the code.
+I have also structured my workflow based on the observation of
+the previous discussions on those patches, and taken into
+consideration the issues faced previously.
+
+=================================================
+
+##Previous Work##
+
+A large part of the `git submodule--helper.c` has already been
+converted by Stefan Beller​, Prathamesh Chavan​ in his GSoC project
+in 2017, and Shourya Shukla in his GSoC project in 2020. This is
+the list of already ported commands.
+
+set-branch
+set-url
+summary
+status
+init
+deinit
+update
+foreach
+sync
+absorbgitdirs
+=================================================
+
+##Work to be done##
+
+The only command that is left to be ported is `git submodule add`.
+The previous work on this by Shourya Shukla in GSoC 2020, did
+not reach a successful merge due to some issues in design and
+was kicked out because it has been stale for so long. The first
+and foremost aim of the project will be to finish porting this
+command. Thereafter, the end goal would be to completely replace
+the shell script (git-submodule.sh) with an efficient c code.
+
+Before porting the `git submodule add` command the initial work
+would be dedicated to the implementation of small helper functions
+in the form of small patches, which would be directly used by the
+`add` command. This workflow is based on the suggestion by
+Junio C Hamano on the thread:
+https://lore.kernel.org/git/xmqqd01sugrg.fsf@gitster.c.googlers.com/.
+
+This workflow would help in the following ways:
+
+- It would help in sending patches in a small digestible format.
+- It would help the reviewers easily review those small units
+   of patches in a single sitting.
+- It would help keep small logical units of code in different clean commits.
+
+An additional test tweak would also be required in 
+`t7400-submodule-basic.sh`,
+to prepend the keyword ‘fatal’ since the command dies out in case
+of absence of commits.
+
+
+The following helper functions would be required to be implemented -
+
+- A function to guess the directory name from the repository string.
+- A function for normalizing path, that is, removing multiple
+   //; leading ./; /./; /../; trailing / .
+
+- A function to check for tracked directories properly as pointed
+   out by Kaartic Sivaraam on the thread:
+https://lore.kernel.org/git/ce151a1408291bb0991ce89459e36ee13ccdfa52.camel@gmail.com/.
+
+- A function to check if the path exists and is already a git
+   repo, else clone it.
+
+- A function to set the submodule config properly.
+
+- After implementation of all these helper methods, the main
+   `module_add()` function would be implemented using the helper
+   functions listed above as well as those helper functions which
+   are predefined.
+=================================================
+
+##Project Timeline##
+
+"Present Day - May 17"
+I’ll utilize this time in exploring the codebase more properly and
+solving more issues, which would help me properly familiarize
+myself with the codebase. I’ll also try to structure a more
+solidified, detailed workflow and come up with a draft patch
+based on the previous work and discussions.
+
+"May 17 - June 7 (Community bonding period)"
+- Get familiar with the community.
+- Discuss proper workflow with mentors.
+- Make changes in the timeline, if necessary.
+- Discuss the structure of the series of patches.
+
+"June 7 - June 25 (Initial coding phase)"
+- Finish implementation of the helper functions.
+- Work on a proper structure of the implementation of the
+   `submodule add` command and implement additional helper
+   functions if required.
+- Update proper documentation of the helper functions.
+
+"June 25 - June 5 (Binding the code)"
+This time would be used to code the main `submodule add`
+command using all the helper functions implemented in the
+initial phase of coding. This includes binding all the code
+together and then completing the command through incremental
+reviews. Also, the necessary documentation would be updated
+parallelly.
+
+"July 5 - July 12 (Initiate porting of command)"
+This time would be utilized in initiating the step-by-step
+conversion of the `git submodule add` command.
+
+"July 12 - July 16 (Phase 1 evaluation)"
+
+"July 16 - July 26 (Semester exams)"
+I will be taking my semester examinations during this
+time. As such, I’ll try to be in touch with the mentors
+and take out as much time as possible (around 20 hours a week).
+
+"July 26 - August 10 (Porting the complete script)"
+This period would be utilized in the complete conversion of
+`git-submodule.sh` into c code and combine it with
+`submodule--helper.c` to make a single `builtin/submodule.c`.
+As I’ll be completely free from academics during this period,
+I’ll try to compensate as much time as possible for the above
+period of July 16 - July 26.
+
+"August 10 - August 16 (Final review and evaluation)"
+- Final review by the mentors.
+- Apply necessary changes and touch-ups.
+- Updating documentation, if any left.
+
+"August 16 - August 23 (Submission of final report)"
+
+Additionally: There are places in the original shell script
+and c code tagged as `NEEDSWORK`. My aim would be to resolve
+these issues within the GSoC period if time permits.
+=================================================
+
+##Post GSoC##
+
+After the GSoC period, I plan to continue my contributions
+for git and look for other issues to work on. I’d look into
+the conversion of other commands which are pending conversion,
+as well as work on the `NEEDSWORK` part of the code (If I’m
+unable to finish it within the GSoC period itself). I plan on
+mentoring new contributors to git and help the contributors
+by doing code reviews and solving their doubts and helping
+them out.
+
+Regards,
+Chinmoy Chakraborty.
+
+=================================================
+
+
+
+Thanks,
+
+Chinmoy
 
