@@ -2,83 +2,258 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-20.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7BA7DC433B4
-	for <git@archiver.kernel.org>; Sat,  3 Apr 2021 10:42:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 705CBC433ED
+	for <git@archiver.kernel.org>; Sat,  3 Apr 2021 12:26:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 33CA26121D
-	for <git@archiver.kernel.org>; Sat,  3 Apr 2021 10:42:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 364456124A
+	for <git@archiver.kernel.org>; Sat,  3 Apr 2021 12:26:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236412AbhDCKmc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 3 Apr 2021 06:42:32 -0400
-Received: from smtp1-g21.free.fr ([212.27.42.1]:9518 "EHLO smtp1-g21.free.fr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235604AbhDCKmc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Apr 2021 06:42:32 -0400
-Received: from zimbra39-e7.priv.proxad.net (unknown [172.20.243.189])
-        by smtp1-g21.free.fr (Postfix) with ESMTP id DAF4CB00535
-        for <git@vger.kernel.org>; Sat,  3 Apr 2021 12:42:28 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-        s=smtp-20201208; t=1617446548;
-        bh=IampWIG1ku8z6KbI+qz2AaO5RrgsuqgVKjYn5Dp6rIU=;
-        h=Date:From:To:In-Reply-To:Subject:From;
-        b=F2/KI0KhKtC5ojIG/XzC8cc+W6APsu9sS66XPuv1H7mq70fJVyeaX9YVoW+vqxKX4
-         sipP0MD6Ph/U82eXC3c4ofQ/t6Yix80uW3ej/vga44mYEXCkTh+1AqctiLXdxTpox4
-         xpS1lh5Li9ygYEVMx30yLAU0j3uOjsCKnr3sitLtIZQAN8rWifjxBMUMJgdowclcKr
-         UJvQHscFBmb3mWvT0tgvy2xIdNWKl2mR38W+wfcWmjgL/hBv+yJmOx2sR8Nhr0bLL/
-         vuR5hGQAPyH0TtfRGM7/JqqKXAUfQMYePjiffv1IkUx5gqlimfiPpx0xTxQ0da3GSZ
-         cROFhU3k2YnxQ==
-Date:   Sat, 3 Apr 2021 12:42:28 +0200 (CEST)
-From:   ydirson@free.fr
-To:     git <git@vger.kernel.org>
-Message-ID: <1054682599.520899173.1617446548600.JavaMail.root@zimbra39-e7>
-In-Reply-To: <1874143044.520636715.1617442122946.JavaMail.root@zimbra39-e7>
-Subject: git rebase --rebase-merges information loss (and other woes)
+        id S236641AbhDCM0i (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 3 Apr 2021 08:26:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46604 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230409AbhDCM0i (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Apr 2021 08:26:38 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17003C0613E6
+        for <git@vger.kernel.org>; Sat,  3 Apr 2021 05:26:34 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id a1so8073953ljp.2
+        for <git@vger.kernel.org>; Sat, 03 Apr 2021 05:26:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Dy33vA4L4oTS+UEzZ4bI/sY9S4nd4shFKD8UHUxfkf0=;
+        b=dSdG8EdqM5xvfu5ZJVauNAIeXV32rC9USQMHzj3fyqQo6794UUY2pERx8O1AGs80DG
+         80xQa+ZPXD3tfcAP7UhZ4Zc/QFZhiA2TNjvhskVS/I/tF4hlNuqMnS+9Ga+KZvyRRy8C
+         7xbCmIoyCcKgR+4lAWKAeuVoCFRH0DiwZhKsMLq2dp2bfcofuFwXL3m4a4mMn67Ry6vw
+         qXdnYEabwhHiST6Y9wCGiPHgN9IqVprvIKVMbHc08nE4GuZy+z5OxuPos4nkt3iAeevp
+         dgm9JZs9XBsU0YGgWZ3oSEYn2jEnlnxLwOg6rhjAaDey7heONUzqecuCtuCGvH8ZRAtz
+         GyZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Dy33vA4L4oTS+UEzZ4bI/sY9S4nd4shFKD8UHUxfkf0=;
+        b=XUDGlx5Xu+ifWE6fEce1Hn+MvyygPV4RkE+vhcrlpqMCVqxEs1D5wNsR8m4cojA2rf
+         0GGVFV4CvsaL9Fszapm8HRvYTGxV/liSSkWpfvrHoKQuo/EWEX50bxj9OqiQ16u7oJgl
+         Eymq5a+FbqLeMwvvZNtWMNNZ7j3KlGRniwcSUHzQqqZWFY9sAWh3tv+nkZYhJhI0fSrh
+         3j6FUYG72ECCdzOYvsiniT6Vb3U2rEKPGzWijyE1fItBIS5H8vxuylr68ZJUJVYP6NZE
+         XrrmmOqDSPfi8qGHKCbWKLTOXMD+mt48AKaSAtDhS++3SGbnO5UXqmR2SrVFak68boYZ
+         1cxQ==
+X-Gm-Message-State: AOAM531IEkW0wfI9W5D8N8rG7ghLDnBXRi47vY5fR5RVA8xpDmoQ1L4R
+        at1EJygydV4O5bAHVKZ6Ud9NWG/0V4JAKg==
+X-Google-Smtp-Source: ABdhPJwnBMomjDnGdIMmvkoUpPJq5Lkomlzqs6peKr0dIc9wWD8fVAB5CWE3il4LyPC47EhIFoxETA==
+X-Received: by 2002:a05:651c:1206:: with SMTP id i6mr11030820lja.426.1617452792010;
+        Sat, 03 Apr 2021 05:26:32 -0700 (PDT)
+Received: from localhost.localdomain (88-115-235-153.elisa-laajakaista.fi. [88.115.235.153])
+        by smtp.googlemail.com with ESMTPSA id u9sm1246724ljj.0.2021.04.03.05.26.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 03 Apr 2021 05:26:31 -0700 (PDT)
+From:   Stavros Ntentos <stdedos@gmail.com>
+X-Google-Original-From: Stavros Ntentos <133706+stdedos@users.noreply.github.com>
+To:     git@vger.kernel.org
+Cc:     stdedos+git@gmail.com, gitster@pobox.com, bagasdotme@gmail.com,
+        peff@peff.net,
+        Stavros Ntentos <133706+stdedos@users.noreply.github.com>
+Subject: [PATCH v3] pathspec: advice: long and short forms are incompatible
+Date:   Sat,  3 Apr 2021 15:26:04 +0300
+Message-Id: <20210403122604.19203-1-133706+stdedos@users.noreply.github.com>
+X-Mailer: git-send-email 2.31.1
+In-Reply-To: <20210326024411.28615-1-stdedos+git@gmail.com>
+References: <20210326024411.28615-1-stdedos+git@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [88.120.44.86]
-X-Mailer: Zimbra 7.2.0-GA2598 (ZimbraWebClient - FF3.0 (Linux)/7.2.0-GA2598)
-X-Authenticated-User: ydirson@free.fr
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I've been going through a couple of "rebase -i -r" lately, and would
-like to share a couple of thoughts, starting with something looking
-like a bug.
+It can be a "reasonable" mistake to mix short and long forms,
+e.g. `:!(glob)`, instead of the (correct) `:(exclude,glob)`.
 
-1. when a merge has been done with "-s ours", rebase replays it without
-any special options, I proceed with the manual resolution, and if I just
---continue, the rebase mechanism believes I want to drop the commit, which
-could not be more wrong.  I can still be careful myself, and use "git commit
---allow-empty" before --continue, but this feels awkward.
+Teach git to issue an advice when such a pathspec is given.
+        i.e.: While in short form parsing:
+        * if the string contains an open parenthesis [`(`], and
+        * without having explicitly terminated magic parsing (`:`)
+        issue an advice hinting to that fact.
 
-Is there any compelling reason not record the merge here ?
+Based on "Junio C Hamano <gitster@pobox.com>"'s code suggestions:
+* https://lore.kernel.org/git/xmqqa6qoqw9n.fsf@gitster.g/
+* https://lore.kernel.org/git/xmqqo8f0cr9z.fsf@gitster.g/
 
+Signed-off-by: Stavros Ntentos <133706+stdedos@users.noreply.github.com>
+---
+ Documentation/config/advice.txt |  3 +++
+ advice.c                        |  3 +++
+ advice.h                        |  2 ++
+ pathspec.c                      | 33 ++++++++++++++++++++++++++++
+ t/t6132-pathspec-exclude.sh     | 38 +++++++++++++++++++++++++++++++++
+ 5 files changed, 79 insertions(+)
 
-2. more generally, when a merge has been done with special options, it
-would be a useful help in solving conflicts if rebase could use the same
-options.  Maybe we could allow the rebase "merge" instruction to use more
-merge options.  The user would still have to edit the instruction sheet
-manually for those, however, and we could then want "rebase -i" to fill
-them automatically, but that would seem to require recording the merge
-options somewhere to start with - maybe in a note.
-
-
-3. while it's made clear that any conflict resolution and amendments
-have to be redone, maybe we could provide some support for a common
-use case, namely "sink that commit/fixup down".  The conflict
-resolution would then be like "checkout $OLD && cherry-pick -n $FIXUP".
-
-Maybe this could be activated by a merge option in rebase-interactive
-instructions, like "merge -C$OLD --fixup $F1 --fixup $F2".
-
-Would that seem reasonable ?
-
+diff --git a/Documentation/config/advice.txt b/Documentation/config/advice.txt
+index acbd0c09aa..05a3cbc164 100644
+--- a/Documentation/config/advice.txt
++++ b/Documentation/config/advice.txt
+@@ -119,4 +119,7 @@ advice.*::
+ 	addEmptyPathspec::
+ 		Advice shown if a user runs the add command without providing
+ 		the pathspec parameter.
++	mixedPathspecMagic::
++		Advice shown if a user tries to mix short- and
++		longform pathspec magic.
+ --
+diff --git a/advice.c b/advice.c
+index 164742305f..f94505e0d6 100644
+--- a/advice.c
++++ b/advice.c
+@@ -33,6 +33,7 @@ int advice_checkout_ambiguous_remote_branch_name = 1;
+ int advice_submodule_alternate_error_strategy_die = 1;
+ int advice_add_ignored_file = 1;
+ int advice_add_empty_pathspec = 1;
++int advice_mixed_pathspec_magic = 1;
+ 
+ static int advice_use_color = -1;
+ static char advice_colors[][COLOR_MAXLEN] = {
+@@ -95,6 +96,7 @@ static struct {
+ 	{ "submoduleAlternateErrorStrategyDie", &advice_submodule_alternate_error_strategy_die },
+ 	{ "addIgnoredFile", &advice_add_ignored_file },
+ 	{ "addEmptyPathspec", &advice_add_empty_pathspec },
++	{ "mixedPathspecMagic", &advice_mixed_pathspec_magic },
+ 
+ 	/* make this an alias for backward compatibility */
+ 	{ "pushNonFastForward", &advice_push_update_rejected }
+@@ -137,6 +139,7 @@ static struct {
+ 	[ADVICE_STATUS_U_OPTION]			= { "statusUoption", 1 },
+ 	[ADVICE_SUBMODULE_ALTERNATE_ERROR_STRATEGY_DIE] = { "submoduleAlternateErrorStrategyDie", 1 },
+ 	[ADVICE_WAITING_FOR_EDITOR]			= { "waitingForEditor", 1 },
++	[ADVICE_MIXED_PATHSPEC_MAGIC]	= { "mixedPathspecMagic", 1 },
+ };
+ 
+ static const char turn_off_instructions[] =
+diff --git a/advice.h b/advice.h
+index bc2432980a..aa229fded8 100644
+--- a/advice.h
++++ b/advice.h
+@@ -33,6 +33,7 @@ extern int advice_checkout_ambiguous_remote_branch_name;
+ extern int advice_submodule_alternate_error_strategy_die;
+ extern int advice_add_ignored_file;
+ extern int advice_add_empty_pathspec;
++extern int advice_mixed_pathspec_magic;
+ 
+ /*
+  * To add a new advice, you need to:
+@@ -72,6 +73,7 @@ extern int advice_add_empty_pathspec;
+ 	ADVICE_STATUS_U_OPTION,
+ 	ADVICE_SUBMODULE_ALTERNATE_ERROR_STRATEGY_DIE,
+ 	ADVICE_WAITING_FOR_EDITOR,
++	ADVICE_MIXED_PATHSPEC_MAGIC,
+ };
+ 
+ int git_default_advice_config(const char *var, const char *value);
+diff --git a/pathspec.c b/pathspec.c
+index 18b3be362a..5f77e2e8d8 100644
+--- a/pathspec.c
++++ b/pathspec.c
+@@ -336,6 +336,36 @@ static const char *parse_long_magic(unsigned *magic, int *prefix_len,
+ 	return pos;
+ }
+ 
++
++/*
++ * Give hint for a common mistake of mixing short and long
++ * form of pathspec magic, as well as possible corrections
++ */
++static void warn_mixed_magic(unsigned magic, const char *elem, const char *pos)
++{
++	struct strbuf longform = STRBUF_INIT;
++	int i;
++
++	if (!advice_enabled(ADVICE_MIXED_PATHSPEC_MAGIC))
++		return;
++
++	for (i = 0; i < ARRAY_SIZE(pathspec_magic); i++) {
++		if (pathspec_magic[i].bit & magic) {
++			if (longform.len)
++				strbuf_addch(&longform, ',');
++			strbuf_addstr(&longform, pathspec_magic[i].name);
++		}
++	}
++	advise_if_enabled(ADVICE_MIXED_PATHSPEC_MAGIC,
++	                  _("'%.*s(...': cannot mix short- and longform pathspec magic!\n"
++	                    "Either spell the shortform magic '%.*s' as ':(%s,...'\n"
++	                    "or end magic pathspec matching with '%.*s:'."),
++	                  (int)(pos - elem), elem,
++	                  (int)(pos - (elem + 1)), elem + 1,
++	                  longform.buf,
++	                  (int)(pos - elem), elem);
++}
++
+ /*
+  * Parse the pathspec element looking for short magic
+  *
+@@ -356,6 +386,9 @@ static const char *parse_short_magic(unsigned *magic, const char *elem)
+ 			continue;
+ 		}
+ 
++		if (ch == '(')
++			warn_mixed_magic(*magic, elem, pos);
++
+ 		if (!is_pathspec_magic(ch))
+ 			break;
+ 
+diff --git a/t/t6132-pathspec-exclude.sh b/t/t6132-pathspec-exclude.sh
+index 30328b87f0..8b9d543e1e 100755
+--- a/t/t6132-pathspec-exclude.sh
++++ b/t/t6132-pathspec-exclude.sh
+@@ -244,4 +244,42 @@ test_expect_success 'grep --untracked PATTERN :(exclude)*FILE' '
+ 	test_cmp expect-grep actual-grep
+ '
+ 
++cat > expected_warn <<"EOF"
++hint: ':!(...': cannot mix short- and longform pathspec magic!
++hint: Either spell the shortform magic '!' as ':(exclude,...'
++hint: or end magic pathspec matching with ':!:'.
++hint: Disable this message with "git config advice.mixedPathspecMagic false"
++EOF
++test_expect_success 'warn pathspec not matching longform magic in :!(...)' '
++	git log --oneline --format=%s -- '"'"':!(glob)**/file'"'"' >actual 2>warn &&
++	cat <<EOF >expect &&
++sub2/file
++sub/sub/sub/file
++sub/file2
++sub/sub/file
++sub/file
++file
++EOF
++	cat actual &&
++	cat warn &&
++	test_cmp expect actual &&
++	test_cmp expected_warn warn
++'
++
++test_expect_success 'do not warn pathspec not matching longform magic in :!:(...) (i.e. if magic parsing is explicitly stopped)' '
++	git log --oneline --format=%s -- '"'"':!:(glob)**/file'"'"' >actual 2>warn &&
++	cat <<EOF >expect &&
++sub2/file
++sub/sub/sub/file
++sub/file2
++sub/sub/file
++sub/file
++file
++EOF
++	cat actual &&
++	cat warn &&
++	test_cmp expect actual &&
++	! test_cmp expected_warn warn
++'
++
+ test_done
 -- 
-Yann
+2.31.1
+
