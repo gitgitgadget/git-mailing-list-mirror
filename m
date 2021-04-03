@@ -2,121 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-19.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A83C6C433ED
-	for <git@archiver.kernel.org>; Sat,  3 Apr 2021 09:04:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B68CAC433ED
+	for <git@archiver.kernel.org>; Sat,  3 Apr 2021 09:59:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 732786120F
-	for <git@archiver.kernel.org>; Sat,  3 Apr 2021 09:04:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 86A4061206
+	for <git@archiver.kernel.org>; Sat,  3 Apr 2021 09:59:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236412AbhDCJEf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 3 Apr 2021 05:04:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59702 "EHLO
+        id S235604AbhDCJ7X (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 3 Apr 2021 05:59:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236284AbhDCJEd (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Apr 2021 05:04:33 -0400
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EDE0C0613E6
-        for <git@vger.kernel.org>; Sat,  3 Apr 2021 02:04:29 -0700 (PDT)
-Received: by mail-ed1-x52c.google.com with SMTP id dm8so7574835edb.2
-        for <git@vger.kernel.org>; Sat, 03 Apr 2021 02:04:29 -0700 (PDT)
+        with ESMTP id S232178AbhDCJ7W (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Apr 2021 05:59:22 -0400
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 979E7C0613E6
+        for <git@vger.kernel.org>; Sat,  3 Apr 2021 02:59:18 -0700 (PDT)
+Received: by mail-pl1-x630.google.com with SMTP id a6so196805pls.1
+        for <git@vger.kernel.org>; Sat, 03 Apr 2021 02:59:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:subject:message-id:mime-version:content-disposition;
-        bh=EGu7VJN1HXEjMUjwL9LA+dCLpM5oU1txuppYbSlYdgw=;
-        b=UnhdrTe7A/T1+qMuWWv16tOI/dV1/7Xzf7oMsOZcKuKPKZqKlKplfFAKeup63oPDLd
-         QHHq7I4EhgX2SYrvh1CM2Gx2su9nJzBScaBZQ20Y8KH02zJfo0ebnqrJG/BI0eqBtTxU
-         wsoZsp3YYNrvxyHugZabPEu6Go+BidvDOD57525Rt8A5QozSF+H8xz1NtqmeYBNIwQAN
-         27ZQS4jYGDKFh8FrX2WxwmIxs90yXlbEuFB7K/jJvXfm104FXowKOhZoKzL34bfZjiw5
-         28O0ht2O7PEDP7RkGmbgmpNwjK4A5rlHZOeEk/Dr5Zl2NSAu01/CHVGOp3zQlEMXxRVh
-         2Wxg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=F1VAyL48gPMK65NXcuyl243gqPwiv4LbmZg8zLTee1M=;
+        b=rkk7YEcT4ipPQC5jpyZgBjeogxjkk+QWz9Bpv3kxf1pKiYx+94zrgmPcBj845ruW1y
+         X0k4kvUlhYI4kDWlWjfBJGR+4lpByumh/pLd7Va3ZM1UcEgo0+FYcfUQXcqlngB0aOrB
+         HRJRlz5xaQ825BKjxxcMqDDKzi0JQmrc24UOjrBoNRCIsnI5H5JS8gUMu7DhlHZv5lJI
+         bPViY5m4Kz/bwYA7FhOMJEi35WfhQqZm+A8AMq34Kp62tkaux6ayJhay3ieYC6CgvMmi
+         5jRRLSlQwJyYzwnCQvuzWnrmYAfnjstG6Siq43iy+QOT5KQzqiDLqQmJ1qRdpB2v6SID
+         ZM0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition;
-        bh=EGu7VJN1HXEjMUjwL9LA+dCLpM5oU1txuppYbSlYdgw=;
-        b=KsMuLGIj0SYdEu5odkNbs8H8LRFhmqA/jA8lKvSTu38qkRArPVCHdVJU6+Fzb/lNAk
-         Z3kSGCPwV9o9goEStIS4+HOqozO7G/AiS6ZqW0AoASH5XCuHbjqt2aiEowtAbSYG27NN
-         /gRjPex6GrktOeRh75EB/pFYvChBqT2zIulfzsCwGSTLH4tDdZtnn/MF28agH/SAXIV4
-         8YQfC0ZtEBXRLWDBg1dmKLU6mPk3M94zQk4zIAQGxrrDY9Ib4Upq6/lsGOW6/BWnEwJ+
-         NaLSADhqT/ebe5rl8sD3ZZkEdhnAUJYuEGTpnTBz3iGIZzIKvdTL3u9MrYZF3wJOOwgR
-         ppFQ==
-X-Gm-Message-State: AOAM531dp+k9y7mWsW7u3Rom4JbrgRP4gNQ53vhAmxJrAAPGL+rWpiGT
-        ypAL1IEC0ginJ5wZZtigQ1JPrsCCGCQ=
-X-Google-Smtp-Source: ABdhPJz4P2qF89lp1Sm94G6DIvd2yVtcaOd3JYgsg+vQzTvMG/yn4pPSk3zH2MMp5ngxb4wvFaf+Vw==
-X-Received: by 2002:a05:6402:4245:: with SMTP id g5mr20074252edb.306.1617440668078;
-        Sat, 03 Apr 2021 02:04:28 -0700 (PDT)
-Received: from szeder.dev (94-21-58-238.pool.digikabel.hu. [94.21.58.238])
-        by smtp.gmail.com with ESMTPSA id h8sm6697827ede.25.2021.04.03.02.04.27
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 03 Apr 2021 02:04:27 -0700 (PDT)
-Date:   Sat, 3 Apr 2021 11:04:25 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Subject: rather slow 'git repack' in 'blob:none' partial clones
-Message-ID: <20210403090412.GH2271@szeder.dev>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=F1VAyL48gPMK65NXcuyl243gqPwiv4LbmZg8zLTee1M=;
+        b=k13Z+3XO59WuODGibSBpxBKycnsk+4FPQAyYZkf7Xalkqy1fbfCAxbT8hMKglFy4Uk
+         cwh4faJM9rDEUtf1uE9atw32ZCKUIR0GoaczEJSUGRDIDaamxti/EdKBlTEmW0qxSxl+
+         KYjXNnsfT+pvjqIxGOjtKfM7QYf32EcmDKJekma4jDIYSJIM6RA/hU9OD/mwW4LlMM4T
+         aLAtVhGDTF94f8ulvkJH+qPX1Mnr8MOBjiaD6WizytBHcTC2SKAmeZFVjubHV5TyQorE
+         ASRuf4eZLu7bPjLoqHIOXzS1HZRoTCCav4IA8uv7RqbpGh3Z8Lbhn/RkYNAJvDMSUEEF
+         R2EA==
+X-Gm-Message-State: AOAM5302p/O9e3TPiTulg4tXmudrXCkrUvJFEKN0saSeVm+g6SFtlInL
+        J60kvmYzOSntZS69g6IZBUI=
+X-Google-Smtp-Source: ABdhPJxfeCybS5XWZJg5v3JKMI10Ts8XPtEp5cjk9+L68tW4O/2jzTu+Vu4BbT0rZppCuefVUdvvDw==
+X-Received: by 2002:a17:902:8f8d:b029:e7:4a2f:1950 with SMTP id z13-20020a1709028f8db02900e74a2f1950mr15968135plo.77.1617443957939;
+        Sat, 03 Apr 2021 02:59:17 -0700 (PDT)
+Received: from [192.168.43.80] (subs28-116-206-12-32.three.co.id. [116.206.12.32])
+        by smtp.gmail.com with ESMTPSA id w17sm10393110pgg.41.2021.04.03.02.59.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 03 Apr 2021 02:59:17 -0700 (PDT)
+Subject: Re: [PATCH] gitk: fix selection color not persistent
+To:     gh acct via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     gh acct <tony@viulogix.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>
+References: <pull.926.git.1617391375445.gitgitgadget@gmail.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <1c869676-d818-c789-5df4-b6d6075ebafb@gmail.com>
+Date:   Sat, 3 Apr 2021 16:59:14 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+In-Reply-To: <pull.926.git.1617391375445.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On 03/04/21 02.22, gh acct via GitGitGadget wrote:
+> From: ghacct <tony@viulogix.com>
+Is it anonymous contribution?
 
-here are trace timings of running 'git gc' in a "normal" and in a
-'blob:none' partial clone:
+> Dear git community,
+> Is it possible please for the gitk selection color setting to be persistent?  Since 2015 this has been working for me.
+> Thank you for considering!
+The patch/commit message seems like question asking for something,
+but you should instead describe why you made this patch, as our
+convention here.
+  
+> Signed-off-by: tgomez <tgomez@usa.wtbts.net>
+> Signed-off-by: ghacct <tony@viulogix.com>
+I asked to you: Is tgomez co-authored this patch or just helping?
 
-  $ git clone --bare https://github.com/git/git git-full.git
-  $ GIT_TRACE_PERFORMANCE=2 /usr/bin/time --format='elapsed: %E  max RSS: %Mk' git -C git-full.git/ gc
-  10:35:24.007277 trace.c:487             performance: 0.001550225 s: git command: /usr/local/libexec/git-core/git pack-refs --all --prune
-  10:35:24.044641 trace.c:487             performance: 0.035631270 s: git command: /usr/local/libexec/git-core/git reflog expire --all
-  10:35:24.061070 read-cache.c:2315       performance: 0.000008506 s:  read cache ./index
-  Enumerating objects: 305283, done.
-  Counting objects: 100% (305283/305283), done.
-  Delta compression using up to 4 threads
-  Compressing objects: 100% (75016/75016), done.
-  Writing objects: 100% (305283/305283), done.
-  Total 305283 (delta 227928), reused 305283 (delta 227928), pack-reused 0
-  10:35:32.604546 trace.c:487             performance: 8.555651283 s: git command: /usr/local/libexec/git-core/git pack-objects --local --delta-base-offset objects/pack/.tmp-2946975-pack --keep-true-parents --honor-pack-keep --non-empty --all --reflog --indexed-objects --unpack-unreachable=2.weeks.ago
-  10:35:32.680597 trace.c:487             performance: 8.633068356 s: git command: /usr/local/libexec/git-core/git repack -d -l -A --unpack-unreachable=2.weeks.ago
-  10:35:32.683130 trace.c:487             performance: 0.000959377 s: git command: /usr/local/libexec/git-core/git prune --expire 2.weeks.ago
-  10:35:32.684401 trace.c:487             performance: 0.000180173 s: git command: /usr/local/libexec/git-core/git worktree prune --expire 3.months.ago
-  10:35:32.685730 trace.c:487             performance: 0.000263898 s: git command: /usr/local/libexec/git-core/git rerere gc
-  10:35:33.514816 trace.c:487             performance: 9.511597988 s: git command: git -C git-full.git/ gc
-  elapsed: 0:09.51  max RSS: 358964k
+> ---
+>      gitk: fix selection color not persistent
+>      
+>      Dear git community, Is it possible please for the gitk selection color
+>      setting to be persistent? Since 2015 this has been working for me. Thank
+>      you for considering!
+> 
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-926%2Fghacct%2Fpatch-1-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-926/ghacct/patch-1-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/926
+> 
+>   gitk-git/gitk | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/gitk-git/gitk b/gitk-git/gitk
+> index 23d9dd1fe0d0..d255654b02fd 100755
+> --- a/gitk-git/gitk
+> +++ b/gitk-git/gitk
+> @@ -2412,6 +2412,7 @@ proc makewindow {} {
+>       text $ctext -background $bgcolor -foreground $fgcolor \
+>           -state disabled -undo 0 -font textfont \
+>           -yscrollcommand scrolltext -wrap none \
+> +        -selectbackground $selectbgcolor -selectforeground $fgcolor \
+>           -xscrollcommand ".bleft.bottom.sbhorizontal set"
+>       if {$have_tk85} {
+>           $ctext conf -tabstyle wordprocessor
+> 
+> base-commit: a65ce7f831aa5fcc596c6d23fcde543d98b39bd7
+> 
+[CC] Junio, what do you think about this patch?
 
-  $ git clone --bare --filter=blob:none https://github.com/git/git git-partial.git
-  $ GIT_TRACE_PERFORMANCE=2 /usr/bin/time --format='elapsed: %E  max RSS: %Mk' git -C git-partial.git/ gc
-  10:35:47.637735 trace.c:487             performance: 0.000872539 s: git command: /usr/local/libexec/git-core/git pack-refs --all --prune
-  10:35:47.675498 trace.c:487             performance: 0.036246403 s: git command: /usr/local/libexec/git-core/git reflog expire --all
-  Enumerating objects: 188205, done.
-  Counting objects: 100% (188205/188205), done.
-  Delta compression using up to 4 threads
-  Compressing objects: 100% (66520/66520), done.
-  Writing objects: 100% (188205/188205), done.
-  Total 188205 (delta 119967), reused 188205 (delta 119967), pack-reused 0
-  10:35:50.081709 trace.c:487             performance: 2.402625839 s: git command: /usr/local/libexec/git-core/git pack-objects --local --delta-base-offset objects/pack/.tmp-2946990-pack
-  10:35:50.100131 read-cache.c:2315       performance: 0.000009979 s:  read cache ./index
-  10:37:04.973541 trace.c:487             performance: 74.885793630 s: git command: /usr/local/libexec/git-core/git pack-objects --local --delta-base-offset objects/pack/.tmp-2946990-pack --keep-true-parents --honor-pack-keep --non-empty --all --reflog --indexed-objects --exclude-promisor-objects --unpack-unreachable=2.weeks.ago
-  Removing duplicate objects: 100% (256/256), done.
-  10:37:07.482791 trace.c:487             performance: 79.804973525 s: git command: /usr/local/libexec/git-core/git repack -d -l -A --unpack-unreachable=2.weeks.ago
-  10:37:07.549333 trace.c:487             performance: 0.008025426 s: git command: /usr/local/libexec/git-core/git prune --expire 2.weeks.ago --exclude-promisor-objects
-  10:37:07.552499 trace.c:487             performance: 0.000362981 s: git command: /usr/local/libexec/git-core/git worktree prune --expire 3.months.ago
-  10:37:07.554521 trace.c:487             performance: 0.000273834 s: git command: /usr/local/libexec/git-core/git rerere gc
-  10:37:10.168233 trace.c:487             performance: 82.533331484 s: git command: git -C git-partial.git/ gc
-  elapsed: 1:22.54  max RSS: 1891832k
-
-Notice the ~9s vs. 82s runtime and ~350M vs. 1.9G memory consumption
-increase.  What's going on here?
-
-Also note that that second 'git pack-objects' invocation doesn't show
-any progress for ~75s.
-
-FWIW, doing the same in a 'tree:0' partial clone is fast.
-
+-- 
+An old man doll... just what I always wanted! - Clara
