@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-20.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A3192C433ED
-	for <git@archiver.kernel.org>; Sat,  3 Apr 2021 12:49:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 05D16C433ED
+	for <git@archiver.kernel.org>; Sat,  3 Apr 2021 12:51:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6FACE611CE
-	for <git@archiver.kernel.org>; Sat,  3 Apr 2021 12:49:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C2C1E611CE
+	for <git@archiver.kernel.org>; Sat,  3 Apr 2021 12:51:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231800AbhDCMtH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 3 Apr 2021 08:49:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51420 "EHLO
+        id S236684AbhDCMv5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 3 Apr 2021 08:51:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52032 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230409AbhDCMtG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Apr 2021 08:49:06 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38E34C0613E6
-        for <git@vger.kernel.org>; Sat,  3 Apr 2021 05:49:03 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id f16so8113273ljm.1
-        for <git@vger.kernel.org>; Sat, 03 Apr 2021 05:49:03 -0700 (PDT)
+        with ESMTP id S231681AbhDCMv4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Apr 2021 08:51:56 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A78ACC0613E6
+        for <git@vger.kernel.org>; Sat,  3 Apr 2021 05:51:53 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id g8so10965973lfv.12
+        for <git@vger.kernel.org>; Sat, 03 Apr 2021 05:51:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Dy33vA4L4oTS+UEzZ4bI/sY9S4nd4shFKD8UHUxfkf0=;
-        b=RJieZx32Bo0u/8W+zTmrJJEWOcK/wJlvNpgUAjKrxZgvnSC0uLU72QovUmyuVKLe8G
-         wLK/3arBy5sQqy8iGdQMkTziyz1c3Rls336QmZN3jWIGeGNG6Saa8YNP8Fdr9dRPIlIi
-         EVPrekUCUxX6tuH+oYyK6OoPmHlsYjE1fmxDn9JpHac8JNQkHBcsrp1LXSGsEAc0Y6nl
-         1PGrcgItU+Pa6MWsOwQ0508/rmi+gpz0kUtnknOeToa2P39rf6ITIZedig2OTo3SDT8J
-         h4uEUzcM2CrHg5dXgoH2BTrnpxD2XdsGSarhw7GpflaQIwFSsq0PXrr+wnw+9NFOAiNS
-         vwwA==
+        bh=B6jTIC+mWSjbUHfm/QIj632QPSSTjrop+B5IvUWqPG0=;
+        b=dGfsg0tS8TqP/foCYOgYYHXLku3u42g7D2EbARPLLUYNJfXynauR5X/xr+nj0lx7Zd
+         2+/3voxzDwmoOtz2py9YjcYqnozJdP4XpZl5enBodr31QOinjUCJMgZwoPz5cg72TN6b
+         BNXy50Z/R5szwwx/r+Bz+Zv5nqu9BEGnbI6eZtcD6gqHk4FsU5lupNeI3tbgcG/oG7Fi
+         IqcF1Y19/MugtcefE6alCmwgvKu8ZStPOI1kQakSN1PgRIKaMUkDDjmRqVWQME14hn8L
+         /+TaEgRbN5svMObTDXelQWeCYWTaIXlzKk2bmAimyiK9z0xFrrHMK8SYEB9SLD2uQLnI
+         BtMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Dy33vA4L4oTS+UEzZ4bI/sY9S4nd4shFKD8UHUxfkf0=;
-        b=cBQCw8yED593pSS/LeA2N8xWH8/KefKuQOhC1Bwo7UXMjmSF0uYQudToaBH5CHJ3l6
-         5E2aT3368J1hblqNP+zEyg8gs/ov+zW0k4Mfq1/L/exhVbOnUtmZ/WUEU28ebIBvoPI0
-         gNI4ShUIPp1yCg3hnVBO333699bES4pCW+tuLEB9jhm5pS8mhwx24CsySdMl7MHDwPRu
-         9TZw65ZCncIFEIvLBS2qEnru4IlzEPsqStludWQAjV0EGyElBWNfzoEJ//PQm7nmz1Vg
-         DdC3OY7OX17xWXH2+35UPApg8EfsDUGeASL1soSXcOOvvK1lSDm1kwBol6K7b6CSwZoz
-         +KtA==
-X-Gm-Message-State: AOAM532oVdE9McC9zJ7duLGanEDDzNn2nITxTbUnSghoJnx8E1SPIyQR
-        PZ3ahTUGgs16yYHHPPf7O1W4kyt3786+AEIr
-X-Google-Smtp-Source: ABdhPJy95xMfGYUkh2r1Sv/sQaZfsm2G/0RmE2WHZchPmuvf6UDYdPHzPcjmAScg7m/OswhhJOnEQA==
-X-Received: by 2002:a2e:b5cd:: with SMTP id g13mr11061542ljn.372.1617454139138;
-        Sat, 03 Apr 2021 05:48:59 -0700 (PDT)
+        bh=B6jTIC+mWSjbUHfm/QIj632QPSSTjrop+B5IvUWqPG0=;
+        b=RftUI7oiuJHDW4sjICT3+82HEchX42OfjFLZ6K/8P6ksvUF8y1UqlrV7f6Z2ARndnz
+         DugsJKeN8PDCmA1aQyBQkNU8lIVatwG0ZZiLHL13cV+kjciZ+O4ceFJo/RFZ9WEKCjrX
+         Z6J/Q6nnYmLeX528kQprRbFTA/d/1X6vVrgRM+P8mys67dUEYjDvEVcCHiS8subBecz6
+         l0EguJ8j4TMuel0yqKO7Iw6OEalTF71DAOoovUyB2aY6C4PNQnYW3IfZcicfxYIMdbEy
+         tlVzQlKHK40yfK6qvHAJQN0eYiXV9ktixBFLDE2DKe8AaDaaFrLHhR0ZQRuXjTfc6Ycn
+         fE4A==
+X-Gm-Message-State: AOAM53183hc5W++vzt663gBwWYz7VgDh8UIe04wHmrUtUqM6XWh69pUu
+        dBYyzdKC7h59mQQvkPYo1/KZmtPpiQRspXza
+X-Google-Smtp-Source: ABdhPJyV9fsWg6iINKfZCK6+FXn7qgpoHDwdgNQ44+lJ6zMSBrhXEO0ZOPMhpmmV1xqAoWSc4n8BEQ==
+X-Received: by 2002:a05:6512:3d1c:: with SMTP id d28mr11326375lfv.41.1617454311704;
+        Sat, 03 Apr 2021 05:51:51 -0700 (PDT)
 Received: from localhost.localdomain (88-115-235-153.elisa-laajakaista.fi. [88.115.235.153])
-        by smtp.googlemail.com with ESMTPSA id t192sm1138393lff.295.2021.04.03.05.48.57
+        by smtp.googlemail.com with ESMTPSA id a14sm1142818lfi.7.2021.04.03.05.51.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 03 Apr 2021 05:48:58 -0700 (PDT)
+        Sat, 03 Apr 2021 05:51:51 -0700 (PDT)
 From:   Stavros Ntentos <stdedos@gmail.com>
 X-Google-Original-From: Stavros Ntentos <133706+stdedos@users.noreply.github.com>
 To:     git@vger.kernel.org
 Cc:     stdedos+git@gmail.com, gitster@pobox.com, bagasdotme@gmail.com,
         peff@peff.net,
         Stavros Ntentos <133706+stdedos@users.noreply.github.com>
-Subject: [PATCH v3] pathspec: advice: long and short forms are incompatible
-Date:   Sat,  3 Apr 2021 15:48:49 +0300
-Message-Id: <20210403124849.21544-1-133706+stdedos@users.noreply.github.com>
+Subject: [PATCH v4] pathspec: advice: long and short forms are incompatible
+Date:   Sat,  3 Apr 2021 15:51:43 +0300
+Message-Id: <20210403125143.22498-1-133706+stdedos@users.noreply.github.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <xmqqft1iquka.fsf@gitster.g>
 References: <xmqqft1iquka.fsf@gitster.g>
@@ -109,7 +109,7 @@ index acbd0c09aa..05a3cbc164 100644
 +		longform pathspec magic.
  --
 diff --git a/advice.c b/advice.c
-index 164742305f..f94505e0d6 100644
+index 164742305f..b1955966d5 100644
 --- a/advice.c
 +++ b/advice.c
 @@ -33,6 +33,7 @@ int advice_checkout_ambiguous_remote_branch_name = 1;
@@ -132,7 +132,7 @@ index 164742305f..f94505e0d6 100644
  	[ADVICE_STATUS_U_OPTION]			= { "statusUoption", 1 },
  	[ADVICE_SUBMODULE_ALTERNATE_ERROR_STRATEGY_DIE] = { "submoduleAlternateErrorStrategyDie", 1 },
  	[ADVICE_WAITING_FOR_EDITOR]			= { "waitingForEditor", 1 },
-+	[ADVICE_MIXED_PATHSPEC_MAGIC]	= { "mixedPathspecMagic", 1 },
++	[ADVICE_MIXED_PATHSPEC_MAGIC]			= { "mixedPathspecMagic", 1 },
  };
  
  static const char turn_off_instructions[] =
