@@ -2,161 +2,177 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 25ADDC433ED
-	for <git@archiver.kernel.org>; Sat,  3 Apr 2021 22:41:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 02AEAC433B4
+	for <git@archiver.kernel.org>; Sun,  4 Apr 2021 00:46:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DA824611EE
-	for <git@archiver.kernel.org>; Sat,  3 Apr 2021 22:41:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C8DDD61278
+	for <git@archiver.kernel.org>; Sun,  4 Apr 2021 00:46:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236747AbhDCWlS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 3 Apr 2021 18:41:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36594 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236649AbhDCWlQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Apr 2021 18:41:16 -0400
-Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com [IPv6:2607:f8b0:4864:20::82c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5612CC061756
-        for <git@vger.kernel.org>; Sat,  3 Apr 2021 15:41:12 -0700 (PDT)
-Received: by mail-qt1-x82c.google.com with SMTP id y2so6041350qtw.13
-        for <git@vger.kernel.org>; Sat, 03 Apr 2021 15:41:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=BUoyRR1qpEZXacevGBAA4CXHhrKFK25zlK979atazVU=;
-        b=vAZbxDNUW2gbk309pWkFPZl4WLoTys+N2C0OJpv+R1zK2LRHLzKS24WHkvtjnlFLWI
-         77cYhv1Uzg0HV7eNB8/aywOT8rJEsaAi4dktSz3FDUbW20iQ9h16R4i7VIlGiXgMZXrB
-         AU/GDXX2mYTsCr0zv89SN5PqFHd3lVzqd4b30ICnAloaTn7fe9BJ7dAgZZjl9d/3NkCb
-         moiXLtSSoY40heqd+I13/4b+BBLAfFCR+l05lphxrk4z9ogXWRA3RUpeyDuIKzZrVsfc
-         f6kyJ31E32k+1igk8PhBLriFn2Z7bjRBy98BvZj3gbdkQLHXZZcCs0j83KE8YAV8khcV
-         N5vQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=BUoyRR1qpEZXacevGBAA4CXHhrKFK25zlK979atazVU=;
-        b=Q78TBhvuzcJgfElBthF1gYI6RVDin+VJnpdRo0xR0KKrd0gVZaOIx+ibD5G/l4yLXk
-         xR386+q3wEaZq8iHhbtEfHpq3JRpcWWHFkdpt4q1gEBmSb3mrakInNtsxEU5P/LvK6An
-         wdlGcQLF5F/C8ejOtunapnC6ZlnYaEWeMbwiDxdihIhoMpSlwsKHO2CXKNlTt5PFvvDQ
-         Ffxxfrqdyu/l3pTbZvaXdvteZZFYNEnd4r2RthnqYAs2wRe8tUVS6j68RCZYtz7pu1Q4
-         NkVigHyUIkBjfEwAmbTqNKTLwtIfVYJjpSokS/Nvk7Ke2FRtyYY6U/+7ODZHuB94ZTqp
-         RmeQ==
-X-Gm-Message-State: AOAM530NDqj9wzQCSm4rYXzJ5dEPPOxlgF+iPzKFX+8SWx9aT5WAYZ+o
-        IBtq/M4nmWeSTTQY1RZCTSr9xMoNSoKESQ==
-X-Google-Smtp-Source: ABdhPJylBScfK1M7CZCJXBZy/U46oP6n911btk33Jur4MaT+Vfd+GwjocknI1D/MZni4c8ZXJKeHJg==
-X-Received: by 2002:ac8:5e8a:: with SMTP id r10mr17340848qtx.13.1617489671159;
-        Sat, 03 Apr 2021 15:41:11 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:856d:2d1e:ab38:1383? ([2600:1700:e72:80a0:856d:2d1e:ab38:1383])
-        by smtp.gmail.com with ESMTPSA id b198sm10318227qkg.10.2021.04.03.15.41.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 03 Apr 2021 15:41:10 -0700 (PDT)
-Subject: Re: should git maintenance prefetch be taught to honor remote.fetch
- refspec?
-To:     Tom Saeger <tom.saeger@oracle.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-References: <20210401184914.qmr7jhjbhp2mt3h6@dhcp-10-154-148-175.vpn.oracle.com>
- <d246df21-fdaa-a391-847a-e03e8e664af1@gmail.com> <xmqq8s613gqa.fsf@gitster.g>
- <3bfd9a88-10f9-df71-bf96-f9c5654e48eb@gmail.com>
- <20210402182716.trbaflsjcvouff2y@brm-x62-17.us.oracle.com>
- <41dc2961-7ba5-a882-3416-45631e2cbb33@gmail.com>
- <CAPig+cRxjLObLvF9kUAuftCxQ+iiFEisagDBWpAAPwdVMUATKQ@mail.gmail.com>
- <20210403202142.w4b25fhptcaguxyx@brm-x62-17.us.oracle.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <8ce278cd-5faa-c3fc-d2cf-6ee99259b21f@gmail.com>
-Date:   Sat, 3 Apr 2021 18:41:08 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.9.0
+        id S236621AbhDDAqy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 3 Apr 2021 20:46:54 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:55147 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236526AbhDDAqx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Apr 2021 20:46:53 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2B374137296;
+        Sat,  3 Apr 2021 20:46:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=zXfsXpT4RsaW6rRHVi1QOe2uX
+        EE=; b=AxmdbghlK65tyz7KRD4hl3IYsHmTlaRVA6k40b19yx5c7w9PQG9uSxHR3
+        MIEbXnyXV9WuXFiADjWIFSmXpueifWkAJPIUtaVLtcJ3HgItHOtIKj63KwAtQYW3
+        OormIezcm/8OyVmkRlspTb8fJSmbLPPdSf6ykIYVvXpHDq5/Mo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type
+        :content-transfer-encoding; q=dns; s=sasl; b=ID020FimLnO+EQU0F6q
+        Ezer1IiZn0dUCgjq2J5FuCoUv4S5TESIQrCpjJ5Ci0QbCefhD9iFIdT5/3mP/I+U
+        thbi7nPvHbHYJ7W76E5YFDKzUm2gm4OXZjBz8tZARYPuRiOq/pwD97yRpuEQbX7+
+        9XEOm71IgWZGcxEcAuklkRFA=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 253C1137295;
+        Sat,  3 Apr 2021 20:46:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5769C137294;
+        Sat,  3 Apr 2021 20:46:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Firmin Martin <firminmartin24@gmail.com>
+Cc:     Bagas Sanjaya <bagasdotme@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH][GSoC] user-manual.txt: fix empty heading of introduction
+References: <20210402121303.344914-1-firminmartin24@gmail.com>
+        <xmqqwntk2xgy.fsf@gitster.g>
+        <7530f132-cd72-bb6f-21f1-1ee23ca5e20f@gmail.com>
+Date:   Sat, 03 Apr 2021 17:46:45 -0700
+Message-ID: <xmqq5z1227wq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20210403202142.w4b25fhptcaguxyx@brm-x62-17.us.oracle.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+X-Pobox-Relay-ID: 3C369136-94DF-11EB-B6F1-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/3/2021 4:21 PM, Tom Saeger wrote:
-> On Fri, Apr 02, 2021 at 06:32:56PM -0400, Eric Sunshine wrote:
->> On Fri, Apr 2, 2021 at 4:43 PM Derrick Stolee <stolee@gmail.com> wrote:
->>> I have a branch available [1], but I'm seeing some failures only
->>> on FreeBSD [2] and I can't understand why that platform is failing
->>> this test. The current version (as of this writing) does not do
->>> the substring replacement technique, and hence it just gives up
->>> on exact matches. I will try the substring approach as an
->>> alternative and see where that gets me.
->>>
->>> [1] https://github.com/gitgitgadget/git/pull/924
->>> [2] https://github.com/gitgitgadget/git/pull/924/checks?check_run_id=2256079534
->>
->> The "+" in patterns such as `+refs/heads/\\*:refs/prefetch...` is what
->> is throwing it off. FreeBSD `grep` doesn't seem to like it, though
->> it's not clear why. Escaping it the same way as you escaped "*"
->> doesn't make it work. Replacing "+" with catchall "." does work, so
->> that's one way to fix it.
->>
->> However, all the escaping you need to do in these refspec patterns to
->> pass them to `grep` is ugly. A much better solution may be to change
->> the `grep` in test-lib-functions.sh:test_subcommand() to `grep -F` to
->> force it to match literally. That way, you can drop all the backslash
->> escaping, including those in front of "[" and "]". A cursory audit of
->> callers test_subcommand() seems to indicate that none of them pass
->> regex patterns, so using `-F` is probably safe and a good idea.
+Bagas Sanjaya <bagasdotme@gmail.com> writes:
 
-Yes, this is an excellent idea. Thanks.
+> On 03/04/21 04.22, Junio C Hamano wrote:
+>> I would have expected to see "before and after".  Is it too obvious
+>> what the postimage would be?  Otherwise, a better presentation would
+>> be to show (an excerpt from) diff between preimage and postimage
+>> output.
+>> Thanks.
+>>=20
+> Attached is `diff -u` of generated HTML output, before and after this
+> patch. The HTML is generated using Asciidoctor.
 
->> By the way, the `coccinelle` check is also "failing", correctly
->> suggesting that you change:
->>
->>     strbuf_addf(&replace, ":refs/prefetch/");
->>
->> to:
->>
->>     strbuf_addstr(&replace, ":refs/prefetch/");
->>
->> in `builtin/gc.c`.
+Unfortunately, that is more-or-less unreadable gunk.  Even for the
+first few places that have differences, the output of diff between
+raw HTML is not suited to spot that the first entry in the TOC has
+changed classs from preface to chapter or how they are treated
+differently.
 
-Good point! I'll get that, too.
+What I did before sending out the message was to generate HTML for
+the before and after versions, render them into text and then run
+diff on them.  It showed that most changes are the chapter numbering
+and cross reference, of course.  This was still hard to see, but at
+least it was possible to eyeball what was going on [*].
 
-> Was curious - so rolled all Eric's feedback into a patch.
-> 
-> This passes 'make test' and 'make coccicheck' locally, not sure about FreeBSD.
-> 
-> Stolee - can you squash this onto your PR and try it if you agree?
+While Firmin showed only the "before" version of .xml, a diff
+between before-and-after versions of .xml turned out to be far
+easier to see how the change propagates down the toolchain than
+either of the above two.  It would have been  the best to have that,
+instead of just the "before" image, in the explanation.
 
-I made my own version of a patch before seeing this one, but
-thanks for working on it.
-> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-> index 6348e8d7339c..e9a1cf3e227a 100644
-> --- a/t/test-lib-functions.sh
-> +++ b/t/test-lib-functions.sh
-> @@ -1652,9 +1652,9 @@ test_subcommand () {
->  
->  	if test -n "$negate"
->  	then
-> -		! grep "\[$expr\]"
-> +		! grep -F "$expr"
->  	else
-> -		grep "\[$expr\]"
-> +		grep -F "$expr"
->  	fi
+    --- user-manual.xml	2021-04-03 17:36:14.804344928 -0700
+    +++ user-manual.xml	2021-04-03 17:36:44.599025868 -0700
+    @@ -7,8 +7,8 @@
+     <bookinfo>
+         <title>Git User Manual</title>
+     </bookinfo>
+    -<preface>
+    -<title></title>
+    +<chapter id=3D"introduction">
+    +<title>Introduction</title>
+     <simpara>Git is a fast distributed revision control system.</simpara=
+>
+     <simpara>This manual is designed to be readable by someone with basi=
+c UNIX
+     command-line skills, but no previous knowledge of Git.</simpara>
+    @@ -31,7 +31,7 @@
+     without any explanation.</simpara>
+     <simpara>Finally, see <xref linkend=3D"todo"/> for ways that you can=
+ help make this manual more
+     complete.</simpara>
+    -</preface>
+    +</chapter>
+     <chapter id=3D"repositories-and-branches">
+     <title>Repositories and Branches</title>
+     <section id=3D"how-to-get-a-git-repository">
 
-Specifically I would use "[$expr]" here so it includes the
-terminating characters of the JSON array that we are testing
-against. It can be important that we have the complete set
-of arguments, so these brackets are important.
+If an updated version is planned, I'd expect it to come with
+something like the above indented patch plus a brief explanation of
+side effects (i.e. we lost preface and we have renumbered the
+chapters) in its proposed log message.
 
-Thanks, all. I'm taking a look at a mechanism for doing this
-without munging the raw string directly, as Junio mentioned.
-It might require adding an output format method in the refspec
-API, but that's probably a good thing, anyway.
+Thanks.
 
-Thanks,
--Stolee
+
+[Footnote]
+
+* The text-rendered HTML would compare like this (just an excerpt).
+
+--- /var/tmp/before.txt	2021-04-03 17:40:07.777307995 -0700
++++ /var/tmp/after.txt	2021-04-03 17:39:51.423836495 -0700
+@@ -4,255 +4,259 @@
+=20
+    Table of Contents
+=20
+-   [1]1. Repositories and Branches
++   [1]1. Introduction
+=20
+-   [2]How to get a Git repository
++   [2]2. Repositories and Branches
+=20
+
+...
+
+TOC numbering is of course off by one, as the patch promotes the
+preface into the first chapter.
+
+...
+
+-   [114]B. Notes and todo list for this manual
++   [116]Todo list
+=20
+-   [115]Todo list
++                            Chapter=C2=A01.=C2=A0Introduction
+=20
+...
+
+And of course, we now have the chapter title.
+
+...
+
+    Git is a fast distributed revision control system.
+=20
+    This manual is designed to be readable by someone with basic UNIX
+    command-line skills, but no previous knowledge of Git.
+=20
+-   [116]Chapter=C2=A01, Repositories and Branches and [117]Chapter=C2=A0=
+2, Exploring
++   [117]Chapter=C2=A02, Repositories and Branches and [118]Chapter=C2=A0=
+3, Exploring
+
+...
+
+Cross references are all off-by-one, too.
