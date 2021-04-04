@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 41DAAC433ED
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4319DC433B4
 	for <git@archiver.kernel.org>; Sun,  4 Apr 2021 09:20:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 058E961103
-	for <git@archiver.kernel.org>; Sun,  4 Apr 2021 09:20:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 188C861365
+	for <git@archiver.kernel.org>; Sun,  4 Apr 2021 09:20:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230244AbhDDJUA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 4 Apr 2021 05:20:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60124 "EHLO
+        id S230252AbhDDJUB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 4 Apr 2021 05:20:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229711AbhDDJT7 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229557AbhDDJT7 (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 4 Apr 2021 05:19:59 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B647C061756
-        for <git@vger.kernel.org>; Sun,  4 Apr 2021 02:19:55 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id e18so8390048wrt.6
-        for <git@vger.kernel.org>; Sun, 04 Apr 2021 02:19:55 -0700 (PDT)
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82F69C061788
+        for <git@vger.kernel.org>; Sun,  4 Apr 2021 02:19:53 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id f6so2307232wrv.12
+        for <git@vger.kernel.org>; Sun, 04 Apr 2021 02:19:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=/iHq0Gmz41beMfCSAL/i4iAuvX5Qhkln3+Lmt/zIlGI=;
-        b=vXaEyb0Hh6mjkyvZwBrl9YOmF5SLOliNi7/e/QuAsKgxdGMLTzn+vbPTLSEyYSCx+Q
-         GHnriMuljNswOrboXmaybp7qNe3JahMgWlpEVHYHD0x1RXPeAa3EOYQDqjPiOF86o3Zr
-         vj+3mdUV9XdjZUVgHXOfOO+l0Gn9QF9t7NUW//ETU/bK1CnVv8tPYgJR550aahb95Dva
-         9QI2A0azIwqaaM5L6/quBFywArNrXz3NivyzMn4EwUQv5cg6h9BLZJFxcqHQrCA6zTqO
-         TCp3wCZDjFF3PK0E0H7j81+tWpnqHStR3/Bn4gv09OxjB2WJfNrfALOacbJdVIMziBTn
-         F1Eg==
+        bh=/qgOKT3niMb3thE5qVdAccAtkqEJ4Ad1PdS/GhsNDus=;
+        b=aiBHovWIIOk5YgE1VIEBjI/fxzuciNLxViNr+I6TUyLRV3ylj0SqtMFhI7/1o2bAQC
+         NEbgirdHeOXX4zK+hs7PaI/BNGwshNnD7nwgPlcktbdiq9QNQtryPsAcm4gSC0Hmcelg
+         Ye/xHqU+YmB7QZUr9sYCSm/JJVrNKzANMIS8cSKKh0tlF970eFMKQt6fa9i6iRsvphN5
+         l1ZxVenvK6lUHFpEqfUoSJApHhHVm9KV40lO46Muu99GWBxqaqBeEmhgLRRf4BkSE9ml
+         9/gS7+d/GO7FyiXGKF2BN7uISuJwqkahqQ0GXbOSy8BdedwljhMVvXYR7uo8vhNKHQv2
+         yMJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=/iHq0Gmz41beMfCSAL/i4iAuvX5Qhkln3+Lmt/zIlGI=;
-        b=LAmaKH702n0ZZmMJEiSOu/JK7ybieGKiA3+LnuRwGS/I0V92CwQE+xr/btMguQ3HNh
-         gQHUFYlG+EcfV+OaXBANWzCC3KiHc/baBTIUPQwc0QFcbrI9oy9HcRjqHrJzzQs1dNK0
-         O8KJ1v+fbpiTSxSLaJSmAGBp8YzJMB56Mc1B3o/gb/s8gPZQuEEhrNu8FSXeojDqt0E/
-         PqzwgR1ZLnfsUfcKvY3ir752ZzeSmuWAp/7iyzOGq2pss0JU+kOxKp31wAExejm+gDs3
-         d+57q2DaASXbD0HLLZcaA/xytUFCSfW2xvbEROetxqSzpqLnoi7kQE98HwWAuUf6htt4
-         U1cA==
-X-Gm-Message-State: AOAM531j0JQC2MCnoOklaVmz7X0nlCptgKhWhQW80v7wnfP+9wmEvvfr
-        SDL67++bV/WyqiZ3ZN6F/cUYqVi7NxnleQ==
-X-Google-Smtp-Source: ABdhPJz7ZgLdtvivFm6yXGVPU3yIw4pdRxV7JqfoEwYIzRCdvFWjGzhRaM8502AOeyRFM9ihT7og/g==
-X-Received: by 2002:a5d:4566:: with SMTP id a6mr10827234wrc.250.1617527993493;
-        Sun, 04 Apr 2021 02:19:53 -0700 (PDT)
+        bh=/qgOKT3niMb3thE5qVdAccAtkqEJ4Ad1PdS/GhsNDus=;
+        b=g57gNZ0O6LyImXrbCB0RaZLJrv65htQQmpb8zqigHi3xsK0FA5woLAwGcYfAX3OX6f
+         onKRxZV1WXagx+NbbuA7XkMikT3iMCvHU7VHGkXJQ0vh+7+h7rKcCD+wRMfztKl3gbCr
+         sc2YvThsfV+tu1V9q/zZOiLeKoFhrAKkW6+1iEMQ1NI0GE1GRBqrKAPXV+IOpPw1vV8/
+         nTITqb/1UoQN7q274a66UyelN7Zu5TshYMRYaNVBfhmlfx2KMvhanvqN19v/CDgb4HEh
+         FQj2krgrS8MUfZ4R/LdqPyjJU4KEwBRmtDZ69gDP0fo8EBY6cHZ05StUiE6O1iJf0dO7
+         4AKA==
+X-Gm-Message-State: AOAM5300F43JvN3i0ailD7MwUeXxeeCdCQE9bH6VZt8XaaMUV7bxQpaZ
+        BIHCEdD6+E/tuRy/a5oox+6e/wplNZ/Lcw==
+X-Google-Smtp-Source: ABdhPJzp/eik1ssSP/dclJL/cTHL6Y7gbVgGlBNkOAB9Ok9WbTweedWrWIsQdMRheknUPbIwspQvQA==
+X-Received: by 2002:a5d:58e5:: with SMTP id f5mr9908651wrd.131.1617527991898;
+        Sun, 04 Apr 2021 02:19:51 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id z25sm22480540wmi.23.2021.04.04.02.19.52
+        by smtp.gmail.com with ESMTPSA id z25sm22480540wmi.23.2021.04.04.02.19.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 04 Apr 2021 02:19:52 -0700 (PDT)
+        Sun, 04 Apr 2021 02:19:51 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -63,9 +63,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Emily Shaffer <emilyshaffer@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 4/4] git-send-email: improve --validate error output
-Date:   Sun,  4 Apr 2021 11:19:46 +0200
-Message-Id: <patch-4.5-a1edceb4913-20210404T091649Z-avarab@gmail.com>
+Subject: [PATCH v2 2/4] git-send-email: refactor duplicate $? checks into a function
+Date:   Sun,  4 Apr 2021 11:19:44 +0200
+Message-Id: <patch-2.5-f236f083e36-20210404T091649Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.1.482.g6691c1be520
 In-Reply-To: <cover-0.5-00000000000-20210404T091649Z-avarab@gmail.com>
 References: <cover-0.3-00000000000-20210402T112946Z-avarab@gmail.com> <cover-0.5-00000000000-20210404T091649Z-avarab@gmail.com>
@@ -76,144 +76,112 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Improve the output we emit on --validate error to:
+Refactor the duplicate checking of $? into a function. There's an
+outstanding series[1] wanting to add a third use of system() in this
+file, let's not copy this boilerplate anymore when that happens.
 
- * Say "FILE:LINE" instead of "FILE: LINE".
-
- * Don't say "patch contains a" after just mentioning the filename,
-   just leave it at "FILE:LINE: is longer than[...]. The "contains a"
-   sounded like we were talking about the file in general, when we're
-   actually checking it line-by-line.
-
- * Don't just say "rejected by sendemail-validate hook", but combine
-   that with the system_or_msg() output to say what exit code the hook
-   died with.
-
-I had an aborted attempt to make the line length checker note all
-lines that were longer than the limit. I didn't think that was worth
-the effort, but I've left in the testing change to check that we die
-as soon as we spot the first long line.
+1. http://lore.kernel.org/git/87y2esg22j.fsf@evledraar.gmail.com
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- git-send-email.perl   | 23 ++++++++++-------------
- t/t9001-send-email.sh | 17 ++++++++++++-----
- 2 files changed, 22 insertions(+), 18 deletions(-)
+ git-send-email.perl | 48 +++++++++++++++++++++++++++++----------------
+ 1 file changed, 31 insertions(+), 17 deletions(-)
 
 diff --git a/git-send-email.perl b/git-send-email.perl
-index 9724a9cae27..175da07d946 100755
+index 6893c8e5808..9724a9cae27 100755
 --- a/git-send-email.perl
 +++ b/git-send-email.perl
-@@ -219,8 +219,8 @@ sub system_or_msg {
- 	my $exit_code = $? >> 8;
- 	return unless $signalled or $exit_code;
+@@ -212,22 +212,31 @@ sub format_2822_time {
+ my $multiedit;
+ my $editor;
  
--	return sprintf(__("failed to run command %s, died with code %d"),
--		       "@$args", $exit_code);
-+	return sprintf(__("fatal: command '%s' died with exit code %d"),
-+		       $args->[0], $exit_code);
++sub system_or_msg {
++	my ($args, $msg) = @_;
++	system(@$args);
++	my $signalled = $? & 127;
++	my $exit_code = $? >> 8;
++	return unless $signalled or $exit_code;
++
++	return sprintf(__("failed to run command %s, died with code %d"),
++		       "@$args", $exit_code);
++}
++
++sub system_or_die {
++	my $msg = system_or_msg(@_);
++	die $msg if $msg;
++}
++
+ sub do_edit {
+ 	if (!defined($editor)) {
+ 		$editor = Git::command_oneline('var', 'GIT_EDITOR');
+ 	}
++	my $die_msg = __("the editor exited uncleanly, aborting everything");
+ 	if (defined($multiedit) && !$multiedit) {
+-		for (@_) {
+-			system('sh', '-c', $editor.' "$@"', $editor, $_);
+-			if (($? & 127) || ($? >> 8)) {
+-				die(__("the editor exited uncleanly, aborting everything"));
+-			}
+-		}
++		system_or_die(['sh', '-c', $editor.' "$@"', $editor, $_], $die_msg) for @_;
+ 	} else {
+-		system('sh', '-c', $editor.' "$@"', $editor, @_);
+-		if (($? & 127) || ($? >> 8)) {
+-			die(__("the editor exited uncleanly, aborting everything"));
+-		}
++		system_or_die(['sh', '-c', $editor.' "$@"', $editor, @_], $die_msg);
+ 	}
  }
  
- sub system_or_die {
-@@ -1945,12 +1945,6 @@ sub unique_email_list {
+@@ -698,9 +707,7 @@ sub is_format_patch_arg {
+ if ($validate) {
+ 	foreach my $f (@files) {
+ 		unless (-p $f) {
+-			my $error = validate_patch($f, $target_xfer_encoding);
+-			$error and die sprintf(__("fatal: %s: %s\nwarning: no patches were sent\n"),
+-						  $f, $error);
++			validate_patch($f, $target_xfer_encoding);
+ 		}
+ 	}
+ }
+@@ -1938,6 +1945,12 @@ sub unique_email_list {
  	return @emails;
  }
  
--sub validate_patch_error {
--	my ($fn, $error) = @_;
--	die sprintf(__("fatal: %s: %s\nwarning: no patches were sent\n"),
--		    $fn, $error);
--}
--
++sub validate_patch_error {
++	my ($fn, $error) = @_;
++	die sprintf(__("fatal: %s: %s\nwarning: no patches were sent\n"),
++		    $fn, $error);
++}
++
  sub validate_patch {
  	my ($fn, $xfer_encoding) = @_;
  
-@@ -1965,12 +1959,14 @@ sub validate_patch {
+@@ -1952,11 +1965,12 @@ sub validate_patch {
  			chdir($repo->wc_path() or $repo->repo_path())
  				or die("chdir: $!");
  			local $ENV{"GIT_DIR"} = $repo->repo_path();
--			if (my $msg = system_or_msg([$validate_hook, $target])) {
--				$hook_error = __("rejected by sendemail-validate hook");
--			}
-+			$hook_error = system_or_msg([$validate_hook, $target]);
+-			$hook_error = "rejected by sendemail-validate hook"
+-				if system($validate_hook, $target);
++			if (my $msg = system_or_msg([$validate_hook, $target])) {
++				$hook_error = __("rejected by sendemail-validate hook");
++			}
  			chdir($cwd_save) or die("chdir: $!");
  		}
--		validate_patch_error($fn, $hook_error) if $hook_error;
-+		if ($hook_error) {
-+			die sprintf(__("fatal: %s: rejected by sendemail-validate hook\n" .
-+				       "%s\n" .
-+				       "warning: no patches were sent\n"), $fn, $hook_error);
-+		}
+-		return $hook_error if $hook_error;
++		validate_patch_error($fn, $hook_error) if $hook_error;
  	}
  
  	# Any long lines will be automatically fixed if we use a suitable transfer
-@@ -1980,7 +1976,8 @@ sub validate_patch {
+@@ -1966,7 +1980,7 @@ sub validate_patch {
  			or die sprintf(__("unable to open %s: %s\n"), $fn, $!);
  		while (my $line = <$fh>) {
  			if (length($line) > 998) {
--				validate_patch_error($fn, sprintf(__("%s: patch contains a line longer than 998 characters"), $.));
-+				die sprintf(__("fatal: %s:%d is longer than 998 characters\n" .
-+					       "warning: no patches were sent\n"), $fn, $.);
+-				return sprintf(__("%s: patch contains a line longer than 998 characters"), $.);
++				validate_patch_error($fn, sprintf(__("%s: patch contains a line longer than 998 characters"), $.));
  			}
  		}
  	}
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 74225e3dc7a..65b30353719 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -415,7 +415,11 @@ test_expect_success $PREREQ 'reject long lines' '
- 	z512=$z64$z64$z64$z64$z64$z64$z64$z64 &&
- 	clean_fake_sendmail &&
- 	cp $patches longline.patch &&
--	echo $z512$z512 >>longline.patch &&
-+	cat >>longline.patch <<-EOF &&
-+	$z512$z512
-+	not a long line
-+	$z512$z512
-+	EOF
- 	test_must_fail git send-email \
- 		--from="Example <nobody@example.com>" \
- 		--to=nobody@example.com \
-@@ -424,7 +428,7 @@ test_expect_success $PREREQ 'reject long lines' '
- 		$patches longline.patch \
- 		2>actual &&
- 	cat >expect <<-\EOF &&
--	fatal: longline.patch: 35: patch contains a line longer than 998 characters
-+	fatal: longline.patch:35 is longer than 998 characters
- 	warning: no patches were sent
- 	EOF
- 	test_cmp expect actual
-@@ -533,15 +537,17 @@ test_expect_success $PREREQ "--validate respects relative core.hooksPath path" '
- 		--validate \
- 		longline.patch 2>actual &&
- 	test_path_is_file my-hooks.ran &&
--	cat >expect <<-\EOF &&
-+	cat >expect <<-EOF &&
- 	fatal: longline.patch: rejected by sendemail-validate hook
-+	fatal: command '"'"'$(pwd)/my-hooks/sendemail-validate'"'"' died with exit code 1
- 	warning: no patches were sent
- 	EOF
- 	test_cmp expect actual
- '
- 
- test_expect_success $PREREQ "--validate respects absolute core.hooksPath path" '
--	test_config core.hooksPath "$(pwd)/my-hooks" &&
-+	hooks_path="$(pwd)/my-hooks" &&
-+	test_config core.hooksPath "$hooks_path" &&
- 	test_when_finished "rm my-hooks.ran" &&
- 	test_must_fail git send-email \
- 		--from="Example <nobody@example.com>" \
-@@ -550,8 +556,9 @@ test_expect_success $PREREQ "--validate respects absolute core.hooksPath path" '
- 		--validate \
- 		longline.patch 2>actual &&
- 	test_path_is_file my-hooks.ran &&
--	cat >expect <<-\EOF &&
-+	cat >expect <<-EOF &&
- 	fatal: longline.patch: rejected by sendemail-validate hook
-+	fatal: command '"'"'$hooks_path/sendemail-validate'"'"' died with exit code 1
- 	warning: no patches were sent
- 	EOF
- 	test_cmp expect actual
 -- 
 2.31.1.482.g6691c1be520
 
