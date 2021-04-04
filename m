@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 04F39C43460
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 152CAC43461
 	for <git@archiver.kernel.org>; Sun,  4 Apr 2021 09:19:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C6BD561103
+	by mail.kernel.org (Postfix) with ESMTP id DED5B6136A
 	for <git@archiver.kernel.org>; Sun,  4 Apr 2021 09:19:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229709AbhDDJT7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S230226AbhDDJT7 (ORCPT <rfc822;git@archiver.kernel.org>);
         Sun, 4 Apr 2021 05:19:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60112 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229557AbhDDJT6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Apr 2021 05:19:58 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1801C0613E6
-        for <git@vger.kernel.org>; Sun,  4 Apr 2021 02:19:52 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id i18so4937315wrm.5
-        for <git@vger.kernel.org>; Sun, 04 Apr 2021 02:19:52 -0700 (PDT)
+        with ESMTP id S230089AbhDDJT7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Apr 2021 05:19:59 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3838EC06178C
+        for <git@vger.kernel.org>; Sun,  4 Apr 2021 02:19:54 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id g18-20020a7bc4d20000b0290116042cfdd8so1114739wmk.4
+        for <git@vger.kernel.org>; Sun, 04 Apr 2021 02:19:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=dcKQz6H6g2cv7p2iTAVawGWLM4fABs0Vv7ZPEt/Y1+Y=;
-        b=XbWw8A0VL//+VmP1fJQEpn46cDZS53RmKhSJzROfr2tQbjDTdxNe+qH5XdG6C7y676
-         Nl/1PGnZZtnl9KEY768sDQrdnhNYixymtbvEuBge3KAxP26yxwXLL7yqJVWY+hw5jKiE
-         SFRPz7XS7EWeSGFWa8TojEq0X2eig7rSY330E5/3e+SzEdwdBILgtWAzqsysc47Xn9by
-         NoHc388NBIottfqxTvPcXF6VOy8zG9K+tIv7Qrbivjk9q1C1OmTBhM443ylVqf8pmZUN
-         5E0s5StXjAF1DFguHZS8qeWaHtSP65GvcLpmpPxUlNPG9Uom9KYYPImjg3KtRzthTGk5
-         xnSg==
+        bh=2OQmQcgqY0vDUDXZFlJKifPbGJlMIYt9Njd6euY1zxE=;
+        b=smxE93RJ1XiGsGjXnm6HwIvQ3wQpTgPj/cmVfeZJAB0H8pK22K7+yvp8mXjVvkQqR5
+         Na8xfaKBDKeCBgxe80byRocMqIaAkGSQisvmDmeG1BuiaSHfGvjvo78oWZDNypLEAnK3
+         3DdtTtqI0hZBo0HjTnMJxRnQVxXK6EJ45nJXSrpibKCwkVb+I6gSF8S+tjuy106LXETK
+         6pv9eAwZh+fWnRK+nGcsYbKbL9aC9BGTstiURJIt9+zolml5lkpabpBUlu7YffNZnPLV
+         35M9OC9rPJ1vElfcr5Bks2BiEvIdfEjl9+XkQf54B+YLcTeDbW/WC3QTazI9XVEp54lw
+         nQeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=dcKQz6H6g2cv7p2iTAVawGWLM4fABs0Vv7ZPEt/Y1+Y=;
-        b=ky93D0WX4RivxbMzo79sCUBp6mjW+c3ptWU4zhU33Eb+ro1HtqK4n7Qp0bHEZMrYcA
-         zURFK+T4KfxyfAp2c4j4IPlJ9MulSp53d7KJwrpMzIzAVXiR7+k2RcGSPX85fXrSj4UN
-         roviMxCfg9M4/ueXkYCBGIO+DB08FE01TyuuahT2XAPJwp4flVc06dOVkbjtjF4ge/ZK
-         gKsESAlIeFFqsfB7mwuNnmZASWrDfB1/NxI4uzFj6Idkjxw4FERZ+5k1vHCYsGKZVqKB
-         aRATFL/jdwalf3sYy5voDjhQZV4NkfxVBBtPISaFq1n48CzjRwAeJXi1mZvVRU1FcCbp
-         h74w==
-X-Gm-Message-State: AOAM532NNcdD4rM/JnUIlyz7GCu0VAf+5YNgyscyKUbbogxKV5qeVkW7
-        O8osGsHzGktl0kfSGeRrQ2tVs+TFE9yiTw==
-X-Google-Smtp-Source: ABdhPJwx1TBMebcZsg1EU3FqQRYmExXoUssHo5ZEdoP2vSdcVaC91FsoqzIELhy9HiVN2ocmm6JcHQ==
-X-Received: by 2002:adf:a3d3:: with SMTP id m19mr23967336wrb.24.1617527991056;
-        Sun, 04 Apr 2021 02:19:51 -0700 (PDT)
+        bh=2OQmQcgqY0vDUDXZFlJKifPbGJlMIYt9Njd6euY1zxE=;
+        b=HRilQCWLRNP2ZNfHG2LOAjbC6tL6lrk0tc49h+hzgcuJH7bYywipCvk8kWALaH4meq
+         SQwQC+WBRnKD3NfUa/lNymRHUUz6otRDMguTwK2+oKl1GsJRuHjiMMtDyVSQPPrgKMXY
+         oZMRxMalLfKNaEfJtw2O4SjdXMXSreOmkUnmDmMDxdGd+53g3ce+ybmCVM52LK7BYbS7
+         /eVPh1UQwjG80cHzGS/cJhhUNkR1BabMNjnk5S289r1If+x/q8B8S2oMSOZb8dXbgaw8
+         KYHt8lCB0BpWSeatisULabjM8nE76yd9fv4aNhACmh0258jLfCZigbISSCR/p+FISzDw
+         nciQ==
+X-Gm-Message-State: AOAM531CUfzLJzcADgC8WwQzdoJgIJ8eyeM+OQXHwhfm2ZayjcEDUTI/
+        DWl95Li19tvoOtI6enMukP6uGo09z61NJQ==
+X-Google-Smtp-Source: ABdhPJzFHNzREJE8U1XnRLaZN3qeeCbDKhJneXfEi8Ismywp/SEEGA5QIpj95VXNidXZkigsicYwLg==
+X-Received: by 2002:a7b:c396:: with SMTP id s22mr20128409wmj.38.1617527992769;
+        Sun, 04 Apr 2021 02:19:52 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id z25sm22480540wmi.23.2021.04.04.02.19.50
+        by smtp.gmail.com with ESMTPSA id z25sm22480540wmi.23.2021.04.04.02.19.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 04 Apr 2021 02:19:50 -0700 (PDT)
+        Sun, 04 Apr 2021 02:19:52 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -63,9 +63,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Emily Shaffer <emilyshaffer@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 1/4] git-send-email: replace "map" in void context with "for"
-Date:   Sun,  4 Apr 2021 11:19:43 +0200
-Message-Id: <patch-1.5-e37b861f239-20210404T091649Z-avarab@gmail.com>
+Subject: [PATCH v2 3/4] git-send-email: test full --validate output
+Date:   Sun,  4 Apr 2021 11:19:45 +0200
+Message-Id: <patch-3.5-15b59c226d4-20210404T091649Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.1.482.g6691c1be520
 In-Reply-To: <cover-0.5-00000000000-20210404T091649Z-avarab@gmail.com>
 References: <cover-0.3-00000000000-20210402T112946Z-avarab@gmail.com> <cover-0.5-00000000000-20210404T091649Z-avarab@gmail.com>
@@ -76,36 +76,65 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While using "map" instead of "for" or "map" instead of "grep" and
-vice-versa makes for interesting trivia questions when interviewing
-Perl programmers, it doesn't make for very readable code. Let's
-refactor this loop initially added in 8fd5bb7f44b (git send-email: add
---annotate option, 2008-11-11) to be a for-loop instead.
+Change the tests that grep substrings out of the output to use a full
+test_cmp, in preparation for improving the output.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- git-send-email.perl | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t9001-send-email.sh | 24 ++++++++++++++++++------
+ 1 file changed, 18 insertions(+), 6 deletions(-)
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index f5bbf1647e3..6893c8e5808 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -217,12 +217,12 @@ sub do_edit {
- 		$editor = Git::command_oneline('var', 'GIT_EDITOR');
- 	}
- 	if (defined($multiedit) && !$multiedit) {
--		map {
-+		for (@_) {
- 			system('sh', '-c', $editor.' "$@"', $editor, $_);
- 			if (($? & 127) || ($? >> 8)) {
- 				die(__("the editor exited uncleanly, aborting everything"));
- 			}
--		} @_;
-+		}
- 	} else {
- 		system('sh', '-c', $editor.' "$@"', $editor, @_);
- 		if (($? & 127) || ($? >> 8)) {
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index 1a1caf8f2ed..74225e3dc7a 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -422,8 +422,12 @@ test_expect_success $PREREQ 'reject long lines' '
+ 		--smtp-server="$(pwd)/fake.sendmail" \
+ 		--transfer-encoding=8bit \
+ 		$patches longline.patch \
+-		2>errors &&
+-	grep longline.patch errors
++		2>actual &&
++	cat >expect <<-\EOF &&
++	fatal: longline.patch: 35: patch contains a line longer than 998 characters
++	warning: no patches were sent
++	EOF
++	test_cmp expect actual
+ '
+ 
+ test_expect_success $PREREQ 'no patch was sent' '
+@@ -527,9 +531,13 @@ test_expect_success $PREREQ "--validate respects relative core.hooksPath path" '
+ 		--to=nobody@example.com \
+ 		--smtp-server="$(pwd)/fake.sendmail" \
+ 		--validate \
+-		longline.patch 2>err &&
++		longline.patch 2>actual &&
+ 	test_path_is_file my-hooks.ran &&
+-	grep "rejected by sendemail-validate" err
++	cat >expect <<-\EOF &&
++	fatal: longline.patch: rejected by sendemail-validate hook
++	warning: no patches were sent
++	EOF
++	test_cmp expect actual
+ '
+ 
+ test_expect_success $PREREQ "--validate respects absolute core.hooksPath path" '
+@@ -540,9 +548,13 @@ test_expect_success $PREREQ "--validate respects absolute core.hooksPath path" '
+ 		--to=nobody@example.com \
+ 		--smtp-server="$(pwd)/fake.sendmail" \
+ 		--validate \
+-		longline.patch 2>err &&
++		longline.patch 2>actual &&
+ 	test_path_is_file my-hooks.ran &&
+-	grep "rejected by sendemail-validate" err
++	cat >expect <<-\EOF &&
++	fatal: longline.patch: rejected by sendemail-validate hook
++	warning: no patches were sent
++	EOF
++	test_cmp expect actual
+ '
+ 
+ for enc in 7bit 8bit quoted-printable base64
 -- 
 2.31.1.482.g6691c1be520
 
