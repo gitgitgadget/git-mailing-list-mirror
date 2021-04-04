@@ -2,177 +2,142 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 02AEAC433B4
-	for <git@archiver.kernel.org>; Sun,  4 Apr 2021 00:46:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CE99C433ED
+	for <git@archiver.kernel.org>; Sun,  4 Apr 2021 01:02:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C8DDD61278
-	for <git@archiver.kernel.org>; Sun,  4 Apr 2021 00:46:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2463B61358
+	for <git@archiver.kernel.org>; Sun,  4 Apr 2021 01:02:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236621AbhDDAqy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 3 Apr 2021 20:46:54 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:55147 "EHLO
+        id S236644AbhDDBCk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 3 Apr 2021 21:02:40 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:54733 "EHLO
         pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236526AbhDDAqx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Apr 2021 20:46:53 -0400
+        with ESMTP id S236526AbhDDBCj (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Apr 2021 21:02:39 -0400
 Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2B374137296;
-        Sat,  3 Apr 2021 20:46:50 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6653713736A;
+        Sat,  3 Apr 2021 21:02:36 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=zXfsXpT4RsaW6rRHVi1QOe2uX
-        EE=; b=AxmdbghlK65tyz7KRD4hl3IYsHmTlaRVA6k40b19yx5c7w9PQG9uSxHR3
-        MIEbXnyXV9WuXFiADjWIFSmXpueifWkAJPIUtaVLtcJ3HgItHOtIKj63KwAtQYW3
-        OormIezcm/8OyVmkRlspTb8fJSmbLPPdSf6ykIYVvXpHDq5/Mo=
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=uNIRjQF2u14cwWS2hM92J8669SE=; b=VBdN/L
+        K0uWDLbCEPV+1zr//D6V5GUlaMzPaoKw4On6+DzSmiAEuNgCUblmoRvRJq+6Y4Qj
+        +gHYEN5wfmUX5xIx1nTKVob5wGeUBJO0oQkE6EoHNAZv7VoISm4qCu0qjzjwPYXd
+        Bj1KqIParClXTnsxjwXpS3r9Yx9j7mp5gj9+Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; q=dns; s=sasl; b=ID020FimLnO+EQU0F6q
-        Ezer1IiZn0dUCgjq2J5FuCoUv4S5TESIQrCpjJ5Ci0QbCefhD9iFIdT5/3mP/I+U
-        thbi7nPvHbHYJ7W76E5YFDKzUm2gm4OXZjBz8tZARYPuRiOq/pwD97yRpuEQbX7+
-        9XEOm71IgWZGcxEcAuklkRFA=
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=j2hvVUljlqzOhT+AFu0H5bkNB7R4QshI
+        Ce1Cvbl/yuUf8rK3GT7G63Dwj5asQinPmZV/cXIpLi0vTBi+OytoHj3WZWRHgYjp
+        mQxoifLu4z7Rih8ziQZrg2JYUNI2HHPqKZ1YWGF0WkLUZ2DwSiZIfBBzki6oYMNZ
+        7HLkv9t0Iz8=
 Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 253C1137295;
-        Sat,  3 Apr 2021 20:46:50 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5FD89137369;
+        Sat,  3 Apr 2021 21:02:36 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5769C137294;
-        Sat,  3 Apr 2021 20:46:47 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9695A137368;
+        Sat,  3 Apr 2021 21:02:33 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Firmin Martin <firminmartin24@gmail.com>
-Cc:     Bagas Sanjaya <bagasdotme@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH][GSoC] user-manual.txt: fix empty heading of introduction
-References: <20210402121303.344914-1-firminmartin24@gmail.com>
-        <xmqqwntk2xgy.fsf@gitster.g>
-        <7530f132-cd72-bb6f-21f1-1ee23ca5e20f@gmail.com>
-Date:   Sat, 03 Apr 2021 17:46:45 -0700
-Message-ID: <xmqq5z1227wq.fsf@gitster.g>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Jerry Zhang <jerry@skydio.com>,
+        Git Mailing List <git@vger.kernel.org>, ross@skydio.com,
+        abe@skydio.com, brian.kubisiask@skydio.com,
+        Jerry Zhang <jerryxzha@googlemail.com>
+Subject: Re: [PATCH 1/1] git-apply: Allow simultaneous --cached and --3way
+ options
+References: <20210403013410.32064-1-jerry@skydio.com>
+        <20210403013410.32064-2-jerry@skydio.com>
+        <CABPp-BGhvQF9k1Jw9NPbZWMkNSffqR777-4S-y-Sh=Etvw-SAA@mail.gmail.com>
+        <xmqqy2e00zaf.fsf@gitster.g>
+Date:   Sat, 03 Apr 2021 18:02:31 -0700
+In-Reply-To: <xmqqy2e00zaf.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
+        02 Apr 2021 21:26:00 -0700")
+Message-ID: <xmqq1rbq276g.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 3C369136-94DF-11EB-B6F1-E43E2BB96649-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 703A284C-94E1-11EB-A7B1-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Bagas Sanjaya <bagasdotme@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On 03/04/21 04.22, Junio C Hamano wrote:
->> I would have expected to see "before and after".  Is it too obvious
->> what the postimage would be?  Otherwise, a better presentation would
->> be to show (an excerpt from) diff between preimage and postimage
->> output.
->> Thanks.
->>=20
-> Attached is `diff -u` of generated HTML output, before and after this
-> patch. The HTML is generated using Asciidoctor.
-
-Unfortunately, that is more-or-less unreadable gunk.  Even for the
-first few places that have differences, the output of diff between
-raw HTML is not suited to spot that the first entry in the TOC has
-changed classs from preface to chapter or how they are treated
-differently.
-
-What I did before sending out the message was to generate HTML for
-the before and after versions, render them into text and then run
-diff on them.  It showed that most changes are the chapter numbering
-and cross reference, of course.  This was still hard to see, but at
-least it was possible to eyeball what was going on [*].
-
-While Firmin showed only the "before" version of .xml, a diff
-between before-and-after versions of .xml turned out to be far
-easier to see how the change propagates down the toolchain than
-either of the above two.  It would have been  the best to have that,
-instead of just the "before" image, in the explanation.
-
-    --- user-manual.xml	2021-04-03 17:36:14.804344928 -0700
-    +++ user-manual.xml	2021-04-03 17:36:44.599025868 -0700
-    @@ -7,8 +7,8 @@
-     <bookinfo>
-         <title>Git User Manual</title>
-     </bookinfo>
-    -<preface>
-    -<title></title>
-    +<chapter id=3D"introduction">
-    +<title>Introduction</title>
-     <simpara>Git is a fast distributed revision control system.</simpara=
+> It might be OK to only allow the combination when everything auto
+> resolves cleanly and fail the operation without touching either the
+> index or the working tree.  Pretending there was no delete/modify
+> conflicts or adding contents with unresolved conflicts as if nothing
+> bad happened as stage 0 entries would never be acceptable.
 >
-     <simpara>This manual is designed to be readable by someone with basi=
-c UNIX
-     command-line skills, but no previous knowledge of Git.</simpara>
-    @@ -31,7 +31,7 @@
-     without any explanation.</simpara>
-     <simpara>Finally, see <xref linkend=3D"todo"/> for ways that you can=
- help make this manual more
-     complete.</simpara>
-    -</preface>
-    +</chapter>
-     <chapter id=3D"repositories-and-branches">
-     <title>Repositories and Branches</title>
-     <section id=3D"how-to-get-a-git-repository">
+> Perhaps
+>
+>  * Error out if the index does not match HEAD.
+>
+>  * Try applying to the contents in the index.  If there are any
+>    structural conflicts, leave these paths at higher stage and do
+>    not touch their contents.
+>
+>  * For paths without structural conflict but need content merges,
+>    attempt ll-merge of the contents.  If autoresolves cleanly,
+>    register the result at stage 0.  Otherwise, discard the failed
+>    conflicted merge, and leave stages 1, 2 and 3 as they are.
+>
+>  * Exit with status 0 if and only if everything has resolved
+>    cleanly.  Otherwise, exit with non-zero status.
+>
+> would be the minimally-acceptably-safe behaviour.
 
-If an updated version is planned, I'd expect it to come with
-something like the above indented patch plus a brief explanation of
-side effects (i.e. we lost preface and we have renumbered the
-chapters) in its proposed log message.
+Note that, while a lot unsatisfactory than the above, the following
+would also be acceptable.
 
-Thanks.
+  * Error out if the index does not match HEAD.
 
+  * Try applying to the contents in the index.  If there are any
+    structural conflicts, abort without touching the index (or the
+    working tree --- but that is best left unsaid as we all know we
+    are talking about '--cached').
 
-[Footnote]
+  * For paths without structural conflict but need content merges,
+    attempt ll-merge of the contents.  If ALL SUCh PATHS autoresolve
+    cleanly, register their result at stage 0.  Otherwise, abort
+    without touching the index (or the working tree).
 
-* The text-rendered HTML would compare like this (just an excerpt).
+  * Exit with status 0 if and only if everything has resolved
+    cleanly.  Otherwise, exit with non-zero status (and never touch
+    the index or the working tree).
 
---- /var/tmp/before.txt	2021-04-03 17:40:07.777307995 -0700
-+++ /var/tmp/after.txt	2021-04-03 17:39:51.423836495 -0700
-@@ -4,255 +4,259 @@
-=20
-    Table of Contents
-=20
--   [1]1. Repositories and Branches
-+   [1]1. Introduction
-=20
--   [2]How to get a Git repository
-+   [2]2. Repositories and Branches
-=20
+The version I earlier gave would give a good starting point to
+manually resolve the conflicts in the index and when resolved fully,
+it is safely recorded as the result of applying the patch on top of
+HEAD, because the non-final results are all in higher stages, and
+all the paths at stage 0 are either from the HEAD and unaffected by
+the merge, or the ones that cleanly resolved.  The "the index must
+match HEAD" upfront is to ensure that.  Otherwise it would make it
+very tempting, after spending all that time to resolve the conflicts
+only in the higher stages of the index, to commit the index as-is to
+make a child commit of HEAD and record that it is the result of
+applying the patch.  But if the starting condition had a change
+unrelated to the change the patch brings in already in the index,
+the resulting commit would be _more_ than what the patch did to the
+codebase.
 
-...
+The simplified version would let the user proceed only when the
+conflicts can mechanically resolved, but it still has the "make sure
+what is recorded is only from the incoming patch" safety.
 
-TOC numbering is of course off by one, as the patch promotes the
-preface into the first chapter.
-
-...
-
--   [114]B. Notes and todo list for this manual
-+   [116]Todo list
-=20
--   [115]Todo list
-+                            Chapter=C2=A01.=C2=A0Introduction
-=20
-...
-
-And of course, we now have the chapter title.
-
-...
-
-    Git is a fast distributed revision control system.
-=20
-    This manual is designed to be readable by someone with basic UNIX
-    command-line skills, but no previous knowledge of Git.
-=20
--   [116]Chapter=C2=A01, Repositories and Branches and [117]Chapter=C2=A0=
-2, Exploring
-+   [117]Chapter=C2=A02, Repositories and Branches and [118]Chapter=C2=A0=
-3, Exploring
-
-...
-
-Cross references are all off-by-one, too.
+Of course, if the user is trying to cherry-pick parts of multiple
+patches and combine them to create a new single commit, the second
+and subsequent applycation of the patches would be thwarted by the
+"the index must match HEAD" rule, but it is far safer to make each
+step into its own snapshot commit during such a workflow to combine
+multiple patch pieces and then squash them together after finishing,
+than carrying an intermediate result only in the index and risk
+losing work you did in the previous step(s) to incorrect resolution
+in later step(s).
