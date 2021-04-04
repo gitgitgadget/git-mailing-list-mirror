@@ -2,186 +2,179 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4319DC433B4
-	for <git@archiver.kernel.org>; Sun,  4 Apr 2021 09:20:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 88FF3C433ED
+	for <git@archiver.kernel.org>; Sun,  4 Apr 2021 09:53:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 188C861365
-	for <git@archiver.kernel.org>; Sun,  4 Apr 2021 09:20:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4BF04611BE
+	for <git@archiver.kernel.org>; Sun,  4 Apr 2021 09:53:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230252AbhDDJUB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 4 Apr 2021 05:20:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60116 "EHLO
+        id S229578AbhDDJxe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 4 Apr 2021 05:53:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39026 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229557AbhDDJT7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Apr 2021 05:19:59 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82F69C061788
-        for <git@vger.kernel.org>; Sun,  4 Apr 2021 02:19:53 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id f6so2307232wrv.12
-        for <git@vger.kernel.org>; Sun, 04 Apr 2021 02:19:53 -0700 (PDT)
+        with ESMTP id S229483AbhDDJxd (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Apr 2021 05:53:33 -0400
+Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA564C061756
+        for <git@vger.kernel.org>; Sun,  4 Apr 2021 02:53:27 -0700 (PDT)
+Received: by mail-io1-xd2e.google.com with SMTP id k8so7004847iop.12
+        for <git@vger.kernel.org>; Sun, 04 Apr 2021 02:53:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=/qgOKT3niMb3thE5qVdAccAtkqEJ4Ad1PdS/GhsNDus=;
-        b=aiBHovWIIOk5YgE1VIEBjI/fxzuciNLxViNr+I6TUyLRV3ylj0SqtMFhI7/1o2bAQC
-         NEbgirdHeOXX4zK+hs7PaI/BNGwshNnD7nwgPlcktbdiq9QNQtryPsAcm4gSC0Hmcelg
-         Ye/xHqU+YmB7QZUr9sYCSm/JJVrNKzANMIS8cSKKh0tlF970eFMKQt6fa9i6iRsvphN5
-         l1ZxVenvK6lUHFpEqfUoSJApHhHVm9KV40lO46Muu99GWBxqaqBeEmhgLRRf4BkSE9ml
-         9/gS7+d/GO7FyiXGKF2BN7uISuJwqkahqQ0GXbOSy8BdedwljhMVvXYR7uo8vhNKHQv2
-         yMJA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=tKwQhOLBpNjarltx/f7nOl/vzQr+LOwlXxx2qP5G/uo=;
+        b=nsBA6baiTAmB9RAvvKlNP/gH0WVFGQTT107Y2Yg6ChLEoUU9geEUePCT2QesJXysi1
+         JqcFV+ZyhorPRqIKkRYa6T64mbZ+nGc+jOy03AauNgUR55q0Wa04RA85cvJ5N1aboc6O
+         fz9AdGnpLlsHlUM8smsHsHLccf6z1Bp0Dh7tb/GzaPgue+nWLUStjQ6kUtKrgrgrgOIe
+         YoFdmmKb1LwDhqwbKsIbbSotzcWe2oWbCKF0ImxyV58y+E3IuVfRXglf13HVrkXZlaKZ
+         p3Qj0pQSVIyc0QselHpI8wpQb2n42JHzWUvaN3xrfddPHmsGqHtzNNRwX6hNdRHAI1cT
+         IHdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=/qgOKT3niMb3thE5qVdAccAtkqEJ4Ad1PdS/GhsNDus=;
-        b=g57gNZ0O6LyImXrbCB0RaZLJrv65htQQmpb8zqigHi3xsK0FA5woLAwGcYfAX3OX6f
-         onKRxZV1WXagx+NbbuA7XkMikT3iMCvHU7VHGkXJQ0vh+7+h7rKcCD+wRMfztKl3gbCr
-         sc2YvThsfV+tu1V9q/zZOiLeKoFhrAKkW6+1iEMQ1NI0GE1GRBqrKAPXV+IOpPw1vV8/
-         nTITqb/1UoQN7q274a66UyelN7Zu5TshYMRYaNVBfhmlfx2KMvhanvqN19v/CDgb4HEh
-         FQj2krgrS8MUfZ4R/LdqPyjJU4KEwBRmtDZ69gDP0fo8EBY6cHZ05StUiE6O1iJf0dO7
-         4AKA==
-X-Gm-Message-State: AOAM5300F43JvN3i0ailD7MwUeXxeeCdCQE9bH6VZt8XaaMUV7bxQpaZ
-        BIHCEdD6+E/tuRy/a5oox+6e/wplNZ/Lcw==
-X-Google-Smtp-Source: ABdhPJzp/eik1ssSP/dclJL/cTHL6Y7gbVgGlBNkOAB9Ok9WbTweedWrWIsQdMRheknUPbIwspQvQA==
-X-Received: by 2002:a5d:58e5:: with SMTP id f5mr9908651wrd.131.1617527991898;
-        Sun, 04 Apr 2021 02:19:51 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id z25sm22480540wmi.23.2021.04.04.02.19.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 04 Apr 2021 02:19:51 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 2/4] git-send-email: refactor duplicate $? checks into a function
-Date:   Sun,  4 Apr 2021 11:19:44 +0200
-Message-Id: <patch-2.5-f236f083e36-20210404T091649Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.31.1.482.g6691c1be520
-In-Reply-To: <cover-0.5-00000000000-20210404T091649Z-avarab@gmail.com>
-References: <cover-0.3-00000000000-20210402T112946Z-avarab@gmail.com> <cover-0.5-00000000000-20210404T091649Z-avarab@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=tKwQhOLBpNjarltx/f7nOl/vzQr+LOwlXxx2qP5G/uo=;
+        b=UvR9JhFr/Dv8WOoVBi4s5XcsYw/eYkdXF8vci6j/wufuhOjZSOVNds3BJh1WSnmNwM
+         RX4XsG52UgRs+OR9P4z2/DXTvMggM2f2Hrxl7nGo0zBd8yz/zrBv8hkd/b/sXDIhqLpv
+         UqJFwc2u98m1MZfTftEcWIMM5yJ7oBc9Wl5828ggEUAnIT9gdqK8ccbEprPmnNCX/g7D
+         dLiPQ9pE6p2rk+egfn3qKKRSmz67o68fYfkfsF/5XJBW0nPHlP9xcvdcOexv+iT/6KA4
+         Rb49j+C0VpOlZ44rj/6AsGJWitAxOV0E31GqNhqjQYuh6y8TFxR5a/0PBngXpeB75wRq
+         AuNA==
+X-Gm-Message-State: AOAM531Bn5qTgqL75Sle4db0ctA46w0zh619jHuOjeeaCJ0KNcXbN7LH
+        8CsXxmqeIglswKkjhxpwzEnq3hwoounbSkKNQ4I=
+X-Google-Smtp-Source: ABdhPJxTF23GEhgdifA4wq7SBtQyn7SgIf6QaQxU4oxRgAaK/OtgekCf0qj4m154HOz0R3wse8Qu/sT6yDOlk0f3kQ8=
+X-Received: by 2002:a02:94a9:: with SMTP id x38mr19475704jah.50.1617530006505;
+ Sun, 04 Apr 2021 02:53:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <pull.913.v5.git.1617185147.gitgitgadget@gmail.com>
+ <pull.913.v6.git.1617369973328.gitgitgadget@gmail.com> <xmqqim544dl4.fsf@gitster.g>
+ <CAOLTT8QvPPJ4jYXjch+RhdHDnvDT6Woh2oQoX2LcoiVX_t7jZQ@mail.gmail.com> <CAP8UFD1=v_dfjKT2zY2=DFhZO1RWh9-++m5gAOn5WmwuV2pJXg@mail.gmail.com>
+In-Reply-To: <CAP8UFD1=v_dfjKT2zY2=DFhZO1RWh9-++m5gAOn5WmwuV2pJXg@mail.gmail.com>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Sun, 4 Apr 2021 17:53:10 +0800
+Message-ID: <CAOLTT8TpDBmXgTNuV_bS6sYfv6QCh9ZznMq7vUmVDP7PzGmRRQ@mail.gmail.com>
+Subject: Re: [PATCH v6] [GSOC] trailer: add new trailer.<token>.cmd config option
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Refactor the duplicate checking of $? into a function. There's an
-outstanding series[1] wanting to add a third use of system() in this
-file, let's not copy this boilerplate anymore when that happens.
+Christian Couder <christian.couder@gmail.com> =E4=BA=8E2021=E5=B9=B44=E6=9C=
+=884=E6=97=A5=E5=91=A8=E6=97=A5 =E4=B8=8B=E5=8D=884:52=E5=86=99=E9=81=93=EF=
+=BC=9A
+>
+> On Sun, Apr 4, 2021 at 7:44 AM ZheNing Hu <adlternative@gmail.com> wrote:
+>
+> > This may be an off-topic question:
+> > I wanted to use `shortlog -s` instead of the document example,
+> > But I found a very strange place:
+> > Here we have two shell scripts:
+> >
+> > $ cat ~/bin/gcount
+> > #!/bin/sh
+> > if test "$1" !=3D ""
+>
+> It's better to use `test -n "$1"` instead of `test "$1" !=3D ""`.
+>
+> > then
+> > git log -1 --author=3D"$1"
+> > else
+> > echo "hello there"
+> > fi
+> >
+> > cat ~/bin/gcount2
+> > #!/bin/sh
+> > if test "$1" !=3D ""
+> > then
+> > git shortlog -1 --author=3D"$1"
+> > else
+> > echo "hello there"
+> > fi
+> >
+> > If I use them in the terminal, there is no problem with them,
+> >
+> > $ ~/bin/gcount gitster
+> > commit 142430338477d9d1bb25be66267225fb58498d92
+> > (interpret-trailers-command-arg, abc5b)
+> > Author: Junio C Hamano <gitster@pobox.com>
+> > Date:   Mon Mar 22 14:00:00 2021 -0700
+> >
+> >     The second batch
+> >
+> >     Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> >
+> > $ ~/bin/gcount2 gitster
+> > Junio C Hamano (1):
+> >       The second batch
+> >
+> > if I use .cmd to run these scripts, the situation is totally different:
+> >
+> > $ git config -l | grep trailer
+> > trailer.cnt.ifexists=3Dadd
+> > trailer.cnt.key=3DCnt:
+> > trailer.cnt.cmd=3D~/bin/gcount
+>
+> The script/command used in ".cmd" or ".command" should really return a
+> short string with no newline or line feed char in it. Here your script
+> can return multiple lines which could mess things up and be difficult
+> to understand.
+>
 
-1. http://lore.kernel.org/git/87y2esg22j.fsf@evledraar.gmail.com
+Yes, it's just a small test, I want use `git shortlog -s --author=3D"$1"` t=
+o show
+commit count of one author.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- git-send-email.perl | 48 +++++++++++++++++++++++++++++----------------
- 1 file changed, 31 insertions(+), 17 deletions(-)
+> > $ git interpret-trailers --trailer=3D"cnt:gitster" <<EOF
+> > EOF
+> >
+> > Cnt: hello there
+> > Cnt: commit 142430338477d9d1bb25be66267225fb58498d92
+> > Author: Junio C Hamano <gitster@pobox.com>
+> > Date:   Mon Mar 22 14:00:00 2021 -0700
+> >
+> >     The second batch
+> >
+> >     Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> >
+> > And if I turn to use gcount2:
+> > $ git config trailer.cnt.cmd "~/bin/gcount2"
+> > $ git interpret-trailers --trailer=3D"cnt:gitster" <<EOF
+> > EOF
+> >
+> > Cnt: hello there
+> > Cnt:
+> >
+> > It looks like `shortlog` does not write to standard output.
+>
+> In shortlog's doc there is:
+>
+> "If no revisions are passed on the command line and either standard
+> input is not a terminal or there is no current branch, git shortlog
+> will output a summary of the log read from standard input, without
+> reference to the current repository."
+>
+> I guess that's what's happening here.
+>
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 6893c8e5808..9724a9cae27 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -212,22 +212,31 @@ sub format_2822_time {
- my $multiedit;
- my $editor;
- 
-+sub system_or_msg {
-+	my ($args, $msg) = @_;
-+	system(@$args);
-+	my $signalled = $? & 127;
-+	my $exit_code = $? >> 8;
-+	return unless $signalled or $exit_code;
-+
-+	return sprintf(__("failed to run command %s, died with code %d"),
-+		       "@$args", $exit_code);
-+}
-+
-+sub system_or_die {
-+	my $msg = system_or_msg(@_);
-+	die $msg if $msg;
-+}
-+
- sub do_edit {
- 	if (!defined($editor)) {
- 		$editor = Git::command_oneline('var', 'GIT_EDITOR');
- 	}
-+	my $die_msg = __("the editor exited uncleanly, aborting everything");
- 	if (defined($multiedit) && !$multiedit) {
--		for (@_) {
--			system('sh', '-c', $editor.' "$@"', $editor, $_);
--			if (($? & 127) || ($? >> 8)) {
--				die(__("the editor exited uncleanly, aborting everything"));
--			}
--		}
-+		system_or_die(['sh', '-c', $editor.' "$@"', $editor, $_], $die_msg) for @_;
- 	} else {
--		system('sh', '-c', $editor.' "$@"', $editor, @_);
--		if (($? & 127) || ($? >> 8)) {
--			die(__("the editor exited uncleanly, aborting everything"));
--		}
-+		system_or_die(['sh', '-c', $editor.' "$@"', $editor, @_], $die_msg);
- 	}
- }
- 
-@@ -698,9 +707,7 @@ sub is_format_patch_arg {
- if ($validate) {
- 	foreach my $f (@files) {
- 		unless (-p $f) {
--			my $error = validate_patch($f, $target_xfer_encoding);
--			$error and die sprintf(__("fatal: %s: %s\nwarning: no patches were sent\n"),
--						  $f, $error);
-+			validate_patch($f, $target_xfer_encoding);
- 		}
- 	}
- }
-@@ -1938,6 +1945,12 @@ sub unique_email_list {
- 	return @emails;
- }
- 
-+sub validate_patch_error {
-+	my ($fn, $error) = @_;
-+	die sprintf(__("fatal: %s: %s\nwarning: no patches were sent\n"),
-+		    $fn, $error);
-+}
-+
- sub validate_patch {
- 	my ($fn, $xfer_encoding) = @_;
- 
-@@ -1952,11 +1965,12 @@ sub validate_patch {
- 			chdir($repo->wc_path() or $repo->repo_path())
- 				or die("chdir: $!");
- 			local $ENV{"GIT_DIR"} = $repo->repo_path();
--			$hook_error = "rejected by sendemail-validate hook"
--				if system($validate_hook, $target);
-+			if (my $msg = system_or_msg([$validate_hook, $target])) {
-+				$hook_error = __("rejected by sendemail-validate hook");
-+			}
- 			chdir($cwd_save) or die("chdir: $!");
- 		}
--		return $hook_error if $hook_error;
-+		validate_patch_error($fn, $hook_error) if $hook_error;
- 	}
- 
- 	# Any long lines will be automatically fixed if we use a suitable transfer
-@@ -1966,7 +1980,7 @@ sub validate_patch {
- 			or die sprintf(__("unable to open %s: %s\n"), $fn, $!);
- 		while (my $line = <$fh>) {
- 			if (length($line) > 998) {
--				return sprintf(__("%s: patch contains a line longer than 998 characters"), $.);
-+				validate_patch_error($fn, sprintf(__("%s: patch contains a line longer than 998 characters"), $.));
- 			}
- 		}
- 	}
--- 
-2.31.1.482.g6691c1be520
+This solved my confusion ;-)
 
+> > Note that in `short_log.c`, log will be output to `log->file`.
+> > Does it make the above behavior different?
+> > Is there a good solution?
+>
+> I would try to pass a revision on the command line.
+
+Thanks, Christian.
+--
+ZheNing Hu
