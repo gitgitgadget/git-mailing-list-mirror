@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67AC8C433B4
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B5C1C433ED
 	for <git@archiver.kernel.org>; Sun,  4 Apr 2021 05:17:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 21E4861262
+	by mail.kernel.org (Postfix) with ESMTP id 5B0336135F
 	for <git@archiver.kernel.org>; Sun,  4 Apr 2021 05:17:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229571AbhDDFKS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 4 Apr 2021 01:10:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34522 "EHLO
+        id S231428AbhDDFRO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 4 Apr 2021 01:17:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229517AbhDDFKR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Apr 2021 01:10:17 -0400
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0B96C061756
-        for <git@vger.kernel.org>; Sat,  3 Apr 2021 22:10:11 -0700 (PDT)
-Received: by mail-pf1-x432.google.com with SMTP id c204so2413934pfc.4
-        for <git@vger.kernel.org>; Sat, 03 Apr 2021 22:10:11 -0700 (PDT)
+        with ESMTP id S229517AbhDDFRN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Apr 2021 01:17:13 -0400
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DFC5C061756
+        for <git@vger.kernel.org>; Sat,  3 Apr 2021 22:17:09 -0700 (PDT)
+Received: by mail-pj1-x102f.google.com with SMTP id kr3-20020a17090b4903b02900c096fc01deso4330838pjb.4
+        for <git@vger.kernel.org>; Sat, 03 Apr 2021 22:17:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:references:from:message-id:date:user-agent:mime-version
          :in-reply-to:content-transfer-encoding:content-language;
-        bh=ajLEEh8WlLfLTS62I+vxPAPzWF3fcu+k15Nbs02Q3gA=;
-        b=nwP0++kyFujSHBWm/SZ10tkoHcyjlvQScvlsNWw9cJNOdzo1wmg5b4dGoSFt6LhRLc
-         Yf6KqwOMDfgZ5jJ7It2qQU7//XS9c9mWIsn/hNCz54YyMbO3yd8Oh5ANYGZhyS97X6An
-         p/bjzEGBNh/JKKyXRTprlxptghPaYc/zw7cQE2UI0apPRu+h6gMgqbVIv68EsA2ed4fb
-         I3jMdHedAF52MD5cj1V9GR6eOvHplREeALT9qnUJRtKbdng+Zzo06IvjlKFs/Qbkx6N2
-         hsG7e0X0Dd7lXJj+XyqofdNdTUU78fHEKpFFxga+AUcbOik+2J7aFij7RpwnzDI0yNVP
-         arUQ==
+        bh=3ZHD3erzezUm99ATfgmhQVFogLBwraMiObodGIk31RI=;
+        b=iD03hzR75BB64ee+o+KEaoBHsxCC/XcxU/g2EVKfftZAXw7D89XYekN7wFgfLRaJsG
+         q7rLQp7jPb51ghl7Yhis9FO+w3cM1TCLaEJ+nZaMpbMQTt8CUWYeok+f9ShXGlNil9u+
+         dQxiQ8fzN2siH/zR5/ZDkK0zobVOIlYFPfls/43aGnmZoYJrJ1vWrQ5mfRQJEpXLje3G
+         n30x6Hc3pyOLG3I42oBldtoTdseSK7WKTAxzv9rgjYeeHfqG7mNoliUVPni97ldCSgXu
+         0OXnfjy+/S0bXJR75yeq7dvo2q3vwGhOxM0Kw+5a5yCC/KNoGBlUkskKwPg8bVoTlMBH
+         j41w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-transfer-encoding
          :content-language;
-        bh=ajLEEh8WlLfLTS62I+vxPAPzWF3fcu+k15Nbs02Q3gA=;
-        b=uT59EZ7oe82IeeD0gHiVKCjD+zpRowSSjvewcnzBTNtBUb+dy/TSQ4muGVkXFd14Jz
-         /yIgjeZHKxkIq42KlJFP+rgAZuwYJqJQX8pOCrepgXbPXUp6OH64b/xAZLmrqEKgleQb
-         RTncC6ccEby9T0axfLykWcp/KMcq6+QzKLNR42v2YNJY+zNP/I3TwaJF9IJvzTJ47VK+
-         fL1g35cVVesxzbbUeg7CK8HQlYwiHD+v1wd6wVHnlvDiPMq+n88M/4D+oS6VPj0Wn1An
-         h6NXFgoPbMu/b90TXceIInzRJRPMeqqNz6Eey0BahPzbn2qhTDczXonlNZArGVxeF9rl
-         tv7g==
-X-Gm-Message-State: AOAM530Jkhx5H2qNMP51GDX7DldkEzYyC4maqccYNl4/aijQKzfcODP1
-        o+rrFAtIdEWJgnkQDdRJg6BSYgiOgCVmEgRmaLM=
-X-Google-Smtp-Source: ABdhPJxJKGmBqMMuHCvWVTHmgKdlMsSjHVTTjOA2O4IGGz0OD2/MSGNtFHKXSFNfsf/qz0qulRSAgQ==
-X-Received: by 2002:a63:1c48:: with SMTP id c8mr17289293pgm.234.1617513011228;
-        Sat, 03 Apr 2021 22:10:11 -0700 (PDT)
+        bh=3ZHD3erzezUm99ATfgmhQVFogLBwraMiObodGIk31RI=;
+        b=conQyTkoVNV8ZcY1f5kCXRKEe4Xq6rAFexU7E//U+0Vs+YQeBC7i5AfHdn+rKsoe9B
+         8ud/9yZ5+jgnY4FBAD6mI+0cOZJhWK0WyieXuAluHcXdtUmCEWl0h9EXTLaDvYwbiWeI
+         sfElaXZB6uwnQtIWVUv/YQsHo82w2JEIDEMTnqC0Vt2rtbnxYgrmCyPgPSZl5zM64G4u
+         XueggOAsdxSWJHSPuWo0fP/ffJovYjZckmOYzveGb3vLRjMlVLzjYdu0Yso4ovvbqsjC
+         RxiyJDdv4P0hX8nAL9MPftFqM+/emcPzeS3qPFIQ5EjBxm1J6nSukdmD5Y6gLt59ONPi
+         xh0w==
+X-Gm-Message-State: AOAM531ESCmhfKbO/ZmlXfB46aHBOfE0B/fCLpgwKJtuFQHkbJp3YlAa
+        2+cGUUyL9pqq4U2ooXNl0TUKM9x543kfdFXmcwI=
+X-Google-Smtp-Source: ABdhPJw7Aq+9jjjHi3DcGK9mXlqzAb2/i2D3IG3f2AOuPi63ymKlg7dNqAvv5qzbqvulYCXSZI1m/Q==
+X-Received: by 2002:a17:902:9f85:b029:e6:f010:a57e with SMTP id g5-20020a1709029f85b02900e6f010a57emr18649609plq.61.1617513428770;
+        Sat, 03 Apr 2021 22:17:08 -0700 (PDT)
 Received: from [192.168.10.22] ([103.77.186.50])
-        by smtp.gmail.com with ESMTPSA id g26sm12567495pge.67.2021.04.03.22.10.09
+        by smtp.gmail.com with ESMTPSA id q205sm13334224pfc.126.2021.04.03.22.17.07
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 03 Apr 2021 22:10:10 -0700 (PDT)
+        Sat, 03 Apr 2021 22:17:08 -0700 (PDT)
 Subject: Re: [PATCH v3] cache-tree.c: remove implicit dependency on
  the_repository
 To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
@@ -63,8 +63,8 @@ References: <pull.915.v2.git.1616772930098.gitgitgadget@gmail.com>
  <pull.915.v3.git.1617465421353.gitgitgadget@gmail.com>
  <xmqqpmzazund.fsf@gitster.g>
 From:   Chinmoy Chakraborty <chinmoy12c@gmail.com>
-Message-ID: <16da2d91-9eda-ddf4-dd87-e07fb2bfbbcb@gmail.com>
-Date:   Sun, 4 Apr 2021 10:41:35 +0530
+Message-ID: <92e1255b-f058-04ef-1901-90cc7d7fb979@gmail.com>
+Date:   Sun, 4 Apr 2021 10:48:33 +0530
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.9.0
 MIME-Version: 1.0
@@ -123,7 +123,7 @@ https://lore.kernel.org/git/f187df01-8e59-ac74-01e1-586a7a63fd4e@gmail.com/
 >
 > Thanks.
 
-Should this information also be added to the commit message
+Should this information be added to the commit message
 
 or just the cover letter of the patch?
 
