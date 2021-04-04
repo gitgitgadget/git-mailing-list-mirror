@@ -8,148 +8,155 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB5C4C433B4
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E7D2FC433ED
 	for <git@archiver.kernel.org>; Sun,  4 Apr 2021 06:18:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A7B6B61106
+	by mail.kernel.org (Postfix) with ESMTP id B91186115A
 	for <git@archiver.kernel.org>; Sun,  4 Apr 2021 06:18:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229578AbhDDGSA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 4 Apr 2021 02:18:00 -0400
-Received: from mout.web.de ([217.72.192.78]:55045 "EHLO mout.web.de"
+        id S230410AbhDDGSG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 4 Apr 2021 02:18:06 -0400
+Received: from mout.web.de ([212.227.15.14]:59019 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229565AbhDDGSA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Apr 2021 02:18:00 -0400
+        id S229565AbhDDGSG (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Apr 2021 02:18:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1617517074;
-        bh=72XYRbtfCkIzVfNoinxjlGGIGFSaKqxY8DWKZ+wPfRU=;
+        s=dbaedf251592; t=1617517080;
+        bh=NQI3TEDgZlG2KJ4wwHBXpAY8t0yd3qLFlhe0b72vHME=;
         h=X-UI-Sender-Class:From:To:Subject:Date:In-Reply-To:References;
-        b=ORCrVXKhkRSQke/f4op/N+sxkex+tWHtXR8Cz6C+7/9ZHNFnXCvZjH17np+EoyfeE
-         0JwY0t4jBEuSAQDtxpNDweOg5e/YHEm88uwPKg8JzAr1zbK73EGMeF4VP2b4dofqKz
-         PXBWFIQxdjjNf7Q+ohQWsRS3d0HpewyYr58deZ+Q=
+        b=ZgJE43GgbIMM/9jJkQTX3Hz4obNvNFHH1gAlsN+V9oEe69Xccq7pIlnINysZ66AXZ
+         fRKHL4b5f3jal/oqiNgKhEGs32EM/SsCRj7aAwsL1zQQ/ri5RpUIKUqYdDJUCKNkWX
+         E7cxeIZH2ZK+8ComiKcZF9wPfP1HCIGjjq2GRXEU=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from localhost.localdomain ([62.20.115.19]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LfRzh-1lvPHX0l8D-00p8ry; Sun, 04
- Apr 2021 08:17:54 +0200
+Received: from localhost.localdomain ([62.20.115.19]) by smtp.web.de (mrweb004
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lx2Wv-1ldju52N6v-016bo7; Sun, 04
+ Apr 2021 08:18:00 +0200
 From:   tboegi@web.de
 To:     git@vger.kernel.org, d.torilov@gmail.com
-Subject: [PATCH v2 1/2] precompose_utf8: Make precompose_string_if_needed() public
-Date:   Sun,  4 Apr 2021 08:17:45 +0200
-Message-Id: <20210404061745.19364-1-tboegi@web.de>
+Subject: [PATCH v2 2/2] MacOs: Precompose startup_info->prefix
+Date:   Sun,  4 Apr 2021 08:17:54 +0200
+Message-Id: <20210404061754.19428-1-tboegi@web.de>
 X-Mailer: git-send-email 2.30.0.155.g66e871b664
 In-Reply-To: <xmqqtuotfre5.fsf@gitster.g>
 References: <xmqqtuotfre5.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:B6zlOwndNrc6J36y+8o87IwqLjhDNhaTakxaueuOSNGHLRvwHGk
- d4GpH5wSw095oIUVSYUS/chouIiFSJaxuuJTncwZDbDpB1zfXJTXT6okHuG0AEt4XxL5PnS
- WPBx/z2caV+3E/JB5LV6wGbdn7s4FYpCmqpAqzZHgcpPfzwr1ylMQPqEZGmTm1ERODeO0c/
- drF7FewOzQAXIBG2xKV7g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:fpWOTw15Gu4=:MHgZDQ+S85kBf7zWOQLSIa
- wPVcmxMExW3xE5xkf/KcafdI4t2He1S+j5FzO8WIxJRtBDtvaj1rYgnfKZHv/ALgoCkJfxMLq
- pLZuvIm2KD3uTnLZ2MklbsUwxcswwxORkkskj/B99zejnil8AsKn4J9nC3XIAALkPEFYQVp44
- fZtk5sSyGeYLDjbVwdJEk0/CPu5uJBiP8Pz7TlAFkMsb4j8C4g5W4rPBVycYFsT52dRiPyZR3
- hWYuroKemj9vgOVDbdfwtLYLtX8VvsaEcB18HFjQI7+RvrKwRiD53V3A+FdlGh/Rc3MLwHRsQ
- QYVWiwSyKkGDTkxQPUh09yeBqzayQ01b5W6/FEsIy0GGNcfpBHFXEGUiDEdfW9LmElpZ9NOw4
- uwJeDDkwcPVognWHnjBnahS8HhiLKBnRQf50KBULkLyjTyV7oLqYO6EKfPCe26saA53N9UBm5
- 0FwNTu0vA19K/zZEd8UK8ts3ZbNDVfDa1LHHKTtB+Sp1Zhy+fpvITNyfppWbI4rzrjigMVlv9
- FRFFZ9Ja0bydlzLfG+0hFVWeq1HlMh+LE5GmZN0pPXuBiRYamtws38mxZM/IDdMDz3ks8uGNh
- 8S3hFrDSzw0bdYQz44+7JE3r9VXgaW0w6cgoZle2faQufzQ7T6NlGlc7MdDz/vmZH9pyiA9/M
- RLKFXNHBnrOfmouPcSRy4mEyPHsO5eayL3GNvkMIeAuuVyN7/G6JJUDWyrjPbbDS9gojx7is+
- gmim/WW014MO4bhT1oMV74vFg27GTd40vbjXHs0ie9RpUzR5lF+QLJM6S7poedAeZtan+bWcN
- DJUQRamW3ZSZszNJAqVfy/plpoPV38proEww9JgfDcuVEohKzq6+AgiJidIyFZpH6wMXW0r5Y
- Dw189oNZsiozvz6Dr+OUGUdHqRNbdV9DmEKJQJfhGNPm0G/GbU23NKRZ06NGPyXRvBipxkgnj
- xtGQerqhGuhXtkBYyV1GooTqBaWz57lXWFMrphAwX99+pbMnsaG5c+ZvEgSpehFgpeSdleUd3
- /uNcKvz2PcPLcW45+j4XLl5+O/NR+Z1M0Oh+Ucn5loUH2Q4OZTgXLGlYEeCwnVOoOBAw657zp
- K9cdCqN9eBdxhvAhHuEanhPRfcpjK8AdInKhufqFP5TQWJn1HhsWnod0wZfjteJFySeTyoFnW
- 1Ba7S0uGgIobuL3DlVUY7sSg+KZ5uy4VMRkqXYQ4fvss8QCYoM6al6BgJh1b7y085iBxE=
+X-Provags-ID: V03:K1:JAeDzMxxIM38Pguen4Y5ZYvfpdehsAKxX16NYoDpjtwoDhj5d6H
+ HLOX1Z9Lyde/l1mTU2f6FfPMuqaVWMeajffVPEAV3PrXAkryWGTPtQtHgh14hQ+Hi2VeJJB
+ JNuXuOIrsX1yt++UYE8jw3a9Ry2lmOAe/nptUCv5qfFbiwZlZ6KVU0uXeeXjuy43y4Oh/gy
+ mx5GPez2fF1pTSdBEfPJg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:+rEf9TLQ1jE=:CW/FguOqG4mECNZtRaJ1jL
+ RXSsS4CMkjZTGUpiIs2IQOh5NcTztnvEnGwvyal1crMenYDN32SCVs2whgdJVjF9oN6bu0Dat
+ 5Gm24MxEapviT6QtGfmmd3lXBfXrH+QBOAyjVkm+mfRIl28PQPVufNHcY+JeCJmmI6PMN/HD2
+ 8wdYpBB2g78PjdAmwKCHARcI7/lNrRKNrFCOmvKNw7Xtn3ppQTRTqvK2Ijv/HIGJEcUDowJYb
+ jt9Y5d7njvvMovX+O2fyhnsCRh2gyA16Om3ihuqk/vwFjfy66GZ3G2IMSaP+U8ju5JG30CYbf
+ 84Wj9HLfRQbQiWV0mnxVJRGFiO8OmPfE8/OMfcJakxG+GYNZDdxDrl9fvULsJ66B/sSod9IDX
+ L+HWe4lXGMQwZfKrUwQqgUw9tB/1sJ5z3L4q7IExsx8Yd4QdOSNUDuj0yIId+5JsYjbCVBV+D
+ uEZ3lsH4kVOSD6r7yiYAbI8kuXH8uGngKu7deapcuJa6SWwnXyc15/w1D1O6A53H2eTalee8Z
+ 6pNv9qzAqZYC4II+IEE+SQ8KSVhi9hUZE3q8Fo0CX/bq56AjCawpJ3NI/8LUyDsYu1rcAwk6k
+ FTxDLkR+JgEdhH1XU9Mtt7vXvamHUFBueQVE1YooK+TUiOUv3w2XfZWAJBuqmduOwKPPElAEP
+ EsDVn2TwryH7X/TnjF5/EWzfk0iTEYhghSBeH2imiIlZMPtev3qXPaOuz3Ah2+fJLYSX+o8SL
+ WSqkQ27kireyJ+dL38KnLHbvEcj+1WtbsWe2Sc2ds5EhlEaU3/LZZ99boRIQ07hnVgjOzP9lf
+ 1tOaJYmma7uWUzJf0dm5/0NwBhHkiIy4l66EG0uXIyVP1UnBhgaXTrszSOcHGTgtwrZEDySX1
+ lg4brXNPcGO48udN2MSX6jvVZJtGbKRnFYt9evEGCEdHzpMmBm95WO9Uk/j8x7yzNlYovj4dI
+ 742/6DCeBvl1aiXadX1XJlUF7hfueSK6pPSrgwtBJ81LRkK+lruWN805zh23go0s4exPUi//M
+ 3yNI/nyJxmk9uZGdQu1pUtBNXe7hc64jcBq1NQ4m5sddBL+HGM63UHNPJb55YrwVoTVdBwVV0
+ ukwJObtq1lqnJuXgc2SpfH1RdpnenSJo66sn1rmjlevMLRPru+dgiljLf+x9QLJytwrsi7lST
+ A/djeeElgX2ELP9zulTP84gUInZ1mWBcem8KOnELvhwiljlJnjkru5J7TB+4MAogkxIHI=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 From: Torsten B=C3=B6gershausen <tboegi@web.de>
 
-commit 5c327502,  MacOS: precompose_argv_prefix()
-uses the function precompose_string_if_needed() internally.
-It is only used from precompose_argv_prefix() and therefore
-static in compat/precompose_utf8.c
+The "prefix" was precomposed for MacOs in commit 5c327502db,
+MacOS: precompose_argv_prefix()
 
-Expose this function, it will be used in the next commit.
+However, this commit forgot to update "startup_info->prefix" after
+precomposing.
+Re-arrange the code in setup.c:
+Move the (possible) precomposition towards the end of
+setup_git_directory_gently(), so that precompose_string_if_needed()
+can use git_config_get_bool("core.precomposeunicode") correctly.
 
-While there, allow passing a NULL pointer, which will return NULL.
+Keep prefix, startup_info->prefix and GIT_PREFIX_ENVIRONMENT all in sync.
 
+And as a result, the prefix no longer needs to be precomposed in git.c
+
+Reported-by: Dmitry Torilov <d.torilov@gmail.com>
+Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
 =2D--
 
-This part 1/2 never made it to the list
+ This part did never made it to the list - it should have gone only
+ to tboegi@web.de
+ git send-email decided to cc to the "Helped-by" and "Reported-by" address=
+es,
+ a feature that I was not aware of - and can be turned off with --suppress=
+-cc=3Dall
+ In other words, I typically send these emails only to my self first, re-r=
+ead
+ with fresh eyes, and then send them out. End of of blabla.
 
- compat/precompose_utf8.c | 9 ++++-----
- compat/precompose_utf8.h | 1 +
- git-compat-util.h        | 5 +++++
- 3 files changed, 10 insertions(+), 5 deletions(-)
+Changes since V1:
+ Add a comment in setup.c, to make more clear that git_config_get_bool()
+ is called, and the setup_XXX() must have prepared everything needed.
 
-diff --git a/compat/precompose_utf8.c b/compat/precompose_utf8.c
-index ec560565a8..cce1d57a46 100644
-=2D-- a/compat/precompose_utf8.c
-+++ b/compat/precompose_utf8.c
-@@ -60,10 +60,12 @@ void probe_utf8_pathname_composition(void)
- 	strbuf_release(&path);
- }
+ git.c   |  2 +-
+ setup.c | 14 ++++++++++----
+ 2 files changed, 11 insertions(+), 5 deletions(-)
 
--static inline const char *precompose_string_if_needed(const char *in)
-+const char *precompose_string_if_needed(const char *in)
- {
- 	size_t inlen;
- 	size_t outlen;
-+	if (!in)
-+		return NULL;
- 	if (has_non_ascii(in, (size_t)-1, &inlen)) {
- 		iconv_t ic_prec;
- 		char *out;
-@@ -96,10 +98,7 @@ const char *precompose_argv_prefix(int argc, const char=
- **argv, const char *pref
- 		argv[i] =3D precompose_string_if_needed(argv[i]);
- 		i++;
+diff --git a/git.c b/git.c
+index 9bc077a025..b53e665671 100644
+=2D-- a/git.c
++++ b/git.c
+@@ -423,7 +423,7 @@ static int run_builtin(struct cmd_struct *p, int argc,=
+ const char **argv)
+ 			int nongit_ok;
+ 			prefix =3D setup_git_directory_gently(&nongit_ok);
+ 		}
+-		prefix =3D precompose_argv_prefix(argc, argv, prefix);
++		precompose_argv_prefix(argc, argv, NULL);
+ 		if (use_pager =3D=3D -1 && p->option & (RUN_SETUP | RUN_SETUP_GENTLY) &=
+&
+ 		    !(p->option & DELAY_PAGER_CONFIG))
+ 			use_pager =3D check_pager_config(p->cmd);
+diff --git a/setup.c b/setup.c
+index c04cd25a30..dcc9c41a85 100644
+=2D-- a/setup.c
++++ b/setup.c
+@@ -1281,10 +1281,6 @@ const char *setup_git_directory_gently(int *nongit_=
+ok)
+ 	} else {
+ 		startup_info->have_repository =3D 1;
+ 		startup_info->prefix =3D prefix;
+-		if (prefix)
+-			setenv(GIT_PREFIX_ENVIRONMENT, prefix, 1);
+-		else
+-			setenv(GIT_PREFIX_ENVIRONMENT, "", 1);
  	}
--	if (prefix) {
--		prefix =3D precompose_string_if_needed(prefix);
--	}
--	return prefix;
-+	return precompose_string_if_needed(prefix);
- }
 
+ 	/*
+@@ -1311,6 +1307,16 @@ const char *setup_git_directory_gently(int *nongit_=
+ok)
+ 		if (startup_info->have_repository)
+ 			repo_set_hash_algo(the_repository, repo_fmt.hash_algo);
+ 	}
++	/* Keep prefix, startup_info->prefix and GIT_PREFIX_ENVIRONMENT in sync =
+*/
++	prefix =3D startup_info->prefix;
++	if (prefix) {
++		/* This calls git_config_get_bool() under the hood (MacOs only) */
++		prefix =3D precompose_string_if_needed(prefix);
++		startup_info->prefix =3D prefix;
++		setenv(GIT_PREFIX_ENVIRONMENT, prefix, 1);
++	} else {
++		setenv(GIT_PREFIX_ENVIRONMENT, "", 1);
++	}
 
-diff --git a/compat/precompose_utf8.h b/compat/precompose_utf8.h
-index d70b84665c..fea06cf28a 100644
-=2D-- a/compat/precompose_utf8.h
-+++ b/compat/precompose_utf8.h
-@@ -29,6 +29,7 @@ typedef struct {
- } PREC_DIR;
-
- const char *precompose_argv_prefix(int argc, const char **argv, const cha=
-r *prefix);
-+const char *precompose_string_if_needed(const char *in);
- void probe_utf8_pathname_composition(void);
-
- PREC_DIR *precompose_utf8_opendir(const char *dirname);
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 9ddf9d7044..a508dbe5a3 100644
-=2D-- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -256,6 +256,11 @@ static inline const char *precompose_argv_prefix(int =
-argc, const char **argv, co
- {
- 	return prefix;
- }
-+static inline const char *precompose_string_if_needed(const char *in)
-+{
-+	return in;
-+}
-+
- #define probe_utf8_pathname_composition()
- #endif
-
+ 	strbuf_release(&dir);
+ 	strbuf_release(&gitdir);
 =2D-
 2.30.0.155.g66e871b664
 
