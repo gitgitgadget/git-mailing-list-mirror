@@ -2,145 +2,154 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE14FC433B4
-	for <git@archiver.kernel.org>; Sun,  4 Apr 2021 06:09:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EB5C4C433B4
+	for <git@archiver.kernel.org>; Sun,  4 Apr 2021 06:18:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 903996128D
-	for <git@archiver.kernel.org>; Sun,  4 Apr 2021 06:09:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A7B6B61106
+	for <git@archiver.kernel.org>; Sun,  4 Apr 2021 06:18:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231975AbhDDGJx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 4 Apr 2021 02:09:53 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59020 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229565AbhDDGJw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Apr 2021 02:09:52 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id F198DC40AE;
-        Sun,  4 Apr 2021 02:09:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ToxIKzs/SpKWu0EVRZrePJdBG3M=; b=j0IRWh
-        6FbTgTiK5WuJRszt6/JszJ7JAxWfYjWjSr3IEemMUYSOaeiM5p0mCNeqWHsIJb8T
-        XBL2UYyasvBbJdHZcKhdg7dfQY/JcGPbBSNW0TpuYk5+aujplUjIMAemdxaAP9bB
-        qbcRytebV6Utx2Rzhvg+9VObrW+jV0S1lFchk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=EGjfiWrYcWZJphbjOqJXiwlBG5TB63fh
-        nTDOc1a09iWvwdyPFttSRwP/zE3CtGievfq3XaSIWrxOsql6dDfzwcqApeXlaqfB
-        e6kHtMziNrycqO219KcI5ga4fxZUF1inbRNyuTl+QX95yjvlaaGhhmpMvajtJKRv
-        ywty01pNV+k=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E98A9C40AD;
-        Sun,  4 Apr 2021 02:09:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 70845C40AC;
-        Sun,  4 Apr 2021 02:09:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Chinmoy via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Chinmoy <chinmoy12c@gmail.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v3] cache-tree.c: remove implicit dependency on
- the_repository
-References: <pull.915.v2.git.1616772930098.gitgitgadget@gmail.com>
-        <pull.915.v3.git.1617465421353.gitgitgadget@gmail.com>
-Date:   Sat, 03 Apr 2021 23:09:46 -0700
-In-Reply-To: <pull.915.v3.git.1617465421353.gitgitgadget@gmail.com> (Chinmoy
-        via GitGitGadget's message of "Sat, 03 Apr 2021 15:57:00 +0000")
-Message-ID: <xmqqy2dyy40l.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S229578AbhDDGSA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 4 Apr 2021 02:18:00 -0400
+Received: from mout.web.de ([217.72.192.78]:55045 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229565AbhDDGSA (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Apr 2021 02:18:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1617517074;
+        bh=72XYRbtfCkIzVfNoinxjlGGIGFSaKqxY8DWKZ+wPfRU=;
+        h=X-UI-Sender-Class:From:To:Subject:Date:In-Reply-To:References;
+        b=ORCrVXKhkRSQke/f4op/N+sxkex+tWHtXR8Cz6C+7/9ZHNFnXCvZjH17np+EoyfeE
+         0JwY0t4jBEuSAQDtxpNDweOg5e/YHEm88uwPKg8JzAr1zbK73EGMeF4VP2b4dofqKz
+         PXBWFIQxdjjNf7Q+ohQWsRS3d0HpewyYr58deZ+Q=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from localhost.localdomain ([62.20.115.19]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LfRzh-1lvPHX0l8D-00p8ry; Sun, 04
+ Apr 2021 08:17:54 +0200
+From:   tboegi@web.de
+To:     git@vger.kernel.org, d.torilov@gmail.com
+Subject: [PATCH v2 1/2] precompose_utf8: Make precompose_string_if_needed() public
+Date:   Sun,  4 Apr 2021 08:17:45 +0200
+Message-Id: <20210404061745.19364-1-tboegi@web.de>
+X-Mailer: git-send-email 2.30.0.155.g66e871b664
+In-Reply-To: <xmqqtuotfre5.fsf@gitster.g>
+References: <xmqqtuotfre5.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5BA736A6-950C-11EB-AA63-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:B6zlOwndNrc6J36y+8o87IwqLjhDNhaTakxaueuOSNGHLRvwHGk
+ d4GpH5wSw095oIUVSYUS/chouIiFSJaxuuJTncwZDbDpB1zfXJTXT6okHuG0AEt4XxL5PnS
+ WPBx/z2caV+3E/JB5LV6wGbdn7s4FYpCmqpAqzZHgcpPfzwr1ylMQPqEZGmTm1ERODeO0c/
+ drF7FewOzQAXIBG2xKV7g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:fpWOTw15Gu4=:MHgZDQ+S85kBf7zWOQLSIa
+ wPVcmxMExW3xE5xkf/KcafdI4t2He1S+j5FzO8WIxJRtBDtvaj1rYgnfKZHv/ALgoCkJfxMLq
+ pLZuvIm2KD3uTnLZ2MklbsUwxcswwxORkkskj/B99zejnil8AsKn4J9nC3XIAALkPEFYQVp44
+ fZtk5sSyGeYLDjbVwdJEk0/CPu5uJBiP8Pz7TlAFkMsb4j8C4g5W4rPBVycYFsT52dRiPyZR3
+ hWYuroKemj9vgOVDbdfwtLYLtX8VvsaEcB18HFjQI7+RvrKwRiD53V3A+FdlGh/Rc3MLwHRsQ
+ QYVWiwSyKkGDTkxQPUh09yeBqzayQ01b5W6/FEsIy0GGNcfpBHFXEGUiDEdfW9LmElpZ9NOw4
+ uwJeDDkwcPVognWHnjBnahS8HhiLKBnRQf50KBULkLyjTyV7oLqYO6EKfPCe26saA53N9UBm5
+ 0FwNTu0vA19K/zZEd8UK8ts3ZbNDVfDa1LHHKTtB+Sp1Zhy+fpvITNyfppWbI4rzrjigMVlv9
+ FRFFZ9Ja0bydlzLfG+0hFVWeq1HlMh+LE5GmZN0pPXuBiRYamtws38mxZM/IDdMDz3ks8uGNh
+ 8S3hFrDSzw0bdYQz44+7JE3r9VXgaW0w6cgoZle2faQufzQ7T6NlGlc7MdDz/vmZH9pyiA9/M
+ RLKFXNHBnrOfmouPcSRy4mEyPHsO5eayL3GNvkMIeAuuVyN7/G6JJUDWyrjPbbDS9gojx7is+
+ gmim/WW014MO4bhT1oMV74vFg27GTd40vbjXHs0ie9RpUzR5lF+QLJM6S7poedAeZtan+bWcN
+ DJUQRamW3ZSZszNJAqVfy/plpoPV38proEww9JgfDcuVEohKzq6+AgiJidIyFZpH6wMXW0r5Y
+ Dw189oNZsiozvz6Dr+OUGUdHqRNbdV9DmEKJQJfhGNPm0G/GbU23NKRZ06NGPyXRvBipxkgnj
+ xtGQerqhGuhXtkBYyV1GooTqBaWz57lXWFMrphAwX99+pbMnsaG5c+ZvEgSpehFgpeSdleUd3
+ /uNcKvz2PcPLcW45+j4XLl5+O/NR+Z1M0Oh+Ucn5loUH2Q4OZTgXLGlYEeCwnVOoOBAw657zp
+ K9cdCqN9eBdxhvAhHuEanhPRfcpjK8AdInKhufqFP5TQWJn1HhsWnod0wZfjteJFySeTyoFnW
+ 1Ba7S0uGgIobuL3DlVUY7sSg+KZ5uy4VMRkqXYQ4fvss8QCYoM6al6BgJh1b7y085iBxE=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Chinmoy via GitGitGadget" <gitgitgadget@gmail.com> writes:
+From: Torsten B=C3=B6gershausen <tboegi@web.de>
 
-> diff --git a/sparse-index.c b/sparse-index.c
-> index 95ea17174da3..e4323ffd81db 100644
-> --- a/sparse-index.c
-> +++ b/sparse-index.c
-> @@ -128,12 +128,14 @@ int set_sparse_index_config(struct repository *repo, int enable)
->  int convert_to_sparse(struct index_state *istate)
->  {
->  	int test_env;
-> +	struct repository *r = the_repository;
-> +
->  	if (istate->split_index || istate->sparse_index ||
->  	    !core_apply_sparse_checkout || !core_sparse_checkout_cone)
->  		return 0;
->  
->  	if (!istate->repo)
-> -		istate->repo = the_repository;
-> +		istate->repo = r;
->  
+commit 5c327502,  MacOS: precompose_argv_prefix()
+uses the function precompose_string_if_needed() internally.
+It is only used from precompose_argv_prefix() and therefore
+static in compat/precompose_utf8.c
 
-I am not quite sure if this is a reasonable conversion.  Surely it
-would not make the compiler barf, but are we sure that the caller of
-convert_to_sparse() wants us to work on the_repository instance and
-no other repository?  As an istate has a .repo member, it seems to
-me that using istate->repo would be a lot saner approach than
-assigning the_repository upfront to r.  It might be even needed, if
-cache_tree_update() wants to take a repository instance, to ensure
-that all callers to this helper sets istate->repo before they call
-it so that the above "if not set yet, use the_repository" code does
-not have to kick in.
+Expose this function, it will be used in the next commit.
 
->  	/*
->  	 * The GIT_TEST_SPARSE_INDEX environment variable triggers the
-> @@ -161,7 +163,7 @@ int convert_to_sparse(struct index_state *istate)
->  		return -1;
->  	}
->  
-> -	if (cache_tree_update(istate, 0)) {
-> +	if (cache_tree_update(r, istate, 0)) {
+While there, allow passing a NULL pointer, which will return NULL.
 
-And this looks like a bad conversion.  It may happen to do the same
-thing, but the flow of the logic up to this point in the function
-was to make sure istate->repo is not empty by filling it if it is
-not yet set, and update the cache tree of that istate.  So, it seems
-more logical if this call were like so, no?
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+=2D--
 
-	if (cache_tree_update(istate->repo, istate, 0)) {
+This part 1/2 never made it to the list
 
-In fact, in the world after 1fd9ae51 (repository: add repo reference
-to index_state, 2021-01-23), it is dubious that this topic to teach
-cache_tree_update() to take a repository pointer is sensible.  While
-working on a single repository, we may create multiple in-core index
-instances that represent temporary indices, but each of these in-core
-index instances (i.e. istate) belong to a single repository.
+ compat/precompose_utf8.c | 9 ++++-----
+ compat/precompose_utf8.h | 1 +
+ git-compat-util.h        | 5 +++++
+ 3 files changed, 10 insertions(+), 5 deletions(-)
 
-And in a call to cache_tree_update(R, I, F), if I->repo is *NOT* R,
-that must mean a bug.  Here is what 1fd9ae51 says on this point.
+diff --git a/compat/precompose_utf8.c b/compat/precompose_utf8.c
+index ec560565a8..cce1d57a46 100644
+=2D-- a/compat/precompose_utf8.c
++++ b/compat/precompose_utf8.c
+@@ -60,10 +60,12 @@ void probe_utf8_pathname_composition(void)
+ 	strbuf_release(&path);
+ }
 
-    repository: add repo reference to index_state
+-static inline const char *precompose_string_if_needed(const char *in)
++const char *precompose_string_if_needed(const char *in)
+ {
+ 	size_t inlen;
+ 	size_t outlen;
++	if (!in)
++		return NULL;
+ 	if (has_non_ascii(in, (size_t)-1, &inlen)) {
+ 		iconv_t ic_prec;
+ 		char *out;
+@@ -96,10 +98,7 @@ const char *precompose_argv_prefix(int argc, const char=
+ **argv, const char *pref
+ 		argv[i] =3D precompose_string_if_needed(argv[i]);
+ 		i++;
+ 	}
+-	if (prefix) {
+-		prefix =3D precompose_string_if_needed(prefix);
+-	}
+-	return prefix;
++	return precompose_string_if_needed(prefix);
+ }
 
-    It will be helpful to add behavior to index operations that might
-    trigger an object lookup. Since each index belongs to a specific
-    repository, add a 'repo' pointer to struct index_state that allows
-    access to this repository.
 
-    Add a BUG() statement if the repo already has an index, and the index
-    already has a repo, but somehow the index points to a different repo.
+diff --git a/compat/precompose_utf8.h b/compat/precompose_utf8.h
+index d70b84665c..fea06cf28a 100644
+=2D-- a/compat/precompose_utf8.h
++++ b/compat/precompose_utf8.h
+@@ -29,6 +29,7 @@ typedef struct {
+ } PREC_DIR;
 
-    This will prevent future changes from needing to pass an additional
-    'struct repository *repo' parameter and instead rely only on the 'struct
-    index_state *istate' parameter.
+ const char *precompose_argv_prefix(int argc, const char **argv, const cha=
+r *prefix);
++const char *precompose_string_if_needed(const char *in);
+ void probe_utf8_pathname_composition(void);
 
-Derrick, what's you thought on this?  The patch under discussion
-looks to me a prime example of "future change(s)" needing "to pass
-an additional 'struct repository *repo' parameter".
+ PREC_DIR *precompose_utf8_opendir(const char *dirname);
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 9ddf9d7044..a508dbe5a3 100644
+=2D-- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -256,6 +256,11 @@ static inline const char *precompose_argv_prefix(int =
+argc, const char **argv, co
+ {
+ 	return prefix;
+ }
++static inline const char *precompose_string_if_needed(const char *in)
++{
++	return in;
++}
++
+ #define probe_utf8_pathname_composition()
+ #endif
 
-Thanks.
+=2D-
+2.30.0.155.g66e871b664
 
