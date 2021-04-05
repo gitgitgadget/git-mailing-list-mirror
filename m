@@ -2,253 +2,186 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D8B7DC43462
-	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 13:04:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C31AC433B4
+	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 13:08:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B608B613A9
-	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 13:04:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 226BE613A9
+	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 13:08:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240945AbhDENEf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Apr 2021 09:04:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50232 "EHLO
+        id S235537AbhDENIz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Apr 2021 09:08:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237176AbhDENE2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Apr 2021 09:04:28 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54792C061788
-        for <git@vger.kernel.org>; Mon,  5 Apr 2021 06:04:22 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id u5-20020a7bcb050000b029010e9316b9d5so5605630wmj.2
-        for <git@vger.kernel.org>; Mon, 05 Apr 2021 06:04:22 -0700 (PDT)
+        with ESMTP id S234330AbhDENIz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Apr 2021 09:08:55 -0400
+Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7CC5C061756
+        for <git@vger.kernel.org>; Mon,  5 Apr 2021 06:08:48 -0700 (PDT)
+Received: by mail-oi1-x233.google.com with SMTP id x2so11583206oiv.2
+        for <git@vger.kernel.org>; Mon, 05 Apr 2021 06:08:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=YJFPKjbf38fYJcW/14HvAHQpRrYbhNHkMU/HO3rFRFs=;
-        b=R9QjggiyYVuiNEij9mWQK9I9Ys3NztdLt4XLFXtvmpkiO1JRg9t28xuy7ckGUfxt9v
-         /D2aQ7lJ63RU6M/ewnqvQlML0txvVKy9/iw+2WUXw3Ano9eR+dlSNnrrmsA0crhLPSjJ
-         pYstsF4m3bGsNnDITKXfDmx4mDJAdBrIhnscrNZWgfEVwi0tlFGEotfQCHe3xPVgHUwq
-         sryLxnM+Z2N4ow/R7JLO817d/xxmLHDLmeYzZuUg0YgAnRtV0Q3OFeb/xPhHTvFvtIiL
-         dRMMchlEmaWcQdRtpn76tVIHb0mKeg2/5uqf5hxHNR3MXnNYB117+niNBKnEcefFGJXk
-         IsXQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=G89VnBw5NsFtl+f1gVd1SYlTr45q7tqcCQwoufxYeGc=;
+        b=JllCKy4Hl39qpA6tAFcLcDpw3Kgzt23q5YOparS0ZuJG6z7oyyt9E2Ce6lTPN/IWo4
+         7nlZRNaB/JVvlzm9PVn8QfVv682box+I8cTYvHim5TL1Sl7sN0MOEcgsn0+SnWJfxwkM
+         X+SHYtOXFMZQoZNJxNOajMn8wQWGw4bWnOJOEQQO8T621D5bergSF/tY/vt6eieAaTZU
+         WnUnoIkJjBZgSfc0qKBZIylB3P2+44wSk6UmpY5K4M5i7OANkPhJIMpg+6h8wV9BoYCH
+         95GXKWS7d+B0V4W23wcMuca/Ne6cX+xaO/1sgKLeKtMqm9V+32oHAI4AlhPC4t/rn+Jd
+         IqIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=YJFPKjbf38fYJcW/14HvAHQpRrYbhNHkMU/HO3rFRFs=;
-        b=bdvHElL8GwbJ31flErclS2xCUwy4Vp9gac+K2jJ9saYZs5+LRihMbP5jtbkLuvovPU
-         vyqHf7gDfq9xqUYB+Tt70BzmY/pdQf2T+zHlwvRG3WOo2MBXrmI4WtQ00SUdKPvD+IRP
-         go8iBUEDUbIui5TfKqsidA6GfgIT4PgyWBlZiVmcLISx40rEgA5Iw05qY7t7/TKyLHUQ
-         kiWWPycXWlYnJPnfFptV33v0wXtFMbzlfVW1bzkLojf8n8PjgrDLFqdc1j2CU8U7utGq
-         bv7QN1GwgWKtnq3fEOzbxUZiEV8poqMJBvVlVsIDmsS0cHekn3S4ymWsBNglFtQHtIE2
-         7Dfg==
-X-Gm-Message-State: AOAM531vrZP5QKFc08nS7madXSjmPVe6cJSHy7Ey2IGuUDCC8CZqNh3C
-        qbxv1qxgxeVhIuey7f1GLvgqhL6PDOU=
-X-Google-Smtp-Source: ABdhPJzHFgn/cEIA1rAkl6BnemK4eW7+ZcWbDFkt/kRAvdYe1TtEYVyHuuLruNXtEKfBkLYcnChkdg==
-X-Received: by 2002:a1c:9a51:: with SMTP id c78mr14216249wme.160.1617627861099;
-        Mon, 05 Apr 2021 06:04:21 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j9sm23086496wmi.24.2021.04.05.06.04.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Apr 2021 06:04:20 -0700 (PDT)
-Message-Id: <7f6c127dac48409ddc8d30ad236182bee21c1957.1617627856.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.924.git.1617627856.gitgitgadget@gmail.com>
-References: <pull.924.git.1617627856.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 05 Apr 2021 13:04:15 +0000
-Subject: [PATCH 5/5] maintenance: allow custom refspecs during prefetch
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     tom.saeger@oracle.com, gitster@pobox.com, sunshine@sunshineco.com,
-        Derrick Stolee <derrickstolee@github.com>,
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=G89VnBw5NsFtl+f1gVd1SYlTr45q7tqcCQwoufxYeGc=;
+        b=HAxOF02ZDxVSe5uYu8MXvP0G+jbJxZ74Go8gyGJWFHPoiqHp7Jn+PsdWairuuBS56w
+         lU3V5GQ0IWym6tYKSB28LmcWWl1hfdu93ZQQ5bZMtIx9uspdcWHqoL+luK0tC9Oi5uwM
+         zfWlRLSLGCTz0imoe4iKQsrUBNLXE7njTL2qur2zBoL2bJpRLGhuv2zWhQtJWeJ25NY2
+         WOrXkrgZ4YwILqmQeHwIqYpDtDiD+VS3taLa2c1XpG6kTsfz9dvc3p1B3j4RoJTdcXYe
+         8IUDKnUc9nfTEljrn/zdUtBcXK5VWm3f/LPZuCOqqmcJSzREVGYodloBNIUTJSmPpi0V
+         B3Sg==
+X-Gm-Message-State: AOAM532CZ8l7f/S2T9SIDYHneyZoL73hoWCO+dy6mIaCSyKgTKqmzVQG
+        V+w3nEECyoPbrSwL6mfByn4=
+X-Google-Smtp-Source: ABdhPJxysMPgyW6FgGgXEWbI/IfyPuOGX4qgz/CWSVtG/soyc7HgyHQC/jY/EQGQT0VuaVYZ/GQDnw==
+X-Received: by 2002:a05:6808:a90:: with SMTP id q16mr17288697oij.77.1617628127915;
+        Mon, 05 Apr 2021 06:08:47 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:91f9:c820:22ba:fec7? ([2600:1700:e72:80a0:91f9:c820:22ba:fec7])
+        by smtp.gmail.com with ESMTPSA id k15sm4030959otj.46.2021.04.05.06.08.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 05 Apr 2021 06:08:47 -0700 (PDT)
+Subject: Re: [PATCH v3] cache-tree.c: remove implicit dependency on
+ the_repository
+To:     Junio C Hamano <gitster@pobox.com>,
+        Chinmoy via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Chinmoy <chinmoy12c@gmail.com>,
         Derrick Stolee <dstolee@microsoft.com>
+References: <pull.915.v2.git.1616772930098.gitgitgadget@gmail.com>
+ <pull.915.v3.git.1617465421353.gitgitgadget@gmail.com>
+ <xmqqy2dyy40l.fsf@gitster.g>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <be9793f0-f437-8e42-d463-21a48d2ee948@gmail.com>
+Date:   Mon, 5 Apr 2021 09:08:44 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.9.0
+MIME-Version: 1.0
+In-Reply-To: <xmqqy2dyy40l.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+On 4/4/2021 2:09 AM, Junio C Hamano wrote:
+> "Chinmoy via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> diff --git a/sparse-index.c b/sparse-index.c
+>> index 95ea17174da3..e4323ffd81db 100644
+>> --- a/sparse-index.c
+>> +++ b/sparse-index.c
+>> @@ -128,12 +128,14 @@ int set_sparse_index_config(struct repository *repo, int enable)
+>>  int convert_to_sparse(struct index_state *istate)
+>>  {
+>>  	int test_env;
+>> +	struct repository *r = the_repository;
+>> +
+>>  	if (istate->split_index || istate->sparse_index ||
+>>  	    !core_apply_sparse_checkout || !core_sparse_checkout_cone)
+>>  		return 0;
+>>  
+>>  	if (!istate->repo)
+>> -		istate->repo = the_repository;
+>> +		istate->repo = r;
+>>  
+> 
+> I am not quite sure if this is a reasonable conversion.  Surely it
+> would not make the compiler barf, but are we sure that the caller of
+> convert_to_sparse() wants us to work on the_repository instance and
+> no other repository?  As an istate has a .repo member, it seems to
+> me that using istate->repo would be a lot saner approach than
+> assigning the_repository upfront to r.  It might be even needed, if
+> cache_tree_update() wants to take a repository instance, to ensure
+> that all callers to this helper sets istate->repo before they call
+> it so that the above "if not set yet, use the_repository" code does
+> not have to kick in.
+> 
+>>  	/*
+>>  	 * The GIT_TEST_SPARSE_INDEX environment variable triggers the
+>> @@ -161,7 +163,7 @@ int convert_to_sparse(struct index_state *istate)
+>>  		return -1;
+>>  	}
+>>  
+>> -	if (cache_tree_update(istate, 0)) {
+>> +	if (cache_tree_update(r, istate, 0)) {
+> 
+> And this looks like a bad conversion.  It may happen to do the same
+> thing, but the flow of the logic up to this point in the function
+> was to make sure istate->repo is not empty by filling it if it is
+> not yet set, and update the cache tree of that istate.  So, it seems
+> more logical if this call were like so, no?
+> 
+> 	if (cache_tree_update(istate->repo, istate, 0)) {
+> 
+> In fact, in the world after 1fd9ae51 (repository: add repo reference
+> to index_state, 2021-01-23), it is dubious that this topic to teach
+> cache_tree_update() to take a repository pointer is sensible.  While
+> working on a single repository, we may create multiple in-core index
+> instances that represent temporary indices, but each of these in-core
+> index instances (i.e. istate) belong to a single repository.
+> 
+> And in a call to cache_tree_update(R, I, F), if I->repo is *NOT* R,
+> that must mean a bug.  Here is what 1fd9ae51 says on this point.
+> 
+>     repository: add repo reference to index_state
+> 
+>     It will be helpful to add behavior to index operations that might
+>     trigger an object lookup. Since each index belongs to a specific
+>     repository, add a 'repo' pointer to struct index_state that allows
+>     access to this repository.
+> 
+>     Add a BUG() statement if the repo already has an index, and the index
+>     already has a repo, but somehow the index points to a different repo.
+> 
+>     This will prevent future changes from needing to pass an additional
+>     'struct repository *repo' parameter and instead rely only on the 'struct
+>     index_state *istate' parameter.
+> 
+> Derrick, what's you thought on this?  The patch under discussion
+> looks to me a prime example of "future change(s)" needing "to pass
+> an additional 'struct repository *repo' parameter".
 
-The prefetch task previously used the default refspec source plus a
-custom refspec destination to avoid colliding with remote refs:
+With your additional comments, I think it is clear that the "fourth
+option" I mentioned earlier [1] is the way to go:
 
-	+refs/heads/*:refs/prefetch/<remote>/*
+  Finally, there is yet a fourth option: use istate->repo instead. In
+  1fd9ae51 (repository: add repo reference to index_state), I added a
+  'repo' member to struct index_state. This is intended for methods to
+  access a repository directly from the index.
 
-However, some users customize their refspec to reduce how much data they
-download from specific remotes. This can involve restrictive patterns
-for fetching or negative patterns to avoid downloading some refs.
+[1] https://lore.kernel.org/git/f187df01-8e59-ac74-01e1-586a7a63fd4e@gmail.com/
 
-Modify fetch_remote() to iterate over the remote's refspec list and
-translate that into the appropriate prefetch scenario. Specifically,
-re-parse the raw form of the refspec into a new 'struct refspec' and
-modify the 'dst' member to replace a leading "refs/" substring with
-"refs/prefetch/", or prepend "refs/prefetch/" to 'dst' otherwise.
-Negative refspecs do not have a 'dst' so they can be transferred to the
-'git fetch' command unmodified.
+So in this sense, we should always use istate->repo, but we might
+still need the following guard in some places:
 
-This prefix change provides the benefit of keeping whatever collisions
-may exist in the custom refspecs, if that is a desirable outcome.
+	if (!istate->repo)
+		istate->repo = the_repository;
 
-This changes the names of the refs that would be fetched by the default
-refspec. Instead of "refs/prefetch/<remote>/<branch>" they will now go
-to "refs/prefetch/remotes/<remote>/<branch>". While this is a change, it
-is not a seriously breaking one: these refs are intended to be hidden
-and not used.
+in case there are situations where the index is loaded before
+the_repository is loaded. I have hit this in testing, but don't fully
+understand the cases where this can happen.
 
-Update the documentation to be more generic about the destination refs.
-Do not mention custom refpecs explicitly, as that does not need to be
-highlighted in this documentation. The important part of placing refs in
-refs/prefetch remains.
+The way it would change this patch is to drop the 'struct repository *r'
+pointers and changes to the method signatures. Instead, keep the
+methods only taking a 'struct index_state *istate' and use istate->repo
+everywhere.
 
-Reported-by: Tom Saeger <tom.saeger@oracle.com>
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- Documentation/git-maintenance.txt |  3 +--
- builtin/gc.c                      | 34 +++++++++++++++++++++++-
- t/t7900-maintenance.sh            | 43 ++++++++++++++++++++++++++-----
- 3 files changed, 71 insertions(+), 9 deletions(-)
-
-diff --git a/Documentation/git-maintenance.txt b/Documentation/git-maintenance.txt
-index 80ddd33ceba0..95a24264eb10 100644
---- a/Documentation/git-maintenance.txt
-+++ b/Documentation/git-maintenance.txt
-@@ -94,8 +94,7 @@ prefetch::
- 	objects from all registered remotes. For each remote, a `git fetch`
- 	command is run. The refmap is custom to avoid updating local or remote
- 	branches (those in `refs/heads` or `refs/remotes`). Instead, the
--	remote refs are stored in `refs/prefetch/<remote>/`. Also, tags are
--	not updated.
-+	refs are stored in `refs/prefetch/`. Also, tags are not updated.
- +
- This is done to avoid disrupting the remote-tracking branches. The end users
- expect these refs to stay unmoved unless they initiate a fetch.  With prefetch
-diff --git a/builtin/gc.c b/builtin/gc.c
-index fa8128de9ae1..92cb8b4e0bfa 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -32,6 +32,7 @@
- #include "remote.h"
- #include "object-store.h"
- #include "exec-cmd.h"
-+#include "refspec.h"
- 
- #define FAILED_RUN "failed to run %s"
- 
-@@ -877,6 +878,7 @@ static int fetch_remote(struct remote *remote, void *cbdata)
- {
- 	struct maintenance_run_opts *opts = cbdata;
- 	struct child_process child = CHILD_PROCESS_INIT;
-+	int i;
- 
- 	child.git_cmd = 1;
- 	strvec_pushl(&child.args, "fetch", remote->name, "--prune", "--no-tags",
-@@ -886,7 +888,37 @@ static int fetch_remote(struct remote *remote, void *cbdata)
- 	if (opts->quiet)
- 		strvec_push(&child.args, "--quiet");
- 
--	strvec_pushf(&child.args, "+refs/heads/*:refs/prefetch/%s/*", remote->name);
-+	for (i = 0; i < remote->fetch.nr; i++) {
-+		struct refspec_item replace;
-+		struct refspec_item *rsi = &remote->fetch.items[i];
-+		struct strbuf new_dst = STRBUF_INIT;
-+		size_t ignore_len = 0;
-+
-+		if (rsi->negative) {
-+			strvec_push(&child.args, remote->fetch.raw[i]);
-+			continue;
-+		}
-+
-+		refspec_item_init(&replace, remote->fetch.raw[i], 1);
-+
-+		/*
-+		 * If a refspec dst starts with "refs/" at the start,
-+		 * then we will replace "refs/" with "refs/prefetch/".
-+		 * Otherwise, we will prepend the dst string with
-+		 * "refs/prefetch/".
-+		 */
-+		if (!strncmp(replace.dst, "refs/", 5))
-+			ignore_len = 5;
-+
-+		strbuf_addstr(&new_dst, "refs/prefetch/");
-+		strbuf_addstr(&new_dst, replace.dst + ignore_len);
-+		free(replace.dst);
-+		replace.dst = strbuf_detach(&new_dst, NULL);
-+
-+		strvec_push(&child.args, refspec_item_format(&replace));
-+
-+		refspec_item_clear(&replace);
-+	}
- 
- 	return !!run_command(&child);
- }
-diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index fc2315edec11..3366ea188782 100755
---- a/t/t7900-maintenance.sh
-+++ b/t/t7900-maintenance.sh
-@@ -142,20 +142,51 @@ test_expect_success 'prefetch multiple remotes' '
- 	test_commit -C clone2 two &&
- 	GIT_TRACE2_EVENT="$(pwd)/run-prefetch.txt" git maintenance run --task=prefetch 2>/dev/null &&
- 	fetchargs="--prune --no-tags --no-write-fetch-head --recurse-submodules=no --refmap= --quiet" &&
--	test_subcommand git fetch remote1 $fetchargs +refs/heads/*:refs/prefetch/remote1/* <run-prefetch.txt &&
--	test_subcommand git fetch remote2 $fetchargs +refs/heads/*:refs/prefetch/remote2/* <run-prefetch.txt &&
-+	test_subcommand git fetch remote1 $fetchargs +refs/heads/*:refs/prefetch/remotes/remote1/* <run-prefetch.txt &&
-+	test_subcommand git fetch remote2 $fetchargs +refs/heads/*:refs/prefetch/remotes/remote2/* <run-prefetch.txt &&
- 	test_path_is_missing .git/refs/remotes &&
--	git log prefetch/remote1/one &&
--	git log prefetch/remote2/two &&
-+	git log prefetch/remotes/remote1/one &&
-+	git log prefetch/remotes/remote2/two &&
- 	git fetch --all &&
--	test_cmp_rev refs/remotes/remote1/one refs/prefetch/remote1/one &&
--	test_cmp_rev refs/remotes/remote2/two refs/prefetch/remote2/two &&
-+	test_cmp_rev refs/remotes/remote1/one refs/prefetch/remotes/remote1/one &&
-+	test_cmp_rev refs/remotes/remote2/two refs/prefetch/remotes/remote2/two &&
- 
- 	test_cmp_config refs/prefetch/ log.excludedecoration &&
- 	git log --oneline --decorate --all >log &&
- 	! grep "prefetch" log
- '
- 
-+test_expect_success 'prefetch custom refspecs' '
-+	git -C clone1 branch -f special/fetched HEAD &&
-+	git -C clone1 branch -f special/secret/not-fetched HEAD &&
-+
-+	# create multiple refspecs for remote1
-+	git config --add remote.remote1.fetch +refs/heads/special/fetched:refs/heads/fetched &&
-+	git config --add remote.remote1.fetch ^refs/heads/special/secret/not-fetched &&
-+
-+	GIT_TRACE2_EVENT="$(pwd)/prefetch-refspec.txt" git maintenance run --task=prefetch 2>/dev/null &&
-+
-+	fetchargs="--prune --no-tags --no-write-fetch-head --recurse-submodules=no --refmap= --quiet" &&
-+
-+	# skips second refspec because it is not a pattern type
-+	rs1="+refs/heads/*:refs/prefetch/remotes/remote1/*" &&
-+	rs2="+refs/heads/special/fetched:refs/prefetch/heads/fetched" &&
-+	rs3="^refs/heads/special/secret/not-fetched" &&
-+
-+	test_subcommand git fetch remote1 $fetchargs $rs1 $rs2 $rs3 <prefetch-refspec.txt &&
-+	test_subcommand git fetch remote2 $fetchargs +refs/heads/*:refs/prefetch/remotes/remote2/* <prefetch-refspec.txt &&
-+
-+	# first refspec is overridden by second
-+	test_must_fail git rev-parse refs/prefetch/special/fetched &&
-+	git rev-parse refs/prefetch/heads/fetched &&
-+
-+	# possible incorrect places for the non-fetched ref
-+	test_must_fail git rev-parse refs/prefetch/remotes/remote1/secret/not-fetched &&
-+	test_must_fail git rev-parse refs/prefetch/remotes/remote1/not-fetched &&
-+	test_must_fail git rev-parse refs/heads/secret/not-fetched &&
-+	test_must_fail git rev-parse refs/heads/not-fetched
-+'
-+
- test_expect_success 'prefetch and existing log.excludeDecoration values' '
- 	git config --unset-all log.excludeDecoration &&
- 	git config log.excludeDecoration refs/remotes/remote1/ &&
--- 
-gitgitgadget
+Thanks,
+-Stolee
