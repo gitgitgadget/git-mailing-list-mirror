@@ -2,77 +2,77 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C31AC433B4
-	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 13:08:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1FF83C433B4
+	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 13:20:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 226BE613A9
-	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 13:08:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E0C6C613AD
+	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 13:20:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235537AbhDENIz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Apr 2021 09:08:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51184 "EHLO
+        id S235736AbhDENUw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Apr 2021 09:20:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234330AbhDENIz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Apr 2021 09:08:55 -0400
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7CC5C061756
-        for <git@vger.kernel.org>; Mon,  5 Apr 2021 06:08:48 -0700 (PDT)
-Received: by mail-oi1-x233.google.com with SMTP id x2so11583206oiv.2
-        for <git@vger.kernel.org>; Mon, 05 Apr 2021 06:08:48 -0700 (PDT)
+        with ESMTP id S232694AbhDENUv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Apr 2021 09:20:51 -0400
+Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECEA5C061756
+        for <git@vger.kernel.org>; Mon,  5 Apr 2021 06:20:45 -0700 (PDT)
+Received: by mail-ot1-x333.google.com with SMTP id s16-20020a0568301490b02901b83efc84a0so2398571otq.10
+        for <git@vger.kernel.org>; Mon, 05 Apr 2021 06:20:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=G89VnBw5NsFtl+f1gVd1SYlTr45q7tqcCQwoufxYeGc=;
-        b=JllCKy4Hl39qpA6tAFcLcDpw3Kgzt23q5YOparS0ZuJG6z7oyyt9E2Ce6lTPN/IWo4
-         7nlZRNaB/JVvlzm9PVn8QfVv682box+I8cTYvHim5TL1Sl7sN0MOEcgsn0+SnWJfxwkM
-         X+SHYtOXFMZQoZNJxNOajMn8wQWGw4bWnOJOEQQO8T621D5bergSF/tY/vt6eieAaTZU
-         WnUnoIkJjBZgSfc0qKBZIylB3P2+44wSk6UmpY5K4M5i7OANkPhJIMpg+6h8wV9BoYCH
-         95GXKWS7d+B0V4W23wcMuca/Ne6cX+xaO/1sgKLeKtMqm9V+32oHAI4AlhPC4t/rn+Jd
-         IqIw==
+        bh=LplSz/EFy4cJRc5wZ58I8XuCOlUaCgmZ2tXff6pv16I=;
+        b=qd5PAdbGtq3ELqNJKdQ54p0rLx6tb+NY9/uTovv1uA47Ec7A3f08qurtXBR6NYR0uC
+         ZlyAN4JkxH85ORd2DoUgGZ8alGSHPY+CaMZhGwx6emlJ20k4N9XtqWoaeSw4dAVsbNNz
+         tTsETFTd7PGW284no6Ssuwp7Blot3NRSW3h6JOWftiK62WstIk5XlG9451vA3/vTAWaF
+         3gGCte3XNBzP/Y3bezWH3UOC2CCPR+UyCDe90yS1OQJugc8jcQ1ut0jxG7jyLxS0fZXX
+         N77FQmSRlJqNF5aogwX6zFIpuzdoDU+XvIirElQEYRinL/ZuQWc7HD7qDacfWp6RDrQ1
+         aiTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=G89VnBw5NsFtl+f1gVd1SYlTr45q7tqcCQwoufxYeGc=;
-        b=HAxOF02ZDxVSe5uYu8MXvP0G+jbJxZ74Go8gyGJWFHPoiqHp7Jn+PsdWairuuBS56w
-         lU3V5GQ0IWym6tYKSB28LmcWWl1hfdu93ZQQ5bZMtIx9uspdcWHqoL+luK0tC9Oi5uwM
-         zfWlRLSLGCTz0imoe4iKQsrUBNLXE7njTL2qur2zBoL2bJpRLGhuv2zWhQtJWeJ25NY2
-         WOrXkrgZ4YwILqmQeHwIqYpDtDiD+VS3taLa2c1XpG6kTsfz9dvc3p1B3j4RoJTdcXYe
-         8IUDKnUc9nfTEljrn/zdUtBcXK5VWm3f/LPZuCOqqmcJSzREVGYodloBNIUTJSmPpi0V
-         B3Sg==
-X-Gm-Message-State: AOAM532CZ8l7f/S2T9SIDYHneyZoL73hoWCO+dy6mIaCSyKgTKqmzVQG
-        V+w3nEECyoPbrSwL6mfByn4=
-X-Google-Smtp-Source: ABdhPJxysMPgyW6FgGgXEWbI/IfyPuOGX4qgz/CWSVtG/soyc7HgyHQC/jY/EQGQT0VuaVYZ/GQDnw==
-X-Received: by 2002:a05:6808:a90:: with SMTP id q16mr17288697oij.77.1617628127915;
-        Mon, 05 Apr 2021 06:08:47 -0700 (PDT)
+        bh=LplSz/EFy4cJRc5wZ58I8XuCOlUaCgmZ2tXff6pv16I=;
+        b=lhrfvzUPQiZTg7GxfUaHC0GSkpgsT57yAPrW4z9T1wMEbpmoUEE90Ry/W1gktTGNrU
+         6pR2lC17kOi6ZjBqOEPiotWGzOVqnb3w4TKaFZNt/WiqUlpIHxHcvrG/WHJLNzxfumDw
+         vTQOdEZ+ON/MAkSoAMwp0KqTZIZ2plXoD537qzYb0n3FL/uiR+j/a8tw15h6+YauAsyQ
+         TpxcSlCUDgx3hXaIKKe2VyvLizHHnQ8iYHvIKuVAPCKc4Jw4bP3I+Umn4XouCSJhAzAe
+         nMUVtv8wyU1pnBdxfWsQ9tCpzjz4e7b7mw4XJnc7EFSWpKSkG76T1t4dhfahlORZSZZq
+         CxFQ==
+X-Gm-Message-State: AOAM5316gDv6HcEAL9qsNYYW507tNRNvC8aRrIAvG6PlTuL3i541YEGS
+        ZmpCvy4CLXm027QlN1P6LrKzXozKIipUJQ==
+X-Google-Smtp-Source: ABdhPJwgOgynjOEsy578m0YqcJqKacBdFpWJH1QNiLCl8iTXBxS8FUNeVFPwx1YIXtY4GAn6NOETsA==
+X-Received: by 2002:a9d:7cd2:: with SMTP id r18mr13410953otn.240.1617628844998;
+        Mon, 05 Apr 2021 06:20:44 -0700 (PDT)
 Received: from ?IPv6:2600:1700:e72:80a0:91f9:c820:22ba:fec7? ([2600:1700:e72:80a0:91f9:c820:22ba:fec7])
-        by smtp.gmail.com with ESMTPSA id k15sm4030959otj.46.2021.04.05.06.08.46
+        by smtp.gmail.com with ESMTPSA id d2sm4028693otl.48.2021.04.05.06.20.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 05 Apr 2021 06:08:47 -0700 (PDT)
-Subject: Re: [PATCH v3] cache-tree.c: remove implicit dependency on
- the_repository
-To:     Junio C Hamano <gitster@pobox.com>,
-        Chinmoy via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Chinmoy <chinmoy12c@gmail.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.915.v2.git.1616772930098.gitgitgadget@gmail.com>
- <pull.915.v3.git.1617465421353.gitgitgadget@gmail.com>
- <xmqqy2dyy40l.fsf@gitster.g>
+        Mon, 05 Apr 2021 06:20:44 -0700 (PDT)
+Subject: Re: should git maintenance prefetch be taught to honor remote.fetch
+ refspec?
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Tom Saeger <tom.saeger@oracle.com>, git@vger.kernel.org
+References: <20210401184914.qmr7jhjbhp2mt3h6@dhcp-10-154-148-175.vpn.oracle.com>
+ <d246df21-fdaa-a391-847a-e03e8e664af1@gmail.com> <xmqq8s613gqa.fsf@gitster.g>
+ <3bfd9a88-10f9-df71-bf96-f9c5654e48eb@gmail.com>
+ <20210402182716.trbaflsjcvouff2y@brm-x62-17.us.oracle.com>
+ <41dc2961-7ba5-a882-3416-45631e2cbb33@gmail.com> <xmqq1rbs4c6t.fsf@gitster.g>
+ <f113284b-a7fe-ba7f-ce1c-d214efd5d0c6@gmail.com> <xmqqft057ijc.fsf@gitster.g>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <be9793f0-f437-8e42-d463-21a48d2ee948@gmail.com>
-Date:   Mon, 5 Apr 2021 09:08:44 -0400
+Message-ID: <e75b1e72-6c9f-d466-ac52-24b324b44b3c@gmail.com>
+Date:   Mon, 5 Apr 2021 09:20:41 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.9.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqy2dyy40l.fsf@gitster.g>
+In-Reply-To: <xmqqft057ijc.fsf@gitster.g>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -80,108 +80,71 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/4/2021 2:09 AM, Junio C Hamano wrote:
-> "Chinmoy via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 4/4/2021 7:10 PM, Junio C Hamano wrote:
+> Derrick Stolee <stolee@gmail.com> writes:
+>> On 4/2/2021 5:19 PM, Junio C Hamano wrote:
+>>> I do not recommend unparsed refspec and textually munging, by the
+>>> way.  Doesn't
+>>>
+>>> 	git fetch master:remotes/origin/master
+>>>
+>>> first parse to normalize the src/dst sides to turn it into
+>>>
+>>> 	git fetch refs/heads/master:refs/remotes/origin/master
 > 
->> diff --git a/sparse-index.c b/sparse-index.c
->> index 95ea17174da3..e4323ffd81db 100644
->> --- a/sparse-index.c
->> +++ b/sparse-index.c
->> @@ -128,12 +128,14 @@ int set_sparse_index_config(struct repository *repo, int enable)
->>  int convert_to_sparse(struct index_state *istate)
->>  {
->>  	int test_env;
->> +	struct repository *r = the_repository;
->> +
->>  	if (istate->split_index || istate->sparse_index ||
->>  	    !core_apply_sparse_checkout || !core_sparse_checkout_cone)
->>  		return 0;
->>  
->>  	if (!istate->repo)
->> -		istate->repo = the_repository;
->> +		istate->repo = r;
->>  
+> I tried to jug my memory in this area a bit by reading the relevant
+> code.  For non-wildcard refspec, e.g. with
 > 
-> I am not quite sure if this is a reasonable conversion.  Surely it
-> would not make the compiler barf, but are we sure that the caller of
-> convert_to_sparse() wants us to work on the_repository instance and
-> no other repository?  As an istate has a .repo member, it seems to
-> me that using istate->repo would be a lot saner approach than
-> assigning the_repository upfront to r.  It might be even needed, if
-> cache_tree_update() wants to take a repository instance, to ensure
-> that all callers to this helper sets istate->repo before they call
-> it so that the above "if not set yet, use the_repository" code does
-> not have to kick in.
+>     [remote "origin"]
+> 	url = ../git.git/
+> 	fetch = master:remotes/origin/master
+> 	tagopt = --no-tags
 > 
->>  	/*
->>  	 * The GIT_TEST_SPARSE_INDEX environment variable triggers the
->> @@ -161,7 +163,7 @@ int convert_to_sparse(struct index_state *istate)
->>  		return -1;
->>  	}
->>  
->> -	if (cache_tree_update(istate, 0)) {
->> +	if (cache_tree_update(r, istate, 0)) {
+> you'd get
 > 
-> And this looks like a bad conversion.  It may happen to do the same
-> thing, but the flow of the logic up to this point in the function
-> was to make sure istate->repo is not empty by filling it if it is
-> not yet set, and update the cache tree of that istate.  So, it seems
-> more logical if this call were like so, no?
+>     $ git fetch -v
+>     From ../git
+>      * [new branch]            master     -> origin/master
+>     $ git for-each-ref
+>     2e36527f23b7f6ae15e6f21ac3b08bf3fed6ee48 commit	refs/remotes/origin/master
 > 
-> 	if (cache_tree_update(istate->repo, istate, 0)) {
-> 
-> In fact, in the world after 1fd9ae51 (repository: add repo reference
-> to index_state, 2021-01-23), it is dubious that this topic to teach
-> cache_tree_update() to take a repository pointer is sensible.  While
-> working on a single repository, we may create multiple in-core index
-> instances that represent temporary indices, but each of these in-core
-> index instances (i.e. istate) belong to a single repository.
-> 
-> And in a call to cache_tree_update(R, I, F), if I->repo is *NOT* R,
-> that must mean a bug.  Here is what 1fd9ae51 says on this point.
-> 
->     repository: add repo reference to index_state
-> 
->     It will be helpful to add behavior to index operations that might
->     trigger an object lookup. Since each index belongs to a specific
->     repository, add a 'repo' pointer to struct index_state that allows
->     access to this repository.
-> 
->     Add a BUG() statement if the repo already has an index, and the index
->     already has a repo, but somehow the index points to a different repo.
-> 
->     This will prevent future changes from needing to pass an additional
->     'struct repository *repo' parameter and instead rely only on the 'struct
->     index_state *istate' parameter.
-> 
-> Derrick, what's you thought on this?  The patch under discussion
-> looks to me a prime example of "future change(s)" needing "to pass
-> an additional 'struct repository *repo' parameter".
+> It all happens inside remote.c::get_fetch_map(), I think.
 
-With your additional comments, I think it is clear that the "fourth
-option" I mentioned earlier [1] is the way to go:
+I see there that some refs are being matched with some
+expectation of remote refs inside get_remote_ref() (which
+calls find_ref_by_name_abbrev() as a helper). There does not
+appear to be any place that modifies the refs directly in
+general, and instead refs are matched from the refspec using
+standard short-ref rules.
 
-  Finally, there is yet a fourth option: use istate->repo instead. In
-  1fd9ae51 (repository: add repo reference to index_state), I added a
-  'repo' member to struct index_state. This is intended for methods to
-  access a repository directly from the index.
+This is particularly shown in examples like "git push topic"
+never modifying the push-refspec from having 'src' equal to
+"topic" and instead the ref machinery discovers that "topic"
+really means "refs/heads/topic".
 
-[1] https://lore.kernel.org/git/f187df01-8e59-ac74-01e1-586a7a63fd4e@gmail.com/
+I took your advice to not munge raw refpsecs and instead
+worked directly on the 'dst' of the struct refspec_item. This
+required adding a method that formats a refspec, which I test
+carefully. I spent about an hour trying to have parse_refspec()
+add the appropriate "refs/" prefix, but it becomes difficult
+when we intend to make a distinction between "refs/heads/" and
+other sub-areas within "refs/". Finally, I punted on that
+conversion and made the logic in 'prefetch' extremely obvious:
 
-So in this sense, we should always use istate->repo, but we might
-still need the following guard in some places:
+1. If the refspec's 'dst' starts with "refs/", then replace
+   that prefix with "refs/prefetch/".
 
-	if (!istate->repo)
-		istate->repo = the_repository;
+2. If the refspec's 'dst' does not start with "refs/", then
+   concatenate "refs/prefetch/" and 'dst'.
 
-in case there are situations where the index is loaded before
-the_repository is loaded. I have hit this in testing, but don't fully
-understand the cases where this can happen.
+This will keep a roughly-equivalent partition of refs (some
+might have previously collided that will not any more).
 
-The way it would change this patch is to drop the 'struct repository *r'
-pointers and changes to the method signatures. Instead, keep the
-methods only taking a 'struct index_state *istate' and use istate->repo
-everywhere.
+I have posted my patch series [1], so please take a look. It
+builds up the infrastructure to properly test such a refspec
+expansion, if we wish to do so.
+
+[1] https://lore.kernel.org/git/pull.924.git.1617627856.gitgitgadget@gmail.com/
 
 Thanks,
 -Stolee
