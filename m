@@ -2,104 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 25580C433ED
-	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 23:09:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 32CDEC433B4
+	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 23:29:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CED9561380
-	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 23:09:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EB34F613D2
+	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 23:29:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235557AbhDEXJk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Apr 2021 19:09:40 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57689 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231488AbhDEXJh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Apr 2021 19:09:37 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A011FAA75E;
-        Mon,  5 Apr 2021 19:09:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=+DXr2rSL/hzEAyJVVLhNYi9weI0=; b=Uu5PdA
-        40R2IM8JMlu9kPdcls+jygH16tYbPiMYOfHutI33dMeZM875FwlQPa5Ozn+fzA7k
-        vpWUaYJ8UTfsQD4BhXI0Rr0UAlc3CABOUqtPnpFt4M/GpX7EyzVEToMaKlP+Edhx
-        ncX2bsMBbsnGntiR0VrAAfjeHAKLIwW53lQ5Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=jXVcSn+pwH5AORlc4Cg5zmMboD1qT2DT
-        QkCY8sB+5pvg34x6NImFhguIRiaMC7fNR9AzHy0+8HmRIdooCz+csC8qbNdv1WDJ
-        doyefubjVjBrsdR8UEoUWqZD+J3Pb9jVXcQ47iHPFnkfR3chgtv55FHZu3BcKE+v
-        ZD49bkn5apc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 981D2AA75D;
-        Mon,  5 Apr 2021 19:09:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1D0DEAA75C;
-        Mon,  5 Apr 2021 19:09:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Albert Cui <albertqcui@gmail.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Albert Cui via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v2] hooks: propose project configured hooks
-References: <pull.908.git.1616105016055.gitgitgadget@gmail.com>
-        <pull.908.v2.git.1616723016659.gitgitgadget@gmail.com>
-        <ec031dc8-e100-725b-5f27-d3007c55be87@gmail.com>
-        <CAMbkP-S-9cccMpU4HG0Wurqap-WkTmD2zk50nKd9kJ_oWO__qw@mail.gmail.com>
-Date:   Mon, 05 Apr 2021 16:09:29 -0700
-In-Reply-To: <CAMbkP-S-9cccMpU4HG0Wurqap-WkTmD2zk50nKd9kJ_oWO__qw@mail.gmail.com>
-        (Albert Cui's message of "Mon, 5 Apr 2021 15:45:10 -0700")
-Message-ID: <xmqqmtuc49cm.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S241526AbhDEX3f (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Apr 2021 19:29:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45078 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237964AbhDEX3e (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Apr 2021 19:29:34 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14D39C06174A
+        for <git@vger.kernel.org>; Mon,  5 Apr 2021 16:29:27 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id w3so19008189ejc.4
+        for <git@vger.kernel.org>; Mon, 05 Apr 2021 16:29:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=skydio.com; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=tlmjfAEDD5mo6aV6Q8uZRH21Bz4bsyEsWirWgYK88Rk=;
+        b=M7cqPNiuMvOwvJOp/HgBixnZPgZ41Wg/9GYFf6TkE6vW3bokbmXQ0fiv2yejKPIf2s
+         +sqA55+8t7CnGalznE5znbfRdZpY6X0GaU0kvOZ/faxxiDGmQ7/kTx7MK6PKAWDcsenm
+         vmUdWGNIqqI4Bs+SWiDbuSt9OuPLEdUk9xNleL5zjgXN4o9oQngZlGGbvAeJr0VSHieh
+         Pdl0f8bWIP+qD1p1SbqX871V5niVTDr++GrnwVsjLIMPrC3df0RdEus5OCXuU/BEhEm0
+         jcokFUqIC6UD9MF1DrpiXceJzL1jaHY+91cGVjEx8XJN5ygqLeDp4tn3hXEwx1nSRzax
+         Pn3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=tlmjfAEDD5mo6aV6Q8uZRH21Bz4bsyEsWirWgYK88Rk=;
+        b=MZy4eUcpH5rhgwuVHIekTvjke/A67vv1zHp+OkJIlt703PZJlYSVjg2Tsk200jUIr+
+         p4UUmw9lTscWgKW1lQWYdfdV96tPcyWhUnWngTeauuk+EYuAdPg7gWGvX/ctRcREoGcz
+         Onjg0A1m83w0c/Z+th30Nz3/F3u/+QpYGpNTuYt2+5LAkcd5NXVYnURKak4eVppsXFFy
+         Icx+CAYwLVLYVcY/AIr22xgGI6MmuAsDb6YjSQ0sgbOW1nuRmZSJ2C8PUflEj5Ubexw8
+         n8HpqdgE0RLrwW3IYUbbWTMNiYzofXshO9mkSSIbCM9OfnKWGhAHUArAryK0//ek0A3l
+         vhTw==
+X-Gm-Message-State: AOAM5333DRnWDsBaEuYFD6DHZDsfOSb/gr/aYrGxSzLaR/ftZaiqhJMS
+        5yll6a9vou3UNx5NeNdDx78VZQdEIBYoQaYCVJUUgQ==
+X-Google-Smtp-Source: ABdhPJz2fhy1Q6wziHc7E30ouUFl3siEDQ3CxVIflKL9/UVit+XX3y9sCwDwT8zdcYx/vSjuS+/Og6bfGo516LmZs+0=
+X-Received: by 2002:a17:906:2dda:: with SMTP id h26mr30851429eji.163.1617665365837;
+ Mon, 05 Apr 2021 16:29:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F9C6621E-9663-11EB-AB59-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+References: <20210403013410.32064-1-jerry@skydio.com> <20210403013410.32064-2-jerry@skydio.com>
+ <CABPp-BGhvQF9k1Jw9NPbZWMkNSffqR777-4S-y-Sh=Etvw-SAA@mail.gmail.com>
+ <xmqqy2e00zaf.fsf@gitster.g> <xmqq1rbq276g.fsf@gitster.g> <CAMKO5CtCk_sJsFFiKKFR1wCSyY226CbxPtN6=p6JRzocSuv8jQ@mail.gmail.com>
+ <xmqqy2dw4bh3.fsf@gitster.g>
+In-Reply-To: <xmqqy2dw4bh3.fsf@gitster.g>
+From:   Jerry Zhang <jerry@skydio.com>
+Date:   Mon, 5 Apr 2021 16:29:15 -0700
+Message-ID: <CAMKO5CuYE1VA2h2zDo-b77WQDgj1LriwifruziPA30Yb7uS=6A@mail.gmail.com>
+Subject: Re: [PATCH 1/1] git-apply: Allow simultaneous --cached and --3way options
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Ross Yeager <ross@skydio.com>,
+        Abraham Bachrach <abe@skydio.com>,
+        Jerry Zhang <jerryxzha@googlemail.com>,
+        Brian Kubisiak <brian.kubisiak@skydio.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Albert Cui <albertqcui@gmail.com> writes:
-
->> Requirements like these make me think that these repositories would be
->> better off with a script that configures the hooks after checking if
->> these things actually exist on the PATH (and installs them if not). I
->> would lower the priority of this one for now.
->>
+On Mon, Apr 5, 2021 at 3:23 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> As mentioned, for enterprise deployments, this can be solved by administrators
-> installing any necessary software automatically.
+> Jerry Zhang <jerry@skydio.com> writes:
 >
-> Otherwise, I think ensuring the tool is installed feels out-of-scope
-> (as written in
-> the doc); it's not like Git makes sure compilers or build tools are
-> installed today,
-> and even today, users could set up Husky hooks that rely on $PATH tools, so
-> we're not introducing a new problem.
+> > I can see what you mean about the user safety issue. However,
+> > my specific use case (see cover letter) involves an index that does not
+> > match HEAD, and wouldn't be possible at all if we forced the index to
+> > match HEAD. Furthermore git-apply --cached even without --3way
+> > doesn't force the index to match HEAD either, so why force it now?
+>
+> Primarily because we tend to be extra careful before mergy operation
+> than any other operation.  Especially without --3way, apply (with or
+> without --cached/--index) is extra careful to make itself all-or-none
+> operation to be safe, so that there is no mixed mess that requires
+> manual intervention (which would further increase the risk of mistakes).
+>
+> It is OK to introduce a new option to allow a dirty index, and your
+> tool can pass that option when it calls "apply --cached --3way", but
+> it would be safe to require a clean index (it does not matter how
+> dirty the working tree is ;-) by default.
+>
+Sure adding the staged files will definitely clobber whatever the user
+had in the cache at stage 0. This will probably be unexpected. But
+the normal invocation of --3way also does this without warning, since
+it touches the cache as well. It just seems odd to me to be adding a safety
+check on some paths that aren't there on other very similar ones. Maybe
+another option would be to add a very stern warning for users of --3way?
 
-I am afraid that this compares apples and oranges.  
-
-I may "git clone" and try "make" to find out that I needed a special
-compiler, and that would not be the end of the world.  It is
-guaranteed that "git clean -f -x -d" followed by installation of
-necessary toolchain followed by "make" would work.  And that is
-partly because "git clone" does not do any more than just clone and
-checkout the initial tree.
-
-If a new version of "git clone" told me "I can install the project
-recommended hooks to use", I answer "yes", and then failed while
-installing and configuring the project-recommended hooks because of
-missing dependencies, then I wouldn't know in what state the result
-would be in.  In some projects, it may be enough to just install the
-missing dependencies, and in some others, it may not be enough and I
-have a broken half-configured mess depending on how the "installing
-and configuring" step failed.
+Unrelatedly would you have context on why --3way falls back on 3way
+rather than trying 3way first then falling back on apply_fragments if
+blobs don't exist? I see some cases where the normal patch application
+will succeed but apply the patch incorrectly, while 3way will apply the
+patch correctly. In these cases it's impossible for the user to force 3way.
+Are there downsides to 3way that aren't solved by falling back on
+apply_fragments?
