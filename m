@@ -2,149 +2,232 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1FF83C433B4
-	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 13:20:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A29DEC433B4
+	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 14:01:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E0C6C613AD
-	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 13:20:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 614CF6139F
+	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 14:01:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235736AbhDENUw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Apr 2021 09:20:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53756 "EHLO
+        id S235913AbhDEOBb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Apr 2021 10:01:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34256 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232694AbhDENUv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Apr 2021 09:20:51 -0400
-Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECEA5C061756
-        for <git@vger.kernel.org>; Mon,  5 Apr 2021 06:20:45 -0700 (PDT)
-Received: by mail-ot1-x333.google.com with SMTP id s16-20020a0568301490b02901b83efc84a0so2398571otq.10
-        for <git@vger.kernel.org>; Mon, 05 Apr 2021 06:20:45 -0700 (PDT)
+        with ESMTP id S235748AbhDEOBa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Apr 2021 10:01:30 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BC06C061756
+        for <git@vger.kernel.org>; Mon,  5 Apr 2021 07:01:24 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id 5-20020a05600c0245b029011a8273f85eso1556330wmj.1
+        for <git@vger.kernel.org>; Mon, 05 Apr 2021 07:01:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=LplSz/EFy4cJRc5wZ58I8XuCOlUaCgmZ2tXff6pv16I=;
-        b=qd5PAdbGtq3ELqNJKdQ54p0rLx6tb+NY9/uTovv1uA47Ec7A3f08qurtXBR6NYR0uC
-         ZlyAN4JkxH85ORd2DoUgGZ8alGSHPY+CaMZhGwx6emlJ20k4N9XtqWoaeSw4dAVsbNNz
-         tTsETFTd7PGW284no6Ssuwp7Blot3NRSW3h6JOWftiK62WstIk5XlG9451vA3/vTAWaF
-         3gGCte3XNBzP/Y3bezWH3UOC2CCPR+UyCDe90yS1OQJugc8jcQ1ut0jxG7jyLxS0fZXX
-         N77FQmSRlJqNF5aogwX6zFIpuzdoDU+XvIirElQEYRinL/ZuQWc7HD7qDacfWp6RDrQ1
-         aiTg==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=LWWnAs9gItyZMI5jI3+rXEeEWJXfbneg2IfYquzOBgo=;
+        b=lSqStREJPFG4yJGUVqqPgHFXmbIY5E5dATn53gjCy4XZd/Bh7He+A+lcFr8IyzjgiS
+         wtxEHd7ghkNWfopEldWtswPIO/nqWXO+fDDAiC6LeySvBem4ed4LNAKebN6x/Ith8aib
+         q9lNLuY6HhLAwzRJsmrWVjnDOBtIAOqJmYUB5rHK0wBB1PnKPrujE/vph9wJFMeM9028
+         ZoxItzIrsNXoQq+9SF1avXMsgyeHFoGTfR5Cz24j6bwhRyQzYIqZVWfe+mWQvkt5FDJw
+         9pfy2AdJF8hN84Hgbqo1yFoXvtKYEmew1EuMEG1D2QeJMQwr3hhW9bn3Q2hKMm25dqvV
+         wCLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=LplSz/EFy4cJRc5wZ58I8XuCOlUaCgmZ2tXff6pv16I=;
-        b=lhrfvzUPQiZTg7GxfUaHC0GSkpgsT57yAPrW4z9T1wMEbpmoUEE90Ry/W1gktTGNrU
-         6pR2lC17kOi6ZjBqOEPiotWGzOVqnb3w4TKaFZNt/WiqUlpIHxHcvrG/WHJLNzxfumDw
-         vTQOdEZ+ON/MAkSoAMwp0KqTZIZ2plXoD537qzYb0n3FL/uiR+j/a8tw15h6+YauAsyQ
-         TpxcSlCUDgx3hXaIKKe2VyvLizHHnQ8iYHvIKuVAPCKc4Jw4bP3I+Umn4XouCSJhAzAe
-         nMUVtv8wyU1pnBdxfWsQ9tCpzjz4e7b7mw4XJnc7EFSWpKSkG76T1t4dhfahlORZSZZq
-         CxFQ==
-X-Gm-Message-State: AOAM5316gDv6HcEAL9qsNYYW507tNRNvC8aRrIAvG6PlTuL3i541YEGS
-        ZmpCvy4CLXm027QlN1P6LrKzXozKIipUJQ==
-X-Google-Smtp-Source: ABdhPJwgOgynjOEsy578m0YqcJqKacBdFpWJH1QNiLCl8iTXBxS8FUNeVFPwx1YIXtY4GAn6NOETsA==
-X-Received: by 2002:a9d:7cd2:: with SMTP id r18mr13410953otn.240.1617628844998;
-        Mon, 05 Apr 2021 06:20:44 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:91f9:c820:22ba:fec7? ([2600:1700:e72:80a0:91f9:c820:22ba:fec7])
-        by smtp.gmail.com with ESMTPSA id d2sm4028693otl.48.2021.04.05.06.20.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 05 Apr 2021 06:20:44 -0700 (PDT)
-Subject: Re: should git maintenance prefetch be taught to honor remote.fetch
- refspec?
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Tom Saeger <tom.saeger@oracle.com>, git@vger.kernel.org
-References: <20210401184914.qmr7jhjbhp2mt3h6@dhcp-10-154-148-175.vpn.oracle.com>
- <d246df21-fdaa-a391-847a-e03e8e664af1@gmail.com> <xmqq8s613gqa.fsf@gitster.g>
- <3bfd9a88-10f9-df71-bf96-f9c5654e48eb@gmail.com>
- <20210402182716.trbaflsjcvouff2y@brm-x62-17.us.oracle.com>
- <41dc2961-7ba5-a882-3416-45631e2cbb33@gmail.com> <xmqq1rbs4c6t.fsf@gitster.g>
- <f113284b-a7fe-ba7f-ce1c-d214efd5d0c6@gmail.com> <xmqqft057ijc.fsf@gitster.g>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <e75b1e72-6c9f-d466-ac52-24b324b44b3c@gmail.com>
-Date:   Mon, 5 Apr 2021 09:20:41 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.9.0
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=LWWnAs9gItyZMI5jI3+rXEeEWJXfbneg2IfYquzOBgo=;
+        b=gH/9mJQ1iNmPYtkMlHbaJa/uC48TCLHeJsK5N0rjNWxgw0NAZO2mFxsKgdrRsff7rv
+         9WejAuX25GM74ODLA6sBqKvutBa3XQgM2YLQalueIGFpWBzsrADarKwSJg6n37E+/gxv
+         Nb71QesgxveFDzFhcg4zxJleKkcLZRU5oBokC+SDRwCFiGnOPGMDeNzEXEofJ20RdkEy
+         DXkgAaUaGBYAXX0nQx9Mtq5BNZM8JQoa4wWDXnNnoK1ERzOUJo9UhpVMs7hYfjOfuuZE
+         TVnzbupH4yktUgSsO7kTe5gG53uNyKAV/Vv58V3TdXv9+c8DfUtDHU/MSdjGHt3JuL2L
+         WpQg==
+X-Gm-Message-State: AOAM532J5jEndfOiuUDCyAiaBpxaHv0J9fM1b4aEPErFqA64rmNw4gKN
+        AMg0t1IV6s2FxU00pT4R4cRvHx3rxSo=
+X-Google-Smtp-Source: ABdhPJzbTEITqNHPQ4w17jUp8Wf3JbQrN1EgPtF2jij6qh6BZTqRdtDu1dJMycdcyovKSkduuliKWw==
+X-Received: by 2002:a1c:65c2:: with SMTP id z185mr25686896wmb.2.1617631281961;
+        Mon, 05 Apr 2021 07:01:21 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id o12sm2043722wrj.34.2021.04.05.07.01.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 Apr 2021 07:01:21 -0700 (PDT)
+Message-Id: <pull.927.git.1617631280402.gitgitgadget@gmail.com>
+From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 05 Apr 2021 14:01:19 +0000
+Subject: [PATCH] [GSOC] ref-filter: use single strbuf for all output
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-In-Reply-To: <xmqqft057ijc.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Hariom Verma <hariom18599@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/4/2021 7:10 PM, Junio C Hamano wrote:
-> Derrick Stolee <stolee@gmail.com> writes:
->> On 4/2/2021 5:19 PM, Junio C Hamano wrote:
->>> I do not recommend unparsed refspec and textually munging, by the
->>> way.  Doesn't
->>>
->>> 	git fetch master:remotes/origin/master
->>>
->>> first parse to normalize the src/dst sides to turn it into
->>>
->>> 	git fetch refs/heads/master:refs/remotes/origin/master
-> 
-> I tried to jug my memory in this area a bit by reading the relevant
-> code.  For non-wildcard refspec, e.g. with
-> 
->     [remote "origin"]
-> 	url = ../git.git/
-> 	fetch = master:remotes/origin/master
-> 	tagopt = --no-tags
-> 
-> you'd get
-> 
->     $ git fetch -v
->     From ../git
->      * [new branch]            master     -> origin/master
->     $ git for-each-ref
->     2e36527f23b7f6ae15e6f21ac3b08bf3fed6ee48 commit	refs/remotes/origin/master
-> 
-> It all happens inside remote.c::get_fetch_map(), I think.
+From: ZheNing Hu <adlternative@gmail.com>
 
-I see there that some refs are being matched with some
-expectation of remote refs inside get_remote_ref() (which
-calls find_ref_by_name_abbrev() as a helper). There does not
-appear to be any place that modifies the refs directly in
-general, and instead refs are matched from the refspec using
-standard short-ref rules.
+When we use `git for-each-ref`, every ref will call
+`show_ref_array_item()` and allocate its own final strbuf
+and error strbuf. Instead, we can provide two single strbuf:
+final_buf and error_buf that get reused for each output.
 
-This is particularly shown in examples like "git push topic"
-never modifying the push-refspec from having 'src' equal to
-"topic" and instead the ref machinery discovers that "topic"
-really means "refs/heads/topic".
+When run it 100 times:
 
-I took your advice to not munge raw refpsecs and instead
-worked directly on the 'dst' of the struct refspec_item. This
-required adding a method that formats a refspec, which I test
-carefully. I spent about an hour trying to have parse_refspec()
-add the appropriate "refs/" prefix, but it becomes difficult
-when we intend to make a distinction between "refs/heads/" and
-other sub-areas within "refs/". Finally, I punted on that
-conversion and made the logic in 'prefetch' extremely obvious:
+$ git for-each-ref
 
-1. If the refspec's 'dst' starts with "refs/", then replace
-   that prefix with "refs/prefetch/".
+on git.git :
 
-2. If the refspec's 'dst' does not start with "refs/", then
-   concatenate "refs/prefetch/" and 'dst'.
+3.19s user
+3.88s system
+35% cpu
+20.199 total
 
-This will keep a roughly-equivalent partition of refs (some
-might have previously collided that will not any more).
+to:
 
-I have posted my patch series [1], so please take a look. It
-builds up the infrastructure to properly test such a refspec
-expansion, if we wish to do so.
+2.89s user
+4.00s system
+34% cpu
+19.741 total
 
-[1] https://lore.kernel.org/git/pull.924.git.1617627856.gitgitgadget@gmail.com/
+The performance has been slightly improved.
 
-Thanks,
--Stolee
+Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+---
+    [GSOC] ref-filter: use single strbuf for all output
+    
+    This patch learned Jeff King's optimization measures in git
+    cat-file(79ed0a5): using a single strbuf for all objects output Instead
+    of allocating a large number of small strbuf for every object.
+    
+    So ref-filter can learn same thing: use single buffer: final_buf and
+    error_buf for all refs output.
+    
+    Thanks.
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-927%2Fadlternative%2Fref-filter-single-buf-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-927/adlternative/ref-filter-single-buf-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/927
+
+ builtin/for-each-ref.c |  4 +++-
+ builtin/tag.c          |  4 +++-
+ ref-filter.c           | 21 ++++++++++++---------
+ ref-filter.h           |  5 ++++-
+ 4 files changed, 22 insertions(+), 12 deletions(-)
+
+diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+index cb9c81a04606..9dc41f48bfa0 100644
+--- a/builtin/for-each-ref.c
++++ b/builtin/for-each-ref.c
+@@ -22,6 +22,8 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
+ 	struct ref_array array;
+ 	struct ref_filter filter;
+ 	struct ref_format format = REF_FORMAT_INIT;
++	struct strbuf final_buf = STRBUF_INIT;
++	struct strbuf error_buf = STRBUF_INIT;
+ 
+ 	struct option opts[] = {
+ 		OPT_BIT('s', "shell", &format.quote_style,
+@@ -81,7 +83,7 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
+ 	if (!maxcount || array.nr < maxcount)
+ 		maxcount = array.nr;
+ 	for (i = 0; i < maxcount; i++)
+-		show_ref_array_item(array.items[i], &format);
++		show_ref_array_item(array.items[i], &format, &final_buf, &error_buf);
+ 	ref_array_clear(&array);
+ 	return 0;
+ }
+diff --git a/builtin/tag.c b/builtin/tag.c
+index d403417b5625..8a38b3e2de34 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -39,6 +39,8 @@ static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting,
+ 		     struct ref_format *format)
+ {
+ 	struct ref_array array;
++	struct strbuf final_buf = STRBUF_INIT;
++	struct strbuf error_buf = STRBUF_INIT;
+ 	char *to_free = NULL;
+ 	int i;
+ 
+@@ -64,7 +66,7 @@ static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting,
+ 	ref_array_sort(sorting, &array);
+ 
+ 	for (i = 0; i < array.nr; i++)
+-		show_ref_array_item(array.items[i], format);
++		show_ref_array_item(array.items[i], format, &final_buf, &error_buf);
+ 	ref_array_clear(&array);
+ 	free(to_free);
+ 
+diff --git a/ref-filter.c b/ref-filter.c
+index f0bd32f71416..51ff6af64ebc 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -2436,16 +2436,16 @@ int format_ref_array_item(struct ref_array_item *info,
+ }
+ 
+ void show_ref_array_item(struct ref_array_item *info,
+-			 const struct ref_format *format)
++			 const struct ref_format *format,
++			 struct strbuf *final_buf,
++			 struct strbuf *error_buf)
+ {
+-	struct strbuf final_buf = STRBUF_INIT;
+-	struct strbuf error_buf = STRBUF_INIT;
+ 
+-	if (format_ref_array_item(info, format, &final_buf, &error_buf))
+-		die("%s", error_buf.buf);
+-	fwrite(final_buf.buf, 1, final_buf.len, stdout);
+-	strbuf_release(&error_buf);
+-	strbuf_release(&final_buf);
++	if (format_ref_array_item(info, format, final_buf, error_buf))
++		die("%s", error_buf->buf);
++	fwrite(final_buf->buf, 1, final_buf->len, stdout);
++	strbuf_reset(error_buf);
++	strbuf_reset(final_buf);
+ 	putchar('\n');
+ }
+ 
+@@ -2453,9 +2453,12 @@ void pretty_print_ref(const char *name, const struct object_id *oid,
+ 		      const struct ref_format *format)
+ {
+ 	struct ref_array_item *ref_item;
++	struct strbuf final_buf = STRBUF_INIT;
++	struct strbuf error_buf = STRBUF_INIT;
++
+ 	ref_item = new_ref_array_item(name, oid);
+ 	ref_item->kind = ref_kind_from_refname(name);
+-	show_ref_array_item(ref_item, format);
++	show_ref_array_item(ref_item, format, &final_buf, &error_buf);
+ 	free_array_item(ref_item);
+ }
+ 
+diff --git a/ref-filter.h b/ref-filter.h
+index 19ea4c413409..95498c9f4467 100644
+--- a/ref-filter.h
++++ b/ref-filter.h
+@@ -120,7 +120,10 @@ int format_ref_array_item(struct ref_array_item *info,
+ 			  struct strbuf *final_buf,
+ 			  struct strbuf *error_buf);
+ /*  Print the ref using the given format and quote_style */
+-void show_ref_array_item(struct ref_array_item *info, const struct ref_format *format);
++void show_ref_array_item(struct ref_array_item *info,
++			 const struct ref_format *format,
++			 struct strbuf *final_buf,
++			 struct strbuf *error_buf);
+ /*  Parse a single sort specifier and add it to the list */
+ void parse_ref_sorting(struct ref_sorting **sorting_tail, const char *atom);
+ /*  Callback function for parsing the sort option */
+
+base-commit: 2e36527f23b7f6ae15e6f21ac3b08bf3fed6ee48
+-- 
+gitgitgadget
