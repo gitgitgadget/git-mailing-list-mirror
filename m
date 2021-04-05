@@ -4,124 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FE54C433ED
-	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 13:04:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F6CDC433B4
+	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 13:04:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 15C83611BE
-	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 13:04:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6A463613A5
+	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 13:04:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237078AbhDENE2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Apr 2021 09:04:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50218 "EHLO
+        id S240819AbhDENEa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Apr 2021 09:04:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50214 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235661AbhDENE0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Apr 2021 09:04:26 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F46CC06178C
-        for <git@vger.kernel.org>; Mon,  5 Apr 2021 06:04:20 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id j18so10861112wra.2
-        for <git@vger.kernel.org>; Mon, 05 Apr 2021 06:04:20 -0700 (PDT)
+        with ESMTP id S235671AbhDENE1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Apr 2021 09:04:27 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77326C061756
+        for <git@vger.kernel.org>; Mon,  5 Apr 2021 06:04:19 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id j20-20020a05600c1914b029010f31e15a7fso7563923wmq.1
+        for <git@vger.kernel.org>; Mon, 05 Apr 2021 06:04:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=wuRuYYWVThwVuKMtFPkVF2Ilw+IL9JMWGp2mFqIegZM=;
-        b=eb95RImDZQuiUourk2hqgPzAJwJYFF25zcRR+SfynHpoj6eNbR7hz5/tjNWOpgcicJ
-         nVLOu6oJOoiRiM+9zZ0B2a9rSkCuPL3uQBAMUyBqnvOdUu5XmkzDGw5cW9iIHC70vvmM
-         V4+nuj4roz52M5G1rtxIMeFCuTQrugyrqw0V+lRHzgciEzLCC+25OYIz9yQThqp3NppH
-         wRxudNxc4Zk8vO/Lcge2dW4l0GkEvs9ZwvSQFXlC0CwPpnKoaqz5iHm1E5psh5xT589p
-         dThwJAz8kDBfT/Z72SUyTTXa6sxUWjdGtrOovoJpeoXotZexyin/7NC4oACQnaVXV8pP
-         qtGA==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=dgxbgZ3JD4kz/dT2QjNMWsE7PkGCQ3gDNPPSXyQTMlQ=;
+        b=LHOepwBL83mE7PqjEBMoRNqS8CnJW3KSCC7HhodnKeoWCB2g78P1aE6+CsjxzaJ6TT
+         yYi2/lt0NCniK1SIP0AC/m6XsOd66LvHY4NMVrZ7NCcH+N/aI1/dmhVUphj0esjHvNuv
+         PCbxftHG0ljDKmOHbncMyQfItmhjwapE47ju5MRQR8xuH15d+Eg+HNzE6OgUX7WHM9zg
+         zOin3UQRJY09LYlt/Kz3GBNejpEgbvLiqMPpra7DxtGeNyjlCtW3/U2Pd4bHK1hJoHbu
+         TsrH9hUwUO26uAVbx2PEhQS0kRoLDUOadvDHDFRSOqjaIaq6NmxROo1QJ7NUiUAMhGTt
+         i6TQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=wuRuYYWVThwVuKMtFPkVF2Ilw+IL9JMWGp2mFqIegZM=;
-        b=f+Tu/dxFv09wqJuiNgmFtyoCD5D97ZXPDc64t6+3SanYbJ8lfVyIoHtNgsO0ATa7oR
-         Yoq+i6YwskF0GMLqVopukZEsC1GAKRhAKsxnNIT9kLW8WXtFd72ft3fh3QMN1kcvyXuR
-         mqbvUjfPTfE0uqETW2hFCY/WVMgJTcpLq82BpGgCafABSz9vQFF5B94JYS68ePDSEK87
-         IyM5v/I+c6HIkzOphqZkqYA3MXRfRdvOkH4cmhIHIj7q+RyTkwvFowwIcQ+p6HF51vkk
-         v458RBlC3F2Lsy7CWh1hWbUKH4CYotu64gKxvryFgdPFSDvkuDJKSzL56oM4Z4NjrGm4
-         kNcQ==
-X-Gm-Message-State: AOAM532Ptuo1covV0nkRaBHOhJHYo2GVvE55heueaF1Ms7Jk66ePKqsf
-        ZFnnv5GfjGnPNnnT9ogSn9oaPfXUwoA=
-X-Google-Smtp-Source: ABdhPJymM5Y88g6uGWyWEadNqvtV2P8F0xEBMDvluKKBHjlGffPuDZaTPULdg9ASPI3GfCIlugbhSw==
-X-Received: by 2002:adf:e68e:: with SMTP id r14mr28700027wrm.273.1617627859304;
-        Mon, 05 Apr 2021 06:04:19 -0700 (PDT)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=dgxbgZ3JD4kz/dT2QjNMWsE7PkGCQ3gDNPPSXyQTMlQ=;
+        b=fI+ng9q/FT29lUZwPYVYaDnN2DSVXGtvHC56jbt3B6YVONXv/nfZUldVBfbd1vyYtS
+         QhvOJT9D2IRZRwcAGXffDayoMRGDSyISVFu1d9q5YwBm72cxaN27J0ekrpZyD5XsUEgq
+         dZDRJcwTAQQaebfYjbY0KTdQLFXC9De3qRIhEiF3txeBs5u4UwCUnJ0N2Fy1IRfhD5ec
+         eVsgY0LXYLYQMmCmjFCJH2rc/f2MIedVjo1sNCbVnAgAiPbFsoXHH9OJKlwWd7lbCSX7
+         IMhTUmf85prRgT5/+zyZ1hvpWs3VGO6tKvfP8DTi1RJknpTGEYMUY7IXVHDtiUkXjpwE
+         /GaQ==
+X-Gm-Message-State: AOAM531NzYHRGLL4HJ5TlBYsrYdoLoeGpiq7K3S2xwbxo01+hB6TbI+p
+        bf2BoNc/xHxgmR9wcbxqL4y5xP7EkYg=
+X-Google-Smtp-Source: ABdhPJzQ9CiwCsuLr1SeFpQ9zg54QmbQvJtXmctQ/puJFmLhyiTL0Bumwh59qyLcILFV3ymBqD5c0A==
+X-Received: by 2002:a1c:7fcd:: with SMTP id a196mr25444519wmd.180.1617627858021;
+        Mon, 05 Apr 2021 06:04:18 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q10sm12125205wrx.35.2021.04.05.06.04.18
+        by smtp.gmail.com with ESMTPSA id c9sm27420477wrr.78.2021.04.05.06.04.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Apr 2021 06:04:19 -0700 (PDT)
-Message-Id: <2b74889c2a323f03be477ffdf9ff388405779c3b.1617627856.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.924.git.1617627856.gitgitgadget@gmail.com>
-References: <pull.924.git.1617627856.gitgitgadget@gmail.com>
+        Mon, 05 Apr 2021 06:04:17 -0700 (PDT)
+Message-Id: <pull.924.git.1617627856.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 05 Apr 2021 13:04:12 +0000
-Subject: [PATCH 2/5] test-lib: use exact match for test_subcommand
+Date:   Mon, 05 Apr 2021 13:04:10 +0000
+Subject: [PATCH 0/5] Maintenance: adapt custom refspecs
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     tom.saeger@oracle.com, gitster@pobox.com, sunshine@sunshineco.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+        Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+Tom Saeger rightly pointed out [1] that the prefetch task ignores custom
+refspecs. This can lead to downloading more data than requested, and it
+doesn't even help the future foreground fetches that use that custom
+refspec.
 
-The use of 'grep' inside test_subcommand uses general patterns, leading
-to sometimes needing escape characters to avoid incorrect matches.
-Further, some platforms interpret different glob characters differently.
+[1]
+https://lore.kernel.org/git/20210401184914.qmr7jhjbhp2mt3h6@dhcp-10-154-148-175.vpn.oracle.com/
 
-Use 'grep -F' to use an exact match. This requires removing escape
-characters from existing callers. Luckily, this is only one test that
-expects refspecs as part of the subcommand.
+This series fixes this problem by carefully replacing the start of each
+refspec's destination with "refs/prefetch/". If the destination already
+starts with "refs/", then that is replaced. Otherwise "refs/prefetch/" is
+just prepended.
 
-Reported-by: Eric Sunshine <sunshine@sunshineco.com>
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- t/t7900-maintenance.sh  | 4 ++--
- t/test-lib-functions.sh | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+In order to accomplish this safely, a new refspec_item_format() method is
+created and tested.
 
-diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index 2412d8c5c006..fc2315edec11 100755
---- a/t/t7900-maintenance.sh
-+++ b/t/t7900-maintenance.sh
-@@ -142,8 +142,8 @@ test_expect_success 'prefetch multiple remotes' '
- 	test_commit -C clone2 two &&
- 	GIT_TRACE2_EVENT="$(pwd)/run-prefetch.txt" git maintenance run --task=prefetch 2>/dev/null &&
- 	fetchargs="--prune --no-tags --no-write-fetch-head --recurse-submodules=no --refmap= --quiet" &&
--	test_subcommand git fetch remote1 $fetchargs +refs/heads/\\*:refs/prefetch/remote1/\\* <run-prefetch.txt &&
--	test_subcommand git fetch remote2 $fetchargs +refs/heads/\\*:refs/prefetch/remote2/\\* <run-prefetch.txt &&
-+	test_subcommand git fetch remote1 $fetchargs +refs/heads/*:refs/prefetch/remote1/* <run-prefetch.txt &&
-+	test_subcommand git fetch remote2 $fetchargs +refs/heads/*:refs/prefetch/remote2/* <run-prefetch.txt &&
- 	test_path_is_missing .git/refs/remotes &&
- 	git log prefetch/remote1/one &&
- 	git log prefetch/remote2/two &&
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 6348e8d7339c..a5915dec22df 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -1652,9 +1652,9 @@ test_subcommand () {
- 
- 	if test -n "$negate"
- 	then
--		! grep "\[$expr\]"
-+		! grep -F "[$expr]"
- 	else
--		grep "\[$expr\]"
-+		grep -F "[$expr]"
- 	fi
- }
- 
+Patch 1 is just a preparation patch that makes the code simpler (and in
+hindsight it should have been written this way from the start).
+
+Patch 2 is a simplification of test_subcommand that removes the need for
+escaping glob characters. Thanks, Eric Sunshine, for the tip of why my tests
+were failing on FreeBSD.
+
+Patches 3-4 add refspec_item_format().
+
+Patch 5 finally modifies the logic in the prefetch task to translate these
+refspecs.
+
+Thanks, -Stolee
+
+Derrick Stolee (5):
+  maintenance: simplify prefetch logic
+  test-lib: use exact match for test_subcommand
+  refspec: output a refspec item
+  test-tool: test refspec input/output
+  maintenance: allow custom refspecs during prefetch
+
+ Documentation/git-maintenance.txt |  3 +-
+ Makefile                          |  1 +
+ builtin/gc.c                      | 63 +++++++++++++++++++------------
+ refspec.c                         | 25 ++++++++++++
+ refspec.h                         |  5 +++
+ t/helper/test-refspec.c           | 39 +++++++++++++++++++
+ t/helper/test-tool.c              |  1 +
+ t/helper/test-tool.h              |  1 +
+ t/t5511-refspec.sh                | 41 ++++++++++++++++++++
+ t/t7900-maintenance.sh            | 43 ++++++++++++++++++---
+ t/test-lib-functions.sh           |  4 +-
+ 11 files changed, 192 insertions(+), 34 deletions(-)
+ create mode 100644 t/helper/test-refspec.c
+
+
+base-commit: 2e36527f23b7f6ae15e6f21ac3b08bf3fed6ee48
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-924%2Fderrickstolee%2Fmaintenance%2Frefspec-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-924/derrickstolee/maintenance/refspec-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/924
 -- 
 gitgitgadget
-
