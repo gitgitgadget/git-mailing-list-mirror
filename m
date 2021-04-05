@@ -2,66 +2,65 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ABB3AC433B4
-	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 19:11:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A701CC433B4
+	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 19:14:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8B83A613A3
-	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 19:11:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 80F01613B4
+	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 19:14:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235320AbhDETMA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Apr 2021 15:12:00 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:56578 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233194AbhDETL7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Apr 2021 15:11:59 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2E30F113976;
-        Mon,  5 Apr 2021 15:11:53 -0400 (EDT)
+        id S236015AbhDETPE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Apr 2021 15:15:04 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55237 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232387AbhDETPD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Apr 2021 15:15:03 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B9E54A8CAE;
+        Mon,  5 Apr 2021 15:14:56 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=CGvYHThPxrud
-        eY3WSZBdezYyInY=; b=WK9HOCIAdHLC8IE+Z3zY9Dj9uBpqivnSKxMPjB45HxuK
-        9WZtaXLkmzOnKPzQZrGz2D5tSwRh85emaCr+XfR5uLXifygkpmVxkGUHPMBedb/L
-        idxq/QrkVg7jfdhDICTOKL1tzdxXokNg0YNRdEKjwLia/RY++5srNZ6A9bhY9Mk=
+        :content-type:content-transfer-encoding; s=sasl; bh=Mxlvkz4Ls7rw
+        wQQX1l28mjAwGrw=; b=pHBNc+OIrwb5ieuoo13jfavKnS2BA7GSTAA0pzqSPVtB
+        OmVDhArXQrvI7rL6IV5oiPT6kZKg5B978SFByXcq2MVNVoXLVBF9bpj2Ia3Xcr/v
+        x1SrMeBXfoJvX5KVsxOayMFRdQ5gmg5X+dobTm6GHFayh262/+K9uSYGu28bsbY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=TGQcof
-        5nmLqVaafHB/jLdxvzfPyrYelT14hcq08S6tPZugxd9TPEUA25xCd7cisGhI940d
-        48Kh8Yb5jQLXi+n2Mxla6JEEMKkQR9m6Tmjg8YMRogD0Eno7spBJezRkye9SNgBR
-        MgHqkQ+78hD6xgMzN2WsihXEKeGVbz8V7tARw=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2852B113975;
-        Mon,  5 Apr 2021 15:11:53 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Gpk6kd
+        8UKaYK/nLHZvpbYs1ZSUk3Hktc66UMZJM3n1eNBeToIRONmTOlaSI5TX4G5UvYO1
+        3C7sp1FIx5qTBDL8/7yEbc0BbmViu5FnAhuJ8Cmc55pQXW37NoMDYPZr8Xn+1kty
+        6oBDtqfsk3De/Y/L0ZHR2sfhqSMWFtuYFQ2+k=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B1176A8CAD;
+        Mon,  5 Apr 2021 15:14:56 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6FA5C113971;
-        Mon,  5 Apr 2021 15:11:50 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3C3E4A8CAC;
+        Mon,  5 Apr 2021 15:14:56 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>
-Subject: Re: [PATCH v2 2/4] git-send-email: refactor duplicate $? checks
- into a function
+Subject: Re: [PATCH v2 4/4] git-send-email: improve --validate error output
 References: <cover-0.3-00000000000-20210402T112946Z-avarab@gmail.com>
         <cover-0.5-00000000000-20210404T091649Z-avarab@gmail.com>
-        <patch-2.5-f236f083e36-20210404T091649Z-avarab@gmail.com>
-Date:   Mon, 05 Apr 2021 12:11:48 -0700
-In-Reply-To: <patch-2.5-f236f083e36-20210404T091649Z-avarab@gmail.com>
+        <patch-4.5-a1edceb4913-20210404T091649Z-avarab@gmail.com>
+Date:   Mon, 05 Apr 2021 12:14:55 -0700
+In-Reply-To: <patch-4.5-a1edceb4913-20210404T091649Z-avarab@gmail.com>
  (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Sun, 4 Apr
- 2021 11:19:44 +0200")
-Message-ID: <xmqqmtuc5yx7.fsf@gitster.g>
+ 2021 11:19:46 +0200")
+Message-ID: <xmqqim505ys0.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: C659BC80-9642-11EB-8E8F-E43E2BB96649-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 35170B96-9643-11EB-AFCB-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -69,49 +68,39 @@ X-Mailing-List: git@vger.kernel.org
 
 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> @@ -1938,6 +1945,12 @@ sub unique_email_list {
->  	return @emails;
->  }
-> =20
-> +sub validate_patch_error {
-> +	my ($fn, $error) =3D @_;
-> +	die sprintf(__("fatal: %s: %s\nwarning: no patches were sent\n"),
-> +		    $fn, $error);
-> +}
-> +
->  sub validate_patch {
->  	my ($fn, $xfer_encoding) =3D @_;
+> Improve the output we emit on --validate error to:
+>
+>  * Say "FILE:LINE" instead of "FILE: LINE".
 
-I like the overall direction of this series, but this change will
-soon be reverted back to have the die/sprintf in the two callsite
-in 4/4 anyway, so this hunk looks more like "I thought this would
-be a good way, but in the end I had to change my mind".
+OK, that is an improvement because it matches "grep -n" hits,
+compiler error messages, etc., to help the editors to jump to these
+lines.
 
-> @@ -1952,11 +1965,12 @@ sub validate_patch {
->  			chdir($repo->wc_path() or $repo->repo_path())
->  				or die("chdir: $!");
->  			local $ENV{"GIT_DIR"} =3D $repo->repo_path();
-> -			$hook_error =3D "rejected by sendemail-validate hook"
-> -				if system($validate_hook, $target);
-> +			if (my $msg =3D system_or_msg([$validate_hook, $target])) {
-> +				$hook_error =3D __("rejected by sendemail-validate hook");
-> +			}
->  			chdir($cwd_save) or die("chdir: $!");
->  		}
-> -		return $hook_error if $hook_error;
-> +		validate_patch_error($fn, $hook_error) if $hook_error;
->  	}
-> =20
->  	# Any long lines will be automatically fixed if we use a suitable tra=
-nsfer
-> @@ -1966,7 +1980,7 @@ sub validate_patch {
->  			or die sprintf(__("unable to open %s: %s\n"), $fn, $!);
->  		while (my $line =3D <$fh>) {
->  			if (length($line) > 998) {
-> -				return sprintf(__("%s: patch contains a line longer than 998 chara=
-cters"), $.);
-> +				validate_patch_error($fn, sprintf(__("%s: patch contains a line lo=
-nger than 998 characters"), $.));
->  			}
->  		}
->  	}
+>  * Don't say "patch contains a" after just mentioning the filename,
+>    just leave it at "FILE:LINE: is longer than[...]. The "contains a"
+>    sounded like we were talking about the file in general, when we're
+>    actually checking it line-by-line.
+
+This, too.
+
+>  * Don't just say "rejected by sendemail-validate hook", but combine
+>    that with the system_or_msg() output to say what exit code the hook
+>    died with.
+>
+> I had an aborted attempt to make the line length checker note all
+> lines that were longer than the limit. I didn't think that was worth
+> the effort, but I've left in the testing change to check that we die
+> as soon as we spot the first long line.
+>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
+> ---
+>  git-send-email.perl   | 23 ++++++++++-------------
+>  t/t9001-send-email.sh | 17 ++++++++++++-----
+>  2 files changed, 22 insertions(+), 18 deletions(-)
+
+Will queue.  I like the end result, but left a comment about
+flipping-and-flopping between 2/4 and this step on an extra
+"validate_patch_error" helper sub.
+
+Thanks.
