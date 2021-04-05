@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1955C43460
-	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 13:04:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8B7DC43462
+	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 13:04:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 79E58613A3
-	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 13:04:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B608B613A9
+	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 13:04:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240821AbhDENEc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Apr 2021 09:04:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50230 "EHLO
+        id S240945AbhDENEf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Apr 2021 09:04:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50232 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235704AbhDENE2 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S237176AbhDENE2 (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 5 Apr 2021 09:04:28 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0E50C061756
-        for <git@vger.kernel.org>; Mon,  5 Apr 2021 06:04:21 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id x7so10862626wrw.10
-        for <git@vger.kernel.org>; Mon, 05 Apr 2021 06:04:21 -0700 (PDT)
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54792C061788
+        for <git@vger.kernel.org>; Mon,  5 Apr 2021 06:04:22 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id u5-20020a7bcb050000b029010e9316b9d5so5605630wmj.2
+        for <git@vger.kernel.org>; Mon, 05 Apr 2021 06:04:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=5L7gpGfJ37qujqIwEpILGJe44hZo32Ph3clz45KGZjY=;
-        b=VbGxMv8LhwRMKZUYcu6ozGYMUmn1f0omcMYV4MFKFcueq7RFmzJH5t79d6jYm/SnIN
-         FhsSGm31lgIdfE+AMKeZZVX3sGP8PEleKtocy+faoXgySZhbPFYg3jnnla8S3kBc6noE
-         UZacba21vW5IQLNw78glZbpY0pdRAcMfDwCIHEFDZfk+rb2K1yNncRDMXhA8pEfPwWG0
-         BKTy6iFZ5Ksa6VVR1vUBaEhuxZpivQdY2CRYv3xNpGfM0PE/fP31mBwoOkxCXebPVFT4
-         Mf48Ey1wd+HkBmGxOXR5JOg5TYinY+pYqYYUm5/apBWS86W87Heqrpjf41m7QtpmHfk2
-         lpuA==
+        bh=YJFPKjbf38fYJcW/14HvAHQpRrYbhNHkMU/HO3rFRFs=;
+        b=R9QjggiyYVuiNEij9mWQK9I9Ys3NztdLt4XLFXtvmpkiO1JRg9t28xuy7ckGUfxt9v
+         /D2aQ7lJ63RU6M/ewnqvQlML0txvVKy9/iw+2WUXw3Ano9eR+dlSNnrrmsA0crhLPSjJ
+         pYstsF4m3bGsNnDITKXfDmx4mDJAdBrIhnscrNZWgfEVwi0tlFGEotfQCHe3xPVgHUwq
+         sryLxnM+Z2N4ow/R7JLO817d/xxmLHDLmeYzZuUg0YgAnRtV0Q3OFeb/xPhHTvFvtIiL
+         dRMMchlEmaWcQdRtpn76tVIHb0mKeg2/5uqf5hxHNR3MXnNYB117+niNBKnEcefFGJXk
+         IsXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=5L7gpGfJ37qujqIwEpILGJe44hZo32Ph3clz45KGZjY=;
-        b=EPWzv+bXRC6uyWvj6KDytZlCqaEpv7O92gJu2WzM5U+NB77CjaY6Ru5bu8hvFkjabE
-         9gfKXEKqHfQIrihb0i7xZTWNCIO5AYNk/4CDH9bOCnmQBgQ7DYSpmfgmKlzS+xg1So/c
-         ObVXNveJ2THa8bH2virNzFxRoEHL1o59dKTMyP2dJJJWj6eHw7dnAZzDlsckyjkf+PO5
-         FliQ3UY2DVmH41CgQKESxgaDeYugEKeyzUYT04i4UtkiEbw0r2YtpDo9Dmm8ZQPvxbBb
-         mhVyv/zyt8bk2L41Kv+9FFJIUMeFhG4ksTd26LCiFG02akxbbM2gl57nOLh27SiOt0e+
-         GGRQ==
-X-Gm-Message-State: AOAM533ciHO+t5MNb+cc33Gja4dwA5yhNq2O4E0n7urqbhDnGIjF9zO0
-        xT2ammDbLj/7+YKQdnYQO9FtjlCbuV0=
-X-Google-Smtp-Source: ABdhPJzDMSoKGk8PDA8OUjTpC6MTl910SHjrtThJfAy2bqSBpjxMLmkbf5n7kYr/Nlgm0VvlgeAdYw==
-X-Received: by 2002:adf:f14b:: with SMTP id y11mr1901235wro.79.1617627860601;
-        Mon, 05 Apr 2021 06:04:20 -0700 (PDT)
+        bh=YJFPKjbf38fYJcW/14HvAHQpRrYbhNHkMU/HO3rFRFs=;
+        b=bdvHElL8GwbJ31flErclS2xCUwy4Vp9gac+K2jJ9saYZs5+LRihMbP5jtbkLuvovPU
+         vyqHf7gDfq9xqUYB+Tt70BzmY/pdQf2T+zHlwvRG3WOo2MBXrmI4WtQ00SUdKPvD+IRP
+         go8iBUEDUbIui5TfKqsidA6GfgIT4PgyWBlZiVmcLISx40rEgA5Iw05qY7t7/TKyLHUQ
+         kiWWPycXWlYnJPnfFptV33v0wXtFMbzlfVW1bzkLojf8n8PjgrDLFqdc1j2CU8U7utGq
+         bv7QN1GwgWKtnq3fEOzbxUZiEV8poqMJBvVlVsIDmsS0cHekn3S4ymWsBNglFtQHtIE2
+         7Dfg==
+X-Gm-Message-State: AOAM531vrZP5QKFc08nS7madXSjmPVe6cJSHy7Ey2IGuUDCC8CZqNh3C
+        qbxv1qxgxeVhIuey7f1GLvgqhL6PDOU=
+X-Google-Smtp-Source: ABdhPJzHFgn/cEIA1rAkl6BnemK4eW7+ZcWbDFkt/kRAvdYe1TtEYVyHuuLruNXtEKfBkLYcnChkdg==
+X-Received: by 2002:a1c:9a51:: with SMTP id c78mr14216249wme.160.1617627861099;
+        Mon, 05 Apr 2021 06:04:21 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h6sm15704676wrr.21.2021.04.05.06.04.20
+        by smtp.gmail.com with ESMTPSA id j9sm23086496wmi.24.2021.04.05.06.04.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 05 Apr 2021 06:04:20 -0700 (PDT)
-Message-Id: <c8d1de06f84499f2f56b3a06df665630806f94ce.1617627856.git.gitgitgadget@gmail.com>
+Message-Id: <7f6c127dac48409ddc8d30ad236182bee21c1957.1617627856.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.924.git.1617627856.gitgitgadget@gmail.com>
 References: <pull.924.git.1617627856.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 05 Apr 2021 13:04:14 +0000
-Subject: [PATCH 4/5] test-tool: test refspec input/output
+Date:   Mon, 05 Apr 2021 13:04:15 +0000
+Subject: [PATCH 5/5] maintenance: allow custom refspecs during prefetch
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,177 +76,179 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-Add a new test-helper, 'test-tool refspec', that currently reads stdin
-line-by-line and translates the refspecs using the parsing logic of
-refspec_item_init() and writes them to output.
+The prefetch task previously used the default refspec source plus a
+custom refspec destination to avoid colliding with remote refs:
 
-Create a test in t5511-refspec.sh that uses this helper to test several
-known special cases. This includes all of the special properties of the
-'struct refspec_item', including:
+	+refs/heads/*:refs/prefetch/<remote>/*
 
- * force: The refspec starts with '+'.
- * pattern: Each side of the refspec has a glob character ('*')
- * matching: The refspec is simply the string ":".
- * exact_sha1: The 'src' string is a 40-character hex string.
- * negative: The refspec starts with '^' and 'dst' is NULL.
+However, some users customize their refspec to reduce how much data they
+download from specific remotes. This can involve restrictive patterns
+for fetching or negative patterns to avoid downloading some refs.
 
-While the exact_sha1 property doesn't require special logic in
-refspec_item_format, it is still tested here for completeness.
+Modify fetch_remote() to iterate over the remote's refspec list and
+translate that into the appropriate prefetch scenario. Specifically,
+re-parse the raw form of the refspec into a new 'struct refspec' and
+modify the 'dst' member to replace a leading "refs/" substring with
+"refs/prefetch/", or prepend "refs/prefetch/" to 'dst' otherwise.
+Negative refspecs do not have a 'dst' so they can be transferred to the
+'git fetch' command unmodified.
 
-There is also the special-case refspec "@" which translates to "HEAD".
+This prefix change provides the benefit of keeping whatever collisions
+may exist in the custom refspecs, if that is a desirable outcome.
 
-Note that if a refspec does not start with "refs/", then that is not
-incorporated as part of the 'struct refspec_item'. This behavior is
-confirmed by these tests. These refspecs still work in the wild because
-the refs layer interprets them appropriately as branches, prepending
-"refs/" or "refs/heads/" as necessary. I spent some time attempting to
-insert these prefixes explicitly in parse_refspec(), but these are
-several subtleties I was unable to overcome. If such a change were to be
-made, then this new test in t5511-refspec.sh will need to be updated
-with new output. For example, the input lines ending with "translated"
-are designed to demonstrate these subtleties.
+This changes the names of the refs that would be fetched by the default
+refspec. Instead of "refs/prefetch/<remote>/<branch>" they will now go
+to "refs/prefetch/remotes/<remote>/<branch>". While this is a change, it
+is not a seriously breaking one: these refs are intended to be hidden
+and not used.
 
+Update the documentation to be more generic about the destination refs.
+Do not mention custom refpecs explicitly, as that does not need to be
+highlighted in this documentation. The important part of placing refs in
+refs/prefetch remains.
+
+Reported-by: Tom Saeger <tom.saeger@oracle.com>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Makefile                |  1 +
- t/helper/test-refspec.c | 39 +++++++++++++++++++++++++++++++++++++++
- t/helper/test-tool.c    |  1 +
- t/helper/test-tool.h    |  1 +
- t/t5511-refspec.sh      | 41 +++++++++++++++++++++++++++++++++++++++++
- 5 files changed, 83 insertions(+)
- create mode 100644 t/helper/test-refspec.c
+ Documentation/git-maintenance.txt |  3 +--
+ builtin/gc.c                      | 34 +++++++++++++++++++++++-
+ t/t7900-maintenance.sh            | 43 ++++++++++++++++++++++++++-----
+ 3 files changed, 71 insertions(+), 9 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index a6a73c574191..f858c9f25976 100644
---- a/Makefile
-+++ b/Makefile
-@@ -734,6 +734,7 @@ TEST_BUILTINS_OBJS += test-reach.o
- TEST_BUILTINS_OBJS += test-read-cache.o
- TEST_BUILTINS_OBJS += test-read-graph.o
- TEST_BUILTINS_OBJS += test-read-midx.o
-+TEST_BUILTINS_OBJS += test-refspec.o
- TEST_BUILTINS_OBJS += test-ref-store.o
- TEST_BUILTINS_OBJS += test-regex.o
- TEST_BUILTINS_OBJS += test-repository.o
-diff --git a/t/helper/test-refspec.c b/t/helper/test-refspec.c
-new file mode 100644
-index 000000000000..08cf441a0a06
---- /dev/null
-+++ b/t/helper/test-refspec.c
-@@ -0,0 +1,39 @@
-+#include "cache.h"
-+#include "parse-options.h"
+diff --git a/Documentation/git-maintenance.txt b/Documentation/git-maintenance.txt
+index 80ddd33ceba0..95a24264eb10 100644
+--- a/Documentation/git-maintenance.txt
++++ b/Documentation/git-maintenance.txt
+@@ -94,8 +94,7 @@ prefetch::
+ 	objects from all registered remotes. For each remote, a `git fetch`
+ 	command is run. The refmap is custom to avoid updating local or remote
+ 	branches (those in `refs/heads` or `refs/remotes`). Instead, the
+-	remote refs are stored in `refs/prefetch/<remote>/`. Also, tags are
+-	not updated.
++	refs are stored in `refs/prefetch/`. Also, tags are not updated.
+ +
+ This is done to avoid disrupting the remote-tracking branches. The end users
+ expect these refs to stay unmoved unless they initiate a fetch.  With prefetch
+diff --git a/builtin/gc.c b/builtin/gc.c
+index fa8128de9ae1..92cb8b4e0bfa 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -32,6 +32,7 @@
+ #include "remote.h"
+ #include "object-store.h"
+ #include "exec-cmd.h"
 +#include "refspec.h"
-+#include "strbuf.h"
-+#include "test-tool.h"
+ 
+ #define FAILED_RUN "failed to run %s"
+ 
+@@ -877,6 +878,7 @@ static int fetch_remote(struct remote *remote, void *cbdata)
+ {
+ 	struct maintenance_run_opts *opts = cbdata;
+ 	struct child_process child = CHILD_PROCESS_INIT;
++	int i;
+ 
+ 	child.git_cmd = 1;
+ 	strvec_pushl(&child.args, "fetch", remote->name, "--prune", "--no-tags",
+@@ -886,7 +888,37 @@ static int fetch_remote(struct remote *remote, void *cbdata)
+ 	if (opts->quiet)
+ 		strvec_push(&child.args, "--quiet");
+ 
+-	strvec_pushf(&child.args, "+refs/heads/*:refs/prefetch/%s/*", remote->name);
++	for (i = 0; i < remote->fetch.nr; i++) {
++		struct refspec_item replace;
++		struct refspec_item *rsi = &remote->fetch.items[i];
++		struct strbuf new_dst = STRBUF_INIT;
++		size_t ignore_len = 0;
 +
-+static const char * const refspec_usage[] = {
-+	N_("test-tool refspec [--fetch]"),
-+	NULL
-+};
-+
-+int cmd__refspec(int argc, const char **argv)
-+{
-+	struct strbuf line = STRBUF_INIT;
-+	int fetch = 0;
-+
-+	struct option refspec_options [] = {
-+		OPT_BOOL(0, "fetch", &fetch,
-+			 N_("enable the 'fetch' option for parsing refpecs")),
-+		OPT_END()
-+	};
-+
-+	argc = parse_options(argc, argv, NULL, refspec_options,
-+			     refspec_usage, 0);
-+
-+	while (strbuf_getline(&line, stdin) != EOF) {
-+		struct refspec_item rsi;
-+
-+		if (!refspec_item_init(&rsi, line.buf, fetch)) {
-+			printf("failed to parse %s\n", line.buf);
++		if (rsi->negative) {
++			strvec_push(&child.args, remote->fetch.raw[i]);
 +			continue;
 +		}
 +
-+		printf("%s\n", refspec_item_format(&rsi));
-+		refspec_item_clear(&rsi);
-+	}
++		refspec_item_init(&replace, remote->fetch.raw[i], 1);
 +
-+	return 0;
-+}
-diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index 287aa6002307..f534ad1731a9 100644
---- a/t/helper/test-tool.c
-+++ b/t/helper/test-tool.c
-@@ -55,6 +55,7 @@ static struct test_cmd cmds[] = {
- 	{ "read-cache", cmd__read_cache },
- 	{ "read-graph", cmd__read_graph },
- 	{ "read-midx", cmd__read_midx },
-+	{ "refspec", cmd__refspec },
- 	{ "ref-store", cmd__ref_store },
- 	{ "regex", cmd__regex },
- 	{ "repository", cmd__repository },
-diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index 9ea4b31011dd..46a0b8850f17 100644
---- a/t/helper/test-tool.h
-+++ b/t/helper/test-tool.h
-@@ -44,6 +44,7 @@ int cmd__reach(int argc, const char **argv);
- int cmd__read_cache(int argc, const char **argv);
- int cmd__read_graph(int argc, const char **argv);
- int cmd__read_midx(int argc, const char **argv);
-+int cmd__refspec(int argc, const char **argv);
- int cmd__ref_store(int argc, const char **argv);
- int cmd__regex(int argc, const char **argv);
- int cmd__repository(int argc, const char **argv);
-diff --git a/t/t5511-refspec.sh b/t/t5511-refspec.sh
-index be025b90f989..7614b6adf932 100755
---- a/t/t5511-refspec.sh
-+++ b/t/t5511-refspec.sh
-@@ -93,4 +93,45 @@ test_refspec fetch "refs/heads/${good}"
- bad=$(printf '\011tab')
- test_refspec fetch "refs/heads/${bad}"				invalid
++		/*
++		 * If a refspec dst starts with "refs/" at the start,
++		 * then we will replace "refs/" with "refs/prefetch/".
++		 * Otherwise, we will prepend the dst string with
++		 * "refs/prefetch/".
++		 */
++		if (!strncmp(replace.dst, "refs/", 5))
++			ignore_len = 5;
++
++		strbuf_addstr(&new_dst, "refs/prefetch/");
++		strbuf_addstr(&new_dst, replace.dst + ignore_len);
++		free(replace.dst);
++		replace.dst = strbuf_detach(&new_dst, NULL);
++
++		strvec_push(&child.args, refspec_item_format(&replace));
++
++		refspec_item_clear(&replace);
++	}
  
-+test_expect_success 'test input/output round trip' '
-+	cat >input <<-\EOF &&
-+		+refs/heads/*:refs/remotes/origin/*
-+		refs/heads/*:refs/remotes/origin/*
-+		refs/heads/main:refs/remotes/frotz/xyzzy
-+		:refs/remotes/frotz/deleteme
-+		^refs/heads/secrets
-+		refs/heads/secret:refs/heads/translated
-+		refs/heads/secret:heads/translated
-+		refs/heads/secret:remotes/translated
-+		secret:translated
-+		refs/heads/*:remotes/xxy/*
-+		refs/heads*/for-linus:refs/remotes/mine/*
-+		2e36527f23b7f6ae15e6f21ac3b08bf3fed6ee48:refs/heads/fixed
-+		HEAD
-+		@
-+		:
-+	EOF
-+	cat >expect <<-\EOF &&
-+		+refs/heads/*:refs/remotes/origin/*
-+		refs/heads/*:refs/remotes/origin/*
-+		refs/heads/main:refs/remotes/frotz/xyzzy
-+		:refs/remotes/frotz/deleteme
-+		^refs/heads/secrets
-+		refs/heads/secret:refs/heads/translated
-+		refs/heads/secret:heads/translated
-+		refs/heads/secret:remotes/translated
-+		secret:translated
-+		refs/heads/*:remotes/xxy/*
-+		refs/heads*/for-linus:refs/remotes/mine/*
-+		2e36527f23b7f6ae15e6f21ac3b08bf3fed6ee48:refs/heads/fixed
-+		HEAD
-+		HEAD
-+		:
-+	EOF
-+	test-tool refspec <input >output &&
-+	test_cmp expect output &&
-+	test-tool refspec --fetch <input >output &&
-+	test_cmp expect output
+ 	return !!run_command(&child);
+ }
+diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+index fc2315edec11..3366ea188782 100755
+--- a/t/t7900-maintenance.sh
++++ b/t/t7900-maintenance.sh
+@@ -142,20 +142,51 @@ test_expect_success 'prefetch multiple remotes' '
+ 	test_commit -C clone2 two &&
+ 	GIT_TRACE2_EVENT="$(pwd)/run-prefetch.txt" git maintenance run --task=prefetch 2>/dev/null &&
+ 	fetchargs="--prune --no-tags --no-write-fetch-head --recurse-submodules=no --refmap= --quiet" &&
+-	test_subcommand git fetch remote1 $fetchargs +refs/heads/*:refs/prefetch/remote1/* <run-prefetch.txt &&
+-	test_subcommand git fetch remote2 $fetchargs +refs/heads/*:refs/prefetch/remote2/* <run-prefetch.txt &&
++	test_subcommand git fetch remote1 $fetchargs +refs/heads/*:refs/prefetch/remotes/remote1/* <run-prefetch.txt &&
++	test_subcommand git fetch remote2 $fetchargs +refs/heads/*:refs/prefetch/remotes/remote2/* <run-prefetch.txt &&
+ 	test_path_is_missing .git/refs/remotes &&
+-	git log prefetch/remote1/one &&
+-	git log prefetch/remote2/two &&
++	git log prefetch/remotes/remote1/one &&
++	git log prefetch/remotes/remote2/two &&
+ 	git fetch --all &&
+-	test_cmp_rev refs/remotes/remote1/one refs/prefetch/remote1/one &&
+-	test_cmp_rev refs/remotes/remote2/two refs/prefetch/remote2/two &&
++	test_cmp_rev refs/remotes/remote1/one refs/prefetch/remotes/remote1/one &&
++	test_cmp_rev refs/remotes/remote2/two refs/prefetch/remotes/remote2/two &&
+ 
+ 	test_cmp_config refs/prefetch/ log.excludedecoration &&
+ 	git log --oneline --decorate --all >log &&
+ 	! grep "prefetch" log
+ '
+ 
++test_expect_success 'prefetch custom refspecs' '
++	git -C clone1 branch -f special/fetched HEAD &&
++	git -C clone1 branch -f special/secret/not-fetched HEAD &&
++
++	# create multiple refspecs for remote1
++	git config --add remote.remote1.fetch +refs/heads/special/fetched:refs/heads/fetched &&
++	git config --add remote.remote1.fetch ^refs/heads/special/secret/not-fetched &&
++
++	GIT_TRACE2_EVENT="$(pwd)/prefetch-refspec.txt" git maintenance run --task=prefetch 2>/dev/null &&
++
++	fetchargs="--prune --no-tags --no-write-fetch-head --recurse-submodules=no --refmap= --quiet" &&
++
++	# skips second refspec because it is not a pattern type
++	rs1="+refs/heads/*:refs/prefetch/remotes/remote1/*" &&
++	rs2="+refs/heads/special/fetched:refs/prefetch/heads/fetched" &&
++	rs3="^refs/heads/special/secret/not-fetched" &&
++
++	test_subcommand git fetch remote1 $fetchargs $rs1 $rs2 $rs3 <prefetch-refspec.txt &&
++	test_subcommand git fetch remote2 $fetchargs +refs/heads/*:refs/prefetch/remotes/remote2/* <prefetch-refspec.txt &&
++
++	# first refspec is overridden by second
++	test_must_fail git rev-parse refs/prefetch/special/fetched &&
++	git rev-parse refs/prefetch/heads/fetched &&
++
++	# possible incorrect places for the non-fetched ref
++	test_must_fail git rev-parse refs/prefetch/remotes/remote1/secret/not-fetched &&
++	test_must_fail git rev-parse refs/prefetch/remotes/remote1/not-fetched &&
++	test_must_fail git rev-parse refs/heads/secret/not-fetched &&
++	test_must_fail git rev-parse refs/heads/not-fetched
 +'
 +
- test_done
+ test_expect_success 'prefetch and existing log.excludeDecoration values' '
+ 	git config --unset-all log.excludeDecoration &&
+ 	git config log.excludeDecoration refs/remotes/remote1/ &&
 -- 
 gitgitgadget
-
