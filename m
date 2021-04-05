@@ -2,50 +2,52 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 95B01C433ED
-	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 17:31:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 233C2C433B4
+	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 17:41:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 613F86135D
-	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 17:31:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DA70261394
+	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 17:41:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238661AbhDERcA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Apr 2021 13:32:00 -0400
-Received: from mail-ed1-f53.google.com ([209.85.208.53]:34528 "EHLO
-        mail-ed1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237872AbhDERcA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Apr 2021 13:32:00 -0400
-Received: by mail-ed1-f53.google.com with SMTP id ba6so5846135edb.1
-        for <git@vger.kernel.org>; Mon, 05 Apr 2021 10:31:53 -0700 (PDT)
+        id S238894AbhDERlO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Apr 2021 13:41:14 -0400
+Received: from mail-ej1-f47.google.com ([209.85.218.47]:34581 "EHLO
+        mail-ej1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234136AbhDERlL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Apr 2021 13:41:11 -0400
+Received: by mail-ej1-f47.google.com with SMTP id b7so17912190ejv.1
+        for <git@vger.kernel.org>; Mon, 05 Apr 2021 10:41:03 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=FsnpRqpF3MYARRSF94pQmt0r63WuT1zUDsgQB6TYous=;
-        b=oa8P2VYNo+YPFObVRiShWNOJ7U3+Y8UcWpFTwPcN2L5Pnes37sSk/2TNQllDf8tIZs
-         uCxtndwQvrZifCYkr+MLFk0T/igRB9/OHuQ5a4xV2E3UzBv8s/+M2/l9DbMtb5xu2JPk
-         4/CSS2DcnceUtwyFQBsccxtxmSU+WtyNkyD90iyCDmvor2iFng5WzcbvrRvwCgiCcsDc
-         b6R7qkvggSdWQDj6SvyNEL3sd0Gcc5a9CDUIdDrIZ5IXxlS3DZcIt19b8IdUnFAKRVQM
-         uDNbCOh6Ix8tv5Qe0EPWh6dT9P4nc/nu7R1VYSr7YLzwBIwxNT7XwS4b8Xuqzfi/3buP
-         HZ0Q==
-X-Gm-Message-State: AOAM532P5xt/jSPwRykV1fzoFYvTagxmnCSNXp5qrdWbsSDyFg+VAWWL
-        Vw1kDAlXMAmwrrvGOc1UYDVVmr4VsR7YpAoNozU=
-X-Google-Smtp-Source: ABdhPJzpOxVdEHHQov9xteqSkCgdaDWadIf9gBjOhQAFmTMPXS0OWuLMYYd4Lv2jsHPOq9NyH0gXbrAF4NKDMz6OdRc=
-X-Received: by 2002:aa7:c551:: with SMTP id s17mr33025562edr.291.1617643912868;
- Mon, 05 Apr 2021 10:31:52 -0700 (PDT)
+        bh=Su6716KuD044Tl+yZFFhKAG3dUGKpJF8bhb4zwSXqSk=;
+        b=Mn5/aGRDCmym3h5W94BlpS+9LyBDKzv0MNZ3KBW9nJFStA10xJHrAQVGQ4T5/dZwgN
+         fsKXRcVGfz3J1aS8MZg8Vkx/wIff6NjGJr/GWJpACKOVN8XqhHWu0svXDSeWXwAL+ags
+         Kq9rOiqL/fFXKpEEjFX49se68hWwdLxR7ZXGPMksWy01WO1i79KLByendSG4AarZvOqU
+         1OiN6rwlhlKvbCHuHQBy1DTd3gR5i84YJtqzChPoc47mmDyi2bB4iSnrjbTdxBrTxKrB
+         Ktprck4rI+AtNrxMVFwADRAG6I0qQg3kxKIdsN4KqGDL3+rRuNwbBZogFOVUjAJts/bZ
+         YoYA==
+X-Gm-Message-State: AOAM5311DxP+1ZDRwyLX3++gLdhVju1MOtL66/Kee78zRXZBk4/Sj9h6
+        VnXAnGKm852TkirgFE24K3bA8WLqkVWKuwSQvEo=
+X-Google-Smtp-Source: ABdhPJyn2FZRVckbshDXDmCJMlkTol9ZDJaZV3diQvlLMd0o3efUmfGE8KikFuVQdnkfw7HOd+J5UDPLZguGxTWsx7g=
+X-Received: by 2002:a17:907:76b3:: with SMTP id jw19mr28928343ejc.202.1617644445224;
+ Mon, 05 Apr 2021 10:40:45 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.924.git.1617627856.gitgitgadget@gmail.com> <2b74889c2a323f03be477ffdf9ff388405779c3b.1617627856.git.gitgitgadget@gmail.com>
-In-Reply-To: <2b74889c2a323f03be477ffdf9ff388405779c3b.1617627856.git.gitgitgadget@gmail.com>
+References: <pull.924.git.1617627856.gitgitgadget@gmail.com>
+ <e10007e1cf8ff0005295f648b9489c11a9427122.1617627856.git.gitgitgadget@gmail.com>
+ <20210405165740.brevvzc7hiyg2wj4@brm-x62-17.us.oracle.com>
+In-Reply-To: <20210405165740.brevvzc7hiyg2wj4@brm-x62-17.us.oracle.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 5 Apr 2021 13:31:42 -0400
-Message-ID: <CAPig+cRaysm=-UcqY4zY5cV0KzAwd+RwzxXN-ZMV0nz=L4_+DA@mail.gmail.com>
-Subject: Re: [PATCH 2/5] test-lib: use exact match for test_subcommand
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Tom Saeger <tom.saeger@oracle.com>,
+Date:   Mon, 5 Apr 2021 13:40:34 -0400
+Message-ID: <CAPig+cSfzpynO5es+B4=7_Dz-qTHNXpDeUVxs7z5yffQFgWU=A@mail.gmail.com>
+Subject: Re: [PATCH 3/5] refspec: output a refspec item
+To:     Tom Saeger <tom.saeger@oracle.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <derrickstolee@github.com>,
         Derrick Stolee <dstolee@microsoft.com>
@@ -54,39 +56,49 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 5, 2021 at 9:04 AM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> The use of 'grep' inside test_subcommand uses general patterns, leading
-> to sometimes needing escape characters to avoid incorrect matches.
-> Further, some platforms interpret different glob characters differently.
-
-These are regular expression metacharacters, not glob characters. A
-more general way to say this might be:
-
-    Furthermore, it can be difficult to know which characters need
-    escaping since the actual regular expression language implemented
-    by various `grep`s differs between platforms; for instance, some
-    may employ pure BRE, whereas others a mix of BRE & ERE.
-
-    Sidestep this difficulty by using `grep -F`...
-
-> Use 'grep -F' to use an exact match. This requires removing escape
-> characters from existing callers. Luckily, this is only one test that
-> expects refspecs as part of the subcommand.
+On Mon, Apr 5, 2021 at 12:58 PM Tom Saeger <tom.saeger@oracle.com> wrote:
+> On Mon, Apr 05, 2021 at 01:04:13PM +0000, Derrick Stolee via GitGitGadget wrote:
+> > +const char *refspec_item_format(const struct refspec_item *rsi)
+> > +{
+> > +     static struct strbuf buf = STRBUF_INIT;
+> > +
+> > +     strbuf_reset(&buf);
 >
-> Reported-by: Eric Sunshine <sunshine@sunshineco.com>
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> is this even needed?
 
-The Reported-by: feels a bit unusual in this context. Perhaps
-Helped-by: would be more appropriate.
+This is needed due to the `static` strbuf declaration (which is easy
+to overlook).
 
-> diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-> @@ -142,8 +142,8 @@ test_expect_success 'prefetch multiple remotes' '
-> -       test_subcommand git fetch remote1 $fetchargs +refs/heads/\\*:refs/prefetch/remote1/\\* <run-prefetch.txt &&
-> -       test_subcommand git fetch remote2 $fetchargs +refs/heads/\\*:refs/prefetch/remote2/\\* <run-prefetch.txt &&
-> +       test_subcommand git fetch remote1 $fetchargs +refs/heads/*:refs/prefetch/remote1/* <run-prefetch.txt &&
-> +       test_subcommand git fetch remote2 $fetchargs +refs/heads/*:refs/prefetch/remote2/* <run-prefetch.txt &&
+> > +     if (rsi->matching)
+> > +             return ":";
+> > +
+> > +     if (rsi->negative)
+> > +             strbuf_addch(&buf, '^');
+> > +     else if (rsi->force)
+> > +             strbuf_addch(&buf, '+');
+> > +
+> > +     if (rsi->src)
+> > +             strbuf_addstr(&buf, rsi->src);
+> > +
+> > +     if (rsi->dst) {
+> > +             strbuf_addch(&buf, ':');
+> > +             strbuf_addstr(&buf, rsi->dst);
+> > +     }
+> > +
+> > +     return buf.buf;
+>
+> should this be strbuf_detach?
 
-To be really robust and avoid accidental glob expansion (as unlikely
-as it is), you should quote any arguments which contain glob
-metacharacters such as "*" rather than supplying them bare like this.
+In normal circumstances, yes, however, with the `static` strbuf, this
+is correct.
+
+However, a more significant question, perhaps, is why this is using a
+`static` strbuf in the first place? Does this need to be optimized
+because it is on a hot path? If not, then the only obvious reason why
+`static` was chosen was that sometimes the function returns a string
+literal and sometimes a constructed string. However, that's minor, and
+it would feel cleaner to avoid the `static` strbuf altogether by using
+strbuf_detach() for the constructed case and xstrdup() for the string
+literal case, and making it the caller's responsibility to free the
+result. (The comment in the header file would need to be updated to
+say as much.)
