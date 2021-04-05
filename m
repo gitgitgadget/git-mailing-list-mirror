@@ -5,231 +5,235 @@ X-Spam-Level:
 X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,MSGID_FROM_MTA_HEADER,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 283F8C433ED
-	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 16:58:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A5E3C433ED
+	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 17:01:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EA3FB61246
-	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 16:58:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 100C2613AF
+	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 17:01:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232516AbhDEQ6G (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Apr 2021 12:58:06 -0400
-Received: from userp2120.oracle.com ([156.151.31.85]:49114 "EHLO
+        id S232575AbhDERB0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Apr 2021 13:01:26 -0400
+Received: from userp2120.oracle.com ([156.151.31.85]:50870 "EHLO
         userp2120.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232147AbhDEQ6G (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Apr 2021 12:58:06 -0400
+        with ESMTP id S232147AbhDERBZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Apr 2021 13:01:25 -0400
 Received: from pps.filterd (userp2120.oracle.com [127.0.0.1])
-        by userp2120.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 135Gmu1O076912;
-        Mon, 5 Apr 2021 16:57:47 GMT
+        by userp2120.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 135GnEe7077007;
+        Mon, 5 Apr 2021 17:01:11 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
  : subject : message-id : references : content-type : in-reply-to :
  mime-version; s=corp-2020-01-29;
- bh=SiBDh+twonEZHusy4/R5ltlwNPEuMaZ4iHRBDpVEP/w=;
- b=b4OnNjMV9dddjxnQ57warg70pEHn7fkMMzwi2rEnhs+e/KjLtM8js9K4ZKzT2dg8Q/H1
- YD0jTu2HNO2FLnxJ9yLziPY1eUTbZUy+zTrXj+ut494RNmwhOxopgCET4UqwcuVXQMfK
- BqY/kmFbQiJUy373aCtkSUlZ9T6bIBkgrrG+3KMEE/HqZtfalhqStCHaagUIQlPu0Gis
- cUPEFE45+3CzIMVYzMSBqFhiEVwSinsySiTNqxUqT1JkdoS5y3XnYgEW+Qi2dogYN4SS
- UuWkPd32w0bLOpgbxDJ6Y6ElQ4/52K1eOJgocpP2RB7HMSlPnxhZUUlbILMbdzOrGZFx 2Q== 
-Received: from userp3020.oracle.com (userp3020.oracle.com [156.151.31.79])
-        by userp2120.oracle.com with ESMTP id 37q3f2apes-1
+ bh=yVziCRPT7KnyeFi3rLIAnbQjfDetg/yOqR8yxzR7fUc=;
+ b=Fpk7O8BrfPXh0VSW2kTduroFY0Ml9a3KA6wSH8oLhdTWJZ5XqtjnvZv3YWbREVW+/SNX
+ m3VY+y9ZMVd17kWBbbOzN/G/6mQUucTywdoWmGrUjCKPjeqxhZpL1GaKGlK/bpKMFdP/
+ fOc65RLVATE6yYzQf4Ot+H2JHKsE40rBT6eqxBIzXNdYvR/kMF0F9if6dvPa4aLoeyCm
+ A2o/5voT1jlZBO6bHGEKbOeLDbbbWUU98N0LUV3Oz1pQBgBoF87QbAXjarwgNr+fyAs0
+ Y+fPa76JjEqZ4SqytZmURhrm/H2NMZbSDVQR+EOkvhGv7W3oZ1Eu1zzV4nrHZQ3Y6Qbe bA== 
+Received: from aserp3030.oracle.com (aserp3030.oracle.com [141.146.126.71])
+        by userp2120.oracle.com with ESMTP id 37q3f2apv4-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Mon, 05 Apr 2021 16:57:47 +0000
-Received: from pps.filterd (userp3020.oracle.com [127.0.0.1])
-        by userp3020.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 135Giw8V158819;
-        Mon, 5 Apr 2021 16:57:47 GMT
-Received: from nam10-dm6-obe.outbound.protection.outlook.com (mail-dm6nam10lp2105.outbound.protection.outlook.com [104.47.58.105])
-        by userp3020.oracle.com with ESMTP id 37q2pt575x-1
+        Mon, 05 Apr 2021 17:01:11 +0000
+Received: from pps.filterd (aserp3030.oracle.com [127.0.0.1])
+        by aserp3030.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 135Gjx4r075320;
+        Mon, 5 Apr 2021 17:01:10 GMT
+Received: from nam11-bn8-obe.outbound.protection.outlook.com (mail-bn8nam11lp2171.outbound.protection.outlook.com [104.47.58.171])
+        by aserp3030.oracle.com with ESMTP id 37q2pbfk71-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Mon, 05 Apr 2021 16:57:47 +0000
+        Mon, 05 Apr 2021 17:01:10 +0000
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=OwLCSi0NYvJVGojxnkwZqNZB5nap3M7Ee3ZfVnaeaMUcA/cZeueoNzs60JNbyNz7enViQncRMqypNCTlPsWj8naeoDogr32mt/Wc0UrUT5GXrjILg+WgTHT03nlUbxfW3bODUvqpN+820tVKRiOes4cKrQ0UIavAR3dU4nOpZW+I0dO7gTSozYijM7yb+eHT1qZBqfK4aRksjilQcKthwlBObyB4gx/nOjOz8bHRYqZCg9ul2/8k2cDdObMAss67CVPNzKzfWYtIOwHkh9gv59jY4vgF0vyrmHEBlaRQa7lAw+SFVA22Iym1g/UB70m1/U/9LTCn4JP82Pc5OjYE6w==
+ b=Wx+Mz2Rwkm9gUxOrCE6dg+IB4udgjCra8HkuEf2+Hj/GYxjZ7T9VBSq0MB92KIiNOO4bBGcu0yVrGNdc831nRhWCW17xqEMMt1kiTts8EfcfZNQilAkCQ5iCgrWNHVewdimAKSm4Ceym5lP+qavKY5bpNLSWl9oRfv8r4CH9y4RjoOx0xic+Opme0Q6NblOyE44ZaeTGN9F+dZOJvMIP7u001CyXDYtF1dZV8+k+mEWZlDe/lHMEtueC//fjyCx2ILJQV2KTGT3OkIDdmTGivaLz6MfrQPk4yzioDioplxso1DniucRHd9mpxoAxH2rQtaIHrXEOZbWKHEXQHwg2NA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=SiBDh+twonEZHusy4/R5ltlwNPEuMaZ4iHRBDpVEP/w=;
- b=oKGZCT0Tz407zXDV+IrTQNDjIQXHUupOYLINc3Gtlqc33qe42OsW++GPVopN2ryjJmU48oOARD+GHgZg+aBgL18acolPpQgle57/+6nm3VoFCtrPuedv2dWwizCeqXJ7BOMq4Z5krJyNoSyUydFPGgmOojKLAOghuCXs/wOJEf/54IMh0ZaRUTp/97buBzuRAX5elOodNAewFHKvvGcYSUkDndG+JcW5K8A7IK2UmIVsHR6NReGCgdBffZXPjyuT+bdH50GAAfHQuvrNLn1Nadwe5aTR9XF1FHnkeZ6GpKPh6pnMVDCueRRS3oJRyW7Lx7cRyXGbrVwF08Pz4FQuSA==
+ bh=yVziCRPT7KnyeFi3rLIAnbQjfDetg/yOqR8yxzR7fUc=;
+ b=aUhSSI56xGhPQwcT1qsWlCptleZBOAjqxyd25e2hftGHf9Nz0EmbwpoAcBZy8pKD6DU4yHP0HHhljEyRO8r2a2606qJEZbdkbIeR1VAHBeZOYBzfLOrVIDsm2H3ZHhaxKe291QQwb2U8D5W19ac8NOzNBcj5HoCnJ6LjTou4B30dgAODjIaPuswNVUi1pGG3zc9aaox9klQ3YVdir803nnRwh9sk+9JJ7Ew98XQbZZIGqDkorCXlDsLee/TOYpvZLwSzLpQRg1je8KosA2g9W0MfNnZ7gA1yrU7D99u6oy0TkpRhZJqt1vHMbMonkEV1w3SwteVkKAv86ZSv3iBRqw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
  dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=SiBDh+twonEZHusy4/R5ltlwNPEuMaZ4iHRBDpVEP/w=;
- b=JilSyaNvSi4V6waIi8gF89bG9RHnHcgvqq9nWvACDN1j2Sm8rIYlCoYaLt5laXrrAtp5LemmsM8LP7y6vYqGpZ8MfVfw0ZzKCKnNKuXmdCDFxPXbCOcr7IK8wtLcKOzhBAvSgIUkfHhiAEHrqs1Ud3A/udC9meY09UwpWbD4J2U=
+ bh=yVziCRPT7KnyeFi3rLIAnbQjfDetg/yOqR8yxzR7fUc=;
+ b=NcNo75zAUV48BUIxSNpsXYPfNilqK3kWoDYOPlFO2G/3sJ6dRwR/DzaWDJu9txRKU+D0jxsqqH8yDdh7YOnYTqxYSdi40v9K289QG9Ah/CqUu/C0O6iQpco6Z7R7avL+mYtEc5MpTPLwYypCyXzYLJ2M7U743hYZPreyVpE6rIo=
 Authentication-Results: gmail.com; dkim=none (message not signed)
  header.d=none;gmail.com; dmarc=none action=none header.from=oracle.com;
 Received: from BY5PR10MB3794.namprd10.prod.outlook.com (2603:10b6:a03:1b2::30)
- by BY5PR10MB4242.namprd10.prod.outlook.com (2603:10b6:a03:20d::9) with
+ by SJ0PR10MB4734.namprd10.prod.outlook.com (2603:10b6:a03:2d2::11) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3999.29; Mon, 5 Apr
- 2021 16:57:43 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3999.28; Mon, 5 Apr
+ 2021 17:01:07 +0000
 Received: from BY5PR10MB3794.namprd10.prod.outlook.com
  ([fe80::c50b:884f:70dd:c978]) by BY5PR10MB3794.namprd10.prod.outlook.com
  ([fe80::c50b:884f:70dd:c978%5]) with mapi id 15.20.3999.032; Mon, 5 Apr 2021
- 16:57:43 +0000
-Date:   Mon, 5 Apr 2021 10:57:40 -0600
+ 17:01:07 +0000
+Date:   Mon, 5 Apr 2021 11:01:05 -0600
 From:   Tom Saeger <tom.saeger@oracle.com>
 To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com,
         Derrick Stolee <derrickstolee@github.com>,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 3/5] refspec: output a refspec item
-Message-ID: <20210405165740.brevvzc7hiyg2wj4@brm-x62-17.us.oracle.com>
+Subject: Re: [PATCH 1/5] maintenance: simplify prefetch logic
+Message-ID: <20210405170105.fujb5hc5usthuw2y@brm-x62-17.us.oracle.com>
 References: <pull.924.git.1617627856.gitgitgadget@gmail.com>
- <e10007e1cf8ff0005295f648b9489c11a9427122.1617627856.git.gitgitgadget@gmail.com>
+ <3a94ff80657cd8e0142c1007be4f183c6a18587e.1617627856.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <e10007e1cf8ff0005295f648b9489c11a9427122.1617627856.git.gitgitgadget@gmail.com>
+In-Reply-To: <3a94ff80657cd8e0142c1007be4f183c6a18587e.1617627856.git.gitgitgadget@gmail.com>
 X-Originating-IP: [129.157.69.41]
-X-ClientProxiedBy: SA0PR12CA0003.namprd12.prod.outlook.com
- (2603:10b6:806:6f::8) To BY5PR10MB3794.namprd10.prod.outlook.com
+X-ClientProxiedBy: SJ0PR05CA0100.namprd05.prod.outlook.com
+ (2603:10b6:a03:334::15) To BY5PR10MB3794.namprd10.prod.outlook.com
  (2603:10b6:a03:1b2::30)
 MIME-Version: 1.0
 X-MS-Exchange-MessageSentRepresentingType: 1
-Received: from brm-x62-17.us.oracle.com (129.157.69.41) by SA0PR12CA0003.namprd12.prod.outlook.com (2603:10b6:806:6f::8) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3999.28 via Frontend Transport; Mon, 5 Apr 2021 16:57:42 +0000
+Received: from brm-x62-17.us.oracle.com (129.157.69.41) by SJ0PR05CA0100.namprd05.prod.outlook.com (2603:10b6:a03:334::15) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4020.9 via Frontend Transport; Mon, 5 Apr 2021 17:01:06 +0000
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: ea5331be-10e2-4ab3-cf7e-08d8f853edfe
-X-MS-TrafficTypeDiagnostic: BY5PR10MB4242:
-X-Microsoft-Antispam-PRVS: <BY5PR10MB424217DB2A7B3553F0E5F2ECFC779@BY5PR10MB4242.namprd10.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:8882;
+X-MS-Office365-Filtering-Correlation-Id: c93d20cf-1e1d-42ba-56d1-08d8f854677a
+X-MS-TrafficTypeDiagnostic: SJ0PR10MB4734:
+X-Microsoft-Antispam-PRVS: <SJ0PR10MB473471BEAF5598B83CD6EC53FC779@SJ0PR10MB4734.namprd10.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:204;
 X-MS-Exchange-SenderADCheck: 1
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: BRod1M/RnYaw4SwFLrpJKHreWUbHBKoCBkrMZhZKYXSMnbd4Ni/2BTODbFMvE3ad0FIZrrxybGKFCYHhtGiGLAvtegoel201SLSnhaEWU5T2Bq1U87u91j9ZCeGqgVMUJjYfF3U0k8SYKxBcL0CmmuDbVigt+ghsm73eE0Mio/VZCVbvkuqWAhxQMDe7r1HOvFJJ0lqS4W6mZET+n/HOHr3xr6hYNKkhtAJKGzk9jExynwRkmod6cRlwfaTUSx1aN5wDOQS7OmwfXOjpFd+OHnjA4wQc8J6uI6PLB2z8sQFkngX8+TEpdrKx53btsO+97sGREfHFwNGAWE0KPSQR2JpElznReoPfa8I94OjRgvHlsY8O+d3rmCMiVq4dnFsjUfXMK/Iz/tcihIHgEar2fluvN6N5E+VYUruig4rhZ/YsqROu4ePbB1QaXNuGH0pdPwjzpmw4fLF+NoOEsTZ328CrLtJxYKhG8BHNUsyqE1lSDUNA66jxFMiKAMPQ5PuGYi72HyBBq5z9XQlgzWqQqPLS7m/JRCI07N2Wntvs1ri4wx9D795SjLUHEQn9xcGIB5XQeN5rljvxvXTB916BN0gF9kjbR0Iw/z53R/KZDSZXt/MpfKnMzcdciDuqQ2DC/D5CZtecZ743TTPtHn1FrQ==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BY5PR10MB3794.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(346002)(366004)(396003)(39860400002)(376002)(136003)(66556008)(66476007)(8936002)(54906003)(66946007)(83380400001)(7696005)(52116002)(5660300002)(316002)(956004)(478600001)(55016002)(86362001)(26005)(45080400002)(44832011)(38100700001)(8676002)(6916009)(4326008)(1076003)(2906002)(186003)(16526019);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData: =?us-ascii?Q?y5GlrWabBP8rqryHXWhU/yuGXyTz6b4CVezjCDbwj3/P8fBgqVtQXvWLLkXp?=
- =?us-ascii?Q?IyrOoQXjXgNnjv0RjK0p5G1lsaxK+H37I3LePBIveqxxHNRUOo1IrGXQSj2B?=
- =?us-ascii?Q?qRHmiujgUDj/QTFQ2E+LnE8CPaRZWMYpx9oFDX3vOyOAH60REFPCvP5vrWtf?=
- =?us-ascii?Q?YSfhZWnG8azWtAEdxgSp5WfzreY3WorwWYvI+HZoKUCnQOEALSHWskOc0eZ3?=
- =?us-ascii?Q?2rc8oNUroRsFpzPMk4xvKDKoV8NEC/vunDEsJT0lbyLhGFFUFIccZVpspIQB?=
- =?us-ascii?Q?LR5n8qo70CZyyB/gNXgTx8+aSELesTqDWkRBzix6O8VzeB2eIgUo6CgSVLIH?=
- =?us-ascii?Q?LVrRZLJOdjq5nor3uOVemdhDdMxBqHSS5Wpj/zpIothEpLtHkCHLgsbQYByI?=
- =?us-ascii?Q?JYL71mIzWIj0XqIOPcQok3c36atxzIwU4rUWoDBl+DpdMKeokCp5n/CwS7JD?=
- =?us-ascii?Q?0dZyW71LExSd/0e4m+BFwaXfb1B5XfhKkxHkdrBAjX+rp1k6yt095UneRJhj?=
- =?us-ascii?Q?hkBKJE4RUydd1N5Y0Q0ThsLmrKZf7AxIg09Ncc13NFxRwv/bNncl3VpPuAW5?=
- =?us-ascii?Q?2EW/yB/4/lfKsx6N5M52CTNjILy5W5mA8fwhPswHntPf6Nnk/NMMNEduopQP?=
- =?us-ascii?Q?5T2ZnEgltVDIU8IOIc5lk63tDcSE6bbWqGUP57E7AcNZB3m/wwt5xfXxjoOn?=
- =?us-ascii?Q?4Z49vqPyftIMif7lUE0Th/UxDiP9NnTL2U1hw0c/LIqtOF/6GG5PPFQhdNby?=
- =?us-ascii?Q?BELx0xLPszzWuIpIY+/3KSZSJkQSptcd2BXxhaMJr7b5dxNiT6spBm5jXhJ/?=
- =?us-ascii?Q?Ae6/T7o4cDYDJW7Gj8hw0QvL7NueSoQDft5+Mml59007LLSKjeN38KALzpvr?=
- =?us-ascii?Q?GTs76b9g2jaHSVBllGrqKzs07Y3XX/2G+GaIfvkJxtLJhAHG/uqHpogVGgVd?=
- =?us-ascii?Q?WKWikpds7Vc/FseqMYF4bZ6GtK4/VJuDXgZ418MPs+kPSkyW8555FdW8bvy6?=
- =?us-ascii?Q?C4F2ayErXAqHp87kvrfQMb66PwEgnWmj4X1YzIT8DNgJUmJjChxT1a9fuTtA?=
- =?us-ascii?Q?c/hhIzfVrtUhDHoPOcUhrZBoyc1MtTxmi5QvuXId0zy5nKrB6vYXcDw+IAMH?=
- =?us-ascii?Q?63HUO4oJ6o+JabZ0yJt2fBhvsGap7VhOtBT1a7DajwZq26qHBYhAhsmz7GXo?=
- =?us-ascii?Q?5IcFbgWQezeQKLFkGmohWg7ZEV/xiVUJdF55IA1HBbscbVNRfp/vvNAPNGd4?=
- =?us-ascii?Q?vuvEP9aZ4p2kJOSmNwNEeh4A2f9HZHOjW6wyuA2EVvt8m9HJVURO5GLgbGSJ?=
- =?us-ascii?Q?xttNyEilWDZcOsod3pJA4YDS?=
+X-Microsoft-Antispam-Message-Info: r2HAwRvR2yj2Ay6M1gNfjPY2P8LG0Qb9XY3VbSXuQeNLbOX3xAbuQm3gcrX14k8lpHFUuBd4yq/ACem0cXOxUy9EVD50y5sUMbidZF8yQYMILWKooFQKib9JKl40kV17XiGMCttSauNoxc+zAyA6+igJKp2xANnowlIPRQ9m5B3Zn/K+tFqgbujviOyEJMtBm+nrgxNCeIZPT0Jp3C8YPDVZTOgHjMP+XSyN9PSpPlom1d4gm5ILxMAs+pXzRRDxBE40/4fNdWq9frhswaduqihTDljw6VLHPByjAI5UeWJIjhQp59Uss7gbqFZ7rz197c9hOOQ+g8xDelG6McyiFLvOezI9zPOrEfBQp0YgupNswh9Tt5j3eyTa9o4F5xgD5vF5B4eNI5yWKZ8BryUBYlUlFkxG2fQj4U8B6ZmXJ9fYwIa2QFxeUL5e+//8DdWPediG4c1BzVjXF8L6KOebKTmDnMMfCd7qEPTaVPxm1QUqUGqHX5NasB0SCv7Rifao1EkMq+hwWDWRdD4mvs0+13xwYp0VzEUyFg959fRL2MGIE6L9KMcx+Etz70aGLImkMBz9IJR5mQolysZdvYDAWRgw1IadDFKxpmMDU75HVHCHfdzqKRsJ4pjMIFASnu79TFYSidlLoimMqplzbwOGDZAgM+IKgb9wQiMYLDXTX2OBiAEPbeHUJS6Muj2CDYID
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BY5PR10MB3794.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(376002)(366004)(396003)(136003)(39860400002)(346002)(83380400001)(44832011)(38100700001)(54906003)(956004)(16526019)(66476007)(5660300002)(2906002)(66556008)(8676002)(186003)(26005)(8936002)(45080400002)(55016002)(1076003)(6916009)(7696005)(52116002)(316002)(66946007)(478600001)(86362001)(4326008)(309714004);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData: =?us-ascii?Q?GqwIcTsHZtixd2It9mfxQjHAR8UY2Pzf7D7rB3NQbENYDoxV4fCehCR9Zsr/?=
+ =?us-ascii?Q?n4UpVerxxhz7eDL7jNdA7ApqjiTv7cpPXCXI0NNCj2DQo+VyrRJkAxJCXiWT?=
+ =?us-ascii?Q?pbuC7MER+4A+A8leX3RpXA6mYsuXphGVidr9wwrmz6FHLp7tcr0pXBSrQKgF?=
+ =?us-ascii?Q?JwaJFh1zcFIUigslpd2rq25OwBc/u884vtDd+um3bLYTlvTwpNtrGxSMzqK6?=
+ =?us-ascii?Q?+BfFiN5j6Dd628jduZ1TpU2GG3mPHMKdePDv2h6CpactJIdsq2wY7B3PkWJ+?=
+ =?us-ascii?Q?uuQmGi3SbyRxB4CQkQF6NOnQC5lQzxrqw62xwsApa+DN2GK1jK+paSgltBiK?=
+ =?us-ascii?Q?RP8XTrz1E5bxmJKGrxIkJXRRGlk+lcQgGsKDFNrc//yijJ8F04RCcrE4kX3a?=
+ =?us-ascii?Q?IaolxN7WvOmJaYL0Gvqg9FYlSTcF2bDMcWeh3KhwAnWVL+eZlXJKzu8zl30l?=
+ =?us-ascii?Q?lDUH9L8wRDD4y1aDhFPxq+mp+ej4ez5aVLEM3stPDo3Mggn+RHMB0efiqnul?=
+ =?us-ascii?Q?5mHnKq5zdzZAGnJT2sB0ScMQ8aL+fnnge/HW0+RaWNZWEvT4J7vEZ9Nquruc?=
+ =?us-ascii?Q?9Mv+RLR5w1YrEf8qRhRjJuGTEDs+PaQ4IujF9IO6DxRyQdpxe9KYAGV2zeCG?=
+ =?us-ascii?Q?hsB0WvVqw14CH9mzo6WQ0gpmwPk+ZSkrJmleVvab/EwDvBIwEqb2fy9ZreJI?=
+ =?us-ascii?Q?H7YO+CvYDZsqcn6DFzT1w6Xtf1xfLWJBsBbaDIBtwZ4e66lVVr6YOiqKQcUw?=
+ =?us-ascii?Q?9DHIp1dfuZvBzP3ghICMWZZTBwQ3fRDpMgbrfN052HuPL/KVJSeMZj006wnK?=
+ =?us-ascii?Q?UBNQvQRgvDJjcd+VmCU+cwFHQprTDyFoeH51YpbPCG0OvFT8/XHjKCUvEuj3?=
+ =?us-ascii?Q?0wr0txsd+JWx8IZxlJtn2rhtizm6iedu8x0hs7R8T8VeXPO6q8HynSzbLoHu?=
+ =?us-ascii?Q?d4g+sG9t7bYPJu/XyXrGZvJoiuD6X1ugyz66CB/EXjdpgStuRSSNM/QWbDwD?=
+ =?us-ascii?Q?toQIyqTag6VYaGI0ZhYb0zN+QxhmaRJ2mhUvqoy4NM+XrZNX9cK60dnNtKyt?=
+ =?us-ascii?Q?YDiLq7BYf/qDPghmzry1q/3kF4bTne4tf+ZIQuvkfmndMACJHn62XOyRK3vO?=
+ =?us-ascii?Q?uLanQknhwfTE+w98LnkYCKG4a+YAj11fu8mDeOCDer0i38sHbeZOdEVqqFQY?=
+ =?us-ascii?Q?z7qh7AcqC8VPtT10ULmuvJ+D8cOumg+RqI0915kqgUxcgfjC0yUJ2wJ0cc/3?=
+ =?us-ascii?Q?GSfOvEnzA4OzSF7LOV0FcBebp2t4PsvPK0XqaAK3gCarLcSIo1cU0Bru+WC2?=
+ =?us-ascii?Q?ucaShqS6XBo8T8WAdbDnA8cj?=
 X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ea5331be-10e2-4ab3-cf7e-08d8f853edfe
+X-MS-Exchange-CrossTenant-Network-Message-Id: c93d20cf-1e1d-42ba-56d1-08d8f854677a
 X-MS-Exchange-CrossTenant-AuthSource: BY5PR10MB3794.namprd10.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Apr 2021 16:57:43.4247
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Apr 2021 17:01:07.2985
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: iEqySP98BPgQGMFEF0Xc/FdwfHJuD5OWm4EzlaObsJQaYU0b/GoYHesU86/L2zSBTKxBMz+LoD/ePjMjzdOkhg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR10MB4242
+X-MS-Exchange-CrossTenant-UserPrincipalName: y/cD2GU8yk74BDswXu5ogA69enmYQcNbVHL8ciZ6R6r6Wzqee3mYMn3B5yJpn8/zK8ihOF/K196EpZFhL8dh6g==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR10MB4734
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=9945 signatures=668683
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0 suspectscore=0
- malwarescore=0 phishscore=0 bulkscore=0 mlxscore=0 spamscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2104030000 definitions=main-2104050110
-X-Proofpoint-GUID: jXkMI3AHaHPG_x1NJmjzz4bnrURtHXQ-
-X-Proofpoint-ORIG-GUID: jXkMI3AHaHPG_x1NJmjzz4bnrURtHXQ-
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0 malwarescore=0 mlxscore=0
+ phishscore=0 bulkscore=0 spamscore=0 mlxlogscore=999 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2104030000
+ definitions=main-2104050110
+X-Proofpoint-GUID: At8h_P_24qv19ybwepkzJivSmXlPeHqM
+X-Proofpoint-ORIG-GUID: At8h_P_24qv19ybwepkzJivSmXlPeHqM
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=9945 signatures=668683
 X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0 mlxscore=0 suspectscore=0
  spamscore=0 impostorscore=0 mlxlogscore=999 malwarescore=0 adultscore=0
- lowpriorityscore=0 clxscore=1011 priorityscore=1501 phishscore=0
+ lowpriorityscore=0 clxscore=1015 priorityscore=1501 phishscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2104030000
  definitions=main-2104050110
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 05, 2021 at 01:04:13PM +0000, Derrick Stolee via GitGitGadget wrote:
+On Mon, Apr 05, 2021 at 01:04:11PM +0000, Derrick Stolee via GitGitGadget wrote:
 > From: Derrick Stolee <dstolee@microsoft.com>
 > 
-> Add a new method, refspec_item_format(), that takes a 'struct
-> refspec_item' pointer as input and returns a string for how that refspec
-> item should be written to Git's config or a subcommand, such as 'git
-> fetch'.
-> 
-> There are several subtleties regarding special-case refspecs that can
-> occur and are represented in t5511-refspec.sh. These cases will be
-> explored in new tests in the following change. It requires adding a new
-> test helper in order to test this format directly, so that is saved for
-> a separate change to keep this one focused on the logic of the format
-> method.
-> 
-> A future change will consume this method when translating refspecs in
-> the 'prefetch' task of the 'git maintenance' builtin.
+> The previous logic filled a string list with the names of each remote,
+> but instead we could simply run the appropriate 'git fetch' data
+> directly in the remote iterator. Do this for reduced code size, but also
+> becuase it sets up an upcoming change to use the remote's refspec. This
+
+*NIT* because
+
+> data is accessible from the 'struct remote' data that is now accessible
+> in fetch_remote().
 > 
 > Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 > ---
->  refspec.c | 25 +++++++++++++++++++++++++
->  refspec.h |  5 +++++
->  2 files changed, 30 insertions(+)
+>  builtin/gc.c | 33 ++++++++-------------------------
+>  1 file changed, 8 insertions(+), 25 deletions(-)
 > 
-> diff --git a/refspec.c b/refspec.c
-> index e3d852c0bfec..ca65ba01bfe6 100644
-> --- a/refspec.c
-> +++ b/refspec.c
-> @@ -180,6 +180,31 @@ void refspec_item_clear(struct refspec_item *item)
->  	item->exact_sha1 = 0;
+> diff --git a/builtin/gc.c b/builtin/gc.c
+> index ef7226d7bca4..fa8128de9ae1 100644
+> --- a/builtin/gc.c
+> +++ b/builtin/gc.c
+> @@ -873,55 +873,38 @@ static int maintenance_task_commit_graph(struct maintenance_run_opts *opts)
+>  	return 0;
 >  }
 >  
-> +const char *refspec_item_format(const struct refspec_item *rsi)
-> +{
-> +	static struct strbuf buf = STRBUF_INIT;
-> +
-> +	strbuf_reset(&buf);
-
-is this even needed?
-
-> +
-> +	if (rsi->matching)
-> +		return ":";
-> +
-> +	if (rsi->negative)
-> +		strbuf_addch(&buf, '^');
-> +	else if (rsi->force)
-> +		strbuf_addch(&buf, '+');
-> +
-> +	if (rsi->src)
-> +		strbuf_addstr(&buf, rsi->src);
-> +
-> +	if (rsi->dst) {
-> +		strbuf_addch(&buf, ':');
-> +		strbuf_addstr(&buf, rsi->dst);
-> +	}
-> +
-> +	return buf.buf;
-
-should this be strbuf_detach?
-
-> +}
-> +
->  void refspec_init(struct refspec *rs, int fetch)
+> -static int fetch_remote(const char *remote, struct maintenance_run_opts *opts)
+> +static int fetch_remote(struct remote *remote, void *cbdata)
 >  {
->  	memset(rs, 0, sizeof(*rs));
-> diff --git a/refspec.h b/refspec.h
-> index 8b79891d3218..92a312f5b4e6 100644
-> --- a/refspec.h
-> +++ b/refspec.h
-> @@ -56,6 +56,11 @@ int refspec_item_init(struct refspec_item *item, const char *refspec,
->  void refspec_item_init_or_die(struct refspec_item *item, const char *refspec,
->  			      int fetch);
->  void refspec_item_clear(struct refspec_item *item);
-> +/*
-> + * Output a given refspec item to a string.
-> + */
-> +const char *refspec_item_format(const struct refspec_item *rsi);
-> +
->  void refspec_init(struct refspec *rs, int fetch);
->  void refspec_append(struct refspec *rs, const char *refspec);
->  __attribute__((format (printf,2,3)))
+> +	struct maintenance_run_opts *opts = cbdata;
+>  	struct child_process child = CHILD_PROCESS_INIT;
+>  
+>  	child.git_cmd = 1;
+> -	strvec_pushl(&child.args, "fetch", remote, "--prune", "--no-tags",
+> +	strvec_pushl(&child.args, "fetch", remote->name, "--prune", "--no-tags",
+>  		     "--no-write-fetch-head", "--recurse-submodules=no",
+>  		     "--refmap=", NULL);
+>  
+>  	if (opts->quiet)
+>  		strvec_push(&child.args, "--quiet");
+>  
+> -	strvec_pushf(&child.args, "+refs/heads/*:refs/prefetch/%s/*", remote);
+> +	strvec_pushf(&child.args, "+refs/heads/*:refs/prefetch/%s/*", remote->name);
+>  
+>  	return !!run_command(&child);
+>  }
+>  
+> -static int append_remote(struct remote *remote, void *cbdata)
+> -{
+> -	struct string_list *remotes = (struct string_list *)cbdata;
+> -
+> -	string_list_append(remotes, remote->name);
+> -	return 0;
+> -}
+> -
+>  static int maintenance_task_prefetch(struct maintenance_run_opts *opts)
+>  {
+> -	int result = 0;
+> -	struct string_list_item *item;
+> -	struct string_list remotes = STRING_LIST_INIT_DUP;
+> -
+>  	git_config_set_multivar_gently("log.excludedecoration",
+>  					"refs/prefetch/",
+>  					"refs/prefetch/",
+>  					CONFIG_FLAGS_FIXED_VALUE |
+>  					CONFIG_FLAGS_MULTI_REPLACE);
+>  
+> -	if (for_each_remote(append_remote, &remotes)) {
+> -		error(_("failed to fill remotes"));
+> -		result = 1;
+> -		goto cleanup;
+> +	if (for_each_remote(fetch_remote, opts)) {
+> +		error(_("failed to prefetch remotes"));
+> +		return 1;
+>  	}
+>  
+> -	for_each_string_list_item(item, &remotes)
+> -		result |= fetch_remote(item->string, opts);
+> -
+> -cleanup:
+> -	string_list_clear(&remotes, 0);
+> -	return result;
+> +	return 0;
+>  }
+>  
+>  static int maintenance_task_gc(struct maintenance_run_opts *opts)
 > -- 
 > gitgitgadget
 > 
