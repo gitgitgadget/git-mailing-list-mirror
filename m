@@ -5,63 +5,63 @@ X-Spam-Level:
 X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 807C6C433ED
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA834C43461
 	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 13:04:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5A941611BE
+	by mail.kernel.org (Postfix) with ESMTP id 8985B613AD
 	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 13:04:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240748AbhDENE3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Apr 2021 09:04:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50216 "EHLO
+        id S240923AbhDENEd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Apr 2021 09:04:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50220 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229681AbhDENE0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Apr 2021 09:04:26 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4098DC061788
-        for <git@vger.kernel.org>; Mon,  5 Apr 2021 06:04:20 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id i18so7412722wrm.5
+        with ESMTP id S235731AbhDENE2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Apr 2021 09:04:28 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07010C061793
+        for <git@vger.kernel.org>; Mon,  5 Apr 2021 06:04:21 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id a12so1092155wrq.13
         for <git@vger.kernel.org>; Mon, 05 Apr 2021 06:04:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=RxYhwUVO73QD53gXj34Ia2LkRQxnBglVimbVxWy9/Ic=;
-        b=WnRZkYf/pXmiStz/coRa+0Jnq814xR3uU5OKWhqM7osohLVB0awP1gYNGMerw3hZ7x
-         aK6xJMBAtA3F7FSNMtrJSbOhk3eTmrrjbdpxrz9Qyv6Y1xhnHdvBiejAFwCBHoS5+POf
-         zKgHQEo6Ll0/rZgaM8jGxdaYS7M1qJT6P9aqwrHE7Z/uFXDV0MUNkU7LVIEWufO+x7+w
-         3b1SV4gGAKK6lymnbLS0L/RUW20QTsix7k8LBltCH3qgjJOCW2Ayr0Br91ybmwiogmip
-         uPeB5aMCYpYF9+gKvmsKzLk6s6kAY6GkdJXItBrpEwkM2rFcDSbWpH5TYRnik0tahZ+j
-         XcDg==
+        bh=P0CSrGG0xl0UZrDRJ2dSC6xgIbyMmNQRJEdbeKxUd2w=;
+        b=eCpwGhxYRWuIhx7A2B+7uD7mIsIETD41zMxklbrVAbKh3Q+lK0j2kClOng74tmjZpr
+         d21Fh51boX10pnzER/rvb6OJvVBC1whVAsQ2viMGMSNv9f530bYLGA11zfHbsjyclZOx
+         LKO8aSBgHKf0ibrVYMl8kkeN6evb3Iv07M3aHdWQ4p4aodYNCy9xt5bFuYu+Ez2e193u
+         wIe3Oka8sktClO9SD9cG/O3cXYKGbqJCIHmJBddG5RI/twKaIRw6w2XXk35XnCBDeGYb
+         KNwJf31Nh76kf8gIBUgii5qrsX2168fncJ4Z3GU2o7mv7+X9Z+iegCmW+JKxA+WYClN3
+         /Waw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=RxYhwUVO73QD53gXj34Ia2LkRQxnBglVimbVxWy9/Ic=;
-        b=RAPAg5cywsSMMsoJiFZPqFpdyT9GS2Xof7CH1xR/EcijI43uxRxm5XPozJXyTzMrrP
-         0Q653guDac93IL8CATUvFXA+OAfw0cBA4FKyGO7qnA6rekj1einVg23wFPuDJkGshMTW
-         ZNW2pHpumyDzhG3UUz4E3Txvk6xsM68mqmY48iO/xX7IwdeMp73zFywbBTwcls9p52fl
-         Y/Htwd4zRONr3IAt7WNEQwygAzaGUYHx8FJGkC3vMIzEVKqKUWQMLxAnfzd2USgFZEIy
-         2NXOuEi5bvfBzkjgWAuPgnQT/lGoTKAXdK44DxoRyfgHcQMSGo1yM6lyNQDE3+9loCgK
-         id1g==
-X-Gm-Message-State: AOAM533/FQj/SG6GTft639Mh89lVvD78DoiIIAUNRslwgM2MGp9MWIU4
-        bW9NolXTgT5U2DnfwqQ683e5RUECsi0=
-X-Google-Smtp-Source: ABdhPJxZ5VbLUdRe8JvC414Rk8Iu+rxgyp0+MrWVjZB/X+Z4Jf7CFR09YAWsEyHrrsryZXX3yjZMRg==
-X-Received: by 2002:adf:ee0a:: with SMTP id y10mr27968796wrn.177.1617627858757;
-        Mon, 05 Apr 2021 06:04:18 -0700 (PDT)
+        bh=P0CSrGG0xl0UZrDRJ2dSC6xgIbyMmNQRJEdbeKxUd2w=;
+        b=TV0ghSgjrmvgQk7PrSo/f1rM/PIKMNAXaV/1Me0g+9Lri3ixXX6+1LABGDyQEmzerP
+         JbLjUlNVP7TcA2WuoKZd8L/ubOH8k+vl3lbAutS2py/HwXLpx3irN6xyJhkyZ60i944J
+         US7qGVwO8+8248y/No+PNA2Y89Kq8YCZLBuA0lYIQJv595/TK0vQGLjXDcRHSBNQ3qvT
+         d2K8+I1ZttYwQsepo4tCpa+ks/XpdIqTkU0pAgf5yY1eEydXIyGxxjH3mbsJmmZrqCko
+         dkin9Nhi5wCSqqHDG5GWlbChIgYes8hVQTg5wgDkNDNtQARm8RLnfURjnzTGLtTSjfdS
+         4U7w==
+X-Gm-Message-State: AOAM531ZR98awFbPUeSvVrs24JUnp598j0OMaA9GDyLjNvkEwHI0jop8
+        /+fBTb18+YOSAR1enprFMFYZeT3Qo6Q=
+X-Google-Smtp-Source: ABdhPJys0Ny0jnAVLtqCHtQrJAvLm24vpxfTizmke5BooxLWhUj7yZMnpo/94PXIFnYku/RRYaIjcw==
+X-Received: by 2002:a5d:6a92:: with SMTP id s18mr9905813wru.200.1617627859864;
+        Mon, 05 Apr 2021 06:04:19 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y1sm23320033wmq.29.2021.04.05.06.04.18
+        by smtp.gmail.com with ESMTPSA id u19sm11082665wml.28.2021.04.05.06.04.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Apr 2021 06:04:18 -0700 (PDT)
-Message-Id: <3a94ff80657cd8e0142c1007be4f183c6a18587e.1617627856.git.gitgitgadget@gmail.com>
+        Mon, 05 Apr 2021 06:04:19 -0700 (PDT)
+Message-Id: <e10007e1cf8ff0005295f648b9489c11a9427122.1617627856.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.924.git.1617627856.gitgitgadget@gmail.com>
 References: <pull.924.git.1617627856.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 05 Apr 2021 13:04:11 +0000
-Subject: [PATCH 1/5] maintenance: simplify prefetch logic
+Date:   Mon, 05 Apr 2021 13:04:13 +0000
+Subject: [PATCH 3/5] refspec: output a refspec item
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,86 +76,79 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The previous logic filled a string list with the names of each remote,
-but instead we could simply run the appropriate 'git fetch' data
-directly in the remote iterator. Do this for reduced code size, but also
-becuase it sets up an upcoming change to use the remote's refspec. This
-data is accessible from the 'struct remote' data that is now accessible
-in fetch_remote().
+Add a new method, refspec_item_format(), that takes a 'struct
+refspec_item' pointer as input and returns a string for how that refspec
+item should be written to Git's config or a subcommand, such as 'git
+fetch'.
+
+There are several subtleties regarding special-case refspecs that can
+occur and are represented in t5511-refspec.sh. These cases will be
+explored in new tests in the following change. It requires adding a new
+test helper in order to test this format directly, so that is saved for
+a separate change to keep this one focused on the logic of the format
+method.
+
+A future change will consume this method when translating refspecs in
+the 'prefetch' task of the 'git maintenance' builtin.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- builtin/gc.c | 33 ++++++++-------------------------
- 1 file changed, 8 insertions(+), 25 deletions(-)
+ refspec.c | 25 +++++++++++++++++++++++++
+ refspec.h |  5 +++++
+ 2 files changed, 30 insertions(+)
 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index ef7226d7bca4..fa8128de9ae1 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -873,55 +873,38 @@ static int maintenance_task_commit_graph(struct maintenance_run_opts *opts)
- 	return 0;
+diff --git a/refspec.c b/refspec.c
+index e3d852c0bfec..ca65ba01bfe6 100644
+--- a/refspec.c
++++ b/refspec.c
+@@ -180,6 +180,31 @@ void refspec_item_clear(struct refspec_item *item)
+ 	item->exact_sha1 = 0;
  }
  
--static int fetch_remote(const char *remote, struct maintenance_run_opts *opts)
-+static int fetch_remote(struct remote *remote, void *cbdata)
++const char *refspec_item_format(const struct refspec_item *rsi)
++{
++	static struct strbuf buf = STRBUF_INIT;
++
++	strbuf_reset(&buf);
++
++	if (rsi->matching)
++		return ":";
++
++	if (rsi->negative)
++		strbuf_addch(&buf, '^');
++	else if (rsi->force)
++		strbuf_addch(&buf, '+');
++
++	if (rsi->src)
++		strbuf_addstr(&buf, rsi->src);
++
++	if (rsi->dst) {
++		strbuf_addch(&buf, ':');
++		strbuf_addstr(&buf, rsi->dst);
++	}
++
++	return buf.buf;
++}
++
+ void refspec_init(struct refspec *rs, int fetch)
  {
-+	struct maintenance_run_opts *opts = cbdata;
- 	struct child_process child = CHILD_PROCESS_INIT;
- 
- 	child.git_cmd = 1;
--	strvec_pushl(&child.args, "fetch", remote, "--prune", "--no-tags",
-+	strvec_pushl(&child.args, "fetch", remote->name, "--prune", "--no-tags",
- 		     "--no-write-fetch-head", "--recurse-submodules=no",
- 		     "--refmap=", NULL);
- 
- 	if (opts->quiet)
- 		strvec_push(&child.args, "--quiet");
- 
--	strvec_pushf(&child.args, "+refs/heads/*:refs/prefetch/%s/*", remote);
-+	strvec_pushf(&child.args, "+refs/heads/*:refs/prefetch/%s/*", remote->name);
- 
- 	return !!run_command(&child);
- }
- 
--static int append_remote(struct remote *remote, void *cbdata)
--{
--	struct string_list *remotes = (struct string_list *)cbdata;
--
--	string_list_append(remotes, remote->name);
--	return 0;
--}
--
- static int maintenance_task_prefetch(struct maintenance_run_opts *opts)
- {
--	int result = 0;
--	struct string_list_item *item;
--	struct string_list remotes = STRING_LIST_INIT_DUP;
--
- 	git_config_set_multivar_gently("log.excludedecoration",
- 					"refs/prefetch/",
- 					"refs/prefetch/",
- 					CONFIG_FLAGS_FIXED_VALUE |
- 					CONFIG_FLAGS_MULTI_REPLACE);
- 
--	if (for_each_remote(append_remote, &remotes)) {
--		error(_("failed to fill remotes"));
--		result = 1;
--		goto cleanup;
-+	if (for_each_remote(fetch_remote, opts)) {
-+		error(_("failed to prefetch remotes"));
-+		return 1;
- 	}
- 
--	for_each_string_list_item(item, &remotes)
--		result |= fetch_remote(item->string, opts);
--
--cleanup:
--	string_list_clear(&remotes, 0);
--	return result;
-+	return 0;
- }
- 
- static int maintenance_task_gc(struct maintenance_run_opts *opts)
+ 	memset(rs, 0, sizeof(*rs));
+diff --git a/refspec.h b/refspec.h
+index 8b79891d3218..92a312f5b4e6 100644
+--- a/refspec.h
++++ b/refspec.h
+@@ -56,6 +56,11 @@ int refspec_item_init(struct refspec_item *item, const char *refspec,
+ void refspec_item_init_or_die(struct refspec_item *item, const char *refspec,
+ 			      int fetch);
+ void refspec_item_clear(struct refspec_item *item);
++/*
++ * Output a given refspec item to a string.
++ */
++const char *refspec_item_format(const struct refspec_item *rsi);
++
+ void refspec_init(struct refspec *rs, int fetch);
+ void refspec_append(struct refspec *rs, const char *refspec);
+ __attribute__((format (printf,2,3)))
 -- 
 gitgitgadget
 
