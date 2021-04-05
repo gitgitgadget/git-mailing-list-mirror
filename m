@@ -2,202 +2,167 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B74BDC433ED
-	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 22:05:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C13FC433ED
+	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 22:08:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8EB8A613C3
-	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 22:05:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1A914613D3
+	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 22:08:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242661AbhDEWFz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Apr 2021 18:05:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55144 "EHLO
+        id S242667AbhDEWIW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Apr 2021 18:08:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55678 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241252AbhDEWFy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Apr 2021 18:05:54 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52E50C061756
-        for <git@vger.kernel.org>; Mon,  5 Apr 2021 15:05:46 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id mh7so8813073ejb.12
-        for <git@vger.kernel.org>; Mon, 05 Apr 2021 15:05:46 -0700 (PDT)
+        with ESMTP id S232628AbhDEWIV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Apr 2021 18:08:21 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05A23C061756
+        for <git@vger.kernel.org>; Mon,  5 Apr 2021 15:08:14 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id a7so18823180ejs.3
+        for <git@vger.kernel.org>; Mon, 05 Apr 2021 15:08:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=skydio.com; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=grlWl1jFPmPtDaemMmMcOJrYyggdhnKNvCRlXEK4Oek=;
-        b=GVNWJEItITOOaWiBbwyomV8S8guH1uxmYu/HDvdok6W6ZxK5CYAA+AX1ZX4I3IvmBl
-         /vQ9ykdKvcOVurTNBO/JqaMlSkkOCpzFuH2VJwk7NwNJq/dytEIHPfThqw6MGlgCmzbI
-         3AeSG2wAKJBmWaxq3Y6aUmhuAnQ+ZxpjjfKTBF+Kndhlya6dOn6utPuxmollCCRKbKfY
-         cn3igmkTEGn8lE72TBWUSuPOdy+kK/OETRZLukH0xOJ1zunozBqZPhmni5MW1nqz5b6/
-         j5GMHbNO3FmjS26KL0+xqtuAaTOX38PhrcXJkO24AUcF44oZ2SJ07AGmr4vm11W8rjQj
-         pKrQ==
+        bh=yqHx5Z1TvpHN7q1kFPbqnruNmpJEVkVCiTTHWMR97r4=;
+        b=AIJ6TU0yI9gc/m7SWi5a/mfZ8tp7aMukSu7X9Sr0SKsX7wNB4Eux6xPprYQbLHJZdx
+         uUA8k1f+BOBTjFYGQeqGRdh16qfOXnCVpV2bm28GDBoDJ7z2ZOubCSJ+u/2ImBHo/fPy
+         PVPAK0Nd8pHcoxfAPkH2JrFutYpW174aE6CXFuuvzjVyEjYJfFCSvBe3X1XO/2GL9en3
+         6Srb9+lbSNE1tiNYn9H8koEF/JEHZ+jmUP6yWafEO9790YLQVoXh+c/qF5FCggMSRNBc
+         Jjn7dLGbPIvqPBUZAF5LRDz+8R+Ksn+O4imevhm5v+WhxKU+vtP+hZF2eD1RJGJJ/rFL
+         UGZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=grlWl1jFPmPtDaemMmMcOJrYyggdhnKNvCRlXEK4Oek=;
-        b=Z3EIAZN3R4JrqwjXnhI+h2ZTNnNN8r/I1VVnC+cJvYIqlUi74IcYFgoPN0SFmpCjej
-         LVm9hu9qWgphaMGSDvp0vFredeeN7NPwtiO+Q8mYUXaA+XI3RpoYYSYdlRuE7saDGt3X
-         uTlvttyyeX3kHWSzxuhLTSYpMlVCq1nxoGlSQYn6s8eEx5J5Qwru7mXJ6g8gF+L6zcGX
-         r5/9tEbsk1E7MKdvS4FhQgJGUylEqWhG2PZuupsyKtN95ZKEu5fluWK7ZPRVi/RpuUI6
-         2v88bxbRTnC1U+TXJmnA6OuBf2FhWog+MJQcVB6ig2kuzPIbsd5mpI6JoLo+syZm3zrq
-         H5Gg==
-X-Gm-Message-State: AOAM531l+KzwzR9iA/1ktko0tll6h6IFygwKHazqSdWecnseeYiSNQRr
-        xOUfWjLgmGvCXY6J4+L1Pa1HcE0POdQEwQxiiQVQkQ==
-X-Google-Smtp-Source: ABdhPJwWamSohd9z+kZkmiafunpIO8sv71BmBiV4LOglEktj02kcFKRPEEBPu9Mh6C2kD//qmawePeAHuHTpIvWPZC8=
-X-Received: by 2002:a17:907:3e9e:: with SMTP id hs30mr31195339ejc.66.1617660344976;
- Mon, 05 Apr 2021 15:05:44 -0700 (PDT)
+        bh=yqHx5Z1TvpHN7q1kFPbqnruNmpJEVkVCiTTHWMR97r4=;
+        b=P+WdQWkML9K6zs5Ua15dFSEi3JjHqCqIlr188z8NZHXIYhccNUzbUVDs0gRdjgMFIM
+         4atyzRcO43qmBs+aLZWvBUQezGAUtdnTy99WbE6aYQRFbk0FxY23h1TpFdU4eWOaGSU3
+         GEIPAdquNyp44qFotmzIqrPvh1WiuYjeGDwCDKwOwr90nWdENX1A96Gu3QF6FpqZQZ0y
+         4v6GFOt3JY287wX+2wfLcddgtGWDkJ22akigQbS9FzMMtDVr6FvMhYLUiv6MUloaS1JJ
+         O1EeivjbxH7SicpBN6ZSI6hjrgpxTNjZV2BNN6YTHZTmDT6gB4NbeIxNYSEiRQZ7oaot
+         kFew==
+X-Gm-Message-State: AOAM531ld5nyGxitzXUrjI8gJ2haKKEVQN6qHdvkch5V6YZAkTeeO6sR
+        DErvQWyRbKalfAssBW24kYXQnzA/yGzgecOxgBP9Lg==
+X-Google-Smtp-Source: ABdhPJxchEWdnetvWzdlN034MB/+uqrcTZKYJNDyeESfTS+DrKmwdigJuG0xeuP8gOryuBgSe1FDazbOsqx2ZBqSQuc=
+X-Received: by 2002:a17:906:8583:: with SMTP id v3mr31293778ejx.361.1617660492708;
+ Mon, 05 Apr 2021 15:08:12 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210403013410.32064-1-jerry@skydio.com> <CABPp-BGSgyAH0w21Vrv_bdPaLg+rCPViktbUmM6fMbmxaK70qA@mail.gmail.com>
-In-Reply-To: <CABPp-BGSgyAH0w21Vrv_bdPaLg+rCPViktbUmM6fMbmxaK70qA@mail.gmail.com>
+References: <20210403013410.32064-1-jerry@skydio.com> <20210403013410.32064-2-jerry@skydio.com>
+ <CABPp-BGhvQF9k1Jw9NPbZWMkNSffqR777-4S-y-Sh=Etvw-SAA@mail.gmail.com>
+In-Reply-To: <CABPp-BGhvQF9k1Jw9NPbZWMkNSffqR777-4S-y-Sh=Etvw-SAA@mail.gmail.com>
 From:   Jerry Zhang <jerry@skydio.com>
-Date:   Mon, 5 Apr 2021 15:05:34 -0700
-Message-ID: <CAMKO5CsN+J_30vhJTo5PYj_9SNJVh_y33APUviG2P4bir29RjQ@mail.gmail.com>
-Subject: Re: [PATCH 0/1] git-apply: Allow simultaneous --cached and --3way options
+Date:   Mon, 5 Apr 2021 15:08:01 -0700
+Message-ID: <CAMKO5Ct89R=Ls61H-q4ArhmWSokRQKS_uc93+=6_Gnxnjnk80A@mail.gmail.com>
+Subject: Re: [PATCH 1/1] git-apply: Allow simultaneous --cached and --3way options
 To:     Elijah Newren <newren@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Ross Yeager <ross@skydio.com>,
-        Abraham Bachrach <abe@skydio.com>, brian.kubisiask@skydio.com
+        Abraham Bachrach <abe@skydio.com>,
+        Jerry Zhang <jerryxzha@googlemail.com>,
+        Brian Kubisiak <brian.kubisiak@skydio.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 2, 2021 at 8:04 PM Elijah Newren <newren@gmail.com> wrote:
+On Fri, Apr 2, 2021 at 8:46 PM Elijah Newren <newren@gmail.com> wrote:
+>
+> I'm not that familiar with apply.c, but let me attempt to take a look...
 >
 > On Fri, Apr 2, 2021 at 6:36 PM Jerry Zhang <jerry@skydio.com> wrote:
 > >
-> > I'm creating a script/tool that will be able to cherry-pick
-> > multiple commits from a single branch, rebase them onto a
-> > base commit, and push those references to a remote.
+> > Previously, --cached and --3way were not
+> > allowed to be used together, since --3way
+> > wrote conflict markers into the working tree.
 > >
-> > Ex. with a branch like "origin/master -> A -> B -> C"
-> > The tool will create "master -> A", "master -> B",
-> > "master -> C" and either make local branches or
-> > push them to a remote. This can be useful since code
-> > review tools like github use branches as the basis
-> > for pull requests.
->
-> Not sure I understand the "master -> A", "master -> B" syntax.  What
-> do you mean here?
-Ah yeah my syntax wasn't super clear here.
-I mean a branch "dev" pointing to commit "C", which is on top of "B",
-which is on top of "A", which is on top of "master".
-My tool would fake "cherry-pick" each of A, B, and C on top of master.
->
-> > A key feature here is that the above happens without
-> > any changes to the user's working directory or cache.
-> > This is important since those operations will add
-> > time and generate build churn. We use these steps
-> > for synthesizing a "cherry-pick" of B to master.
+> > These changes change semantics so that if
+> > these flags are given together and there is
+> > a conflict, the conflict markers are added
+> > directly to cache. If there is no conflict,
+> > the patch is applied directly to cache as
+> > expected.
 > >
-> > 1. cp .git/index index.temp
-> > 2. set GIT_INDEX_FILE=index.temp
-> > 3. git reset master -- . (git read-tree also works here, but is a bit slower)
-> > 4. git format-patch --full-index B~..B
-> > 5. git apply --cached B.patch
-> > 6. git write-tree
-> > 7. git commit-tree {output of 6} -p master -m "message"
-> > 8. either `git symbolic-ref` to make a branch or `git push` to remote
->
-> Yeah, folks have resorted to various variants of this kind of thing in
-> the past.  It is a clever way to handle some basic cases, but it does
-> often fall short.  It's unfortunate that cherry-pick and rebase cannot
-> yet just provide this functionality (more on that below).
->
-> It may also interest you that rebase has two different backends, one
-> built on am (which in turn is built on format-patch + apply), and one
-> built on the merge machinery (which the am --3way also uses when it
-> needs to).  We deprecated the format-patch + apply backend in part
-> because it sometimes results in misapplied patches; see the "Context"
-> subsection of the "BEHAVIORAL DIFFERENCES" section of the git-rebase
-> manpage.  However, the am version would at least handle basic renames,
-> which I believe might cause problems for a direct format-patch + apply
-> invocation like yours (I'll also discuss this more below).
-Thanks -- I was able to repro a case where am machinery applied a patch
-incorrectly but 3way applied it correctly. This actually brings up
-another point,
-because am doesn't report errors when applying a patch incorrectly in this
-case, we don't end up falling back to 3way. There also is no user flag
-to force 3way, so the user can't do anything to ensure the correct
-application here. Maybe it would be better for --3way to directly invoke
-the 3way merge rather than causing it to fallback? (Junio might also
-have some input here).
->
-> > I'm looking to improve the git apply step in #5.
-> > Currently we can't use --cached in combination with
-> > --3way, which limits some of the usefulness of this method.
-> > There are many diffs that will block applying a patch
-> > that a 3 way merge can resolve without conflicts. Even
-> > in the case where there are real conflicts, performing
-> > a 3 way merge will allow us to show the user the lines
-> > where the conflict occurred.
+> > Signed-off-by: Jerry Zhang <jerry@skydio.com>
+> > Signed-off-by: Jerry Zhang <jerryxzha@googlemail.com>
+> > ---
+> >  Documentation/git-apply.txt |  4 +++-
+> >  apply.c                     | 13 +++++++------
+> >  2 files changed, 10 insertions(+), 7 deletions(-)
 > >
-> > With the above in mind, I've created a small patch that
-> > implements the behavior I'd like. Rather than disallow
-> > the cached and 3way flags to be combined, we allow them,
-> > but write any conflicts directly to the cached file. Since
-> > we're unable to modify the working directory, it seems
-> > reasonable in this case to not actually present the user
-> > with any options to resolve conflicts. Instead, a script
-> > or tool using this command can diff the temporary cache
-> > to get the source of the conflict.
+> > diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
+> > index 91d9a8601c..3dc0085066 100644
+> > --- a/Documentation/git-apply.txt
+> > +++ b/Documentation/git-apply.txt
+> > @@ -89,7 +89,9 @@ OPTIONS
+> >         and we have those blobs available locally, possibly leaving the
+> >         conflict markers in the files in the working tree for the user to
+> >         resolve.  This option implies the `--index` option, and is incompatible
+> > -       with the `--reject` and the `--cached` options.
+> > +       with the `--reject` option. When used with the --cached option, any
+> > +       conflict markers are added directly to the cache rather than the
+> > +       working tree.
+> >
+> >  --build-fake-ancestor=<file>::
+> >         Newer 'git diff' output has embedded 'index information'
+> > diff --git a/apply.c b/apply.c
+> > index 6695a931e9..fc94ca0e99 100644
+> > --- a/apply.c
+> > +++ b/apply.c
+> > @@ -133,8 +133,6 @@ int check_apply_state(struct apply_state *state, int force_apply)
+> >
+> >         if (state->apply_with_reject && state->threeway)
+> >                 return error(_("--reject and --3way cannot be used together."));
+> > -       if (state->cached && state->threeway)
+> > -               return error(_("--cached and --3way cannot be used together."));
+> >         if (state->threeway) {
+> >                 if (is_not_gitdir)
+> >                         return error(_("--3way outside a repository"));
+> > @@ -4490,13 +4488,16 @@ static int create_file(struct apply_state *state, struct patch *patch)
+> >
+> >         if (!mode)
+> >                 mode = S_IFREG | 0644;
+> > -       if (create_one_file(state, path, mode, buf, size))
+> > -               return -1;
+> > +       if (!state->cached) {
 >
-> Looks like you're focusing on content conflicts.  What about path
-> conflicts?  For example, apply's --3way just uses a per-file
-> ll_merge() call, meaning it won't handle renames, so your method would
-> also often get spurious modify/delete conflicts when renames occur.
-> How does your plan to just "cache" conflicts work with these
-> modify/delete files?  Will users just look for conflict markers and
-> ignore the fact that both modified newfile and modified oldfile are
-> present?  I'm also curious how e.g. directory/file conflicts would be
-> handled by your scheme; these seem somewhat problematic to me from
-> your description.
+> Why add this check?  create_one_file() already has an early return if
+> state->cached is true.
 >
-> > Happy to address any feedback. After I address any major
-> > changes I will add new tests for this path.
+removed in latest patch
+> > +               if (create_one_file(state, path, mode, buf, size))
+> > +                       return -1;
+> > +       }
+> >
+> > -       if (patch->conflicted_threeway)
+> > +       if (patch->conflicted_threeway && !state->cached)
+> >                 return add_conflicted_stages_file(state, patch);
+> > -       else if (state->update_index)
+> > +       else if (state->update_index) {
+> >                 return add_index_file(state, path, mode, buf, size);
 >
-> Don't know the timeframe you're looking at, but I'm looking to modify
-> cherry-pick and rebase to be able to operate on branches that are not
-> checked out, or in bare repositories.  The blocker to that
-That functionality would be great. I initially did look at what it would
-take to modify sequencer to get what I wanted, but I quickly realized
-it would be a big refactor.
-> traditionally has been that the merge machinery required a working
-> directory.  The good news is that I wrote a new merge backend that
-> doesn't require a working directory.  The bad news is I'm still trying
-> to get that new merge backend through the review process, and no
-> current release of git has a complete version of that new backend yet.
-> Further, the changes to cherry-pick and rebase have not yet been
-> started.  There were some decisions to make too, such as how to handle
-> the case with conflicts -- just report them and tell the user to retry
-> with a checkout?  Provide some kind of basic information about the
-> conflicts?  What'd be useful to you?
-After thinking some more I'd generally agree with comments to leave
-the conflicts at higher stages rather than check in the conflict markers.
-This should result in less issues with path conflicts as well (or at least
-be similar to 3way by itself). This is probably ok, because the conflict
-markers can always be generated from the higher stage files (git diff or
-git checkout -m -- .), but the reverse isn't true.
-Overall 90% of the functionality comes from being able to do the 3-way
-at all, since it's able to handle more cases correctly. Having *any* output
-to tell the user why their operation failed would just be a bonus.
-
-I'd envision flags similar to these, for cherry-pick
-
---cached : Do not touch the working tree to apply conflict markers.
-Instead conflicts are left at a higher order in the cache.
---cached-parent : Checkout the index to the given commit, then
-apply the cherry-pick with the given commit as a parent. Print out
-the new commit. Warning: index will be left unsynchronized with
-HEAD after this operation. Intended to be used with a temporary index
-rather than the main one.
-
-In the end I'm not sure how to still accomplish the desired functionality
-without using a temporary index -- this would always result in
-desyncing the user's index / working dir afterwards. Maybe error or
-warn if the user isn't using a temporary index?
+> So if something had conflicts, you ignore the various conflicted
+> modes, and just add it to the index as it stands.  What if it was
+> deleted upstream and modified locally?  Doesn't that just ignore the
+> conflict, make it invisible to the user, and add the locally modified
+> version?  Similarly if it was renamed upstream and modified locally,
+> doesn't that end up in both files being present?  And if there's a
+> directory/file conflict, due to the lack of ADD_CACHE_SKIP_DFCHECK (or
+> whatever it's called), the add is just going to fail, but perhaps
+> that's the most reasonable case as it'd print an error message and
+> return -1, I think.
+>
+> Again, I didn't test any of this out and I'm not so familiar with this
+> code, so I'm guessing at these scenarios.  If I'm wrong about how this
+> works, the commit message probably deserves an explanation about why
+> they work, and we'd definitely need a few testcases for these types of
+> scenarios.  If I'm right, the current implementation is problematic at
+> least if not the idea of using these options together.
+Echoing my other reply, I think I will give up on the conflict markers and
+just leave the files at the higher stages. I think that will address any
+safety concerns since that's what --3way does without the cached
+flag
