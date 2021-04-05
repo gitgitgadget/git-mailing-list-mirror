@@ -2,383 +2,234 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	PDS_SHORTFWD_URISHRT_QP,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MSGID_FROM_MTA_HEADER,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8652FC433ED
-	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 16:03:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 283F8C433ED
+	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 16:58:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 638CB613A3
-	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 16:03:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EA3FB61246
+	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 16:58:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241871AbhDEQDK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Apr 2021 12:03:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60726 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241868AbhDEQDJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Apr 2021 12:03:09 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59B0BC061756
-        for <git@vger.kernel.org>; Mon,  5 Apr 2021 09:03:01 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id qo10so7104548ejb.6
-        for <git@vger.kernel.org>; Mon, 05 Apr 2021 09:03:01 -0700 (PDT)
+        id S232516AbhDEQ6G (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Apr 2021 12:58:06 -0400
+Received: from userp2120.oracle.com ([156.151.31.85]:49114 "EHLO
+        userp2120.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232147AbhDEQ6G (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Apr 2021 12:58:06 -0400
+Received: from pps.filterd (userp2120.oracle.com [127.0.0.1])
+        by userp2120.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 135Gmu1O076912;
+        Mon, 5 Apr 2021 16:57:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
+ : subject : message-id : references : content-type : in-reply-to :
+ mime-version; s=corp-2020-01-29;
+ bh=SiBDh+twonEZHusy4/R5ltlwNPEuMaZ4iHRBDpVEP/w=;
+ b=b4OnNjMV9dddjxnQ57warg70pEHn7fkMMzwi2rEnhs+e/KjLtM8js9K4ZKzT2dg8Q/H1
+ YD0jTu2HNO2FLnxJ9yLziPY1eUTbZUy+zTrXj+ut494RNmwhOxopgCET4UqwcuVXQMfK
+ BqY/kmFbQiJUy373aCtkSUlZ9T6bIBkgrrG+3KMEE/HqZtfalhqStCHaagUIQlPu0Gis
+ cUPEFE45+3CzIMVYzMSBqFhiEVwSinsySiTNqxUqT1JkdoS5y3XnYgEW+Qi2dogYN4SS
+ UuWkPd32w0bLOpgbxDJ6Y6ElQ4/52K1eOJgocpP2RB7HMSlPnxhZUUlbILMbdzOrGZFx 2Q== 
+Received: from userp3020.oracle.com (userp3020.oracle.com [156.151.31.79])
+        by userp2120.oracle.com with ESMTP id 37q3f2apes-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Mon, 05 Apr 2021 16:57:47 +0000
+Received: from pps.filterd (userp3020.oracle.com [127.0.0.1])
+        by userp3020.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 135Giw8V158819;
+        Mon, 5 Apr 2021 16:57:47 GMT
+Received: from nam10-dm6-obe.outbound.protection.outlook.com (mail-dm6nam10lp2105.outbound.protection.outlook.com [104.47.58.105])
+        by userp3020.oracle.com with ESMTP id 37q2pt575x-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Mon, 05 Apr 2021 16:57:47 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=OwLCSi0NYvJVGojxnkwZqNZB5nap3M7Ee3ZfVnaeaMUcA/cZeueoNzs60JNbyNz7enViQncRMqypNCTlPsWj8naeoDogr32mt/Wc0UrUT5GXrjILg+WgTHT03nlUbxfW3bODUvqpN+820tVKRiOes4cKrQ0UIavAR3dU4nOpZW+I0dO7gTSozYijM7yb+eHT1qZBqfK4aRksjilQcKthwlBObyB4gx/nOjOz8bHRYqZCg9ul2/8k2cDdObMAss67CVPNzKzfWYtIOwHkh9gv59jY4vgF0vyrmHEBlaRQa7lAw+SFVA22Iym1g/UB70m1/U/9LTCn4JP82Pc5OjYE6w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=SiBDh+twonEZHusy4/R5ltlwNPEuMaZ4iHRBDpVEP/w=;
+ b=oKGZCT0Tz407zXDV+IrTQNDjIQXHUupOYLINc3Gtlqc33qe42OsW++GPVopN2ryjJmU48oOARD+GHgZg+aBgL18acolPpQgle57/+6nm3VoFCtrPuedv2dWwizCeqXJ7BOMq4Z5krJyNoSyUydFPGgmOojKLAOghuCXs/wOJEf/54IMh0ZaRUTp/97buBzuRAX5elOodNAewFHKvvGcYSUkDndG+JcW5K8A7IK2UmIVsHR6NReGCgdBffZXPjyuT+bdH50GAAfHQuvrNLn1Nadwe5aTR9XF1FHnkeZ6GpKPh6pnMVDCueRRS3oJRyW7Lx7cRyXGbrVwF08Pz4FQuSA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=QN3feokyMWYfQzerSFylGwksK/dnNDSoPxv2Zv4IZtw=;
-        b=kWy9WwQAyuPbS89DXDurBQx/x/sz7UKrs9wfkE8EZ/ZxUHe+hsV8ya5X8KITHahNsz
-         DFcjOhlK/ayePFx1UlrJqSwCRLMLNTLUDgB0Z0fJp09OK4oE1518ZLn84G6NFD9F5puR
-         TxE4glyXe4675YjWS9Lb4MVLFXErmQcX7gY20QOELtk3Y7noWXFQ65AsPEA4RQk9sUIw
-         mhGnRjs3z4BA/5UwTUQ5mLfZvu86XDKdZDmdCaHmjLuRp2BZqHXdgwd4es+jlGdZFUZ0
-         o3aQJg8mo1vPLA5rmjKm/ZJpgTgKyMj4ZirjnArQajWiX17XKxMKFsb68PepHzvRgbQM
-         ZfwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=QN3feokyMWYfQzerSFylGwksK/dnNDSoPxv2Zv4IZtw=;
-        b=B7slI8Ali8gjZqdy+XfODOu40pUOp6EUNatCazIrMisybrqdyVDwLecpknPvWverJt
-         Q0k6MsW5q5JC+wXPkLS56yyf1kfSyGlsVX9ei9GR59IQV2fv4b+LW730xzA65eRPRfPX
-         zesIGfRjQhJ9vgWgDGtKCcSwVqisiicaBAp9FQgGfHx7C4+ypUUHsUbH3ozrufQQrEJu
-         jehPeoB2Bp+L5SwDPx9oe0d2hZeVjD9n55hpn9/gBacWo864iky5Ab2kg0bSUSjEpaRt
-         ii7MS/brmDM/z0mS23obvG9ax1WvoozM+xfTYXqhpkcl8LtpgMEee3yTC9LHyPxN81P1
-         ZsZQ==
-X-Gm-Message-State: AOAM530fxJsig4SUQp+SSWNCtPt2NE+myxmJFvOtlCnr4uIMlGXNNYRl
-        Bb37c9uCQGSCk7vrgIVVjM5S2AZXaF1jNIUdEWo=
-X-Google-Smtp-Source: ABdhPJxQKTC4Ygbkf4JytDHmd72UckV2HOivOM26vResQczJyeAzhPpHjkbruNEa584WGav/wxZlhWtgHEleJhdBhj8=
-X-Received: by 2002:a17:907:a059:: with SMTP id gz25mr16632308ejc.211.1617638579941;
- Mon, 05 Apr 2021 09:02:59 -0700 (PDT)
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=SiBDh+twonEZHusy4/R5ltlwNPEuMaZ4iHRBDpVEP/w=;
+ b=JilSyaNvSi4V6waIi8gF89bG9RHnHcgvqq9nWvACDN1j2Sm8rIYlCoYaLt5laXrrAtp5LemmsM8LP7y6vYqGpZ8MfVfw0ZzKCKnNKuXmdCDFxPXbCOcr7IK8wtLcKOzhBAvSgIUkfHhiAEHrqs1Ud3A/udC9meY09UwpWbD4J2U=
+Authentication-Results: gmail.com; dkim=none (message not signed)
+ header.d=none;gmail.com; dmarc=none action=none header.from=oracle.com;
+Received: from BY5PR10MB3794.namprd10.prod.outlook.com (2603:10b6:a03:1b2::30)
+ by BY5PR10MB4242.namprd10.prod.outlook.com (2603:10b6:a03:20d::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3999.29; Mon, 5 Apr
+ 2021 16:57:43 +0000
+Received: from BY5PR10MB3794.namprd10.prod.outlook.com
+ ([fe80::c50b:884f:70dd:c978]) by BY5PR10MB3794.namprd10.prod.outlook.com
+ ([fe80::c50b:884f:70dd:c978%5]) with mapi id 15.20.3999.032; Mon, 5 Apr 2021
+ 16:57:43 +0000
+Date:   Mon, 5 Apr 2021 10:57:40 -0600
+From:   Tom Saeger <tom.saeger@oracle.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 3/5] refspec: output a refspec item
+Message-ID: <20210405165740.brevvzc7hiyg2wj4@brm-x62-17.us.oracle.com>
+References: <pull.924.git.1617627856.gitgitgadget@gmail.com>
+ <e10007e1cf8ff0005295f648b9489c11a9427122.1617627856.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e10007e1cf8ff0005295f648b9489c11a9427122.1617627856.git.gitgitgadget@gmail.com>
+X-Originating-IP: [129.157.69.41]
+X-ClientProxiedBy: SA0PR12CA0003.namprd12.prod.outlook.com
+ (2603:10b6:806:6f::8) To BY5PR10MB3794.namprd10.prod.outlook.com
+ (2603:10b6:a03:1b2::30)
 MIME-Version: 1.0
-References: <E6E88000-9C18-4035-9A14-8B406617351A@gmail.com>
-In-Reply-To: <E6E88000-9C18-4035-9A14-8B406617351A@gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 5 Apr 2021 18:02:48 +0200
-Message-ID: <CAP8UFD2eXtW4e-Pm5N2GyXZXPpYaZBci7bs=yHGTaTaD=ZaKag@mail.gmail.com>
-Subject: Re: [GSoC][Draft Proposal] Finish converting git submodule to builtin
-To:     Atharva Raykar <raykar.ath@gmail.com>
-Cc:     git <git@vger.kernel.org>,
-        Shourya Shukla <shouryashukla.oo@gmail.com>,
-        Shourya Shukla <periperidip@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-Exchange-MessageSentRepresentingType: 1
+Received: from brm-x62-17.us.oracle.com (129.157.69.41) by SA0PR12CA0003.namprd12.prod.outlook.com (2603:10b6:806:6f::8) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3999.28 via Frontend Transport; Mon, 5 Apr 2021 16:57:42 +0000
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: ea5331be-10e2-4ab3-cf7e-08d8f853edfe
+X-MS-TrafficTypeDiagnostic: BY5PR10MB4242:
+X-Microsoft-Antispam-PRVS: <BY5PR10MB424217DB2A7B3553F0E5F2ECFC779@BY5PR10MB4242.namprd10.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:8882;
+X-MS-Exchange-SenderADCheck: 1
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: BRod1M/RnYaw4SwFLrpJKHreWUbHBKoCBkrMZhZKYXSMnbd4Ni/2BTODbFMvE3ad0FIZrrxybGKFCYHhtGiGLAvtegoel201SLSnhaEWU5T2Bq1U87u91j9ZCeGqgVMUJjYfF3U0k8SYKxBcL0CmmuDbVigt+ghsm73eE0Mio/VZCVbvkuqWAhxQMDe7r1HOvFJJ0lqS4W6mZET+n/HOHr3xr6hYNKkhtAJKGzk9jExynwRkmod6cRlwfaTUSx1aN5wDOQS7OmwfXOjpFd+OHnjA4wQc8J6uI6PLB2z8sQFkngX8+TEpdrKx53btsO+97sGREfHFwNGAWE0KPSQR2JpElznReoPfa8I94OjRgvHlsY8O+d3rmCMiVq4dnFsjUfXMK/Iz/tcihIHgEar2fluvN6N5E+VYUruig4rhZ/YsqROu4ePbB1QaXNuGH0pdPwjzpmw4fLF+NoOEsTZ328CrLtJxYKhG8BHNUsyqE1lSDUNA66jxFMiKAMPQ5PuGYi72HyBBq5z9XQlgzWqQqPLS7m/JRCI07N2Wntvs1ri4wx9D795SjLUHEQn9xcGIB5XQeN5rljvxvXTB916BN0gF9kjbR0Iw/z53R/KZDSZXt/MpfKnMzcdciDuqQ2DC/D5CZtecZ743TTPtHn1FrQ==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BY5PR10MB3794.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(346002)(366004)(396003)(39860400002)(376002)(136003)(66556008)(66476007)(8936002)(54906003)(66946007)(83380400001)(7696005)(52116002)(5660300002)(316002)(956004)(478600001)(55016002)(86362001)(26005)(45080400002)(44832011)(38100700001)(8676002)(6916009)(4326008)(1076003)(2906002)(186003)(16526019);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData: =?us-ascii?Q?y5GlrWabBP8rqryHXWhU/yuGXyTz6b4CVezjCDbwj3/P8fBgqVtQXvWLLkXp?=
+ =?us-ascii?Q?IyrOoQXjXgNnjv0RjK0p5G1lsaxK+H37I3LePBIveqxxHNRUOo1IrGXQSj2B?=
+ =?us-ascii?Q?qRHmiujgUDj/QTFQ2E+LnE8CPaRZWMYpx9oFDX3vOyOAH60REFPCvP5vrWtf?=
+ =?us-ascii?Q?YSfhZWnG8azWtAEdxgSp5WfzreY3WorwWYvI+HZoKUCnQOEALSHWskOc0eZ3?=
+ =?us-ascii?Q?2rc8oNUroRsFpzPMk4xvKDKoV8NEC/vunDEsJT0lbyLhGFFUFIccZVpspIQB?=
+ =?us-ascii?Q?LR5n8qo70CZyyB/gNXgTx8+aSELesTqDWkRBzix6O8VzeB2eIgUo6CgSVLIH?=
+ =?us-ascii?Q?LVrRZLJOdjq5nor3uOVemdhDdMxBqHSS5Wpj/zpIothEpLtHkCHLgsbQYByI?=
+ =?us-ascii?Q?JYL71mIzWIj0XqIOPcQok3c36atxzIwU4rUWoDBl+DpdMKeokCp5n/CwS7JD?=
+ =?us-ascii?Q?0dZyW71LExSd/0e4m+BFwaXfb1B5XfhKkxHkdrBAjX+rp1k6yt095UneRJhj?=
+ =?us-ascii?Q?hkBKJE4RUydd1N5Y0Q0ThsLmrKZf7AxIg09Ncc13NFxRwv/bNncl3VpPuAW5?=
+ =?us-ascii?Q?2EW/yB/4/lfKsx6N5M52CTNjILy5W5mA8fwhPswHntPf6Nnk/NMMNEduopQP?=
+ =?us-ascii?Q?5T2ZnEgltVDIU8IOIc5lk63tDcSE6bbWqGUP57E7AcNZB3m/wwt5xfXxjoOn?=
+ =?us-ascii?Q?4Z49vqPyftIMif7lUE0Th/UxDiP9NnTL2U1hw0c/LIqtOF/6GG5PPFQhdNby?=
+ =?us-ascii?Q?BELx0xLPszzWuIpIY+/3KSZSJkQSptcd2BXxhaMJr7b5dxNiT6spBm5jXhJ/?=
+ =?us-ascii?Q?Ae6/T7o4cDYDJW7Gj8hw0QvL7NueSoQDft5+Mml59007LLSKjeN38KALzpvr?=
+ =?us-ascii?Q?GTs76b9g2jaHSVBllGrqKzs07Y3XX/2G+GaIfvkJxtLJhAHG/uqHpogVGgVd?=
+ =?us-ascii?Q?WKWikpds7Vc/FseqMYF4bZ6GtK4/VJuDXgZ418MPs+kPSkyW8555FdW8bvy6?=
+ =?us-ascii?Q?C4F2ayErXAqHp87kvrfQMb66PwEgnWmj4X1YzIT8DNgJUmJjChxT1a9fuTtA?=
+ =?us-ascii?Q?c/hhIzfVrtUhDHoPOcUhrZBoyc1MtTxmi5QvuXId0zy5nKrB6vYXcDw+IAMH?=
+ =?us-ascii?Q?63HUO4oJ6o+JabZ0yJt2fBhvsGap7VhOtBT1a7DajwZq26qHBYhAhsmz7GXo?=
+ =?us-ascii?Q?5IcFbgWQezeQKLFkGmohWg7ZEV/xiVUJdF55IA1HBbscbVNRfp/vvNAPNGd4?=
+ =?us-ascii?Q?vuvEP9aZ4p2kJOSmNwNEeh4A2f9HZHOjW6wyuA2EVvt8m9HJVURO5GLgbGSJ?=
+ =?us-ascii?Q?xttNyEilWDZcOsod3pJA4YDS?=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ea5331be-10e2-4ab3-cf7e-08d8f853edfe
+X-MS-Exchange-CrossTenant-AuthSource: BY5PR10MB3794.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Apr 2021 16:57:43.4247
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: iEqySP98BPgQGMFEF0Xc/FdwfHJuD5OWm4EzlaObsJQaYU0b/GoYHesU86/L2zSBTKxBMz+LoD/ePjMjzdOkhg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR10MB4242
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=9945 signatures=668683
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0 suspectscore=0
+ malwarescore=0 phishscore=0 bulkscore=0 mlxscore=0 spamscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2104030000 definitions=main-2104050110
+X-Proofpoint-GUID: jXkMI3AHaHPG_x1NJmjzz4bnrURtHXQ-
+X-Proofpoint-ORIG-GUID: jXkMI3AHaHPG_x1NJmjzz4bnrURtHXQ-
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=9945 signatures=668683
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0 mlxscore=0 suspectscore=0
+ spamscore=0 impostorscore=0 mlxlogscore=999 malwarescore=0 adultscore=0
+ lowpriorityscore=0 clxscore=1011 priorityscore=1501 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2104030000
+ definitions=main-2104050110
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Mon, Apr 05, 2021 at 01:04:13PM +0000, Derrick Stolee via GitGitGadget wrote:
+> From: Derrick Stolee <dstolee@microsoft.com>
+> 
+> Add a new method, refspec_item_format(), that takes a 'struct
+> refspec_item' pointer as input and returns a string for how that refspec
+> item should be written to Git's config or a subcommand, such as 'git
+> fetch'.
+> 
+> There are several subtleties regarding special-case refspecs that can
+> occur and are represented in t5511-refspec.sh. These cases will be
+> explored in new tests in the following change. It requires adding a new
+> test helper in order to test this format directly, so that is saved for
+> a separate change to keep this one focused on the logic of the format
+> method.
+> 
+> A future change will consume this method when translating refspecs in
+> the 'prefetch' task of the 'git maintenance' builtin.
+> 
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  refspec.c | 25 +++++++++++++++++++++++++
+>  refspec.h |  5 +++++
+>  2 files changed, 30 insertions(+)
+> 
+> diff --git a/refspec.c b/refspec.c
+> index e3d852c0bfec..ca65ba01bfe6 100644
+> --- a/refspec.c
+> +++ b/refspec.c
+> @@ -180,6 +180,31 @@ void refspec_item_clear(struct refspec_item *item)
+>  	item->exact_sha1 = 0;
+>  }
+>  
+> +const char *refspec_item_format(const struct refspec_item *rsi)
+> +{
+> +	static struct strbuf buf = STRBUF_INIT;
+> +
+> +	strbuf_reset(&buf);
 
-On Sat, Apr 3, 2021 at 4:08 PM Atharva Raykar <raykar.ath@gmail.com> wrote:
->
-> Hi all,
->
-> Below is my draft of my GSoC proposal. I have noticed that Chinmoy has al=
-ready
-> submitted a proposal for the same idea before me, so would that be consid=
-ered
-> "taken"? (I don't think I can submit another proposal for the other idea =
-either,
-> because someone has already sent one for that as well)
+is this even needed?
 
-Unfortunately, it looks like we will mentor only 2 students on the 2
-projects listed on https://git.github.io/SoC-2021-Ideas/, so we might
-have to make tough choices.
+> +
+> +	if (rsi->matching)
+> +		return ":";
+> +
+> +	if (rsi->negative)
+> +		strbuf_addch(&buf, '^');
+> +	else if (rsi->force)
+> +		strbuf_addch(&buf, '+');
+> +
+> +	if (rsi->src)
+> +		strbuf_addstr(&buf, rsi->src);
+> +
+> +	if (rsi->dst) {
+> +		strbuf_addch(&buf, ':');
+> +		strbuf_addstr(&buf, rsi->dst);
+> +	}
+> +
+> +	return buf.buf;
 
-> Since I have already put my effort into this for a while, I thought I mig=
-ht as
-> well send it, but I'll accept whatever the mentors say about the eligibil=
-ity of
-> this proposal.
+should this be strbuf_detach?
 
-Thanks for sending it anyway!
-
-> Here is a prettier markdown version:
-> https://gist.github.com/tfidfwastaken/0c6ca9ef2a452f110a416351541e0f19
->
->
-> --8<-----8<-----8<-----8<-----8<-----8<-----8<-----8<-----8<-----8<-----8=
-<--
->
->                           ___________________
->
->                            GSOC GIT PROPOSAL
->
->                              Atharva Raykar
->                           ___________________
->
->
-> Table of Contents
-> _________________
->
-> 1. Personal Details
-> 2. Background
-> 3. Me and Git
-> .. 1. Current knowledge of git
-> 4. The Project: Finish converting `git submodule' to builtin
-> 5. Prior work
-> 6. General implementation strategy
-> 7. Timeline (using the format dd/mm)
-> 8. Beyond GSoC
-> 9. Blogging
-> 10. Final Remarks: A little more about me
->
->
-> 1 Personal Details
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->
->   Name        : Atharva Raykar
->   Major       : Computer Science and Engineering
->   Email       : raykar.ath@gmail.com
->   IRC nick    : atharvaraykar on #git and #git-devel
->   Address     : RB 103, Purva Riviera, Marathahalli, Bangalore
->   Postal Code : 560037
->   Time Zone   : IST (UTC+5:30)
->   GitHub      : http://github.com/tfidfwastaken
->
->
-> 2 Background
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->
->   I am Atharva Raykar, currently in my third year of studying Computer
->   Science and Engineering at PES University, Bangalore. I have always
->   enjoyed programming since a young age, but my deep appreciation for
->   good program design and creating the right abstractions came during my
->   exploration of the various rabbitholes of knowledge originating from
->   communities around the internet. I have personally enjoyed learning
->   about Functional Programming, Database Architecture and Operating
->   Systems, and my interests keep expanding as I explore more in this
->   field.
->
->   I owe my appreciation of this rich field to these communities, and I
->   always wanted to give back. With that goal, I restarted the [PES Open
->   Source] community in our campus, with the goal of creating spaces
->   where members could share knowledge, much in the same spirit as the
->   communities that kickstarted my journey in Computer Science. I learnt
->   a lot about collaborating in the open, maintainership, and reviewing
->   code. While I have made many small contributions to projects in the
->   past, I am hoping GSoC will help me make the leap to a larger and more
->   substantial contribution to one of my favourite projects that made it
->   all possible in my journey with Open Source.
->
->
-> [PES Open Source] <https://pesos.github.io>
->
->
-> 3 Me and Git
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->
->   Here are the various forms of contributions that I have made to Git:
->
->   - [Microproject] userdiff: userdiff: add support for Scheme Status: In
->     progress, patch v2 pending List:
->     <https://public-inbox.org/git/20210327173938.59391-1-raykar.ath@gmail=
-.com/>
->
->   - [Git Education] Conducted a workshop with attendance of hundreds of
->     students new to git, and increased the prevalence of of git's usage
->     in my campus.
->     Photos: <https://photos.app.goo.gl/T7CPk1zkHdK7mx6v7> and
->     <https://photos.app.goo.gl/bzTgdHMttxDen6z9A>
->
->   I intend to continue helping people out on the mailing list and IRC
->   and tending to patches wherever possible in the meantime.
-
-Nice!
-
-> 3.1 Current knowledge of git
-
-s/git/Git/
-
-> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->
->   I use git almost daily in some form, and I am fairly comfortable with
->   it. I have already read and understood the chapters from the Git
->   Book about submodules along with the one on objects, references,
->   packfiles and the refspec.
->
->
-> 4 The Project: Finish converting `git submodule' to builtin
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->
->   Git has historically had many components implemented in the form of
->   shell scripts. This was less than ideal for several reasons:
->   - Portability: Non-POSIX systems like Windows don't play nice with
->     shell script commands like grep, cd and printf, to name a few, and
->     these commands have to be reimplemented for the system. There are
->     also POSIX to Windows path conversion issues.
->   - No direct access to plumbing: Shell commands do not have direct
->     access to the low level git API, and a separate shell is spawned to
->     just to carry out their operations.
->   - Performance: Shell scripts tend to create a lot of child processes
->     which slows down the functioning of these commands, especially with
->     large repositories.
->   Over the years, many GSoC students have converted the shell versions
->   of these commands to C. Git `submodule' is the last of these to be
->   converted.
->
->
-> 5 Prior work
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->
->   I will be taking advantage of the knowledge that was gained in the
->   process of the converting the previous scripts and avoiding all the
->   gotchas that may be present in the process. There may be a bunch of
->   useful helper functions in the previous patches that can be reused as
->   well (more investigation needed to determine what exactly is
->   reusable).
->
->   Currently the only other commands left to be completed for `submodule'
->   are `add' and `update'. Work for `add' has already been started by a
->   previous GSoCer, Shourya Shukla, and needs to picked up from there.
-
-Yeah, 'update' uses  =CC=80git submodule--helper update-clone`, `git
-submodule--helper update-module-mode` and other `git
-submodule--helper` sub-commands, but is not fully ported.
-
->   Reference:
->   <https://github.com/gitgitgadget/git/issues/541#issuecomment-769245064>
->
->   I'll have these as my references when I am working on the project:
->   His blog about his progress:
->   <https://shouryashukla.blogspot.com/2020/08/the-final-report.html>
->   (more has been implemented since)
->   Shourya's latest patch for `submodule add':
->   <https://lore.kernel.org/git/20201007074538.25891-1-shouryashukla.oo@gm=
-ail.com/>
->
->   For the most part, the implementation looks fairly complete, but there
->   seems to be a segfault occurring, along with a few changes suggested
->   by the reviewers. It will be helpful to contact Shourya to fully
->   understand what needs to be done.
->
->   Prathamesh's previous conversion work:
->   <https://lore.kernel.org/git/20170724203454.13947-1-pc44800@gmail.com/#=
-t>
-
-It would be nice if, after finishing 'add' and 'update', you could
-also completely get rid of git-submodule.sh and instead use `git
-submodule-helper` as `git submodule`.
-
-> 6 General implementation strategy
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D
->
->   The way to port the shell to C code for `submodule' will largely
->   remain the same. There already exists the builtin
->   `submodule--helper.c' which contains most of the previous commands'
->   ports. All that the shell script for `git-submodule.sh' is doing for
->   the previously completed ports is parsing the flags and then calling
->   the helper, which does all the business logic.
->
->   So I will be moving out all the business logic that the shell script
->   is performing to `submodule--helper.c'. Any reusable functionality
->   that is introduced during the port will be added to `submodule.c' in
->   the top level.
-
-Ok.
-
->   For example: The general strategy for converting `cmd_update()' would
->   be to have a call to `submodule--helper' in the shell script to a
->   function which would resemble something like `module_update()' which
->   would perform the work being done by the shell script past the flags
->   being parsed and make the necessary calls to `update_clone()', and the
->   git interface in C for performing the merging, checkout and rebase
->   where necessary.
-
-It would be nice if you could go into more details about what
-`module_update()' would look like. Do you see steps that you could
-take to not have to do everything related to `module_update()' in only
-one patch?
-
->   After this process, the builtin is added to the commands array in
->   `submodule--helper.c'. And since these two functions are the last bit
-
-It's not very clear here that by "these two functions" you reference
-the 'add' and 'update' sub-commands.
-
->   of functionality left to convert in submodules, an extended goal can
->   be to get rid of the shell script altogether, and make the helper into
->   the actual builtin [1].
-
-Nice that you are talking about this!
-
->   [1]
->   <https://lore.kernel.org/git/nycvar.QRO.7.76.6.2011191327320.56@tvgsbej=
-vaqbjf.bet/>
->
->
-> 7 Timeline (using the format dd/mm)
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->
->   Periods of limited availability (read: hectic chaos):
->   - From 13/04 to 20/04 I will be having project evaluations and lab
->     assessments for five of my courses.
->   - From 20/04 to 01/05 I have my in-semester exams.
->   - For a period of two weeks in the range of 08/05 to 29/05 I will be
->     having my end-semester exams.
->   My commitment: I will still have time during my finals to help people
->   out on the mailing list, get acquainted with the community and its
->   processes, and even review patches if I can. This is because we get
->   holidays between each exam, and my grades are good enough to that I
->   can prioritise git over my studies ;-)
-
-s/git/Git/
-
->   And on the safe side, I will still engage with the community from now
->   till 07/06 so that the community bonding period is not compromised in
->   any way.
->
->   Periods of abundant availability: After 29/05 all the way to the first
->   week of August, I will be having my summer break, so I can dedicate
->   myself to git full-time :-)
->
->   I would have also finished all my core courses, so even after that, I
->   will have enough of time to give back to git past my GSoC period.
-
-Ok.
-
-Also: s/git/Git/
-
->   Phase 1: 07/06 to 14/06 -- Investigate and devise a strategy to port
->   the submodule functions
->   - This phase will be more diagrams in my notebook than code in my
->     editor -- I will go through all the methods used to port the other
->     submodule functions and see how to do the same for what is left.
->   - I will find the C equivalents of all the shell invocations in
->     `git-submodule.sh', and see what invocations have /no/ equivalent
->     and need to be created as helpers in C (Eg: What is the equivalent
->     to the `ensure-core-worktree' invocation in C?). For all the helpers
->     and new functionality that I do introduce, I will need to create the
->     testing strategy for the same.
->   - I will go through all the work done by Shourya in his patch, and try
->     to understand it properly. I will also see the mistakes that were
->     caught in all the reviews for previous submodule conversion patches
->     and try to learn from them before I jump to the code.
->   - Deliverable: I will create a checklist for all the work that needs
->     to be done with as much detail as I can with the help of inputs from
->     my mentor and all the knowledge I have gained in the process.
->
->   Phase 2: 14/06 to 28/06 -- Convert `add' to builtin in C
->   - I will work on completing `git submodule add'. One strategy would be
->     to either reimplement the whole thing using what was learnt in
->     Shourya's attempt, but it is probably wiser to just take his patch
->     and modify it. I would know what to do by the time I reach this
->     phase.
->   - I will also add tests for this functionality. I will also document
->     my changes when required. These would be unit tests for the helpers
->     introduced, and integration of `add' with the other commands.
->   - Deliverable: Completely port `add' to C!
->
->   Bonus Phase: If I am ahead of time -- Remove the need for a
->   `submodule--helper', and make it a proper C builtin.
->   - Once all the submodule functionality is ported, the shell script is
->     not really doing much more than parsing the arguments and passing it
->     to the helper. We won't need this anymore if it is implemented.
-
-Ok, great!
+> +}
+> +
+>  void refspec_init(struct refspec *rs, int fetch)
+>  {
+>  	memset(rs, 0, sizeof(*rs));
+> diff --git a/refspec.h b/refspec.h
+> index 8b79891d3218..92a312f5b4e6 100644
+> --- a/refspec.h
+> +++ b/refspec.h
+> @@ -56,6 +56,11 @@ int refspec_item_init(struct refspec_item *item, const char *refspec,
+>  void refspec_item_init_or_die(struct refspec_item *item, const char *refspec,
+>  			      int fetch);
+>  void refspec_item_clear(struct refspec_item *item);
+> +/*
+> + * Output a given refspec item to a string.
+> + */
+> +const char *refspec_item_format(const struct refspec_item *rsi);
+> +
+>  void refspec_init(struct refspec *rs, int fetch);
+>  void refspec_append(struct refspec *rs, const char *refspec);
+>  __attribute__((format (printf,2,3)))
+> -- 
+> gitgitgadget
+> 
