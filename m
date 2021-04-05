@@ -2,98 +2,142 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90D82C433B4
-	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 22:17:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 55691C433ED
+	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 22:19:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5635B613DA
-	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 22:17:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0122C613DA
+	for <git@archiver.kernel.org>; Mon,  5 Apr 2021 22:19:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241421AbhDEWRY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Apr 2021 18:17:24 -0400
-Received: from cloud.peff.net ([104.130.231.41]:42074 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S241313AbhDEWRX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Apr 2021 18:17:23 -0400
-Received: (qmail 3093 invoked by uid 109); 5 Apr 2021 22:17:16 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 05 Apr 2021 22:17:16 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 22116 invoked by uid 111); 5 Apr 2021 22:17:16 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 05 Apr 2021 18:17:16 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 5 Apr 2021 18:17:15 -0400
-From:   Jeff King <peff@peff.net>
-To:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Hariom Verma <hariom18599@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>
-Subject: Re: [PATCH] [GSOC] ref-filter: use single strbuf for all output
-Message-ID: <YGuMaxoYgRkUR1sa@coredump.intra.peff.net>
-References: <pull.927.git.1617631280402.gitgitgadget@gmail.com>
+        id S241443AbhDEWTT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Apr 2021 18:19:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58086 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S242828AbhDEWTO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Apr 2021 18:19:14 -0400
+Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B01DC061756
+        for <git@vger.kernel.org>; Mon,  5 Apr 2021 15:19:06 -0700 (PDT)
+Received: by mail-pg1-x529.google.com with SMTP id p12so4974953pgj.10
+        for <git@vger.kernel.org>; Mon, 05 Apr 2021 15:19:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=skydio.com; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=XLlEPpB+pcEnhr4BXZrEn6fE5p+6CIcYg3YMusJDrKs=;
+        b=rclsTLnfzGwQ4jk/a6uZqR2s2bePUI1luze+DyAFOrFGguwCqKLDdxJC0vI/ar7HJN
+         FfA//eZ30QQUlAVEDXTLh6fzxwuTDc/uY9rZZWGbwHZHqQexCgvdIVSIqQXQxdRW+YQV
+         7O/bKs1DFHSZUqcYSvxP5qUTCZV3TKAsZQachkkC1FDJYBoMgtx/M/jujzYxha5FMaJl
+         gfSGs7e49g56fb4HXg8ukcr1HZ+vZRol+cD26UORS4JxxMVOHpE57JSeFibocRtNbceQ
+         X4k4WJgOwwzi0gHOnH3FRj0F0uQ6E7Ia/5OqfeGaBZyGvayGEMnEiCx4JV7PSCna5I0S
+         +z8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=XLlEPpB+pcEnhr4BXZrEn6fE5p+6CIcYg3YMusJDrKs=;
+        b=ieAvYwCyKlZ4+q6mS1Ls0eYzcSma4eJabJpCMUH+Pz/pTzDsHvW7V4lS7EHSVFQFfs
+         cGEUd+YSK62L5CZUPAy0LYIExJOncdVhQ4yl2+PBUnOryR1eOa4pGeUuOijU34s3q4a3
+         pKaCRAqzgfzqywNHT8OBS+JJVin7Zk0PW+mAJMRBdRUA5nJM0f6WgsWYxEnoa9ZcIQUr
+         thA/a+dyF8+hG/9p55beR7LjDCzsly8qjo9Cy5Zs+I0qGuqK4yUbLd4csgEr7BNHAvUT
+         IMjxlIzoc++nyd+vsWwJcwxAxOHUtx8WTC5q3mRf2clcqWNC09ERI25DxGUoXSvdDbwX
+         CqIg==
+X-Gm-Message-State: AOAM532h+v8KNqbkBedXHjR0csiYSDYLlpIeIvYpImh1ffTLR63xqf61
+        TbjweyqaVTOaG4nFLcPsQ+nWStO5BmIiVZH5
+X-Google-Smtp-Source: ABdhPJwKy2WeqJitx2HFkdIQEMPTycmnQzET9xFBUZ1o10uuKDtauPWF8jjXUfHK1/tN3SqO3ba9Dg==
+X-Received: by 2002:aa7:9299:0:b029:21d:7ad1:2320 with SMTP id j25-20020aa792990000b029021d7ad12320mr25414344pfa.22.1617661145726;
+        Mon, 05 Apr 2021 15:19:05 -0700 (PDT)
+Received: from jerry-desktop.localdomain ([50.236.240.214])
+        by smtp.gmail.com with ESMTPSA id x25sm17044785pfn.81.2021.04.05.15.19.04
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 05 Apr 2021 15:19:05 -0700 (PDT)
+From:   Jerry Zhang <jerry@skydio.com>
+To:     git@vger.kernel.org, newren@gmail.com, gitster@pobox.com
+Cc:     ross@skydio.com, abe@skydio.com, brian.kubisiak@skydio.com,
+        Jerry Zhang <jerry@skydio.com>,
+        Jerry Zhang <jerryxzha@googlemail.com>
+Subject: [PATCH V2] git-apply: Allow simultaneous --cached and --3way options
+Date:   Mon,  5 Apr 2021 15:19:02 -0700
+Message-Id: <20210405221902.27998-1-jerry@skydio.com>
+X-Mailer: git-send-email 2.31.1.164.g61adc3a729
+In-Reply-To: <20210403013410.32064-2-jerry@skydio.com>
+References: <20210403013410.32064-2-jerry@skydio.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <pull.927.git.1617631280402.gitgitgadget@gmail.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 05, 2021 at 02:01:19PM +0000, ZheNing Hu via GitGitGadget wrote:
+Previously, --cached and --3way were not
+allowed to be used together, since --3way
+wrote conflict markers into the working tree.
 
-> When we use `git for-each-ref`, every ref will call
-> `show_ref_array_item()` and allocate its own final strbuf
-> and error strbuf. Instead, we can provide two single strbuf:
-> final_buf and error_buf that get reused for each output.
-> 
-> When run it 100 times:
-> 
-> $ git for-each-ref
-> 
-> on git.git :
-> 
-> 3.19s user
-> 3.88s system
-> 35% cpu
-> 20.199 total
-> 
-> to:
-> 
-> 2.89s user
-> 4.00s system
-> 34% cpu
-> 19.741 total
+These changes change semantics so that if
+these flags are given together and there is
+a conflict, the conflicting objects are left
+at a higher order in the cache, and the command
+will return non-zero. If there is no conflict,
+the patch is applied directly to cache as
+expected and the command will return 0.
 
-That's a bigger performance improvement than I'd expect from this. I'm
-having trouble reproducing it here (I get the same time before and
-after). I also notice that you don't seem to be CPU bound, and we spend
-most of our time on system CPU (so program startup stuff, not the loop
-you're optimizing).
+The user can use `git diff` to view the contents
+of the conflict, or `git checkout -m -- .` to
+regenerate the conflict markers in the working
+directory.
 
-I think a more interesting test is timing a single invocation with a
-large number of refs. If you are planning to do a lot of work on the
-formatting code, it might be worth adding such a test into t/perf (both
-to show off results, but also to catch any regressions after we make
-things faster).
+With the combined --3way and --cached flags,
+The conflict markers won't be written to the
+working directory, so there is no point in
+attempting rerere.
 
->     This patch learned Jeff King's optimization measures in git
->     cat-file(79ed0a5): using a single strbuf for all objects output Instead
->     of allocating a large number of small strbuf for every object.
+Signed-off-by: Jerry Zhang <jerry@skydio.com>
+Signed-off-by: Jerry Zhang <jerryxzha@googlemail.com>
+---
+ Documentation/git-apply.txt | 3 ++-
+ apply.c                     | 5 ++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-I do think this is a good direction (for all the reasons laid out in
-79ed0a5), though it wasn't actually the part I was most worried about
-for ref-filter performance. The bigger issue in ref-filter is that each
-individual atom will generally have its own allocated string, and then
-we'll format all of the atoms into the final strbuf output. In most
-cases we could avoid those intermediate copies entirely.
+diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
+index 91d9a8601c..392882d9a5 100644
+--- a/Documentation/git-apply.txt
++++ b/Documentation/git-apply.txt
+@@ -89,7 +89,8 @@ OPTIONS
+ 	and we have those blobs available locally, possibly leaving the
+ 	conflict markers in the files in the working tree for the user to
+ 	resolve.  This option implies the `--index` option, and is incompatible
+-	with the `--reject` and the `--cached` options.
++	with the `--reject` option. When used with the --cached option, any conflicts
++    are left at higher stages in the cache.
+ 
+ --build-fake-ancestor=<file>::
+ 	Newer 'git diff' output has embedded 'index information'
+diff --git a/apply.c b/apply.c
+index 6695a931e9..e59c77a1b7 100644
+--- a/apply.c
++++ b/apply.c
+@@ -133,8 +133,6 @@ int check_apply_state(struct apply_state *state, int force_apply)
+ 
+ 	if (state->apply_with_reject && state->threeway)
+ 		return error(_("--reject and --3way cannot be used together."));
+-	if (state->cached && state->threeway)
+-		return error(_("--cached and --3way cannot be used together."));
+ 	if (state->threeway) {
+ 		if (is_not_gitdir)
+ 			return error(_("--3way outside a repository"));
+@@ -4646,7 +4644,8 @@ static int write_out_results(struct apply_state *state, struct patch *list)
+ 		}
+ 		string_list_clear(&cpath, 0);
+ 
+-		repo_rerere(state->repo, 0);
++		if (!state->cached)
++			repo_rerere(state->repo, 0);
+ 	}
+ 
+ 	return errs;
+-- 
+2.29.0
 
-I do think this would be a useful optimization to have in addition,
-though. As for the patch itself, I looked over the review that Eric
-gave, and he already said everything I would have. :)
-
--Peff
