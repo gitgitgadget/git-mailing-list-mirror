@@ -2,199 +2,147 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AEB2C43460
-	for <git@archiver.kernel.org>; Tue,  6 Apr 2021 14:00:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8591DC433ED
+	for <git@archiver.kernel.org>; Tue,  6 Apr 2021 14:35:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D2E3E613BD
-	for <git@archiver.kernel.org>; Tue,  6 Apr 2021 14:00:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4E7A1613BE
+	for <git@archiver.kernel.org>; Tue,  6 Apr 2021 14:35:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344839AbhDFOA7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Apr 2021 10:00:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37120 "EHLO
+        id S1345215AbhDFOfo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Apr 2021 10:35:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234998AbhDFOA6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Apr 2021 10:00:58 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39554C06174A
-        for <git@vger.kernel.org>; Tue,  6 Apr 2021 07:00:50 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id a76so4218857wme.0
-        for <git@vger.kernel.org>; Tue, 06 Apr 2021 07:00:50 -0700 (PDT)
+        with ESMTP id S239344AbhDFOfn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Apr 2021 10:35:43 -0400
+Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A35B5C06174A
+        for <git@vger.kernel.org>; Tue,  6 Apr 2021 07:35:33 -0700 (PDT)
+Received: by mail-io1-xd30.google.com with SMTP id v26so15762614iox.11
+        for <git@vger.kernel.org>; Tue, 06 Apr 2021 07:35:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=L30JOyTUDiG33bs18mptbYSAy0GY7nwlxVrpycnRwm8=;
-        b=CC6QHdridhFYkD//l2j9Lr7LRwdBRWKfZCM6x0W5GMElQUxIt6Ul/YKd8f4rJbosjR
-         PUbmAYvqPvMxq4FQRKa/adZj8OVmhuB4bPZBtE21cI49Fd/SOG3MQnjyAV9tT4wq+QAD
-         5XWgdcKELlpT/6LbnzlAneAZDPYzFe69GMNHFRySEzOpFhsh9EdUoqY8f2g5igBI5bc1
-         eTrFwe+I/N1KKrcEmabXVM/+rPtsUTqXU4L2L+JbFtCR+GGOn7gGKkW1c8lgMqW5uy1+
-         wKiia1IKVGurwKb7I9oJeZcOpxq7X2wPIetdMuz0Al/P24oMyH/mSzWZlGZOPDaJcKGX
-         WEGg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=RRQhASsHyFJQVsJwvfNN77kXQ/5HelaYFkEW8m/pyYw=;
+        b=rV7f8FNu833Md3g9KErmE2pNHTjg8ANjmfp1DmEQin2lXNERS7SAp3eBRhQ5+lo+OZ
+         PAzgGmwEoS5HLGHltRtgZmyvhaoTG43ew8Hi4a5itKYVNcb+FB2+QnkgBzzyPixQG0au
+         bAn67/fy9wNri6jfjt6UJa7u14lBU9YUirGqHcqpVliWnm15utimqX4gMXAvD1t3c9Dy
+         VkoTFRf6UC8hWW5EChgeX4P5lEgqbIi4k7xM4qAgIi7U2+mYq27imGzRQxfeko8mhjSs
+         6WtJnF2mYGOlLVbgzZRGawUPnWFfCxvj2HxgIBCREwljoKoHO8+7AozVGfts+m9xuRC1
+         qvww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=L30JOyTUDiG33bs18mptbYSAy0GY7nwlxVrpycnRwm8=;
-        b=SuAWwGzaiG3HKzz81Pg//RN5sJgz6UvoMKntv2wlrmctczb7MbxC51Tz4IVNFQgInS
-         R+RHam6J11FvPsoDcIA71uzvTjq4PQzyqPer1piuOl5jkwpHmn/nCnpns83Kf620k1YN
-         a6eDV0v+HyJnRIq8bcAhrYqGs1h+QpqSphy3dqzHZWaFfL2Qyy4LiIM6g2p7mz13wb/4
-         WvpW455G2YiTL9mYRWXSNHy26OOSGae5Qq6Depsf9naZ7fB4fdh6BEsbYrT80LgXXdX+
-         jVYcH5cRhP2n/HY0ZhjIaTo50t/dnmTqzvsJw11XUTJ+l20swNlnKqXmUok2/B14+rop
-         jClQ==
-X-Gm-Message-State: AOAM531T1tPmMxZjNlGlhgKVQJKuyiYlEndmnkbtVZ7rPUjJJdNTB/zF
-        2vHVAp96sW7eKZi+zH0hioSTbguTSztqoQ==
-X-Google-Smtp-Source: ABdhPJwcQsetEStj9fdj7Iy6bTi3vzR5xq/DugZ21dWUwseh3EVBVnGupGiOpBqalM8Gd0qm1cAgFQ==
-X-Received: by 2002:a05:600c:228d:: with SMTP id 13mr4399423wmf.49.1617717648618;
-        Tue, 06 Apr 2021 07:00:48 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id h6sm20029696wrr.21.2021.04.06.07.00.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Apr 2021 07:00:47 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v3 3/3] git-send-email: improve --validate error output
-Date:   Tue,  6 Apr 2021 16:00:37 +0200
-Message-Id: <patch-3.4-8a67afd3404-20210406T135716Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.31.1.527.g9b8f7de2547
-In-Reply-To: <cover-0.4-00000000000-20210406T135715Z-avarab@gmail.com>
-References: <cover-0.5-00000000000-20210404T091649Z-avarab@gmail.com> <cover-0.4-00000000000-20210406T135715Z-avarab@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=RRQhASsHyFJQVsJwvfNN77kXQ/5HelaYFkEW8m/pyYw=;
+        b=Nkz9wCrVHYRckPpSes/NOEJdIddAndO9diKqiVWQ/lWQX9MPzk23qHTpO2oOGRmwCG
+         QbfXzTRv8zYKmOTWtCWqrDCfbu1apdKIttY7cDBa8jxxiLtTZDkb1aIRiQvkphVgQHCE
+         D05tlBStYm8jVYDw3vpj5r99vWSCmP15Gl+Z2o/JrxAAaMKtfFJb/7k6k4qCgZ2s4nUA
+         U0I7XSWTzIwYhHS4xAGc94DxVgxHzKkCgKKujg01DjFUY68W9+7zaPzA/gNuKc7F1URp
+         gxWstT7z+Q0Ikgkg0k68s49FcLxISGerQEXIzLz1pnRzspg88UP/7OKwS2ElPgmkIJUS
+         ixlA==
+X-Gm-Message-State: AOAM530VK5rfuYVfhbXTjiRd8HVbemwinspehzUp2+gY61+SwDuPJuza
+        QC0uOOUCuqnEQOyyqjlvvXet/Abm4egsuAKEQro=
+X-Google-Smtp-Source: ABdhPJxn7QAe9ujdq0uDnWUMWoMrFvXZvv2PIDgzOBcxfHSmsPQooiC0/Hvr04129Vawnwc957IakhNC2hAAVmj6EV4=
+X-Received: by 2002:a6b:6308:: with SMTP id p8mr24559985iog.172.1617719733157;
+ Tue, 06 Apr 2021 07:35:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <pull.927.git.1617631280402.gitgitgadget@gmail.com>
+ <YGuMaxoYgRkUR1sa@coredump.intra.peff.net> <CAOLTT8TwjRyT6MK_ekEx9APBv7jn17JRKj=mJQMO5Sk-DgHA-A@mail.gmail.com>
+ <CAOLTT8SzDsoScFaGe5emQc6V5QDJD=osdE5OMAz2Xs8=AvrfVQ@mail.gmail.com> <YGxpZ/vJ/MyS0tLB@coredump.intra.peff.net>
+In-Reply-To: <YGxpZ/vJ/MyS0tLB@coredump.intra.peff.net>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Tue, 6 Apr 2021 22:35:17 +0800
+Message-ID: <CAOLTT8Q5kQh+8M3Ws4zjyid1+m3orBkootObxd0N2B6p8yNukg@mail.gmail.com>
+Subject: Re: [PATCH] [GSOC] ref-filter: use single strbuf for all output
+To:     Jeff King <peff@peff.net>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Hariom Verma <hariom18599@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Improve the output we emit on --validate error to:
+Jeff King <peff@peff.net> =E4=BA=8E2021=E5=B9=B44=E6=9C=886=E6=97=A5=E5=91=
+=A8=E4=BA=8C =E4=B8=8B=E5=8D=8810:00=E5=86=99=E9=81=93=EF=BC=9A
+>
+> On Tue, Apr 06, 2021 at 06:35:57PM +0800, ZheNing Hu wrote:
+>
+> > ZheNing Hu <adlternative@gmail.com> =E4=BA=8E2021=E5=B9=B44=E6=9C=886=
+=E6=97=A5=E5=91=A8=E4=BA=8C =E4=B8=8B=E5=8D=885:49=E5=86=99=E9=81=93=EF=BC=
+=9A
+> > > But this is the first time I use `t/perf/*` and there is a little pro=
+blem.
+> > > It seem like whatever I run single script like `sh ./p0007-write-cach=
+e.sh`
+> > > or just `make` or `./run ${HOME}/git -- ./p0002-read-cache.sh` , thes=
+e
+> > > tests will fail.
+> > >
+> > It's because I don't have /usr/bin/time, solved after installation.
+> > So best have this:
+> >
+> > --- a/t/perf/perf-lib.sh
+> > +++ b/t/perf/perf-lib.sh
+> > @@ -152,6 +152,10 @@ immediate=3Dt
+> >  # Perf tests require GNU time
+> >  case "$(uname -s)" in Darwin) GTIME=3D"${GTIME:-gtime}";; esac
+> >  GTIME=3D"${GTIME:-/usr/bin/time}"
+> > +if ! test -f "$GTIME"
+> > +then
+> > +       error "command not found: "$GTIME""
+> > +fi
+>
+> This patch would create problems when we expect to find the value of
+> $GTIME in the $PATH e.g., you can see in the Darwin case it is set to
+> just "gtime", not an absolute path).
+>
+> I am sympathetic to helping people see what's wrong, but I think in this
+> case we're better off pointing people to using "-v". E.g.:
+>
+>   $ GTIME=3Dpretend-we-do-not-have-gtime ./p0001-rev-list.sh
+>   perf 1 - rev-list --all:
+>   not ok 1 - rev-list --all
+>   #
+>   #             git rev-list --all >/dev/null
+>   #
+>
+> Uh oh, that wasn't very informative. But how about this:
+>
+>   $ GTIME=3Dpretend-we-do-not-have-gtime ./p0001-rev-list.sh -v
+>   [...]
+>   perf 1 - rev-list --all:
+>   running:
+>         git rev-list --all >/dev/null
+>
+>   ./p0001-rev-list.sh: 160: pretend-we-do-not-have-gtime: not found
+>   not ok 1 - rev-list --all
+>   #
+>   #             git rev-list --all >/dev/null
+>   #
+>
+> which I think makes it reasonably clear.
+>
+> -Peff
 
- * Say "FILE:LINE" instead of "FILE: LINE", to match "grep -n",
-   compiler error messages etc.
+I just make a small suggestion. ;)
+You are right, "-v" is enough.
 
- * Don't say "patch contains a" after just mentioning the filename,
-   just leave it at "FILE:LINE: is longer than[...]. The "contains a"
-   sounded like we were talking about the file in general, when we're
-   actually checking it line-by-line.
+In addition, I found that the performance was basically
+unchanged after testing. It seems that this optimization is
+indeed too small, not as practical as in `cat-file`.
 
- * Don't just say "rejected by sendemail-validate hook", but combine
-   that with the system_or_msg() output to say what exit code the hook
-   died with.
+This shows that the performance bottleneck of `ref-filter`
+lies elsewhere. E.g. you mentioned "intermediate copies".
 
-I had an aborted attempt to make the line length checker note all
-lines that were longer than the limit. I didn't think that was worth
-the effort, but I've left in the testing change to check that we die
-as soon as we spot the first long line.
-
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- git-send-email.perl   | 12 ++++++------
- t/t9001-send-email.sh | 17 ++++++++++++-----
- 2 files changed, 18 insertions(+), 11 deletions(-)
-
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 2dd48621759..175da07d946 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -219,8 +219,8 @@ sub system_or_msg {
- 	my $exit_code = $? >> 8;
- 	return unless $signalled or $exit_code;
- 
--	return sprintf(__("failed to run command %s, died with code %d"),
--		       "@$args", $exit_code);
-+	return sprintf(__("fatal: command '%s' died with exit code %d"),
-+		       $args->[0], $exit_code);
- }
- 
- sub system_or_die {
-@@ -1964,7 +1964,8 @@ sub validate_patch {
- 		}
- 		if ($hook_error) {
- 			die sprintf(__("fatal: %s: rejected by sendemail-validate hook\n" .
--				       "warning: no patches were sent\n"), $fn);
-+				       "%s\n" .
-+				       "warning: no patches were sent\n"), $fn, $hook_error);
- 		}
- 	}
- 
-@@ -1975,9 +1976,8 @@ sub validate_patch {
- 			or die sprintf(__("unable to open %s: %s\n"), $fn, $!);
- 		while (my $line = <$fh>) {
- 			if (length($line) > 998) {
--				die sprintf(__("fatal: %s: %d: patch contains a line longer than 998 characters\n" .
--					       "warning: no patches were sent\n"),
--					    $fn, $.);
-+				die sprintf(__("fatal: %s:%d is longer than 998 characters\n" .
-+					       "warning: no patches were sent\n"), $fn, $.);
- 			}
- 		}
- 	}
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 74225e3dc7a..65b30353719 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -415,7 +415,11 @@ test_expect_success $PREREQ 'reject long lines' '
- 	z512=$z64$z64$z64$z64$z64$z64$z64$z64 &&
- 	clean_fake_sendmail &&
- 	cp $patches longline.patch &&
--	echo $z512$z512 >>longline.patch &&
-+	cat >>longline.patch <<-EOF &&
-+	$z512$z512
-+	not a long line
-+	$z512$z512
-+	EOF
- 	test_must_fail git send-email \
- 		--from="Example <nobody@example.com>" \
- 		--to=nobody@example.com \
-@@ -424,7 +428,7 @@ test_expect_success $PREREQ 'reject long lines' '
- 		$patches longline.patch \
- 		2>actual &&
- 	cat >expect <<-\EOF &&
--	fatal: longline.patch: 35: patch contains a line longer than 998 characters
-+	fatal: longline.patch:35 is longer than 998 characters
- 	warning: no patches were sent
- 	EOF
- 	test_cmp expect actual
-@@ -533,15 +537,17 @@ test_expect_success $PREREQ "--validate respects relative core.hooksPath path" '
- 		--validate \
- 		longline.patch 2>actual &&
- 	test_path_is_file my-hooks.ran &&
--	cat >expect <<-\EOF &&
-+	cat >expect <<-EOF &&
- 	fatal: longline.patch: rejected by sendemail-validate hook
-+	fatal: command '"'"'$(pwd)/my-hooks/sendemail-validate'"'"' died with exit code 1
- 	warning: no patches were sent
- 	EOF
- 	test_cmp expect actual
- '
- 
- test_expect_success $PREREQ "--validate respects absolute core.hooksPath path" '
--	test_config core.hooksPath "$(pwd)/my-hooks" &&
-+	hooks_path="$(pwd)/my-hooks" &&
-+	test_config core.hooksPath "$hooks_path" &&
- 	test_when_finished "rm my-hooks.ran" &&
- 	test_must_fail git send-email \
- 		--from="Example <nobody@example.com>" \
-@@ -550,8 +556,9 @@ test_expect_success $PREREQ "--validate respects absolute core.hooksPath path" '
- 		--validate \
- 		longline.patch 2>actual &&
- 	test_path_is_file my-hooks.ran &&
--	cat >expect <<-\EOF &&
-+	cat >expect <<-EOF &&
- 	fatal: longline.patch: rejected by sendemail-validate hook
-+	fatal: command '"'"'$hooks_path/sendemail-validate'"'"' died with exit code 1
- 	warning: no patches were sent
- 	EOF
- 	test_cmp expect actual
--- 
-2.31.1.527.g9b8f7de2547
-
+--
+ZheNing Hu
