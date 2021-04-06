@@ -2,237 +2,200 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 09CEFC433ED
-	for <git@archiver.kernel.org>; Tue,  6 Apr 2021 23:15:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C6BCEC433B4
+	for <git@archiver.kernel.org>; Tue,  6 Apr 2021 23:25:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D456061002
-	for <git@archiver.kernel.org>; Tue,  6 Apr 2021 23:15:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 88E4161205
+	for <git@archiver.kernel.org>; Tue,  6 Apr 2021 23:25:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237496AbhDFXPX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Apr 2021 19:15:23 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:55992 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S232039AbhDFXPW (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 6 Apr 2021 19:15:22 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id B5E6D60422;
-        Tue,  6 Apr 2021 23:15:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1617750914;
-        bh=LAXuoZ3U1Ne3tdPo60IYAUHDrm7FVbqQoXjyGnywCvg=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=ek8X8WYt/JlBKrEYbiY/MgKc4uFI8w1Mjq1PPmHGTL9aIBhVi+jhlZlgHBZbLaStI
-         XyeBMf4Aw0+YePgSwU7+Wvv83L5pIScdXmrKnU8qQHDE6Tl9tlEDVlJxpTapE6QUXz
-         ADdmAHV9nEmbMT71NBV3UGkhGammnEqDdokMbZDxNElf8O+3G8h0V4saRePJozvUK2
-         OAFHU/f6GQ53nWkToeAl0daSopFZu5v3jpTYJbSW/r3NKMpHyqtYmeM5q+E/F6PaNw
-         DGblg3MtoQO8nfuu8Zn2aMFudrG1Fp1dsWSiV50Gg084P/72FHzGgMQe1P4Qmz2hPv
-         8kAliKZwjRQOtcikXqfTzCU2ghcli/JFYSkkNcakJzv6ePeeL9uuEqXrv3CKhPnRXD
-         wz0XBK5F3CwR4ZxXoXJkNMcYwqAhOiCjcpwBYpLyG5roF2PwAjBAKl30xM4hpm4lLQ
-         Q7H8k+zr8AA4lmu9J4wsIZoNDNaJ4mcb0O2gd5yCFKpBYw8Z8KU
-Date:   Tue, 6 Apr 2021 23:15:09 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Albert Cui <albertqcui@gmail.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Albert Cui via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v2] hooks: propose project configured hooks
-Message-ID: <YGzrfaSC4xd75j2U@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Albert Cui <albertqcui@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Albert Cui via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-References: <pull.908.git.1616105016055.gitgitgadget@gmail.com>
- <pull.908.v2.git.1616723016659.gitgitgadget@gmail.com>
- <ec031dc8-e100-725b-5f27-d3007c55be87@gmail.com>
- <CAMbkP-S-9cccMpU4HG0Wurqap-WkTmD2zk50nKd9kJ_oWO__qw@mail.gmail.com>
+        id S236006AbhDFXZp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Apr 2021 19:25:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47820 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229734AbhDFXZo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Apr 2021 19:25:44 -0400
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 307B6C06174A
+        for <git@vger.kernel.org>; Tue,  6 Apr 2021 16:25:36 -0700 (PDT)
+Received: by mail-pj1-x102f.google.com with SMTP id mj7-20020a17090b3687b029014d162a65b6so275302pjb.2
+        for <git@vger.kernel.org>; Tue, 06 Apr 2021 16:25:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=skydio.com; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=74jV9edTpUgFwnQCJ0r/deza4SURfhyM1zt/f1VmzOA=;
+        b=OFp+ZHcXuimz54JYuv1LHt+rxkwc4613iEim/TPIHpiqvLnZukYmBbYK6df/RWZkAT
+         XmET6G+uYv2f2Gte3qLnmVyCT2ZDF1TauDh5cebajdpOeCa8+PGoEay1zBK27v0Y1YWK
+         EgoZPwFUhwpnDQ7TSPuP2eRTJtXjuLxPToKfiwg/6qhv6MSq/jtnNoYvYZoxAUs0IUYV
+         Qr25NBH0Jfcq+OiwdUL11jImPCMUfyH2zeMfhs76Xf34yEem4erb8tuoYoAVdir1dxSe
+         yOayJYEb+ZmomT248x6+EdelM86wG837z61F+WiVEYayVooM5Sss/8Ku1/U70jZMWXZS
+         EEng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=74jV9edTpUgFwnQCJ0r/deza4SURfhyM1zt/f1VmzOA=;
+        b=itFNphhD4Uy/6uAZHscoRerPD48YTxFRsCArybvoxdvVp1+PXKXnV57cKQ89/rJkaH
+         bgT7YnGjqMWdJvhSCeUoNJvfpNJHvllXlDM4eMj0uTHtv52pzg2syY9ETgmxu/c5GZsJ
+         bLdHCiafU9qdjcRzYllEtc8T9BUf2Yd6+/WmiN15BJKZtPGr3ut8ZbFWH/7ftSptRpIq
+         xh4CuTMLo3YcEGrks0c/PD+d7n80/UeuZzimMSpZw+zM5rA++Bx7AQYhYpusT4TQ59+X
+         AyeGWGNTtnfyDC7coVU/xvEQynW8hRy8TvLafpuRZ7ZuHkjAl9f5kLkZ3MI49K6Hgt/q
+         ZNfQ==
+X-Gm-Message-State: AOAM5332jX7k9a7BDasoAFX4L1MhUGWI/NokEKifnKLDdZqNFwckXJEH
+        9M0XtiTQppHqYHxAt/39CNkFdI5X3mZbGSLR
+X-Google-Smtp-Source: ABdhPJy6DvIw11Emb8wYebf5NMPs9Za0UjZPMwp5HHH3wWxQaOs3RsR8EdEBJtBEAqqL9ABLV8LG/g==
+X-Received: by 2002:a17:902:7786:b029:e6:cc0f:4dff with SMTP id o6-20020a1709027786b02900e6cc0f4dffmr562042pll.4.1617751535196;
+        Tue, 06 Apr 2021 16:25:35 -0700 (PDT)
+Received: from jerry-desktop.localdomain ([50.236.240.214])
+        by smtp.gmail.com with ESMTPSA id x22sm18971137pfa.24.2021.04.06.16.25.34
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 06 Apr 2021 16:25:34 -0700 (PDT)
+From:   Jerry Zhang <jerry@skydio.com>
+To:     git@vger.kernel.org, newren@gmail.com, gitster@pobox.com
+Cc:     ross@skydio.com, abe@skydio.com, brian.kubisiak@skydio.com,
+        Jerry Zhang <jerry@skydio.com>
+Subject: [PATCH] git-apply: try threeway first when "--3way" is used
+Date:   Tue,  6 Apr 2021 16:25:32 -0700
+Message-Id: <20210406232532.3543-1-jerry@skydio.com>
+X-Mailer: git-send-email 2.31.1.165.gb6fb64cead
+In-Reply-To: <20210406025551.25213-1-jerry@skydio.com>
+References: <20210406025551.25213-1-jerry@skydio.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="0j8bA8SpW4tyKTHE"
-Content-Disposition: inline
-In-Reply-To: <CAMbkP-S-9cccMpU4HG0Wurqap-WkTmD2zk50nKd9kJ_oWO__qw@mail.gmail.com>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The apply_fragments() method of "git apply"
+can silently apply patches incorrectly if
+a file has repeating contents. In these
+cases a three-way merge is capable of applying
+it correctly in more situations, and will
+show a conflict rather than applying it
+incorrectly. However, because the patches
+apply "successfully" using apply_fragments(),
+git will never fall back to the merge, even
+if the "--3way" flag is used, and the user has
+no way to ensure correctness by forcing the
+three-way merge method.
 
---0j8bA8SpW4tyKTHE
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Change the behavior so that when "--3way" is used,
+git will always try the three-way merge first and
+will only fall back to apply_fragments() in cases
+where blobs are not available or some other error
+(but not in the case of a merge conflict).
 
-On 2021-04-05 at 22:45:10, Albert Cui wrote:
-> Right, this entire proposal is trying to get to a "Git-blessed" solution,
-> and I should make the need clearer. A few reasons for standardizing
-> this come to mind:
->=20
-> 1. Many existing "standard" solutions. A multitude of existing solutions =
-for
-> this use case speaks to the fact that a basic config script is not suffic=
-ient.
-> I mentioned Husky above, but here are a few more; basically each
-> popular programming language environment has a solution for this.
->=20
-> https://github.com/sds/overcommit - Ruby
-> https://github.com/pre-commit/pre-commit - Python
-> https://github.com/Arkweid/lefthook - Go
-> https://github.com/shibapm/Komondor - Swift
-> https://github.com/typicode/husky - Node
->=20
-> These solutions all handle the installation and updating of hooks. A
-> "configure-hooks.sh" script doesn't handle hook updates, unless you go th=
-rough
-> the trouble yourself of implementing and maintaining that.
+Since user-facing results will be different,
+this has backwards compatibility implications
+for users depending on the old behavior. In
+addition, the three-way merge will be slower
+than direct patch application.
 
-I think part of the problem is that an automated process to update hooks
-is generally a security vulnerability, since it means that untrusted
-remote code will automatically run on your computer.
+Signed-off-by: Jerry Zhang <jerry@skydio.com>
+---
+ Documentation/git-apply.txt |  5 ++---
+ apply.c                     | 13 ++++++-------
+ t/t4108-apply-threeway.sh   | 20 ++++++++++++++++++++
+ 3 files changed, 28 insertions(+), 10 deletions(-)
 
-I want to be clear that I understand the desire for this feature, even
-though it's not a feature I would personally use, and the fact that
-there are many approaches means that clearly there are many people that
-do want this functionality.  I have in the past shared hooks with others
-and we have mutually benefitted enormously from that fact.  My concerns
-here are solely about the security aspects of this feature.
+diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
+index 91d9a8601c8c316d4649c405af42e531c39991a8..9144575299c264dd299b542b7b5948eef35f211c 100644
+--- a/Documentation/git-apply.txt
++++ b/Documentation/git-apply.txt
+@@ -84,9 +84,8 @@ OPTIONS
+ 
+ -3::
+ --3way::
+-	When the patch does not apply cleanly, fall back on 3-way merge if
+-	the patch records the identity of blobs it is supposed to apply to,
+-	and we have those blobs available locally, possibly leaving the
++	Attempt 3-way merge if the patch records the identity of blobs it is supposed
++	to apply to and we have those blobs available locally, possibly leaving the
+ 	conflict markers in the files in the working tree for the user to
+ 	resolve.  This option implies the `--index` option, and is incompatible
+ 	with the `--reject` and the `--cached` options.
+diff --git a/apply.c b/apply.c
+index 6695a931e979a968b28af88d425d0c76ba17d0d4..9bd4efcbced842d2c5c030a0f2178ddb36114600 100644
+--- a/apply.c
++++ b/apply.c
+@@ -3569,10 +3569,10 @@ static int try_threeway(struct apply_state *state,
+ 		write_object_file("", 0, blob_type, &pre_oid);
+ 	else if (get_oid(patch->old_oid_prefix, &pre_oid) ||
+ 		 read_blob_object(&buf, &pre_oid, patch->old_mode))
+-		return error(_("repository lacks the necessary blob to fall back on 3-way merge."));
++		return error(_("repository lacks the necessary blob to perform 3-way merge."));
+ 
+ 	if (state->apply_verbosity > verbosity_silent)
+-		fprintf(stderr, _("Falling back to three-way merge...\n"));
++		fprintf(stderr, _("Performing three-way merge...\n"));
+ 
+ 	img = strbuf_detach(&buf, &len);
+ 	prepare_image(&tmp_image, img, len, 1);
+@@ -3604,7 +3604,7 @@ static int try_threeway(struct apply_state *state,
+ 	if (status < 0) {
+ 		if (state->apply_verbosity > verbosity_silent)
+ 			fprintf(stderr,
+-				_("Failed to fall back on three-way merge...\n"));
++				_("Failed to perform three-way merge...\n"));
+ 		return status;
+ 	}
+ 
+@@ -3637,10 +3637,9 @@ static int apply_data(struct apply_state *state, struct patch *patch,
+ 	if (load_preimage(state, &image, patch, st, ce) < 0)
+ 		return -1;
+ 
+-	if (patch->direct_to_threeway ||
+-	    apply_fragments(state, &image, patch) < 0) {
++	if (!state->threeway || try_threeway(state, &image, patch, st, ce) < 0) {
+ 		/* Note: with --reject, apply_fragments() returns 0 */
+-		if (!state->threeway || try_threeway(state, &image, patch, st, ce) < 0)
++		if (patch->direct_to_threeway || apply_fragments(state, &image, patch) < 0)
+ 			return -1;
+ 	}
+ 	patch->result = image.buf;
+@@ -5017,7 +5016,7 @@ int apply_parse_options(int argc, const char **argv,
+ 		OPT_BOOL(0, "apply", force_apply,
+ 			N_("also apply the patch (use with --stat/--summary/--check)")),
+ 		OPT_BOOL('3', "3way", &state->threeway,
+-			 N_( "attempt three-way merge if a patch does not apply")),
++			 N_( "attempt three-way merge, fall back on normal patch if that fails")),
+ 		OPT_FILENAME(0, "build-fake-ancestor", &state->fake_ancestor,
+ 			N_("build a temporary index based on embedded index information")),
+ 		/* Think twice before adding "--nul" synonym to this */
+diff --git a/t/t4108-apply-threeway.sh b/t/t4108-apply-threeway.sh
+index d62db3fbe16f35a625a4a14eebb70034f695d3eb..9ff313f976422f9c12dc8032d14567b54cfe3765 100755
+--- a/t/t4108-apply-threeway.sh
++++ b/t/t4108-apply-threeway.sh
+@@ -160,4 +160,24 @@ test_expect_success 'apply -3 with add/add conflict (dirty working tree)' '
+ 	test_cmp three.save three
+ '
+ 
++test_expect_success 'apply -3 with ambiguous repeating file' '
++	git reset --hard &&
++	test_write_lines 1 2 1 2 1 2 1 2 1 2 1 >one_two_repeat &&
++	git add one_two_repeat &&
++	git commit -m "init one" &&
++	test_write_lines 1 2 1 2 1 2 1 2 one 2 1 >one_two_repeat &&
++	git commit -a -m "change one" &&
++
++	git diff HEAD~ >Repeat.diff &&
++	git reset --hard HEAD~ &&
++
++	test_write_lines 1 2 1 2 1 2 one 2 1 2 one >one_two_repeat &&
++	git commit -a -m "change surrounding one" &&
++
++	git apply --index --3way Repeat.diff &&
++	test_write_lines 1 2 1 2 1 2 one 2 one 2 one >expect &&
++
++	test_cmp expect one_two_repeat
++'
++
+ test_done
+-- 
+2.29.0
 
-> 3. Improving security. As you mentioned, hooks are difficult to get
-> right from a security
-> perspective, and standardizing on a single implementation allows us to
-> give developers
-> a well-vetted solution with a better security model than what exists
-> today. For example,
-> we're proposing making it very clear to users whenever there's a hook
-> update. This isn't
-> something that existing solutions do.
-
-I don't think this materially improves security.  All of these options
-have the same security problems, and that's inherent in the solution.
-What we're doing here is basically giving people a built-in feature that
-is the equivalent of piping curl to bash and blessing it as secure when
-it's not.
-
-> I'll also say in general, the Git project is much more likely to get
-> security right than smaller
-> projects, where oftentimes even popular projects end up unmaintained.
-
-I agree that Git tries to be careful about security.  It is for these
-reasons that I think Derrick and I have provided you the feedback we
-have here.
-
-> Agreed. We already did a security review internally at Google. The main
-> feedback was:
->=20
-> * We need an explicit opt-in opposed to setting hooks up automatically,
-> e.g. a command line flag like --accept-hooks at minimum. This is primarily
-> to distinguish people who are just cloning a repository to browse the code
-> from people who are developing.
->=20
-> * The average user doesn't have the ability to review hooks in general
-> (security is hard and obscuration is easy), and if the user has
-> already opted into
-> this feature because they are engaged in development, it's very likely
-> that they're
-> already running build scripts, so the additional attack vector here doesn=
-'t seem
-> like a big issue.
-
-I think you've hit the nail on the head here, but drawn a mistaken
-conclusion.  The average user doesn't have the ability to review hooks
-in general and therefore cannot make an informed decision about whether
-to enable them, so the behavior we need to have is not to lead them to
-doing things which are risky from a security perspective.
-
-If my goal is to just build a product and not to run its tests, which I
-do with a decent number of projects, then I can audit a Go or Rust
-project trivially and determine if it executes arbitrary code or not
-during the build process and if so, inspect it and gain confidence in
-it.  In fact, there are many projects which don't execute build scripts
-during the process, and therefore which are completely safe.  This hook
-design changes that calculus dramatically.
-
-I also want to point out that people clone repositories for a variety of
-reasons.  At GitHub, every team has its own repository with
-documentation.  Literally every employee at the company, regardless of
-role, interacts with a Git repository, even people who do normally
-nontechnical tasks such as our in-house lawyers and our event planners.
-Many of these people are nontechnical, and almost none of these
-repositories has any software development involvement.  There are also
-numerous people elsewhere who may work on projects such as books or
-other non-software in repositories who are nontechnical.  Under the
-current model, the biggest problem these people face is accidentally
-corrupting their local repository and losing data.  With a design that
-prompts them to install hooks, they face the possibility of arbitrary
-code execution.
-
-The reason I proposed the FAQ we have in our documentation is because I
-answer a decent number of questions on Stack Overflow, in addition to
-questions that involve users that I get pulled into at work.
-Overwhelmingly, the vast majority of users, even developers, are not
-completely comfortable with Git and are unsure about how to use it
-effectively (cf. https://ohshitgit.com/).  If we propose to a user that
-they should do something like enable hooks by adding a prompt, many
-users will automatically say "yes" because (a) they don't understand and
-they trust that Git is prompting them to do something beneficial and (b)
-because they don't know or care and just want to get on with their
-lives.  As a result, we're exposing people to giant social engineering
-attacks on behalf of potentially unscrupulous repository maintainers.
-
-This is made worse by the fact that we will prompt users even when
-cloning a repo that they have no intention of performing development on
-means that we will have users who are misled here where otherwise
-nothing would happen.
-
-There is a huge problem with social engineering attacks and phishing on
-the Internet today and I'm concerned that this is going in exactly the
-wrong direction.
-
-I would want to see a comprehensive security analysis feature taking
-into consideration social engineering attacks, the skill level and
-comfort with Git of the majority of Git users, and the fact that people
-clone repositories for many reasons other than software development.
-It's easy to look at this from the perspective of the typical employee
-at a major tech company and assume that users are generally security
-conscious, comfortable with Git, and primarily engaged in software
-development on the projects they clone, but I'm not sure any of those
-cases are generally true, and anyway there are many counterexamples in
-the real world whose use cases we need to take into account.
-
-I continue to have serious reservations about this series and approach,
-and I'm not sure that any proposal we can adopt here will address the
-security concerns.  To be frank, I don't think this proposal should move
-forward in its current state or otherwise, since I think the security
-problems are inherent in this approach and fundamentally can't be fixed.
-
-This is, as should be obvious from my email address, my personal
-opinion, despite my reference to my employer above.  Unless otherwise
-stated, I don't speak for my employer and they don't speak for me.
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
-
---0j8bA8SpW4tyKTHE
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.27 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYGzrfAAKCRB8DEliiIei
-gWvaAQDqXSfcsdcfnpO6Vv4EmVykaWlvxHmcmeIGRAfOn55ulAD+K8uJAXXYOaZS
-po8Kn7O8xiCoSWyZvGNYbDyyivJM6Ac=
-=Z7/e
------END PGP SIGNATURE-----
-
---0j8bA8SpW4tyKTHE--
