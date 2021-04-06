@@ -2,93 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 57166C433B4
-	for <git@archiver.kernel.org>; Tue,  6 Apr 2021 22:47:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 93290C433B4
+	for <git@archiver.kernel.org>; Tue,  6 Apr 2021 23:01:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 22AD8613D2
-	for <git@archiver.kernel.org>; Tue,  6 Apr 2021 22:47:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6BDCB613BE
+	for <git@archiver.kernel.org>; Tue,  6 Apr 2021 23:01:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344099AbhDFWre (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Apr 2021 18:47:34 -0400
-Received: from cloud.peff.net ([104.130.231.41]:42996 "EHLO cloud.peff.net"
+        id S236259AbhDFXCB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Apr 2021 19:02:01 -0400
+Received: from cloud.peff.net ([104.130.231.41]:43018 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S244004AbhDFWre (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Apr 2021 18:47:34 -0400
-Received: (qmail 9612 invoked by uid 109); 6 Apr 2021 22:47:25 -0000
+        id S232398AbhDFXCA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Apr 2021 19:02:00 -0400
+Received: (qmail 9674 invoked by uid 109); 6 Apr 2021 23:01:52 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 06 Apr 2021 22:47:25 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 06 Apr 2021 23:01:52 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 898 invoked by uid 111); 6 Apr 2021 22:47:25 -0000
+Received: (qmail 1085 invoked by uid 111); 6 Apr 2021 23:01:52 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 06 Apr 2021 18:47:25 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 06 Apr 2021 19:01:52 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 6 Apr 2021 18:47:24 -0400
+Date:   Tue, 6 Apr 2021 19:01:51 -0400
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Nikita Bobko <nikitabobko@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+To:     Varun Varada <varuncvarada@gmail.com>
+Cc:     Michal =?utf-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>,
         git@vger.kernel.org
-Subject: Re: [Bug report] diff.noprefix config is ignored for interactive
- `add`
-Message-ID: <YGzk/C9V3jkPr3xo@coredump.intra.peff.net>
-References: <CAMJzOtyzu8y5mWdKXe3MPe8ZoJs8O=me8Xuu0t77YVdAMc7Tgg@mail.gmail.com>
- <YGzUerPL7V8jDxHo@coredump.intra.peff.net>
- <xmqqsg4313fp.fsf@gitster.g>
+Subject: Re: [PATCH] doc: replace jargon word "impact" with "effect"/"affect"
+Message-ID: <YGzoX9OeWMKXpqtf@coredump.intra.peff.net>
+References: <CAD2i4DBj6fNvq=Lc3KiXJj5uBpteyKfEKp7ATOWrTE36KUeRww@mail.gmail.com>
+ <20210406092440.GZ6564@kitsune.suse.cz>
+ <CAD2i4DDr3Ftk6RE8cA74iSsJTpC9nEb=Cqvr79pF51BpcWEnsA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqsg4313fp.fsf@gitster.g>
+In-Reply-To: <CAD2i4DDr3Ftk6RE8cA74iSsJTpC9nEb=Cqvr79pF51BpcWEnsA@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 06, 2021 at 02:57:46PM -0700, Junio C Hamano wrote:
+On Tue, Apr 06, 2021 at 02:36:27PM -0500, Varun Varada wrote:
 
-> Jeff King <peff@peff.net> writes:
+> > while using "will not impact" in an incorrect or unclear way may be a
+> > problem the word "impact" in itself is not "jargon".
 > 
-> > I imagine something like this:
-> > ...
-> > would work, but I didn't really test it. There's another hitch, which is
-> > that this subsystem has all been re-written in C. So we'd really want to
-> > implement it in the new code (possibly in both places, though maybe it
-> > is time to consider cutting over from the perl script to the C one by
-> > deafult?).
-> >
-> > But hopefully this illustrates the general idea, and gives somebody
-> > interested in the feature enough to work up their own patch.
-> 
-> These "cosmetic appearance" configuration that would affect the
-> output from diff shown to the user would not be limited to just the
-> .noprefix, though.  Depending on the users, they would care just as
-> deeply about any of these:
-> 
-> 	.context
-> 	.interHunkContext
-> 	.mnemonicPrefix
->         .noprefix
-> 	.relative
-> 	.orderFile
-> 
-> as Nikita does for .noprefix to send a bug report.
-> 
-> Luckily or unluckily, .suppressBlankEmpty and the per-filetype
-> .xfuncname patterns do impact the output from the plumbing, because
-> git_diff_basic_config() does read them, even though they are merely
-> "cosmetic" configurations.
-> 
-> I am unsure how much we should cater to end-user controlled
-> configuration when we are generating diff output for our own
-> consumption, but if we were to tweak "add -p" and friends to
-> pay attention to .noprefix, we probably should do the same for
-> all the others.
+> The word means "to have a strong or marked effect on" (v.) and "a
+> strong or market influence" (n.) when used figuratively; it is not
+> synonymous with "affect" and "effect", respectively, as shown even by
+> all of the entries you've cited. Using it as such is the incorrect
+> part, so those are the instances I've changed in the diff.
 
-Yes. We already have gone through this with other options (e.g.,
-diff.algorithm). I would be happy if somebody wanted to handle the
-complete set. But I am also OK with stumbling towards completeness, as
-people who care about a particular option plumb it through.
+Er, is that true? From Michal's definitions:
+
+> > From The Collaborative International Dictionary of English v.0.48 :
+> [...]
+> >      2. To affect or influence, especially in a significant or
+
+It literally uses "affect" to define it. The "especially significant"
+does not apply to many, but I don't think that makes it necessarily
+wrong to use impact to mean "affect".
+
+Likewise:
+
+> > From WordNet (r) 3.0 (2006) :
+> [...]
+> >       v 1: press or wedge together; pack together
+> >       2: have an effect upon; "Will the new rules affect me?" [syn:
+> >          affect, impact, bear upon, bear on, touch on,
+> >          touch]
+
+That is likewise listing "impact" and "affect" as synonyms.
+
+I do agree the word is over-used in some forms of writing, but I don't
+find anything at all confusing or wrong about the uses that you changed
+in your patch. I am a native speaker of English. I'm open to the
+argument that non-native speakers may be more confused by the word. But
+this seems like mostly a style preference thing, and I'd generally
+prefer to leave the contributions and style of the original writers
+intact unless there is a good reason not to.
+
+Such changes are doubly unwanted in cases like this:
+
+> --- a/compat/nedmalloc/malloc.c.h
+> +++ b/compat/nedmalloc/malloc.c.h
+> @@ -2952,7 +2952,7 @@ static size_t traverse_and_check(mstate m);
+>  #endif /* (FOOTERS && !INSECURE) */
+> 
+> 
+> -/* In gcc, use __builtin_expect to minimize impact of checks */
+> +/* In gcc, use __builtin_expect to minimize affect of checks */
+>  #if !INSECURE
+>  #if defined(__GNUC__) && __GNUC__ >= 3
+>  #define RTCHECK(e)  __builtin_expect(e, 1)
+
+where the text is imported from another project, and we'd prefer to stay
+as close to their version as possible (e.g., to avoid unnecessary
+conflicts when pulling in new versions).
+
+Also, this one should be "effect" anyway, as it is a noun.
 
 -Peff
