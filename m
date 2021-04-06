@@ -2,84 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 338D1C433ED
-	for <git@archiver.kernel.org>; Tue,  6 Apr 2021 18:09:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BCB6C433B4
+	for <git@archiver.kernel.org>; Tue,  6 Apr 2021 18:13:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 01D7F613AD
-	for <git@archiver.kernel.org>; Tue,  6 Apr 2021 18:09:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 213ED60FF0
+	for <git@archiver.kernel.org>; Tue,  6 Apr 2021 18:13:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238411AbhDFSJX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Apr 2021 14:09:23 -0400
-Received: from cloud.peff.net ([104.130.231.41]:42850 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237456AbhDFSJB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Apr 2021 14:09:01 -0400
-Received: (qmail 8428 invoked by uid 109); 6 Apr 2021 18:08:53 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 06 Apr 2021 18:08:53 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30846 invoked by uid 111); 6 Apr 2021 18:08:52 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 06 Apr 2021 14:08:52 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 6 Apr 2021 14:08:52 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
-        Christian Couder <christian.couder@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v2 0/8] rev-parse: implement object type filter
-Message-ID: <YGyjtCWqdeCj3S3U@coredump.intra.peff.net>
-References: <cover.1614600555.git.ps@pks.im>
- <cover.1615813673.git.ps@pks.im>
- <xmqqblbdjzu6.fsf@gitster.g>
+        id S234577AbhDFSNL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Apr 2021 14:13:11 -0400
+Received: from mail-lf1-f45.google.com ([209.85.167.45]:33686 "EHLO
+        mail-lf1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232876AbhDFSNL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Apr 2021 14:13:11 -0400
+Received: by mail-lf1-f45.google.com with SMTP id o126so24298875lfa.0
+        for <git@vger.kernel.org>; Tue, 06 Apr 2021 11:13:02 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=eqhK08kXxi5g3XQPybkaYtR17KFkJhs6Nth03tFcM3s=;
+        b=UrlFt3qW3DHh5mPSeegTAPi8Bc4rch7CdLRqF8NSb8WMQpnN+cmC383huMMMsveQpc
+         i2WMyJS/8Nj2kKsmNwjr3GVqy+vgn/faBSwRfJNKmCnJL0/ngRybll8pTlaS+BkB5ery
+         Q/YhwB/XKVhOQsjTh60+7t1KYzbgjtyeFlehTx08VVewy8jQSZaqXw8vqOVuJ/GZOWpK
+         VF7DhGSvbFUTofcNAx4E8yj4qe0QFJByHQ7FqDpjJ0pAwJdUvOI/UIAq0ss1UFUxTaHH
+         FsfbK0FzjmFz76IgovlU2n/DC3J0Ns1oKesO7IGRRGv5EGrOBRcXCcqbBqdkYdkdf3cF
+         1R/Q==
+X-Gm-Message-State: AOAM531qkmmDLyqBQC9BTD0ZxH3iovTtA/3PquPOa1J0JhWddQAvii7L
+        hvHb8+yaQoN/F35w6bJrWlJEPFesCjxOjQ==
+X-Google-Smtp-Source: ABdhPJzlp6Ym4xoYXcSwsqc0IT2F4/7CgF/u65IvdgoCvICmOtLnFFL6Pl6xpWySy50y6jO0II7Qaw==
+X-Received: by 2002:a05:6512:2356:: with SMTP id p22mr21286200lfu.347.1617732781602;
+        Tue, 06 Apr 2021 11:13:01 -0700 (PDT)
+Received: from localhost.localdomain (dygkyxjlgy9q-6c1cgkky-4.rev.dnainternet.fi. [2001:14bb:150:99d:2507:5bfd:aa2:2a10])
+        by smtp.gmail.com with ESMTPSA id c2sm2235340lfc.221.2021.04.06.11.13.00
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 Apr 2021 11:13:01 -0700 (PDT)
+From:   =?UTF-8?q?Ville=20Skytt=C3=A4?= <ville.skytta@iki.fi>
+To:     git@vger.kernel.org
+Subject: [PATCH] completion: treat unset GIT_COMPLETION_SHOW_ALL gracefully
+Date:   Tue,  6 Apr 2021 21:12:47 +0300
+Message-Id: <20210406181247.250046-1-ville.skytta@iki.fi>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqblbdjzu6.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 20, 2021 at 02:10:41PM -0700, Junio C Hamano wrote:
+If not set, referencing it in nounset (set -u) mode unguarded produces
+an error.
 
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > this is the second version of my patch series which implements a new
-> > `object:type` filter for git-rev-parse(1) and git-upload-pack(1) and
-> > extends support for bitmap indices to work with combined filters.
-> > ...
-> > Please see the attached range-diff for more details.
-> 
-> Any comment from stakeholders?
+Signed-off-by: Ville Skyttä <ville.skytta@iki.fi>
+---
+ contrib/completion/git-completion.bash | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Sorry, this languished on my to-review list for a while.
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index e1a66954fe..6d77f56f92 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -427,7 +427,7 @@ __gitcomp_builtin ()
+ 
+ 	if [ -z "$options" ]; then
+ 		local completion_helper
+-		if [ "$GIT_COMPLETION_SHOW_ALL" = "1" ]; then
++		if [ "${GIT_COMPLETION_SHOW_ALL-}" = "1" ]; then
+ 			completion_helper="--git-completion-helper-all"
+ 		else
+ 			completion_helper="--git-completion-helper"
+-- 
+2.25.1
 
-I took a careful look. I found a few small nits, but the code overall
-looks pretty good.
-
-I do still find the use of the filter code here a _little_ bit
-off-putting. It makes perfect sense in some ways: we are asking rev-list
-to filter the output, and it keeps our implementation nice and simple.
-It took me a while to figure out what I think makes it weird, but I
-think it's:
-
-  - the partial-clone feature exposes the filter mechanism in a very
-    transparent way. So while it's not _wrong_ to be able to ask for a
-    partial clone of only trees, it's an odd thing that nobody would
-    really use in practice. And so it's a bit funny that it gets
-    documented alongside blob:limit, etc.
-
-  - for the same reason, it's very rigid. We have no way to say "this
-    filter OR that filter", and are unlikely to grow them (because this
-    is all part of the network protocol). Whereas it's perfectly
-    reasonable for somebody to ask for "trees and blobs" via rev-list.
-
-I dunno. Those aren't objections exactly. Just trying to put my finger
-on why my initial reaction was "huh, why --filter?".
-
--Peff
