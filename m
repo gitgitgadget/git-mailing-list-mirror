@@ -6,88 +6,87 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A33FFC433B4
-	for <git@archiver.kernel.org>; Tue,  6 Apr 2021 00:10:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 274DDC433B4
+	for <git@archiver.kernel.org>; Tue,  6 Apr 2021 00:14:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 68A7C6128B
-	for <git@archiver.kernel.org>; Tue,  6 Apr 2021 00:10:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E1327613EA
+	for <git@archiver.kernel.org>; Tue,  6 Apr 2021 00:14:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242935AbhDFAK3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Apr 2021 20:10:29 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:55016 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242936AbhDFAK2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Apr 2021 20:10:28 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id A28F2115BDA;
-        Mon,  5 Apr 2021 20:10:21 -0400 (EDT)
+        id S241648AbhDFAOJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Apr 2021 20:14:09 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:54298 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237726AbhDFAOJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Apr 2021 20:14:09 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6939E125529;
+        Mon,  5 Apr 2021 20:14:02 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=oQ+N1Amm5yDYCBTUgZixI1/8WeY=; b=LAW5Fg
-        EsZ46/T4v6bjjZWYBMleVPIBudn6kMDz0Wx9i4+CpOqUmz1YOCEwiRpRJPSMl6uO
-        OpuCmSHg+4yC7Sx1KeL5uEnziviABH3ODvjHeK6cpLQ0XUKWm9/so56auWVICHGK
-        Gg2wDHqL2e4XmbwF6C1IC7dAK7ZM/J5Vs8r5Y=
+        :content-type; s=sasl; bh=jjGrP+BaCIG8YnZ/zMqtk7/f4rw=; b=BxUfua
+        +x2zZUyKK8ufKoP1WL2bcsOZ3NtzwZKzvlsrHEchIG2l0q1VcJtqxfXIMoURd1Vw
+        wqcWfnj6To2UI+ASxmBMPIA9/k/gFyDw5NdTdfaD5YI0F32Y2PWUiEqU58rX1Gn5
+        Xt+FuSoY/wqfL2v4/Zk5Jx/VGlCJtRpvJ9ajk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=fSvl5lwdh9svKH3gOmUBSItkt2blhQz4
-        ffl/6j2CEzR5OgRCG/es1FNCB2brtO3VWmC5q7MXcm3BCS60BZ6W5qM3HCiqhTae
-        fIqNxXrx0UD7Rn6u/VAISriX2IbdQGi167kcBfrUIlpPgFVMwJsxM4Tmnszl9OSn
-        7n1PkzIqU5Q=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9A7D5115BD9;
-        Mon,  5 Apr 2021 20:10:21 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=aE8n3+HTC5mkz25Ww4Z/xEQblS3LBWTl
+        uf8J4GG/aLUEsA1ceLgzrnT/G/yh2NPciPHPajjvLAD9WYFJf/1H2PvvwD9OATOw
+        aaNaQ/h7tbykgk9uNz7l97uPL69joqDL0kWeHkEsp5qao6F6yPBqhI7wQZjtvI5y
+        NuBMeSr4M2Y=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 627B1125528;
+        Mon,  5 Apr 2021 20:14:02 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D90A2115BD8;
-        Mon,  5 Apr 2021 20:10:18 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 28916125524;
+        Mon,  5 Apr 2021 20:13:59 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jerry Zhang <jerry@skydio.com>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Ross Yeager <ross@skydio.com>,
-        Abraham Bachrach <abe@skydio.com>,
-        Jerry Zhang <jerryxzha@googlemail.com>,
-        Brian Kubisiak <brian.kubisiak@skydio.com>
-Subject: Re: [PATCH 1/1] git-apply: Allow simultaneous --cached and --3way
- options
-References: <20210403013410.32064-1-jerry@skydio.com>
-        <20210403013410.32064-2-jerry@skydio.com>
-        <CABPp-BGhvQF9k1Jw9NPbZWMkNSffqR777-4S-y-Sh=Etvw-SAA@mail.gmail.com>
-        <xmqqy2e00zaf.fsf@gitster.g> <xmqq1rbq276g.fsf@gitster.g>
-        <CAMKO5CtCk_sJsFFiKKFR1wCSyY226CbxPtN6=p6JRzocSuv8jQ@mail.gmail.com>
-        <xmqqy2dw4bh3.fsf@gitster.g>
-        <CAMKO5CuYE1VA2h2zDo-b77WQDgj1LriwifruziPA30Yb7uS=6A@mail.gmail.com>
-Date:   Mon, 05 Apr 2021 17:10:17 -0700
-In-Reply-To: <CAMKO5CuYE1VA2h2zDo-b77WQDgj1LriwifruziPA30Yb7uS=6A@mail.gmail.com>
-        (Jerry Zhang's message of "Mon, 5 Apr 2021 16:29:15 -0700")
-Message-ID: <xmqqblas46ja.fsf@gitster.g>
+To:     Albert Cui <albertqcui@gmail.com>
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        Albert Cui via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v2] hooks: propose project configured hooks
+References: <pull.908.git.1616105016055.gitgitgadget@gmail.com>
+        <pull.908.v2.git.1616723016659.gitgitgadget@gmail.com>
+        <ec031dc8-e100-725b-5f27-d3007c55be87@gmail.com>
+        <CAMbkP-S-9cccMpU4HG0Wurqap-WkTmD2zk50nKd9kJ_oWO__qw@mail.gmail.com>
+        <xmqqmtuc49cm.fsf@gitster.g>
+        <CAMbkP-SBQMLeM14d9KSnzE44KsfhHPsxWQ1PaskauWPynTJvWQ@mail.gmail.com>
+Date:   Mon, 05 Apr 2021 17:13:57 -0700
+In-Reply-To: <CAMbkP-SBQMLeM14d9KSnzE44KsfhHPsxWQ1PaskauWPynTJvWQ@mail.gmail.com>
+        (Albert Cui's message of "Mon, 5 Apr 2021 16:40:24 -0700")
+Message-ID: <xmqq7dlg46d6.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 789C03CA-966C-11EB-8EE1-E43E2BB96649-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: FBE71ADA-966C-11EB-B5A4-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jerry Zhang <jerry@skydio.com> writes:
+Albert Cui <albertqcui@gmail.com> writes:
 
-> Unrelatedly would you have context on why --3way falls back on 3way
-> rather than trying 3way first then falling back on apply_fragments if
-> blobs don't exist?
+> I'm a little confused, and maybe it's because we have different
+> definitions of what "installing hooks" means. By installing hooks,
+> I meant the addition of the hook command to the config, e.g the
+> outcome of:
+>
+> `git config --add hook.pre-commit.command pylint`
 
-Historical accident, following the order in which these features
-were invented, plus applying a single patch straight has been faster
-than doing a 3-way.
+Yeah, I was envisioning that it won't be as a simple, mechanical and
+unconditional single command invocation.  Rather, the 'pylint' part
+would have to become different depending on the environment (e.g.
+what operating system you are on, what editor you prefer, etc.).
+And the part that decides what kind of environment you are on would
+have to be written by the project that controls the "project-managed
+hooks"---unfortunately that would most likely to be an error-prone
+part.
 
-I tend to agree with what you are hinting at, though, as I do not
-offhand think of a situation in which a successful 3way merge would
-be less correct than a straight patch application, and if the user
-explicitly has told us to do "--3way", that is a sign that it is
-acceptable to try 3way first even if it costs more cycles.
 
-Those who has been giving "--3way" from inertia would notice if the
-performance difference is large enough and may complain, though.
+
