@@ -2,187 +2,169 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 96269C433B4
-	for <git@archiver.kernel.org>; Tue,  6 Apr 2021 02:49:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E275DC433B4
+	for <git@archiver.kernel.org>; Tue,  6 Apr 2021 02:52:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 607B2613A7
-	for <git@archiver.kernel.org>; Tue,  6 Apr 2021 02:49:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A82D76139E
+	for <git@archiver.kernel.org>; Tue,  6 Apr 2021 02:52:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243488AbhDFCtr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Apr 2021 22:49:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59938 "EHLO
+        id S243490AbhDFCw0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Apr 2021 22:52:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233030AbhDFCtq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Apr 2021 22:49:46 -0400
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 396C5C06174A
-        for <git@vger.kernel.org>; Mon,  5 Apr 2021 19:49:38 -0700 (PDT)
-Received: by mail-pj1-x1035.google.com with SMTP id k23-20020a17090a5917b02901043e35ad4aso8844210pji.3
-        for <git@vger.kernel.org>; Mon, 05 Apr 2021 19:49:38 -0700 (PDT)
+        with ESMTP id S233030AbhDFCw0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Apr 2021 22:52:26 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D28BC06174A
+        for <git@vger.kernel.org>; Mon,  5 Apr 2021 19:52:19 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id ap14so19576908ejc.0
+        for <git@vger.kernel.org>; Mon, 05 Apr 2021 19:52:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=skydio.com; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Zs3opUXUD5wpPyjh8J//WOSfIztiUcieeV45b2m5pNc=;
-        b=k+uRMdq4StLBIqZb8AmUhzxD8MY+jWZfzlDOhN26hwnx47mmmvvorhyWpJ8ynYwbCJ
-         39kMIxXCJ1hSNUX3uku5szJbwuk7OPIWa4H2eQKKx44XAOksZbzPn8r1vgsSeJR+w8rW
-         W1D5zyKGotOIQAKm24+ei8jcL/AFkQXCKLnxN+nD1nQWDKvcYr92MRkkI5ZHavFC+V+j
-         OCQ8Kzezg9Bwx6MxqsJueawuUQNRfdH81bN7Y0uw+bR0mtdT2BqOv0A+2lMRV/Xj+h1l
-         NDb6htb9coEC7+W+MzEF1Fq34GF7509KyVKuLI5e6TLkwmehGc7VMNzirDef0CL/BVS2
-         Lmvg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=JIExY/8d3KpyTzXEst/3i8AOlXGwm+U4LK39z2D3Ze8=;
+        b=kkhuXGT8q1ZapsEM9qb9YXnZdJD7fuzTtJDL9JVxd9LhMrgBkNdAp2Cnf2HjF1aq3Z
+         nfHauklocsXV471Eq2M0PcUCW0lROpWU7yyOgS6BzToOKNAg5K5cK68nK3SxvvxkVAxA
+         VHzHPateKcc0Q/jB9iQf3gVqG9CaUwt42lKupeLNLUfyH/DgcLF+10Ywh263Z77cV7PS
+         wYiHyq0zH9hSTskGx8PkcOQTcp4t9uSr+rhy0ZlCrkhvT1XFNHhtzTxeACMSxJTgtph/
+         SvqS28/dYY3Py0qvJDgEc8Jr4XMfBwiGWEVWcrJTmsdtKcpiCIuuRPZyFr8PnED345pV
+         b3Ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Zs3opUXUD5wpPyjh8J//WOSfIztiUcieeV45b2m5pNc=;
-        b=s2JDeSwGrtjnm3aPAAvIJAKLjjwGKlsEXXnh71Exq+rh4hhOYQBn6EVv0bzUTBcH3Y
-         ddoh30piSJSb1M0WuZOf+yJl3M3R1wiTMwBFdouhmbAzKsDPAho4yLB/8+Wsaw0ap0B7
-         srQV1odR/+H1uuRSlJ7NR5Jz11hjlPgLLxu3XW+rRBhoSToppfqH4u1FzfYxNfprD6m/
-         CfWVxc/NJ/tsHuXiGuwQ6iLdjXw7HEUO+ElmnL9EUg/COhb1dinWOWPVzecHMbXynfZ/
-         qL0yh8KXgKC0Aj43MiEF6rIQj9gKzcONlwxZyHuM5IiWAQiMvJjiKEmGfG+sESl24pee
-         anVA==
-X-Gm-Message-State: AOAM532WdzO/49Y4PFXLuNJoUDnSu0QUq/K/yyaIkkFl8P941MZQdTar
-        kVC2RKxLVuFjURq+plqiYzbdlJYygoI6usIP
-X-Google-Smtp-Source: ABdhPJykwC366jUxmavwJrLOqd1Y8/3t7UnbYT3aRZUXDOs9MgGlWX0stms7CXq6i0LLs3YkkbcxlQ==
-X-Received: by 2002:a17:902:6845:b029:e4:4d0f:c207 with SMTP id f5-20020a1709026845b02900e44d0fc207mr26854752pln.36.1617677377291;
-        Mon, 05 Apr 2021 19:49:37 -0700 (PDT)
-Received: from jerry-desktop.localdomain ([50.236.240.214])
-        by smtp.gmail.com with ESMTPSA id v25sm16746272pfn.51.2021.04.05.19.49.36
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 05 Apr 2021 19:49:36 -0700 (PDT)
-From:   Jerry Zhang <jerry@skydio.com>
-To:     git@vger.kernel.org, newren@gmail.com, gitster@pobox.com
-Cc:     ross@skydio.com, abe@skydio.com, brian.kubisiak@skydio.com,
-        Jerry Zhang <jerry@skydio.com>
-Subject: [PATCH v3] git-apply: allow simultaneous --cached and --3way options
-Date:   Mon,  5 Apr 2021 19:49:31 -0700
-Message-Id: <20210406024931.24355-1-jerry@skydio.com>
-X-Mailer: git-send-email 2.31.1.165.g83e21c9f89
-In-Reply-To: <20210405221902.27998-1-jerry@skydio.com>
-References: <20210405221902.27998-1-jerry@skydio.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=JIExY/8d3KpyTzXEst/3i8AOlXGwm+U4LK39z2D3Ze8=;
+        b=Tihb3zjAboWxIuKyxg1bd+PU5GaFoyzQJQsiO4BWM6/4g3RW/fUShO8suLr+PoJYmS
+         6hx8v2VR/blrY4D4H1n/2LLc8C0SLbaO8vJtjQw+T5BCxJp2OGuQw/yj65aT2sOWn6IS
+         oaaouuZ4Dj3CsPqZ2Sn/IncWnnwE5UoOCZvqJk3b8VCHWqZ4Snxlmi31XCNszh/4/5cd
+         QkdLGryRSjHp60E5+L8W3pb8aNhBgYOHr1DYKBV5YK2+zCKyV/AoURgQh7yk9B/1zgA8
+         einqIR2Uoom5Gjduhwko7zJkSI7zB4/6LvDg0fVOjgvhPpY6n0AH/sdu9oLGqH+MJtXk
+         qO9A==
+X-Gm-Message-State: AOAM533sn2Y2Ycgi3y8S3SBEuYJySB6jQ+sVlcib61T0jRF/zGSm/j8V
+        Bjmb47EY8uc4UKqlcveAhWxge24hKSH/NjoYgJxZZg==
+X-Google-Smtp-Source: ABdhPJx/ptFdT93qwXwVl2Cp0vFPQwDAYlIvOQbFSKC891IawX5IWrl9QjRLhwx27DhjSfhHW4qYLARhEcIOQIBYwb4=
+X-Received: by 2002:a17:907:3e9e:: with SMTP id hs30mr32187712ejc.66.1617677536828;
+ Mon, 05 Apr 2021 19:52:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20210403013410.32064-2-jerry@skydio.com> <20210405221902.27998-1-jerry@skydio.com>
+ <xmqqr1jo4aex.fsf@gitster.g>
+In-Reply-To: <xmqqr1jo4aex.fsf@gitster.g>
+From:   Jerry Zhang <jerry@skydio.com>
+Date:   Mon, 5 Apr 2021 19:52:06 -0700
+Message-ID: <CAMKO5CuLpa9Sn_oXMpgP6oGE9NFA8aLeTfeyaW6TOTErE0KgEg@mail.gmail.com>
+Subject: Re: [PATCH V2] git-apply: Allow simultaneous --cached and --3way options
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Elijah Newren <newren@gmail.com>,
+        Ross Yeager <ross@skydio.com>,
+        Abraham Bachrach <abe@skydio.com>,
+        Brian Kubisiak <brian.kubisiak@skydio.com>,
+        Jerry Zhang <jerryxzha@googlemail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"git apply" does not allow "--cached" and
-"--3way" to be used together, since "--3way"
-writes conflict markers into the working tree.
+Thanks for the comments! I've updated v3 with the changes. Let me know
+if you have any
+more thoughts on whether to block / warn the user before clobbering their cache.
 
-Allow "git apply" to accept "--cached" and
-"--3way" at the same time.  When all changes
-auto-resolve cleanly, the result is placed in the
-index at stage #0 and the command exits with 0
-status.  If there is any path whose conflict
-cannot be cleanly auto-resolved, the original
-contents from common ancestor (stage #1), our
-version (stage #2) and the contents from the
-patch (stage #3) are left at separate stages.
-No attempt is made to resolve the conflict at
-the content level, and the command exists with
- non-zero status, because there is no place
-(like the working tree) to leave a half-resolved
- merge for the user to resolve.
-
-The user can use `git diff` to view the contents
-of the conflict, or `git checkout -m -- .` to
-regenerate the conflict markers in the working
-directory.
-
-Since rerere depends on conflict markers written
-to file for its database storage and lookup, don't
-attempt it in this case. This could be fixable
-if the in memory conflict markers from the ll_merge
-result could be passed to the rerere api.
-
-Signed-off-by: Jerry Zhang <jerry@skydio.com>
----
- Documentation/git-apply.txt |  6 ++++--
- apply.c                     |  7 +++----
- t/t4108-apply-threeway.sh   | 24 ++++++++++++++++++++++++
- 3 files changed, 31 insertions(+), 6 deletions(-)
-
-diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
-index 91d9a8601c8c316d4649c405af42e531c39991a8..9c48863c47287208850e8376f43453ecec595444 100644
---- a/Documentation/git-apply.txt
-+++ b/Documentation/git-apply.txt
-@@ -88,8 +88,10 @@ OPTIONS
- 	the patch records the identity of blobs it is supposed to apply to,
- 	and we have those blobs available locally, possibly leaving the
- 	conflict markers in the files in the working tree for the user to
--	resolve.  This option implies the `--index` option, and is incompatible
--	with the `--reject` and the `--cached` options.
-+	resolve.  This option implies the `--index` option unless the
-+	`--cached` option is used, and is incompatible with the `--reject` option.
-+	When used with the `--cached` option, any conflicts are left at higher stages
-+	in the cache.
- 
- --build-fake-ancestor=<file>::
- 	Newer 'git diff' output has embedded 'index information'
-diff --git a/apply.c b/apply.c
-index 6695a931e979a968b28af88d425d0c76ba17d0d4..02d13ea6db7f9a4066dec3d33d7ddbe11b616f33 100644
---- a/apply.c
-+++ b/apply.c
-@@ -133,8 +133,6 @@ int check_apply_state(struct apply_state *state, int force_apply)
- 
- 	if (state->apply_with_reject && state->threeway)
- 		return error(_("--reject and --3way cannot be used together."));
--	if (state->cached && state->threeway)
--		return error(_("--cached and --3way cannot be used together."));
- 	if (state->threeway) {
- 		if (is_not_gitdir)
- 			return error(_("--3way outside a repository"));
-@@ -4645,8 +4643,9 @@ static int write_out_results(struct apply_state *state, struct patch *list)
- 				fprintf(stderr, "U %s\n", item->string);
- 		}
- 		string_list_clear(&cpath, 0);
--
--		repo_rerere(state->repo, 0);
-+		/* rerere relies on conflict markers which aren't written with --cached */
-+		if (!state->cached)
-+			repo_rerere(state->repo, 0);
- 	}
- 
- 	return errs;
-diff --git a/t/t4108-apply-threeway.sh b/t/t4108-apply-threeway.sh
-index d62db3fbe16f35a625a4a14eebb70034f695d3eb..75eb34b13d0024046fd2a510c00c5af1f7bfc52d 100755
---- a/t/t4108-apply-threeway.sh
-+++ b/t/t4108-apply-threeway.sh
-@@ -160,4 +160,28 @@ test_expect_success 'apply -3 with add/add conflict (dirty working tree)' '
- 	test_cmp three.save three
- '
- 
-+test_expect_success 'apply with --3way --cached' '
-+	# Merging side should be similar to applying this patch
-+	git diff ...side >P.diff &&
-+
-+	# The corresponding conflicted merge
-+	git reset --hard &&
-+	git checkout main^0 &&
-+	test_must_fail git merge --no-commit side &&
-+	git ls-files -s >expect.ls &&
-+
-+	# should fail to apply
-+	git reset --hard &&
-+	git checkout main^0 &&
-+	test_must_fail git apply --cached --3way P.diff &&
-+	git ls-files -s >actual.ls &&
-+	print_sanitized_conflicted_diff >actual.diff &&
-+
-+	# The cache should resemble the corresponding merge
-+	test_cmp expect.ls actual.ls &&
-+	# However the working directory should not change
-+	>expect.diff &&
-+	test_cmp expect.diff actual.diff
-+'
-+
- test_done
--- 
-2.29.0
-
+On Mon, Apr 5, 2021 at 3:46 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Jerry Zhang <jerry@skydio.com> writes:
+>
+> > Subject: Re: [PATCH V2] git-apply: Allow simultaneous --cached and --3way options
+>
+> s/Allow/allow/ (cf. "git shortlog --no-merged" output for recent examples)
+>
+> > Previously, --cached and --3way were not
+> > allowed to be used together, since --3way
+> > wrote conflict markers into the working tree.
+>
+> Hint that you are talking about the "git apply" command by
+> mentioning the name somewhere.
+>
+> Drop "previously"; we talk about the status quo in the present tense
+> in our proposed commit log messages to set the stage, and then describe
+> what the patch author percieves as a problem, before describing the
+> proposed solution to the problem.
+>
+> cf. Documentation/SubmittingPatches[[describe-changes]] (the whole section)
+>
+> > These changes change semantics so that if
+> > these flags are given together and there is
+> > a conflict, the conflicting objects are left
+> > at a higher order in the cache, and the command
+> > will return non-zero. If there is no conflict,
+> > the patch is applied directly to cache as
+> > expected and the command will return 0.
+>
+> Give an order to the codebase to "be like so".  Here is my attempt.
+>
+>     Teach "git apply" to accept "--cached" and "--3way" at the same
+>     time.  Only when all changes to all paths involved in the
+>     application auto-resolve cleanly, the result is placed in the
+>     index at stage #0 and the command exits with 0 status.  If there
+>     is any path whose conflict cannot be cleanly auto-resolved, the
+>     original contents from common ancestor (stage #1), our version
+>     (stage #2) and the contents from the patch (stage #3) for the
+>     conflicted paths are left at separate stages without any attempt
+>     to resolve the conflict at the content level, and the command
+>     exists with non-zero status, because there is no place (like the
+>     working tree files) to leave a half-resolved conflicted merge
+>     result to ask the end-user to resolve.
+>
+> > The user can use `git diff` to view the contents
+> > of the conflict, or `git checkout -m -- .` to
+> > regenerate the conflict markers in the working
+> > directory.
+>
+> Nice.
+>
+> > With the combined --3way and --cached flags,
+> > The conflict markers won't be written to the
+> > working directory, so there is no point in
+> > attempting rerere.
+>
+> I am not sure what this paragraph is trying to convey here.
+>
+> I agree that when a *new* conflict is encountered in this new mode,
+> writing out a rerere pre-image, in preparation for accepting the
+> post-image the end-user gives us after the conflicts are resolved,
+> does not make sense, because we are not giving the end-user the
+> conflicted state and asking to help resolve it for us.
+>
+> But if a rerere database entry records a previous merge result in
+> which conflicts were resolved by the end user, it would make sense
+> to try reusing the resolution, I would think.  I offhand do not know
+> how involved it would be to do so, so punting on that is fine, but
+> that is "there is no point", but it is "we are not trying".
+>
+> Perhaps
+>
+>     When there are conflicts, theoretically, it would be nice to be
+>     able to replay an existing entry in the rerere database that
+>     records already resolved conflict that match the current one,
+>     but that would be too much work, so let's not try it for now.
+>
+> would be a good explanation why we are not doing (i.e. we made a
+> trade-off) and recording that is important, as it will allow others
+> in the future to try building on the change we are proposing here
+> (it is not like we decided that it is fundamentally wrong to try to
+> use rerere in this situation).
+>
+> > Signed-off-by: Jerry Zhang <jerry@skydio.com>
+> > Signed-off-by: Jerry Zhang <jerryxzha@googlemail.com>
+>
+> Unless we are interacting with two people with the same name, please
+> sign-off with the same name/address as the name/address that will be
+> recorded as the author of this change.  I am guessing that dropping
+> the latter should be sufficient?
+>
+> Thanks.
