@@ -2,106 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93290C433B4
-	for <git@archiver.kernel.org>; Tue,  6 Apr 2021 23:01:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D5A52C433B4
+	for <git@archiver.kernel.org>; Tue,  6 Apr 2021 23:13:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6BDCB613BE
-	for <git@archiver.kernel.org>; Tue,  6 Apr 2021 23:01:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A1EF761177
+	for <git@archiver.kernel.org>; Tue,  6 Apr 2021 23:13:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236259AbhDFXCB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Apr 2021 19:02:01 -0400
-Received: from cloud.peff.net ([104.130.231.41]:43018 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232398AbhDFXCA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Apr 2021 19:02:00 -0400
-Received: (qmail 9674 invoked by uid 109); 6 Apr 2021 23:01:52 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 06 Apr 2021 23:01:52 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 1085 invoked by uid 111); 6 Apr 2021 23:01:52 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 06 Apr 2021 19:01:52 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 6 Apr 2021 19:01:51 -0400
-From:   Jeff King <peff@peff.net>
-To:     Varun Varada <varuncvarada@gmail.com>
-Cc:     Michal =?utf-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] doc: replace jargon word "impact" with "effect"/"affect"
-Message-ID: <YGzoX9OeWMKXpqtf@coredump.intra.peff.net>
-References: <CAD2i4DBj6fNvq=Lc3KiXJj5uBpteyKfEKp7ATOWrTE36KUeRww@mail.gmail.com>
- <20210406092440.GZ6564@kitsune.suse.cz>
- <CAD2i4DDr3Ftk6RE8cA74iSsJTpC9nEb=Cqvr79pF51BpcWEnsA@mail.gmail.com>
+        id S235432AbhDFXNe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Apr 2021 19:13:34 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55793 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232039AbhDFXNd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Apr 2021 19:13:33 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A9D99B44F8;
+        Tue,  6 Apr 2021 19:13:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=z1Re0iZmvLiMC045fZ+6yREwGIg=; b=ofrfNF
+        o/MSlr9yjJMW2R2q5BfoPhe/eFEeANb2WBzyB/zupEPzblbLAUFGtJ1O7mES6cAX
+        5VfFNLbvRvjY6baAj2MUM0ypDqvHMYhoWc1oXfp71gkdjh6CBZP85JHCOvk81tRH
+        xe1Od/GXQWWN94Ofc6LThZQuMPd9M6h9UqA8s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=V8c53Ygg5BblQFQI0/GNE0Z+jbbmmme6
+        KNQxrtyHyQfbvAgWVoiTCk9ofaKqw3oXSm95FJXsYPE2Ul0SF7vKOnvVgFbcvf19
+        ztoD2e4U+Np4t11ch61Nw/en5XelISXwJOBqRgHhg7Jw4gnVBukDCGx9vLW9Onoq
+        fqDj5jiF8do=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9E9B2B44F7;
+        Tue,  6 Apr 2021 19:13:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 25B45B44F6;
+        Tue,  6 Apr 2021 19:13:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jerry Zhang <jerry@skydio.com>
+Cc:     git@vger.kernel.org, newren@gmail.com, ross@skydio.com,
+        abe@skydio.com, brian.kubisiak@skydio.com
+Subject: Re: [PATCH] git-apply: try threeway first when "--3way" is used
+References: <20210406025551.25213-1-jerry@skydio.com>
+        <xmqqblas2b52.fsf@gitster.g>
+Date:   Tue, 06 Apr 2021 16:13:23 -0700
+In-Reply-To: <xmqqblas2b52.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+        05 Apr 2021 23:13:45 -0700")
+Message-ID: <xmqqk0pf0zxo.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAD2i4DDr3Ftk6RE8cA74iSsJTpC9nEb=Cqvr79pF51BpcWEnsA@mail.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: AFAEB2C4-972D-11EB-8A87-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 06, 2021 at 02:36:27PM -0500, Varun Varada wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> > while using "will not impact" in an incorrect or unclear way may be a
-> > problem the word "impact" in itself is not "jargon".
-> 
-> The word means "to have a strong or marked effect on" (v.) and "a
-> strong or market influence" (n.) when used figuratively; it is not
-> synonymous with "affect" and "effect", respectively, as shown even by
-> all of the entries you've cited. Using it as such is the incorrect
-> part, so those are the instances I've changed in the diff.
+> Will queue.  Thanks.
 
-Er, is that true? From Michal's definitions:
+Just to avoid confusion, "Will queue" does not mean "No further
+updates are necessary from you".
 
-> > From The Collaborative International Dictionary of English v.0.48 :
-> [...]
-> >      2. To affect or influence, especially in a significant or
+It is a short-hand to say "Even though the version I just reviewed
+may still want to be improved, it is in good enough shape to be
+tested with other topics on the 'seen' branch, so I'll do so
+primarily to see if there are any funny interactions with them".
 
-It literally uses "affect" to define it. The "especially significant"
-does not apply to many, but I don't think that makes it necessarily
-wrong to use impact to mean "affect".
+IOW, I expect the patch to be rerolled before it is ready to be
+merged to 'next' and below.
 
-Likewise:
+Thanks.
 
-> > From WordNet (r) 3.0 (2006) :
-> [...]
-> >       v 1: press or wedge together; pack together
-> >       2: have an effect upon; "Will the new rules affect me?" [syn:
-> >          affect, impact, bear upon, bear on, touch on,
-> >          touch]
-
-That is likewise listing "impact" and "affect" as synonyms.
-
-I do agree the word is over-used in some forms of writing, but I don't
-find anything at all confusing or wrong about the uses that you changed
-in your patch. I am a native speaker of English. I'm open to the
-argument that non-native speakers may be more confused by the word. But
-this seems like mostly a style preference thing, and I'd generally
-prefer to leave the contributions and style of the original writers
-intact unless there is a good reason not to.
-
-Such changes are doubly unwanted in cases like this:
-
-> --- a/compat/nedmalloc/malloc.c.h
-> +++ b/compat/nedmalloc/malloc.c.h
-> @@ -2952,7 +2952,7 @@ static size_t traverse_and_check(mstate m);
->  #endif /* (FOOTERS && !INSECURE) */
-> 
-> 
-> -/* In gcc, use __builtin_expect to minimize impact of checks */
-> +/* In gcc, use __builtin_expect to minimize affect of checks */
->  #if !INSECURE
->  #if defined(__GNUC__) && __GNUC__ >= 3
->  #define RTCHECK(e)  __builtin_expect(e, 1)
-
-where the text is imported from another project, and we'd prefer to stay
-as close to their version as possible (e.g., to avoid unnecessary
-conflicts when pulling in new versions).
-
-Also, this one should be "effect" anyway, as it is a noun.
-
--Peff
