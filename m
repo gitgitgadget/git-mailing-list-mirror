@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CBF22C433ED
-	for <git@archiver.kernel.org>; Tue,  6 Apr 2021 18:47:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 59423C433B4
+	for <git@archiver.kernel.org>; Tue,  6 Apr 2021 18:47:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 960B5613BD
-	for <git@archiver.kernel.org>; Tue,  6 Apr 2021 18:47:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 27E37613D2
+	for <git@archiver.kernel.org>; Tue,  6 Apr 2021 18:47:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240418AbhDFSsC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Apr 2021 14:48:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43914 "EHLO
+        id S240485AbhDFSsD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Apr 2021 14:48:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233898AbhDFSsC (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S240251AbhDFSsC (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 6 Apr 2021 14:48:02 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E34ABC06174A
-        for <git@vger.kernel.org>; Tue,  6 Apr 2021 11:47:53 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id b9so7417211wrs.1
-        for <git@vger.kernel.org>; Tue, 06 Apr 2021 11:47:53 -0700 (PDT)
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7741EC06175F
+        for <git@vger.kernel.org>; Tue,  6 Apr 2021 11:47:54 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id t5-20020a1c77050000b029010e62cea9deso7819503wmi.0
+        for <git@vger.kernel.org>; Tue, 06 Apr 2021 11:47:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Llo0Of7xrxXb6L4qe3wjXKvb7OepjL9FntDDDajZ5Mw=;
-        b=DMyp7iRDR6qii+ndDYKda85Lrw1I11PqvwyMBEIbUV6Q0vueUN42ry5CdZEDy6AYN6
-         R01gm+CbZgiXGDrfvgvSVfH1+LetRPQX06MY7ja/ka9FCS7lUnEHNce/81zeq32ad60p
-         fAqW9CPSF8/mfVZZbBwRlXtlBugYkGXD/qwYb2zSwLKdm/Cnqk/CiwL1MtBzT3VAziDe
-         q+VCiPosmdDoLNwO5oXeGTduGR2UDr9jMDsx+ldWIyi2akk5Z5VtyJWIj5mfyefavX2Z
-         Gt7c/ydfzUnEg/SkuFN1b4VNCtvbnZ4CUY58Q4Y6a11pgV47fepV/vFz3YC0lR1lWBOz
-         OjOw==
+        bh=PgJ0YgR2NLW/QaUBFc2FgMQq0xZYgM9FeOj+wD03FLg=;
+        b=iHsH1ucyOGEQAoDxt+F4PfFwNTeIRxMJ7G/SB3bLb4VJNGYKn5juTFmevv4oRPxzUP
+         h2Wx/AoGx+BV+4hzYOmnQl1sgEQlMZyV+iaT3RACV0Ts4QDsEWBXCx+rEamsDGnO5sV5
+         BqDgXgRFeO98Nrkpqc00cUuLEWp8y0eAWLQgN5rdBqZjKEvjxvLSuNHacMEaMq03zKon
+         b+O70eafeCmTTG/e0uvu7CquWSZETwdTueKcdWTswnC2x+0HHvPLxBHGANAdDfc15PTN
+         jxwzOz6Ej4ZY66bYwAnrO/3Vy+fYCadsFxKn5L7zHjuCIVdLFn8QEeZuiI12+MnJK9hH
+         Qf2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Llo0Of7xrxXb6L4qe3wjXKvb7OepjL9FntDDDajZ5Mw=;
-        b=ea9AVDGQ+QisottLuOMCW4WTsDSHW7Jbh8Bz6wDdpmTOuoMVWhv1MU/oBoGa38ujqR
-         BodFwghl/c/JkjmeUDxydSKTL5wTQLvZDcOYkxpHCZL6NGIeHnUnetX+2F9+XT4WCFHb
-         57tqzuUD/kZI1rpsPfewlIAq0pw/zugOVuPC34vPjk2KAeee2GEjcbhVFabQ1yfYAjEb
-         qJTlGOY4NSjSRPpqfFnBlphPgJSPJzDxR3+8hhtDuYwAjbjhTGPb8Gkyl6TVRytsgwWO
-         x3Cq5V4hEjbnhGjriPZDxCgO/2tkFA6HKJt8apkJrmjNj7zB6iLUS4NMxvH073ZUe1x1
-         Li7Q==
-X-Gm-Message-State: AOAM530H7K5qyF5lbLKT0g2smc6ZWcHItLYv2B8tmjnTlCFHLHZtH2iN
-        ihTJKwB4b4EnnK9gxDBBeDezy17buIs=
-X-Google-Smtp-Source: ABdhPJwp9Ga7oNmi7zd/9E17vzxh9jH1+lBGS+vmBw7Iqmld3bvvb9PuDjZFHVlrfdwVcCxbQYAjPA==
-X-Received: by 2002:adf:f8c2:: with SMTP id f2mr5089623wrq.194.1617734872603;
-        Tue, 06 Apr 2021 11:47:52 -0700 (PDT)
+        bh=PgJ0YgR2NLW/QaUBFc2FgMQq0xZYgM9FeOj+wD03FLg=;
+        b=XEjvV85A3eFdqbku+bAvAraVJGwfjsiyifkenXw5OuSikD/hWLiRdgs5Rizv5y4Gnk
+         zprk9E5LSd4/EgZVV/VJ/OqjEVklQRHNT/1lvZgzpbNiQ28QCZs0K2dyWjR2tXYh0ICt
+         JtF0c+Kzj6/ssa2X9JebrzL0eGOQ7byhB6+BL9vG/HBLp4dbWRtC3neWbeebYXhl7ZN4
+         888cVLqjCBYWabiU7B6M5CumSkmtyoJsGQgvgipVliptvipu06nwqBMnXQtCyRNyiGKF
+         07KCbLAf9ZAxw5CCAxvcwf6kdLkZN0rrOv1KAOhKVpLnXl51KH5UYAbW4aU6gnG1A9km
+         aHeQ==
+X-Gm-Message-State: AOAM531E10UYNN6zbpjvN9ns0wtwA+UNwcgQOavLBy6omp58YlLcdeh5
+        fo+ef1N/KjitpRKaUPeRHoHwbeillZE=
+X-Google-Smtp-Source: ABdhPJxKjU5TGZyKRdBnqn8qXn5aURpX9Dc8PKc1Dbx8eQhD2CxAEM3Mg+2KO1zU7kyVb8xBL5+hlw==
+X-Received: by 2002:a7b:cb45:: with SMTP id v5mr2052757wmj.2.1617734873255;
+        Tue, 06 Apr 2021 11:47:53 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o24sm3718380wmr.26.2021.04.06.11.47.52
+        by smtp.gmail.com with ESMTPSA id o62sm5149497wmo.3.2021.04.06.11.47.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 06 Apr 2021 11:47:52 -0700 (PDT)
-Message-Id: <5aa0cb06c3f2e31a51bb6747fa84de69c0c1212f.1617734870.git.gitgitgadget@gmail.com>
+Message-Id: <d58a3e042ee84641290b15496e96f959ef86a122.1617734870.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.924.v2.git.1617734870.gitgitgadget@gmail.com>
 References: <pull.924.git.1617627856.gitgitgadget@gmail.com>
         <pull.924.v2.git.1617734870.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 06 Apr 2021 18:47:46 +0000
-Subject: [PATCH v2 1/5] maintenance: simplify prefetch logic
+Date:   Tue, 06 Apr 2021 18:47:47 +0000
+Subject: [PATCH v2 2/5] test-lib: use exact match for test_subcommand
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,86 +78,56 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The previous logic filled a string list with the names of each remote,
-but instead we could simply run the appropriate 'git fetch' data
-directly in the remote iterator. Do this for reduced code size, but also
-because it sets up an upcoming change to use the remote's refspec. This
-data is accessible from the 'struct remote' data that is now accessible
-in fetch_remote().
+The use of 'grep' inside test_subcommand uses general patterns, leading
+to sometimes needing escape characters to avoid incorrect matches.
+Further, some platforms interpret regular expression metacharacters
+differently. Furthermore, it can be difficult to know which characters
+need escaping since the actual regular expression language implemented
+by various `grep`s differs between platforms; for instance, some may
+employ pure BRE, whereas others a mix of BRE & ERE.
 
+Sidestep this difficulty by using `grep -F` to use an exact match. This
+requires removing escape characters from existing callers. Luckily,
+this is only one test that expects refspecs as part of the subcommand.
+
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- builtin/gc.c | 33 ++++++++-------------------------
- 1 file changed, 8 insertions(+), 25 deletions(-)
+ t/t7900-maintenance.sh  | 4 ++--
+ t/test-lib-functions.sh | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index ef7226d7bca4..fa8128de9ae1 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -873,55 +873,38 @@ static int maintenance_task_commit_graph(struct maintenance_run_opts *opts)
- 	return 0;
+diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+index 2412d8c5c006..37eed6ed3aa3 100755
+--- a/t/t7900-maintenance.sh
++++ b/t/t7900-maintenance.sh
+@@ -142,8 +142,8 @@ test_expect_success 'prefetch multiple remotes' '
+ 	test_commit -C clone2 two &&
+ 	GIT_TRACE2_EVENT="$(pwd)/run-prefetch.txt" git maintenance run --task=prefetch 2>/dev/null &&
+ 	fetchargs="--prune --no-tags --no-write-fetch-head --recurse-submodules=no --refmap= --quiet" &&
+-	test_subcommand git fetch remote1 $fetchargs +refs/heads/\\*:refs/prefetch/remote1/\\* <run-prefetch.txt &&
+-	test_subcommand git fetch remote2 $fetchargs +refs/heads/\\*:refs/prefetch/remote2/\\* <run-prefetch.txt &&
++	test_subcommand git fetch remote1 $fetchargs "+refs/heads/*:refs/prefetch/remote1/*" <run-prefetch.txt &&
++	test_subcommand git fetch remote2 $fetchargs "+refs/heads/*:refs/prefetch/remote2/*" <run-prefetch.txt &&
+ 	test_path_is_missing .git/refs/remotes &&
+ 	git log prefetch/remote1/one &&
+ 	git log prefetch/remote2/two &&
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 6348e8d7339c..a5915dec22df 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -1652,9 +1652,9 @@ test_subcommand () {
+ 
+ 	if test -n "$negate"
+ 	then
+-		! grep "\[$expr\]"
++		! grep -F "[$expr]"
+ 	else
+-		grep "\[$expr\]"
++		grep -F "[$expr]"
+ 	fi
  }
  
--static int fetch_remote(const char *remote, struct maintenance_run_opts *opts)
-+static int fetch_remote(struct remote *remote, void *cbdata)
- {
-+	struct maintenance_run_opts *opts = cbdata;
- 	struct child_process child = CHILD_PROCESS_INIT;
- 
- 	child.git_cmd = 1;
--	strvec_pushl(&child.args, "fetch", remote, "--prune", "--no-tags",
-+	strvec_pushl(&child.args, "fetch", remote->name, "--prune", "--no-tags",
- 		     "--no-write-fetch-head", "--recurse-submodules=no",
- 		     "--refmap=", NULL);
- 
- 	if (opts->quiet)
- 		strvec_push(&child.args, "--quiet");
- 
--	strvec_pushf(&child.args, "+refs/heads/*:refs/prefetch/%s/*", remote);
-+	strvec_pushf(&child.args, "+refs/heads/*:refs/prefetch/%s/*", remote->name);
- 
- 	return !!run_command(&child);
- }
- 
--static int append_remote(struct remote *remote, void *cbdata)
--{
--	struct string_list *remotes = (struct string_list *)cbdata;
--
--	string_list_append(remotes, remote->name);
--	return 0;
--}
--
- static int maintenance_task_prefetch(struct maintenance_run_opts *opts)
- {
--	int result = 0;
--	struct string_list_item *item;
--	struct string_list remotes = STRING_LIST_INIT_DUP;
--
- 	git_config_set_multivar_gently("log.excludedecoration",
- 					"refs/prefetch/",
- 					"refs/prefetch/",
- 					CONFIG_FLAGS_FIXED_VALUE |
- 					CONFIG_FLAGS_MULTI_REPLACE);
- 
--	if (for_each_remote(append_remote, &remotes)) {
--		error(_("failed to fill remotes"));
--		result = 1;
--		goto cleanup;
-+	if (for_each_remote(fetch_remote, opts)) {
-+		error(_("failed to prefetch remotes"));
-+		return 1;
- 	}
- 
--	for_each_string_list_item(item, &remotes)
--		result |= fetch_remote(item->string, opts);
--
--cleanup:
--	string_list_clear(&remotes, 0);
--	return result;
-+	return 0;
- }
- 
- static int maintenance_task_gc(struct maintenance_run_opts *opts)
 -- 
 gitgitgadget
 
