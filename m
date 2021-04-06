@@ -2,229 +2,170 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7130DC433B4
-	for <git@archiver.kernel.org>; Tue,  6 Apr 2021 12:29:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AE677C433B4
+	for <git@archiver.kernel.org>; Tue,  6 Apr 2021 12:57:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2CE8A6113E
-	for <git@archiver.kernel.org>; Tue,  6 Apr 2021 12:29:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 854E7613CB
+	for <git@archiver.kernel.org>; Tue,  6 Apr 2021 12:57:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243177AbhDFM36 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Apr 2021 08:29:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45212 "EHLO
+        id S243419AbhDFM5c (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Apr 2021 08:57:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51264 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243155AbhDFM35 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Apr 2021 08:29:57 -0400
-Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3A6AC06174A
-        for <git@vger.kernel.org>; Tue,  6 Apr 2021 05:29:47 -0700 (PDT)
-Received: by mail-pg1-x536.google.com with SMTP id l76so10220103pga.6
-        for <git@vger.kernel.org>; Tue, 06 Apr 2021 05:29:47 -0700 (PDT)
+        with ESMTP id S243376AbhDFM5c (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Apr 2021 08:57:32 -0400
+Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 738D3C06174A
+        for <git@vger.kernel.org>; Tue,  6 Apr 2021 05:57:24 -0700 (PDT)
+Received: by mail-oi1-x22a.google.com with SMTP id v25so14958700oic.5
+        for <git@vger.kernel.org>; Tue, 06 Apr 2021 05:57:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=0pn8ir7TtbHXrLk6Ryot1WtWNbBqtzYM8w/lAkB1PsM=;
-        b=avrDBqN9zC3WzYifV3bqyMUJAHlxgg2CnP18iXQmFHSZ28HOXwc8xfQaKUelI2nsJA
-         832KhMqRST01eAqEWYMwKIJncWhKqRAgc/eOVWoJw4CbNu9WZBIYJdnDedu+HJ0b7SnO
-         Q7x3N8zVcCLKDe9DkeXH/rybErrTzQ01GfYtGkNerCK/CJyN1kVRRX2lRVAr+pN5ETe1
-         zQXtwH7Xdl2YdRQndx+LAYgv2RHe3uq0oFF6Qk8EtqSg6mUejRnB1IcUrk0JoCFGx2Wq
-         Xt+wCT25yN1JjPWhSEx9ZNs8Ze44wtggk1iHFya3U8KeBMGepXOLqqRINqPr77u54HeE
-         uG6g==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=t+GU7I2+kUrwKQg4SRP5VJisCRmva2BTesDNBOSBF5A=;
+        b=ESsbEhLBDIRk6/ZQJahaFkimEerBv867ASzv6xSrLDKrx6F96B9Qv/zJElG8O3fiQF
+         9HpC/b3dXZes5c+3cVuZoRHWOJcktY9NdetvbSe4ewhUotSZfS2jSaHh0xsop+P3CH6E
+         E3S67S+HvKy+yJzzw+lu2k+oDVCH9XWVIRsWx8gTCwiBIVfFO4dj7m6m1Q13DUVSgttp
+         sgZ+XJSjdAWmdaa/SxPZcwtBhftsvChlAxLiYecuC+jinuW5qP9PXNzWbdxyYSpB8Fwy
+         dPOwEvh8Hn/tlsevNOYAZFCO97Q18P7kLdDt4lka41SDarEWAygJQ7aXqXnMsvnr3wHr
+         o7Mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=0pn8ir7TtbHXrLk6Ryot1WtWNbBqtzYM8w/lAkB1PsM=;
-        b=aQqFtaH0Mqsyxb701AhyhA/61LhVUy7paV4fXlbP41kSVcLSF2OkOBPvx6OfGCfXBF
-         BYMrBUX/mBL5TT2vXqyannM8zMWu907nXWtp8vdc629bE7x+vTpi84IUKe/MkNsymIxd
-         uuTsgHn5uoH8QJqjfnSNplP+K0RTonM0c2ISRAqkj/z/iO6u1Xydnqrr815i8Cc5Jyaa
-         YHogBByqJYah5IJhxnMQKUVzpvc+cflfqbKj4I33Hr1fwDEQnySGwj7E+3rkRKoc6gGF
-         0y3SgZCXzYaTQ7OebeeQ4j8E9UFmPmu9R8vRRtU6W8gEVGd/nTVPrhptXC8N1g75wjCZ
-         myDg==
-X-Gm-Message-State: AOAM530ONvl8PPmDFo2uQlx5LjP7/dRqwqlExMazz6ph1s73M+A8dUFr
-        M1w+34LkcVOcZ4rY8lbulQU=
-X-Google-Smtp-Source: ABdhPJyIYOYJ6c3xeRrTfjtl5XkslcWDJ2Ta2cFMYtj7ZB6pGAL+XU/4GDT3AN71ZFENALkNFVI/zg==
-X-Received: by 2002:a63:1e1e:: with SMTP id e30mr5297877pge.77.1617712187279;
-        Tue, 06 Apr 2021 05:29:47 -0700 (PDT)
-Received: from atharva-on-air.dlink ([119.82.107.157])
-        by smtp.gmail.com with ESMTPSA id q25sm18419314pff.104.2021.04.06.05.29.45
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 06 Apr 2021 05:29:46 -0700 (PDT)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.60.0.2.21\))
-Subject: Re: [GSOC][PATCH] userdiff: add support for Scheme
-From:   Atharva Raykar <raykar.ath@gmail.com>
-In-Reply-To: <61622cda-3ce5-7cd9-acd6-54906297500c@gmail.com>
-Date:   Tue, 6 Apr 2021 17:59:43 +0530
-Cc:     Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <60D8CE48-926B-4A09-9355-4331C14F6753@gmail.com>
-References: <20210327173938.59391-1-raykar.ath@gmail.com>
- <3def82fd-71a7-3ad9-0fa2-48598bfd3313@kdbg.org>
- <5BA00FC6-9810-49AB-8DE2-D4F4010E2F82@gmail.com>
- <09678471-b2a2-8504-2293-e2b34a3a96e8@gmail.com>
- <D8256AFA-898E-4388-8FCC-7D3D340C001E@gmail.com>
- <A3C3DD12-3C00-49ED-B427-37AAB4211C2A@gmail.com>
- <61622cda-3ce5-7cd9-acd6-54906297500c@gmail.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-X-Mailer: Apple Mail (2.3654.60.0.2.21)
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=t+GU7I2+kUrwKQg4SRP5VJisCRmva2BTesDNBOSBF5A=;
+        b=lZqH8Ug9EH87jg1moFPtcrD/N9xARsDg+ZO+MJVk9514g7rm+iCYGNnM0ylNgyzJec
+         ZV0s6cG+c2CkNcsueV9uKBHY2PGKuUppk2FAFRU5xTYOooJRHDFzmxkOLRWHrnVvkWG4
+         FThit2d78rELtgDZ6NC8IuCqLVEEqmTQ3wJWwVn/nXzzPfJOTIUrQHnvjtCCt3eEX6vJ
+         07MjOvo1CV9ie1JNevUeZLpRBXu7efJCFuIgQIA3+QVk3drEePzdkwPQj+xWpp0pgw/U
+         7Nc9JdJTtrXlxxWNjgKaGWjWhHMx4C0vi2EBDGOf1G664/Scegy+D6Ns8qnv7PXRRY3a
+         CfHw==
+X-Gm-Message-State: AOAM5326o+cjXLLcn51CzOL2zUF/Ubesf3tbfM9ka5txiAK1nN5w+wB1
+        7c6xy98CQnUFf3PKlMGke70=
+X-Google-Smtp-Source: ABdhPJxgI9JS1HKIWizgoBvsJu6o9Ye8St/H699sVLa6b2BXPHsaOduqxBSgQsg6ibYYGESRth/uXg==
+X-Received: by 2002:aca:57d1:: with SMTP id l200mr3077375oib.148.1617713843706;
+        Tue, 06 Apr 2021 05:57:23 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:7d35:99dc:7770:379a? ([2600:1700:e72:80a0:7d35:99dc:7770:379a])
+        by smtp.gmail.com with ESMTPSA id g5sm3637049oiy.24.2021.04.06.05.57.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 06 Apr 2021 05:57:23 -0700 (PDT)
+Subject: Re: What's cooking in git.git (Apr 2021, #01; Mon, 5)
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Elijah Newren <newren@gmail.com>
+References: <xmqqy2dw2pai.fsf@gitster.g>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <6000ac2f-5d6d-09a2-c44d-4090e3d4c804@gmail.com>
+Date:   Tue, 6 Apr 2021 08:57:22 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.9.0
+MIME-Version: 1.0
+In-Reply-To: <xmqqy2dw2pai.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 05-Apr-2021, at 15:34, Phillip Wood <phillip.wood123@gmail.com> =
-wrote:
->=20
-> Hi Atharva
->=20
-> On 30/03/2021 11:22, Atharva Raykar wrote:
->>> On 30-Mar-2021, at 12:34, Atharva Raykar <raykar.ath@gmail.com> =
-wrote:
->>>=20
->>>=20
->>>=20
->>>> On 29-Mar-2021, at 15:48, Phillip Wood <phillip.wood123@gmail.com> =
-wrote:
->>>>=20
->>>> Hi Atharva
->>>>=20
->>>> On 28/03/2021 13:23, Atharva Raykar wrote:
->>>>> On 28-Mar-2021, at 05:16, Johannes Sixt <j6t@kdbg.org> wrote:
->>>>> [...]
->>>>>>> diff --git a/t/t4018/scheme-local-define =
-b/t/t4018/scheme-local-define
->>>>>>> new file mode 100644
->>>>>>> index 0000000000..90e75dcce8
->>>>>>> --- /dev/null
->>>>>>> +++ b/t/t4018/scheme-local-define
->>>>>>> @@ -0,0 +1,4 @@
->>>>>>> +(define (higher-order)
->>>>>>> +  (define local-function RIGHT
->>>>>>=20
->>>>>> ... this one, which is also indented and *is* marked as RIGHT.
->>>>> In this test case, I was explicitly testing for an indented =
-'(define'
->>>>> whereas in the former, I was testing for the top-level =
-'(define-syntax',
->>>>> which happened to have an internal define (which will inevitably =
-show up
->>>>> in a lot of scheme code).
->>>>=20
->>>> It would be nice to include indented define forms but including =
-them means that any change to the body of a function is attributed to =
-the last internal definition rather than the actual function. For =
-example
->>>>=20
->>>> (define (f arg)
->>>> (define (g x)
->>>>   (+ 1 x))
->>>>=20
->>>> (some-func ...)
->>>> ;;any change here will have '(define (g x)' in the hunk header, not =
-'(define (f arg)'
->>>=20
->>> The reason I went for this over the top level forms, is because
->>> I felt it was useful to see the nearest definition for internal
->>> functions that often have a lot of the actual business logic of
->>> the program (at least a lot of SICP seems to follow this pattern).
->>> The disadvantage is as you said, it might also catch trivial inner
->>> functions and the developer might lose context.
->> Never mind this message, I had misunderstood the problem you were =
-trying to
->> demonstrate. I wholeheartedly agree with what you are trying to say, =
-and
->> the indentation heuristic discussed does look interesting. I shall =
-have a
->> glance at the RFC you linked in the other reply.
->>> The disadvantage is as you said, it might also catch trivial inner
->>> functions and the developer might lose context.
->> Feel free to disregard me misquoting you here. You did not say that =
-(:
->>> Another problem is it may match more trivial bindings, like:
->>>=20
->>> (define (some-func things)
->>>  ...
->>>  (define items '(eggs
->>>                  ham
->>>                  peanut-butter))
->>>  ...)
->>>=20
->>> What I have noticed *anecdotally* is that this is not common enough
->>> to be too much of a problem, and local define bindings seem to be =
-more
->>> favoured in Racket than other Schemes, that use 'let' more often.
->>>=20
->>>> I don't think this can be avoided as we rely on regexs rather than =
-parsing the source so it is probably best to only match toplevel =
-defines.
->>>=20
->>> The other issue with only matching top level defines is that a
->>> lot of scheme programs are library definitions, something like
->>>=20
->>> (library
->>>    (foo bar)
->>>  (export ...)
->>>  (define ...)
->>>  (define ...)
->>>  ;; and a bunch of other definitions...
->>> )
->>>=20
->>> Only matching top level defines will completely ignore matching all
->>> the definitions in these files.
->> That said, I still stand by the fact that only catching top level =
-defines
->> will lead to a lot of definitions being ignored. Maybe the occasional
->> mismatch may be worth the gain in the number of function contexts =
-being
->> detected?
->=20
-> I'm not sure that the mismatches will be occasional - every time you =
-have an internal definition in a function the hunk header will be wrong =
-when you change the main body of the function. This will affect grep =
---function-context and diff -W as well as the normal hunk headers. The =
-problem is there is no way to avoid that and provide something useful in =
-the library example you have above. It would be useful to find some code =
-bases and diff the output of 'git log --patch' with and without the =
-leading whitespace match in the function pattern to see how often this =
-is a problem (i.e. when the funcnames do not match see which one is =
-correct).
+On 4/5/2021 9:08 PM, Junio C Hamano wrote:> * ds/clarify-hashwrite (2021-03-26) 1 commit
+>   (merged to 'next' on 2021-03-30 at 701f5c0696)
+>  + csum-file: make hashwrite() more readable
+> 
+>  The hashwrite() API always resulted in a call to write(2), even
+>  when writing a small amount of bytes that would still fit in the
+>  internal buffer held by the hashfile struct.  It has been updated
+>  to delay the writing until the buffer is filled or the hashfile
+>  concluded for performance.
 
-You are right -- on trying out the function on a two other scheme
-codebases, I noticed that there are a lot more wrongly matched functions
-than I initially thought. About half of them identify the wrong function
-in one of the repositories I tried. However, removing the leading
-whitespace in the pattern did not lead to better matching; it just led
-to a lot of the hunk headers going blank. I am not sure what causes this
-behaviour, but my guess is that the function contexts are shown only if
-it is within a certain distance from the function definition?
+Sorry for not noticing earlier, but this branch description is
+based on my erroneous understanding of the change in v1. The
+commit now only rearranges and comments the method to be more
+clear that it is correctly buffering the data. Perhaps this
+could be a substitute?
 
-Even if it did match only the top level defines correctly, the functions
-matched would still often be technically wrong -- it will show the outer
-function as the context when the user has edited an internal function
-(and in Scheme, there is heavy usage of internal functions).
+  The hashwrite() API uses a buffering mechanism to avoid calling
+  write(2) too frequently. This logic has been refactored to be
+  easier to understand.
 
-After running 'git grep --function-context' with the leading whitespace
-removed, it seems to match too aggressively, as it captures a huge
-region to match all the way upto the top level. Especially for files
-where all the definitions are in a 'library'.
+> * ds/sparse-index (2021-03-30) 21 commits
+>  - p2000: add sparse-index repos
+>  - sparse-index: loose integration with cache_tree_verify()
+>  - cache-tree: integrate with sparse directory entries
+>  - sparse-checkout: disable sparse-index
+>  - sparse-checkout: toggle sparse index from builtin
+>  - sparse-index: add index.sparse config option
+>  - sparse-index: check index conversion happens
+>  - unpack-trees: allow sparse directories
+>  - submodule: sparse-index should not collapse links
+>  - sparse-index: convert from full to sparse
+>  - sparse-index: add 'sdir' index extension
+>  - sparse-checkout: hold pattern list in index
+>  - unpack-trees: ensure full index
+>  - test-tool: don't force full index
+>  - test-read-cache: print cache entries with --table
+>  - t1092: compare sparse-checkout to sparse-index
+>  - sparse-index: implement ensure_full_index()
+>  - sparse-index: add guard to ensure full index
+>  - t1092: clean up script quoting
+>  - t/perf: add performance test for sparse operations
+>  - sparse-index: design doc and format update
+>  (this branch is used by ds/sparse-index-protections.)
+> 
+>  Both in-core and on-disk index has been updated to optionally omit
+>  individual entries and replace them with the tree object that
+>  corresponds to the directory that contains them when the "cone"
+>  mode of sparse checkout is in use.
 
-Overall, I personally felt that there were more downsides to matching
-only at the top level. I'd rather the hunk header have the nearest
-function to provide the context, than have no function displayed at all.
-Even when the match is wrong, it at least helps me locate where the
-change was made more easily.
+I believe this one has been stable for a little while. Do you
+think it could be a candidate for 'next' soon? Alternatively,
+you could wait and merge ds/sparse-index and
+ds/sparse-index-protections at the same time. I just know that
+the second series is causing some merge contention with other
+topics.
 
+> * ds/sparse-index-protections (2021-03-31) 25 commits
+>  - name-hash: use expand_to_path()
+>  - sparse-index: expand_to_path()
+>  - revision: ensure full index
+>  - resolve-undo: ensure full index
+>  - read-cache: ensure full index
+>  - pathspec: ensure full index
+>  - merge-recursive: ensure full index
+>  - entry: ensure full index
+>  - dir: ensure full index
+>  - update-index: ensure full index
+>  - stash: ensure full index
+>  - rm: ensure full index
+>  - merge-index: ensure full index
+>  - ls-files: ensure full index
+>  - grep: ensure full index
+>  - fsck: ensure full index
+>  - difftool: ensure full index
+>  - commit: ensure full index
+>  - checkout: ensure full index
+>  - checkout-index: ensure full index
+>  - add: ensure full index
+>  - cache: move ensure_full_index() to cache.h
+>  - read-cache: expand on query into sparse-directory entry
+>  - *: remove 'const' qualifier for struct index_state
+>  - sparse-index: API protection strategy
+>  (this branch uses ds/sparse-index.)
+> 
+>  Builds on top of the sparse-index infrastructure to mark operations
+>  that are not ready to mark with the sparse index, causing them to
+>  fall back on fully-populated index that they always have worked with.
 
-> Best Wishes
->=20
-> Phillip
->=20
->=20
+I will have at least one more re-roll of this topic based on
+Elijah's latest comments. I know that this is causing merge
+contention with other topics, so I'm refraining from submitting
+more series on top until this one is merged.
 
+Thanks,
+-Stolee
