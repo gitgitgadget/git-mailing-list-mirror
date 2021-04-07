@@ -2,98 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4AFEDC433ED
-	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 19:38:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D1501C433ED
+	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 19:47:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F2EE56124B
-	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 19:38:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A709F61177
+	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 19:47:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236553AbhDGTjA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Apr 2021 15:39:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59802 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236301AbhDGTi7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Apr 2021 15:38:59 -0400
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62C80C06175F
-        for <git@vger.kernel.org>; Wed,  7 Apr 2021 12:38:49 -0700 (PDT)
-Received: by mail-pj1-x102c.google.com with SMTP id ot17-20020a17090b3b51b0290109c9ac3c34so1855275pjb.4
-        for <git@vger.kernel.org>; Wed, 07 Apr 2021 12:38:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=atlassian.com; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=3N/NNSbo4w8NV3lgsadnfcpo5p/ut5yrX+VHHpBFjT0=;
-        b=ULT/L4D1gVz+W4c9RssdG7eZxh2ldIGesN+HIse4hpVvSLmLkm55wtSbs+evraNS5W
-         k1KcCyUuW2TpCbJLIUDs2RQh4DCnUZjbYQHYdSyUdEfNBKjvC/pTTlW0gr85iddE0EmN
-         VPlgXEsby3tiGdhGXRxFRBn1vmU/yOwQ9jeIOVR5j8aQxbjuvJFGeAWF+dIvRbr8E+qs
-         eWNWdRCn9pG7sNEGEpZALmwWvW5WNqhDDEpfyqu/fewAp56qOCQ1Gv6yyTfLCUIT1H2j
-         as3x0x+BU7iPZT1mE5y7FbUFWwBNtBHWAQcdBSieYquP48SWGsUks73hIsP/mUP9nS9u
-         w7BQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=3N/NNSbo4w8NV3lgsadnfcpo5p/ut5yrX+VHHpBFjT0=;
-        b=hox/UwT5jmdldkz/wNHLpQIABpO8Y9zxb3Fxbn6pD0FV6HIeCAflM3yDuDO7JkHo8M
-         Ag/0Ey1HIeWaFrgYE1VFNxISIx1lRKIG+1nt+lbEhtwEdw4ZFl07ijaEv9ddu3vseGRc
-         X1Qy1H9MeDx4++BrDwckn7fYEzIajsANoLiilX6d3AeqClDAF/XXFLbhwca/duoGaxay
-         SqmPQu9UTJ2QIBkhduHgBhh+H0GR8YP3W6c/9NCQWSeZSFHX40KzZLIn//xwBNx6mmaG
-         4iIB4eRzDVSSbsW7pMPrLWbNL/uhnwJ3J2se8iBHaeISCCXiMRCSQPyZhTwzQ86/Mhg0
-         TZJw==
-X-Gm-Message-State: AOAM530kwYrS+JD51pzW2H4CTZNqWOYCpknTFhUcRVBcL0ZW/R02/7RV
-        JRSUgXZjMu1Nu0JzCs45vVC8LWypvCr9mLGIB/M08w==
-X-Google-Smtp-Source: ABdhPJyd8CqO3LKNhpVIyvyWrI65CeJCwBlxxT+ySfOykGVUlo853GlAwruGkd8RaULlXlQScRYK3m8QfSawbaxHj58=
-X-Received: by 2002:a17:903:2306:b029:e7:1c8d:63fc with SMTP id
- d6-20020a1709032306b02900e71c8d63fcmr4379959plh.35.1617824328783; Wed, 07 Apr
- 2021 12:38:48 -0700 (PDT)
+        id S1345736AbhDGTrN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Apr 2021 15:47:13 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60794 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1345651AbhDGTrJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Apr 2021 15:47:09 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 347C2C1F84;
+        Wed,  7 Apr 2021 15:46:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=x0t65qrreikkwvHOV0fVvOSexHY=; b=ujIwgz
+        zkumM+Bn9D8Nw2Zi7X2/BB3MzqpQzqc4MrgtbxdC45Rmzm+eX/Veb2y2qwlkJ38b
+        szAJtiOeZ3bRfWIxqZCSGnnmAwV95QsI94K2rBL+ZpB8S8ZAiGsFQmNanBfVVBYd
+        PQzS4yoA7mKrfyGNFx9iK6t3oUKD+iZkgojwQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ua4V+HPYIgCWHbMJbYAn7Fg/myncDhm5
+        XBtUwLfEDkz9J/lXc6AhvmCN97uTEhZExuD1otZ3iKGGHs1G85WGrSV0vbRSp9kJ
+        Nj0HaLq0WNnT31IfxHnhNesivEdLgIPXc/1zhWdWE97JTV25wvnU3Eq9ZBXNFJnP
+        t7yvW3bzLpc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2C37CC1F83;
+        Wed,  7 Apr 2021 15:46:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AEDF0C1F82;
+        Wed,  7 Apr 2021 15:46:57 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Mark Lodato <lodato@google.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Eli Schwartz <eschwartz@archlinux.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Drew DeVault <sir@cmpwn.com>, git@vger.kernel.org
+Subject: Re: Regarding the depreciation of ssh+git/git+ssh protocols
+References: <20210407134646.2866522-1-lodato@google.com>
+Date:   Wed, 07 Apr 2021 12:46:56 -0700
+In-Reply-To: <20210407134646.2866522-1-lodato@google.com> (Mark Lodato's
+        message of "Wed, 7 Apr 2021 09:46:46 -0400")
+Message-ID: <xmqqv98xzxlb.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <b35a68a1-e693-5502-7a28-a1dd8222d3a0@gmail.com>
-In-Reply-To: <b35a68a1-e693-5502-7a28-a1dd8222d3a0@gmail.com>
-From:   Bryan Turner <bturner@atlassian.com>
-Date:   Wed, 7 Apr 2021 12:38:37 -0700
-Message-ID: <CAGyf7-GQ_1JV6X3Z0h4c3+Qy1eZ30RW-Mni=72p007md5NLKMg@mail.gmail.com>
-Subject: Re: There should have be git gc --repack-arguments
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
-Cc:     Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0333D2F6-97DA-11EB-8E6C-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 7, 2021 at 5:10 AM Bagas Sanjaya <bagasdotme@gmail.com> wrote:
->
-> Hi,
->
-> I request that git gc should have --repack-arguments option. The value
-> of this option should be passed to git repack.
->
-> The use case is when I have very large repos (such as GCC and Linux kernel)
-> on a server with small RAM (1-2 GB). When doing gc on such repo, the repack
-> step may hang because git-repack have to create single large packfile which
-> can be larger than available memory (RAM+swap), so it must be necessary to
-> do git repack --window-memory=<desired memory usage> --max-pack-size=<desired
-> pack size> to create split and smaller packs instead.
+Mark Lodato <lodato@google.com> writes:
 
-I can't speak to the feature request, but since there are
-configuration knobs already for both of those, that implies you can
-use git -c pack.windowMemory=... -c pack.packSizeLimit=... gc and
-those configuration settings will be propagated to the git repack
-process that git gc runs.
-
+> The common thread is that systems need a way to uniquely identify a git
+> repository or some object therein. I believe this means some combination
+> of:
 >
-> There should also git config item gc.repackArguments, which have the same
-> effect as git gc --repack-arguments, with the option takes precedence over
-> the config.
+> - VCS type (git)
+> - Transport location (e.g. https://github.com/git/git)
+> - Ref (e.g. master)
+> - Resolved commit ID (e.g. 48bf2fa8bad054d66bd79c6ba903c89c704201f7)
+> - Path (e.g. contrib/diff-highlight)
+> - (possibly) Clone depth
 
-Passing configuration settings as I show above would already take
-precedence over any config file, since config from the command line is
-higher priority.
+Nice.  So there is no reason to expect that these downstream systems
+can sanely force various VCS systems that the notation they use for
+"transport location" would identify what VCS type uses that
+location.  All the other details (like refs, which may other VCS
+many not even have) other than VCS type depend on the VCS used.
 
-Hope this helps!
-Bryan
+Thanks.
