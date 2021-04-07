@@ -2,180 +2,195 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 84FEFC433ED
-	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 22:05:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9550C433B4
+	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 22:09:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4CE716115B
-	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 22:05:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B09596120E
+	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 22:09:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229497AbhDGWFa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Apr 2021 18:05:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35576 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229586AbhDGWF3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Apr 2021 18:05:29 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63658C061760
-        for <git@vger.kernel.org>; Wed,  7 Apr 2021 15:05:18 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id r9so7621023ejj.3
-        for <git@vger.kernel.org>; Wed, 07 Apr 2021 15:05:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=5zRyeRrJ5W4+uFDpUbQVbbnmNELBDAfW4oPCHosxBXM=;
-        b=iycAX/luoLggjtTkO+QtVI4j7x0q7KYTdhBrdhzTZEdnWc4XEs/tg94U7Sii1YubTr
-         OEtYJ1hMQDy/WXobMiys1f687Wh0ARaglL1Ee/74z2uoHteQ/cUGok8tY5vblhgPjWjq
-         /+ulm8e1ow1CrvoPY/YGLkGCXnXcPwYvFHj9AJyLwUN00m4udz84agZQqTq/AyzkMSiI
-         5MiuAzuTuuxmkyKx/M2KKwzqzi8AoLzuBaDBtGbxTAfrJfiAYxSCv++wvIYT+OVoX7nN
-         2b9wpCVlKTqW7PUhBVh76E2u7zbgcdotpil9EVfRPRGvWLiVte+l0ZYe6y/8sr3N9zhr
-         ywvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=5zRyeRrJ5W4+uFDpUbQVbbnmNELBDAfW4oPCHosxBXM=;
-        b=NzHjGcJGMk8GCWrLCsluPNm4SOMD8xBhREedbktWXHTX11fFo0Rr5tc+tjyLXWvm7Y
-         6Si2R+wNCaIaF4dKoc3TcFVYcKEJd/ApZWU6JZgPKVG7NbXbg6G/42FWzuuhM8eF1sc5
-         t9g6zhArdfbyX6aZKdK5C+CC+JOSp2syJ4NcI2I9CjXcwt5QTNC7h2QTyZcMzRWI3wAF
-         r8LwVmDjUF6csw/ctY/44f9/w6/sSNGRAvThhixPM8RA1sH2oMmiNydeCFZZtCfY+kKb
-         mUun/VVpmmt+VBApCAFIuADLbzpifJemPAMKZBE9moNkYKvJ2uW9G6ElTukoxoXzvC9p
-         LrKw==
-X-Gm-Message-State: AOAM5314fSZjKa9LyU1ofliCmWYkjeyoHesvCI3HgDjWyq61HHLyG0Gi
-        ugnEis4Psw7FxDoznaKRKuM=
-X-Google-Smtp-Source: ABdhPJyZsi/Jk9V8rGj5Cz+qCXJv9GMCnZ15kv3pWs8qNchJZOeG3G2f2RdbFT+80Wi6N2xy82MfeA==
-X-Received: by 2002:a17:907:8315:: with SMTP id mq21mr6066304ejc.197.1617833117058;
-        Wed, 07 Apr 2021 15:05:17 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id hz24sm8539683ejc.119.2021.04.07.15.05.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Apr 2021 15:05:16 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, tom.saeger@oracle.com, gitster@pobox.com,
-        sunshine@sunshineco.com, Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 3/5] refspec: output a refspec item
-References: <pull.924.git.1617627856.gitgitgadget@gmail.com>
-        <e10007e1cf8ff0005295f648b9489c11a9427122.1617627856.git.gitgitgadget@gmail.com>
-        <87r1jmjxdg.fsf@evledraar.gmail.com>
-        <b3e00d3e-c782-9f2a-14e0-f576e50a7e55@gmail.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <b3e00d3e-c782-9f2a-14e0-f576e50a7e55@gmail.com>
-Date:   Thu, 08 Apr 2021 00:05:15 +0200
-Message-ID: <87czv5kaxw.fsf@evledraar.gmail.com>
+        id S229512AbhDGWJp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Apr 2021 18:09:45 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60550 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229469AbhDGWJm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Apr 2021 18:09:42 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2BF68BCF84;
+        Wed,  7 Apr 2021 18:09:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=rJjMUbmAJqnrV9CIiJlyuJ6C62c=; b=rSPCyC
+        sjEJ/mJWKi3bBE8EIve4F8R9yR/Nh/oXELFIYliGY5+RHed91A4wawE4//S2YpJg
+        fZKKSDy1Whj88FoUWBkMqIJk/V9LHsGTdGHgLavuR0jEjcrgQkNq4XZyMuUwxWWu
+        vVU1vWS2+U75w8igZkb6T/Xv8ZXW1osC+TTaI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=U9dmBfe3P7+q3bRB3ZIvu0wSwU1gREL1
+        k64nHFQzj4hd2p/m/dS3WbEaT4YZ6OFwYFRNiFxaT6/rstZimTMwshWtcBsmH/cW
+        ZJm3ZdayjUAOBZ9oAShqmOVyuxMcpHBfMQErShpNYVcUj0lzWe22rS5m1k5tAdXE
+        NZRsXC5JmQo=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2354BBCF7F;
+        Wed,  7 Apr 2021 18:09:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 86AB0BCF7E;
+        Wed,  7 Apr 2021 18:09:31 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Miriam Rubio <mirucam@gmail.com>
+Cc:     git@vger.kernel.org, Tanushree Tumane <tanushreetumane@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v2 3/4] bisect--helper: reimplement `bisect_run` shell
+ function in C
+References: <20210407173334.68222-1-mirucam@gmail.com>
+        <20210407173334.68222-4-mirucam@gmail.com>
+Date:   Wed, 07 Apr 2021 15:09:30 -0700
+In-Reply-To: <20210407173334.68222-4-mirucam@gmail.com> (Miriam Rubio's
+        message of "Wed, 7 Apr 2021 19:33:32 +0200")
+Message-ID: <xmqqeeflycf9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: EDB00292-97ED-11EB-AE80-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Miriam Rubio <mirucam@gmail.com> writes:
 
-On Wed, Apr 07 2021, Derrick Stolee wrote:
-
-> On 4/7/2021 4:46 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>=20
->> On Mon, Apr 05 2021, Derrick Stolee via GitGitGadget wrote:
->>> +	return buf.buf;
->>=20
->> There's a downthread discussion about the strbuf usage here so that's
->> covered.
+> From: Tanushree Tumane <tanushreetumane@gmail.com>
 >
-> And it's fixed in v2.
+> Reimplement the `bisect_run()` shell function
+> in C and also add `--bisect-run` subcommand to
+> `git bisect--helper` to call it from git-bisect.sh.
 >
->> But I'm still confused about the need for this function and the
->> following two patches. If we apply this on top of your series:
->>=20=20=20=20=20
->>     diff --git a/t/helper/test-refspec.c b/t/helper/test-refspec.c
->>     index 08cf441a0a0..9e099e43ebf 100644
->>     --- a/t/helper/test-refspec.c
->>     +++ b/t/helper/test-refspec.c
->>     @@ -31,7 +31,7 @@ int cmd__refspec(int argc, const char **argv)
->>                             continue;
->>                     }
->>=20=20=20=20=20
->>     -               printf("%s\n", refspec_item_format(&rsi));
->>     +               puts(line.buf);
->>                     refspec_item_clear(&rsi);
->>             }
->>=20
->> The only failing test is:
->>=20=20=20=20=20
->>     + diff -u expect output
->>     --- expect      2021-04-07 08:12:05.577598038 +0000
->>     +++ output      2021-04-07 08:12:05.577598038 +0000
->>     @@ -11,5 +11,5 @@
->>      refs/heads*/for-linus:refs/remotes/mine/*
->>      2e36527f23b7f6ae15e6f21ac3b08bf3fed6ee48:refs/heads/fixed
->>      HEAD
->>     -HEAD
->>     +@
->>      :
->
-> It should be obvious that taking refspecs as input, parsing them,
-> then reformatting them for output should be almost equivalent to
-> printing the input line.
->
-> The point is to exercise the logic that actually formats the
-> refspec for output. The test-tool clearly does this.
->
-> The logic for converting a 'struct refspec_item' to a string is
-> non-trivial and worth testing. I don't understand why you are
-> concerned that the black-box of the test-tool could be done
-> more easily to "trick" the test script.
+> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+> Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
+> Signed-off-by: Miriam Rubio <mirucam@gmail.com>
 
-Yes, but why do we need to convert it to a struct refspec_item in the
-first place?
+If I am reading the patch correctly, this removes the need for the
+$GIT_DIR/BISECT_RUN file that used to be used to keep track of the
+state?  If that is true, it is worth noting in the proposed log
+message.
 
-Maybe I'm just overly comfortable with string munging but I think the
-smaller patch-on-top to use strbuf_splice() is simpler than adding a new
-API just for this use-case.
+As far as I can see, nobody creates $GIT_DIR/BISECT_RUN anymore.
 
-But I'm still wondering if that @ v.s. HEAD case is something this
-series actually needs in its end goal (but then has a missing test?), or
-if it was just a "let's test the guts of the refspec.c while we're at
-it".
+    $ git grep -e path_bisect_run -e BISECT_RUN
+    bisect.c:static GIT_PATH_FUNC(git_path_bisect_run, "BISECT_RUN")
+    bisect.c:	unlink_or_warn(git_path_bisect_run());
+    builtin/bisect--helper.c:		BISECT_RUN,
+    builtin/bisect--helper.c:			 N_("use <cmd>... to automatical...
+    builtin/bisect--helper.c:	case BISECT_RUN:
+    t/t6030-bisect-porcelain.sh:	test_path_is_missing ".git/BISECT_RUN" &&
 
->> So the purpose of this new API is that we don't want to make the
->> assumption that strrchr(buf, ':') is a safe way to find the delimiter in
->> the refspec, or is there some case where we grok "HEAD" but not "@"
->> that's buggy, but not tested for in this series?
->
-> The purpose is to allow us to modify a 'struct refspec_item' andproduce a=
- refspec string instead of munging a refspec string
-> directly.
+What if a run script tried to read from (or checked the presence of)
+the file for its correct operation (e.g. I would imagine that "do
+this operation when run interactively, but do the same operation
+silently when run from the git-bisect machinery" may be a reasonable
+thing to do)?
 
-But aren't we doing that all over the place, e.g. the grep results for
-"refspec_appendf". Even for things purely constructed on the C API level
-we pass a const char* now.
+This change just unintendedly broke such a script, didn't it?  The
+change makes me a bit worried.
 
-I'm not saying it wouldn't be nice to have the refspec.c API changed to
-have a clear delimitation between its const char* handling, and C-level
-uses which could construct and pass a "struct refspec_item" instead.
+> +	if (bisect_next_check(terms, NULL))
+> +		return BISECT_FAILED;
+> +
+> +	if (argc)
+> +		sq_quote_argv(&command, argv);
+> +	else
+> +		return BISECT_FAILED;
+> +
+> +	run_args.v[0] = xstrdup(command.buf);
+> +	run_args.nr = 1;
+> +
+> +	while (1) {
+> +		strvec_clear(&args);
+> +
+> +		printf(_("running %s"), command.buf);
+> +		res = run_command_v_opt(run_args.v, RUN_USING_SHELL);
 
-But is it *needed* here in a way that I've missed, or is this just a
-partial testing/refactoring of that API while we're at it?
+Nicely used sq_quote_argv() with RUN_USING_SHELL here.  Goodl.
 
-[Guessing ahead here because of our TZ difference]:
+> +		if (res < 0 && res >= 128) {
+> +			error(_("bisect run failed: exit code %d from"
+> +				" '%s' is < 0 or >= 128"), res, command.buf);
+> +			strbuf_release(&command);
+> +			return res;
+> +		}
+> +
+> +		if (res == 125)
+> +			strvec_push(&args, "skip");
+> +		else if (res > 0)
+> +			strvec_push(&args, terms->term_bad);
+> +		else
+> +			strvec_push(&args, terms->term_good);
+> +
 
-It seems to me that if this is such a partial refactoring it's a strange
-way to go about it.
+bisect_state() does so much that it was a bit hard to follow for me
+(who hasn't been following the bisect-in-C topic very closely), but
+the code around here roughly corresponds to the following snippet in
+the original scripted version.
 
-We're left with freeing/munging the "struct refspec" src/dst in-place
-and re-constructing a string that has "+" etc., but we already had that
-data in parse_refspec() just before we'd call
-refspec_item_format(). That function could then just spew out a
-pre-formatted string we'd squirreled away in "struct refspec_item".
+> -		git bisect--helper --bisect-state $state >"$GIT_DIR/BISECT_RUN"
+> -		res=$?
+> -
+> -		cat "$GIT_DIR/BISECT_RUN"
+> -
+> -		if sane_grep "first $TERM_BAD commit could be any of" "$GIT_DIR/BISECT_RUN" \
+> -			>/dev/null
+> -		then
+> -			gettextln "bisect run cannot continue any more" >&2
+> -			exit $res
+> -		fi
 
-If the lengthy paragraph you have at the end of 4/5 holds true, then
-such an internal representation doesn't need to have the "refs/" prefix
-stores as a const char* (in cases where it's not just "*" or whatever),
-no?. We'd then be able to more easily init/copy/munge the refspec for
-formatting.
+I see that the contents of the file BISECT_RUN is shown to the user
+in the original but is that part of what bisect_state() does, or did
+we lose it during this round of conversion?
+
+> +		res = bisect_state(terms, args.v, args.nr);
+> +		if (res == BISECT_INTERNAL_SUCCESS_MERGE_BASE) {
+> +			printf(_("bisect run success"));
+> +			res = BISECT_OK;
+> +		} else if (res == BISECT_ONLY_SKIPPED_LEFT)
+> +			error(_("bisect run cannot continue any more"));
+> +		else if (res)
+> +			error(_("bisect run failed:'git bisect--helper --bisect-state"
+> +				" %s' exited with error code %d"), args.v[0], res);
+> +		else
+> +			continue;
+
+In any case, being able to check the return value from bisect_state()
+and switch is so much nicer than having to sane_grep in BISECT_RUN.
+
+> +		strbuf_release(&command);
+> +		strvec_clear(&args);
+> +		strvec_clear(&run_args);
+> +
+> +		return res;
+> +	}
+> +}
+> +
+>  int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+>  {
+>  	enum {
+> @@ -1086,7 +1146,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+>  		BISECT_LOG,
+>  		BISECT_REPLAY,
+>  		BISECT_SKIP,
+> -		BISECT_VISUALIZE
+> +		BISECT_VISUALIZE,
+> +		BISECT_RUN,
+
+Now this new one has the trailing comma.  I'd suggest doing so in
+the previous step.
+
+Thanks.
