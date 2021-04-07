@@ -7,86 +7,188 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F8C3C433B4
-	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 00:19:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A03CC433B4
+	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 02:25:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1927C613C2
-	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 00:19:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 53A13613B8
+	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 02:25:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241961AbhDGAT3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Apr 2021 20:19:29 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:52114 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237769AbhDGAT2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Apr 2021 20:19:28 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9BAAC12E172;
-        Tue,  6 Apr 2021 20:19:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=lsuxIKMYEfLdpvje356wddeldlk=; b=DTg116
-        ww7BHJkMbBrzdc4wXsIw8994gmK6hh88D0JRBJxjPATaVT3Vmi3GH6YlbAEZC6ua
-        fZOY8ZX9NcybWIWe0shMx+Ezo8K2du1lg8c58qoM6pF6GF9Ov7f2aBV2hvvNECxd
-        novGWQOUiknJxiMN1oUdOLKRkdQlkNsSUWNc0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Yn7pNsfmifrdnUfyV0wCNcEQgA/QXdE3
-        nJYJI7s4jYrsdnn4biiQHdZG+gsuDrUR580sPPCJp17l58OvgpkFrrmEaD1E2TEc
-        mxD2Y+oVoX54R+rFowsG56lynfhD9VSzu/uaz84q1BGTZenvcEay4CXkf0mB0WCU
-        rtd8FeeZNqU=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 92BEC12E171;
-        Tue,  6 Apr 2021 20:19:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D914812E16E;
-        Tue,  6 Apr 2021 20:19:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jerry Zhang <jerry@skydio.com>
-Cc:     git@vger.kernel.org, newren@gmail.com, ross@skydio.com,
-        abe@skydio.com
-Subject: Re: [PATCH] git-apply: try threeway first when "--3way" is used
-References: <20210406025551.25213-1-jerry@skydio.com>
-        <20210406232532.3543-1-jerry@skydio.com>
-Date:   Tue, 06 Apr 2021 17:19:13 -0700
-In-Reply-To: <20210406232532.3543-1-jerry@skydio.com> (Jerry Zhang's message
-        of "Tue, 6 Apr 2021 16:25:32 -0700")
-Message-ID: <xmqqczv70wvy.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S1348102AbhDGC0E (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Apr 2021 22:26:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58600 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233994AbhDGC0D (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Apr 2021 22:26:03 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32D15C06174A
+        for <git@vger.kernel.org>; Tue,  6 Apr 2021 19:25:54 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id dd20so11696425edb.12
+        for <git@vger.kernel.org>; Tue, 06 Apr 2021 19:25:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=skydio.com; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=+dMQ1UXu9XBzlGTnwkRACrO25wnqYBB5RlQyEEYwoZY=;
+        b=qhl0JJYLLEig8rQ0M4Ko87z9CYiiQ9WVh9S8Vy1/f5s0cFolvqKgRlIOZOLLoHq1ec
+         70C3zg3KLDDvYFS2B+TMAR3wgc15B1psM/16yoBrf4tcE9GpnGvLpa3mRBkGSSfacd86
+         SWuSuBG0xHKNGHMhZDUfTNtTL1XtWdwzPPWS5yTO7VAM0k9DQ2RHRyuw5HlLZEUEjGE0
+         Ns6wCgvhM1zT22qk8iRGocIIiTDw5riKd6janhb/SQ0xzn3gTlJdzbABm5bhYTPAJbN0
+         Bfy/RC/U4mKUe7AcQZqkMR3NFcNufs7KsCu0fpUIkGUx54FD+kqAWJeX3D/lMzZox4bE
+         GE9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=+dMQ1UXu9XBzlGTnwkRACrO25wnqYBB5RlQyEEYwoZY=;
+        b=b5+qxVFWtxT/zz4Xvf8gPtL6EPe9+wv0hAl7gO7o8XCLc+zB3MczhtET+PqQI7Tmnz
+         XyHkh2zwFuokzUjmu5iGX/nnAaW8LD+JG4jtiVNiUhzkVzficlX2ZVAF20SaMzhLxfmX
+         zsLN8vhM6bowmRhOIl9SLOEEaw8VbPRP9nOKHmNoXUdxCa/nBsVLXyYxcjZjlktB2+R1
+         d5Rv63HtBZp9rW2k7b0bsuV27ZiGNMskHhCX56+pi9m7qivdxLjr2rFKOyxHldaMyu/O
+         3xHk1+BEDzh2q6KTw3ENXG5tUUoioR3ZlBRj1GXpIGnjdEwrgZDTtPUEm8/FI/Ro/ydC
+         CNrg==
+X-Gm-Message-State: AOAM533XNLA+zUqz95eLDwPFk/yyO34gc2sqjP2BxvG+2vpVU6FZUZDe
+        txsComHoS3muzaZU/TW0yM3RhbX7u8xbL2zhdE6hHw==
+X-Google-Smtp-Source: ABdhPJywcsTEQB1xynsDpuswzht3yOdI5LBn2WtJUG9/4NQRNhgNQ6yyNGys7zly5h5/ssnMULI+l2teCEFV1/RKbYQ=
+X-Received: by 2002:a05:6402:4241:: with SMTP id g1mr1584105edb.331.1617762352859;
+ Tue, 06 Apr 2021 19:25:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E3195B06-9736-11EB-8699-D609E328BF65-77302942!pb-smtp21.pobox.com
+References: <20210403013410.32064-2-jerry@skydio.com> <20210405221902.27998-1-jerry@skydio.com>
+ <xmqqr1jo4aex.fsf@gitster.g> <CAMKO5CuLpa9Sn_oXMpgP6oGE9NFA8aLeTfeyaW6TOTErE0KgEg@mail.gmail.com>
+ <xmqqh7kk2c49.fsf@gitster.g> <CAMKO5Ctoa8cf9T0reE9DduC7oX8QgQw-sQH315mQN=KiLDS8ag@mail.gmail.com>
+In-Reply-To: <CAMKO5Ctoa8cf9T0reE9DduC7oX8QgQw-sQH315mQN=KiLDS8ag@mail.gmail.com>
+From:   Jerry Zhang <jerry@skydio.com>
+Date:   Tue, 6 Apr 2021 19:25:41 -0700
+Message-ID: <CAMKO5Cv01vFde5XqrM0Niu1jSrhMe=bdmc15KN1Uo8WP9cNKhw@mail.gmail.com>
+Subject: Re: [PATCH V2] git-apply: Allow simultaneous --cached and --3way options
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Elijah Newren <newren@gmail.com>,
+        Ross Yeager <ross@skydio.com>,
+        Abraham Bachrach <abe@skydio.com>,
+        Brian Kubisiak <brian.kubisiak@skydio.com>,
+        Jerry Zhang <jerryxzha@googlemail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jerry Zhang <jerry@skydio.com> writes:
-
-> Subject: Re: [PATCH] git-apply: try threeway first when "--3way" is used
-
-Just for future reference, it is customery to start with [PATCH v2],
-[PATCH v3], etc. when sending an updated patch to make sure it is
-obvious to readers of the list which one is the latest.
-
-> The apply_fragments() method of "git apply" can silently apply
-> patches incorrectly if a file has repeating contents. In these
-> cases a three-way merge is capable of applying it correctly in
-> more situations, and will show a conflict rather than applying it
-> incorrectly. However, because the patches apply "successfully"
-> using apply_fragments(), git will never fall back to the merge,
-> even if the "--3way" flag is used, and the user has no way to
-> ensure correctness by forcing the three-way merge method.
-
-I think this version addresses all issues I noticed in the previous
-version.  Unless somebody else finds some more issues in a coming
-few days, let's declare victory and merge it down to 'next'.
-
-By the way, as my last response bounced for the address
-brian.kubisiak@skydio.com you had on the CC list, I'm excluding it
-from the Cc list of this message.
-
-Thanks.
+On Tue, Apr 6, 2021 at 2:56 PM Jerry Zhang <jerry@skydio.com> wrote:
+>
+> On Mon, Apr 5, 2021 at 10:52 PM Junio C Hamano <gitster@pobox.com> wrote:
+> >
+> > Jerry Zhang <jerry@skydio.com> writes:
+> >
+> > > Thanks for the comments! I've updated v3 with the changes. Let me know
+> > > if you have any
+> > > more thoughts on whether to block / warn the user before clobbering their cache.
+> >
+> > Please do not top-post on this list.
+> >
+> > I've already said that I think we should ensure the index is clean
+> > by default, because, unlike the case where the application is done
+> > on the working tree files, the use of "--cached" is a sign that the
+> > next step is likely to write a tree out.  As I've already said so in
+> > earlier reviews, there is nothing more from me to add on that issue.
+> Understood, but please bear with me to explain the risks a bit more. I'm
+> having some difficulty coming up with a name and explanation for flags
+> for this case, because I don't completely understand the safety issue
+> we are trying to mitigate.
+>
+> Let me enumerate some behaviors in 3 different cases where the user
+> has "file.txt" changes staged in the index, so index differs from HEAD.
+>
+> "git apply --cached" would either 1. combine the patch and cached version
+> and put that in the cache or 2. do nothing (patch failed). In 2 nothing happened
+> so the user's changes are safe. In 1 the user's changes may be gone, but
+> since the user was forewarned, this is presumably what they wanted.
+>
+> "git apply --3way" would either 1. apply cleanly to working dir or
+> 2. conflict, in which case user's changes would be moved to stage #2
+> in cache. For 1 the user's changes are in the cache, so they can check that out
+> to restore the original state, since this invocation requires the cache
+> and working dir to match. For 2, the user's changes are moved to cache
+> in stage #2. Although the changes are preserved, there doesn't seem to
+> be any atomic way to move a cache entry from stage #2 to stage #0.
+> Something like "git restore --staged --ours file.txt" seems like it should
+> work, but "git restore" doesn't allow combining those flags.
+> The non atomic way we can do is "git checkout --ours file.txt &&
+> git add file.txt", this is ok in this case since we've required the index
+> and working tree to match.
+>
+> "git apply --3way --cached" would either 1. apply cleanly to the cache or
+> 2. conflict, and the user's changes are moved to stage #2. In 1, the user's
+> changes are lost because they're combined with the patch, but this is
+> the same as the "--cached" case by itself. In 2, the user's changes are
+> preserved in stage #2 similar to "--3way" by itself. What's somewhat
+> tricky here is restoring it to stage #0 since we can't use the working
+> tree, but I think that is more of a limitation in "git restore", since moving
+> a cache entry from stage #2 to stage #0 is a conceptually possible and
+> simple operation.
+Update: I found out that this can be done through "git update-index"
+Say you start with
+```
+100755 adc1032303de8d262868c0a1b85a00fa3b97e9d8 1 file.sh
+100755 d0bf2e33594ea7d9d7352df5511db562de819518 2 file.sh
+100755 e9bf5dfdea804f4f1bcf24988bbc7c3f99991a09 3 file.sh
+```
+Pass into "git update-index --index-info the following
+```
+100755 d0bf2e33594ea7d9d7352df5511db562de819518 0 file.sh
+0 0 1 file.sh
+0 0 2 file.sh
+0 0 3 file.sh
+```
+and you will have atomically moved the "ours" stage of file.sh into
+stage #0. This is sort of what I'd expect "git checkout --ours file.sh"
+to do, but it doesn't seem to do that.
+>
+> In summary it seems to me that merge or no merge, the safety semantics
+> for "--3way" + "--cached" as it is are pretty similar to the existing semantics
+> for those options individually. The user could be preparing to write
+> a tree out in either the "--cached" or the "--cached --3way" operation
+> so I don't understand why those must differ in safety. In addition, the
+> both "--3way" and "--3way --cached" perform mergey operations that
+> changes the stages of a file in cache, so I don't understand why those
+> must differ in safety either.
+>
+> >
+> > >> Give an order to the codebase to "be like so".  Here is my attempt.
+> > >>
+> > >>     Teach "git apply" to accept "--cached" and "--3way" at the same
+> > >>     time.  Only when all changes to all paths involved in the
+> > >>     application auto-resolve cleanly, the result is placed in the
+> > >>     index at stage #0 and the command exits with 0 status.  If there
+> > >>     is any path whose conflict cannot be cleanly auto-resolved, the
+> > >>     original contents from common ancestor (stage #1), our version
+> > >>     (stage #2) and the contents from the patch (stage #3) for the
+> > >>     conflicted paths are left at separate stages without any attempt
+> > >>     to resolve the conflict at the content level, and the command
+> > >>     exists with non-zero status, because there is no place (like the
+> > >>     working tree files) to leave a half-resolved conflicted merge
+> > >>     result to ask the end-user to resolve.
+> >
+> > I wrote the above as an example to illustrate the tone and the level
+> > of details expected in our proposed commit log message.  The
+> > behaviour it describes may not necessarily match what you have
+> > implemented in the patch.
+> >
+> > For example, imagine that we are applying a patch for two paths,
+> > where one auto-resolves cleanly and the other does not.  The above
+> > description expects both paths will leave the higher stages (instead
+> > of recording the auto-resolved path at stage #0, and leaving the
+> > other path that cannot be auto-resolved at higher stages) and the
+> > command exits with non-zero status, which may not be what you
+> > implemented.  As an illustration, I didn't necessarily mean such an
+> > all-or-none behaviour wrt resolving should be what we implement---I
+> > do not want to choose, as this is your itch and I want _you_ with
+> > the itch to think long and hard before deciding what the best design
+> > for end-users would be, and present it as a proposed solution.  An
+> > obvious alternative is to record auto-resolved paths at stage #0 and
+> > leave only the paths for which auto-resolution failed in conflicted
+> > state.
+> I missed the "all changes to all paths" requirement in that description,
+> I'll update it to be more consistent with what it actually does. As you say,
+> the leaving entries at higher orders behavior only happens for conflicting
+> paths, not for all paths.
+> >
+> > Thanks.
