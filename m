@@ -2,76 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 12AB7C433ED
-	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 19:48:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86385C433ED
+	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 19:52:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CA56E61159
-	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 19:48:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 51D2B61177
+	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 19:52:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348858AbhDGTs3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Apr 2021 15:48:29 -0400
-Received: from cloud.peff.net ([104.130.231.41]:43664 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1347438AbhDGTs2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Apr 2021 15:48:28 -0400
-Received: (qmail 17559 invoked by uid 109); 7 Apr 2021 19:48:17 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 07 Apr 2021 19:48:17 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 22367 invoked by uid 111); 7 Apr 2021 19:48:17 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 07 Apr 2021 15:48:17 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 7 Apr 2021 15:48:16 -0400
-From:   Jeff King <peff@peff.net>
-To:     Eugen Konkov <kes-kes@yandex.ru>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: Can not list stash (git version 2.30.0)
-Message-ID: <YG4MgBMJGBbIyGDJ@coredump.intra.peff.net>
-References: <1851413381.20210407204938@yandex.ru>
+        id S1355758AbhDGTwl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Apr 2021 15:52:41 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:56750 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1345736AbhDGTwl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Apr 2021 15:52:41 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 34088126887;
+        Wed,  7 Apr 2021 15:52:31 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=jCWmA2RBEgqvT1h58abBvUsdh6I=; b=gLSHBa
+        VSDxjpODo6066wZADa18lr/TOzwm2XaQGr0AopZivPJ9/4+8GhXFyMYgIWjKXMvv
+        01OTUT5n8LTzN2S4mkCOG7KO5k/X5RAHZhuRCR8ucJR1sNx4N031cabK2jhnzzHH
+        gGuVwW0d5nzFmmQiOSCOa9paK7yg6KwXbFV38=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=GWOzyncLhcN8vHUTUUHR1+HRA7kHpnDD
+        s20RSMqy/QldPugzp65oGR8P8N+JCc6nNdUN5mfe/FImQFYL0Sdqd5OpPOekB7sD
+        /om12zujqZ6dziL8WlbXAvhRmuhZnJVCacnQ5HsqaJM/jfq2jQtfN+G//cnf1ShV
+        WGIZ0NvLIYU=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2CB64126886;
+        Wed,  7 Apr 2021 15:52:31 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.243.138.161])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 790E6126882;
+        Wed,  7 Apr 2021 15:52:28 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     jost.schulte@tutanota.com
+Cc:     Git <git@vger.kernel.org>
+Subject: Re: Shell completion for branch names
+References: <MXghkzC----2@tutanota.com>
+Date:   Wed, 07 Apr 2021 12:52:26 -0700
+In-Reply-To: <MXghkzC----2@tutanota.com> (jost schulte's message of "Wed, 7
+        Apr 2021 16:23:16 +0200 (CEST)")
+Message-ID: <xmqqr1jlzxc5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1851413381.20210407204938@yandex.ru>
+Content-Type: text/plain
+X-Pobox-Relay-ID: C85CC510-97DA-11EB-AD67-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 07, 2021 at 08:49:38PM +0300, Eugen Konkov wrote:
+jost.schulte@tutanota.com writes:
 
-> I am in progress of rebasing
-> 
-> ~/e/Auth/Mojolicious/Plugin $ git rebase aa3376
-> Created autostash: 4018bc7
-> hint: Waiting for your editor to close the file...
-> 
-> 
-> while I am in editor I switched to different console to view created autostash:
-> 
-> ~/e/Auth $ git stash list
-> 
-> and see nothing
-> 
-> but can view stash by its id:
-> ~/e/Auth $ git show 4018bc7
-> commit 4018bc7bc870eb37aa35f40a0f612ca55a586045
-> Merge: a790392 674e39f
-> .....
+> I have a question regarding git-completion. I'm using zsh and have
+> added the function .git-completion.bash. That gives me some
+> auto-completion for branch names.
+>
+> What I'm looking for: I have a branch named
+> "feature/issue-123-add-feature" for example. I'd like to type "git
+> switch 123[tab]". Is there some function out there that provides
+> this?
 
-If you run with GIT_TRACE=1, you can see that the autostash feature uses
-"git stash create" and not "git stash push". That creates the stash
-commit but _doesn't_ push it onto the stash list.
+I am not an area expert for shell completion, but as a mere user,
+unless the shell completion in a directory where I have README.txt
+file, responds to
 
-So it's working as intended. The rationale comes from the very
-first commit adding autostash, 587947750b (rebase: implement
---[no-]autostash and rebase.autostash, 2013-05-12), which says:
+    $ cat EAD<TAB>
 
-    The advantage of this approach is that we do not affect the normal
-    stash's reflogs, making the autostash invisible to the end-user.  This
-    means that you can use 'git stash' during a rebase as usual.
+and completes the request to
 
--Peff
+    $ cat README.txt
+
+I would find such a behaviour quite confusing.
+
+On the other hand if
+
+    $ git log feat<TAB>
+
+expands to
+
+    $ git log feature/issue-
+
+then another <TAB> after that would offer 123-add-feature and 143-fix
+as candidates, or instead of <TAB> if I type "123<TAB>" and get it
+expanded to the full feature/issue-123-add-feature, then I wouldn't
+find it confusing or unnatural.
