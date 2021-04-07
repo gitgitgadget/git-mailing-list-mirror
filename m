@@ -2,178 +2,180 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C510C433ED
-	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 21:57:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 84FEFC433ED
+	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 22:05:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BD097611C1
-	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 21:57:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4CE716115B
+	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 22:05:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234507AbhDGV5r (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Apr 2021 17:57:47 -0400
-Received: from mout.gmx.net ([212.227.17.22]:33679 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229819AbhDGV5q (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Apr 2021 17:57:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1617832655;
-        bh=UC2ve6kmdQQyqlLruL6mAobai9LexHcyKHkI1QXDt2o=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=ei/KLZpoN/dYIyXPvWBqipdk0D166K5deOU47Z7dys9D9mc+Usl57qj5CrqEAxGFW
-         UYSuPgCZABR8JULM675gOk5LIaCWIJaaQpnMxDupIi1wO3r0Y2pRu3YPZjHixcf6IG
-         FMcurODK3HIyEMo0sg8NpBNAPjO9tmjd9NL+eCzU=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.20.233.45] ([213.196.212.198]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MZTqg-1l6fIO38h4-00WUCb; Wed, 07
- Apr 2021 23:57:34 +0200
-Date:   Wed, 7 Apr 2021 21:43:19 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Paul Mackerras <paulus@samba.org>,
-        Vladimir Chigarev via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, Vladimir Chigarev <chiga17@mail.ru>,
-        Vladimir Chigarev <chiga17@mail.ru>
-Subject: Re: [PATCH] gitk: add option to perform 'git fetch' command
-In-Reply-To: <pull.872.git.git.1611328595003.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2104072142001.54@tvgsbejvaqbjf.bet>
-References: <pull.872.git.git.1611328595003.gitgitgadget@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S229497AbhDGWFa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Apr 2021 18:05:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35576 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229586AbhDGWF3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Apr 2021 18:05:29 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63658C061760
+        for <git@vger.kernel.org>; Wed,  7 Apr 2021 15:05:18 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id r9so7621023ejj.3
+        for <git@vger.kernel.org>; Wed, 07 Apr 2021 15:05:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=5zRyeRrJ5W4+uFDpUbQVbbnmNELBDAfW4oPCHosxBXM=;
+        b=iycAX/luoLggjtTkO+QtVI4j7x0q7KYTdhBrdhzTZEdnWc4XEs/tg94U7Sii1YubTr
+         OEtYJ1hMQDy/WXobMiys1f687Wh0ARaglL1Ee/74z2uoHteQ/cUGok8tY5vblhgPjWjq
+         /+ulm8e1ow1CrvoPY/YGLkGCXnXcPwYvFHj9AJyLwUN00m4udz84agZQqTq/AyzkMSiI
+         5MiuAzuTuuxmkyKx/M2KKwzqzi8AoLzuBaDBtGbxTAfrJfiAYxSCv++wvIYT+OVoX7nN
+         2b9wpCVlKTqW7PUhBVh76E2u7zbgcdotpil9EVfRPRGvWLiVte+l0ZYe6y/8sr3N9zhr
+         ywvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=5zRyeRrJ5W4+uFDpUbQVbbnmNELBDAfW4oPCHosxBXM=;
+        b=NzHjGcJGMk8GCWrLCsluPNm4SOMD8xBhREedbktWXHTX11fFo0Rr5tc+tjyLXWvm7Y
+         6Si2R+wNCaIaF4dKoc3TcFVYcKEJd/ApZWU6JZgPKVG7NbXbg6G/42FWzuuhM8eF1sc5
+         t9g6zhArdfbyX6aZKdK5C+CC+JOSp2syJ4NcI2I9CjXcwt5QTNC7h2QTyZcMzRWI3wAF
+         r8LwVmDjUF6csw/ctY/44f9/w6/sSNGRAvThhixPM8RA1sH2oMmiNydeCFZZtCfY+kKb
+         mUun/VVpmmt+VBApCAFIuADLbzpifJemPAMKZBE9moNkYKvJ2uW9G6ElTukoxoXzvC9p
+         LrKw==
+X-Gm-Message-State: AOAM5314fSZjKa9LyU1ofliCmWYkjeyoHesvCI3HgDjWyq61HHLyG0Gi
+        ugnEis4Psw7FxDoznaKRKuM=
+X-Google-Smtp-Source: ABdhPJyZsi/Jk9V8rGj5Cz+qCXJv9GMCnZ15kv3pWs8qNchJZOeG3G2f2RdbFT+80Wi6N2xy82MfeA==
+X-Received: by 2002:a17:907:8315:: with SMTP id mq21mr6066304ejc.197.1617833117058;
+        Wed, 07 Apr 2021 15:05:17 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id hz24sm8539683ejc.119.2021.04.07.15.05.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 07 Apr 2021 15:05:16 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, tom.saeger@oracle.com, gitster@pobox.com,
+        sunshine@sunshineco.com, Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 3/5] refspec: output a refspec item
+References: <pull.924.git.1617627856.gitgitgadget@gmail.com>
+        <e10007e1cf8ff0005295f648b9489c11a9427122.1617627856.git.gitgitgadget@gmail.com>
+        <87r1jmjxdg.fsf@evledraar.gmail.com>
+        <b3e00d3e-c782-9f2a-14e0-f576e50a7e55@gmail.com>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
+In-reply-to: <b3e00d3e-c782-9f2a-14e0-f576e50a7e55@gmail.com>
+Date:   Thu, 08 Apr 2021 00:05:15 +0200
+Message-ID: <87czv5kaxw.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Im/2TRDecy7COoG7xrPQT4OIMSbonmrr8GQ/emAJ6FS0c3FQzGF
- Q48pa/kNasckhB0AvW1PnlWEgJQL+EvpLRDlWKjsjlG5JcER8S5Zy/a/JnV+kpmpQYYDn/b
- kbj2Lg4v7Qi+gU54qokBOLIBsDWHoV9q6ije7sIsVZY9SoeKPCytxgg11Hfe563UlU2Lvfo
- piZXCmLaW1Q96YjnI7sPA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:/yWszybA4hM=:iFGDAYgRe+YBFTSGLHvDRq
- lWt4/Qy/stl6ieSbJisKc+aY03X52WEC/hbSMuZeZvPTFk+ketfP7ZYNUkMfST7BX8cn+ysxS
- eQm3+KzNyDKPRZGyMPGJ09jah9nUbd2Is126DdAXnQkRRyohaktw6Cb0vtzI4hlMYGzkdPANd
- 7Wo6Vo/R/jTmAF0pUSqNEV+Ly0bXuxNS81ZkYMHU37ES7yV0YkkkwMCsDGwioqv4x+xizK/GZ
- XnjKfhYRXGqLBqr/qWobikM9qX7wPpDA/0hUoUAX66S0XM0Zr8XL7XAqbyrK9y9+BsiLKMRfa
- qx2bzeOCMez3t44sJGnX/7sC130yAF5REwomS3Eu5cAgCvEA9C/9Rl+N5Q0CIO370tlNS8jcG
- GjLIhk6C3VFs8mu4JL++lgnCkEWVAvQRA4JOdDaxpfgKcC2yk7iUuQ86e8T+FoCivV1J9CN9Q
- Dj/+AXx2UBfO2lB3P+XFSfgl2EMEbon2AviEImhp3e7uBBIZ5xdtqCSTHkTHvKxb9G6v4/Qep
- Z3eeL7PRHJC31mgSdbCIxirU4ylFHPh7hmQzm3q3NX2kFaTh187f7zwz7l/6lKMzfEKgGgoDr
- 3rqj2J9qXQatU4qTlReVSqakn5mSyI4ljxVfAamySsu9fo3n6aWVgtqkL8asDcCsTXHM6kzAl
- p2JVAw2xjLf2Ppx5BPYK45oeFkcZBEaCzXN+6NezNzIgcpVSL6sguwwntFQU7PSShKYoCrGoS
- yPf2DVinw5xuH3MOam4ajQuFF7wZqy5FDjofOAMTXYu+LW9fJEZOdYaIknBURBIUiTjgy+K0O
- 4OdVzA0On/88cmCpWn92xNH0QA8QihTu3TWbiWbqGoV3Lp6dxxG8hR8exfsrxDMUve+Wd5eQt
- U14ULm8GPv9gugoCp41XkZumUqbP+OgIm0uM1pLxksAvRQCguThoQqZnSkMvj99YwjP8/GHHb
- FeJ2ItYAUEeNissh+mM6YfSsrY+9iflX2xBHLmFHFFUHbutrymbiPWYzH228UQn7ZMno/5j+K
- ppLi+I+gbTYCziyC7WBFv9y9aN9/o7Y+gETIv00ngUGFxFAnZC8NPGPK53/9MsiEiCX6n6855
- 7/zeA1OstUE+0Vu3dVP3cxuhGmzlYxvcABQzmYEo7kGqQBHLSR9YlxfvQ3E8AI395WCowmviY
- EtqB/CNwH9TvHmxWEYA4NbAsP/yV8oAIhsv6n/pDeTvQNAi6rEbU1eVg4LIUMciE6pF5AAhcp
- RHwusyxZR0zKOshhE
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[Cc:ing Paul, the gitk maintainer]
 
-Paul, this patch has been stuck on the Git mailing list for a few months.
-Could I ask you whether there is a chance that you could review it?
+On Wed, Apr 07 2021, Derrick Stolee wrote:
 
-Thanks,
-Johannes
+> On 4/7/2021 4:46 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>>=20
+>> On Mon, Apr 05 2021, Derrick Stolee via GitGitGadget wrote:
+>>> +	return buf.buf;
+>>=20
+>> There's a downthread discussion about the strbuf usage here so that's
+>> covered.
+>
+> And it's fixed in v2.
+>
+>> But I'm still confused about the need for this function and the
+>> following two patches. If we apply this on top of your series:
+>>=20=20=20=20=20
+>>     diff --git a/t/helper/test-refspec.c b/t/helper/test-refspec.c
+>>     index 08cf441a0a0..9e099e43ebf 100644
+>>     --- a/t/helper/test-refspec.c
+>>     +++ b/t/helper/test-refspec.c
+>>     @@ -31,7 +31,7 @@ int cmd__refspec(int argc, const char **argv)
+>>                             continue;
+>>                     }
+>>=20=20=20=20=20
+>>     -               printf("%s\n", refspec_item_format(&rsi));
+>>     +               puts(line.buf);
+>>                     refspec_item_clear(&rsi);
+>>             }
+>>=20
+>> The only failing test is:
+>>=20=20=20=20=20
+>>     + diff -u expect output
+>>     --- expect      2021-04-07 08:12:05.577598038 +0000
+>>     +++ output      2021-04-07 08:12:05.577598038 +0000
+>>     @@ -11,5 +11,5 @@
+>>      refs/heads*/for-linus:refs/remotes/mine/*
+>>      2e36527f23b7f6ae15e6f21ac3b08bf3fed6ee48:refs/heads/fixed
+>>      HEAD
+>>     -HEAD
+>>     +@
+>>      :
+>
+> It should be obvious that taking refspecs as input, parsing them,
+> then reformatting them for output should be almost equivalent to
+> printing the input line.
+>
+> The point is to exercise the logic that actually formats the
+> refspec for output. The test-tool clearly does this.
+>
+> The logic for converting a 'struct refspec_item' to a string is
+> non-trivial and worth testing. I don't understand why you are
+> concerned that the black-box of the test-tool could be done
+> more easily to "trick" the test script.
 
+Yes, but why do we need to convert it to a struct refspec_item in the
+first place?
 
-On Fri, 22 Jan 2021, Vladimir Chigarev via GitGitGadget wrote:
+Maybe I'm just overly comfortable with string munging but I think the
+smaller patch-on-top to use strbuf_splice() is simpler than adding a new
+API just for this use-case.
 
-> From: Vladimir Chigarev <chiga17@mail.ru>
+But I'm still wondering if that @ v.s. HEAD case is something this
+series actually needs in its end goal (but then has a missing test?), or
+if it was just a "let's test the guts of the refspec.c while we're at
+it".
+
+>> So the purpose of this new API is that we don't want to make the
+>> assumption that strrchr(buf, ':') is a safe way to find the delimiter in
+>> the refspec, or is there some case where we grok "HEAD" but not "@"
+>> that's buggy, but not tested for in this series?
 >
-> There wasn't ability to perform 'git fetch' from gitk tool.
-> Add 'Fetch' option to 'File' menu.
-> Bind it to 'F7' key.
->
-> Signed-off-by: Vladimir Chigarev <chiga17@mail.ru>
-> ---
->     gitk: add option to perform 'git fetch' command
->
->     There wasn't ability to perform 'git fetch' from gitk tool. Add 'Fet=
-ch'
->     option to 'File' menu. Bind it to 'F7' key.
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-87=
-2%2Fchiga17%2Fgitk-fetch-option-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-872/c=
-higa17/gitk-fetch-option-v1
-> Pull-Request: https://github.com/git/git/pull/872
->
->  gitk-git/gitk | 31 +++++++++++++++++++++++++++++++
->  1 file changed, 31 insertions(+)
->
-> diff --git a/gitk-git/gitk b/gitk-git/gitk
-> index 23d9dd1fe0d..1756385886f 100755
-> --- a/gitk-git/gitk
-> +++ b/gitk-git/gitk
-> @@ -499,6 +499,34 @@ proc getcommits {selid} {
->      }
->  }
->
-> +proc fetch {} {
-> +    global bgcolor NS fetch_output
-> +
-> +    set fetch_output {}
-> +    if {[catch {exec sh -c "git fetch -v 2>&1"} fetch_output]} {
-> +    }
-> +
-> +    set w .about
-> +    if {[winfo exists $w]} {
-> +	raise $w
-> +	return
-> +    }
-> +    ttk_toplevel $w
-> +    wm title $w [mc "Fetch"]
-> +    make_transient $w .
-> +    message $w.m -text [mc " $fetch_output "] \
-> +	    -justify left -aspect 600 -border 2 -bg $bgcolor -relief groove
-> +    pack $w.m -side top -fill x -padx 2 -pady 2
-> +    ${NS}::button $w.ok -text [mc "Close"] -command "destroy $w" -defau=
-lt active
-> +    pack $w.ok -side bottom
-> +    bind $w <Visibility> "focus $w.ok"
-> +    bind $w <Key-Escape> "destroy $w"
-> +    bind $w <Key-Return> "destroy $w"
-> +    tk::PlaceWindow $w widget .
-> +
-> +    reloadcommits
-> +}
-> +
->  proc updatecommits {} {
->      global curview vcanopt vorigargs vfilelimit viewinstances
->      global viewactive viewcomplete tclencoding
-> @@ -2089,6 +2117,7 @@ proc makewindow {} {
->          mc "&File" cascade {
->              {mc "&Update" command updatecommits -accelerator F5}
->              {mc "&Reload" command reloadcommits -accelerator Shift-F5}
-> +            {mc "&Fetch" command fetch -accelerator F7}
->              {mc "Reread re&ferences" command rereadrefs}
->              {mc "&List references" command showrefs -accelerator F2}
->              {xx "" separator}
-> @@ -2609,6 +2638,7 @@ proc makewindow {} {
->      bindkey f nextfile
->      bind . <F5> updatecommits
->      bindmodfunctionkey Shift 5 reloadcommits
-> +    bind . <F7> fetch
->      bind . <F2> showrefs
->      bindmodfunctionkey Shift 4 {newview 0}
->      bind . <F4> edit_or_newview
-> @@ -3125,6 +3155,7 @@ proc keys {} {
->  [mc "<%s-KP->	Decrease font size" $M1T]
->  [mc "<%s-minus>	Decrease font size" $M1T]
->  [mc "<F5>		Update"]
-> +[mc "<F7>		Fetch"]
->  " \
->              -justify left -bg $bgcolor -border 2 -relief groove
->      pack $w.m -side top -fill both -padx 2 -pady 2
->
-> base-commit: 72c4083ddf91b489b7b7b812df67ee8842177d98
-> --
-> gitgitgadget
->
->
+> The purpose is to allow us to modify a 'struct refspec_item' andproduce a=
+ refspec string instead of munging a refspec string
+> directly.
+
+But aren't we doing that all over the place, e.g. the grep results for
+"refspec_appendf". Even for things purely constructed on the C API level
+we pass a const char* now.
+
+I'm not saying it wouldn't be nice to have the refspec.c API changed to
+have a clear delimitation between its const char* handling, and C-level
+uses which could construct and pass a "struct refspec_item" instead.
+
+But is it *needed* here in a way that I've missed, or is this just a
+partial testing/refactoring of that API while we're at it?
+
+[Guessing ahead here because of our TZ difference]:
+
+It seems to me that if this is such a partial refactoring it's a strange
+way to go about it.
+
+We're left with freeing/munging the "struct refspec" src/dst in-place
+and re-constructing a string that has "+" etc., but we already had that
+data in parse_refspec() just before we'd call
+refspec_item_format(). That function could then just spew out a
+pre-formatted string we'd squirreled away in "struct refspec_item".
+
+If the lengthy paragraph you have at the end of 4/5 holds true, then
+such an internal representation doesn't need to have the "refs/" prefix
+stores as a const char* (in cases where it's not just "*" or whatever),
+no?. We'd then be able to more easily init/copy/munge the refspec for
+formatting.
