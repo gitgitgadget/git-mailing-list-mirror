@@ -2,143 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D294FC43461
-	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 20:53:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E995DC43460
+	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 20:57:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A9EE761154
-	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 20:53:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A6AB061205
+	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 20:57:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231486AbhDGUxY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Apr 2021 16:53:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48070 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231319AbhDGUxX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Apr 2021 16:53:23 -0400
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C9B9C061760
-        for <git@vger.kernel.org>; Wed,  7 Apr 2021 13:53:13 -0700 (PDT)
-Received: by mail-ot1-x331.google.com with SMTP id w31-20020a9d36220000b02901f2cbfc9743so140833otb.7
-        for <git@vger.kernel.org>; Wed, 07 Apr 2021 13:53:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=39IIcwxN3axjHErA2mOeSnila3jyITRxhbrA4RCEOhU=;
-        b=HKc1kDqvPctWUWQIZOgmTNo97iGsp2RS7M62dCMjhZp+7nPtHJmbB3PeklpvDWK8af
-         MBo1lVrT6EM44C760CQUGZp2fckMlnWdgD80tP+DH/j1JAfnS8xwFsO/d8lYvysoIRgv
-         zXU3rYLS4SGeXEfF8CzL10WJ+eLLkY6S830UhARfsTRbqjVesj6jZ6vP2bfM3IQNPhW/
-         ZeozU8smwJH6wSdjnc4EedhfqMGKo07hKrQMYiC9LaNw1i3QH7LfkSUmlQ9gPcMotSfO
-         knomMWGamC6eofgp492A/myX22I0gGe0Whyqq1bvCrUWwyTnPs0aqensVvNhKTziHaUf
-         eoGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=39IIcwxN3axjHErA2mOeSnila3jyITRxhbrA4RCEOhU=;
-        b=ryHbVSgspOmSUzLPcMRs8mOqbt8/EBnuIdzBY7EgXHtNDUWhUIAbm0QkhK+VjnsCJz
-         7hLQUsoQbD4+JMEhIhZHVz1zKeplw9F4Rtvpybyzvqkdl9AYzvX/465pYBZKAEnT6r1I
-         b9q0HLSZFxTLyNLgkj1a5de7Babt/2MyvLJAN2U8g+sAOf3AL8dRbneh76hJeSvv3Poc
-         3CaSxqeqj7+pNZIR20TbTt2t1a+Mj0aliv5ve62V4jy9tdjue9O2CT3ia9j6w4JznID7
-         4nZFsUS7Lx1yfDx1tTAYScB4UUgN4vyy03ovlocMs92e6dtNa1F0BB75QCESBfc/5D9U
-         /dbg==
-X-Gm-Message-State: AOAM532kj3zFXrL7ZMl7jEKMS05Erre9RN3QsoAgyKSaDtCjrOsnb33/
-        oLtAK/jEOCVpmKGccRZQbA9VmvDOOASyag==
-X-Google-Smtp-Source: ABdhPJwGGTo+7bPKynhuGK3n0zX04SbS+qcqVPkeloIbRX9tubVhkOQh/5A1Tdg+S4FzmfcT+6K67A==
-X-Received: by 2002:a9d:6e11:: with SMTP id e17mr4479358otr.222.1617828792902;
-        Wed, 07 Apr 2021 13:53:12 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:f1c4:b701:47c1:603f? ([2600:1700:e72:80a0:f1c4:b701:47c1:603f])
-        by smtp.gmail.com with ESMTPSA id v65sm4580747oib.42.2021.04.07.13.53.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 07 Apr 2021 13:53:11 -0700 (PDT)
-Subject: Re: [PATCH 3/5] refspec: output a refspec item
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, tom.saeger@oracle.com, gitster@pobox.com,
-        sunshine@sunshineco.com, Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.924.git.1617627856.gitgitgadget@gmail.com>
- <e10007e1cf8ff0005295f648b9489c11a9427122.1617627856.git.gitgitgadget@gmail.com>
- <87r1jmjxdg.fsf@evledraar.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <b3e00d3e-c782-9f2a-14e0-f576e50a7e55@gmail.com>
-Date:   Wed, 7 Apr 2021 16:53:10 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.9.0
+        id S231640AbhDGU50 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Apr 2021 16:57:26 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:60221 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230280AbhDGU5Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Apr 2021 16:57:25 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 94C51135219;
+        Wed,  7 Apr 2021 16:57:15 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=0ga2BIUko9ELin/US3T/6fjhx1s=; b=Hv5bfN
+        B1O8GMeb10GJJXVvpzql+f0JTmcWqtK9iYvT43uwQadIkvCfiOcsVwXGCHgC8nLH
+        imLQNuGMkwsQPMcaPrJPfDHZjXGF/6BDmIxb2T4N/Sj+jyOhCoyVNDEARReVednO
+        rLZQuHI29QPrpjDijKQ0GzSRuhLXEaR1pQ2N0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=kp3ka3qdsXDqv1I6bb1vLTpniomca92c
+        aHCgjxQD9dOx9VQ5bUT2XlO4vsmcoEh2QK0xJHz2wK8SWi9RwVx/vabqt+VO2aOx
+        gRAbPQqiR37r/HA3KKxwHfif5jVlrD/nA5CnwB15F0I4k33OrV+eUtUsvc47FPHq
+        CX4RoXtTSAI=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 77C8A135218;
+        Wed,  7 Apr 2021 16:57:15 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9EEF6135217;
+        Wed,  7 Apr 2021 16:57:12 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Bagas Sanjaya <bagasdotme@gmail.com>, git@vger.kernel.org
+Subject: Re: Reviewed-by given by celebrities (no subject matter expertise
+ on Git development)
+References: <345a7b27-8ee4-4b64-0340-40b002a25d1f@gmail.com>
+        <xmqqeefqzsvz.fsf@gitster.g>
+        <YG4U5phu1uXZe6Tn@coredump.intra.peff.net>
+Date:   Wed, 07 Apr 2021 13:57:10 -0700
+In-Reply-To: <YG4U5phu1uXZe6Tn@coredump.intra.peff.net> (Jeff King's message
+        of "Wed, 7 Apr 2021 16:24:06 -0400")
+Message-ID: <xmqqv98xyfrt.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <87r1jmjxdg.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: D37F970C-97E3-11EB-A870-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/7/2021 4:46 AM, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Mon, Apr 05 2021, Derrick Stolee via GitGitGadget wrote:
->> +	return buf.buf;
-> 
-> There's a downthread discussion about the strbuf usage here so that's
-> covered.
+Jeff King <peff@peff.net> writes:
 
-And it's fixed in v2.
+> I don't usually post "me too" responses, since they are usually just
+> noise. But I could not resist it here, for two reasons:
+>
+>   - this is such a nicely written summary of what "Reviewed-by" means in
+>     our project that I think it deserves some praise. :)
+>
+>   - because it is ultimately about "what does Reviewed-by mean within
+>     the Git project", there is some small value in having another
+>     project member say "yes, that is exactly what I expect from it,
+>     too"
 
-> But I'm still confused about the need for this function and the
-> following two patches. If we apply this on top of your series:
->     
->     diff --git a/t/helper/test-refspec.c b/t/helper/test-refspec.c
->     index 08cf441a0a0..9e099e43ebf 100644
->     --- a/t/helper/test-refspec.c
->     +++ b/t/helper/test-refspec.c
->     @@ -31,7 +31,7 @@ int cmd__refspec(int argc, const char **argv)
->                             continue;
->                     }
->     
->     -               printf("%s\n", refspec_item_format(&rsi));
->     +               puts(line.buf);
->                     refspec_item_clear(&rsi);
->             }
-> 
-> The only failing test is:
->     
->     + diff -u expect output
->     --- expect      2021-04-07 08:12:05.577598038 +0000
->     +++ output      2021-04-07 08:12:05.577598038 +0000
->     @@ -11,5 +11,5 @@
->      refs/heads*/for-linus:refs/remotes/mine/*
->      2e36527f23b7f6ae15e6f21ac3b08bf3fed6ee48:refs/heads/fixed
->      HEAD
->     -HEAD
->     +@
->      :
+Heh, thanks.
 
-It should be obvious that taking refspecs as input, parsing them,
-then reformatting them for output should be almost equivalent to
-printing the input line.
+Are you hinting that some of what I wrote (with typofixes like
+s/arond/around/) should be inserted to SubmittingPatches or
+somewhere near it?
 
-The point is to exercise the logic that actually formats the
-refspec for output. The test-tool clearly does this.
-
-The logic for converting a 'struct refspec_item' to a string is
-non-trivial and worth testing. I don't understand why you are
-concerned that the black-box of the test-tool could be done
-more easily to "trick" the test script.
-
-> So the purpose of this new API is that we don't want to make the
-> assumption that strrchr(buf, ':') is a safe way to find the delimiter in
-> the refspec, or is there some case where we grok "HEAD" but not "@"
-> that's buggy, but not tested for in this series?
-
-The purpose is to allow us to modify a 'struct refspec_item' andproduce a refspec string instead of munging a refspec string
-directly.
-
-Thanks,
--Stolee
- 
+I am still scratching my head why "celebrities" were brought into
+the original question in the first place, but I can say that we do
+not discriminate against "celebrities" who review patches with
+prejudice like "that lady only plays a hacker on TV, and must know
+nothing to qualify to review our patches."  Celebrities or not, once
+somebody demonstrates enough competence and earns reputation on this
+list, opinions by that person would count more than others.
