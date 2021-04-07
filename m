@@ -2,114 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 96A0DC433B4
-	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 23:03:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 16381C433ED
+	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 23:05:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6D326610E7
-	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 23:03:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E3B25611C9
+	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 23:05:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229488AbhDGXDR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Apr 2021 19:03:17 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:65339 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229449AbhDGXDR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Apr 2021 19:03:17 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7C11FBD536;
-        Wed,  7 Apr 2021 19:03:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=CKfgTmM6d0XsZU0uvvoqIhfFs8k=; b=k8G0uTXCK/Xc8bv/023a
-        QWj98Iv2jZxZnAKqAPCAAE5k/vpYFFA9uwMoa49o2QPSRG3GZSqngyde0mVrdmSa
-        h+INBMYzFmJXF2IrrfeXOCtWxWGI9JP1ApI3S612JB+Dp0TtoiHTBRZcU4WExx1X
-        +TzNQFYvfMQVsmRWgZ3MVRE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         q=dns; s=sasl; b=kgVjmN2yYs9U6Z898D4BwbViYOMTY5KYHgR/ZyZQ/fY+z9
-        r3rh5NGYJP+IfOhHyV3UCzAzF0hv1THC8aish9owU3YCGOJ3TcyeqnK3r0G8iLy9
-        as0xMrDMsR7K7MxwP1ECYuxnvVofOch7lAv5SOmCHYKZUwqM+vYd9oYM14/6U=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6D245BD535;
-        Wed,  7 Apr 2021 19:03:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D78D7BD534;
-        Wed,  7 Apr 2021 19:03:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Chinmoy via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-        Chinmoy <chinmoy12c@gmail.com>
-Subject: Re: [PATCH v4] cache-tree.c: remove implicit dependency on
- the_repository
-References: <pull.915.v3.git.1617465421353.gitgitgadget@gmail.com>
-        <pull.915.v4.git.1617778489719.gitgitgadget@gmail.com>
-Date:   Wed, 07 Apr 2021 16:03:05 -0700
-Message-ID: <xmqqsg41wvdi.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S229747AbhDGXFV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Apr 2021 19:05:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48652 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229723AbhDGXFU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Apr 2021 19:05:20 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 169F8C061760
+        for <git@vger.kernel.org>; Wed,  7 Apr 2021 16:05:09 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id e14so30309362ejz.11
+        for <git@vger.kernel.org>; Wed, 07 Apr 2021 16:05:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=HWofVOcPb6zS/3tKdSzsMe2eeg/UJMnyccLR50+Hktw=;
+        b=iWMjlyiFlwRzLQCcO8vM9QIDZhp3quRkaeqJdl3r4i0VMuGnvcOCSvEMqfaRNOavim
+         cNu0HaLA2ehi66sTWCQ4wLZ0oRjtKmSsUJIcVG5XXVaKkOwL3MeTIg8th2T/zEg0t0Hl
+         flN0wlbQHqKNdtoQDDO0sKJSG15w2Iw+lL321jtG8IJb0Hkm6IQt4mvyonpquYtcAjTa
+         +dgRTN7jJxR5ETlZE1BMuump4XrpsIqH2QBhXcIZFylvpPbo6RSpWiECyX0hLce4IrbP
+         87WqarA/3jX9/4dxxGOalFaTsBBiuUhiI1quKRYIW5mJ+H9AeO6ewcOvaIJ3CTJgKTI6
+         YnhQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=HWofVOcPb6zS/3tKdSzsMe2eeg/UJMnyccLR50+Hktw=;
+        b=DmOJQ80Nd1gkwfjtM/Ss1pO0RpW4pLcllngyjvUGKkFJa3SyJuJrdnELCrJEVuCMX/
+         nbG0rBCkoCz2Rkh8bZshsTiuHZnH8LpFsvkEyXwpaNeNXNsiF8H3v/yF5KVWn2V8/15Q
+         Z2BYDF4uPqSLF4GgJWdLJgJbyoBX6Zme/2SbfTWMlrRrR6U94XyDK1LDvLuLmkRug7+v
+         49xnbST897eCjniQSVcdtOFZ8GFArv59nRj6DyAdH6QGfho81E8etJoxb4szjBbecKQZ
+         JcsmTwH5Nv7arIbq67ZcVrw3SWebIw4zwWlULkw8+y/3JOxwAuD+h0JUHq8rsvDqtzNQ
+         2Y3Q==
+X-Gm-Message-State: AOAM532vvRaMTiAKrma4GWfT6soM7CBu1VLeERvpDHOWsMevOU6aY6J0
+        zXQHsD2uZuxhsJIL7P0xCX4=
+X-Google-Smtp-Source: ABdhPJwmVC5wxinskTjhoKMGuJ8wMlgmQDPEFA4OTeSltasGPniSYynDQSq8k2g42OLppa6OrCEJjA==
+X-Received: by 2002:a17:906:ecb8:: with SMTP id qh24mr6820020ejb.162.1617836707746;
+        Wed, 07 Apr 2021 16:05:07 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id nd36sm13171689ejc.21.2021.04.07.16.05.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 07 Apr 2021 16:05:07 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Sergey Organov <sorganov@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Philip Oakley <philipoakley@iee.email>,
+        Elijah Newren <newren@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 7/9] t9902: fix completion tests for log.d* to match
+ log.diffMerges
+References: <20210407225608.14611-1-sorganov@gmail.com>
+ <20210407225608.14611-8-sorganov@gmail.com>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
+In-reply-to: <20210407225608.14611-8-sorganov@gmail.com>
+Date:   Thu, 08 Apr 2021 01:05:06 +0200
+Message-ID: <87y2dtitlp.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 6993CAF4-97F5-11EB-B154-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Chinmoy via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> From: Chinmoy Chakraborty <chinmoy12c@gmail.com>
+On Thu, Apr 08 2021, Sergey Organov wrote:
+
+> There were 3 completion tests failures due to introduction of
+> log.diffMerges configuration variable that affected the result of
+> completion of log.d. Fixed them accordingly.
 >
-> This kills the_repository dependency in cache_tree_update()
-> and prime_cache_tree().
->
-> Signed-off-by: Chinmoy Chakraborty <chinmoy12c@gmail.com>
+> Signed-off-by: Sergey Organov <sorganov@gmail.com>
 > ---
->     Replace the_repository with r
-
-Huh???
-
-> diff --git a/cache-tree.c b/cache-tree.c
-> index add1f0771317..4928a9f0f13b 100644
-> --- a/cache-tree.c
-> +++ b/cache-tree.c
-> @@ -446,10 +446,10 @@ int cache_tree_update(struct index_state *istate, int flags)
->  		istate->cache_tree = cache_tree();
+>  t/t9902-completion.sh | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+> index 04ce884ef5ac..4d732d6d4f81 100755
+> --- a/t/t9902-completion.sh
+> +++ b/t/t9902-completion.sh
+> @@ -2306,6 +2306,7 @@ test_expect_success 'git config - variable name' '
+>  	test_completion "git config log.d" <<-\EOF
+>  	log.date Z
+>  	log.decorate Z
+> +	log.diffMerges Z
+>  	EOF
+>  '
 >  
->  	trace_performance_enter();
-> -	trace2_region_enter("cache_tree", "update", the_repository);
-> +	trace2_region_enter("cache_tree", "update", istate->repo);
->  	i = update_one(istate->cache_tree, istate->cache, istate->cache_nr,
->  		       "", 0, &skip, flags);
-> -	trace2_region_leave("cache_tree", "update", the_repository);
-> +	trace2_region_leave("cache_tree", "update", istate->repo);
->  	trace_performance_leave("cache_tree_update");
->  	if (i < 0)
->  		return i;
-> @@ -746,13 +746,13 @@ void prime_cache_tree(struct repository *r,
->  		      struct index_state *istate,
->  		      struct tree *tree)
->  {
-> -	trace2_region_enter("cache-tree", "prime_cache_tree", the_repository);
-> +	trace2_region_enter("cache-tree", "prime_cache_tree", r);
->  	cache_tree_free(&istate->cache_tree);
->  	istate->cache_tree = cache_tree();
+> @@ -2327,6 +2328,7 @@ test_expect_success 'git -c - variable name' '
+>  	test_completion "git -c log.d" <<-\EOF
+>  	log.date=Z
+>  	log.decorate=Z
+> +	log.diffMerges=Z
+>  	EOF
+>  '
 >  
->  	prime_cache_tree_rec(r, istate->cache_tree, tree);
->  	istate->cache_changed |= CACHE_TREE_CHANGED;
-> -	trace2_region_leave("cache-tree", "prime_cache_tree", the_repository);
-> +	trace2_region_leave("cache-tree", "prime_cache_tree", r);
->  }
+> @@ -2348,6 +2350,7 @@ test_expect_success 'git clone --config= - variable name' '
+>  	test_completion "git clone --config=log.d" <<-\EOF
+>  	log.date=Z
+>  	log.decorate=Z
+> +	log.diffMerges=Z
+>  	EOF
+>  '
 
-The patch assumes that istate->repo will always set, but it does not
-even try to justify why that assumption is safe to make (e.g. "the
-entire codebase that leads to this function has been audited and
-made sure istate at this point will always have its .repo member is
-set" in the log message, if such an audit has actually been done,
-may have been convincing), which I find quite troubling.
+Commits should be made in such a way as to not break the build/tests
+partway through a series, which it seems is happening until this fixup.
+
+Having read this far most of what you have in this 9 patch series
+could/should be squashed into something much smaller, e.g. tests being
+added for code added in previous steps, let's add the tests along with
+the code since this isn't such a large change.
