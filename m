@@ -2,104 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E138EC433ED
-	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 10:51:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2009AC433B4
+	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 12:10:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B413A6108B
-	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 10:51:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CF2F861153
+	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 12:10:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351502AbhDGKvH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Apr 2021 06:51:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56178 "EHLO
+        id S1352013AbhDGMK6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Apr 2021 08:10:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45552 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351491AbhDGKvF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Apr 2021 06:51:05 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D89DC061756
-        for <git@vger.kernel.org>; Wed,  7 Apr 2021 03:50:56 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id l4so26857121ejc.10
-        for <git@vger.kernel.org>; Wed, 07 Apr 2021 03:50:55 -0700 (PDT)
+        with ESMTP id S235309AbhDGMK5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Apr 2021 08:10:57 -0400
+Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59134C061756
+        for <git@vger.kernel.org>; Wed,  7 Apr 2021 05:10:47 -0700 (PDT)
+Received: by mail-pg1-x531.google.com with SMTP id t140so12877338pgb.13
+        for <git@vger.kernel.org>; Wed, 07 Apr 2021 05:10:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=dMCPsbukkT090+gH9bhjvp0/GeZT/MTrBiY2R2zaVhY=;
-        b=vQhtsz20kgFomavAx5UrzzH4Rh88zKVckYCMxdbQeD7NJKEUTZKHR8eR8Gi2B9HM5Y
-         5t/4EDmWDv1YxjHAt0+VGu9k8htrrDPmDNKWeuaug3Dn9Ci5jxC/Tn+7MI9wK7wlu8/D
-         y3d6oBJSHntvBdGDukpXV7laAs6TZCZczTDx/qZG+Zrg7rmV8p7lZVjbB6SM271EmLtI
-         7aw+QvGldy0k9JyUqIcBtgkVTTDfgKKMJQFjAV+Mh2jOXUFsjxyzhfV0b1FdRk/bB0ly
-         1tYLbiRls8p9lGIo5u6GInc2Ffrf7Eh26kEbwjZjiYNePpV8v1/WEqsS+7p8N0YzCf2m
-         1DMg==
+        h=to:from:subject:message-id:date:user-agent:mime-version
+         :content-language:content-transfer-encoding;
+        bh=3puQgPLbNsDSLqyTY2Zr6IJA+Dm2rl2fbMCUvljUnaY=;
+        b=swT1N9YpG6sE0a963pzgy5JQQykVxTi9MQ7eTp7tan1y/Ofs/lmE3UF/GMsVUzX9Pp
+         omRjRam63nKbD6/K203FmwGCb8JF29RrPu/eoplK0UZAYhpBaeCxUM5VVuItESxq/Wbx
+         YYHIQSTx+DwqEFCsLUsoznXvi8Pzx6tr7A/QqiKV618T7EYw0KXFQOHZcXnFdY68Ui5c
+         l93dL3E+k1NYqvVhoMlCs9jsB6PCKCaZeB8k3ccMwb0+5NyWYA81slOHkXPPfTiQ55VO
+         cyoTf5JHMuy7Gae2pv5JERgJOA55xaOiCFpLLPm2hn0fQO4fQUu2ZqxuyAkDao5CdLe+
+         IU6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=dMCPsbukkT090+gH9bhjvp0/GeZT/MTrBiY2R2zaVhY=;
-        b=S9JayjD9OmfHUgEdfNyMBecofj9JAx4VIrUkBXwgYzaRRMJ/ot1Q9vInzZnQljO7QR
-         BpzdGzuQLX9ocRQa0xDcWKIJr39ZR98kXrIPuLROZ6edEu6IcmqSIagf35tzsKvK1/ro
-         ZxP3apxGT0e8egOtHUGtjxs1wv9I/mLxsa7BH/+QVRCgSd02sXsm+kJeGknGyNUKj7kS
-         OFs3SUIMoR15dXEi9sZymVmcvPKWAA/epF5VVyOKfLXgI1q79CaHm9sHTDt7DwI3RsBU
-         uR70lNXYdUKUBLt+Lfw/pT+Lr8pGai+n0UFYnz0C0gDMgfzG8jLPx8WoIHGnx15ABERG
-         oq+Q==
-X-Gm-Message-State: AOAM532CfMar+o0Zr4f/tO/CdM3lI2Kw53Ph8PmLQFrG/S1JuFbgGZeN
-        YSFJ0DwaO9bbJWoZ2f9iBDAMgpjJaSvwtg==
-X-Google-Smtp-Source: ABdhPJxq7qIplqfc1M2ZUbslrE50T6/+pPMNR05t6VqoPIzTfjogla2VB9oGVt/QVZ0r25z1homvxQ==
-X-Received: by 2002:a17:907:2509:: with SMTP id y9mr2921799ejl.170.1617792654547;
-        Wed, 07 Apr 2021 03:50:54 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id cy5sm15730302edb.46.2021.04.07.03.50.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Apr 2021 03:50:54 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
+        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+         :mime-version:content-language:content-transfer-encoding;
+        bh=3puQgPLbNsDSLqyTY2Zr6IJA+Dm2rl2fbMCUvljUnaY=;
+        b=O+twZMLf6fxtRPClJpJeK3uMZ82kPzOeKgQKEd/57kL6Zgu3L/NQKTsl5J94h+gWf/
+         jHImdUznYUWWl5S257uPqwnGpo0rxGvo4O7MVhAEZrpLEym8YHl4FNbc4C68XJ/rj9kj
+         g/5+irhWIdrIhC00IaUr/MU6AqAgmn4Y3ro6GMEc+BRqX43G5JG+iuyhGdHq90jaEvjx
+         Qg5c/rKdyxkawL37ANzP2QgEG3Z9RGsxjcVms28umCYvqjMkrytL3AUuG4C6DjR8i4/I
+         AdaRy+4vqKLYRrApqcfrcJwGii2YNfhGUpvDhMprKYBk21xTsQPFv4pfk9oe78F96w+M
+         SqyA==
+X-Gm-Message-State: AOAM530YZKbV7tvWvq76ZD58AL/+3QPFxFL86mhTw98WFjHaEfJwZYvw
+        ghqvn9qdSKRiW9diBVmMzW27bdMRa/p/Gw==
+X-Google-Smtp-Source: ABdhPJwf2v4aBP6NxD8U+EN34MGRwYEQ1dYws8+W53NvANwYTgTJhWEZZUZ6VLX4L20KLy7FKnbTFg==
+X-Received: by 2002:a63:b59:: with SMTP id a25mr2972660pgl.235.1617797446675;
+        Wed, 07 Apr 2021 05:10:46 -0700 (PDT)
+Received: from [192.168.43.80] (subs32-116-206-28-31.three.co.id. [116.206.28.31])
+        by smtp.gmail.com with ESMTPSA id q5sm4790186pfj.131.2021.04.07.05.10.45
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 07 Apr 2021 05:10:46 -0700 (PDT)
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH] bash completion: complete CHERRY_PICK_HEAD
-Date:   Wed,  7 Apr 2021 12:50:51 +0200
-Message-Id: <patch-1.1-483669af7fc-20210407T105035Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.31.1.527.g9b8f7de2547
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Subject: There should have be git gc --repack-arguments
+Message-ID: <b35a68a1-e693-5502-7a28-a1dd8222d3a0@gmail.com>
+Date:   Wed, 7 Apr 2021 19:10:43 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When e.g. in a failed cherry pick we did not recognize
-CHERRY_PICK_HEAD as we do e.g. REBASE_HEAD in a failed rebase let's
-rectify that.
+Hi,
 
-When REBASE_HEAD was added in fbd7a232370 (rebase: introduce and use
-pseudo-ref REBASE_HEAD, 2018-02-11) a completion was added for it, but
-no corresponding completion existed for CHERRY_PICK_HEAD added in
-d7e5c0cbfb0 (Introduce CHERRY_PICK_HEAD, 2011-02-19).
+I request that git gc should have --repack-arguments option. The value
+of this option should be passed to git repack.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- contrib/completion/git-completion.bash | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+The use case is when I have very large repos (such as GCC and Linux kernel)
+on a server with small RAM (1-2 GB). When doing gc on such repo, the repack
+step may hang because git-repack have to create single large packfile which
+can be larger than available memory (RAM+swap), so it must be necessary to
+do git repack --window-memory=<desired memory usage> --max-pack-size=<desired
+pack size> to create split and smaller packs instead.
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index e1a66954fe8..dbb290956b6 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -744,7 +744,7 @@ __git_refs ()
- 			track=""
- 			;;
- 		*)
--			for i in HEAD FETCH_HEAD ORIG_HEAD MERGE_HEAD REBASE_HEAD; do
-+			for i in HEAD FETCH_HEAD ORIG_HEAD MERGE_HEAD REBASE_HEAD CHERRY_PICK_HEAD; do
- 				case "$i" in
- 				$match*)
- 					if [ -e "$dir/$i" ]; then
+There should also git config item gc.repackArguments, which have the same
+effect as git gc --repack-arguments, with the option takes precedence over
+the config.
+
 -- 
-2.31.1.527.g9b8f7de2547
-
+An old man doll... just what I always wanted! - Clara
