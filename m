@@ -2,86 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1501C433ED
-	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 19:47:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 12AB7C433ED
+	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 19:48:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A709F61177
-	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 19:47:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CA56E61159
+	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 19:48:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345736AbhDGTrN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Apr 2021 15:47:13 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60794 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345651AbhDGTrJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Apr 2021 15:47:09 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 347C2C1F84;
-        Wed,  7 Apr 2021 15:46:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=x0t65qrreikkwvHOV0fVvOSexHY=; b=ujIwgz
-        zkumM+Bn9D8Nw2Zi7X2/BB3MzqpQzqc4MrgtbxdC45Rmzm+eX/Veb2y2qwlkJ38b
-        szAJtiOeZ3bRfWIxqZCSGnnmAwV95QsI94K2rBL+ZpB8S8ZAiGsFQmNanBfVVBYd
-        PQzS4yoA7mKrfyGNFx9iK6t3oUKD+iZkgojwQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ua4V+HPYIgCWHbMJbYAn7Fg/myncDhm5
-        XBtUwLfEDkz9J/lXc6AhvmCN97uTEhZExuD1otZ3iKGGHs1G85WGrSV0vbRSp9kJ
-        Nj0HaLq0WNnT31IfxHnhNesivEdLgIPXc/1zhWdWE97JTV25wvnU3Eq9ZBXNFJnP
-        t7yvW3bzLpc=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2C37CC1F83;
-        Wed,  7 Apr 2021 15:46:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AEDF0C1F82;
-        Wed,  7 Apr 2021 15:46:57 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Mark Lodato <lodato@google.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Eli Schwartz <eschwartz@archlinux.org>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Drew DeVault <sir@cmpwn.com>, git@vger.kernel.org
-Subject: Re: Regarding the depreciation of ssh+git/git+ssh protocols
-References: <20210407134646.2866522-1-lodato@google.com>
-Date:   Wed, 07 Apr 2021 12:46:56 -0700
-In-Reply-To: <20210407134646.2866522-1-lodato@google.com> (Mark Lodato's
-        message of "Wed, 7 Apr 2021 09:46:46 -0400")
-Message-ID: <xmqqv98xzxlb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S1348858AbhDGTs3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Apr 2021 15:48:29 -0400
+Received: from cloud.peff.net ([104.130.231.41]:43664 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1347438AbhDGTs2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Apr 2021 15:48:28 -0400
+Received: (qmail 17559 invoked by uid 109); 7 Apr 2021 19:48:17 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 07 Apr 2021 19:48:17 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 22367 invoked by uid 111); 7 Apr 2021 19:48:17 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 07 Apr 2021 15:48:17 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 7 Apr 2021 15:48:16 -0400
+From:   Jeff King <peff@peff.net>
+To:     Eugen Konkov <kes-kes@yandex.ru>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: Can not list stash (git version 2.30.0)
+Message-ID: <YG4MgBMJGBbIyGDJ@coredump.intra.peff.net>
+References: <1851413381.20210407204938@yandex.ru>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 0333D2F6-97DA-11EB-8E6C-D152C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1851413381.20210407204938@yandex.ru>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Mark Lodato <lodato@google.com> writes:
+On Wed, Apr 07, 2021 at 08:49:38PM +0300, Eugen Konkov wrote:
 
-> The common thread is that systems need a way to uniquely identify a git
-> repository or some object therein. I believe this means some combination
-> of:
->
-> - VCS type (git)
-> - Transport location (e.g. https://github.com/git/git)
-> - Ref (e.g. master)
-> - Resolved commit ID (e.g. 48bf2fa8bad054d66bd79c6ba903c89c704201f7)
-> - Path (e.g. contrib/diff-highlight)
-> - (possibly) Clone depth
+> I am in progress of rebasing
+> 
+> ~/e/Auth/Mojolicious/Plugin $ git rebase aa3376
+> Created autostash: 4018bc7
+> hint: Waiting for your editor to close the file...
+> 
+> 
+> while I am in editor I switched to different console to view created autostash:
+> 
+> ~/e/Auth $ git stash list
+> 
+> and see nothing
+> 
+> but can view stash by its id:
+> ~/e/Auth $ git show 4018bc7
+> commit 4018bc7bc870eb37aa35f40a0f612ca55a586045
+> Merge: a790392 674e39f
+> .....
 
-Nice.  So there is no reason to expect that these downstream systems
-can sanely force various VCS systems that the notation they use for
-"transport location" would identify what VCS type uses that
-location.  All the other details (like refs, which may other VCS
-many not even have) other than VCS type depend on the VCS used.
+If you run with GIT_TRACE=1, you can see that the autostash feature uses
+"git stash create" and not "git stash push". That creates the stash
+commit but _doesn't_ push it onto the stash list.
 
-Thanks.
+So it's working as intended. The rationale comes from the very
+first commit adding autostash, 587947750b (rebase: implement
+--[no-]autostash and rebase.autostash, 2013-05-12), which says:
+
+    The advantage of this approach is that we do not affect the normal
+    stash's reflogs, making the autostash invisible to the end-user.  This
+    means that you can use 'git stash' during a rebase as usual.
+
+-Peff
