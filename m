@@ -2,103 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D0E0C433ED
-	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 22:13:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 92351C433B4
+	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 22:17:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E2D1F61164
-	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 22:13:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5F5726121E
+	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 22:17:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229964AbhDGWNz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Apr 2021 18:13:55 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:56654 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229488AbhDGWNy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Apr 2021 18:13:54 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id DE2A8135997;
-        Wed,  7 Apr 2021 18:13:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=AKqtDm1Jf0g3WZa6XKTcsFlRa0c=; b=WtC0F0
-        VvMJ+NnSHnzV2KTFNVBPg42G02cBYOwHDvyLLUIZ9u6iGdLqHBJcSfbOnnqPtt0F
-        4OKwNd1et6R5qMD5z19PXut98fY6rdcBhk7SIuMyWBqYNii/dCePQZOTp78TgYtl
-        qEJeKEOLfRMux1S+UTtOoN8CY33dcU63VYq2I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=HvSfKYETVZRe+MXn6oSF6qeMhJCNmyh5
-        2M/p8dUTms4YLC/NGdpubUdDXoPMi/KcCXFYNCNqX8Qw/COEUY8RwYenqZLkTUwN
-        mpWujrAx0QVvEkpmMiNWahM5YvOyu9nI/eYmHQd2rBR5K/K7da4mYNDP1CoS03Hc
-        3lZDWf3vDyw=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id D64EF135996;
-        Wed,  7 Apr 2021 18:13:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.243.138.161])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 194C0135995;
-        Wed,  7 Apr 2021 18:13:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
+        id S229637AbhDGWSF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Apr 2021 18:18:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38324 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229469AbhDGWSD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Apr 2021 18:18:03 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F314C061760
+        for <git@vger.kernel.org>; Wed,  7 Apr 2021 15:17:52 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id x4so1696759edd.2
+        for <git@vger.kernel.org>; Wed, 07 Apr 2021 15:17:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=zTNa5Y5odr4nnM3turTlcPglFBeoBKjaax8THSxamPQ=;
+        b=oys0GzGT4cTfMLMTLAunCUYdTsNXV/bWfN+LbcM5fQxP6EG/XKjm0tajEETwxGwKED
+         R81FLoTF25Vi5gL/qvTJPwKHUsfreSsX8Cz6Dr92W+70Su8CwHNoMVrXXOZ60LEHHL89
+         ZxemZEgMnWRqf+cXIuRjiHrdS64typPCMHO35HUeWndZgx9hpL3fk5Z+WW7/WV/CiSP2
+         x1eN2CZ7zDTNBRl0V+xwnQuHoS4QDWjHaW0ePwwvmu4vm76VMXyzVRc07qV4tvQ06y9E
+         EIZi1fucys/S0GvwapGTc81tUiS8hcJQHdUxdMVEtqUTZ96QQocvjPA3wTEmgzEm8Cy8
+         XPeQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=zTNa5Y5odr4nnM3turTlcPglFBeoBKjaax8THSxamPQ=;
+        b=B1OkenjPch9ubPM941hzEyFxbLocvtYuYgp/HQYp3RPgfraCVlvLWjJINZdWtXtKqw
+         Az815gaiejsLYiKs0ZbmYZD0NwDFU0dAG0mKQjGsihYbB2ng9rJMtK6EUGrBfugQ9Gsj
+         5iGMTKmcvNEL7Bof8OY64s+ukA+P2+cPHprJjEd/ltdIxyLqDyp3vY5CeGi+wDbnDtqH
+         Arz3KJJIVKQhPlefqaSJnNCWURo/EnkdUDSDvPmgA6lgXtoBxwPw2uv9Fl28Bj91XtfN
+         x5UuDJ9/uLMOeaVzrmK5634Y46Ubw8HhKnui4KwEZoxITJo+xTLKxpuNRjDF41UXw3uc
+         1xzA==
+X-Gm-Message-State: AOAM530ZEhvt0ICDV4tcfEPLjb4fiQNwkvhD+KtQUOVyznt6W+q1fhK9
+        zFwA4sdLeUfLbOjgeuFc9izb9CyFDdrNTw==
+X-Google-Smtp-Source: ABdhPJwCJEdAEVC/M1J4qXvAoVocAKlV8WfNdIIRMSwyufjV9HNHfjbmsgJl/dt4XI16Ajb287XLQw==
+X-Received: by 2002:aa7:c1cc:: with SMTP id d12mr7395086edp.136.1617833871118;
+        Wed, 07 Apr 2021 15:17:51 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id q18sm755791edr.26.2021.04.07.15.17.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 07 Apr 2021 15:17:50 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>, git@vger.kernel.org
-Subject: Re: There should have be git gc --repack-arguments
-References: <b35a68a1-e693-5502-7a28-a1dd8222d3a0@gmail.com>
-        <YG4J7vtTRVpGGLoo@coredump.intra.peff.net>
-        <xmqq8s5tzv4f.fsf@gitster.g>
-        <YG4mImcQyTC1/S8X@coredump.intra.peff.net>
-Date:   Wed, 07 Apr 2021 15:13:39 -0700
-In-Reply-To: <YG4mImcQyTC1/S8X@coredump.intra.peff.net> (Jeff King's message
-        of "Wed, 7 Apr 2021 17:37:38 -0400")
-Message-ID: <xmqqa6q9yc8c.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+Cc:     Horst von Brand <vonbrand@inf.utfsm.cl>, git@vger.kernel.org
+Subject: Re: No error when overwriting ignored files
+References: <2056254759.360640.1617825398727.JavaMail.zimbra@inf.utfsm.cl>
+ <YG4Tl1IPlFBIhV4l@coredump.intra.peff.net>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
+In-reply-to: <YG4Tl1IPlFBIhV4l@coredump.intra.peff.net>
+Date:   Thu, 08 Apr 2021 00:17:50 +0200
+Message-ID: <87a6q9kacx.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 826D8710-97EE-11EB-984E-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
 
-> On Wed, Apr 07, 2021 at 01:40:16PM -0700, Junio C Hamano wrote:
+On Wed, Apr 07 2021, Jeff King wrote:
+
+> On Wed, Apr 07, 2021 at 03:56:38PM -0400, Horst von Brand wrote:
 >
->> Jeff King <peff@peff.net> writes:
+>> When pulling from a repository that tracks a file listed in
+>> `.gitignore` that would overwrite a local file, this is not reported.
 >> 
->> >> ... git repack ...  --max-pack-size=<desired pack size> to create split and
->> >> smaller packs instead.
->> > ...
->> > You can also set pack.packSizeLimit for the latter, though I do not
->> > recommend it. It will not help with memory usage (neither while
->> > repacking nor for later commands).
->> 
->> In other words, passing --max-pack-size, whether it is done with a
->> new --repack-arguments option or it is done with the existing
->> pack.packSizeLimit configuration, would make things worse.
+>> For example, in the attached repositories, when doing `git pull tst1`
+>> in `tst2`, it is (correctly) reported that `ignored.not` would be
+>> overwritten, while `ignored.txt` is not reported.
 >
-> Right. I wish we didn't have --max-pack-size at all. I do not think it
-> is ever a good idea, and it complicates the packing code quite a bit.
-
-I suspect that the original motivation was sneaker-netting on
-multiple floppy disks ;-)
-
->>  - on a small box, it may make sense to avoid repacking everything
->>    into one in the first place, but we do not want the number of
->>    packs to grow unbounded.
->> 
->> Would the new geometric repack feature help here, especially for the
->> latter?
+> This is behaving as intended. Ignored files are not considered
+> "precious". You can find more discussion by searching for that term in
+> the list archive.
 >
-> Yes, I think it would. You'd perhaps want to generate a multi-pack-index
-> file, too, to avoid having to look for objects in multiple packs
-> sequentially (we have a "git repack --write-midx" option on the way, as
-> well).
+> There is no concept of "ignored but precious" in Git. However, here's an
+> old patch series that tries to move in that direction (using an
+> attribute):
+>
+>   https://lore.kernel.org/git/20190216114938.18843-1-pclouds@gmail.com/
+>
+> AFAIK nobody is actively working on it right now.
 
-Thanks.
+Having re-read that thread now I still think by far the most useful way
+forward with this for anyone who's interested is to investigate/add
+missing tests for our current behavior, why/when it got introduced,
+whether anyone wanted it or if it was emergent etc. See [1] for a
+summary.
+
+That's quite a bit of work, but is work that someone with little/no
+previous familiarity with git's development should be able to do with
+enough time & motivation....
+
+1. https://lore.kernel.org/git/87ftsi68ke.fsf@evledraar.gmail.com/
