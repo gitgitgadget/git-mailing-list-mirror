@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 16381C433ED
-	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 23:05:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 27A49C433B4
+	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 23:06:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E3B25611C9
-	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 23:05:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EE1CB6108B
+	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 23:06:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229747AbhDGXFV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Apr 2021 19:05:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48652 "EHLO
+        id S229586AbhDGXGj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Apr 2021 19:06:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48946 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229723AbhDGXFU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Apr 2021 19:05:20 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 169F8C061760
-        for <git@vger.kernel.org>; Wed,  7 Apr 2021 16:05:09 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id e14so30309362ejz.11
-        for <git@vger.kernel.org>; Wed, 07 Apr 2021 16:05:09 -0700 (PDT)
+        with ESMTP id S229477AbhDGXGi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Apr 2021 19:06:38 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B14BC061760
+        for <git@vger.kernel.org>; Wed,  7 Apr 2021 16:06:28 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id l4so30324299ejc.10
+        for <git@vger.kernel.org>; Wed, 07 Apr 2021 16:06:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
          :message-id:mime-version;
-        bh=HWofVOcPb6zS/3tKdSzsMe2eeg/UJMnyccLR50+Hktw=;
-        b=iWMjlyiFlwRzLQCcO8vM9QIDZhp3quRkaeqJdl3r4i0VMuGnvcOCSvEMqfaRNOavim
-         cNu0HaLA2ehi66sTWCQ4wLZ0oRjtKmSsUJIcVG5XXVaKkOwL3MeTIg8th2T/zEg0t0Hl
-         flN0wlbQHqKNdtoQDDO0sKJSG15w2Iw+lL321jtG8IJb0Hkm6IQt4mvyonpquYtcAjTa
-         +dgRTN7jJxR5ETlZE1BMuump4XrpsIqH2QBhXcIZFylvpPbo6RSpWiECyX0hLce4IrbP
-         87WqarA/3jX9/4dxxGOalFaTsBBiuUhiI1quKRYIW5mJ+H9AeO6ewcOvaIJ3CTJgKTI6
-         YnhQ==
+        bh=89Rc5pVtzeO5DIDH4l4Gdpnod2Q7e/NJzSVXQViJP7k=;
+        b=LL/s7e3t0mA6mzO78O7IWpoYqk1MT3/KcVpDPhs/Q3wYQR7gZs/6WvtTZxzgBS51cS
+         Y8rxALrB3AEg+e6DrAxDFhNdF1LqbH04HjBiWEhj56UTZ6aaXb2uP16lcv3w17PLSjmc
+         jwZPWc5yck0MxGwP412J4YMN6jsxwwoPReK977IH/kqHSUwdcOdwV2CZkaegClydmure
+         OROXF50YrX2w3GwcZUyEui6q4txeizfba8dSF/ILVl58Z8DRSsy2gxhRV/zj0XqxMnqZ
+         bZyP/aWWOa3rFifbFegwPutNHYP3RpMWIfSuYRM6S69SRrF90D8DeWaUPF3pC2W1kAV6
+         /nQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
          :in-reply-to:date:message-id:mime-version;
-        bh=HWofVOcPb6zS/3tKdSzsMe2eeg/UJMnyccLR50+Hktw=;
-        b=DmOJQ80Nd1gkwfjtM/Ss1pO0RpW4pLcllngyjvUGKkFJa3SyJuJrdnELCrJEVuCMX/
-         nbG0rBCkoCz2Rkh8bZshsTiuHZnH8LpFsvkEyXwpaNeNXNsiF8H3v/yF5KVWn2V8/15Q
-         Z2BYDF4uPqSLF4GgJWdLJgJbyoBX6Zme/2SbfTWMlrRrR6U94XyDK1LDvLuLmkRug7+v
-         49xnbST897eCjniQSVcdtOFZ8GFArv59nRj6DyAdH6QGfho81E8etJoxb4szjBbecKQZ
-         JcsmTwH5Nv7arIbq67ZcVrw3SWebIw4zwWlULkw8+y/3JOxwAuD+h0JUHq8rsvDqtzNQ
-         2Y3Q==
-X-Gm-Message-State: AOAM532vvRaMTiAKrma4GWfT6soM7CBu1VLeERvpDHOWsMevOU6aY6J0
-        zXQHsD2uZuxhsJIL7P0xCX4=
-X-Google-Smtp-Source: ABdhPJwmVC5wxinskTjhoKMGuJ8wMlgmQDPEFA4OTeSltasGPniSYynDQSq8k2g42OLppa6OrCEJjA==
-X-Received: by 2002:a17:906:ecb8:: with SMTP id qh24mr6820020ejb.162.1617836707746;
-        Wed, 07 Apr 2021 16:05:07 -0700 (PDT)
+        bh=89Rc5pVtzeO5DIDH4l4Gdpnod2Q7e/NJzSVXQViJP7k=;
+        b=YxXsJIWf3aAOwYVePioJ5LC2++6gPKtHhDnFydMAM30dl2nfiLLKyui2OcFCwiICnV
+         OJH7x1IgtPlAeYG79if26q60HBzDq2ZeT5JaFD5nZK1QlcJe7QuzwsexWPTQ62pRyaw8
+         AbdmXuVhxvNziiU1pENdVNEodzkbDhCTfLTW0NmoAL2T99vlsDH0wUqYKRXG54sVB04N
+         gn6NYgsjIGGmcb/M2hs3wutAwssRk2a8xXjK6LZqqezxIhwkOmoI9aFFr1VnRkGsk2St
+         FPvwrM2YXFKKDN63XMR/b8eTuE3Ool03n7MRCfptsZ1BTqtGCkiDSfKCeov01s2GTpxf
+         mBuA==
+X-Gm-Message-State: AOAM531JmS+EmzMRy5DEprZN2f8j5Ny1OIxcCuQRV2TqfnRUjYGcru3S
+        WQxxzuRdFU49p3Ht4k3QD9I=
+X-Google-Smtp-Source: ABdhPJwvlj3X3I/Vj7kU4SDQ+rmpNx+kKwEu+XlpHHkpc3//Pfze9+qadqaYBdPajplyeuhySyycCQ==
+X-Received: by 2002:a17:906:9b08:: with SMTP id eo8mr6694081ejc.284.1617836787250;
+        Wed, 07 Apr 2021 16:06:27 -0700 (PDT)
 Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id nd36sm13171689ejc.21.2021.04.07.16.05.07
+        by smtp.gmail.com with ESMTPSA id e15sm9565627ejr.66.2021.04.07.16.06.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Apr 2021 16:05:07 -0700 (PDT)
+        Wed, 07 Apr 2021 16:06:26 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Sergey Organov <sorganov@gmail.com>
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
@@ -63,14 +63,13 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Elijah Newren <newren@gmail.com>,
         Felipe Contreras <felipe.contreras@gmail.com>,
         git@vger.kernel.org
-Subject: Re: [PATCH 7/9] t9902: fix completion tests for log.d* to match
- log.diffMerges
+Subject: Re: [PATCH 6/9] t4013: add tests for log.diffMerges config
 References: <20210407225608.14611-1-sorganov@gmail.com>
- <20210407225608.14611-8-sorganov@gmail.com>
+ <20210407225608.14611-7-sorganov@gmail.com>
 User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <20210407225608.14611-8-sorganov@gmail.com>
-Date:   Thu, 08 Apr 2021 01:05:06 +0200
-Message-ID: <87y2dtitlp.fsf@evledraar.gmail.com>
+In-reply-to: <20210407225608.14611-7-sorganov@gmail.com>
+Date:   Thu, 08 Apr 2021 01:06:26 +0200
+Message-ID: <87v98xitjh.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -80,47 +79,56 @@ X-Mailing-List: git@vger.kernel.org
 
 On Thu, Apr 08 2021, Sergey Organov wrote:
 
-> There were 3 completion tests failures due to introduction of
-> log.diffMerges configuration variable that affected the result of
-> completion of log.d. Fixed them accordingly.
+> Test that wrong values are denied.
+>
+> Test that the value of log.diffMerges properly affects both
+> --diff-merges=def and -m.
 >
 > Signed-off-by: Sergey Organov <sorganov@gmail.com>
 > ---
->  t/t9902-completion.sh | 3 +++
->  1 file changed, 3 insertions(+)
+>  t/t4013-diff-various.sh | 26 ++++++++++++++++++++++++++
+>  1 file changed, 26 insertions(+)
 >
-> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-> index 04ce884ef5ac..4d732d6d4f81 100755
-> --- a/t/t9902-completion.sh
-> +++ b/t/t9902-completion.sh
-> @@ -2306,6 +2306,7 @@ test_expect_success 'git config - variable name' '
->  	test_completion "git config log.d" <<-\EOF
->  	log.date Z
->  	log.decorate Z
-> +	log.diffMerges Z
->  	EOF
+> diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+> index 275a6790896d..ee4afca06ced 100755
+> --- a/t/t4013-diff-various.sh
+> +++ b/t/t4013-diff-various.sh
+> @@ -460,6 +460,32 @@ test_expect_success 'log --diff-merges=def matches --diff-merges=separate' '
+>  	test_cmp expected actual
 >  '
 >  
-> @@ -2327,6 +2328,7 @@ test_expect_success 'git -c - variable name' '
->  	test_completion "git -c log.d" <<-\EOF
->  	log.date=Z
->  	log.decorate=Z
-> +	log.diffMerges=Z
->  	EOF
->  '
->  
-> @@ -2348,6 +2350,7 @@ test_expect_success 'git clone --config= - variable name' '
->  	test_completion "git clone --config=log.d" <<-\EOF
->  	log.date=Z
->  	log.decorate=Z
-> +	log.diffMerges=Z
->  	EOF
+> +test_expect_success 'deny wrong log.diffMerges config' '
+> +	git config log.diffMerges wrong-value &&
+> +	test_expect_code 128 git log &&
+> +	git config --unset log.diffMerges
+
+Don't use "git config", but "test_config" at the start, then you don't
+need the --unset at the end, it'll happen automatically. Ditto for the
+following tests.
+
+> +'
+> +
+> +test_expect_success 'git config log.diffMerges first-parent' '
+> +	git log -p --diff-merges=first-parent master >result &&
+> +	process_diffs result >expected &&
+> +	git config log.diffMerges first-parent &&
+> +	git log -p --diff-merges=def master >result &&
+> +	process_diffs result >actual &&
+> +	git config --unset log.diffMerges &&
+> +	test_cmp expected actual
+> +'
+> +
+> +test_expect_success 'git config log.diffMerges first-parent vs -m' '
+> +	git log -p --diff-merges=first-parent master >result &&
+> +	process_diffs result >expected &&
+> +	git config log.diffMerges first-parent &&
+> +	git log -p -m master >result &&
+> +	process_diffs result >actual &&
+> +	git config --unset log.diffMerges &&
+> +	test_cmp expected actual
+> +'
+> +
+>  test_expect_success 'log -S requires an argument' '
+>  	test_must_fail git log -S
 >  '
 
-Commits should be made in such a way as to not break the build/tests
-partway through a series, which it seems is happening until this fixup.
-
-Having read this far most of what you have in this 9 patch series
-could/should be squashed into something much smaller, e.g. tests being
-added for code added in previous steps, let's add the tests along with
-the code since this isn't such a large change.
