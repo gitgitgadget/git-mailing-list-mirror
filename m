@@ -2,111 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A76EC43460
-	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 17:34:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C532AC433ED
+	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 17:49:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0679861363
-	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 17:34:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8738161262
+	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 17:49:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354885AbhDGReq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Apr 2021 13:34:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60872 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354886AbhDGRei (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Apr 2021 13:34:38 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98D87C061761
-        for <git@vger.kernel.org>; Wed,  7 Apr 2021 10:34:26 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id b133-20020a1c678b0000b02901231346381dso1611966wmc.0
-        for <git@vger.kernel.org>; Wed, 07 Apr 2021 10:34:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=gO0AxTlSP9JgWbiUcJUymvi+2jRVcSGEQ7hJF8nhFCo=;
-        b=NfAqWj3Gm/hvkruLk0VrGa6Pb/KZb7FXfOZOl4vygMPl8zoHx19guAA0OE7yCcR1CJ
-         XEtGxxIb+9YSgqyTGJNW+bpZCOu1Y7bIo6legtXaNR4n5WTbCGByfRL4nXRsWVs9GxNc
-         CBPxLEXZNvAhpZiWNJUNe3uAqhmxWj/BYdFTmDrdsa+oTU1jpWw4thxOxLSZTwVHAZP3
-         OB8Kv8fauT74jp7F1pntaxbRtBMVFZg+h7fOt9Wy0EWT1SajhhaBD4pu8v4b/soE/+Gb
-         ewO30pYO8eYUjE/T+ZSQSzwSQfbnWpgWC5ozPHgd53YRUeIyxJE8XQs13gzfRxgh1WZJ
-         zdDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=gO0AxTlSP9JgWbiUcJUymvi+2jRVcSGEQ7hJF8nhFCo=;
-        b=l06wxoJHy0qJVxcniqWjvfrwV70bIBMkb8OVx2I5qTMNtUCo5HvqynVIdnalLBQ6MI
-         4h5z8ai0Da8DvxRBmEiLCGkmSqm/d6HzuO21m2lBG3bhCG1GUJBVPIifZj57Ftox2TZf
-         KRiOwuufBOV44xFX3FeSkbVhxCU2+VekOutisUzfOxMs6Pk8a2JKhm7JJpMLkAeJ6iZ0
-         MXiZr36sJPQHezfI3Y4e1tuUG7UaoJfexmMH4ykBCtEJ2v4NF4SNzyw9nrDf7iFQucLf
-         a0jFQysgzIligQkW2j4hVsjH8S/Uih3M33/67NilJZuHLyYCeXLTRTupW5mqfgTqdgBp
-         j7GQ==
-X-Gm-Message-State: AOAM532s/L0F6PrMMPyOIHDh2ZpWt9G/Nk6QVwybbJjJSWFZp8ljND5m
-        6EDJxjQV7lhsMbPoBQ9dxuoJialDZFjSow==
-X-Google-Smtp-Source: ABdhPJzKzgoXL8miVH9WYkjfvY3VuCwm4VtXVEB2MIG/zlmmzsRizvqCzaXwIVt2ClIS1iYulzji4w==
-X-Received: by 2002:a1c:f407:: with SMTP id z7mr2745553wma.20.1617816865412;
-        Wed, 07 Apr 2021 10:34:25 -0700 (PDT)
-Received: from localhost.localdomain ([81.0.37.230])
-        by smtp.gmail.com with ESMTPSA id o7sm41657197wrs.16.2021.04.07.10.34.24
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 07 Apr 2021 10:34:25 -0700 (PDT)
-From:   Miriam Rubio <mirucam@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Miriam Rubio <mirucam@gmail.com>
-Subject: [PATCH v2 4/4] bisect--helper: retire `--bisect-next-check` subcommand
-Date:   Wed,  7 Apr 2021 19:33:33 +0200
-Message-Id: <20210407173334.68222-5-mirucam@gmail.com>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20210407173334.68222-1-mirucam@gmail.com>
-References: <20210407173334.68222-1-mirucam@gmail.com>
+        id S1348430AbhDGRty (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Apr 2021 13:49:54 -0400
+Received: from forward104p.mail.yandex.net ([77.88.28.107]:38786 "EHLO
+        forward104p.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1348463AbhDGRtu (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 7 Apr 2021 13:49:50 -0400
+X-Greylist: delayed 36499 seconds by postgrey-1.27 at vger.kernel.org; Wed, 07 Apr 2021 13:49:50 EDT
+Received: from sas2-0deea21afb46.qloud-c.yandex.net (sas2-0deea21afb46.qloud-c.yandex.net [IPv6:2a02:6b8:c14:7183:0:640:dee:a21a])
+        by forward104p.mail.yandex.net (Yandex) with ESMTP id B3F534B02A6B
+        for <git@vger.kernel.org>; Wed,  7 Apr 2021 20:49:39 +0300 (MSK)
+Received: from sas1-37da021029ee.qloud-c.yandex.net (sas1-37da021029ee.qloud-c.yandex.net [2a02:6b8:c08:1612:0:640:37da:210])
+        by sas2-0deea21afb46.qloud-c.yandex.net (mxback/Yandex) with ESMTP id fexefZkgAG-ndIa4MPp;
+        Wed, 07 Apr 2021 20:49:39 +0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1617817779;
+        bh=IHK7KggAsGf2zFQ56DhIYoWeug+aEibmBArFdOfud6Q=;
+        h=Subject:To:From:Date:Message-ID;
+        b=cdKcmjnn4oCGfn6olCRnKHqb8XJvonlee8K4WSQZcP0EQBXq1pjTubzwlV73qjNBw
+         xD0QQ5vPYXzyOUTLaQZlEoqUEZB0qJYGPq4iyMYCF2Ks31sTJc9FKWUqAHLezG+ds8
+         X65lcT3k/VARLDEdN3kpuIzGuMFiKYfedU8woJnI=
+Authentication-Results: sas2-0deea21afb46.qloud-c.yandex.net; dkim=pass header.i=@yandex.ru
+Received: by sas1-37da021029ee.qloud-c.yandex.net (smtp/Yandex) with ESMTPSA id z3twkLahSL-ndKGpX04;
+        Wed, 07 Apr 2021 20:49:39 +0300
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (Client certificate not present)
+Date:   Wed, 7 Apr 2021 20:49:38 +0300
+From:   Eugen Konkov <kes-kes@yandex.ru>
+Message-ID: <1851413381.20210407204938@yandex.ru>
+To:     Git Mailing List <git@vger.kernel.org>
+Subject: Can not list stash (git version 2.30.0)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-After reimplementation of `git bisect run` in C,
-`--bisect-next-check` subcommand is not needed anymore.
+Hello Git,
 
-Let's remove it from options list and code.
+I am in progress of rebasing
 
-Mentored by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Miriam Rubio <mirucam@gmail.com>
----
- builtin/bisect--helper.c | 7 -------
- 1 file changed, 7 deletions(-)
+~/e/Auth/Mojolicious/Plugin $ git rebase aa3376
+Created autostash: 4018bc7
+hint: Waiting for your editor to close the file...
 
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 31c5f99660..c20f43c581 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -21,7 +21,6 @@ static GIT_PATH_FUNC(git_path_bisect_first_parent, "BISECT_FIRST_PARENT")
- 
- static const char * const git_bisect_helper_usage[] = {
- 	N_("git bisect--helper --bisect-reset [<commit>]"),
--	N_("git bisect--helper --bisect-next-check <good_term> <bad_term> [<term>]"),
- 	N_("git bisect--helper --bisect-terms [--term-good | --term-old | --term-bad | --term-new]"),
- 	N_("git bisect--helper --bisect-start [--term-{new,bad}=<term> --term-{old,good}=<term>]"
- 					    " [--no-checkout] [--first-parent] [<bad> [<good>...]] [--] [<paths>...]"),
-@@ -1192,12 +1191,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 			return error(_("--bisect-reset requires either no argument or a commit"));
- 		res = bisect_reset(argc ? argv[0] : NULL);
- 		break;
--	case BISECT_NEXT_CHECK:
--		if (argc != 2 && argc != 3)
--			return error(_("--bisect-next-check requires 2 or 3 arguments"));
--		set_terms(&terms, argv[1], argv[0]);
--		res = bisect_next_check(&terms, argc == 3 ? argv[2] : NULL);
--		break;
- 	case BISECT_TERMS:
- 		if (argc > 1)
- 			return error(_("--bisect-terms requires 0 or 1 argument"));
--- 
-2.29.2
+
+while I am in editor I switched to different console to view created autostash:
+
+~/e/Auth $ git stash list
+
+and see nothing
+
+but can view stash by its id:
+~/e/Auth $ git show 4018bc7
+commit 4018bc7bc870eb37aa35f40a0f612ca55a586045
+Merge: a790392 674e39f
+.....
+
+
+Expected result: I should be able to see this autostash when `git stash list`
+
+
+
+--
+Best regards,
+Eugen Konkov 
 
