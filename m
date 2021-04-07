@@ -2,155 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4402CC433B4
-	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 21:37:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 04138C433ED
+	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 21:37:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 03BC46121E
-	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 21:37:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BADF66121E
+	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 21:37:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233656AbhDGVhi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Apr 2021 17:37:38 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:61484 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232943AbhDGVhf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Apr 2021 17:37:35 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 68A881274EB;
-        Wed,  7 Apr 2021 17:37:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=urlqOkibVrMZuyJydYMq+NhWLn8=; b=BtnkVh
-        Wco8mujcVIm6qNDrXEC0ddxvIeOiTxRtFLla/Na9+2Kg6Y5XG/0nm3sDxnDm/Iok
-        rvynwPOKv+fJTvT5XCxFsy+kMXaBMSF5GaX/PdTEDZvp1gDzFhUcosGvBrurPRZE
-        6fUJgA1mGYaRfgtAsvsWyxmIts6nd0sG3N1J0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=vdp68MwIvjsF4K1LzDt3vEwI6P4ymAUL
-        4PXjq9xUWA1XsxoKnC9cMZrJ1N4QEQznSeBSHHNh+Unun9aG6X7EH9OtoBnL7Bda
-        1fm3KyXlHdaPnVtvX5ZBDaUZzYqBLUibo1+6wBeOLFpf/nDeb7vzmFA2E6Ywkc28
-        nbD270EQONE=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4E44E1274EA;
-        Wed,  7 Apr 2021 17:37:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 81DB21274E9;
-        Wed,  7 Apr 2021 17:37:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Miriam Rubio <mirucam@gmail.com>
-Cc:     git@vger.kernel.org, Pranit Bauva <pranit.bauva@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Tanushree Tumane <tanushreetumane@gmail.com>
-Subject: Re: [PATCH v2 2/4] bisect--helper: reimplement
- `bisect_visualize()`shell function in C
-References: <20210407173334.68222-1-mirucam@gmail.com>
-        <20210407173334.68222-3-mirucam@gmail.com>
-Date:   Wed, 07 Apr 2021 14:37:18 -0700
-In-Reply-To: <20210407173334.68222-3-mirucam@gmail.com> (Miriam Rubio's
-        message of "Wed, 7 Apr 2021 19:33:31 +0200")
-Message-ID: <xmqqo8epydwx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S233670AbhDGVhw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Apr 2021 17:37:52 -0400
+Received: from cloud.peff.net ([104.130.231.41]:43820 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233671AbhDGVhu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Apr 2021 17:37:50 -0400
+Received: (qmail 18200 invoked by uid 109); 7 Apr 2021 21:37:39 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 07 Apr 2021 21:37:39 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 23472 invoked by uid 111); 7 Apr 2021 21:37:39 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 07 Apr 2021 17:37:39 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 7 Apr 2021 17:37:38 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>, git@vger.kernel.org
+Subject: Re: There should have be git gc --repack-arguments
+Message-ID: <YG4mImcQyTC1/S8X@coredump.intra.peff.net>
+References: <b35a68a1-e693-5502-7a28-a1dd8222d3a0@gmail.com>
+ <YG4J7vtTRVpGGLoo@coredump.intra.peff.net>
+ <xmqq8s5tzv4f.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6EB53D76-97E9-11EB-8C4C-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq8s5tzv4f.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Miriam Rubio <mirucam@gmail.com> writes:
+On Wed, Apr 07, 2021 at 01:40:16PM -0700, Junio C Hamano wrote:
 
-This bit
+> Jeff King <peff@peff.net> writes:
+> 
+> >> ... git repack ...  --max-pack-size=<desired pack size> to create split and
+> >> smaller packs instead.
+> > ...
+> > You can also set pack.packSizeLimit for the latter, though I do not
+> > recommend it. It will not help with memory usage (neither while
+> > repacking nor for later commands).
+> 
+> In other words, passing --max-pack-size, whether it is done with a
+> new --repack-arguments option or it is done with the existing
+> pack.packSizeLimit configuration, would make things worse.
 
-> -		case "$1" in
-> -		git*|tig) ;;
-> -		-*)	set git log "$@" ;;
-> -		*)	set git "$@" ;;
-> -		esac
+Right. I wish we didn't have --max-pack-size at all. I do not think it
+is ever a good idea, and it complicates the packing code quite a bit.
 
-in the original corresponds to the following.
+These days we have index v2 to let us address more than 4GB in a
+packfile. I suppose it's possible you could have a filesystem whose max
+file size is smaller than your total packfile, but that seems pretty
+unlikely these days (even 32-bit systems tend to have large file
+support).
 
-> +	} else {
-> +		if (argv[0][0] == '-') {
-> +			strvec_pushl(&args, "log", NULL);
-> +			flags |= RUN_GIT_CMD;
+But that's all a tangent. :)
 
-If it begins with "-", we assume that is an option to "git log".  OK.
+> So in conclusion:
+> 
+>  - attempting to repack everything into one pack on a memory starved
+>    box would be helped with reduced window memory size.
 
-> +		} else if (strcmp(argv[0], "tig") && !starts_with(argv[0], "git"))
-> +			flags |= RUN_GIT_CMD;
+Yes, though less than you might think. It is only trying to keep the
+memory used by delta compression at bay. The per-object book-keeping
+tends to be quite high by itself. If you are under memory pressure
+during delta compression, you may also be better off reducing the number
+of threads (since each thread is simultaneously using windowMemory
+bytes).
 
-The condition (if it is not "tig" and does not start with "git") is
-the opposite for the first case arm where we just use the rest of
-the command line as is.  We take it as a git subcommand name and its
-arguments.  OK.
+>  - on a small box, it may make sense to avoid repacking everything
+>    into one in the first place, but we do not want the number of
+>    packs to grow unbounded.
+> 
+> Would the new geometric repack feature help here, especially for the
+> latter?
 
-> +		strvec_pushv(&args, argv);
+Yes, I think it would. You'd perhaps want to generate a multi-pack-index
+file, too, to avoid having to look for objects in multiple packs
+sequentially (we have a "git repack --write-midx" option on the way, as
+well).
 
-And the remainder of the command line is pushed into the arguments.
-
-OK.
-
-> +	}
-
-And this part from the original
-
-> -	eval '"$@"' --bisect -- $(cat "$GIT_DIR/BISECT_NAMES")
-
-corresponds to the rest.  What the original calls "$@" is already
-captured in args.
-
-> +	strvec_pushl(&args, "--bisect",  NULL);
-
-We lost the "--" ("end of options and revs, now the pathspec
-follows") here.  Not good.
-
-> +	strbuf_read_file(&sb, git_path_bisect_names(), 0);
-> +	strvec_split(&args, sb.buf);
-
-This is probably quite wrong.  What we will place in the
-BISECT_NAMES file, as it is a list of pathspec elements (i.e. a
-pathspec), can contain spaces.  For that reason, when we write to
-the file, we use sq_quote_argv() on each pathspec elements.
-
-See builtin/bisect--helper.c::bisect_start()
-
-If I understand correctly, strvec_split() is to split a buffer at
-runs of whitespaces, which is a helper for a very different purpose.
-
-Perhaps sq_dequote_to_strvec() is what we want to use here?
-
-> +	strbuf_release(&sb);
-> +	res = run_command_v_opt(args.v, flags);
-> +	strvec_clear(&args);
-> +	return res;
-> +}
-> +
->  int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
->  {
->  	enum {
-> @@ -1046,7 +1085,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
->  		BISECT_STATE,
->  		BISECT_LOG,
->  		BISECT_REPLAY,
-> -		BISECT_SKIP
-> +		BISECT_SKIP,
-> +		BISECT_VISUALIZE
-
-Perhaps it is a good time to add trailing comma after this new
-token.  cf. Documentation/CodingGuidelines (look for "since early
-2012").  The next patch to add yet another enum won't have to touch
-the line added here that way.
-
-Everything below looked trivially correct.
-
-Thanks.
+-Peff
