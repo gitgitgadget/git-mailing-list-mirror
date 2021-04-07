@@ -2,72 +2,71 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 13096C43462
-	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 08:47:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A6DBC4360C
+	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 08:54:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CB65661154
-	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 08:47:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CC4A26124B
+	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 08:54:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349667AbhDGIrQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Apr 2021 04:47:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56682 "EHLO
+        id S1349685AbhDGIyy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Apr 2021 04:54:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349623AbhDGIqo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Apr 2021 04:46:44 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00673C061756
-        for <git@vger.kernel.org>; Wed,  7 Apr 2021 01:46:05 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id n2so20071538ejy.7
-        for <git@vger.kernel.org>; Wed, 07 Apr 2021 01:46:05 -0700 (PDT)
+        with ESMTP id S1349706AbhDGIyp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Apr 2021 04:54:45 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B121C0613D9
+        for <git@vger.kernel.org>; Wed,  7 Apr 2021 01:53:38 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id f8so15848277edd.11
+        for <git@vger.kernel.org>; Wed, 07 Apr 2021 01:53:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
          :message-id:mime-version;
-        bh=DMbygNF5G6tVhETg6D011+Pb+7YULcU+DnSgHjzg2XE=;
-        b=Q4vxAzKWmyL9CNpjYMq84MvRu464976mshaxP/3IByRXD+vdQOnJXVm1Mbl3eoyQTo
-         78Yc9lc4jKA5areluCCZoxcmg15eMgGwY0ViWW/PycYzPVZX+/EhuVYxVeoCSNgFqulf
-         e103z5IYikNtoxyS+3cPKW9wsy+QYEussF5hJIuNW9lklMWGLOBY8E2PYucUg3jNqYxJ
-         zn1mgPP9GrRx70+Y0Sb+4jMynDBZGEbd1Nxp6+NL/Oc1fVAeaMi7Z+MdFFOj7eX9Q1rc
-         y2SrRDkT7qBqYeQt6Cuu60ICoAD5G8gK/cXbWrFDmim+xHYC7TG9OHpgeAANBU1+YEVV
-         89SQ==
+        bh=bxY+FiQiHLL/iscZmAdUEbn/e04AgLWvoTg/2GtDTP8=;
+        b=frObbNdnM2i8H6ssrnSRhMmuc1kINIqJ74y23/ae/I2+JU3YTsFPDebythhWKsfQbJ
+         t2qqbGSS/n4M2wzFwz8QDlNaMRRnFdnQLjQXkINlS2iRwxH7doFStcj8IBICwcjtwSxN
+         /mYFKZc86oxtmGQ2HnmzJK5DV6G6tUYLY2mwKjaS8I0mH6rxANyfRLZdxheF2upze0xh
+         BmwbzLCNtZwI/pw5n929STsB3qdWVP9o5edUJmzNZXgGbE2JXaSqrFIUQPllJtlb2vld
+         RoRfTeZsYEP1zRZf567GevtM+m6jYiii1HRG/5WJRKXMlRaBeDJQIb6Ym8jR/is8tyU9
+         EMGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
          :in-reply-to:date:message-id:mime-version;
-        bh=DMbygNF5G6tVhETg6D011+Pb+7YULcU+DnSgHjzg2XE=;
-        b=XamJd1w9yees3yS+f2IY0I9GsO0XB/TiGlygPrLyfFX35Uphx2t3QMauW8q2CBJfxC
-         4Jo6E0CiCe9mEXaqbYw2B299A17WleIPFY6Y3AVDoG+GvPSpyS0eZwn0+v2Ne/L9R/Kk
-         Ea/TJyXQxnREHfvCwHN6zDrKRVRtH0o9wt3fjgytxOrYDUPwgwiQ/u7rPke1I8MSPczH
-         qwaWX9rAcCJ231u+I2Amx/goM7DztrRW84sEgVbsYuNfgZMSvrRzalREpoz3vMVVlTxc
-         dGs+iStgn1nlsOu7HI1JqzIptc/ubCwvtKHwRH2CaikIl6N1WvNo+LmXnRM9ovwxwubE
-         5BAQ==
-X-Gm-Message-State: AOAM531umvYVAMlDgTV5YoengPN+cLSEbyalnVerEUnl371dc3NHkxpf
-        Ti1OifKFS0LBD/7kPd3m1Yw=
-X-Google-Smtp-Source: ABdhPJxAGQb1xzLVNWzrbRalojitUGxOkwtv1D3aB8NenYM7gQRUB9BJXnxvWg50VTMHr6NokCXq7w==
-X-Received: by 2002:a17:906:f56:: with SMTP id h22mr2499452ejj.494.1617785164667;
-        Wed, 07 Apr 2021 01:46:04 -0700 (PDT)
+        bh=bxY+FiQiHLL/iscZmAdUEbn/e04AgLWvoTg/2GtDTP8=;
+        b=NlwJDqKRU3HlSB5HUEmnHXeb7vB6T5LlzShy1ERy5ukrbZGyQSGNmDqmXuRfehD/CW
+         4+F6cWw75h3XGAWJ0hqS/DHIo0H8nitSouR0la205SRIonUDqwGW+qEkA2+4WChXkYP/
+         EKNSa0wGR2GhsE8WdlkUkCKC9vpU6CtUG/ICgP5uJDwn9PdpPA4kvNiAYkHPmnJpm4m1
+         4+Aa6uWrIVjJbAdtMcaNcXO6lCaYGnn7HafqWHoCx9WTxjcaOMhxO0GA02xJ0BY+X/eG
+         csAP3Q+uorON8ip6xEA55MC5Y2Czvh3adixVtyqXGH5/yM7KNJSQw1QUhEGhsclg4Okw
+         13OQ==
+X-Gm-Message-State: AOAM531LvHfkI5gJGo3LOpjWefmuMz1aa1NJQLFLOFrJkR/9CkoAg0Hz
+        9afQUFItNCG9Rayh8T+L0mU=
+X-Google-Smtp-Source: ABdhPJw3IEvL7IMGVIz+gn3LFgrP9pISqMHytuL2Gt0Kn8GpfewQgSEK4Ak4Z1Xf8Ih0UQcmpjbDmA==
+X-Received: by 2002:aa7:c916:: with SMTP id b22mr3110467edt.299.1617785616784;
+        Wed, 07 Apr 2021 01:53:36 -0700 (PDT)
 Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id q16sm15413840edv.61.2021.04.07.01.46.04
+        by smtp.gmail.com with ESMTPSA id kx3sm7443904ejc.44.2021.04.07.01.53.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Apr 2021 01:46:04 -0700 (PDT)
+        Wed, 07 Apr 2021 01:53:36 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, tom.saeger@oracle.com, gitster@pobox.com,
         sunshine@sunshineco.com, Derrick Stolee <derrickstolee@github.com>,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 3/5] refspec: output a refspec item
+Subject: Re: [PATCH 5/5] maintenance: allow custom refspecs during prefetch
 References: <pull.924.git.1617627856.gitgitgadget@gmail.com>
- <e10007e1cf8ff0005295f648b9489c11a9427122.1617627856.git.gitgitgadget@gmail.com>
+ <7f6c127dac48409ddc8d30ad236182bee21c1957.1617627856.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <e10007e1cf8ff0005295f648b9489c11a9427122.1617627856.git.gitgitgadget@gmail.com>
-Date:   Wed, 07 Apr 2021 10:46:03 +0200
-Message-ID: <87r1jmjxdg.fsf@evledraar.gmail.com>
+In-reply-to: <7f6c127dac48409ddc8d30ad236182bee21c1957.1617627856.git.gitgitgadget@gmail.com>
+Date:   Wed, 07 Apr 2021 10:53:35 +0200
+Message-ID: <87o8eqjx0w.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -77,145 +76,51 @@ X-Mailing-List: git@vger.kernel.org
 
 On Mon, Apr 05 2021, Derrick Stolee via GitGitGadget wrote:
 
-> From: Derrick Stolee <dstolee@microsoft.com>
->
-> Add a new method, refspec_item_format(), that takes a 'struct
-> refspec_item' pointer as input and returns a string for how that refspec
-> item should be written to Git's config or a subcommand, such as 'git
-> fetch'.
->
-> There are several subtleties regarding special-case refspecs that can
-> occur and are represented in t5511-refspec.sh. These cases will be
-> explored in new tests in the following change. It requires adding a new
-> test helper in order to test this format directly, so that is saved for
-> a separate change to keep this one focused on the logic of the format
-> method.
->
-> A future change will consume this method when translating refspecs in
-> the 'prefetch' task of the 'git maintenance' builtin.
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  refspec.c | 25 +++++++++++++++++++++++++
->  refspec.h |  5 +++++
->  2 files changed, 30 insertions(+)
->
-> diff --git a/refspec.c b/refspec.c
-> index e3d852c0bfec..ca65ba01bfe6 100644
-> --- a/refspec.c
-> +++ b/refspec.c
-> @@ -180,6 +180,31 @@ void refspec_item_clear(struct refspec_item *item)
->  	item->exact_sha1 = 0;
->  }
+> [...]
+> diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+> index fc2315edec11..3366ea188782 100755
+> --- a/t/t7900-maintenance.sh
+> +++ b/t/t7900-maintenance.sh
+> @@ -142,20 +142,51 @@ test_expect_success 'prefetch multiple remotes' '
+>  	test_commit -C clone2 two &&
+>  	GIT_TRACE2_EVENT="$(pwd)/run-prefetch.txt" git maintenance run --task=prefetch 2>/dev/null &&
+>  	fetchargs="--prune --no-tags --no-write-fetch-head --recurse-submodules=no --refmap= --quiet" &&
+> -	test_subcommand git fetch remote1 $fetchargs +refs/heads/*:refs/prefetch/remote1/* <run-prefetch.txt &&
+> -	test_subcommand git fetch remote2 $fetchargs +refs/heads/*:refs/prefetch/remote2/* <run-prefetch.txt &&
+> +	test_subcommand git fetch remote1 $fetchargs +refs/heads/*:refs/prefetch/remotes/remote1/* <run-prefetch.txt &&
+> +	test_subcommand git fetch remote2 $fetchargs +refs/heads/*:refs/prefetch/remotes/remote2/* <run-prefetch.txt &&
+>  	test_path_is_missing .git/refs/remotes &&
+> -	git log prefetch/remote1/one &&
+> -	git log prefetch/remote2/two &&
+> +	git log prefetch/remotes/remote1/one &&
+> +	git log prefetch/remotes/remote2/two &&
+>  	git fetch --all &&
+> -	test_cmp_rev refs/remotes/remote1/one refs/prefetch/remote1/one &&
+> -	test_cmp_rev refs/remotes/remote2/two refs/prefetch/remote2/two &&
+> +	test_cmp_rev refs/remotes/remote1/one refs/prefetch/remotes/remote1/one &&
+> +	test_cmp_rev refs/remotes/remote2/two refs/prefetch/remotes/remote2/two &&
 >  
-> +const char *refspec_item_format(const struct refspec_item *rsi)
-> +{
-> +	static struct strbuf buf = STRBUF_INIT;
+>  	test_cmp_config refs/prefetch/ log.excludedecoration &&
+>  	git log --oneline --decorate --all >log &&
+>  	! grep "prefetch" log
+>  '
+>  
+> +test_expect_success 'prefetch custom refspecs' '
+> +	git -C clone1 branch -f special/fetched HEAD &&
+> +	git -C clone1 branch -f special/secret/not-fetched HEAD &&
 > +
-> +	strbuf_reset(&buf);
+> +	# create multiple refspecs for remote1
+> +	git config --add remote.remote1.fetch +refs/heads/special/fetched:refs/heads/fetched &&
+> +	git config --add remote.remote1.fetch ^refs/heads/special/secret/not-fetched &&
 > +
-> +	if (rsi->matching)
-> +		return ":";
-> +
-> +	if (rsi->negative)
-> +		strbuf_addch(&buf, '^');
-> +	else if (rsi->force)
-> +		strbuf_addch(&buf, '+');
-> +
-> +	if (rsi->src)
-> +		strbuf_addstr(&buf, rsi->src);
-> +
-> +	if (rsi->dst) {
-> +		strbuf_addch(&buf, ':');
-> +		strbuf_addstr(&buf, rsi->dst);
-> +	}
-> +
-> +	return buf.buf;
+> +	GIT_TRACE2_EVENT="$(pwd)/prefetch-refspec.txt" git maintenance run --task=prefetch 2>/dev/null &&
 
-There's a downthread discussion about the strbuf usage here so that's
-covered.
+I see this is following some established convention in the file, but is
+there really not a way to make this pass without directing stderr to
+/dev/null? It makes ad-hoc debugging when reviewing harder.
 
-But I'm still confused about the need for this function and the
-following two patches. If we apply this on top of your series:
-    
-    diff --git a/t/helper/test-refspec.c b/t/helper/test-refspec.c
-    index 08cf441a0a0..9e099e43ebf 100644
-    --- a/t/helper/test-refspec.c
-    +++ b/t/helper/test-refspec.c
-    @@ -31,7 +31,7 @@ int cmd__refspec(int argc, const char **argv)
-                            continue;
-                    }
-    
-    -               printf("%s\n", refspec_item_format(&rsi));
-    +               puts(line.buf);
-                    refspec_item_clear(&rsi);
-            }
 
-The only failing test is:
-    
-    + diff -u expect output
-    --- expect      2021-04-07 08:12:05.577598038 +0000
-    +++ output      2021-04-07 08:12:05.577598038 +0000
-    @@ -11,5 +11,5 @@
-     refs/heads*/for-linus:refs/remotes/mine/*
-     2e36527f23b7f6ae15e6f21ac3b08bf3fed6ee48:refs/heads/fixed
-     HEAD
-    -HEAD
-    +@
-     :
+I tried just removing it, but then (in an earlier test case) the
+"test_subcommand" fails because it can't find the line we're looking
+for, so us piping stderr to /dev/null impacts our trace2 output?
 
-Other than that applying this on top makes everything pass:
-    
-    diff --git a/builtin/gc.c b/builtin/gc.c
-    index 92cb8b4e0bf..ea5572d15c5 100644
-    --- a/builtin/gc.c
-    +++ b/builtin/gc.c
-    @@ -889,35 +889,21 @@ static int fetch_remote(struct remote *remote, void *cbdata)
-     		strvec_push(&child.args, "--quiet");
-     
-     	for (i = 0; i < remote->fetch.nr; i++) {
-    -		struct refspec_item replace;
-     		struct refspec_item *rsi = &remote->fetch.items[i];
-    -		struct strbuf new_dst = STRBUF_INIT;
-    -		size_t ignore_len = 0;
-    +		struct strbuf new_spec = STRBUF_INIT;
-    +		char *pos;
-     
-     		if (rsi->negative) {
-     			strvec_push(&child.args, remote->fetch.raw[i]);
-     			continue;
-     		}
-     
-    -		refspec_item_init(&replace, remote->fetch.raw[i], 1);
-    -
-    -		/*
-    -		 * If a refspec dst starts with "refs/" at the start,
-    -		 * then we will replace "refs/" with "refs/prefetch/".
-    -		 * Otherwise, we will prepend the dst string with
-    -		 * "refs/prefetch/".
-    -		 */
-    -		if (!strncmp(replace.dst, "refs/", 5))
-    -			ignore_len = 5;
-    -
-    -		strbuf_addstr(&new_dst, "refs/prefetch/");
-    -		strbuf_addstr(&new_dst, replace.dst + ignore_len);
-    -		free(replace.dst);
-    -		replace.dst = strbuf_detach(&new_dst, NULL);
-    -
-    -		strvec_push(&child.args, refspec_item_format(&replace));
-    -
-    -		refspec_item_clear(&replace);
-    +		strbuf_addstr(&new_spec, remote->fetch.raw[i]);
-    +		if ((pos = strrchr(new_spec.buf, ':')) != NULL)
-    +			strbuf_splice(&new_spec, pos - new_spec.buf + 1, sizeof("refs/") - 1,
-    +				      "refs/prefetch/", sizeof("refs/prefetch/") - 1);
-    +		strvec_push(&child.args, new_spec.buf);
-    +		strbuf_release(&new_spec);
-     	}
-     
-     	return !!run_command(&child);
-
-So the purpose of this new API is that we don't want to make the
-assumption that strrchr(buf, ':') is a safe way to find the delimiter in
-the refspec, or is there some case where we grok "HEAD" but not "@"
-that's buggy, but not tested for in this series?
