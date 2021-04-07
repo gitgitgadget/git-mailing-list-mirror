@@ -2,89 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CACEC433B4
-	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 23:35:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C2F6BC433ED
+	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 23:37:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 43D2A6124C
-	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 23:35:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7F1326128A
+	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 23:37:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229774AbhDGXfW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Apr 2021 19:35:22 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:52251 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229480AbhDGXfV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Apr 2021 19:35:21 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 69C3213621D;
-        Wed,  7 Apr 2021 19:35:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=DTMRPRzmwCpd
-        CFX7pyVbZWaQZio=; b=Q2HmQClODoKvxN7EKDWC1fRtjSwVRGLZzrCWlv8iAZUK
-        4hCDG54sF22mnxobKYbAXmj8wDmjl6sCxX6qFP9nhyzOzPpmi/pR3FY3+xo3exR8
-        /oNfPpnicMDuLU4CXkxMXPfxp3wiWGz3paMxbavY2qH8/jTBNrRjDZvITdSwIBE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=MA8Zil
-        mWfBxMzdrUgbI19EbuvJNLpG1uiB23CnMkcY5lCZ1tomf8bVrAjfu5w0JpCory07
-        etcNJ3YjbwxOSy75vS0ecVFTQQwrD7wnZ9gvX9FXJ7dXHJGV96Prl6zjMwsfY+0G
-        KNN2jyjuD0nIO3Ow7GyUsEJ56tI+PRyuWZ8QY=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 61B6D13621C;
-        Wed,  7 Apr 2021 19:35:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A9A9313621B;
-        Wed,  7 Apr 2021 19:35:08 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Sergey Organov <sorganov@gmail.com>, Jeff King <peff@peff.net>,
-        Philip Oakley <philipoakley@iee.email>,
-        Elijah Newren <newren@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 6/9] t4013: add tests for log.diffMerges config
-References: <20210407225608.14611-1-sorganov@gmail.com>
-        <20210407225608.14611-7-sorganov@gmail.com>
-        <87v98xitjh.fsf@evledraar.gmail.com>
-Date:   Wed, 07 Apr 2021 16:35:06 -0700
-In-Reply-To: <87v98xitjh.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Thu, 08 Apr 2021 01:06:26 +0200")
-Message-ID: <xmqqh7khwtw5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S229774AbhDGXiI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Apr 2021 19:38:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55788 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229712AbhDGXiG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Apr 2021 19:38:06 -0400
+Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30F50C061760
+        for <git@vger.kernel.org>; Wed,  7 Apr 2021 16:37:55 -0700 (PDT)
+Received: by mail-pg1-x529.google.com with SMTP id q10so39885pgj.2
+        for <git@vger.kernel.org>; Wed, 07 Apr 2021 16:37:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=B8gRHjna5Ja57WmGGp+orC/zPZ7U7GsPbm6X2hpxKSI=;
+        b=GhxwpLvjJJSDWV5xtu5uA9mVmPcL6hFPsLX1+ZQqYptfnV2pYUoWuGa22eMlyoG7xp
+         6FmBHk1svVYmA5jgew5xLZKIf84Hs0JYY/OUD1vTbPQ1PD5Bt1RCKkDTWOJVl2r2LTH7
+         mYx/y8vjLvZmqL+1gGvfx4KkkdTDg5nHByiqfKpTmB10tV0jAaYGxuhwgIga566gxRvY
+         RCMZ6Qkum2C0/km2OWvaWLERVgNwJOvTiGSRqH9/Pu2Ibk4Jc/nJNXGVnJ3SV+XC4/Kf
+         oy7sA3Ky8JuvikNzV3R8mqUR6wLOI9nawv5o2woT9EkBR5z2R6Fr93NIWu4Ib8wvvcex
+         qF0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=B8gRHjna5Ja57WmGGp+orC/zPZ7U7GsPbm6X2hpxKSI=;
+        b=UXhR46v0rkrMN2NcZyzEqkBvIRymp06PjSBfp3KPK9TxIeF2KspIa4Br+ltUvYH80v
+         yTjWaDQItKZVGtbpgcfDDplQk+OcbqQkkd988C7YYuaaA6/roYtSuXZoZLWNoveJWWBg
+         y/hI6srlX8yO/UrODHoWj1WeI9+/BbH7+9sfwKoAIDZsB5MTx/Qks566S260X/LEKPPH
+         qTOPZ5MkHg+p1qjmD58OVOR+Kc31DjzDDNBoJiyr3ZA6PVvK/IrYyGOWWV2518bdVSP6
+         c1YSZX2RSy6qWZ2NI1GRX8aHJVblCQH8OKGjikbs44NJILatjb7L0g26Dl3ccJQ/IyTd
+         /+GQ==
+X-Gm-Message-State: AOAM531N9iJ385xNT/9Czixyj0oMyYfDcCdkPnPlOlfIrJ+kJY00E4yD
+        ZXIqSSAUEZMeJAfz/I70FZr4/g==
+X-Google-Smtp-Source: ABdhPJzW7sAhuYBsRVB9a/PienGsEskgUTaAw83qrQnuDJFCepAu0Gp4snV7x80Bd+DoQsQfL8prUg==
+X-Received: by 2002:a63:1921:: with SMTP id z33mr5458716pgl.211.1617838674611;
+        Wed, 07 Apr 2021 16:37:54 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:0:8cb6:cbee:2f8c:7584])
+        by smtp.gmail.com with ESMTPSA id d13sm23170683pgb.6.2021.04.07.16.37.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 07 Apr 2021 16:37:53 -0700 (PDT)
+Date:   Wed, 7 Apr 2021 16:37:48 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, tom.saeger@oracle.com, gitster@pobox.com,
+        sunshine@sunshineco.com, Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v2 5/5] maintenance: allow custom refspecs during prefetch
+Message-ID: <YG5CTFMIfSYcqZkJ@google.com>
+References: <pull.924.git.1617627856.gitgitgadget@gmail.com>
+ <pull.924.v2.git.1617734870.gitgitgadget@gmail.com>
+ <9592224e3d428762c6f9b38a0bcc2cee5c3dff6c.1617734871.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: E3A93014-97F9-11EB-A11F-D609E328BF65-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <9592224e3d428762c6f9b38a0bcc2cee5c3dff6c.1617734871.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On Tue, Apr 06, 2021 at 06:47:50PM +0000, Derrick Stolee via GitGitGadget wrote:
+> @@ -877,6 +878,7 @@ static int fetch_remote(struct remote *remote, void *cbdata)
+[snip]
+> +		/*
+> +		 * If a refspec dst starts with "refs/" at the start,
+> +		 * then we will replace "refs/" with "refs/prefetch/".
+> +		 * Otherwise, we will prepend the dst string with
+> +		 * "refs/prefetch/".
+> +		 */
+> +		if (!strncmp(replace.dst, "refs/", 5))
+> +			ignore_len = 5;
+Using a literal string plus the literal value of the string length,
+twice, doesn't sit great with me...
 
->> +test_expect_success 'deny wrong log.diffMerges config' '
->> +	git config log.diffMerges wrong-value &&
->> +	test_expect_code 128 git log &&
->> +	git config --unset log.diffMerges
->
-> Don't use "git config", but "test_config" at the start, then you don't
-> need the --unset at the end, it'll happen automatically. Ditto for the
-> following tests.
+> +
+> +		strbuf_addstr(&new_dst, "refs/prefetch/");
+> +		strbuf_addstr(&new_dst, replace.dst + ignore_len);
+...plus with some ugly array pointer math. :) Why not use
+git-compat-util.h:skip_prefix() instead of doing your own math? (In
+fact, the doc comment on skip_prefix() talks about using it exactly for
+stripping "refs/" off the beginning of a string :) )
 
-More importantly, test_config arranges the unset to happen even if
-a step in the middle (e.g. test_expect_code in the above example)
-fails.  In the posted version, the control would not reach the
-"git config --unset" and leaves the configuration behind.
-
-And that is the biggest reason why the above should use test_config.
-
-Thanks for a good suggestion.
+ - Emily
