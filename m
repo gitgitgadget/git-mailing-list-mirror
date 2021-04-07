@@ -2,226 +2,230 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 081B2C433B4
-	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 18:40:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D000C433ED
+	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 19:00:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D00D06121E
-	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 18:40:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5245261205
+	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 19:00:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234047AbhDGSlF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Apr 2021 14:41:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47184 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230020AbhDGSk6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Apr 2021 14:40:58 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC853C06175F
-        for <git@vger.kernel.org>; Wed,  7 Apr 2021 11:40:47 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id u10so21923232lju.7
-        for <git@vger.kernel.org>; Wed, 07 Apr 2021 11:40:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=YVBZZiJwirgK87iH2xyrrN709tlDj+JdsszbuGh/fKM=;
-        b=i2VhZNhLq/h+Q+epD0mqlbFnQuzpVMRPQSfEcEsQKrPyvnWDD+62YY2Vj39UXatjrm
-         GH10CmHkFs96bhRsYiH3WX7gznInDSTRRbVooKUY6RHb5AWkMF1lQcTDnBhcOY5RBiXM
-         AILotW/mpyOGmNtWT32wGRkLR0OYrQ3QRSlV6aKkehJs3UM+caSfLpVJF/7zKx2ayG//
-         VM2fJ6TCBe4SB7xiTYoAhp9RcofkBRCsgDe3lODK+RzBdJFX4IsTU4GTV90X/SPdS92f
-         61+zBElILMO2hl6d/Z4HM++Vv2Y8iPd89EfjD4Q+n+/MmpEXMw8+wDn5s3GVF1TaNaed
-         KAYw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=YVBZZiJwirgK87iH2xyrrN709tlDj+JdsszbuGh/fKM=;
-        b=WruBFfkakzw0n1Qu/TCQdtyMYV6R8fozIHYfKRXlDxRmZi/f+j64pNW+gV0ZUQY5kp
-         y/sJ7uDmRSeIl6xdaKCYAkDoQ58YI+aFYzglftsXjoAyPNnCFs1acxgM2crV3Jq/HF3/
-         WROopHZaw0qB0XdLkbXJUyMcMKNZWnogjF5uxpWLWTOXqjf71MvkIOYKscSt76MoLp/h
-         DJcny2k1NfN0fvCOFdCK7U4Z+ZkUKHUatfXnVUmX3QqYMTnlJ+cGtWS6YOx5wVMmzPoj
-         W9PMAwH3x6h01inNe8tPpP+NBj4XgoVqzGzpWgQmHxlpurjgV4X+uf7cdHr+GgikW+bE
-         7nwA==
-X-Gm-Message-State: AOAM5335cdjqFrLVvNgkrI8h6cMckXCxFPRLaqfDXYCYbFNOiVf/Un8D
-        RzOIBgTtZcmfzfTETgKRyoiBza3F1yWITR6bwVmoPdBsKK4wj1Od
-X-Google-Smtp-Source: ABdhPJwMQBpgmnFpguG041vZbLUE4n6/U1sQJZoO3SmT07UVraUrN9B4dokyA2H3u8QA3d4ObKy3cty0iksVwB/LBWc=
-X-Received: by 2002:a2e:7618:: with SMTP id r24mr2986575ljc.420.1617820846196;
- Wed, 07 Apr 2021 11:40:46 -0700 (PDT)
+        id S1355523AbhDGTAi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Apr 2021 15:00:38 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:58034 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1355515AbhDGTAg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Apr 2021 15:00:36 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id CFAB11263DA;
+        Wed,  7 Apr 2021 15:00:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=vsMHETV+iCU9e69DWRIyo3KVQn4=; b=oOrS/L
+        cJ+Q3E8bJVuvq02GU/DPMd6PI/W6awRjZ+RTaOcn6I57hWFL1vrrjb1e5udG+E8l
+        0CNpUOZxKE6KcpOqQtKBQB8oiRXoNAhA5z+/ivvEkM/7Tgi2GcIgs73yOSL0Fqen
+        REiVdB9ZfeGd9Swv3LhZWCuNG/s1C8DYB2StI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=sVsxH7HCqCWrNw/4EiHR5DkM0JDUtdYh
+        kcYFud3xn5t7Vx6khCX7GKVl3T4KSFVjGKMjB/jTpTnbgrh5IPxQYqI6x5dQY0zf
+        Sh3RBXC1/GRYUPl7N+3nqTMZ+/ruZtbYQ/rxa7CWdTkc9TZcrVj+1wo+TMr+ocuJ
+        ZjvgpWSAcHg=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id C78D91263D9;
+        Wed,  7 Apr 2021 15:00:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id AC5BF1263D8;
+        Wed,  7 Apr 2021 15:00:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jerry Zhang <jerry@skydio.com>
+Cc:     git@vger.kernel.org, newren@gmail.com, ross@skydio.com,
+        abe@skydio.com, brian.kubisiak@skydio.com
+Subject: Re: [PATCH v4] git-apply: allow simultaneous --cached and --3way
+ options
+References: <20210406024931.24355-1-jerry@skydio.com>
+        <20210407180349.10173-1-jerry@skydio.com>
+Date:   Wed, 07 Apr 2021 12:00:19 -0700
+In-Reply-To: <20210407180349.10173-1-jerry@skydio.com> (Jerry Zhang's message
+        of "Wed, 7 Apr 2021 11:03:49 -0700")
+Message-ID: <xmqqzgy9zzr0.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.908.git.1616105016055.gitgitgadget@gmail.com>
- <pull.908.v2.git.1616723016659.gitgitgadget@gmail.com> <ec031dc8-e100-725b-5f27-d3007c55be87@gmail.com>
- <CAMbkP-S-9cccMpU4HG0Wurqap-WkTmD2zk50nKd9kJ_oWO__qw@mail.gmail.com>
- <YGzrfaSC4xd75j2U@camp.crustytoothpaste.net> <87tuoijzsy.fsf@evledraar.gmail.com>
- <9af3770f-204b-253b-d7f2-c9d5e7cf2fdb@gmail.com>
-In-Reply-To: <9af3770f-204b-253b-d7f2-c9d5e7cf2fdb@gmail.com>
-From:   Albert Cui <albertqcui@gmail.com>
-Date:   Wed, 7 Apr 2021 11:40:34 -0700
-Message-ID: <CAMbkP-QDzCQbekBf7tdN6zccDU8xnXdYFAuSZSbsdS6hSumghA@mail.gmail.com>
-Subject: Re: [PATCH v2] hooks: propose project configured hooks
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Albert Cui via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 80A69C8E-97D3-11EB-83ED-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 7, 2021 at 6:09 AM Derrick Stolee <stolee@gmail.com> wrote:
+Jerry Zhang <jerry@skydio.com> writes:
+
+> "git apply" does not allow "--cached" and
+> "--3way" to be used together, since "--3way"
+> writes conflict markers into the working tree.
 >
-> On 4/7/2021 3:53 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> >
-> > On Wed, Apr 07 2021, brian m. carlson wrote:
-> >>
-> >> I continue to have serious reservations about this series and approach=
-,
-> >> and I'm not sure that any proposal we can adopt here will address the
-> >> security concerns.  To be frank, I don't think this proposal should mo=
-ve
-> >> forward in its current state or otherwise, since I think the security
-> >> problems are inherent in this approach and fundamentally can't be fixe=
-d.
-> >>
-> >> This is, as should be obvious from my email address, my personal
-> >> opinion, despite my reference to my employer above.  Unless otherwise
-> >> stated, I don't speak for my employer and they don't speak for me.
-> >
-> > I agree with pretty much every word you said, in particular the social
-> > engineering aspect of this. In past mails I've referred to elsewhere
-> > I've proposed some Emacs-like "ask" facility for git, but you've
-> > convinced me that that default would be a bad idea for the "user just
-> > clicks yes no matter what" reasons you noted.
+> Allow "git apply" to accept "--cached" and
+> "--3way" at the same time.  When a single file
+> auto-resolves cleanly, the result is placed in the
+> index at stage #0 and the command exits with 0
+> status.  For a file that has a conflict which
+> cannot be cleanly auto-resolved, the original
+> contents from common ancestor (stage #1), our
+> version (stage #2) and the contents from the
+> patch (stage #3) are left at separate stages.
+> No attempt is made to resolve the conflict at
+> the content level, and the command exists with
+> non-zero status, because there is no place
+> (like the working tree) to leave a half-resolved
+> merge for the user to resolve.
 >
-> These replies definitely speak from a perspective common to mine.
-> This is very dangerous territory and should be handled carefully.
+> The user can use `git diff` to view the contents
+> of the conflict, or `git checkout -m -- .` to
+> regenerate the conflict markers in the working
+> directory.
 >
-> There is also a legitimate user need to use hooks _to contribute_
-> to some repositories. Hooks are not needed to read the repositories
-> or interact with them as a document.
+> Don't attempt rerere in this case since it depends
+> on conflict markers written to file for its database
+> storage and lookup. There would be two main changes
+> required to get rerere working:
+> 1. Allow the rerere api to accept in memory object
+> rather than files, which would allow us to pass in
+> the conflict markers contained in the result from
+> ll_merge().
+> 2. Rerere can't write to the working directory, so
+> it would have to apply the result to cache stage #0
+> directly. A flag would be needed to control this.
 >
-> The current mechanisms require ad-hoc approaches that are custom to
-> each project, so there would be value in creating a standard inside
-> the Git client itself. I think the proposal goes too far in making
-> this an automatic configuration, either because it assumes trust or
-> assumes sufficient skepticism on behalf of the users. Either is not
-> acceptable for the Git project.
+> Signed-off-by: Jerry Zhang <jerry@skydio.com>
+> ---
+
+For future reference, please summarize what changed between v3 and
+v4 in this space immediately after the three-dash line.  This is
+especially helpful when sending v4 so soon after v3 that nobody had
+a chance to review and respond to v3, as it helps reviewers to
+decide if it is safe to skip v3 and jump directly to v4 to start
+reading.
+
+>  Documentation/git-apply.txt |  6 ++++--
+>  apply.c                     |  7 +++----
+>  t/t4108-apply-threeway.sh   | 24 ++++++++++++++++++++++++
+>  3 files changed, 31 insertions(+), 6 deletions(-)
 >
-> Here are the hard lines I draw:
->
-> 1. This should not happen in "git clone" (other than maybe a message
->    over stderr that hooks are available to be configured through a
->    different command).
->
-> 2. Hooks should not update in "git checkout" (other than a message
->    that hooks have updated).
->
+> diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
+> index 9144575299c264dd299b542b7b5948eef35f211c..aa1ae56a25e0428cabcfa2539900ef2a09abcb7c 100644
+> --- a/Documentation/git-apply.txt
+> +++ b/Documentation/git-apply.txt
+> @@ -87,8 +87,10 @@ OPTIONS
+>  	Attempt 3-way merge if the patch records the identity of blobs it is supposed
+>  	to apply to and we have those blobs available locally, possibly leaving the
+>  	conflict markers in the files in the working tree for the user to
+> -	resolve.  This option implies the `--index` option, and is incompatible
+> -	with the `--reject` and the `--cached` options.
+> +	resolve.  This option implies the `--index` option unless the
+> +	`--cached` option is used, and is incompatible with the `--reject` option.
+> +	When used with the `--cached` option, any conflicts are left at higher stages
+> +	in the cache.
 
-To =C3=86var's point, maybe it would help to separate the two user bases of
-project configured hooks.
-(1) Employee working at BigCorp. They are cloning from a trusted
-remote on company machines where the company controls what gets
-installed and how Git is configured. Their motivation is to make
-changes to their local clone and submit changes to a central
-repository.
-(2) Git user cloning from any remote e.g. GitHub. They could have many
-motivations: to make changes, to inspect the code, to simply just
-build.
+Also for future reference.
 
-I agree that this feature should not get in the way of users (2), or
-expose them to new attack surfaces, users who may have no desire to
-have project configured hooks. That said, I think we can still get
-into a world that better serves users (1). I proposed this upthread
-and would like feedback on it (I realize these examples still assume
-one config for every branch, but you get the gist):
+It is clear to me (from the pre-context lines of the above hunk)
+that this change wants to depend on the other "3way-first" topic,
+because I reviewed the other topic.
 
-Case 1. Opt-into clone setup via config
-```
-#~/.gitconfig
-[hook]
-   allowCloneInstallFromRemote =3D $REMOTE
-```
+But it would not be too much trouble to say "this builds on the
+jz/apply-run-3way-first topic 923cd87a (git-apply: try threeway
+first when "--3way" is used, 2021-04-06)".  When potential reviewers
+are tempted to apply this and try it out while reviewing, such a
+note would help them.  And as a patch author, you would want to
+increase the chance that your patch gets reviewed, so any help you
+give to potential reviewers would help you.
 
-IFF $REMOTE matches the config, then `git clone $REMOTE --setup-hooks` work=
-s:
+The space between the three-dash line and the diffstat is the place
+to write it.
 
-```
-$ git clone $remote --setup-hooks
-The following hooks were installed from `origin` ($ORIGIN_URL):
-pre-push: $GIT_ROOT/pre_push.sh
-```
+> diff --git a/apply.c b/apply.c
+> index 9bd4efcbced842d2c5c030a0f2178ddb36114600..0d1e91c88986433052e9b6e67c0dcbd04e6eb703 100644
+> --- a/apply.c
+> +++ b/apply.c
+> @@ -133,8 +133,6 @@ int check_apply_state(struct apply_state *state, int force_apply)
+>  
+>  	if (state->apply_with_reject && state->threeway)
+>  		return error(_("--reject and --3way cannot be used together."));
+> -	if (state->cached && state->threeway)
+> -		return error(_("--cached and --3way cannot be used together."));
+>  	if (state->threeway) {
+>  		if (is_not_gitdir)
+>  			return error(_("--3way outside a repository"));
+> @@ -4644,8 +4642,9 @@ static int write_out_results(struct apply_state *state, struct patch *list)
+>  				fprintf(stderr, "U %s\n", item->string);
+>  		}
+>  		string_list_clear(&cpath, 0);
+> -
+> -		repo_rerere(state->repo, 0);
+> +		/* rerere relies on conflict markers which aren't written with --cached */
 
-Case 2. Without the config opt-in for clone setup
-```
-$ git clone $remote # using --setup-hooks here wouldn't change
-behavior since there's no config opt-in
-Remote `origin` ($ORIGIN_URL) suggests the following hooks:
-pre-push: $GIT_ROOT/pre_push.sh
+A minor nit.  It is not just "conflict markers" that rerere wants.
+It wants a intermediate half-merged result "in the working tree",
+because it does not work with in-core copy.  So
 
-If you wish to install them, run `git hook setup origin`.
-To always ignore hooks from `origin`, run `git hook ignore origin`.
-```
+                /*
+                 * With --cached, we do not write conflicted file to the
+                 * working tree, so cannot use rerere to reuse previous
+		 * resolution.
+                 */
 
-Case 3. Opting into updates
-You could imagine a similar config, e.g. allowAutoUpdateFromRemote
-that allows Git to prompt users to consent to auto-updating hooks on
-"git checkout" with this type of behavior:
+or something, perhaps.
 
-....
-$ git checkout
+> +		if (!state->cached)
+> +			repo_rerere(state->repo, 0);
+>  	}
+>  
+>  	return errs;
+> diff --git a/t/t4108-apply-threeway.sh b/t/t4108-apply-threeway.sh
+> index 9ff313f976422f9c12dc8032d14567b54cfe3765..37ba4f6fa201c49a4bf2882d6b8345c1c2bedf0c 100755
+> --- a/t/t4108-apply-threeway.sh
+> +++ b/t/t4108-apply-threeway.sh
+> @@ -180,4 +180,28 @@ test_expect_success 'apply -3 with ambiguous repeating file' '
+>  	test_cmp expect one_two_repeat
+>  '
+>  
+> +test_expect_success 'apply with --3way --cached' '
+> +	# Merging side should be similar to applying this patch
+> +	git diff ...side >P.diff &&
+> +
+> +	# The corresponding conflicted merge
+> +	git reset --hard &&
+> +	git checkout main^0 &&
+> +	test_must_fail git merge --no-commit side &&
+> +	git ls-files -s >expect.ls &&
+> +
+> +	# should fail to apply
+> +	git reset --hard &&
+> +	git checkout main^0 &&
+> +	test_must_fail git apply --cached --3way P.diff &&
+> +	git ls-files -s >actual.ls &&
+> +	print_sanitized_conflicted_diff >actual.diff &&
+> +
+> +	# The cache should resemble the corresponding merge
+> +	test_cmp expect.ls actual.ls &&
+> +	# However the working directory should not change
+> +	>expect.diff &&
+> +	test_cmp expect.diff actual.diff
+> +'
 
-The following hooks were updated from remote `origin` ($ORIGIN_URL):
+Interesting.  I would have expected "ls-files -u" would be used, but
+using "-s" to see the stage #0 entries is more thorough.
 
-pre-push: $GIT_ROOT/pre_push.sh
+The above is only about a failing case, which is of course an
+important case to validate, but don't we also want to check a
+successful case, and a case where two paths are touched, and one
+applies cleanly while the other conflicts?
 
-If you wish to install them, run `git hook setup origin`.
-
-# The below only appears if allowAutoUpdateFromRemote is set for $ORIGIN_UR=
-L
-If you wish to always accept hooks from `origin`, run `git hook setup --alw=
-ays
-origin`. You should only do this if you trust code changes from origin.
-
-To always ignore hooks from `origin`, run `git hook ignore origin`.
-....
-
-> 3. Whatever document triggers a hook configuration should live at
->    HEAD and should not be configured or updated until HEAD has been
->    updated by one Git command (git clone, git checkout), time
->    passes for the user to inspect the worktree, then _another_
->    command (git hooks?) is run manually to reconfigure the hooks.
->
-
-I want to separate the requirement from the implementation. What I'm
-hearing is that "users should have a chance to inspect the suggested
-hook before consenting to installing it." That doesn't necessarily
-require the configuration to be in HEAD.
-
-Again, that's reasonable for users (2) but doesn't seem necessary for
-users (1) if we have the correct opt-ins.
-
-> I think there is a potential way forward if these items are followed.
->
-> But I'd like to ask a different question: What problems are these
-> custom hooks solving, and can Git solve those problems in-core?
->
-> If we care about checking commits for format or something, is that
-> a common enough problem that we could implement it in Git itself and
-> enable it through a Git config option? It might be interesting to
-> pursue this direction and maybe we'll solve 80% of the need with
-> extensions like that.
->
-> I'm aware of some hooks that insert things like a Gerrit change-id
-> that would probably not be appropriate for such an in-core change.
->
-
-A `git lint` command would cover a lot of the use cases, but to your
-point, there are others.
-
-Thanks,
-Albert
+Thanks.
