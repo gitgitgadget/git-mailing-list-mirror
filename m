@@ -2,99 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 04311C433B4
-	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 22:49:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 90D28C433ED
+	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 22:56:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D0A3A6100B
-	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 22:49:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5CA1B6121E
+	for <git@archiver.kernel.org>; Wed,  7 Apr 2021 22:56:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229515AbhDGWte (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Apr 2021 18:49:34 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:52038 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229449AbhDGWtd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Apr 2021 18:49:33 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 60E8D135E3A;
-        Wed,  7 Apr 2021 18:49:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=dQ3ckYNcFEud
-        rhlV+s6ZQfMqtEo=; b=PggA3pwUaAPFc41km0bgv2C23BRQGIIy3gjF08OOuVVD
-        Pg9GDcSP1vztYICUnve7H2xeYlF/m62MIOEyZH8iPyU6fQRL1dDzL8nObAgspldJ
-        klPi6Q9j4agHWp/G+240+TiM3ndgRUTjg0V0wKd37gY93BWfWFJk2FHbzPzmEvg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=TQWJ2W
-        2yiwOWiBQClHMmZZek81AkhauWzB9Yuh9K7nFFP6T/Kd3m27MSmxq7J/Og9q0C26
-        kT/d+o6MYk854w2cW4eevDzkjEV0xz9f0tPds1sxF1M17OUOfcD2JheMq09Eh7rw
-        PErvqAS1Tbusho3g4r4u8+aGrUQNZXhzB5rMw=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 42805135E39;
-        Wed,  7 Apr 2021 18:49:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 68D61135E38;
-        Wed,  7 Apr 2021 18:49:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, tom.saeger@oracle.com,
-        sunshine@sunshineco.com, Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 3/5] refspec: output a refspec item
-References: <pull.924.git.1617627856.gitgitgadget@gmail.com>
-        <e10007e1cf8ff0005295f648b9489c11a9427122.1617627856.git.gitgitgadget@gmail.com>
-        <87r1jmjxdg.fsf@evledraar.gmail.com>
-        <b3e00d3e-c782-9f2a-14e0-f576e50a7e55@gmail.com>
-        <87czv5kaxw.fsf@evledraar.gmail.com>
-Date:   Wed, 07 Apr 2021 15:49:18 -0700
-In-Reply-To: <87czv5kaxw.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Thu, 08 Apr 2021 00:05:15 +0200")
-Message-ID: <xmqqy2dtww0h.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S229505AbhDGW4d (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Apr 2021 18:56:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46706 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229449AbhDGW4d (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Apr 2021 18:56:33 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB11BC061760
+        for <git@vger.kernel.org>; Wed,  7 Apr 2021 15:56:22 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id j18so725000lfg.5
+        for <git@vger.kernel.org>; Wed, 07 Apr 2021 15:56:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=quS4egLtab54phy6sZAfZx9lgp3XrX7ElK0t7tx1M24=;
+        b=RlUqXPJKkAIbjchZNkVX1W1mX5hh1EzDIEiJa3zwTUbGV++bqHdM5uwKrI+JqvnRKY
+         Ht0J5bM8O+TnaS8/k9zYSBc7FQM98eM+2lfTJ+QFEkbvmlVhlpWo6xhG3SxkyX0xUVpE
+         mMVJciffI0vjtslcpE8Aqm0d/25DmiQmUbku3In7JZ6Gw11NgdWkDqDuxPT4rTyf8zEd
+         BpYBzQXysGkQcWpkO0ondfr7QYgv6vPXtPKJKXW1aSn3Uw0vnKLpnMfmJ4nIRDZLCQsy
+         HHhwdJ2J1L/irbUeFVzIvM18xuTuu5dfqvBXbQHxpJEn1AHNXsHKrsb1mOXgzTN/WFJM
+         nKfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=quS4egLtab54phy6sZAfZx9lgp3XrX7ElK0t7tx1M24=;
+        b=nL4hPQULraVF+ypQAUt+SiLXwiThnDwRTw1w4KZrsuOA97v2xcooPZrZWaDfbgxQ6W
+         kfXcvvd2ceeWK1q10Frt0FcHAQPgbLwhhF8nsGhhLGRI+q0EHlgVzBHHcIr8dHvbfIGg
+         twLtxeOFJvJZWcs2iLw38jGDzIxtoq3ELxQ0a1N3y5QlZ3bRHlOm0oSAsob2aKfPsp+X
+         +SJdpZ2MW16cMjyjBNplJ3fL+D+W/kvDLLs1GdrAMF/Luu0+8YEqsx6AzCpu2aVzMvnO
+         vfXx5axEcGl57ouxh6bon5BIV4xpDM3+g4oLIeE0rCavnDMPv7Tau0aIME90poL0rHBl
+         glqg==
+X-Gm-Message-State: AOAM533R2xU4rkylugyV2fpx81IJtnOKY8T5/APYQezBBEDEH8bvanmp
+        xVgPWSc3H2u14ys1embUesU=
+X-Google-Smtp-Source: ABdhPJw7DIbgPcKjzvQWLLeLuHkLJt4jx/83cCAyq9H4pAadzpo890XJTHzVNYKTW0UQ1z2xNiWKiw==
+X-Received: by 2002:a05:6512:504:: with SMTP id o4mr3780301lfb.438.1617836181281;
+        Wed, 07 Apr 2021 15:56:21 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id t25sm2580101ljo.102.2021.04.07.15.56.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 07 Apr 2021 15:56:20 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.email>,
+        Elijah Newren <newren@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        git@vger.kernel.org, Sergey Organov <sorganov@gmail.com>
+Subject: [PATCH 0/9] git log: configurable default format for merge diffs
+Date:   Thu,  8 Apr 2021 01:55:59 +0300
+Message-Id: <20210407225608.14611-1-sorganov@gmail.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 7D915F46-97F3-11EB-9606-D609E328BF65-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+These patches introduce capability to configure the default format of
+output of diffs for merge commits by means of new log.diffMerges
+configuration variable. The default format is then used by -m,
+--diff-merges=m, and new --diff-merges=def options.
 
-> On Wed, Apr 07 2021, Derrick Stolee wrote:
->
->> The purpose is to allow us to modify a 'struct refspec_item'
->> andproduce a refspec string instead of munging a refspec string
->> directly.
+In particular,
 
-Ouch.  I thought the goal was to take
+  git config log.diffMerges first-parent
 
-    [remote "origin"]
-	fetch =3D $src:$dst
+will change -m option format from "separate" to "first-parent" that
+will in turn cause, say,
 
-let the code that is used in the actual fetching to parse it into
-the in-core "refspec_item", and then transform the refspec_item by
+  git show -m <merge_commit>
 
- - discarding it if the item does not result in storing in the real
-   fetch
+to output diff to the first parent only, instead of appending
+typically large and surprising diff to the second parent at the end of
+the output.
 
- - tweaking $dst side so that it won't touch anywhere outside
-   refs/prefetch/ to avoid disturbing end-user's notion of what the
-   latest state of the remote ref is.
+Sergey Organov (9):
+  diff-merges: introduce --diff-merges=def
+  diff-merges: refactor set_diff_merges()
+  diff-merges: introduce log.diffMerges config variable
+  diff-merges: adapt -m to enable default diff format
+  t4013: add test for --diff-merges=def
+  t4013: add tests for log.diffMerges config
+  t9902: fix completion tests for log.d* to match log.diffMerges
+  doc/diff-options: document new --diff-merges features
+  doc/config: document log.diffMerges
 
-so that the "parsed" refspec_item is passed to the fetch machinery
-without ever having to be converted back to textual form.
+ Documentation/config/log.txt   |  5 +++
+ Documentation/diff-options.txt | 15 ++++++---
+ builtin/log.c                  |  2 ++
+ diff-merges.c                  | 58 ++++++++++++++++++++++++----------
+ diff-merges.h                  |  2 ++
+ t/t4013-diff-various.sh        | 34 ++++++++++++++++++++
+ t/t9902-completion.sh          |  3 ++
+ 7 files changed, 98 insertions(+), 21 deletions(-)
 
-Why do we even need to "andproduce a refspec string"?
+-- 
+2.25.1
+
