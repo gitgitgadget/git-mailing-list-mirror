@@ -2,87 +2,177 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8551C433ED
-	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 13:31:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C1DBC433ED
+	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 13:33:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 70E9261151
-	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 13:31:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D676161130
+	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 13:33:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231255AbhDHNbd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Apr 2021 09:31:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39212 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230322AbhDHNba (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Apr 2021 09:31:30 -0400
-Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63A33C061760
-        for <git@vger.kernel.org>; Thu,  8 Apr 2021 06:31:19 -0700 (PDT)
-Received: by mail-pg1-x52b.google.com with SMTP id d10so1400313pgf.12
-        for <git@vger.kernel.org>; Thu, 08 Apr 2021 06:31:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=O2JAUeY5GcWHxrHaIZAd/VeUAll1zpdqiRdWw3l0qYI=;
-        b=gnP2BLWhAgEUqCx4ujY2gjtdQdslFmN33ml8Sw4PhjGhswSq3myc0Pr+OYvfa9ZfSA
-         ehXekpuZWnic4VA+W7YQmcTBspZS9o4+ha7dk3QX/VGCijvTTdWg1hJcBslMmPYbJiX1
-         yWq1AA2ta1h2vMmSb2htIwk9JA+hhQZh9BJU2FVoBONB02U8to1ZErXVh2pWH66rkfYy
-         9l98ukL4qnhgdWHJpf3olmre4Jkw4O334ARN3lv/tR0O0sSE1/wK7E9z/Bxo7JHwLDf0
-         q0r7FA3qbV/xQQ3OiBre1oSWgBk4t3eAMQusDnEzMyIw+ExTy1h7lMbZaYxmxEvmKQTA
-         qpAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=O2JAUeY5GcWHxrHaIZAd/VeUAll1zpdqiRdWw3l0qYI=;
-        b=NHHQa8FGJ0QybY9leirBXCWDqCmRB00p/238Lm5qA537ONFROIL+mcLpJVQ6y2W0Qo
-         pNsnTgPF32+CV5dcckOzdIFo9i+vLigZ+KSwPagwNgpCP4hFZ78Jy587/ZmD42Jz2B1P
-         fWONQ2gHY7k6i/OAv9PWStipnFwij/tjvzmpKpLWHySe2HvmUh2Ao7WXd6MgBVhB5ZzI
-         0evD+sVEbkCIdnP6fEylXrDrZ6TyRw+W3kOB5ZMCP3X/Dqrx7/jgCBraYrPUCDrLmAbx
-         d4wB4dfpOFF1gttQUFHWJXgUG/I4kbo9wtyT9VadwabWpAUTIo2D82XbvzYw2f/RmEWu
-         KTAA==
-X-Gm-Message-State: AOAM532zmsu03wcYa4+41o+Sf8nsmgmZsFhg9FeuxPKdnLwkGoA4TWMp
-        4nsq1nyygvqThy4w5wAw/AapUE493GMO8Q==
-X-Google-Smtp-Source: ABdhPJz3m1iaeyBc677RamZOyrwMmq7aSNmKcRKdteIStm41Wa4CJT+XwikaUK6BqZ9fJY9UvvWU5g==
-X-Received: by 2002:a63:f54b:: with SMTP id e11mr7897612pgk.139.1617888678057;
-        Thu, 08 Apr 2021 06:31:18 -0700 (PDT)
-Received: from [192.168.43.80] (subs02-180-214-232-25.three.co.id. [180.214.232.25])
-        by smtp.gmail.com with ESMTPSA id y12sm25160775pfq.118.2021.04.08.06.31.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 08 Apr 2021 06:31:17 -0700 (PDT)
-Subject: Re: There should have be git gc --repack-arguments
-To:     Bryan Turner <bturner@atlassian.com>
-Cc:     Git Users <git@vger.kernel.org>
-References: <b35a68a1-e693-5502-7a28-a1dd8222d3a0@gmail.com>
- <CAGyf7-GQ_1JV6X3Z0h4c3+Qy1eZ30RW-Mni=72p007md5NLKMg@mail.gmail.com>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-Message-ID: <7c53b1e6-5801-7e96-2939-18abbd8d1e53@gmail.com>
-Date:   Thu, 8 Apr 2021 20:31:13 +0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.9.0
+        id S231599AbhDHNdV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Apr 2021 09:33:21 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:56446 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231638AbhDHNdU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Apr 2021 09:33:20 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id C0EEB12C863;
+        Thu,  8 Apr 2021 09:33:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=B9V0I09ZEAs5iYDd6fCAUC01KOs=; b=Jjj6kKpgOe3YyKeGHh+6
+        XeBSvZlKq8URvTqRoBJUKZpKLrPiV+/60axlVabRVTGEWVnvLpClEmqMu62VorAP
+        Ywl05VAY6QdBj7i2TC1bxmZ2588bsoCKwKL2gV8AZvYy/kWkoFVSjS06QfBwNBYV
+        vQMGw6lVQRLnk0y8nTKQjaU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         q=dns; s=sasl; b=JIufmbvcoD6uiOeLeHseQwwSqxFMkl4pv8Wa/tm9OKD4Go
+        t9uX9Sn61tE4vjtHcl8ak6b1wG8ah5Qml7ZN2maeUaV2VqFi4++2TS/Ve/AbQBz4
+        zXZI1Adn9jEtmGuQ4kg8wbe0ptUCwV92KaclzjvWpk1v2+qR9t5ntVEHoGk+U=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id B86F512C862;
+        Thu,  8 Apr 2021 09:33:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.243.138.161])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 0821312C861;
+        Thu,  8 Apr 2021 09:33:06 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jerry Zhang <jerry@skydio.com>
+Cc:     git@vger.kernel.org, newren@gmail.com, ross@skydio.com,
+        abe@skydio.com, brian.kubisiak@skydio.com
+Subject: Re: [PATCH v5] git-apply: allow simultaneous --cached and --3way
+ options
+References: <20210407180349.10173-1-jerry@skydio.com>
+        <20210408021344.8053-1-jerry@skydio.com>
+Date:   Thu, 08 Apr 2021 06:33:05 -0700
+Message-ID: <xmqqh7kgvr3i.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CAGyf7-GQ_1JV6X3Z0h4c3+Qy1eZ30RW-Mni=72p007md5NLKMg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: F3E32D7A-986E-11EB-9ABB-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 08/04/21 02.38, Bryan Turner wrote:
-> I can't speak to the feature request, but since there are
-> configuration knobs already for both of those, that implies you can
-> use git -c pack.windowMemory=... -c pack.packSizeLimit=... gc and
-> those configuration settings will be propagated to the git repack
-> process that git gc runs.
+Jerry Zhang <jerry@skydio.com> writes:
 
-Oops, I overlooked that. Thanks for reminding me!
+>  Documentation/git-apply.txt |  6 +++--
+>  apply.c                     |  9 ++++---
+>  t/t4108-apply-threeway.sh   | 50 +++++++++++++++++++++++++++++++++++++
+>  3 files changed, 59 insertions(+), 6 deletions(-)
 
--- 
-An old man doll... just what I always wanted! - Clara
+Nicely done.  Will queue.
+
+Elijah, how does this round look to you?
+
+> diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
+> index 9144575299c264dd299b542b7b5948eef35f211c..aa1ae56a25e0428cabcfa2539900ef2a09abcb7c 100644
+> --- a/Documentation/git-apply.txt
+> +++ b/Documentation/git-apply.txt
+> @@ -87,8 +87,10 @@ OPTIONS
+>  	Attempt 3-way merge if the patch records the identity of blobs it is supposed
+>  	to apply to and we have those blobs available locally, possibly leaving the
+>  	conflict markers in the files in the working tree for the user to
+> -	resolve.  This option implies the `--index` option, and is incompatible
+> -	with the `--reject` and the `--cached` options.
+> +	resolve.  This option implies the `--index` option unless the
+> +	`--cached` option is used, and is incompatible with the `--reject` option.
+> +	When used with the `--cached` option, any conflicts are left at higher stages
+> +	in the cache.
+>  
+>  --build-fake-ancestor=<file>::
+>  	Newer 'git diff' output has embedded 'index information'
+> diff --git a/apply.c b/apply.c
+> index 9bd4efcbced842d2c5c030a0f2178ddb36114600..dadab80ec967357b031657d4e3d0ae52fac11411 100644
+> --- a/apply.c
+> +++ b/apply.c
+> @@ -133,8 +133,6 @@ int check_apply_state(struct apply_state *state, int force_apply)
+>  
+>  	if (state->apply_with_reject && state->threeway)
+>  		return error(_("--reject and --3way cannot be used together."));
+> -	if (state->cached && state->threeway)
+> -		return error(_("--cached and --3way cannot be used together."));
+>  	if (state->threeway) {
+>  		if (is_not_gitdir)
+>  			return error(_("--3way outside a repository"));
+> @@ -4644,8 +4642,11 @@ static int write_out_results(struct apply_state *state, struct patch *list)
+>  				fprintf(stderr, "U %s\n", item->string);
+>  		}
+>  		string_list_clear(&cpath, 0);
+> -
+> -		repo_rerere(state->repo, 0);
+> +		/* Rerere relies on the partially merged result being in the working tree
+> +		 * with conflict markers, but that isn't written with --cached.
+> +		 */
+> +		if (!state->cached)
+> +			repo_rerere(state->repo, 0);
+>  	}
+>  
+>  	return errs;
+> diff --git a/t/t4108-apply-threeway.sh b/t/t4108-apply-threeway.sh
+> index 9ff313f976422f9c12dc8032d14567b54cfe3765..65147efdea9a00e30d156e6f4d5d72a3987f230d 100755
+> --- a/t/t4108-apply-threeway.sh
+> +++ b/t/t4108-apply-threeway.sh
+> @@ -180,4 +180,54 @@ test_expect_success 'apply -3 with ambiguous repeating file' '
+>  	test_cmp expect one_two_repeat
+>  '
+>  
+> +test_expect_success 'apply with --3way --cached clean apply' '
+> +	# Merging side should be similar to applying this patch
+> +	git diff ...side >P.diff &&
+> +
+> +	# The corresponding cleanly applied merge
+> +	git reset --hard &&
+> +	git checkout main~ &&
+> +	git merge --no-commit side &&
+> +	git ls-files -s >expect.ls &&
+> +
+> +	# should succeed
+> +	git reset --hard &&
+> +	git checkout main~ &&
+> +	git apply --cached --3way P.diff &&
+> +	git ls-files -s >actual.ls &&
+> +	print_sanitized_conflicted_diff >actual.diff &&
+> +
+> +	# The cache should resemble the corresponding merge
+> +	# (both files at stage #0)
+> +	test_cmp expect.ls actual.ls &&
+> +	# However the working directory should not change
+> +	>expect.diff &&
+> +	test_cmp expect.diff actual.diff
+> +'
+> +
+> +test_expect_success 'apply with --3way --cached and conflicts' '
+> +	# Merging side should be similar to applying this patch
+> +	git diff ...side >P.diff &&
+> +
+> +	# The corresponding conflicted merge
+> +	git reset --hard &&
+> +	git checkout main^0 &&
+> +	test_must_fail git merge --no-commit side &&
+> +	git ls-files -s >expect.ls &&
+> +
+> +	# should fail to apply
+> +	git reset --hard &&
+> +	git checkout main^0 &&
+> +	test_must_fail git apply --cached --3way P.diff &&
+> +	git ls-files -s >actual.ls &&
+> +	print_sanitized_conflicted_diff >actual.diff &&
+> +
+> +	# The cache should resemble the corresponding merge
+> +	# (one file at stage #0, one file at stages #1 #2 #3)
+> +	test_cmp expect.ls actual.ls &&
+> +	# However the working directory should not change
+> +	>expect.diff &&
+> +	test_cmp expect.diff actual.diff
+> +'
+> +
+>  test_done
