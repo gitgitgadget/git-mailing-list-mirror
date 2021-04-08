@@ -2,122 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-21.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
+	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D78B5C433B4
-	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 23:35:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E1A4C433B4
+	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 23:39:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9D555610FC
-	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 23:35:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2C11B6023C
+	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 23:39:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232938AbhDHXfL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Apr 2021 19:35:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58706 "EHLO
+        id S232793AbhDHXkC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Apr 2021 19:40:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59738 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232426AbhDHXfL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Apr 2021 19:35:11 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6658FC061760
-        for <git@vger.kernel.org>; Thu,  8 Apr 2021 16:34:59 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id ba6so4397217edb.1
-        for <git@vger.kernel.org>; Thu, 08 Apr 2021 16:34:59 -0700 (PDT)
+        with ESMTP id S232426AbhDHXkC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Apr 2021 19:40:02 -0400
+Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61C90C061760
+        for <git@vger.kernel.org>; Thu,  8 Apr 2021 16:39:50 -0700 (PDT)
+Received: by mail-yb1-xb4a.google.com with SMTP id q14so3541243ybk.22
+        for <git@vger.kernel.org>; Thu, 08 Apr 2021 16:39:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=GQE9RS4/OtVAwwu1SuQeEdlTVA6EpMbeNstZV/gwohQ=;
-        b=We8OFKfvh4XJlCdPuU41frNtMVLk/PX46yWmFoGOVe24wiQuFyFNPzsOZ7NSL1KpHT
-         YkF5cqKNQqOI8pNE8VGtaFN5iR2xrCjY0IiGmh/Tjw/F4iqZTdi+QHaye65r49mi/E/Z
-         Kd/SKiX5saTa3vc8muK7KJRmOZf64nhvKZX7LnCV/z8+yn4r5T0rMGRyyn6DVybBw7zZ
-         LnjIeYvF/Aa+Qql3ecoFb0/2yzI16FoSR3Ks3LLRCO4XDAxNrOTM/uSnV4Pol1ROPlAp
-         +m/sngBfAiSWlYi/RlprQhsTzeCvEGOpBXO2g3ItrCy5FA42WtNt+rWMLlXkTN9xt7lw
-         p0jA==
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=gm80oqDCm1umLeklStIjVe8uxq7VMKYvoCn903semYs=;
+        b=TEGREVwlzmPh5XIX6f+yQHEdO29GlYWnGoAQ/wQtiad+VC8n47x9sl7AfuDsM0Q118
+         iJ9Gd9oAbKJc4hUQJ5v4HXMyuexwfbRMcMznnpQ9eBDgnzk2GoI+mT9ga1qZkLk08oL2
+         DjwNR5yzvyzRix/+87i8WYEvz5GuiOMm1g0az4Sxk84FFkipEP7aYYWvjLULgsKmn4Cm
+         869wUTJT/A5OgP/ek1vs1OQNN7JApu3Hxz+Vr+80GzhFB/Iyg0sXRJ5VBcJACTGEyf8+
+         OxHOYHWSTCYbvBXL8bqw5KKBCHcybwGQGCDEe6DLrwZ0lXcxfHiGFuJF0KifJV0FIJv4
+         4Mog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=GQE9RS4/OtVAwwu1SuQeEdlTVA6EpMbeNstZV/gwohQ=;
-        b=Jgt2dUI2lRhMIU3+hN/osESsGKkcWJnIPDMEnhGq2SFcqI+Kk9HIR4lENxJtklamSp
-         b/8ILsuAObeDAjUSUximv21bF2+w+eE+hss5RC/hTbnpCnJyAT0urN8Iv40KNCNFxGzD
-         ncrgxKsFur0ABuZCzsIAJQD/2VXb9u8iv76ApQZoA+Nz16MpD+N8i6aTSz3UrTc1JLWY
-         pvG/PqiIUn1WZiUJF4rTCLa0D9KO5nqIEznOe26eWiAUvrB47cmf6YZkfjrosQxKu++q
-         gkzXmiKxUs+venJ9F5tNaWSZIo8W48fCmivI9v0L8/beIcn0gFxfhPfFA2inRwB8TC2V
-         10vA==
-X-Gm-Message-State: AOAM532CWMvLQ1XgJT6SDy86BT7GnUwffXHj7EwhoPnxhayis1jP9ZjN
-        5jn1wzskOexigyi5K6xN69ZTj7mcRrcpZA==
-X-Google-Smtp-Source: ABdhPJxQKkdJq1ZmMF5WzVFWRmz2uJaioTYPl5KzfHbWQnyoDxGDIIqPQf1JcwgB1l+LoG9Jf/E/hQ==
-X-Received: by 2002:aa7:c957:: with SMTP id h23mr14537571edt.301.1617924898165;
-        Thu, 08 Apr 2021 16:34:58 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id ca1sm415346edb.76.2021.04.08.16.34.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Apr 2021 16:34:57 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Subject: Re: [PATCH] config: Introduce GIT_CONFIG_NOGLOBAL
-References: <a23382059bb57022dd1e40d1c2c9a11307b0ff3b.1617891426.git.ps@pks.im>
- <xmqqczv4vgck.fsf@gitster.g>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <xmqqczv4vgck.fsf@gitster.g>
-Date:   Fri, 09 Apr 2021 01:34:57 +0200
-Message-ID: <87zgy8gxjy.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=gm80oqDCm1umLeklStIjVe8uxq7VMKYvoCn903semYs=;
+        b=WfgArMVY0EpBVt0agTOWBo3byh39dqw8oXuIPbh/vdTDQIH4tldJTPbYCEVKrsiFNE
+         xrHcqz8iLlIvwPT263MsglO/8gAWk7bPPmso4qzHQoKSS2k9n5vuCmSxFXgb5ZaW+Fla
+         Q0J/1uN77qXV/ZIr7aaVMtQ6hwZ5wl8CTrK9geYiscmFYUHhH8uL+wpejgQHBX1UWhQ2
+         Xc87ewnoQXvUQXEUUUlTv9CgUVEpIvsymt7aomlsQrpPV8HlalO6oOnm7hGDoOkdBV00
+         8bmmt3hbBPjdudDTv2Cuy2FAHrHnFHQ79NTDMy7hoNSDoTyam7CWkhtm4UbO4JIPfrIY
+         um8g==
+X-Gm-Message-State: AOAM530tzxxr8v+AzuFCQCBIdRiWdOqI3IQS24AokKFA62T8hyznT3AJ
+        wCi6iGOHFEVPESsc0Fe98x3qJKa0Q07Z6bKkGY23XO9YIrd2o6l+G8Mc8GVW6lLRoDDe6GBFgh2
+        tVq0klwfg1enfPAQd4capjwf83hQwilFgZk1qt+FFlbRrnoPfvr0C1xPdo1KEtxEO14exxAfIHg
+        ==
+X-Google-Smtp-Source: ABdhPJxND6ONG028Bq6nmtmmyIwGlJvOv+dgP9iyixS3VIC2SXlL+6Khu7xkkxVUQPToZp6xyHT01CaxYXMOSWJKmJw=
+X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:0:34d1:6a8d:be3e:615f])
+ (user=emilyshaffer job=sendgmr) by 2002:a25:ba87:: with SMTP id
+ s7mr14776548ybg.222.1617925189424; Thu, 08 Apr 2021 16:39:49 -0700 (PDT)
+Date:   Thu,  8 Apr 2021 16:39:34 -0700
+Message-Id: <20210408233936.533342-1-emilyshaffer@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.31.1.295.g9ea45b61b8-goog
+Subject: [RFC PATCH 0/2] share a config between submodule and superproject
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     git@vger.kernel.org
+Cc:     Emily Shaffer <emilyshaffer@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi folks,
 
-On Thu, Apr 08 2021, Junio C Hamano wrote:
+Especially after es/config-based-hooks makes its way to 'next' and
+'master', we think it would be really useful to have a config that
+applies to a whole "project" - where "project" means "superproject and
+its submodules." There's a longer defense in patch 2, but that's the
+speedy summary.
 
-> Patrick Steinhardt <ps@pks.im> writes:
->> +test_expect_success 'GIT_CONFIG_NOGLOBAL' '
->> +	test_when_finished rm -f "$HOME"/.config/git &&
->> +	cat >"$HOME"/.gitconfig <<-EOF &&
->> +	[home]
->> +		config = true
->> +	EOF
->> +	mkdir -p "$HOME"/.config/git &&
->> +	cat >"$HOME"/.config/git/config <<-EOF &&
->> +	[xdg]
->> +		config = true
->> +	EOF
->> +	cat >.git/config <<-EOF &&
->> +	[local]
->> +		config = true
->> +	EOF
->> +
->> +	cat >expect <<-EOF &&
->> +	global	xdg.config=true
->> +	global	home.config=true
->> +	local	local.config=true
->> +	EOF
->> +	git config --show-scope --list >output &&
->> +	test_cmp expect output &&
->> +
->> +	cat >expect <<-EOF &&
->> +	local	local.config=true
->> +	EOF
->> +	GIT_CONFIG_NOGLOBAL=true git config --show-scope --list >output &&
->> +	test_cmp expect output
->> +'
->
-> This test was what initially piqued my curiosity, as the fact that
-> the result filtered with the new mechanism has only 'local' misled
-> me to incorrectly think that we are suppressing both 'system' and
-> 'global' with the single variable.  Until I realized that we cannot
-> test the 'system' configuration in our test suite, that is.
+I'm not wild about the implementation of this solution as it calls out
+to 'git rev-parse' and 'git ls-files' - not once, but twice! - and I
+understand that is considerably slower on some platforms than others.
+But I'm open to suggestions - I couldn't find any other examples of a
+repo figuring out whether it's a submodule or not. (I thought there may
+be some, as 'repository.submodule_prefix' exists, but it seems like
+that's only set in some special cases during operations initated from
+the superproject.)
 
-I haven't tested this, but that seems like a thing we want to mock in
-the test suite by just having git_etc_gitconfig() check a GIT_TEST_*
-variable.
+I'm hoping to work on some other submodule-centric stuff over the coming
+months, and it might end up being very useful to be able to tell "am I a
+submodule?" and "how do I talk to my superproject?" more generally - so
+I'm really open to figuring out a better way than this, if folks have
+ideas.
 
-I had a git_env_str() in [1] that we could use for that, or maybe it
-should be git_env_path() in this case with the same --path handling, or
-just do what repo_default_branch_name() does.
+Patch 1 is a small refactor that we can take or leave - I found
+"SCOPE_SUBMODULE" to be pretty ambiguous, especially since it seems to
+refer to configs from .gitmodules. Even though I decided that
+"superproject" was a better name than "submodule" I still wasn't super
+happy with the ambiguity. But we can drop it if folks don't want to
+rename.
 
-1. https://lore.kernel.org/git/20201113161320.16458-1-avarab@gmail.com/
+Thanks a bunch,
+ - Emily
+
+Emily Shaffer (2):
+  config: rename "submodule" scope to "gitmodules"
+  config: add 'config.superproject' file
+
+ Documentation/git-config.txt   |  21 +++++-
+ builtin/config.c               |  10 ++-
+ config.c                       |  30 +++++++-
+ config.h                       |   5 +-
+ submodule-config.c             |   2 +-
+ submodule.c                    |  29 ++++++++
+ submodule.h                    |   6 ++
+ t/t1311-superproject-config.sh | 124 +++++++++++++++++++++++++++++++++
+ 8 files changed, 220 insertions(+), 7 deletions(-)
+ create mode 100755 t/t1311-superproject-config.sh
+
+-- 
+2.31.1.295.g9ea45b61b8-goog
+
