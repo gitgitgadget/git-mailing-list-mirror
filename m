@@ -2,110 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=0.5 required=3.0 tests=BAYES_00,DATE_IN_PAST_06_12,
-	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1055C433ED
-	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 12:19:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F02D1C43460
+	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 13:23:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7140761041
-	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 12:19:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A5958610E6
+	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 13:23:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231192AbhDHMUC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Apr 2021 08:20:02 -0400
-Received: from mout.gmx.net ([212.227.17.22]:34913 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229741AbhDHMUC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Apr 2021 08:20:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1617884387;
-        bh=8cakOw17VNs9EfccEUEtZZuTvYwzO+3H3XVnGVFALo0=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=af9JNf8tyGAkEXK5s8YZjnicUathSaxejt7Y0fuEKs9Ndrun52nH+i5OLHfMtPTxe
-         HthvkNxHpUa3UFX5o4RJCgHoV67tKwsApswMd8a79aGvKhFRSGD3fsJGPHyhAtyauq
-         Qtjy6kKdQmzcKqWvvDeQ+H4GM7NXrz5EKeidlZM8=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.20.233.45] ([213.196.212.198]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mw9QC-1lklT50Wsm-00s5Sz; Thu, 08
- Apr 2021 14:19:47 +0200
-Date:   Thu, 8 Apr 2021 04:40:46 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Elijah Newren <newren@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Philip Oakley <philipoakley@iee.email>
-Subject: Re: unifying sequencer's options persisting, was Re: [PATCH v2]
- sequencer: fix edit handling for cherry-pick and revert messages
-In-Reply-To: <xmqq7dlk2ug9.fsf@gitster.g>
-Message-ID: <nycvar.QRO.7.76.6.2104080438080.54@tvgsbejvaqbjf.bet>
-References: <pull.988.git.git.1616742969145.gitgitgadget@gmail.com> <pull.988.v2.git.git.1617070174458.gitgitgadget@gmail.com> <nycvar.QRO.7.76.6.2103301200020.52@tvgsbejvaqbjf.bet> <CABPp-BGwAtpsQJ8U5N1q21PMkideptY2MB2PNgbPqvya+XuyHg@mail.gmail.com>
- <nycvar.QRO.7.76.6.2103311533340.52@tvgsbejvaqbjf.bet> <3b117e65-bf9f-af13-b093-28bbbd6f9bb3@gmail.com> <xmqqa6qg4d0i.fsf@gitster.g> <CABPp-BEzayZkEZ36CFNBGz9X3jv0MNUnWa2EhzKKmWcb83yRmw@mail.gmail.com> <xmqq7dlk2ug9.fsf@gitster.g>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S231566AbhDHNXZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Apr 2021 09:23:25 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:65198 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229741AbhDHNXY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Apr 2021 09:23:24 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 588E612C7C9;
+        Thu,  8 Apr 2021 09:23:12 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=4/28D5Yu5A3vafkP7/aYM3g+pZE=; b=kAsdrJ4KifOCwEN8Eb7c
+        YyIYJef75Sy8pVP9xZwfHejkIbgMGR9sN1CLoACguupF54bvxDRUbvZahYj6lV6Z
+        y66y7nkdt55bqHecAkNN4PGe09dyfR43rOHSR9sd68UtBYOMHN+GAB1d1CSheHH+
+        gKE1Mv6zWpaGqEquilaZWjM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         q=dns; s=sasl; b=k5NuPafMVyr3srTTG8WZ3RLlbE3beztIejYVDsEVv/ffrk
+        tU0PALaQyeR7qI6F8jY01407Z5DTumNlqKho741Kl391uOL/2fhWrL87RzXO01md
+        thvmcdO9kzXZFjdP15Ju5FvT9r//PWQZb9pjX1j8+Pt0JRcS1Q2t4yt9wxiJI=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 51B4D12C7C8;
+        Thu,  8 Apr 2021 09:23:12 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.243.138.161])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 29FAF12C7C7;
+        Thu,  8 Apr 2021 09:23:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Chinmoy Chakraborty <chinmoy12c@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v4] cache-tree.c: remove implicit dependency on
+ the_repository
+References: <pull.915.v3.git.1617465421353.gitgitgadget@gmail.com>
+        <pull.915.v4.git.1617778489719.gitgitgadget@gmail.com>
+        <xmqqsg41wvdi.fsf@gitster.g>
+        <0df415b7-73b7-6e72-1885-3ca606acf8fd@gmail.com>
+Date:   Thu, 08 Apr 2021 06:23:05 -0700
+Message-ID: <xmqqmtu8vrk6.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:nc2DbQY20bWXdzx/MXZfu92fJRdsOcmrtrpCafHq1NvXdtP4oEY
- ZxR21wvA6cBIaNkfxq+bzeuXjs1egRkMIi/WHPCerI1JHnLWjTuoI9Yp3aWQV0aMb7te1TV
- I88N8lttW9/3J3MTp1gIKGmzGUOefBmdx+kgBjQwIhT75C71I/2vb1Vt8LlXze1Cv6CCM/1
- AFWN1LJUYu0qPCAv2NOTg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:YHOygVIRWgM=:Uz4uTJAvK2m4gAn99BO6Q2
- 8wANRY9uey0dhiampV/S55jgTUW6tt8LjMHtfiXPTatXdw/MlJ9rczc1WZxMk/Ll4ikAq1ReX
- 2o0nmC7ujDOtPoSFtnbPAwG2RJml+BOFRt/r86WuJz2BHIZHFU1g9TJIZmCHv3Gfd1Uebw3g5
- 2aJT+nnHYFdbVsjHAfc137CLfJvC+ktJ7K1lJng9M4cwlZc+r+96xII57x2Rh9sMIAapzoZ40
- MVuehxUSlZ0R+IIUEP1olXNf5AUR8IaClHW4OWIAqFsnkhoa7yLaJ7s8bKXdd9b3tBh988/iv
- Q8IPxjAUmvy0nD8H8EinwtS1x2I+6Hir5VGMl3MnvqZDPgkWfqwzycCKyFy6a0bFXUtRYE8fW
- b/rVuvJ/iAXJ2L/nlbkF8lJt0Tbx+KGUQnNhICVjSQjwoEyIqGf2pjQeQh0xJ5OyqKKAKOy8S
- o3uBH7UG+mqztVC6/zbWiQwpXjv2EjJ8jpeZ2Ck28dGGaREAzdrDXI3KidtCdB4U8/h5tAfTL
- xaGAd3IKy9e5KUgX+tSle9ml+9PlAayDy5DOKpNM6C+puYQI5fhfXDM1fpbgK03dd7tVt4gGN
- hC8Bh6AwQr3T+N2t839TnygfA4W2l/Wxw5GjvTtSSlG6cwN+Nan5mcc/UlyUHO/bGTPX6YJFV
- R9+UlzFjVzBKro63UgcNaKBcaT7Yv+KrLZa4XVSoLahrNCzDx1Sj3OLSeBEeNMiNZr2XMG9Zl
- X5XJgEMNFi1YguXF3OKieDhfFbUmRFFLq3OHKT5H55fKtLUZIjmlnRhfUwp9pL0oyoEvvLnvn
- Ehky0ieYaGkNIoKoHT4TioNwKaRSIh/ASKcIukfTa8XWg1qgUe8qJ3SsRiS08vcgD7uQE7ZqN
- MYylhjjxA7ThoaS0sWiZmnDwr1kqeHBK7rY5qVqp9mDwtx1n8B2yTwRKunSJzaTEsxR1FPwF5
- aDXKJ73HG6aeikXWxEQpC5cLC9CnsTh07OYlth44+Vy8BAp1cCMM0DXrEkrxGD3t/Pcz5QWcr
- ly5pTA9tSg5DoPXhopgN1jv/CJUQnWOvKFKmTf87wjOVdnSK3apXj9Rf24wDaiJdowNI7ldBT
- HDyMsLXHQrfbsT2SIiJU4bpN3OLIv2pUAHMdY4nSQM13Rqys/pphMhTSCmpSd1DlPPDr0f/qD
- cUb+ygGazyjqEBQIZPocuuCC8y+5rZ5nTGbZYBfPDP3+pz/w7K0qulXQ1Xq7PbWbw3Ik7TBew
- Q8c++scZGkq+OJsqW
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8E572660-986D-11EB-89C7-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Chinmoy Chakraborty <chinmoy12c@gmail.com> writes:
 
-On Fri, 2 Apr 2021, Junio C Hamano wrote:
+> Is it safe to make this assumption?
 
-> Elijah Newren <newren@gmail.com> writes:
+It was the question I asked, and I didn't see a reason to believe it
+is safe.
+
+> I mean to be completely sure of this, one would have to track back
+> to all the callers.
+
+Yes.  If we audit the callers to make sure istate->repo always
+points at the right repository, add missing assignment to
+istate->repo as necessary, and add
+
+	if (!istate->repo)
+		BUG("caller of cache_tree_udpate() did not fill istate->repo");
+
+then that would be an improvement.  But...
+
+> Should a check like:
 >
-> > Even if others now disagree with the above, I know I can get a huge
-> > speedup by changing sequencer to stop per-commit wasteful work (stop
-> > forking processes like "git commit", don't write control structures if
-> > the rebase hasn't ended or hit a conflict, don't update the working
-> > copy or index or reflog).  It's enough of a speedup that if backward
-> > compatibility won't allow such a method to be used by default, I'd
-> > still make yet another backend that could be optionally used.  And I'd
-> > have the default rebase and cherry-pick start printing annoying
-> > deprecation notices so that users become aware of a faster option.
+>     if(!istate->repo)
 >
-> A faster and less powerful interface is good; I doubt deprecation
-> would work well. If a workflow depends on things like post-commit
-> hook, the affected users deserve some way to migrate to --exec or
-> whatever method to compensate the loss of functionality.
+>         istate->repo = the_repository;
+>
+> be required?
 
-I could imagine that there is opportunity to "persist on disk only when
-needed". For example, if no `pre-commit` hook is installed that needs to
-be run, there is no need to update the worktree nor HEAD until the rebase
-is done.
+... if we add such an "if the caller did not set istate->repo,
+assume the_repository" code, then the resulting code explicitly
+assumes that the istate the caller passed to us without setting
+istate->repo belongs to the default repository.
 
-And this type of `only write to disk when needed` functionality could
-probably be abstracted away so much as to make the rest of the code
-look elegant again.
+I do not quite see the point of such a change---it is not all that
+better than "implicit dependency on the_repository" the patch tries
+to address, is it?
 
-Ciao,
-Dscho
