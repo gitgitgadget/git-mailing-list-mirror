@@ -2,123 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-23.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A41BCC433B4
-	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 23:43:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5341BC433ED
+	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 23:46:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7588F61106
-	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 23:43:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3050161108
+	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 23:46:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232819AbhDHXnW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Apr 2021 19:43:22 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59093 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232426AbhDHXnV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Apr 2021 19:43:21 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8232DC60D0;
-        Thu,  8 Apr 2021 19:43:09 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=UnRIeA+XvWH7LNTvvwz5Cpb2wsA=; b=pR+NEb
-        qFJFdQZ1AF2U1Uf0bCp9Qu8wUuT3biUT90H36PbDVYiXqNf2GCjytYRa8UkaRnks
-        GVDdXVw7DAFEC/fyzjTgy5fsgTVoJtWT3fYazQDyHltPG+l1dHSKGW2oFQzi9weZ
-        ydGmPNw5uLBtkGY1nSuvovPpS0YCQH2nsjJ1k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=EEcD1ulGpGI25k+RVXmw4+oiVG428ZBz
-        PYOBaqiD18Zh2xyWihsOBbfJYlz/G8ZIVNCSkz79HkCCIsKlxyw6CmNZv8pyDCKW
-        rbSOudLoDcAuvVAgRp5A3lvDj5ovKZ3GsauNRjfnMDYTnktyqiZgOAXDE/CH4RCS
-        vWL+1hzui/0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7A667C60CF;
-        Thu,  8 Apr 2021 19:43:09 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.243.138.161])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 09FBAC60CE;
-        Thu,  8 Apr 2021 19:43:09 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Subject: Re: [PATCH] config: Introduce GIT_CONFIG_NOGLOBAL
-References: <a23382059bb57022dd1e40d1c2c9a11307b0ff3b.1617891426.git.ps@pks.im>
-        <xmqqczv4vgck.fsf@gitster.g>
-        <YG+PLROZbSo32F3k@coredump.intra.peff.net>
-Date:   Thu, 08 Apr 2021 16:43:08 -0700
-In-Reply-To: <YG+PLROZbSo32F3k@coredump.intra.peff.net> (Jeff King's message
-        of "Thu, 8 Apr 2021 19:18:05 -0400")
-Message-ID: <xmqq35w0qr5f.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S232996AbhDHXqd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Apr 2021 19:46:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33018 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232991AbhDHXqc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Apr 2021 19:46:32 -0400
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1451CC061760
+        for <git@vger.kernel.org>; Thu,  8 Apr 2021 16:46:19 -0700 (PDT)
+Received: by mail-pf1-x432.google.com with SMTP id a85so2562094pfa.0
+        for <git@vger.kernel.org>; Thu, 08 Apr 2021 16:46:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=0pUT1DZirdWrFydtDL6IbJjJMY9lG1sPZ81A1wc4IPE=;
+        b=HWw0VzqMiA36McvFmh2PlLK/raXDZz08wSsRG7NKnSvsrSH9O/SPqyCjl7KxgMD3Ix
+         Qh4imv2Vw0SlXkNFQvf0rsXE+7Jw+3j8a4Cd9q8Ch2uXglOwZVKIbwu5j/GIX5cS2j8L
+         dpTlkehxMtkPGEjJYYICLDs2T7+UYiIbSrT3OfUCqsVT4IvAzf/1RCMET3qNHubT38rA
+         Odr9jP0q9R6MSGl4VZZQR0ZU0llYkJ679ISXFkmxW26Qm7vj9ip7kgHP7ktXgVnLz4AX
+         isX9cHI6F8YSfJONj7rBHF6UrBQ9+EutK/yRxE3RGHxQLExKd+56HGsqW0z4BaRsCWmn
+         pX9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=0pUT1DZirdWrFydtDL6IbJjJMY9lG1sPZ81A1wc4IPE=;
+        b=KvU0Pg5Txvhyzw7QXOpxohk2324z3EJGlkgs+fha6XpNwHkTB+ZXHBjETCvbQduTaA
+         i2t3FZPsHe8B1djXfGo/nkWazvNOAZQchffksuLKulIb0VmQJCJD5d3PMYyte1XnvtM7
+         zhnDAp9EmJCCRX9zh5pBYUax9L0NMF9rKbqsPtF+OLyyFco8gSVDFEDyLFd5I9viA2T2
+         vku6KXAETW7ZhQuZ/owY/mXR0n1PbMpu/tGpAB/KvTcQt9/EhZRqGrOaG8WkMiqEHdPu
+         QBKW/AKCKV+4G9uNz+GtAQybXkEcqTiKL4h9jEkkd7hOdfp+V14/xL4LcgMnsQAKItSv
+         1xPQ==
+X-Gm-Message-State: AOAM531x6Mtl5HZie2uS66xFUswfTEdD2jU6xq60AombwtADugN1EZdn
+        j+q4OaSpmW1noGh3ge92wQ+ndPeugIxY+g==
+X-Google-Smtp-Source: ABdhPJx1VnQSnU93JC+YTluyQBj9zpdBoVhqtiFFq99+WA0MXiPPqK9ef+X9gHvc4oA/TMqHmJn/lg==
+X-Received: by 2002:aa7:9f0c:0:b029:241:d69c:6b6a with SMTP id g12-20020aa79f0c0000b0290241d69c6b6amr9684466pfr.37.1617925578339;
+        Thu, 08 Apr 2021 16:46:18 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:0:34d1:6a8d:be3e:615f])
+        by smtp.gmail.com with ESMTPSA id x19sm447952pfc.152.2021.04.08.16.46.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Apr 2021 16:46:17 -0700 (PDT)
+Date:   Thu, 8 Apr 2021 16:46:12 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v8 37/37] docs: unify githooks and git-hook manpages
+Message-ID: <YG+VxDvlov81PfK3@google.com>
+References: <20210311021037.3001235-1-emilyshaffer@google.com>
+ <20210311021037.3001235-38-emilyshaffer@google.com>
+ <xmqq5z0y2540.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2C626814-98C4-11EB-81C2-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq5z0y2540.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Tue, Apr 06, 2021 at 07:36:15PM -0700, Junio C Hamano wrote:
+> 
+> Emily Shaffer <emilyshaffer@google.com> writes:
+> 
+> > By showing the list of all hooks in 'git help hook' for users to refer
+> > to, 'git help hook' becomes a one-stop shop for hook authorship. Since
+> > some may still have muscle memory for 'git help githooks', though,
+> > reference the 'git hook' commands and otherwise don't remove content.
+> >
+> > Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+> > ---
+> >  Documentation/git-hook.txt     |  11 +
+> >  Documentation/githooks.txt     | 716 +--------------------------------
+> >  Documentation/native-hooks.txt | 708 ++++++++++++++++++++++++++++++++
+> >  3 files changed, 724 insertions(+), 711 deletions(-)
+> >  create mode 100644 Documentation/native-hooks.txt
+> 
+> While this would be a very good move when this were the only topic
+> juggling the hook related documentation, in the real world, it
+> creates rather nasty "ouch, the original hooks document was updated,
+> and we need to carry these changes over to the new native-hooks
+> file" conflicts with multiple commits on different topics.
+> 
+> $ git log --oneline --no-merges es/config-hooks..seen Documentation/githooks.txt
+> 2d4e48b8ee fsmonitor--daemon: man page and documentation
+> 23c781f173 githooks.txt: clarify documentation on reference-transaction hook
+> 5f308a89d8 githooks.txt: replace mentions of SHA-1 specific properties
+> 7efc378205 doc: fix some typos
+> 
+> $ git log --oneline --no-merges ^master es/config-hooks..seen Documentation/githooks.txt
+> 2d4e48b8ee fsmonitor--daemon: man page and documentation
+> 
+> As three of the four changes are already in master, it probably is a
+> good idea to rebase this topic (and redo this step) to update the
+> native-hooks.txt
+> 
+> I am not sure offhand how ready fsmonitor--daemon stuff is, but if
+> it takes longer to stabilize than this topic, it might make sense to
+> hold off the changes to githooks.txt in that topic, until this topic
+> stabilizes enough to hit at least 'next', preferrably 'master', and
+> then base that topic (or at least the documentation part of it) on
+> the final shape of the native-hooks.txt.
+> 
+> Or better ideas?
+> 
+> Thanks.
 
->>  (3) when set to any other string, it is taken as a filename that
->>      has the global configuration.  Unlike $HOME/.gitconfig or
->>      $XDG_HOME/git/config, it is an error if the named file does not
->>      exist (this is to catch misconfiguration).
->> 
->> And once this is accepted by users and established as a pattern, we
->> could migrate GIT_CONFIG_NOSYSTEM to GIT_CONFIG_SYSTEM=/dev/null
->
-> That seems pretty reasonable. I'm on the fence on your (3). Conceivably
-> somebody could want to override the baked-in defaults without being sure
-> the file is present. But I'm not sure how useful that would be in
-> practice.
+I got bitten by this same issue with native-hooks.txt while addressing
+comments, too. Another commenter suggested to not inline those hook
+definitions into "git help hook" - so I plan to drop that part of this
+patch. If it makes it easier for you, I think you could revert this last
+commit; if we decide later that we want to have "git help hook" share
+the hook definitions after all, I think we should do that separately and
+as a quick change not stuck behind 36 other complicated patches.
 
-I was also on the fence.  
-
-If your plan is to create $HOME/.alternate-config and point at it by
-setting GIT_CONFIG_GLOBAL=$HOME/.alternate-config, there are two
-places you can make typo.  You may write a file with a wrong name.
-You may export a variable with a wrong name.
-
-> Some other things to consider:
->
->   - does setting GIT_CONFIG_GLOBAL override both the $HOME and
->     $XDG_CONFIG_HOME? If the plan is to override them, that makes sense.
->     But we do usually read from both of them, so conceivably you might
->     want to override just one? That's probably over-engineering, though.
-
-I viewed this to be working at the more conceptual "here is the file
-to read 'system' (or 'per-user') stuff from" level, and not at the
-level of the individual file, as I consider that it is a mere
-implementation detail that 'per-user' may read from multiple files.
-
->   - if we have config for "read from this file instead of the system
->     config" and "read from this instead of the user-level config", then
->     I wonder if people will want "read this instead of the repo config".
->     We have resisted having GIT_CONFIG mean that for many years, because
->     I think it gets awkward in some cases (e.g., we'd still want to read
->     it for core.repositoryformatversion, etc). I'm OK with drawing the
->     line there and saying it's not a support feature, but we should be
->     prepared to explain it to users (in the docs or at least in the
->     commit message adding the system/global override variables).
-
-We may have to bite the bullet and make an official catalog of
-really "structurely fundamental" configuration variables that must
-appear in the per-repository file, and a mechanism to enforce that
-by always reading these variables from "$GIT_DIR/config" and always
-ignoring appearances of them in any other places.
-
-That alone would probably be a good thing to do regardless of the
-GIT_CONFIG_NOGLOBAL issue, as I suspect you may be able to wreak
-havoc by adding random configuration like [extension] in
-$HOME/.gitconfig ;-)
-
-With that, it would make sense to allow overriding the per-repo
-configuration in a similar way, only as a mechanism to override
-configuration variables that are about "preferences" (as opposed to
-the structurally fundamental ones).
+ - Emily
