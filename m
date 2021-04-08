@@ -7,112 +7,142 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E183C433B4
-	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 17:46:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 041A4C433ED
+	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 17:55:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 51AA5610F8
-	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 17:46:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D240E61105
+	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 17:55:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232714AbhDHRqL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Apr 2021 13:46:11 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:51615 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232281AbhDHRqK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Apr 2021 13:46:10 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8642812E3A8;
-        Thu,  8 Apr 2021 13:45:59 -0400 (EDT)
+        id S232731AbhDHR4G (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Apr 2021 13:56:06 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62798 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232728AbhDHR4F (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Apr 2021 13:56:05 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B9898B241E;
+        Thu,  8 Apr 2021 13:55:53 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=Mcz7SQ7soZ4H
-        m5lcp1IRPZFwIBA=; b=bKKmxQgoNi+Sr59/NJ49VHsNk2GlrRX0QWBPwUs+eNGx
-        aWPkrsIE0Q/9uaqr2w1SRArRJKOG7Xu2Hb2b00UfDxZBtBqLy5oV7JTnXlGMheL4
-        w+cPXL7naQGtXQSiWz5GAde0NDUQASff2CDhP6gQc5nd4cm/EgFprZupJiDC0F0=
+        :content-type:content-transfer-encoding; s=sasl; bh=TOwIQVMeq3Gh
+        uT+fhEe/uglKzzA=; b=YcsDP043T9xTCtPAh43hmQDdG4+bMBR+llMrSTlIrV5V
+        bbumy1KB7KiccUZaYUv9D2kgLoHrvchiGhHqiKdIVt8s0c1suB7FejMQcXOqcij/
+        UOYgzNx13MruvkX3u0Iow7+Ik5UZKfE7xxR2x0YLXZr8B2Bb9B6BwPAHQ3irVSA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=uu3wTx
-        bYoI5KSEtyjmii7W8lbIoSBv6k3knDdpHoZ5TOqc6vuvf2/hCuO6CVg22T3mHmCe
-        q2iPJ+ZT0u33A7/srkxW12sl1gPoQ/iYsa8nFKpZgLZ90dRJHBxZb+tTZ5upBjp3
-        HaYUpIHS9DCrDwbYDK4VlATBlZIUAxVPupIo4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7EBD912E3A6;
-        Thu,  8 Apr 2021 13:45:59 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=a09fT3
+        OgHoY+TfMD4uDAFyK/mTqnSacBis2VH5VnsX4aRg71ZOrLyj9oD+49DUag6tjZDZ
+        itsmcpO3fBB/VSnY32p3lWKxCP21tgSjfw8L9P/mD91d7P8/y52Zs2E5gCTmEuhX
+        zrIqIisvhGbvB0Mpc1nQ6DeLEMhMlbFdKR29s=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B211AB241D;
+        Thu,  8 Apr 2021 13:55:53 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.243.138.161])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C6D6112E3A5;
-        Thu,  8 Apr 2021 13:45:56 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 44AC2B241C;
+        Thu,  8 Apr 2021 13:55:53 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Ville =?utf-8?Q?Skytt=C3=A4?= <ville.skytta@iki.fi>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] completion: audit and guard $GIT_* against unset use
-References: <20210408070641.360431-1-ville.skytta@iki.fi>
-Date:   Thu, 08 Apr 2021 10:45:55 -0700
-In-Reply-To: <20210408070641.360431-1-ville.skytta@iki.fi> ("Ville
- =?utf-8?Q?Skytt=C3=A4=22's?=
-        message of "Thu, 8 Apr 2021 10:06:41 +0300")
-Message-ID: <xmqqv98wu0to.fsf@gitster.g>
+Subject: Re: [PATCH v2] config.c: remove last remnant of
+ GIT_TEST_GETTEXT_POISON
+References: <patch-1.1-ea968affa8c-20210324T233254Z-avarab@gmail.com>
+        <patch-1.1-2b2ac8471f-20210408T132357Z-avarab@gmail.com>
+Date:   Thu, 08 Apr 2021 10:55:52 -0700
+In-Reply-To: <patch-1.1-2b2ac8471f-20210408T132357Z-avarab@gmail.com>
+ (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Thu, 8 Apr
+ 2021 15:25:55 +0200")
+Message-ID: <xmqqr1jku0d3.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 45C7ACEC-9892-11EB-9C2D-E43E2BB96649-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: A94CEEFC-9893-11EB-8E63-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ville Skytt=C3=A4 <ville.skytta@iki.fi> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> $GIT_COMPLETION_SHOW_ALL and $GIT_TESTING_ALL_COMMAND_LIST were used
-> without guarding against them being unset, causing errors in nounset
-> (set -u) mode.
+> Remove a use of GIT_TEST_GETTEXT_POISON added in f276e2a4694 (config:
+> improve error message for boolean config, 2021-02-11).
+
+Thanks.  Will queue.
+
 >
-> No other nounset-unsafe $GIT_* usages were found.
+> This was simultaneously in-flight with my d162b25f956 (tests: remove
+> support for GIT_TEST_GETTEXT_POISON, 2021-01-20) which removed the
+> rest of the GIT_TEST_GETTEXT_POISON code.
 >
-> While at it, remove a superfluous (duplicate) unset guard from $GIT_DIR
-> in __git_find_repo_path.
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
-> Signed-off-by: Ville Skytt=C3=A4 <ville.skytta@iki.fi>
 > ---
->  contrib/completion/git-completion.bash | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
-
-Looks good to me.  Will queue.  Thanks.
-
 >
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
-n/git-completion.bash
-> index e1a66954fe..29b859a0b8 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -77,7 +77,7 @@ __git_find_repo_path ()
->  		test -d "$__git_dir" &&
->  		__git_repo_path=3D"$__git_dir"
->  	elif [ -n "${GIT_DIR-}" ]; then
-> -		test -d "${GIT_DIR-}" &&
-> +		test -d "$GIT_DIR" &&
->  		__git_repo_path=3D"$GIT_DIR"
->  	elif [ -d .git ]; then
->  		__git_repo_path=3D.git
-> @@ -427,7 +427,7 @@ __gitcomp_builtin ()
+> This trivial cleanup now without the objectionable and needless change
+> to the tests.
+>
+> Range-diff:
+> 1:  ea968affa8 ! 1:  2b2ac8471f config.c: remove last remnant of GIT_TE=
+ST_GETTEXT_POISON
+>     @@ config.c: int git_config_bool(const char *name, const char *valu=
+e)
+>       	return v;
+>       }
+>      =20
+>     -
+>     - ## t/t1300-config.sh ##
+>     -@@ t/t1300-config.sh: test_expect_success 'invalid unit boolean' '
+>     - 	git config commit.gpgsign "1true" &&
+>     - 	test_cmp_config 1true commit.gpgsign &&
+>     - 	test_must_fail git config --bool --get commit.gpgsign 2>actual &=
+&
+>     --	test_i18ngrep "bad boolean config value .1true. for .commit.gpgs=
+ign." actual
+>     -+	grep "bad boolean config value .1true. for .commit.gpgsign." act=
+ual
+>     - '
+>     -=20
+>     - test_expect_success 'line number is reported correctly' '
+>
+>  config.c | 16 +---------------
+>  1 file changed, 1 insertion(+), 15 deletions(-)
+>
+> diff --git a/config.c b/config.c
+> index 6428393a41..870d9534de 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -1180,20 +1180,6 @@ static void die_bad_number(const char *name, con=
+st char *value)
+>  	}
+>  }
 > =20
->  	if [ -z "$options" ]; then
->  		local completion_helper
-> -		if [ "$GIT_COMPLETION_SHOW_ALL" =3D "1" ]; then
-> +		if [ "${GIT_COMPLETION_SHOW_ALL-}" =3D "1" ]; then
->  			completion_helper=3D"--git-completion-helper-all"
->  		else
->  			completion_helper=3D"--git-completion-helper"
-> @@ -1910,7 +1910,7 @@ _git_help ()
->  		return
->  		;;
->  	esac
-> -	if test -n "$GIT_TESTING_ALL_COMMAND_LIST"
-> +	if test -n "${GIT_TESTING_ALL_COMMAND_LIST-}"
->  	then
->  		__gitcomp "$GIT_TESTING_ALL_COMMAND_LIST $(__git --list-cmds=3Dalias=
-,list-guide) gitk"
->  	else
+> -NORETURN
+> -static void die_bad_bool(const char *name, const char *value)
+> -{
+> -	if (!strcmp(name, "GIT_TEST_GETTEXT_POISON"))
+> -		/*
+> -		 * We explicitly *don't* use _() here since it would
+> -		 * cause an infinite loop with _() needing to call
+> -		 * use_gettext_poison().
+> -		 */
+> -		die("bad boolean config value '%s' for '%s'", value, name);
+> -	else
+> -		die(_("bad boolean config value '%s' for '%s'"), value, name);
+> -}
+> -
+>  int git_config_int(const char *name, const char *value)
+>  {
+>  	int ret;
+> @@ -1268,7 +1254,7 @@ int git_config_bool(const char *name, const char =
+*value)
+>  {
+>  	int v =3D git_parse_maybe_bool(value);
+>  	if (v < 0)
+> -		die_bad_bool(name, value);
+> +		die(_("bad boolean config value '%s' for '%s'"), value, name);
+>  	return v;
+>  }
