@@ -2,120 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A0497C433B4
-	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 22:33:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 020C6C433ED
+	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 22:43:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 77CE861159
-	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 22:33:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CA67B610F8
+	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 22:43:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232800AbhDHWd5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Apr 2021 18:33:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45446 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232265AbhDHWd4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Apr 2021 18:33:56 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBD3DC061760
-        for <git@vger.kernel.org>; Thu,  8 Apr 2021 15:33:44 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id a25so5654830ejk.0
-        for <git@vger.kernel.org>; Thu, 08 Apr 2021 15:33:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=YASdWU5lbToWiLzVWmR7X6WpeDxHAGCVJCh6MSKVk9U=;
-        b=uMXnEhDUIJaoNVFXjcxvlE7E6+D92Pw/1hVcmtR8P7OfgQVoXKuGjPZshIfkckSf+O
-         j/42GEFkIftgCHwfcphgdl9ZClzq1AZ7rRu069hfsAPeGB5yY/nWXP+ki9pcpJBmpam0
-         1z5JvZZfYTA6p/M9b1UtjE1BL/8tQChTv1rt1g1vDvIGc2np504SwRA+R5INVufEPDZv
-         J4RKTdQCR4XTa2QOkkOg3Gplh61cIRIVwN/0vTlbR4OPM4XS3IP6Ddsg0u1LkCQcz3El
-         Dy4tAnAemRWxvs2EkbcTJCpA/KSur8NZOMh9tiOo8h8f+Mx1Lx78mlaLjdDInVtpicXs
-         o5eg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=YASdWU5lbToWiLzVWmR7X6WpeDxHAGCVJCh6MSKVk9U=;
-        b=XCCl/Z+svwiqctZv3ieeo8EmMeeFAKHSpKIMwDmR/KWg3yb3YZ/FxoHkSL8n9BesYA
-         2yppvvpWT34hqomCPPYulthhlWaXT1LBD0rDfOO2DDc5bGX1fDve1wb1L9LC9kxvc32S
-         2nzNzkf6Pg+NtDJYKpr9+VuQW2QK7l2rXjlVzIiuppralKmpTxsM1PjBKToQ1uFs4U37
-         9OLdC3oxnzN3en+YOzckGNkyrMLp5YuYW/kYT7rXFOYH8RR3nawAgMBZVzq7LnemLIjg
-         DVzCaMOw/pj3TOzo2fyP1Ve2onCmt+BZAXa2PC5jN1kjdYGRPIEMQBmVEAZ5eJ40T22n
-         DlrQ==
-X-Gm-Message-State: AOAM530yWMuvoTVSCcQ/vyGA2B6Q/5mmoEKWDG6OLv0AefXLhFvN7YW8
-        xn6ZCFzdMBvb8UYT8mYJhYc=
-X-Google-Smtp-Source: ABdhPJzy+rqrPENmRGGLFH8c5TsM2qgkHGDtnnetcw9JbPi65qx7ErOBAJ97vata4jD7kI8t7Hgc4A==
-X-Received: by 2002:a17:906:804a:: with SMTP id x10mr13324640ejw.15.1617921223466;
-        Thu, 08 Apr 2021 15:33:43 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id c19sm363951edu.20.2021.04.08.15.33.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Apr 2021 15:33:43 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH v13 4/5] bugreport: add uname info
-References: <20200416211807.60811-1-emilyshaffer@google.com>
- <20200416211807.60811-5-emilyshaffer@google.com>
- <87mtu8ifmj.fsf@evledraar.gmail.com> <xmqqv98wquqp.fsf@gitster.g>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <xmqqv98wquqp.fsf@gitster.g>
-Date:   Fri, 09 Apr 2021 00:33:42 +0200
-Message-ID: <87h7kgieyh.fsf@evledraar.gmail.com>
+        id S232804AbhDHWnV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Apr 2021 18:43:21 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:53781 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232643AbhDHWnV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Apr 2021 18:43:21 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 86A0412FFDF;
+        Thu,  8 Apr 2021 18:43:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=Ky/fbglFHjajY57F2Z3t0AYgjcc=; b=dP/Wdf2Fm8hwYgTKbjuG
+        PYd7hdpswB0+KMJYFK0dP5Or3NbBn89mriHNamOWa00bshqrQ71aO4/jgbLdGbEn
+        1rxrkIpOrrdfo31K4Qcqmpbx4I4pjKleMJuIdZhEKmVIXPdHjlmCWASbe70is3mu
+        biM0DrxmqrIg5T5lcUi7G0w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         q=dns; s=sasl; b=izunybXdlHBZKJtgRcyl1dz3E8Bc2lAKLZhZxou1VYFYyQ
+        1VkLqvu08C3NwT7ROKulWszx9lRpRTbwuzF9lQlSyJkiSY9cUdWjLwo6dclVVyTD
+        ydW/wI3WscnwtWX15lXtFniCzxaXvcfX0AK3eFIEkx+44ZX7Y5eqDwVJpmxfM=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 801D012FFDE;
+        Thu,  8 Apr 2021 18:43:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.243.138.161])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id CA95B12FFDC;
+        Thu,  8 Apr 2021 18:43:06 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Emily Shaffer <emilyshaffer@google.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmo=?= =?utf-8?B?w7Zyw7A=?= Bjarmason 
+        <avarab@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 2/4] git-send-email: refactor duplicate $? checks
+ into a function
+References: <cover-0.3-00000000000-20210402T112946Z-avarab@gmail.com>
+        <cover-0.5-00000000000-20210404T091649Z-avarab@gmail.com>
+        <patch-2.5-f236f083e36-20210404T091649Z-avarab@gmail.com>
+        <xmqqft0447lu.fsf@gitster.g>
+Date:   Thu, 08 Apr 2021 15:43:05 -0700
+Message-ID: <xmqqpmz4qtxi.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: C94C31A4-98BB-11EB-9ADD-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Fri, Apr 09 2021, Junio C Hamano wrote:
-
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+> One big thing that is different between this version and the one in
+> Emily's "config hook" topic is that this is still limited to the
+> case where $repo exists.  In the new world order, it will not matter
+> in what directory the command runs, as long as "git hook" finds the
+> hook, and details of the invocation is hidden behind the command.
 >
->> On Thu, Apr 16 2020, Emily Shaffer wrote:
->>
->>> The contents of uname() can give us some insight into what sort of
->>> system the user is running on, and help us replicate their setup if need
->>> be. The domainname field is not guaranteed to be available, so don't
->>> collect it.
->>
->> Even with _GNU_SOURCE would anyone care about the domainname (the NIS/YP
->> name, not DNS) these days, as opposed to the portable POSIX "nodename"
->> field you're not including?
->>
->> In any case, I'd think it's a good idea to omit both. People tend not to
->> want to want to include their FQDN (e.g. their employer), and I can't
->> think of a reason we'd care about it for debugging git.
->>
->>> [...]
->>> +		strbuf_addf(sys_info, "%s %s %s %s\n",
->>> +			    uname_info.sysname,
->>> +			    uname_info.release,
->>> +			    uname_info.version,
->>> +			    uname_info.machine);
->>
->> Since this is completely free-form I'd think:
->>
->>     "sysname: %s\nrelease: %s\nversion: %s\nmachine: %s\nnodename: %s\nd=
-omainname: %s\n",
->>
->> Or something like that would be better (after pruning out the fields we
->> don't care about).
->
-> All true.
->
-> By the way, what's this sudden interest in re-reviewing an age old
-> topic?
+> I presume that Emily's series is expected to be updated soonish?
+> Please figure out who to go first and other details to work well
+> together between you two.
 
-The thread got bumped by SZEDER in [1] and I'd read an April date
-without noticing the year, so I see this has long-since landed,
-nevermind :)
+Since I didn't hear from either of you, I'll queue with this
+possibly bogus conflict resolution for now.
 
-1. https://lore.kernel.org/git/20200416211807.60811-2-emilyshaffer@google.c=
-om/
+Thanks.
+
+
+diff --cc git-send-email.perl
+index 175da07d94,73e1e0b51a..0000000000
+--- i/git-send-email.perl
++++ w/git-send-email.perl
+@@@ -1947,27 -1940,11 +1947,13 @@@ sub unique_email_list 
+  
+  sub validate_patch {
+  	my ($fn, $xfer_encoding) = @_;
+--
+- 	if ($repo) {
+- 		my $validate_hook = catfile($repo->hooks_path(),
+- 					    'sendemail-validate');
+- 		my $hook_error;
+- 		if (-x $validate_hook) {
+- 			my $target = abs_path($fn);
+- 			# The hook needs a correct cwd and GIT_DIR.
+- 			my $cwd_save = cwd();
+- 			chdir($repo->wc_path() or $repo->repo_path())
+- 				or die("chdir: $!");
+- 			local $ENV{"GIT_DIR"} = $repo->repo_path();
+- 			$hook_error = system_or_msg([$validate_hook, $target]);
+- 			chdir($cwd_save) or die("chdir: $!");
+- 		}
+- 		if ($hook_error) {
+- 			die sprintf(__("fatal: %s: rejected by sendemail-validate hook\n" .
+- 				       "%s\n" .
+- 				       "warning: no patches were sent\n"), $fn, $hook_error);
+- 		}
++ 	my $target = abs_path($fn);
+ -	return "rejected by sendemail-validate hook"
+ -		if system(("git", "hook", "run", "sendemail-validate", "-a",
+ -				$target));
+++	$hook_error = system_or_msg([qw(git hook run sendemail-validate -a), $target]);
+++	if ($hook_error) {
+++		die sprintf(__("fatal: %s: rejected by sendemail-validate hook\n" .
+++			       "%s\n" .
+++			       "warning: no patches were sent\n"), $fn, $hook_error);
+ +	}
+  
+  	# Any long lines will be automatically fixed if we use a suitable transfer
+  	# encoding.
