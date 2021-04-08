@@ -2,338 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63426C433ED
-	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 09:10:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E67D8C433ED
+	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 09:15:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 35F976112F
-	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 09:10:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C4A826113A
+	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 09:15:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229741AbhDHJKZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Apr 2021 05:10:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38190 "EHLO
+        id S229640AbhDHJQB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Apr 2021 05:16:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229600AbhDHJKY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Apr 2021 05:10:24 -0400
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4999FC061760
-        for <git@vger.kernel.org>; Thu,  8 Apr 2021 02:10:12 -0700 (PDT)
-Received: by mail-pj1-x1030.google.com with SMTP id il9-20020a17090b1649b0290114bcb0d6c2so2817813pjb.0
-        for <git@vger.kernel.org>; Thu, 08 Apr 2021 02:10:12 -0700 (PDT)
+        with ESMTP id S229600AbhDHJQB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Apr 2021 05:16:01 -0400
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D6CAC061760
+        for <git@vger.kernel.org>; Thu,  8 Apr 2021 02:15:50 -0700 (PDT)
+Received: by mail-pj1-x1032.google.com with SMTP id mj7-20020a17090b3687b029014d162a65b6so2807687pjb.2
+        for <git@vger.kernel.org>; Thu, 08 Apr 2021 02:15:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding:content-language;
-        bh=2qUuxED9OhBhALUcnxWZN3SXdFHEXmPhb2sj+6lntlw=;
-        b=katYRSIFC1slkQpESPHQI+geO+gFtFftSI6VTRwyYuBHJBKHQKCSUHrsN8fl7u9dA8
-         JPi/rLf9Tpf9ZsG9WrnTgyDrK8aXITLCV1vETLagP/Gh5e9J/knXRylCm0mmrbFyLTqo
-         9+GmqcHcb3ldJLkWDrrAbtLFzDXPSo0m6d6qRyA8y6MTJzPnSapxcSf18yaXuUBNZbu2
-         GEJme54fshgLcQ/KUFl/8Mw4KIKrB44gUFrfqrE4jk+yRN4xylEA3UhSFD70qFFxnsMg
-         OAupY6ug6gCFXw2mid+6q2hlqLcapIF5mbOXL50htJ8H/yNRpsm9i+3oO0HHKl37QGI1
-         keng==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=9qHh2UHULQBunwyQ2slEKQsEz9qA1lx0WKErqJDPDmg=;
+        b=ctM9tZfNlOmvU3HtHdHWjqyqs0VUaFFw/nD4uVPO2O5nvDEqHirxjiRMDH1TLQxV47
+         DMoEpMTtc3PLRJFSlXJAmz9aelPqmi2rCzOC+VZ3zWYhYtpdkIQnHB7Jzo8TLuPQ+vuD
+         E5aDEJ07PuTt0DYNg4yIPz4iObhM5/bxn6Dhaw2WsM4xlEIj69A5ngdFv3FWOwB5xGZy
+         +k/mA+plygxrmGnV0FZjwiNVc08qiTgFbKwR6GSGUJPJUbRCup7UPzz0VTisaCJSg2cQ
+         imGhy0fLrLyQSg/2OSywa0EbRvzCq/GEMp3NIbTTWr9Tcmrm5mv7375qGk8alhdIufUt
+         TUdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=2qUuxED9OhBhALUcnxWZN3SXdFHEXmPhb2sj+6lntlw=;
-        b=ObDaCfdZI1JJfGkmxRjnweV74V7gclaIvv+wvkHu7rq5O4o8uV10CZ8g4UBRg5M9Hz
-         KMFe2tIdoOFL1B/rgxmebDM5eZ4mEW3G93a3GwFGOuUoJXdiwxQ/Rjol1AsmX+AQDRkJ
-         YENd5NnReEZFnkTG+Lw9cuCkQMGLYwoiQ1qWIGBtvnQOvsOaigVo435C5yjBP7f/gT83
-         1idTaxZmifAC7tY9U0ovzSjDw3pJpwG5drfmDYil2GvK1sFst/KRWIAjOhZPYA4u6JQ0
-         4LdSkUiJbmo73Xa9vzpImDncumMsiN/pvEUW2X6mAD15kW1ZFpggOPPySzqKO08NqGC6
-         4sAQ==
-X-Gm-Message-State: AOAM533I54CPMXFQ4lnts5NuRLJE8oIaeX3meEGqQhtPJfUJg42EOH29
-        pJuNHrnAmMJbCLbBdldnEbRW7iOhhKiA6g==
-X-Google-Smtp-Source: ABdhPJwTuJfR7PliJ/Q6iVe36kWN0fC17wR56c1y21glHl+U+yyHRNU6vYKmolEKVS4vvn3Ad//D4g==
-X-Received: by 2002:a17:90b:4d0a:: with SMTP id mw10mr7313832pjb.51.1617873011168;
-        Thu, 08 Apr 2021 02:10:11 -0700 (PDT)
-Received: from [192.168.0.107] ([103.112.34.122])
-        by smtp.gmail.com with ESMTPSA id fa6sm7780849pjb.2.2021.04.08.02.10.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 08 Apr 2021 02:10:10 -0700 (PDT)
-Subject: Re: [GSoC] Draft Proposal (Convert submodule to builtin)
-To:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
-References: <195bf718-6226-43c9-8c58-167388d3d99b@gmail.com>
- <f5b9ea24-e2f7-6c54-b4ff-86cef27527f7@gmail.com>
- <CAP8UFD1PC=vQCXLLoECPzFc8BGGfQxptHE5+Et11F-=3-twZYg@mail.gmail.com>
- <769c7c48-a518-2636-10be-1479997e8f15@gmail.com>
- <CAP8UFD0RyhnurYdWt1xWF2O-bpk-irSs71+XH1Zd8ghdzRKZ8Q@mail.gmail.com>
-From:   Chinmoy Chakraborty <chinmoy12c@gmail.com>
-Message-ID: <374a2b8a-0d59-4546-eab3-7229943217ba@gmail.com>
-Date:   Thu, 8 Apr 2021 14:41:38 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.9.0
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=9qHh2UHULQBunwyQ2slEKQsEz9qA1lx0WKErqJDPDmg=;
+        b=BfsZ1vNGU9kgVLIOFKpaq9vmC5CPxl9lG0zBX1SLJPMSZJyqUAdoSZ0iGGjX9pQL8F
+         FymnrXIGqtspgnc1tsV1R3xFFJZEk3SkmTqsbwPvqwn4c9vf33YoRmbYheA2r1vhQP9i
+         guL/fbIrad7Y3azw40RWFXdQnFkbWI0pYb+slP6BzGu8bKakST7NGQJ30lhqOVwuIG/A
+         0133uSaDlMDBOkcD49STNXgWoHpUxe85OlmSYQOOd6AT4Jv0Zszou86ur2ryJWGukx7i
+         KCNFlZraTM8rV5vkww+YAU/+9r+9LZ225qLinz4KbfBvypllGBV5HOIwJdMYAelunqSk
+         EVlA==
+X-Gm-Message-State: AOAM533STuZ5zWgl6xXI+Bkgtf1F7loeJt6RBABRPpUuHecWcztrdI5C
+        wNaRoXnCAz+4Zv8W3Ew6pbEANq/0X6EiHVcv
+X-Google-Smtp-Source: ABdhPJyvSQWM+l3TcYZBbLKbkfVlHIlIgpbHMjTtSVDt+lL/hijSZ8zfDJCiuKhwk5JcHL6q2FsZPg==
+X-Received: by 2002:a17:902:bd41:b029:e6:933a:f3ef with SMTP id b1-20020a170902bd41b02900e6933af3efmr6815229plx.19.1617873349116;
+        Thu, 08 Apr 2021 02:15:49 -0700 (PDT)
+Received: from atharva-on-air.Dlink ([119.82.107.157])
+        by smtp.gmail.com with ESMTPSA id p5sm23323094pfq.56.2021.04.08.02.15.46
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 08 Apr 2021 02:15:48 -0700 (PDT)
+From:   Atharva Raykar <raykar.ath@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Atharva Raykar <raykar.ath@gmail.com>, gitster@pobox.com,
+        avarab@gmail.com, j6t@kdbg.org, phillip.wood123@gmail.com
+Subject: [GSoC][PATCH v3 0/1] userdiff: add support for scheme
+Date:   Thu,  8 Apr 2021 14:44:42 +0530
+Message-Id: <20210408091442.22740-1-raykar.ath@gmail.com>
+X-Mailer: git-send-email 2.31.1
+In-Reply-To: <20210403131612.97194-1-raykar.ath@gmail.com>
+References: <20210403131612.97194-1-raykar.ath@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CAP8UFD0RyhnurYdWt1xWF2O-bpk-irSs71+XH1Zd8ghdzRKZ8Q@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is the V2 of the draft proposal after applying the
+Changes since v2:
 
-changes suggested by Christian Couder and Kaartik Sivaraam.
+ - Add word regex to support for R7RS identifiers that allow for special
+   characters between vertical lines, such as |foo bar baz|.
+   - Change t4034 to include the above case.
 
-Thank you for you reviews :).
+Atharva Raykar (1):
+  userdiff: add support for Scheme
 
-==================================================
+ Documentation/gitattributes.txt    |  2 ++
+ t/t4018-diff-funcname.sh           |  1 +
+ t/t4018/scheme-class               |  7 +++++++
+ t/t4018/scheme-def                 |  4 ++++
+ t/t4018/scheme-def-variant         |  4 ++++
+ t/t4018/scheme-define-slash-public |  7 +++++++
+ t/t4018/scheme-define-syntax       |  8 ++++++++
+ t/t4018/scheme-define-variant      |  4 ++++
+ t/t4018/scheme-library             | 11 +++++++++++
+ t/t4018/scheme-local-define        |  4 ++++
+ t/t4018/scheme-module              |  6 ++++++
+ t/t4018/scheme-top-level-define    |  4 ++++
+ t/t4018/scheme-user-defined-define |  6 ++++++
+ t/t4034-diff-words.sh              |  1 +
+ t/t4034/scheme/expect              | 11 +++++++++++
+ t/t4034/scheme/post                |  6 ++++++
+ t/t4034/scheme/pre                 |  6 ++++++
+ userdiff.c                         |  9 +++++++++
+ 18 files changed, 101 insertions(+)
+ create mode 100644 t/t4018/scheme-class
+ create mode 100644 t/t4018/scheme-def
+ create mode 100644 t/t4018/scheme-def-variant
+ create mode 100644 t/t4018/scheme-define-slash-public
+ create mode 100644 t/t4018/scheme-define-syntax
+ create mode 100644 t/t4018/scheme-define-variant
+ create mode 100644 t/t4018/scheme-library
+ create mode 100644 t/t4018/scheme-local-define
+ create mode 100644 t/t4018/scheme-module
+ create mode 100644 t/t4018/scheme-top-level-define
+ create mode 100644 t/t4018/scheme-user-defined-define
+ create mode 100644 t/t4034/scheme/expect
+ create mode 100644 t/t4034/scheme/post
+ create mode 100644 t/t4034/scheme/pre
 
-Convert submodule to builtin
-March 2021
-
-==================================================
-##Personal Information##
-
-
-Name - Chinmoy Chakraborty
-E-mail - chinmoy12c@gmail.com
-Github - https://github.com/chinmoy12c
-Linkedin - https://www.linkedin.com/in/chinmoy12c/
-Major - Information Technology
-Time Zone - IST (UTC+05:30)
-=================================================
-
-##Work Environment##
-
-I am fluent in C, Java, Python, and Shell script. I use Git
-as my VCS, Visual Studio Code as my primary code editor, and
-Kali Linux as my primary OS.
-=================================================
-
-##Git Contributions##
-
-[Microproject] Replace instances of `the_repository` with ‘r’. (Learning 
-the ropes)
-Pull request: https://github.com/gitgitgadget/git/pull/915
-Mailing List: 
-https://lore.kernel.org/git/pull.915.git.1616701733901.gitgitgadget@gmail.com/
-
-
-[column, range-diff] downcase option description
-Pull request: https://github.com/gitgitgadget/git/pull/920
-Mailing List: 
-https://lore.kernel.org/git/pull.920.git.1616913298624.gitgitgadget@gmail.com/
-
-
-[Documentation] updated documentation for git commit --date
-Pull request: https://github.com/gitgitgadget/git/pull/918
-Mailing List: 
-https://lore.kernel.org/git/pull.918.git.1616926790227.gitgitgadget@gmail.com/
-=================================================
-
-##Project Outline##
-
-A few components of git, like `git-submodule.sh`
-are in the form of shell scripts. This causes
-problems in production code in multiple platforms
-like windows. The goal of this project is to
-convert the shell script version of `git-submodule.sh`
-to portable c code. The end goal would be
-to completely remove `git-submodule.sh` and rename
-`builtin/submodule--helper.c` to `builtin/submodule.c`
-so that the `git submodule` is fully implemented using C.
-=================================================
-
-##Why is the project required?##
-
-"Issues with the portability of code"
-
-The submodule shell script uses shell commands like
-`echo`, `grep`, `test`, `printf` etc. When switching
-to non-POSIX compliant systems, one will have
-to re-implement these commands specifically for the
-system. There are also POSIX-to-Windows path conversion
-issues. To fix these issues, it was decided to convert
-these scripts into portable C code.
-
-"Large overhead in calling the command"
-
-The commands implemented in shell scripts are not builtins, so
-they call `fork()` and `exec()` multiple times, hence creating
-additional shells. This adds to the overhead in using the
-commands in terms of time and memory.
-
-"No access to low-level API"
-
-The shell commands don’t have access to low level commands
-like `git hash-object`, `git cat-file` etc. As these commands
-are internally required for submodule commands to work, the shell
-script needs to spawn a separate shell to execute these commands.
-=================================================
-
-##How have I prepared?##
-
-I have gone through all the previous works and read through their
-code to make myself accustomed to the intricacies of the code.
-I have also structured my workflow based on the observation of
-the previous discussions on those patches, and taken into
-consideration the issues faced previously.
-
-=================================================
-
-##Previous Work##
-
-A large part of the `git submodule--helper.c` has already been
-converted by Stefan Beller​, Prathamesh Chavan​ in his GSoC project
-in 2017, and Shourya Shukla in his GSoC project in 2020. This is
-the list of already ported commands.
-
-set-branch
-set-url
-summary
-status
-init
-deinit
-update
-foreach
-sync
-absorbgitdirs
-=================================================
-
-##Work to be done##
-
-The only command that is left to be ported is `git submodule add`.
-The previous work on this by Shourya Shukla in GSoC 2020, did
-not reach a successful merge due to some issues in design and
-the patch was dropped as it had been stale for long.
-See: 
-https://github.com/git/git/blob/1861aa482a38ae84f597cede48167ab43e7e50a3/whats-cooking.txt#L1158-L1169
-The first and foremost aim of the project will be to finish
-porting the `add` command. Thereafter, the end goal would be to
-completely replace the shell script (git-submodule.sh) with
-an efficient c code.
-
-Before porting the `git submodule add` command the initial work
-would be dedicated to the implementation of small helper functions
-in the form of small patches, which would be directly used by the
-`add` command. This workflow is based on the suggestion by
-Junio C Hamano on the thread:
-https://lore.kernel.org/git/xmqqd01sugrg.fsf@gitster.c.googlers.com/.
-
-This workflow would help in the following ways:
-
-- It would help in sending patches in a small digestible format.
-- It would help the reviewers easily review those small units
-   of patches in a single sitting.
-- It would help keep small logical units of code in different clean commits.
-
-An additional test tweak would also be required in 
-`t7400-submodule-basic.sh`,
-to prepend the keyword ‘fatal’ since the command dies out in case
-of absence of commits as pointed out by Kaartic Sivaraam on the thread:
-https://lore.kernel.org/git/ce151a1408291bb0991ce89459e36ee13ccdfa52.camel@gmail.com/.
-
-
-The following helper functions would be required to be implemented -
-
-- A function to guess the path name from the repository string.
-   Example prototype: static char *guess_dir_name(const char *repo)
-   Returns the path name.
-
-- A function to assure repo is absolute or relative to parent.
-   Example prototype: static char *get_real_repo(const char *repo)
-   Returns the correct repo name.
-
-- A function for normalizing path, that is, removing multiple
-   //; leading ./; /./; /../; trailing / .
-   Example prototype: static char *normalize_path(const char *path)
-
-- A function to check if the path exists and is already a git
-   repo, else clone it.
-   Example prototype: static int add_submodule(struct add_data *info)
-   `add_data` is a struct which stores the config of the submodule.
-
-- A function to set the submodule config properly.
-   Example prototype: static void config_added_submodule(struct add_data 
-*info)
-
-- After implementation of all these helper methods, the main
-   `module_add()` function would be implemented using the helper
-   functions listed above as well as those helper functions which
-   are predefined.
-=================================================
-
-##Project Timeline##
-
-"Present Day - May 17"
-I’ll utilize this time in exploring the codebase more properly and
-solving more issues, which would help me properly familiarize
-myself with the codebase. I’ll also try to structure a more
-solidified, detailed workflow and come up with a draft patch
-based on the previous work and discussions.
-
-"May 17 - June 7 (Community bonding period)"
-- Get familiar with the community.
-- Discuss proper workflow with mentors.
-- Make changes in the timeline, if necessary.
-- Discuss the structure of the series of patches.
-
-"June 7 - June 25 (Initial coding phase)"
-- Finish implementation of the helper functions.
-- Work on a proper structure of the implementation of the
-   `submodule add` command and implement additional helper
-   functions if required.
-- Update proper documentation of the helper functions.
-
-"June 25 - July 5 (Binding the code)"
-This time would be used to code the main `submodule add`
-command using all the helper functions implemented in the
-initial phase of coding. This includes binding all the code
-together and then completing the command through incremental
-reviews. Also, the necessary documentation would be updated
-parallelly.
-
-"July 5 - July 12 (Initiate porting of command)"
-- Discuss how to go about porting the entire submodule script.
-- Initiate porting of the `git-submodule.sh` script.
-
-"July 12 - July 16 (Phase 1 evaluation)"
-
-"July 16 - July 26 (Semester exams)"
-I will be taking my semester examinations during this
-time. As such, I’ll try to be in touch with the mentors
-and take out as much time as possible (around 20 hours a week).
-
-"July 26 - August 10 (Porting the complete script)"
-This period would be utilized in the complete conversion of
-`git-submodule.sh` into c code and combine it with
-`submodule--helper.c` to make a single `builtin/submodule.c`.
-As I’ll be completely free from academics during this period,
-I’ll try to compensate as much time as possible for the above
-period of July 16 - July 26.
-
-"August 10 - August 16 (Final review and evaluation)"
-- Final review by the mentors.
-- Apply necessary changes and touch-ups.
-- Updating documentation, if any left.
-
-"August 16 - August 23 (Submission of final report)"
-
-Additionally: There are places in the original shell script
-and c code tagged as `NEEDSWORK`. My aim would be to resolve
-these issues within the GSoC period if time permits.
-=================================================
-
-##Post GSoC##
-
-After the GSoC period, I plan to continue my contributions
-for git and look for other issues to work on. I’d look into
-the conversion of other commands which are pending conversion,
-as well as work on the `NEEDSWORK` part of the code (If I’m
-unable to finish it within the GSoC period itself). I plan on
-mentoring new contributors to git and help the contributors
-by doing code reviews and solving their doubts and helping
-them out.
-
-Regards,
-Chinmoy Chakraborty.
-
+-- 
+2.31.1
 
