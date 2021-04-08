@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E8242C43460
-	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 18:33:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F08DC433B4
+	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 18:36:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BD043610CB
-	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 18:33:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 23900610FC
+	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 18:36:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232383AbhDHSd1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Apr 2021 14:33:27 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57295 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231676AbhDHSd0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Apr 2021 14:33:26 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 08ECCB2842;
-        Thu,  8 Apr 2021 14:33:15 -0400 (EDT)
+        id S232841AbhDHSg2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Apr 2021 14:36:28 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:56994 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231676AbhDHSg2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Apr 2021 14:36:28 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id CE334115670;
+        Thu,  8 Apr 2021 14:36:15 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=MFOPmawf5qbQ
-        zmrCb/trqQEGdn0=; b=vXlSUq0Omf63u9AuD+yz6VzC0fnJamA0HY7nG2HZzW3a
-        K8/2zzqL9X6H5ZWxhSzeHvaolXTADiSVB3piUyfakuCv3jXODEvIV1LOQqQicV/B
-        95uPajjfCrZsR8niGBPAJ1A1y2dfxCQDL6a4fh42tUwulBmPGZIuogYXd3EgSDM=
+        :content-type:content-transfer-encoding; s=sasl; bh=rCwg3UlRqWWn
+        pjFDXaf1MR4aDW8=; b=ClYv6st7Pm+NOs0ByuFW+5sDuj9WxtA50PpN3REp1J5I
+        1ERfwtsKhKjoByyxiNE+M7k/7QEAcwzvxIbstZ+uEmMA4+05lX9T3QrWzDLSDHCK
+        OG4f1dLFFJNTLBjHPVZ1dMXiBm/sviLVIo1jFcH5Ll0+mmdTDPcnZHdEXkE/iZ0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=J98qog
-        Loc+pgDNn8W3S6FWMLw/6oule6h15vCVO7n1G+/FYAJSs2dlNxecUyJyTB1fcWKw
-        ZXUE0YQ7bJPG/Xp0tD62MJbSwqtbRsTNuQ4JykJ/T6quKbk4NxTmwTPVHeUe8rJs
-        Tk3Dmh6fV687OmLozyHMv5jv2vNKUBR/6erdQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id F2D4EB2841;
-        Thu,  8 Apr 2021 14:33:14 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=IDeIn+
+        z3LjlNFh5Gt+NO/z1hnKoCuFrxsD6X/H7tv4vLgweWrwc3+8KS1yzzGBEPrlWx/K
+        XrbKVooOzoELH1JCGPuihDtOCvBCMTrMFAiEQAW2PgclN9LGs8GE8YDzwOJdWHzc
+        FCernoB43W6Ukn9mDV3NdE6ox8GMsojgX+Orc=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id C6BC411566F;
+        Thu,  8 Apr 2021 14:36:15 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.243.138.161])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7ACDAB2840;
-        Thu,  8 Apr 2021 14:33:14 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2008311566D;
+        Thu,  8 Apr 2021 14:36:13 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org, Lin Sun <lin.sun@zoom.us>,
         =?utf-8?B?xJBvw6Bu?= =?utf-8?B?IFRy4bqnbiBDw7RuZw==?= Danh 
         <congdanhqx@gmail.com>, David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH 4/5] config.c: add a "tristate" helper
+Subject: Re: [PATCH 5/5] config: add --type=bool-or-auto switch
 References: <cover-0.6-0000000000-20210408T133125Z-avarab@gmail.com>
-        <patch-4.6-222e91e11b-20210408T133125Z-avarab@gmail.com>
-Date:   Thu, 08 Apr 2021 11:33:13 -0700
-In-Reply-To: <patch-4.6-222e91e11b-20210408T133125Z-avarab@gmail.com>
+        <patch-5.6-9f8996a888-20210408T133125Z-avarab@gmail.com>
+Date:   Thu, 08 Apr 2021 11:36:11 -0700
+In-Reply-To: <patch-5.6-9f8996a888-20210408T133125Z-avarab@gmail.com>
  (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Thu, 8 Apr
- 2021 15:34:28 +0200")
-Message-ID: <xmqqa6q8tymu.fsf@gitster.g>
+ 2021 15:34:29 +0200")
+Message-ID: <xmqq5z0wtyhw.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: E12CD238-9898-11EB-BF87-D152C8D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 4BA4D1BA-9899-11EB-A09F-D609E328BF65-77302942!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -69,108 +69,95 @@ X-Mailing-List: git@vger.kernel.org
 
 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> Add "tristate" functions to go along with the "bool" functions and
-> migrate the common pattern of checking if something is "bool" or
-> "auto" in various places over to the new functions.
+> Now that we're using git_config_tristate() internally let's expose it
+> via "git config" like we do "bool", "int" etc for completeness, and so
+> that we can easily test it.
 >
-> We also have e.g. "repo_config_get_bool" and
-> "config_error_nonbool". I'm not adding corresponding "tristate"
-> functions as they're not needed by anything, but we could add those in
-> the future if they are.
->
-> I'm not migrating over "core.abbrev" parsing as part of this
-> change. When "core.abbrev" was made optionally boolean in
-> a9ecaa06a7 (core.abbrev=3Dno disables abbreviations, 2020-09-01) the
-> "die if empty" code added in g48d5014dd4 (config.abbrev: document the
-> new default that auto-scales, 2016-11-01) wasn't adjusted. It thus
-> behaves unlike all other "maybe bool" config variables.
->
-> I have a planned series to start adding some tests for "core.abbrev",
-> but AFAICT there's not even a test for "core.abbrev=3Dtrue", and I'd
-> like to focus on thing that have no behavior change here, so let's
-> leave it for now.
+> Unlike the --type=3Dbool-or-str option added in dbd8c09bfe (mergetool:
+> allow auto-merge for meld to follow the vim-diff behavior, 2020-05-07)
+> we don't have or anticipate any in-tree user of this except the tests.
 >
 > Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
-> ---
->  builtin/log.c  | 13 +++++++------
->  compat/mingw.c |  6 +++---
->  config.c       | 16 ++++++++++++++++
->  config.h       | 12 ++++++++++++
->  http.c         |  5 +++--
->  userdiff.c     |  6 ++----
->  6 files changed, 43 insertions(+), 15 deletions(-)
-
-> diff --git a/config.c b/config.c
-> index fc28dbd97c..74d2b2c0df 100644
-> --- a/config.c
-> +++ b/config.c
-> @@ -1257,6 +1257,14 @@ int git_parse_maybe_bool(const char *value)
->  	return -1;
->  }
-> =20
-> +int git_parse_maybe_tristate(const char *value)
-> +{
-> +	int v =3D git_parse_maybe_bool(value);
-> +	if (v < 0 && !strcasecmp(value, "auto"))
-> +		return 2;
-> +	return v;
-> +}
-
-This is not parse_mayb_bool_text(), so "1" and "-1" written in the
-configuration file are "true", "0" is "false", like the "bool" case.
-
-I wonder if written without an unnecessary extra variable, i.e.
-
-	if (value && !strcasecmp(value, "auto"))
-		return 2;
-	return git_parse_maybe_bool(value);
-
-is easier to follow, though, as it is quite clear that it is mostly
-the same as maybe_bool and the only difference is when "auto" is
-given.
-
-> +int git_config_tristate(const char *name, const char *value)
-> +{
-> +	int v =3D git_parse_maybe_tristate(value);
-> +	if (v < 0)
-> +		die(_("bad tristate config value '%s' for '%s'"), value, name);
-> +	return v;
-> +}
 
 OK.
 
-> diff --git a/config.h b/config.h
-> index 19a9adbaa9..c5129e4392 100644
-> --- a/config.h
-> +++ b/config.h
-> @@ -197,6 +197,12 @@ int git_parse_ulong(const char *, unsigned long *)=
-;
->   */
->  int git_parse_maybe_bool(const char *);
-> =20
-> +/**
-> + * Same as `git_parse_maybe_bool`, except that "auto" is recognized an=
-d
-> + * will return "2".
-> + */
-> +int git_parse_maybe_tristate(const char *);
 
-A false being 0 and a true being 1 is understandable for readers
-without symbolic constant, but "2" deserves to have a symbolic
-constant, doesn't it?
+> @@ -263,6 +267,12 @@ static int format_config(struct strbuf *buf, const=
+ char *key_, const char *value
+>  				strbuf_addstr(buf, value_);
+>  			else
+>  				strbuf_addstr(buf, v ? "true" : "false");
+> +		} else if (type =3D=3D TYPE_BOOL_OR_AUTO) {
+> +			int v =3D git_config_tristate(key_, value_);
+> +			if (v =3D=3D 2)
+> +				strbuf_addstr(buf, "auto");
+> +			else
+> +				strbuf_addstr(buf, v ? "true" : "false");
 
-> @@ -226,6 +232,12 @@ int git_config_bool_or_int(const char *, const cha=
-r *, int *);
->   */
->  int git_config_bool(const char *, const char *);
-> =20
-> +/**
-> + * Like git_config_bool() except "auto" is also recognized and will
-> + * return "2"
-> + */
-> +int git_config_tristate(const char *, const char *);
+Makes sense.
 
-Likewise.
+> +test_expect_success 'there is no --bool-or-auto, --<type> is deprecate=
+d in favor of --type=3D<type>' '
+> +	test_expect_code 129 git config --bool-or-auto
+> +'
+> +
+> +test_expect_success 'get --type=3Dbool-or-auto' '
+> +	cat >.git/config <<-\EOF &&
+> +	[bool]
+> +	true1
+> +	true2 =3D true
+> +	false =3D false
+> +	[int]
+> +	int1 =3D 0
+> +	int2 =3D 1
+> +	int3 =3D -1
+> +	[string]
+> +	string1 =3D hello
+> +	string2 =3D there you
+> +	[auto]
+> +	auto1 =3D auto
+> +	auto2 =3D AUTO
+> +	[bad-auto]
+> +	bad-auto1 =3D AUTOMATIC
+> +	EOF
+> +	cat >expect <<-\EOF &&
+> +	true
+> +	true
+> +	false
+> +	false
+> +	true
+> +	true
+> +	auto
+> +	auto
+> +	EOF
+
+Almost the same comment applies to the expected output as the
+earlier patch.
+
+Other than that, (and adjusting for 2 that should be turned into
+symbolic constant in an earlier step in a reroll), this step looks
+quite sensible.
 
 Thanks.
+
+> +	{
+> +		git config --type=3Dbool-or-auto bool.true1 &&
+> +		git config --type=3Dbool-or-auto bool.true2 &&
+> +		git config --type=3Dbool-or-auto bool.false &&
+> +		git config --type=3Dbool-or-auto int.int1 &&
+> +		git config --type=3Dbool-or-auto int.int2 &&
+> +		git config --type=3Dbool-or-auto int.int3 &&
+> +		git config --type=3Dbool-or-auto auto.auto1 &&
+> +		git config --type=3Dbool-or-auto auto.auto2
+> +	} >actual &&
+> +	test_cmp expect actual &&
+> +
+> +	test_must_fail git config --type=3Dbool-or-auto --get bad-auto.bad-au=
+to1 2>err &&
+> +	grep "bad tristate config value" err
+> +'
+> +
+>  cat >expect <<\EOF
+>  [bool]
+>  	true1 =3D true
