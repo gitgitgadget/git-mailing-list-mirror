@@ -2,247 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE98AC433ED
-	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 14:18:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D5ABC43460
+	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 14:21:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A5CD06113D
-	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 14:18:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E79696024A
+	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 14:21:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232137AbhDHOSa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Apr 2021 10:18:30 -0400
-Received: from out5-smtp.messagingengine.com ([66.111.4.29]:53143 "EHLO
-        out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S232053AbhDHORn (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 8 Apr 2021 10:17:43 -0400
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.nyi.internal (Postfix) with ESMTP id A48D15C0063
-        for <git@vger.kernel.org>; Thu,  8 Apr 2021 10:17:31 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Thu, 08 Apr 2021 10:17:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
-        :from:to:subject:message-id:mime-version:content-type; s=fm3;
-         bh=t8YZOlEcQYkTExDZY5XIkIf7Jx8bX0he0VBmOix8Yd4=; b=HtGSlNss6HXt
-        a0cuw5NVT4Kjll6EfXcDEjekh4NXwkTCr0rLdY8sXKAbeLUDQimtb0VOacv/fzoU
-        7tvesEz1yf36b+4PmNzFq448lyaX+IIapZ1xXvz1jJdocyTRHWVjjx5aaMWzsgR8
-        9qDdtje1cKC+lN6U3ExX3RAq3FVPOKbCYAAyqO6Iu5pGdvoWu2yZBCQ/usaqKWeE
-        uR253ILIen9UpVPQxesxI6W9Ys8Wk948tURoA01mE0lrB5kBdCttCMnKhS5cERe4
-        G7W568QDBe2xKwt56vH28PMAhpuML4MgsuD68vOCwrTPHwniDDXSLGlRArX7/I9X
-        2WghXAMRbg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=content-type:date:from:message-id
-        :mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
-        :x-me-sender:x-sasl-enc; s=fm2; bh=t8YZOlEcQYkTExDZY5XIkIf7Jx8bX
-        0he0VBmOix8Yd4=; b=DazOwu0pIsanRK2Tq2XrqvhLKOsjEi/3DgAfZte+hXmgw
-        EETV1GXKhUlOFRGLx3QX3QnbjF/wEgtmGHskSyUgbrI7ShiicN6vFI9Gt6vRGZy8
-        +Zz+rIarglyvy2cRrp4WsXico65ytkBzoOcwPQ1xuVpR98z8iWRsalJu7xr/D2vz
-        RvMbQ1iGRovmxPgQz6HaBsL/nEwu3TEKHgBFc6POF6xU+YjiWUNPRQgv2Eud0pI6
-        apqFc2moWnYg2+6KHsaLWpdJ+J4uywpYIQYRPsD30u55H4mYzw2cyzOhadyGsoz+
-        HHTqAa4YTvtp9tgaWsRAuRzr5WEKS/p0hqtUm2mrA==
-X-ME-Sender: <xms:exBvYGvnhaSQiICFSwtF212G3jnaQmgtoYk_zU_gn2x1l-EcIfK_Lg>
-    <xme:exBvYIlnp7CLm3WHZe-beCNg8YFDL1V8qjICYC7pasf5Qxq4aNF24O0-EqJWSGwH0
-    -9VSJI2qD4bHckqiw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrudejledgjeeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkgggtugesghdtreertd
-    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
-    rdhimheqnecuggftrfgrthhtvghrnhepjeeifedvueelfffgjeduffdvgefhiefgjefgvd
-    dvfeduvefffeevfffhgfekieffnecukfhppeejjedrudeluddrgedrleelnecuvehluhhs
-    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:exBvYAyFlOJAF0W09UsgQjaQv6B-GjC245NT7GJKZXRAOHnsALvCGg>
-    <xmx:exBvYCO2Dk6cHGP3QXlMaZNrg8Mq0HV7e_fTz8ow5evmYTJvQc5Rmg>
-    <xmx:exBvYEpAnK1apR1Pcbd2w08If3O7xhILm1ulbZofA1cUMjrCisUZKA>
-    <xmx:exBvYCUbaWj-EED5g2jnmKbL-Dwgc-tyYR8PETaT0wjIqZUudhx-Dw>
-Received: from vm-mail.pks.im (x4dbf0463.dyn.telefonica.de [77.191.4.99])
-        by mail.messagingengine.com (Postfix) with ESMTPA id F30D81080069
-        for <git@vger.kernel.org>; Thu,  8 Apr 2021 10:17:30 -0400 (EDT)
-Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 599fa1cd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-        for <git@vger.kernel.org>;
-        Thu, 8 Apr 2021 14:17:24 +0000 (UTC)
-Date:   Thu, 8 Apr 2021 16:17:23 +0200
-From:   Patrick Steinhardt <ps@pks.im>
-To:     git@vger.kernel.org
-Subject: [PATCH] config: Introduce GIT_CONFIG_NOGLOBAL
-Message-ID: <a23382059bb57022dd1e40d1c2c9a11307b0ff3b.1617891426.git.ps@pks.im>
+        id S231867AbhDHOVX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Apr 2021 10:21:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50412 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231520AbhDHOVW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Apr 2021 10:21:22 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25049C061760
+        for <git@vger.kernel.org>; Thu,  8 Apr 2021 07:21:11 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id o16so2494837ljp.3
+        for <git@vger.kernel.org>; Thu, 08 Apr 2021 07:21:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=BnT/asvZQaUji+52ucDidiQSzIk2ISzrmBxc7j76ko8=;
+        b=UQFGvMKlpSVhYFtrRboBWaYLcWf1tG5TqArOADcLVcwfaByfQpNU4HA842xz0kAGty
+         wDSEJjnBtTIHF6Cqjb96OWr76qOYFozKSzZZX35KhmDa9YC+fgcYH2lbJdRigHHSoq8a
+         quu0o3zrv+42jxrMjYCvjXzIDdpRwe4x76WgVfehqd3N7EsLNSi1FzWGwvmBjPWlhuQ2
+         Nd17+BGsJH28FIpiAVgkoA/BB7Y0GzznmGxoQQUw12gGSliLQZNXs1K88jH61OdC2Q3D
+         C5luyYnbBxvrKV0iR7f7EvUJWU+3DUINYetUsMeyzrwj7wNA2oVNB3+Dbgp+kYUy/K9q
+         Ltuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=BnT/asvZQaUji+52ucDidiQSzIk2ISzrmBxc7j76ko8=;
+        b=XoLFOP84ORthwrGKq77b6hwEexOp3OjHWqt9GPf6G+ONkvr0D2APHoLo/qR953sv8i
+         XFluDWLzZa1XK0H7MgCzy/nbaGbF5T9ifKgJz4NvJkTyZgjseF6/YlT0CPeESTYwEfVS
+         u8+mqo0PvRGSFoy0p6GFKqmzNiAWdBKmFeZ9elvKRvoUmxs2VZ/LZZREmuMOxsjl73nr
+         LYzWUl0Ink4MFoyZNAmM6YMbGJxX/tCitG6VYvVpHzQMgMePkW4xqrfkd672u9Hgl3HR
+         alRo4NzQhvXVXYfIPKzUCiafTC3owRUZqXdYZaHhmfanI1Z4D7F8ynWQDGBaF7Azka79
+         N8HA==
+X-Gm-Message-State: AOAM531F2t9OZJFeV4bpzylt+VOQWgbNjdDy6aPx5yJoDQewrA//yCos
+        RG1NVKEgclQsG9DIMksf6vuLuSM8/bk=
+X-Google-Smtp-Source: ABdhPJwmoqpIzO/xpIPD8raKZy3hteTVPzSeZCnT/ZOayjPoEbtfRKvoRnnY2tLr5tlDdLNAO2ExoQ==
+X-Received: by 2002:a05:651c:212a:: with SMTP id a42mr5868152ljq.505.1617891669388;
+        Thu, 08 Apr 2021 07:21:09 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id o139sm2843691lfa.129.2021.04.08.07.21.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Apr 2021 07:21:08 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Philip Oakley <philipoakley@iee.email>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Elijah Newren <newren@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 1/9] diff-merges: introduce --diff-merges=def
+References: <20210407225608.14611-1-sorganov@gmail.com>
+        <20210407225608.14611-2-sorganov@gmail.com>
+        <f6b25ea6-88b1-c167-7fd4-440be8782fcb@iee.email>
+Date:   Thu, 08 Apr 2021 17:21:07 +0300
+In-Reply-To: <f6b25ea6-88b1-c167-7fd4-440be8782fcb@iee.email> (Philip Oakley's
+        message of "Thu, 8 Apr 2021 12:48:11 +0100")
+Message-ID: <87eefkdfho.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="I2UmYPcyVgD7iqsh"
-Content-Disposition: inline
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
---I2UmYPcyVgD7iqsh
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Philip Oakley <philipoakley@iee.email> writes:
+> Hi,
+>
+> On 07/04/2021 23:56, Sergey Organov wrote:
+>> Introduce the notion of default diff format for merges, and the option
+>> "def" to select it. The default is "separate" and can't yet be
+> "def" feels a bit too short and sounds similar to "define" - why not
+> spell out in full?
 
-While it's already possible to stop git from reading the system config
-via GIT_CONFIG_NOSYSTEM, doing the same for global config files requires
-the user to unset both HOME and XDG_CONFIG_HOME. This is an awkward
-interface and may even pose a problem e.g. when git hooks rely on these
-variables to be present.
+Dunno, it just happened. No sound reason. Will change to "default" for
+the next re-roll.
 
-Introduce a new GIT_CONFIG_NOGLOBAL envvar, which is the simple
-equivalent to GIT_CONFIG_NOSYSTEM. If set to true, git will skip reading
-both `~/.gitconfig` and `$XDG_CONFIG_HOME/git/config`.
+>> changed, so effectively "dev" is just a synonym for "separate" for
+> did you mean "def"?  i.e. s/dev/def/   (..spell out in full ;-)
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- Documentation/git-config.txt |  4 ++++
- Documentation/git.txt        | 16 ++++++++++++----
- config.c                     |  9 +++++++--
- t/t1300-config.sh            | 31 +++++++++++++++++++++++++++++++
- 4 files changed, 54 insertions(+), 6 deletions(-)
+Yep, thanks!
 
-diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-index 4b4cc5c5e8..88cd064abb 100644
---- a/Documentation/git-config.txt
-+++ b/Documentation/git-config.txt
-@@ -340,6 +340,10 @@ GIT_CONFIG::
- 	Using the "--global" option forces this to ~/.gitconfig. Using the
- 	"--system" option forces this to $(prefix)/etc/gitconfig.
-=20
-+GIT_CONFIG_NOGLOBAL::
-+	Whether to skip reading settings from the global ~/.gitconfig and
-+	$XDG_CONFIG_HOME/git/config files. See linkgit:git[1] for details.
-+
- GIT_CONFIG_NOSYSTEM::
- 	Whether to skip reading settings from the system-wide
- 	$(prefix)/etc/gitconfig file. See linkgit:git[1] for details.
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 3a9c44987f..4462bd2da9 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -670,13 +670,21 @@ for further details.
- 	If this environment variable is set to `0`, git will not prompt
- 	on the terminal (e.g., when asking for HTTP authentication).
-=20
-+`GIT_CONFIG_NOGLOBAL`::
-+	Whether to skip reading settings from the system-wide `~/.gitconfig`
-+	and `$XDG_CONFIG_HOME/git/config` files.  This environment variable can
-+	be used along with `$GIT_CONFIG_NOSYSTEM` to create a predictable
-+	environment for a picky script, or you can set it temporarily to avoid
-+	using a buggy global config file while waiting for someone with
-+	sufficient permissions to fix it.
-+
- `GIT_CONFIG_NOSYSTEM`::
- 	Whether to skip reading settings from the system-wide
- 	`$(prefix)/etc/gitconfig` file.  This environment variable can
--	be used along with `$HOME` and `$XDG_CONFIG_HOME` to create a
--	predictable environment for a picky script, or you can set it
--	temporarily to avoid using a buggy `/etc/gitconfig` file while
--	waiting for someone with sufficient permissions to fix it.
-+	be used along with `$GIT_CONFIG_NOGLOBAL` to create a predictable
-+	environment for a picky script, or you can set it temporarily to avoid
-+	using a buggy `/etc/gitconfig` file while waiting for someone with
-+	sufficient permissions to fix it.
-=20
- `GIT_FLUSH`::
- 	If this environment variable is set to "1", then commands such
-diff --git a/config.c b/config.c
-index 6428393a41..19c1b31c75 100644
---- a/config.c
-+++ b/config.c
-@@ -1879,6 +1879,11 @@ int git_config_system(void)
- 	return !git_env_bool("GIT_CONFIG_NOSYSTEM", 0);
- }
-=20
-+static int git_config_global(void)
-+{
-+	return !git_env_bool("GIT_CONFIG_NOGLOBAL", 0);
-+}
-+
- static int do_git_config_sequence(const struct config_options *opts,
- 				  config_fn_t fn, void *data)
- {
-@@ -1903,10 +1908,10 @@ static int do_git_config_sequence(const struct conf=
-ig_options *opts,
- 					    data);
-=20
- 	current_parsing_scope =3D CONFIG_SCOPE_GLOBAL;
--	if (xdg_config && !access_or_die(xdg_config, R_OK, ACCESS_EACCES_OK))
-+	if (git_config_global() && xdg_config && !access_or_die(xdg_config, R_OK,=
- ACCESS_EACCES_OK))
- 		ret +=3D git_config_from_file(fn, xdg_config, data);
-=20
--	if (user_config && !access_or_die(user_config, R_OK, ACCESS_EACCES_OK))
-+	if (git_config_global() && user_config && !access_or_die(user_config, R_O=
-K, ACCESS_EACCES_OK))
- 		ret +=3D git_config_from_file(fn, user_config, data);
-=20
- 	current_parsing_scope =3D CONFIG_SCOPE_LOCAL;
-diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-index e0dd5d65ce..0754189974 100755
---- a/t/t1300-config.sh
-+++ b/t/t1300-config.sh
-@@ -2059,6 +2059,37 @@ test_expect_success '--show-scope with --show-origin=
-' '
- 	test_cmp expect output
- '
-=20
-+test_expect_success 'GIT_CONFIG_NOGLOBAL' '
-+	test_when_finished rm -f "$HOME"/.config/git &&
-+	cat >"$HOME"/.gitconfig <<-EOF &&
-+	[home]
-+		config =3D true
-+	EOF
-+	mkdir -p "$HOME"/.config/git &&
-+	cat >"$HOME"/.config/git/config <<-EOF &&
-+	[xdg]
-+		config =3D true
-+	EOF
-+	cat >.git/config <<-EOF &&
-+	[local]
-+		config =3D true
-+	EOF
-+
-+	cat >expect <<-EOF &&
-+	global	xdg.config=3Dtrue
-+	global	home.config=3Dtrue
-+	local	local.config=3Dtrue
-+	EOF
-+	git config --show-scope --list >output &&
-+	test_cmp expect output &&
-+
-+	cat >expect <<-EOF &&
-+	local	local.config=3Dtrue
-+	EOF
-+	GIT_CONFIG_NOGLOBAL=3Dtrue git config --show-scope --list >output &&
-+	test_cmp expect output
-+'
-+
- for opt in --local --worktree
- do
- 	test_expect_success "$opt requires a repo" '
---=20
-2.31.1
-
-
---I2UmYPcyVgD7iqsh
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmBvEHIACgkQVbJhu7ck
-PpTJtQ/9EsVAahAI7QkeidfiKCUaWrdDAtyLsT2l3Hknz26Kdug8GxTznVIg7QiL
-qDxYlkvDOux7zfct88IwJKLK4NZptbEZ/Xmr+J8vtQkTibVmVAE6GqOkQw44/0QM
-B/QxkcO0JVtm3WFUwXBP+Sza1LfeKxfxL8Dg9tdl5iocrSWI/wIrfqjhfMuU3qv+
-uyeskGrwFdQiTWYlAC0P9NLFXYhhHI9WalAYtJARw5+Xi8+YbYC91h1S5XtDCPbQ
-exKn0iM5rXzlRUTDlW414SWGMxLNafAGvjWgH3zsNQvMVWwnkHTNsjs9ogB1A+no
-P0T+vsgi5UWnjrnqiT5qOZUHxYXQ77qe7UMe/oEKi1ty/kvTJfn08crGB1bP3BQX
-hUnH3Vclb2jGzUs2HvikOQWJqhlqSq1wq9qnkpcIva32CzJqyxmJlGO6w6HtoMPL
-vgfiD+qUgSGCdSsE7pQxTirk+++oCnxve/IRkEdyxQt4ZIWTNJVVYOYbX6LHH7A0
-wWotVxPOdS9MtUOL22IjBG2+YadXSBXNFv6yFFYYpb6BWrj6NjHi6YE8pn/d7UZ7
-D7d+M0dQlUm9ozTgdn/LXbkJEnMk8XNBfvBXHvXnXfAVR4bIGJF7kooaSoUbbTQ4
-8jm955Ovw9GhBa12j+y4LTgMW1wgwjyyAM7pzCuEXtE01gqneR8=
-=0HKR
------END PGP SIGNATURE-----
-
---I2UmYPcyVgD7iqsh--
+-- Sergey
