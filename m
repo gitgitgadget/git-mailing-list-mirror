@@ -8,139 +8,188 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 902FBC433ED
-	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 22:08:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B14E2C433B4
+	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 22:13:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 57289610E8
-	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 22:08:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 65AEC61105
+	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 22:13:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232470AbhDHWIi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Apr 2021 18:08:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40002 "EHLO
+        id S232697AbhDHWN7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Apr 2021 18:13:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232265AbhDHWIh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Apr 2021 18:08:37 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80271C061760
-        for <git@vger.kernel.org>; Thu,  8 Apr 2021 15:08:25 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id u17so5548091ejk.2
-        for <git@vger.kernel.org>; Thu, 08 Apr 2021 15:08:25 -0700 (PDT)
+        with ESMTP id S232684AbhDHWN6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Apr 2021 18:13:58 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5C25C061760
+        for <git@vger.kernel.org>; Thu,  8 Apr 2021 15:13:46 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id l4so5509134ejc.10
+        for <git@vger.kernel.org>; Thu, 08 Apr 2021 15:13:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=qg3vsjDaB1Ijg8BDANMv0E+V3dQpQ3QQT8ShZNgfb4U=;
-        b=g++gLZpxMOQTN6dEWZ/bvfCG+dmrP6J9IFQQG6mIZ+sJSV7cUNBhdlKASyW5UZZ3Ng
-         cVtkRMk4ZoFuYqUe6nwa8moBj20IMiWMwetQSM7tdAxD86JiePiUpmnEESE4ibARvLM8
-         5mMrDy5rEYKCPnVYOwuM7KnG39I7cNDwTywmJWQQg2ibh6sdIYWvF2fbPUhRvnAxXJrS
-         YEPr5m9u4ko6A5BrtW3n+RFPKUWTLnJatGdWquxNmbz/6TV0rmYYw9Nny5u6okQwHVoy
-         ziy3dRGHygXVoMpRPCeDqiRFf/T0HO9rJ9xhWkMHZw3lAKgcssrMCJsz3CVFlz1oC9YD
-         RS4w==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=fxMup2hQNR3YyNObyJPC9HKFHK01Cec0NMebSrn7Cpw=;
+        b=TLB9DwczRr24CBqMgn+fGoqdtyNXhturjDFgD63jGcPS1mdbbJ/vsfLjt8k6pUI91y
+         vLDRc4TEpaJecYcagIvilZT9r8LVE0hDV0wDfLKhdwECzvtbUoAwGbaeyah/XPPRKvrQ
+         tN14gsvdq9qfEX9VyyqCsW5rIfPP26B++l23L+PZ+xocuOXdLFWOFHUulwd6L9Rmu3UM
+         QhF+UE90ak09qKdEnj6MAO/YiM6pXH0stDrkL3jz+4ibAn18ZwVYbnL+tcQm3BzkETy0
+         uPr3uJWhrNaIBz524+YRaXtIwC49TuUykylVmi3e9vcVFQHauR+lDHqj3gBQOBsAud5R
+         Fndg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=qg3vsjDaB1Ijg8BDANMv0E+V3dQpQ3QQT8ShZNgfb4U=;
-        b=M2UNjlSdiYQcvLbkhk6k16LsO5qaaFPSmevrXd10gxhNnw8Cb53E3A0a8TyfOVwsAn
-         Gpqn+ICJywqBJ9CQYKpcozSJniRlWX+AprbUuL11tkx15Zbqe+8CCkxRhnXUoUu+H01r
-         xg74299pls6efanJfsbJfe31lzHaRkh46DnA70OapUbcd3BNkUMgnFL8HLRM8OIbR6dn
-         x9WC0gyWuxPAGQcdnpbZhkyK2RER0FGI78zDw3aCEVmuzGdYUoaWZ1IBOADCEttPMNmu
-         vc+2v7i3hxPwVQxlnEsFj3nEvicPoYDt2gdWPYMEfiarhnr8Y3IykWCFtSjqjFchkN+V
-         l2bA==
-X-Gm-Message-State: AOAM5339bDZcNfs7ciU32eA633zsyry05kSVSrANAPQb7dz+KJ5HjGXs
-        K2Y2B7pN8SGn67qdAmqJm9M=
-X-Google-Smtp-Source: ABdhPJzuXCDeUDs9X01inyq3/dXRHXH9T3ahGwtqLzC5I1bLQOnvj7emyH88/Iwp/frql68/PSDDRQ==
-X-Received: by 2002:a17:906:e5a:: with SMTP id q26mr5375804eji.263.1617919704041;
-        Thu, 08 Apr 2021 15:08:24 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id u13sm312061ejj.16.2021.04.08.15.08.23
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=fxMup2hQNR3YyNObyJPC9HKFHK01Cec0NMebSrn7Cpw=;
+        b=UXOwo6VBowZqWBolxVGt29Cd+f1MQ4DVTa+SRJ9TjoVZGAzBczUl6n9Z9toLm0yDOn
+         WRBlzWGRXTss8tDpGzCVdRaPI0yHw9SbLQgEmXiDuWY7cf/Aezn4gD6/5PYlg9UgMiSf
+         CdzAfTwn75j1oUu6sV88NmT9P1EtIkca2Mvfa7eQXfHfmcfWSZ46ZsqFc/KHBmhATAd9
+         QaAX+xixPDfUydTUl+Dmmgi+ILG3VcYPXBLmlrzNCBBHZRbqHr3wH4sJF0SM4Sv20KA6
+         kt/7r+uckvOT/tUaviGrZYQGzf9VPf57PD6MNbnNGWugGCJ4Moi5DtrLaOhg7cIcGcO8
+         IPwQ==
+X-Gm-Message-State: AOAM531eFxSDqHbW/gFJ6C8HD4OTVUF9b9dfD44/JYn3Pd9cIWFKlVJW
+        umsqW6O+f2bSj3G4N9ATYzI=
+X-Google-Smtp-Source: ABdhPJxKkKJHqnz2XRmi+QvppfXLylvKI6XkFwfaVOXoY5vJ5iJkuT+vY0fQ/DIazvV3HL4bJxAjmQ==
+X-Received: by 2002:a17:907:9614:: with SMTP id gb20mr13078281ejc.108.1617920025458;
+        Thu, 08 Apr 2021 15:13:45 -0700 (PDT)
+Received: from szeder.dev (94-21-58-238.pool.digikabel.hu. [94.21.58.238])
+        by smtp.gmail.com with ESMTPSA id n3sm297013ejj.113.2021.04.08.15.13.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Apr 2021 15:08:23 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Makefile: add missing dependencies of 'config-list.h'
-References: <20200416211807.60811-2-emilyshaffer@google.com>
- <20210408212915.3060286-1-szeder.dev@gmail.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <20210408212915.3060286-1-szeder.dev@gmail.com>
-Date:   Fri, 09 Apr 2021 00:08:23 +0200
-Message-ID: <87pmz4ig4o.fsf@evledraar.gmail.com>
+        Thu, 08 Apr 2021 15:13:45 -0700 (PDT)
+Date:   Fri, 9 Apr 2021 00:13:43 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Sergey Organov <sorganov@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Philip Oakley <philipoakley@iee.email>,
+        Elijah Newren <newren@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 7/9] t9902: fix completion tests for log.d* to match
+ log.diffMerges
+Message-ID: <20210408221343.GC2947267@szeder.dev>
+References: <20210407225608.14611-1-sorganov@gmail.com>
+ <20210407225608.14611-8-sorganov@gmail.com>
+ <87y2dtitlp.fsf@evledraar.gmail.com>
+ <875z0wdekf.fsf@osv.gnss.ru>
+ <87sg40imit.fsf@evledraar.gmail.com>
+ <87k0pc7cap.fsf@osv.gnss.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87k0pc7cap.fsf@osv.gnss.ru>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Apr 08, 2021 at 11:26:38PM +0300, Sergey Organov wrote:
+> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+> 
+> > On Thu, Apr 08 2021, Sergey Organov wrote:
+> >
+> >> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+> >>
+> >>> On Thu, Apr 08 2021, Sergey Organov wrote:
+> >>>
+> >>>> There were 3 completion tests failures due to introduction of
+> >>>> log.diffMerges configuration variable that affected the result of
+> >>>> completion of log.d. Fixed them accordingly.
+> >>>>
+> >>>> Signed-off-by: Sergey Organov <sorganov@gmail.com>
+> >>>> ---
+> >>>>  t/t9902-completion.sh | 3 +++
+> >>>>  1 file changed, 3 insertions(+)
+> >>>>
+> >>>> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+> >>>> index 04ce884ef5ac..4d732d6d4f81 100755
+> >>>> --- a/t/t9902-completion.sh
+> >>>> +++ b/t/t9902-completion.sh
+> >>>> @@ -2306,6 +2306,7 @@ test_expect_success 'git config - variable name' '
+> >>>>  	test_completion "git config log.d" <<-\EOF
+> >>>>  	log.date Z
+> >>>>  	log.decorate Z
+> >>>> +	log.diffMerges Z
+> >>>>  	EOF
+> >>>>  '
+> >>>>  
+> >>>> @@ -2327,6 +2328,7 @@ test_expect_success 'git -c - variable name' '
+> >>>>  	test_completion "git -c log.d" <<-\EOF
+> >>>>  	log.date=Z
+> >>>>  	log.decorate=Z
+> >>>> +	log.diffMerges=Z
+> >>>>  	EOF
+> >>>>  '
+> >>>>  
+> >>>> @@ -2348,6 +2350,7 @@ test_expect_success 'git clone --config= - variable name' '
+> >>>>  	test_completion "git clone --config=log.d" <<-\EOF
+> >>>>  	log.date=Z
+> >>>>  	log.decorate=Z
+> >>>> +	log.diffMerges=Z
+> >>>>  	EOF
+> >>>>  '
+> >>>
+> >>> Commits should be made in such a way as to not break the build/tests
+> >>> partway through a series, which it seems is happening until this
+> >>> fixup.
 
-On Thu, Apr 08 2021, SZEDER G=C3=A1bor wrote:
+Well, actually no: it _starts_ to break with this patch, because
+'log.diffMerges' is not documented yet, and it will pass again with
+the last patch in the series that adds that missing piece of
+documentation.
 
-> We auto-generate the list of supported configuration variables from
-> 'Documentation/config/*.txt', and that list used to be created by the
-> 'generate-cmdlist.sh' helper script and stored in the 'command-list.h'
-> header.  Commit 709df95b78 (help: move list_config_help to
-> builtin/help, 2020-04-16) extracted this into a dedicated
-> 'generate-configlist.sh' script and 'config-list.h' header, and added
-> a new target in the 'Makefile' as well, but while doing so it forgot
-> to extract the dependencies of the latter.  Consequently, since then
-> 'config-list.h' is not re-generated when 'Documentation/config/*.txt'
-> is updated, while 'command-list.h' is re-generated unnecessarily:
->
->   $ touch Documentation/config/log.txt
->   $ make -j4
->       GEN command-list.h
->       CC help.o
->       AR libgit.a
->
-> Fix this and list all config-related documentation files as
-> dependencies of 'config-list.h' and remove them from the dependencies
-> of 'command-list.h'.
->
->   $ touch Documentation/config/log.txt
->   $ make
->       GEN config-list.h
->       CC builtin/help.o
->       LINK git
->
-> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
-> ---
->  Makefile | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/Makefile b/Makefile
-> index 5a022367d4..2c41f125e0 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -2151,13 +2151,13 @@ $(BUILT_INS): git$X
->=20=20
->  config-list.h: generate-configlist.sh
->=20=20
-> -config-list.h:
-> +config-list.h: Documentation/*config.txt Documentation/config/*.txt
->  	$(QUIET_GEN)$(SHELL_PATH) ./generate-configlist.sh \
->  		>$@+ && mv $@+ $@
->=20=20
->  command-list.h: generate-cmdlist.sh command-list.txt
->=20=20
-> -command-list.h: $(wildcard Documentation/git*.txt) Documentation/*config=
-.txt Documentation/config/*.txt
-> +command-list.h: $(wildcard Documentation/git*.txt)
->  	$(QUIET_GEN)$(SHELL_PATH) ./generate-cmdlist.sh \
->  		$(patsubst %,--exclude-program %,$(EXCLUDED_PROGRAMS)) \
->  		command-list.txt >$@+ && mv $@+ $@
+> >> Yep.
+> >>
+> >> Could these tests be somehow written in a more robust manner, to be
+> >> protected against future additions of configuration variables that are
+> >> unrelated to the features being tested? If so, I'd prefer to fix them as
+> >> a prerequisite to the series rather than adding fixes to unrelated 
+> >> existing tests into my patches.
+> >
+> > Hrm? I mean if you have a commit fixing up failing tests in an earlier
+> > commit then that change should in one way or the other be made as part
+> > of that earlier change.
+> >
+> > Yes we can skip the tests or something in the meantime, which we do
+> > sometimes as part of some really large changes, but these can just be
+> > squashed, no?
+> 
+> I mean I don't want this change at all.
 
-This change makes sense.
+You'll definitely need this change, though.
 
-I have a not-yet-submitted patch series where I added some more
-config/*/*.txt that wouldn't be caught by this rule, I'd updated the
-Documentation/Makefile, but missed this part in the top-level Makefile.
+> I didn't change completion mechanism, so completion tests should not
+> suddenly fail because of my changes.
 
-So a relation question: Does anyone actually prefer this state of
-affairs of having a Makefile, Documentation/Makefile, t/Makefile
-t/perf/Makefile and template/Makefile?
+We auto-generate the list of supported configuration variables from
+the documentation and use that list in our Bash completion script to
+list possible configuration variables for 'git config <TAB>' and 'git
+-c <TAB>'.  And we want to make sure that this feature works as
+intended, so we have a couple of tests that try to complete real
+config variable sections and names.  You are just unlucky to introduce
+a new configuraton variable that happenes to start with the same
+prefix that is used in some of those tests.
 
-It seems to me with ever-closer coupling between them that it's getting
-to be more of a hassle to manage state between them than it would be to
-just move them all into one big Makefile.
+> I did entirely unrelated change and
+> noticed the breakage only by accident, as tests even don't fail unless
+> you *install* git, not only make it. So, for example, just "make test"
+> doesn't fail, while "make install; make test" will.
+
+It might be related to a bug in the build process that doesn't update
+that auto-generated list of supported configuration variables after
+e.g. 'Documentation/config/log.txt' was modified; see a proposed fix
+at:
+
+  https://public-inbox.org/git/20210408212915.3060286-1-szeder.dev@gmail.com/
+
+> It looks like something is wrong here, a bug or misfeature, or even two,
+> and if it's fixed before these series, I won't need this in my series at
+> all. Besides, that's yet another reason *not* to squash this change into
+> an otherwise unrelated commit.
+
+The introduction of the new configuration variable, its documentation
+and this test update should all go into a single patch.  The whole
+test suite must pass for every single commit.
+
