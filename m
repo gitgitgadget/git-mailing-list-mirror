@@ -2,194 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B14E2C433B4
-	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 22:13:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B5D68C433B4
+	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 22:19:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 65AEC61105
-	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 22:13:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 826ED610FC
+	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 22:19:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232697AbhDHWN7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Apr 2021 18:13:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41170 "EHLO
+        id S232690AbhDHWTc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Apr 2021 18:19:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42364 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232684AbhDHWN6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Apr 2021 18:13:58 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5C25C061760
-        for <git@vger.kernel.org>; Thu,  8 Apr 2021 15:13:46 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id l4so5509134ejc.10
-        for <git@vger.kernel.org>; Thu, 08 Apr 2021 15:13:46 -0700 (PDT)
+        with ESMTP id S232265AbhDHWTb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Apr 2021 18:19:31 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 134BFC061760
+        for <git@vger.kernel.org>; Thu,  8 Apr 2021 15:19:19 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id mh7so5534964ejb.12
+        for <git@vger.kernel.org>; Thu, 08 Apr 2021 15:19:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=fxMup2hQNR3YyNObyJPC9HKFHK01Cec0NMebSrn7Cpw=;
-        b=TLB9DwczRr24CBqMgn+fGoqdtyNXhturjDFgD63jGcPS1mdbbJ/vsfLjt8k6pUI91y
-         vLDRc4TEpaJecYcagIvilZT9r8LVE0hDV0wDfLKhdwECzvtbUoAwGbaeyah/XPPRKvrQ
-         tN14gsvdq9qfEX9VyyqCsW5rIfPP26B++l23L+PZ+xocuOXdLFWOFHUulwd6L9Rmu3UM
-         QhF+UE90ak09qKdEnj6MAO/YiM6pXH0stDrkL3jz+4ibAn18ZwVYbnL+tcQm3BzkETy0
-         uPr3uJWhrNaIBz524+YRaXtIwC49TuUykylVmi3e9vcVFQHauR+lDHqj3gBQOBsAud5R
-         Fndg==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=mPXdBCV0X7a63rEP1Y9yAKtHITHErxPf38n80cfwXCs=;
+        b=GB+IWaWAJsA1lH2hX6fPUxoaqyAYzS3CFwiG4+0ieclECokBRGTS8kcdHFFmGus2lt
+         d/WO8iZwUpA97WTqxT81Hywy6hKhbM37ArI6ic2/3k2pel0ppbjm1fpagSxw/N5Dtjha
+         /FG6lrMn8MrbQQuKlc9qLAkEwPdvbRwfSbhwEkDBRyjX9VKS/op95oA1EA1aG5d0Df7Y
+         PNk/KbYX0mKXI4hmMliRRFgYKxRI8/wIa0u3JcPupN/M6YWPnfRlqgJKQWBMiiqiRhSR
+         1AU1sQw+3VHFhguBwusmKZVDQqV3u9/HE66mlfrfbBjjlbCCgu7r2zNavJ2hRyxs3dOG
+         +u7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=fxMup2hQNR3YyNObyJPC9HKFHK01Cec0NMebSrn7Cpw=;
-        b=UXOwo6VBowZqWBolxVGt29Cd+f1MQ4DVTa+SRJ9TjoVZGAzBczUl6n9Z9toLm0yDOn
-         WRBlzWGRXTss8tDpGzCVdRaPI0yHw9SbLQgEmXiDuWY7cf/Aezn4gD6/5PYlg9UgMiSf
-         CdzAfTwn75j1oUu6sV88NmT9P1EtIkca2Mvfa7eQXfHfmcfWSZ46ZsqFc/KHBmhATAd9
-         QaAX+xixPDfUydTUl+Dmmgi+ILG3VcYPXBLmlrzNCBBHZRbqHr3wH4sJF0SM4Sv20KA6
-         kt/7r+uckvOT/tUaviGrZYQGzf9VPf57PD6MNbnNGWugGCJ4Moi5DtrLaOhg7cIcGcO8
-         IPwQ==
-X-Gm-Message-State: AOAM531eFxSDqHbW/gFJ6C8HD4OTVUF9b9dfD44/JYn3Pd9cIWFKlVJW
-        umsqW6O+f2bSj3G4N9ATYzI=
-X-Google-Smtp-Source: ABdhPJxKkKJHqnz2XRmi+QvppfXLylvKI6XkFwfaVOXoY5vJ5iJkuT+vY0fQ/DIazvV3HL4bJxAjmQ==
-X-Received: by 2002:a17:907:9614:: with SMTP id gb20mr13078281ejc.108.1617920025458;
-        Thu, 08 Apr 2021 15:13:45 -0700 (PDT)
-Received: from szeder.dev (94-21-58-238.pool.digikabel.hu. [94.21.58.238])
-        by smtp.gmail.com with ESMTPSA id n3sm297013ejj.113.2021.04.08.15.13.44
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=mPXdBCV0X7a63rEP1Y9yAKtHITHErxPf38n80cfwXCs=;
+        b=JeN6mdEWK45/b3+LWteveJXr5l/TmUamK4i68ZB75yoCsnDeiCWGEuj41TNzrvjxTN
+         qbjzo+TOlxK4MSep5FRWLYtz++cvN3RpOInyFX+snzafkV8YdZ0Luo1HmQrh+wTkdUfN
+         ALcYHuLqnaUHs/niu2iaCxndEL3nReSShX6vxZpOaFr1VREnH3q7F7bmt2Oj4pAFVzPj
+         uS2QnAaoJOjI1XOeKcIpW4aGsqPot1CcGRFHZ4mXKBluLbY/RNOsFlxU5FzVwP6UlnGc
+         ElsBkJ3AAAGxyzRtkKjhoAS2aIvtQqcCKMX3MhQCTZqX86/jnj1Lu1z5WDNXeBnTCp6r
+         Vzfg==
+X-Gm-Message-State: AOAM533D3hotnyMAEDqjwmVS7NTbXql0EEVAiBrTttxsznqBRBmG0f67
+        cIbens3NttUXVHIbLxFpzW4lqg6TFIj+xw==
+X-Google-Smtp-Source: ABdhPJyvbGclEf30s0hJUi9tZ9bB12NBJ1VtLClLynTf2beGnNcwbsgFHEc8Jyw13c6drmyP5kxo+A==
+X-Received: by 2002:a17:906:2e14:: with SMTP id n20mr13026670eji.16.1617920357766;
+        Thu, 08 Apr 2021 15:19:17 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id i2sm338692edy.72.2021.04.08.15.19.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Apr 2021 15:13:45 -0700 (PDT)
-Date:   Fri, 9 Apr 2021 00:13:43 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Sergey Organov <sorganov@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Philip Oakley <philipoakley@iee.email>,
-        Elijah Newren <newren@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 7/9] t9902: fix completion tests for log.d* to match
- log.diffMerges
-Message-ID: <20210408221343.GC2947267@szeder.dev>
-References: <20210407225608.14611-1-sorganov@gmail.com>
- <20210407225608.14611-8-sorganov@gmail.com>
- <87y2dtitlp.fsf@evledraar.gmail.com>
- <875z0wdekf.fsf@osv.gnss.ru>
- <87sg40imit.fsf@evledraar.gmail.com>
- <87k0pc7cap.fsf@osv.gnss.ru>
+        Thu, 08 Apr 2021 15:19:17 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v13 4/5] bugreport: add uname info
+References: <20200416211807.60811-1-emilyshaffer@google.com>
+ <20200416211807.60811-5-emilyshaffer@google.com>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
+In-reply-to: <20200416211807.60811-5-emilyshaffer@google.com>
+Date:   Fri, 09 Apr 2021 00:19:16 +0200
+Message-ID: <87mtu8ifmj.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87k0pc7cap.fsf@osv.gnss.ru>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 08, 2021 at 11:26:38PM +0300, Sergey Organov wrote:
-> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
-> 
-> > On Thu, Apr 08 2021, Sergey Organov wrote:
-> >
-> >> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
-> >>
-> >>> On Thu, Apr 08 2021, Sergey Organov wrote:
-> >>>
-> >>>> There were 3 completion tests failures due to introduction of
-> >>>> log.diffMerges configuration variable that affected the result of
-> >>>> completion of log.d. Fixed them accordingly.
-> >>>>
-> >>>> Signed-off-by: Sergey Organov <sorganov@gmail.com>
-> >>>> ---
-> >>>>  t/t9902-completion.sh | 3 +++
-> >>>>  1 file changed, 3 insertions(+)
-> >>>>
-> >>>> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-> >>>> index 04ce884ef5ac..4d732d6d4f81 100755
-> >>>> --- a/t/t9902-completion.sh
-> >>>> +++ b/t/t9902-completion.sh
-> >>>> @@ -2306,6 +2306,7 @@ test_expect_success 'git config - variable name' '
-> >>>>  	test_completion "git config log.d" <<-\EOF
-> >>>>  	log.date Z
-> >>>>  	log.decorate Z
-> >>>> +	log.diffMerges Z
-> >>>>  	EOF
-> >>>>  '
-> >>>>  
-> >>>> @@ -2327,6 +2328,7 @@ test_expect_success 'git -c - variable name' '
-> >>>>  	test_completion "git -c log.d" <<-\EOF
-> >>>>  	log.date=Z
-> >>>>  	log.decorate=Z
-> >>>> +	log.diffMerges=Z
-> >>>>  	EOF
-> >>>>  '
-> >>>>  
-> >>>> @@ -2348,6 +2350,7 @@ test_expect_success 'git clone --config= - variable name' '
-> >>>>  	test_completion "git clone --config=log.d" <<-\EOF
-> >>>>  	log.date=Z
-> >>>>  	log.decorate=Z
-> >>>> +	log.diffMerges=Z
-> >>>>  	EOF
-> >>>>  '
-> >>>
-> >>> Commits should be made in such a way as to not break the build/tests
-> >>> partway through a series, which it seems is happening until this
-> >>> fixup.
 
-Well, actually no: it _starts_ to break with this patch, because
-'log.diffMerges' is not documented yet, and it will pass again with
-the last patch in the series that adds that missing piece of
-documentation.
+On Thu, Apr 16 2020, Emily Shaffer wrote:
 
-> >> Yep.
-> >>
-> >> Could these tests be somehow written in a more robust manner, to be
-> >> protected against future additions of configuration variables that are
-> >> unrelated to the features being tested? If so, I'd prefer to fix them as
-> >> a prerequisite to the series rather than adding fixes to unrelated 
-> >> existing tests into my patches.
-> >
-> > Hrm? I mean if you have a commit fixing up failing tests in an earlier
-> > commit then that change should in one way or the other be made as part
-> > of that earlier change.
-> >
-> > Yes we can skip the tests or something in the meantime, which we do
-> > sometimes as part of some really large changes, but these can just be
-> > squashed, no?
-> 
-> I mean I don't want this change at all.
+> The contents of uname() can give us some insight into what sort of
+> system the user is running on, and help us replicate their setup if need
+> be. The domainname field is not guaranteed to be available, so don't
+> collect it.
 
-You'll definitely need this change, though.
+Even with _GNU_SOURCE would anyone care about the domainname (the NIS/YP
+name, not DNS) these days, as opposed to the portable POSIX "nodename"
+field you're not including?
 
-> I didn't change completion mechanism, so completion tests should not
-> suddenly fail because of my changes.
+In any case, I'd think it's a good idea to omit both. People tend not to
+want to want to include their FQDN (e.g. their employer), and I can't
+think of a reason we'd care about it for debugging git.
 
-We auto-generate the list of supported configuration variables from
-the documentation and use that list in our Bash completion script to
-list possible configuration variables for 'git config <TAB>' and 'git
--c <TAB>'.  And we want to make sure that this feature works as
-intended, so we have a couple of tests that try to complete real
-config variable sections and names.  You are just unlucky to introduce
-a new configuraton variable that happenes to start with the same
-prefix that is used in some of those tests.
+> [...]
+> +		strbuf_addf(sys_info, "%s %s %s %s\n",
+> +			    uname_info.sysname,
+> +			    uname_info.release,
+> +			    uname_info.version,
+> +			    uname_info.machine);
 
-> I did entirely unrelated change and
-> noticed the breakage only by accident, as tests even don't fail unless
-> you *install* git, not only make it. So, for example, just "make test"
-> doesn't fail, while "make install; make test" will.
+Since this is completely free-form I'd think:
 
-It might be related to a bug in the build process that doesn't update
-that auto-generated list of supported configuration variables after
-e.g. 'Documentation/config/log.txt' was modified; see a proposed fix
-at:
+    "sysname: %s\nrelease: %s\nversion: %s\nmachine: %s\nnodename: %s\ndomainname: %s\n",
 
-  https://public-inbox.org/git/20210408212915.3060286-1-szeder.dev@gmail.com/
-
-> It looks like something is wrong here, a bug or misfeature, or even two,
-> and if it's fixed before these series, I won't need this in my series at
-> all. Besides, that's yet another reason *not* to squash this change into
-> an otherwise unrelated commit.
-
-The introduction of the new configuration variable, its documentation
-and this test update should all go into a single patch.  The whole
-test suite must pass for every single commit.
-
+Or something like that would be better (after pruning out the fields we
+don't care about).
