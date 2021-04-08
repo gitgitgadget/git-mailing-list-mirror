@@ -2,67 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 04E52C433B4
-	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 12:06:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5ADA9C433B4
+	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 12:19:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CCF0A61168
-	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 12:06:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2C89C61130
+	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 12:19:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231579AbhDHMGL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Apr 2021 08:06:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48470 "EHLO
+        id S231489AbhDHMTZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Apr 2021 08:19:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231483AbhDHMGI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Apr 2021 08:06:08 -0400
-Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB761C061760
-        for <git@vger.kernel.org>; Thu,  8 Apr 2021 05:05:55 -0700 (PDT)
-Received: by mail-io1-xd2f.google.com with SMTP id v26so1920335iox.11
-        for <git@vger.kernel.org>; Thu, 08 Apr 2021 05:05:55 -0700 (PDT)
+        with ESMTP id S231486AbhDHMTY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Apr 2021 08:19:24 -0400
+Received: from mail-il1-x135.google.com (mail-il1-x135.google.com [IPv6:2607:f8b0:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6F7AC061760
+        for <git@vger.kernel.org>; Thu,  8 Apr 2021 05:19:11 -0700 (PDT)
+Received: by mail-il1-x135.google.com with SMTP id d2so1554116ilm.10
+        for <git@vger.kernel.org>; Thu, 08 Apr 2021 05:19:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=MH/g0LREGmDrg1IzUuGzMpI/fiOSpIP48KhKKsWvPfk=;
-        b=qpcqDQBeUMjxD0JAguM7/9sucuJhuSZ4PPkBdTrUMbPzszw2HeKuxo5YPhKbSZ9bRg
-         BbFyoe17S/461AxU/2YxW/QzW78SUIFXRFGa7FLaFo4/LjLGhNlYm+tGHzYJ5itnmDWl
-         +m26a+fOmLC0QnRoztXlq9x5zc2aaxcrs67H4ZKyj5bIhYbeLcU9uD8rAgGbNBM9r1vp
-         6sVgM7bz9W8YstUe8whlqS4N1BcgBGDuVNyTWNC3I+2ujiSTL94j/8eaWDQ6CRdNhp4E
-         fbAqFJYPKWB4AmfvR2bzvf5R9dTUmAwPZ9ZtvpbEcrIobcpX/nitAZRnPU+ApYM8ship
-         TTDg==
+        bh=PpOIdKTAlPZMHpNXbPLY7+85hJ7hBLQcQIStYI/ET0U=;
+        b=cKaLUkSzjMGokgXw/yK4abRm5EO9KxH3LT4b6ziBLChkGNjNG2UuyxFkfU2+1w9KBk
+         XSvFdFlDIfxmXvwt9HbXUhksK1ugG54awMOGs5da5rw5pPgiakVp22Baw3dhZLllJHSQ
+         1l5lA4UMWwlTmGdiMdR5tb2EQ1SpJgMpPeoPsABkStjXye1vs18x+A02jK2AeyV/olra
+         nczA/sQOY5X3TVfvV2LCyH5MUbiwE81f1sbKMe5tFvvuU3qJ/iIFetlQJwkqhvH6eBdu
+         CjmcsGe9v1yQPhN9LRlzBIuL2U18hJPhY22jQ/OWSzjBwv227x6tWCTiQhJ64Uk55Reb
+         nVOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=MH/g0LREGmDrg1IzUuGzMpI/fiOSpIP48KhKKsWvPfk=;
-        b=b27q+c3Q+H4QMyiaiPHgZRx+xpyxM2Kjiv6CeYNAsXG9c9wH00xXPi/XHo6enIqxw2
-         ce88xDjI7ImkAiw7Ku7M5B29tthclHe2DypR17XENMCEJxSXd9cc+t8PGh+/iYRsw9CI
-         JWo6jXOPKdEQMNS4tMoMUd5zhtlKJ6cq3YiAF4v+7TXwfUZheTIFiFmaq7HsHA9vtZu9
-         sJ+4Pqw/H5xBdXyxgrKAmbS14qYthX8ysrwUYSWGOOXeki/5b87LmbuLnceu6UL10DVM
-         dGxAQqELUBjEAb6Q0UOhzfWGJk5xCKSu/s3jpNfoD68NLcADZ3yArHfNnhkyM+7ZcWFn
-         QPAA==
-X-Gm-Message-State: AOAM5301OM7cwn7PgkYQQm5r28ZTRfOZ0T+/BjvvhUNR2vIoP5nFzo1U
-        MthtPWj3Qhon+Id8FtPVecp2u37L3MIWUfJI33cySZAlgqYtsox+
-X-Google-Smtp-Source: ABdhPJySr+zDWz8/GFQIA8yzvrYScc230bkSCyBnoineg6KL6tY29qB1UF1zdCKhKsGCf78HhhcNcizLGjUSfSbvmr0=
-X-Received: by 2002:a6b:7302:: with SMTP id e2mr6494676ioh.106.1617883555256;
- Thu, 08 Apr 2021 05:05:55 -0700 (PDT)
+        bh=PpOIdKTAlPZMHpNXbPLY7+85hJ7hBLQcQIStYI/ET0U=;
+        b=dJmV8WCYSrhAS7v9koNFZd8ptNIvy90awPrTtMQU8DAIWqMdOAPpnpnq17J8C5FUMk
+         HyATSNqrWVKe0GR08W+Q0XNVx3haV3ixi0N4br0M0Erih27g0kPlb7D8NfSK/zZBxnDc
+         YnNP15GSZOIVqE1D1bkoRuJZpaFV9/Bwg9Q+WV5EgL+Ws3iKYT88Bvo9AM+LJOzOUN9q
+         aCHZkxPMrzRzAojO5JL1JVwLkUXKbV/Y27dP/B1v90XovBsim1PpQaoIqr8/PjiD3zPQ
+         eRP47QucA0K8n42f6X5LI6KHhotqfr+mxy7+JvT6LYvK/hnXBnnWwncN7202tASPkHj0
+         gNpw==
+X-Gm-Message-State: AOAM532DyRpXkHKKFG7Co91Dm887wJRsrOTqfpqB5Epyg6hewa0pLvM+
+        ks9urFC5xG7Q2LPdmX2X2jFbcFy56tiXRf09Qlg=
+X-Google-Smtp-Source: ABdhPJwb8LiK1er1n/FqCPo1eSapv++2pzcBepd9pUYjgJk2rMTeFSKjh5UYDl6jZ3Rh53IDzoljXqHlizyk4IWjZk4=
+X-Received: by 2002:a92:d308:: with SMTP id x8mr6640153ila.301.1617884351257;
+ Thu, 08 Apr 2021 05:19:11 -0700 (PDT)
 MIME-Version: 1.0
 References: <pull.927.git.1617631280402.gitgitgadget@gmail.com>
- <pull.927.v2.git.1617809209164.gitgitgadget@gmail.com> <xmqqczv5zvj3.fsf@gitster.g>
-In-Reply-To: <xmqqczv5zvj3.fsf@gitster.g>
+ <pull.927.v2.git.1617809209164.gitgitgadget@gmail.com> <YG4jxKQ3z1R+8Jfz@coredump.intra.peff.net>
+In-Reply-To: <YG4jxKQ3z1R+8Jfz@coredump.intra.peff.net>
 From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Thu, 8 Apr 2021 20:05:39 +0800
-Message-ID: <CAOLTT8RYjp1GKQpdPSzSNnn9o3+tuKNcGEUTp5HD9_Jut01JMQ@mail.gmail.com>
+Date:   Thu, 8 Apr 2021 20:18:59 +0800
+Message-ID: <CAOLTT8QvdLeWz=cDOoVFV8Lrk2QL2wf_jwDc6oK5j+6gup+Png@mail.gmail.com>
 Subject: Re: [PATCH v2] [GSOC] ref-filter: use single strbuf for all output
-To:     Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
 Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
         Christian Couder <chriscool@tuxfamily.org>,
         Hariom Verma <hariom18599@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
@@ -74,98 +74,12 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B44=E6=9C=888=E6=97=
-=A5=E5=91=A8=E5=9B=9B =E4=B8=8A=E5=8D=884:31=E5=86=99=E9=81=93=EF=BC=9A
+Jeff King <peff@peff.net> =E4=BA=8E2021=E5=B9=B44=E6=9C=888=E6=97=A5=E5=91=
+=A8=E5=9B=9B =E4=B8=8A=E5=8D=885:27=E5=86=99=E9=81=93=EF=BC=9A
 >
-> "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> On Wed, Apr 07, 2021 at 03:26:48PM +0000, ZheNing Hu via GitGitGadget wro=
+te:
 >
-> > Subject: Re: [PATCH v2] [GSOC] ref-filter: use single strbuf for all ou=
-tput
->
-> The implementation changed so much from the initial attempt, for
-> which the above title may have been appropriate, that reusing single
-> strbuf over and over is not the most important part of the change
-> anymore, I am afraid.  Besides, it uses TWO strbufs ;-)
->
-> Subject: [PATCH] ref-filter: introduce show_ref_array_items() helper
->
-> or something like that?
->
-
-Yep, I may think that its core is still reusing strbufs, but
-"introduce show_ref_array_items()"  will be more accurate.
-
-> > From: ZheNing Hu <adlternative@gmail.com>
-> >
-> > When we use `git for-each-ref`, every ref will call
-> > `show_ref_array_item()` and allocate its own final strbuf
-> > and error strbuf. Instead, we can reuse these two strbuf
-> > for each step ref's output.
-> >
-> > The performance for `git for-each-ref` on the Git repository
-> > itself with performance testing tool `hyperfine` changes from
-> > 18.7 ms =C2=B1 0.4 ms to 18.2 ms =C2=B1 0.3 ms.
-> >
-> > This approach is similar to the one used by 79ed0a5
-> > (cat-file: use a single strbuf for all output, 2018-08-14)
-> > to speed up the cat-file builtin.
-> >
-> > Signed-off-by: ZheNing Hu <adlternative@gmail.com>
-> > ---
-> >     [GSOC] ref-filter: use single strbuf for all output
-> >
-> >     Now git for-each-ref can reuse two buffers for all refs output, the
-> >     performance is slightly improved.
-> >
-> >     Now there may be a question : Should the original interface
-> >     show_ref_array_items be retained?
-> > ...
-> >        /*  Callback function for parsing the sort option */
->
-> Again, not a very useful range-diff as the implementation changed so much=
-.
->
-
-This makes me wonder if I should give up GGG in the future.
-I also don=E2=80=99t want a rang-diff with a big difference.
-
->
-> >  builtin/for-each-ref.c |  4 +---
-> >  ref-filter.c           | 20 ++++++++++++++++++++
-> >  ref-filter.h           |  5 +++++
-> >  3 files changed, 26 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-> > index cb9c81a04606..d630402230f3 100644
-> > --- a/builtin/for-each-ref.c
-> > +++ b/builtin/for-each-ref.c
-> > @@ -16,7 +16,6 @@ static char const * const for_each_ref_usage[] =3D {
-> >
-> >  int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
-> >  {
-> > -     int i;
-> >       struct ref_sorting *sorting =3D NULL, **sorting_tail =3D &sorting=
-;
-> >       int maxcount =3D 0, icase =3D 0;
-> >       struct ref_array array;
-> > @@ -80,8 +79,7 @@ int cmd_for_each_ref(int argc, const char **argv, con=
-st char *prefix)
-> >
-> >       if (!maxcount || array.nr < maxcount)
-> >               maxcount =3D array.nr;
-> > -     for (i =3D 0; i < maxcount; i++)
-> > -             show_ref_array_item(array.items[i], &format);
-> > +     show_ref_array_items(array.items, &format, maxcount);
->
-> The intention of this call is to pass an array and the number of
-> elements in the array as a pair to the function, right?  When you
-> design the API for a new helper function, do not split them apart by
-> inserting an unrelated parameter in the middle.
->
-
-Eh, are you saying that `maxcount` is irrelevant here? There should be
-`maxcount`, because we need to limit the number of iterations here.
-
 > > diff --git a/ref-filter.c b/ref-filter.c
 > > index f0bd32f71416..27bbf9b6c8ac 100644
 > > --- a/ref-filter.c
@@ -178,16 +92,6 @@ Eh, are you saying that `maxcount` is irrelevant here? There should be
 > > +void show_ref_array_items(struct ref_array_item **info,
 > > +                      const struct ref_format *format,
 > > +                      size_t n)
->
-> IOW,
->
->         void show_ref_array_items(const struct ref_format *format,
->                                   struct ref_array_item *info[], size_t n=
-)
->
-
-Yes, it will be more obvious in the form of an array.
-
 > > +{
 > > +     struct strbuf final_buf =3D STRBUF_INIT;
 > > +     struct strbuf error_buf =3D STRBUF_INIT;
@@ -197,74 +101,48 @@ Yes, it will be more obvious in the form of an array.
 > > +             if (format_ref_array_item(info[i], format, &final_buf, &e=
 rror_buf))
 > > +                     die("%s", error_buf.buf);
->
-> OK, the contents of error_buf is already localized, so it is correct
-> not to have _() around the "%s" here.
->
 > > +             fwrite(final_buf.buf, 1, final_buf.len, stdout);
 > > +             strbuf_reset(&error_buf);
 > > +             strbuf_reset(&final_buf);
 > > +             putchar('\n');
->
-> This is inherited code, but splitting fwrite() and putchar() apart
-> like this makes the code hard to follow.  Perhaps clean it up later
-> when nothing else is going on in the code as leftoverbits, outside
-> the topic.
->
-
-Ok, swap the position of reset and putchar.
-
 > > +     }
 > > +     strbuf_release(&error_buf);
 > > +     strbuf_release(&final_buf);
 > > +}
-> > +
-> >  void show_ref_array_item(struct ref_array_item *info,
-> >                        const struct ref_format *format)
-> >  {
 >
-> Isn't the point of the new helper function so that this can become a
-> thin wrapper around it, i.e.
+> I think this is a reasonable direction to take the solution: wrapping
+> the loop so that the reuse of the buffers can be included there.
 >
->         void show_ref_array_item(...)
->         {
->                 show_ref_array_items(format, &info, 1);
->         }
+> But I do wonder if we should go the opposite direction, and get rid of
+> show_ref_array_item() entirely. It only has two callers, both of which
+> could just write the loop themselves. That is more code, but perhaps it
+> would make it more clear what is going on in those callers, and to give
+> them more flexibility.
 >
 
-Maybe it makes sense. But as Peff said, Maybe we can just delete it.
+Indeed. I think `pretty_print_ref()` is proof that we may need to keep
+`show_ref_array_item()` because If it modified to `show_ref_array_items(...=
+,1);`
+it will look very strange.
 
-> > diff --git a/ref-filter.h b/ref-filter.h
-> > index 19ea4c413409..eb7e79a6676d 100644
-> > --- a/ref-filter.h
-> > +++ b/ref-filter.h
-> > @@ -121,6 +121,11 @@ int format_ref_array_item(struct ref_array_item *i=
-nfo,
-> >                         struct strbuf *error_buf);
-> >  /*  Print the ref using the given format and quote_style */
-> >  void show_ref_array_item(struct ref_array_item *info, const struct ref=
-_format *format);
-> > +/*  Print the refs using the given format and quote_style and maxcount=
- */
-> > +void show_ref_array_items(struct ref_array_item **info,
-> > +                      const struct ref_format *format,
-> > +                      size_t n);
->
-> The inconsistency between "maxcount" vs "n" is irritating.  Calling
-> the parameter with a name that has the word "info" (because the new
-> parameter is about that array) and a word like "nelem" to hint that
-> it is the number of elements in the array) would be sensible.
->
-> void show_ref_array_items(const struct ref_format *format,
->                           struct ref_array_item *info[], size_t info_coun=
-t);
->
-> or something along the line, perhaps?
+> I notice there's a third user of the ref-filter.c code in
+> builtin/branch.c that does not use show_ref_array_item(). Instead, it
+> loops itself and calls format_ref_array_item(). I think this is because
+> it is sometimes columnizing the results. Perhaps git-tag and
+> for-each-ref would want to learn the same trick, in which case they'd be
+> happy to have the open-coded loop.
 >
 
-Aha, I guess this is the reason for the misunderstanding above.
-Yes, `info_count` is the correct meaning and the meaning of `n` is
-wrong.
+Yes, a special judgment about colopts is used in the `print_ref_list()` of
+`branch.c`.
+
+> Either way, it probably makes sense to introduce the same optimization
+> to the case in builtin/branch.c.
+>
+
+I agree in `branch.c` here can learn this reusing bufs optimization.
+
+> -Peff
 
 Thanks.
 --
