@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 29847C433ED
-	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 13:34:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 73E0AC433B4
+	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 13:34:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E271B61151
-	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 13:34:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4DF2261151
+	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 13:34:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231730AbhDHNe7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Apr 2021 09:34:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39972 "EHLO
+        id S231734AbhDHNfB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Apr 2021 09:35:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231720AbhDHNez (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Apr 2021 09:34:55 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA0E7C061761
-        for <git@vger.kernel.org>; Thu,  8 Apr 2021 06:34:43 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id z1so2441939edb.8
-        for <git@vger.kernel.org>; Thu, 08 Apr 2021 06:34:43 -0700 (PDT)
+        with ESMTP id S231722AbhDHNe4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Apr 2021 09:34:56 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6766C061760
+        for <git@vger.kernel.org>; Thu,  8 Apr 2021 06:34:44 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id e14so3055291ejz.11
+        for <git@vger.kernel.org>; Thu, 08 Apr 2021 06:34:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=zwmJdRexBx1jD2AWCtQ58cRuUTojeju7ZWqikHThBTc=;
-        b=MD09qE94u3vNMoqrIABq2T/MDCkoOWNsOx3QvYWUsLsyholdcp4ifb5kuuQUyt88sv
-         pVWw3tZdktRXAgxCbBiXowtIKi8rhtbtQ1jo8134HQ/MgBy3aMnG+SKtyLXdWhjPSI4H
-         CAiLOOnoBMBEPfBttzWATi402xYUfUZKg+eAADVt6qB+B4wyP/ufO3di9EdRAxO1E3aC
-         aEhY4tpg7dBCnbYjshEsquae5EFuyS71vmkl+NCU3Tll3pjEXEXNqIcYF0Y9kxjBaqgI
-         nyJ3cLoVfbsBKKiwB0a79c3pwpCKpb1Zonk5NN0qQau67dhRMtvLsb/XdX3jSsAkG9p6
-         QC+Q==
+        bh=N5y+jE1A0gEtuQn83NUg7WsP0Hg+rJGsa42Z6zLZ5Yg=;
+        b=TdzRvZgzxZSR+8xvmfYcgkNJUfwgIwbCMfsuPe1KomJgRdcDCmLuztrQgh95Ybjs0p
+         ouRYH5C0fApniNqgCqzj1q+JF32I9dVyBy0b35+u1Ub796xlL8RzFOObwyQ6KuOsOUQJ
+         Ex9eFWFmCQfuN2xYbDdH0DPzx6M0OHlm3pnOSg3JqOID5+/D9sh6r23w7gLwk9eo7wfz
+         BjJTwtg2lcjcK/55hNAa4lDiHDHHThaA/vUmXkEqdVhZ/aum9gmyZiBrm2LHTtZ6u0rA
+         N3qCeu4Vwl4hNcKev6PykXIbB52R0D6NEf7FLssWKCaoi56TUSUZTFR5Huu27mjBeb7w
+         INzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=zwmJdRexBx1jD2AWCtQ58cRuUTojeju7ZWqikHThBTc=;
-        b=uFpt36YlDGuCMU5wTf+CSjFBHzWIBySxIUKWCxZ5zrJYYeZoeSCDtT8dYU+xSS6XOD
-         1X0uZah/sgKnlfy3eztw6GxmWIlrk3zwlqbIzwg4IFLtaXpyxBX1bf9ZOfcOb/oIS8Un
-         8JGrDtAyp/g52k4fgrcHxApe6y6tIEG/mYw7FwZlp8KSq8UeLQxT/88vPAP8hdzgsEHa
-         efe7ssZR+BgKw5t+yWUSdqVPSBzu5xmgls6ak4b8HOdEj3qvvMuZu7CKjwlXWNLWWpDc
-         c981bswq4jp/ZwUJR2AYrog+ONtnQe7BUui5Z6s6Y4jCF3uPPRudSX8cG1b8tYyz+LJ0
-         z1UA==
-X-Gm-Message-State: AOAM533L+A+Ma8bcjlvLwDFce506LTYjKwK7UusWWbu8pqlrvObYG50o
-        ry5h9B7/cMyDrd8L9/34Hww/KlmI9oMdVA==
-X-Google-Smtp-Source: ABdhPJw9BZ3dPsZY5XGRNWS4dSM7C/CFe7RJAFMGwFBE7OxiB0k2rK4HZ3FBKMgKa663yaALy1IEKQ==
-X-Received: by 2002:a05:6402:22a6:: with SMTP id cx6mr11523813edb.55.1617888882211;
-        Thu, 08 Apr 2021 06:34:42 -0700 (PDT)
+        bh=N5y+jE1A0gEtuQn83NUg7WsP0Hg+rJGsa42Z6zLZ5Yg=;
+        b=P53inFLfpmM+CpIoYNXZTUIHphTiPK2YGiZ0XMz17vFh6tgqwQdi37htpMOcDy5COO
+         Qq7N08HE6N2XEWevxqKR5h6RoXbXuZc9VMtYFn6m7WBGGwbng7cLlL4SjKHhmit7jgT8
+         Q+oairCKVpr6pNqNDtWlGgwQLbBr1sQhPTbX36PxpapnLqsUtHv3NwibcjBG9mYIpEYp
+         94sHltMzJ3NSGvvImPQRICzirL0yIhBCRI/vvry9CqvnDQe7LUXY/B5hO+iFG/Dxy0Ak
+         p9/z3TdxN+07Qy1i/zm4RIZ1YPTmvLmBVR2ci+i2ReXw+ZBsN17DhNQ5498KjwKheUHZ
+         la2w==
+X-Gm-Message-State: AOAM533x3/DWNp7sD6x3Xo6B0pTGbjvO/qZlUnoY01rJqL509cqaBppC
+        isVXGiVobrgWKJU9b/Nwtfo5mCoi8hYAQQ==
+X-Google-Smtp-Source: ABdhPJzA40e9evKm1mBMWAsANVj1DK7Q2xYAYqPTxiiUYchUK3+h+fG8SzOgYMkaovkmn7FyFc38Pw==
+X-Received: by 2002:a17:906:f9c2:: with SMTP id lj2mr10164117ejb.195.1617888883183;
+        Thu, 08 Apr 2021 06:34:43 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id x24sm12441621edr.36.2021.04.08.06.34.41
+        by smtp.gmail.com with ESMTPSA id x24sm12441621edr.36.2021.04.08.06.34.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Apr 2021 06:34:41 -0700 (PDT)
+        Thu, 08 Apr 2021 06:34:42 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -64,9 +64,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Lin Sun <lin.sun@zoom.us>,
         <congdanhqx@gmail.com>, David Aguilar <davvid@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 4/5] config.c: add a "tristate" helper
-Date:   Thu,  8 Apr 2021 15:34:28 +0200
-Message-Id: <patch-4.6-222e91e11b-20210408T133125Z-avarab@gmail.com>
+Subject: [PATCH 5/5] config: add --type=bool-or-auto switch
+Date:   Thu,  8 Apr 2021 15:34:29 +0200
+Message-Id: <patch-5.6-9f8996a888-20210408T133125Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.1.527.g9b8f7de2547
 In-Reply-To: <cover-0.6-0000000000-20210408T133125Z-avarab@gmail.com>
 References: <cover-0.6-0000000000-20210408T133125Z-avarab@gmail.com>
@@ -77,190 +77,154 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add "tristate" functions to go along with the "bool" functions and
-migrate the common pattern of checking if something is "bool" or
-"auto" in various places over to the new functions.
+Now that we're using git_config_tristate() internally let's expose it
+via "git config" like we do "bool", "int" etc for completeness, and so
+that we can easily test it.
 
-We also have e.g. "repo_config_get_bool" and
-"config_error_nonbool". I'm not adding corresponding "tristate"
-functions as they're not needed by anything, but we could add those in
-the future if they are.
-
-I'm not migrating over "core.abbrev" parsing as part of this
-change. When "core.abbrev" was made optionally boolean in
-a9ecaa06a7 (core.abbrev=no disables abbreviations, 2020-09-01) the
-"die if empty" code added in g48d5014dd4 (config.abbrev: document the
-new default that auto-scales, 2016-11-01) wasn't adjusted. It thus
-behaves unlike all other "maybe bool" config variables.
-
-I have a planned series to start adding some tests for "core.abbrev",
-but AFAICT there's not even a test for "core.abbrev=true", and I'd
-like to focus on thing that have no behavior change here, so let's
-leave it for now.
+Unlike the --type=bool-or-str option added in dbd8c09bfe (mergetool:
+allow auto-merge for meld to follow the vim-diff behavior, 2020-05-07)
+we don't have or anticipate any in-tree user of this except the tests.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/log.c  | 13 +++++++------
- compat/mingw.c |  6 +++---
- config.c       | 16 ++++++++++++++++
- config.h       | 12 ++++++++++++
- http.c         |  5 +++--
- userdiff.c     |  6 ++----
- 6 files changed, 43 insertions(+), 15 deletions(-)
+ Documentation/git-config.txt |  4 +++
+ builtin/config.c             | 19 ++++++++++++++
+ t/t1300-config.sh            | 49 ++++++++++++++++++++++++++++++++++++
+ 3 files changed, 72 insertions(+)
 
-diff --git a/builtin/log.c b/builtin/log.c
-index 8acd285daf..0d945313d8 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -868,11 +868,12 @@ static int git_format_config(const char *var, const char *value, void *cb)
- 		return 0;
+diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+index 4ae9ef210c..1af8222e82 100644
+--- a/Documentation/git-config.txt
++++ b/Documentation/git-config.txt
+@@ -189,6 +189,10 @@ Valid `<type>`'s include:
+   above.
+ - 'bool-or-str: canonicalize according to either 'bool' (as described
+   above), or emit the value as-is.
++- 'bool-or-auto: canonicalize according to either 'bool', as described
++  above, or whether the value is "auto". This is used by various
++  "tristate" variables such as `core.restrictInheritedHandles`,
++  `format.numbered` etc.
+ - 'path': canonicalize by adding a leading `~` to the value of `$HOME` and
+   `~user` to the home directory for the specified user. This specifier has no
+   effect when setting the value (but you can use `git config section.variable
+diff --git a/builtin/config.c b/builtin/config.c
+index f71fa39b38..039a4f0961 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -68,6 +68,7 @@ static int fixed_value;
+ #define TYPE_EXPIRY_DATE	5
+ #define TYPE_COLOR		6
+ #define TYPE_BOOL_OR_STR	7
++#define TYPE_BOOL_OR_AUTO	8
+ 
+ #define OPT_CALLBACK_VALUE(s, l, v, h, i) \
+ 	{ OPTION_CALLBACK, (s), (l), (v), NULL, (h), PARSE_OPT_NOARG | \
+@@ -99,6 +100,8 @@ static int option_parse_type(const struct option *opt, const char *arg,
+ 			new_type = TYPE_BOOL_OR_INT;
+ 		else if (!strcmp(arg, "bool-or-str"))
+ 			new_type = TYPE_BOOL_OR_STR;
++		else if (!strcmp(arg, "bool-or-auto"))
++			new_type = TYPE_BOOL_OR_AUTO;
+ 		else if (!strcmp(arg, "path"))
+ 			new_type = TYPE_PATH;
+ 		else if (!strcmp(arg, "expiry-date"))
+@@ -156,6 +159,7 @@ static struct option builtin_config_options[] = {
+ 	OPT_CALLBACK_VALUE(0, "int", &type, N_("value is decimal number"), TYPE_INT),
+ 	OPT_CALLBACK_VALUE(0, "bool-or-int", &type, N_("value is --bool or --int"), TYPE_BOOL_OR_INT),
+ 	OPT_CALLBACK_VALUE(0, "bool-or-str", &type, N_("value is --bool or string"), TYPE_BOOL_OR_STR),
++	/* No bool-or-auto! The --<type> form is deprecated in favor of --type=<what> */
+ 	OPT_CALLBACK_VALUE(0, "path", &type, N_("value is a path (file or directory name)"), TYPE_PATH),
+ 	OPT_CALLBACK_VALUE(0, "expiry-date", &type, N_("value is an expiry date"), TYPE_EXPIRY_DATE),
+ 	OPT_GROUP(N_("Other")),
+@@ -263,6 +267,12 @@ static int format_config(struct strbuf *buf, const char *key_, const char *value
+ 				strbuf_addstr(buf, value_);
+ 			else
+ 				strbuf_addstr(buf, v ? "true" : "false");
++		} else if (type == TYPE_BOOL_OR_AUTO) {
++			int v = git_config_tristate(key_, value_);
++			if (v == 2)
++				strbuf_addstr(buf, "auto");
++			else
++				strbuf_addstr(buf, v ? "true" : "false");
+ 		} else if (type == TYPE_PATH) {
+ 			const char *v;
+ 			if (git_config_pathname(&v, key_, value_) < 0)
+@@ -435,6 +445,15 @@ static char *normalize_value(const char *key, const char *value)
+ 		else
+ 			return xstrdup(v ? "true" : "false");
  	}
- 	if (!strcmp(var, "format.numbered")) {
--		if (value && !strcasecmp(value, "auto")) {
-+		int tristate = git_config_tristate(var, value);
-+		if (tristate == 2) {
- 			auto_number = 1;
- 			return 0;
- 		}
--		numbered = git_config_bool(var, value);
-+		numbered = tristate;
- 		auto_number = auto_number && numbered;
- 		return 0;
- 	}
-@@ -904,11 +905,11 @@ static int git_format_config(const char *var, const char *value, void *cb)
- 	if (!strcmp(var, "format.signaturefile"))
- 		return git_config_pathname(&signature_file, var, value);
- 	if (!strcmp(var, "format.coverletter")) {
--		if (value && !strcasecmp(value, "auto")) {
-+		int tristate = git_config_tristate(var, value);
-+		if (tristate == 2)
- 			config_cover_letter = COVER_AUTO;
--			return 0;
--		}
--		config_cover_letter = git_config_bool(var, value) ? COVER_ON : COVER_OFF;
++	if (type == TYPE_BOOL_OR_AUTO) {
++		int v = git_parse_maybe_tristate(value);
++		if (v < 0)
++			return xstrdup(value);
++		else if (v == 2)
++			xstrdup("auto");
 +		else
-+			config_cover_letter = tristate ? COVER_ON : COVER_OFF;
- 		return 0;
- 	}
- 	if (!strcmp(var, "format.outputdirectory"))
-diff --git a/compat/mingw.c b/compat/mingw.c
-index a43599841c..e6e85ae99a 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -247,11 +247,11 @@ int mingw_core_config(const char *var, const char *value, void *cb)
- 	}
++			return xstrdup(v ? "true" : "false");
++	}
+ 	if (type == TYPE_COLOR) {
+ 		char v[COLOR_MAXLEN];
+ 		if (git_config_color(v, key, value))
+diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+index a002ec5644..952d9e9ed9 100755
+--- a/t/t1300-config.sh
++++ b/t/t1300-config.sh
+@@ -874,6 +874,55 @@ test_expect_success 'get --bool-or-str' '
+ 	test_cmp expect actual
+ '
  
- 	if (!strcmp(var, "core.restrictinheritedhandles")) {
--		if (value && !strcasecmp(value, "auto"))
-+		int tristate = git_config_tristate(var, value);
-+		if (tristate == 2)
- 			core_restrict_inherited_handles = -1;
- 		else
--			core_restrict_inherited_handles =
--				git_config_bool(var, value);
-+			core_restrict_inherited_handles = tristate;
- 		return 0;
- 	}
- 
-diff --git a/config.c b/config.c
-index fc28dbd97c..74d2b2c0df 100644
---- a/config.c
-+++ b/config.c
-@@ -1257,6 +1257,14 @@ int git_parse_maybe_bool(const char *value)
- 	return -1;
- }
- 
-+int git_parse_maybe_tristate(const char *value)
-+{
-+	int v = git_parse_maybe_bool(value);
-+	if (v < 0 && !strcasecmp(value, "auto"))
-+		return 2;
-+	return v;
-+}
++test_expect_success 'there is no --bool-or-auto, --<type> is deprecated in favor of --type=<type>' '
++	test_expect_code 129 git config --bool-or-auto
++'
 +
- int git_config_bool_or_int(const char *name, const char *value, int *is_bool)
- {
- 	int v = git_parse_maybe_bool_text(value);
-@@ -1268,6 +1276,14 @@ int git_config_bool_or_int(const char *name, const char *value, int *is_bool)
- 	return git_config_int(name, value);
- }
- 
-+int git_config_tristate(const char *name, const char *value)
-+{
-+	int v = git_parse_maybe_tristate(value);
-+	if (v < 0)
-+		die(_("bad tristate config value '%s' for '%s'"), value, name);
-+	return v;
-+}
++test_expect_success 'get --type=bool-or-auto' '
++	cat >.git/config <<-\EOF &&
++	[bool]
++	true1
++	true2 = true
++	false = false
++	[int]
++	int1 = 0
++	int2 = 1
++	int3 = -1
++	[string]
++	string1 = hello
++	string2 = there you
++	[auto]
++	auto1 = auto
++	auto2 = AUTO
++	[bad-auto]
++	bad-auto1 = AUTOMATIC
++	EOF
++	cat >expect <<-\EOF &&
++	true
++	true
++	false
++	false
++	true
++	true
++	auto
++	auto
++	EOF
++	{
++		git config --type=bool-or-auto bool.true1 &&
++		git config --type=bool-or-auto bool.true2 &&
++		git config --type=bool-or-auto bool.false &&
++		git config --type=bool-or-auto int.int1 &&
++		git config --type=bool-or-auto int.int2 &&
++		git config --type=bool-or-auto int.int3 &&
++		git config --type=bool-or-auto auto.auto1 &&
++		git config --type=bool-or-auto auto.auto2
++	} >actual &&
++	test_cmp expect actual &&
 +
- int git_config_bool(const char *name, const char *value)
- {
- 	int v = git_parse_maybe_bool(value);
-diff --git a/config.h b/config.h
-index 19a9adbaa9..c5129e4392 100644
---- a/config.h
-+++ b/config.h
-@@ -197,6 +197,12 @@ int git_parse_ulong(const char *, unsigned long *);
-  */
- int git_parse_maybe_bool(const char *);
- 
-+/**
-+ * Same as `git_parse_maybe_bool`, except that "auto" is recognized and
-+ * will return "2".
-+ */
-+int git_parse_maybe_tristate(const char *);
++	test_must_fail git config --type=bool-or-auto --get bad-auto.bad-auto1 2>err &&
++	grep "bad tristate config value" err
++'
 +
- /**
-  * Parse the string to an integer, including unit factors. Dies on error;
-  * otherwise, returns the parsed result.
-@@ -226,6 +232,12 @@ int git_config_bool_or_int(const char *, const char *, int *);
-  */
- int git_config_bool(const char *, const char *);
- 
-+/**
-+ * Like git_config_bool() except "auto" is also recognized and will
-+ * return "2"
-+ */
-+int git_config_tristate(const char *, const char *);
-+
- /**
-  * Allocates and copies the value string into the `dest` parameter; if no
-  * string is given, prints an error message and returns -1.
-diff --git a/http.c b/http.c
-index 406410f884..b54a232e90 100644
---- a/http.c
-+++ b/http.c
-@@ -406,10 +406,11 @@ static int http_options(const char *var, const char *value, void *cb)
- 		return git_config_string(&user_agent, var, value);
- 
- 	if (!strcmp("http.emptyauth", var)) {
--		if (value && !strcmp("auto", value))
-+		int tristate = git_config_tristate(var, value);
-+		if (tristate == 2)
- 			curl_empty_auth = -1;
- 		else
--			curl_empty_auth = git_config_bool(var, value);
-+			curl_empty_auth = tristate;
- 		return 0;
- 	}
- 
-diff --git a/userdiff.c b/userdiff.c
-index 3f81a2261c..7ff010961f 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -277,10 +277,8 @@ static int parse_funcname(struct userdiff_funcname *f, const char *k,
- 
- static int parse_tristate(int *b, const char *k, const char *v)
- {
--	if (v && !strcasecmp(v, "auto"))
--		*b = -1;
--	else
--		*b = git_config_bool(k, v);
-+	int tristate = git_config_tristate(k, v);
-+	*b = tristate == 2 ? -1 : tristate;
- 	return 0;
- }
- 
+ cat >expect <<\EOF
+ [bool]
+ 	true1 = true
 -- 
 2.31.1.527.g9b8f7de2547
 
