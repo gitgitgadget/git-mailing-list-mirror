@@ -2,117 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E4D40C433B4
-	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 17:38:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 01E74C433ED
+	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 17:38:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B0A7A610C8
-	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 17:38:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C99D6610F8
+	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 17:38:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232388AbhDHRi3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Apr 2021 13:38:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37608 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231676AbhDHRi2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Apr 2021 13:38:28 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19E0DC061760
-        for <git@vger.kernel.org>; Thu,  8 Apr 2021 10:38:17 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id d13so5384968lfg.7
-        for <git@vger.kernel.org>; Thu, 08 Apr 2021 10:38:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=MSI2+pUTYAzDalsfOSYMkLJZH1umjsdeM046z4qcdo8=;
-        b=j3sMllERcvxjfu3depM6g8Jcnk/whlf5LSnvraQ/RCObqiEnYmXhjIP+Js2MWmh484
-         E3ZZibiMcSJWiRYXkCMA6ogaFbEFTwOR39RCzDiMJQM7pXHNamthaG8NCp/gfqs3NUf5
-         SwXHUnu8ciipQdzvuE2gZ6hOnOxnsdtyEBD3pxx8RdEHWMxikH/IURKumQbq9oaP+0X+
-         K23JNHoVlVe6/ttA2rHwr21Vdc2e31J4fwfE94GB6fgPrEfcNgvr0P2P1yP8hHScpjmB
-         KRYk49OFAn3/OwMSAxZnI8bh/V4mbpV4pqpjKekB8qlAZTY05DMK2Lva90PLPhy00sSN
-         omIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=MSI2+pUTYAzDalsfOSYMkLJZH1umjsdeM046z4qcdo8=;
-        b=GIXGgrUyAVlew7B9HWngRxP5Kzc2XI2Sh+0Gg7yOoTbsh4S9I2e3nTmDPJejPVlIwF
-         vlV5aa4Y/Cmx3Ok6YAsw6c8T33REnENwmy2oS0wCZ5AcHcunIs1hh1CAgy3EGXECvYWm
-         oOdweTQokcMfhPIWrcI5Ke2+yJloRnz18TQLNUE0vSUTvEbUt+ExSwXnsFxRoLaX0eiP
-         f3ui+xAzOZqRIq/t/YSYDTnbOAWve/as9vOXkAAaUdVDa/m2EUNAbGzrIukv/f4QNPRc
-         hgSdEgOOPBhDTriQDlUEkbMXLQHBZhSci8EGt2ohVXnz37Z1hf6eHX0r+XrQzhSCtpHz
-         1Lpw==
-X-Gm-Message-State: AOAM530SO0PnDhn0/OGZthwysyG90WNyU4UMe/GT2XOMQQXraiVozI//
-        Y6PE7c2YdmBdE98x39YZbgNiVv2eXaw=
-X-Google-Smtp-Source: ABdhPJwOYzpDZNjV0Hb4epKrX17aLKkQNVGrLqS3W4AjLaVlKe+t1p8Nu/D0jA79dS5Ws8U/jVmQ/A==
-X-Received: by 2002:ac2:54a1:: with SMTP id w1mr2883610lfk.48.1617903495280;
-        Thu, 08 Apr 2021 10:38:15 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id m24sm6580lfq.184.2021.04.08.10.38.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Apr 2021 10:38:14 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Philip Oakley <philipoakley@iee.email>, Jeff King <peff@peff.net>,
-        Elijah Newren <newren@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 1/9] diff-merges: introduce --diff-merges=def
-References: <20210407225608.14611-1-sorganov@gmail.com>
-        <20210407225608.14611-2-sorganov@gmail.com>
-        <f6b25ea6-88b1-c167-7fd4-440be8782fcb@iee.email>
-        <87eefkdfho.fsf@osv.gnss.ru> <xmqq8s5svg8b.fsf@gitster.g>
-Date:   Thu, 08 Apr 2021 20:38:14 +0300
-In-Reply-To: <xmqq8s5svg8b.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-        08 Apr 2021 10:27:48 -0700")
-Message-ID: <87o8eo7k3d.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+        id S232671AbhDHRjD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Apr 2021 13:39:03 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:54817 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231566AbhDHRjC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Apr 2021 13:39:02 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 44DD112E326;
+        Thu,  8 Apr 2021 13:38:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=HvDDLXj4aIOa
+        NvR47QG45VEmMUw=; b=Ir+EEn3iiDHUhFmgVotTrMiGSUrDmLt5v8bVkIH5FS41
+        pJF8SAZtzjDzZQupVbYEErNAYvnsnSLU8H59R7ICMf5F39fhWz2ii76MPsvBgpIQ
+        w1f+TOlFEmTmIUD9Ba4OWtJAQu/IXR1S9uJeifGKj1wTolMCYNorSX0NTGGGUDg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Dk2u42
+        Lt0diCX5LffJpTSVeT378WJ+vFFhdxAE6DDpb2boW+d9AOxVNBXdPogDOQyBfj1n
+        vwlFIVQp5RYUfmzgZtGFMoDFPmX8CPk8LG7Ie1gkp5wjAX/w57BLS6PjMAtc0ww7
+        QS516f9g85F8hiKfhwml0gjgLiGUnprpQvu9g=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3C56112E325;
+        Thu,  8 Apr 2021 13:38:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.243.138.161])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 1A03912E324;
+        Thu,  8 Apr 2021 13:38:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+Cc:     Miriam Rubio <mirucam@gmail.com>, git@vger.kernel.org,
+        Pranit Bauva <pranit.bauva@gmail.com>,
+        Tanushree Tumane <tanushreetumane@gmail.com>
+Subject: Re: [PATCH v2 1/4] run-command: make `exists_in_PATH()` non-static
+References: <20210407173334.68222-1-mirucam@gmail.com>
+        <20210407173334.68222-2-mirucam@gmail.com> <YG7naB1xepTSoeVk@danh.dev>
+Date:   Thu, 08 Apr 2021 10:38:46 -0700
+In-Reply-To: <YG7naB1xepTSoeVk@danh.dev> (=?utf-8?B?IsSQb8OgbiBUcuG6p24g?=
+ =?utf-8?B?Q8O0bmc=?= Danh"'s message of
+        "Thu, 8 Apr 2021 18:22:39 +0700")
+Message-ID: <xmqq4kggvfq1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 46401FF2-9891-11EB-8E89-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh  <congdanhqx@gmail.com> writes=
+:
 
-> Sergey Organov <sorganov@gmail.com> writes:
+> On 2021-04-07 19:33:30+0200, Miriam Rubio <mirucam@gmail.com> wrote:
+>> From: Pranit Bauva <pranit.bauva@gmail.com>
+>>=20
+>> Removes the `static` keyword from `exists_in_PATH()` function
+>> and declares the function in `run-command.h` file.
+>> The function will be used in bisect_visualize() in a later
+>> commit.
+>>=20
+>> `exists_in_PATH()` and `locate_in_PATH()` functions don't
+>> depend on file-local variables.
 >
->> Hi,
->>
->> Philip Oakley <philipoakley@iee.email> writes:
->>> Hi,
->>>
->>> On 07/04/2021 23:56, Sergey Organov wrote:
->>>> Introduce the notion of default diff format for merges, and the option
->>>> "def" to select it. The default is "separate" and can't yet be
->>> "def" feels a bit too short and sounds similar to "define" - why not
->>> spell out in full?
->>
->> Dunno, it just happened. No sound reason. Will change to "default" for
->> the next re-roll.
+> Isn't this implementation detail? I think we shouldn't include them in
+> the commit message.
+
+I also was scratching my head about the statement.  What the
+sentence says is not incorrect per-se, but it was not clear what the
+relevance is to mention it.  I suspect that it may have wanted to
+say "because they do not depend on any file scope statics to keep
+state or base their computation on, it is safe to expose them as a
+generally reusable public helper functions", and if so, "that's an
+irrelevant implementation detail" would not be a valid objection
+against mentioning it, but as written in the original, the sentence
+as a mere statement of the fact does not seem to help readers.
+
+>> +/**
+>> + * Returns if a $PATH given by parameter is found or not (it is NULL)=
+. This
+>> + * function uses locate_in_PATH() function that emulates the path sea=
+rch that
+>> + * execvp would perform. Memory used to store the resultant path is f=
+reed by
+>> + * the function.
 >
-> I do not immediately see the point of writing --diff-merges=default
-> on the command line in the first place.  If what it calls for is the
-> default, wouldn't it be easier to just leave it out?
+> I think this documentation focused too much in implementation detail,
+> locate_in_PATH is still an internal linkage symbol at this stage.
+> I think its mention here doesn't improve anything.
 
-It does enable output of diffs for merge commits, so it's not the same
-as leaving it out. The "default" is the exact format it will use for the
-output.
+I totally agree with this.  What it does is more important.
 
-Or do you mean using bare "--diff-merges", without "=value"? It is
-considered bad practice, right?
-
->
-> But if we have to have it as one of the choice, please do not invent
-> such an abbreviation, especially without taking the fully-spelled
-> form.
-
-I think we have to, see above, and yes, I'll turn it to the full form.
-
-Thanks,
-
--- Sergey Organov
+If you have to describe how it does it, it is often because you need
+to warn callers due to a curious implementation glitch (e.g. "this
+uses 4-slot rotating internal buffer, so do not expect its return
+value to stay stable after many calls").  In such a case, of course
+describing how it does it is important to help callers avoid pitfalls,
+but for this function, I do not see a need for that.
