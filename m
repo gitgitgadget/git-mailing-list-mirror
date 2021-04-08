@@ -2,122 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C703C433B4
-	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 06:53:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0F20C433B4
+	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 07:06:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F1C7661040
-	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 06:53:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8111861157
+	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 07:06:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229702AbhDHGxN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Apr 2021 02:53:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36350 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229505AbhDHGxN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Apr 2021 02:53:13 -0400
-Received: from lahtoruutu.iki.fi (lahtoruutu.iki.fi [IPv6:2a0b:5c81:1c1::37])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF205C061760
-        for <git@vger.kernel.org>; Wed,  7 Apr 2021 23:53:02 -0700 (PDT)
-Received: from mail-il1-f169.google.com (mail-il1-f169.google.com [209.85.166.169])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: ville.skytta)
-        by lahtoruutu.iki.fi (Postfix) with ESMTPSA id 86C1F1B00413
-        for <git@vger.kernel.org>; Thu,  8 Apr 2021 09:52:57 +0300 (EEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=lahtoruutu;
-        t=1617864777;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=Rav5HSL4R8qNhtZjKDnVD7eM0miDELX2Te6rVP7y7MM=;
-        b=W1p050dHi9yJDeyliiOXeJHQtdwV5LXPvecG35XG0ss1bIYiVCr2kcw5veZIYlzrELL0DX
-        VRgaqDOO23sUr0FTiYn5SD6ZX7yRBtgI1sV5smZSl+JFphns+U+TSy3gu3Iv6zOlBpr+iz
-        5MwX03Gk1sKJJTsIv9hcGBhWDSnnUmscmBRhBUveERStYRMGx6u2SPctvy13FWOY6jy0DH
-        995bfv7k2KFOfQyWpLDiTh0uTcI8Nw5f2UW52OY/j2K5EcNIomQTBc4AJkwYmTLsQ0SK4+
-        a0+bnrRXqNyQVaCL5vlMKd7OSJJnx/YTUiC4I/wRZbPV+jWKw1Aypt2cnoNKqA==
-Received: by mail-il1-f169.google.com with SMTP id p8so857679ilm.13
-        for <git@vger.kernel.org>; Wed, 07 Apr 2021 23:52:57 -0700 (PDT)
-X-Gm-Message-State: AOAM5335/NlHbjc4kF6GBo5XxA7z1g/RWc4s61CeiDX7EsrcXR6PV17T
-        tw93l+ID1Qvc3wXB4tc8tNV3wczSCfGnkqpv3Rw=
-X-Google-Smtp-Source: ABdhPJzrhg5awVNytFvjdOPBALRf6m1EDKZwNxwZXkgH4GolgMOQskeFr/f/ZfiJPf37SZt8mKOZMP3jjiwuAlarOZs=
-X-Received: by 2002:a05:6e02:1546:: with SMTP id j6mr5396442ilu.299.1617864776200;
- Wed, 07 Apr 2021 23:52:56 -0700 (PDT)
+        id S230247AbhDHHHE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Apr 2021 03:07:04 -0400
+Received: from mail-lf1-f47.google.com ([209.85.167.47]:38550 "EHLO
+        mail-lf1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230248AbhDHHGz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Apr 2021 03:06:55 -0400
+Received: by mail-lf1-f47.google.com with SMTP id j18so2215765lfg.5
+        for <git@vger.kernel.org>; Thu, 08 Apr 2021 00:06:44 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=kj+H1Z8T95RvdkWJH/B6ZHG0RdKqgGpxrd1TnKgtr8o=;
+        b=FxcFbzyVsgsw4M7GFlXy1Qvh5xBJ0l1gZ3kGRGho2kkpsd+kzTepXEWNf8k1XRQxZd
+         51gLSrzeCdO8a4LcKp0/AW2fcTtAZELtDq/Fzt3iZVHTxYgOu6zjwJ/2SoXUEHE4uFdz
+         jVn0QNb+olvzTrytC1cvwZJGsVKcGKuLpj5aJEiPY6xY9GACLpAZYMrmVwDCY+sQE4RZ
+         CxqaUafsZvUY8/24D1ldh7FNHb+DEzPi+pKpm3oIhMco4PzBh0ZnDDculV6u191JaocQ
+         6vZYxB6L2NdptIiZN1Gof6P8dwvQrXWOUNkOLpjZ0MgX9mIFiy4ULJ5U1fcpNBkC/0RR
+         EjXg==
+X-Gm-Message-State: AOAM532F6Yu1JSL9tFALT+wFSeQRcIY05VmAmmSSiKt62K/Q8zRejByw
+        xbl05bx4CUzCCHU4xFLglix9QkAqTyYUgg==
+X-Google-Smtp-Source: ABdhPJy/+oXylAdnjtA5BLkhVvdN8RcrcvJCOeQQNjP2yfzxsMeEdpDQj8FAu9EBBR/VWZgdeIJBRA==
+X-Received: by 2002:a05:6512:3301:: with SMTP id k1mr5214506lfe.327.1617865603545;
+        Thu, 08 Apr 2021 00:06:43 -0700 (PDT)
+Received: from uncleman.upcloud.com (dygkyxjmrrj79l4kgmcyy-4.rev.dnainternet.fi. [2001:14bb:150:99d:4e71:f7d4:e105:5080])
+        by smtp.gmail.com with ESMTPSA id d10sm2756875ljg.112.2021.04.08.00.06.42
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Apr 2021 00:06:43 -0700 (PDT)
+From:   =?UTF-8?q?Ville=20Skytt=C3=A4?= <ville.skytta@iki.fi>
+To:     git@vger.kernel.org
+Subject: [PATCH] completion: audit and guard $GIT_* against unset use
+Date:   Thu,  8 Apr 2021 10:06:41 +0300
+Message-Id: <20210408070641.360431-1-ville.skytta@iki.fi>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-References: <20210406181247.250046-1-ville.skytta@iki.fi> <xmqqo8er12kq.fsf@gitster.g>
-In-Reply-To: <xmqqo8er12kq.fsf@gitster.g>
-From:   =?UTF-8?Q?Ville_Skytt=C3=A4?= <ville.skytta@iki.fi>
-Date:   Thu, 8 Apr 2021 09:52:44 +0300
-X-Gmail-Original-Message-ID: <CABr9L5C_+bdiv=hhbx4h1cXcOcW-9su45kNMo0i0i0zBO0j8QA@mail.gmail.com>
-Message-ID: <CABr9L5C_+bdiv=hhbx4h1cXcOcW-9su45kNMo0i0i0zBO0j8QA@mail.gmail.com>
-Subject: Re: [PATCH] completion: treat unset GIT_COMPLETION_SHOW_ALL gracefully
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
-        s=lahtoruutu; t=1617864777;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=Rav5HSL4R8qNhtZjKDnVD7eM0miDELX2Te6rVP7y7MM=;
-        b=ids+SNvos0zVq4sVgbIM1MR9aTRcPPWvOis16fXPKAJQRjcXxDtx4EpJhyblMzB/ypOM3P
-        wlnHEyOpcnCyagxvHn3WfmXxIOJbotZDKdwM692Yhls41uvr9odaTvuvmf5ZwYMlKSsVg9
-        p2NKwXZvUzd7JxmPN/jNbAHRk6r8L9fai8mXJrhV2mhX71B/cpL2z4UlGjPkFrPH0rISHD
-        QRBIdCjLGeQmh871BLWyYIoPLQRcuYEMNa3rPuOIM8S1IaGHWD6XInMrw5G6AWjsxBUG5U
-        SDEqOilBZi7HWciWUC6Edz1YFQl+nFSd2qNKWNf61rP8ZYdlFz7PjTBA/TUPBA==
-ARC-Authentication-Results: i=1;
-        ORIGINATING;
-        auth=pass smtp.auth=ville.skytta smtp.mailfrom=ville.skytta@iki.fi
-ARC-Seal: i=1; s=lahtoruutu; d=iki.fi; t=1617864777; a=rsa-sha256;
-        cv=none;
-        b=GDkhbyhcviGlgDHyF5GONcHrVKb4DpXssQ6bx7HJnfLaeF9I59ZYtek0e53W1os+dKNMPT
-        KNPTx9vWWu9B8Ug/ofTs1/tvrn1CeKxdibnjnOdzQ5DJaaRn9WL2kky4/JKP1tbYZTKHST
-        N+D61CTVesFYjIHbWtcPBIMXwQHTiODl+9DVJ4MSBFBO9PDPFqrn4Bgk2iJXIkjqBI9e7r
-        3IPwtX+aMsWgglndMNzj0h7atIcPRRWnueeJxB8tontcd1ENmH4nO7yPmszHHKi9L1mZ9R
-        pfGOJASoDTcVj4uWgh7fnqc6PEiUXUDaUOSURb3IGs6Ka+YsBGuBbgXv17rhkg==
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 7 Apr 2021 at 01:16, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Ville Skytt=C3=A4 <ville.skytta@iki.fi> writes:
->
-> > If not set, referencing it in nounset (set -u) mode unguarded produces
-> > an error.
-> >
-> > Signed-off-by: Ville Skytt=C3=A4 <ville.skytta@iki.fi>
-> > ---
-> >  contrib/completion/git-completion.bash | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> Thanks.
->
-> $ git grep -h -o -e '\$GIT_[A-Z_]*' master -- contrib/completion/git-comp=
-letion.bash
->
-> gives a few other hits.
+$GIT_COMPLETION_SHOW_ALL and $GIT_TESTING_ALL_COMMAND_LIST were used
+without guarding against them being unset, causing errors in nounset
+(set -u) mode.
 
-Thanks for checking. If we want to do what was proposed below:
+No other nounset-unsafe $GIT_* usages were found.
 
-> I'd prefer to see that (1) the proposed
-> log message explain that the patch author audited all usages of
-> variables
+While at it, remove a superfluous (duplicate) unset guard from $GIT_DIR
+in __git_find_repo_path.
 
-...we need to go through not only ones starting with GIT_, but as is
-written above, _all_ variables, which is a larger task.
+Signed-off-by: Ville Skyttä <ville.skytta@iki.fi>
+---
+ contrib/completion/git-completion.bash | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-To be clear, I haven't checked anything besides what was the subject
-of and change in the patch. I can go through all GIT_* while at it,
-but I'm not promising going through all variables at this point.
-Hopefully that's enough to get the resulting changes merged.
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index e1a66954fe..29b859a0b8 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -77,7 +77,7 @@ __git_find_repo_path ()
+ 		test -d "$__git_dir" &&
+ 		__git_repo_path="$__git_dir"
+ 	elif [ -n "${GIT_DIR-}" ]; then
+-		test -d "${GIT_DIR-}" &&
++		test -d "$GIT_DIR" &&
+ 		__git_repo_path="$GIT_DIR"
+ 	elif [ -d .git ]; then
+ 		__git_repo_path=.git
+@@ -427,7 +427,7 @@ __gitcomp_builtin ()
+ 
+ 	if [ -z "$options" ]; then
+ 		local completion_helper
+-		if [ "$GIT_COMPLETION_SHOW_ALL" = "1" ]; then
++		if [ "${GIT_COMPLETION_SHOW_ALL-}" = "1" ]; then
+ 			completion_helper="--git-completion-helper-all"
+ 		else
+ 			completion_helper="--git-completion-helper"
+@@ -1910,7 +1910,7 @@ _git_help ()
+ 		return
+ 		;;
+ 	esac
+-	if test -n "$GIT_TESTING_ALL_COMMAND_LIST"
++	if test -n "${GIT_TESTING_ALL_COMMAND_LIST-}"
+ 	then
+ 		__gitcomp "$GIT_TESTING_ALL_COMMAND_LIST $(__git --list-cmds=alias,list-guide) gitk"
+ 	else
+-- 
+2.25.1
 
-Would be great if there were some automated tests to catch these
-issues, as they tend to crop up over time.
