@@ -2,162 +2,79 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F08DC433B4
-	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 18:36:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F51DC433B4
+	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 19:28:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 23900610FC
-	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 18:36:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EA00461008
+	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 19:28:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232841AbhDHSg2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Apr 2021 14:36:28 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:56994 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231676AbhDHSg2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Apr 2021 14:36:28 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id CE334115670;
-        Thu,  8 Apr 2021 14:36:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=rCwg3UlRqWWn
-        pjFDXaf1MR4aDW8=; b=ClYv6st7Pm+NOs0ByuFW+5sDuj9WxtA50PpN3REp1J5I
-        1ERfwtsKhKjoByyxiNE+M7k/7QEAcwzvxIbstZ+uEmMA4+05lX9T3QrWzDLSDHCK
-        OG4f1dLFFJNTLBjHPVZ1dMXiBm/sviLVIo1jFcH5Ll0+mmdTDPcnZHdEXkE/iZ0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=IDeIn+
-        z3LjlNFh5Gt+NO/z1hnKoCuFrxsD6X/H7tv4vLgweWrwc3+8KS1yzzGBEPrlWx/K
-        XrbKVooOzoELH1JCGPuihDtOCvBCMTrMFAiEQAW2PgclN9LGs8GE8YDzwOJdWHzc
-        FCernoB43W6Ukn9mDV3NdE6ox8GMsojgX+Orc=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C6BC411566F;
-        Thu,  8 Apr 2021 14:36:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.243.138.161])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2008311566D;
-        Thu,  8 Apr 2021 14:36:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Lin Sun <lin.sun@zoom.us>,
-        =?utf-8?B?xJBvw6Bu?= =?utf-8?B?IFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>, David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH 5/5] config: add --type=bool-or-auto switch
-References: <cover-0.6-0000000000-20210408T133125Z-avarab@gmail.com>
-        <patch-5.6-9f8996a888-20210408T133125Z-avarab@gmail.com>
-Date:   Thu, 08 Apr 2021 11:36:11 -0700
-In-Reply-To: <patch-5.6-9f8996a888-20210408T133125Z-avarab@gmail.com>
- (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Thu, 8 Apr
- 2021 15:34:29 +0200")
-Message-ID: <xmqq5z0wtyhw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S231918AbhDHT2v (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Apr 2021 15:28:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33474 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231420AbhDHT2v (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Apr 2021 15:28:51 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71B82C061760
+        for <git@vger.kernel.org>; Thu,  8 Apr 2021 12:28:38 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id a7so4965817eju.1
+        for <git@vger.kernel.org>; Thu, 08 Apr 2021 12:28:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=QUApxAMOgUJ3YEPQClhHIb2wuszG3EAv/Z73LvilrUI=;
+        b=iTZJ8Y2nMs5u8GJI0NqTHlBnCQ6mSB/EWnnLhzcHBtAEc6VRT3bq/xgdYuA9Tc8x/z
+         wmUf3rqYhpE/S4kk3DqeMmmCRf5O2g0lwk0FtUa0l1QuP3Cn1HKWlUgU8ay5Bl6fGq0a
+         Y3BGnqsAufR+WUre8AzaioXykGYbsOsAh4533QQRdxRMBDy5BUE4h5Ry/unPiQfV8lq1
+         1FIj4cLsRjYSep8xSItD7NR2qOfcpOJnLo2/9fayHSQTY5U5bSFA/6ki5rMwSEhVpUmn
+         k6SSI+O8d8CZW2oadJUYxVDe2Xd6R0K4mlWn3qDbJvBgVQ3mXvO7j18zPl5B0clePy+O
+         CSIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=QUApxAMOgUJ3YEPQClhHIb2wuszG3EAv/Z73LvilrUI=;
+        b=eN15Hs9y0fgDcfvhuSEEN69HCfrxabLvxU3w6+0aJI6taMynMWUiwfjF9KNAywpmNR
+         Sc12ZUwHr8c9A5tPbZGjYDb9ila4saPwX6bJLYuDpOMxu2Ub4rtIKu5SGeR3AUdFu6zs
+         1jEIQnX78Pylx4uLbnl8EQXnbj8bJCV0kP/kT/t9zv9Y9Dk/451723rZqY7zslnwcvEE
+         a+EaBldBVjpdJAF5KPzKJSEDnJtlnseEkB3LhaycJdxNNdwxwIfW2+M2Eysu3rquTluI
+         JZhF8AqINVAcceDuD7GYBp1Rwz4mNl4cFb67CTvTvyNZg7ItS6GW6cR7IpGPjm2VglDe
+         pvyg==
+X-Gm-Message-State: AOAM530FsarDceCgL4AdzQ/rvP3Unl0TL9ZYwc3PqJEnivSFetOlzm3V
+        ddy6E4L1hooeTnnAg7e3O6q1PXpUvrKPz2W7KqhXBJf0
+X-Google-Smtp-Source: ABdhPJwKAR65CyaeaO7DIM8Qo+qHfs88utEejuBZx/cLr9YujS7svGiXoPMeFhE14gSxa0cIZ8IPiN1ojla+wzVW0Mg=
+X-Received: by 2002:a17:906:5906:: with SMTP id h6mr13002173ejq.288.1617910116758;
+ Thu, 08 Apr 2021 12:28:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 4BA4D1BA-9899-11EB-A09F-D609E328BF65-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+From:   Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>
+Date:   Thu, 8 Apr 2021 12:28:25 -0700
+Message-ID: <CAKu1iLXtwuCQTS0s7_LEm0OJF-4s0UhPhDW1r5Zb7=GsSPfpdQ@mail.gmail.com>
+Subject: git-p4 crashes on non UTF-8 output from p4
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+When git-p4 reads the output from a p4 command, it assumes it will be
+100% UTF-8. If even one character in the output of one p4 command is
+not UTF-8, git-p4 crashes with:
 
-> Now that we're using git_config_tristate() internally let's expose it
-> via "git config" like we do "bool", "int" etc for completeness, and so
-> that we can easily test it.
->
-> Unlike the --type=3Dbool-or-str option added in dbd8c09bfe (mergetool:
-> allow auto-merge for meld to follow the vim-diff behavior, 2020-05-07)
-> we don't have or anticipate any in-tree user of this except the tests.
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
+File "C:/Program Files/Git/bin/git-p4.py", line 774, in p4CmdList
+    value = value.decode() UnicodeDecodeError: 'utf-8' codec can't
+decode byte Ox93 in position 42: invalid start byte
 
-OK.
+I'd like to make a pull request to have it try another encoding (eg
+cp1252) and/or use the Unicode replacement character, to prevent the
+whole program from crashing on such a minor problem.
 
+This is especially a problem on the "git p4 clone" command with @all,
+where git-p4 needs to read thousands of changeset descriptions, one of
+which may have a stray smart quote, causing the whole clone operation
+to fail.
 
-> @@ -263,6 +267,12 @@ static int format_config(struct strbuf *buf, const=
- char *key_, const char *value
->  				strbuf_addstr(buf, value_);
->  			else
->  				strbuf_addstr(buf, v ? "true" : "false");
-> +		} else if (type =3D=3D TYPE_BOOL_OR_AUTO) {
-> +			int v =3D git_config_tristate(key_, value_);
-> +			if (v =3D=3D 2)
-> +				strbuf_addstr(buf, "auto");
-> +			else
-> +				strbuf_addstr(buf, v ? "true" : "false");
-
-Makes sense.
-
-> +test_expect_success 'there is no --bool-or-auto, --<type> is deprecate=
-d in favor of --type=3D<type>' '
-> +	test_expect_code 129 git config --bool-or-auto
-> +'
-> +
-> +test_expect_success 'get --type=3Dbool-or-auto' '
-> +	cat >.git/config <<-\EOF &&
-> +	[bool]
-> +	true1
-> +	true2 =3D true
-> +	false =3D false
-> +	[int]
-> +	int1 =3D 0
-> +	int2 =3D 1
-> +	int3 =3D -1
-> +	[string]
-> +	string1 =3D hello
-> +	string2 =3D there you
-> +	[auto]
-> +	auto1 =3D auto
-> +	auto2 =3D AUTO
-> +	[bad-auto]
-> +	bad-auto1 =3D AUTOMATIC
-> +	EOF
-> +	cat >expect <<-\EOF &&
-> +	true
-> +	true
-> +	false
-> +	false
-> +	true
-> +	true
-> +	auto
-> +	auto
-> +	EOF
-
-Almost the same comment applies to the expected output as the
-earlier patch.
-
-Other than that, (and adjusting for 2 that should be turned into
-symbolic constant in an earlier step in a reroll), this step looks
-quite sensible.
-
-Thanks.
-
-> +	{
-> +		git config --type=3Dbool-or-auto bool.true1 &&
-> +		git config --type=3Dbool-or-auto bool.true2 &&
-> +		git config --type=3Dbool-or-auto bool.false &&
-> +		git config --type=3Dbool-or-auto int.int1 &&
-> +		git config --type=3Dbool-or-auto int.int2 &&
-> +		git config --type=3Dbool-or-auto int.int3 &&
-> +		git config --type=3Dbool-or-auto auto.auto1 &&
-> +		git config --type=3Dbool-or-auto auto.auto2
-> +	} >actual &&
-> +	test_cmp expect actual &&
-> +
-> +	test_must_fail git config --type=3Dbool-or-auto --get bad-auto.bad-au=
-to1 2>err &&
-> +	grep "bad tristate config value" err
-> +'
-> +
->  cat >expect <<\EOF
->  [bool]
->  	true1 =3D true
+Sound ok?
