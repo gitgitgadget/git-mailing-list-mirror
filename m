@@ -2,128 +2,145 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A5B6C433B4
-	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 15:04:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FA50C433B4
+	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 15:12:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4582F61104
-	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 15:04:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0EF55610F9
+	for <git@archiver.kernel.org>; Thu,  8 Apr 2021 15:12:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232060AbhDHPFC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Apr 2021 11:05:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59936 "EHLO
+        id S231964AbhDHPMs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Apr 2021 11:12:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232043AbhDHPEx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Apr 2021 11:04:53 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF38AC061763
-        for <git@vger.kernel.org>; Thu,  8 Apr 2021 08:04:40 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id e14so3587614ejz.11
-        for <git@vger.kernel.org>; Thu, 08 Apr 2021 08:04:40 -0700 (PDT)
+        with ESMTP id S231946AbhDHPMs (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Apr 2021 11:12:48 -0400
+Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8271FC061760
+        for <git@vger.kernel.org>; Thu,  8 Apr 2021 08:12:33 -0700 (PDT)
+Received: by mail-io1-xd2f.google.com with SMTP id v26so2581843iox.11
+        for <git@vger.kernel.org>; Thu, 08 Apr 2021 08:12:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=+TgcPChjNYhPVkz49K3frhW3QdyWBAtp4NeeeynEsOQ=;
-        b=rxVX+/Y51GotC/sVTB3EPY3xxoxRPdqb14HxgpLMVYAERpeky/8XfPZW+O6AbASCxx
-         M0hMVOCsJGog2M6H3rnPfWTiTlwAT6qcIDFPicQoVPFFAI09rK+dj8P5dFVofVr00CsE
-         eCcEMB95U+00GdL2V/ILaeZWRIFGP5CeWVj4aNwVsjAvqKHTQhDvnna6cVSctw+6v6be
-         fIkoybyUsx2ZdyzqgrDF2hi/Z0EOxNT7ZQ+tBeAWJis3Qk8AIUk9IuEVLRCa5Xhjb7Ko
-         CFBxUFGtKY8qWJburPOHlVxym4fF+jqdBQ9Zczz7uKNcSqTWgzmb3D4v/fmVmeyF3q1t
-         FNgg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=ZKj91p8mL+a04tZyOTr+16kUPr0w6bbBDb6/MWSqMF4=;
+        b=ip+IdZ+15kx4OENSo3sBBSe1QCb6U4AgKUJH/3aB7UR3yv10Gs10kNG6PCLSW3kyiC
+         IdJEUrgXL93BQvTBzxdcaKdx0H/o1HWrJIBL7sWELYQ5wNjNwLoqBVrY8D2nfToJ1wKX
+         QO2EgrcJEVQ5ra6dc99fiq7g0xT3R28dL3ct5Hq7SOuI6QI9jtLHXtqxIoO2aGgjsJY2
+         sFLItyh5bpfO5FgXZizLSnIURZySzuKlBrnMv+Th8Brk6uzmqp/6P0CteA/mKNqMobMY
+         +avNgjkEc2iMVZfoMt1GV0/7TR94JanhFCqTRkH7zUVKTTj/eFt2BdMQBsoInVjy5KZL
+         3A9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=+TgcPChjNYhPVkz49K3frhW3QdyWBAtp4NeeeynEsOQ=;
-        b=Fco+qyrmird3VA6x72cnF6i5UCcCoMwgm7RmLF+t727LphntSn9LSLBrxvpSFOWHtH
-         f+WLd4ttz10D6QXRtJY7jTis2N0VWm4bOBEVv+wlEJCS8dH8jGe3V0Q5NChXs1z1aVmw
-         PW+GhYGu8yt9j4jph/G1NDePjbWPAU4Y3E+tW6ia9dFTCWs2278Xh18gW+71em5oF3Hk
-         XvB/3Z2H00jcbIFiViTGpx60fv2rTeOfNWgqAWkSClN8su6nvNaEl1q2tfrcJjAvJ8wD
-         KeWzGUHsGtXlf1GSGEkulIqLPKkWo0yRBO61az+VwvuZo5GhAOl4mr7KrkUkyrC5Jege
-         BKog==
-X-Gm-Message-State: AOAM5305DwoSkWGhOFKHEXY0Mw+9z0PrHHERDKoj9qPL1ZmmOtDKwwvi
-        izaCJ6+ujw9+aWALHFGM5/YmZtOso+hkOg==
-X-Google-Smtp-Source: ABdhPJw9WhbzyvMbGGGaOaXqvNRFkohj6VF9ubsHFu0sumOgaheX5//uFfr6PJ7ppqFTv1XemTB87Q==
-X-Received: by 2002:a17:906:af91:: with SMTP id mj17mr10606327ejb.228.1617894279190;
-        Thu, 08 Apr 2021 08:04:39 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id h25sm2479253ejx.105.2021.04.08.08.04.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Apr 2021 08:04:38 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-        Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Adam Spiers <git@adamspiers.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Chris Torek <chris.torek@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v5 8/9] blame tests: don't rely on t/t4018/ directory
-Date:   Thu,  8 Apr 2021 17:04:23 +0200
-Message-Id: <patch-08.10-3583078715-20210408T145833Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.31.1.527.g9b8f7de2547
-In-Reply-To: <cover-00.10-0000000000-20210408T145833Z-avarab@gmail.com>
-References: <cover-00.11-00000000000-20210324T014604Z-avarab@gmail.com> <cover-00.10-0000000000-20210408T145833Z-avarab@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=ZKj91p8mL+a04tZyOTr+16kUPr0w6bbBDb6/MWSqMF4=;
+        b=V/x0FwTZnpbFOS0q6glPfZQcRSkjNc3jjLrVveSSLpaFwmwqhXNBqHoOxTmIqb4A2I
+         ZjCL7A0w3IyfQTmphFRnn25qlY43YaI05JFfW6zY2CvlbIwt8qzbgfJ93l5CtWOTBz1D
+         pSoSi7GUjzcvsXDCx8f6FPis7mjQs5bu7i7btDENX+x+rUY7p6Qaz+ec/lSy0cTabLQ1
+         WucHhL1FMbYcCv+jbPwZCRJaGnMmKE30U2Q6gLMLwyUQnOZC7cUE16+i6z3t2mhHPSgk
+         2K/ZjKpdMLhKiIqqoOLfOaIUPvxgFD0QlPImUTiZWiASch3tEvMuuaCW1b5LR347uJua
+         2HqQ==
+X-Gm-Message-State: AOAM530riTD22ch1Dh7W5mfBtZiWMtQqJWHoR0EPXCi42nrqpeBkxYu/
+        pGL8eOBIQH5+LgVxVG6hrNStYNOQ9ay+1jIwbqI=
+X-Google-Smtp-Source: ABdhPJwAUDlAbAMT2Ztgd2Prhf+uCNsPBMgm3Wk3qrzS2JrQPVa8nqc4rOsfqffNq0+EGnisQvOVMP4eBtekKfI0WXI=
+X-Received: by 2002:a05:6638:dc3:: with SMTP id m3mr9440712jaj.130.1617894752700;
+ Thu, 08 Apr 2021 08:12:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <pull.927.git.1617631280402.gitgitgadget@gmail.com>
+ <pull.927.v2.git.1617809209164.gitgitgadget@gmail.com> <YG4jxKQ3z1R+8Jfz@coredump.intra.peff.net>
+ <CAOLTT8QvdLeWz=cDOoVFV8Lrk2QL2wf_jwDc6oK5j+6gup+Png@mail.gmail.com>
+ <YG8UD7c4lChOQM5a@coredump.intra.peff.net> <CAOLTT8STy3Y_pLf0PDs-Uj1dXJYSjPD3FbKrUiSM4Uz-F7etSA@mail.gmail.com>
+ <YG8Ya3Z0FGBm1vwf@coredump.intra.peff.net>
+In-Reply-To: <YG8Ya3Z0FGBm1vwf@coredump.intra.peff.net>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Thu, 8 Apr 2021 23:12:21 +0800
+Message-ID: <CAOLTT8RBc0MLWZpRctxxMSnd5n6Fj6b6teZWz8kR_WebHxkvzQ@mail.gmail.com>
+Subject: Re: [PATCH v2] [GSOC] ref-filter: use single strbuf for all output
+To:     Jeff King <peff@peff.net>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Hariom Verma <hariom18599@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Refactor a test added in 9466e3809d (blame: enable funcname blaming
-with userdiff driver, 2020-11-01) so that the blame tests don't rely
-on stealing the contents of "t/t4018/fortran-external-function".
+Jeff King <peff@peff.net> =E4=BA=8E2021=E5=B9=B44=E6=9C=888=E6=97=A5=E5=91=
+=A8=E5=9B=9B =E4=B8=8B=E5=8D=8810:51=E5=86=99=E9=81=93=EF=BC=9A
+>
+> On Thu, Apr 08, 2021 at 10:43:54PM +0800, ZheNing Hu wrote:
+>
+> > > What I meant was that we should get rid of show_ref_array_items(), as
+> > > well, and just use format_ref_array_item() everywhere. This whole
+> > > wrapper is only saving us a few lines, and it makes it harder to see
+> > > what the function is doing. Likewise for pretty-print ref. But I dunn=
+o.
+> > > Maybe that is all going too far.
+> > >
+> >
+> > Ok... so you mean we just use a loop like in branch.c, and get rid of
+> > show_ref_array_items() and show_ref_array_item().
+> > (We can still use the optimization of reuse bufs)
+>
+> Yes, something like this:
+>
+> diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+> index cb9c81a046..55297fe297 100644
+> --- a/builtin/for-each-ref.c
+> +++ b/builtin/for-each-ref.c
+> @@ -22,6 +22,8 @@ int cmd_for_each_ref(int argc, const char **argv, const=
+ char *prefix)
+>         struct ref_array array;
+>         struct ref_filter filter;
+>         struct ref_format format =3D REF_FORMAT_INIT;
+> +       struct strbuf output =3D STRBUF_INIT;
+> +       struct strbuf err =3D STRBUF_INIT;
+>
+>         struct option opts[] =3D {
+>                 OPT_BIT('s', "shell", &format.quote_style,
+> @@ -80,8 +82,16 @@ int cmd_for_each_ref(int argc, const char **argv, cons=
+t char *prefix)
+>
+>         if (!maxcount || array.nr < maxcount)
+>                 maxcount =3D array.nr;
+> -       for (i =3D 0; i < maxcount; i++)
+> -               show_ref_array_item(array.items[i], &format);
+> +
+> +       for (i =3D 0; i < maxcount; i++) {
+> +               strbuf_reset(&output);
+> +               if (format_ref_array_item(array.items[i], &format, &outpu=
+t, &err))
+> +                       die("%s", err.buf);
+> +               fwrite(output.buf, 1, output.len, stdout);
+> +               putchar('\n');
+> +       }
+> +
+> +       strbuf_release(&output);
+>         ref_array_clear(&array);
+>         return 0;
+>  }
+>
+> It is dropping a few lines by assuming that the error buf is only
+> touched when we return an error (which IMHO is a reasonable assumption
+> to make).
+>
 
-I have another patch series that'll possibly (or not) refactor that
-file, but having this test inter-dependency makes things simple in any
-case by making this test more readable.
+I agree, err buffer does not need to be reused.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- t/annotate-tests.sh | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+> -Peff
 
-diff --git a/t/annotate-tests.sh b/t/annotate-tests.sh
-index 29ce89090d..04a2c58594 100644
---- a/t/annotate-tests.sh
-+++ b/t/annotate-tests.sh
-@@ -482,12 +482,22 @@ test_expect_success 'blame -L ^:RE (absolute: end-of-file)' '
- test_expect_success 'setup -L :funcname with userdiff driver' '
- 	echo "fortran-* diff=fortran" >.gitattributes &&
- 	fortran_file=fortran-external-function &&
--	orig_file="$TEST_DIRECTORY/t4018/$fortran_file" &&
--	cp "$orig_file" . &&
-+	cat >$fortran_file <<-\EOF &&
-+	function RIGHT(a, b) result(c)
-+
-+	integer, intent(in) :: ChangeMe
-+	integer, intent(in) :: b
-+	integer, intent(out) :: c
-+
-+	c = a+b
-+
-+	end function RIGHT
-+	EOF
- 	git add "$fortran_file" &&
- 	GIT_AUTHOR_NAME="A" GIT_AUTHOR_EMAIL="A@test.git" \
- 	git commit -m "add fortran file" &&
--	sed -e "s/ChangeMe/IWasChanged/" <"$orig_file" >"$fortran_file" &&
-+	sed -e "s/ChangeMe/IWasChanged/" <"$fortran_file" >"$fortran_file".tmp &&
-+	mv "$fortran_file".tmp "$fortran_file" &&
- 	git add "$fortran_file" &&
- 	GIT_AUTHOR_NAME="B" GIT_AUTHOR_EMAIL="B@test.git" \
- 	git commit -m "change fortran file"
--- 
-2.31.1.527.g9b8f7de2547
-
+Thanks.
+--
+ZheNing Hu
