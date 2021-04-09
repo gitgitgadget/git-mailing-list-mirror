@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50CCDC433ED
-	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 01:10:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4944AC433ED
+	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 01:10:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 09B5B610A7
-	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 01:10:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 19F04610C7
+	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 01:10:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233122AbhDIBK1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Apr 2021 21:10:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51048 "EHLO
+        id S233142AbhDIBK3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Apr 2021 21:10:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232426AbhDIBK0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Apr 2021 21:10:26 -0400
-Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25B0DC061760
-        for <git@vger.kernel.org>; Thu,  8 Apr 2021 18:10:14 -0700 (PDT)
-Received: by mail-yb1-xb4a.google.com with SMTP id n13so3739266ybp.14
-        for <git@vger.kernel.org>; Thu, 08 Apr 2021 18:10:14 -0700 (PDT)
+        with ESMTP id S233115AbhDIBK1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Apr 2021 21:10:27 -0400
+Received: from mail-qk1-x749.google.com (mail-qk1-x749.google.com [IPv6:2607:f8b0:4864:20::749])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA685C061760
+        for <git@vger.kernel.org>; Thu,  8 Apr 2021 18:10:15 -0700 (PDT)
+Received: by mail-qk1-x749.google.com with SMTP id y22so2384326qkb.23
+        for <git@vger.kernel.org>; Thu, 08 Apr 2021 18:10:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=22FfvI2Ld4mCHPq5rjNg63Mu3JTg5FX2CkL3tUrVSbo=;
-        b=nhIGN5Z7CXBMnmeSvPZp+Km3wVv7K6TEOzaoyrL3t1pySgq0HlQiGYdKO0ued5EGQG
-         NRf98a3imqNkQYlc/Ks8KxZ5a/2ZyfWIMn8vLA2vpfQbPO62hyqzosfYXJdH6Dopu0HA
-         cK2MHRtkfeU8W1I9b27p3TrVKQG4fDnMms0xRRiGmjqZ8PG+pv9UMLib9RzLPZ3LgA1O
-         YcY+dhdf59kfoOdZkNkz6DzEQ+SsR8nf0Iqfqx2s5Sx0pQLWwTRbvL1uZroUmwtWrIX2
-         Yf/vEbSSz0l7npHgYS+2a2xUUwGlE2WYKDRNdpy86JLKCsO1Hk5VSVITKJhHgCwdY+4K
-         C/Dw==
+        bh=AmiAFUWmc3T1ej5C6alEbnc8klyjc/DyvsLEQJhI0vk=;
+        b=LG3tLN/zNmIypQNQ2wiKg/ZzUEVQJe4cqK0bjnh+seYRGFagKJwGxkVWUlJQM59D69
+         HPLVurCrutRMRknRGP/eX/eRQM2kPMOYAR1G3V2jKF0d1Ixv3d01HK3DJVLa2023Mk5f
+         poBE3mMadTdthfMa+rMgg61IWlUhD/h7TYaqc8PI0SfYmFPDsNh4Ar00wHdkTzwDhg+b
+         4GMllCyfMbu4haMEyLNSJxcUaEOgWK8XGqPRjENn8Pxfxrc85FcVQE4KXb/GjX5uSY7Q
+         9JIeOWOadweUIOJwDaoAwBSGKWRa/DYSQ8zKch2iiIFRXl2voro0/tPrXWbeJnqXqHPa
+         JToQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=22FfvI2Ld4mCHPq5rjNg63Mu3JTg5FX2CkL3tUrVSbo=;
-        b=KnRhuqKs6Ihcj/XxNeEhmijG4JAFoB+QqYr/HBJiMrCRYA3m9bjvfkEhCjRUXdrTuS
-         LW06uyHKH2e4X1Mjd79HDlKy4bk3CRXNfhQ662QGQs3lPV+Gr7npFR8pYLdVCH3fH2O6
-         CAmpc1LUAHo5F32PCDQX8YWhaA8j2KhZLRTzk4pxD+OzP6ehBtV+NjcqSfMcBT7rhPr0
-         +GFiAI5T/AaV15WzMII6XK74vMi5gF8k0DN8NrHnJSUsI8Z6jVzNeYQYvrLuasS1PHl0
-         3gnTkJG3yHDdlwa3z8B5ZjIL85CRqgFPBnzEoN2SNLtNpyFim8X6BWTLRYvgsu9z7JMK
-         GEcg==
-X-Gm-Message-State: AOAM532+wBRNtuYWt/TJSoZSjabqlG6nnYv7J3biNYfx4LY+2YA1SR01
-        dQWfSl6YjhZnA52y6YOdNC7z9LCF4i4KQzCr1P4z4b/GLZbqqZbvwWzg+KmegYwoOWTkmiaEBNU
-        q3KY0GbNASYrzj6OKzPr2SLAXN9ObHPUlS73KfQNcn+7+PDeTfEd4gRt+RzCD4hU8QlPzt/yOfp
-        EM
-X-Google-Smtp-Source: ABdhPJz2l9OCWwLWmt6Lh8nEVLpH/Zolg5ArB+i2eO91kZZ8RBUqpBGp61w/cDNIjlgsw1a5yBLYpcTBwCQZxUhE2F/m
+        bh=AmiAFUWmc3T1ej5C6alEbnc8klyjc/DyvsLEQJhI0vk=;
+        b=cQ74mfcb2gZA61+vQd12xPGFIiGhKSyj/eg1+fJAivTTE4DpxlCNPdFDfRTGAqTncu
+         51vx7E3fgRvwxutl7U+JaKxQuRyaC/YI/cK1VuQcxyYFodPmDvGsNw2mODjXn7PAJlcV
+         08BcvoBKKDB5twQ/U9PZ865FiKItI/bfdEhgUkYFAd06m8mMxQkdErybvE6K7WuYj6PU
+         Steg+BzXH+L3t6nEnaFRSrIONL1u0dl+ueEKZeA1AZ7wFAM24DTGQml4mOfdBv1UWHSN
+         pvapiQfdHiRFD9PDGQC27oVTW6925UQ2zW2FD2TuDtU0OWsXIPAt8Vi9hUck5/3D16WZ
+         AIdw==
+X-Gm-Message-State: AOAM532AjfvSDHPK7JejXmTk5zgafAtlGMlRbbRCtR5iKO82bKiFYibc
+        HRPRohRhydN+UdDmR+qBtEJg+2p8Q/YfnQHuziGa1PaTiI+m6H44wR1TTBXslsSZuf6cynY8oP3
+        mZw2bAKiwOPK45twtcWADgXT9WsogfnxfcyVJTCH8pWNGufTTEcJ7/VhjAcwPozcnI0nOuhtTFG
+        SR
+X-Google-Smtp-Source: ABdhPJw87ltKJ3pRidfKZVohk7Lf0LaIHc31bmp1bJVaDM2m5vhmK5rXcjiYb3kY/mVjevcWxgpWkKmDB2fEKmj4KyWF
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a25:9108:: with SMTP id
- v8mr14839292ybl.460.1617930613225; Thu, 08 Apr 2021 18:10:13 -0700 (PDT)
-Date:   Thu,  8 Apr 2021 18:10:00 -0700
+ (user=jonathantanmy job=sendgmr) by 2002:a0c:f74d:: with SMTP id
+ e13mr12186703qvo.8.1617930614919; Thu, 08 Apr 2021 18:10:14 -0700 (PDT)
+Date:   Thu,  8 Apr 2021 18:10:01 -0700
 In-Reply-To: <cover.1617929278.git.jonathantanmy@google.com>
-Message-Id: <b07e52ec18f46fb85d49ba0e1e6e8ad22845af9e.1617929278.git.jonathantanmy@google.com>
+Message-Id: <7988c106873332ac6e5c2f9dd143cfa1f50e067c.1617929278.git.jonathantanmy@google.com>
 Mime-Version: 1.0
 References: <cover.1617929278.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.31.1.295.g9ea45b61b8-goog
-Subject: [PATCH 3/6] fetch-pack: refactor add_haves()
+Subject: [PATCH 4/6] fetch-pack: refactor command and capability write
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>
@@ -70,87 +70,86 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A subsequent commit will need part, but not all, of the functionality in
-add_haves(), so move some of its functionality to its sole caller
-send_fetch_request().
+A subsequent commit will need this functionality independent of the rest
+of send_fetch_request(), so put this into its own function.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- fetch-pack.c | 28 ++++++++++++----------------
- 1 file changed, 12 insertions(+), 16 deletions(-)
+ fetch-pack.c | 41 ++++++++++++++++++++++++-----------------
+ 1 file changed, 24 insertions(+), 17 deletions(-)
 
 diff --git a/fetch-pack.c b/fetch-pack.c
-index 9f3901cdba..128ad47d2a 100644
+index 128ad47d2a..512fe5450d 100644
 --- a/fetch-pack.c
 +++ b/fetch-pack.c
-@@ -1195,11 +1195,9 @@ static void add_common(struct strbuf *req_buf, struct oidset *common)
+@@ -1213,29 +1213,23 @@ static int add_haves(struct fetch_negotiator *negotiator,
+ 	return haves_added;
  }
  
- static int add_haves(struct fetch_negotiator *negotiator,
--		     int seen_ack,
- 		     struct strbuf *req_buf,
--		     int *haves_to_send, int *in_vain)
-+		     int *haves_to_send)
+-static int send_fetch_request(struct fetch_negotiator *negotiator, int fd_out,
+-			      struct fetch_pack_args *args,
+-			      const struct ref *wants, struct oidset *common,
+-			      int *haves_to_send, int *in_vain,
+-			      int sideband_all, int seen_ack)
++static void write_fetch_command_and_capabilities(struct strbuf *req_buf,
++						 const struct string_list *server_options)
  {
--	int ret = 0;
- 	int haves_added = 0;
- 	const struct object_id *oid;
+-	int haves_added;
+-	int done_sent = 0;
+ 	const char *hash_name;
+-	struct strbuf req_buf = STRBUF_INIT;
  
-@@ -1209,17 +1207,10 @@ static int add_haves(struct fetch_negotiator *negotiator,
- 			break;
+ 	if (server_supports_v2("fetch", 1))
+-		packet_buf_write(&req_buf, "command=fetch");
++		packet_buf_write(req_buf, "command=fetch");
+ 	if (server_supports_v2("agent", 0))
+-		packet_buf_write(&req_buf, "agent=%s", git_user_agent_sanitized());
++		packet_buf_write(req_buf, "agent=%s", git_user_agent_sanitized());
+ 	if (advertise_sid && server_supports_v2("session-id", 0))
+-		packet_buf_write(&req_buf, "session-id=%s", trace2_session_id());
+-	if (args->server_options && args->server_options->nr &&
++		packet_buf_write(req_buf, "session-id=%s", trace2_session_id());
++	if (server_options && server_options->nr &&
+ 	    server_supports_v2("server-option", 1)) {
+ 		int i;
+-		for (i = 0; i < args->server_options->nr; i++)
+-			packet_buf_write(&req_buf, "server-option=%s",
+-					 args->server_options->items[i].string);
++		for (i = 0; i < server_options->nr; i++)
++			packet_buf_write(req_buf, "server-option=%s",
++					 server_options->items[i].string);
  	}
  
--	*in_vain += haves_added;
--	if (!haves_added || (seen_ack && *in_vain >= MAX_IN_VAIN)) {
--		/* Send Done */
--		packet_buf_write(req_buf, "done\n");
--		ret = 1;
--	}
--
- 	/* Increase haves to send on next round */
- 	*haves_to_send = next_flush(1, *haves_to_send);
- 
--	return ret;
-+	return haves_added;
- }
- 
- static int send_fetch_request(struct fetch_negotiator *negotiator, int fd_out,
-@@ -1228,7 +1219,8 @@ static int send_fetch_request(struct fetch_negotiator *negotiator, int fd_out,
- 			      int *haves_to_send, int *in_vain,
- 			      int sideband_all, int seen_ack)
- {
--	int ret = 0;
+ 	if (server_feature_v2("object-format", &hash_name)) {
+@@ -1243,13 +1237,26 @@ static int send_fetch_request(struct fetch_negotiator *negotiator, int fd_out,
+ 		if (hash_algo_by_ptr(the_hash_algo) != hash_algo)
+ 			die(_("mismatched algorithms: client %s; server %s"),
+ 			    the_hash_algo->name, hash_name);
+-		packet_buf_write(&req_buf, "object-format=%s", the_hash_algo->name);
++		packet_buf_write(req_buf, "object-format=%s", the_hash_algo->name);
+ 	} else if (hash_algo_by_ptr(the_hash_algo) != GIT_HASH_SHA1) {
+ 		die(_("the server does not support algorithm '%s'"),
+ 		    the_hash_algo->name);
+ 	}
++	packet_buf_delim(req_buf);
++}
++
++static int send_fetch_request(struct fetch_negotiator *negotiator, int fd_out,
++			      struct fetch_pack_args *args,
++			      const struct ref *wants, struct oidset *common,
++			      int *haves_to_send, int *in_vain,
++			      int sideband_all, int seen_ack)
++{
 +	int haves_added;
 +	int done_sent = 0;
- 	const char *hash_name;
- 	struct strbuf req_buf = STRBUF_INIT;
++	struct strbuf req_buf = STRBUF_INIT;
++
++	write_fetch_command_and_capabilities(&req_buf, args->server_options);
  
-@@ -1312,9 +1304,13 @@ static int send_fetch_request(struct fetch_negotiator *negotiator, int fd_out,
- 	/* Add all of the common commits we've found in previous rounds */
- 	add_common(&req_buf, common);
- 
--	/* Add initial haves */
--	ret = add_haves(negotiator, seen_ack, &req_buf,
--			haves_to_send, in_vain);
-+	haves_added = add_haves(negotiator, &req_buf, haves_to_send);
-+	*in_vain += haves_added;
-+	if (!haves_added || (seen_ack && *in_vain >= MAX_IN_VAIN)) {
-+		/* Send Done */
-+		packet_buf_write(&req_buf, "done\n");
-+		done_sent = 1;
-+	}
- 
- 	/* Send request */
- 	packet_buf_flush(&req_buf);
-@@ -1322,7 +1318,7 @@ static int send_fetch_request(struct fetch_negotiator *negotiator, int fd_out,
- 		die_errno(_("unable to write request to remote"));
- 
- 	strbuf_release(&req_buf);
--	return ret;
-+	return done_sent;
- }
- 
- /*
+-	packet_buf_delim(&req_buf);
+ 	if (args->use_thin_pack)
+ 		packet_buf_write(&req_buf, "thin-pack");
+ 	if (args->no_progress)
 -- 
 2.31.1.295.g9ea45b61b8-goog
 
