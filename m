@@ -2,187 +2,280 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 83084C433ED
-	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 12:53:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B4FD8C433ED
+	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 13:35:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 504A0610FB
-	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 12:53:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8AE6D60241
+	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 13:35:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233483AbhDIMxX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Apr 2021 08:53:23 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:56989 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231127AbhDIMxX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Apr 2021 08:53:23 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 07916134581;
-        Fri,  9 Apr 2021 08:53:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=MUq5eD2RUt3Wo55IDjl2VnjQq
-        Ro=; b=kYKCRvjvhVTyqN5szArcGYax5krGRpbnhqoHdkGJjdLGkuAxQC0NN+EYN
-        KuO93kp2mAHag5DaS+oJywcZ3FnZSNKfkOWyoCdHt2GJ+VndqlqUT9o2B+pdh6qE
-        E8xRcy5teMY71kt1jT1o88Ts7yTcopEHdARa/8frgz2qnLdh1A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; q=dns; s=sasl; b=iqmzgHmv9O1YitZHGxP
-        /oSbXZo7amp2hkIhU5amZFb5jUBW/2pBr3qxD2F6MVwISE4Mi5QhTzPNEWxeTx+n
-        wJ9i2xieoUfaWaLtnj+sRuSYKKqNo+7Fkj6wKRZyGqk1miJEhzvsbia7cMgxh+q+
-        5N7IwtegaUt3JzwWsAWZU/BU=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 00B72134580;
-        Fri,  9 Apr 2021 08:53:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.243.138.161])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 4591F13457F;
-        Fri,  9 Apr 2021 08:53:07 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Lin Sun <lin.sun@zoom.us>,
-        =?utf-8?B?xJBvw6Bu?= =?utf-8?B?IFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>, David Aguilar <davvid@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH 4/5] config.c: add a "tristate" helper
-References: <cover-0.6-0000000000-20210408T133125Z-avarab@gmail.com>
-        <patch-4.6-222e91e11b-20210408T133125Z-avarab@gmail.com>
-        <xmqqa6q8tymu.fsf@gitster.g> <875z0wicmp.fsf@evledraar.gmail.com>
-        <xmqqtuogpc6f.fsf@gitster.g> <87o8eogs2r.fsf@evledraar.gmail.com>
-Date:   Fri, 09 Apr 2021 05:53:05 -0700
-Message-ID: <xmqq35vzoc0e.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S231127AbhDINgI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Apr 2021 09:36:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44864 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233705AbhDINgF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Apr 2021 09:36:05 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 604D2C061760
+        for <git@vger.kernel.org>; Fri,  9 Apr 2021 06:35:51 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id n11-20020a05600c4f8bb029010e5cf86347so5447070wmq.1
+        for <git@vger.kernel.org>; Fri, 09 Apr 2021 06:35:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:mime-version:content-transfer-encoding
+         :fcc:to:cc;
+        bh=V1PIIIBg54bmeDn8fMecZZNus6JeTs7ldJJev7bUTdg=;
+        b=qe7Hf83nydataoeT/tA3awNDUqmy09bLp0fwVNdbZdUgSbo26UtkWF3OWGiSk4I1n2
+         PRQBys0MUaNZmH6kdbYpoL7r0EU9SKLYl6STIDaIu95UJO0OztSFuOb+2fGUz36sXE1D
+         EsRFvwSUFTpgk6zKOOSO8y4HmCmxklq7RpdxforWdWur0+/8v2JZRP5S0NzgIl8UclLQ
+         k34q7e2SNWvN8Dv1LngVca7sCVl+G8DNkDGyZ3BwAiPeFOk6AHMkPT1KwtiujHiFiQ2L
+         DswLSDkz/JjiCEYOZgMZLuTRKQAT6E2HfCB6nGxMENGAAvlpPgTyut0AxhgvjNV1iL6a
+         UjIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=V1PIIIBg54bmeDn8fMecZZNus6JeTs7ldJJev7bUTdg=;
+        b=UTiTso91fN/MaizEP8DlDzZS//QGtPZIocEJACeah4SA7IPhFyXwSImVCHPMD4Bud3
+         7GshqxTiEMxk178CTis8QTYGfxSQcx0IyjtE+B/B5UUcYwANm3dyy5hV3yYCfMiEekVr
+         PxedITUCAwUx+zgG142zr19OLUOIAdEYhnr1tDjNddomMGb9LmlAIVAv/sCZ01gHByff
+         PW+uxEm1X4MMHPDEpph4N0MYciXTGjloYINOBbjOKPEhv/nIQwdKIvQpGIhUvqWn5X00
+         rYDTOgwyGWHLgs59gd6BDTSw6I++OMisG0Wg/8Kzsrxkt1Tlbx6w98vPgXP8yzjnwOFg
+         fcqw==
+X-Gm-Message-State: AOAM530VN+D3FvjjnWxJ+coJC9h8VC/foJbgsaH2cCAB3UqzNunvqTL2
+        Tw26RG3Fvrp0Pps3miVMGXUI4Lec2tM=
+X-Google-Smtp-Source: ABdhPJyDxCEFazuiqgvKurDqnLZCwMcdVx52i45BBLkC2em4WrWdYWyfGuNkLUJzaqZ9uXKMKDXj0w==
+X-Received: by 2002:a1c:4686:: with SMTP id t128mr13749933wma.156.1617975350109;
+        Fri, 09 Apr 2021 06:35:50 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id m3sm4625390wme.40.2021.04.09.06.35.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 09 Apr 2021 06:35:49 -0700 (PDT)
+Message-Id: <pull.928.git.1617975348494.gitgitgadget@gmail.com>
+From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 09 Apr 2021 13:35:47 +0000
+Subject: [PATCH] [GSOC] ref-filter: get rid of show_ref_array_item
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 87F03616-9932-11EB-9CA4-E43E2BB96649-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Hariom Verma <hariom18599@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        ZheNing Hu <adlternative@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+From: ZheNing Hu <adlternative@gmail.com>
 
-> The benefit in this case is to human readers of the code who know
-> they're being helped by the enum checking in "case" arms.
+When we use `git for-each-ref`, every ref will call
+`show_ref_array_item()` and allocate its own final strbuf.
+But we can reuse the final strbuf for each step ref's output.
+Since `show_ref_array_item()` is not used in many places,
+we can directly delete `show_ref_array_item()` and use the
+same logic code to replace it. In this way, the caller can
+clearly see how the loop work.
 
-Well, do we have tristate that is handled with switch/case?  And
-more importantly, do tristates benefit from getting handled with
-switch/case?
+The performance for `git for-each-ref` on the Git repository
+itself with performance testing tool `hyperfine` changes from
+23.7 ms ± 0.9 ms to 22.2 ms ± 1.0 ms.
 
-The one I cited as an existing example to decide that we should
-favour "special case 'auto' and then let it fall through to the
-normal bool" is in userdiff.c
+At the same time, we apply this optimization to `git tag -l`
+and `git branch -l`, the `git branch -l` performance upgrade
+from 5.8 ms ± 0.8 ms to 2.7 ms ± 0.2 ms and `git tag -l`
+performance upgrade from 5.9 ms ± 0.4 ms to 5.4 ms ± 0.4 ms.
+Since the number of tags in git.git is much more than branches,
+so this shows that the optimization will be more obvious in
+those repositories that contain a small number of objects.
 
-        static int parse_tristate(int *b, const char *k, const char *v)
-        {
-                if (v && !strcasecmp(v, "auto"))
-                        *b =3D -1;
-                else
-                        *b =3D git_config_bool(k, v);
-                return 0;
-        }
+This approach is similar to the one used by 79ed0a5
+(cat-file: use a single strbuf for all output, 2018-08-14)
+to speed up the cat-file builtin.
 
-and the caller uses it to set -1/0/1 in driver->binary member.
+Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+---
+    [GSOC] ref-filter: get rid of show_ref_array_item
+    
+    Now git for-each-ref can reuse final buf for all refs output, the
+    performance is slightly improved, This optimization is also applied to
+    git tag -l and git branch -l.
+    
+    Thanks.
 
-And the member is often used like so:
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-928%2Fadlternative%2Fref-filter-reuse-buf-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-928/adlternative/ref-filter-reuse-buf-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/928
 
-	... else if (userdiff->binary !=3D -1) {
-		is_binary =3D userdiff->binary;
-	} else {
-		is_binary =3D auto_detect_based_on_contents(...);
-	}
-	if (is_binary) {
-		... do the binary thing ...
-	}
+ builtin/branch.c       |  8 ++++----
+ builtin/for-each-ref.c | 13 +++++++++++--
+ builtin/tag.c          | 13 +++++++++++--
+ ref-filter.c           | 24 +++++++++---------------
+ ref-filter.h           |  2 --
+ 5 files changed, 35 insertions(+), 25 deletions(-)
 
-This is because "auto" is the only value among the three that needs
-"preprocessing" before it is turned into a concrete yes/no that is
-usable in the downstream code.  So with AUTO being the only spelled
-out value, a construct like this:
+diff --git a/builtin/branch.c b/builtin/branch.c
+index bcc00bcf182d..5c797e992aa4 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -411,6 +411,8 @@ static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sortin
+ {
+ 	int i;
+ 	struct ref_array array;
++	struct strbuf out = STRBUF_INIT;
++	struct strbuf err = STRBUF_INIT;
+ 	int maxwidth = 0;
+ 	const char *remote_prefix = "";
+ 	char *to_free = NULL;
+@@ -440,8 +442,7 @@ static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sortin
+ 	ref_array_sort(sorting, &array);
+ 
+ 	for (i = 0; i < array.nr; i++) {
+-		struct strbuf out = STRBUF_INIT;
+-		struct strbuf err = STRBUF_INIT;
++		strbuf_reset(&out);
+ 		if (format_ref_array_item(array.items[i], format, &out, &err))
+ 			die("%s", err.buf);
+ 		if (column_active(colopts)) {
+@@ -452,10 +453,9 @@ static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sortin
+ 			fwrite(out.buf, 1, out.len, stdout);
+ 			putchar('\n');
+ 		}
+-		strbuf_release(&err);
+-		strbuf_release(&out);
+ 	}
+ 
++	strbuf_release(&out);
+ 	ref_array_clear(&array);
+ 	free(to_free);
+ }
+diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+index cb9c81a04606..157cc8623949 100644
+--- a/builtin/for-each-ref.c
++++ b/builtin/for-each-ref.c
+@@ -22,6 +22,8 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
+ 	struct ref_array array;
+ 	struct ref_filter filter;
+ 	struct ref_format format = REF_FORMAT_INIT;
++	struct strbuf output = STRBUF_INIT;
++	struct strbuf err = STRBUF_INIT;
+ 
+ 	struct option opts[] = {
+ 		OPT_BIT('s', "shell", &format.quote_style,
+@@ -80,8 +82,15 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
+ 
+ 	if (!maxcount || array.nr < maxcount)
+ 		maxcount = array.nr;
+-	for (i = 0; i < maxcount; i++)
+-		show_ref_array_item(array.items[i], &format);
++	for (i = 0; i < maxcount; i++) {
++		strbuf_reset(&output);
++		if (format_ref_array_item(array.items[i], &format, &output, &err))
++			die("%s", err.buf);
++		fwrite(output.buf, 1, output.len, stdout);
++		putchar('\n');
++	}
++
++	strbuf_release(&output);
+ 	ref_array_clear(&array);
+ 	return 0;
+ }
+diff --git a/builtin/tag.c b/builtin/tag.c
+index d403417b5625..b172f3861413 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -39,6 +39,8 @@ static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting,
+ 		     struct ref_format *format)
+ {
+ 	struct ref_array array;
++	struct strbuf output = STRBUF_INIT;
++	struct strbuf err = STRBUF_INIT;
+ 	char *to_free = NULL;
+ 	int i;
+ 
+@@ -63,8 +65,15 @@ static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting,
+ 	filter_refs(&array, filter, FILTER_REFS_TAGS);
+ 	ref_array_sort(sorting, &array);
+ 
+-	for (i = 0; i < array.nr; i++)
+-		show_ref_array_item(array.items[i], format);
++	for (i = 0; i < array.nr; i++) {
++		strbuf_reset(&output);
++		if (format_ref_array_item(array.items[i], format, &output, &err))
++			die("%s", err.buf);
++		fwrite(output.buf, 1, output.len, stdout);
++		putchar('\n');
++	}
++
++	strbuf_release(&output);
+ 	ref_array_clear(&array);
+ 	free(to_free);
+ 
+diff --git a/ref-filter.c b/ref-filter.c
+index f0bd32f71416..9e38e42fb7ae 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -2435,27 +2435,21 @@ int format_ref_array_item(struct ref_array_item *info,
+ 	return 0;
+ }
+ 
+-void show_ref_array_item(struct ref_array_item *info,
+-			 const struct ref_format *format)
+-{
+-	struct strbuf final_buf = STRBUF_INIT;
+-	struct strbuf error_buf = STRBUF_INIT;
+-
+-	if (format_ref_array_item(info, format, &final_buf, &error_buf))
+-		die("%s", error_buf.buf);
+-	fwrite(final_buf.buf, 1, final_buf.len, stdout);
+-	strbuf_release(&error_buf);
+-	strbuf_release(&final_buf);
+-	putchar('\n');
+-}
+-
+ void pretty_print_ref(const char *name, const struct object_id *oid,
+ 		      const struct ref_format *format)
+ {
+ 	struct ref_array_item *ref_item;
++	struct strbuf output = STRBUF_INIT;
++	struct strbuf err = STRBUF_INIT;
++
+ 	ref_item = new_ref_array_item(name, oid);
+ 	ref_item->kind = ref_kind_from_refname(name);
+-	show_ref_array_item(ref_item, format);
++	if (format_ref_array_item(ref_item, format, &output, &err))
++		die("%s", err.buf);
++	fwrite(output.buf, 1, output.len, stdout);
++	putchar('\n');
++
++	strbuf_release(&output);
+ 	free_array_item(ref_item);
+ }
+ 
+diff --git a/ref-filter.h b/ref-filter.h
+index 19ea4c413409..baf72a718965 100644
+--- a/ref-filter.h
++++ b/ref-filter.h
+@@ -119,8 +119,6 @@ int format_ref_array_item(struct ref_array_item *info,
+ 			  const struct ref_format *format,
+ 			  struct strbuf *final_buf,
+ 			  struct strbuf *error_buf);
+-/*  Print the ref using the given format and quote_style */
+-void show_ref_array_item(struct ref_array_item *info, const struct ref_format *format);
+ /*  Parse a single sort specifier and add it to the list */
+ void parse_ref_sorting(struct ref_sorting **sorting_tail, const char *atom);
+ /*  Callback function for parsing the sort option */
 
-	if ((driver->binary !=3D TRISTATE_AUTO)=20
-	    ? driver->binary : auto_detect())
-		...; /* do the binary thing */
-	else
-		...; /* do the non-binary thing */
-
-would be sufficient to help human readers.  You do not need enum
-to help, and you do not need switch/case.
-
-You could use switch/case with enum if you really wanted to, but
-
-	switch (temp =3D driver->binary) {
-	case TRISTATE_AUTO:
-		temp =3D auto_detect();
-                break; /* ????? */
-	case TRISTATE_FALSE:
-		/* do the non-binary thing */
-		...;
-		break;
-	case TRISTATE_TRUE:
-		/* do the binary thing */
-		...;
-		break;
-	}
-
-would not be a useful construct for the "auto" use case, where
-tristate is used to mean "we cannot decide at the configuration
-time, as the appropriate value depends on other factors that are
-available when it actually is used, e.g. the contents in the buffer,
-if fd=3D1 is connected to the terminal, etc."
-
-If you really wanted to, you could still use switch/case for such a
-use case, perhaps like this:
-
-	switch (temp =3D driver->binary) {
-	case TRISTATE_AUTO:
-		temp =3D auto_detect();
-		/* fallthrough */
-	default:
-		if (!temp) { /* TRISTATE_FALSE */
-			/* do the non-binary thing */
-			...;
-		} else { /* TRISTATE_TRUE */
-			/* do the binary thing */
-			...;
-		}
-		break;
-	}
-
-and switch may help making sure that all enum values are handled,
-but I do not see a value in it.  The earlier code that used "if
-auto, run autodetect, otherwise use the value as is" as the
-condition for an if/else statement would be far easier to follow,
-and equally safe.
-
-> ... in config.c in the future it makes sense to pass a pointer to a
-> "is_auto" parameter to these new tristate() functions, similar to
-> e.g. the existing git_config_bool_or_int().
-
-I am not sure what you are trying to gain by introducing is_auto
-here.
-
-For bool_or_int(), is_bool pointer makes perfect sense, because the
-value spelled as "true" cannot be anything but bool, but "1" can be
-either boolean true or an integer.  An extra is_bool bit can be used
-by callers that care if the user said "true/yes" or "1" and want to
-behave differently, when the configuration can take either bool or
-integer.  For example, if you originally have a "do you want this
-operation to be verbose?" yes/no variable, and later extended it to
-add verbosity level, "yes/true" might mean "yes, please use the
-default verbosity level", while "1", "2", ... would mean "yes, and
-please set the verbosity level to this number".  And the default
-verbosity level may not be "1", so the distinction between "yes" and
-"1" does matter.
-
-I do not see such a disambiguation need for tristate parsing, so the
-immense usefulness of is_bool is not a good analogy to draw value for
-the proposed is_auto from.
-
-Thanks.
+base-commit: 2e36527f23b7f6ae15e6f21ac3b08bf3fed6ee48
+-- 
+gitgitgadget
