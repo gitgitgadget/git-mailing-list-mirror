@@ -7,105 +7,134 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B55E9C43460
-	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 21:20:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E48CC433B4
+	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 21:27:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 93FC7610F9
-	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 21:20:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0F25B61182
+	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 21:27:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234579AbhDIVVC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Apr 2021 17:21:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34210 "EHLO
+        id S234505AbhDIV1n (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Apr 2021 17:27:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234574AbhDIVVB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Apr 2021 17:21:01 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 162DFC061762
-        for <git@vger.kernel.org>; Fri,  9 Apr 2021 14:20:48 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id sd23so2119989ejb.12
-        for <git@vger.kernel.org>; Fri, 09 Apr 2021 14:20:48 -0700 (PDT)
+        with ESMTP id S234333AbhDIV1m (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Apr 2021 17:27:42 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81EEDC061762
+        for <git@vger.kernel.org>; Fri,  9 Apr 2021 14:27:27 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id z1so8131158edb.8
+        for <git@vger.kernel.org>; Fri, 09 Apr 2021 14:27:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=AXA+Yikow8teRqWzh5JII8yxGsvjbvvE2A9UT6zvkng=;
-        b=mlbAbfBl/W1nV8fT0GQ1T9fgvOeHbiwQfQ3u+mdc+2ytzsndXqT2MfUlSC7Hl6Wk7N
-         6Y2JeeftBq4+KdaSGov8XQwtXBk2nqN17+ExZ0m9ki4cSkeVhRvjvIJO4u/wt49hck9w
-         GXED37UJpGKPi6Iv0ZdhhBa4dAjM2XbMguSnFpx+h+hcv0phdNsuZdmLLbiOw9FbAdV4
-         R+cb2E91dlA2pGadwYULcI/RwvuGYCRKvL1Ifv5J3Wv38iyNTNMTDrocH1gUQV+hh+iA
-         Q4WpUe67ToWf0hECr0ianp1XwtvgFJC1QhO6Y0JQkyvhWXjPpUb0zxpcP22uYXT5vCiW
-         hNAQ==
+        bh=BuCiBGb82Z0RNxuGJ5+8YWRkYBibE/mNJ1Y9fyzEoa0=;
+        b=GBOBTRunvk6gZbviuGXNAVnhIH64v5Fifsvr6FDrz8CZw3WQoi5X3rHs9tWIXSGAu9
+         0Cu2PRDP2Hp3wpNnCKaZQDOynopSK4MVqgD4niwxpGrLUm/c/dX9hX/ruAY6fLwaslFq
+         /kgUZ1RiKsE3UwxpRE60mGxYXWcfP+3Fq2ms/VrDH9K7VPieH6BPTMVnR7U4QTZrXQms
+         mWTnAf31yEAvvOkg+agXG/JORE4GXd/uWM7BUxSNA2myiqxe3SOCVSmgwTDH4D0PsQ8K
+         xzxQTjU7qHd6l9hXzJbuLoiUUYkTNELp5CjXlQU4bMJjfio9Z0N9kt5VKciKHDKyXEAN
+         bhYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to;
-        bh=AXA+Yikow8teRqWzh5JII8yxGsvjbvvE2A9UT6zvkng=;
-        b=j5sHYV8WByi/10FWTBgi/N7e3Wq42QiA6fb8VFNiCg2F6xvrch8nNiSSfG4CBzLBhh
-         apD4gq+a+hPIWzbNO1ox89O6TSljKiOt1/bop1y6EhqaI1P3e7Lr1rczlkliSXtcRPds
-         xzNT2XsiC1/iiBOh6B9nWXQNWLFMCXWZ6oSJhb+fXlGC+iYpVv8Hw3XfcSvFncdDd5Zo
-         LHfXxf2yLi5wiyVtpBwbBiM5x/CeBXJNnXfF6vurls3ayBWJjg0W7i6jJK6D2INum/V5
-         VEFjINws47OYU6FSKAfxcvtrSyX/mORUyQaKyHDK/cNfhR7cXSbUKOshU7MtQlYUX8uw
-         ObGg==
-X-Gm-Message-State: AOAM533BQ5iJdX8zbJ95S+wyhwg24cHqL9kczc1eesjBO6ViWcVQXZhd
-        rAAUpPfxnED8bpKeMAcG+MOltr0Rxqo=
-X-Google-Smtp-Source: ABdhPJwJsHfnr70OeU4D6VwCumhsx1py2lneueSTIp1ZMqm1lXrdMw7RfgbrgmIA9OlGRBiZEjidrg==
-X-Received: by 2002:a17:906:c058:: with SMTP id bm24mr18039741ejb.335.1618003246893;
-        Fri, 09 Apr 2021 14:20:46 -0700 (PDT)
+        bh=BuCiBGb82Z0RNxuGJ5+8YWRkYBibE/mNJ1Y9fyzEoa0=;
+        b=peLu+48lO1Tpt+gPRWPc5ATORO3kch1ybMhb/btX0YIXVvziq0VBoGP4VBZHIjWoqA
+         z8CiRorp2F68fb+VyRAHYm4F8cKDUkP1+MqdPLmpgVqMNhHXqDldgOWU15UpuiGQRuth
+         tPGxPpmc+Tm9FUSUhSjQF8fvQ59JjgNSoUZMuuKSVyZTNJJkfXnJxcrCfUbQN8kzIuzo
+         SSu2PBjpDlD7Q438YmdHGL945Yn8MiNYnZkLMSK+RlpGR2cq0PgMmFZVfMPVa+ekbb9P
+         1bs5GUVC/oh/oIDiDBlJtMJqwc/KedMX/ZHojhtMGVcmPf20uB2WTa0mRcT7WmdGVUPd
+         qFlg==
+X-Gm-Message-State: AOAM532/RpD21w4+3l3Mcmhv9Wgu58fy8IPgkGF4+DpJrHlP1La+0Mwl
+        kibUmWoEz2FNAwWL/Na5CH8=
+X-Google-Smtp-Source: ABdhPJxRK3ns6HBY3qPrdBxBBnRHOdxjtlQghfRq2t3t+IFNq2m4sqnd90VFeWuKunasOfJ6fQJ34w==
+X-Received: by 2002:a05:6402:27d4:: with SMTP id c20mr19464071ede.271.1618003646335;
+        Fri, 09 Apr 2021 14:27:26 -0700 (PDT)
 Received: from szeder.dev (94-21-23-40.pool.digikabel.hu. [94.21.23.40])
-        by smtp.gmail.com with ESMTPSA id g20sm2058035edb.7.2021.04.09.14.20.45
+        by smtp.gmail.com with ESMTPSA id ck29sm2037435edb.47.2021.04.09.14.27.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Apr 2021 14:20:46 -0700 (PDT)
-Date:   Fri, 9 Apr 2021 23:20:44 +0200
+        Fri, 09 Apr 2021 14:27:26 -0700 (PDT)
+Date:   Fri, 9 Apr 2021 23:27:24 +0200
 From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Jeff King <peff@peff.net>
+To:     Emily Shaffer <emilyshaffer@google.com>
 Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Makefile: add missing dependencies of 'config-list.h'
-Message-ID: <20210409212044.GD2947267@szeder.dev>
-References: <20200416211807.60811-2-emilyshaffer@google.com>
- <20210408212915.3060286-1-szeder.dev@gmail.com>
- <87pmz4ig4o.fsf@evledraar.gmail.com>
- <YG+UeQRwdBsVeRNV@coredump.intra.peff.net>
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH v13 4/5] bugreport: add uname info
+Message-ID: <20210409212724.GE2947267@szeder.dev>
+References: <20200416211807.60811-1-emilyshaffer@google.com>
+ <20200416211807.60811-5-emilyshaffer@google.com>
+ <87mtu8ifmj.fsf@evledraar.gmail.com>
+ <xmqqv98wquqp.fsf@gitster.g>
+ <87h7kgieyh.fsf@evledraar.gmail.com>
+ <YG+Ux3UKJDa4yWUr@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <YG+UeQRwdBsVeRNV@coredump.intra.peff.net>
+In-Reply-To: <YG+Ux3UKJDa4yWUr@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 08, 2021 at 07:40:41PM -0400, Jeff King wrote:
-> On Fri, Apr 09, 2021 at 12:08:23AM +0200, Ævar Arnfjörð Bjarmason wrote:
-> 
-> > > -config-list.h:
-> > > +config-list.h: Documentation/*config.txt Documentation/config/*.txt
-> > >  	$(QUIET_GEN)$(SHELL_PATH) ./generate-configlist.sh \
-> > >  		>$@+ && mv $@+ $@
-> > >  
-> > >  command-list.h: generate-cmdlist.sh command-list.txt
-> > >  
-> > > -command-list.h: $(wildcard Documentation/git*.txt) Documentation/*config.txt Documentation/config/*.txt
-> > > +command-list.h: $(wildcard Documentation/git*.txt)
-> > >  	$(QUIET_GEN)$(SHELL_PATH) ./generate-cmdlist.sh \
-> > >  		$(patsubst %,--exclude-program %,$(EXCLUDED_PROGRAMS)) \
-> > >  		command-list.txt >$@+ && mv $@+ $@
+On Thu, Apr 08, 2021 at 04:41:59PM -0700, Emily Shaffer wrote:
+> On Fri, Apr 09, 2021 at 12:33:42AM +0200, Ævar Arnfjörð Bjarmason wrote:
+> > On Fri, Apr 09 2021, Junio C Hamano wrote:
+> > > By the way, what's this sudden interest in re-reviewing an age old
+> > > topic?
 > > 
-> > This change makes sense.
+> > The thread got bumped by SZEDER in [1] and I'd read an April date
+> > without noticing the year, so I see this has long-since landed,
+> > nevermind :)
+> > 
+> > 1. https://lore.kernel.org/git/20200416211807.60811-2-emilyshaffer@google.com/
 > 
-> I agree it looks like it's moving in the right direction, but I am
-> slightly puzzled by the existing code. Why do we need to use $(wildcard)
-> for git*.txt, but not for the others?
+> Phew, you scared me :)
 
-We don't need $(wildcard) for git*.txt either, because 'make' expands
-wildcards in prerequisites, see e.g.:
+Doesn't the output of your bugreport tests scares you?
 
-  https://www.gnu.org/software/make/manual/html_node/Wildcard-Examples.html
+  Initialized empty Git repository in /home/szeder/src/git/t/trash directory.t0091-bugreport/.git/
+  expecting success of 0091.1 'creates a report with content in the right places': 
+  	test_when_finished rm git-bugreport-check-headers.txt &&
+  	git bugreport -s check-headers &&
+  	check_all_headers_populated <git-bugreport-check-headers.txt
+  
+  Created new report at 'git-bugreport-check-headers.txt'.
+  grep: Thank you for filling out a Git bug report!: No such file or directory
+  grep: Please answer the following questions to help us understand your issue.: No such file or directory
+  grep: : No such file or directory
+  grep: What did you do before the bug happened? (Steps to reproduce your issue): No such file or directory
+  grep: : No such file or directory
+  grep: What did you expect to happen? (Expected behavior): No such file or directory
+  grep: : No such file or directory
+  grep: What happened instead? (Actual behavior): No such file or directory
+  grep: : No such file or directory
+  grep: What's different between what you expected and what actually happened?: No such file or directory
+  grep: : No such file or directory
+  grep: Anything else you want to add:: No such file or directory
+  grep: : No such file or directory
+  grep: Please review the rest of the bug report below.: No such file or directory
+  grep: You can delete any lines you don't wish to share.: No such file or directory
+  grep: : No such file or directory
+  grep: : No such file or directory
+  grep: [System Info]: No such file or directory
+  grep: git version:: No such file or directory
+  grep: git version 2.31.0.7.ga9ff022d9b: No such file or directory
+  grep: cpu: x86_64: No such file or directory
+  grep: built from commit: a9ff022d9b49e64336612f89100eb5220ed793bd: No such file or directory
+  grep: sizeof-long: 8: No such file or directory
+  grep: sizeof-size_t: 8: No such file or directory
+  grep: shell-path: /bin/sh: No such file or directory
+  grep: uname: Linux 5.10.17-051017-generic #202102170631 SMP Wed Feb 17 11:37:41 UTC 2021 x86_64: No such file or directory
+  grep: compiler info: gnuc: 9.3: No such file or directory
+  grep: libc info: glibc: 2.31: No such file or directory
+  grep: $SHELL (typically, interactive shell): /bin/bash: No such file or directory
+  grep: : No such file or directory
+  grep: : No such file or directory
+  grep: [Enabled Hooks]: No such file or directory
+  
+  ok 1 - creates a report with content in the right places
 
-
-On a related note: all config variables are now listed in
-Documentation/config/*.txt; Documentation/*config.txt doesn't contain
-any, so that could be removed.
+It does scare me...
 
