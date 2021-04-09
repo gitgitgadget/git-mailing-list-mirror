@@ -2,333 +2,254 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,URIBL_BLOCKED autolearn=ham
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 61353C433B4
-	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 14:00:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 30707C43462
+	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 14:35:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3A9F161182
-	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 14:00:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0E81060190
+	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 14:35:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231946AbhDIOA6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Apr 2021 10:00:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50446 "EHLO
+        id S233880AbhDIOfm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Apr 2021 10:35:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57980 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232884AbhDIOA4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Apr 2021 10:00:56 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37F2CC061760
-        for <git@vger.kernel.org>; Fri,  9 Apr 2021 07:00:43 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id b4so9864963lfi.6
-        for <git@vger.kernel.org>; Fri, 09 Apr 2021 07:00:43 -0700 (PDT)
+        with ESMTP id S233468AbhDIOfl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Apr 2021 10:35:41 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F230C061760
+        for <git@vger.kernel.org>; Fri,  9 Apr 2021 07:35:26 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id 184so6728526ljf.9
+        for <git@vger.kernel.org>; Fri, 09 Apr 2021 07:35:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=korea-ac-kr.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=HIyudkNOhpi7XGR/29zOXR4WYAwP0X90gLl2RtSPfnI=;
-        b=htiVh6V+QKYx5oKe9KsCpMVMAfltoowYWyOU3q+uaPJvdO3UIkVAhV4pCLrEOnHSnG
-         eG3WCPkIJ7HW/37mDbH3QWJzHmQxs+rjR/Bf17Bdmg0hdIqm6fqgHielof8oIfGnRgs3
-         0LoDX6kXC2herfL2w8S3OTFAd7JWGgvKxkkgKv4MXY0cVgDhizIp6xhk6BPvWfDRAFbm
-         xzhm8XzOrFgYp2Fc9J1GCdR6nKEFFln7nTiiGNj+secxMAElA42D1Ha3rJCcuoLWZ744
-         NNRM46OJ3IcxbSFboaXjRfyG3fCgEs3WMtOERHW3m/AtTfl/dc2cZD2Tlr++VCUzzZyx
-         ppJA==
+        d=usp.br; s=usp-google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=8Fm1BsgqWXUVXz57uOuyV/THOFFyrCIDq3kS4IEkp4w=;
+        b=PMe46jXLxGuvy8dlTWofzl8rJBDoLfrcOTCg8e7xT518hgCpXqKZOrkxMRwpVBLwYv
+         cxjNqaMo1wpfWnWzX+4FrPqguCvIZC+6q97TOwy1F7fJdXM2UtxkNfHC1KFgl7byGZN5
+         nTnuFLqaszCBxrVTXE2oHQv1Eg7w+WspkmF/N14NOcaMQ0b6fX8EhELGgVbaOVnajXsW
+         uxwe6FEdpvPjLma0jal2ngI7HbByiTeC+Nb+yj2fnuIn55kXjpZ5D3r+fpX3uhATPyMZ
+         tLBrUnSQqCiYxkgI1ykEqUo8/8wr87RiThZxE4MbJvmWWYEmgtpkqzkQvdUTPXGeGSBz
+         VGBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=HIyudkNOhpi7XGR/29zOXR4WYAwP0X90gLl2RtSPfnI=;
-        b=ZLmaDKnLOCsXrXydDKhNn1a3ZiGvT1Z7DKGLnEPqNkKjZTKsv4WzptupKBD+ZK1DIN
-         fTMLfYGv0qll6KI2xjoGRGY1WByLyS+XVPj29cmFTLAyL6iNfnlq6SU9LZ42BqnPQU+e
-         BHkz8t1eVIk+dnnnBkBxE+2qm1gGNGnUpAMAvRdCf3Dw/IYlV8jzWWBCy57OpFDsBjw8
-         450NxlBB0Xe8xuu/GooSWvcDdtg+8GC69wxXzTqNoqYCAb6K/aT7oPWNXkOfTZNrPFj+
-         QkkcJWZVUcdNPU/3JHQ4MsLyL2KjAfmOXRYL8ZdYBMjVssRthXeEejKugHG3Iz7toDPw
-         oxsQ==
-X-Gm-Message-State: AOAM53241pzsBcKPj6dClw/bTtBwhKjDd2NK3D12vNhBmTrHKd//RGRB
-        Q5XdnXHgh/nrYoRT8nd3F0/gUeGibtZ2B8RynCCAbK7b230zdA==
-X-Google-Smtp-Source: ABdhPJwmbA/FYKya5uUw1ogsOW6QsqV4axvC8f08mBCXtNfZTF60Uto+7rbBk+nfzkhN1QU+Wl4DmaJaEZWDZ+R2aCo=
-X-Received: by 2002:a05:6512:21c2:: with SMTP id d2mr10141467lft.424.1617976840813;
- Fri, 09 Apr 2021 07:00:40 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=8Fm1BsgqWXUVXz57uOuyV/THOFFyrCIDq3kS4IEkp4w=;
+        b=Sm537F0D4EtBJYjS+CDeH+lWdXhI41923E1OvAWKM7bCtKdNs34M+GKnpMU9i0FcDP
+         ww2+d57UkvvkYlsR8lH6u/0YrUm7Qk90Z3itQ+SQccFcAVbF5Lx7GoXcghWyF4EtEXmA
+         +Gy35rHrOQV2vVPVlPOcoX0mZ0QRtX6ApPAJgOfbIyQQTESDeKg6tLXXG71FEV0EpJrE
+         ifdt+alkR/FCBiozWVWUIWrssPoCpqjiqqnTT0VmUVo2xNJL1CYMDpu4Q5DzRF/sWLet
+         Y+DDavOr3mTzV5mMvYUupBZwRxHX4cFbarHHQq1YOI86gCjMFbbi1dfy22NLJcTtSgqD
+         JARg==
+X-Gm-Message-State: AOAM533d6Y5/kGeih8srnbEu4IwhrPZPqC1MQrLvKoPsV8xOpJN5NtVU
+        RbwAEoL/lei1dOH5FoFGabtl+oW+1lApQc8PWksfnQ==
+X-Google-Smtp-Source: ABdhPJz7wLObvvZxubNm0F+eAmxHl1oO/FYgNtWiGqmuxZ5g4xH7sF4hJh5Ov+qFurXfvBzONGicg4xDOr9e33sKU2U=
+X-Received: by 2002:a2e:6a12:: with SMTP id f18mr6114666ljc.113.1617978924939;
+ Fri, 09 Apr 2021 07:35:24 -0700 (PDT)
 MIME-Version: 1.0
-From:   =?UTF-8?B?4oCN7Jqw7Iq57ZuIWyDrjIDtlZnsm5DshJ3Ct+uwleyCrO2Gte2VqeqzvOygleyImOujjOyXsA==?=
-         =?UTF-8?B?6rWsKOyerO2VmSkgLyDsu7Ttk6jthLDtlZnqs7wgXQ==?= 
-        <seunghoonwoo@korea.ac.kr>
-Date:   Fri, 9 Apr 2021 22:59:44 +0900
-Message-ID: <CAPb83E_r-gx-zDU1eLwPLfC_Zd-4Hyb_x6t_s_pGHwfxuQ0+vQ@mail.gmail.com>
-Subject: Possible memory leak bug reports for the latest "git" repository.
-To:     git@vger.kernel.org
-Cc:     hanjiyeon0@gmail.com
+References: <20210408233936.533342-1-emilyshaffer@google.com> <20210408233936.533342-3-emilyshaffer@google.com>
+In-Reply-To: <20210408233936.533342-3-emilyshaffer@google.com>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Fri, 9 Apr 2021 11:35:13 -0300
+Message-ID: <CAHd-oW4VoBbZHc7cLdn0LPM531qNDGOfwPZdKiKoG4BoRFaqdg@mail.gmail.com>
+Subject: Re: [RFC PATCH 2/2] config: add 'config.superproject' file
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Git Development team.
+Hi, Emily
 
-Hi.
-Recently, we discovered that the vulnerable code of CVE-2019-9169 is
-included in the latest version (v2.31.1) of your source repository
-(https://github.com/git/git).
+I'm not familiar enough with this code to give a full review and I
+imagine you probably want comments more focused on the design level,
+while this is an RFC, but here are some small nitpicks I found while
+reading the patch. I Hope it helps :)
 
-Vulnerable file: git/compat/regex/regexec.c
+On Thu, Apr 8, 2021 at 8:39 PM Emily Shaffer <emilyshaffer@google.com> wrote:
+>
+> diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+> index 4b4cc5c5e8..a33136fb08 100644
+> --- a/Documentation/git-config.txt
+> +++ b/Documentation/git-config.txt
+> @@ -48,7 +48,7 @@ unset an existing `--type` specifier with `--no-type`.
+>
+>  When reading, the values are read from the system, global and
+>  repository local configuration files by default, and options
+> -`--system`, `--global`, `--local`, `--worktree` and
+> +`--system`, `--global`, `--superproject`, `--local`, `--worktree` and
+>  `--file <filename>` can be used to tell the command to read from only
+>  that location (see <<FILES>>).
+>
+> @@ -127,6 +127,17 @@ rather than from all available files.
+>  +
+>  See also <<FILES>>.
+>
+> +--superproject::
+> +       For writing options: write to the superproject's
+> +       `.git/config.superproject` file, even if run from a submodule of that
+> +       superproject.
 
-Ref: CVE-2019-9169 (https://nvd.nist.gov/vuln/detail/CVE-2019-9169)
+Hmm, I wonder what happens if a repo is both a submodule and a
+superproject (i.e. in case of nested submodules). Let's see:
 
-Original patch link:
-https://sourceware.org/git/?p=glibc.git;a=blobdiff;f=posix/regexec.c;h=084b1222d95b62eb2930166060174ef78cb74b02;hp=91d5a797b82e2679ceab74238416de06693e46ea;hb=583dd860d5b833037175247230a328f0050dbfe9;hpb=2bac7daa58da1a313bd452369b0508b31e146637
+# Create repo/sub/sub2
+$ git init repo
+$ cd repo
+$ touch F && git add F && git commit -m F
+$ git submodule add ./ sub
+$ git -C sub submodule add ./sub sub2
+$ git -C sub commit -m sub2
+$ git commit -m sub
 
+# Now test the config
+$ git -C sub/sub2 config --superproject foo.bar 1
+$ git -C sub/sub2 config --get foo.bar
+1
+$ git -C sub config --get foo.bar
+<nothing>
+$ git config --get foo.bar
+<nothing>
 
-Although the original vulnerability caused a heap-based buffer
-over-read, the vulnerable code seems to cause a memory leak in your
-repository.
+It makes sense to me that `foo.bar` is not defined on `repo`, but
+shouldn't it be defined on `repo/sub`? Or am I doing something wrong?
 
-Could you review whether this is a real vulnerability?
+(`git -C sub rev-parse --git-dir` gives `.git/modules/sub/`, where
+indeed there is a config.superproject with `foo.bar` set.)
 
-The below information shows our testing environments and results:
+> diff --git a/builtin/config.c b/builtin/config.c
+> index f71fa39b38..f0a57a89ca 100644
+> --- a/builtin/config.c
+> +++ b/builtin/config.c
+> @@ -26,7 +26,7 @@ static char key_delim = ' ';
+>  static char term = '\n';
+>
+>  static int use_global_config, use_system_config, use_local_config;
+> -static int use_worktree_config;
+> +static int use_worktree_config, use_superproject_config;
+>  static struct git_config_source given_config_source;
+>  static int actions, type;
+>  static char *default_value;
+> @@ -130,6 +130,8 @@ static struct option builtin_config_options[] = {
+>         OPT_GROUP(N_("Config file location")),
+>         OPT_BOOL(0, "global", &use_global_config, N_("use global config file")),
+>         OPT_BOOL(0, "system", &use_system_config, N_("use system config file")),
+> +       OPT_BOOL(0, "superproject",
+> +                &use_superproject_config, N_("use superproject config file")),
+>         OPT_BOOL(0, "local", &use_local_config, N_("use repository config file")),
+>         OPT_BOOL(0, "worktree", &use_worktree_config, N_("use per-worktree config file")),
+>         OPT_STRING('f', "file", &given_config_source.file, N_("file"), N_("use given config file")),
+> @@ -697,6 +699,12 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+>         else if (use_system_config) {
+>                 given_config_source.file = git_etc_gitconfig();
+>                 given_config_source.scope = CONFIG_SCOPE_SYSTEM;
+> +       } else if (use_superproject_config) {
+> +               struct strbuf superproject_cfg = STRBUF_INIT;
+> +               git_config_superproject(&superproject_cfg, get_git_dir());
+> +               given_config_source.file = xstrdup(superproject_cfg.buf);
+> +               given_config_source.scope = CONFIG_SCOPE_SUPERPROJECT;
+> +               strbuf_release(&superproject_cfg);
 
-*****************************************************************************************
-First test:
+Nit: maybe it would be a bit cleaner to replace the xstrdup() +
+strbuf_release() lines with a single:
 
-OS: Ubuntu 16.04.07 LTS
-Git version: v2.31.1
-Makefile config:
+    given_config_source.file = strbuf_detach(superproject_cfg, NULL);
 
-  1184 # Set CFLAGS, LDFLAGS and other *FLAGS variables. These might be
-  1185 # tweaked by config.* below as well as the command-line, both of
-  1186 # which'll override these defaults.
-  1187 CFLAGS = -g -O2 -Wall -fsanitize=address
-  1188 LDFLAGS =
+>         } else if (use_local_config) {
+>                 given_config_source.file = git_pathdup("config");
+>                 given_config_source.scope = CONFIG_SCOPE_LOCAL;
+> diff --git a/config.c b/config.c
+> index 67d9bf2238..28bb80fd0d 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -21,6 +21,7 @@
+>  #include "dir.h"
+>  #include "color.h"
+>  #include "refs.h"
+> +#include "submodule.h"
+>
+>  struct config_source {
+>         struct config_source *prev;
+> @@ -1852,6 +1853,17 @@ const char *git_etc_gitconfig(void)
+>         return system_wide;
+>  }
+>
+> +void git_config_superproject(struct strbuf *sb, const char *gitdir)
+> +{
+> +       if (!get_superproject_gitdir(sb)) {
+> +               /* not a submodule */
+> +               strbuf_reset(sb);
 
-Result:
+Do we have to reset `sb` here? It seems that get_superproject_gitdir()
+leaves the buffer empty when we are not inside a submodule.
 
-$ ./git-log -i '\(\(\)*.\)*\(\)\(\)\1'
-fatal: your current branch 'master' does not have any commits yet
-=================================================================
-==27253==ERROR: LeakSanitizer: detected memory leaks
+> diff --git a/submodule.h b/submodule.h
+> index 4ac6e31cf1..1308d5ae2d 100644
+> --- a/submodule.h
+> +++ b/submodule.h
+> @@ -149,6 +149,12 @@ void prepare_submodule_repo_env(struct strvec *out);
+>  void absorb_git_dir_into_superproject(const char *path,
+>                                       unsigned flags);
+>
+> +/*
+> + * Return the gitdir of the superproject, which this project is a submodule of.
+> + * If this repository is not a submodule of another repository, return 0.
 
-Direct leak of 65 byte(s) in 1 object(s) allocated from:
-    #0 0x7f6ff01de961 in realloc
-(/usr/lib/x86_64-linux-gnu/libasan.so.2+0x98961)
-    #1 0x843ee5 in xrealloc  /HDD/POC/CVE-2019-9169/git-2.31.1/wrapper.c:126
+Nit: it might be nice to say what's the state of `buf` on a 0 return.
+Perhaps also be more explicit about the return codes? Maybe something
+like:
 
-SUMMARY: AddressSanitizer: 65 byte(s) leaked in 1 allocation(s).
-*****************************************************************************************
+"If this repository is a submodule of another repository, save the
+superproject's gitdir on `buf` and return 1. Otherwise, return 0 and
+leave `buf` empty."
 
+> +int get_superproject_gitdir(struct strbuf *buf);
+> +
+>  /*
+>   * Return the absolute path of the working tree of the superproject, which this
+>   * project is a submodule of. If this repository is not a submodule of
+> diff --git a/t/t1311-superproject-config.sh b/t/t1311-superproject-config.sh
+> new file mode 100755
+> index 0000000000..650c4d24c7
+> --- /dev/null
+> +++ b/t/t1311-superproject-config.sh
+> @@ -0,0 +1,124 @@
+[...]
+> +test_expect_success 'superproject config applies to super and submodule' '
+> +       cat >.git/config.superproject <<-EOF &&
+> +       [foo]
+> +               bar = baz
+> +       EOF
+> +
+> +       git config --get foo.bar &&
+> +       git -C sub config --get foo.bar &&
+> +
+> +       rm .git/config.superproject
 
-*****************************************************************************************
-Second test:
+Hmm, if this test fails before removing the config.superproject file,
+couldn't it interfere with other tests (like the 'can --edit
+superproject config')? Perhaps this and the other similar cleanup
+removals could be declared inside a `test_when_finished` clause, to
+ensure they are performed even on test failure.
 
-OS: Ubuntu 18.04.5 LTS
-Git version: v2.31.1
-Makefile config: Default
+> +test_expect_success 'can --unset from super or sub' '
+> +       git config --superproject apple.species honeycrisp &&
+> +       git -C sub config --superproject banana.species cavendish &&
+> +
+> +       git config --unset --superproject banana.species &&
+> +       git -C sub config --unset --superproject apple.species
+> +'
 
-Result:
+Nice "cross-setting/unsetting" test :)
 
-$ printf xxxxxxxxxxxxxx |valgrind --leak-check=full ./git-log -i '\(\(\)*.\)*\1'
-==63105== Memcheck, a memory error detector
-==63105== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==63105== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==63105== Command: ./git-log -i \\(\\(\\)*.\\)*\\1
-==63105==
-==63105==
-==63105== HEAP SUMMARY:
-==63105==     in use at exit: 118,368,930 bytes in 76,720 blocks
-==63105==   total heap usage: 463,994 allocs, 387,274 frees,
-2,273,364,625 bytes allocated
-==63105==
-==63105== 40 bytes in 1 blocks are possibly lost in loss record 38 of 142
-==63105==    at 0x4C31B0F: malloc (in
-/usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==63105==    by 0x34013A: do_xmalloc (wrapper.c:41)
-==63105==    by 0x355BB5: chdir_notify_register (chdir-notify.c:18)
-==63105==    by 0x355BB5: chdir_notify_reparent (chdir-notify.c:48)
-==63105==    by 0x2D5DC6: packed_ref_store_create (packed-backend.c:207)
-==63105==    by 0x2D02BA: files_ref_store_create (files-backend.c:96)
-==63105==    by 0x2CC295: get_main_ref_store (refs.c:1900)
-==63105==    by 0x2E969D: handle_revision_pseudo_opt (revision.c:2578)
-==63105==    by 0x2E969D: setup_revisions (revision.c:2730)
-==63105==    by 0x180562: cmd_log_init_finish (log.c:206)
-==63105==    by 0x18241F: cmd_log_init (log.c:275)
-==63105==    by 0x18241F: cmd_log (log.c:754)
-==63105==    by 0x12781D: run_builtin (git.c:453)
-==63105==    by 0x12781D: handle_builtin (git.c:704)
-==63105==    by 0x1289A4: cmd_main (git.c:872)
-==63105==    by 0x127467: main (common-main.c:52)
-==63105==
-==63105== 40 bytes in 1 blocks are possibly lost in loss record 39 of 142
-==63105==    at 0x4C31B0F: malloc (in
-/usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==63105==    by 0x34013A: do_xmalloc (wrapper.c:41)
-==63105==    by 0x355BB5: chdir_notify_register (chdir-notify.c:18)
-==63105==    by 0x355BB5: chdir_notify_reparent (chdir-notify.c:48)
-==63105==    by 0x2D02D6: files_ref_store_create (files-backend.c:99)
-==63105==    by 0x2CC295: get_main_ref_store (refs.c:1900)
-==63105==    by 0x2E969D: handle_revision_pseudo_opt (revision.c:2578)
-==63105==    by 0x2E969D: setup_revisions (revision.c:2730)
-==63105==    by 0x180562: cmd_log_init_finish (log.c:206)
-==63105==    by 0x18241F: cmd_log_init (log.c:275)
-==63105==    by 0x18241F: cmd_log (log.c:754)
-==63105==    by 0x12781D: run_builtin (git.c:453)
-==63105==    by 0x12781D: handle_builtin (git.c:704)
-==63105==    by 0x1289A4: cmd_main (git.c:872)
-==63105==    by 0x127467: main (common-main.c:52)
-==63105==
-==63105== 40 bytes in 1 blocks are possibly lost in loss record 40 of 142
-==63105==    at 0x4C31B0F: malloc (in
-/usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==63105==    by 0x34013A: do_xmalloc (wrapper.c:41)
-==63105==    by 0x355BB5: chdir_notify_register (chdir-notify.c:18)
-==63105==    by 0x355BB5: chdir_notify_reparent (chdir-notify.c:48)
-==63105==    by 0x2D02E6: files_ref_store_create (files-backend.c:100)
-==63105==    by 0x2CC295: get_main_ref_store (refs.c:1900)
-==63105==    by 0x2E969D: handle_revision_pseudo_opt (revision.c:2578)
-==63105==    by 0x2E969D: setup_revisions (revision.c:2730)
-==63105==    by 0x180562: cmd_log_init_finish (log.c:206)
-==63105==    by 0x18241F: cmd_log_init (log.c:275)
-==63105==    by 0x18241F: cmd_log (log.c:754)
-==63105==    by 0x12781D: run_builtin (git.c:453)
-==63105==    by 0x12781D: handle_builtin (git.c:704)
-==63105==    by 0x1289A4: cmd_main (git.c:872)
-==63105==    by 0x127467: main (common-main.c:52)
-==63105==
-==63105== 65 bytes in 1 blocks are definitely lost in loss record 59 of 142
-==63105==    at 0x4C31A3F: malloc (in
-/usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==63105==    by 0x4C33D84: realloc (in
-/usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==63105==    by 0x340345: xrealloc (wrapper.c:126)
-==63105==    by 0x30B93A: strbuf_grow (strbuf.c:98)
-==63105==    by 0x30C8EC: strbuf_vaddf (strbuf.c:392)
-==63105==    by 0x30CA33: strbuf_addf (strbuf.c:333)
-==63105==    by 0x2A9700: preprocess_options (parse-options.c:666)
-==63105==    by 0x2A9700: parse_options (parse-options.c:847)
-==63105==    by 0x18053E: cmd_log_init_finish (log.c:199)
-==63105==    by 0x18241F: cmd_log_init (log.c:275)
-==63105==    by 0x18241F: cmd_log (log.c:754)
-==63105==    by 0x12781D: run_builtin (git.c:453)
-==63105==    by 0x12781D: handle_builtin (git.c:704)
-==63105==    by 0x1289A4: cmd_main (git.c:872)
-==63105==    by 0x127467: main (common-main.c:52)
-==63105==
-==63105== 84 (56 direct, 28 indirect) bytes in 1 blocks are definitely
-lost in loss record 61 of 142
-==63105==    at 0x4C31B0F: malloc (in
-/usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==63105==    by 0x34013A: do_xmalloc (wrapper.c:41)
-==63105==    by 0x2AE9C0: copy_pathspec (pathspec.c:664)
-==63105==    by 0x2E993A: setup_revisions (revision.c:2844)
-==63105==    by 0x180562: cmd_log_init_finish (log.c:206)
-==63105==    by 0x18241F: cmd_log_init (log.c:275)
-==63105==    by 0x18241F: cmd_log (log.c:754)
-==63105==    by 0x12781D: run_builtin (git.c:453)
-==63105==    by 0x12781D: handle_builtin (git.c:704)
-==63105==    by 0x1289A4: cmd_main (git.c:872)
-==63105==    by 0x127467: main (common-main.c:52)
-==63105==
-==63105== 84 (56 direct, 28 indirect) bytes in 1 blocks are definitely
-lost in loss record 62 of 142
-==63105==    at 0x4C31B0F: malloc (in
-/usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==63105==    by 0x34013A: do_xmalloc (wrapper.c:41)
-==63105==    by 0x2AE9C0: copy_pathspec (pathspec.c:664)
-==63105==    by 0x2E996A: setup_revisions (revision.c:2849)
-==63105==    by 0x180562: cmd_log_init_finish (log.c:206)
-==63105==    by 0x18241F: cmd_log_init (log.c:275)
-==63105==    by 0x18241F: cmd_log (log.c:754)
-==63105==    by 0x12781D: run_builtin (git.c:453)
-==63105==    by 0x12781D: handle_builtin (git.c:704)
-==63105==    by 0x1289A4: cmd_main (git.c:872)
-==63105==    by 0x127467: main (common-main.c:52)
-==63105==
-==63105== 191 (112 direct, 79 indirect) bytes in 1 blocks are
-definitely lost in loss record 76 of 142
-==63105==    at 0x4C31B0F: malloc (in
-/usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==63105==    by 0x34013A: do_xmalloc (wrapper.c:41)
-==63105==    by 0x2AE381: parse_pathspec (pathspec.c:582)
-==63105==    by 0x2E9164: setup_revisions (revision.c:2800)
-==63105==    by 0x180562: cmd_log_init_finish (log.c:206)
-==63105==    by 0x18241F: cmd_log_init (log.c:275)
-==63105==    by 0x18241F: cmd_log (log.c:754)
-==63105==    by 0x12781D: run_builtin (git.c:453)
-==63105==    by 0x12781D: handle_builtin (git.c:704)
-==63105==    by 0x1289A4: cmd_main (git.c:872)
-==63105==    by 0x127467: main (common-main.c:52)
-==63105==
-==63105== 464 (448 direct, 16 indirect) bytes in 28 blocks are
-definitely lost in loss record 98 of 142
-==63105==    at 0x4C31B0F: malloc (in
-/usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==63105==    by 0x34013A: do_xmalloc (wrapper.c:41)
-==63105==    by 0x217A3D: commit_list_insert (commit.c:554)
-==63105==    by 0x217A3D: parse_commit_buffer (commit.c:447)
-==63105==    by 0x296F37: parse_object_buffer (object.c:217)
-==63105==    by 0x297070: parse_object (object.c:282)
-==63105==    by 0x274781: add_ref_decoration (log-tree.c:179)
-==63105==    by 0x2D5C53: do_for_each_repo_ref_iterator (iterator.c:418)
-==63105==    by 0x2CB9F8: do_for_each_ref (refs.c:1492)
-==63105==    by 0x274A65: load_ref_decorations (log-tree.c:211)
-==63105==    by 0x1807C9: cmd_log_init_finish (log.c:262)
-==63105==    by 0x18241F: cmd_log_init (log.c:275)
-==63105==    by 0x18241F: cmd_log (log.c:754)
-==63105==    by 0x12781D: run_builtin (git.c:453)
-==63105==    by 0x12781D: handle_builtin (git.c:704)
-==63105==
-==63105== 37,468 (32 direct, 37,436 indirect) bytes in 1 blocks are
-definitely lost in loss record 120 of 142
-==63105==    at 0x4C33B25: calloc (in
-/usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==63105==    by 0x3403AD: xcalloc (wrapper.c:140)
-==63105==    by 0x1806F4: cmd_log_init_finish (log.c:233)
-==63105==    by 0x18241F: cmd_log_init (log.c:275)
-==63105==    by 0x18241F: cmd_log (log.c:754)
-==63105==    by 0x12781D: run_builtin (git.c:453)
-==63105==    by 0x12781D: handle_builtin (git.c:704)
-==63105==    by 0x1289A4: cmd_main (git.c:872)
-==63105==    by 0x127467: main (common-main.c:52)
-==63105==
-==63105== 184,176 (183,792 direct, 384 indirect) bytes in 11,487
-blocks are definitely lost in loss record 130 of 142
-==63105==    at 0x4C31B0F: malloc (in
-/usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==63105==    by 0x34013A: do_xmalloc (wrapper.c:41)
-==63105==    by 0x217A3D: commit_list_insert (commit.c:554)
-==63105==    by 0x217A3D: parse_commit_buffer (commit.c:447)
-==63105==    by 0x217CEC: repo_parse_commit_internal (commit.c:498)
-==63105==    by 0x2E4C3D: repo_parse_commit (commit.h:89)
-==63105==    by 0x2E4C3D: try_to_simplify_commit (revision.c:1007)
-==63105==    by 0x2E84AA: process_parents (revision.c:1140)
-==63105==    by 0x2EBFED: get_revision_1 (revision.c:3999)
-==63105==    by 0x2EC1BF: get_revision_internal (revision.c:4113)
-==63105==    by 0x2EC344: get_revision (revision.c:4187)
-==63105==    by 0x181538: cmd_log_walk (log.c:422)
-==63105==    by 0x182427: cmd_log (log.c:755)
-==63105==    by 0x12781D: run_builtin (git.c:453)
-==63105==    by 0x12781D: handle_builtin (git.c:704)
-==63105==
-==63105== LEAK SUMMARY:
-==63105==    definitely lost: 184,561 bytes in 11,520 blocks
-==63105==    indirectly lost: 37,971 bytes in 1,139 blocks
-==63105==      possibly lost: 120 bytes in 3 blocks
-==63105==    still reachable: 118,146,278 bytes in 64,058 blocks
-==63105==         suppressed: 0 bytes in 0 blocks
-==63105== Reachable blocks (those to which a pointer was found) are not shown.
-==63105== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==63105==
-==63105== For counts of detected and suppressed errors, rerun with: -v
-==63105== ERROR SUMMARY: 10 errors from 10 contexts (suppressed: 0 from 0)
-*****************************************************************************************
+[...]
+> +# This test deletes the submodule! Keep it at the end of the test suite.
+> +test_expect_success 'config.submodule works even with no submodules' '
 
-Thank you.
-Best regards,
-Seunghoon Woo, Jiyeon Han
-
--- 
-
-Best regards,
-
-Seunghoon Woo
-Korea University Dept. of Computer Science and Engineering
-Computer & Communication Security Lab.
-seunghoonwoo@korea.ac.kr
-(+82)10-8147-9308
+s/config.submodule/config.superproject/ ?
