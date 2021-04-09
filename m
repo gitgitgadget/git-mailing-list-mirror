@@ -2,109 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-21.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 223A9C433ED
-	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 00:25:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 482F6C433B4
+	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 01:10:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C5F2A60FE8
-	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 00:25:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1A558610A7
+	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 01:10:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233083AbhDIAZt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Apr 2021 20:25:49 -0400
-Received: from cloud.peff.net ([104.130.231.41]:45428 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232488AbhDIAZs (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Apr 2021 20:25:48 -0400
-Received: (qmail 26164 invoked by uid 109); 9 Apr 2021 00:25:36 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 09 Apr 2021 00:25:36 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4960 invoked by uid 111); 9 Apr 2021 00:25:36 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 08 Apr 2021 20:25:36 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 8 Apr 2021 20:25:35 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Subject: Re: [PATCH] config: Introduce GIT_CONFIG_NOGLOBAL
-Message-ID: <YG+e/zGgoITH6qZa@coredump.intra.peff.net>
-References: <a23382059bb57022dd1e40d1c2c9a11307b0ff3b.1617891426.git.ps@pks.im>
- <xmqqczv4vgck.fsf@gitster.g>
- <YG+PLROZbSo32F3k@coredump.intra.peff.net>
- <xmqq35w0qr5f.fsf@gitster.g>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq35w0qr5f.fsf@gitster.g>
+        id S232967AbhDIBKV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Apr 2021 21:10:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51016 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232426AbhDIBKU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Apr 2021 21:10:20 -0400
+Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2C99C061760
+        for <git@vger.kernel.org>; Thu,  8 Apr 2021 18:10:08 -0700 (PDT)
+Received: by mail-pf1-x449.google.com with SMTP id t1so2095563pfg.5
+        for <git@vger.kernel.org>; Thu, 08 Apr 2021 18:10:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=weUXpf22nUY/zE0nGiFmDSk/yZjL1xCJ/qIbj/ACJw8=;
+        b=o8pWcwxSefyiCbyTys3gBwmKBMJUWwLQuGwSl+CMXFhOODD1/PHpGXYnA98cmf/2Sx
+         AZAg6zY3CmIcurgJKan/rP9MjBK5DHT+4+HGBgmAWuE+0hFcwESJEGOgQz7MhVJbl0cj
+         N9k/ylXivsStag1zrcXgJz7XgjDDlY8Qq1uZWIBmO4ESqIBc01Mwhor1ZCDGb1MNOVmZ
+         ixCCZG1IlLlDYgb20MYwV/PhijmlVwPqq5tbp7SMIylmjGB8IEE60uYun92wEmaAuPps
+         mP9JwbCr0L8L4O5Y/Ib5AQ7DrKDwRfpfn1flNqCW63oG4HD+LLi20Ro/Iv4LMOZADl5T
+         Yo+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=weUXpf22nUY/zE0nGiFmDSk/yZjL1xCJ/qIbj/ACJw8=;
+        b=f/IVSNhZWWl2QMlgwHNC4IgqB/lBog0E+y/1fNY3Og+oCiSAc5QJaz95b+NWtl7r8A
+         iBBc3+tTESjdN7hN09NENzeaD5gYxqLqRY0+B3GU+IFkYGH0Xt9RimaWRfe33qGcjU6S
+         IS3C+gVLyZkr8zDzpK9BWKmjcFRygEGXwAnyZz59V3jv/G6oBF1pIu7nURzOE0Etn4hx
+         itiT8LyC3xW0ALWr0/QNGKBw0C/j0rSnH70rWK67/z2j2qStAF1E08dnzC6mxnnlUqWQ
+         vnKHPTykvA9WmzLZdGVfabr2BC4H3pHZeSVb7q6xw3xNpIC4PV7UBeeUVLLOiZVhcT2r
+         SMHg==
+X-Gm-Message-State: AOAM530id5Mqr3jZbggtotoCCVfWRoK8TpCXlo7Qzd32+7gmX6js8cDW
+        EmvD/TpHp/93wTFHm/CyxxMlCjePMKT99syBwtJGlgPmVlohZ0CO1lWNjqWrKQ1okOeexxw1FKz
+        bZmeLhPRQUVq5ROGEhIKDPR5s26HdZx7qZCyboJZI4bamjgKFHa92UCLfGAgvJOARZaAsr/N8+C
+        U6
+X-Google-Smtp-Source: ABdhPJyl2msU/dRpYsjoc57wPdTlHSsUX2r1QwTyVlbKEkic3CSqOwjmlm6Iw3gJuy5jJNAG6oXdKNSy+slDUo9DgsUM
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a17:902:e211:b029:e9:a266:53a7 with
+ SMTP id u17-20020a170902e211b02900e9a26653a7mr3400651plb.11.1617930607660;
+ Thu, 08 Apr 2021 18:10:07 -0700 (PDT)
+Date:   Thu,  8 Apr 2021 18:09:57 -0700
+Message-Id: <cover.1617929278.git.jonathantanmy@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.31.1.295.g9ea45b61b8-goog
+Subject: [PATCH 0/6] Push negotiation
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 08, 2021 at 04:43:08PM -0700, Junio C Hamano wrote:
+Here are patches for push negotiation. The basic idea is that we can
+reuse part of the fetch protocol (and code) to find out what is in
+common between the client and server, and then use that information to
+further narrow the objects sent in the packfile during a push.
 
-> > Some other things to consider:
-> >
-> >   - does setting GIT_CONFIG_GLOBAL override both the $HOME and
-> >     $XDG_CONFIG_HOME? If the plan is to override them, that makes sense.
-> >     But we do usually read from both of them, so conceivably you might
-> >     want to override just one? That's probably over-engineering, though.
-> 
-> I viewed this to be working at the more conceptual "here is the file
-> to read 'system' (or 'per-user') stuff from" level, and not at the
-> level of the individual file, as I consider that it is a mere
-> implementation detail that 'per-user' may read from multiple files.
+Patch 1 is a bug fix that probably should be merged even if the rest
+aren't. Patches 2-4 are refactorings in preparation for the future
+patches. Patches 5-6 contain the actual logic and documentation.
 
-Yeah. I'm OK with that. I think it's conceptually simpler. I was going
-to also say "less flexible", but once you have pointed Git at the file
-of your choice, it is easy to [include] any other one if you want.
+I have written more about it in my prior work [1], although the commit
+messages and documentation in patches 5-6 should be enough to explain
+what's going on. (If they're not, feel free to make review comments.)
 
-> We may have to bite the bullet and make an official catalog of
-> really "structurely fundamental" configuration variables that must
-> appear in the per-repository file, and a mechanism to enforce that
-> by always reading these variables from "$GIT_DIR/config" and always
-> ignoring appearances of them in any other places.
-> 
-> That alone would probably be a good thing to do regardless of the
-> GIT_CONFIG_NOGLOBAL issue, as I suspect you may be able to wreak
-> havoc by adding random configuration like [extension] in
-> $HOME/.gitconfig ;-)
+The main change from [1] is that the client-side code that used to be in
+builtin/fetch-pack.c is now in builtin/fetch.c, because I realized that
+builtin/fetch-pack.c does not support HTTP. Other than that, all the
+"what hasn't been done yet" items have been done except for statistics
+in the commit message.
 
-I think we've historically had some problems there, but I think these
-days it's not too bad. We look directly at $GIT_DIR/config with
-read_repository_format(), loading only stuff that check_repo_format()
-cares about:
+[1] https://lore.kernel.org/git/20210218012100.928957-1-jonathantanmy@google.com/
 
-  - core.repositoryformatversion
+Jonathan Tan (6):
+  fetch-pack: buffer object-format with other args
+  fetch-pack: refactor process_acks()
+  fetch-pack: refactor add_haves()
+  fetch-pack: refactor command and capability write
+  fetch: teach independent negotiation (no packfile)
+  send-pack: support push negotiation
 
-  - extensions.*
+ Documentation/config/push.txt           |   7 +
+ Documentation/technical/protocol-v2.txt |   8 +
+ builtin/fetch.c                         |  27 ++-
+ fetch-pack.c                            | 224 +++++++++++++++---------
+ fetch-pack.h                            |  11 ++
+ object.h                                |   2 +-
+ send-pack.c                             |  61 ++++++-
+ t/t5516-fetch-push.sh                   |  35 ++++
+ t/t5701-git-serve.sh                    |   2 +-
+ t/t5702-protocol-v2.sh                  |  89 ++++++++++
+ transport-helper.c                      |  10 ++
+ transport.c                             |  30 +++-
+ transport.h                             |   6 +
+ upload-pack.c                           |  18 +-
+ 14 files changed, 430 insertions(+), 100 deletions(-)
 
-  - core.bare
+-- 
+2.31.1.295.g9ea45b61b8-goog
 
-  - core.worktree
-
-And those _should_ be ignored by the regular config-reading paths. So I
-think it would be OK to have a $GIT_CONFIG_LOCAL variable that overrides
-the location in do_git_config_sequence() only, and that would cover only
-the preferences parts. I do agree it wouldn't hurt to document which
-options are read in which context.
-
-I do wonder how useful such an option would be, though. I can see why
-you would want to redirect or disable system-level or user-level config
-once, and then use it for many invocations. But in a single repo, you
-might as well just set the repo config, or override it for a single
-invocation with "git -c", etc.
-
-I guess one possible use could be "I got a repository I do not trust as
-a tarball and want to investigate it without paying attention to its
-local config". But that's a pretty narrow case, and you'd probably be
-better off just vetting the config yourself anyway (since depending on
-what you want to do in the repo, you may need some of that config, like
-remote.*, etc).
-
-I dunno.
-
--Peff
