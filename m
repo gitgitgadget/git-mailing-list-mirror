@@ -7,86 +7,86 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 36A60C433ED
-	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 11:28:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B5EA3C433ED
+	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 11:32:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0DE7B610A7
-	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 11:28:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7F6DD6113A
+	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 11:32:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231819AbhDIL2o (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Apr 2021 07:28:44 -0400
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:60141 "EHLO
+        id S231638AbhDILci (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Apr 2021 07:32:38 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:39361 "EHLO
         out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S233747AbhDIL2l (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 9 Apr 2021 07:28:41 -0400
+        by vger.kernel.org with ESMTP id S232763AbhDILca (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 9 Apr 2021 07:32:30 -0400
 Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.nyi.internal (Postfix) with ESMTP id 514AF5C0037;
-        Fri,  9 Apr 2021 07:28:28 -0400 (EDT)
+        by mailout.nyi.internal (Postfix) with ESMTP id 6D4305C0081;
+        Fri,  9 Apr 2021 07:32:17 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Fri, 09 Apr 2021 07:28:28 -0400
+  by compute1.internal (MEProxy); Fri, 09 Apr 2021 07:32:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
         :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm3; bh=EHDIHRhopAsgVBFyC4Fl6hSKF8/
-        RqVzcpWs2ki5tH0Y=; b=I16hgE3WbGm7Xk/wpoI4UUGDpT1229r08mL2TyEEmEe
-        jOgULrG5+iXmX6XfajkrGxr5N9A+T66XggA1AoIdGMBqYlUCiWb13Fy0w2Ia+N9K
-        4/KeiwZSu1T4v0X1QnzTngJp0AoVhpX3A1/P7LwvhNYlRNSWrARm1IYNivcCQ57l
-        SKzynlQIMuifhOOA04GKqYIBGVEKz90xg5QLdYmzSO/HGHSxmbXEfnEOpwlOzNLK
-        deBzDsNQPEh8GwLkz2JIWQsOYRQPLv2WDRDXL7HNpHrwux2oy+Pqz7fAfJPJUbFr
-        7b/ektZ8rkSDNy9SK9buc3QH45C4sJP1r6RGQHHbs9Q==
+        :content-type:in-reply-to; s=fm3; bh=iEHc3CKXyCt6AbwWxdiMNGkBtPF
+        5CFOPZ6ZpVfWgkKg=; b=rUSH53H57j4V7jWwjMtAAmomMwrKc1fl5t2JBGsWk+i
+        kmUmnPdiV07OzaigUQAeZ9cmw04mzJTVDFCkr/tBsZoJZCA0EA4vUvpwWFA4Q37+
+        RZjNhyo8ZyhO9W4cPemppGoTRjSjpvB713ypwNBjiVP/TtFHCAJKmrVsWkHfykl0
+        8S7aY3h2GX+RAnWIQKtS0GtvJsHxY4Nr4o31TGFn4RT0ODJx2t29gwOZAkoG000q
+        E5fkWT2yMoNzDOJMKoCp+NxVZOJD07yvMIetu2xErG+cvZlOQNMH9E4VgP2laPQ1
+        BCUbjhoq9xDBhut1KGLLb59IbcOdj++3xWz54d1HfCA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=EHDIHR
-        hopAsgVBFyC4Fl6hSKF8/RqVzcpWs2ki5tH0Y=; b=CbvXAPS1SzEsXfGnvBvjQh
-        xpEbkb9OVHTVoIyThLwqHSpC8Op8ujLzUz0cOhN72+1z7qyv/Sn4f7/O/mYWzPW0
-        ZS0hjNASfghwFWiJvYmr3v3Ddeukc6pOqfPYwUsmxe8nnqlXdXyuEzy2akNTEfYB
-        i1zOnNCe+Y50cIXiqURUfAFowMs2xSf2F1rXbXqgaK2rMZ9ioVRIfanjuSqmIDdp
-        SK/L7ZL655+CNXRybLSW/6R2lrUuM8Wmw8Mtk+ajCiuDCNx4de56MjSO5VfNcgZE
-        u+oawR8KJeq8AQOMXcrc3HVhGMfr6WUAhcpRIZt9pdgi2lCzM4pvrn+UtjevRdCw
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=iEHc3C
+        KXyCt6AbwWxdiMNGkBtPF5CFOPZ6ZpVfWgkKg=; b=Wahkutjk85HnVxN/6PILut
+        acjRwrk6BaGRDC5TYqf6ykQi8tiAZPSVsF65hQnAZ0DNL/+NcVHKCAWTbQfpfcSw
+        iBncGh1dfGAhT/xOJQ4LPl7h0E3/JTup91xQBxO8Tditu9N6wGQI6W1ljyJyY5o3
+        bl32J+mVqctUalo2Qsq01IB+BzqXe75DSqCr+xLrqtOqZEre7Yzv8fl95OGEwFP7
+        5Ul9aiilogAinYRudnoZryVtJuASGR7ZomHHVgO5DC8L2sdX0WUT/3QUiYkMeB0Q
+        MWgCIOL/Ca3hGnRFEFrX+XUbjZrsISCYV8p1A9Oa1OXdasf9OxyVeOeTozImteOw
         ==
-X-ME-Sender: <xms:XDpwYIIxMqlO13C6-1XF3pMTTiUWqqRiR9nFvakiUHVKUczAIkLU3A>
-    <xme:XDpwYIL8p8r-DeTVT0654DWNZrxCNnY-nVFAo7iKdQ1UQ6P6sh-qicyLMtEmV3VwQ
-    e8M-s7ZtYjI2lkRQw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrudekuddggeduucetufdoteggodetrfdotf
+X-ME-Sender: <xms:QDtwYO4RTc1KWNx8S18ed-eeoRtr0cT72B2qhJqaB0-VbEc29inhJA>
+    <xme:QDtwYH6SSttBXaBWpO3Eu1E1nmCsByFmgZx6GjoI7zelnPIkFM0bUjdOLFOO54jCL
+    xr1i3DxOASn8Ja-kA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrudekuddggedvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
     hnpefgfeejuefgheegueeljeffteefuedthfdvvedugfevvdffleduueeiiefgvedtheen
     ucffohhmrghinhepphgvnhguihhnghdrnhhrnecukfhppeejjedrudeluddrkedrudeile
-    enucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshes
+    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshes
     phhkshdrihhm
-X-ME-Proxy: <xmx:XDpwYIunm7HPn1Z0UJgHekWux3bmTc3xLnWzQY_TZMbqwcMo_KECpQ>
-    <xmx:XDpwYFak1LpiLZJsbUU6mxFiZrFxxajTKbI55oFwp3Bmd7WEtGuhdw>
-    <xmx:XDpwYPYAu-f4DGMhQLBumXQ0TU7XuhLuiuDKP5BkHNXQXAAuVCvRQA>
-    <xmx:XDpwYGykP21eOu5yWAgQ6JEsG3-6x4wpMSKSCkMLToLAk96YpTyeeA>
+X-ME-Proxy: <xmx:QDtwYNfr5aVcV9Q9V5eP_mr-DJ5XvnrpyJ6NVLJ4pRROQNrAP8YvPg>
+    <xmx:QDtwYLIA4FUSd9N1RpDLmE37J_2bFgQWDAqf5-NLbdClV5YQUIy7Yg>
+    <xmx:QDtwYCL8Ww0rzJL7txSH3432zaOuqBdVfVCiiKiEj2fRkXhwKWHrjA>
+    <xmx:QTtwYEiwX_VDnidM_nfKNRxylF1pCfC0gC7CtpmwAQrJnjdQiFsHfQ>
 Received: from vm-mail.pks.im (x4dbf08a9.dyn.telefonica.de [77.191.8.169])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 8AD7E240067;
-        Fri,  9 Apr 2021 07:28:27 -0400 (EDT)
+        by mail.messagingengine.com (Postfix) with ESMTPA id 52F1D240065;
+        Fri,  9 Apr 2021 07:32:16 -0400 (EDT)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id f6696864 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Fri, 9 Apr 2021 11:28:26 +0000 (UTC)
-Date:   Fri, 9 Apr 2021 13:28:25 +0200
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 65ab7b5a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Fri, 9 Apr 2021 11:32:13 +0000 (UTC)
+Date:   Fri, 9 Apr 2021 13:32:12 +0200
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>,
         Christian Couder <christian.couder@gmail.com>,
         Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH v3 8/8] rev-list: allow filtering of provided items
-Message-ID: <796606f32b3ffc286a3157312d00ee0ee3e5600c.1617967252.git.ps@pks.im>
+Subject: [RESEND PATCH v3 8/8] rev-list: allow filtering of provided items
+Message-ID: <cf2297b413d1cabb1a558dd5b22fa2a70bf9305a.1617967822.git.ps@pks.im>
 References: <cover.1615813673.git.ps@pks.im>
  <cover.1617967252.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="qCeSP4cqGIzkLbua"
+        protocol="application/pgp-signature"; boundary="GcrpLvAqh8ZHLzhx"
 Content-Disposition: inline
-In-Reply-To: <cover.1617967252.git.ps@pks.im>
+In-Reply-To: <796606f32b3ffc286a3157312d00ee0ee3e5600c.1617967252.git.ps@pks.im>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---qCeSP4cqGIzkLbua
+--GcrpLvAqh8ZHLzhx
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
@@ -105,6 +105,10 @@ will be subject to filtering.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
+
+Forgot to stage and add test changes to adjust for the changed flag
+name.
+
  Documentation/rev-list-options.txt  |  5 ++++
  builtin/pack-objects.c              |  2 +-
  builtin/rev-list.c                  | 36 +++++++++++++++++++++--------
@@ -317,7 +321,7 @@ mark_reflog,
  		free_bitmap_index(bitmap_git);
 diff --git a/t/t6112-rev-list-filters-objects.sh b/t/t6112-rev-list-filters=
 -objects.sh
-index c79ec04060..47c558ab0e 100755
+index c79ec04060..0a305c9c49 100755
 --- a/t/t6112-rev-list-filters-objects.sh
 +++ b/t/t6112-rev-list-filters-objects.sh
 @@ -207,6 +207,34 @@ test_expect_success 'verify object:type=3Dtag prints t=
@@ -326,34 +330,35 @@ ag' '
  '
 =20
 +test_expect_success 'verify object:type=3Dblob prints only blob with --fil=
-ter-provided' '
+ter-provided-revisions' '
 +	printf "%s blob\n" $(git -C object-type rev-parse HEAD:blob) >expected &&
 +	git -C object-type rev-list --objects \
-+		--filter=3Dobject:type=3Dblob --filter-provided HEAD >actual &&
++		--filter=3Dobject:type=3Dblob --filter-provided-revisions HEAD >actual &&
 +	test_cmp expected actual
 +'
 +
 +test_expect_success 'verify object:type=3Dtree prints only tree with --fil=
-ter-provided' '
+ter-provided-revisions' '
 +	printf "%s \n" $(git -C object-type rev-parse HEAD^{tree}) >expected &&
 +	git -C object-type rev-list --objects \
-+		--filter=3Dobject:type=3Dtree HEAD --filter-provided >actual &&
++		--filter=3Dobject:type=3Dtree HEAD --filter-provided-revisions >actual &&
 +	test_cmp expected actual
 +'
 +
 +test_expect_success 'verify object:type=3Dcommit prints only commit with -=
--filter-provided' '
+-filter-provided-revisions' '
 +	git -C object-type rev-parse HEAD >expected &&
 +	git -C object-type rev-list --objects \
-+		--filter=3Dobject:type=3Dcommit --filter-provided HEAD >actual &&
++		--filter=3Dobject:type=3Dcommit --filter-provided-revisions HEAD >actual=
+ &&
 +	test_cmp expected actual
 +'
 +
 +test_expect_success 'verify object:type=3Dtag prints only tag with --filte=
-r-provided' '
+r-provided-revisions' '
 +	printf "%s tag\n" $(git -C object-type rev-parse tag) >expected &&
 +	git -C object-type rev-list --objects \
-+		--filter=3Dobject:type=3Dtag --filter-provided tag >actual &&
++		--filter=3Dobject:type=3Dtag --filter-provided-revisions tag >actual &&
 +	test_cmp expected actual
 +'
 +
@@ -362,40 +367,40 @@ r-provided' '
  # NOTE: sparse:path filter support has been dropped for security reasons,
 diff --git a/t/t6113-rev-list-bitmap-filters.sh b/t/t6113-rev-list-bitmap-f=
 ilters.sh
-index cb9db7df6f..9053ac5059 100755
+index cb9db7df6f..bfc9bdafa0 100755
 --- a/t/t6113-rev-list-bitmap-filters.sh
 +++ b/t/t6113-rev-list-bitmap-filters.sh
 @@ -98,6 +98,28 @@ test_expect_success 'object:type filter' '
  	test_bitmap_traversal expect actual
  '
 =20
-+test_expect_success 'object:type filter with --filter-provided' '
-+	git rev-list --objects --filter-provided --filter=3Dobject:type=3Dtag tag=
- >expect &&
++test_expect_success 'object:type filter with --filter-provided-revisions' '
++	git rev-list --objects --filter-provided-revisions --filter=3Dobject:type=
+=3Dtag tag >expect &&
 +	git rev-list --use-bitmap-index \
-+		     --objects --filter-provided --filter=3Dobject:type=3Dtag tag >actua=
-l &&
++		     --objects --filter-provided-revisions --filter=3Dobject:type=3Dtag =
+tag >actual &&
 +	test_cmp expect actual &&
 +
-+	git rev-list --objects --filter-provided --filter=3Dobject:type=3Dcommit =
-tag >expect &&
++	git rev-list --objects --filter-provided-revisions --filter=3Dobject:type=
+=3Dcommit tag >expect &&
 +	git rev-list --use-bitmap-index \
-+		     --objects --filter-provided --filter=3Dobject:type=3Dcommit tag >ac=
-tual &&
++		     --objects --filter-provided-revisions --filter=3Dobject:type=3Dcomm=
+it tag >actual &&
 +	test_bitmap_traversal expect actual &&
 +
-+	git rev-list --objects --filter-provided --filter=3Dobject:type=3Dtree ta=
-g >expect &&
++	git rev-list --objects --filter-provided-revisions --filter=3Dobject:type=
+=3Dtree tag >expect &&
 +	git rev-list --use-bitmap-index \
-+		     --objects --filter-provided --filter=3Dobject:type=3Dtree tag >actu=
-al &&
++		     --objects --filter-provided-revisions --filter=3Dobject:type=3Dtree=
+ tag >actual &&
 +	test_bitmap_traversal expect actual &&
 +
-+	git rev-list --objects --filter-provided --filter=3Dobject:type=3Dblob ta=
-g >expect &&
++	git rev-list --objects --filter-provided-revisions --filter=3Dobject:type=
+=3Dblob tag >expect &&
 +	git rev-list --use-bitmap-index \
-+		     --objects --filter-provided --filter=3Dobject:type=3Dblob tag >actu=
-al &&
++		     --objects --filter-provided-revisions --filter=3Dobject:type=3Dblob=
+ tag >actual &&
 +	test_bitmap_traversal expect actual
 +'
 +
@@ -407,12 +412,12 @@ e=3Dblob tag >expect &&
  	test_bitmap_traversal expect actual
  '
 =20
-+test_expect_success 'combine filter with --filter-provided' '
-+	git rev-list --objects --filter-provided --filter=3Dblob:limit=3D1000 --f=
-ilter=3Dobject:type=3Dblob tag >expect &&
++test_expect_success 'combine filter with --filter-provided-revisions' '
++	git rev-list --objects --filter-provided-revisions --filter=3Dblob:limit=
+=3D1000 --filter=3Dobject:type=3Dblob tag >expect &&
 +	git rev-list --use-bitmap-index \
-+		     --objects --filter-provided --filter=3Dblob:limit=3D1000 --filter=
-=3Dobject:type=3Dblob tag >actual &&
++		     --objects --filter-provided-revisions --filter=3Dblob:limit=3D1000 =
+--filter=3Dobject:type=3Dblob tag >actual &&
 +	test_bitmap_traversal expect actual &&
 +
 +	git cat-file --batch-check=3D"%(objecttype) %(objectsize)" <actual >objec=
@@ -429,24 +434,24 @@ ts &&
 2.31.1
 
 
---qCeSP4cqGIzkLbua
+--GcrpLvAqh8ZHLzhx
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmBwOlgACgkQVbJhu7ck
-PpQttQ//Ydd59xH1H37xKTWew7rYhZwMwIu5NZ7S9vexunXSxiQ13I3o1BhPSbDr
-rtdU8/2fq+wDCa0uD1QQQ5Bm/+J6SrX5QnxrVYPX1pueypSH8/Dy2GQxj5+KW7ej
-sjIk5DY0c9w2HE7m9did5xlEH2WczfmdpNi+AQpmn8DbdW8oKv+1nOBp+x5QcCAP
-LPfxxN2dXOmXSMOkfnmXPMAheAi6AKBlyfsN3UZxQQ13dYH6+cgJ4LdLx/K6nxTz
-OuZ+mWvKn8hwm6XXzr3/3jsgM2L/1fXYuS2stoLatkI6HwmajUsgQbfdzzckStc+
-cBwOFZku4jBz0+dlL97kESFvLzDn8ZfVMjQHuxrWrGa7GhbO1Hpa8T5QPH351X0C
-aKzoXMD5m+vWhVt0Vo0zOL42vhAvM2EPDD5ditfezkWye2w+xcZek85NTGBYlEnX
-Nz+OdLg9vOervUcxsAZp9TfTJmARp4DU00r1HFVR7HNrDKBV8o8HThyYEyY2fSjl
-6O64voD9zJxHZxA1YMFL7FQTIS3M4xHaYrcNUgIvUcaAhm6SyfzQ6K7ydNqgNPii
-VhYMTLZq/qHtxju0ByxChKUEJxcYxznYNNwn+wh+U+dn0BAbJGbJcxaRQHH3h1QY
-hrlzUxuPmzrFL1Df0WQqaYx1v0vRbvYstiRXKTPJKM9NknxPuxs=
-=ReDT
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmBwOzsACgkQVbJhu7ck
+PpQC1w/+JEBqcTNLuftQIXx1u1y6gsHF+ykqCPq225JPcY32qHhPY7us9O2iJCgn
+xgcN6l5hunzrOsJh5xuuDqcd1z+xASEOHeEhBCAeKU2AfAs+GUF6ITENLZ/QaYs6
+LTK9N104ol5AjeTbpXkzyDlT3ROHSV1QeEEe3WHWh2sivOFL0eyUqKXv+bS3vwgY
+kHgY/EFCTgdl8pZ/xe5och9lf76X933vpdl7i6EoRm9d6detMo3k17qDznj/dkRE
+DhoiiR9F66WFlbTNwm0RdRJX5xoyvMxcG7/0VE2RM3Dgrf+UhqhYFDoqVg6FKnxQ
+gxZ5+VR9/iVpidNamy30Xx59kxFSZef64nuWqZaumof8n3g8ne9XpJH0nfxbRxuR
+Ngh75cfAU/GBPIuiJsP0Kk/v8gljSS2C7P/+LPrrjEAYWdEpSc/2o1eKIT+eVWrH
+U/i6h8VeoG6J1A+94NhmchsPcj5DJy1hZYGP5XGqrhvDJ1y0JxlX9VrecsCVydJm
+87p5/3XJeE31YNtNRrvpJ8KiNiM3Qy6HXPE2c+jX0SjZzI0Y02Cv7JA8jbGqcLCq
+qLEfHAierkdsCAU6F0O3QvRq8B9i/whW3cDoEg/HDdeAY2cHaXZ7yy7wrp53sHIW
+qaWMitRjNntmaHR1AFqGrrt+pbwRNHXT9kZEW/fpGxoX+onwpZY=
+=Tdol
 -----END PGP SIGNATURE-----
 
---qCeSP4cqGIzkLbua--
+--GcrpLvAqh8ZHLzhx--
