@@ -6,102 +6,100 @@ X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 65F97C433B4
-	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 18:36:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F1730C433ED
+	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 18:42:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 20AE161105
-	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 18:36:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B3499610FC
+	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 18:42:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234471AbhDISgR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Apr 2021 14:36:17 -0400
-Received: from cloud.peff.net ([104.130.231.41]:46826 "EHLO cloud.peff.net"
+        id S234512AbhDISmg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Apr 2021 14:42:36 -0400
+Received: from cloud.peff.net ([104.130.231.41]:46842 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234307AbhDISgQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Apr 2021 14:36:16 -0400
-Received: (qmail 1086 invoked by uid 109); 9 Apr 2021 18:36:03 -0000
+        id S234367AbhDISmg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Apr 2021 14:42:36 -0400
+Received: (qmail 1149 invoked by uid 109); 9 Apr 2021 18:42:23 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 09 Apr 2021 18:36:03 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 09 Apr 2021 18:42:23 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15500 invoked by uid 111); 9 Apr 2021 18:36:02 -0000
+Received: (qmail 15526 invoked by uid 111); 9 Apr 2021 18:42:22 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 09 Apr 2021 14:36:02 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 09 Apr 2021 14:42:22 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Fri, 9 Apr 2021 14:36:02 -0400
+Date:   Fri, 9 Apr 2021 14:42:22 -0400
 From:   Jeff King <peff@peff.net>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Taylor Blau <me@ttaylorr.com>, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 5/6] object-name.c: make dependency on object_type order
- more obvious
-Message-ID: <YHCekt1iXjy2NLrP@coredump.intra.peff.net>
+Subject: Re: [PATCH 6/6] tag.c: use type_from_string_gently() when parsing
+ tags
+Message-ID: <YHCgDm0KVygpjkNU@coredump.intra.peff.net>
 References: <cover-0.3-0000000000-20210409T080534Z-avarab@gmail.com>
  <cover-0.6-0000000000-20210409T082935Z-avarab@gmail.com>
- <patch-5.6-94e13611f0-20210409T082935Z-avarab@gmail.com>
+ <patch-6.6-3279d67d2b-20210409T082935Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <patch-5.6-94e13611f0-20210409T082935Z-avarab@gmail.com>
+In-Reply-To: <patch-6.6-3279d67d2b-20210409T082935Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 09, 2021 at 10:32:53AM +0200, Ævar Arnfjörð Bjarmason wrote:
+On Fri, Apr 09, 2021 at 10:32:54AM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-> Add an assert to make it more obvious that we were effectively
-> hardcoding OBJ_TAG in sort_ambiguous() as "4".
-> 
-> I wrote this code in 5cc044e0257 (get_short_oid: sort ambiguous
-> objects by type, then SHA-1, 2018-05-10), there was already a comment
-> about this magic, but let's make sure that someone doing a potential
-> reordering of "enum object_type" in the future would notice it
-> breaking this function (and probably a bunch of other things...).
+> Change a series of strcmp() to instead use type_from_string_gently()
+> to get the integer type early, and then use that for comparison.
 
-Yeah, those object type values are used for the on-disk formats, so
-quite a lot would break.
+The result looks much nicer.
 
-> @@ -408,6 +408,8 @@ static int sort_ambiguous(const void *a, const void *b, void *ctx)
->  	enum object_type b_type = oid_object_info(sort_ambiguous_repo, b, NULL);
->  	enum object_type a_type_sort;
->  	enum object_type b_type_sort;
-> +	const enum object_type tag_type_offs = OBJ_TAG - OBJ_NONE;
-> +	assert(tag_type_offs == 4);
+One interesting note...
 
-This protects us against shifting of the values or reordering within the
-main 4 types, but it doesn't protect against new types, nor reordering
-in which the main 4 types are no longer contiguous. E.g.:
+> @@ -162,23 +162,24 @@ int parse_tag_buffer(struct repository *r, struct tag *item, const void *data, u
+>  		return -1;
+>  	bufptr += 5;
+>  	nl = memchr(bufptr, '\n', tail - bufptr);
+> -	if (!nl || sizeof(type) <= (nl - bufptr))
+> +	if (!nl)
+> +		return -1;
+> +	type = type_from_string_gently(bufptr, nl - bufptr);
+> +	if (type < 0)
+>  		return -1;
 
-  enum object_type {
-          OBJ_NONE = 0,
-	  OBJ_REF_DELTA = 1,
-	  OBJ_OFS_DELTA = 2,
-	  OBJ_COMMIT = 3,
-	  OBJ_TAG = 4,
-	  OBJ_BLOB = 5,
-	  OBJ_TREE = 6,
-  };
+If we got anything but the main-4 types here, we'll return an error.
+So we know here:
 
-would be wrong. I dunno. I guess in some sense I am glad to see an
-attempt at automated enforcement of assumptions. But I think if we are
-worried about the object_type enum changing, we'd do better to write
-this function in a less-clever way.
+> -	if (!strcmp(type, blob_type)) {
+> +	if (type == OBJ_BLOB) {
+>  		item->tagged = (struct object *)lookup_blob(r, &oid);
+> -	} else if (!strcmp(type, tree_type)) {
+> +	} else if (type == OBJ_TREE) {
+>  		item->tagged = (struct object *)lookup_tree(r, &oid);
+> -	} else if (!strcmp(type, commit_type)) {
+> +	} else if (type == OBJ_COMMIT) {
+>  		item->tagged = (struct object *)lookup_commit(r, &oid);
+> -	} else if (!strcmp(type, tag_type)) {
+> +	} else if (type == OBJ_TAG) {
+>  		item->tagged = (struct object *)lookup_tag(r, &oid);
+>  	} else {
+>  		return error("unknown tag type '%s' in %s",
+> -			     type, oid_to_hex(&item->object.oid));
+> +			     type_name(type), oid_to_hex(&item->object.oid));
+>  	}
 
-  /* sort tags before anything else */
-  if (a_type == OBJ_TAG)
-          a_type = 0;
-  if (b_type == OBJ_TAG)
-          b_type = 0;
+That the final "else" clause can't be reached. I don't mind being
+defensive, but if it _is_ reached, then we'd feed that unknown type to
+type_name(), which will return NULL for unknown items (unless I guess it
+has also learned about the hypothetical new type).
 
-Of course that is still assuming that normal values are all positive,
-but that seems reasonable. If you really wanted to be agnostic, you
-could assign the minimum value.  But you can't easily know that for an
-enum. So you'd want to store them as ints (reversing your previous
-commit!) and using INT_MIN.
+I think this should just be:
 
-The conditional probably performs less well in a tight loop, but I doubt
-that matters for the size of array we expect to sort (if we cared about
-performance we would not call oid_object_info() twice inside the
-comparator!).
+  else {
+          BUG("type_from_string gave us an unknown type: %d", (int)type);
+  }
+
+which makes it clear we expect the code can't be reached, and doesn't
+make any assumptions about what we can do with the odd value.
 
 -Peff
