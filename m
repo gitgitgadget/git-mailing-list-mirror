@@ -2,106 +2,258 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E5185C43460
-	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 15:38:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C1A1C433B4
+	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 15:38:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B508960FE4
-	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 15:38:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0F50F610E5
+	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 15:38:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233657AbhDIPic (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Apr 2021 11:38:32 -0400
-Received: from mout.web.de ([217.72.192.78]:41513 "EHLO mout.web.de"
+        id S229665AbhDIPiq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Apr 2021 11:38:46 -0400
+Received: from cloud.peff.net ([104.130.231.41]:46286 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233038AbhDIPib (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Apr 2021 11:38:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1617982696;
-        bh=hmnu9eU0NkzsYJm7tyaClSYlVxKLHaGGH5FDq7PayzE=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=pZZ9BiiEbvSAQBswt50+POYWRaYNdepCRez+6BPApJgRsNWxX8QQusAApWGcmQ5yI
-         xCY8cDL66UzzCR/n9uNWrcNbBd0H/wuD7lVbo4xCy77XiCtVd2YcHbCrt24YRZ8PV6
-         2GoooSXH3bzXmFKwtqNgk7ObgIouC787QD4WfT5M=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LgHLE-1ls4LM1nCG-00nkuZ; Fri, 09
- Apr 2021 17:38:16 +0200
-Date:   Fri, 9 Apr 2021 17:38:16 +0200
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: git-p4 crashes on non UTF-8 output from p4
-Message-ID: <20210409153815.7joohvmlnh6itczc@tb-raspi4>
-References: <CAKu1iLXtwuCQTS0s7_LEm0OJF-4s0UhPhDW1r5Zb7=GsSPfpdQ@mail.gmail.com>
+        id S233288AbhDIPip (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Apr 2021 11:38:45 -0400
+Received: (qmail 31739 invoked by uid 109); 9 Apr 2021 15:38:32 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 09 Apr 2021 15:38:32 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12442 invoked by uid 111); 9 Apr 2021 15:38:31 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 09 Apr 2021 11:38:31 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 9 Apr 2021 11:38:31 -0400
+From:   Jeff King <peff@peff.net>
+To:     Patrick Steinhardt <ps@pks.im>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 3/3] config: allow overriding of global and system
+ configuration
+Message-ID: <YHB092HN2oVLmqC1@coredump.intra.peff.net>
+References: <a23382059bb57022dd1e40d1c2c9a11307b0ff3b.1617891426.git.ps@pks.im>
+ <cover.1617975637.git.ps@pks.im>
+ <272a3b31aa73da8d65b04e647b1b9ca860f4e783.1617975637.git.ps@pks.im>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAKu1iLXtwuCQTS0s7_LEm0OJF-4s0UhPhDW1r5Zb7=GsSPfpdQ@mail.gmail.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:2we5MOoV277nTv5nbItivAlWneL+FOVcwHI0O1zhJHaXcL20lFx
- n4gmR43XVfR1VaiDlQwgCPGuuNFP8mNePG3OCARlJ5HTH2RG+0tQ5smBLOgYTNBI/gx98sX
- hw/Z/3WGG/afTEZ4R4/w3pqcfuCR4yYmel22Cn6W4GflXX+YU++4gzMAaMlmaWMcb+MFM4u
- xkoDUV1294jVyc8OH3jBg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:5BrL18UAjtA=:f/JkHD/hnz/S3B1j1RTfEM
- 7Tr2AfQUeQIbvrzlB1ncRS6PswUJG9C+x9Wmm22N90mgb7K9KhMIyAMiNW7wp+F/b7ccUR8sp
- m43XXdhQlpPOGgNGq4nSJL7DtCiFhTIyJksYwjsyBpR0YjBHHYyEJCVC+C594Xdqb65MA2noM
- 8rZBTLiNeJymlc3aWGmTCLWWMNEhFOq/kFAeHy4ocJNmVJVjnJZvIHkEFS0DrUBPWfTgxeucv
- TV65smaH9Jzk+4Sd9sE2AF763jQoHvL3dTX/1OeouPX9p3TvpRuAjVQk2wlc1gXmD72bCOaAs
- uZcgua1ihwbJzmbu7luHJr2RtWse1TW7kwPEB8Lbq54jlFDpqXND2KZjGLihkYlJIMw6OQS4v
- gbf1nb2Q/su2j093tHnizLtoMlTouqz/VK0vWMNdinjRLcRQuAV6FMiRVsjnOYYnOWYfT9kfi
- E+1CgdA7tAchba8bXlcQalqfusmSX3WB/6aH+M8w7S0CD+esTr4QXzxH5r3/Z8r6YA6YRQMDW
- adbfJ2FavNGsWZ9H4qiWb/nOo7URo+EX6U25If39NvOyBqNvFtvWNJyBUfPsvp1AVuwngHRDY
- 4gTYrEtpWeBF5bqY6NY44ZeXGNri4P7Bb0AVrU/fcgi1ncTHhZ/mTZTpK/eciT9wPID5CvH8E
- PHhOiJ0lZLPujmJMLwamiahhPy14GXW0KGVd8VLHKwWaFD0EaI1Hm8ExqmZCl+yb6tnZm9Xbs
- VodORmo6vFCoN5wLvodTVttSH9jb/YLcEq3tYyoSV8jV1cM8sbQDlM+X/RGrT0tVgGHM1QJpH
- StNScWJFQ4hvNgfJw0pP7kyOdTZPBQBGRRtXl8ZfRvvvSMaRAGCdgRZ0eeM6vhNamXhD+OneL
- ZTYgXN8bdNFt/Tu+2iTE+1t0UouaF5ViJJDUwgnscshIOONLfsiD+70xM5vM1JjKwVFIdWjty
- vPEVaCuoSxaymGsdFhaOVhTjFYkdGlyt6K0jp0H8dJ9XVUQ0FbS+qEtJoIvG6U64BrZnNXMAI
- C0tjAsRHL/DU9/H/JBfQLuf3ykntP4rYb6RkA5QKaCaoXBXmrngFWcxbDUG1TrJ/uFKp93+y0
- sejNKWCfm1u+RBnMA5o8+ls+kPoSbVoJbCpiXNv7BiS9HDyMj77+4yTIrV+ORL89VewhJHqkH
- m5YxWpYHXShkZNc9DrJi1gD7Sf+mrlJkpuMvjiksW1RELryxl9n7JPJeBGNWzTOVCRExM=
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <272a3b31aa73da8d65b04e647b1b9ca860f4e783.1617975637.git.ps@pks.im>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 08, 2021 at 12:28:25PM -0700, Tzadik Vanderhoof wrote:
-> When git-p4 reads the output from a p4 command, it assumes it will be
-> 100% UTF-8. If even one character in the output of one p4 command is
-> not UTF-8, git-p4 crashes with:
->
-> File "C:/Program Files/Git/bin/git-p4.py", line 774, in p4CmdList
->     value =3D value.decode() UnicodeDecodeError: 'utf-8' codec can't
-> decode byte Ox93 in position 42: invalid start byte
->
-> I'd like to make a pull request to have it try another encoding (eg
-> cp1252) and/or use the Unicode replacement character, to prevent the
-> whole program from crashing on such a minor problem.
->
-> This is especially a problem on the "git p4 clone" command with @all,
-> where git-p4 needs to read thousands of changeset descriptions, one of
-> which may have a stray smart quote, causing the whole clone operation
-> to fail.
->
-> Sound ok?
+On Fri, Apr 09, 2021 at 03:43:30PM +0200, Patrick Steinhardt wrote:
 
-Welcome to the Git community.
-To start with: I am not a git-p4 expert as such, but seeing that a program=
- is crashing
-is never a good thing.
-All efforts to prevent the crash are a step forward.
+> In order to have git run in a fully controlled environment without any
+> misconfiguration, it may be desirable for users or scripts to override
+> global- and system-level configuration files. We already have a way of
+> doing this, which is to unset both HOME and XDG_CONFIG_HOME environment
+> variables and to set `GIT_CONFIG_NOGLOBAL=true`. This is quite kludgy,
+> and unsetting the first two variables likely has an impact on other
+> executables spawned by such a script.
+> 
+> The obvious way to fix this would be to introduce `GIT_CONFIG_NOSYSTEM`
+> as an equivalent to `GIT_CONFIG_NOGLOBAL`. But in the past, it has
 
-As you mention cp1252 (which is more used under Windows), there are probab=
-ly lots of
-system out there which use ISO-8859-15 (or ISO-8859-1) we may have the fir=
-st whish:
+I think you have NOSYSTEM and NOGLOBAL mixed up in both paragraphs here?
 
-Make the encoding/fallback configurable.
-Let people choose if they want a crash (if things are broken),
-fallback to cp1252 or one of the other ISO-ISO-8859-x encodings.
+Otherwise the motivation and description here look very good (and I like
+the overall direction).
 
-In that sense: we look forward to a pull-request.
+> diff --git a/Documentation/git.txt b/Documentation/git.txt
+> index 3a9c44987f..2129629296 100644
+> --- a/Documentation/git.txt
+> +++ b/Documentation/git.txt
+> @@ -670,6 +670,16 @@ for further details.
+>  	If this environment variable is set to `0`, git will not prompt
+>  	on the terminal (e.g., when asking for HTTP authentication).
+>  
+> +`GIT_CONFIG_GLOBAL`::
+> +`GIT_CONFIG_SYSTEM`::
+> +	Take the configuration from the given files instead from global or
+> +	system-level configuration files. The files must exist and be readable
+> +	by the current user. If `GIT_CONFIG_SYSTEM` is set, `/etc/gitconfig`
+> +	will not be read. Likewise, if `GIT_CONFIG_GLOBAL` is set, neither
+> +	`$HOME/.gitconfig` nor `$XDG_CONFIG_HOME/git/config` will be read. Can
+> +	be set to `/dev/null` to skip reading configuration files of the
+> +	respective level.
+
+Makes sense. The reference to `/etc/gitconfig` here may not be accurate,
+depending on the build parameters. I notice below in the context that we
+say:
+
+>  `GIT_CONFIG_NOSYSTEM`::
+>  	Whether to skip reading settings from the system-wide
+>  	`$(prefix)/etc/gitconfig` file.  This environment variable can
+
+which is _also_ not quite right (if $(prefix) is "/usr", then the file
+really is /etc/gitconfig).
+
+I think it might be possible to pull the value of the ETC_GITCONFIG
+Makefile variable into the documentation, so we could probably give the
+"real" value. But I wonder if it would suffice to just say:
+
+   ...the system config (usually `/etc/gitconfig`) will not be read.
+
+Or is that too confusing (it invites the question "when is it not
+/etc/gitconfig")? I guess we could say "the system config file defined
+at build-time (usually `/etc/gitconfig`)", which is perhaps more clear.
+
+> @@ -1847,8 +1847,22 @@ static int git_config_from_blob_ref(config_fn_t fn,
+>  const char *git_system_config(void)
+>  {
+>  	static const char *system_wide;
+> -	if (!system_wide)
+> -		system_wide = system_path(ETC_GITCONFIG);
+> +
+> +	if (!system_wide) {
+> +		system_wide = xstrdup_or_null(getenv("GIT_CONFIG_SYSTEM"));
+
+I wondered, given the "const char *" return values in the last patch, if
+you might pass back the result of getenv() directly. But you duplicate
+it here, which is good, as it avoids portability problems hanging on to
+the result of getenv().
+
+> +		if (system_wide) {
+> +			/*
+> +			 * If GIT_CONFIG_SYSTEM is set, it overrides the
+> +			 * /etc/gitconfig. Furthermore, the file must exist in
+> +			 * order to prevent any typos by the user.
+> +			 */
+> +			if (access(system_wide, R_OK))
+> +				die(_("cannot access '%s'"), system_wide);
+> +		} else {
+> +			system_wide = system_path(ETC_GITCONFIG);
+> +		}
+> +	}
+
+I was on the fence about whether to enforce the "this file must exist"
+property, with respect to the overall design. But seeing how we must
+actually add extra code here to handle it makes me want to just treat it
+exactly like the other files.
+
+Using a separate access() here is also a TOCTOU race, but I'm pretty
+sure the existing config code makes the same mistake (and it's not that
+big a deal in this context).
+
+> @@ -1857,8 +1871,20 @@ void git_global_config(const char **user, const char **xdg)
+>  	static const char *user_config, *xdg_config;
+>  
+>  	if (!user_config) {
+> -		user_config = expand_user_path("~/.gitconfig", 0);
+> -		xdg_config = xdg_config_home("config");
+> +		user_config = xstrdup_or_null(getenv("GIT_CONFIG_GLOBAL"));
+> +		if (user_config) {
+> +			/*
+> +			 * If GIT_CONFIG_GLOBAL is set, then it overrides both
+> +			 * the ~/.gitconfig and the XDG configuration file.
+> +			 * Furthermore, the file must exist in order to prevent
+> +			 * any typos by the user.
+> +			 */
+> +			if (access(user_config, R_OK))
+> +				die(_("cannot access '%s'"), user_config);
+> +		} else {
+> +			user_config = expand_user_path("~/.gitconfig", 0);
+> +			xdg_config = xdg_config_home("config");
+> +		}
+>  	}
+
+And this looks as I'd expect (but the same comments as above apply, of
+course).
+
+> +test_expect_success 'override global and system config' '
+> +	test_when_finished rm -f "$HOME"/.config/git &&
+> +
+> +	cat >"$HOME"/.gitconfig <<-EOF &&
+> +	[home]
+> +		config = true
+> +	EOF
+> +	mkdir -p "$HOME"/.config/git &&
+> +	cat >"$HOME"/.config/git/config <<-EOF &&
+> +	[xdg]
+> +		config = true
+> +	EOF
+> +	cat >.git/config <<-EOF &&
+> +	[local]
+> +		config = true
+> +	EOF
+> +	cat >custom-global-config <<-EOF &&
+> +	[global]
+> +		config = true
+> +	EOF
+> +	cat >custom-system-config <<-EOF &&
+> +	[system]
+> +		config = true
+> +	EOF
+
+Minor style nit, but we usually prefer non-interpolating "\EOF" if we
+don't intend to interpolate within the here-doc. It does look like
+t1300 has quite a mix of styles, though.
+
+> +	cat >expect <<-EOF &&
+> +	global	xdg.config=true
+> +	global	home.config=true
+> +	local	local.config=true
+> +	EOF
+> +	git config --show-scope --list >output &&
+> +	test_cmp expect output &&
+> +
+> +	sane_unset GIT_CONFIG_NOSYSTEM &&
+> +
+> +	cat >expect <<-EOF &&
+> +	system	system.config=true
+> +	global	global.config=true
+> +	local	local.config=true
+> +	EOF
+> +	GIT_CONFIG_SYSTEM=custom-system-config GIT_CONFIG_GLOBAL=custom-global-config \
+> +		git config --show-scope --list >output &&
+> +	test_cmp expect output &&
+> +
+> +	cat >expect <<-EOF &&
+> +	local	local.config=true
+> +	EOF
+> +	GIT_CONFIG_SYSTEM=/dev/null GIT_CONFIG_GLOBAL=/dev/null git config --show-scope --list >output &&
+> +	test_cmp expect output
+> +'
+
+And this test covers all of the new stuff we care about. Good.
+
+> +test_expect_success 'override global and system config with missing file' '
+> +	sane_unset GIT_CONFIG_NOSYSTEM &&
+> +	test_must_fail env GIT_CONFIG_GLOBAL=does-not-exist git version &&
+> +	test_must_fail env GIT_CONFIG_SYSTEM=does-not-exist git version &&
+> +	GIT_CONFIG_NOSYSTEM=true GIT_CONFIG_SYSTEM=does-not-exist git version
+> +'
+
+Makes sense to test given the patch, though if we rip out the "missing"
+check, then obviously this goes away.
+
+> +test_expect_success 'write to overridden global and system config' '
+
+Hmm. I hadn't really considered _writing_ to these files (after all, you
+can just use "git config --file" to do so). I guess it is consistent,
+and would probably be more work (and more error-prone) to try to
+distinguish reading versus writing in the code.
+
+> +	cat >expect <<EOF &&
+> +[config]
+> +	key = value
+> +EOF
+
+No "<<-EOF" here to fix the indentation?
+
+> +	test_must_fail env GIT_CONFIG_GLOBAL=write-to-global git config --global config.key value &&
+> +	touch write-to-global &&
+> +	GIT_CONFIG_GLOBAL=write-to-global git config --global config.key value &&
+> +	test_cmp expect write-to-global &&
+
+In the writing case, the "must exist" thing makes it even weirder, since
+we might be intending to create the file! If we leave in the writing,
+that makes me even more convinced that we should drop the "must exist"
+check.
+
+-Peff
