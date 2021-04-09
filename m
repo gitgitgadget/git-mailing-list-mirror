@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DACCCC43460
-	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 13:43:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E49DC433B4
+	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 13:43:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B6FCE610D1
-	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 13:43:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F1ACA6113A
+	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 13:43:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233802AbhDINnn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Apr 2021 09:43:43 -0400
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:46703 "EHLO
+        id S233729AbhDINnr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Apr 2021 09:43:47 -0400
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:58941 "EHLO
         out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S233784AbhDINnl (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 9 Apr 2021 09:43:41 -0400
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-        by mailout.nyi.internal (Postfix) with ESMTP id 221045C00B5;
-        Fri,  9 Apr 2021 09:43:28 -0400 (EDT)
+        by vger.kernel.org with ESMTP id S233619AbhDINnq (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 9 Apr 2021 09:43:46 -0400
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.nyi.internal (Postfix) with ESMTP id 898785C00C1;
+        Fri,  9 Apr 2021 09:43:33 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Fri, 09 Apr 2021 09:43:28 -0400
+  by compute1.internal (MEProxy); Fri, 09 Apr 2021 09:43:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
         :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm3; bh=HuQXxss9Mwae18r/WxIrG9zOroT
-        5E4HVShjgnBrcC5s=; b=U/haWJJzfZHZwznt6+eyapNKSLR1/UIp0MBCCXYjC7+
-        VV62+A0h1vvE9FugIx/wqJGHwKGaK3eVWlURSeREBh/ucMbAd1OLYOlTzXf2Xa3W
-        qu7QiQ84Xkv1STZ3jCAflOrZG1smYsuWOK4HlljgfuFEOinkUmp62GKpjGrMRjoO
-        hbpGqza6CCvseb4lONjw3CWULnr8csOM6e6ZYRvWqxE9d1OXRB/ZdZ/JErdZ5BH2
-        yQdQL9xLpG/b1ga8y0mZdgXtaGhEcvMpX55eQxlC30luD+USPSf62PVzzi2urip3
-        YzJ8QVYcBiDjWJwxvV+zQVCAMqdeSF/c3gK/z1ZmOmQ==
+        :content-type:in-reply-to; s=fm3; bh=U4716Iwoh4d6ho57TmV/bQPCxrw
+        UYaW9Tymr2kwNFUY=; b=qUBQgFd/XUb/nS20ddBoNEox5T1dUqvSPCGc5zXMpiK
+        VuuIQCY8/D0BKGDAws5itmFQiItJ8n7pyh5aY3FBbyU0te3XSvsKsxtOX5dVAcBV
+        BJAEnszZGCUjqw3XUiGBeXOIfc4YWF2yn+pXFV2YZVaWJgulWlhwc3UJ95NYXd1g
+        l5aUq/QuNifLd0AXBn+4WmcnrzIVaL1JgQdER4G1/XjoAQq6RlU17oEyIwCoSoNL
+        twAfTu1FnURGuqEdUUOnbafQF80SMgWRVZcEI2nUFN0bhDUcZ89N1ZZC0P2tFu5c
+        kQtl0f2l5AFj+MJx8iKvdcRMaZGI7hH99AEFMwCV3fQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=HuQXxs
-        s9Mwae18r/WxIrG9zOroT5E4HVShjgnBrcC5s=; b=rLU4cu4/Fq8qdRM0q4fe7d
-        qKhut/pq1a3FB2A2wTC5RryuzgRVP+XYV1GJ9q0ogCQDuWOGBUDVQdfDQTIFR/uF
-        tI7TRWDKIYpvC1OECBuvdksZE8l/NzF90/UatKTS7N0ud126BWHlIGkitQ51fjhI
-        xdFDW8ai6tCFqA3Q8GJO6RsGdv3J/yJPCOtuNCrIPeEU/lJWKd3dW0EY368lsSsW
-        goYcCGoRfUE33zqnRerDV6nun3h7vvyDdY+fYdOGecT4fhwoaTDvjaq0OOuV9UlZ
-        7ArVTk4SWtL9JOzxB3ohLOM2BN8bWnyj/gPegleFYJbPwrzEUYLz6eNLgFul09xQ
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=U4716I
+        woh4d6ho57TmV/bQPCxrwUYaW9Tymr2kwNFUY=; b=HSc+dtpKYqklkMBr2XsHuI
+        KYRdMhpBtWqzDrocD5Z+eiU5AnNXIbkp9F2NtOA7BEjAPD2sR2CVTmi7zRlsDrRQ
+        +FKagasJgTXzxeYHEkTcraiUviFUbOtXpyvigGM9vrgpnraLQgVN7XunehtM50FX
+        1UyBWYqC+2Ovb0mkGZJt6sHbkpQF557NKrs9U1GY3EW4GPbNKa2WjJO1mCoQNYtv
+        mVcTLpzfXM42Ik2svykyS6y/z9Il4k1jL6ELklZ6+p/i0bP1xWt6b3BK5AszHtA2
+        IeR0l8dR+84Za941S1KnhrfR3A2p16JvWhUyokJk99AQ27g7of+VJA3mjpK22XJw
         ==
-X-ME-Sender: <xms:AFpwYETGN4NonmjtINo9-yVwFkR_SgjaoCz8EUAYZUxpIaOjtLQTIQ>
-    <xme:AFpwYGFuKFeu7T5Te3H97FLyWhDQW_UCxCozy3WfGTWp7R8LqMZVK7wFccDX7nluW
-    EgeRS_lJRSNb-KceQ>
+X-ME-Sender: <xms:BVpwYAqU4RNCq7fe4StJP7mXWPfOhlVi0BtT8sR8DdBuTgzy_lHOUw>
+    <xme:BVpwYGogO48On0xuDn5JSAr4JfYx1E1C5zXuIVc0vHiIG4e5-dbbtlIISajNPiblw
+    4a56AjWGe5YHNtbuw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrudekuddgieelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
@@ -55,29 +55,30 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrudekuddgieelucetufdoteggod
     hnpeehgefhtdefueffheekgfffudelffejtdfhvdejkedthfehvdelgfetgfdvtedthfen
     ucfkphepjeejrdduledurdekrdduieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
     hrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:AFpwYA_YYipJB37GnBOnx2hUJBPVu5wYCqLPWICxObLPe67VAGE57A>
-    <xmx:AFpwYAJw2bvFB5we69lU7O9XPyS9muJTS-_Afzac9FTkXT0CL0mByA>
-    <xmx:AFpwYDaFjIiVCs0i44eFyrCfMNHDWKtWZ-9eEF07HAeVxOQbEqxEmg>
-    <xmx:AFpwYFmHALsiEpx-zOLVcy329hnhlSUK-q9MEvn8csgYuDdymTqCXA>
+X-ME-Proxy: <xmx:BVpwYFNhZOBs41gtfiGnJnCiNHRhS9Cd2q-mvUz2bWZdWgITaWAsjA>
+    <xmx:BVpwYH5ulbEvNhjuCSvrG1Zn23v_P8FnUv-78thMPEBMNf9uEO_eJA>
+    <xmx:BVpwYP4DUTqDlMm_EJ3lk-gNNY-2N5Bflr-8xckvqWQyVDxSHbjz4A>
+    <xmx:BVpwYPFSbeigufr8gzCEel6SWlYdw-IeJmXrV1vxkUNZbsVijdByew>
 Received: from vm-mail.pks.im (x4dbf08a9.dyn.telefonica.de [77.191.8.169])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 5EA22240067;
-        Fri,  9 Apr 2021 09:43:27 -0400 (EDT)
+        by mail.messagingengine.com (Postfix) with ESMTPA id 4EDF3240054;
+        Fri,  9 Apr 2021 09:43:32 -0400 (EDT)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id e88e3d29 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Fri, 9 Apr 2021 13:43:27 +0000 (UTC)
-Date:   Fri, 9 Apr 2021 15:43:25 +0200
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 60857d5e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Fri, 9 Apr 2021 13:43:31 +0000 (UTC)
+Date:   Fri, 9 Apr 2021 15:43:30 +0200
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 2/3] config: unify code paths to get global config paths
-Message-ID: <dddc85bcf54e9b19f1612cf2a5be928dcb2bad7d.1617975637.git.ps@pks.im>
+Subject: [PATCH v2 3/3] config: allow overriding of global and system
+ configuration
+Message-ID: <272a3b31aa73da8d65b04e647b1b9ca860f4e783.1617975637.git.ps@pks.im>
 References: <a23382059bb57022dd1e40d1c2c9a11307b0ff3b.1617891426.git.ps@pks.im>
  <cover.1617975637.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="8XSwNFrW0pzryg9P"
+        protocol="application/pgp-signature"; boundary="oOcc1yX9Q53rMEqH"
 Content-Disposition: inline
 In-Reply-To: <cover.1617975637.git.ps@pks.im>
 Precedence: bulk
@@ -85,149 +86,256 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---8XSwNFrW0pzryg9P
+--oOcc1yX9Q53rMEqH
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-There's two callsites which assemble global config paths, once in the
-config loading code and once in the git-config(1) builtin. We're about
-to implement a way to override global config paths via an environment
-variable which would require us to adjust both sites.
+In order to have git run in a fully controlled environment without any
+misconfiguration, it may be desirable for users or scripts to override
+global- and system-level configuration files. We already have a way of
+doing this, which is to unset both HOME and XDG_CONFIG_HOME environment
+variables and to set `GIT_CONFIG_NOGLOBAL=3Dtrue`. This is quite kludgy,
+and unsetting the first two variables likely has an impact on other
+executables spawned by such a script.
 
-Unify both code paths into a single `git_global_config()` function which
-returns both paths for `~/.gitconfig` and the XDG config file. This will
-make the subsequent patch which introduces the new envvar easier to
-implement.
+The obvious way to fix this would be to introduce `GIT_CONFIG_NOSYSTEM`
+as an equivalent to `GIT_CONFIG_NOGLOBAL`. But in the past, it has
+turned out that this design is inflexible: we cannot test system-level
+parsing of the git configuration in our test harness because there is no
+way to change its location, so all tests run with `GIT_CONFIG_NOSYSTEM`
+set.
 
-No functional changes are expected from this patch.
+Instead of doing the same mistake with `GIT_CONFIG_NOGLOBAL`, introduce
+two new variables `GIT_CONFIG_GLOBAL` and `GIT_CONFIG_SYSTEM`:
+
+    - If unset, git continues to use the usual locations.
+
+    - If set to a specific path, we skip reading the normal
+      configuration files and instead take the path. This path must
+      exist and be readable to ensure that the user didn't typo.
+
+    - If set to `/dev/null`, we do not load either global- or
+      system-level configuration at all.
+
+This implements the usecase where we want to execute code in a sanitized
+environment without any potential misconfigurations via `/dev/null`, but
+is more flexible and allows for more usecases than simply adding
+`GIT_CONFIG_NOGLOBAL`.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/config.c |  6 ++----
- config.c         | 20 ++++++++++++++++----
- config.h         |  1 +
- 3 files changed, 19 insertions(+), 8 deletions(-)
+ Documentation/git-config.txt |  5 +++
+ Documentation/git.txt        | 10 +++++
+ config.c                     | 34 ++++++++++++++--
+ t/t1300-config.sh            | 75 ++++++++++++++++++++++++++++++++++++
+ 4 files changed, 120 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/config.c b/builtin/config.c
-index 02ed0b3fe7..604a0973a5 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -671,9 +671,9 @@ int cmd_config(int argc, const char **argv, const char =
-*prefix)
- 	}
+diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+index 4b4cc5c5e8..5cddadafd2 100644
+--- a/Documentation/git-config.txt
++++ b/Documentation/git-config.txt
+@@ -340,6 +340,11 @@ GIT_CONFIG::
+ 	Using the "--global" option forces this to ~/.gitconfig. Using the
+ 	"--system" option forces this to $(prefix)/etc/gitconfig.
 =20
- 	if (use_global_config) {
--		char *user_config =3D expand_user_path("~/.gitconfig", 0);
--		char *xdg_config =3D xdg_config_home("config");
-+		const char *user_config, *xdg_config;
++GIT_CONFIG_GLOBAL::
++GIT_CONFIG_SYSTEM::
++	Take the configuration from the given files instead from global or
++	system-level configuration. See linkgit:git[1] for details.
++
+ GIT_CONFIG_NOSYSTEM::
+ 	Whether to skip reading settings from the system-wide
+ 	$(prefix)/etc/gitconfig file. See linkgit:git[1] for details.
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 3a9c44987f..2129629296 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -670,6 +670,16 @@ for further details.
+ 	If this environment variable is set to `0`, git will not prompt
+ 	on the terminal (e.g., when asking for HTTP authentication).
 =20
-+		git_global_config(&user_config, &xdg_config);
- 		if (!user_config)
- 			/*
- 			 * It is unknown if HOME/.gitconfig exists, so
-@@ -688,10 +688,8 @@ int cmd_config(int argc, const char **argv, const char=
- *prefix)
- 		if (access_or_warn(user_config, R_OK, 0) &&
- 		    xdg_config && !access_or_warn(xdg_config, R_OK, 0)) {
- 			given_config_source.file =3D xdg_config;
--			free(user_config);
- 		} else {
- 			given_config_source.file =3D user_config;
--			free(xdg_config);
- 		}
- 	}
- 	else if (use_system_config) {
++`GIT_CONFIG_GLOBAL`::
++`GIT_CONFIG_SYSTEM`::
++	Take the configuration from the given files instead from global or
++	system-level configuration files. The files must exist and be readable
++	by the current user. If `GIT_CONFIG_SYSTEM` is set, `/etc/gitconfig`
++	will not be read. Likewise, if `GIT_CONFIG_GLOBAL` is set, neither
++	`$HOME/.gitconfig` nor `$XDG_CONFIG_HOME/git/config` will be read. Can
++	be set to `/dev/null` to skip reading configuration files of the
++	respective level.
++
+ `GIT_CONFIG_NOSYSTEM`::
+ 	Whether to skip reading settings from the system-wide
+ 	`$(prefix)/etc/gitconfig` file.  This environment variable can
 diff --git a/config.c b/config.c
-index c552ab4ad9..6af0244085 100644
+index 6af0244085..9dfc4a79f7 100644
 --- a/config.c
 +++ b/config.c
-@@ -1852,6 +1852,19 @@ const char *git_system_config(void)
+@@ -1847,8 +1847,22 @@ static int git_config_from_blob_ref(config_fn_t fn,
+ const char *git_system_config(void)
+ {
+ 	static const char *system_wide;
+-	if (!system_wide)
+-		system_wide =3D system_path(ETC_GITCONFIG);
++
++	if (!system_wide) {
++		system_wide =3D xstrdup_or_null(getenv("GIT_CONFIG_SYSTEM"));
++		if (system_wide) {
++			/*
++			 * If GIT_CONFIG_SYSTEM is set, it overrides the
++			 * /etc/gitconfig. Furthermore, the file must exist in
++			 * order to prevent any typos by the user.
++			 */
++			if (access(system_wide, R_OK))
++				die(_("cannot access '%s'"), system_wide);
++		} else {
++			system_wide =3D system_path(ETC_GITCONFIG);
++		}
++	}
++
  	return system_wide;
  }
 =20
-+void git_global_config(const char **user, const char **xdg)
-+{
-+	static const char *user_config, *xdg_config;
+@@ -1857,8 +1871,20 @@ void git_global_config(const char **user, const char=
+ **xdg)
+ 	static const char *user_config, *xdg_config;
+=20
+ 	if (!user_config) {
+-		user_config =3D expand_user_path("~/.gitconfig", 0);
+-		xdg_config =3D xdg_config_home("config");
++		user_config =3D xstrdup_or_null(getenv("GIT_CONFIG_GLOBAL"));
++		if (user_config) {
++			/*
++			 * If GIT_CONFIG_GLOBAL is set, then it overrides both
++			 * the ~/.gitconfig and the XDG configuration file.
++			 * Furthermore, the file must exist in order to prevent
++			 * any typos by the user.
++			 */
++			if (access(user_config, R_OK))
++				die(_("cannot access '%s'"), user_config);
++		} else {
++			user_config =3D expand_user_path("~/.gitconfig", 0);
++			xdg_config =3D xdg_config_home("config");
++		}
+ 	}
+=20
+ 	*user =3D user_config;
+diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+index e0dd5d65ce..5498ca32b0 100755
+--- a/t/t1300-config.sh
++++ b/t/t1300-config.sh
+@@ -2059,6 +2059,81 @@ test_expect_success '--show-scope with --show-origin=
+' '
+ 	test_cmp expect output
+ '
+=20
++test_expect_success 'override global and system config' '
++	test_when_finished rm -f "$HOME"/.config/git &&
 +
-+	if (!user_config) {
-+		user_config =3D expand_user_path("~/.gitconfig", 0);
-+		xdg_config =3D xdg_config_home("config");
-+	}
++	cat >"$HOME"/.gitconfig <<-EOF &&
++	[home]
++		config =3D true
++	EOF
++	mkdir -p "$HOME"/.config/git &&
++	cat >"$HOME"/.config/git/config <<-EOF &&
++	[xdg]
++		config =3D true
++	EOF
++	cat >.git/config <<-EOF &&
++	[local]
++		config =3D true
++	EOF
++	cat >custom-global-config <<-EOF &&
++	[global]
++		config =3D true
++	EOF
++	cat >custom-system-config <<-EOF &&
++	[system]
++		config =3D true
++	EOF
 +
-+	*user =3D user_config;
-+	*xdg =3D xdg_config;
-+}
++	cat >expect <<-EOF &&
++	global	xdg.config=3Dtrue
++	global	home.config=3Dtrue
++	local	local.config=3Dtrue
++	EOF
++	git config --show-scope --list >output &&
++	test_cmp expect output &&
 +
- /*
-  * Parse environment variable 'k' as a boolean (in various
-  * possible spellings); if missing, use the default value 'def'.
-@@ -1883,9 +1896,8 @@ static int do_git_config_sequence(const struct config=
-_options *opts,
- 				  config_fn_t fn, void *data)
- {
- 	int ret =3D 0;
--	char *xdg_config =3D xdg_config_home("config");
--	char *user_config =3D expand_user_path("~/.gitconfig", 0);
- 	char *repo_config;
-+	const char *user_config, *xdg_config;
- 	enum config_scope prev_parsing_scope =3D current_parsing_scope;
-=20
- 	if (opts->commondir)
-@@ -1903,6 +1915,8 @@ static int do_git_config_sequence(const struct config=
-_options *opts,
- 					    data);
-=20
- 	current_parsing_scope =3D CONFIG_SCOPE_GLOBAL;
-+	git_global_config(&user_config, &xdg_config);
++	sane_unset GIT_CONFIG_NOSYSTEM &&
 +
- 	if (xdg_config && !access_or_die(xdg_config, R_OK, ACCESS_EACCES_OK))
- 		ret +=3D git_config_from_file(fn, xdg_config, data);
-=20
-@@ -1927,8 +1941,6 @@ static int do_git_config_sequence(const struct config=
-_options *opts,
- 		die(_("unable to parse command-line config"));
-=20
- 	current_parsing_scope =3D prev_parsing_scope;
--	free(xdg_config);
--	free(user_config);
- 	free(repo_config);
- 	return ret;
- }
-diff --git a/config.h b/config.h
-index 8e8376ae19..53a782e0f5 100644
---- a/config.h
-+++ b/config.h
-@@ -327,6 +327,7 @@ int config_error_nonbool(const char *);
- #endif
-=20
- const char *git_system_config(void);
-+void git_global_config(const char **user, const char **xdg);
-=20
- int git_config_parse_parameter(const char *, config_fn_t fn, void *data);
-=20
++	cat >expect <<-EOF &&
++	system	system.config=3Dtrue
++	global	global.config=3Dtrue
++	local	local.config=3Dtrue
++	EOF
++	GIT_CONFIG_SYSTEM=3Dcustom-system-config GIT_CONFIG_GLOBAL=3Dcustom-globa=
+l-config \
++		git config --show-scope --list >output &&
++	test_cmp expect output &&
++
++	cat >expect <<-EOF &&
++	local	local.config=3Dtrue
++	EOF
++	GIT_CONFIG_SYSTEM=3D/dev/null GIT_CONFIG_GLOBAL=3D/dev/null git config --=
+show-scope --list >output &&
++	test_cmp expect output
++'
++
++test_expect_success 'override global and system config with missing file' '
++	sane_unset GIT_CONFIG_NOSYSTEM &&
++	test_must_fail env GIT_CONFIG_GLOBAL=3Ddoes-not-exist git version &&
++	test_must_fail env GIT_CONFIG_SYSTEM=3Ddoes-not-exist git version &&
++	GIT_CONFIG_NOSYSTEM=3Dtrue GIT_CONFIG_SYSTEM=3Ddoes-not-exist git version
++'
++
++test_expect_success 'write to overridden global and system config' '
++	cat >expect <<EOF &&
++[config]
++	key =3D value
++EOF
++
++	test_must_fail env GIT_CONFIG_GLOBAL=3Dwrite-to-global git config --globa=
+l config.key value &&
++	touch write-to-global &&
++	GIT_CONFIG_GLOBAL=3Dwrite-to-global git config --global config.key value =
+&&
++	test_cmp expect write-to-global &&
++
++	test_must_fail env GIT_CONFIG_SYSTEM=3Dwrite-to-system git config --syste=
+m config.key value &&
++	touch write-to-system &&
++	GIT_CONFIG_SYSTEM=3Dwrite-to-system git config --system config.key value =
+&&
++	test_cmp expect write-to-system
++'
++
+ for opt in --local --worktree
+ do
+ 	test_expect_success "$opt requires a repo" '
 --=20
 2.31.1
 
 
---8XSwNFrW0pzryg9P
+--oOcc1yX9Q53rMEqH
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmBwWf0ACgkQVbJhu7ck
-PpR8hA/8CawdxWEew+ql9tG8aQ6STCtNjOQpyyRxVqSRUeSBO3VAqK41KnheBY/Y
-Q/2tlxfcHMxWs0vm6/hy/b2UDe8RZUc7Aa3TfPmrUCizdZExuT2Td09w0a+bNSvs
-mRgsfN0gAoj1XVKvcksO/VxnzSPWkyUltELSx4fSvXkBygFMTUmTi3ce036o/7wi
-OGGGD43WaWzNQroAv30T1REr4KokQfiy4h5/xQic+7Ag7nncKzPv3xt0C7kLKYqr
-285J/ZqivGt9lgrdoeLm+yam7mhy+SManwN0Jg9Z8jgr8/Zu6llFB1l3XvmWDT5S
-xnMkad+Wwqrv5DZb8O5HpgJX51o7bmmgg3KoBt4ts9ZUxozjG4CkhFy7aJznxbeU
-CyhzIUdZR2yD6tFvEVK12iIwOTgepJcI5DAJgTJfim1FUPuY+utKj+wzThs6V2TW
-IWgD80o5gqZeMrIRP1frKUPxMj+1jm0kQ1Pff2v5RD+R3XqHoxbySkPLDypE5ZzF
-KGuKW11kH9elGpKFf79cPxxV2K84U+o2+Ej+oUkwVFANUklRQ/i8oNRKvrr043OV
-ZtLUt3t1b4YUCljLhMlxoPO5JoGrXip3a1ZehESXxuYhPEu+DrT4CCM98hf4c23x
-JahSH/TMQa+oc/4Ari6nQKGbr/0LPaKRcK75Ho7+bL5O5zOYM8E=
-=Lbp6
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmBwWgEACgkQVbJhu7ck
+PpTSgQ/+NziLak8eFngMrUWGIDTDX+c8jDZnBgwkomnqFSnnLTZd/4fwndZjvqxG
+YSiVyD9ikdBamoGM9DBuOKOQ2M5fhZb3Lg4LepFtKlhBmTd2r2mRgndf3/9r097e
+jzBqEknNrxGhhf1o7Z7HaaZG77uAep60f+b9+az1gDnHh3yrIPCOmtpciw5PPiCz
+XoUL32IdAtxq9i8Mze5s7s8D8nflFTydg+xZAaxnXVgNYClBE1nyuQswphU4E8LT
+Ibnu63Q/VbnXNEUeLg5xW1N6JFMAwLK9SPAvSvWLaihKmC/vPItTp7R1uxiSWnUZ
+EiEk/X7wgtIoSyjEZ4NC8r8xP22OS/Aqkn3UfGyhd6cHd6iHkRBN28bRNeDr+f2m
+aRbe0v3c+u4QbvmArleO+yzFAqmjO5bVMxMDfjeRKMW5ZmrMZznowQ/zTr6UX2GA
+MiI4abOSOVl0jvbTP5eKBx6uoCOduFwHMIdEmxDa8RsfX+8WaoN6YEP6pOpzYmTc
+oL9TqVxS6ebruIETF5At1lolMA1KEY6GbLVXDHePBc3ZOnmHuL8VOz6V+EoT+OAb
+z2kJK+K6990FQSb82D/CJox2LbbsDp8rTNT+jK2l9FFh8S0nYhAAMEKjHyipudcf
+UXZaHxfXle3Ai/XWVDljbDk23uTv49FeY5Ih/ZRPGNfyhSgyvRg=
+=gYus
 -----END PGP SIGNATURE-----
 
---8XSwNFrW0pzryg9P--
+--oOcc1yX9Q53rMEqH--
