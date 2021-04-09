@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A507C433B4
-	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 18:47:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5ADE1C43460
+	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 18:47:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0A03761105
-	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 18:47:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2D23161056
+	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 18:47:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234650AbhDISsB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Apr 2021 14:48:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57272 "EHLO
+        id S234657AbhDISsC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Apr 2021 14:48:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234394AbhDISrv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Apr 2021 14:47:51 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AC0FC0613D9
+        with ESMTP id S234469AbhDISrw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Apr 2021 14:47:52 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0516C061762
         for <git@vger.kernel.org>; Fri,  9 Apr 2021 11:47:38 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id q26so6558873wrz.9
+Received: by mail-wr1-x42b.google.com with SMTP id s7so6454526wru.6
         for <git@vger.kernel.org>; Fri, 09 Apr 2021 11:47:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=NBCuBsyzyid5FYNFzT/nqU+gxu/TAB8898oEPkxFX2Q=;
-        b=a4f/Nrh5B86+m0/OWNg14ETj+lFTVNIN5mk/hlhvMNiECxAxmkF0HIITwXzDTX5pVL
-         MxJqkOF2VBSUcNGY490AFDxVJG51IkRoZ85y+NeZo1eEtJG1lgPYNqCtOeVq8kscU9lw
-         PLyWGABpi8DuuNkmeV2GmFpbFC/hsyjR4BFWs4YrrtyYw/JiA6J2OTyKCK0/9a5KLhIZ
-         lr5NUCUUDVoERNmKtnT3dx2y+Vgo4g2ebB95lNHHmQlPWbIlurMpIbAHpwruIsMMbLy4
-         r3EikH6k8ZIoPkBaEeWG8GUybZJEpDXWqUusTpd4ERepJA31LX4CV1T4SNSTOp6GNgIx
-         lioQ==
+        bh=6Cly6c+pVEn0MrqzZoU7qCjU5jWrqrApZjLclDmdUlc=;
+        b=h3zxrfnZl/hQ8oJLeyctmgQ7LfZUoWXA7e/VBpm74mwEeD9gnzH0WYZs+V/QgExhKu
+         uiUSaSVMRHMa54X0UGeG/noFFZc7RtnPCK8CPAaiU/qx7DYjJ9HPXsi97GhFKY7Ss0IO
+         iaOcXDIY9DD1BQoRkmyI2ckSdN+iSuiI/PS5n/dCJ//4Z8r4ztwnKsB1YdOlOc+/rglK
+         0bbNT4hMnhcpDhf2T9Sh8TIYwIrATiXfUqZVNnRfdKIx3ZbopnLykMslnJTPHhafrse5
+         s1IHuE+d6LOtERx7KVABNVjcbHuSNTxoS8NJO+CWGNlFB/WmUkCD01i5E474PE9ZV1pv
+         v4fA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=NBCuBsyzyid5FYNFzT/nqU+gxu/TAB8898oEPkxFX2Q=;
-        b=VXo0G+PDmrtocvMo/YSYM8nXAzjPwm5wYlZNXLrCiN/2qfa6L4bwxVuntmJxKKV9Qd
-         l64+PaCFN/fgH9xBLsNQxTqlXUAL341Y1eZwUWi/bxGEPIsKz8bSvIobHWuHPPRyw7NM
-         8suREkVr/Perm8ly8OdsgDo3jlMXZnek8pT9cURhH4MgucrQlLkMrr3LkAD3i6FYc+O0
-         bkv2S/iGGS78A7yBtO5ZDOLcQKSoNIIYjxoc8W6UTtMZKPuGv4epyVIsmDNVP7iIbUXX
-         oGqeDEcxt6W+4D6kBpRaryBH/4eA8LR5Q866UatwQ3Ezgajt2ZrXXqZK7EN5k48vqGo7
-         XoiQ==
-X-Gm-Message-State: AOAM53216ZeVje7MGZtDcrlQ/Iol/hKkSXpwbP18bC7f8TJtVVaxFf+1
-        anpKgKagbKF37RUPhxYci9jBWSydIIQ=
-X-Google-Smtp-Source: ABdhPJy1+gehYLJ7YHUJ/sGV22A+Ass1cZ/n6bn9gU2T/O4pc0IJLLTQ7p0UCFQXuwZ+QVTGqRmRlw==
-X-Received: by 2002:adf:fd0b:: with SMTP id e11mr14866824wrr.347.1617994057006;
+        bh=6Cly6c+pVEn0MrqzZoU7qCjU5jWrqrApZjLclDmdUlc=;
+        b=RnWox69MpRkxhZzDWkrBUt3IkrQKdRYYyDk8salCPsGJSyJv3fcGBdrQbadJIjw4+u
+         5NicZ0vRFTGcU0+yemuP3C2ZzD70bk9hrfr/7WQ9cAeA5BBUBkEEzMFsMp+fB9ygA7en
+         KZ692i0ADiN+CzkVU2s1/b1KguY+lBmKDYjpoBzZszDLGPnRcTCwCu2Rg1sLqh+EOCKT
+         dNiBzteGMvb1xA6Sw6AzjkRzA8QWxNuDk4RI92NqP1TAfuncZdUXQPpH5JmSrQ6aPeDJ
+         nOgRKNfcJ2JmCVNemJnST2nsyTWwQT9VsDv7vSSpV/SbHUXtjrBVs+IgOIJZBEfMHQha
+         nGFA==
+X-Gm-Message-State: AOAM531n7VzePr+HyUShxZ5rX1ZZY4V/M2byWc8Gqoc/uUMaPvsbM6oS
+        9sOec3IvzlIDbQIsrUKP+0LiSckrgUY=
+X-Google-Smtp-Source: ABdhPJyKw0iIAJpNKBzIkr87KEcZsbyXpkqlYzmSc8wWQdirIRdYndutf405JUjoKon5DS6GeWeXFQ==
+X-Received: by 2002:adf:cf0f:: with SMTP id o15mr18664051wrj.91.1617994057541;
         Fri, 09 Apr 2021 11:47:37 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d7sm6596438wrw.63.2021.04.09.11.47.36
+        by smtp.gmail.com with ESMTPSA id h13sm5029803wmq.29.2021.04.09.11.47.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Apr 2021 11:47:36 -0700 (PDT)
-Message-Id: <24129e3e633dbcf7c70f2962a330dc067e161712.1617994052.git.gitgitgadget@gmail.com>
+        Fri, 09 Apr 2021 11:47:37 -0700 (PDT)
+Message-Id: <563264af39c3103014fc2eb277ddd32ed78f10cf.1617994052.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.929.git.1617994052.gitgitgadget@gmail.com>
 References: <pull.929.git.1617994052.gitgitgadget@gmail.com>
 From:   "Andrzej Hunt via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 09 Apr 2021 18:47:25 +0000
-Subject: [PATCH 06/12] builtin/bugreport: don't leak prefixed filename
+Date:   Fri, 09 Apr 2021 18:47:26 +0000
+Subject: [PATCH 07/12] builtin/check-ignore: clear_pathspec before returning
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,67 +74,85 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Andrzej Hunt <ajrhunt@google.com>
 
-prefix_filename() returns newly allocated memory, and strbuf_addstr()
-doesn't take ownership of its inputs. Therefore we have to make sure to
-store and free prefix_filename()'s result.
+parse_pathspec() allocates new memory into pathspec, therefore we need
+to free it when we're done.
 
-As this leak is in cmd_bugreport(), we could just as well UNLEAK the
-prefix - but there's no good reason not to just free it properly. This
-leak was found while running t0091, see output below:
+An UNLEAK would probably be just as good here - but clear_pathspec() is
+not much more work so we might as well use it. check_ignore() is either
+called once directly from cmd_check_ignore() (in which case the leak
+really doesnt matter), or it can be called multiple times in a loop from
+check_ignore_stdin_paths(), in which case we're potentially leaking
+multiple times - but even in this scenario the leak is so small as to
+have no real consequence.
 
-Direct leak of 24 byte(s) in 1 object(s) allocated from:
-    #0 0x49ab79 in realloc /home/abuild/rpmbuild/BUILD/llvm-11.0.0.src/build/../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:164:3
-    #1 0x9acc66 in xrealloc wrapper.c:126:8
+Found while running t0008:
+
+Direct leak of 112 byte(s) in 1 object(s) allocated from:
+    #0 0x49a85d in malloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:145:3
+    #1 0x9aca44 in do_xmalloc wrapper.c:41:8
+    #2 0x9aca1a in xmalloc wrapper.c:62:9
+    #3 0x873c17 in parse_pathspec pathspec.c:582:2
+    #4 0x503eb8 in check_ignore builtin/check-ignore.c:90:2
+    #5 0x5038af in cmd_check_ignore builtin/check-ignore.c:190:17
+    #6 0x4cd91d in run_builtin git.c:467:11
+    #7 0x4cb5f3 in handle_builtin git.c:719:3
+    #8 0x4ccf47 in run_argv git.c:808:4
+    #9 0x4caf49 in cmd_main git.c:939:19
+    #10 0x69e43e in main common-main.c:52:11
+    #11 0x7f18bb0dd349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+
+Indirect leak of 65 byte(s) in 1 object(s) allocated from:
+    #0 0x49ab79 in realloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:164:3
+    #1 0x9acc46 in xrealloc wrapper.c:126:8
     #2 0x93baed in strbuf_grow strbuf.c:98:2
-    #3 0x93c6ea in strbuf_add strbuf.c:295:2
-    #4 0x69f162 in strbuf_addstr ./strbuf.h:304:2
-    #5 0x69f083 in prefix_filename abspath.c:277:2
-    #6 0x4fb275 in cmd_bugreport builtin/bugreport.c:146:9
-    #7 0x4cd91d in run_builtin git.c:467:11
-    #8 0x4cb5f3 in handle_builtin git.c:719:3
-    #9 0x4ccf47 in run_argv git.c:808:4
-    #10 0x4caf49 in cmd_main git.c:939:19
-    #11 0x69df9e in main common-main.c:52:11
-    #12 0x7f523a987349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+    #3 0x93d696 in strbuf_vaddf strbuf.c:392:3
+    #4 0x9400c6 in xstrvfmt strbuf.c:979:2
+    #5 0x940253 in xstrfmt strbuf.c:989:8
+    #6 0x92b72a in prefix_path_gently setup.c:115:15
+    #7 0x87442d in init_pathspec_item pathspec.c:439:11
+    #8 0x873cef in parse_pathspec pathspec.c:589:3
+    #9 0x503eb8 in check_ignore builtin/check-ignore.c:90:2
+    #10 0x5038af in cmd_check_ignore builtin/check-ignore.c:190:17
+    #11 0x4cd91d in run_builtin git.c:467:11
+    #12 0x4cb5f3 in handle_builtin git.c:719:3
+    #13 0x4ccf47 in run_argv git.c:808:4
+    #14 0x4caf49 in cmd_main git.c:939:19
+    #15 0x69e43e in main common-main.c:52:11
+    #16 0x7f18bb0dd349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+
+Indirect leak of 2 byte(s) in 1 object(s) allocated from:
+    #0 0x486834 in strdup ../projects/compiler-rt/lib/asan/asan_interceptors.cpp:452:3
+    #1 0x9ac9e8 in xstrdup wrapper.c:29:14
+    #2 0x874542 in init_pathspec_item pathspec.c:468:20
+    #3 0x873cef in parse_pathspec pathspec.c:589:3
+    #4 0x503eb8 in check_ignore builtin/check-ignore.c:90:2
+    #5 0x5038af in cmd_check_ignore builtin/check-ignore.c:190:17
+    #6 0x4cd91d in run_builtin git.c:467:11
+    #7 0x4cb5f3 in handle_builtin git.c:719:3
+    #8 0x4ccf47 in run_argv git.c:808:4
+    #9 0x4caf49 in cmd_main git.c:939:19
+    #10 0x69e43e in main common-main.c:52:11
+    #11 0x7f18bb0dd349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+
+SUMMARY: AddressSanitizer: 179 byte(s) leaked in 3 allocation(s).
 
 Signed-off-by: Andrzej Hunt <ajrhunt@google.com>
 ---
- builtin/bugreport.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ builtin/check-ignore.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/builtin/bugreport.c b/builtin/bugreport.c
-index ad3cc9c02f62..9915a5841def 100644
---- a/builtin/bugreport.c
-+++ b/builtin/bugreport.c
-@@ -129,6 +129,7 @@ int cmd_bugreport(int argc, const char **argv, const char *prefix)
- 	char *option_output = NULL;
- 	char *option_suffix = "%Y-%m-%d-%H%M";
- 	const char *user_relative_path = NULL;
-+	char *prefixed_filename;
+diff --git a/builtin/check-ignore.c b/builtin/check-ignore.c
+index 3c652748d58c..467e92cc7b80 100644
+--- a/builtin/check-ignore.c
++++ b/builtin/check-ignore.c
+@@ -118,6 +118,7 @@ static int check_ignore(struct dir_struct *dir,
+ 			num_ignored++;
+ 	}
+ 	free(seen);
++	clear_pathspec(&pathspec);
  
- 	const struct option bugreport_options[] = {
- 		OPT_STRING('o', "output-directory", &option_output, N_("path"),
-@@ -142,9 +143,9 @@ int cmd_bugreport(int argc, const char **argv, const char *prefix)
- 			     bugreport_usage, 0);
- 
- 	/* Prepare the path to put the result */
--	strbuf_addstr(&report_path,
--		      prefix_filename(prefix,
--				      option_output ? option_output : ""));
-+	prefixed_filename = prefix_filename(prefix,
-+					    option_output ? option_output : "");
-+	strbuf_addstr(&report_path, prefixed_filename);
- 	strbuf_complete(&report_path, '/');
- 
- 	strbuf_addstr(&report_path, "git-bugreport-");
-@@ -189,6 +190,7 @@ int cmd_bugreport(int argc, const char **argv, const char *prefix)
- 	fprintf(stderr, _("Created new report at '%s'.\n"),
- 		user_relative_path);
- 
-+	free(prefixed_filename);
- 	UNLEAK(buffer);
- 	UNLEAK(report_path);
- 	return !!launch_editor(report_path.buf, NULL, NULL);
+ 	return num_ignored;
+ }
 -- 
 gitgitgadget
 
