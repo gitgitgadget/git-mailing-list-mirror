@@ -7,77 +7,78 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 79CA6C433ED
-	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 11:28:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36A60C433ED
+	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 11:28:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 53A9C610F7
-	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 11:28:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0DE7B610A7
+	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 11:28:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233633AbhDIL2i (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Apr 2021 07:28:38 -0400
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:41925 "EHLO
+        id S231819AbhDIL2o (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Apr 2021 07:28:44 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:60141 "EHLO
         out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S233603AbhDIL2g (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 9 Apr 2021 07:28:36 -0400
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
-        by mailout.nyi.internal (Postfix) with ESMTP id 5ADF75C0097;
-        Fri,  9 Apr 2021 07:28:23 -0400 (EDT)
+        by vger.kernel.org with ESMTP id S233747AbhDIL2l (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 9 Apr 2021 07:28:41 -0400
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.nyi.internal (Postfix) with ESMTP id 514AF5C0037;
+        Fri,  9 Apr 2021 07:28:28 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Fri, 09 Apr 2021 07:28:23 -0400
+  by compute1.internal (MEProxy); Fri, 09 Apr 2021 07:28:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
         :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm3; bh=7QVbyRXVMdH4GypcTjyJOGafoQr
-        l6wqozT3DJiP2AIU=; b=x3f8aRCklopQpoHKUTfR1m+9vpsMqv9YYi9npiqYF45
-        wCz1JZALbH4pjBl2UGSj9c7gqX3YuMbAc+fNUJVnTQ0UYbk+s/qbHJ7r7RIbkp5T
-        K2VNQrnNBEwpTWJ/r613QIHUQ5QLAm8G7CEz3PmM0R35m4eOcMOBOJYIYtPpmYe0
-        mdMqVdX/dKAljUcRyp4CAT5xU3+MrK0E/vPdDo6IqPhW3JgsKQ8PsaOfGFsaNZ4N
-        ExwMGt0n6k2qTqJ6stPdvoF4e9Y6Lznu3rGbp6dJULaVq7wDFhG+iaqvo+xyGTF3
-        H2nn+VBPfuWv1M/e7fgufzu7rUEwSHsHr7gh1wPFDsA==
+        :content-type:in-reply-to; s=fm3; bh=EHDIHRhopAsgVBFyC4Fl6hSKF8/
+        RqVzcpWs2ki5tH0Y=; b=I16hgE3WbGm7Xk/wpoI4UUGDpT1229r08mL2TyEEmEe
+        jOgULrG5+iXmX6XfajkrGxr5N9A+T66XggA1AoIdGMBqYlUCiWb13Fy0w2Ia+N9K
+        4/KeiwZSu1T4v0X1QnzTngJp0AoVhpX3A1/P7LwvhNYlRNSWrARm1IYNivcCQ57l
+        SKzynlQIMuifhOOA04GKqYIBGVEKz90xg5QLdYmzSO/HGHSxmbXEfnEOpwlOzNLK
+        deBzDsNQPEh8GwLkz2JIWQsOYRQPLv2WDRDXL7HNpHrwux2oy+Pqz7fAfJPJUbFr
+        7b/ektZ8rkSDNy9SK9buc3QH45C4sJP1r6RGQHHbs9Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=7QVbyR
-        XVMdH4GypcTjyJOGafoQrl6wqozT3DJiP2AIU=; b=GKjMkVcWQ9EM/cKPoapQYS
-        jSs96t0mF/JNnx4eREeN9O9oVJEN4PVOUdTc3n1qLpME6Qcd0rsjvTO5/ZOWMPqB
-        G58kJzw14vd5YQAcCPSl3xElMcXr40QziuhCtgoyfO4/pXge+5AeWl8xYF9U2cNg
-        0OPpKU66L8+dcI5/rnH7DY7eG05kH97n4WtVF28Z4tgA5cU2kHw96G3M8+RODILC
-        id9pyja6jg7LIfUrjG7LGTXkLqAua65xpTPrUOpwCAQTFktbC8Bk7DLOaww2W96f
-        aEvPEDkN9MSoOBBtaQRGshgVaVheSn1QEVwYi6IKDzt3dcSfHTXO3jpllyTiId0A
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=EHDIHR
+        hopAsgVBFyC4Fl6hSKF8/RqVzcpWs2ki5tH0Y=; b=CbvXAPS1SzEsXfGnvBvjQh
+        xpEbkb9OVHTVoIyThLwqHSpC8Op8ujLzUz0cOhN72+1z7qyv/Sn4f7/O/mYWzPW0
+        ZS0hjNASfghwFWiJvYmr3v3Ddeukc6pOqfPYwUsmxe8nnqlXdXyuEzy2akNTEfYB
+        i1zOnNCe+Y50cIXiqURUfAFowMs2xSf2F1rXbXqgaK2rMZ9ioVRIfanjuSqmIDdp
+        SK/L7ZL655+CNXRybLSW/6R2lrUuM8Wmw8Mtk+ajCiuDCNx4de56MjSO5VfNcgZE
+        u+oawR8KJeq8AQOMXcrc3HVhGMfr6WUAhcpRIZt9pdgi2lCzM4pvrn+UtjevRdCw
         ==
-X-ME-Sender: <xms:VzpwYMPl9OulS3KCt1dZdV7qKZFybcYt4LMi2g7GOkPFaD5bK0S19A>
-    <xme:VzpwYFjmKprQZQaWJWesrpAfLD26p8C_l6jenyAOZO6oSuYBvW3hYKMSe9l5CL72z
-    9tzfGjcluO8zgaZdg>
+X-ME-Sender: <xms:XDpwYIIxMqlO13C6-1XF3pMTTiUWqqRiR9nFvakiUHVKUczAIkLU3A>
+    <xme:XDpwYIL8p8r-DeTVT0654DWNZrxCNnY-nVFAo7iKdQ1UQ6P6sh-qicyLMtEmV3VwQ
+    e8M-s7ZtYjI2lkRQw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrudekuddggeduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeehgefhtdefueffheekgfffudelffejtdfhvdejkedthfehvdelgfetgfdvtedthfen
-    ucfkphepjeejrdduledurdekrdduieelnecuvehluhhsthgvrhfuihiivgepvdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:VzpwYG74dF83OttSQfnYHCIjeUDm8lKeQ-Y1l0N4utqQDozubMBpVg>
-    <xmx:VzpwYE1Q9TLTlvrsOtgP5l4po20qoo9n67OnGa_G8eIrYmlPZaHsWg>
-    <xmx:VzpwYJuOFGd3pgQAF_ZKFk_HZ_4ujvVwcO9lIgML1f7XfyE_DAvonw>
-    <xmx:VzpwYOqt_CscCN4jllQ2BMQsB6ZLwuV-j7ybb6TfOYkIjYk250IpDg>
+    hnpefgfeejuefgheegueeljeffteefuedthfdvvedugfevvdffleduueeiiefgvedtheen
+    ucffohhmrghinhepphgvnhguihhnghdrnhhrnecukfhppeejjedrudeluddrkedrudeile
+    enucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshes
+    phhkshdrihhm
+X-ME-Proxy: <xmx:XDpwYIunm7HPn1Z0UJgHekWux3bmTc3xLnWzQY_TZMbqwcMo_KECpQ>
+    <xmx:XDpwYFak1LpiLZJsbUU6mxFiZrFxxajTKbI55oFwp3Bmd7WEtGuhdw>
+    <xmx:XDpwYPYAu-f4DGMhQLBumXQ0TU7XuhLuiuDKP5BkHNXQXAAuVCvRQA>
+    <xmx:XDpwYGykP21eOu5yWAgQ6JEsG3-6x4wpMSKSCkMLToLAk96YpTyeeA>
 Received: from vm-mail.pks.im (x4dbf08a9.dyn.telefonica.de [77.191.8.169])
-        by mail.messagingengine.com (Postfix) with ESMTPA id A629C240068;
-        Fri,  9 Apr 2021 07:28:22 -0400 (EDT)
+        by mail.messagingengine.com (Postfix) with ESMTPA id 8AD7E240067;
+        Fri,  9 Apr 2021 07:28:27 -0400 (EDT)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id f1f23e66 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Fri, 9 Apr 2021 11:28:22 +0000 (UTC)
-Date:   Fri, 9 Apr 2021 13:28:21 +0200
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id f6696864 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Fri, 9 Apr 2021 11:28:26 +0000 (UTC)
+Date:   Fri, 9 Apr 2021 13:28:25 +0200
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>,
         Christian Couder <christian.couder@gmail.com>,
         Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH v3 7/8] pack-bitmap: implement combined filter
-Message-ID: <06a376399bcce0caed993fd2e1a9cff5a57ce502.1617967252.git.ps@pks.im>
+Subject: [PATCH v3 8/8] rev-list: allow filtering of provided items
+Message-ID: <796606f32b3ffc286a3157312d00ee0ee3e5600c.1617967252.git.ps@pks.im>
 References: <cover.1615813673.git.ps@pks.im>
  <cover.1617967252.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="JYOczBxH3wosdRbL"
+        protocol="application/pgp-signature"; boundary="qCeSP4cqGIzkLbua"
 Content-Disposition: inline
 In-Reply-To: <cover.1617967252.git.ps@pks.im>
 Precedence: bulk
@@ -85,119 +86,342 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---JYOczBxH3wosdRbL
+--qCeSP4cqGIzkLbua
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When the user has multiple objects filters specified, then this is
-internally represented by having a "combined" filter. These combined
-filters aren't yet supported by bitmap indices and can thus not be
-accelerated.
+When providing an object filter, it is currently impossible to also
+filter provided items. E.g. when executing `git rev-list HEAD` , the
+commit this reference points to will be treated as user-provided and is
+thus excluded from the filtering mechanism. This makes it harder than
+necessary to properly use the new `--filter=3Dobject:type` filter given
+that even if the user wants to only see blobs, he'll still see commits
+of provided references.
 
-Fix this by implementing support for these combined filters. The
-implementation is quite trivial: when there's a combined filter, we
-simply recurse into `filter_bitmap()` for all of the sub-filters.
+Improve this by introducing a new `--filter-provided` option to the
+git-rev-parse(1) command. If given, then all user-provided references
+will be subject to filtering.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- pack-bitmap.c                      | 41 +++++++++++++++++++++++++++---
- t/t6113-rev-list-bitmap-filters.sh |  7 +++++
- 2 files changed, 44 insertions(+), 4 deletions(-)
+ Documentation/rev-list-options.txt  |  5 ++++
+ builtin/pack-objects.c              |  2 +-
+ builtin/rev-list.c                  | 36 +++++++++++++++++++++--------
+ pack-bitmap.c                       |  6 +++--
+ pack-bitmap.h                       |  3 ++-
+ reachable.c                         |  2 +-
+ t/t6112-rev-list-filters-objects.sh | 28 ++++++++++++++++++++++
+ t/t6113-rev-list-bitmap-filters.sh  | 36 +++++++++++++++++++++++++++++
+ 8 files changed, 104 insertions(+), 14 deletions(-)
 
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-op=
+tions.txt
+index 3afa8fffbd..7fa18fc6e6 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -933,6 +933,11 @@ equivalent.
+ --no-filter::
+ 	Turn off any previous `--filter=3D` argument.
+=20
++--filter-provided-revisions::
++	Filter the list of explicitly provided revisions, which would otherwise
++	always be printed even if they did not match any of the filters. Only
++	useful with `--filter=3D`.
++
+ --filter-print-omitted::
+ 	Only useful with `--filter=3D`; prints a list of the objects omitted
+ 	by the filter.  Object IDs are prefixed with a ``~'' character.
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 525c2d8552..2f2026dc87 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -3516,7 +3516,7 @@ static int pack_options_allow_reuse(void)
+=20
+ static int get_object_list_from_bitmap(struct rev_info *revs)
+ {
+-	if (!(bitmap_git =3D prepare_bitmap_walk(revs, &filter_options)))
++	if (!(bitmap_git =3D prepare_bitmap_walk(revs, &filter_options, 0)))
+ 		return -1;
+=20
+ 	if (pack_options_allow_reuse() &&
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index b4d8ea0a35..13f0ff3f8d 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -398,7 +398,8 @@ static inline int parse_missing_action_value(const char=
+ *value)
+ }
+=20
+ static int try_bitmap_count(struct rev_info *revs,
+-			    struct list_objects_filter_options *filter)
++			    struct list_objects_filter_options *filter,
++			    int filter_provided_revs)
+ {
+ 	uint32_t commit_count =3D 0,
+ 		 tag_count =3D 0,
+@@ -433,7 +434,7 @@ static int try_bitmap_count(struct rev_info *revs,
+ 	 */
+ 	max_count =3D revs->max_count;
+=20
+-	bitmap_git =3D prepare_bitmap_walk(revs, filter);
++	bitmap_git =3D prepare_bitmap_walk(revs, filter, filter_provided_revs);
+ 	if (!bitmap_git)
+ 		return -1;
+=20
+@@ -450,7 +451,8 @@ static int try_bitmap_count(struct rev_info *revs,
+ }
+=20
+ static int try_bitmap_traversal(struct rev_info *revs,
+-				struct list_objects_filter_options *filter)
++				struct list_objects_filter_options *filter,
++				int filter_provided_revs)
+ {
+ 	struct bitmap_index *bitmap_git;
+=20
+@@ -461,7 +463,7 @@ static int try_bitmap_traversal(struct rev_info *revs,
+ 	if (revs->max_count >=3D 0)
+ 		return -1;
+=20
+-	bitmap_git =3D prepare_bitmap_walk(revs, filter);
++	bitmap_git =3D prepare_bitmap_walk(revs, filter, filter_provided_revs);
+ 	if (!bitmap_git)
+ 		return -1;
+=20
+@@ -471,14 +473,15 @@ static int try_bitmap_traversal(struct rev_info *revs,
+ }
+=20
+ static int try_bitmap_disk_usage(struct rev_info *revs,
+-				 struct list_objects_filter_options *filter)
++				 struct list_objects_filter_options *filter,
++				 int filter_provided_revs)
+ {
+ 	struct bitmap_index *bitmap_git;
+=20
+ 	if (!show_disk_usage)
+ 		return -1;
+=20
+-	bitmap_git =3D prepare_bitmap_walk(revs, filter);
++	bitmap_git =3D prepare_bitmap_walk(revs, filter, filter_provided_revs);
+ 	if (!bitmap_git)
+ 		return -1;
+=20
+@@ -499,6 +502,7 @@ int cmd_rev_list(int argc, const char **argv, const cha=
+r *prefix)
+ 	int bisect_show_vars =3D 0;
+ 	int bisect_find_all =3D 0;
+ 	int use_bitmap_index =3D 0;
++	int filter_provided_revs =3D 0;
+ 	const char *show_progress =3D NULL;
+=20
+ 	if (argc =3D=3D 2 && !strcmp(argv[1], "-h"))
+@@ -599,6 +603,10 @@ int cmd_rev_list(int argc, const char **argv, const ch=
+ar *prefix)
+ 			list_objects_filter_set_no_filter(&filter_options);
+ 			continue;
+ 		}
++		if (!strcmp(arg, "--filter-provided-revisions")) {
++			filter_provided_revs =3D 1;
++			continue;
++		}
+ 		if (!strcmp(arg, "--filter-print-omitted")) {
+ 			arg_print_omitted =3D 1;
+ 			continue;
+@@ -665,11 +673,11 @@ int cmd_rev_list(int argc, const char **argv, const c=
+har *prefix)
+ 		progress =3D start_delayed_progress(show_progress, 0);
+=20
+ 	if (use_bitmap_index) {
+-		if (!try_bitmap_count(&revs, &filter_options))
++		if (!try_bitmap_count(&revs, &filter_options, filter_provided_revs))
+ 			return 0;
+-		if (!try_bitmap_disk_usage(&revs, &filter_options))
++		if (!try_bitmap_disk_usage(&revs, &filter_options, filter_provided_revs))
+ 			return 0;
+-		if (!try_bitmap_traversal(&revs, &filter_options))
++		if (!try_bitmap_traversal(&revs, &filter_options, filter_provided_revs))
+ 			return 0;
+ 	}
+=20
+@@ -694,6 +702,16 @@ int cmd_rev_list(int argc, const char **argv, const ch=
+ar *prefix)
+ 			return show_bisect_vars(&info, reaches, all);
+ 	}
+=20
++	if (filter_provided_revs) {
++		struct commit_list *c;
++		for (i =3D 0; i < revs.pending.nr; i++) {
++			struct object_array_entry *pending =3D revs.pending.objects + i;
++			pending->item->flags |=3D NOT_USER_GIVEN;
++		}
++		for (c =3D revs.commits; c; c =3D c->next)
++			c->item->object.flags |=3D NOT_USER_GIVEN;
++	}
++
+ 	if (arg_print_omitted)
+ 		oidset_init(&omitted_objects, DEFAULT_OIDSET_SIZE);
+ 	if (arg_missing_action =3D=3D MA_PRINT)
 diff --git a/pack-bitmap.c b/pack-bitmap.c
-index cd3f5c433e..4385f15828 100644
+index 4385f15828..0576a19a28 100644
 --- a/pack-bitmap.c
 +++ b/pack-bitmap.c
-@@ -926,6 +926,29 @@ static void filter_bitmap_object_type(struct bitmap_in=
-dex *bitmap_git,
- 		filter_bitmap_exclude_type(bitmap_git, tip_objects, to_filter, OBJ_BLOB);
+@@ -1009,7 +1009,8 @@ static int can_filter_bitmap(struct list_objects_filt=
+er_options *filter)
  }
 =20
-+static int filter_supported(struct list_objects_filter_options *filter)
-+{
-+	int i;
-+
-+	switch (filter->choice) {
-+	case LOFC_BLOB_NONE:
-+	case LOFC_BLOB_LIMIT:
-+	case LOFC_OBJECT_TYPE:
-+		return 1;
-+	case LOFC_TREE_DEPTH:
-+		if (filter->tree_exclude_depth =3D=3D 0)
-+			return 1;
-+		return 0;
-+	case LOFC_COMBINE:
-+		for (i =3D 0; i < filter->sub_nr; i++)
-+			if (!filter_supported(&filter->sub[i]))
-+				return 0;
-+		return 1;
-+	default:
-+		return 0;
-+	}
-+}
-+
- static int filter_bitmap(struct bitmap_index *bitmap_git,
- 			 struct object_list *tip_objects,
- 			 struct bitmap *to_filter,
-@@ -933,6 +956,8 @@ static int filter_bitmap(struct bitmap_index *bitmap_gi=
-t,
+ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
+-					 struct list_objects_filter_options *filter)
++					 struct list_objects_filter_options *filter,
++					 int filter_provided_revs)
  {
- 	if (!filter || filter->choice =3D=3D LOFC_DISABLED)
- 		return 0;
-+	if (!filter_supported(filter))
-+		return -1;
+ 	unsigned int i;
 =20
- 	if (filter->choice =3D=3D LOFC_BLOB_NONE) {
- 		if (bitmap_git)
-@@ -949,8 +974,7 @@ static int filter_bitmap(struct bitmap_index *bitmap_gi=
-t,
- 		return 0;
- 	}
+@@ -1104,7 +1105,8 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_i=
+nfo *revs,
+ 	if (haves_bitmap)
+ 		bitmap_and_not(wants_bitmap, haves_bitmap);
 =20
--	if (filter->choice =3D=3D LOFC_TREE_DEPTH &&
--	    filter->tree_exclude_depth =3D=3D 0) {
-+	if (filter->choice =3D=3D LOFC_TREE_DEPTH) {
- 		if (bitmap_git)
- 			filter_bitmap_tree_depth(bitmap_git, tip_objects,
- 						 to_filter,
-@@ -966,8 +990,17 @@ static int filter_bitmap(struct bitmap_index *bitmap_g=
-it,
- 		return 0;
- 	}
+-	filter_bitmap(bitmap_git, wants, wants_bitmap, filter);
++	filter_bitmap(bitmap_git, (filter && filter_provided_revs) ? NULL : wants,
++		      wants_bitmap, filter);
 =20
--	/* filter choice not handled */
--	return -1;
-+	if (filter->choice =3D=3D LOFC_COMBINE) {
-+		int i;
-+		for (i =3D 0; i < filter->sub_nr; i++) {
-+			if (filter_bitmap(bitmap_git, tip_objects, to_filter,
-+					  &filter->sub[i]) < 0)
-+				return -1;
-+		}
-+		return 0;
-+	}
+ 	bitmap_git->result =3D wants_bitmap;
+ 	bitmap_git->haves =3D haves_bitmap;
+diff --git a/pack-bitmap.h b/pack-bitmap.h
+index 36d99930d8..5d8ae3b590 100644
+--- a/pack-bitmap.h
++++ b/pack-bitmap.h
+@@ -50,7 +50,8 @@ void traverse_bitmap_commit_list(struct bitmap_index *,
+ 				 show_reachable_fn show_reachable);
+ void test_bitmap_walk(struct rev_info *revs);
+ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
+-					 struct list_objects_filter_options *filter);
++					 struct list_objects_filter_options *filter,
++					 int filter_provided_revs);
+ int reuse_partial_packfile_from_bitmap(struct bitmap_index *,
+ 				       struct packed_git **packfile,
+ 				       uint32_t *entries,
+diff --git a/reachable.c b/reachable.c
+index 77a60c70a5..fc833cae43 100644
+--- a/reachable.c
++++ b/reachable.c
+@@ -223,7 +223,7 @@ void mark_reachable_objects(struct rev_info *revs, int =
+mark_reflog,
+ 	cp.progress =3D progress;
+ 	cp.count =3D 0;
+=20
+-	bitmap_git =3D prepare_bitmap_walk(revs, NULL);
++	bitmap_git =3D prepare_bitmap_walk(revs, NULL, 0);
+ 	if (bitmap_git) {
+ 		traverse_bitmap_commit_list(bitmap_git, revs, mark_object_seen);
+ 		free_bitmap_index(bitmap_git);
+diff --git a/t/t6112-rev-list-filters-objects.sh b/t/t6112-rev-list-filters=
+-objects.sh
+index c79ec04060..47c558ab0e 100755
+--- a/t/t6112-rev-list-filters-objects.sh
++++ b/t/t6112-rev-list-filters-objects.sh
+@@ -207,6 +207,34 @@ test_expect_success 'verify object:type=3Dtag prints t=
+ag' '
+ 	test_cmp expected actual
+ '
+=20
++test_expect_success 'verify object:type=3Dblob prints only blob with --fil=
+ter-provided' '
++	printf "%s blob\n" $(git -C object-type rev-parse HEAD:blob) >expected &&
++	git -C object-type rev-list --objects \
++		--filter=3Dobject:type=3Dblob --filter-provided HEAD >actual &&
++	test_cmp expected actual
++'
 +
-+	BUG("unsupported filter choice");
- }
-=20
- static int can_filter_bitmap(struct list_objects_filter_options *filter)
++test_expect_success 'verify object:type=3Dtree prints only tree with --fil=
+ter-provided' '
++	printf "%s \n" $(git -C object-type rev-parse HEAD^{tree}) >expected &&
++	git -C object-type rev-list --objects \
++		--filter=3Dobject:type=3Dtree HEAD --filter-provided >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success 'verify object:type=3Dcommit prints only commit with -=
+-filter-provided' '
++	git -C object-type rev-parse HEAD >expected &&
++	git -C object-type rev-list --objects \
++		--filter=3Dobject:type=3Dcommit --filter-provided HEAD >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success 'verify object:type=3Dtag prints only tag with --filte=
+r-provided' '
++	printf "%s tag\n" $(git -C object-type rev-parse tag) >expected &&
++	git -C object-type rev-list --objects \
++		--filter=3Dobject:type=3Dtag --filter-provided tag >actual &&
++	test_cmp expected actual
++'
++
+ # Test sparse:path=3D<path> filter.
+ # !!!!
+ # NOTE: sparse:path filter support has been dropped for security reasons,
 diff --git a/t/t6113-rev-list-bitmap-filters.sh b/t/t6113-rev-list-bitmap-f=
 ilters.sh
-index fb66735ac8..cb9db7df6f 100755
+index cb9db7df6f..9053ac5059 100755
 --- a/t/t6113-rev-list-bitmap-filters.sh
 +++ b/t/t6113-rev-list-bitmap-filters.sh
-@@ -98,4 +98,11 @@ test_expect_success 'object:type filter' '
+@@ -98,6 +98,28 @@ test_expect_success 'object:type filter' '
  	test_bitmap_traversal expect actual
  '
 =20
-+test_expect_success 'combine filter' '
-+	git rev-list --objects --filter=3Dblob:limit=3D1000 --filter=3Dobject:typ=
-e=3Dblob tag >expect &&
++test_expect_success 'object:type filter with --filter-provided' '
++	git rev-list --objects --filter-provided --filter=3Dobject:type=3Dtag tag=
+ >expect &&
 +	git rev-list --use-bitmap-index \
-+		     --objects --filter=3Dblob:limit=3D1000 --filter=3Dobject:type=3Dblo=
-b tag >actual &&
++		     --objects --filter-provided --filter=3Dobject:type=3Dtag tag >actua=
+l &&
++	test_cmp expect actual &&
++
++	git rev-list --objects --filter-provided --filter=3Dobject:type=3Dcommit =
+tag >expect &&
++	git rev-list --use-bitmap-index \
++		     --objects --filter-provided --filter=3Dobject:type=3Dcommit tag >ac=
+tual &&
++	test_bitmap_traversal expect actual &&
++
++	git rev-list --objects --filter-provided --filter=3Dobject:type=3Dtree ta=
+g >expect &&
++	git rev-list --use-bitmap-index \
++		     --objects --filter-provided --filter=3Dobject:type=3Dtree tag >actu=
+al &&
++	test_bitmap_traversal expect actual &&
++
++	git rev-list --objects --filter-provided --filter=3Dobject:type=3Dblob ta=
+g >expect &&
++	git rev-list --use-bitmap-index \
++		     --objects --filter-provided --filter=3Dobject:type=3Dblob tag >actu=
+al &&
 +	test_bitmap_traversal expect actual
++'
++
+ test_expect_success 'combine filter' '
+ 	git rev-list --objects --filter=3Dblob:limit=3D1000 --filter=3Dobject:typ=
+e=3Dblob tag >expect &&
+ 	git rev-list --use-bitmap-index \
+@@ -105,4 +127,18 @@ test_expect_success 'combine filter' '
+ 	test_bitmap_traversal expect actual
+ '
+=20
++test_expect_success 'combine filter with --filter-provided' '
++	git rev-list --objects --filter-provided --filter=3Dblob:limit=3D1000 --f=
+ilter=3Dobject:type=3Dblob tag >expect &&
++	git rev-list --use-bitmap-index \
++		     --objects --filter-provided --filter=3Dblob:limit=3D1000 --filter=
+=3Dobject:type=3Dblob tag >actual &&
++	test_bitmap_traversal expect actual &&
++
++	git cat-file --batch-check=3D"%(objecttype) %(objectsize)" <actual >objec=
+ts &&
++	while read objecttype objectsize
++	do
++		test "$objecttype" =3D blob || return 1
++		test "$objectsize" -le 1000 || return 1
++	done <objects
 +'
 +
  test_done
@@ -205,24 +429,24 @@ b tag >actual &&
 2.31.1
 
 
---JYOczBxH3wosdRbL
+--qCeSP4cqGIzkLbua
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmBwOlQACgkQVbJhu7ck
-PpQsgQ//ZATYnUPsd1skS9e2MsYnrpOtumH4YASkv7qcRXIeHq6yGllrbZ72VRuL
-6XvFrowgQw64VT9cUXv6NRYndnAgVDZEcLQVpzdqhIIKtq2QxjAIVvAoaDYeMrqy
-1XR9Fqc+o6Nl9VFRnFe5ODuVMGiukz0zeBCGHKat90BiDjCGiJ0VlsH9NfP+m3ph
-UiOiKYaZX2ItfeFykdZk+pkz6Etuwspm925X26UlgSVuW4oBtkjzjBDjpPErFaTZ
-FP/pe0SWkdaheBVp8eIf3Rb3Eq3QUZjGtRr1jp+5wYE8XDIkKFAxcWCAK8ZK1q5v
-koTM4lmKyY+Qr2gdGucqA+6MvPzzzD5efIkmw2EnZdP6qYheeC2AnFeYONR/uT22
-9JsVkfk709SJjJPj1sEQ01BwkEXglq/jJF9UzRwez52AoBg0S5OHGs5XO2mbqzvz
-zubUSx3WHPRdTAE6xCrJGgsFMUAoZAg+uhCx60c6rEVEaGkgjMfFzHVgHigeX8nz
-6lkYG5wUALQXxVHTSyiGy+ufWGp78PrPOPVtT/bx3gcjZm7J/HArRnvJVSFDfSLa
-J8AUHegAS5VNxUx4G0SO145X9bV4Nrg1x99QyItAtuVsBgE7vPhuviJ8AJcEgdpx
-EOe0zcSPJBon3lez/bebVuq6xaairn0+Cic+xvRimA8yqBO40SY=
-=R4/r
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmBwOlgACgkQVbJhu7ck
+PpQttQ//Ydd59xH1H37xKTWew7rYhZwMwIu5NZ7S9vexunXSxiQ13I3o1BhPSbDr
+rtdU8/2fq+wDCa0uD1QQQ5Bm/+J6SrX5QnxrVYPX1pueypSH8/Dy2GQxj5+KW7ej
+sjIk5DY0c9w2HE7m9did5xlEH2WczfmdpNi+AQpmn8DbdW8oKv+1nOBp+x5QcCAP
+LPfxxN2dXOmXSMOkfnmXPMAheAi6AKBlyfsN3UZxQQ13dYH6+cgJ4LdLx/K6nxTz
+OuZ+mWvKn8hwm6XXzr3/3jsgM2L/1fXYuS2stoLatkI6HwmajUsgQbfdzzckStc+
+cBwOFZku4jBz0+dlL97kESFvLzDn8ZfVMjQHuxrWrGa7GhbO1Hpa8T5QPH351X0C
+aKzoXMD5m+vWhVt0Vo0zOL42vhAvM2EPDD5ditfezkWye2w+xcZek85NTGBYlEnX
+Nz+OdLg9vOervUcxsAZp9TfTJmARp4DU00r1HFVR7HNrDKBV8o8HThyYEyY2fSjl
+6O64voD9zJxHZxA1YMFL7FQTIS3M4xHaYrcNUgIvUcaAhm6SyfzQ6K7ydNqgNPii
+VhYMTLZq/qHtxju0ByxChKUEJxcYxznYNNwn+wh+U+dn0BAbJGbJcxaRQHH3h1QY
+hrlzUxuPmzrFL1Df0WQqaYx1v0vRbvYstiRXKTPJKM9NknxPuxs=
+=ReDT
 -----END PGP SIGNATURE-----
 
---JYOczBxH3wosdRbL--
+--qCeSP4cqGIzkLbua--
