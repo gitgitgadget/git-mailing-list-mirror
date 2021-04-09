@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46170C433ED
-	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 18:47:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A01BFC433B4
+	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 18:47:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EDE2A61056
-	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 18:47:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6BC54610FC
+	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 18:47:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234662AbhDISsE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Apr 2021 14:48:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57278 "EHLO
+        id S234667AbhDISsF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Apr 2021 14:48:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57280 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234572AbhDISrw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Apr 2021 14:47:52 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F8F5C061763
+        with ESMTP id S234582AbhDISrx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Apr 2021 14:47:53 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB907C061762
         for <git@vger.kernel.org>; Fri,  9 Apr 2021 11:47:39 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id x15so6588140wrq.3
+Received: by mail-wm1-x32e.google.com with SMTP id y20-20020a1c4b140000b029011f294095d3so5253039wma.3
         for <git@vger.kernel.org>; Fri, 09 Apr 2021 11:47:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=xBQHDAQkmLXliEEpOaUXRyoJMpH3nXNNFwi39q0+Dhw=;
-        b=FWlKZNryYYgT2t4VJ9Jr3mJZhXOf8mlRrQBgW5YCnD9YywF1bN7VPuf5RfOH4h+FdU
-         3e7JOhWhnBs09xN1oZ8wE+K31D7rmTwjK0vzqzCbPA9BlU0usNggNYvkIgdnS6gPQS/J
-         HEcS06mxt5zjqBz7DrTPQwsHv9krKZ3htZZSUKn0aBJva9DNLQo1WUsIFvmovgL2Iggm
-         baS6BJsh5ptIBF8oi72xMfbszJSEbpJDq05eDLpSs+7orVQyPRLznl6Ji9MgFIEHd8cR
-         ZC+i2m+FH8RHnOwHeAQGZFQXTSomnxPXIkL7yw0RGsKmMochGzq5xlciDa8ri94aV2vg
-         JMjQ==
+        bh=OUffXNu87CDMnFQUZ0L6u1Y+eZRl0x+hw5v/1tRshY8=;
+        b=Bik4cR/fNlc4/P1C2lgjFOQzs5xoKK/h3cLuTXm9z1l50mCGA8QTCaHd61+BhbNW2T
+         whAJU/s4mlzs5+HA+0rG3nxX5DbnLHvOiQkf+ynEqHCMIEV0Depaf5ajI+TZebC/u6Mr
+         qtjgtoUyg84uf615AJaD+/plUC9ViojQb2kHpU/el74UxztNlzh4Fd6Zw2p1fqDFPRsC
+         l9QT9pD0jPLjabfEpEkft2NBvBDf3eAnHTmAnZ6fsw993hsGdEoT24kq9ff3ztAPOy56
+         9MgCv7hQqiuwGVZ3f4NfYxAyTZzSUq/xaKTP+o0AoJgSctmAk+ktmRRV6SdHdxVzVtwn
+         XO7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=xBQHDAQkmLXliEEpOaUXRyoJMpH3nXNNFwi39q0+Dhw=;
-        b=qkIFtydKiJoxQl0UebGxn0FgMJp5YkzOKKE77MFKjY9AiXQjdJlh2zBalbTEAqWEYR
-         X63pc3z47dEfxPNOTrpzqjoalsYAeTG+MOS6mjNxI/6OBg6IsVTBMy5uvly4EfyKLsgr
-         12oZcIH/dahfQIQBqW9uyWBhktTOi1zH4D5q5YANvA5DbRU2bh9kKuHMJ9SY5LO9/nFQ
-         FkidNsdPIK1XUh/+wNzKKnYw+HMweIgTka1C4x2+4QZu8xkgjldizHPfcTrRif1VZEeZ
-         4mTJiwHNdarMpkF1V5Ra9BsMMTbvo9KYtnokJg/hvRKefeOUkGNMBQLVl5/LsI5ncC62
-         bOTg==
-X-Gm-Message-State: AOAM533m3j7lhroSQC36KWcw69zJGb53t4L2/0mSxHmiNweowkai9d53
-        l1QAEbch1ZSo0Q1z+O/wtK1IifAWLG0=
-X-Google-Smtp-Source: ABdhPJwnVjZEvTwWFQiEtMLbTeGkgFF4HUC56k55k1Qu1fNN5ugl5/9ANCeEhSxL4GVEfzbQQL7uBA==
-X-Received: by 2002:adf:d211:: with SMTP id j17mr19444801wrh.311.1617994058052;
+        bh=OUffXNu87CDMnFQUZ0L6u1Y+eZRl0x+hw5v/1tRshY8=;
+        b=bmENGJkc2owmKSlCCB6b+EBvHaXH0aorm/LwM2LnWltboUTXMp1jcnw9eqm5/k09fh
+         cV3LTN7tTdbNMqS0Xk7v3OOAIKCUlKhUaCtrkAT1cQag8o7hWoVQkdTbKa8IT4dJcezB
+         GrtqEcH6Moo2SHpXKYap24DyiAL4XDDh1t90SQ3HciK2YoVTLAN3p9LNq+Zxh/En8Faa
+         oYrHLm8284GpApm3mBXtt/3jK7sT7Gkv279OMsLwqnMv31jPvFYQ/X78702vmTbRKFov
+         wZHVEnsQVgyXUP4iAxTeBQt0y/2AzBV2jjhqlC1FqmabGWl7fvByy6ShyGRzAi0GVRSh
+         WeRA==
+X-Gm-Message-State: AOAM531hZXI1ZUrTUd5lCXZPTRMm8rJFy1Qi8x9B0POihkBB6kj1czF6
+        lzoJs+wwNRsomUvKjcBb5PNTyxNaKHU=
+X-Google-Smtp-Source: ABdhPJw/irUzefmSq12nktihwoqs+Rb3F0krWNgmnyAAkdu4npoLFAZDZxjmpIuAWHdaDtrVUPcENw==
+X-Received: by 2002:a05:600c:1992:: with SMTP id t18mr14680967wmq.125.1617994058575;
         Fri, 09 Apr 2021 11:47:38 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j6sm6477162wru.18.2021.04.09.11.47.37
+        by smtp.gmail.com with ESMTPSA id c24sm5211856wml.29.2021.04.09.11.47.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Apr 2021 11:47:37 -0700 (PDT)
-Message-Id: <cdeb4b7875e3bf66bf2b492841118bab0e8f047e.1617994052.git.gitgitgadget@gmail.com>
+        Fri, 09 Apr 2021 11:47:38 -0700 (PDT)
+Message-Id: <130ef89218a47adc7ee558e75672e0e4eb5f30ca.1617994052.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.929.git.1617994052.gitgitgadget@gmail.com>
 References: <pull.929.git.1617994052.gitgitgadget@gmail.com>
 From:   "Andrzej Hunt via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 09 Apr 2021 18:47:27 +0000
-Subject: [PATCH 08/12] builtin/checkout: clear pending objects after diffing
+Date:   Fri, 09 Apr 2021 18:47:28 +0000
+Subject: [PATCH 09/12] mailinfo: also free strbuf lists when clearing mailinfo
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,51 +74,83 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Andrzej Hunt <ajrhunt@google.com>
 
-add_pending_object() populates rev.pending, we need to take care of
-clearing it once we're done.
+mailinfo.p_hdr_info/s_hdr_info are null-terminated lists of strbuf's,
+with entries pointing either to NULL or an allocated strbuf. Therefore
+we need to free those strbuf's (and not just the data they contain)
+whenever we're done with a given entry. (See handle_header() where those
+new strbufs are malloc'd.)
 
-This code is run close to the end of a checkout, therefore this leak
-seems like it would have very little impact. See also LSAN output
-from t0020 below:
+Once we no longer need the list (and not just its entries) we can switch
+over to strbuf_list_free() instead of manually iterating over the list,
+which takes care of those additional details for us. We can only do this
+in clear_mailinfo() - in handle_commit_message() we are only clearing the
+array contents but want to reuse the array itself, hence we can't use
+strbuf_list_free() there.
 
-Direct leak of 2048 byte(s) in 1 object(s) allocated from:
-    #0 0x49ab79 in realloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:164:3
-    #1 0x9acc46 in xrealloc wrapper.c:126:8
-    #2 0x83e3a3 in add_object_array_with_path object.c:337:3
-    #3 0x8f672a in add_pending_object_with_path revision.c:329:2
-    #4 0x8eaeab in add_pending_object_with_mode revision.c:336:2
-    #5 0x8eae9d in add_pending_object revision.c:342:2
-    #6 0x5154a0 in show_local_changes builtin/checkout.c:602:2
-    #7 0x513b00 in merge_working_tree builtin/checkout.c:979:3
-    #8 0x512cb3 in switch_branches builtin/checkout.c:1242:9
-    #9 0x50f8de in checkout_branch builtin/checkout.c:1646:9
-    #10 0x50ba12 in checkout_main builtin/checkout.c:2003:9
-    #11 0x5086c0 in cmd_checkout builtin/checkout.c:2055:8
-    #12 0x4cd91d in run_builtin git.c:467:11
-    #13 0x4cb5f3 in handle_builtin git.c:719:3
-    #14 0x4ccf47 in run_argv git.c:808:4
-    #15 0x4caf49 in cmd_main git.c:939:19
-    #16 0x69e43e in main common-main.c:52:11
-    #17 0x7f5dd1d50349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+Leak output from t0023:
 
-SUMMARY: AddressSanitizer: 2048 byte(s) leaked in 1 allocation(s).
+Direct leak of 72 byte(s) in 3 object(s) allocated from:
+    #0 0x49a85d in malloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:145:3
+    #1 0x9ac9f4 in do_xmalloc wrapper.c:41:8
+    #2 0x9ac9ca in xmalloc wrapper.c:62:9
+    #3 0x7f6cf7 in handle_header mailinfo.c:205:10
+    #4 0x7f5abf in check_header mailinfo.c:583:4
+    #5 0x7f5524 in mailinfo mailinfo.c:1197:3
+    #6 0x4dcc95 in parse_mail builtin/am.c:1167:6
+    #7 0x4d9070 in am_run builtin/am.c:1732:12
+    #8 0x4d5b7a in cmd_am builtin/am.c:2398:3
+    #9 0x4cd91d in run_builtin git.c:467:11
+    #10 0x4cb5f3 in handle_builtin git.c:719:3
+    #11 0x4ccf47 in run_argv git.c:808:4
+    #12 0x4caf49 in cmd_main git.c:939:19
+    #13 0x69e43e in main common-main.c:52:11
+    #14 0x7fc1fadfa349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+
+SUMMARY: AddressSanitizer: 72 byte(s) leaked in 3 allocation(s).
+
 Signed-off-by: Andrzej Hunt <ajrhunt@google.com>
 ---
- builtin/checkout.c | 1 +
- 1 file changed, 1 insertion(+)
+ mailinfo.c | 14 +++-----------
+ 1 file changed, 3 insertions(+), 11 deletions(-)
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 4c696ef4805b..190153c81571 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -602,6 +602,7 @@ static void show_local_changes(struct object *head,
- 	diff_setup_done(&rev.diffopt);
- 	add_pending_object(&rev, head, NULL);
- 	run_diff_index(&rev, 0);
-+	object_array_clear(&rev.pending);
- }
+diff --git a/mailinfo.c b/mailinfo.c
+index 5681d9130db6..95ce191f385b 100644
+--- a/mailinfo.c
++++ b/mailinfo.c
+@@ -821,7 +821,7 @@ static int handle_commit_msg(struct mailinfo *mi, struct strbuf *line)
+ 		for (i = 0; header[i]; i++) {
+ 			if (mi->s_hdr_data[i])
+ 				strbuf_release(mi->s_hdr_data[i]);
+-			mi->s_hdr_data[i] = NULL;
++			FREE_AND_NULL(mi->s_hdr_data[i]);
+ 		}
+ 		return 0;
+ 	}
+@@ -1236,22 +1236,14 @@ void setup_mailinfo(struct mailinfo *mi)
  
- static void describe_detached_head(const char *msg, struct commit *commit)
+ void clear_mailinfo(struct mailinfo *mi)
+ {
+-	int i;
+-
+ 	strbuf_release(&mi->name);
+ 	strbuf_release(&mi->email);
+ 	strbuf_release(&mi->charset);
+ 	strbuf_release(&mi->inbody_header_accum);
+ 	free(mi->message_id);
+ 
+-	if (mi->p_hdr_data)
+-		for (i = 0; mi->p_hdr_data[i]; i++)
+-			strbuf_release(mi->p_hdr_data[i]);
+-	free(mi->p_hdr_data);
+-	if (mi->s_hdr_data)
+-		for (i = 0; mi->s_hdr_data[i]; i++)
+-			strbuf_release(mi->s_hdr_data[i]);
+-	free(mi->s_hdr_data);
++	strbuf_list_free(mi->p_hdr_data);
++	strbuf_list_free(mi->s_hdr_data);
+ 
+ 	while (mi->content < mi->content_top) {
+ 		free(*(mi->content_top));
 -- 
 gitgitgadget
 
