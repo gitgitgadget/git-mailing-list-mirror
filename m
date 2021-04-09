@@ -2,62 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BD295C433B4
-	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 22:05:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7064FC433ED
+	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 22:11:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8EE20610D0
-	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 22:05:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4767F61106
+	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 22:11:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234798AbhDIWFW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Apr 2021 18:05:22 -0400
-Received: from mail-ej1-f52.google.com ([209.85.218.52]:46037 "EHLO
-        mail-ej1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234517AbhDIWFV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Apr 2021 18:05:21 -0400
-Received: by mail-ej1-f52.google.com with SMTP id sd23so2252846ejb.12
-        for <git@vger.kernel.org>; Fri, 09 Apr 2021 15:05:08 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=3Bt4LNYf9KPMrjXY7KRMTe6ImorjlE9OoKXivCIkQbQ=;
-        b=FghFTctau0jujTBeEpN2PaAPhKVCcoEWp3X7y8p3ejmWgjjgK0xNeTpIe106TTzqOB
-         6R7XbPD7afSVSb2B00IJqCSDaXx9uZj+GaCHQY37fsecsUnr4ItLxk7ESnSkNmvDQmMn
-         CMy1IJpLV+T0Y50Uc3eRVcaY+lWag8/vg+igUaI4SIJawQAGgWczr4rjy23zXsRleE0z
-         gSnZN9tZx6oQ3rCRdgSIy3ydcXl5itqS50cnbl9++oEMbva/uRUSkg8Me1p0G2thy1WN
-         IWUTeYtF52FzzV3eSnfmI41fqUygTQzdtI1XBuCOxTd/w8Gfz1QF0I0V/r1RIzAsxajx
-         k0FQ==
-X-Gm-Message-State: AOAM530rXCOqjnCkNM7wZRGOCXdhGzPXwUvsiIfkL9WdCyIR9D1MZbeP
-        rHjhZsQXui0ahlotB/F8d6OhisrgPSJ/kAmUcxAwZ74cOCU=
-X-Google-Smtp-Source: ABdhPJz2V0ND6SWchVyNqkRRCqqjbi1tzF5sipOxwXvuBAlS+QXZm+SWF8rpwOeP051wAFToZbX5nP8G6xdbwEIlCPQ=
-X-Received: by 2002:a17:906:2988:: with SMTP id x8mr18143989eje.168.1618005907410;
- Fri, 09 Apr 2021 15:05:07 -0700 (PDT)
+        id S234878AbhDIWL0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Apr 2021 18:11:26 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:65071 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234602AbhDIWLZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Apr 2021 18:11:25 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6ADD1AEE0B;
+        Fri,  9 Apr 2021 18:11:11 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=H7QBXCQYjVJFfY3vlA4VJA6EXdk=; b=j5yAlH
+        oGhG4mLAg5UucIrVD67B3l5lE+cAg0pEOy+6XO0ytDQ74qbRkt2J6+vuiO6vXGbh
+        +1aT3QcJDiNkT5bBkkVIDWBIB3gMkqid4533o6Bjwr0kG4SzI983X8wV6EWDnC58
+        TbQMpJwYZvCpyHHKenI6xs9rYmQKQ43Ip5spA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=tdE3x+/SDwZn3C+T9nlGlmXk1D3iNUSq
+        RaLgWWFsNFXUJHcmjoCT7/xvM95oTEY1AxVun92axvteKx8zy4Q7cfzwkP+12yLB
+        BOTV1/2gss94Ej77dJNIkS1fbOojtEeCf69uW6zIervHmYmiCSWG3GpdprEeRk0s
+        v0OVld1WHRk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6269EAEE0A;
+        Fri,  9 Apr 2021 18:11:11 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E716AAEE08;
+        Fri,  9 Apr 2021 18:11:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Lin Sun <lin.sun@zoom.us>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH 4/5] config.c: add a "tristate" helper
+References: <cover-0.6-0000000000-20210408T133125Z-avarab@gmail.com>
+        <patch-4.6-222e91e11b-20210408T133125Z-avarab@gmail.com>
+        <xmqqa6q8tymu.fsf@gitster.g>
+        <YHCzhcBkqdeEMrWA@coredump.intra.peff.net>
+Date:   Fri, 09 Apr 2021 15:11:10 -0700
+In-Reply-To: <YHCzhcBkqdeEMrWA@coredump.intra.peff.net> (Jeff King's message
+        of "Fri, 9 Apr 2021 16:05:25 -0400")
+Message-ID: <xmqqv98vm7lt.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <20210409211812.3869-1-sir@cmpwn.com>
-In-Reply-To: <20210409211812.3869-1-sir@cmpwn.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 9 Apr 2021 18:04:55 -0400
-Message-ID: <CAPig+cTnd23pk9GyH2p-6AjW0cvPD6nqK62moTfRA3FXgROkRw@mail.gmail.com>
-Subject: Re: [PATCH] send-email: clarify SMTP encryption settings
-To:     Drew DeVault <sir@cmpwn.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7DC1A0D2-9980-11EB-9A42-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 9, 2021 at 5:18 PM Drew DeVault <sir@cmpwn.com> wrote:
-> The present options are misleading; "ssl" enables generic, "modern" SSL
-> support, which could use either SSL or TLS; and "tls" enables the
-> SMTP-specific (and deprecated) STARTTLS protocol.
->
-> This changes the canonical config options to "ssl/tls" and "starttls",
-> updates the docs to explain the options in more detail, and updates
-> git-send-email to accept either form.
-> ---
+Jeff King <peff@peff.net> writes:
 
-Missing sign-off.
+> It seems like it would be more convenient if you could pass it a bool
+> value to turn the "auto" into. E.g., if you could do:
+>
+>   b = git_parse_maybe_tristate(value, 1); /* default to "1" */
+>   if (b < 0)
+>           do_error();
+>   if (b)
+>           do_true(); /* true, or maybe "auto" */
+>   else
+>           do_false();
+>
+> I dunno. That would probably be hard to represent via "git config
+> --type". And some callers probably do care about "auto" versus "true".
+
+It would work well for codepaths where computing the default value
+is cheap (or even possible).
+
+I think the point of using "auto" is to delay the decision as late
+as possible.  E.g. in-core parsed config and attribute may still
+want to stay "auto", until we actually get our hands on the blob
+contents to see if it is binary, until we know how heavily loaded
+the system is, until we know isatty(1), etc.  Some are cheap to
+compute in advance, some are expensive and impossible until we meet
+the data.
+
+So I still think the canonical use pattern for the "auto" thing is
+
+	is_frotz = git_parse_bool_or_auto(value);
+
+	... arbitrary number of things can happen here
+	... the above may even be done in a git_config()
+	... callback, and is_frotz may not even be used.
+
+	if (is_frotz == AUTO)
+		is_frotz = auto_detect_frotz();
+
+	if (is_frotz)
+		...; /* do the frotz thing */
+	else
+		...; /* do the non-frotz thing */
+
+> It also feels funny calling this "tristate". Aren't there other
+> tristates we could have besides "auto"? The command-line option is
+> bool-or-auto, which is descriptive. Should this use a similar name?
+
+I like that bool-or-auto name very much.
