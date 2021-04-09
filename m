@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A01BFC433B4
-	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 18:47:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D1D6C433ED
+	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 18:47:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6BC54610FC
-	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 18:47:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D4A81610FC
+	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 18:47:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234667AbhDISsF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Apr 2021 14:48:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57280 "EHLO
+        id S234641AbhDISsG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Apr 2021 14:48:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234582AbhDISrx (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S234597AbhDISrx (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 9 Apr 2021 14:47:53 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB907C061762
-        for <git@vger.kernel.org>; Fri,  9 Apr 2021 11:47:39 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id y20-20020a1c4b140000b029011f294095d3so5253039wma.3
-        for <git@vger.kernel.org>; Fri, 09 Apr 2021 11:47:39 -0700 (PDT)
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54861C061764
+        for <git@vger.kernel.org>; Fri,  9 Apr 2021 11:47:40 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id e12so6553293wro.11
+        for <git@vger.kernel.org>; Fri, 09 Apr 2021 11:47:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=OUffXNu87CDMnFQUZ0L6u1Y+eZRl0x+hw5v/1tRshY8=;
-        b=Bik4cR/fNlc4/P1C2lgjFOQzs5xoKK/h3cLuTXm9z1l50mCGA8QTCaHd61+BhbNW2T
-         whAJU/s4mlzs5+HA+0rG3nxX5DbnLHvOiQkf+ynEqHCMIEV0Depaf5ajI+TZebC/u6Mr
-         qtjgtoUyg84uf615AJaD+/plUC9ViojQb2kHpU/el74UxztNlzh4Fd6Zw2p1fqDFPRsC
-         l9QT9pD0jPLjabfEpEkft2NBvBDf3eAnHTmAnZ6fsw993hsGdEoT24kq9ff3ztAPOy56
-         9MgCv7hQqiuwGVZ3f4NfYxAyTZzSUq/xaKTP+o0AoJgSctmAk+ktmRRV6SdHdxVzVtwn
-         XO7Q==
+        bh=1nKP0yaXjr4MwVeYdNA48ZKHdlQ2SyIoLZPfwwX2iB4=;
+        b=ssPeJZsp8xHSagzrQVznncb+D/GEN7I74vchjVL4LOZHClguGzZf2J7DCeDuDSNNji
+         r8hr5wVkJMQjNKgJhcswVNi2U+tJO2/ypIvvuggdNAQwyxh3YXZH8wuPiw+P69FhZ+Iz
+         1IRsjtqU1hlyaGVfln3zbU1jMnukKuCfyeItk03skn87jH2YxHm2XwJ04+CdrfSrU3TJ
+         ZIa/OKmWZHadtigQbHN10keQut3MrfuVztq8Ymf9PFk3+jJMPpgWWe0xszs+vFkfCXXQ
+         2Yvg7/6IRMK+KIp/5LiFZ/eZ7RAcG5ZcZHf4c/2rPiBj99zlKELnhrjSaJJkwoBzcz8p
+         oCbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=OUffXNu87CDMnFQUZ0L6u1Y+eZRl0x+hw5v/1tRshY8=;
-        b=bmENGJkc2owmKSlCCB6b+EBvHaXH0aorm/LwM2LnWltboUTXMp1jcnw9eqm5/k09fh
-         cV3LTN7tTdbNMqS0Xk7v3OOAIKCUlKhUaCtrkAT1cQag8o7hWoVQkdTbKa8IT4dJcezB
-         GrtqEcH6Moo2SHpXKYap24DyiAL4XDDh1t90SQ3HciK2YoVTLAN3p9LNq+Zxh/En8Faa
-         oYrHLm8284GpApm3mBXtt/3jK7sT7Gkv279OMsLwqnMv31jPvFYQ/X78702vmTbRKFov
-         wZHVEnsQVgyXUP4iAxTeBQt0y/2AzBV2jjhqlC1FqmabGWl7fvByy6ShyGRzAi0GVRSh
-         WeRA==
-X-Gm-Message-State: AOAM531hZXI1ZUrTUd5lCXZPTRMm8rJFy1Qi8x9B0POihkBB6kj1czF6
-        lzoJs+wwNRsomUvKjcBb5PNTyxNaKHU=
-X-Google-Smtp-Source: ABdhPJw/irUzefmSq12nktihwoqs+Rb3F0krWNgmnyAAkdu4npoLFAZDZxjmpIuAWHdaDtrVUPcENw==
-X-Received: by 2002:a05:600c:1992:: with SMTP id t18mr14680967wmq.125.1617994058575;
-        Fri, 09 Apr 2021 11:47:38 -0700 (PDT)
+        bh=1nKP0yaXjr4MwVeYdNA48ZKHdlQ2SyIoLZPfwwX2iB4=;
+        b=O6uT7bYGF0kDZMOfx95T7av4eQh+WNi0S9JUUL2G6QL+Q9wEuHiccWBYk+IhR+xcNt
+         jQN50NEcm8S599AZaks1uyFIpr/Ht4QJ53OLOUxZjyRJdpbnoQb/2m4rNJ1C9RAZrEMc
+         8qtegEfl7e4TF8upw3FRMpuXKrfVf9hfFDMX3r9OGF+bctVOObKmn4qidkTvOZX053Fs
+         48ZxPXPjcClJxBYMmdxGdpHd/c1znwjgV1sik0DaU2ivU6Zu/SMBLQK069tv4i7facOP
+         fsLyC9k04QM5hljG3nx7qiL9cwWkfjssxId+JSTidGIkX/BHIW1uMrthmvYSXHNHUKXf
+         rjGA==
+X-Gm-Message-State: AOAM531JWhsFwO8UbocF3O8eiaZXxNohhazTTaxbnXQDkmokcjqGJVzV
+        U/4Ncp96HD+gqv1TZWewZmtU3CV22hw=
+X-Google-Smtp-Source: ABdhPJwIMjLQmcSLPBXn+tzjZWCXKsEIlzxLWe9W259Oy1biSvJflChchNXkEA3nkNQ60KkhOPYzHA==
+X-Received: by 2002:a5d:684d:: with SMTP id o13mr19637060wrw.235.1617994059121;
+        Fri, 09 Apr 2021 11:47:39 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c24sm5211856wml.29.2021.04.09.11.47.38
+        by smtp.gmail.com with ESMTPSA id b12sm6093784wrf.39.2021.04.09.11.47.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Fri, 09 Apr 2021 11:47:38 -0700 (PDT)
-Message-Id: <130ef89218a47adc7ee558e75672e0e4eb5f30ca.1617994052.git.gitgitgadget@gmail.com>
+Message-Id: <8f2374ee899da808ce42f55a5aacc5fe54ad38ed.1617994052.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.929.git.1617994052.gitgitgadget@gmail.com>
 References: <pull.929.git.1617994052.gitgitgadget@gmail.com>
 From:   "Andrzej Hunt via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 09 Apr 2021 18:47:28 +0000
-Subject: [PATCH 09/12] mailinfo: also free strbuf lists when clearing mailinfo
+Date:   Fri, 09 Apr 2021 18:47:29 +0000
+Subject: [PATCH 10/12] builtin/for-each-ref: free filter and UNLEAK sorting.
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,83 +74,69 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Andrzej Hunt <ajrhunt@google.com>
 
-mailinfo.p_hdr_info/s_hdr_info are null-terminated lists of strbuf's,
-with entries pointing either to NULL or an allocated strbuf. Therefore
-we need to free those strbuf's (and not just the data they contain)
-whenever we're done with a given entry. (See handle_header() where those
-new strbufs are malloc'd.)
+sorting might be a list allocated in ref_default_sorting() (in this case
+it's a fixed single item list, which has nevertheless been xcalloc'd),
+or it might be a list allocated in parse_opt_ref_sorting(). In either
+case we could free these lists - but instead we UNLEAK as we're at the
+end of cmd_for_each_ref. (There's no existing implementation of
+clear_ref_sorting(), and writing a loop to free the list seems more
+trouble than it's worth.)
 
-Once we no longer need the list (and not just its entries) we can switch
-over to strbuf_list_free() instead of manually iterating over the list,
-which takes care of those additional details for us. We can only do this
-in clear_mailinfo() - in handle_commit_message() we are only clearing the
-array contents but want to reuse the array itself, hence we can't use
-strbuf_list_free() there.
+filter.with_commit/no_commit are populated via
+OPT_CONTAINS/OPT_NO_CONTAINS, both of which create new entries via
+parse_opt_commits(), and also need to be free'd or UNLEAK'd. Because
+free_commit_list() already exists, we choose to use that over an UNLEAK.
 
-Leak output from t0023:
+LSAN output from t0041:
 
-Direct leak of 72 byte(s) in 3 object(s) allocated from:
+Direct leak of 16 byte(s) in 1 object(s) allocated from:
+    #0 0x49a9d2 in calloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:154:3
+    #1 0x9ac252 in xcalloc wrapper.c:140:8
+    #2 0x8a4a55 in ref_default_sorting ref-filter.c:2486:32
+    #3 0x56c6b1 in cmd_for_each_ref builtin/for-each-ref.c:72:13
+    #4 0x4cd91d in run_builtin git.c:467:11
+    #5 0x4cb5f3 in handle_builtin git.c:719:3
+    #6 0x4ccf47 in run_argv git.c:808:4
+    #7 0x4caf49 in cmd_main git.c:939:19
+    #8 0x69dabe in main common-main.c:52:11
+    #9 0x7f2bdc570349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+
+Direct leak of 16 byte(s) in 1 object(s) allocated from:
     #0 0x49a85d in malloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:145:3
-    #1 0x9ac9f4 in do_xmalloc wrapper.c:41:8
-    #2 0x9ac9ca in xmalloc wrapper.c:62:9
-    #3 0x7f6cf7 in handle_header mailinfo.c:205:10
-    #4 0x7f5abf in check_header mailinfo.c:583:4
-    #5 0x7f5524 in mailinfo mailinfo.c:1197:3
-    #6 0x4dcc95 in parse_mail builtin/am.c:1167:6
-    #7 0x4d9070 in am_run builtin/am.c:1732:12
-    #8 0x4d5b7a in cmd_am builtin/am.c:2398:3
-    #9 0x4cd91d in run_builtin git.c:467:11
-    #10 0x4cb5f3 in handle_builtin git.c:719:3
-    #11 0x4ccf47 in run_argv git.c:808:4
-    #12 0x4caf49 in cmd_main git.c:939:19
-    #13 0x69e43e in main common-main.c:52:11
-    #14 0x7fc1fadfa349 in __libc_start_main (/lib64/libc.so.6+0x24349)
-
-SUMMARY: AddressSanitizer: 72 byte(s) leaked in 3 allocation(s).
+    #1 0x9abf54 in do_xmalloc wrapper.c:41:8
+    #2 0x9abf2a in xmalloc wrapper.c:62:9
+    #3 0x717486 in commit_list_insert commit.c:540:33
+    #4 0x8644cf in parse_opt_commits parse-options-cb.c:98:2
+    #5 0x869bb5 in get_value parse-options.c:181:11
+    #6 0x8677dc in parse_long_opt parse-options.c:378:10
+    #7 0x8659bd in parse_options_step parse-options.c:817:11
+    #8 0x867fcd in parse_options parse-options.c:870:10
+    #9 0x56c62b in cmd_for_each_ref builtin/for-each-ref.c:59:2
+    #10 0x4cd91d in run_builtin git.c:467:11
+    #11 0x4cb5f3 in handle_builtin git.c:719:3
+    #12 0x4ccf47 in run_argv git.c:808:4
+    #13 0x4caf49 in cmd_main git.c:939:19
+    #14 0x69dabe in main common-main.c:52:11
+    #15 0x7f2bdc570349 in __libc_start_main (/lib64/libc.so.6+0x24349)
 
 Signed-off-by: Andrzej Hunt <ajrhunt@google.com>
 ---
- mailinfo.c | 14 +++-----------
- 1 file changed, 3 insertions(+), 11 deletions(-)
+ builtin/for-each-ref.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/mailinfo.c b/mailinfo.c
-index 5681d9130db6..95ce191f385b 100644
---- a/mailinfo.c
-+++ b/mailinfo.c
-@@ -821,7 +821,7 @@ static int handle_commit_msg(struct mailinfo *mi, struct strbuf *line)
- 		for (i = 0; header[i]; i++) {
- 			if (mi->s_hdr_data[i])
- 				strbuf_release(mi->s_hdr_data[i]);
--			mi->s_hdr_data[i] = NULL;
-+			FREE_AND_NULL(mi->s_hdr_data[i]);
- 		}
- 		return 0;
- 	}
-@@ -1236,22 +1236,14 @@ void setup_mailinfo(struct mailinfo *mi)
- 
- void clear_mailinfo(struct mailinfo *mi)
- {
--	int i;
--
- 	strbuf_release(&mi->name);
- 	strbuf_release(&mi->email);
- 	strbuf_release(&mi->charset);
- 	strbuf_release(&mi->inbody_header_accum);
- 	free(mi->message_id);
- 
--	if (mi->p_hdr_data)
--		for (i = 0; mi->p_hdr_data[i]; i++)
--			strbuf_release(mi->p_hdr_data[i]);
--	free(mi->p_hdr_data);
--	if (mi->s_hdr_data)
--		for (i = 0; mi->s_hdr_data[i]; i++)
--			strbuf_release(mi->s_hdr_data[i]);
--	free(mi->s_hdr_data);
-+	strbuf_list_free(mi->p_hdr_data);
-+	strbuf_list_free(mi->s_hdr_data);
- 
- 	while (mi->content < mi->content_top) {
- 		free(*(mi->content_top));
+diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+index cb9c81a04606..84efb71f82fc 100644
+--- a/builtin/for-each-ref.c
++++ b/builtin/for-each-ref.c
+@@ -83,5 +83,8 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
+ 	for (i = 0; i < maxcount; i++)
+ 		show_ref_array_item(array.items[i], &format);
+ 	ref_array_clear(&array);
++	free_commit_list(filter.with_commit);
++	free_commit_list(filter.no_commit);
++	UNLEAK(sorting);
+ 	return 0;
+ }
 -- 
 gitgitgadget
 
