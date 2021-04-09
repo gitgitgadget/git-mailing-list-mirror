@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E5B46C43460
-	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 05:09:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3DC16C433ED
+	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 05:20:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A741A61186
-	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 05:09:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0781761165
+	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 05:20:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232918AbhDIFJ0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Apr 2021 01:09:26 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:59172 "EHLO
+        id S229840AbhDIFUt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Apr 2021 01:20:49 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:63897 "EHLO
         pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233273AbhDIFJS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Apr 2021 01:09:18 -0400
+        with ESMTP id S229498AbhDIFUo (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Apr 2021 01:20:44 -0400
 Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id A8381132258;
-        Fri,  9 Apr 2021 01:08:19 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 882C91322B6;
+        Fri,  9 Apr 2021 01:20:32 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ek3dRVCuoqUgOmHRqw4bPPKzaqk=; b=WEqaIz
-        ijDXmrYC3SAwqzrx69lrAERIIZCLiPyN2+VWKu1yQ50oUOG5mTvmpWfWHf1iXXcb
-        XmsVZkz5fSrQ9aBzCuvvQ80uFAluLmFyjC+W8j4fU0ZJx3wgkbalpgRwf1u7g91R
-        M71XGN7NzQ5rSypj3ESKXYZOfKTBeCM95Qs8I=
+        :content-type; s=sasl; bh=+HHD29jx/bZK9BYsqVXnoqZQWpk=; b=xvat7G
+        OFbZfHfNw+IgfTZdVW820WM6/yhoXHrii5gh2ffnWWQIEGtAm21tpsDEN0+4B5Z7
+        AFdGbyJKgcbfpXOhzRWi2SZy38WaOutBNjm0rmkBBGQR4/rjQMjcmslMW6nFRkTW
+        bZvduQMo3AwL5SKU7uF2sHsNDHb5oqVidLHmk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=t5hiyFdXporrhQuFdUpp0JBGbliZLvjz
-        RuhLEba6gbC37AO5Ekvx6re8ZAgUrKd2FUu4EU3d9ro3f3uXV64sxnJmaCcsqmWM
-        1Ze9fZSQp6CFo/o9bdHp7MF/KVUk2Onh8fgD62FeV8G3hce8HoCX9R81ZD55HgqP
-        OW23ugHkdFw=
+        :content-type; q=dns; s=sasl; b=cI5qBRTdNeKhn5yG37upqpGJinjCiqH5
+        fY5BTCigQnDOo7ggwo+09Py4HI/bdljk3LwB46u4wWnEN/UpSq0N5bpWRZVZKsQT
+        D/3yQfc8nHC0+YFyIBJEPKWfjSbfbxK1MOqHmiU3NZouifrwXOTgX/QTUxMaKmuI
+        GqPD1Ml9LM0=
 Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id A1159132257;
-        Fri,  9 Apr 2021 01:08:19 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7F4231322B5;
+        Fri,  9 Apr 2021 01:20:32 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.243.138.161])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E740A132256;
-        Fri,  9 Apr 2021 01:08:16 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 712781322B4;
+        Fri,  9 Apr 2021 01:20:29 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jonathan Tan <jonathantanmy@google.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/6] fetch-pack: refactor process_acks()
+Subject: Re: [PATCH 3/6] fetch-pack: refactor add_haves()
 References: <cover.1617929278.git.jonathantanmy@google.com>
-        <6a9f78df1a3513df04ac3275cd1feccfb6cf87b1.1617929278.git.jonathantanmy@google.com>
-Date:   Thu, 08 Apr 2021 22:08:15 -0700
-In-Reply-To: <6a9f78df1a3513df04ac3275cd1feccfb6cf87b1.1617929278.git.jonathantanmy@google.com>
-        (Jonathan Tan's message of "Thu, 8 Apr 2021 18:09:59 -0700")
-Message-ID: <xmqqsg40niyo.fsf@gitster.g>
+        <b07e52ec18f46fb85d49ba0e1e6e8ad22845af9e.1617929278.git.jonathantanmy@google.com>
+Date:   Thu, 08 Apr 2021 22:20:27 -0700
+In-Reply-To: <b07e52ec18f46fb85d49ba0e1e6e8ad22845af9e.1617929278.git.jonathantanmy@google.com>
+        (Jonathan Tan's message of "Thu, 8 Apr 2021 18:10:00 -0700")
+Message-ID: <xmqqlf9sniec.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 98000716-98F1-11EB-A6BE-E43E2BB96649-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 4C9D38AA-98F3-11EB-A478-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
@@ -66,151 +66,85 @@ X-Mailing-List: git@vger.kernel.org
 Jonathan Tan <jonathantanmy@google.com> writes:
 
 > A subsequent commit will need part, but not all, of the functionality in
-> process_acks(), so move some of its functionality to its sole caller
-> do_fetch_pack_v2(). As a side effect, the resulting code is also
-> shorter.
+> add_haves(), so move some of its functionality to its sole caller
+> send_fetch_request().
 >
 > Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 > ---
->  fetch-pack.c | 70 +++++++++++++++++-----------------------------------
->  1 file changed, 22 insertions(+), 48 deletions(-)
-
-Nicely done.
-
-I first found the patch hard to follow, but that wasn't due to this
-patch, but because I wasn't all that familiar with the original
-anymore (even though I do recall futzing with the codepath that
-involves the in_vain stuff myself at some point in the past).
-
-And indeed the resulting code is easy to see what is going on (I'd
-need a lot more concentration than I can muster this late in the
-night to be able to tell if the behaviour does not change with the
-patch, though).
-
+>  fetch-pack.c | 28 ++++++++++++----------------
+>  1 file changed, 12 insertions(+), 16 deletions(-)
+>
 > diff --git a/fetch-pack.c b/fetch-pack.c
-> index 2318ebe680..9f3901cdba 100644
+> index 9f3901cdba..128ad47d2a 100644
 > --- a/fetch-pack.c
 > +++ b/fetch-pack.c
-> @@ -1351,35 +1351,11 @@ static int process_section_header(struct packet_reader *reader,
->  	return ret;
+> @@ -1195,11 +1195,9 @@ static void add_common(struct strbuf *req_buf, struct oidset *common)
 >  }
 >  
-> -enum common_found {
-> -	/*
-> -	 * No commit was found to be possessed by both the client and the
-> -	 * server, and "ready" was not received.
-> -	 */
-> -	NO_COMMON_FOUND,
-> -
-> -	/*
-> -	 * At least one commit was found to be possessed by both the client and
-> -	 * the server, and "ready" was not received.
-> -	 */
-> -	COMMON_FOUND,
-> -
-> -	/*
-> -	 * "ready" was received, indicating that the server is ready to send
-> -	 * the packfile without any further negotiation.
-> -	 */
-> -	READY
-> -};
-> -
-> -static enum common_found process_acks(struct fetch_negotiator *negotiator,
-> -				      struct packet_reader *reader,
-> -				      struct oidset *common)
-> +static int process_ack(struct fetch_negotiator *negotiator,
-> +		       struct packet_reader *reader,
-> +		       struct object_id *common_oid,
-> +		       int *received_ready)
+>  static int add_haves(struct fetch_negotiator *negotiator,
+> -		     int seen_ack,
+>  		     struct strbuf *req_buf,
+> -		     int *haves_to_send, int *in_vain)
+> +		     int *haves_to_send)
 >  {
-> -	/* received */
-> -	int received_ready = 0;
-> -	int received_ack = 0;
+> -	int ret = 0;
+>  	int haves_added = 0;
+>  	const struct object_id *oid;
+>  
+> @@ -1209,17 +1207,10 @@ static int add_haves(struct fetch_negotiator *negotiator,
+>  			break;
+>  	}
+>  
+> -	*in_vain += haves_added;
+> -	if (!haves_added || (seen_ack && *in_vain >= MAX_IN_VAIN)) {
+> -		/* Send Done */
+> -		packet_buf_write(req_buf, "done\n");
+> -		ret = 1;
+> -	}
 > -
-> -	process_section_header(reader, "acknowledgments", 0);
->  	while (packet_reader_read(reader) == PACKET_READ_NORMAL) {
->  		const char *arg;
+>  	/* Increase haves to send on next round */
+>  	*haves_to_send = next_flush(1, *haves_to_send);
 >  
-> @@ -1387,20 +1363,17 @@ static enum common_found process_acks(struct fetch_negotiator *negotiator,
->  			continue;
->  
->  		if (skip_prefix(reader->line, "ACK ", &arg)) {
-> -			struct object_id oid;
-> -			received_ack = 1;
-> -			if (!get_oid_hex(arg, &oid)) {
-> +			if (!get_oid_hex(arg, common_oid)) {
->  				struct commit *commit;
-> -				oidset_insert(common, &oid);
-> -				commit = lookup_commit(the_repository, &oid);
-> +				commit = lookup_commit(the_repository, common_oid);
->  				if (negotiator)
->  					negotiator->ack(negotiator, commit);
->  			}
-> -			continue;
-> +			return 1;
->  		}
->  
->  		if (!strcmp(reader->line, "ready")) {
-> -			received_ready = 1;
-> +			*received_ready = 1;
->  			continue;
->  		}
->  
-> @@ -1418,13 +1391,12 @@ static enum common_found process_acks(struct fetch_negotiator *negotiator,
->  	 * sent. Therefore, a DELIM is expected if "ready" is sent, and a FLUSH
->  	 * otherwise.
->  	 */
-> -	if (received_ready && reader->status != PACKET_READ_DELIM)
-> +	if (*received_ready && reader->status != PACKET_READ_DELIM)
->  		die(_("expected packfile to be sent after 'ready'"));
-> -	if (!received_ready && reader->status != PACKET_READ_FLUSH)
-> +	if (!*received_ready && reader->status != PACKET_READ_FLUSH)
->  		die(_("expected no other sections to be sent after no 'ready'"));
->  
-> -	return received_ready ? READY :
-> -		(received_ack ? COMMON_FOUND : NO_COMMON_FOUND);
-> +	return 0;
+> -	return ret;
+> +	return haves_added;
 >  }
+
+OK, so the helper used to
+
+ - send out have's
+ - increment *in_vain with the number of have's sent out
+ - decide when to send done and send it
+ - increase haves-to-send for the next round.
+
+But the new version skips the second and third step, and let the
+caller be responsible for in_vain management.  The only piece of
+information the caller needs to do so from this function is the
+number of have's we send out, so that is what we return from the
+function.
+
+> -	/* Add initial haves */
+> -	ret = add_haves(negotiator, seen_ack, &req_buf,
+> -			haves_to_send, in_vain);
+> +	haves_added = add_haves(negotiator, &req_buf, haves_to_send);
+> +	*in_vain += haves_added;
+> +	if (!haves_added || (seen_ack && *in_vain >= MAX_IN_VAIN)) {
+> +		/* Send Done */
+> +		packet_buf_write(&req_buf, "done\n");
+> +		done_sent = 1;
+> +	}
+
+And indeed, this caller does the *in_vain management add_haves()
+used to do and give "done" as needed.
+
+> @@ -1322,7 +1318,7 @@ static int send_fetch_request(struct fetch_negotiator *negotiator, int fd_out,
+>  		die_errno(_("unable to write request to remote"));
 >  
->  static void receive_shallow_info(struct fetch_pack_args *args,
-> @@ -1573,6 +1545,8 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
->  	struct fetch_negotiator negotiator_alloc;
->  	struct fetch_negotiator *negotiator;
->  	int seen_ack = 0;
-> +	struct object_id common_oid;
-> +	int received_ready = 0;
->  	struct string_list packfile_uris = STRING_LIST_INIT_DUP;
->  	int i;
->  	struct strvec index_pack_args = STRVEC_INIT;
-> @@ -1631,22 +1605,22 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
->  			break;
->  		case FETCH_PROCESS_ACKS:
->  			/* Process ACKs/NAKs */
-> -			switch (process_acks(negotiator, &reader, &common)) {
-> -			case READY:
-> +			process_section_header(&reader, "acknowledgments", 0);
-> +			while (process_ack(negotiator, &reader, &common_oid,
-> +					   &received_ready)) {
-> +				in_vain = 0;
-> +				seen_ack = 1;
-> +				oidset_insert(&common, &common_oid);
-> +			}
-> +			if (received_ready) {
->  				/*
->  				 * Don't check for response delimiter; get_pack() will
->  				 * read the rest of this response.
->  				 */
->  				state = FETCH_GET_PACK;
-> -				break;
-> -			case COMMON_FOUND:
-> -				in_vain = 0;
-> -				seen_ack = 1;
-> -				/* fallthrough */
-> -			case NO_COMMON_FOUND:
-> +			} else {
->  				do_check_stateless_delimiter(args, &reader);
->  				state = FETCH_SEND_REQUEST;
-> -				break;
->  			}
->  			break;
->  		case FETCH_GET_PACK:
+>  	strbuf_release(&req_buf);
+> -	return ret;
+> +	return done_sent;
+
+And of course, the value returned by this function is if we sent
+"done", which is far easier to see with the new variable name.
+
+Again, very nicely done.
+
