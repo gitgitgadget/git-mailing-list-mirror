@@ -2,453 +2,172 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DAEEC433ED
-	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 11:10:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5ED7CC433ED
+	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 11:14:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B8F12610D1
-	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 11:10:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 15D0D610F7
+	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 11:14:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233711AbhDILKn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Apr 2021 07:10:43 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:64700 "EHLO smtp.hosts.co.uk"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232042AbhDILKn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Apr 2021 07:10:43 -0400
-Received: from host-92-1-139-132.as43234.net ([92.1.139.132] helo=[192.168.1.37])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1lUp1w-0003jU-E1; Fri, 09 Apr 2021 12:10:29 +0100
-Subject: Re: [RFC PATCH 2/2] config: add 'config.superproject' file
-To:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
-References: <20210408233936.533342-1-emilyshaffer@google.com>
- <20210408233936.533342-3-emilyshaffer@google.com>
-From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <e19a250a-c4ca-fc32-83f9-a03aa03cd88a@iee.email>
-Date:   Fri, 9 Apr 2021 12:10:27 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.9.1
+        id S233942AbhDILOs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Apr 2021 07:14:48 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:44003 "EHLO
+        out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S233932AbhDILOp (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 9 Apr 2021 07:14:45 -0400
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.nyi.internal (Postfix) with ESMTP id 7FEFA5C0065;
+        Fri,  9 Apr 2021 07:14:32 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute1.internal (MEProxy); Fri, 09 Apr 2021 07:14:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
+        :from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=fm3; bh=bJmILJaFhH0WiuqkuC8bA3RXzJX
+        zxtyPZRJGfz1TrR8=; b=KD6vgTbGwClaADlGgS6WO5awkid+4xe/W1ZyEnp+Uza
+        IhDfZoTOd5BHJ8EaYAScgXnR9YedEF+o5kYfF180ygy2HOXkY10dJvp/px+xarVp
+        vE8G8MT9xM4LtkhHaapBUig+9dVpKvVmuuqB211PnMaPagEbcLKHNsyTfqLjano+
+        lbaMp0W2jMDF5sovdg912UiIeCY94u1MnUwD5cTJqyEElRp6TXWbjT8N5AmTVJ+y
+        E/YutlGufLkhrE2oUOyfjuSZTltP4rqiV3CINOBX7qLlhciMyN2pu7kFchohPx6F
+        LSzWczODG/vszGwusvMwDey+9iewztrpuFt5EO0nMtw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=bJmILJ
+        aFhH0WiuqkuC8bA3RXzJXzxtyPZRJGfz1TrR8=; b=ojtTFwIV/rgYj2tzQ/BLn/
+        Olxnwc6WFB3j/66Y+saGFi6Mu4+er5D74ks2s/xkswut80glQzDtNvLopg/4ycSs
+        vKZqL7w/ceC4J0ZsIQwMx7NTDMms/3iuKbv4uxCuqqSK4goW3WV7uY5bYe5VRjgI
+        7Ne18gM5WqTNWkOpEuW6WWuRxcpZIi0hADZB0qttWsEKkrypBUzAyZvz6hNgPNjE
+        gRVc6F1HYEgWiUcR7QVPTODweFcwS0avw6qupoor4HGzlsUESrT/XbxAADqFdLH6
+        R9S6uoNpmDQV/G9l2c5suZ6oEbtjSjmLrWfLSj9BQytSUwfU+ulixUPUnyc8K84g
+        ==
+X-ME-Sender: <xms:FzdwYGslkKTR_lwMXZoflEIgU-4eR8fMoxYhUmZLaxrElUPIAQ_RAg>
+    <xme:FzdwYLcsmCOFC7YZVuSSBczqWl23ps-cmgwKILqgeby1NUrh8Gx9iAIJ9_MmW8_7H
+    -qJMx9LACLWswOTrA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrudekuddgfeelucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeehgefhtdefueffheekgfffudelffejtdfhvdejkedthfehvdelgfetgfdvtedthfen
+    ucfkphepjeejrdduledurdekrdduieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:FzdwYBzMC8IlK24UNQociqNnaQuz_P55uBW2BxE3ZrFz8kt6h4kpuA>
+    <xmx:FzdwYBN8Gu_N8ny1vUvxxst0tik31_Z2YhKJqHIFsOn6fFSOdXsnew>
+    <xmx:FzdwYG-qh7HYFp5W1eJYS_SvAIuLsFbyJEVhAHTsyLRIBXk3MsV8aQ>
+    <xmx:GDdwYIL2LXVAPdxxNIoLwLSyuP-pYCGKN_lPvIuTspCXx7eyKJi8cQ>
+Received: from vm-mail.pks.im (x4dbf08a9.dyn.telefonica.de [77.191.8.169])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 0F761240057;
+        Fri,  9 Apr 2021 07:14:30 -0400 (EDT)
+Received: from localhost (ncase [10.192.0.11])
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 4e5db764 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Fri, 9 Apr 2021 11:14:27 +0000 (UTC)
+Date:   Fri, 9 Apr 2021 13:14:26 +0200
+From:   Patrick Steinhardt <ps@pks.im>
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Christian Couder <christian.couder@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v2 0/8] rev-parse: implement object type filter
+Message-ID: <YHA3EkH3HDe45EKA@ncase>
+References: <cover.1614600555.git.ps@pks.im>
+ <cover.1615813673.git.ps@pks.im>
+ <xmqqblbdjzu6.fsf@gitster.g>
+ <YGyjtCWqdeCj3S3U@coredump.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <20210408233936.533342-3-emilyshaffer@google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="JK+mXRdn0PxzmOZF"
+Content-Disposition: inline
+In-Reply-To: <YGyjtCWqdeCj3S3U@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 09/04/2021 00:39, Emily Shaffer wrote:
-> Some configs, such as wrapper directives like gerrit.createChangeId, or
-> forthcoming hook configs, should apply to a superproject as well as all
-> its submodules. It may not be appropriate to apply them globally - for
-> example, if the user also contributes to many projects which do not use
-> the configs necessary for one project-with-submodules - and it may be
-> burdensome to apply them locally to the superproject and each of its
-> submodules. Even if the user runs 'git submodule foreach "git config
-> --local foo.bar', if a new submodule is added later on, that config is
-> not applied to the new submodule.
->
-> It is also inappropriate to share the entire superproject config, since
-> some items - like remote URLs or partial-clone filters - would not apply
-> to a submodule.
->
-> To make life easier for projects with many submodules, then, create a
-> new "config.superproject" config scope, which is included in the config
-> parse for the superproject as well as for all the submodules of that
-> superproject.
->
-> For the superproject, this new config file is equally local to the local
-> config; for the submodule, the new config file is less local than the
-> local config. So let's include it directly before the local config
-> during the config parse.
->
-> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-> ---
 
-Does this need an update to the `git config --show-origin --show-scope`
-capability?
---
-Philip
->  Documentation/git-config.txt   |  21 +++++-
->  builtin/config.c               |  10 ++-
->  config.c                       |  26 +++++++
->  config.h                       |   3 +
->  submodule.c                    |  29 ++++++++
->  submodule.h                    |   6 ++
->  t/t1311-superproject-config.sh | 124 +++++++++++++++++++++++++++++++++
->  7 files changed, 216 insertions(+), 3 deletions(-)
->  create mode 100755 t/t1311-superproject-config.sh
->
-> diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-> index 4b4cc5c5e8..a33136fb08 100644
-> --- a/Documentation/git-config.txt
-> +++ b/Documentation/git-config.txt
-> @@ -48,7 +48,7 @@ unset an existing `--type` specifier with `--no-type`.
->  
->  When reading, the values are read from the system, global and
->  repository local configuration files by default, and options
-> -`--system`, `--global`, `--local`, `--worktree` and
-> +`--system`, `--global`, `--superproject`, `--local`, `--worktree` and
->  `--file <filename>` can be used to tell the command to read from only
->  that location (see <<FILES>>).
->  
-> @@ -127,6 +127,17 @@ rather than from all available files.
->  +
->  See also <<FILES>>.
->  
-> +--superproject::
-> +	For writing options: write to the superproject's
-> +	`.git/config.superproject` file, even if run from a submodule of that
-> +	superproject.
-> ++
-> +For reading options: read only from the superproject's
-> +`.git/config.superproject` file, even if run from a submodule of that
-> +superproject, rather than from all available files.
-> ++
-> +See also <<FILES>>.
-> +
->  --local::
->  	For writing options: write to the repository `.git/config` file.
->  	This is the default behavior.
-> @@ -283,7 +294,7 @@ The default is to use a pager.
->  FILES
->  -----
->  
-> -If not set explicitly with `--file`, there are four files where
-> +If not set explicitly with `--file`, there are five files where
->  'git config' will search for configuration options:
->  
->  $(prefix)/etc/gitconfig::
-> @@ -301,6 +312,12 @@ $XDG_CONFIG_HOME/git/config::
->  	User-specific configuration file. Also called "global"
->  	configuration file.
->  
-> +$GIT_DIR/config.superproject::
-> +	When `git config` is run from a project which is a submodule of another
-> +	project, that superproject's $GIT_DIR will be used. Use this config file
-> +	to set configurations which need to be the same across a superproject
-> +	and all its submodules.
-> +
->  $GIT_DIR/config::
->  	Repository specific configuration file.
->  
-> diff --git a/builtin/config.c b/builtin/config.c
-> index f71fa39b38..f0a57a89ca 100644
-> --- a/builtin/config.c
-> +++ b/builtin/config.c
-> @@ -26,7 +26,7 @@ static char key_delim = ' ';
->  static char term = '\n';
->  
->  static int use_global_config, use_system_config, use_local_config;
-> -static int use_worktree_config;
-> +static int use_worktree_config, use_superproject_config;
->  static struct git_config_source given_config_source;
->  static int actions, type;
->  static char *default_value;
-> @@ -130,6 +130,8 @@ static struct option builtin_config_options[] = {
->  	OPT_GROUP(N_("Config file location")),
->  	OPT_BOOL(0, "global", &use_global_config, N_("use global config file")),
->  	OPT_BOOL(0, "system", &use_system_config, N_("use system config file")),
-> +	OPT_BOOL(0, "superproject",
-> +		 &use_superproject_config, N_("use superproject config file")),
->  	OPT_BOOL(0, "local", &use_local_config, N_("use repository config file")),
->  	OPT_BOOL(0, "worktree", &use_worktree_config, N_("use per-worktree config file")),
->  	OPT_STRING('f', "file", &given_config_source.file, N_("file"), N_("use given config file")),
-> @@ -697,6 +699,12 @@ int cmd_config(int argc, const char **argv, const char *prefix)
->  	else if (use_system_config) {
->  		given_config_source.file = git_etc_gitconfig();
->  		given_config_source.scope = CONFIG_SCOPE_SYSTEM;
-> +	} else if (use_superproject_config) {
-> +		struct strbuf superproject_cfg = STRBUF_INIT;
-> +		git_config_superproject(&superproject_cfg, get_git_dir());
-> +		given_config_source.file = xstrdup(superproject_cfg.buf);
-> +		given_config_source.scope = CONFIG_SCOPE_SUPERPROJECT;
-> +		strbuf_release(&superproject_cfg);
->  	} else if (use_local_config) {
->  		given_config_source.file = git_pathdup("config");
->  		given_config_source.scope = CONFIG_SCOPE_LOCAL;
-> diff --git a/config.c b/config.c
-> index 67d9bf2238..28bb80fd0d 100644
-> --- a/config.c
-> +++ b/config.c
-> @@ -21,6 +21,7 @@
->  #include "dir.h"
->  #include "color.h"
->  #include "refs.h"
-> +#include "submodule.h"
->  
->  struct config_source {
->  	struct config_source *prev;
-> @@ -1852,6 +1853,17 @@ const char *git_etc_gitconfig(void)
->  	return system_wide;
->  }
->  
-> +void git_config_superproject(struct strbuf *sb, const char *gitdir)
-> +{
-> +	if (!get_superproject_gitdir(sb)) {
-> +		/* not a submodule */
-> +		strbuf_reset(sb);
-> +		strbuf_addstr(sb, gitdir);
-> +	}
-> +
-> +	strbuf_addstr(sb, "/config.superproject");
-> +}
-> +
->  /*
->   * Parse environment variable 'k' as a boolean (in various
->   * possible spellings); if missing, use the default value 'def'.
-> @@ -1909,6 +1921,17 @@ static int do_git_config_sequence(const struct config_options *opts,
->  	if (user_config && !access_or_die(user_config, R_OK, ACCESS_EACCES_OK))
->  		ret += git_config_from_file(fn, user_config, data);
->  
-> +	current_parsing_scope = CONFIG_SCOPE_SUPERPROJECT;
-> +	if (opts->git_dir && !opts->ignore_superproject) {
-> +
-> +		struct strbuf superproject_gitdir = STRBUF_INIT;
-> +		git_config_superproject(&superproject_gitdir, opts->git_dir);
-> +		if (!access_or_die(superproject_gitdir.buf, R_OK, 0))
-> +			ret += git_config_from_file(fn, superproject_gitdir.buf, data);
-> +
-> +		strbuf_release(&superproject_gitdir);
-> +	}
-> +
->  	current_parsing_scope = CONFIG_SCOPE_LOCAL;
->  	if (!opts->ignore_repo && repo_config &&
->  	    !access_or_die(repo_config, R_OK, 0))
-> @@ -2027,6 +2050,7 @@ void read_very_early_config(config_fn_t cb, void *data)
->  
->  	opts.respect_includes = 1;
->  	opts.ignore_repo = 1;
-> +	opts.ignore_superproject = 1;
->  	opts.ignore_worktree = 1;
->  	opts.ignore_cmdline = 1;
->  	opts.system_gently = 1;
-> @@ -3515,6 +3539,8 @@ const char *config_scope_name(enum config_scope scope)
->  		return "command";
->  	case CONFIG_SCOPE_GITMODULES:
->  		return "gitmodules";
-> +	case CONFIG_SCOPE_SUPERPROJECT:
-> +		return "superproject";
->  	default:
->  		return "unknown";
->  	}
-> diff --git a/config.h b/config.h
-> index 535f5517b8..b42e1d13eb 100644
-> --- a/config.h
-> +++ b/config.h
-> @@ -43,6 +43,7 @@ enum config_scope {
->  	CONFIG_SCOPE_WORKTREE,
->  	CONFIG_SCOPE_COMMAND,
->  	CONFIG_SCOPE_GITMODULES,
-> +	CONFIG_SCOPE_SUPERPROJECT,
->  };
->  const char *config_scope_name(enum config_scope scope);
->  
-> @@ -84,6 +85,7 @@ typedef int (*config_parser_event_fn_t)(enum config_event_t type,
->  struct config_options {
->  	unsigned int respect_includes : 1;
->  	unsigned int ignore_repo : 1;
-> +	unsigned int ignore_superproject : 1;
->  	unsigned int ignore_worktree : 1;
->  	unsigned int ignore_cmdline : 1;
->  	unsigned int system_gently : 1;
-> @@ -319,6 +321,7 @@ int git_config_rename_section_in_file(const char *, const char *, const char *);
->  int git_config_copy_section(const char *, const char *);
->  int git_config_copy_section_in_file(const char *, const char *, const char *);
->  const char *git_etc_gitconfig(void);
-> +void git_config_superproject(struct strbuf *, const char *);
->  int git_env_bool(const char *, int);
->  unsigned long git_env_ulong(const char *, unsigned long);
->  int git_config_system(void);
-> diff --git a/submodule.c b/submodule.c
-> index 9767ba9893..92b00f8697 100644
-> --- a/submodule.c
-> +++ b/submodule.c
-> @@ -2178,6 +2178,35 @@ void absorb_git_dir_into_superproject(const char *path,
->  	}
->  }
->  
-> +int get_superproject_gitdir(struct strbuf *buf)
-> +{
-> +	struct strbuf sb = STRBUF_INIT;
-> +	struct child_process cp = CHILD_PROCESS_INIT;
-> +	int rc = 0;
-> +
-> +	/* NEEDSWORK: this call also calls out to a subprocess! */
-> +	rc = get_superproject_working_tree(&sb);
-> +	strbuf_release(&sb);
-> +
-> +	if (!rc)
-> +		return rc;
-> +
-> +	prepare_submodule_repo_env_no_git_dir(&cp.env_array);
-> +
-> +	strvec_pushl(&cp.args, "-C", "..", "rev-parse", "--absolute-git-dir", NULL);
-> +	cp.git_cmd = 1;
-> +
-> +	rc = capture_command(&cp, buf, 0);
-> +	strbuf_trim_trailing_newline(buf);
-> +
-> +	/* leave buf empty if we didn't have a superproject gitdir */
-> +	if (rc)
-> +		strbuf_reset(buf);
-> +
-> +	/* rc reflects the exit code of the rev-parse; invert into a bool */
-> +	return !rc;
-> +}
-> +
->  int get_superproject_working_tree(struct strbuf *buf)
->  {
->  	struct child_process cp = CHILD_PROCESS_INIT;
-> diff --git a/submodule.h b/submodule.h
-> index 4ac6e31cf1..1308d5ae2d 100644
-> --- a/submodule.h
-> +++ b/submodule.h
-> @@ -149,6 +149,12 @@ void prepare_submodule_repo_env(struct strvec *out);
->  void absorb_git_dir_into_superproject(const char *path,
->  				      unsigned flags);
->  
-> +/*
-> + * Return the gitdir of the superproject, which this project is a submodule of.
-> + * If this repository is not a submodule of another repository, return 0.
-> + */
-> +int get_superproject_gitdir(struct strbuf *buf);
-> +
->  /*
->   * Return the absolute path of the working tree of the superproject, which this
->   * project is a submodule of. If this repository is not a submodule of
-> diff --git a/t/t1311-superproject-config.sh b/t/t1311-superproject-config.sh
-> new file mode 100755
-> index 0000000000..650c4d24c7
-> --- /dev/null
-> +++ b/t/t1311-superproject-config.sh
-> @@ -0,0 +1,124 @@
-> +#!/bin/sh
-> +
-> +test_description='Test git config --superproject in different settings'
-> +
-> +. ./test-lib.sh
-> +
-> +# follow t7400's example and use the trash dir repo as a submodule to add
-> +submodurl=$(pwd -P)
-> +
-> +# since only the configs are modified, set up the repo structure only once
-> +test_expect_success 'setup repo structure' '
-> +	test_commit "base" &&
-> +	git submodule add "${submodurl}" sub/ &&
-> +	git commit -m "add a submodule"
-> +'
-> +
-> +test_expect_success 'superproject config applies to super and submodule' '
-> +	cat >.git/config.superproject <<-EOF &&
-> +	[foo]
-> +		bar = baz
-> +	EOF
-> +
-> +	git config --get foo.bar &&
-> +	git -C sub config --get foo.bar &&
-> +
-> +	rm .git/config.superproject
-> +'
-> +
-> +test_expect_success 'can add from super or sub' '
-> +	git config --superproject apple.species honeycrisp &&
-> +	git -C sub config --superproject banana.species cavendish &&
-> +
-> +	cat >expect <<-EOF &&
-> +	apple.species=honeycrisp
-> +	banana.species=cavendish
-> +	EOF
-> +
-> +	git config --list >actual &&
-> +	grep -Ff expect actual &&
-> +
-> +	git -C sub config --list >actual &&
-> +	grep -Ff expect actual &&
-> +
-> +	rm .git/config.superproject
-> +'
-> +
-> +test_expect_success 'can --unset from super or sub' '
-> +	git config --superproject apple.species honeycrisp &&
-> +	git -C sub config --superproject banana.species cavendish &&
-> +
-> +	git config --unset --superproject banana.species &&
-> +	git -C sub config --unset --superproject apple.species
-> +'
-> +
-> +test_expect_success 'can --edit superproject config' '
-> +	test_config core.editor "echo [foo]bar=baz >" &&
-> +	git config --edit --superproject &&
-> +
-> +	git config --get foo.bar &&
-> +
-> +	rm .git/config.superproject
-> +'
-> +
-> +test_expect_success 'can --show-origin the superproject config' '
-> +	git config --superproject --add foo.bar baz &&
-> +
-> +	git config --list --show-origin >actual &&
-> +	grep -F "config.superproject" actual &&
-> +
-> +	rm .git/config.superproject
-> +'
-> +
-> +test_expect_success 'can --show-scope the superproject config' '
-> +	git config --superproject --add foo.bar baz &&
-> +
-> +	git config --list --show-scope >actual &&
-> +	grep "superproject" actual &&
-> +
-> +	rm .git/config.superproject
-> +'
-> +
-> +test_expect_success 'pre-existing config applies to new submodule' '
-> +	git config --superproject --add foo.bar baz &&
-> +
-> +	git submodule add "${submodurl}" sub2/ &&
-> +	git commit -m "add a second submodule" &&
-> +
-> +	git -C sub2 config --get foo.bar &&
-> +
-> +	# clean up
-> +	git reset HEAD^ &&
-> +	rm -fr sub2 &&
-> +	rm .git/config.superproject
-> +'
-> +
-> +# NEEDSWORK: submodule.c:get_superproject_working_tree doesn't support worktree
-> +test_expect_failure 'worktrees can still access config.superproject' '
-> +	git config --superproject --add foo.bar baz &&
-> +
-> +	git worktree add wt &&
-> +	(
-> +		cd wt &&
-> +		git config --get foo.bar
-> +	) &&
-> +
-> +	# clean up
-> +	git worktree remove wt &&
-> +	rm .git/config.superproject
-> +'
-> +
-> +# This test deletes the submodule! Keep it at the end of the test suite.
-> +test_expect_success 'config.submodule works even with no submodules' '
-> +	# get rid of the submodule
-> +	git reset HEAD^ &&
-> +	rm -fr sub &&
-> +
-> +	git config --superproject --add foo.bar baz &&
-> +
-> +	git config --get foo.bar &&
-> +
-> +	rm .git/config.superproject
-> +'
-> +
-> +test_done
+--JK+mXRdn0PxzmOZF
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+On Tue, Apr 06, 2021 at 02:08:52PM -0400, Jeff King wrote:
+> On Sat, Mar 20, 2021 at 02:10:41PM -0700, Junio C Hamano wrote:
+>=20
+> > Patrick Steinhardt <ps@pks.im> writes:
+> >=20
+> > > this is the second version of my patch series which implements a new
+> > > `object:type` filter for git-rev-parse(1) and git-upload-pack(1) and
+> > > extends support for bitmap indices to work with combined filters.
+> > > ...
+> > > Please see the attached range-diff for more details.
+> >=20
+> > Any comment from stakeholders?
+>=20
+> Sorry, this languished on my to-review list for a while.
+>=20
+> I took a careful look. I found a few small nits, but the code overall
+> looks pretty good.
+>=20
+> I do still find the use of the filter code here a _little_ bit
+> off-putting. It makes perfect sense in some ways: we are asking rev-list
+> to filter the output, and it keeps our implementation nice and simple.
+> It took me a while to figure out what I think makes it weird, but I
+> think it's:
+>=20
+>   - the partial-clone feature exposes the filter mechanism in a very
+>     transparent way. So while it's not _wrong_ to be able to ask for a
+>     partial clone of only trees, it's an odd thing that nobody would
+>     really use in practice. And so it's a bit funny that it gets
+>     documented alongside blob:limit, etc.
+>=20
+>   - for the same reason, it's very rigid. We have no way to say "this
+>     filter OR that filter", and are unlikely to grow them (because this
+>     is all part of the network protocol). Whereas it's perfectly
+>     reasonable for somebody to ask for "trees and blobs" via rev-list.
+>=20
+> I dunno. Those aren't objections exactly. Just trying to put my finger
+> on why my initial reaction was "huh, why --filter?".
+
+Yeah, I do kind of share these concerns. Ideally, we'd provide a nicer
+only-user-facing interface to query the repository for various objects.
+git-cat-file(1) would be the obvious thing that first gets into my mind,
+where it would be nice to have it filter stuff. But then on the other
+hand, it's really rather a simple "Give me what I tell you to" binary,
+which is probably a good thing. Other than that I don't think there's
+any executable that'd be a good fit -- we could do this via a new
+git-list-objects(1), but then again git-rev-list(1) already does most of
+what git-list-objects(1) would do, so why bother.
+
+It kind of feels like git-checkout(1) to me: it does many things, and if
+you know how to wield it it works perfectly fine. But the user interface
+is lacking, which is why it was split up into git-switch(1) and
+git-restore(1). It's telling already that the summary of git-rev-list(1)
+is "Lists commit objects in reverse chronological order". I mean yes,
+that's what it does in many cases. But there's just as many cases where
+it doesn't.
+
+Patrick
+
+--JK+mXRdn0PxzmOZF
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmBwNxEACgkQVbJhu7ck
+PpQFpw/9EAnRl8RbO3nwkI3iJNfdGy71AAebWq3M52+J3MDa50xHN6FCsY4W5Rnm
+8T6x15w2Zc4R2JuGk9+R99l5U9xPUH1TTm95LcqHmcw5PfuW4/TnV2Co5sKB9Yh+
+XAn75YLMM69XdjEidMh4qXcQtLURSV3qzCY9y/1stXXOS7v5lCDZZza0fmzr25D5
+hQjDLuyeGNTAgmXkkdLku3KOMz0AfqVrWhPUebrDFxSi/wcN0xExq+mY+92iLzuf
+xDbOYqxO9YEETvwR17npkvOoyuGGbiOSoPon9C6pjn9lafJd9t/48kEiekLto8Te
+f35pdoIsSx1By7WZgEeYComliPb/K1wgV7ZXyZCc8qon9exXX4dAEjAk8lyZDgpc
+FvrtLl2rxE8dI4+tAd5G5k5Y8Gm5WQcdzi4u54UPctXeFKZi4dwD6IVwZR/eGX+c
+FA6Pss3dq3kFxndroPIY4mwgWrzLGXzp3YLQ4kzLrKPQz1e5lIb/cT+6Fev0/Zqv
++w0PzoyyMLSfN8QFNHa21JZrk4NQ3Dm9R3S3srhjCeOubpzyy7ccvCTjLwaefKKG
+WGowtAgsHT7X5t63NLG2+bBwesvg/2b6naushoAX1lpC1na2UaULOjmwhVsduVeX
+A6Qv8A0nBf3Ncxqa9pWRhV7bQCXmP2jTZUKZSxqPWxvD6PJBnqY=
+=SjOS
+-----END PGP SIGNATURE-----
+
+--JK+mXRdn0PxzmOZF--
