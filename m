@@ -2,198 +2,186 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C140FC433B4
-	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 10:31:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F36D6C43460
+	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 10:59:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7DC4560240
-	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 10:31:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D3DB8610E5
+	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 10:59:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231621AbhDIKcA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Apr 2021 06:32:00 -0400
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:47441 "EHLO
+        id S233762AbhDILAE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Apr 2021 07:00:04 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:51055 "EHLO
         out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S231402AbhDIKb6 (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 9 Apr 2021 06:31:58 -0400
+        by vger.kernel.org with ESMTP id S233749AbhDIK77 (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 9 Apr 2021 06:59:59 -0400
 Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.nyi.internal (Postfix) with ESMTP id DF69B5C00A3;
-        Fri,  9 Apr 2021 06:31:45 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Fri, 09 Apr 2021 06:31:45 -0400
+        by mailout.nyi.internal (Postfix) with ESMTP id F20055C0135;
+        Fri,  9 Apr 2021 06:59:45 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute1.internal (MEProxy); Fri, 09 Apr 2021 06:59:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
         :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm3; bh=2y0mlhefgjcRMpixzN3H/02zgrv
-        rukL5xAPZZzB9j+E=; b=BkxSMPoVbjbu2H1r3RktXM6/8qbhAT80GjV7V4xPRfs
-        GZl+FrWym8FqrN720cDqcHyWulJC62Uq6CySeYhMgqDBDNTyBWy3Ttqr6/grl5U3
-        sLi8IVK7si1TRFjvjHDPIWodScPowC+kBd0LgSe8mPgoC60jZ0fsDY/gMCbsfNH4
-        1wZZrT6lV8L7gK940SdmOJM5GIZdMi+lOPInSpumwc/TDJxmdLXr7Om5h2gOBlPx
-        b1ppBiOv8rURNiK/P3tAEJU7Ola5/0S//NfpUfaweKnKHrNCAfT+tcjqKuoFl2wT
-        eNHGqcGnyk/rLVVyR77jhc+VQ4DjIkjnMmprWQZZcZQ==
+        :content-type:in-reply-to; s=fm3; bh=DlVNzeUx09dfeZVDfIAfdOxNir4
+        FYPy4uVsfoX3tq1k=; b=xHNNAfko+dYgxii379ZyneadSvotMbOSXga03fM9kRp
+        hgfFgVLB43w/tE/1k80cG2EeiUD9LcoEXJzWnGO00jdgTpVwxfc9P9t2DRai8Aup
+        m3UN6MYGgeMJNewAmxm/wIgZ5iQFfpvykeuNqXPRpFCGRz40Py3fYZ0GhUbK15sh
+        YRB1PaQ1BFJmAkZj/ptm/iU2d9Yyq8yo14Quz9XUonVkNw/DnZanEk9xU8zLRP5q
+        2/YsmnEk0VHKxewuzK2gG6IjeBBNdgPZ0wilPYYLP38EIL6fhiGOePdthHBTs1fg
+        rkU9q7qNqD9Nd2kVcvqS8ZQJuUZ5h9/Shisfe1frJlA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=2y0mlh
-        efgjcRMpixzN3H/02zgrvrukL5xAPZZzB9j+E=; b=k5VnkLc9ii5HJwbXr4ixmU
-        nV4lAG48OqOalUYlFkudWvBRYHAJGOXW/PfeTx9CR+KyAvimIZkchZvON60zPk3A
-        LyfEt/JVzhrQWkaxJVcJxCkbM6BCEB/3kmNmxfidxEs6xq5lWSdJf0lSVY7MfwdR
-        nJrBuwvqcxsdp80SrLpIz7lc6ssF2fHpu/aSkxlxU2stnVVrHcixD0OZONR+IQfX
-        tpW4q/Ng9izCZ9EBc29ZBsAOt7sJ20KRzblz6EFFaBN3h+H4y5J7cBwg7eUNS+oc
-        tufwGvW1K+1egBxQbedU+Fpvaix2TOW46CQvuLliA4en6B4VcVO8AxjAAgkvQ0RA
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=DlVNze
+        Ux09dfeZVDfIAfdOxNir4FYPy4uVsfoX3tq1k=; b=YnblMw7CZFxcYibrC4pPnn
+        O75THJvUS6xYWh+XZ4CxrPo7vtuCpHeOiVbdKYs+uG/l8D+lqQPJ7T1PeDF3NhoB
+        sfKflTQkEV4L87mlGn4eGbWzbUCnR0Lzl7V6mckMse0fG4fpZuTfvgPg/PDI6TZv
+        AU7NZVam5Cpp6M9FopslNpyJEH+gkIB0gbgCz5vE/KAi9Y6uLccfm5JaexmkZU4j
+        RPcdw5LT8l3pB51D2cZ1Hsr+wHhFReXJiM1x1DEDvNRYDIs0DmvKcQIr88CLGAzU
+        NylJmgM/ppW6eXb1iUNpykFdroicMcY2ibmpPt7kXx9e4F+G0OYgtm98Qs+Wl5kQ
         ==
-X-ME-Sender: <xms:ES1wYPIu9f9cLGY26ROwliYnjX6SKnObcMmw-FF-sxBOgOAvKP4ouQ>
-    <xme:ES1wYKDkC9Fn7qsASaz3XiXORtRVwC7StTgrydSex5Shz4MqSVnsacHcn_stRpagh
-    1bIMd-7fU4jiSTYrw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrudekuddgfedtucetufdoteggodetrfdotf
+X-ME-Sender: <xms:oDNwYGY2iWWRI3ly11A2o4fy2izYhf3K26jEqDd8CYi9SiowJrJkiA>
+    <xme:oDNwYJbpSWST6QRHKThqbb0ghwIPQCzQHK0dyRcBz3-xwP6YB3Uby_lAA_BI3Drbg
+    uURKIU4dFAoUOVlZQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrudekuddgfeeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeehgefhtdefueffheekgfffudelffejtdfhvdejkedthfehvdelgfetgfdvtedthfen
-    ucfkphepjeejrdduledurdekrdduieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:ES1wYEqZiT94T0RYX34eUFA922LKfccyn24qIsmLrnclI36epbYUtA>
-    <xmx:ES1wYFjKWZfclUUIHbStEL__XM-cUlwjVmEJ5qL3NdmxJyCVhDcsDw>
-    <xmx:ES1wYBD4VFkjbyMT47ypArLp4CAQpHzVWyijZgQZTy0N9EUyEJUnoA>
-    <xmx:ES1wYJATAoq9HDdJX2DpDEnboc41n0964uz6oHzaXmTPE9Tb5fXYnA>
+    hnpefgfeejuefgheegueeljeffteefuedthfdvvedugfevvdffleduueeiiefgvedtheen
+    ucffohhmrghinhepphgvnhguihhnghdrnhhrnecukfhppeejjedrudeluddrkedrudeile
+    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshes
+    phhkshdrihhm
+X-ME-Proxy: <xmx:oDNwYA-R_XxNmu7bk0yGjgiQ91Y_Tsg7wa-ictAf9dAgkYmnsLxWxg>
+    <xmx:oDNwYIqpAQloF_Fe6YeWbc2p3VYGWTF1WcKzhJhpSO9PjLpsWiHOQQ>
+    <xmx:oDNwYBrwgoceS59H0AZFzswKRWe0oDSj4MEjkV3ykI0dEhHKjc7ypA>
+    <xmx:oTNwYCCczIOfbIkhJq0WcYtupqOf4lLqg4O-NgM9kSQdI4ql-vsRJQ>
 Received: from vm-mail.pks.im (x4dbf08a9.dyn.telefonica.de [77.191.8.169])
-        by mail.messagingengine.com (Postfix) with ESMTPA id EC06A108005F;
-        Fri,  9 Apr 2021 06:31:44 -0400 (EDT)
+        by mail.messagingengine.com (Postfix) with ESMTPA id D9AEE240057;
+        Fri,  9 Apr 2021 06:59:43 -0400 (EDT)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 2707ee53 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Fri, 9 Apr 2021 10:31:43 +0000 (UTC)
-Date:   Fri, 9 Apr 2021 12:31:42 +0200
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 4170bdfe (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Fri, 9 Apr 2021 10:59:42 +0000 (UTC)
+Date:   Fri, 9 Apr 2021 12:59:41 +0200
 From:   Patrick Steinhardt <ps@pks.im>
 To:     Jeff King <peff@peff.net>
 Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
         Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v2 7/8] pack-bitmap: implement combined filter
-Message-ID: <YHAtDp11xFzdUSQl@ncase>
+Subject: Re: [PATCH v2 8/8] rev-list: allow filtering of provided items
+Message-ID: <YHAznTddwG/ej4aS@ncase>
 References: <cover.1614600555.git.ps@pks.im>
  <cover.1615813673.git.ps@pks.im>
- <fac3477d979058da0430b974a34f7c7f866bf456.1615813673.git.ps@pks.im>
- <YGygV1mesbJzdPr5@coredump.intra.peff.net>
+ <0e26fee8b31e46e87fb9fa1ac599506502a9d622.1615813673.git.ps@pks.im>
+ <YGyinyL2UU421hoX@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="kxYWc6vT12NSnAk6"
+        protocol="application/pgp-signature"; boundary="IVpENzOGWawT/Osv"
 Content-Disposition: inline
-In-Reply-To: <YGygV1mesbJzdPr5@coredump.intra.peff.net>
+In-Reply-To: <YGyinyL2UU421hoX@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---kxYWc6vT12NSnAk6
+--IVpENzOGWawT/Osv
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Apr 06, 2021 at 01:54:31PM -0400, Jeff King wrote:
-> On Mon, Mar 15, 2021 at 02:14:59PM +0100, Patrick Steinhardt wrote:
+On Tue, Apr 06, 2021 at 02:04:15PM -0400, Jeff King wrote:
+> On Mon, Mar 15, 2021 at 02:15:05PM +0100, Patrick Steinhardt wrote:
 >=20
-> > When the user has multiple objects filters specified, then this is
-> > internally represented by having a "combined" filter. These combined
-> > filters aren't yet supported by bitmap indices and can thus not be
-> > accelerated.
+> > When providing an object filter, it is currently impossible to also
+> > filter provided items. E.g. when executing `git rev-list HEAD` , the
+> > commit this reference points to will be treated as user-provided and is
+> > thus excluded from the filtering mechanism. This makes it harder than
+> > necessary to properly use the new `--filter=3Dobject:type` filter given
+> > that even if the user wants to only see blobs, he'll still see commits
+> > of provided references.
 > >=20
-> > Fix this by implementing support for these combined filters. The
-> > implementation is quite trivial: when there's a combined filter, we
-> > simply recurse into `filter_bitmap()` for all of the sub-filters.
+> > Improve this by introducing a new `--filter-provided` option to the
+> > git-rev-parse(1) command. If given, then all user-provided references
+> > will be subject to filtering.
 >=20
-> The goal makes sense.
+> I think this option is a good thing to have.
 >=20
-> Before this patch, I think your test:
->=20
-> > +test_expect_success 'combine filter' '
-> > +	git rev-list --objects --filter=3Dblob:limit=3D1000 --filter=3Dobject=
-:type=3Dblob tag >expect &&
-> > +	git rev-list --use-bitmap-index \
-> > +		     --objects --filter=3Dblob:limit=3D1000 --filter=3Dobject:type=
-=3Dblob tag >actual &&
-> > +	test_bitmap_traversal expect actual
-> > +'
->=20
-> would pass anyway, because we'd just skip using bitmaps. Is there a way
-> we can tell that the bitmap code actually kicked in? Maybe a perf test
-> would make it clear (those aren't always run, but hopefully we'd
-> eventually notice a regression there).
->=20
-> > +static int filter_supported(struct list_objects_filter_options *filter)
-> > +{
-> > +	int i;
-> > +
-> > +	switch (filter->choice) {
-> > +	case LOFC_BLOB_NONE:
-> > +	case LOFC_BLOB_LIMIT:
-> > +	case LOFC_OBJECT_TYPE:
-> > +		return 1;
-> > +	case LOFC_TREE_DEPTH:
-> > +		if (filter->tree_exclude_depth =3D=3D 0)
-> > +			return 1;
-> > +		return 0;
-> > +	case LOFC_COMBINE:
-> > +		for (i =3D 0; i < filter->sub_nr; i++)
-> > +			if (!filter_supported(&filter->sub[i]))
-> > +				return 0;
-> > +		return 1;
-> > +	default:
-> > +		return 0;
-> > +	}
-> > +}
->=20
-> Hmm. This is essentially reproducing the list in filter_bitmap() of
-> what's OK for bitmaps. So when adding a new filter, it would have to be
-> added in both places.
->=20
-> Can we preserve that property of the original code? I'd think that just
-> adding LOFC_COMBINE to filter_bitmap() would be sufficient. I.e., this
-> hunk:
->=20
-> > +	if (filter->choice =3D=3D LOFC_COMBINE) {
-> > +		int i;
-> > +		for (i =3D 0; i < filter->sub_nr; i++) {
-> > +			filter_bitmap(bitmap_git, tip_objects, to_filter,
-> > +				      &filter->sub[i]);
-> > +		}
-> > +		return 0;
-> > +	}
->=20
-> ...except that we need to see if filter_bitmap() returns "-1" for any of
-> the recursive calls. Which we probably should be doing anyway to
-> propagate any errors (though I think the only "errors" we'd return are
-> "not supported", at least for now).
->=20
-> -Peff
+> The name seems a little confusing to me, as I can read is as both
+> "please filter the provided objects" and "a filter has been provided".
+> I guess "--filter-print-provided" would be more clear. And also the
+> default, so you'd want "--no-filter-print-provided". That's kind of
+> clunky, though. Maybe "--filter-omit-provided"?
 
-But wouldn't that mean that we're now needlessly filtering via bitmaps
-all the way down the combined filters only to realize at the end that it
-cannot work because we've got a tree filter with non-zero tree depth?
-Granted, this will not be the common case. But it still feels like we're
-doing needless work for cases where we know that bitmaps cannot answer
-the query.
+Hum, "--filter-omit-provided" doesn't sound good to me, either. Omit to
+me sounds like it'd omit filtering provided items, but we're doing
+the reverse thing.
+
+How about "--filter-provided-revisions"? Verbose, but at least it cannot
+be confused with a filter being provided.
+
+> > @@ -694,6 +698,16 @@ int cmd_rev_list(int argc, const char **argv, cons=
+t char *prefix)
+> >  			return show_bisect_vars(&info, reaches, all);
+> >  	}
+> > =20
+> > +	if (filter_options.filter_wants) {
+> > +		struct commit_list *c;
+> > +		for (i =3D 0; i < revs.pending.nr; i++) {
+> > +			struct object_array_entry *pending =3D revs.pending.objects + i;
+> > +			pending->item->flags |=3D NOT_USER_GIVEN;
+> > +		}
+> > +		for (c =3D revs.commits; c; c =3D c->next)
+> > +			c->item->object.flags |=3D NOT_USER_GIVEN;
+> > +	}
+>=20
+> You store the flag inside the filter_options struct, which implies to me
+> that it's something that could be applied per-filter (at least in
+> theory; the command line option doesn't allow us to distinguish).
+>=20
+> But here you treat it as a global flag that munges the NOT_USER_GIVEN
+> flags. Given that it's inside the filter_options struct, and that you
+> propagate it via transform_to_combine_type(), I'd have expected the LOFC
+> code to look at the flag and decide to ignore the whole user-given
+> concept completely.
+>=20
+> To be clear, I don't mind at all having it as a global that applies to
+> all filters. I don't think the flexibility buys us anything. But since
+> it only applies to rev-list, why not just make it a global option within
+> rev-list?
+[snip]
+
+Fair point. This probably stems from the confusion where I initially
+didn't realize that the filter_options is not a "global" options
+structure, but in fact the filter itself already. That's also why there
+had been the initial bug where converting filter options into a combined
+filter led to `filter_wants` being dropped.
+
+In any case, the resulting code with it being global to rev-list.c
+instead of part of the options is a lot cleaner.
 
 Patrick
 
---kxYWc6vT12NSnAk6
+--IVpENzOGWawT/Osv
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmBwLQ0ACgkQVbJhu7ck
-PpTdEQ//cP/RJ5KTG3sODCB1tOPrMvSjtsskHmdNA/Htnmab4Ezjacc3+JzF5RC7
-u/fMKZKogEaLLpTusGagozfwIhvFRGtqhQyMUPxnb97pNGD4/dvuhCSTYARg9XXJ
-w+BHnljpkgpiTeovLZfDthtaIdkZX0Bd8BA+86fBmyWMGkqO/JSxhnyCDYiDUWuy
-GDqQVDQO3yw7WnT8s7efghLxlIBWRMpCD1k6sjSUAL2TZSMAohcOFwmnIuKWuu3F
-9i5gSFnsEjs06BQvctLDpoSNDQWGUbnf2KRk+qTb1dHPXZGNeF1WX3DLwBeiv+XB
-SsPhfKDN5LQp5TzZI21j9u7IDyPMgz4bVD41NT5yqKWIkLNCbjrVx+aO7kMUwA3h
-iNh0/n2+FY6nuUSJSs3TZooBPxK6pPXl2BRn+ZM7Uz8Ky9GerRJBG001emVQLzGw
-E41GtOWrKfpVytGgOYlA2C5QemHm/AlS7Ud8SAkOM4rPaPRFwGQaFQL1rmzd4IL/
-gdldH4GUXZkaMXsPnVGQL6zq/W2I7eCTIi97/23MyuAtGecCbub5ZIzGFlDfHrpj
-m4tA5rzsYxHhOnSQoRIhIcbCU8imtp5ZALGX3qxQdIqf0pR3uw4c1rFLdYfgMFG4
-9+as5uxIgFmHNdYbES1PUhz5VGGIE8+/ugbHsnG2IgqoUPfvlhk=
-=XMQf
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmBwM5wACgkQVbJhu7ck
+PpRIig//Y8TMUTxwuwvPnrfP6yIK3MSuNXKDMCaF9x9gmEXNqw4rIFDS1dpC8GMA
+PzEFzPAanlhnydkbUy9CnsfD3SQIONbjihUnYGlEXruN3tg8MeyB2+hHAXRYNMwA
+8NG0vHQQOfm/ErkpXUcR/IFUUCKH5H43y5nKgriNK5GkSHUaC1OnbhW+mj5x2j9E
+13ZRyXJNgL2OPRsEKdthZuw2Wd/yt5e4XF0YgsOUSlVl1fE7RwIYd+pDGUtHiAz5
+r9moVg2ruWzpJXgo/eFqWW92gs1GsgvyvoJzJ1EizfdCJw3l4iKTJqaLUOuqJbBT
++91kvCIlamGTsHBCy+tPN+1cRbtdwJ8bO6ItT8oXad5bTcLa6JvGS2PFtPqFZWjL
+8DUzxQJuuE4FcneEXSxWSfKkvb6kaGdEYDLIGcXB6+UkP3V+4jQDlWms4Ou/Io9s
+lPwUrh9VHycLz02uSPv0Wyu1Yd+6/n4RaTU1/l71n9i6UpDc2v0HvZ6YpWq8nXjh
+3lK7i+HcAdBc8FbfnOLjvxcgQwL3x0I9JmFb0Zpt7sjn9T9SfBpuOBsHEnQGqI2A
+O03oqZn7mUBI4aV7+L4/lPK2WslNMxOwgd51tR6sPNFAX/gCggqRqA+Pr+bTQJeQ
+csIsJDpVNuxy7KeHMg/wSgRLDZM+1RYLPx5KT3Rc9Xrr1MSl9Rg=
+=9Pi6
 -----END PGP SIGNATURE-----
 
---kxYWc6vT12NSnAk6--
+--IVpENzOGWawT/Osv--
