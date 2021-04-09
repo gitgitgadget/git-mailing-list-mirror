@@ -2,66 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-20.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E2D5C43462
-	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 04:05:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CFAB9C43461
+	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 04:06:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F0CB061175
-	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 04:05:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A722561175
+	for <git@archiver.kernel.org>; Fri,  9 Apr 2021 04:06:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231410AbhDIEGI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Apr 2021 00:06:08 -0400
+        id S231467AbhDIEGL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Apr 2021 00:06:11 -0400
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60952 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229999AbhDIEF7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Apr 2021 00:05:59 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 792CEC0613D7
-        for <git@vger.kernel.org>; Thu,  8 Apr 2021 21:05:46 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id y20-20020a1c4b140000b029011f294095d3so3947679wma.3
-        for <git@vger.kernel.org>; Thu, 08 Apr 2021 21:05:46 -0700 (PDT)
+        with ESMTP id S229829AbhDIEGA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Apr 2021 00:06:00 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B99A4C061760
+        for <git@vger.kernel.org>; Thu,  8 Apr 2021 21:05:47 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id y20-20020a1c4b140000b029011f294095d3so3947691wma.3
+        for <git@vger.kernel.org>; Thu, 08 Apr 2021 21:05:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=z9tI7NjqGm1gdGZXm6Zxtdy8WZ+Qp03lTyopeWaOGTw=;
-        b=Kni948ZH5s06FfwTqGpZLz3X5HD054LI9n5SRLUQGLoO7CN/FAROs2R97VxPew22Uq
-         pieKwqkGdNJCr54dNw2wCmE5+SbwCDRmIMW6bQM3DyDZBGkmJS9P/5WoU/f6lAGf0m7R
-         DjBNt92Q0GHEvicCQUc5gcx/67eFq2T5sgQndDJABIsJfD/5XIiSV8F9T99js44qzbTI
-         T65jsqjv8wbcRQtamPuhMpt8IPCfOy1O2Qt790JFa7wA6rs72EOM1s+zy1ISA+NyJTe5
-         8tjHDoiFzYO/pfkaUP/oXnAj8b2NEfY/P+MDtV6QIIqhGCkcVFSwwIz1ABTCisZOz3ym
-         Kz1A==
+        bh=7xInX0wyFhZhxMzQJx+f3Vk4N3i+w+Pw4IaiGaInFrQ=;
+        b=sbZbXANW90qVZZJhBAqwKDajZyaEESfy1d/bIC3Hcr4IT2ih0xZDHfebum8wREl91w
+         9pi+TP7k3Gj2+QG2q853mgzFscGqf7GGVdAkWasYRYb14tck4tfjbF0rp81oBOso4Bhg
+         jAQSJn7UISYAga72KMN4hAbirYPGQLGzmxrRqdJsgqaz8XBYHzoipfT6dwhzC/7QEMYw
+         NWwxAXyIOy5KL1fUwjnGXfJfa9Y60OZRs16sAiQxF8BiUc62Lc7sZHhWayX6+UvarTt1
+         oQW+7UcF75UwP+7F/C/mPPvrYQEKFQPOGadzItu4VNbiuQj4N4AytqZQvXIf944WkUer
+         G+Sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=z9tI7NjqGm1gdGZXm6Zxtdy8WZ+Qp03lTyopeWaOGTw=;
-        b=CEB8ggYkFZKpUdSkQ6u5Kj2j/ROL5InPZYzFtAfhZH+N5cW3oZmD+6GXEj+zRM+JoL
-         KDzyDx/dlx7TWVvq9ww71CvEnqqwK5oN6abH/e3NL6cnuyUgAZ/4dcWpbnpMbLWVmKi5
-         xXUYN8C/Pzw4zFBn3M6dJzCUa1L3nvYLjJhG4kJPM/WJlyUNmH2VeVABWyKJKLYQW444
-         TIEgIt2ztoxolu+nXCFSOM5zFYsPB4CygD/olTClF5CV8NsG06TXKp9qcPqZijBmsDYL
-         0OqWhZEOsWsPIUZNo5Fs1coMPRQadiNnZgybbKZL9iEN6zcyYZtThFbaGNOMK8fPvlwt
-         cWsA==
-X-Gm-Message-State: AOAM5325qDfSVxGBFE+/Pcnc7IEFa/AxgFSAiKPfomMQXgBIsP9QO5l+
-        K2Vlg0ncnIMCFrXNIDmLzoRNXjghSORCiQ==
-X-Google-Smtp-Source: ABdhPJw3g2qDA4UZifKwpaPSY9aDYPc1DqHn+mxeVzXU6CXBfY6CGnLMIFiUpqToE3FmIV5QQYa8Bg==
-X-Received: by 2002:a1c:bc8b:: with SMTP id m133mr11717876wmf.103.1617941144738;
-        Thu, 08 Apr 2021 21:05:44 -0700 (PDT)
+        bh=7xInX0wyFhZhxMzQJx+f3Vk4N3i+w+Pw4IaiGaInFrQ=;
+        b=dpYd+Kgem5xgyriKsQO/9Sa+sFMyodLfU6EhfyndMPGZBo8k1cBqOYfpEomRA3phId
+         LLs/sjxnb0TOuoTLoV1eMO9E4e2C1vhJ6LZufbqjQqZ51xCMCjzQB4e4fu1Ktx36TI1g
+         o948gOXAe2I9Arr220zXkcI7qKEsNlDPkNXOndWx86x1LSZihvl/LTSPCyw+b50NTrsu
+         gs7G1mm73mPbh5Ylc2RCHc/iCK1qPxA7Hj7Jie7p0cx7bq2POv5YxLZlLhPfkW6BAulB
+         WfXv1Tp9iNac+TP2cnCVYh6+p7M5uJ9mBBXee5INNY+uJMDYS0V+JOFIdviT5h64IkXu
+         Nqpg==
+X-Gm-Message-State: AOAM530zp14mHAxemW2jGR6LmnLIi614ySNp31/vx2nERxeWEmEBINv6
+        jhb4oELcNpck3gF1b7/szvtqk6U5kN7JBA==
+X-Google-Smtp-Source: ABdhPJyeNS5W8HCo7z8BKNXddM4pbqM457J057RnxN7o8YwX5gaoTP+g8+xsc2mU/X959pV4eCWutg==
+X-Received: by 2002:a1c:b0c4:: with SMTP id z187mr11532150wme.81.1617941145871;
+        Thu, 08 Apr 2021 21:05:45 -0700 (PDT)
 Received: from Inspiron.home (2a01cb04010c420080e637770dc2ae3c.ipv6.abo.wanadoo.fr. [2a01:cb04:10c:4200:80e6:3777:dc2:ae3c])
-        by smtp.gmail.com with ESMTPSA id c9sm2064636wrr.78.2021.04.08.21.05.44
+        by smtp.gmail.com with ESMTPSA id c9sm2064636wrr.78.2021.04.08.21.05.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Apr 2021 21:05:44 -0700 (PDT)
+        Thu, 08 Apr 2021 21:05:45 -0700 (PDT)
 From:   Firmin Martin <firminmartin24@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Firmin Martin <firminmartin24@gmail.com>
-Subject: [RFC PATCH v1 06/13] doc: typeset dummy URLs and protocols in monospace
-Date:   Fri,  9 Apr 2021 06:02:54 +0200
-Message-Id: <20210409040301.3260358-7-firminmartin24@gmail.com>
+Subject: [RFC PATCH v1 07/13] doc: typeset git dotfiles in monospace
+Date:   Fri,  9 Apr 2021 06:02:55 +0200
+Message-Id: <20210409040301.3260358-8-firminmartin24@gmail.com>
 X-Mailer: git-send-email 2.31.1.133.g84d06cdc06
 In-Reply-To: <20210409040301.3260358-1-firminmartin24@gmail.com>
 References: <20210409040301.3260358-1-firminmartin24@gmail.com>
@@ -71,317 +71,484 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Wrap dummy URLs and protocols names with backticks as indicated in the
-CodingGuidelines. Note that some asciidoc predefined attributes are
-replaced by their corresponding characters as they are made literal:
-
-    {tilde} => ~
-    {startsb} => [
-    {endsb} => ]
-
-Remove backticks of two URLs as they prevent them to be clickable.
-Reflect this in the CodingGuidelines: only dummy URLs should be wrapped
-with backticks.
+Wrap git dotfiles with backticks as indicated in the CodingGuidelines.
 
 Signed-off-by: Firmin Martin <firminmartin24@gmail.com>
 ---
- Documentation/CodingGuidelines     |  2 +-
- Documentation/git-archimport.txt   |  2 +-
- Documentation/git-cvsimport.txt    |  2 +-
- Documentation/git-daemon.txt       |  6 +++---
- Documentation/git-http-backend.txt |  2 +-
- Documentation/git-remote-ext.txt   | 10 ++++-----
- Documentation/git-remote-fd.txt    |  2 +-
- Documentation/git-svn.txt          |  4 ++--
- Documentation/gitfaq.txt           |  4 ++--
- Documentation/gitweb.txt           | 10 ++++-----
- Documentation/urls.txt             | 34 +++++++++++++++---------------
- 11 files changed, 39 insertions(+), 39 deletions(-)
+ Documentation/config.txt            | 12 ++++++------
+ Documentation/fetch-options.txt     |  2 +-
+ Documentation/git-config.txt        |  8 ++++----
+ Documentation/git-fast-import.txt   |  2 +-
+ Documentation/git-format-patch.txt  |  2 +-
+ Documentation/git-fsck.txt          |  4 ++--
+ Documentation/git-instaweb.txt      |  2 +-
+ Documentation/git-ls-files.txt      |  2 +-
+ Documentation/git-notes.txt         |  8 ++++----
+ Documentation/git-pack-refs.txt     |  4 ++--
+ Documentation/git-prune.txt         |  2 +-
+ Documentation/git-rebase.txt        |  4 ++--
+ Documentation/git-submodule.txt     | 12 ++++++------
+ Documentation/git-svn.txt           |  4 ++--
+ Documentation/git-upload-pack.txt   |  2 +-
+ Documentation/git-var.txt           |  2 +-
+ Documentation/gitattributes.txt     |  8 ++++----
+ Documentation/gitignore.txt         |  4 ++--
+ Documentation/gitremote-helpers.txt |  2 +-
+ Documentation/gittutorial-2.txt     | 10 +++++-----
+ Documentation/gitweb.txt            |  2 +-
+ Documentation/user-manual.txt       |  2 +-
+ 22 files changed, 50 insertions(+), 50 deletions(-)
 
-diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-index 45465bc0c9..554fba1a47 100644
---- a/Documentation/CodingGuidelines
-+++ b/Documentation/CodingGuidelines
-@@ -607,7 +607,7 @@ Writing Documentation:
-  or commands:
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 05bcf1bf2b..1747307621 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -114,14 +114,14 @@ are:
+ `gitdir`::
  
-  Literal examples (e.g. use of command-line options, command names,
-- branch names, URLs, pathnames (files and directories), configuration and
-+ branch names, dummy URLs, pathnames (files and directories), configuration and
-  environment variables) must be typeset in monospace (i.e. wrapped with
-  backticks):
-    `--pretty=oneline`
-diff --git a/Documentation/git-archimport.txt b/Documentation/git-archimport.txt
-index b5c9e500ca..72237659d9 100644
---- a/Documentation/git-archimport.txt
-+++ b/Documentation/git-archimport.txt
-@@ -97,7 +97,7 @@ OPTIONS
- 	pruned.
+ 	The data that follows the keyword `gitdir:` is used as a glob
+-	pattern. If the location of the .git directory matches the
++	pattern. If the location of the `.git` directory matches the
+ 	pattern, the include condition is met.
+ +
+-The .git location may be auto-discovered, or come from `$GIT_DIR`
+-environment variable. If the repository is auto discovered via a .git
+-file (e.g. from submodules, or a linked worktree), the .git location
+-would be the final location where the .git directory is, not where the
+-.git file is.
++The `.git` location may be auto-discovered, or come from `$GIT_DIR`
++environment variable. If the repository is auto discovered via a `.git`
++file (e.g. from submodules, or a linked worktree), the `.git` location
++would be the final location where the `.git` directory is, not where the
++`.git` file is.
+ +
+ The pattern can contain standard globbing wildcards and two additional
+ ones, `**/` and `/**`, that can match multiple path components. Please
+diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
+index 6aa07a54b9..94de13eec8 100644
+--- a/Documentation/fetch-options.txt
++++ b/Documentation/fetch-options.txt
+@@ -43,7 +43,7 @@ the current repository has the same history as the source repository.
+ --update-shallow::
+ 	By default when fetching from a shallow repository,
+ 	`git fetch` refuses refs that require updating
+-	.git/shallow. This option updates .git/shallow and accept such
++	`.git/shallow`. This option updates `.git/shallow` and accept such
+ 	refs.
  
- -a::
--	Attempt to auto-register archives at `http://mirrors.sourcecontrol.net`
-+	Attempt to auto-register archives at http://mirrors.sourcecontrol.net
- 	This is particularly useful with the `-D` option.
+ --negotiation-tip=<commit|glob>::
+diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+index 85e02aff92..afb14bcafe 100644
+--- a/Documentation/git-config.txt
++++ b/Documentation/git-config.txt
+@@ -148,7 +148,7 @@ See also <<FILES>>.
+ --blob blob::
+ 	Similar to `--file` but use the given blob instead of a file. E.g.
+ 	you can use 'master:.gitmodules' to read values from the file
+-	'.gitmodules' in the `master` branch. See "SPECIFYING REVISIONS"
++	`.gitmodules` in the `master` branch. See "SPECIFYING REVISIONS"
+ 	section in linkgit:gitrevisions[7] for a more complete list of
+ 	ways to spell blob names.
  
- -t <tmpdir>::
-diff --git a/Documentation/git-cvsimport.txt b/Documentation/git-cvsimport.txt
-index 586184bbd4..ead844944e 100644
---- a/Documentation/git-cvsimport.txt
-+++ b/Documentation/git-cvsimport.txt
-@@ -221,7 +221,7 @@ Problems related to tags:
- If you suspect that any of these issues may apply to the repository you
- want to import, consider using cvs2git:
+@@ -336,8 +336,8 @@ ENVIRONMENT
+ -----------
  
--* cvs2git (part of cvs2svn), `http://subversion.apache.org/`
-+* cvs2git (part of cvs2svn), http://subversion.apache.org/
+ GIT_CONFIG::
+-	Take the configuration from the given file instead of .git/config.
+-	Using the `--global` option forces this to ~/.gitconfig. Using the
++	Take the configuration from the given file instead of `.git/config`.
++	Using the `--global` option forces this to `~/.gitconfig`. Using the
+ 	`--system` option forces this to $(prefix)/etc/gitconfig.
+ 
+ GIT_CONFIG_NOSYSTEM::
+@@ -367,7 +367,7 @@ for example when writing scripts.
+ EXAMPLES
+ --------
+ 
+-Given a .git/config like this:
++Given a `.git/config` like this:
+ 
+ ------------
+ #
+diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
+index eeac242732..7b801de61a 100644
+--- a/Documentation/git-fast-import.txt
++++ b/Documentation/git-fast-import.txt
+@@ -116,7 +116,7 @@ Locations of Marks Files
+ 	with `--import-marks`= and `--export-marks`= are relative
+ 	to an internal directory in the current repository.
+ 	In `git-fast-import` this means that the paths are relative
+-	to the .git/info/fast-import directory. However, other
++	to the `.git/info/fast-import` directory. However, other
+ 	importers may use a different location.
+ +
+ Relative and non-relative marks may be combined by interweaving
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index 2009a048a9..3b10a6f7ea 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -503,7 +503,7 @@ If it does not apply correctly, there can be various reasons.
+   this case.
+ 
+ * The MUA corrupted your patch; "am" would complain that
+-  the patch does not apply.  Look in the .git/rebase-apply/ subdirectory and
++  the patch does not apply.  Look in the `.git/rebase-apply/` subdirectory and
+   see what 'patch' file contains and check for the common
+   corruption patterns mentioned above.
+ 
+diff --git a/Documentation/git-fsck.txt b/Documentation/git-fsck.txt
+index 048a28ee50..a680caa365 100644
+--- a/Documentation/git-fsck.txt
++++ b/Documentation/git-fsck.txt
+@@ -86,8 +86,8 @@ care about this output and want to speed it up further.
+ 	Be chatty.
+ 
+ --lost-found::
+-	Write dangling objects into .git/lost-found/commit/ or
+-	.git/lost-found/other/, depending on type.  If the object is
++	Write dangling objects into `.git/lost-found/commit/` or
++	`.git/lost-found/other/`, depending on type.  If the object is
+ 	a blob, the contents are written into the file, rather than
+ 	its object name.
+ 
+diff --git a/Documentation/git-instaweb.txt b/Documentation/git-instaweb.txt
+index dfbd3a40ce..a8876b74ca 100644
+--- a/Documentation/git-instaweb.txt
++++ b/Documentation/git-instaweb.txt
+@@ -69,7 +69,7 @@ restart::
+ CONFIGURATION
+ -------------
+ 
+-You may specify configuration in your .git/config
++You may specify configuration in your `.git/config`
+ 
+ -----------------------------------------------------------------------
+ [instaweb]
+diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
+index ee435024da..3557823de9 100644
+--- a/Documentation/git-ls-files.txt
++++ b/Documentation/git-ls-files.txt
+@@ -103,7 +103,7 @@ OPTIONS
+ 	directory and its subdirectories in <file>.
+ 
+ --exclude-standard::
+-	Add the standard Git exclusions: .git/info/exclude, .gitignore
++	Add the standard Git exclusions: `.git/info/exclude`, `.gitignore`
+ 	in each directory, and the user's global exclusion file.
+ 
+ --error-unmatch::
+diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
+index 8f25b07f10..ffc6fc51a7 100644
+--- a/Documentation/git-notes.txt
++++ b/Documentation/git-notes.txt
+@@ -192,11 +192,11 @@ OPTIONS
+ --commit::
+ 	Finalize an in-progress `git notes merge`. Use this option
+ 	when you have resolved the conflicts that `git notes merge`
+-	stored in .git/NOTES_MERGE_WORKTREE. This amends the partial
++	stored in `.git/NOTES_MERGE_WORKTREE`. This amends the partial
+ 	merge commit created by `git notes merge` (stored in
+-	.git/NOTES_MERGE_PARTIAL) by adding the notes in
+-	.git/NOTES_MERGE_WORKTREE. The notes ref stored in the
+-	.git/NOTES_MERGE_REF symref is updated to the resulting commit.
++	`.git/NOTES_MERGE_PARTIAL`) by adding the notes in
++	`.git/NOTES_MERGE_WORKTREE`. The notes ref stored in the
++	`.git/NOTES_MERGE_REF` symref is updated to the resulting commit.
+ 
+ --abort::
+ 	Abort/reset an in-progress `git notes merge`, i.e. a notes merge
+diff --git a/Documentation/git-pack-refs.txt b/Documentation/git-pack-refs.txt
+index 7e62ff3e8d..169bcfb07f 100644
+--- a/Documentation/git-pack-refs.txt
++++ b/Documentation/git-pack-refs.txt
+@@ -64,8 +64,8 @@ BUGS
+ ----
+ 
+ Older documentation written before the packed-refs mechanism was
+-introduced may still say things like ".git/refs/heads/<branch> file
+-exists" when it means "branch <branch> exists".
++introduced may still say things like "`.git/refs/heads/<branch>` file
++exists" when it means branch <branch> exists.
+ 
  
  GIT
- ---
-diff --git a/Documentation/git-daemon.txt b/Documentation/git-daemon.txt
-index e9cce4e468..1298ceb723 100644
---- a/Documentation/git-daemon.txt
-+++ b/Documentation/git-daemon.txt
-@@ -55,8 +55,8 @@ OPTIONS
- --base-path=<path>::
- 	Remap all the path requests as relative to the given path.
- 	This is sort of "Git root" - if you run `git daemon` with
--	`--base-path=/srv/git` on example.com, then if you later try to pull
--	'git://example.com/hello.git', `git daemon` will interpret the path
-+	`--base-path=/srv/git` on `example.com`, then if you later try to pull
-+	`git://example.com/hello.git`, `git daemon` will interpret the path
- 	as `/srv/git/hello.git`.
+diff --git a/Documentation/git-prune.txt b/Documentation/git-prune.txt
+index 4cdd753c13..382e5f70f4 100644
+--- a/Documentation/git-prune.txt
++++ b/Documentation/git-prune.txt
+@@ -24,7 +24,7 @@ objects unreachable from any of these head objects from the object database.
+ In addition, it
+ prunes the unpacked objects that are also found in packs by
+ running `git prune-packed`.
+-It also removes entries from .git/shallow that are not reachable by
++It also removes entries from `.git/shallow` that are not reachable by
+ any ref.
  
- --base-path-relaxed::
-@@ -139,7 +139,7 @@ otherwise `stderr`.
- --user-path=<path>::
- 	Allow {tilde}user notation to be used in requests.  When
- 	specified with no parameter, requests to
--	git://host/{tilde}alice/foo is taken as a request to access
-+	`git://host/~alice/foo` is taken as a request to access
- 	'foo' repository in the home directory of user `alice`.
- 	If `--user-path=path` is specified, the same request is
- 	taken as a request to access `path/foo` repository in
-diff --git a/Documentation/git-http-backend.txt b/Documentation/git-http-backend.txt
-index c97c10ba09..e63816e430 100644
---- a/Documentation/git-http-backend.txt
-+++ b/Documentation/git-http-backend.txt
-@@ -13,7 +13,7 @@ SYNOPSIS
- DESCRIPTION
- -----------
- A simple CGI program to serve the contents of a Git repository to Git
--clients accessing the repository over http:// and https:// protocols.
-+clients accessing the repository over `http://` and `https://` protocols.
- The program supports clients fetching using both the smart HTTP protocol
- and the backwards-compatible dumb HTTP protocol, as well as clients
- pushing using the smart HTTP protocol.
-diff --git a/Documentation/git-remote-ext.txt b/Documentation/git-remote-ext.txt
-index fd9b621fa2..49057434cd 100644
---- a/Documentation/git-remote-ext.txt
-+++ b/Documentation/git-remote-ext.txt
-@@ -16,7 +16,7 @@ This remote helper uses the specified '<command>' to connect
- to a remote Git server.
+ Note that unreachable, packed objects will remain.  If this is
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index ddc76ca308..1c5eaf8cf7 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -48,7 +48,7 @@ It is possible that a merge failure will prevent this process from being
+ completely automatic.  You will have to resolve any such merge failure
+ and run `git rebase --continue`.  Another option is to bypass the commit
+ that caused the merge failure with `git rebase --skip`.  To check out the
+-original <branch> and remove the .git/rebase-apply working files, use the
++original <branch> and remove the `.git/rebase-apply` working files, use the
+ command `git rebase --abort` instead.
  
- Data written to stdin of the specified '<command>' is assumed
--to be sent to a git:// server, `git-upload-pack`, `git-receive-pack`
-+to be sent to a `git://` server, `git-upload-pack`, `git-receive-pack`
- or `git-upload-archive` (depending on situation), and data read
- from stdout of <command> is assumed to be received from
- the same service.
-@@ -42,17 +42,17 @@ The following sequences have a special meaning:
+ Assume the following history exists and the current branch is `topic`:
+@@ -800,7 +800,7 @@ completeness:
+   them to stderr.
  
- '%G' (must be the first characters in an argument)::
- 	This argument will not be passed to '<command>'. Instead, it
--	will cause the helper to start by sending git:// service requests to
-+	will cause the helper to start by sending `git://` service requests to
- 	the remote side with the service field set to an appropriate value and
- 	the repository field set to rest of the argument. Default is not to send
- 	such a request.
+ * State directories: The two backends keep their state in different
+-  directories under .git/
++  directories under `.git/`
+ 
+ include::merge-strategies.txt[]
+ 
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index b97531f808..0a691b1df0 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -95,7 +95,7 @@ too (and can also report changes to a submodule's work tree).
+ init [--] [<path>...]::
+ 	Initialize the submodules recorded in the index (which were
+ 	added and committed elsewhere) by setting `submodule.$name.url`
+-	in .git/config. It uses the same setting from `.gitmodules` as
++	in `.git/config`. It uses the same setting from `.gitmodules` as
+ 	a template. If the URL is relative, it will be resolved using
+ 	the default remote. If there is no default remote, the current
+ 	repository will be assumed to be upstream.
+@@ -106,8 +106,8 @@ configured to be active will be initialized, otherwise all submodules are
+ initialized.
  +
--This is useful if remote side is git:// server accessed over
-+This is useful if remote side is `git://` server accessed over
- some tunnel.
+ When present, it will also copy the value of `submodule.$name.update`.
+-This command does not alter existing information in .git/config.
+-You can then customize the submodule clone URLs in .git/config
++This command does not alter existing information in `.git/config`.
++You can then customize the submodule clone URLs in `.git/config`
+ for your local setup and proceed to `git submodule update`;
+ you can also just use `git submodule update --init` without
+ the explicit 'init' step if you do not intend to customize
+@@ -117,7 +117,7 @@ See the add subcommand for the definition of default remote.
  
- '%V' (must be first characters in argument)::
- 	This argument will not be passed to '<command>'. Instead it sets
--	the vhost field in the git:// service request (to rest of the argument).
-+	the vhost field in the `git://` service request (to rest of the argument).
- 	Default is not to send vhost in such request (if sent).
- 
- ENVIRONMENT VARIABLES
-@@ -93,7 +93,7 @@ begins with `ext::`.  Examples:
- 	Represents a repository with path /repo accessed using the
- 	helper program `git-server-alias foo`.  The path to the
- 	repository and type of request are not passed on the command
--	line but as part of the protocol stream, as usual with git://
-+	line but as part of the protocol stream, as usual with `git://`
- 	protocol.
- 
- "ext::git-server-alias foo %G/repo %Vfoo"::
-diff --git a/Documentation/git-remote-fd.txt b/Documentation/git-remote-fd.txt
-index 14868c4678..239844f827 100644
---- a/Documentation/git-remote-fd.txt
-+++ b/Documentation/git-remote-fd.txt
-@@ -22,7 +22,7 @@ to be pipes connected to a remote Git server (<infd> being the inbound pipe
- and <outfd> being the outbound pipe.
- 
- It is assumed that any handshaking procedures have already been completed
--(such as sending service request for git://) before this helper is started.
-+(such as sending service request for `git://`) before this helper is started.
- 
- <anything> can be any string. It is ignored. It is meant for providing
- information to user in the URL in case that URL is displayed in some
+ deinit [-f|--force] (--all|[--] <path>...)::
+ 	Unregister the given submodules, i.e. remove the whole
+-	`submodule.$name` section from .git/config together with their work
++	`submodule.$name` section from `.git/config` together with their work
+ 	tree. Further calls to `git submodule update`, `git submodule foreach`
+ 	and `git submodule sync` will skip any unregistered submodules until
+ 	they are initialized again, so use this command if you don't want to
+@@ -235,7 +235,7 @@ git submodule foreach 'echo $sm_path `git rev-parse HEAD`'
+ sync [--recursive] [--] [<path>...]::
+ 	Synchronizes submodules' remote URL configuration setting
+ 	to the value specified in `.gitmodules`. It will only affect those
+-	submodules which already have a URL entry in .git/config (that is the
++	submodules which already have a URL entry in `.git/config` (that is the
+ 	case when they are initialized or freshly added). This is useful when
+ 	submodule URLs change upstream and you need to update your local
+ 	repositories accordingly.
+@@ -251,7 +251,7 @@ absorbgitdirs::
+ 	move the `git` directory of the submodule into its superproject's
+ 	`$GIT_DIR/modules` path and then connect the `git` directory and
+ 	its working directory by setting the `core.worktree` and adding
+-	a .git file pointing to the `git` directory embedded in the
++	a `.git` file pointing to the `git` directory embedded in the
+ 	superprojects `git` directory.
+ +
+ A repository that was cloned independently and later added as a submodule or
 diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index f42cf6b189..93868c9226 100644
+index 93868c9226..2e1e3348c7 100644
 --- a/Documentation/git-svn.txt
 +++ b/Documentation/git-svn.txt
-@@ -798,8 +798,8 @@ svn-remote.<name>.useSvnsyncprops::
- svn-remote.<name>.rewriteRoot::
- 	This allows users to create repositories from alternate
- 	URLs.  For example, an administrator could run `git svn` on the
--	server locally (accessing via file://) but wish to distribute
--	the repository with a public http:// or svn:// URL in the
-+	server locally (accessing via `file://`) but wish to distribute
-+	the repository with a public `http://` or `svn://` URL in the
- 	metadata so users of it will see the public URL.
+@@ -221,7 +221,7 @@ config key: `svn-remote.<name>.include-paths`
  
- svn-remote.<name>.rewriteUUID::
-diff --git a/Documentation/gitfaq.txt b/Documentation/gitfaq.txt
-index 92e8106af4..01d6a27cf6 100644
---- a/Documentation/gitfaq.txt
-+++ b/Documentation/gitfaq.txt
-@@ -140,8 +140,8 @@ How do I use multiple accounts with the same hosting provider using HTTP?::
- 	Usually the easiest way to distinguish between these accounts is to use
- 	the username in the URL.  For example, if you have the accounts `author`
- 	and `committer` on `git.example.org`, you can use the URLs
--	https://author@git.example.org/org1/project1.git and
--	https://committer@git.example.org/org2/project2.git.  This way, when you
-+	`https://author@git.example.org/org1/project1.git` and
-+	`https://committer@git.example.org/org2/project2.git`.  This way, when you
- 	use a credential helper, it will automatically try to look up the
- 	correct credentials for your account.  If you already have a remote set
- 	up, you can change the URL with something like `git remote set-url
+ --placeholder-filename=<filename>;;
+ 	Set the name of placeholder files created by `--preserve-empty-dirs`.
+-	Default: ".gitignore"
++	Default: "`.gitignore`"
+ 
+ `rebase`::
+ 	This fetches revisions from the SVN parent of the current `HEAD`
+@@ -432,7 +432,7 @@ Any other arguments are passed directly to `git log`
+ 
+ `create-ignore`::
+ 	Recursively finds the svn:ignore property on directories and
+-	creates matching .gitignore files. The resulting files are staged to
++	creates matching `.gitignore` files. The resulting files are staged to
+ 	be committed, but are not committed. Use `-r`/`--revision` to refer to a
+ 	specific revision.
+ 
+diff --git a/Documentation/git-upload-pack.txt b/Documentation/git-upload-pack.txt
+index f4b9dab02e..fdb7edc727 100644
+--- a/Documentation/git-upload-pack.txt
++++ b/Documentation/git-upload-pack.txt
+@@ -26,7 +26,7 @@ OPTIONS
+ -------
+ 
+ --[no-]strict::
+-	Do not try <directory>/.git/ if <directory> is no Git directory.
++	Do not try `<directory>/.git/` if <directory> is no Git directory.
+ 
+ --timeout=<n>::
+ 	Interrupt transfer after <n> seconds of inactivity.
+diff --git a/Documentation/git-var.txt b/Documentation/git-var.txt
+index 3e356129cd..1105e8a1cc 100644
+--- a/Documentation/git-var.txt
++++ b/Documentation/git-var.txt
+@@ -19,7 +19,7 @@ OPTIONS
+ -------
+ -l::
+ 	Cause the logical variables to be listed. In addition, all the
+-	variables of the Git configuration file .git/config are listed
++	variables of the Git configuration file `.git/config` are listed
+ 	as well. (However, the configuration variables listing functionality
+ 	is deprecated in favor of `git config -l`.)
+ 
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index 2ce7365ec6..bd1cd2629c 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -7,7 +7,7 @@ gitattributes - Defining attributes per path
+ 
+ SYNOPSIS
+ --------
+-$GIT_DIR/info/attributes, .gitattributes
++$GIT_DIR/info/attributes, `.gitattributes`
+ 
+ 
+ DESCRIPTION
+@@ -430,7 +430,7 @@ variable to `true`.
+ Note: Whenever the clean filter is changed, the repo should be renormalized:
+ $ git add --renormalize .
+ 
+-For example, in .gitattributes, you would assign the `filter`
++For example, in `.gitattributes`, you would assign the `filter`
+ attribute for paths.
+ 
+ ------------------------
+@@ -438,7 +438,7 @@ attribute for paths.
+ ------------------------
+ 
+ Then you would define a `filter.indent.clean` and `filter.indent.smudge`
+-configuration in your .git/config to specify a pair of commands to
++configuration in your `.git/config` to specify a pair of commands to
+ modify the contents of C programs when the source files are checked
+ in ("clean" is run) and checked out (no change is made because the
+ command is "cat").
+@@ -771,7 +771,7 @@ matches what GNU 'diff -p' output uses.  This default selection however
+ is not suited for some contents, and you can use a customized pattern
+ to make a selection.
+ 
+-First, in .gitattributes, you would assign the `diff` attribute
++First, in `.gitattributes`, you would assign the `diff` attribute
+ for paths.
+ 
+ ------------------------
+diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
+index 379db07326..7488cdb585 100644
+--- a/Documentation/gitignore.txt
++++ b/Documentation/gitignore.txt
+@@ -7,7 +7,7 @@ gitignore - Specifies intentionally untracked files to ignore
+ 
+ SYNOPSIS
+ --------
+-$XDG_CONFIG_HOME/git/ignore, $GIT_DIR/info/exclude, .gitignore
++$XDG_CONFIG_HOME/git/ignore, $GIT_DIR/info/exclude, `.gitignore`
+ 
+ DESCRIPTION
+ -----------
+@@ -211,7 +211,7 @@ Another example:
+     $ echo '!/vmlinux*' >arch/foo/kernel/.gitignore
+ --------------------------------------------------------------
+ 
+-The second .gitignore prevents Git from ignoring
++The second `.gitignore` prevents Git from ignoring
+ `arch/foo/kernel/vmlinux.lds.S`.
+ 
+ Example to exclude everything except a specific directory `foo/bar`
+diff --git a/Documentation/gitremote-helpers.txt b/Documentation/gitremote-helpers.txt
+index 6e75d45382..e92b9113f2 100644
+--- a/Documentation/gitremote-helpers.txt
++++ b/Documentation/gitremote-helpers.txt
+@@ -512,7 +512,7 @@ set by Git if the remote helper has the 'option' capability.
+ 	repository is guaranteed empty).
+ 
+ 'option update-shallow' {'true'|'false'}::
+-	Allow to extend .git/shallow if the new refs require it.
++	Allow to extend `.git/shallow` if the new refs require it.
+ 
+ 'option pushcert' {'true'|'false'}::
+ 	GPG sign pushes.
+diff --git a/Documentation/gittutorial-2.txt b/Documentation/gittutorial-2.txt
+index 65bc1453d6..ef11670768 100644
+--- a/Documentation/gittutorial-2.txt
++++ b/Documentation/gittutorial-2.txt
+@@ -133,7 +133,7 @@ header identifying their length and their type.  The type is either a
+ blob, a tree, a commit, or a tag.
+ 
+ The simplest commit to find is the `HEAD` commit, which we can find
+-from .git/HEAD:
++from `.git/HEAD`:
+ 
+ ------------------------------------------------
+ $ cat .git/HEAD
+@@ -141,7 +141,7 @@ ref: refs/heads/master
+ ------------------------------------------------
+ 
+ As you can see, this tells us which branch we're currently on, and it
+-tells us this by naming a file under the .git directory, which itself
++tells us this by naming a file under the `.git` directory, which itself
+ contains a SHA-1 name referring to a commit object, which we can
+ examine with cat-file:
+ 
+@@ -203,8 +203,8 @@ project's history:
+     data and "tree" objects containing subdirectory information.
+   * "blob" objects contain file data without any other structure.
+   * References to commit objects at the head of each branch are
+-    stored in files under .git/refs/heads/.
+-  * The name of the current branch is stored in .git/HEAD.
++    stored in files under `.git/refs/heads/`.
++  * The name of the current branch is stored in `.git/HEAD`.
+ 
+ Note, by the way, that lots of commands take a tree as an argument.
+ But as we can see above, a tree can be referred to in many different
+@@ -263,7 +263,7 @@ index a042389..513feba 100644
+ 
+ So `git diff` is comparing against something other than the head.
+ The thing that it's comparing against is actually the index file,
+-which is stored in .git/index in a binary format, but whose contents
++which is stored in `.git/index` in a binary format, but whose contents
+ we can examine with ls-files:
+ 
+ ------------------------------------------------
 diff --git a/Documentation/gitweb.txt b/Documentation/gitweb.txt
-index 1feb9c2b08..689afb38c0 100644
+index 689afb38c0..14abdb843f 100644
 --- a/Documentation/gitweb.txt
 +++ b/Documentation/gitweb.txt
-@@ -586,7 +586,7 @@ These configurations enable two things. First, each unix user (`<user>`) of
- the server will be able to browse through `gitweb` Git repositories found in
- `~/public_git/` with the following url:
+@@ -642,7 +642,7 @@ parameter.
  
--  http://git.example.org/~<user>/
-+  `http://git.example.org/~<user>/`
+ *Notice* that in this case you don't need special settings for
+ `@stylesheets`, `$my_uri` and `$home_link`, but you lose "dumb client"
+-access to your project .git dirs (described in "Single URL for `gitweb` and
++access to your project `.git` dirs (described in "Single URL for `gitweb` and
+ for fetching" section).  A possible workaround for the latter is the
+ following: in your project root dir (e.g. `/pub/git`) have the projects
+ named *without* a .git extension (e.g. `/pub/git/project` instead of
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index 4459d74ec2..998875fc2b 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -3143,7 +3143,7 @@ Writing objects: 100% (6020/6020), done.
+ Total 6020 (delta 4070), reused 0 (delta 0)
+ ------------------------------------------------
  
- If you do not want this feature on your server just remove the second
- rewrite rule.
-@@ -610,7 +610,7 @@ $feature{'pathinfo'}{'default'} = [1];
- in your `gitweb` configuration file, it is possible to set up your server so
- that it consumes and produces URLs in the form
+-This creates a single "pack file" in .git/objects/pack/
++This creates a single "pack file" in `.git/objects/pack/`
+ containing all currently unpacked objects.  You can then run
  
--  http://git.example.com/project.git/shortlog/sometag
-+  `http://git.example.com/project.git/shortlog/sometag`
- 
- i.e. without 'gitweb.cgi' part, by using a configuration such as the
- following.  This configuration assumes that `/var/www/gitweb` is the
-@@ -670,19 +670,19 @@ named *without* a .git extension (e.g. `/pub/git/project` instead of
- 
- The additional AliasMatch makes it so that
- 
--  http://git.example.com/project.git
-+  `http://git.example.com/project.git`
- 
- will give raw access to the project's Git dir (so that the project can be
- cloned), while
- 
--  http://git.example.com/project
-+  `http://git.example.com/project`
- 
- will provide human-friendly `gitweb` access.
- 
- This solution is not 100% bulletproof, in the sense that if some project has
- a named ref (branch, tag) starting with `git/`, then paths such as
- 
--  http://git.example.com/project/command/abranch..git/abranch
-+  `http://git.example.com/project/command/abranch..git/abranch`
- 
- will fail with a 404 error.
- 
-diff --git a/Documentation/urls.txt b/Documentation/urls.txt
-index 68ab4fbcc3..b0aa97823b 100644
---- a/Documentation/urls.txt
-+++ b/Documentation/urls.txt
-@@ -6,23 +6,23 @@ address of the remote server, and the path to the repository.
- Depending on the transport protocol, some of this information may be
- absent.
- 
--Git supports ssh, git, http, and https protocols (in addition, ftp,
--and ftps can be used for fetching, but this is inefficient and
-+Git supports `ssh`, `git`, `http`, and `https` protocols (in addition, `ftp`,
-+and `ftps` can be used for fetching, but this is inefficient and
- deprecated; do not use it).
- 
--The native transport (i.e. git:// URL) does no authentication and
-+The native transport (i.e. `git://` URL) does no authentication and
- should be used with caution on unsecured networks.
- 
- The following syntaxes may be used with them:
- 
--- ssh://{startsb}user@{endsb}host.xz{startsb}:port{endsb}/path/to/repo.git/
--- git://host.xz{startsb}:port{endsb}/path/to/repo.git/
--- http{startsb}s{endsb}://host.xz{startsb}:port{endsb}/path/to/repo.git/
--- ftp{startsb}s{endsb}://host.xz{startsb}:port{endsb}/path/to/repo.git/
-+- `ssh://[user@]host.xz[:port]/path/to/repo.git/`
-+- `git://host.xz[:port]/path/to/repo.git/`
-+- `http[s]://host.xz[:port]/path/to/repo.git/`
-+- `ftp[s]://host.xz[:port]/path/to/repo.git/`
- 
- An alternative scp-like syntax may also be used with the ssh protocol:
- 
--- {startsb}user@{endsb}host.xz:path/to/repo.git/
-+- `[user@]host.xz:path/to/repo.git/`
- 
- This syntax is only recognized if there are no slashes before the
- first colon. This helps differentiate a local path that contains a
-@@ -32,15 +32,15 @@ url.
- 
- The ssh and git protocols additionally support ~username expansion:
- 
--- ssh://{startsb}user@{endsb}host.xz{startsb}:port{endsb}/~{startsb}user{endsb}/path/to/repo.git/
--- git://host.xz{startsb}:port{endsb}/~{startsb}user{endsb}/path/to/repo.git/
--- {startsb}user@{endsb}host.xz:/~{startsb}user{endsb}/path/to/repo.git/
-+- `ssh://[user@]host.xz[:port]/~[user]/path/to/repo.git/`
-+- `git://host.xz[:port]/~[user]/path/to/repo.git/`
-+- `[user@]host.xz:/~[user]/path/to/repo.git/`
- 
- For local repositories, also supported by Git natively, the following
- syntaxes may be used:
- 
--- /path/to/repo.git/
--- \file:///path/to/repo.git/
-+- `/path/to/repo.git/`
-+- `file:///path/to/repo.git/`
- 
- ifndef::git-clone[]
- These two syntaxes are mostly equivalent, except when cloning, when
-@@ -85,8 +85,8 @@ For example, with this:
- 		insteadOf = work:
- ------------
- 
--a URL like "work:repo.git" or like "host.xz:/path/to/repo.git" will be
--rewritten in any context that takes a URL to be "git://git.host.xz/repo.git".
-+a URL like `work:repo.git` or like `host.xz:/path/to/repo.git` will be
-+rewritten in any context that takes a URL to be `git://git.host.xz/repo.git`.
- 
- If you want to rewrite URLs for push only, you can create a
- configuration section of the form:
-@@ -103,6 +103,6 @@ For example, with this:
- 		pushInsteadOf = git://example.org/
- ------------
- 
--a URL like "git://example.org/path/to/repo.git" will be rewritten to
--"ssh://example.org/path/to/repo.git" for pushes, but pulls will still
-+a URL like `git://example.org/path/to/repo.git` will be rewritten to
-+`ssh://example.org/path/to/repo.git` for pushes, but pulls will still
- use the original URL.
+ ------------------------------------------------
 -- 
 2.31.1.133.g84d06cdc06
 
