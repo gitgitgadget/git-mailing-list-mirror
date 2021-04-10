@@ -8,73 +8,71 @@ X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D433C433ED
-	for <git@archiver.kernel.org>; Sat, 10 Apr 2021 14:17:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E72DDC433B4
+	for <git@archiver.kernel.org>; Sat, 10 Apr 2021 14:17:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 31B456115A
-	for <git@archiver.kernel.org>; Sat, 10 Apr 2021 14:17:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B6E5E610CD
+	for <git@archiver.kernel.org>; Sat, 10 Apr 2021 14:17:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234757AbhDJORj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 10 Apr 2021 10:17:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53894 "EHLO
+        id S234776AbhDJORv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 10 Apr 2021 10:17:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234392AbhDJORj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Apr 2021 10:17:39 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C94AC06138A
-        for <git@vger.kernel.org>; Sat, 10 Apr 2021 07:17:24 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id n11-20020a05600c4f8bb029010e5cf86347so6435499wmq.1
-        for <git@vger.kernel.org>; Sat, 10 Apr 2021 07:17:24 -0700 (PDT)
+        with ESMTP id S234392AbhDJORu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Apr 2021 10:17:50 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EE38C06138B
+        for <git@vger.kernel.org>; Sat, 10 Apr 2021 07:17:35 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id 12so8368688wrz.7
+        for <git@vger.kernel.org>; Sat, 10 Apr 2021 07:17:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=r7HKD/dgt6CzeD4jEi53Fa1jJ8k+yyvB0esS2zGZ/XA=;
-        b=tFf0vYvU0ZJ3dUPpfWijz2cSsURLy/VRti+11lNJxHSfnOLwgP6pbuKw2tOv15jWxS
-         3DDS410Zpa2OAFsDVv1ClcNl8XDRUhmPBW4QyhQttbWXRzeGXpnGFJ3EL6EUDGP6eQj/
-         ihCgHCF7QtDbgJDOpE+es/IGOyfWp/9Jj4ofC70fERS/RLZP2amQRJ95QVg9QPsVrmYt
-         +lY85ZblLMRHc26u/U+kvV09dgO3uXKRxLAMvVXLIfQFAX1XAbKFSYb4o/c5vGmnsEHq
-         WheIYKF3f44XO4epG4Q3uoqH4hwYv5xVzHQ3Y0QbsxfWrN2L1exzaasvFE3BahWk2lMh
-         LI+A==
+        bh=cgPM8kQ+45FVxtUjYoUXEHeCUfH+qteknYwLMGAdQis=;
+        b=P3tRPBZNcooi1lffKM+fMXiv52P/6gLR4ILqVNeMxEfeBGLMcd7vLfVLEdZvKwWxo+
+         rJWgKu9DfdCf/uyrIiuFc3UUCD0uw4EeWhX9ObNZyEBJOcGYtayJSwc+eeoadWU6eLrp
+         7N22wZF7dIOTIQnuotHLRlyW0lMS3Rxmyp2CIamW9KHFvI/4ql0XyX2t2VQ3Py6p/K02
+         Wf2+SMp7pot4K9GNDgG0HEonDFXvynBxEDnyWUr7wVEPZVnykdp88SGJQbEqGA98JNqn
+         RGvgcIshn+9X+5uIImo3ARGu8ICshBjfWDAowCCv+mMwGvpQ4OkJwCobEYILEjFzjIlO
+         E19g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=r7HKD/dgt6CzeD4jEi53Fa1jJ8k+yyvB0esS2zGZ/XA=;
-        b=RrfDELDWZVDzKn+/7AG86k2Q3LNVh4y4x00Cz+lybvwym6Qsj0yg05I2bXmo1lDeuz
-         J92sXmT6P3oQOMw1/ycKx6CBmJAzw+MbnByrv92FWpj+F0nbupcfrfcV3Yqie5J68swB
-         +JZ0r6CtDgT0LdWWQBwhk0BRVBuAzM86DbSHPxjmuOXhbuZe66/q/Hg+DGSVfZaLcqvy
-         WFdhlsWZ/vwjwYQ8y2IaetSFiawRFU6iWDlBHYwnWMFayzJVRbIv7ITXrry2sthEpsaF
-         cx4b4sc+pbL/uTSYpgcB7KlQb83LVnHfgbIfWmdZJQN58xyZWieHrO8iNTWCoE/lvvNu
-         Mv7g==
-X-Gm-Message-State: AOAM533jajQDzusI0nRHKVXCwajZsALVLGwPNmg0KYKULVe+mKSBs2H6
-        cE6lzJJca2/expCDRSSpdwY=
-X-Google-Smtp-Source: ABdhPJwUlj0jMvtFHDi1MCDUuEewiDh4T1/h7Zt3rkdnsGADZS513gHYeDoE2orUUoldqN4h837bdw==
-X-Received: by 2002:a05:600c:378c:: with SMTP id o12mr18514265wmr.69.1618064243319;
-        Sat, 10 Apr 2021 07:17:23 -0700 (PDT)
+        bh=cgPM8kQ+45FVxtUjYoUXEHeCUfH+qteknYwLMGAdQis=;
+        b=sc4nT6d2K/xbinXNMuriqWAXlm9/MGIFfiVtI3n9kfs9Bvn/fgDdl9D4TL3z3dbSKw
+         ColFuBHUwoX7VgZqswQPyAo1SvPYAZeJe1oS/gsIm7Id0iNVgGpJtC5BsyVT3v/OOiN3
+         nFAHaTthJIxmHHCASN/oSqX0rzVwO/eQ3tA/go5e5Ruoh8/sCOXsMmwRw2d/mwSi+v9l
+         ujt453IqIyolGxaLl+2BHnfX1/AblAX57FJFy7z4Spu0/BVehjn99EsbU4AUsvXuSXuN
+         745UiGDddeLQiKVYRDqn8rdAw/PWoORtx1tD9cMowhcL8jYCJoqOZI7rpfKz0lGlE0SD
+         Mdig==
+X-Gm-Message-State: AOAM530iMUY4IhvJnq88KcweKDd8gPHR0Nr58Uu41ksFltxCB8le8+87
+        16r+BqpmgSOQ+uu5aV+ESIk=
+X-Google-Smtp-Source: ABdhPJwe9ypus0w7zudYS24SO2xZX/BibHpa0w0hBG53bxL/hTfDdwAj66Lt3kxKrsSWpv9RRk6T7w==
+X-Received: by 2002:adf:f504:: with SMTP id q4mr6794224wro.304.1618064254021;
+        Sat, 10 Apr 2021 07:17:34 -0700 (PDT)
 Received: from [192.168.0.104] (abayonne-651-1-48-7.w92-156.abo.wanadoo.fr. [92.156.201.7])
-        by smtp.gmail.com with ESMTPSA id c12sm9623496wro.6.2021.04.10.07.17.22
+        by smtp.gmail.com with ESMTPSA id f24sm7826936wmb.32.2021.04.10.07.17.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 10 Apr 2021 07:17:22 -0700 (PDT)
-Subject: Re: [PATCH v7 08/15] merge-one-file: rewrite in C
+        Sat, 10 Apr 2021 07:17:33 -0700 (PDT)
+Subject: Re: [PATCH v7 09/15] merge-resolve: rewrite in C
 To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
         Derrick Stolee <stolee@gmail.com>
 References: <20201124115315.13311-1-alban.gruin@gmail.com>
  <20210317204939.17890-1-alban.gruin@gmail.com>
- <20210317204939.17890-9-alban.gruin@gmail.com>
- <nycvar.QRO.7.76.6.2103222303210.50@tvgsbejvaqbjf.bet>
- <c968a6b8-bc0e-04f0-b72d-9fef05b60bd8@gmail.com>
- <nycvar.QRO.7.76.6.2103241004590.50@tvgsbejvaqbjf.bet>
+ <20210317204939.17890-10-alban.gruin@gmail.com>
+ <nycvar.QRO.7.76.6.2103232257590.50@tvgsbejvaqbjf.bet>
 From:   Alban Gruin <alban.gruin@gmail.com>
-Message-ID: <23f47974-36e2-7d28-49c0-e6ddc06c75a1@gmail.com>
-Date:   Sat, 10 Apr 2021 16:17:08 +0200
+Message-ID: <025aad24-68e3-295b-1e3b-2a7250807276@gmail.com>
+Date:   Sat, 10 Apr 2021 16:17:32 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.9.0
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.2103241004590.50@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.2103232257590.50@tvgsbejvaqbjf.bet>
 Content-Type: text/plain; charset=utf-8
 Content-Language: fr-FR
 Content-Transfer-Encoding: 8bit
@@ -84,159 +82,160 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Johannes,
 
-Le 24/03/2021 à 10:10, Johannes Schindelin a écrit :
+Le 23/03/2021 à 23:21, Johannes Schindelin a écrit :
 > Hi Alban,
 > 
-> On Tue, 23 Mar 2021, Alban Gruin wrote:
+> On Wed, 17 Mar 2021, Alban Gruin wrote:
 > 
->> Le 22/03/2021 à 23:20, Johannes Schindelin a écrit :
->>>
->>> On Wed, 17 Mar 2021, Alban Gruin wrote:
->>>
->>>>
->>>>  	for (; i < argc; i++) {
->>>>  		const char *arg = argv[i];
->>>> diff --git a/builtin/merge-one-file.c b/builtin/merge-one-file.c
->>>> new file mode 100644
->>>> index 0000000000..ad99c6dbd4
->>>> --- /dev/null
->>>> +++ b/builtin/merge-one-file.c
->>>> @@ -0,0 +1,94 @@
->>>> +/*
->>>> + * Builtin "git merge-one-file"
->>>> + *
->>>> + * Copyright (c) 2020 Alban Gruin
->>>> + *
->>>> + * Based on git-merge-one-file.sh, written by Linus Torvalds.
->>>> + *
->>>> + * This is the git per-file merge utility, called with
->>>> + *
->>>> + *   argv[1] - original file object name (or empty)
->>>> + *   argv[2] - file in branch1 object name (or empty)
->>>> + *   argv[3] - file in branch2 object name (or empty)
->>>> + *   argv[4] - pathname in repository
->>>> + *   argv[5] - original file mode (or empty)
->>>> + *   argv[6] - file in branch1 mode (or empty)
->>>> + *   argv[7] - file in branch2 mode (or empty)
->>>> + *
->>>> + * Handle some trivial cases. The _really_ trivial cases have been
->>>> + * handled already by git read-tree, but that one doesn't do any merges
->>>> + * that might change the tree layout.
->>>> + */
->>>> +
->>>> +#include "cache.h"
->>>> +#include "builtin.h"
->>>> +#include "lockfile.h"
->>>> +#include "merge-strategies.h"
->>>> +
->>>> +static const char builtin_merge_one_file_usage[] =
->>>> +	"git merge-one-file <orig blob> <our blob> <their blob> <path> "
->>>> +	"<orig mode> <our mode> <their mode>\n\n"
->>>> +	"Blob ids and modes should be empty for missing files.";
->>>> +
->>>> +static int read_mode(const char *name, const char *arg, unsigned int *mode)
->>>> +{
->>>> +	char *last;
->>>> +	int ret = 0;
->>>> +
->>>> +	*mode = strtol(arg, &last, 8);
->>>> +
->>>> +	if (*last)
->>>> +		ret = error(_("invalid '%s' mode: expected nothing, got '%c'"), name, *last);
->>>> +	else if (!(S_ISREG(*mode) || S_ISDIR(*mode) || S_ISLNK(*mode)))
->>>> +		ret = error(_("invalid '%s' mode: %o"), name, *mode);
->>>> +
->>>> +	return ret;
->>>> +}
->>>> +
->>>> +int cmd_merge_one_file(int argc, const char **argv, const char *prefix)
->>>> +{
->>>> +	struct object_id orig_blob, our_blob, their_blob,
->>>> +		*p_orig_blob = NULL, *p_our_blob = NULL, *p_their_blob = NULL;
->>>> +	unsigned int orig_mode = 0, our_mode = 0, their_mode = 0, ret = 0;
->>>> +	struct lock_file lock = LOCK_INIT;
->>>> +	struct repository *r = the_repository;
->>>> +
->>>> +	if (argc != 8)
->>>> +		usage(builtin_merge_one_file_usage);
->>>> +
->>>> +	if (repo_read_index(r) < 0)
->>>> +		die("invalid index");
->>>> +
->>>> +	repo_hold_locked_index(r, &lock, LOCK_DIE_ON_ERROR);
->>>> +
->>>> +	if (!get_oid_hex(argv[1], &orig_blob)) {
->>>> +		p_orig_blob = &orig_blob;
->>>> +		ret = read_mode("orig", argv[5], &orig_mode);
->>>> +	} else if (!*argv[1] && *argv[5])
->>>> +		ret = error(_("no 'orig' object id given, but a mode was still given."));
->>>
->>> Here, it looks as if the case of an empty `argv[1]` is not handled
->>> _explicitly_, but we rely on `get_oid_hex()` to return non-zero, and then
->>> we rely on the second arm _also_ not re-assigning `orig_blob`.
->>>
->>> I wonder whether this could be checked, and whether it would make sense to
->>> fold this, along with most of these 5 lines, into the `read_mode()` helper
->>> function (DRYing up the code even further).
->>>
+>> diff --git a/merge-strategies.c b/merge-strategies.c
+>> index 2717af51fd..a51700dae5 100644
+>> --- a/merge-strategies.c
+>> +++ b/merge-strategies.c
+>> @@ -272,3 +275,95 @@ int merge_all_index(struct index_state *istate, int oneshot, int quiet,
 >>
->> Do you mean rewriting the first condition to read like this:
->>
->>     if (*argv[1] && !get_oid_hex(argv[1], &orig_blob)) {
->>
->> ?
->>
->> In which case yes, I can do that.
+>>  	return err;
+>>  }
+>> +
+>> +static int fast_forward(struct repository *r, struct tree_desc *t,
+>> +			int nr, int aggressive)
+>> +{
+>> +	struct unpack_trees_options opts;
+>> +	struct lock_file lock = LOCK_INIT;
+>> +
+>> +	refresh_index(r->index, REFRESH_QUIET, NULL, NULL, NULL);
+>> +	repo_hold_locked_index(r, &lock, LOCK_DIE_ON_ERROR);
 > 
-> Yes, that's what I meant. Or this instead:
-> 
-> 	if (!*argv[1]) {
-> 		if (*argv[5])
-> 			ret = error(... mode was still given ...)
-> 	} else if (!get_oid_hex(...)) {
-> 		...
-> 	}
-> 
->> BTW the two lasts calls to read_mode() should be like
->>
->>     err |= read_mode(…);
-> 
-> While this is certainly shorter than
-> 
-> 	if (read_mode(...))
-> 		ret = -1;
+> Shouldn't we lock the index first, and _then_ refresh it? I guess not,
+> seeing as we don't do that either in `cmd_status()`: there, we also
+> refresh the index and _then_ lock it.
 > 
 
-So, I folded all of this into a single function that reads the mode,
-convert the oid, and show an error if needed.  Now, I have:
+Yeah, I don't think I saw a lock/refresh sequence, but I may be wrong.
 
-    if (read_param("orig", argv[1], argv[5], &orig_blob,
-                   &p_orig_blob, &orig_mode))
-        ret = -1;
+>> +
+>> +	memset(&opts, 0, sizeof(opts));
+>> +	opts.head_idx = 1;
+>> +	opts.src_index = r->index;
+>> +	opts.dst_index = r->index;
+>> +	opts.merge = 1;
+>> +	opts.update = 1;
+>> +	opts.aggressive = aggressive;
+>> +
+>> +	if (nr == 1)
+>> +		opts.fn = oneway_merge;
+>> +	else if (nr == 2) {
+>> +		opts.fn = twoway_merge;
+>> +		opts.initial_checkout = is_index_unborn(r->index);
+>> +	} else if (nr >= 3) {
+>> +		opts.fn = threeway_merge;
+>> +		opts.head_idx = nr - 1;
+>> +	}
+> 
+> Given the function's name `fast_forward()`, I have to admit that I
+> somewhat stumbled over these merges.
+>> +
+>> +	if (unpack_trees(nr, t, &opts))
+>> +		return -1;
+>> +
 
-    if (read_param("our", …))
-        ret = -1;
+I just noticed that the lock is not released if there is an error here.
 
-    if (read_param("their", …))
-        ret = -1;
-
-    if (ret)
-        return ret;
-
-
-> I actually prefer the latter, for clarity (we do want `read_mode()` to be
-> called, i.e. we cannot use `||=` here, but it is also not a bit-wise "or"
-> operation, therefore `|=` strikes me as misleading). What do you think?
+>> +	if (write_locked_index(r->index, &lock, COMMIT_LOCK))
+>> +		return error(_("unable to write new index file"));
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static int add_tree(struct tree *tree, struct tree_desc *t)
+>> +{
+>> +	if (parse_tree(tree))
+>> +		return -1;
+>> +
+>> +	init_tree_desc(t, tree->buffer, tree->size);
+>> +	return 0;
+>> +}
+> 
+> This is a really trivial helper, but it is used a couple times below, so
+> it makes sense to have it encapsulated in a separate function.
+> 
+>> +
+>> +int merge_strategies_resolve(struct repository *r,
+>> +			     struct commit_list *bases, const char *head_arg,
+>> +			     struct commit_list *remote)
+> 
+> Since it is a list, and since the original variable in the shell script
+> had been named in the plural form, let's do the same here: `remotes`.
 > 
 
-Yes, I think it's much clearer that way.
+This one is supposed to contain only one commit, so I'm not really
+conviced that this parameter should be in the plural form.
 
-FIY, `||=' does not exist in C.
+>> +{
+>> +	struct tree_desc t[MAX_UNPACK_TREES];
+>> +	struct object_id head, oid;
+>> +	struct commit_list *i;
+>> +	int nr = 0;
+>> +
+>> +	if (head_arg)
+>> +		get_oid(head_arg, &head);
+>> +
+>> +	puts(_("Trying simple merge."));
+> 
+> Good. Usually I would recommend to print this to `stderr`, but the
+> original script prints it to `stdout`, so we should do that here, too.
+> 
+>> +
+>> +	for (i = bases; i && i->item; i = i->next) {
+>> +		if (add_tree(repo_get_commit_tree(r, i->item), t + (nr++)))
+>> +			return 2;
+> 
+> Since we're talking about a library function, not a `cmd_*()` function,
+> the return value on error should probably be negative.
+> 
+> Even better would be to let the function return an `enum` that contains
+> labels with more intuitive meaning than "2".
+> 
+> It _is_ the expected exit code when calling `git merge-resolve`, of course
+> (because of the `|| exit 2` after that `read-tree` call), but I wonder
+> whether a better layer for that `2` would be the `cmd_merge_resolve()`
+> function, letting `merge_strategies_resolve()` report failures in a more
+> fine-grained fashion.
+> 
+
+Right -- I'll see what I can do here.
+
+>> +	}
+>> +
+>> +	if (head_arg) {
+> 
+> It would probably be easier to read if the `if (head_arg)` clause above
+> was merged into this here clause.
+> 
+>> +		struct tree *tree = parse_tree_indirect(&head);
+>> +		if (add_tree(tree, t + (nr++)))
+>> +			return 2;
+>> +	}
+>> +
+>> +	if (remote && add_tree(repo_get_commit_tree(r, remote->item), t + (nr++)))
+>> +		return 2;
+> 
+> You get away with assuming that `remotes` only contains at most a single
+> entry because `cmd_merge_resolve()` verified it.
+> 
+> However, as the intention is to use this as a library function, I think
+> the input validation needs to be moved here instead of relying on all
+> callers to verify that they send at most one "remote" ref.
+> 
+> Other than that, this patch looks good to me.
+> 
+Well, this condition checks that there is one commit, and if so, uses it
+to call add_tree().  I don't see the mistake here.
 
 Cheers,
 Alban
 
-> Ciao,
+> Thanks,
 > Dscho
 > 
+
 
