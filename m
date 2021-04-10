@@ -7,337 +7,223 @@ X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C9E1C433B4
-	for <git@archiver.kernel.org>; Sat, 10 Apr 2021 12:03:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D513C433ED
+	for <git@archiver.kernel.org>; Sat, 10 Apr 2021 12:30:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 569FE610F9
-	for <git@archiver.kernel.org>; Sat, 10 Apr 2021 12:03:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0CFD7601FD
+	for <git@archiver.kernel.org>; Sat, 10 Apr 2021 12:30:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234376AbhDJMEM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 10 Apr 2021 08:04:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53590 "EHLO
+        id S234373AbhDJMa2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 10 Apr 2021 08:30:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59180 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234262AbhDJMEL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Apr 2021 08:04:11 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CE72C061762
-        for <git@vger.kernel.org>; Sat, 10 Apr 2021 05:03:56 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id r9so12687748ejj.3
-        for <git@vger.kernel.org>; Sat, 10 Apr 2021 05:03:56 -0700 (PDT)
+        with ESMTP id S234262AbhDJMa2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Apr 2021 08:30:28 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 692A6C061762
+        for <git@vger.kernel.org>; Sat, 10 Apr 2021 05:30:13 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id h10so9538790edt.13
+        for <git@vger.kernel.org>; Sat, 10 Apr 2021 05:30:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=UGexUgqNlElFOnxJN0pqvleJEFEQ7WkxgYZ1RqlgctE=;
-        b=nPQXPtJefYlPg5mGKyKuc+5uy25XzDjvZVf4fTFjzHvX9Vk+Xq9/vsDaMFKfE6asYc
-         zwRxcqV/JUkcPcgHN7JiOuOh5w/ildphOKUVlvjBAC1mgjA1LcL4WXabNS/BvAcEp9Jh
-         ++66OS09x6cRmi4lx8n8ELt9oMZXm8te7I3f058Xpm2le5yEyESDr40XkM9lthXi67/g
-         6xjSLXUhIMk1gZ5VR4n3YMjxAe30WLIavkWg1gzQm8F8lhy+atBx9DNgGxmM5DS8r22h
-         mz+rp9CA6KgjsRnA5yEvhKoivxVD+NUvRvmhx21UZstZfKG8JOuqn9NNusTg0N76iUoq
-         LtpQ==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=tuo04ZnR5xs43WX2tQ4zgLm/JlgvDCRDlDqxB1EWJBA=;
+        b=UuJ/trYpUmDogxA3gFZyfhHajzTavsa2tZ0o2Feyd874UJi1+fZF0GsE/FnPQYm8ur
+         CXF5N46IaDOzFnXyUW2c/j2w2829/l3QvAVJnBecanO5bhBaiYsj3Mu/KIU/IY4tNkCo
+         4J+Qd3A69/0J4c3Jt5rMTOHnoS1fdFaHuGEbYmtNw4h9jxzpyv4wQHuXJE7JCuNlWCUi
+         L7rDwii5DtSWcsFA4cTPv01+uSBXsSVsF6uEdzBJWM1vPjJBzjO9vWw+gevzU027sOqH
+         l4Ho7l7mKfdJcigfjUwueLrKEMiZ7C9UsOIExhZDzscw+mLxYIZGt6gKbjZOvC7zFVQv
+         vTxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=UGexUgqNlElFOnxJN0pqvleJEFEQ7WkxgYZ1RqlgctE=;
-        b=cdz2UczRyHEW+5QmsRR46bi3fDlpTMLvI1EhDAITF2zyvmCN9/MuI08FksowM/ORhD
-         Dc7+N6++fIKA5UkG6zQs+WlMGgZ91n4KOibFHKqf9uwB46GuzemW+qBWMWXSd7HbR9L3
-         BL8pkXSM0HAdhR8TYhbAIHXcfd7omPgYgCzZiPO3quvA4vuKSfRMxdQ7fiemtkyvdn6Y
-         klJbNO8ii3m3VvwCyCBa+pynpInwWQiOITsnfV0IhPjxl8ZaNpFwhcM49p7SU8SHY4+C
-         4LWpkdp9n9aWUlt9QE/0dvXcTxNwRncLndpXqiJz5+B9R656ovQoqN5AFPmKEEFw4R86
-         v/cw==
-X-Gm-Message-State: AOAM532hIbnfVQOtXL5O7aZFWJYmPVVNNY/meR5hUmWmwx4tW1ah3ysy
-        CpPG4eR8ebIo3TsVdcNrS82TCFUEUGYCPQnfzE0=
-X-Google-Smtp-Source: ABdhPJzv++NVVVhUyqnEmI8wKQ/cVCRSZ3ea6zC8Vib4HeZm+USjpZKbYJwhNYozMdlYV4Kksc5aSV1O/xebt6EemUg=
-X-Received: by 2002:a17:906:b104:: with SMTP id u4mr19680288ejy.211.1618056235181;
- Sat, 10 Apr 2021 05:03:55 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=tuo04ZnR5xs43WX2tQ4zgLm/JlgvDCRDlDqxB1EWJBA=;
+        b=gKW5h3ud2pxE1+hTYmnIt67/4h1ByMBQJGLflJxXS9YDrmLjulAgDnJ9BY8YgiWOIq
+         cPRtEjDabK69pZAuZgRDY+9Jc8D+PLK4gd0Yh0wyxJjGdQqzZ+f5+T0Rb+bk/5SHhs8x
+         w1gD+S6MKigZVUPyx+VxGo8GzU7hDoKBgvZUR74dtql20rxEW085wT5IgniAOzeohytG
+         v/uaMgBlf/zIQdSQACBXCzqjOf6BRlBM101uEpmwjt1cFuSDS5NMoZlrcI9fHkvoK8e6
+         TMS4zAqnbCVzBGoEor1bcVy0o0Pc5G8YwE6a/jcXyjwzODJolh7Vw3mKzg6bajj4uxHZ
+         7jKw==
+X-Gm-Message-State: AOAM531nT5iWIGZ4SDMPVOyU2a4a2nvpC7hjScY352nG0SPW91IUUU+c
+        M6Hg8q59rOIRdAh1W5LR4U6J6UgTrI6dtA==
+X-Google-Smtp-Source: ABdhPJyNim6BsoiueDBHUdxPELpjdWD3qskkQz1Q/mzLnG41dHJqfGBjWEEzZtnNMiE57IIpU/drTw==
+X-Received: by 2002:a05:6402:4d1:: with SMTP id n17mr21188834edw.118.1618057812060;
+        Sat, 10 Apr 2021 05:30:12 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id la16sm2587507ejb.40.2021.04.10.05.30.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 10 Apr 2021 05:30:11 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Johannes Sixt <j6t@kdbg.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Adam Spiers <git@adamspiers.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        "Chris Torek" <chris.torek@gmail.com>
+Subject: Re: [PATCH v4 05/10] userdiff: add and use for_each_userdiff_driver()
+References: <20210224195129.4004-1-avarab@gmail.com>
+        <cover-00.11-00000000000-20210324T014604Z-avarab@gmail.com>
+        <patch-05.11-64ea5e8443f-20210324T014604Z-avarab@gmail.com>
+        <YFuPMMMYicFK6A/S@coredump.intra.peff.net>
+        <87im5gp2ze.fsf@evledraar.gmail.com>
+        <YFvaYokQJpvwSzJ6@coredump.intra.peff.net>
+        <87czvoowg2.fsf@evledraar.gmail.com>
+        <YF1UuNBrAWvHSCp1@coredump.intra.peff.net>
+        <87czv3gs3q.fsf@evledraar.gmail.com>
+        <YHC1CZoOBJFwQIx8@coredump.intra.peff.net>
+        <xmqq5z0vm6e2.fsf@gitster.g>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
+In-reply-to: <xmqq5z0vm6e2.fsf@gitster.g>
+Date:   Sat, 10 Apr 2021 14:30:10 +0200
+Message-ID: <871rbigw4t.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <195bf718-6226-43c9-8c58-167388d3d99b@gmail.com>
- <f5b9ea24-e2f7-6c54-b4ff-86cef27527f7@gmail.com> <CAP8UFD1PC=vQCXLLoECPzFc8BGGfQxptHE5+Et11F-=3-twZYg@mail.gmail.com>
- <769c7c48-a518-2636-10be-1479997e8f15@gmail.com> <CAP8UFD0RyhnurYdWt1xWF2O-bpk-irSs71+XH1Zd8ghdzRKZ8Q@mail.gmail.com>
- <374a2b8a-0d59-4546-eab3-7229943217ba@gmail.com>
-In-Reply-To: <374a2b8a-0d59-4546-eab3-7229943217ba@gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sat, 10 Apr 2021 14:03:43 +0200
-Message-ID: <CAP8UFD15qSTyOLgRFRDvL5ja4zM_JZjMNq3xaVZF=E2ougjvWQ@mail.gmail.com>
-Subject: Re: [GSoC] Draft Proposal (Convert submodule to builtin)
-To:     Chinmoy Chakraborty <chinmoy12c@gmail.com>
-Cc:     git <git@vger.kernel.org>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 8, 2021 at 11:10 AM Chinmoy Chakraborty
-<chinmoy12c@gmail.com> wrote:
->
-> This is the V2 of the draft proposal after applying the
->
-> changes suggested by Christian Couder and Kaartik Sivaraam.
 
-Please add all the reviewers in Cc. I added Kaartic.
+On Sat, Apr 10 2021, Junio C Hamano wrote:
 
-> ##Git Contributions##
+> Jeff King <peff@peff.net> writes:
 >
-> [Microproject] Replace instances of `the_repository` with =E2=80=98r=E2=
-=80=99. (Learning
-> the ropes)
-> Pull request: https://github.com/gitgitgadget/git/pull/915
-> Mailing List:
-> https://lore.kernel.org/git/pull.915.git.1616701733901.gitgitgadget@gmail=
-.com/
+>>> That plan involves an "git rm -r compat/regex" and a compat/pcre
+>>> instead, I have some long-left-over patches for that.
+>>
+>> OK. I was more worried about platforms where it was cumbersome to
+>> install pcre. If we are shipping it as a vendored library, then at least
+>> the dependency management is on us, and not the user. I do worry a
+>> little about running into complications with building or debugging it.
 >
->
-> [column, range-diff] downcase option description
-> Pull request: https://github.com/gitgitgadget/git/pull/920
-> Mailing List:
-> https://lore.kernel.org/git/pull.920.git.1616913298624.gitgitgadget@gmail=
-.com/
->
->
-> [Documentation] updated documentation for git commit --date
-> Pull request: https://github.com/gitgitgadget/git/pull/918
-> Mailing List:
-> https://lore.kernel.org/git/pull.918.git.1616926790227.gitgitgadget@gmail=
-.com/
+> Please don't.  I prefer not shipping compat/pcre ourselves; having
+> to worry about version skew and picking up upstream security fixes
+> in time, etc. for an external library that is well maintained is not
+> what we need.
 
-Adding a status to let us know if each of your contributions have been
-merged to seen, next or master, or even already released (in which
-version?) would be nice. You could also add a GitHub or GitLab link to
-the merge commit that merged your contribution.
+I'm not submitting patches for this now, I personally don't care much if
+PCRE became a required dep (as in you need the library) and we didn't
+ship it.
 
-> ##Project Outline##
->
-> A few components of git, like `git-submodule.sh`
-> are in the form of shell scripts. This causes
-> problems in production code in multiple platforms
-> like windows. The goal of this project is to
-> convert the shell script version of `git-submodule.sh`
-> to portable c code. The end goal would be
+I just assumed if I'd propose that that we'd want "make" to work on more
+bare-bones systems, since we e.g. carry a copy of
+sha1collisiondetection/ partially to facilitate that.
 
-s/c/C/
+But FWIW, and to the extent I've got time etc. my rough plan for this
+larger PCRE conpsiary was:
 
-> to completely remove `git-submodule.sh` and rename
-> `builtin/submodule--helper.c` to `builtin/submodule.c`
-> so that the `git submodule` is fully implemented using C.
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->
-> ##Why is the project required?##
->
-> "Issues with the portability of code"
->
-> The submodule shell script uses shell commands like
-> `echo`, `grep`, `test`, `printf` etc. When switching
-> to non-POSIX compliant systems, one will have
-> to re-implement these commands specifically for the
-> system. There are also POSIX-to-Windows path conversion
-> issues. To fix these issues, it was decided to convert
-> these scripts into portable C code.
->
-> "Large overhead in calling the command"
->
-> The commands implemented in shell scripts are not builtins, so
-> they call `fork()` and `exec()` multiple times, hence creating
-> additional shells.
+ 1. Get the current pickaxe-prep-for-PCRE patches to land.
 
-s/shells/processes/
+ 2. I've got patches on top of that which move over to PCRE, so as with
+    the existing grep.c code we could drop kwset entirely (declare that
+    if you need optimized fast search, you can install PCRE).
 
-> This adds to the overhead in using the
-> commands in terms of time and memory.
->
-> "No access to low-level API"
->
-> The shell commands don=E2=80=99t have access to low level commands
-> like `git hash-object`, `git cat-file` etc.
+ 3. git rm kwset.[ch]
 
-I am not sure it's correct to say that they don't have access to such
-low level commands. I think it would be better to say that they don't
-have direct access to the internal functions behind such low level
-commands.
+ 4. Migrate more things to some light wrapper "do a regex match" API
+    (just small modifications to grep.c) that'll optimistically be able
+    to do BRE/ERE/PCRE matches. If you've got PCRE then PCRE can handle
+    them all (it's got a RX dialecttranslation interface).
 
-> As these commands
-> are internally required for submodule commands to work, the shell
-> script needs to spawn a separate shell to execute these commands.
+ 5. All our regcomp/regexec should be gone in favor if this simple
+    replacement API.
 
-s/separate shell/separate process/
+Which is where this "PCRE everywhere" would come in, at this point we'll
+be carrying a compat/regex/ which we could just as well replace with a
+compat/pcre/.
 
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->
-> ##How have I prepared?##
->
-> I have gone through all the previous works and read through their
-> code to make myself accustomed to the intricacies of the code.
-> I have also structured my workflow based on the observation of
-> the previous discussions on those patches, and taken into
-> consideration the issues faced previously.
->
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->
-> ##Previous Work##
->
-> A large part of the `git submodule--helper.c` has already been
+The reason it would matter to have a hard prereq on PCRE is because it
+would simplify and speed up a lot of code in various places to be able
+to make an assumption that it's there. E.g. for things that do "match a
+line" like pickaxe we could do clever anchoring and match the whole diff
+at once, and also things like streaming the diff out as we consume it
+into PCRE's stream matching API.
 
-I would say that it's 'git-submodule.sh' that has been converted. 'git
-submodule--helper.c' is the result of that conversion.
+We also have a lot of things purely on the C level that would be
+simpler, e.g. (just one thing I remember) grep.c has 40 lines of code to
+emulate \b<word>\b, but we could ... just use \b.
 
-> converted by Stefan Beller, Prathamesh Chavan in his GSoC project
-> in 2017, and Shourya Shukla in his GSoC project in 2020. This is
-> the list of already ported commands.
->
-> set-branch
-> set-url
-> summary
-> status
-> init
-> deinit
-> update
-> foreach
-> sync
-> absorbgitdirs
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->
-> ##Work to be done##
->
-> The only command that is left to be ported is `git submodule add`.
-> The previous work on this by Shourya Shukla in GSoC 2020, did
-> not reach a successful merge due to some issues in design and
-> the patch was dropped as it had been stale for long.
-> See:
-> https://github.com/git/git/blob/1861aa482a38ae84f597cede48167ab43e7e50a3/=
-whats-cooking.txt#L1158-L1169
-> The first and foremost aim of the project will be to finish
-> porting the `add` command. Thereafter, the end goal would be to
-> completely replace the shell script (git-submodule.sh) with
-> an efficient c code.
+To Jeff's comment upthread:
 
-s/c/C/
+> And while it may build portably everywhere, that may involve extra
+> work and not integrate with our build knobs (e.g., it looks like it
+> uses autoconf)
 
-> Before porting the `git submodule add` command the initial work
-> would be dedicated to the implementation of small helper functions
-> in the form of small patches, which would be directly used by the
-> `add` command. This workflow is based on the suggestion by
-> Junio C Hamano on the thread:
-> https://lore.kernel.org/git/xmqqd01sugrg.fsf@gitster.c.googlers.com/.
->
-> This workflow would help in the following ways:
->
-> - It would help in sending patches in a small digestible format.
-> - It would help the reviewers easily review those small units
->    of patches in a single sitting.
-> - It would help keep small logical units of code in different clean commi=
-ts.
->
-> An additional test tweak would also be required in
-> `t7400-submodule-basic.sh`,
-> to prepend the keyword =E2=80=98fatal=E2=80=99 since the command dies out=
- in case
-> of absence of commits as pointed out by Kaartic Sivaraam on the thread:
-> https://lore.kernel.org/git/ce151a1408291bb0991ce89459e36ee13ccdfa52.came=
-l@gmail.com/.
+I already did that work in an old WIP branch I have. I haven't run it
+again so maybe this summary is inaccurate, but here's the commit:
+https://github.com/avar/git/commit/79256ee4a1
 
-Ok.
+So basically it won't build with autoconf or whatever, just with our own
+build system after we'd wget the relevant PCREv2 source files into
+compat/pcre/.
 
-> The following helper functions would be required to be implemented -
->
-> - A function to guess the path name from the repository string.
->    Example prototype: static char *guess_dir_name(const char *repo)
->    Returns the path name.
->
-> - A function to assure repo is absolute or relative to parent.
->    Example prototype: static char *get_real_repo(const char *repo)
->    Returns the correct repo name.
->
-> - A function for normalizing path, that is, removing multiple
->    //; leading ./; /./; /../; trailing / .
->    Example prototype: static char *normalize_path(const char *path)
->
-> - A function to check if the path exists and is already a git
->    repo, else clone it.
->    Example prototype: static int add_submodule(struct add_data *info)
->    `add_data` is a struct which stores the config of the submodule.
->
-> - A function to set the submodule config properly.
->    Example prototype: static void config_added_submodule(struct add_data
-> *info)
+The only things PCRE really needed autoconf or its own build system for
+was to define 20-ish macros which are either options we can switch, or
+(looking at this now) 4x probes like "HAVE_STDINT_H" which we could add
+to compat.mak.uname and friends.
 
-How would you test these helper functions? Would they be used by any
-code in 'builtin/submodule--helper.c'?
+If we wanted it to Just Work we could run that script and "git commit"
+it, or just leave it at a make warning saying "you don't have PCRE,
+either install it using your pkg system, or run this handy shellscript".
 
-> - After implementation of all these helper methods, the main
->    `module_add()` function would be implemented using the helper
->    functions listed above as well as those helper functions which
->    are predefined.
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->
-> ##Project Timeline##
->
-> "Present Day - May 17"
-> I=E2=80=99ll utilize this time in exploring the codebase more properly an=
-d
-> solving more issues, which would help me properly familiarize
-> myself with the codebase. I=E2=80=99ll also try to structure a more
-> solidified, detailed workflow and come up with a draft patch
+But yeah, if Junio's paranoid about the security aspect we could skip
+that "./get-pcre.sh && git commit" step.
 
-A draft patch of what? I thought that you wanted to create many
-patches, each one implementing a small step, maybe a single function
-that you described above.
+I'm getting some deja-vu writing this next part, I'm pretty sure I've
+written some version of the same E-Mail before, in any case:
 
-> based on the previous work and discussions.
->
-> "May 17 - June 7 (Community bonding period)"
-> - Get familiar with the community.
-> - Discuss proper workflow with mentors.
-> - Make changes in the timeline, if necessary.
-> - Discuss the structure of the series of patches.
->
-> "June 7 - June 25 (Initial coding phase)"
-> - Finish implementation of the helper functions.
-> - Work on a proper structure of the implementation of the
->    `submodule add` command
+ A. This wouldn't be anything new. We have some old bitrotting copy of
+    GNU awk's copy of glibc's regex engine in compat/regex. It's trivial
+    to e.g. get it to exhaust all memory on your system.
 
-I am not sure what this means.
+    Sure, PCRE could have bugs, but at least we *could* update it. As
+    you may remember I abandoned my last attempt to update compat/regex/
 
-> and implement additional helper
->    functions if required.
-> - Update proper documentation of the helper functions.
->
-> "June 25 - July 5 (Binding the code)"
-> This time would be used to code the main `submodule add`
-> command using all the helper functions implemented in the
-> initial phase of coding.
+ B. Even if you assume some bug like that, I think realistically no user
+    anywhere would be vulnerable to a copy we'd ship in compat/pcre/,
+    any vendor would ignore it and build the prereq themselves. It's
+    purely a developer aid.
 
-So how would the helper functions be useful and tested before this step?
+    Of course it could have some CVE, but it wouldn't be mean a git
+    point release.
 
-> This includes binding all the code
-> together and then completing the command through incremental
-> reviews. Also, the necessary documentation would be updated
-> parallelly.
->
-> "July 5 - July 12 (Initiate porting of command)"
-> - Discuss how to go about porting the entire submodule script.
-> - Initiate porting of the `git-submodule.sh` script.
->
-> "July 12 - July 16 (Phase 1 evaluation)"
->
-> "July 16 - July 26 (Semester exams)"
-> I will be taking my semester examinations during this
-> time. As such, I=E2=80=99ll try to be in touch with the mentors
-> and take out as much time as possible (around 20 hours a week).
->
-> "July 26 - August 10 (Porting the complete script)"
-> This period would be utilized in the complete conversion of
-> `git-submodule.sh` into c code and combine it with
+ C. Even if the regex engine has an CVE/RCE we have no feature anywhere
+    to execute arbitrary user regexes, anyone who could inject one can
+    already run arbitrary git commands.
 
-s/c code/C code/
+ D. The *one* exception to C) is gitweb's not-on-by-default "grep the
+    source tree" feature.
 
-> `submodule--helper.c` to make a single `builtin/submodule.c`.
-> As I=E2=80=99ll be completely free from academics during this period,
-> I=E2=80=99ll try to compensate as much time as possible for the above
-> period of July 16 - July 26.
+    So first its users would be better off than they are now now. You
+    can trivially DoS any box that has it exposed, secondly the union of
+    gitweb users + those that would turn that on + build their own git
+    for running a public-facing site is probably 0 people these days.
+
+ E. Even if you assume some combination of B..D isn't true I genuinely
+    don't know why this concern of PCRE being a special
+    security/vulnerability concern comes from, it seems to be brought up
+    any time the topic is discussed.
+
+    The implicit context is that we already process regexes using a
+    plethora of engines, and are using anything from AIXs, SunOS's,
+    Window's, OSX's, GNU libc's etc. regex engines to do so.
+
+    I haven't seen anything to suggest that PCRE's security record is
+    notably worse than even one of those pieces of software, and right
+    now we're exposing any bugs in the union of all those engines.
+
+    It's quite the opposite, unlike those engines PCRE actually gives
+    you really good features to limit resource consumption and regex
+    features in the event that you don't trust your regex or your
+    input.
+
+    I'd actually trust for things like processing a "git grep on the
+    web" with appropriate resource constraints.
+
+    The two solutions in that space are basically to use DFA engine as
+    e.g. Google's re2 does. That means living with a severely restricted
+    set of regex features, or to have bells and whistles as PCRE's NFA
+    does, but one that has tweakable resource limits.
