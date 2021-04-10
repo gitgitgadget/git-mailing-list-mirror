@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AD05DC43460
-	for <git@archiver.kernel.org>; Sat, 10 Apr 2021 17:17:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B5F5C43462
+	for <git@archiver.kernel.org>; Sat, 10 Apr 2021 17:17:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 86C34611AE
-	for <git@archiver.kernel.org>; Sat, 10 Apr 2021 17:17:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D899C610A2
+	for <git@archiver.kernel.org>; Sat, 10 Apr 2021 17:17:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234866AbhDJRRm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 10 Apr 2021 13:17:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36092 "EHLO
+        id S234900AbhDJRRq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 10 Apr 2021 13:17:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36094 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234738AbhDJRRg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Apr 2021 13:17:36 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0B9CC06138A
+        with ESMTP id S234761AbhDJRRh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Apr 2021 13:17:37 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6DDBC06138C
         for <git@vger.kernel.org>; Sat, 10 Apr 2021 10:17:21 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id c1so1908717ljd.7
+Received: by mail-lj1-x22a.google.com with SMTP id a1so10205463ljp.2
         for <git@vger.kernel.org>; Sat, 10 Apr 2021 10:17:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=fWPLUK/87IasufE+rzXw9S6VGHfQUN0z9gXDzUuyxzs=;
-        b=uLcCpOaA7ubD4qu6/3ue03fazJDFAivec3KdbiH4UhiZwfDnQCjncSINafO9bx6iAK
-         uJ29ktsPVkZaET1azzXAPsKY4aAP/fBKp8V5teZNJOfIegUqNFQmgGIA1BPKVTOcMK9J
-         60vbC5vfNS+DgLAQc89lJUEzSs9q83wS3tmxu8Vz3APD10R0JP1ByromvfSjIlBxjAiS
-         Mb1FVdVt11BnAXyGhFAolEvhoNI5x4fHY5YCWwIS7lJZpYKfyika3PQgmH2daYKkoB8k
-         lJV2oXYlUXbIX3TbxUbOpgff4169PMWPLrBa3Ge1xufmhV/+LL8fn1X3auRXnrtCvOd6
-         N0jw==
+        bh=fphA7Cp+Mv/DrXHrgICQamnofaFLQMa9hKIvHULv1cI=;
+        b=NJ4WIVNHNZFZtJ0GIIU/UhFiBXw3sRpJoQNW/DjCF6UlCwI1a6np04sX8A1gNBs6kT
+         ZfzoZHAlpnLrSWWrn/w229qdXqrqvOgtMmGEEbRjX8+UqdjbEx0qKt3h4WUAgYbeEzr7
+         p97FXUi0ndzeiA3yh+7NRAN21tHR1F8hUkkr5UjRnhtZvUskvcNa+AuIc7wxKouxnhiz
+         aIQaEfdWhRMxj+LuU7GpeEbRcaCAAoKfl0FXecc1zMxw0fsfIjylkWzQWKMU+IRTP+Ol
+         iF1SdaDo5EmuDwcMk+a4a38ejuqpWixiQ2bT9Rh4wJCAQ9/IqpT0WiIstAXM16mVMfYD
+         SibA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=fWPLUK/87IasufE+rzXw9S6VGHfQUN0z9gXDzUuyxzs=;
-        b=D6f6/aj9J8mmX7DN9WuSX7AiGzZcMXy4q9Rfjtp6CJWJNXnZccPAapAXEi4mG7GWbi
-         B6Un4KW6J3yVYyKlINcdh/ZRq4389lwnS/oq5fSdf4fDuKT4EnkjXTJLBqzOj7gvnpNe
-         k56G8YSS6tOT6VeP+yZ39BGSY1KU9yAW5a4rvk0AGVNXB8IsZJoOQxxHpAIPXK4iGErz
-         CxzVVTUTxO4JBrlTgpThpTxb21rZUEfUa+yRnkYsXSY1lJT/1WW6OVdSHztoNAG7pEIu
-         uV+29vKwcxEL5qVoBqjSM6hnhxzk3Ru0u4h+uBdk+U1aNyRj5lLpizGaNqd7rLuaj8te
-         WlkQ==
-X-Gm-Message-State: AOAM532C46cQviJ5XHIaQ18F4her3B4PDXs0GhLvarFB0n2x6TolzjEQ
-        J3vJgJKoikLe8Wkwhmt4FxQ=
-X-Google-Smtp-Source: ABdhPJw4v08NBHtdnoI7KJ9J22n0bslbJwNplKMZI5lSuIEtrVxOfmtHej+ugQXMsstXTiq1zwT8qw==
-X-Received: by 2002:a2e:5049:: with SMTP id v9mr7212582ljd.259.1618075039537;
-        Sat, 10 Apr 2021 10:17:19 -0700 (PDT)
+        bh=fphA7Cp+Mv/DrXHrgICQamnofaFLQMa9hKIvHULv1cI=;
+        b=icdbi7x+v5Mvd4/Nv88L3Jan8JcfezUYLqGrVCkxqLcmvGtfJvD8Ui4cwhBy36goO1
+         HFJfFKzuaVDsL1mooK0cIQjDCd/3c7Ymryu8Yw2gv7IzfPPwUe0mtovRIYVFspegdIg4
+         hid41gIPVNOr+dbD6yz5vFeaV5i4bg2772qMNodwE6MK0IDnteKI2GAFwQnOTLNH3nRr
+         L9tO6vpjej6/gMtJQALJJOxxsB/9yn8NESJI3bAmJ6rZLZlUeu8Jg3K8jcje+e537FlX
+         M2zod0bcLZoujkcEv5OIkQyZmIbSpziNpjoymoqzf8NooBo97f5Ih6HvsoiF5dvMCxuf
+         fqqQ==
+X-Gm-Message-State: AOAM532q0TKS+OQbQtxyQ7YhVft3Rbmo6v7lZ2/ZLRNCXJI9YNLWfd3r
+        iZR87bggNpsWgqKzCy3m2hfzT3KCiF0=
+X-Google-Smtp-Source: ABdhPJyzdgHK/bPfYIOh9+OIfmNUtnPGvmqD5b6QBX7m7Ja9Y0gib4bOobGqfIPlIBCcgPaThpJteQ==
+X-Received: by 2002:a2e:9184:: with SMTP id f4mr5264803ljg.144.1618075040403;
+        Sat, 10 Apr 2021 10:17:20 -0700 (PDT)
 Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id z7sm1336543ljo.64.2021.04.10.10.17.18
+        by smtp.gmail.com with ESMTPSA id z7sm1336543ljo.64.2021.04.10.10.17.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 10 Apr 2021 10:17:19 -0700 (PDT)
+        Sat, 10 Apr 2021 10:17:20 -0700 (PDT)
 From:   Sergey Organov <sorganov@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.email>,
@@ -64,9 +64,9 @@ Cc:     Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.email>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, git@vger.kernel.org,
         Sergey Organov <sorganov@gmail.com>
-Subject: [PATCH v1 2/5] diff-merges: refactor set_diff_merges()
-Date:   Sat, 10 Apr 2021 20:16:54 +0300
-Message-Id: <20210410171657.20159-3-sorganov@gmail.com>
+Subject: [PATCH v1 3/5] diff-merges: adapt -m to enable default diff format
+Date:   Sat, 10 Apr 2021 20:16:55 +0300
+Message-Id: <20210410171657.20159-4-sorganov@gmail.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20210410171657.20159-1-sorganov@gmail.com>
 References: <20210407225608.14611-1-sorganov@gmail.com>
@@ -77,70 +77,47 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Split set_diff_merges() into separate parsing and execution functions,
-the former to be reused for parsing of configuration values later in
-the patch series.
+Let -m option (and --diff-merges=m) enable the default format instead
+of "separate", to be able to tune it with log.diffMerges option.
 
 Signed-off-by: Sergey Organov <sorganov@gmail.com>
 ---
- diff-merges.c | 36 +++++++++++++++++++++---------------
- 1 file changed, 21 insertions(+), 15 deletions(-)
+ diff-merges.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/diff-merges.c b/diff-merges.c
-index 7690580d7464..9918b6ac55e4 100644
+index 9918b6ac55e4..a02f39828336 100644
 --- a/diff-merges.c
 +++ b/diff-merges.c
-@@ -55,29 +55,35 @@ static void set_dense_combined(struct rev_info *revs)
- 	revs->dense_combined_merges = 1;
- }
- 
--static void set_diff_merges(struct rev_info *revs, const char *optarg)
-+static diff_merges_setup_func_t func_by_opt(const char *optarg)
+@@ -34,10 +34,10 @@ static void set_m(struct rev_info *revs)
  {
--	if (!strcmp(optarg, "off") || !strcmp(optarg, "none")) {
--		suppress(revs);
--		/* Return early to leave revs->merges_need_diff unset */
--		return;
--	}
--
-+	if (!strcmp(optarg, "off") || !strcmp(optarg, "none"))
-+		return suppress;
- 	if (!strcmp(optarg, "1") || !strcmp(optarg, "first-parent"))
--		set_first_parent(revs);
-+		return set_first_parent;
- 	else if (!strcmp(optarg, "m") || !strcmp(optarg, "separate"))
--		set_separate(revs);
-+		return set_separate;
- 	else if (!strcmp(optarg, "c") || !strcmp(optarg, "combined"))
--		set_combined(revs);
-+		return set_combined;
- 	else if (!strcmp(optarg, "cc") || !strcmp(optarg, "dense-combined"))
--		set_dense_combined(revs);
-+		return set_dense_combined;
- 	else if (!strcmp(optarg, "default"))
--		set_to_default(revs);
--	else
-+		return set_to_default;
-+	return NULL;
-+}
-+
-+static void set_diff_merges(struct rev_info *revs, const char *optarg)
-+{
-+	diff_merges_setup_func_t func = func_by_opt(optarg);
-+
-+	if (!func)
- 		die(_("unknown value for --diff-merges: %s"), optarg);
- 
--	/* The flag is cleared by set_xxx() functions, so don't move this up */
--	revs->merges_need_diff = 1;
-+	func(revs);
-+
-+	/* NOTE: the merges_need_diff flag is cleared by func() call */
-+	if (func != suppress)
-+		revs->merges_need_diff = 1;
+ 	/*
+ 	 * To "diff-index", "-m" means "match missing", and to the "log"
+-	 * family of commands, it means "show full diff for merges". Set
++	 * family of commands, it means "show default diff for merges". Set
+ 	 * both fields appropriately.
+ 	 */
+-	set_separate(revs);
++	set_to_default(revs);
+ 	revs->match_missing = 1;
  }
  
- /*
+@@ -61,13 +61,13 @@ static diff_merges_setup_func_t func_by_opt(const char *optarg)
+ 		return suppress;
+ 	if (!strcmp(optarg, "1") || !strcmp(optarg, "first-parent"))
+ 		return set_first_parent;
+-	else if (!strcmp(optarg, "m") || !strcmp(optarg, "separate"))
++	else if (!strcmp(optarg, "separate"))
+ 		return set_separate;
+ 	else if (!strcmp(optarg, "c") || !strcmp(optarg, "combined"))
+ 		return set_combined;
+ 	else if (!strcmp(optarg, "cc") || !strcmp(optarg, "dense-combined"))
+ 		return set_dense_combined;
+-	else if (!strcmp(optarg, "default"))
++	else if (!strcmp(optarg, "m") || !strcmp(optarg, "default"))
+ 		return set_to_default;
+ 	return NULL;
+ }
 -- 
 2.25.1
 
