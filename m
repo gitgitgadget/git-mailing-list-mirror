@@ -2,129 +2,156 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F918C433B4
-	for <git@archiver.kernel.org>; Sat, 10 Apr 2021 08:12:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F3AE7C433ED
+	for <git@archiver.kernel.org>; Sat, 10 Apr 2021 08:31:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E68FD6113A
-	for <git@archiver.kernel.org>; Sat, 10 Apr 2021 08:12:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C5E9561184
+	for <git@archiver.kernel.org>; Sat, 10 Apr 2021 08:31:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229632AbhDJIMU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 10 Apr 2021 04:12:20 -0400
-Received: from mout.web.de ([217.72.192.78]:42017 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229494AbhDJIMT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Apr 2021 04:12:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1618042321;
-        bh=YElSxS7kgZZhrmWXcjdzf6l0NsPYhNM6N5B9Ht/udEI=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=j2JgCL9swNU50LyeedNA1N00bbHaC2h8w5SOQg81lpslnU3FNK0z/+7lt1Hf4YRHi
-         hhtaWAH4ZonnkPtNv27QDmOpISeYSlFetsdHxRX02E+7TFNbPf37EM0T/HeKOj0HDP
-         QCdhJ0NpV9AgpW0wJOIXEAmct0mZURqtq1a8C9TQ=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from Mini-von-Rene.fritz.box ([79.203.31.60]) by smtp.web.de
- (mrweb106 [213.165.67.124]) with ESMTPSA (Nemesis) id
- 1M6pYS-1lUYtL2aq6-008Gsu; Sat, 10 Apr 2021 10:12:01 +0200
-Subject: Re: [PATCH 03/12] ls-files: free max_prefix when done
-To:     Andrzej Hunt via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Andrzej Hunt <andrzej@ahunt.org>, Andrzej Hunt <ajrhunt@google.com>
-References: <pull.929.git.1617994052.gitgitgadget@gmail.com>
- <beccdb1778697a2a46b81c85fc91c477c040397c.1617994052.git.gitgitgadget@gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <6a72a920-134f-541b-7caa-debe24658005@web.de>
-Date:   Sat, 10 Apr 2021 10:12:00 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.9.0
+        id S230060AbhDJIbH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 10 Apr 2021 04:31:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36142 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229494AbhDJIbH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Apr 2021 04:31:07 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6859C061762
+        for <git@vger.kernel.org>; Sat, 10 Apr 2021 01:30:51 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id k128so4031278wmk.4
+        for <git@vger.kernel.org>; Sat, 10 Apr 2021 01:30:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=b2MPEAfCPVfFZ+28OeNLUbJaLbt8Rd3/VrSUOpbtnvQ=;
+        b=YwlJ6gbhYHwq5zpTjEX/DzHwYVN/dmlXgfcCWU5ahNRwh/sMrRqvlY+sL16+bTjPsh
+         L4N9zGebfIqPHqf/ZEWylAUz7yJHXRjtV5LaPPFOLQVn9yxA3Aj5qlpKBFSmLW/ORpm2
+         WzYBo38j1fz1rl5+R3Ty6fLq4jb1cjhc8wff2vifQyP1vGGGe64Wzb0gIJTzraMTp4Ho
+         7a57XLTMG1Z7hjChkZi4RPfDipYJz03H72mTo5u02W0xiiWk+RbxFdXpLxyNlPM3qJsR
+         wf0s0Ox8hJTyY/NVNqSdT3kEzpuX0Yfshu1ZEQf9SsmREF5sszYu78cORY0QLD/D49vn
+         hACA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=b2MPEAfCPVfFZ+28OeNLUbJaLbt8Rd3/VrSUOpbtnvQ=;
+        b=dph1FAGoM15X2c8GsWEu9fja47Ie17KG1dyzP+TSVMbxsEz7ZuclK7VUoaw1LzuwLG
+         buxeFqSZsnADMA4HossPoQ5tHW1CaTYx57M/4KIVRDd3TxOr/5hgsoh34FP/YErYfwAn
+         b3a7kFWl+DBs5iPtDkfbTn0t0o45VMOwWUY2HWThhkzfqqrPdIuzxEUIF/9jewVHX80i
+         mfbZaEoQZd6HARSjCAbKEYrXOjlG57cpM36q2WBFBTsPSs3uXA8ag9saHKWih23OdgI9
+         aODe8uSx4Dk2P79IXjuwGpxnUuYVgRcAkZkVPEdCTb7ZX/RUd25DRq9G4ts3KJIDy0d5
+         w6nQ==
+X-Gm-Message-State: AOAM530EoA05UpJRdQJc8Wc8hE2L1AE9UDiTBMuzhiOcBHMd786tNPz8
+        RUIrxqYomM836PJLtHvqWsV65NriKOQ=
+X-Google-Smtp-Source: ABdhPJyYA4QQGQlasLMQ2An/svmLtfWHeDCAhKbuZwPYYXIGsjrdSd+Yc5GKqnYixXwUuiDl6VYiqg==
+X-Received: by 2002:a1c:3182:: with SMTP id x124mr17268420wmx.41.1618043450170;
+        Sat, 10 Apr 2021 01:30:50 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id f8sm7962755wro.29.2021.04.10.01.30.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 10 Apr 2021 01:30:49 -0700 (PDT)
+Message-Id: <pull.930.git.1618043449249.gitgitgadget@gmail.com>
+From:   "Andrzej Hunt via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 10 Apr 2021 08:30:48 +0000
+Subject: [PATCH] merge-ort: only do pointer arithmetic for non-empty lists
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-In-Reply-To: <beccdb1778697a2a46b81c85fc91c477c040397c.1617994052.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:YGc9avVJyDPU5C8SbYFS/e8qhXar6982xPKjZSm98oWq4rKnZND
- uYO4Iox3Wwc2WkJ/+qJqvUVd4XJbSPKN010qp30XU/ssuBQ9BIL8chbr66sSNBzhWuvSDt/
- 7417yiwJZbZ+6+0gD+XN1+Otd3aG9HHx7KmWbf+aeLZYHq+VrYlBwl+NLHCnPrlNAk82MGQ
- qWvFY5Dd1EYE6tO9v7a0w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:wQKOjZjQdHE=:xW+t38mcCYAma/IG1VNIog
- zC6Cj2L2Avi/UPNH4zzYhb15NrtRSY0I4qZj+AspdRFwTb7Ic6R3QZsznhB2sMc5KitZFYRmg
- nlQz98R6H2pYI8g1qCewtBoUr4vxQ83v50TWhXCaSsNHwWzeIKmVNzaHekXBYaY4Dmksz7WUM
- 3QrHfABf5M+yVYvRcP2eYRgi54Ab/6DFhrjAT98/15Ns7HC3XR6hFYABBDPPceXWBbWERz5fJ
- 9HKbMbjf5JNnc7CzFblo5cInoLwXqbgdmosFCapWT4G2RyTQhUoGOvBfn4Ov5AN/qGqhUGeuB
- wlesy5r+ZB0np/syc5SsAM5doX0Rpo/3k4HxDo3YJps2aEhClyLGcP+OVkSjlGgok95uO2u1E
- ylTq66n10EO+Fvceih2GY0FVgViCwDTazPg8qIrmaS+k2z/TZjf0lCjFFc9Yt4vyKoAF4oiEy
- fDuCYiZNIEvPh1XgkzX66FJCWYkxskSLBDIguF6q9uZJUX6r8shZKfMGbmRcGaozgJ2eK0b0o
- pbePgBzbz9vnF2DXtUDzG3ft34bSrKWBwby34a2Q/K52drwq7hLrMrS7ObUAtIvOZORXwKhTE
- ffKlVCwg9NrA7szqD8FAwz5qwLCo94SFwKIJH0OsFQsoT10TSSxiXtWvKzgz+Ji54yLRFznsT
- M3UD4yNJq+c54Uap98QBI4oF6hQcKTB65LcT/sw7EJVgTk++/79Vz6aOBwFyt+1gwvoveg/rp
- Fk4XAlb8ukB4VrND9vU55c0ZGO2G1/PCLWl8Z7FtzpQIvxB3oiWzt8zWOnU0Pwf6bqv5j+LMG
- Fe/Xz0dLBZKMjjQpS6UlCh1qUPyNBzKcK9RpLi27LWJLrBQpA2yEWkKyX6r3C9DNKomxNwS2g
- DBvxTWFVVXAn2j4404Zsxjz2ikFYU5jFv34rlSD7y1puA0KLs6EbQ/uD+9v0FyCoccB9367Ay
- aCdAGXMnySvhCL5Pm0iu7xcgfXGFakPsE1GW7Ui6w4doQeIaCHV/xnzbP0JSZq7R/PjhoDqdQ
- bW57dN43Z6Tb9J0Qln1zTE296wfBZDfv+xqZEwbka22GIBkZaEqDl1EBi4IjA7y1BsOa3Geby
- oDWspXyBQGgwbf4MVtZoRz5hig/k+PoOnyFQV2okKDIuFRsK6ewoIc3vklkB5sjQpY8GfK+th
- g23cyVD4QacPV6NhVBgqiaPtoiGdCzEiIQybVCXUrcv2i1OVrH/uzXTaxzP1SUigQ8GF0=
+To:     git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>, Andrzej Hunt <andrzej@ahunt.org>,
+        Andrzej Hunt <ajrhunt@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 09.04.21 um 20:47 schrieb Andrzej Hunt via GitGitGadget:
-> From: Andrzej Hunt <ajrhunt@google.com>
->
-> common_prefix() returns a new string, which we store in max_prefix -
-> this string needs to be freed to avoid a leak. This leak is happening
-> in cmd_ls_files, hence is of no real consequence - an UNLEAK would be
-> just as good, but we might as well free the string properly.
->
-> Leak found while running t0002, see output below:
->
-> Direct leak of 8 byte(s) in 1 object(s) allocated from:
->     #0 0x49a85d in malloc /home/abuild/rpmbuild/BUILD/llvm-11.0.0.src/bu=
-ild/../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:145:3
->     #1 0x9ab1b4 in do_xmalloc wrapper.c:41:8
->     #2 0x9ab248 in do_xmallocz wrapper.c:75:8
->     #3 0x9ab22a in xmallocz wrapper.c:83:9
->     #4 0x9ab2d7 in xmemdupz wrapper.c:99:16
->     #5 0x78d6a4 in common_prefix dir.c:191:15
->     #6 0x5aca48 in cmd_ls_files builtin/ls-files.c:669:16
->     #7 0x4cd92d in run_builtin git.c:453:11
->     #8 0x4cb5fa in handle_builtin git.c:704:3
->     #9 0x4ccf57 in run_argv git.c:771:4
->     #10 0x4caf49 in cmd_main git.c:902:19
->     #11 0x69ce2e in main common-main.c:52:11
->     #12 0x7f64d4d94349 in __libc_start_main (/lib64/libc.so.6+0x24349)
->
-> Signed-off-by: Andrzej Hunt <ajrhunt@google.com>
-> ---
->  builtin/ls-files.c | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-> index 60a2913a01e9..53e20bbf9cce 100644
-> --- a/builtin/ls-files.c
-> +++ b/builtin/ls-files.c
-> @@ -781,5 +781,6 @@ int cmd_ls_files(int argc, const char **argv, const =
-char *cmd_prefix)
->  	}
->
->  	dir_clear(&dir);
-> +	free((void *)max_prefix);
+From: Andrzej Hunt <ajrhunt@google.com>
 
-This cast is necessary to ignore the const attribute of the pointer.
-It's scary, but safe here because this function owns the referenced
-object.
+versions could be an empty string_list. In that case, versions->items is
+NULL, and we shouldn't be trying to perform pointer arithmetic with it (as
+that results in undefined behaviour).
 
-I think the promise to not modify the string given at the top of the
-function is not worth having to take back that promise forcefully at
-the end to dispose of it.  Determining the correctness of this cast
-requires reading the whole function.  Removing the const from the
-declaration (and the cast) would improve readability overall.  Thoughts?
+This issue has probably existed since:
+  ee4012dcf9 (merge-ort: step 2 of tree writing -- function to create tree object, 2020-12-13)
+But it only started occurring during tests since tests started using
+merge-ort:
+  f3b964a07e (Add testing with merge-ort merge strategy, 2021-03-20)
 
->  	return 0;
->  }
->
+For reference - here's the original UBSAN commit that implemented this
+check, it sounds like this behaviour isn't actually likely to cause any
+issues (but we might as well fix it regardless):
+https://reviews.llvm.org/D67122
 
+UBSAN output from t3404 or t5601:
+
+merge-ort.c:2669:43: runtime error: applying zero offset to null pointer
+    #0 0x78bb53 in write_tree merge-ort.c:2669:43
+    #1 0x7856c9 in process_entries merge-ort.c:3303:2
+    #2 0x782317 in merge_ort_nonrecursive_internal merge-ort.c:3744:2
+    #3 0x77feef in merge_incore_nonrecursive merge-ort.c:3853:2
+    #4 0x6f6a5c in do_recursive_merge sequencer.c:640:3
+    #5 0x6f6a5c in do_pick_commit sequencer.c:2221:9
+    #6 0x6ef055 in single_pick sequencer.c:4814:9
+    #7 0x6ef055 in sequencer_pick_revisions sequencer.c:4867:10
+    #8 0x4fb392 in run_sequencer revert.c:225:9
+    #9 0x4fa5b0 in cmd_revert revert.c:235:8
+    #10 0x42abd7 in run_builtin git.c:453:11
+    #11 0x429531 in handle_builtin git.c:704:3
+    #12 0x4282fb in run_argv git.c:771:4
+    #13 0x4282fb in cmd_main git.c:902:19
+    #14 0x524b63 in main common-main.c:52:11
+    #15 0x7fc2ca340349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+    #16 0x4072b9 in _start start.S:120
+
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior merge-ort.c:2669:43 in
+
+Signed-off-by: Andrzej Hunt <ajrhunt@google.com>
+---
+    merge-ort: only do pointer arithmetic for non-empty lists
+    
+    Here's a small and inconsequential UBSAN issue that started happening
+    when running tests on next since yesterday (since the merge of
+    en/ort-readiness).
+    
+    It can be reproduced with something like this (t3404 also triggers the
+    same issue):
+    
+    make SANITIZE=undefined COPTS="-Og -g" T="$(wildcard t5601-*.sh)"
+    GIT_TEST_OPTS="-v" UBSAN_OPTIONS=print_stacktrace=1 test
+    
+    ATB, Andrzej
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-930%2Fahunt%2Fmerge-ort-ubsan-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-930/ahunt/merge-ort-ubsan-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/930
+
+ merge-ort.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/merge-ort.c b/merge-ort.c
+index 5e118a85ee04..4da4b4688336 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -2504,8 +2504,10 @@ static void write_tree(struct object_id *result_oid,
+ 	 * We won't use relevant_entries again and will let it just pop off the
+ 	 * stack, so there won't be allocation worries or anything.
+ 	 */
+-	relevant_entries.items = versions->items + offset;
+-	relevant_entries.nr = versions->nr - offset;
++	if (versions->nr) {
++		relevant_entries.items = versions->items + offset;
++		relevant_entries.nr = versions->nr - offset;
++	}
+ 	QSORT(relevant_entries.items, relevant_entries.nr, tree_entry_order);
+ 
+ 	/* Pre-allocate some space in buf */
+
+base-commit: 89b43f80a514aee58b662ad606e6352e03eaeee4
+-- 
+gitgitgadget
