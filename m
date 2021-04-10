@@ -2,156 +2,248 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F3AE7C433ED
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 01A18C433B4
 	for <git@archiver.kernel.org>; Sat, 10 Apr 2021 08:31:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C5E9561184
+	by mail.kernel.org (Postfix) with ESMTP id B512561105
 	for <git@archiver.kernel.org>; Sat, 10 Apr 2021 08:31:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230060AbhDJIbH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 10 Apr 2021 04:31:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36142 "EHLO
+        id S229537AbhDJIaY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 10 Apr 2021 04:30:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229494AbhDJIbH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Apr 2021 04:31:07 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6859C061762
-        for <git@vger.kernel.org>; Sat, 10 Apr 2021 01:30:51 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id k128so4031278wmk.4
-        for <git@vger.kernel.org>; Sat, 10 Apr 2021 01:30:51 -0700 (PDT)
+        with ESMTP id S229494AbhDJIaX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Apr 2021 04:30:23 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 854B3C061762
+        for <git@vger.kernel.org>; Sat, 10 Apr 2021 01:30:08 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id ba6so9165851edb.1
+        for <git@vger.kernel.org>; Sat, 10 Apr 2021 01:30:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=b2MPEAfCPVfFZ+28OeNLUbJaLbt8Rd3/VrSUOpbtnvQ=;
-        b=YwlJ6gbhYHwq5zpTjEX/DzHwYVN/dmlXgfcCWU5ahNRwh/sMrRqvlY+sL16+bTjPsh
-         L4N9zGebfIqPHqf/ZEWylAUz7yJHXRjtV5LaPPFOLQVn9yxA3Aj5qlpKBFSmLW/ORpm2
-         WzYBo38j1fz1rl5+R3Ty6fLq4jb1cjhc8wff2vifQyP1vGGGe64Wzb0gIJTzraMTp4Ho
-         7a57XLTMG1Z7hjChkZi4RPfDipYJz03H72mTo5u02W0xiiWk+RbxFdXpLxyNlPM3qJsR
-         wf0s0Ox8hJTyY/NVNqSdT3kEzpuX0Yfshu1ZEQf9SsmREF5sszYu78cORY0QLD/D49vn
-         hACA==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=bzyIMPI4igP4JeCJNGXy7x1SkKU0tzU6cQ52lhQRedQ=;
+        b=sui9Hdmu7cE3KqkTP5/bszBr+12NOZsFQrN96z11Y7Dltg08f52cfICFXf8CLmKcZQ
+         /OHIIqG0uy4ESSCefA72267Fc5J3ljMkGAb7+pHPGhH80r2uK+E1sBVGF8BpdUlM11gG
+         a9FBfu9l6pforAsQ7VODJ+VrnABihB385qzWpEuxlLTFSgK5AohMxDk/t8d+JLQY9hkz
+         pPtg7uECvtR642Eazm5+tIn1Tn99hrqJMz3dvaxuhz4NGS8UmlCo1wFiVr5+KP9Q4Cem
+         RghT3X0daqcuETRmZzPqX7SkVyNEGkDn/VeQOi5CKV5m8+ZQDL1bKY0zkE0s8lAKxP8w
+         K7yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=b2MPEAfCPVfFZ+28OeNLUbJaLbt8Rd3/VrSUOpbtnvQ=;
-        b=dph1FAGoM15X2c8GsWEu9fja47Ie17KG1dyzP+TSVMbxsEz7ZuclK7VUoaw1LzuwLG
-         buxeFqSZsnADMA4HossPoQ5tHW1CaTYx57M/4KIVRDd3TxOr/5hgsoh34FP/YErYfwAn
-         b3a7kFWl+DBs5iPtDkfbTn0t0o45VMOwWUY2HWThhkzfqqrPdIuzxEUIF/9jewVHX80i
-         mfbZaEoQZd6HARSjCAbKEYrXOjlG57cpM36q2WBFBTsPSs3uXA8ag9saHKWih23OdgI9
-         aODe8uSx4Dk2P79IXjuwGpxnUuYVgRcAkZkVPEdCTb7ZX/RUd25DRq9G4ts3KJIDy0d5
-         w6nQ==
-X-Gm-Message-State: AOAM530EoA05UpJRdQJc8Wc8hE2L1AE9UDiTBMuzhiOcBHMd786tNPz8
-        RUIrxqYomM836PJLtHvqWsV65NriKOQ=
-X-Google-Smtp-Source: ABdhPJyYA4QQGQlasLMQ2An/svmLtfWHeDCAhKbuZwPYYXIGsjrdSd+Yc5GKqnYixXwUuiDl6VYiqg==
-X-Received: by 2002:a1c:3182:: with SMTP id x124mr17268420wmx.41.1618043450170;
-        Sat, 10 Apr 2021 01:30:50 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f8sm7962755wro.29.2021.04.10.01.30.49
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=bzyIMPI4igP4JeCJNGXy7x1SkKU0tzU6cQ52lhQRedQ=;
+        b=Y+0NG+YpaumBkYIy69zw2/Uct7xUr1Knag1toLMXUKMu0hFjp6eFvkwqrTO0JCjVQ7
+         FHY2IFxpgVQxi790ElAYY6eLXL09aVARdBHTDqhPXP/Pi/DvtuGx9++T9CxI3aBFIOxN
+         9A5hVL1N2tOdik6wdsDNCq+Q9Mwh0Fj6DXFQttyV2jIsJ/GAs+X6u6LRbhHLxhWy9qnF
+         ovbRw5HS9y9GdsVJAr3v1h7Mxp1gczU54Rb36l3oQIO0rXlxZrk/V7QxGpmheQAcpQy+
+         d36gy6iohy93pTyt5TEE20jJ9khQ7qwldohJCdTSbjuEB2qf1W1NR0vsl1GKjFZr5GeS
+         IXQQ==
+X-Gm-Message-State: AOAM532Pu3cQsnHX0Uju74j5HRTdjo/6Hl1gfI8juwIJgpm8NFsMrO00
+        DmIMGBiWMpvkl6dyQdvCkII=
+X-Google-Smtp-Source: ABdhPJyXulf0FeGr71Zh6dSsAEli4yqyG7Snt5pdcV5U+hEBfv+x6S6woKOw2GB3BMSdH+lFDwyXNw==
+X-Received: by 2002:a50:fd16:: with SMTP id i22mr20822475eds.239.1618043407002;
+        Sat, 10 Apr 2021 01:30:07 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id by25sm2346525ejc.49.2021.04.10.01.30.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 10 Apr 2021 01:30:49 -0700 (PDT)
-Message-Id: <pull.930.git.1618043449249.gitgitgadget@gmail.com>
-From:   "Andrzej Hunt via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 10 Apr 2021 08:30:48 +0000
-Subject: [PATCH] merge-ort: only do pointer arithmetic for non-empty lists
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Sat, 10 Apr 2021 01:30:06 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/2] test-lib: allow test snippets as here-docs
+References: <YHDUg6ZR5vu93kGm@coredump.intra.peff.net>
+ <YHDVAxxKDzfTlq3h@coredump.intra.peff.net>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
+In-reply-to: <YHDVAxxKDzfTlq3h@coredump.intra.peff.net>
+Date:   Sat, 10 Apr 2021 10:30:05 +0200
+Message-ID: <87a6q6h78y.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>, Andrzej Hunt <andrzej@ahunt.org>,
-        Andrzej Hunt <ajrhunt@google.com>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Andrzej Hunt <ajrhunt@google.com>
 
-versions could be an empty string_list. In that case, versions->items is
-NULL, and we shouldn't be trying to perform pointer arithmetic with it (as
-that results in undefined behaviour).
+On Sat, Apr 10 2021, Jeff King wrote:
 
-This issue has probably existed since:
-  ee4012dcf9 (merge-ort: step 2 of tree writing -- function to create tree object, 2020-12-13)
-But it only started occurring during tests since tests started using
-merge-ort:
-  f3b964a07e (Add testing with merge-ort merge strategy, 2021-03-20)
+> Most test snippets are wrapped in single quotes, like:
+>
+>   test_expect_success 'some description' '
+>           do_something
+>   '
+>
+> This sometimes makes the snippets awkward to write, because you can't
+> easily use single quotes. We sometimes work around this with $SQ, or by
+> loosening regexes to use "." instead of a literal quote, or by using
+> double quotes when we'd prefer to use single-quotes (and just adding
+> extra backslash-escapes to avoid interpolation).
+>
+> This commit adds another option: feeding the snippet on the function's
+> stdin. This doesn't conflict with anything the snippet would want to do,
+> because we always redirect its stdin from /dev/null anyway (which we'll
+> continue to do).
 
-For reference - here's the original UBSAN commit that implemented this
-check, it sounds like this behaviour isn't actually likely to cause any
-issues (but we might as well fix it regardless):
-https://reviews.llvm.org/D67122
+I like this, and not having to write $SQ, '"'"' etc.
 
-UBSAN output from t3404 or t5601:
+> A few notes on the implementation:
+>
+>   - it would be nice to push this down into test_run_, but we can't, as
+>     test_expect_success and test_expect_failure want to see the actual
+>     script content to report it for verbose-mode. A helper function
+>     limits the amount of duplication in those callers here.
 
-merge-ort.c:2669:43: runtime error: applying zero offset to null pointer
-    #0 0x78bb53 in write_tree merge-ort.c:2669:43
-    #1 0x7856c9 in process_entries merge-ort.c:3303:2
-    #2 0x782317 in merge_ort_nonrecursive_internal merge-ort.c:3744:2
-    #3 0x77feef in merge_incore_nonrecursive merge-ort.c:3853:2
-    #4 0x6f6a5c in do_recursive_merge sequencer.c:640:3
-    #5 0x6f6a5c in do_pick_commit sequencer.c:2221:9
-    #6 0x6ef055 in single_pick sequencer.c:4814:9
-    #7 0x6ef055 in sequencer_pick_revisions sequencer.c:4867:10
-    #8 0x4fb392 in run_sequencer revert.c:225:9
-    #9 0x4fa5b0 in cmd_revert revert.c:235:8
-    #10 0x42abd7 in run_builtin git.c:453:11
-    #11 0x429531 in handle_builtin git.c:704:3
-    #12 0x4282fb in run_argv git.c:771:4
-    #13 0x4282fb in cmd_main git.c:902:19
-    #14 0x524b63 in main common-main.c:52:11
-    #15 0x7fc2ca340349 in __libc_start_main (/lib64/libc.so.6+0x24349)
-    #16 0x4072b9 in _start start.S:120
+I've got an unsubmitted series (a bigger part of the -V rewrite) which
+conflicted with this one, because I'd moved that message into those
+helper functions.
 
-SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior merge-ort.c:2669:43 in
+But in that case I end up having to have this in
+test_expect_{success,failure} anyway, because the change I had was to
+move it into test_{ok,failure}_, i.e. to color the emitted body under
+verbose differently depending on test ok/failure (which means deferring
+the "this is our test body" until after the run).
 
-Signed-off-by: Andrzej Hunt <ajrhunt@google.com>
----
-    merge-ort: only do pointer arithmetic for non-empty lists
-    
-    Here's a small and inconsequential UBSAN issue that started happening
-    when running tests on next since yesterday (since the merge of
-    en/ort-readiness).
-    
-    It can be reproduced with something like this (t3404 also triggers the
-    same issue):
-    
-    make SANITIZE=undefined COPTS="-Og -g" T="$(wildcard t5601-*.sh)"
-    GIT_TEST_OPTS="-v" UBSAN_OPTIONS=print_stacktrace=1 test
-    
-    ATB, Andrzej
+It got slightly awkward because before I could pass "$@" to those (they
+pass "$1" now), but with your change there's a "-" left on the argument
+list, so we need to pass "$1" and "$test_body".
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-930%2Fahunt%2Fmerge-ort-ubsan-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-930/ahunt/merge-ort-ubsan-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/930
+Anyway, it's no problem, just musings on having re-arranged this code
+you're pointing out needs/could be re-arranged.
 
- merge-ort.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+Maybe it would be easier to pass test_run arguments saying whether we
+expect failure or not, and then move the whole if/else after it into its
+own body. It already takes the "expecting_failure" parameter, so this on
+top of master:
 
-diff --git a/merge-ort.c b/merge-ort.c
-index 5e118a85ee04..4da4b4688336 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -2504,8 +2504,10 @@ static void write_tree(struct object_id *result_oid,
- 	 * We won't use relevant_entries again and will let it just pop off the
- 	 * stack, so there won't be allocation worries or anything.
- 	 */
--	relevant_entries.items = versions->items + offset;
--	relevant_entries.nr = versions->nr - offset;
-+	if (versions->nr) {
-+		relevant_entries.items = versions->items + offset;
-+		relevant_entries.nr = versions->nr - offset;
-+	}
- 	QSORT(relevant_entries.items, relevant_entries.nr, tree_entry_order);
- 
- 	/* Pre-allocate some space in buf */
+	diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+	index 6348e8d733..9e20bd607d 100644
+	--- a/t/test-lib-functions.sh
+	+++ b/t/test-lib-functions.sh
+	@@ -611,8 +611,7 @@ test_expect_failure () {
+	 	export test_prereq
+	 	if ! test_skip "$@"
+	 	then
+	-		say >&3 "checking known breakage of $TEST_NUMBER.$test_count '$1': $2"
+	-		if test_run_ "$2" expecting_failure
+	+		if test_run_ "$1" "$2" expecting_failure
+	 		then
+	 			test_known_broken_ok_ "$1"
+	 		else
+	@@ -631,8 +630,7 @@ test_expect_success () {
+	 	export test_prereq
+	 	if ! test_skip "$@"
+	 	then
+	-		say >&3 "expecting success of $TEST_NUMBER.$test_count '$1': $2"
+	-		if test_run_ "$2"
+	+		if test_run_ "$1" "$2"
+	 		then
+	 			test_ok_ "$1"
+	 		else
+	diff --git a/t/test-lib.sh b/t/test-lib.sh
+	index d3f6af6a65..5a1192e80c 100644
+	--- a/t/test-lib.sh
+	+++ b/t/test-lib.sh
+	@@ -935,9 +935,20 @@ test_eval_ () {
+	 }
+	 
+	 test_run_ () {
+	+	local description
+	+	description="$1"
+	+	shift
+	+
+	 	test_cleanup=:
+	 	expecting_failure=$2
+	 
+	+	if test -n "$expecting_failure"
+	+	then
+	+		say >&3 "checking known breakage of $TEST_NUMBER.$test_count '$description': $1"
+	+	else
+	+		say >&3 "expecting success of $TEST_NUMBER.$test_count '$description': $1"
+	+	fi
+	+
+	 	if test "${GIT_TEST_CHAIN_LINT:-1}" != 0; then
+	 		# turn off tracing for this test-eval, as it simply creates
+	 		# confusing noise in the "-x" output
 
-base-commit: 89b43f80a514aee58b662ad606e6352e03eaeee4
--- 
-gitgitgadget
+... or maybe not, but in any case, if the verbose mode was what was
+stopping you from moving this down to "test_run_" just that seems like
+an easy change.
+
+I like your current implementation better, i.e. to have the stdin
+consumption happen ASAP and have the others be low-level utility
+functions, but I don't care much, but if you wanted it the other way
+maybe the above diff helps.
+	
+>   - The helper function is a little awkward to call, as you feed it the
+>     name of the variable you want to set. The more natural thing in
+>     shell would be command substitution like:
+>
+>       body=$(body_or_stdin "$2")
+>
+>     but that loses trailing whitespace. There are tricks around this,
+>     like:
+>
+>       body=$(body_or_stdin "$2"; printf '.)
+>       body=${body%.}
+>
+>     but we'd prefer to keep such tricks in the helper, not in each
+>     caller.
+
+I see why you did this, and for a narrow change it's a good thing.
+
+FWIW having spent some more time on making the TAP format more pruttah
+in a parallel WIP series I think this is ultimately a losing
+game. You're inserting the extra LF because you don't want to have the
+"checking..." and the first line of the test body on the same line;
+
+But we have all of:
+
+    test_expect_success 'foo' 'true'
+    test_expect_success 'foo' '
+        true
+    '
+
+And now:
+
+    test_expect_success 'foo' - <<\EOT
+        true
+    '
+
+So if (definitely not needed for your change) wanted to always make this
+pretty/indented we'd need to push that logic down to the formatter,
+which would insert a leading LF and/or indentation as appropriate.
+
+I just declared that if you use the first form you don't get
+indentation :)
+
+>   - I implemented the helper using a sequence of "read" calls. Together
+>     with "-r" and unsetting the IFS, this preserves incoming whitespace.
+>     An alternative is to use "cat" (which then requires the gross "."
+>     trick above). But this saves us a process, which is probably a good
+>     thing. The "read" builtin does use more read() syscalls than
+>     necessary (one per byte), but that is almost certainly a win over a
+>     separate process.
+>
+>     Both are probably slower than passing a single-quoted string, but
+>     the difference is lost in the noise for a script that I converted as
+>     an experiment.
+>
+>   - I handle test_expect_success and test_expect_failure here. If we
+>     like this style, we could easily extend it to other spots (e.g.,
+>     lazy_prereq bodies) on top of this patch.
+>
+>   - even though we are using "local", we have to be careful about our
+>     variable names. Within test_expect_success, any variable we declare
+>     with local will be seen by the test snippets themselves (so it won't
+>     persist between tests like normal variables would).
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
