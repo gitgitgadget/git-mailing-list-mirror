@@ -8,52 +8,52 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B5F5C43462
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F93DC43470
 	for <git@archiver.kernel.org>; Sat, 10 Apr 2021 17:17:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D899C610A2
+	by mail.kernel.org (Postfix) with ESMTP id EE30B611ED
 	for <git@archiver.kernel.org>; Sat, 10 Apr 2021 17:17:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234900AbhDJRRq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 10 Apr 2021 13:17:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36094 "EHLO
+        id S234874AbhDJRRs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 10 Apr 2021 13:17:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234761AbhDJRRh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Apr 2021 13:17:37 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6DDBC06138C
-        for <git@vger.kernel.org>; Sat, 10 Apr 2021 10:17:21 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id a1so10205463ljp.2
-        for <git@vger.kernel.org>; Sat, 10 Apr 2021 10:17:21 -0700 (PDT)
+        with ESMTP id S234832AbhDJRRi (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Apr 2021 13:17:38 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D82FBC06138A
+        for <git@vger.kernel.org>; Sat, 10 Apr 2021 10:17:22 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id o16so10179363ljp.3
+        for <git@vger.kernel.org>; Sat, 10 Apr 2021 10:17:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=fphA7Cp+Mv/DrXHrgICQamnofaFLQMa9hKIvHULv1cI=;
-        b=NJ4WIVNHNZFZtJ0GIIU/UhFiBXw3sRpJoQNW/DjCF6UlCwI1a6np04sX8A1gNBs6kT
-         ZfzoZHAlpnLrSWWrn/w229qdXqrqvOgtMmGEEbRjX8+UqdjbEx0qKt3h4WUAgYbeEzr7
-         p97FXUi0ndzeiA3yh+7NRAN21tHR1F8hUkkr5UjRnhtZvUskvcNa+AuIc7wxKouxnhiz
-         aIQaEfdWhRMxj+LuU7GpeEbRcaCAAoKfl0FXecc1zMxw0fsfIjylkWzQWKMU+IRTP+Ol
-         iF1SdaDo5EmuDwcMk+a4a38ejuqpWixiQ2bT9Rh4wJCAQ9/IqpT0WiIstAXM16mVMfYD
-         SibA==
+        bh=ephUlwupFbjFTnzN2zWNMpIJf4tmj4WtTZn1Ml1+zF8=;
+        b=jYNQJzeOSISuPugeMBiFhY7kifR8Ii+NUKeVDnwDn9fCTcKapsvNKIZZe7bgGBZrv6
+         RLa0PCf6JatUD8QvGcIPF7noXVR4++n+enfsAksBu1MBZoZjVYfC/S/ajDzsvVw8uIb2
+         9b5iBYTogOUOx+lVFFq/IrfavVOJy97N+m5M0RglKg45Du4qkx/HR3JYE6UXztUTq2ew
+         fJiFV4YrywkPyq3uimsldqRyjnsLztAIWb/AT8ImR5Jc1n9De429qWZocVirN8V5ha7z
+         5wkdbSSvRBJmwtgtAAqZ4uH+zK4WcsBb5JNOHzRQDAghochWXtQSdwBYBzAt53vIJiyE
+         yW2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=fphA7Cp+Mv/DrXHrgICQamnofaFLQMa9hKIvHULv1cI=;
-        b=icdbi7x+v5Mvd4/Nv88L3Jan8JcfezUYLqGrVCkxqLcmvGtfJvD8Ui4cwhBy36goO1
-         HFJfFKzuaVDsL1mooK0cIQjDCd/3c7Ymryu8Yw2gv7IzfPPwUe0mtovRIYVFspegdIg4
-         hid41gIPVNOr+dbD6yz5vFeaV5i4bg2772qMNodwE6MK0IDnteKI2GAFwQnOTLNH3nRr
-         L9tO6vpjej6/gMtJQALJJOxxsB/9yn8NESJI3bAmJ6rZLZlUeu8Jg3K8jcje+e537FlX
-         M2zod0bcLZoujkcEv5OIkQyZmIbSpziNpjoymoqzf8NooBo97f5Ih6HvsoiF5dvMCxuf
-         fqqQ==
-X-Gm-Message-State: AOAM532q0TKS+OQbQtxyQ7YhVft3Rbmo6v7lZ2/ZLRNCXJI9YNLWfd3r
-        iZR87bggNpsWgqKzCy3m2hfzT3KCiF0=
-X-Google-Smtp-Source: ABdhPJyzdgHK/bPfYIOh9+OIfmNUtnPGvmqD5b6QBX7m7Ja9Y0gib4bOobGqfIPlIBCcgPaThpJteQ==
-X-Received: by 2002:a2e:9184:: with SMTP id f4mr5264803ljg.144.1618075040403;
-        Sat, 10 Apr 2021 10:17:20 -0700 (PDT)
+        bh=ephUlwupFbjFTnzN2zWNMpIJf4tmj4WtTZn1Ml1+zF8=;
+        b=X9zFORjjq9XAB5lNxvuVXWwxWs9qenhskFmy8RRwfDujX+kz+OzpHm1/9JOlRj/Bf8
+         pHsYNafH1Wn4YChdcpcnZL7xr6tlDvqdMk3ylMnDfl86Zv4ecvfJ2a4jIkg14rP0xhFR
+         SmRiuMPHHAHmbfhh6J02yjQq8Htjzsu6TUkLVvH9kd/7KDmIkMIjJODsBXeSBjVfRFKE
+         njNjZlcaUF0sjbdgpOoQhSRLVgKyk3yGfFadix+RvQqoAhWSbA+DL18SMJ/r0cKCymc2
+         B+nrguiDfbN88ZxLGe2oGioAz/NjNnKR6QBKEiBeyPULe0T/jm43YMJJyUcjzCam9u99
+         ShBQ==
+X-Gm-Message-State: AOAM533QkuYtvWJKhRNcErVPRHqUqTl/wu2bamC8S9rASSWOh69I9NhL
+        FCm73bk1gkId681pO7NFXV8=
+X-Google-Smtp-Source: ABdhPJzljpHs99O9fKGXTmo6du4Hlp0BhVQ442ALk5J5BoUtiME3u5w7UVqH712iXNOMp/ug+xCWaQ==
+X-Received: by 2002:a2e:b4cc:: with SMTP id r12mr12644736ljm.247.1618075041437;
+        Sat, 10 Apr 2021 10:17:21 -0700 (PDT)
 Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id z7sm1336543ljo.64.2021.04.10.10.17.19
+        by smtp.gmail.com with ESMTPSA id z7sm1336543ljo.64.2021.04.10.10.17.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Sat, 10 Apr 2021 10:17:20 -0700 (PDT)
 From:   Sergey Organov <sorganov@gmail.com>
@@ -64,9 +64,9 @@ Cc:     Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.email>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, git@vger.kernel.org,
         Sergey Organov <sorganov@gmail.com>
-Subject: [PATCH v1 3/5] diff-merges: adapt -m to enable default diff format
-Date:   Sat, 10 Apr 2021 20:16:55 +0300
-Message-Id: <20210410171657.20159-4-sorganov@gmail.com>
+Subject: [PATCH v1 4/5] diff-merges: introduce log.diffMerges config variable
+Date:   Sat, 10 Apr 2021 20:16:56 +0300
+Message-Id: <20210410171657.20159-5-sorganov@gmail.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20210410171657.20159-1-sorganov@gmail.com>
 References: <20210407225608.14611-1-sorganov@gmail.com>
@@ -77,47 +77,156 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Let -m option (and --diff-merges=m) enable the default format instead
-of "separate", to be able to tune it with log.diffMerges option.
+New log.diffMerges configuration variable sets the format that
+--diff-merges=default will be using. The default is "separate".
+
+t4013: add the following tests for log.diffMerges config:
+
+* Test that wrong values are denied.
+
+* Test that the value of log.diffMerges properly affects both
+--diff-merges=default and -m.
+
+t9902: fix completion tests for log.d* to match log.diffMerges.
+
+Added documentation for log.diffMerges.
 
 Signed-off-by: Sergey Organov <sorganov@gmail.com>
 ---
- diff-merges.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ Documentation/config/log.txt |  5 +++++
+ builtin/log.c                |  2 ++
+ diff-merges.c                | 11 +++++++++++
+ diff-merges.h                |  2 ++
+ t/t4013-diff-various.sh      | 23 +++++++++++++++++++++++
+ t/t9902-completion.sh        |  3 +++
+ 6 files changed, 46 insertions(+)
 
+diff --git a/Documentation/config/log.txt b/Documentation/config/log.txt
+index 208d5fdcaa68..456eb07800cb 100644
+--- a/Documentation/config/log.txt
++++ b/Documentation/config/log.txt
+@@ -24,6 +24,11 @@ log.excludeDecoration::
+ 	the config option can be overridden by the `--decorate-refs`
+ 	option.
+ 
++log.diffMerges::
++	Set default diff format to be used for merge commits. See
++	`--diff-merges` in linkgit:git-log[1] for details.
++	Defaults to `separate`.
++
+ log.follow::
+ 	If `true`, `git log` will act as if the `--follow` option was used when
+ 	a single <path> is given.  This has the same limitations as `--follow`,
+diff --git a/builtin/log.c b/builtin/log.c
+index 8acd285dafd8..6102893fccb9 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -481,6 +481,8 @@ static int git_log_config(const char *var, const char *value, void *cb)
+ 			decoration_style = 0; /* maybe warn? */
+ 		return 0;
+ 	}
++	if (!strcmp(var, "log.diffmerges"))
++		return diff_merges_config(value);
+ 	if (!strcmp(var, "log.showroot")) {
+ 		default_show_root = git_config_bool(var, value);
+ 		return 0;
 diff --git a/diff-merges.c b/diff-merges.c
-index 9918b6ac55e4..a02f39828336 100644
+index a02f39828336..75630fb8e6b8 100644
 --- a/diff-merges.c
 +++ b/diff-merges.c
-@@ -34,10 +34,10 @@ static void set_m(struct rev_info *revs)
- {
- 	/*
- 	 * To "diff-index", "-m" means "match missing", and to the "log"
--	 * family of commands, it means "show full diff for merges". Set
-+	 * family of commands, it means "show default diff for merges". Set
- 	 * both fields appropriately.
- 	 */
--	set_separate(revs);
-+	set_to_default(revs);
- 	revs->match_missing = 1;
- }
+@@ -90,6 +90,17 @@ static void set_diff_merges(struct rev_info *revs, const char *optarg)
+  * Public functions. They are in the order they are called.
+  */
  
-@@ -61,13 +61,13 @@ static diff_merges_setup_func_t func_by_opt(const char *optarg)
- 		return suppress;
- 	if (!strcmp(optarg, "1") || !strcmp(optarg, "first-parent"))
- 		return set_first_parent;
--	else if (!strcmp(optarg, "m") || !strcmp(optarg, "separate"))
-+	else if (!strcmp(optarg, "separate"))
- 		return set_separate;
- 	else if (!strcmp(optarg, "c") || !strcmp(optarg, "combined"))
- 		return set_combined;
- 	else if (!strcmp(optarg, "cc") || !strcmp(optarg, "dense-combined"))
- 		return set_dense_combined;
--	else if (!strcmp(optarg, "default"))
-+	else if (!strcmp(optarg, "m") || !strcmp(optarg, "default"))
- 		return set_to_default;
- 	return NULL;
- }
++int diff_merges_config(const char *value)
++{
++	diff_merges_setup_func_t func = func_by_opt(value);
++
++	if (!func)
++		return -1;
++
++	set_to_default = func;
++	return 0;
++}
++
+ int diff_merges_parse_opts(struct rev_info *revs, const char **argv)
+ {
+ 	int argcount = 1;
+diff --git a/diff-merges.h b/diff-merges.h
+index 659467c99a4f..09d9a6c9a4fb 100644
+--- a/diff-merges.h
++++ b/diff-merges.h
+@@ -9,6 +9,8 @@
+ 
+ struct rev_info;
+ 
++int diff_merges_config(const char *value);
++
+ int diff_merges_parse_opts(struct rev_info *revs, const char **argv);
+ 
+ void diff_merges_suppress(struct rev_info *revs);
+diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+index 8acb5b866900..87cab7867135 100755
+--- a/t/t4013-diff-various.sh
++++ b/t/t4013-diff-various.sh
+@@ -460,6 +460,29 @@ test_expect_success 'log --diff-merges=default matches --diff-merges=separate' '
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'deny wrong log.diffMerges config' '
++	test_config log.diffMerges wrong-value &&
++	test_expect_code 128 git log
++'
++
++test_expect_success 'git config log.diffMerges first-parent' '
++	git log -p --diff-merges=first-parent master >result &&
++	process_diffs result >expected &&
++	test_config log.diffMerges first-parent &&
++	git log -p --diff-merges=default master >result &&
++	process_diffs result >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success 'git config log.diffMerges first-parent vs -m' '
++	git log -p --diff-merges=first-parent master >result &&
++	process_diffs result >expected &&
++	test_config log.diffMerges first-parent &&
++	git log -p -m master >result &&
++	process_diffs result >actual &&
++	test_cmp expected actual
++'
++
+ test_expect_success 'log -S requires an argument' '
+ 	test_must_fail git log -S
+ '
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index 04ce884ef5ac..4d732d6d4f81 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -2306,6 +2306,7 @@ test_expect_success 'git config - variable name' '
+ 	test_completion "git config log.d" <<-\EOF
+ 	log.date Z
+ 	log.decorate Z
++	log.diffMerges Z
+ 	EOF
+ '
+ 
+@@ -2327,6 +2328,7 @@ test_expect_success 'git -c - variable name' '
+ 	test_completion "git -c log.d" <<-\EOF
+ 	log.date=Z
+ 	log.decorate=Z
++	log.diffMerges=Z
+ 	EOF
+ '
+ 
+@@ -2348,6 +2350,7 @@ test_expect_success 'git clone --config= - variable name' '
+ 	test_completion "git clone --config=log.d" <<-\EOF
+ 	log.date=Z
+ 	log.decorate=Z
++	log.diffMerges=Z
+ 	EOF
+ '
+ 
 -- 
 2.25.1
 
