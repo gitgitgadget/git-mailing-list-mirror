@@ -2,95 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 07178C433B4
-	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 23:04:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A7605C433B4
+	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 23:22:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BC618610CA
-	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 23:04:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6885E611F2
+	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 23:22:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235744AbhDKXEm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 11 Apr 2021 19:04:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50874 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235005AbhDKXEk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Apr 2021 19:04:40 -0400
-Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C47D8C061574
-        for <git@vger.kernel.org>; Sun, 11 Apr 2021 16:04:23 -0700 (PDT)
-Received: by mail-io1-xd32.google.com with SMTP id e186so11543895iof.7
-        for <git@vger.kernel.org>; Sun, 11 Apr 2021 16:04:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=J1CjmmJJTTcXiK+k0Csms1rgiCUeKVY87gaxwoHyt+M=;
-        b=Moyulf81MXX4Ug3i5CbydJq7/P6+xx/hA0oBnt3hGRwr17xgcCrEBE9p2iJ3jkV4I7
-         Qfb7BHFYvvB9ULKohJ8JiUnKr3SFqE4P5KldNorl3sFnFf9r2TekAA4Yd6uozJyxf8uR
-         0S3v66hTOCnZrd3+d8iRh7JeZ/gnMREsgHhChtVA0L79vn24kEwCIcuI/5alWosfZjGk
-         8mqLZjNyXG+dy5yGep/u3HUlqKsrBmloFvfU2DkB/euVofk84j3OUiFD/Vb1nayo9LME
-         hd6JSk+2wzy5C2FCyBxF9KGVCx4V6ySKADXMhzaSbLxcdN4UPob2EupVDZkV0SEAbHuG
-         F/sA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=J1CjmmJJTTcXiK+k0Csms1rgiCUeKVY87gaxwoHyt+M=;
-        b=bwH41cGGrmQ8QMFJJYv0jcAoJ3pNWkGMLGakgKeh3fDY0YpcF02toCOsGfCCjvY6jL
-         sX/apdn76eEcYa+Bo5JqN9GaC6/GxGU9G0DWbtu86qN9gw/JC9Sgv9JYTP1wjHOZAZwb
-         Mru0c1IYgr6wqeSSK1yUQGk71zhEz6QZxWmus/N/StlNJ/HWCRTXXtv+yjDcnDL2Z9CQ
-         TEJ9ZeI0UYO3b5/Gl+ixhPz1VmLbREWa+BrXu39FgwhHTIwA+L/tIy02NBeeVQqcNqLE
-         LII5Armtq1aNHfV5XYYgTqQeYEJWb4otmA9h6sdTlp5J4oW2jF4qFiEOEebrPj5zxMnP
-         TBcA==
-X-Gm-Message-State: AOAM530mGYgKh44Cd7idexIypVKlcG1Q3mDjrJiJW+P0FjhgS9xeGdOj
-        C1M7IINnUuXkU8rG/VJb+FQ+7Jhr7md/F9JoOdi81MChtCo9Cg==
-X-Google-Smtp-Source: ABdhPJylOf7xgKWyGRA69VqViMTkuZo/boOCBDZJlsier9zhSQsZ0RZ4EIVJS5+Z+WiRzYQnHp2zWbNUqEAMWDQsTcY=
-X-Received: by 2002:a02:6a5a:: with SMTP id m26mr25254431jaf.17.1618182262958;
- Sun, 11 Apr 2021 16:04:22 -0700 (PDT)
+        id S235700AbhDKXWe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 11 Apr 2021 19:22:34 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51594 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235229AbhDKXWd (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Apr 2021 19:22:33 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 059A0CC24D;
+        Sun, 11 Apr 2021 19:22:15 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=XXhZozPr7HED5j0EWxFBhugXEGM=; b=vSEWrL
+        5BlV0oy5GihqBTKNBRFq1vswM/HTymCaMNxWleL84N8XB93S/e3+1Z0hBkoCBfP5
+        VfnsG3cvhTj9JxSpt4WtuiRlHRsblvqDlSX50iKWX9qZugZGGOjqSTZbUUOGeGg0
+        FK/hmo64iiOfgbXGaR09BaUI53a8Lyi9528l4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=w/cfmuwgWwaH2u1DPt65sUWL9h9+Cz3R
+        hDGJTEE3BAnOfyqYy95gCDjkDvL2CP5j8BR3xmr5GSX6Y6ktCpc2EQrfIku42l7k
+        r4KVxacXbdQOpUvjkgFpASmxPvYVnEFzyAMPLvd57PQGwfYquxKM47ZYFUpaRxMd
+        Xv8qfO3gNgk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id F1E75CC24C;
+        Sun, 11 Apr 2021 19:22:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7A6F2CC24B;
+        Sun, 11 Apr 2021 19:22:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeffrey Walton <noloader@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Subject: Re: How to checkout a branch (and not a tag)
+References: <CAH8yC8nT-68H9Vy=zxqsKeqpBqt-OJYCpVh53cm1KoeSbSVC-Q@mail.gmail.com>
+Date:   Sun, 11 Apr 2021 16:22:13 -0700
+In-Reply-To: <CAH8yC8nT-68H9Vy=zxqsKeqpBqt-OJYCpVh53cm1KoeSbSVC-Q@mail.gmail.com>
+        (Jeffrey Walton's message of "Sun, 11 Apr 2021 19:04:11 -0400")
+Message-ID: <xmqqk0p8flui.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Reply-To: noloader@gmail.com
-From:   Jeffrey Walton <noloader@gmail.com>
-Date:   Sun, 11 Apr 2021 19:04:11 -0400
-Message-ID: <CAH8yC8nT-68H9Vy=zxqsKeqpBqt-OJYCpVh53cm1KoeSbSVC-Q@mail.gmail.com>
-Subject: How to checkout a branch (and not a tag)
-To:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: BFDBE516-9B1C-11EB-8AEA-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I'm trying to checkout a branch called REL1_35 from
-https://github.com/wikimedia/mediawiki-skins-Cosmos. The repo also has
-a tag called REL1_35.
+Jeffrey Walton <noloader@gmail.com> writes:
 
-When I perform the following I apparently get the tag (with old files)
-and not the branch (with updated files):
+> I'm trying to checkout a branch called REL1_35 from
+> https://github.com/wikimedia/mediawiki-skins-Cosmos. The repo also has
+> a tag called REL1_35.
+>
+> When I perform the following I apparently get the tag (with old files)
+> and not the branch (with updated files):
+>
+>     wiki_rel=REL1_53
 
-    wiki_rel=REL1_53
-    ...
-    git fetch origin && git reset --hard "origin/${wiki_rel}" && \
-        git checkout -f "${wiki_rel}" && git pull && git clean -xdf
+Hopefully this typo is not part of what contributed to your problem.
+Assuming that you actually used REL1_35 here...
 
-I found https://groups.google.com/g/git-users/c/FfzGmqj6sNQ, but I am
-not following it. My .git/config looks like it is using the proper
-reference:
+>     ...
+>     git fetch origin && git reset --hard "origin/${wiki_rel}" && \
 
-# cat skins/Cosmos/.git/config
-[core]
-        repositoryformatversion = 0
-        filemode = true
-        bare = false
-        logallrefupdates = true
-[remote "origin"]
-        url = https://github.com/Universal-Omega/MediaWiki-Cosmos-skin.git
-        fetch = +refs/heads/*:refs/remotes/origin/*
-[branch "REL1_35"]
-        remote = origin
-        merge = refs/heads/REL1_35
+...this should get their branches in refs/remotes/origin/, and would
+reset whatever local branch you are on to origin/REL1_35.  So at this
+point, HEAD is the same as their REL1_35 branch.
 
-How do I checkout the branch (and not a tag)?
+>         git checkout -f "${wiki_rel}"
 
-Thanks in advance.
+And this causes the tag/REL1_35, which was obtained from them, to be
+checked out to a detached HEAD.
+
+What are you trying to do here?  Do you want your own local REL1_35
+branch, that starts at the same commit as their REL1_35 branch?  If
+so, then instead of that "checkout", you would probably do
+
+	git checkout -b REL1_35
+
+Or whole thing up to this point would be
+
+	git fetch origin &&
+	git checkout -t -b REL1_35 origin/REL1_35
+
+and then after this, your "git pull" while on your REL1_35 brnch
+would integrate with their REL1_35 branch [*]
+
+
+[Footnote]
+
+* Unless you have other funny configuration variables in the
+  repository possibly from earlier random hacking, that is.
+  Depending on the state of the repository before you started the
+  "git fetch origin" step, commands like "git pull" and "git push"
+  would behave differently.
