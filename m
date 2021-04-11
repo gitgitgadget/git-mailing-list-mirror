@@ -2,84 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 28257C433ED
-	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 14:03:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C821CC433ED
+	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 14:11:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EBF016101B
-	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 14:03:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9E51E610CA
+	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 14:11:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235386AbhDKOD1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 11 Apr 2021 10:03:27 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:60935 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233514AbhDKOD0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Apr 2021 10:03:26 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id EE1E112525E;
-        Sun, 11 Apr 2021 10:03:09 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=MVfeMCfSBVyDpJpLISdYnXN5Zzc=; b=UTnlGAjhVj7znt2DhCf/
-        8VMOeZtZry8qehXnK0tLEw6KD8H0aGgaNC4JXOtnmyhgIqQ6FqE3ZIkwSl9mOZbK
-        iOI+7TY8yvDBh++77ui6HxB1mI8KarGTgLMvk6c8s0dq9WkcLAlt531kzqKgSPiU
-        l92ebJhQgV8Yg3hUmpBdeHw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         q=dns; s=sasl; b=UmnIn872OqYtZhoz+Nj4YtuQdZ/YmtWbyYGdXyPX+zOYh4
-        YziHsPlvpMBFvpKpo/c50DO+sUot0iqBGYMxmGMKoY/xf6Jenat9rtUpQsyypGML
-        v+NMUTW/eJUpOjsoLYd1D4jpgdhYlvSU6DPYGGaIHZTZpF+xklgylrVRP8eF4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E790312525D;
-        Sun, 11 Apr 2021 10:03:09 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.243.138.161])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 1B21912525B;
-        Sun, 11 Apr 2021 10:03:07 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     <git@vger.kernel.org>, Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 10/15] hash: provide per-algorithm null OIDs
-References: <20210410152140.3525040-1-sandals@crustytoothpaste.net>
-        <20210410152140.3525040-11-sandals@crustytoothpaste.net>
-Date:   Sun, 11 Apr 2021 07:03:05 -0700
-Message-ID: <xmqqy2dohqau.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S235625AbhDKOLg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 11 Apr 2021 10:11:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49934 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235229AbhDKOLf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Apr 2021 10:11:35 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55719C061574
+        for <git@vger.kernel.org>; Sun, 11 Apr 2021 07:11:19 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id sd23so7288061ejb.12
+        for <git@vger.kernel.org>; Sun, 11 Apr 2021 07:11:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=98nHJTc/V5Le2/JK0fd939e5TrGakVbwsI164Iaugog=;
+        b=O2Ng7rFVthjdTngSxz6Z9mAHAH2m2c2eLZMqrEXa4cHIvE6KznwKrqJqWrQHtgf5vA
+         WP8N5UeEKrY7v4msN6Z9QTRR2VLlbt4LyLaA5Ny7iydepyZxgoOGTW/jMumSaP1cFpER
+         FUZp5u3JMRiXuQQntLFzZTRT3tIhhvaBLRDlD6PiG14N5MRA1PRfi9lS1acFqOVIkT3h
+         At3vhoe2aSGvP606Z+JQzhqkwgL+g8VkdhEEBHCNpDF/cYVgZs6K0OA+uzbfV7Lhc8M8
+         eo3xq8IhtzRnKyPER3b3TSMOwe8ZYAXkskjx4e2oDeKUFASGfwHCK9wYeQU+uenaUmn7
+         z9ww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=98nHJTc/V5Le2/JK0fd939e5TrGakVbwsI164Iaugog=;
+        b=kig0+ykbK07+3OHy525eVeebOdt18OQtHTIk1w0TtCwh72rsbWT3tbXfO03do20b/3
+         V9SuW+vycMGFJSKTzBQE0R6K61TRpf9OlV2N98TptBcGRyToEJ6dwtm4iMaoD0nCOz4Z
+         nsGYIWMDtzeaW55fPfs0+tqJnhe2u27iXHCg0kkLsiVmJZR2y7TVcTY73j2fHOWcWu1h
+         Aew7X+rzm5f/N2uIHEE4qW1ITGw2WwOeFhi6eOcHeMZg6wXEAyaADWAhu12sehAV12jS
+         mINOGOes3sT5NhdsX7ZeV64VspENM03iCn9/WEX0h4wdTIyvIVsFRstXLaWfyjTgS6hg
+         R6/g==
+X-Gm-Message-State: AOAM530jCsO5eH1R1IsnHBzI72BWRDj8dzT1bMZFUOlK78hS697d5hbT
+        J+8AquS5m3KQ9Tbn1wdBRnuq+Q7PtB4=
+X-Google-Smtp-Source: ABdhPJxTIZZ56qYYVCgJiuXqsUyqKmCSc1QJti7odg2ZgxhJXny/AImvoUzNtBEh75bMqaxOBS+D7Q==
+X-Received: by 2002:a17:906:2988:: with SMTP id x8mr23931988eje.168.1618150277281;
+        Sun, 11 Apr 2021 07:11:17 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id q8sm575079ejd.79.2021.04.11.07.11.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 11 Apr 2021 07:11:16 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Drew DeVault <sir@cmpwn.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 1/3] git-send-email(1): improve smtp-encryption docs
+References: <20210411125431.28971-1-sir@cmpwn.com>
+ <20210411125431.28971-2-sir@cmpwn.com>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
+In-reply-to: <20210411125431.28971-2-sir@cmpwn.com>
+Date:   Sun, 11 Apr 2021 16:11:14 +0200
+Message-ID: <87h7kcgbct.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: A40E7068-9ACE-11EB-9088-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> diff --git a/object-file.c b/object-file.c
-> index 5f1fa05c4e..50bb5b6ca4 100644
-> --- a/object-file.c
-> +++ b/object-file.c
-> @@ -55,7 +55,6 @@
->  	"\x6f\xe1\x41\xf7\x74\x91\x20\xa3\x03\x72" \
->  	"\x18\x13"
+On Sun, Apr 11 2021, Drew DeVault wrote:
+
+Subject nit: 1/3 is "git-send-email(1):", the rest
+"git-send-email:". I'd suggest just "send-email:", we usually omit
+"git-" from the subcommand, and don't use man sections to refer to our
+own software.
+
+> This clarifies the meaning of the 'ssl' and 'tls' values for this
+> option, which respectively enable SSL/TLS, i.e. a standard "modern" SSL
+> approach; and STARTTLS, i.e. opportunistic in-band TLS.
+>
+> Signed-off-by: Drew DeVault <sir@cmpwn.com>
+> ---
+>  Documentation/git-send-email.txt | 7 +++++--
+>  1 file changed, 5 insertions(+), 2 deletions(-)
+>
+> diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+> index 93708aefea..c17c3b400a 100644
+> --- a/Documentation/git-send-email.txt
+> +++ b/Documentation/git-send-email.txt
+> @@ -168,8 +168,11 @@ Sending
+>  	unspecified, choosing the envelope sender is left to your MTA.
 >  
-> -const struct object_id null_oid;
->  static const struct object_id empty_tree_oid = {
->  	EMPTY_TREE_SHA1_BIN_LITERAL,
->  	GIT_HASH_SHA1,
-> @@ -64,6 +63,9 @@ static const struct object_id empty_blob_oid = {
->  	EMPTY_BLOB_SHA1_BIN_LITERAL,
->  	GIT_HASH_SHA1,
->  };
-> +const struct object_id null_oid_sha1 = {
-> +	{0}, GIT_HASH_SHA1,
-> +};
+>  --smtp-encryption=<encryption>::
+> -	Specify the encryption to use, either 'ssl' or 'tls'.  Any other
+> -	value reverts to plain SMTP.  Default is the value of
+> +	Specify the encryption to use, either 'ssl' or 'tls'. 'ssl' enables
 
-sparse wants this to be a file-scope static.
+Starting a sentance with a quoted lower-case word makes for hard
+reading. Maybe:
+
+    When set to 'ssl' ...
+
+Or something? 
+
+> +	generic SSL/TLS support and is typically used on port 465.  'tls'
+> +	enables in-band STARTTLS support and is typically used on port 25 or
+> +	587.  Use whichever option is recommended by your mail provider.  Any
+> +	other value reverts to plain SMTP.  Default is the value of
+>  	`sendemail.smtpEncryption`.
+>  
+>  --smtp-domain=<FQDN>::
+
