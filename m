@@ -2,76 +2,154 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.2 required=3.0 tests=BAYES_05,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A022CC433B4
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AECE8C43460
 	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 01:31:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6A5F6610A8
+	by mail.kernel.org (Postfix) with ESMTP id 7F87A610C8
 	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 01:31:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234983AbhDKBZa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 10 Apr 2021 21:25:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55248 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234944AbhDKBZ3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Apr 2021 21:25:29 -0400
-Received: from mail-il1-x136.google.com (mail-il1-x136.google.com [IPv6:2607:f8b0:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8132C06138B
-        for <git@vger.kernel.org>; Sat, 10 Apr 2021 18:25:14 -0700 (PDT)
-Received: by mail-il1-x136.google.com with SMTP id w2so7925783ilj.12
-        for <git@vger.kernel.org>; Sat, 10 Apr 2021 18:25:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=nNy1BP3QsP5sziveWHuzUOk9uIqMraunhZaCp8mw0zI=;
-        b=avFPpzQ01Ju0ZYReip4bNM7luQ5lm3LrFFk/kMHgA7aiFw6eMqXap9RmNn+MYtJQ4/
-         F33ozCf/g7897aTeLdLIF2NvxtcBzhon85coYTVz7dVSsXXW70bpG2Ps28qBkwG5z8wu
-         ZAwKGobG+bxP2ILy3RAY8QC3eCpgczi03SvkX7JYRXzvu/8pUQxI3lxCT+ERZmW2oWM1
-         /SVhDSccSvNLBLXvyI8pECE1Fxz+Ggwo3++EFc63RyOli4ANpw49htv8nPRf3CMJeXJI
-         Z2dNyMe76ykF3CWdgYF7EwPQzF/NYUI9e++wk6024RtgHFCqi3puaD3N5pH/sbocbYq+
-         Hw6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=nNy1BP3QsP5sziveWHuzUOk9uIqMraunhZaCp8mw0zI=;
-        b=NGWHhjSsM6Gj3aGfGbUd9arFqQQTSe31uFur2fCcdF72gg2jkFfaeF30SXcNiQ11pX
-         Bo50/Vi/CvtMd8XM//sCD2SNB5b+6rdlJKbbnpo13fHLv9xB3V6FyV3UNn+X2VT9JNcT
-         R/pxgsswODu4eEgURoM9CN3V8NjYC31FGje9I/elq1F+dFUVz6jbpsDHZwoQh1gaKUtA
-         69Tyk4Tydo3X6YbpGtNL0E331RLhFx4oSbnNwaWGmT1r4x11+f+HQmpNlp8uYAd/j0Bf
-         afACAmbZGdfDSMLL6TFpONyEGN7t+8kpxgZyuLd/wt1eNueuCMyyRNMIhR/eTAU3lUp5
-         ZNHw==
-X-Gm-Message-State: AOAM531Q3o+pfTPqPyTcJuYl8/3cwcpZeNQOnKdMXYuJYq3hhU/Kal/3
-        9vTOfCawAOiYT6Wdnu5X52LCxJo8ZvDqwsi2KdDcrbq+Gqo=
-X-Google-Smtp-Source: ABdhPJwX8+HpYpP83aHvDIZaQoUCpLTNLKH9T/I/G+lB1+2OOAWxeHPlMPSZ2DRbn5kSVGENnFQ7v5+c5s6kWjmE2uc=
-X-Received: by 2002:a05:6e02:1351:: with SMTP id k17mr17474084ilr.37.1618104308797;
- Sat, 10 Apr 2021 18:25:08 -0700 (PDT)
+        id S234996AbhDKBbP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 10 Apr 2021 21:31:15 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:58671 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234944AbhDKBbP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Apr 2021 21:31:15 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id F0D99121512;
+        Sat, 10 Apr 2021 21:30:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=k/FOO6+ekOsCpvBr/IuTiXDE8tk=; b=kqeHYG
+        p6ShDU53nSAcQZAUSICsKfa8wXhDKcOHsHwOQIKwIliPMXuF2yZ83FrDqFTp2DVH
+        lmJeBQop3n839Zn20Owv8vueLOOV224UwwPQcKi/6CdjiBOK5ehhOpm8UFiGo1y9
+        HURY9jJf4/rEF2NT9iFEFwLtAQxHnGnrrshoA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=RsiDa77sN7uQjgSK6L8dgvkSFMSlrMJh
+        sirkaHQevB9i7YPRfsmGxDDtfrUQAHoEgQWHYRdZmeHu5rgHHIx3Vj1uPCQoJMkM
+        N/SMWReoFI9JDBasqjRHVFUvF7ITRjT9NL8/W/MrQukCYgpFT923vB4V63IvzNed
+        Qbiq4quS/JY=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id E97DA121510;
+        Sat, 10 Apr 2021 21:30:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3552B12150C;
+        Sat, 10 Apr 2021 21:30:57 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Albert Cui via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Albert Cui <albertqcui@gmail.com>
+Subject: Re: [PATCH v2] fetch: show progress for packfile uri downloads
+References: <pull.907.git.1616007794513.gitgitgadget@gmail.com>
+        <pull.907.v2.git.1618008249632.gitgitgadget@gmail.com>
+Date:   Sat, 10 Apr 2021 18:30:54 -0700
+In-Reply-To: <pull.907.v2.git.1618008249632.gitgitgadget@gmail.com> (Albert
+        Cui via GitGitGadget's message of "Fri, 09 Apr 2021 22:44:09 +0000")
+Message-ID: <xmqqy2dpip4h.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-From:   Chris Jerdonek <chris.jerdonek@gmail.com>
-Date:   Sat, 10 Apr 2021 18:24:57 -0700
-Message-ID: <CAOTb1wef2w_H4mwMMwR4En8665GduAMoceL45+OYC4DSBPtozQ@mail.gmail.com>
-Subject: question re: git show-ref and matching ref patterns from the front
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 908AECF6-9A65-11EB-9794-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, I noticed that git-show-ref only seems to permit matching patterns
-from the end of a ref name:
-https://git-scm.com/docs/git-show-ref#Documentation/git-show-ref.txt-ltpatterngt82308203
-For example, "git show-ref master" will include both
-"refs/heads/master" and "refs/remotes/origin/master".
+"Albert Cui via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-However, is there a way to limit Git to showing refs starting with a
-prefix, and that doesn't also require Git to iterate over all refs?
+> From: Albert Cui <albertqcui@gmail.com>
+>
+> Git appears to hang when downloading packfiles as this part of the
+> fetch is silent, causing user confusion. This change implements
+> progress for the number of packfiles downloaded; a progress display
+> for bytes would involve deeper changes at the http-fetch layer
+> instead of fetch-pack, the caller, so we do not do that in this
+> patch.
 
-It seems like that would be natural and useful e.g. for repos with
-many refs and/or repos with namespaces. Am I missing something, or
-would that be a useful addition?
+... meaning, hopefully later we'd hook into transport->progress and
+implement the byte-level progress display down there?  And when that
+happens, we'd remove this file-level progress as it would be too
+confusing to have both at the same time?
 
-Thanks,
---Chris
+Is this start_progress() call a way to unconditionally enable the
+progress display?  How does it interact with transport->progress
+that is driven by transport_set_verbosity(), which in turn is called
+by builtin/fetch.c and friends?  If it doesn't, shouldn't this
+codepath pay attention to the transport->progress and enable the
+progress meter only when it is enabled (i.e. the stderr going to a
+terminal, or --progress explicitly being asked)?
+
+> @@ -1585,6 +1586,7 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+>  	struct fetch_negotiator *negotiator;
+>  	int seen_ack = 0;
+>  	struct string_list packfile_uris = STRING_LIST_INIT_DUP;
+> +	struct progress *packfile_uri_progress;
+>  	int i;
+>  	struct strvec index_pack_args = STRVEC_INIT;
+>  	struct oidset gitmodules_oids = OIDSET_INIT;
+> @@ -1689,6 +1691,8 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+>  		}
+>  	}
+>  
+> +	packfile_uri_progress = start_progress(_("Downloading packs"), packfile_uris.nr);
+> +
+>  	for (i = 0; i < packfile_uris.nr; i++) {
+>  		int j;
+>  		struct child_process cmd = CHILD_PROCESS_INIT;
+> @@ -1696,6 +1700,7 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+>  		const char *uri = packfile_uris.items[i].string +
+>  			the_hash_algo->hexsz + 1;
+>  
+> +		display_progress(packfile_uri_progress, i + 1);
+>  		strvec_push(&cmd.args, "http-fetch");
+>  		strvec_pushf(&cmd.args, "--packfile=%.*s",
+>  			     (int) the_hash_algo->hexsz,
+> @@ -1739,6 +1744,9 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+>  						 get_object_directory(),
+>  						 packname));
+>  	}
+> +
+> +	stop_progress(&packfile_uri_progress);
+> +
+>  	string_list_clear(&packfile_uris, 0);
+>  	strvec_clear(&index_pack_args);
+>  
+> diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
+> index 2e1243ca40b0..0476b3f50455 100755
+> --- a/t/t5702-protocol-v2.sh
+> +++ b/t/t5702-protocol-v2.sh
+> @@ -848,10 +848,12 @@ test_expect_success 'part of packfile response provided as URI' '
+>  	configure_exclusion "$P" my-blob >h &&
+>  	configure_exclusion "$P" other-blob >h2 &&
+>  
+> -	GIT_TRACE=1 GIT_TRACE_PACKET="$(pwd)/log" GIT_TEST_SIDEBAND_ALL=1 \
+> +	GIT_PROGRESS_DELAY=0 GIT_TRACE=1 GIT_TRACE2_EVENT=1 \
+> +	GIT_TRACE_PACKET="$(pwd)/log" GIT_TEST_SIDEBAND_ALL=1 \
+>  	git -c protocol.version=2 \
+>  		-c fetch.uriprotocols=http,https \
+> -		clone "$HTTPD_URL/smart/http_parent" http_child &&
+> +		clone "$HTTPD_URL/smart/http_parent" http_child \
+> +		--progress 2>progress &&
+>  
+>  	# Ensure that my-blob and other-blob are in separate packfiles.
+>  	for idx in http_child/.git/objects/pack/*.idx
+> @@ -875,6 +877,8 @@ test_expect_success 'part of packfile response provided as URI' '
+>  	test -f hfound &&
+>  	test -f h2found &&
+>  
+> +	test_i18ngrep "Downloading packs" progress &&
+> +
+>  	# Ensure that there are exactly 3 packfiles with associated .idx
+>  	ls http_child/.git/objects/pack/*.pack \
+>  	    http_child/.git/objects/pack/*.idx >filelist &&
+>
+> base-commit: a5828ae6b52137b913b978e16cd2334482eb4c1f
