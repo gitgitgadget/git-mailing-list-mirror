@@ -8,62 +8,64 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E7BDC433B4
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 81DADC43460
 	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 09:56:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D4444611CE
-	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 09:56:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5CC0E611F0
+	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 09:56:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235382AbhDKJ43 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 11 Apr 2021 05:56:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51364 "EHLO
+        id S235394AbhDKJ4a (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 11 Apr 2021 05:56:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229804AbhDKJ42 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Apr 2021 05:56:28 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C41EBC061574
-        for <git@vger.kernel.org>; Sun, 11 Apr 2021 02:56:12 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id a6so9859299wrw.8
-        for <git@vger.kernel.org>; Sun, 11 Apr 2021 02:56:12 -0700 (PDT)
+        with ESMTP id S235391AbhDKJ43 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Apr 2021 05:56:29 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78006C06138B
+        for <git@vger.kernel.org>; Sun, 11 Apr 2021 02:56:13 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id u5-20020a7bcb050000b029010e9316b9d5so5188324wmj.2
+        for <git@vger.kernel.org>; Sun, 11 Apr 2021 02:56:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=sVG2Tb+3jo8G5zdkc8IPV7f/mJRvdz3MdmkDy+VsCMc=;
-        b=OLWiN9AoUw02SGY4gepEK2g6aM+o9MPXcb27V4TkqZKR+V2YCCOfXCY7UXY9VFuyjp
-         fknWasZbV8v6odxECeWL1jv0DvQ4TBCrRs8aLGnuXmE+DaszQw59EidsJdt7uiOh3TN7
-         0ViwCFevmEvUsQ649seVjoJvVLcwAl7QxSQ13Rb0WhiXMC9e42AuXGO8kJfGzBQxq6u+
-         AGGtNnxyMt1s8IytNkUSs10ufkC0n/M/KgZiKI3Jotsu6a+p7+D8BmSyijmr3o81QMXw
-         wVUOFUV87dlorpJvyAjGZIvjPSWPIj6IcoBt4hpXClLry3TpXPl4ozYKlrLuk59Jsd9y
-         zb6Q==
+        bh=XiUdO9/MUHtGHyGT/+/I7m+LftBF4SC9h8sIkh34j1Y=;
+        b=ZzuBZ6AWXemreCvAXpNOWTlOrzzRH/XcR9RBQICwCJLzEuSHj0sAAHrBuY6zgREilb
+         2ce7u7ucUIZ4J3Neun/+wzYb1wjbOXIDR1X4oKMdu+mXktkHnFJ83K6EiwL7w6f02Dg4
+         r75v91pP5PMF8xIiMseV7f//iGoewJp557XwCBZPOmd2Nt1Guvf2UqITr4suogPR2KbJ
+         wcgYEDhV0wgwn+q3pKKtFRqJsvJtJNLa8QoThkg5fQIAd+0Nhp2ZYOoTrkTHtEn/kkBr
+         lV3ImGAmfiDcyxm2RsSy8TDLhIfKf6zqMkLdJSwruAIuhwI9SloITE+xytmz2ixWKEGA
+         jwsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=sVG2Tb+3jo8G5zdkc8IPV7f/mJRvdz3MdmkDy+VsCMc=;
-        b=qMX362pDR9U7bHqtMdG+UN1dmM95h6aOiQPzFxmPJaWqsEgQ3h71sY5NCY++ur80cR
-         uBPXrP8ImS/gdmVZSuCuFWa7RnBUrL+bCfpbmnaYVrYZ2mo8eugDAmULONw0gU9+TDVf
-         dt9jCmThq5Gd4HrQwZr3iMaOJqHmk3u2X7U432UjOQ5g/Bnp1yisAibOONerP8Vlwd4K
-         1twi2VuQdStdBclMIamWQEf9r2fLQ9iAmxRrByl4Wdj4e/8JMh1EqM637woS4NIgcSO5
-         sp4vL6wPI8/8KHCFaU/dAszvOQYR4qwi0GJFzekCZ975ygJkxqMGx6MLj9StilkY3Fz2
-         qztw==
-X-Gm-Message-State: AOAM532kzQVGwPlPMxJPoytJFs8VncVUfWcU7DZib/v9oRWCzz+Xu0g3
-        FSqmvP24S8B4yc9ouVfr7qfemMXHQW0=
-X-Google-Smtp-Source: ABdhPJw1VSccbF65DhX/DCFIEu5mQptynndcBvUwPk/frTf8N9dkfFMt2AXA2yhoN6IxMVSnozbWVQ==
-X-Received: by 2002:a05:6000:251:: with SMTP id m17mr26560464wrz.171.1618134971544;
-        Sun, 11 Apr 2021 02:56:11 -0700 (PDT)
+        bh=XiUdO9/MUHtGHyGT/+/I7m+LftBF4SC9h8sIkh34j1Y=;
+        b=IJfkTIBBi4bI+sVxkW+VmKXV3lXXgcRFD9tspzQp1TMfM+2UEoRbk9Lv21PbvI5U61
+         C8lgEZ5FVy/npTeiwVOZeIe26q+ZbiUdflJUbTkxzT2xJrNa5pXMpYivHrbcNBU9lYih
+         ie/S2ZCijNoWL7JgMzTqBzi0wx0Fef2ocY05PTt5lgL5vorePZQtm44duhLl8EDeOq0M
+         5Amxa4QROKrxZyRt0nQE6AvvTNxQRLJuv41V1xCFrXuELBIT5gTIohocVmGfS8ke2ID7
+         iVrBHhSoVmSQIGnuAq/WJrRi9aXS5ZPjG/O+mHyBiIeHcxYReLP6+lboDjtOWTMyK6c+
+         +eFw==
+X-Gm-Message-State: AOAM531yag0aHbKLTfFMMFCjCjhijIwYIWfWHq4hQfivwLRj0tIidSLU
+        2uUJUN/sfSrzZ8tQUto7LRy6KZDusZc=
+X-Google-Smtp-Source: ABdhPJzTN+slzZusRMXgdpSIX0Q8u09Lup5Xku0W8ejxDtmi+H0jHEA9US3r9Qr+rZfYbCUk0S1hAA==
+X-Received: by 2002:a05:600c:1457:: with SMTP id h23mr21712962wmi.118.1618134972297;
+        Sun, 11 Apr 2021 02:56:12 -0700 (PDT)
 Received: from localhost.localdomain ([81.0.37.230])
-        by smtp.gmail.com with ESMTPSA id j30sm12994099wrj.62.2021.04.11.02.56.10
+        by smtp.gmail.com with ESMTPSA id j30sm12994099wrj.62.2021.04.11.02.56.11
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 11 Apr 2021 02:56:11 -0700 (PDT)
+        Sun, 11 Apr 2021 02:56:12 -0700 (PDT)
 From:   Miriam Rubio <mirucam@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Pranit Bauva <pranit.bauva@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Tanushree Tumane <tanushreetumane@gmail.com>,
         Miriam Rubio <mirucam@gmail.com>
-Subject: [PATCH v3 1/4] run-command: make `exists_in_PATH()` non-static
-Date:   Sun, 11 Apr 2021 11:55:35 +0200
-Message-Id: <20210411095538.34129-2-mirucam@gmail.com>
+Subject: [PATCH v3 2/4] bisect--helper: reimplement `bisect_visualize()`shell function in C
+Date:   Sun, 11 Apr 2021 11:55:36 +0200
+Message-Id: <20210411095538.34129-3-mirucam@gmail.com>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20210411095538.34129-1-mirucam@gmail.com>
 References: <20210411095538.34129-1-mirucam@gmail.com>
@@ -75,56 +77,149 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Pranit Bauva <pranit.bauva@gmail.com>
 
-Removes the `static` keyword from `exists_in_PATH()` function
-and declares the function in `run-command.h` file.
-The function will be used in bisect_visualize() in a later
-commit.
+Reimplement the `bisect_visualize()` shell function
+in C and also add `--bisect-visualize` subcommand to
+`git bisect--helper` to call it from git-bisect.sh.
 
-Mentored by: Christian Couder <chriscool@tuxfamily.org>
-Mentored by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
 Signed-off-by: Miriam Rubio <mirucam@gmail.com>
 ---
- run-command.c |  2 +-
- run-command.h | 12 ++++++++++++
- 2 files changed, 13 insertions(+), 1 deletion(-)
+ builtin/bisect--helper.c | 48 +++++++++++++++++++++++++++++++++++++++-
+ git-bisect.sh            | 25 +--------------------
+ 2 files changed, 48 insertions(+), 25 deletions(-)
 
-diff --git a/run-command.c b/run-command.c
-index be6bc128cd..210b8858f7 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -211,7 +211,7 @@ static char *locate_in_PATH(const char *file)
- 	return NULL;
+diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+index 1fdb7d9d10..71963979b1 100644
+--- a/builtin/bisect--helper.c
++++ b/builtin/bisect--helper.c
+@@ -30,6 +30,7 @@ static const char * const git_bisect_helper_usage[] = {
+ 	N_("git bisect--helper --bisect-state (good|old) [<rev>...]"),
+ 	N_("git bisect--helper --bisect-replay <filename>"),
+ 	N_("git bisect--helper --bisect-skip [(<rev>|<range>)...]"),
++	N_("git bisect--helper --bisect-visualize"),
+ 	NULL
+ };
+ 
+@@ -1034,6 +1035,44 @@ static enum bisect_error bisect_skip(struct bisect_terms *terms, const char **ar
+ 	return res;
  }
  
--static int exists_in_PATH(const char *file)
-+int exists_in_PATH(const char *file)
- {
- 	char *r = locate_in_PATH(file);
- 	int found = r != NULL;
-diff --git a/run-command.h b/run-command.h
-index d08414a92e..cc6f1bad20 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -179,6 +179,18 @@ void child_process_clear(struct child_process *);
- 
- int is_executable(const char *name);
- 
-+/**
-+ * Search if a $PATH for a command exists.  This emulates the path search that
-+ * execvp would perform, without actually executing the command so it
-+ * can be used before fork() to prepare to run a command using
-+ * execve() or after execvp() to diagnose why it failed.
-+ *
-+ * The caller should ensure that file contains no directory separators.
-+ *
-+ * Returns 1 if it is found in $PATH or 0 if the command could not be found.
-+ */
-+int exists_in_PATH(const char *file);
++static int bisect_visualize(struct bisect_terms *terms, const char **argv, int argc)
++{
++	struct strvec args = STRVEC_INIT;
++	int flags = RUN_COMMAND_NO_STDIN, res = 0;
++	struct strbuf sb = STRBUF_INIT;
 +
- /**
-  * Start a sub-process. Takes a pointer to a `struct child_process`
-  * that specifies the details and returns pipe FDs (if requested).
++	if (bisect_next_check(terms, NULL) != 0)
++		return BISECT_FAILED;
++
++	if (!argc) {
++		if ((getenv("DISPLAY") || getenv("SESSIONNAME") || getenv("MSYSTEM") ||
++		     getenv("SECURITYSESSIONID")) && exists_in_PATH("gitk"))
++			strvec_push(&args, "gitk");
++		else {
++			strvec_pushl(&args, "log", NULL);
++			flags |= RUN_GIT_CMD;
++		}
++	} else {
++		if (argv[0][0] == '-') {
++			strvec_pushl(&args, "log", NULL);
++			flags |= RUN_GIT_CMD;
++		} else if (strcmp(argv[0], "tig") && !starts_with(argv[0], "git"))
++			flags |= RUN_GIT_CMD;
++
++		strvec_pushv(&args, argv);
++	}
++
++	strvec_pushl(&args, "--bisect", "--", NULL);
++
++	strbuf_read_file(&sb, git_path_bisect_names(), 0);
++	sq_dequote_to_strvec(sb.buf, &args);
++	strbuf_release(&sb);
++
++	res = run_command_v_opt(args.v, flags);
++	strvec_clear(&args);
++	return res;
++}
++
+ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ {
+ 	enum {
+@@ -1046,7 +1085,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 		BISECT_STATE,
+ 		BISECT_LOG,
+ 		BISECT_REPLAY,
+-		BISECT_SKIP
++		BISECT_SKIP,
++		BISECT_VISUALIZE,
+ 	} cmdmode = 0;
+ 	int res = 0, nolog = 0;
+ 	struct option options[] = {
+@@ -1068,6 +1108,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 			 N_("replay the bisection process from the given file"), BISECT_REPLAY),
+ 		OPT_CMDMODE(0, "bisect-skip", &cmdmode,
+ 			 N_("skip some commits for checkout"), BISECT_SKIP),
++		OPT_CMDMODE(0, "bisect-visualize", &cmdmode,
++			 N_("visualize the bisection"), BISECT_VISUALIZE),
+ 		OPT_BOOL(0, "no-log", &nolog,
+ 			 N_("no log for BISECT_WRITE")),
+ 		OPT_END()
+@@ -1128,6 +1170,10 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 		set_terms(&terms, "bad", "good");
+ 		res = bisect_skip(&terms, argv, argc);
+ 		break;
++	case BISECT_VISUALIZE:
++		get_terms(&terms);
++		res = bisect_visualize(&terms, argv, argc);
++		break;
+ 	default:
+ 		BUG("unknown subcommand %d", cmdmode);
+ 	}
+diff --git a/git-bisect.sh b/git-bisect.sh
+index 6a7afaea8d..95f7f3fb8c 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -39,29 +39,6 @@ _x40="$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40"
+ TERM_BAD=bad
+ TERM_GOOD=good
+ 
+-bisect_visualize() {
+-	git bisect--helper --bisect-next-check $TERM_GOOD $TERM_BAD fail || exit
+-
+-	if test $# = 0
+-	then
+-		if test -n "${DISPLAY+set}${SESSIONNAME+set}${MSYSTEM+set}${SECURITYSESSIONID+set}" &&
+-			type gitk >/dev/null 2>&1
+-		then
+-			set gitk
+-		else
+-			set git log
+-		fi
+-	else
+-		case "$1" in
+-		git*|tig) ;;
+-		-*)	set git log "$@" ;;
+-		*)	set git "$@" ;;
+-		esac
+-	fi
+-
+-	eval '"$@"' --bisect -- $(cat "$GIT_DIR/BISECT_NAMES")
+-}
+-
+ bisect_run () {
+ 	git bisect--helper --bisect-next-check $TERM_GOOD $TERM_BAD fail || exit
+ 
+@@ -152,7 +129,7 @@ case "$#" in
+ 		# Not sure we want "next" at the UI level anymore.
+ 		git bisect--helper --bisect-next "$@" || exit ;;
+ 	visualize|view)
+-		bisect_visualize "$@" ;;
++		git bisect--helper --bisect-visualize "$@" || exit;;
+ 	reset)
+ 		git bisect--helper --bisect-reset "$@" ;;
+ 	replay)
 -- 
 2.29.2
 
