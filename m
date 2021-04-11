@@ -2,72 +2,72 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BFF4FC433B4
-	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 14:34:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C6B84C433B4
+	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 14:43:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7B57B610CA
-	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 14:34:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9398461006
+	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 14:43:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235979AbhDKOew (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 11 Apr 2021 10:34:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54896 "EHLO
+        id S236100AbhDKOns (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 11 Apr 2021 10:43:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235095AbhDKOew (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Apr 2021 10:34:52 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77AD4C061574
-        for <git@vger.kernel.org>; Sun, 11 Apr 2021 07:34:35 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id c1so3854189ljd.7
-        for <git@vger.kernel.org>; Sun, 11 Apr 2021 07:34:35 -0700 (PDT)
+        with ESMTP id S235663AbhDKOns (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Apr 2021 10:43:48 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1794C06138B
+        for <git@vger.kernel.org>; Sun, 11 Apr 2021 07:43:31 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id p6so3552840wrn.9
+        for <git@vger.kernel.org>; Sun, 11 Apr 2021 07:43:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=iLnDNMCHt/+W2dchbIaaA5vYTRd5u9oyXvVmsjOGAyw=;
-        b=kSIX8K9eh/snr8kuwHoMk/WH9daTNIoST2pYYj4Qm9/iBFfAXVukIeTTIJDwL8CWwI
-         A5ra7UJeaEg7kCjGWkaU5M1OeHaxnHj8Kxd2mI4VCyKch10OrLquSKh9L7mNCWQYpl00
-         YjdGejBVl5XCM25Y/6G/W42zdOsK0SElIfoAEdxqEv+F+e+pW/TuYzppqcDjcTn6JYOL
-         97aAWz5vXZ9ok55qO+cOVw3AngfYjAza0syfbcFYgUGBG0zacyZncY3NCfS6dpUKcCmL
-         U34pOThjvLTyrVVIZ9ODPkI11iFpcoRgwnx5orSnTtLJyLgLKXWBKiQKTrDrVNxQ0Beo
-         DwNA==
+        bh=s0/jkQ0ZJ6OS5jsAtHZexZ1t+xoujJfzEg93uczXBhY=;
+        b=bLD3TYAIqKY0rlJKkYqZBgbgAd9VsZ5n2FER+hZIltGq03OcqV00kizGas1IVVgVl3
+         HDVFfHSKQrrpYNlOWdMjy49GFGuJRjturvazX1tTB39DxsKRCq66Dds+fKHi1FIhDWE3
+         hQQCoe95ec5gkPAJvgauWiBFhbXpnk2BtEbbnvfbIwhX8yWNYFazAdBeaGPGfxml/rbx
+         rSGvhWesWjNhEAem5xH78ofPRowQ5nli8XHPBzTCHgcTZ/TwEl2etGhfmgO6Ly35xEaV
+         4X+mR66swaTJyLSbAVWwNeABUCwyuIBRAM16R/FHZXKCt6bofTidfGSoObMlbJHZQ6FH
+         du7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=iLnDNMCHt/+W2dchbIaaA5vYTRd5u9oyXvVmsjOGAyw=;
-        b=KKJHZGNi6wf3VI9xKut8XQ2Pl+onPh10AiKocqFKkPtvZcC7JDM2hZyr6BFT0XfGe/
-         P1q/7ZnpgE0zRKk3ECVfwCKzPnoMOOAAHptm55TvG1LXgp1ApJOFrEDKKdqcLs3qI1b3
-         aBgCJ7oQ/FNg4Ii0myRCB3UV1p4c0sq5SgGbWQu4E8UuAq/Er7ZEzE5X0/wvT7WzJJVW
-         jgUXxMmYhEUetfgmTcdnScdqvj5ByjBenHuyrsDTV1gY+lnNf0ZSCTSUhV5myt0H/1XW
-         XtYAyzYUnC8XOMXxKeWU+4waz6IpwPfLSWfMGNsVNS64dE06KQYqcJJUmHvMKeDy9Dni
-         5Zsw==
-X-Gm-Message-State: AOAM5321REdTD1PkgT9HUzktLkrzpFhiyTr4yZxzcvYcQO6Lde4B919U
-        WS4bry4V4XAxWl+ZtsSc0VA=
-X-Google-Smtp-Source: ABdhPJw2sLWKOkMTFynm/wJqQvbkZNElJX7FnY3vKUnQ+RLaZyLvvk6DMbFuDnjxl5Uv0e+WvId04Q==
-X-Received: by 2002:a2e:9dc2:: with SMTP id x2mr15789458ljj.306.1618151674043;
-        Sun, 11 Apr 2021 07:34:34 -0700 (PDT)
-Received: from localhost.localdomain (90-229-209-178-no2204.tbcn.telia.com. [90.229.209.178])
-        by smtp.gmail.com with ESMTPSA id i22sm1321287lfv.120.2021.04.11.07.34.32
+        bh=s0/jkQ0ZJ6OS5jsAtHZexZ1t+xoujJfzEg93uczXBhY=;
+        b=mbbrwB6TYKlH3yysr5t7E9UzJjRKcqvBOJmN4qZLAHRFN61v5as6CYTwSQD+eqsNDq
+         bzdkDcJDJFC8S6hlkF0gCfRXCdb1Z2gpitklcXS30vO3StCnEKYuDSR9lnnrhYKbz57s
+         5T5muKA2O0tnlaDIfbdRtEtqoOUz97Lf+oxiIwNpcyATWZzXSu+heks6J70o8T1EVzwS
+         ZVunjF/YbWr47sjNuXQNT5+taaDXaLyifRRZevAGPq4jSG/vqvsA5M2/7ZQ1Pz/YZOsr
+         E4/XHhgC9ODuzN+bnRaOiv2phR91IbeweLrYb/xsLF4UkQ+YvD27Q0pAOIsX5Fx5kaqE
+         q/mg==
+X-Gm-Message-State: AOAM531nNb5Ve+ad+mNAraWH42kUS3LKLkx5Y1hDPVGrW061i+Nej6uj
+        YxHImyVvl2r3oEweEFDpTVYC+uMrgloC7g==
+X-Google-Smtp-Source: ABdhPJyZXVSdb8/sbrSG9pmiBC8s9KRJnmo0JTJMIKtJufr3mPbQwxJM3vaEIzNMOHEkSFxkjpAfzA==
+X-Received: by 2002:adf:f60e:: with SMTP id t14mr27776059wrp.51.1618152210147;
+        Sun, 11 Apr 2021 07:43:30 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id e33sm2105343wmp.43.2021.04.11.07.43.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 11 Apr 2021 07:34:33 -0700 (PDT)
-From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-To:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Emily Shaffer <emilyshaffer@google.com>,
+        Sun, 11 Apr 2021 07:43:29 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Drew DeVault <sir@cmpwn.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, "Junio C Hamano" <gitster@pobox.com>,
-        git@vger.kernel.org
-Subject: [PATCH] t0091-bugreport.sh: actually verify some content of report
-Date:   Sun, 11 Apr 2021 16:33:54 +0200
-Message-Id: <20210411143354.25134-1-martin.agren@gmail.com>
-X-Mailer: git-send-email 2.31.1.163.ga65ce7f831
-In-Reply-To: <20210409212724.GE2947267@szeder.dev>
-References: <20210409212724.GE2947267@szeder.dev>
+        <avarab@gmail.com>
+Subject: [PATCH 1/2] send-email: remove non-working support for "sendemail.smtpssl"
+Date:   Sun, 11 Apr 2021 16:43:19 +0200
+Message-Id: <patch-1.2-ee041188e55-20210411T144128Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.31.1.623.g88b15a793d
+In-Reply-To: <cover-0.2-00000000000-20210411T144128Z-avarab@gmail.com>
+References: <20210411125431.28971-1-sir@cmpwn.com> <cover-0.2-00000000000-20210411T144128Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,92 +75,68 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the first test in this script, 'creates a report with content in the
-right places', we generate a report and pipe it into our helper
-`check_all_headers_populated()`. The idea of the helper is to find all
-lines that look like headers ("[Some Header Here]") and to check that
-the next line is non-empty. This is supposed to catch erroneous outputs
-such as the following:
+Remove the already dead code to support "sendemail.smtssl" by finally
+removing the dead code supporting the configuration option.
 
-  [A Header]
-  something
-  more here
+In f6bebd121ac (git-send-email: add support for TLS via
+Net::SMTP::SSL, 2008-06-25) the --smtp-ssl command-line option was
+documented as deprecated, later in 65180c66186 (List send-email config
+options in config.txt., 2009-07-22) the "sendemail.smtpssl"
+configuration option was also documented as such.
 
-  [Another Header]
+Then in in 3ff15040e22 (send-email: fix regression in
+sendemail.identity parsing, 2019-05-17) I unintentionally removed
+support for it by introducing a bug in read_config().
 
-  [Too Early Header]
-  contents
+As can be seen from the diff context we've already returned unless
+$enc i defined, so it's not possible for us to reach the "elsif"
+branch here. This code was therefore already dead since Git v2.23.0.
 
-However, we provide the lines of the bug report as filenames to grep,
-meaning we mostly end up spewing errors:
+So let's just remove it instead of fixing the bug, clearly nobody's
+cared enough to complain.
 
-  grep: : No such file or directory
-  grep: [System Info]: No such file or directory
-  grep: git version:: No such file or directory
-  grep: git version 2.31.1.164.g984c2561cd: No such file
+The --smtp-ssl option is still deprecated, if someone cares they can
+follow-up and remove that too, but unlike the config option that one
+could still be in use in the wild. I'm just removing this code that's
+provably unused already.
 
-This doesn't disturb the test, which tugs along and reports success, not
-really having verified the contents of the report at all.
-
-Note that after 788a776069 ("bugreport: collect list of populated
-hooks", 2020-05-07), the bug report, which is created in our hook-less
-test repo, contains an empty section with the enabled hooks. Thus, even
-the intention of our helper is a bit misguided: there is nothing
-inherently wrong with having an empty section in the bug report.
-
-Let's instead grep for some contents that we expect to find in a bug
-report. We won't verify that they appear in the right order, but at
-least we end up verifying the contents more than before this commit.
-
-Reported-by: SZEDER Gábor <szeder.dev@gmail.com>
-Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- > It does scare me..
+ Documentation/config/sendemail.txt | 3 ---
+ git-send-email.perl                | 6 +-----
+ 2 files changed, 1 insertion(+), 8 deletions(-)
 
- Maybe something like this?
-
- t/t0091-bugreport.sh | 26 +++++---------------------
- 1 file changed, 5 insertions(+), 21 deletions(-)
-
-diff --git a/t/t0091-bugreport.sh b/t/t0091-bugreport.sh
-index 526304ff95..9111c4c26f 100755
---- a/t/t0091-bugreport.sh
-+++ b/t/t0091-bugreport.sh
-@@ -4,29 +4,13 @@ test_description='git bugreport'
+diff --git a/Documentation/config/sendemail.txt b/Documentation/config/sendemail.txt
+index cbc5af42fdf..50baa5d6bfb 100644
+--- a/Documentation/config/sendemail.txt
++++ b/Documentation/config/sendemail.txt
+@@ -8,9 +8,6 @@ sendemail.smtpEncryption::
+ 	See linkgit:git-send-email[1] for description.  Note that this
+ 	setting is not subject to the 'identity' mechanism.
  
- . ./test-lib.sh
- 
--# Headers "[System Info]" will be followed by a non-empty line if we put some
--# information there; we can make sure all our headers were followed by some
--# information to check if the command was successful.
--HEADER_PATTERN="^\[.*\]$"
+-sendemail.smtpssl (deprecated)::
+-	Deprecated alias for 'sendemail.smtpEncryption = ssl'.
 -
--check_all_headers_populated () {
--	while read -r line
--	do
--		if test "$(grep "$HEADER_PATTERN" "$line")"
--		then
--			echo "$line"
--			read -r nextline
--			if test -z "$nextline"; then
--				return 1;
--			fi
--		fi
--	done
--}
--
--test_expect_success 'creates a report with content in the right places' '
-+test_expect_success 'creates a report with content' '
- 	test_when_finished rm git-bugreport-check-headers.txt &&
- 	git bugreport -s check-headers &&
--	check_all_headers_populated <git-bugreport-check-headers.txt
-+	grep "^Please answer " git-bugreport-check-headers.txt &&
-+	grep "^\[System Info\]$" git-bugreport-check-headers.txt &&
-+	grep "^git version:$" git-bugreport-check-headers.txt &&
-+	grep "^\[Enabled Hooks\]$" git-bugreport-check-headers.txt
- '
+ sendemail.smtpsslcertpath::
+ 	Path to ca-certificates (either a directory or a single file).
+ 	Set it to an empty string to disable certificate verification.
+diff --git a/git-send-email.perl b/git-send-email.perl
+index f5bbf1647e3..877c7dd1a21 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -374,11 +374,7 @@ sub read_config {
+ 		my $enc = Git::config(@repo, $setting);
+ 		return unless defined $enc;
+ 		return if $configured->{$setting}++;
+-		if (defined $enc) {
+-			$smtp_encryption = $enc;
+-		} elsif (Git::config_bool(@repo, "$prefix.smtpssl")) {
+-			$smtp_encryption = 'ssl';
+-		}
++		$smtp_encryption = $enc;
+ 	}
+ }
  
- test_expect_success 'dies if file with same name as report already exists' '
 -- 
-2.31.1.163.ga65ce7f831
+2.31.1.623.g88b15a793d
 
