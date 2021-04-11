@@ -2,227 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 54E38C43460
-	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 11:05:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6065BC433ED
+	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 11:36:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 290D461008
-	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 11:05:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2513C611AD
+	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 11:36:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235421AbhDKLFb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 11 Apr 2021 07:05:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37894 "EHLO
+        id S235458AbhDKLgw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 11 Apr 2021 07:36:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235381AbhDKLF0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Apr 2021 07:05:26 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55F04C06138B
-        for <git@vger.kernel.org>; Sun, 11 Apr 2021 04:05:09 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id s7so9838867wru.6
-        for <git@vger.kernel.org>; Sun, 11 Apr 2021 04:05:09 -0700 (PDT)
+        with ESMTP id S235095AbhDKLgv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Apr 2021 07:36:51 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94A44C061574
+        for <git@vger.kernel.org>; Sun, 11 Apr 2021 04:36:35 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id a7so15625702eju.1
+        for <git@vger.kernel.org>; Sun, 11 Apr 2021 04:36:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=q+oN9aySBt3edBnsA6x+lAV0Q3CaqjjX4P4Cz2G+un8=;
-        b=MxE471Eje6yO+mMB6U3HVzUB+P9iUCRNQn6jZAQQfG2OdoHPakQMbc1QViix5+qc3+
-         83NYVuqNXlLZPLmPjWh8413pKfGGwNJinprRIe8KU7Nm8e7pARAbOZfO3AABOt8PIbm+
-         iRqGyLNhNkvtERZpGyV+9rlBD7MgCxxtBOW6e2rkHRcrzTuDZCpaxb149UNX1RcCO0X0
-         3+8PCgwzcYnmKjjhV/JQldYqR/UChGRMn0oN2phJzh+IXcsb2US/3md5OSvLVFdLyNYY
-         EYbjcTjWEs27tzrkE9P+2j4k5Zo5KjPNFxiHqyokavhPAmnJcaIMrZ+ysarBLF3Yhk7p
-         Lukw==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=RivWIWaaB951+oemZjZhlX6386KUW9rPbI0W8SxHZ1w=;
+        b=AaUcqjP8HEPaxRKvPs5dmHVI23oS431sVJpJ6D6vN7yaPk5Uj/F3tIt8QykbSLuRoV
+         8LJW5CJFJl2T47vBuaN2viB9G1JZDdYTldm8fiKtDkUg0Ig1Os/A9gvd4PeXQQfjPQzb
+         s92n8q9lxW2I+jBBOgIr1OkKCtSXtYWq5lac1cYE/wplVj4r6SFUqL7iBarGBYpCFnq6
+         zq/YirNHZfpgkWLSL1I8X0LHatGL8IHOohP8vPj4e99MTki0F6hPac2iFSTbLBK2si6K
+         Xsxqb8u7XKPvgrStWp9VL7wOTYU/B1TFKqlBrUcV6S2lEwCb4d85MEOvOj9pwaYrqRWJ
+         ZKVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=q+oN9aySBt3edBnsA6x+lAV0Q3CaqjjX4P4Cz2G+un8=;
-        b=rOgG5cFSvrUd1JYXxWVLKK2Exzil3B3HA9qPnNKLNgzCAdUn73oVXLs9BL/S/8tqx8
-         yFlVCPi3jcP+xSfWJP7PcBjMXALqWmXykEgv1hMcgLClmdb3VmpC8q2gV90rOL27SkTY
-         eKbbQcjw6Lwa4KbjordjrchuqAqNfHlzopwNXnmV/zgVN/Ue7jH38hkvCQQ5GU8k9ukB
-         l0oSrOKtrcuRIXnP05BQUhnHCn6axDn+BpZnnJpZT14RSUWz8iRc1Ys6rtEbgHokCCGZ
-         rDllIXHA9MMq0DBsP3PPmVAgnnSpU0BGM5bLu6Q8b449DoEUT6WvHZu1vY2SK7RhNtpW
-         CbQw==
-X-Gm-Message-State: AOAM531XpO3XYEBdMQHc2q8E7fS53C3yP6iKW0Ec7Va5FP/FWYuGITlv
-        BgmYfqFW8jV8ditGQArF+NZtmTmXXyU=
-X-Google-Smtp-Source: ABdhPJxlTG4ZGCit/mExOkpEOFKp55Jb2zsoLjtRRanw01q7cKcTP8mqnT3ov+befusCFApJSnDLSQ==
-X-Received: by 2002:a05:6000:118c:: with SMTP id g12mr5735378wrx.241.1618139108142;
-        Sun, 11 Apr 2021 04:05:08 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e18sm9224691wrc.85.2021.04.11.04.05.07
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=RivWIWaaB951+oemZjZhlX6386KUW9rPbI0W8SxHZ1w=;
+        b=C8Fj1k993wIvd6gIAcMGr4GI4zXaTKhshRBS5NRI8u3cBgesPYn3hxQj/HoNS6KO3p
+         WciVldWHtOZq4kZhW6QklU0qouLdPJftAmGm/mbgKZ8Nj46S1mtTDGzFihloTbhbxqAM
+         N3Qy33ZVnTPpWfo9vOXTARDCnak8IeD3wyDFGLGcBK8QzCbyxHhUS1fgrxQQenGYQbpI
+         1TQOru2Q1HzgnBvty/0jai2on6McBXiXmzWYi32aO/dfHnEjwX44p3DbT6DpyTIHRuAw
+         FF7J9HTHFt3n1dicojUuMPaGv2OFAMd0jD/ub/QttxZ3ZlJ1ySC/G7Zo//CyVk4S2bJc
+         B/fQ==
+X-Gm-Message-State: AOAM533NGWu24VjkfYu1Jrzl9jM4czPXK+syx2CDScbWirXqAzYIMEHb
+        QbrKuvlb2P9pblH8kbpqnYk=
+X-Google-Smtp-Source: ABdhPJw8UCCKafqfV+e0KJFjJuYP4q1cmNBEl6h7YYTlD9/ppZs7pT0T2ylhBmid02kj1m097QAxyA==
+X-Received: by 2002:a17:906:4f15:: with SMTP id t21mr12632554eju.338.1618140994314;
+        Sun, 11 Apr 2021 04:36:34 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id a9sm4551158eds.33.2021.04.11.04.36.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 11 Apr 2021 04:05:07 -0700 (PDT)
-Message-Id: <pull.930.v2.git.1618139107203.gitgitgadget@gmail.com>
-In-Reply-To: <pull.930.git.1618043449249.gitgitgadget@gmail.com>
-References: <pull.930.git.1618043449249.gitgitgadget@gmail.com>
-From:   "Andrzej Hunt via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 11 Apr 2021 11:05:06 +0000
-Subject: [PATCH v2] merge-ort: only do pointer arithmetic for non-empty lists
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Sun, 11 Apr 2021 04:36:33 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 08/15] cache: compare the entire buffer for struct
+ object_id
+References: <20210410152140.3525040-1-sandals@crustytoothpaste.net>
+ <20210410152140.3525040-9-sandals@crustytoothpaste.net>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
+In-reply-to: <20210410152140.3525040-9-sandals@crustytoothpaste.net>
+Date:   Sun, 11 Apr 2021 13:36:33 +0200
+Message-ID: <87pmz1f3y6.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>,
-        =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Andrzej Hunt <andrzej@ahunt.org>,
-        Andrzej Hunt <ajrhunt@google.com>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Andrzej Hunt <ajrhunt@google.com>
 
-versions could be an empty string_list. In that case, versions->items is
-NULL, and we shouldn't be trying to perform pointer arithmetic with it (as
-that results in undefined behaviour).
+On Sat, Apr 10 2021, brian m. carlson wrote:
 
-Moreover we only use the results of this calculation once when calling
-QSORT. Therefore we choose to skip creating relevant_entries and call
-QSORT directly with our manipulated pointers (but only if there's data
-requiring sorting). This lets us avoid abusing the string_list API,
-and saves us from having to explain why this abuse is OK.
+> Currently, when we compare two object IDs, we have to take a branch to
+> determine what the hash size is supposed to be.  The compiler can
+> optimize well for a single length, but has trouble when there are two
+> possible lengths.
 
-Finally, an assertion is added to make sure that write_tree() is called
-with a valid offset.
+This would benefit from some performance/perf numbers. When this code
+was first changed like this in 183a638b7da (hashcmp: assert constant
+hash size, 2018-08-23) we had:
 
-This issue has probably existed since:
-  ee4012dcf9 (merge-ort: step 2 of tree writing -- function to create tree object, 2020-12-13)
-But it only started occurring during tests since tests started using
-merge-ort:
-  f3b964a07e (Add testing with merge-ort merge strategy, 2021-03-20)
+      Test     v2.18.0             v2.19.0-rc0               HEAD
+      ------------------------------------------------------------------------------
+      0001.2:  34.24(33.81+0.43)   34.83(34.42+0.40) +1.7%   33.90(33.47+0.42) -1.0%
 
-For reference - here's the original UBSAN commit that implemented this
-check, it sounds like this behaviour isn't actually likely to cause any
-issues (but we might as well fix it regardless):
-https://reviews.llvm.org/D67122
+Then it was later modified in 0dab7129ab1 (cache: make hashcmp and
+hasheq work with larger hashes, 2018-11-14).
 
-UBSAN output from t3404 or t5601:
+> @@ -205,7 +205,7 @@ static inline int hashcmp(const unsigned char *sha1, const unsigned char *sha2)
+>  
+>  static inline int oidcmp(const struct object_id *oid1, const struct object_id *oid2)
+>  {
+> -	return hashcmp(oid1->hash, oid2->hash);
+> +	return memcmp(oid1->hash, oid2->hash, GIT_MAX_RAWSZ);
+>  }
 
-merge-ort.c:2669:43: runtime error: applying zero offset to null pointer
-    #0 0x78bb53 in write_tree merge-ort.c:2669:43
-    #1 0x7856c9 in process_entries merge-ort.c:3303:2
-    #2 0x782317 in merge_ort_nonrecursive_internal merge-ort.c:3744:2
-    #3 0x77feef in merge_incore_nonrecursive merge-ort.c:3853:2
-    #4 0x6f6a5c in do_recursive_merge sequencer.c:640:3
-    #5 0x6f6a5c in do_pick_commit sequencer.c:2221:9
-    #6 0x6ef055 in single_pick sequencer.c:4814:9
-    #7 0x6ef055 in sequencer_pick_revisions sequencer.c:4867:10
-    #8 0x4fb392 in run_sequencer revert.c:225:9
-    #9 0x4fa5b0 in cmd_revert revert.c:235:8
-    #10 0x42abd7 in run_builtin git.c:453:11
-    #11 0x429531 in handle_builtin git.c:704:3
-    #12 0x4282fb in run_argv git.c:771:4
-    #13 0x4282fb in cmd_main git.c:902:19
-    #14 0x524b63 in main common-main.c:52:11
-    #15 0x7fc2ca340349 in __libc_start_main (/lib64/libc.so.6+0x24349)
-    #16 0x4072b9 in _start start.S:120
+hashcmp is now:
 
-SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior merge-ort.c:2669:43 in
+        if (the_hash_algo->rawsz == GIT_MAX_RAWSZ)
+                return memcmp(sha1, sha2, GIT_MAX_RAWSZ);
+        return memcmp(sha1, sha2, GIT_SHA1_RAWSZ);
 
-Signed-off-by: Andrzej Hunt <ajrhunt@google.com>
----
-    merge-ort: only do pointer arithmetic for non-empty lists
-    
-    V2 removes relevant_entries as per René's suggestion, and adds an
-    assertion as per Junio's question.
+Wouldn't it make more sense to amend it to just be a memcmp
+wrapper/macro if we're going to not make this conditional on the hash
+algorithm, or are there other callsites where we still want the old way
+of doing it?
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-930%2Fahunt%2Fmerge-ort-ubsan-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-930/ahunt/merge-ort-ubsan-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/930
+>  
+>  static inline int hasheq(const unsigned char *sha1, const unsigned char *sha2)
+> @@ -221,7 +221,7 @@ static inline int hasheq(const unsigned char *sha1, const unsigned char *sha2)
+>  
+>  static inline int oideq(const struct object_id *oid1, const struct object_id *oid2)
+>  {
+> -	return hasheq(oid1->hash, oid2->hash);
+> +	return !memcmp(oid1->hash, oid2->hash, GIT_MAX_RAWSZ);
+>  }
 
-Range-diff vs v1:
+Ditto hasheq v.s. !memcmp:
 
- 1:  d52ce7110446 ! 1:  48c1a0ad6f46 merge-ort: only do pointer arithmetic for non-empty lists
-     @@ Commit message
-          NULL, and we shouldn't be trying to perform pointer arithmetic with it (as
-          that results in undefined behaviour).
-      
-     +    Moreover we only use the results of this calculation once when calling
-     +    QSORT. Therefore we choose to skip creating relevant_entries and call
-     +    QSORT directly with our manipulated pointers (but only if there's data
-     +    requiring sorting). This lets us avoid abusing the string_list API,
-     +    and saves us from having to explain why this abuse is OK.
-     +
-     +    Finally, an assertion is added to make sure that write_tree() is called
-     +    with a valid offset.
-     +
-          This issue has probably existed since:
-            ee4012dcf9 (merge-ort: step 2 of tree writing -- function to create tree object, 2020-12-13)
-          But it only started occurring during tests since tests started using
-     @@ Commit message
-      
-       ## merge-ort.c ##
-      @@ merge-ort.c: static void write_tree(struct object_id *result_oid,
-     - 	 * We won't use relevant_entries again and will let it just pop off the
-     - 	 * stack, so there won't be allocation worries or anything.
-     - 	 */
-     + 	size_t maxlen = 0, extra;
-     + 	unsigned int nr = versions->nr - offset;
-     + 	struct strbuf buf = STRBUF_INIT;
-     +-	struct string_list relevant_entries = STRING_LIST_INIT_NODUP;
-     + 	int i;
-     + 
-     +-	/*
-     +-	 * We want to sort the last (versions->nr-offset) entries in versions.
-     +-	 * Do so by abusing the string_list API a bit: make another string_list
-     +-	 * that contains just those entries and then sort them.
-     +-	 *
-     +-	 * We won't use relevant_entries again and will let it just pop off the
-     +-	 * stack, so there won't be allocation worries or anything.
-     +-	 */
-      -	relevant_entries.items = versions->items + offset;
-      -	relevant_entries.nr = versions->nr - offset;
-     -+	if (versions->nr) {
-     -+		relevant_entries.items = versions->items + offset;
-     -+		relevant_entries.nr = versions->nr - offset;
-     -+	}
-     - 	QSORT(relevant_entries.items, relevant_entries.nr, tree_entry_order);
-     +-	QSORT(relevant_entries.items, relevant_entries.nr, tree_entry_order);
-     ++	assert(offset <= versions->nr);
-     ++	if (versions->nr)
-     ++		QSORT(versions->items + offset, nr, tree_entry_order);
-       
-       	/* Pre-allocate some space in buf */
-     + 	extra = hash_size + 8; /* 8: 6 for mode, 1 for space, 1 for NUL char */
-
-
- merge-ort.c | 15 +++------------
- 1 file changed, 3 insertions(+), 12 deletions(-)
-
-diff --git a/merge-ort.c b/merge-ort.c
-index 5e118a85ee04..702eb5bf362d 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -2493,20 +2493,11 @@ static void write_tree(struct object_id *result_oid,
- 	size_t maxlen = 0, extra;
- 	unsigned int nr = versions->nr - offset;
- 	struct strbuf buf = STRBUF_INIT;
--	struct string_list relevant_entries = STRING_LIST_INIT_NODUP;
- 	int i;
- 
--	/*
--	 * We want to sort the last (versions->nr-offset) entries in versions.
--	 * Do so by abusing the string_list API a bit: make another string_list
--	 * that contains just those entries and then sort them.
--	 *
--	 * We won't use relevant_entries again and will let it just pop off the
--	 * stack, so there won't be allocation worries or anything.
--	 */
--	relevant_entries.items = versions->items + offset;
--	relevant_entries.nr = versions->nr - offset;
--	QSORT(relevant_entries.items, relevant_entries.nr, tree_entry_order);
-+	assert(offset <= versions->nr);
-+	if (versions->nr)
-+		QSORT(versions->items + offset, nr, tree_entry_order);
- 
- 	/* Pre-allocate some space in buf */
- 	extra = hash_size + 8; /* 8: 6 for mode, 1 for space, 1 for NUL char */
-
-base-commit: 89b43f80a514aee58b662ad606e6352e03eaeee4
--- 
-gitgitgadget
+        if (the_hash_algo->rawsz == GIT_MAX_RAWSZ)
+                return !memcmp(sha1, sha2, GIT_MAX_RAWSZ);
+        return !memcmp(sha1, sha2, GIT_SHA1_RAWSZ);
