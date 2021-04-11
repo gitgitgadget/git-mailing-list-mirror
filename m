@@ -2,134 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E9EFC433B4
-	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 22:12:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 07178C433B4
+	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 23:04:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A9FBA6101D
-	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 22:12:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BC618610CA
+	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 23:04:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235780AbhDKWNB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 11 Apr 2021 18:13:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39860 "EHLO
+        id S235744AbhDKXEm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 11 Apr 2021 19:04:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235718AbhDKWNA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Apr 2021 18:13:00 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22522C061574
-        for <git@vger.kernel.org>; Sun, 11 Apr 2021 15:12:41 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id w3so17100208ejc.4
-        for <git@vger.kernel.org>; Sun, 11 Apr 2021 15:12:41 -0700 (PDT)
+        with ESMTP id S235005AbhDKXEk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Apr 2021 19:04:40 -0400
+Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C47D8C061574
+        for <git@vger.kernel.org>; Sun, 11 Apr 2021 16:04:23 -0700 (PDT)
+Received: by mail-io1-xd32.google.com with SMTP id e186so11543895iof.7
+        for <git@vger.kernel.org>; Sun, 11 Apr 2021 16:04:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=vkY3r3ACroQOTpfYKPlnFTHG6HbyWltkd5j8Qy/prBA=;
-        b=PDBV04MYnbiGmT+lKeHvVn9W5sYjSxlnlBSBGApY4DNVE6WjrBubvrgTA5XFVkw1O5
-         rY5hiXnJy0ZXbNf4m75OAn2l7miw3N742frqJYAAitnmLwqrXCrX6AX19MY0plwBWN/c
-         4kGDKbQ6yD9Wu3DV1CjmYkTkpnvRmT/SzK1vXNb85rR8DHzoo1cp6zrzDk4qpmV6kIbH
-         lnm/CGSQufAwlgW/Ch4/Yie8ufz1/bVJOSA62Rsb2uLhnSK/8habBgarGyqoFy3Vbnr9
-         oCDFO/TGKFfxw5rSrDd2gRz0seEGax/chEAcU3i1XCjWhC5EDt4djYMnr2oYqNiGVwY1
-         vZ8Q==
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=J1CjmmJJTTcXiK+k0Csms1rgiCUeKVY87gaxwoHyt+M=;
+        b=Moyulf81MXX4Ug3i5CbydJq7/P6+xx/hA0oBnt3hGRwr17xgcCrEBE9p2iJ3jkV4I7
+         Qfb7BHFYvvB9ULKohJ8JiUnKr3SFqE4P5KldNorl3sFnFf9r2TekAA4Yd6uozJyxf8uR
+         0S3v66hTOCnZrd3+d8iRh7JeZ/gnMREsgHhChtVA0L79vn24kEwCIcuI/5alWosfZjGk
+         8mqLZjNyXG+dy5yGep/u3HUlqKsrBmloFvfU2DkB/euVofk84j3OUiFD/Vb1nayo9LME
+         hd6JSk+2wzy5C2FCyBxF9KGVCx4V6ySKADXMhzaSbLxcdN4UPob2EupVDZkV0SEAbHuG
+         F/sA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=vkY3r3ACroQOTpfYKPlnFTHG6HbyWltkd5j8Qy/prBA=;
-        b=cK6mo5B/11krEl3ewpQwhHK/mDFlkVJ2XyHoxkkn7brK/Cwy7cITIZs4jVqF0YiQAE
-         t627tb6OwAL7mzfLF+sy9sqra+kC6dxkuze9WTIwCKBpTqLhk36G1URW0FTkpI5b1kxr
-         tPjrT3NMiPNEQcjQp5/DXklMCu9+7tfOn04Y/2crj0gsi679JV7tDad+w6M5GMDztabZ
-         VkIJMWGDRAh5U8Wgllj/Nj+UpRSZadULWyZryTOWEULxR58z0O+fHsHHvYr2wr6115l0
-         zOU6LDQ6XvfWU38F2xgU3nx1Sdl0nKdIDJzkQ16byr+xuYtfesSVeR73ZeWlg9pXzURq
-         ou7A==
-X-Gm-Message-State: AOAM5307mKy1I6qH1suVIsk6BVDDyd0qkzsjZk29VL1NVXMcIMUlUSnN
-        msngqooYCNz1XZN21n9IBEwHPYmAO3CSzQ==
-X-Google-Smtp-Source: ABdhPJwjNZb7FkkLPlcKUCGf0dJyHLinmMQ8ZHIejEXcFNaegDB4hbKtP1QjsxrrxBO4QEt0hantgg==
-X-Received: by 2002:a17:906:4ec3:: with SMTP id i3mr8531674ejv.119.1618179159669;
-        Sun, 11 Apr 2021 15:12:39 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id k8sm5387207edr.75.2021.04.11.15.12.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 11 Apr 2021 15:12:39 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 09/15] hash: set and copy algo field in struct object_id
-References: <20210410152140.3525040-1-sandals@crustytoothpaste.net>
- <20210410152140.3525040-10-sandals@crustytoothpaste.net>
- <87k0p9f2z9.fsf@evledraar.gmail.com>
- <YHNusqcmwv75P6Ck@camp.crustytoothpaste.net>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <YHNusqcmwv75P6Ck@camp.crustytoothpaste.net>
-Date:   Mon, 12 Apr 2021 00:12:38 +0200
-Message-ID: <87wnt8eai1.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=J1CjmmJJTTcXiK+k0Csms1rgiCUeKVY87gaxwoHyt+M=;
+        b=bwH41cGGrmQ8QMFJJYv0jcAoJ3pNWkGMLGakgKeh3fDY0YpcF02toCOsGfCCjvY6jL
+         sX/apdn76eEcYa+Bo5JqN9GaC6/GxGU9G0DWbtu86qN9gw/JC9Sgv9JYTP1wjHOZAZwb
+         Mru0c1IYgr6wqeSSK1yUQGk71zhEz6QZxWmus/N/StlNJ/HWCRTXXtv+yjDcnDL2Z9CQ
+         TEJ9ZeI0UYO3b5/Gl+ixhPz1VmLbREWa+BrXu39FgwhHTIwA+L/tIy02NBeeVQqcNqLE
+         LII5Armtq1aNHfV5XYYgTqQeYEJWb4otmA9h6sdTlp5J4oW2jF4qFiEOEebrPj5zxMnP
+         TBcA==
+X-Gm-Message-State: AOAM530mGYgKh44Cd7idexIypVKlcG1Q3mDjrJiJW+P0FjhgS9xeGdOj
+        C1M7IINnUuXkU8rG/VJb+FQ+7Jhr7md/F9JoOdi81MChtCo9Cg==
+X-Google-Smtp-Source: ABdhPJylOf7xgKWyGRA69VqViMTkuZo/boOCBDZJlsier9zhSQsZ0RZ4EIVJS5+Z+WiRzYQnHp2zWbNUqEAMWDQsTcY=
+X-Received: by 2002:a02:6a5a:: with SMTP id m26mr25254431jaf.17.1618182262958;
+ Sun, 11 Apr 2021 16:04:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Reply-To: noloader@gmail.com
+From:   Jeffrey Walton <noloader@gmail.com>
+Date:   Sun, 11 Apr 2021 19:04:11 -0400
+Message-ID: <CAH8yC8nT-68H9Vy=zxqsKeqpBqt-OJYCpVh53cm1KoeSbSVC-Q@mail.gmail.com>
+Subject: How to checkout a branch (and not a tag)
+To:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+I'm trying to checkout a branch called REL1_35 from
+https://github.com/wikimedia/mediawiki-skins-Cosmos. The repo also has
+a tag called REL1_35.
 
-On Sun, Apr 11 2021, brian m. carlson wrote:
+When I perform the following I apparently get the tag (with old files)
+and not the branch (with updated files):
 
-> On 2021-04-11 at 11:57:30, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>=20
->> On Sat, Apr 10 2021, brian m. carlson wrote:
->>=20
->> >  const struct object_id null_oid;
->> >  static const struct object_id empty_tree_oid =3D {
->> > -	EMPTY_TREE_SHA1_BIN_LITERAL
->> > +	EMPTY_TREE_SHA1_BIN_LITERAL,
->> > +	GIT_HASH_SHA1,
->> >  };
->> >  static const struct object_id empty_blob_oid =3D {
->> > -	EMPTY_BLOB_SHA1_BIN_LITERAL
->> > +	EMPTY_BLOB_SHA1_BIN_LITERAL,
->> > +	GIT_HASH_SHA1,
->> >  };
->> >  static const struct object_id empty_tree_oid_sha256 =3D {
->> > -	EMPTY_TREE_SHA256_BIN_LITERAL
->> > +	EMPTY_TREE_SHA256_BIN_LITERAL,
->> > +	GIT_HASH_SHA256,
->> >  };
->> >  static const struct object_id empty_blob_oid_sha256 =3D {
->> > -	EMPTY_BLOB_SHA256_BIN_LITERAL
->> > +	EMPTY_BLOB_SHA256_BIN_LITERAL,
->> > +	GIT_HASH_SHA256,
->> >  };
->>=20
->> In this and some other patches we're continuing to add new fields to
->> structs without using designated initializers.
->>=20
->> Not a new problem at all, just a note that if you re-roll I for one
->> would very much appreciate starting by migrating over to that. It makes
->> for much easier reading in subsequent patches in this series, and in
->> future ones.
->
-> I'm happy to do that.  I thought we were not allowed to use C99 features
-> because only recent versions of MSVC support modern C.  I was previously
-> under the impression that MSVC didn't support anything but C89, but they
-> now support C11 and C17 in their latest release[0], much to my surprise.
->
-> If we're willing to require C99 features, then I'm happy to add those.
-> I'll also send a follow-up series to require C99 support, which I think
-> is overdue considering the standard is 22 years old.
->
-> [0] https://devblogs.microsoft.com/cppblog/c11-and-c17-standard-support-a=
-rriving-in-msvc/
+    wiki_rel=REL1_53
+    ...
+    git fetch origin && git reset --hard "origin/${wiki_rel}" && \
+        git checkout -f "${wiki_rel}" && git pull && git clean -xdf
 
-I don't think we can in general require C99, e.g. I found just the other
-day that our CI's MSVC will fail on %zu (to print size_t without %lu & a
-cast).
+I found https://groups.google.com/g/git-users/c/FfzGmqj6sNQ, but I am
+not following it. My .git/config looks like it is using the proper
+reference:
 
-But we can use some subset of C99 features, and happily designated
-initializers is one of those, see cbc0f81d96f (strbuf: use designated
-initializers in STRBUF_INIT, 2017-07-10). It's been used all over the
-place since then.
+# cat skins/Cosmos/.git/config
+[core]
+        repositoryformatversion = 0
+        filemode = true
+        bare = false
+        logallrefupdates = true
+[remote "origin"]
+        url = https://github.com/Universal-Omega/MediaWiki-Cosmos-skin.git
+        fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "REL1_35"]
+        remote = origin
+        merge = refs/heads/REL1_35
 
-See e.g.: git grep -P '^\s+\.\S+ =3D ' -- '*.[ch]'
+How do I checkout the branch (and not a tag)?
+
+Thanks in advance.
