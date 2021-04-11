@@ -2,267 +2,292 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	T_PDS_SHORTFWD_URISHRT_QP,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4FD36C433ED
-	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 09:37:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 04B0CC433ED
+	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 09:40:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 26A05610E9
-	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 09:37:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C9417611F2
+	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 09:40:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235281AbhDKJiF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 11 Apr 2021 05:38:05 -0400
-Received: from mout.web.de ([212.227.15.4]:37967 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235267AbhDKJiF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Apr 2021 05:38:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1618133867;
-        bh=ti0mhvoEjet0anG10bHIRu8geevobdKXzEv/8SUUa9Y=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=ieXZQ+DKP5GLoCdduclI4/eOGeVYOfDyy1ovV755uD9D5jespim43MNQOxpYNbuWK
-         r5JqVGpbAZDfICgpAINQAdL5Za55NfiSAeTVzCfJLPm5mmciFL1BSZrF7JDeyFQDfM
-         4DcEUoV2XVksha+wfZtoVq6FyvxUBVc2m0XMbITE=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0M6UiB-1lkSrA1Kpv-00yPt9; Sun, 11
- Apr 2021 11:37:47 +0200
-Date:   Sun, 11 Apr 2021 11:37:46 +0200
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: git-p4 crashes on non UTF-8 output from p4
-Message-ID: <20210411093746.ymqofe2uawclwu5i@tb-raspi4>
-References: <CAKu1iLXtwuCQTS0s7_LEm0OJF-4s0UhPhDW1r5Zb7=GsSPfpdQ@mail.gmail.com>
- <20210409153815.7joohvmlnh6itczc@tb-raspi4>
- <CAKu1iLX1AyTCSGxDVgiR1cr4=4ODD-gn8jHAinhp7OhDChAf1A@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+        id S235112AbhDKJkf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 11 Apr 2021 05:40:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47944 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229804AbhDKJkc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Apr 2021 05:40:32 -0400
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3356C061574
+        for <git@vger.kernel.org>; Sun, 11 Apr 2021 02:40:14 -0700 (PDT)
+Received: by mail-pf1-x42d.google.com with SMTP id l123so7198454pfl.8
+        for <git@vger.kernel.org>; Sun, 11 Apr 2021 02:40:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=E6sx1WJdBk2a7G3dorPJ2CmHjvewuP1hAm3CRay7bUw=;
+        b=erruTslwTCitstHmRWojrSKaVx4fOlkShH76rKLNL7J7/AFbfceHQzuf9p6RCVMPyS
+         0OVLyQPANAzDFAVTb6W/JFAkgErPHJpYNivxxgp0K7JDL64PzHSnoS2OkL3K2RMgOmFG
+         H+GLCM/CVBN8eJa30d9GirZGRl5esaersULKeAbpAlPjRuYzGDuSIRNDWtCgfeqD/lfH
+         en3K2lZqlxNNHd4X04Mt7TGMN3NhByWLhUHmk0v+Uwv5t/8/CgQ5HfJXY9gMyJS/MaUV
+         6X5qYVWB/12B1R5VByVnKkbqh0ZHcUzYZ2gEaAVRxAzYtE5M2riuHzwOqF4Kct20eLpY
+         sZLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=E6sx1WJdBk2a7G3dorPJ2CmHjvewuP1hAm3CRay7bUw=;
+        b=pSqAY4VOq2hF+kHe0go27Tuep8BuHw9BbN5isa5OTf2vwT1l0idagj/pAvhvZ2krSI
+         CiPrd7V/9VjSNgJJLDaqscJlvJXS6M9PBAdBkohiQ93IjBTG6O0bci42zjq+hAXTJm1B
+         87CdCDUR7ONRS79AFMMx3edb3BkI4lVBDjaf5kuh8K4BY4L+SF3Ol1JUdYX/aq+Q4kuG
+         tuFCFx74GVDQnWtUZJ12+Xoz5UxSD8P0MCYwbkxzR6fxaJAYwP5FGRBL7qvGXaTWJHPk
+         0K60D20CFuHUQKojeSP7btJa+wbDwq5UHfCzh1wEhLeXfOJehKyD4nUmd6w9u8w6oL2u
+         1Usg==
+X-Gm-Message-State: AOAM5329x/zG55bClr5jB2jlwwPCuJ3AsVjcwyB1GsCU5CbP5zMQpfBN
+        62d7AbVUfX5cjVzPC5eD/iNt/MkAvjgDqQ==
+X-Google-Smtp-Source: ABdhPJxVLQlnSpfaXNiuYKiMeBW53NTabOudnf4B0X1S2onFq9G18fkw25diYz5ag5rRTZTfrfyVTg==
+X-Received: by 2002:a62:b403:0:b029:20c:cbd5:5be1 with SMTP id h3-20020a62b4030000b029020ccbd55be1mr20360665pfn.53.1618134014181;
+        Sun, 11 Apr 2021 02:40:14 -0700 (PDT)
+Received: from atharva-on-air.dlink ([180.151.104.48])
+        by smtp.gmail.com with ESMTPSA id a30sm6896770pfr.66.2021.04.11.02.40.12
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 11 Apr 2021 02:40:13 -0700 (PDT)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.60.0.2.21\))
+Subject: Re: [GSoC][Draft Proposal v2] Finish converting git submodule to
+ builtin
+From:   Atharva Raykar <raykar.ath@gmail.com>
+In-Reply-To: <CAP8UFD2hhtpnz+WE2J9iLbzfRJ2k5EOtUMRW=QcH9xe1U6y69g@mail.gmail.com>
+Date:   Sun, 11 Apr 2021 15:10:10 +0530
+Cc:     git <git@vger.kernel.org>,
+        Shourya Shukla <shouryashukla.oo@gmail.com>,
+        Shourya Shukla <periperidip@gmail.com>
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CAKu1iLX1AyTCSGxDVgiR1cr4=4ODD-gn8jHAinhp7OhDChAf1A@mail.gmail.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:0/7FnbRQcbQZfN7TaoBTLNn1V60QyN/UBgJn41PkBKeM07DBqpY
- 02Qis2Vz6+3cbk15X9CPLOnGwOfjCKCPTRHa/CwDGE+uEaoIMVGZr/AjnvepNYMY47gWXDM
- Us7JhmQBvhXyUlXBd/CUt/ppHDhyJM97RD4hZ2b30aZfsY/ljlVq8dnMWref74gdzBzW5fI
- AcXZK6LpjZ9HoTEw6t2IQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:U2Z1r+H8yIU=:4J6PKph7ZuM+VwUK5BqGRz
- llouBEIuF33txOSF8I5zc4xDBne1L3zgm6i3exgas+BCptmKA9hv5VhboMsb9OnSn8oU8wZSG
- KcOb+ipjBYumHunjluLR4r9cKbPxvmzj/P1/MPm9EFFWu6BTaWAo3z5I+q9KVo3DFntUvPGSt
- gLCenl+6DIDTA0s9Laq4idrZt0YorezDSyVuY2rPSxCykLzcGqL629xNdovy23krdpDBUvxfc
- UpXSxVi3TIF3TnVs+jwHF+A6IgKeeR4qxXApZ4X9wFKSwaIVg2nTEJIgp89dnTyh68whzwMcG
- FEgwVSrN41D4nnTHAc114We7F2ViP7a0yhBCYruWgVcnhcrcRv3BT9bBJvfUx0mVswmwwVAv5
- DksWMjRUq1vRdMDrSRpXmA0YPm8Y3IrtpcfpRSmQAr93abxS3V601o+Gyd795+XX1TKTipomN
- 0hFIwpkBGzGhG5PPwmjbeicD2clB2iCfcaW8CSTjViYD7pRMF8dNhm6ivLjvO7gRRuOXfVmLr
- 8feu1dqxF1gQlC4C3HiTvz8tmyv06Pe1X5e3bQWKAmXKd2z54HdGJ8Kk2aXJr1ehHGEGgVcOn
- eZg4ZhWdoUKq5FHQbM/BVA9Kgopl5kAxHit/vy/sb1PmPiTfYxzt6hFN5U+zMZuYHyqvxiBCh
- IIqJQOvKk+xmwx2qPiQRLQSSc+MWcRh+nXMofQrCsnVEHGojTjVGG9udON2VyhhQ6U28IpJbu
- g/LKU8TsQTX+B8JFj8yjr3MYrvhf4J8c3zILEigA6CO1J3Epi9BGIqvZSnwoX3183kbYzm8zS
- dYzG9VjyQ9LUu9V/txkl9bSPqOQYIC89o0sf6TYCAzxQt3ESSa973ivdvwsOkh6FTJcNdaAO4
- th6nwrdlF3zjPB4QnpEZFIBPFJugwAVjuMU4pMNyXwX/z2mK8mYsFoVXw+fBlb0nGC1HdwbHr
- 4Yn+jbDzmGa9bZk9DPKY+AsYry4OyUYlQi12630AwVryFFTGW53zil5+QoFPYBGiFfWJnvlve
- xTGuWTFdF8z09Oc4vwgXc92ZGaojvnaqY9dzpRAxQFK88cSjOo/5K3HC7+cDhRKa79zi252o3
- IPuUg+p80Bb+HB35MzZpyzbjDidvoNhYZlMVtE8/0wW1OCvis4Ww6RLFtHYQlvT8b1n/PoTpu
- 0pqKj0g6Z07Wt9ywvoGaqEALd7VPbDhmKJEESW41mjA16JJpas2HjV395fOGk7VoicRsU=
+Message-Id: <F6B9AC67-EB44-4FD9-A7A0-A6494BAE3BC7@gmail.com>
+References: <E6E88000-9C18-4035-9A14-8B406617351A@gmail.com>
+ <F3446051-620F-4C7B-A306-5C36922A976C@gmail.com>
+ <CAP8UFD2hhtpnz+WE2J9iLbzfRJ2k5EOtUMRW=QcH9xe1U6y69g@mail.gmail.com>
+To:     Christian Couder <christian.couder@gmail.com>
+X-Mailer: Apple Mail (2.3654.60.0.2.21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Apr 11, 2021 at 12:16:25AM -0700, Tzadik Vanderhoof wrote:
-> Here is the pull request:
-
-Thanks for the work. Some comments inline.
-
->
-> From 8d234af842223dceae76ce0affd3bbb3f17bb6d9 Mon Sep 17 00:00:00 2001
-> From: Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>
-> Date: Sat, 10 Apr 2021 22:41:39 -0700
 
 
-The subject should be one short line, highlighting what this is all about,
-followed by a blank line and a longer description about the problem and
-the solution. The original description was good, see below.
+> On 10-Apr-2021, at 18:29, Christian Couder =
+<christian.couder@gmail.com> wrote:
+>=20
+> On Thu, Apr 8, 2021 at 12:19 PM Atharva Raykar <raykar.ath@gmail.com> =
+wrote:
+>>=20
+>> Here's my updated draft. Changes since v1:
+>>=20
+>> - Elaborated more on example porting strategy, stating how the =
+patches
+>>   could be broken up.
+>> - Made language at the end of section 6 less ambiguous.
+>> - Updated status of microproject.
+>> - s/git/Git in several places.
+>=20
+> Thanks for this summary of the changes since the previous version!
+>=20
+>> 3 Me and Git
+>> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>>=20
+>>  Here are the various forms of contributions that I have made to Git:
+>>=20
+>>  - [Microproject] userdiff: userdiff: add support for Scheme Status: =
+In
+>=20
+> s/userdiff: userdiff/userdiff/
+>=20
+>>    progress, patch v3 requiring a review List:
+>>    =
+<https://lore.kernel.org/git/20210408091442.22740-1-raykar.ath@gmail.com/>=
 
-> Subject: [PATCH] add git-p4.fallbackEncoding config variable, to prevent
->  git-p4 from crashing on non UTF-8 changeset descriptions
-
-In that sense I make a first trial here, subject for improvements:
-
-
-Subject: [PATCH] Add git-p4.fallbackEncoding config variable
-
-When git-p4 reads the output from a p4 command, it assumes it will be
-100% UTF-8. If even one character in the output of one p4 command is
-not UTF-8, git-p4 crashes e.g. with:
-
-File "C:/Program Files/Git/bin/git-p4.py", line 774, in p4CmdList
-    value =3D value.decode() UnicodeDecodeError: 'utf-8' codec can't
-decode byte Ox93 in position 42: invalid start byte
-
-Allow to try another encoding (eg cp1252) and/or use the
-Unicode replacement character  to prevent the whole program from crashing
-on such a "minor" problem.
-
-This is especially a problem on the "git p4 clone" command with @all,
-where git-p4 needs to read thousands of changeset descriptions, one of
-which may have a stray smart quote, causing the whole clone operation
-to fail.
-
-Introduce "git-p4.fallbackEncoding" to handle non UTF-8 encodings, if need=
-ed.
-
->
-> ---
->  Documentation/git-p4.txt | 10 ++++++++++
->  git-p4.py                | 11 ++++++++++-
->  2 files changed, 20 insertions(+), 1 deletion(-)
->
-> diff --git a/Documentation/git-p4.txt b/Documentation/git-p4.txt
-> index f89e68b..71f3487 100644
-> --- a/Documentation/git-p4.txt
-> +++ b/Documentation/git-p4.txt
-> @@ -638,6 +638,16 @@ git-p4.pathEncoding::
->   to transcode the paths to UTF-8. As an example, Perforce on Windows
->   often uses "cp1252" to encode path names.
->
-> +git-p4.fallbackEncoding::
-> +    Perforce changeset descriptions can be in a mixture of encodings. G=
-it-p4
-> +    first tries to interpret each description as UTF-8. If that fails, =
-this
-> +    config allows another encoding to be tried.  The default is "cp1252=
-".  You
-
-I know that cp1252 is attractive to be used, especially for Windows instal=
-lations that
-use Latin-based "characters".
-But: If we introduce a new config-variable into Git, the default tends to =
-be
-"if not set to anything, behave as the old Git".
-
-> +    can set it to another encoding, for example, "iso-8859-5". If inste=
-ad of
-ISO-8859-5 may be more portable on the different i18 implementations
-than the lower-case spelling.
-
-> +    an encoding, you specify "replace", UTF-8 will be used, with invali=
-d UTF-8
-> +    characters replaced by the Unicode replacement character. If you sp=
-ecify
-> +    "none", there is no fallback, and any non UTF-8 character will caus=
-e
-> +    git-p4 to immediately fail.
-
-As said, before, many people may expect Git to fail, so that the default s=
-hould be
-none to avoid surprises.
-When a "non-UTF-8-clean" repo is handled, they want to know it.
-
-> +
->  git-p4.largeFileSystem::
->   Specify the system that is used for large (binary) files. Please note
->   that large file systems do not support the 'git p4 submit' command.
-> diff --git a/git-p4.py b/git-p4.py
-> index 09c9e93..18d02b4 100755
-> --- a/git-p4.py
-> +++ b/git-p4.py
-> @@ -771,7 +771,16 @@ def p4CmdList(cmd, stdin=3DNone, stdin_mode=3D'w+b'=
-,
-> cb=3DNone, skip_info=3DFalse,
->                  for key, value in entry.items():
->                      key =3D key.decode()
->                      if isinstance(value, bytes) and not (key in
-> ('data', 'path', 'clientFile') or key.startswith('depotFile')):
-> -                        value =3D value.decode()
-> +                        try:
-> +                            value =3D value.decode()
-> +                        except:
-> +                            fallbackEncoding =3D
-> gitConfig("git-p4.fallbackEncoding").lower() or 'cp1252'
-> +                            if fallbackEncoding =3D=3D 'none':
-> +                                raise
-
-Would it make sense to tell the user about the new config value here?
- raise Exception("Non UTF-8 detected. See git-p4.fallbackEncoding"
-Or somewhat in that style ?
-
-> +                            elif fallbackEncoding =3D=3D 'replace':
-> +                                value =3D value.decode(errors=3D'replac=
-e')
-> +                            else:
-> +                                value =3D value.decode(encoding=3Dfallb=
-ackEncoding)
->                      decoded_entry[key] =3D value
->                  # Parse out data if it's an error response
->                  if decoded_entry.get('code') =3D=3D 'error' and 'data' =
-in
-> decoded_entry:
-
-
-Did I miss the Signed-off-by here?
-
-Please have a look here:
-https://git-scm.com/docs/SubmittingPatches
-
-(or look at Documentation/SubmittingPatches in your git source code)
-
-And finally: Thanks for the contribution.
-Is there any chance to add test-cases, to make sure that this feature
-is well-tested now and in the future ?
-
-
-> --
-> 2.31.1.windows.1
->
-> On Fri, Apr 9, 2021 at 8:38 AM Torsten B=F6gershausen <tboegi@web.de> wr=
-ote:
-> >
-> > On Thu, Apr 08, 2021 at 12:28:25PM -0700, Tzadik Vanderhoof wrote:
-> > > When git-p4 reads the output from a p4 command, it assumes it will b=
-e
-> > > 100% UTF-8. If even one character in the output of one p4 command is
-> > > not UTF-8, git-p4 crashes with:
-> > >
-> > > File "C:/Program Files/Git/bin/git-p4.py", line 774, in p4CmdList
-> > >     value =3D value.decode() UnicodeDecodeError: 'utf-8' codec can't
-> > > decode byte Ox93 in position 42: invalid start byte
-> > >
-> > > I'd like to make a pull request to have it try another encoding (eg
-> > > cp1252) and/or use the Unicode replacement character, to prevent the
-> > > whole program from crashing on such a minor problem.
-> > >
-> > > This is especially a problem on the "git p4 clone" command with @all=
-,
-> > > where git-p4 needs to read thousands of changeset descriptions, one =
+>>=20
+>>  - [Git Education] Conducted a workshop with attendance of hundreds =
 of
-> > > which may have a stray smart quote, causing the whole clone operatio=
-n
-> > > to fail.
-> > >
-> > > Sound ok?
-> >
-> > Welcome to the Git community.
-> > To start with: I am not a git-p4 expert as such, but seeing that a pro=
-gram is crashing
-> > is never a good thing.
-> > All efforts to prevent the crash are a step forward.
-> >
-> > As you mention cp1252 (which is more used under Windows), there are pr=
-obably lots of
-> > system out there which use ISO-8859-15 (or ISO-8859-1) we may have the=
- first whish:
-> >
-> > Make the encoding/fallback configurable.
-> > Let people choose if they want a crash (if things are broken),
-> > fallback to cp1252 or one of the other ISO-ISO-8859-x encodings.
-> >
-> > In that sense: we look forward to a pull-request.
->
->
->
-> --
-> Tzadik
+>>    students new to git, and increased the prevalence of of git's =
+usage
+>=20
+> s/git/Git/
+> s/of of git/of Git/
+>=20
+
+Thanks, will fix these.
+
+>>    in my campus.
+>>    Photos: <https://photos.app.goo.gl/T7CPk1zkHdK7mx6v7> and
+>>    <https://photos.app.goo.gl/bzTgdHMttxDen6z9A>
+>=20
+> [...]
+>=20
+>> 6 General implementation strategy
+>> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>>=20
+>>  The way to port the shell to C code for `submodule' will largely
+>>  remain the same. There already exists the builtin
+>>  `submodule--helper.c' which contains most of the previous commands'
+>>  ports. All that the shell script for `git-submodule.sh' is doing for
+>>  the previously completed ports is parsing the flags and then calling
+>>  the helper, which does all the business logic.
+>>=20
+>>  So I will be moving out all the business logic that the shell script
+>>  is performing to `submodule--helper.c'. Any reusable functionality
+>>  that is introduced during the port will be added to `submodule.c' in
+>>  the top level.
+>>=20
+>>      For example: The general strategy for converting `cmd_update()' =
+would
+>>      be to have a call to `submodule--helper' in the shell script to =
+a
+>>      function which would resemble something like `module_update()'.
+>=20
+> Does module_update() already exists? It's hard to understand if you
+> are referring to something that already exists (where?) or that you
+> would create (how?) here. More details about this would be nice.
+
+It is a function that I intend to write, will make that more clear.
+
+>> This
+>>      would perform the work being done by the shell script past the =
+flags
+>>      being parsed and make the necessary call to `update_clone()', =
+which
+>>      returns information about the cloned modules.
+>=20
+> How does it return information?
+>=20
+>> For each cloned module,
+>>      it will find out the update mode through `module_update_mode()', =
+and
+>>      run the appropriate operation according to that mode (like a =
+rebase,
+>>      if that was the update mode).
+>>=20
+>>      One possible way this work can be broken up into multiple =
+patches, is
+>>      by moving over the shell code into C in a bottom-up manner.
+>>      For example: The shell part which retrieves the latest revision =
+in the
+>>      remote (if --remote is specified) can be wrapped into a command =
+of
+>>      `submodule--helper.c'.
+>=20
+> Could you give an example of how the command would be named, what
+> arguments it would take and how it could be used?
+>=20
+>> Then we can move the part where we run the
+>>      update method (ie the `case' on line 611 onwards) into a C =
+function.
+>=20
+> Do you mean the code that does something like:
+>=20
+>                       case "$update_module" in
+>                       checkout)
+>                               ...
+>                       rebase)
+>                               ...
+>                       merge)
+>                               ...
+>                       !*)
+>                               ...
+>                       *)
+>                               ...
+>                       esac
+>=20
+>                       if (sanitize_submodule_env; cd "$sm_path" &&
+> $command "$sha1")
+>                       then
+>                               say "$say_msg"
+>                       elif test -n "$must_die_on_failure"
+>                       then
+>                               die_with_status 2 "$die_msg"
+>                       else
+>                               err=3D"${err};$die_msg"
+>                               continue
+>                       fi
+>=20
+> ?
+>=20
+> Could you also give an example of how the command would be named, what
+> arguments it would take and how it could be used?
+
+I could add more detail about the exact arguments each converted part
+would take, but I feel a little hesitant because I will most likely
+change my mind on a lot of those kind of lower-level decisions as I
+understand the codebase better. The point I was trying to convey is
+that the high-level workflow I would follow while converting would look
+like this:
+
+1. Identify parts in git-submodule.sh that have cohesive functionality
+2. Rewrite that functionality in C, which can be invoked from
+    `git submodule--helper <function name> <args>`
+3. Remove the shell code and replace it with the above invocation
+4. Once the shell code is reduced to only a bunch of calls to
+    submodule--helper, wrap all of that into one call that looks like
+    `git submodule--helper update <flags>` that encapsulates all the
+    functionality done by the other helper function calls.
+
+(In other words: I will cluster the functionality in a bottom-up way.
+Maybe I should mention the above four points in my proposal?)
+
+The example I gave for how to handle the presence of the remote flag
+and the function that performs the module updation method (ie, the =
+`case`
+on line 611) was just to illustrate the above workflow, rather than say
+that this is how I will exactly do it.
+
+I also would like to know what level of granularity is ideal for the
+proposal. For now I have tried to keep it at "whatever I will surely
+follow through when I work on the project", which at the moment is the
+covered by the four points I mentioned above.
+
+If I go too much into detail about the functions and arguments
+of every helper in my example, I will feel compelled to do the same for
+the `git submodule add` example. I also will have to reason more =
+carefully
+because I do not want to end up in a situation where I do not actually
+stick to my proposal all that much, because I realise in my =
+investigation
+phase that there is a different, much better way.
+
+Do let me know what is preferred.
+
+>>      Eventually, the shell part will just look like a bunch of =
+invocations
+>>      to `submodule--helper', at which point, the whole thing can be
+>>      encapsulated in a single command called `git submodule--helper =
+update'
+>>      (Bonus: Move the whole functionality to C, including the parsing =
+of
+>>      flags, to work towards getting rid of `git-submodule.sh'). I =
+believe
+>>      this is a fairly non-destructive and incremental way to work, =
+and the
+>>      porting efforts by Stefan seem to follow this same kind of =
+philosophy.
+>>      I will most likely end up tuning the size of these increments =
+when I
+>>      get around to planning in my first phase of the project.
+>>=20
+>>  After this process, I will be adding the `add' and `update' command =
+to
+>>  the commands array in `submodule--helper.c'. And since these two
+>>  functions are the last bit of functionality left to convert in
+>>  submodules, an extended goal can be to get rid of the shell script
+>>  altogether, and make the helper into the actual builtin [1].
+>>=20
+>>  [1]
+>>  =
+<https://lore.kernel.org/git/nycvar.QRO.7.76.6.2011191327320.56@tvgsbejvaq=
+bjf.bet/>
+
