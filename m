@@ -2,108 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 94C61C433B4
-	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 23:29:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B597AC433ED
+	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 23:52:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 607C9611C9
-	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 23:29:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 734DC611F0
+	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 23:52:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235722AbhDKX34 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 11 Apr 2021 19:29:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56256 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235229AbhDKX34 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Apr 2021 19:29:56 -0400
-Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F04CC061574
-        for <git@vger.kernel.org>; Sun, 11 Apr 2021 16:29:38 -0700 (PDT)
-Received: by mail-io1-xd33.google.com with SMTP id e186so11581586iof.7
-        for <git@vger.kernel.org>; Sun, 11 Apr 2021 16:29:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:reply-to:from:date:message-id
-         :subject:to:cc;
-        bh=jASSjI8Ch9sj3wp1rVxBEXie6nHmLqrD4yme392V0k0=;
-        b=jZ9ODtRwsUBZomrbvHU1dG0ezAGPlcVJpHKgQGWmbUHl8p+IqmvRVZyZTC8/wwlb1c
-         AjRRyk4/LCttNbe+pArRz+sCGMM38fhQr31ttLtRRIBNmAs9ziAetQTgLBNZWC96+X21
-         bKiHR2Y7nxVBtWmdeMoxqTEYkHh8L0aIRV07y8mlHIBIKRnAOxhRxm1WJC/CvxSPPZsj
-         h+ChcQgFXizTmT3rs4xktANZ0gCDQzBKCWDxdVRpJUEhk01rEZ8Cq84L/9k/GP/CeEsd
-         cEmUMFYx5DgH8KUNR/eleCdHgnyTtS+LRtQ7bFkdJYZzaccg+zKTIVkpNQx14K/FI375
-         hklQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
-         :from:date:message-id:subject:to:cc;
-        bh=jASSjI8Ch9sj3wp1rVxBEXie6nHmLqrD4yme392V0k0=;
-        b=M/9YeHcChsQ8rK1jPLWhGjoWdna3pQDsrLiRQ6LYWQUjVgRDKQFLHy1NGGDObg/R/o
-         y5MSp61Z+s4eq2vcDuAnfpVu2HetIA+6nHyvu/FxsktWghCsJs86hjZptR+9fo0uIfP2
-         vte/fMCqqP1rPafdTRMjwaGLmWcVMgePRBoomCVZi5957vHL1mNmZL1DzJ7re8WX0Gbb
-         vu14mZzaLQosoDTm2yQFDVBTr6BAGw0/uixQp+/ELw9Ip09vfR2S3V+1dm+0VzLA4iub
-         /7oao4NQ0p8N8cDWEZ+xl4+7e7KwAEBJ+fFQxRfgstzlJD3uVYNWm5C1HUu8lF+mRiog
-         QUlQ==
-X-Gm-Message-State: AOAM533QBrSXCUqiDalAcyswBDCLFX5P4iIanZYVq0PJGry+PYxvALrE
-        auT5GzYU42LcMl+5nmYC+zZH1Uf/hYiGY7Kw4zURVJL0OAE=
-X-Google-Smtp-Source: ABdhPJwWugMf8ro1663mcZKN+cWv3dHUK5+Ocu1dNIKBhXnPiJ4Vmofz/QgS450jKpBxD+g/xcoY+3uOqkAsrZ1rY18=
-X-Received: by 2002:a6b:4f06:: with SMTP id d6mr6762568iob.124.1618183777519;
- Sun, 11 Apr 2021 16:29:37 -0700 (PDT)
+        id S235860AbhDKXw5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 11 Apr 2021 19:52:57 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:59514 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S235768AbhDKXw4 (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 11 Apr 2021 19:52:56 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 943616041F;
+        Sun, 11 Apr 2021 23:52:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1618185128;
+        bh=LXwzEGOtwXfjdsDEWhfrWvgp7oGGwJ6A3kbcUoI5YF8=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=jm+R0DO7judIRuv8JYQ1dmCEQMY3xRH6HHbZOdKSLB6tForKUi3Buc/mg/eJEk+l+
+         k90l8Cm/eM3YPsICtKNGSBLxAMnepQcio5ZLxMcp3yIND/sa2Ka0e/fPTapd6V0bXf
+         EjcvUsVeLlz63yDlwRbP5i5JRP9pAZx4aRQNzEux0e77cktgjqZtcAx82RKGQojvVQ
+         pd4gcv+w0U9lFZr994dnVmLgCb7WPu2NwgyBHwTHgdUpE4Yglv3JcI2YsGBfu/Wczx
+         1yCReNnWvZ2Dg7HTzAUHDNP2wizawhPrGAH5Zooeciopdc6fUEcuKHbdqViyVtb8um
+         XTJDowphSb49Yqu2KJ8ar5oCfV0PmJ1iMYItE6ssbl5j+ZBdyU2Sjy1G8TPRcS8d1G
+         LhV4MSAyZ20bqrJSbR1sOSHQfj0axMK0E8I8cdAlv8DdF6FRxX8ppyv5C/Tj3cxpoh
+         5NgVyle711Aszg/j1iOckxF5vQbW47xipQ99bXeujaQBEaSY2uF
+Date:   Sun, 11 Apr 2021 23:52:03 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 09/15] hash: set and copy algo field in struct object_id
+Message-ID: <YHOLo36MfuTj6YeD@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>
+References: <20210410152140.3525040-1-sandals@crustytoothpaste.net>
+ <20210410152140.3525040-10-sandals@crustytoothpaste.net>
+ <87k0p9f2z9.fsf@evledraar.gmail.com>
+ <YHNusqcmwv75P6Ck@camp.crustytoothpaste.net>
+ <87wnt8eai1.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <CAH8yC8nT-68H9Vy=zxqsKeqpBqt-OJYCpVh53cm1KoeSbSVC-Q@mail.gmail.com>
- <xmqqk0p8flui.fsf@gitster.g>
-In-Reply-To: <xmqqk0p8flui.fsf@gitster.g>
-Reply-To: noloader@gmail.com
-From:   Jeffrey Walton <noloader@gmail.com>
-Date:   Sun, 11 Apr 2021 19:29:25 -0400
-Message-ID: <CAH8yC8kZjFZo-si45oYTzUyH+J6YOLD62Bdmomzr0NDkDzLhRQ@mail.gmail.com>
-Subject: Re: How to checkout a branch (and not a tag)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="47YmQYLRaL6NG91h"
+Content-Disposition: inline
+In-Reply-To: <87wnt8eai1.fsf@evledraar.gmail.com>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Apr 11, 2021 at 7:22 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Jeffrey Walton <noloader@gmail.com> writes:
->
-> > I'm trying to checkout a branch called REL1_35 from
-> > https://github.com/wikimedia/mediawiki-skins-Cosmos. The repo also has
-> > a tag called REL1_35.
+
+--47YmQYLRaL6NG91h
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On 2021-04-11 at 22:12:38, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>=20
+> On Sun, Apr 11 2021, brian m. carlson wrote:
+>=20
+> > On 2021-04-11 at 11:57:30, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> >>=20
+> >> In this and some other patches we're continuing to add new fields to
+> >> structs without using designated initializers.
+> >>=20
+> >> Not a new problem at all, just a note that if you re-roll I for one
+> >> would very much appreciate starting by migrating over to that. It makes
+> >> for much easier reading in subsequent patches in this series, and in
+> >> future ones.
 > >
-> > When I perform the following I apparently get the tag (with old files)
-> > and not the branch (with updated files):
+> > I'm happy to do that.  I thought we were not allowed to use C99 features
+> > because only recent versions of MSVC support modern C.  I was previously
+> > under the impression that MSVC didn't support anything but C89, but they
+> > now support C11 and C17 in their latest release[0], much to my surprise.
 > >
-> >     wiki_rel=REL1_53
->
-> Hopefully this typo is not part of what contributed to your problem.
-> Assuming that you actually used REL1_35 here...
+> > If we're willing to require C99 features, then I'm happy to add those.
+> > I'll also send a follow-up series to require C99 support, which I think
+> > is overdue considering the standard is 22 years old.
+> >
+> > [0] https://devblogs.microsoft.com/cppblog/c11-and-c17-standard-support=
+-arriving-in-msvc/
+>=20
+> I don't think we can in general require C99, e.g. I found just the other
+> day that our CI's MSVC will fail on %zu (to print size_t without %lu & a
+> cast).
 
-Yes, typo.
+That's a shame.  I think I'd like to try, though, and ask people to
+upgrade MSVC to a suitable version if we're going to continue to support
+it.  It's not like there aren't alternatives.  So I'm going to send out
+that series anyway, I think.  That's independent of this series, though,
+so I'll add the designated initializers in v2.
+--=20
+brian m. carlson (he/him or they/them)
+Houston, Texas, US
 
-> >     ...
-> >     git fetch origin && git reset --hard "origin/${wiki_rel}" && \
->
-> ...this should get their branches in refs/remotes/origin/, and would
-> reset whatever local branch you are on to origin/REL1_35.  So at this
-> point, HEAD is the same as their REL1_35 branch.
->
-> >         git checkout -f "${wiki_rel}"
->
-> And this causes the tag/REL1_35, which was obtained from them, to be
-> checked out to a detached HEAD.
->
-> What are you trying to do here?  Do you want your own local REL1_35
-> branch, that starts at the same commit as their REL1_35 branch?
+--47YmQYLRaL6NG91h
+Content-Type: application/pgp-signature; name="signature.asc"
 
-I want an exact copy of the remote branch.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.27 (GNU/Linux)
 
-After I get that copy, I usually delete unneeded fodder, like test
-gear and documentation.
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYHOLowAKCRB8DEliiIei
+gf+ZAQCnbZiK7RLb+0lGxziV2bwcEdj1zeAZPcFqOnFPLAqnHQEAwol9mSA0UiKl
+/E3P95DaY2AOqiqku+y/PW4cQBQT0ww=
+=5W25
+-----END PGP SIGNATURE-----
 
-Jeff
+--47YmQYLRaL6NG91h--
