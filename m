@@ -7,93 +7,82 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C9184C433B4
-	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 20:38:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 26B6DC433ED
+	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 20:54:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6A79061025
-	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 20:38:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C507260FF0
+	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 20:54:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236547AbhDKUip (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 11 Apr 2021 16:38:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47944 "EHLO
+        id S235860AbhDKUyt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 11 Apr 2021 16:54:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51394 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233822AbhDKUip (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Apr 2021 16:38:45 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF1E2C061574
-        for <git@vger.kernel.org>; Sun, 11 Apr 2021 13:38:26 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id u20so12798570lja.13
-        for <git@vger.kernel.org>; Sun, 11 Apr 2021 13:38:26 -0700 (PDT)
+        with ESMTP id S235530AbhDKUys (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Apr 2021 16:54:48 -0400
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6E01C061574
+        for <git@vger.kernel.org>; Sun, 11 Apr 2021 13:54:31 -0700 (PDT)
+Received: by mail-ot1-x32a.google.com with SMTP id v24-20020a9d69d80000b02901b9aec33371so10987271oto.2
+        for <git@vger.kernel.org>; Sun, 11 Apr 2021 13:54:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=ZGBJywLTPoP8U5Hu9FryfudN+vM49BSAicxhRrWp9qY=;
-        b=MtxUEHOyrAxh7fkvA8ZMWIqzb5hzurjCvOo5IBNECyvjmD/L8nRGrmNJfDwNy+MtL7
-         N8YsleNAofSYlQkmPu6pHa51LCJwyL/qdsc6oXbtvLLQw1hW452+xgkmjpuFnOHHi7de
-         RrgzRvUIF754HIQ/VyQLVBpItPnKIo6Iik549brHFOS2WxiW57aEqq6OnK5Z3mrdABbS
-         BiAV/e5++Q3FUqrB58OhVsAegZHTYQlGYOBWN1JQ0tOU4G4XeYv1HdiCOfFNQB4KHpn2
-         3XzKEZBx1iD35WwnROiHNT89BzEOprSPINHr2JQ9DGaORp/LEflLdHyjg1LM/ZmkOHcM
-         SHPA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=KrhKaBRzhhhBtxcdNhbFHEV4cghUyj58CYGjMQvjfNc=;
+        b=CT++yrLG59vu1jlTuO0PqKWUhGewjWPjZlvHysA7IuIWzMFsrx1M8ugLYvkkVYOi+0
+         6JJ7/YUNjIu+qbcBAur867R61IRpGLVyyUdfx5ArbxOv35EO9nQbr4zvaRTBda7KgYwj
+         7RH1IkJzk6UulR8TvUTpHxGAgzptR3x1WYRs1zdHkqf/t8Jgs5RZpb0H5V5GHxCW/VTw
+         StlaX/MQjL1qIZgqEyCFXakJsur649QoW3d28r2HXfm5UTCQadpM8RqB6pypypgiqeFL
+         fm7NPWxJi81BJOPjrHZ3tRJH9t2glbexv7GvOrybz/sv7t1q+w1TBUHiahjYKthBk4Eh
+         7JBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=ZGBJywLTPoP8U5Hu9FryfudN+vM49BSAicxhRrWp9qY=;
-        b=CHHnx5M9avstysZOollcDipH/TDLm9kGisDir3TsuEoNwyZ2mssb2OQhbIXHdxiYou
-         cQBwIu6zglepr4jlTDE6eOombY1yHiXFbl/xI/HXAVP/goC8YD4M1G/E82O/GjeFCR+D
-         8/UHaCLXE/ROXn7zkRKLOIcwFrjiQA4t/6XR6lcZ8MDxrcYTBz9SJ/hCHEdcoqbhbZAd
-         o8inX2ITkSdag6Awu7LLUHA9a82aVOpwEYgXXTdKO8QdyITVVsngt7QFv70jGm1vHG/3
-         7sGUorwFAq+44LGgdjZvz7YV/yGSA/sILPb+QipKEkdmUNE1MzUdpYH8x/YmaLYMzL6F
-         S1bQ==
-X-Gm-Message-State: AOAM5302CIcxdEs2neN9TMTmhcQ/Vrs96aj74CJqJE+8dzHM9MfjXEM9
-        jfpyXelQH6XmQiRbHr+G6IplfiV2lFg=
-X-Google-Smtp-Source: ABdhPJyXCdclzOPrBOrQh51VEzWxNN1RqySmZvKO86U2p5QWumZ074PQe5j6/aHajv12rHjFMHGLmg==
-X-Received: by 2002:a2e:b051:: with SMTP id d17mr15720683ljl.255.1618173499391;
-        Sun, 11 Apr 2021 13:38:19 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id f8sm2149016ljn.1.2021.04.11.13.38.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 11 Apr 2021 13:38:18 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.email>,
-        Elijah Newren <newren@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v1 0/5] git log: configurable default format for merge
- diffs
-References: <20210407225608.14611-1-sorganov@gmail.com>
-        <20210410171657.20159-1-sorganov@gmail.com>
-        <xmqqsg3whka6.fsf@gitster.g> <87wnt84s0h.fsf@osv.gnss.ru>
-        <xmqqo8ekhcfy.fsf@gitster.g>
-Date:   Sun, 11 Apr 2021 23:38:17 +0300
-In-Reply-To: <xmqqo8ekhcfy.fsf@gitster.g> (Junio C. Hamano's message of "Sun,
-        11 Apr 2021 12:02:25 -0700")
-Message-ID: <87sg3w4kw6.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=KrhKaBRzhhhBtxcdNhbFHEV4cghUyj58CYGjMQvjfNc=;
+        b=DPV51JjSKMrGW55RCNz5Zwn6DY9d8b8PewAO7fMCdNua9Q1qIbnOXsQ7f6nVPcEmFF
+         nWKPz4F88IDk1mCAjsIqZuudmy+6xI5jQh4OYtVKIsHsSnDZvnMOi5ZSJCJ5EEAOVIIM
+         t5K3k6H9CR0pNeLepKpEpa+ao1024n8En9vWsto4bxcqdxj+i7TOEG6hEh4OgA1jMJkv
+         3V/EMmCsM+pBMZce/dB4j4hY0/WGE4mFT7vCeIc3MLL3qxMVk95wRjAwIZgnwaeaJBAe
+         3Hftxo8WwMKdrtFKvwFXia/dv9VQt9d7XBSq1LflHZ4PtaZU8p37fyVfWTscPFg8X6Bc
+         z1Gw==
+X-Gm-Message-State: AOAM530YOHE0K9j+X4rqv6XOx/dcnSmXkHWNwLNxXRyh3W2wR/rRMLZJ
+        3omnXx0+dWtL2UjcB8pkKvQLSqgOyzGweC/H3WHdmfbJWPFVpou1
+X-Google-Smtp-Source: ABdhPJzHrdRlYMQ8ix7LqU3NgX2VD82WOdrEdz1OsHX7J3Gs6FmgLfUstRH6X6+8lsb+YRDDGI8ZC3Nmz2LH6g0rMI8=
+X-Received: by 2002:a9d:740c:: with SMTP id n12mr20772672otk.21.1618174470896;
+ Sun, 11 Apr 2021 13:54:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20210326024411.28615-1-stdedos+git@gmail.com> <20210403122604.19203-1-133706+stdedos@users.noreply.github.com>
+ <xmqqr1jq7bzc.fsf@gitster.g> <CAHMHMxUVy4MUarT-q5EHwf_6cPNn+TSmNDuQbuxXvYPpnQTmpg@mail.gmail.com>
+ <xmqqfszwhc2e.fsf@gitster.g>
+In-Reply-To: <xmqqfszwhc2e.fsf@gitster.g>
+From:   =?UTF-8?B?zqPPhM6xz43Pgc6/z4Igzp3PhM6tzr3PhM6/z4I=?= 
+        <stdedos@gmail.com>
+Date:   Sun, 11 Apr 2021 23:53:55 +0300
+Message-ID: <CAHMHMxXKZMju30UKUAYUUOH4fMrtOV7Y3rZyneJ3VJMk15AkDQ@mail.gmail.com>
+Subject: Re: [PATCH v3] pathspec: advice: long and short forms are incompatible
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>,
+        =?UTF-8?B?zqPPhM6xz43Pgc6/z4Igzp3PhM6tzr3PhM6/z4I=?= 
+        <stdedos+git@gmail.com>, Bagas Sanjaya <bagasdotme@gmail.com>,
+        Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Sergey Organov <sorganov@gmail.com> writes:
+On Sun, 11 Apr 2021 at 22:10, Junio C Hamano <gitster@pobox.com> wrote:
 >
->> 2. We have descriptive long name for every other option, and it'd be an
->> exception if we'd have none for --diff-merges=m. In fact, it's
->> --diff-merges=m that could have been removed, but it'd break resemblance
->> with --cc and -c that both do have their --diff-merges=cc and
->> --diff-merges=c counterparts.
+> Hmph, that is unfortunate.  As authorship and sign-off is a part of
+> the mechanism we use to keep track of provenance of our codebase,
+> we'd prefer to be talking to somebody whom we can reach when needed;
+> the noreply address apparently is designed to be unreachable, no?
 >
-> Hmph, a devil's advocate in me suspects that it may just be arguing
-> why user-configurable 'default' is a bad idea, though.
 
-What feels bad about it? Is there something inherently wrong with an
-ability to configure a default and then request that default to be
-applied, using command-line option?
+I would like to "just" contribute, if possible.
+If someone *really* needs to track me down, I assume the mailing list
+is anyway already public,
+and the patchset title already will directly link to the thread.
 
--- Sergey Organov
+With regards,
+Ntentos Stavros
