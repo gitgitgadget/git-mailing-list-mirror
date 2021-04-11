@@ -2,61 +2,50 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0622FC433ED
-	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 18:04:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A1077C433B4
+	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 19:02:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B6BE360240
-	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 18:04:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6075461003
+	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 19:02:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235721AbhDKSEx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 11 Apr 2021 14:04:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43300 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235284AbhDKSEw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Apr 2021 14:04:52 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98893C061574
-        for <git@vger.kernel.org>; Sun, 11 Apr 2021 11:04:34 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id l14so9645562ljb.1
-        for <git@vger.kernel.org>; Sun, 11 Apr 2021 11:04:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=dvbk/JFcn3JLa7zqah2RAgoD3cZs+02uMX3Y9n1cfsU=;
-        b=ov4Qk42AhpOV3TxOJ8IYFwezdFLvWLRkQM9KK/homVSVikTE7bQpA8RsqqOB1INH2P
-         tEqu8PT9LvAsr5DEQpgof6Yd1BcqpI605MAcwTUEvdgu7MO6TXl6vR2lzyA/RLFOjtKk
-         r0qsUFeEDASy5+xl+AYW8VzQsQOJggmxUUvkGS4MnUtjvSUN7pPn0WKB/buTRDEHe32M
-         ZQKYMRTIzJbUulLT1nKpvnPKi5mV3/Evifeizxq85rUNIfFnu3lMT/5Phef7JD3Tds80
-         tCE6WpexGzirLbOo/awqtyhhPJHl0+cEwxleQ4PHlicfpCYghRW7K2fE/wzuvZ+d6lvA
-         RLlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=dvbk/JFcn3JLa7zqah2RAgoD3cZs+02uMX3Y9n1cfsU=;
-        b=h6CS69sUiReIqKtvre/Tybn45p6ea9iwKbIfWJWWIOniSXhFYdo6SqDd9u43tSX/0+
-         +Xkr9U/wXOewquAslF+Ba8Yu1/jvufmKnde6xKj/c3mJmUAzX6opbwEh9xEL8ocHxHWU
-         MGTOidKb6S0jeE4AefOxn74/WyCEgpGLBN2S2kqZ/BFwhYF+gzVilcHeSv1mCfXQDrCy
-         cQN5lvGwccRD4l8hgVc1pVArJF/G8IVO3G6o+0SMMJr2rjHysjkInSFb7sCuZG1Nuquz
-         mQxuFqxw+V5iqUW3Uqz1P0XPPaai5ZW36cEWoWPvGbW+47Hr/3FCmN/tCpbsWdE5Q57k
-         tKYQ==
-X-Gm-Message-State: AOAM5330NW7/BjJCIURhOvQKm+vxi8fkBbS8ya6UvcK3ZEEoaVbxP5OO
-        JtcRy7EEcwOxJEccjqRKKTcoW9c06Ow=
-X-Google-Smtp-Source: ABdhPJwHew7YZ7hV2eWaiGJVccJ7/KrK84lnJS23hcoPwHK2TdD2nMyCQKE2f82oE6NSgYTx94//jw==
-X-Received: by 2002:a2e:9785:: with SMTP id y5mr1565292lji.56.1618164272309;
-        Sun, 11 Apr 2021 11:04:32 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id m1sm1682828lfu.206.2021.04.11.11.04.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 11 Apr 2021 11:04:31 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
+        id S235476AbhDKTCo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 11 Apr 2021 15:02:44 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56115 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235407AbhDKTCn (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Apr 2021 15:02:43 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A0F09BDBC0;
+        Sun, 11 Apr 2021 15:02:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=LOeHA+qCAYBTXuuvyMOj4SZ2Fu0=; b=hgkLlt
+        UiXNLrIVOTfC076qWKGZwbL1BSe2M08lH3PGli+0ZmZmtr9vrhEvz5nVkvQMC3tF
+        T0XjuQUAOcSpS1N2/YO3oHyp/ReBZMLidytWXq7VluWqZ3Vfi6D76va09E3SX3KW
+        hHbswVISVFuu1UpzdYXxyJgnMLtIoFK1cvAT8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=v2Ou6qoK9x9LqsH25h/be7EUb7AliYWE
+        PH6itJHcDjcb9La7qKz+aezIITY3bB6xzmWQjcWI8cLbgpOBy42wWeir+k5nEEQr
+        2Pa8KggAeZg82bDcethqf+S/JWRPioWndGNGUqayXwkvHXDaDKqj4UylI6e9u0Sy
+        n3MUzMPqXcY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 987C8BDBBE;
+        Sun, 11 Apr 2021 15:02:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.243.138.161])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 09196BDBB9;
+        Sun, 11 Apr 2021 15:02:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Sergey Organov <sorganov@gmail.com>
 Cc:     Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.email>,
         Elijah Newren <newren@gmail.com>,
         Felipe Contreras <felipe.contreras@gmail.com>,
@@ -66,88 +55,26 @@ Subject: Re: [PATCH v1 0/5] git log: configurable default format for merge
  diffs
 References: <20210407225608.14611-1-sorganov@gmail.com>
         <20210410171657.20159-1-sorganov@gmail.com>
-        <xmqqsg3whka6.fsf@gitster.g>
-Date:   Sun, 11 Apr 2021 21:04:30 +0300
-In-Reply-To: <xmqqsg3whka6.fsf@gitster.g> (Junio C. Hamano's message of "Sun,
-        11 Apr 2021 09:13:05 -0700")
-Message-ID: <87wnt84s0h.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+        <xmqqsg3whka6.fsf@gitster.g> <87wnt84s0h.fsf@osv.gnss.ru>
+Date:   Sun, 11 Apr 2021 12:02:25 -0700
+In-Reply-To: <87wnt84s0h.fsf@osv.gnss.ru> (Sergey Organov's message of "Sun,
+        11 Apr 2021 21:04:30 +0300")
+Message-ID: <xmqqo8ekhcfy.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
+X-Pobox-Relay-ID: 746A1766-9AF8-11EB-9572-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Sergey Organov <sorganov@gmail.com> writes:
 
-> Sergey Organov <sorganov@gmail.com> writes:
->
->> These patches introduce capability to configure the default format of
->> output of diffs for merge commits by means of new log.diffMerges
->> configuration variable. The default format is then used by -m,
->> --diff-merges=m, and new --diff-merges=default options.
->>
->> In particular,
->>
->>   git config log.diffMerges first-parent
->>
->> will change -m option format from "separate" to "first-parent" that
->> will in turn cause, say,
->>
->>   git show -m <merge_commit>
->>
->> to output diff to the first parent only, instead of appending
->> typically large and surprising diff to the second parent at the end of
->> the output.
->
-> I think that it is a good goal to free a short-and-sweet "-m" from
-> getting tied forever to the current "two-tree diff for each of the
-> parent" (aka "separate"), and a configuration to change what the
-> "-m" option means would be a good approach to do so.  It would help
-> the interactive use by human end-users, which is the point of having
-> short-and-sweet options.  Existing scripts may depend on the current
-> behaviour, so the configuration cannot be introduced right away, but
-> over time they can be migrated to use the longer and more explicit
-> option "--diff-merges=separate".
+> 2. We have descriptive long name for every other option, and it'd be an
+> exception if we'd have none for --diff-merges=m. In fact, it's
+> --diff-merges=m that could have been removed, but it'd break resemblance
+> with --cc and -c that both do have their --diff-merges=cc and
+> --diff-merges=c counterparts.
 
-Yep, that's exactly the plan I have in mind.
-
-To tell the truth, I hope there are no scripts that use "git log -m -p",
-or "git show -m", but I do want to be on the safe side with it anyway,
-and then sometime in the future maybe we will be safe to change
-configuration default.
-
->
-> But I do not see much point in adding the "--diff-merges=default".
-> Who is the target audience?  Certainly not scripts that want to
-> avoid depending on the 'default' that can be different and easily
-> vary per user.
-
-There are 2 reasons to have "default":
-
-1. --diff-merges=default and -m are not exact synonyms: unlike -m,
---diff-merges=default (similar to other --diff-merges options)
-immediately enables diff output for merges, without -p, thus, for
-example, allowing to output diffs for merge commits only.
-
-The exact synonyms are rather --diff-merges=m and --diff-merges=default,
-and then we get to the next reason:
-
-2. We have descriptive long name for every other option, and it'd be an
-exception if we'd have none for --diff-merges=m. In fact, it's
---diff-merges=m that could have been removed, but it'd break resemblance
-with --cc and -c that both do have their --diff-merges=cc and
---diff-merges=c counterparts.
-
-Overall, having "default" has both functional and consistency merits.
-
-> Or is the plan to deprecate and remove the short-and-sweet "-m"
-> option and standardize on "--diff-merges=<style>"?  If so, such a
-> design makes sense from pureness and completeness standpoint, but I
-> am not sure if that is a good design for practical use.
-
-No, what I have in mind is resurrection of -m as more useful option, not
-removing it.
-
-Thanks,
--- Sergey Organov
+Hmph, a devil's advocate in me suspects that it may just be arguing
+why user-configurable 'default' is a bad idea, though.
