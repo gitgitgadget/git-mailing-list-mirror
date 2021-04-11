@@ -6,75 +6,73 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1077C433B4
-	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 19:02:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0AD85C433ED
+	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 19:08:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6075461003
-	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 19:02:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D45EF6105A
+	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 19:08:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235476AbhDKTCo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 11 Apr 2021 15:02:44 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56115 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235407AbhDKTCn (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Apr 2021 15:02:43 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A0F09BDBC0;
-        Sun, 11 Apr 2021 15:02:26 -0400 (EDT)
+        id S236231AbhDKTIq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 11 Apr 2021 15:08:46 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64377 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235420AbhDKTIq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Apr 2021 15:08:46 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 63D4ECAE7E;
+        Sun, 11 Apr 2021 15:08:29 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=LOeHA+qCAYBTXuuvyMOj4SZ2Fu0=; b=hgkLlt
-        UiXNLrIVOTfC076qWKGZwbL1BSe2M08lH3PGli+0ZmZmtr9vrhEvz5nVkvQMC3tF
-        T0XjuQUAOcSpS1N2/YO3oHyp/ReBZMLidytWXq7VluWqZ3Vfi6D76va09E3SX3KW
-        hHbswVISVFuu1UpzdYXxyJgnMLtIoFK1cvAT8=
+        :content-type:content-transfer-encoding; s=sasl; bh=XhQKg1VHdaed
+        86Iu9V/sBxhfBA0=; b=OYLCMNLxo0X8sbj7CAghtDa/oMgKD+CQXOyyS26eBZoh
+        j4bEAIt6tgJlVqL42GGf6yMpvH1XZcncHTVtJYGyBPXcugb238ke0DptnPxuCR/r
+        shNvIdsxPERnFzWb0l2HSj331dyV0nMH7Bmax1aFA5PT/aWiIkwqrao2zcIroZY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=v2Ou6qoK9x9LqsH25h/be7EUb7AliYWE
-        PH6itJHcDjcb9La7qKz+aezIITY3bB6xzmWQjcWI8cLbgpOBy42wWeir+k5nEEQr
-        2Pa8KggAeZg82bDcethqf+S/JWRPioWndGNGUqayXwkvHXDaDKqj4UylI6e9u0Sy
-        n3MUzMPqXcY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 987C8BDBBE;
-        Sun, 11 Apr 2021 15:02:26 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=JC7nU8
+        PIJQ5aH53E25+TQNvQQ0ahT/t2eMovu7DDVlKevxyHwa00A0DOhVfcNfAK1YSXUr
+        6I6JdO5fOjOJaGLBju0khLY83j6uuW06gS6b+ktwJM7dyW8BIMKsaY44snz9403A
+        NSNGs6l+J5SIKPxTBYW1uYeyoYhKZa7zhbn2M=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 487E8CAE7D;
+        Sun, 11 Apr 2021 15:08:29 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.243.138.161])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 09196BDBB9;
-        Sun, 11 Apr 2021 15:02:26 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B73C8CAE7C;
+        Sun, 11 Apr 2021 15:08:28 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Sergey Organov <sorganov@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.email>,
-        Elijah Newren <newren@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v1 0/5] git log: configurable default format for merge
- diffs
-References: <20210407225608.14611-1-sorganov@gmail.com>
-        <20210410171657.20159-1-sorganov@gmail.com>
-        <xmqqsg3whka6.fsf@gitster.g> <87wnt84s0h.fsf@osv.gnss.ru>
-Date:   Sun, 11 Apr 2021 12:02:25 -0700
-In-Reply-To: <87wnt84s0h.fsf@osv.gnss.ru> (Sergey Organov's message of "Sun,
-        11 Apr 2021 21:04:30 +0300")
-Message-ID: <xmqqo8ekhcfy.fsf@gitster.g>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Drew DeVault <sir@cmpwn.com>
+Subject: Re: [PATCH 1/2] send-email: remove non-working support for
+ "sendemail.smtpssl"
+References: <20210411125431.28971-1-sir@cmpwn.com>
+        <cover-0.2-00000000000-20210411T144128Z-avarab@gmail.com>
+        <patch-1.2-ee041188e55-20210411T144128Z-avarab@gmail.com>
+Date:   Sun, 11 Apr 2021 12:08:28 -0700
+In-Reply-To: <patch-1.2-ee041188e55-20210411T144128Z-avarab@gmail.com>
+ (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Sun, 11 Apr
+ 2021 16:43:19 +0200")
+Message-ID: <xmqqk0p8hc5v.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 746A1766-9AF8-11EB-9572-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 4C9AB078-9AF9-11EB-9AD9-D152C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sergey Organov <sorganov@gmail.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> 2. We have descriptive long name for every other option, and it'd be an
-> exception if we'd have none for --diff-merges=m. In fact, it's
-> --diff-merges=m that could have been removed, but it'd break resemblance
-> with --cc and -c that both do have their --diff-merges=cc and
-> --diff-merges=c counterparts.
+> So let's just remove it instead of fixing the bug, clearly nobody's
+> cared enough to complain.
 
-Hmph, a devil's advocate in me suspects that it may just be arguing
-why user-configurable 'default' is a bad idea, though.
+Hmph, is that a safe assumption?  They may have just assumed that
+you did not break it and kept using plaintext without knowing?  If
+we do not give a warning when sending over an unencrypted channel in
+red flashing letters, that is more likely explanation than nobody
+caring that we saw no breakage reports, no?
