@@ -8,64 +8,64 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C8D7DC433ED
-	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 14:17:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AA3DC433B4
+	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 14:20:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 84670610E9
-	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 14:17:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 57694610CA
+	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 14:20:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235737AbhDKORj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 11 Apr 2021 10:17:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51228 "EHLO
+        id S235749AbhDKOUj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 11 Apr 2021 10:20:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235095AbhDKORh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Apr 2021 10:17:37 -0400
+        with ESMTP id S235095AbhDKOUj (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Apr 2021 10:20:39 -0400
 Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F585C061574
-        for <git@vger.kernel.org>; Sun, 11 Apr 2021 07:17:20 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id l4so15917202ejc.10
-        for <git@vger.kernel.org>; Sun, 11 Apr 2021 07:17:20 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72EBCC061574
+        for <git@vger.kernel.org>; Sun, 11 Apr 2021 07:20:19 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id u21so15927846ejo.13
+        for <git@vger.kernel.org>; Sun, 11 Apr 2021 07:20:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
          :message-id:mime-version;
-        bh=Z4npkVgkXnBoLU3nO3SksKaQOBT7AOttTam6h6uU7zw=;
-        b=hMME/ooaL7xMQobmJPvh3MsUPY5QxyqCpchsDYUyv9F9QbmXYgyFjUl3e+OwEyignJ
-         i0O9LvtIjii242s3lPI+7i9qOMBLoctT3B6iwz+pzaQM7p4Wq8paEas4SfSENs6490Bj
-         S2GKCDcgv5Ylwc85ec/srs+xQcFjVYtgsWkeX64umhYbfJDFvaCgvqxnKXNyENxc0jwG
-         0M2HatTmH4zYqC4wqrhWZB74Aoi7T+eZZDcQqRh4lAh6IYc6mTtOd8LSCwdwQLLQ9kX7
-         CPINBkq3mgtRwqqK9i8G16B8X+wkDA3YFdvWEitpMdF1B0DHQ1trYbBXnqRMHTsuuCN/
-         zVkA==
+        bh=R+E+02Nfe9cUlMFJhBrVJJuYcue7CsDmmW9if8n9oSE=;
+        b=R9Z85Im1X9g88jJrBq7b7v1Mj2Egy4m3HY8ntqlgmGpUOx6vNTk6xDwM0QOM5CA94A
+         ss32FzuNP1aoHz/oyn5iTieUWZq1SMKJaac9uJJaNx+rggP6WobfHDbgtpJcG/R6Mmep
+         lkH1pAWWt4t339dRD5iVE9w5Ph9xpV6riwNwjKDDIAwCGl/yqvKNVsOPm/n9J2VIHHSZ
+         PA+oUO6cbMn9kP9RG+XrZAnryUrO9FqBDg98F7jdNNoqG48P5H9QpyBlU29Kmd9wTWrD
+         mvwib2w6I2DR0cKUjRsgw7SXt3SEEgu3fSChiYAeYdov9C4Aa5lhCLRKknUEwy8Te1wB
+         RdaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
          :in-reply-to:date:message-id:mime-version;
-        bh=Z4npkVgkXnBoLU3nO3SksKaQOBT7AOttTam6h6uU7zw=;
-        b=O5djUstF0lySQIogCFv9ra+bj5LpZccPjFcnT0bIHkvckKKDFThUxhXPPdGWqliR/V
-         fvyEhZdfWU0I5MXwwslT6vo5y+QsVfgqq7KfpNbpgp9NuntnmqBrvHFvtvhPISKetwpK
-         ddv2tFzfranlIVcJVYGucpjHPfGoNVJideW6nVrlLSR4DeWPnBfhLcp83DDa9yeAcKPa
-         OJzuE670fEwTY8fXqm0A2Nl3Yf4Hi6+p2eu4IsdEOLugqJkf54K5QBfTNlesPLeYuGNt
-         NW6OqvpaqCyPfhbZJSP5dfAf4S7WkY9RCpwH0HOj4CVBNOOWZZZBPv9zjrDJkLxvANjC
-         6iLA==
-X-Gm-Message-State: AOAM531tWdxFf1RyI6ftlfKVlYKKSwp34GqY3QWowIn4YKKpxiztF0BA
-        po0MOwzpeeSUZrOz8aPQfpcXuGQfYQo=
-X-Google-Smtp-Source: ABdhPJzd8Ot9HTlvzsKAzX1DHMvJZ9Q3vEdWDHsWGkjvvdspHO4knx9Rkw3W6wyJBDrqtFiFKK+cIQ==
-X-Received: by 2002:a17:906:6d01:: with SMTP id m1mr24287854ejr.501.1618150639133;
-        Sun, 11 Apr 2021 07:17:19 -0700 (PDT)
+        bh=R+E+02Nfe9cUlMFJhBrVJJuYcue7CsDmmW9if8n9oSE=;
+        b=Y4qgByuT4eBwtDvf9ILlMxFy6tPS0DN6klIIBSc2UOIwpd24dnExGMKYEFx5rdmV1D
+         N2QEEDAXOS/BZqIc0uyQPPiveV0EzmhsOpdAj9LgRXlMHyFKHcFr7zw3p0f73wIlPkAi
+         gNsalgyT60YDeoSVQUkc2In535a5GydRtktaBrG4lN0LYirY/R1JVtVy1RGd51fKbUaj
+         H8F++ZpR2OSD/axV9czokRO8B4zTtt1IOlqxNmSWEav006jRS3EDhYOimZVvfDt//iTw
+         xhVd0Q3wk3ixwKsuvacWuuF5Jd6w8Nq7+cgBfl4xDL8BwtNxWx/VJ6jL2HDiuGzeY6Ke
+         etQw==
+X-Gm-Message-State: AOAM532yA20gmpnr3ERi8lRwOVPVAw2bhWHN3aUnrRbn5TPOCKZcjvYH
+        DcAcsDJDYai7EKWofwKMsI0=
+X-Google-Smtp-Source: ABdhPJzF56Q0RFqaH2keAonf6sRj2p4N+lL/IBM03LIvETILWB8oQMfAdoOr/dkmBJ9BloYK7O+pbA==
+X-Received: by 2002:a17:906:5da:: with SMTP id t26mr23111009ejt.21.1618150818646;
+        Sun, 11 Apr 2021 07:20:18 -0700 (PDT)
 Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id e5sm4752495edr.64.2021.04.11.07.17.18
+        by smtp.gmail.com with ESMTPSA id nb29sm4011709ejc.118.2021.04.11.07.20.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 11 Apr 2021 07:17:18 -0700 (PDT)
+        Sun, 11 Apr 2021 07:20:18 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Drew DeVault <sir@cmpwn.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 3/3] git-send-email: rename 'tls' to 'starttls'
+Subject: Re: [PATCH v2 2/3] git-send-email: die on invalid smtp_encryption
 References: <20210411125431.28971-1-sir@cmpwn.com>
- <20210411125431.28971-4-sir@cmpwn.com>
+ <20210411125431.28971-3-sir@cmpwn.com>
 User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <20210411125431.28971-4-sir@cmpwn.com>
-Date:   Sun, 11 Apr 2021 16:17:17 +0200
-Message-ID: <87eefggb2q.fsf@evledraar.gmail.com>
+In-reply-to: <20210411125431.28971-3-sir@cmpwn.com>
+Date:   Sun, 11 Apr 2021 16:20:16 +0200
+Message-ID: <87blakgaxr.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -75,79 +75,57 @@ X-Mailing-List: git@vger.kernel.org
 
 On Sun, Apr 11 2021, Drew DeVault wrote:
 
-> The name 'tls' is misleading. The 'ssl' option enables a generic
-> "modern" encryption stack which might very well use TLS; but the 'tls'
-> option enables STARTTLS support, which works entirely differently.
->
-> This renames the canonical option to 'starttls', to make this
-> distinction more obvious, and adds 'tls' as an alias for starttls, to
-> avoid breaking config files.
->
 > Signed-off-by: Drew DeVault <sir@cmpwn.com>
 > ---
->  Documentation/git-send-email.txt |  6 ++++--
->  git-send-email.perl              | 10 +++++++---
->  2 files changed, 11 insertions(+), 5 deletions(-)
+>  Documentation/git-send-email.txt | 4 ++--
+>  git-send-email.perl              | 3 +++
+>  2 files changed, 5 insertions(+), 2 deletions(-)
 >
 > diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-> index 520b355e50..f8cea9e1f9 100644
+> index c17c3b400a..520b355e50 100644
 > --- a/Documentation/git-send-email.txt
 > +++ b/Documentation/git-send-email.txt
-> @@ -168,12 +168,14 @@ Sending
->  	unspecified, choosing the envelope sender is left to your MTA.
->  
->  --smtp-encryption=<encryption>::
-> -	Specify the encryption to use, either 'ssl' or 'tls'. 'ssl' enables
-> -	generic SSL/TLS support and is typically used on port 465.  'tls'
-> +	Specify the encryption to use, either 'ssl' or 'starttls'. 'ssl' enables
-> +	generic SSL/TLS support and is typically used on port 465.  'starttls'
+> @@ -171,8 +171,8 @@ Sending
+>  	Specify the encryption to use, either 'ssl' or 'tls'. 'ssl' enables
+>  	generic SSL/TLS support and is typically used on port 465.  'tls'
 >  	enables in-band STARTTLS support and is typically used on port 25 or
->  	587.  Use whichever option is recommended by your mail provider.  Leave
->  	empty to disable encryption and use plain SMTP.  Default is the value of
+> -	587.  Use whichever option is recommended by your mail provider.  Any
+> -	other value reverts to plain SMTP.  Default is the value of
+> +	587.  Use whichever option is recommended by your mail provider.  Leave
+> +	empty to disable encryption and use plain SMTP.  Default is the value of
 >  	`sendemail.smtpEncryption`.
-> ++
-> +'tls' is an alias for 'starttls' for legacy reasons.
 >  
 >  --smtp-domain=<FQDN>::
->  	Specifies the Fully Qualified Domain Name (FQDN) used in the
 > diff --git a/git-send-email.perl b/git-send-email.perl
-> index bda5211f0d..3f125bc2b8 100755
+> index f5bbf1647e..bda5211f0d 100755
 > --- a/git-send-email.perl
 > +++ b/git-send-email.perl
-> @@ -495,8 +495,12 @@ sub read_config {
+> @@ -495,6 +495,9 @@ sub read_config {
 >  
 >  # 'default' encryption is none -- this only prevents a warning
 >  $smtp_encryption = '' unless (defined $smtp_encryption);
-> -if ($smtp_encryption ne "" && $smtp_encryption ne "ssl" && $smtp_encryption ne "tls") {
-> -	die __("Invalid smtp_encryption configuration: expected 'ssl', 'tls', or nothing.\n");
-> +if ($smtp_encryption eq "tls") {
-> +	# "tls" is an alias for starttls for legacy reasons
-> +	$smtp_encryption = "starttls";
-> +};
+> +if ($smtp_encryption ne "" && $smtp_encryption ne "ssl" && $smtp_encryption ne "tls") {
+> +	die __("Invalid smtp_encryption configuration: expected 'ssl', 'tls', or nothing.\n");
+> +}
 
-Needless trailing ";".
+Having not tested this but just eyeballed the code, I'm fairly sure
+you're adding a logic error here, or is $smtp_encryption guaranteed to
+be defined at this point?
 
-This and the preceding patch would be more readable if it was
-re-arranged in some way as to not rewrite the newly introduced lines
-between 2 and 3, maybe:
+We start with it as undef, then read the config, then the CLI
+options. If we've got neither it'll still be undef here, no?
 
-{
-	my $tls_name = "tls";
-        if (....)
-}
+Thus the string comparison will emit a warning.
 
-Then you'd only need to change "tls" to "starttls" there.
+Maybe I'm overly used to regexen in Perl, but I'd also find this more
+readable as:
 
-> +if ($smtp_encryption ne "" && $smtp_encryption ne "ssl" && $smtp_encryption ne "starttls") {
-> +	die __("Invalid smtp_encryption configuration: expected 'ssl', 'starttls', or nothing.\n");
->  }
->  
->  # Set CC suppressions
-> @@ -1541,7 +1545,7 @@ sub send_message {
->  						 Hello => $smtp_domain,
->  						 Debug => $debug_net_smtp,
->  						 Port => $smtp_server_port);
-> -			if ($smtp_encryption eq 'tls' && $smtp) {
-> +			if ($smtp_encryption eq 'starttls' && $smtp) {
+    $smtp_encryption !~ /^(?:|ssl|tls)$/s
 
-And this could use the same variable.
+Or something like:
+
+    my @valid_smtp_encryption = ('', qw(ssl tls));
+    if (!grep { $_ eq $smtp_encryption } @valid_smtp_encryption) {
+        ....
+    }
+
