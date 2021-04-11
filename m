@@ -2,90 +2,84 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ADDB4C43460
-	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 12:54:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 28257C433ED
+	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 14:03:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 86FAF610CB
-	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 12:54:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EBF016101B
+	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 14:03:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235541AbhDKMzC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 11 Apr 2021 08:55:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33356 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235535AbhDKMzC (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Apr 2021 08:55:02 -0400
-Received: from out0.migadu.com (out0.migadu.com [IPv6:2001:41d0:2:267::])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C53BBC061574
-        for <git@vger.kernel.org>; Sun, 11 Apr 2021 05:54:45 -0700 (PDT)
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cmpwn.com; s=key1;
-        t=1618145684;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=6BkyJj7dyJN6OaR5Iv+EM55YTYurL50wm+W5z+322pE=;
-        b=HrKKXEv7FnvFmnpiOdrv39BR5ZsoBEXw9Ts+EsGX3FhKcv2ATYkckfxoC9/OQlM4qvs2Ea
-        FeKuFXlCovmPke86cHjwC0SDASt1J6EX2G2yhQ+XHIPmcTE/RtBve5EJy/amK9/DJGZMPl
-        CqbYoR/TdX0nGKrd3sfMq5uJ7uiQ6mCDomLxaxBpgT6rsJZ2m5R+lZ/gX4LThxiFRM+tML
-        EmQiH3V8u/VZtAlcls32cHE2FlRihfS1x6STN//29lJ3zFliss8P62zNn10SdVeuzMoSJk
-        JFoevZBS4yMeW5DQ+YNrmNheNrlL7IGg2mHNrhTzUBlapcLbplflEpsi9iKXuA==
-From:   Drew DeVault <sir@cmpwn.com>
-To:     git@vger.kernel.org
-Cc:     Drew DeVault <sir@cmpwn.com>
-Subject: [PATCH v2 2/3] git-send-email: die on invalid smtp_encryption
-Date:   Sun, 11 Apr 2021 08:54:30 -0400
-Message-Id: <20210411125431.28971-3-sir@cmpwn.com>
-In-Reply-To: <20210411125431.28971-1-sir@cmpwn.com>
-References: <20210411125431.28971-1-sir@cmpwn.com>
+        id S235386AbhDKOD1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 11 Apr 2021 10:03:27 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:60935 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233514AbhDKOD0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Apr 2021 10:03:26 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id EE1E112525E;
+        Sun, 11 Apr 2021 10:03:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=MVfeMCfSBVyDpJpLISdYnXN5Zzc=; b=UTnlGAjhVj7znt2DhCf/
+        8VMOeZtZry8qehXnK0tLEw6KD8H0aGgaNC4JXOtnmyhgIqQ6FqE3ZIkwSl9mOZbK
+        iOI+7TY8yvDBh++77ui6HxB1mI8KarGTgLMvk6c8s0dq9WkcLAlt531kzqKgSPiU
+        l92ebJhQgV8Yg3hUmpBdeHw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         q=dns; s=sasl; b=UmnIn872OqYtZhoz+Nj4YtuQdZ/YmtWbyYGdXyPX+zOYh4
+        YziHsPlvpMBFvpKpo/c50DO+sUot0iqBGYMxmGMKoY/xf6Jenat9rtUpQsyypGML
+        v+NMUTW/eJUpOjsoLYd1D4jpgdhYlvSU6DPYGGaIHZTZpF+xklgylrVRP8eF4=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id E790312525D;
+        Sun, 11 Apr 2021 10:03:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.243.138.161])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 1B21912525B;
+        Sun, 11 Apr 2021 10:03:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     <git@vger.kernel.org>, Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 10/15] hash: provide per-algorithm null OIDs
+References: <20210410152140.3525040-1-sandals@crustytoothpaste.net>
+        <20210410152140.3525040-11-sandals@crustytoothpaste.net>
+Date:   Sun, 11 Apr 2021 07:03:05 -0700
+Message-ID: <xmqqy2dohqau.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
-X-Migadu-Auth-User: sir@cmpwn.com
+Content-Type: text/plain
+X-Pobox-Relay-ID: A40E7068-9ACE-11EB-9088-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Drew DeVault <sir@cmpwn.com>
----
- Documentation/git-send-email.txt | 4 ++--
- git-send-email.perl              | 3 +++
- 2 files changed, 5 insertions(+), 2 deletions(-)
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index c17c3b400a..520b355e50 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -171,8 +171,8 @@ Sending
- 	Specify the encryption to use, either 'ssl' or 'tls'. 'ssl' enables
- 	generic SSL/TLS support and is typically used on port 465.  'tls'
- 	enables in-band STARTTLS support and is typically used on port 25 or
--	587.  Use whichever option is recommended by your mail provider.  Any
--	other value reverts to plain SMTP.  Default is the value of
-+	587.  Use whichever option is recommended by your mail provider.  Leave
-+	empty to disable encryption and use plain SMTP.  Default is the value of
- 	`sendemail.smtpEncryption`.
- 
- --smtp-domain=<FQDN>::
-diff --git a/git-send-email.perl b/git-send-email.perl
-index f5bbf1647e..bda5211f0d 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -495,6 +495,9 @@ sub read_config {
- 
- # 'default' encryption is none -- this only prevents a warning
- $smtp_encryption = '' unless (defined $smtp_encryption);
-+if ($smtp_encryption ne "" && $smtp_encryption ne "ssl" && $smtp_encryption ne "tls") {
-+	die __("Invalid smtp_encryption configuration: expected 'ssl', 'tls', or nothing.\n");
-+}
- 
- # Set CC suppressions
- my(%suppress_cc);
--- 
-2.31.1
+> diff --git a/object-file.c b/object-file.c
+> index 5f1fa05c4e..50bb5b6ca4 100644
+> --- a/object-file.c
+> +++ b/object-file.c
+> @@ -55,7 +55,6 @@
+>  	"\x6f\xe1\x41\xf7\x74\x91\x20\xa3\x03\x72" \
+>  	"\x18\x13"
+>  
+> -const struct object_id null_oid;
+>  static const struct object_id empty_tree_oid = {
+>  	EMPTY_TREE_SHA1_BIN_LITERAL,
+>  	GIT_HASH_SHA1,
+> @@ -64,6 +63,9 @@ static const struct object_id empty_blob_oid = {
+>  	EMPTY_BLOB_SHA1_BIN_LITERAL,
+>  	GIT_HASH_SHA1,
+>  };
+> +const struct object_id null_oid_sha1 = {
+> +	{0}, GIT_HASH_SHA1,
+> +};
 
+sparse wants this to be a file-scope static.
