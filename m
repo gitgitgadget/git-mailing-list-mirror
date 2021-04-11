@@ -2,98 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 161BFC433ED
-	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 15:34:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BEC1BC433ED
+	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 16:13:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DD5C9610C7
-	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 15:34:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8619161028
+	for <git@archiver.kernel.org>; Sun, 11 Apr 2021 16:13:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236138AbhDKPfG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 11 Apr 2021 11:35:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39596 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235202AbhDKPfG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Apr 2021 11:35:06 -0400
-Received: from mail-il1-x12e.google.com (mail-il1-x12e.google.com [IPv6:2607:f8b0:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF142C061574
-        for <git@vger.kernel.org>; Sun, 11 Apr 2021 08:34:49 -0700 (PDT)
-Received: by mail-il1-x12e.google.com with SMTP id c15so8872014ilj.1
-        for <git@vger.kernel.org>; Sun, 11 Apr 2021 08:34:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Zx/N8PvVk1/J3OqgsJ1oZHvWC02VUV717+6tfdxzMq8=;
-        b=aPiyktCT4AMzTJ/bf3SL5egSoKQHRPKIGHpjqJ45YiamErJSSCgnJVH07OEMPyUkT0
-         gl1SlIWsqqrIrSB/C5tgdhVFabze3AFy6njN7RkKSE0qnkfH8XYLI5E56hONfkg6KIci
-         ewQLipdRDcY22SG4jBR5SVggeZlT40r/Lbwydn6sFI6hSmLZ4QRAFUedRaZAFXrTzHFH
-         4fsyzOIZfc6HjTr9PfgWx1SWdgn9GkXyr8sHA10TuqfWehydanvHRmnrqiqcC8omMAR2
-         IHldtwBUUQECdn2ccvnOWpAgmpyY+Hq4ww3WUiAZGR8ycU4eq/jkbIpwquHmJ9RtUA5l
-         /+oQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Zx/N8PvVk1/J3OqgsJ1oZHvWC02VUV717+6tfdxzMq8=;
-        b=IPXNh5QFSzxGKLt+3J6f2FjUayYuniJv51sQuYd6GJ1f/19eh3K26HNFjFNOTgYm5C
-         k1bvYlqzRn5M5NxzuIHGTTYc8NwXiMwjQeWQjDm30U5SqB+iC/X6xwFi2L9QptY1AmN/
-         G4pWSfwCjHSorqK0pb3xwVKsxs+UOQGb1HDAtGCjbuEmES9yqiQI1DDBsxIVOrm5O1z5
-         E/Ke0xVeYbqyJSVwaUE8iNZJRSz79pWmkub/+/xCmOUqBh4tyMdgRkr/fikWS1+7AUAN
-         CUyu9Vvt0dlVTwN/W/hmaMOXYT/d37OXIWodhBOLT4AxkD22RU465AEh0+ffrwXbkjiT
-         vkqQ==
-X-Gm-Message-State: AOAM531XcOD5b6V3DCrpjofmhPJs/rDDsBpFGRZvkMPFPa4EtOdlJLWn
-        uAQS6IFgsO3scUUoNqKzND+vNbcQ1d7c5djSOGA=
-X-Google-Smtp-Source: ABdhPJzYeIjn/4Mof72v8oitQ6xjXGpXHIu+uA7Q3HSAv7L2nb31dt/iJQX5IF3UugMYOolvrEje0VE8rlw4No6UU1o=
-X-Received: by 2002:a92:3644:: with SMTP id d4mr20284303ilf.53.1618155289299;
- Sun, 11 Apr 2021 08:34:49 -0700 (PDT)
+        id S236405AbhDKQNX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 11 Apr 2021 12:13:23 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58513 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235756AbhDKQNX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Apr 2021 12:13:23 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5D9DDBCC4F;
+        Sun, 11 Apr 2021 12:13:06 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=nx8T7+EH88W4iqcSavlaoby+dHw=; b=jv1euYCjyhlh5jywfMFO
+        APMYmRBzONB5iPQqzLLm+rwKEyV2eI4Z+uJMiZBIFGSt62Y+ZVcPoIOUB7HyQY1C
+        ywHCu+DJxCK0qgPFQdtkOGwExx/aKcgNOQyARKDz0jq3Zs19y0oR/JgNB6yJZQMB
+        Pt/P82Bv/H1PmDXeiLU63YU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         q=dns; s=sasl; b=D7K2LcvnfsYytG0dkkiC3tyzWrNvLzs/tdRRwGojdPZldi
+        cnhnKdS0qxqktPW8LwZDxh/AKJyJ6AAsV0ve4aOnGTa+KywCZC5LkR8jpJ4/hNRn
+        hSKB7xrPxvXMRTUNZeW7Lu/AYNAq0zCD7Sry2NV/8BGozwS2ZOM3dTVaXwKv8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 53494BCC4E;
+        Sun, 11 Apr 2021 12:13:06 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C2AB4BCC4D;
+        Sun, 11 Apr 2021 12:13:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Sergey Organov <sorganov@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.email>,
+        Elijah Newren <newren@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v1 0/5] git log: configurable default format for merge
+ diffs
+References: <20210407225608.14611-1-sorganov@gmail.com>
+        <20210410171657.20159-1-sorganov@gmail.com>
+Date:   Sun, 11 Apr 2021 09:13:05 -0700
+Message-ID: <xmqqsg3whka6.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <CAOLTT8RfE4nn5NnjZh7xuF09-5=+K+_j_2kP0327HVdR4x_wAQ@mail.gmail.com>
- <CAOLTT8RTA0inxgxbd3qDToKYxwgXGKvJikXWsXg7oQ4asFj+HQ@mail.gmail.com>
-In-Reply-To: <CAOLTT8RTA0inxgxbd3qDToKYxwgXGKvJikXWsXg7oQ4asFj+HQ@mail.gmail.com>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Sun, 11 Apr 2021 23:34:35 +0800
-Message-ID: <CAOLTT8SW0n=x3HBL=php0aC1nhP7eU-MHFLustC3H0opxGRV1w@mail.gmail.com>
-Subject: Re: GSoC Git Proposal Draft - ZheNing Hu
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Hariom verma <hariom18599@gmail.com>,
-        Shourya Shukla <periperidip@gmail.com>,
-        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>, Jiang Xin <worldhello.net@gmail.com>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: CC709812-9AE0-11EB-8FB1-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, Peff,
+Sergey Organov <sorganov@gmail.com> writes:
 
-> Why is Olga=E2=80=99s solution rejected?
-> 1. Olga's solution is to let `git cat-file` use the `ref-filter` interfac=
-e,
-> the performance of `cat-file` appears to be degraded due "very eager to
-> allocate lots of separate strings" in `ref-filter` and other reasons.
+> These patches introduce capability to configure the default format of
+> output of diffs for merge commits by means of new log.diffMerges
+> configuration variable. The default format is then used by -m,
+> --diff-merges=m, and new --diff-merges=default options.
+>
+> In particular,
+>
+>   git config log.diffMerges first-parent
+>
+> will change -m option format from "separate" to "first-parent" that
+> will in turn cause, say,
+>
+>   git show -m <merge_commit>
+>
+> to output diff to the first parent only, instead of appending
+> typically large and surprising diff to the second parent at the end of
+> the output.
 
-I am thinking today whether we can directly append some object information
-directly to `&state->stack->output`, Instead of assigning to `v->s` firstly=
-.
+I think that it is a good goal to free a short-and-sweet "-m" from
+getting tied forever to the current "two-tree diff for each of the
+parent" (aka "separate"), and a configuration to change what the
+"-m" option means would be a good approach to do so.  It would help
+the interactive use by human end-users, which is the point of having
+short-and-sweet options.  Existing scripts may depend on the current
+behaviour, so the configuration cannot be introduced right away, but
+over time they can be migrated to use the longer and more explicit
+option "--diff-merges=separate".
 
-But in `cmp_ref_sorting()` we will use `get_ref_atom_value()`, It is possib=
-le
-to compare `v->s` of two different refs, I must goto fill object info in `v=
-->s`.
+But I do not see much point in adding the "--diff-merges=default".
+Who is the target audience?  Certainly not scripts that want to
+avoid depending on the 'default' that can be different and easily
+vary per user.
 
-So I think this is one of the reasons why `ref-filter` desires to
-allocate a large
-number of strings, right?
+Or is the plan to deprecate and remove the short-and-sweet "-m"
+option and standardize on "--diff-merges=<style>"?  If so, such a
+design makes sense from pureness and completeness standpoint, but I
+am not sure if that is a good design for practical use.
 
---
-ZheNing Hu
