@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90842C433B4
-	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 17:16:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F753C433B4
+	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 17:16:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7010861206
-	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 17:16:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6E2D861206
+	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 17:16:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244289AbhDLRRE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Apr 2021 13:17:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35186 "EHLO
+        id S244535AbhDLRRJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Apr 2021 13:17:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35102 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244044AbhDLRQY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Apr 2021 13:16:24 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7481DC06134F
-        for <git@vger.kernel.org>; Mon, 12 Apr 2021 10:15:54 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id h4so4702860wrt.12
-        for <git@vger.kernel.org>; Mon, 12 Apr 2021 10:15:54 -0700 (PDT)
+        with ESMTP id S243960AbhDLRQ3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Apr 2021 13:16:29 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6529CC061574
+        for <git@vger.kernel.org>; Mon, 12 Apr 2021 10:15:55 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id 12so7260023wmf.5
+        for <git@vger.kernel.org>; Mon, 12 Apr 2021 10:15:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=4g4zkBFclK/dJVd1IEGEqwg97RwzW49Nxm5byI7uQM0=;
-        b=BSO+VKeVlD7WGdEfUdBbrzHAvVchzbcX2hfn9PztcJgALtlh+mNvwBslx/DCJyLwjD
-         kaYSewg4VCYol1yx5lJpT2uKZTtFRrhQeK3Yg9WpnzZwkdBnxrkoLab7RXHV+3zmwnyu
-         oc0bH9uGOo9kratpgnEMPXOVTQfe65AL/S9SGewGw8YYPKcdLdzWKoD/q7tpo08LaxBL
-         sK6H2BX2uqp9TwO/+Gsmf6tb++qvIZys1LSnL6PiRryRujov6/HJnAO+LA5Nje5QzktN
-         QB4Sjoph3q6CgJYPq8ylSWkp+o5ET6t2CF/esONgvDcSvIrgbBXCBg6Bp+VAAOKlZjS6
-         yrxQ==
+        bh=8vfzGY4e3JZmVv/z7f6GluOSI2a8fb+vM/qakIeaBgE=;
+        b=uc3VQTwIqHHH2elx3gUsfZKVr/B21KaUqpzbKTCYJoCLVWXeT+04zDxt2haH/09b0s
+         3Hjfoi3cTriLrZwVArqqiayTRzPKrrOslOtmw+WwTeXF3YXo1a3ZA4Yz+MJdzW+Lq61I
+         9pu+6JsxKOrWg0OhkQcf5/0qodSSBOQMVef7QVkncHbl/6rbALGWuzGCMzJVGjdrF5Dx
+         anImSoXOgJZ3NjWYgvpVo3kvee6qJDuPt7xZPDxH+dz+ytg2nkQVd0uMGGTUW34lgix1
+         BzoYnTAMQ1QntnVHSmOuDtF7n+qwGvuJ+n0gElOJgJaIaJ0VJvG6mJzkGzEO65kmGqeb
+         VbrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=4g4zkBFclK/dJVd1IEGEqwg97RwzW49Nxm5byI7uQM0=;
-        b=ZIbO5IIyI685u82rXN8Q6RIi6b3GRV/yP514V3vZByODE4UXVEYT3f9X5oMXETANNP
-         KP7k2ugn6lz4bntBOukZY+uVXTfRUDlAugug7RLSgmSo4qMKS/EexA6MWYh9w4tf0iqw
-         u42BVR+dNFnTpp4hgYO5QBMDlTRat+AyaqoVreU+EGtgamERDPTr7Xzm+oIr26906oJ9
-         WjCONhDNqJvDN9bZ8+C/wY8mYkPBePMmrokrnXU/6m+bM8ktpAMNDtomsrXFgoZBS3cy
-         s+hLbo51H94Z7JBbd+KO5T5AlbC+jaBNlxre0VLqWljut5/2K3Ll9Il6oU3SOxuSBm6u
-         DKBw==
-X-Gm-Message-State: AOAM530QMhKHZAu/SqOkyEaTvyBASHvUHrPrufETE9hMyzt8GXuFenTn
-        rnj4HObkfEqzmSlFJpV654YOe32upaW2yA==
-X-Google-Smtp-Source: ABdhPJxpVXDmJEThActEFwzX/sEMis2DUn4dY4m9WWc2Vk0c9vq9h+RIxu2uaFke1jCrJI74GcohWg==
-X-Received: by 2002:a5d:5083:: with SMTP id a3mr32873527wrt.157.1618247752978;
-        Mon, 12 Apr 2021 10:15:52 -0700 (PDT)
+        bh=8vfzGY4e3JZmVv/z7f6GluOSI2a8fb+vM/qakIeaBgE=;
+        b=Kaz9Q5rv+BfNE+7c6l2l1J8tmwf9k9RJT7C8YkTId8qGNYikhBOKm/Ym0N4E0pFMOt
+         b4RG8hxkMF/QzbWqIeya3UNDbKACq/5hTcKRo9Jg49MTGnalmQ1Mmmp4aGQ7XwWRAGC9
+         pyG4GemJYfoSjvM5RTKjyzZl4YoHpDQAlSBfvof2XTCbgWl5cFVra4Z9siy1uvc7suwf
+         NsnoOdaVubXb0nH4goJ8X6aQwzkh6LRXvMJueIeDyG6qVAR8CopaVA9ajFx5d8vMuROs
+         cC3wojEsRjyaE66m1NKymqNJDz5u/0ehxbdg4nnI0ojNxR7Ww3O5ZjcctIdhHJtngh6M
+         x2wA==
+X-Gm-Message-State: AOAM533LP0LgNUzkPYWGKQEyvWQe1csLGqGJRMdgmnGBj/lOS/CUut+Z
+        nCyhtSchmxytmGnP993MDuxcB40+gsn1Kg==
+X-Google-Smtp-Source: ABdhPJyI3tbK+/BNt0S4iVF3m7CJbptFFX9F3d5AoDpMRtRqGMk4vEIpVnvnKwG9vW3Am1nR7R0v7w==
+X-Received: by 2002:a05:600c:4f44:: with SMTP id m4mr121405wmq.175.1618247753782;
+        Mon, 12 Apr 2021 10:15:53 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id j1sm7828625wrr.33.2021.04.12.10.15.52
+        by smtp.gmail.com with ESMTPSA id j1sm7828625wrr.33.2021.04.12.10.15.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Apr 2021 10:15:52 -0700 (PDT)
+        Mon, 12 Apr 2021 10:15:53 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         <carenas@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 19/22] pickaxe -G: terminate early on matching lines
-Date:   Mon, 12 Apr 2021 19:15:26 +0200
-Message-Id: <patch-19.22-53e9405f849-20210412T170457Z-avarab@gmail.com>
+Subject: [PATCH v3 20/22] pickaxe -G: don't special-case create/delete
+Date:   Mon, 12 Apr 2021 19:15:27 +0200
+Message-Id: <patch-20.22-76de6ebc8b8-20210412T170457Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.1.639.g3d04783866f
 In-Reply-To: <cover-00.22-00000000000-20210412T170457Z-avarab@gmail.com>
 References: <20210216115801.4773-1-avarab@gmail.com> <cover-00.22-00000000000-20210412T170457Z-avarab@gmail.com>
@@ -78,97 +78,96 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Solve a long-standing item for "git log -Grx" of us e.g. finding "+
-str" in the diff context and noting that we had a "hit", but xdiff
-diligently continuing to generate and spew the rest of the diff at
-us. This makes use of a new "early return" xdiff interface added by
-preceding commits.
+Instead of special-casing creations and deletions let's just generate
+a diff for them.
 
-The TODO item (or, the NEEDSWORK comment) has been there since "git
-log -G" was implemented. See f506b8e8b5f (git log/diff: add -G<regexp>
-that greps in the patch text, 2010-08-23).
+This logic of not running a diff under -G if we don't have both sides
+dates back to the original implementation of -S in
+52e9578985f ([PATCH] Introducing software archaeologist's tool
+"pickaxe"., 2005-05-21).
 
-But now with the support added in the preceding changes to the
-xdiff-interface we can return early. Let's assert the behavior of that
-new early-return xdiff-interface by having a BUG() call here to die if
-it ever starts handing us needless work again.
+In the case of -S we were not working with the xdiff interface and
+needed to do this, but when -G was implemented in f506b8e8b5f (git
+log/diff: add -G<regexp> that greps in the patch text, 2010-08-23)
+this logic was diligently copied over.
+
+But as the performance test added earlier in this series shows, this
+does not make much of a difference. With:
+
+    time GIT_TEST_LONG= GIT_PERF_REPEAT_COUNT=10 GIT_PERF_MAKE_OPTS='-j8 CFLAGS=-O3' ./run origin/next HEAD~ HEAD -- p4209-pickaxe.sh
+
+With the HEAD~ commit being the preceding "pickaxe -G: terminate early
+on matching lines" we get these results. Note that it's only the -G
+codepaths that are relevant to this change:
+
+    Test                                                                      origin/next       HEAD~                   HEAD
+    -----------------------------------------------------------------------------------------------------------------------------------------
+    4209.1: git log -S'int main' <limit-rev>..                                0.35(0.32+0.03)   0.35(0.33+0.02) +0.0%   0.35(0.30+0.05) +0.0%
+    4209.2: git log -S'æ' <limit-rev>..                                       0.46(0.42+0.04)   0.46(0.41+0.05) +0.0%   0.46(0.42+0.04) +0.0%
+    4209.3: git log --pickaxe-regex -S'(int|void|null)' <limit-rev>..         0.65(0.62+0.02)   0.64(0.61+0.02) -1.5%   0.64(0.60+0.04) -1.5%
+    4209.4: git log --pickaxe-regex -S'if *\([^ ]+ & ' <limit-rev>..          0.52(0.45+0.06)   0.52(0.50+0.01) +0.0%   0.54(0.47+0.04) +3.8%
+    4209.5: git log --pickaxe-regex -S'[àáâãäåæñøùúûüýþ]' <limit-rev>..       0.39(0.34+0.05)   0.39(0.34+0.04) +0.0%   0.39(0.36+0.03) +0.0%
+    4209.6: git log -G'(int|void|null)' <limit-rev>..                         0.60(0.55+0.04)   0.58(0.54+0.03) -3.3%   0.58(0.49+0.08) -3.3%
+    4209.7: git log -G'if *\([^ ]+ & ' <limit-rev>..                          0.61(0.52+0.06)   0.59(0.53+0.05) -3.3%   0.59(0.54+0.05) -3.3%
+    4209.8: git log -G'[àáâãäåæñøùúûüýþ]' <limit-rev>..                       0.61(0.51+0.07)   0.58(0.54+0.04) -4.9%   0.57(0.51+0.06) -6.6%
+    4209.9: git log -i -S'int main' <limit-rev>..                             0.36(0.31+0.04)   0.36(0.34+0.02) +0.0%   0.35(0.32+0.03) -2.8%
+    4209.10: git log -i -S'æ' <limit-rev>..                                   0.36(0.33+0.03)   0.39(0.34+0.01) +8.3%   0.36(0.32+0.03) +0.0%
+    4209.11: git log -i --pickaxe-regex -S'(int|void|null)' <limit-rev>..     0.83(0.77+0.05)   0.82(0.77+0.05) -1.2%   0.80(0.75+0.04) -3.6%
+    4209.12: git log -i --pickaxe-regex -S'if *\([^ ]+ & ' <limit-rev>..      0.67(0.61+0.03)   0.64(0.61+0.03) -4.5%   0.63(0.61+0.02) -6.0%
+    4209.13: git log -i --pickaxe-regex -S'[àáâãäåæñøùúûüýþ]' <limit-rev>..   0.40(0.37+0.02)   0.40(0.37+0.03) +0.0%   0.40(0.36+0.04) +0.0%
+    4209.14: git log -i -G'(int|void|null)' <limit-rev>..                     0.58(0.51+0.07)   0.59(0.52+0.06) +1.7%   0.58(0.52+0.05) +0.0%
+    4209.15: git log -i -G'if *\([^ ]+ & ' <limit-rev>..                      0.60(0.54+0.05)   0.60(0.54+0.06) +0.0%   0.60(0.56+0.03) +0.0%
+    4209.16: git log -i -G'[àáâãäåæñøùúûüýþ]' <limit-rev>..                   0.58(0.51+0.06)   0.57(0.52+0.05) -1.7%   0.60(0.48+0.09) +3.4%
+
+This small simplification really doesn't buy us much now, but I've got
+plans to both convert the pickaxe code to using a PCREv2 backend[1]
+and to implement additional pickaxe modes to do custom searches
+through the diff[2]. Always having the diff available under -G is
+going to help to simplify both of those changes.
+
+1. https://lore.kernel.org/git/20210203032811.14979-22-avarab@gmail.com/
+2. https://lore.kernel.org/git/20190424152215.16251-3-avarab@gmail.com/
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- diffcore-pickaxe.c | 30 +++++++++++++++++++-----------
- xdiff-interface.h  |  4 ++++
- 2 files changed, 23 insertions(+), 11 deletions(-)
+ diffcore-pickaxe.c | 12 +-----------
+ 1 file changed, 1 insertion(+), 11 deletions(-)
 
 diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
-index 27aa20be350..2147afef722 100644
+index 2147afef722..96183f4cfab 100644
 --- a/diffcore-pickaxe.c
 +++ b/diffcore-pickaxe.c
-@@ -27,13 +27,12 @@ static int diffgrep_consume(void *priv, char *line, unsigned long len)
- 	if (line[0] != '+' && line[0] != '-')
- 		return 0;
- 	if (data->hit)
--		/*
--		 * NEEDSWORK: we should have a way to terminate the
--		 * caller early.
--		 */
--		return 0;
--	data->hit = !regexec_buf(data->regexp, line + 1, len - 1, 1,
--				 &regmatch, 0);
-+		BUG("Already matched in diffgrep_consume! Broken xdiff_emit_line_fn?");
-+	if (!regexec_buf(data->regexp, line + 1, len - 1, 1,
-+			 &regmatch, 0)) {
-+		data->hit = 1;
-+		return 1;
-+	}
- 	return 0;
- }
- 
-@@ -45,6 +44,7 @@ static int diff_grep(mmfile_t *one, mmfile_t *two,
+@@ -40,19 +40,11 @@ static int diff_grep(mmfile_t *one, mmfile_t *two,
+ 		     struct diff_options *o,
+ 		     regex_t *regexp, kwset_t kws)
+ {
+-	regmatch_t regmatch;
  	struct diffgrep_cb ecbdata;
  	xpparam_t xpp;
  	xdemitconf_t xecfg;
-+	int ret;
+ 	int ret;
  
- 	if (!one)
- 		return !regexec_buf(regexp, two->ptr, two->size,
-@@ -63,10 +63,18 @@ static int diff_grep(mmfile_t *one, mmfile_t *two,
- 	ecbdata.hit = 0;
- 	xecfg.ctxlen = o->context;
- 	xecfg.interhunkctxlen = o->interhunkcontext;
--	if (xdi_diff_outf(one, two, discard_hunk_line, diffgrep_consume,
--			  &ecbdata, &xpp, &xecfg))
--		return 0;
--	return ecbdata.hit;
-+
-+	/*
-+	 * An xdiff error might be our "data->hit" from above. See the
-+	 * comment for xdiff_emit_line_fn in xdiff-interface.h
-+	 */
-+	ret = xdi_diff_outf(one, two, discard_hunk_line, diffgrep_consume,
-+			    &ecbdata, &xpp, &xecfg);
-+	if (ecbdata.hit)
-+		return 1;
-+	if (ret)
-+		return ret;
-+	return 0;
- }
+-	if (!one)
+-		return !regexec_buf(regexp, two->ptr, two->size,
+-				    1, &regmatch, 0);
+-	if (!two)
+-		return !regexec_buf(regexp, one->ptr, one->size,
+-				    1, &regmatch, 0);
+-
+ 	/*
+ 	 * We have both sides; need to run textual diff and see if
+ 	 * the pattern appears on added/deleted lines.
+@@ -172,9 +164,7 @@ static int pickaxe_match(struct diff_filepair *p, struct diff_options *o,
+ 	mf1.size = fill_textconv(o->repo, textconv_one, p->one, &mf1.ptr);
+ 	mf2.size = fill_textconv(o->repo, textconv_two, p->two, &mf2.ptr);
  
- static unsigned int contains(mmfile_t *mf, regex_t *regexp, kwset_t kws,
-diff --git a/xdiff-interface.h b/xdiff-interface.h
-index 7d1724abb64..3b6819586da 100644
---- a/xdiff-interface.h
-+++ b/xdiff-interface.h
-@@ -27,6 +27,10 @@
-  * doing so will currently make your early return indistinguishable
-  * from an error internal to xdiff, xdiff itself will see that
-  * non-zero return and translate it to -1.
-+ *
-+ * See "diff_grep" in diffcore-pickaxe.c for a trick to work around
-+ * this, i.e. using the "consume_callback_data" to note the desired
-+ * early return.
-  */
- typedef int (*xdiff_emit_line_fn)(void *, char *, unsigned long);
- typedef void (*xdiff_emit_hunk_fn)(void *data,
+-	ret = fn(DIFF_FILE_VALID(p->one) ? &mf1 : NULL,
+-		 DIFF_FILE_VALID(p->two) ? &mf2 : NULL,
+-		 o, regexp, kws);
++	ret = fn(&mf1, &mf2, o, regexp, kws);
+ 
+ 	if (textconv_one)
+ 		free(mf1.ptr);
 -- 
 2.31.1.639.g3d04783866f
 
