@@ -8,50 +8,50 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DAE6C433ED
-	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 17:15:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EDB7EC433B4
+	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 17:16:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2AEE061222
-	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 17:15:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C3C1F61222
+	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 17:16:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243988AbhDLRQO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Apr 2021 13:16:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35078 "EHLO
+        id S244249AbhDLRQW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Apr 2021 13:16:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35086 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243980AbhDLRQB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Apr 2021 13:16:01 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32128C061574
+        with ESMTP id S244011AbhDLRQD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Apr 2021 13:16:03 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBA5BC06138D
         for <git@vger.kernel.org>; Mon, 12 Apr 2021 10:15:43 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id h4so4702408wrt.12
+Received: by mail-wr1-x433.google.com with SMTP id e7so4771279wrs.11
         for <git@vger.kernel.org>; Mon, 12 Apr 2021 10:15:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=u7has5A8bd2EYTrNLXyglJZzMXo17DIqwIuKC8/fYOk=;
-        b=KZ62gCSSCspr+UgxGd0IpwddLDlx2QvHFrbSDzDwoZLeJsQOCuRGkFU5JiXHmKRbzZ
-         h44N1rCmU6wwh+20RUAcZK1PmXdwyn7+9sPlhK9qRmCmI1mH7UDmx/y1z75VylfUk+kg
-         PN0FFsq+PwDIGDbcw8XcYAoladSGf7NjUiVw2d3GfgzP0xgXnbxq6V22nELIOl3hGep1
-         pC9dIfWbiYWEFJdXWhfeJF5Edoju6uOWcPJ5OTTmYpwuw51zQrhHMIX04q3rwlcfnZ+E
-         VzchzsvGEIOInmtZ1iMC5lOA5ktCjwcWJ1cipR45c42nHnz0OTQDMBqxlXjPglVCho3l
-         HRHQ==
+        bh=98ippXJIzWiecn72dQL/jdkeNegtNbH2YlFsFIjeIB8=;
+        b=fWrN9FVcvECiE4WuW/C8Q+3T6RHelwCmmCuZ+59G/grFBmmXgNBpBCLrTAUL3anNgc
+         JJSIU3NGdYxY7rHIJWdR5fC0ymCmlu92jGXwklXjDNxKLq2pPh+7Mqn023aCvDryJRHe
+         dWXw4imGeU+1NO03V+GViewOxH3mzddGe+5b3NO65xc24WjgM+C65oqBwt/51yAe5ZJ1
+         HBFEuyf2YMURwMpqOoQdPiXMBFNEfkdDriRjphTyE2wiZQ0rg5EdWLDpSjB02Vg5j6r8
+         1ylPjQy3B2+3y5pzByG1p9Y+5zqvkEiRwaqZFjQIHz1Ch4bVltCJFAF0NWsZP+qsYPfR
+         tIYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=u7has5A8bd2EYTrNLXyglJZzMXo17DIqwIuKC8/fYOk=;
-        b=CC+0TJ8uQnBSRfh7CkrszGozN6hIUf3cKwsd1QFbBi17FCa0+BvvpZocnNzetG4RR5
-         UbDmo25al0O8V3Qks8TlVIzgjBNxJssa6aQXOkI7ACEFZ/hBNW5GA8hOPcOX9m3nWRzu
-         u43PdrB+u49doEzAeQIkO8wf6P5a0lI4zfEEnMVSiAxz7/YfznU+BwwKd0LnLM1tfsAB
-         0hEQcPUa2jkSKNrUYzVY7de+W18EBT6VPhKhqU0+aPAsEi48Gsc0jsm9Nf/iZQq1zGsB
-         OzgEdxrJ7DIaiBOJMEkgWIIyWK55+MxrLk+wlOPvCDsD/YStB1lRz5m9QHrDp5dGDUCs
-         Wjdg==
-X-Gm-Message-State: AOAM532lc9H4JD5FaWpkTVXQglq1pTSzHRYZb1J4Lo2XQP4slOs6DBRI
-        cyog92R9qI7GqOebZYP663YI/ouChxc/eA==
-X-Google-Smtp-Source: ABdhPJyj5xkHMGf9xuGPTRH2awnxpJZmV1xHzYYXjg1xrVPgGuCtauLFiEBI4n5ITIwjQ5OejHFPEg==
-X-Received: by 2002:a5d:4579:: with SMTP id a25mr24121516wrc.160.1618247741755;
-        Mon, 12 Apr 2021 10:15:41 -0700 (PDT)
+        bh=98ippXJIzWiecn72dQL/jdkeNegtNbH2YlFsFIjeIB8=;
+        b=cnq/7klvsBOVBNY5vD3XZ3Rk3OAcPwxU9dvxrstapXvJ5bseK7ngrEWus4BnR3R3ZC
+         Gei1cC8j6+Hr7q/n1DbKt7q8ve8lqSTpyu5yIRk2JWnRfPptoE++MwEa5bK7owLpAAAh
+         Rgg7kdjBzTepx0T5m/YYtY7ve3zQ3xkfEYjCVmx0FEGWrE2UverzR5xk7LUxm06CQqt7
+         f2gs5fSJIqvSup7gusV1ys/FLPzILRyajUiV66p58SuSAZj3KzarFDhmd6xNprbc6Y8P
+         jBB+tRGNsjQ+ZrG5DiyGpokXkrqLqcRpM0fZDyg305g5bas5barhArK5WFJ+I/LUHAHT
+         8Gcg==
+X-Gm-Message-State: AOAM530ZVqgIjyobyHiPJ/zxduNDfsf1IK0h64sVFZienJHAO5XqLUw3
+        sBpn4LGccEU8tWPVKhQfOJSdeZ0BTJo5kA==
+X-Google-Smtp-Source: ABdhPJzRWDnR/QUfQKLk7wYZFN2tkuuCI0Ha2XnrDNwAKxtUVPSF3t2o0BZDgWhU77zrVkD9JY/duA==
+X-Received: by 2002:adf:f991:: with SMTP id f17mr7732677wrr.5.1618247742433;
+        Mon, 12 Apr 2021 10:15:42 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
         by smtp.gmail.com with ESMTPSA id j1sm7828625wrr.33.2021.04.12.10.15.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         <carenas@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 05/22] pickaxe tests: test for -G, -S and --find-object incompatibility
-Date:   Mon, 12 Apr 2021 19:15:12 +0200
-Message-Id: <patch-05.22-0c4657189a8-20210412T170457Z-avarab@gmail.com>
+Subject: [PATCH v3 06/22] pickaxe tests: add missing test for --no-pickaxe-regex being an error
+Date:   Mon, 12 Apr 2021 19:15:13 +0200
+Message-Id: <patch-06.22-1696076bb09-20210412T170457Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.1.639.g3d04783866f
 In-Reply-To: <cover-00.22-00000000000-20210412T170457Z-avarab@gmail.com>
 References: <20210216115801.4773-1-avarab@gmail.com> <cover-00.22-00000000000-20210412T170457Z-avarab@gmail.com>
@@ -78,32 +78,46 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a test for the options sanity check added in 5e505257f2 (diff:
-properly error out when combining multiple pickaxe options,
-2018-01-04).
+Add a missing test for --no-pickaxe-regex. This has been an error ever
+since before the -S or -G options were added, or since
+7ae0b0cb65f (git-log (internal): more options., 2006-03-01).
+
+The reason for adding this test is that Junio suggested in [1] in
+response to a later test addition in this series that it might be good
+to support --no-pickaxe-regex in combination with -G. This would allow
+for fixed-string searching with -G, similr to grep's --fixed-strings
+mode.
+
+I agree that that would make sense if anyone would like to implement
+it, but since it dies right now let's first add this test to assert
+the existing long-standing behavior. We can always add support for
+--[no-]pickaxe-regex in combination with -G at some later date.
+
+1. http://lore.kernel.org/git/xmqqwnto9pt7.fsf@gitster.g
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t4209-log-pickaxe.sh | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ t/t4209-log-pickaxe.sh | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
 diff --git a/t/t4209-log-pickaxe.sh b/t/t4209-log-pickaxe.sh
-index 9fa770b5fbd..21e22af1e7e 100755
+index 21e22af1e7e..532bb875f02 100755
 --- a/t/t4209-log-pickaxe.sh
 +++ b/t/t4209-log-pickaxe.sh
-@@ -55,6 +55,17 @@ test_expect_success setup '
- 	git rev-parse --verify HEAD >expect_second
+@@ -66,6 +66,18 @@ test_expect_success 'usage' '
+ 	grep "mutually exclusive" err
  '
  
-+test_expect_success 'usage' '
-+	test_expect_code 128 git log -Gregex -Sstring 2>err &&
-+	grep "mutually exclusive" err &&
++test_expect_success 'usage: --no-pickaxe-regex' '
++	cat >expect <<-\EOF &&
++	fatal: unrecognized argument: --no-pickaxe-regex
++	EOF
 +
-+	test_expect_code 128 git log -Gregex --find-object=HEAD 2>err &&
-+	grep "mutually exclusive" err &&
++	test_expect_code 128 git log -Sstring --no-pickaxe-regex 2>actual &&
++	test_cmp expect actual &&
 +
-+	test_expect_code 128 git log -Sstring --find-object=HEAD 2>err &&
-+	grep "mutually exclusive" err
++	test_expect_code 128 git log -Gstring --no-pickaxe-regex 2>err &&
++	test_cmp expect actual
 +'
 +
  test_log	expect_initial	--grep initial
