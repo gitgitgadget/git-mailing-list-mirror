@@ -8,62 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E5F5C433ED
-	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 19:26:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B056DC43462
+	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 19:26:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E218861356
-	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 19:26:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8B4F461358
+	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 19:26:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245300AbhDLT0p (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Apr 2021 15:26:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35400 "EHLO
+        id S245304AbhDLT0q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Apr 2021 15:26:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245262AbhDLT0W (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Apr 2021 15:26:22 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21208C061574
+        with ESMTP id S245265AbhDLT0X (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Apr 2021 15:26:23 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA36EC061756
         for <git@vger.kernel.org>; Mon, 12 Apr 2021 12:26:04 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id n11-20020a05600c4f8bb029010e5cf86347so41673wmq.1
+Received: by mail-wr1-x42c.google.com with SMTP id r7so2093487wrm.1
         for <git@vger.kernel.org>; Mon, 12 Apr 2021 12:26:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=7eHgtF3ihBtDn+40op4W+TSymMKAgvAS86eX9UBI2b4=;
-        b=tVmGFJPqqNBbmPa0FVjkzncmtNUSLizlkXlNBXbMGBpvScexR6kBS3HycY4SGmCdbR
-         zzkmWul8f9T8KqbsEqyCXRUVUQ2SH0m37dbs8ne4D+GWpsvzy2p6pZu7f+hKWpuz6Z17
-         UDpMMNoN6kFnQvk5pYHtEz/3AgFjVAyPz8THZ4cfT3EoX4Rgtck2Ej6Bh6A2G5xomkVC
-         ZIax0dYsx1AjDLeUCl82KiQsE6T6nYYreBNBzbIIngxTnkEaSDUHof/M6elhyRJyRV0G
-         RiRxgQXvRMCXF60coJ477QltWJLickdndXFTMBlJDYDWNipEeONfHMRXbvL7oUR78Xxr
-         zYeg==
+        bh=sWmBxqxDCxI+NUgmTODL63Z0VX43x5aB5HMk2YEHvq4=;
+        b=iZCcRlYnOaaCYwApwN3QSTWPUWub636pCTQnD78gEHg0WR5/pVVRZfsfbeKPYy3F5D
+         UJdau0AF9hdmwAHajLnLyspyZz8dKiFcJy5gvxLl8WM0rCZjgkp0RoqOnpqRGX7NY/o2
+         ywdrO2Mb8SpIhSj5+yeJ1sjvt63MWdX+3n7V9jvk5W0avm5U/lx3E4nkGD4NkYe9zShl
+         UqLiquFiaQMySEO4R8aiWJnx4lT+vabwB6YQslTXbonQr8HkrkYzkqQhdFSYVWcKuPhR
+         8sxxG08XXYJmgre6tYWXeOZ374eSuiTh0fbIUF97deONktB8tV6wPl7L0mkEihoV4fW2
+         Z2OQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=7eHgtF3ihBtDn+40op4W+TSymMKAgvAS86eX9UBI2b4=;
-        b=p1INYnup5jboJYDt+UZz4r5CvEjwJGgkjB3MZ0o/qre2nl3pPLggDxSPEJR8gOn2XF
-         xz8h4rpVeL8VPZ0pF3G44jyXynkfRipIuLRgySIHuZxrfjxKYv6ojTnaBfjIwGRfAML2
-         RnKyHIXuXIQwltHXWMmgjU7Omsl8M4Xk9l4B/I0Ljt5gDbzKN1WWnNANnnPrBcpkmTn3
-         4/NF+ztRxaCilp1T7oVf8djJRsyHoXH25kz8ZUgrP20ISl45pQ6kP64GVDfC+pqvMAtS
-         wy3a9KPhDY3atR/F5WOskM1WK5vS1IqeL6XlE5urwyeN1uctQhxhNHN4oRjF1mwZDqhy
-         3LNQ==
-X-Gm-Message-State: AOAM530eMjP53GVu1kG+o57Q88VIFqVktZ9CLnAlxYskvGNrFlO7eiQ5
-        wD2+L5giQkDEJM5C7HLSuTZQTicWXBI=
-X-Google-Smtp-Source: ABdhPJzHh+1sjk4v3VX6g6onFVk4NBq+c+pyGqfvJ3CknMJvcxfvTFbEJpMe7/yFm++qohyBYKD9Ug==
-X-Received: by 2002:a1c:6643:: with SMTP id a64mr600809wmc.98.1618255562926;
-        Mon, 12 Apr 2021 12:26:02 -0700 (PDT)
+        bh=sWmBxqxDCxI+NUgmTODL63Z0VX43x5aB5HMk2YEHvq4=;
+        b=gJr1LuCNjncd9t3f60AaDbkULbAmqCkaJuAL3cWVUW7RFXng/HDnsKcYTDtsBXDirD
+         BTV/jFoRizkF0k5xngG9CaXyzZAA9MpCtSawDj+0KTygpJcwk1fxLaf8uso5na3vZPs9
+         1cgWcnT9crlyhtVACsCeDNlo36bUNouJ9FQo13y0XomDuwYZG4+U7tSoH7OKy3XIIyIO
+         qRmyVUUO98w2S0P/31ljgV9z0Nt/VTVEcHgNmJvuegju+VR31xa1mmBeeo0JdNUUrdjT
+         HsM1icbdA9cTSnqi4LGrTatlwMB/fmqibikP7/TZiZzj74DV12Gd2Pvg/Kh6ShMnfzt6
+         ojaQ==
+X-Gm-Message-State: AOAM532ayH9qVMuDCiU+q0sGTcHK5pTxKogd1xSm8h1WVdQoxOU4DN0d
+        RUaYuQRQwEKncuO9/d8kFxufgsXS8mE=
+X-Google-Smtp-Source: ABdhPJwqsAJiFWJVN1Et5IJbxkg5fl5soQCCV+E0MVpCuH1mQ54x3+yGhIz5N6tDmoRx1XQpa5VK0A==
+X-Received: by 2002:adf:fe4f:: with SMTP id m15mr22916299wrs.67.1618255563501;
+        Mon, 12 Apr 2021 12:26:03 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o14sm18268057wrh.88.2021.04.12.12.26.02
+        by smtp.gmail.com with ESMTPSA id k3sm18212267wrc.67.2021.04.12.12.26.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Apr 2021 12:26:02 -0700 (PDT)
-Message-Id: <0a6119d910a3f83e6c9c421acd1316b496e6612b.1618255553.git.gitgitgadget@gmail.com>
+        Mon, 12 Apr 2021 12:26:03 -0700 (PDT)
+Message-Id: <393fcecdae1ec471bbd692d63688a16697ecdf78.1618255553.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.847.v6.git.git.1618255552.gitgitgadget@gmail.com>
 References: <pull.847.v5.git.git.1615580397.gitgitgadget@gmail.com>
         <pull.847.v6.git.git.1618255552.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 12 Apr 2021 19:25:45 +0000
-Subject: [PATCH v6 13/20] reftable: add a heap-based priority queue for
- reftable records
+Date:   Mon, 12 Apr 2021 19:25:46 +0000
+Subject: [PATCH v6 14/20] reftable: add merged table view
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -88,47 +87,53 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-This is needed to create a merged view multiple reftables
+This adds an abstract, read-only interface to the ref database.
+
+This primitive is used to construct the read view of the ref database
+(the read view is constructed by merging several *.ref files). It also
+provides the mechanism to provide a unified view of the refs in the main
+repository and the per-worktree refs.
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- Makefile                  |   2 +
- reftable/pq.c             | 115 ++++++++++++++++++++++++++++++++++++++
- reftable/pq.h             |  32 +++++++++++
- reftable/pq_test.c        |  72 ++++++++++++++++++++++++
- reftable/reftable-tests.h |   1 +
- t/helper/test-reftable.c  |   1 +
- 6 files changed, 223 insertions(+)
- create mode 100644 reftable/pq.c
- create mode 100644 reftable/pq.h
- create mode 100644 reftable/pq_test.c
+ Makefile                   |   2 +
+ reftable/merged.c          | 367 +++++++++++++++++++++++++++++++++++++
+ reftable/merged.h          |  35 ++++
+ reftable/merged_test.c     | 291 +++++++++++++++++++++++++++++
+ reftable/reftable-merged.h |  72 ++++++++
+ t/helper/test-reftable.c   |   1 +
+ 6 files changed, 768 insertions(+)
+ create mode 100644 reftable/merged.c
+ create mode 100644 reftable/merged.h
+ create mode 100644 reftable/merged_test.c
+ create mode 100644 reftable/reftable-merged.h
 
 diff --git a/Makefile b/Makefile
-index b23e4a82063a..74560a9605bb 100644
+index 74560a9605bb..129f73d118ac 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -2406,6 +2406,7 @@ REFTABLE_OBJS += reftable/block.o
  REFTABLE_OBJS += reftable/blocksource.o
  REFTABLE_OBJS += reftable/iter.o
  REFTABLE_OBJS += reftable/publicbasics.o
-+REFTABLE_OBJS += reftable/pq.o
++REFTABLE_OBJS += reftable/merged.o
+ REFTABLE_OBJS += reftable/pq.o
  REFTABLE_OBJS += reftable/reader.o
  REFTABLE_OBJS += reftable/record.o
- REFTABLE_OBJS += reftable/reftable.o
-@@ -2415,6 +2416,7 @@ REFTABLE_OBJS += reftable/zlib-compat.o
+@@ -2416,6 +2417,7 @@ REFTABLE_OBJS += reftable/zlib-compat.o
  
  REFTABLE_TEST_OBJS += reftable/basics_test.o
  REFTABLE_TEST_OBJS += reftable/block_test.o
-+REFTABLE_TEST_OBJS += reftable/pq_test.o
++REFTABLE_TEST_OBJS += reftable/merged_test.o
+ REFTABLE_TEST_OBJS += reftable/pq_test.o
  REFTABLE_TEST_OBJS += reftable/record_test.o
  REFTABLE_TEST_OBJS += reftable/reftable_test.o
- REFTABLE_TEST_OBJS += reftable/test_framework.o
-diff --git a/reftable/pq.c b/reftable/pq.c
+diff --git a/reftable/merged.c b/reftable/merged.c
 new file mode 100644
-index 000000000000..8918d158e2d4
+index 000000000000..02940a79b0a3
 --- /dev/null
-+++ b/reftable/pq.c
-@@ -0,0 +1,115 @@
++++ b/reftable/merged.c
+@@ -0,0 +1,367 @@
 +/*
 +Copyright 2020 Google LLC
 +
@@ -136,120 +141,413 @@ index 000000000000..8918d158e2d4
 +license that can be found in the LICENSE file or at
 +https://developers.google.com/open-source/licenses/bsd
 +*/
++
++#include "merged.h"
++
++#include "constants.h"
++#include "iter.h"
++#include "pq.h"
++#include "reader.h"
++#include "record.h"
++#include "generic.h"
++#include "reftable-merged.h"
++#include "reftable-error.h"
++#include "system.h"
++
++static int merged_iter_init(struct merged_iter *mi)
++{
++	int i = 0;
++	for (i = 0; i < mi->stack_len; i++) {
++		struct reftable_record rec = reftable_new_record(mi->typ);
++		int err = iterator_next(&mi->stack[i], &rec);
++		if (err < 0) {
++			return err;
++		}
++
++		if (err > 0) {
++			reftable_iterator_destroy(&mi->stack[i]);
++			reftable_record_destroy(&rec);
++		} else {
++			struct pq_entry e = {
++				.rec = rec,
++				.index = i,
++			};
++			merged_iter_pqueue_add(&mi->pq, e);
++		}
++	}
++
++	return 0;
++}
++
++static void merged_iter_close(void *p)
++{
++	struct merged_iter *mi = (struct merged_iter *)p;
++	int i = 0;
++	merged_iter_pqueue_release(&mi->pq);
++	for (i = 0; i < mi->stack_len; i++) {
++		reftable_iterator_destroy(&mi->stack[i]);
++	}
++	reftable_free(mi->stack);
++}
++
++static int merged_iter_advance_nonnull_subiter(struct merged_iter *mi,
++					       size_t idx)
++{
++	struct reftable_record rec = reftable_new_record(mi->typ);
++	struct pq_entry e = {
++		.rec = rec,
++		.index = idx,
++	};
++	int err = iterator_next(&mi->stack[idx], &rec);
++	if (err < 0)
++		return err;
++
++	if (err > 0) {
++		reftable_iterator_destroy(&mi->stack[idx]);
++		reftable_record_destroy(&rec);
++		return 0;
++	}
++
++	merged_iter_pqueue_add(&mi->pq, e);
++	return 0;
++}
++
++static int merged_iter_advance_subiter(struct merged_iter *mi, size_t idx)
++{
++	if (iterator_is_null(&mi->stack[idx]))
++		return 0;
++	return merged_iter_advance_nonnull_subiter(mi, idx);
++}
++
++static int merged_iter_next_entry(struct merged_iter *mi,
++				  struct reftable_record *rec)
++{
++	struct strbuf entry_key = STRBUF_INIT;
++	struct pq_entry entry = { 0 };
++	int err = 0;
++
++	if (merged_iter_pqueue_is_empty(mi->pq))
++		return 1;
++
++	entry = merged_iter_pqueue_remove(&mi->pq);
++	err = merged_iter_advance_subiter(mi, entry.index);
++	if (err < 0)
++		return err;
++
++	/*
++	  One can also use reftable as datacenter-local storage, where the ref
++	  database is maintained in globally consistent database (eg.
++	  CockroachDB or Spanner). In this scenario, replication delays together
++	  with compaction may cause newer tables to contain older entries. In
++	  such a deployment, the loop below must be changed to collect all
++	  entries for the same key, and return new the newest one.
++	*/
++	reftable_record_key(&entry.rec, &entry_key);
++	while (!merged_iter_pqueue_is_empty(mi->pq)) {
++		struct pq_entry top = merged_iter_pqueue_top(mi->pq);
++		struct strbuf k = STRBUF_INIT;
++		int err = 0, cmp = 0;
++
++		reftable_record_key(&top.rec, &k);
++
++		cmp = strbuf_cmp(&k, &entry_key);
++		strbuf_release(&k);
++
++		if (cmp > 0) {
++			break;
++		}
++
++		merged_iter_pqueue_remove(&mi->pq);
++		err = merged_iter_advance_subiter(mi, top.index);
++		if (err < 0) {
++			return err;
++		}
++		reftable_record_destroy(&top.rec);
++	}
++
++	reftable_record_copy_from(rec, &entry.rec, hash_size(mi->hash_id));
++	reftable_record_destroy(&entry.rec);
++	strbuf_release(&entry_key);
++	return 0;
++}
++
++static int merged_iter_next(struct merged_iter *mi, struct reftable_record *rec)
++{
++	while (1) {
++		int err = merged_iter_next_entry(mi, rec);
++		if (err == 0 && mi->suppress_deletions &&
++		    reftable_record_is_deletion(rec)) {
++			continue;
++		}
++
++		return err;
++	}
++}
++
++static int merged_iter_next_void(void *p, struct reftable_record *rec)
++{
++	struct merged_iter *mi = (struct merged_iter *)p;
++	if (merged_iter_pqueue_is_empty(mi->pq))
++		return 1;
++
++	return merged_iter_next(mi, rec);
++}
++
++static struct reftable_iterator_vtable merged_iter_vtable = {
++	.next = &merged_iter_next_void,
++	.close = &merged_iter_close,
++};
++
++static void iterator_from_merged_iter(struct reftable_iterator *it,
++				      struct merged_iter *mi)
++{
++	assert(it->ops == NULL);
++	it->iter_arg = mi;
++	it->ops = &merged_iter_vtable;
++}
++
++int reftable_new_merged_table(struct reftable_merged_table **dest,
++			      struct reftable_table *stack, int n,
++			      uint32_t hash_id)
++{
++	struct reftable_merged_table *m = NULL;
++	uint64_t last_max = 0;
++	uint64_t first_min = 0;
++	int i = 0;
++	for (i = 0; i < n; i++) {
++		uint64_t min = reftable_table_min_update_index(&stack[i]);
++		uint64_t max = reftable_table_max_update_index(&stack[i]);
++
++		if (reftable_table_hash_id(&stack[i]) != hash_id) {
++			return REFTABLE_FORMAT_ERROR;
++		}
++		if (i == 0 || min < first_min) {
++			first_min = min;
++		}
++		if (i == 0 || max > last_max) {
++			last_max = max;
++		}
++	}
++
++	m = (struct reftable_merged_table *)reftable_calloc(
++		sizeof(struct reftable_merged_table));
++	m->stack = stack;
++	m->stack_len = n;
++	m->min = first_min;
++	m->max = last_max;
++	m->hash_id = hash_id;
++	*dest = m;
++	return 0;
++}
++
++/* clears the list of subtable, without affecting the readers themselves. */
++void merged_table_release(struct reftable_merged_table *mt)
++{
++	FREE_AND_NULL(mt->stack);
++	mt->stack_len = 0;
++}
++
++void reftable_merged_table_free(struct reftable_merged_table *mt)
++{
++	if (mt == NULL) {
++		return;
++	}
++	merged_table_release(mt);
++	reftable_free(mt);
++}
++
++uint64_t
++reftable_merged_table_max_update_index(struct reftable_merged_table *mt)
++{
++	return mt->max;
++}
++
++uint64_t
++reftable_merged_table_min_update_index(struct reftable_merged_table *mt)
++{
++	return mt->min;
++}
++
++static int reftable_table_seek_record(struct reftable_table *tab,
++				      struct reftable_iterator *it,
++				      struct reftable_record *rec)
++{
++	return tab->ops->seek_record(tab->table_arg, it, rec);
++}
++
++static int merged_table_seek_record(struct reftable_merged_table *mt,
++				    struct reftable_iterator *it,
++				    struct reftable_record *rec)
++{
++	struct reftable_iterator *iters = reftable_calloc(
++		sizeof(struct reftable_iterator) * mt->stack_len);
++	struct merged_iter merged = {
++		.stack = iters,
++		.typ = reftable_record_type(rec),
++		.hash_id = mt->hash_id,
++		.suppress_deletions = mt->suppress_deletions,
++	};
++	int n = 0;
++	int err = 0;
++	int i = 0;
++	for (i = 0; i < mt->stack_len && err == 0; i++) {
++		int e = reftable_table_seek_record(&mt->stack[i], &iters[n],
++						   rec);
++		if (e < 0) {
++			err = e;
++		}
++		if (e == 0) {
++			n++;
++		}
++	}
++	if (err < 0) {
++		int i = 0;
++		for (i = 0; i < n; i++) {
++			reftable_iterator_destroy(&iters[i]);
++		}
++		reftable_free(iters);
++		return err;
++	}
++
++	merged.stack_len = n;
++	err = merged_iter_init(&merged);
++	if (err < 0) {
++		merged_iter_close(&merged);
++		return err;
++	} else {
++		struct merged_iter *p =
++			reftable_malloc(sizeof(struct merged_iter));
++		*p = merged;
++		iterator_from_merged_iter(it, p);
++	}
++	return 0;
++}
++
++int reftable_merged_table_seek_ref(struct reftable_merged_table *mt,
++				   struct reftable_iterator *it,
++				   const char *name)
++{
++	struct reftable_ref_record ref = {
++		.refname = (char *)name,
++	};
++	struct reftable_record rec = { NULL };
++	reftable_record_from_ref(&rec, &ref);
++	return merged_table_seek_record(mt, it, &rec);
++}
++
++int reftable_merged_table_seek_log_at(struct reftable_merged_table *mt,
++				      struct reftable_iterator *it,
++				      const char *name, uint64_t update_index)
++{
++	struct reftable_log_record log = {
++		.refname = (char *)name,
++		.update_index = update_index,
++	};
++	struct reftable_record rec = { NULL };
++	reftable_record_from_log(&rec, &log);
++	return merged_table_seek_record(mt, it, &rec);
++}
++
++int reftable_merged_table_seek_log(struct reftable_merged_table *mt,
++				   struct reftable_iterator *it,
++				   const char *name)
++{
++	uint64_t max = ~((uint64_t)0);
++	return reftable_merged_table_seek_log_at(mt, it, name, max);
++}
++
++uint32_t reftable_merged_table_hash_id(struct reftable_merged_table *mt)
++{
++	return mt->hash_id;
++}
++
++static int reftable_merged_table_seek_void(void *tab,
++					   struct reftable_iterator *it,
++					   struct reftable_record *rec)
++{
++	return merged_table_seek_record((struct reftable_merged_table *)tab, it,
++					rec);
++}
++
++static uint32_t reftable_merged_table_hash_id_void(void *tab)
++{
++	return reftable_merged_table_hash_id(
++		(struct reftable_merged_table *)tab);
++}
++
++static uint64_t reftable_merged_table_min_update_index_void(void *tab)
++{
++	return reftable_merged_table_min_update_index(
++		(struct reftable_merged_table *)tab);
++}
++
++static uint64_t reftable_merged_table_max_update_index_void(void *tab)
++{
++	return reftable_merged_table_max_update_index(
++		(struct reftable_merged_table *)tab);
++}
++
++static struct reftable_table_vtable merged_table_vtable = {
++	.seek_record = reftable_merged_table_seek_void,
++	.hash_id = reftable_merged_table_hash_id_void,
++	.min_update_index = reftable_merged_table_min_update_index_void,
++	.max_update_index = reftable_merged_table_max_update_index_void,
++};
++
++void reftable_table_from_merged_table(struct reftable_table *tab,
++				      struct reftable_merged_table *merged)
++{
++	assert(tab->ops == NULL);
++	tab->ops = &merged_table_vtable;
++	tab->table_arg = merged;
++}
+diff --git a/reftable/merged.h b/reftable/merged.h
+new file mode 100644
+index 000000000000..8c4d4d58d77a
+--- /dev/null
++++ b/reftable/merged.h
+@@ -0,0 +1,35 @@
++/*
++Copyright 2020 Google LLC
++
++Use of this source code is governed by a BSD-style
++license that can be found in the LICENSE file or at
++https://developers.google.com/open-source/licenses/bsd
++*/
++
++#ifndef MERGED_H
++#define MERGED_H
 +
 +#include "pq.h"
 +
-+#include "reftable-record.h"
-+#include "system.h"
-+#include "basics.h"
++struct reftable_merged_table {
++	struct reftable_table *stack;
++	size_t stack_len;
++	uint32_t hash_id;
++	int suppress_deletions;
 +
-+static int pq_less(struct pq_entry a, struct pq_entry b)
-+{
-+	struct strbuf ak = STRBUF_INIT;
-+	struct strbuf bk = STRBUF_INIT;
-+	int cmp = 0;
-+	reftable_record_key(&a.rec, &ak);
-+	reftable_record_key(&b.rec, &bk);
++	uint64_t min;
++	uint64_t max;
++};
 +
-+	cmp = strbuf_cmp(&ak, &bk);
++struct merged_iter {
++	struct reftable_iterator *stack;
++	uint32_t hash_id;
++	size_t stack_len;
++	uint8_t typ;
++	int suppress_deletions;
++	struct merged_iter_pqueue pq;
++};
 +
-+	strbuf_release(&ak);
-+	strbuf_release(&bk);
++void merged_table_release(struct reftable_merged_table *mt);
 +
-+	if (cmp == 0)
-+		return a.index > b.index;
-+
-+	return cmp < 0;
-+}
-+
-+struct pq_entry merged_iter_pqueue_top(struct merged_iter_pqueue pq)
-+{
-+	return pq.heap[0];
-+}
-+
-+int merged_iter_pqueue_is_empty(struct merged_iter_pqueue pq)
-+{
-+	return pq.len == 0;
-+}
-+
-+void merged_iter_pqueue_check(struct merged_iter_pqueue pq)
-+{
-+	int i = 0;
-+	for (i = 1; i < pq.len; i++) {
-+		int parent = (i - 1) / 2;
-+
-+		assert(pq_less(pq.heap[parent], pq.heap[i]));
-+	}
-+}
-+
-+struct pq_entry merged_iter_pqueue_remove(struct merged_iter_pqueue *pq)
-+{
-+	int i = 0;
-+	struct pq_entry e = pq->heap[0];
-+	pq->heap[0] = pq->heap[pq->len - 1];
-+	pq->len--;
-+
-+	i = 0;
-+	while (i < pq->len) {
-+		int min = i;
-+		int j = 2 * i + 1;
-+		int k = 2 * i + 2;
-+		if (j < pq->len && pq_less(pq->heap[j], pq->heap[i])) {
-+			min = j;
-+		}
-+		if (k < pq->len && pq_less(pq->heap[k], pq->heap[min])) {
-+			min = k;
-+		}
-+
-+		if (min == i) {
-+			break;
-+		}
-+
-+		SWAP(pq->heap[i], pq->heap[min]);
-+		i = min;
-+	}
-+
-+	return e;
-+}
-+
-+void merged_iter_pqueue_add(struct merged_iter_pqueue *pq, struct pq_entry e)
-+{
-+	int i = 0;
-+	if (pq->len == pq->cap) {
-+		pq->cap = 2 * pq->cap + 1;
-+		pq->heap = reftable_realloc(pq->heap,
-+					    pq->cap * sizeof(struct pq_entry));
-+	}
-+
-+	pq->heap[pq->len++] = e;
-+	i = pq->len - 1;
-+	while (i > 0) {
-+		int j = (i - 1) / 2;
-+		if (pq_less(pq->heap[j], pq->heap[i])) {
-+			break;
-+		}
-+
-+		SWAP(pq->heap[j], pq->heap[i]);
-+
-+		i = j;
-+	}
-+}
-+
-+void merged_iter_pqueue_release(struct merged_iter_pqueue *pq)
-+{
-+	int i = 0;
-+	for (i = 0; i < pq->len; i++) {
-+		reftable_record_destroy(&pq->heap[i].rec);
-+	}
-+	FREE_AND_NULL(pq->heap);
-+	pq->len = pq->cap = 0;
-+}
-diff --git a/reftable/pq.h b/reftable/pq.h
++#endif
+diff --git a/reftable/merged_test.c b/reftable/merged_test.c
 new file mode 100644
-index 000000000000..385d2fb139a6
+index 000000000000..0c301ceccedd
 --- /dev/null
-+++ b/reftable/pq.h
-@@ -0,0 +1,32 @@
++++ b/reftable/merged_test.c
+@@ -0,0 +1,291 @@
 +/*
 +Copyright 2020 Google LLC
 +
@@ -258,35 +556,294 @@ index 000000000000..385d2fb139a6
 +https://developers.google.com/open-source/licenses/bsd
 +*/
 +
-+#ifndef PQ_H
-+#define PQ_H
++#include "merged.h"
 +
++#include "system.h"
++
++#include "basics.h"
++#include "blocksource.h"
++#include "constants.h"
++#include "reader.h"
 +#include "record.h"
++#include "test_framework.h"
++#include "reftable-merged.h"
++#include "reftable-tests.h"
++#include "reftable-generic.h"
++#include "reftable-writer.h"
 +
-+struct pq_entry {
-+	int index;
-+	struct reftable_record rec;
-+};
++static void write_test_table(struct strbuf *buf,
++			     struct reftable_ref_record refs[], int n)
++{
++	int min = 0xffffffff;
++	int max = 0;
++	int i = 0;
++	int err;
 +
-+struct merged_iter_pqueue {
-+	struct pq_entry *heap;
-+	size_t len;
-+	size_t cap;
-+};
++	struct reftable_write_options opts = {
++		.block_size = 256,
++	};
++	struct reftable_writer *w = NULL;
++	for (i = 0; i < n; i++) {
++		uint64_t ui = refs[i].update_index;
++		if (ui > max) {
++			max = ui;
++		}
++		if (ui < min) {
++			min = ui;
++		}
++	}
 +
-+struct pq_entry merged_iter_pqueue_top(struct merged_iter_pqueue pq);
-+int merged_iter_pqueue_is_empty(struct merged_iter_pqueue pq);
-+void merged_iter_pqueue_check(struct merged_iter_pqueue pq);
-+struct pq_entry merged_iter_pqueue_remove(struct merged_iter_pqueue *pq);
-+void merged_iter_pqueue_add(struct merged_iter_pqueue *pq, struct pq_entry e);
-+void merged_iter_pqueue_release(struct merged_iter_pqueue *pq);
++	w = reftable_new_writer(&strbuf_add_void, buf, &opts);
++	reftable_writer_set_limits(w, min, max);
 +
-+#endif
-diff --git a/reftable/pq_test.c b/reftable/pq_test.c
++	for (i = 0; i < n; i++) {
++		uint64_t before = refs[i].update_index;
++		int n = reftable_writer_add_ref(w, &refs[i]);
++		assert(n == 0);
++		assert(before == refs[i].update_index);
++	}
++
++	err = reftable_writer_close(w);
++	EXPECT_ERR(err);
++
++	reftable_writer_free(w);
++}
++
++static struct reftable_merged_table *
++merged_table_from_records(struct reftable_ref_record **refs,
++			  struct reftable_block_source **source,
++			  struct reftable_reader ***readers, int *sizes,
++			  struct strbuf *buf, int n)
++{
++	int i = 0;
++	struct reftable_merged_table *mt = NULL;
++	int err;
++	struct reftable_table *tabs =
++		reftable_calloc(n * sizeof(struct reftable_table));
++	*readers = reftable_calloc(n * sizeof(struct reftable_reader *));
++	*source = reftable_calloc(n * sizeof(**source));
++	for (i = 0; i < n; i++) {
++		write_test_table(&buf[i], refs[i], sizes[i]);
++		block_source_from_strbuf(&(*source)[i], &buf[i]);
++
++		err = reftable_new_reader(&(*readers)[i], &(*source)[i],
++					  "name");
++		EXPECT_ERR(err);
++		reftable_table_from_reader(&tabs[i], (*readers)[i]);
++	}
++
++	err = reftable_new_merged_table(&mt, tabs, n, SHA1_ID);
++	EXPECT_ERR(err);
++	return mt;
++}
++
++static void readers_destroy(struct reftable_reader **readers, size_t n)
++{
++	int i = 0;
++	for (; i < n; i++)
++		reftable_reader_free(readers[i]);
++	reftable_free(readers);
++}
++
++static void test_merged_between(void)
++{
++	uint8_t hash1[SHA1_SIZE] = { 1, 2, 3, 0 };
++
++	struct reftable_ref_record r1[] = { {
++		.refname = "b",
++		.update_index = 1,
++		.value_type = REFTABLE_REF_VAL1,
++		.value.val1 = hash1,
++	} };
++	struct reftable_ref_record r2[] = { {
++		.refname = "a",
++		.update_index = 2,
++		.value_type = REFTABLE_REF_DELETION,
++	} };
++
++	struct reftable_ref_record *refs[] = { r1, r2 };
++	int sizes[] = { 1, 1 };
++	struct strbuf bufs[2] = { STRBUF_INIT, STRBUF_INIT };
++	struct reftable_block_source *bs = NULL;
++	struct reftable_reader **readers = NULL;
++	struct reftable_merged_table *mt =
++		merged_table_from_records(refs, &bs, &readers, sizes, bufs, 2);
++	int i;
++	struct reftable_ref_record ref = { NULL };
++	struct reftable_iterator it = { NULL };
++	int err = reftable_merged_table_seek_ref(mt, &it, "a");
++	EXPECT_ERR(err);
++
++	err = reftable_iterator_next_ref(&it, &ref);
++	EXPECT_ERR(err);
++	EXPECT(ref.update_index == 2);
++	reftable_ref_record_release(&ref);
++	reftable_iterator_destroy(&it);
++	readers_destroy(readers, 2);
++	reftable_merged_table_free(mt);
++	for (i = 0; i < ARRAY_SIZE(bufs); i++) {
++		strbuf_release(&bufs[i]);
++	}
++	reftable_free(bs);
++}
++
++static void test_merged(void)
++{
++	uint8_t hash1[SHA1_SIZE] = { 1 };
++	uint8_t hash2[SHA1_SIZE] = { 2 };
++	struct reftable_ref_record r1[] = {
++		{
++			.refname = "a",
++			.update_index = 1,
++			.value_type = REFTABLE_REF_VAL1,
++			.value.val1 = hash1,
++		},
++		{
++			.refname = "b",
++			.update_index = 1,
++			.value_type = REFTABLE_REF_VAL1,
++			.value.val1 = hash1,
++		},
++		{
++			.refname = "c",
++			.update_index = 1,
++			.value_type = REFTABLE_REF_VAL1,
++			.value.val1 = hash1,
++		}
++	};
++	struct reftable_ref_record r2[] = { {
++		.refname = "a",
++		.update_index = 2,
++		.value_type = REFTABLE_REF_DELETION,
++	} };
++	struct reftable_ref_record r3[] = {
++		{
++			.refname = "c",
++			.update_index = 3,
++			.value_type = REFTABLE_REF_VAL1,
++			.value.val1 = hash2,
++		},
++		{
++			.refname = "d",
++			.update_index = 3,
++			.value_type = REFTABLE_REF_VAL1,
++			.value.val1 = hash1,
++		},
++	};
++
++	struct reftable_ref_record want[] = {
++		r2[0],
++		r1[1],
++		r3[0],
++		r3[1],
++	};
++
++	struct reftable_ref_record *refs[] = { r1, r2, r3 };
++	int sizes[3] = { 3, 1, 2 };
++	struct strbuf bufs[3] = { STRBUF_INIT, STRBUF_INIT, STRBUF_INIT };
++	struct reftable_block_source *bs = NULL;
++	struct reftable_reader **readers = NULL;
++	struct reftable_merged_table *mt =
++		merged_table_from_records(refs, &bs, &readers, sizes, bufs, 3);
++
++	struct reftable_iterator it = { NULL };
++	int err = reftable_merged_table_seek_ref(mt, &it, "a");
++	struct reftable_ref_record *out = NULL;
++	size_t len = 0;
++	size_t cap = 0;
++	int i = 0;
++
++	EXPECT_ERR(err);
++	while (len < 100) { /* cap loops/recursion. */
++		struct reftable_ref_record ref = { NULL };
++		int err = reftable_iterator_next_ref(&it, &ref);
++		if (err > 0) {
++			break;
++		}
++		if (len == cap) {
++			cap = 2 * cap + 1;
++			out = reftable_realloc(
++				out, sizeof(struct reftable_ref_record) * cap);
++		}
++		out[len++] = ref;
++	}
++	reftable_iterator_destroy(&it);
++
++	assert(ARRAY_SIZE(want) == len);
++	for (i = 0; i < len; i++) {
++		assert(reftable_ref_record_equal(&want[i], &out[i], SHA1_SIZE));
++	}
++	for (i = 0; i < len; i++) {
++		reftable_ref_record_release(&out[i]);
++	}
++	reftable_free(out);
++
++	for (i = 0; i < 3; i++) {
++		strbuf_release(&bufs[i]);
++	}
++	readers_destroy(readers, 3);
++	reftable_merged_table_free(mt);
++	reftable_free(bs);
++}
++
++static void test_default_write_opts(void)
++{
++	struct reftable_write_options opts = { 0 };
++	struct strbuf buf = STRBUF_INIT;
++	struct reftable_writer *w =
++		reftable_new_writer(&strbuf_add_void, &buf, &opts);
++
++	struct reftable_ref_record rec = {
++		.refname = "master",
++		.update_index = 1,
++	};
++	int err;
++	struct reftable_block_source source = { NULL };
++	struct reftable_table *tab = reftable_calloc(sizeof(*tab) * 1);
++	uint32_t hash_id;
++	struct reftable_reader *rd = NULL;
++	struct reftable_merged_table *merged = NULL;
++
++	reftable_writer_set_limits(w, 1, 1);
++
++	err = reftable_writer_add_ref(w, &rec);
++	EXPECT_ERR(err);
++
++	err = reftable_writer_close(w);
++	EXPECT_ERR(err);
++	reftable_writer_free(w);
++
++	block_source_from_strbuf(&source, &buf);
++
++	err = reftable_new_reader(&rd, &source, "filename");
++	EXPECT_ERR(err);
++
++	hash_id = reftable_reader_hash_id(rd);
++	assert(hash_id == SHA1_ID);
++
++	reftable_table_from_reader(&tab[0], rd);
++	err = reftable_new_merged_table(&merged, tab, 1, SHA1_ID);
++	EXPECT_ERR(err);
++
++	reftable_reader_free(rd);
++	reftable_merged_table_free(merged);
++	strbuf_release(&buf);
++}
++
++/* XXX test refs_for(oid) */
++
++int merged_test_main(int argc, const char *argv[])
++{
++	RUN_TEST(test_merged_between);
++	RUN_TEST(test_merged);
++	RUN_TEST(test_default_write_opts);
++	return 0;
++}
+diff --git a/reftable/reftable-merged.h b/reftable/reftable-merged.h
 new file mode 100644
-index 000000000000..5178980b37ed
+index 000000000000..1a6d16915ab4
 --- /dev/null
-+++ b/reftable/pq_test.c
++++ b/reftable/reftable-merged.h
 @@ -0,0 +1,72 @@
 +/*
 +Copyright 2020 Google LLC
@@ -296,94 +853,82 @@ index 000000000000..5178980b37ed
 +https://developers.google.com/open-source/licenses/bsd
 +*/
 +
-+#include "system.h"
++#ifndef REFTABLE_MERGED_H
++#define REFTABLE_MERGED_H
 +
-+#include "basics.h"
-+#include "constants.h"
-+#include "pq.h"
-+#include "record.h"
-+#include "reftable-tests.h"
-+#include "test_framework.h"
++#include "reftable-iterator.h"
 +
-+static void test_pq(void)
-+{
-+	char *names[54] = { NULL };
-+	int N = ARRAY_SIZE(names) - 1;
++/*
++ * Merged tables
++ *
++ * A ref database kept in a sequence of table files. The merged_table presents a
++ * unified view to reading (seeking, iterating) a sequence of immutable tables.
++ *
++ * The merged tables are on purpose kept disconnected from their actual storage
++ * (eg. files on disk), because it is useful to merge tables aren't files. For
++ * example, the per-workspace and global ref namespace can be implemented as a
++ * merged table of two stacks of file-backed reftables.
++ */
 +
-+	struct merged_iter_pqueue pq = { NULL };
-+	const char *last = NULL;
++/* A merged table is implements seeking/iterating over a stack of tables. */
++struct reftable_merged_table;
 +
-+	int i = 0;
-+	for (i = 0; i < N; i++) {
-+		char name[100];
-+		snprintf(name, sizeof(name), "%02d", i);
-+		names[i] = xstrdup(name);
-+	}
++/* A generic reftable; see below. */
++struct reftable_table;
 +
-+	i = 1;
-+	do {
-+		struct reftable_record rec =
-+			reftable_new_record(BLOCK_TYPE_REF);
-+		struct pq_entry e = { 0 };
++/* reftable_new_merged_table creates a new merged table. It takes ownership of
++   the stack array.
++*/
++int reftable_new_merged_table(struct reftable_merged_table **dest,
++			      struct reftable_table *stack, int n,
++			      uint32_t hash_id);
 +
-+		reftable_record_as_ref(&rec)->refname = names[i];
-+		e.rec = rec;
-+		merged_iter_pqueue_add(&pq, e);
-+		merged_iter_pqueue_check(pq);
-+		i = (i * 7) % N;
-+	} while (i != 1);
++/* returns an iterator positioned just before 'name' */
++int reftable_merged_table_seek_ref(struct reftable_merged_table *mt,
++				   struct reftable_iterator *it,
++				   const char *name);
 +
-+	while (!merged_iter_pqueue_is_empty(pq)) {
-+		struct pq_entry e = merged_iter_pqueue_remove(&pq);
-+		struct reftable_ref_record *ref =
-+			reftable_record_as_ref(&e.rec);
++/* returns an iterator for log entry, at given update_index */
++int reftable_merged_table_seek_log_at(struct reftable_merged_table *mt,
++				      struct reftable_iterator *it,
++				      const char *name, uint64_t update_index);
 +
-+		merged_iter_pqueue_check(pq);
++/* like reftable_merged_table_seek_log_at but look for the newest entry. */
++int reftable_merged_table_seek_log(struct reftable_merged_table *mt,
++				   struct reftable_iterator *it,
++				   const char *name);
 +
-+		if (last != NULL) {
-+			assert(strcmp(last, ref->refname) < 0);
-+		}
-+		last = ref->refname;
-+		ref->refname = NULL;
-+		reftable_free(ref);
-+	}
++/* returns the max update_index covered by this merged table. */
++uint64_t
++reftable_merged_table_max_update_index(struct reftable_merged_table *mt);
 +
-+	for (i = 0; i < N; i++) {
-+		reftable_free(names[i]);
-+	}
++/* returns the min update_index covered by this merged table. */
++uint64_t
++reftable_merged_table_min_update_index(struct reftable_merged_table *mt);
 +
-+	merged_iter_pqueue_release(&pq);
-+}
++/* releases memory for the merged_table */
++void reftable_merged_table_free(struct reftable_merged_table *m);
 +
-+int pq_test_main(int argc, const char *argv[])
-+{
-+	RUN_TEST(test_pq);
-+	return 0;
-+}
-diff --git a/reftable/reftable-tests.h b/reftable/reftable-tests.h
-index 5e7698ae654e..495556572e20 100644
---- a/reftable/reftable-tests.h
-+++ b/reftable/reftable-tests.h
-@@ -12,6 +12,7 @@ license that can be found in the LICENSE file or at
- int basics_test_main(int argc, const char **argv);
- int block_test_main(int argc, const char **argv);
- int merged_test_main(int argc, const char **argv);
-+int pq_test_main(int argc, const char **argv);
- int record_test_main(int argc, const char **argv);
- int refname_test_main(int argc, const char **argv);
- int reftable_test_main(int argc, const char **argv);
++/* return the hash ID of the merged table. */
++uint32_t reftable_merged_table_hash_id(struct reftable_merged_table *m);
++
++/* create a generic table from reftable_merged_table */
++void reftable_table_from_merged_table(struct reftable_table *tab,
++				      struct reftable_merged_table *table);
++
++#endif
 diff --git a/t/helper/test-reftable.c b/t/helper/test-reftable.c
-index fdf925867375..368eb7339eb7 100644
+index 368eb7339eb7..cb277d911692 100644
 --- a/t/helper/test-reftable.c
 +++ b/t/helper/test-reftable.c
 @@ -5,6 +5,7 @@ int cmd__reftable(int argc, const char **argv)
  {
  	basics_test_main(argc, argv);
  	block_test_main(argc, argv);
-+	pq_test_main(argc, argv);
++	merged_test_main(argc, argv);
+ 	pq_test_main(argc, argv);
  	record_test_main(argc, argv);
  	reftable_test_main(argc, argv);
- 	tree_test_main(argc, argv);
 -- 
 gitgitgadget
 
