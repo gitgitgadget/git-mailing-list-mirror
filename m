@@ -2,72 +2,71 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 676CEC433B4
-	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 07:09:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 583A0C43460
+	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 07:53:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 39C1060FEF
-	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 07:09:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1BCE36121F
+	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 07:53:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236801AbhDLHKI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Apr 2021 03:10:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42496 "EHLO
+        id S236973AbhDLHxr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Apr 2021 03:53:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52074 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229764AbhDLHKH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Apr 2021 03:10:07 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44E97C061574
-        for <git@vger.kernel.org>; Mon, 12 Apr 2021 00:09:50 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id h10so13711078edt.13
-        for <git@vger.kernel.org>; Mon, 12 Apr 2021 00:09:50 -0700 (PDT)
+        with ESMTP id S236920AbhDLHxo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Apr 2021 03:53:44 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDB10C061574
+        for <git@vger.kernel.org>; Mon, 12 Apr 2021 00:53:25 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id s7so11730294wru.6
+        for <git@vger.kernel.org>; Mon, 12 Apr 2021 00:53:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=references:user-agent:from:to:cc:subject:in-reply-to:message-id
          :date:mime-version:content-transfer-encoding;
-        bh=4B5pYd1SHbeOpl/iq+y3jRHbnoHJ6zNJ1GC+Gz6y/IQ=;
-        b=Qm5elI6CMEGQ+rxpOMtoht5nNFfIGMPFFcUw/OiDFpn7D9+3Qvk6JA0+d5ck2lkWyc
-         W3aR9uvuG7i9k6opidRq8RLdPBdIbG8e4HPAX2qm/NbgF5Ham6Q7iKChxjnr5BT+ADsv
-         aDHSq2ALpNOXFEn9o9FQkshkxIWM+4l7veZp1lCR/7Ns7PF5tS5HnfzgoXIJKI+izwbB
-         pI6iR78LU2UnXlWgFbjXTQofwqfQeRmB7hEpZ5UjgJdFS8mThOZhPF5jbMC3v62oKn8V
-         rWbrYA7+Zm8Dji7SQXwoHw64l2W9IxQ3vpz/85W5uIFykKDvpyHNnH9uwk2nStoN/pED
-         eMzw==
+        bh=K+s10SFtbL1eE/Uv/u73oF1YNasPmgmAYon9+GdEnJw=;
+        b=E8yZpDIYScSPAeebC/vowjd11G2pdVEH6gdcTBIGME4NJqjuZ23lEHK8HEQ27Ub7Py
+         YmDWifG8G/gldgxptrpfAJozlDFQjtGCgguc0ILErSyChf0IO9XVSO3Exw55f0iDjL1t
+         M4v9SVbUUxFSYNFdadxWtzd94NvVB2hxdSFztLUiZj9E2MMLqfvU51J858iSPPpDQsGK
+         vUctbElHsKPXM9pMsjbfuJ4M9279fPFbpRKf78YQxSqNvjxi9ZDr+X3cX/5xfjnpJc9R
+         xcPHwXcSwM9PrLLQ6YenHNnGTc0ZKPd79JWct7hk8YTIEwRn3Hp/drGeouWKY9VbJreC
+         /idg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:references:user-agent:from:to:cc:subject
          :in-reply-to:message-id:date:mime-version:content-transfer-encoding;
-        bh=4B5pYd1SHbeOpl/iq+y3jRHbnoHJ6zNJ1GC+Gz6y/IQ=;
-        b=K6aiwy+cRm3TBogNbB16T26klktLVYsMvNhVuE63BE1Hi37TcOhxRgEIZKfZFr60gt
-         evVyJmgljMxs6xFwRLyFdnEgUzdO/iCy19JbGAndPdt/XLBwCSx+rP4b0Y6MwK453Fsi
-         rlxKayKD8Hdjow/6/GJOZHnrIweRXP9TtT/3qytbpzeAiGt4ilLaQuilz6kgJdorNS8G
-         cYf83ktfjEv4sSBLGfPp3eLxaGrM98BKnr1dfSVnUeGiq2qWPkoKnBODV4jlGsPMarsA
-         G0/ysFxRw4/90FDBvvfyUybuW1yEtNKYUfYrOzUD3XWdQ7jW8t+l/yYJDYlEgiL71TgG
-         h31A==
-X-Gm-Message-State: AOAM532YxsqXinDjJanHmsovyPq/ZLTBDZuxGLZ5xAm1XaJmhNJ9gE+N
-        rf02pdniXfZZ2znJvJV62uU2/JTuFGdDxg==
-X-Google-Smtp-Source: ABdhPJyW1PFw8U4V6qbK7g16t42Bsqsw+HiJcC0ZtlnYQc/MKm6/qRA6ZnYmXUovkz40IGkEsZ9SxA==
-X-Received: by 2002:a50:c004:: with SMTP id r4mr27190519edb.192.1618211388742;
-        Mon, 12 Apr 2021 00:09:48 -0700 (PDT)
-Received: from cpm12071.fritz.box ([79.140.122.112])
-        by smtp.gmail.com with ESMTPSA id bw14sm4444615ejb.89.2021.04.12.00.09.47
+        bh=K+s10SFtbL1eE/Uv/u73oF1YNasPmgmAYon9+GdEnJw=;
+        b=noLe4Mz2g+VdxdMsXc+yi6sV0mWcgkURbDn+DfZDesyB1Oyb0IFxr7d07BbwtKoZtZ
+         ghvYsb4JAiHx3PuRiSndVipzJmX+aXm8N/a9PefrtpvmjfGJusblN7jW20g8FBPg1rFx
+         XFkdG96NJpewGQz3T5MxO3cPlSUmZMX2WjyXpfj5gJbuXMz/3o8usYp2uhmnpGQlQbfF
+         OoWanbUMRMpJTF8J50rdIosn3kBFMAMnIn4S6zR53T4zCAmvsu6CKjBbTnaU0VT1wTNi
+         Vrgd3duU33qRvpUwvfEwIVDhJXG4HOGQ3iEzNMxyTR/jBR+xBVWf5orOA0WVT4PmtWvo
+         aozQ==
+X-Gm-Message-State: AOAM530bXIP/5d04/5Y7tUWftbAxfQj5FmgLthUT+6x+mM/3G3P/v8/8
+        pTqRBDnoExGkJ3sxZKjuXFA7Ex5BFPTamw==
+X-Google-Smtp-Source: ABdhPJzqMcbpSSfRcIZ4T274qGW82gUA5Xk2vTAE87G97u3RBzbjmEeincIfpLlSSz3+FFt5OpGhbw==
+X-Received: by 2002:adf:e647:: with SMTP id b7mr20351166wrn.43.1618214004406;
+        Mon, 12 Apr 2021 00:53:24 -0700 (PDT)
+Received: from cpm12071.local ([79.140.122.112])
+        by smtp.gmail.com with ESMTPSA id u2sm13610008wmc.22.2021.04.12.00.53.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Apr 2021 00:09:47 -0700 (PDT)
+        Mon, 12 Apr 2021 00:53:23 -0700 (PDT)
 References: <20210403090412.GH2271@szeder.dev>
  <gohp6ko8et3jdm.fsf@cpm12071.fritz.box>
- <YG4hfge2y/AmcklZ@coredump.intra.peff.net>
+ <20210411105903.GG2947267@szeder.dev>
 User-agent: mu4e 1.4.15; emacs 27.2
 From:   Rafael Silva <rafaeloliveira.cs@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Subject: Re: rather slow 'git repack' in 'blob:none' partial clones
-In-reply-to: <YG4hfge2y/AmcklZ@coredump.intra.peff.net>
-Message-ID: <gohp6kim4sf07b.fsf@cpm12071.fritz.box>
-Date:   Mon, 12 Apr 2021 09:09:46 +0200
+In-reply-to: <20210411105903.GG2947267@szeder.dev>
+Message-ID: <gohp6k4kgcdjm6.fsf@gmail.com>
+Date:   Mon, 12 Apr 2021 09:53:23 +0200
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -76,9 +75,109 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-Jeff King <peff@peff.net> writes:
+SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
 
 > On Mon, Apr 05, 2021 at 03:02:33AM +0200, Rafael Silva wrote:
+>> > here are trace timings of running 'git gc' in a "normal" and in a
+>> > 'blob:none' partial clone:
+>> >
+>> >   $ git clone --bare https://github.com/git/git git-full.git
+>> >   $ GIT_TRACE_PERFORMANCE=3D2 /usr/bin/time --format=3D'elapsed: %E  m=
+ax RSS: %Mk' git -C git-full.git/ gc
+> [...]
+>> >   elapsed: 0:09.51  max RSS: 358964k
+>> >
+>> >   $ git clone --bare --filter=3Dblob:none https://github.com/git/git g=
+it-partial.git
+>> >   $ GIT_TRACE_PERFORMANCE=3D2 /usr/bin/time --format=3D'elapsed: %E  m=
+ax RSS: %Mk' git -C git-partial.git/ gc
+>> >   10:35:47.637735 trace.c:487             performance: 0.000872539 s: =
+git command: /usr/local/libexec/git-core/git pack-refs --all --prune
+>> >   10:35:47.675498 trace.c:487             performance: 0.036246403 s: =
+git command: /usr/local/libexec/git-core/git reflog expire --all
+>> >   Enumerating objects: 188205, done.
+>> >   Counting objects: 100% (188205/188205), done.
+>> >   Delta compression using up to 4 threads
+>> >   Compressing objects: 100% (66520/66520), done.
+>> >   Writing objects: 100% (188205/188205), done.
+>> >   Total 188205 (delta 119967), reused 188205 (delta 119967), pack-reus=
+ed 0
+>> >   10:35:50.081709 trace.c:487             performance: 2.402625839 s: =
+git command: /usr/local/libexec/git-core/git pack-objects --local --delta-b=
+ase-offset objects/pack/.tmp-2946990-pack
+>> >   10:35:50.100131 read-cache.c:2315       performance: 0.000009979 s: =
+ read cache ./index
+>> >   10:37:04.973541 trace.c:487             performance: 74.885793630 s:=
+ git command: /usr/local/libexec/git-core/git pack-objects --local --delta-=
+base-offset objects/pack/.tmp-2946990-pack --keep-true-parents --honor-pack=
+-keep --non-empty --all --reflog --indexed-objects --exclude-promisor-objec=
+ts --unpack-unreachable=3D2.weeks.ago
+>> >   Removing duplicate objects: 100% (256/256), done.
+>> >   10:37:07.482791 trace.c:487             performance: 79.804973525 s:=
+ git command: /usr/local/libexec/git-core/git repack -d -l -A --unpack-unre=
+achable=3D2.weeks.ago
+>> >   10:37:07.549333 trace.c:487             performance: 0.008025426 s: =
+git command: /usr/local/libexec/git-core/git prune --expire 2.weeks.ago --e=
+xclude-promisor-objects
+>> >   10:37:07.552499 trace.c:487             performance: 0.000362981 s: =
+git command: /usr/local/libexec/git-core/git worktree prune --expire 3.mont=
+hs.ago
+>> >   10:37:07.554521 trace.c:487             performance: 0.000273834 s: =
+git command: /usr/local/libexec/git-core/git rerere gc
+>> >   10:37:10.168233 trace.c:487             performance: 82.533331484 s:=
+ git command: git -C git-partial.git/ gc
+>> >   elapsed: 1:22.54  max RSS: 1891832k
+>> >
+>> > Notice the ~9s vs. 82s runtime and ~350M vs. 1.9G memory consumption
+>> > increase.  What's going on here?
+>> >
+>> > Also note that that second 'git pack-objects' invocation doesn't show
+>> > any progress for ~75s.
+>> >
+>> > FWIW, doing the same in a 'tree:0' partial clone is fast.
+>>=20
+>> I'm not expert on the area - by "area": the entire git code base :).
+>> However, I was intrigued by this performance numbers and decided to give
+>> it a try on the investigation, mostly for learning.
+>
+> That's the spirit!
+>
+
+:)
+
+>> While I'm not sure
+>> about the solution of the problem, I decided to share it here with the
+>> hope that at least I'll be saving someone else time.
+>>=20
+>> When I was digging into the code and adding trace2_region_*() calls, I
+>> notice most of the time spent on the `git gc` (for the reported
+>> situation) was in:
+>>=20
+>>        # In builtin/pack-objects.c
+>>        static void get_object_list(int ac, const char **av)
+>>        {
+>>                ...
+>>                if (unpack_unreachable)
+>>                        loosen_unused_packed_objects();
+>>                ...
+>>        }
+>>=20
+>> The loosen_unused_packed_objects() will unpack unreachable objects as
+>> loose objects, and given that the partial cloned .pack file is
+>> incomplete, this result in writing a lot of loose objects in $GIT_DIR
+>> increasing the execution time and memory consumption. This can be seen
+>> by watching the $GIT_DIR/objects/ during the `git gc` execution on the
+>> partial cloned repo.
+>
+> Indeed, that 'blob:none' partial clone grew in size temporarily to
+> over 1.3GB during repacking, but luckily all those unnecessarily
+> loosened objects were removed at the end.  I first noticed this issue
+> while attempting to repack a considerably larger partial-cloned
+> repository, which I aborted because it ate up all the memory...  I
+> suppose that even if it didn't use that much memory, it would
+> eventually run out of available disk space for all those loose objects
+> anyway...
+>
 >
 >> I'm not entirely sure about this (not this late in the day), but it seem=
 s to
@@ -103,62 +202,10 @@ struct object_id *oid,
 >>                 return 0;
 >>         if (oid_array_lookup(&recent_objects, oid) >=3D 0)
 >> --- >8 ---
->
-> you are avoiding writing out the file. But we should realize much
-> earlier that it is not something we need to even consider loosening.
->
-> In the loop in loosen_unused_packed_objects(), we skip packs that are
-> marked as "keep", so we'd skip the new promisor pack entirely. But we'd
-> still see all these objects in the _old_ promisor pack. However, for
-> each object there, we call has_sha1_pack_kept_or_nonlocal(), so that
-> would likewise realize that each object is already being kept in the
-> other pack.
->
-
-Agreed. Realizing sooner that we shouldn't even consider loosening the
-objects from the packfile it's better solution.
-
-> Something like this seems to work, but I only lightly tested it, and it
-> could probably use some refactoring to make it less horrible:
->
-> diff --git a/builtin/repack.c b/builtin/repack.c
-> index fdee8e4578..457525953a 100644
-> --- a/builtin/repack.c
-> +++ b/builtin/repack.c
-> @@ -574,6 +574,23 @@ int cmd_repack(int argc, const char **argv, const ch=
-ar *prefix)
->  		repack_promisor_objects(&po_args, &names);
->=20=20
->  		if (existing_packs.nr && delete_redundant) {
-> +			/*
-> +			 * tell pack-objects about our new promisor pack, which
-> +			 * we will also be keeping
-> +			 */
-> +			for_each_string_list_item(item, &names) {
-> +				/*
-> +				 * yuck, we seem to only have the name with the
-> +				 * packdir prefixed
-> +				 */
-> +				const char *prefix;
-> +				if (!skip_prefix(packtmp, packdir, &prefix) ||
-> +				    *prefix++ !=3D '/')
-> +					BUG("confused by packtmp");
-> +				strvec_pushf(&cmd.args, "--keep-pack=3D%s-%s.pack",
-> +					     prefix, item->string);
-> +			}
-> +
->  			if (unpack_unreachable) {
->  				strvec_pushf(&cmd.args,
->  					     "--unpack-unreachable=3D%s",
->
-> Do you want to try to work with that?
->
-
-Yes, I'll try to work with that, together with refactoring that you
-mentioned in the code and the other replies.
-
-Thanks for the suggestion.
-
+>>=20
+>> I'll try to prepare a patch for this change with proper testing, if this
+>> turns out to be proper way to handle partial clone repository.
+>>=20
 >> A quick benchmark did show some promising result:
 >>=20
 >>     # built from: 2e36527f23 (The sixth batch, 2021-04-02)
@@ -179,16 +226,21 @@ runs
 >>           'Benchmark #2' ran 10.78 =C2=B1 0.06 times faster than 'Benchm=
 ark #1'
 >
-> It's still quite a bit slower than a non-partial clone because the
-> traversal with --exclude-promisor-objects is slow. I think that's
-> because it has to open up all of the objects in the promisor pack to see
-> what they refer to. I don't know if we can do better (and it's largely
-> an orthogonal problem to what you're solving here, so it probably makes
-> sense to just punt on it for now).
+> I can confirm that you change speeds up repacking considerably and it
+> completely eliminates that temporary repo size explision due to
+> unpacked objects, but, alas, it doesn't seem to reduce the memory
+> usage.
 >
-> -Peff
+> Thanks,
+> G=C3=A1bor
 
-Make sense.
+Thanks for confirming it. The memory usage, indeed, is almost the same
+after the changes.  Nevertheless, Peff suggested a better approach to
+addressing this issue, by realizing earlier that we should even
+consider loosening the objects from the pack.
+
+I'll try to work with that approach and see how this apply to memory
+usage.
 
 --=20
 Thanks
