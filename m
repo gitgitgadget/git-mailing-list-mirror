@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CB846C43461
-	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 19:26:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 47402C433ED
+	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 19:26:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AE1E161358
-	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 19:26:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2376261352
+	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 19:26:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241509AbhDLT0s (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Apr 2021 15:26:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35412 "EHLO
+        id S245301AbhDLT0t (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Apr 2021 15:26:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237238AbhDLT0Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Apr 2021 15:26:24 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 642A0C06138E
-        for <git@vger.kernel.org>; Mon, 12 Apr 2021 12:26:06 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id c15so5132190wro.13
-        for <git@vger.kernel.org>; Mon, 12 Apr 2021 12:26:06 -0700 (PDT)
+        with ESMTP id S245266AbhDLT0X (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Apr 2021 15:26:23 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A08DC06138C
+        for <git@vger.kernel.org>; Mon, 12 Apr 2021 12:26:05 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id c15so5132125wro.13
+        for <git@vger.kernel.org>; Mon, 12 Apr 2021 12:26:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=fodV0rxWTzIpPlnBrgeQol6U1Nk6PfxpK2fJ9yKOoAI=;
-        b=vJhUhrpXpcJeFz4EotwIJ/R1tiYv2P+Qcfg9cp8Y91xvZ5r+XmZ3wSKUWv0eB3bOLn
-         66in5Pbdsssbda4+3deInf0+eOutXA/QO/s12/kIqfOVly48dGyWs0THy3ERkKXX2aR7
-         UZV5OeI1m7VlxqdmJ3y8BdzQubThX3g21DyAXhX33+DHtDr2QzRxSoT/RfqGoQCE1Hm0
-         QIQ+mw7cgNIj4+yO0W0UrW5dDLTrCHdOI5sMxBILLbH2dTMFIO6DmnEP9gQE0/ZdCa2n
-         KgAuDxhphTndWwapV3bSvZuXA/I/t9VW9Ufe20Ue2y4pzPy5wK8wheausHJNRO/jYMUS
-         HFiA==
+        bh=AhouERgsJD5dWSSqejjxUjNPPBrojpGdpLiusVKScjM=;
+        b=UT52BDhS7e5q6ahT72txUABs8nAbFUEfzdNaLeFbuyv/zgsbk6i7lpKWGRfu+IyrGX
+         HFfXSOUYZ6KjvaJitthQJMhd7TSqDokwQexCACEw2BFwi0KSD/P5Ej5hEJd8sjtI3op+
+         MQITF7INUSUZNJrkh1Qa7BP8HU2gFmMphnxu5Et13L/ARa09/BQP/WSFfFbiJ0Yfovqe
+         FGWNfAfLX7gCd8JrpXYFViW/xqVPpRQqJGSRKRxTdHJ8jKE9ocEhHkFNWION12z+M4d8
+         3j4OpIC32auFgS2vCMLdLzblRziYQ4W6KVykQ9z/60YErwXCdwdZMIdDeNGM1AEJRd3i
+         EcLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=fodV0rxWTzIpPlnBrgeQol6U1Nk6PfxpK2fJ9yKOoAI=;
-        b=L7fvHPp3ZpMmGsoAjXbS2WKDqzVs7KKURcqqpdz9H7/YXE1SX+MyizcxjOV+PDvDDZ
-         rMoQLHtMcmdG6V6Vi6Nw1U+EH1t6B0J9U3hLDOehm5o8TXiB5nQo+1JYzZ5vhNk30K7R
-         WZEjTnrH7e98ejoBL99gXc0SdBepiIj/Ao0X/MTT5oPl1nD4e42MvXnJ10qHRY/LZNfn
-         7nn91LF/PwQ9oR4UZ8oEs9wZKz/yFe0/RlLRbssyEvFeetXOEc0vr02Uof2xOFpvWEn6
-         8x+IfRD7tPPnvj3kXGM0wqTkJAg3rVmOggk3aSTXelN06I+DFz4sId8ZBROMq/Vog30a
-         wxYw==
-X-Gm-Message-State: AOAM530plpQLDNPUv2ucYq+Oz2gt0XYeOmW6qoriOg9L2C8LnT5IIPyI
-        MzS3uax8Z9ICnGCVJfzGAPiJ3R0tiMs=
-X-Google-Smtp-Source: ABdhPJxz/aIzF5+j5iSMNbvOs1nVZbmeFkE8Q2s4zvMcxzj2gb510UScepjYVR8/EEZnplct1lTBBQ==
-X-Received: by 2002:a5d:55cf:: with SMTP id i15mr5729516wrw.289.1618255565239;
-        Mon, 12 Apr 2021 12:26:05 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j23sm278754wmo.33.2021.04.12.12.26.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=AhouERgsJD5dWSSqejjxUjNPPBrojpGdpLiusVKScjM=;
+        b=ou2k9KISpNWV5c+EFhnmrIquFF0iUDbgql9UjNDnrUz3J4blo3dlPNeYqKyH6Ggkxr
+         o7RCmbYU8fzHDPMByk5TLFXN7G/0fWH+4f0eDzPLrkokdvqStUcww43U3Jssfu5cJsj7
+         NXRAIL7UMCa/ZJ3M68cf78jLDyfxURf0eQV+LYK+gaFjakLn9NfThOVU3rM3qT6RZ0fT
+         821FiP+Ij/BanSfFPp2CWbHT6EJEiz/dL6PvYwRwztys37iqFpCUQjzLUfblORbl10tY
+         UQDU/vqPpbHuIXUTTHObDlxT6EIJCqgOAXpUyuiSZ1Nh145iwWbQSOCrDbQonFMkN67G
+         VYtg==
+X-Gm-Message-State: AOAM532Mi75G0v+h6CrDYDS0YAvw5MPU3nHiw4jNvcikuHOGNn85xjXw
+        qste1FzPrv2fLrrnfW4niN9L5ixZLCI=
+X-Google-Smtp-Source: ABdhPJyHhZe+bbT3qrqGteD3MeD+fcjo3boERRCI9oI5GM6v4eCPQ6HTWMPJgQZi/NMyMxBu6qrCRQ==
+X-Received: by 2002:a5d:58fa:: with SMTP id f26mr7446536wrd.177.1618255564087;
         Mon, 12 Apr 2021 12:26:04 -0700 (PDT)
-Message-Id: <5db7c8ab7f2307d2a1e91e8bd862e1144abbe9cd.1618255553.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a72sm285413wme.29.2021.04.12.12.26.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Apr 2021 12:26:03 -0700 (PDT)
+Message-Id: <3186b2b70f736561f2254588ac3dc44458fc3f3f.1618255553.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.847.v6.git.git.1618255552.gitgitgadget@gmail.com>
 References: <pull.847.v5.git.git.1615580397.gitgitgadget@gmail.com>
         <pull.847.v6.git.git.1618255552.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 12 Apr 2021 19:25:49 +0000
-Subject: [PATCH v6 17/20] reftable: add dump utility
+Date:   Mon, 12 Apr 2021 19:25:47 +0000
+Subject: [PATCH v6 15/20] reftable: implement refname validation
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -87,21 +87,299 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-provide a command-line utility for inspecting individual tables, and
-inspecting a complete ref database
+The packed/loose format has restrictions on refnames: a and a/b cannot
+coexist. This limitation does not apply to reftable per se, but must be
+maintained for interoperability. This code adds validation routines to
+abort transactions that are trying to add invalid names.
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- reftable/dump.c | 212 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 212 insertions(+)
- create mode 100644 reftable/dump.c
+ Makefile                 |   2 +
+ reftable/refname.c       | 209 +++++++++++++++++++++++++++++++++++++++
+ reftable/refname.h       |  29 ++++++
+ reftable/refname_test.c  | 102 +++++++++++++++++++
+ t/helper/test-reftable.c |   1 +
+ 5 files changed, 343 insertions(+)
+ create mode 100644 reftable/refname.c
+ create mode 100644 reftable/refname.h
+ create mode 100644 reftable/refname_test.c
 
-diff --git a/reftable/dump.c b/reftable/dump.c
+diff --git a/Makefile b/Makefile
+index 129f73d118ac..9b941b69eb4b 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2410,6 +2410,7 @@ REFTABLE_OBJS += reftable/merged.o
+ REFTABLE_OBJS += reftable/pq.o
+ REFTABLE_OBJS += reftable/reader.o
+ REFTABLE_OBJS += reftable/record.o
++REFTABLE_OBJS += reftable/refname.o
+ REFTABLE_OBJS += reftable/reftable.o
+ REFTABLE_OBJS += reftable/tree.o
+ REFTABLE_OBJS += reftable/writer.o
+@@ -2420,6 +2421,7 @@ REFTABLE_TEST_OBJS += reftable/block_test.o
+ REFTABLE_TEST_OBJS += reftable/merged_test.o
+ REFTABLE_TEST_OBJS += reftable/pq_test.o
+ REFTABLE_TEST_OBJS += reftable/record_test.o
++REFTABLE_TEST_OBJS += reftable/refname_test.o
+ REFTABLE_TEST_OBJS += reftable/reftable_test.o
+ REFTABLE_TEST_OBJS += reftable/test_framework.o
+ REFTABLE_TEST_OBJS += reftable/tree_test.o
+diff --git a/reftable/refname.c b/reftable/refname.c
 new file mode 100644
-index 000000000000..00b444e8c9b8
+index 000000000000..0f4eb3b292d3
 --- /dev/null
-+++ b/reftable/dump.c
-@@ -0,0 +1,212 @@
++++ b/reftable/refname.c
+@@ -0,0 +1,209 @@
++/*
++  Copyright 2020 Google LLC
++
++  Use of this source code is governed by a BSD-style
++  license that can be found in the LICENSE file or at
++  https://developers.google.com/open-source/licenses/bsd
++*/
++
++#include "system.h"
++#include "reftable-error.h"
++#include "basics.h"
++#include "refname.h"
++#include "reftable-iterator.h"
++
++struct find_arg {
++	char **names;
++	const char *want;
++};
++
++static int find_name(size_t k, void *arg)
++{
++	struct find_arg *f_arg = (struct find_arg *)arg;
++	return strcmp(f_arg->names[k], f_arg->want) >= 0;
++}
++
++static int modification_has_ref(struct modification *mod, const char *name)
++{
++	struct reftable_ref_record ref = { NULL };
++	int err = 0;
++
++	if (mod->add_len > 0) {
++		struct find_arg arg = {
++			.names = mod->add,
++			.want = name,
++		};
++		int idx = binsearch(mod->add_len, find_name, &arg);
++		if (idx < mod->add_len && !strcmp(mod->add[idx], name)) {
++			return 0;
++		}
++	}
++
++	if (mod->del_len > 0) {
++		struct find_arg arg = {
++			.names = mod->del,
++			.want = name,
++		};
++		int idx = binsearch(mod->del_len, find_name, &arg);
++		if (idx < mod->del_len && !strcmp(mod->del[idx], name)) {
++			return 1;
++		}
++	}
++
++	err = reftable_table_read_ref(&mod->tab, name, &ref);
++	reftable_ref_record_release(&ref);
++	return err;
++}
++
++static void modification_release(struct modification *mod)
++{
++	/* don't delete the strings themselves; they're owned by ref records.
++	 */
++	FREE_AND_NULL(mod->add);
++	FREE_AND_NULL(mod->del);
++	mod->add_len = 0;
++	mod->del_len = 0;
++}
++
++static int modification_has_ref_with_prefix(struct modification *mod,
++					    const char *prefix)
++{
++	struct reftable_iterator it = { NULL };
++	struct reftable_ref_record ref = { NULL };
++	int err = 0;
++
++	if (mod->add_len > 0) {
++		struct find_arg arg = {
++			.names = mod->add,
++			.want = prefix,
++		};
++		int idx = binsearch(mod->add_len, find_name, &arg);
++		if (idx < mod->add_len &&
++		    !strncmp(prefix, mod->add[idx], strlen(prefix)))
++			goto done;
++	}
++	err = reftable_table_seek_ref(&mod->tab, &it, prefix);
++	if (err)
++		goto done;
++
++	while (1) {
++		err = reftable_iterator_next_ref(&it, &ref);
++		if (err)
++			goto done;
++
++		if (mod->del_len > 0) {
++			struct find_arg arg = {
++				.names = mod->del,
++				.want = ref.refname,
++			};
++			int idx = binsearch(mod->del_len, find_name, &arg);
++			if (idx < mod->del_len &&
++			    !strcmp(ref.refname, mod->del[idx])) {
++				continue;
++			}
++		}
++
++		if (strncmp(ref.refname, prefix, strlen(prefix))) {
++			err = 1;
++			goto done;
++		}
++		err = 0;
++		goto done;
++	}
++
++done:
++	reftable_ref_record_release(&ref);
++	reftable_iterator_destroy(&it);
++	return err;
++}
++
++static int validate_refname(const char *name)
++{
++	while (1) {
++		char *next = strchr(name, '/');
++		if (!*name) {
++			return REFTABLE_REFNAME_ERROR;
++		}
++		if (!next) {
++			return 0;
++		}
++		if (next - name == 0 || (next - name == 1 && *name == '.') ||
++		    (next - name == 2 && name[0] == '.' && name[1] == '.'))
++			return REFTABLE_REFNAME_ERROR;
++		name = next + 1;
++	}
++	return 0;
++}
++
++int validate_ref_record_addition(struct reftable_table tab,
++				 struct reftable_ref_record *recs, size_t sz)
++{
++	struct modification mod = {
++		.tab = tab,
++		.add = reftable_calloc(sizeof(char *) * sz),
++		.del = reftable_calloc(sizeof(char *) * sz),
++	};
++	int i = 0;
++	int err = 0;
++	for (; i < sz; i++) {
++		if (reftable_ref_record_is_deletion(&recs[i])) {
++			mod.del[mod.del_len++] = recs[i].refname;
++		} else {
++			mod.add[mod.add_len++] = recs[i].refname;
++		}
++	}
++
++	err = modification_validate(&mod);
++	modification_release(&mod);
++	return err;
++}
++
++static void strbuf_trim_component(struct strbuf *sl)
++{
++	while (sl->len > 0) {
++		int is_slash = (sl->buf[sl->len - 1] == '/');
++		strbuf_setlen(sl, sl->len - 1);
++		if (is_slash)
++			break;
++	}
++}
++
++int modification_validate(struct modification *mod)
++{
++	struct strbuf slashed = STRBUF_INIT;
++	int err = 0;
++	int i = 0;
++	for (; i < mod->add_len; i++) {
++		err = validate_refname(mod->add[i]);
++		if (err)
++			goto done;
++		strbuf_reset(&slashed);
++		strbuf_addstr(&slashed, mod->add[i]);
++		strbuf_addstr(&slashed, "/");
++
++		err = modification_has_ref_with_prefix(mod, slashed.buf);
++		if (err == 0) {
++			err = REFTABLE_NAME_CONFLICT;
++			goto done;
++		}
++		if (err < 0)
++			goto done;
++
++		strbuf_reset(&slashed);
++		strbuf_addstr(&slashed, mod->add[i]);
++		while (slashed.len) {
++			strbuf_trim_component(&slashed);
++			err = modification_has_ref(mod, slashed.buf);
++			if (err == 0) {
++				err = REFTABLE_NAME_CONFLICT;
++				goto done;
++			}
++			if (err < 0)
++				goto done;
++		}
++	}
++	err = 0;
++done:
++	strbuf_release(&slashed);
++	return err;
++}
+diff --git a/reftable/refname.h b/reftable/refname.h
+new file mode 100644
+index 000000000000..a24b40fcb428
+--- /dev/null
++++ b/reftable/refname.h
+@@ -0,0 +1,29 @@
++/*
++  Copyright 2020 Google LLC
++
++  Use of this source code is governed by a BSD-style
++  license that can be found in the LICENSE file or at
++  https://developers.google.com/open-source/licenses/bsd
++*/
++#ifndef REFNAME_H
++#define REFNAME_H
++
++#include "reftable-record.h"
++#include "reftable-generic.h"
++
++struct modification {
++	struct reftable_table tab;
++
++	char **add;
++	size_t add_len;
++
++	char **del;
++	size_t del_len;
++};
++
++int validate_ref_record_addition(struct reftable_table tab,
++				 struct reftable_ref_record *recs, size_t sz);
++
++int modification_validate(struct modification *mod);
++
++#endif
+diff --git a/reftable/refname_test.c b/reftable/refname_test.c
+new file mode 100644
+index 000000000000..5e005d6af31c
+--- /dev/null
++++ b/reftable/refname_test.c
+@@ -0,0 +1,102 @@
 +/*
 +Copyright 2020 Google LLC
 +
@@ -110,210 +388,112 @@ index 000000000000..00b444e8c9b8
 +https://developers.google.com/open-source/licenses/bsd
 +*/
 +
-+#include <stddef.h>
-+#include <stdio.h>
-+#include <stdlib.h>
-+#include <unistd.h>
-+#include <string.h>
++#include "basics.h"
++#include "block.h"
++#include "blocksource.h"
++#include "constants.h"
++#include "reader.h"
++#include "record.h"
++#include "refname.h"
++#include "reftable-error.h"
++#include "reftable-writer.h"
++#include "system.h"
 +
-+#include "reftable.h"
++#include "test_framework.h"
 +#include "reftable-tests.h"
 +
-+static uint32_t hash_id;
++struct testcase {
++	char *add;
++	char *del;
++	int error_code;
++};
 +
-+static int dump_table(const char *tablename)
++static void test_conflict(void)
 +{
-+	struct reftable_block_source src = { 0 };
-+	int err = reftable_block_source_from_file(&src, tablename);
-+	struct reftable_iterator it = { 0 };
-+	struct reftable_ref_record ref = { 0 };
-+	struct reftable_log_record log = { 0 };
-+	struct reftable_reader *r = NULL;
++	struct reftable_write_options opts = { 0 };
++	struct strbuf buf = STRBUF_INIT;
++	struct reftable_writer *w =
++		reftable_new_writer(&strbuf_add_void, &buf, &opts);
++	struct reftable_ref_record rec = {
++		.refname = "a/b",
++		.value_type = REFTABLE_REF_SYMREF,
++		.value.symref = "destination", /* make sure it's not a symref.
++						*/
++		.update_index = 1,
++	};
++	int err;
++	int i;
++	struct reftable_block_source source = { NULL };
++	struct reftable_reader *rd = NULL;
++	struct reftable_table tab = { NULL };
++	struct testcase cases[] = {
++		{ "a/b/c", NULL, REFTABLE_NAME_CONFLICT },
++		{ "b", NULL, 0 },
++		{ "a", NULL, REFTABLE_NAME_CONFLICT },
++		{ "a", "a/b", 0 },
 +
-+	if (err < 0)
-+		return err;
++		{ "p/", NULL, REFTABLE_REFNAME_ERROR },
++		{ "p//q", NULL, REFTABLE_REFNAME_ERROR },
++		{ "p/./q", NULL, REFTABLE_REFNAME_ERROR },
++		{ "p/../q", NULL, REFTABLE_REFNAME_ERROR },
 +
-+	err = reftable_new_reader(&r, &src, tablename);
-+	if (err < 0)
-+		return err;
++		{ "a/b/c", "a/b", 0 },
++		{ NULL, "a//b", 0 },
++	};
++	reftable_writer_set_limits(w, 1, 1);
 +
-+	err = reftable_reader_seek_ref(r, &it, "");
-+	if (err < 0) {
-+		return err;
++	err = reftable_writer_add_ref(w, &rec);
++	EXPECT_ERR(err);
++
++	err = reftable_writer_close(w);
++	EXPECT_ERR(err);
++	reftable_writer_free(w);
++
++	block_source_from_strbuf(&source, &buf);
++	err = reftable_new_reader(&rd, &source, "filename");
++	EXPECT_ERR(err);
++
++	reftable_table_from_reader(&tab, rd);
++
++	for (i = 0; i < ARRAY_SIZE(cases); i++) {
++		struct modification mod = {
++			.tab = tab,
++		};
++
++		if (cases[i].add != NULL) {
++			mod.add = &cases[i].add;
++			mod.add_len = 1;
++		}
++		if (cases[i].del != NULL) {
++			mod.del = &cases[i].del;
++			mod.del_len = 1;
++		}
++
++		err = modification_validate(&mod);
++		EXPECT(err == cases[i].error_code);
 +	}
 +
-+	while (1) {
-+		err = reftable_iterator_next_ref(&it, &ref);
-+		if (err > 0) {
-+			break;
-+		}
-+		if (err < 0) {
-+			return err;
-+		}
-+		reftable_ref_record_print(&ref, hash_id);
-+	}
-+	reftable_iterator_destroy(&it);
-+	reftable_ref_record_clear(&ref);
++	reftable_reader_free(rd);
++	strbuf_release(&buf);
++}
 +
-+	err = reftable_reader_seek_log(r, &it, "");
-+	if (err < 0) {
-+		return err;
-+	}
-+	while (1) {
-+		err = reftable_iterator_next_log(&it, &log);
-+		if (err > 0) {
-+			break;
-+		}
-+		if (err < 0) {
-+			return err;
-+		}
-+		reftable_log_record_print(&log, hash_id);
-+	}
-+	reftable_iterator_destroy(&it);
-+	reftable_log_record_clear(&log);
-+
-+	reftable_reader_free(r);
++int refname_test_main(int argc, const char *argv[])
++{
++	RUN_TEST(test_conflict);
 +	return 0;
 +}
-+
-+static int compact_stack(const char *stackdir)
-+{
-+	struct reftable_stack *stack = NULL;
-+	struct reftable_write_options cfg = {};
-+
-+	int err = reftable_new_stack(&stack, stackdir, cfg);
-+	if (err < 0)
-+		goto done;
-+
-+	err = reftable_stack_compact_all(stack, NULL);
-+	if (err < 0)
-+		goto done;
-+done:
-+	if (stack != NULL) {
-+		reftable_stack_destroy(stack);
-+	}
-+	return err;
-+}
-+
-+static int dump_stack(const char *stackdir)
-+{
-+	struct reftable_stack *stack = NULL;
-+	struct reftable_write_options cfg = {};
-+	struct reftable_iterator it = { 0 };
-+	struct reftable_ref_record ref = { 0 };
-+	struct reftable_log_record log = { 0 };
-+	struct reftable_merged_table *merged = NULL;
-+
-+	int err = reftable_new_stack(&stack, stackdir, cfg);
-+	if (err < 0)
-+		return err;
-+
-+	merged = reftable_stack_merged_table(stack);
-+
-+	err = reftable_merged_table_seek_ref(merged, &it, "");
-+	if (err < 0) {
-+		return err;
-+	}
-+
-+	while (1) {
-+		err = reftable_iterator_next_ref(&it, &ref);
-+		if (err > 0) {
-+			break;
-+		}
-+		if (err < 0) {
-+			return err;
-+		}
-+		reftable_ref_record_print(&ref, hash_id);
-+	}
-+	reftable_iterator_destroy(&it);
-+	reftable_ref_record_clear(&ref);
-+
-+	err = reftable_merged_table_seek_log(merged, &it, "");
-+	if (err < 0) {
-+		return err;
-+	}
-+	while (1) {
-+		err = reftable_iterator_next_log(&it, &log);
-+		if (err > 0) {
-+			break;
-+		}
-+		if (err < 0) {
-+			return err;
-+		}
-+		reftable_log_record_print(&log, hash_id);
-+	}
-+	reftable_iterator_destroy(&it);
-+	reftable_log_record_clear(&log);
-+
-+	reftable_stack_destroy(stack);
-+	return 0;
-+}
-+
-+static void print_help(void)
-+{
-+	printf("usage: dump [-cst] arg\n\n"
-+	       "options: \n"
-+	       "  -c compact\n"
-+	       "  -t dump table\n"
-+	       "  -s dump stack\n"
-+	       "  -h this help\n"
-+	       "  -2 use SHA256\n"
-+	       "\n");
-+}
-+
-+int reftable_dump_main(int argc, char *const *argv)
-+{
-+	int err = 0;
-+	int opt;
-+	int opt_dump_table = 0;
-+	int opt_dump_stack = 0;
-+	int opt_compact = 0;
-+	const char *arg = NULL;
-+	while ((opt = getopt(argc, argv, "2chts")) != -1) {
-+		switch (opt) {
-+		case '2':
-+			hash_id = 0x73323536;
-+			break;
-+		case 't':
-+			opt_dump_table = 1;
-+			break;
-+		case 's':
-+			opt_dump_stack = 1;
-+			break;
-+		case 'c':
-+			opt_compact = 1;
-+			break;
-+		case '?':
-+		case 'h':
-+			print_help();
-+			return 2;
-+			break;
-+		}
-+	}
-+
-+	if (argv[optind] == NULL) {
-+		fprintf(stderr, "need argument\n");
-+		print_help();
-+		return 2;
-+	}
-+
-+	arg = argv[optind];
-+
-+	if (opt_dump_table) {
-+		err = dump_table(arg);
-+	} else if (opt_dump_stack) {
-+		err = dump_stack(arg);
-+	} else if (opt_compact) {
-+		err = compact_stack(arg);
-+	}
-+
-+	if (err < 0) {
-+		fprintf(stderr, "%s: %s: %s\n", argv[0], arg,
-+			reftable_error_str(err));
-+		return 1;
-+	}
-+	return 0;
-+}
+diff --git a/t/helper/test-reftable.c b/t/helper/test-reftable.c
+index cb277d911692..23e050eb5d23 100644
+--- a/t/helper/test-reftable.c
++++ b/t/helper/test-reftable.c
+@@ -8,6 +8,7 @@ int cmd__reftable(int argc, const char **argv)
+ 	merged_test_main(argc, argv);
+ 	pq_test_main(argc, argv);
+ 	record_test_main(argc, argv);
++	refname_test_main(argc, argv);
+ 	reftable_test_main(argc, argv);
+ 	tree_test_main(argc, argv);
+ 	return 0;
 -- 
 gitgitgadget
 
