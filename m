@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 640BCC433B4
-	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 17:16:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 90842C433B4
+	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 17:16:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3E0CC61206
-	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 17:16:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7010861206
+	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 17:16:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244050AbhDLRRD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Apr 2021 13:17:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35100 "EHLO
+        id S244289AbhDLRRE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Apr 2021 13:17:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244016AbhDLRQY (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S244044AbhDLRQY (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 12 Apr 2021 13:16:24 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96239C06134E
-        for <git@vger.kernel.org>; Mon, 12 Apr 2021 10:15:53 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id w203-20020a1c49d40000b029010c706d0642so8332861wma.0
-        for <git@vger.kernel.org>; Mon, 12 Apr 2021 10:15:53 -0700 (PDT)
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7481DC06134F
+        for <git@vger.kernel.org>; Mon, 12 Apr 2021 10:15:54 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id h4so4702860wrt.12
+        for <git@vger.kernel.org>; Mon, 12 Apr 2021 10:15:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=GM3w22/EA9Vygg7V9dviM0LetUvUWSl0IHXYhbF2vOE=;
-        b=ILIMqWUUabOINA3EmZCphauS9WijuMaDw8fRuKKhf4SVmYTyjSQaPt0i7DkW+/i7uK
-         cRoH8iSTwwnqa2anvsTUQaz2LaUcKR5HZ1HDACxlCD/e3L+IMR+CqQLlcBkggPkYFx04
-         tm6P87YdOLmWlDBMbXgzidpaDljX09q+GXBJKhI7cPXyf6ZmTtI8zdwChSi1ohb13Swc
-         6xEcHBqSn0WidePW1CWNkQcETMB97PjRroR94m8oZ+5dNHd2UwHx15E2GPUwFbZxP5wF
-         6evynT1HnIEWi3ds5oi24dA0cd3F/s1Gy5oO7J6rBD76l9horXH++eBf5F9Y0UpeB1ak
-         JFKw==
+        bh=4g4zkBFclK/dJVd1IEGEqwg97RwzW49Nxm5byI7uQM0=;
+        b=BSO+VKeVlD7WGdEfUdBbrzHAvVchzbcX2hfn9PztcJgALtlh+mNvwBslx/DCJyLwjD
+         kaYSewg4VCYol1yx5lJpT2uKZTtFRrhQeK3Yg9WpnzZwkdBnxrkoLab7RXHV+3zmwnyu
+         oc0bH9uGOo9kratpgnEMPXOVTQfe65AL/S9SGewGw8YYPKcdLdzWKoD/q7tpo08LaxBL
+         sK6H2BX2uqp9TwO/+Gsmf6tb++qvIZys1LSnL6PiRryRujov6/HJnAO+LA5Nje5QzktN
+         QB4Sjoph3q6CgJYPq8ylSWkp+o5ET6t2CF/esONgvDcSvIrgbBXCBg6Bp+VAAOKlZjS6
+         yrxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=GM3w22/EA9Vygg7V9dviM0LetUvUWSl0IHXYhbF2vOE=;
-        b=Nk51OPeH/g2OqwrhqoKy62t6R9MeDV58GG0v7GWYW3FuGR9flO99oSjfEdED2im5ol
-         aD96doaKlCdeMKHofmBMCh6FOHcu25CIhLBdC7tXT0QWWpbH4vECmTNxEEg9/TyBPI8h
-         CaGaEQ91l5Twv73PqgqjiUjE926GwPsSMQGoBbmi1VkbfDlaiJ0Uj3ZB3mQxoc/7PWT5
-         skdW8DgH53nTyUNl5f95PxHmXHIaPRarAfiVjNLtnGsGpb5/E98z3mrlDrBDuIVtX1Js
-         ohURTK3EOoVF5hxxkJ6essjm7aluGcvfsdmSdHQhn4xrfSuBjXYSqhZrffpW3z0nlrGS
-         yD1A==
-X-Gm-Message-State: AOAM5316929rlxv6790m1z+vSwlWlYxkDZQRN0oq69GEXdJGumfo+nTq
-        TojcKMzFlorp/qKeYfx50oo1R9DUIDihqg==
-X-Google-Smtp-Source: ABdhPJzDknOBAWpgadSmUcSoMxHaBsDUdQ8O26sn5q0/uCT3JnRrFg9X39fo7Ft1cqsyyt8SGEtLeQ==
-X-Received: by 2002:a05:600c:3590:: with SMTP id p16mr157935wmq.140.1618247752042;
+        bh=4g4zkBFclK/dJVd1IEGEqwg97RwzW49Nxm5byI7uQM0=;
+        b=ZIbO5IIyI685u82rXN8Q6RIi6b3GRV/yP514V3vZByODE4UXVEYT3f9X5oMXETANNP
+         KP7k2ugn6lz4bntBOukZY+uVXTfRUDlAugug7RLSgmSo4qMKS/EexA6MWYh9w4tf0iqw
+         u42BVR+dNFnTpp4hgYO5QBMDlTRat+AyaqoVreU+EGtgamERDPTr7Xzm+oIr26906oJ9
+         WjCONhDNqJvDN9bZ8+C/wY8mYkPBePMmrokrnXU/6m+bM8ktpAMNDtomsrXFgoZBS3cy
+         s+hLbo51H94Z7JBbd+KO5T5AlbC+jaBNlxre0VLqWljut5/2K3Ll9Il6oU3SOxuSBm6u
+         DKBw==
+X-Gm-Message-State: AOAM530QMhKHZAu/SqOkyEaTvyBASHvUHrPrufETE9hMyzt8GXuFenTn
+        rnj4HObkfEqzmSlFJpV654YOe32upaW2yA==
+X-Google-Smtp-Source: ABdhPJxpVXDmJEThActEFwzX/sEMis2DUn4dY4m9WWc2Vk0c9vq9h+RIxu2uaFke1jCrJI74GcohWg==
+X-Received: by 2002:a5d:5083:: with SMTP id a3mr32873527wrt.157.1618247752978;
         Mon, 12 Apr 2021 10:15:52 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id j1sm7828625wrr.33.2021.04.12.10.15.51
+        by smtp.gmail.com with ESMTPSA id j1sm7828625wrr.33.2021.04.12.10.15.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Apr 2021 10:15:51 -0700 (PDT)
+        Mon, 12 Apr 2021 10:15:52 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         <carenas@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 18/22] xdiff-interface: allow early return from xdiff_emit_line_fn
-Date:   Mon, 12 Apr 2021 19:15:25 +0200
-Message-Id: <patch-18.22-76d667f152f-20210412T170457Z-avarab@gmail.com>
+Subject: [PATCH v3 19/22] pickaxe -G: terminate early on matching lines
+Date:   Mon, 12 Apr 2021 19:15:26 +0200
+Message-Id: <patch-19.22-53e9405f849-20210412T170457Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.1.639.g3d04783866f
 In-Reply-To: <cover-00.22-00000000000-20210412T170457Z-avarab@gmail.com>
 References: <20210216115801.4773-1-avarab@gmail.com> <cover-00.22-00000000000-20210412T170457Z-avarab@gmail.com>
@@ -78,143 +78,97 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Finish the change started in the preceding commit and allow an early
-return from "xdiff_emit_line_fn" callbacks, this will allows
-diffcore-pickaxe.c to save itself redundant work.
+Solve a long-standing item for "git log -Grx" of us e.g. finding "+
+str" in the diff context and noting that we had a "hit", but xdiff
+diligently continuing to generate and spew the rest of the diff at
+us. This makes use of a new "early return" xdiff interface added by
+preceding commits.
 
-Our xdiff interface also had the limitation of not being able to abort
-early since the beginning, see d9ea73e0564 (combine-diff: refactor
-built-in xdiff interface., 2006-04-05). Although at that time
-"xdiff_emit_line_fn" was called "xdiff_emit_consume_fn", and
-"xdiff_emit_hunk_fn" didn't exist yet.
+The TODO item (or, the NEEDSWORK comment) has been there since "git
+log -G" was implemented. See f506b8e8b5f (git log/diff: add -G<regexp>
+that greps in the patch text, 2010-08-23).
 
-There was some work in this area of xdiff-interface.[ch] recently with
-3b40a090fd4 (diff: avoid generating unused hunk header lines,
-2018-11-02) and 7c61e25fbf1 (diff: use hunk callback for word-diff,
-2018-11-02).
-
-In combination those two changes allow us to not do any work on the
-hunks and diff at all, but didn't change the status quo with regards
-to consumers that e.g. want the diff lines, but might want to abort
-early.
-
-Whereas now we can abort e.g. on the first "-line" of a 1000 line diff
-if that's all we needed.
-
-This interface is rather scary as noted in the comment to
-xdiff-interface.h being added here, as noted there a future change
-could add more exit codes, and hack xdl_emit_diff() and friends to
-ignore or skip things more selectively as a result.
-
-I did not see an inherent reason for why xdl_emit_{diffrec,record}()
-could not be changed to ferry the "xdiff_emit_line_fn" error code
-upwards instead of returning -1 on all "ret < 0".
-
-But doing so would require corresponding changes in xdl_emit_diff(),
-xdl_diff(). I didn't see any issue with narrowly doing that to
-accomplish what I needed here, but it would leave xdiff's own return
-values in an inconsistent state.
-
-Instead I've left it at returning a more conventional (for git's own
-codebase) 1 for an early return, and translating it (or rather, all
-non-zero) to -1 for xdiff's consumption.
-
-The reason for most of the "stop" complexity in xdiff_outf() is
-because we want to be able to abort early, but do so in a way that
-doesn't skip the appropriate strbuf_reset() invocations.
+But now with the support added in the preceding changes to the
+xdiff-interface we can return early. Let's assert the behavior of that
+new early-return xdiff-interface by having a BUG() call here to die if
+it ever starts handing us needless work again.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- xdiff-interface.c | 18 ++++++++++++++----
- xdiff-interface.h | 17 +++++++++++++++++
- 2 files changed, 31 insertions(+), 4 deletions(-)
+ diffcore-pickaxe.c | 30 +++++++++++++++++++-----------
+ xdiff-interface.h  |  4 ++++
+ 2 files changed, 23 insertions(+), 11 deletions(-)
 
-diff --git a/xdiff-interface.c b/xdiff-interface.c
-index 5d8c8c67dc2..50c0ef759dd 100644
---- a/xdiff-interface.c
-+++ b/xdiff-interface.c
-@@ -37,9 +37,12 @@ static int consume_one(void *priv_, char *s, unsigned long size)
- 	char *ep;
- 	while (size) {
- 		unsigned long this_size;
-+		int ret;
- 		ep = memchr(s, '\n', size);
- 		this_size = (ep == NULL) ? size : (ep - s + 1);
--		priv->line_fn(priv->consume_callback_data, s, this_size);
-+		ret = priv->line_fn(priv->consume_callback_data, s, this_size);
-+		if (ret)
-+			return ret;
- 		size -= this_size;
- 		s += this_size;
- 	}
-@@ -50,11 +53,14 @@ static int xdiff_outf(void *priv_, mmbuffer_t *mb, int nbuf)
- {
- 	struct xdiff_emit_state *priv = priv_;
- 	int i;
-+	int stop = 0;
- 
- 	if (!priv->line_fn)
+diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
+index 27aa20be350..2147afef722 100644
+--- a/diffcore-pickaxe.c
++++ b/diffcore-pickaxe.c
+@@ -27,13 +27,12 @@ static int diffgrep_consume(void *priv, char *line, unsigned long len)
+ 	if (line[0] != '+' && line[0] != '-')
  		return 0;
- 
- 	for (i = 0; i < nbuf; i++) {
-+		if (stop)
-+			return 1;
- 		if (mb[i].ptr[mb[i].size-1] != '\n') {
- 			/* Incomplete line */
- 			strbuf_add(&priv->remainder, mb[i].ptr, mb[i].size);
-@@ -63,17 +69,21 @@ static int xdiff_outf(void *priv_, mmbuffer_t *mb, int nbuf)
- 
- 		/* we have a complete line */
- 		if (!priv->remainder.len) {
--			consume_one(priv, mb[i].ptr, mb[i].size);
-+			stop = consume_one(priv, mb[i].ptr, mb[i].size);
- 			continue;
- 		}
- 		strbuf_add(&priv->remainder, mb[i].ptr, mb[i].size);
--		consume_one(priv, priv->remainder.buf, priv->remainder.len);
-+		stop = consume_one(priv, priv->remainder.buf, priv->remainder.len);
- 		strbuf_reset(&priv->remainder);
- 	}
-+	if (stop)
-+		return -1;
- 	if (priv->remainder.len) {
--		consume_one(priv, priv->remainder.buf, priv->remainder.len);
-+		stop = consume_one(priv, priv->remainder.buf, priv->remainder.len);
- 		strbuf_reset(&priv->remainder);
- 	}
-+	if (stop)
-+		return -1;
+ 	if (data->hit)
+-		/*
+-		 * NEEDSWORK: we should have a way to terminate the
+-		 * caller early.
+-		 */
+-		return 0;
+-	data->hit = !regexec_buf(data->regexp, line + 1, len - 1, 1,
+-				 &regmatch, 0);
++		BUG("Already matched in diffgrep_consume! Broken xdiff_emit_line_fn?");
++	if (!regexec_buf(data->regexp, line + 1, len - 1, 1,
++			 &regmatch, 0)) {
++		data->hit = 1;
++		return 1;
++	}
  	return 0;
  }
  
+@@ -45,6 +44,7 @@ static int diff_grep(mmfile_t *one, mmfile_t *two,
+ 	struct diffgrep_cb ecbdata;
+ 	xpparam_t xpp;
+ 	xdemitconf_t xecfg;
++	int ret;
+ 
+ 	if (!one)
+ 		return !regexec_buf(regexp, two->ptr, two->size,
+@@ -63,10 +63,18 @@ static int diff_grep(mmfile_t *one, mmfile_t *two,
+ 	ecbdata.hit = 0;
+ 	xecfg.ctxlen = o->context;
+ 	xecfg.interhunkctxlen = o->interhunkcontext;
+-	if (xdi_diff_outf(one, two, discard_hunk_line, diffgrep_consume,
+-			  &ecbdata, &xpp, &xecfg))
+-		return 0;
+-	return ecbdata.hit;
++
++	/*
++	 * An xdiff error might be our "data->hit" from above. See the
++	 * comment for xdiff_emit_line_fn in xdiff-interface.h
++	 */
++	ret = xdi_diff_outf(one, two, discard_hunk_line, diffgrep_consume,
++			    &ecbdata, &xpp, &xecfg);
++	if (ecbdata.hit)
++		return 1;
++	if (ret)
++		return ret;
++	return 0;
+ }
+ 
+ static unsigned int contains(mmfile_t *mf, regex_t *regexp, kwset_t kws,
 diff --git a/xdiff-interface.h b/xdiff-interface.h
-index 0198f9632f5..7d1724abb64 100644
+index 7d1724abb64..3b6819586da 100644
 --- a/xdiff-interface.h
 +++ b/xdiff-interface.h
-@@ -11,6 +11,23 @@
+@@ -27,6 +27,10 @@
+  * doing so will currently make your early return indistinguishable
+  * from an error internal to xdiff, xdiff itself will see that
+  * non-zero return and translate it to -1.
++ *
++ * See "diff_grep" in diffcore-pickaxe.c for a trick to work around
++ * this, i.e. using the "consume_callback_data" to note the desired
++ * early return.
   */
- #define MAX_XDIFF_SIZE (1024UL * 1024 * 1023)
- 
-+/**
-+ * The `xdiff_emit_line_fn` function can return 1 to abort early, or 0
-+ * to continue processing. Note that doing so is an all-or-nothing
-+ * affair, as returning 1 will return all the way to the top-level,
-+ * e.g. the xdi_diff_outf() call to generate the diff.
-+ *
-+ * Thus returning 1 means you won't be getting any more diff lines. If
-+ * you need something in-between those two options you'll to use
-+ * `xdl_emit_hunk_consume_func_t` and implement your own version of
-+ * xdl_emit_diff().
-+ *
-+ * We may extend the interface in the future to understand other more
-+ * granular return values. While you should return 1 to exit early,
-+ * doing so will currently make your early return indistinguishable
-+ * from an error internal to xdiff, xdiff itself will see that
-+ * non-zero return and translate it to -1.
-+ */
  typedef int (*xdiff_emit_line_fn)(void *, char *, unsigned long);
  typedef void (*xdiff_emit_hunk_fn)(void *data,
- 				   long old_begin, long old_nr,
 -- 
 2.31.1.639.g3d04783866f
 
