@@ -2,96 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D6E25C433ED
-	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 17:04:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F69DC433B4
+	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 17:07:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A6F3E611CE
-	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 17:04:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 05359611CE
+	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 17:07:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244257AbhDLRFL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Apr 2021 13:05:11 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58003 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245158AbhDLREn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Apr 2021 13:04:43 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E38D7AA433;
-        Mon, 12 Apr 2021 13:04:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=kbuEWhzRnKBN8s8lnr8L+z6ji3U=; b=JKBCp2
-        2HqXbxb1reJgWU+uXDODNcP8zvqo5thJ6zuLMf4F2R96+C0MIDDgm7nzHDJo1Nts
-        JenYebKvNzv+/dZAJu1s2cf6cgy7xSeyrIXR627NrSDc69IdLdHftvQdXz0D5zFV
-        q8FzhMcskdDZEA2MN/KJ8Mw4hguAmwr+Uhz4Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=PXcbHegRjmiULDcZpRLiNcu7IPnSbphX
-        3SjJzdrnsYzNb9wCAzMWm6840p+7ahSqanRPsyRdliI9LWgWV6iilqJ4XOmZnsUd
-        hogmvVaw6Sw+Mf2bFe6hnRbSVvDCZHLS8gXYDt4Or4Bgl29nMgxjwOl6RpCdJyca
-        Uh86aFIlLmU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DA62EAA431;
-        Mon, 12 Apr 2021 13:04:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 525DFAA430;
-        Mon, 12 Apr 2021 13:04:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        =?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
-        <avarab@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 3/3] config: allow overriding of global and system
- configuration
-References: <cover.1617975637.git.ps@pks.im> <cover.1618238567.git.ps@pks.im>
-        <af663640ae25a95fa56adf32baf4c2e197f3eea2.1618238567.git.ps@pks.im>
-Date:   Mon, 12 Apr 2021 10:04:23 -0700
-In-Reply-To: <af663640ae25a95fa56adf32baf4c2e197f3eea2.1618238567.git.ps@pks.im>
-        (Patrick Steinhardt's message of "Mon, 12 Apr 2021 16:46:54 +0200")
-Message-ID: <xmqq4kgbfn8o.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S243383AbhDLRHm convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Mon, 12 Apr 2021 13:07:42 -0400
+Received: from mail-ej1-f45.google.com ([209.85.218.45]:38688 "EHLO
+        mail-ej1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240644AbhDLRHl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Apr 2021 13:07:41 -0400
+Received: by mail-ej1-f45.google.com with SMTP id r12so21498578ejr.5
+        for <git@vger.kernel.org>; Mon, 12 Apr 2021 10:07:23 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=JqgOXG66JvkDbIE5WMhCtAIQssBuZq+t6G6Fn0cZu84=;
+        b=S6J7TSvnoKW2K6d/rxpL5o2/YoLLgM5GCXJC+hPBGWATPXATMs68012+/tG2TvukrL
+         WlEEHwR/OioXU9iXIcytKX35khVENijng7dQk8s35CC9D15wEdSG/BSOFwPTXL5JIyiA
+         7VATriV5uVnw5SHBocPN8EF5LVhEUvXdOXdjnPzjGFxvCAGntE0zRhpFRyyAKnzP8/7+
+         qnnfdoWz+YC6uERM1eDVRchWtbUaVh9i3OpN9NLCY5QTMOA3hcCRmr64+PsfRXkWt2NF
+         z2C7s4XehkMJFdnX7HG71AamPdZPDZQ7MFXcBYuQkrv6TFDyjxLnPJMk/Zlox7w1IeyQ
+         7cyg==
+X-Gm-Message-State: AOAM530B0kEoaHwbsWkYYjNvJFiMoHW6WJT8RSzWw7H6/QyMvIZUeuzl
+        e5T0c4fwFF4a3hgT1dsuOc5FEF+V9ZhknbYXXFg=
+X-Google-Smtp-Source: ABdhPJx2OKoS/nEBMDpMmc7BWoTZ6ivIWdGdiYrKYdaD9tRrFHMA07wq6aux7mFbBkV9D81dy78t0FNReZydKW3Tla0=
+X-Received: by 2002:a17:906:cc46:: with SMTP id mm6mr2394754ejb.138.1618247242553;
+ Mon, 12 Apr 2021 10:07:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 21CE0D6E-9BB1-11EB-B6A6-D152C8D8090B-77302942!pb-smtp1.pobox.com
+References: <cover-00.16-00000000000-20210412T110456Z-avarab@gmail.com> <patch-05.16-6df03776940-20210412T110456Z-avarab@gmail.com>
+In-Reply-To: <patch-05.16-6df03776940-20210412T110456Z-avarab@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 12 Apr 2021 13:07:10 -0400
+Message-ID: <CAPig+cTJNrTrV=oEDRgGeaqOLmj8gpHKfxJTqfXynBYibd=+Ag@mail.gmail.com>
+Subject: Re: [PATCH 05/16] test-lib-functions: document test_commit --no-tag
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Matthieu Moy <git@matthieu-moy.fr>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Mon, Apr 12, 2021 at 7:09 AM Ævar Arnfjörð Bjarmason
+<avarab@gmail.com> wrote:
+> In 76b8b8d05c (test-lib functions: document arguments to test_commit,
+> 2021-01-12) I added missing documentation to test_commit, but in less
+> than a month later in 3803a3a099 (t: add --no-tag option to
+> test_commit, 2021-02-09) we got another undocumented option. Let's fix
+> that.
+>
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+> @@ -177,6 +177,9 @@ debug () {
+> +#   --no-tag
+> +#      Do not tag the resulting commit, if supplied giving the
+> +#      optional "<tag>" argument is an error.
 
->  char *git_system_config(void)
->  {
-> +	char *system_config = xstrdup_or_null(getenv("GIT_CONFIG_SYSTEM"));
-> +	if (system_config) {
-> +		if (!strcmp(system_config, "/dev/null"))
-> +			FREE_AND_NULL(system_config);
-> +		return system_config;
-> +	}
+This is difficult to understand for a native English speaker/reader
+due to the comma-splice[1]. A period or semicolon in place of the
+comma would fix it.
 
-I am not sure if returning NULL from this function will always be
-the same as returning /dev/null on a system with functioning
-/dev/null.  For example, when use_system_config is enabled,
-builtin/config.c::cmd_config() assigns the NULL returned by this
-function to given_config_source.file and then calls
-config.c::config_with_options(), which notices that none of
-use_stdin, file, or blob member of the config_source exists and
-falls back to the config_sequence().
-
-So, for the purpose of special casing "/dev/null" textually, the
-above is not sufficient, I am afraid.
-
-Let's rescind the "/dev/null gets turned into NULL" in the above
-change for now.  If we truly want to cater to an installation where
-open("/dev/null") fails and emulate, that needs to be done at a much
-lower layer, but we do not have to go there for the purpose of this
-series.
-
-Thanks.
+[1]: https://lore.kernel.org/git/CAPx1GvfFPWvJsj+uJV7RZrv1rgEpio=pk6rKF2UrjHebVY=LPA@mail.gmail.com/
