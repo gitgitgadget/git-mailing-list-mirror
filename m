@@ -7,100 +7,119 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B358C433ED
-	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 13:19:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E0F7CC433ED
+	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 13:30:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 46AD26128E
-	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 13:19:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ACF4F61288
+	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 13:30:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238720AbhDLNTp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Apr 2021 09:19:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39598 "EHLO
+        id S241926AbhDLNae (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Apr 2021 09:30:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238277AbhDLNTn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Apr 2021 09:19:43 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BF2FC061574
-        for <git@vger.kernel.org>; Mon, 12 Apr 2021 06:19:25 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id r12so20234853ejr.5
-        for <git@vger.kernel.org>; Mon, 12 Apr 2021 06:19:25 -0700 (PDT)
+        with ESMTP id S238998AbhDLNa2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Apr 2021 09:30:28 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02A07C061574
+        for <git@vger.kernel.org>; Mon, 12 Apr 2021 06:30:09 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id v6so19005260ejo.6
+        for <git@vger.kernel.org>; Mon, 12 Apr 2021 06:30:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=8J8XVDFvlp0Cntv5ilqYkw2roys2ViM1bMXCtPRhNsM=;
-        b=ei1UO1QLXIDcc1q/JqeO7H4rpyKEG5MRvtbyf+XU/ontsVFgZ5R91JtM/DbAdxiOtS
-         KjJvyFAtjoIU0gHKbEWY4Pk//neLTy1O0hrfiFlPtIlEHyHhUtE6TcgyyEJQ54STUyxx
-         nwKfqOwODhPRFWLjMP4QffpWCqjeBtIGR/glSodxa+kshyCFmsU8Ut6goyZt2wWZdvNR
-         OSmt34/j3/+BPrPb29Lz23wFjVjfHyLLJBJlVrxIqZX72oMOU/Un3dpVriENl1mh+SOy
-         lnC533MDXJ2wWcA5Vrf4vMRFg6VkR3YIePv5GDRp8f/NkZTiWidOTXuJapCb3fDLxi7v
-         uzYg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=/OqNlWhRnA1bS3tOGXNPX1VINxkPeK7KjTmuxKkGKaY=;
+        b=D5NZUSSxRUdmhlQpy+aUs5vrzw6FZx0xddoWD5cKOKI/M3Olag4q5EiWPlTay3b2ZM
+         Dtbl/xFXLFfQNUuaK/r6xif2ww/MUwFM5f7cnmDmi6WDByRtoJmhIB7RryqHNmmlePZh
+         kBK7kF3C2TJj5scDyPx4f68Q3owacy7OycLZNTCdz0ucWsVEfJTxMhoWNf1cRe4JzSNM
+         wGkusblvgUZuQulQLNRpZgHIkycVirkrmJdhIq5WOcceR/VFCrIoKSFmzfzIeGX1mPXA
+         nxYuW3KH6QVepRNH+VG9QlpAL/bclo9WlgNtpb4DmbU2LszQJ4r0pleig55SobjNctVI
+         kh2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=8J8XVDFvlp0Cntv5ilqYkw2roys2ViM1bMXCtPRhNsM=;
-        b=TY4hoevkylhna/3/QmUI1I2IQgF8LKf7SPq1S1nqN49u/eAoiBRF/mKjZ9J1Td3Laf
-         x4ytJnhGMNoF1naCf5mIIElKJWozPV77XDCg8LehiYeZqc7POkBuq4YSHdIEfSWw1VQI
-         wyTNqYPrrh0hMdKsB0/IYNwO816q8XlWLneXusEmOwPFJ1ADBssSIlij9sjBUA7yxwv4
-         F33VMtjcVPCXlCpspn+8XyKaPkYDkKkUpsELNpF023ceiaO2gD5HZAoRnE2WUH74rq4c
-         M+PX7x+LaxwXFOOXZ2Wg7NuqEkksa5cpzSDrYStnyb3wVsnS3RYvYRs7TgA43U5BIQKf
-         2VHQ==
-X-Gm-Message-State: AOAM53087K5z9DFtQDCXOuT7x//GbOSbVanHsjE9Zu983BszAW8kxN2W
-        V7WLJ1zp49DyTFCqOREdiICSRzCGOrLDSg==
-X-Google-Smtp-Source: ABdhPJyXA2zzu8uaagDg0owB6FTP51joSIOWV0P4EaZvZ4XbQzLryHVJDTA5QBUab5HcyN0oOEIhRA==
-X-Received: by 2002:a17:906:f42:: with SMTP id h2mr26644174ejj.317.1618233563058;
-        Mon, 12 Apr 2021 06:19:23 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id y21sm6824535edr.38.2021.04.12.06.19.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Apr 2021 06:19:22 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
-        <carenas@gmail.com>
-Subject: Re: [PATCH v2 04/22] test-lib functions: add --printf option to
- test_commit
-References: <20210203032811.14979-1-avarab@gmail.com>
- <20210216115801.4773-5-avarab@gmail.com> <xmqqh7ksb5j7.fsf@gitster.g>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <xmqqh7ksb5j7.fsf@gitster.g>
-Date:   Mon, 12 Apr 2021 15:19:22 +0200
-Message-ID: <87lf9nej39.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=/OqNlWhRnA1bS3tOGXNPX1VINxkPeK7KjTmuxKkGKaY=;
+        b=aTLWGJZw8/NHcQ2AoEquQyRCetvL4m44Q+N0ny/0NCQYU6o7fKEbSyuzfw0E1ZQKsY
+         daPWtU3h2KV8tVjyoOeqmxDhVuXormSflx321wljWBVbbjnPIcD23gDmXfItxJ1YwlWW
+         MvuorsrsIxirHINJUvBbffRFdifuu4F8iYQPYoAFEVVWx/kako3GTIqGwtWMegUwoLha
+         E0lPzNP7jckPdeJeopOJdGdNEbFQhiTnzM720TL2wUaYEEhSrS3i9rhF6s6km0dtr497
+         iQebApaFUGDbg2B5IdLSZfw2C+zD3cqnnbUb2oDfNgJLj+2NvJ5zNzunuL1gJrDL5yCz
+         yeRA==
+X-Gm-Message-State: AOAM532/DhJNNDlrlR5hilPyLU38DDdAbNMwN+lHyXh+VfjUg9NgYFXP
+        BBV++029WuVZmJBjkIgxYmtOlSeCJzWu6CewSkNYBEu39GU=
+X-Google-Smtp-Source: ABdhPJxDPgftGhvTRd/6DlcK0TehumA/Qz2yeNgZIM6PH6b8wWJyGcsRRUbmAY3TdAvDcvJxmyFJqc9xfG6/Q7ML/Xs=
+X-Received: by 2002:a17:906:1a0d:: with SMTP id i13mr11160750ejf.197.1618234207643;
+ Mon, 12 Apr 2021 06:30:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+References: <E6E88000-9C18-4035-9A14-8B406617351A@gmail.com>
+ <F3446051-620F-4C7B-A306-5C36922A976C@gmail.com> <CAP8UFD2hhtpnz+WE2J9iLbzfRJ2k5EOtUMRW=QcH9xe1U6y69g@mail.gmail.com>
+ <F6B9AC67-EB44-4FD9-A7A0-A6494BAE3BC7@gmail.com> <f721d35c-72fe-fe18-edfc-8745966e41af@gmail.com>
+ <5E858DC0-E642-4E0D-BDCD-40F62198DE11@gmail.com>
+In-Reply-To: <5E858DC0-E642-4E0D-BDCD-40F62198DE11@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 12 Apr 2021 15:29:56 +0200
+Message-ID: <CAP8UFD16Y7+S0057fYG-K9o85kKVLQBmUZMTB9CVScK8TvM62g@mail.gmail.com>
+Subject: Re: [GSoC][Draft Proposal v2] Finish converting git submodule to builtin
+To:     Atharva Raykar <raykar.ath@gmail.com>
+Cc:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        git <git@vger.kernel.org>,
+        Shourya Shukla <shouryashukla.oo@gmail.com>,
+        Shourya Shukla <periperidip@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Apr 12, 2021 at 7:56 AM Atharva Raykar <raykar.ath@gmail.com> wrote:
+> On 12-Apr-2021, at 01:02, Kaartic Sivaraam <kaartic.sivaraam@gmail.com> wrote:
+> > On 11/04/21 3:10 pm, Atharva Raykar wrote:
 
-On Wed, Mar 31 2021, Junio C Hamano wrote:
+> >> The example I gave for how to handle the presence of the remote flag
+> >> and the function that performs the module updation method (ie, the `case`
+> >> on line 611) was just to illustrate the above workflow, rather than say
+> >> that this is how I will exactly do it.
+> >> I also would like to know what level of granularity is ideal for the
+> >> proposal. For now I have tried to keep it at "whatever I will surely
+> >> follow through when I work on the project", which at the moment is the
+> >> covered by the four points I mentioned above.
+> >> If I go too much into detail about the functions and arguments
+> >> of every helper in my example, I will feel compelled to do the same for
+> >> the `git submodule add` example. I also will have to reason more carefully
+> >> because I do not want to end up in a situation where I do not actually
+> >> stick to my proposal all that much, because I realise in my investigation
+> >> phase that there is a different, much better way.
+> >> Do let me know what is preferred.
+> >
+> > It makes sense that you don't want to go into too much detail in your
+> > proposal. I think Christian wasn't expecting it either. As far as I
+> > understand, he was just trying to make your proposal clear to the person
+> > who reads it. Just mentioning something like,
+> >
+> >  This would perform the work being done by the shell script past the
+> >  flags being parsed and make the necessary call to `update_clone()',
+> >  which returns information about the cloned modules.
+> >
+> > is not clear as it doesn't say how you're "thinking" the function would
+> > return information. Mention this would be helpful for the reader to know
+> > what your expectations are and if they need any correction. So, it is
+> > better to mention such related information to make your proposal
+> > complete. The high-level flow looks good to me.
+>
+> Alright, I get what you mean. I hope my v3 communicated my intention
+> more clearly. Translating my thoughts to text is hard work, and the
+> good part of revisiting my proposal and fleshing out the details is
+> it is forcing me to understand the problem better :)
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
->
->>  test_expect_success 'can parse blob ending with CR' '
->> -	printf "[some]key =3D value\\r" >config &&
->> -	git add config &&
->> -	git commit -m CR &&
->> +	test_commit --printf CR config "[some]key =3D value\\r" &&
->
-> OK, the first arg becomes the commit title, and the second one is
-> used for the filename, and the next arg is the string given to
-> printf, I guess.
->
->>  test_expect_success 'rerere forget (binary)' '
->>  	git checkout -f side &&
->> -	printf "a\0c" >binary &&
->> -	git commit -a -m binary &&
->> +	test_commit binary binary "a\0c" &&
->
-> This lacks --printf.  Are we breaking the test but "test-must-fail"
-> is hiding the breakage here?
+Yeah, the idea is that you should try to show in your proposal that
+you have understood some of the problems well enough. If there are
+things that are not clear or not very detailed, they are not very
+useful as they won't show us that you have understood much. It's
+better to focus on a few things or examples and explain them clearly
+and with enough detail, than to try to cover a lot of ground in a
+vague way.
 
-Yes, well spotted. FWIW in splitting this out into another series I
-fixed this bug in the re-roll:
-https://lore.kernel.org/git/cover-00.16-00000000000-20210412T110456Z-avarab=
-@gmail.com/T/#ma9ef67d8198c203adc05aab44f87aa753a3df993
+In other words if you can explain well a sensible plan to convert a
+small part of the code, and give sensible details about that small
+part, we can have trust that you will manage to do it for the whole
+project even if some of the details change.
