@@ -2,70 +2,84 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F194C433B4
-	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 19:12:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EF6E8C433B4
+	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 19:26:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2E19961352
-	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 19:12:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C27DD61356
+	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 19:26:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237195AbhDLTM7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Apr 2021 15:12:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60690 "EHLO
+        id S245250AbhDLT0S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Apr 2021 15:26:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35348 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236840AbhDLTM7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Apr 2021 15:12:59 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FEEAC061574
-        for <git@vger.kernel.org>; Mon, 12 Apr 2021 12:12:39 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id r7so2058620wrm.1
-        for <git@vger.kernel.org>; Mon, 12 Apr 2021 12:12:39 -0700 (PDT)
+        with ESMTP id S237137AbhDLT0P (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Apr 2021 15:26:15 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 013BEC06174A
+        for <git@vger.kernel.org>; Mon, 12 Apr 2021 12:25:57 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id r7so2093132wrm.1
+        for <git@vger.kernel.org>; Mon, 12 Apr 2021 12:25:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=kbWCiHuf18/aY7JDGHycU3ZBYXdsb+efZGqV5hrDq20=;
-        b=XGMF9T1Py2V0o9XiuDVamIQFOwUmkmDD6Ud16giFIODFLtDhsEPJAIPhcWSoNUg+iX
-         2Dfo5hryCc36l3QlHg91eBnEfWNgFVLZZHgpmXp03jPDrV1VwLhSlxjTX85pTRAE9rMx
-         saWVn3P9uXzdHT1qUIbtDrkX6PNUrojCqtVsegCwxGpryniszsuao7IV0Ljb2eS2TetC
-         3M+6I8BfGBfJ+t4dRBE2rZnimHbMwlNkrlixYaKK/ZiBqVZadQa9KYYif0Koava3soXz
-         cFwKem4+1YjaH1IU2gq3frNcDDGUqSDjT2mv2Nqjl1LyNFraNDxw5ftGCjsofCp5p3d3
-         xnIw==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=rJaShWjEu4eUF7ydhTR+EmPjwOi/kD1/15/JKYSZUWM=;
+        b=K/ZHu7uiIBIJ1pWxqlZ59y7uas1mkZshffp0VkZQ485FanPxWo71TLjVpTro1jeD85
+         6V+5plyP4vHW+o1jtQ3MdehNUgcSeBZAbgLheM7tHK9NJoCavFxQo3KwKemvY/L7NitX
+         KA0NoJcMk77tdcFTewbr7VRXb3ZuBHXXU96nqoMoCSOIQe/sqbhUx3hQgC5OY6lZtRrH
+         8hHCM3TnWxcXWcmb2Dmiv3UxxRxSfyAp5fhjEuSsfSk3lfplpX1pQvdDF94m7o1idkdw
+         SxODRT5S31yYUJ7INNQhZnVfTf5dk37pVMXAzG0wYi62QqVgQcMT1yoruwK7rm3XGX0a
+         WlRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=kbWCiHuf18/aY7JDGHycU3ZBYXdsb+efZGqV5hrDq20=;
-        b=LtWRN2iHSto/ibW4GzoGhXLfIH7VnnrwzCs2QcfLkGcXaSydHqit5NFMsIifPgTzk0
-         FIIk6svQNRYuYeq6WNnsKd86UquH92C8kZRLSldTHXi17KH6z5K12EQIhsFjvBkojnom
-         0ucYV5kRHiUgqYedH2vW43SuuiNr99X+NKvDjt7+x2sjTRSXnmdNzu8E9O7DjxJ/pFM2
-         4xZ+4gWj0Ch7W64V9ioFMl0L8YrRbFnWXLP8XADgKbHMZy6mWtesWNf2b88KIwuBzBnz
-         GlmVHcJZFa995vQxYj6NAl7muvTvvFm5eh+rLzIjKTrfiK3wnaEVYWr0AmqTzgJr9Mln
-         3vyw==
-X-Gm-Message-State: AOAM533j/xu/LKnQQCZyxZdlukah1kqmbaDNUCh+hl7WxQePWHWGpfDA
-        401V73bc5wPjzKH82AtVjiAAiYKLjwE=
-X-Google-Smtp-Source: ABdhPJzna1PRw/yhkmddQLOdCLhzx3YbMfPXmCbkZNBYUkx63NWec3yhIgw4UxbMfVhYQC+mShdZeg==
-X-Received: by 2002:a05:6000:10c7:: with SMTP id b7mr33046947wrx.143.1618254758224;
-        Mon, 12 Apr 2021 12:12:38 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=rJaShWjEu4eUF7ydhTR+EmPjwOi/kD1/15/JKYSZUWM=;
+        b=lh5sqx62MrU5XRMC87Zn6RPJTotgUtis4yXaQ1Y7J7qtn15fFxFwqdXwTx/vAuFKov
+         VuPQfIzjjQ7jlsivqwXqjxR0ugMwV+Xxtr2ek1L2FLTejuOi3hzeA/FAsBi1NYmCaqT/
+         EGl4c4FVBR+VOnrMM3Ktz4ztDbUCvs7BQ05MhXCSVx3mC4XpfwQoY3HNfbO66Ux+qbAN
+         hUGB6ud/TARwC5Aj2SL+vJ+YyLYy3/tdxKx4SBoHt3zF1KzNPzYSZkZFBfIB6ShrZzS5
+         KgItGjwQF31UWoX1POgKSZ5IMEbMV/RcoruAhi6Zy+5j615AUojoLFzKGwju6Y7KVYFh
+         Ayxg==
+X-Gm-Message-State: AOAM5337RhUs30rj7Czb2g1FLLzuZZMHlHryZTRd+NbadbD4gICusPUE
+        2ht8lJq1gusXEfLbj2DghRebOrHYQIs=
+X-Google-Smtp-Source: ABdhPJwI3snDPgV1Gv+WUpsFfLA7xe9GtFsdSrmLHCtcHCUvcm36XJVChfo70CPG3KkvUCbPkeobXQ==
+X-Received: by 2002:adf:f692:: with SMTP id v18mr22950353wrp.206.1618255555824;
+        Mon, 12 Apr 2021 12:25:55 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u9sm266942wmc.38.2021.04.12.12.12.37
+        by smtp.gmail.com with ESMTPSA id k3sm18211983wrc.67.2021.04.12.12.25.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Apr 2021 12:12:37 -0700 (PDT)
-Message-Id: <pull.1001.git.git.1618254757074.gitgitgadget@gmail.com>
+        Mon, 12 Apr 2021 12:25:55 -0700 (PDT)
+Message-Id: <15b8306fbe4b86f8c6b8b26b76f6e65944a4a4dc.1618255552.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.847.v6.git.git.1618255552.gitgitgadget@gmail.com>
+References: <pull.847.v5.git.git.1615580397.gitgitgadget@gmail.com>
+        <pull.847.v6.git.git.1618255552.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 12 Apr 2021 19:12:36 +0000
-Subject: [PATCH] reftable: document an alternate cleanup method on Windows
+Date:   Mon, 12 Apr 2021 19:25:33 +0000
+Subject: [PATCH v6 01/20] init-db: set the_repository->hash_algo early on
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Han-Wen Nienhuys <hanwenn@gmail.com>,
+Cc:     Han-Wen Nienhuys <hanwen@google.com>, Jeff King <peff@peff.net>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Josh Steadmon <steadmon@google.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Patrick Steinhardt <ps@pks.im>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Felipe Contreras <felipe.contreras@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>,
         Han-Wen Nienhuys <hanwen@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -73,46 +87,55 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-The new method uses the update_index counter, which isn't susceptible to clock
-inaccuracies.
+The reftable backend needs to know the hash algorithm for writing the
+initialization hash table.
 
+The initial reftable contains a symref HEAD => "main" (or "master"), which is
+agnostic to the size of hash value, but this is an exceptional circumstance, and
+the reftable library does not cater to this exception. It insists that all
+tables in the stack have a consistent format ID for the hash algorithm.
+
+Call set_repo_hash_algo directly after calling validate_hash_algorithm() (which
+reads $GIT_DEFAULT_HASH).
+
+Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
-    reftable: document an alternate cleanup method on Windows
-    
-    The new method uses the update_index counter, which isn't susceptible to
-    clock inaccuracies.
-    
-    Signed-off-by: Han-Wen Nienhuys hanwen@google.com
+ builtin/init-db.c | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1001%2Fhanwen%2Fwindows-2-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1001/hanwen/windows-2-v1
-Pull-Request: https://github.com/git/git/pull/1001
-
- Documentation/technical/reftable.txt | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/technical/reftable.txt b/Documentation/technical/reftable.txt
-index 3ef169af27d8..d7c3b645cfb0 100644
---- a/Documentation/technical/reftable.txt
-+++ b/Documentation/technical/reftable.txt
-@@ -1011,8 +1011,13 @@ reftable stack, reload `tables.list`, and delete any tables no longer mentioned
- in `tables.list`.
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index c19b35f1e691..ff06fe4b9a49 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -424,6 +424,27 @@ int init_db(const char *git_dir, const char *real_git_dir,
  
- Irregular program exit may still leave about unused files. In this case, a
--cleanup operation can read `tables.list`, note its modification timestamp, and
--delete any unreferenced `*.ref` files that are older.
-+cleanup operation should proceed as follows:
+ 	validate_hash_algorithm(&repo_fmt, hash);
+ 
++	/*
++	 * At this point, the_repository we have in-core does not look
++	 * anything like one that we would see initialized in an already
++	 * working repository after calling setup_git_directory().
++	 *
++	 * Calling repository.c::initialize_the_repository() may have
++	 * prepared the .index .objects and .parsed_objects members, but
++	 * other members like .gitdir, .commondir, etc. have not been
++	 * initialized.
++	 *
++	 * Many API functions assume they are working with the_repository
++	 * that has sensibly been initialized, but because we haven't
++	 * really read from an existing repository, we need to hand-craft
++	 * the necessary members of the structure to get out of this
++	 * chicken-and-egg situation.
++	 *
++	 * For now, we update the hash algorithm member to what the
++	 * validate_hash_algorithm() call decided for us.
++	 */
++	repo_set_hash_algo(the_repository, repo_fmt.hash_algo);
 +
-+* take a lock `tables.list.lock` to prevent concurrent modifications
-+* refresh the reftable stack, by reading `tables.list`
-+* for each `*.ref` file, remove it if
-+** it is not mentioned in `tables.list`, and
-+** its max update_index is not beyond the max update_index of the stack
- 
- 
- Alternatives considered
-
-base-commit: 89b43f80a514aee58b662ad606e6352e03eaeee4
+ 	reinit = create_default_files(template_dir, original_git_dir,
+ 				      initial_branch, &repo_fmt,
+ 				      flags & INIT_DB_QUIET);
 -- 
 gitgitgadget
+
