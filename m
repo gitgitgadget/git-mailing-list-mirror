@@ -2,54 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DFB06C433ED
-	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 18:48:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5EDBC433B4
+	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 19:06:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A2E4F61249
-	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 18:48:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5795761352
+	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 19:06:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236725AbhDLStP convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Mon, 12 Apr 2021 14:49:15 -0400
-Received: from mail-ej1-f49.google.com ([209.85.218.49]:36827 "EHLO
-        mail-ej1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236804AbhDLStO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Apr 2021 14:49:14 -0400
-Received: by mail-ej1-f49.google.com with SMTP id r9so21976028ejj.3
-        for <git@vger.kernel.org>; Mon, 12 Apr 2021 11:48:54 -0700 (PDT)
+        id S236840AbhDLTG2 convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Mon, 12 Apr 2021 15:06:28 -0400
+Received: from mail-ej1-f46.google.com ([209.85.218.46]:42839 "EHLO
+        mail-ej1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236711AbhDLTG1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Apr 2021 15:06:27 -0400
+Received: by mail-ej1-f46.google.com with SMTP id w23so6236976ejb.9
+        for <git@vger.kernel.org>; Mon, 12 Apr 2021 12:06:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=YJEZhUtY2D0XDeF2ZIjiMbXMaUkcJ9/cN7rceyZdfMQ=;
-        b=MPA+WEx0yd7874wH29UtQdNWsxljMLVoK0XmIfSco1btKriz0N8X+pWAuL9/zPfR7c
-         8ZhDMD187o6FfYtViKC1QNjBsD/YJ1RRCdTV/i6xuOWMiiFQArg/Z41rve71+m16XbA+
-         /hbiE7XVsP52/cZ9eDsUd2NppB2IWmSR0AxpyEmnvDPTaCd6b7zQS1qx5fGQF4goTtVE
-         rBwv/MS5I+uYTZjRz8b325+onjG9WVtEWPoiFizIY6+3FNoLBvYCs85Zi01Byv0zPpoT
-         NVLX4sX+EPrbOZsuazwterIF3OigG86HGA0jVh3b4w9uM4unTYnJD8p0RcTIKU2qt76t
-         5TrQ==
-X-Gm-Message-State: AOAM531LeqUnDFTAE8eWqvk9xUwuU/dwC/bJ2C4wZmCKLOemIvaQ7VZZ
-        yaR+4Vfg6Ox0lPUGtlyz3JFWr55oOCGHneWJj6Q=
-X-Google-Smtp-Source: ABdhPJwLtC/vH/j1OIBVjGs4mMd22ctBVkb2H7WOWUPkS5x8RYvhjvjNVn1MDBkn5q4uup2T7BEX/zlUMgrw+HUFJqk=
-X-Received: by 2002:a17:906:85cb:: with SMTP id i11mr8178186ejy.311.1618253333903;
- Mon, 12 Apr 2021 11:48:53 -0700 (PDT)
+        bh=ooS9sPPnExQpYuRvKvN5dA9jq8tKS1dAPXl4gnKFgjE=;
+        b=lGrO5La6hc+sEi1m0bVsNgcYSrwlPUHDe2ZMfq8uxekxxiBEnmPrJdU1fQ2SeU/xq1
+         D47ef60NdDdqRC7zoeAFSVLXjcGUWKJnM1d26btETN5Deu/2u6SqqqKqOH92GFyTDC1r
+         i9Yp6Qnd1mRS8NmgPwsWIm2PgLO/cefFUGkxAdWk2c+Il9sOedIcksEswWatMo132jLo
+         8PgHHMFNhC8U4xm8vmiZyCtKNJMTuYw8co9PffZeBkpAcT0yEmV6x9YeGGrKDDo4PmNz
+         /OQ+Zpj7hQZFesSLRrgaRjTxgZFEGvbAeEhZMvDDV2QocuD6+ZeU753aWLm3x2SVmMEH
+         MA5w==
+X-Gm-Message-State: AOAM533OUzG6SbEafNxDfCE2AWVvx4O/LdSx1KWh7I+l9Y975IPreCk5
+        2fVnpYS8MV2dCrknIIytiZ3r5jne7NaSiAHlilWInHmKM4w=
+X-Google-Smtp-Source: ABdhPJxWdpYf/irR4oCJ6D7/vjK+nGhPykAhzbl8vEdILf3xiFpT9zNl026vCZiI6lceSC3tcuI+CgzxeWzqXNG6hR8=
+X-Received: by 2002:a17:906:cc46:: with SMTP id mm6mr2791223ejb.138.1618254367495;
+ Mon, 12 Apr 2021 12:06:07 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover-00.16-00000000000-20210412T110456Z-avarab@gmail.com>
- <patch-01.16-8e4b4a2a216-20210412T110456Z-avarab@gmail.com>
- <CAPig+cQFFsLeE921WpzTxVnBMnNRiKs4N=hUQ2UQi1VznNEQwg@mail.gmail.com> <xmqqsg3vcpqv.fsf@gitster.g>
-In-Reply-To: <xmqqsg3vcpqv.fsf@gitster.g>
+References: <cover-00.16-00000000000-20210412T110456Z-avarab@gmail.com> <patch-08.16-352eeff41c9-20210412T110456Z-avarab@gmail.com>
+In-Reply-To: <patch-08.16-352eeff41c9-20210412T110456Z-avarab@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 12 Apr 2021 14:48:43 -0400
-Message-ID: <CAPig+cSiwq3KwSLyfNezx77FvLMu0gDjLq2jCKVnLQ-uVXP3Yw@mail.gmail.com>
-Subject: Re: [PATCH 01/16] check-non-portable-shell: complain about "test"
- a/-o instead of &&/||
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Matthieu Moy <git@matthieu-moy.fr>,
+Date:   Mon, 12 Apr 2021 15:05:56 -0400
+Message-ID: <CAPig+cTTjX=keJJdXLfsP52tQJZULgzjqbvYm=QZLK2312qRmw@mail.gmail.com>
+Subject: Re: [PATCH 08/16] test-lib functions: add --printf option to test_commit
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Matthieu Moy <git@matthieu-moy.fr>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8BIT
@@ -57,31 +54,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 12, 2021 at 2:38 PM Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
-> >> +       /\btest\s+-[a-z]\s+.*?\s+-a\s+/ and err '"test A && test B" preferred to "test A -a B"';
-> >> +       /\btest\s+-[a-z]\s+.*?\s+-o\s+/ and err '"test A || test B" preferred to "test A -o B"';
-> >
-> > These will only match the simplistic forms of `test -X blah` (where
-> > "-X" is some single letter option), but will miss expressions such as
-> > `test "$foo" = bar`. Crafting a regex to match more generally would be
-> > non-trivial, so this simpler match is a reasonable start. Okay.
+On Mon, Apr 12, 2021 at 7:09 AM Ævar Arnfjörð Bjarmason
+<avarab@gmail.com> wrote:
+> Add a --printf option to test_commit to allow writing to the file with
+> "printf" instead of "echo".
 >
-> Would it be a trivial improvement to do
+> This is useful for writing "\n", "\0" etc., in particular in
+> combination with the --append option added in 3373518cc8 (test-lib
+> functions: add an --append option to test_commit, 2021-01-12).
+> [...]
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+
+Just a bit of pure bikeshedding...
+
+> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+> @@ -173,6 +173,10 @@ debug () {
+> +#   --printf
+> +#       Use "printf" instead of "echo" when writing "<contents>" to
+> +#       "<file>". You will need to provide your own trailing "\n". You
+> +#       can only supply the FORMAT for the printf(1), not its ARGUMENT(s).
+
+The name "printf" has such strong association in programmer's minds
+with "%" and argument consumption that the name of this option alone
+almost begs people to take advantage of argument interpolation even
+though it's documented here as not allowing it. Taking into
+consideration that people often do not read documentation, `--printf`
+as the name of the option may be an unfortunate one. Perhaps it could
+be called `--raw` or something less likely to suggest argument
+interpolation.
+
+> @@ -192,6 +196,7 @@ debug () {
 >
->     'test', followed by anything other than '&' or '|', and then
->     followed by '-a' or '-o'
->
-> instead?
+>  test_commit () {
+>         notick= &&
+> +       echo=echo &&
 
-That seems plausible and trivial enough. In fact, I think it
-eliminates a source of false-positives that Ævar's pattern can report,
-such as:
-
-    test whatever && ls -a foo
-
-and
-
-    test whatever && foo -o outfile
-
-among others.
+This could be slightly confusing. I wonder if naming this variable
+`emit` would be clearer.
