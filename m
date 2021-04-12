@@ -2,455 +2,360 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 14DE6C433ED
-	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 13:37:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F137C433B4
+	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 14:04:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CC5DA61288
-	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 13:37:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 731DA61244
+	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 14:04:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241999AbhDLNiO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Apr 2021 09:38:14 -0400
-Received: from wout4-smtp.messagingengine.com ([64.147.123.20]:53171 "EHLO
-        wout4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S238495AbhDLNiO (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 12 Apr 2021 09:38:14 -0400
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.west.internal (Postfix) with ESMTP id CD2541681;
-        Mon, 12 Apr 2021 09:37:55 -0400 (EDT)
+        id S242095AbhDLOE2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Apr 2021 10:04:28 -0400
+Received: from wout5-smtp.messagingengine.com ([64.147.123.21]:45613 "EHLO
+        wout5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S238881AbhDLOE2 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 12 Apr 2021 10:04:28 -0400
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+        by mailout.west.internal (Postfix) with ESMTP id 95350174C;
+        Mon, 12 Apr 2021 10:04:09 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Mon, 12 Apr 2021 09:37:56 -0400
+  by compute4.internal (MEProxy); Mon, 12 Apr 2021 10:04:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
         :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm3; bh=vy7YMdPGC8CN57IrKcdSgw31SeG
-        K9niymFaU1RPC5XU=; b=ka1bzhi4iL+N1lzHZ32o1mRV+D3wINTRnjb4NQziOUw
-        RC5G46lLugd2bLbQl4Mjp0/M/92qPGVYwomfWwwuSp40jVI82QzsXvgO/zkN+GEH
-        HQmho31geMTy6AmUdLElo6XMDYbLmSIzc5ZTPLJwGP6sp8PcMfLGN/Zin26ogPZw
-        R7b6jzmlCUoT+YGKn7hFPmQzBYGrlMYQdZsC/nm4CLjUa30jnlPVgUcVCpWxyY9Y
-        wexo+vH57d52zbrtHw3557WXL7iR4FP+byC1Y9P3rwGDU6IGCLbNqi3tWi3NjswE
-        SbEooVbElwuI1H+gfFeqeuFCchtJM0y9IBMeQOBir8Q==
+        :content-type:in-reply-to; s=fm3; bh=LlkvfDj/imLkTwsPLYD+FgY5+ZM
+        Hg3N/+vPOI7vgFbA=; b=UBkp9k0AS9P0gCvSJ7Y9BfaNm/7j/UuU8WVJfTGlrMD
+        /K6o+MV5GcfiDog0IGT9gcxI4738q/2BcTEcwdQXtg55HdKZ7HQAwFmV61m5ma3Y
+        kvJ9N57of/dmiNql3fMrkehTRA4/NOMcu7w7FkijdP019BhRPYi7ukV4e/2EsfV+
+        u8r9FWGFKaArKN+KX6BhcA8g2FgTvG55wwONv/YaB11PyD+kveau5qCot8w+4cH1
+        yjqTd65F3m5kg3AfvGyQifRYc8UfSOLKPNW/M9MvULrxCKNV+MIwtK8gdZLtz9SZ
+        Xjou72178rd1iWNri3Pn/OQ0jPIdDeOw915CT03fZIQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=vy7YMd
-        PGC8CN57IrKcdSgw31SeGK9niymFaU1RPC5XU=; b=k8mCAkoTmUwlAMRnXAlMmz
-        riHi7DmoPwQPbNph+XMDuCFbUPdsU41FAQltKYd+T+4zQGRq72COfGtDe9fAkIS2
-        xRtvefSphKxxCpovTpr7K9Gofj09Ve3FOsCDDWKaYzWx0gtQ6Rm0WKZJdU0ZA3vg
-        jLo4dX+o0wPzFvzX0LP2YcI7WqX8qw0+hd4N3Ww52gy7CpHvjj4m8KvHjNgdG6D4
-        hPVhejaZU7tB9C52pas2bAN+PCuowG8FkyhbJpDSie3oYjs9Q8yh36LWCYQOOaFN
-        V++PalpZHEyao2KVhqRjnvvkvMXiy4U3Z1Sj43pA3r051rwo/YBnfI0dXZVhSipw
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=LlkvfD
+        j/imLkTwsPLYD+FgY5+ZMHg3N/+vPOI7vgFbA=; b=fpZFDgyCt/gYOcUpK6X0YG
+        9PoNBAUshVxOhd4yiWvghOjsC9ru6+oF6967OV11mMZT4vM7rRLHqVruFLueLxU2
+        eA7l0WxSl6lZCnV8GrTOchEBsc4/PDmeTalDng6kpQlThZcmJ4L4XimtqM5fyFdi
+        zkrX8cwELg4gYLbymMTyOU+Qn8lfVSleSDrg0P12auFvufMWAihz75rgDnphmEjS
+        ITrfj5kO7xtHtRs6WPONa4NfuSeTIsEcvN3A7pDxZ1kE7v9DjJs5XRgHftrNQWmV
+        5aLfnVRJ6aDgLGdFbPE56LFHfyHwUZqWjn/vVsF5M6Ekxul+bXmKSgGUG6LMSlGg
         ==
-X-ME-Sender: <xms:M010YGIwVNWPIvoVfVK4Hhp9OL08x90og6Ts8tqG4gTCOCsh0MTjuA>
-    <xme:M010YOLBnla1WGofskKAyJMpoyXb02MVDOnTD7RJ9DYtDAKWXcXwpEe0WW9Pl6Zme
-    vM251VyHWToBXNy3w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrudekjedgieejucetufdoteggodetrfdotf
+X-ME-Sender: <xms:WFN0YNZqvQbwjbpeWtxesK_hOD45FGSmkckAxM7WtVSpKcd8UXHFMQ>
+    <xme:WFN0YEVCYIaShObDA3plpv2z0t6veBLKvS3U-DOALSM_P6Zzjr4iCKYNZ0Zh1COzV
+    bGPdoCYTdQkeyNNDA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrudekjedgjedvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpefgfeejuefgheegueeljeffteefuedthfdvvedugfevvdffleduueeiiefgvedtheen
-    ucffohhmrghinhepphgvnhguihhnghdrnhhrnecukfhppeejkedrheehrdefhedrfedtne
-    cuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehp
-    khhsrdhimh
-X-ME-Proxy: <xmx:M010YGvxgTNnn6cwU17H-OSoWQE8B4sUwmHGPdXoCjk7qstRHv-Bdg>
-    <xmx:M010YLZYwUq5n8ljYcrlroWqhqUY9GB8UBEmpNjbCpBF3XqslKEgQg>
-    <xmx:M010YNYNEmL1i5E3QUFsazBUEXdQKZa1R8GTL-0ghZsWJq6jY1VB0Q>
-    <xmx:M010YMm_pIHfN8kkCFkEf72_IVgHagutof_9Kcp0EL5KARNTNjeSfg>
+    hnpeehgefhtdefueffheekgfffudelffejtdfhvdejkedthfehvdelgfetgfdvtedthfen
+    ucfkphepjeekrdehhedrfeehrdeftdenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:WFN0YM0qR0F0UwjfL_IK2SDhbM_8nMC4LSIlDnhgD2Kr2bPtP-DjOQ>
+    <xmx:WFN0YDZUaLi4fuowDdRrKKwqZQrmlfq9PT0Sht6tRo6LFJrZlEutCQ>
+    <xmx:WFN0YHpo28RF-iu4rO9ry7aHcH36bMeKasDibUsT33BDXERNNptQMA>
+    <xmx:WVN0YLk3S-Ps3WJfj9fD9zLYm09NqsVMuah71l0SCm8y-cbeT1VkVg>
 Received: from vm-mail.pks.im (dynamic-078-055-035-030.78.55.pool.telefonica.de [78.55.35.30])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 9F23C24005A;
-        Mon, 12 Apr 2021 09:37:54 -0400 (EDT)
+        by mail.messagingengine.com (Postfix) with ESMTPA id DB6C224006A;
+        Mon, 12 Apr 2021 10:04:07 -0400 (EDT)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 93775e50 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Mon, 12 Apr 2021 13:37:54 +0000 (UTC)
-Date:   Mon, 12 Apr 2021 15:37:53 +0200
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id b229c79d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Mon, 12 Apr 2021 14:04:02 +0000 (UTC)
+Date:   Mon, 12 Apr 2021 16:04:01 +0200
 From:   Patrick Steinhardt <ps@pks.im>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>,
-        Christian Couder <christian.couder@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Philip Oakley <philipoakley@iee.email>
-Subject: [PATCH v4 8/8] rev-list: allow filtering of provided items
-Message-ID: <c779d222cf68bf1d6cd7973c8cbe75db3dbc9d26.1618234575.git.ps@pks.im>
-References: <cover.1617967252.git.ps@pks.im>
- <cover.1618234575.git.ps@pks.im>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 3/3] config: allow overriding of global and system
+ configuration
+Message-ID: <YHRTUVJZ2m9a0zDa@ncase>
+References: <a23382059bb57022dd1e40d1c2c9a11307b0ff3b.1617891426.git.ps@pks.im>
+ <cover.1617975637.git.ps@pks.im>
+ <272a3b31aa73da8d65b04e647b1b9ca860f4e783.1617975637.git.ps@pks.im>
+ <YHB092HN2oVLmqC1@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="INsDHvrF8j8EliMy"
+        protocol="application/pgp-signature"; boundary="eTHJBdd50iqVq/ED"
 Content-Disposition: inline
-In-Reply-To: <cover.1618234575.git.ps@pks.im>
+In-Reply-To: <YHB092HN2oVLmqC1@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---INsDHvrF8j8EliMy
+--eTHJBdd50iqVq/ED
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When providing an object filter, it is currently impossible to also
-filter provided items. E.g. when executing `git rev-list HEAD` , the
-commit this reference points to will be treated as user-provided and is
-thus excluded from the filtering mechanism. This makes it harder than
-necessary to properly use the new `--filter=3Dobject:type` filter given
-that even if the user wants to only see blobs, he'll still see commits
-of provided references.
+On Fri, Apr 09, 2021 at 11:38:31AM -0400, Jeff King wrote:
+> On Fri, Apr 09, 2021 at 03:43:30PM +0200, Patrick Steinhardt wrote:
+>=20
+> > In order to have git run in a fully controlled environment without any
+> > misconfiguration, it may be desirable for users or scripts to override
+> > global- and system-level configuration files. We already have a way of
+> > doing this, which is to unset both HOME and XDG_CONFIG_HOME environment
+> > variables and to set `GIT_CONFIG_NOGLOBAL=3Dtrue`. This is quite kludgy,
+> > and unsetting the first two variables likely has an impact on other
+> > executables spawned by such a script.
+> >=20
+> > The obvious way to fix this would be to introduce `GIT_CONFIG_NOSYSTEM`
+> > as an equivalent to `GIT_CONFIG_NOGLOBAL`. But in the past, it has
+>=20
+> I think you have NOSYSTEM and NOGLOBAL mixed up in both paragraphs here?
+>=20
+> Otherwise the motivation and description here look very good (and I like
+> the overall direction).
+>=20
+> > diff --git a/Documentation/git.txt b/Documentation/git.txt
+> > index 3a9c44987f..2129629296 100644
+> > --- a/Documentation/git.txt
+> > +++ b/Documentation/git.txt
+> > @@ -670,6 +670,16 @@ for further details.
+> >  	If this environment variable is set to `0`, git will not prompt
+> >  	on the terminal (e.g., when asking for HTTP authentication).
+> > =20
+> > +`GIT_CONFIG_GLOBAL`::
+> > +`GIT_CONFIG_SYSTEM`::
+> > +	Take the configuration from the given files instead from global or
+> > +	system-level configuration files. The files must exist and be readable
+> > +	by the current user. If `GIT_CONFIG_SYSTEM` is set, `/etc/gitconfig`
+> > +	will not be read. Likewise, if `GIT_CONFIG_GLOBAL` is set, neither
+> > +	`$HOME/.gitconfig` nor `$XDG_CONFIG_HOME/git/config` will be read. Can
+> > +	be set to `/dev/null` to skip reading configuration files of the
+> > +	respective level.
+>=20
+> Makes sense. The reference to `/etc/gitconfig` here may not be accurate,
+> depending on the build parameters. I notice below in the context that we
+> say:
+>=20
+> >  `GIT_CONFIG_NOSYSTEM`::
+> >  	Whether to skip reading settings from the system-wide
+> >  	`$(prefix)/etc/gitconfig` file.  This environment variable can
+>=20
+> which is _also_ not quite right (if $(prefix) is "/usr", then the file
+> really is /etc/gitconfig).
+>=20
+> I think it might be possible to pull the value of the ETC_GITCONFIG
+> Makefile variable into the documentation, so we could probably give the
+> "real" value. But I wonder if it would suffice to just say:
+>=20
+>    ...the system config (usually `/etc/gitconfig`) will not be read.
+>=20
+> Or is that too confusing (it invites the question "when is it not
+> /etc/gitconfig")? I guess we could say "the system config file defined
+> at build-time (usually `/etc/gitconfig`)", which is perhaps more clear.
+>=20
+> > @@ -1847,8 +1847,22 @@ static int git_config_from_blob_ref(config_fn_t =
+fn,
+> >  const char *git_system_config(void)
+> >  {
+> >  	static const char *system_wide;
+> > -	if (!system_wide)
+> > -		system_wide =3D system_path(ETC_GITCONFIG);
+> > +
+> > +	if (!system_wide) {
+> > +		system_wide =3D xstrdup_or_null(getenv("GIT_CONFIG_SYSTEM"));
+>=20
+> I wondered, given the "const char *" return values in the last patch, if
+> you might pass back the result of getenv() directly. But you duplicate
+> it here, which is good, as it avoids portability problems hanging on to
+> the result of getenv().
+>=20
+> > +		if (system_wide) {
+> > +			/*
+> > +			 * If GIT_CONFIG_SYSTEM is set, it overrides the
+> > +			 * /etc/gitconfig. Furthermore, the file must exist in
+> > +			 * order to prevent any typos by the user.
+> > +			 */
+> > +			if (access(system_wide, R_OK))
+> > +				die(_("cannot access '%s'"), system_wide);
+> > +		} else {
+> > +			system_wide =3D system_path(ETC_GITCONFIG);
+> > +		}
+> > +	}
+>=20
+> I was on the fence about whether to enforce the "this file must exist"
+> property, with respect to the overall design. But seeing how we must
+> actually add extra code here to handle it makes me want to just treat it
+> exactly like the other files.
+>=20
+> Using a separate access() here is also a TOCTOU race, but I'm pretty
+> sure the existing config code makes the same mistake (and it's not that
+> big a deal in this context).
+>=20
+> > @@ -1857,8 +1871,20 @@ void git_global_config(const char **user, const =
+char **xdg)
+> >  	static const char *user_config, *xdg_config;
+> > =20
+> >  	if (!user_config) {
+> > -		user_config =3D expand_user_path("~/.gitconfig", 0);
+> > -		xdg_config =3D xdg_config_home("config");
+> > +		user_config =3D xstrdup_or_null(getenv("GIT_CONFIG_GLOBAL"));
+> > +		if (user_config) {
+> > +			/*
+> > +			 * If GIT_CONFIG_GLOBAL is set, then it overrides both
+> > +			 * the ~/.gitconfig and the XDG configuration file.
+> > +			 * Furthermore, the file must exist in order to prevent
+> > +			 * any typos by the user.
+> > +			 */
+> > +			if (access(user_config, R_OK))
+> > +				die(_("cannot access '%s'"), user_config);
+> > +		} else {
+> > +			user_config =3D expand_user_path("~/.gitconfig", 0);
+> > +			xdg_config =3D xdg_config_home("config");
+> > +		}
+> >  	}
+>=20
+> And this looks as I'd expect (but the same comments as above apply, of
+> course).
+>=20
+> > +test_expect_success 'override global and system config' '
+> > +	test_when_finished rm -f "$HOME"/.config/git &&
+> > +
+> > +	cat >"$HOME"/.gitconfig <<-EOF &&
+> > +	[home]
+> > +		config =3D true
+> > +	EOF
+> > +	mkdir -p "$HOME"/.config/git &&
+> > +	cat >"$HOME"/.config/git/config <<-EOF &&
+> > +	[xdg]
+> > +		config =3D true
+> > +	EOF
+> > +	cat >.git/config <<-EOF &&
+> > +	[local]
+> > +		config =3D true
+> > +	EOF
+> > +	cat >custom-global-config <<-EOF &&
+> > +	[global]
+> > +		config =3D true
+> > +	EOF
+> > +	cat >custom-system-config <<-EOF &&
+> > +	[system]
+> > +		config =3D true
+> > +	EOF
+>=20
+> Minor style nit, but we usually prefer non-interpolating "\EOF" if we
+> don't intend to interpolate within the here-doc. It does look like
+> t1300 has quite a mix of styles, though.
+>=20
+> > +	cat >expect <<-EOF &&
+> > +	global	xdg.config=3Dtrue
+> > +	global	home.config=3Dtrue
+> > +	local	local.config=3Dtrue
+> > +	EOF
+> > +	git config --show-scope --list >output &&
+> > +	test_cmp expect output &&
+> > +
+> > +	sane_unset GIT_CONFIG_NOSYSTEM &&
+> > +
+> > +	cat >expect <<-EOF &&
+> > +	system	system.config=3Dtrue
+> > +	global	global.config=3Dtrue
+> > +	local	local.config=3Dtrue
+> > +	EOF
+> > +	GIT_CONFIG_SYSTEM=3Dcustom-system-config GIT_CONFIG_GLOBAL=3Dcustom-g=
+lobal-config \
+> > +		git config --show-scope --list >output &&
+> > +	test_cmp expect output &&
+> > +
+> > +	cat >expect <<-EOF &&
+> > +	local	local.config=3Dtrue
+> > +	EOF
+> > +	GIT_CONFIG_SYSTEM=3D/dev/null GIT_CONFIG_GLOBAL=3D/dev/null git confi=
+g --show-scope --list >output &&
+> > +	test_cmp expect output
+> > +'
+>=20
+> And this test covers all of the new stuff we care about. Good.
+>=20
+> > +test_expect_success 'override global and system config with missing fi=
+le' '
+> > +	sane_unset GIT_CONFIG_NOSYSTEM &&
+> > +	test_must_fail env GIT_CONFIG_GLOBAL=3Ddoes-not-exist git version &&
+> > +	test_must_fail env GIT_CONFIG_SYSTEM=3Ddoes-not-exist git version &&
+> > +	GIT_CONFIG_NOSYSTEM=3Dtrue GIT_CONFIG_SYSTEM=3Ddoes-not-exist git ver=
+sion
+> > +'
+>=20
+> Makes sense to test given the patch, though if we rip out the "missing"
+> check, then obviously this goes away.
+>=20
+> > +test_expect_success 'write to overridden global and system config' '
+>=20
+> Hmm. I hadn't really considered _writing_ to these files (after all, you
+> can just use "git config --file" to do so). I guess it is consistent,
+> and would probably be more work (and more error-prone) to try to
+> distinguish reading versus writing in the code.
+>=20
+> > +	cat >expect <<EOF &&
+> > +[config]
+> > +	key =3D value
+> > +EOF
+>=20
+> No "<<-EOF" here to fix the indentation?
+>=20
+> > +	test_must_fail env GIT_CONFIG_GLOBAL=3Dwrite-to-global git config --g=
+lobal config.key value &&
+> > +	touch write-to-global &&
+> > +	GIT_CONFIG_GLOBAL=3Dwrite-to-global git config --global config.key va=
+lue &&
+> > +	test_cmp expect write-to-global &&
+>=20
+> In the writing case, the "must exist" thing makes it even weirder, since
+> we might be intending to create the file! If we leave in the writing,
+> that makes me even more convinced that we should drop the "must exist"
+> check.
+>=20
+> -Peff
 
-Improve this by introducing a new `--filter-provided-objects` option
-to the git-rev-parse(1) command. If given, then all user-provided
-references will be subject to filtering.
+I do agree that for the writing side it's limiting to require the file
+to exist. The question is really what's gained by it. The worst thing
+that could happen is that the user writes to a file he didn't intend to
+write to -- this can happen regardless of whether or not the file
+exists, and in fact the worse case is where we overwrite values of a
+file which the user didn't intend to overwrite. The case where we create
+a new file by accident doesn't seem to be that interesting to me.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- Documentation/rev-list-options.txt  |  5 ++++
- builtin/pack-objects.c              |  2 +-
- builtin/rev-list.c                  | 36 +++++++++++++++++++++--------
- pack-bitmap.c                       |  6 +++--
- pack-bitmap.h                       |  3 ++-
- reachable.c                         |  2 +-
- t/t6112-rev-list-filters-objects.sh | 28 ++++++++++++++++++++++
- t/t6113-rev-list-bitmap-filters.sh  | 36 +++++++++++++++++++++++++++++
- 8 files changed, 104 insertions(+), 14 deletions(-)
+In any case, the user would probably use `git config -f` anyway. Which
+raises the question whether it's sensible to allow writing to the file
+in the first place. And for the sake of scripts, I lean towards "yes":
+the dev can set up envvars once, and then use the config for both
+reading and writing.
 
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-op=
-tions.txt
-index 3afa8fffbd..5bf2a85f69 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -933,6 +933,11 @@ equivalent.
- --no-filter::
- 	Turn off any previous `--filter=3D` argument.
-=20
-+--filter-provided-objects::
-+	Filter the list of explicitly provided objects, which would otherwise
-+	always be printed even if they did not match any of the filters. Only
-+	useful with `--filter=3D`.
-+
- --filter-print-omitted::
- 	Only useful with `--filter=3D`; prints a list of the objects omitted
- 	by the filter.  Object IDs are prefixed with a ``~'' character.
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 525c2d8552..2f2026dc87 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -3516,7 +3516,7 @@ static int pack_options_allow_reuse(void)
-=20
- static int get_object_list_from_bitmap(struct rev_info *revs)
- {
--	if (!(bitmap_git =3D prepare_bitmap_walk(revs, &filter_options)))
-+	if (!(bitmap_git =3D prepare_bitmap_walk(revs, &filter_options, 0)))
- 		return -1;
-=20
- 	if (pack_options_allow_reuse() &&
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index b4d8ea0a35..7677b1af5a 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -398,7 +398,8 @@ static inline int parse_missing_action_value(const char=
- *value)
- }
-=20
- static int try_bitmap_count(struct rev_info *revs,
--			    struct list_objects_filter_options *filter)
-+			    struct list_objects_filter_options *filter,
-+			    int filter_provided_objects)
- {
- 	uint32_t commit_count =3D 0,
- 		 tag_count =3D 0,
-@@ -433,7 +434,7 @@ static int try_bitmap_count(struct rev_info *revs,
- 	 */
- 	max_count =3D revs->max_count;
-=20
--	bitmap_git =3D prepare_bitmap_walk(revs, filter);
-+	bitmap_git =3D prepare_bitmap_walk(revs, filter, filter_provided_objects);
- 	if (!bitmap_git)
- 		return -1;
-=20
-@@ -450,7 +451,8 @@ static int try_bitmap_count(struct rev_info *revs,
- }
-=20
- static int try_bitmap_traversal(struct rev_info *revs,
--				struct list_objects_filter_options *filter)
-+				struct list_objects_filter_options *filter,
-+				int filter_provided_objects)
- {
- 	struct bitmap_index *bitmap_git;
-=20
-@@ -461,7 +463,7 @@ static int try_bitmap_traversal(struct rev_info *revs,
- 	if (revs->max_count >=3D 0)
- 		return -1;
-=20
--	bitmap_git =3D prepare_bitmap_walk(revs, filter);
-+	bitmap_git =3D prepare_bitmap_walk(revs, filter, filter_provided_objects);
- 	if (!bitmap_git)
- 		return -1;
-=20
-@@ -471,14 +473,15 @@ static int try_bitmap_traversal(struct rev_info *revs,
- }
-=20
- static int try_bitmap_disk_usage(struct rev_info *revs,
--				 struct list_objects_filter_options *filter)
-+				 struct list_objects_filter_options *filter,
-+				 int filter_provided_objects)
- {
- 	struct bitmap_index *bitmap_git;
-=20
- 	if (!show_disk_usage)
- 		return -1;
-=20
--	bitmap_git =3D prepare_bitmap_walk(revs, filter);
-+	bitmap_git =3D prepare_bitmap_walk(revs, filter, filter_provided_objects);
- 	if (!bitmap_git)
- 		return -1;
-=20
-@@ -499,6 +502,7 @@ int cmd_rev_list(int argc, const char **argv, const cha=
-r *prefix)
- 	int bisect_show_vars =3D 0;
- 	int bisect_find_all =3D 0;
- 	int use_bitmap_index =3D 0;
-+	int filter_provided_objects =3D 0;
- 	const char *show_progress =3D NULL;
-=20
- 	if (argc =3D=3D 2 && !strcmp(argv[1], "-h"))
-@@ -599,6 +603,10 @@ int cmd_rev_list(int argc, const char **argv, const ch=
-ar *prefix)
- 			list_objects_filter_set_no_filter(&filter_options);
- 			continue;
- 		}
-+		if (!strcmp(arg, "--filter-provided-objects")) {
-+			filter_provided_objects =3D 1;
-+			continue;
-+		}
- 		if (!strcmp(arg, "--filter-print-omitted")) {
- 			arg_print_omitted =3D 1;
- 			continue;
-@@ -665,11 +673,11 @@ int cmd_rev_list(int argc, const char **argv, const c=
-har *prefix)
- 		progress =3D start_delayed_progress(show_progress, 0);
-=20
- 	if (use_bitmap_index) {
--		if (!try_bitmap_count(&revs, &filter_options))
-+		if (!try_bitmap_count(&revs, &filter_options, filter_provided_objects))
- 			return 0;
--		if (!try_bitmap_disk_usage(&revs, &filter_options))
-+		if (!try_bitmap_disk_usage(&revs, &filter_options, filter_provided_objec=
-ts))
- 			return 0;
--		if (!try_bitmap_traversal(&revs, &filter_options))
-+		if (!try_bitmap_traversal(&revs, &filter_options, filter_provided_object=
-s))
- 			return 0;
- 	}
-=20
-@@ -694,6 +702,16 @@ int cmd_rev_list(int argc, const char **argv, const ch=
-ar *prefix)
- 			return show_bisect_vars(&info, reaches, all);
- 	}
-=20
-+	if (filter_provided_objects) {
-+		struct commit_list *c;
-+		for (i =3D 0; i < revs.pending.nr; i++) {
-+			struct object_array_entry *pending =3D revs.pending.objects + i;
-+			pending->item->flags |=3D NOT_USER_GIVEN;
-+		}
-+		for (c =3D revs.commits; c; c =3D c->next)
-+			c->item->object.flags |=3D NOT_USER_GIVEN;
-+	}
-+
- 	if (arg_print_omitted)
- 		oidset_init(&omitted_objects, DEFAULT_OIDSET_SIZE);
- 	if (arg_missing_action =3D=3D MA_PRINT)
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 7ce3ede7e4..6b790a834b 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -986,7 +986,8 @@ static int can_filter_bitmap(struct list_objects_filter=
-_options *filter)
- }
-=20
- struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
--					 struct list_objects_filter_options *filter)
-+					 struct list_objects_filter_options *filter,
-+					 int filter_provided_objects)
- {
- 	unsigned int i;
-=20
-@@ -1081,7 +1082,8 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_i=
-nfo *revs,
- 	if (haves_bitmap)
- 		bitmap_and_not(wants_bitmap, haves_bitmap);
-=20
--	filter_bitmap(bitmap_git, wants, wants_bitmap, filter);
-+	filter_bitmap(bitmap_git, (filter && filter_provided_objects) ? NULL : wa=
-nts,
-+		      wants_bitmap, filter);
-=20
- 	bitmap_git->result =3D wants_bitmap;
- 	bitmap_git->haves =3D haves_bitmap;
-diff --git a/pack-bitmap.h b/pack-bitmap.h
-index 36d99930d8..bb45217d3b 100644
---- a/pack-bitmap.h
-+++ b/pack-bitmap.h
-@@ -50,7 +50,8 @@ void traverse_bitmap_commit_list(struct bitmap_index *,
- 				 show_reachable_fn show_reachable);
- void test_bitmap_walk(struct rev_info *revs);
- struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
--					 struct list_objects_filter_options *filter);
-+					 struct list_objects_filter_options *filter,
-+					 int filter_provided_objects);
- int reuse_partial_packfile_from_bitmap(struct bitmap_index *,
- 				       struct packed_git **packfile,
- 				       uint32_t *entries,
-diff --git a/reachable.c b/reachable.c
-index 77a60c70a5..fc833cae43 100644
---- a/reachable.c
-+++ b/reachable.c
-@@ -223,7 +223,7 @@ void mark_reachable_objects(struct rev_info *revs, int =
-mark_reflog,
- 	cp.progress =3D progress;
- 	cp.count =3D 0;
-=20
--	bitmap_git =3D prepare_bitmap_walk(revs, NULL);
-+	bitmap_git =3D prepare_bitmap_walk(revs, NULL, 0);
- 	if (bitmap_git) {
- 		traverse_bitmap_commit_list(bitmap_git, revs, mark_object_seen);
- 		free_bitmap_index(bitmap_git);
-diff --git a/t/t6112-rev-list-filters-objects.sh b/t/t6112-rev-list-filters=
--objects.sh
-index c79ec04060..de751b65b4 100755
---- a/t/t6112-rev-list-filters-objects.sh
-+++ b/t/t6112-rev-list-filters-objects.sh
-@@ -207,6 +207,34 @@ test_expect_success 'verify object:type=3Dtag prints t=
-ag' '
- 	test_cmp expected actual
- '
-=20
-+test_expect_success 'verify object:type=3Dblob prints only blob with --fil=
-ter-provided-objects' '
-+	printf "%s blob\n" $(git -C object-type rev-parse HEAD:blob) >expected &&
-+	git -C object-type rev-list --objects \
-+		--filter=3Dobject:type=3Dblob --filter-provided-objects HEAD >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'verify object:type=3Dtree prints only tree with --fil=
-ter-provided-objects' '
-+	printf "%s \n" $(git -C object-type rev-parse HEAD^{tree}) >expected &&
-+	git -C object-type rev-list --objects \
-+		--filter=3Dobject:type=3Dtree HEAD --filter-provided-objects >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'verify object:type=3Dcommit prints only commit with -=
--filter-provided-objects' '
-+	git -C object-type rev-parse HEAD >expected &&
-+	git -C object-type rev-list --objects \
-+		--filter=3Dobject:type=3Dcommit --filter-provided-objects HEAD >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'verify object:type=3Dtag prints only tag with --filte=
-r-provided-objects' '
-+	printf "%s tag\n" $(git -C object-type rev-parse tag) >expected &&
-+	git -C object-type rev-list --objects \
-+		--filter=3Dobject:type=3Dtag --filter-provided-objects tag >actual &&
-+	test_cmp expected actual
-+'
-+
- # Test sparse:path=3D<path> filter.
- # !!!!
- # NOTE: sparse:path filter support has been dropped for security reasons,
-diff --git a/t/t6113-rev-list-bitmap-filters.sh b/t/t6113-rev-list-bitmap-f=
-ilters.sh
-index cb9db7df6f..4d8e09167e 100755
---- a/t/t6113-rev-list-bitmap-filters.sh
-+++ b/t/t6113-rev-list-bitmap-filters.sh
-@@ -98,6 +98,28 @@ test_expect_success 'object:type filter' '
- 	test_bitmap_traversal expect actual
- '
-=20
-+test_expect_success 'object:type filter with --filter-provided-objects' '
-+	git rev-list --objects --filter-provided-objects --filter=3Dobject:type=
-=3Dtag tag >expect &&
-+	git rev-list --use-bitmap-index \
-+		     --objects --filter-provided-objects --filter=3Dobject:type=3Dtag ta=
-g >actual &&
-+	test_cmp expect actual &&
-+
-+	git rev-list --objects --filter-provided-objects --filter=3Dobject:type=
-=3Dcommit tag >expect &&
-+	git rev-list --use-bitmap-index \
-+		     --objects --filter-provided-objects --filter=3Dobject:type=3Dcommit=
- tag >actual &&
-+	test_bitmap_traversal expect actual &&
-+
-+	git rev-list --objects --filter-provided-objects --filter=3Dobject:type=
-=3Dtree tag >expect &&
-+	git rev-list --use-bitmap-index \
-+		     --objects --filter-provided-objects --filter=3Dobject:type=3Dtree t=
-ag >actual &&
-+	test_bitmap_traversal expect actual &&
-+
-+	git rev-list --objects --filter-provided-objects --filter=3Dobject:type=
-=3Dblob tag >expect &&
-+	git rev-list --use-bitmap-index \
-+		     --objects --filter-provided-objects --filter=3Dobject:type=3Dblob t=
-ag >actual &&
-+	test_bitmap_traversal expect actual
-+'
-+
- test_expect_success 'combine filter' '
- 	git rev-list --objects --filter=3Dblob:limit=3D1000 --filter=3Dobject:typ=
-e=3Dblob tag >expect &&
- 	git rev-list --use-bitmap-index \
-@@ -105,4 +127,18 @@ test_expect_success 'combine filter' '
- 	test_bitmap_traversal expect actual
- '
-=20
-+test_expect_success 'combine filter with --filter-provided-objects' '
-+	git rev-list --objects --filter-provided-objects --filter=3Dblob:limit=3D=
-1000 --filter=3Dobject:type=3Dblob tag >expect &&
-+	git rev-list --use-bitmap-index \
-+		     --objects --filter-provided-objects --filter=3Dblob:limit=3D1000 --=
-filter=3Dobject:type=3Dblob tag >actual &&
-+	test_bitmap_traversal expect actual &&
-+
-+	git cat-file --batch-check=3D"%(objecttype) %(objectsize)" <actual >objec=
-ts &&
-+	while read objecttype objectsize
-+	do
-+		test "$objecttype" =3D blob || return 1
-+		test "$objectsize" -le 1000 || return 1
-+	done <objects
-+'
-+
- test_done
---=20
-2.31.1
+On the reading side, I can relate with Junio's argument that there's now
+two possibilities for typos: once in the envvar, and once in the file
+path. But given that git won't check the envvar's key for typos, we
+cannot really reduce the chance for typos down to zero anyway.
 
+So I do tend towards just allowing for the file to not exist: when
+reading, we silentely ignore it, and when writing we create it.
 
---INsDHvrF8j8EliMy
+Patrick
+
+--eTHJBdd50iqVq/ED
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmB0TTAACgkQVbJhu7ck
-PpT8oBAAkLaLHzW6xivIYwkMPtRPU8jyVpiNB+XFKMvImu5t9DQg3RGzR48sJVMR
-PPpjM1oeA0R1yNQ2RfYiowqDL8RzJKwngZjOs9BnHIvxeF9McJZ7VxP5tnrR9+QX
-29GFpK/vqCBJkCu/z+i1IodCnI8/QonGqzQCNsBR9ZzoP8KSuDkDwFx+eVCYb8Di
-YrB+5fGe2LSZdfF5TZ7XeRH0e+iXMHAdYRduDCk7FSbc5ztQsDJy1Tw+0wVpr0oh
-GUxcx+oeLDpJrcLXke1gCxEm4v45vGazv8SS/069kd2HR6IMDL6SRQguDMRez+c/
-YegsWRgfp5MK0pSxsW++boZ5NOa0Uo5MB1Wh2gFEUl563Pfpcs1fRT9oP0Y2bTK7
-h03Mw8x5Yn+V7l98sye2EWARs3lpAh7SzoKICc47ooOqs1ttCHCKXpvs6yO0t7jo
-y2EoEsxcPnP2IxaAngOLoSgEjJDsoML4lqIDvlE05jLknby7d+Tqamlo97XFmM38
-ZETN470e+BaGqMXboTdO5yv5sig3KGFmq9NMbiqw8AogJv6xD8AiqdIWGw5Smo7t
-mFJQJ8g+EB8kdC2rI2stdlZYkeJMRPV6Ka23ZtTzCoKX5WeQ+IC7+X2tI3ezG+sS
-uUFjgZ1DbZbh9zBVz0w4qJuneFVzSusZMaZbUgRAFx0werFctNU=
-=N2SP
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmB0U1AACgkQVbJhu7ck
+PpStFQ//RxRA+Hc7v2uBfvPEcQLDuS9dnISP1JN5MJiq/h9bLo1O8I5/cn0zp1rX
+PfCxgLOm/NG7/RRXp+sbD3KLeG56rEP5cpOm4e387st0aTvg8J8HT1MuxhWMPz/f
+KP1M8TK2imSrkDiN4scPNhNL1oeHJuIsRrYTx00a/n6HMV6FN5Ya2dMCnILyjE8S
+FALjOzAX3Noup+Tr67u2qlb3PgxQZDiPtHag8+LYBqRJ7wvFNg7O3FxDU0luHo4P
+QWgQvnTPfqdiFVztEiAUw6zqB8AB84Ns/T7aThpkcDw7Isw+rektGPDmH3VtiCwj
+M8kdcpZPH7toMixFmQNBPJPITmU6ZV9ltbXwlR1q9PEecsoMsLLtLYtHj/avXRCt
+/aj/Xf8N4Q0ZOxzsvueTbOvhfdGbhMAIoVJA6C/yC5apPTH8S6mlK358hfVBZLdB
+BIb26gt3MsjggzQZT8edeIu1UdKReAHptLNcrny2OKKdJKabOTNfKDsQzkzwCDBf
+AOFLBJ6bIbzPIpYhqAgF3Vl6nJ0TfrCWuVXWO3UeB2TLKVypRROLnCyoTvwlGFKj
+FmwyjGcMvNG1z1U9ftJK2QS6NW+0DUW2axcT6oBt9/N456525G0tK1avG3o3Z6kf
+30WPjwFMPEc3IB6PjFkl2uRM2urahsZ/jg7ZB1zKkWWizap/LpQ=
+=gnWu
 -----END PGP SIGNATURE-----
 
---INsDHvrF8j8EliMy--
+--eTHJBdd50iqVq/ED--
