@@ -2,195 +2,269 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D0AFC433B4
-	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 15:45:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3809BC433ED
+	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 15:52:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0245E61249
-	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 15:45:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0395261246
+	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 15:52:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242975AbhDLPqD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Apr 2021 11:46:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43476 "EHLO
+        id S242975AbhDLPws (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Apr 2021 11:52:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241288AbhDLPqC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Apr 2021 11:46:02 -0400
-Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 978ADC061574
-        for <git@vger.kernel.org>; Mon, 12 Apr 2021 08:45:43 -0700 (PDT)
-Received: by mail-ot1-x334.google.com with SMTP id s16-20020a0568301490b02901b83efc84a0so13159247otq.10
-        for <git@vger.kernel.org>; Mon, 12 Apr 2021 08:45:43 -0700 (PDT)
+        with ESMTP id S242088AbhDLPwq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Apr 2021 11:52:46 -0400
+Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC1F3C061574
+        for <git@vger.kernel.org>; Mon, 12 Apr 2021 08:52:26 -0700 (PDT)
+Received: by mail-oi1-x231.google.com with SMTP id l131so8828334oih.0
+        for <git@vger.kernel.org>; Mon, 12 Apr 2021 08:52:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=f8m5JuVTXuPI4Vqrqc1mbh16x9ifFdzEvDYy+RgSo0o=;
-        b=dmtEQCSe9qzf+rsUx5kKCsS7iKFU7NYgUzlf/wI6uizIWbvorIOx3QZKx2FXnO9MyO
-         pQcEEegZCZKYkz9DHabGI6qN3yitkRTxnhKY6BbA6rkHI1hZPFSWCj23V0EA8c4skZWV
-         dVgJstK71zgCs2zUAfI9RXtxFleQjtRYn/FXsTbWxkxl+vc5szac850knKbwEbtEE0kF
-         Wjji13VWba5opgmOEK0rFKyq1HryYRj1UGq9aOXKvKbdnMriZSudhWuLgrprUz2z64s/
-         FiqueSDjWvrqD+7y9Yzub7+TePx6bjieLtkaWCeYsBlN8zKPXO7t2AOoWwLuRhQtHHSb
-         pbJQ==
+         :cc:content-transfer-encoding;
+        bh=xuIhSggfgJYXTc5uuUQL75XQTfDTJ6Yz9QojVVqegGs=;
+        b=Al2AJlkrURXS8EDIGCdfxXhqhQS001hIGIItsMzT2ASa6FRbcpyObnrBAha4aSHuRv
+         JUQVi/fzAdiliplrQWIGhBlumxI8MBcV76yAG+7b4T6pSTPUHpzyox65Jv1pe6GmeVfb
+         0jhsSVwCIxXRx3vYV0KBVhXrhjsNZ+DRy1ZbN9Gr14kotplUl9GN9ewT6XgrAAGSMcSi
+         m5qkostESyAisq18hLTd8aqDwCx1w7M+5m/Qk5FjzdrPb2T5Ghc1Wn6GGgP2tt793HSL
+         WKdA5GSU+LF4OIh8EVJYpG/3u7NowAFvapEUVzl2YeSedMrpDiZ2h/j0HhKA//1Zy3cF
+         KpdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=f8m5JuVTXuPI4Vqrqc1mbh16x9ifFdzEvDYy+RgSo0o=;
-        b=KLKmtR+H7gubatjIhobxSmxn4gwgfXSaCPLBsPP6PuoTuojV1mkDK+hT54d6oYaQIY
-         BNqnHzl2DXvSMAlyRx0Yio/pJkNgXCzMJK/emArZiAP6ZJVhG+/0aPaoVovpMFJNm5D0
-         kNfqP1GJUL5wp47rV5OIbZKKo4iOp4SaH6oPcLr6S5uRu3YsI9wnE6iKqeYL0PCyFfzY
-         wj+qOHCgDJAg3bCSiVxGWpQqwm79V3xzTXrH7oWYSxgsGRu/cU707T47V7My702YaDxv
-         e1GMbgrhnvU4bmzxjUx/Ns6so4RFAZmQpAqn3mo4IxjxEfMrM1Tro5DJLYIFLJ/4hcr/
-         HOvg==
-X-Gm-Message-State: AOAM531RtH9kzO1PPnyT2bD6VnUfEw+MDVaNZV442R5WP33GPS6JRp+P
-        2i+WuvHjYE/vs3eBF6p3EmwGQZJlgHG/Zzwkojo=
-X-Google-Smtp-Source: ABdhPJxzy/8MkB97AYf/xmxlIZGmWgmXLiRW0HgPYNqJvi1DBrIOrSdeREs0uleq8Z7RWSUEEdS7vixKdHCPGUdpZf0=
-X-Received: by 2002:a9d:2de8:: with SMTP id g95mr11462262otb.162.1618242342994;
- Mon, 12 Apr 2021 08:45:42 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=xuIhSggfgJYXTc5uuUQL75XQTfDTJ6Yz9QojVVqegGs=;
+        b=aYLefAKDI19tjo10ybnbJFXGZmSQjFt3/Rf1rjbfqshXY5TlHcZdmAuG9EifK/+yel
+         pMWy1gxXSfE8uyqyO+KE1GjTLRRjPnHJaG0x3Ozn5XQjZVNsAB1vnfEhJiP2q7kFH2/i
+         T1CZ2K6P1UGl56Q2GEQUIwwT3XPRUzY53L5ajiZ0KPhCa/NPwMBCv9GG5ZCS9mJCqEUx
+         6F0jlOfNs9VNC75hP04wtag0hi7wXzD1mHSCxTbN1kCGGqygol4jIHVy0wz1k2dhFtba
+         eRBdt4Vv3e/sqbeF6i1zjkiN4FEExDF3ronN1HEZCaKYZc2zogRzMCNxvqZpMhPYtFj5
+         BqxQ==
+X-Gm-Message-State: AOAM532EeQfKL8ZUGFbRkec00enU/xPw3ZpaFK4eMCa3+uYCxI7zTUF+
+        ffZqdRrWvR6Jlv8xwEV6X7pSxu3cf6+mRS4OriY=
+X-Google-Smtp-Source: ABdhPJyFnCrSnqMzBc8jCLkqwLflgxQmSx3nvCEsR9jFU1IQTL7sqZNTFlHTv8M2yzei1HVkEgPBCft1BYjzFJn7RSE=
+X-Received: by 2002:a05:6808:a8a:: with SMTP id q10mr19640729oij.167.1618242746125;
+ Mon, 12 Apr 2021 08:52:26 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210407180349.10173-1-jerry@skydio.com> <20210408021344.8053-1-jerry@skydio.com>
- <xmqqh7kgvr3i.fsf@gitster.g>
-In-Reply-To: <xmqqh7kgvr3i.fsf@gitster.g>
+References: <pull.930.git.1618043449249.gitgitgadget@gmail.com> <pull.930.v2.git.1618139107203.gitgitgadget@gmail.com>
+In-Reply-To: <pull.930.v2.git.1618139107203.gitgitgadget@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 12 Apr 2021 08:45:31 -0700
-Message-ID: <CABPp-BEmZrK9ambLHL=ryjRM22zqGn6vzc+2aGoy=x-Z3mwUdQ@mail.gmail.com>
-Subject: Re: [PATCH v5] git-apply: allow simultaneous --cached and --3way options
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jerry Zhang <jerry@skydio.com>,
-        Git Mailing List <git@vger.kernel.org>, ross@skydio.com,
-        Abraham Bachrach <abe@skydio.com>, brian.kubisiak@skydio.com
+Date:   Mon, 12 Apr 2021 08:52:14 -0700
+Message-ID: <CABPp-BE2D933Bc6w-OeaJc1r+1_tvMeK2M-HK4eEKPkQb3BdQQ@mail.gmail.com>
+Subject: Re: [PATCH v2] merge-ort: only do pointer arithmetic for non-empty lists
+To:     Andrzej Hunt via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Andrzej Hunt <andrzej@ahunt.org>,
+        Andrzej Hunt <ajrhunt@google.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 8, 2021 at 6:33 AM Junio C Hamano <gitster@pobox.com> wrote:
+On Sun, Apr 11, 2021 at 4:05 AM Andrzej Hunt via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
-> Jerry Zhang <jerry@skydio.com> writes:
+> From: Andrzej Hunt <ajrhunt@google.com>
 >
-> >  Documentation/git-apply.txt |  6 +++--
-> >  apply.c                     |  9 ++++---
-> >  t/t4108-apply-threeway.sh   | 50 +++++++++++++++++++++++++++++++++++++
-> >  3 files changed, 59 insertions(+), 6 deletions(-)
+> versions could be an empty string_list. In that case, versions->items is
+> NULL, and we shouldn't be trying to perform pointer arithmetic with it (a=
+s
+> that results in undefined behaviour).
 >
-> Nicely done.  Will queue.
->
-> Elijah, how does this round look to you?
+> Moreover we only use the results of this calculation once when calling
+> QSORT. Therefore we choose to skip creating relevant_entries and call
+> QSORT directly with our manipulated pointers (but only if there's data
+> requiring sorting). This lets us avoid abusing the string_list API,
+> and saves us from having to explain why this abuse is OK.
 
-Sorry for the delay; modulo two minor issues with the commit message
-it looks good to me.
+Oh, nice, I like that.
 
-This change won't allow git-apply to handle upstream renames, and
-makes me wonder if we should lift the fall_back_threeway() logic out
-of builtin/am.c and use it here.  This change also makes me wonder if
-we should change git-am's --3way flag to make it not be treated as a
-fallback to be consistent with what we are doing here.  But neither of
-those changes need to be part of this patch.
+>
+> Finally, an assertion is added to make sure that write_tree() is called
+> with a valid offset.
+>
+> This issue has probably existed since:
+>   ee4012dcf9 (merge-ort: step 2 of tree writing -- function to create tre=
+e object, 2020-12-13)
+> But it only started occurring during tests since tests started using
+> merge-ort:
+>   f3b964a07e (Add testing with merge-ort merge strategy, 2021-03-20)
+>
+> For reference - here's the original UBSAN commit that implemented this
+> check, it sounds like this behaviour isn't actually likely to cause any
+> issues (but we might as well fix it regardless):
+> https://reviews.llvm.org/D67122
+>
+> UBSAN output from t3404 or t5601:
+>
+> merge-ort.c:2669:43: runtime error: applying zero offset to null pointer
+>     #0 0x78bb53 in write_tree merge-ort.c:2669:43
+>     #1 0x7856c9 in process_entries merge-ort.c:3303:2
+>     #2 0x782317 in merge_ort_nonrecursive_internal merge-ort.c:3744:2
+>     #3 0x77feef in merge_incore_nonrecursive merge-ort.c:3853:2
+>     #4 0x6f6a5c in do_recursive_merge sequencer.c:640:3
+>     #5 0x6f6a5c in do_pick_commit sequencer.c:2221:9
+>     #6 0x6ef055 in single_pick sequencer.c:4814:9
+>     #7 0x6ef055 in sequencer_pick_revisions sequencer.c:4867:10
+>     #8 0x4fb392 in run_sequencer revert.c:225:9
+>     #9 0x4fa5b0 in cmd_revert revert.c:235:8
+>     #10 0x42abd7 in run_builtin git.c:453:11
+>     #11 0x429531 in handle_builtin git.c:704:3
+>     #12 0x4282fb in run_argv git.c:771:4
+>     #13 0x4282fb in cmd_main git.c:902:19
+>     #14 0x524b63 in main common-main.c:52:11
+>     #15 0x7fc2ca340349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+>     #16 0x4072b9 in _start start.S:120
+>
+> SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior merge-ort.c:2669:=
+43 in
+>
+> Signed-off-by: Andrzej Hunt <ajrhunt@google.com>
+> ---
+>     merge-ort: only do pointer arithmetic for non-empty lists
+>
+>     V2 removes relevant_entries as per Ren=C3=A9's suggestion, and adds a=
+n
+>     assertion as per Junio's question.
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-930%2Fa=
+hunt%2Fmerge-ort-ubsan-v2
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-930/ahunt/=
+merge-ort-ubsan-v2
+> Pull-Request: https://github.com/gitgitgadget/git/pull/930
+>
+> Range-diff vs v1:
+>
+>  1:  d52ce7110446 ! 1:  48c1a0ad6f46 merge-ort: only do pointer arithmeti=
+c for non-empty lists
+>      @@ Commit message
+>           NULL, and we shouldn't be trying to perform pointer arithmetic =
+with it (as
+>           that results in undefined behaviour).
+>
+>      +    Moreover we only use the results of this calculation once when =
+calling
+>      +    QSORT. Therefore we choose to skip creating relevant_entries an=
+d call
+>      +    QSORT directly with our manipulated pointers (but only if there=
+'s data
+>      +    requiring sorting). This lets us avoid abusing the string_list =
+API,
+>      +    and saves us from having to explain why this abuse is OK.
+>      +
+>      +    Finally, an assertion is added to make sure that write_tree() i=
+s called
+>      +    with a valid offset.
+>      +
+>           This issue has probably existed since:
+>             ee4012dcf9 (merge-ort: step 2 of tree writing -- function to =
+create tree object, 2020-12-13)
+>           But it only started occurring during tests since tests started =
+using
+>      @@ Commit message
+>
+>        ## merge-ort.c ##
+>       @@ merge-ort.c: static void write_tree(struct object_id *result_oid=
+,
+>      -   * We won't use relevant_entries again and will let it just pop o=
+ff the
+>      -   * stack, so there won't be allocation worries or anything.
+>      -   */
+>      +  size_t maxlen =3D 0, extra;
+>      +  unsigned int nr =3D versions->nr - offset;
 
-> > diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
-> > index 9144575299c264dd299b542b7b5948eef35f211c..aa1ae56a25e0428cabcfa2539900ef2a09abcb7c 100644
-> > --- a/Documentation/git-apply.txt
-> > +++ b/Documentation/git-apply.txt
-> > @@ -87,8 +87,10 @@ OPTIONS
-> >       Attempt 3-way merge if the patch records the identity of blobs it is supposed
-> >       to apply to and we have those blobs available locally, possibly leaving the
-> >       conflict markers in the files in the working tree for the user to
-> > -     resolve.  This option implies the `--index` option, and is incompatible
-> > -     with the `--reject` and the `--cached` options.
-> > +     resolve.  This option implies the `--index` option unless the
-> > +     `--cached` option is used, and is incompatible with the `--reject` option.
-> > +     When used with the `--cached` option, any conflicts are left at higher stages
-> > +     in the cache.
-> >
-> >  --build-fake-ancestor=<file>::
-> >       Newer 'git diff' output has embedded 'index information'
-> > diff --git a/apply.c b/apply.c
-> > index 9bd4efcbced842d2c5c030a0f2178ddb36114600..dadab80ec967357b031657d4e3d0ae52fac11411 100644
-> > --- a/apply.c
-> > +++ b/apply.c
-> > @@ -133,8 +133,6 @@ int check_apply_state(struct apply_state *state, int force_apply)
-> >
-> >       if (state->apply_with_reject && state->threeway)
-> >               return error(_("--reject and --3way cannot be used together."));
-> > -     if (state->cached && state->threeway)
-> > -             return error(_("--cached and --3way cannot be used together."));
-> >       if (state->threeway) {
-> >               if (is_not_gitdir)
-> >                       return error(_("--3way outside a repository"));
-> > @@ -4644,8 +4642,11 @@ static int write_out_results(struct apply_state *state, struct patch *list)
-> >                               fprintf(stderr, "U %s\n", item->string);
-> >               }
-> >               string_list_clear(&cpath, 0);
-> > -
-> > -             repo_rerere(state->repo, 0);
-> > +             /* Rerere relies on the partially merged result being in the working tree
-> > +              * with conflict markers, but that isn't written with --cached.
-> > +              */
-> > +             if (!state->cached)
-> > +                     repo_rerere(state->repo, 0);
-> >       }
-> >
-> >       return errs;
-> > diff --git a/t/t4108-apply-threeway.sh b/t/t4108-apply-threeway.sh
-> > index 9ff313f976422f9c12dc8032d14567b54cfe3765..65147efdea9a00e30d156e6f4d5d72a3987f230d 100755
-> > --- a/t/t4108-apply-threeway.sh
-> > +++ b/t/t4108-apply-threeway.sh
-> > @@ -180,4 +180,54 @@ test_expect_success 'apply -3 with ambiguous repeating file' '
-> >       test_cmp expect one_two_repeat
-> >  '
-> >
-> > +test_expect_success 'apply with --3way --cached clean apply' '
-> > +     # Merging side should be similar to applying this patch
-> > +     git diff ...side >P.diff &&
-> > +
-> > +     # The corresponding cleanly applied merge
-> > +     git reset --hard &&
-> > +     git checkout main~ &&
-> > +     git merge --no-commit side &&
-> > +     git ls-files -s >expect.ls &&
-> > +
-> > +     # should succeed
-> > +     git reset --hard &&
-> > +     git checkout main~ &&
-> > +     git apply --cached --3way P.diff &&
-> > +     git ls-files -s >actual.ls &&
-> > +     print_sanitized_conflicted_diff >actual.diff &&
-> > +
-> > +     # The cache should resemble the corresponding merge
-> > +     # (both files at stage #0)
-> > +     test_cmp expect.ls actual.ls &&
-> > +     # However the working directory should not change
-> > +     >expect.diff &&
-> > +     test_cmp expect.diff actual.diff
-> > +'
-> > +
-> > +test_expect_success 'apply with --3way --cached and conflicts' '
-> > +     # Merging side should be similar to applying this patch
-> > +     git diff ...side >P.diff &&
-> > +
-> > +     # The corresponding conflicted merge
-> > +     git reset --hard &&
-> > +     git checkout main^0 &&
-> > +     test_must_fail git merge --no-commit side &&
-> > +     git ls-files -s >expect.ls &&
-> > +
-> > +     # should fail to apply
-> > +     git reset --hard &&
-> > +     git checkout main^0 &&
-> > +     test_must_fail git apply --cached --3way P.diff &&
-> > +     git ls-files -s >actual.ls &&
-> > +     print_sanitized_conflicted_diff >actual.diff &&
-> > +
-> > +     # The cache should resemble the corresponding merge
-> > +     # (one file at stage #0, one file at stages #1 #2 #3)
-> > +     test_cmp expect.ls actual.ls &&
-> > +     # However the working directory should not change
-> > +     >expect.diff &&
-> > +     test_cmp expect.diff actual.diff
-> > +'
-> > +
-> >  test_done
+Should we remove the initialization here and just define nr only, and then.=
+..
+
+>      +  struct strbuf buf =3D STRBUF_INIT;
+>      +- struct string_list relevant_entries =3D STRING_LIST_INIT_NODUP;
+>      +  int i;
+>      +
+>      +- /*
+>      +-  * We want to sort the last (versions->nr-offset) entries in vers=
+ions.
+>      +-  * Do so by abusing the string_list API a bit: make another strin=
+g_list
+>      +-  * that contains just those entries and then sort them.
+>      +-  *
+>      +-  * We won't use relevant_entries again and will let it just pop o=
+ff the
+>      +-  * stack, so there won't be allocation worries or anything.
+>      +-  */
+>       - relevant_entries.items =3D versions->items + offset;
+>       - relevant_entries.nr =3D versions->nr - offset;
+>      -+ if (versions->nr) {
+>      -+         relevant_entries.items =3D versions->items + offset;
+>      -+         relevant_entries.nr =3D versions->nr - offset;
+>      -+ }
+>      -  QSORT(relevant_entries.items, relevant_entries.nr, tree_entry_ord=
+er);
+>      +- QSORT(relevant_entries.items, relevant_entries.nr, tree_entry_ord=
+er);
+>      ++ assert(offset <=3D versions->nr);
+
+Define nr here after this assert?  The definition of nr also depended
+implicitly on this requirement, so if we're making this requirement
+explicit, it would make sense to define nr after stating the
+requirement.
+
+>      ++ if (versions->nr)
+>      ++         QSORT(versions->items + offset, nr, tree_entry_order);
+>
+>         /* Pre-allocate some space in buf */
+>      +  extra =3D hash_size + 8; /* 8: 6 for mode, 1 for space, 1 for NUL=
+ char */
+>
+>
+>  merge-ort.c | 15 +++------------
+>  1 file changed, 3 insertions(+), 12 deletions(-)
+>
+> diff --git a/merge-ort.c b/merge-ort.c
+> index 5e118a85ee04..702eb5bf362d 100644
+> --- a/merge-ort.c
+> +++ b/merge-ort.c
+> @@ -2493,20 +2493,11 @@ static void write_tree(struct object_id *result_o=
+id,
+>         size_t maxlen =3D 0, extra;
+>         unsigned int nr =3D versions->nr - offset;
+>         struct strbuf buf =3D STRBUF_INIT;
+> -       struct string_list relevant_entries =3D STRING_LIST_INIT_NODUP;
+>         int i;
+>
+> -       /*
+> -        * We want to sort the last (versions->nr-offset) entries in vers=
+ions.
+> -        * Do so by abusing the string_list API a bit: make another strin=
+g_list
+> -        * that contains just those entries and then sort them.
+> -        *
+> -        * We won't use relevant_entries again and will let it just pop o=
+ff the
+> -        * stack, so there won't be allocation worries or anything.
+> -        */
+> -       relevant_entries.items =3D versions->items + offset;
+> -       relevant_entries.nr =3D versions->nr - offset;
+> -       QSORT(relevant_entries.items, relevant_entries.nr, tree_entry_ord=
+er);
+> +       assert(offset <=3D versions->nr);
+> +       if (versions->nr)
+> +               QSORT(versions->items + offset, nr, tree_entry_order);
+>
+>         /* Pre-allocate some space in buf */
+>         extra =3D hash_size + 8; /* 8: 6 for mode, 1 for space, 1 for NUL=
+ char */
+>
+> base-commit: 89b43f80a514aee58b662ad606e6352e03eaeee4
+> --
+> gitgitgadget
+
+Otherwise, this patch looks good to me; thanks!
