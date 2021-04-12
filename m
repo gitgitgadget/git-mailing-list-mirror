@@ -2,93 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A5EDBC433B4
-	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 19:06:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F622C433ED
+	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 19:06:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5795761352
-	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 19:06:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EDE6161350
+	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 19:06:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236840AbhDLTG2 convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Mon, 12 Apr 2021 15:06:28 -0400
-Received: from mail-ej1-f46.google.com ([209.85.218.46]:42839 "EHLO
-        mail-ej1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236711AbhDLTG1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Apr 2021 15:06:27 -0400
-Received: by mail-ej1-f46.google.com with SMTP id w23so6236976ejb.9
-        for <git@vger.kernel.org>; Mon, 12 Apr 2021 12:06:08 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ooS9sPPnExQpYuRvKvN5dA9jq8tKS1dAPXl4gnKFgjE=;
-        b=lGrO5La6hc+sEi1m0bVsNgcYSrwlPUHDe2ZMfq8uxekxxiBEnmPrJdU1fQ2SeU/xq1
-         D47ef60NdDdqRC7zoeAFSVLXjcGUWKJnM1d26btETN5Deu/2u6SqqqKqOH92GFyTDC1r
-         i9Yp6Qnd1mRS8NmgPwsWIm2PgLO/cefFUGkxAdWk2c+Il9sOedIcksEswWatMo132jLo
-         8PgHHMFNhC8U4xm8vmiZyCtKNJMTuYw8co9PffZeBkpAcT0yEmV6x9YeGGrKDDo4PmNz
-         /OQ+Zpj7hQZFesSLRrgaRjTxgZFEGvbAeEhZMvDDV2QocuD6+ZeU753aWLm3x2SVmMEH
-         MA5w==
-X-Gm-Message-State: AOAM533OUzG6SbEafNxDfCE2AWVvx4O/LdSx1KWh7I+l9Y975IPreCk5
-        2fVnpYS8MV2dCrknIIytiZ3r5jne7NaSiAHlilWInHmKM4w=
-X-Google-Smtp-Source: ABdhPJxWdpYf/irR4oCJ6D7/vjK+nGhPykAhzbl8vEdILf3xiFpT9zNl026vCZiI6lceSC3tcuI+CgzxeWzqXNG6hR8=
-X-Received: by 2002:a17:906:cc46:: with SMTP id mm6mr2791223ejb.138.1618254367495;
- Mon, 12 Apr 2021 12:06:07 -0700 (PDT)
-MIME-Version: 1.0
-References: <cover-00.16-00000000000-20210412T110456Z-avarab@gmail.com> <patch-08.16-352eeff41c9-20210412T110456Z-avarab@gmail.com>
-In-Reply-To: <patch-08.16-352eeff41c9-20210412T110456Z-avarab@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 12 Apr 2021 15:05:56 -0400
-Message-ID: <CAPig+cTTjX=keJJdXLfsP52tQJZULgzjqbvYm=QZLK2312qRmw@mail.gmail.com>
-Subject: Re: [PATCH 08/16] test-lib functions: add --printf option to test_commit
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Matthieu Moy <git@matthieu-moy.fr>,
+        id S236898AbhDLTGl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Apr 2021 15:06:41 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58359 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236711AbhDLTGk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Apr 2021 15:06:40 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 69F44AB4A4;
+        Mon, 12 Apr 2021 15:06:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=1i+2PXQsE18n
+        zS/8o0XVaVpnb4I=; b=beDhh4L2GbPp+x7Fv+1viyQ3Gw6SGFp+2K2eZGPyfy+x
+        P7+iVdgPKm584EYJbQFuwrttAT04/zXXMpjpwG04dGWbLCSixThdamPXbJVbgKVf
+        HXsS2vEoK3DRTREIqvk5td3tw8aZ6YBuUYZQ++Y8vFoJsjx8WT8LvmRr4VNyrhc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=v9+7aK
+        MLQJ4QWaO6y+IKJ+7G7B83YULtDZDLo7wdBjXiTyNPUEjjk8e/0AEOeOMSauzsit
+        3W6iFBqjZ9MuzpzL9BEEDJmtox/BYTyI11FVl+6lbZ4RBdpy893yDpTYwyNeWV2n
+        dUViEQyZIbptmWZYOvnW/EUD9SEjOc1rWYRmM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 61FABAB4A2;
+        Mon, 12 Apr 2021 15:06:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D6B98AB4A1;
+        Mon, 12 Apr 2021 15:06:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Matthieu Moy <git@matthieu-moy.fr>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Subject: Re: [PATCH 02/16] test-lib: bring $remove_trash out of retirement
+References: <cover-00.16-00000000000-20210412T110456Z-avarab@gmail.com>
+        <patch-02.16-44223ae777e-20210412T110456Z-avarab@gmail.com>
+Date:   Mon, 12 Apr 2021 12:06:20 -0700
+In-Reply-To: <patch-02.16-44223ae777e-20210412T110456Z-avarab@gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Mon, 12 Apr
+ 2021 13:08:51
+        +0200")
+Message-ID: <xmqqo8ejcogj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 2ACDA38C-9BC2-11EB-A655-D152C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 12, 2021 at 7:09 AM Ævar Arnfjörð Bjarmason
-<avarab@gmail.com> wrote:
-> Add a --printf option to test_commit to allow writing to the file with
-> "printf" instead of "echo".
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+
+> There's no point in creating a repository or directory only to decide
+> right afterwards that we're skipping all the tests.
 >
-> This is useful for writing "\n", "\0" etc., in particular in
-> combination with the --append option added in 3373518cc8 (test-lib
-> functions: add an --append option to test_commit, 2021-01-12).
-> [...]
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> So let's partially revert 06478dab4c (test-lib: retire $remove_trash
+> variable, 2017-04-23) and move the decision about whether to skip all
+> tests earlier.
+>
+> I tested this with --debug, see 4d0912a206 (test-lib.sh: do not barf
+> under --debug at the end of the test, 2017-04-24) for a bug we don't
+> want to re-introduce.
+>
+> While I'm at it let's move the HOME assignment to just before
+> test_create_repo, it could be lower, but it seems better to set it
+> before calling anything in test-lib-functions.sh
+>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
 > ---
 
-Just a bit of pure bikeshedding...
+I am not clear what the reasoning behind this change is.  Is it
+correct to say that the idea flows like the following?
 
-> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-> @@ -173,6 +173,10 @@ debug () {
-> +#   --printf
-> +#       Use "printf" instead of "echo" when writing "<contents>" to
-> +#       "<file>". You will need to provide your own trailing "\n". You
-> +#       can only supply the FORMAT for the printf(1), not its ARGUMENT(s).
+ 0. If we do the $GIT_SKIP_TESTS check early, specifically, before
+    we create the trash directory to run the tests in, we do not
+    have to create and then remove it.
 
-The name "printf" has such strong association in programmer's minds
-with "%" and argument consumption that the name of this option alone
-almost begs people to take advantage of argument interpolation even
-though it's documented here as not allowing it. Taking into
-consideration that people often do not read documentation, `--printf`
-as the name of the option may be an unfortunate one. Perhaps it could
-be called `--raw` or something less likely to suggest argument
-interpolation.
+ 1. If we na=C3=AFvely do the above, test_done called in the "ah, the
+    entirety of test is skipped" case will try to see if the trash
+    directory exists and complain, so we need to add more code in
+    that test_done codepath to avoid complaints.
 
-> @@ -192,6 +196,7 @@ debug () {
->
->  test_commit () {
->         notick= &&
-> +       echo=echo &&
+ 2. As a part of that "more code", we mark the fact that we created
+    a new repository with $remove_trash variable.
 
-This could be slightly confusing. I wonder if naming this variable
-`emit` would be clearer.
+Assuming that the above flow of thought is what is behind this
+patch, I think the patch is mostly sensible.
+
+remove_trash needs to be cleared at the beginning, perhaps where
+store_arg_to and opt_required_arg are cleared, though, to protect
+us from a stray environment variable.
+
+Thanks.
