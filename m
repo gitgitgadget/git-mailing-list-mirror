@@ -2,349 +2,157 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20DB0C43461
-	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 14:46:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E06CAC433B4
+	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 14:56:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EBFD161352
-	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 14:46:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BCD936044F
+	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 14:56:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242503AbhDLOrQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Apr 2021 10:47:16 -0400
-Received: from wout5-smtp.messagingengine.com ([64.147.123.21]:54993 "EHLO
-        wout5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S242501AbhDLOrP (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 12 Apr 2021 10:47:15 -0400
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.west.internal (Postfix) with ESMTP id DFD0517CF;
-        Mon, 12 Apr 2021 10:46:56 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Mon, 12 Apr 2021 10:46:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
-        :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm3; bh=jBHqByTMN1jwhox29GtLIjvBpzZ
-        UFlfvg2DOM6XoS3c=; b=HLqr5teJlT8+VYRmWv5lt2pbK/CDgSJtCqkQilV9OXj
-        /pHlz68C8+z1LMuQJKEVULt6lVLmuzqbBdcoef3/MdvKVPqpSvrBEIO16rdaLYW9
-        lkSL39o+tPzyKEK2YP/pn5cq8Z7xPXZgtx2zZ4JubPb5LxYukjuSR5xOhzfkZac+
-        CtYdUzEg2zyhAYAag3DCt3LIx6r2GnCo5CyVQfGOcuq+gN3zhSvvoXhGgpMMah+R
-        sexLgGDOqMIbroiD7EBma/QULog0RSx72kbL+YUB6wzuF7zwq9rE+2ObJNR6y+Hc
-        2qb8mN4hmqX9SsWajPj/x6ZU+fdMxuYlAFOIsH8EMuw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=jBHqBy
-        TMN1jwhox29GtLIjvBpzZUFlfvg2DOM6XoS3c=; b=thFX2AuaPUMshhfBnhPMsm
-        dmtHWqEN30nmboGykAfv/jTt1QuA1BrIrCL10T2T60sQU+FBAaAwrWyIoXfBf0xa
-        /Mza052DKT/J+yGg9DTQA0hLjJVQyDM6EkQ1nqBI6VH1ePGY8a3Ni7j3AtmUFOKq
-        VxeC/dM8ehcWyFAuDtJn40qBdOjFHM1kti4Z9hVo95LJbHNxuJwNaSX05MC6MeR8
-        5LBt9psMYhczrDBL5ZZX9plG6XhvAEVfzvafQfx5mEpnmSRvO/jCJDTUcR3s8sRP
-        1CWGpNlDOg/+DkBDdozGkSpueM9X3m9wJ1NvjaDc1ix2ffizDEJEYquveMzWUxCg
-        ==
-X-ME-Sender: <xms:YF10YEYoR97dB_9TAAcJMyTlpVeLuZUyToU4PNVpGpYp1JuPuqbOzA>
-    <xme:YF10YPiKlHEMOFuC9vidm64ItZQdWIAvN7P7gHVfWhtl9DuP_2H9xiOS7W5fcLko_
-    Vvx7LHKLHeR2FLq5A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrudekjedgkeduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeehgefhtdefueffheekgfffudelffejtdfhvdejkedthfehvdelgfetgfdvtedthfen
-    ucfkphepjeekrdehhedrfeehrdeftdenucevlhhushhtvghrufhiiigvpedvnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:YF10YG4FjWuQjS-N7vghJ6Z04ctwgzhP-3_q2QquMIayFEBzYu63pg>
-    <xmx:YF10YG7kgkaL3GGXhuwNcr6ircEcGrRdt3NEE1SxfUZP0AA1WvBRrw>
-    <xmx:YF10YKckSAa1wk5841W-3WMyBT4qGUEbs8oO464rpi8HnBQF_UyrXw>
-    <xmx:YF10YBCz5mpsNdY0f_47H4pVSApmyP3jRwIPeo95if-TurvICLuhBw>
-Received: from vm-mail.pks.im (dynamic-078-055-035-030.78.55.pool.telefonica.de [78.55.35.30])
-        by mail.messagingengine.com (Postfix) with ESMTPA id C5766240066;
-        Mon, 12 Apr 2021 10:46:55 -0400 (EDT)
-Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id ed18ced2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Mon, 12 Apr 2021 14:46:55 +0000 (UTC)
-Date:   Mon, 12 Apr 2021 16:46:54 +0200
-From:   Patrick Steinhardt <ps@pks.im>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v3 3/3] config: allow overriding of global and system
- configuration
-Message-ID: <af663640ae25a95fa56adf32baf4c2e197f3eea2.1618238567.git.ps@pks.im>
-References: <cover.1617975637.git.ps@pks.im>
- <cover.1618238567.git.ps@pks.im>
+        id S242133AbhDLO4S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Apr 2021 10:56:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60806 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237526AbhDLO4R (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Apr 2021 10:56:17 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72DD5C061574
+        for <git@vger.kernel.org>; Mon, 12 Apr 2021 07:55:59 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id w23so15450489edx.7
+        for <git@vger.kernel.org>; Mon, 12 Apr 2021 07:55:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=formlabs.com; s=google;
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=35WHNKEn6H0dNGkUPbMYqJ/EXOUFsoT36dzLkTyC5Bs=;
+        b=B101B4gYxMlElKgvj+aXuPvpCGIKqG5jV1Ak60YGIHGgcddM6U1z9Hh4/CvlLxCs7c
+         gmAdybkW8J6o/TDhc0Tw+WXj9FQuyFvDY+87EaUGswX0xQGkOW7XbWkzGxzN649KDGH/
+         mzPXr/LJKd/jlfuBEqw+vdMOzF45rcwV/1utM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=35WHNKEn6H0dNGkUPbMYqJ/EXOUFsoT36dzLkTyC5Bs=;
+        b=hH1d38aih1ROPvdCRTLX0v699wNOzUJJ3DrUo9eDCa5GMLdkR2MErPBTyBZ5MnNGv0
+         L9dhFhAzaxt4i6FhyZi92d2/OgMo+XXJu0dVhLd0ajMbzl+RFl6y11xtGYlp/erpfN6X
+         pK94fYd0d1A9UcnvYKiNursGxUG5P0V2SZjQGwkuD/VotWMP79JIz/OnvjeY8V6/2YwS
+         RE+e/xk5cGOybaWlvI34tTWDXfvmWYE+W6NlUeGY+fgU1NI11hLn00CS/AjTbLnXJIqK
+         1tYhQ1Fp6NfLuTBYz9GdmGfdaDPlZ4hIV7drkPokGusGHqGVTUb3FanhxZXX5A60bikG
+         CDLw==
+X-Gm-Message-State: AOAM533bHhOB9CzMq7Swpw8VeXKnKvFQV0wkJnxhvo48ptyEyIngxor2
+        ZK9XYze82ULgCWM6y/CfIOe6M9q5R5f61YMWt+9jDLwhkU+9cEVd
+X-Google-Smtp-Source: ABdhPJzJFiUCrDsXaTbpGVsxH9YrDamnM/zOGa1z8ZKxHFZbDxWaH1kic8y+FBflzy+L3/9hvFCokHIFcKyUCyN/rH4=
+X-Received: by 2002:aa7:c7da:: with SMTP id o26mr29887119eds.244.1618239357713;
+ Mon, 12 Apr 2021 07:55:57 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="KW/ZU3ozBeujneYG"
-Content-Disposition: inline
-In-Reply-To: <cover.1618238567.git.ps@pks.im>
+From:   Tamas Peregi <tamas.peregi@formlabs.com>
+Date:   Mon, 12 Apr 2021 16:55:21 +0200
+Message-ID: <CAKJ37DfivxL-2Sy0qa+M_1Pw0c9-CWsCJO5=VqP1UOB5zTSP_Q@mail.gmail.com>
+Subject: Unexpected conflict during cherry-pick after moving submodule
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi all,
 
---KW/ZU3ozBeujneYG
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I ran into something that seems like a bug to me. I'm fairly new to
+git, especially git submodules, so it's possible this is expected
+behaviour, but if it is, please explain where I went wrong.
 
-In order to have git run in a fully controlled environment without any
-misconfiguration, it may be desirable for users or scripts to override
-global- and system-level configuration files. We already have a way of
-doing this, which is to unset both HOME and XDG_CONFIG_HOME environment
-variables and to set `GIT_CONFIG_NOGLOBAL=3Dtrue`. This is quite kludgy,
-and unsetting the first two variables likely has an impact on other
-executables spawned by such a script.
+Thanks in advance: Tam=C3=A1s
 
-The obvious way to fix this would be to introduce `GIT_CONFIG_NOGLOBAL`
-as an equivalent to `GIT_CONFIG_NOSYSTEM`. But in the past, it has
-turned out that this design is inflexible: we cannot test system-level
-parsing of the git configuration in our test harness because there is no
-way to change its location, so all tests run with `GIT_CONFIG_NOSYSTEM`
-set.
+What did you do before the bug happened? (Steps to reproduce your issue)
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-Instead of doing the same mistake with `GIT_CONFIG_NOGLOBAL`, introduce
-two new variables `GIT_CONFIG_GLOBAL` and `GIT_CONFIG_SYSTEM`:
+- I modified a file on one branch
+- Then switched to another
+- Moved a submodule to another directory
+- Tried to cherry-pick my modification from the other branch
 
-    - If unset, git continues to use the usual locations.
+This script can be used to reproduce my steps (any submodule works, I
+chose gsl-lite because I like it):
+    git init
 
-    - If set to a specific path, we skip reading the normal
-      configuration files and instead take the path.
+    echo hello > hello.txt
+    git add hello.txt
+    git commit -m "Add hello.txt"
 
-    - If set to `/dev/null`, we do not load either global- or
-      system-level configuration at all.
+    git submodule add https://github.com/gsl-lite/gsl-lite/ vendor/gsl
+    git commit -a -m "Add submodule"
 
-This implements the usecase where we want to execute code in a sanitized
-environment without any potential misconfigurations via `/dev/null`, but
-is more flexible and allows for more usecases than simply adding
-`GIT_CONFIG_NOGLOBAL`.
+    git branch world
+    git branch move
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- Documentation/git-config.txt |  5 +++
- Documentation/git.txt        | 10 +++++
- builtin/config.c             |  6 ++-
- config.c                     | 24 ++++++++++--
- t/t1300-config.sh            | 71 ++++++++++++++++++++++++++++++++++++
- 5 files changed, 112 insertions(+), 4 deletions(-)
+    git checkout world
+    echo world >> hello.txt
+    git commit -a -m "Expand hello.txt"
 
-diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-index 4b4cc5c5e8..5cddadafd2 100644
---- a/Documentation/git-config.txt
-+++ b/Documentation/git-config.txt
-@@ -340,6 +340,11 @@ GIT_CONFIG::
- 	Using the "--global" option forces this to ~/.gitconfig. Using the
- 	"--system" option forces this to $(prefix)/etc/gitconfig.
-=20
-+GIT_CONFIG_GLOBAL::
-+GIT_CONFIG_SYSTEM::
-+	Take the configuration from the given files instead from global or
-+	system-level configuration. See linkgit:git[1] for details.
-+
- GIT_CONFIG_NOSYSTEM::
- 	Whether to skip reading settings from the system-wide
- 	$(prefix)/etc/gitconfig file. See linkgit:git[1] for details.
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 3a9c44987f..380422a6a9 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -670,6 +670,16 @@ for further details.
- 	If this environment variable is set to `0`, git will not prompt
- 	on the terminal (e.g., when asking for HTTP authentication).
-=20
-+`GIT_CONFIG_GLOBAL`::
-+`GIT_CONFIG_SYSTEM`::
-+	Take the configuration from the given files instead from global or
-+	system-level configuration files. If `GIT_CONFIG_SYSTEM` is set, the
-+	system config file defined at build time (usually `/etc/gitconfig`)
-+	will not be read. Likewise, if `GIT_CONFIG_GLOBAL` is set, neither
-+	`$HOME/.gitconfig` nor `$XDG_CONFIG_HOME/git/config` will be read. Can
-+	be set to `/dev/null` to skip reading configuration files of the
-+	respective level.
-+
- `GIT_CONFIG_NOSYSTEM`::
- 	Whether to skip reading settings from the system-wide
- 	`$(prefix)/etc/gitconfig` file.  This environment variable can
-diff --git a/builtin/config.c b/builtin/config.c
-index 865fddd6ce..9104816459 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -674,7 +674,10 @@ int cmd_config(int argc, const char **argv, const char=
- *prefix)
- 		char *user_config, *xdg_config;
-=20
- 		git_global_config(&user_config, &xdg_config);
--		if (!user_config)
-+		if (!user_config) {
-+			if (getenv("GIT_CONFIG_GLOBAL"))
-+				die(_("GIT_CONFIG_GLOBAL=3D/dev/null set"));
-+
- 			/*
- 			 * It is unknown if HOME/.gitconfig exists, so
- 			 * we do not know if we should write to XDG
-@@ -682,6 +685,7 @@ int cmd_config(int argc, const char **argv, const char =
-*prefix)
- 			 * is set and points at a sane location.
- 			 */
- 			die(_("$HOME not set"));
-+		}
-=20
- 		given_config_source.scope =3D CONFIG_SCOPE_GLOBAL;
-=20
-diff --git a/config.c b/config.c
-index ebff58aa57..ed46eda997 100644
---- a/config.c
-+++ b/config.c
-@@ -1846,13 +1846,31 @@ static int git_config_from_blob_ref(config_fn_t fn,
-=20
- char *git_system_config(void)
- {
-+	char *system_config =3D xstrdup_or_null(getenv("GIT_CONFIG_SYSTEM"));
-+	if (system_config) {
-+		if (!strcmp(system_config, "/dev/null"))
-+			FREE_AND_NULL(system_config);
-+		return system_config;
-+	}
- 	return system_path(ETC_GITCONFIG);
- }
-=20
--void git_global_config(char **user_config, char **xdg_config)
-+void git_global_config(char **user_out, char **xdg_out)
- {
--	*user_config =3D expand_user_path("~/.gitconfig", 0);
--	*xdg_config =3D xdg_config_home("config");
-+	char *user_config =3D xstrdup_or_null(getenv("GIT_CONFIG_GLOBAL"));
-+	char *xdg_config =3D NULL;
-+
-+	if (user_config) {
-+		if (!strcmp(user_config, "/dev/null"))
-+			FREE_AND_NULL(user_config);
-+		xdg_config =3D NULL;
-+	} else {
-+		user_config =3D expand_user_path("~/.gitconfig", 0);
-+		xdg_config =3D xdg_config_home("config");
-+	}
-+
-+	*user_out =3D user_config;
-+	*xdg_out =3D xdg_config;
- }
-=20
- /*
-diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-index e0dd5d65ce..17f1b78c01 100755
---- a/t/t1300-config.sh
-+++ b/t/t1300-config.sh
-@@ -2059,6 +2059,77 @@ test_expect_success '--show-scope with --show-origin=
-' '
- 	test_cmp expect output
- '
-=20
-+test_expect_success 'override global and system config' '
-+	test_when_finished rm -f "$HOME"/.config/git &&
-+
-+	cat >"$HOME"/.gitconfig <<-EOF &&
-+	[home]
-+		config =3D true
-+	EOF
-+	mkdir -p "$HOME"/.config/git &&
-+	cat >"$HOME"/.config/git/config <<-EOF &&
-+	[xdg]
-+		config =3D true
-+	EOF
-+	cat >.git/config <<-EOF &&
-+	[local]
-+		config =3D true
-+	EOF
-+	cat >custom-global-config <<-EOF &&
-+	[global]
-+		config =3D true
-+	EOF
-+	cat >custom-system-config <<-EOF &&
-+	[system]
-+		config =3D true
-+	EOF
-+
-+	cat >expect <<-EOF &&
-+	global	xdg.config=3Dtrue
-+	global	home.config=3Dtrue
-+	local	local.config=3Dtrue
-+	EOF
-+	git config --show-scope --list >output &&
-+	test_cmp expect output &&
-+
-+	sane_unset GIT_CONFIG_NOSYSTEM &&
-+
-+	cat >expect <<-EOF &&
-+	system	system.config=3Dtrue
-+	global	global.config=3Dtrue
-+	local	local.config=3Dtrue
-+	EOF
-+	GIT_CONFIG_SYSTEM=3Dcustom-system-config GIT_CONFIG_GLOBAL=3Dcustom-globa=
-l-config \
-+		git config --show-scope --list >output &&
-+	test_cmp expect output &&
-+
-+	cat >expect <<-EOF &&
-+	local	local.config=3Dtrue
-+	EOF
-+	GIT_CONFIG_SYSTEM=3D/dev/null GIT_CONFIG_GLOBAL=3D/dev/null git config --=
-show-scope --list >output &&
-+	test_cmp expect output
-+'
-+
-+test_expect_success 'override global and system config with missing file' '
-+	sane_unset GIT_CONFIG_NOSYSTEM &&
-+	test_must_fail env GIT_CONFIG_GLOBAL=3Ddoes-not-exist GIT_CONFIG_SYSTEM=
-=3D/dev/null git config --global --list >actual &&
-+	test_must_fail env GIT_CONFIG_GLOBAL=3D/dev/null GIT_CONFIG_SYSTEM=3Ddoes=
--not-exist git config --system --list >actual &&
-+	GIT_CONFIG_GLOBAL=3Ddoes-not-exist GIT_CONFIG_SYSTEM=3Ddoes-not-exist git=
- version
-+'
-+
-+test_expect_success 'write to overridden global and system config' '
-+	cat >expect <<EOF &&
-+[config]
-+	key =3D value
-+EOF
-+
-+	GIT_CONFIG_GLOBAL=3Dwrite-to-global git config --global config.key value =
-&&
-+	test_cmp expect write-to-global &&
-+
-+	GIT_CONFIG_SYSTEM=3Dwrite-to-system git config --system config.key value =
-&&
-+	test_cmp expect write-to-system
-+'
-+
- for opt in --local --worktree
- do
- 	test_expect_success "$opt requires a repo" '
---=20
-2.31.1
+    git checkout move
+    mkdir thirdparty
+    git mv vendor/gsl thirdparty/gsl
+    git commit -a -m "Move submodule"
+
+    git cherry-pick world
 
 
---KW/ZU3ozBeujneYG
-Content-Type: application/pgp-signature; name="signature.asc"
+What did you expect to happen? (Expected behavior)
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
------BEGIN PGP SIGNATURE-----
+I expected the cherry-pick to happen without conflicts.
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmB0XV0ACgkQVbJhu7ck
-PpSM5w//V0R5q26+5sZUM284M/PljgQXfZieLtTH0UbDFYMX3wye94KUrk95Bghd
-WOL5V5CIOO+i47j3hUJrMEDalUWO1htWSWex8XLuO9knFL2vA4OfAY/2yvZhlH3l
-0+JJ+WkFNH6k7TxNwCU+f6lGU2zSBPZ5i0IhRqu2NpFxWf4q2ymPLYKyV/37mxtr
-CVaTkHsoUPadOMtfozLmP4Y7xBFncJjrcLKypnK2hQJQGridthym5BrH4ABUqzbf
-lLzFKQLzfwO8V6VydNd+c10UtQlh1yPLZX/dxlkjekjuPz+HV2G4g+uNgpOyZxUO
-cAF0tBXIOqshHwNr+vEm0xIjUH+PkV2tCANfTHz4qXScMU87nPxab13M49nt5rHf
-gFq/cY2Hx3D86k8TCfO6VoOS46y58eh/Ym7reoeQ4Cm5wbiHsgnbxFG8l20SyCfM
-jqJQh115dtVEN+pQKsW3dTxXanP4PItFnjZbHEPQhpISuxXdXon5GaUZxt6jiaRZ
-mvCMhII4tvIxAmi1mQdv+ltaaWPBRjEZ8J4/my991P5xNg4FoFguUvpl16xW3Mqz
-J3K+FWDy2joMPs7/3nEgGOlMRnkjcWnPyPkm6n2125ZtqelUAAuSoRmu9q6zVe7L
-TU8nb/Apzm5Rf4ht9db+E91CykQiHWBjrvi5orvUu39WjmdSKEE=
-=dBO2
------END PGP SIGNATURE-----
 
---KW/ZU3ozBeujneYG--
+What happened instead? (Actual behavior)
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+I ran into a conflict during the cherry-pick:
+    Adding as thirdparty/gsl~HEAD instead
+    error: could not apply 516d94f... Expand hello.txt
+    hint: after resolving the conflicts, mark the corrected paths
+    hint: with 'git add <paths>' or 'git rm <paths>'
+    hint: and commit the result with 'git commit'
+
+
+What's different between what you expected and what actually happened?
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+As hello.txt has nothing to do with the submodule, I assumed the
+cherry-pick would go through smoothly.
+
+
+Anything else you want to add:
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D
+
+- "git add thirdparty/gsl && git cherry-pick --continue" resolves the
+issue as expected.
+- If I change which commit in the submodule the superproject points
+to, the problem disappears, but I don't necessarily want to do that.
+- I'm using "Git for Windows", but the issue was reproduced by my
+Mac-based colleagues too with the exact same results.
+
+[System Info]
+git version:
+git version 2.31.1.windows.1
+cpu: x86_64
+built from commit: c5f0be26a7e3846e3b6268d1c6c4800d838c6bbb
+sizeof-long: 4
+sizeof-size_t: 8
+shell-path: /bin/sh
+feature: fsmonitor--daemon
+uname: Windows 10.0 19042
+compiler info: gnuc: 10.2
+libc info: no libc information available
+$SHELL (typically, interactive shell): C:\Program Files\Git\usr\bin\bash.ex=
+e
