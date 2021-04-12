@@ -6,43 +6,43 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 15645C433ED
-	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 18:26:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 01661C433ED
+	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 18:27:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DC96661357
-	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 18:26:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BA3196109E
+	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 18:27:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244916AbhDLS05 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Apr 2021 14:26:57 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:62495 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236888AbhDLS0z (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Apr 2021 14:26:55 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1ABE0118127;
-        Mon, 12 Apr 2021 14:26:37 -0400 (EDT)
+        id S244929AbhDLS1c (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Apr 2021 14:27:32 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56559 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236868AbhDLS1a (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Apr 2021 14:27:30 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5F999AAFC3;
+        Mon, 12 Apr 2021 14:27:11 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=nnBJoCtSu03e5uXg0c1ulwJH2Is=; b=ZroFcT
-        xdNBrhgrboAq4vDnx2tSTxn+ZBO/ZCVykZ9pUUOq0e4LME2BLYMJbgCCO5sUVVcr
-        rQh49wwx5YEuOITqTIfOIdmkp2vXX1OPk12d4sp7oSYHoYt5kbPG1xGHastkYpm4
-        +4yfPTMuQwlRA3uc+bVgiozdaY0aOyEZJV6bM=
+        :content-type; s=sasl; bh=YvVUP82bKR4y3+EGdzuHGAuEjl8=; b=VrNPJt
+        G+NIGDgqJgMHKKoK+xgVIAKC2ZBMSz4uagVtRZRDOJTIiPJRmdMEBfYwJ2XOVOii
+        QMXCRQP99oTpBMWxNDXLsHBIcpitsgDqdVKqTy0jvSHnHfmNM8Ja48i548gMcunF
+        qXGxcbiym3I7MYY5RDAUWbbNgjYiOQPZFrQNw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ets6UVa4P8qJp+QyHehMrJkfRxwcrQ6T
-        lbIM75RoTIF0TOF9ssotaQ1mXCKscQYvhuIR0xCv0hzSaZ7IuTY6Djdq/IfKnGSa
-        g7vbSvdBMNkFjdp8NopvZ9/SabF4x75+U0bWH7sDl3emM8zdvB5sNI5syjtXFkJ7
-        7dmfZz4RqY4=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1472D118126;
-        Mon, 12 Apr 2021 14:26:37 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=wdOpznnTdolrlujKrtZUUwbEK/gW9Yza
+        eSxqrztgoC9mYpCTOugqXBV0QR+XaNCrqy3hCUr/XsfeuHh1HtZAtX6B0V6JjUEt
+        3XCsYiX4QTTIh/DvpdOt8hYi7ZRb76mOSRlb55XmipdRfQ1tv7kDZ3OGOO4hMrns
+        4nKSf08CTu8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 586E9AAFC2;
+        Mon, 12 Apr 2021 14:27:11 -0400 (EDT)
         (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.243.138.161])
+Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 3803F118124;
-        Mon, 12 Apr 2021 14:26:33 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E4D56AAFBE;
+        Mon, 12 Apr 2021 14:27:10 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Elijah Newren <newren@gmail.com>
@@ -52,23 +52,49 @@ Cc:     Jerry Zhang <jerry@skydio.com>,
 Subject: Re: [PATCH v5] git-apply: allow simultaneous --cached and --3way
  options
 References: <20210407180349.10173-1-jerry@skydio.com>
-        <20210408021344.8053-1-jerry@skydio.com> <xmqqh7kgvr3i.fsf@gitster.g>
-        <CABPp-BEmZrK9ambLHL=ryjRM22zqGn6vzc+2aGoy=x-Z3mwUdQ@mail.gmail.com>
-Date:   Mon, 12 Apr 2021 11:26:31 -0700
-In-Reply-To: <CABPp-BEmZrK9ambLHL=ryjRM22zqGn6vzc+2aGoy=x-Z3mwUdQ@mail.gmail.com>
-        (Elijah Newren's message of "Mon, 12 Apr 2021 08:45:31 -0700")
-Message-ID: <xmqq5z0re4vc.fsf@gitster.g>
+        <20210408021344.8053-1-jerry@skydio.com>
+        <CABPp-BGFjZajiEMcJ7-WMPNaHJd3_eA3g1Wc-5HzBZMuA_7h+Q@mail.gmail.com>
+Date:   Mon, 12 Apr 2021 11:27:10 -0700
+In-Reply-To: <CABPp-BGFjZajiEMcJ7-WMPNaHJd3_eA3g1Wc-5HzBZMuA_7h+Q@mail.gmail.com>
+        (Elijah Newren's message of "Mon, 12 Apr 2021 08:40:52 -0700")
+Message-ID: <xmqq1rbfe4u9.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 9BA61E8C-9BBC-11EB-B25A-D609E328BF65-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: B21FD5B8-9BBC-11EB-9AF5-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Elijah Newren <newren@gmail.com> writes:
 
-> Sorry for the delay; modulo two minor issues with the commit message
-> it looks good to me.
+> On Wed, Apr 7, 2021 at 7:13 PM Jerry Zhang <jerry@skydio.com> wrote:
+>>
+>> "git apply" does not allow "--cached" and
+>> "--3way" to be used together, since "--3way"
+>> writes conflict markers into the working tree.
+>>
+>> Allow "git apply" to accept "--cached" and
+>> "--3way" at the same time.  When a single file
+>> auto-resolves cleanly, the result is placed in the
+>> index at stage #0 and the command exits with 0
+>> status.
+>
+> Should this instead read:
+>   "...placed in the index at stage #0.  If all files auto-resolve
+> cleanly, the command exits with 0 status."
+> or something like that?
 
-Thanks.
+Perhaps.
+
+>>  For a file that has a conflict which
+>> cannot be cleanly auto-resolved, the original
+>> contents from common ancestor (stage #1), our
+>> version (stage #2) and the contents from the
+>> patch (stage #3) are left at separate stages.
+>> No attempt is made to resolve the conflict at
+>> the content level, and the command exists with
+>
+> s/exists/exits/
+
+Will squash it in.
