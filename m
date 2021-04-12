@@ -2,191 +2,244 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0A62C433B4
-	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 15:29:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B08CC433B4
+	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 15:41:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8AD6E61206
-	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 15:29:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ECDEE6124C
+	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 15:41:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240372AbhDLPaO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Apr 2021 11:30:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39998 "EHLO
+        id S242174AbhDLPlY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Apr 2021 11:41:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42480 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238498AbhDLPaO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Apr 2021 11:30:14 -0400
-Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02D9DC061574
-        for <git@vger.kernel.org>; Mon, 12 Apr 2021 08:29:56 -0700 (PDT)
-Received: by mail-ot1-x32c.google.com with SMTP id w31-20020a9d36220000b02901f2cbfc9743so13145086otb.7
-        for <git@vger.kernel.org>; Mon, 12 Apr 2021 08:29:55 -0700 (PDT)
+        with ESMTP id S238815AbhDLPlX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Apr 2021 11:41:23 -0400
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9E72C061574
+        for <git@vger.kernel.org>; Mon, 12 Apr 2021 08:41:03 -0700 (PDT)
+Received: by mail-oi1-x22c.google.com with SMTP id d12so13804301oiw.12
+        for <git@vger.kernel.org>; Mon, 12 Apr 2021 08:41:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=ZCVXx2wkRkv7apYx6BqZ5LLCMuxY0jcNM6msGAB0g9w=;
-        b=fdYhqBKt/9B1cFU6DzBdwZf6GQ3r2Hv9D19VhlwIB1zJPelPCSeo0ra5LFFtoZWr0K
-         Zr1XqASHKEWXufM/092CBO2RIMKLtn4JJ8zXihY4sQ+iYTmANSgaOmkKCQ0WcUKIw6OY
-         3/rBnYG4CIM0l/YjsoAvdAHvN1RY8b6uYufrTiq2qqIfDxkVvmmh2Bc3iREZKR2wrPeg
-         0KPN6QNYaJPu2E6doThxgduSfxHOkLQp43EF8BPlVjiAWy9lGRHkFIfMIKKpzEx5N6ml
-         Ha2lstMJ/+iA43n5bvDHh8DxQUu9dSmHt5uXdetVv8mZRywHYKTUtkAOkAKIkS6Sfiub
-         Gv2A==
+         :cc;
+        bh=l2dTZ/YtjKOJa0z6KfANiU1owYYpjeXP076jU8TJ+tw=;
+        b=BM8zioePJX13uTJU7GS0fJ1K5s0SM/PFlhT56oWiS7Nm2XlVTAj2GadWK4a2HY808x
+         X+KOkkf5Ni0TRR4zP3CV1WL+YieR0VX6qde4Pfk1EMZC2YHA/vikAL5L7JGjgFjtfvy2
+         pVoOoSzdeI46rNRRTgZfvyJ8/cNY1yIWaSSh367oD8FSkC6djt8m/1cHMGcfMEfsQ9Vq
+         0iFJ0J1jm/nTQ7hE130bJOWxtS/cDD8SYVHmsh/vPSB/h6agKCcB6zAUXDJwI3C07lhN
+         xbMOnWj9Nz/Iu36OwJfVt1RVLqHN2FOlgf5BWKKXdCInONVd3m3xtctYShUXRqEKEASA
+         oNKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ZCVXx2wkRkv7apYx6BqZ5LLCMuxY0jcNM6msGAB0g9w=;
-        b=N3jj/4G5pK+AqPAA7UVbCjknuRA9HK3Jxrz28abW6JoRAjYfFmVIWAI08BuHI5PNyV
-         OqMqI3RZW5Hb8pAVzqMD9I2NLJnU/gO1Et+dgKr8bBpjXP/sfBNa9hsvHoa+OmMm6gbc
-         +HulOFLpuM+hVkdW1yLZuvprnmh8mjkdsOrAX3ekQY8IyWh+9GW9vh12bqMy87mQ5Qwg
-         4fqMB9rgVEhetxSwq9syNIRXDJzbderiydLbUM8MKHoRmPaluFksZqWUoUW6TCWeQkb6
-         Mlr8ZODYHe3aXI9XfiPDavzPX97hzGqp3Ukc8V5pPNN2b52ONzM4J+qVw1FYazDAqPO3
-         nwcA==
-X-Gm-Message-State: AOAM533YJyIKdHnsPY2i3VjWwkKQtxamu8VKK+MGytswN0IjIoMaufLU
-        bNThd2/WxnDJ/zVzVZ9cI85fDlD9hHw9Li61D5neRxmGS9FIPw==
-X-Google-Smtp-Source: ABdhPJw74LVUHchXuq2kvS8MU/ePR4vV/jr+nKjsLe+GokPW6R5wSY+Bz2zIz4fwyhsaiWpBJ9k+KNNAiPCtMnfDzSY=
-X-Received: by 2002:a9d:8a6:: with SMTP id 35mr5241588otf.316.1618241395297;
- Mon, 12 Apr 2021 08:29:55 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=l2dTZ/YtjKOJa0z6KfANiU1owYYpjeXP076jU8TJ+tw=;
+        b=sNkeW1FyLjtXceX65TYyGrKwlFf85abajr8J7+sLea0fuKF1oATmDce0YstXnu38oy
+         IrVwBgxZSPUCtSe8ZP4WerDaFmOA+XVgUsZABZmzDGwz9k+FyTcMB3ResjsDtx69BSCi
+         md6nUVUjuOg7X4dT6OVGw5cnONjSpFDnOrI0OO6zLwY8grxGef758zR5gbdY6iyjkBys
+         Kw9Ax91+KD423GPwbWWi3m3mCnSJJOxs7X9+9nlK/tVXVjNK0O484r51ZBGU39ZPvqEl
+         sbOHN1CUiGPKFp2NLJN0snluVx7ms4RykhgJG5NVpMlZiKcRcLK7ruyqT37GULRD5LQI
+         k2PQ==
+X-Gm-Message-State: AOAM5332Tx2fioiBKe75mt9ZBHEmEuD9CWODSGQ7DuTLnhKdXYkm8SMX
+        /sTi/g1Ri9Lv7Z6+dC5b8nJ6zA29hnlofUI8dOQ=
+X-Google-Smtp-Source: ABdhPJxW3YRxPhL8s/E6/hh9JvRLZlez4N8Nz2x4xsSyjIo5j23vI1SgA4Fm6O8D2oLwfJg6Y2RKfWiuIqT54TyaMrA=
+X-Received: by 2002:a05:6808:a8a:: with SMTP id q10mr19604705oij.167.1618242063184;
+ Mon, 12 Apr 2021 08:41:03 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAKJ37DfivxL-2Sy0qa+M_1Pw0c9-CWsCJO5=VqP1UOB5zTSP_Q@mail.gmail.com>
-In-Reply-To: <CAKJ37DfivxL-2Sy0qa+M_1Pw0c9-CWsCJO5=VqP1UOB5zTSP_Q@mail.gmail.com>
+References: <20210407180349.10173-1-jerry@skydio.com> <20210408021344.8053-1-jerry@skydio.com>
+In-Reply-To: <20210408021344.8053-1-jerry@skydio.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 12 Apr 2021 08:29:44 -0700
-Message-ID: <CABPp-BEOnrnQKov1YDdHXkb6CCNxudE9bUdntOeq3k0wOODc1A@mail.gmail.com>
-Subject: Re: Unexpected conflict during cherry-pick after moving submodule
-To:     Tamas Peregi <tamas.peregi@formlabs.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+Date:   Mon, 12 Apr 2021 08:40:52 -0700
+Message-ID: <CABPp-BGFjZajiEMcJ7-WMPNaHJd3_eA3g1Wc-5HzBZMuA_7h+Q@mail.gmail.com>
+Subject: Re: [PATCH v5] git-apply: allow simultaneous --cached and --3way options
+To:     Jerry Zhang <jerry@skydio.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>, ross@skydio.com,
+        Abraham Bachrach <abe@skydio.com>, brian.kubisiak@skydio.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Wed, Apr 7, 2021 at 7:13 PM Jerry Zhang <jerry@skydio.com> wrote:
+>
+> "git apply" does not allow "--cached" and
+> "--3way" to be used together, since "--3way"
+> writes conflict markers into the working tree.
+>
+> Allow "git apply" to accept "--cached" and
+> "--3way" at the same time.  When a single file
+> auto-resolves cleanly, the result is placed in the
+> index at stage #0 and the command exits with 0
+> status.
 
-On Mon, Apr 12, 2021 at 7:59 AM Tamas Peregi <tamas.peregi@formlabs.com> wr=
-ote:
->
-> Hi all,
->
-> I ran into something that seems like a bug to me. I'm fairly new to
-> git, especially git submodules, so it's possible this is expected
-> behaviour, but if it is, please explain where I went wrong.
->
-> Thanks in advance: Tam=C3=A1s
->
-> What did you do before the bug happened? (Steps to reproduce your issue)
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->
-> - I modified a file on one branch
-> - Then switched to another
-> - Moved a submodule to another directory
-> - Tried to cherry-pick my modification from the other branch
->
-> This script can be used to reproduce my steps (any submodule works, I
-> chose gsl-lite because I like it):
->     git init
->
->     echo hello > hello.txt
->     git add hello.txt
->     git commit -m "Add hello.txt"
->
->     git submodule add https://github.com/gsl-lite/gsl-lite/ vendor/gsl
->     git commit -a -m "Add submodule"
->
->     git branch world
->     git branch move
->
->     git checkout world
->     echo world >> hello.txt
->     git commit -a -m "Expand hello.txt"
->
->     git checkout move
->     mkdir thirdparty
->     git mv vendor/gsl thirdparty/gsl
->     git commit -a -m "Move submodule"
->
->     git cherry-pick world
->
->
-> What did you expect to happen? (Expected behavior)
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D
->
-> I expected the cherry-pick to happen without conflicts.
->
->
-> What happened instead? (Actual behavior)
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> I ran into a conflict during the cherry-pick:
->     Adding as thirdparty/gsl~HEAD instead
->     error: could not apply 516d94f... Expand hello.txt
->     hint: after resolving the conflicts, mark the corrected paths
->     hint: with 'git add <paths>' or 'git rm <paths>'
->     hint: and commit the result with 'git commit'
->
->
-> What's different between what you expected and what actually happened?
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->
-> As hello.txt has nothing to do with the submodule, I assumed the
-> cherry-pick would go through smoothly.
->
->
-> Anything else you want to add:
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D
->
-> - "git add thirdparty/gsl && git cherry-pick --continue" resolves the
-> issue as expected.
-> - If I change which commit in the submodule the superproject points
-> to, the problem disappears, but I don't necessarily want to do that.
-> - I'm using "Git for Windows", but the issue was reproduced by my
-> Mac-based colleagues too with the exact same results.
->
-> [System Info]
-> git version:
-> git version 2.31.1.windows.1
-> cpu: x86_64
-> built from commit: c5f0be26a7e3846e3b6268d1c6c4800d838c6bbb
-> sizeof-long: 4
-> sizeof-size_t: 8
-> shell-path: /bin/sh
-> feature: fsmonitor--daemon
-> uname: Windows 10.0 19042
-> compiler info: gnuc: 10.2
-> libc info: no libc information available
-> $SHELL (typically, interactive shell): C:\Program Files\Git\usr\bin\bash.=
-exe
+Should this instead read:
+  "...placed in the index at stage #0.  If all files auto-resolve
+cleanly, the command exits with 0 status."
+or something like that?
 
-Thanks for the report.
+>  For a file that has a conflict which
+> cannot be cleanly auto-resolved, the original
+> contents from common ancestor (stage #1), our
+> version (stage #2) and the contents from the
+> patch (stage #3) are left at separate stages.
+> No attempt is made to resolve the conflict at
+> the content level, and the command exists with
 
-We can change the final command to
-    git cherry-pick --strategy recursive world
+s/exists/exits/
 
-to be more explicit, though that doesn't change things and still
-triggers the bug.  However, if we change the above to
-    git cherry-pick --strategy ort world
+> non-zero status, because there is no place
+> (like the working tree) to leave a half-resolved
+> merge for the user to resolve.
+>
+> The user can use `git diff` to view the contents
+> of the conflict, or `git checkout -m -- .` to
+> regenerate the conflict markers in the working
+> directory.
+>
+> Don't attempt rerere in this case since it depends
+> on conflict markers written to file for its database
+> storage and lookup. There would be two main changes
+> required to get rerere working:
+> 1. Allow the rerere api to accept in memory object
+> rather than files, which would allow us to pass in
+> the conflict markers contained in the result from
+> ll_merge().
+> 2. Rerere can't write to the working directory, so
+> it would have to apply the result to cache stage #0
+> directly. A flag would be needed to control this.
+>
+> Signed-off-by: Jerry Zhang <jerry@skydio.com>
+> ---
+> Patch applies on top of
+> "[PATCH v2] git-apply: try threeway first when "--3way""
+> Main merge conflict is the addition of multiple
+> tests at the bottom of the file.
+>
+> v4->v5:
+>
+> Updated in file comment about rerere
+> Added test for cleanly applying patch (should return 0)
+> Previous test captured case where patch fails to apply
+> due to 1 conflicting file and 1 cleanly applying file
+> (returns 1).
+>
+>  Documentation/git-apply.txt |  6 +++--
+>  apply.c                     |  9 ++++---
+>  t/t4108-apply-threeway.sh   | 50 +++++++++++++++++++++++++++++++++++++
+>  3 files changed, 59 insertions(+), 6 deletions(-)
+>
+> diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
+> index 9144575299c264dd299b542b7b5948eef35f211c..aa1ae56a25e0428cabcfa2539900ef2a09abcb7c 100644
+> --- a/Documentation/git-apply.txt
+> +++ b/Documentation/git-apply.txt
+> @@ -87,8 +87,10 @@ OPTIONS
+>         Attempt 3-way merge if the patch records the identity of blobs it is supposed
+>         to apply to and we have those blobs available locally, possibly leaving the
+>         conflict markers in the files in the working tree for the user to
+> -       resolve.  This option implies the `--index` option, and is incompatible
+> -       with the `--reject` and the `--cached` options.
+> +       resolve.  This option implies the `--index` option unless the
+> +       `--cached` option is used, and is incompatible with the `--reject` option.
+> +       When used with the `--cached` option, any conflicts are left at higher stages
+> +       in the cache.
+>
+>  --build-fake-ancestor=<file>::
+>         Newer 'git diff' output has embedded 'index information'
+> diff --git a/apply.c b/apply.c
+> index 9bd4efcbced842d2c5c030a0f2178ddb36114600..dadab80ec967357b031657d4e3d0ae52fac11411 100644
+> --- a/apply.c
+> +++ b/apply.c
+> @@ -133,8 +133,6 @@ int check_apply_state(struct apply_state *state, int force_apply)
+>
+>         if (state->apply_with_reject && state->threeway)
+>                 return error(_("--reject and --3way cannot be used together."));
+> -       if (state->cached && state->threeway)
+> -               return error(_("--cached and --3way cannot be used together."));
+>         if (state->threeway) {
+>                 if (is_not_gitdir)
+>                         return error(_("--3way outside a repository"));
+> @@ -4644,8 +4642,11 @@ static int write_out_results(struct apply_state *state, struct patch *list)
+>                                 fprintf(stderr, "U %s\n", item->string);
+>                 }
+>                 string_list_clear(&cpath, 0);
+> -
+> -               repo_rerere(state->repo, 0);
+> +               /* Rerere relies on the partially merged result being in the working tree
+> +                * with conflict markers, but that isn't written with --cached.
+> +                */
+> +               if (!state->cached)
+> +                       repo_rerere(state->repo, 0);
+>         }
+>
+>         return errs;
+> diff --git a/t/t4108-apply-threeway.sh b/t/t4108-apply-threeway.sh
+> index 9ff313f976422f9c12dc8032d14567b54cfe3765..65147efdea9a00e30d156e6f4d5d72a3987f230d 100755
+> --- a/t/t4108-apply-threeway.sh
+> +++ b/t/t4108-apply-threeway.sh
+> @@ -180,4 +180,54 @@ test_expect_success 'apply -3 with ambiguous repeating file' '
+>         test_cmp expect one_two_repeat
+>  '
+>
+> +test_expect_success 'apply with --3way --cached clean apply' '
+> +       # Merging side should be similar to applying this patch
+> +       git diff ...side >P.diff &&
+> +
+> +       # The corresponding cleanly applied merge
+> +       git reset --hard &&
+> +       git checkout main~ &&
+> +       git merge --no-commit side &&
+> +       git ls-files -s >expect.ls &&
+> +
+> +       # should succeed
+> +       git reset --hard &&
+> +       git checkout main~ &&
+> +       git apply --cached --3way P.diff &&
+> +       git ls-files -s >actual.ls &&
+> +       print_sanitized_conflicted_diff >actual.diff &&
+> +
+> +       # The cache should resemble the corresponding merge
+> +       # (both files at stage #0)
+> +       test_cmp expect.ls actual.ls &&
+> +       # However the working directory should not change
+> +       >expect.diff &&
+> +       test_cmp expect.diff actual.diff
+> +'
+> +
+> +test_expect_success 'apply with --3way --cached and conflicts' '
+> +       # Merging side should be similar to applying this patch
+> +       git diff ...side >P.diff &&
+> +
+> +       # The corresponding conflicted merge
+> +       git reset --hard &&
+> +       git checkout main^0 &&
+> +       test_must_fail git merge --no-commit side &&
+> +       git ls-files -s >expect.ls &&
+> +
+> +       # should fail to apply
+> +       git reset --hard &&
+> +       git checkout main^0 &&
+> +       test_must_fail git apply --cached --3way P.diff &&
+> +       git ls-files -s >actual.ls &&
+> +       print_sanitized_conflicted_diff >actual.diff &&
+> +
+> +       # The cache should resemble the corresponding merge
+> +       # (one file at stage #0, one file at stages #1 #2 #3)
+> +       test_cmp expect.ls actual.ls &&
+> +       # However the working directory should not change
+> +       >expect.diff &&
+> +       test_cmp expect.diff actual.diff
+> +'
+> +
+>  test_done
+> --
+> 2.29.0
 
-then that fixes the bug, including even in git-2.31.1.  The version of
-the 'ort' merge backend in 2.31.1 isn't ready for general usage (it
-can't handle file renormalization, or subtree merges, or
-sparse-checkouts with conflicts in files outside of the requested
-sparsity paths, and also has a platform specific bug where it'll die
-on corner case rename/rename conflicts due to assumptions about libc
-qsort() stability), but the version in 2.32 will be.  And 'ort' is
-going to replace 'recursive' once the project is comfortable enough
-with the new backend.
-
-All this is to say that the fix is on the way, even if it doesn't help
-you quite yet.
+Otherwise, looks good to me.
