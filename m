@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F161C433B4
-	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 21:10:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B7F1C43460
+	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 21:10:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 14C9E610CE
+	by mail.kernel.org (Postfix) with ESMTP id EAF0F6135C
 	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 21:10:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231854AbhDLVKs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Apr 2021 17:10:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57980 "EHLO
+        id S241474AbhDLVKt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Apr 2021 17:10:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57984 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241910AbhDLVIq (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S242228AbhDLVIq (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 12 Apr 2021 17:08:46 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C94EFC061344
-        for <git@vger.kernel.org>; Mon, 12 Apr 2021 14:08:26 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id 12so14339263wrz.7
-        for <git@vger.kernel.org>; Mon, 12 Apr 2021 14:08:26 -0700 (PDT)
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74DC4C061346
+        for <git@vger.kernel.org>; Mon, 12 Apr 2021 14:08:27 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id a6so14336932wrw.8
+        for <git@vger.kernel.org>; Mon, 12 Apr 2021 14:08:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=63cgv+d6hF7bJxk9XJMcdXLWzyM+y2aIDW1QZ5VUN1A=;
-        b=CaJlVQ8XsDfLToS1PTrzgyp6IP9SWAFmvFjEfmBye8imCRiG3ZEo7S0mFY5CbBxRxS
-         04HMHB0DsEzqls8pswJe6C0CkhVFkyrpfwdiLZRo3UgomQHUbkizhP4P26ta6pDCEy81
-         if0yXvYBRAhZ5YmNzuiuSCQAqexyX22YSLvjSICEHVED/S3KgebB/cY3fcBqMRmMAz/o
-         aYO/rUEK2gcpnHqYy1aEvvjl8tOMlZO4Ds/7QKK16Pt4Pj4v8dQYgcqyDlkpMl47Cuhn
-         RdUW99cMiW7ZmCJXkJI38p1WygdHbrgmPbHr2rN1a9hWVl8nzBQA9hG5/YNwHE4Uj3w5
-         NFGg==
+        bh=AqzgF3ydQhx2SGKGBO9a/JEpTg8x4sKJCQWGxp4c3hY=;
+        b=GmBA1Ndq9J8MEUwpHEB1mqKTVdB2vhcQLZQdsvjXVdeZ9HQCoC7KNRA2kSdVqtaux5
+         xpKBX+tCdPw9oGERbPmSAUPRBAQwIByW42qRXNmeuyU8RfbZWDxppcYsngWdpXhUw0jQ
+         Z6HxLR5rdhOMMfuT0bH0acugvVHsuOq73GN8jM/m6UhW6weZGreZFmfZ5DkglnfvTJZ7
+         Fsx05nYjPqXlKVe/wjoNkBj+q3a7VCGrOaywb4MUAdJOt9TYPE+XbeDxf0SCQ03ukZgi
+         +m0njWU3LYPodSUhMVNdOvEynyF7edmmxuf/RZzzG2Jmv8L+6lWFIh4FExCQ8DYhRaWU
+         0zeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=63cgv+d6hF7bJxk9XJMcdXLWzyM+y2aIDW1QZ5VUN1A=;
-        b=DJNKDWcOmUCRYoPCPOfzC0vPuwLM/Fx5YI3GYhuVrSvm1klagLLGYFOutghSHJpJKV
-         +wue/FZDOe/g0tWQvXtvHLh/77My9t4qB85/dYozZVX+O9bv8PfqVIvr2Wvcp64Pfibs
-         eZii6FCumdWn1d6a9ujXzNPts7deqSht5a4M4c5zpdL4eoQWEIlsQjoXjpvq1WY+xqrR
-         84hHsK7aN7YYt7K7ku7GKO0z4km7nJUK2orVOWCtnvHE56VWZhOyeIE1dBS4g6GL9UAu
-         DceWXf11gAPLjjZMqKTVuwOGUPolzpZlBvJCoukmo25O1yWmGwY/gBT7GGGX8tmNtrln
-         GnyQ==
-X-Gm-Message-State: AOAM532UkmRdhOgwLXyqqhD+AknnvF8p1dCpyLmVhVYVIzrXcT0wBBy1
-        aQuwNBOMY3c5Z/OtacnVfJ5P8nJXtNw=
-X-Google-Smtp-Source: ABdhPJxUP0iT2/MyJew00b/JItiQW5ecF6/h2rnYFaykMxZFw47JDmq7eHvs6UcYJMxeJKk3L40VLQ==
-X-Received: by 2002:a05:6000:18cd:: with SMTP id w13mr32916850wrq.20.1618261705679;
-        Mon, 12 Apr 2021 14:08:25 -0700 (PDT)
+        bh=AqzgF3ydQhx2SGKGBO9a/JEpTg8x4sKJCQWGxp4c3hY=;
+        b=XWLvnjrUMZHz8q6F0qeISfVmbLqFgv8KatE2t3hi2wRf+8ri36zYNLbTvGPY5NDazt
+         Vdbe31e+zq3ISS5SvXrR3M9IiYaVstxGuF5XF7WmArNi09NauRX/rgmCrUvZkIJeOwNo
+         NL4dL28vDA6SuewcsW01XaB4ezM3ECGuTDq83boYRzxSiNdhq/1PUJQ4VDT5OuyywSVr
+         EjkT3hRKBNNorWhyqmMZCL3majRt4JdT0YoMdRNrXly1o8JjbssvLyVBCUsO3HoHNn3r
+         aCLbsyip+g3REJhOhrh5huRt4ECIi0RKJlgNY76uil/nYfJqB8eAcEKOPNwVfVruIJQH
+         h/kA==
+X-Gm-Message-State: AOAM530yOgGwNcfIs5jegiTDI8xlWCiKTTZr7oI662fxy/Nh8OcGAoMs
+        0E8OyLMWdtU9ZAIU+YUrzyS8jKktJJA=
+X-Google-Smtp-Source: ABdhPJwh76+KDpVvwnSgMouNceeB4CBvOtLL0rv50nabKCObCW6wbrZ/lqRFswZgy4Mi1ahOumYElQ==
+X-Received: by 2002:a5d:47c4:: with SMTP id o4mr32759024wrc.138.1618261706275;
+        Mon, 12 Apr 2021 14:08:26 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b206sm491352wmc.15.2021.04.12.14.08.25
+        by smtp.gmail.com with ESMTPSA id s10sm46659wrt.23.2021.04.12.14.08.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 12 Apr 2021 14:08:25 -0700 (PDT)
-Message-Id: <45b603379422bcf7382ff905a97921e3ca5114a3.1618261698.git.gitgitgadget@gmail.com>
+Message-Id: <97124e9fdc7f21d1f82162b8269551c023392fa3.1618261698.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.906.v3.git.1618261697.gitgitgadget@gmail.com>
 References: <pull.906.v2.git.1617241802.gitgitgadget@gmail.com>
         <pull.906.v3.git.1618261697.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 12 Apr 2021 21:08:01 +0000
-Subject: [PATCH v3 10/26] fsck: ensure full index
+Date:   Mon, 12 Apr 2021 21:08:02 +0000
+Subject: [PATCH v3 11/26] grep: ensure full index
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,27 +79,28 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-When verifying all blobs reachable from the index, ensure that a sparse
-index has been expanded to a full one to avoid missing some blobs.
+Before iterating over all cache entries, ensure that a sparse index is
+expanded to a full one so we do not miss blobs to scan. Later, this can
+integrate more carefully with sparse indexes with proper testing.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- builtin/fsck.c | 2 ++
+ builtin/grep.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 821e7798c706..4d7f5c63ce0d 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -883,6 +883,8 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
- 		verify_index_checksum = 1;
- 		verify_ce_order = 1;
- 		read_cache();
-+		/* TODO: audit for interaction with sparse-index. */
-+		ensure_full_index(&the_index);
- 		for (i = 0; i < active_nr; i++) {
- 			unsigned int mode;
- 			struct blob *blob;
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 4e91a253ac3b..c2d40414e975 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -504,6 +504,8 @@ static int grep_cache(struct grep_opt *opt,
+ 	if (repo_read_index(repo) < 0)
+ 		die(_("index file corrupt"));
+ 
++	/* TODO: audit for interaction with sparse-index. */
++	ensure_full_index(repo->index);
+ 	for (nr = 0; nr < repo->index->cache_nr; nr++) {
+ 		const struct cache_entry *ce = repo->index->cache[nr];
+ 
 -- 
 gitgitgadget
 
