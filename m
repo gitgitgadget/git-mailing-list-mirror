@@ -6,47 +6,47 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 76E80C433B4
-	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 13:13:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F03AC433ED
+	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 13:15:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2F8FC6128E
-	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 13:13:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4572C6134F
+	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 13:15:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241767AbhDLNNT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Apr 2021 09:13:19 -0400
-Received: from wout4-smtp.messagingengine.com ([64.147.123.20]:55311 "EHLO
+        id S238347AbhDLNPq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Apr 2021 09:15:46 -0400
+Received: from wout4-smtp.messagingengine.com ([64.147.123.20]:51013 "EHLO
         wout4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S241705AbhDLNNR (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 12 Apr 2021 09:13:17 -0400
+        by vger.kernel.org with ESMTP id S238989AbhDLNPk (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 12 Apr 2021 09:15:40 -0400
 Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.west.internal (Postfix) with ESMTP id 07641CBA;
-        Mon, 12 Apr 2021 09:12:58 -0400 (EDT)
+        by mailout.west.internal (Postfix) with ESMTP id 451B5CB3;
+        Mon, 12 Apr 2021 09:15:22 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Mon, 12 Apr 2021 09:12:59 -0400
+  by compute1.internal (MEProxy); Mon, 12 Apr 2021 09:15:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
         :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm3; bh=dvqBIMrek8eia4hjbyPWCQqbD5Z
-        uq19Z6cWCYkwQCIg=; b=BuLgdvRyL2ugKRUw/Qa/1uL7DCHU6ZKzJ7t2jaf+ipG
-        6rHEV/+aGFm64fAyw64TkUkoxoxSXMi6vIcYrDpcRo3ZFw0djnSSXsFcBDxWkprJ
-        D7rjc+b2SOSkssD0yIXwG8UjeOggsmlsMJrAcThfBUI/DsMHp7RX2uidPrBOkuNm
-        sxMceLZ8PCAZMPN3JLwUFYi9vTVrNU7WwJ0YRDoQEUyCor++FEG0K7rUYummrWTS
-        uBGHKFLsmu3YA1SzOtSFRkJZdCAQJKW2AZuU5KrBMGiB+w3+Udwyh1HF9xj6FwsS
-        vmwucytv0EGgX4XhK8XU4QHlrjGeNAz+sJpipH3nG3g==
+        :content-type:in-reply-to; s=fm3; bh=rh7eTdF6ICVcF3/QHH4KzdqJ4Wn
+        5F1HaykFK4K28mFk=; b=F+VMh+EN1L0MBvL8sn3qB/aM5CBJ8RzT8H4NKpfdsVw
+        LxgNt90Nv0YN2r9Hzim6ho/TP/uG/QrPoPdP9dvUkVLvPaxsl5DvDAuMLi0LMtGw
+        S1jhpuQF3uQ+sEyeYnXkcG1EH0uRM5KZ/8g9hOsTJDOTaW6D/GQ+1TQbZfWVMOWG
+        kYj6eUBmDD/lDB/C1jlBzbVHvs7i/dhDC/ASulBgFI1IAm5XFqOathresXNsMwWP
+        vC9yyt0Wq2gc/1tyPPPJPDg1gcZsdi6I8m30VT75jpWW8mhmbGP2PzbNkrVrFVRi
+        ee1H6Zuyji7wCTABD6O+y1HVfsismmBfjObRwFtGjHQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=dvqBIM
-        rek8eia4hjbyPWCQqbD5Zuq19Z6cWCYkwQCIg=; b=PEX1sdCLEwksLBnJc3hfU0
-        WaWdbkw/JUzVgYVLj2zY8xT1EuDxnQu5L8usURsUHFrpQtZZebQzJIoaxQZk2ENE
-        SuIgVthGfBGJyAL2kTwNkquEXHfoxiE1FihwQy5p0oR9HuZRlAi3+wtNOGuphf0y
-        S5ZOKomB4HIpBIhbjww24h6MIIRuRlUu2xhOcEeDfNlvvT3xaKXLsFychHkRHSVC
-        5vqafbEv5yddta69sRk33u2NxEeVUN9kUrtbMC7E6oF5smE6fwy+hkMCnv5OUIw8
-        ogFvGcB/uKMksBk1jofLJcT+/1uzCzc07JnFCxNg7U8tmXglAeElP8YujIcImMUw
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=rh7eTd
+        F6ICVcF3/QHH4KzdqJ4Wn5F1HaykFK4K28mFk=; b=Mo74QTUlCbMdS3b4uoOpbA
+        bMCHIV/XHIt1Gjby0ZNg54RbmuOFaYNT1TnzjNraD+DqTGxsb1IBPsfM5ipL0eF4
+        s7hIUEPjONmmu8nxDoW3jPBTqFeTek899Zy1/QOdes7IR51Plqnb/NZefl6LdFtQ
+        K2cmOu6OIutBvWw2P0ta+yi9LQWGGMz90iiXl6WU1JR6MWFyEdofR65yjBWx3wBZ
+        NFsXnLpBtXKDpYCDclRGRUGmQb/mnSO2fFlVlxsWZ3zi1cl9FVo1HFrEXm6D79FI
+        NOb+8Nc3XoI91/2I32amfS2p/KZFS9nHSW6NN72avTjzZaAKuzKoAgHj9k8F0T/w
         ==
-X-ME-Sender: <xms:Wkd0YD4wbc43vKvjshPoxOdpjyN_z_Dg9FKStuXNyEEmLolXW-QXEA>
-    <xme:Wkd0YI5a84IfIRMhm3RJ2D8qPwGJiHVlcsMrXkgZQNuqV2pZFeByis7UakHCoGjxC
-    vaWJvPAXT2DN_UOEw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrudekjedgiedvucetufdoteggodetrfdotf
+X-ME-Sender: <xms:6Ud0YDeW70NyIjGZiSmB3tm9B0QMWSGLUzmjZzzH5KlRoIpHPA3Q7A>
+    <xme:6Ud0YJN7oqKXUcqehA4xZq14XjWIQ4uc2qAX9bAD00EK5vd0LNUs_Bqz1bHj1PaVf
+    Cw3RwdRWZHpXAu2GA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrudekjedgieefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
@@ -54,75 +54,84 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrudekjedgiedvucetufdoteggod
     hnpeehgefhtdefueffheekgfffudelffejtdfhvdejkedthfehvdelgfetgfdvtedthfen
     ucfkphepjeekrdehhedrfeehrdeftdenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
     grmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:Wkd0YKd6QfvoinJY2wG8fuDYFfkCjFSH6KOO6vjRE-MgU0TRoGD4Yg>
-    <xmx:Wkd0YEKv6vckzwVMfe796VoVrYvsVKKJirUDZauYJCVqsc6fKUkCLA>
-    <xmx:Wkd0YHKvfXHYvzv02izhBrEaQztcA4NsmQeouvI_WCJbvAVgkNftpQ>
-    <xmx:Wkd0YOV4cJeJBzXyxvfjv0Tv0sfkdUywfni0847j_LsF-qVdoL1eOA>
+X-ME-Proxy: <xmx:6Ud0YMgHGZewxns6oWCVtpB2828r7QLgpzu7HSiXYed8aomvwjGQjQ>
+    <xmx:6Ud0YE9s6bM-iIN-YGa2zlvGn1WQylV-v0iT6_Sit6fhy0wwkDddZg>
+    <xmx:6Ud0YPvbyehldcQmv6T7eYNeaUNycPxPCfZG4yvXP0Ja0qsxJd0wfw>
+    <xmx:6Ud0YI5NuM7Sp1lOU_D20C1pYNHz0T4t_diKA0djPOa4RTkPqMfxWw>
 Received: from vm-mail.pks.im (dynamic-078-055-035-030.78.55.pool.telefonica.de [78.55.35.30])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 55B9B108005C;
-        Mon, 12 Apr 2021 09:12:57 -0400 (EDT)
+        by mail.messagingengine.com (Postfix) with ESMTPA id 667C71080063;
+        Mon, 12 Apr 2021 09:15:20 -0400 (EDT)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id a24fc9a1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Mon, 12 Apr 2021 13:12:45 +0000 (UTC)
-Date:   Mon, 12 Apr 2021 15:12:44 +0200
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 35ca815e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Mon, 12 Apr 2021 13:15:19 +0000 (UTC)
+Date:   Mon, 12 Apr 2021 15:15:18 +0200
 From:   Patrick Steinhardt <ps@pks.im>
-To:     Junio C Hamano <gitster@pobox.com>
+To:     Philip Oakley <philipoakley@iee.email>
 Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
         Christian Couder <christian.couder@gmail.com>,
         Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v3 0/8] rev-parse: implement object type filter
-Message-ID: <YHRHTCHnV9dypO9s@ncase>
+Subject: Re: [PATCH v3 8/8] rev-list: allow filtering of provided items
+Message-ID: <YHRH5so2onO5cfwy@ncase>
 References: <cover.1615813673.git.ps@pks.im>
  <cover.1617967252.git.ps@pks.im>
- <xmqqpmz1icj4.fsf@gitster.g>
+ <796606f32b3ffc286a3157312d00ee0ee3e5600c.1617967252.git.ps@pks.im>
+ <8788dbca-3caf-e9d6-7995-b09e276d1609@iee.email>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="9lyQj1TNAOBA0cLH"
+        protocol="application/pgp-signature"; boundary="YfFP0Wq9tVf4sBnh"
 Content-Disposition: inline
-In-Reply-To: <xmqqpmz1icj4.fsf@gitster.g>
+In-Reply-To: <8788dbca-3caf-e9d6-7995-b09e276d1609@iee.email>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---9lyQj1TNAOBA0cLH
+--YfFP0Wq9tVf4sBnh
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Apr 10, 2021 at 11:02:55PM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->=20
-> > Subject: Re: [PATCH v3 0/8] rev-parse: implement object type filter
+On Fri, Apr 09, 2021 at 04:00:26PM +0100, Philip Oakley wrote:
+> typo nit.
+> On 09/04/2021 12:28, Patrick Steinhardt wrote:
+> > When providing an object filter, it is currently impossible to also
+> > filter provided items. E.g. when executing `git rev-list HEAD` , the
+> > commit this reference points to will be treated as user-provided and is
+> > thus excluded from the filtering mechanism. This makes it harder than
+> > necessary to properly use the new `--filter=3Dobject:type` filter given
+> > that even if the user wants to only see blobs, he'll still see commits
+> > of provided references.
 > >
-> > this is the third version of my patch series which implements a new
-> > `object:type` filter for git-rev-parse(1) and git-upload-pack(1) and
-> > extends support for bitmap indices to work with combined filters.
+> > Improve this by introducing a new `--filter-provided` option to the
+> s/--filter-provided/--filter-provided-revisions/
 >=20
-> Do you truly mean rev-parse, or is it just a typo for rev-list?
+> Also in some tests - I presume the option should be spelled out in full.
 
-It's a typo both in the series' title and here in the text.
+Right. I did fix these in the resend because I forgot to stage changes,
+but still had it in the commit message.
+
+Fixed now, thanks!
 
 Patrick
 
---9lyQj1TNAOBA0cLH
+--YfFP0Wq9tVf4sBnh
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmB0R0sACgkQVbJhu7ck
-PpSGZA//SsjDJoE/sxm9d2maBh+CD0e0ZE1OlefTz1SrSwfiNAzswELg0a5wIaMi
-+gkhQoBIGbaBQNbd8wxIKTnKm91Dd6oVbDARFjYJZ9ISOi20csX3XlIE3rm315w2
-4xrnqalUjYl/A8QPNjxywojbumsQQET3GM+fmnDvce/cZ2PL/PjInkluI9hAMBbj
-MfCD7pWjcgmDBSjuoCK1lvqln2QS6aVjxb4biljSF0KV36OO3Y6VQGzxJ8uXpRPG
-BdBEJcCY441CvPntdKZYR55i1R9n/11pbeC92BeAYboEDGoZiisESgziD6EHaYvm
-QbkBGwXo1s0b7qZ8gFMcMWkqSS/E68EZ5t94fvdeWJeTNWz0gNQ+1/pLK1L4zti7
-dgHkys34vBlBfWeyeq54d/p4UNU3VM5nqzEOC+snxaUU7ZGIVg/8ksbaxUfJtHN6
-1eQWyo6wpvnTWk0s3qu1F1eFgV+B5S2hbtBenGRztJ3q1/LknxVes7uAVUHx7VdM
-KQFqWRRDBDvdjXyLvn9odyqGHg+UqJ91gJQ8H97BK7v2RmYnUgs125gmDlyIbhGe
-dmLQu+QED/tsFLzJDx7WqqEildASO83g9C7nY14cgOHnUvjdPCuMLeF5l77Lnc7u
-pJ2R3sDRTKVtuRz+JXEM0rm434GM17+t4OtEwPIg1ReBN+RYizo=
-=qas6
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmB0R+UACgkQVbJhu7ck
+PpRKkw//SiL4GpwW8F7p3yksFPLRmn6W1SxyxkKdSpHswRwHI8HN5BE9f/bh19UA
+DZvR/blyiLGTM7rUhS2y9OIRjTkrXLwESmj79yJisU2FlWhyCmBkgp01nUE/Uggt
+6E6AgcklH77yjZYumXQKqsy4RuEDm7YGSLGN14jgSvNPQHZ/clc/wdD1yzRvpzJ9
+yXv1JZcTcRtEvFvQWWfdzfxmNxXOP3wfXkgqHWt/7jFuuhYwA4M9HfP+WC+fFJHP
+K8MI+dD1/Iwej/xZb5+hhfTRX4As3DWy/SPOYc9h7Lw4nCob0CkpWFNV3NM5uWKe
+IAzr+XTKSkG7I26wiUvYw+FU/I1Eq781A8EiB7ihFG0aPuYlpRzCdLxTFIG2sLGI
+NWgqREl0pum/yl6EKra+00FjHXUAkfX/h6hkxoPvEgsLxLbBIYD6LWJIcL4tz1SZ
+OE+XWwuQigG03qxBHatqXL+nB/LmZ2BqiZXO3Gu5Z1Lv0f5YyZe5wVUAHQpZBtDC
+4qkKiDL+mtrkyU/l6rpIcePwcr2RbON+aIhl3VBNze2a2OCwnZX2e8jD8gQ3Cb/u
+L2l786m5Ec5Fx8QNFJHU4wOtPAGAZ3EdTlIyFG7PPwjH3piCMDeg/7JYZBEzdODJ
+t5pWxrq0DpzG9g3uZNudGqzNwSgUWjGB7169ayjf/BB/bkiJILQ=
+=MxlP
 -----END PGP SIGNATURE-----
 
---9lyQj1TNAOBA0cLH--
+--YfFP0Wq9tVf4sBnh--
