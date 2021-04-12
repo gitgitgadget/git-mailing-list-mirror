@@ -2,116 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C85FFC433B4
-	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 16:57:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8BA8C433B4
+	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 17:01:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8025D61074
-	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 16:57:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 932F0611CE
+	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 17:01:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244996AbhDLQ5u (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Apr 2021 12:57:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58596 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344625AbhDLQ4U (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Apr 2021 12:56:20 -0400
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E11DC06134E
-        for <git@vger.kernel.org>; Mon, 12 Apr 2021 09:53:15 -0700 (PDT)
-Received: by mail-ot1-x329.google.com with SMTP id s16-20020a0568301490b02901b83efc84a0so13372666otq.10
-        for <git@vger.kernel.org>; Mon, 12 Apr 2021 09:53:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=dOX+wOuP4zyUqgtDL4MXRJYM065t2WopHbMF5xMmoAU=;
-        b=PpWVyBnVvF1sS1xGKQqg8x0Xu+viGxVUFs1BrAbPn70EbBo1lle5xJbolNPNuhorGD
-         fYE32lu64RtTtyYXnQrOEhNZmjf+0eFTywExWMzJShfSFRVdzZcqJ16r0SrAJMt4/U18
-         EKEX8XfJYTSrITZx1FnaToTgvIWOIkghBhhKxmXiU9jTr1bXmbqTxNEAvCkMP0XK/zGi
-         OG7UYTA0GjwE/2HiSGJqN7L1OXtlQpEwvjvSnIIkTKodmMdhv/c2N8O8S8a+Q9tvSbLu
-         tVTopRNize817I3BTHStlcw7dE2LItPMcWA9s5xKoaMnnjRVTAc3K/tXXhbK5bpv7men
-         ynSw==
+        id S243840AbhDLRBv convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Mon, 12 Apr 2021 13:01:51 -0400
+Received: from mail-ej1-f46.google.com ([209.85.218.46]:41570 "EHLO
+        mail-ej1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S243837AbhDLRAh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Apr 2021 13:00:37 -0400
+Received: by mail-ej1-f46.google.com with SMTP id g17so18682964ejp.8
+        for <git@vger.kernel.org>; Mon, 12 Apr 2021 10:00:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=dOX+wOuP4zyUqgtDL4MXRJYM065t2WopHbMF5xMmoAU=;
-        b=DfdYDpdH2CSoJNsKc8ttoYxCgIwS946q6uiAOLsr7Sv//il8QV28viXWMevrBILqB9
-         3F0pMt8vLghKgPKTosiygY6hKumKO8cyBa8uwQW4zvSqOwVS0CLjfFDH7jXTlJ9Tz96N
-         Pzo3aWXKudduLEEDQk4J3JX/5gGr/5jyl9dKf2GmvNtQsD/uqg8gtjtACqbegMXoO/ah
-         gmrvtPs6GR6RdURKF+qrndrLWaZ/f6Zv0iHmZhpI3DD3S7jt9i3DvlVEXnjIwWSQaFU4
-         hMvk6ZHSHYpxPIbO5+sR2rvn9JJbaicJmYJi2kW8TO5SSs7gciMPLf5x+V3CI70YuR86
-         L3cw==
-X-Gm-Message-State: AOAM532woAW6uZFDo5mQZ67xJPTJiE498ixZcvi4vV53eQ7D9OOL/D1v
-        v2SU23bFBtnQ+rUojOeCOWwbAlhwkqZ+7RkPXscq6WU6yRg=
-X-Google-Smtp-Source: ABdhPJzrZLjFYzp0b2dm7T9Y4GKsjU3XHcwd5AvRalsZz3VF04bYV/KU7Jxjq0Kdh9vzX1/UKOg6+BDC1D9WDy9jUMo=
-X-Received: by 2002:a9d:2de8:: with SMTP id g95mr11703063otb.162.1618246395041;
- Mon, 12 Apr 2021 09:53:15 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=+ld03dZrVL6xfD44oZIey1g1YiflTuTw71X0udlWozk=;
+        b=BKZfXVR/QQLkLXePaL/ipO4zQCkp7Yy+m7stw+60rOWbLeFBt2ORR6veXIMzcDvG7g
+         5AUP0qhVFzb5WU4w8kF1ageuo283dohhoYxvRqAW+tbMEkd2XX4xFsRFtU3tO9PM642P
+         zrDl+N0E+YQ5QTL7rux4q3Sp5rzRAftTrWv8xxp7dHUQiDVrNhLlbvhxSeN4I/StabTu
+         16TY+HytVqTdjLUBAc028WSDigtzU5ee3GGvJmojE1J/5reBJNpaQbvEOx2IyfM9EXmh
+         jDYzxsIGFtDBWaTEo2NT9trTslytdeqG2LZx6GI7hPN3lHLY/1+5vWKKK9D6+1oeTfVq
+         7aPQ==
+X-Gm-Message-State: AOAM531uVwDyivO23KNg5nd3tWaEyGXjUAgtsBqqli7bKIuYBnldlecR
+        Pj7LjsxR1rdBOTkJp9nb0nm8rJmIXv1/VrMQM1E=
+X-Google-Smtp-Source: ABdhPJxFQRMiDZjoHR10qmnXeNShO3U7X5SQb4I2si39E60ZPEuDJsaSfvS8V0iLo3m6XCdRvKC3FpPBt0D/zVUtDOs=
+X-Received: by 2002:a17:907:3a98:: with SMTP id fh24mr18390847ejc.371.1618246817424;
+ Mon, 12 Apr 2021 10:00:17 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAKJ37DfivxL-2Sy0qa+M_1Pw0c9-CWsCJO5=VqP1UOB5zTSP_Q@mail.gmail.com>
- <CABPp-BEOnrnQKov1YDdHXkb6CCNxudE9bUdntOeq3k0wOODc1A@mail.gmail.com> <CAKJ37Dc5-rOeN_=vq5P3=z=_1bqGFRuFhuWde6cS0vGg3mkLnQ@mail.gmail.com>
-In-Reply-To: <CAKJ37Dc5-rOeN_=vq5P3=z=_1bqGFRuFhuWde6cS0vGg3mkLnQ@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 12 Apr 2021 09:53:03 -0700
-Message-ID: <CABPp-BHASo5CFejED8CFbB1zszAaQW1Q8yitUdqW-wi8eFuvWg@mail.gmail.com>
-Subject: Re: Unexpected conflict during cherry-pick after moving submodule
-To:     Tamas Peregi <tamas.peregi@formlabs.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+References: <cover-00.16-00000000000-20210412T110456Z-avarab@gmail.com> <patch-01.16-8e4b4a2a216-20210412T110456Z-avarab@gmail.com>
+In-Reply-To: <patch-01.16-8e4b4a2a216-20210412T110456Z-avarab@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 12 Apr 2021 13:00:06 -0400
+Message-ID: <CAPig+cQFFsLeE921WpzTxVnBMnNRiKs4N=hUQ2UQi1VznNEQwg@mail.gmail.com>
+Subject: Re: [PATCH 01/16] check-non-portable-shell: complain about "test"
+ a/-o instead of &&/||
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Matthieu Moy <git@matthieu-moy.fr>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Tamas,
-
-On Mon, Apr 12, 2021 at 9:08 AM Tamas Peregi <tamas.peregi@formlabs.com> wrote:
+On Mon, Apr 12, 2021 at 7:09 AM Ævar Arnfjörð Bjarmason
+<avarab@gmail.com> wrote:
+> Expand the t/check-non-portable-shell.pl checks to complain about the
+> use of "-a" and "-o" to the "test" shell built-in to to mean "and" and
+> "or", as opposed to using two "test" invocations with "&&" or "||".
 >
-> Hi Elijah,
->
-> thanks for the quick reply and the useful information about the ort strategy!
->
-> Do I understand correctly that the problem is in the recursive
-> strategy, i.e. inside the cherry-pick step, not the submodule
-> movement? That sounds a bit unfortunate in my case, as I'm the one
-> moving the submodule (then merging it back to master), and others in
-> my company want to cherry-pick over it, so I'm breaking their
-> workflows if I go ahead with moving. (Unless I tell all of them to use
-> the experimental ort strategy instead, which may introduce its own set
-> of problems.) Is there any way of moving the submodule that doesn't
-> break cherry-picking with the default (recursive) strategy? I'm
-> willing to do some extra work to spare confusion by others down the
-> line.
+> There aren't any portability issues with using that construct that I
+> know of, but since Junio expressed a dislike of it in [1] and we've
+> currently got no such constructs let's add it to the lint checking. I
+> had various in-flight and WIP patches that used this construct.
 
-Unfortunately, the recursive merge machinery had a variety of issues
-with submodules (see e.g.
-https://git.kernel.org/pub/scm/git/git.git/commit/?id=aa2faac03ad646873ebac2b230581d1d26dd1b99)
-and yes, the merge machinery is intrinsic to cherry-pick's
-functionality.  I don't have a good workaround for you, short of "wait
-until git-2.32 is released".
+It's not only Junio's dislike of `-a` and `-o` but also that they have
+long been considered obsolescent by POSIX[1]. GNU has likewise warned
+against it[2] for a few decades.
 
-> Also: up until now, I thought cherry-pick simply exports the source
-> commit as a patch, then applies it to the target commit, but
-> "recursive" is a merge strategy, correct? So is cherry-pick doing
-> something vastly more complex than I thought, involving merging in the
-> background?
+[1]: https://pubs.opengroup.org/onlinepubs/9699919799/utilities/test.html#tag_20_128_16
+[2]: https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.70/html_node/Limitations-of-Builtins.html
 
-Right, cherry-pick makes use of the merge machinery using a particular
-specially crafted merge while recording it as a regular commit.
-Interestingly, the rebase command has multiple backends, one of which
-used the merge machinery and another that behaved as you thought by
-creating and applying patches.  While the use of an appropriate
-special merge (as done by cherry-pick and rebase) is roughly
-semantically equivalent to what creating and applying patches
-provides, the create-and-apply-patches procedure actually discards
-relevant information and results in some shortcomings that simply
-cannot be fixed.  As such, we switched the default rebase backend from
-"apply" to "merge" as of git-2.26.  If you're curious, read up on the
-"BEHAVIORAL DIFFERENCES" section of the git-rebase(1) manual,
-especially the "Context" section.
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+> diff --git a/t/check-non-portable-shell.pl b/t/check-non-portable-shell.pl
+> @@ -35,6 +35,7 @@ sub err {
+> +       # Portability issues
+> @@ -48,6 +49,9 @@ sub err {
+> +       # Coding style preferences
 
-Hope that helps,
-Elijah
+Given that these flags are considered obsolescent, thus may someday be
+dropped from some implementations, these seem a better fit for the
+"portability issues" section than the "coding style preferences"
+section. (I'd probably just drop those section titles, though.)
+
+> +       /\btest\s+-[a-z]\s+.*?\s+-a\s+/ and err '"test A && test B" preferred to "test A -a B"';
+> +       /\btest\s+-[a-z]\s+.*?\s+-o\s+/ and err '"test A || test B" preferred to "test A -o B"';
+
+These will only match the simplistic forms of `test -X blah` (where
+"-X" is some single letter option), but will miss expressions such as
+`test "$foo" = bar`. Crafting a regex to match more generally would be
+non-trivial, so this simpler match is a reasonable start. Okay.
