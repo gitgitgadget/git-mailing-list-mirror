@@ -2,88 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AE607C433B4
-	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 19:31:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F219DC433ED
+	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 19:32:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 72D5A611F2
-	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 19:31:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BA9A361358
+	for <git@archiver.kernel.org>; Mon, 12 Apr 2021 19:32:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237482AbhDLTcL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Apr 2021 15:32:11 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:60611 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236717AbhDLTcK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Apr 2021 15:32:10 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 17FF112F7DA;
-        Mon, 12 Apr 2021 15:31:52 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=8A9lbuZyiJeO
-        bcIjUfJo861kzYY=; b=WcbpVpqrAWcz13nbuwf9HhPf6mIEiA0/MktOrI5UW6fr
-        UoOx1b5TW6nOA2293bVcpEzL9hWF8J1VXS5NnKVA9pOfwe3lcmBSL4Im9J+xZBX7
-        u47XkfnPOQ9TeP2QiUTOrJnI5F8u/yBzwz+FM9biEia3S/wsIvQG0PGgu+iAjkk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=hqQa9/
-        ghOy0IscZVBFxwBfDnZLzdD9NLmGNcZ5H75/e94N2yZ/i/uuSr83fxNtVh3gpSRD
-        M+oiNMNuc/vzWcY3fG6mGQMj5tW3xxeiRGc0WOcRCEaTZp1HqyTFSLQT7H+oPqCr
-        zH8gSj1V3bUZDLLKrIAwoQZFHrYPCqdKX+oYg=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0FA5B12F7D9;
-        Mon, 12 Apr 2021 15:31:52 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 490D812F7D7;
-        Mon, 12 Apr 2021 15:31:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Matthieu Moy <git@matthieu-moy.fr>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 14/16] test-lib-functions: use "return 1" instead of
- "false"
-References: <cover-00.16-00000000000-20210412T110456Z-avarab@gmail.com>
-        <patch-14.16-b6e9d971b40-20210412T110456Z-avarab@gmail.com>
-Date:   Mon, 12 Apr 2021 12:31:47 -0700
-In-Reply-To: <patch-14.16-b6e9d971b40-20210412T110456Z-avarab@gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Mon, 12 Apr
- 2021 13:09:03
-        +0200")
-Message-ID: <xmqqfszvcna4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S237657AbhDLTc5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Apr 2021 15:32:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36872 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236717AbhDLTc4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Apr 2021 15:32:56 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7A54C061574
+        for <git@vger.kernel.org>; Mon, 12 Apr 2021 12:32:36 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id g18-20020a7bc4d20000b0290116042cfdd8so9362429wmk.4
+        for <git@vger.kernel.org>; Mon, 12 Apr 2021 12:32:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=nDo9WqCd+V83tWwaUusi1upKAL13k1SdsCBud2tl3EY=;
+        b=dkd+QdERRU1glUY4YsbZR//TqGJIUK1LvVmy9KILUg96uIQ+OFTd0B3uVgXZNlql2K
+         b5JvHMUpAHDn7lNP3R6bKZGjBhhhOa+x6GnkX28wjxltFLbNSLCtJntiHa1wIVWWxt5p
+         AqL8jovY+M4OGakiQ9to/cxhezoqKC4Re1gi95IGoaAPJEYf9P2no8LOUgvAA1FbeQ/X
+         foBYsVlWznyxhrPaMbyhLONstoSDnugpojRxyoQPZFxdOfLvS2UEs/hihasIHueY1G4H
+         llAu0bKHCCtp3K1Wkj8E5GIuBmwmdecnrwGT6oaxJLhtm49U/ZD9GJrCKVPVT44Bmome
+         O8bA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=nDo9WqCd+V83tWwaUusi1upKAL13k1SdsCBud2tl3EY=;
+        b=V3ZYwaz3zgFzW6poWd457wieUEsuALdqRtuGpILeqjIdf4V6am9tgr+gKn6mLmuVMz
+         joBm+13BhD7QeennFPDJS/TaHcnC0EjSAv5JxaAlNzf181f/BKNUHavDpifUAbee+x4M
+         F+aeXQvlPmUfTMEmZQM5yg72lHibMQ6t0fmp5sOlLHFr8LUSmi4zx65j0Vs4Oqf0D3eI
+         CsdptXzAVhmB1G1JFuSz9esJz4jUzPi0hZC2pP7zVvoFqx9VzrRwdYRn9objhXihB2Y7
+         Zmrs3CSc73Nh0YXkzXR/2LNrc7pR+xckcmGMXrEgrjKLF06wSyjU9/n8H1LnDFTY4KC/
+         Uccg==
+X-Gm-Message-State: AOAM5319+YgvH5f8uNC3KMbiiacsu7ewsT7TDcnFOLOHsim1/9ia2Rg1
+        MEHcJWVS7HYApYYc3FPjxR7mowjyKW4=
+X-Google-Smtp-Source: ABdhPJydJnonrVP7ecAvcy1xt2qCgAcJ8IK+LGv1+9cp8TnpdQ+HTYt7jT9X8Jwqp2oorvZmcHs6tQ==
+X-Received: by 2002:a05:600c:4f8e:: with SMTP id n14mr629208wmq.166.1618255955513;
+        Mon, 12 Apr 2021 12:32:35 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id e9sm10288238wrs.84.2021.04.12.12.32.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Apr 2021 12:32:35 -0700 (PDT)
+Message-Id: <pull.1002.git.git.1618255954484.gitgitgadget@gmail.com>
+From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 12 Apr 2021 19:32:34 +0000
+Subject: [PATCH] refs: print errno for read_raw_ref if GIT_TRACE_REFS is set
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: B9CEF8BC-9BC5-11EB-A4C2-E43E2BB96649-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+From: Han-Wen Nienhuys <hanwen@google.com>
 
-> Change a few functions that relied on a "false" being the last
-> statement in the function to use an explicit "return 1" like the other
-> functions in this file.
+The ref backend API uses errno as a sideband error channel.
 
-While not wrong per-se, this and a few other changes in this series
-are typical of your multi-patch series that unnecessarily consume
-reviewer bandwidth that could be better spent on other more
-important and correctness sensitive steps (like 07/16) in the same
-series.
+Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+---
+    refs: print errno for read_raw_ref if GIT_TRACE_REFS is set
+    
+    The ref backend API uses errno as a sideband error channel.
+    
+    Signed-off-by: Han-Wen Nienhuys hanwen@google.com
 
-You should find a good balance to avoid wearing out and distracting
-your reviewers---they are the most scarce resource around here that
-must be shared by other people, not just with other topics of your
-own.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1002%2Fhanwen%2Ferrno-debug-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1002/hanwen/errno-debug-v1
+Pull-Request: https://github.com/git/git/pull/1002
 
-Thanks.
+ refs/debug.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
+diff --git a/refs/debug.c b/refs/debug.c
+index 922e64fa6ad9..576bf98e74ae 100644
+--- a/refs/debug.c
++++ b/refs/debug.c
+@@ -244,6 +244,7 @@ static int debug_read_raw_ref(struct ref_store *ref_store, const char *refname,
+ 	int res = 0;
+ 
+ 	oidcpy(oid, &null_oid);
++	errno = 0;
+ 	res = drefs->refs->be->read_raw_ref(drefs->refs, refname, oid, referent,
+ 					    type);
+ 
+@@ -251,7 +252,9 @@ static int debug_read_raw_ref(struct ref_store *ref_store, const char *refname,
+ 		trace_printf_key(&trace_refs, "read_raw_ref: %s: %s (=> %s) type %x: %d\n",
+ 			refname, oid_to_hex(oid), referent->buf, *type, res);
+ 	} else {
+-		trace_printf_key(&trace_refs, "read_raw_ref: %s: %d\n", refname, res);
++		trace_printf_key(&trace_refs,
++				 "read_raw_ref: %s: %d (errno %d)\n", refname,
++				 res, errno);
+ 	}
+ 	return res;
+ }
+
+base-commit: 89b43f80a514aee58b662ad606e6352e03eaeee4
+-- 
+gitgitgadget
