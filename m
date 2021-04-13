@@ -2,172 +2,132 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AD5D1C433ED
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 22:21:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F279FC433B4
+	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 23:18:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8324C6128E
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 22:21:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CA7E661246
+	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 23:18:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347313AbhDMWV2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Apr 2021 18:21:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49248 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347257AbhDMWV2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Apr 2021 18:21:28 -0400
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98314C061574
-        for <git@vger.kernel.org>; Tue, 13 Apr 2021 15:21:07 -0700 (PDT)
-Received: by mail-pj1-x1030.google.com with SMTP id s14so4374695pjl.5
-        for <git@vger.kernel.org>; Tue, 13 Apr 2021 15:21:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=tDeb8OpXsJ3umUWDWkv0/Yifz+yrzb8LfXejufNkN1o=;
-        b=pNx3I9+pcJWszgoweWv3uRCr7UQSk8dzk0tPoBekHVqODxRrVToVo2avE5iA8DDdhe
-         PuVdefByZ0pKXsANwYsVBv4rwxixnpJMy+9VwmmXoAHqi6Wubne8fbaP10mwNCbEPtE7
-         6mvU23aaSURSB6LYXI03VgoMy6g9eNr5/2+DiAmaWn2AzsBHkNar+C3VbzLq5rVd0SWZ
-         UXDGcm0VAnjQp9/AhlHnrucRAbTLROeZI9TaklLQtcGlNl1VylZD5jeEAv6XTYIhVntY
-         w1h5OGCKZKBnbmI/gQu9K613ZNSh4035xBFGZRz9Cf/ZXL6KQhsVbzLuGdE4hTRWCHdk
-         SOfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=tDeb8OpXsJ3umUWDWkv0/Yifz+yrzb8LfXejufNkN1o=;
-        b=g7rdtxLgSUoR6oOf1P08pYSKjIzanjDKFQZ5sIyvy6fRhvqPUrqEgjZVpRfaHGXT3o
-         hqezMWpMhnWdSYwPKONSF838W4y84idIW6LqSeFd0Akoe0aNm+Yb4sqHsQDEuoLqE9nl
-         elGYLFln0bOPKUPJh1P70t2mFXL5MUIC1Q4vEwPT9RFNLiqxgPZQAvdc6c4DDHmf6POC
-         8BXUhCjuPt0AYycKxxSA7Ft5MYtllGNUfMMh/T0ktogy0NyuDpjEwPOMmDkEj9NFu1a5
-         R0R08ic05Dm5p7cCqNdp1xUqNRDPItbdbpdw9QGC3ioKPzN0w6fpD007jVbtj/Cv+N+/
-         GyUg==
-X-Gm-Message-State: AOAM532X/CpWMBfdtI62MNpiIEaYc6YpKgSbWt00Qac7lKCP0YN7II8X
-        W6PZcyi95wko6BGHGMs3oKBReQ==
-X-Google-Smtp-Source: ABdhPJx+0E2gRsKZ6bpIcvFfqytCCVkiRIqCTbSCwHPGCB8LDai1HH36KhnIcB2JyqhPIPQ4BM3B/A==
-X-Received: by 2002:a17:90b:714:: with SMTP id s20mr36936pjz.62.1618352466879;
-        Tue, 13 Apr 2021 15:21:06 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:0:2386:6c3a:61d0:6901])
-        by smtp.gmail.com with ESMTPSA id g10sm5914153pfr.67.2021.04.13.15.21.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Apr 2021 15:21:06 -0700 (PDT)
-Date:   Tue, 13 Apr 2021 15:21:00 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] t0091-bugreport.sh: actually verify some content of
- report
-Message-ID: <YHYZTLl90rkWWVOr@google.com>
-References: <20210409212724.GE2947267@szeder.dev>
- <20210411143354.25134-1-martin.agren@gmail.com>
- <xmqqwnt7e82i.fsf@gitster.g>
- <CAN0heSr3MQnqMiWiSYpmpx3ZRkyXK6z1VfW_T-EQi31ifs0drA@mail.gmail.com>
- <87a6q22dei.fsf@evledraar.gmail.com>
+        id S1348030AbhDMXTA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Apr 2021 19:19:00 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:56693 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230123AbhDMXS5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Apr 2021 19:18:57 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 35BD51113B6;
+        Tue, 13 Apr 2021 19:18:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=79bZYuKTUrSC5N+HyBMapjOArdg=; b=DqjBOu6paGJX6xeJVQL7
+        K7vN3au8ns9lewRI9bBzKplW3PuK5+7TOWOT+j1G1VK6VU+8D0KKflUpdJvRuj0t
+        uqrOHv4faDRrN345Va11qoO9u+F+xgpB9XKFYyuEETsxhzw2NyH6JmdmQ+wqsNMo
+        dnuVQ/lRBAmSRwzSjCU7rF8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         q=dns; s=sasl; b=cM150CiZKkclxanvLWRYgr25yelLCAbhyKAwsees7pBSZU
+        /3mP6IaNf5d40GHe4/oYflsEwdDky+L6W/KlQ6Ja2scih16hrx6XcsYt6qyNmQsa
+        F6F7kVrhrrFGoOJ/GI9JCJAPZ2ZnaxmRSTJP8Icu3CCMQnEOhXzJGRM0GzGaE=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2DBD01113B5;
+        Tue, 13 Apr 2021 19:18:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 726F81113B4;
+        Tue, 13 Apr 2021 19:18:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Sergey Organov <sorganov@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.email>,
+        Elijah Newren <newren@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v2 1/5] diff-merges: introduce --diff-merges=on
+References: <20210407225608.14611-1-sorganov@gmail.com>
+        <20210413114118.25693-1-sorganov@gmail.com>
+        <20210413114118.25693-2-sorganov@gmail.com>
+Date:   Tue, 13 Apr 2021 16:18:32 -0700
+Message-ID: <xmqqfsztkc3b.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87a6q22dei.fsf@evledraar.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9188D672-9CAE-11EB-98DA-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 13, 2021 at 09:27:33PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> 
-> 
-> On Tue, Apr 13 2021, Martin Ågren wrote:
-> 
-> > On Mon, 12 Apr 2021 at 19:17, Junio C Hamano <gitster@pobox.com> wrote:
-> >>
-> >> Martin Ågren <martin.agren@gmail.com> writes:
-> >>
-> >> > In the first test in this script, 'creates a report with content in the
-> >> > right places', we generate a report and pipe it into our helper
-> >> > `check_all_headers_populated()`. The idea of the helper is to find all
-> >> > lines that look like headers ("[Some Header Here]") and to check that
-> >> > the next line is non-empty. This is supposed to catch erroneous outputs
-> >> > such as the following:
-> > ...
-> >> > Let's instead grep for some contents that we expect to find in a bug
-> >> > report. We won't verify that they appear in the right order, but at
-> >> > least we end up verifying the contents more than before this commit.
-> >>
-> >> Nicely described.  I agree that the original intent (let alone the
-> >> implementation) is misguided and we should allow an empty section as
-> >> a perfectly normal thing.
-> >
-> >> > +test_expect_success 'creates a report with content' '
-> >> >       test_when_finished rm git-bugreport-check-headers.txt &&
-> >> >       git bugreport -s check-headers &&
-> >> > -     check_all_headers_populated <git-bugreport-check-headers.txt
-> >> > +     grep "^Please answer " git-bugreport-check-headers.txt &&
-> >> > +     grep "^\[System Info\]$" git-bugreport-check-headers.txt &&
-> >> > +     grep "^git version:$" git-bugreport-check-headers.txt &&
-> >> > +     grep "^\[Enabled Hooks\]$" git-bugreport-check-headers.txt
-> >> >  '
-> >>
-> >> It is a different matter if it is sufficient to ensure only certain
-> >> selected lines appear in the report, though.  As all the lines lost
-> >> by this fix comes from 238b439d (bugreport: add tool to generate
-> >> debugging info, 2020-04-16), it would be nice to hear from Emily.
-> >
-> > Maybe something like
-> >
-> >        awk '\''BEGIN { sect="" }
-> >                /^\[.*]$/ { sect=$0 }
-> >                /./ { print sect, $0 }'\'' \
-> >            git-bugreport-check-headers.txt >prefixed &&
-> >        grep "^ Thank you for filling out a Git bug report" prefixed &&
-> >        grep "^ Please review the rest of the bug report below" prefixed &&
-> >        grep "^ You can delete any lines you don.t wish to share" prefixed &&
-> >        grep "\[System Info\] git version ..." prefixed
-> >
-> > Something like that could be used to verify that a line goes into the
-> > right section, as opposed to just seeing that it appears *somewhere*. Or
-> > maybe
-> >
-> >   grep -e Thank.you -e Please.review -e You.can.delete -e "^\[" \
-> >        -e git.version git-bugreport-check-headers.txt >actual
-> >
-> > then setting up an "expect" and comparing. That would help us verify the
-> > order, including which section things appear in. Slightly less friendly
-> > for comparing loosely, compared to the awk-then-grep above.
-> >
-> > Let's see what Emily thinks about the various alternatives. Maybe she can
-> > think of something else.
+Sergey Organov <sorganov@gmail.com> writes:
 
-My apologies for the slow reply :)
+> Introduce the notion of default diff format for merges, and the option
+> "on" to select it. The default format is "separate" and can't yet
+> be changed, so effectively "on" is just a synonym for "separate"
+> for now. Add corresponding test to t4013.
+>
+> This is in preparation for introducing log.diffMerges configuration
+> option that will let --diff-merges=on to be configured to any
+> supported format.
 
-> I think a straight-up test_cmp is preferrable, both for correctness and
-> also as self-documentation, you can see from the test what the full
-> expected output is like.
+"on"---that's short-and-sweet and really nice, compared to the "default"
+in the previous iteration.
 
-Yeah, I like the sound of this.
+Clever.
 
-> 
-> Obviously in this case we can't do a test_cmp on the raw output, as it
-> contains various things from uname.
-> 
-> But it looks like we could do that if we do some light awk/perl/sed
-> munging of the "[System Info]" and "[Enabled Hooks]" section(s).
-> 
-> Or, since we also control the generator we could pass a --no-system-info
-> and/or --no-hooks-info, which may be something some people want for
-> privacy/reporting reasons anyway (e.g. I've often used perlbug and
-> deleted that whole info, because info there has no relevance to the
-> specific issue I'm reporting).
-
-This approach sounds more appealing to me than awk munging. I think
-you're right that folks may not want to share it in some cases.
-
-Thanks for noticing.
- - Emily
-
+> Signed-off-by: Sergey Organov <sorganov@gmail.com>
+> ---
+>  diff-merges.c           | 7 +++++++
+>  t/t4013-diff-various.sh | 8 ++++++++
+>  2 files changed, 15 insertions(+)
+>
+> diff --git a/diff-merges.c b/diff-merges.c
+> index 146bb50316a6..ff227368bd46 100644
+> --- a/diff-merges.c
+> +++ b/diff-merges.c
+> @@ -2,6 +2,11 @@
+>  
+>  #include "revision.h"
+>  
+> +typedef void (*diff_merges_setup_func_t)(struct rev_info *);
+> +static void set_separate(struct rev_info *revs);
+> +
+> +static diff_merges_setup_func_t set_to_default = set_separate;
+> +
+>  static void suppress(struct rev_info *revs)
+>  {
+>  	revs->separate_merges = 0;
+> @@ -66,6 +71,8 @@ static void set_diff_merges(struct rev_info *revs, const char *optarg)
+>  		set_combined(revs);
+>  	else if (!strcmp(optarg, "cc") || !strcmp(optarg, "dense-combined"))
+>  		set_dense_combined(revs);
+> +	else if (!strcmp(optarg, "on"))
+> +		set_to_default(revs);
+>  	else
+>  		die(_("unknown value for --diff-merges: %s"), optarg);
+>  
+> diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+> index 6cca8b84a6bf..26a7b4d19d4d 100755
+> --- a/t/t4013-diff-various.sh
+> +++ b/t/t4013-diff-various.sh
+> @@ -452,6 +452,14 @@ diff-tree --stat --compact-summary initial mode
+>  diff-tree -R --stat --compact-summary initial mode
+>  EOF
+>  
+> +test_expect_success 'log --diff-merges=on matches --diff-merges=separate' '
+> +	git log -p --diff-merges=separate master >result &&
+> +	process_diffs result >expected &&
+> +	git log -p --diff-merges=on master >result &&
+> +	process_diffs result >actual &&
+> +	test_cmp expected actual
+> +'
+> +
+>  test_expect_success 'log -S requires an argument' '
+>  	test_must_fail git log -S
+>  '
