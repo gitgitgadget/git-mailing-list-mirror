@@ -2,184 +2,220 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D18FDC433B4
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 13:41:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6BC0C433B4
+	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 14:01:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A6956613B1
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 13:41:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7961B61206
+	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 14:01:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346055AbhDMNlk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Apr 2021 09:41:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48676 "EHLO
+        id S237401AbhDMOCG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Apr 2021 10:02:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53246 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346038AbhDMNlj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Apr 2021 09:41:39 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99ECDC061574
-        for <git@vger.kernel.org>; Tue, 13 Apr 2021 06:41:19 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id bx20so18303460edb.12
-        for <git@vger.kernel.org>; Tue, 13 Apr 2021 06:41:19 -0700 (PDT)
+        with ESMTP id S231869AbhDMOCC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Apr 2021 10:02:02 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2265EC061756
+        for <git@vger.kernel.org>; Tue, 13 Apr 2021 07:01:42 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id h4so7553462wrt.12
+        for <git@vger.kernel.org>; Tue, 13 Apr 2021 07:01:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=eRX8FnaDepCecICP1mT6DQj/Knt1SKuVzb8GYuZai70=;
-        b=UrRBTHvEbblurNYSYWbXoPb6Xvj4lNtyBxU9QO0nGBddqfe5gTQWA2N/rnbkW7LsXW
-         P4NYZUxIww3nItDgw3iKz0ypv4msG3KYxN/o8hPXMYddETRCKIC3Mpjhr/DSx7JGsvAi
-         cjDCkIyQzxof9LNR+MymFJXRoyV69MQ5vGpqQyboUuwDuR3hQVMkoCpVEjuaIWuE80tJ
-         Vq3bNQE5iUnJBXXMcnobTx0LmjQyd3TRwS77FhDPqOWVg37a57mlPXCJ6t2PeW99MkBq
-         xgxPIJV6Kvau17Z5zsMsuIZuhTeZbEYcBlCrrQWIj5tBj5aLuxulqxWYbG9mVx5JTiC1
-         mR1w==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=gXqdqUJHSvZv+ScIN0sMWzSKjWEIqKfVgAWYeNbLixQ=;
+        b=TcjuTas1N5MhZwbVOqJyrgLiB3Ti1QImbBBC7lp0NC+MZu6lW8ko4mEGaoqz1v/nUZ
+         MB8UoGxNGvqTV2DVhetuFLNvd+PRqbLeMOllVuHP48KN/Gi/oBWDu9p2IV7YU8XDumYr
+         YpqrYzRJYbEcDmQF+o18leTj+OGAH2uAdFDrbSXepcLBrijx5owk/tUFmo1DCQlvLQGx
+         vo1TKHcgXIlqVduO9WaUuUrTpnazCvZyHw8O+9BlI8MQHvyM/ShoFScIFTplqu79KOHI
+         ugh3c57+QbZcmluf6kRDVoY5j+Oh+kg4iFvsgWp7CChgRkPHnQDvDTj72l4VIabIsV0a
+         buYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=eRX8FnaDepCecICP1mT6DQj/Knt1SKuVzb8GYuZai70=;
-        b=U93Adb33MLglQ/Z8Njys+7oeGft8HuM8Dj4OdSb4G/LNy3+19hmyq1LsQ9fwZAwswQ
-         Q8jU+TLYTnqnVMxnOvaEJ9wmVyiChHOEymMb8Q6x0bbVnQQVjX1a795ZCdfZVhN4CJ1y
-         t5jhaQK/tVB8RzK44sRHN48+B8DF7qGGRebSoV6elyuNH8zcniQhAclzdA2KOL6lSB3e
-         snuZSD+4QNEGUmIV9XWEO5Us5AVQUTlWY8N/1Dbaf7giPCkAGB3EoMiNr+HjiSUtbq3U
-         SgPCJqoUr1mFXLEhrv5ptJHfGkAirkhswWCWO+SlPzxOuXudhkVCXzenkQmFKV3505/Q
-         59Jg==
-X-Gm-Message-State: AOAM531Bm1KdwM74bdloD3DErvZ8VuESFM7TGHHrY1g5DlbU0pb7jqms
-        Z+K4zMKqGIRwxIqMQ66TvqsmG9p6vbRM9g==
-X-Google-Smtp-Source: ABdhPJxfClPjm30GGq5/XnKQlz8ZUVaa/uqYfAvtyqhv+oU7X3k0V9gzuMbPoEgOeEpPoduGahthRQ==
-X-Received: by 2002:a05:6402:6ca:: with SMTP id n10mr35241876edy.312.1618321277189;
-        Tue, 13 Apr 2021 06:41:17 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id l15sm9196909edb.48.2021.04.13.06.41.16
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=gXqdqUJHSvZv+ScIN0sMWzSKjWEIqKfVgAWYeNbLixQ=;
+        b=gGsqTr3yh7z9YlPpaxll/nqKc7CRTEmOQ5cH+8qlBzLJtuY3UMlzgI6dmbXVhfaynN
+         q9p8fB3ZrQOfXmYC855biTWd//q1wzZXGCCHAkRBwfu9sRLEx1NY5M3vkcx6wmQr4vpQ
+         CLqHHjhDmq1L9yXvJ/ITLaCHq+Xuldy8/mjLwGoL3yWV71ntZ6sEPRORsaXmoKRTzWUF
+         R9o/1wXnGmY9sizXa9J1wbzBm/0qzCr0aR903ow7WbGXIg/HRopwNR0MYlRt5lrvOytL
+         svnr5f6aVBr9FnEIeMPs3yzUSIOn8dJWZehwQl4M/SDY/49ZEiWudjvYOZ3CO9CMcnM3
+         5wcQ==
+X-Gm-Message-State: AOAM532i4gadMWQVi34yMOrJQt0vupYYSEU9AHm3YCc/ofolmRGupnha
+        DqieHGiPZPQ4v+EtswOW18IzVhFg1Ns=
+X-Google-Smtp-Source: ABdhPJynQBdQ72XVgSNVW9NQmOH7Edx1kX7F9S3+5DUIwrAahN/aGxVN597UgPLT7j+31+AtSGO05w==
+X-Received: by 2002:a5d:65ca:: with SMTP id e10mr36714929wrw.331.1618322500739;
+        Tue, 13 Apr 2021 07:01:40 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id h2sm2668193wmc.24.2021.04.13.07.01.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Apr 2021 06:41:16 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Han-Wen Nienhuys <hanwen@google.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Josh Steadmon <steadmon@google.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Patrick Steinhardt <ps@pks.im>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Han-Wen Nienhuys <hanwenn@gmail.com>
-Subject: Re: [PATCH v6 02/20] reftable: add LICENSE
-References: <pull.847.v5.git.git.1615580397.gitgitgadget@gmail.com>
-        <pull.847.v6.git.git.1618255552.gitgitgadget@gmail.com>
-        <02bd1f40fa4e281f878d0b9ba4a8b5f8eb21c8ff.1618255552.git.gitgitgadget@gmail.com>
-        <87fszuej8y.fsf@evledraar.gmail.com>
-        <CAFQ2z_MQp99uPpdai9Hbh76h-PO3JUHmY-pasSXONjeRp8dTzA@mail.gmail.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <CAFQ2z_MQp99uPpdai9Hbh76h-PO3JUHmY-pasSXONjeRp8dTzA@mail.gmail.com>
-Date:   Tue, 13 Apr 2021 15:41:15 +0200
-Message-ID: <87o8ei2tfo.fsf@evledraar.gmail.com>
+        Tue, 13 Apr 2021 07:01:40 -0700 (PDT)
+Message-Id: <0a3892d2ec9e4acd4cba1c1d0390acc60dc6e50f.1618322497.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.932.git.1618322497.gitgitgadget@gmail.com>
+References: <pull.932.git.1618322497.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 13 Apr 2021 14:01:29 +0000
+Subject: [PATCH 02/10] unpack-trees: make sparse aware
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, newren@gmail.com,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Derrick Stolee <dstolee@microsoft.com>
 
-On Tue, Apr 13 2021, Han-Wen Nienhuys wrote:
+As a first step to integrate 'git status' and 'git add' with the sparse
+index, we must start integrating unpack_trees() with sparse directory
+entries. These changes are currently impossible to trigger because
+unpack_trees() calls ensure_full_index() if command_requires_full_index
+is true. This is the case for all commands at the moment. As we expand
+more commands to be sparse-aware, we might find that more changes are
+required to unpack_trees(). The current changes will suffice for
+'status' and 'add'.
 
-> On Tue, Apr 13, 2021 at 9:28 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> <avarab@gmail.com> wrote:
->>     > However, it is fundamentally blocked on someone willing to spend
->>     > some time reviewing the series; this seems to be out of my
->>     > control.
->>
->> I for one find it hard to follow re-rolls of this when past discussion
->> isn't clarified/updated in commit messages/CLs.
->>
->> So in particular in v3[2] there was a whole discussion about what what
->> this licence & external hosting of this codebase meant in practical
->> terms.
->>
->> I vaguely recall that that was clarified in some way by you, but didn't
->> find the relevant E-Mail. Something like Google's lawyers said something
->> to the effect that this could just be added to git.git, no? Maybe that's
->> incorrect, I don't remember.
->
-> You're right, I didn't update the thread. The outcome is that the
-> library for now lives in https://github.com/hanwen/reftable while it's
-> not integrated in git.git. In this repo I can accept contributions
-> (including fixup changes posted to the git list) without requiring
-> CLAs.
+unpack_trees() calls the traverse_trees() API using unpack_callback()
+to decide if we should recurse into a subtree. We must add new abilities
+to skip a subtree if it corresponds to a sparse directory entry.
 
-And once this lands if there's patches to reftable/* on this ML?
+It is important to be careful about the trailing directory separator
+that exists in the sparse directory entries but not in the subtree
+paths.
 
-Knowing would be good, a change to Documentation/SubmittingPatches et al
-in the next iteration even better :)
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ dir.h           |  2 +-
+ preload-index.c |  2 ++
+ read-cache.c    |  3 +++
+ unpack-trees.c  | 24 ++++++++++++++++++++++--
+ 4 files changed, 28 insertions(+), 3 deletions(-)
 
->> I.e. if it's meant to be 100% externally maintained and "code-dumped"
->> into git.git like we do with sha1collisiondetection/ that raises one set
->> of concerns, but if it's meant to be "eaten" by git.git that poses
->> another set of questions for the code review here. I.e. much of what
->> you're doing in later patches in this series is introducing things that
->> are redundant/odd if viewed if we're supposing that this code is meant
->> to live in git.git.
->
-> The code is meant to be eaten by git.git, but be amenable to being
-> used by libgit2 with minimal modifications. To that end, it tries to
-> use just functionality offered by git-compat-util.
->
-> If you could point out specific oddities, that would be helpful.
+diff --git a/dir.h b/dir.h
+index 51cb0e217247..9d6666f520f3 100644
+--- a/dir.h
++++ b/dir.h
+@@ -503,7 +503,7 @@ static inline int ce_path_match(struct index_state *istate,
+ 				char *seen)
+ {
+ 	return match_pathspec(istate, pathspec, ce->name, ce_namelen(ce), 0, seen,
+-			      S_ISDIR(ce->ce_mode) || S_ISGITLINK(ce->ce_mode));
++			      S_ISSPARSEDIR(ce->ce_mode) || S_ISDIR(ce->ce_mode) || S_ISGITLINK(ce->ce_mode));
+ }
+ 
+ static inline int dir_path_match(struct index_state *istate,
+diff --git a/preload-index.c b/preload-index.c
+index e5529a586366..35e67057ca9b 100644
+--- a/preload-index.c
++++ b/preload-index.c
+@@ -55,6 +55,8 @@ static void *preload_thread(void *_data)
+ 			continue;
+ 		if (S_ISGITLINK(ce->ce_mode))
+ 			continue;
++		if (S_ISSPARSEDIR(ce->ce_mode))
++			continue;
+ 		if (ce_uptodate(ce))
+ 			continue;
+ 		if (ce_skip_worktree(ce))
+diff --git a/read-cache.c b/read-cache.c
+index 29ffa9ac5db9..6308234b4838 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1594,6 +1594,9 @@ int refresh_index(struct index_state *istate, unsigned int flags,
+ 		if (ignore_skip_worktree && ce_skip_worktree(ce))
+ 			continue;
+ 
++		if (istate->sparse_index && S_ISSPARSEDIR(ce->ce_mode))
++			continue;
++
+ 		if (pathspec && !ce_path_match(istate, ce, pathspec, seen))
+ 			filtered = 1;
+ 
+diff --git a/unpack-trees.c b/unpack-trees.c
+index dddf106d5bd4..9a62e823928a 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -586,6 +586,13 @@ static void mark_ce_used(struct cache_entry *ce, struct unpack_trees_options *o)
+ {
+ 	ce->ce_flags |= CE_UNPACKED;
+ 
++	/*
++	 * If this is a sparse directory, don't advance cache_bottom.
++	 * That will be advanced later using the cache-tree data.
++	 */
++	if (S_ISSPARSEDIR(ce->ce_mode))
++		return;
++
+ 	if (o->cache_bottom < o->src_index->cache_nr &&
+ 	    o->src_index->cache[o->cache_bottom] == ce) {
+ 		int bottom = o->cache_bottom;
+@@ -984,6 +991,9 @@ static int do_compare_entry(const struct cache_entry *ce,
+ 	ce_len -= pathlen;
+ 	ce_name = ce->name + pathlen;
+ 
++	/* remove directory separator if a sparse directory entry */
++	if (S_ISSPARSEDIR(ce->ce_mode))
++		ce_len--;
+ 	return df_name_compare(ce_name, ce_len, S_IFREG, name, namelen, mode);
+ }
+ 
+@@ -993,6 +1003,10 @@ static int compare_entry(const struct cache_entry *ce, const struct traverse_inf
+ 	if (cmp)
+ 		return cmp;
+ 
++	/* If ce is a sparse directory, then allow equality here. */
++	if (S_ISSPARSEDIR(ce->ce_mode))
++		return 0;
++
+ 	/*
+ 	 * Even if the beginning compared identically, the ce should
+ 	 * compare as bigger than a directory leading up to it!
+@@ -1243,6 +1257,7 @@ static int unpack_callback(int n, unsigned long mask, unsigned long dirmask, str
+ 	struct cache_entry *src[MAX_UNPACK_TREES + 1] = { NULL, };
+ 	struct unpack_trees_options *o = info->data;
+ 	const struct name_entry *p = names;
++	unsigned recurse = 1;
+ 
+ 	/* Find first entry with a real name (we could use "mask" too) */
+ 	while (!p->mode)
+@@ -1284,12 +1299,16 @@ static int unpack_callback(int n, unsigned long mask, unsigned long dirmask, str
+ 					}
+ 				}
+ 				src[0] = ce;
++
++				if (S_ISSPARSEDIR(ce->ce_mode))
++					recurse = 0;
+ 			}
+ 			break;
+ 		}
+ 	}
+ 
+-	if (unpack_nondirectories(n, mask, dirmask, src, names, info) < 0)
++	if (recurse &&
++	    unpack_nondirectories(n, mask, dirmask, src, names, info) < 0)
+ 		return -1;
+ 
+ 	if (o->merge && src[0]) {
+@@ -1319,7 +1338,8 @@ static int unpack_callback(int n, unsigned long mask, unsigned long dirmask, str
+ 			}
+ 		}
+ 
+-		if (traverse_trees_recursive(n, dirmask, mask & ~dirmask,
++		if (recurse &&
++		    traverse_trees_recursive(n, dirmask, mask & ~dirmask,
+ 					     names, info) < 0)
+ 			return -1;
+ 		return mask;
+-- 
+gitgitgadget
 
-Things like different coding style, e.g. $(git grep '[!=3D]=3D NULL' --
-reftable/) & comment style.
-
-Having Go-ish (or Google-ish?) *_test.c files instead of that living in
-t/helper/*.
-
-reftable/dump.c not using parse_options().
-
-This having reftable_free() etc., which at least for in-tree use is
-redundant, see 8d128513429 (grep/pcre2: actually make pcre2 use custom
-allocator, 2021-02-18).
-
-Wondering if internal libraries (e.g. in basic.c) are there to avoid
-various kitchen-sink things existing in git.git itself, or because no
-existing thing fit the purpose.
-
-I'm not saying those things aren't OK or the "sorta-external" trade-off
-needs to change, just that reviewing it not knowing what the expected
-status is left me hanging.
-
-> As said earlier, the BSD license here is the most liberal I could
-> find, but I'm open to something else, if that makes integration in
-> both git and libgit2 possible. This was not discussed further, and
-> hence the "TODO: relicense?" comment.
-
-I don't per-se have issues with the license, just questions about what
-it means for the development flow.
-
-Let's say Junio merges this to master, and someone discovers a bug in
-it. Surely one of these happen:
-
- 1. We just take the patch, if it's a tree-wide patch someone at
-    reftable.git would need to either look at GPLv2 patch or clean-room
-    duplicate it somehow.
-
- 2. Junio refuses any suggested changes to the reftable/* directory, we
-    tell people to submit an upstream PR, once that lands we update. So
-    like sha1collisiondetection/ (well, sans the "Junio refusing", I
-    think I un-forked that at least a couple of times).
-
-One of those means that e.g. if the change is to a strbuf API reftable/*
-needs we'd need to version that API or otherwise treat it as stable.
-
-As an aside, to your [1] again: At least to me reading a series on-list
-that has TODO comments in commit messages very much sounds like an RFC
-but not calling itself that, maybe I'm alone in that, but if not
-clearing this sort of thing up / documenting it might go far in getting
-more reviews.
-
-1. https://lore.kernel.org/git/CAFQ2z_P=3DMqT81gLjov6A471Z9sd69qQTep8KG8M8=
-=3DLO9pJtkpQ@mail.gmail.com/
