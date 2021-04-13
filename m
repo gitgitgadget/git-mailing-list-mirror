@@ -2,125 +2,84 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 01FB2C433B4
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 07:33:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 69300C433ED
+	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 07:39:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CDD60613B1
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 07:33:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4262B613B8
+	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 07:39:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240151AbhDMHeP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Apr 2021 03:34:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52278 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240288AbhDMHeK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Apr 2021 03:34:10 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3A98C061574
-        for <git@vger.kernel.org>; Tue, 13 Apr 2021 00:33:50 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id w18so18251982edc.0
-        for <git@vger.kernel.org>; Tue, 13 Apr 2021 00:33:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=IsCGrj7j4AwaukPUVPddJLtzGHBkJxgpEL+4K3Kziew=;
-        b=i9NGOODRNIP0kTDm3mneCxBaMZg1Um6sAdZ9/deYr0BAgU3WJXQUwxU4ph5q1xOh8T
-         whPlQPQ3jYr5xYnAGtF6ZDibo11BG/5q8OZqOtdqlhm9+JFHk/KM/GjSsa2swriZWDuR
-         2RM0EGiENu/c9e8IdSoOi4WrKvcOyUMuhR0EoW+X/FV6mCT0pm0R+N/Y7hn0TxTeNoV4
-         fzakplbMNxAz8KPlG8WeX9uI58jWWlRWikTDn1Un6frJD5e8ydmMecPHPTIC6v192hEI
-         VOvt0kgj52OJ2NsjhQmpsqEjQBzSV99weokcwdYeSovv6Adq/RSwfu21bDMvdwL7AQtR
-         96YQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=IsCGrj7j4AwaukPUVPddJLtzGHBkJxgpEL+4K3Kziew=;
-        b=ULWMUE5HhHATntPolszRwvmPi7iOHaYbFvXsj/yMFo+8EIzvvfjaWyCsTT5jEtu5T3
-         xXTxFJF0PSgVDWDr9mpLEi1pMd1EYJ7qMhxJl7OPgC3JLirXiGWqV+DDAXQJoBSXEQG3
-         VA0NS3+FKlUPNCfnMysBCRpVNks17XobcgWNQAZ55ZsBqtMW8F4n5lFoOHQi7GBWbk0k
-         rMxOGPYhOQ1isi8DNVHfC0y0l3ZfN8zqCqsLg7852C39A0f+ooyCqtfCgHcVAO6Lx1eD
-         U1sajHtPFtNKzZIncvhFmbjS/e2qedE9cdxj1sV3eiNa/J6NIGmFqo23V2HTpx8U04rl
-         IpKQ==
-X-Gm-Message-State: AOAM5300TM9qTZIZ8ZZIfkCNa9vgiGDkwfGrWleiQ/FX5i3m0sj/GGOh
-        JU84aIMEd64Ebw2PO8jbOpkYoYdxR3qV3jWJCvZuL9sYpE7b7A==
-X-Google-Smtp-Source: ABdhPJwKbx2FnvhWnL0Pn8U2VMWkXwQ7SHYfTuXLg7Z8oTHQqpquNxwRzcsfH+nQsIP/SCoshTi4cFNGbJS/I432cEI=
-X-Received: by 2002:aa7:cf90:: with SMTP id z16mr33248050edx.273.1618299229444;
- Tue, 13 Apr 2021 00:33:49 -0700 (PDT)
+        id S238383AbhDMHkB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Apr 2021 03:40:01 -0400
+Received: from cloud.peff.net ([104.130.231.41]:50854 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S238266AbhDMHj6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Apr 2021 03:39:58 -0400
+Received: (qmail 28698 invoked by uid 109); 13 Apr 2021 07:39:37 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 13 Apr 2021 07:39:37 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 23245 invoked by uid 111); 13 Apr 2021 07:39:38 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 13 Apr 2021 03:39:38 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 13 Apr 2021 03:39:36 -0400
+From:   Jeff King <peff@peff.net>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] pack-objects: update "nr_seen" progress based on
+ pack-reused count
+Message-ID: <YHVKuFaR/AjYhf9b@coredump.intra.peff.net>
+References: <YHPBXu9R/7i1jZhy@coredump.intra.peff.net>
+ <06e42cf3-188c-d314-b3b9-bdb2f43a37e6@gmail.com>
 MIME-Version: 1.0
-References: <pull.913.v8.git.1617975462.gitgitgadget@gmail.com>
- <pull.913.v9.git.1618245568.gitgitgadget@gmail.com> <7f645ec95f48a206311973ee45578ba14ac58b7f.1618245568.git.gitgitgadget@gmail.com>
- <xmqqsg3vb51n.fsf@gitster.g>
-In-Reply-To: <xmqqsg3vb51n.fsf@gitster.g>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Tue, 13 Apr 2021 09:33:38 +0200
-Message-ID: <CAP8UFD1r2kUaKbjFcRn_FGxz5=hvwY+DHdmPKR61cNdHzBe26A@mail.gmail.com>
-Subject: Re: [PATCH v9 2/2] [GSOC] trailer: add new .cmd config option
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, ZheNing Hu <adlternative@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <06e42cf3-188c-d314-b3b9-bdb2f43a37e6@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 12, 2021 at 10:51 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > +For consistency, the $1 is also passed, this time with the empty string,
-> > +in the command when the command is first called to add a trailer with
-> > +the specified <token>.
->
-> I guess the same question as 1/2 applies to this part.  I am not
-> sure what "consistency" the behaviour of calling the configured
-> command with no argument is trying to achieve.  To me, .cmd doing
-> this may be for consistency with .command but I am not sure why
-> the consistency is even desiable.
+On Mon, Apr 12, 2021 at 08:48:24PM -0400, Derrick Stolee wrote:
 
-It might be desirable to make it easier for people to migrate from
-".command" to ".cmd". I agree this is debatable, but I don't see a big
-downside in it. Maybe, if no argument was passed at all the first time
-the command is called instead of the empty string, the command could
-then know that it's called for the first time. I am not sure this
-would be very helpful in practice though.
+> On 4/11/2021 11:41 PM, Jeff King wrote:> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> > index 525c2d8552..faee5a5c76 100644
+> > --- a/builtin/pack-objects.c
+> > +++ b/builtin/pack-objects.c
+> > @@ -3527,7 +3527,8 @@ static int get_object_list_from_bitmap(struct rev_info *revs)
+> >  			&reuse_packfile_bitmap)) {
+> >  		assert(reuse_packfile_objects);
+> >  		nr_result += reuse_packfile_objects;
+> > -		display_progress(progress_state, nr_result);
+> > +		nr_seen += reuse_packfile_objects;
+> > +		display_progress(progress_state, nr_seen);
+> 
+> nr_seen and nr_result are defined in the same line with nr_written,
+> as static globals. I can understand how this mistake happened.
 
-> > +$ cat ~/bin/gcount
-> > +#!/bin/sh
-> > +test -n "$1" && git shortlog -s --author="$1" HEAD || true
-> > +$ git config trailer.cnt.key "Commit-count: "
-> > +$ git config trailer.cnt.ifExists "replace"
-> > +$ git config trailer.cnt.cmd "~/bin/gcount"
-> > +$ git interpret-trailers --trailer="cnt:Junio" <<EOF
-> > +> subject
-> > +>
-> > +> message
-> > +>
-> > +> EOF
-> > +subject
-> > +
-> > +message
-> > +
-> > +Commit-count: 22484     Junio C Hamano
-> > +------------
->
-> This and the other (omitted) example demonstrates how the initial
-> "empty" invocation is useless by using "replace".  Which also means
-> that you cannot add more than one trailer of the same <key> with the
-> mechanism (since the older ones are replaced with the latest).
+I think it is even more subtle than that. Both topics (the one to
+convert callers to use nr_seen as progress, and the one adding this call
+to use nr_result for progress) were "in flight" at the same time, but in
+a funny way. The latter was written much earlier in a fork of Git, but
+not sent upstream immediately. So the nr_seen conversion didn't know
+about it, and later the other topic was "merged" (actually,
+cherry-picked) into upstream.
 
-You can add more than one trailer with the same key if you don't use
-"replace" but use "--trim-empty" on the command line, so that an empty
-trailer added by the initial invocation is removed. And we can later
-add a `trailer.<token>.runMode` to remove the initial invocation.
+So it really is a semantic conflict when merging two branches that
+happened simultaneously. It's a little odd in that the branches were
+running simultaneously for years, but the same thing could happen even
+with two topics much closer together.
 
-> The code change and the test change are consistent with the design,
-> though.
+Anyway, that's all just an interesting sidenote.
 
-Yeah, this patch looks good to me now.
+> There are no other places where nr_result is used for
+> display_progress() while nr_seen _is_ used a couple more times.
 
-Thanks!
+Thanks for double-checking. That make sense, since we added only this
+one call, and the others were all converted to nr_seen when it was
+introduced.
+
+-Peff
