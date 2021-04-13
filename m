@@ -2,135 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C8C1BC433ED
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 20:42:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DBAD9C433ED
+	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 20:46:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A563A61154
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 20:42:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AF8AF61139
+	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 20:46:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231902AbhDMUma (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Apr 2021 16:42:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55888 "EHLO
+        id S230281AbhDMUqi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Apr 2021 16:46:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230281AbhDMUma (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Apr 2021 16:42:30 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3247BC061574
-        for <git@vger.kernel.org>; Tue, 13 Apr 2021 13:42:10 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id x7so17702360wrw.10
-        for <git@vger.kernel.org>; Tue, 13 Apr 2021 13:42:10 -0700 (PDT)
+        with ESMTP id S1348272AbhDMUqd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Apr 2021 16:46:33 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46C6FC061574
+        for <git@vger.kernel.org>; Tue, 13 Apr 2021 13:46:11 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id e14so16712257lfn.11
+        for <git@vger.kernel.org>; Tue, 13 Apr 2021 13:46:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:subject:in-reply-to:references:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=aTeBZSUHKR9C1cDA5Fnj9Rt5HJG10zw5vtUF77goJKw=;
-        b=vhjyy8TJTEohTZIUpyAi2i7uimEADbAIpncZojHgLdpMDRx13YsJiMl/vLPxtNXWAl
-         ObTt1Ti3A6Hu7NjClszKL8iTAdD8ONOQAMqybVrnliL2nzQqGM2eoCMcUbHligGJnDf1
-         4gsT7xxgvBVNLeaKpkJ8rX3lFicfbsHmYiAuAVP/blBqgb3Fji3lFhLI78YP5zrxm4jZ
-         E4ZuLI68DyqmDTNF9SdMLhjXfg/a5RsI0ziZs+D4K2JoWgWonmIVX0Rofx8vOGvVa0c+
-         BB5tj0qUzakhAic+mMvoFfFBBLimLEUvyNPUEQj0+ZuE9RtRoVfcFl6Oo1SFMzLfGk+Q
-         bdXw==
+        d=usp.br; s=usp-google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=/Xa5klVNCPo+tshHdBmEoIIKVHn5fpzPMEAMMrq8NPQ=;
+        b=FOygE9W17nVx7D0n0lTz/1f8CUd5l7CL2tM3Ip8uUlJtZALniQZmVqCSq53sbE7iUd
+         wExdnLdJmQMd6bOL70Tihn0TNaEt09tsEeiO4PyvVUAks1ShiV2jdsSVH5i3DU/CwFWN
+         Sk4LpYsXfAN5vstJoBYuGfUg0TLhGTUgK0KOfotXnw4HYtudl8SpPJdYEN6i++CpsgUm
+         6osv+iTVNaqxEATopSHxtzWaYwVKURbgI7JV1x+VPiNUqbSTV/aGKGRjZzeHVBrbVK+C
+         7nz9Ii1zY44Ww5prdLm3CvZIIpVrTqVq3GacF/Eei4tb4VXlyKUBtUlvIBIR7FEn2Cbd
+         Knyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:in-reply-to:references:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=aTeBZSUHKR9C1cDA5Fnj9Rt5HJG10zw5vtUF77goJKw=;
-        b=jY53HaqQAazf25HuPwVW+YmpyJ8O386ILrQARmXzRP9ORsB5dJdgFlrlkqAg+WUMm5
-         AK+HY+Ndqn6oAt5so7XSA3/MHnX5kx4eX3RhcvXF50y6c0d9ad30KtsEnYBfOjYOJYWp
-         kEB6jstg7zHB51nrWrZE8V8QBxAQtvhuIacNjlUldIxB8KaeGx+lDLYm4o8Y7YP1Adq9
-         9IsvZ7SeqPjIKore05Yg08WurkIJ0WnVQLaBQrgeBfYu8RKHBOLMfAUZ1hR4BfTWqbkQ
-         gfnmbcRKgNOg1QzT/B2tI8ETjvuOdG/yRyBaTH20wMeNzPgidS5v1WSbHgz1X7Mrwq2V
-         beJg==
-X-Gm-Message-State: AOAM532tsyfUnCP6uo8D2amw0cRh2f3r56n3C8u1aB2I2jP7gXsVMmRm
-        pPFWgKy6KGm0voksosBcr5Y0WoBB7vImEQ==
-X-Google-Smtp-Source: ABdhPJwB+GxR1yvWfAcAS9cyWYc65+jKun2jZEWutv5UxLWiY0JlRU9KOaKZF+cfVqu7hgaLj2Vtrg==
-X-Received: by 2002:a5d:40cf:: with SMTP id b15mr2536305wrq.162.1618346528562;
-        Tue, 13 Apr 2021 13:42:08 -0700 (PDT)
-Received: from Inspiron (2a01cb04010c42008529471c2a12c435.ipv6.abo.wanadoo.fr. [2a01:cb04:10c:4200:8529:471c:2a12:c435])
-        by smtp.gmail.com with ESMTPSA id u6sm3865529wml.23.2021.04.13.13.42.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Apr 2021 13:42:08 -0700 (PDT)
-From:   Firmin Martin <firminmartin24@gmail.com>
-To:     =?utf-8?Q?Jean-No=C3=ABl?= Avila <avila.jn@gmail.com>,
-        git <git@vger.kernel.org>
-Subject: Re: [RFC PATCH v1 00/13][GSoC] doc: (monospace) apply
- CodingGuidelines on a large-scale
-In-Reply-To: <d2e78646-6735-2a27-735c-331de6411ca2@gmail.com>
-References: <20210409040301.3260358-1-firminmartin24@gmail.com>
- <d2e78646-6735-2a27-735c-331de6411ca2@gmail.com>
-Date:   Tue, 13 Apr 2021 22:42:06 +0200
-Message-ID: <87h7k9hq75.fsf@Inspiron.i-did-not-set--mail-host-address--so-tickle-me>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=/Xa5klVNCPo+tshHdBmEoIIKVHn5fpzPMEAMMrq8NPQ=;
+        b=smltXiq9mejmQC/jZQ8pS2Yx/OHgsUkqVr82+Rr+cbXTxBj9e48eoTpcMaX+9G0f/3
+         qTkjo2KPhJpsSTyTZjRrBVh0kWZ1lIb09+JEzRRKp74D4yYo/8cfqd55cYHjRfhuEYmx
+         jJOY23meyasOVKfIwfC/UN8DngNm0auVST15RF+dyXlGJMZq6VV2P3jNz0Q/n/fxKfmO
+         iUsFfucnkudJjMGiwYE9VIya2U/eh9eBZzSuRhGjirea6BeMY8m++hvKrivWLy3a4QsM
+         yADaVEaoA6DTjMrK3npUBisKlKz8mzDns+0erGmj8i8pOlbLoW7UVTBSaGYxAh4LJtxB
+         ML0A==
+X-Gm-Message-State: AOAM5325MH9MzhGinTehjTwV8eJY5Ao/l2Fqis9f/RXe1KQvtifh2ujx
+        PixIsUXu0Zd7YBZwsS1ZTpRCiR5aRL9E+uglLmJQNg==
+X-Google-Smtp-Source: ABdhPJz/6pQ7xq0RvpQpn8zp7GRQ6YPDZDiWmVFY2qSoSxj+6OlHmCu4FN/JcBqpmxmVm8PSIcShypMt0FvUhAjdsiY=
+X-Received: by 2002:a05:6512:3094:: with SMTP id z20mr12486345lfd.354.1618346769694;
+ Tue, 13 Apr 2021 13:46:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+References: <pull.932.git.1618322497.gitgitgadget@gmail.com>
+In-Reply-To: <pull.932.git.1618322497.gitgitgadget@gmail.com>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Tue, 13 Apr 2021 17:45:58 -0300
+Message-ID: <CAHd-oW7vCKC-XRM=rX37+jQn_XDzjtar9nNHKQ-4OHSZ=2=KFA@mail.gmail.com>
+Subject: Re: [PATCH 00/10] Sparse-index: integrate with status and add
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jean-No=C3=ABl,
+Hi, Stolee
 
-Jean-No=C3=ABl Avila <avila.jn@gmail.com> writes:
-
-> Le 09/04/2021 =C3=A0 06:02, Firmin Martin a =C3=A9crit=C2=A0:
->> This patch series aims to make the documentation fully compliant to the
->> CodingGuidelines regarding monospace font. After it, new contributors
->> who just want to change a little portion of the documention could just
->> look around how it has been done without being confused by the
->> inconsistency between the documentation and the CodingGuidelines.
+On Tue, Apr 13, 2021 at 11:02 AM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
+> This is the first "payoff" series in the sparse-index work. It makes 'git
+> status' and 'git add' very fast when a sparse-index is enabled on a
+> repository with cone-mode sparse-checkout (and a small populated set).
 >
-> Thank you for tackling the task of formating the docu and directing to
-> CodingGuidelines for some markup rules. It appears that the last rule
-> about backticks is wrong with late Asciidoctor, for which backticks are
-Thanks. As a new Git contributor, I used to think that we don't use asciido=
-ctor,
-until I see in Documentation/Makefile:
+> This is based on ds/sparse-index-protections AND mt/add-rm-sparse-checkout.
 
-    ifdef USE_ASCIIDOCTOR
-    ASCIIDOC =3D asciidoctor
-    ...
-    ASCIIDOC_EXTRA +=3D -acompat-mode -atabsize=3D8
-    ...
-    endif
+I just noticed that our ds/sparse-index-protections and
+mt/add-rm-sparse-checkout had a small semantic conflict. It didn't
+appear before, but it does now with this new series.
 
-So, we actually use both depending the variable USE_ASCIIDOCTOR.=20
+ds/sparse-index-protections added `ensure_full_index()` guards before
+the loops that traverse over all cache entries. At the same time,
+mt/add-rm-sparse-checkout added yet another one of these loops, at
+`pathspec.c::find_pathspecs_matching_skip_worktree()`. Although the
+new place didn't get the `ensure_full_index()` guard, all of its
+callers (in `add` and `rm`) did call `ensure_full_index()` before
+calling it, so it was fine.
 
-> only a font switcher and no longer hold any semantic meaning. This means
-> that double-hyphens may need escaping (see:
-> https://asciidoctor.org/docs/migration/#migration-cheatsheet) when
-> switching style and tools.
+However, patches 7 and 8 remove some of these protections in `add`s
+code. And, as a result, if "dir" is a sparse directory entry, `git add
+[--refresh] dir/file` no longer emits the warning added at
+mt/add-rm-sparse-checkout.
 
-In the helpful link that you provide, it says that the "setext-style
-(i.e., two-line) section title" enables compatibility mode.  As far as I
-can tell, most man pages (git.*.txt) fall under this category, except
-the most important one: user-manual.txt.  But this is in fact not
-relevant, because the snippet above of the Makefile suggests that we
-actually explicitly running asciidoctor in compatibility mode.
+Adding `ensure_full_index()` at
+`find_pathspecs_matching_skip_worktree()` fixes the problem. We have
+to consider the performance implications, but they _might_ be
+acceptable as we only call this function when a pathspec given to
+`add` or `rm` does not match any non-ignored file inside the sparse
+checkout.
 
-> One other rule worth adding would be that tabs are banned from asciidoc
-> because they cannot always be matched with correct indentation.
+Additionally, the tests I added at t3705 won't catch this problem,
+even when running with GIT_TEST_SPARSE_INDEX=true :( That's because
+they don't set core.sparseCheckout and core.sparseCheckoutCone, they
+only set individual index entries with the SKIP_WORKTREE bit. And
+therefore, the index is always written fully. Perhaps, should I reroll
+my series using cone mode for these tests?
 
-I'm an absolute novice regarding AsciiDoc vs. Asciidoctor. But from the
-user guide of AsciiDoc (https://asciidoc.org/userguide.html#_tabs), it says
-
-    By default tab characters input files will translated to 8
-    spaces. Tab expansion is set with the tabsize entry in the
-    configuration file [miscellaneous] section and can be overridden in
-    included files by setting a tabsize attribute in the include macro=E2=
-=80=99s
-    attribute list. For example:
-
-    include::addendum.txt[tabsize=3D2] The tab size can also be set using
-    the attribute command-line option, for example --attribute tabsize=3D4
-
-... and we also explicitly set it to 8 spaces (see above). Could you
-elaborate a bit on the matter ?
-
-Thanks,
-
-Firmin
+(And a semi-related question: do you plan on adding
+GIT_TEST_SPARSE_INDEX=true to one of the CI jobs? )
