@@ -2,159 +2,132 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB252C433ED
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 14:51:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 96D2EC433B4
+	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 16:02:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C915260551
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 14:51:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 720F960C40
+	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 16:02:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231218AbhDMOwH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Apr 2021 10:52:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36202 "EHLO
+        id S1346729AbhDMQCk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Apr 2021 12:02:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51700 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231165AbhDMOwG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Apr 2021 10:52:06 -0400
-Received: from mail-il1-x129.google.com (mail-il1-x129.google.com [IPv6:2607:f8b0:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 043B4C061574
-        for <git@vger.kernel.org>; Tue, 13 Apr 2021 07:51:46 -0700 (PDT)
-Received: by mail-il1-x129.google.com with SMTP id c15so14323436ilj.1
-        for <git@vger.kernel.org>; Tue, 13 Apr 2021 07:51:46 -0700 (PDT)
+        with ESMTP id S229492AbhDMQCk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Apr 2021 12:02:40 -0400
+Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36D2DC061574
+        for <git@vger.kernel.org>; Tue, 13 Apr 2021 09:02:20 -0700 (PDT)
+Received: by mail-ot1-x332.google.com with SMTP id v19-20020a0568300913b029028423b78c2dso7941777ott.8
+        for <git@vger.kernel.org>; Tue, 13 Apr 2021 09:02:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=CHcoo23hzgsBmdR+/mVIn9ZW9uyv9fAoClZoNQ8Of5o=;
-        b=IHNY9Na4//i1Oo7hkQUk2+eiYRc3QCNaW3ZTg8ZxX2KEGXuu5qUYT/vmUrtLMexr8U
-         /u0n8Sn8f+xP2Ksb2uOfYg3FHUOlaRiImw7IMl88kh+gIW6O/V58XCo/1WqBsqYWmMih
-         Rs72nprX2OK7SnPdbDObOwT5qrG8OIQHOAnuqByMqAv/GGbpQMkV1EREIL6lZsTPyp43
-         MMVoFquOi/PNGgzmXoi+XbHGNG7Yp1o7bVkupXPxUrFQCgkBbn/j7wKForcEl8Udm3C8
-         Ky5qXqxYnEyswwEyhkfReJsMOVrPntVSZUINw3qb2hJjhyWQiOs3KGp7ieaKbLXJXaL/
-         wJIA==
+         :cc;
+        bh=k47xil1fRjZVCvNZReqXjoW46eLjFs70Dc3Z79Mltjo=;
+        b=ctCTDDrNvitmV85K7ZlC8mqBk9cqhIqeb8ITxcT48dt/iuy4p0wFgtecfpzbzc4Lqp
+         P0fNSWLIiEHEUk+MInjALZmplDK2OANC9MV/K//Esid2RPr8o0yYQIKMSVjq9mkgy6vm
+         RdF/GN27NPlXGhGhEuurnptxPay+OVup7iPyHVER2iOd5l/NQZeM1E6mIkr0gbQhcdsR
+         sUPzl6iF2TRB4HUrlRstc8pZVFKOhseeTldQ+GITteZZSPuCFIfVyQDZyK25EBr+nPa/
+         UBJFf96MOHOrPD700SUCtmlQ2iSbcD4k5jOtP+oJb0E9atMYt+3eNgU3qeMvKFgRpE6v
+         CxzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=CHcoo23hzgsBmdR+/mVIn9ZW9uyv9fAoClZoNQ8Of5o=;
-        b=tTKRGGAndhY5cehXPV9oZF8wGwCVgW8neDLLRzQDuH70cW7n23Dj8Gvgaz6/B0+zR+
-         4HJjIWQFuZiKBfP4Jj5qnz1jbDTZEIBhdR27GYhMwhsazbkd/ASlSXx+XGVDmdb80AGC
-         6drT2uNmxzUOxBgA4Pkn6Xz0Dp3PXN4Sjr1FPsZf2OBtPy3i0KkBC2OI3CS/VZsyOEhQ
-         ojBLBqobolV/cBAt4tG1N3MF5/4W37PVt166HIgTtKOntz3pZqy4kIao+N4I/WaZUVa0
-         CRGkXj0V9r8BfrkdPQKmO9YEFOKm0X/X97kZBE5R/TjnfbstupS7owS3VxjNSm/9AKRI
-         GsKA==
-X-Gm-Message-State: AOAM532D8B929D0nmBPaYA30NoSHjCnVvMF9OWTZ4FS7+/ORIrhHRxUz
-        q+TDzxWWN2yyLt0AEMxSF5T4FR/x9dZvmA41Iz4=
-X-Google-Smtp-Source: ABdhPJzV00qV30BXDX9IRYuEe0HRDKOUP0WT5irsdXxpbeRUrleAaLKs26+k8I7rLcTWJot+Syfl1008W1+05yjWDXE=
-X-Received: by 2002:a92:d308:: with SMTP id x8mr27617810ila.301.1618325506021;
- Tue, 13 Apr 2021 07:51:46 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=k47xil1fRjZVCvNZReqXjoW46eLjFs70Dc3Z79Mltjo=;
+        b=Qt5Z3YRH+Li5I/g2TKYWtsNyfq+Nv/2yrNfgbQuqGFo6CSqZHyH64pY1yfdzsYKHLc
+         CKs8upsmkvuzJn27x5/zWtzgqTtjB6X4LZwSpz/WMWU/G1YiRK9rw+Tu5fF/1wdRLNH2
+         dM4jnENPr7yuBg2cJSvJBro50Ma3lv2wtavOdFyXGAmL4E7eonign3ryuFsQCXJf9uWE
+         a4qLiEWgcIlsYD1Kfd/7kk1SQQWGOz11DU8YzQwBYo5DDi37DNdzMYBbIk4Xb/TP9LYj
+         Yt4FjmyN89CB3q29Tetbs7RsecCgLAjCx3Q75vuHE67nKYI4cCGEFMeL0gHr5tm+f8fX
+         w70w==
+X-Gm-Message-State: AOAM530k6E5LrDwsde74cHWUe3W6iVMwwFuK5naowiOOr2cadN96mBXe
+        C8vmd19f/PsWP/s1L3CRutM5Eq6mpa78XHawlIXwlBdK
+X-Google-Smtp-Source: ABdhPJwWneK92NUzYiWqGPwRG1k7/ZLPqv1hZlSYGYFu+EtJQKQpd8JVKwtXs1H82Gqxa6NC2ThKy6qJj5xs/EqScJs=
+X-Received: by 2002:a9d:2de8:: with SMTP id g95mr15752056otb.162.1618329736099;
+ Tue, 13 Apr 2021 09:02:16 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAOLTT8RfE4nn5NnjZh7xuF09-5=+K+_j_2kP0327HVdR4x_wAQ@mail.gmail.com>
- <CAOLTT8RTA0inxgxbd3qDToKYxwgXGKvJikXWsXg7oQ4asFj+HQ@mail.gmail.com>
- <CAOLTT8SW0n=x3HBL=php0aC1nhP7eU-MHFLustC3H0opxGRV1w@mail.gmail.com> <YHU86dPKODAPDXY0@coredump.intra.peff.net>
-In-Reply-To: <YHU86dPKODAPDXY0@coredump.intra.peff.net>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Tue, 13 Apr 2021 22:51:30 +0800
-Message-ID: <CAOLTT8Q2eV-0TemhiCL21fRWT=P6E8=Qajs1EjekTNN7XEmwpw@mail.gmail.com>
-Subject: Re: GSoC Git Proposal Draft - ZheNing Hu
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Hariom verma <hariom18599@gmail.com>,
-        Shourya Shukla <periperidip@gmail.com>,
-        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>, Jiang Xin <worldhello.net@gmail.com>,
-        Git List <git@vger.kernel.org>
+References: <pull.906.v2.git.1617241802.gitgitgadget@gmail.com> <pull.906.v3.git.1618261697.gitgitgadget@gmail.com>
+In-Reply-To: <pull.906.v3.git.1618261697.gitgitgadget@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 13 Apr 2021 09:02:04 -0700
+Message-ID: <CABPp-BGCpwguTJk3N-4Okrdpsio9Q7Hj1HSPPUZX1EZSiXkepQ@mail.gmail.com>
+Subject: Re: [PATCH v3 00/26] Sparse Index: API protections
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        Derrick Stolee <derrickstolee@github.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> =E4=BA=8E2021=E5=B9=B44=E6=9C=8813=E6=97=A5=E5=91=
-=A8=E4=BA=8C =E4=B8=8B=E5=8D=882:40=E5=86=99=E9=81=93=EF=BC=9A
+On Mon, Apr 12, 2021 at 2:08 PM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
-> On Sun, Apr 11, 2021 at 11:34:35PM +0800, ZheNing Hu wrote:
+> Here is the second patch series submission coming out of the sparse-index
+> RFC [1].
 >
-> > > Why is Olga=E2=80=99s solution rejected?
-> > > 1. Olga's solution is to let `git cat-file` use the `ref-filter` inte=
-rface,
-> > > the performance of `cat-file` appears to be degraded due "very eager =
-to
-> > > allocate lots of separate strings" in `ref-filter` and other reasons.
-> >
-> > I am thinking today whether we can directly append some object informat=
-ion
-> > directly to `&state->stack->output`, Instead of assigning to `v->s` fir=
-stly.
+> [1]
+> https://lore.kernel.org/git/pull.847.git.1611596533.gitgitgadget@gmail.com/
 >
-> Yes, that's the direction I think we'd want to go.
+> This is based on ds/sparse-index.
 >
-> > But in `cmp_ref_sorting()` we will use `get_ref_atom_value()`, It is po=
-ssible
-> > to compare `v->s` of two different refs, I must goto fill object info i=
-n `v->s`.
-> >
-> > So I think this is one of the reasons why `ref-filter` desires to
-> > allocate a large
-> > number of strings, right?
+> The point of this series is to insert protections for the consumers of the
+> in-memory index to avoid unintended behavior change when using a sparse
+> index versus a full one.
 >
-> Yeah, I think sorting in general is a bit tricky, because it inherently
-> requires collecting the value for each item. Just thinking about what
-> properties an ideal solution would have (which we might not be able to
-> get all of):
+> We mark certain regions of code as needing a full index, so we call
+> ensure_full_index() to expand a sparse index to a full one, if necessary.
+> These protections are inserted file-by-file in every loop over all cache
+> entries. Well, "most" loops, because some are going to be handled in the
+> very next series so I leave them out.
 >
->   - if we're sorting by something numeric (e.g., an committer
->     timestamp), we should avoid forming it into a string at all
+> Many callers use index_name_pos() to find a path by name. In these cases, we
+> can check if that position resolves to a sparse directory instance. In those
+> cases, we just expand to a full index and run the search again.
 >
->   - if the sort item requires work to extract that overlaps with the
->     output format (e.g., sorting by authordate and showing author name
->     in the format, both of which require parsing the author ident line
->     of a commit), ideally we'd just do that work once per ref/object.
+> The last few patches deal with the name-hash hashtable for doing O(1)
+> lookups.
 >
+> These protections don't do much right now, since the previous series created
+> the_repository->settings.command_requires_full_index to guard all index
+> reads and writes to ensure the in-memory copy is full for commands that have
+> not been tested with the sparse index yet.
+>
+> However, after this series is complete, we now have a straight-forward plan
+> for making commands "sparse aware" one-by-one:
+>
+>  1. Disable settings.command_requires_full_index to allow an in-memory
+>     sparse-index.
+>  2. Run versions of that command under a debugger, breaking on
+>     ensure_full_index().
+>  3. Examine the call stack to determine the context of that expansion, then
+>     implement the proper behavior in those locations.
+>  4. Add tests to ensure we are checking this logic in the presence of sparse
+>     directory entries.
+>
+> I will admit that mostly it is the writing of the test cases that takes the
+> most time in the conversions I've done so far.
+>
+>
+> Updates in v3
+> =============
+>
+>  * I updated based on Elijah's feedback.
+>  * One new patch splits out a change that Elijah (rightfully) pointed out
+>    did not belong with the patch it was originally in.
+>
+> I gave it time to see if any other comments came in, but it looks like
+> review stabilized. I probably waited a bit longer than I should have.
 
-Yes i can understand.
+This round looks good to me.
 
->   - if we are sorting, obviously we have to hold some amount of data for
->     each item in memory all at once (since we have to get data on the
->     sort properties for each, and then sort the result). So we'd
->     probably need at least some allocation per ref anyway, and an extra
->     string isn't too bad. But if we're not sorting, then it would be
->     nice to consider one ref/object at a time, which lets us keep our
->     peak memory usage lower, reuse output buffers, etc.
->
-
-Yes, storing these strings in memory is beneficial for sorting.
-
-> I think some of those are in competition with each other. Minimizing
-> work shared between the sorting and format steps means keeping more data
-> in memory. So it might be sensible to just treat them totally
-> independently, and not worry about sharing work (I haven't looked at how
-> ref-filter does this now).  TBH, I care a lot less about making the
-> "sorting" case fast than I do about making sure that if we _aren't_
-> sorting, we go as fast as possible.
->
-
-Okay, so we just focus on the "nosort" case.
-I am thinking about finding those cases that git do not need sort and we ca=
-n
-make a flag like "nosort =3D 1", and then use this "nosort" flag in
-`ref-filter` to do the
-string copy optimization what we want.
-But the problem now is that `git for-each-ref` itself does not support
-`--un-sort`,
-and it have a default sort order by `refname`. I suspect that there are no
-unsorted situation here for us to improve (Any other command call
-`ref_array_sort()`
-will also have similar situation, and it seem cause a little memory leak, t=
-he
-ref_sorting entries in sorting_tail aren't free, right?)
-
-> -Peff
-
---
-ZheNing Hu
+Reviewed-by: Elijah Newren <newren@gmail.com>
