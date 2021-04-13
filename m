@@ -2,148 +2,159 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9A5AC433B4
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 14:45:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EB252C433ED
+	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 14:51:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CC68F6052B
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 14:45:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C915260551
+	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 14:51:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345027AbhDMOp0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Apr 2021 10:45:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34728 "EHLO
+        id S231218AbhDMOwH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Apr 2021 10:52:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36202 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344897AbhDMOpX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Apr 2021 10:45:23 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF6A2C061756
-        for <git@vger.kernel.org>; Tue, 13 Apr 2021 07:45:02 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id r20so19637094ljk.4
-        for <git@vger.kernel.org>; Tue, 13 Apr 2021 07:45:02 -0700 (PDT)
+        with ESMTP id S231165AbhDMOwG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Apr 2021 10:52:06 -0400
+Received: from mail-il1-x129.google.com (mail-il1-x129.google.com [IPv6:2607:f8b0:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 043B4C061574
+        for <git@vger.kernel.org>; Tue, 13 Apr 2021 07:51:46 -0700 (PDT)
+Received: by mail-il1-x129.google.com with SMTP id c15so14323436ilj.1
+        for <git@vger.kernel.org>; Tue, 13 Apr 2021 07:51:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp.br; s=usp-google;
+        d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=TVKRC4sc2wsUumCqxP2yPF46A8N+02ybVvWNamdLFJ0=;
-        b=YbS1FWu3sE5P6RrRey7TINGaL7mETirDjvpy9G4bcRDiyQIPD38IVWjTtcaBzzkGkr
-         iZqvh0AXcRIQ3oPDp5tFkj/He2pBEl16L42DDcqM3fXqdLGWUhBq8K61Tv8aDyRlb6qd
-         6VPliLaEOO5M0PRVydT0t7HFR2mKz03j7pFDDPVWywoSZVvHmKBeknQDfH/NoOK1LeqZ
-         A5k0eUMWmlYS9aDqzA5DMu3OUigUQWeGlZn5PHQW4Pz7BU5ZnSNadsDi7a64EpeDbNt+
-         CqAjjomWpmcEAHXGJQiw4BLbHygDwbNvw6r3cjxZ4hZUyng0BTcMWkgSkUZ5CFJEkpmJ
-         1YPw==
+        bh=CHcoo23hzgsBmdR+/mVIn9ZW9uyv9fAoClZoNQ8Of5o=;
+        b=IHNY9Na4//i1Oo7hkQUk2+eiYRc3QCNaW3ZTg8ZxX2KEGXuu5qUYT/vmUrtLMexr8U
+         /u0n8Sn8f+xP2Ksb2uOfYg3FHUOlaRiImw7IMl88kh+gIW6O/V58XCo/1WqBsqYWmMih
+         Rs72nprX2OK7SnPdbDObOwT5qrG8OIQHOAnuqByMqAv/GGbpQMkV1EREIL6lZsTPyp43
+         MMVoFquOi/PNGgzmXoi+XbHGNG7Yp1o7bVkupXPxUrFQCgkBbn/j7wKForcEl8Udm3C8
+         Ky5qXqxYnEyswwEyhkfReJsMOVrPntVSZUINw3qb2hJjhyWQiOs3KGp7ieaKbLXJXaL/
+         wJIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=TVKRC4sc2wsUumCqxP2yPF46A8N+02ybVvWNamdLFJ0=;
-        b=Nh4YeLxl46QynjqZJPi+abb7CKwkhznYcviiRSNn+rXhEiG/aZUXLetvElTYs1BqDk
-         kOhh1k0yeSBec/idm3LLyVuLSBEkGIv6w8Z+Z4Lq2a4yUg5YsofFPUxYh3uxKatKXuo2
-         o3Xywp30akbcSxSU9l1X9hcglyl18ofhQkPuvr/3W+8JnAatM0EaV3wfTe83O5ffsQGD
-         4nFJneHED08LDCdvgNlx++FrFU1ijmqqAQhsaQMyvpNMixlfLv4lmd8tqPm67eE7ULF7
-         6nwwV5xTx4oXLVtoCZlEgVLe52e+8QICeblOX8IR/phYpURDGBNzKmga5u8VbvC5No3v
-         jl9Q==
-X-Gm-Message-State: AOAM532txPPpwTnCd7KjHD6ZJxzu+5rkEssrCcjMqFTPuVxbMIkgVzVE
-        kky5VSkD195wbStCtVuxBf4wnHuThKAKXRq5fU9atqskTxU=
-X-Google-Smtp-Source: ABdhPJyPf5C/AlbBikpBrJWzQTGDwLMk4kNqNQPp2+xXcp38PSm6sS7VZyPTGnF332zOlXLE0D9nDSO5PrKNu4lDsuI=
-X-Received: by 2002:a05:651c:513:: with SMTP id o19mr5524865ljp.291.1618325101420;
- Tue, 13 Apr 2021 07:45:01 -0700 (PDT)
+        bh=CHcoo23hzgsBmdR+/mVIn9ZW9uyv9fAoClZoNQ8Of5o=;
+        b=tTKRGGAndhY5cehXPV9oZF8wGwCVgW8neDLLRzQDuH70cW7n23Dj8Gvgaz6/B0+zR+
+         4HJjIWQFuZiKBfP4Jj5qnz1jbDTZEIBhdR27GYhMwhsazbkd/ASlSXx+XGVDmdb80AGC
+         6drT2uNmxzUOxBgA4Pkn6Xz0Dp3PXN4Sjr1FPsZf2OBtPy3i0KkBC2OI3CS/VZsyOEhQ
+         ojBLBqobolV/cBAt4tG1N3MF5/4W37PVt166HIgTtKOntz3pZqy4kIao+N4I/WaZUVa0
+         CRGkXj0V9r8BfrkdPQKmO9YEFOKm0X/X97kZBE5R/TjnfbstupS7owS3VxjNSm/9AKRI
+         GsKA==
+X-Gm-Message-State: AOAM532D8B929D0nmBPaYA30NoSHjCnVvMF9OWTZ4FS7+/ORIrhHRxUz
+        q+TDzxWWN2yyLt0AEMxSF5T4FR/x9dZvmA41Iz4=
+X-Google-Smtp-Source: ABdhPJzV00qV30BXDX9IRYuEe0HRDKOUP0WT5irsdXxpbeRUrleAaLKs26+k8I7rLcTWJot+Syfl1008W1+05yjWDXE=
+X-Received: by 2002:a92:d308:: with SMTP id x8mr27617810ila.301.1618325506021;
+ Tue, 13 Apr 2021 07:51:46 -0700 (PDT)
 MIME-Version: 1.0
-References: <patch-1.1-f0542cd902c-20210413T121930Z-avarab@gmail.com>
- <cover-0.2-00000000000-20210413T122645Z-avarab@gmail.com> <patch-2.2-c2cb52b6605-20210413T122645Z-avarab@gmail.com>
-In-Reply-To: <patch-2.2-c2cb52b6605-20210413T122645Z-avarab@gmail.com>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Tue, 13 Apr 2021 11:44:50 -0300
-Message-ID: <CAHd-oW4G+7z3UM3qjhPp=2oqOPE4a49fweew0n+gheGtQEy5VA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] diff tests: rewrite flakyness-causing test "aid"
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+References: <CAOLTT8RfE4nn5NnjZh7xuF09-5=+K+_j_2kP0327HVdR4x_wAQ@mail.gmail.com>
+ <CAOLTT8RTA0inxgxbd3qDToKYxwgXGKvJikXWsXg7oQ4asFj+HQ@mail.gmail.com>
+ <CAOLTT8SW0n=x3HBL=php0aC1nhP7eU-MHFLustC3H0opxGRV1w@mail.gmail.com> <YHU86dPKODAPDXY0@coredump.intra.peff.net>
+In-Reply-To: <YHU86dPKODAPDXY0@coredump.intra.peff.net>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Tue, 13 Apr 2021 22:51:30 +0800
+Message-ID: <CAOLTT8Q2eV-0TemhiCL21fRWT=P6E8=Qajs1EjekTNN7XEmwpw@mail.gmail.com>
+Subject: Re: GSoC Git Proposal Draft - ZheNing Hu
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Hariom verma <hariom18599@gmail.com>,
+        Shourya Shukla <periperidip@gmail.com>,
+        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>, Jiang Xin <worldhello.net@gmail.com>,
+        Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 13, 2021 at 9:31 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
+Jeff King <peff@peff.net> =E4=BA=8E2021=E5=B9=B44=E6=9C=8813=E6=97=A5=E5=91=
+=A8=E4=BA=8C =E4=B8=8B=E5=8D=882:40=E5=86=99=E9=81=93=EF=BC=9A
 >
-> If a new test is added to this "while read magic cmd" test facility
-> added in 3c2f75b590c (t4013: add tests for diff/log family output
-> options., 2006-06-26) but no test file is added it'll fail the first
-> time, but then succeed on subsequent runs as a new file has been added
-> in t4013.
+> On Sun, Apr 11, 2021 at 11:34:35PM +0800, ZheNing Hu wrote:
 >
-> Let's accomplish the same aim in way that doesn't cause subsequent
-
-s/in way/in a way/ ?
-
-> test runs to succeed. If we can't find the file we'll BUG out, and
-> suggest to the developer that they copy our "expect.new" file over,
-> unlike the previous "expect" file this won't be picked up on
-> subsequent runs.
+> > > Why is Olga=E2=80=99s solution rejected?
+> > > 1. Olga's solution is to let `git cat-file` use the `ref-filter` inte=
+rface,
+> > > the performance of `cat-file` appears to be degraded due "very eager =
+to
+> > > allocate lots of separate strings" in `ref-filter` and other reasons.
+> >
+> > I am thinking today whether we can directly append some object informat=
+ion
+> > directly to `&state->stack->output`, Instead of assigning to `v->s` fir=
+stly.
 >
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> ---
->  t/t4013-diff-various.sh | 25 +++++++++++++++----------
->  1 file changed, 15 insertions(+), 10 deletions(-)
+> Yes, that's the direction I think we'd want to go.
 >
-> diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-> index 67f6411aff9..228ff100c61 100755
-> --- a/t/t4013-diff-various.sh
-> +++ b/t/t4013-diff-various.sh
-> @@ -200,10 +200,12 @@ do
->         esac
->         test=3D$(echo "$label" | sed -e 's|[/ ][/ ]*|_|g')
->         pfx=3D$(printf "%04d" $test_count)
-> -       expect=3D"$TEST_DIRECTORY/t4013/diff.$test"
-> +       expect_relative=3D"t4013/diff.$test"
-> +       expect=3D"$TEST_DIRECTORY/$expect_relative"
->         actual=3D"$pfx-diff.$test"
+> > But in `cmp_ref_sorting()` we will use `get_ref_atom_value()`, It is po=
+ssible
+> > to compare `v->s` of two different refs, I must goto fill object info i=
+n `v->s`.
+> >
+> > So I think this is one of the reasons why `ref-filter` desires to
+> > allocate a large
+> > number of strings, right?
 >
->         test_expect_$status "git $cmd # magic is ${magic:-(not used)}" '
-> +               test_when_finished "rm $actual" &&
+> Yeah, I think sorting in general is a bit tricky, because it inherently
+> requires collecting the value for each item. Just thinking about what
+> properties an ideal solution would have (which we might not be able to
+> get all of):
+>
+>   - if we're sorting by something numeric (e.g., an committer
+>     timestamp), we should avoid forming it into a string at all
+>
+>   - if the sort item requires work to extract that overlaps with the
+>     output format (e.g., sorting by authordate and showing author name
+>     in the format, both of which require parsing the author ident line
+>     of a commit), ideally we'd just do that work once per ref/object.
+>
 
-Nit: before these two patches, "$actual" was only removed when the
-test succeeded. So, in case of failure, the failed output files would
-still be there for debugging. It might be interesting to keep this
-behavior and only remove "$actual" at the end of the test.
+Yes i can understand.
 
->                 {
->                         echo "$ git $cmd"
->                         case "$magic" in
-> @@ -216,16 +218,19 @@ do
->                             -e "s/^\\(.*mixed; boundary=3D\"-*\\)$V\\(-*\=
-\)\"\$/\\1g-i-t--v-e-r-s-i-o-n\2\"/"
->                         echo "\$"
->                 } >"$actual" &&
-> -               if test -f "$expect"
-> +
-> +               if ! test -f "$expect"
->                 then
-> -                       process_diffs "$actual" >actual &&
-> -                       process_diffs "$expect" >expect &&
-> -                       test_cmp expect actual
-> -               else
-> -                       # this is to help developing new tests.
-> -                       cp "$actual" "$expect"
-> -                       false
-> -               fi
-> +                       expect_new=3D"$expect.new" &&
-> +                       cp "$actual" "$expect_new" &&
-> +                       BUG "Have no \"$expect_relative\", new test? The =
-output is in \"$expect_new\", maybe use that?"
-> +               fi &&
-> +
-> +               test_when_finished "rm actual" &&
-> +               process_diffs "$actual" >actual &&
-> +               test_when_finished "rm expect" &&
-> +               process_diffs "$expect" >expect &&
-> +               test_cmp expect actual
->         '
->  done <<\EOF
->  diff-tree initial
+>   - if we are sorting, obviously we have to hold some amount of data for
+>     each item in memory all at once (since we have to get data on the
+>     sort properties for each, and then sort the result). So we'd
+>     probably need at least some allocation per ref anyway, and an extra
+>     string isn't too bad. But if we're not sorting, then it would be
+>     nice to consider one ref/object at a time, which lets us keep our
+>     peak memory usage lower, reuse output buffers, etc.
+>
 
-The rest LGTM, thanks.
+Yes, storing these strings in memory is beneficial for sorting.
+
+> I think some of those are in competition with each other. Minimizing
+> work shared between the sorting and format steps means keeping more data
+> in memory. So it might be sensible to just treat them totally
+> independently, and not worry about sharing work (I haven't looked at how
+> ref-filter does this now).  TBH, I care a lot less about making the
+> "sorting" case fast than I do about making sure that if we _aren't_
+> sorting, we go as fast as possible.
+>
+
+Okay, so we just focus on the "nosort" case.
+I am thinking about finding those cases that git do not need sort and we ca=
+n
+make a flag like "nosort =3D 1", and then use this "nosort" flag in
+`ref-filter` to do the
+string copy optimization what we want.
+But the problem now is that `git for-each-ref` itself does not support
+`--un-sort`,
+and it have a default sort order by `refname`. I suspect that there are no
+unsorted situation here for us to improve (Any other command call
+`ref_array_sort()`
+will also have similar situation, and it seem cause a little memory leak, t=
+he
+ref_sorting entries in sorting_tail aren't free, right?)
+
+> -Peff
+
+--
+ZheNing Hu
