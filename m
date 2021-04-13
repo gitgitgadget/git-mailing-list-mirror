@@ -2,94 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67312C433ED
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 20:22:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 11193C433B4
+	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 20:25:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 342BB61242
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 20:22:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DBF3561242
+	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 20:25:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348197AbhDMUW7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Apr 2021 16:22:59 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:63706 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346491AbhDMUW6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Apr 2021 16:22:58 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 12EB8137F42;
-        Tue, 13 Apr 2021 16:22:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=mti+IpDJMXTuOmBc3Jhif9K9YU4=; b=xOP7fa
-        IkBsLfa5y9QfO2Bkui8LrJz47ffaaBycKA0YRnBhJD2LiOy8pilqwSMTdN700EY3
-        VkopX3/aruMnLwNW/KP/UhpZy40duHTUqqugJwkUnCJL1TK6O9oX02fnHXBcKVjg
-        BQUO6088+YPBc4MCGtFHoaFb9WzvAKbxAwGUI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=sx+zyefBvJ3x/woSAMPWPL7ykjNL8ziu
-        C7j/FeCZrikD9KTP6CLk/1EgCSD9I1CodoVBvv8hHDEqKooZe2S5qKYR++H2Q+ZI
-        qGM+mXk7ZP4Bvkj070RO+t3fTsJ7fJuWMc1MwVOdKpxgto91OK0yvbD34Y3GZlLd
-        rMrQ7apVJjU=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0B813137F41;
-        Tue, 13 Apr 2021 16:22:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 4729B137F3E;
-        Tue, 13 Apr 2021 16:22:33 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Rafael Silva <rafaeloliveira.cs@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 3/3] revision: avoid parsing with
- --exclude-promisor-objects
-References: <YHVECXHfZ1bidTJH@coredump.intra.peff.net>
-        <YHVFnNvGim8Iduwq@coredump.intra.peff.net>
-Date:   Tue, 13 Apr 2021 13:22:31 -0700
-In-Reply-To: <YHVFnNvGim8Iduwq@coredump.intra.peff.net> (Jeff King's message
-        of "Tue, 13 Apr 2021 03:17:48 -0400")
-Message-ID: <xmqqpmyykk8o.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S1343728AbhDMU0I (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Apr 2021 16:26:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52308 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232014AbhDMU0E (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Apr 2021 16:26:04 -0400
+Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59516C061574
+        for <git@vger.kernel.org>; Tue, 13 Apr 2021 13:25:44 -0700 (PDT)
+Received: by mail-io1-xd36.google.com with SMTP id a9so7552859ioc.8
+        for <git@vger.kernel.org>; Tue, 13 Apr 2021 13:25:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=shopify.com; s=google;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=j/+NWMTahuBkquacxBA7Gv/vJtrGRAdFgZciLtbaR6k=;
+        b=gnNem02Udjsf8O753RWjZB+A5zlAEf1NCxPhseTbRkw92jX2xYz9HlDQszRzsOv9tw
+         iFHmoEmOQIlMLXH6w1BnBFiKLEXib02xIG5QWHnlHUkLmkrrgoOEDHvRHnqkg9e/R9XF
+         XeTYvXnjnSWcLPphSiMWBHUVXOFkzXN0fL4Ls=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=j/+NWMTahuBkquacxBA7Gv/vJtrGRAdFgZciLtbaR6k=;
+        b=r1uDftMw0DdpsziPizOsuGF0QQGrWpoKr1e8F2tCflz0A3Zlz6JeCrSubG62SpT+k4
+         AoR6xMO5fcvl0PGmje88p38nAD4tmkN4bPTtcSjwh6KtvliQP1Qd3JCSxeYdFZ+h5NOT
+         7hL3xYTJGKbXhjzTZ+Dvdeo92aZS/xHUOMkkuvQW1Gm9EL81OQbg2zfkrMkerg/Ur2aJ
+         X/hKMpeIEMkrHfQJ0dtLqXwLo+7RIq4DNr4Egc66YAFAnYvKFwpMmZQt5vzumis5K7SI
+         I/uGHOyFkdzcanH/KUR5CaihRX4oNvXt+5bFsux/ggwJsw39nSIEAXr6TFCMMYAwsb4T
+         /wGQ==
+X-Gm-Message-State: AOAM533lZg71MHlLOE3WKUUPMzdloJhOXrH6wNzq+oJzWYpfpHUpjBMP
+        uKjVIszEZAxGTHlpj60WGyx8+BeNvb23RYgEbj2MCudXHk2zZg==
+X-Google-Smtp-Source: ABdhPJx+ZvLnOVmn8XEnGG34CJKaLBb/8iVFPjKJEVMNhUdW/4FHknsav/iljR7b7OR7K/6CK1XkNRcEct9kEOG8DPI=
+X-Received: by 2002:a6b:bf07:: with SMTP id p7mr28384676iof.15.1618345543393;
+ Tue, 13 Apr 2021 13:25:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: FA9553B6-9C95-11EB-94D9-E43E2BB96649-77302942!pb-smtp20.pobox.com
+From:   Sam Bostock <sam.bostock@shopify.com>
+Date:   Tue, 13 Apr 2021 16:25:32 -0400
+Message-ID: <CAHwnEogvmTZ-VS5GksoGEiyo3EHO+At+xeWa3frXUESD3HicnQ@mail.gmail.com>
+Subject: `git fetch` not updating 'origin/HEAD' after branch rename
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Hi!
 
-> ... The only reason we call parse_object() is that
-> we need a "struct object" on which to set the flags. There are two
-> options here:
->
->   - we can look up just the object type via oid_object_info(), and then
->     call the appropriate lookup_foo() function
->
->   - we can call lookup_unknown_object(), which gives us an OBJ_NONE
->     struct (which will get auto-converted later by object_as_type() via
->     calls to lookup_commit(), etc).
->
-> The first one is closer to the current code, but we do pay the price to
-> look up the type for each object. The latter should be more efficient in
-> CPU, though it wastes a little bit of memory (the "unknown" object
+Hopefully I followed the instructions on https://git-scm.com/community
+correctly to report this bug.
 
-That's clever.  I like it.
+Long story short, it seems to me that `git fetch` should update
+"refs/remotes/origin/HEAD" when the upstream HEAD changes, but it
+doesn't. See my filled out bug report below.
 
->   5600.5: count commits                0.37(0.37+0.00)     0.38(0.38+0.00) +2.7%
->   5600.6: count non-promisor commits   11.74(11.37+0.37)   0.04(0.03+0.00) -99.7%
->
-> The improvement is particularly big in this script because _every_
-> object in the newly-cloned partial repo is a promisor object. So after
-> marking them all, there's nothing left to traverse.
+Thanks,
 
-;-).
+Sam
+
+----
+
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
+
+What did you do before the bug happened? (Steps to reproduce your issue)
+
+1. Clone a repo with some branch name (say "master") from some remote
+origin (say GitHub).
+2. Replace/rename the main branch on the remote (say "main").
+3. Run `git fetch` locally to sync with remote.
+4. Run `git rev-parse --abbrev-ref --verify origin/HEAD`.
+
+What did you expect to happen? (Expected behavior)
+
+The `git fetch` should update the refs accordingly so "origin/HEAD"
+now points to
+the new branch, which should be output from the command above:
+
+    $ git rev-parse --abbrev-ref --verify origin/HEAD
+    origin/main
+
+What happened instead? (Actual behavior)
+
+The "origin/HEAD" ref seems to not point to anything anymore (because the
+branch it was pointing to was "deleted"). `git fetch` fails to update
+it to reflect the change.
+
+    $ git rev-parse --abbrev-ref --verify origin/HEAD
+    fatal: Needed a single revision
+
+What's different between what you expected and what actually happened?
+
+The HEAD on origin has changed, but this change is not reflected in
+the local refs by `git fetch`.
+
+Anything else you want to add:
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.30.2
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /nix/store/74shlfgb18717ixjlpivpxd7iqcyhyn5-bash-4.4-p23/bin/bash
+uname: Darwin 19.6.0 Darwin Kernel Version 19.6.0: Tue Jan 12 22:13:05
+PST 2021; root:xnu-6153.141.16~1/RELEASE_X86_64 x86_64
+compiler info: clang: 7.1.0 (tags/RELEASE_710/final)
+libc info: no libc information available
+$SHELL (typically, interactive shell): /usr/local/bin/bash
+
+
+[Enabled Hooks]
