@@ -2,286 +2,175 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C661CC433ED
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 08:03:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 428CBC433ED
+	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 08:06:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8C2A4613BD
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 08:03:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1FD6E6120E
+	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 08:06:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239204AbhDMIDa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Apr 2021 04:03:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58620 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237309AbhDMIDR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Apr 2021 04:03:17 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 648ABC061574
-        for <git@vger.kernel.org>; Tue, 13 Apr 2021 01:02:31 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id x12so3642295ejc.1
-        for <git@vger.kernel.org>; Tue, 13 Apr 2021 01:02:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=26tubh//y6q6ZVxcde/gRKaD4nR9UEf7Rb2YjqjnBF0=;
-        b=NhHUbpPNVy4r3Dp0k1DETKf3svpw1H2Y4DAp0rnsvp7mXjGoXUUn1u0917TEOfvoN0
-         VYqHaO+Ru4AyuFwnUE+WLTedIV76wovqnNIDB0bfXP1ep4uN2Ud7qpXM3LHxmA76Nwkp
-         yPj4H5zGOdL8hsvNa4Vbfeo4YB2cAVOil8jBk+eZsD27Kf5JH6CjuQXO2ey13USGD8sX
-         B5RpZuHsGTxoLrxc9IrOun1ZfTOOkY2kevsQXW2S5xHTEiF+19r9qV+IiTpCtWz/RNyj
-         2gG0ZCasVrKMStF4kKsSLzPbvDxBZJnNWWGV5uYf/Cl/KPjhlESU5uEQvcIR9bVRYzDx
-         p8vA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=26tubh//y6q6ZVxcde/gRKaD4nR9UEf7Rb2YjqjnBF0=;
-        b=tePUXh77SwH5CJQhPZ8mU6EQU1mhCKc49SEx6zA0kre6Ssg1quPcUCs5k3w+NyQTQd
-         Ts+X5nmSM15v/fJwbUKNyZI9N/z2Zv+pr8chhd6ZFdefcsDZILGy0oZbYs4e4ytXnT0V
-         jk3lNW5scwtpwZCZlXs2IpWLNMda9QbX4fQbzJy2L4/CyrGtaH3+MPW74LZNvWSuDc5Z
-         cCId/didMfL5dfe4wa9e1JR6mGV+4qCzAlozPxO959dZvk4qQF6iZfGWNAgLRCNZN0vv
-         AQGn42WThM1Zrtl8dxw35LofyX/ufthCqXLEVv5AAfnSgVy+HkzmPJnXiYttOq/gM6qE
-         1eSw==
-X-Gm-Message-State: AOAM533IXXV/w3d0ilQ1BPt4fAkUl9NnyTv1FIPoR1Wfstb57EAhwo/v
-        K0wJzV6Z0WkAECYQMOgEYpRRFiMtTE35IA==
-X-Google-Smtp-Source: ABdhPJxryDHJbSsBepS9yx0BE6JePCoz/Th227Qgvrk1Mvi39zJO57Tx+U2d8uv/LyU1DB6zq0DT5w==
-X-Received: by 2002:a17:906:350e:: with SMTP id r14mr4403722eja.365.1618300949625;
-        Tue, 13 Apr 2021 01:02:29 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id s20sm8564378edu.93.2021.04.13.01.02.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Apr 2021 01:02:29 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Josh Steadmon <steadmon@google.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Patrick Steinhardt <ps@pks.im>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH v6 04/20] reftable: utility functions
-References: <pull.847.v5.git.git.1615580397.gitgitgadget@gmail.com>
- <pull.847.v6.git.git.1618255552.gitgitgadget@gmail.com>
- <df8003cb9a7d9e017d358251a2d22c0e72454e03.1618255552.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <df8003cb9a7d9e017d358251a2d22c0e72454e03.1618255552.git.gitgitgadget@gmail.com>
-Date:   Tue, 13 Apr 2021 10:02:28 +0200
-Message-ID: <87czuyehnv.fsf@evledraar.gmail.com>
+        id S239750AbhDMIGk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Apr 2021 04:06:40 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:39483 "EHLO
+        out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S239986AbhDMIGj (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 13 Apr 2021 04:06:39 -0400
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.nyi.internal (Postfix) with ESMTP id EDBEF5C0064;
+        Tue, 13 Apr 2021 04:06:18 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute1.internal (MEProxy); Tue, 13 Apr 2021 04:06:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
+        :from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=fm3; bh=bWAGPEQtn3QO7AViTS6AhLjHy3J
+        ME61DI4RmnjeWyqI=; b=pDCT2Drtlrvgg8mHjklJNx2ycBHOXx1WBzoWokGbHN3
+        M+ZbZuNaITtLgW4pW71hPpPDUXreiGPp8beIkoeBfS2E3935UrPKt4Fyj10Xe4v8
+        p2+CVg2WOCfqNFKhex0pxfrXDXyVxOTHualsc/sULUInMBJR6xxG28lAPUw2xD4v
+        DUTGbDEV+CZHnrTogBUnrfnRelcDdXB31XwoI/2ToAjGkNjSQSjKjRs9F7g5h/9C
+        zIDz9ZAz0aL2TMsWARSfMsA8WG/o4rLsZN6EId8IknTVVXQfb2UPjpJA8pLxpZ9q
+        0TKcSH7PjLqC/qLnPnwoNQUlfw0zK1QeEF4GvqykHSA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=bWAGPE
+        Qtn3QO7AViTS6AhLjHy3JME61DI4RmnjeWyqI=; b=NLZehPic0k6WpvlcIkItFh
+        q/r+Ug1l2PHZr3ybe2kFYIgKjhvAyuMZ7cfhDxR+GuDUd0CXlqCJOnhS4JLxDk4H
+        rF+FQ6mtO2GKrUVoa2WVJH8OeTax8X7HA33kAkXqi0xhaKCUKyIb1Qt3klrdVmhP
+        oxN9Ocsz7PwEOLmIeWfcCCB8AgIxearORLAfpS8eK9SGgt9C1ApHCgitqhTYy3l9
+        fnqL8csckbmptFaEptELsARPHvFmGoFVgxOPzVADvOTY+1jatlz/2RT3hF4nrd1Y
+        JW//FbppaEAK9GQeJw1XrRSbbEGiF94PXAGqOaDLivKjYcFdtGjjnuxwWEQZkUVg
+        ==
+X-ME-Sender: <xms:-lB1YA8rmsuNIKPHVvnDuhzx3ZY69Kde8B--CtlOrO1e3gu-3cL_sg>
+    <xme:-lB1YIvrHS9CRWXyEzSkVI-GUFonLSfINWlhRcNQgxGlSdcN8VsQco9AtbDb8ruEe
+    KcPp5DZjIu0Cl_xNw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrudekkedguddvjecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpeffhffvuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepiedvjeefheeiteekgeejveefffdtvedvudfgvdeuheeffeejfeetudeutdefgfeg
+    necuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucfkphepkeelrddugedrfeehrddvud
+    efnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhs
+    sehpkhhsrdhimh
+X-ME-Proxy: <xmx:-lB1YGCE4JaRgoIWBjocW_M9WYIpMLKLRRyHk4pXX0Mpb1Dfbt2voQ>
+    <xmx:-lB1YAcJ6oF70G5M8YdxqpNubu3lJDrgDIpz0Olz6iDElFBgZ97-IQ>
+    <xmx:-lB1YFPmeTUR-nNQwyte3BATDSJXXldcusPy_1HuJaY0Ca1wdYthWA>
+    <xmx:-lB1YOZKji7KU4ZtLpXGKRoEIAwKmk9liV6VgQSsp_lqimFEhLQtoA>
+Received: from vm-mail.pks.im (dynamic-089-014-035-213.89.14.pool.telefonica.de [89.14.35.213])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 7B57724005C;
+        Tue, 13 Apr 2021 04:06:17 -0400 (EDT)
+Received: from localhost (ncase [10.192.0.11])
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id d79b6c1b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Tue, 13 Apr 2021 08:06:14 +0000 (UTC)
+Date:   Tue, 13 Apr 2021 10:06:13 +0200
+From:   Patrick Steinhardt <ps@pks.im>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Philip Oakley <philipoakley@iee.email>
+Subject: Re: [PATCH v4 0/8] rev-list: implement object type filter
+Message-ID: <YHVQ9RPLk8/r+8mS@ncase>
+References: <cover.1617967252.git.ps@pks.im>
+ <cover.1618234575.git.ps@pks.im>
+ <YHVMEdeDv9ZeXRAU@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="HMEeKcT8JnYwVmZn"
+Content-Disposition: inline
+In-Reply-To: <YHVMEdeDv9ZeXRAU@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Mon, Apr 12 2021, Han-Wen Nienhuys via GitGitGadget wrote:
+--HMEeKcT8JnYwVmZn
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> +int strbuf_add_void(void *b, const void *data, size_t sz)
-> +{
-> +	strbuf_add((struct strbuf *)b, data, sz);
-> +	return sz;
-> +}
+On Tue, Apr 13, 2021 at 03:45:21AM -0400, Jeff King wrote:
+> On Mon, Apr 12, 2021 at 03:37:14PM +0200, Patrick Steinhardt wrote:
+>=20
+> > this is the fourth version of my patch series which implements a new
+> > `object:type` filter for git-rev-list(1) and git-upload-pack(1) and
+> > extends support for bitmap indices to work with combined filters.
+> >=20
+> > Changes compared to v3:
+> >=20
+> >     - Small style fix to not pass an empty string and `0`, but instead
+> >       simply pass two `NULL` pointers to
+> >       `list_objects_filter__filter_object, pointed out by Junio.
+> >=20
+> >     - I've changed patch 7/8 as proposed by Peff: support of combined
+> >       filters is now determined directly in `filter_bitmap()`, without
+> >       having to mirror all filter types in the new `filter_supported()`
+> >       function.
+> >=20
+> >     - Renamed `--filter-provided-revisions` to
+> >       `--filter-provided-objects` as proposed by Peff and addressed both
+> >       commit message and tests as pointed out by Philip.
+>=20
+> Thanks. I have no more nits to pick. The only question left for me is
+> the big one of "do we like this with --filter, or should it be some kind
+> of rev-list option", as discussed in:
+>=20
+>   https://lore.kernel.org/git/YHB7R8hVRt+V+i2W@coredump.intra.peff.net/
+>=20
+> As I said elsewhere, I'm OK going with this route. I just wanted to call
+> attention to that earlier response in case you had any final thoughts
+> (I'm guessing your final thoughts are "jeez, I already wrote it with
+> --filter, so let's just go with that" which is perfectly reasonable to
+> me. ;) ).
 
-Is that cast needed on your compiler? This compiles without warnings for
-me without that.
+I don't think it would help usability to add new `--show-blobs` and
+`--show-trees` options. The user interface to show this kind of
+information exists already with `--objects`, and by adding another way
+of asking a similar query would raise the question of how these two ways
+interact with each other:
 
-Also, maybe this is the sort of thing that makes sense to split into
-general "APIs needed for reftable" patches. E.g. something like the
-below (just the strbuf.h change):
+    - Does `--show-blobs` have effect if `--objects` is not set?
 
-diff --git a/reftable/merged_test.c b/reftable/merged_test.c
-index 0c301cecced..e49029eed34 100644
---- a/reftable/merged_test.c
-+++ b/reftable/merged_test.c
-@@ -43,7 +43,7 @@ static void write_test_table(struct strbuf *buf,
- 		}
- 	}
- 
--	w = reftable_new_writer(&strbuf_add_void, buf, &opts);
-+	w = reftable_new_writer(&strbuf_add_write, buf, &opts);
- 	reftable_writer_set_limits(w, min, max);
- 
- 	for (i = 0; i < n; i++) {
-@@ -241,7 +241,7 @@ static void test_default_write_opts(void)
- 	struct reftable_write_options opts = { 0 };
- 	struct strbuf buf = STRBUF_INIT;
- 	struct reftable_writer *w =
--		reftable_new_writer(&strbuf_add_void, &buf, &opts);
-+		reftable_new_writer(&strbuf_add_write, &buf, &opts);
- 
- 	struct reftable_ref_record rec = {
- 		.refname = "master",
-diff --git a/reftable/refname_test.c b/reftable/refname_test.c
-index 5e005d6af31..e8ecba1fad9 100644
---- a/reftable/refname_test.c
-+++ b/reftable/refname_test.c
-@@ -31,7 +31,7 @@ static void test_conflict(void)
- 	struct reftable_write_options opts = { 0 };
- 	struct strbuf buf = STRBUF_INIT;
- 	struct reftable_writer *w =
--		reftable_new_writer(&strbuf_add_void, &buf, &opts);
-+		reftable_new_writer(&strbuf_add_write, &buf, &opts);
- 	struct reftable_ref_record rec = {
- 		.refname = "a/b",
- 		.value_type = REFTABLE_REF_SYMREF,
-diff --git a/reftable/reftable-writer.h b/reftable/reftable-writer.h
-index 9d2f8d60555..bdef4813f4c 100644
---- a/reftable/reftable-writer.h
-+++ b/reftable/reftable-writer.h
-@@ -83,7 +83,7 @@ struct reftable_stats {
- 
- /* reftable_new_writer creates a new writer */
- struct reftable_writer *
--reftable_new_writer(int (*writer_func)(void *, const void *, size_t),
-+reftable_new_writer(ssize_t (*writer_func)(void *, const void *, size_t),
- 		    void *writer_arg, struct reftable_write_options *opts);
- 
- /* Set the range of update indices for the records we will add. When writing a
-diff --git a/reftable/reftable_test.c b/reftable/reftable_test.c
-index 69dbfb09fff..1685b9a07bc 100644
---- a/reftable/reftable_test.c
-+++ b/reftable/reftable_test.c
-@@ -52,7 +52,7 @@ static void write_table(char ***names, struct strbuf *buf, int N,
- 		.hash_id = hash_id,
- 	};
- 	struct reftable_writer *w =
--		reftable_new_writer(&strbuf_add_void, buf, &opts);
-+		reftable_new_writer(&strbuf_add_write, buf, &opts);
- 	struct reftable_ref_record ref = { NULL };
- 	int i = 0, n;
- 	struct reftable_log_record log = { NULL };
-@@ -131,7 +131,7 @@ static void test_log_buffer_size(void)
- 						   .message = "commit: 9\n",
- 					   } };
- 	struct reftable_writer *w =
--		reftable_new_writer(&strbuf_add_void, &buf, &opts);
-+		reftable_new_writer(&strbuf_add_write, &buf, &opts);
- 
- 	/* This tests buffer extension for log compression. Must use a random
- 	   hash, to ensure that the compressed part is larger than the original.
-@@ -169,7 +169,7 @@ static void test_log_write_read(void)
- 	struct reftable_block_source source = { NULL };
- 	struct strbuf buf = STRBUF_INIT;
- 	struct reftable_writer *w =
--		reftable_new_writer(&strbuf_add_void, &buf, &opts);
-+		reftable_new_writer(&strbuf_add_write, &buf, &opts);
- 	const struct reftable_stats *stats = NULL;
- 	reftable_writer_set_limits(w, 0, N);
- 	for (i = 0; i < N; i++) {
-@@ -437,7 +437,7 @@ static void test_table_refs_for(int indexed)
- 
- 	struct strbuf buf = STRBUF_INIT;
- 	struct reftable_writer *w =
--		reftable_new_writer(&strbuf_add_void, &buf, &opts);
-+		reftable_new_writer(&strbuf_add_write, &buf, &opts);
- 
- 	struct reftable_iterator it = { NULL };
- 	int j;
-@@ -534,7 +534,7 @@ static void test_table_empty(void)
- 	struct reftable_write_options opts = { 0 };
- 	struct strbuf buf = STRBUF_INIT;
- 	struct reftable_writer *w =
--		reftable_new_writer(&strbuf_add_void, &buf, &opts);
-+		reftable_new_writer(&strbuf_add_write, &buf, &opts);
- 	struct reftable_block_source source = { NULL };
- 	struct reftable_reader *rd = NULL;
- 	struct reftable_ref_record rec = { NULL };
-diff --git a/reftable/stack.c b/reftable/stack.c
-index 3cdb6e8ed33..2e3fd8db1dd 100644
---- a/reftable/stack.c
-+++ b/reftable/stack.c
-@@ -39,7 +39,7 @@ static void stack_filename(struct strbuf *dest, struct reftable_stack *st,
- 	strbuf_addstr(dest, name);
- }
- 
--static int reftable_fd_write(void *arg, const void *data, size_t sz)
-+static ssize_t reftable_fd_write(void *arg, const void *data, size_t sz)
- {
- 	int *fdp = (int *)arg;
- 	return write(*fdp, data, sz);
-diff --git a/reftable/test_framework.c b/reftable/test_framework.c
-index a5ff4e2a2d2..e5e39fe8b13 100644
---- a/reftable/test_framework.c
-+++ b/reftable/test_framework.c
-@@ -15,9 +15,3 @@ void set_test_hash(uint8_t *p, int i)
- {
- 	memset(p, (uint8_t)i, hash_size(SHA1_ID));
- }
--
--int strbuf_add_void(void *b, const void *data, size_t sz)
--{
--	strbuf_add((struct strbuf *)b, data, sz);
--	return sz;
--}
-diff --git a/reftable/test_framework.h b/reftable/test_framework.h
-index 5fdc9519a5a..c04925ea11d 100644
---- a/reftable/test_framework.h
-+++ b/reftable/test_framework.h
-@@ -46,8 +46,4 @@ license that can be found in the LICENSE file or at
- 
- void set_test_hash(uint8_t *p, int i);
- 
--/* Like strbuf_add, but suitable for passing to reftable_new_writer
-- */
--int strbuf_add_void(void *b, const void *data, size_t sz);
--
- #endif
-diff --git a/reftable/writer.c b/reftable/writer.c
-index d42ca8afac1..ca3b127f83d 100644
---- a/reftable/writer.c
-+++ b/reftable/writer.c
-@@ -118,7 +118,7 @@ static void writer_reinit_block_writer(struct reftable_writer *w, uint8_t typ)
- static struct strbuf reftable_empty_strbuf = STRBUF_INIT;
- 
- struct reftable_writer *
--reftable_new_writer(int (*writer_func)(void *, const void *, size_t),
-+reftable_new_writer(ssize_t (*writer_func)(void *, const void *, size_t),
- 		    void *writer_arg, struct reftable_write_options *opts)
- {
- 	struct reftable_writer *wp =
-diff --git a/reftable/writer.h b/reftable/writer.h
-index 4921c249d06..09b88673d97 100644
---- a/reftable/writer.h
-+++ b/reftable/writer.h
-@@ -15,7 +15,7 @@ license that can be found in the LICENSE file or at
- #include "reftable-writer.h"
- 
- struct reftable_writer {
--	int (*write)(void *, const void *, size_t);
-+	ssize_t (*write)(void *, const void *, size_t);
- 	void *write_arg;
- 	int pending_padding;
- 	struct strbuf last_key;
-diff --git a/strbuf.h b/strbuf.h
-index 223ee2094af..e3ae5b8a9d3 100644
---- a/strbuf.h
-+++ b/strbuf.h
-@@ -290,6 +290,18 @@ void strbuf_add_commented_lines(struct strbuf *out,
-  */
- void strbuf_add(struct strbuf *sb, const void *data, size_t len);
- 
-+/**
-+ * Like strbuf_add() but emulates write() for APIs that need
-+ * it. Returns the passed-in `len` as-is. The `void *` is really a
-+ * `struct strbuf *`.
-+ */
-+static inline ssize_t strbuf_add_write(void *sb, const void *data,
-+				       size_t len)
-+{
-+	strbuf_add(sb, data, len);
-+	return len;
-+}
-+
- /**
-  * Add a NUL-terminated string to the buffer.
-  *
+    - Is `--objects` redundant if we have `--show-blobs`, or would
+      `--objects --show-blobs` list all objects regardless of whether
+      they're blobs or not?
+
+    - What would happen if the user says `--show-blobs --no-objects`?
+
+    - Are these options mutually exclusive?
+
+We avoid all these questions by just adding it as a filter.
+
+Furthermore, the filter also allows future iterations which build on top
+of this. If we had a combined OR filter in addition to the existing
+combined AND filter, the user could say "Give me all blobs which aren't
+bigger than a specific size PLUS all trees with a depth smaller than 5
+PLUS all commits and tags". It's not like I'd know of a specific usecase
+for this right now, but I think the potential of having such filters in
+the future is a plus.
+
+Patrick
+
+--HMEeKcT8JnYwVmZn
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmB1UPQACgkQVbJhu7ck
+PpRN4g//ZoZvD1hN/4B1Tpqg9pvCIniSr11SLzySoRxCHy+eKUrMIE1woXgF/8M/
+0wpDAK0hkA1i54E3zz0OutwqRHL1+2NbRT9sXvmvpTtBeHPhioUobA12v3i9uCnK
+2itHjYADlUE3eoHRLGlxyjOAYebCxSLF2Xp4WJueYjTKom9VNwoTJ7PK8lWGv5tN
+k/7FM1kYlTc/kHjlHzRuw0U9mA6Nm0+iv/1Hbh/rctp4MfSylENFwEGHaaMMaiQE
+bvo96561XWy1L/Xu2kCzY3uw8hlh2bTELTMsoKcQT38qKs3c4cdR4net0vXwhVLC
+vUSGCX6bQ5KAr+LJG3bwTksPkK1DnqPZ2PkGDFCrGw9G+uHUahs+ZloX/WqqKnPI
+5qyMKtMxxQVDa4qRgX+bHe0YqCovajlfWK8QLMltr65Qn0wTYxtfCJwBKcOPH12t
+qaiOtQullbnO939wBkRczSD1iUJLj3RS01GA+tRj4DBu6E3NEwGVF0hStTtGIoda
++J5XDDGWSqccfXIf7zXabQQoyqlHvZSFKZ6Bx+j/mU0Ddc2FA4STXo1LSbj+d4KM
+/cgY0rp6MvrCgNYiKDfElq12IOOobMC5hFbUdLBCyvJN1MflrHp1QBLAchBgcLal
+Kxa+7C3NgMoV8f+7MuJoq0UeZ0Za36/vOc5z+THjw08pVCP2ApQ=
+=/Gzz
+-----END PGP SIGNATURE-----
+
+--HMEeKcT8JnYwVmZn--
