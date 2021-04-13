@@ -2,110 +2,163 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C7A5C43460
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 12:02:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9B44C433ED
+	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 12:03:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 15EB2613AB
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 12:02:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C83AC613AB
+	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 12:03:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344056AbhDMMC6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Apr 2021 08:02:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54830 "EHLO
+        id S1344048AbhDMMDV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Apr 2021 08:03:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54914 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238034AbhDMMC5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Apr 2021 08:02:57 -0400
-Received: from mail-vs1-xe2b.google.com (mail-vs1-xe2b.google.com [IPv6:2607:f8b0:4864:20::e2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28722C061574
-        for <git@vger.kernel.org>; Tue, 13 Apr 2021 05:02:38 -0700 (PDT)
-Received: by mail-vs1-xe2b.google.com with SMTP id 2so8374099vsh.4
-        for <git@vger.kernel.org>; Tue, 13 Apr 2021 05:02:38 -0700 (PDT)
+        with ESMTP id S237609AbhDMMDU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Apr 2021 08:03:20 -0400
+Received: from mail-il1-x129.google.com (mail-il1-x129.google.com [IPv6:2607:f8b0:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29549C061574
+        for <git@vger.kernel.org>; Tue, 13 Apr 2021 05:03:00 -0700 (PDT)
+Received: by mail-il1-x129.google.com with SMTP id z9so13837974ilb.4
+        for <git@vger.kernel.org>; Tue, 13 Apr 2021 05:03:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=dXlE5bDiiK+S06C1JTWcrrr60+yNRGu5SFzKeGdx4S4=;
-        b=LIHoFc7nsxZvN19Vit9zqBxewcYlSi/mciXXofEy3xDJQix0qEjl6V6jLHdKT0AKMN
-         3rC6lz7ruVVprfZ0idjg5kxIPg7kI8zckzsCJZy0C9XLhIX0SHrKGK2sP0bnsKx+OTTb
-         pnsKtzP0jQKYA8ot2n9kFBaXg+ZtpEJHQoJz6hz9QC62DAljGUl1uAs/UlKhx5TFhk89
-         DeOLvP9rieEbXndkmRW6CTWjZG3vd5vQUPAtq2cqtLoCkKAwKrpa0crNGjSzp/Wq86WB
-         dlnmV8oPvivrIIYKYq9hfylPeXN/18P5Srh27vnWTOFTb6LL4q43Ruon7fZnvj0WEcrq
-         fLIQ==
+        bh=OlzryL7+7MLXOm/8WpEo75Fr7dgllHoZXSC3mdrH4JY=;
+        b=q7HmfPsx0y66MFZxMqVB1qD04eMHokxofLiy2TzizJGtq32EVQfIjht51I1wRjtFRm
+         bslniFREQ4d6O82sd9Uc4SzNKR786by8IO3mDzA3mr/CEfAKpr7Nsz7UeueDozcGzy5/
+         grPSDaPVYdTUp8wFlrdmt2LEohJQB2ogeZJVLkDs0f57/8efIZoEqop2qQbagihCSrfi
+         0f+e97chWeBRUIP2bXdiioijQFtqwchhnb2OrMXRhFGi4WpeeL0hk6D/7+jRV3kK8FYi
+         469NvD4e6XYRjQGnMkyTXXbY4Rw9YuM2jlDMrEq4+ZQ6moatknncQmmKMJOOuh0y4owt
+         5PzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=dXlE5bDiiK+S06C1JTWcrrr60+yNRGu5SFzKeGdx4S4=;
-        b=Oyz0VFy87vg1w+U48BG0BWyjf49I0UFR8Kt6v2t5erSs+rQARq97dM/xeJDgGqBigl
-         v5r28GcvCyGWS0Gkjw/JSOnRAnVr6FBED4bEiarsrTjbuIoJBo95x0S781zkCKbD9DnN
-         AAFMATK+AigTw8zlytSaljVveKSm2mSuTCgfQClwxMdsfRzq9aS5A1GUC4o2tIwyeRTC
-         8Q5hXNlO3301AwDT1ZKPrDBVP3SrnpeMrJMyKunz85OJ7VJkBKJ/9gjEIkdfjHdqLD54
-         AZxXWCGOdMC9Bv1H3D8ANG6cUZpKmQGnLcTXEVHiwgV8Lc3HAxBu3K/QEAdAZB+kAxKM
-         Lpqg==
-X-Gm-Message-State: AOAM532D85ucJSjcs/TjiPkV0h0MseV1BrrXcFb9bbUofWR4AmkWLvRh
-        iAVGFR/eXwrZiT1bv2XI+wcaAWzd8NxPSMf8bCjhTmtw4kw=
-X-Google-Smtp-Source: ABdhPJx8kPLs/l7qrAH0irbivd/gmrCBTVuGkgIn9ST7pw9tdKDRElnXKiwXISTN+3452kw7XW+En2DsQFL7wVacNRU=
-X-Received: by 2002:a67:e34e:: with SMTP id s14mr5169936vsm.50.1618315357152;
- Tue, 13 Apr 2021 05:02:37 -0700 (PDT)
+        bh=OlzryL7+7MLXOm/8WpEo75Fr7dgllHoZXSC3mdrH4JY=;
+        b=WQzWFl7fTwOQxDXXiAAMzzXle1jJnRgTFVRLr9de4ujDFv8jsea+WSxM297rRNahaW
+         halz4LcvKxtg5CrWAWMcfZQuQ3o1JAWd9rOlnDEqX46dp6DFKkoosxxdvDGMeG8/UZR3
+         edDoOiC9btwLHAblpB9+b4Dq/ELuJ5BBCoG37gJvEsawcTbyjJkssJp+dU2NvKoMQivf
+         l/w8KPAJHCKOa1B/ZbKwoM4Yer3CeAlm8NJGg1hxJOgGqZ7zLyKB5hrzZIuhoZX5wX6b
+         HccpYvuUGEfes1UkOxlKq4dKm7HdOgYAoJSFz+67oWr43qoDe+FmwJekNZlZKP4H0TYe
+         PAGg==
+X-Gm-Message-State: AOAM532puFYFztQJuVFlCmJaOluUjcVNqOiNqzk2DPGimbxkksIgdVU0
+        DdgX0HHNcNlCN+aoJKm1cor+XTI19GOjRcD8HPEz3xU6FNsmcDtBIiIl6Q==
+X-Google-Smtp-Source: ABdhPJzgDQLtK3HFMj7oCQHWnDtj2Oz+nCseFK8JVJnhjQTYxA+TEj0nYDMRB7c+B68tGfiq1YuT+bbzpLNZ6vdTJGY=
+X-Received: by 2002:a92:d308:: with SMTP id x8mr27032063ila.301.1618315379585;
+ Tue, 13 Apr 2021 05:02:59 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.1002.git.git.1618255954484.gitgitgadget@gmail.com>
- <xmqq4kgbb2ic.fsf@gitster.g> <CAFQ2z_MnZOfo4Bt6SsRJnL+F70r9wr_jYSf2KGvcvyX-8PfVRQ@mail.gmail.com>
-In-Reply-To: <CAFQ2z_MnZOfo4Bt6SsRJnL+F70r9wr_jYSf2KGvcvyX-8PfVRQ@mail.gmail.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Tue, 13 Apr 2021 14:02:25 +0200
-Message-ID: <CAFQ2z_OMUdi4D3Jg3rsPr_Q-VeRptdiEOiYOL2kmyuBuvZLCjg@mail.gmail.com>
-Subject: Re: [PATCH] refs: print errno for read_raw_ref if GIT_TRACE_REFS is set
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
+References: <pull.913.v8.git.1617975462.gitgitgadget@gmail.com>
+ <pull.913.v9.git.1618245568.gitgitgadget@gmail.com> <7f645ec95f48a206311973ee45578ba14ac58b7f.1618245568.git.gitgitgadget@gmail.com>
+ <xmqqsg3vb51n.fsf@gitster.g> <CAP8UFD1r2kUaKbjFcRn_FGxz5=hvwY+DHdmPKR61cNdHzBe26A@mail.gmail.com>
+In-Reply-To: <CAP8UFD1r2kUaKbjFcRn_FGxz5=hvwY+DHdmPKR61cNdHzBe26A@mail.gmail.com>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Tue, 13 Apr 2021 20:02:47 +0800
+Message-ID: <CAOLTT8TB9UF5z-51pLxdkRUxo5-w2+_U_e1wpDAdzBBmT3Og7w@mail.gmail.com>
+Subject: Re: [PATCH v9 2/2] [GSOC] trailer: add new .cmd config option
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 13, 2021 at 1:58 PM Han-Wen Nienhuys <hanwen@google.com> wrote:
+Hi, Christian and Junio,
+
+Christian Couder <christian.couder@gmail.com> =E4=BA=8E2021=E5=B9=B44=E6=9C=
+=8813=E6=97=A5=E5=91=A8=E4=BA=8C =E4=B8=8B=E5=8D=883:33=E5=86=99=E9=81=93=
+=EF=BC=9A
 >
-> On Mon, Apr 12, 2021 at 11:45 PM Junio C Hamano <gitster@pobox.com> wrote=
+> On Mon, Apr 12, 2021 at 10:51 PM Junio C Hamano <gitster@pobox.com> wrote=
 :
-> > > @@ -251,7 +252,9 @@ static int debug_read_raw_ref(struct ref_store *r=
-ef_store, const char *refname,
-> > >               trace_printf_key(&trace_refs, "read_raw_ref: %s: %s (=
-=3D> %s) type %x: %d\n",
-> > >                       refname, oid_to_hex(oid), referent->buf, *type,=
- res);
-> > >       } else {
-> > > -             trace_printf_key(&trace_refs, "read_raw_ref: %s: %d\n",=
- refname, res);
-> > > +             trace_printf_key(&trace_refs,
-> > > +                              "read_raw_ref: %s: %d (errno %d)\n", r=
-efname,
-> > > +                              res, errno);
-> > >       }
 > >
-> > OK.  Between trace_printf_key() and the return of the call to
-> > read_raw_ref() method of the ref backend is only an "if (res =3D=3D 0)"
-> > condition and I do not see anything that might clobber errno.
+> > "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> >
+> > > +For consistency, the $1 is also passed, this time with the empty str=
+ing,
+> > > +in the command when the command is first called to add a trailer wit=
+h
+> > > +the specified <token>.
+> >
+> > I guess the same question as 1/2 applies to this part.  I am not
+> > sure what "consistency" the behaviour of calling the configured
+> > command with no argument is trying to achieve.  To me, .cmd doing
+> > this may be for consistency with .command but I am not sure why
+> > the consistency is even desirable.
 >
-> I don't want to bet on that. Let me send a second round.
+> It might be desirable to make it easier for people to migrate from
+> ".command" to ".cmd". I agree this is debatable, but I don't see a big
+> downside in it. Maybe, if no argument was passed at all the first time
+> the command is called instead of the empty string, the command could
+> then know that it's called for the first time. I am not sure this
+> would be very helpful in practice though.
+>
 
-oh, ugh.  In email, there are two calls, but one is prefixed with '-'.
+If i'm not wrong, Christan meant that this command must run so it's
+"consistency", and Junio thinks this "consistency" is not needed.
 
-Nevertheless, a bit of paranoia doesn't hurt here.
+It is true that there is not much harm in keeping `.cmd` at the behavior
+of `.command` now. But I remember the `trailer.<token>.runmode` that
+Christan said before, perhaps adding it in the subsequent iterations can
+solve Junio's doubts. Sometimes I also confirm that the behavior of
+`git interpret-trailers` is very strange too.
 
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
+> > > +$ cat ~/bin/gcount
+> > > +#!/bin/sh
+> > > +test -n "$1" && git shortlog -s --author=3D"$1" HEAD || true
+> > > +$ git config trailer.cnt.key "Commit-count: "
+> > > +$ git config trailer.cnt.ifExists "replace"
+> > > +$ git config trailer.cnt.cmd "~/bin/gcount"
+> > > +$ git interpret-trailers --trailer=3D"cnt:Junio" <<EOF
+> > > +> subject
+> > > +>
+> > > +> message
+> > > +>
+> > > +> EOF
+> > > +subject
+> > > +
+> > > +message
+> > > +
+> > > +Commit-count: 22484     Junio C Hamano
+> > > +------------
+> >
+> > This and the other (omitted) example demonstrates how the initial
+> > "empty" invocation is useless by using "replace".  Which also means
+> > that you cannot add more than one trailer of the same <key> with the
+> > mechanism (since the older ones are replaced with the latest).
+>
+> You can add more than one trailer with the same key if you don't use
+> "replace" but use "--trim-empty" on the command line, so that an empty
+> trailer added by the initial invocation is removed. And we can later
+> add a `trailer.<token>.runMode` to remove the initial invocation.
+>
+
+Yes, something like:
+
+trailer.see.command=3Decho "$ARG"
+
+git interpret-trailers --trim-empty --trailer=3D"see =3D lll"
+--trailer=3D"see:jj"</dev/null
+
+see: lll
+see: jj
+
+> > The code change and the test change are consistent with the design,
+> > though.
+>
+> Yeah, this patch looks good to me now.
+>
+> Thanks!
+
+So is there anything else should I improve?
+
+Thanks.
 --
-
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
-
-Registergericht und -nummer: Hamburg, HRB 86891
-
-Sitz der Gesellschaft: Hamburg
-
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+ZheNing Hu
