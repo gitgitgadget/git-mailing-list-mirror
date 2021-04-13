@@ -2,105 +2,135 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 07DC1C433ED
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 20:38:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C8C1BC433ED
+	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 20:42:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CC53061131
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 20:38:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A563A61154
+	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 20:42:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232249AbhDMUiZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Apr 2021 16:38:25 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:59940 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237029AbhDMUiX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Apr 2021 16:38:23 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1529512365F;
-        Tue, 13 Apr 2021 16:38:03 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=iUvPbKU53hyhTgJOB4m0asQh68g=; b=CzXfR9
-        Pqo6REOUvOj1xUWnuUjyXXf4Sx0xvCaO49EofPkyJD4wNUuAFhxMF0WdDKyXx3bX
-        eh3AHZqoPrf3ho+OwRubfoyjlZlDCRDBV7op4vRuje9bb/dbQs/45fpT1Aigl82S
-        tGT2tzF3QVy/EhBMy/ezCcXmFvmD4JYxTkBQE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=EZEzqx9StyX7uvLyKWhzyH/0uTOT9NGM
-        D8YkTL8HZVFpxGqObwtN+Cdr8jBUV5dAzeWUsBa+gnNtAiTl7Gxqj6xmZhQpWoY7
-        GXiAwfkjDORosGd8KQru9CP1TM50ZWyWvQeT9PJcykq4m5euNIEt0JIJfa3YdRAH
-        EnAaZWAEYOI=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0D11B12365D;
-        Tue, 13 Apr 2021 16:38:03 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2AFB1123658;
-        Tue, 13 Apr 2021 16:38:00 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Sam Bostock <sam.bostock@shopify.com>
-Cc:     git@vger.kernel.org
-Subject: Re: `git fetch` not updating 'origin/HEAD' after branch rename
-References: <CAHwnEogvmTZ-VS5GksoGEiyo3EHO+At+xeWa3frXUESD3HicnQ@mail.gmail.com>
-Date:   Tue, 13 Apr 2021 13:37:58 -0700
-In-Reply-To: <CAHwnEogvmTZ-VS5GksoGEiyo3EHO+At+xeWa3frXUESD3HicnQ@mail.gmail.com>
-        (Sam Bostock's message of "Tue, 13 Apr 2021 16:25:32 -0400")
-Message-ID: <xmqqlf9lly3d.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S231902AbhDMUma (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Apr 2021 16:42:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55888 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230281AbhDMUma (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Apr 2021 16:42:30 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3247BC061574
+        for <git@vger.kernel.org>; Tue, 13 Apr 2021 13:42:10 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id x7so17702360wrw.10
+        for <git@vger.kernel.org>; Tue, 13 Apr 2021 13:42:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:subject:in-reply-to:references:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=aTeBZSUHKR9C1cDA5Fnj9Rt5HJG10zw5vtUF77goJKw=;
+        b=vhjyy8TJTEohTZIUpyAi2i7uimEADbAIpncZojHgLdpMDRx13YsJiMl/vLPxtNXWAl
+         ObTt1Ti3A6Hu7NjClszKL8iTAdD8ONOQAMqybVrnliL2nzQqGM2eoCMcUbHligGJnDf1
+         4gsT7xxgvBVNLeaKpkJ8rX3lFicfbsHmYiAuAVP/blBqgb3Fji3lFhLI78YP5zrxm4jZ
+         E4ZuLI68DyqmDTNF9SdMLhjXfg/a5RsI0ziZs+D4K2JoWgWonmIVX0Rofx8vOGvVa0c+
+         BB5tj0qUzakhAic+mMvoFfFBBLimLEUvyNPUEQj0+ZuE9RtRoVfcFl6Oo1SFMzLfGk+Q
+         bdXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:subject:in-reply-to:references:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=aTeBZSUHKR9C1cDA5Fnj9Rt5HJG10zw5vtUF77goJKw=;
+        b=jY53HaqQAazf25HuPwVW+YmpyJ8O386ILrQARmXzRP9ORsB5dJdgFlrlkqAg+WUMm5
+         AK+HY+Ndqn6oAt5so7XSA3/MHnX5kx4eX3RhcvXF50y6c0d9ad30KtsEnYBfOjYOJYWp
+         kEB6jstg7zHB51nrWrZE8V8QBxAQtvhuIacNjlUldIxB8KaeGx+lDLYm4o8Y7YP1Adq9
+         9IsvZ7SeqPjIKore05Yg08WurkIJ0WnVQLaBQrgeBfYu8RKHBOLMfAUZ1hR4BfTWqbkQ
+         gfnmbcRKgNOg1QzT/B2tI8ETjvuOdG/yRyBaTH20wMeNzPgidS5v1WSbHgz1X7Mrwq2V
+         beJg==
+X-Gm-Message-State: AOAM532tsyfUnCP6uo8D2amw0cRh2f3r56n3C8u1aB2I2jP7gXsVMmRm
+        pPFWgKy6KGm0voksosBcr5Y0WoBB7vImEQ==
+X-Google-Smtp-Source: ABdhPJwB+GxR1yvWfAcAS9cyWYc65+jKun2jZEWutv5UxLWiY0JlRU9KOaKZF+cfVqu7hgaLj2Vtrg==
+X-Received: by 2002:a5d:40cf:: with SMTP id b15mr2536305wrq.162.1618346528562;
+        Tue, 13 Apr 2021 13:42:08 -0700 (PDT)
+Received: from Inspiron (2a01cb04010c42008529471c2a12c435.ipv6.abo.wanadoo.fr. [2a01:cb04:10c:4200:8529:471c:2a12:c435])
+        by smtp.gmail.com with ESMTPSA id u6sm3865529wml.23.2021.04.13.13.42.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Apr 2021 13:42:08 -0700 (PDT)
+From:   Firmin Martin <firminmartin24@gmail.com>
+To:     =?utf-8?Q?Jean-No=C3=ABl?= Avila <avila.jn@gmail.com>,
+        git <git@vger.kernel.org>
+Subject: Re: [RFC PATCH v1 00/13][GSoC] doc: (monospace) apply
+ CodingGuidelines on a large-scale
+In-Reply-To: <d2e78646-6735-2a27-735c-331de6411ca2@gmail.com>
+References: <20210409040301.3260358-1-firminmartin24@gmail.com>
+ <d2e78646-6735-2a27-735c-331de6411ca2@gmail.com>
+Date:   Tue, 13 Apr 2021 22:42:06 +0200
+Message-ID: <87h7k9hq75.fsf@Inspiron.i-did-not-set--mail-host-address--so-tickle-me>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 230C55AE-9C98-11EB-9D8B-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sam Bostock <sam.bostock@shopify.com> writes:
+Hi Jean-No=C3=ABl,
 
-> Hopefully I followed the instructions on https://git-scm.com/community
-> correctly to report this bug.
+Jean-No=C3=ABl Avila <avila.jn@gmail.com> writes:
+
+> Le 09/04/2021 =C3=A0 06:02, Firmin Martin a =C3=A9crit=C2=A0:
+>> This patch series aims to make the documentation fully compliant to the
+>> CodingGuidelines regarding monospace font. After it, new contributors
+>> who just want to change a little portion of the documention could just
+>> look around how it has been done without being confused by the
+>> inconsistency between the documentation and the CodingGuidelines.
 >
-> Long story short, it seems to me that `git fetch` should update
-> "refs/remotes/origin/HEAD" when the upstream HEAD changes, but it
-> doesn't. See my filled out bug report below.
+>
+> Thank you for tackling the task of formating the docu and directing to
+> CodingGuidelines for some markup rules. It appears that the last rule
+> about backticks is wrong with late Asciidoctor, for which backticks are
+Thanks. As a new Git contributor, I used to think that we don't use asciido=
+ctor,
+until I see in Documentation/Makefile:
 
-That is working as intended.
+    ifdef USE_ASCIIDOCTOR
+    ASCIIDOC =3D asciidoctor
+    ...
+    ASCIIDOC_EXTRA +=3D -acompat-mode -atabsize=3D8
+    ...
+    endif
 
-Since its inception, refs/remotes/origin/HEAD has been designed to
-mean "the branch, which the owner of the repository considers the
-most interesting for his/her purpose to keep track in the 'origin'
-remote repository".  It is perfectly OK to repoint origin/HEAD to
-point at another branch you are interested in after you make a
-clone.
+So, we actually use both depending the variable USE_ASCIIDOCTOR.=20
 
-The origin/HEAD happens to be primed by noticing what the remote
-repository sets HEAD to point to their branch upon cloning, but that
-is purely for convenience (i.e. HEAD branch of a repository offered
-for cloning points at a branch the owner of the repository being
-cloned considers the primary branch in his/her repository, and that
-often coincides with the earlier definition of origin/HEAD for those
-who clone such a repository).  It would be a bug to update it to
-something other than you set (either passively by keeping what
-"clone" gave you initially, or actively by updating it to point at
-another branch) upon "git fetch" from the remote.
+> only a font switcher and no longer hold any semantic meaning. This means
+> that double-hyphens may need escaping (see:
+> https://asciidoctor.org/docs/migration/#migration-cheatsheet) when
+> switching style and tools.
 
-There was an idea floated to use the same mechanism used by "git
-clone" to prime origin/HEAD upon "git fetch" when origin/HEAD is
-missing, and I do not think there were many objections against the
-idea, so that may happen sometime in the future.  It may also be
-possible to add "git fetch --reset-remote-tracking-HEAD" option to
-make "fetch" overwrite existing origin/HEAD but somebody has to
-propose such a change, argue for its benefit and get it accepted by
-the community.
+In the helpful link that you provide, it says that the "setext-style
+(i.e., two-line) section title" enables compatibility mode.  As far as I
+can tell, most man pages (git.*.txt) fall under this category, except
+the most important one: user-manual.txt.  But this is in fact not
+relevant, because the snippet above of the Makefile suggests that we
+actually explicitly running asciidoctor in compatibility mode.
 
-Thanks.
+> One other rule worth adding would be that tabs are banned from asciidoc
+> because they cannot always be matched with correct indentation.
 
+I'm an absolute novice regarding AsciiDoc vs. Asciidoctor. But from the
+user guide of AsciiDoc (https://asciidoc.org/userguide.html#_tabs), it says
 
+    By default tab characters input files will translated to 8
+    spaces. Tab expansion is set with the tabsize entry in the
+    configuration file [miscellaneous] section and can be overridden in
+    included files by setting a tabsize attribute in the include macro=E2=
+=80=99s
+    attribute list. For example:
 
+    include::addendum.txt[tabsize=3D2] The tab size can also be set using
+    the attribute command-line option, for example --attribute tabsize=3D4
+
+... and we also explicitly set it to 8 spaces (see above). Could you
+elaborate a bit on the matter ?
+
+Thanks,
+
+Firmin
