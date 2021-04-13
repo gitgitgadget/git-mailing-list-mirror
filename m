@@ -2,302 +2,173 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 69679C433B4
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 18:48:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D6F0C433B4
+	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 19:01:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3B3BF611CE
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 18:48:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2DFD4613C7
+	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 19:01:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347814AbhDMStM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Apr 2021 14:49:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59636 "EHLO
+        id S1347899AbhDMTB4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Apr 2021 15:01:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347803AbhDMStK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Apr 2021 14:49:10 -0400
-Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A823DC061574
-        for <git@vger.kernel.org>; Tue, 13 Apr 2021 11:48:50 -0700 (PDT)
-Received: by mail-pg1-x534.google.com with SMTP id y32so12574698pga.11
-        for <git@vger.kernel.org>; Tue, 13 Apr 2021 11:48:50 -0700 (PDT)
+        with ESMTP id S230397AbhDMTBy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Apr 2021 15:01:54 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15164C061574
+        for <git@vger.kernel.org>; Tue, 13 Apr 2021 12:01:34 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id u21so27625460ejo.13
+        for <git@vger.kernel.org>; Tue, 13 Apr 2021 12:01:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=GVZO3O1gDm69m1qK+EYfTpC1jJ5DIUIYTPuERXNGzfY=;
-        b=V6VJeD/lXnWAXdpKtkhgdLafIBjHajWbdSTcJGLxK+zwvtoMoa3T6wdGhGIJQOb3Ub
-         UZ0E3yPIudKWamBZK5i6VPg/NZldNNiCkJB74YX5qWaKYt9OLBf5zXiajmLaV4jdp5j/
-         1Bgqt18p3UiqbEZ7yR8HXwDBMRNGBkupsDYVOE+ThFmn6VD1/Lik0axxcd1303xoazg4
-         rUvp1otxFUHiCRvs8feW/vGag9ElOTCQylZHFbLe7an4BO8E/4eccoDXe1yVB/yXgbsA
-         DgP+1XRhJxz72uHklFB1bs6bDhGTSZhsocfoAw4Jh12/xDQosylJonMQZIXfOvAwlg4j
-         kHUA==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=iN+qMbmMP1e3L4Qd6Lu0rmMy4kw/OQaX8Nk4msBXB/Q=;
+        b=kjqj5HPs9Jq6yEeS3kq3eywEJvdTNCbIq7g5J1/FZhtmUrY2CsKbekA+3Q/jh6k7jk
+         uYDxpqPyoecnFQAjzh8u9gm+VTn6JkpuoZGbgiqeR6FditAbcZyXk3eVHYT00wvvxjE6
+         EDZjAWXdt3SpvvnMZLsUTReZsppt97ljS4nwTV/YU0txs56iYQjSAN+z2ivibF0yEI/u
+         Am9eXybFLJAYmrNJLKQPTQW2mkjWzEnvuyINVPmQwbTh0yKY05ftiEIe68Gt3vESOm8S
+         +ofS+qQMTQlj/MEdsuine2iow2YcSarEBSGNtuRO0TzkOfcV7N+2N03mPmdjUoSH7QaF
+         lo/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=GVZO3O1gDm69m1qK+EYfTpC1jJ5DIUIYTPuERXNGzfY=;
-        b=GSmkpOxNSrOSfLLgRMTtXTJNS1pOGTvUpIxBzP3NAnL+qN243944QxIjmeNG0AJiaB
-         E68LVfFk2pMTDY89FV8EV9FekDTlXJTNObONOlplKWEf8Nld8SO+hS+SiMFM3zFi4dHv
-         gx0BeyUw2AZd66PIs+WecS/zIiWNdduRll3PkLCpkiUQ/WSMZJCuCQZIxg4z5+1ZPKdX
-         xixeDfCifvy6RyDJaDJyTc7kl80NnCwH3eRDoFEs2sCCQJ2rUJMAH6e6h2NeNXRBCp2g
-         dXnrGI13TlZpn5bDEmcLnPzxaimhvui21owiyolcCJxiQJZKZbuA/uc1MLqxEw4I9xCm
-         kuGw==
-X-Gm-Message-State: AOAM530tZbUbxHFNmt0Z8aIjjwOUS6NOD1iF5H11dm3+bt4xa+B0+779
-        CRDj0GNQHQquxiwnhRcYG9x8Iw==
-X-Google-Smtp-Source: ABdhPJyEhEVve/IqzAblmwDAKGa9MvdBKRcs5nMZETbT1IzIOemnSu16MQGgEP4xBEnMtnN9RqdNdA==
-X-Received: by 2002:a05:6a00:1626:b029:252:930:8ae3 with SMTP id e6-20020a056a001626b029025209308ae3mr1809631pfc.59.1618339729939;
-        Tue, 13 Apr 2021 11:48:49 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:0:f854:cc1c:b809:7daf])
-        by smtp.gmail.com with ESMTPSA id l17sm14577059pgi.66.2021.04.13.11.48.48
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=iN+qMbmMP1e3L4Qd6Lu0rmMy4kw/OQaX8Nk4msBXB/Q=;
+        b=DguMc5Re953mzDNQFDipsJLwFDP5fvbR7el/m0NyZnaMwMRkuVtouF7VL3wcB3+CEy
+         Xqf/ibeFtzziPO7LhtJrfn9krUNaiHJCM2ITB4tYrhFD+E/lzYcQuSz+nhQdYgJPqoq6
+         JJsC3MwbYfoKF3FXZJydyk8xxQ0gXP/+4YohEP1t4MB+iy4kxanbz8g34t/LlR0xEg17
+         Sg8EfDwhYhRNnL9Krnc8b4Q4QiYfAJrpui9IiHPwAlP/ZS4Dolu88vtAeOWN3fRadXZy
+         n9E7OFd+6h7/N+N0eg6tALmacFRlP3gGAcXopoz00BIVBYgI7zcKvfgT8u6dhATmE5R2
+         wx6A==
+X-Gm-Message-State: AOAM531zol+jMGkoVXGUFMNgLNhUdLdh59Orpt/WKhUP7W3myZ5oWDaj
+        ovS3wEETMHALwqIzrBDJkzw=
+X-Google-Smtp-Source: ABdhPJxrc/y87jY1VJID9e6m1KW3qqIwuadoWHKAJiqVt8uUMH+LYJriXq1um41SGHsyP5OFoXTP1Q==
+X-Received: by 2002:a17:906:fa07:: with SMTP id lo7mr17832389ejb.321.1618340492706;
+        Tue, 13 Apr 2021 12:01:32 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id n5sm8524761ejj.73.2021.04.13.12.01.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Apr 2021 11:48:49 -0700 (PDT)
-Date:   Tue, 13 Apr 2021 11:48:44 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
+        Tue, 13 Apr 2021 12:01:32 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: [RFC PATCH 2/2] config: add 'config.superproject' file
-Message-ID: <YHXnjFS/xPn73VzJ@google.com>
-References: <20210408233936.533342-1-emilyshaffer@google.com>
- <20210408233936.533342-3-emilyshaffer@google.com>
- <CAHd-oW4VoBbZHc7cLdn0LPM531qNDGOfwPZdKiKoG4BoRFaqdg@mail.gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] diff tests: rewrite flakyness-causing test "aid"
+References: <patch-1.1-f0542cd902c-20210413T121930Z-avarab@gmail.com>
+ <cover-0.2-00000000000-20210413T122645Z-avarab@gmail.com>
+ <patch-2.2-c2cb52b6605-20210413T122645Z-avarab@gmail.com>
+ <CAHd-oW4G+7z3UM3qjhPp=2oqOPE4a49fweew0n+gheGtQEy5VA@mail.gmail.com>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
+In-reply-to: <CAHd-oW4G+7z3UM3qjhPp=2oqOPE4a49fweew0n+gheGtQEy5VA@mail.gmail.com>
+Date:   Tue, 13 Apr 2021 21:01:31 +0200
+Message-ID: <87fszu2elw.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAHd-oW4VoBbZHc7cLdn0LPM531qNDGOfwPZdKiKoG4BoRFaqdg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 09, 2021 at 11:35:13AM -0300, Matheus Tavares Bernardino wrote:
-> 
-> Hi, Emily
-> 
-> I'm not familiar enough with this code to give a full review and I
-> imagine you probably want comments more focused on the design level,
-> while this is an RFC, but here are some small nitpicks I found while
-> reading the patch. I Hope it helps :)
-> 
-> On Thu, Apr 8, 2021 at 8:39 PM Emily Shaffer <emilyshaffer@google.com> wrote:
-> >
-> > diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-> > index 4b4cc5c5e8..a33136fb08 100644
-> > --- a/Documentation/git-config.txt
-> > +++ b/Documentation/git-config.txt
-> > @@ -48,7 +48,7 @@ unset an existing `--type` specifier with `--no-type`.
-> >
-> >  When reading, the values are read from the system, global and
-> >  repository local configuration files by default, and options
-> > -`--system`, `--global`, `--local`, `--worktree` and
-> > +`--system`, `--global`, `--superproject`, `--local`, `--worktree` and
-> >  `--file <filename>` can be used to tell the command to read from only
-> >  that location (see <<FILES>>).
-> >
-> > @@ -127,6 +127,17 @@ rather than from all available files.
-> >  +
-> >  See also <<FILES>>.
-> >
-> > +--superproject::
-> > +       For writing options: write to the superproject's
-> > +       `.git/config.superproject` file, even if run from a submodule of that
-> > +       superproject.
-> 
-> Hmm, I wonder what happens if a repo is both a submodule and a
-> superproject (i.e. in case of nested submodules). Let's see:
-> 
-> # Create repo/sub/sub2
-> $ git init repo
-> $ cd repo
-> $ touch F && git add F && git commit -m F
-> $ git submodule add ./ sub
-> $ git -C sub submodule add ./sub sub2
-> $ git -C sub commit -m sub2
-> $ git commit -m sub
-> 
-> # Now test the config
-> $ git -C sub/sub2 config --superproject foo.bar 1
-> $ git -C sub/sub2 config --get foo.bar
-> 1
-> $ git -C sub config --get foo.bar
-> <nothing>
-> $ git config --get foo.bar
-> <nothing>
-> 
-> It makes sense to me that `foo.bar` is not defined on `repo`, but
-> shouldn't it be defined on `repo/sub`? Or am I doing something wrong?
-> 
-> (`git -C sub rev-parse --git-dir` gives `.git/modules/sub/`, where
-> indeed there is a config.superproject with `foo.bar` set.)
 
-Yeah, this isn't very surprising. The code does essentially:
+On Tue, Apr 13 2021, Matheus Tavares Bernardino wrote:
 
-  parent_gitdir = git -C ../ rev-parse --git-dir
-  config_parse_order += $parent_gitdir/config.superproject
+> On Tue, Apr 13, 2021 at 9:31 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> <avarab@gmail.com> wrote:
+>>
+>> If a new test is added to this "while read magic cmd" test facility
+>> added in 3c2f75b590c (t4013: add tests for diff/log family output
+>> options., 2006-06-26) but no test file is added it'll fail the first
+>> time, but then succeed on subsequent runs as a new file has been added
+>> in t4013.
+>>
+>> Let's accomplish the same aim in way that doesn't cause subsequent
+>
+> s/in way/in a way/ ?
 
-That is, in the nested submodules case, it's looking at
-.git/modules/sub/config.superproject - but 'sub' is getting its
-superproject config from .git/config.superproject and has no such file
-of its own.
+*nod*
 
-One way I could see to solve it would be to skip the "find parent
-gitdir" thing entirely:
+>> test runs to succeed. If we can't find the file we'll BUG out, and
+>> suggest to the developer that they copy our "expect.new" file over,
+>> unlike the previous "expect" file this won't be picked up on
+>> subsequent runs.
+>>
+>> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+>> ---
+>>  t/t4013-diff-various.sh | 25 +++++++++++++++----------
+>>  1 file changed, 15 insertions(+), 10 deletions(-)
+>>
+>> diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+>> index 67f6411aff9..228ff100c61 100755
+>> --- a/t/t4013-diff-various.sh
+>> +++ b/t/t4013-diff-various.sh
+>> @@ -200,10 +200,12 @@ do
+>>         esac
+>>         test=3D$(echo "$label" | sed -e 's|[/ ][/ ]*|_|g')
+>>         pfx=3D$(printf "%04d" $test_count)
+>> -       expect=3D"$TEST_DIRECTORY/t4013/diff.$test"
+>> +       expect_relative=3D"t4013/diff.$test"
+>> +       expect=3D"$TEST_DIRECTORY/$expect_relative"
+>>         actual=3D"$pfx-diff.$test"
+>>
+>>         test_expect_$status "git $cmd # magic is ${magic:-(not used)}" '
+>> +               test_when_finished "rm $actual" &&
+>
+> Nit: before these two patches, "$actual" was only removed when the
+> test succeeded. So, in case of failure, the failed output files would
+> still be there for debugging. It might be interesting to keep this
+> behavior and only remove "$actual" at the end of the test.
 
-  git -C ../ config --superproject --list >parent_superproject_cfg
-  config_parse_order += parent_superproject_cfg
-  config_parse_order += $my_own_gitdir/config.superproject
+Either I'm missing something or you are, that's how test_when_finished
+works.
 
-The recursion is a little icky, I guess, but submodules are all
-recursive anyway, right? :) Hmm.
+It's skipped under e.g. "--immediate --debug". See b586744a864 (test:
+skip clean-up when running under --immediate mode, 2011-06-27)
 
-> 
-> > diff --git a/builtin/config.c b/builtin/config.c
-> > index f71fa39b38..f0a57a89ca 100644
-> > --- a/builtin/config.c
-> > +++ b/builtin/config.c
-> > @@ -26,7 +26,7 @@ static char key_delim = ' ';
-> >  static char term = '\n';
-> >
-> >  static int use_global_config, use_system_config, use_local_config;
-> > -static int use_worktree_config;
-> > +static int use_worktree_config, use_superproject_config;
-> >  static struct git_config_source given_config_source;
-> >  static int actions, type;
-> >  static char *default_value;
-> > @@ -130,6 +130,8 @@ static struct option builtin_config_options[] = {
-> >         OPT_GROUP(N_("Config file location")),
-> >         OPT_BOOL(0, "global", &use_global_config, N_("use global config file")),
-> >         OPT_BOOL(0, "system", &use_system_config, N_("use system config file")),
-> > +       OPT_BOOL(0, "superproject",
-> > +                &use_superproject_config, N_("use superproject config file")),
-> >         OPT_BOOL(0, "local", &use_local_config, N_("use repository config file")),
-> >         OPT_BOOL(0, "worktree", &use_worktree_config, N_("use per-worktree config file")),
-> >         OPT_STRING('f', "file", &given_config_source.file, N_("file"), N_("use given config file")),
-> > @@ -697,6 +699,12 @@ int cmd_config(int argc, const char **argv, const char *prefix)
-> >         else if (use_system_config) {
-> >                 given_config_source.file = git_etc_gitconfig();
-> >                 given_config_source.scope = CONFIG_SCOPE_SYSTEM;
-> > +       } else if (use_superproject_config) {
-> > +               struct strbuf superproject_cfg = STRBUF_INIT;
-> > +               git_config_superproject(&superproject_cfg, get_git_dir());
-> > +               given_config_source.file = xstrdup(superproject_cfg.buf);
-> > +               given_config_source.scope = CONFIG_SCOPE_SUPERPROJECT;
-> > +               strbuf_release(&superproject_cfg);
-> 
-> Nit: maybe it would be a bit cleaner to replace the xstrdup() +
-> strbuf_release() lines with a single:
-> 
->     given_config_source.file = strbuf_detach(superproject_cfg, NULL);
+Maybe there's some edge case where we'd like to keep the files that it's
+not covering, but then we should patch it to do the right thing, not use
+manual "rm" at the end instead.
 
-Oh nice, thanks!
+>>                 {
+>>                         echo "$ git $cmd"
+>>                         case "$magic" in
+>> @@ -216,16 +218,19 @@ do
+>>                             -e "s/^\\(.*mixed; boundary=3D\"-*\\)$V\\(-*=
+\\)\"\$/\\1g-i-t--v-e-r-s-i-o-n\2\"/"
+>>                         echo "\$"
+>>                 } >"$actual" &&
+>> -               if test -f "$expect"
+>> +
+>> +               if ! test -f "$expect"
+>>                 then
+>> -                       process_diffs "$actual" >actual &&
+>> -                       process_diffs "$expect" >expect &&
+>> -                       test_cmp expect actual
+>> -               else
+>> -                       # this is to help developing new tests.
+>> -                       cp "$actual" "$expect"
+>> -                       false
+>> -               fi
+>> +                       expect_new=3D"$expect.new" &&
+>> +                       cp "$actual" "$expect_new" &&
+>> +                       BUG "Have no \"$expect_relative\", new test? The=
+ output is in \"$expect_new\", maybe use that?"
+>> +               fi &&
+>> +
+>> +               test_when_finished "rm actual" &&
+>> +               process_diffs "$actual" >actual &&
+>> +               test_when_finished "rm expect" &&
+>> +               process_diffs "$expect" >expect &&
+>> +               test_cmp expect actual
+>>         '
+>>  done <<\EOF
+>>  diff-tree initial
+>
+> The rest LGTM, thanks.
 
-> 
-> >         } else if (use_local_config) {
-> >                 given_config_source.file = git_pathdup("config");
-> >                 given_config_source.scope = CONFIG_SCOPE_LOCAL;
-> > diff --git a/config.c b/config.c
-> > index 67d9bf2238..28bb80fd0d 100644
-> > --- a/config.c
-> > +++ b/config.c
-> > @@ -21,6 +21,7 @@
-> >  #include "dir.h"
-> >  #include "color.h"
-> >  #include "refs.h"
-> > +#include "submodule.h"
-> >
-> >  struct config_source {
-> >         struct config_source *prev;
-> > @@ -1852,6 +1853,17 @@ const char *git_etc_gitconfig(void)
-> >         return system_wide;
-> >  }
-> >
-> > +void git_config_superproject(struct strbuf *sb, const char *gitdir)
-> > +{
-> > +       if (!get_superproject_gitdir(sb)) {
-> > +               /* not a submodule */
-> > +               strbuf_reset(sb);
-> 
-> Do we have to reset `sb` here? It seems that get_superproject_gitdir()
-> leaves the buffer empty when we are not inside a submodule.
-
-Since I didn't promise it in the documentation I included the reset
-here, but I see your comment just after this suggesting I should also
-promise it in the documentation ;)
-
-> 
-> > diff --git a/submodule.h b/submodule.h
-> > index 4ac6e31cf1..1308d5ae2d 100644
-> > --- a/submodule.h
-> > +++ b/submodule.h
-> > @@ -149,6 +149,12 @@ void prepare_submodule_repo_env(struct strvec *out);
-> >  void absorb_git_dir_into_superproject(const char *path,
-> >                                       unsigned flags);
-> >
-> > +/*
-> > + * Return the gitdir of the superproject, which this project is a submodule of.
-> > + * If this repository is not a submodule of another repository, return 0.
-> 
-> Nit: it might be nice to say what's the state of `buf` on a 0 return.
-> Perhaps also be more explicit about the return codes? Maybe something
-> like:
-> 
-> "If this repository is a submodule of another repository, save the
-> superproject's gitdir on `buf` and return 1. Otherwise, return 0 and
-> leave `buf` empty."
-
-Seems reasonable.
-
-> 
-> > +int get_superproject_gitdir(struct strbuf *buf);
-> > +
-> >  /*
-> >   * Return the absolute path of the working tree of the superproject, which this
-> >   * project is a submodule of. If this repository is not a submodule of
-> > diff --git a/t/t1311-superproject-config.sh b/t/t1311-superproject-config.sh
-> > new file mode 100755
-> > index 0000000000..650c4d24c7
-> > --- /dev/null
-> > +++ b/t/t1311-superproject-config.sh
-> > @@ -0,0 +1,124 @@
-> [...]
-> > +test_expect_success 'superproject config applies to super and submodule' '
-> > +       cat >.git/config.superproject <<-EOF &&
-> > +       [foo]
-> > +               bar = baz
-> > +       EOF
-> > +
-> > +       git config --get foo.bar &&
-> > +       git -C sub config --get foo.bar &&
-> > +
-> > +       rm .git/config.superproject
-> 
-> Hmm, if this test fails before removing the config.superproject file,
-> couldn't it interfere with other tests (like the 'can --edit
-> superproject config')? Perhaps this and the other similar cleanup
-> removals could be declared inside a `test_when_finished` clause, to
-> ensure they are performed even on test failure.
-
-Oh sure, thanks.
-
-> 
-> > +test_expect_success 'can --unset from super or sub' '
-> > +       git config --superproject apple.species honeycrisp &&
-> > +       git -C sub config --superproject banana.species cavendish &&
-> > +
-> > +       git config --unset --superproject banana.species &&
-> > +       git -C sub config --unset --superproject apple.species
-> > +'
-> 
-> Nice "cross-setting/unsetting" test :)
-> 
-> [...]
-> > +# This test deletes the submodule! Keep it at the end of the test suite.
-> > +test_expect_success 'config.submodule works even with no submodules' '
-> 
-> s/config.submodule/config.superproject/ ?
-Aaauuurgggh :)
-
-Thanks for the nits!
- - Emily
+Thanks a lot for the review!
