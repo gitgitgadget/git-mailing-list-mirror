@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C1914C433ED
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 09:08:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DE31CC433B4
+	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 09:08:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8FACC613B6
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 09:08:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B5355613B6
+	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 09:08:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230406AbhDMJJB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Apr 2021 05:09:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44722 "EHLO
+        id S236736AbhDMJJE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Apr 2021 05:09:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44726 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236736AbhDMJIz (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230229AbhDMJIz (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 13 Apr 2021 05:08:55 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBF64C061756
-        for <git@vger.kernel.org>; Tue, 13 Apr 2021 02:08:32 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id u17so24758723ejk.2
-        for <git@vger.kernel.org>; Tue, 13 Apr 2021 02:08:32 -0700 (PDT)
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDE84C06175F
+        for <git@vger.kernel.org>; Tue, 13 Apr 2021 02:08:33 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id m3so18514343edv.5
+        for <git@vger.kernel.org>; Tue, 13 Apr 2021 02:08:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=5ClaFBbvgyIY+CZsiBOXIMAHg4vYaYlBk7ozkvfWzgk=;
-        b=ZCIVW30B0z0nn37CcV8St67ZbEU0WBep09OrzO+1QzmB6q2GAbQUMKJO2PNwIJ0DJx
-         uuam6Tf70Qlg81L+Nf92dUmZZkyBGB/I2J4ewmtdpjCk532vTJFVQW88gsR/yGBBS8/X
-         cFqrJyQKB+ZnyUQ87OlJaCmiCz7sR4PMlg0twRDe39dgemN+3MQ/aSNDDUyk+bLjWcLc
-         N08ojLo5CIFvJ+t2W4iy+r8QO+UAQJZTru1CeWirt9XRcDImYlrxOkNt8B6/5Z1hMqRn
-         8YGUYnRUz/e8lwh254xH87Zu74nPxOACqfjxMrxoaqw5hK5Wv4T34UXpCVWQG/TLRGAQ
-         XrQw==
+        bh=LMOrHyxOs59oX83kcUuH3Jx8H2gUPvDlypaOfNOkQic=;
+        b=vQSyE0bfSrBZFKOwfuTJVg2+QaVkIYgo0gdEY490oayp2tCark40MDNrEBu6Pye4+7
+         19ql2rj+fgfZOA8My4450mY9nKwV6jpLFggtUUIt23Juh4eJy+xhzrSUIYfswfgpn6ur
+         0ixCSeQZ4oZxCxLc02uQye2lsR+LDArUvRf8n9WSpZ+YBNCFx0c6KLsdsG9jZ8lfnwMG
+         S2ptuD6T/KJ83z4Ey59MO7+dlHMtG3MuhP+m2iMFC46du0k8fsWUfool21GtsmPoWx0u
+         r0PFyD5f1dAt4+mv1KLvKWPRzlcVR++nvmin64jZQOWPOVPCTFblEQiHLVbeFaNXyTNm
+         yW+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=5ClaFBbvgyIY+CZsiBOXIMAHg4vYaYlBk7ozkvfWzgk=;
-        b=uJBVF0B83qnsJCNofFnD1GRkf2bdDgKNTZIidt1W98mwPlRPh50Jwyl+wKB5/i15VP
-         qBh05zwQc8GX0wS/84VhmtceQKJcM65aFtHMpt7DaA1CtnyrZ0Kcv3mzOAsj5phxWmTK
-         Jkx0P5rRNqfIFryIGmEnTA1Xjm86F8pCzoG+MUHmRJuPQp3IcJfkZYqP+yOrh9T12fdT
-         kYSOxuXwa9l+z2LlbgaUQwbrCtuQKBDbAf7//7YKOvwBLEsp2VsGmSF5YLkN4Sl0mS2v
-         wsXOXBm3zxb4cytWZdXmcAfKk8sWfjstftVIzO97RFiN7TO/32E6oPGrkHghiuP0RRy8
-         5VyQ==
-X-Gm-Message-State: AOAM533P7Visj4kuXApOdSUZdYVPQqMADkaJF0D+LDPooYGJPweqxF5i
-        JeOZa04IvgEA5NDGdgVNoeQsGoZ99twCBA==
-X-Google-Smtp-Source: ABdhPJyl0Qbl/M3AKyOmYo5YYyOx2nUpJ64Lw6xVC07GwesRclZKGdEIRn8rvcnNaBx+2Jdb5F1erw==
-X-Received: by 2002:a17:906:8a86:: with SMTP id mu6mr9701465ejc.505.1618304911179;
-        Tue, 13 Apr 2021 02:08:31 -0700 (PDT)
+        bh=LMOrHyxOs59oX83kcUuH3Jx8H2gUPvDlypaOfNOkQic=;
+        b=qH+oG7/00FzZYUFFb8kMdzfckVuIfHmwXQYBxU3pUrpPxm4TApfKQPvnOsughZyago
+         bXhR/+Eha5U41Yi9FEpWH/OHWGhP8BeTDYIjDOiqUzwT5i0P82Gxdlg1HKiEvWFywuDg
+         It9JAAzVe9Ip1cxK2e4LaV9pu/4pvoyLSI02qCIS1dUdjur2I/2/j+JIIIennOKffYtl
+         JXqZ3P7o91/P7cxFkGn00wRTgLawwltjsI9TFSnpVnl01bXZSB+G93wll8FSVMJOKD5y
+         ZHw+I9e8MGTvDzWQ96BKuAPMv9pBBTF0tP5Qdbydvcwz2NUmI6KaHJXXyRyUA9bd3tVr
+         8K5w==
+X-Gm-Message-State: AOAM5315xHnHxnY9DD05F2zj2kgEkp73u7ah48GC6E8wCLkPO+PzETkU
+        SPvityCpWLrKkXusPnUDSRBF7ACAk7L9wQ==
+X-Google-Smtp-Source: ABdhPJziWFQ1E8lNzpyHFTQdXzE//F3vET8Mii9Li89v7acqF7v+0k388/7OuavWMx9cv67ZNybdpg==
+X-Received: by 2002:a50:aad9:: with SMTP id r25mr34053106edc.125.1618304912033;
+        Tue, 13 Apr 2021 02:08:32 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id 28sm8918318edw.82.2021.04.13.02.08.30
+        by smtp.gmail.com with ESMTPSA id 28sm8918318edw.82.2021.04.13.02.08.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Apr 2021 02:08:30 -0700 (PDT)
+        Tue, 13 Apr 2021 02:08:31 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -67,9 +67,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 1/3] usage.c: don't copy/paste the same comment three times
-Date:   Tue, 13 Apr 2021 11:08:19 +0200
-Message-Id: <patch-1.3-2e4665b625b-20210413T090603Z-avarab@gmail.com>
+Subject: [PATCH v2 2/3] api docs: document BUG() in api-error-handling.txt
+Date:   Tue, 13 Apr 2021 11:08:20 +0200
+Message-Id: <patch-2.3-ce78c79c9ac-20210413T090603Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.1.645.g989d83ea6a6
 In-Reply-To: <cover-0.3-00000000000-20210413T090603Z-avarab@gmail.com>
 References: <cover-0.5-00000000000-20210328T022343Z-avarab@gmail.com> <cover-0.3-00000000000-20210413T090603Z-avarab@gmail.com>
@@ -80,61 +80,34 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In ee4512ed481 (trace2: create new combined trace facility,
-2019-02-22) we started with two copies of this comment,
-0ee10fd1296 (usage: add trace2 entry upon warning(), 2020-11-23) added
-a third. Let's instead add an earlier comment that applies to all
-these mostly-the-same functions.
+When the BUG() function was added in d8193743e08 (usage.c: add BUG()
+function, 2017-05-12) these docs added in 1f23cfe0ef5 (doc: document
+error handling functions and conventions, 2014-12-03) were not
+updated. Let's do that.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- usage.c | 17 +++++------------
- 1 file changed, 5 insertions(+), 12 deletions(-)
+ Documentation/technical/api-error-handling.txt | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/usage.c b/usage.c
-index 1b206de36d6..c7d233b0de9 100644
---- a/usage.c
-+++ b/usage.c
-@@ -55,12 +55,13 @@ static NORETURN void usage_builtin(const char *err, va_list params)
- 	exit(129);
- }
+diff --git a/Documentation/technical/api-error-handling.txt b/Documentation/technical/api-error-handling.txt
+index ceeedd485c9..71486abb2f0 100644
+--- a/Documentation/technical/api-error-handling.txt
++++ b/Documentation/technical/api-error-handling.txt
+@@ -1,8 +1,11 @@
+ Error reporting in git
+ ======================
  
-+/*
-+ * We call trace2_cmd_error_va() in the below functions first and
-+ * expect it to va_copy 'params' before using it (because an 'ap' can
-+ * only be walked once).
-+ */
- static NORETURN void die_builtin(const char *err, va_list params)
- {
--	/*
--	 * We call this trace2 function first and expect it to va_copy 'params'
--	 * before using it (because an 'ap' can only be walked once).
--	 */
- 	trace2_cmd_error_va(err, params);
+-`die`, `usage`, `error`, and `warning` report errors of various
+-kinds.
++`BUG`, `die`, `usage`, `error`, and `warning` report errors of
++various kinds.
++
++- `BUG` is for failed internal assertions that should never happen,
++  i.e. a bug in git itself.
  
- 	vreportf("fatal: ", err, params);
-@@ -70,10 +71,6 @@ static NORETURN void die_builtin(const char *err, va_list params)
- 
- static void error_builtin(const char *err, va_list params)
- {
--	/*
--	 * We call this trace2 function first and expect it to va_copy 'params'
--	 * before using it (because an 'ap' can only be walked once).
--	 */
- 	trace2_cmd_error_va(err, params);
- 
- 	vreportf("error: ", err, params);
-@@ -81,10 +78,6 @@ static void error_builtin(const char *err, va_list params)
- 
- static void warn_builtin(const char *warn, va_list params)
- {
--	/*
--	 * We call this trace2 function first and expect it to va_copy 'params'
--	 * before using it (because an 'ap' can only be walked once).
--	 */
- 	trace2_cmd_error_va(warn, params);
- 
- 	vreportf("warning: ", warn, params);
+ - `die` is for fatal application errors.  It prints a message to
+   the user and exits with status 128.
 -- 
 2.31.1.645.g989d83ea6a6
 
