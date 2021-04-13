@@ -2,155 +2,190 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-23.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FCFAC433B4
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 18:05:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B3141C43461
+	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 18:05:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 663EE613B1
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 18:05:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 904DB613CE
+	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 18:05:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345365AbhDMSF2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Apr 2021 14:05:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49836 "EHLO
+        id S1347529AbhDMSGR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Apr 2021 14:06:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50012 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244907AbhDMSF2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Apr 2021 14:05:28 -0400
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DA45C061574
-        for <git@vger.kernel.org>; Tue, 13 Apr 2021 11:05:08 -0700 (PDT)
-Received: by mail-pj1-x1032.google.com with SMTP id z22-20020a17090a0156b029014d4056663fso9437669pje.0
-        for <git@vger.kernel.org>; Tue, 13 Apr 2021 11:05:08 -0700 (PDT)
+        with ESMTP id S1347524AbhDMSGR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Apr 2021 14:06:17 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D36ADC061574
+        for <git@vger.kernel.org>; Tue, 13 Apr 2021 11:05:56 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id d21so354315edv.9
+        for <git@vger.kernel.org>; Tue, 13 Apr 2021 11:05:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=1yflgOZO0lkIcyTf5Ci0FnLRDANn2xi2BbM/yPaTIig=;
-        b=CqOII00Q9RolSwI0VBY9Prezk/Qxfko3JZZ3pJBKWKLRw/sT7DD/f6NLpTUwxG0arF
-         nwYFGsXFpA7yGpY1R6HnuXyUiMJmqTn2yDUa7y2Gt5XeOSXElpLZgRqjVRdfFsQZJ4eK
-         +ZDJBxx2hqfW/U4JLBm4OcyIQ/Yp2dqSdhA++Ezq/39l5V+Y018TFa2cMDgDYufnCu0+
-         GCuMVMfbGXGIozXT043XiJSFsVr7a768bAy5u7SloNlg5kLAoneIJ2yFeuoUegktW9Sa
-         nXGrXKyNq7tuxKAT0pq+AVAGPV6rfbSqEcHbrwuAe4WvzxjaOaO5DYsjYdg/FVxME8Aq
-         nRyQ==
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=H45h3XtcA/1YRTCWA1bGKxX9ue22xLkdX2c2XoyEgRs=;
+        b=N0pFubQmjsCsRsHOR4RIBnTvC4MFh7c9l1ZcDBd6dt2c3Jv/eQsl6RmSnUhRf+VVoK
+         4ouxGk+kJ5vEaMjfqx+BMeJPJHsapn2Nv87ZG8LoVEDTF9WnqZdW8849eAaAuXyi2Kx3
+         //6LCRxZavdfoyPrMiFlg6QsjEAxdCjS5zpJAj/8IQy+9UQlqEBasLn/tMo2f4YJc+5H
+         Kxpmknava05FjUS9ACscicv2+1O1raeVur2WK9Yo9xP/oxmnXnDEQ76VSVDZKc2khPb0
+         zzo7OjmzLIEVR5Y+PJZBiKuZnudN13bf3NyLrtm5UdJL1Sq+lAGm/rhM9AF+vbrCysNy
+         oVgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=1yflgOZO0lkIcyTf5Ci0FnLRDANn2xi2BbM/yPaTIig=;
-        b=Lc0Tt0VrwWtNm5odP1jDUJS4Q0lBPN5Gb9+7gHP0C8i1XUyjj2TPe63vmg7ss4ibGP
-         TM0YTFfD86O2yRD93+IbfbwG4iD0pWJh39hPcaP/KdUXcIXe7IVY1RdiT5qtTPQe3Pm9
-         coSVOEtCL3tuYfEXhBXrdnG4FfxN1FqFBLblrnm4CNq8PBzJ+2gasANmngNasexH5jZz
-         KzhP3xsjaNG1N17X6ktDEokAbREjPZ0Df4455w+SV5B+QpfpYR3NMHthD824PTcvzFPi
-         Tf67muuF6//+1Am1wqLLdf2FPJnD/iobX1QfQQCZ4sr5jm4kBMymgtvDNaNP6ecWStGB
-         Owrw==
-X-Gm-Message-State: AOAM533GUaPI3TpHelpbcKeqzMMYZZt6Ik451VBkkQJj4+WvYM27PgPz
-        WYTugiHl31bpxnyWaiyii47uIaM3pbbWvg==
-X-Google-Smtp-Source: ABdhPJwdxGWAjdevHhs+Bszi/NcFwr9LIx0AHJHf6p+P6FVBGYK3cDJhpE5CXMu4tBvnJI0bypA14w==
-X-Received: by 2002:a17:90a:db4b:: with SMTP id u11mr1307785pjx.154.1618337107478;
-        Tue, 13 Apr 2021 11:05:07 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:0:f854:cc1c:b809:7daf])
-        by smtp.gmail.com with ESMTPSA id v1sm2796540pjt.1.2021.04.13.11.05.06
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=H45h3XtcA/1YRTCWA1bGKxX9ue22xLkdX2c2XoyEgRs=;
+        b=Y1JSpWwV55YnoY1gSzjG0aYPTUNIChS0aZkgKsHzTjJM5wunW1AH4ud0zjGGOMmtI7
+         Z59M7rakPn4+fKYn0doJc63wdSHbkwgVbylP7xlvRdnhYx28AXrWNex1thlkH3ps/zmI
+         pVCv3Km2wuBl0tQOfjZ+SZ3FS9tAMq8HU307MM1VB01HrUmt+bWLz7+aokG+9cZtzNsD
+         6khNjpph/Mo7PDjfFVkDa5CQMq8e07ZiypVnnlohNa/ccQZgmelwceAIhWs6oRbtAz+E
+         Uk8QAS4ZLSqk1atZXP01TsOsRGfTMkG/innfiJw6HkUWEV5EBo/N7dKwterX4hQ0I1Ne
+         WJ9w==
+X-Gm-Message-State: AOAM533wIObE6SEfJa7hxOtEL7KDCmPBfeiE90oKHwP/Yris7ZZroo5a
+        iUe0vUn+5CNMtu2iNb+AaPk=
+X-Google-Smtp-Source: ABdhPJxxhTPPnCzUheSZH1X8qDkuaPElVkqm3F41T8vQeLUXoNpqpSlRzOg4mfPwtxI4mnDxgOfcGA==
+X-Received: by 2002:aa7:d7d1:: with SMTP id e17mr26410148eds.84.1618337155507;
+        Tue, 13 Apr 2021 11:05:55 -0700 (PDT)
+Received: from szeder.dev (94-21-23-40.pool.digikabel.hu. [94.21.23.40])
+        by smtp.gmail.com with ESMTPSA id p9sm9779048edu.79.2021.04.13.11.05.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Apr 2021 11:05:06 -0700 (PDT)
-Date:   Tue, 13 Apr 2021 11:05:02 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Philip Oakley <philipoakley@iee.email>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH 2/2] config: add 'config.superproject' file
-Message-ID: <YHXdTg8cm5yUWt5J@google.com>
-References: <20210408233936.533342-1-emilyshaffer@google.com>
- <20210408233936.533342-3-emilyshaffer@google.com>
- <e19a250a-c4ca-fc32-83f9-a03aa03cd88a@iee.email>
+        Tue, 13 Apr 2021 11:05:55 -0700 (PDT)
+Date:   Tue, 13 Apr 2021 20:05:52 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Rafael Silva <rafaeloliveira.cs@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: rather slow 'git repack' in 'blob:none' partial clones
+Message-ID: <20210413180552.GI2947267@szeder.dev>
+References: <20210403090412.GH2271@szeder.dev>
+ <gohp6ko8et3jdm.fsf@cpm12071.fritz.box>
+ <YG4hfge2y/AmcklZ@coredump.intra.peff.net>
+ <20210412213653.GH2947267@szeder.dev>
+ <YHTcHY+P7RuZJGab@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <e19a250a-c4ca-fc32-83f9-a03aa03cd88a@iee.email>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <YHTcHY+P7RuZJGab@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 09, 2021 at 12:10:27PM +0100, Philip Oakley wrote:
+On Mon, Apr 12, 2021 at 07:47:41PM -0400, Jeff King wrote:
+> On Mon, Apr 12, 2021 at 11:36:53PM +0200, SZEDER Gábor wrote:
 > 
-> On 09/04/2021 00:39, Emily Shaffer wrote:
-> > Some configs, such as wrapper directives like gerrit.createChangeId, or
-> > forthcoming hook configs, should apply to a superproject as well as all
-> > its submodules. It may not be appropriate to apply them globally - for
-> > example, if the user also contributes to many projects which do not use
-> > the configs necessary for one project-with-submodules - and it may be
-> > burdensome to apply them locally to the superproject and each of its
-> > submodules. Even if the user runs 'git submodule foreach "git config
-> > --local foo.bar', if a new submodule is added later on, that config is
-> > not applied to the new submodule.
-> >
-> > It is also inappropriate to share the entire superproject config, since
-> > some items - like remote URLs or partial-clone filters - would not apply
-> > to a submodule.
-> >
-> > To make life easier for projects with many submodules, then, create a
-> > new "config.superproject" config scope, which is included in the config
-> > parse for the superproject as well as for all the submodules of that
-> > superproject.
-> >
-> > For the superproject, this new config file is equally local to the local
-> > config; for the submodule, the new config file is less local than the
-> > local config. So let's include it directly before the local config
-> > during the config parse.
-> >
-> > Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-> > ---
+> > All what you wrote above makes sense to me, but I've never looked at
+> > how partial clones work, so it doesn't mean anything...  In any case
+> > your patch brings great speedups, but, unfortunately, the memory usage
+> > remains as high as it was:
+> > 
+> >   $ /usr/bin/time --format=elapsed: %E  max RSS: %Mk /home/szeder/src/git/bin-wrappers/git -C git-partial.git/ gc
+> >   Enumerating objects: 188450, done.
+> >   Counting objects: 100% (188450/188450), done.
+> >   Delta compression using up to 4 threads
+> >   Compressing objects: 100% (66623/66623), done.
+> >   Writing objects: 100% (188450/188450), done.
+> >   Total 188450 (delta 120109), reused 188450 (delta 120109), pack-reused 0
+> >   elapsed: 0:15.18  max RSS: 1888332k
+> > 
+> > And git.git is not all that large, I wonder how much memory would be
+> > necessary to 'gc' a 'blob:none' clone of e.g. chromium?! :)
+> > 
+> > BTW, this high memory usage in a partial clone is not specific to
+> > 'repack', 'fsck' suffers just as much:
 > 
-> Does this need an update to the `git config --show-origin --show-scope`
-> capability?
+> I think the issue is in the exclude-promisor-object code paths of the
+> traversal. Try this:
+> 
+>   [two clones of git.git, one full and one partial]
+>   $ git clone --no-local --bare /path/to/git full.git
+>   $ git clone --no-local --bare --filter=blob:none /path/to/git partial.git
+> 
+>   [full clone is quick to traverse all objects]
+>   $ time git -C full.git rev-list --count --all
+>   63215
+>   real	0m0.369s
+>   user	0m0.365s
+>   sys	0m0.004s
+> 
+>   [partial is, too; it's the same amount of work because we're just
+>    looking at the commits here]
+>   $ time git -C partial.git rev-list --count --all
+>   63215
+>   real	0m0.373s
+>   user	0m0.364s
+>   sys	0m0.009s
+> 
+>   [but now ask it to exclude promisor objects, and it's much slower;
+>   this is because is_promisor_object() opens up each tree in the pack in
+>   order to see which "promised" objects it mentions]
 
-It's included:
+I don't understand this: 'git rev-list --count --all' only counts
+commit objects, so why should it open any trees at all?
 
-> > --- a/config.c
-> > +++ b/config.c
-> > @@ -3515,6 +3539,8 @@ const char *config_scope_name(enum config_scope scope)
-> >  		return "command";
-> >  	case CONFIG_SCOPE_GITMODULES:
-> >  		return "gitmodules";
-> > +	case CONFIG_SCOPE_SUPERPROJECT:
-> > +		return "superproject";
-> >  	default:
-> >  		return "unknown";
-> >  	}
-> > diff --git a/config.h b/config.h
-> > index 535f5517b8..b42e1d13eb 100644
-> > --- a/config.h
-> > +++ b/config.h
-> > @@ -43,6 +43,7 @@ enum config_scope {
-> >  	CONFIG_SCOPE_WORKTREE,
-> >  	CONFIG_SCOPE_COMMAND,
-> >  	CONFIG_SCOPE_GITMODULES,
-> > +	CONFIG_SCOPE_SUPERPROJECT,
-> >  };
+>   $ time git -C partial.git rev-list --exclude-promisor-objects --count --all
+>   0
+>   real	0m11.723s
+>   user	0m11.354s
+>   sys	0m0.369s
+> 
+> And I think that is the source for the memory use, too. Without that
+> option, we peak at 11MB heap. With it, 1.6GB. Oops. Looks like there
+> might be some "leaks" when we parse tree objects and then leave the
+> buffers connected to the structs (technically not a leak because we
+> still have the pointers, but obviously having every tree in memory at
+> once is not good).
+> 
+> The patch below drops the peak heap to 165MB. Still quite a bit more,
+> but I think it's a combination of delta-base cache (96MB) plus extra
+> structs for all the non-commit objects whose flags we marked.
+> 
+> It does seem like there's probably a good space/time tradeoff to be made
+> here (e.g., caching the list of "promisor" object ids for the pack
+> instead of inflating and reading all of the trees on the fly).
+> 
+> diff --git a/packfile.c b/packfile.c
+> index 8668345d93..b79cbc8cd4 100644
+> --- a/packfile.c
+> +++ b/packfile.c
+> @@ -2247,6 +2247,7 @@ static int add_promisor_object(const struct object_id *oid,
+>  			return 0;
+>  		while (tree_entry_gently(&desc, &entry))
+>  			oidset_insert(set, &entry.oid);
+> +		free_tree_buffer(tree);
+>  	} else if (obj->type == OBJ_COMMIT) {
+>  		struct commit *commit = (struct commit *) obj;
+>  		struct commit_list *parents = commit->parents;
+> diff --git a/revision.c b/revision.c
+> index 553c0faa9b..fac2577748 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -3271,8 +3271,15 @@ static int mark_uninteresting(const struct object_id *oid,
+>  			      void *cb)
+>  {
+>  	struct rev_info *revs = cb;
+> +	/*
+> +	 * yikes, do we really need to parse here? maybe
 
-> > diff --git a/t/t1311-superproject-config.sh b/t/t1311-superproject-config.sh
-> > new file mode 100755
-> > index 0000000000..650c4d24c7
-> > --- /dev/null
-> > +++ b/t/t1311-superproject-config.sh
-> > +test_expect_success 'can --show-origin the superproject config' '
-> > +	git config --superproject --add foo.bar baz &&
-> > +
-> > +	git config --list --show-origin >actual &&
-> > +	grep -F "config.superproject" actual &&
-> > +
-> > +	rm .git/config.superproject
-> > +'
-> > +
-> > +test_expect_success 'can --show-scope the superproject config' '
-> > +	git config --superproject --add foo.bar baz &&
-> > +
-> > +	git config --list --show-scope >actual &&
-> > +	grep "superproject" actual &&
-> > +
-> > +	rm .git/config.superproject
-> > +'
+Heh, a "yikes" here and a "yuck" in your previous patch...  This issue
+was worth reporting :)
 
- - Emily
+> +	 * lookup_unknown_object() would be sufficient, or
+> +	 * even oid_object_info() followed by the correct type
+> +	 */
+>  	struct object *o = parse_object(revs->repo, oid);
+>  	o->flags |= UNINTERESTING | SEEN;
+> +	if (o->type == OBJ_TREE)
+> +		free_tree_buffer((struct tree *)o);
+>  	return 0;
+>  }
+>  
+> 
+> -Peff
