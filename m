@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D3415C433ED
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 14:02:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8156CC433ED
+	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 14:02:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B600061206
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 14:02:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5FCDF61206
+	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 14:02:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237589AbhDMOCO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Apr 2021 10:02:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53250 "EHLO
+        id S232475AbhDMOCX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Apr 2021 10:02:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53260 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237076AbhDMOCD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Apr 2021 10:02:03 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 594CCC06175F
-        for <git@vger.kernel.org>; Tue, 13 Apr 2021 07:01:42 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id m9so3851883wrx.3
-        for <git@vger.kernel.org>; Tue, 13 Apr 2021 07:01:42 -0700 (PDT)
+        with ESMTP id S237201AbhDMOCF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Apr 2021 10:02:05 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47BA9C061574
+        for <git@vger.kernel.org>; Tue, 13 Apr 2021 07:01:44 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id w7-20020a1cdf070000b0290125f388fb34so8245334wmg.0
+        for <git@vger.kernel.org>; Tue, 13 Apr 2021 07:01:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=wy+APj9NNOktVQw1Dg8sosD01WrzUgk01YbHujHnv/M=;
-        b=MeMEm/wQTmjLU4NX0pkv2DYWZyVFVgfjleYo8/Xja3JY064bIUl2TNOQbxAMM9+P33
-         lmEPAH5jxRfSudXiSboLqPtjjtF1Sb9jJr8shCLPx2Gby9TjwJRRAykBew34CDn8uNLg
-         02vJWslsj6/gsnSVcHhiXnwga/IdYyMvTIbHa8thK3zvhgeF+jq0SBfRXssJJA6HzZu3
-         3sUuf4pm+UIfag6w43hNwUuu/SCgcO2oznzuEMljHTG0ybdGbbW+AMAmjoHUDkLteUrP
-         8i7+pwDnptv3fhjfNQg/ujnW/R+BOMR1kfy/NA3GeXsfsZArNiv8aZyWdG7HBFk8EZrL
-         EAGQ==
+        bh=igbZPETxXaQSENv8XIc9P3Kyj/wn+H2Pe1/dZBLGnEk=;
+        b=Y2j+GqBsHJBYfSXrNF2LZYui9m3WdUJh3wXP6aRZCwuMx70NpyYKuIlX2l5V4Kn57e
+         FNi6ztUFhWh3MB0cAzsBGbBZuY6fCPxH4XgjrgilKH+MDubdM2NnKGIDa/nRF/IK3QRW
+         KNBoWZZC09qJ0rA7OQKg3GSpAzBfRnQLx2xTgMx4HueN4yUlcd2mdr7tivIEwWKhjrna
+         A7doul5Ssg774O/mnDL3OG20tltSK0gLMwRKLxy0/4ICPaAtWXpps32V79uRmamljO8X
+         doDdInx/UeUuEflt5nWcYxtSfZDoIh9xYqfR2Tb9mmh3LDvN89AZecZqOluc+WwuwDxo
+         a45w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=wy+APj9NNOktVQw1Dg8sosD01WrzUgk01YbHujHnv/M=;
-        b=QHlHv+QNIvUWABWUz8CIsPy/4LB31sfaR9FsB1EvOLgy23CPAL3zjW8502BUpoOe+d
-         6mzh3Avtjti/09VbE/dUbmjPcf8os9qb08pGBFmQMrTJLwe5l6IobYjMFiSRW2xA5UI1
-         Ma9X+DhKwqYDfPLz3LjDzCWs6CcVHP+eYFSk97rpR5T0DAm++4FS4g+YSUZWAFSH5x+O
-         k/OZXK79r4lOWHNz9hcBIkVuuWFXzsVkv66noI5l2SleKj3IO/LTG73UdUW9bpzmp9JS
-         Y/t8mrkV26B059VEm0Yxvmpw2hfiJwN6Av6cSe5qDpT8btsylytPd6dyHnlrrWnKzbfh
-         8X2g==
-X-Gm-Message-State: AOAM532LOteRh+gv/LURAlUsfrmaCvkp5mlYRUOijdMJdXpIFE0VCxed
-        7rmQqms7hbroQ7pnm3pCOhBd/Z0XakY=
-X-Google-Smtp-Source: ABdhPJzI9N60MqHz03WFfNFGO6KyUi0A+PBTxu0nRW8JCdNSIgbStAOXx5oRFi76q1Q9vY7xH2Wvsw==
-X-Received: by 2002:adf:de08:: with SMTP id b8mr10379034wrm.279.1618322499870;
-        Tue, 13 Apr 2021 07:01:39 -0700 (PDT)
+        bh=igbZPETxXaQSENv8XIc9P3Kyj/wn+H2Pe1/dZBLGnEk=;
+        b=lOiQgAxnPPq0RjFlw4eaG5dwunMPi/JrCkxdPGjnx1bfXHQCjGc6dBiHgvqxuIKV+0
+         +/Wp1lKp2kCekbliCqKNHlZgGhUBsj/O59hVFrWit6zYLLDMOU/iyW1w0jT1AKx38VQN
+         gRZhgsBTzOsnP+w41U/0ka7EjDsLDgtIpIk9egSZQm53GRetESLXwrW/7kEHMRDmiZVk
+         FQDjonRZWNwkHb706cQHljapjpmY0tyyyoEHidYQr/+CB2hSoECco9PiTmpf3AJjKtjy
+         tcbeZ3YJo+iMy7oTpBU09QDrINyFsYCayd8jUR6mefRxXam+gyt7VVGjkNgKik3MR/Nr
+         0l0w==
+X-Gm-Message-State: AOAM531Iwl8WqY8Gi4LVxnyPDTK6iPig5d+CQd4BB7EkbphvVOQCYfUb
+        BXiXLqA5uUv6ipWmv9orF4HoKHZO6Mo=
+X-Google-Smtp-Source: ABdhPJznB4qIbEsQjk/uE6SpxPtCNvXkfn0lvjDYvCg4deZN9VL1fRNJxbJowDzMu7C0ZDjvc1TmWg==
+X-Received: by 2002:a1c:f204:: with SMTP id s4mr185728wmc.8.1618322503027;
+        Tue, 13 Apr 2021 07:01:43 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f2sm2582184wmp.20.2021.04.13.07.01.39
+        by smtp.gmail.com with ESMTPSA id b187sm2645687wmh.17.2021.04.13.07.01.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Apr 2021 07:01:39 -0700 (PDT)
-Message-Id: <b2cb5401eff83c43ca805a36bf41a28a6ffc3630.1618322497.git.gitgitgadget@gmail.com>
+        Tue, 13 Apr 2021 07:01:42 -0700 (PDT)
+Message-Id: <d7d4cad8be0b2a27a332a2796ba0dce92783355f.1618322497.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.932.git.1618322497.gitgitgadget@gmail.com>
 References: <pull.932.git.1618322497.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 13 Apr 2021 14:01:28 +0000
-Subject: [PATCH 01/10] t1092: add tests for status/add and sparse files
+Date:   Tue, 13 Apr 2021 14:01:32 +0000
+Subject: [PATCH 05/10] status: use sparse-index throughout
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,75 +76,104 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-Before moving to update 'git status' and 'git add' to work with sparse
-indexes, add an explicit test that ensures the sparse-index works the
-same as a normal sparse-checkout when the worktree contains directories
-and files outside of the sparse cone.
+By testing 'git -c core.fsmonitor= status -uno', we can check for the
+simplest index operations that can be made sparse-aware. The necessary
+implementation details are already integrated with sparse-checkout, so
+modify command_requires_full_index to be zero for cmd_status().
 
-Specifically, 'folder1/a' is a file in our test repo, but 'folder1' is
-not in the sparse cone. When 'folder1/a' is modified, the file
-'folder1/a' is shown as modified, but adding it fails. This is new
-behavior as of a20f704 (add: warn when asked to update SKIP_WORKTREE
-entries, 2021-04-08). Before that change, these adds would be silently
-ignored.
+By running the debugger for 'git status -uno' after that change, we find
+two instances of ensure_full_index() that were added for extra safety,
+but can be removed without issue.
 
-Untracked files are fine: adding new files both with 'git add .' and
-'git add folder1/' works just as in a full checkout. This may not be
-entirely desirable, but we are not intending to change behavior at the
-moment, only document it.
+In refresh_index(), we loop through the index entries. The
+refresh_cache_ent() method copies the sparse directories into the
+refreshed index without issue.
+
+The loop within run_diff_files() skips things that are in stage 0 and
+have skip-worktree enabled, so seems safe to disable ensure_full_index()
+here.
+
+This allows some cases of 'git status' to no longer expand a sparse
+index to a full one, giving the following performance improvements for
+p2000-sparse-checkout-operations.sh:
+
+Test                                  HEAD~1           HEAD
+-----------------------------------------------------------------------------
+2000.2: git status (full-index-v3)    0.38(0.36+0.07)  0.37(0.31+0.10) -2.6%
+2000.3: git status (full-index-v4)    0.38(0.29+0.12)  0.37(0.30+0.11) -2.6%
+2000.4: git status (sparse-index-v3)  2.43(2.33+0.14)  0.04(0.05+0.04) -98.4%
+2000.5: git status (sparse-index-v4)  2.44(2.35+0.13)  0.05(0.04+0.07) -98.0%
+
+Note that since HEAD~1 was expanding the sparse index by parsing trees,
+it was artificially slower than the full index case. Thus, the 98%
+improvement is misleading, and instead we should celebrate the 0.37s to
+0.05s improvement of 82%. This is more indicative of the peformance
+gains we are expecting by using a sparse index.
+
+Note: we are dropping the assignment of core.fsmonitor here. This is not
+necessary for the test script as we are not altering the config any
+other way. Correct integration with FS Monitor will be validated in
+later changes.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- t/t1092-sparse-checkout-compatibility.sh | 36 ++++++++++++++++++++++++
- 1 file changed, 36 insertions(+)
+ builtin/commit.c                         |  3 +++
+ read-cache.c                             |  2 --
+ t/t1092-sparse-checkout-compatibility.sh | 12 ++++++++----
+ 3 files changed, 11 insertions(+), 6 deletions(-)
 
+diff --git a/builtin/commit.c b/builtin/commit.c
+index cf0c36d1dcb2..e529da7beadd 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1404,6 +1404,9 @@ int cmd_status(int argc, const char **argv, const char *prefix)
+ 	if (argc == 2 && !strcmp(argv[1], "-h"))
+ 		usage_with_options(builtin_status_usage, builtin_status_options);
+ 
++	prepare_repo_settings(the_repository);
++	the_repository->settings.command_requires_full_index = 0;
++
+ 	status_init_config(&s, git_status_config);
+ 	argc = parse_options(argc, argv, prefix,
+ 			     builtin_status_options,
+diff --git a/read-cache.c b/read-cache.c
+index 6308234b4838..83e6bdef7604 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1578,8 +1578,6 @@ int refresh_index(struct index_state *istate, unsigned int flags,
+ 	 */
+ 	preload_index(istate, pathspec, 0);
+ 	trace2_region_enter("index", "refresh", NULL);
+-	/* TODO: audit for interaction with sparse-index. */
+-	ensure_full_index(istate);
+ 	for (i = 0; i < istate->cache_nr; i++) {
+ 		struct cache_entry *ce, *new_entry;
+ 		int cache_errno = 0;
 diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index 12e6c453024f..6598c12a2069 100755
+index e488ef9bd941..380a085f8ec4 100755
 --- a/t/t1092-sparse-checkout-compatibility.sh
 +++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -232,6 +232,42 @@ test_expect_success 'add, commit, checkout' '
- 	test_all_match git checkout -
- '
+@@ -449,12 +449,16 @@ test_expect_success 'sparse-index is expanded and converted back' '
+ 	GIT_TRACE2_EVENT="$(pwd)/trace2.txt" GIT_TRACE2_EVENT_NESTING=10 \
+ 		git -C sparse-index -c core.fsmonitor="" reset --hard &&
+ 	test_region index convert_to_sparse trace2.txt &&
+-	test_region index ensure_full_index trace2.txt &&
++	test_region index ensure_full_index trace2.txt
++'
  
-+test_expect_success 'status/add: outside sparse cone' '
+-	rm trace2.txt &&
++test_expect_success 'sparse-index is not expanded' '
 +	init_repos &&
 +
-+	# folder1 is at HEAD, but outside the sparse cone
-+	run_on_sparse mkdir folder1 &&
-+	cp initial-repo/folder1/a sparse-checkout/folder1/a &&
-+	cp initial-repo/folder1/a sparse-index/folder1/a &&
-+
-+	test_sparse_match git status &&
-+
-+	write_script edit-contents <<-\EOF &&
-+	echo text >>$1
-+	EOF
-+	run_on_all ../edit-contents folder1/a &&
-+	run_on_all ../edit-contents folder1/new &&
-+
-+	test_sparse_match git status --porcelain=v2 &&
-+
-+	# This "git add folder1/a" is completely ignored
-+	# by the sparse-checkout repos. It causes the
-+	# full repo to have a different staged environment.
-+	test_must_fail git -C sparse-checkout add folder1/a &&
-+	test_must_fail git -C sparse-index add folder1/a &&
-+	git -C full-checkout checkout HEAD -- folder1/a &&
-+	test_sparse_match git status --porcelain=v2 &&
-+
-+	test_all_match git add . &&
-+	test_all_match git status --porcelain=v2 &&
-+	test_all_match git commit -m folder1/new &&
-+
-+	run_on_all ../edit-contents folder1/newer &&
-+	test_all_match git add folder1/ &&
-+	test_all_match git status --porcelain=v2 &&
-+	test_all_match git commit -m folder1/newer
-+'
-+
- test_expect_success 'checkout and reset --hard' '
- 	init_repos &&
++	rm -f trace2.txt &&
+ 	GIT_TRACE2_EVENT="$(pwd)/trace2.txt" GIT_TRACE2_EVENT_NESTING=10 \
+-		git -C sparse-index -c core.fsmonitor="" status -uno &&
+-	test_region index ensure_full_index trace2.txt
++		git -C sparse-index status -uno &&
++	test_region ! index ensure_full_index trace2.txt
+ '
  
+ test_done
 -- 
 gitgitgadget
 
