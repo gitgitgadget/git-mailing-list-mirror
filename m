@@ -2,151 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E1406C433ED
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 04:55:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 80602C433B4
+	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 06:40:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B618D613A9
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 04:55:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 64495613B1
+	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 06:40:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230268AbhDME4D (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Apr 2021 00:56:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46162 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229515AbhDME4C (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Apr 2021 00:56:02 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4EEEC061574
-        for <git@vger.kernel.org>; Mon, 12 Apr 2021 21:55:43 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id ba6so17784348edb.1
-        for <git@vger.kernel.org>; Mon, 12 Apr 2021 21:55:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=BAUoe6oHVPHaK5sybxfz3NNBtZyOyH0778ZqDouI/LM=;
-        b=CNSAiHuck8wLLuNLSQwwd9THrIxuwxmGuPylpXEcbsG+fyuIsZncMjyBpoj6zPLFzM
-         Qn+ge4pZuq3dLZxDBforiAWHTil73fJix6Sv9BgAzXf3kritDvLuCdhZ18PEPd7+pqj3
-         NlVWovu8GEAzxdY10ZC1EVyMjpmm02bC2BY5di6/teSWqqcVoq13nulrpnHVhkroHTa1
-         exMlFsMJJ+dVIExWlXdxVfA/KB/y39UI0rB+M9F+fBnjKxfdvmTCiFvGy0BJNz5fP/uI
-         hUzHPfpZnvDt4vWu2tAkNuq45g1sfDQoN08axYESeUqtBiSvmWVN/NiXQ7tyqE9oxLAk
-         vYfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=BAUoe6oHVPHaK5sybxfz3NNBtZyOyH0778ZqDouI/LM=;
-        b=NeqP1aIoZe94mdoV6h82Po1okI2MqJqHFRrLOp09LXxF2QGgN3pRyNfZla/aL3QPge
-         u9U+GWM7LnOsXsamtwzeeJpxvqu0JoIijaS9Tua3XQAeR1cyxjvA7/93nDq4vSEtcL9x
-         t16T+GT1DTS87tNwGXpEyNtyyF3+ig3rORhZ+y1MHVKLvWGaxVeQrEUIBbHTRtMF7Lrz
-         ir55SfPuO7tkKo1UkAv4Xa9gS42gBqk0BgTqXexhJFae1LUe2VQJI9Ymb+zv0L+sHreY
-         xpULMVQ1mDpECj1E6f/wjdCOj8sAPWhj2hyhcxgEioy0gHe1NpMKSldgGYaasPhkDy03
-         ZJpA==
-X-Gm-Message-State: AOAM531ygLb9CQDySrIV0F0KCOV0iKDEEmr34zUp+L5+ybnVS+dRFqKC
-        aJRV+sVMDVB+hTA6jviBEZJ9Fxgj3yRjrM3rnsQ=
-X-Google-Smtp-Source: ABdhPJyuK5z63JxSFRjlLUeVxQc9Ua4aNswVFiVziPR4HmxfNtzekMnN7Qzef4GuT1LMO9oXWtQsc9jDO1aES4kqaLw=
-X-Received: by 2002:a05:6402:48c:: with SMTP id k12mr32710854edv.237.1618289742173;
- Mon, 12 Apr 2021 21:55:42 -0700 (PDT)
+        id S241025AbhDMGlD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Apr 2021 02:41:03 -0400
+Received: from cloud.peff.net ([104.130.231.41]:50676 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229534AbhDMGlC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Apr 2021 02:41:02 -0400
+Received: (qmail 28345 invoked by uid 109); 13 Apr 2021 06:40:42 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 13 Apr 2021 06:40:42 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 22587 invoked by uid 111); 13 Apr 2021 06:40:43 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 13 Apr 2021 02:40:43 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 13 Apr 2021 02:40:41 -0400
+From:   Jeff King <peff@peff.net>
+To:     ZheNing Hu <adlternative@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Hariom verma <hariom18599@gmail.com>,
+        Shourya Shukla <periperidip@gmail.com>,
+        =?utf-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>, Jiang Xin <worldhello.net@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: GSoC Git Proposal Draft - ZheNing Hu
+Message-ID: <YHU86dPKODAPDXY0@coredump.intra.peff.net>
+References: <CAOLTT8RfE4nn5NnjZh7xuF09-5=+K+_j_2kP0327HVdR4x_wAQ@mail.gmail.com>
+ <CAOLTT8RTA0inxgxbd3qDToKYxwgXGKvJikXWsXg7oQ4asFj+HQ@mail.gmail.com>
+ <CAOLTT8SW0n=x3HBL=php0aC1nhP7eU-MHFLustC3H0opxGRV1w@mail.gmail.com>
 MIME-Version: 1.0
-References: <pull.624.git.1588616864222.gitgitgadget@gmail.com>
-In-Reply-To: <pull.624.git.1588616864222.gitgitgadget@gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Tue, 13 Apr 2021 06:55:31 +0200
-Message-ID: <CAP8UFD13-osOHU7Ug_2iToQZyx2T2neOXzZB=ssmDZLEQoF4eg@mail.gmail.com>
-Subject: Re: [PATCH] sparse-checkout: stop blocking empty workdirs
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAOLTT8SW0n=x3HBL=php0aC1nhP7eU-MHFLustC3H0opxGRV1w@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 4, 2020 at 8:30 PM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
+On Sun, Apr 11, 2021 at 11:34:35PM +0800, ZheNing Hu wrote:
 
-> @@ -302,8 +300,8 @@ test_expect_success 'revert to old sparse-checkout on empty update' '
->                 echo >file &&
->                 git add file &&
->                 git commit -m "test" &&
-> -               test_must_fail git sparse-checkout set nothing 2>err &&
-> -               test_i18ngrep "Sparse checkout leaves no entry on working directory" err &&
-> +               git sparse-checkout set nothing 2>err &&
-> +               test_i18ngrep ! "Sparse checkout leaves no entry on working directory" err &&
+> > Why is Olga’s solution rejected?
+> > 1. Olga's solution is to let `git cat-file` use the `ref-filter` interface,
+> > the performance of `cat-file` appears to be degraded due "very eager to
+> > allocate lots of separate strings" in `ref-filter` and other reasons.
+> 
+> I am thinking today whether we can directly append some object information
+> directly to `&state->stack->output`, Instead of assigning to `v->s` firstly.
 
-It looks like this check is obsolete as the "Sparse checkout leaves no
-entry on working directory" error has been removed by this patch
-below...
+Yes, that's the direction I think we'd want to go.
 
->                 test_i18ngrep ! ".git/index.lock" err &&
->                 git sparse-checkout set file
->         )
+> But in `cmp_ref_sorting()` we will use `get_ref_atom_value()`, It is possible
+> to compare `v->s` of two different refs, I must goto fill object info in `v->s`.
+> 
+> So I think this is one of the reasons why `ref-filter` desires to
+> allocate a large
+> number of strings, right?
 
-[...]
+Yeah, I think sorting in general is a bit tricky, because it inherently
+requires collecting the value for each item. Just thinking about what
+properties an ideal solution would have (which we might not be able to
+get all of):
 
-> @@ -1706,19 +1704,6 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
->
->                         if (apply_sparse_checkout(&o->result, ce, o))
->                                 ret = 1;
-> -
-> -                       if (!ce_skip_worktree(ce))
-> -                               empty_worktree = 0;
-> -               }
-> -               /*
-> -                * Sparse checkout is meant to narrow down checkout area
-> -                * but it does not make sense to narrow down to empty working
-> -                * tree. This is usually a mistake in sparse checkout rules.
-> -                * Do not allow users to do that.
-> -                */
-> -               if (o->result.cache_nr && empty_worktree) {
-> -                       ret = unpack_failed(o, "Sparse checkout leaves no entry on working directory");
+  - if we're sorting by something numeric (e.g., an committer
+    timestamp), we should avoid forming it into a string at all
 
-...here...
+  - if the sort item requires work to extract that overlaps with the
+    output format (e.g., sorting by authordate and showing author name
+    in the format, both of which require parsing the author ident line
+    of a commit), ideally we'd just do that work once per ref/object.
 
-> -                       goto done;
->                 }
->                 if (ret == 1) {
->                         /*
+  - if we are sorting, obviously we have to hold some amount of data for
+    each item in memory all at once (since we have to get data on the
+    sort properties for each, and then sort the result). So we'd
+    probably need at least some allocation per ref anyway, and an extra
+    string isn't too bad. But if we're not sorting, then it would be
+    nice to consider one ref/object at a time, which lets us keep our
+    peak memory usage lower, reuse output buffers, etc.
 
-[...]
+I think some of those are in competition with each other. Minimizing
+work shared between the sorting and format steps means keeping more data
+in memory. So it might be sensible to just treat them totally
+independently, and not worry about sharing work (I haven't looked at how
+ref-filter does this now).  TBH, I care a lot less about making the
+"sorting" case fast than I do about making sure that if we _aren't_
+sorting, we go as fast as possible.
 
-> @@ -1824,28 +1808,12 @@ enum update_sparsity_result update_sparsity(struct unpack_trees_options *o)
->
->                 if (apply_sparse_checkout(o->src_index, ce, o))
->                         ret = UPDATE_SPARSITY_WARNINGS;
-> -
-> -               if (!ce_skip_worktree(ce))
-> -                       empty_worktree = 0;
-> -       }
-> -
-> -       /*
-> -        * Sparse checkout is meant to narrow down checkout area
-> -        * but it does not make sense to narrow down to empty working
-> -        * tree. This is usually a mistake in sparse checkout rules.
-> -        * Do not allow users to do that.
-> -        */
-> -       if (o->src_index->cache_nr && empty_worktree) {
-> -               unpack_failed(o, "Sparse checkout leaves no entry on working directory");
-
-...and here.
-
-> -               ret = UPDATE_SPARSITY_INDEX_UPDATE_FAILURES;
-> -               goto done;
->         }
-
-So maybe instead of the 3 lines below:
-
-> +               git sparse-checkout set nothing 2>err &&
-> +               test_i18ngrep ! "Sparse checkout leaves no entry on working directory" err &&
->                 test_i18ngrep ! ".git/index.lock" err &&
-
-we should just have:
-
-               git sparse-checkout set nothing &&
-
-?
+-Peff
