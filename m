@@ -2,60 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B955EC433B4
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 09:08:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D4853C43460
+	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 09:08:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9F1A460FEF
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 09:08:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B0670613B6
+	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 09:08:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230093AbhDMJI6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Apr 2021 05:08:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44728 "EHLO
+        id S230298AbhDMJI7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Apr 2021 05:08:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44720 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230298AbhDMJIy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Apr 2021 05:08:54 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDEFDC06138C
-        for <git@vger.kernel.org>; Tue, 13 Apr 2021 02:08:34 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id h10so18474744edt.13
-        for <git@vger.kernel.org>; Tue, 13 Apr 2021 02:08:34 -0700 (PDT)
+        with ESMTP id S230280AbhDMJIx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Apr 2021 05:08:53 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F40C1C061574
+        for <git@vger.kernel.org>; Tue, 13 Apr 2021 02:08:31 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id w23so8910244ejb.9
+        for <git@vger.kernel.org>; Tue, 13 Apr 2021 02:08:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=o7nlRxHxUs16/8/WENVju9TsSyJ2A3dzqcqGwnf+r6s=;
-        b=rvjMgvLdwbuztsMmYdytUvLDKTMZP3O16QZW2N2s0otMwykGoIbietiPnrMibGecfR
-         7Y/GFCxLc9lOQB+moOh6EkplPazVnqewdeuJwOVVOVRJVrO0Ph3/snuunizEbs1+L6eO
-         26b3hrvuWLDLKd1BsKFkzYk3+Q0MZHK3tEuLRngR1BH76h/YWaIIJrfPXH6l1dEgWOX9
-         l6TwjDh0J8S/YnpwfW5RaiNBfLWsTVagiWGDhl6FABofBmG8DVK8D9pXg2yJJxS+16lf
-         /NAy/TyZeDoELSOtxRVWsqGJDOydc3yUIu72TzvY003xDwWoKx9sJXUyQfHcRcQoZi8q
-         XMhQ==
+        bh=knI/JXiPkayzB89rmJ905kOX0W5mVDLDTwrEGwMQ7Rs=;
+        b=eUlb16sjR8IOVuV9lMvL1PpTm7Mmfu8Wmu7fvO6hIeaCJ7Jhd0MHKIuIoT4ppjewlc
+         /5HwuhOM1kJL0LU504V97kEH8vkTNd5nzYpU91/8SqR02EYjZBSVhMVhfhekU23hbXiM
+         t33j0Y/yd6JslhXi2lPSSMD1WXAcDYPJyew19txaUTOeMPjSbSZGigczjJ9kYAlF3qvH
+         rmITQPDJO82yqCJfqyxDyH7DOVGIDPLctbsORCd5YHjwto+xHHMEM+yLNvmorW5upIvD
+         3otZEiCbDe1epP01RRhIhKemnbFigRvkCs0ZRnVcb7kHhzk9nLGiwP3b0QvmKEq98QaL
+         rEHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=o7nlRxHxUs16/8/WENVju9TsSyJ2A3dzqcqGwnf+r6s=;
-        b=q/Zk+3sBya3u+fEjf/cp7OUj7+O8pB9iuRnWPcOT8bi18eViuYYHclI9HVuyCVv0WN
-         OZG90Z9odFg0kQzM1HlWnkZwUKoOOVY9if2L9RQi7XXYimIOzDi/WZe+vNBP5S4wlRpB
-         kLrjqH7wQaibJ69K2O7H0DEG8uw5LzRo3v2m2D4Lf9y+g8nIssG8QxzWMB5Gdj87bV6R
-         dEpl3G8pFD6/YuvLxSP+alo33pgsW8YZyKEZEJTVNUcbZK//E4ZO4Ym0V9bHxLdt2w9w
-         fstMs80bbVThkuaT+3DGpJF9dmw9UVNGs0sLUh4kDelHd5p//uSGppxBdYvWodndL7R8
-         z6/w==
-X-Gm-Message-State: AOAM533gIWacJunWuwjwJ0TESwLi7wVmBOnDt9inHZCWqnNF/yDwoGU/
-        VhZKSXfxGRy5ZbmEg80a8oEay2riuR63LQ==
-X-Google-Smtp-Source: ABdhPJwIjO8xp/dvf9JomOm42+Q8PaW8sYT3HuqxADmdxewi3oSE1DP0agTbTwF/5mswjs1cax6W2g==
-X-Received: by 2002:a05:6402:51cd:: with SMTP id r13mr33811289edd.116.1618304912670;
-        Tue, 13 Apr 2021 02:08:32 -0700 (PDT)
+        bh=knI/JXiPkayzB89rmJ905kOX0W5mVDLDTwrEGwMQ7Rs=;
+        b=J57NDAtxkVwIfnuiK0TFyPeCq6CFcEMwwEVqIgjONK8nLoOSY7F6C1NWE1IwgkYUoB
+         doYhH1XJKo/DEWM+M2EziuC7tH0Iy9wzNMGLRXp/hyeJjeR0oTTh2bXo0po85h95VO2v
+         8SMEQ3ky3v23H9kIDumD94Nw7BEjCldWh1+/D8GxCLzlyyo04fP4FpAg3phZ2z1Zn6Jk
+         yH2quEF3APNdglCwBLtLlp5Pd/vF78FKDO+Dq/5pmejhYLe3zF6MU/YsEfWS3zUPk0Vh
+         NC9wesQV3gf7ez1YDS18umonY9phD2rIh0DrdLeqD5v2fguFZr5UdFcQTWsnYuAdmOgg
+         rYkw==
+X-Gm-Message-State: AOAM530T0AN9EFVYkZtfPaUQTbCO7/jv70/lGts/J8mQFo8iz0zQOYEX
+        YMvWVqaxClvZjbbrhOQJaJf5n9RV5Rws5g==
+X-Google-Smtp-Source: ABdhPJyGtdYEel3a/wbz/P4/FK2L6FW8FzAdRFWmo+Z+bv/3Ui0EpLg049jWZ6dVD0brRgnbBK5wjQ==
+X-Received: by 2002:a17:907:98ae:: with SMTP id ju14mr3734814ejc.287.1618304910525;
+        Tue, 13 Apr 2021 02:08:30 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id 28sm8918318edw.82.2021.04.13.02.08.32
+        by smtp.gmail.com with ESMTPSA id 28sm8918318edw.82.2021.04.13.02.08.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Apr 2021 02:08:32 -0700 (PDT)
+        Tue, 13 Apr 2021 02:08:30 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -67,12 +66,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 3/3] api docs: document that BUG() emits a trace2 error event
-Date:   Tue, 13 Apr 2021 11:08:21 +0200
-Message-Id: <patch-3.3-982f72345f1-20210413T090603Z-avarab@gmail.com>
+Subject: [PATCH v2 0/3] trace2 docs: note that BUG() sends an "error" event
+Date:   Tue, 13 Apr 2021 11:08:18 +0200
+Message-Id: <cover-0.3-00000000000-20210413T090603Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.1.645.g989d83ea6a6
-In-Reply-To: <cover-0.3-00000000000-20210413T090603Z-avarab@gmail.com>
-References: <cover-0.5-00000000000-20210328T022343Z-avarab@gmail.com> <cover-0.3-00000000000-20210413T090603Z-avarab@gmail.com>
+In-Reply-To: <cover-0.5-00000000000-20210328T022343Z-avarab@gmail.com>
+References: <cover-0.5-00000000000-20210328T022343Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,52 +79,38 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Correct documentation added in e544221d97a (trace2:
-Documentation/technical/api-trace2.txt, 2019-02-22) to state that
-calling BUG() also emits an "error" event. See ee4512ed481 (trace2:
-create new combined trace facility, 2019-02-22) for the initial
-implementation.
+A trivial update to the trace2 docs to fix an omission
+with "BUG()" not being listed alongside error(), die() etc.
 
-The BUG() function did not emit an event then however, that was only
-changed later in 0a9dde4a04c (usage: trace2 BUG() invocations,
-2021-02-05), that commit changed the code, but didn't update any of
-the docs.
+v1 of this[1] added a non-fatal-but-logging bug() function, per the
+discussion on v1 that's now gone.
 
-Let's also add a cross-reference from api-error-handling.txt.
+1. http://lore.kernel.org/git/cover-0.6-00000000000-20210328T025618Z-avarab@gmail.com
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- Documentation/technical/api-error-handling.txt | 3 +++
- Documentation/technical/api-trace2.txt         | 2 +-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+Ævar Arnfjörð Bjarmason (3):
+  usage.c: don't copy/paste the same comment three times
+  api docs: document BUG() in api-error-handling.txt
+  api docs: document that BUG() emits a trace2 error event
 
-diff --git a/Documentation/technical/api-error-handling.txt b/Documentation/technical/api-error-handling.txt
-index 71486abb2f0..8be4f4d0d6a 100644
---- a/Documentation/technical/api-error-handling.txt
-+++ b/Documentation/technical/api-error-handling.txt
-@@ -23,6 +23,9 @@ various kinds.
-   without running into too many problems.  Like `error`, it
-   returns -1 after reporting the situation to the caller.
- 
-+These reports will be logged via the trace2 facility. See the "error"
-+event in link:api-trace2.txt[trace2 API].
-+
- Customizable error handlers
- ---------------------------
- 
-diff --git a/Documentation/technical/api-trace2.txt b/Documentation/technical/api-trace2.txt
-index c65ffafc485..3f52f981a2d 100644
---- a/Documentation/technical/api-trace2.txt
-+++ b/Documentation/technical/api-trace2.txt
-@@ -465,7 +465,7 @@ completed.)
- ------------
- 
- `"error"`::
--	This event is emitted when one of the `error()`, `die()`,
-+	This event is emitted when one of the `BUG()`, `error()`, `die()`,
- 	`warning()`, or `usage()` functions are called.
- +
- ------------
+ Documentation/technical/api-error-handling.txt | 10 ++++++++--
+ Documentation/technical/api-trace2.txt         |  2 +-
+ usage.c                                        | 17 +++++------------
+ 3 files changed, 14 insertions(+), 15 deletions(-)
+
+Range-diff against v1:
+1:  a7b329c21cf ! 1:  2e4665b625b usage.c: don't copy/paste the same comment three times
+    @@ Metadata
+      ## Commit message ##
+         usage.c: don't copy/paste the same comment three times
+     
+    -    In gee4512ed481 (trace2: create new combined trace facility,
+    +    In ee4512ed481 (trace2: create new combined trace facility,
+         2019-02-22) we started with two copies of this comment,
+         0ee10fd1296 (usage: add trace2 entry upon warning(), 2020-11-23) added
+         a third. Let's instead add an earlier comment that applies to all
+2:  8c8b1dfd184 = 2:  ce78c79c9ac api docs: document BUG() in api-error-handling.txt
+3:  f0e0d0daa6e = 3:  982f72345f1 api docs: document that BUG() emits a trace2 error event
+4:  515d146cac8 < -:  ----------- usage.c: add a non-fatal bug() function to go with BUG()
 -- 
 2.31.1.645.g989d83ea6a6
 
