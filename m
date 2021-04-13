@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50F60C433B4
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 14:02:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 144D4C433ED
+	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 14:02:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 364E161353
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 14:02:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ED79F61206
+	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 14:02:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237436AbhDMOCx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Apr 2021 10:02:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53272 "EHLO
+        id S243527AbhDMOC7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Apr 2021 10:02:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53286 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237575AbhDMOCI (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S231927AbhDMOCI (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 13 Apr 2021 10:02:08 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBEFDC06175F
-        for <git@vger.kernel.org>; Tue, 13 Apr 2021 07:01:45 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id o20-20020a05600c4fd4b0290114265518afso8804482wmq.4
-        for <git@vger.kernel.org>; Tue, 13 Apr 2021 07:01:45 -0700 (PDT)
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8903C061574
+        for <git@vger.kernel.org>; Tue, 13 Apr 2021 07:01:47 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id a4so16601831wrr.2
+        for <git@vger.kernel.org>; Tue, 13 Apr 2021 07:01:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=SrgOTEjinxEkmRzJNt4NPuTMuL2Eyhqp5grWczNHIq4=;
-        b=Iaj0ZL4pB6nKPiMhftItDUnf6QRPb/SQQDegi9x7SWIis5duukE0do3MG097u27HIT
-         2cnR0LtI1CWkHhoqbUtQwVUJNLnswjHpIS0775QiM4S2T40puCpsU1SYGrtvx/EdUkxr
-         AA11N7EWD8zqygZeEQNbdc+HN3myUxqlYzqEbjjCrvu4qYI2T6tSIV8NEDWYvvVheq2p
-         PDBA0FjxMQWP5NW0SqAHtMiSD6CLj58Tu6a68G/MBtugbURzAN60Hj89vtgcriovgtmX
-         +dQTVE1k4XmpmZDJ2LxifE1uNQ5HYvzJh9JW06tAMgMY0bGy83nezfFcmXSrGH7GJIBB
-         tcYQ==
+        bh=bDJHZj1SEW4NF6/qiK9Pt7qfHcqQUwE1hZUVJoNYJFI=;
+        b=vPt83GjB5k8HynTZQh+ytanxvf5EHQz2t6hIOhgsgcDInpcz9P662REP1ybO2VkviJ
+         s7M4scxkjqnxT4cL9IWkzLLVDyR6Bpx9JCoeFbWFkIvPYqtF+VkB1OAP+ghfYA/0sbbj
+         UfP5j7JPfoVX88K/SplBBMXkUguuk4AUnupS859zIgdWfIpq352ZAiCAf08bQtzz8Co5
+         T7Z/tgjlPy48/ygmjw6RzJ5IdzDFquTOM/2+a7Og1H46Hc3msLEBgXNgM9LG97ZCqHrV
+         gPt9NESoBmLQ0OYxwuiQMYSVYuIvppApKLem7dz8+x2w9h8RSbbtYzXzvbZNuprcZPgF
+         myzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=SrgOTEjinxEkmRzJNt4NPuTMuL2Eyhqp5grWczNHIq4=;
-        b=YDh1trCTbPR+6ScbFv7+/jBdvkJXoWFwdKBR7jq4vXAcG88d4SBmz91O5vOsvCQbxh
-         BoiSDN0jZKJeD5TQS4OwpqYrVa70tESPLhqZ5usWS7dyoO6NU69XR2ZnVkDkYys+aNqp
-         Ib7jk4+CxwPsAifP4zoIZwrMNV6ZxTzAfhvMO3h83d2XeFF8z4a0Njig1D6iVY1jnuVe
-         4EOj2Qnj1P+5SMzXa9P3d4eKTOgDTdcL9mc0ITG/G921rM7A3hdxzcJQO4xeevUtKt1l
-         rUvYxx6sV5v44HVDR9HhEazR5BiEIYhn2RxFzZ1v5870IEcI9sSq9jclPWf+GAqXRlEQ
-         X7Bw==
-X-Gm-Message-State: AOAM532o7Fmw4ItBPhItnVckNHntp8vP+gtSq/oGU7Jvr+mAA7z9cn0l
-        iqjgcJ3bez4xPeX1SaOjzPvuZHtFaxY=
-X-Google-Smtp-Source: ABdhPJznoy2ISpEUULU+qyRaLoxnzuOq+ddx5JByeOn7dt0nrvwO7ZNqGstx2/hn+QjRVWvWKzN5jw==
-X-Received: by 2002:a7b:cf27:: with SMTP id m7mr136509wmg.95.1618322504653;
-        Tue, 13 Apr 2021 07:01:44 -0700 (PDT)
+        bh=bDJHZj1SEW4NF6/qiK9Pt7qfHcqQUwE1hZUVJoNYJFI=;
+        b=bLMaVA2cP7Yv7htYf5S4LViQY18rhvFdYQg0NLkmS8fuMgtKf5IrHx0d1o8Bzimbth
+         nrOaEE+tO8GZh7Kc21qGlWJbgn5pNtKdQvapfq1C1+e4yrt14OyDPQ7duVwpIX0g3YnF
+         oLozVFTLcH+gM5pSkeBa6EWmCydrbBpaqWkJ0eVXKUHJS4L0TUCSnQSrNJQnLV5wRx5c
+         cIYQ2s9z5Gt+PYGXrMwNu3Rhrq/3wOHQxLhr86LkxHBLtxOoZZWZ4AKwroeWdn1ath3D
+         5Iq5x5iwC/L1oRAVkg/YPCXxl2Swqte7yEd9cQqqNTYaP3bUo+SztYZT0vUemZivfNkr
+         DfAw==
+X-Gm-Message-State: AOAM531H7X/wCl5gQ/zuVIhLYBRDHGhDT+maYmT5dF7UYjNJPV9HkTtS
+        QvotfTMuyTKoGBokHDUMUKIghWjhiVY=
+X-Google-Smtp-Source: ABdhPJwj72BQlw180TYGXUmjRtsqlM0lxHsmntEtpWbIMqRiFXOiPDMjaukMZjV8OFMtBP7lV0+awg==
+X-Received: by 2002:a05:6000:18d2:: with SMTP id w18mr37235590wrq.88.1618322505267;
+        Tue, 13 Apr 2021 07:01:45 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z15sm14034280wrv.39.2021.04.13.07.01.44
+        by smtp.gmail.com with ESMTPSA id a7sm21846541wrn.50.2021.04.13.07.01.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Apr 2021 07:01:44 -0700 (PDT)
-Message-Id: <6d7f30f2b90ac2151645a29c6a12639074c8f2d3.1618322498.git.gitgitgadget@gmail.com>
+        Tue, 13 Apr 2021 07:01:45 -0700 (PDT)
+Message-Id: <75199bbe8ca179b7d2e2b09831af0d479bd28e6e.1618322498.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.932.git.1618322497.gitgitgadget@gmail.com>
 References: <pull.932.git.1618322497.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 13 Apr 2021 14:01:35 +0000
-Subject: [PATCH 08/10] pathspec: stop calling ensure_full_index
+Date:   Tue, 13 Apr 2021 14:01:36 +0000
+Subject: [PATCH 09/10] t7519: add sparse directories to FS monitor tests
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,66 +76,106 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The add_pathspec_matches_against_index() focuses on matching a pathspec
-to file entries in the index. This already works correctly for its only
-use: checking if untracked files exist in the index.
+The File System Monitor (FS Monitor) tests in t7519 demonstrate some
+important interactions with the index and the response from the FS
+Monitor hook. Later changes will integrate the FS Monitor extension in
+the index with the existence of sparse directory entries in a sparse
+index. To do so, we need to include directories outside of the sparse
+checkout definition.
 
-The compatibility checks in t1092 already test that 'git add <dir>'
-works for a directory outside of the sparse cone. That provides coverage
-for removing this guard.
+Add a new directory, dir1a, between dir1 and dir2 in the test repo used
+by this script. By inserting it in the middle, we are more likely to
+trigger incorrect behavior when the fsmonitor_dirty bitmap is involved
+with sparse directories changing the position of cache entries.
 
-This finalizes our ability to run 'git add .' without expanding a sparse
-index to a full one. This is evidenced by an update to t1092 and by
-these performance numbers for p2000-sparse-operations.sh:
-
-Test                                    HEAD~1            HEAD
---------------------------------------------------------------------------------
-2000.10: git add . (full-index-v3)      1.37(1.02+0.18)   1.38(1.01+0.20) +0.7%
-2000.11: git add . (full-index-v4)      1.26(1.00+0.15)   1.27(0.99+0.17) +0.8%
-2000.12: git add . (sparse-index-v3)    2.39(2.29+0.14)   0.06(0.05+0.07) -97.5%
-2000.13: git add . (sparse-index-v4)    2.42(2.32+0.14)   0.06(0.05+0.06) -97.5%
-
-While the 97% improvement is shown by the test results, it is worth
-noting that expanding the sparse index was adding overhead in previous
-commits. Comparing to the full index case, we see the performance go
-from 1.27s to 0.06s, a 95% improvement.
+I could have modified the test to create two repos, one sparse and one
+not, but that causes confusion in the expected output. Further, it makes
+the test take twice as long. With this approach, we can validate that FS
+Monitor works with the sparse index feature using the
+GIT_TEST_SPARSE_INDEX=1 environment variable. The test currently fails
+with that environment variable because FS Monitor is disabled when a
+sparse index exists. The following changes will update this behavior.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- pathspec.c                               | 2 --
- t/t1092-sparse-checkout-compatibility.sh | 6 ++++++
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ t/t7519-status-fsmonitor.sh | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/pathspec.c b/pathspec.c
-index 54813c0c4e8e..b51b48471fe6 100644
---- a/pathspec.c
-+++ b/pathspec.c
-@@ -37,8 +37,6 @@ void add_pathspec_matches_against_index(const struct pathspec *pathspec,
- 			num_unmatched++;
- 	if (!num_unmatched)
- 		return;
--	/* TODO: audit for interaction with sparse-index. */
--	ensure_full_index(istate);
- 	for (i = 0; i < istate->cache_nr; i++) {
- 		const struct cache_entry *ce = istate->cache[i];
- 		if (sw_action == PS_IGNORE_SKIP_WORKTREE && ce_skip_worktree(ce))
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index c210dba78067..738013b00191 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -471,6 +471,12 @@ test_expect_success 'sparse-index is not expanded' '
- 	echo >>sparse-index/extra.txt &&
- 	GIT_TRACE2_EVENT="$(pwd)/trace2.txt" GIT_TRACE2_EVENT_NESTING=10 \
- 		git -C sparse-index add extra.txt &&
-+	test_region ! index ensure_full_index trace2.txt &&
-+
-+	rm trace2.txt &&
-+	echo >>sparse-index/untracked.txt &&
-+	GIT_TRACE2_EVENT="$(pwd)/trace2.txt" GIT_TRACE2_EVENT_NESTING=10 \
-+		git -C sparse-index add . &&
- 	test_region ! index ensure_full_index trace2.txt
- '
- 
+diff --git a/t/t7519-status-fsmonitor.sh b/t/t7519-status-fsmonitor.sh
+index 45d025f96010..23879d967297 100755
+--- a/t/t7519-status-fsmonitor.sh
++++ b/t/t7519-status-fsmonitor.sh
+@@ -62,11 +62,16 @@ test_expect_success 'setup' '
+ 	mkdir dir1 &&
+ 	: >dir1/tracked &&
+ 	: >dir1/modified &&
++	mkdir dir1a &&
++	: >dir1a/a &&
++	: >dir1a/b &&
+ 	mkdir dir2 &&
+ 	: >dir2/tracked &&
+ 	: >dir2/modified &&
+ 	git -c core.fsmonitor= add . &&
+ 	git -c core.fsmonitor= commit -m initial &&
++	git sparse-checkout init --cone --no-sparse-index &&
++	git sparse-checkout set dir1 dir2 &&
+ 	git config core.fsmonitor .git/hooks/fsmonitor-test &&
+ 	cat >.gitignore <<-\EOF
+ 	.gitignore
+@@ -99,6 +104,8 @@ test_expect_success 'update-index --no-fsmonitor" removes the fsmonitor extensio
+ cat >expect <<EOF &&
+ h dir1/modified
+ H dir1/tracked
++S dir1a/a
++S dir1a/b
+ h dir2/modified
+ H dir2/tracked
+ h modified
+@@ -121,6 +128,8 @@ test_expect_success 'update-index --fsmonitor-valid" sets the fsmonitor valid bi
+ cat >expect <<EOF &&
+ H dir1/modified
+ H dir1/tracked
++S dir1a/a
++S dir1a/b
+ H dir2/modified
+ H dir2/tracked
+ H modified
+@@ -139,6 +148,8 @@ test_expect_success 'update-index --no-fsmonitor-valid" clears the fsmonitor val
+ cat >expect <<EOF &&
+ H dir1/modified
+ H dir1/tracked
++S dir1a/a
++S dir1a/b
+ H dir2/modified
+ H dir2/tracked
+ H modified
+@@ -158,6 +169,8 @@ cat >expect <<EOF &&
+ H dir1/modified
+ h dir1/new
+ H dir1/tracked
++S dir1a/a
++S dir1a/b
+ H dir2/modified
+ h dir2/new
+ H dir2/tracked
+@@ -182,6 +195,8 @@ cat >expect <<EOF &&
+ H dir1/modified
+ h dir1/new
+ h dir1/tracked
++S dir1a/a
++S dir1a/b
+ H dir2/modified
+ h dir2/new
+ h dir2/tracked
+@@ -201,6 +216,8 @@ test_expect_success 'all unmodified files get marked valid' '
+ cat >expect <<EOF &&
+ H dir1/modified
+ h dir1/tracked
++S dir1a/a
++S dir1a/b
+ h dir2/modified
+ h dir2/tracked
+ h modified
 -- 
 gitgitgadget
 
