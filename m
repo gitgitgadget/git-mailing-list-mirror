@@ -2,115 +2,198 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 293F9C433B4
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 10:58:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 30217C433B4
+	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 11:41:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F3B4761278
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 10:58:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DF5BC6109D
+	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 11:41:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244888AbhDMK7E (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Apr 2021 06:59:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40764 "EHLO
+        id S240759AbhDMLmI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Apr 2021 07:42:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50242 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230123AbhDMK7B (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Apr 2021 06:59:01 -0400
-Received: from mail-vk1-xa2b.google.com (mail-vk1-xa2b.google.com [IPv6:2607:f8b0:4864:20::a2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D789DC061574
-        for <git@vger.kernel.org>; Tue, 13 Apr 2021 03:58:41 -0700 (PDT)
-Received: by mail-vk1-xa2b.google.com with SMTP id s14so1527184vka.10
-        for <git@vger.kernel.org>; Tue, 13 Apr 2021 03:58:41 -0700 (PDT)
+        with ESMTP id S231378AbhDMLmH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Apr 2021 07:42:07 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF40EC061574
+        for <git@vger.kernel.org>; Tue, 13 Apr 2021 04:41:47 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id r22so8275729ljc.5
+        for <git@vger.kernel.org>; Tue, 13 Apr 2021 04:41:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=WP1ILzad+ZkkG43muCv8bmbDmIMEsA/IO5cP7PhqfE4=;
-        b=JtfIos6WY//r3i1DUt0xmjXnN48Z4LjUkTDotnUoZKuNWIsl2wDwrvnITxVHfZ59wK
-         oIf98XlxqkIH1hOvRsEla+ZU/+HydX4E9quD/Cb7kmWEhkccXArNLDIE6e7qzVaYodVq
-         tKN7kveemHxpAaAjvIpfzYmTJpXAL61t72KGb745xcNDp0bwttU9yE6rKy5tR9K2TSyp
-         mJVZmpt4IPW9TUFVNfDk/1qFBMflyqGjWH0Sm0kXEC9MIcHnY0tvSLJHiZ8M/HdTv0F5
-         tPrRjDykYarfU1XgUPNbnk79OdveOtaDQQ/Aryj0sG0bvp2ZwSsDmY8/2bJDm/IiJ8Lq
-         Ie/Q==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=E/L0PhxITkYwVwCtaBePzoPwzMPJCRj3KeJuJ12nfF8=;
+        b=givT+GfVgLt7Ffxdro570peDDceevRkDAhLHbmLIxVTqUweY7rg36qvi0AZY/DbMRg
+         IxgAskGLFxF4FP8y6jCg480XUP648UTsrWNYWPkVYs3ufGMjXgJhIfqedpsU2wMQ/sQs
+         7PwyJHExqooKWZAil6nwO6BBbf9BxfUgqOUk9qoB4MOvk0xXDosLewC2bQnfrL9hGmb/
+         aDPTasRuOPL7lSOKIf21IsU4GX3eyyXqQ9Ggr9DMeqKsDKvNztDxCm64T90373wrv/l9
+         faSBxUswyMiQX/SMB+iDA2Q9l6gu1W0o8WBfd6gsSkKal269Hz8KU9FcuRv/DgcElVnL
+         kzng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=WP1ILzad+ZkkG43muCv8bmbDmIMEsA/IO5cP7PhqfE4=;
-        b=W6LVKOLboE0H0lmW1tlWK56yFgukICo96y+47NhtPb4//28r10U/eX6KBga3Bbhzoc
-         4xoLC0Xg1HQaSu8gQpdPrwXrS91sGCEjqvZ4d2PsQ4pX3aKB+EWl8BVU5SvRyFnLgpR0
-         h1vkvk0Pw6LXmPUOjAyffPOV4DF2r+xNmvRPK+J98Z1GrKDqhhHOV8vkyW9rLwSvQqMc
-         9NVmsqP97Sm69EPw5I4qJO3r7dRljbevhnAvqwDRnaPaUYlIoQ7EbsASoyYvrmrZV++0
-         /SUJVeSiMGsUZdOtTgTgKhUpcjDwZl/SqzWGaQqd/pXgEuYf6WNLh2PXAXUww6UJepUk
-         VCFA==
-X-Gm-Message-State: AOAM5300M5xr1LavKFGmO5oidn7VcBJ4dx4jh+kCmdJckNoLrRyk9wtc
-        CdssxVT60hE0wDoKMUlTBU2/eBoqImowlb2H0+zSxQ==
-X-Google-Smtp-Source: ABdhPJyhOyUQJTkkP6dELQlSpJo+GMqOgBocdURzeg+JO1VGH8xbLqBKM/qUGuiXX75OBJDCpP5m2rJht3Hh9tu8IyU=
-X-Received: by 2002:ac5:c185:: with SMTP id z5mr10650276vkb.19.1618311520896;
- Tue, 13 Apr 2021 03:58:40 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.847.v5.git.git.1615580397.gitgitgadget@gmail.com>
- <pull.847.v6.git.git.1618255552.gitgitgadget@gmail.com> <df8003cb9a7d9e017d358251a2d22c0e72454e03.1618255552.git.gitgitgadget@gmail.com>
- <87czuyehnv.fsf@evledraar.gmail.com>
-In-Reply-To: <87czuyehnv.fsf@evledraar.gmail.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Tue, 13 Apr 2021 12:58:29 +0200
-Message-ID: <CAFQ2z_P7GjwjerP7S39xkdK20wzeE+z09NRpCnJuNCXFnJ=r8A@mail.gmail.com>
-Subject: Re: [PATCH v6 04/20] reftable: utility functions
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Josh Steadmon <steadmon@google.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Patrick Steinhardt <ps@pks.im>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=E/L0PhxITkYwVwCtaBePzoPwzMPJCRj3KeJuJ12nfF8=;
+        b=lVwEze6wnEKrEew1oqVaMui+qdRfhdmZ74O3hms3haEz5UCKRG9niag1YFTitAeG4m
+         XiQRdFOvZZ/qWss0RQA9KlK7fGaQt88RKAHoW5UrL7Y9aAJeaYL2TvN4f5pmjmjqUOyV
+         9t0urlXHdsgKfiEh522J75BZXkeu0khBSx/kerJ20Uu3VeS90WC2w6Hfzd2zDSVrIXIn
+         84sJmJSNasOhfxngNT552DxeMnpCLIWI+WYmLYpjUbeF2F9pU/qGbFDWvs1gSIuGEWyA
+         OPxVdCdn4lK+Tk6+wX59kJcSluYaLiPpFlVGxR0kw9OLTiO1MUOLywvSDjhgpFwmBRcW
+         J9uw==
+X-Gm-Message-State: AOAM5316D+dhfPH4Qjj2NP9fNj4R2ShN9ZPyMFZjiWb8k1xZRHeiWE1Z
+        5s7IHQryxjbraRN2h56E4rw=
+X-Google-Smtp-Source: ABdhPJwYPvb/YXs9B3jU4qCbMJs9VXv8dexeymPNBHlT4NMU4lQoKe4bzwh6CSqALGxmF42F6j/AAw==
+X-Received: by 2002:a2e:919a:: with SMTP id f26mr20636940ljg.508.1618314106314;
+        Tue, 13 Apr 2021 04:41:46 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id b11sm663339lfi.292.2021.04.13.04.41.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Apr 2021 04:41:45 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.email>,
+        Elijah Newren <newren@gmail.com>,
         Felipe Contreras <felipe.contreras@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Han-Wen Nienhuys <hanwenn@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, git@vger.kernel.org,
+        Sergey Organov <sorganov@gmail.com>
+Subject: [PATCH v2 0/5] git log: configurable default format for merge diffs
+Date:   Tue, 13 Apr 2021 14:41:13 +0300
+Message-Id: <20210413114118.25693-1-sorganov@gmail.com>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20210407225608.14611-1-sorganov@gmail.com>
+References: <20210407225608.14611-1-sorganov@gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 13, 2021 at 10:02 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
->
-> On Mon, Apr 12 2021, Han-Wen Nienhuys via GitGitGadget wrote:
->
-> > +int strbuf_add_void(void *b, const void *data, size_t sz)
-> > +{
-> > +     strbuf_add((struct strbuf *)b, data, sz);
-> > +     return sz;
-> > +}
->
-> Is that cast needed on your compiler? This compiles without warnings for
-> me without that.
+These patches introduce capability to configure the default format of
+output of diffs for merge commits by means of new log.diffMerges
+configuration variable. The default format could be requested by the
+new value "on" for --diff-merges option (--diff-merges=on).
 
-No! thanks.
+Then -m and --diff-merges=m are also changed to use the default
+format, in a backward compatible manner, as visible behavior doesn't
+change unless user customizes log.diffMerges configuration.
 
-> Also, maybe this is the sort of thing that makes sense to split into
-> general "APIs needed for reftable" patches. E.g. something like the
-> below (just the strbuf.h change):
+In particular,
 
-SGTM.
+  git config log.diffMerges first-parent
 
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
+will change -m option format from "separate" to "first-parent" that
+will in turn cause, say,
 
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+  git show -m <merge_commit>
 
-Registergericht und -nummer: Hamburg, HRB 86891
+to output diff to the first parent only, instead of appending
+typically large and surprising diff to the second parent at the end of
+the output.
 
-Sitz der Gesellschaft: Hamburg
+Updates in v2:
 
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+  * Renamed --diff-merges=default to --diff-merges=on. Junio didn't
+    like the "default" here, and I agree. Dunno why I've even called
+    it "default" in the first place.
+
+Updates in v1:
+
+  * Renamed abbreviated value "def" to full "default"
+
+  * Fixed tests to use "test_config" instead of "git config"
+
+  * Meld all "git config" changes into single commit that includes
+    code, documentation, and tests, as they are mutually
+    interdependent.
+
+Signed-off-by: Sergey Organov <sorganov@gmail.com>
+
+Sergey Organov (5):
+  diff-merges: introduce --diff-merges=on
+  diff-merges: refactor set_diff_merges()
+  diff-merges: adapt -m to enable default diff format
+  diff-merges: introduce log.diffMerges config variable
+  doc/diff-options: document new --diff-merges features
+
+ Documentation/config/log.txt   |  5 +++
+ Documentation/diff-options.txt | 15 ++++++---
+ builtin/log.c                  |  2 ++
+ diff-merges.c                  | 58 ++++++++++++++++++++++++----------
+ diff-merges.h                  |  2 ++
+ t/t4013-diff-various.sh        | 31 ++++++++++++++++++
+ t/t9902-completion.sh          |  3 ++
+ 7 files changed, 95 insertions(+), 21 deletions(-)
+
+Interdiff against v1:
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index 31e2bacf5252..6d968b9012dc 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -34,7 +34,7 @@ endif::git-diff[]
+ endif::git-format-patch[]
+ 
+ ifdef::git-log[]
+---diff-merges=(off|none|default|first-parent|1|separate|m|combined|c|dense-combined|cc)::
++--diff-merges=(off|none|on|first-parent|1|separate|m|combined|c|dense-combined|cc)::
+ --no-diff-merges::
+ 	Specify diff format to be used for merge commits. Default is
+ 	{diff-merges-default} unless `--first-parent` is in use, in which case
+@@ -45,7 +45,7 @@ ifdef::git-log[]
+ 	Disable output of diffs for merge commits. Useful to override
+ 	implied value.
+ +
+---diff-merges=default:::
++--diff-merges=on:::
+ --diff-merges=m:::
+ -m:::
+ 	This option makes diff output for merge commits to be shown in
+diff --git a/diff-merges.c b/diff-merges.c
+index 75630fb8e6b8..f3a9daed7e05 100644
+--- a/diff-merges.c
++++ b/diff-merges.c
+@@ -67,7 +67,7 @@ static diff_merges_setup_func_t func_by_opt(const char *optarg)
+ 		return set_combined;
+ 	else if (!strcmp(optarg, "cc") || !strcmp(optarg, "dense-combined"))
+ 		return set_dense_combined;
+-	else if (!strcmp(optarg, "m") || !strcmp(optarg, "default"))
++	else if (!strcmp(optarg, "m") || !strcmp(optarg, "on"))
+ 		return set_to_default;
+ 	return NULL;
+ }
+diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+index 87cab7867135..87def81699bf 100755
+--- a/t/t4013-diff-various.sh
++++ b/t/t4013-diff-various.sh
+@@ -452,10 +452,10 @@ diff-tree --stat --compact-summary initial mode
+ diff-tree -R --stat --compact-summary initial mode
+ EOF
+ 
+-test_expect_success 'log --diff-merges=default matches --diff-merges=separate' '
++test_expect_success 'log --diff-merges=on matches --diff-merges=separate' '
+ 	git log -p --diff-merges=separate master >result &&
+ 	process_diffs result >expected &&
+-	git log -p --diff-merges=default master >result &&
++	git log -p --diff-merges=on master >result &&
+ 	process_diffs result >actual &&
+ 	test_cmp expected actual
+ '
+@@ -469,7 +469,7 @@ test_expect_success 'git config log.diffMerges first-parent' '
+ 	git log -p --diff-merges=first-parent master >result &&
+ 	process_diffs result >expected &&
+ 	test_config log.diffMerges first-parent &&
+-	git log -p --diff-merges=default master >result &&
++	git log -p --diff-merges=on master >result &&
+ 	process_diffs result >actual &&
+ 	test_cmp expected actual
+ '
+-- 
+2.25.1
+
