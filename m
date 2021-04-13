@@ -2,156 +2,179 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A3FB6C433ED
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 19:27:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E889C433B4
+	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 19:44:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 72A37613C7
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 19:27:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 446E1613C4
+	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 19:44:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231700AbhDMT2C (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Apr 2021 15:28:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39798 "EHLO
+        id S242249AbhDMTok (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Apr 2021 15:44:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229975AbhDMT2A (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Apr 2021 15:28:00 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99FB5C061574
-        for <git@vger.kernel.org>; Tue, 13 Apr 2021 12:27:40 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id d21so628541edv.9
-        for <git@vger.kernel.org>; Tue, 13 Apr 2021 12:27:40 -0700 (PDT)
+        with ESMTP id S229634AbhDMToj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Apr 2021 15:44:39 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 562D1C061574
+        for <git@vger.kernel.org>; Tue, 13 Apr 2021 12:44:19 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id l4so27781068ejc.10
+        for <git@vger.kernel.org>; Tue, 13 Apr 2021 12:44:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=wxAgDSO4PHtnyT9YqEInrFwVFPJ40qAdrw7NJDg+OnQ=;
-        b=g1CJNwa7m6TvN1AL5fntom/RGkd3ZaXUyi0DcYO2msQdmBPNwcIyihbh47WMdR8ruA
-         P2Hf6N90Uxjna5EakCvX0uvdjVKbevFvh1P64Un2PUp1DZ9grXsZqkz7pFET0PeY9O3p
-         rFoPxpgpQp82jKySnWSNsq3dPoNyVkVgOjnG0BoGB2CGz/yMkEn7Xg7djnZ/MzBP8M9d
-         y4K02fh59kLcdAx3gcLAYA/2k/f4CxBttLf35/qcEz8Rj7INW/nIP+vyIxfTUO2pzfhb
-         ChsSuHtFfIe7B6hGQKhCeGul/O2gcQ29IWLnBttrdof4vrB21LZUdoP1GnCTHajZ6mA0
-         3ulA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=fRJseCS+LCGyUOwMEYiKn5aMuL9jfOJdBRKAyaDXIiI=;
+        b=lo+Uz4UxB5coxdCIQCsZX20hVwlXeB2IZuV+RLPdHOPlYtvMMRzvC7K0/8s2fFHIAU
+         LFAn96P0BaWxyCLHM/ihu/Pt80Uzp5KNKzXJfSngX1hrbJukzVYMLb4thYemaeKPdAXs
+         D2TLZv77MOGcVTk2w6lZlkPYFOHAGl2izJ8MduCUGGFkiAqDQvpUmaTF+trk0aBFbEmV
+         95oTGoWAQDE7qj725LY/Dy6HvAQi6myljX8melAYjIZpm9NXkIRsBYWR/Ghi6800yyx2
+         RB5YvESgxYqPZ5Vm8ZqqpuHdTXgHfr5X0WiBsvefovkb1hqwvHMLbIG/Nv0seJP13K5/
+         +uhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=wxAgDSO4PHtnyT9YqEInrFwVFPJ40qAdrw7NJDg+OnQ=;
-        b=lj1Bapq7DFxVWQK0cpYvsm67HeaK0pzcy2dDu4KpTG4C0IVsvukjSPPe4wTgzChIgE
-         dy6bFMc/VoP6cZnwXMyM5lxi62PLsvzxmzICQbmpYTi/HPDb6bdHaM8Gzku3x+c7UU11
-         EzCiU0rh22iIDv1zFl1kV/TCTn7t4Xl7S0YDCjEuTMER5FYpsy6Cd2dfO9+VcLltDJfX
-         oi3No/ALw0/EgOLF5y+xaTLk2YI/NwTAJhg/RK2U9ZMFFZsjITnX8D5AgGZFYy59P6xg
-         sQ3MgVaN9TcNIkqq0UNRyhuLqJSVqwClMpexiBe34tnG6nbYRfs/MVcvcw/FlsyyMQ0Z
-         QfBw==
-X-Gm-Message-State: AOAM532qinJn4zuI6L0YlC4+uOGDgXGEJDrURxmS5K6cZDAJ+wgHeS4m
-        +UZaxtVTF+T2lve3Ceaa8w8=
-X-Google-Smtp-Source: ABdhPJywdHU/i3cYU1gqgd8/BF6Dnf2vR1G64pOniTnydX3FWoQrxGwpNFqqALtyLKHD0QronDbvMQ==
-X-Received: by 2002:aa7:c349:: with SMTP id j9mr34667589edr.41.1618342059235;
-        Tue, 13 Apr 2021 12:27:39 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id u13sm8724114ejn.59.2021.04.13.12.27.38
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=fRJseCS+LCGyUOwMEYiKn5aMuL9jfOJdBRKAyaDXIiI=;
+        b=PMe0j+WGzt80CSndnLm5Lz27X/2wCERGcZhvZvYvDEWEMAsTv3M/sRQUlGV6Uza2PG
+         EYclem+35Qc+uFE4oCt9EJb6WgG5CINwOqbVykiFQmJ4LmrIOatcf0bgPs2Djm0UCJIQ
+         Dqv4sNkwfqYaLqnd2LE/LF3vMGnqGLgGxZoSCVt9U4TRbK4zE6fft1aoTszuhg4/NJot
+         5vCI+fb4eGNuTTxc4UhrdgQ21iYfBLsk2lLQSmsK3QXtet9UR/0H7y4oHL8IQrKb3I4W
+         OysPXuu0FfuzGfhXCQRP4sNvxPl78pL4sVyskfO1ppt2JCoN8ZobQbSs3NjPGHWG4XAj
+         +WFA==
+X-Gm-Message-State: AOAM533EQIekZ/QcB2WiThhzGCxPpUjnvGik2s/aXCOTFBrndZD9oae2
+        N4zZ1wu+nj9KRMzgVsZnwOY=
+X-Google-Smtp-Source: ABdhPJyK/Dol28y8k1M2Ru6nc8DEhijGoKI0HNwKahz2rBbt5WPYLugxwRz6BmKQodqYFryoRZ7awg==
+X-Received: by 2002:a17:906:cc48:: with SMTP id mm8mr8064181ejb.58.1618343057916;
+        Tue, 13 Apr 2021 12:44:17 -0700 (PDT)
+Received: from szeder.dev (94-21-23-40.pool.digikabel.hu. [94.21.23.40])
+        by smtp.gmail.com with ESMTPSA id q12sm8793353ejy.91.2021.04.13.12.44.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Apr 2021 12:27:38 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] t0091-bugreport.sh: actually verify some content of report
+        Tue, 13 Apr 2021 12:44:17 -0700 (PDT)
+Date:   Tue, 13 Apr 2021 21:44:15 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
+Cc:     Emily Shaffer <emilyshaffer@google.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] t0091-bugreport.sh: actually verify some content of
+ report
+Message-ID: <20210413194415.GK2947267@szeder.dev>
 References: <20210409212724.GE2947267@szeder.dev>
  <20210411143354.25134-1-martin.agren@gmail.com>
- <xmqqwnt7e82i.fsf@gitster.g>
- <CAN0heSr3MQnqMiWiSYpmpx3ZRkyXK6z1VfW_T-EQi31ifs0drA@mail.gmail.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <CAN0heSr3MQnqMiWiSYpmpx3ZRkyXK6z1VfW_T-EQi31ifs0drA@mail.gmail.com>
-Date:   Tue, 13 Apr 2021 21:27:33 +0200
-Message-ID: <87a6q22dei.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210411143354.25134-1-martin.agren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sun, Apr 11, 2021 at 04:33:54PM +0200, Martin Ågren wrote:
+> In the first test in this script, 'creates a report with content in the
+> right places', we generate a report and pipe it into our helper
+> `check_all_headers_populated()`. The idea of the helper is to find all
+> lines that look like headers ("[Some Header Here]") and to check that
+> the next line is non-empty. This is supposed to catch erroneous outputs
+> such as the following:
+> 
+>   [A Header]
+>   something
+>   more here
+> 
+>   [Another Header]
+> 
+>   [Too Early Header]
+>   contents
+> 
+> However, we provide the lines of the bug report as filenames to grep,
+> meaning we mostly end up spewing errors:
+> 
+>   grep: : No such file or directory
+>   grep: [System Info]: No such file or directory
+>   grep: git version:: No such file or directory
+>   grep: git version 2.31.1.164.g984c2561cd: No such file
+> 
+> This doesn't disturb the test, which tugs along and reports success, not
+> really having verified the contents of the report at all.
+> 
+> Note that after 788a776069 ("bugreport: collect list of populated
+> hooks", 2020-05-07), the bug report, which is created in our hook-less
+> test repo, contains an empty section with the enabled hooks. Thus, even
+> the intention of our helper is a bit misguided: there is nothing
+> inherently wrong with having an empty section in the bug report.
+> 
+> Let's instead grep for some contents that we expect to find in a bug
+> report. We won't verify that they appear in the right order, but at
+> least we end up verifying the contents more than before this commit.
+> 
+> Reported-by: SZEDER Gábor <szeder.dev@gmail.com>
+> Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+> ---
+>  > It does scare me..
+> 
+>  Maybe something like this?
 
-On Tue, Apr 13 2021, Martin =C3=85gren wrote:
+Thanks!
 
-> On Mon, 12 Apr 2021 at 19:17, Junio C Hamano <gitster@pobox.com> wrote:
->>
->> Martin =C3=85gren <martin.agren@gmail.com> writes:
->>
->> > In the first test in this script, 'creates a report with content in the
->> > right places', we generate a report and pipe it into our helper
->> > `check_all_headers_populated()`. The idea of the helper is to find all
->> > lines that look like headers ("[Some Header Here]") and to check that
->> > the next line is non-empty. This is supposed to catch erroneous outputs
->> > such as the following:
-> ...
->> > Let's instead grep for some contents that we expect to find in a bug
->> > report. We won't verify that they appear in the right order, but at
->> > least we end up verifying the contents more than before this commit.
->>
->> Nicely described.  I agree that the original intent (let alone the
->> implementation) is misguided and we should allow an empty section as
->> a perfectly normal thing.
->
->> > +test_expect_success 'creates a report with content' '
->> >       test_when_finished rm git-bugreport-check-headers.txt &&
->> >       git bugreport -s check-headers &&
->> > -     check_all_headers_populated <git-bugreport-check-headers.txt
->> > +     grep "^Please answer " git-bugreport-check-headers.txt &&
->> > +     grep "^\[System Info\]$" git-bugreport-check-headers.txt &&
->> > +     grep "^git version:$" git-bugreport-check-headers.txt &&
->> > +     grep "^\[Enabled Hooks\]$" git-bugreport-check-headers.txt
->> >  '
->>
->> It is a different matter if it is sufficient to ensure only certain
->> selected lines appear in the report, though.  As all the lines lost
->> by this fix comes from 238b439d (bugreport: add tool to generate
->> debugging info, 2020-04-16), it would be nice to hear from Emily.
->
-> Maybe something like
->
->        awk '\''BEGIN { sect=3D"" }
->                /^\[.*]$/ { sect=3D$0 }
->                /./ { print sect, $0 }'\'' \
->            git-bugreport-check-headers.txt >prefixed &&
->        grep "^ Thank you for filling out a Git bug report" prefixed &&
->        grep "^ Please review the rest of the bug report below" prefixed &&
->        grep "^ You can delete any lines you don.t wish to share" prefixed=
- &&
->        grep "\[System Info\] git version ..." prefixed
->
-> Something like that could be used to verify that a line goes into the
-> right section, as opposed to just seeing that it appears *somewhere*. Or
-> maybe
->
->   grep -e Thank.you -e Please.review -e You.can.delete -e "^\[" \
->        -e git.version git-bugreport-check-headers.txt >actual
->
-> then setting up an "expect" and comparing. That would help us verify the
-> order, including which section things appear in. Slightly less friendly
-> for comparing loosely, compared to the awk-then-grep above.
->
-> Let's see what Emily thinks about the various alternatives. Maybe she can
-> think of something else.
+>  t/t0091-bugreport.sh | 26 +++++---------------------
+>  1 file changed, 5 insertions(+), 21 deletions(-)
+> 
+> diff --git a/t/t0091-bugreport.sh b/t/t0091-bugreport.sh
+> index 526304ff95..9111c4c26f 100755
+> --- a/t/t0091-bugreport.sh
+> +++ b/t/t0091-bugreport.sh
+> @@ -4,29 +4,13 @@ test_description='git bugreport'
+>  
+>  . ./test-lib.sh
+>  
+> -# Headers "[System Info]" will be followed by a non-empty line if we put some
+> -# information there; we can make sure all our headers were followed by some
+> -# information to check if the command was successful.
+> -HEADER_PATTERN="^\[.*\]$"
+> -
+> -check_all_headers_populated () {
+> -	while read -r line
+> -	do
+> -		if test "$(grep "$HEADER_PATTERN" "$line")"
+> -		then
+> -			echo "$line"
+> -			read -r nextline
+> -			if test -z "$nextline"; then
+> -				return 1;
+> -			fi
+> -		fi
+> -	done
+> -}
+> -
+> -test_expect_success 'creates a report with content in the right places' '
+> +test_expect_success 'creates a report with content' '
+>  	test_when_finished rm git-bugreport-check-headers.txt &&
+>  	git bugreport -s check-headers &&
+> -	check_all_headers_populated <git-bugreport-check-headers.txt
+> +	grep "^Please answer " git-bugreport-check-headers.txt &&
 
-I think a straight-up test_cmp is preferrable, both for correctness and
-also as self-documentation, you can see from the test what the full
-expected output is like.
+This "Please answer" is translated and you look for it with plain
+'grep' instead of 'test_i18ngrep', which is fine nowadays...  However,
+Junio queued this patch on top of v2.29.3, which is old enough to
+still have the GETTEXT_POISON CI job, and fails because of this.
 
-Obviously in this case we can't do a test_cmp on the raw output, as it
-contains various things from uname.
+> +	grep "^\[System Info\]$" git-bugreport-check-headers.txt &&
+> +	grep "^git version:$" git-bugreport-check-headers.txt &&
+> +	grep "^\[Enabled Hooks\]$" git-bugreport-check-headers.txt
+>  '
 
-But it looks like we could do that if we do some light awk/perl/sed
-munging of the "[System Info]" and "[Enabled Hooks]" section(s).
+I have to wonder, however, whether this is worth testing at all.
 
-Or, since we also control the generator we could pass a --no-system-info
-and/or --no-hooks-info, which may be something some people want for
-privacy/reporting reasons anyway (e.g. I've often used perlbug and
-deleted that whole info, because info there has no relevance to the
-specific issue I'm reporting).
+>  
+>  test_expect_success 'dies if file with same name as report already exists' '
+> -- 
+> 2.31.1.163.ga65ce7f831
+> 
