@@ -2,159 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-14.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE967C433B4
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 12:10:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E16AC433B4
+	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 12:12:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9DF5760FDB
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 12:10:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5580461278
+	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 12:12:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231329AbhDMMLB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Apr 2021 08:11:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56580 "EHLO
+        id S1345446AbhDMMMo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Apr 2021 08:12:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231134AbhDMMLA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Apr 2021 08:11:00 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BDCBC061574
-        for <git@vger.kernel.org>; Tue, 13 Apr 2021 05:10:41 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id x7so16187846wrw.10
-        for <git@vger.kernel.org>; Tue, 13 Apr 2021 05:10:41 -0700 (PDT)
+        with ESMTP id S239738AbhDMMMn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Apr 2021 08:12:43 -0400
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBE7EC061574
+        for <git@vger.kernel.org>; Tue, 13 Apr 2021 05:12:23 -0700 (PDT)
+Received: by mail-ot1-x32d.google.com with SMTP id t17-20020a9d77510000b0290287a5143b41so4630742otl.11
+        for <git@vger.kernel.org>; Tue, 13 Apr 2021 05:12:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=x/Fv5nvPCiV5XXNujP9bGc5N3QByd/ZNiPhrkayfR0g=;
-        b=Z5yufAQRLb3m80snAJNubJ+HhPOK1J24Kt5I+blAdDY7udJBZzyxK69/CXeQGACD6R
-         84JCvWF3YfdrEPz4abpiJTkwskLpDURavE+JbHzSYd2fwiKIRPQca2kOGKmSMhkMLdSH
-         wqIhbzVDCVbG+jhLfRxKViFIsx4lEkT2xkx0T9SzyhZrwxqN6C2kNrLmvYZgOmTY+6fd
-         NVvGgelknOn0GPc6Eghseg7NbzQA0KvCw5bx1na/lT2XKeI/Tcz+apTahoUZin63lbWM
-         clPQ/m0ff/gtYvw8JbgJWjVQ1pbvYcW18B4jSjGaSzkU/ACJYtfBFDcJjQWKF79ocYjl
-         IOjQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=vJ1S67eG9/esg3pr6ZDAM8navcmsvH/hYxolnZ6uPgU=;
+        b=FSWrpACfEwP3Lu6Q5a80HUf6+5jCMTpGR66dyH/4h1IX7JSQ1aG3KZH/ExJS1AKtzh
+         5DEshqETFT2bOncV2ha93g+zKTUs1m/cSEABbydc8kTlg6+CtT0cCIO5viTV1WoM+r/f
+         9DyoYKfSO2yf7VEAc7rF5nTa2M/521sPYRlkUJRsMXNhtlUqlwsZ7kbQxILOhjFXnKhi
+         UVtBFuoUpbbud8d9rfvY5nifQMYvtHgaC5VSTd2yqmptkU9Gy4TTIYHVXRwqPpZNvd0w
+         X7CsS+vwOowq8C9rdREuqNzHaNwvUO6YUSmgVLWkHULCzG0hb2Um3goidIt7NfG7PReL
+         GMUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=x/Fv5nvPCiV5XXNujP9bGc5N3QByd/ZNiPhrkayfR0g=;
-        b=WcpMNkvgjbe+Mnpq8kkB3A5cVO0QjAq5+BEFEh/ZlATTDNLPB+qC8Y2cwQRDfgwNNK
-         X420Dvinm2X6dBhGnSZcNgB5Fef4OCCzPNzYK4TQ7z/oqHHsSu+yzH6gUMXYXcCuVi5f
-         HmkA67WW1cofxU58cv9w+gPt6sCOtOvIWxxUnuR0jOfEvKfcTg6kYFsJ2OHYTsP+p7Kh
-         HCv9JHVuVOZFvtuIje7Y4VmYh5Nio505qQNk6QAyzmtpPaLdGlxPQTL4MkC1LK4Q3z25
-         L/OCnNQorZuJbDu/gvfLjjGlN8RTi9f2ngXga69fXbbLs9mmNci5y/S02BiW38UvHAqj
-         XXWA==
-X-Gm-Message-State: AOAM531qg6QvMqGJ8OX8kMxw/ygU5G9G2hhA/SU0OexV+jNmE5Vtt7ne
-        Q7FJBh0GsdZriNSw5/RsMH0RviromxQ=
-X-Google-Smtp-Source: ABdhPJyknukNx/fsD8AFWpAyURKgYeunP1LHkL+OXcqyGhslxnlEEPj9qbvObF8SNHg6KyKYWhAxIw==
-X-Received: by 2002:adf:f308:: with SMTP id i8mr17150620wro.209.1618315839717;
-        Tue, 13 Apr 2021 05:10:39 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n3sm2377514wmi.7.2021.04.13.05.10.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Apr 2021 05:10:39 -0700 (PDT)
-Message-Id: <pull.1002.v2.git.git.1618315838582.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1002.git.git.1618255954484.gitgitgadget@gmail.com>
-References: <pull.1002.git.git.1618255954484.gitgitgadget@gmail.com>
-From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 13 Apr 2021 12:10:38 +0000
-Subject: [PATCH v2] refs: print errno for read_raw_ref if GIT_TRACE_REFS is
- set
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=vJ1S67eG9/esg3pr6ZDAM8navcmsvH/hYxolnZ6uPgU=;
+        b=PiqHx8vhLAFnloUZ6qRW9Ho1ogpKhA9ePI9QZeNv6T7q6mgV49hecHPZuUgw4c/neL
+         Nc+pbKsMhnZ+5FzwS9PyPMxOyQLhkM3KQ6HdJyZRWH8ntU1SeV4r+VOah4JPtQP5rMIF
+         P++aZ9uSa54h6PQ/sYFRDnanhebrgMbdkND5bot6jzEThrUrPJXPnkSWy6arcBx47ZQ1
+         ZqLpwSzX3dzkPa2y08MItdKkdQ7UfA27t9ocwtO+S2vB2rpryJQbVE3wMMCH+nEjFMGf
+         TUIbxWYeoGwjeMHPWYbNCy2Ffbe3zF7hdPkqC3yKNV8RdHNYCTl3puDaCYdaF/nObiMQ
+         G4Jw==
+X-Gm-Message-State: AOAM530S+0O5UoINnQ4I/VaP4ZAtxhwNbZuEOJ5oT68L5q8nM8qqSFSW
+        NFXWnF0Tsjz+hAeEkzKArZkK0Xxgnb2jPA==
+X-Google-Smtp-Source: ABdhPJyT+uK7Rw60NceUHDaZrmAwwv/HCMuoXnCwiSXxgOm9fBnyysd9qKE2yjolMIVk65P4dcp18A==
+X-Received: by 2002:a9d:7699:: with SMTP id j25mr28140926otl.177.1618315943260;
+        Tue, 13 Apr 2021 05:12:23 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:d9df:73fc:aa55:75a7? ([2600:1700:e72:80a0:d9df:73fc:aa55:75a7])
+        by smtp.gmail.com with ESMTPSA id 93sm2475805otm.2.2021.04.13.05.12.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 13 Apr 2021 05:12:22 -0700 (PDT)
+Subject: Re: [PATCH 03/15] cache: add an algo member to struct object_id
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Cc:     Derrick Stolee <dstolee@microsoft.com>
+References: <20210410152140.3525040-1-sandals@crustytoothpaste.net>
+ <20210410152140.3525040-4-sandals@crustytoothpaste.net>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <38f48634-077b-6351-5285-f8ecc6f552d0@gmail.com>
+Date:   Tue, 13 Apr 2021 08:12:21 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.9.1
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Han-Wen Nienhuys <hanwen@google.com>,
-        Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
+In-Reply-To: <20210410152140.3525040-4-sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Han-Wen Nienhuys <hanwen@google.com>
+On 4/10/2021 11:21 AM, brian m. carlson wrote:
+> Now that we're working with multiple hash algorithms in the same repo,
+> it's best if we label each object ID with its algorithm so we can
+> determine how to format a given object ID. Add a member called algo to
+> struct object_id.
+> 
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+>  hash.h | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/hash.h b/hash.h
+> index 3fb0c3d400..dafdcb3335 100644
+> --- a/hash.h
+> +++ b/hash.h
+> @@ -181,6 +181,7 @@ static inline int hash_algo_by_ptr(const struct git_hash_algo *p)
+>  
+>  struct object_id {
+>  	unsigned char hash[GIT_MAX_RAWSZ];
+> +	int algo;
+>  };
 
-The ref backend API uses errno as a sideband error channel.
+What are the performance implications of adding this single bit
+(that actually costs us 4 to 8 bytes, based on alignment)? Later
+in the series you add longer hash comparisons, too. These seem
+like they will affect performance for existing SHA-1 repos, and
+it would be nice to know how much we are paying for this support.
 
-Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
----
-    refs: print errno for read_raw_ref if GIT_TRACE_REFS is set
-    
-    The ref backend API uses errno as a sideband error channel.
-    
-    Signed-off-by: Han-Wen Nienhuys hanwen@google.com
+I assume that we already checked what happened when GIT_MAX_RAWSZ
+increased, but that seemed worth the cost so we could have SHA-256
+at all. I find the justification for this interoperability mode to
+be less significant, and potentially adding too much of a tax onto
+both SHA-1 repos that will never upgrade, and SHA-256 repos that
+upgrade all at once (or start as SHA-256).
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1002%2Fhanwen%2Ferrno-debug-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1002/hanwen/errno-debug-v2
-Pull-Request: https://github.com/git/git/pull/1002
+Of course, if there truly is no serious performance implication to
+this change, then I support following the transition plan and
+allowing us to be flexible on timelines for interoperability. It
+just seems like we need to investigate what this will cost.
 
-Range-diff vs v1:
-
- 1:  9b150c5563f9 ! 1:  1e9a8990e7f2 refs: print errno for read_raw_ref if GIT_TRACE_REFS is set
-     @@ Commit message
-      
-       ## refs/debug.c ##
-      @@ refs/debug.c: static int debug_read_raw_ref(struct ref_store *ref_store, const char *refname,
-     + {
-     + 	struct debug_ref_store *drefs = (struct debug_ref_store *)ref_store;
-       	int res = 0;
-     ++	int saved_errno = 0;
-       
-       	oidcpy(oid, &null_oid);
-      +	errno = 0;
-       	res = drefs->refs->be->read_raw_ref(drefs->refs, refname, oid, referent,
-       					    type);
-     ++	saved_errno = errno;
-       
-     -@@ refs/debug.c: static int debug_read_raw_ref(struct ref_store *ref_store, const char *refname,
-     + 	if (res == 0) {
-       		trace_printf_key(&trace_refs, "read_raw_ref: %s: %s (=> %s) type %x: %d\n",
-       			refname, oid_to_hex(oid), referent->buf, *type, res);
-       	} else {
-      -		trace_printf_key(&trace_refs, "read_raw_ref: %s: %d\n", refname, res);
-      +		trace_printf_key(&trace_refs,
-      +				 "read_raw_ref: %s: %d (errno %d)\n", refname,
-     -+				 res, errno);
-     ++				 res, saved_errno);
-       	}
-       	return res;
-       }
-
-
- refs/debug.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
-
-diff --git a/refs/debug.c b/refs/debug.c
-index 922e64fa6ad9..286987b72166 100644
---- a/refs/debug.c
-+++ b/refs/debug.c
-@@ -242,16 +242,21 @@ static int debug_read_raw_ref(struct ref_store *ref_store, const char *refname,
- {
- 	struct debug_ref_store *drefs = (struct debug_ref_store *)ref_store;
- 	int res = 0;
-+	int saved_errno = 0;
- 
- 	oidcpy(oid, &null_oid);
-+	errno = 0;
- 	res = drefs->refs->be->read_raw_ref(drefs->refs, refname, oid, referent,
- 					    type);
-+	saved_errno = errno;
- 
- 	if (res == 0) {
- 		trace_printf_key(&trace_refs, "read_raw_ref: %s: %s (=> %s) type %x: %d\n",
- 			refname, oid_to_hex(oid), referent->buf, *type, res);
- 	} else {
--		trace_printf_key(&trace_refs, "read_raw_ref: %s: %d\n", refname, res);
-+		trace_printf_key(&trace_refs,
-+				 "read_raw_ref: %s: %d (errno %d)\n", refname,
-+				 res, saved_errno);
- 	}
- 	return res;
- }
-
-base-commit: 89b43f80a514aee58b662ad606e6352e03eaeee4
--- 
-gitgitgadget
+Thanks,
+-Stolee
