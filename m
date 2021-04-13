@@ -2,72 +2,73 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D6F0C433B4
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 19:01:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1238CC433B4
+	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 19:07:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2DFD4613C7
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 19:01:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BEE7660E0B
+	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 19:07:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347899AbhDMTB4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Apr 2021 15:01:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34138 "EHLO
+        id S231812AbhDMTHw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Apr 2021 15:07:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230397AbhDMTBy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Apr 2021 15:01:54 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15164C061574
-        for <git@vger.kernel.org>; Tue, 13 Apr 2021 12:01:34 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id u21so27625460ejo.13
-        for <git@vger.kernel.org>; Tue, 13 Apr 2021 12:01:34 -0700 (PDT)
+        with ESMTP id S230123AbhDMTHs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Apr 2021 15:07:48 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1001EC061574
+        for <git@vger.kernel.org>; Tue, 13 Apr 2021 12:07:28 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id w3so27705946ejc.4
+        for <git@vger.kernel.org>; Tue, 13 Apr 2021 12:07:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
          :message-id:mime-version:content-transfer-encoding;
-        bh=iN+qMbmMP1e3L4Qd6Lu0rmMy4kw/OQaX8Nk4msBXB/Q=;
-        b=kjqj5HPs9Jq6yEeS3kq3eywEJvdTNCbIq7g5J1/FZhtmUrY2CsKbekA+3Q/jh6k7jk
-         uYDxpqPyoecnFQAjzh8u9gm+VTn6JkpuoZGbgiqeR6FditAbcZyXk3eVHYT00wvvxjE6
-         EDZjAWXdt3SpvvnMZLsUTReZsppt97ljS4nwTV/YU0txs56iYQjSAN+z2ivibF0yEI/u
-         Am9eXybFLJAYmrNJLKQPTQW2mkjWzEnvuyINVPmQwbTh0yKY05ftiEIe68Gt3vESOm8S
-         +ofS+qQMTQlj/MEdsuine2iow2YcSarEBSGNtuRO0TzkOfcV7N+2N03mPmdjUoSH7QaF
-         lo/g==
+        bh=VvZLPEBYDSLqkxehIgbdJxYv1+4jCzuCKsrN52zcI28=;
+        b=urCOY9komm3G0kL0inHv9HtIHHnSqJehhbp/l59vvYDQhlAPsO1muAgb605dLUhlYa
+         I5UlN9Qw/L+VR4y7ewk6jPTVoVZkBPcy0t1UlbtthfUhB+NdeXR6zXVeqo5nHxXoBKmM
+         pkRIbmoHYOm5vC1wf3RK3WGRCraBmMEtbzWGjPC7QbykUL6N9lNzLFnCv21ILCEtrZxo
+         SUYwn66VQIC++hLBSBeEUjtFi4l4Dkfp9nByl4vrMusK5WYAIswIMHTtHDdOyDUeC1je
+         sMQVHcgoAJQYvf5BnqU9032/kdpukgiBMVi7hADB6sS7kC414GeTNPReJ2w/8OTKmDq+
+         xHYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
          :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=iN+qMbmMP1e3L4Qd6Lu0rmMy4kw/OQaX8Nk4msBXB/Q=;
-        b=DguMc5Re953mzDNQFDipsJLwFDP5fvbR7el/m0NyZnaMwMRkuVtouF7VL3wcB3+CEy
-         Xqf/ibeFtzziPO7LhtJrfn9krUNaiHJCM2ITB4tYrhFD+E/lzYcQuSz+nhQdYgJPqoq6
-         JJsC3MwbYfoKF3FXZJydyk8xxQ0gXP/+4YohEP1t4MB+iy4kxanbz8g34t/LlR0xEg17
-         Sg8EfDwhYhRNnL9Krnc8b4Q4QiYfAJrpui9IiHPwAlP/ZS4Dolu88vtAeOWN3fRadXZy
-         n9E7OFd+6h7/N+N0eg6tALmacFRlP3gGAcXopoz00BIVBYgI7zcKvfgT8u6dhATmE5R2
-         wx6A==
-X-Gm-Message-State: AOAM531zol+jMGkoVXGUFMNgLNhUdLdh59Orpt/WKhUP7W3myZ5oWDaj
-        ovS3wEETMHALwqIzrBDJkzw=
-X-Google-Smtp-Source: ABdhPJxrc/y87jY1VJID9e6m1KW3qqIwuadoWHKAJiqVt8uUMH+LYJriXq1um41SGHsyP5OFoXTP1Q==
-X-Received: by 2002:a17:906:fa07:: with SMTP id lo7mr17832389ejb.321.1618340492706;
-        Tue, 13 Apr 2021 12:01:32 -0700 (PDT)
+        bh=VvZLPEBYDSLqkxehIgbdJxYv1+4jCzuCKsrN52zcI28=;
+        b=c/ji8OvB1dkk6Uk/aefteO7hrgJy/0Jda98yLuY3E539BTSHxjDKhlP+2o0TuYez4s
+         LNV3EcHRL8VvBpL2jGyA/JET1hOc8u3V9TRS8Bp1RWOavMM1HHxCtjqw1m+MGAi25vWe
+         QC+kmnIEqlr0VAqIOCrQDZikGVsV9G+5hcE1/RvUISyvOIANOvFEYXNFPQQgVgL9iFeZ
+         l7kKaLKY+bPdeskH1NS4ENY6l8mdGvWPyglSydUWbZJ9v8ZGsvtX/cG7DIZIpW4lx/o7
+         eQ4bPHmSQ0jXhxHQrvVXJ1YfY6Kp+cYhP4FGHO88LQ6CzEqtv0MYbveYgssivHYVRcoU
+         3eCw==
+X-Gm-Message-State: AOAM530jwqK5j6ulu0qbYoWQIuaJLDBxXOCtDApfwWgES5iCPxAHKS6R
+        9cPCD/1vWeGiXmPef7HSFg0=
+X-Google-Smtp-Source: ABdhPJwBqrsEFcaKFFZrWXjQJ/1uF27NQ/ZsoiD549wA9B1tuHvI8BY3/37yGJZaiRbYn5cNa/TqDg==
+X-Received: by 2002:a17:906:a20c:: with SMTP id r12mr33131371ejy.554.1618340846722;
+        Tue, 13 Apr 2021 12:07:26 -0700 (PDT)
 Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id n5sm8524761ejj.73.2021.04.13.12.01.32
+        by smtp.gmail.com with ESMTPSA id gn19sm356687ejc.68.2021.04.13.12.07.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Apr 2021 12:01:32 -0700 (PDT)
+        Tue, 13 Apr 2021 12:07:26 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] diff tests: rewrite flakyness-causing test "aid"
-References: <patch-1.1-f0542cd902c-20210413T121930Z-avarab@gmail.com>
- <cover-0.2-00000000000-20210413T122645Z-avarab@gmail.com>
- <patch-2.2-c2cb52b6605-20210413T122645Z-avarab@gmail.com>
- <CAHd-oW4G+7z3UM3qjhPp=2oqOPE4a49fweew0n+gheGtQEy5VA@mail.gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Makefile: add missing dependencies of 'config-list.h'
+References: <20200416211807.60811-2-emilyshaffer@google.com>
+ <20210408212915.3060286-1-szeder.dev@gmail.com>
+ <87pmz4ig4o.fsf@evledraar.gmail.com>
+ <YG+UeQRwdBsVeRNV@coredump.intra.peff.net>
 User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <CAHd-oW4G+7z3UM3qjhPp=2oqOPE4a49fweew0n+gheGtQEy5VA@mail.gmail.com>
-Date:   Tue, 13 Apr 2021 21:01:31 +0200
-Message-ID: <87fszu2elw.fsf@evledraar.gmail.com>
+In-reply-to: <YG+UeQRwdBsVeRNV@coredump.intra.peff.net>
+Date:   Tue, 13 Apr 2021 21:07:25 +0200
+Message-ID: <87czuy2ec2.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -76,99 +77,77 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Tue, Apr 13 2021, Matheus Tavares Bernardino wrote:
+On Fri, Apr 09 2021, Jeff King wrote:
 
-> On Tue, Apr 13, 2021 at 9:31 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> <avarab@gmail.com> wrote:
->>
->> If a new test is added to this "while read magic cmd" test facility
->> added in 3c2f75b590c (t4013: add tests for diff/log family output
->> options., 2006-06-26) but no test file is added it'll fail the first
->> time, but then succeed on subsequent runs as a new file has been added
->> in t4013.
->>
->> Let's accomplish the same aim in way that doesn't cause subsequent
+> On Fri, Apr 09, 2021 at 12:08:23AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
 >
-> s/in way/in a way/ ?
-
-*nod*
-
->> test runs to succeed. If we can't find the file we'll BUG out, and
->> suggest to the developer that they copy our "expect.new" file over,
->> unlike the previous "expect" file this won't be picked up on
->> subsequent runs.
->>
->> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
->> ---
->>  t/t4013-diff-various.sh | 25 +++++++++++++++----------
->>  1 file changed, 15 insertions(+), 10 deletions(-)
->>
->> diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
->> index 67f6411aff9..228ff100c61 100755
->> --- a/t/t4013-diff-various.sh
->> +++ b/t/t4013-diff-various.sh
->> @@ -200,10 +200,12 @@ do
->>         esac
->>         test=3D$(echo "$label" | sed -e 's|[/ ][/ ]*|_|g')
->>         pfx=3D$(printf "%04d" $test_count)
->> -       expect=3D"$TEST_DIRECTORY/t4013/diff.$test"
->> +       expect_relative=3D"t4013/diff.$test"
->> +       expect=3D"$TEST_DIRECTORY/$expect_relative"
->>         actual=3D"$pfx-diff.$test"
->>
->>         test_expect_$status "git $cmd # magic is ${magic:-(not used)}" '
->> +               test_when_finished "rm $actual" &&
+>> > -config-list.h:
+>> > +config-list.h: Documentation/*config.txt Documentation/config/*.txt
+>> >  	$(QUIET_GEN)$(SHELL_PATH) ./generate-configlist.sh \
+>> >  		>$@+ && mv $@+ $@
+>> >=20=20
+>> >  command-list.h: generate-cmdlist.sh command-list.txt
+>> >=20=20
+>> > -command-list.h: $(wildcard Documentation/git*.txt) Documentation/*con=
+fig.txt Documentation/config/*.txt
+>> > +command-list.h: $(wildcard Documentation/git*.txt)
+>> >  	$(QUIET_GEN)$(SHELL_PATH) ./generate-cmdlist.sh \
+>> >  		$(patsubst %,--exclude-program %,$(EXCLUDED_PROGRAMS)) \
+>> >  		command-list.txt >$@+ && mv $@+ $@
+>>=20
+>> This change makes sense.
 >
-> Nit: before these two patches, "$actual" was only removed when the
-> test succeeded. So, in case of failure, the failed output files would
-> still be there for debugging. It might be interesting to keep this
-> behavior and only remove "$actual" at the end of the test.
-
-Either I'm missing something or you are, that's how test_when_finished
-works.
-
-It's skipped under e.g. "--immediate --debug". See b586744a864 (test:
-skip clean-up when running under --immediate mode, 2011-06-27)
-
-Maybe there's some edge case where we'd like to keep the files that it's
-not covering, but then we should patch it to do the right thing, not use
-manual "rm" at the end instead.
-
->>                 {
->>                         echo "$ git $cmd"
->>                         case "$magic" in
->> @@ -216,16 +218,19 @@ do
->>                             -e "s/^\\(.*mixed; boundary=3D\"-*\\)$V\\(-*=
-\\)\"\$/\\1g-i-t--v-e-r-s-i-o-n\2\"/"
->>                         echo "\$"
->>                 } >"$actual" &&
->> -               if test -f "$expect"
->> +
->> +               if ! test -f "$expect"
->>                 then
->> -                       process_diffs "$actual" >actual &&
->> -                       process_diffs "$expect" >expect &&
->> -                       test_cmp expect actual
->> -               else
->> -                       # this is to help developing new tests.
->> -                       cp "$actual" "$expect"
->> -                       false
->> -               fi
->> +                       expect_new=3D"$expect.new" &&
->> +                       cp "$actual" "$expect_new" &&
->> +                       BUG "Have no \"$expect_relative\", new test? The=
- output is in \"$expect_new\", maybe use that?"
->> +               fi &&
->> +
->> +               test_when_finished "rm actual" &&
->> +               process_diffs "$actual" >actual &&
->> +               test_when_finished "rm expect" &&
->> +               process_diffs "$expect" >expect &&
->> +               test_cmp expect actual
->>         '
->>  done <<\EOF
->>  diff-tree initial
+> I agree it looks like it's moving in the right direction, but I am
+> slightly puzzled by the existing code. Why do we need to use $(wildcard)
+> for git*.txt, but not for the others?
 >
-> The rest LGTM, thanks.
+>> I have a not-yet-submitted patch series where I added some more
+>> config/*/*.txt that wouldn't be caught by this rule, I'd updated the
+>> Documentation/Makefile, but missed this part in the top-level Makefile.
+>>=20
+>> So a relation question: Does anyone actually prefer this state of
+>> affairs of having a Makefile, Documentation/Makefile, t/Makefile
+>> t/perf/Makefile and template/Makefile?
+>>=20
+>> It seems to me with ever-closer coupling between them that it's getting
+>> to be more of a hassle to manage state between them than it would be to
+>> just move them all into one big Makefile.
+>
+> Yes, I'm generally a fan of avoiding recursive make when we can. I think
+> the caveats are:
+>
+>   - it would be nice to continue to have stub Makefiles in
+>     sub-directories that trigger the main one (so "cd t && make"
+>     continues to work, for example).
 
-Thanks a lot for the review!
+Yeah, we should definitely keep those in place. I also wonder if various
+rules for local wildcards will be more complex when they need to reach
+into subdirectories.
+
+>   - we may need some cleanup of parts of the top-level Makefile which
+>     are triggered without dependencies (e.g., I think we unconditionally
+>     run some scripts to compute GIT_VERSION in the top-level; this is
+>     already a bit wasteful, but may get even more so as we add more
+>     rules from sub-directories).
+>
+> Mostly my argument against it (and why I haven't purused it) would be:
+> it sounds like a lot of work and risk of regression, and the current
+> system seems pretty fine in practice.
+
+One edge case I discovered the other day but didn't bother debugging
+much was make at the top-level failing because "doc.dep" in
+Documentation/Makefile uses this pattern:
+
+    rm x &&
+    script >x
+
+Which would normally work in one Makefile, but in this case two rules in
+the top-level called unrelated "make -C Documentation [...]", so both of
+those sub-processes end up needing to generate the doc.dep, and they
+race each other.
+
+Another thing fixed (or, worked around) with a wider application of [1].
+
+1. https://lore.kernel.org/git/patch-3.6-96e2338ed8e-20210329T161723Z-avara=
+b@gmail.com/
