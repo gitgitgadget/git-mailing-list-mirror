@@ -6,111 +6,90 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 438F0C433ED
-	for <git@archiver.kernel.org>; Wed, 14 Apr 2021 07:54:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C0B8C43470
+	for <git@archiver.kernel.org>; Wed, 14 Apr 2021 08:03:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0E01D61220
-	for <git@archiver.kernel.org>; Wed, 14 Apr 2021 07:54:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4193561179
+	for <git@archiver.kernel.org>; Wed, 14 Apr 2021 08:03:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231773AbhDNHyw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Apr 2021 03:54:52 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:53780 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231938AbhDNHx5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Apr 2021 03:53:57 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 26157127D80;
-        Wed, 14 Apr 2021 03:53:36 -0400 (EDT)
+        id S1348780AbhDNIEM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Apr 2021 04:04:12 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64730 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1349865AbhDNID0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Apr 2021 04:03:26 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 132A2B28D2;
+        Wed, 14 Apr 2021 04:03:00 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=CYPh2MCKF6NG
-        YrHQ4auOatwJbx8=; b=WiFmVYyrduRcopXeY2eq8AZmJLzaKM1u6rJq+LZWND/q
-        63rXOSlOeq5pUNPY56XRe73wpNShaNWKfDAg3ZQno4bRTmlIWCGo9GB3G+X6L9mQ
-        ZYP/+uejqZVs0MoE9P8xdpP1wa6C2mq6pVWL4uixYEqh2W3GiZWy7f48vXL+coY=
+        :content-type; s=sasl; bh=52aRdvtAJj/JrGPzXtq+UX4UvPQ=; b=t1b/xP
+        qq8MNPvB8SWEWDqQ/FA/8gNfADVPzyOkavUb9RspWwhug0sSjEfbWUoN4j8vRLmg
+        gvFMSxm/bSbRu8uXKXm6qDKeSmwJ23npUQp4LCz5lFCr323mLXjzxRKYaD1CiXdm
+        w4ry/iZ/Ed1C79q6DihCkTzHdb2IC7RpQZ+ZA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=e0J/rX
-        M661geyz//ziZrO/juk5S1SEi7P1EegpqW0qhMEaYVkECYIr76myYPb0VDFiUACA
-        WWlKoX29IhjP7o5YhfBC3oi0fqYmXKrWbWl++aVloDonZIUwXRD+aPbAI9XKTivl
-        9F4yeHN5F/4MYRwzzd/ItL9z1xklZo8zaO0dQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1EEDE127D7F;
-        Wed, 14 Apr 2021 03:53:36 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=H8Fmc0XAUdre+PO2YQMVJijmFza3kjsV
+        SWHSCRYJ1MN5ksHturI/k3zuUBcsiB0NnoqrkAhc0rmlSIId+hoE693Goa2k9Dvh
+        W9aUcdK+dlLsN6bM6oGKWgVqR8SevjFQq7pOo/u1e9ehgTZ3eobbnusqOLenYyjA
+        D1YqrMv1Omc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 090E4B28D1;
+        Wed, 14 Apr 2021 04:03:00 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 169DE127D7D;
-        Wed, 14 Apr 2021 03:53:32 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 86CFFB28CE;
+        Wed, 14 Apr 2021 04:02:59 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        git <git@vger.kernel.org>
-Subject: Re: [PATCH 2/2] diff tests: rewrite flakyness-causing test "aid"
-References: <patch-1.1-f0542cd902c-20210413T121930Z-avarab@gmail.com>
-        <cover-0.2-00000000000-20210413T122645Z-avarab@gmail.com>
-        <patch-2.2-c2cb52b6605-20210413T122645Z-avarab@gmail.com>
-        <CAHd-oW4G+7z3UM3qjhPp=2oqOPE4a49fweew0n+gheGtQEy5VA@mail.gmail.com>
-        <87fszu2elw.fsf@evledraar.gmail.com>
-        <CAHd-oW6D7Tmp2TmrmGvXDt-NnT_wxhfr_bn_P_7=ot=m_2eyyA@mail.gmail.com>
-        <874kg92xn0.fsf@evledraar.gmail.com> <xmqqim4pz83e.fsf@gitster.g>
-        <871rbd2u47.fsf@evledraar.gmail.com>
-Date:   Wed, 14 Apr 2021 00:53:30 -0700
-In-Reply-To: <871rbd2u47.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Wed, 14 Apr 2021 09:38:48 +0200")
-Message-ID: <xmqqblahz4hx.fsf@gitster.g>
+To:     Bagas Sanjaya <bagasdotme@gmail.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Raxel Gutierrez <raxelgutierrez09@gmail.com>,
+        mricon@kernel.org, patchwork@lists.ozlabs.org,
+        Taylor Blau <me@ttaylorr.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Git Users <git@vger.kernel.org>
+Subject: Re: Pain points in Git's patch flow
+References: <YHaIBvl6Mf7ztJB3@google.com>
+        <b562e614-add7-575f-3013-1dbc667bc5bf@gmail.com>
+Date:   Wed, 14 Apr 2021 01:02:58 -0700
+In-Reply-To: <b562e614-add7-575f-3013-1dbc667bc5bf@gmail.com> (Bagas Sanjaya's
+        message of "Wed, 14 Apr 2021 14:22:51 +0700")
+Message-ID: <xmqq7dl5z425.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 81F43182-9CF6-11EB-8A4F-D609E328BF65-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: D4306F14-9CF7-11EB-AEAC-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Bagas Sanjaya <bagasdotme@gmail.com> writes:
 
->>> Thus if we do:
->>>
->>>     git something >expected &&
->>>     test_cmp expected actual &&
->>>     rm expected actual
->>
->> Isn't it a poor example to use to argue for your particular change,
->> where $actual in the original is designed to be unique among tests,
->> in order to ensure that $actual files left after test pieces fail
->> would not interfere with the tests that come later?  IOW, there is
->> not a reason to remove $actual until the end of the test sequence,
->> is there?
->
-> Not really, because you needed to read the rest of the test file to com=
-e
-> to that conclusion.
->
-> The point of using a helper that guarantees cleanup such as
-> test_when_finished or test_config over manual "git config" or "git rm"
-> isn't that we can prove that we need it because a later test needs the
-> cleanup, but that anyone can add new tests or functionality without
-> having to worry about cleaning up the existing trash directory.
->
-> So yes, it's not needed here, but that's only because we know the rest
-> of the tests don't have e.g. a test that does a:
+> There is no lists of "beginner-friendly" issues that can be worked on by
+> new contributors. They had to search this ML archive for bug report
+> issues and determine themselves which are beginner-friendly.
 
-In this particular case, $actual files are designed to be left
-behind for failed test pieces, so that the tester can come back and
-inspect them.  I probably should have said it a bit more strongly
-than "there is not a reason to remove".  You SHOULD NOT remove and
-that is why we had "check and then remove only upon success" there,
-instead of test_when_finished.  We want them left for and only for
-failing test pieces.
+Yeah, looking for "#leftoverbits" or "low-hanging" on the list
+archive is often cited as a way, and it does seem easy enough to
+do.  You go to https://lore.kernel.org/git/, type "leftoverbits"
+or "low-hanging" in the text input and press SEARCH.
 
-Please do not advocate for and encourage newbies who would be
-reading the discussion from sidelines to use test_when_finished out
-of dogmatic principle without thinking.  Even though there are valid
-cases where test_when_finished is the perfect fit, in this
-particular case, use of it is a clear regression.
+But that is only half of the story.
 
-Thanks.
+Anybody can throw random ideas and label them "#leftoverbits" or
+"low-hanging fruit", but some of these ideas might turn out to be
+ill-conceived or outright nonsense.  Limiting search to the
+utterances by those with known good taste does help, but as a
+newbie, you do not know who these people with good taste are.
+
+It might help to have a curated list of starter tasks, but I suspect
+that they tend to get depleted rather quickly---by definition the
+ones on the list are easy to do and there is nothing to stop an
+eager newbie from eating all of them in one sitting X-(.
+
+So, I dunno.  We seem to suffer from the same lack of good starter
+tasks before each GSoC begins.
