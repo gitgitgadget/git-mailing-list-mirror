@@ -2,142 +2,169 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4442EC433B4
-	for <git@archiver.kernel.org>; Wed, 14 Apr 2021 22:56:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D2D24C433ED
+	for <git@archiver.kernel.org>; Wed, 14 Apr 2021 23:22:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 21B5361090
-	for <git@archiver.kernel.org>; Wed, 14 Apr 2021 22:56:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9AD43610FA
+	for <git@archiver.kernel.org>; Wed, 14 Apr 2021 23:22:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233083AbhDNW5N (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Apr 2021 18:57:13 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:33318 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S232196AbhDNW5M (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 14 Apr 2021 18:57:12 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S236991AbhDNXWo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Apr 2021 19:22:44 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55684 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232330AbhDNXWo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Apr 2021 19:22:44 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 187D2B8EA9;
+        Wed, 14 Apr 2021 19:22:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=6EDfcOMvJdwfcIUT7Ju66AE7Gqk=; b=knAVnM
+        ViBNpDyz4bZlHdS2mrcrVCe61qhELonBDNezKYm2CqupJlQkS1cDmewQCc9tKBRM
+        rV36eHgmWL5sUwH+/NYaRhFA67GqM1gmOKp7VDHdM11XB1cjtRmc+XYJYUmBrLpU
+        2cPEo4NPOBpP0vhSQ/eMk70SKRL7GZBRv6RCU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+        :references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=IHPwcwNUghheN4gzzM0t2rslEg5M8ej5
+        g7IZ7vKHQP27FW/YKUqGNwEQP9fjCrdMhFBgIwfJ1y/mhs3zl6CMHhOFjUN54LzR
+        jneLHciimt++FjCVj8MJuKKwJlfyfrWvGoQYh10BbljXnWdnZjy6uNM63eB3AmFa
+        qsxRe1bp7io=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 02454B8EA8;
+        Wed, 14 Apr 2021 19:22:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 023EC60744;
-        Wed, 14 Apr 2021 22:56:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1618440980;
-        bh=R877vS6ajl6npOIV9fHq3xqvOP+ZuQYatjzOWXQuTb4=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=ZdYRlzk4w0NSHxxZVG5URdaKyx6czad9dXtzCbfpIKtE/YoBrflixfA1cR5HI5C3d
-         JHMZR2/1Va1ombE7BfFeVUMPLKLp4s3jCIkoznKy/Ro9hiE3r1YsNw5VE5HMqUKHZm
-         4BJv4zB/c89tuwFZCaH8hvXzY8eUDmfYQIWK8CJAbiaSf/tzCQbUY51jQJStnY7Guk
-         +WX8Nl4uAEMFomFOWkNiQ8P9D4mnrYygQQCNJAkT0s2HVALIS5rn+sOoMjdSL4LaXm
-         rySft9bkmPeDLN8eQGLDD7h7SEVSUdrF8FJbX+9e8OqYNRpXYjrYkqhC5UTGl7AvnW
-         an8MZHG5ibn6rvwzniR58/bSK/iRbczbyq5MiRD4naDtZQzZCa7zrj+Y/IWDVdyKLP
-         zKPJSoX4EFL3cbFjlB+BZ8dJ9pOX4EkPed/xSznrlgp81nPkbvX/lqVM0ecYgGYvaY
-         YZ4iRi1/TIZi3pvB7b3kXWsIRI2fIGT6/0V/yus+blGc9IhX0yK
-Date:   Wed, 14 Apr 2021 22:56:14 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jason Gore <Jason.Gore@microsoft.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: Git clean enumerates ignored directories (since 2.27)
-Message-ID: <YHdzDlAfsuZ21HR7@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jason Gore <Jason.Gore@microsoft.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Elijah Newren <newren@gmail.com>
-References: <DM6PR00MB06829EC5B85E0C5AC595004E894E9@DM6PR00MB0682.namprd00.prod.outlook.com>
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 63824B8EA7;
+        Wed, 14 Apr 2021 19:22:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Patrick Steinhardt <ps@pks.im>
+Subject: What's cooking (draft for #4's issue this month)
+References: <xmqqmtu1zn3o.fsf@gitster.g>
+Date:   Wed, 14 Apr 2021 16:22:19 -0700
+In-Reply-To: <xmqqmtu1zn3o.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
+        13 Apr 2021 18:11:39 -0700")
+Message-ID: <xmqqim4owixg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="qnwpT3kXoArf9tHH"
-Content-Disposition: inline
-In-Reply-To: <DM6PR00MB06829EC5B85E0C5AC595004E894E9@DM6PR00MB0682.namprd00.prod.outlook.com>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 429FFAF2-9D78-11EB-8AE1-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Here is the (local) test status near the tip of 'seen', relative to
+the integration result last night.
 
---qnwpT3kXoArf9tHH
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+ * hn/reftable has a preparatory change to use oidread() instead of
+   hashcpy() in places queued at its tip.  This is essentially a
+   no-op in the codebase without bc/hash-transition-interop-part-1
+   and would be a bugfix with that topic.  Please squash it into an
+   appropriate step in the series when updating the topic in the
+   future.
 
-On 2021-04-14 at 17:17:46, Jason Gore wrote:
-> I'm unsure of whether this issue is Windows-specific but at the very leas=
-t I suspect this is a change of behavior that would affect all platforms.
->=20
-> In July 2020 I reported an issue I initially encountered in 2.27 that sti=
-ll seems to be present in 2.31.1.windows.1: https://github.com/git-for-wind=
-ows/git/issues/2732
->=20
-> Since I haven't seen a response on the issue and it still occurs I decide=
-d to email this list as well.
->=20
-> Package managers such as PNPM tend to create very long filenames due to s=
-ymlinking. Having git not enumerate these ignored directories is essential =
-to leveraging any sort of clean behavior (both for performance and for warn=
-ing output) as we did before version 2.27. Our repo clean functions went fr=
-om taking a few seconds to over 10 minutes due to this change in behavior.
+ * ab/unexpected-object-type topic has an assertion to catch
+   semantic conflicts with topics in-flight queued at its tip.  It
+   would probably be safe to carry it until the topioc is merged to
+   'master' and then remove it after the dust settles.  Please
+   squash it into an appropriate step in the series when updating
+   the topic in the future.
 
-It looks like there were some changes to the dir.c code between 2.26 and
-2.27 which may have impacted clean.  I'm CCing Elijah Newren who wrote
-those patches and in any event would be more familiar with that code
-than I am.
+ * The tip of 'seen' passes all the tests locally, except that t5540
+   fails when compiled with CC=clang (http-push exits with signal
+   11).  bc/hash-transition-interop-part-1, which is at the tip of
+   'seen', seems to have this issue standalone.  FYI, here is what
+   "clang --version" gives me:
 
-I've taken the liberty of pulling in your testcase from that issue and
-converting it to work in POSIX sh on a Linux machine.  If the path is
-not sufficiently long for your needs, you can bump the value of the variable
-"last" below.
+    Debian clang version 11.0.1-2
+    Target: x86_64-pc-linux-gnu
+    Thread model: posix
+    InstalledDir: /usr/bin
 
-----
-#!/bin/sh
+Credits for the corrections cited above goes to Patrick.
 
-git init test-repo
-cd test-repo
-longname=3D"directory"
-touch "$longname.txt"
-last=3D400
-for x in $(seq 1 $last); do
-  mkdir "x$longname$x"
-  mv directory* "x$longname$x"
-  mv "x$longname$x" "$longname$x"
-done
-git clean -ffdxn -e directory$last
-----
+The attached is a summary of various topics.  Their status may be a
+bit stale (I haven't re-reviewed them with respect to the latest
+discussion on the list).
 
-When it fails, it will complain that it wasn't able to open the
-directory.  It still exits zero, however.
+Thanks.
 
-I haven't bisected this, so I don't know if those patches are related to
-the problem or not.  I'm a little short on time today to investigate
-further, but hopefully this can get someone on the right path with a
-modified version and git bisect run if nothing else.
+----- >8 ---------- >8 ---------- >8 ---------- >8 ---------- >8 -----
 
-> I've also had repeated problems sending you this email as your email serv=
-er seems to reject any email with a URL in it (per the github link above.)
+Expecting a (hopefully final) reroll.
+ - ag/merge-strategies-in-c                                     03-17         #15
 
-I don't think that's the problem, since this email came through just
-fine.  It's more likely that your email was being bounced for HTML,
-which isn't allowed on the list.
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
+Expecting a reroll.
+ - sg/bugreport-fixes                                           04-08          #1
+ - ds/maintenance-prefetch-fix                                  04-10          #3
+ - ma/t0091-bugreport-fix                                       04-12          #1
 
---qnwpT3kXoArf9tHH
-Content-Type: application/pgp-signature; name="signature.asc"
+On hold, waiting for the "protections" topic to stablize.
+ + ds/sparse-index                                              03-30/04-07   #21
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.27 (GNU/Linux)
+On hold.  Probably needs either a reroll or incremental refinements.
+ + dl/complete-stash                                            03-24/03-24    #3
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYHdzDgAKCRB8DEliiIei
-gcJJAQCdALWpIgCybMk07BSJLEf+9SytDygQal1+g4UMXi3x0gD/QF1feKZMVJRA
-4WwmRD+RHpeWLQpDQHsvkAGN2TWRJwU=
-=0y89
------END PGP SIGNATURE-----
+Stalled
+ - es/config-hooks                                              03-10         #36
+ - ab/describe-tests-fix                                        04-12          #5
+ - ab/pickaxe-pcre2                                             04-12         #22
+ - ab/unexpected-object-type                                    04-14         #11
 
---qnwpT3kXoArf9tHH--
+Undecided
+ - mt/add-rm-in-sparse-checkout                                 04-08          #7
+ - jh/rfc-builtin-fsmonitor                                     04-08         #23
+ - mt/parallel-checkout-part-2                                  04-08          #5
+ - bc/hash-transition-interop-part-1                            04-10         #16
+ - mr/bisect-in-c-4                                             04-11          #4
+ - ps/rev-list-object-type-filter                               04-12          #8
+ - ab/fsck-unexpected-type                                      04-13          #6
+ - rs/repack-without-loosening-promised-objects                 04-14          #2
+ - ds/sparse-index-protections                                  04-14         #26
+
+Waiting for reroll.
+ - ah/plugleaks                                                 04-10          #9
+
+Waiting for reviews to conclude.
+ - ab/doc-lint                                                  04-10          #7
+ - ab/rebase-no-reschedule-failed-exec                          04-10          #2
+ - hn/refs-trace-errno                                          04-12          #1
+
+Waiting for reviews.
+ - jt/push-negotiation                                          04-08          #6
+ - tb/multi-pack-bitmaps                                        04-10         #23
+ - ab/svn-tests-set-e-fix                                       04-12          #2
+ - ab/test-lib-updates                                          04-12         #16
+ - ao/p4-avoid-decoding                                         04-12          #2
+ - zh/trailer-cmd                                               04-12          #2
+ - hn/reftable                                                  04-14         #21
+
+Will merge to 'master'.
+ + en/ort-perf-batch-10                                         03-18/04-07    #8
+ + en/ort-readiness                                             03-20/04-08   #13
+ + jz/apply-run-3way-first                                      04-06/04-08    #1
+ + ab/complete-cherry-pick-head                                 04-07/04-09    #1
+ + jz/apply-3way-cached                                         04-07/04-09    #1
+ + ab/userdiff-tests                                            04-08/04-13    #9
+ + ar/userdiff-scheme                                           04-08/04-13    #1
+ + ah/merge-ort-ubsan-fix                                       04-12/04-13    #1
+ + hn/reftable-tables-doc-update                                04-12/04-13    #1
+ + jk/pack-objects-bitmap-progress-fix                          04-12/04-13    #1
+
+Will merge to 'next'.
+ - jt/fetch-pack-request-fix                                    04-08          #1
+ - ab/detox-gettext-tests                                       04-13          #1
+ - ab/usage-error-docs                                          04-13          #3
+ - jk/promisor-optim                                            04-13          #3
+ - so/log-diff-merge                                            04-13          #5
+ - ps/config-global-override                                    04-13          #3
