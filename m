@@ -2,89 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F6BDC433B4
-	for <git@archiver.kernel.org>; Wed, 14 Apr 2021 01:11:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BC89AC433ED
+	for <git@archiver.kernel.org>; Wed, 14 Apr 2021 05:14:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E070E6121E
-	for <git@archiver.kernel.org>; Wed, 14 Apr 2021 01:11:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9659F61131
+	for <git@archiver.kernel.org>; Wed, 14 Apr 2021 05:14:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233061AbhDNBMF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Apr 2021 21:12:05 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:53637 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232096AbhDNBME (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Apr 2021 21:12:04 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 03113125610;
-        Tue, 13 Apr 2021 21:11:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-        :subject:date:message-id:mime-version:content-type; s=sasl; bh=O
-        5FkjA/scoOvjtxgE85aBtkipng=; b=T0kpSqtR2cp0H1EWb3rJBp8yWZpfAYfuP
-        CTqnnDE6KyVzep1raVo5W0gK9I9aNDki4ngJxImn1xNyVsLklRXfXsnHeyhaC7dS
-        qnsn5Im8KRTWH5QUylyDAC9s9DBLvN8l78eHKbXiWtkZTc0Z9N+qPe/5/EtTdYJr
-        xGEJYGq7wc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-        :date:message-id:mime-version:content-type; q=dns; s=sasl; b=bub
-        1cT24a0YLLqF4ARuYe5C3ZPMRSv9TggHPHZqOW9IVKsgTe97G0HQdLi9MMo3rs9N
-        HdWwNk+2EBtC+iK8+IkCy10oQHej5FB8FsczdjySyTgK88I55im4cV3j7asOLBOR
-        amiOWNiYlbjTvAzCns0dJ/uHpLc1qGaMxJuKN6PU=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id F095712560F;
-        Tue, 13 Apr 2021 21:11:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 3D2FC12560E;
-        Tue, 13 Apr 2021 21:11:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Subject: What's cooking (draft for #4's issue this month)
-Date:   Tue, 13 Apr 2021 18:11:39 -0700
-Message-ID: <xmqqmtu1zn3o.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S233191AbhDNFOl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Apr 2021 01:14:41 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51990 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230375AbhDNFOh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Apr 2021 01:14:37 -0400
+Received: (qmail 3210 invoked by uid 109); 14 Apr 2021 05:14:15 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 14 Apr 2021 05:14:15 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 4116 invoked by uid 111); 14 Apr 2021 05:14:16 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 14 Apr 2021 01:14:16 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 14 Apr 2021 01:14:14 -0400
+From:   Jeff King <peff@peff.net>
+To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Cc:     Rafael Silva <rafaeloliveira.cs@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: rather slow 'git repack' in 'blob:none' partial clones
+Message-ID: <YHZ6JvLBNpZVOqiX@coredump.intra.peff.net>
+References: <20210403090412.GH2271@szeder.dev>
+ <gohp6ko8et3jdm.fsf@cpm12071.fritz.box>
+ <YG4hfge2y/AmcklZ@coredump.intra.peff.net>
+ <20210412213653.GH2947267@szeder.dev>
+ <YHTcHY+P7RuZJGab@coredump.intra.peff.net>
+ <20210413180552.GI2947267@szeder.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5EC52B40-9CBE-11EB-B87E-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210413180552.GI2947267@szeder.dev>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A handful of topics have been merged to 'master' as the 9th batch of
-this cycle.
+On Tue, Apr 13, 2021 at 08:05:52PM +0200, SZEDER Gábor wrote:
 
-    54a3917115 The ninth batch
-    e0d4a63c09 Merge branch 'vs/completion-with-set-u'
-    e6545201ad Merge branch 'ab/detox-config-gettext'
-    a9414b86ac Merge branch 'gk/gitweb-redacted-email'
-    8446b388b1 Merge branch 'cc/test-helper-bloom-usage-fix'
-    2279289e95 Merge branch 'ab/send-email-validate-errors'
-    4c6ac2da2c Merge branch 'tb/precompose-prefix-simplify'
-    1d5fbd45c4 Merge branch 'fm/user-manual-use-preface'
-    7b55441db1 Merge branch 'ab/perl-do-not-abuse-map'
-    0623669fc6 Merge branch 'tb/pack-preferred-tips-to-give-bitmap'
-    f63add4aa8 Merge branch 'jk/ref-filter-segfault-fix'
+> >   [but now ask it to exclude promisor objects, and it's much slower;
+> >   this is because is_promisor_object() opens up each tree in the pack in
+> >   order to see which "promised" objects it mentions]
+> 
+> I don't understand this: 'git rev-list --count --all' only counts
+> commit objects, so why should it open any trees at all?
 
-And a few topics have been merged to 'next'.
+Because the promisor code is a bit over-eager. There's actually one
+small error in what I wrote above. In that particular rev-list, we're
+not calling is_promisor_object() at all, because we'll already have
+excluded all the promisor objects by marking them UNINTERESTING and
+SEEN.
 
-    cdadb2c621 Merge branch 'hn/reftable-tables-doc-update' into next
-    bbe18a7b3a Merge branch 'jk/pack-objects-bitmap-progress-fix' into next
-    41713a32bd Merge branch 'ah/merge-ort-ubsan-fix' into next
-    35fb0e853d Merge branch 'ab/userdiff-tests' into next
-    eb80d55a8c Merge branch 'ar/userdiff-scheme' into next
+So:
 
-On 'seen' there are many topics that have not seen adequately
-reviews; some tests are broken near its tip (I think they pass the
-selftests by themselves).
+  - in is_promisor_object(), we load the _whole_ list of promisor
+    objects, which requires opening trees to find out about referenced
+    blobs. In theory it could know that we only care about commits, but
+    it's not connected to a particular traversal, so it gets the whole
+    list.
 
-    0e76df05ca Merge branch 'ps/rev-list-object-type-filter' into seen
-    956fbceb2e ### breaks 6112 6113
-    c007303ad4 Merge branch 'bc/hash-transition-interop-part-1' into seen
-    4813f16161 ### breaks 0031
+  - mark_uninteresting() is the code where we pre-mark the objects from
+    the promisor pack as UNINTERESTING, and that was loading all of the
+    trees in this case. And it could know that we are not looking at
+    --objects, so there's no need to touch trees. But after my patches,
+    we do not load the contents of _any_ objects at all in that
+    function. We could avoid even creating "struct object" for
+    non-commits there, too, but that would imply looking up the type of
+    each object (so more CPU, though it would save us some memory when
+    we only care about commits). I suspect in practice that most callers
+    would generally pass --objects anyway, though (e.g., your original
+    pack-objects that started this thread certainly cares about
+    non-commits).
 
+> > +	/*
+> > +	 * yikes, do we really need to parse here? maybe
+> 
+> Heh, a "yikes" here and a "yuck" in your previous patch...  This issue
+> was worth reporting :)
+
+Yeah. I think the client side of a lot of this partial-clone / promisor
+stuff is not very mature. It's waiting on people to start using it and
+finding all of these rough edges.
+
+-Peff
