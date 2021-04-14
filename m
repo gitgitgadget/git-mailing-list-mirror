@@ -2,149 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2599BC433B4
-	for <git@archiver.kernel.org>; Wed, 14 Apr 2021 16:31:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D5D26C433ED
+	for <git@archiver.kernel.org>; Wed, 14 Apr 2021 16:36:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F07B360FEF
-	for <git@archiver.kernel.org>; Wed, 14 Apr 2021 16:31:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B69B86113B
+	for <git@archiver.kernel.org>; Wed, 14 Apr 2021 16:36:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351818AbhDNQcK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Apr 2021 12:32:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33078 "EHLO
+        id S1352771AbhDNQgy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Apr 2021 12:36:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351634AbhDNQcG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Apr 2021 12:32:06 -0400
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A109C061574
-        for <git@vger.kernel.org>; Wed, 14 Apr 2021 09:31:44 -0700 (PDT)
-Received: by mail-oi1-x22a.google.com with SMTP id k18so16287191oik.1
-        for <git@vger.kernel.org>; Wed, 14 Apr 2021 09:31:44 -0700 (PDT)
+        with ESMTP id S1351853AbhDNQgx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Apr 2021 12:36:53 -0400
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 298A6C061574
+        for <git@vger.kernel.org>; Wed, 14 Apr 2021 09:36:31 -0700 (PDT)
+Received: by mail-oi1-x234.google.com with SMTP id u16so3910652oiu.7
+        for <git@vger.kernel.org>; Wed, 14 Apr 2021 09:36:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=aQh0eUV0koYA5u7OvXgHuHVr3FHBnizeB16dZVrA29o=;
-        b=tCC/FX0I0z5i4Xr2yFFUyWqEOB/BwIRL3e784YA3KHaJnAeGZFfsBJwINiuCe3VxuL
-         LpET2shC/NWcx9hHDtmX0XpxRdEibq7lkB7IZDNS6K/Ab6KP7+v1YS4ek7cgl246Q7WG
-         U6g/ZArQz1nLKK6jF5WuXPLNbZMh2m4ynM5gYLmZBJU/psYP0fLyVul6VMdDY2r6Orv0
-         L2kgxWGRPvhbotI+UyHf6GAE1Q0Vtq5s5TN4REefP8NRyA5sG1BXzCb/UgsBaHacbY7i
-         dYkBVpz0w0yDEUQtVFqrmgtuaUV+8w2DWuRKt9SycI7gK+rPZ8fzEVGdwMgRYuC16iGE
-         jRfA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Biv1Jnn0TKxhgEnDl7IHFxjH6D8j8XrvEjLBOrDl/8o=;
+        b=Zoh/BdglToOWIG0y4a8VXxqJYH2Dw6Ui2eE06D07vdzeL8f+t1iJvZzXU68ljSffL4
+         WtO8FyMoOx6EldWQ2VqXEMG5CWtPL4MCN88/hdpcVUf422p3zq2tVnB1cEOQpXyfDS+f
+         DROTnA+esoN6x+xCVOfuqal1xShnxTP4wGOXAQ7Tlwe21I/rYgMXMVXPOcGUpnDE7+tE
+         aXpbNCiWrXs45hnRuOgpdd0U+y1JbRpSPzowRdfl5bmWd4h3sRGjeYPzt591MQ5Pdt5x
+         TOp3MjDV2goxCMYQjcUEsjTzhr2uPeyN96Q1XMkRX2TpKoCC/Hom7Df7fjhQaBZxrvol
+         tPpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=aQh0eUV0koYA5u7OvXgHuHVr3FHBnizeB16dZVrA29o=;
-        b=sacCQXMHfjrH+yuFFuL0HZqoran2cxXjkDHEYxMOC+Crxd6C319SIngg0QoKx/i4rK
-         bWwdYIit7kC4TYXu/t2PcmHpcs6peKqw5r04WRR2rkqy5SGxtPFyQvUdGsIn91Cg2uMn
-         Qxvwqr3/x0tsqM5G2Q7vt2jMnDbzygMaTmF5uOssr0IE0j37fcxHpg30w1NCN9u2uCns
-         nXNj1kTXpcWfvFd9W/W0s+qrkPXqqZK0qszzychdBIIzYN2lP5pYlzXfqmqEjYWHdg/5
-         aMqwcrU0TzIfjk8aKVJKi7irI8Mnz8vOXzaDdTbrne5pQPknyp1DnvN+qBHyGdlpMm25
-         Wj4w==
-X-Gm-Message-State: AOAM533hKFoNgG7/9+cDX905Lkw+7YLT4DsKft1ho4YwZyVQ9thzJBzR
-        iN2ZJlhey3YmmxI2LyjRKjePfTSoEx/HVA==
-X-Google-Smtp-Source: ABdhPJybvGFewhhEPDPJ21KLvm/wjdtjL+8G2Sp+gYQD0OHFjmUpNXpZGVVLS9Tnmx7CP6F+DZDj4g==
-X-Received: by 2002:a54:4e96:: with SMTP id c22mr2954117oiy.176.1618417903598;
-        Wed, 14 Apr 2021 09:31:43 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:e5b3:d157:1c7e:e794? ([2600:1700:e72:80a0:e5b3:d157:1c7e:e794])
-        by smtp.gmail.com with ESMTPSA id c12sm13565oou.26.2021.04.14.09.31.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Apr 2021 09:31:42 -0700 (PDT)
-Subject: Re: [PATCH 00/10] Sparse-index: integrate with status and add
-To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
-References: <pull.932.git.1618322497.gitgitgadget@gmail.com>
- <CAHd-oW7vCKC-XRM=rX37+jQn_XDzjtar9nNHKQ-4OHSZ=2=KFA@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <ddb08fd9-995e-dcb5-9e2c-60e3d761490b@gmail.com>
-Date:   Wed, 14 Apr 2021 12:31:41 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.9.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Biv1Jnn0TKxhgEnDl7IHFxjH6D8j8XrvEjLBOrDl/8o=;
+        b=etKW/LK+Tfm4qakqtAKpkYJLNjgfzhMHDoJAEtmtUj14v717RdiPuYTwhC3JWFcwA8
+         BM9gqEzS9P94NnYCbKOc8D/I9jzmEKOpYjsjyZOqdVwr9HeWFyCoGkekDAkyc+Zp8EDn
+         aXNFXcJV2HEVjipD5cnu7xRH+nJT7iK/F3zSath4fn4IvA8f4LKvbzaK2TEO2aXdf4pf
+         jCS0A0iIddG3KzzUyMN1psFNY0CEvpmc7Dpf/I4KGisIiFeTQ6DCaFbFk8fKvzPch11y
+         zgEKSR6VZKnM99NuCD8+BM93qi8J2fVFxnuMS3hwjaOJChE0DKwLnCsQzI138vDhFAYO
+         RMKQ==
+X-Gm-Message-State: AOAM532oOBO/CzuWiV8p0hx7peTBZwLM8en/ip/Re9JwKQ23zGWFRLBy
+        y8fTsXup6UP9r6zLt417zcwd21tAIUE1WoDCLxE=
+X-Google-Smtp-Source: ABdhPJxarpu4dXWdR0FREv3xwF8jPleKX5TqRcLjxyEzei9WPhvfcaePSevM66OSARtOHiiYsaY4aQ8FpJd7t4JfwFk=
+X-Received: by 2002:aca:6545:: with SMTP id j5mr3020929oiw.31.1618418190471;
+ Wed, 14 Apr 2021 09:36:30 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAHd-oW7vCKC-XRM=rX37+jQn_XDzjtar9nNHKQ-4OHSZ=2=KFA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <cover.1615588108.git.matheus.bernardino@usp.br> <cover.1617914011.git.matheus.bernardino@usp.br>
+In-Reply-To: <cover.1617914011.git.matheus.bernardino@usp.br>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 14 Apr 2021 09:36:19 -0700
+Message-ID: <CABPp-BGFfqOLg4tt85f-F-TJEXTDQFfAvRuui6VCctcd0FB5sQ@mail.gmail.com>
+Subject: Re: [PATCH v4 0/7] add/rm: honor sparse checkout and warn on sparse paths
+To:     Matheus Tavares <matheus.bernardino@usp.br>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <stolee@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/13/2021 4:45 PM, Matheus Tavares Bernardino wrote:
-> Hi, Stolee
-> 
-> On Tue, Apr 13, 2021 at 11:02 AM Derrick Stolee via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->>
->> This is the first "payoff" series in the sparse-index work. It makes 'git
->> status' and 'git add' very fast when a sparse-index is enabled on a
->> repository with cone-mode sparse-checkout (and a small populated set).
->>
->> This is based on ds/sparse-index-protections AND mt/add-rm-sparse-checkout.
-> 
-> I just noticed that our ds/sparse-index-protections and
-> mt/add-rm-sparse-checkout had a small semantic conflict. It didn't
-> appear before, but it does now with this new series.
-
-Thank you for taking a close look.
- 
-> ds/sparse-index-protections added `ensure_full_index()` guards before
-> the loops that traverse over all cache entries. At the same time,
-> mt/add-rm-sparse-checkout added yet another one of these loops, at
-> `pathspec.c::find_pathspecs_matching_skip_worktree()`. Although the
-> new place didn't get the `ensure_full_index()` guard, all of its
-> callers (in `add` and `rm`) did call `ensure_full_index()` before
-> calling it, so it was fine.
+On Thu, Apr 8, 2021 at 1:41 PM Matheus Tavares
+<matheus.bernardino@usp.br> wrote:
 >
-> However, patches 7 and 8 remove some of these protections in `add`s
-> code. And, as a result, if "dir" is a sparse directory entry, `git add
-> [--refresh] dir/file` no longer emits the warning added at
-> mt/add-rm-sparse-checkout.
+> Make `rm` honor sparse checkouts, and make both `rm` and `add` warn
+> when asked to update sparse entries.
+>
+> There are two changes since v3:
+>
+> - `test_i18ncmp` and `test_i18ngrep` were replaced by `test_cmp` and
+>   `grep`
+>
+> - The flag added in patch 5 now makes refresh_index() completely ignore
+>   skip_worktree entries, instead of just suppressing their matches on
+>   the seen[] array. The previous implementation was not necessarily
+>   wrong but, as Junio pointed out, it was rather odd to keep matching
+>   the entries if we no longer want to use the matches.
+>
+>   As "side effects", the new version of the flag also makes
+>   refresh_index() refrain from both:
+>
+>   (1) checking and warning if skip_worktree entries matching the given
+>   pathspec are unmerged.
+>
+>   (2) marking skip_worktree entries matching the given pathspec with
+>   CE_UPTODATE.
+>
+>   The change (1) is actually interesting because `git add` doesn't
+>   update skip_worktree entries, and thus, it doesn't make much sense to
+>   warn if they are unmerged. Besides, we will already warn if the user
+>   requests to update such entries, anyway. And finally, unmerged
+>   entries should not have the skip_worktree bit set in the first place.
+>   (`git merge` should clean this bit when writing the new index, and
+>   neither `git sparse-checkout` nor `git update-index` allow to set the
+>   bit on an unmerged entry.)
+>
+>   Change (2) is perhaps not very beneficial, but it is also not harmful.
+>   The only practical difference we get by not setting the CE_UPTODATE
+>   flag in the skip_worktree entries is that, when writing a new index at
+>   the end of `git add --refresh`, do_write_index() will start checking
+>   if these entries are racy clean. Note that it already does that for
+>   all the skip_worktree entries that do not match the user-given
+>   pathspecs. And, in fact, this behavior distinction based on the
+>   pathspec only happens with `--refresh`. Plain `git add` and other
+>   options don't mark any skip_worktree entry with CE_UPTODATE
+>   (regardless of the pathspecs) and thus, all these entries are checked
+>   when writing the index. So `git add --refresh` will only do what the
+>   other options already do.
 
-You are right, it does not emit the warning. I will add a test that
-ensures that behavior is the same across the two sparse repos in
-t1092 as part of my v2 in this series.
- 
-> Adding `ensure_full_index()` at
-> `find_pathspecs_matching_skip_worktree()` fixes the problem. We have
-> to consider the performance implications, but they _might_ be
-> acceptable as we only call this function when a pathspec given to
-> `add` or `rm` does not match any non-ignored file inside the sparse
-> checkout.
+Sorry for the delay.  These two changes sound good to me, and the
+range-diff looks reasonable.
 
-I'll want to do the right thing here to make the warning work, so
-I'll take a look soon.
+>   (Additionally, as I mentioned in [1], there might actually be at least
+>   one advantage in checking if the skip_worktree entries are racy clean.
+>   But this is a very specific case, and it's probably a topic for a
+>   another thread :)
+>
+> [1]: https://lore.kernel.org/git/CAHd-oW4kRLjV9Sq3CFt-V1Ot9pYFzJggU1zPp3Hcuw=qWfq7Mg@mail.gmail.com/
 
-> Additionally, the tests I added at t3705 won't catch this problem,
-> even when running with GIT_TEST_SPARSE_INDEX=true :( That's because
-> they don't set core.sparseCheckout and core.sparseCheckoutCone, they
-> only set individual index entries with the SKIP_WORKTREE bit. And
-> therefore, the index is always written fully. Perhaps, should I reroll
-> my series using cone mode for these tests?
-
-Your series should not be re-rolled for this. Instead, this is valuable
-feedback for this series: there is behavior in 'git add' that I am not
-checking stays the same when the sparse-index is enabled. That's my
-responsibility and I'll get it fixed.
- 
-> (And a semi-related question: do you plan on adding
-> GIT_TEST_SPARSE_INDEX=true to one of the CI jobs? )
-
-I do plan to add that, after things calm down. It won't do much right
-now because it requires core.sparseCheckout[Cone] to be enabled. Not
-many tests provide that, so they don't add much coverage. I thought at
-one point to adjust the initial repo creation to include a
-sparse-checkout in cone mode, but that would change too many tests.
-I still haven't found the right way to expand the test coverage to
-take advantage of our deep test suite for this feature.
-
-Thanks,
--Stolee
+This I'm a bit surprised by.  I thought the outcome there was that you
+didn't want to mark skip_worktree entries as CE_UPTODATE in order to
+force them to be stat'd in the future when someone clears the
+skip_worktree bit.  (And that we'd expect the sparse-checkout
+add/disable command to be the likely one to handle that, though if
+users use `git update-index --no-skip-worktree PATH` then they'd also
+be responsible for any refreshing as well.)  Am I misunderstanding?
