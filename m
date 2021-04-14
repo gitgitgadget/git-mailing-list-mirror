@@ -2,132 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F279FC433B4
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 23:18:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 120ECC433ED
+	for <git@archiver.kernel.org>; Wed, 14 Apr 2021 00:05:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CA7E661246
-	for <git@archiver.kernel.org>; Tue, 13 Apr 2021 23:18:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E47E361246
+	for <git@archiver.kernel.org>; Wed, 14 Apr 2021 00:05:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348030AbhDMXTA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Apr 2021 19:19:00 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:56693 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230123AbhDMXS5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Apr 2021 19:18:57 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 35BD51113B6;
-        Tue, 13 Apr 2021 19:18:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=79bZYuKTUrSC5N+HyBMapjOArdg=; b=DqjBOu6paGJX6xeJVQL7
-        K7vN3au8ns9lewRI9bBzKplW3PuK5+7TOWOT+j1G1VK6VU+8D0KKflUpdJvRuj0t
-        uqrOHv4faDRrN345Va11qoO9u+F+xgpB9XKFYyuEETsxhzw2NyH6JmdmQ+wqsNMo
-        dnuVQ/lRBAmSRwzSjCU7rF8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         q=dns; s=sasl; b=cM150CiZKkclxanvLWRYgr25yelLCAbhyKAwsees7pBSZU
-        /3mP6IaNf5d40GHe4/oYflsEwdDky+L6W/KlQ6Ja2scih16hrx6XcsYt6qyNmQsa
-        F6F7kVrhrrFGoOJ/GI9JCJAPZ2ZnaxmRSTJP8Icu3CCMQnEOhXzJGRM0GzGaE=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2DBD01113B5;
-        Tue, 13 Apr 2021 19:18:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S232986AbhDNAGI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Apr 2021 20:06:08 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:60896 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S232167AbhDNAGH (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 13 Apr 2021 20:06:07 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 726F81113B4;
-        Tue, 13 Apr 2021 19:18:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Sergey Organov <sorganov@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.email>,
-        Elijah Newren <newren@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v2 1/5] diff-merges: introduce --diff-merges=on
-References: <20210407225608.14611-1-sorganov@gmail.com>
-        <20210413114118.25693-1-sorganov@gmail.com>
-        <20210413114118.25693-2-sorganov@gmail.com>
-Date:   Tue, 13 Apr 2021 16:18:32 -0700
-Message-ID: <xmqqfsztkc3b.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 397776041F;
+        Wed, 14 Apr 2021 00:05:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1618358716;
+        bh=v+LcH3tnIiHYW7y7qMErF2uHiy4jaz+bCr13PXInGH8=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=fkdrcWmnzcTBu6lU3rxT/LS5VH4Iq9x8P9qOG5zLCvJlulKdVGCWLatoZvwwCObSL
+         TJrF4A1B2r1tkNuYbiyXCixdbaEzEByRMTQBORGd1qzqQTb4VVRC6VVuMRAkEPQioB
+         y8mif32BuMzbZiV+00ni5chf9vjavORvq3+/5T28ysd1Q40PQ333+IotokX+X6NfZl
+         H/h4OtNKE0o0YDAw1KbYy5fdon1NavPGBA0g1mGPzfkFK9Zpb7f6K1M7HLrpHVb0z2
+         N9vKujhpoQyg+twmSGKyQ/erpopvyzvoZHQFa0kHHZN4CsLAs0BqbpcqniQG/teBH3
+         ZD1hKQn4LF8fqzYKnG6apcK4zTvlTu0CTQPgsD3wSRmIeomUVqrssV7Ob0O7ZDoluL
+         VYViy3wKDcRjF14Xnd+y3X3iDI/DGFNy7s6boB9wmeH9GLtu57NFkW8C7SjR/eaegu
+         +ZmGvXODo4OQcsphg5mUNdAfLg/nLrl+jvbMqA1TZC/nz+lfmXR
+Date:   Wed, 14 Apr 2021 00:05:10 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Vitaly VS <strikervitaly@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Git via MITM transparent proxy with HTTPS Interception
+Message-ID: <YHYxtvKgKz+Uv2xO@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Vitaly VS <strikervitaly@gmail.com>, git@vger.kernel.org
+References: <CAEaE=iyUGiPK-HX850mEgC=X6atEhbjJ0dCK0dci0nOCahPhgQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9188D672-9CAE-11EB-98DA-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="N5o1NmCiAAwra6Cx"
+Content-Disposition: inline
+In-Reply-To: <CAEaE=iyUGiPK-HX850mEgC=X6atEhbjJ0dCK0dci0nOCahPhgQ@mail.gmail.com>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sergey Organov <sorganov@gmail.com> writes:
 
-> Introduce the notion of default diff format for merges, and the option
-> "on" to select it. The default format is "separate" and can't yet
-> be changed, so effectively "on" is just a synonym for "separate"
-> for now. Add corresponding test to t4013.
->
-> This is in preparation for introducing log.diffMerges configuration
-> option that will let --diff-merges=on to be configured to any
-> supported format.
+--N5o1NmCiAAwra6Cx
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-"on"---that's short-and-sweet and really nice, compared to the "default"
-in the previous iteration.
+On 2021-04-13 at 12:07:58, Vitaly VS wrote:
+> Hello! Can a Git client work properly through a MITM transparent proxy
+> with HTTPS interception?
 
-Clever.
+Yes, with some important caveats.  The proxy must be completely
+transparent.  It must not modify or impede the data in any way, it must
+speak both HTTP 1.1 and HTTP 2 correctly and fully, and the proxy must
+speak TLS completely correctly, including terminating the connection in
+accordance with the protocol.  It must be completely impossible to tell
+that a proxy is being used.
 
-> Signed-off-by: Sergey Organov <sorganov@gmail.com>
-> ---
->  diff-merges.c           | 7 +++++++
->  t/t4013-diff-various.sh | 8 ++++++++
->  2 files changed, 15 insertions(+)
->
-> diff --git a/diff-merges.c b/diff-merges.c
-> index 146bb50316a6..ff227368bd46 100644
-> --- a/diff-merges.c
-> +++ b/diff-merges.c
-> @@ -2,6 +2,11 @@
->  
->  #include "revision.h"
->  
-> +typedef void (*diff_merges_setup_func_t)(struct rev_info *);
-> +static void set_separate(struct rev_info *revs);
-> +
-> +static diff_merges_setup_func_t set_to_default = set_separate;
-> +
->  static void suppress(struct rev_info *revs)
->  {
->  	revs->separate_merges = 0;
-> @@ -66,6 +71,8 @@ static void set_diff_merges(struct rev_info *revs, const char *optarg)
->  		set_combined(revs);
->  	else if (!strcmp(optarg, "cc") || !strcmp(optarg, "dense-combined"))
->  		set_dense_combined(revs);
-> +	else if (!strcmp(optarg, "on"))
-> +		set_to_default(revs);
->  	else
->  		die(_("unknown value for --diff-merges: %s"), optarg);
->  
-> diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-> index 6cca8b84a6bf..26a7b4d19d4d 100755
-> --- a/t/t4013-diff-various.sh
-> +++ b/t/t4013-diff-various.sh
-> @@ -452,6 +452,14 @@ diff-tree --stat --compact-summary initial mode
->  diff-tree -R --stat --compact-summary initial mode
->  EOF
->  
-> +test_expect_success 'log --diff-merges=on matches --diff-merges=separate' '
-> +	git log -p --diff-merges=separate master >result &&
-> +	process_diffs result >expected &&
-> +	git log -p --diff-merges=on master >result &&
-> +	process_diffs result >actual &&
-> +	test_cmp expected actual
-> +'
-> +
->  test_expect_success 'log -S requires an argument' '
->  	test_must_fail git log -S
->  '
+I do want to point out that TLS interception is by definition a security
+vulnerability and almost always significantly weakens security, often by
+using weaker protocols, breaking or disabling certificate verification,
+and impeding the upgrading and interoperability of the protocol[0].  You
+should definitely read and understand the literature about TLS
+intercepting proxies and have personally verified that your
+implementation is free of vulnerabilities before deploying.  You
+shouldn't rely on your implementer for this information, because they
+usually aren't aware that their implementation has vulnerabilities.
+
+Also, my experience is that many, many proxies of this nature are
+completely broken and don't work correctly, so if you are not fully
+aware of what's going on and haven't fully tested your implementation,
+you shouldn't deploy this technology.  I frequently answer questions
+=66rom users in scenarios such as this who are having problems due to a
+broken proxy and often have to tell them to contact their network
+administrator.  I therefore do not in any sense recommend deploying such
+infrastructure.
+
+Git really does need a properly functioning HTTP and TLS implementation
+and things tend to break in a variety of ways when encountering broken
+proxies.  I would say "exciting ways", but I recognize them all now and
+they're not exciting anymore.
+
+> Getting a bunch of errors when trying to "git clone https://SOME_REPO.git"
+> On small REPOs (about 1-5 MB) there is a chance that the clone will be
+> successful, but mostly I get these errors:
+
+Your proxy is broken and doesn't speak the protocol correctly.  It isn't
+a transparent proxy.  You should either remove it or contact your
+network administrator to have it removed.
+
+[0] https://www.ftc.gov/system/files/documents/public_comments/2016/09/0001=
+9-129028.pdf
+--=20
+brian m. carlson (he/him or they/them)
+Houston, Texas, US
+
+--N5o1NmCiAAwra6Cx
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.27 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYHYxtgAKCRB8DEliiIei
+gZAgAQCjZlsQ+XkSMdCbV7VclHu3YniyN9IMWBGHzVWGMBESoQD9FhNOWXo1xELg
+XLfROj/4Umjp/yKIDPR/Z2suJ9/7MAU=
+=Nzb4
+-----END PGP SIGNATURE-----
+
+--N5o1NmCiAAwra6Cx--
