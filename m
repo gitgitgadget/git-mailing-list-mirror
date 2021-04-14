@@ -2,155 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,LOTS_OF_MONEY,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E4681C433ED
-	for <git@archiver.kernel.org>; Wed, 14 Apr 2021 01:09:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F6BDC433B4
+	for <git@archiver.kernel.org>; Wed, 14 Apr 2021 01:11:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9AD74613B6
-	for <git@archiver.kernel.org>; Wed, 14 Apr 2021 01:09:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E070E6121E
+	for <git@archiver.kernel.org>; Wed, 14 Apr 2021 01:11:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233026AbhDNBJz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Apr 2021 21:09:55 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:60952 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S232096AbhDNBJx (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 13 Apr 2021 21:09:53 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S233061AbhDNBMF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Apr 2021 21:12:05 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:53637 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232096AbhDNBME (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Apr 2021 21:12:04 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 03113125610;
+        Tue, 13 Apr 2021 21:11:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+        :subject:date:message-id:mime-version:content-type; s=sasl; bh=O
+        5FkjA/scoOvjtxgE85aBtkipng=; b=T0kpSqtR2cp0H1EWb3rJBp8yWZpfAYfuP
+        CTqnnDE6KyVzep1raVo5W0gK9I9aNDki4ngJxImn1xNyVsLklRXfXsnHeyhaC7dS
+        qnsn5Im8KRTWH5QUylyDAC9s9DBLvN8l78eHKbXiWtkZTc0Z9N+qPe/5/EtTdYJr
+        xGEJYGq7wc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+        :date:message-id:mime-version:content-type; q=dns; s=sasl; b=bub
+        1cT24a0YLLqF4ARuYe5C3ZPMRSv9TggHPHZqOW9IVKsgTe97G0HQdLi9MMo3rs9N
+        HdWwNk+2EBtC+iK8+IkCy10oQHej5FB8FsczdjySyTgK88I55im4cV3j7asOLBOR
+        amiOWNiYlbjTvAzCns0dJ/uHpLc1qGaMxJuKN6PU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id F095712560F;
+        Tue, 13 Apr 2021 21:11:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 9B80F6041F;
-        Wed, 14 Apr 2021 01:08:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1618362540;
-        bh=5ylezJpoOuHVSD/ysDcU2q/IANLbl4Y47bpIdV8brb4=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=e2C1lYV8NEqqq8MVRqhqb+BW1gg/Dv4Jc1TBpEOd11KVySYaa+WnhOdBG4EwTyljH
-         dUKzSbEUJUp4lFmBfUq/fq8TkplctsZFaUVYIrrNATYeFC9iRm6t3dDg4NhZcBHu8L
-         8137Ay3F919+DSROFI/GKT49AWK6MLzKgH3xWzGx+fhcRoapiQzeHoj8TDnEf7biBv
-         nrYhLIYEmg34ZGmM5Si4/0LbBKvQwYpGsjJq42v+uXPBDNBybxuoiVEW2GBbS0jCnT
-         t1FuZiHMVmzDU2J6LGMy7TSrZ/T+Em5OKo1HJvnyby6OoRI/pr+0Zkkyep06aJkZgi
-         jo2fqG1suOLxuQowpnGgsTEGXrpOKUMEmCk6Kic/4H3xlPe1Dqrg8R9mvb8n5j7Sf3
-         GF3r2FBdHEU03yy6PrWUS4VRXIc71UdBuCyFarNGBwUOmv2l0P2+cyq32yVXRRo8CV
-         1I4z3NpVeZNfERQgi/yUGOdAtAUU9tuJ5ycLkuDIlxMawx0yULO
-Date:   Wed, 14 Apr 2021 01:08:52 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 03/15] cache: add an algo member to struct object_id
-Message-ID: <YHZApIpPBhpmwscP@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <20210410152140.3525040-1-sandals@crustytoothpaste.net>
- <20210410152140.3525040-4-sandals@crustytoothpaste.net>
- <38f48634-077b-6351-5285-f8ecc6f552d0@gmail.com>
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 3D2FC12560E;
+        Tue, 13 Apr 2021 21:11:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Subject: What's cooking (draft for #4's issue this month)
+Date:   Tue, 13 Apr 2021 18:11:39 -0700
+Message-ID: <xmqqmtu1zn3o.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="A/xDrurJfiqNVyri"
-Content-Disposition: inline
-In-Reply-To: <38f48634-077b-6351-5285-f8ecc6f552d0@gmail.com>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5EC52B40-9CBE-11EB-B87E-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+A handful of topics have been merged to 'master' as the 9th batch of
+this cycle.
 
---A/xDrurJfiqNVyri
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+    54a3917115 The ninth batch
+    e0d4a63c09 Merge branch 'vs/completion-with-set-u'
+    e6545201ad Merge branch 'ab/detox-config-gettext'
+    a9414b86ac Merge branch 'gk/gitweb-redacted-email'
+    8446b388b1 Merge branch 'cc/test-helper-bloom-usage-fix'
+    2279289e95 Merge branch 'ab/send-email-validate-errors'
+    4c6ac2da2c Merge branch 'tb/precompose-prefix-simplify'
+    1d5fbd45c4 Merge branch 'fm/user-manual-use-preface'
+    7b55441db1 Merge branch 'ab/perl-do-not-abuse-map'
+    0623669fc6 Merge branch 'tb/pack-preferred-tips-to-give-bitmap'
+    f63add4aa8 Merge branch 'jk/ref-filter-segfault-fix'
 
-On 2021-04-13 at 12:12:21, Derrick Stolee wrote:
-> On 4/10/2021 11:21 AM, brian m. carlson wrote:
-> > Now that we're working with multiple hash algorithms in the same repo,
-> > it's best if we label each object ID with its algorithm so we can
-> > determine how to format a given object ID. Add a member called algo to
-> > struct object_id.
-> >=20
-> > Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> > ---
-> >  hash.h | 1 +
-> >  1 file changed, 1 insertion(+)
-> >=20
-> > diff --git a/hash.h b/hash.h
-> > index 3fb0c3d400..dafdcb3335 100644
-> > --- a/hash.h
-> > +++ b/hash.h
-> > @@ -181,6 +181,7 @@ static inline int hash_algo_by_ptr(const struct git=
-_hash_algo *p)
-> > =20
-> >  struct object_id {
-> >  	unsigned char hash[GIT_MAX_RAWSZ];
-> > +	int algo;
-> >  };
->=20
-> What are the performance implications of adding this single bit
-> (that actually costs us 4 to 8 bytes, based on alignment)? Later
-> in the series you add longer hash comparisons, too. These seem
-> like they will affect performance for existing SHA-1 repos, and
-> it would be nice to know how much we are paying for this support.
+And a few topics have been merged to 'next'.
 
-I will do some performance numbers on these patches, but it will likely
-be the weekend before I can get to it.  I think this will add 4 bytes on
-most platforms, since int is typically 32 bits, and the alignment
-requirement would be for the most strictly aligned member, which is the
-int, so a 4-byte alignment.  I don't think the alignment requirements
-are especially onerous here.
+    cdadb2c621 Merge branch 'hn/reftable-tables-doc-update' into next
+    bbe18a7b3a Merge branch 'jk/pack-objects-bitmap-progress-fix' into next
+    41713a32bd Merge branch 'ah/merge-ort-ubsan-fix' into next
+    35fb0e853d Merge branch 'ab/userdiff-tests' into next
+    eb80d55a8c Merge branch 'ar/userdiff-scheme' into next
 
-> I assume that we already checked what happened when GIT_MAX_RAWSZ
-> increased, but that seemed worth the cost so we could have SHA-256
-> at all. I find the justification for this interoperability mode to
-> be less significant, and potentially adding too much of a tax onto
-> both SHA-1 repos that will never upgrade, and SHA-256 repos that
-> upgrade all at once (or start as SHA-256).
+On 'seen' there are many topics that have not seen adequately
+reviews; some tests are broken near its tip (I think they pass the
+selftests by themselves).
 
-The entire goal of the interoperability is to let people seamlessly and
-transparently move from SHA-1 to SHA-256.  Currently, the only way
-people can move a SHA-1 repository to a SHA-256 repository is with
-fast-import and fast-export, which loses all digital signatures and tags
-to blobs.  This also requires a flag day.
+    0e76df05ca Merge branch 'ps/rev-list-object-type-filter' into seen
+    956fbceb2e ### breaks 6112 6113
+    c007303ad4 Merge branch 'bc/hash-transition-interop-part-1' into seen
+    4813f16161 ### breaks 0031
 
-SHA-1 can now be attacked for USD 45,000.  That means it is within the
-budget of a dedicated professional and virtually all medium or large
-corporations, including even most municipal governments, to create a
-SHA-1 collision.  Unfortunately, the way we deal with this is to die, so
-as soon as this happens, the repository fails closed.  While an attacker
-cannot make use of the collisions to spread malicious objects, because
-of the way Git works, they can effectively DoS a repository, which is in
-itself a security issue.  Fixing this requires major surgery.
-
-We need the interoperability code to let people transition their
-repositories away from SHA-1, even if it has some performance impact,
-because without that most SHA-1 repositories will never transition.
-That's what's outlined in the transition plan, and why that approach was
-proposed, even though it would be nicer to avoid having to implement it
-at all.
-
-I will endeavor to make the performance impact as small as possible, of
-course, and ideally there will be none.  I am sensitive to the fact that
-people do run absurdly large workloads on Git, as we both know, and I do
-want to support that.
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
-
---A/xDrurJfiqNVyri
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.27 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYHZAogAKCRB8DEliiIei
-gTFxAP9Aj3j+VQyywlx9nIxQrad3sx3/4fz0SwuipLeeAolDMwEAwL5ucCKRF2is
-amrlAzGFP5zAsE6cHFSIN+Duk5inTwE=
-=2zlt
------END PGP SIGNATURE-----
-
---A/xDrurJfiqNVyri--
