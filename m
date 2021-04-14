@@ -2,97 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BC89AC433ED
-	for <git@archiver.kernel.org>; Wed, 14 Apr 2021 05:14:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CFCCDC433ED
+	for <git@archiver.kernel.org>; Wed, 14 Apr 2021 05:18:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9659F61131
-	for <git@archiver.kernel.org>; Wed, 14 Apr 2021 05:14:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AEBF76120E
+	for <git@archiver.kernel.org>; Wed, 14 Apr 2021 05:18:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233191AbhDNFOl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Apr 2021 01:14:41 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51990 "EHLO cloud.peff.net"
+        id S237952AbhDNFSu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Apr 2021 01:18:50 -0400
+Received: from cloud.peff.net ([104.130.231.41]:52000 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230375AbhDNFOh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Apr 2021 01:14:37 -0400
-Received: (qmail 3210 invoked by uid 109); 14 Apr 2021 05:14:15 -0000
+        id S230375AbhDNFSt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Apr 2021 01:18:49 -0400
+Received: (qmail 3245 invoked by uid 109); 14 Apr 2021 05:18:29 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 14 Apr 2021 05:14:15 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 14 Apr 2021 05:18:29 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4116 invoked by uid 111); 14 Apr 2021 05:14:16 -0000
+Received: (qmail 4150 invoked by uid 111); 14 Apr 2021 05:18:29 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 14 Apr 2021 01:14:16 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 14 Apr 2021 01:18:29 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Wed, 14 Apr 2021 01:14:14 -0400
+Date:   Wed, 14 Apr 2021 01:18:27 -0400
 From:   Jeff King <peff@peff.net>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     Rafael Silva <rafaeloliveira.cs@gmail.com>,
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        Rafael Silva <rafaeloliveira.cs@gmail.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         Git Mailing List <git@vger.kernel.org>
-Subject: Re: rather slow 'git repack' in 'blob:none' partial clones
-Message-ID: <YHZ6JvLBNpZVOqiX@coredump.intra.peff.net>
-References: <20210403090412.GH2271@szeder.dev>
- <gohp6ko8et3jdm.fsf@cpm12071.fritz.box>
- <YG4hfge2y/AmcklZ@coredump.intra.peff.net>
- <20210412213653.GH2947267@szeder.dev>
- <YHTcHY+P7RuZJGab@coredump.intra.peff.net>
- <20210413180552.GI2947267@szeder.dev>
+Subject: Re: [PATCH 1/3] is_promisor_object(): free tree buffer after parsing
+Message-ID: <YHZ7Iy29FS9SjKjT@coredump.intra.peff.net>
+References: <YHVECXHfZ1bidTJH@coredump.intra.peff.net>
+ <YHVFKgn7WN76QnRz@coredump.intra.peff.net>
+ <xmqqtuoakkgc.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20210413180552.GI2947267@szeder.dev>
+In-Reply-To: <xmqqtuoakkgc.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 13, 2021 at 08:05:52PM +0200, SZEDER Gábor wrote:
+On Tue, Apr 13, 2021 at 01:17:55PM -0700, Junio C Hamano wrote:
 
-> >   [but now ask it to exclude promisor objects, and it's much slower;
-> >   this is because is_promisor_object() opens up each tree in the pack in
-> >   order to see which "promised" objects it mentions]
+> > diff --git a/packfile.c b/packfile.c
+> > index 8668345d93..b79cbc8cd4 100644
+> > --- a/packfile.c
+> > +++ b/packfile.c
+> > @@ -2247,6 +2247,7 @@ static int add_promisor_object(const struct object_id *oid,
+> >  			return 0;
+> >  		while (tree_entry_gently(&desc, &entry))
+> >  			oidset_insert(set, &entry.oid);
+> > +		free_tree_buffer(tree);
+> >  	} else if (obj->type == OBJ_COMMIT) {
+> >  		struct commit *commit = (struct commit *) obj;
+> >  		struct commit_list *parents = commit->parents;
 > 
-> I don't understand this: 'git rev-list --count --all' only counts
-> commit objects, so why should it open any trees at all?
+> Hmph, does an added free() without removing one later mean we've
+> been leaking?
 
-Because the promisor code is a bit over-eager. There's actually one
-small error in what I wrote above. In that particular rev-list, we're
-not calling is_promisor_object() at all, because we'll already have
-excluded all the promisor objects by marking them UNINTERESTING and
-SEEN.
+Yes. Though perhaps not technically a leak, in that we are still holding
+on to the "struct tree" entries via the obj_hash table. But nobody was
+freeing them at all until the end of the program.
 
-So:
+I actually think it may be a mistake for "struct tree" to have
+buffer/len fields at all. It is a slight convenience to be able to pass
+them around with the struct, but it makes the expected lifetime much
+more confusing. In practice, all code wants to deal with one tree at a
+time, then drop the buffer when it's done (we might hold several when
+recursing through subtrees, but we'd never hold more than the distance
+from the leaf to the root, and each recursive invocation of something
+like process_tree() is holding exactly one tree buffer).
 
-  - in is_promisor_object(), we load the _whole_ list of promisor
-    objects, which requires opening trees to find out about referenced
-    blobs. In theory it could know that we only care about commits, but
-    it's not connected to a particular traversal, so it gets the whole
-    list.
-
-  - mark_uninteresting() is the code where we pre-mark the objects from
-    the promisor pack as UNINTERESTING, and that was loading all of the
-    trees in this case. And it could know that we are not looking at
-    --objects, so there's no need to touch trees. But after my patches,
-    we do not load the contents of _any_ objects at all in that
-    function. We could avoid even creating "struct object" for
-    non-commits there, too, but that would imply looking up the type of
-    each object (so more CPU, though it would save us some memory when
-    we only care about commits). I suspect in practice that most callers
-    would generally pass --objects anyway, though (e.g., your original
-    pack-objects that started this thread certainly cares about
-    non-commits).
-
-> > +	/*
-> > +	 * yikes, do we really need to parse here? maybe
-> 
-> Heh, a "yikes" here and a "yuck" in your previous patch...  This issue
-> was worth reporting :)
-
-Yeah. I think the client side of a lot of this partial-clone / promisor
-stuff is not very mature. It's waiting on people to start using it and
-finding all of these rough edges.
+It may not be worth the trouble to try to clean it up at this point,
+though.
 
 -Peff
