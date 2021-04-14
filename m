@@ -2,106 +2,142 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 01CEFC433ED
-	for <git@archiver.kernel.org>; Wed, 14 Apr 2021 22:10:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4442EC433B4
+	for <git@archiver.kernel.org>; Wed, 14 Apr 2021 22:56:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D1099610E8
-	for <git@archiver.kernel.org>; Wed, 14 Apr 2021 22:10:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 21B5361090
+	for <git@archiver.kernel.org>; Wed, 14 Apr 2021 22:56:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231293AbhDNWK6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Apr 2021 18:10:58 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57210 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231190AbhDNWK5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Apr 2021 18:10:57 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 67004B87BE;
-        Wed, 14 Apr 2021 18:10:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=dGFQUghkBLdCU23z02vZyEHJCDw=; b=IdV498
-        ob5mEMQpfc2KSNry8qNFiGWCXore8Tzs/FUtOmT+QMsFDPN33Vbr4bDclZ32CEV4
-        abC10m1vZbReTE/VaybuUME1M0nYSHi8kzf2Efd3bjYiwg8I+JWiTgC98gY0H/Io
-        0GAogfkJ4tciU4Q7+50dWdV/TdPcnFucTQcWo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Vmywwfqo6bqgVtFk0FVfRsM/7cz29FHF
-        0TkVagGZHkjcXjhQKjMlDCwqmMZneTTCBGDif/Rn7CwvxbWIN8+5r5LzYdQrMDHW
-        kHwbnoCu8qZ1J/TLyonXkkEf4FsMjY2kRN1MX128MtzumhXTI0WNjRYDHPHeyh12
-        pBvZjVS448E=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4F887B87BD;
-        Wed, 14 Apr 2021 18:10:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S233083AbhDNW5N (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Apr 2021 18:57:13 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:33318 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S232196AbhDNW5M (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 14 Apr 2021 18:57:12 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8B5BCB87BC;
-        Wed, 14 Apr 2021 18:10:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Rafael Silva <rafaeloliveira.cs@gmail.com>
-Cc:     git@vger.kernel.org,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH 0/2] prevent `repack` to unpack and delete promisor objects
-References: <20210403090412.GH2271@szeder.dev>
-        <20210414191403.4387-1-rafaeloliveira.cs@gmail.com>
-Date:   Wed, 14 Apr 2021 15:10:29 -0700
-In-Reply-To: <20210414191403.4387-1-rafaeloliveira.cs@gmail.com> (Rafael
-        Silva's message of "Wed, 14 Apr 2021 21:14:01 +0200")
-Message-ID: <xmqqr1jcwm96.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 023EC60744;
+        Wed, 14 Apr 2021 22:56:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1618440980;
+        bh=R877vS6ajl6npOIV9fHq3xqvOP+ZuQYatjzOWXQuTb4=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=ZdYRlzk4w0NSHxxZVG5URdaKyx6czad9dXtzCbfpIKtE/YoBrflixfA1cR5HI5C3d
+         JHMZR2/1Va1ombE7BfFeVUMPLKLp4s3jCIkoznKy/Ro9hiE3r1YsNw5VE5HMqUKHZm
+         4BJv4zB/c89tuwFZCaH8hvXzY8eUDmfYQIWK8CJAbiaSf/tzCQbUY51jQJStnY7Guk
+         +WX8Nl4uAEMFomFOWkNiQ8P9D4mnrYygQQCNJAkT0s2HVALIS5rn+sOoMjdSL4LaXm
+         rySft9bkmPeDLN8eQGLDD7h7SEVSUdrF8FJbX+9e8OqYNRpXYjrYkqhC5UTGl7AvnW
+         an8MZHG5ibn6rvwzniR58/bSK/iRbczbyq5MiRD4naDtZQzZCa7zrj+Y/IWDVdyKLP
+         zKPJSoX4EFL3cbFjlB+BZ8dJ9pOX4EkPed/xSznrlgp81nPkbvX/lqVM0ecYgGYvaY
+         YZ4iRi1/TIZi3pvB7b3kXWsIRI2fIGT6/0V/yus+blGc9IhX0yK
+Date:   Wed, 14 Apr 2021 22:56:14 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Jason Gore <Jason.Gore@microsoft.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: Git clean enumerates ignored directories (since 2.27)
+Message-ID: <YHdzDlAfsuZ21HR7@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jason Gore <Jason.Gore@microsoft.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Elijah Newren <newren@gmail.com>
+References: <DM6PR00MB06829EC5B85E0C5AC595004E894E9@DM6PR00MB0682.namprd00.prod.outlook.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 39C3062C-9D6E-11EB-81F6-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="qnwpT3kXoArf9tHH"
+Content-Disposition: inline
+In-Reply-To: <DM6PR00MB06829EC5B85E0C5AC595004E894E9@DM6PR00MB0682.namprd00.prod.outlook.com>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rafael Silva <rafaeloliveira.cs@gmail.com> writes:
 
-> This series is built on top of jk/promisor-optim. It conflicts with
-> changes on p5600 otherwise.
->
-> The following patches fixes the issue where we unnecessarily turn loose
-> all the promisor objects and deletes them right after when running
-> `repack -A -d ..` (via `git gc) for a partial repository. 
->
-> Special thanks to Peff, for proposing a better approach for managing
-> the situation and for Jonathan Tan for earlier interaction on the
-> solution. Previously, I thought we should skip the promisor objects
-> by just adding a check in loosened_object_can_be_discarded(). However,
-> Peff pointed out that we can do better by realizing much sooner that
-> we should not even consider loosening the objects for the _old_ promisor
-> packs.
->
-> It took me a bit to come up with the test because it seems `repack`
-> doesn't offer an option to skip the "deletion of unpacked objects",
-> so this series adds a new option to `repack` for skip the
-> `git prune-packed` execution thus allowing us to easily inspect the
-> unpacked objects before they are removed and simplification of our
-> test suite. Furthermore, The test will now test the `repack` code
-> path instead of performing the operations by calling
-> `pack-objects`.
+--qnwpT3kXoArf9tHH
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Beautiful.  Thanks for working so well together, all of you.
+On 2021-04-14 at 17:17:46, Jason Gore wrote:
+> I'm unsure of whether this issue is Windows-specific but at the very leas=
+t I suspect this is a change of behavior that would affect all platforms.
+>=20
+> In July 2020 I reported an issue I initially encountered in 2.27 that sti=
+ll seems to be present in 2.31.1.windows.1: https://github.com/git-for-wind=
+ows/git/issues/2732
+>=20
+> Since I haven't seen a response on the issue and it still occurs I decide=
+d to email this list as well.
+>=20
+> Package managers such as PNPM tend to create very long filenames due to s=
+ymlinking. Having git not enumerate these ignored directories is essential =
+to leveraging any sort of clean behavior (both for performance and for warn=
+ing output) as we did before version 2.27. Our repo clean functions went fr=
+om taking a few seconds to over 10 minutes due to this change in behavior.
 
+It looks like there were some changes to the dir.c code between 2.26 and
+2.27 which may have impacted clean.  I'm CCing Elijah Newren who wrote
+those patches and in any event would be more familiar with that code
+than I am.
 
-> Rafael Silva (2):
->   repack: teach --no-prune-packed to skip `git prune-packed`
->   repack: avoid loosening promisor pack objects in partial clones
->
->  Documentation/git-repack.txt  |  5 +++++
->  builtin/repack.c              | 15 ++++++++++++---
->  t/perf/p5600-partial-clone.sh |  4 ++++
->  t/t5616-partial-clone.sh      |  9 +++++++++
->  t/t7700-repack.sh             | 23 +++++++++++------------
->  5 files changed, 41 insertions(+), 15 deletions(-)
+I've taken the liberty of pulling in your testcase from that issue and
+converting it to work in POSIX sh on a Linux machine.  If the path is
+not sufficiently long for your needs, you can bump the value of the variable
+"last" below.
+
+----
+#!/bin/sh
+
+git init test-repo
+cd test-repo
+longname=3D"directory"
+touch "$longname.txt"
+last=3D400
+for x in $(seq 1 $last); do
+  mkdir "x$longname$x"
+  mv directory* "x$longname$x"
+  mv "x$longname$x" "$longname$x"
+done
+git clean -ffdxn -e directory$last
+----
+
+When it fails, it will complain that it wasn't able to open the
+directory.  It still exits zero, however.
+
+I haven't bisected this, so I don't know if those patches are related to
+the problem or not.  I'm a little short on time today to investigate
+further, but hopefully this can get someone on the right path with a
+modified version and git bisect run if nothing else.
+
+> I've also had repeated problems sending you this email as your email serv=
+er seems to reject any email with a URL in it (per the github link above.)
+
+I don't think that's the problem, since this email came through just
+fine.  It's more likely that your email was being bounced for HTML,
+which isn't allowed on the list.
+--=20
+brian m. carlson (he/him or they/them)
+Houston, Texas, US
+
+--qnwpT3kXoArf9tHH
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.27 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYHdzDgAKCRB8DEliiIei
+gcJJAQCdALWpIgCybMk07BSJLEf+9SytDygQal1+g4UMXi3x0gD/QF1feKZMVJRA
+4WwmRD+RHpeWLQpDQHsvkAGN2TWRJwU=
+=0y89
+-----END PGP SIGNATURE-----
+
+--qnwpT3kXoArf9tHH--
