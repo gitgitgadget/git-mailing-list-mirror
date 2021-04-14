@@ -2,148 +2,234 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E7EA3C433B4
-	for <git@archiver.kernel.org>; Wed, 14 Apr 2021 09:36:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20DD9C433ED
+	for <git@archiver.kernel.org>; Wed, 14 Apr 2021 09:43:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B57D2611B0
-	for <git@archiver.kernel.org>; Wed, 14 Apr 2021 09:36:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E5FCA61220
+	for <git@archiver.kernel.org>; Wed, 14 Apr 2021 09:43:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230102AbhDNJgW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Apr 2021 05:36:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54714 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229914AbhDNJgV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Apr 2021 05:36:21 -0400
-Received: from mail-vk1-xa31.google.com (mail-vk1-xa31.google.com [IPv6:2607:f8b0:4864:20::a31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5A4BC061574
-        for <git@vger.kernel.org>; Wed, 14 Apr 2021 02:36:00 -0700 (PDT)
-Received: by mail-vk1-xa31.google.com with SMTP id u23so144998vkl.12
-        for <git@vger.kernel.org>; Wed, 14 Apr 2021 02:36:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=QjccawiBAcVOJcA2lIESWnjAeZVgHCNQ6P3T5bOaUJc=;
-        b=i/6L2T4ZGGNkF7jS93OiJd+HEOvmK4WAebCwnYjHUCxq4NwXzKfAqEonS+93ybcvmp
-         bEoEPCB2oT2eUvpMdXWLqw3qqHpUGB978hDYkEajPc8X3wwyHRWlqpLlWOADf9mTLOoD
-         63za+RoYVtU9qoOcgCqenFye8Yhl/X1FmlgJbVERuTWWG6Rc9cno4mPm93G2d+wB76pU
-         GFg7qL4LFyteZrCULGK3uCIzU27Wp3b3gqDVSC+sjUAjcrKAdiTu4RzfrXcU7ElQ1EtM
-         3ug45haSKcxWeDPH6oQ4lTArnyzMGIRr+CyrTxafEAuN6lIAkPx4iFmV/7NdoKUSxO2h
-         dIYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=QjccawiBAcVOJcA2lIESWnjAeZVgHCNQ6P3T5bOaUJc=;
-        b=bFeijWDObsH8T/y6PARgEbDw3FHo+fyrF2ByA6SVRfvgOkHA3M/6uTkUSWFXa1Iet8
-         mMtSISnaaIaz3idFv1kMLeNsTLxgJVKkFIwOFSYPxx3HFKW2n2G4wJct1jFO00IwzrJU
-         bi0ZMO9GoT74RS9sbqhk1jJ8FMmzrAdFmVaT1NwFrfc1I4ToHGKyLBjDcYXf9PmMOzP3
-         l9Xls5WUKYhVe+YVYuGKvA+sLIggVSX13w6LDryOGkaYNZcaPdfhuSLKaXXHj9Tkbmgo
-         eN+HSNzZ4MGofaQe1HSlahwd1UN9Q/ldSOMeJNIZ4NMma+ILQiFVOkT2gnH31KMukqJr
-         uVqQ==
-X-Gm-Message-State: AOAM5315Qn8SFT0UUZyKYJNX/DXi+4pOYB9+6Jwiln+G+Us25KBzWxbl
-        Zoblgon/8R9DXvKsTVGdRaGWQ/OdjkyI8GSIVFE=
-X-Google-Smtp-Source: ABdhPJxPPLQLuTfTgjTP9Iw2efq9QwFoHt+xKf1mpx2cSE7IflhW98Rz94DQVArzDubOkMqAbkjDlFsGl9c8mbh7+Zg=
-X-Received: by 2002:a1f:aa43:: with SMTP id t64mr27564132vke.22.1618392959625;
- Wed, 14 Apr 2021 02:35:59 -0700 (PDT)
+        id S235353AbhDNJnp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Apr 2021 05:43:45 -0400
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:59185 "EHLO
+        out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S233066AbhDNJno (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 14 Apr 2021 05:43:44 -0400
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.nyi.internal (Postfix) with ESMTP id 609815C019D;
+        Wed, 14 Apr 2021 05:43:23 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute1.internal (MEProxy); Wed, 14 Apr 2021 05:43:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
+        :from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=fm3; bh=1Ostu/eKSWtZRIa7/sQnnJbbnBB
+        7ZI6s8al0l9j9GWY=; b=o5DMc5UC4GaNo0BqAJq1iZwZlwTKozxiTDXe2JVqAHz
+        rUrNhUZtEJt/136ydBAaW4Qb3/HMVE2fxcISm8trM/d4nAdS2WeEChu7wi8GVIw/
+        70BsMV9Mmh6T8aBZRrb01uODhjyL8r1j2zLT4/sjSb2RrE+l3KUOsTyQFtMySrRf
+        xSr/KM4vA3GTzvhOzobRJIqVGXpWUzJTCv07KLUVzSl0NCcA2ej7DhEP9q+cB9/G
+        cQ3ud0YdbHVL7Qai2jfoYwB7w46J7X5nBJ1P+E8wVQmil5pzZiTme84lHNNo1OSi
+        KH9M6UVR3LVRVegPHBHuiU7fVbma+/yhkDMl3yeORrA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=1Ostu/
+        eKSWtZRIa7/sQnnJbbnBB7ZI6s8al0l9j9GWY=; b=VV3dv/JhtHekuo3MC0yYzf
+        pP9h4BXICY9sbGiTntwAtrYYpD3HHgA9hZceZsaF3vN8B66uZaBUByFnaFDVyxcN
+        Z6vZtdgJRxZ99k1P4gJqwGkDlNBgrVoDtGGj8i7GPZ2SLW4e2Spmy5lgy1oc5C2s
+        +AmR+5lL7ADfmErmaV8wGfShBnlwFY9fYHTsyDuULFMyVWsRT7M7d8Zw5hQXWytp
+        VKJi3L1ue6zsFqVD70sABKm2zGIpR1/Rvfl++W+kIVjWAUvmk5ZBqvunBl5VP9l2
+        ZEaIYN2Tj2aG8shjpogJlAllP+7/oOtLwl2POPaUWswWO2/2xsMD/4NibxGtxVvA
+        ==
+X-ME-Sender: <xms:O7l2YCEmvYJ30RYMZz8-r7Z89FG57brmvM0z9bI3hPCAODII_R9F-g>
+    <xme:O7l2YDX-LKebvTzLDfckij-xasBb3CjKBgsklOV6SI6uxaagj_Gjs8RDqgTTVAP5J
+    kGYniEGkRDTEYdlDQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrudeluddgudelucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
+    ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
+    khhsrdhimheqnecuggftrfgrthhtvghrnhepgeeuudfggfetudetuddtteffveejgfegte
+    etieejfeekheegjeettdeuiedvleejnecuffhomhgrihhnpehvrghlvddrthgrrhhgvght
+    pdhuphgurghtvgdrnhgvfidpuhhpuggrthgvrdhnrghmvgdpuhhpuggrthgvrdgvmhgrih
+    hlnecukfhppeejkedrheehrdefgedruddtieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:O7l2YMIyyOCB0WEv8ZhqxW15aGu3TWhFLBZ_AJXuJvWjnNdpIVkbgQ>
+    <xmx:O7l2YMFUk96EtF9XKSUc5RbnJewspyMhE7d8ekQoXJ5kiSyGtTGU0g>
+    <xmx:O7l2YIVAEN9KoJrPWKFV9NPX8RdzrSkzu0D0EER0xwpZrs4RKzG-Jg>
+    <xmx:O7l2YBcmrE36fkI31m5ECeGt5XJxzbi3a9mkaOYGdZKpXtqMyHktfg>
+Received: from vm-mail.pks.im (dynamic-078-055-034-106.78.55.pool.telefonica.de [78.55.34.106])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 82E16108005C;
+        Wed, 14 Apr 2021 05:43:22 -0400 (EDT)
+Received: from localhost (ncase [10.192.0.11])
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id e439e839 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Wed, 14 Apr 2021 09:43:18 +0000 (UTC)
+Date:   Wed, 14 Apr 2021 11:43:16 +0200
+From:   Patrick Steinhardt <ps@pks.im>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>
+Subject: Re: What's cooking (draft for #4's issue this month)
+Message-ID: <YHa5NE3tj/R5kF8N@ncase>
+References: <xmqqmtu1zn3o.fsf@gitster.g>
 MIME-Version: 1.0
-References: <CAEaE=iyUGiPK-HX850mEgC=X6atEhbjJ0dCK0dci0nOCahPhgQ@mail.gmail.com>
- <YHYxtvKgKz+Uv2xO@camp.crustytoothpaste.net>
-In-Reply-To: <YHYxtvKgKz+Uv2xO@camp.crustytoothpaste.net>
-From:   Vitaly VS <strikervitaly@gmail.com>
-Date:   Wed, 14 Apr 2021 12:35:48 +0300
-Message-ID: <CAEaE=izSNyxRcvMd5bArHnmi0F2G83nouge9e_qxiQmA0AsWog@mail.gmail.com>
-Subject: Re: Git via MITM transparent proxy with HTTPS Interception
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Vitaly VS <strikervitaly@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="5p6EFo9hyhauGsM0"
+Content-Disposition: inline
+In-Reply-To: <xmqqmtu1zn3o.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thank you for the fast response.
 
-About our network environment
-We are Cisco WSA(Servers SW, ASA, ISR) that proxies http/https
-traffic. Client requests a website, network device redirects traffic
-to WSA using WCCPv2, then WSA proxies the request to Cisco ASA
-Firewall and internet.
+--5p6EFo9hyhauGsM0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Yes, that our transparent proxy is not completely transparent because
-HTTPS Interception.
-If network guys turning off HTTPS Interception for github.com "git
-clone" work well through the transparent proxy...
+On Tue, Apr 13, 2021 at 06:11:39PM -0700, Junio C Hamano wrote:
+> On 'seen' there are many topics that have not seen adequately
+> reviews; some tests are broken near its tip (I think they pass the
+> selftests by themselves).
+>=20
+>     0e76df05ca Merge branch 'ps/rev-list-object-type-filter' into seen
+>     956fbceb2e ### breaks 6112 6113
+>     c007303ad4 Merge branch 'bc/hash-transition-interop-part-1' into seen
+>     4813f16161 ### breaks 0031
 
-Disabled https interception for github is a security issue for
-us(corporate risks, code leak, etc). That's why I asked about can the
-git client working with https interception.
+Test breakage for the rev-list filter series has been a bad interaction
+of d8883ed540 (object.c: stop supporting len =3D=3D -1 in
+type_from_string_gently(), 2021-03-28) and
+ps/rev-list-object-type-filter. The following patch fixes this, which
+I'll include in my next reroll of this series.
 
-Proxy didn't alter any of the contents of the stream(that says to me
-our SecOps), but I've not received decrypted traffic yet to be sure.
-HTTPS traffic caching but we are also disabled this feature for github.
+diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
+index 19e128ef11..33c7718a7a 100644
+--- a/list-objects-filter-options.c
++++ b/list-objects-filter-options.c
+@@ -100,7 +100,7 @@ static int gently_parse_list_objects_filter(
+ 		return 1;
 
-Common downloads with curl or browser from the same sources from
-github or gitlab working well.
+ 	} else if (skip_prefix(arg, "object:type=3D", &v0)) {
+-		int type =3D type_from_string_gently(v0, -1);
++		int type =3D type_from_string_gently(v0, strlen(v0));
+ 		if (type < 0) {
+ 			strbuf_addstr(errbuf, _("expected 'object:type=3D<type>'"));
+ 			return 1;
 
-Brian, really thank you for pdf but we haven't Client-end TLS
-interception on our clients.
 
-=D1=81=D1=80, 14 =D0=B0=D0=BF=D1=80. 2021 =D0=B3. =D0=B2 03:05, brian m. ca=
-rlson <sandals@crustytoothpaste.net>:
+The other breakages I see are caused by hn/reftable, where all tests in
+t0031-reftables.sh cause segfaults. The root cause seems to be that
+reading refs via the reftable backend doesn't initialize the `algo`
+field of the OID, which is fixed via the following patch.
 
->
-> On 2021-04-13 at 12:07:58, Vitaly VS wrote:
-> > Hello! Can a Git client work properly through a MITM transparent proxy
-> > with HTTPS interception?
->
-> Yes, with some important caveats.  The proxy must be completely
-> transparent.  It must not modify or impede the data in any way, it must
-> speak both HTTP 1.1 and HTTP 2 correctly and fully, and the proxy must
-> speak TLS completely correctly, including terminating the connection in
-> accordance with the protocol.  It must be completely impossible to tell
-> that a proxy is being used.
->
-> I do want to point out that TLS interception is by definition a security
-> vulnerability and almost always significantly weakens security, often by
-> using weaker protocols, breaking or disabling certificate verification,
-> and impeding the upgrading and interoperability of the protocol[0].  You
-> should definitely read and understand the literature about TLS
-> intercepting proxies and have personally verified that your
-> implementation is free of vulnerabilities before deploying.  You
-> shouldn't rely on your implementer for this information, because they
-> usually aren't aware that their implementation has vulnerabilities.
->
-> Also, my experience is that many, many proxies of this nature are
-> completely broken and don't work correctly, so if you are not fully
-> aware of what's going on and haven't fully tested your implementation,
-> you shouldn't deploy this technology.  I frequently answer questions
-> from users in scenarios such as this who are having problems due to a
-> broken proxy and often have to tell them to contact their network
-> administrator.  I therefore do not in any sense recommend deploying such
-> infrastructure.
->
-> Git really does need a properly functioning HTTP and TLS implementation
-> and things tend to break in a variety of ways when encountering broken
-> proxies.  I would say "exciting ways", but I recognize them all now and
-> they're not exciting anymore.
->
-> > Getting a bunch of errors when trying to "git clone https://SOME_REPO.g=
-it"
-> > On small REPOs (about 1-5 MB) there is a chance that the clone will be
-> > successful, but mostly I get these errors:
->
-> Your proxy is broken and doesn't speak the protocol correctly.  It isn't
-> a transparent proxy.  You should either remove it or contact your
-> network administrator to have it removed.
->
-> [0] https://www.ftc.gov/system/files/documents/public_comments/2016/09/00=
-019-129028.pdf
-> --
-> brian m. carlson (he/him or they/them)
-> Houston, Texas, US
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index 130fd90e45..35fb7dd0a2 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -251,10 +251,10 @@ static int reftable_ref_iterator_advance(struct ref_i=
+terator *ref_iterator)
+ 		ri->base.flags =3D 0;
+ 		switch (ri->ref.value_type) {
+ 		case REFTABLE_REF_VAL1:
+-			hashcpy(ri->oid.hash, ri->ref.value.val1);
++			oidread(&ri->oid, ri->ref.value.val1);
+ 			break;
+ 		case REFTABLE_REF_VAL2:
+-			hashcpy(ri->oid.hash, ri->ref.value.val2.value);
++			oidread(&ri->oid, ri->ref.value.val2.value);
+ 			break;
+ 		case REFTABLE_REF_SYMREF: {
+ 			int out_flags =3D 0;
+@@ -299,7 +299,7 @@ static int reftable_ref_iterator_peel(struct ref_iterat=
+or *ref_iterator,
+ 	struct git_reftable_iterator *ri =3D
+ 		(struct git_reftable_iterator *)ref_iterator;
+ 	if (ri->ref.value_type =3D=3D REFTABLE_REF_VAL2) {
+-		hashcpy(peeled->hash, ri->ref.value.val2.target_value);
++		oidread(peeled, ri->ref.value.val2.target_value);
+ 		return 0;
+ 	}
+
+@@ -977,7 +977,7 @@ git_reftable_reflog_ref_iterator_advance(struct ref_ite=
+rator *ref_iterator)
+
+ 		free(ri->last_name);
+ 		ri->last_name =3D xstrdup(ri->log.refname);
+-		hashcpy(ri->oid.hash, ri->log.update.new_hash);
++		oidread(&ri->oid, ri->log.update.new_hash);
+ 		return ITER_OK;
+ 	}
+ }
+@@ -1090,8 +1090,8 @@ static int git_reftable_for_each_reflog_ent_newest_fi=
+rst(
+ 			break;
+ 		}
+
+-		hashcpy(old_oid.hash, log.update.old_hash);
+-		hashcpy(new_oid.hash, log.update.new_hash);
++		oidread(&old_oid, log.update.old_hash);
++		oidread(&new_oid, log.update.new_hash);
+
+ 		full_committer =3D fmt_ident(log.update.name, log.update.email,
+ 					   WANT_COMMITTER_IDENT,
+@@ -1157,8 +1157,8 @@ static int git_reftable_for_each_reflog_ent_oldest_fi=
+rst(
+ 		struct object_id new_oid;
+ 		const char *full_committer =3D "";
+
+-		hashcpy(old_oid.hash, log->update.old_hash);
+-		hashcpy(new_oid.hash, log->update.new_hash);
++		oidread(&old_oid, log->update.old_hash);
++		oidread(&new_oid, log->update.new_hash);
+
+ 		full_committer =3D fmt_ident(log->update.name, log->update.email,
+ 					   WANT_COMMITTER_IDENT, NULL,
+@@ -1330,8 +1330,8 @@ git_reftable_reflog_expire(struct ref_store *ref_stor=
+e, const char *refname,
+ 		if (err > 0 || strcmp(log.refname, refname)) {
+ 			break;
+ 		}
+-		hashcpy(ooid.hash, log.update.old_hash);
+-		hashcpy(noid.hash, log.update.new_hash);
++		oidread(&ooid, log.update.old_hash);
++		oidread(&noid, log.update.new_hash);
+
+ 		if (should_prune_fn(&ooid, &noid, log.update.email,
+ 				    (timestamp_t)log.update.time,
+@@ -1410,7 +1410,7 @@ static int git_reftable_read_raw_ref(struct ref_store=
+ *ref_store,
+ 		strbuf_addstr(referent, ref.value.symref);
+ 		*type |=3D REF_ISSYMREF;
+ 	} else if (reftable_ref_record_val1(&ref) !=3D NULL) {
+-		hashcpy(oid->hash, reftable_ref_record_val1(&ref));
++		oidread(oid, reftable_ref_record_val1(&ref));
+ 	} else {
+ 		*type |=3D REF_ISBROKEN;
+ 		errno =3D EINVAL;
+
+
+Patrick
+
+--5p6EFo9hyhauGsM0
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmB2uTQACgkQVbJhu7ck
+PpQ60hAArnpoBvBBFeiiCIr7y+k8Hl5viEoPMN5VCXcjZC5kGfxigvJqSGUbDWin
+P7ZBniJgO+6gQQboP4L7sDKGma8F+DrnImjV7pqkf/WpZ7oe9zi2CwJHfLPPiApA
+0k1XEOg1E//EceX1CRGGAasbQcM0vpdIbt6r5z3vFi5rRw9Z7Eqs5ciuMTw3IqFU
+vN6mooLAW0WDAfSCDX6xN2DpUxluBpfAkXzy7KUv1VW/8LrsN+vo6lpnPVNO47wm
+AU2j8RwALjlUZKbFEUkBUCqTunSn0BqlTJoLiiWlsfX35Jvf+pb1P9tsRpfZ4Nru
+utUY+7YVUe8gYLSjCf08rjAbss3KOeXzuV7pB5aVzr9hthptzfveY7lmWuQcejC+
+Svt+LrenjGulAdVbDLzXgaPYKBzMohGEtD0fsVvmHgatmq8JYaKqhHsVOBV87Jso
+91/dEXnmU2x5R2YaHDxDDc+E7y7bnXs1+K+mdsv5NjmEnWInw7fEy5hMZ5Xaukbt
+BMM6il6nnGeY8sqWELWO0AXDMVasN6uETJMLxgRVRHEQ+/Y/WT5t7AQvxoVCSz38
+1M7tRbGFOLiUsaN1A10SxCekD30TGIju6PlFWEfQV8QZy6FFGzucFSoUlb4MtAOG
+TGeuB417q6ZNM4gpk6pTKLYts0N0OJrRbxcikZ9MJd0q1L9LIgA=
+=NWA9
+-----END PGP SIGNATURE-----
+
+--5p6EFo9hyhauGsM0--
