@@ -2,152 +2,159 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 33EACC433ED
-	for <git@archiver.kernel.org>; Wed, 14 Apr 2021 06:13:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77F49C433B4
+	for <git@archiver.kernel.org>; Wed, 14 Apr 2021 06:22:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 00B67611EE
-	for <git@archiver.kernel.org>; Wed, 14 Apr 2021 06:13:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 562CE611C9
+	for <git@archiver.kernel.org>; Wed, 14 Apr 2021 06:22:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349104AbhDNGNv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Apr 2021 02:13:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37774 "EHLO
+        id S1349223AbhDNGXN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Apr 2021 02:23:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347755AbhDNGNv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Apr 2021 02:13:51 -0400
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45F65C061574
-        for <git@vger.kernel.org>; Tue, 13 Apr 2021 23:13:30 -0700 (PDT)
-Received: by mail-pj1-x1029.google.com with SMTP id r13so5926698pjf.2
-        for <git@vger.kernel.org>; Tue, 13 Apr 2021 23:13:30 -0700 (PDT)
+        with ESMTP id S1347687AbhDNGXH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Apr 2021 02:23:07 -0400
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB394C061574
+        for <git@vger.kernel.org>; Tue, 13 Apr 2021 23:22:45 -0700 (PDT)
+Received: by mail-ed1-x535.google.com with SMTP id m3so22254548edv.5
+        for <git@vger.kernel.org>; Tue, 13 Apr 2021 23:22:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
-        bh=6lpduO5DJO6Jhu/7gSmAFMWgZN9X6fUCsnXUxPXJa0k=;
-        b=IUcpS67tL3auSKjlsNNgj1x/Qaa1+AsVsgeb3gp02vta+OE9GiDpr5JtJnnSkL1MWR
-         3qAzcvMaPiatd9DoM87kuqpuJk9twNelSmvoFrNOnUTylkD/LYg9bKxAe4g0q60HjzgC
-         3CYG2VB11sxQ4AkvRvnWnmzGmxM7oxcc6+1MXxMkvTdrlZW+/V40VS77AaSDHsAgpkzM
-         l4EFkNFg8BvGvONYx/wytEaaD33bFxmMdT4qnohjEn2Pwl1DmKgw6RYj34NfFpKsMSpA
-         HAkK8V3JmsdyPLsqH8Rhu/t6rETiyjBZ86pEXpY8mN16VALZSAfEWBbQZ41BsQCKdu9r
-         CZBg==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=LNv57ZN5SDURfFduoUwTePro4cocInVVO0Yx5uXmW0Y=;
+        b=QGztWEAb2yHpxPCVeJZ1lY4CCM7Zeg0TfKedLKBV4p0hL1rWnb2HSy/jOrOgkJlrAP
+         QeLYDrQmIUyUZwfnjQ2dCEKwpmpmQvVA466FyxXC0tP9WnmVB92fmjz1nVP5ZaC4C9Qc
+         sihDcDp7ucPoVFD0Ae4I9J19AIGnFaxUb0Abiy1tHBwVZjqXBX6lQmnCbrJdir1odDWY
+         nWYEOrlHHimlK9Ps801xz8p2r/T1THRjyn9lsF4mkkHGDUYGG++FLgCQ+mPXFP6piMV+
+         lC1O/nhkeVqCbcCrOQ/Wl3DnZOi60xkB52BrVEiQuRzHKlyQRjfRUP4B2yszRtz4dovY
+         lFsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition;
-        bh=6lpduO5DJO6Jhu/7gSmAFMWgZN9X6fUCsnXUxPXJa0k=;
-        b=rsvtJWZOdZPmqFcIj+1EC5mLF0fM0yDH0ydqlwh+h2tdv2BKrpLx8EtUS+HZSGJzgX
-         gJcxfLuxAPV1WfbYa1XYVLvvsvS1IV9dhm7mw6ba69LEulOW2/XH4PdTEXdQkv30iEnl
-         /dUWtNVxwL5HTHuipqk+PQMSFsGza5aujXgpue37p1D+XojmjZGtx67fduP1aB4/bGTA
-         T77RTtdaZMTi4EQq2vYEX0MjnWMxBZhA3bRVyxhPg/8Z0hSXkndbW8ApRG/FSnhEWhhm
-         Yh0bsPRlxVJ1eJYWUDnLgUDuyhEEtwZYqvQ1WEfo9/RAgIXUdukoqySt5hvbLrs9U6nC
-         Efmw==
-X-Gm-Message-State: AOAM53120sideZ3uDAsWIVcYTEeduDzrOm2wFtfzPbCnrnaNEPrKSdds
-        rm5IFq+AcQsUG0sHTA0P5fWPq3XieAM=
-X-Google-Smtp-Source: ABdhPJz5OsqIVAp7CwJgJSp/GJoh7XhAxsW2f8kyIe0s5jOTRSP4zbHAzroLsgzR68/utB7qk/q3Ag==
-X-Received: by 2002:a17:90a:d352:: with SMTP id i18mr1867124pjx.19.1618380809385;
-        Tue, 13 Apr 2021 23:13:29 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:e5b9:3ce9:bdd4:e712])
-        by smtp.gmail.com with ESMTPSA id s21sm237792pjr.52.2021.04.13.23.13.28
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=LNv57ZN5SDURfFduoUwTePro4cocInVVO0Yx5uXmW0Y=;
+        b=PTzssbtYdeJanrX6XBdqv06JIC618IBa63Fw1y4tnVDfrXbwToIUReK5TMULVg/QsA
+         4NQSrQim2NWtU4sPhbP35rGhoLnP6qoz2gWsD94z++iQHaJ0dXhmyeDRAfcweVgRUoOk
+         t9OjBV2C6W09woQ8Zajj1xYKj5t2Tipkkvm+rw+FKeSSYEzg8fTAqm0CKeYEx3oF9o9L
+         MHUWKt3OtzN9+7AWTjWSgzEvDuoDrlDOCdIu3am0ICZ5KctHKikzap6ATJN7rkebn1wd
+         5NZ84SJ95x/oQHpXK2jRQLc4+Ba7Uf6fk53AUleAbA6KbXYitbf+ilxExCssoaAN9kns
+         p8PA==
+X-Gm-Message-State: AOAM533wNUFa4xKvbbvQmus8dWPTdPKUTylDteDuZwYb1Ve4JrLfn4om
+        mu8vlvIir6mVRQMLqfKWsvY=
+X-Google-Smtp-Source: ABdhPJyAK1toJ4Lkr7nEw64ZwMDhmpdvkmfSgHycBwWh8H/8sMc8oBMC1T3aFGygXjWNACA/oVpYOA==
+X-Received: by 2002:a50:f19d:: with SMTP id x29mr30975458edl.102.1618381364555;
+        Tue, 13 Apr 2021 23:22:44 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id s20sm10835069edu.93.2021.04.13.23.22.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Apr 2021 23:13:28 -0700 (PDT)
-Date:   Tue, 13 Apr 2021 23:13:26 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Raxel Gutierrez <raxelgutierrez09@gmail.com>, mricon@kernel.org,
-        patchwork@lists.ozlabs.org, Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Emily Shaffer <emilyshaffer@google.com>
-Subject: Pain points in Git's patch flow
-Message-ID: <YHaIBvl6Mf7ztJB3@google.com>
+        Tue, 13 Apr 2021 23:22:43 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] diff tests: rewrite flakyness-causing test "aid"
+References: <patch-1.1-f0542cd902c-20210413T121930Z-avarab@gmail.com>
+ <cover-0.2-00000000000-20210413T122645Z-avarab@gmail.com>
+ <patch-2.2-c2cb52b6605-20210413T122645Z-avarab@gmail.com>
+ <CAHd-oW4G+7z3UM3qjhPp=2oqOPE4a49fweew0n+gheGtQEy5VA@mail.gmail.com>
+ <87fszu2elw.fsf@evledraar.gmail.com>
+ <CAHd-oW6D7Tmp2TmrmGvXDt-NnT_wxhfr_bn_P_7=ot=m_2eyyA@mail.gmail.com>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
+In-reply-to: <CAHd-oW6D7Tmp2TmrmGvXDt-NnT_wxhfr_bn_P_7=ot=m_2eyyA@mail.gmail.com>
+Date:   Wed, 14 Apr 2021 08:22:43 +0200
+Message-ID: <874kg92xn0.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
 
-I'd like to introduce Raxel (cc-ed), who is starting an internship
-this June with the Git team at Google.
+On Tue, Apr 13 2021, Matheus Tavares Bernardino wrote:
 
-He'll be working on a bit of an experimental project: we want to take
-Patchwork[1], which in principle can be a helpful addition to a
-mailing list centric workflow[2], and improve it to be something that
-people in the Git open source project get day-to-day benefit from.
-Raxel's previous successes in making changes to tools to support a
-better user experience make me excited for the potential for this
-work.
+> On Tue, Apr 13, 2021 at 4:01 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> <avarab@gmail.com> wrote:
+>>
+>>
+>> On Tue, Apr 13 2021, Matheus Tavares Bernardino wrote:
+>>
+>> > On Tue, Apr 13, 2021 at 9:31 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+>> > <avarab@gmail.com> wrote:
+>> >>  t/t4013-diff-various.sh | 25 +++++++++++++++----------
+>> >>  1 file changed, 15 insertions(+), 10 deletions(-)
+>> >>
+>> >> diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+>> >> index 67f6411aff9..228ff100c61 100755
+>> >> --- a/t/t4013-diff-various.sh
+>> >> +++ b/t/t4013-diff-various.sh
+>> >> @@ -200,10 +200,12 @@ do
+>> >>         esac
+>> >>         test=3D$(echo "$label" | sed -e 's|[/ ][/ ]*|_|g')
+>> >>         pfx=3D$(printf "%04d" $test_count)
+>> >> -       expect=3D"$TEST_DIRECTORY/t4013/diff.$test"
+>> >> +       expect_relative=3D"t4013/diff.$test"
+>> >> +       expect=3D"$TEST_DIRECTORY/$expect_relative"
+>> >>         actual=3D"$pfx-diff.$test"
+>> >>
+>> >>         test_expect_$status "git $cmd # magic is ${magic:-(not used)}=
+" '
+>> >> +               test_when_finished "rm $actual" &&
+>> >
+>> > Nit: before these two patches, "$actual" was only removed when the
+>> > test succeeded. So, in case of failure, the failed output files would
+>> > still be there for debugging. It might be interesting to keep this
+>> > behavior and only remove "$actual" at the end of the test.
+>>
+>> Either I'm missing something or you are, that's how test_when_finished
+>> works.
+>>
+>> It's skipped under e.g. "--immediate --debug". See b586744a864 (test:
+>> skip clean-up when running under --immediate mode, 2011-06-27)
+>
+> I was mostly thinking about the `artifacts` zip we get from our CI
+> when a test fails. I find the final trash dir quite useful for some
+> post-mortem analysis, especially to debug WIP tests that only fail
+> occasionally or test failures on OSes I don't have quick access to.
 
-Anyway, yesterday[3] Junio, Taylor, and Emily were discussing how to
-encourage more reviews:
+Ah, yes that's a problem we should solve, but I think we should not put
+off migration to test_when_finished because of that.
 
- <gitster> this week, i'd be thinking about ways to get topics, that
-           are not reviewed sufficiently, reviewed. I can act as the
-           last-resort fallback reviewer, but that's not sufficient.
- <ttaylorr> gitster: I share your concern.
- <nasamuffin> gitster: yep, agree, on both counts
+The whole reason we use it is to clean up the work area for the next
+test.
 
-That reminded me that it would be useful preparation to collect
-descriptions of pain points we are having with our existing patch
-flow.  For example:
+Thus if we do:
 
-- As a reviewer, I want to be able to easily find a series that needs
-  review.  Using patchwork, I can see some recent patch series; or
-  using a hierarchical threaded mail reader, I can find a neglected
-  thread or one that seems to be likely to have an interesting
-  discussion going on.  But without reading in detail, there is no
-  easy way to see whether the series has reached a review, whether
-  someone else intends to review it, and what the author believes its
-  status to be.
+    git something >expected &&
+    test_cmp expected actual &&
+    rm expected actual
 
-- Relatedly, as a patch author or reviewer, I want to be able to
-  easily tell whether a topic has been sufficiently reviewed.  Today,
-  the signals for this are implicit: I have to judge consensus, or to
-  check the Git repository for whether the patch has been merged, or
-  to check the maintainer's latest "What's cooking in git.git"
-  message.
+And "git something" segfaults it's only dumb luck that subsequent tests
+don't fail in non-obvious ways due to the files being left behind.
 
-- As a potential reviewer or interested user, I want to be able to
-  follow all relevant discussion for a patch series, while also
-  having the ability to stop following it if the discussion goes on
-  too long and starts overwhelming my email inbox.  Today, I can join
-  the discussion and then (1) it is hit-or-miss whether the patch
-  author ccs me on later iterations of the patch and (2) there is no
-  easy way without aggressive email filtering to stop watching it if
-  I am cc-ed.
+If we could rely on this in general we could make everything under
+test_when_finished a noop, but I think you'll find that'll fail a lot of
+things in the test suite if we do that.
 
-- After having diagnosed an issue to be due to a patch, I want to be
-  able to easily find all relevant review discussion.  Today I can
-  use the mailing list archive[4] or patchwork to find review
-  discussion on the latest version of the series that patch was in,
-  but tracing back to previous iterations of that same series can be
-  non-trivial.  Moreover, if I'm interested in a particular puzzling
-  line of code, finding which iteration introduced it can take a long
-  time.
+But the problem you cite is legitimate, but we should solve it with
+something like:
 
-Those four are important in my everyday life.  Questions:
+ 1. If we fail tests 58 and 67 out of 100 we should/could run these
+    again at the end under some more exhaustive debugging mode where
+    we'd save away all the intermediate files.
 
- 1. What pain points in the patch flow for git.git are important to
-    you?
+ 2. Or, and test_when_finished helps here, we could set $PATH when it
+    runs to a directory with a custom "rm", which would save away the
+    temporary files, expecting that we'll tar them up if any of the
+    tests whose files we saved failed (we'd delete the other ones).
 
- 2. What tricks do you use to get by with those existing pain points?
+ 3. Similarly, wrap "rm" in some "cat and rm" for common cases like
+    actual/expected files, and improve the verbose output to some
+    "verbose if fails".
 
- 3. Do you think patchwork goes in a direction that is likely to help
-    with these?
-
- 4. What other tools would you like to see that could help?
-
-Thanks,
-Jonathan
-
-[1] http://jk.ozlabs.org/projects/patchwork/; you can see an instance
-for Git at https://patchwork.kernel.org/project/git/list/
-[2] https://kernel-recipes.org/en/2016/talks/patches-carved-into-stone-tablets/,
-https://www.kernel.org/pub/software/scm/git/docs/gitworkflows.html#_patch_workflow
-[3] https://colabti.org/irclogger/irclogger_log/git-devel?date=2021-04-12#l40
-[4] https://lore.kernel.org/git/
