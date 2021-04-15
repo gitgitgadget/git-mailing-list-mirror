@@ -7,92 +7,95 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DBE6C433ED
-	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 20:50:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 953A1C433B4
+	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 20:56:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5ABBC610FC
-	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 20:50:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5A19D610FC
+	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 20:56:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234894AbhDOUu7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Apr 2021 16:50:59 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:53101 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234668AbhDOUu7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Apr 2021 16:50:59 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id A4364123B24;
-        Thu, 15 Apr 2021 16:50:35 -0400 (EDT)
+        id S234879AbhDOU4j (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Apr 2021 16:56:39 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:56901 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234838AbhDOU4j (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Apr 2021 16:56:39 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 79B7A13584D;
+        Thu, 15 Apr 2021 16:56:15 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=vEKeL6M/B6avOuaBzuuJpdbQs5k=; b=rmI7bl
-        QVEwgdOMaToWQyYnKpM4J+nSBd3JNDUw5L4u04NEocMyXEV7B6WIW8H/jw2phXRn
-        XywJ9iM4/Qpwx1iq0TRjikJwxM1a6JyKa9lCvaIx6DhvrihAeJFKGyOAJUTEI/0x
-        yU2723ybirGtTSitWoEo5RmCiXbizsuRcbHmg=
+        :content-type:content-transfer-encoding; s=sasl; bh=Ud6ShG4NRNXd
+        qSMCNpZtheo0Nbk=; b=ssQyXvVpj26Wpnu7CyMCsnjQIea+1cQPTM2f5nGBDJje
+        FeLejzve4ALGbOIgJm8Kk5UxXhn/mm+oe0DtNkQSawm7S55ZNc0DC4JievjQS/oC
+        1ZWSr1FwptxLuLy/XHEVyxt9tumk9z8xqlW3odOozVVGA0OYQrz6E8EmywufnY4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=FpHyEY0CBtsphC4XnTmheBW9Fhz4BSlm
-        7muwR7JzADlWsyYSASic0IDeMaVN4G6xQwWL87o++YeHyGZPGY/ynTXBBOruhnrS
-        IIgSxZmNMmvnvvjpQlniXDDZFilFkm5ER5g1M8AHfPFG/+JWwgs36+kxxua0rlE9
-        wSMvWMFaYdc=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9C4D8123B23;
-        Thu, 15 Apr 2021 16:50:35 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=V2MsK/
+        8lz+vmNcVw/qWFvmeZvlBag8sH4jGms0sCTsGrhfXxWYt/3flbaPqORb4THzExgx
+        CdulTy9tvV67oXkVLZrNUddcHWxaUMkM3qzMd44JccPQAZt298YUDgcuoq9epeDa
+        RRTHERe5g06dNhiRscv6B9J3srqbJj5tFBCCU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 72FC813584C;
+        Thu, 15 Apr 2021 16:56:15 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E73C0123B22;
-        Thu, 15 Apr 2021 16:50:32 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9AF5D13584B;
+        Thu, 15 Apr 2021 16:56:11 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Ed Maste <emaste@freebsd.org>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Albert Cui <albertqcui@gmail.com>,
-        git mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH v2] hooks: propose project configured hooks
-References: <pull.908.git.1616105016055.gitgitgadget@gmail.com>
-        <pull.908.v2.git.1616723016659.gitgitgadget@gmail.com>
-        <ec031dc8-e100-725b-5f27-d3007c55be87@gmail.com>
-        <CAMbkP-S-9cccMpU4HG0Wurqap-WkTmD2zk50nKd9kJ_oWO__qw@mail.gmail.com>
-        <YGzrfaSC4xd75j2U@camp.crustytoothpaste.net>
-        <87tuoijzsy.fsf@evledraar.gmail.com>
-        <9af3770f-204b-253b-d7f2-c9d5e7cf2fdb@gmail.com>
-        <CAPyFy2A25EApYOivqhD_-sUNpep9c98DXHh0tXLd7T17qQLFLg@mail.gmail.com>
-        <xmqq7dl3qqrh.fsf@gitster.g>
-        <CAPyFy2Bf8t_2HggKG7LMY4u=9qBJ0-+xcx-gCv_kh7KYHg1-hw@mail.gmail.com>
-Date:   Thu, 15 Apr 2021 13:50:30 -0700
-In-Reply-To: <CAPyFy2Bf8t_2HggKG7LMY4u=9qBJ0-+xcx-gCv_kh7KYHg1-hw@mail.gmail.com>
-        (Ed Maste's message of "Thu, 15 Apr 2021 16:37:54 -0400")
-Message-ID: <xmqqh7k7p90p.fsf@gitster.g>
+To:     Matheus Tavares <matheus.bernardino@usp.br>
+Cc:     git@jeffhostetler.com, git@vger.kernel.org
+Subject: Re: [PATCH] pkt-line: do not report packet write errors twice
+References: <xmqqlf9jp9v5.fsf@gitster.g>
+        <20210415204809.1818959-1-matheus.bernardino@usp.br>
+Date:   Thu, 15 Apr 2021 13:56:09 -0700
+In-Reply-To: <20210415204809.1818959-1-matheus.bernardino@usp.br> (Matheus
+        Tavares's message of "Thu, 15 Apr 2021 17:48:09 -0300")
+Message-ID: <xmqqczuvp8ra.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 388F8136-9E2C-11EB-B6A6-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 026F2880-9E2D-11EB-A509-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ed Maste <emaste@freebsd.org> writes:
+Matheus Tavares <matheus.bernardino@usp.br> writes:
 
-> Yes - this is what I'm wondering about. It seems this information is
-> not available other than by inspecting config.mak.uname or reading
-> mailing list archives. I can also look at .travis.yml, .cirrus.yml,
-> and .github/workflows/main.yml to get a sense of the platforms
-> supported by Git's CI. That includes at least various versions or
-> flavours of Linux, macOS, Windows, and FreeBSD. Is it worth putting a
-> sentence or two in README.md about this?
+> On Thu, Apr 15, 2021 at 5:32 PM Junio C Hamano <gitster@pobox.com> wrot=
+e:
+>>
+>> Matheus Tavares Bernardino <matheus.bernardino@usp.br> writes:
+>>
+>> > Nice! :) Maybe we could also avoid the static strings without
+>> > repeating the literals by making `do_packet_write()` receive a `stru=
+ct
+>> > strbuf *err` and save the error message in it? Then the two callers
+>> > can decide whether to pass it to error() or die() accordingly.
+>>
+>> Sorry, but I do not understand what benefit we are trying to gain by
+>> introducing an extra strbuf (which I assume is used to strbuf_add()
+>> the error message into). =C2=A0Wouldn't the caller need two messages a=
+nd
+>> flip between <error,error_errno> vs <die,die_errno> pair?
+>
+> Hmm, I'm not sure I understand what you mean by the two messages, but
+> what I was thinking of is something like this (on top of my original
+> patch):
 
-I do not think that README, which is end-user facing, is a good
-place for that.
+Ah, OK, you meant that you'd make do_packet_write() handle
+die/error_errno itself by manually calling strerror(errno).
 
-If anything, I am inclined to say that developer facing documents
-like SubmittingPatches and CodingGuidelines may be a better place to
-say that things are expected to work on X, Y and Z platforms, but I
-would think it is perfectly OK to start with a new feature that
-works only on, say, macOS, and leave it unimplemented for other
-platforms until somebody who is motivated enough to help fills the
-gap.  So in that sense, "things are expected to work on these
-platforms" may be already stronger than what we want to say.
+One small downside with the approach is that do_packet_write() needs
+to hardcode how die/error_errno() mixes the strerror() with the
+caller supplied error message, but I do not care too strongly either
+way.  My original motivation of suggesting the rewrite was to avoid
+overlong lines in the main flow of the code by replacing the long
+messages with variable names that are much shorter, so as long as
+that is done, I am fine either way.
+
+Thanks.
