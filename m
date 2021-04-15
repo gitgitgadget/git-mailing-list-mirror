@@ -7,117 +7,77 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 700BFC433ED
-	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 19:41:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C47BAC433ED
+	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 19:46:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2DF9461152
-	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 19:41:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8FAB560C3E
+	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 19:46:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234662AbhDOTmT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Apr 2021 15:42:19 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51909 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234226AbhDOTmT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Apr 2021 15:42:19 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A143DC0754;
-        Thu, 15 Apr 2021 15:41:55 -0400 (EDT)
+        id S234940AbhDOTrC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Apr 2021 15:47:02 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:58215 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234659AbhDOTq7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Apr 2021 15:46:59 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 137271233FB;
+        Thu, 15 Apr 2021 15:46:35 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=9hva/vpR0N3dA0uIG8TLydYuC6E=; b=Ybj99Z
-        LClQ2cA26qLQzLLPLqIVAsDznXxSPcNTbwSowPz0rNE+RndOzq/BKvviKP83hI7m
-        BY+i40w0NQBc85F10e0vBn97W5+zaHl74ae3XYaayMgfGK3DYDI9emdvnMnC+tIS
-        9bDJpoHKHhSHn4c/8JkhRBedU1Ad99tk2v9QA=
+        :content-type; s=sasl; bh=ZipsR0whaMe4zIdWjDSdsbZYirI=; b=lJteQD
+        Gfsm/Gma9Tv8BDT85fO0/ILTjZnpWCmyoqoiPjDn+zkS+aXRJB1Xs2lI7jftxI1L
+        taGGKIPs/nuctY5JkVnEk/AwUVH/8eZvl6+9wmBz1CK/ASwqEWeV0NSTKrXgA8r/
+        YceugGxns/SXycXKF2kzfPlQuooWlQW6v/JHg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=g5mDYmu0ht3SvPyyYnmFe/4ERPEhLW2T
-        X+XvbI9BTEmW6CMIb/V65QC+R94BF8V3K4a/N9V0T1bC4pwMIBEndatwNf+HicGt
-        kcit6wMc/i/grcOtAcldGLRHE5zcKpFc+ZpSKhOjfWB2kW/yvcHvkeSAmea6kD8+
-        E9yjFmVC/xY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 98C4CC0753;
-        Thu, 15 Apr 2021 15:41:55 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=PdyWt9DwCX24ulORaSnMornGSb/PzVbI
+        FylJuvux7i0b+dOgVdJeEjVxq61oyQIttRnkYmG+5CN9ZparHvRQJ4L7Sf1YbhET
+        bovCkt2mB/woFDyyZ5UTtE+WWJzaKsgy0/wOGri1UrHB1Wpu6Ww6XQWsEXa1fBcN
+        FgW5LYo2u80=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0D03C1233FA;
+        Thu, 15 Apr 2021 15:46:35 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 285DEC0752;
-        Thu, 15 Apr 2021 15:41:55 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 475011233F8;
+        Thu, 15 Apr 2021 15:46:32 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Ed Maste <emaste@freebsd.org>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Albert Cui <albertqcui@gmail.com>,
-        Albert Cui via GitGitGadget <gitgitgadget@gmail.com>,
-        git mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH v2] hooks: propose project configured hooks
-References: <pull.908.git.1616105016055.gitgitgadget@gmail.com>
-        <pull.908.v2.git.1616723016659.gitgitgadget@gmail.com>
-        <ec031dc8-e100-725b-5f27-d3007c55be87@gmail.com>
-        <CAMbkP-S-9cccMpU4HG0Wurqap-WkTmD2zk50nKd9kJ_oWO__qw@mail.gmail.com>
-        <YGzrfaSC4xd75j2U@camp.crustytoothpaste.net>
-        <87tuoijzsy.fsf@evledraar.gmail.com>
-        <9af3770f-204b-253b-d7f2-c9d5e7cf2fdb@gmail.com>
-        <CAPyFy2A25EApYOivqhD_-sUNpep9c98DXHh0tXLd7T17qQLFLg@mail.gmail.com>
-Date:   Thu, 15 Apr 2021 12:41:54 -0700
-In-Reply-To: <CAPyFy2A25EApYOivqhD_-sUNpep9c98DXHh0tXLd7T17qQLFLg@mail.gmail.com>
-        (Ed Maste's message of "Thu, 15 Apr 2021 12:52:48 -0400")
-Message-ID: <xmqq7dl3qqrh.fsf@gitster.g>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Why isn't 'jch' based on 'next'?
+References: <YHgDYl3cMx9+Hqa7@generichostname> <xmqqlf9jqucm.fsf@gitster.g>
+Date:   Thu, 15 Apr 2021 12:46:30 -0700
+In-Reply-To: <xmqqlf9jqucm.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+        15 Apr 2021 11:24:25 -0700")
+Message-ID: <xmqq35vrqqjt.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: A22C275C-9E22-11EB-B5B9-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 475A2BF2-9E23-11EB-AB57-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ed Maste <emaste@freebsd.org> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Thu, 18 Mar 2021 at 21:29, brian m. carlson
-> <sandals@crustytoothpaste.net> wrote:
->> > +* Works across Windows/Linux/macOS
->>
->> Git supports other platforms as well.
->
-> In particular, FreeBSD is an example of a platform that is not in the
-> above list, but included in Git's CI. Is there an explicit list of
-> supported platforms (and perhaps a notion of support tiers)?
+> So if we reset 'seen' at 'master' and merge the tip of these topics
+> into it, the tree of the empty commit that is marked with "### match
+> next" marker should match the tree of 'next', or something is still
+> wrong (most likely, a mismerge).  Also, the order topics are merged
+> into 'next' may not be necessarily the order they appear in 'seen'.
+> Every time I rebuild 'seen' from 'master', I have a chance to reorder
+> these topics so that the ones that are expected to graduate sooner
+> come near the bottom.
 
-It is not like there is a Git company who employs developers to
-support certain platforms.  This is the mailing list for the open
-source development community for Git, and Developers come and leave
-over time [*].
+This is so that I can "git checkout seen~40" (or whereever point
+that has all the topics scheduled to be in 'master' and nothing
+else) and run tests, to simulate what happens if these topics
+graduate to 'master'.
 
-The best you can get out of here is: if you find portability issues
-when you tried to make it work on your favorite platform, you can
-raise it here and (1) somebody with more Git experience on the same
-platform may solve it for you, (2) somebody with similar Git
-experience as you do (or less) on the same platform may solve it
-with you, or (3) somebody without acess to the platform may offer to
-help you solve it.  
-
-You cannot reasonably expect more than that from us on this list.
-
-However, major platforms have their own (often binary) packaging
-system that offer Git packaged for their users.  Debian/Ubuntu ship
-their own .deb, Git-for-Windows binary installer is made available
-promptly after we release a new version, macOS folks have Apple Git
-and homebrew or macPorts or whatever (but do not quote me on this; I
-am not an Apple user).  What they do is not under our control, and
-you need to ask them what their support policies, EOL timelines, and
-such.  Some of these packagers lurk around here and may respond, but
-that is you getting lucky ;-)
-
-
-[Footnote]
-
-* You can peek into config.mak.uname to see the list of platforms
-  that have had a working Git some time in the past.  Hopefully most
-  of them are still up-to-date and working, but we wouldn't even
-  know if a minority platform, for which an entry for it was added
-  to the file in the past by some developer who needed a working Git
-  on it, no longer works with the latest version of Git with recent
-  toolchains after the original developer lost interest.
+> By ensuring "### match next" and 'next' matches, even though they
+> came to their trees in different route, I can spot a mismerge that
+> is waiting to happen soon when a topic graduates to 'master'.
