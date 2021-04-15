@@ -4,112 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D4D6FC433ED
-	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 06:37:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C466C433ED
+	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 08:14:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AB0D661139
-	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 06:37:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E5F6D611AB
+	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 08:14:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230359AbhDOGho (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Apr 2021 02:37:44 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:55509 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229503AbhDOGhk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Apr 2021 02:37:40 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 714F0130710;
-        Thu, 15 Apr 2021 02:37:17 -0400 (EDT)
+        id S231599AbhDOIPD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Apr 2021 04:15:03 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56438 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231483AbhDOIPD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Apr 2021 04:15:03 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8B5B9C2F56;
+        Thu, 15 Apr 2021 04:14:39 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=XwZDlzxRpmCEKC0PQoJmqbti7Qk=; b=yEHldB
-        o2PLhJoeDlPYJerOVS1mbebTFaEVZ6vJkF5ufkR3rupBG28u8comBvzGnxQgQJvl
-        gVDGyj0Oada05bcouunCoZoj6AwSpMIK0+a9oEjiX7Eh152b7brMY5grc7LL0jUS
-        iGN9sdZkD3INivSiJgV6ls65SERm8yCigZvKg=
+        :subject:references:date:message-id:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=e7a9cIvYr97BOZgsZCXDvyvsR
+        vQ=; b=dmPXoOkwl/cPNNr58CdTnsA3A2TAiAUP/yq9YmQ2oFzltQdCGd3UPr8vC
+        UlN7NzhAQE5pkyETgeP+5ksSOppKlxXGp/FwcD5EK4yBWX5blQvXyZImh/S93t7u
+        MF5/DyfypGIojjtlObs6/lsOdqhEpAdOTGnDP34YafX9kbEis0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=p3JGlkxMODZ8bZMIGq3PqCA0yiNymRZn
-        CVrszxfTaLwz7/TzO7/acKlKktvojdFP4Wo8S3eT234DQ495nQkfNR4hjqKtOIut
-        uSyvXXka+T9/mBtZXjCY78/o79NSrnSBcgS/7CuINAjwXWDtQppCaD4ul+xoz38j
-        T9QW/JXqTNE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4660413070F;
-        Thu, 15 Apr 2021 02:37:17 -0400 (EDT)
+        :subject:references:date:message-id:mime-version:content-type
+        :content-transfer-encoding; q=dns; s=sasl; b=UYcUt6NYomfCFWMyVv7
+        mahxQ1ibw9intoNnwQdKtIqBq+76Lqr2aHWMMx5cwymbz6Gxoelxl4xHa8nW5/56
+        hwu0kGAYnizGISoL0yuuAhNWp0MlYVFTt2Mhi2nqCePxxUKFBAINgubHKOaVwr2l
+        CMW21EcPVcM8hrJEtYkN6f7o=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 83191C2F55;
+        Thu, 15 Apr 2021 04:14:39 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 6192513070E;
-        Thu, 15 Apr 2021 02:37:13 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 08F61C2F54;
+        Thu, 15 Apr 2021 04:14:39 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Patrick Steinhardt <ps@pks.im>
-Subject: Re: What's cooking (draft for #4's issue this month)
-References: <xmqqmtu1zn3o.fsf@gitster.g> <xmqqim4owixg.fsf@gitster.g>
-        <YHeKFILFySGRo2Dc@camp.crustytoothpaste.net>
-Date:   Wed, 14 Apr 2021 23:37:11 -0700
-In-Reply-To: <YHeKFILFySGRo2Dc@camp.crustytoothpaste.net> (brian m. carlson's
-        message of "Thu, 15 Apr 2021 00:34:28 +0000")
-Message-ID: <xmqqr1jcrr3c.fsf@gitster.g>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        git <git@vger.kernel.org>
+Subject: Re: [PATCH 2/2] diff tests: rewrite flakyness-causing test "aid"
+References: <patch-1.1-f0542cd902c-20210413T121930Z-avarab@gmail.com>
+        <cover-0.2-00000000000-20210413T122645Z-avarab@gmail.com>
+        <patch-2.2-c2cb52b6605-20210413T122645Z-avarab@gmail.com>
+        <CAHd-oW4G+7z3UM3qjhPp=2oqOPE4a49fweew0n+gheGtQEy5VA@mail.gmail.com>
+        <87fszu2elw.fsf@evledraar.gmail.com>
+        <CAHd-oW6D7Tmp2TmrmGvXDt-NnT_wxhfr_bn_P_7=ot=m_2eyyA@mail.gmail.com>
+        <874kg92xn0.fsf@evledraar.gmail.com> <xmqqim4pz83e.fsf@gitster.g>
+        <871rbd2u47.fsf@evledraar.gmail.com> <xmqqblahz4hx.fsf@gitster.g>
+        <87y2dl18mg.fsf@evledraar.gmail.com>
+Date:   Thu, 15 Apr 2021 01:14:38 -0700
+Message-ID: <xmqqlf9krmkx.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 034088BC-9DB5-11EB-91EE-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 9F86B176-9DC2-11EB-AFB0-D152C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> On 2021-04-14 at 23:22:19, Junio C Hamano wrote:
->> Here is the (local) test status near the tip of 'seen', relative to
->> the integration result last night.
->> 
->>  * hn/reftable has a preparatory change to use oidread() instead of
->>    hashcpy() in places queued at its tip.  This is essentially a
->>    no-op in the codebase without bc/hash-transition-interop-part-1
->>    and would be a bugfix with that topic.  Please squash it into an
->>    appropriate step in the series when updating the topic in the
->>    future.
->> 
->>  * ab/unexpected-object-type topic has an assertion to catch
->>    semantic conflicts with topics in-flight queued at its tip.  It
->>    would probably be safe to carry it until the topioc is merged to
->>    'master' and then remove it after the dust settles.  Please
->>    squash it into an appropriate step in the series when updating
->>    the topic in the future.
->> 
->>  * The tip of 'seen' passes all the tests locally, except that t5540
->>    fails when compiled with CC=clang (http-push exits with signal
->>    11).  bc/hash-transition-interop-part-1, which is at the tip of
->>    'seen', seems to have this issue standalone.  FYI, here is what
->>    "clang --version" gives me:
->> 
->>     Debian clang version 11.0.1-2
->>     Target: x86_64-pc-linux-gnu
->>     Thread model: posix
->>     InstalledDir: /usr/bin
+> What I am saying is that it's incompatible to have:
 >
-> You should expect a reroll, so feel free to drop this if it breaks
-> things for now and I'll figure out where things are going wrong.
+>  1. Failing tests
+>  2. Not removing scratch files that would otherwise be removed
+>
+> And:
+>
+>  3. Knowing that the rest of the tests pass in the case of #1 without
+>     reading them all.
+>
+> Hence the suggestion that we should use test_when_finished without
+> exception for such patterns.
 
-I actually do appreciate the topic to be in 'seen', as these
-integration exercises tend to serve as an early warning for
-impending messy conflicts I'll need to be worried about.
+I disagree with the above; t4013's "read magic cmd" part is designed
+to be independent from each other; I do not think you need to read
+all of the parts enclosed in << ... EOF to understand that.
 
-I do worry about the memory requirement bloat of the object_id
-structure, as we do need to keep one instance per object in-core,
-but the squashable fix for the reftable topic given by Patrick
-to replace use of hashcpy() with oidread() is still a good idea even
-if we are going to use a different mechanism to keep track of which
-object_id instance uses what hash algorithm, so again I am happy to
-have seen your bc/hash-transition-interop-part-1 topic and had an
-early chance to make it collide with others ;-)
+In short,
+
+ * "test_when_finished 'rm ...'" is a good tool to ensure something
+   gets removed no matter what else happens in the same test.  Since
+   it does not run the clean-up under "-i", it can even be used on
+   files that would be useful in diagnosing failures.  But under
+   "-d", it does clean-up to avoid affecting the following test.
+
+ * $actual was made unique so that even under "-d", a failing test
+   would not negatively affect the subsequent ones.  Removing it for
+   failure cases is actively wrong, so use of test_when_finished,
+   which may be an expedient way to remove artifact that would
+   negatively affect later test pieces, does not apply --- existing
+   code is doing better than test_when_finished can offer, and
+   replacing it with test_when_finished is a regression.
+
+ * And the most important part: the unnecessary removal of $actual
+   was not even part of the "flakyness-causing" bug you started this
+   topic to fix anyway.  We should just remove the regression caused
+   by unnecessary use of test_when_finished and focus on the "don't
+   place the actual output from a brand new test under the file used
+   for the expectation the next time---instead place it under
+   temporary file and call for attention" part, which was the real
+   improvement.
+
+>> Please do not advocate for and encourage newbies who would be
+>> reading the discussion from sidelines to use test_when_finished out
+>> of dogmatic principle without thinking.
+>
+> Is Matheus the newbie here? I think he's contributed enough to form his
+> own opinion.
+
+No, those "reading the discussion from sidelines" are not on To: or
+Cc:, but are eager to learn by reading what is available to git@
+subscribers (including the lore archive).  I do not want those of us
+whose name appear often in the list archive to be sending a wrong
+signal to them.
+
+> In any case, I think it's best to just drop this series.
+
+That is a sad and wrong conclusion.  We should just realize what we
+really wanted to fix in the first place and keep the improvement;
+otherwise all the review time was wasted.
+
+And next time, I'd suggest you not to spend too many bytes on "while
+at it".  Clear and obvious clean-up while the tree and the project
+is otherwise quiescent is very much no-brainer welcome, but
+otherwise...
 
 Thanks.
