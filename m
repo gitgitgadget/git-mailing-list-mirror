@@ -2,118 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E80F3C433ED
-	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 21:26:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F5C9C433B4
+	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 21:41:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A13616100B
-	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 21:26:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EA681610CB
+	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 21:41:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235885AbhDOV02 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Apr 2021 17:26:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45132 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235093AbhDOV01 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Apr 2021 17:26:27 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC771C061574
-        for <git@vger.kernel.org>; Thu, 15 Apr 2021 14:26:03 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id u21so39023860ejo.13
-        for <git@vger.kernel.org>; Thu, 15 Apr 2021 14:26:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=i0EehdW4FJjf3SaXtZtNaZ4RUzQXvnsO4qJq9RrvP3s=;
-        b=uRO76NLj9aj5DU2CKvGF+yZHxuwTI45godIKiIrBzgZZ6zSpLE9DfaLHs/c50aI7QZ
-         tpLPqFXi/XDcrBiVoDjqrcihH4YOkmHRWXhHrw4hN8wWLlmVa8UQb5l17sff1qUomj1Z
-         UR7wcFh9K1KyBY8ooFpPn91j0fPaqjDJFvb/3pEGmnICjyYVgkkjIJQHZaTiJpuFi9Jf
-         EFA7oiPLUnsyJuinOYJdSRrntrNPvsOgti9ivkemXbAxuJoH0HSJYI+q7ExZdIi6jutH
-         KwGLbnzvmjnWJQbhJv/Jngk0zhQ0KvY9XP8IiBtACIeUPZzUWQWDa6sZHpyH3GqPUR9u
-         VDXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=i0EehdW4FJjf3SaXtZtNaZ4RUzQXvnsO4qJq9RrvP3s=;
-        b=N7ZnQfzvia0LxxZmW7/xrH/iVjql6NVlTg249mBUzx8cnbvH6NckNQHcCjGBh3mpV2
-         L6E1c8n7BXTG24MngigCv00RbK9fWsPU+MdNAnpFnLXJkJMwHQbTwTAv+twf9OD18qxV
-         RZctANki7XUVNLNYnttC+6p5ABoysZBs6EHH2BIstJsNHkYM4u7jrIUw1oV3WPmzSakP
-         K8wO//53tNLDYV/Sq3VfcM5Atn2F98YadtNsmHMSF3Oe68mzw0KvYfrabtlnAgtKL9R9
-         ekmDNAD8QlLF8wnwWn486RuaeroCBMOqtL6dmvuPQArffjDkfVozJkVWuI9XVwAVQS6x
-         Js3Q==
-X-Gm-Message-State: AOAM530oqwHv3akusmERZxGz7vLtpY8bETWUqK9m4zx1LHIDg5p57b4j
-        2jKTMLXnxN+HJ/L6re2pS9c=
-X-Google-Smtp-Source: ABdhPJzZiLjuV50Y1YQfTCR8v3HwHytxT8o84efLt76i6zkDFNF+qiokmIrYWkahrlf6pndFYG3xZA==
-X-Received: by 2002:a17:906:170a:: with SMTP id c10mr5352052eje.493.1618521962596;
-        Thu, 15 Apr 2021 14:26:02 -0700 (PDT)
-Received: from szeder.dev (78-131-14-48.pool.digikabel.hu. [78.131.14.48])
-        by smtp.gmail.com with ESMTPSA id q16sm3529031edv.61.2021.04.15.14.26.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Apr 2021 14:26:02 -0700 (PDT)
-Date:   Thu, 15 Apr 2021 23:26:00 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] diff tests: rewrite flakyness-causing test "aid"
-Message-ID: <20210415212600.GN2947267@szeder.dev>
-References: <patch-1.1-f0542cd902c-20210413T121930Z-avarab@gmail.com>
- <cover-0.2-00000000000-20210413T122645Z-avarab@gmail.com>
- <patch-2.2-c2cb52b6605-20210413T122645Z-avarab@gmail.com>
- <CAHd-oW4G+7z3UM3qjhPp=2oqOPE4a49fweew0n+gheGtQEy5VA@mail.gmail.com>
- <87fszu2elw.fsf@evledraar.gmail.com>
- <CAHd-oW6D7Tmp2TmrmGvXDt-NnT_wxhfr_bn_P_7=ot=m_2eyyA@mail.gmail.com>
+        id S236263AbhDOVln (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Apr 2021 17:41:43 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:52878 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236256AbhDOVlj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Apr 2021 17:41:39 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1D1F0135D76;
+        Thu, 15 Apr 2021 17:41:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=NYzXZY7XmxR3
+        gqnH0HRp4OkBo+M=; b=BLPi51dvXJmaTt8y8j4VFKLxlVWYZ2RxDHKFqAJdYzAT
+        4+9x/eQBs1ScAOStWMBgJ61KbquDWNPJNAwK6w+lIl2m2WV6IO6gg256JVF32VLk
+        MKQiNPBoAeWD/HfdvRODjXMB22pvOlq2YHfDv4cJVAgCApP2qgHsRI97wyX6Roc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=iXRyhj
+        u4fkKRlbD+UpKPrbrylh2ioJcRAYcnNemUgT29wT9KQbCYsM+faRD9jvKRA21bJ8
+        sTMZVcSZZ6Yjj95VYTAI72kN6VVOPvxGYwEtDb44k3gRQA6kCmcvsb7XzMAbniEw
+        9Tk43awaeJHIxbYaOl2z7RIGgXBtnsUd+BNmE=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 16351135D75;
+        Thu, 15 Apr 2021 17:41:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 56EE4135D71;
+        Thu, 15 Apr 2021 17:41:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
+Subject: Re: Future structure of submodules and .git/, .git/modules/*
+ organization
+References: <20210408233936.533342-1-emilyshaffer@google.com>
+        <87v98p17im.fsf@evledraar.gmail.com>
+Date:   Thu, 15 Apr 2021 14:41:11 -0700
+In-Reply-To: <87v98p17im.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Wed, 14 Apr 2021 12:32:17 +0200")
+Message-ID: <xmqq8s5jp6o8.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAHd-oW6D7Tmp2TmrmGvXDt-NnT_wxhfr_bn_P_7=ot=m_2eyyA@mail.gmail.com>
+X-Pobox-Relay-ID: 4CC93636-9E33-11EB-B395-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 13, 2021 at 04:55:23PM -0300, Matheus Tavares Bernardino wrote:
-> On Tue, Apr 13, 2021 at 4:01 PM Ævar Arnfjörð Bjarmason
-> > >> diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-> > >> index 67f6411aff9..228ff100c61 100755
-> > >> --- a/t/t4013-diff-various.sh
-> > >> +++ b/t/t4013-diff-various.sh
-> > >> @@ -200,10 +200,12 @@ do
-> > >>         esac
-> > >>         test=$(echo "$label" | sed -e 's|[/ ][/ ]*|_|g')
-> > >>         pfx=$(printf "%04d" $test_count)
-> > >> -       expect="$TEST_DIRECTORY/t4013/diff.$test"
-> > >> +       expect_relative="t4013/diff.$test"
-> > >> +       expect="$TEST_DIRECTORY/$expect_relative"
-> > >>         actual="$pfx-diff.$test"
-> > >>
-> > >>         test_expect_$status "git $cmd # magic is ${magic:-(not used)}" '
-> > >> +               test_when_finished "rm $actual" &&
-> > >
-> > > Nit: before these two patches, "$actual" was only removed when the
-> > > test succeeded. So, in case of failure, the failed output files would
-> > > still be there for debugging. It might be interesting to keep this
-> > > behavior and only remove "$actual" at the end of the test.
-> >
-> > Either I'm missing something or you are, that's how test_when_finished
-> > works.
-> >
-> > It's skipped under e.g. "--immediate --debug". See b586744a864 (test:
-> > skip clean-up when running under --immediate mode, 2011-06-27)
-> 
-> I was mostly thinking about the `artifacts` zip we get from our CI
-> when a test fails. I find the final trash dir quite useful for some
-> post-mortem analysis, especially to debug WIP tests that only fail
-> occasionally or test failures on OSes I don't have quick access to.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-On Travis CI we run tests with '--immediate' for exactly this reason;
-I don't know why it's done differently on other CI systems, and,
-unfortunately, 'git log --grep=immediate ci/' didn't turn up any
-insights.
+> I very much wish that we could eventually make the use of submodules
+> totally transparent, i.e. (taking the example of git.git):
+>
+>  * You clone, and we just get objects from
+>    https://github.com/cr-marcstevens/sha1collisiondetection.git too
+>
+>  * The fact that we have:
+>
+>    160000 commit 855827c583bc30645ba427885caa40c5b81764d2  sha1collisio=
+ndetection
+> ...
+
+I am afraid that the story is not that simple (I wish it were).
+
+There are at last two opposing ways submodules are to be used.  The
+original motivation was to borrow an external project as part of
+your project, and the way we use SHA1DC is fairly close to it (but
+not quite).  In the context of such a usage
+
+	git commit -m "message" --recurse-submodules
+
+would often not be an appropriate operation.  A message that is
+suitable in the context of the entire project would not be in the
+context of the project that is bound to your project as a submodule,
+and for your changes to be reusable by the folks who own the borrowed
+project to make sense, your change should be defensible on its own,
+"it helps this project that happens to use you as a submodule" by
+itself is not all that convincing.
+
+The other way submodule often gets used is to artificially split a
+logically single project into many subdirectories and make them into
+separate repositories, the top-level project binding them as
+submodules.  An submodule in such an arrangement may not even make
+sense as a standalone project---this pattern was only brought into
+usage because without the more recent inventions like lazy/partial
+clones and sparse checkouts, large projects did not fit within a
+single repository.
+
+With such an arrangement, of course it makes perfect sense for
+things like
+
+	git commit -m "message" --recurse-submodules
+	git grep --recurse-submodules
+
+to work as if you are working inside a single repository, by
+definition.  You are splitting a logically single project into
+multiple submodules as a workaround, and then still wanting to
+treat them as a single project, after all.
+
+Supporting those who want to use "collection of submodules as if it
+were a single monolithic project" well is a worthy goal, but I do
+not think it is healthy to assume that is the only use and forget
+about use cases that would benefit from a clear boundary at
+submodules (e.g. not sharing commit log message, a change at the
+toplevel project may consist of multiple changes at the submoudle
+level, etc.).
+
+Thanks.
 
