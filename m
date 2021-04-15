@@ -2,353 +2,237 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-31.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+X-Spam-Status: No, score=-18.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
+	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DDFB6C433ED
-	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 21:20:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B61A0C433B4
+	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 21:25:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A5D4560E0C
-	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 21:20:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9728F60FDB
+	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 21:25:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235871AbhDOVUw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Apr 2021 17:20:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43920 "EHLO
+        id S235922AbhDOVZe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Apr 2021 17:25:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234959AbhDOVUv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Apr 2021 17:20:51 -0400
-Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0C16C061574
-        for <git@vger.kernel.org>; Thu, 15 Apr 2021 14:20:26 -0700 (PDT)
-Received: by mail-yb1-xb4a.google.com with SMTP id i6so3818291ybk.2
-        for <git@vger.kernel.org>; Thu, 15 Apr 2021 14:20:26 -0700 (PDT)
+        with ESMTP id S235900AbhDOVZa (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Apr 2021 17:25:30 -0400
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B58E1C061574
+        for <git@vger.kernel.org>; Thu, 15 Apr 2021 14:25:06 -0700 (PDT)
+Received: by mail-pl1-x636.google.com with SMTP id j7so12822479plx.2
+        for <git@vger.kernel.org>; Thu, 15 Apr 2021 14:25:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=JIj6Bp6CcjDfFP5uuUPZAoMtJBHDBGRa7NdtpKtcbbA=;
-        b=BsjPnQwznO+x/oh7dyhrXHfOp1a7oy1pEl3NwYvVMXb85tUNtAaGhTN31M9Y/Ui2A0
-         AF5CPUQfqltBECo6cb/Xr02tbzARi8UgMdeIvUOOfYSvrzeBL3x5GaCtOZNc+JWhFQFG
-         qsHIRQ8UBJYecB1p9kbSatJEc4v0o85BPnuuohhTmnSwT46zj7I6dLNpBbSRIwEFRXWb
-         d2vGSzIt9LiysV0IXX3cyDypCXsTSXlMmGD0Sb73HUT6yme0DEda1OOModITHOu6oKPX
-         50zREjJcIMYUosvs3sTDXa+VdTQNNNt7vuCzwLxHNoOoa8Y7FXQ1bHuY/sd0FozLPkMj
-         SQIA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=CEg53zDdNCy5YctuCxzTz6yx53Ibhust2203nf8SjnM=;
+        b=miycVesrPVzjnQ8p+qCCS6W1rATNAYv0Jb58jxhycO4fLsuvTlRLhsGGHY456PISPb
+         gLvRZhDIQuDI5gGigz83qPCZRme/rVeBLeF2yxTV+GSzzgz8stTe95ZvsVbBZGAmEyIZ
+         VZutwjWm9jcU8XlNQyWv1rbMyNxnf1nIvfnCPhYf9qnuyM02nEaaJ5BYBLeP4b/f+w7K
+         r6QBeuyB/seAJlf2UVIL1XMZIQN9glkfIsFEYCacohDkNQil3Edchbmd8yv1yqdQ+CCk
+         GBfKZNs5zPUj0V29PdKHq2/kgLuWFFjtHXC9HUrWapIdgonyf6DGjTypPCtQWfNYnfUa
+         LmKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=JIj6Bp6CcjDfFP5uuUPZAoMtJBHDBGRa7NdtpKtcbbA=;
-        b=QCCr2V60UJAL5wXDDdMngb0qNNucZReFmjdlSZW2JIHyCGKtEr9r1kp0vNYLlS1q1D
-         6K1xcOAt327SbWuyvDFJ2jOCIpiQ0OK4U1wMdYUiVzORT4/bH38LP1mvWOuciQqCJUB0
-         MY68/+Er027XAE+Kp42eQ0uQww1ePJt3NG90ySye0mV7ABh/T2Xavly6wI+sMRbiAoXc
-         fnieJRHESKEtEEnGnaiOipY5iTQ+j5Nvc6IAt0FfdW1LWEkfb/C5dIfCpwPCCC9uADVZ
-         K3oFn+cnGxOm42oz9HpN3B6cKt6uUawJM5EDMJBrBO2MFfCiAWrtn9Mlo93ozSbIpHW7
-         9Bpg==
-X-Gm-Message-State: AOAM531w92+kalZkTHFr5VO6/N+c9fvTUGrknkdMmUA7V0vxWO4PSGaL
-        iW6C/6ciEh9tNhzUyAScK+TCtAJey2ptc8BxVIAmHCPFsBis4D3FyNHoQ+M6foaliEUsgtefqSL
-        18T+J+gdCQEvYvd5oIjTUwBkGN7FSfck9uG5hYERme1z6QXr6mg==
-X-Google-Smtp-Source: ABdhPJy8xSdfUTfbjH7LrGwiwiD4pA0Cr8lIZKrMo+GY9M/m8piyGg4vXwjqYU4ctDcVHNcrzhDlSyo=
-X-Received: from librarian2.svl.corp.google.com ([2620:15c:2ce:200:5dbb:61aa:1534:1ce5])
- (user=bga job=sendgmr) by 2002:a25:ef0c:: with SMTP id g12mr7051570ybd.235.1618521626190;
- Thu, 15 Apr 2021 14:20:26 -0700 (PDT)
-Date:   Thu, 15 Apr 2021 14:20:17 -0700
-Message-Id: <20210415212017.1407303-1-bga@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.31.1.368.gbe11c130af-goog
-Subject: [PATCH] object-info: support for retrieving object info
-From:   Bruno Albuquerque <bga@google.com>
-To:     git@vger.kernel.org
-Cc:     Bruno Albuquerque <bga@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=CEg53zDdNCy5YctuCxzTz6yx53Ibhust2203nf8SjnM=;
+        b=jIl+5hAvmEiYTlrKT6VDBYRByoSpWBTJw0SMBq794kpAVXqVZMH1VquOmIqkmxGGb3
+         tLSVjRfrrlWOoHkvaqGGINozvQFOnW2WHayNwvliPiMY1RlbZOssuqGohe0V1VquU+5Q
+         maglhI3X0rXhj2P85262XfJBpTXlEDlEJXd5BA1Z6hj1FHP+OACHNJ8KDzkXxE56d517
+         ejhOYlmuKH643R2v7mhYQthzTIT2Ub7irsuk8mFTgQn8ayCzeDqMwjddQSDYtXBwSZgp
+         DaPpU59MoY/fDmHM+tNHJH+JSQSsq5UVgnKuNgExy8qDbc5RF051q0pcnKIAAGKQiEsH
+         D+IQ==
+X-Gm-Message-State: AOAM530kc4zTA6cs1cKpXHaAi+nfnUOYr4d2C3krv9cH+F0asT3znGlF
+        +0O6RkVN4hvm99gBDjJP2L5eQP0xc9/coA==
+X-Google-Smtp-Source: ABdhPJznlpMsGKvC3pwBYxNqNLMm3p4sTQmBWAipcdLKMT7ou90N4oIpZyV9WnN7yarmGjZaEiga/g==
+X-Received: by 2002:a17:902:ce85:b029:eb:46e1:2da2 with SMTP id f5-20020a170902ce85b02900eb46e12da2mr6021752plg.38.1618521906060;
+        Thu, 15 Apr 2021 14:25:06 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:0:fe63:cb36:e487:f45e])
+        by smtp.gmail.com with ESMTPSA id 18sm3007746pgn.82.2021.04.15.14.25.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Apr 2021 14:25:05 -0700 (PDT)
+Date:   Thu, 15 Apr 2021 14:25:01 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Future structure of submodules and .git/, .git/modules/*
+ organization
+Message-ID: <YHivLSiJmZ0VtKs3@google.com>
+References: <20210408233936.533342-1-emilyshaffer@google.com>
+ <87v98p17im.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87v98p17im.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sometimes it is useful to get information of an object without having to
-download it completely.
+On Wed, Apr 14, 2021 at 12:32:17PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> On Fri, Apr 09 2021, Emily Shaffer wrote:
+> 
+> > I'm hoping to work on some other submodule-centric stuff over the coming
+> > months, and it might end up being very useful to be able to tell "am I a
+> > submodule?" and "how do I talk to my superproject?" more generally - so
+> > I'm really open to figuring out a better way than this, if folks have
+> > ideas.
+> >
+> > Patch 1 is a small refactor that we can take or leave - I found
+> > "SCOPE_SUBMODULE" to be pretty ambiguous, especially since it seems to
+> > refer to configs from .gitmodules. Even though I decided that
+> > "superproject" was a better name than "submodule" I still wasn't super
+> > happy with the ambiguity. But we can drop it if folks don't want to
+> > rename.
+> 
+> This is less on your patch, and more on the larger work you're
+> suggesting, but the two are kind of related. Skip to the paragraph
+> starting with "But why" below for the relevance :)
+> 
+> I very much wish that we could eventually make the use of submodules
+> totally transparent, i.e. (taking the example of git.git):
+> 
+>  * You clone, and we just get objects from
+>    https://github.com/cr-marcstevens/sha1collisiondetection.git too
+> 
+>  * The fact that we have:
+> 
+>    160000 commit 855827c583bc30645ba427885caa40c5b81764d2  sha1collisiondetection
+> 
+>    Would become totally invisible to most users unless they run some
+>    gutsy ls-tree/files comand.
+> 
+>    We used to have a full git dir at sha1collisiondetection/.git and all
+>    the UX issues that entailed (e.g. switching to an old commit without
+>    the submodule).
+> 
+>    Now it's a stub and the actual repo is at
+>    .git/modules/sha1collisiondetection/, so we're kind of partially
+>    there.
 
-Add the "object-info" capability that lets the client ask for
-object-related information with their full hexadecimal object names.
+Side note: when I was writing the tests for patch 2 in this series I
+noticed it was still really easy to end up with a full git dir at e.g.
+sha1collisiondetection/.git, if you are trying to create a new repo to
+use as a submodule (easily could be the case when working on a
+"greenfield" project and you're the original author). There is
+definitely a reason that I copied the (IMO) hack from the other
+submodule test suite using the trash directory as a remote for my new
+submodule. ;) I wonder whether I was just doing it wrong, or if we need
+some established flow (maybe with `git submodule` subcommand) to create
+a brand new submodule, not cloned from somewhere, and put its gitdir
+inside of .git/modules?
 
-Only sizes are returned for now.
+>  * I would think that the next (but big) logical step would be to use
+>    some combination of delta islands, upcoming sparse indexes etc. to
+>    actually share the object stores of the parent and submodule.
 
-Signed-off-by: Bruno Albuquerque <bga@google.com>
----
- Documentation/technical/protocol-v2.txt |  31 +++++++
- Makefile                                |   1 +
- protocol-caps.c                         | 115 ++++++++++++++++++++++++
- protocol-caps.h                         |  10 +++
- serve.c                                 |   2 +
- t/t5701-git-serve.sh                    |  26 ++++++
- 6 files changed, 185 insertions(+)
- create mode 100644 protocol-caps.c
- create mode 100644 protocol-caps.h
+Interesting - I'm trying to think of reasons not to and coming up blank,
+but I also don't have much firsthand experience with the area of the
+code that looks through the object store, so what do I know?
 
-Hello.
+>    Things like "git fsck" which now just punt on COMMIT would need to
+>    become smarter, but e.g. we could repack (or not, with islands)
+>    between parent and submodule.
+> 
+> I would think that this end goal makes more sense than the current
+> status quo of teaching every command that needs to e.g. grep the tree to
+> have a "--recurse-submodules". The distinction would be invisible to the
+> likes of "git-grep".
 
-This is my first git patch so I thought I would introduce myself. I am a
-software engineer at Google and I have been involved with opensource for
-a while (mostly with the Haiku OS project) and now I am working on some
-Git changes that hopefully will be generally usefull.
+Yeah, I see where you're going, I think. Teaching everyone
+--recurse-submodules or to respect the config setting
+(core.recurseSubmodules? whatever it is) is inherently fragile, since it
+relies on human reviewers to remember to chide patch authors to think of
+the submodules use case. Neat.
 
-For this specific change, a clear usage scenario is implementing a VFS
-on top of Git (something like https://github.com/microsoft/VFSForGit) in
-a way that would not require someone to always fully download objects to
-get information about them. Object size is the obvious one and what is
-implemented here.
+> It would mean more complexity in e.g. "git commit", but we can imagine
+> if you wanted a cross-submodule commit it could do those commits
+> recursively, update parent COMMIT entries etc. (and even, optionally,
+> push out the submodule changes). That particular thing being so ad-hoc
+> is a *very* frequent pain point in submodule use.
 
-diff --git a/Documentation/technical/protocol-v2.txt b/Documentation/technical/protocol-v2.txt
-index a7c806a73e..f4ed141774 100644
---- a/Documentation/technical/protocol-v2.txt
-+++ b/Documentation/technical/protocol-v2.txt
-@@ -514,3 +514,34 @@ packet-line, and must not contain non-printable or whitespace characters. The
- current implementation uses trace2 session IDs (see
- link:api-trace2.html[api-trace2] for details), but this may change and users of
- the session ID should not rely on this fact.
-+
-+object-info
-+~~~~~~~~~~~
-+
-+`object-info` is the command to retrieve information about one or more objects.
-+Its main purpose is to allow a client to make decisions based on this
-+information without having to fully fetch objects. Object size is the only
-+information that is currently supported.
-+
-+An `object-info` request takes the following arguments:
-+
-+	size
-+	Requests size information to be returned for each listed object id.
-+
-+	oid <oid>
-+	Indicates to the server an object which the client wants to obtain
-+	information for.
-+
-+The response of `object-info` is a list of the the requested object ids
-+and associated requested information, each separated by a single space.
-+
-+	output = info flush-pkt
-+
-+	info = PKT-LINE(attrs) LF)
-+		*PKT-LINE(obj-info LF)
-+
-+	attrs = attr | attrs SP attrs
-+
-+	attr = "size"
-+
-+	obj-info = obj-id SP obj-size
-diff --git a/Makefile b/Makefile
-index 21c0bf1667..3225e37b63 100644
---- a/Makefile
-+++ b/Makefile
-@@ -961,6 +961,7 @@ LIB_OBJS += progress.o
- LIB_OBJS += promisor-remote.o
- LIB_OBJS += prompt.o
- LIB_OBJS += protocol.o
-+LIB_OBJS += protocol-caps.o
- LIB_OBJS += prune-packed.o
- LIB_OBJS += quote.o
- LIB_OBJS += range-diff.o
-diff --git a/protocol-caps.c b/protocol-caps.c
-new file mode 100644
-index 0000000000..c15e397756
---- /dev/null
-+++ b/protocol-caps.c
-@@ -0,0 +1,115 @@
-+#include "git-compat-util.h"
-+#include "protocol-caps.h"
-+#include "gettext.h"
-+#include "pkt-line.h"
-+#include "strvec.h"
-+#include "hash.h"
-+#include "object.h"
-+#include "object-store.h"
-+#include "string-list.h"
-+#include "strbuf.h"
-+
-+struct requested_info {
-+	unsigned size : 1;
-+};
-+
-+/*
-+ * Parses oids from the given line and collects them in the given
-+ * oid_str_list. Returns 1 if parsing was successful and 0 otherwise.
-+ */
-+static int parse_oid(const char *line, struct string_list *oid_str_list)
-+{
-+	const char *arg;
-+
-+	if (!skip_prefix(line, "oid ", &arg))
-+		return 0;
-+
-+	string_list_append(oid_str_list, arg);
-+
-+	return 1;
-+}
-+
-+/*
-+ * Validates and send requested info back to the client. Any errors detected
-+ * are returned as they are detected.
-+ */
-+static void send_info(struct repository *r, struct packet_writer *writer,
-+		      struct string_list *oid_str_list,
-+		      struct requested_info *info)
-+{
-+	struct string_list_item *item;
-+	struct strbuf send_buffer = STRBUF_INIT;
-+
-+	if (!oid_str_list->nr)
-+		return;
-+
-+	if (info->size)
-+		packet_writer_write(writer, "size");
-+
-+	for_each_string_list_item (item, oid_str_list) {
-+		const char *oid_str = item->string;
-+		struct object_id oid;
-+		unsigned long object_size;
-+
-+		if (get_oid_hex(oid_str, &oid) < 0) {
-+			packet_writer_error(
-+				writer,
-+				"object-info: protocol error, expected to get oid, not '%s'",
-+				oid_str);
-+			continue;
-+		}
-+
-+		strbuf_addstr(&send_buffer, oid_str);
-+
-+		if (info->size) {
-+			if (oid_object_info(r, &oid, &object_size) < 0) {
-+				strbuf_addstr(&send_buffer, " ");
-+			} else {
-+				strbuf_addf(&send_buffer, " %lu", object_size);
-+			}
-+		}
-+
-+		packet_writer_write(writer, "%s",
-+				    strbuf_detach(&send_buffer, NULL));
-+	}
-+}
-+
-+int cap_object_info(struct repository *r, struct strvec *keys,
-+		    struct packet_reader *request)
-+{
-+	struct packet_writer writer;
-+	packet_writer_init(&writer, 1);
-+	int parsed_header;
-+	struct requested_info info;
-+
-+	struct string_list oid_str_list = STRING_LIST_INIT_DUP;
-+
-+	parsed_header = 0;
-+	while (packet_reader_read(request) == PACKET_READ_NORMAL) {
-+		if (!strcmp("size", request->line)) {
-+			info.size = 1;
-+			continue;
-+		}
-+
-+		if (parse_oid(request->line, &oid_str_list))
-+			continue;
-+
-+		packet_writer_error(&writer,
-+				    "object-info: unexpected line: '%s'",
-+				    request->line);
-+	}
-+
-+	if (request->status != PACKET_READ_FLUSH) {
-+		packet_writer_error(
-+			&writer, "object-info: expected flush after arguments");
-+		die(_("object-info: expected flush after arguments"));
-+	}
-+
-+	send_info(r, &writer, &oid_str_list, &info);
-+
-+	string_list_clear(&oid_str_list, 1);
-+
-+	packet_flush(1);
-+
-+	return 0;
-+}
-diff --git a/protocol-caps.h b/protocol-caps.h
-new file mode 100644
-index 0000000000..6351648e37
---- /dev/null
-+++ b/protocol-caps.h
-@@ -0,0 +1,10 @@
-+#ifndef PROTOCOL_CAPS_H
-+#define PROTOCOL_CAPS_H
-+
-+struct repository;
-+struct strvec;
-+struct packet_reader;
-+int cap_object_info(struct repository *r, struct strvec *keys,
-+		    struct packet_reader *request);
-+
-+#endif /* PROTOCOL_CAPS_H */
-\ No newline at end of file
-diff --git a/serve.c b/serve.c
-index ac20c72763..aa8209f147 100644
---- a/serve.c
-+++ b/serve.c
-@@ -5,6 +5,7 @@
- #include "version.h"
- #include "strvec.h"
- #include "ls-refs.h"
-+#include "protocol-caps.h"
- #include "serve.h"
- #include "upload-pack.h"
- 
-@@ -78,6 +79,7 @@ static struct protocol_capability capabilities[] = {
- 	{ "server-option", always_advertise, NULL },
- 	{ "object-format", object_format_advertise, NULL },
- 	{ "session-id", session_id_advertise, NULL },
-+	{ "object-info", always_advertise, cap_object_info },
- };
- 
- static void advertise_capabilities(void)
-diff --git a/t/t5701-git-serve.sh b/t/t5701-git-serve.sh
-index 509f379d49..73e74a9c54 100755
---- a/t/t5701-git-serve.sh
-+++ b/t/t5701-git-serve.sh
-@@ -19,6 +19,7 @@ test_expect_success 'test capability advertisement' '
- 	fetch=shallow
- 	server-option
- 	object-format=$(test_oid algo)
-+	object-info
- 	0000
- 	EOF
- 
-@@ -240,4 +241,29 @@ test_expect_success 'unexpected lines are not allowed in fetch request' '
- 	grep "unexpected line: .this-is-not-a-command." err
- '
- 
-+# Test the basics of object-info
-+#
-+test_expect_success 'basics of object-info' '
-+	test-tool pkt-line pack >in <<-EOF &&
-+	command=object-info
-+	object-format=$(test_oid algo)
-+	0001
-+	size
-+	oid $(git rev-parse two:two.t)
-+	oid $(git rev-parse two:two.t)
-+	0000
-+	EOF
-+
-+	cat >expect <<-EOF &&
-+	size
-+	$(git rev-parse two:two.t) $(wc -c <two.t | xargs)
-+	$(git rev-parse two:two.t) $(wc -c <two.t | xargs)
-+	0000
-+	EOF
-+
-+	test-tool serve-v2 --stateless-rpc <in >out &&
-+	test-tool pkt-line unpack <out >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-2.31.1.368.gbe11c130af-goog
+Yeah, it sounds like you're describing the approach I was hoping to use
+for commit-with-recursion:
 
+ - Note each submodule with staged changes, as well as the superproject
+ - (Optional? but might be nice) Open an editor with all the commit
+   messages separated by scissors, so you can easily refer back to or
+   modify the submodule commit messages while writing the superproject
+   commit message
+ - Generate all the submodule commits with the supplied commit-msgs
+ - Take the commit IDs of all the newly created commits, stage them in
+   the superproject, and generate the superproject commit with the
+   supplied commit-msg
+
+Maybe the editor bit is too much, but Jonathan Nieder at least really
+liked that idea :) But the bit you're talking about - generating the
+submodules first and then staging and committing in the superproject "on
+the fly" - was the approach I was hoping to take.
+
+> 
+> But why am I talking about this here when all you're suggesting is
+> another config level?
+> 
+> Well, I think (but have not carefully thought about) that this
+> CONFIG_SCOPE_GITMODULES is probably a narrow net improvement now. If you
+> set most options in your .git/config to you that's the same logical
+> project, why shouldn't you get your diff setting or whatever because you
+> cd'd to a submodule "in the same project" (from the view of the user).
+> 
+> But I think that for a wider "improve submodules" effort it's worth
+> someone (and right now, that sounds like it's you) thinking about where
+> we're going with the feature. Maybe with some technical doc identifying
+> the most common pain points, what we propose (or could envision) doing
+> about them.
+> 
+> So e.g. in this case, having per-submodule config could be a step
+> forward, but it could also be one more step of walking in a circle.
+> 
+> I.e. don't think any user asked for or wanted to stitch together
+> multiple .git directories into one linked pseudo-checkout, that's
+> ultimately something we're exposing as an implementation detail. If we
+> no longer expose that implementation detail, would we be stuck
+> supporting what's ultimately a workaround feature?
+> 
+> None of that means we shouldn't have that one step forward that solves
+> real problems today.
+> 
+> But I think we should think about the end goal(s) sooner than
+> later.
+
+Yeah, this is actually a good nudge for me. Internally we've got a big
+nice doc explaining all our submodule plans for the next 6-9 months -
+but I should probably get to sharing that with the list ;) I'd say to
+look for it either this Friday or next Friday.
+
+> E.g. in your case, do you *really* want another config level, or
+> is it just the easiest way to get what you actually want, which is for a
+> "git config" in the submodule dir to perhaps consider its .git/config
+> and .git/modules/sha1collisiondetection/config as the same file for the
+> purposes of config parsing? Sans things like the remote URLs etc.
+
+As for this specific case, I want what is in the patch. Using a new
+config file doesn't feel like a compromise to me - I actually would
+prefer users to be able to explicitly choose shared vs. repo-specific
+configs, rather than for we Git devs to implicitly decide which configs
+are fine to share and which aren't. (I could also see having explicitly
+shared or non-shared configs making it easier for wrappers to leverage
+the Git config infrastructure, without mirroring our own "list of
+configs to not share to submodule" for themselves.)
+
+This RFC is mostly here to enable shared hooks, as you might have
+guessed - but even with hooks, it's easy to imagine wanting a blend of
+inherited vs. per-repo hooks. For example, I want to inherit a hook to
+create a Gerrit Change-Id footer in my superproject and all my
+submodules, definitely - but if my superproject is written in C and
+includes a submodule which is in, I dunno, Rust or Zig or Perl or
+whatever people are writing these days, I definitely don't want to try
+and run my C linter from my superproject on my 15 Rust submodules - and
+I definitely don't want to disable it in each one.
+
+ - Emily
