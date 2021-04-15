@@ -2,90 +2,216 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A40AC433B4
-	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 03:51:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B4070C433ED
+	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 04:21:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 296C56128E
-	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 03:51:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 87D3E61131
+	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 04:21:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229736AbhDODva (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Apr 2021 23:51:30 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56495 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229449AbhDODv3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Apr 2021 23:51:29 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DA1E4BAA02;
-        Wed, 14 Apr 2021 23:51:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=/kp2YxRmQEJI1lr4KsjbLDVEa3g=; b=bZoRg8
-        HjlmZzE0GtHZqlzMVYzZOrQvc+oPSTF+MMbfO6I54fNb9AxCs0prdyOkK3dQpH6t
-        eU7tuz3qhK7mnacSf6+GYpNgxGM3mc7O8vzIotoXw4h3Di0PkeMT6wz70LGz4CnW
-        SbmMA4LAR9x48D9Aj8uheTk8OmsjrkRaf5Ass=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=njzJ9fQ1ZIT/R3igyspMP8P2hZ7dJO5F
-        xR8+ura1BXc2mKWJU3+RlS043g6nuWubRsUyG7hLYKRM5LbaQyWgsjIb7PHOEdpJ
-        2D8QWARrTw1leHF8hhUtdqMeQ46AlYgfsf6muYk1UZuQ+TCmGkKU0yH4ZrU/k50n
-        OlzbNmORhs8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C9A13BA9FE;
-        Wed, 14 Apr 2021 23:51:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B331CBA9FC;
-        Wed, 14 Apr 2021 23:51:04 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     rafaeloliveira.cs@gmail.com, git@vger.kernel.org,
-        szeder.dev@gmail.com, peff@peff.net
-Subject: Re: [PATCH 2/2] repack: avoid loosening promisor pack objects in
- partial clones
-References: <20210414191403.4387-3-rafaeloliveira.cs@gmail.com>
-        <20210415010454.4077355-1-jonathantanmy@google.com>
-Date:   Wed, 14 Apr 2021 20:51:02 -0700
-In-Reply-To: <20210415010454.4077355-1-jonathantanmy@google.com> (Jonathan
-        Tan's message of "Wed, 14 Apr 2021 18:04:54 -0700")
-Message-ID: <xmqqo8egurx5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S229853AbhDOEV6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Apr 2021 00:21:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46048 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229525AbhDOEV5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Apr 2021 00:21:57 -0400
+Received: from mail-oo1-xc35.google.com (mail-oo1-xc35.google.com [IPv6:2607:f8b0:4864:20::c35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 155DCC061574
+        for <git@vger.kernel.org>; Wed, 14 Apr 2021 21:21:34 -0700 (PDT)
+Received: by mail-oo1-xc35.google.com with SMTP id c6-20020a4aacc60000b02901e6260b12e2so2608676oon.3
+        for <git@vger.kernel.org>; Wed, 14 Apr 2021 21:21:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=vNE0Wf5FT8GiNNHJTx7M0CcivQlyVBbK9S1VG2Wz9zo=;
+        b=ghbVY4hJxQNIZSLjrXqilW8ImtFZChOLD4HcwNFBOtm9AXHZcLE5CiAcx7aV74JsQ/
+         kzc0RgLGnAF8ZKwkaxk+tP3YhTRRBQh9z9RQGQRgU2M7gkG1pt87TEWuCllQAGpzo+5K
+         q0lY9tTFs/o/yJQuRx4PzAk/pTQ83fUWz2D+llP7cA2wj3ErCcxowFNeVuZkQsg6ofuX
+         a4ZEG4Zqc1B0UhUO7lbKPXCd9JJLoI8q+QWsrQnUA3i0muf/5H+/3kiHKDe4KRGazACF
+         wOTWuw71WbvytmWfcaFVu8jduy4dYF3ZAnlOBJG9dqGdDr7QtSRFRldjW3Tkp/m2swyw
+         GQWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=vNE0Wf5FT8GiNNHJTx7M0CcivQlyVBbK9S1VG2Wz9zo=;
+        b=SjeHKLqTUANZFj/e046gAzlZpUOq/t9Qu1QLC3KdjNoV4eT9bMbfJ7O1+97aY2sVZt
+         jfbXKRZuACCE4t2W8Md5opr2KVSRNba6YrNbaZPjHLDQa343nPqfhZCr87YVHJUW0/QI
+         ZmvkMAq7kS+mOmeTkuSRfkyVF9THJeBUxtSWzMti6Mg34zB/YACN+6npxHRTW/6qb7wJ
+         a3/hZisZ3dqA2HkjRWXu5wICNUPbunB9G2Ll3edC7Mu04tZO5wR3aw1zrCsNACqSyS53
+         5cFBqay1YGY9KCkXxjNC4440inkP7YOxra8EtB3WCJ6TXgUH5RB8ngxfi0upWK228gdL
+         n42w==
+X-Gm-Message-State: AOAM5303rJwv/x1Qoz9cNqFR681UILuuO7DY1+vyAoZrGfWmvbMQDpXt
+        0Sv1IIc5NrMIWGC3XHl2BBfckbnAI7fStLIcLUk=
+X-Google-Smtp-Source: ABdhPJyZ1EdO48i7u+1BVyeuOabvdlB0M4NorD8YxFDqRMT8SF30eA7Ze60U+EMPlqVDsXVthDQgfP1YDPLID0ZgRMA=
+X-Received: by 2002:a4a:d685:: with SMTP id i5mr1160776oot.32.1618460493349;
+ Wed, 14 Apr 2021 21:21:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: CD785C30-9D9D-11EB-A2E8-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+References: <C0E64A34-AAA0-4ECE-8EC5-045815B3413D@tidbits.com>
+In-Reply-To: <C0E64A34-AAA0-4ECE-8EC5-045815B3413D@tidbits.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 14 Apr 2021 21:21:21 -0700
+Message-ID: <CABPp-BFm12ao-M9TVLpde3B7tkuX746t7Qs5V8-hEbshig0ZTw@mail.gmail.com>
+Subject: Re: possible bug due to directory rename detection
+To:     Matt Neuburg <matt@tidbits.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Hi,
 
->> When `-A` and `-d` are used together, besides packing all objects (-A)
->> and removing redundant packs (-d), it also unpack all unreachable
->> objects and deletes them by calling `git pruned-packed`.
+On Wed, Apr 14, 2021 at 5:51 PM Matt Neuburg <matt@tidbits.com> wrote:
 >
-> I still think of these objects as not unreachable, even though I know
-> that pack-objects calls them that (the argument is called
-> --unpack-unreachable). So I would say "it also loosens all objects that
-> were previously packed but did not go into the new pack", but perhaps
-> this is OK too.
+> git version 2.24.3 (Apple Git-128) running under Big Sur on a MacBook Pro=
+.
+>
+> Please see
+>
+>   https://stackoverflow.com/questions/67067686/git-file-level-merge-confl=
+ict-caused-by-git-suggesting-the-file-should-perhap
+>
+> for a complete description of what I saw and why I think it's wrong.
+>
+> However, I will also reproduce the question here (just copy and paste, in=
+ GitHub Markdown format). Notice that I provide a complete `ls` for both br=
+anch tips and their merge-base, and since the problem has to do with a file=
+-level merge conflict that I contend is generated by Git itself due to its =
+overly aggressive directory rename detection behavior, that should be suffi=
+cient to describe the entire matter.
+>
+> As I say in a comment on SO:
+>
+> `git diff --find-renames` from merge-base to master reveals that (as one =
+can also see by eye) the vast preponderance is entirely new stuff in _wordp=
+ressed_ or stuff that was moved (renamed) from top level to _wordpressed_. =
+There is exactly one existing rename where an article was moved from _dan_ =
+to _wordpressed_:
+>
+>     diff --git a/dan/bdd.md b/wordpressed/bdd.md
+>
+> And yet on just that basis alone, Git assumes that this new article that =
+popped up in _dan_ should have popped up in _wordpressed_ instead?? I'm sor=
+ry, I regard this as a Git bug. There needs at the very least to be a way t=
+o turn off this "feature", surely.
 
-Hmph, that is puzzling.  I understand that the operation about
+Yes, it's certainly possible to avoid the conflict.  There's two ways.
+First, you can just tell it to automatically accept the directory
+renames without conflicting:
+  git config merge.directoryRenames true
+Or, you can tell it to never use these detected directory renames:
+  git config merge.directoryRenames false
+The default behavior is equivalent to
+  git config merge.directoryRenames conflict
 
- (1) finding all the objects that are still reachable and send them
-     into a newly created pack, and
+Different people like different behaviors, there's no way to know
+which one _you_ prefer.  I know a lot of people running with
+merge.directoryRenames set to true.  I once saw someone on this list
+who wanted merge.directoryRenames to be false, and it sounds like you
+may be the second.  There are almost certainly more folks.  But the
+fact that people have different preferences and there's no way to tell
+what would be wanted from looking at the history suggests that
+reporting a conflict is the only sane thing to do by default.
 
- (2) among the objects that were previously in the packs, eject
-     those that weren't made into the new pack with the previous
-     point.
+In case it helps, here's the parts from your output that are relevant...
 
-Where did I get it wrong?  If all the reachable ones are dealt with
-with the first point, what is leftover is not reachable, no?
+> Thanks for listening. m.
+
+> To show you the situation, I'm going to show what a `ls` of files and fol=
+ders looks like in each branch. I'll start with `master`:
+>
+> ```
+> $ git status
+> On branch master
+> Your branch is up to date with 'origin/master'.
+> nothing to commit, working tree clean
+>
+> $ ls -1 -R
+...
+> ./dan:
+...doesn't have any files, thus isn't tracked by git...
+>
+> ./wordpressed:
+...snipped lots of other files...
+> bdd.md
 
 
+> Okay, now here is `home-base`:
+>
+> ```
+> $ git switch home-base
+> Switched to branch 'home-base'
+> Your branch is up to date with 'origin/home-base'.
+>
+> $ ls -1 -R
+...
+>
+> ./dan:
+> bdd.md
+> homebase.md
+...So two files in `dan`; bdd.md and homebase.md
+
+
+> Finally, for the sake of completeness, I'm going to show you the merge ba=
+se between `master` and `home-base`:
+
+Yes, it's critical to look at this too.
+
+> ```
+> $ git merge-base master home-base
+> b5d7355fe42eddad96beb200df2cba65381c288a
+> $ git checkout b5d7355fe
+> $ ls -1 -R
+...
+> ./dan:
+> bdd.md
+
+So `dan` only had one file: bdd.md
+
+> Now then. Ask yourself, please, what should happen when I try to merge `m=
+aster` into `home-base`. What are contributions from both sides of the merg=
+e? In my view, Git should realize that in `master` a lot of new files appea=
+red in _wordpressed_, and that some of them are renames of files that used =
+to be at the top level. Plus, of course, in `home-base`, a new file _homeba=
+se.md_ has appeared in _dan_.
+
+Yes, and in addition every single file in the dan/ directory was moved
+into the wordpressed/ directory in master (all one of them in this
+case), while home-base added a new file to the old dan/ directory.
+Often, folks put files together in a directory because they are
+related and want to keep those files together.  When every file in a
+directory is moved to some new directory by one side of history, and
+the other side of history adds a new file to the old directory,
+shouldn't the merge realize that and move the new file to the new
+directory?
+
+Some may say 'no', it shouldn't.  Many people say 'yes', it should.
+How is git supposed to know?  It can't be based solely on looking at
+the history; the relatedness of files in the same directory is some
+kind of semantic meaning that people don't record.  So, by default,
+git marks it as a conflict and asks you to decide like this:
+
+> $ git switch home-base
+> $ git merge master
+> CONFLICT (file location): dan/homebase.md added in HEAD inside a director=
+y that was renamed in master, suggesting it should perhaps be moved to word=
+pressed/homebase.md.
+> Automatic merge failed; fix conflicts and then commit the result.
+
+As I mentioned above, you can set merge.directoryRenames if you want
+to avoid these conflicts, picking whichever of the two options other
+than 'conflict' that you prefer.  Perhaps we should mention the
+merge.directoryRenames config variable when one or more warnings of
+this type are involved in a merge; otherwise it's not that
+discoverable.
+
+
+Hope that helps,
+Elijah
