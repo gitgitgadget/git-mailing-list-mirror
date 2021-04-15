@@ -2,422 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BF9D7C433B4
-	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 00:16:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 39716C433B4
+	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 00:35:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7FA776121E
-	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 00:16:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 02D3E61074
+	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 00:35:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231244AbhDOAQd convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Wed, 14 Apr 2021 20:16:33 -0400
-Received: from beige.elm.relay.mailchannels.net ([23.83.212.16]:21507 "EHLO
-        beige.elm.relay.mailchannels.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229889AbhDOAQa (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 14 Apr 2021 20:16:30 -0400
-X-Sender-Id: dreamhost|x-authsender|tidbits@apeth.net
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-        by relay.mailchannels.net (Postfix) with ESMTP id EDD49217A0
-        for <git@vger.kernel.org>; Thu, 15 Apr 2021 00:16:07 +0000 (UTC)
-Received: from pdx1-sub0-mail-a52.g.dreamhost.com (100-96-133-89.trex.outbound.svc.cluster.local [100.96.133.89])
-        (Authenticated sender: dreamhost)
-        by relay.mailchannels.net (Postfix) with ESMTPA id B3532217C8
-        for <git@vger.kernel.org>; Thu, 15 Apr 2021 00:16:05 +0000 (UTC)
-X-Sender-Id: dreamhost|x-authsender|tidbits@apeth.net
-Received: from pdx1-sub0-mail-a52.g.dreamhost.com (pop.dreamhost.com
- [64.90.62.162])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384)
-        by 100.96.133.89 (trex/6.1.1);
-        Thu, 15 Apr 2021 00:16:07 +0000
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|tidbits@apeth.net
-X-MailChannels-Auth-Id: dreamhost
-X-Eight-Rock: 4b32380d4b30a2c0_1618445767811_4195400772
-X-MC-Loop-Signature: 1618445767811:3199818360
-X-MC-Ingress-Time: 1618445767811
-Received: from pdx1-sub0-mail-a52.g.dreamhost.com (localhost [127.0.0.1])
-        by pdx1-sub0-mail-a52.g.dreamhost.com (Postfix) with ESMTP id 6DEFB8952C
-        for <git@vger.kernel.org>; Wed, 14 Apr 2021 17:16:05 -0700 (PDT)
-Received: from [192.168.1.64] (122-58-124-90-vdsl.sparkbb.co.nz [122.58.124.90])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S231487AbhDOAf0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Apr 2021 20:35:26 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:33370 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229738AbhDOAf0 (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 14 Apr 2021 20:35:26 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: tidbits@apeth.net)
-        by pdx1-sub0-mail-a52.g.dreamhost.com (Postfix) with ESMTPSA id C8C328933A
-        for <git@vger.kernel.org>; Wed, 14 Apr 2021 17:16:04 -0700 (PDT)
-X-DH-BACKEND: pdx1-sub0-mail-a52
-From:   Matt Neuburg <matt@tidbits.com>
-Content-Type: text/plain;
-        charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.60.0.2.21\))
-Subject: possible bug due to directory rename detection
-Message-Id: <C0E64A34-AAA0-4ECE-8EC5-045815B3413D@tidbits.com>
-Date:   Thu, 15 Apr 2021 12:17:14 +1200
-To:     git@vger.kernel.org
-X-Mailer: Apple Mail (2.3654.60.0.2.21)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 1AA8160744;
+        Thu, 15 Apr 2021 00:34:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1618446873;
+        bh=96f7nXuClm83feMm1tuPGg+f4ARW6DvgfwfFK096fmQ=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=hWnG6UbOoupysJKYJ+SMoR9ETvsgg2/ErZEWqFDw3DlKlQ+6kRGZ1fK8Zw63fJweJ
+         H2JuCitNA93TXrTLmm+w44nqiDp+14/VOjmA9nO1zQigE/SjHukdFR58YvgEho/LkH
+         RzS14mZWoshXZyxi5UtBMAZ8BcvUHaD1bwyh5HMZkOGB3xFMEkFnje6sbS8OMy8X9M
+         0gYZv2Xnr9lBOyfw5ri4Ffshr4Gf4X8R+14MaUjiXv1oIcWX6lMBqE+szeZ8ZNvGI8
+         aF451oOAGJhyLZ9HKHFCUqpU5TiIZLa14Li8QkJJXjkfw8/Xq3iT1rg+5fr41IdFur
+         /rY8eV2/MBvPaimK/vZ2aNQbZfUmAOdNtgvaotDl7JGwT9YoQTFYjTAgQVDGTdqpDu
+         Ig/MX0NYlMAYFvw01dapdpzEM7qTEAkFd2caSg4jZCBH6pLNC6PQKqD529KOWYV6ET
+         efNbvKg3fy/lZf3wcnzrL5I1ZN8w391c8TeRxj8SMukzGmPEgHF
+Date:   Thu, 15 Apr 2021 00:34:28 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Patrick Steinhardt <ps@pks.im>
+Subject: Re: What's cooking (draft for #4's issue this month)
+Message-ID: <YHeKFILFySGRo2Dc@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Han-Wen Nienhuys <hanwen@google.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Patrick Steinhardt <ps@pks.im>
+References: <xmqqmtu1zn3o.fsf@gitster.g>
+ <xmqqim4owixg.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="oGDBz9SK83wHKuQ0"
+Content-Disposition: inline
+In-Reply-To: <xmqqim4owixg.fsf@gitster.g>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git version 2.24.3 (Apple Git-128) running under Big Sur on a MacBook Pro.
 
-Please see
+--oGDBz9SK83wHKuQ0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-  https://stackoverflow.com/questions/67067686/git-file-level-merge-conflict-caused-by-git-suggesting-the-file-should-perhap 
+On 2021-04-14 at 23:22:19, Junio C Hamano wrote:
+> Here is the (local) test status near the tip of 'seen', relative to
+> the integration result last night.
+>=20
+>  * hn/reftable has a preparatory change to use oidread() instead of
+>    hashcpy() in places queued at its tip.  This is essentially a
+>    no-op in the codebase without bc/hash-transition-interop-part-1
+>    and would be a bugfix with that topic.  Please squash it into an
+>    appropriate step in the series when updating the topic in the
+>    future.
+>=20
+>  * ab/unexpected-object-type topic has an assertion to catch
+>    semantic conflicts with topics in-flight queued at its tip.  It
+>    would probably be safe to carry it until the topioc is merged to
+>    'master' and then remove it after the dust settles.  Please
+>    squash it into an appropriate step in the series when updating
+>    the topic in the future.
+>=20
+>  * The tip of 'seen' passes all the tests locally, except that t5540
+>    fails when compiled with CC=3Dclang (http-push exits with signal
+>    11).  bc/hash-transition-interop-part-1, which is at the tip of
+>    'seen', seems to have this issue standalone.  FYI, here is what
+>    "clang --version" gives me:
+>=20
+>     Debian clang version 11.0.1-2
+>     Target: x86_64-pc-linux-gnu
+>     Thread model: posix
+>     InstalledDir: /usr/bin
 
-for a complete description of what I saw and why I think it's wrong.
+You should expect a reroll, so feel free to drop this if it breaks
+things for now and I'll figure out where things are going wrong.
+--=20
+brian m. carlson (he/him or they/them)
+Houston, Texas, US
 
-However, I will also reproduce the question here (just copy and paste, in GitHub Markdown format). Notice that I provide a complete `ls` for both branch tips and their merge-base, and since the problem has to do with a file-level merge conflict that I contend is generated by Git itself due to its overly aggressive directory rename detection behavior, that should be sufficient to describe the entire matter.
+--oGDBz9SK83wHKuQ0
+Content-Type: application/pgp-signature; name="signature.asc"
 
-As I say in a comment on SO:
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.27 (GNU/Linux)
 
-`git diff --find-renames` from merge-base to master reveals that (as one can also see by eye) the vast preponderance is entirely new stuff in _wordpressed_ or stuff that was moved (renamed) from top level to _wordpressed_. There is exactly one existing rename where an article was moved from _dan_ to _wordpressed_: 
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYHeKEwAKCRB8DEliiIei
+gW3RAQDOGEsn/tMfANP02z7e8IYtpd2o93dWEMO4e4x9gSZQCQD/YqBZHpSNLdiT
+R+15Om9MvqnqLFooG39XaL7guERxag4=
+=JBnN
+-----END PGP SIGNATURE-----
 
-    diff --git a/dan/bdd.md b/wordpressed/bdd.md
-
-And yet on just that basis alone, Git assumes that this new article that popped up in _dan_ should have popped up in _wordpressed_ instead?? I'm sorry, I regard this as a Git bug. There needs at the very least to be a way to turn off this "feature", surely.
-
-Thanks for listening. m.  
-
-========
-
-I've got a Git repo of Markdown articles, where people create pull requests (one per Markdown article) that eventually get merged to `master` and then, working directly on `master`, I move that article into a folder called _wordpressed_ and commit and push to `master`.
-
-And I've got a very old pull request that is still sitting there in a branch called `home-base`, consisting of a file _dan/homebase.md_ which I'm thinking of editing into shape with some more commits and then merging to `master`.
-
-This `home-base` branch is _so_ old that the repo, seen from its point of view, is totally different from how it looks today in `master`. So I thought it might be good to reverse merge `master` into `home-base` just to bring it more up to date and move the merge base up a lot.
-
-But when I try to do that, I get a merge conflict that I can't understand.
-
-----
-
-To show you the situation, I'm going to show what a `ls` of files and folders looks like in each branch. I'll start with `master`:
-
-```
-$ git status
-On branch master
-Your branch is up to date with 'origin/master'.
-nothing to commit, working tree clean
-
-$ ls -1 -R
-README.md
-dan
-instructions.md
-wordpressed
-
-./dan:
-
-./wordpressed:
-AppDelegateRefactor.md
-BareListContentView.md
-CellContentConfiguration.md
-ControlTargetActioniOS14.md
-GetStartedWithPods.md
-MultipleTrailingClosures.md
-StatesAndBackgrounds.md
-Swift52notes1.md
-Swift52notes2.md
-Swift52notes3.md
-UserInteractiveCells.md
-bdd-common-pitfalls.md
-bdd.md
-brantsMenuBar.md
-collectionViewContentConfig.md
-collectionViewLists.md
-collectionViewLists2.md
-collectionViewOutline.md
-debuggingLinks.md
-diffableDataSources.md
-diffableDataSources2.md
-forwardCompatibity.md
-haptics.md
-iOS13deprecations.md
-images
-inAppPurchases.md
-logging.md
-miscSwiftTricks1.md
-miscSwiftTricks2.md
-miscSwiftTricks3.md
-miscSwiftTricks4.md
-multipleSelection.md
-mysteriesOfLayout.md
-newInIOS14.md
-packages.md
-photoPicker.md
-protocolParadox.md
-splitViewControllers.md
-splitViewControllers2.md
-swiftTrickTwoClasses.md
-targetActionRant.md
-typescript-shape-of-things.md
-untappableButton.md
-what-vs-how.md
-xcode12Editing.md
-xcode12testing.md
-xcodeWhereAmI.md
-xcodeWorkInTwoPlaces.md
-
-./wordpressed/images:
-argumentsInScheme.png
-bigFlags.png
-callHierarchy.png
-callersMenu.png
-chooser.png
-config.png
-createdTester.png
-dataOrUrl.png
-ipadportraitoverlay.png
-listOfPepBoys.png
-listWithSectionHeaders.png
-littleFlags.png
-looksLikeADuck.png
-newTester.png
-outlineIndicatorsWrong.png
-outlineIndicatorsWrong2.png
-perfectAfterHack.png
-pickAPeppa.png
-rootOnly.png
-sandboxAccountOnDevice.png
-selfSizingStringDrawer.png
-simpleList.png
-split1.png
-split2.png
-splitViewControllerPadLandscape.png
-tableViewAsChoice.png
-threecolumns.png
-twoPossibilities.png
-twoscreensphone.png
-variableRowHeights.png
-workingOutline.png
-```
-
-As you can see, the main folder is itself mostly empty. All the articles are in _wordpressed_, along with their images which are in _wordpressed/images_.
-
-----
-
-Okay, now here is `home-base`:
-
-```
-$ git switch home-base
-Switched to branch 'home-base'
-Your branch is up to date with 'origin/home-base'.
-
-$ ls -1 -R
-GetStartedWithPods.md
-README.md
-Swift52notes1.md
-Swift52notes2.md
-Swift52notes3.md
-dan
-debuggingLinks.md
-images
-logging.md
-miscSwiftTricks1.md
-miscSwiftTricks2.md
-miscSwiftTricks3.md
-miscSwiftTricks4.md
-packages.md
-wordpressed
-xcode12Editing.md
-xcode12testing.md
-xcodeWhereAmI.md
-xcodeWorkInTwoPlaces.md
-
-./dan:
-bdd.md
-homebase.md
-
-./images:
-chooser.png
-config.png
-split1.png
-split2.png
-
-./wordpressed:
-images
-
-./wordpressed/images:
-```
-
-As you can see, that's a much earlier situation. Nothing had been moved to _wordpressed_ yet. There were a few articles floating around the top level, and the _dan_ folder had two articles, including the one I'm interested in here, _homebase.md_.
-
-----
-
-Finally, for the sake of completeness, I'm going to show you the merge base between `master` and `home-base`:
-
-```
-$ git merge-base master home-base
-b5d7355fe42eddad96beb200df2cba65381c288a
-$ git checkout b5d7355fe
-$ ls -1 -R
-GetStartedWithPods.md
-README.md
-Swift52notes1.md
-Swift52notes2.md
-Swift52notes3.md
-dan
-debuggingLinks.md
-images
-logging.md
-miscSwiftTricks1.md
-miscSwiftTricks2.md
-miscSwiftTricks3.md
-miscSwiftTricks4.md
-packages.md
-wordpressed
-xcode12Editing.md
-xcode12testing.md
-xcodeWhereAmI.md
-xcodeWorkInTwoPlaces.md
-
-./dan:
-bdd.md
-
-./images:
-chooser.png
-config.png
-split1.png
-split2.png
-
-./wordpressed:
-images
-
-./wordpressed/images:
-```
-
-Well, it looks an awful lot like `home-base` looks now, doesn't it? The main difference is that that's before _homebase.md_ appeared in the _dan_ folder.
-
-----
-
-Now then. Ask yourself, please, what should happen when I try to merge `master` into `home-base`. What are contributions from both sides of the merge? In my view, Git should realize that in `master` a lot of new files appeared in _wordpressed_, and that some of them are renames of files that used to be at the top level. Plus, of course, in `home-base`, a new file _homebase.md_ has appeared in _dan_.
-
-Those contributions should not conflict (in my view).
-
-Okay, let's try it.
-
-```
-$ git switch home-base
-$ git merge master
-CONFLICT (file location): dan/homebase.md added in HEAD inside a directory that was renamed in master, suggesting it should perhaps be moved to wordpressed/homebase.md.
-Automatic merge failed; fix conflicts and then commit the result.
-
-$ git status
-On branch home-base
-Your branch is up to date with 'origin/home-base'.
-
-You have unmerged paths.
-  (fix conflicts and run "git commit")
-  (use "git merge --abort" to abort the merge)
-
-Changes to be committed:
-	deleted:    dan/homebase.md
-	new file:   instructions.md
-	new file:   wordpressed/AppDelegateRefactor.md
-	new file:   wordpressed/BareListContentView.md
-	new file:   wordpressed/CellContentConfiguration.md
-	new file:   wordpressed/ControlTargetActioniOS14.md
-	renamed:    GetStartedWithPods.md -> wordpressed/GetStartedWithPods.md
-	new file:   wordpressed/MultipleTrailingClosures.md
-	new file:   wordpressed/StatesAndBackgrounds.md
-	renamed:    Swift52notes1.md -> wordpressed/Swift52notes1.md
-	renamed:    Swift52notes2.md -> wordpressed/Swift52notes2.md
-	renamed:    Swift52notes3.md -> wordpressed/Swift52notes3.md
-	new file:   wordpressed/UserInteractiveCells.md
-	new file:   wordpressed/bdd-common-pitfalls.md
-	renamed:    dan/bdd.md -> wordpressed/bdd.md
-	new file:   wordpressed/brantsMenuBar.md
-	new file:   wordpressed/collectionViewContentConfig.md
-	new file:   wordpressed/collectionViewLists.md
-	new file:   wordpressed/collectionViewLists2.md
-	new file:   wordpressed/collectionViewOutline.md
-	renamed:    debuggingLinks.md -> wordpressed/debuggingLinks.md
-	new file:   wordpressed/diffableDataSources.md
-	new file:   wordpressed/diffableDataSources2.md
-	new file:   wordpressed/forwardCompatibity.md
-	new file:   wordpressed/haptics.md
-	new file:   wordpressed/iOS13deprecations.md
-	new file:   wordpressed/images/argumentsInScheme.png
-	new file:   wordpressed/images/bigFlags.png
-	new file:   wordpressed/images/callHierarchy.png
-	new file:   wordpressed/images/callersMenu.png
-	renamed:    images/chooser.png -> wordpressed/images/chooser.png
-	renamed:    images/config.png -> wordpressed/images/config.png
-	new file:   wordpressed/images/createdTester.png
-	new file:   wordpressed/images/dataOrUrl.png
-	new file:   wordpressed/images/ipadportraitoverlay.png
-	new file:   wordpressed/images/listOfPepBoys.png
-	new file:   wordpressed/images/listWithSectionHeaders.png
-	new file:   wordpressed/images/littleFlags.png
-	new file:   wordpressed/images/looksLikeADuck.png
-	new file:   wordpressed/images/newTester.png
-	new file:   wordpressed/images/outlineIndicatorsWrong.png
-	new file:   wordpressed/images/outlineIndicatorsWrong2.png
-	new file:   wordpressed/images/perfectAfterHack.png
-	new file:   wordpressed/images/pickAPeppa.png
-	new file:   wordpressed/images/rootOnly.png
-	new file:   wordpressed/images/sandboxAccountOnDevice.png
-	new file:   wordpressed/images/selfSizingStringDrawer.png
-	new file:   wordpressed/images/simpleList.png
-	renamed:    images/split1.png -> wordpressed/images/split1.png
-	renamed:    images/split2.png -> wordpressed/images/split2.png
-	new file:   wordpressed/images/splitViewControllerPadLandscape.png
-	new file:   wordpressed/images/tableViewAsChoice.png
-	new file:   wordpressed/images/threecolumns.png
-	new file:   wordpressed/images/twoPossibilities.png
-	new file:   wordpressed/images/twoscreensphone.png
-	new file:   wordpressed/images/variableRowHeights.png
-	new file:   wordpressed/images/workingOutline.png
-	new file:   wordpressed/inAppPurchases.md
-	renamed:    logging.md -> wordpressed/logging.md
-	renamed:    miscSwiftTricks1.md -> wordpressed/miscSwiftTricks1.md
-	renamed:    miscSwiftTricks2.md -> wordpressed/miscSwiftTricks2.md
-	renamed:    miscSwiftTricks3.md -> wordpressed/miscSwiftTricks3.md
-	renamed:    miscSwiftTricks4.md -> wordpressed/miscSwiftTricks4.md
-	new file:   wordpressed/multipleSelection.md
-	new file:   wordpressed/mysteriesOfLayout.md
-	new file:   wordpressed/newInIOS14.md
-	renamed:    packages.md -> wordpressed/packages.md
-	new file:   wordpressed/photoPicker.md
-	new file:   wordpressed/protocolParadox.md
-	new file:   wordpressed/splitViewControllers.md
-	new file:   wordpressed/splitViewControllers2.md
-	new file:   wordpressed/swiftTrickTwoClasses.md
-	new file:   wordpressed/targetActionRant.md
-	new file:   wordpressed/typescript-shape-of-things.md
-	new file:   wordpressed/untappableButton.md
-	new file:   wordpressed/what-vs-how.md
-	renamed:    xcode12Editing.md -> wordpressed/xcode12Editing.md
-	renamed:    xcode12testing.md -> wordpressed/xcode12testing.md
-	renamed:    xcodeWhereAmI.md -> wordpressed/xcodeWhereAmI.md
-	renamed:    xcodeWorkInTwoPlaces.md -> wordpressed/xcodeWorkInTwoPlaces.md
-
-Unmerged paths:
-  (use "git add <file>..." to mark resolution)
-	added by us:     wordpressed/homebase.md 
-```
-
-----
-
-Okay, so that last line is the one I don't understand. What does it mean to say that "added by us" is _wordpressed/homebase.md_? _NO!_ That's not where we added it. We added it in _dan_.
-
-Neither `master` nor `home-base` has a file _wordpressed/homebase.md_. So where is Git getting the idea that there is one??? It seems to have something to do with the same reason why it thinks there is a merge conflict at all:
-
-> _dan/homebase.md_ added in HEAD inside a directory that was renamed in master, suggesting it should perhaps be moved to wordpressed/homebase.md.
-
-So: _What is Git talking about here?_ Why does Git think that _dan/homebase.md_ should be _wordpressed/homebase.md_, on no evidence whatever that I can find? How can I prevent this merge conflict and get Git to be more simplistic about this? Could I perhaps use a different merge strategy? Or how can I simply resolve the conflict in such a way as to say, No, Git, just leave _dan/homebase.md_ alone, please?
-
-Again, apologies for the length of the detail in the question.
-
-========
-
-
---
-matt neuburg, phd = http://www.apeth.net/matt/
-pantes anthropoi tou eidenai oregontai phusei
-Programming iOS 14! https://www.oreilly.com/library/view/programming-ios-14/9781492092162/
-iOS 14 Fundamentals! https://www.oreilly.com/library/view/ios-14-programming/9781492092087/
-RubyFrontier! http://www.apeth.com/RubyFrontierDocs/default.html
-
+--oGDBz9SK83wHKuQ0--
