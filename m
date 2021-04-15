@@ -2,94 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20C14C433B4
-	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 08:55:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6EC3EC433ED
+	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 08:58:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E683361074
-	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 08:55:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 47B12611CD
+	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 08:58:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231909AbhDOI4S (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Apr 2021 04:56:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49382 "EHLO
+        id S231669AbhDOI63 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Apr 2021 04:58:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231533AbhDOI4S (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Apr 2021 04:56:18 -0400
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3F3CC061574
-        for <git@vger.kernel.org>; Thu, 15 Apr 2021 01:55:55 -0700 (PDT)
-Received: by mail-pf1-x435.google.com with SMTP id m11so15619997pfc.11
-        for <git@vger.kernel.org>; Thu, 15 Apr 2021 01:55:55 -0700 (PDT)
+        with ESMTP id S231534AbhDOI62 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Apr 2021 04:58:28 -0400
+Received: from mail-vk1-xa2a.google.com (mail-vk1-xa2a.google.com [IPv6:2607:f8b0:4864:20::a2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 583E9C061574
+        for <git@vger.kernel.org>; Thu, 15 Apr 2021 01:58:05 -0700 (PDT)
+Received: by mail-vk1-xa2a.google.com with SMTP id k12so1689213vkn.7
+        for <git@vger.kernel.org>; Thu, 15 Apr 2021 01:58:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=epHYG4RZJW39odMNlimCDyELivpW/+8QmfwrYYWmMls=;
-        b=EPEVGw9onXWIfgq2WtozrBn3lTY4/m7ApasBseAOrlozzu1hAA2aipEbYrc75KOkZf
-         VEqDjbrGspc5KYevh7NAh8QqderJSAoPjYiTECbSP2ZwnpjFcGuGyFCGVNlcL8Mg1GUD
-         N9HeLoZviJqx3BU4huT+GRUrSDh+BFYdyVtRoxpm6NFFkLPh+YV2MbOwLged3Wa9Oc9R
-         u+nIdQIZkyyELzynvzk37Qg5NOTPMAEmNfu+6ZqnvhcuOrV6b2ZdG7sh1VoSCdOTfysR
-         oLY9yQPDYyqtsH0KxpkcWYu08BWXuzIFFQ5BsBhKX3HIh5EeYEGljvEZ5vMTbBdg2Wt9
-         L7hQ==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=ka/3cRmarexfmehCfM/1T9oyOBYvx0AWPolKPPFIzJY=;
+        b=u+TuXVMVaw4bq5W6JGR4uSJwG8c7AjlryWToyi/74Woe2PIvYILGn3WebGH/obaD2v
+         UvTzs2V+RHwUi3xm+vcVTC1tl/0Pn9KklsYfFSTtYjckucx9DG7RQKGyy8jHTgfaTXI4
+         dnlS8YC8M4sArfVSQqgRXtztZQ6OAONEROM/BlWBsKlS//PD8B5ff6oOhMn+eroyzVkc
+         2uTPODPyl00LabzthdZ4rWhxrCC3gFjvLCyvNRVSPrygjx0XKBCVzOnpz+D7iuJYNuLi
+         P+I5j3SQfz1ZWeX3aUvN3dhT9SXl5oHrfL2+ctw8teJ3iJV2ost0Z3remBLgZw2ygh3d
+         kWRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=epHYG4RZJW39odMNlimCDyELivpW/+8QmfwrYYWmMls=;
-        b=uCMO/v5HQ4RbBG0OkuaxmmBzoF1AKoGum1gSQrXw1e5+BBO+q3SQrRgYTwfVeIwkcY
-         ZbseYkHYff3jNmu14ztzYEKOS/at7AwvfkTucrRhk89IPso+sI1TaXfk/Xim0arMOYQ0
-         YUFrHdEZGfgQkRbyRm9ltMEPiH7i9yvaFfBPe5YYisl0FTc6HZMSxvmQCgwcDMHTNDXi
-         fuvAlUHmWP3AqWLLr9NZQgB9688v7xl8VbJLXQZVN/fOiWLMv0xxRo2lz1Zn6xIbu45l
-         t3iJm/og138+YFkeQ1L/AwRMCrxpv2A5eUlpvD7kVgZ1ZoHU4UgZ692Z0AzMMgX7ZfuX
-         r6ug==
-X-Gm-Message-State: AOAM531hSmqmi4cx7IIaSg3M+zZirmprzy/Kym1gqvUThExmjthhOIW9
-        y/tpWUZJRZD6FZPXCsWOnTs=
-X-Google-Smtp-Source: ABdhPJyarzhwY0lZk/n3tE8iFkxGb5hPYwoEqSRRcUA9q605x6V1ov0F/Xm+ByLGXkAqjbVjNSH3tg==
-X-Received: by 2002:a65:4281:: with SMTP id j1mr2538658pgp.348.1618476955371;
-        Thu, 15 Apr 2021 01:55:55 -0700 (PDT)
-Received: from generichostname ([172.92.165.181])
-        by smtp.gmail.com with ESMTPSA id ch21sm1722205pjb.8.2021.04.15.01.55.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Apr 2021 01:55:54 -0700 (PDT)
-Date:   Thu, 15 Apr 2021 01:55:52 -0700
-From:   Denton Liu <liu.denton@gmail.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 01/15] sha1-file: allow hashing objects literally with
- any algorithm
-Message-ID: <YHf/mPIyHr+S2Fpy@generichostname>
-References: <20210410152140.3525040-1-sandals@crustytoothpaste.net>
- <20210410152140.3525040-2-sandals@crustytoothpaste.net>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=ka/3cRmarexfmehCfM/1T9oyOBYvx0AWPolKPPFIzJY=;
+        b=TlvNrR/okP4sXvVHPSe2RODQdxNuw2vVAMmlMf/HDuqIeixSKYLkPct9Ana1uMl05p
+         fn1azyhYLAUxYQF2/bQ2K4nnE//YD0k/AJQ2BalfPbXm2pZhpvGr3cZmrPIUxNsN5YCI
+         LXfUcFJeIMR3+7zc04dA6yyncdGwtfvCzYx5QkFXdR3cM19gT16VZ7/Na8G/6F6keF3S
+         9QEUTTD3S45NEBgELsHdUNQyaTjQxNnyIuvti1DGSegC3fdcDkGbh/PQHByNQyIKcibK
+         idvshUJVmo3VSATGNxo51rjvsxfiPcZnSCfo7JakooG3ARwHqTMyWtU3MJZh8Y8s4AZO
+         o9GA==
+X-Gm-Message-State: AOAM533BhcooEpdrLdYo8/Q90vTV9KLViPwfxCowt3EQuhsGiVy2O28D
+        vV79jG2mCf7ZGNL50G2y7vfGiTvq2o8wyIt/z5XLgg==
+X-Google-Smtp-Source: ABdhPJyw7301Yr0kunhUvOmQPp+yF1NOSfILKneKMn88qWklIVfC/xuEt1YkTzU84zu4B90gXnZjcWe8NmqG2teSKVc=
+X-Received: by 2002:a1f:2c15:: with SMTP id s21mr964143vks.8.1618477084389;
+ Thu, 15 Apr 2021 01:58:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210410152140.3525040-2-sandals@crustytoothpaste.net>
+References: <pull.847.v5.git.git.1615580397.gitgitgadget@gmail.com>
+ <pull.847.v6.git.git.1618255552.gitgitgadget@gmail.com> <9297b9c363f6d922443d261375759046e303351d.1618255553.git.gitgitgadget@gmail.com>
+ <87a6q2egvy.fsf@evledraar.gmail.com>
+In-Reply-To: <87a6q2egvy.fsf@evledraar.gmail.com>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Thu, 15 Apr 2021 10:57:53 +0200
+Message-ID: <CAFQ2z_NusDzvVUjm7+pyuBc9wosuLD+rUdDwLO=hQbiRTs08PA@mail.gmail.com>
+Subject: Re: [PATCH v6 07/20] reftable: reading/writing blocks
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Josh Steadmon <steadmon@google.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Patrick Steinhardt <ps@pks.im>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi brian,
+On Tue, Apr 13, 2021 at 10:19 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> > Includes a code snippet copied from zlib
+> > [...]
+> > +int ZEXPORT uncompress_return_consumed (
+>
+> Pending the "how is this integrated?" question I had in
+> http://lore.kernel.org/git/87fszuej8y.fsf@evledraar.gmail.com it's a bit
+> odd to have a "compat" we unconditionally compile.
+>
+> Since this is for post-2017 zlib doesn't putting it in top-level
+> compat/* and having a flag to enable it make more sense, and then not
+> renaming the function.
 
-> Subject: [PATCH 01/15] sha1-file: allow hashing objects literally with any algorithm
+Thanks. I've moved this into compat/ for the next version of the series
 
-s/sha1-file/object-file/
+(how should I track this info. Is the email here fine, or do I somehow
+have to work this into the commit message?)
 
-I can see that you've waited a while to send this series ;)
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
 
-On Sat, Apr 10, 2021 at 03:21:26PM +0000, brian m. carlson wrote:
-> In order to perform suitable testing with multiple algorithms and
-> interoperability, we'll need the ability to hash an object with a given
-> algorithm. Introduce this capability for now only for objects which are
-> hashed literally by adding a function which does this and changing a
-> static function to accept an algorithm pointer.
-> 
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> ---
->  object-file.c  | 16 ++++++++++++++--
->  object-store.h |  3 +++
->  2 files changed, 17 insertions(+), 2 deletions(-)
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+
+Registergericht und -nummer: Hamburg, HRB 86891
+
+Sitz der Gesellschaft: Hamburg
+
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
