@@ -2,105 +2,150 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 12BF8C433ED
-	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 20:38:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0632AC433B4
+	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 20:48:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DFF6360E08
-	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 20:38:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B8FDB61029
+	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 20:48:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235622AbhDOUik (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Apr 2021 16:38:40 -0400
-Received: from mail-io1-f42.google.com ([209.85.166.42]:45046 "EHLO
-        mail-io1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235613AbhDOUik (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Apr 2021 16:38:40 -0400
-Received: by mail-io1-f42.google.com with SMTP id p8so4174665iol.11
-        for <git@vger.kernel.org>; Thu, 15 Apr 2021 13:38:16 -0700 (PDT)
+        id S234894AbhDOUsl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Apr 2021 16:48:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36918 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234668AbhDOUsl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Apr 2021 16:48:41 -0400
+Received: from mail-qv1-xf2d.google.com (mail-qv1-xf2d.google.com [IPv6:2607:f8b0:4864:20::f2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43949C061574
+        for <git@vger.kernel.org>; Thu, 15 Apr 2021 13:48:17 -0700 (PDT)
+Received: by mail-qv1-xf2d.google.com with SMTP id d1so841165qvy.11
+        for <git@vger.kernel.org>; Thu, 15 Apr 2021 13:48:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=usp.br; s=usp-google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=fvORqv00yGcXiUzO6m69xMcppphlQ/9b1aq2cSRkk3A=;
+        b=uOhLodDDNjaXopFm2UfXLkTJDFVhrlYXHBjMd8fs5rsYjoW+2AJ8qfWxporppdt2gV
+         HPwsaPANS6ohBJyODyrQjD8lbY640NauzphijW7msfDbmZ4YLJnRCrOtzbvj5eekreXe
+         ZC+94l8uS+B6QST9SpbsG65PXsHaQ1rLbSb4hg/LQeEiGI0ZRkfzVfshrQHzXsJyhpBw
+         LfKyn8ODLfAfPN76lENNEp81A8PC1Q9wqvJSsesN3UF+Ri0AzDuR0avkrdxkWKFxWcah
+         RZ42Kco9t0MaunQKPnrFBxdpCa7dEjE4tWJZHYCcFUCJ8s59ZNYmLeFXBasxtC71EgU4
+         Ru7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=a0I0TNpx5Bi1X0GpB8dv918sg3Uqf0F+PRH0aOBFJCM=;
-        b=CKdYLyUu6dn0QazgXZEkfuM3tzX+pHxbbm0FYU+U1wOCXt4XtoqiQf+3jm3Dor19TL
-         Fsi5aVGoTSCov213cnLZUlWNNJzkFwh/ShHPVkbPc14rD/u2YzsRVgyNdCJychYAHhJ8
-         Ya40Ehil2MFXA6Ss4K3OPg/DWz5ZfK9dIdFKreg17PldMTbeOmK9joSMbrBw9ntbPmzG
-         ZbPt2mVaHOjmAg8eRv140pJvCW3jL1KdKROLHCMb6at7cq6OTKXZ0aAqImu1VB5d4Xe8
-         XkmFYZiYwr3xzY+sj4tZfqpLE/dFB6pDO592DD5jfl8ZoVF1+mz46/7W2FxTNwc6xB0l
-         PnQw==
-X-Gm-Message-State: AOAM5314VjtvCYau0x6Xns/BJ4UqaZMvfv9lRzVB7138zyaFz2n6cScb
-        3sPwUvuCmVRAqnFUxEGnaeWqAauUE/ezGD5jTak=
-X-Google-Smtp-Source: ABdhPJwsuM0GHbtMxaxELkO6yet0KIIvHDWgKmpePAJX73CV45VGF8hoAEOfcfHRZKj94xtHHnGsQcmwoNzxCLA1AqA=
-X-Received: by 2002:a5e:8717:: with SMTP id y23mr761398ioj.111.1618519096500;
- Thu, 15 Apr 2021 13:38:16 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=fvORqv00yGcXiUzO6m69xMcppphlQ/9b1aq2cSRkk3A=;
+        b=CQeTBGe/dNBNbXFa7tmG6r6KKaqVaY4Y5HkAWcbshbAKH5VjDQ7idQHlrTbS75GhWb
+         uXr0F7x+eNgJdXCSwIo3d3n4Ak5ReNEVf5cRIJtJ37tey8SVSqiCtUiK6e0ZO9XKqhPd
+         55cD3kENzsBLlb49QgHL6jDxQyzpOk/1edtj9WJLzkPZiXOS3dhydmwJMkA8pH4heqkb
+         K6659vFJPOaleqfwZGU2XL1gGYu0x3cvWTfvjrmzNw7z9fDlG0b/l1kqyRoJ9Zs7G9BV
+         fy+eDwE0hZfeUPJJm7Tlkh4bBf4pjIi9pSjXe5+gyBqOiL5XUKDBOJZ64NnCjUzGF6nW
+         bjmA==
+X-Gm-Message-State: AOAM532dqHhADMjouvAV3ro+ldPJdkkTss0NAjYxQUgZSmLOFI0t3uYG
+        ILG31y7kK5+pGSfT/sWH04vqxiRl3h8mgg==
+X-Google-Smtp-Source: ABdhPJwjyLmsR9VWgj0NxB1C1ZHLVAfJhJcAcSaxbUGZnJEXgEZnarDRPI+2SW5SPI8TxJM2Qk5Isw==
+X-Received: by 2002:a0c:b303:: with SMTP id s3mr5208898qve.22.1618519696488;
+        Thu, 15 Apr 2021 13:48:16 -0700 (PDT)
+Received: from mango.meuintelbras.local ([177.32.118.149])
+        by smtp.gmail.com with ESMTPSA id d11sm2613855qto.59.2021.04.15.13.48.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Apr 2021 13:48:15 -0700 (PDT)
+From:   Matheus Tavares <matheus.bernardino@usp.br>
+To:     gitster@pobox.com
+Cc:     git@jeffhostetler.com, git@vger.kernel.org
+Subject: Re: [PATCH] pkt-line: do not report packet write errors twice
+Date:   Thu, 15 Apr 2021 17:48:09 -0300
+Message-Id: <20210415204809.1818959-1-matheus.bernardino@usp.br>
+X-Mailer: git-send-email 2.30.1
+In-Reply-To: <xmqqlf9jp9v5.fsf@gitster.g>
+References: <xmqqlf9jp9v5.fsf@gitster.g>
 MIME-Version: 1.0
-References: <pull.908.git.1616105016055.gitgitgadget@gmail.com>
- <pull.908.v2.git.1616723016659.gitgitgadget@gmail.com> <ec031dc8-e100-725b-5f27-d3007c55be87@gmail.com>
- <CAMbkP-S-9cccMpU4HG0Wurqap-WkTmD2zk50nKd9kJ_oWO__qw@mail.gmail.com>
- <YGzrfaSC4xd75j2U@camp.crustytoothpaste.net> <87tuoijzsy.fsf@evledraar.gmail.com>
- <9af3770f-204b-253b-d7f2-c9d5e7cf2fdb@gmail.com> <CAPyFy2A25EApYOivqhD_-sUNpep9c98DXHh0tXLd7T17qQLFLg@mail.gmail.com>
- <xmqq7dl3qqrh.fsf@gitster.g>
-In-Reply-To: <xmqq7dl3qqrh.fsf@gitster.g>
-From:   Ed Maste <emaste@freebsd.org>
-Date:   Thu, 15 Apr 2021 16:37:54 -0400
-Message-ID: <CAPyFy2Bf8t_2HggKG7LMY4u=9qBJ0-+xcx-gCv_kh7KYHg1-hw@mail.gmail.com>
-Subject: Re: [PATCH v2] hooks: propose project configured hooks
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Albert Cui <albertqcui@gmail.com>,
-        git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 15 Apr 2021 at 15:41, Junio C Hamano <gitster@pobox.com> wrote:
+On Thu, Apr 15, 2021 at 5:32 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Ed Maste <emaste@freebsd.org> writes:
+> Matheus Tavares Bernardino <matheus.bernardino@usp.br> writes:
 >
-> > On Thu, 18 Mar 2021 at 21:29, brian m. carlson
-> > <sandals@crustytoothpaste.net> wrote:
-> >> > +* Works across Windows/Linux/macOS
-> >>
-> >> Git supports other platforms as well.
-> >
-> > In particular, FreeBSD is an example of a platform that is not in the
-> > above list, but included in Git's CI. Is there an explicit list of
-> > supported platforms (and perhaps a notion of support tiers)?
+> > Nice! :) Maybe we could also avoid the static strings without
+> > repeating the literals by making `do_packet_write()` receive a `struct
+> > strbuf *err` and save the error message in it? Then the two callers
+> > can decide whether to pass it to error() or die() accordingly.
 >
-> It is not like there is a Git company who employs developers to
-> support certain platforms.  This is the mailing list for the open
-> source development community for Git, and Developers come and leave
-> over time [*].
+> Sorry, but I do not understand what benefit we are trying to gain by
+> introducing an extra strbuf (which I assume is used to strbuf_add()
+> the error message into).  Wouldn't the caller need two messages and
+> flip between <error,error_errno> vs <die,die_errno> pair?
 
-I'm sorry that my query wasn't clear; I have no expectation of Git
-volunteers providing support (in the commercial sense) for any
-particular platform.
+Hmm, I'm not sure I understand what you mean by the two messages, but
+what I was thinking of is something like this (on top of my original
+patch):
 
-What I am interested in is the Git community's expectations around
-platform support, with respect to new features, changes that break one
-or more platforms, and similar. I submitted portability improvements
-for FreeBSD, and certainly expected that if a change introduced a
-regression on one of Linux, Windows, or macOS it would not be
-accepted.
+diff --git a/pkt-line.c b/pkt-line.c
+index 39c9ca4212..98304ce374 100644
+--- a/pkt-line.c
++++ b/pkt-line.c
+@@ -195,16 +195,14 @@ int packet_write_fmt_gently(int fd, const char *fmt, ...)
+ }
 
-> * You can peek into config.mak.uname to see the list of platforms
->   that have had a working Git some time in the past.  Hopefully most
->   of them are still up-to-date and working, but we wouldn't even
->   know if a minority platform, for which an entry for it was added
->   to the file in the past by some developer who needed a working Git
->   on it, no longer works with the latest version of Git with recent
->   toolchains after the original developer lost interest.
+ static int do_packet_write(const int fd_out, const char *buf, size_t size,
+-			   int gentle)
++			   struct strbuf *err)
+ {
+ 	char header[4];
+ 	size_t packet_size;
 
-Yes - this is what I'm wondering about. It seems this information is
-not available other than by inspecting config.mak.uname or reading
-mailing list archives. I can also look at .travis.yml, .cirrus.yml,
-and .github/workflows/main.yml to get a sense of the platforms
-supported by Git's CI. That includes at least various versions or
-flavours of Linux, macOS, Windows, and FreeBSD. Is it worth putting a
-sentence or two in README.md about this?
+ 	if (size > LARGE_PACKET_DATA_MAX) {
+-		if (gentle)
+-			return error(_("packet write failed - data exceeds max packet size"));
+-		else
+-			die(_("packet write failed - data exceeds max packet size"));
++		strbuf_addstr(err, _("packet write failed - data exceeds max packet size"));
++		return -1;
+ 	}
+
+ 	packet_trace(buf, size, 1);
+@@ -221,22 +219,28 @@ static int do_packet_write(const int fd_out, const char *buf, size_t size,
+
+ 	if (write_in_full(fd_out, header, 4) < 0 ||
+ 	    write_in_full(fd_out, buf, size) < 0) {
+-		if (gentle)
+-			return error_errno(_("packet write failed"));
+-		else
+-			die_errno(_("packet write failed"));
++		strbuf_addf(err, _("packet write failed: %s"), strerror(errno));
++		return -1;
+ 	}
+ 	return 0;
+ }
+
+ static int packet_write_gently(const int fd_out, const char *buf, size_t size)
+ {
+-	return do_packet_write(fd_out, buf, size, 1);
++	struct strbuf err = STRBUF_INIT;
++	if (do_packet_write(fd_out, buf, size, &err)) {
++		error("%s", err.buf);
++		strbuf_release(&err);
++		return -1;
++	}
++	return 0;
+ }
+
+ void packet_write(int fd_out, const char *buf, size_t size)
+ {
+-	do_packet_write(fd_out, buf, size, 0);
++	struct strbuf err = STRBUF_INIT;
++	if (do_packet_write(fd_out, buf, size, &err))
++		die("%s", err.buf);
+ }
+
+ void packet_buf_write(struct strbuf *buf, const char *fmt, ...)
+
