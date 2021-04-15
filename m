@@ -2,107 +2,173 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
+X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3831DC433ED
-	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 15:02:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 892A0C433ED
+	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 15:24:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1FE1461184
-	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 15:02:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 647A760FDA
+	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 15:24:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234266AbhDOPC7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Apr 2021 11:02:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45430 "EHLO
+        id S234140AbhDOPZE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Apr 2021 11:25:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50778 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235330AbhDOPA4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Apr 2021 11:00:56 -0400
-Received: from mail-vs1-xe2d.google.com (mail-vs1-xe2d.google.com [IPv6:2607:f8b0:4864:20::e2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03D4DC061756
-        for <git@vger.kernel.org>; Thu, 15 Apr 2021 08:00:33 -0700 (PDT)
-Received: by mail-vs1-xe2d.google.com with SMTP id l11so3829929vsr.10
-        for <git@vger.kernel.org>; Thu, 15 Apr 2021 08:00:32 -0700 (PDT)
+        with ESMTP id S233829AbhDOPZD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Apr 2021 11:25:03 -0400
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 795E7C061574
+        for <git@vger.kernel.org>; Thu, 15 Apr 2021 08:24:38 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id m3so28556317edv.5
+        for <git@vger.kernel.org>; Thu, 15 Apr 2021 08:24:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=qesJpivVWpeD2MA2cN4Ziz6Udykcmvft4U33eY4J5aM=;
-        b=ShPUkodResImEZTNn0Jx2eQqrxAMXEsFsJhahNuFvG+OaX683wVRrQtWT400xoAzDu
-         74/zLw98hO4hp0vijATH1PHjKdaoQiD4JLLm0ke0XO+lHIiXe8LKTOFBQ8FkHLUYPSQK
-         O9TZCtfwK8/Gco8IEfMhbJfYKXBAQgN8ZaY+uK/tbF4Xe1FaMsrYHhu/ii1sMp5lzCSl
-         p4bIVnVv0yzZjsWcd2wnumBRHMhM0E58dL/1Ski5blz+kLqV0vR+cLd1RyFxOCZf9WfX
-         8lB9OHMJ5DCfa1WGbcQEi/lSvhuKLmaiSAErj8xVgxVyRzEabIamNEfKsl3ncEA0bukf
-         1hHg==
+        d=gmail.com; s=20161025;
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=w4CMxt3W+Cm9CzeM7kYJ32vfuhhoWuqmmpsaJ751nCU=;
+        b=h9KfAdUC6CV6o31D6IxQA9URdQFMna2g/bLFOokkOt530rxlCcUrvhEe4P888Hqu2k
+         3b8k6jxu8EzigbrJs+uti4GpgFDsRmhj0/NXb63kPjNHxu51hlRms87MeAW/Aj5znA72
+         y0TXgSMx48/OQLx8I+vBl7f1qafyxGRc3g+ky3LAvMYGU1vh/iPRDdDLaugpLGish0it
+         D0ATIIUOzkE27tOuYeC5qKwqoW+MwMgMlc88GtbpU3lwhhiUGcWUCCi9MJIiAZVP2YNC
+         Nz0mvIhogsi9aFtR9b0QcIBSoio0KqmW6Y0JpVMEu7/d1DvAbEK2SEvLRBvYsj5Rr8tL
+         BYmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=qesJpivVWpeD2MA2cN4Ziz6Udykcmvft4U33eY4J5aM=;
-        b=eFV28lOU6ggU6LVA8is//x78KGP5tmyQavFHsWiDICI/+OtFzx1FBkMaKbF0WaC2qW
-         wnNO2kdPCzySI+JUr162pkRbMf05PAWOwujHi7dLPeHAsjsefXn2WHsUvQ3HilIrr9EJ
-         /5khH+gTR6QeRgXotLlJJJ8xejDN1g/jf49a331X1b2/x5OHANPQpYGttQjmGaw0U62h
-         2jMtoyZt5O6F13Q2UuNky6FthmWd0jX1zj9SXfePriKeMXK54oBlawXbSI4yiozBMkQL
-         YcnKEUAYajBKrtw0W9T7PFwTK+po14q2RSjL5t66BYEo4cPg63Z2Wu72c2s9A1/Myqk1
-         OS5A==
-X-Gm-Message-State: AOAM531I0P69OpU/WbmiWG15NRMsitU8YMM415L7tv+L9Y/iMpSFHZDM
-        iP+XLHgL9TpqPGhAnOAGqGn7M6GEuA8cdkegjC2+4Xs8ABR+3Q==
-X-Google-Smtp-Source: ABdhPJxns8l4UTEIAOzN7OKePDGlWf/uBjmUUpvEaK+CQWslKzTTsZeXNH+sp1JgZer14sntI+VLmPDcqTizL9onqgM=
-X-Received: by 2002:a05:6102:38cb:: with SMTP id k11mr2514165vst.28.1618498832000;
- Thu, 15 Apr 2021 08:00:32 -0700 (PDT)
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=w4CMxt3W+Cm9CzeM7kYJ32vfuhhoWuqmmpsaJ751nCU=;
+        b=YPbgBJ2OMwPm1FdUgDSNIoo9yHi6Fjkz71eA6djHg7egD/g5lIlo4wGIfp8blTaZxE
+         8nvLt3UWn4VSXLKMmjvCl1atnSB9weDOT5qYLHxQmOrhHBmpqQKfCvG0BeFbKMOTIlNm
+         oLqyBRNhwdWl+LFb3d3rdKX2dfXwIGqhUP9ao1RiG8H7fZKx8PFPVEM0SY3oWejPVl+y
+         Ev3xaNL8/tBMBbDgWgmDL6m3i1OwC0K8azJDP3iBv1TRevbq5izZBePAKceQC/EJytrG
+         UeOBCMcpHWWngCzb7sIDiVeGnNyoFpZPI957eoH/dYsCmO51TYxtfdTH8Bvf5Vm1a9aE
+         /QYA==
+X-Gm-Message-State: AOAM532haTbhiXwWUL6cO/hVsMkJLLd9z/KiKQBaRuCFuSX8kyjABMsQ
+        Tcq4WMtYcIHCj/5D/xl2AsA=
+X-Google-Smtp-Source: ABdhPJyV6tgpTOrGAr5EU89rha5p7EDNdcIPqF5USNfdDbuIAGN7wZqxz2tgANxV3arubUXkT/LPOQ==
+X-Received: by 2002:a05:6402:1764:: with SMTP id da4mr4851190edb.154.1618500277250;
+        Thu, 15 Apr 2021 08:24:37 -0700 (PDT)
+Received: from [192.168.1.240] (243.20.198.146.dyn.plus.net. [146.198.20.243])
+        by smtp.gmail.com with ESMTPSA id m14sm2692111edd.63.2021.04.15.08.24.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 15 Apr 2021 08:24:36 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 0/2] rebase: don't override --no-reschedule-failed-exec
+ with config
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <cover.1616411973.git.avarab@gmail.com>
+ <cover-0.3-0000000000-20210409T075713Z-avarab@gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <63774b95-7de2-b160-385b-6c7d99e867ed@gmail.com>
+Date:   Thu, 15 Apr 2021 16:24:30 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.9.0
 MIME-Version: 1.0
-References: <pull.847.v5.git.git.1615580397.gitgitgadget@gmail.com>
- <pull.847.v6.git.git.1618255552.gitgitgadget@gmail.com> <df8003cb9a7d9e017d358251a2d22c0e72454e03.1618255552.git.gitgitgadget@gmail.com>
- <87r1je2up2.fsf@evledraar.gmail.com>
-In-Reply-To: <87r1je2up2.fsf@evledraar.gmail.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Thu, 15 Apr 2021 17:00:20 +0200
-Message-ID: <CAFQ2z_MaqYTWr2haHVF=oiSbYCct+oFpdwD+VtnpKKMFNgvkJg@mail.gmail.com>
-Subject: Re: [PATCH v6 04/20] reftable: utility functions
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Josh Steadmon <steadmon@google.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Patrick Steinhardt <ps@pks.im>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Han-Wen Nienhuys <hanwenn@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <cover-0.3-0000000000-20210409T075713Z-avarab@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 13, 2021 at 3:14 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> I'd think that rather than duplicating magic constants & one thing in
-> dir.h we'd be better off having some leading patches splitting off the
-> relevant parts of object-file.c & dir.h, maybe THAT_NAME_minimal.h?
->
-> Or: why not simply include dir.h and object.h etc? The compiler/linker
-> will discard the unused functions, and if the worry is overuse of
-> git.git functions creeping in I'd think that would be better done via
-> some test/CI job that checks what objects were used.
+Hi Ævar
 
-It was useful to see how much (or how little) of Git I needed to make
-it work, but it has served its purpose, so I followed your suggestion
-to use dir.h and object.h.
+On 09/04/2021 09:01, Ævar Arnfjörð Bjarmason wrote:
+> This fixes a bug where we read config & options when "git rebase -i -x
+> make" starts, and will understand the "--no-reschedule-failed-exec"
+> option, but once a command fails we'll lose track of having had a
+> "--no-reschedule-failed-exec" and will happily re-read the
+> "rebase.rescheduleFailedExec=true" config the user might have.
+> 
+> Thus we'll have config winning over explicit command-line
+> options. This series fixes that bug.
+> 
+> Changes since v1:
+> 
+>   * I forgot how test_config works, and was doing a test_when_finished
+>     "test_unconfig", which isn't needed, duh! Thanks to Phillip Wood
+>     for that & other reviews on this series.
+> 
+>   * There was a discussion about how to add yet another rebase
+>     machinery state file. I think the consensus is "let's just do it
+>     like this", i.e. we could write some tri-state content to the file,
+>     but we'd get into back-compat issues with other git versions.
 
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
+These patches look fine to me now
 
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+Thanks
 
-Registergericht und -nummer: Hamburg, HRB 86891
+Phillip
 
-Sitz der Gesellschaft: Hamburg
-
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+> There was a discussiob about how to manage this whole state (a DB,
+> JSON?) in another thread, let's kick the can of how exactly we store
+> state down the line, and just fix the bug using the existing state
+> saving convention for now.
+> 
+> Ævar Arnfjörð Bjarmason (2):
+>    rebase tests: camel-case rebase.rescheduleFailedExec consistently
+>    rebase: don't override --no-reschedule-failed-exec with config
+> 
+>   Documentation/git-rebase.txt |  8 ++++++++
+>   sequencer.c                  |  5 +++++
+>   t/t3418-rebase-continue.sh   | 27 +++++++++++++++++++++++++--
+>   3 files changed, 38 insertions(+), 2 deletions(-)
+> 
+> Range-diff against v1:
+> 1:  002dc72ee7 = 1:  e0dd2cb82a rebase tests: camel-case rebase.rescheduleFailedExec consistently
+> 2:  330b33e7a8 < -:  ---------- rebase tests: use test_unconfig after test_config
+> 3:  e00300d58d ! 2:  7991160de3 rebase: don't override --no-reschedule-failed-exec with config
+>      @@ Commit message
+>           However the --reschedule-failed-exec option doesn't take effect when
+>           the rebase starts (we'd just create a
+>           ".git/rebase-merge/reschedule-failed-exec" file if it was true). It
+>      -    only takes effect when the exec command fails, and the user wants to
+>      -    run "rebase --continue".
+>      +    only takes effect when the exec command fails, at which point we'll
+>      +    reschedule the failed "exec" command.
+>       
+>      -    At that point we'll have forgotten that we asked for
+>      -    --no-reschedule-failed-exec at the start, and will happily re-read the
+>      -    config.
+>      +    Since we only wrote out the positive
+>      +    ".git/rebase-merge/reschedule-failed-exec" under
+>      +    --reschedule-failed-exec, but nothing with --no-reschedule-failed-exec
+>      +    we'll forget that we asked not to reschedule failed "exec", and would
+>      +    happily re-read the config and see that
+>      +    rebase.rescheduleFailedExec=true is set.
+>       
+>      -    We'll then see that rebase.rescheduleFailedExec=true is set. At that
+>      -    point we have no record of having set --no-reschedule-failed-exec
+>      -    earlier. So the config will effectively override the user having
+>      -    explicitly disabled the option on the command-line.
+>      +    So the config will effectively override the user having explicitly
+>      +    disabled the option on the command-line.
+>       
+>           Even more confusingly: Since rebase accepts different options based on
+>           its state there wasn't even a way to get around this with "rebase
+>      @@ t/t3418-rebase-continue.sh: test_expect_success 'rebase.rescheduleFailedExec onl
+>        
+>       +test_expect_success 'rebase.rescheduleFailedExec=true & --no-reschedule-failed-exec' '
+>       +	test_when_finished "git rebase --abort" &&
+>      -+	test_when_finished "test_unconfig rebase.rescheduleFailedExec" &&
+>       +	test_config rebase.rescheduleFailedExec true &&
+>       +	test_must_fail git rebase -x false --no-reschedule-failed-exec HEAD~2 &&
+>       +	test_must_fail git rebase --continue 2>err &&
+>      @@ t/t3418-rebase-continue.sh: test_expect_success 'rebase.rescheduleFailedExec onl
+>       +test_expect_success 'new rebase.rescheduleFailedExec=true setting in an ongoing rebase is ignored' '
+>       +	test_when_finished "git rebase --abort" &&
+>       +	test_must_fail git rebase -x false HEAD~2 &&
+>      -+	test_when_finished "test_unconfig rebase.rescheduleFailedExec" &&
+>       +	test_config rebase.rescheduleFailedExec true &&
+>       +	test_must_fail git rebase --continue 2>err &&
+>       +	! grep "has been rescheduled" err
+> 
