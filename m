@@ -2,216 +2,186 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B4070C433ED
-	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 04:21:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D1717C433ED
+	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 06:06:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 87D3E61131
-	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 04:21:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A008961464
+	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 06:06:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229853AbhDOEV6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Apr 2021 00:21:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46048 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229525AbhDOEV5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Apr 2021 00:21:57 -0400
-Received: from mail-oo1-xc35.google.com (mail-oo1-xc35.google.com [IPv6:2607:f8b0:4864:20::c35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 155DCC061574
-        for <git@vger.kernel.org>; Wed, 14 Apr 2021 21:21:34 -0700 (PDT)
-Received: by mail-oo1-xc35.google.com with SMTP id c6-20020a4aacc60000b02901e6260b12e2so2608676oon.3
-        for <git@vger.kernel.org>; Wed, 14 Apr 2021 21:21:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=vNE0Wf5FT8GiNNHJTx7M0CcivQlyVBbK9S1VG2Wz9zo=;
-        b=ghbVY4hJxQNIZSLjrXqilW8ImtFZChOLD4HcwNFBOtm9AXHZcLE5CiAcx7aV74JsQ/
-         kzc0RgLGnAF8ZKwkaxk+tP3YhTRRBQh9z9RQGQRgU2M7gkG1pt87TEWuCllQAGpzo+5K
-         q0lY9tTFs/o/yJQuRx4PzAk/pTQ83fUWz2D+llP7cA2wj3ErCcxowFNeVuZkQsg6ofuX
-         a4ZEG4Zqc1B0UhUO7lbKPXCd9JJLoI8q+QWsrQnUA3i0muf/5H+/3kiHKDe4KRGazACF
-         wOTWuw71WbvytmWfcaFVu8jduy4dYF3ZAnlOBJG9dqGdDr7QtSRFRldjW3Tkp/m2swyw
-         GQWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=vNE0Wf5FT8GiNNHJTx7M0CcivQlyVBbK9S1VG2Wz9zo=;
-        b=SjeHKLqTUANZFj/e046gAzlZpUOq/t9Qu1QLC3KdjNoV4eT9bMbfJ7O1+97aY2sVZt
-         jfbXKRZuACCE4t2W8Md5opr2KVSRNba6YrNbaZPjHLDQa343nPqfhZCr87YVHJUW0/QI
-         ZmvkMAq7kS+mOmeTkuSRfkyVF9THJeBUxtSWzMti6Mg34zB/YACN+6npxHRTW/6qb7wJ
-         a3/hZisZ3dqA2HkjRWXu5wICNUPbunB9G2Ll3edC7Mu04tZO5wR3aw1zrCsNACqSyS53
-         5cFBqay1YGY9KCkXxjNC4440inkP7YOxra8EtB3WCJ6TXgUH5RB8ngxfi0upWK228gdL
-         n42w==
-X-Gm-Message-State: AOAM5303rJwv/x1Qoz9cNqFR681UILuuO7DY1+vyAoZrGfWmvbMQDpXt
-        0Sv1IIc5NrMIWGC3XHl2BBfckbnAI7fStLIcLUk=
-X-Google-Smtp-Source: ABdhPJyZ1EdO48i7u+1BVyeuOabvdlB0M4NorD8YxFDqRMT8SF30eA7Ze60U+EMPlqVDsXVthDQgfP1YDPLID0ZgRMA=
-X-Received: by 2002:a4a:d685:: with SMTP id i5mr1160776oot.32.1618460493349;
- Wed, 14 Apr 2021 21:21:33 -0700 (PDT)
+        id S230464AbhDOGGc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Apr 2021 02:06:32 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51866 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229793AbhDOGGa (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Apr 2021 02:06:30 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 16D06BB5C6;
+        Thu, 15 Apr 2021 02:06:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=l3Llsob9oarAMX5+mwTaYOoMfvo=; b=iFTkEg
+        q0FcCvb9oBmmktgSHwk25q5AswPsLrQU/uv6T+UrGm95uCwQsHzK4qipxr72oh5j
+        aDmckaJNerYf9SR9MWldZ1CWoA66o0y3TpFJeavu/zp7okvN2TG43TFHXFOZ2aWL
+        rNVWNVkJg0p96qQSlGBtA443h6FocDkmSTsgU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=xCIJRuHfs33zvhe5MGns1zLlK/JQY53W
+        +wj30KBWLAkUDKplrE78gJ7h0WtyHlgAOe51s33BkEj2+OFy8m5Jp6tnymaGWPmV
+        dTB4hOXp2jLwdZidYgAR/jjkZi87B2cA/4uaM3s+83yx9peEWNPeY1n6QS7xWZy8
+        yqaTRs+GSys=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0EAB5BB5C5;
+        Thu, 15 Apr 2021 02:06:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 41848BB5C4;
+        Thu, 15 Apr 2021 02:06:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org, Raxel Gutierrez <raxelgutierrez09@gmail.com>,
+        mricon@kernel.org, patchwork@lists.ozlabs.org,
+        Taylor Blau <me@ttaylorr.com>,
+        Emily Shaffer <emilyshaffer@google.com>
+Subject: Re: Pain points in Git's patch flow
+References: <YHaIBvl6Mf7ztJB3@google.com>
+Date:   Wed, 14 Apr 2021 23:06:06 -0700
+In-Reply-To: <YHaIBvl6Mf7ztJB3@google.com> (Jonathan Nieder's message of "Tue,
+        13 Apr 2021 23:13:26 -0700")
+Message-ID: <xmqqv98orsj5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <C0E64A34-AAA0-4ECE-8EC5-045815B3413D@tidbits.com>
-In-Reply-To: <C0E64A34-AAA0-4ECE-8EC5-045815B3413D@tidbits.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 14 Apr 2021 21:21:21 -0700
-Message-ID: <CABPp-BFm12ao-M9TVLpde3B7tkuX746t7Qs5V8-hEbshig0ZTw@mail.gmail.com>
-Subject: Re: possible bug due to directory rename detection
-To:     Matt Neuburg <matt@tidbits.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: AAF6300C-9DB0-11EB-BEBB-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-On Wed, Apr 14, 2021 at 5:51 PM Matt Neuburg <matt@tidbits.com> wrote:
->
-> git version 2.24.3 (Apple Git-128) running under Big Sur on a MacBook Pro=
-.
->
-> Please see
->
->   https://stackoverflow.com/questions/67067686/git-file-level-merge-confl=
-ict-caused-by-git-suggesting-the-file-should-perhap
->
-> for a complete description of what I saw and why I think it's wrong.
->
-> However, I will also reproduce the question here (just copy and paste, in=
- GitHub Markdown format). Notice that I provide a complete `ls` for both br=
-anch tips and their merge-base, and since the problem has to do with a file=
--level merge conflict that I contend is generated by Git itself due to its =
-overly aggressive directory rename detection behavior, that should be suffi=
-cient to describe the entire matter.
->
-> As I say in a comment on SO:
->
-> `git diff --find-renames` from merge-base to master reveals that (as one =
-can also see by eye) the vast preponderance is entirely new stuff in _wordp=
-ressed_ or stuff that was moved (renamed) from top level to _wordpressed_. =
-There is exactly one existing rename where an article was moved from _dan_ =
-to _wordpressed_:
->
->     diff --git a/dan/bdd.md b/wordpressed/bdd.md
->
-> And yet on just that basis alone, Git assumes that this new article that =
-popped up in _dan_ should have popped up in _wordpressed_ instead?? I'm sor=
-ry, I regard this as a Git bug. There needs at the very least to be a way t=
-o turn off this "feature", surely.
+> That reminded me that it would be useful preparation to collect
+> descriptions of pain points we are having with our existing patch
+> flow.
 
-Yes, it's certainly possible to avoid the conflict.  There's two ways.
-First, you can just tell it to automatically accept the directory
-renames without conflicting:
-  git config merge.directoryRenames true
-Or, you can tell it to never use these detected directory renames:
-  git config merge.directoryRenames false
-The default behavior is equivalent to
-  git config merge.directoryRenames conflict
+As the maintainer, I want to ensure that what I queue on 'seen' is
+kept reasonably up to date.  Not picking up the latest every time a
+topic is rerolled is OK, but before declaring the topic will hit
+'next' in a few days, it must be (1) the latest and (2) the greatest
+(meaning: what reviewers are happy with).
 
-Different people like different behaviors, there's no way to know
-which one _you_ prefer.  I know a lot of people running with
-merge.directoryRenames set to true.  I once saw someone on this list
-who wanted merge.directoryRenames to be false, and it sounds like you
-may be the second.  There are almost certainly more folks.  But the
-fact that people have different preferences and there's no way to tell
-what would be wanted from looking at the history suggests that
-reporting a conflict is the only sane thing to do by default.
+This requires a few features from any tracking system.  It must be
+able to:
 
-In case it helps, here's the parts from your output that are relevant...
+ - tell which round of patches are in 'seen'.
 
-> Thanks for listening. m.
+ - tell which e-mail messages are the newer round than what is
+   queued, and which ones are the latest round.
 
-> To show you the situation, I'm going to show what a `ls` of files and fol=
-ders looks like in each branch. I'll start with `master`:
->
-> ```
-> $ git status
-> On branch master
-> Your branch is up to date with 'origin/master'.
-> nothing to commit, working tree clean
->
-> $ ls -1 -R
-...
-> ./dan:
-...doesn't have any files, thus isn't tracked by git...
->
-> ./wordpressed:
-...snipped lots of other files...
-> bdd.md
+ - tell which patch have been commented on, and been updated in
+   response.
+
+ - tell which patch have been positively accepted with an Ack or a
+   Reviewed-by, and if a patch in a newer round is identical to an
+   already accepted one (in which case, reviewers would not bother
+   to send "this step still looks good to me").
+
+The system I use for the first two points is to rely on the list
+archive and the mapping from each individual commit made out of a
+patch on the list (implemented as git notes, that records a blob
+with the Message-Id for each commit [*1*]).  So
+
+   $ git log --notes=amlog --no-merges --oneline master..$topic
+
+would give a list of commits with the original Message-ID, and I can
+see which piece of e-mail each commit came from.
+
+The third and fourth are maintained mostly manual, with me keeping
+notes in the draft of "What's cooking" report (which I send out from
+time to time).  Having to notice, pick up and squeeze in Acked-by's
+and Reviewed-by's is quite painful and cumbersome, especially for a
+long series, and the buggy "git rebase -x" does not help, either
+[*2*].
+
+If we run a patchwork instance for our project, the first two could
+be largely automated.  Automation built around Patchwork should be
+able to, or at least should be able to help me to:
+
+ - notice when a new round of an existing topic is posted.
+
+ - fetch the "amlog" notes, together with a copy of daily 'seen', to
+   see if a topic that is queued has an update, and notify me and
+   others when the topic queued is stale [*3*].
+
+ - tie a step in the latest round with a corresponding step in the
+   previous round, and show Ack's and Reviewed-By's that are still
+   valid [*4*].
 
 
-> Okay, now here is `home-base`:
->
-> ```
-> $ git switch home-base
-> Switched to branch 'home-base'
-> Your branch is up to date with 'origin/home-base'.
->
-> $ ls -1 -R
-...
->
-> ./dan:
-> bdd.md
-> homebase.md
-...So two files in `dan`; bdd.md and homebase.md
+[Footnotes]
 
+*1* "git fetch https://github.com/gitster/git +refs/notes/amlog:refs/notes/amlog"
+    should give you a copy of this database.  Then, for example you
+    can ask where a commit came from:
 
-> Finally, for the sake of completeness, I'm going to show you the merge ba=
-se between `master` and `home-base`:
+    $ git show -s --notes=amlog format="%N%s" 61a7660516
+    Message-Id: <pull.1001.git.git.1618254757074.gitgitgadget@gmail.com>
+    reftable: document an alternate cleanup method on Windows
 
-Yes, it's critical to look at this too.
+    Note that this is not a one-to-one mapping.  I may initially
+    apply patches to an inappropriate base and push the integration
+    result out that has it in 'seen', but I may realize that the
+    series needs to be queued on a different commit and rebase the
+    topic the next day.  Both commits before and after such a
+    rebasing have come from the single piece of e-mail, so you can
+    say "this commit came from this message", but it is impossible
+    to expect a single answer to "which commit is the result of this
+    message"---there will be multiple.
 
-> ```
-> $ git merge-base master home-base
-> b5d7355fe42eddad96beb200df2cba65381c288a
-> $ git checkout b5d7355fe
-> $ ls -1 -R
-...
-> ./dan:
-> bdd.md
+    Strictly speaking, when two rounds of the same topic had patches
+    that were unchanged between the iterations in their earliest
+    parts, two pieces of e-mail may convey the same patch, so in the
+    ideal world, it might be more useful to record "this commit came
+    from this and that messges, both of which record an identical
+    patch".  I currently do not do so, though.
 
-So `dan` only had one file: bdd.md
+*2* It would be ideal if "rebase -i -x 'add-trailer -r peff@'" can
+    be used to stop at each commit, run the 'add-trailer -r peff@'
+    script that amends HEAD to add "Reviewed-by: peff@", and
+    continue, while honoring the "notes.rewriteref" configuration
+    variable (in my repository, set to "refs/notes/amlog").  That
+    way, I can queue with "git am", at which time "amlog" gets
+    populated to map each commit to the original message, find
+    Reviewed-by: and do the above rebase, while carrying the message
+    IDs to resulting commits.  Alas, "rebase -i -x" is buggy and
+    loses the notes during this process (doing s/pick/reword/ and
+    manually squeezing Reviewed-by: into the log message is a poor
+    but workable workaround).
+    cf. https://lore.kernel.org/git/xmqq8s6tcuxc.fsf@gitster.g/
 
-> Now then. Ask yourself, please, what should happen when I try to merge `m=
-aster` into `home-base`. What are contributions from both sides of the merg=
-e? In my view, Git should realize that in `master` a lot of new files appea=
-red in _wordpressed_, and that some of them are renames of files that used =
-to be at the top level. Plus, of course, in `home-base`, a new file _homeba=
-se.md_ has appeared in _dan_.
+*3* It is perfectly normal if a topic is left stale, if the newer
+    iteration breaks integration.  So the stale notification going
+    directly to a contributor from an automated system would not
+    help very much, but it needs to come with the reason why it is
+    kept out of 'seen', which must be supplied by human, not by an
+    automation.
 
-Yes, and in addition every single file in the dan/ directory was moved
-into the wordpressed/ directory in master (all one of them in this
-case), while home-base added a new file to the old dan/ directory.
-Often, folks put files together in a directory because they are
-related and want to keep those files together.  When every file in a
-directory is moved to some new directory by one side of history, and
-the other side of history adds a new file to the old directory,
-shouldn't the merge realize that and move the new file to the new
-directory?
+    If an automation around Patchwork can send, instead of "hey,
+    here is an updated series available" notification, a mbox
+    readily usable by "git am -s3c" to me, with Acked-by's and
+    Reviewed-by's already incorporated, that might be ideal (these
+    trailers may have to be filtered/curated to avoid spams,
+    though).
+ 
 
-Some may say 'no', it shouldn't.  Many people say 'yes', it should.
-How is git supposed to know?  It can't be based solely on looking at
-the history; the relatedness of files in the same directory is some
-kind of semantic meaning that people don't record.  So, by default,
-git marks it as a conflict and asks you to decide like this:
-
-> $ git switch home-base
-> $ git merge master
-> CONFLICT (file location): dan/homebase.md added in HEAD inside a director=
-y that was renamed in master, suggesting it should perhaps be moved to word=
-pressed/homebase.md.
-> Automatic merge failed; fix conflicts and then commit the result.
-
-As I mentioned above, you can set merge.directoryRenames if you want
-to avoid these conflicts, picking whichever of the two options other
-than 'conflict' that you prefer.  Perhaps we should mention the
-merge.directoryRenames config variable when one or more warnings of
-this type are involved in a merge; otherwise it's not that
-discoverable.
-
-
-Hope that helps,
-Elijah
+*4* Judging a step in the latest round and the corresponding step in
+    the previous round has not substantially changed may not be
+    easily automatable, and carrying Ack's and Reviewed-by's forward
+    would require human curator of the "patchwork" database.
