@@ -7,147 +7,171 @@ X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB062C433B4
-	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 15:33:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CA7E3C433ED
+	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 15:33:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B2BA861158
-	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 15:33:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A589D61152
+	for <git@archiver.kernel.org>; Thu, 15 Apr 2021 15:33:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233376AbhDOPdg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Apr 2021 11:33:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52638 "EHLO
+        id S233741AbhDOPdt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Apr 2021 11:33:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52700 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233094AbhDOPde (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Apr 2021 11:33:34 -0400
-Received: from mail-il1-x12d.google.com (mail-il1-x12d.google.com [IPv6:2607:f8b0:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA0C4C061574
-        for <git@vger.kernel.org>; Thu, 15 Apr 2021 08:33:10 -0700 (PDT)
-Received: by mail-il1-x12d.google.com with SMTP id r5so12345688ilb.2
-        for <git@vger.kernel.org>; Thu, 15 Apr 2021 08:33:10 -0700 (PDT)
+        with ESMTP id S233363AbhDOPdt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Apr 2021 11:33:49 -0400
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43C64C061574
+        for <git@vger.kernel.org>; Thu, 15 Apr 2021 08:33:26 -0700 (PDT)
+Received: by mail-pj1-x1033.google.com with SMTP id il9-20020a17090b1649b0290114bcb0d6c2so14642823pjb.0
+        for <git@vger.kernel.org>; Thu, 15 Apr 2021 08:33:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=hp104Pq6lV70gnrvnRJ3E/Bi6QVkehhoMefot7jEdZA=;
-        b=GZzGbsmamc4HWp4EqTrDeaTkI5r1VctYtPeiXiFlYldsNN4/PjV4Lh7pbU5anP46kt
-         s6qtAoXZ1SSH0nHahRhOBPGTd788IVkD94JAvPf0i/3+5xss2CeWuK4o8w6mYwdSsF4H
-         ryQKCNKrFbtyCo5G7mlR4tHuXdoLyxRPzfHfrWZU32kZzZIlD6IsJXFjX0RYn/YokA62
-         /Eq/pHKxlo6klvd+2wd+iyodnVvCeFEQSZ9rDjrHOLOzyK/a0mKa1ekOvYoG1ZlhI7Gk
-         iqlkiA6HOR4HZWSbPnfmBrRTi/kHS18Tg5av5lheqm0sSvhg+LQIwlkZZi4b4H9Bu1Xp
-         Jsmg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=zZmYonZNosSeZ7cZrsCtWaPTu+sdATtIOX96L9Uga9g=;
+        b=MvLkc6lfYAgM4BoqEZHrcmLDsKCaQuvsveMnryB0KcrqTO3xondaLjHgaSO34x5pxM
+         h+zB8rx9KW80cEc85KhZRAk8Qjd0tRLhTdZ0XdIomSqO9+m8dtF0gjB5DKgilNznzr9J
+         m2DOyyFzdPyg439oRHal6ys8NHlkKqap+9fYXsEoV10Etm/GwAotgvOqcEpBGmLU4QBq
+         NTZNfBTVc8uLxAZ1dorKAYruDxI+Xvaa8O4eJiQcQIEsYzhvYL3RGobiU684ASgDMheC
+         txq8694vx2fETDkcyO3B8y3y2nmCJvZMs1mWCAf2cfUfbCSN4Cj4dBqp4EFVmX3P5QTF
+         kgQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=hp104Pq6lV70gnrvnRJ3E/Bi6QVkehhoMefot7jEdZA=;
-        b=TAoIhUMfZRUkxQvOz99WCvvcF1/cx96bdvzBlq5wSet/ZMoicHJq0tTU5IpGgA06r4
-         U+F/634H2bj10TZY1XIg1elVjle3TOuai4iDIYbSzuR84qxwyN8DilY7TnJ7YCNDaARQ
-         1wd7RK/o+jrij30ncSUH0rXgYRv+I4QboSzi0zueoFf1h85ll7Kh0ZJcMv6tIkI96nwI
-         RPt2Sm28AlUY6n0JcjTKPWBLzzVJcebGK08cm0V9X5QOdRAZ/lRYvxLhmCCizcx+PlBp
-         0cRcvU6Nlxq+W1oPEEBWVKy06s5R44GnrauRLmXoETGX1/rS5Zg/up4N3r+Ju//B/HuK
-         rsbg==
-X-Gm-Message-State: AOAM531V7/894DhyNtuqgyhw2H8NQBGepUhifqfkp0Ego36mOpTH6e/m
-        XvWHUNfOa3N0ZuvD0+lFufjsVlyBze0hZO7Gby8=
-X-Google-Smtp-Source: ABdhPJx/dFaV269m6xk1mZ2M0dLYD7LUQ2+88FfWPVIy66zxKq8utOZ2OZBTDop0pPpS7UMlN4yDi8pqZ6q0zSdF5+c=
-X-Received: by 2002:a92:d308:: with SMTP id x8mr3213764ila.301.1618500790005;
- Thu, 15 Apr 2021 08:33:10 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=zZmYonZNosSeZ7cZrsCtWaPTu+sdATtIOX96L9Uga9g=;
+        b=bM8C/v/0vXMeir9/vDnIFrWrOARLmB8SSzVpAe4uUSM6w1meFVvBQaQnHvCD0OWKtw
+         01hsolq2yZn3sEaZWpGhH8qvPxHNvv5L2hy88PC7LArQUJ173Ek6x9ZWdZdX9+Zgdmbf
+         6o0izXopSdFFppmiK8oLUm8zOV7yijlG+/E4AsF5cmu6rkMJyDOK/ShBevGIyLbDz//c
+         llrHAf+VO+3U2UuWi0xgBmjhMNxNiA9sIw/O7HMbIdZlzV8urfVF3knMsV+IQj4IrXli
+         i3v4quny6yydMz8DGfhXucbLj5gC9wLi4Ni2FiQjjixO1HFmsoQbnruT8CldJApxjAta
+         nImQ==
+X-Gm-Message-State: AOAM530p7OaB+UqH3Xlw8BkvOre4QGLuuMpXBpCxRo3IL+6vnD6AjxI1
+        oc/tugBEHC1Occ3PYTjGnpE=
+X-Google-Smtp-Source: ABdhPJztCwZ+sFT9npo6jrS63SPzCQy5g5gxyx9IJN3RnAE6HfnjWENds76CeB7blCjbRsYoiBb4aw==
+X-Received: by 2002:a17:902:d305:b029:ea:db56:e7d with SMTP id b5-20020a170902d305b02900eadb560e7dmr4566760plc.66.1618500805840;
+        Thu, 15 Apr 2021 08:33:25 -0700 (PDT)
+Received: from localhost ([2402:800:63b8:e237:6144:daaa:2a78:8b4c])
+        by smtp.gmail.com with ESMTPSA id s5sm2691554pgp.7.2021.04.15.08.33.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Apr 2021 08:33:25 -0700 (PDT)
+Date:   Thu, 15 Apr 2021 22:33:23 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Matthieu Moy <git@matthieu-moy.fr>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 06/16] test-lib functions: add an --annotated-tag option
+ to "test_commit"
+Message-ID: <YHhcwzYstq3i9qT4@danh.dev>
+References: <cover-00.16-00000000000-20210412T110456Z-avarab@gmail.com>
+ <patch-06.16-8d43fdd5865-20210412T110456Z-avarab@gmail.com>
 MIME-Version: 1.0
-References: <pull.913.v8.git.1617975462.gitgitgadget@gmail.com>
- <pull.913.v9.git.1618245568.gitgitgadget@gmail.com> <7f645ec95f48a206311973ee45578ba14ac58b7f.1618245568.git.gitgitgadget@gmail.com>
- <xmqqsg3vb51n.fsf@gitster.g> <CAP8UFD1r2kUaKbjFcRn_FGxz5=hvwY+DHdmPKR61cNdHzBe26A@mail.gmail.com>
- <CAOLTT8TB9UF5z-51pLxdkRUxo5-w2+_U_e1wpDAdzBBmT3Og7w@mail.gmail.com>
- <xmqq35vum1rn.fsf@gitster.g> <CAOLTT8TNK55AprX2tezoX4YjWV31RRyLWc9NJOvidRqqSgBpQQ@mail.gmail.com>
- <xmqqv98oy5bh.fsf@gitster.g>
-In-Reply-To: <xmqqv98oy5bh.fsf@gitster.g>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Thu, 15 Apr 2021 23:32:54 +0800
-Message-ID: <CAOLTT8TVAvk_Hdcd27jHz5wWOR6xEMuCeQvDfu48qVDFPN666A@mail.gmail.com>
-Subject: Re: [PATCH v9 2/2] [GSOC] trailer: add new .cmd config option
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <patch-06.16-8d43fdd5865-20210412T110456Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B44=E6=9C=8815=E6=97=
-=A5=E5=91=A8=E5=9B=9B =E4=B8=8A=E5=8D=884:33=E5=86=99=E9=81=93=EF=BC=9A
->
-> ZheNing Hu <adlternative@gmail.com> writes:
->
-> >> So I am waiting to hear why it is not a misfeature.  If it is not,
-> >> then surely I am fine to keep it for now and add a workaround later,
-> >> but until that happens, I do not think "commit --trailer" can be
-> >> used as a way to allow end-users emulate "-s" for their favorite
-> >> trailer like helped-by, acked-by, etc.
-> >>
-> >
-> > If it is really necessary to solve this "empty execution" in .cmd,
->
-> > Maybe we need to consider two points:
-> > * Do we need a new config flag as you said `[implicitExecution =3D fals=
-e]`
-> > or just drop it? Has anyone been relying on the "empty execution" of
-> > .command before? This may be worthy of concern.
->
-> Yes, if it is useful sometimes to run the .command or .cmd with
-> empty <value> even when nobody asks for it on the command line with
-> a "--trailer=3D<key>:<value>" option, then I agree that the users
-> should be able to choose between running and not running [*].
->
-> > *  Do we need `trailer.<token>.runMode` as Christan said before?
-> > I rejected his this suggestion before, and now I regret it a bit.
->
-> So far, I haven't heard anything that indicates it is a useful
-> behaviour for .command, so my preference is to get rid of the
-> behaviour when we introduce .cmd to deprecate .command; yes, until
-> we get rid of .command, the behaviour between the two would be
-> inconsistent but that is unavoidable when making a bugfix that is
-> backward incompatible.
->
-> When (and only when) anybody finds a credible use case, we can add a
-> mechanism to optionally turn it on (e.g. .runMode).
->
-> That is my thinking right at this moment, but that's of course
-> subject to change when a use case that would be helped by having
-> this extra execution.
->
->
-> [Footnote]
->
-> * Right now, all I know is that not being able to turn it off makes
->   it impossible to use "git commit --trailer" as a more general
->   substitute for "git commit --signoff" without breaking other
->   trailers (e.g. --trim-empty may get rid of the result of the extra
->   execution, but would remove other trailers that can be
->   legitimately empty).  And making it on by default with
->   configuration would mean that even though we designed .cmd as a
->   better version of the .command feature with its misdesign
->   corrected, we'd inherit one misdesign from it, which defeats one
->   third of the point of introducing the .cmd in the first place ;-)
+On 2021-04-12 13:08:55+0200, Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
+>  	git branch B A^0
+> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+> index fa3e3e975fd..a0fcc383d0b 100644
+> --- a/t/test-lib-functions.sh
+> +++ b/t/test-lib-functions.sh
+> @@ -180,6 +180,10 @@ debug () {
+>  #   --no-tag
+>  #	Do not tag the resulting commit, if supplied giving the
+>  #	optional "<tag>" argument is an error.
 
-Perhaps such a modification can meet our temporary needs!
+This comment applied to previous patch, but I think we need this patch
+to justify for optional "<tag>" argument is an error for "--no-tag"
 
-@@ -721,9 +738,10 @@ static void process_command_line_args(struct
-list_head *arg_head,
-        char *cl_separators =3D xstrfmt("=3D%s", separators);
+----8<----
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index a0fcc383d0..ed0a4e5e5d 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -253,6 +253,10 @@ test_commit () {
+ 	    $signoff -m "$1" &&
+ 	case "$tag" in
+ 	none)
++		if test -z "$4"
++		then
++			BUG "<tag> given to test_commit --no-tag"
++		fi
+ 		;;
+ 	light)
+ 		git ${indir:+ -C "$indir"} tag "${4:-$1}"
+----8<----
+> +#   --annotate
+> +#	Create an annotated tag with "--annotate -m <message>". Calls
+> +#	test_tick between making the commit and tag unless --notick is
+> +#	given.
+>  #
+>  # This will commit a file with the given contents and the given commit
+>  # message, and tag the resulting commit with the given tag name.
+> @@ -192,7 +196,7 @@ test_commit () {
+>  	author= &&
+>  	signoff= &&
+>  	indir= &&
+> -	no_tag= &&
+> +	tag=light &&
+>  	while test $# != 0
+>  	do
+>  		case "$1" in
+> @@ -220,7 +224,10 @@ test_commit () {
+>  			shift
+>  			;;
+>  		--no-tag)
+> -			no_tag=yes
+> +			tag=none
+> +			;;
+> +		--annotate)
+> +			tag=annotate
+>  			;;
+>  		*)
+>  			break
+> @@ -244,10 +251,20 @@ test_commit () {
+>  	git ${indir:+ -C "$indir"} commit \
+>  	    ${author:+ --author "$author"} \
+>  	    $signoff -m "$1" &&
+> -	if test -z "$no_tag"
+> -	then
+> +	case "$tag" in
+> +	none)
+> +		;;
+> +	light)
+>  		git ${indir:+ -C "$indir"} tag "${4:-$1}"
+> -	fi
+> +		;;
+> +	annotate)
+> +		if test "$tag$notick" = "annotate"
 
-        /* Add an arg item for each configured trailer with a command */
-        list_for_each(pos, &conf_head) {
-                item =3D list_entry(pos, struct arg_item, list);
--               if (item->conf.cmd || item->conf.command)
-+               if (item->conf.command)
+Perhap I'm missing something, however, I couldn't get the reason for
+inserting "$tag" here. I wonder what wrong with:
 
-I'm so busy today that I probably haven't had time to put this into a
-patch today,
-If this solution is reasonable, I will send a new version of the patch tomo=
-rrow.
-As you said, first solve the misfeature, and we can add [trailer.runMode] l=
-ater.
+	if test -z "$notick"
+	then
+		test_tick
+	fi &&
 
-Thanks, Junio!
---
-ZheNing Hu
+> +		then
+> +			test_tick
+> +		fi &&
+> +		git ${indir:+ -C "$indir"} tag -a -m "$1" "${4:-$1}"
+> +		;;
+> +	esac
+>  }
+>  
+>  # Call test_merge with the arguments "<message> <commit>", where <commit>
+> -- 
+> 2.31.1.634.gb41287a30b0
+> 
+
+-- 
+Danh
