@@ -2,209 +2,143 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72F93C433ED
-	for <git@archiver.kernel.org>; Fri, 16 Apr 2021 21:14:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 95A9AC433ED
+	for <git@archiver.kernel.org>; Fri, 16 Apr 2021 21:22:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 41FCF6101D
-	for <git@archiver.kernel.org>; Fri, 16 Apr 2021 21:14:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 734156023F
+	for <git@archiver.kernel.org>; Fri, 16 Apr 2021 21:22:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235807AbhDPVPU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Apr 2021 17:15:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49138 "EHLO
+        id S1344279AbhDPVXV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Apr 2021 17:23:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235558AbhDPVPU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Apr 2021 17:15:20 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF898C061574
-        for <git@vger.kernel.org>; Fri, 16 Apr 2021 14:14:54 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id l4so44016557ejc.10
-        for <git@vger.kernel.org>; Fri, 16 Apr 2021 14:14:54 -0700 (PDT)
+        with ESMTP id S1344275AbhDPVXU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Apr 2021 17:23:20 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC50AC061574
+        for <git@vger.kernel.org>; Fri, 16 Apr 2021 14:22:54 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id sd23so35428264ejb.12
+        for <git@vger.kernel.org>; Fri, 16 Apr 2021 14:22:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=93T2gjA75ScwamVtHGt+lScGkuGhfVZ/SzwdjHEKXjk=;
-        b=FOV/gmVLqF6SAF6U7s5rCfPYa7JYDx/QDbeHB86RuwqU7NFPy2DP9a/Ag2Rn1w2Tu0
-         L+MXfLDRqq0QMFB9VzMTWkaXjRW0N0BXVhY8eljfm7tMm16CqfZSP8o/6CfV7OLdNlhf
-         dKC7OB5c5apmRBDYk7dOEbWnwX+KCDZjcUI/JgyxoFApEd38jpNP7aPr3S6xuPk6DC69
-         9LOzYtMMvrgWt5PzebAPMGEpIplapvZqoa6fBG2PZvlnjB+qvVI5qaxzPO1newJlsokY
-         8dcTjohvD9Tj/dNprh0IRq09BgusaiW4msVJRQcHx+v5xHH+OBao/tbBY90w0t4Z4dne
-         jF1g==
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=PnebQ4nT6WaLuJawOkWjEHdAGphNQ+dcI09R9HBNxjg=;
+        b=NkVmI9kONa6+aYdeohYijVb6uF6XLdZCuoGwz8soJ/02a3+QDy9fUzolgd9ZpeX0xf
+         weFQnEmnANTKOXjvW6eGdIETL65v7VKgnX6NrUs27pi+jay9swRBa9SfKgWlcxzlmiTT
+         rgDuxHL3+MI4ltCeu7J2HM6e4bTUBCGNaJh3YjJkRZkOVhQK/VIohyVFMgoBM10pf1FX
+         KqrV1nYGkHtkBXa0kc3oosjIi+3nW/Gy4ngm7sfBbw5MJQtjj93zZTBCj+PLGI6zmZYV
+         D1r6FSMcAskHpUL5Sp7aF2Pf4j5xOzfg/rHijLB4pv75RnyK/l1PHBgCqYHMJodtfNNA
+         lcqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=93T2gjA75ScwamVtHGt+lScGkuGhfVZ/SzwdjHEKXjk=;
-        b=Wsxr1P5CUm7RkGHy1VUBd0VAuMcuuOabK++thD5BudwbCTMKTy0KxxA9X4IlD2aN2I
-         x4CykjbsCI7M5wgfQSvUOkE7V7fZRJ9R9CIBGTi40NpC/RNzzBUMYUvkiFRoVb674tAJ
-         viEA1JIsp2SlYwJS0XQNulA/4kDdbpYfk22pg6qCuer6eFHMMS2YvMUbfRX1UTcqi+5i
-         8fu++5UMHwEWlZSS15LBEEkIE5oM2fmJSv+lmBEByCuWkOC/4MDcz36snOFF1bbO4kaA
-         CmQy9DNdBUkzFyBpd/1JQ++zyCfLL1pSG4DwtHLFASaW/ElsJd42/0qaauD5nbM/rzJG
-         4YoQ==
-X-Gm-Message-State: AOAM533A+if4bn8pQGmK5l92RgUaANWY5LRzcwMlDSDzqv4EACHYeZ8H
-        zrBXBS9XFuVdoeGDnky+H7Q=
-X-Google-Smtp-Source: ABdhPJxQ7YIBtTF1u6v8GQclos1EG+sMShaEAkVIqRC8+IEweGlIZSSv4liJoSknb+1y23Ry/g5l9w==
-X-Received: by 2002:a17:907:1c08:: with SMTP id nc8mr10386183ejc.378.1618607693609;
-        Fri, 16 Apr 2021 14:14:53 -0700 (PDT)
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=PnebQ4nT6WaLuJawOkWjEHdAGphNQ+dcI09R9HBNxjg=;
+        b=NSLuk/WIHxloS7VB6C8lGQKCFBhJ8AP10SIVZjmERZn6ULQpUE0HYMYIo5nycsSajD
+         El8v2kSr9Gu5vo6+PijoKuaIbQSidiSNV91fs2LQmq0gKAsCha9axfQTn8Ym+lRtQnUR
+         AmEaQrkUWA8bWQTxCfvMVVBOx3oO7zh/i9hNJhie/2i7ll9Fq87uZc2k0Qs+ZqNfpd+g
+         FAb83cCT+VA1AZiuqSrAfIwsbPg287y8ASSG/I6Q+hsCSKprlGDqMo+bhIVhnPO6a/vd
+         OAe7Au/VYExGJyq5GGAd5AnRZ7owweW49CpxHMF6tpFbxUflSsjmbebj3K83P8KI5XR8
+         xQNA==
+X-Gm-Message-State: AOAM53003BFAccFuBzFnLdXHZpiYBlg5mofs5DjQ/ZQlb5364r19moj8
+        kK8VwZxC2bHOy3416GYCTQs=
+X-Google-Smtp-Source: ABdhPJy6VS5QzQqiy1nB4Mcm4oxaVfus+QzTMJHuNXFWlf6xeVOWRO0edBzw7FF22/OSXRJeqOHg3A==
+X-Received: by 2002:a17:906:4a89:: with SMTP id x9mr10145881eju.121.1618608173550;
+        Fri, 16 Apr 2021 14:22:53 -0700 (PDT)
 Received: from szeder.dev (78-131-14-48.pool.digikabel.hu. [78.131.14.48])
-        by smtp.gmail.com with ESMTPSA id b8sm6677934edu.41.2021.04.16.14.14.52
+        by smtp.gmail.com with ESMTPSA id u24sm6230122edt.85.2021.04.16.14.22.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Apr 2021 14:14:53 -0700 (PDT)
-Date:   Fri, 16 Apr 2021 23:14:51 +0200
+        Fri, 16 Apr 2021 14:22:53 -0700 (PDT)
+Date:   Fri, 16 Apr 2021 23:22:51 +0200
 From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Patrick Steinhardt <ps@pks.im>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4 1/3] config: rename `git_etc_config()`
-Message-ID: <20210416211451.GP2947267@szeder.dev>
-References: <cover.1618238567.git.ps@pks.im>
- <cover.1618297711.git.ps@pks.im>
- <34bdbc27d618d7467d2caf6844d8c06bdcb8545b.1618297711.git.ps@pks.im>
+        Jeff King <peff@peff.net>, Matthieu Moy <git@matthieu-moy.fr>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 12/16] test-lib: modernize test_create_repo() function
+Message-ID: <20210416212251.GQ2947267@szeder.dev>
+References: <cover-00.16-00000000000-20210412T110456Z-avarab@gmail.com>
+ <patch-12.16-424caad189f-20210412T110456Z-avarab@gmail.com>
+ <20210415211013.GM2947267@szeder.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <34bdbc27d618d7467d2caf6844d8c06bdcb8545b.1618297711.git.ps@pks.im>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210415211013.GM2947267@szeder.dev>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 13, 2021 at 09:11:44AM +0200, Patrick Steinhardt wrote:
-> The `git_etc_gitconfig()` function retrieves the system-level path of
-> the configuration file. We're about to introduce a way to override it
-> via an environment variable, at which point the name of this function
-> would start to become misleading.
+On Thu, Apr 15, 2021 at 11:10:13PM +0200, SZEDER Gábor wrote:
+> >  3. We won't ever hit that "Cannot setup test environment"
+> >     error.
 > 
-> Rename the function to `git_system_config()` as a preparatory step.
-> While at it, the function is also refactored to pass memory ownership to
-> the caller. This is done to better match semantics of
-> `git_global_config()`, which is going to be introduced in the next
-> commit.
+> ENOSPC?  Some rogue background process on Windows still desperately
+> clinging to an open file descriptor to some file in the same
+> directory, preventing 'rm -rf "$TRASH_DIRECTORY"' near the beginning
+> of 'test-lib.sh' and interfering with 'git init'?
 > 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  builtin/config.c |  2 +-
->  config.c         | 18 ++++++++----------
->  config.h         |  3 ++-
->  3 files changed, 11 insertions(+), 12 deletions(-)
+> >     Checking the test environment sanity when doing "git init" dates
+> >     back to eea420693be (t0000: catch trivial pilot errors.,
+> >     2005-12-10) and 2ccd2027b01 (trivial: check, if t/trash directory
+> >     was successfully created, 2006-01-05).
+> > 
+> >     We can also see it in another form a bit later in my own
+> >     0d314ce834d (test-lib: use subshell instead of cd $new && .. && cd
+> >     $old, 2010-08-30).
+> > 
+> >     But since 2006f0adaee (t/test-lib: make sure Git has already been
+> >     built, 2012-09-17) we already check if we have a built git
+> >     earlier.
+> > 
+> >     The one thing this was testing after that 2012 change was that
+> >     we'd just built "git", but not "git-init", but since
+> >     3af4c7156c4 (tests: respect GIT_TEST_INSTALLED when initializing
+> >     repositories, 2018-11-12) we invoke "git", not "git-init".
+> > 
+> >     So all of that's been checked already, and we don't need to
+> >     re-check it here.
 > 
-> diff --git a/builtin/config.c b/builtin/config.c
-> index f71fa39b38..02ed0b3fe7 100644
-> --- a/builtin/config.c
-> +++ b/builtin/config.c
-> @@ -695,7 +695,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
->  		}
->  	}
->  	else if (use_system_config) {
-> -		given_config_source.file = git_etc_gitconfig();
-> +		given_config_source.file = git_system_config();
->  		given_config_source.scope = CONFIG_SCOPE_SYSTEM;
->  	} else if (use_local_config) {
->  		given_config_source.file = git_pathdup("config");
-> diff --git a/config.c b/config.c
-> index 6428393a41..8c83669cce 100644
-> --- a/config.c
-> +++ b/config.c
-> @@ -1844,12 +1844,9 @@ static int git_config_from_blob_ref(config_fn_t fn,
->  	return git_config_from_blob_oid(fn, name, &oid, data);
->  }
->  
-> -const char *git_etc_gitconfig(void)
-> +char *git_system_config(void)
->  {
-> -	static const char *system_wide;
-> -	if (!system_wide)
-> -		system_wide = system_path(ETC_GITCONFIG);
-> -	return system_wide;
-> +	return system_path(ETC_GITCONFIG);
->  }
->  
->  /*
-> @@ -1883,6 +1880,7 @@ static int do_git_config_sequence(const struct config_options *opts,
->  				  config_fn_t fn, void *data)
->  {
->  	int ret = 0;
-> +	char *system_config = git_system_config();
->  	char *xdg_config = xdg_config_home("config");
->  	char *user_config = expand_user_path("~/.gitconfig", 0);
->  	char *repo_config;
-> @@ -1896,11 +1894,10 @@ static int do_git_config_sequence(const struct config_options *opts,
->  		repo_config = NULL;
->  
->  	current_parsing_scope = CONFIG_SCOPE_SYSTEM;
-> -	if (git_config_system() && !access_or_die(git_etc_gitconfig(), R_OK,
+> I agree that if we already have a 'git' binary that can run 'git
+> version', then we can safely assume that it will be able to run 'git
+> init' as well.  It might be that 'git init' is buggy and segfaults,
+> but that is not a "have you built things yet?" kind of error.
 
-Removing git_config_system() from the condition breaks
-GIT_CONFIG_NOSYSTEM:
-
-  expecting success of 9999.1 'test': 
-  	cat /usr/local/etc/gitconfig &&
-  	git config --list --show-origin --show-scope
-  
-  + cat /usr/local/etc/gitconfig
-  [foo]
-  	bar = baz
-  + git config --list --show-origin --show-scope
-  system	file:/usr/local/etc/gitconfig	foo.bar=baz
-  local	file:.git/config	core.repositoryformatversion=0
-  local	file:.git/config	core.filemode=true
-  local	file:.git/config	core.bare=false
-  local	file:.git/config	core.logallrefupdates=true
-  ok 1 - test
-
-And breaks just about everything the Linux32 job on Travis CI:
-
-  https://travis-ci.org/github/git/git/jobs/767207687#L1218
-
-> -						  opts->system_gently ?
-> -						  ACCESS_EACCES_OK : 0))
-> -		ret += git_config_from_file(fn, git_etc_gitconfig(),
-> -					    data);
-> +	if (system_config && !access_or_die(system_config, R_OK,
-> +					    opts->system_gently ?
-> +					    ACCESS_EACCES_OK : 0))
-> +		ret += git_config_from_file(fn, system_config, data);
->  
->  	current_parsing_scope = CONFIG_SCOPE_GLOBAL;
->  	if (xdg_config && !access_or_die(xdg_config, R_OK, ACCESS_EACCES_OK))
-> @@ -1927,6 +1924,7 @@ static int do_git_config_sequence(const struct config_options *opts,
->  		die(_("unable to parse command-line config"));
->  
->  	current_parsing_scope = prev_parsing_scope;
-> +	free(system_config);
->  	free(xdg_config);
->  	free(user_config);
->  	free(repo_config);
-> diff --git a/config.h b/config.h
-> index 19a9adbaa9..2be8fa1880 100644
-> --- a/config.h
-> +++ b/config.h
-> @@ -318,7 +318,6 @@ int git_config_rename_section(const char *, const char *);
->  int git_config_rename_section_in_file(const char *, const char *, const char *);
->  int git_config_copy_section(const char *, const char *);
->  int git_config_copy_section_in_file(const char *, const char *, const char *);
-> -const char *git_etc_gitconfig(void);
->  int git_env_bool(const char *, int);
->  unsigned long git_env_ulong(const char *, unsigned long);
->  int git_config_system(void);
-> @@ -327,6 +326,8 @@ int config_error_nonbool(const char *);
->  #define config_error_nonbool(s) (config_error_nonbool(s), const_error())
->  #endif
->  
-> +char *git_system_config(void);
-> +
->  int git_config_parse_parameter(const char *, config_fn_t fn, void *data);
->  
->  enum config_scope current_config_scope(void);
-> -- 
-> 2.31.1
+> > -	mkdir -p "$repo"
+> > -	(
+> > -		cd "$repo" || error "Cannot setup test environment"
+> > -		"${GIT_TEST_INSTALLED:-$GIT_EXEC_PATH}/git$X" \
+> > -			init \
+> > -			"--template=$GIT_BUILD_DIR/templates/blt/" >&3 2>&4 ||
+> > -		error "cannot run git init -- have you built things yet?"
+> > -		mv .git/hooks .git/hooks-disabled
+> > -	) || exit
 > 
+> This patch removes this '|| exit', which is...
+> 
+>   - good: if 'test_create_repo' is invoked in a test case (and not in
+>     a subshell) and if it were to fail for some reason, then it won't
+>     abort the whole test script, but will fail only that test case.
+> 
+>   - bad: 'test_create_repo' is responsible for creating the repository
+>     in the trash directory as well; if that were to fail for any
+>     reason, then the test script will not be aborted early.
+> 
+> I think the 'exit' on error should be removed from 'test_create_repo',
+> but the callsite in 'test-lib.sh' should become 'test_create_repo ||
+> exit 1'.
 
+Case in point: the bug I just reported in
+
+  https://public-inbox.org/git/20210416211451.GP2947267@szeder.dev/
+
+does break Git in a way that in one of our CI jobs 'git init' is
+unable to create the repository in the trash directory.
 
