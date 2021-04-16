@@ -2,113 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 53451C433B4
-	for <git@archiver.kernel.org>; Fri, 16 Apr 2021 19:03:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BBF16C433ED
+	for <git@archiver.kernel.org>; Fri, 16 Apr 2021 19:12:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 19811613B0
-	for <git@archiver.kernel.org>; Fri, 16 Apr 2021 19:03:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 93D86613C5
+	for <git@archiver.kernel.org>; Fri, 16 Apr 2021 19:12:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235966AbhDPTEW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Apr 2021 15:04:22 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59346 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235998AbhDPTEV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Apr 2021 15:04:21 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 43DAFC844B;
-        Fri, 16 Apr 2021 15:03:56 -0400 (EDT)
+        id S235966AbhDPTM0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Apr 2021 15:12:26 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:59237 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235122AbhDPTM0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Apr 2021 15:12:26 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9D62312BC2E;
+        Fri, 16 Apr 2021 15:12:01 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=nVGcZXBRYmY6
-        dKZA1lv2IqaR7Ng=; b=aceM1Zu5KZkAzv6IptiR+m8ssFtiC8fCQ8KDUWZsRQXQ
-        /x1A3jLbe+9iYcdvByE9YXu6tI4JGjR1xeq8N0dCSZ+LLLcLMQo/IZb1j1hJLwFU
-        PaLtQdUuRrgqCiJXHNyOTH4p9u+j0m4xGd6a+pVP7dW9f9HP4nBpLVHhNY4lnfY=
+        :content-type; s=sasl; bh=ADMmWrb/luFbRj2TIdMhzuEqPrE=; b=EvOX8r
+        DiKaOCoihVvqEcK4WAjB4NFyeMONWS1qz0IRISlBkIDid2ZoQ8HXXm2EreMtyE2f
+        Yk10I+3IDmNG7qO6kDTPsKxCAiv4gk/SCEt0gl0O+8FXGjYlJXr+UMKu7huWVfcU
+        Xh0pSZNuuUxJxW1ZJf6+cjoDl/Uo4OnqQoml0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=ot8zJ3
-        DHIW+gnFgoxO0clEbt0vyNCq1uBr0c4BqYyete/Sr7FQSVnMr/M8mYW99M78wQnS
-        FjOX2/G5ooEDzE4TcEnhxAamxPs1pnhWLBsAUCMvzhSTnqCIQ3zuabKRH82zBQmw
-        FTzk8+bDZQ4eyuoqj7cmE3ZCA3OGtB0yDoNCA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3CFCEC844A;
-        Fri, 16 Apr 2021 15:03:56 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=t3f426KtaCBzze6vgtjFcnb11ldxg5y6
+        Os+8oY2S8gPAjqVzr4cZuWVfkSCoRjhk8T6fcCGoRAsncAD+rhQIUuayxAcdZCEt
+        YM3ZcT2iyshbDeW/6Lc/+SrfT/Us8a9IgfiYbknd6Mr7nXfnFvHwvKUwAHKrazNx
+        /1DvI6uhork=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 95F7A12BC2D;
+        Fri, 16 Apr 2021 15:12:01 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7B33AC8449;
-        Fri, 16 Apr 2021 15:03:55 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id CDCC812BC2A;
+        Fri, 16 Apr 2021 15:11:58 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Jeff King <peff@peff.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>
-Subject: Re: [PATCH] Makefile: add missing dependencies of 'config-list.h'
-References: <20200416211807.60811-2-emilyshaffer@google.com>
-        <20210408212915.3060286-1-szeder.dev@gmail.com>
-        <87pmz4ig4o.fsf@evledraar.gmail.com>
-        <YG+UeQRwdBsVeRNV@coredump.intra.peff.net>
-        <20210409212044.GD2947267@szeder.dev>
-Date:   Fri, 16 Apr 2021 12:03:54 -0700
-In-Reply-To: <20210409212044.GD2947267@szeder.dev> ("SZEDER =?utf-8?Q?G?=
- =?utf-8?Q?=C3=A1bor=22's?= message
-        of "Fri, 9 Apr 2021 23:20:44 +0200")
-Message-ID: <xmqqblaem4px.fsf@gitster.g>
+To:     "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
+Subject: Re: [PATCH v10 1/2] [GSOC] docs: correct descript of
+ trailer.<token>.command
+References: <pull.913.v9.git.1618245568.gitgitgadget@gmail.com>
+        <pull.913.v10.git.1618562875.gitgitgadget@gmail.com>
+        <8129ef6c476b4f35be59eae71367de5b83888068.1618562875.git.gitgitgadget@gmail.com>
+Date:   Fri, 16 Apr 2021 12:11:57 -0700
+In-Reply-To: <8129ef6c476b4f35be59eae71367de5b83888068.1618562875.git.gitgitgadget@gmail.com>
+        (ZheNing Hu via GitGitGadget's message of "Fri, 16 Apr 2021 08:47:54
+        +0000")
+Message-ID: <xmqq7dl2m4ci.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 7DCD6762-9EE6-11EB-84A3-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9DE4F65E-9EE7-11EB-9F25-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+"ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> On Thu, Apr 08, 2021 at 07:40:41PM -0400, Jeff King wrote:
->> On Fri, Apr 09, 2021 at 12:08:23AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0=
- Bjarmason wrote:
->>=20
->> > > -config-list.h:
->> > > +config-list.h: Documentation/*config.txt Documentation/config/*.t=
-xt
->> > >  	$(QUIET_GEN)$(SHELL_PATH) ./generate-configlist.sh \
->> > >  		>$@+ && mv $@+ $@
->> > > =20
->> > >  command-list.h: generate-cmdlist.sh command-list.txt
->> > > =20
->> > > -command-list.h: $(wildcard Documentation/git*.txt) Documentation/=
-*config.txt Documentation/config/*.txt
->> > > +command-list.h: $(wildcard Documentation/git*.txt)
->> > >  	$(QUIET_GEN)$(SHELL_PATH) ./generate-cmdlist.sh \
->> > >  		$(patsubst %,--exclude-program %,$(EXCLUDED_PROGRAMS)) \
->> > >  		command-list.txt >$@+ && mv $@+ $@
->> >=20
->> > This change makes sense.
->>=20
->> I agree it looks like it's moving in the right direction, but I am
->> slightly puzzled by the existing code. Why do we need to use $(wildcar=
-d)
->> for git*.txt, but not for the others?
->
-> We don't need $(wildcard) for git*.txt either, because 'make' expands
-> wildcards in prerequisites, see e.g.:
->
->   https://www.gnu.org/software/make/manual/html_node/Wildcard-Examples.=
-html
->
->
-> On a related note: all config variables are now listed in
-> Documentation/config/*.txt; Documentation/*config.txt doesn't contain
-> any, so that could be removed.
+> Subject: Re: [PATCH v10 1/2] [GSOC] docs: correct descript of trailer.<token>.command
 
-Is it OK for me to keep expecting an update to the patch happen soon?
+s/descript/&ion/ (no need to resend only to fix this).
 
-Thanks.
+> diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
+> index 96ec6499f001..6f2a7a130464 100644
+> --- a/Documentation/git-interpret-trailers.txt
+> +++ b/Documentation/git-interpret-trailers.txt
+> @@ -232,25 +232,30 @@ trailer.<token>.ifmissing::
+>  	that option for trailers with the specified <token>.
+>  
+>  trailer.<token>.command::
+> +	This option can be used to specify a shell command that will be called:
+> +	once to automatically add a trailer with the specified <token>, and then
+> +	each time a '--trailer <token>=<value>' argument to modify the <value> of
+> +	the trailer that this option would produce.
+>  +
+> +When the specified command is first called to add a trailer
+> +with the specified <token>, the behavior is as if a special
+> +'--trailer <token>=<value>' argument was added at the beginning
+> +of the "git interpret-trailers" command, where <value>
+> +is taken to be the standard output of the command with any
+> +leading and trailing whitespace trimmed off.
+>  +
+> +If some '--trailer <token>=<value>' arguments are also passed
+> +on the command line, the command is called again once for each
+> +of these arguments with the same <token>. And the <value> part
+> +of these arguments, if any, will be used to replace the first
+> +occurrence of substring `$ARG` in the command. This way the
+> +command can produce a <value> computed from the <value> passed
+> +in the '--trailer <token>=<value>' argument.
+>  +
+
+Makes quite a lot of sense.  I wouldn't have got confused by the
+behaviour of .command if it were documented like the above from day
+one.  Very nice.
+
+> +For consistency, the first occurrence of substring `$ARG` is
+> +also replaced, this time with the empty string, in the command
+> +when the command is first called to add a trailer with the
+> +specified <token>.
+
+OK, so "for consistency" is about consistency between the "execute
+once first without being asked" case (where there is no plausible
+source of $ARG), and "execute because we were asked by a command
+line option (where we are given <value> to replace $ARG).
+
+Makes sense.
+
+Will queue.  Thanks.
+
+
+
+
