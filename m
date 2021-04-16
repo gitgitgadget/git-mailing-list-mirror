@@ -2,80 +2,148 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03B04C433B4
-	for <git@archiver.kernel.org>; Fri, 16 Apr 2021 23:17:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AAB3DC433B4
+	for <git@archiver.kernel.org>; Fri, 16 Apr 2021 23:20:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C88AB6109F
-	for <git@archiver.kernel.org>; Fri, 16 Apr 2021 23:17:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7253C6101C
+	for <git@archiver.kernel.org>; Fri, 16 Apr 2021 23:20:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231958AbhDPXRo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Apr 2021 19:17:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47788 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234723AbhDPXRk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Apr 2021 19:17:40 -0400
-Received: from mail-oo1-xc31.google.com (mail-oo1-xc31.google.com [IPv6:2607:f8b0:4864:20::c31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50526C061574
-        for <git@vger.kernel.org>; Fri, 16 Apr 2021 16:17:14 -0700 (PDT)
-Received: by mail-oo1-xc31.google.com with SMTP id y23-20020a4ade170000b02901e6250b3be6so3993142oot.5
-        for <git@vger.kernel.org>; Fri, 16 Apr 2021 16:17:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=l699PfPdm78ue8xz67S+wiveYF6/QDa1dju/DwQaiGs=;
-        b=G3XRQmUoJsR+rOkPMbWq8zcAST+7nPgmpKToxAMCRZmSjelpwg7msK/6wWHXU4JigI
-         wkMCrO/G8U8oZxUw0sa3KgiXLWh2aSkdJaS3Q2EBW+7v8BqDbXvhMqH4Zq3zU7rLEFd+
-         /bYQFG7rs5cpi46rbYPsX7dBingCFqp0etZsRTnif1+0Mt2xzulcR5/hcjwcvRDWAw2R
-         DUamOcYqnNX1MjfRCET7C6oZ3JzLFZRCOHAQDbTU8dyIaFoCN/zZV2bvl4MIhPilWX7a
-         4HgXpJFyebbnP/fzsyIK2PHy4HPosAghRQqQovNCVfujoTsXa/jYxE2rylVtLGlSzjw2
-         /EFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=l699PfPdm78ue8xz67S+wiveYF6/QDa1dju/DwQaiGs=;
-        b=KtGH6F8JRz45VUYEJ3s6HREQkhlqI/ssJf0dm97gojlQ4BPCBKZZFd/+FWPXodiwdL
-         ge10owOQxwGiTQ3rMfiC3BFzJbcr9CHJcDY+wGw8fsllrqc7lWXXiInd0Q/syreRnVFh
-         rG+rL6UcqYPCgwBsJGEh68c80+KLNgxVixk0vXM7VFAS3rkqOzs01lR+Qwz3YHSpU84u
-         u8TA3M18GIK+Mt07TT1JPNl7HBoWsrWsD61tv1esxmPHuhaihTm5e9JMEiQT9LmelTjh
-         si5JnxfZrg9JlO6gopwLdiwl+hyI68K96u60UxGvFNzlx9CLAe9yzpK8Pv6qzVcWgbSG
-         F+VQ==
-X-Gm-Message-State: AOAM533Vds9QCLPu7XNJlU2oKh5AMmXwl/NlwB9E0fyIxuC/wAyoY46Y
-        Sm1kZciR6yG01ZyWBQ7YwmBuw0IM1/Fuk3ah6QPRsCVi
-X-Google-Smtp-Source: ABdhPJw59mMUHnY8NtFBQuRO1V9+yJTZUC2btSITT1QOMYDOVrMnZAzxC/x/qLe10T4UpAX2gbc5Dyhq8YfDxQdFFzY=
-X-Received: by 2002:a4a:d685:: with SMTP id i5mr5033629oot.32.1618615033727;
- Fri, 16 Apr 2021 16:17:13 -0700 (PDT)
+        id S232618AbhDPXVN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Apr 2021 19:21:13 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:34804 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S230489AbhDPXVN (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 16 Apr 2021 19:21:13 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A88C960744;
+        Fri, 16 Apr 2021 23:20:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1618615247;
+        bh=8iO1mm8EEOkSZ56dH64InL/lcMqn7Nu9v4dGK+w3K44=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=hfEAM2W7Lb04YfX3VLkBcWu3zlLfV39aYxOyL5jTSot9F298za0T0QrHC1BZYZz3m
+         A6T6PN9YRsGfrgNoHWhbYN2g1K6rkSb3daain+JjdjoJwvjZbpBbZ8l9BGp/zCalp5
+         e8BRisYX0cAYGS4z8VSKLGcc2AtfH4q6cVfVe2NOG2tHb8nO9tzgmT5Ya+WjA8pQJe
+         fMj84IvSZvKwVdSiwG7Ef9q+6pl941CkgftaIgl9D4FILGYB//tu8Ddtc5fym5uqzi
+         io9ig1IeGTq7qrBn1yEu3R6Qaqd4SgeB7ypryTrgOAdu9CQpe/7HgjEYRD+ZPHS4UU
+         7lOTPWLfcz8C86dB1wUuvqTtj7QcvCaCMIjyP4CbAXb8CMoMKwQxi03bikVYl4rn7L
+         B6tXu+SLKUPrD55Ktr0f9zjUNQXXyb0iSvY5I7dnFmWba9paixMGLSRV4js8qsebyI
+         QMBmxXCjAQGGfqLpvEaNWub1yq1UeVb5y21pGP1aqFHMjoACO/h
+Date:   Fri, 16 Apr 2021 23:20:42 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Lars Kiesow <lkiesow@uos.de>
+Cc:     git@vger.kernel.org
+Subject: Re: Bug report: gitk unable to handle Unicode properly
+Message-ID: <YHobypuPjLTdjHIJ@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Lars Kiesow <lkiesow@uos.de>, git@vger.kernel.org
+References: <20210416182121.3c824c87@pc.home.lkiesow.io>
 MIME-Version: 1.0
-References: <cover.1615588108.git.matheus.bernardino@usp.br>
- <cover.1617914011.git.matheus.bernardino@usp.br> <xmqqzgxxkj8v.fsf@gitster.g>
-In-Reply-To: <xmqqzgxxkj8v.fsf@gitster.g>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 16 Apr 2021 16:17:02 -0700
-Message-ID: <CABPp-BE=KfQTj0ad3uBS90MA1EDkHFV8kXi7xbEMDcnoi-MiOg@mail.gmail.com>
-Subject: Re: [PATCH v4 0/7] add/rm: honor sparse checkout and warn on sparse paths
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Matheus Tavares <matheus.bernardino@usp.br>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="LhEkD2ddcekjV0Au"
+Content-Disposition: inline
+In-Reply-To: <20210416182121.3c824c87@pc.home.lkiesow.io>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 16, 2021 at 2:33 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Matheus Tavares <matheus.bernardino@usp.br> writes:
->
-> > Make `rm` honor sparse checkouts, and make both `rm` and `add` warn
-> > when asked to update sparse entries.
->
-> OK, has the back-and-forth concluded and this is now ready to be
-> merged down to 'next'?
 
-Yes, let's merge it.
+--LhEkD2ddcekjV0Au
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On 2021-04-16 at 16:21:21, Lars Kiesow wrote:
+> Hi everyone,
+> while fixing some Unicode problems in a project, I noticed that gitk
+> will not display Unicode characters correctly and may even crash if the
+> branch name consists of Unicode characters.
+>=20
+> I'ts certainly not the end of the world (who is crazy enough to use =F0=
+=9F=96=A4
+> as a branch name) but could still cause problems.
+
+I don't use gitk, but I decided to try to reproduce this nevertheless,
+and I'm having a bit of trouble.
+
+> What did you do before the bug happened? (Steps to reproduce your issue)
+>=20
+> - Create a git branch named with a multi-byte Unicode character like:
+>=20
+>         git checkout -b =F0=9F=96=A4
+>=20
+> - Launch gitk
+>     - Crash (see below)
+
+I don't see a crash.
+
+> - Switch to another branch
+>=20
+>         git checkout xy
+>=20
+> - Launch gitk
+>     - Branch names are not displayed properly
+
+I do see the emoji displayed properly.
+
+> What did you expect to happen? (Expected behavior)
+>=20
+> - Launching gitk, it should not crash and names like =E2=80=9C=F0=9F=96=
+=A4=E2=80=9D should be
+>   displayed correctly
+
+This is the behavior I see.  I'm using the Debian experimental packages
+of gitk 1:2.31.0+next.20210315-1 and Debian unstable's tk 8.6.11+1.
+
+Is it possible your version of Tcl or Tk is not properly set up for this
+case?  I know nothing about either of those; Tcl is one of the few
+reasonably common languages I have never worked with.
+
+> What happened instead? (Actual behavior)
+>=20
+> - Launching while on the branch =E2=80=9C=F0=9F=96=A4=E2=80=9D crashed gi=
+tk.
+>   The reported error is:
+>=20
+>         X Error of failed request:  BadLength (poly request too large or =
+internal Xlib length error)
+>           Major opcode of failed request:  139 (RENDER)
+>           Minor opcode of failed request:  20 (RenderAddGlyphs)
+>           Serial number of failed request:  5225
+>           Current serial number in output stream:  5263
+>=20
+> - Launching while on another branch but with the branch =E2=80=9C=F0=9F=
+=96=A4=E2=80=9D makes that
+>   branch appear as =E2=8C=B7=E2=8C=B7
+
+Can you tell us about your locale settings?  On most Linux systems,
+running the program "locale" should show them.  I would expect something
+bad might happen if you were not in a UTF-8 locale.
+--=20
+brian m. carlson (he/him or they/them)
+Houston, Texas, US
+
+--LhEkD2ddcekjV0Au
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.27 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYHobyQAKCRB8DEliiIei
+gXAUAP9ZCV4AA6AQvfS9NYxQkVAJw5+/0Krcy3AQYa4rzCbEtgEAt5LalYu/EHLs
+S5hu8Jw6tAbV3FbGqODGjAJFdR9lSgk=
+=vZ16
+-----END PGP SIGNATURE-----
+
+--LhEkD2ddcekjV0Au--
