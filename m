@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 21786C433B4
-	for <git@archiver.kernel.org>; Fri, 16 Apr 2021 12:50:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3A57C433ED
+	for <git@archiver.kernel.org>; Fri, 16 Apr 2021 12:50:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F247E611AC
-	for <git@archiver.kernel.org>; Fri, 16 Apr 2021 12:50:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7C67B611AC
+	for <git@archiver.kernel.org>; Fri, 16 Apr 2021 12:50:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241097AbhDPMud (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Apr 2021 08:50:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49360 "EHLO
+        id S242375AbhDPMuh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Apr 2021 08:50:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49366 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238690AbhDPMu2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Apr 2021 08:50:28 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DD91C061760
+        with ESMTP id S235528AbhDPMua (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Apr 2021 08:50:30 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E69EFC061756
         for <git@vger.kernel.org>; Fri, 16 Apr 2021 05:50:03 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id s7so26485858wru.6
+Received: by mail-wr1-x435.google.com with SMTP id 12so26605671wrz.7
         for <git@vger.kernel.org>; Fri, 16 Apr 2021 05:50:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=l5fQM2i0YarPXAiGL2ateoLUfZrvDMiRyg/WkQQFZUI=;
-        b=iiNEzg0gBDkWxwUilR8hw3z/kWXq6syAkRQA3ZMVJJMy6QPetXhnpaC3T/k5+hCxmB
-         5oiqpXbU125KyQhH/D3rV87hdd2AqTzwQOdhzAmd311ahxxsh9bf9N87F5owQ2i35lnj
-         x6U0nzewMo2UGdvu675HpqGjMIvYI5i9fd94rYzUlVb35Tdfs0tZTiaWh0FQSOVpPKBK
-         HT3T8YurMZbV60skKBrxbX2KplxoRQRM8KTazOA6JZ0AtpRwZBQdyvGk0zUYaxwwSZ9h
-         RDK5SGsSXcx6pQ/b+VB3PfTrtFrPal9QOqnkg0h905+VC9y2KF4Vf6oswgVIX8zPlU3z
-         Rj8Q==
+        bh=BKZMXuN/+p8qrPdSacUofbQM5WONxi8AP2yKhlLmgCo=;
+        b=ns/zWD/Og2IGmukPJzQgyQrzgyhqsILr0alqh2QGaTFe52xSyE8qzhwxg+n8e+lqsh
+         zhIn1t0V+HLgIxWvGmbHhMkLqb3z/ll5Ncw/moRXT5N5Ppbh6MbzRwbZ3YYFB74gA7fn
+         vA2EdtIY4ubvyHaEd4iz3qfsPuE7d4r4K/z1a5/g46fasI5d1RAyRRJTWdOdOdqJB7bD
+         T/chIf+r1PCe1XiapiVLQQ2xdSXAZaLUaqGct9XmixYGSWmz3BnADRCLQry1vFylyl81
+         VZgmXMEi0rD1Fm9GckVPnHX8Uaw5oQ26QOzVXdl7VPOtt+MJxneaG0vMULlBtL64YwEK
+         v0pQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=l5fQM2i0YarPXAiGL2ateoLUfZrvDMiRyg/WkQQFZUI=;
-        b=DEYxn2LBdW31RS6KbZZC86qjPd+qaFHLILMiTF+93m0as2GmYVFgEG/o9169pXP3tY
-         Jf6R2HJfmFtEDA9PKJNitRGvqwPhhWD2eHZOYIpq0v5HV5xIIj4U341jUBGw0wqNUi8J
-         W1vjN+Lq/iyGO176dRyGx0q+so0qv/urWY/Cs7xHYgu0kdCoDB/ZPoINAm0upZ+dh02z
-         xi0UW8SCSS/n6GpGuOxOUh+KJSQouH2+rLMK0p+x6diB3JV6v8uJh1WSEeZdheKLHSeO
-         T8U4X3pbM1SU6RgHEOMHQdYkTFHkemEApiktJlYWXF6Z9VmZ6HNqK4iDRu5Upu3LEeeS
-         kUNQ==
-X-Gm-Message-State: AOAM5319rIkdpL6xSyDQYZprFM9uWUG/7apVdLLlulCuMMbS2fwcC08j
-        aX72QamPrcCEZgxj1FLDclRzenjhNaU=
-X-Google-Smtp-Source: ABdhPJzhN4UftZawRWGCBsayQ5F7O/fARLUB393PJH5kpjAW7tfCd2tU+q/iIsgZE41Xly5UZJEOdA==
-X-Received: by 2002:adf:cc89:: with SMTP id p9mr8659624wrj.223.1618577402121;
+        bh=BKZMXuN/+p8qrPdSacUofbQM5WONxi8AP2yKhlLmgCo=;
+        b=qDUGtMV6KGOzb1V4fnL6RCKZQCQb3CMGmjfRZItUSLl/RruG5T+E6A2MrDF92nh0x7
+         O0Ug82qxRtEQ0zxO6bUBX5bqtIJJuktnXjdPUHSqT7sQm0Z7rIkwuuuG+efX8jRoApQ7
+         DUEtaDdyeYTt1Y37UNAwdv+ASylJlUtKA/ZE5WHD/4rzI4FI0ttelR1nAoW2pHVlFl30
+         nCVITVJ45YzB+U/ty6pnzP/4UmD2hD4byx/pmfaA+dvyVeQuWzSc9tfvNsLgs4m499kz
+         yxuJgIiiCAKE3La8RsfTNIxRrEtt7zg5kMMuXUYS4uNHGaeTyjK/BOo8IZMRjK3hZ9ia
+         kkKQ==
+X-Gm-Message-State: AOAM531x0LjS/dQtgRMBd+3wL9IkjLxFBmoOzEhtSfq/ejFVfWzoF4c3
+        KEl5ZGEhvSAjQw1VoYqiFN3C/rJdwao=
+X-Google-Smtp-Source: ABdhPJzI2QCQtSnCnhWbv3lxgpNVs3sjrxAWhAejJKhQEtdOd/fVM/TU0GkzIPi0z71NEansyC0csg==
+X-Received: by 2002:a5d:640a:: with SMTP id z10mr8652671wru.276.1618577402716;
         Fri, 16 Apr 2021 05:50:02 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h8sm9812951wrt.94.2021.04.16.05.50.01
+        by smtp.gmail.com with ESMTPSA id g9sm8949197wmh.21.2021.04.16.05.50.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Apr 2021 05:50:01 -0700 (PDT)
-Message-Id: <73b4e8496746a3d1387e568a5a898c02ec81df76.1618577399.git.gitgitgadget@gmail.com>
+        Fri, 16 Apr 2021 05:50:02 -0700 (PDT)
+Message-Id: <565ed8a1892946a75c1116b0f351725e64fa90ba.1618577399.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.924.v4.git.1618577399.gitgitgadget@gmail.com>
 References: <pull.924.v3.git.1618020225.gitgitgadget@gmail.com>
         <pull.924.v4.git.1618577399.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 16 Apr 2021 12:49:57 +0000
-Subject: [PATCH v4 2/4] fetch: add --prefetch option
+Date:   Fri, 16 Apr 2021 12:49:58 +0000
+Subject: [PATCH v4 3/4] maintenance: use 'git fetch --prefetch'
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,213 +81,99 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The --prefetch option will be used by the 'prefetch' maintenance task
-instead of sending refspecs explicitly across the command-line. The
-intention is to modify the refspec to place all results in
-refs/prefetch/ instead of anywhere else.
+The 'prefetch' maintenance task previously forced the following refspec
+for each remote:
 
-Create helper method filter_prefetch_refspec() to modify a given refspec
-to fit the rules expected of the prefetch task:
+	+refs/heads/*:refs/prefetch/<remote>/*
 
- * Negative refspecs are preserved.
- * Refspecs without a destination are removed.
- * Refspecs whose source starts with "refs/tags/" are removed.
- * Other refspecs are placed within "refs/prefetch/".
+If a user has specified a more strict refspec for the remote, then this
+prefetch task downloads more objects than necessary.
 
-Finally, we add the 'force' option to ensure that prefetch refs are
-replaced as necessary.
+The previous change introduced the '--prefetch' option to 'git fetch'
+which manipulates the remote's refspec to place all resulting refs into
+refs/prefetch/, with further partitioning based on the destinations of
+those refspecs.
 
-There are some interesting cases that are worth testing.
+Update the documentation to be more generic about the destination refs.
+Do not mention custom refspecs explicitly, as that does not need to be
+highlighted in this documentation. The important part of placing refs in
+refs/prefetch/ remains.
 
-An earlier version of this change dropped the "i--" from the loop that
-deletes a refspec item and shifts the remaining entries down. This
-allowed some refspecs to not be modified. The subtle part about the
-first --prefetch test is that the "refs/tags/*" refspec appears directly
-before the "refs/heads/bogus/*" refspec. Without that "i--", this
-ordering would remove the "refs/tags/*" refspec and leave the last one
-unmodified, placing the result in "refs/heads/*".
-
-It is possible to have an empty refspec. This is typically the case for
-remotes other than the origin, where users want to fetch a specific tag
-or branch. To correctly test this case, we need to further remove the
-upstream remote for the local branch. Thus, we are testing a refspec
-that will be deleted, leaving nothing to fetch.
-
-Helped-by: Tom Saeger <tom.saeger@oracle.com>
-Helped-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Reported-by: Tom Saeger <tom.saeger@oracle.com>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/fetch-options.txt   |  5 +++
- builtin/fetch.c                   | 59 ++++++++++++++++++++++++++++++-
- t/t5582-fetch-negative-refspec.sh | 43 ++++++++++++++++++++++
- 3 files changed, 106 insertions(+), 1 deletion(-)
+ Documentation/git-maintenance.txt |  6 ++----
+ builtin/gc.c                      |  7 +++----
+ t/t7900-maintenance.sh            | 14 +++++++-------
+ 3 files changed, 12 insertions(+), 15 deletions(-)
 
-diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
-index 07783deee309..9e7b4e189ce0 100644
---- a/Documentation/fetch-options.txt
-+++ b/Documentation/fetch-options.txt
-@@ -110,6 +110,11 @@ ifndef::git-pull[]
- 	setting `fetch.writeCommitGraph`.
- endif::git-pull[]
+diff --git a/Documentation/git-maintenance.txt b/Documentation/git-maintenance.txt
+index 80ddd33ceba0..1e738ad39832 100644
+--- a/Documentation/git-maintenance.txt
++++ b/Documentation/git-maintenance.txt
+@@ -92,10 +92,8 @@ commit-graph::
+ prefetch::
+ 	The `prefetch` task updates the object directory with the latest
+ 	objects from all registered remotes. For each remote, a `git fetch`
+-	command is run. The refmap is custom to avoid updating local or remote
+-	branches (those in `refs/heads` or `refs/remotes`). Instead, the
+-	remote refs are stored in `refs/prefetch/<remote>/`. Also, tags are
+-	not updated.
++	command is run. The configured refspec is modified to place all
++	requested refs within `refs/prefetch/`. Also, tags are not updated.
+ +
+ This is done to avoid disrupting the remote-tracking branches. The end users
+ expect these refs to stay unmoved unless they initiate a fetch.  With prefetch
+diff --git a/builtin/gc.c b/builtin/gc.c
+index fa8128de9ae1..9d35f7da50d8 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -879,15 +879,14 @@ static int fetch_remote(struct remote *remote, void *cbdata)
+ 	struct child_process child = CHILD_PROCESS_INIT;
  
-+--prefetch::
-+	Modify the configured refspec to place all refs into the
-+	`refs/prefetch/` namespace. See the `prefetch` task in
-+	linkgit:git-maintenance[1].
-+
- -p::
- --prune::
- 	Before fetching, remove any remote-tracking references that no
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 0b90de87c7a2..97c4fe6e6d66 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -48,6 +48,7 @@ enum {
- static int fetch_prune_config = -1; /* unspecified */
- static int fetch_show_forced_updates = 1;
- static uint64_t forced_updates_ms = 0;
-+static int prefetch = 0;
- static int prune = -1; /* unspecified */
- #define PRUNE_BY_DEFAULT 0 /* do we prune by default? */
+ 	child.git_cmd = 1;
+-	strvec_pushl(&child.args, "fetch", remote->name, "--prune", "--no-tags",
++	strvec_pushl(&child.args, "fetch", remote->name,
++		     "--prefetch", "--prune", "--no-tags",
+ 		     "--no-write-fetch-head", "--recurse-submodules=no",
+-		     "--refmap=", NULL);
++		     NULL);
  
-@@ -158,6 +159,8 @@ static struct option builtin_fetch_options[] = {
- 		    N_("do not fetch all tags (--no-tags)"), TAGS_UNSET),
- 	OPT_INTEGER('j', "jobs", &max_jobs,
- 		    N_("number of submodules fetched in parallel")),
-+	OPT_BOOL(0, "prefetch", &prefetch,
-+		 N_("modify the refspec to place all refs within refs/prefetch/")),
- 	OPT_BOOL('p', "prune", &prune,
- 		 N_("prune remote-tracking branches no longer on remote")),
- 	OPT_BOOL('P', "prune-tags", &prune_tags,
-@@ -436,6 +439,56 @@ static void find_non_local_tags(const struct ref *refs,
- 	oidset_clear(&fetch_oids);
+ 	if (opts->quiet)
+ 		strvec_push(&child.args, "--quiet");
+ 
+-	strvec_pushf(&child.args, "+refs/heads/*:refs/prefetch/%s/*", remote->name);
+-
+ 	return !!run_command(&child);
  }
  
-+static void filter_prefetch_refspec(struct refspec *rs)
-+{
-+	int i;
-+
-+	if (!prefetch)
-+		return;
-+
-+	for (i = 0; i < rs->nr; i++) {
-+		struct strbuf new_dst = STRBUF_INIT;
-+		char *old_dst;
-+		const char *sub = NULL;
-+
-+		if (rs->items[i].negative)
-+			continue;
-+		if (!rs->items[i].dst ||
-+		    (rs->items[i].src &&
-+		     !strncmp(rs->items[i].src, "refs/tags/", 10))) {
-+			int j;
-+
-+			free(rs->items[i].src);
-+			free(rs->items[i].dst);
-+
-+			for (j = i + 1; j < rs->nr; j++) {
-+				rs->items[j - 1] = rs->items[j];
-+				rs->raw[j - 1] = rs->raw[j];
-+			}
-+			rs->nr--;
-+			i--;
-+			continue;
-+		}
-+
-+		old_dst = rs->items[i].dst;
-+		strbuf_addstr(&new_dst, "refs/prefetch/");
-+
-+		/*
-+		 * If old_dst starts with "refs/", then place
-+		 * sub after that prefix. Otherwise, start at
-+		 * the beginning of the string.
-+		 */
-+		if (!skip_prefix(old_dst, "refs/", &sub))
-+			sub = old_dst;
-+		strbuf_addstr(&new_dst, sub);
-+
-+		rs->items[i].dst = strbuf_detach(&new_dst, NULL);
-+		rs->items[i].force = 1;
-+
-+		free(old_dst);
-+	}
-+}
-+
- static struct ref *get_ref_map(struct remote *remote,
- 			       const struct ref *remote_refs,
- 			       struct refspec *rs,
-@@ -452,6 +505,10 @@ static struct ref *get_ref_map(struct remote *remote,
- 	struct hashmap existing_refs;
- 	int existing_refs_populated = 0;
+diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+index 2412d8c5c006..eadb800c08cc 100755
+--- a/t/t7900-maintenance.sh
++++ b/t/t7900-maintenance.sh
+@@ -141,15 +141,15 @@ test_expect_success 'prefetch multiple remotes' '
+ 	test_commit -C clone1 one &&
+ 	test_commit -C clone2 two &&
+ 	GIT_TRACE2_EVENT="$(pwd)/run-prefetch.txt" git maintenance run --task=prefetch 2>/dev/null &&
+-	fetchargs="--prune --no-tags --no-write-fetch-head --recurse-submodules=no --refmap= --quiet" &&
+-	test_subcommand git fetch remote1 $fetchargs +refs/heads/\\*:refs/prefetch/remote1/\\* <run-prefetch.txt &&
+-	test_subcommand git fetch remote2 $fetchargs +refs/heads/\\*:refs/prefetch/remote2/\\* <run-prefetch.txt &&
++	fetchargs="--prefetch --prune --no-tags --no-write-fetch-head --recurse-submodules=no --quiet" &&
++	test_subcommand git fetch remote1 $fetchargs <run-prefetch.txt &&
++	test_subcommand git fetch remote2 $fetchargs <run-prefetch.txt &&
+ 	test_path_is_missing .git/refs/remotes &&
+-	git log prefetch/remote1/one &&
+-	git log prefetch/remote2/two &&
++	git log prefetch/remotes/remote1/one &&
++	git log prefetch/remotes/remote2/two &&
+ 	git fetch --all &&
+-	test_cmp_rev refs/remotes/remote1/one refs/prefetch/remote1/one &&
+-	test_cmp_rev refs/remotes/remote2/two refs/prefetch/remote2/two &&
++	test_cmp_rev refs/remotes/remote1/one refs/prefetch/remotes/remote1/one &&
++	test_cmp_rev refs/remotes/remote2/two refs/prefetch/remotes/remote2/two &&
  
-+	filter_prefetch_refspec(rs);
-+	if (remote)
-+		filter_prefetch_refspec(&remote->fetch);
-+
- 	if (rs->nr) {
- 		struct refspec *fetch_refspec;
- 
-@@ -520,7 +577,7 @@ static struct ref *get_ref_map(struct remote *remote,
- 			if (has_merge &&
- 			    !strcmp(branch->remote_name, remote->name))
- 				add_merge_config(&ref_map, remote_refs, branch, &tail);
--		} else {
-+		} else if (!prefetch) {
- 			ref_map = get_remote_ref(remote_refs, "HEAD");
- 			if (!ref_map)
- 				die(_("Couldn't find remote ref HEAD"));
-diff --git a/t/t5582-fetch-negative-refspec.sh b/t/t5582-fetch-negative-refspec.sh
-index f34509727702..e5d2e79ad382 100755
---- a/t/t5582-fetch-negative-refspec.sh
-+++ b/t/t5582-fetch-negative-refspec.sh
-@@ -240,4 +240,47 @@ test_expect_success "push with matching +: and negative refspec" '
- 	git -C two push -v one
- '
- 
-+test_expect_success '--prefetch correctly modifies refspecs' '
-+	git -C one config --unset-all remote.origin.fetch &&
-+	git -C one config --add remote.origin.fetch ^refs/heads/bogus/ignore &&
-+	git -C one config --add remote.origin.fetch "refs/tags/*:refs/tags/*" &&
-+	git -C one config --add remote.origin.fetch "refs/heads/bogus/*:bogus/*" &&
-+
-+	git tag -a -m never never-fetch-tag HEAD &&
-+
-+	git branch bogus/fetched HEAD~1 &&
-+	git branch bogus/ignore HEAD &&
-+
-+	git -C one fetch --prefetch --no-tags &&
-+	test_must_fail git -C one rev-parse never-fetch-tag &&
-+	git -C one rev-parse refs/prefetch/bogus/fetched &&
-+	test_must_fail git -C one rev-parse refs/prefetch/bogus/ignore &&
-+
-+	# correctly handle when refspec set becomes empty
-+	# after removing the refs/tags/* refspec.
-+	git -C one config --unset-all remote.origin.fetch &&
-+	git -C one config --add remote.origin.fetch "refs/tags/*:refs/tags/*" &&
-+
-+	git -C one fetch --prefetch --no-tags &&
-+	test_must_fail git -C one rev-parse never-fetch-tag &&
-+
-+	# The refspec for refs that are not fully qualified
-+	# are filtered multiple times.
-+	git -C one rev-parse refs/prefetch/bogus/fetched &&
-+	test_must_fail git -C one rev-parse refs/prefetch/bogus/ignore
-+'
-+
-+test_expect_success '--prefetch succeeds when refspec becomes empty' '
-+	git checkout bogus/fetched &&
-+	test_commit extra &&
-+
-+	git -C one config --unset-all remote.origin.fetch &&
-+	git -C one config --unset branch.main.remote &&
-+	git -C one config remote.origin.fetch "+refs/tags/extra" &&
-+	git -C one config remote.origin.skipfetchall true &&
-+	git -C one config remote.origin.tagopt "--no-tags" &&
-+
-+	git -C one fetch --prefetch
-+'
-+
- test_done
+ 	test_cmp_config refs/prefetch/ log.excludedecoration &&
+ 	git log --oneline --decorate --all >log &&
 -- 
 gitgitgadget
 
