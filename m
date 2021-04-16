@@ -2,88 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4FCDDC433B4
-	for <git@archiver.kernel.org>; Fri, 16 Apr 2021 20:25:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 14862C433ED
+	for <git@archiver.kernel.org>; Fri, 16 Apr 2021 20:40:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1786061166
-	for <git@archiver.kernel.org>; Fri, 16 Apr 2021 20:25:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D120E6124B
+	for <git@archiver.kernel.org>; Fri, 16 Apr 2021 20:40:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245205AbhDPU0F (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Apr 2021 16:26:05 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62412 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244908AbhDPU0E (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Apr 2021 16:26:04 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 69DA5C8C93;
-        Fri, 16 Apr 2021 16:25:39 -0400 (EDT)
+        id S236027AbhDPUlR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Apr 2021 16:41:17 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:64167 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235967AbhDPUlQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Apr 2021 16:41:16 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5A24C1168C8;
+        Fri, 16 Apr 2021 16:40:51 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=CGYZe4Qcc0/DmszrmM6Jel//I4c=; b=viTLFS
-        GFOA3HP4LUVBaAbS2Ph9ZynlbQjFVV5t2QWET5X/UGgurVgkB5JZjp0XxGQ8GYQR
-        rRJ4ZZ1l4FHcmUeokDJVdyhRYMsVx0gDg20TZJzksfcjbUL0Ic7FD70nwZQULeRr
-        6SDpTrOEPXmHtKxrlqNglQaTH23ksAdVsnq2w=
+        :content-type:content-transfer-encoding; s=sasl; bh=ZFyBa1uo+EJw
+        eszb0lJDxHDXc9w=; b=eKBG2FJJbHDkaQtbz3ylNjECbKccn0nK92v3y2Jm38gM
+        5432egZSowaS7vXAM0Izdodysx0qJguBlP5hcX0sw+LwmNNfRIXFYn7cln5Sa4QL
+        WmxmyiWHSxyMt0LBsF0FKL+JfvpWEUnJCmzw4HPFCao+5dmswMOVvB3EWTj+fac=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=VfuDToyRTZswnWZGcygK+JFZPO547XGV
-        gW/ZJpv0UpyukbrtnJCpusgdQNuzvxr5+ydPuQMYU1tLB/xMxXnjaDlFCJx8x8Ul
-        RlXdsW0pNiVAG4NoQIGo5sDrlH+8Q1Lv2ZffM3qtuAjc8U422r3swQOAylR3MO7S
-        Uke6+UVaWE0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 60819C8C91;
-        Fri, 16 Apr 2021 16:25:39 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=n6vJNp
+        On7HwbzV/lp+EUu99laYdOT4cVJNIc9IwE0llCVxwrysvd17WF0YSpzil3RLVLVh
+        AXfXxAkNzPUcGSDeEeXZyO6dhwiyeOeow+l95UmE9rgKGZMUk3syX1FToRUzxDY4
+        +B+sD5dQNZpdG2sqUBjONEn9Z4Hxas7yH/6YI=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 537B11168C7;
+        Fri, 16 Apr 2021 16:40:51 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C170AC8C90;
-        Fri, 16 Apr 2021 16:25:38 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9E8491168C6;
+        Fri, 16 Apr 2021 16:40:48 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     git@vger.kernel.org, Raxel Gutierrez <raxelgutierrez09@gmail.com>,
-        mricon@kernel.org, patchwork@lists.ozlabs.org,
-        Taylor Blau <me@ttaylorr.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        ZheNing Hu <adlternative@gmail.com>
-Subject: Re: Pain points in Git's patch flow
-References: <YHaIBvl6Mf7ztJB3@google.com> <xmqqfszqko0k.fsf@gitster.g>
-Date:   Fri, 16 Apr 2021 13:25:38 -0700
-In-Reply-To: <xmqqfszqko0k.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
-        16 Apr 2021 12:50:03 -0700")
-Message-ID: <xmqqblaekmd9.fsf@gitster.g>
+To:     Ville =?utf-8?Q?Skytt=C3=A4?= <ville.skytta@iki.fi>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] completion: avoid aliased command lookup error in
+ nounset mode
+References: <20210416191939.1120651-1-ville.skytta@iki.fi>
+Date:   Fri, 16 Apr 2021 13:40:46 -0700
+In-Reply-To: <20210416191939.1120651-1-ville.skytta@iki.fi> ("Ville
+ =?utf-8?Q?Skytt=C3=A4=22's?=
+        message of "Fri, 16 Apr 2021 22:19:39 +0300")
+Message-ID: <xmqq7dl2klo1.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E864351E-9EF1-11EB-BB8A-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 06B49188-9EF4-11EB-AD58-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Ville Skytt=C3=A4 <ville.skytta@iki.fi> writes:
 
-> So here is a real-life example.
+> Aliased command lookup accesses the `list` variable before it has been
+> set, causing an error in "nounset" mode. Initialize to an empty string
+> to avoid that.
 >
-> Let's say somebody is looking at a "gentle ping" [*1*]
+>     $ git nonexistent-command <Tab>bash: list: unbound variable
 >
-> znh> The patch seems to have fallen into the crack.
-> zhn> Jeff and Junio, willing to help?
->
-> How would we figure out what happened to the patch today without
-> visiting patchwork would be:
-> ...
-> Now, how can patchwork improve the above reviewer experience, out
-> of the box and possibly with new helpe rools around it?
+> Signed-off-by: Ville Skytt=C3=A4 <ville.skytta@iki.fi>
+> ---
+>  contrib/completion/git-completion.bash | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-Also, it would be ideal if it is made easy for willing reviewers
-with excess bandwidth to preemptively find and review patches that
-need reviewing.  I think your original write-up upthread covered
-this use case sufficiently.
+Thanks, will queue.
 
-Thanks.
-
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
+n/git-completion.bash
+> index dfa735ea62..49e76e9d08 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -1129,7 +1129,7 @@ __git_pretty_aliases ()
+>  # __git_aliased_command requires 1 argument
+>  __git_aliased_command ()
+>  {
+> -	local cur=3D$1 last list word cmdline
+> +	local cur=3D$1 last list=3D word cmdline
+> =20
+>  	while [[ -n "$cur" ]]; do
+>  		if [[ "$list" =3D=3D *" $cur "* ]]; then
