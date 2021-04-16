@@ -2,186 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_2 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 83086C433ED
-	for <git@archiver.kernel.org>; Fri, 16 Apr 2021 15:40:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB64FC433ED
+	for <git@archiver.kernel.org>; Fri, 16 Apr 2021 16:47:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5F63B611C2
-	for <git@archiver.kernel.org>; Fri, 16 Apr 2021 15:40:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A665161042
+	for <git@archiver.kernel.org>; Fri, 16 Apr 2021 16:47:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343882AbhDPPlF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Apr 2021 11:41:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59822 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235514AbhDPPlE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Apr 2021 11:41:04 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6C13C061574
-        for <git@vger.kernel.org>; Fri, 16 Apr 2021 08:40:38 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id r12so42808945ejr.5
-        for <git@vger.kernel.org>; Fri, 16 Apr 2021 08:40:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=9szvXQhXaj5Q+1VLaMwubTkHas+3V0Lti+HRjvEucPc=;
-        b=VVbxDyEb3VwK2onj+uzD0KAPykUVAQokSXvX1b6BzuNFfbZ8gNVSDv5deKo19EVqiD
-         cYz+s2kMPNlo6Nox4Of+ihPfny0shRqj/7BPRYF/oH8VIZn5xLAIRdgqS4jevVNdsxXm
-         dBBQsF7zS1ZVn3ft8Su/+g5kV0dO7/SOnZzenZ42/dwC5pQLryZHjw+G65c1gQ6kNeoz
-         nq0qXwP1RhW6U6+CVYpamBHtBE8JgZXKi78Z/UKn4S7ZcZ8SyuTOBjJRsyl7N96mYXmx
-         FIiqt4op0YatESA+l7SivHoGRgLopr8tnD1oWxyqSyv8PPTFnkp9WPoCR+umXwmQ2QOj
-         WzyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=9szvXQhXaj5Q+1VLaMwubTkHas+3V0Lti+HRjvEucPc=;
-        b=kkRQ28ytVwc9CmV/FDusmfU6dDGOfUs7SLDBuLDHhbKzoPllozyB3/vntpS8MsH7m4
-         mOwWvWelhGQUek3GkHkjk5MpebgVq9SkVyBhvkO5rB98rYzR0FiotOVrTtNoI3aXOE5z
-         Ei5JZlQvZNEfjvC4YQff89XK1LqYu3geAflDis5toAQjdrnV6mCKbDGo3Quf/ZDbHjdN
-         uVBCltZfeS9EjeEPK2UwT1BjZ+N+nhBiEtuQl4YUAguNLAOhUbrt+iJLT/80PT6N97Fq
-         RAyeut7xOYVUdUMb0qZkOhOXHk7WJEB+V4Kcnx9Q1phCVSVTelPsEOcRz6byUY5QD0Ta
-         092A==
-X-Gm-Message-State: AOAM532ScFpsbANgatQL2sdeoEAqt5aZcTM2E5Lu5fscHRBKbjj0Rdhw
-        Q3AJTIUiMqosb7Fs6jr0ZEFaRR1BD/g=
-X-Google-Smtp-Source: ABdhPJxImNKwmBVTnpbAJ5mhUtu4hvGW/VzV/0jajgzrWOHjJUcpY34TPIe8kuBRzUJu7NSETpoAwA==
-X-Received: by 2002:a17:906:3915:: with SMTP id f21mr9148849eje.256.1618587637358;
-        Fri, 16 Apr 2021 08:40:37 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id q25sm5735105edt.51.2021.04.16.08.40.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Apr 2021 08:40:36 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     git@vger.kernel.org, Simon Ruderich <simon@ruderich.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Philip Oakley <philipoakley@iee.email>
-Subject: Re: [PATCH v8 2/8] config: add new way to pass config via
- `--config-env`
-References: <cover.1606214397.git.ps@pks.im>
- <cover.1610453228.git.ps@pks.im>
- <470396d36f938f0070b8c849a85b1a30949056e3.1610453228.git.ps@pks.im>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <470396d36f938f0070b8c849a85b1a30949056e3.1610453228.git.ps@pks.im>
-Date:   Fri, 16 Apr 2021 17:40:36 +0200
-Message-ID: <87o8eeteyz.fsf@evledraar.gmail.com>
+        id S236178AbhDPQrw convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Fri, 16 Apr 2021 12:47:52 -0400
+Received: from mta-out-2-1.rz.uni-osnabrueck.de ([131.173.18.152]:53397 "EHLO
+        mta-out-2-1.rz.uni-osnabrueck.de" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S235595AbhDPQrw (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 16 Apr 2021 12:47:52 -0400
+X-Greylist: delayed 1554 seconds by postgrey-1.27 at vger.kernel.org; Fri, 16 Apr 2021 12:47:51 EDT
+Received: from vm411.rz.uni-osnabrueck.de (smtp-auth-1.serv.uni-osnabrueck.de [IPv6:2001:638:508:100::83ad:108f])
+        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by mta-out-2-1.rz.uni-osnabrueck.de (Postfix) with ESMTPS id 47C5F3000906
+        for <git@vger.kernel.org>; Fri, 16 Apr 2021 18:21:30 +0200 (CEST)
+Received: from pc.home.lkiesow.io (ip4d1546b6.dynamic.kabel-deutschland.de [77.21.70.182])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: lkiesow)
+        by vm411.rz.uni-osnabrueck.de (Postfix) with ESMTPSA id E62023050086
+        for <git@vger.kernel.org>; Fri, 16 Apr 2021 18:21:22 +0200 (CEST)
+Date:   Fri, 16 Apr 2021 18:21:21 +0200
+From:   Lars Kiesow <lkiesow@uos.de>
+To:     git@vger.kernel.org
+Subject: Bug report: gitk unable to handle Unicode properly
+Message-ID: <20210416182121.3c824c87@pc.home.lkiesow.io>
+Organization: =?UTF-8?B?T3NuYWJyw7xjaw==?= University
+X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
+X-PMX-Version: vm411.rz.uni-osnabrueck.de (Univ. Osnabrueck) with PMX 6.4.6.2792898, Antispam-Engine: 2.7.2.2107409, Antispam-Data: 2021.4.16.160915, AntiVirus-Engine: 5.82.0, AntiVirus-Data: 2021.4.15.5820001  
+X-PMX-Spam: Gauge=X, Probability=10%, Report=
+ TO_IN_SUBJECT 0.5, HTML_00_01 0.05, HTML_00_10 0.05, BODYTEXTP_SIZE_3000_LESS 0, BODY_SIZE_2000_2999 0, BODY_SIZE_5000_LESS 0, BODY_SIZE_7000_LESS 0, CT_TEXT_PLAIN_UTF8_CAPS 0, NO_CTA_FOUND 0, NO_CTA_URI_FOUND 0, NO_URI_HTTPS 0, __ANY_URI 0, __BODY_NO_MAILTO 0, __CT 0, __CTE 0, __CT_TEXT_PLAIN 0, __FRAUD_MONEY_CURRENCY 0, __FRAUD_MONEY_CURRENCY_DOLLAR 0, __FROM_DOMAIN_NOT_IN_BODY 0, __FROM_NAME_NOT_IN_BODY 0, __HAS_FROM 0, __HAS_MSGID 0, __HAS_X_MAILER 0, __HIGHBITS 0, __MIME_TEXT_ONLY 0, __MIME_TEXT_P 0, __MIME_TEXT_P1 0, __MIME_VERSION 0, __NO_HTML_TAG_RAW 0, __PHISH_SPEAR_SUBJ_PREDICATE 0, __SANE_MSGID 0, __SUBJ_ALPHA_END 0, __SUBJ_ALPHA_NEGATE 0, __TO_IN_SUBJECT 0, __TO_IN_SUBJECT2 0, __TO_MALFORMED_2 0, __TO_NO_NAME 0, __URI_NO_MAILTO 0, __URI_NO_WWW 0
+X-PMX-Spam-Level: X
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi everyone,
+while fixing some Unicode problems in a project, I noticed that gitk
+will not display Unicode characters correctly and may even crash if the
+branch name consists of Unicode characters.
 
-On Tue, Jan 12 2021, Patrick Steinhardt wrote:
+I'ts certainly not the end of the world (who is crazy enough to use 🖤
+as a branch name) but could still cause problems.
 
-A minor doc bug that wasn't spotted before landing. Here we say
-"--config-env foo=bar" will work:
+Please find some additional information below.
 
-> diff --git a/Documentation/git.txt b/Documentation/git.txt
-> index a6d4ad0818..d36e6fd482 100644
-> --- a/Documentation/git.txt
-> +++ b/Documentation/git.txt
-> @@ -13,7 +13,7 @@ SYNOPSIS
->      [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
->      [-p|--paginate|-P|--no-pager] [--no-replace-objects] [--bare]
->      [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
-> -    [--super-prefix=<path>]
-> +    [--super-prefix=<path>] [--config-env <name>=<envvar>]
->      <command> [<args>]
->  
->  DESCRIPTION
-> @@ -80,6 +80,28 @@ config file). Including the equals but with an empty value (like `git -c
->  foo.bar= ...`) sets `foo.bar` to the empty string which `git config
->  --type=bool` will convert to `false`.
+Best regards,
+Lars
 
-But not here, we ask for "--config-env=" (note the "="):
 
-> +--config-env=<name>=<envvar>::
-> +	Like `-c <name>=<value>`, give configuration variable
-> +	'<name>' a value, where <envvar> is the name of an
-> +	environment variable from which to retrieve the value. Unlike
-> +	`-c` there is no shortcut for directly setting the value to an
-> +	empty string, instead the environment variable itself must be
-> +	set to the empty string.  It is an error if the `<envvar>` does not exist
-> +	in the environment. `<envvar>` may not contain an equals sign
-> +	to avoid ambiguity with `<name>`s which contain one.
-> ++
-> [...]
-> +		} else if (skip_prefix(cmd, "--config-env=", &cmd)) {
-> +			git_config_push_env(cmd);
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-But as this...
+- Create a git branch named with a multi-byte Unicode character like:
 
-> +test_expect_success 'git --config-env=key=envvar support' '
-> +	cat >expect <<-\EOF &&
-> +	value
-> +	value
-> +	false
-> +	EOF
-> +	{
-> +		ENVVAR=value git --config-env=core.name=ENVVAR config core.name &&
-> +		ENVVAR=value git --config-env=foo.CamelCase=ENVVAR config foo.camelcase &&
-> +		ENVVAR= git --config-env=foo.flag=ENVVAR config --bool foo.flag
-> +	} >actual &&
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'git --config-env fails with invalid parameters' '
-> +	test_must_fail git --config-env=foo.flag config --bool foo.flag 2>error &&
-> +	test_i18ngrep "invalid config format: foo.flag" error &&
-> +	test_must_fail git --config-env=foo.flag= config --bool foo.flag 2>error &&
-> +	test_i18ngrep "missing environment variable name for configuration ${SQ}foo.flag${SQ}" error &&
-> +	sane_unset NONEXISTENT &&
-> +	test_must_fail git --config-env=foo.flag=NONEXISTENT config --bool foo.flag 2>error &&
-> +	test_i18ngrep "missing environment variable ${SQ}NONEXISTENT${SQ} for configuration ${SQ}foo.flag${SQ}" error
-> +'
-> +
-> +test_expect_success 'git -c and --config-env work together' '
-> +	cat >expect <<-\EOF &&
-> +	bar.cmd cmd-value
-> +	bar.env env-value
-> +	EOF
-> +	ENVVAR=env-value git \
-> +		-c bar.cmd=cmd-value \
-> +		--config-env=bar.env=ENVVAR \
-> +		config --get-regexp "^bar.*" >actual &&
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'git -c and --config-env override each other' '
-> +	cat >expect <<-\EOF &&
-> +	env
-> +	cmd
-> +	EOF
-> +	{
-> +		ENVVAR=env git -c bar.bar=cmd --config-env=bar.bar=ENVVAR config bar.bar &&
-> +		ENVVAR=env git --config-env=bar.bar=ENVVAR -c bar.bar=cmd config bar.bar
-> +	} >actual &&
-> +	test_cmp expect actual
-> +'
-> +
->  test_expect_success 'git config --edit works' '
->  	git config -f tmp test.value no &&
->  	echo test.value=yes >expect &&
+        git checkout -b 🖤
 
-...and the tests show we just support the --opt=foo=bar form, not --opt
-foo=bar.
+- Launch gitk
+    - Crash (see below)
 
-Bonus points to anyone sorting out some of the existing inconsistencies
-when fixing this, i.e. --exec-path supports either the "=" form, or not,
-but various other skip_prefix() in the same function don't, seemingly
-(but I have not tested) for no good reason.
+- Switch to another branch
 
-It seems to me that having a skip_prefix_opt() or something would be a
-good fix for this, i.e. a "maybe trim the last '='" version of
-skip_prefix. Then we could just consistently use that.
+        git checkout xy
 
-Or maybe there's some reason we don't want to be as lax as --exec-path
-with any other option...
+- Launch gitk
+    - Branch names are not displayed properly
 
+
+What did you expect to happen? (Expected behavior)
+
+- Launching gitk, it should not crash and names like “🖤” should be
+  displayed correctly
+
+
+What happened instead? (Actual behavior)
+
+- Launching while on the branch “🖤” crashed gitk.
+  The reported error is:
+
+        X Error of failed request:  BadLength (poly request too large or internal Xlib length error)
+          Major opcode of failed request:  139 (RENDER)
+          Minor opcode of failed request:  20 (RenderAddGlyphs)
+          Serial number of failed request:  5225
+          Current serial number in output stream:  5263
+
+- Launching while on another branch but with the branch “🖤” makes that
+  branch appear as ⌷⌷
+
+
+What's different between what you expected and what actually happened?
+
+- gitk should launch and display Unicode characters correctly
+
+
+[System Info]
+git version:
+git version 2.30.2
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 5.11.11-200.fc33.x86_64 #1 SMP Tue Mar 30 16:53:32 UTC
+2021 x86_64 compiler info: gnuc: 10.2
+libc info: glibc: 2.32
+$SHELL (typically, interactive shell): /bin/zsh
+
+
+[Enabled Hooks]
