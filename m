@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F333BC43460
-	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 12:53:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 79598C433B4
+	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 12:53:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CD03D611AC
-	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 12:53:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3B632611C2
+	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 12:53:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236531AbhDQMyJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Apr 2021 08:54:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54962 "EHLO
+        id S236540AbhDQMyO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Apr 2021 08:54:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236495AbhDQMyG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Apr 2021 08:54:06 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EF5EC061756
-        for <git@vger.kernel.org>; Sat, 17 Apr 2021 05:53:38 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id n4-20020a05600c4f84b029013151278decso4353153wmq.4
-        for <git@vger.kernel.org>; Sat, 17 Apr 2021 05:53:38 -0700 (PDT)
+        with ESMTP id S236461AbhDQMyM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Apr 2021 08:54:12 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57C11C061574
+        for <git@vger.kernel.org>; Sat, 17 Apr 2021 05:53:44 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id y5-20020a05600c3645b0290132b13aaa3bso3813982wmq.1
+        for <git@vger.kernel.org>; Sat, 17 Apr 2021 05:53:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=cL+Yf735B8BILcHwKCNszDz+Do2V7ma+Y3G5U/IY+ns=;
-        b=dtxiJRJdyrACRx9agOQnstl35wbB6MIzMTmkZLWIESUVCay6EusgVtXrX/N/Gy0ObP
-         bMbbxX6r4tAeAKprCxphQgJN/xslHLR+irSuWtAyC7Z6BpLpVrK2yzKISEjvelIZOKem
-         a9S3FO5WnNomU4Z3yBkzgm4r13eT475BV4AWLWR5CFkZiKLaBsEiOQM5iMtpdossZeFJ
-         NormOtOvYgJrspBOMXSjRHWB5sJIdNcpV/Cr0BWu/ehwHkUDtxc73pqtkmTzTEb1YuZq
-         4nNAu7ZQIBBiMcZec10zAGnJmcTmihVbG8QdoHNlMssyX7G1UvUoI/Jv+fQFJmPjiP02
-         QPiw==
+        bh=eH8tBSxiB1F5Gp8TB7DTOQRB+ZGpEIZjseqEuRjzrxM=;
+        b=TxRpD8SpGSGydvCPCSZLSB0sD6/bOdmtxFaqHMFa+YZLFX0xXhjpO4gbT6l9eOylz0
+         WSPy/SqofxPeGGo9Kj/7KMt3ULxOKi2Pw0ncqu6LPf7IGplkryfeLpW4U9X78ILzZy/E
+         sDcHVtU8wwrkhUwODNDzFhm4o0jKhwXByvuBnh1y1hZRyUEbAVSL1SGvEZCmpg/M7xJa
+         hadL0e48QsiLJUvYi0Ji/JTfYA4t0gskMIg3rIPrVP3k9cJSNCMkI4eEd4kkHsNEtE2d
+         930iM0VIDyR78WXgOZ2V3VT/EgzFNDMGgduupKxPuO2wmmFIo1bV5c8q5IxB4LHdMuL0
+         KNlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=cL+Yf735B8BILcHwKCNszDz+Do2V7ma+Y3G5U/IY+ns=;
-        b=NO+v8nCTY2I+korg50xFSGw0Zllxp0kzN7zi0cqs1qnn3B0L89EfY1Mlq8p/rSrOAL
-         MuaK7/al6X7hC1vHW6bHc/gRzV+9cAlmQRi5fiMZhQ22l/2PfGt1VYjPJCTxQQlda/Xt
-         tpSphk8FdWOAlIW3gdkjuSeRs4Nr/LUHYqYyamsRn4d/vRZybUIvjcchNtLQURnjvfrs
-         rPmmM6PGhvZ6eVWqAEcbA7ozhHED1zzr3q78HPJ8+Cal3exDB8FJShAadb4ECGftsj4E
-         UAXB0Chst7/eMf42GcOtaUSgJCv+jvSC884ZuLQyvQ1GkWQ7BCsNBHc4rP8Z7+eLmoyo
-         AJxA==
-X-Gm-Message-State: AOAM532DWnF8HqcMcX5rhLSQM7epKNj0WaBLbPY7fqroE6N83eTrJpnz
-        9fsuFr0mbG39sqAKtYmthtEIvb4wIWAZZg==
-X-Google-Smtp-Source: ABdhPJxKr4rchWOkXKp13DVrGH9a2ZMFOKJWMeS2bG7RqQMGjSlatbLCke3kEI0YCcqB7dniEOds/Q==
-X-Received: by 2002:a05:600c:d4:: with SMTP id u20mr12576654wmm.164.1618664016764;
-        Sat, 17 Apr 2021 05:53:36 -0700 (PDT)
+        bh=eH8tBSxiB1F5Gp8TB7DTOQRB+ZGpEIZjseqEuRjzrxM=;
+        b=T1EZl3jKAKM4IaNMdmQZeUIxetQxQVXwyXZ+MdIfMCwgMGbO/po8Cc0hBzcIfsY9XF
+         Ld9Tug8+ilvrMQHUNCj7OC9kugxVOxSACxTSRmIgocPRGlIcz7pwDIIHGypbgAS5MDs6
+         J27DPadLRhg7tfHR7fnnJxAFz9imLe/7V2m/ZX7azuRSXoYWlbPylQPNe0ONSuQkMSvB
+         MnoXo6+GEo+WvweqFbIA86hLKyNQ8pY/vUEl8QVRpZ2TSu3kpfaNyG95/JTVtIJLWVPH
+         R/b3H49xSmsNHn5BwnOkG+kdsYu4LCMpeIuTXsMrBwEYq+qIbJkyz9I+mPEUSOp9YZ+T
+         wG6w==
+X-Gm-Message-State: AOAM532l1vb0jB8UflKVfbuIJtV2M4W/IvjI8OJZyq8fEJy8LqQ1xpqY
+        4Js0gljH0K7NrMpVnjl7TdgfKTo1JE1iFw==
+X-Google-Smtp-Source: ABdhPJwYKsq23IgYlTllwUy7gN8wxIcYaFtruG1R/jLfjKGCvijSUNV2ZSIeGmxmJq+rgpXnYypwTw==
+X-Received: by 2002:a1c:4c04:: with SMTP id z4mr764129wmf.28.1618664022864;
+        Sat, 17 Apr 2021 05:53:42 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id v4sm11594529wme.14.2021.04.17.05.53.36
+        by smtp.gmail.com with ESMTPSA id v4sm11594529wme.14.2021.04.17.05.53.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 17 Apr 2021 05:53:36 -0700 (PDT)
+        Sat, 17 Apr 2021 05:53:42 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -68,9 +68,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 01/12] check-non-portable-shell: check for "test <cond> -a/-o <cond>"
-Date:   Sat, 17 Apr 2021 14:52:34 +0200
-Message-Id: <patch-01.12-a8b483bc771-20210417T124424Z-avarab@gmail.com>
+Subject: [PATCH v2 08/12] test-lib functions: add --printf option to test_commit
+Date:   Sat, 17 Apr 2021 14:52:41 +0200
+Message-Id: <patch-08.12-dc0a863db72-20210417T124424Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.1.722.g788886f50a2
 In-Reply-To: <cover-00.12-00000000000-20210417T124424Z-avarab@gmail.com>
 References: <cover-00.16-00000000000-20210412T110456Z-avarab@gmail.com> <cover-00.12-00000000000-20210417T124424Z-avarab@gmail.com>
@@ -81,43 +81,160 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a check for -a/-o in "test", as a follow-up to the
-CodingGuidelines having recommended against their use since
-897f964c0dc (CodingGuidelines: avoid "test <cond> -a/-o <cond>",
-2014-05-20).
+Add a --printf option to test_commit to allow writing to the file with
+"printf" instead of "echo".
 
-These constructs are considered obsolescent by POSIX[1]. GNU has
-likewise warned against them[2] for a few decades.
+This is useful for writing "\n", "\0" etc., in particular in
+combination with the --append option added in 3373518cc8 (test-lib
+functions: add an --append option to test_commit, 2021-01-12).
 
-These will only match the simplistic forms of `test -X blah` (where
-"-X" is some single letter option), but will miss expressions such as
-`test "$foo" = bar`. We stop at "&" or "|" to try not to overmatch
-things like:
-
-    test whatever && ls -a foo
-    test whatever && foo -o outfile
-
-1. https://pubs.opengroup.org/onlinepubs/9699919799/utilities/test.html#tag_20_128_16
-2. https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.70/html_node/Limitations-of-Builtins.html
+I'm converting a few tests to use the new option rather than a manual
+printf/add/commit combination to demonstrate its usefulness. While I'm
+at it use "test_create_repo" where appropriate, and give the
+first/second commit a meaningful/more conventional log message in
+cases where no test cared about that message.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/check-non-portable-shell.pl | 2 ++
- 1 file changed, 2 insertions(+)
+ t/t1307-config-blob.sh    |  4 +---
+ t/t2030-unresolve-info.sh |  3 +--
+ t/t4006-diff-mode.sh      |  6 ++----
+ t/t4030-diff-textconv.sh  |  8 ++------
+ t/t5520-pull.sh           | 10 ++--------
+ t/test-lib-functions.sh   | 12 ++++++++++--
+ 6 files changed, 18 insertions(+), 25 deletions(-)
 
-diff --git a/t/check-non-portable-shell.pl b/t/check-non-portable-shell.pl
-index fd3303552be..894aa0a4f92 100755
---- a/t/check-non-portable-shell.pl
-+++ b/t/check-non-portable-shell.pl
-@@ -41,6 +41,8 @@ sub err {
- 	/^\s*declare\s+/ and err 'arrays/declare not portable';
- 	/^\s*[^#]\s*which\s/ and err 'which is not portable (use type)';
- 	/\btest\s+[^=]*==/ and err '"test a == b" is not portable (use =)';
-+	/\btest\s+-[a-z]\s+[^&|]+\s+-a\s+/ and err '"test A && test B" preferred to "test A -a B"';
-+	/\btest\s+-[a-z]\s+[^&|]+\s+-o\s+/ and err '"test A || test B" preferred to "test A -o B"';
- 	/\bwc -l.*"\s*=/ and err '`"$(wc -l)"` is not portable (use test_line_count)';
- 	/\bhead\s+-c\b/ and err 'head -c is not portable (use test_copy_bytes BYTES <file >out)';
- 	/(?:\$\(seq|^\s*seq\b)/ and err 'seq is not portable (use test_seq)';
+diff --git a/t/t1307-config-blob.sh b/t/t1307-config-blob.sh
+index 002e6d3388e..930dce06f0f 100755
+--- a/t/t1307-config-blob.sh
++++ b/t/t1307-config-blob.sh
+@@ -65,9 +65,7 @@ test_expect_success 'parse errors in blobs are properly attributed' '
+ '
+ 
+ test_expect_success 'can parse blob ending with CR' '
+-	printf "[some]key = value\\r" >config &&
+-	git add config &&
+-	git commit -m CR &&
++	test_commit --printf CR config "[some]key = value\\r" &&
+ 	echo value >expect &&
+ 	git config --blob=HEAD:config some.key >actual &&
+ 	test_cmp expect actual
+diff --git a/t/t2030-unresolve-info.sh b/t/t2030-unresolve-info.sh
+index be6c84c52a2..f691e6d9032 100755
+--- a/t/t2030-unresolve-info.sh
++++ b/t/t2030-unresolve-info.sh
+@@ -179,8 +179,7 @@ test_expect_success 'rerere and rerere forget (subdirectory)' '
+ 
+ test_expect_success 'rerere forget (binary)' '
+ 	git checkout -f side &&
+-	printf "a\0c" >binary &&
+-	git commit -a -m binary &&
++	test_commit --printf binary binary "a\0c" &&
+ 	test_must_fail git merge second &&
+ 	git rerere forget binary
+ '
+diff --git a/t/t4006-diff-mode.sh b/t/t4006-diff-mode.sh
+index 275ce5fa15b..6cdee2a2164 100755
+--- a/t/t4006-diff-mode.sh
++++ b/t/t4006-diff-mode.sh
+@@ -26,10 +26,8 @@ test_expect_success 'chmod' '
+ '
+ 
+ test_expect_success 'prepare binary file' '
+-	git commit -m rezrov &&
+-	printf "\00\01\02\03\04\05\06" >binbin &&
+-	git add binbin &&
+-	git commit -m binbin
++	git commit -m one &&
++	test_commit --printf two binbin "\00\01\02\03\04\05\06"
+ '
+ 
+ test_expect_success '--stat output after text chmod' '
+diff --git a/t/t4030-diff-textconv.sh b/t/t4030-diff-textconv.sh
+index c906320b60d..a39a626664d 100755
+--- a/t/t4030-diff-textconv.sh
++++ b/t/t4030-diff-textconv.sh
+@@ -26,12 +26,8 @@ EOF
+ chmod +x hexdump
+ 
+ test_expect_success 'setup binary file with history' '
+-	printf "\\0\\n" >file &&
+-	git add file &&
+-	git commit -m one &&
+-	printf "\\01\\n" >>file &&
+-	git add file &&
+-	git commit -m two
++	test_commit --printf one file "\\0\\n" &&
++	test_commit --printf --append two file "\\01\\n"
+ '
+ 
+ test_expect_success 'file is considered binary by porcelain' '
+diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
+index a09411327f9..e2c0c510222 100755
+--- a/t/t5520-pull.sh
++++ b/t/t5520-pull.sh
+@@ -746,14 +746,8 @@ test_expect_success 'pull --rebase fails on corrupt HEAD' '
+ '
+ 
+ test_expect_success 'setup for detecting upstreamed changes' '
+-	mkdir src &&
+-	(
+-		cd src &&
+-		git init &&
+-		printf "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n" > stuff &&
+-		git add stuff &&
+-		git commit -m "Initial revision"
+-	) &&
++	test_create_repo src &&
++	test_commit -C src --printf one stuff "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n" &&
+ 	git clone src dst &&
+ 	(
+ 		cd src &&
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 6e2332a324a..dbeb3d92628 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -173,6 +173,10 @@ debug () {
+ #	Do not call test_tick before making a commit
+ #   --append
+ #	Use ">>" instead of ">" when writing "<contents>" to "<file>"
++#   --printf
++#       Use "printf" instead of "echo" when writing "<contents>" to
++#       "<file>". You will need to provide your own trailing "\n". You
++#       can only supply the FORMAT for the printf(1), not its ARGUMENT(s).
+ #   --signoff
+ #	Invoke "git commit" with --signoff
+ #   --author <author>
+@@ -191,6 +195,7 @@ debug () {
+ 
+ test_commit () {
+ 	notick= &&
++	echo=echo &&
+ 	append= &&
+ 	author= &&
+ 	signoff= &&
+@@ -202,6 +207,9 @@ test_commit () {
+ 		--notick)
+ 			notick=yes
+ 			;;
++		--printf)
++			echo=printf
++			;;
+ 		--append)
+ 			append=yes
+ 			;;
+@@ -238,9 +246,9 @@ test_commit () {
+ 	file=${2:-"$1.t"} &&
+ 	if test -n "$append"
+ 	then
+-		echo "${3-$1}" >>"$indir$file"
++		$echo "${3-$1}" >>"$indir$file"
+ 	else
+-		echo "${3-$1}" >"$indir$file"
++		$echo "${3-$1}" >"$indir$file"
+ 	fi &&
+ 	git ${indir:+ -C "$indir"} add "$file" &&
+ 	if test -z "$notick"
 -- 
 2.31.1.722.g788886f50a2
 
