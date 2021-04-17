@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A042C43462
-	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 12:53:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F333BC43460
+	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 12:53:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 04E0A61208
-	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 12:53:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CD03D611AC
+	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 12:53:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236226AbhDQMyN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Apr 2021 08:54:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54986 "EHLO
+        id S236531AbhDQMyJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Apr 2021 08:54:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54962 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236437AbhDQMyK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Apr 2021 08:54:10 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A319BC061756
-        for <git@vger.kernel.org>; Sat, 17 Apr 2021 05:53:42 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id f195-20020a1c1fcc0000b029012eb88126d7so5586403wmf.3
-        for <git@vger.kernel.org>; Sat, 17 Apr 2021 05:53:42 -0700 (PDT)
+        with ESMTP id S236495AbhDQMyG (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Apr 2021 08:54:06 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EF5EC061756
+        for <git@vger.kernel.org>; Sat, 17 Apr 2021 05:53:38 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id n4-20020a05600c4f84b029013151278decso4353153wmq.4
+        for <git@vger.kernel.org>; Sat, 17 Apr 2021 05:53:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=JM3dB/ZI4CquGHNqPvx6uWkmmgv9q7o7NjIHgVuPcE0=;
-        b=FKPcLcgEJIzcxPz/OIH6+Pl6GPyITIGD+Mxm90thvVEQMP2Rz49U5vixgSDMLH8sB3
-         GYCIzsrwFvrdDvQ9WIdTvOd0jj7exa0V6Sf2KBU/7ZSVYB69m7LiDyijV3DlqHYTSmsM
-         o4+09jrxuPwKt+cCXU+6tvvmNMmSanZs7XIY94nkUnEMAfK5BkPcACdFu68gVJ/sT3nD
-         hKve/wNykyFAmYopciujn387hu/s4IkoXQ91aOf7o95wV5gob0pvMPoItIRNPw5NkDgD
-         5DTpBYqvXyni+bVAhkBzaY6Hotppyb7gzdrDyM8ds5yAXElsVtGrwCmf6P5RU+I7BDQl
-         HVOw==
+        bh=cL+Yf735B8BILcHwKCNszDz+Do2V7ma+Y3G5U/IY+ns=;
+        b=dtxiJRJdyrACRx9agOQnstl35wbB6MIzMTmkZLWIESUVCay6EusgVtXrX/N/Gy0ObP
+         bMbbxX6r4tAeAKprCxphQgJN/xslHLR+irSuWtAyC7Z6BpLpVrK2yzKISEjvelIZOKem
+         a9S3FO5WnNomU4Z3yBkzgm4r13eT475BV4AWLWR5CFkZiKLaBsEiOQM5iMtpdossZeFJ
+         NormOtOvYgJrspBOMXSjRHWB5sJIdNcpV/Cr0BWu/ehwHkUDtxc73pqtkmTzTEb1YuZq
+         4nNAu7ZQIBBiMcZec10zAGnJmcTmihVbG8QdoHNlMssyX7G1UvUoI/Jv+fQFJmPjiP02
+         QPiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=JM3dB/ZI4CquGHNqPvx6uWkmmgv9q7o7NjIHgVuPcE0=;
-        b=VYB2n/8EKHBcd/dIRGgWlH7sjwyHJO/jyi5LTC97UXrE8kkSRNzyOhWBy4kibsY5K4
-         XS6zN0nmVmqwhRzF/f2YCGWaw8XqHcOdj6mQKRwzLy1NoBGZojdBOdwUo7qd3KF5L668
-         v7TnR4ga6Tbkaj9x9B4aDICdPKB1HCUtqpXn4B9n/NcVI4IoY7mJ7xNOy3JO0Rdkn3TX
-         TbFKWF5SRyqbYF50Dqd7PJq1M3rdY8NbMGy8hCtW6xYnXnq15burEuwNFr+lvdA0GoFH
-         wQsy/73uxvbYg+Cc1kqIEExI+VOimtWnxTUk+IVPavZsAe0UPsH21LdKiPGq7r1DYWQY
-         myMQ==
-X-Gm-Message-State: AOAM532O6vFipHRjwDOFZSivpBBW0Ddl5vcP1h0O2YTEeEvC71DYvf0d
-        upFgEWrhUyTY6O4H8On4qc57ql6k5pJx0w==
-X-Google-Smtp-Source: ABdhPJx/tID55vYMLTAeiAfoa1kiGSQclk+MRSlyNQe96pTgXAoOwqY/qmsUdT3kREtgFgzc/2B7Zw==
-X-Received: by 2002:a7b:c394:: with SMTP id s20mr12850375wmj.4.1618664021171;
-        Sat, 17 Apr 2021 05:53:41 -0700 (PDT)
+        bh=cL+Yf735B8BILcHwKCNszDz+Do2V7ma+Y3G5U/IY+ns=;
+        b=NO+v8nCTY2I+korg50xFSGw0Zllxp0kzN7zi0cqs1qnn3B0L89EfY1Mlq8p/rSrOAL
+         MuaK7/al6X7hC1vHW6bHc/gRzV+9cAlmQRi5fiMZhQ22l/2PfGt1VYjPJCTxQQlda/Xt
+         tpSphk8FdWOAlIW3gdkjuSeRs4Nr/LUHYqYyamsRn4d/vRZybUIvjcchNtLQURnjvfrs
+         rPmmM6PGhvZ6eVWqAEcbA7ozhHED1zzr3q78HPJ8+Cal3exDB8FJShAadb4ECGftsj4E
+         UAXB0Chst7/eMf42GcOtaUSgJCv+jvSC884ZuLQyvQ1GkWQ7BCsNBHc4rP8Z7+eLmoyo
+         AJxA==
+X-Gm-Message-State: AOAM532DWnF8HqcMcX5rhLSQM7epKNj0WaBLbPY7fqroE6N83eTrJpnz
+        9fsuFr0mbG39sqAKtYmthtEIvb4wIWAZZg==
+X-Google-Smtp-Source: ABdhPJxKr4rchWOkXKp13DVrGH9a2ZMFOKJWMeS2bG7RqQMGjSlatbLCke3kEI0YCcqB7dniEOds/Q==
+X-Received: by 2002:a05:600c:d4:: with SMTP id u20mr12576654wmm.164.1618664016764;
+        Sat, 17 Apr 2021 05:53:36 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id v4sm11594529wme.14.2021.04.17.05.53.40
+        by smtp.gmail.com with ESMTPSA id v4sm11594529wme.14.2021.04.17.05.53.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 17 Apr 2021 05:53:40 -0700 (PDT)
+        Sat, 17 Apr 2021 05:53:36 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -68,9 +68,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 06/12] test-lib functions: add an --annotated option to "test_commit"
-Date:   Sat, 17 Apr 2021 14:52:39 +0200
-Message-Id: <patch-06.12-9b6bf65ce1c-20210417T124424Z-avarab@gmail.com>
+Subject: [PATCH v2 01/12] check-non-portable-shell: check for "test <cond> -a/-o <cond>"
+Date:   Sat, 17 Apr 2021 14:52:34 +0200
+Message-Id: <patch-01.12-a8b483bc771-20210417T124424Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.1.722.g788886f50a2
 In-Reply-To: <cover-00.12-00000000000-20210417T124424Z-avarab@gmail.com>
 References: <cover-00.16-00000000000-20210412T110456Z-avarab@gmail.com> <cover-00.12-00000000000-20210417T124424Z-avarab@gmail.com>
@@ -81,98 +81,43 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add an --annotated option to test_commit to create annotated tags. The
-tag will share the same message as the commit, and we'll call
-test_tick before creating it (unless --notick) is provided.
+Add a check for -a/-o in "test", as a follow-up to the
+CodingGuidelines having recommended against their use since
+897f964c0dc (CodingGuidelines: avoid "test <cond> -a/-o <cond>",
+2014-05-20).
 
-There's quite a few tests that could be simplified with this
-construct. I've picked one to convert in this change as a
-demonstration.
+These constructs are considered obsolescent by POSIX[1]. GNU has
+likewise warned against them[2] for a few decades.
+
+These will only match the simplistic forms of `test -X blah` (where
+"-X" is some single letter option), but will miss expressions such as
+`test "$foo" = bar`. We stop at "&" or "|" to try not to overmatch
+things like:
+
+    test whatever && ls -a foo
+    test whatever && foo -o outfile
+
+1. https://pubs.opengroup.org/onlinepubs/9699919799/utilities/test.html#tag_20_128_16
+2. https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.70/html_node/Limitations-of-Builtins.html
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t1403-show-ref.sh     |  6 ++----
- t/test-lib-functions.sh | 27 ++++++++++++++++++++++-----
- 2 files changed, 24 insertions(+), 9 deletions(-)
+ t/check-non-portable-shell.pl | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/t/t1403-show-ref.sh b/t/t1403-show-ref.sh
-index 6ce62f878c3..17d3cc14050 100755
---- a/t/t1403-show-ref.sh
-+++ b/t/t1403-show-ref.sh
-@@ -7,11 +7,9 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- . ./test-lib.sh
- 
- test_expect_success setup '
--	test_commit A &&
--	git tag -f -a -m "annotated A" A &&
-+	test_commit --annotate A &&
- 	git checkout -b side &&
--	test_commit B &&
--	git tag -f -a -m "annotated B" B &&
-+	test_commit --annotate B &&
- 	git checkout main &&
- 	test_commit C &&
- 	git branch B A^0
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index d0f4f3885d6..6e2332a324a 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -179,6 +179,10 @@ debug () {
- #	Invoke "git commit" with --author <author>
- #   --no-tag
- #	Do not tag the resulting commit
-+#   --annotate
-+#	Create an annotated tag with "--annotate -m <message>". Calls
-+#	test_tick between making the commit and tag, unless --notick
-+#	is given.
- #
- # This will commit a file with the given contents and the given commit
- # message, and tag the resulting commit with the given tag name.
-@@ -191,7 +195,7 @@ test_commit () {
- 	author= &&
- 	signoff= &&
- 	indir= &&
--	no_tag= &&
-+	tag=light &&
- 	while test $# != 0
- 	do
- 		case "$1" in
-@@ -219,7 +223,10 @@ test_commit () {
- 			shift
- 			;;
- 		--no-tag)
--			no_tag=yes
-+			tag=none
-+			;;
-+		--annotate)
-+			tag=annotate
- 			;;
- 		*)
- 			break
-@@ -243,10 +250,20 @@ test_commit () {
- 	git ${indir:+ -C "$indir"} commit \
- 	    ${author:+ --author "$author"} \
- 	    $signoff -m "$1" &&
--	if test -z "$no_tag"
--	then
-+	case "$tag" in
-+	none)
-+		;;
-+	light)
- 		git ${indir:+ -C "$indir"} tag "${4:-$1}"
--	fi
-+		;;
-+	annotate)
-+		if test -z "$notick"
-+		then
-+			test_tick
-+		fi &&
-+		git ${indir:+ -C "$indir"} tag -a -m "$1" "${4:-$1}"
-+		;;
-+	esac
- }
- 
- # Call test_merge with the arguments "<message> <commit>", where <commit>
+diff --git a/t/check-non-portable-shell.pl b/t/check-non-portable-shell.pl
+index fd3303552be..894aa0a4f92 100755
+--- a/t/check-non-portable-shell.pl
++++ b/t/check-non-portable-shell.pl
+@@ -41,6 +41,8 @@ sub err {
+ 	/^\s*declare\s+/ and err 'arrays/declare not portable';
+ 	/^\s*[^#]\s*which\s/ and err 'which is not portable (use type)';
+ 	/\btest\s+[^=]*==/ and err '"test a == b" is not portable (use =)';
++	/\btest\s+-[a-z]\s+[^&|]+\s+-a\s+/ and err '"test A && test B" preferred to "test A -a B"';
++	/\btest\s+-[a-z]\s+[^&|]+\s+-o\s+/ and err '"test A || test B" preferred to "test A -o B"';
+ 	/\bwc -l.*"\s*=/ and err '`"$(wc -l)"` is not portable (use test_line_count)';
+ 	/\bhead\s+-c\b/ and err 'head -c is not portable (use test_copy_bytes BYTES <file >out)';
+ 	/(?:\$\(seq|^\s*seq\b)/ and err 'seq is not portable (use test_seq)';
 -- 
 2.31.1.722.g788886f50a2
 
