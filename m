@@ -5,64 +5,64 @@ X-Spam-Level:
 X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2FE5C433B4
-	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 15:13:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 916D4C43461
+	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 15:13:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A94B1611AF
-	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 15:13:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6E8EB60FF1
+	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 15:13:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236611AbhDQPOI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Apr 2021 11:14:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57088 "EHLO
+        id S236287AbhDQPOJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Apr 2021 11:14:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57090 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236581AbhDQPOI (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S236605AbhDQPOI (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 17 Apr 2021 11:14:08 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77EBEC061574
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8693BC061756
         for <git@vger.kernel.org>; Sat, 17 Apr 2021 08:13:41 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id y5-20020a05600c3645b0290132b13aaa3bso3934890wmq.1
+Received: by mail-wm1-x332.google.com with SMTP id t14-20020a05600c198eb029012eeb3edfaeso5708210wmq.2
         for <git@vger.kernel.org>; Sat, 17 Apr 2021 08:13:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=6gXQlC6WfeDhidMTMl3NDyHiPUKU9vvCJH+mC6VPa/k=;
-        b=g+nIupatmlp7+YfRkzBrtUyYqQNi0ptqvjl3HDIJo9pdU8+Urwr/7fHmf4uXZS49wC
-         9Mse6a0pABDnhRIQ4xQ7wnb5CVk5CY17PMIfWhd0s7VBEr0iqfzWC783UttNX82E5deh
-         zMpj1lqOaxqVYMpVlPJpIJQJ6UCAuTZNMtDp0OGaWjweg71hn4ef95XiY9iXw37rUC5A
-         0jXTJRxbsDQVUXWNib/qQsc6MBxt0x/HiqwfKYVNA3PmgYG8DPGrQDYDHNyHplQzGapl
-         vjRQymwpu4WG1n+E+CZXqkFJO4bo0HLPKsgdy5deAYybLp9mBc480xJtMw+QIPaGJhgW
-         miSA==
+        bh=DDdoas0nzEoy0UlGPxF79WHx0DyLjxc5rXrE7r9U2Jo=;
+        b=pRqjkGBaqhYBjtHksZgyNBHi92vS/svWo6iWUAhpIubYV1ILlcTHElztwYtiUpPD1x
+         HCt8v6kJM89+xAraB2dMQzRMJeXlvc/vRfE1WMzFqUJLe2viWiSU6Rs/kHq5fNPxJ8uT
+         zuH4wuTOQrjpT6KeFu8rC2R+Yf86eRARoe0duOc2QwFYrBJbPFGkZcWaQ+IzsTzvkuF1
+         G656gReXfbLrqAljmgxhkN5lT9izKfwPa9wcSxO4ZOQwkDiUQCL5+bOfl1dyEDHJkA44
+         a7zTYLOp5Ya6vbduZL5aDf58NGa7966P3Xlc7BmA/aoIzBEgaS4/WV0R5WE9UYHMqjCK
+         yCTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=6gXQlC6WfeDhidMTMl3NDyHiPUKU9vvCJH+mC6VPa/k=;
-        b=baRwBj+gTE0kmX8m7Y0993u3FhhMLy3XJD89X9CXgQGHREKoBrsfJhuW5TxS3D6cS5
-         oodRuWDuF3PgPr28attkN8Pk+qUzkFsZn4ZHGJ102V4tFfNFKslHOVGVqv1qFfj2uroJ
-         t6jaMRSKuP6TusgHmAmNzMLe+8H5llQ21sEDWqC487nabaKDIKIgXehTUuvap4Sr7I29
-         Bftm3yDvQ3zD6Pslt7jVYWqkvo3S/ZP5UoiwFRfptIFh2QNo3LuUaKKeZhuizloAzMNo
-         E2qy997vT0wX/bzlyJEy8/6dT63t1Ekt7ZpNoAmw2tdxmYbukor4PtYxVwx3gpn/kHJ2
-         2QPg==
-X-Gm-Message-State: AOAM5310OqpBlULWTcW7lag3Aw2hdWrhzPsBilaaS0X9eV9YxOfMiqAB
-        osTfJWNRDY7/ATgaRcbAviKoMk+Tr6E=
-X-Google-Smtp-Source: ABdhPJxXv1kCMG5yenW2NTWT7dH6CbCV3yHyQvOUbxXo2fbh+kfqoWuiu8ViTv7viK9XX2PIHGH5OA==
-X-Received: by 2002:a1c:9a16:: with SMTP id c22mr13197772wme.7.1618672419557;
-        Sat, 17 Apr 2021 08:13:39 -0700 (PDT)
+        bh=DDdoas0nzEoy0UlGPxF79WHx0DyLjxc5rXrE7r9U2Jo=;
+        b=UHchFcm1UQnbTEa7Z593RZMhTfb4RmkmKDnhvdcLabQYD4u1tsNL2JYyJvbYQFp4Yw
+         VD64EXp/gMK9q42QiGbS/LNNxDrSi+7YecJrepOIwPBcp3B2piZUpE3bwwvx/PwesxHk
+         bYl25F47BApbESCC8N9g4FwJBf2zqlZQc3DC79rAhz0zVeLtrLfw70URovnL4hBNITNB
+         Q9gGHmfgfEatSb61enDVM/3YLY/4rGXBeH0qDX/DY2bL6+wyoJd3NA8jz/n4VaMZm5U6
+         fDWW5j+uIakfxi6fz8UQm0Un2RrzTouQ3x5qO1B5v5JKwwQ4naXS7yQxC8yVzHLYjtWW
+         eLmw==
+X-Gm-Message-State: AOAM532XPArTzc9af+jY0zOSUWOcW9ENLWQPcPekCLD+rQjnQoLwSObP
+        A5KjDqxauhDv1m9DFp+FxFeEDB4gcvs=
+X-Google-Smtp-Source: ABdhPJxO5ZiyLFj7Ps4UE+JfFAyoQtwtIeU46/h33/sBNcK5erXvSpDx/7rsF3UKFkmRilwDSNUA+w==
+X-Received: by 2002:a7b:c4d9:: with SMTP id g25mr13202217wmk.182.1618672420165;
+        Sat, 17 Apr 2021 08:13:40 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z15sm14311340wrv.39.2021.04.17.08.13.39
+        by smtp.gmail.com with ESMTPSA id s14sm15099285wrm.51.2021.04.17.08.13.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Sat, 17 Apr 2021 08:13:39 -0700 (PDT)
-Message-Id: <34210e5bd3da3fe540800966860a9deca9c3253a.1618672417.git.gitgitgadget@gmail.com>
+Message-Id: <9c0fc91aba241177072739a66bb539925dbb13e8.1618672417.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.913.v11.git.1618672417.gitgitgadget@gmail.com>
 References: <pull.913.v10.git.1618562875.gitgitgadget@gmail.com>
         <pull.913.v11.git.1618672417.gitgitgadget@gmail.com>
 From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 17 Apr 2021 15:13:36 +0000
-Subject: [PATCH v11 1/2] [GSOC] docs: correct description of .command
+Date:   Sat, 17 Apr 2021 15:13:37 +0000
+Subject: [PATCH v11 2/2] [GSOC] trailer: add new .cmd config option
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,69 +78,501 @@ X-Mailing-List: git@vger.kernel.org
 
 From: ZheNing Hu <adlternative@gmail.com>
 
-In the original documentation of `trailer.<token>.command`,
-some descriptions are easily misunderstood. So let's modify
-it to increase its readability.
+The `trailer.<token>.command` configuration variable
+specifies a command (run via the shell, so it does not have
+to be a single name or path to the command, but can be a
+shell script), and the first occurrence of substring $ARG is
+replaced with the value given to the `interpret-trailer`
+command for the token in a '--trailer <token>=<value>' argument.
 
-In addition, clarify that `$ARG` in command can only be
-replaced once.
+This has two downsides:
 
+* The use of $ARG in the mechanism misleads the users that
+the value is passed in the shell variable, and tempt them
+to use $ARG more than once, but that would not work, as
+the second and subsequent $ARG are not replaced.
+
+* Because $ARG is textually replaced without regard to the
+shell language syntax, even '$ARG' (inside a single-quote
+pair), which a user would expect to stay intact, would be
+replaced, and worse, if the value had an unmatched single
+quote (imagine a name like "O'Connor", substituted into
+NAME='$ARG' to make it NAME='O'Connor'), it would result in
+a broken command that is not syntactically correct (or
+worse).
+
+Introduce a new `trailer.<token>.cmd` configuration that
+takes higher precedence to deprecate and eventually remove
+`trailer.<token>.command`, which passes the value as an
+argument to the command.  Instead of "$ARG", users can
+refer to the value as positional argument, $1, in their
+scripts. At the same time, in order to allow
+`git interpret-trailers` to better simulate the behavior
+of `git command -s`, the first implicitly executed command
+will not pass positional parameters, users can use this
+feature to suppress its output.
+
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Helped-by: Christian Couder <christian.couder@gmail.com>
 Signed-off-by: ZheNing Hu <adlternative@gmail.com>
 ---
- Documentation/git-interpret-trailers.txt | 37 ++++++++++++++----------
- 1 file changed, 21 insertions(+), 16 deletions(-)
+ Documentation/git-interpret-trailers.txt |  90 +++++++++++++++--
+ t/t7513-interpret-trailers.sh            | 122 +++++++++++++++++++++++
+ trailer.c                                |  79 ++++++++++++---
+ 3 files changed, 267 insertions(+), 24 deletions(-)
 
 diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
-index 96ec6499f001..6f2a7a130464 100644
+index 6f2a7a130464..3fcc721bb3a2 100644
 --- a/Documentation/git-interpret-trailers.txt
 +++ b/Documentation/git-interpret-trailers.txt
-@@ -232,25 +232,30 @@ trailer.<token>.ifmissing::
+@@ -232,6 +232,20 @@ trailer.<token>.ifmissing::
  	that option for trailers with the specified <token>.
  
  trailer.<token>.command::
--	This option can be used to specify a shell command that will
--	be called to automatically add or modify a trailer with the
--	specified <token>.
-+	This option can be used to specify a shell command that will be called:
-+	once to automatically add a trailer with the specified <token>, and then
-+	each time a '--trailer <token>=<value>' argument to modify the <value> of
-+	the trailer that this option would produce.
++	This option behaves in the same way as 'trailer.<token>.cmd', except
++	that it doesn't pass anything as argument to the specified command.
++	Instead the first occurrence of substring $ARG is replaced by the
++	value that would be passed as argument.
+++
++The 'trailer.<token>.command' option has been deprecated in favor of
++'trailer.<token>.cmd' due to the fact that $ARG in the user's command is
++only replaced once and that the original way of replacing $ARG is not safe.
+++
++When both 'trailer.<token>.cmd' and 'trailer.<token>.command' are given
++for the same <token>, 'trailer.<token>.cmd' is used and
++'trailer.<token>.command' is ignored.
++
++trailer.<token>.cmd::
+ 	This option can be used to specify a shell command that will be called:
+ 	once to automatically add a trailer with the specified <token>, and then
+ 	each time a '--trailer <token>=<value>' argument to modify the <value> of
+@@ -247,15 +261,17 @@ leading and trailing whitespace trimmed off.
+ If some '--trailer <token>=<value>' arguments are also passed
+ on the command line, the command is called again once for each
+ of these arguments with the same <token>. And the <value> part
+-of these arguments, if any, will be used to replace the first
+-occurrence of substring `$ARG` in the command. This way the
+-command can produce a <value> computed from the <value> passed
+-in the '--trailer <token>=<value>' argument.
++of these arguments, if any, will be passed to the command as its
++first argument. This way the command can produce a <value> computed
++from the <value> passed in the '--trailer <token>=<value>' argument.
  +
--When this option is specified, the behavior is as if a special
--'<token>=<value>' argument were added at the beginning of the command
--line, where <value> is taken to be the standard output of the
--specified command with any leading and trailing whitespace trimmed
--off.
-+When the specified command is first called to add a trailer
-+with the specified <token>, the behavior is as if a special
-+'--trailer <token>=<value>' argument was added at the beginning
-+of the "git interpret-trailers" command, where <value>
-+is taken to be the standard output of the command with any
-+leading and trailing whitespace trimmed off.
- +
--If the command contains the `$ARG` string, this string will be
--replaced with the <value> part of an existing trailer with the same
--<token>, if any, before the command is launched.
-+If some '--trailer <token>=<value>' arguments are also passed
-+on the command line, the command is called again once for each
-+of these arguments with the same <token>. And the <value> part
-+of these arguments, if any, will be used to replace the first
-+occurrence of substring `$ARG` in the command. This way the
-+command can produce a <value> computed from the <value> passed
-+in the '--trailer <token>=<value>' argument.
- +
--If some '<token>=<value>' arguments are also passed on the command
--line, when a 'trailer.<token>.command' is configured, the command will
--also be executed for each of these arguments. And the <value> part of
--these arguments, if any, will be used to replace the `$ARG` string in
--the command.
-+For consistency, the first occurrence of substring `$ARG` is
-+also replaced, this time with the empty string, in the command
-+when the command is first called to add a trailer with the
-+specified <token>.
+-For consistency, the first occurrence of substring `$ARG` is
+-also replaced, this time with the empty string, in the command
+-when the command is first called to add a trailer with the
+-specified <token>.
++It is worth mentioning that the command is first called to add a
++trailer with the specified <token> and without positional argument.
++Users can make use of this output when they need automatically add
++some trailers. On the other hand, users can use a trick to suppress
++this output by judging whether the number of positional parameters
++is equal to one, if it is true, execute the commands, otherwise exit
++with non-zero to suppress the output.
  
  EXAMPLES
  --------
+@@ -338,6 +354,64 @@ subject
+ Fix #42
+ ------------
+ 
++* Configure a 'cnt' trailer with a cmd use a global script `gcount`
++to record commit counts of a specified author and show how it works:
+++
++------------
++$ cat ~/bin/gcount
++#!/bin/sh
++if test "$#" != 1
++then
++	exit 1
++else
++	test -n "$1" && git shortlog -s --author="$1" HEAD || true
++fi
++$ git config trailer.cnt.key "Commit-count: "
++$ git config trailer.cnt.ifExists "addIfDifferentNeighbor"
++$ git config trailer.cnt.cmd "~/bin/gcount"
++$ git interpret-trailers --trailer="cnt:Junio" --trailer="cnt:Linus Torvalds"<<EOF
++> subject
++>
++> message
++>
++> EOF
++subject
++
++message
++
++Commit-count: 22484     Junio C Hamano
++Commit-count: 1117      Linus Torvalds
++------------
++
++* Configure a 'ref' trailer with a cmd use a global script `glog-grep`
++  to grep last relevant commit from git log in the git repository
++  and show how it works:
+++
++------------
++$ cat ~/bin/glog-grep
++#!/bin/sh
++if test "$#" != 1
++then
++	exit 1
++else
++	test -n "$1" && git log --grep "$1" --pretty=reference -1 || true
++fi
++$ git config trailer.ref.key "Reference-to: "
++$ git config trailer.ref.ifExists "replace"
++$ git config trailer.ref.cmd "~/bin/glog-grep"
++$ git interpret-trailers --trailer="ref:Add copyright notices." <<EOF
++> subject
++>
++> message
++>
++> EOF
++subject
++
++message
++
++Reference-to: 8bc9a0c769 (Add copyright notices., 2005-04-07)
++------------
++
+ * Configure a 'see' trailer with a command to show the subject of a
+   commit that is related, and show how it works:
+ +
+diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
+index 6602790b5f4c..1e5f6160dd5a 100755
+--- a/t/t7513-interpret-trailers.sh
++++ b/t/t7513-interpret-trailers.sh
+@@ -51,6 +51,107 @@ test_expect_success 'setup' '
+ 	EOF
+ '
+ 
++test_expect_success 'with cmd' '
++	test_when_finished "git config --remove-section trailer.bug" &&
++	git config trailer.bug.key "Bug-maker: " &&
++	git config trailer.bug.ifExists "add" &&
++	git config trailer.bug.cmd "echo \"maybe is\"" &&
++	cat >expected2 <<-EOF &&
++
++	Bug-maker: maybe is
++	Bug-maker: maybe is him
++	Bug-maker: maybe is me
++	EOF
++	git interpret-trailers --trailer "bug: him" --trailer "bug:me" \
++		>actual2 &&
++	test_cmp expected2 actual2
++'
++
++test_expect_success 'with cmd and $1' '
++	test_when_finished "git config --remove-section trailer.bug" &&
++	git config trailer.bug.key "Bug-maker: " &&
++	git config trailer.bug.ifExists "add" &&
++	git config trailer.bug.cmd "echo \"\$1\" is" &&
++	cat >expected2 <<-EOF &&
++
++	Bug-maker: is
++	Bug-maker: him is him
++	Bug-maker: me is me
++	EOF
++	git interpret-trailers --trailer "bug: him" --trailer "bug:me" \
++		>actual2 &&
++	test_cmp expected2 actual2
++'
++
++test_expect_success 'with cmd and $1 with sh -c' '
++	test_when_finished "git config --remove-section trailer.bug" &&
++	git config trailer.bug.key "Bug-maker: " &&
++	git config trailer.bug.ifExists "replace" &&
++	git config trailer.bug.cmd "sh -c \"echo who is \"\$1\"\"" &&
++	cat >expected2 <<-EOF &&
++
++	Bug-maker: who is me
++	EOF
++	git interpret-trailers --trailer "bug: him" --trailer "bug:me" \
++		>actual2 &&
++	test_cmp expected2 actual2
++'
++
++test_expect_success 'with cmd and $1 with shell script' '
++	test_when_finished "git config --remove-section trailer.bug" &&
++	git config trailer.bug.key "Bug-maker: " &&
++	git config trailer.bug.ifExists "replace" &&
++	git config trailer.bug.cmd "./echoscript" &&
++	cat >expected2 <<-EOF &&
++
++	Bug-maker: who is me
++	EOF
++	cat >echoscript <<-EOF &&
++	#!/bin/sh
++	if test "\$#" != 1
++	then
++		exit 1
++	else
++		echo who is "\$1"
++	fi
++	EOF
++	chmod +x echoscript &&
++	git interpret-trailers --trailer "bug: him" --trailer "bug:me" \
++		>actual2 &&
++	test_cmp expected2 actual2
++'
++
++test_expect_success 'with cmd, $1 and without --trailer' '
++	test_when_finished "git config --remove-section trailer.bug" &&
++	test_when_finished "git config --remove-section trailer.gub" &&
++	git config trailer.bug.key "Bug-maker: " &&
++	git config trailer.bug.ifExists "replace" &&
++	git config trailer.bug.cmd "./echoscript" &&
++	git config trailer.gub.key "Gub-maker: " &&
++	git config trailer.gub.ifExists "replace" &&
++	git config trailer.gub.cmd "./echoscript2" &&
++	cat >expected2 <<-EOF &&
++
++	Gub-maker: si ohw
++	EOF
++	cat >echoscript <<-EOF &&
++	#!/bin/sh
++	if test "\$#" != 1
++	then
++		exit 1
++	else
++		echo who is "\$1"
++	fi
++	EOF
++	cat >echoscript2 <<-EOF &&
++		echo si ohw "\$1"
++	EOF
++	chmod +x echoscript &&
++	chmod +x echoscript2 &&
++	git interpret-trailers >actual2 &&
++	test_cmp expected2 actual2
++'
++
+ test_expect_success 'without config' '
+ 	sed -e "s/ Z\$/ /" >expected <<-\EOF &&
+ 
+@@ -1274,6 +1375,27 @@ test_expect_success 'setup a commit' '
+ 	git commit -m "Add file a.txt"
+ '
+ 
++test_expect_success 'cmd takes precedence over command' '
++	test_when_finished "git config --unset trailer.fix.cmd" &&
++	git config trailer.fix.ifExists "replace" &&
++	git config trailer.fix.cmd "test -n \"\$1\" && git log -1 --oneline --format=\"%h (%aN)\" \
++	--abbrev-commit --abbrev=14 \"\$1\" || true" &&
++	git config trailer.fix.command "git log -1 --oneline --format=\"%h (%s)\" \
++		--abbrev-commit --abbrev=14 \$ARG" &&
++	FIXED=$(git log -1 --oneline --format="%h (%aN)" --abbrev-commit --abbrev=14 HEAD) &&
++	cat complex_message_body >expected2 &&
++	sed -e "s/ Z\$/ /" >>expected2 <<-EOF &&
++		Fixes: $FIXED
++		Acked-by= Z
++		Reviewed-by:
++		Signed-off-by: Z
++		Signed-off-by: A U Thor <author@example.com>
++	EOF
++	git interpret-trailers --trailer "review:" --trailer "fix=HEAD" \
++		<complex_message >actual2 &&
++	test_cmp expected2 actual2
++'
++
+ test_expect_success 'with command using $ARG' '
+ 	git config trailer.fix.ifExists "replace" &&
+ 	git config trailer.fix.command "git log -1 --oneline --format=\"%h (%s)\" --abbrev-commit --abbrev=14 \$ARG" &&
+diff --git a/trailer.c b/trailer.c
+index be4e9726421c..2f5f8f5b4b59 100644
+--- a/trailer.c
++++ b/trailer.c
+@@ -14,6 +14,7 @@ struct conf_info {
+ 	char *name;
+ 	char *key;
+ 	char *command;
++	char *cmd;
+ 	enum trailer_where where;
+ 	enum trailer_if_exists if_exists;
+ 	enum trailer_if_missing if_missing;
+@@ -127,8 +128,10 @@ static void free_arg_item(struct arg_item *item)
+ 	free(item->conf.name);
+ 	free(item->conf.key);
+ 	free(item->conf.command);
++	free(item->conf.cmd);
+ 	free(item->token);
+-	free(item->value);
++	if (item->value)
++		FREE_AND_NULL(item->value);
+ 	free(item);
+ }
+ 
+@@ -216,26 +219,35 @@ static int check_if_different(struct trailer_item *in_tok,
+ 	return 1;
+ }
+ 
+-static char *apply_command(const char *command, const char *arg)
++static char *apply_command(struct conf_info *conf, const char *arg)
+ {
+ 	struct strbuf cmd = STRBUF_INIT;
+ 	struct strbuf buf = STRBUF_INIT;
+ 	struct child_process cp = CHILD_PROCESS_INIT;
+ 	char *result;
+ 
+-	strbuf_addstr(&cmd, command);
+-	if (arg)
+-		strbuf_replace(&cmd, TRAILER_ARG_STRING, arg);
+-
+-	strvec_push(&cp.args, cmd.buf);
++	if (conf->cmd) {
++		strbuf_addstr(&cmd, conf->cmd);
++		strvec_push(&cp.args, cmd.buf);
++		if (arg)
++			strvec_push(&cp.args, arg);
++	} else if (conf->command) {
++		strbuf_addstr(&cmd, conf->command);
++		if (arg)
++			strbuf_replace(&cmd, TRAILER_ARG_STRING, arg);
++		strvec_push(&cp.args, cmd.buf);
++	}
+ 	cp.env = local_repo_env;
+ 	cp.no_stdin = 1;
+ 	cp.use_shell = 1;
+ 
+ 	if (capture_command(&cp, &buf, 1024)) {
+-		error(_("running trailer command '%s' failed"), cmd.buf);
+ 		strbuf_release(&buf);
+-		result = xstrdup("");
++		if (!conf->cmd || arg) {
++			error(_("running trailer command '%s' failed"), cmd.buf);
++			result = xstrdup("");
++		} else
++			result = NULL;
+ 	} else {
+ 		strbuf_trim(&buf);
+ 		result = strbuf_detach(&buf, NULL);
+@@ -247,9 +259,11 @@ static char *apply_command(const char *command, const char *arg)
+ 
+ static void apply_item_command(struct trailer_item *in_tok, struct arg_item *arg_tok)
+ {
+-	if (arg_tok->conf.command) {
+-		const char *arg;
+-		if (arg_tok->value && arg_tok->value[0]) {
++	if (arg_tok->conf.command || arg_tok->conf.cmd) {
++		const char *arg = NULL;
++
++		if ((arg_tok->value && arg_tok->value[0]) ||
++		   (arg_tok->conf.cmd && !arg_tok->value)) {
+ 			arg = arg_tok->value;
+ 		} else {
+ 			if (in_tok && in_tok->value)
+@@ -257,8 +271,9 @@ static void apply_item_command(struct trailer_item *in_tok, struct arg_item *arg
+ 			else
+ 				arg = xstrdup("");
+ 		}
+-		arg_tok->value = apply_command(arg_tok->conf.command, arg);
+-		free((char *)arg);
++		arg_tok->value = apply_command(&arg_tok->conf, arg);
++		if (arg)
++			free((char *)arg);
+ 	}
+ }
+ 
+@@ -273,16 +288,28 @@ static void apply_arg_if_exists(struct trailer_item *in_tok,
+ 		break;
+ 	case EXISTS_REPLACE:
+ 		apply_item_command(in_tok, arg_tok);
++		if (!arg_tok->value) {
++			free_arg_item(arg_tok);
++			return;
++		}
+ 		add_arg_to_input_list(on_tok, arg_tok);
+ 		list_del(&in_tok->list);
+ 		free_trailer_item(in_tok);
+ 		break;
+ 	case EXISTS_ADD:
+ 		apply_item_command(in_tok, arg_tok);
++		if (!arg_tok->value) {
++			free_arg_item(arg_tok);
++			return;
++		}
+ 		add_arg_to_input_list(on_tok, arg_tok);
+ 		break;
+ 	case EXISTS_ADD_IF_DIFFERENT:
+ 		apply_item_command(in_tok, arg_tok);
++		if (!arg_tok->value) {
++			free_arg_item(arg_tok);
++			return;
++		}
+ 		if (check_if_different(in_tok, arg_tok, 1, head))
+ 			add_arg_to_input_list(on_tok, arg_tok);
+ 		else
+@@ -290,6 +317,10 @@ static void apply_arg_if_exists(struct trailer_item *in_tok,
+ 		break;
+ 	case EXISTS_ADD_IF_DIFFERENT_NEIGHBOR:
+ 		apply_item_command(in_tok, arg_tok);
++		if (!arg_tok->value) {
++			free_arg_item(arg_tok);
++			return;
++		}
+ 		if (check_if_different(on_tok, arg_tok, 0, head))
+ 			add_arg_to_input_list(on_tok, arg_tok);
+ 		else
+@@ -314,6 +345,10 @@ static void apply_arg_if_missing(struct list_head *head,
+ 	case MISSING_ADD:
+ 		where = arg_tok->conf.where;
+ 		apply_item_command(NULL, arg_tok);
++		if (!arg_tok->value) {
++			free_arg_item(arg_tok);
++			return;
++		}
+ 		to_add = trailer_from_arg(arg_tok);
+ 		if (after_or_end(where))
+ 			list_add_tail(&to_add->list, head);
+@@ -430,6 +465,7 @@ static void duplicate_conf(struct conf_info *dst, const struct conf_info *src)
+ 	dst->name = xstrdup_or_null(src->name);
+ 	dst->key = xstrdup_or_null(src->key);
+ 	dst->command = xstrdup_or_null(src->command);
++	dst->cmd = xstrdup_or_null(src->cmd);
+ }
+ 
+ static struct arg_item *get_conf_item(const char *name)
+@@ -454,8 +490,8 @@ static struct arg_item *get_conf_item(const char *name)
+ 	return item;
+ }
+ 
+-enum trailer_info_type { TRAILER_KEY, TRAILER_COMMAND, TRAILER_WHERE,
+-			 TRAILER_IF_EXISTS, TRAILER_IF_MISSING };
++enum trailer_info_type { TRAILER_KEY, TRAILER_COMMAND, TRAILER_CMD,
++			TRAILER_WHERE, TRAILER_IF_EXISTS, TRAILER_IF_MISSING };
+ 
+ static struct {
+ 	const char *name;
+@@ -463,6 +499,7 @@ static struct {
+ } trailer_config_items[] = {
+ 	{ "key", TRAILER_KEY },
+ 	{ "command", TRAILER_COMMAND },
++	{ "cmd", TRAILER_CMD },
+ 	{ "where", TRAILER_WHERE },
+ 	{ "ifexists", TRAILER_IF_EXISTS },
+ 	{ "ifmissing", TRAILER_IF_MISSING }
+@@ -542,6 +579,11 @@ static int git_trailer_config(const char *conf_key, const char *value, void *cb)
+ 			warning(_("more than one %s"), conf_key);
+ 		conf->command = xstrdup(value);
+ 		break;
++	case TRAILER_CMD:
++		if (conf->cmd)
++			warning(_("more than one %s"), conf_key);
++		conf->cmd = xstrdup(value);
++		break;
+ 	case TRAILER_WHERE:
+ 		if (trailer_set_where(&conf->where, value))
+ 			warning(_("unknown value '%s' for key '%s'"), value, conf_key);
+@@ -713,6 +755,11 @@ static void process_command_line_args(struct list_head *arg_head,
+ 				     xstrdup(token_from_item(item, NULL)),
+ 				     xstrdup(""),
+ 				     &item->conf, NULL);
++		else if (item->conf.cmd)
++			add_arg_item(arg_head,
++				     xstrdup(token_from_item(item, NULL)),
++				     NULL,
++				     &item->conf, NULL);
+ 	}
+ 
+ 	/* Add an arg item for each trailer on the command line */
 -- 
 gitgitgadget
-
