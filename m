@@ -2,125 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FD72C433B4
-	for <git@archiver.kernel.org>; Fri, 16 Apr 2021 23:59:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3DEF8C433ED
+	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 00:01:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DD79E610A8
-	for <git@archiver.kernel.org>; Fri, 16 Apr 2021 23:58:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1858F611AB
+	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 00:01:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234941AbhDPX7X (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Apr 2021 19:59:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56814 "EHLO
+        id S233213AbhDQACX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Apr 2021 20:02:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57516 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234712AbhDPX7W (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Apr 2021 19:59:22 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F252C061574
-        for <git@vger.kernel.org>; Fri, 16 Apr 2021 16:58:55 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id a4so28203316wrr.2
-        for <git@vger.kernel.org>; Fri, 16 Apr 2021 16:58:55 -0700 (PDT)
+        with ESMTP id S229719AbhDQACX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Apr 2021 20:02:23 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B34DC061574
+        for <git@vger.kernel.org>; Fri, 16 Apr 2021 17:01:57 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id i10so11416896lfe.11
+        for <git@vger.kernel.org>; Fri, 16 Apr 2021 17:01:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=bmLdd12sSTLu1m2M1GAO18oqxs8ewe+p9c1u08l8Q5s=;
-        b=ec9JPHPhMLHw1BX+zIjJ8rg/dGTC9zvrDMOnn/OcGWKRfiHqVPVTmEExAxFQ4FvSf6
-         MvbIIgIZW3IyvUCQxOZNXMHNAHO34G7Ksm0cWjKc93e2H9gDaSSHHPJwnBaMIkTDGj9J
-         xJSLB6W18vEa8yDUtkiPfX7USwIzFVV0KdeQhTJZ50efWf7lq1Nv2vF40fRw1T6x4Kh+
-         63F3FE+YaxOv0zJYfxkzBrur8ywSZOZ4FGvg3iFXQ2k29Az3t9KWryLMMU4YcpJI3DKz
-         Jx2cAxGE33JW8T1tXwtUgWhqoyrw4z8isKcbKy0zFbdZVdsmV0D9qIn9cCw1jLwKMeTN
-         mjMw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=R08bg8rzPNTixVWWSSd+j9zdVafbfsSa5b8Zl/gLPqs=;
+        b=oOVP64t8P94EHSPpLq/XaFouH23p7H5HaSTPZjs5l7NEgSvypSS/Ck2v4083mE4grF
+         etNR65eT2yWUInUDlMgFz05E91mWvvdzPWpU+49yYjpoqZhnkcee989Bh6Dm3zmHiVFO
+         r9rQuxKgYKYpYTHdwqR52IvQ1w1yK51gf2YeikTpNvsE5EWAtkrnHoQOA6UXMSO/yRwX
+         L2MnUT/fEPqKI9YHB/PHpcKWkwkBTFIUDbWblZ5nMOpb7Xi56pF6Ifr8OpZE1sgOk6YB
+         cpNJ1sHdCLvrWZaF7+/FW4aCQaabmzsMXlS92l9Zwax9sIjAWp1yv1lA1Zl0IkAPkfCS
+         SjZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=bmLdd12sSTLu1m2M1GAO18oqxs8ewe+p9c1u08l8Q5s=;
-        b=DMs0a3kk4k/FM3YxMTjPSl4grcQtMD6acNymnHLRx+voETw9YYrp9Ku5sPMjuoMbv+
-         zOPD2l+AkYilYCVy/ZMYM0WcFqzxgDu2J2aCe63bWuKUFMskhh0HLdtSe7mDIDZmjI2m
-         m+TmqZifBQDnSPANbX3m6fvSU5sUtfm+qWFETlTpew61GUsxCDh8HXzupD+mtnhyaoyp
-         +6fM55gInOkrvJvjBhgpRNfXAessgvvEF5SjruyHuMds6enLY7oZU+WNsEmY803TxFjs
-         iJk879jwkiesBSzkTs6b2J4yAByzdwsvNeV182yU2hUqS3zIcvdzq7AMidCMhjuiVxtW
-         Gajw==
-X-Gm-Message-State: AOAM532YQ7B6sFXkvztO2zt+eheDLWsToFNW+58kwL2NnEoOmH+IniXb
-        BVl1wTR8laOTqtIJVBoE2GSoPi4Io5jwOHmDxwzJVIr9BIM=
-X-Google-Smtp-Source: ABdhPJyKHWojTMLKU0pO8xhXS8eUKzTGqLsQf11Bd8X3I3LJhvBiSOMzD/W39rWSPAzS6fi4NoOYSkDCvKnb3qmcSWc=
-X-Received: by 2002:a5d:6d48:: with SMTP id k8mr1554402wri.93.1618617533919;
- Fri, 16 Apr 2021 16:58:53 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=R08bg8rzPNTixVWWSSd+j9zdVafbfsSa5b8Zl/gLPqs=;
+        b=jXRzLHiAyjv2s7uhRieJRo8WepagI8ogrHO4F0V6M9dfpJagy1AE8GaWZhUcAoY4O+
+         hVNC/TMKynzXdyvpTXLDXzquvQEiJN4nZyxws6oXe0bUxmnn/+gCHMEAnCZIG3xFGWoZ
+         gn+gRQEqTipJ4GqxvcsZKFKfP/UK3q1ourx+EvyAfjI+FcRfDmqIS/Bx4Y6X8cPmo16t
+         zBDqU95wE2K8l65CJcwVgnVajBEK7zaNMDmZppyMyAfYpSBIWvBZ4TgkhoZP75OCKYlD
+         vhBV5luII0thKL4t83eFH2VPvLptVhHSFM52+RFrjTJ7t3/MjlinCOY7e+fpvgpSWYLi
+         aeJQ==
+X-Gm-Message-State: AOAM533l0S15Veq+TXXyysynIqD9vssvh/mGV3IHa8MTVWolY/KI8Wl5
+        Z13N4LxbQ+O00cJvN1Ie3Ye6Q7J5axtH+WggH1Xc8t9Agjc=
+X-Google-Smtp-Source: ABdhPJzOcixbGtquGwuzT4NtgnnbER3uErcGoC0eRUZBWHHWbj8W9PtHm8gy4lglZr3azUKwoE9GHvAI23aIRWb0y4s=
+X-Received: by 2002:a05:6512:22c4:: with SMTP id g4mr4537469lfu.501.1618617716084;
+ Fri, 16 Apr 2021 17:01:56 -0700 (PDT)
 MIME-Version: 1.0
-From:   Matthew Timothy Kennerly <mtkennerly@gmail.com>
-Date:   Fri, 16 Apr 2021 19:58:43 -0400
-Message-ID: <CAKqNo6TFudrXnuPzQcOaVQrRpq_0K_fxyyMA5god-WQL7y=RcQ@mail.gmail.com>
-Subject: If the initial commit is empty, it is not shown in "git log --simplify-by-decoration"
-To:     git@vger.kernel.org
+References: <20210416182121.3c824c87@pc.home.lkiesow.io> <YHobypuPjLTdjHIJ@camp.crustytoothpaste.net>
+In-Reply-To: <YHobypuPjLTdjHIJ@camp.crustytoothpaste.net>
+From:   Chris Torek <chris.torek@gmail.com>
+Date:   Fri, 16 Apr 2021 17:01:45 -0700
+Message-ID: <CAPx1GvetNRBovJMF8tkk9obuSHjC=w9JqryrSTeA0rVF35Q5+A@mail.gmail.com>
+Subject: Re: Bug report: gitk unable to handle Unicode properly
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Lars Kiesow <lkiesow@uos.de>, Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+On Fri, Apr 16, 2021 at 4:21 PM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> On 2021-04-16 at 16:21:21, Lars Kiesow wrote:
+> > - Launch gitk
+> >     - Crash (see below)
 
-This seems like a bug to me, but maybe there's a good reason for it. I
-reproduced it using Git 2.27.0 on Windows initially, and then I
-upgraded to 2.31.1 to confirm that it was still present.
+> I don't see a crash.
 
-After committing with "--allow-empty", the initial commit is not shown
-in "git log --simplify-by-decoration", although it is shown with "git
-log". I would have expected it to be shown in both cases:
+I think this is a Tk/X11 interaction bug.
 
----
-$ git init
-Initialized empty Git repository in C:/tmp/repro/.git/
+See, e.g., https://bugs.python.org/issue42225 (which has the same symptoms).
 
-$ git commit --allow-empty -m init
-[master (root-commit) bc54978] init
+I'm no tcl/tk expert, but I vaguely remember other similar bug
+reports.  They all turned out to need a tk-side fix.
 
-$ git log --simplify-by-decoration
-
-$ git log
-commit d7814029effeb7e824e480ca52e30f5a9d1e8058 (HEAD -> master)
-Author: mtkennerly <mtkennerly@gmail.com>
-Date:   Fri Apr 16 19:48:06 2021 -0400
-
-    init
----
-
-However, if the first commit is not empty, then it is shown with or
-without "--simplify-by-decoration", as expected:
-
----
-$ git init
-Initialized empty Git repository in C:/tmp/repro2/.git/
-
-$ echo hi > foo.txt
-
-$ git add .
-
-$ git commit -m init
-[master (root-commit) 35b6427] init
- 1 file changed, 1 insertion(+)
- create mode 100644 foo.txt
-
-$ git log --simplify-by-decoration
-commit 35b6427461fe48c0e918dfea2bc5ddab9dc8844d (HEAD -> master)
-Author: mtkennerly <mtkennerly@gmail.com>
-Date:   Fri Apr 16 19:51:06 2021 -0400
-
-    init
-
-$ git log
-commit 35b6427461fe48c0e918dfea2bc5ddab9dc8844d (HEAD -> master)
-Author: mtkennerly <mtkennerly@gmail.com>
-Date:   Fri Apr 16 19:51:06 2021 -0400
-
-    init
----
-
-For context, this was reported to me on GitHub here:
-https://github.com/mtkennerly/dunamai/issues/14
-
-Regards,
-
-MTK
+Chris
