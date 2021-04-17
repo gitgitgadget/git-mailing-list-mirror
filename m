@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 535EEC433B4
-	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 12:58:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 55970C43460
+	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 12:58:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 33B5E61186
-	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 12:58:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 379CB61186
+	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 12:58:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236556AbhDQM7N (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Apr 2021 08:59:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56086 "EHLO
+        id S236563AbhDQM7O (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Apr 2021 08:59:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56088 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236476AbhDQM7G (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S236487AbhDQM7G (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 17 Apr 2021 08:59:06 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7CAFC061574
-        for <git@vger.kernel.org>; Sat, 17 Apr 2021 05:58:39 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id n4-20020a05600c4f84b029013151278decso4357025wmq.4
-        for <git@vger.kernel.org>; Sat, 17 Apr 2021 05:58:39 -0700 (PDT)
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78F7EC06175F
+        for <git@vger.kernel.org>; Sat, 17 Apr 2021 05:58:40 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id m9so16503114wrx.3
+        for <git@vger.kernel.org>; Sat, 17 Apr 2021 05:58:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=p7IFAHkiwhUwcXYbcZmXS/CX6ZSd/fNeSJVbaNcKrOc=;
-        b=PqmXKxxnLbUYw8S/1AJ2ZwouLJFEHc6HH/5x8HOqIAObvxh5HgxPaLmzbm0KJKmA8c
-         Mr+3preeYb4FfVmTFXjRVP+QV42Onu/FZ/AhtwUF6Q7USaKWquw2s29fTAWyCObgK5Pk
-         DWX4e+f7/94NTCjqL74wLaydCASoPxOZ+clIl+DHz7njaZXnVs6ee9dD0t2ZXh4xfsc9
-         OyzYyZZF/09NZtDRs4MHibEKX9mRz9/1U6jM3OPFc53/GrymrqbiiYUvN6RAMh5pvp3W
-         5XK3ePATV3W92K5JspRLxSRP//fcN4mP8jq6de+jHFSHTqBasHDLrssQhXZssGktPYtM
-         I5HQ==
+        bh=9iWbM+CDNzFxkO2DG3TEFGVGW7b8pODtnt1iCNZaO8k=;
+        b=VZvLDpAEkZlkgSAJQ9O/qPdYVbFWRTtLq7pL2XRWQZ5A/IKTNnRZKMMqVz+8UKHNQz
+         lUlEM8+N1Qj9IA15o/N4mdCGMksY6IigFHDpEcjo1fMS+bil1Bes4ykSE2VQkwNTcTwT
+         jRIeVI7Ph6cssbCiJr/7L4yc79OS636sN8YP47fsj9mJ4xq/nHD2cTNa9d11LeqPUVOb
+         jjqbf0XuyaqCXVmC7jO/0cyMMjWvqcCE0EVTdKHWJr2x6ZJOyy83iUwUZJBq7B8y/hL0
+         tUx4iv6Gl/1GuI3CDLQTYwYZLXl0hD1d1nJGgOFNDcjzc2RO7E2887rLuyMl/hNAjpD/
+         udOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=p7IFAHkiwhUwcXYbcZmXS/CX6ZSd/fNeSJVbaNcKrOc=;
-        b=EdyNXkvQPfeiV+jBmsvtCLALL4DXCjrQs94aLOX9XphHbh5efTSPx0Ol+9eI7p6jW1
-         XPlbXsF3ePAYyU+gX9SDk6Acg4bOgAE0Z7fjGzTcDRxQuc6ttjIpmN2hJPTGvvh7VcNA
-         s/Lakk9EQGNTStTVfQk63NDodbg7LCkkB97WJHGMCwizm6QfzHAYbkJiDwKJtY50ziBw
-         O4wkEZuFSQEp8yBtGwNKp6mK0nWSwr8BsQ4lRyJpovSc/IORs4HmRakHXNEQnIjxT35X
-         6qTd1TxKJRm1/KwHd3q5/FL5t497nNNNBrQsbYo+RXqE7QudmKvi9kGuUwrqSldvPJe7
-         taCA==
-X-Gm-Message-State: AOAM532UYY7CReM47OW5hoSFyPQ7Ez9kqpDGt98HIXq+JldTz62bIpoG
-        jB5iWRiyYRbGONSW5D4yIzqAb4MUcPReYA==
-X-Google-Smtp-Source: ABdhPJwSFv+DX7S6cAXOLvKyjQnzGSXmJibK5/hfe+Fxj3JSGaz+bagOhKfIHBIDqhFMdCVQQKQxLg==
-X-Received: by 2002:a1c:bad7:: with SMTP id k206mr12693329wmf.26.1618664318325;
-        Sat, 17 Apr 2021 05:58:38 -0700 (PDT)
+        bh=9iWbM+CDNzFxkO2DG3TEFGVGW7b8pODtnt1iCNZaO8k=;
+        b=bfWcFOMG4jh8OOG0afVOIvZRsXCy/jN/F01kIOjpo/Vf9P5lcpmDF7GJ4oLJXdHnI5
+         sLKq6yRBRH8Wecs92U+HJ3M0d3jyuotbExhyUNT+nj/AS/mBdf7jYALbryX5JVKALbTh
+         o0u0IumX2Uto81r+BXlLGDcRWhOF+htz0M1qtiei/P9i9NViMZSvNpK2QZXsdnaoFg4o
+         0O+0lULCHQwYmX2J/NVtIgth/9tM35Oh0rsyHvpLlv+TLfPXlYW1jGbUjMx9pZ38tW+P
+         Hw7Ui+rYh3Vr7q3XJYL1GzXu1dySioq7DXm4lYCX66TFkYVz+8ETybDiySoVfnJLMN6Y
+         KSCw==
+X-Gm-Message-State: AOAM530Qh385Qa8igxlr6hnzVVu1YQUHfFgS98wijYTZkO3WBWyrPHrZ
+        0D3CIbjUhJ6regu9AIn8lX/cOq1GvJRdnw==
+X-Google-Smtp-Source: ABdhPJycpXlsRTgjQQs/BwrOixB9TOfAeXgJ1PIn71Zhdu/QokxMF4Sdaxm96E6mYUfL219NOhaSxA==
+X-Received: by 2002:a05:6000:184c:: with SMTP id c12mr4282431wri.125.1618664319088;
+        Sat, 17 Apr 2021 05:58:39 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id i12sm12452909wmd.3.2021.04.17.05.58.37
+        by smtp.gmail.com with ESMTPSA id i12sm12452909wmd.3.2021.04.17.05.58.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 17 Apr 2021 05:58:37 -0700 (PDT)
+        Sat, 17 Apr 2021 05:58:38 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -69,9 +69,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Andreas Schwab <schwab@linux-m68k.org>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 2/3] Revert and amend "test-lib-functions: assert correct parameter count"
-Date:   Sat, 17 Apr 2021 14:58:26 +0200
-Message-Id: <patch-2.3-6f9e09a2017-20210417T125540Z-avarab@gmail.com>
+Subject: [PATCH 3/3] test-lib-functions: remove last two parameter count assertions
+Date:   Sat, 17 Apr 2021 14:58:27 +0200
+Message-Id: <patch-3.3-b7b11a60bcd-20210417T125540Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.1.723.g7084a9d5a2d
 In-Reply-To: <cover-0.3-00000000000-20210417T125539Z-avarab@gmail.com>
 References: <cover-00.12-00000000000-20210417T124424Z-avarab@gmail.com> <cover-0.3-00000000000-20210417T125539Z-avarab@gmail.com>
@@ -82,171 +82,53 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This reverts and amends my my own e7884b353b7 (test-lib-functions:
-assert correct parameter count, 2021-02-12) in order to improve the -x
-output.
+Remove a couple of parameter count assertions where, unlike the
+preceding commit's migration to 'test -$x "$@"', we'll now silently do
+the "wrong" thing if given too many parameters. The benefit is less
+verbose trace output, as noted in the preceding commit.
 
-The goal here is to get rid of the verbosity of having e.g. a "test 2
--ne 2" line for every "test_cmp". We use "$@" as an argument to "test"
-to intentionally feed the "test" operator too many arguments if the
-functions are called with too many arguments, thus piggy-backing on it
-to check the number of arguments we get.
+In the case of "test_file_size", the "test-tool" we're invoking is
+happy to accept N parameters (it'll print out all N sizes). Let's just
+use "$@" in that case anyway. There's only a few callers, and
+eventually those should probably be moved to use the test-tool
+directly.
 
-Before this for each test_cmp invocation we'd emit:
-
-    + test_cmp expect actual
-    + test 2 -ne 2
-    + eval diff -u "$@"
-    + diff -u expect actual
-
-That "test 2 -ne 2" line is new in my e7884b353b7. As noted in
-45a2686441b (test-lib-functions: remove bug-inducing "diagnostics"
-helper param, 2021-02-12) we had buggy invocations of some of these
-functions with too many parameters.
-
-Now we'll get just:
-
-    + test_cmp expect actual
-    + eval diff -u "$@"
-    + diff -u expect actual
-
-This does not to the "right" thing in cases like:
-
-    test_path_is_file x -a y
-
-Which will now turn into:
-
-    test -f x -a y
-
-I consider that to be OK given the trade-off that any extra checking
-would produce more verbose trace output. As shown in 45a2686441b we
-had issues with these functions being invoked with multiple
-parameters (e.g. a glob) by accident, we don't need to be paranoid in
-guarding against hostile misuse from our own test suite.
-
-While I'm at it change a few functions that relied on a "false" being
-the last statement in the function to use an explicit "return 1" like
-the other functions in this file.
+That only leaves test_line_count, I suppose I could leave that one
+alone, but since it's the only common function left that does this
+assertion let's remove it for the brevity of the -x output and
+consistency with other functions.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/test-lib-functions.sh | 51 +++++++++++++++++------------------------
- 1 file changed, 21 insertions(+), 30 deletions(-)
+ t/test-lib-functions.sh | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
 diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 0232cc9f46d..9f6d46b8b1b 100644
+index 9f6d46b8b1b..a2081ebcdea 100644
 --- a/t/test-lib-functions.sh
 +++ b/t/test-lib-functions.sh
-@@ -758,39 +758,35 @@ test_external_without_stderr () {
- # debugging-friendly alternatives to "test [-f|-d|-e]"
- # The commands test the existence or non-existence of $1
- test_path_is_file () {
+@@ -821,10 +821,7 @@ test_path_is_missing () {
+ # output through when the number of lines is wrong.
+ 
+ test_line_count () {
+-	if test $# != 3
+-	then
+-		BUG "not 3 parameters to test_line_count"
+-	elif ! test $(wc -l <"$3") "$1" "$2"
++	if ! test $(wc -l <"$3") "$1" "$2"
+ 	then
+ 		echo "test_line_count: line count for $3 !$1 $2"
+ 		cat "$3"
+@@ -833,8 +830,7 @@ test_line_count () {
+ }
+ 
+ test_file_size () {
 -	test "$#" -ne 1 && BUG "1 param"
--	if ! test -f "$1"
-+	if ! test -f "$@"
- 	then
--		echo "File $1 doesn't exist"
--		false
-+		echo "File $* doesn't exist"
-+		return 1
- 	fi
+-	test-tool path-utils file-size "$1"
++	test-tool path-utils file-size "$@"
  }
  
- test_path_is_dir () {
--	test "$#" -ne 1 && BUG "1 param"
--	if ! test -d "$1"
-+	if ! test -d "$@"
- 	then
--		echo "Directory $1 doesn't exist"
--		false
-+		echo "Directory $* doesn't exist"
-+		return 1
- 	fi
- }
- 
- test_path_exists () {
--	test "$#" -ne 1 && BUG "1 param"
--	if ! test -e "$1"
-+	if ! test -e "$@"
- 	then
--		echo "Path $1 doesn't exist"
--		false
-+		echo "Path $* doesn't exist"
-+		return 1
- 	fi
- }
- 
- # Check if the directory exists and is empty as expected, barf otherwise.
- test_dir_is_empty () {
--	test "$#" -ne 1 && BUG "1 param"
--	test_path_is_dir "$1" &&
--	if test -n "$(ls -a1 "$1" | egrep -v '^\.\.?$')"
-+	test_path_is_dir "$@" &&
-+	if test -n "$(ls -a1 "$@" | egrep -v '^\.\.?$')"
- 	then
--		echo "Directory '$1' is not empty, it contains:"
-+		echo "Directory '$*' is not empty, it contains:"
- 		ls -la "$1"
- 		return 1
- 	fi
-@@ -798,19 +794,17 @@ test_dir_is_empty () {
- 
- # Check if the file exists and has a size greater than zero
- test_file_not_empty () {
--	test "$#" = 2 && BUG "2 param"
--	if ! test -s "$1"
-+	if ! test -s "$@"
- 	then
--		echo "'$1' is not a non-empty file."
--		false
-+		echo "'$*' is not a non-empty file."
-+		return 1
- 	fi
- }
- 
- test_path_is_missing () {
--	test "$#" -ne 1 && BUG "1 param"
--	if test -e "$1"
-+	if test -e "$@"
- 	then
--		echo "Path $1 exists!"
-+		echo "Path $* exists!"
- 		false
- 	fi
- }
-@@ -1012,7 +1006,6 @@ test_expect_code () {
- # - not all diff versions understand "-u"
- 
- test_cmp () {
--	test "$#" -ne 2 && BUG "2 param"
- 	eval "$GIT_TEST_CMP" '"$@"'
- }
- 
-@@ -1042,7 +1035,6 @@ test_cmp_config () {
- # test_cmp_bin - helper to compare binary files
- 
- test_cmp_bin () {
--	test "$#" -ne 2 && BUG "2 param"
- 	cmp "$@"
- }
- 
-@@ -1103,12 +1095,11 @@ verbose () {
- # otherwise.
- 
- test_must_be_empty () {
--	test "$#" -ne 1 && BUG "1 param"
--	test_path_is_file "$1" &&
--	if test -s "$1"
-+	test_path_is_file "$@" &&
-+	if test -s "$@"
- 	then
--		echo "'$1' is not empty, it contains:"
--		cat "$1"
-+		echo "'$*' is not empty, it contains:"
-+		cat "$@"
- 		return 1
- 	fi
- }
+ # Returns success if a comma separated string of keywords ($1) contains a
 -- 
 2.31.1.722.g788886f50a2
 
