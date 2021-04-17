@@ -2,149 +2,171 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 54848C433ED
-	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 22:11:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5AB72C433B4
+	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 22:32:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2390D6108C
-	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 22:11:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2CF63610C7
+	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 22:32:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237127AbhDQWLd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Apr 2021 18:11:33 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:35620 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S231854AbhDQWLd (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 17 Apr 2021 18:11:33 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S237101AbhDQW1Z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Apr 2021 18:27:25 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56644 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235439AbhDQW1X (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Apr 2021 18:27:23 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id DD772D038B;
+        Sat, 17 Apr 2021 18:26:55 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=GL13oBf3k5/0wcnHjW9pNCB3hgE=; b=o1vZMe
+        o34WRRePkKjh6yPfxBzywFCQDg8QCAMAJLKde9MCfVt+7pYEr6b8klN0u+7VOaEr
+        2Jj+GawVghTEDMJT2dDt3FlnxHoMTDnb91awPL7mFZLkTgFHT/iin5iSD+Z/tbiP
+        pRr7vKqH29gmfm40UStMTldqwy10F/FlS2HeI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=rLgpOHXdT+6xTbvwH9RIJOjwa/8pIR09
+        6KuEYGybP7ZduvFMG3zElauQ9Nl2t9b6eZH2FpVhLxHboIbPUEYb3d7hlT+5nFbE
+        fkF7BWVlXNoq3QUF14SDJeJ/oDuq9RBz/+lBxnhIghIsDWNfIAWVWIisdk3Dja/b
+        wiEKMbXJ97U=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D4809D038A;
+        Sat, 17 Apr 2021 18:26:55 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E7A016078B;
-        Sat, 17 Apr 2021 22:10:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1618697436;
-        bh=DdFAm1pcnra3sOB6LyImM2rLOt2l9AgKDL8zi9cTuyw=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=i51OGdcuxZB064rNwkj2v7hPws+W+/Cjeh+JwVA53Or8C0RTZBf5/Yr/jTymM0P0/
-         Msxl1buutWPu/fOccKh2pIfVsk5DbxCT4UIKukxr3uN+0rmvMc2Gr7/01046jdUmKM
-         yHz+1R97DjFA/l0coMGF6gyEMWbs0+WA9mRyPXeyLexRPaD6y7SOTEHz6M6xrqSIZc
-         YuLBGrHb/dsYRgOVaN7zKEATqQu2j5J2Vdbf7cYarKxxnKnbV+IyaTf8zq/yjpf/hD
-         8GTiORcHO6Tn+WsKhFmrMfofQaYirCwWTZW22kLgpkqG+weegD1CnK4pQpI1vKTciI
-         DVzj4mvTwlbZeIosalECE0DkjwTSyPNpD/n0DVQXXGFZvgpl03quTdG/xe3XaWvczF
-         QqbFrUqlJu9Vb65y7dMLfesZvqRP8V8RdopS8oDyD9dYoH4vZDscEzRI8EZXue9HLH
-         nPH429JbT2bkuSoKgQmXoQUoufhYBBt/7KaeEOs8bX3RIDY7B5I
-Date:   Sat, 17 Apr 2021 22:10:28 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git Users <git@vger.kernel.org>
-Subject: Re: [PATCH] CodingGuidelines: remove suggestion to write commands in
- Perl/SH
-Message-ID: <YHtc1LZCv0PWbFpD@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, Git Users <git@vger.kernel.org>
-References: <patch-1.1-83266f30b67-20210417T084346Z-avarab@gmail.com>
- <bcc64c2d-3469-38ab-3234-fa8984a3d0f9@gmail.com>
- <87r1j91427.fsf@evledraar.gmail.com>
- <YHtFBeWxE2cFlShY@camp.crustytoothpaste.net>
- <87k0p01tje.fsf@evledraar.gmail.com>
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5C592D0389;
+        Sat, 17 Apr 2021 18:26:55 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
+Subject: Re: [PATCH v11 0/2] [GSOC] trailer: add new .cmd config option
+References: <pull.913.v10.git.1618562875.gitgitgadget@gmail.com>
+        <pull.913.v11.git.1618672417.gitgitgadget@gmail.com>
+Date:   Sat, 17 Apr 2021 15:26:54 -0700
+In-Reply-To: <pull.913.v11.git.1618672417.gitgitgadget@gmail.com> (ZheNing Hu
+        via GitGitGadget's message of "Sat, 17 Apr 2021 15:13:35 +0000")
+Message-ID: <xmqq5z0kbl8x.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="3iCLM26hf1x6rti9"
-Content-Disposition: inline
-In-Reply-To: <87k0p01tje.fsf@evledraar.gmail.com>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 03FC24E6-9FCC-11EB-A41B-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
---3iCLM26hf1x6rti9
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> In https://lore.kernel.org/git/xmqqv99i4ck2.fsf@gitster.g/ Junio and
+> Christian talked about the problem of using strbuf_replace() to replace
+> $ARG:
+>
+>  1. if the user's script has more than one $ARG, only the first one will be
+>     replaced, which is incorrected.
+>  2. $ARG is textually replaced without shell syntax, which may result a
+>     broken command when $ARG include some unmatching single quote, very
+>     unsafe.
+>
+> Now pass trailer value as $1 to the trailer command with another
+> trailer.<token>.cmd config, to solve these above problems.
+>
+> We are now writing documents that are more readable and correct than before.
 
-On 2021-04-17 at 21:37:57, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->=20
-> On Sat, Apr 17 2021, brian m. carlson wrote:
-> > I'm also kind of opposed to this change.  For example, I plan on adding
-> > a utility to fill in SHA-1 compatibility things for SHA-256 repos, and
-> > that will be written in shell.  The performance benefit of C here is
-> > going to be minimal, especially considering the fact that people will be
-> > running it literally at most once per repo, so I don't see a reason to
-> > spend a lot of time writing C code.
->=20
-> "This change" as in the patch or my informal summary of what I think the
-> current status quo is?
+Here is a good spot to summarize what changed since the previous
+round.
 
-The patch.
+It seems that this now has "exit non-zero to tell the caller not to
+add the trailer for this execuation".  Is that the only change you
+made?
 
-> The change being proposed here isn't to say that you can never write a
-> new thing in shell, but advice that actively encourages that for
-> prototyping.
+I was hoping that we'd declare victory with what was in v10 (with
+possibly typos and minor stylistic fixes if needed---I no longer
+remember details), let it go through the usual course of cooking in
+'next' and merged down to 'master', and then after the dust settles,
+we'd be adding this "by exiting with non-zero status, scripts can
+signal a trailer not to be added for a particular invocation" as a
+new feature, if it turns out to be necessary.
 
-I think in many cases it is valuable to use it for prototyping still.
+But let's see what's new in this iteration.
 
-> > I'm not of the opinion that we should never have shell or Perl code in
-> > our project, nor does it intrinsically make sense to migrate everything
-> > to C.  Typically we've done that because it performs better, especially
-> > on Windows, but there are many situations in which those are not major
-> > considerations and shell or Perl can be a desirable approach.
->=20
-> ... but since we're sharing our own opinions :)
->=20
-> As someone with >100 commits in perl.git, I don't think I can be thought
-> to be uncomfortable with the language.
 
-I am duly aware of this fact, having worked on a mainly Perl codebase
-full-time for 6 years.
+>       +#!/bin/sh
+>      -+test -n "$1" && git shortlog -s --author="$1" HEAD || true
+>      ++if test "$#" != 1
+>      ++then
+>      ++	exit 1
+>      ++else
+>      ++	test -n "$1" && git shortlog -s --author="$1" HEAD || true
+>      ++fi
 
-> So it sucks for the individual author, but at this point the trade-off
-> of whipping something new up in e.g. *.sh isn't just that the thing
-> doesn't need to be performant, but e.g. in the case of the gettext
-> integration means we'll be stuck with the fixed costs of extending
-> certain core APIs to shell-land forever, whereas currently it's looking
-> like we might be able to "git rm" much/most of that stuff sooner than
-> later.
+I find this dubious.  Why not
 
-I think it's worth keeping the shell script stuff around because I think
-it adds a lot less friction to building new tooling.  I'll be frank: I'm
-not massively in love with C, despite having known it since I was 10,
-nor is our C particularly elegant (memory leaks, tons of global
-variables, etc.).  I think there can be an argument made that in a lot
-of cases, shell or Perl is the better option when performance isn't
-essential, and so I think those should continue to be first-class
-languages in our codebase, even if that means we need to put a little
-more effort into maintaining them.
+	if test "$#" != 1 || test -z "$1"
+	then
+		exit 1
+	else
+		git shortlog -s --author="$1" HEAD
+	fi
 
-Moreover, we still have a decent number of scripts using the shell
-tooling, so I'm not sure they're going away quite as quickly as you'd
-hoped.  I agree they're not as numerous as they used to be, but they're
-still not entirely gone, nor do I think they're going to all disappear
-anytime soon.
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
+That is, if you happened to give an empty string, your version gives
+"" to <value> and returns success, letting a trailer "cnt:" with
+empty value.  Is that what we really want?
 
---3iCLM26hf1x6rti9
-Content-Type: application/pgp-signature; name="signature.asc"
+>       +$ git config trailer.cnt.key "Commit-count: "
+>       +$ git config trailer.cnt.ifExists "addIfDifferentNeighbor"
+>       +$ git config trailer.cnt.cmd "~/bin/gcount"
+>       +$ git interpret-trailers --trailer="cnt:Junio" --trailer="cnt:Linus Torvalds"<<EOF
+>       +> subject
+>      -+> 
+>      ++>
+>       +> message
+>      -+> 
+>      ++>
+>       +> EOF
+>       +subject
+>       +
+>      @@ Documentation/git-interpret-trailers.txt: subject
+>       +------------
+>       +$ cat ~/bin/glog-grep
+>       +#!/bin/sh
+>      -+test -n "$1" && git log --grep "$1" --pretty=reference -1 || true
+>      ++if test "$#" != 1
+>      ++then
+>      ++	exit 1
+>      ++else
+>      ++	test -n "$1" && git log --grep "$1" --pretty=reference -1 || true
+>      ++fi
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.27 (GNU/Linux)
+Ditto.
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYHtc0wAKCRB8DEliiIei
-gdAAAP93yFRxanx/Odi1sQaABT4LxlQctWDbKFhlMmeWsfGyjwD/erpOBcSr8DCt
-607AnpO6MCrgamQEIZRy81k/dNDkIQ4=
-=Dw7g
------END PGP SIGNATURE-----
+>      + 	if (capture_command(&cp, &buf, 1024)) {
+>      +-		error(_("running trailer command '%s' failed"), cmd.buf);
+>      + 		strbuf_release(&buf);
+>      +-		result = xstrdup("");
+>      ++		if (!conf->cmd || arg) {
+>      ++			error(_("running trailer command '%s' failed"), cmd.buf);
 
---3iCLM26hf1x6rti9--
+I am not sure about this part.  If .cmd (the new style) exits with a
+non-zero status for user-supplied --trailer=<token>:<value> (because
+it did not like the <value>), is that "running failed"?  The script
+is expected to express yes/no with its exit status, so I would say it
+is not failing, but successfully expressed its displeasure and vetoed
+the particular trailer from getting added.  IOW, "|| arg" part in
+the condition feels iffy to me.
+
+>      ++			result = xstrdup("");
+>      ++		} else
+>      ++			result = NULL;
+>      + 	} else {
+>      + 		strbuf_trim(&buf);
+>      + 		result = strbuf_detach(&buf, NULL);
+
+OK.
