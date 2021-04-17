@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 79598C433B4
-	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 12:53:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DEED4C43461
+	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 12:53:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3B632611C2
-	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 12:53:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B76E6611C2
+	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 12:53:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236540AbhDQMyO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Apr 2021 08:54:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54996 "EHLO
+        id S236356AbhDQMyP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Apr 2021 08:54:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236461AbhDQMyM (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S236535AbhDQMyM (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 17 Apr 2021 08:54:12 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57C11C061574
-        for <git@vger.kernel.org>; Sat, 17 Apr 2021 05:53:44 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id y5-20020a05600c3645b0290132b13aaa3bso3813982wmq.1
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 058E6C061756
+        for <git@vger.kernel.org>; Sat, 17 Apr 2021 05:53:45 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id u5-20020a7bcb050000b029010e9316b9d5so15548199wmj.2
         for <git@vger.kernel.org>; Sat, 17 Apr 2021 05:53:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=eH8tBSxiB1F5Gp8TB7DTOQRB+ZGpEIZjseqEuRjzrxM=;
-        b=TxRpD8SpGSGydvCPCSZLSB0sD6/bOdmtxFaqHMFa+YZLFX0xXhjpO4gbT6l9eOylz0
-         WSPy/SqofxPeGGo9Kj/7KMt3ULxOKi2Pw0ncqu6LPf7IGplkryfeLpW4U9X78ILzZy/E
-         sDcHVtU8wwrkhUwODNDzFhm4o0jKhwXByvuBnh1y1hZRyUEbAVSL1SGvEZCmpg/M7xJa
-         hadL0e48QsiLJUvYi0Ji/JTfYA4t0gskMIg3rIPrVP3k9cJSNCMkI4eEd4kkHsNEtE2d
-         930iM0VIDyR78WXgOZ2V3VT/EgzFNDMGgduupKxPuO2wmmFIo1bV5c8q5IxB4LHdMuL0
-         KNlA==
+        bh=Q3vFfZBtvABEMfKPjwdFQ/CNeu1eSyPRsdkY84Me3Us=;
+        b=blI82oPFnsVtuDk7r7g1omRMrzKSiVoeqY/adXCBTTJT+52t8e6rd5Y4CLOrzs3Fdh
+         EGvYSF7urd+2wjXsbMUOMl4zXlvEUPJf4zBULfttq6azny9bz3EKlqYVS1DpmvsIRiVb
+         ya0edqKKYb5ozH5RUnZvNFJ/bO6jwjnjUJfl4kOneJGs/PecgS/QPWDUq66noIanTX+s
+         ihJnsmwEsxomvAGrRsyniSTTDebWMihnRKHQoekqJWRv6mAitFhlgJbCrNi2vagxS82N
+         X+SBURdHrZewF4+ZzDLNYQfR/4dNe0BkwTYwfDUXPPIIKCHbpVvYPdUWLwZhMiBfEdXN
+         Rdbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=eH8tBSxiB1F5Gp8TB7DTOQRB+ZGpEIZjseqEuRjzrxM=;
-        b=T1EZl3jKAKM4IaNMdmQZeUIxetQxQVXwyXZ+MdIfMCwgMGbO/po8Cc0hBzcIfsY9XF
-         Ld9Tug8+ilvrMQHUNCj7OC9kugxVOxSACxTSRmIgocPRGlIcz7pwDIIHGypbgAS5MDs6
-         J27DPadLRhg7tfHR7fnnJxAFz9imLe/7V2m/ZX7azuRSXoYWlbPylQPNe0ONSuQkMSvB
-         MnoXo6+GEo+WvweqFbIA86hLKyNQ8pY/vUEl8QVRpZ2TSu3kpfaNyG95/JTVtIJLWVPH
-         R/b3H49xSmsNHn5BwnOkG+kdsYu4LCMpeIuTXsMrBwEYq+qIbJkyz9I+mPEUSOp9YZ+T
-         wG6w==
-X-Gm-Message-State: AOAM532l1vb0jB8UflKVfbuIJtV2M4W/IvjI8OJZyq8fEJy8LqQ1xpqY
-        4Js0gljH0K7NrMpVnjl7TdgfKTo1JE1iFw==
-X-Google-Smtp-Source: ABdhPJwYKsq23IgYlTllwUy7gN8wxIcYaFtruG1R/jLfjKGCvijSUNV2ZSIeGmxmJq+rgpXnYypwTw==
-X-Received: by 2002:a1c:4c04:: with SMTP id z4mr764129wmf.28.1618664022864;
-        Sat, 17 Apr 2021 05:53:42 -0700 (PDT)
+        bh=Q3vFfZBtvABEMfKPjwdFQ/CNeu1eSyPRsdkY84Me3Us=;
+        b=TpUOuh2rpx3StDaXPAgdpMOT1qfc15hwILlQUmXUrTpm5gEb06N9Y3+5CWEKJ37BPv
+         R661z4bS5fDyqCJk7UYetwJ9NVwFfpmh6t20D7/4xAdIFPdj51Zisw5RPRT8Hb5K8/SU
+         hAm1NtsD8enIB8WG5BLywjSpjzOTnXS9mPr8/sc0Zf1bcqWBIcBbQU4QxhfdfnO7DktR
+         lZk7ZNCUSvyb47NdTbyplUyKXVNoiMs1dNyebzaO2rGej6FYO28/Eg1cU74K6kSvcgN7
+         kcjZ85ofrt+QSB9k0rEllWpq9FzP23TRF1aHc+IqjJMr0vAfcWBBzlbG6l4Anj4uz/rX
+         js5A==
+X-Gm-Message-State: AOAM5304sfCvJlwry0u+BocG+41L9c0pF7M00LGY79IDKy4B8EnvbJkv
+        sFsOW1tcJFmDBZh7pA6Sk3lbXRKNWjkspg==
+X-Google-Smtp-Source: ABdhPJzJspaUuB2x9u3RyxOSY8gTGYBd0Zxthy09fJ3V8R7retr1hP6LpNpQm+r/1uxgw1coq0Acmg==
+X-Received: by 2002:a05:600c:2dc8:: with SMTP id e8mr12406398wmh.10.1618664023562;
+        Sat, 17 Apr 2021 05:53:43 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
         by smtp.gmail.com with ESMTPSA id v4sm11594529wme.14.2021.04.17.05.53.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 17 Apr 2021 05:53:42 -0700 (PDT)
+        Sat, 17 Apr 2021 05:53:43 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -68,9 +68,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 08/12] test-lib functions: add --printf option to test_commit
-Date:   Sat, 17 Apr 2021 14:52:41 +0200
-Message-Id: <patch-08.12-dc0a863db72-20210417T124424Z-avarab@gmail.com>
+Subject: [PATCH v2 09/12] submodule tests: use symbolic-ref --short to discover branch name
+Date:   Sat, 17 Apr 2021 14:52:42 +0200
+Message-Id: <patch-09.12-90bf55d2d42-20210417T124424Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.1.722.g788886f50a2
 In-Reply-To: <cover-00.12-00000000000-20210417T124424Z-avarab@gmail.com>
 References: <cover-00.16-00000000000-20210412T110456Z-avarab@gmail.com> <cover-00.12-00000000000-20210417T124424Z-avarab@gmail.com>
@@ -81,160 +81,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a --printf option to test_commit to allow writing to the file with
-"printf" instead of "echo".
+Change a use of $GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME added in
+704fed9ea22 (tests: start moving to a different default main branch
+name, 2020-10-23) to simply discover the initial branch name of a
+repository set up in this function with "symbolic-ref --short".
 
-This is useful for writing "\n", "\0" etc., in particular in
-combination with the --append option added in 3373518cc8 (test-lib
-functions: add an --append option to test_commit, 2021-01-12).
+That's something done in another test in 704fed9ea22, so doing it like
+this seems like an omission, or rather an overly eager
+search/replacement instead of fixing the test logic.
 
-I'm converting a few tests to use the new option rather than a manual
-printf/add/commit combination to demonstrate its usefulness. While I'm
-at it use "test_create_repo" where appropriate, and give the
-first/second commit a meaningful/more conventional log message in
-cases where no test cared about that message.
+There are only three uses of the GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+variable in the test suite, this gets rid of one of those.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t1307-config-blob.sh    |  4 +---
- t/t2030-unresolve-info.sh |  3 +--
- t/t4006-diff-mode.sh      |  6 ++----
- t/t4030-diff-textconv.sh  |  8 ++------
- t/t5520-pull.sh           | 10 ++--------
- t/test-lib-functions.sh   | 12 ++++++++++--
- 6 files changed, 18 insertions(+), 25 deletions(-)
+ t/lib-submodule-update.sh | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/t/t1307-config-blob.sh b/t/t1307-config-blob.sh
-index 002e6d3388e..930dce06f0f 100755
---- a/t/t1307-config-blob.sh
-+++ b/t/t1307-config-blob.sh
-@@ -65,9 +65,7 @@ test_expect_success 'parse errors in blobs are properly attributed' '
- '
- 
- test_expect_success 'can parse blob ending with CR' '
--	printf "[some]key = value\\r" >config &&
--	git add config &&
--	git commit -m CR &&
-+	test_commit --printf CR config "[some]key = value\\r" &&
- 	echo value >expect &&
- 	git config --blob=HEAD:config some.key >actual &&
- 	test_cmp expect actual
-diff --git a/t/t2030-unresolve-info.sh b/t/t2030-unresolve-info.sh
-index be6c84c52a2..f691e6d9032 100755
---- a/t/t2030-unresolve-info.sh
-+++ b/t/t2030-unresolve-info.sh
-@@ -179,8 +179,7 @@ test_expect_success 'rerere and rerere forget (subdirectory)' '
- 
- test_expect_success 'rerere forget (binary)' '
- 	git checkout -f side &&
--	printf "a\0c" >binary &&
--	git commit -a -m binary &&
-+	test_commit --printf binary binary "a\0c" &&
- 	test_must_fail git merge second &&
- 	git rerere forget binary
- '
-diff --git a/t/t4006-diff-mode.sh b/t/t4006-diff-mode.sh
-index 275ce5fa15b..6cdee2a2164 100755
---- a/t/t4006-diff-mode.sh
-+++ b/t/t4006-diff-mode.sh
-@@ -26,10 +26,8 @@ test_expect_success 'chmod' '
- '
- 
- test_expect_success 'prepare binary file' '
--	git commit -m rezrov &&
--	printf "\00\01\02\03\04\05\06" >binbin &&
--	git add binbin &&
--	git commit -m binbin
-+	git commit -m one &&
-+	test_commit --printf two binbin "\00\01\02\03\04\05\06"
- '
- 
- test_expect_success '--stat output after text chmod' '
-diff --git a/t/t4030-diff-textconv.sh b/t/t4030-diff-textconv.sh
-index c906320b60d..a39a626664d 100755
---- a/t/t4030-diff-textconv.sh
-+++ b/t/t4030-diff-textconv.sh
-@@ -26,12 +26,8 @@ EOF
- chmod +x hexdump
- 
- test_expect_success 'setup binary file with history' '
--	printf "\\0\\n" >file &&
--	git add file &&
--	git commit -m one &&
--	printf "\\01\\n" >>file &&
--	git add file &&
--	git commit -m two
-+	test_commit --printf one file "\\0\\n" &&
-+	test_commit --printf --append two file "\\01\\n"
- '
- 
- test_expect_success 'file is considered binary by porcelain' '
-diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index a09411327f9..e2c0c510222 100755
---- a/t/t5520-pull.sh
-+++ b/t/t5520-pull.sh
-@@ -746,14 +746,8 @@ test_expect_success 'pull --rebase fails on corrupt HEAD' '
- '
- 
- test_expect_success 'setup for detecting upstreamed changes' '
--	mkdir src &&
--	(
--		cd src &&
--		git init &&
--		printf "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n" > stuff &&
--		git add stuff &&
--		git commit -m "Initial revision"
--	) &&
-+	test_create_repo src &&
-+	test_commit -C src --printf one stuff "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n" &&
- 	git clone src dst &&
+diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
+index 4b714e93083..f7c7df0ca42 100644
+--- a/t/lib-submodule-update.sh
++++ b/t/lib-submodule-update.sh
+@@ -63,6 +63,7 @@ create_lib_submodule_repo () {
+ 	git init submodule_update_repo &&
  	(
- 		cd src &&
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 6e2332a324a..dbeb3d92628 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -173,6 +173,10 @@ debug () {
- #	Do not call test_tick before making a commit
- #   --append
- #	Use ">>" instead of ">" when writing "<contents>" to "<file>"
-+#   --printf
-+#       Use "printf" instead of "echo" when writing "<contents>" to
-+#       "<file>". You will need to provide your own trailing "\n". You
-+#       can only supply the FORMAT for the printf(1), not its ARGUMENT(s).
- #   --signoff
- #	Invoke "git commit" with --signoff
- #   --author <author>
-@@ -191,6 +195,7 @@ debug () {
+ 		cd submodule_update_repo &&
++		branch=$(git symbolic-ref --short HEAD) &&
+ 		echo "expect" >>.gitignore &&
+ 		echo "actual" >>.gitignore &&
+ 		echo "x" >file1 &&
+@@ -144,7 +145,7 @@ create_lib_submodule_repo () {
+ 		git checkout -b valid_sub1 &&
+ 		git revert HEAD &&
  
- test_commit () {
- 	notick= &&
-+	echo=echo &&
- 	append= &&
- 	author= &&
- 	signoff= &&
-@@ -202,6 +207,9 @@ test_commit () {
- 		--notick)
- 			notick=yes
- 			;;
-+		--printf)
-+			echo=printf
-+			;;
- 		--append)
- 			append=yes
- 			;;
-@@ -238,9 +246,9 @@ test_commit () {
- 	file=${2:-"$1.t"} &&
- 	if test -n "$append"
- 	then
--		echo "${3-$1}" >>"$indir$file"
-+		$echo "${3-$1}" >>"$indir$file"
- 	else
--		echo "${3-$1}" >"$indir$file"
-+		$echo "${3-$1}" >"$indir$file"
- 	fi &&
- 	git ${indir:+ -C "$indir"} add "$file" &&
- 	if test -z "$notick"
+-		git checkout "${GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME-master}"
++		git checkout "$branch"
+ 	)
+ }
+ 
 -- 
 2.31.1.722.g788886f50a2
 
