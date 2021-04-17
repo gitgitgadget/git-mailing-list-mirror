@@ -2,108 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 76AA4C433ED
-	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 00:36:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F65CC433B4
+	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 00:45:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 42999611AB
-	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 00:36:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6ADD7611AB
+	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 00:45:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234999AbhDQAgl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Apr 2021 20:36:41 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:34852 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S231997AbhDQAgj (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 16 Apr 2021 20:36:39 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S235000AbhDQAqM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Apr 2021 20:46:12 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55144 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229719AbhDQAqL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Apr 2021 20:46:11 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DAC66B146B;
+        Fri, 16 Apr 2021 20:45:45 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=b4uivGELG9NsCTsHGCQnMHNvnD8=; b=pVmRpk
+        d35qRHUpqkEnp303Wkf5qEyBs3IjQh0u/fKHCNUIgqVCMmmnkXgYz/XPOgsCj4t7
+        ym1CQ6R5U5Z30NhnutGtRdmFqFnph7GBAN71YHBHX70/9aSAMpsmBLs+ACInGuDX
+        29RCXHqcy+NHAR5rSjOTopMQFnQ9p0WSMhCSY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=BUY4eeOKDviSsoX6iOMUqsaaAXMSmdRH
+        4GkMhB4ssQLMN+7Z9ZRM+anuSPE+jMI2gAbjyOy37B0+Pog4wsJCwjzaO5QwnlRY
+        wc5cR3LqF2+a9Sh2I3B3F7/BrRCExfzv626BEP7Opo0zmymdqSUEz1RmWQewsNMz
+        I82o3LLinsQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CCFA4B1468;
+        Fri, 16 Apr 2021 20:45:45 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 892536078B;
-        Sat, 17 Apr 2021 00:35:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1618619743;
-        bh=4upg77bf6aXVRrkwAkNb9DDuzAyDy/C0FTXkqqyh3E4=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=Qc0KTV1e/P4LY4ltabzp0Jm6DxHa+RYEBm23fP/WGRSIlkHSNrta3OtCdYSnRrYDp
-         jY20ee6YEzxMUqCW7KYp8F73x8KNseaAOVfZpnyZZV+3SQ5D8CUr7ely+TomX3ptiT
-         S4bmmxK1U3u/Uy74k7S0s4hSVKZrJw87FArSRl4rz3gY0rWl9j2Zennh75GF2q9ZsL
-         P2tiN8cesDUL51kYNJhNIirwHlTR0c62piFCgOZ0A+KAarCavtvsHlL4tf3Q0Mqs6K
-         iaGQKVcaaK8+NOSRiLLHipCpn/m0ekkEpszmkTF8kdGY3/uf/+o72mgHFeq7vUZrMR
-         Nc++sLnY80uuBcOzDyE4vy5N1FzA1moBWQlcMojN0DdC2RtH7fRb7+gqYM0A94j8pn
-         L4pDEwPu94HW1xvX+oddhAJzfJaeYF/9I+PtossLP8ppIg3c3uigqPlIeYnH13R+94
-         2JqEIaq3ApfsXn15SWoySBG7mbSnBaerPLB67ltyFq8u9H6/VmD
-Date:   Sat, 17 Apr 2021 00:35:36 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Chris Torek <chris.torek@gmail.com>
-Cc:     Lars Kiesow <lkiesow@uos.de>, Git List <git@vger.kernel.org>
-Subject: Re: Bug report: gitk unable to handle Unicode properly
-Message-ID: <YHotWPe8noZqd9zt@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Chris Torek <chris.torek@gmail.com>, Lars Kiesow <lkiesow@uos.de>,
-        Git List <git@vger.kernel.org>
-References: <20210416182121.3c824c87@pc.home.lkiesow.io>
- <YHobypuPjLTdjHIJ@camp.crustytoothpaste.net>
- <CAPx1GvetNRBovJMF8tkk9obuSHjC=w9JqryrSTeA0rVF35Q5+A@mail.gmail.com>
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3496CB1466;
+        Fri, 16 Apr 2021 20:45:45 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jerry Zhang <jerry@skydio.com>
+Cc:     git@vger.kernel.org, ross@skydio.com, abe@skydio.com,
+        brian.kubisiak@skydio.com
+Subject: Re: [PATCH] git-rev-list: add --exclude-path-first-parent flag
+References: <20210417001525.19960-1-jerry@skydio.com>
+Date:   Fri, 16 Apr 2021 17:45:44 -0700
+In-Reply-To: <20210417001525.19960-1-jerry@skydio.com> (Jerry Zhang's message
+        of "Fri, 16 Apr 2021 17:15:25 -0700")
+Message-ID: <xmqqzgxxivrb.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="e3vkQxURpg7PAhAg"
-Content-Disposition: inline
-In-Reply-To: <CAPx1GvetNRBovJMF8tkk9obuSHjC=w9JqryrSTeA0rVF35Q5+A@mail.gmail.com>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3E8B7E60-9F16-11EB-A570-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jerry Zhang <jerry@skydio.com> writes:
 
---e3vkQxURpg7PAhAg
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Add the --exclude-path-first-parent flag,
+> which works similarly to --first-parent,
+> but affects only the graph traversal for
+> the set of commits being excluded.
+>
+>    -A-------E-HEAD
+>      \     /
+>       B-C-D
+>
+> In this example, the goal is to return the
+> set {B, C, D} which represents a working
+> branch that has been merged into main branch
+> E. `git rev-list D ^E` will end up returning
+> no commits since the exclude path eliminates
+> D and its ancestors.
+> `git rev-list --exclude-path-first-parent D ^E`
+> however will return {B, C, D} as desired.
 
-On 2021-04-17 at 00:01:45, Chris Torek wrote:
-> On Fri, Apr 16, 2021 at 4:21 PM brian m. carlson
-> <sandals@crustytoothpaste.net> wrote:
-> > On 2021-04-16 at 16:21:21, Lars Kiesow wrote:
-> > > - Launch gitk
-> > >     - Crash (see below)
->=20
-> > I don't see a crash.
->=20
-> I think this is a Tk/X11 interaction bug.
->=20
-> See, e.g., https://bugs.python.org/issue42225 (which has the same symptom=
-s).
->=20
-> I'm no tcl/tk expert, but I vaguely remember other similar bug
-> reports.  They all turned out to need a tk-side fix.
+It is not clera why you want to have this, instead of doing a more
+obvious "D..E^".  Even better is "E^..E", which is often what you
+want when viewing a history like my 'seen' that is a straight-line
+into which tips of branches are merged.
 
-It seems from the linked bug report that this is fixed in Tk 8.6.11,
-which I'm using, but not in Tk 8.6.10, which is available in Fedora 33.
-
-So it sounds like this should probably be filed as a bug with Fedora.  I
-don't know what their policy on backports is like, but they might be
-willing to backport a fix to Fedora 33.
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
-
---e3vkQxURpg7PAhAg
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.27 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYHotWAAKCRB8DEliiIei
-gdUlAQCB6jne6T/iymmz+W4ZoQbvA/Jj8oIVckpM28RQiCmUVgEAsv542KCJ9b9f
-/CfBOcPdX3vVYNoZsb6N0EGCnLr09gk=
-=Gfu2
------END PGP SIGNATURE-----
-
---e3vkQxURpg7PAhAg--
+E^..E (or doing the same for any commit on the mainline in such a
+history whose first-parent chain solely consists of merges) would
+show the list of the commits that came from the side branch that was
+merged, plus the merge commit, where the committer who created a
+merge would hava a chance to give a summary of what happened on the
+side branch.
