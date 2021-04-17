@@ -2,170 +2,155 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CBCDCC433B4
-	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 07:22:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 181E2C433ED
+	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 07:41:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9802860E0C
-	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 07:22:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E0D4F61186
+	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 07:41:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229888AbhDQHXP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Apr 2021 03:23:15 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59636 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229631AbhDQHXP (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Apr 2021 03:23:15 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D7629CC18A;
-        Sat, 17 Apr 2021 03:22:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=nYz0YJ4IAoACvWI4ntRksOnH/Qc=; b=XbnQuv
-        t+pBERYsD1Kp008//ih4Wo6hIOHDV7BvUvOlMuCrZjCIW2t0JDxigcJ4Xxl1lKND
-        yVth9FCVfzsH7EgvZAaYHWixbe2yKdMh0R4ZyRdQeERgj+8WT26weN36tiHt1j2a
-        7bwxrT9aZttMUd2O2mPWDvmq8e5jjDoQ7QM7A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=bS3ofBVfrKcZXGc0DCVoscnN8gXyUwS6
-        QKku2sIzisU3l5DsRVt+dp2edYtTsf1NIqXcQxF0K1Q4gt/sxfQZfq8ehWPrmm90
-        6Hn8aJzIj/eMOez4Z1WQc9OF+3I3Tq0WXIKYgOIcEzytw/63O66zMtSzKz4W0gDE
-        bJ5YxMp7FAI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CE5ECCC189;
-        Sat, 17 Apr 2021 03:22:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4AF48CC188;
-        Sat, 17 Apr 2021 03:22:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jerry Zhang <jerry@skydio.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Ross Yeager <ross@skydio.com>,
-        Abraham Bachrach <abe@skydio.com>,
-        Brian Kubisiak <brian.kubisiak@skydio.com>
-Subject: Re: [PATCH] git-rev-list: add --exclude-path-first-parent flag
-References: <20210417001525.19960-1-jerry@skydio.com>
-        <xmqqzgxxivrb.fsf@gitster.g>
-        <CAMKO5Cutas2BM_CTHTJs_O9NSp2Vyn-bK0jV0K758eq5M6-Oag@mail.gmail.com>
-Date:   Sat, 17 Apr 2021 00:22:47 -0700
-In-Reply-To: <CAMKO5Cutas2BM_CTHTJs_O9NSp2Vyn-bK0jV0K758eq5M6-Oag@mail.gmail.com>
-        (Jerry Zhang's message of "Fri, 16 Apr 2021 18:07:18 -0700")
-Message-ID: <xmqqczutiddk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S231386AbhDQHmC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Apr 2021 03:42:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43822 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229631AbhDQHmB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Apr 2021 03:42:01 -0400
+Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com [IPv6:2607:f8b0:4864:20::d2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 345FCC061574
+        for <git@vger.kernel.org>; Sat, 17 Apr 2021 00:41:34 -0700 (PDT)
+Received: by mail-io1-xd2d.google.com with SMTP id g125so1257347iof.3
+        for <git@vger.kernel.org>; Sat, 17 Apr 2021 00:41:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=LG3PJu75ik+9uaC8wSdIEBW8S7BBls4zhY8Ei1JKZFE=;
+        b=LQWuZZw1Ok086Hdbr5/0+vz+p32zEgdoMR3tGek5dhtuOys29ES5AfkQBoDMlIHlLv
+         3XJ8n6Z5H7GrWiASEamaJK2ahMdLWVHvE9uKnE7mQGzPZM2J8/SomRhEHCu+DLjNsxWU
+         2UwIJlnXODB212ZRi5IPlaqHneeaf5ubdm7dfacUSKjN574uHx6c0w0+lX1jvTN4IS3u
+         zRQPe7NyVrnlME0R9N/LmgrtHbp043rwQJNuCXm0N9EpAd4nnbWcdOwcdJlV6IfF4jQQ
+         PmJMOFO86eNVAtW7u2zj+isKF2tQc9oQMqTtKgBdPZ1TuB2/G/F1iyLDKwj7MZhxcRYa
+         KyqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=LG3PJu75ik+9uaC8wSdIEBW8S7BBls4zhY8Ei1JKZFE=;
+        b=QOBpPTzqa33aDJscqBh+s86M8y95oGcdsah67AQiaZLcbjrZX8LLLDPupD6gBTKFCK
+         IKzZ4pEfv8mbW24pq9lHzwyWQyl7d4hK4ungHWVkj4yO/J+cPai1p8lxEcviMoxszGOJ
+         FQHTVxvcHSlKx2INPJlv0LIrVPiMEeNOrl3pIFvt7M/j1tUmWZmWaErDt2tEiOU9benE
+         k6cyfocjLKbK0AI67t1N5+ecYP5SZnVcKP61+7PW1FF8SUAmvOQsnV46jBSBkobpObth
+         GreJK4jKg6Sqdp8LvHhc7AJKfGbAw3NsTyXRvFj1oIjvGBQkOpxBjbGAl5kYZD+uyBOh
+         dEcA==
+X-Gm-Message-State: AOAM5320+BTlw3l+DvX6mrKM1qZ2x8hjjI4AmRbwXyLRI+/0WJLqZ5Vk
+        JTWcBVP6SmVa+n+lEGXWLuazytWB0KkQExD+enI=
+X-Google-Smtp-Source: ABdhPJxlCWY6VTpP9/f/D0xwKYmvl8PjLdiC99B0nCt2Nrj5HO2g3AcgC3BkghGjFNxUt/Ty16hkC9691id3KNqkqkA=
+X-Received: by 2002:a5d:848a:: with SMTP id t10mr6793545iom.68.1618645293480;
+ Sat, 17 Apr 2021 00:41:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B63603D6-9F4D-11EB-8617-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+References: <pull.913.v9.git.1618245568.gitgitgadget@gmail.com>
+ <pull.913.v10.git.1618562875.gitgitgadget@gmail.com> <daa889bd0ade1111eb8b1471fe7e953fcb41d12b.1618562875.git.gitgitgadget@gmail.com>
+ <xmqqy2dikpc1.fsf@gitster.g> <xmqqr1jakp57.fsf@gitster.g> <xmqqpmytiplw.fsf@gitster.g>
+ <xmqqlf9hinuw.fsf@gitster.g>
+In-Reply-To: <xmqqlf9hinuw.fsf@gitster.g>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Sat, 17 Apr 2021 15:41:17 +0800
+Message-ID: <CAOLTT8S-CLSk6Obu-8L+QKb9YjBufVTMcTnSrfaUOQmyej59TQ@mail.gmail.com>
+Subject: Re: [PATCH v10 2/2] [GSOC] trailer: add new .cmd config option
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jerry Zhang <jerry@skydio.com> writes:
-
-> On Fri, Apr 16, 2021 at 5:45 PM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> Jerry Zhang <jerry@skydio.com> writes:
->>
->> > Add the --exclude-path-first-parent flag,
->> > which works similarly to --first-parent,
->> > but affects only the graph traversal for
->> > the set of commits being excluded.
->> >
->> >    -A-------E-HEAD
->> >      \     /
->> >       B-C-D
->> >
->> > In this example, the goal is to return the
->> > set {B, C, D} which represents a working
->> > branch that has been merged into main branch
->> > E. `git rev-list D ^E` will end up returning
->> > no commits since the exclude path eliminates
->> > D and its ancestors.
->> > `git rev-list --exclude-path-first-parent D ^E`
->> > however will return {B, C, D} as desired.
->>
->> It is not clera why you want to have this, instead of doing a more
->> obvious "D..E^".  Even better is "E^..E", which is often what you
->> want when viewing a history like my 'seen' that is a straight-line
->> into which tips of branches are merged.
-> My motivation is to find the point at which a release branch forked off from
-> a main branch, even though the release branch could have been merged
-> into the main branch multiple times since it was forked off.
+Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B44=E6=9C=8817=E6=97=
+=A5=E5=91=A8=E5=85=AD =E4=B8=8A=E5=8D=8811:36=E5=86=99=E9=81=93=EF=BC=9A
 >
-> If we add another merge from release to main, it will be more clear
-> that those give different results:
+> Junio C Hamano <gitster@pobox.com> writes:
 >
->         -A-----E-F-main
->           \   / /
->            B-C-D-release
+> > And continuing this line of thought, I think it would be a perfectly
+> > fine extension to allow the script/program that is launched by the
+> > .command or .cmd mechanism to signal interpret-trailers that it does
+> > not want it to add a trailer as the result of this invocation by
+> > exiting with non-zero.  And that would be a reasonable way forward
+> > without having to add yet another ugly workaround .runMode.
+> >
+> > For example, trailer.signoff.cmd could be this script:
+> >
+> >       #!/bin/sh
+> >       if test $# !=3D 1
+> >       then
+> >               exit 1
+> >       else
+> >               git log -1 --author=3D"$1" --format=3D'"%aN" <$aE>'
+> >       fi
+> >
+> > where the "implicit" invocation is signalled by not passing any
+> > argument, to which the script reacts by exiting with 1, and the
+> > interpret-trailers would discard the result of the unasked-for
+> > invocation.
 >
-> `git rev-list --exclude-path-first-parent release ^main` returns {B, C, D}.
-> I've added commit F to show that we don't necessarily have info on E,
-> there could be many commits between it and the tip of main.
+> The beauty of this approach, compared to say .runMode, is that the
+> program specified by .cmd (and .command, except that it cannot tell
+> if the invocation is in response to explicit --trailer=3D<key>:<value>
+> request, or the extra one that is done even without being asked)
+> have even better control in squelching the trailer output.  Not just
+> to silence the extra unasked-for invocation, it can inspect the
+> value given to each of --trailer=3D<key>:<value> option and decide not
+> to add a trailer in response to it.
+>
 
-OK, you meant to deal with repeated merges into integration branch.
+If I understand correctly, Your approach may be like this:
 
-So the idea is to just name the end point merge, say F (you also
-could name D as the starting point, but see below), and 
+First, Those `<token> <value>` pairs we passed on the command line
+will use one positional parameter in the shell-script.
 
- - initially mark its first parent as UNINTERESTING (i.e. E), and
-   other parents as INTERESTING (i.e. D).
+Second, if it is the trailer implicitly added, originally it was
+`<token> ""`, now we turn it to `<token> NULL`, This will make
+the shell-script not pass positional parameters.
 
- - run the revision traversal machinery, but when propagating the
-   UNINTERESTING bit, give it only to the first parent.  The second
-   and later parents won't become UNINTERESTING.
+Then our shell script can distinguish them by the value of $#.
 
- - stop after we exhaust INTERESTING commits.
+If we want shell-script to execute implicitly anyway, We can do nothing.
+the shell-script can be like  as Christian mention:
 
-It would probably work for your idealized topology, but I do not
-know what happens when there are criss-cross merges.  In the revised
-picture, you are merging down from the B-C-D chain into the
-mainline, but once the B-C-D chain becomes longer and diverges too
-much from the mainline, it becomes tempting to break the "merge only
-in one direction" discipline and merge back from the mainline, to
-"catch up", and such a merge will have the history of B-C-D line of
-development as its first parent.  Would that screw up the selection
-of which line of development is uninteresting?
+#!/bin/sh
+echo "$(git config user.name) <$(git config user.email)>"
 
->> > Add the --exclude-path-first-parent flag,
->> > which works similarly to --first-parent,
->> > but affects only the graph traversal for
->> > the set of commits being excluded.
->> >
->> >    -A-------E-HEAD
->> >      \     /
->> >       B-C-D
+But If we want shell-script to reject implicit execution, We can judge the
+value of $# : 0 exit , 1 normal as you mention:
 
-In any case, it was totally unclear from the proposed log messsage,
-and the overlong option name that does not say much did not help me
-guess what you wanted to do with it.  Specifically, it is not clear
-what "exclude" means (we do not usually use the word in the context
-of revision traversal), and when we talk about "path" in the context
-of revision traversal, we almost always mean the paths to the files,
-i.e. pathspec that limits and simplifies the shape of the history.
-Also, it claims that it works similarly to --first-parent, but what
-you are doing is to propagate UNINTERESTING bit on the first-parent
-chain, which ends up showing the side branch (i.e. B-C-D chain),
-without showing the commits on the first-parent chain (A and E).
+#!/bin/sh
+if test $# !=3D 1
+then
+    exit 0
+else
+    git log -1 --author=3D"$1" --format=3D'%aN <%aE>'
+fi
 
-What are the words that convey the idea behind this operation
-clearly at the conceptual level?  Let's think aloud to see if we can
-come up with a better name.
+I agree with your approach.
+But when I am reproducing your solution, I may be in trouble:
+If we let shell-script `exit(1)`, `capture_command()` will output
+"running trailer command '%s' failed" which is its origin strategy
+in order to catch the user's command error.
 
- * first parents are unintertesting
+But If we use `exit(0)` , The headache is coming again:
 
- * show commits on side branch(es)
+Signed-off-by:
 
- * follow side branch.
+the empty value trailer still output. What we want is that those
+"<token> NULL" are rejected here, we don=E2=80=99t want any other output,
+do we?
 
-I think that is closer to the problem you are solving, if I
-understand what you wrote above correctly.
 
-Perhaps --show-side-branch or --follow-side-branch?  I dunno.
+Thanks.
+--
+ZheNing Hu
