@@ -2,110 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22D8EC433ED
-	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 08:54:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD000C433B4
+	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 08:58:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E22C0611EF
-	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 08:54:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A119B61152
+	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 08:58:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235859AbhDQIy4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Apr 2021 04:54:56 -0400
-Received: from mout.web.de ([212.227.17.12]:56285 "EHLO mout.web.de"
+        id S231386AbhDQI6b (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Apr 2021 04:58:31 -0400
+Received: from cloud.peff.net ([104.130.231.41]:54940 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236057AbhDQIyH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Apr 2021 04:54:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1618649616;
-        bh=oe7hBhjNbyDUVBJOFfIs0A1T9xqwQIwgyrTUv/FGd7A=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=fHu/nle9gveL3AzlZc7zjY8O0t9z+fGoJk8PsX7TrogYGvZT3Rj5OfcjvJvyCxs5F
-         MHPvrmzw9uRGm/oWTGK43a5Jr+q8T7TopY7EN36vgC1EVa96RFSGKWvN2r/MUar59h
-         OnV+JaZEFFnUcZKUDjavovocLlKMRftob+3bFBLE=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0ML8X7-1lXxp31D3R-000Ova; Sat, 17
- Apr 2021 10:53:36 +0200
-Date:   Sat, 17 Apr 2021 10:53:35 +0200
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] CodingGuidelines: remove suggestion to write commands in
- Perl/SH
-Message-ID: <20210417085335.ib6m4jagiekeulec@tb-raspi4>
-References: <patch-1.1-83266f30b67-20210417T084346Z-avarab@gmail.com>
+        id S229631AbhDQI6b (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Apr 2021 04:58:31 -0400
+Received: (qmail 30012 invoked by uid 109); 17 Apr 2021 08:58:04 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 17 Apr 2021 08:58:04 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 2536 invoked by uid 111); 17 Apr 2021 08:58:05 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 17 Apr 2021 04:58:05 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Sat, 17 Apr 2021 04:58:04 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+        Christian Couder <christian.couder@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Philip Oakley <philipoakley@iee.email>
+Subject: Re: [PATCH v4 0/8] rev-list: implement object type filter
+Message-ID: <YHqjHA6ZUYvT6w1T@coredump.intra.peff.net>
+References: <cover.1617967252.git.ps@pks.im>
+ <cover.1618234575.git.ps@pks.im>
+ <YHVMEdeDv9ZeXRAU@coredump.intra.peff.net>
+ <xmqqfsztlwxb.fsf@gitster.g>
+ <YHbZNL0gzw0+1k5h@ncase>
+ <xmqqmtu0y3r8.fsf@gitster.g>
+ <YHgOCUI++AY/7zwX@coredump.intra.peff.net>
+ <xmqqczuvsac6.fsf@gitster.g>
+ <xmqq8s5jsa5c.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <patch-1.1-83266f30b67-20210417T084346Z-avarab@gmail.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:hDgCPNGyCyhW96wReybEZh9jSsViFwYZp9R8JlgoLevBeG7qnzh
- JVxLyficAs4/XCPaLUxaTk4Up2TTTA7zuQiCX6CpvL6IG88JjilxVwpnCRGwb6GeGi8fG6L
- 5jvtsqXa3FURLQkiDAcoexJWZfmJk7b87ymqdszDotTkoukwEp/MFpksuARgfnY5MH/sS8c
- EBrwG4jeYPYNtVu8SmRjA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:pGmrntDj/78=:8KJVmahzSifSaOxJr6t57Y
- cpKeQWcZR5GYoG0V8lhW846cORAH7mlJzPDuwd+SjPtRhI4KE9luyCgOsQqjWrnfHodtxJuiT
- vrtKusNYnnlo3wy83899bLGhQVrE0WC+od70zgdqt+Dmg8LM8lIt0/TMCf+5UlZTp+l4rLRFl
- O7hjy738VWW11RY9q/rIuZuOg5xhIb3VBb38qRYN0sJlumIVaSwSkDiaOP5vxoBxySH8y/uZY
- /hZ+2nPVkuhkaI3HsCDtwZx/otm8OcO9UEIeTjF0b4hDOog3eMU31y8ZumYpgjC1HwmJ/CN3C
- hKcuwOQA2GuTaaMna0odaeM/fupzIJgFt9mwS8PF3ini9TGZav2Z9ALixt09AOhHjraNAUddv
- I8B1UyJH3xvr+sGjhRNGPJfTdYxBLmrHzB7jxZGjyt5YMRSV+O4Y+Pk+XyDfC/v1F07ZNIEF0
- Xjoen/CSngg2okx8PnciZ6aT6elqQiA3LjF8uV2aik6O+W9XXnnL9p0IUv4ZvXx24lY8ygcBE
- pu+sFWf7gPKImA2KiLnagGsdAfdsD1SpvYb1IbB1iz6F425Qbbs2hEDUXPZ5Z1RCwANa4hjf1
- Q/ieIX+Flpx60cCCvnmq/mwzmVC7wA316ddqjIcFBwzzBsWFvXZB6zRfaAyOUj58LvI7W/51l
- 7jV582IdAapgALbGZoGO+oSokQAu43maa+K8qxSJd5sVOQLk+HkDeeq0f1GqDx+8Cegiv0GUG
- w2eHXtVDeuHZOLSl1JW3Br/Fc3BhrpkVfHiKfFvvd2PJ2HyZnynTlYwwYhwNP1FaBJMPdqijY
- 12LN4GSCioHNleIAsazXG5pbRG/vcu9TTGBvqBok1TQOy/Q5QRbiWmttBrg3MWc49W4kPkKA/
- gTdvziI/1R4ntXrQZ4Uq/9OLuFutBGKFnmiOc8XDDZwxbQq3fqHLZxoSJ62/EShOtHNEngQII
- XT7tq2VdllWNknul06OTAQl5tpDm+dMqE2KZH4S4SydpmYpnKpl97xCr/gA+EQPl2HuC64eA8
- JehMdGhK3yf8alCmbMPW6TTx/ibeXXf99/Gckgfrp64dK/gJC3YGBepMQu9mfPC8OOCsOgtBg
- Ux/XLjq5opqMnpFgDLFK2ZpbhfVE7BivgvXY0lDxSlA8Ee/Qv3RHVoIGTEJX2O1jAkD0rThev
- MDeFkWoul+vfRgJUmXpUl2lVjNYnrMih4WutmieTvcnhCBTpREh4AmEe7XeSuB0jN34Sc=
+In-Reply-To: <xmqq8s5jsa5c.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Apr 17, 2021 at 10:43:54AM +0200, =C6var Arnfj=F6r=F0 Bjarmason wr=
-ote:
-> Remove a suggestion to write new commands in Perl or Shell to
-> experiment. This advice was added in 6d0618a820a (Add
-> Documentation/CodingGuidelines, 2007-11-08).
->
-> Since then the consensus changed to having no new such commands unless
-> necessary, and existing ones have been actively migrated to C.
->
-> Signed-off-by: ??var Arnfj??r?? Bjarmason <avarab@gmail.com>
+On Thu, Apr 15, 2021 at 10:57:51AM -0700, Junio C Hamano wrote:
 
-The patch looks good - but the Umlauts are garbled:
-ISO-2022-JP is used ?
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > ...  But that leads me to
+> > wonder into a different direction---coalesce (tag|tree|blob)_objects
+> > members into a single bit, say all_objects, have "--objects" and
+> > friends set that single bit, and update places like these to check
+> > that single bit.
+> 
+> Just to avoid misunderstanding, I am not saying this topic needs to
+> address any of this unifying of three bits.
+> 
+> It is just an idea for those interested to think about, when they
+> have nothing better to do, when the codebase is quiescent.
 
-> ---
->  Documentation/CodingGuidelines | 5 -----
->  1 file changed, 5 deletions(-)
->
-> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidel=
-ines
-> index 45465bc0c98..b9cd55db6a8 100644
-> --- a/Documentation/CodingGuidelines
-> +++ b/Documentation/CodingGuidelines
-> @@ -416,11 +416,6 @@ For C programs:
->     that are made available to it by including one of the header files
->     it must include by the previous rule.
->
-> - - If you are planning a new command, consider writing it in shell
-> -   or perl first, so that changes in semantics can be easily
-> -   changed and discussed.  Many Git commands started out like
-> -   that, and a few are still scripts.
-> -
->   - Avoid introducing a new dependency into Git. This means you
->     usually should stay away from scripting languages not already
->     used in the Git core command set (unless your command is clearly
-> --
-> 2.31.1.687.g1d87aeed692
->
+It does feel like going "backwards" in a sense. We have the three flags
+mostly split, and we'd lose that distinction. On the other hand, if the
+current split is imperfect, it may be leading people down a confusing
+path (I _think_ this "trees must be set in order to see blobs" thing is
+the only real gotcha, but there could be others).
+
+There's some other discussion in this old thread:
+
+  https://lore.kernel.org/git/06a84f8c77924b275606384ead8bb2fd7d75f7b6.1487984670.git.jonathantanmy@google.com/
+
+(I didn't remember it, but my spider sense tingling caused me to dig in
+the archive a bit).
+
+-Peff
