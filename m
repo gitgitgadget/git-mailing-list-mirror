@@ -6,167 +6,120 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5AB72C433B4
-	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 22:32:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 351E9C433B4
+	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 23:46:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2CF63610C7
-	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 22:32:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E53E56134F
+	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 23:46:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237101AbhDQW1Z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Apr 2021 18:27:25 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56644 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235439AbhDQW1X (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Apr 2021 18:27:23 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DD772D038B;
-        Sat, 17 Apr 2021 18:26:55 -0400 (EDT)
+        id S234904AbhDQXqc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Apr 2021 19:46:32 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:57823 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229865AbhDQXqc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Apr 2021 19:46:32 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id EF5181202AA;
+        Sat, 17 Apr 2021 19:46:04 -0400 (EDT)
         (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=GL13oBf3k5/0wcnHjW9pNCB3hgE=; b=o1vZMe
-        o34WRRePkKjh6yPfxBzywFCQDg8QCAMAJLKde9MCfVt+7pYEr6b8klN0u+7VOaEr
-        2Jj+GawVghTEDMJT2dDt3FlnxHoMTDnb91awPL7mFZLkTgFHT/iin5iSD+Z/tbiP
-        pRr7vKqH29gmfm40UStMTldqwy10F/FlS2HeI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=rLgpOHXdT+6xTbvwH9RIJOjwa/8pIR09
-        6KuEYGybP7ZduvFMG3zElauQ9Nl2t9b6eZH2FpVhLxHboIbPUEYb3d7hlT+5nFbE
-        fkF7BWVlXNoq3QUF14SDJeJ/oDuq9RBz/+lBxnhIghIsDWNfIAWVWIisdk3Dja/b
-        wiEKMbXJ97U=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D4809D038A;
-        Sat, 17 Apr 2021 18:26:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+        :subject:date:message-id:mime-version:content-type; s=sasl; bh=H
+        gJ9phjbWtO11hr5dH4ilOZryzg=; b=ggEv5nCzzZOUWGsTEmWzIKJgHaW95NVS0
+        scRVIyvkva9LjuPiXJ7Rn/oUBhZBcq9B0nFTklujg6dAzzWray1QdUkJkyf0gRLN
+        2mCJykvNehrKZropokPsjugYnFwB6tlEujKlo8Q1k+W6iQATl2GF66MpzKBOAIwO
+        Ld9gVbWh3M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+        :date:message-id:mime-version:content-type; q=dns; s=sasl; b=Kx3
+        hri6qUsartCecy5/o8Ph6HTFEyXCnqYfhJZmImnvOLkSRXTPzIzr/nT9g/8VBHIL
+        aPOnxKs4gjWOqdmT41Bv0U3kl33MIygfj3GoUlSobXkU0E1wbkxPV29iwWHz1KU/
+        cjTC5jskbOgCo7E1bffio8rzEcUIBSfseuCVsS6c=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D92CE1202A9;
+        Sat, 17 Apr 2021 19:46:04 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5C592D0389;
-        Sat, 17 Apr 2021 18:26:55 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 075C31202A6;
+        Sat, 17 Apr 2021 19:46:01 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>
-Subject: Re: [PATCH v11 0/2] [GSOC] trailer: add new .cmd config option
-References: <pull.913.v10.git.1618562875.gitgitgadget@gmail.com>
-        <pull.913.v11.git.1618672417.gitgitgadget@gmail.com>
-Date:   Sat, 17 Apr 2021 15:26:54 -0700
-In-Reply-To: <pull.913.v11.git.1618672417.gitgitgadget@gmail.com> (ZheNing Hu
-        via GitGitGadget's message of "Sat, 17 Apr 2021 15:13:35 +0000")
-Message-ID: <xmqq5z0kbl8x.fsf@gitster.g>
+To:     git@vger.kernel.org
+Subject: [BUG?] 'git describe seen'?
+Date:   Sat, 17 Apr 2021 16:45:59 -0700
+Message-ID: <xmqq1rb8bhl4.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 03FC24E6-9FCC-11EB-A41B-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 113597EA-9FD7-11EB-9C3B-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
+This does not seem a new problem at all, as v2.10.0 thru more recent
+versions of "git describe" seem to give me the same answer.
 
-> In https://lore.kernel.org/git/xmqqv99i4ck2.fsf@gitster.g/ Junio and
-> Christian talked about the problem of using strbuf_replace() to replace
-> $ARG:
->
->  1. if the user's script has more than one $ARG, only the first one will be
->     replaced, which is incorrected.
->  2. $ARG is textually replaced without shell syntax, which may result a
->     broken command when $ARG include some unmatching single quote, very
->     unsafe.
->
-> Now pass trailer value as $1 to the trailer command with another
-> trailer.<token>.cmd config, to solve these above problems.
->
-> We are now writing documents that are more readable and correct than before.
+Anyway, I am seeing a curious symptom.
 
-Here is a good spot to summarize what changed since the previous
-round.
+$ git rev-list --count v2.31.0..seen
+716
+$ git rev-list --count v2.31.1..seen
+687
 
-It seems that this now has "exit non-zero to tell the caller not to
-add the trailer for this execuation".  Is that the only change you
-made?
+The above means that 'seen' is closer to v2.31.1 than v2.31.0; there
+are fewer commits that are not in v2.31.1 that are in 'seen', than
+commits that are not in v2.31.0 that are in 'seen'.  
 
-I was hoping that we'd declare victory with what was in v10 (with
-possibly typos and minor stylistic fixes if needed---I no longer
-remember details), let it go through the usual course of cooking in
-'next' and merged down to 'master', and then after the dust settles,
-we'd be adding this "by exiting with non-zero status, scripts can
-signal a trailer not to be added for a particular invocation" as a
-new feature, if it turns out to be necessary.
+That is naturally expected.
 
-But let's see what's new in this iteration.
+$ git rev-list --count v2.31.0..v2.31.1
+29
 
+And that difference of 29 matches the difference, which is 716 - 687.
 
->       +#!/bin/sh
->      -+test -n "$1" && git shortlog -s --author="$1" HEAD || true
->      ++if test "$#" != 1
->      ++then
->      ++	exit 1
->      ++else
->      ++	test -n "$1" && git shortlog -s --author="$1" HEAD || true
->      ++fi
+But here is what is puzzling.
 
-I find this dubious.  Why not
+$ git describe seen
+v2.31.0-716-g7b65b53281
 
-	if test "$#" != 1 || test -z "$1"
-	then
-		exit 1
-	else
-		git shortlog -s --author="$1" HEAD
-	fi
+$ git rev-list --first-parent master..seen |
+  while read v
+  do
+	d=$(git describe $v)
+	echo $v $d
+	case "$d" in v2.31.1-*) break ;; esac
+  done
+7b65b53281ae06ee25dd47dead4062125eb54427 v2.31.0-716-g7b65b53281
+eec14f0fec886c909a29d63a94537df5a62be618 v2.31.0-714-geec14f0fec
+...
+103835562c64abef2319995716230f92092f87af v2.31.0-569-g103835562c
+d4324831d9152b16e091646e22a6e03423a59c93 v2.31.1-516-gd4324831d9
 
-That is, if you happened to give an empty string, your version gives
-"" to <value> and returns success, letting a trailer "cnt:" with
-empty value.  Is that what we really want?
+Is there something tricky about the topic merged at 10383556 (Merge
+branch 'jh/rfc-builtin-fsmonitor' into seen, 2021-04-17) to confuse
+the counting done in "git describe"?
 
->       +$ git config trailer.cnt.key "Commit-count: "
->       +$ git config trailer.cnt.ifExists "addIfDifferentNeighbor"
->       +$ git config trailer.cnt.cmd "~/bin/gcount"
->       +$ git interpret-trailers --trailer="cnt:Junio" --trailer="cnt:Linus Torvalds"<<EOF
->       +> subject
->      -+> 
->      ++>
->       +> message
->      -+> 
->      ++>
->       +> EOF
->       +subject
->       +
->      @@ Documentation/git-interpret-trailers.txt: subject
->       +------------
->       +$ cat ~/bin/glog-grep
->       +#!/bin/sh
->      -+test -n "$1" && git log --grep "$1" --pretty=reference -1 || true
->      ++if test "$#" != 1
->      ++then
->      ++	exit 1
->      ++else
->      ++	test -n "$1" && git log --grep "$1" --pretty=reference -1 || true
->      ++fi
-
-Ditto.
-
->      + 	if (capture_command(&cp, &buf, 1024)) {
->      +-		error(_("running trailer command '%s' failed"), cmd.buf);
->      + 		strbuf_release(&buf);
->      +-		result = xstrdup("");
->      ++		if (!conf->cmd || arg) {
->      ++			error(_("running trailer command '%s' failed"), cmd.buf);
-
-I am not sure about this part.  If .cmd (the new style) exits with a
-non-zero status for user-supplied --trailer=<token>:<value> (because
-it did not like the <value>), is that "running failed"?  The script
-is expected to express yes/no with its exit status, so I would say it
-is not failing, but successfully expressed its displeasure and vetoed
-the particular trailer from getting added.  IOW, "|| arg" part in
-the condition feels iffy to me.
-
->      ++			result = xstrdup("");
->      ++		} else
->      ++			result = NULL;
->      + 	} else {
->      + 		strbuf_trim(&buf);
->      + 		result = strbuf_detach(&buf, NULL);
-
-OK.
+$ git log --first-parent --oneline master..103835562^2
+14d50074ff t7527: test status with untracked-cache and fsmonitor--daemon
+07dbff70ce p7519: add fsmonitor--daemon
+436807f77a t7527: create test for fsmonitor--daemon
+c826602412 fsmonitor: force update index when fsmonitor token advances
+aaaf17ce60 fsmonitor--daemon: use a cookie file to sync with file system
+71a0e07d79 fsmonitor--daemon:: introduce client delay for testing
+9aedb0f1ea fsmonitor--daemon: periodically truncate list of modified files
+d4ae16b416 fsmonitor--daemon: implement handle_client callback
+94f826fd48 fsmonitor-fs-listen-macos: implement FSEvent listener on MacOS
+25663103ea fsmonitor-fs-listen-macos: add macos header files for FSEvent
+e504205db7 fsmonitor-fs-listen-win32: implement FSMonitor backend on Windows
+5e207d2af6 fsmonitor--daemon: create token-based changed path cache
+42f493472f fsmonitor--daemon: define token-ids
+082b8085d3 fsmonitor--daemon: add pathname classification
+d4f4c59e56 fsmonitor--daemon: implement daemon command options
+aec39650b5 fsmonitor-fs-listen-macos: stub in backend for MacOS
+100cb9e8ad fsmonitor-fs-listen-win32: stub in backend for Windows
+404d7dbdb6 fsmonitor--daemon: implement client command options
+1f2d717bd6 fsmonitor--daemon: add a built-in fsmonitor daemon
+4b10913cfe fsmonitor: introduce `core.useBuiltinFSMonitor` to call the daemon via IPC
+867611645c config: FSMonitor is repository-specific
+6e74370ce4 fsmonitor-ipc: create client routines for git-fsmonitor--daemon
+ff338b5790 Merge branch 'jh/simple-ipc' into jh/rfc-builtin-fsmonitor
