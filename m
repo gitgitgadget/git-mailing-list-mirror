@@ -2,90 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E1C48C433B4
-	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 19:57:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 28119C433ED
+	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 20:29:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AD4F761245
-	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 19:57:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E649861026
+	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 20:29:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236877AbhDQT5p (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Apr 2021 15:57:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33202 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236718AbhDQT5o (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Apr 2021 15:57:44 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36522C061574
-        for <git@vger.kernel.org>; Sat, 17 Apr 2021 12:57:16 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id x20so19631484lfu.6
-        for <git@vger.kernel.org>; Sat, 17 Apr 2021 12:57:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp.br; s=usp-google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=l98xm6Tdur/0588BfpFhyAGwxJ9plzVrPs4WmBtnK9k=;
-        b=SelBFE4UMNsiTGlyeBpxXI+YAiICzzWLL2EI+Z4Ezos1cec5EgaWMWjSiKKdxIzJ6d
-         47PS8KlL7tR4hFkLkNDAHNWy1NbFLlOoJLyLgFuD+xTMoaZ1R+QvAZ0TVrY8rjYw4wWW
-         nT3gGRSlJaofMCnyqMgFTX4Bag2WgrRjWFpr00OyS8v9Oc9W05q50eO/U0sawn8RpQLq
-         FGw+YT11FkQtf6FBZEEn/8bzXEWpBdk8CRa26ZScYGM5zCmdiR8UK0rtsQFiVmGQFPzX
-         jta9gbMuj3yed5P8WMOttwFy69I/iZfpr5TiSza717+1F0uj0Vr/3oWfqBqS4TfTiHhs
-         XxnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=l98xm6Tdur/0588BfpFhyAGwxJ9plzVrPs4WmBtnK9k=;
-        b=Nwvqc/iuliF0l1zJZ4oHkf/k7BYbp/Cuv1DP8HPBUI/xAiTA/LG9JDwkFjWvAgZI7t
-         UxejNKHqFz9gVXxLIpcLY453OCfHgttHjRccBi1lzDNkFAc0y1UMSr2xXIZsF/Pe0cIp
-         N4QhcDcIA/UKn9Dqb8vGT1fhQeqwR0K10uP1yOMmzU43p/sVCyQM+Uk/gxUXqXiW3vpd
-         HcYinOxydSWS+wbcOP1PRd4ox1dxYEIuE+gYVm55J2SkKJL7HYnbF5NAVcqN6wBUNjbR
-         PGN/2U+6PbKgeYPEeum7e22NlUpvQah1PwtPaPYDfTYF1Y+WAvfE6wR0yCEEJuqKDAv9
-         aVDQ==
-X-Gm-Message-State: AOAM533zF/cw9htzbhw1M5ua0g0M95RdfGw/cmz7ycQMzHX8MeKLgQML
-        g8E70SbBugzI5QD/UdmFvOXDhqDkVxNEGr9QV6y4QbFjPV4=
-X-Google-Smtp-Source: ABdhPJxO2UNNgxXC6shrjCX9fG61F/OEzBET6tFyD9Q4hOgECUsafIlC7v9QR1pB6r8ByH5k9WOBnJm5j4m8lFXnp0s=
-X-Received: by 2002:a05:6512:3094:: with SMTP id z20mr7152758lfd.354.1618689434565;
- Sat, 17 Apr 2021 12:57:14 -0700 (PDT)
+        id S236977AbhDQU32 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Apr 2021 16:29:28 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:35536 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S236718AbhDQU31 (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 17 Apr 2021 16:29:27 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id D848E60744;
+        Sat, 17 Apr 2021 20:28:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1618691339;
+        bh=gGTeH8s9GZ5mV2kI5ej7t4GC/+d4jR2ZPf8s5TyYANQ=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=nSqhSwxOeyy/2RKav9X+2Evku3d9hwUs/oKoDGKoSBm+/cPSSGT7KZB3x5jq46rWk
+         GdZVYbonOoP/Xlc4FQH7+f4SY6WoMiJvX1nB8KdB41ufxLkhdCZP9+r2kih66CtCD4
+         YJxx7Xt0v6UbJF1Asy626jg15PRxpXxYDS9fIYdtcKjDJUYGOeN7oycSZPmPjMdoEz
+         JKm2u1xx2r+sE6aDfETI7YV+NU2SpputD0roLB5qysgyMQrqGLN9JS7jRLA7HZMhmR
+         L8kVxVE6n3ESqDrGcrjnWoGab+kV61NKVYWZBMu3Re3/SqUam0Xoi/q8reGAfkIh6B
+         LYe4u3gqG2gHx/zmo3Pq4EGAUjzgzFWh7Rew4TEml5ovGHYQ4ZbhSPvWWV2vVCQ1EL
+         Y6JbTqi9tKCJKKg8hz0gAjtAs6ivCzs47vnHFyl/xdXeLmLbOyf6ow6HIDRX2s39Cv
+         QDr05dQqYcWjjiA+upxDI31gIcJkkWhpWF3b9Onk9FoW/Rmmw04
+Date:   Sat, 17 Apr 2021 20:28:53 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git Users <git@vger.kernel.org>
+Subject: Re: [PATCH] CodingGuidelines: remove suggestion to write commands in
+ Perl/SH
+Message-ID: <YHtFBeWxE2cFlShY@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, Git Users <git@vger.kernel.org>
+References: <patch-1.1-83266f30b67-20210417T084346Z-avarab@gmail.com>
+ <bcc64c2d-3469-38ab-3234-fa8984a3d0f9@gmail.com>
+ <87r1j91427.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <cover.1616015337.git.matheus.bernardino@usp.br>
- <cover.1617893234.git.matheus.bernardino@usp.br> <xmqqpmytkis8.fsf@gitster.g>
-In-Reply-To: <xmqqpmytkis8.fsf@gitster.g>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Sat, 17 Apr 2021 16:57:03 -0300
-Message-ID: <CAHd-oW4qdVTQyEeUB5_78iDoK-QWMNXOZ5cN9HuONYASvw6zpA@mail.gmail.com>
-Subject: Re: [PATCH v2 0/5] Parallel Checkout (part 2)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="XEuGnqIlVymMB/Xj"
+Content-Disposition: inline
+In-Reply-To: <87r1j91427.fsf@evledraar.gmail.com>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 16, 2021 at 6:43 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Matheus Tavares <matheus.bernardino@usp.br> writes:
->
-> > This is the next step in the parallel checkout implementation. As
-> > mt/parallel-checkout-part-1 is now on master, this round is based
-> > directly on master.
-> >
-> > Changes since v1:
->
-> Now, I do not think we've seen any response to these messages.
->
-> It seems that review comments for the earlier round cf.
-> <CAP8UFD1stvx=2hBWyxmu75SXRzX-bHBfGr2jxWKgHdc85cfxRg@mail.gmail.com>
->
-> have been addressed?  Should we merge it down to 'next' now?
 
-Yes, I think I've addressed all the comments from the previous round.
-There is just a minor change that I made locally yesterday, so I'll
-reroll the series with it now. Nonetheless, the change is quite small
-and trivial, so I think the rerolled version can be merged to 'next'.
+--XEuGnqIlVymMB/Xj
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On 2021-04-17 at 12:36:00, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>=20
+> On Sat, Apr 17 2021, Bagas Sanjaya wrote:
+>=20
+> > On 17/04/21 15.43, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> >> Since then the consensus changed to having no new such commands unless
+> >> necessary, and existing ones have been actively migrated to C.
+> >
+> > What I implied that when we need to implement new commands, it must
+> > be directly written in C (steeper learning curve and more tedious
+> > than implemented in shell script), so I'm against this proposal.
+>=20
+> I updated the v2 of this to note that I'm not really proposing anything
+> new, but just bringing the document in line with reality. For a long
+> time now we've rejected any new non-C things being imported into the
+> tree, unless those that fall under the "such as an importer to convert
+> random-scm-X" language that's still retained in the CodingGuidelines.
+>=20
+> I think that even if you or someone else wanted to write a new thing in
+> Perl or SH we'd want a new way of doing that now anyway,
+> e.g. git-send-email.perl should really be a helper for a C program
+> rather than a stand-alone thing.
+
+I'm also kind of opposed to this change.  For example, I plan on adding
+a utility to fill in SHA-1 compatibility things for SHA-256 repos, and
+that will be written in shell.  The performance benefit of C here is
+going to be minimal, especially considering the fact that people will be
+running it literally at most once per repo, so I don't see a reason to
+spend a lot of time writing C code.
+
+I'm not of the opinion that we should never have shell or Perl code in
+our project, nor does it intrinsically make sense to migrate everything
+to C.  Typically we've done that because it performs better, especially
+on Windows, but there are many situations in which those are not major
+considerations and shell or Perl can be a desirable approach.
+--=20
+brian m. carlson (he/him or they/them)
+Houston, Texas, US
+
+--XEuGnqIlVymMB/Xj
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.27 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYHtFBQAKCRB8DEliiIei
+gdosAQDZyYPZlm1KzCm3DiKGGn40SjnYmq4YXEfbDAZt5RV9AQD/Y9+OqIcBLK7+
+v9G6aUPj5Nw9pbmzOyHfwnh+p46IRw4=
+=vAcv
+-----END PGP SIGNATURE-----
+
+--XEuGnqIlVymMB/Xj--
