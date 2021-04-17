@@ -2,92 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49EE9C433ED
-	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 01:17:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 18271C433B4
+	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 01:57:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1CF12606A5
-	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 01:17:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D21556101D
+	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 01:57:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234712AbhDQBSD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Apr 2021 21:18:03 -0400
-Received: from avasout02.plus.net ([212.159.14.17]:41337 "EHLO
-        avasout02.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229719AbhDQBSC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Apr 2021 21:18:02 -0400
-Received: from satellite ([195.213.6.1])
-        by smtp with ESMTPA
-        id XZaWlONtS7QW9XZaZlAePG; Sat, 17 Apr 2021 02:17:36 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-        t=1618622256; bh=Tx4K8jJyrWgYtnmS5eh4P1GgxsrWOzn4B/27E3KxeZI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=lNpr5XvTPRv+fdg0Q4Uc9SmhP9QYKBsBTKelj2EQsp0ftaQm+QodWVMRafhWj6OOd
-         7OfMOTBdUiESd0ZT6CBUo6vh+3YGVFrEuVbLnrtqgHFvAVE43lzdTNA7dbF+VtJWEN
-         ENTt6p/CbJ0jHaHNXIb0PM8I0NDF9n+s/ETZ0LQl9J7tvoodp5oO3cMvaI2yKwKg74
-         q65tcjAq5rgtaE3U3OxdPVQh0DTRYnOzEIkdsH1c6Z8aETOrIXPEbekrHZL04Wf2eQ
-         5uCKUPJkTvY0EVO7Lpsykima1ZiMEpDLjRVWwkRmhotBqWHhUbkUKLMvjp+26xPsFN
-         tK/LIwnbkuVTQ==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=H+BAP9Qi c=1 sm=1 tr=0
- a=v1fZ9eGmBRQ2oAddCs0ezw==:117 a=v1fZ9eGmBRQ2oAddCs0ezw==:17
- a=kj9zAlcOel0A:10 a=ybZZDoGAAAAA:8 a=UlqV6C1OAAAA:20 a=XIrub0NXh_JgTC8vgP0A:9
- a=CjuIK1q_8ugA:10 a=0RhZnL1DYvcuLYC8JZ5M:22
-X-AUTH: ramsayjones@:2500
-Date:   Sat, 17 Apr 2021 02:17:32 +0100
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>,
-        git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Philip Oakley <philipoakley@iee.email>
-Subject: Re: [PATCH v4 0/8] rev-list: implement object type filter
-Message-ID: <YHo3LO2RKfe0W/z7@satellite>
-References: <cover.1617967252.git.ps@pks.im>
- <cover.1618234575.git.ps@pks.im>
- <YHVMEdeDv9ZeXRAU@coredump.intra.peff.net>
- <YHVQ9RPLk8/r+8mS@ncase>
- <YHgKiXRMq/1Fpg2x@coredump.intra.peff.net>
- <xmqqlf9hkhpp.fsf@gitster.g>
- <xmqq4kg5kehw.fsf@gitster.g>
+        id S233847AbhDQBzI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Apr 2021 21:55:08 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:51321 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229719AbhDQBzI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Apr 2021 21:55:08 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5EC7F1189BE;
+        Fri, 16 Apr 2021 21:54:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=cNoA6tuP76u1s1LOGSs5ScheoOk=; b=RHAO6xq1w3zhrMskn2k9
+        XQ76z3roZQS6rzFkFFcT4dNgJHpWlfbR9sI/O3g8iIMGslMd8R5bG5Tzhi9+fNUh
+        yaHJCUKGQK3RFSm7FlRVVZbhteLUKRYlOTS/24J5ziW1jmqtDWe3WE5ZNU6huPqL
+        Q4lP+A6MgkRjVL5coPAXLRs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         q=dns; s=sasl; b=QuDksdTxB6iv7ZtZ2M+cYR219YNAqgx+gERC5gNRkZYX8P
+        h+BNwRAbV6EDLc3VdvB1RXART+Gx0tqBEfUMZDUWPRrY2uu5j1w3OjfCbbTLm8O2
+        2Z9yL2i038dJWLc9WvMdgJYnyOHmIPAYNx2NZlvzLGFsEXDCi9lMDjiIXSr0I=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5794E1189BD;
+        Fri, 16 Apr 2021 21:54:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A05481189BC;
+        Fri, 16 Apr 2021 21:54:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, ZheNing Hu <adlternative@gmail.com>
+Subject: Re: [PATCH v9 1/2] [GSOC] docs: correct descript of
+ trailer.<token>.command
+References: <pull.913.v8.git.1617975462.gitgitgadget@gmail.com>
+        <pull.913.v9.git.1618245568.gitgitgadget@gmail.com>
+        <8129ef6c476b4f35be59eae71367de5b83888068.1618245568.git.gitgitgadget@gmail.com>
+        <xmqqwnt7b5fg.fsf@gitster.g>
+        <CAP8UFD2gUbWP2LWXDt1nmph1qMyhEBfLErw3=5OTBx-KeBQBVQ@mail.gmail.com>
+Date:   Fri, 16 Apr 2021 18:54:37 -0700
+Message-ID: <xmqqtuo5iski.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq4kg5kehw.fsf@gitster.g>
-X-CMAE-Envelope: MS4wfJCsbgSCXhCvNQYnyqb97Gcr+E0ojPOFqImAl0rxft06FNON+BsQrdWAMDIxX7+fQMrNgjv04vbhlDCnaF7KvkGu5v8L+b+UuELEIUJlG/k7pSwClVPz
- mEZwGQu6lL4dLG6/oxMpUOgNIX0zonJ9irl2udgXAMBhJTVCSqhc+r14
+Content-Type: text/plain
+X-Pobox-Relay-ID: DEDC3B8A-9F1F-11EB-9075-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 16, 2021 at 04:15:39PM -0700, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > I think the only remaining issues are the comments on 5/8 on tests,
-> > then?  Hopefully we can have one more iteration to finalize the
-> > topic and merge it down to 'next'?
-> >
-> > Thanks.
-> 
-> I guess not.  I am guessing this topic is responsible for
-> 
->   https://github.com/git/git/runs/2366364023?check_suite_focus=true#step:4:115
+Christian Couder <christian.couder@gmail.com> writes:
 
-Yes, I noticed this a few days ago, and tried the obvious fix (ie to
-#include "cache.h" at the start of the list-objects-filter-options.h
-header file) which does indeed work fine. However, I then thought that
-moving the definition of 'enum object_type' (along with the TYPE_BITS
-#define) to the 'object.h' header file (and #include "object.h" into
-cache.h) would be a better idea...
+> $ git config trailer.sign.command 'echo "$(git config user.name)
+> <$(git config user.email)>"'
+>
+> My opinion is that we should have added a `trailer.<token>.runMode`
+> config option along with `trailer.<token>.command`. This was not
+> discussed unfortunately when ".command" was implemented, but it seems
+> to be a good idea now.
 
-Having done that, I wondered how many '#include "cache.h"' could be
-replaced by "object.h", and ... well, that was a few days ago and
-something came up...
+Yes, without a knob to diable/enable, the "feature" is pretty much
+useless.  
 
-ATB,
-Ramsay Jones
+> It can be avoided when the --trim-empty CLI option can be used. A hook
+> to remove empty trailers (which might call `git interpret-trailers
+> --trim-empty` itself) could also be used when --trim-empty cannot be
+> used directly.
 
+And as you know, --trim-empty that applies to all trailer keys would
+destroy other trailers and trailer.<token>.trimEmpty, even if it
+were available, would not work at all to remove it for the case you
+cited above, to add "user.name <user.email>", which is not an empty
+string.
+
+> I agree that the current mechanism cannot easily emulate "commit -s".
+> ...
+> I agree that --trim-empty is not usable sometimes. Another idea would
+> be to add 'trailer.<token>.trimEmpty' to be able to do things like:
+
+"easily"?  "sometimes"?
+
+"--trim-empty" is unusable, trailer.<token>.trimEmpty would not work
+even if it were added because the reason why this is broken is not
+because it gives an empty value, but because it runs even when it is
+not asked and there is no way to turn it off.
+
+This shows that even the only plausibly-useful use case we've seen
+so far is not very well supported, and necessary options/knobs to
+make it usable have not been invented and implemented.
+
+It is time for us to admit that this is a misfeature that is not
+well thought out.  Recognising that .command is broken is the first
+step to remedy it with a better alternative in .cmd; otherwise we
+would inherit the same breakage in the replacement.
+
+The only reasonable way out I would think of is to hide the
+unconditional execution behind trailer.<token>.runMode, and make the
+default for runMode to "do not run when --trailer=<token>[:<value>]
+is not asked from the command line" for .cmd; it is OK for .command
+not to honor the knob, as we will get rid of it once we see .cmd
+works well.
+
+Thanks.
