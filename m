@@ -2,124 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 351E9C433B4
-	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 23:46:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 35ABDC433ED
+	for <git@archiver.kernel.org>; Sun, 18 Apr 2021 05:11:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E53E56134F
-	for <git@archiver.kernel.org>; Sat, 17 Apr 2021 23:46:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0081C61207
+	for <git@archiver.kernel.org>; Sun, 18 Apr 2021 05:11:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234904AbhDQXqc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Apr 2021 19:46:32 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:57823 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229865AbhDQXqc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Apr 2021 19:46:32 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id EF5181202AA;
-        Sat, 17 Apr 2021 19:46:04 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-        :subject:date:message-id:mime-version:content-type; s=sasl; bh=H
-        gJ9phjbWtO11hr5dH4ilOZryzg=; b=ggEv5nCzzZOUWGsTEmWzIKJgHaW95NVS0
-        scRVIyvkva9LjuPiXJ7Rn/oUBhZBcq9B0nFTklujg6dAzzWray1QdUkJkyf0gRLN
-        2mCJykvNehrKZropokPsjugYnFwB6tlEujKlo8Q1k+W6iQATl2GF66MpzKBOAIwO
-        Ld9gVbWh3M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-        :date:message-id:mime-version:content-type; q=dns; s=sasl; b=Kx3
-        hri6qUsartCecy5/o8Ph6HTFEyXCnqYfhJZmImnvOLkSRXTPzIzr/nT9g/8VBHIL
-        aPOnxKs4gjWOqdmT41Bv0U3kl33MIygfj3GoUlSobXkU0E1wbkxPV29iwWHz1KU/
-        cjTC5jskbOgCo7E1bffio8rzEcUIBSfseuCVsS6c=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id D92CE1202A9;
-        Sat, 17 Apr 2021 19:46:04 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 075C31202A6;
-        Sat, 17 Apr 2021 19:46:01 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Subject: [BUG?] 'git describe seen'?
-Date:   Sat, 17 Apr 2021 16:45:59 -0700
-Message-ID: <xmqq1rb8bhl4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S229982AbhDRFMP convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Sun, 18 Apr 2021 01:12:15 -0400
+Received: from mail-ej1-f50.google.com ([209.85.218.50]:33446 "EHLO
+        mail-ej1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229671AbhDRFMO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Apr 2021 01:12:14 -0400
+Received: by mail-ej1-f50.google.com with SMTP id g5so41254198ejx.0
+        for <git@vger.kernel.org>; Sat, 17 Apr 2021 22:11:47 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=6njVm9YZbS7uazB9Kvw2nxzIWySeRRsnas5xMqr49pQ=;
+        b=Ez8ALyTswLVQ2NO0dEIsGMrLRkM+YgNB6+uGTc/BPXw7ej48XiBKqqYWJxSR2DdVto
+         fXaLXYi3XXKnztctDHc73yGGlkpTDbUTJyYh4/Jp+zecn/Ob0sXGkpNi8yyRvrZpFqVZ
+         lIeLO9Tt8UZvS4DB42OZYoqshXIzcOqERY/iNpFkILCO8HUVfYOQ0z4OhtNyd+L9m2ea
+         DWR5hVfISMOsOslfR69IzqA+WYNG2wi0YNftW4piiErpwd0BnHYOoeiYrhxUUGqrpNcq
+         Nu9/1o2ZrK5hPS52BMvKrQijzZhvTjgt9U4i+Jj3awWTMmBMQmwR56Dai5OK1D5pItZu
+         zZEA==
+X-Gm-Message-State: AOAM532vEjkUK9xJZ9PScxgN3e7HPuf67XqvMxgllQHwQI5muCsDq2JR
+        jv524gPjWwY3dHnQfxKif3ajNNIDahQ694OfWRk=
+X-Google-Smtp-Source: ABdhPJxZeOP0fBcpzz6K59H/vFiB9Q1jcyX9skxHYB6AodWX8oEnS5ka5W96bjWfKyjXZwA3k01u0tJ0IopaJkgHIDk=
+X-Received: by 2002:a17:906:37d7:: with SMTP id o23mr15692124ejc.202.1618722706354;
+ Sat, 17 Apr 2021 22:11:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 113597EA-9FD7-11EB-9C3B-D609E328BF65-77302942!pb-smtp21.pobox.com
+References: <cover-00.12-00000000000-20210417T124424Z-avarab@gmail.com>
+ <cover-0.3-00000000000-20210417T125539Z-avarab@gmail.com> <patch-2.3-6f9e09a2017-20210417T125540Z-avarab@gmail.com>
+In-Reply-To: <patch-2.3-6f9e09a2017-20210417T125540Z-avarab@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sun, 18 Apr 2021 01:11:35 -0400
+Message-ID: <CAPig+cSR_y4uqPnYt+P4EFxPrhN8LHDjLX=_5uJFWYbL1skixA@mail.gmail.com>
+Subject: Re: [PATCH 2/3] Revert and amend "test-lib-functions: assert correct
+ parameter count"
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Matthieu Moy <git@matthieu-moy.fr>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Andreas Schwab <schwab@linux-m68k.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This does not seem a new problem at all, as v2.10.0 thru more recent
-versions of "git describe" seem to give me the same answer.
+On Sat, Apr 17, 2021 at 8:58 AM Ævar Arnfjörð Bjarmason
+<avarab@gmail.com> wrote:
+> [...]
+> The goal here is to get rid of the verbosity of having e.g. a "test 2
+> -ne 2" line for every "test_cmp". We use "$@" as an argument to "test"
+> to intentionally feed the "test" operator too many arguments if the
+> functions are called with too many arguments, thus piggy-backing on it
+> to check the number of arguments we get.
 
-Anyway, I am seeing a curious symptom.
+My one concern about this change is that it enters the realm of
+"huh?". Although it's dead-simple to understand what this code is
+doing:
 
-$ git rev-list --count v2.31.0..seen
-716
-$ git rev-list --count v2.31.1..seen
-687
+    test "$#" -ne 1 && BUG "1 param"
+    if ! test -f "$1"
 
-The above means that 'seen' is closer to v2.31.1 than v2.31.0; there
-are fewer commits that are not in v2.31.1 that are in 'seen', than
-commits that are not in v2.31.0 that are in 'seen'.  
+the replacement code:
 
-That is naturally expected.
+    if ! test -f "$@"
 
-$ git rev-list --count v2.31.0..v2.31.1
-29
+can easily lead to head-scratching, wondering why the author chose to
+use "$@" rather than the more obvious "$1". This sort of unusual local
+idiom might normally deserve an in-code comment explaining why the
+more obvious code is not employed. However, adding a comment at each
+site would be overkill, so it might be the sort of thing to explain in
+documentation somewhere ("In order to make -x output less noisy,
+employ "$@" rather than explicitly checking function arguments when
+writing new test functions...".) Otherwise, the reader is forced to
+consult the commit message.
 
-And that difference of 29 matches the difference, which is 716 - 687.
+Not a major objection; just voicing the bit of unease I feel about it.
 
-But here is what is puzzling.
+> This does not to the "right" thing in cases like:
 
-$ git describe seen
-v2.31.0-716-g7b65b53281
+Channeling Dscho's inner Eric Sunshine[1]: s/to/do/
 
-$ git rev-list --first-parent master..seen |
-  while read v
-  do
-	d=$(git describe $v)
-	echo $v $d
-	case "$d" in v2.31.1-*) break ;; esac
-  done
-7b65b53281ae06ee25dd47dead4062125eb54427 v2.31.0-716-g7b65b53281
-eec14f0fec886c909a29d63a94537df5a62be618 v2.31.0-714-geec14f0fec
-...
-103835562c64abef2319995716230f92092f87af v2.31.0-569-g103835562c
-d4324831d9152b16e091646e22a6e03423a59c93 v2.31.1-516-gd4324831d9
-
-Is there something tricky about the topic merged at 10383556 (Merge
-branch 'jh/rfc-builtin-fsmonitor' into seen, 2021-04-17) to confuse
-the counting done in "git describe"?
-
-$ git log --first-parent --oneline master..103835562^2
-14d50074ff t7527: test status with untracked-cache and fsmonitor--daemon
-07dbff70ce p7519: add fsmonitor--daemon
-436807f77a t7527: create test for fsmonitor--daemon
-c826602412 fsmonitor: force update index when fsmonitor token advances
-aaaf17ce60 fsmonitor--daemon: use a cookie file to sync with file system
-71a0e07d79 fsmonitor--daemon:: introduce client delay for testing
-9aedb0f1ea fsmonitor--daemon: periodically truncate list of modified files
-d4ae16b416 fsmonitor--daemon: implement handle_client callback
-94f826fd48 fsmonitor-fs-listen-macos: implement FSEvent listener on MacOS
-25663103ea fsmonitor-fs-listen-macos: add macos header files for FSEvent
-e504205db7 fsmonitor-fs-listen-win32: implement FSMonitor backend on Windows
-5e207d2af6 fsmonitor--daemon: create token-based changed path cache
-42f493472f fsmonitor--daemon: define token-ids
-082b8085d3 fsmonitor--daemon: add pathname classification
-d4f4c59e56 fsmonitor--daemon: implement daemon command options
-aec39650b5 fsmonitor-fs-listen-macos: stub in backend for MacOS
-100cb9e8ad fsmonitor-fs-listen-win32: stub in backend for Windows
-404d7dbdb6 fsmonitor--daemon: implement client command options
-1f2d717bd6 fsmonitor--daemon: add a built-in fsmonitor daemon
-4b10913cfe fsmonitor: introduce `core.useBuiltinFSMonitor` to call the daemon via IPC
-867611645c config: FSMonitor is repository-specific
-6e74370ce4 fsmonitor-ipc: create client routines for git-fsmonitor--daemon
-ff338b5790 Merge branch 'jh/simple-ipc' into jh/rfc-builtin-fsmonitor
+[1]: https://lore.kernel.org/git/nycvar.QRO.7.76.6.2103222235150.50@tvgsbejvaqbjf.bet/
