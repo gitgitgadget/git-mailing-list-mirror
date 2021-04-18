@@ -2,111 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2EE84C433B4
-	for <git@archiver.kernel.org>; Sun, 18 Apr 2021 15:15:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E3ECC433B4
+	for <git@archiver.kernel.org>; Sun, 18 Apr 2021 16:55:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 08738610CD
-	for <git@archiver.kernel.org>; Sun, 18 Apr 2021 15:15:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 77A6760FF1
+	for <git@archiver.kernel.org>; Sun, 18 Apr 2021 16:55:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231409AbhDRPPd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 18 Apr 2021 11:15:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54492 "EHLO
+        id S230218AbhDRQzz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 18 Apr 2021 12:55:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47618 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230028AbhDRPPb (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Apr 2021 11:15:31 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4593BC06174A
-        for <git@vger.kernel.org>; Sun, 18 Apr 2021 08:15:03 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id z13so35033577lfd.9
-        for <git@vger.kernel.org>; Sun, 18 Apr 2021 08:15:03 -0700 (PDT)
+        with ESMTP id S229446AbhDRQzw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Apr 2021 12:55:52 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 000A0C06174A
+        for <git@vger.kernel.org>; Sun, 18 Apr 2021 09:55:17 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id x19so21878155lfa.2
+        for <git@vger.kernel.org>; Sun, 18 Apr 2021 09:55:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=z59Wdcf6FULCrzSE5Aja+9qnh4OOGUb+u+XM1ie6a/A=;
-        b=Ov+pOHJ5Zk5BLnCW04GDWYGKjDz1KF9Mx0A4A6jRT1q6v81mr5xq2ili6F8es+hwBB
-         FLtC91mC8Th7PfiVEvj3PZfSmlRMnrn8ES4tPCcDkTQtPbhdrA57e4aJWvOfpck5nty/
-         v+LdsbNaOcGpUWyvsHaanq0s9PicPvhCs2mFPa/dkRqZ3yljH4cvT44y2PXNx+rjU5Vk
-         25crptZOcC8TrjwsgjJuEUb0Ajxt1I1GUAvfvIwSLdLYIUqwf82TF0TsyVZam6y5Jv8v
-         fml70KSLMG2o5GUA5Nk0GCQKrUX5MOuVUCVK18+eDQ2TcPHA1I102vCjoN3Eo5j9SHuN
-         cN0w==
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=iiyN0fmLDFtrs55DVpyoe1Mn80Q1KdF33qvkQiMG+cU=;
+        b=TiIw8E3GbfAguBGqWIBUD+P+LRTDwRO0EGQBVkeblvMnsDFZS9TjuRxmOtSjRZEFrT
+         ZJ3lHNWudagTZIS5izBnVpsF2UwuLGJUHcVdmPftDCVBBlgHqzjnRuYEm6OqU/LXzfGS
+         U8ll2c/kCAczcLXS+pnNyIWq+GhPyjnibfdKLEba8G00Ou6ZFPQKuU4kh2zSudzSlgfE
+         UpIw5Zu3lR81gOndxMqtfTJDa8LQmSpQAMSDWk+UVvXeInLX38XNlOIYIPExEuIgZuXs
+         DoCCKSzdh5WsfPK3bweVkNdoPS6vIpM2HSaw2oSfJrwXTcRre3+36qiOgiX+O/jkMCUG
+         0IMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=z59Wdcf6FULCrzSE5Aja+9qnh4OOGUb+u+XM1ie6a/A=;
-        b=RoRJGKpakSLkhBCKXQBXKV+O1CIiTzQM0gURjl/wa0jxnht5cJcCSkZrudNcqNZlYM
-         Zg62XI21m9Z9pIKxV7+P6RKCEEN+nkudyhO7iqOIysWtfffjVa7OqbMu0MKRD66JAHnK
-         lJfS3mQ9dVUuvuQKLUd6sZguo9U9Lv21T5IamPLHFSUv61gajRmSOesHf3p1TrEQTxF5
-         aZhCRJ6AfVYyCJO+w/+vi7EZJSyad6BSDpQxZz2yb+K4ep1XFd1/qNGVUE8A1iEcH/sE
-         j0WSTetdK9uHv5XXEocxSzdUD1nk7GmP3q5gwmpZEjT/J6MjKGoS1VFhuXy487shQ/le
-         bSlg==
-X-Gm-Message-State: AOAM530WUxV5hgqxED5mi+Ra3MV3GvFFqxBpStX1rjjQsOq25/lKSNOf
-        MpIHWshvOvGHtoG/F5+D9FiO24UCn9U=
-X-Google-Smtp-Source: ABdhPJw02gkuc//SsvEARf+REYrck/z4EpqVQGBa67MB+tH9ZZ5Abe12/NfNrEZ0I3TPPePXtW4VUg==
-X-Received: by 2002:a19:98b:: with SMTP id 133mr9436608lfj.587.1618758901363;
-        Sun, 18 Apr 2021 08:15:01 -0700 (PDT)
-Received: from aaberge.net (kramer.samfundet.no. [2001:67c:29f4::72])
-        by smtp.gmail.com with ESMTPSA id y2sm1575591lfj.161.2021.04.18.08.15.00
-        for <git@vger.kernel.org>
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=iiyN0fmLDFtrs55DVpyoe1Mn80Q1KdF33qvkQiMG+cU=;
+        b=treSidc4YR2FoQb8gkBATTJw/bEXgngTQrRUJqUXJ/QWh0RS2Cr+NzcOR6UOIvPT/D
+         YohjjJyGyvhBn1gMV2TgSzXRO6e2Rkvb/oL9mM7FcKVEmOM5JipgpGSWO1XHmrh6Ohr9
+         xgDbfv0wwYVa6QrERJrCh+JVolVIK1eEXnPzKI4zj4kMA+0G71VuTIh4oNQqDL8nQtgT
+         Ash4nK4S3tiX0tXlFIxlV9qppqqTMO+kKSBJScGrL147VHQfctpx06TGdc3Aezgle444
+         ey9zXrAgV7F4t/1sij+iocieYaqx32sn5cDp3kQggZ3pTTpPjd3k8P4SyLkTp+odqNZN
+         Y9Zg==
+X-Gm-Message-State: AOAM5308MoVD7da/2XafLWAK2o8K2u6QDKzps7JcPaj0KQpmXI26gHWO
+        PEmjgNPb+AQwXFoo2g59H98RlfWq6TM=
+X-Google-Smtp-Source: ABdhPJzR0ReM5A+JqiqJUT/fezACnmEJmtQVgVwEy/NHTjjNLRIBr3p6qbtmip755ReqDfSPB8fSkQ==
+X-Received: by 2002:a05:6512:31ca:: with SMTP id j10mr9667288lfe.459.1618764916168;
+        Sun, 18 Apr 2021 09:55:16 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id i20sm773789lfe.4.2021.04.18.09.55.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 18 Apr 2021 08:15:00 -0700 (PDT)
-Date:   Sun, 18 Apr 2021 17:14:59 +0200
-From:   Trygve Aaberge <trygveaa@gmail.com>
-To:     git@vger.kernel.org
-Subject: Using --term-* with bisect breaks skip
-Message-ID: <20210418151459.GC10839@aaberge.net>
+        Sun, 18 Apr 2021 09:55:15 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Apr 2021, #04; Thu, 15)
+References: <xmqqa6pznlgq.fsf@gitster.g>
+Date:   Sun, 18 Apr 2021 19:55:14 +0300
+In-Reply-To: <xmqqa6pznlgq.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+        15 Apr 2021 17:04:37 -0700")
+Message-ID: <87zgxvttvx.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-What did you do before the bug happened? (Steps to reproduce your issue)
-1. git bisect start --term-new=fixed --term-old=unfixed master HEAD~10
-2. git bisect skip
-
-What did you expect to happen? (Expected behavior)
-Git should mark the commit as skipped and change HEAD to a different commit.
-
-What happened instead? (Actual behavior)
-The commit was marked as skipped, but HEAD was not changed.
-
-What's different between what you expected and what actually happened?
-After running bisect skip, HEAD was still at the same commit as before,
-instead of having changed to a new that I can test. The usual output about
-steps left to test and the new commit was also missing, skip did not output
-anything.
-
-Anything else you want to add:
-- If I don't provide any --term-* options, skip works as expected.
-- The revisions provided in the reproduction steps doesn't matter, they're
-  just an example.
-- I tried running from the next branch, and it happened there too.
-
-[System Info]
-git version:
-git version 2.31.1
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Linux 5.10.29-1-lts #1 SMP Sat, 10 Apr 2021 14:40:41 +0000 x86_64
-compiler info: gnuc: 10.2
-libc info: glibc: 2.33
-$SHELL (typically, interactive shell): /usr/bin/zsh
+Junio C Hamano <gitster@pobox.com> writes:
 
 
-[Enabled Hooks]
+[...]
 
+>
+> * so/log-diff-merge (2021-04-13) 5 commits
+>  - doc/diff-options: document new --diff-merges features
+>  - diff-merges: introduce log.diffMerges config variable
+>  - diff-merges: adapt -m to enable default diff format
+>  - diff-merges: refactor set_diff_merges()
+>  - diff-merges: introduce --diff-merges=on
+>
+>  "git log" learned "--diff-merges=<style>" option, with an
+>  associated configuration variable log.diffMerges.
+>
+>  Seems to break t9902.
 
--- 
-Trygve Aaberge
+As far as I understand, it doesn't. It rather hits a deficiency of the
+build system where one needs to "make install" for completion tests to
+run as expected.
+
+Thanks,
+-- Sergey Organov
