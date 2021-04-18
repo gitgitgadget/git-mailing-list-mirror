@@ -2,96 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 35ABDC433ED
-	for <git@archiver.kernel.org>; Sun, 18 Apr 2021 05:11:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 662B1C433ED
+	for <git@archiver.kernel.org>; Sun, 18 Apr 2021 05:22:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0081C61207
-	for <git@archiver.kernel.org>; Sun, 18 Apr 2021 05:11:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 32E036109F
+	for <git@archiver.kernel.org>; Sun, 18 Apr 2021 05:22:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229982AbhDRFMP convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Sun, 18 Apr 2021 01:12:15 -0400
-Received: from mail-ej1-f50.google.com ([209.85.218.50]:33446 "EHLO
-        mail-ej1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229671AbhDRFMO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Apr 2021 01:12:14 -0400
-Received: by mail-ej1-f50.google.com with SMTP id g5so41254198ejx.0
-        for <git@vger.kernel.org>; Sat, 17 Apr 2021 22:11:47 -0700 (PDT)
+        id S230007AbhDRFWy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 18 Apr 2021 01:22:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40672 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229671AbhDRFWt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Apr 2021 01:22:49 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0C4EC06174A
+        for <git@vger.kernel.org>; Sat, 17 Apr 2021 22:22:20 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id j12so11827942edy.3
+        for <git@vger.kernel.org>; Sat, 17 Apr 2021 22:22:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Xv3ag8dIFHHaxslOgO1t2H5X6oEso9768kaObuw09vM=;
+        b=hcMjoq+dOazVmAupzp83vPKYM8gvY8ZY0sVIXls5zRTXFG+JRcOL/cek651DlmSt8C
+         sWvT3XK4Z4kQq1quUic53XHiEb1s+NcuoTUjqpxFYrqSgCykzeByLJ9mZEit9G6siZyZ
+         I2reJ4Kv4pGQUj837au8ArXrfV5DoeNnEQhn50E9MywFMn6MxNGeX5YVhtetE9BQXXNf
+         HYgRlWU2nXOV/Rrvm4CwxtZsh+NR+SovOdgHGNry7PrsTDw3cnASDbayvPGQNmpnnS8r
+         fbXAWSrfj9IzZNGovTiJv2k8TgvHYCOWG9e9B242+7RcogQVFqQH71AdJe92rLbHFzl4
+         OoOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=6njVm9YZbS7uazB9Kvw2nxzIWySeRRsnas5xMqr49pQ=;
-        b=Ez8ALyTswLVQ2NO0dEIsGMrLRkM+YgNB6+uGTc/BPXw7ej48XiBKqqYWJxSR2DdVto
-         fXaLXYi3XXKnztctDHc73yGGlkpTDbUTJyYh4/Jp+zecn/Ob0sXGkpNi8yyRvrZpFqVZ
-         lIeLO9Tt8UZvS4DB42OZYoqshXIzcOqERY/iNpFkILCO8HUVfYOQ0z4OhtNyd+L9m2ea
-         DWR5hVfISMOsOslfR69IzqA+WYNG2wi0YNftW4piiErpwd0BnHYOoeiYrhxUUGqrpNcq
-         Nu9/1o2ZrK5hPS52BMvKrQijzZhvTjgt9U4i+Jj3awWTMmBMQmwR56Dai5OK1D5pItZu
-         zZEA==
-X-Gm-Message-State: AOAM532vEjkUK9xJZ9PScxgN3e7HPuf67XqvMxgllQHwQI5muCsDq2JR
-        jv524gPjWwY3dHnQfxKif3ajNNIDahQ694OfWRk=
-X-Google-Smtp-Source: ABdhPJxZeOP0fBcpzz6K59H/vFiB9Q1jcyX9skxHYB6AodWX8oEnS5ka5W96bjWfKyjXZwA3k01u0tJ0IopaJkgHIDk=
-X-Received: by 2002:a17:906:37d7:: with SMTP id o23mr15692124ejc.202.1618722706354;
- Sat, 17 Apr 2021 22:11:46 -0700 (PDT)
+        bh=Xv3ag8dIFHHaxslOgO1t2H5X6oEso9768kaObuw09vM=;
+        b=bRwgYuXUMG7Tljk+HrBpZgCzkF83YAPtL9VPks1GufXld6IESISMsWec7pJWzWGnEA
+         5YVDPdBvjFis6sPsNYumnOPK+kCx4rHCvUoi5OlU+xDwDlyyfBmtm3fEK1PNMz67hRNz
+         dQCWeNiM5qv3Sa1igrE2zlHAsEP6ta2JyN9cVRfetbq3gd3QDsv1kq6DGUWycs+SdiWM
+         Q0uYXH/JTkkYxAt1+iVbkS3MVLiY8ifnGo1OFyh4DGKUKJ/KklXWUP8Du8f8/FIfSZcY
+         hlxOOinnFdlLRy/ke354AiTLosYu7sNXx8N3wbpdSErl8jEfVARUletSwxEqDWoFPdtT
+         tSvA==
+X-Gm-Message-State: AOAM533YGW3b1xdhVPr7YLuZx/7saHgSyYpLLNN5vN1DpC7bk5z6g/HL
+        IMJuh6B1TTfpnN105aTBwgvnHclFqdiVK5Gamj0=
+X-Google-Smtp-Source: ABdhPJzk1LuycJiPRilQaSoyxeL1m7QbwjwvF+XDc+JTGe2bsfj1KBAoaZiSVVI2cVN/sKY90TVfiJqjHVaaSNc4SsI=
+X-Received: by 2002:a05:6402:1741:: with SMTP id v1mr18504009edx.127.1618723338604;
+ Sat, 17 Apr 2021 22:22:18 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover-00.12-00000000000-20210417T124424Z-avarab@gmail.com>
- <cover-0.3-00000000000-20210417T125539Z-avarab@gmail.com> <patch-2.3-6f9e09a2017-20210417T125540Z-avarab@gmail.com>
-In-Reply-To: <patch-2.3-6f9e09a2017-20210417T125540Z-avarab@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 18 Apr 2021 01:11:35 -0400
-Message-ID: <CAPig+cSR_y4uqPnYt+P4EFxPrhN8LHDjLX=_5uJFWYbL1skixA@mail.gmail.com>
-Subject: Re: [PATCH 2/3] Revert and amend "test-lib-functions: assert correct
- parameter count"
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Matthieu Moy <git@matthieu-moy.fr>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Andreas Schwab <schwab@linux-m68k.org>
+References: <YHofmWcIAidkvJiD@google.com>
+In-Reply-To: <YHofmWcIAidkvJiD@google.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sun, 18 Apr 2021 07:22:07 +0200
+Message-ID: <CAP8UFD0Ct8NofMdds=w0k1-jjX638L6QJQEJWVxqJ6ZPSoJUjg@mail.gmail.com>
+Subject: Re: RFC/Discussion - Submodule UX Improvements
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     git <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>, albertcui@google.com,
+        Junio C Hamano <gitster@pobox.com>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        Shourya Shukla <periperidip@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Apr 17, 2021 at 8:58 AM Ævar Arnfjörð Bjarmason
-<avarab@gmail.com> wrote:
-> [...]
-> The goal here is to get rid of the verbosity of having e.g. a "test 2
-> -ne 2" line for every "test_cmp". We use "$@" as an argument to "test"
-> to intentionally feed the "test" operator too many arguments if the
-> functions are called with too many arguments, thus piggy-backing on it
-> to check the number of arguments we get.
+Hi Emily,
 
-My one concern about this change is that it enters the realm of
-"huh?". Although it's dead-simple to understand what this code is
-doing:
+On Sat, Apr 17, 2021 at 1:39 AM Emily Shaffer <emilyshaffer@google.com> wro=
+te:
+>
+> Hi folks,
+>
+> As hinted by a couple recent patches, I'm planning on some pretty big sub=
+module
+> work over the next 6 months or so - and =C3=86var pointed out to me in
+> https://lore.kernel.org/git/87v98p17im.fsf@evledraar.gmail.com that I pro=
+bably
+> should share some of those plans ahead of time. :) So attached is a light=
+ly
+> modified version of the doc that we've been working on internally at Goog=
+le,
+> focusing on what we think would be an ideal submodule workflow.
 
-    test "$#" -ne 1 && BUG "1 param"
-    if ! test -f "$1"
-
-the replacement code:
-
-    if ! test -f "$@"
-
-can easily lead to head-scratching, wondering why the author chose to
-use "$@" rather than the more obvious "$1". This sort of unusual local
-idiom might normally deserve an in-code comment explaining why the
-more obvious code is not employed. However, adding a comment at each
-site would be overkill, so it might be the sort of thing to explain in
-documentation somewhere ("In order to make -x output less noisy,
-employ "$@" rather than explicitly checking function arguments when
-writing new test functions...".) Otherwise, the reader is forced to
-consult the commit message.
-
-Not a major objection; just voicing the bit of unease I feel about it.
-
-> This does not to the "right" thing in cases like:
-
-Channeling Dscho's inner Eric Sunshine[1]: s/to/do/
-
-[1]: https://lore.kernel.org/git/nycvar.QRO.7.76.6.2103222235150.50@tvgsbejvaqbjf.bet/
+Thanks for sharing this doc! My main concern with this is that we are
+likely to have a GSoC student working soon on finishing to port `git
+submodule` to C code. And I wonder how that would interact with your
+work.
