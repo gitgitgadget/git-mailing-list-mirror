@@ -2,216 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CABF2C433B4
-	for <git@archiver.kernel.org>; Sun, 18 Apr 2021 11:22:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E5ACC433ED
+	for <git@archiver.kernel.org>; Sun, 18 Apr 2021 13:27:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9A3BD6134F
-	for <git@archiver.kernel.org>; Sun, 18 Apr 2021 11:22:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D677A60FE9
+	for <git@archiver.kernel.org>; Sun, 18 Apr 2021 13:27:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230012AbhDRLWv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 18 Apr 2021 07:22:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32768 "EHLO
+        id S231305AbhDRN1g (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 18 Apr 2021 09:27:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59480 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229652AbhDRLWv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Apr 2021 07:22:51 -0400
-Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9229C06174A
-        for <git@vger.kernel.org>; Sun, 18 Apr 2021 04:22:21 -0700 (PDT)
-Received: by mail-io1-xd2e.google.com with SMTP id h141so23688345iof.2
-        for <git@vger.kernel.org>; Sun, 18 Apr 2021 04:22:21 -0700 (PDT)
+        with ESMTP id S229671AbhDRN1f (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Apr 2021 09:27:35 -0400
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 280FFC06174A
+        for <git@vger.kernel.org>; Sun, 18 Apr 2021 06:27:07 -0700 (PDT)
+Received: by mail-pl1-x634.google.com with SMTP id u7so14509540plr.6
+        for <git@vger.kernel.org>; Sun, 18 Apr 2021 06:27:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=VREbe+hqU6NdQoLZ4KIQX5aEvXI5bp/grB1Szt89Rbk=;
-        b=NaurcXInxpt8YVjVtIBxgdxSPcRgQg37b92vzdJHCvwM/uBrx9q5ARx9iuYC4DTyjc
-         3qPoWV1ACENtk7O1Xv/bxVKbtaq/sSkfG6UMmlsDm6AhriUEvq6vM8uRX+OmJdpMUy1D
-         h36TszHbWpK++XuiDyVUVUlzVacHHb00LZtslet+/08rWdrC2faEKHXJ4GwozoaLU5lQ
-         xkhZC+Jx8JQcrRZz25x51hQ2go7olreQ6J70cuaT/qpMiMh6ktySoQhOKWD7qhOfz8LL
-         El5J7atsCBxyBsye1Pf8rDC4lz3MV9h5JreV95wTIfco+J7RlBE17fpTVWURyqVWoTaf
-         BfLg==
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=b21DSjhaWDhR/CaGWm5Ftgr51CRSVAAjRfWwQAZ6qRQ=;
+        b=gIS9x5CbPXDzpWVTivncBPP48AH2fnYIUahAOrCgkQ6RFIHABb+cB6Q/cA0IC8kQNT
+         GhPmdO/GI6K+lBKFMfFV1eO1Z1G0DvY4e9MJJc3GN+JBbiqkDMq2CewJB94+UR0v/TjL
+         hA9Q++HjMUYRPMUfvCFAUTN9Fh5b1yZCiVi5vvKI8qpLuQ9C6c1RViUhiED91s/30+E2
+         Dzc4uuQCwLKpNb2wS3mo+MpBxj51bJdbm6xD54Epe1uevSrBW7RE9IfE55HDCvTWRQkQ
+         UTRtdJUShInECA5baG3YRopQMMWyDWdY7S5L7IO3nt00OnflFPiPcyHAx56jBgOUlI7j
+         0Gjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=VREbe+hqU6NdQoLZ4KIQX5aEvXI5bp/grB1Szt89Rbk=;
-        b=BsBRw1B5SJBeo3nWWrV7zkDWcuVABZKd08/LNYAA3sjOeqxOc5q88jAxCaFD3SQVs1
-         vJ7uJOOjqfNpE7wNUplvArS5ph4X6u6z3+zYe6jTuJtTU/nQIv1y5+K/mNVSd+MhVh6q
-         93UCZyNTu5LmKevppqN4GctxDDoRv6fxJ+wWl6qMShXHLw9BrDSo9dqWUCtFVEfEkpRy
-         Ij9rtMbl1Ynu2LfZjlxpJ2BzteectDypY9cu1sYn5YiVdNl6CIy9kkNyInHdSoUhHotG
-         P69UFbaAzBDOkQ4ztkJ0ihQAepTPd6z49nmKAy7AvK2K1QiKSYnjYsItBLIezJGLnRGW
-         gMDQ==
-X-Gm-Message-State: AOAM531pI4oowLRE6LbhkjTuI/EiMYZVKuVksYXpDRmZJwtDYuSJvzcj
-        jr9j5hAz15XwwEDdSVbxI4j9k4BmuUGwzwx7Pa8=
-X-Google-Smtp-Source: ABdhPJxW4jydPXKAah6WeLneA/NBCudQczVWdItGnQJW7DLc0RUGgPVHtrjx10RpVtWrTvO/4BdvoZ+Q3urMg5zvpLw=
-X-Received: by 2002:a05:6602:2f10:: with SMTP id q16mr10689025iow.106.1618744941231;
- Sun, 18 Apr 2021 04:22:21 -0700 (PDT)
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=b21DSjhaWDhR/CaGWm5Ftgr51CRSVAAjRfWwQAZ6qRQ=;
+        b=JrkmUwYcQdLOFTK/sd4JZlHpfxCek3N0HfWskX0YUnFKruTweMkuIIbmAc8L/tqu62
+         KLP/AYPW8SuDRRYerllvl0UEOkRmRvrI90H2+9aIzW/m8Krv5FdDQ6/B2wTN9nJ7uFat
+         jvAdU1a7u1V60dQVLEhBxIU8eGi/TAqlHioKy2DDzAGYEkKHsgzA7Z8r6QroN3EVxSAd
+         s/Cwdl9uJi5hdq+EBdmw5s0NJk1k36u9wRJ/PNcCUHKtrUK1eo4BB6vGpvl4yHB1o12C
+         vfYc2UMKNeRqXDELaKPxCnPaz3YbERgMojfbLwdLjfzHnza7dACno5GNlMi2DRWscUsv
+         Xqfg==
+X-Gm-Message-State: AOAM531rkUxDMOswK6WijSaOUy7LO9eHnDlKxDAizfz952v6YrPjQxWT
+        BfGx4kyetvdlUA6D3O7CeOob1IDERLA3NA==
+X-Google-Smtp-Source: ABdhPJykFD+pk14FLc6ZniUhzYHMXoUJVOc8kxJDz0IwwAcQ/KYEc8GDjNZCVkPHWSP+dcRDBde2sA==
+X-Received: by 2002:a17:90a:9509:: with SMTP id t9mr20030250pjo.3.1618752426327;
+        Sun, 18 Apr 2021 06:27:06 -0700 (PDT)
+Received: from [192.168.43.80] (subs02-180-214-232-89.three.co.id. [180.214.232.89])
+        by smtp.gmail.com with ESMTPSA id r3sm7933748pfl.159.2021.04.18.06.27.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 18 Apr 2021 06:27:05 -0700 (PDT)
+Subject: Re: [BUG?] 'git describe seen'?
+To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        Junio C Hamano <gitster@pobox.com>
+References: <xmqq1rb8bhl4.fsf@gitster.g>
+ <5cb071aa-16d1-8ea8-39e7-a0f5b89cbf3a@web.de>
+Cc:     Git Users <git@vger.kernel.org>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <41392642-d4ff-7a0f-f92c-ea78f4a0b0e1@gmail.com>
+Date:   Sun, 18 Apr 2021 20:27:03 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.9.1
 MIME-Version: 1.0
-References: <pull.928.git.1617975348494.gitgitgadget@gmail.com> <4c4eded7-3bb3-7ae9-6455-468b9522978c@web.de>
-In-Reply-To: <4c4eded7-3bb3-7ae9-6455-468b9522978c@web.de>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Sun, 18 Apr 2021 19:22:05 +0800
-Message-ID: <CAOLTT8RY_8Ui7AAfU6K7O03DqbMTh0m5GJpmuwOyiV8Ghn+cQg@mail.gmail.com>
-Subject: Re: [PATCH] [GSOC] ref-filter: get rid of show_ref_array_item
-To:     =?UTF-8?B?UmVuw6kgU2NoYXJmZS4=?= <l.s.r@web.de>
-Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Hariom Verma <hariom18599@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Derrick Stolee <stolee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <5cb071aa-16d1-8ea8-39e7-a0f5b89cbf3a@web.de>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe. <l.s.r@web.de> =E4=BA=8E2021=E5=B9=B44=E6=9C=8817=E6=97=
-=A5=E5=91=A8=E5=85=AD =E4=B8=8B=E5=8D=885:11=E5=86=99=E9=81=93=EF=BC=9A
->
-> Am 09.04.21 um 15:35 schrieb ZheNing Hu via GitGitGadget:
-> > From: ZheNing Hu <adlternative@gmail.com>
-> >
-> > When we use `git for-each-ref`, every ref will call
-> > `show_ref_array_item()` and allocate its own final strbuf.
-> > But we can reuse the final strbuf for each step ref's output.
-> > Since `show_ref_array_item()` is not used in many places,
-> > we can directly delete `show_ref_array_item()` and use the
-> > same logic code to replace it. In this way, the caller can
-> > clearly see how the loop work.
->
-> Inlining an exported function that is not providing the right level of
-> abstraction is a bold move that simplifies the API and can unlock
-> improvements at the former call sites, like the possibility to reuse an
-> allocated buffer in this case.  OK.
->
-> > The performance for `git for-each-ref` on the Git repository
-> > itself with performance testing tool `hyperfine` changes from
-> > 23.7 ms =C2=B1 0.9 ms to 22.2 ms =C2=B1 1.0 ms.
->
-> I see a speedup as well, but it's within the noise.
->
+On 18/04/21 17.26, René Scharfe wrote:
+> And vice versa, the fifteen commits that increase the depth of v2.31.1,
+> but not of v2.31.0:
+> 
+>     834845142d l10n: de.po: Update German translation for Git v2.31.0
+>     408985d301 l10n: pt_PT: add Portuguese translations part 1
+>     1369935987 l10n: vi.po(5104t): for git v2.31.0 l10n round 2
+>     b0adcc311b l10n: es: 2.31.0 round 2
+>     c21ad4d941 l10n: Add translation team info
+>     8c4abfb8be l10n: start Indonesian translation
+>     8278f87022 l10n: zh_TW.po: v2.31.0 round 2 (15 untranslated)
+>     2f176de687 l10n: bg.po: Updated Bulgarian translation (5104t)
+>     1ecef023a9 Merge branch 'fr_next' of github.com:jnavila/git
+>     5b888ad949 Merge branch 'master' of github.com:nafmo/git-l10n-sv
+>     068cb92300 l10n: fr: v2.31 rnd 2
+>     f6a7e896b8 l10n: tr: v2.31.0-rc1
+>     929dc48e96 l10n: sv.po: Update Swedish translation (5104t0f0u)
+>     9b7e82b940 l10n: git.pot: v2.31.0 round 2 (9 new, 8 removed)
+>     4dd8469336 Merge branch 'master' of github.com:git/git
+> 
+> That matches the observation above that the depth of v2.31.1 was
+> increased by twelve more than the depth of v2.31.0.
 
-Yes, the performance improvement is very small under a large number
-of refs. It was almost completely drowned out by the noise.
+Did you mean fifteen commits between v2.31.1 and v2.31.0? If so it's
+illogical, because these commits (from git-po workflow) were merged
+on rc1-rc2 of v2.31.
 
-> > At the same time, we apply this optimization to `git tag -l`
-> > and `git branch -l`, the `git branch -l` performance upgrade
-> > from 5.8 ms =C2=B1 0.8 ms to 2.7 ms =C2=B1 0.2 ms and `git tag -l`
-> > performance upgrade from 5.9 ms =C2=B1 0.4 ms to 5.4 ms =C2=B1 0.4 ms.
->
-> On my system there's no measurable change with these commands.
->
-
-In our case, git branch -l has made obvious progress, but it may be because
-the number of branches is far less than tags.
-
-> Nevertheless I think reusing the buffer across the loops is a good
-> idea.
->
-> > Since the number of tags in git.git is much more than branches,
-> > so this shows that the optimization will be more obvious in
-> > those repositories that contain a small number of objects.
-> >
-> > This approach is similar to the one used by 79ed0a5
-> > (cat-file: use a single strbuf for all output, 2018-08-14)
-> > to speed up the cat-file builtin.
-> >
-> > Signed-off-by: ZheNing Hu <adlternative@gmail.com>
-> > ---
-> >     [GSOC] ref-filter: get rid of show_ref_array_item
-> >
-> >     Now git for-each-ref can reuse final buf for all refs output, the
-> >     performance is slightly improved, This optimization is also applied=
- to
-> >     git tag -l and git branch -l.
-> >
-> >     Thanks.
-> >
-> > Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-928%2=
-Fadlternative%2Fref-filter-reuse-buf-v1
-> > Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-928/adlt=
-ernative/ref-filter-reuse-buf-v1
-> > Pull-Request: https://github.com/gitgitgadget/git/pull/928
-> >
-> >  builtin/branch.c       |  8 ++++----
-> >  builtin/for-each-ref.c | 13 +++++++++++--
-> >  builtin/tag.c          | 13 +++++++++++--
-> >  ref-filter.c           | 24 +++++++++---------------
-> >  ref-filter.h           |  2 --
-> >  5 files changed, 35 insertions(+), 25 deletions(-)
-> >
-> > diff --git a/builtin/branch.c b/builtin/branch.c
-> > index bcc00bcf182d..5c797e992aa4 100644
-> > --- a/builtin/branch.c
-> > +++ b/builtin/branch.c
-> > @@ -411,6 +411,8 @@ static void print_ref_list(struct ref_filter *filte=
-r, struct ref_sorting *sortin
-> >  {
-> >       int i;
-> >       struct ref_array array;
-> > +     struct strbuf out =3D STRBUF_INIT;
-> > +     struct strbuf err =3D STRBUF_INIT;
-> >       int maxwidth =3D 0;
-> >       const char *remote_prefix =3D "";
-> >       char *to_free =3D NULL;
-> > @@ -440,8 +442,7 @@ static void print_ref_list(struct ref_filter *filte=
-r, struct ref_sorting *sortin
-> >       ref_array_sort(sorting, &array);
-> >
-> >       for (i =3D 0; i < array.nr; i++) {
-> > -             struct strbuf out =3D STRBUF_INIT;
-> > -             struct strbuf err =3D STRBUF_INIT;
-> > +             strbuf_reset(&out);
-> >               if (format_ref_array_item(array.items[i], format, &out, &=
-err))
->
-> This function didn't call show_ref_array_item() to begin with, so
-> strictly speaking it's not related to change in the title.  It is a
-> preexisting example of show_ref_array_item() not being flexible enough,
-> though.  I think it makes sense to have separate patches for inlining
-> the function verbatim and reusing the output buffer when
-> format_ref_array_item() is called in a loop.
->
-
-I agree with you. I will divide this into a separate patch.
-
-> >                       die("%s", err.buf);
-> >               if (column_active(colopts)) {
-> > @@ -452,10 +453,9 @@ static void print_ref_list(struct ref_filter *filt=
-er, struct ref_sorting *sortin
-> >                       fwrite(out.buf, 1, out.len, stdout);
-> >                       putchar('\n');
-> >               }
-> > -             strbuf_release(&err);
-> > -             strbuf_release(&out);
-> >       }
-> >
-> > +     strbuf_release(&out);
->
-> err is no longer released, and it is also not reset in the loop.
-> That change is not mentioned in the commit message, but it should.
-> Why is it safe?  Probably because format_ref_array_item() only
-> populates it if it also returns non-zero and then we end up dying
-> anyway.
->
-> That makes leak checking harder, though -- it's not easy to see if
-> err hasn't simply been forgotten to be released.  I'd just retain
-> the strbuf_release() call at the end of the function -- it
-> shouldn't have a measurable performance impact and documents that
-> this function is cleaning up after itself.  Thoughts?
->
-
-Makes sense. Perhaps future changes will forget the release of err buffer.
-I will add `strbuf_release()` here.
-
-Thanks.
---
-ZheNing Hu
+-- 
+An old man doll... just what I always wanted! - Clara
