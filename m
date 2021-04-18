@@ -2,117 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A14D4C433ED
-	for <git@archiver.kernel.org>; Sun, 18 Apr 2021 18:33:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 80961C433B4
+	for <git@archiver.kernel.org>; Sun, 18 Apr 2021 19:09:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7758C60249
-	for <git@archiver.kernel.org>; Sun, 18 Apr 2021 18:33:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 527716108C
+	for <git@archiver.kernel.org>; Sun, 18 Apr 2021 19:09:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232480AbhDRSd6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 18 Apr 2021 14:33:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40314 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229783AbhDRSd5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Apr 2021 14:33:57 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2BA2C06174A
-        for <git@vger.kernel.org>; Sun, 18 Apr 2021 11:33:28 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id e5so3030923wrg.7
-        for <git@vger.kernel.org>; Sun, 18 Apr 2021 11:33:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=ejLcOnTxwgPM9c5HAbaFYeVpvHf+fniHfB8AqzEapzc=;
-        b=JxuoAVCecROh7eq48UGTlKDDruj+Z4PlygL8Az6pJ4SLrIffKQd2eSvFYYcmG5x2iu
-         QeLaC828gjmG2PA6gOmhHO9D4lKWpG0u9QmQozQGUNP92NtBkhXzWcAetmSuqyRX2YbP
-         RegM5NZaRHt2IPEZIOd4H7BrGkdKz1PfXbprlOnjYr/b8/vReBGXPdZTamw6jjlGsHV+
-         o26MfZMIHZ9k/pjHSQGh50pIzTlwSWBzcCA5d7AgY5XeWMvuydVQ4R5B2IQy4J41ASYO
-         KGVInk3dek+Nir3uhUTCAq9RQ5FcvKUsKt9bj5FyVrwxn+M2fmBkk+j09LC72dLo7C4X
-         gN9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=ejLcOnTxwgPM9c5HAbaFYeVpvHf+fniHfB8AqzEapzc=;
-        b=Um7uoE/a9bsQEaMnf7zgk0Krsa6++IIB3/cNqTWTjeNpoGOds4zRc+vSS3lcNrfPnU
-         f8vXmYgJs4yhGRL1eJpD/NjwvE6htmVkx5/x22yrQKBVUBJzOwZZn8Fg1f8RzjMityjn
-         mc9jdkJjr7xRqjw7Gu8Z1Hj3BJIhNm8wtDbjHNex364RAAtZTFdi2SYJuPveuk1Xd19o
-         0RcsR03kCcdAx6tJBIlvISu6lY5Y8dV7ITqp2BKOvolJnVk+SzAacWMs0hkW9tF2eLdU
-         Z1ViYLLCAt+nyVNNZhgx7AupoDUZTLSIsIH2Coyeh7kAhBll+RA8EPI0m0sTWCWSuemn
-         RJXg==
-X-Gm-Message-State: AOAM5318/NcfTaR2snID6OErPrXODDUQuhTB8+fQTppOhW58aA/1MNxt
-        cttYGZJGjX6e0feEyQHBN1E3Ho4ewOM=
-X-Google-Smtp-Source: ABdhPJxIZlBb2ZjwfwkCA0QLpzPpZGFYObsVQ9N1QdPIi/S3wIghjHPOMlwe8YtVbyMQ7ByU1guysg==
-X-Received: by 2002:a5d:4287:: with SMTP id k7mr10806100wrq.244.1618770807642;
-        Sun, 18 Apr 2021 11:33:27 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f23sm17062240wmf.37.2021.04.18.11.33.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 18 Apr 2021 11:33:27 -0700 (PDT)
-Message-Id: <pull.934.git.1618770806366.gitgitgadget@gmail.com>
-From:   "Josh Soref via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 18 Apr 2021 18:33:25 +0000
-Subject: [PATCH] git-merge: move space to between strings
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S232082AbhDRTJi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 18 Apr 2021 15:09:38 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51765 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229488AbhDRTJi (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Apr 2021 15:09:38 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 656E9BF078;
+        Sun, 18 Apr 2021 15:09:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=qh+bsgbR/9aJ+NrS0ywgSZiN7Jw=; b=WPB+Rx
+        menH+xVHd9lfcqd6+aYrvlPPUJ0zxXC1Nl6fFPuO/04iQbGcXwbiVVtNCojAqtcu
+        UWJls4sNgiVfEY05Kkf9lyoxBT697ovvMIX+bj6+D2PcyAgwXQSOP4q7xtP/8H0J
+        YvtdrPGCDpsK3tPbepg+NijZXLasr7T+0clms=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=HcLs/kSsu+vRx5H0FkZNxOG9d5xYRMyp
+        uFff2Z4Oyte19/PGxFMN6ZxxUsEVin3WyJhtegeE0IgL9+c0F5vY6mxa4BlwSkZE
+        8YUn26P6+p5mVoRwOTnbb3iXY5ADKCtSofUAHzfeRyIGDUsOOiIOl0Zj2m7JIxTN
+        i/wKQd83yVE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5C8C1BF077;
+        Sun, 18 Apr 2021 15:09:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C0EDABF076;
+        Sun, 18 Apr 2021 15:09:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Sergey Organov <sorganov@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Apr 2021, #04; Thu, 15)
+References: <xmqqa6pznlgq.fsf@gitster.g> <87zgxvttvx.fsf@osv.gnss.ru>
+Date:   Sun, 18 Apr 2021 12:09:07 -0700
+In-Reply-To: <87zgxvttvx.fsf@osv.gnss.ru> (Sergey Organov's message of "Sun,
+        18 Apr 2021 19:55:14 +0300")
+Message-ID: <xmqqtuo39zqk.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Josh Soref <jsoref@gmail.com>, Josh Soref <jsoref@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8D5C546A-A079-11EB-B6EB-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Josh Soref <jsoref@gmail.com>
+Sergey Organov <sorganov@gmail.com> writes:
 
-Signed-off-by: Josh Soref <jsoref@gmail.com>
----
-    git-merge: move space to between strings
-    
-    GitHub Actions show things like:
-    
-     * branch                  master     -> FETCH_HEAD
-     (nothing to squash)Already up to date.
-    
-    
-    The expected results are:
-    
-     * branch                  master     -> FETCH_HEAD
-    (nothing to squash) Already up to date.
-    
-    
-    This commit should change that. Other than breaking all the
-    localizations, and anyone who actively parses the output, this shouldn't
-    have much impact.
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>
+> [...]
+>
+>>
+>> * so/log-diff-merge (2021-04-13) 5 commits
+>>  - doc/diff-options: document new --diff-merges features
+>>  - diff-merges: introduce log.diffMerges config variable
+>>  - diff-merges: adapt -m to enable default diff format
+>>  - diff-merges: refactor set_diff_merges()
+>>  - diff-merges: introduce --diff-merges=on
+>>
+>>  "git log" learned "--diff-merges=<style>" option, with an
+>>  associated configuration variable log.diffMerges.
+>>
+>>  Seems to break t9902.
+>
+> As far as I understand, it doesn't. It rather hits a deficiency of the
+> build system where one needs to "make install" for completion tests to
+> run as expected.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-934%2Fjsoref%2Fnothing-to-squash-already-up-to-date-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-934/jsoref/nothing-to-squash-already-up-to-date-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/934
+Yeah, the next issue of the report will show that this topic has
+been moved on top of fix for config-list.h dependency in the build
+procedure, which fixed the issue.
 
- builtin/merge.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 062e91144125..0d8c782cccb2 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -383,7 +383,7 @@ static void restore_state(const struct object_id *head,
- static void finish_up_to_date(const char *msg)
- {
- 	if (verbosity >= 0)
--		printf("%s%s\n", squash ? _(" (nothing to squash)") : "", msg);
-+		printf("%s%s\n", squash ? _("(nothing to squash) ") : "", msg);
- 	remove_merge_branch_state(the_repository);
- }
- 
-
-base-commit: 7a6a90c6ec48fc78c83d7090d6c1b95d8f3739c0
--- 
-gitgitgadget
+Thanks.
