@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 38EA0C43461
-	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 19:53:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C2B92C433B4
+	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 19:53:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0290060241
-	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 19:53:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 887CA61363
+	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 19:53:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241914AbhDSTyV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Apr 2021 15:54:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33524 "EHLO
+        id S241919AbhDSTyY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Apr 2021 15:54:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33536 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235026AbhDSTyU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Apr 2021 15:54:20 -0400
-Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41FF3C06174A
-        for <git@vger.kernel.org>; Mon, 19 Apr 2021 12:53:50 -0700 (PDT)
-Received: by mail-qk1-x72f.google.com with SMTP id t17so8621326qkg.4
-        for <git@vger.kernel.org>; Mon, 19 Apr 2021 12:53:50 -0700 (PDT)
+        with ESMTP id S241915AbhDSTyW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Apr 2021 15:54:22 -0400
+Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A7EBC06138A
+        for <git@vger.kernel.org>; Mon, 19 Apr 2021 12:53:52 -0700 (PDT)
+Received: by mail-qk1-x734.google.com with SMTP id e13so27244266qkl.6
+        for <git@vger.kernel.org>; Mon, 19 Apr 2021 12:53:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp.br; s=usp-google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=XSTDFlfrnlPN4OX9jmt7I6SqgUacxZ0/NW0ArCXUExw=;
-        b=TrOluSr4L8+3M5F0FHumdNBQN7wlYVEc9+L9SfukaXliC4+8SnT31KRm5hJ7NYcImV
-         bAXAR0EYy3UIDR6Af7PoO5t86qkDm7f8kWpXPDNcsoF5J/sb0sRXtJ7LAK21lFo0sYsM
-         N7RqOT3TGQMv+TUHWlHuL4OBuRRi44EdH/vnakxJVMaHZ6tM73dU3QzYZf43F6o0zBqG
-         rV4Bywy32srjU5w92sIZUwQKMJbTiqtquRPbQdVUS+C0bt2U1lHFakI4YT8PFv8j0U4K
-         /infEevSs8XsIlWtOFP/XKSpbBZKfDG582vM/j3LsFyoFsrLJpQQrpsENrzJhyncRVWU
-         5adQ==
+        bh=WkFrG3l+kM7XmDDgEvtgfAvzcfQkwheP7JO1Ypm9mMI=;
+        b=VuuX1G3CJ4UFTbDlLoadmwgym9hjSzAK3YabMplZ6f2Dv2a3Bxun+hAEqVpcuamvzM
+         c1pRc1EUSHXqRQbNWrTup7UwNaEu4kucdN+ptFP/kV/keGN7ClDQ+9cRy179ARvUpCG2
+         YBbk26mNJQh0XWzw/ODqyEPBj7F3ijL64id/XTJkwMrDETv0ReBqyhuMW97Uhk62vzG3
+         r99ykrGPScsnGp7LQP1k/UbrCq8xeTv2L4VWwtEaZnYC03NMax8U0U9OSoCMBtzGrIAo
+         Ov2PxxuBw0tTJ3s/iX9KSU2md8sQJLP9E6rcaUiHcW0y65/XJRoWU/vfEi1T8e+oOkTq
+         Gk8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=XSTDFlfrnlPN4OX9jmt7I6SqgUacxZ0/NW0ArCXUExw=;
-        b=K86xfXjdUmoOdjXynbPUkhKV3+ZzeQMXw0R6LqezlW447DwiRUhDsF64qV1A6phpZR
-         +w52j8uu2C/XBl1TatFeRqoQD34hdM/9ypzIn4WvE1ErQYHEd9hfTX1ye4Kmk3sp3DkZ
-         HCmT/xjDuKcJEL/OYLqmGMTDoGMpTfPesmyKEZPrgsiIEQ+20g3TpxpH6ydSfTNqfcuD
-         cqgb9qYo6cYZiouDa+yTH9srgOhyF18TqQENcLJnBvKf5MWvMBjxbhiXp+A4a2Cag4bO
-         //jBKmQ0BXWAYWs8Vs7dyIwYQVrntlzw9MzwBa9OjR1Vbo+TUnr0BMLeTRwWfgOvhn9g
-         s81g==
-X-Gm-Message-State: AOAM531U6mXwihripqV5LG8yk52mnlul+BYDRN9+LUQjCLiniwnxoXGX
-        UZUKFhBbrdXb9CyFWH+EqjFGag==
-X-Google-Smtp-Source: ABdhPJxxiThpH5B7h4AGSTFEFzfTPRJLyGqgj8/DItgexCS1Gu0QUL4ldtIbOhO23UdiZ70dUYyrfg==
-X-Received: by 2002:a05:620a:66a:: with SMTP id a10mr8736955qkh.272.1618862029392;
-        Mon, 19 Apr 2021 12:53:49 -0700 (PDT)
+        bh=WkFrG3l+kM7XmDDgEvtgfAvzcfQkwheP7JO1Ypm9mMI=;
+        b=EXQPdbyynys4NPXU85Iu+glpHKmT039D1AEXeg7mGjKkD3aUSTMidLP2uLUdritTRu
+         7ZkjE21Ws9EBVbA5OiyCamgdrk+esPDq3WTLcZkI4zpVohsxruGs+MS6IMz6t+p8EN6+
+         VuIaSQfIhBBORO+c7f3ohSWM17+5Hfua0jgmZ5s6iSBSvcPKELowUS9v7shAJ6Syfu3m
+         zSKkx+2ikPkHM0O4XNjf2umFdQiD1STWAk/R+a1BrBooYR9vr1DkCZDboETa6UJucWZx
+         Bp++Gwpcvj5DFDg76XE4BcWrX2XIxtY3usy4yh4TM8WqrWiyQtuhxSke2KL191uQFszJ
+         OEDg==
+X-Gm-Message-State: AOAM530gELsqNWSd/Uk0727Il/AEUCfmPCjoxnB2VfbVbUJPyBp8RlTk
+        xXYxTQFoGSb1CLmboXQDyHHHdA==
+X-Google-Smtp-Source: ABdhPJwFm+YToD9kKtGjiUs19/1ehoIvIMjFp04K9Avdlbz6oovtTJOZlU6tobhvvlbT/2YsHrOyZQ==
+X-Received: by 2002:a37:f612:: with SMTP id y18mr13601874qkj.406.1618862031339;
+        Mon, 19 Apr 2021 12:53:51 -0700 (PDT)
 Received: from mango.meuintelbras.local ([177.32.118.149])
-        by smtp.gmail.com with ESMTPSA id h3sm4479987qka.122.2021.04.19.12.53.47
+        by smtp.gmail.com with ESMTPSA id h3sm4479987qka.122.2021.04.19.12.53.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Apr 2021 12:53:49 -0700 (PDT)
+        Mon, 19 Apr 2021 12:53:51 -0700 (PDT)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, christian.couder@gmail.com,
         git@jeffhostetler.com
-Subject: [PATCH v4 3/5] parallel-checkout: add configuration options
-Date:   Mon, 19 Apr 2021 16:53:33 -0300
-Message-Id: <ad165c0637b0244df1851f10386fe87df2a70368.1618861380.git.matheus.bernardino@usp.br>
+Subject: [PATCH v4 4/5] parallel-checkout: support progress displaying
+Date:   Mon, 19 Apr 2021 16:53:34 -0300
+Message-Id: <cf9e28dc0eddfc8e36a64b9738c94bb790349092.1618861380.git.matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.30.1
 In-Reply-To: <cover.1618861380.git.matheus.bernardino@usp.br>
 References: <cover.1618861380.git.matheus.bernardino@usp.br>
@@ -72,254 +72,160 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Make parallel checkout configurable by introducing two new settings:
-checkout.workers and checkout.thresholdForParallelism. The first defines
-the number of workers (where one means sequential checkout), and the
-second defines the minimum number of entries to attempt parallel
-checkout.
-
-To decide the default value for checkout.workers, the parallel version
-was benchmarked during three operations in the linux repo, with cold
-cache: cloning v5.8, checking out v5.8 from v2.6.15 (checkout I) and
-checking out v5.8 from v5.7 (checkout II). The four tables below show
-the mean run times and standard deviations for 5 runs in: a local file
-system on SSD, a local file system on HDD, a Linux NFS server, and
-Amazon EFS (all on Linux). Each parallel checkout test was executed with
-the number of workers that brings the best overall results in that
-environment.
-
-Local SSD:
-             Sequential             10 workers            Speedup
-Clone        8.805 s ± 0.043 s      3.564 s ± 0.041 s     2.47 ± 0.03
-Checkout I   9.678 s ± 0.057 s      4.486 s ± 0.050 s     2.16 ± 0.03
-Checkout II  5.034 s ± 0.072 s      3.021 s ± 0.038 s     1.67 ± 0.03
-
-Local HDD:
-             Sequential             10 workers             Speedup
-Clone        32.288 s ± 0.580 s     30.724 s ± 0.522 s    1.05 ± 0.03
-Checkout I   54.172 s ±  7.119 s    54.429 s ± 6.738 s    1.00 ± 0.18
-Checkout II  40.465 s ± 2.402 s     38.682 s ± 1.365 s    1.05 ± 0.07
-
-Linux NFS server (v4.1, on EBS, single availability zone):
-
-             Sequential             32 workers            Speedup
-Clone        240.368 s ± 6.347 s    57.349 s ± 0.870 s    4.19 ± 0.13
-Checkout I   242.862 s ± 2.215 s    58.700 s ± 0.904 s    4.14 ± 0.07
-Checkout II  65.751 s ± 1.577 s     23.820 s ± 0.407 s    2.76 ± 0.08
-
-EFS (v4.1, replicated over multiple availability zones):
-
-             Sequential             32 workers            Speedup
-Clone        922.321 s ± 2.274 s    210.453 s ± 3.412 s   4.38 ± 0.07
-Checkout I   1011.300 s ± 7.346 s   297.828 s ± 0.964 s   3.40 ± 0.03
-Checkout II  294.104 s ± 1.836 s    126.017 s ± 1.190 s   2.33 ± 0.03
-
-The above benchmarks show that parallel checkout is most effective on
-repositories located on an SSD or over a distributed file system. For
-local file systems on spinning disks, and/or older machines, the
-parallelism does not always bring a good performance. For this reason,
-the default value for checkout.workers is one, a.k.a. sequential
-checkout.
-
-To decide the default value for checkout.thresholdForParallelism,
-another benchmark was executed in the "Local SSD" setup, where parallel
-checkout showed to be beneficial. This time, we compared the runtime of
-a `git checkout -f`, with and without parallelism, after randomly
-removing an increasing number of files from the Linux working tree. The
-"sequential fallback" column below corresponds to the executions where
-checkout.workers was 10 but checkout.thresholdForParallelism was equal
-to the number of to-be-updated files plus one (so that we end up writing
-sequentially). Each test case was sampled 15 times, and each sample had
-a randomly different set of files removed. Here are the results:
-
-             sequential fallback   10 workers           speedup
-10   files    772.3 ms ± 12.6 ms   769.0 ms ± 13.6 ms   1.00 ± 0.02
-20   files    780.5 ms ± 15.8 ms   775.2 ms ±  9.2 ms   1.01 ± 0.02
-50   files    806.2 ms ± 13.8 ms   767.4 ms ±  8.5 ms   1.05 ± 0.02
-100  files    833.7 ms ± 21.4 ms   750.5 ms ± 16.8 ms   1.11 ± 0.04
-200  files    897.6 ms ± 30.9 ms   730.5 ms ± 14.7 ms   1.23 ± 0.05
-500  files   1035.4 ms ± 48.0 ms   677.1 ms ± 22.3 ms   1.53 ± 0.09
-1000 files   1244.6 ms ± 35.6 ms   654.0 ms ± 38.3 ms   1.90 ± 0.12
-2000 files   1488.8 ms ± 53.4 ms   658.8 ms ± 23.8 ms   2.26 ± 0.12
-
-From the above numbers, 100 files seems to be a reasonable default value
-for the threshold setting.
-
-Note: Up to 1000 files, we observe a drop in the execution time of the
-parallel code with an increase in the number of files. This is a rather
-odd behavior, but it was observed in multiple repetitions. Above 1000
-files, the execution time increases according to the number of files, as
-one would expect.
-
-About the test environments: Local SSD tests were executed on an
-i7-7700HQ (4 cores with hyper-threading) running Manjaro Linux. Local
-HDD tests were executed on an Intel(R) Xeon(R) E3-1230 (also 4 cores
-with hyper-threading), HDD Seagate Barracuda 7200.14 SATA 3.1, running
-Debian. NFS and EFS tests were executed on an Amazon EC2 c5n.xlarge
-instance, with 4 vCPUs. The Linux NFS server was running on a m6g.large
-instance with 2 vCPUSs and a 1 TB EBS GP2 volume. Before each timing,
-the linux repository was removed (or checked out back to its previous
-state), and `sync && sysctl vm.drop_caches=3` was executed.
-
-Co-authored-by: Jeff Hostetler <jeffhost@microsoft.com>
+Original-patch-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
 ---
- Documentation/config/checkout.txt | 21 +++++++++++++++++++++
- parallel-checkout.c               | 24 +++++++++++++++++++-----
- parallel-checkout.h               |  9 +++++++--
- unpack-trees.c                    | 10 +++++++---
- 4 files changed, 54 insertions(+), 10 deletions(-)
+ parallel-checkout.c | 34 +++++++++++++++++++++++++++++++---
+ parallel-checkout.h |  5 ++++-
+ unpack-trees.c      | 11 ++++++++---
+ 3 files changed, 43 insertions(+), 7 deletions(-)
 
-diff --git a/Documentation/config/checkout.txt b/Documentation/config/checkout.txt
-index 2cddf7b4b4..bfbca90f0e 100644
---- a/Documentation/config/checkout.txt
-+++ b/Documentation/config/checkout.txt
-@@ -21,3 +21,24 @@ checkout.guess::
- 	Provides the default value for the `--guess` or `--no-guess`
- 	option in `git checkout` and `git switch`. See
- 	linkgit:git-switch[1] and linkgit:git-checkout[1].
-+
-+checkout.workers::
-+	The number of parallel workers to use when updating the working tree.
-+	The default is one, i.e. sequential execution. If set to a value less
-+	than one, Git will use as many workers as the number of logical cores
-+	available. This setting and `checkout.thresholdForParallelism` affect
-+	all commands that perform checkout. E.g. checkout, clone, reset,
-+	sparse-checkout, etc.
-++
-+Note: parallel checkout usually delivers better performance for repositories
-+located on SSDs or over NFS. For repositories on spinning disks and/or machines
-+with a small number of cores, the default sequential checkout often performs
-+better. The size and compression level of a repository might also influence how
-+well the parallel version performs.
-+
-+checkout.thresholdForParallelism::
-+	When running parallel checkout with a small number of files, the cost
-+	of subprocess spawning and inter-process communication might outweigh
-+	the parallelization gains. This setting allows to define the minimum
-+	number of files for which parallel checkout should be attempted. The
-+	default is 100.
 diff --git a/parallel-checkout.c b/parallel-checkout.c
-index 836154fec6..3cc2028861 100644
+index 3cc2028861..09e8b10a35 100644
 --- a/parallel-checkout.c
 +++ b/parallel-checkout.c
-@@ -1,10 +1,12 @@
- #include "cache.h"
-+#include "config.h"
+@@ -3,6 +3,7 @@
  #include "entry.h"
  #include "parallel-checkout.h"
  #include "pkt-line.h"
++#include "progress.h"
  #include "run-command.h"
  #include "sigchain.h"
  #include "streaming.h"
-+#include "thread-utils.h"
- 
- struct pc_worker {
- 	struct child_process cp;
-@@ -24,6 +26,20 @@ enum pc_status parallel_checkout_status(void)
- 	return parallel_checkout.status;
- }
- 
-+static const int DEFAULT_THRESHOLD_FOR_PARALLELISM = 100;
-+static const int DEFAULT_NUM_WORKERS = 1;
-+
-+void get_parallel_checkout_configs(int *num_workers, int *threshold)
-+{
-+	if (git_config_get_int("checkout.workers", num_workers))
-+		*num_workers = DEFAULT_NUM_WORKERS;
-+	else if (*num_workers < 1)
-+		*num_workers = online_cpus();
-+
-+	if (git_config_get_int("checkout.thresholdForParallelism", threshold))
-+		*threshold = DEFAULT_THRESHOLD_FOR_PARALLELISM;
-+}
-+
- void init_parallel_checkout(void)
- {
- 	if (parallel_checkout.status != PC_UNINITIALIZED)
-@@ -584,11 +600,9 @@ static void write_items_sequentially(struct checkout *state)
- 		write_pc_item(&parallel_checkout.items[i], state);
- }
- 
--static const int DEFAULT_NUM_WORKERS = 2;
--
--int run_parallel_checkout(struct checkout *state)
-+int run_parallel_checkout(struct checkout *state, int num_workers, int threshold)
- {
--	int ret, num_workers = DEFAULT_NUM_WORKERS;
-+	int ret;
- 
- 	if (parallel_checkout.status != PC_ACCEPTING_ENTRIES)
- 		BUG("cannot run parallel checkout: uninitialized or already running");
-@@ -598,7 +612,7 @@ int run_parallel_checkout(struct checkout *state)
- 	if (parallel_checkout.nr < num_workers)
- 		num_workers = parallel_checkout.nr;
- 
--	if (num_workers <= 1) {
-+	if (num_workers <= 1 || parallel_checkout.nr < threshold) {
- 		write_items_sequentially(state);
- 	} else {
- 		struct pc_worker *workers = setup_workers(state, num_workers);
-diff --git a/parallel-checkout.h b/parallel-checkout.h
-index ec58716519..2a68ab954d 100644
---- a/parallel-checkout.h
-+++ b/parallel-checkout.h
-@@ -17,6 +17,7 @@ enum pc_status {
+@@ -17,6 +18,8 @@ struct parallel_checkout {
+ 	enum pc_status status;
+ 	struct parallel_checkout_item *items; /* The parallel checkout queue. */
+ 	size_t nr, alloc;
++	struct progress *progress;
++	unsigned int *progress_cnt;
  };
  
- enum pc_status parallel_checkout_status(void);
-+void get_parallel_checkout_configs(int *num_workers, int *threshold);
+ static struct parallel_checkout parallel_checkout;
+@@ -146,6 +149,20 @@ int enqueue_checkout(struct cache_entry *ce, struct conv_attrs *ca)
+ 	return 0;
+ }
  
- /*
-  * Put parallel checkout into the PC_ACCEPTING_ENTRIES state. Should be used
-@@ -31,8 +32,12 @@ void init_parallel_checkout(void);
++size_t pc_queue_size(void)
++{
++	return parallel_checkout.nr;
++}
++
++static void advance_progress_meter(void)
++{
++	if (parallel_checkout.progress) {
++		(*parallel_checkout.progress_cnt)++;
++		display_progress(parallel_checkout.progress,
++				 *parallel_checkout.progress_cnt);
++	}
++}
++
+ static int handle_results(struct checkout *state)
+ {
+ 	int ret = 0;
+@@ -194,6 +211,7 @@ static int handle_results(struct checkout *state)
+ 			 */
+ 			ret |= checkout_entry_ca(pc_item->ce, &pc_item->ca,
+ 						 state, NULL, NULL);
++			advance_progress_meter();
+ 			break;
+ 		case PC_ITEM_PENDING:
+ 			have_pending = 1;
+@@ -534,6 +552,9 @@ static void parse_and_save_result(const char *buffer, int len,
+ 	pc_item->status = res->status;
+ 	if (st)
+ 		pc_item->st = *st;
++
++	if (res->status != PC_ITEM_COLLIDED)
++		advance_progress_meter();
+ }
+ 
+ static void gather_results_from_workers(struct pc_worker *workers,
+@@ -596,11 +617,16 @@ static void write_items_sequentially(struct checkout *state)
+ {
+ 	size_t i;
+ 
+-	for (i = 0; i < parallel_checkout.nr; i++)
+-		write_pc_item(&parallel_checkout.items[i], state);
++	for (i = 0; i < parallel_checkout.nr; i++) {
++		struct parallel_checkout_item *pc_item = &parallel_checkout.items[i];
++		write_pc_item(pc_item, state);
++		if (pc_item->status != PC_ITEM_COLLIDED)
++			advance_progress_meter();
++	}
+ }
+ 
+-int run_parallel_checkout(struct checkout *state, int num_workers, int threshold)
++int run_parallel_checkout(struct checkout *state, int num_workers, int threshold,
++			  struct progress *progress, unsigned int *progress_cnt)
+ {
+ 	int ret;
+ 
+@@ -608,6 +634,8 @@ int run_parallel_checkout(struct checkout *state, int num_workers, int threshold
+ 		BUG("cannot run parallel checkout: uninitialized or already running");
+ 
+ 	parallel_checkout.status = PC_RUNNING;
++	parallel_checkout.progress = progress;
++	parallel_checkout.progress_cnt = progress_cnt;
+ 
+ 	if (parallel_checkout.nr < num_workers)
+ 		num_workers = parallel_checkout.nr;
+diff --git a/parallel-checkout.h b/parallel-checkout.h
+index 2a68ab954d..80f539bcb7 100644
+--- a/parallel-checkout.h
++++ b/parallel-checkout.h
+@@ -5,6 +5,7 @@
+ 
+ struct cache_entry;
+ struct checkout;
++struct progress;
+ 
+ /****************************************************************
+  * Users of parallel checkout
+@@ -31,13 +32,15 @@ void init_parallel_checkout(void);
+  * for later write and return 0.
   */
  int enqueue_checkout(struct cache_entry *ce, struct conv_attrs *ca);
++size_t pc_queue_size(void);
  
--/* Write all the queued entries, returning 0 on success.*/
--int run_parallel_checkout(struct checkout *state);
-+/*
-+ * Write all the queued entries, returning 0 on success. If the number of
-+ * entries is smaller than the specified threshold, the operation is performed
-+ * sequentially.
-+ */
-+int run_parallel_checkout(struct checkout *state, int num_workers, int threshold);
+ /*
+  * Write all the queued entries, returning 0 on success. If the number of
+  * entries is smaller than the specified threshold, the operation is performed
+  * sequentially.
+  */
+-int run_parallel_checkout(struct checkout *state, int num_workers, int threshold);
++int run_parallel_checkout(struct checkout *state, int num_workers, int threshold,
++			  struct progress *progress, unsigned int *progress_cnt);
  
  /****************************************************************
   * Interface with checkout--worker
 diff --git a/unpack-trees.c b/unpack-trees.c
-index f0430d458d..0669748f21 100644
+index 0669748f21..4b77e52c6b 100644
 --- a/unpack-trees.c
 +++ b/unpack-trees.c
-@@ -399,7 +399,7 @@ static int check_updates(struct unpack_trees_options *o,
- 	int errs = 0;
- 	struct progress *progress;
- 	struct checkout state = CHECKOUT_INIT;
--	int i;
-+	int i, pc_workers, pc_threshold;
- 
- 	trace_performance_enter();
- 	state.force = 1;
-@@ -465,8 +465,11 @@ static int check_updates(struct unpack_trees_options *o,
- 		oid_array_clear(&to_fetch);
- 	}
- 
-+	get_parallel_checkout_configs(&pc_workers, &pc_threshold);
-+
- 	enable_delayed_checkout(&state);
--	init_parallel_checkout();
-+	if (pc_workers > 1)
-+		init_parallel_checkout();
- 	for (i = 0; i < index->cache_nr; i++) {
+@@ -474,17 +474,22 @@ static int check_updates(struct unpack_trees_options *o,
  		struct cache_entry *ce = index->cache[i];
  
-@@ -480,7 +483,8 @@ static int check_updates(struct unpack_trees_options *o,
+ 		if (ce->ce_flags & CE_UPDATE) {
++			size_t last_pc_queue_size = pc_queue_size();
++
+ 			if (ce->ce_flags & CE_WT_REMOVE)
+ 				BUG("both update and delete flags are set on %s",
+ 				    ce->name);
+-			display_progress(progress, ++cnt);
+ 			ce->ce_flags &= ~CE_UPDATE;
+ 			errs |= checkout_entry(ce, &state, NULL, NULL);
++
++			if (last_pc_queue_size == pc_queue_size())
++				display_progress(progress, ++cnt);
  		}
  	}
- 	stop_progress(&progress);
--	errs |= run_parallel_checkout(&state);
-+	if (pc_workers > 1)
-+		errs |= run_parallel_checkout(&state, pc_workers, pc_threshold);
+-	stop_progress(&progress);
+ 	if (pc_workers > 1)
+-		errs |= run_parallel_checkout(&state, pc_workers, pc_threshold);
++		errs |= run_parallel_checkout(&state, pc_workers, pc_threshold,
++					      progress, &cnt);
++	stop_progress(&progress);
  	errs |= finish_delayed_checkout(&state, NULL);
  	git_attr_set_direction(GIT_ATTR_CHECKIN);
  
