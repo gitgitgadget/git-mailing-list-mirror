@@ -7,129 +7,136 @@ X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B0850C433B4
-	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 15:55:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 93F0BC433B4
+	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 15:55:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 89A2361285
-	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 15:55:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 79B5A6128C
+	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 15:55:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240360AbhDSPzv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Apr 2021 11:55:51 -0400
-Received: from wout4-smtp.messagingengine.com ([64.147.123.20]:38741 "EHLO
+        id S241463AbhDSPz4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Apr 2021 11:55:56 -0400
+Received: from wout4-smtp.messagingengine.com ([64.147.123.20]:33955 "EHLO
         wout4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S240142AbhDSPzu (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 19 Apr 2021 11:55:50 -0400
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.west.internal (Postfix) with ESMTP id 657A510C9;
-        Mon, 19 Apr 2021 11:55:20 -0400 (EDT)
+        by vger.kernel.org with ESMTP id S241383AbhDSPzy (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 19 Apr 2021 11:55:54 -0400
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
+        by mailout.west.internal (Postfix) with ESMTP id C05B3FCF;
+        Mon, 19 Apr 2021 11:55:24 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Mon, 19 Apr 2021 11:55:20 -0400
+  by compute7.internal (MEProxy); Mon, 19 Apr 2021 11:55:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
-        :from:to:cc:subject:message-id:mime-version:content-type; s=fm3;
-         bh=07k8d7eGrBrDwdaxlyKibCs2VHC5FCp3NWEMlOx+ZtA=; b=cLBDA/eBtJ5+
-        uANsXpwg0TRBFnhVy4zK05OjbZ+m/lB1srKcga2Bjh9Ql/7QklHPqqBzfK6pffa0
-        mrOxyUPXkZfn0T2sfbZiqTB9CdWE4PAHfWSQw0LdxyG2hOBPxqpoI4K/X8lkkEfC
-        WFdknb/L0UtbnbgVVciu1pzMr8hRr8+EzesoM6DxM/iyN6puMc2POzWJhzvXv8CM
-        Ogy1vWA56NRbdjiLKb/SaEBKKHsqPS6hvYjk6zeQYvJSV3IAlyfFQLHjsKxXlwOQ
-        2XfjA/6ZIMq+NVERMTjGfAL60NadD+l7HOnn3LS70W/Lhh9BrbhuPgGFRWB/EsJi
-        +7gyoPdCHg==
+        :from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=fm3; bh=RiNj+dlrUouRf9EQSaYZXlCudQy
+        Ep3xGtXhRTaEhOVw=; b=PL/NmXS/nxy2wH6+1fWR0celRAcwoRro5QFf5u7lJ4g
+        w9CIIX9rJOeyVsvGtzQzrNWekvCxj22yDcfWrWg+8VI4ueUZYsxMkXxOhw/maHks
+        XBdrK/vvvCBongh6vLGC/3NMybYI+eM1OGoepImmMwQzSypbcO7fVKJR1S1cjamc
+        XoTBZtX7Qfv0qiy/C3oaLOZU6KZcQ3ow9YsQWLI/gWLm6N4lXDeUAWjbxyx63IqV
+        V0B8jkDIi2yoXPVCuMwNVAh8YPw+DFGYXF8GtZJBGu8y45KSh0fn/wS7LiwR+Cox
+        Mu86cKPtapdu9kZfxX8EYmn8DF/Jhdn0VagOdzJBBPQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:message-id
-        :mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
-        :x-me-sender:x-sasl-enc; s=fm2; bh=07k8d7eGrBrDwdaxlyKibCs2VHC5F
-        Cp3NWEMlOx+ZtA=; b=e1g6t6GR7qliqRcksuZApakrbzQ7KwIipCSpoU/yC/9Ks
-        IoFe+A+cmL2sDAblfTBbr9SNjV8qLH4PhqMI2yP0hpvBWdSfy+rNfH064zcdm6FZ
-        cYBQh3nNRD2uNaO+1dh9e22pBMt04BLh2YHHZZYFcdEEWv23W9ulu9AYjeas0D1Q
-        JrlfYScvjAE+Xh8t/4njsnIZTiCldNYE36CeAUm2PJTVzsRVlBZ3ISEi7bbi5Ql9
-        snmIm2eLyYiGAo5THBKYSQ7YDvS+nbG2/lq3S202TrE0WAUQtxdqPFH6wi6Mw6/H
-        zODwGNVLp0sp/H6kM1JnzTC6Kjx5FoTr8NXKhvGzA==
-X-ME-Sender: <xms:56d9YIsSr8e617xAizkGGqIUCpsdppLbPHYBN0aMtqf98fpy2yX71Q>
-    <xme:56d9YJu8fJMZrJZDCkxYlQeuNcfkONQtoy-TDyw7kSg_V7T2ywwndwE5qQpBuo8mq
-    UNDS3p3U_NoS5MzWg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvddtgedgleeiucetufdoteggodetrfdotf
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=RiNj+d
+        lrUouRf9EQSaYZXlCudQyEp3xGtXhRTaEhOVw=; b=bHAU+7pKNM66O2XsZ2rbc+
+        FX9zmDdDVFJbt+HejTkEuWjZD8tJhJCCH90IqfwnnizYTOIMLJlkkveJcqSVq3ss
+        8C0foQLJetta8fAnlaiFd9eF80z0zR9OP35lmKox93N/HiVr8dDlzSiPPqy6T2ki
+        ZyFZ5t4IAnZxZp3KAANtFtJHzJPwmDYYYrP0BhLE9kUheyGtDUJq5q9ZNNFSNprZ
+        wIBpls83tq9cblYXygYqOp043G4aja0UIRPDYZlEcpsjIFNEIGEC1gKLF84fKL75
+        bbjLRN2qz1oxAcD8aayG2eXhBCSeS8inGqZVydNijxWd/hR7G3nc+CkYtAIHFq4A
+        ==
+X-ME-Sender: <xms:7Kd9YCss8c7DuzdozVtMAMGimjnET5CYxpvR0hbp0LWfVNKkh7xQ7Q>
+    <xme:7Kd9YBh77GTxLvzu-6tzrdpw2cItBk5bub9XezBtHM38RBEQ9nC0NKHxiC9SBVd86
+    IFE63WKlWszKNIo8Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvddtgedgleehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkgggtugesghdtreertd
-    dtudenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
-    rdhimheqnecuggftrfgrthhtvghrnhepgeefkeeivdffudejjefgheegfefgleevueeige
-    efjeetffdvhfduteeiueehheevnecukfhppeejjedrudeluddrieekrdektdenucevlhhu
-    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrih
-    hm
-X-ME-Proxy: <xmx:56d9YOx8HuiwJ94f1-SsUlttXg0HpbKIh7VpCggPcWn9LBCzBOazqw>
-    <xmx:56d9YPhBxhk2YtoFB3_G0f_4qqL9UrYLkcReZUklylBjLNZyW_iMDQ>
-    <xmx:56d9YCCG4tGoSQbUTHvrROMcP2iIZppFMsifOaLVRNzQhhanu47Fbw>
-    <xmx:6Kd9YCfgSAVXcctNm1rBicT6BpY6kf5buFhwDhvmLDnGn_4EcnWfzg>
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
+    ertddtudenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
+    khhsrdhimheqnecuggftrfgrthhtvghrnheptdffjeeiudduleehvdfgteeifeelheejte
+    dvteduiedttedvtdffffefhfdvgffgnecukfhppeejjedrudeluddrieekrdektdenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhm
+X-ME-Proxy: <xmx:7Kd9YCtFEscxndw1NtTikXNMxO7tJXFduVDTXQORsi7wTjS8nRZlVg>
+    <xmx:7Kd9YE_4fbRWP4opudOtBv7m3FjmCqkL-bTSZNuzF8MEFglbIxgswA>
+    <xmx:7Kd9YAanUw9iR3Qou3Xg4qf156U-AjdrYBHg9aJJ3FMDlRz2iK8vLg>
+    <xmx:7Kd9YBGwFS20Encp7Jmudqd-3FgYt_8dfnx0eprrRCMGxsZoSStGQw>
 Received: from vm-mail.pks.im (x4dbf4450.dyn.telefonica.de [77.191.68.80])
-        by mail.messagingengine.com (Postfix) with ESMTPA id ED817240054;
-        Mon, 19 Apr 2021 11:55:18 -0400 (EDT)
+        by mail.messagingengine.com (Postfix) with ESMTPA id ABC1E24005C;
+        Mon, 19 Apr 2021 11:55:23 -0400 (EDT)
 Received: from localhost (tanuki [10.192.0.23])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 5564e2d1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Mon, 19 Apr 2021 15:55:17 +0000 (UTC)
-Date:   Mon, 19 Apr 2021 17:56:45 +0200
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 86788e5f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Mon, 19 Apr 2021 15:55:22 +0000 (UTC)
+Date:   Mon, 19 Apr 2021 17:56:50 +0200
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
 Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
         Jeff King <peff@peff.net>
-Subject: [PATCH 0/2] git: support separate arg for `--config-env`'s value
-Message-ID: <cover.1618847606.git.ps@pks.im>
+Subject: [PATCH 1/2] git.txt: fix synopsis of `--config-env` missing the
+ equals sign
+Message-ID: <08049f3b1088a301ea87db9a69454a2516b9525b.1618847606.git.ps@pks.im>
+References: <cover.1618847606.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="MMOkDoLVq/BeYq7N"
+        protocol="application/pgp-signature"; boundary="Z752L4XYgiAGA8Zo"
 Content-Disposition: inline
+In-Reply-To: <cover.1618847606.git.ps@pks.im>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---MMOkDoLVq/BeYq7N
+--Z752L4XYgiAGA8Zo
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+When executing `git -h`, then the `--config-env` documentation rightly
+lists the option as requiring an equals between the option and its
+argument: this is the only currently supported format. But the git(1)
+manpage incorrectly lists the option as taking a space in between.
 
-As pointed out by =C6var, the synopsis in the git(1) manpage was
-misdocumenting the syntax of the `--config-env` option. This patch
-series fixes it and also addresses the shortcoming that while most of
-the other options support both `--git-dir=3Dfoo` and `--git-dir foo`,
-`--config-env` only supported the former format.
+Fix the issue by adding the missing space.
 
-I'm happy to drop the latter patch if it's generally seen as something
-that's not needed, but =C6var and Peff got a point in that it feels
-inconsistent with the other options.
+Reported-by: =C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com>
+Signed-of-by: Patrick Steinhardt <ps@pks.im>
+---
+ Documentation/git.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Patrick
-
-Patrick Steinhardt (2):
-  git.txt: fix synopsis of `--config-env` missing the equals sign
-  git: support separate arg for `--config-env`'s value
-
- Documentation/git.txt |  2 +-
- git.c                 |  8 ++++++++
- t/t1300-config.sh     | 15 ++++++++++++++-
- 3 files changed, 23 insertions(+), 2 deletions(-)
-
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 3a9c44987f..ba5c8e9d98 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -13,7 +13,7 @@ SYNOPSIS
+     [--exec-path[=3D<path>]] [--html-path] [--man-path] [--info-path]
+     [-p|--paginate|-P|--no-pager] [--no-replace-objects] [--bare]
+     [--git-dir=3D<path>] [--work-tree=3D<path>] [--namespace=3D<name>]
+-    [--super-prefix=3D<path>] [--config-env <name>=3D<envvar>]
++    [--super-prefix=3D<path>] [--config-env=3D<name>=3D<envvar>]
+     <command> [<args>]
+=20
+ DESCRIPTION
 --=20
 2.31.1
 
 
---MMOkDoLVq/BeYq7N
+--Z752L4XYgiAGA8Zo
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmB9qDwACgkQVbJhu7ck
-PpTloxAAhgLRX3/TcxyhE5UgKEf+y356EgKIVYCCwBTaoPhQ7aoATSob4m2mDjaV
-ubbdEtbDFirWOOiXJqa61xo+yBuCGap8GAfU8JLmVepX7h1YbQECsWlE0q5ogDoo
-17QsneHbFF7DwDuBFrK3P/GsIdbcP2Mg0ffxrlgXcRKtb1DS2yoyh3OUfLqVgh3n
-YmpEbimPB+zUobaj09/hpFAcR1MLlcTFSixMeMUWmnaRChwtEx0N2uvt+Emswbbk
-Lpi4c1I+1dTaEZIFGOu68O6rc02/56fbVEebc+NPrqXIEmx60VOr8l3rE3x+lTwZ
-qcS3W4Cc8CmugoWCu8gMr4UUzeNp62OXXTLfIIap8OMSCqXSjV1S/PNRgqx87Wd0
-n+lGfcmFu+qpRbhrVvDuHpqKTTsNtufO7bkSlNsHOYkqb9vwBmDm4Ty519AyJpX/
-Jr1bLXeW6b+sV6ZfqTNxey5IoKKiZbRXeyZlDpVW5EESbh0Z/L1H+ToMF3YfXSmY
-8HkgslrYOzdVAdVKxkOL2Gwelgcnt8XXykhyt2rAFOXI3fWm44/g8jbwB8qwa05j
-2NMHhFm/ia78BL2aaF6ruaW+59vS2nQC6Wyx4Ed79jm9YGi0kwgoybTFCUiVC1k7
-J+riH3AbIHp8d2dwcANp7gWdGKJ8skvzo5kEKuo9GmrnLYvj2HU=
-=xCFE
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmB9qEEACgkQVbJhu7ck
+PpQb/Q//QjClaGi1WScFvQ8VuRcS8VUJBzb3iLhSsUdT88Z8gPI8K7IJqXOcy/w7
+7SkbzfDhqpx2bChu4IihiJ4C21tSvm7YUpM9/Tp7+6zJ7GG7kKWIx0tbB9eKq3XP
+ryTw4MCffGglo4RRZsy9ZX007uH+4Fw73YD3/ZNcYqOJXEzBG6OtpVAOUIt7zb1s
+amsLLk6oCFfq2WqY9lvaN9K4tP5TRP/1F/jsdzKMUELvvtKerZw7kInhgETqAO2I
+gdb21ccR6ZRC6xdr4TuonK2OS+TAzBvbaF2o5RmCspG+/UG2z8lahQMOPCjGsB49
+cNVtL+yqXXk4JtmYokzKqVcSrA687O1Pb9/rYMVbFXIIE6Cfrd2CAr2MCS0HC6Xn
+BhPt9UzGAkVYIDFtw22zgVKQCpcqN0u7Kb6Gt3daJGZOT9+yWWMxLt/+S4kLFshF
+zBP+2L+JDZ6FJXc+jNXJBuUI7KOpDJ7BwbtsqUeNUI2GENUNpH/OZI7WJi+MBLk5
+/1yyPKCxeb/JlPYVOn2syWn32Cqd+uaz0SAsZ0xbl86jD+5jGNv+bb1KDUrTVnVl
+vbcuYOOr6hMXjnl+6aGQYaZTnwJKyV2mSwP+BBkR8np7o3w6qT38fnLi6kLkXMyY
+HSb0VGe8nzyuyJB5tivbZOku58ceSMTnlyjWk4XguTR4wbRm0uI=
+=s2TU
 -----END PGP SIGNATURE-----
 
---MMOkDoLVq/BeYq7N--
+--Z752L4XYgiAGA8Zo--
