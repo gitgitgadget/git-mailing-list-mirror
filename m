@@ -2,389 +2,259 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B0267C43460
-	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 11:41:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5484EC433B4
+	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 11:46:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8F0BE61221
-	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 11:41:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 316056108B
+	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 11:46:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238773AbhDSLln (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Apr 2021 07:41:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35908 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238770AbhDSLiw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Apr 2021 07:38:52 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D7B2C061760
-        for <git@vger.kernel.org>; Mon, 19 Apr 2021 04:38:19 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id o9-20020a1c41090000b029012c8dac9d47so10975941wma.1
-        for <git@vger.kernel.org>; Mon, 19 Apr 2021 04:38:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=2a9vWWut/GjDiVw6KZDMDxp5aQXJRJ4XYMy52A0DJkE=;
-        b=RG7C1xD2bvdSNdk2Z2v9Cp4n5aob1M4Ysczau9CXgi237NDKfHHTh+yXMua74+sXCS
-         EBi5m0mp77bkD9hmAFnwKmz5wCDpuOZw0lGI69vCXkSXcI4RZ+mjFXxyFqFLSQ+rG5oT
-         JxWtmQfgK6cefOAcIY7wkWQVGJIAhcJ9TjTueiVxK4Ub76VrzzRQYC44o/9y0ybX3S1s
-         4tODRSp7rm+1Qycx7a0RvJRfSBSXnmLNDkso/XlKkaz0xVEet/KkraZFKhAKkiWVELIp
-         bAiEqLTiqWOZYIVBhufPwTfVG2ThGioSPFRYyKp27lcjIK3mZ5Za3OWdM9db/LsTgVot
-         wgww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=2a9vWWut/GjDiVw6KZDMDxp5aQXJRJ4XYMy52A0DJkE=;
-        b=q5jaipNSW5xo588jvm0RTYeVtdyL8COTQpK2Og43MILrc9Qmkyxo6bVQeUDNvim/rG
-         twOrluIx36euXYMwE/a/+GJn6uc+lwEJZKyS7ywzppZgjMdzzJhCHKSajF0DugiutmK/
-         4sursqcW9hRjfjUVtNGkdtyr1qn6ahB4P7K9GA/1UXLfSCGgdsFHZrBc4pjuFhAapE2R
-         QGDMCBNLIrmwlLA4EEoJt0k+kfkXb9Rj3inWOT58cOVF+GYKO1sk+X2rncWtyNVFI5O+
-         PQFmPzvEJ7TOMGIoXIhP+Yb6g4CX+2+IsvWM7sY9GTDpRHoIcz0QF5EkwmrJRLmfUfzk
-         rftA==
-X-Gm-Message-State: AOAM531VIKzDs3racOrdJB/YpvxbC1gXH+Rv4R8m4e/wyamiVAeCyLwU
-        AVcZoyg3q/i2T+sXxAQmSDcdk8KeYfs=
-X-Google-Smtp-Source: ABdhPJzwTQ0GL3hKIP/JYUNDmFZgzcM0dpG2DlQjp8vFT4D5vjLy4smFMvpWs+9Xuh3zIxRSRLfqDQ==
-X-Received: by 2002:a1c:2786:: with SMTP id n128mr21596451wmn.82.1618832298087;
-        Mon, 19 Apr 2021 04:38:18 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m14sm2844427wmq.44.2021.04.19.04.38.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Apr 2021 04:38:17 -0700 (PDT)
-Message-Id: <dd8ffbf53157bde0c8dcc7d778b6f8d5849499fd.1618832277.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.847.v7.git.git.1618832276.gitgitgadget@gmail.com>
-References: <pull.847.v6.git.git.1618255552.gitgitgadget@gmail.com>
-        <pull.847.v7.git.git.1618832276.gitgitgadget@gmail.com>
-From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 19 Apr 2021 11:37:56 +0000
-Subject: [PATCH v7 28/28] t1404: annotate test cases with REFFILES
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        id S238859AbhDSLrL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Apr 2021 07:47:11 -0400
+Received: from wout1-smtp.messagingengine.com ([64.147.123.24]:41689 "EHLO
+        wout1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S238606AbhDSLrI (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 19 Apr 2021 07:47:08 -0400
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.west.internal (Postfix) with ESMTP id 2AF77B06;
+        Mon, 19 Apr 2021 07:46:38 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute1.internal (MEProxy); Mon, 19 Apr 2021 07:46:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
+        :from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=fm3; bh=gvyjP4ykFM9HwnODyGFylaFNCBh
+        3Mx9YGwQx1CoyPXc=; b=rJqhjNL9ofOQ5DfgQ9TEZEmeEVHdR4peEo0SNCHDiFB
+        5784AFxkdiQuaLAHOPHb9chEHiLHNYH5GU6dbQSGcJJyGLl2wlCRaxZTBL0te5LT
+        aFQcbkYROh9CmSfES2ri8BohOeLZwGivi0eZXMr8MoHttd13ohWCrL0A2TI6PT3H
+        I9WUSX/aCIPbqUeo1xLh8rcXXI5nMNmNy+zvNqU3CupetRgcgtOyGYQapY2L8D20
+        0RtqEHO6kC+eFkgmOk1OuXXfzI3ONRmXjFJOfsDD6NK9XdBY8jwiw+xe1CjOYFaT
+        wUEtmVlYrOWBYbAXuzxho6KfnOejqmpa3kvV6Un9u8Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=gvyjP4
+        ykFM9HwnODyGFylaFNCBh3Mx9YGwQx1CoyPXc=; b=AVvqmF5ZcBTUGA425N5omr
+        qv91EJQSNtLMxb09lygSqWxPFW8awcDi7wBy8ZFk1MVDS/lcevq+T/e5BMAz61SZ
+        gt+tgvrS3Q4bQL9NnA4atJtr0CzTQ6WmCU9MpR88n1YJlY7chU1GCE5RfSIqrjr4
+        4Ukd0VnuQ8kunBpp0m5WVqYUwYaIcwzruMqFWevdlCuHjdDhY8Q5x3/8WkFruAH/
+        8Rrt6J91eIRzry8gp50460+OVYZ32wQ+C4fmWUe3J00oBn4qCzTKyShRNP309VXj
+        KcCHU57/4JkV7xf1pW/UCjsEeAKmrJDYXfi8ZQsQQdJgSDafGcvowM34p/526KUA
+        ==
+X-ME-Sender: <xms:nG19YPPJcfNJmShhZiA-kn5h3-EoPMv2HE_7foQSfJsR3un_lly51Q>
+    <xme:nG19YJ9q3RBbcg5KXGAydUt010teyK3yQwbHgBfMBc1b_6KyJ6WFEcsnZaa59Po2g
+    Xnw5TLBz0gkMjeHow>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvddtgedggeehucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeehgefhtdefueffheekgfffudelffejtdfhvdejkedthfehvdelgfetgfdvtedthfen
+    ucfkphepjeejrdduledurdeikedrkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:nG19YOSXBUBdNWhuvTxL8TrJ3Px4ioAiptKPBgAg01vEKmqQrTcUxg>
+    <xmx:nG19YDvw60tvGFhh82zA1CkvBuF1BKJmnO3GkCo93JJ9WnDMh8RzCQ>
+    <xmx:nG19YHcP8imb1U5t1lqgwQHUAhm1ryl9jRtyvgSwJZQ1aIya56OXzA>
+    <xmx:nW19YO7BXb5R8jAZdmMuaJPAE4_TaZrjakg53GDZLeMSJI4aO1Bnsg>
+Received: from vm-mail.pks.im (x4dbf4450.dyn.telefonica.de [77.191.68.80])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 1CEA01080066;
+        Mon, 19 Apr 2021 07:46:35 -0400 (EDT)
+Received: from localhost (ncase [10.192.0.11])
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id b7415368 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Mon, 19 Apr 2021 11:46:33 +0000 (UTC)
+Date:   Mon, 19 Apr 2021 13:46:32 +0200
+From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
-Cc:     Han-Wen Nienhuys <hanwen@google.com>, Jeff King <peff@peff.net>,
+Cc:     Jeff King <peff@peff.net>,
+        Christian Couder <christian.couder@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Philip Oakley <philipoakley@iee.email>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Josh Steadmon <steadmon@google.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Patrick Steinhardt <ps@pks.im>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Felipe Contreras <felipe.contreras@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Han-Wen Nienhuys g <hanwen@google.com>,
-        Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Subject: [PATCH v5 0/8] rev-list: implement object type filter
+Message-ID: <cover.1618832437.git.ps@pks.im>
+References: <cover.1618234575.git.ps@pks.im>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="6qrewkQwpl5rv/mq"
+Content-Disposition: inline
+In-Reply-To: <cover.1618234575.git.ps@pks.im>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Han-Wen Nienhuys <hanwen@google.com>
 
-* Reftable for now lacks detailed error messages for directory/file conflicts.
-  Skip message comparisons.
+--6qrewkQwpl5rv/mq
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-* Mark tests that muck with .git directly as REFFILES.
+Hi,
 
-Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
----
- t/t1404-update-ref-errors.sh | 86 ++++++++++++++++++++++++------------
- 1 file changed, 57 insertions(+), 29 deletions(-)
+this is the fifth version of my patch series which implements a new
+`object:type` filter for git-rev-list(1) and git-upload-pack(1) and
+extends support for bitmap indices to work with combined filters.
 
-diff --git a/t/t1404-update-ref-errors.sh b/t/t1404-update-ref-errors.sh
-index 8b51c4efc135..811d5bb56d41 100755
---- a/t/t1404-update-ref-errors.sh
-+++ b/t/t1404-update-ref-errors.sh
-@@ -27,7 +27,9 @@ test_update_rejected () {
- 	fi &&
- 	printf "create $prefix/%s $C\n" $create >input &&
- 	test_must_fail git update-ref --stdin <input 2>output.err &&
--	test_i18ngrep -F "$error" output.err &&
-+	if test_have_prereq REFFILES ; then
-+		test_i18ngrep -F "$error" output.err
-+	fi &&
- 	git for-each-ref $prefix >actual &&
- 	test_cmp unchanged actual
- }
-@@ -101,7 +103,9 @@ df_test() {
- 		printf "%s\n" "delete $delname" "create $addname $D"
- 	fi >commands &&
- 	test_must_fail git update-ref --stdin <commands 2>output.err &&
--	test_cmp expected-err output.err &&
-+	if test_have_prereq REFFILES ; then
-+		test_cmp expected-err output.err
-+	fi &&
- 	printf "%s\n" "$C $delref" >expected-refs &&
- 	git for-each-ref --format="%(objectname) %(refname)" $prefix/r >actual-refs &&
- 	test_cmp expected-refs actual-refs
-@@ -189,7 +193,7 @@ test_expect_success 'one new ref is a simple prefix of another' '
- 
- '
- 
--test_expect_success 'empty directory should not fool rev-parse' '
-+test_expect_success REFFILES 'empty directory should not fool rev-parse' '
- 	prefix=refs/e-rev-parse &&
- 	git update-ref $prefix/foo $C &&
- 	git pack-refs --all &&
-@@ -199,7 +203,7 @@ test_expect_success 'empty directory should not fool rev-parse' '
- 	test_cmp expected actual
- '
- 
--test_expect_success 'empty directory should not fool for-each-ref' '
-+test_expect_success REFFILES 'empty directory should not fool for-each-ref' '
- 	prefix=refs/e-for-each-ref &&
- 	git update-ref $prefix/foo $C &&
- 	git for-each-ref $prefix >expected &&
-@@ -209,14 +213,14 @@ test_expect_success 'empty directory should not fool for-each-ref' '
- 	test_cmp expected actual
- '
- 
--test_expect_success 'empty directory should not fool create' '
-+test_expect_success REFFILES 'empty directory should not fool create' '
- 	prefix=refs/e-create &&
- 	mkdir -p .git/$prefix/foo/bar/baz &&
- 	printf "create %s $C\n" $prefix/foo |
- 	git update-ref --stdin
- '
- 
--test_expect_success 'empty directory should not fool verify' '
-+test_expect_success REFFILES 'empty directory should not fool verify' '
- 	prefix=refs/e-verify &&
- 	git update-ref $prefix/foo $C &&
- 	git pack-refs --all &&
-@@ -225,7 +229,7 @@ test_expect_success 'empty directory should not fool verify' '
- 	git update-ref --stdin
- '
- 
--test_expect_success 'empty directory should not fool 1-arg update' '
-+test_expect_success REFFILES 'empty directory should not fool 1-arg update' '
- 	prefix=refs/e-update-1 &&
- 	git update-ref $prefix/foo $C &&
- 	git pack-refs --all &&
-@@ -234,7 +238,7 @@ test_expect_success 'empty directory should not fool 1-arg update' '
- 	git update-ref --stdin
- '
- 
--test_expect_success 'empty directory should not fool 2-arg update' '
-+test_expect_success REFFILES 'empty directory should not fool 2-arg update' '
- 	prefix=refs/e-update-2 &&
- 	git update-ref $prefix/foo $C &&
- 	git pack-refs --all &&
-@@ -243,7 +247,7 @@ test_expect_success 'empty directory should not fool 2-arg update' '
- 	git update-ref --stdin
- '
- 
--test_expect_success 'empty directory should not fool 0-arg delete' '
-+test_expect_success REFFILES 'empty directory should not fool 0-arg delete' '
- 	prefix=refs/e-delete-0 &&
- 	git update-ref $prefix/foo $C &&
- 	git pack-refs --all &&
-@@ -252,7 +256,7 @@ test_expect_success 'empty directory should not fool 0-arg delete' '
- 	git update-ref --stdin
- '
- 
--test_expect_success 'empty directory should not fool 1-arg delete' '
-+test_expect_success REFFILES 'empty directory should not fool 1-arg delete' '
- 	prefix=refs/e-delete-1 &&
- 	git update-ref $prefix/foo $C &&
- 	git pack-refs --all &&
-@@ -336,7 +340,9 @@ test_expect_success 'missing old value blocks update' '
- 	EOF
- 	printf "%s\n" "update $prefix/foo $E $D" |
- 	test_must_fail git update-ref --stdin 2>output.err &&
--	test_cmp expected output.err
-+	if test_have_prereq REFFILES ; then
-+		test_cmp expected output.err
-+	fi
- '
- 
- test_expect_success 'incorrect old value blocks update' '
-@@ -347,7 +353,9 @@ test_expect_success 'incorrect old value blocks update' '
- 	EOF
- 	printf "%s\n" "update $prefix/foo $E $D" |
- 	test_must_fail git update-ref --stdin 2>output.err &&
--	test_cmp expected output.err
-+	if test_have_prereq REFFILES ; then
-+		test_cmp expected output.err
-+	fi
- '
- 
- test_expect_success 'existing old value blocks create' '
-@@ -358,7 +366,9 @@ test_expect_success 'existing old value blocks create' '
- 	EOF
- 	printf "%s\n" "create $prefix/foo $E" |
- 	test_must_fail git update-ref --stdin 2>output.err &&
--	test_cmp expected output.err
-+	if test_have_prereq REFFILES ; then
-+		test_cmp expected output.err
-+	fi
- '
- 
- test_expect_success 'incorrect old value blocks delete' '
-@@ -369,7 +379,9 @@ test_expect_success 'incorrect old value blocks delete' '
- 	EOF
- 	printf "%s\n" "delete $prefix/foo $D" |
- 	test_must_fail git update-ref --stdin 2>output.err &&
--	test_cmp expected output.err
-+	if test_have_prereq REFFILES ; then
-+		test_cmp expected output.err
-+	fi
- '
- 
- test_expect_success 'missing old value blocks indirect update' '
-@@ -380,7 +392,9 @@ test_expect_success 'missing old value blocks indirect update' '
- 	EOF
- 	printf "%s\n" "update $prefix/symref $E $D" |
- 	test_must_fail git update-ref --stdin 2>output.err &&
--	test_cmp expected output.err
-+	if test_have_prereq REFFILES ; then
-+		test_cmp expected output.err
-+	fi
- '
- 
- test_expect_success 'incorrect old value blocks indirect update' '
-@@ -392,7 +406,9 @@ test_expect_success 'incorrect old value blocks indirect update' '
- 	EOF
- 	printf "%s\n" "update $prefix/symref $E $D" |
- 	test_must_fail git update-ref --stdin 2>output.err &&
--	test_cmp expected output.err
-+	if test_have_prereq REFFILES ; then
-+		test_cmp expected output.err
-+	fi
- '
- 
- test_expect_success 'existing old value blocks indirect create' '
-@@ -404,7 +420,9 @@ test_expect_success 'existing old value blocks indirect create' '
- 	EOF
- 	printf "%s\n" "create $prefix/symref $E" |
- 	test_must_fail git update-ref --stdin 2>output.err &&
--	test_cmp expected output.err
-+	if test_have_prereq REFFILES ; then
-+		test_cmp expected output.err
-+	fi
- '
- 
- test_expect_success 'incorrect old value blocks indirect delete' '
-@@ -416,7 +434,9 @@ test_expect_success 'incorrect old value blocks indirect delete' '
- 	EOF
- 	printf "%s\n" "delete $prefix/symref $D" |
- 	test_must_fail git update-ref --stdin 2>output.err &&
--	test_cmp expected output.err
-+	if test_have_prereq REFFILES ; then
-+		test_cmp expected output.err
-+	fi
- '
- 
- test_expect_success 'missing old value blocks indirect no-deref update' '
-@@ -427,7 +447,9 @@ test_expect_success 'missing old value blocks indirect no-deref update' '
- 	EOF
- 	printf "%s\n" "option no-deref" "update $prefix/symref $E $D" |
- 	test_must_fail git update-ref --stdin 2>output.err &&
--	test_cmp expected output.err
-+	if test_have_prereq REFFILES ; then
-+		test_cmp expected output.err
-+	fi
- '
- 
- test_expect_success 'incorrect old value blocks indirect no-deref update' '
-@@ -439,7 +461,9 @@ test_expect_success 'incorrect old value blocks indirect no-deref update' '
- 	EOF
- 	printf "%s\n" "option no-deref" "update $prefix/symref $E $D" |
- 	test_must_fail git update-ref --stdin 2>output.err &&
--	test_cmp expected output.err
-+	if test_have_prereq REFFILES ; then
-+		test_cmp expected output.err
-+	fi
- '
- 
- test_expect_success 'existing old value blocks indirect no-deref create' '
-@@ -451,7 +475,9 @@ test_expect_success 'existing old value blocks indirect no-deref create' '
- 	EOF
- 	printf "%s\n" "option no-deref" "create $prefix/symref $E" |
- 	test_must_fail git update-ref --stdin 2>output.err &&
--	test_cmp expected output.err
-+	if test_have_prereq REFFILES ; then
-+		test_cmp expected output.err
-+	fi
- '
- 
- test_expect_success 'incorrect old value blocks indirect no-deref delete' '
-@@ -463,10 +489,12 @@ test_expect_success 'incorrect old value blocks indirect no-deref delete' '
- 	EOF
- 	printf "%s\n" "option no-deref" "delete $prefix/symref $D" |
- 	test_must_fail git update-ref --stdin 2>output.err &&
--	test_cmp expected output.err
-+	if test_have_prereq REFFILES ; then
-+		test_cmp expected output.err
-+	fi
- '
- 
--test_expect_success 'non-empty directory blocks create' '
-+test_expect_success REFFILES 'non-empty directory blocks create' '
- 	prefix=refs/ne-create &&
- 	mkdir -p .git/$prefix/foo/bar &&
- 	: >.git/$prefix/foo/bar/baz.lock &&
-@@ -485,7 +513,7 @@ test_expect_success 'non-empty directory blocks create' '
- 	test_cmp expected output.err
- '
- 
--test_expect_success 'broken reference blocks create' '
-+test_expect_success REFFILES 'broken reference blocks create' '
- 	prefix=refs/broken-create &&
- 	mkdir -p .git/$prefix &&
- 	echo "gobbledigook" >.git/$prefix/foo &&
-@@ -504,7 +532,7 @@ test_expect_success 'broken reference blocks create' '
- 	test_cmp expected output.err
- '
- 
--test_expect_success 'non-empty directory blocks indirect create' '
-+test_expect_success REFFILES 'non-empty directory blocks indirect create' '
- 	prefix=refs/ne-indirect-create &&
- 	git symbolic-ref $prefix/symref $prefix/foo &&
- 	mkdir -p .git/$prefix/foo/bar &&
-@@ -524,7 +552,7 @@ test_expect_success 'non-empty directory blocks indirect create' '
- 	test_cmp expected output.err
- '
- 
--test_expect_success 'broken reference blocks indirect create' '
-+test_expect_success REFFILES 'broken reference blocks indirect create' '
- 	prefix=refs/broken-indirect-create &&
- 	git symbolic-ref $prefix/symref $prefix/foo &&
- 	echo "gobbledigook" >.git/$prefix/foo &&
-@@ -543,7 +571,7 @@ test_expect_success 'broken reference blocks indirect create' '
- 	test_cmp expected output.err
- '
- 
--test_expect_success 'no bogus intermediate values during delete' '
-+test_expect_success REFFILES 'no bogus intermediate values during delete' '
- 	prefix=refs/slow-transaction &&
- 	# Set up a reference with differing loose and packed versions:
- 	git update-ref $prefix/foo $C &&
-@@ -600,7 +628,7 @@ test_expect_success 'no bogus intermediate values during delete' '
- 	test_must_fail git rev-parse --verify --quiet $prefix/foo
- '
- 
--test_expect_success 'delete fails cleanly if packed-refs file is locked' '
-+test_expect_success REFFILES 'delete fails cleanly if packed-refs file is locked' '
- 	prefix=refs/locked-packed-refs &&
- 	# Set up a reference with differing loose and packed versions:
- 	git update-ref $prefix/foo $C &&
-@@ -616,7 +644,7 @@ test_expect_success 'delete fails cleanly if packed-refs file is locked' '
- 	test_cmp unchanged actual
- '
- 
--test_expect_success 'delete fails cleanly if packed-refs.new write fails' '
-+test_expect_success REFFILES 'delete fails cleanly if packed-refs.new write fails' '
- 	# Setup and expectations are similar to the test above.
- 	prefix=refs/failed-packed-refs &&
- 	git update-ref $prefix/foo $C &&
--- 
-gitgitgadget
+Changes compared to v4:
+
+    - I'm now explicitly passing `strlen(v0)` to
+      `type_from_string_gently()` to be prepared for the future
+      semantics change here.
+
+    - The error message printed in case the user passes in invalid
+      object type to `--filter=3Dobject:type=3D` now prints the wrong
+      value passed by the user.
+
+    - Fixed missing header in list-objects-filter-options.h.
+
+    - Tests now use test_create_repo and test_commit.
+
+    - Removed a needless subshell in the tests.
+
+I hope that this catches all feedback and that I didn't misunderstand or
+miss something. If I did, please give me a shout!
+
+Patrick
+
+Patrick Steinhardt (8):
+  uploadpack.txt: document implication of `uploadpackfilter.allow`
+  revision: mark commit parents as NOT_USER_GIVEN
+  list-objects: move tag processing into its own function
+  list-objects: support filtering by tag and commit
+  list-objects: implement object type filter
+  pack-bitmap: implement object type filter
+  pack-bitmap: implement combined filter
+  rev-list: allow filtering of provided items
+
+ Documentation/config/uploadpack.txt |   9 ++-
+ Documentation/rev-list-options.txt  |   8 ++
+ builtin/pack-objects.c              |   2 +-
+ builtin/rev-list.c                  |  36 ++++++---
+ list-objects-filter-options.c       |  15 ++++
+ list-objects-filter-options.h       |   3 +
+ list-objects-filter.c               | 116 ++++++++++++++++++++++++++++
+ list-objects-filter.h               |   2 +
+ list-objects.c                      |  30 ++++++-
+ pack-bitmap.c                       |  45 +++++++++--
+ pack-bitmap.h                       |   3 +-
+ reachable.c                         |   2 +-
+ revision.c                          |   4 +-
+ revision.h                          |   3 -
+ t/t6112-rev-list-filters-objects.sh |  72 +++++++++++++++++
+ t/t6113-rev-list-bitmap-filters.sh  |  68 +++++++++++++++-
+ 16 files changed, 388 insertions(+), 30 deletions(-)
+
+Range-diff against v4:
+1:  f80b9570d4 =3D 1:  bcc81336b1 uploadpack.txt: document implication of `=
+uploadpackfilter.allow`
+2:  46c1952405 =3D 2:  ffe8e2bf73 revision: mark commit parents as NOT_USER=
+_GIVEN
+3:  3d792f6339 =3D 3:  21d7f06d0a list-objects: move tag processing into it=
+s own function
+4:  674da0f9ac =3D 4:  b5d6ab6b4a list-objects: support filtering by tag an=
+d commit
+5:  d22a5fd37d ! 5:  f462745290 list-objects: implement object type filter
+    @@ list-objects-filter-options.c: static int gently_parse_list_objects_=
+filter(
+      		return 1;
+     =20
+     +	} else if (skip_prefix(arg, "object:type=3D", &v0)) {
+    -+		int type =3D type_from_string_gently(v0, -1, 1);
+    ++		int type =3D type_from_string_gently(v0, strlen(v0), 1);
+     +		if (type < 0) {
+    -+			strbuf_addstr(errbuf, _("expected 'object:type=3D<type>'"));
+    ++			strbuf_addf(errbuf, _("'%s' for 'object:type=3D<type>' is"
+    ++					      "not a valid object type"), v0);
+     +			return 1;
+     +		}
+     +
+    @@ list-objects-filter-options.c: static int gently_parse_list_objects_=
+filter(
+     =20
+    =20
+      ## list-objects-filter-options.h ##
+    +@@
+    + #ifndef LIST_OBJECTS_FILTER_OPTIONS_H
+    + #define LIST_OBJECTS_FILTER_OPTIONS_H
+    +=20
+    ++#include "cache.h"
+    + #include "parse-options.h"
+    + #include "string-list.h"
+    +=20
+     @@ list-objects-filter-options.h: enum list_objects_filter_choice {
+      	LOFC_BLOB_LIMIT,
+      	LOFC_TREE_DEPTH,
+    @@ t/t6112-rev-list-filters-objects.sh: test_expect_success 'verify blo=
+b:limit=3D1m'
+     +# Test object:type=3D<type> filter.
+     +
+     +test_expect_success 'setup object-type' '
+    -+	git init object-type &&
+    -+	echo contents >object-type/blob &&
+    -+	git -C object-type add blob &&
+    -+	git -C object-type commit -m commit-message &&
+    ++	test_create_repo object-type &&
+    ++	test_commit --no-tag -C object-type message blob &&
+     +	git -C object-type tag tag -m tag-message
+     +'
+     +
+    @@ t/t6112-rev-list-filters-objects.sh: test_expect_success 'verify blo=
+b:limit=3D1m'
+     +'
+     +
+     +test_expect_success 'verify object:type=3Dblob prints blob and commit=
+' '
+    -+	(
+    -+		git -C object-type rev-parse HEAD &&
+    -+		printf "%s blob\n" $(git -C object-type rev-parse HEAD:blob)
+    -+	) >expected &&
+    ++	git -C object-type rev-parse HEAD >expected &&
+    ++	printf "%s blob\n" $(git -C object-type rev-parse HEAD:blob) >>expec=
+ted &&
+     +	git -C object-type rev-list --objects --filter=3Dobject:type=3Dblob =
+HEAD >actual &&
+     +	test_cmp expected actual
+     +'
+6:  17c9f66bbc =3D 6:  90c80c1efa pack-bitmap: implement object type filter
+7:  759ac54bb2 =3D 7:  9726e69861 pack-bitmap: implement combined filter
+8:  c779d222cf ! 8:  fce3551e48 rev-list: allow filtering of provided items
+    @@ pack-bitmap.c: struct bitmap_index *prepare_bitmap_walk(struct rev_i=
+nfo *revs,
+    =20
+      ## pack-bitmap.h ##
+     @@ pack-bitmap.h: void traverse_bitmap_commit_list(struct bitmap_index=
+ *,
+    - 				 show_reachable_fn show_reachable);
+      void test_bitmap_walk(struct rev_info *revs);
+    + int test_bitmap_commits(struct repository *r);
+      struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
+     -					 struct list_objects_filter_options *filter);
+     +					 struct list_objects_filter_options *filter,
+--=20
+2.31.1
+
+
+--6qrewkQwpl5rv/mq
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmB9bZcACgkQVbJhu7ck
+PpQVERAAraNJIBMY+bWSZvzFMuBV1+GT/kB/4mE8DSev78bAnjfJwUlf71sZC0Yq
+CUXZ1PGitDWOoXPVdUSL2c/QnQ1iGe8nQuFmBovbuM0viVOU+NquaGdlYAwJ1N4t
+TzWzH/iTApdMPh9uNk/N0MdVrJylvORATvG07PMrA+UlQmYj31wTLk1a0wqjUnt3
+5gU0/2R+Zzh03i0ov5+E02ld7OasDfiZu2WJBzXWpePe86gKnXpaM2hrQF7svE0c
+29wkfofHXNLmc02ml9+SqgTTCV8B9Kb5elB6k3zhyZu4wFCSjqBupj7yF2NqJL25
+9+mz5m2lXBvTI2em65EYjnfNO6SijgH0ZAb4X5hC8mH2zmMChXRO8ZTjKjUyYLvN
+pze07D7/Bm7HwbY3/6gfuunmBuJ0bXqGlfO8rZgYbJL+a6ejaauLnYF1jhmKjpbi
+rOQtNobyCabLZnVXzCxUez1atBq1DUmZbZm26EhOd/3f4VCXMYdl0yTNAArdJwaA
+iL4Qeet1qJ09To0WzfxfYP1aPlV71luWy9RNGqxFpxmbCKfaJlj7Aq8kQbXVxz6N
+A43s2kcvLi3HTMry5lx68DJgtbH6ebGKBmbsg7u6USeg19+sy//Y5vaNkUMYaomf
+4y1ZyL95vQzyhbS/CFK0c/E1n/Ccr0OirQE99j2VPtKcAxbJCy0=
+=VdzL
+-----END PGP SIGNATURE-----
+
+--6qrewkQwpl5rv/mq--
