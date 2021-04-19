@@ -2,114 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7ED1C433B4
-	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 22:00:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FDA1C433ED
+	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 22:34:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9713760E0C
-	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 22:00:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0093161107
+	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 22:34:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232478AbhDSWAu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Apr 2021 18:00:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32920 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232239AbhDSWAr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Apr 2021 18:00:47 -0400
-Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28AFAC06174A
-        for <git@vger.kernel.org>; Mon, 19 Apr 2021 15:00:16 -0700 (PDT)
-Received: by mail-qt1-x82b.google.com with SMTP id u8so27268451qtq.12
-        for <git@vger.kernel.org>; Mon, 19 Apr 2021 15:00:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=YcsYkm76s5WmBYZMiY//fz4h+cC0zRFCi0yvvoNkEWo=;
-        b=XuMQSdx6LcMdcrajGiCfTrkM7J1bAtymu0O2nUSimllDS7obj/P9mruht5wW1DlHCv
-         RqFF5VcvVWeN3no3Y4uApZFRGc8Odiq7e3rVUX5hdTxCtKWaRnc4Fusn5dWUxoEjd6hT
-         doAvBspSdAEWelZan/daytIAqZH8otnShYrBo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to;
-        bh=YcsYkm76s5WmBYZMiY//fz4h+cC0zRFCi0yvvoNkEWo=;
-        b=movx6amTAxpQP9iqlli4LxrHe31xanQE/YThA92LKM9YHlzrh4pFGmJzNfGxA/5eWK
-         oZZKa9/ceKDWbg1HhX4ROkMMFo2tQTjcwY6vpsmPm5ox+IS1szLY6wnbECKS5CA+bvPc
-         On9ElHR6aKlzPdIsQD9ghLBJ02BovLS+kB4lLa+vZjGY75TpPvIGZJBzwfeoH2QrceLA
-         yHndZG39yVQ3a9vqFEdf8COWaMAdWlPiVKVkDmBgDKb3kQjjDoQXFZYD1RTruMHkpD/V
-         EKCGFiyt1YXIGsOV/XY7Cnp5CW53Vbd8x/HoJ0gvUxXhJzt4O+7fbZFYiuvCl5SRoNIC
-         FchQ==
-X-Gm-Message-State: AOAM532LazeFvniFv7RhZoXlGJ5fM89sWkuoi4fbEIK86l023v/s/m2T
-        GpcJSZHMVzosjyo7wryaUgi5Zw==
-X-Google-Smtp-Source: ABdhPJzWvAFAsvp49t2SWDoSPhejo6Tx09L6h3rDUvMh5bi1B5vctfHHL9LuewERzv9vNe7Y+PH8cA==
-X-Received: by 2002:ac8:7586:: with SMTP id s6mr13860203qtq.94.1618869615310;
-        Mon, 19 Apr 2021 15:00:15 -0700 (PDT)
-Received: from nitro.local ([89.36.78.230])
-        by smtp.gmail.com with ESMTPSA id r1sm10661824qtt.3.2021.04.19.15.00.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Apr 2021 15:00:14 -0700 (PDT)
-Date:   Mon, 19 Apr 2021 18:00:13 -0400
-From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+        id S230152AbhDSWe7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Apr 2021 18:34:59 -0400
+Received: from outgoing-auth-1.mit.edu ([18.9.28.11]:42673 "EHLO
+        outgoing.mit.edu" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S230029AbhDSWe5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Apr 2021 18:34:57 -0400
+Received: from cwcc.thunk.org (pool-72-74-133-215.bstnma.fios.verizon.net [72.74.133.215])
+        (authenticated bits=0)
+        (User authenticated as tytso@ATHENA.MIT.EDU)
+        by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 13JMYHrc003947
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 19 Apr 2021 18:34:18 -0400
+Received: by cwcc.thunk.org (Postfix, from userid 15806)
+        id C080B15C3B0D; Mon, 19 Apr 2021 18:34:17 -0400 (EDT)
+Date:   Mon, 19 Apr 2021 18:34:17 -0400
+From:   "Theodore Ts'o" <tytso@mit.edu>
 To:     Sebastian Schuberth <sschuberth@gmail.com>
-Cc:     Eric Wong <e@80x24.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
         patchwork@lists.ozlabs.org
 Subject: Re: Pain points in Git's patch flow
-Message-ID: <20210419220013.mguw4l5644r2c7gj@nitro.local>
-Mail-Followup-To: Sebastian Schuberth <sschuberth@gmail.com>,
-        Eric Wong <e@80x24.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>, patchwork@lists.ozlabs.org
+Message-ID: <YH4FaQRB/vWOI9aI@mit.edu>
 References: <YHaIBvl6Mf7ztJB3@google.com>
  <22a0a383-0ae1-c7d1-75f7-7dfdfe5fb504@gmail.com>
  <87fszn48lh.fsf@evledraar.gmail.com>
  <CAHGBnuOVmzzhgW6GanHBXNb22UW3P1m3i6PJnOUEhYPO76hH4g@mail.gmail.com>
- <20210419193600.GA19186@dcvr>
- <CAHGBnuOv5PvCcKqed-sTOs2uxyuhRS7RDF4XvzPu9oHpyroasQ@mail.gmail.com>
+ <87czuq4r4l.fsf@evledraar.gmail.com>
+ <CAHGBnuMedez4SE-4-JwCcR8k=_FRtjgBdBSEJqshQnVceCvGug@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAHGBnuOv5PvCcKqed-sTOs2uxyuhRS7RDF4XvzPu9oHpyroasQ@mail.gmail.com>
+In-Reply-To: <CAHGBnuMedez4SE-4-JwCcR8k=_FRtjgBdBSEJqshQnVceCvGug@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 19, 2021 at 09:49:46PM +0200, Sebastian Schuberth wrote:
-> > To watch a particular filename, the "dfn:" prefix may be used.
-> > The prefixes supported for a particular instance are documented in
-> > <https://public-inbox.org/git/_/text/help/>, and you
-> > can watch multiple files by combining with "OR".
+On Mon, Apr 19, 2021 at 09:23:14PM +0200, Sebastian Schuberth wrote:
+> > That's not inherent with the E-Mail workflow, e.g. Linus on the LKML
+> > also pulls from remotes.
 > 
-> Thanks for pointing out these interesting features, I wasn't aware of them.
+> Yeah, I was vaguely aware of this. To me, the question is why "also"?
+> Why not *only* pull from remotes? What's the feature gap email patches
+> try to close?
 
-Eric is being modest. There are very cool things brewing in public-inbox, like
-ability to create saved searches and follow threads you're interested in.
-E.g. you should be able to define something like "whenever someone mentions my
-favourite file, function name, or term, copy the entire thread into my inbox
-and continuously update it with new messages."
+Linus mostly pulls from git trees.  The e-mail workflow tends to be
+used by maintainers, who are reviewing submissions from their
+contributors.  People submitting changes relating to ext4 know to send
+it to the linux-ext4 mailing list; people who are submitting changes
+to the xfs file system send it to linux-xfs, etc.
 
-I'm hoping that this will help turn the concept of mailing lists on their head
--- instead of subscribing to a list, folks will instead subscribe to closely
-relevant saved searches across any number of remote and local sources.
-
-> > Email is already well-established with a good amount of small
-> > players, and plain-text is relatively inexpensive.  So it seems
-> > best to build off the only halfway-decentralized thing we have
-> > in wide use, rather than trying to start from scratch.
+> > It does ensure that e.g. if someone submits patches and then deletes
+> > their GitHub account the patches are still on the ML.
 > 
-> While I can understand that conservative approach for a community
-> around a tool as important as Git, I still fear that only ever
-> sticking to technology that is already in wide use will hinder to look
-> over the rim of the tea cup.
+> Ah, so it's basically just about a backup? That could also be solved
+> differently by forking / syncing Git repos.
 
-I view email as merely one way of exchanging RFC2822-formatted messages. 
-There are others and RFC2822 is robust enough to serve as a good standard
-base that allows both free-form and structured content, including mixed.
+The primary reason why the kernel uses mailing lists is because code
+reviews are fundamentally *discussions*, and people are used to using
+inboxes.  Sure, you can have a gerrit server send e-mail notifications
+about code reviews, but then you have to reply by going to the gerrit
+server (and gerrit really doesn't work well on slow network link such
+as those found on airplanes and cruise ships).  I'd say that most
+maintainers simply find e-mail reviews to simply be more *convenient*
+than using gerrit.  And over time, we've used other tools to track
+metadata over the status of a patch, such as patchwork, which are
+optional.
 
--K
+> > I just wanted to help bridge the gap between the distributed E-Mail v.s
+> > centralized website flow.
+> 
+> Maybe, instead of jumping into something like an email vs Gerrit
+> discussion, what would help is to get back one step and gather the
+> abstract requirements. Then, with a fresh and unbiased mind, look at
+> all the tools and infrastructure out there that are able to fulfill
+> the needs, and then make a choice.
+
+I'll note that the kernel folks have done this, starting with a 2019
+Kernel Summit talk at the Linux Plumbers Conference in Lisbon.  A
+description of the follow-up discussions from that talk can be found
+here:
+
+	https://lwn.net/Articles/803619/
+
+There was a collection of requirements on a thread on the newly
+created workflows@vger.kernel.org mailing list.  This has led to a
+number of proposals to make improvements to git, public-inbox,
+patchwork, the kernel.org infrastructures, etc., some of which were
+funded by the Linux Foundation last year.
+
+Konstantin Ryabitsev has been driving a large amount of that work, and
+one of the things that has come out of that is b4.  (Yes, that's a
+Star Trek reference...  https://memory-alpha.fandom.com/wiki/B-4)
+
+  https://people.kernel.org/monsieuricon/introducing-b4-and-patch-attestation
+
+Obviously, this isn't intended to be a solution for everyone, and I'm
+sure there are many projects that are happy forcing developers to use,
+say, Gerrit, which might be a better solution for them.
+
+However, there are a number of core kernel developers who are
+super-allergic to solutions which force users to use web interfaces.
+So solutions that have a combination of CLI's as well as web interface
+is probably going to be the right approach.  Things like pwclient and
+b4 are exciting starting points for improved kernel workflows.
+
+Of course, we've gone a bit farther afield from the original question
+which is what should git's development workflows should be.  Given
+that git is using some of the kernel.org infrastructures, certainly
+some of the kernel workflow tools are options for the git development
+community to consider.
+
+One of the advantages of the kernel workflows model is that we don't
+force users to use github or gitlab or gerrit, without having to make
+a global decision for the entire community.  For example, if some
+developers want to start using b4 to download patch series for git,
+they could start doing that today.
+
+Cheers,
+
+						- Ted
