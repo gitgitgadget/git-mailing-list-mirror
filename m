@@ -2,189 +2,253 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B49EC433ED
-	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 15:55:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 02449C433B4
+	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 17:11:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7E7F461285
-	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 15:55:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C3465611C9
+	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 17:11:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241684AbhDSP4D (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Apr 2021 11:56:03 -0400
-Received: from wout4-smtp.messagingengine.com ([64.147.123.20]:43875 "EHLO
-        wout4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S241544AbhDSPz7 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 19 Apr 2021 11:55:59 -0400
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-        by mailout.west.internal (Postfix) with ESMTP id 4F8B710D2;
-        Mon, 19 Apr 2021 11:55:29 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Mon, 19 Apr 2021 11:55:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
-        :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm3; bh=UpXBPpEkROKfBi1usARRSuAMxTM
-        SdZQMgMByA4PuPJE=; b=USWHz35q/tB/G9DgMGJJDrm62YtRDv20mjTK5a5vyNL
-        VnZEeq/qw1SrjXH6EtvNBddcL2e5UqNnhwgIguZSd2/s61ekqCd/NHM+G3ztEFIA
-        QPtLMIMue+6uP/flULzA+DyP+bBGWRLJf5CNE9zkbVkvTKPBlWfsSfjdvBAyZnis
-        4th5kCkXa3qedHE6lv3c0opZ2iHanJi66z9ztwveVSrPT6+mZkAme4qoKjVcg/lV
-        o2VWfja3Qj3mmMKWyGx8Q94r9ID/pBWNyVDU5Wr1UcGawSh4SqpCMASHkPorN7eq
-        nwdGNLdOxZhaDMcqfcWnN5VC/QzghSkAJiSQTScC0gA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=UpXBPp
-        EkROKfBi1usARRSuAMxTMSdZQMgMByA4PuPJE=; b=AOORil2vp9VHQ6RWi0NWoH
-        KhOyfcE5kkeAKDN9kbtl9ymaQccYGkky/RfSYm+wNBDCn8+C+bkTyBnFrGeIHEva
-        nGHgoKiywaW5lHe75jgdMndQe1vKKVB0lF4WvMclbnU2buAV6GRYKsoGr/yoVnoN
-        x04eLoFiJMLziKSM/CWh7tMbEEba4tieFXD6h6twYVHeX1VcPrgFaN1k5FvRMSqE
-        73lbi7XtxS+zfP6yUVNM1J5Gq6nznEz7QyRT0FeQqs9ff0ebNsT+tQwYAdqlF2Ar
-        eXWPjTGZRDUdW0HwT9SOXMpVwlwUovHN+QwP+dB+Sbw5WxUzlrOo2eyLUivgNkQA
-        ==
-X-ME-Sender: <xms:8Kd9YMtF15LT099NQHk_tKdS3VWEkThqOlN_IliteHOwkupbsYw2zA>
-    <xme:8Kd9YGJlK13pHYmCM5gTIewvsmYWXYTr0kfievLy1NykRCWM7v3pe81rt2r6y03wz
-    ribstcRTVdpsmsE0Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvddtgedgleeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
-    ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
-    dvjeektdfhhedvlefgtefgvdettdfhnecukfhppeejjedrudeluddrieekrdektdenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhm
-X-ME-Proxy: <xmx:8Kd9YLoZ1pRBVb9W34xS5DAGKC7NcQylBcpQd5VYUByvNu5Nt5bZhA>
-    <xmx:8Kd9YJUDhFs4kysXl2P9qc8bczYaaBqntJlab01_nYO58fjbRxfCJw>
-    <xmx:8Kd9YA2yQN2QVOoZtk80vMiB1Rbo6ygdUV6J2i1uVh6WG9YvXZmiSA>
-    <xmx:8Kd9YDKSZ_DhAqTD6dOg5HYpzHrVAm5K7ymRy13fkl-Iyw6v_9L-WQ>
-Received: from vm-mail.pks.im (x4dbf4450.dyn.telefonica.de [77.191.68.80])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 4F8A724005D;
-        Mon, 19 Apr 2021 11:55:28 -0400 (EDT)
-Received: from localhost (tanuki [10.192.0.23])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id ae84bfd6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Mon, 19 Apr 2021 15:55:27 +0000 (UTC)
-Date:   Mon, 19 Apr 2021 17:56:55 +0200
-From:   Patrick Steinhardt <ps@pks.im>
-To:     git@vger.kernel.org
-Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: [PATCH 2/2] git: support separate arg for `--config-env`'s value
-Message-ID: <d52db89bc2f40a9df5e9fafe4e1bb8c173a7f45f.1618847606.git.ps@pks.im>
-References: <cover.1618847606.git.ps@pks.im>
+        id S232748AbhDSRLd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Apr 2021 13:11:33 -0400
+Received: from mail-eopbgr60087.outbound.protection.outlook.com ([40.107.6.87]:4432
+        "EHLO EUR04-DB3-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S230127AbhDSRLc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Apr 2021 13:11:32 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=nIF6NLbDvdms26xdGtMIQ0EWDL9+xgK3csLRR8j7DRv6FUd+euB0N0b3jjX4ETz2U6cqQXaSocAyRiOawg9Wx6P/2B4ogA9EYjOCbELSpOtmboszOX6lISYF0FcNEmE5Fh/y52q0yei8qYsaHuDb7agWKCzxiVyKkRKvYzHWbm0Id3OI90DT0VJSKOflBCsOhI0n0icxCknoRdmpSXxEm3WZbiPUGpDZs85aeG7L2xaLcskFBXsCWbC5QwIlutVKengBtxWUosVivQMf4Y0TQHtCjkRh+hwMkGlBTyEvOyTlBCNgYVjHiH5KNGyOypzjk9MFPlEcLTTxZIDA7Dj+4A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=XniWzcvH4aqLbafMoOrZ5pplJUwUsWdJqLRTeuzIXhc=;
+ b=ffdW1g+Mfq48FjAjgwN7v+z0yNFpFQ7i3WiHUfc3ryXuXNPkhB0PzHiYudMvrkIe2t7/p/XZjfuddU6DSA4wmETwV9yMWPHNQJFPl9mYGvlsYJV7eaBmsh/5dIOQNqEhX8ULzCRsAR+xtGAAoJG86nDGOtQeLuv00t1a8xlx1baKk6LXnhhXfuaT2s4EVGEbWQM90A8ICdFgES9Lcb/XK7NjedOFLG7dDz1UBUnZ3pSmi6t6kER+54kwkyKLLeiWf7Fsa0qWnU3jpgpUlJ1r6I6XeRFBQ7HbcxEVJHEuEgtiOFsCTkMnl1uruCW1a0UovyRz684gqTM1iZjJdiTVfA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=fi.abb.com; dmarc=pass action=none header.from=fi.abb.com;
+ dkim=pass header.d=fi.abb.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fi.abb.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=XniWzcvH4aqLbafMoOrZ5pplJUwUsWdJqLRTeuzIXhc=;
+ b=k0lJWhIpY25UVgbFuvN8oUFFnV36MZt5/JF2rrPbmn37KII1TRNjLAYoFlHquwXrOBvAGFAIPRbOUvopKWIc68jvPZIIz/fv8Pwi7EPbvDxNVnmnQWZZOZKucrtnqBuDaqlm9yOgVcSPraY/SVxLysvYULpQ7vBHjuWl4crhbSXduT38TUN7cagPsjJc2SqrbJRitcGcPlL5841Y6QPd55ttcdVK0XnMkwIod1uJ4lOInFwlTnsSmwPvcH5E/z+wfd++4zG0GJK93TQsVB9ZBLQ7Im0hM4gk04XS/qylnUso/cj+RGslbYJTbF303Uen4GkNzVQLga/HdNMrA+97uA==
+Received: from AM6PR06MB4263.eurprd06.prod.outlook.com (2603:10a6:20b:1e::31)
+ by AS8PR06MB7895.eurprd06.prod.outlook.com (2603:10a6:20b:3cc::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4042.16; Mon, 19 Apr
+ 2021 17:11:01 +0000
+Received: from AM6PR06MB4263.eurprd06.prod.outlook.com
+ ([fe80::7506:a4c7:c725:5bce]) by AM6PR06MB4263.eurprd06.prod.outlook.com
+ ([fe80::7506:a4c7:c725:5bce%5]) with mapi id 15.20.4020.022; Mon, 19 Apr 2021
+ 17:11:01 +0000
+From:   Joonas Harjumaki <joonas.harjumaki@fi.abb.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Git push --mirror hangs
+Thread-Topic: Git push --mirror hangs
+Thread-Index: Adc1PsxdsJlWDxYBRYq97Jz1MhOtPA==
+Date:   Mon, 19 Apr 2021 17:11:01 +0000
+Message-ID: <AM6PR06MB4263DD69639AFD60663D1DD6A7499@AM6PR06MB4263.eurprd06.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: vger.kernel.org; dkim=none (message not signed)
+ header.d=none;vger.kernel.org; dmarc=none action=none header.from=fi.abb.com;
+x-originating-ip: [88.114.213.40]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 387fd4e7-7c3a-4aca-8cc9-08d903561b87
+x-ms-traffictypediagnostic: AS8PR06MB7895:
+x-microsoft-antispam-prvs: <AS8PR06MB78959452A5AF615584398A8BA7499@AS8PR06MB7895.eurprd06.prod.outlook.com>
+x-abb-o365-outbound: ABBOUTBOUND1
+x-ms-oob-tlc-oobclassifiers: OLM:1122;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: 9KLo66PBVVZULzmz6hBoTMNWpWGyXAZeoYvKwcpJE+6+PtsaP8u89anbUo7lXaRLoad4o1vpymMfaF2P76Byrq11fagGwFFJzQo7zFGZxpf4gOmQ9v3Oro0ivgbeDLUnKfg8OA1jRAqqhbGEDRpzm8jhL+6Fs3syS4HjfX4Ee54kvRvAMFTHwST7R/duG1KJgREd3YfKh50r4Y+rH+34vztM4gLyEqANrx7caKLPQIuVycfgPNtHEMIe6lQ6DrbxpFePiDxZ+w5cbrqJl3mkQz5UMzG6xW8ijx8GQBchNoW7lqvm13KjXlRxWowhR/K/rimZr3wQfhVXGdnLLE8C7K8mIIxBfZ0+XjbO+pfY+F1KNpzF3zuWCwNXlpu+Umy1KL1hrFwMyuejR81YgaFuH0JhmjdKKn/eBDDZ3JutpMpwvrrNjiuNmKKTzw6uZ8Iq0GAiue0KICtSiuQVBrt/dSvCSJlBk4QBzAYBZ5pmnnk2IDZNiJXef8gPF/Gte+kZXw611IT/RqMdfmQFoLsVMcCT2/N2iaNk/8udzJ1H+pYMXL91BZxEdZJQLpfQhmGPEwiIAjO1asAAL74cwU+6sGqKGLPGW2BJlFI1V1LK6JKuPQEEOTaPP9L/0LjGDUtJifxzo+g8le6CTpgiyJsLSK71T8OZ9QUki0y+hGbSpReecrgjSStNbsGqpt/vzjTi
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM6PR06MB4263.eurprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(346002)(376002)(366004)(136003)(396003)(39860400002)(66574015)(6916009)(76116006)(52536014)(7696005)(83380400001)(2906002)(122000001)(38100700002)(316002)(26005)(5660300002)(44832011)(966005)(8936002)(9686003)(66556008)(64756008)(66476007)(186003)(478600001)(66446008)(86362001)(33656002)(66946007)(6506007)(55016002)(71200400001)(8676002);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata: =?iso-8859-1?Q?2bRSBcYzB1Sps4ReVHc74iBctCWrTf6SA5qrPOPQQardqhISRpNVXOu1Nf?=
+ =?iso-8859-1?Q?N60t42eai+UB7VHDUpiY6eWTVa+NqJ+knAsuu0pkmv6QIV8NawKsLuMJfr?=
+ =?iso-8859-1?Q?oGCwYpEhw9KYMdJ0txPy/lMDJdmycvowpIuxlHTdBawRwykOtNqH9aYSrE?=
+ =?iso-8859-1?Q?JxKTN4FBDnY4YgsBpwGEucMZn83qmgRXmqUGnaAGjW2DMRVA6bh6ozMpEB?=
+ =?iso-8859-1?Q?dkI0N4wZc9dbuPkti9+Mb7KTVob7/+EYGXI8k4YKuugsRGDoJJ152eds4B?=
+ =?iso-8859-1?Q?IogEvq8kRlwmvHh7MumI1GusdOWEzW8zAsdMA4TAo7VSqIupaXVaPJFWm0?=
+ =?iso-8859-1?Q?dLdnZaFo3lF91HmTsWxEzjzJdmbCfSSoGI0CLY9iewkEhQLzUrWZlDIpm1?=
+ =?iso-8859-1?Q?ny5FoG0cGxeCWCoLlpKOb9OufHhwy6HPlZxDzv/6eyVZKOZCCWThBF4xcZ?=
+ =?iso-8859-1?Q?IiWxDAUlgf9vlVFNQ4JYxRt7cOiRORE8nlt7vWsffWEU1Ck2BIjIFfEMlS?=
+ =?iso-8859-1?Q?e/FXCTiKcmj8OgjADswAEQlnCC2Ejf85Razky5EANeOjndpb/v7losTcVU?=
+ =?iso-8859-1?Q?VfEtE5eFqPQQ3s0N56kC3hS+4/iKaRCttPhkHZyj9PkXuX2I7m71R/sJ2E?=
+ =?iso-8859-1?Q?sS3VsQTVTfU4CPb12RmNzf0Y/qhEu/WBP/Kh4d9TjZhU44zsccLho0JvKY?=
+ =?iso-8859-1?Q?78ZbW2a0m+YCeq/LPJDJDeFj8kPIXi6Tf+4TofiXl6tgdxAwmHzg5XVD6+?=
+ =?iso-8859-1?Q?zWx5jAjSlElwzbeoEDW3rB8pmuXe8yIvj6x1Q/SDoyInBcAzuClO1LsqGq?=
+ =?iso-8859-1?Q?gOS3IiBd2vIosiR2l60FfYOJtDcyt0WaxYr3aHr1tCWAqG7IoghWynTXZ3?=
+ =?iso-8859-1?Q?f53igodbiK7OQSNLdp6U+vYKY6nzU/7x1kPdEacFzm07pG1YekdvduArTJ?=
+ =?iso-8859-1?Q?gcf4fDJS2rY35NIk5i9irGdurnN0pYwQVorCObJIPP0njkRLvkHnFhJY8a?=
+ =?iso-8859-1?Q?JteKW8V5sKj857H69IuIQLw47od2itgc4fsDcdCZH5DA5fV8E/Hc9/LxRe?=
+ =?iso-8859-1?Q?fkjM1k9nMm4ZVsvmK+/Wyuft5cgh6Kz+Sv39U7SSw8fgixTgpI+uC99ztX?=
+ =?iso-8859-1?Q?Yj0CVt4M/gNytt612x61V9GAqwjT0OM1W3Oq+G+xKHSZzgc9d/BxntYFVi?=
+ =?iso-8859-1?Q?zVuvecz7LaUDukv/cR+CdDZJtaE6mt7brBxusjsFZq4HFbNyxwXQWpfHe/?=
+ =?iso-8859-1?Q?Pk037VZiW5rli5p9IJgQKH9xSAXVz3UR11MdsBV9nGC0hn/dVrYJbJ98KF?=
+ =?iso-8859-1?Q?7rbISBD174TMADPtQVIkdxenWuLl6gzN2ok2LKBKbubImPgbFSQ0kHSY3p?=
+ =?iso-8859-1?Q?5wcBtHX0J5?=
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="rhTDc7k3lKkukEKC"
-Content-Disposition: inline
-In-Reply-To: <cover.1618847606.git.ps@pks.im>
+X-OriginatorOrg: fi.abb.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: AM6PR06MB4263.eurprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 387fd4e7-7c3a-4aca-8cc9-08d903561b87
+X-MS-Exchange-CrossTenant-originalarrivaltime: 19 Apr 2021 17:11:01.2485
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 372ee9e0-9ce0-4033-a64a-c07073a91ecd
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: T/ndVi+oi2okfH8IXqMXPJYzmY8SJTNGQ64/KNjGYLOg0Lh0YxrwDZKyK7jlGAstSzs2EYnVSrqKY3htobPwRqMYRQ9fzJjfFdG7wQvzseI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR06MB7895
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+I'm trying to "git push --mirror https://[project]@dev.azure.com" to Azure =
+DevOps repository. The size-pack is 3.70 GiB. I have git version 2.31.1 fro=
+m http://ppa.launchpad.net/git-core/ppa/ubuntu on Ubuntu 20.04.
+iotop or top are not reporting any load.
 
---rhTDc7k3lKkukEKC
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+iotop:
+Total DISK READ:         0.00 B/s | Total DISK WRITE:         0.00 B/s
+Current DISK READ:       0.00 B/s | Current DISK WRITE:       0.00 B/s
 
-While not documented as such, many of the top-level options like
-`--git-dir` and `--work-tree` support two syntaxes: they accept both an
-equals sign between option and its value, and they do support option and
-value as two separate arguments. The recently added `--config-env`
-option only supports the syntax with an equals sign.
-
-Mitigate this inconsistency by accepting both syntaxes and add tests to
-verify both work.
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- git.c             |  8 ++++++++
- t/t1300-config.sh | 15 ++++++++++++++-
- 2 files changed, 22 insertions(+), 1 deletion(-)
-
-diff --git a/git.c b/git.c
-index b53e665671..ad365c05c7 100644
---- a/git.c
-+++ b/git.c
-@@ -255,6 +255,14 @@ static int handle_options(const char ***argv, int *arg=
-c, int *envchanged)
- 			git_config_push_parameter((*argv)[1]);
- 			(*argv)++;
- 			(*argc)--;
-+		} else if (!strcmp(cmd, "--config-env")) {
-+			if (*argc < 2) {
-+				fprintf(stderr, _("no config key given for --config-env\n" ));
-+				usage(git_usage_string);
-+			}
-+			git_config_push_env((*argv)[1]);
-+			(*argv)++;
-+			(*argc)--;
- 		} else if (skip_prefix(cmd, "--config-env=3D", &cmd)) {
- 			git_config_push_env(cmd);
- 		} else if (!strcmp(cmd, "--literal-pathspecs")) {
-diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-index e0dd5d65ce..18803f9953 100755
---- a/t/t1300-config.sh
-+++ b/t/t1300-config.sh
-@@ -1374,16 +1374,29 @@ test_expect_success 'git --config-env=3Dkey=3Denvva=
-r support' '
- 	cat >expect <<-\EOF &&
- 	value
- 	value
-+	value
-+	value
-+	false
- 	false
- 	EOF
- 	{
- 		ENVVAR=3Dvalue git --config-env=3Dcore.name=3DENVVAR config core.name &&
-+		ENVVAR=3Dvalue git --config-env core.name=3DENVVAR config core.name &&
- 		ENVVAR=3Dvalue git --config-env=3Dfoo.CamelCase=3DENVVAR config foo.came=
-lcase &&
--		ENVVAR=3D git --config-env=3Dfoo.flag=3DENVVAR config --bool foo.flag
-+		ENVVAR=3Dvalue git --config-env foo.CamelCase=3DENVVAR config foo.camelc=
-ase &&
-+		ENVVAR=3D git --config-env=3Dfoo.flag=3DENVVAR config --bool foo.flag &&
-+		ENVVAR=3D git --config-env foo.flag=3DENVVAR config --bool foo.flag
- 	} >actual &&
- 	test_cmp expect actual
- '
+top:
+top - 19:58:05 up 12:33,  1 user,  load average: 0,18, 0,27, 0,22
+Tasks: 285 total,   1 running, 284 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  1,4 us,  1,4 sy,  0,0 ni, 97,1 id,  0,0 wa,  0,0 hi,  0,0 si,  0,=
+0 st
+MiB Mem :   9727,7 total,   1069,0 free,   1123,0 used,   7535,8 buff/cache
+MiB Swap:   2048,0 total,    854,2 free,   1193,8 used.   8195,3 avail Mem=
 =20
-+test_expect_success 'git --config-env with missing value' '
-+	test_must_fail env ENVVAR=3Dvalue git --config-env 2>error &&
-+	test_i18ngrep "no config key given for --config-env" error &&
-+	test_must_fail env ENVVAR=3Dvalue git --config-env config core.name 2>err=
-or &&
-+	test_i18ngrep "invalid config format: config" error
-+'
-+
- test_expect_success 'git --config-env fails with invalid parameters' '
- 	test_must_fail git --config-env=3Dfoo.flag config --bool foo.flag 2>error=
- &&
- 	test_i18ngrep "invalid config format: foo.flag" error &&
---=20
-2.31.1
 
+    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMM=
+AND                                                                        =
+                                                    =20
+  84514 ssc600    20   0   14528   4116   3308 R   6,2   0,0   0:00.01 top =
+                                                                           =
+                                                    =20
+      1 root      20   0  169028  13284   8504 S   0,0   0,1   0:21.42 syst=
+emd                                                                        =
+                                                    =20
+      2 root      20   0       0      0      0 S   0,0   0,0   0:00.02 kthr=
+eadd                                                                       =
+                                                    =20
+      3 root       0 -20       0      0      0 I   0,0   0,0   0:00.00 rcu_=
+gp                                                                         =
+                                                    =20
+      4 root       0 -20       0      0      0 I   0,0   0,0   0:00.00 rcu_=
+par_gp                                                                     =
+                                                    =20
+      6 root       0 -20       0      0      0 I   0,0   0,0   0:00.00 kwor=
+ker/0:0H-kblockd                                                           =
+                                                    =20
+      9 root       0 -20       0      0      0 I   0,0   0,0   0:00.00 mm_p=
+ercpu_wq                                                                   =
+                                                    =20
+     10 root      20   0       0      0      0 S   0,0   0,0   0:42.87 ksof=
+tirqd/0                                                                    =
+                                                    =20
+     11 root      20   0       0      0      0 I   0,0   0,0   0:12.28 rcu_=
+preempt                                                                    =
+                                                    =20
+     12 root      rt   0       0      0      0 S   0,0   0,0   0:00.30 migr=
+ation/0                                                                    =
+                                                    =20
+     13 root     -51   0       0      0      0 S   0,0   0,0   0:00.00 idle=
+_inject/0                                                                  =
+                                                    =20
+     14 root      20   0       0      0      0 S   0,0   0,0   0:00.00 cpuh=
+p/0                                                                        =
+                                                    =20
+     15 root      20   0       0      0      0 S   0,0   0,0   0:00.00 cpuh=
+p/1 =20
 
---rhTDc7k3lKkukEKC
-Content-Type: application/pgp-signature; name="signature.asc"
+Git has been stuck for an hour and half after printing these:
+Writing objects: 100% (116519/116519), 3.69 GiB | 2.99 MiB/s, done.
+Total 116519 (delta 74981), reused 116519 (delta 74981), pack-reused 0
+18:42:45.650572 trace.c:487             performance: 1266.567544063 s: git =
+command: /usr/lib/git-core/git pack-objects --all-progress-implied --revs -=
+-stdout --thin --progress
+18:42:45.743254 pkt-line.c:80           packet:          git> 0000
+18:42:46.465637 http.c:703              <=3D Recv header, 0000000013 bytes =
+(0x0000000d)
+18:42:46.465693 http.c:715              <=3D Recv header: HTTP/2 200
+18:42:46.465707 http.c:703              <=3D Recv header, 0000000024 bytes =
+(0x00000018)
+18:42:46.465716 http.c:715              <=3D Recv header: cache-control: pr=
+ivate
+18:42:46.465727 http.c:703              <=3D Recv header, 0000000053 bytes =
+(0x00000035)
+18:42:46.465734 http.c:715              <=3D Recv header: content-type: app=
+lication/x-git-receive-pack-result
+18:42:46.465744 http.c:703              <=3D Recv header, 0000000124 bytes =
+(0x0000007c)
+18:42:46.465752 http.c:715              <=3D Recv header: p3p: CP=3D"CAO DS=
+P COR ADMa DEV CONo TELo CUR PSA PSD TAI IVDo OUR SAMi BUS DEM NAV STA UNI =
+COM INT PHY ONL FIN PUR LOC CNT"
+18:42:46.465763 http.c:703              <=3D Recv header, 0000000055 bytes =
+(0x00000037)
+18:42:46.465770 http.c:715              <=3D Recv header: x-tfs-processid: =
+[stripped]
+18:42:46.465778 http.c:703              <=3D Recv header, 0000000064 bytes =
+(0x00000040)
+18:42:46.465785 http.c:715              <=3D Recv header: strict-transport-=
+security: max-age=3D31536000; includeSubDomains
+18:42:46.465795 http.c:703              <=3D Recv header, 0000000050 bytes =
+(0x00000032)
+18:42:46.465801 http.c:715              <=3D Recv header: activityid: [stri=
+pped]
+18:42:46.465810 http.c:703              <=3D Recv header, 0000000053 bytes =
+(0x00000035)
+18:42:46.465833 http.c:715              <=3D Recv header: x-tfs-session: [s=
+tripped]
+18:42:46.465842 http.c:703              <=3D Recv header, 0000000051 bytes =
+(0x00000033)
+18:42:46.465849 http.c:715              <=3D Recv header: x-vss-e2eid: [str=
+ipped]
+18:42:46.465858 http.c:703              <=3D Recv header, 0000000082 bytes =
+(0x00000052)
+18:42:46.465866 http.c:715              <=3D Recv header: x-vss-userdata: [=
+stripped]
+18:42:46.465899 http.c:703              <=3D Recv header, 0000000029 bytes =
+(0x0000001d)
+18:42:46.465910 http.c:715              <=3D Recv header: x-frame-options: =
+SAMEORIGIN
+18:42:46.465919 http.c:703              <=3D Recv header, 0000000068 bytes =
+(0x00000044)
+18:42:46.465926 http.c:715              <=3D Recv header: request-context: =
+[stripped]
+18:42:46.465936 http.c:703              <=3D Recv header, 0000000048 bytes =
+(0x00000030)
+18:42:46.465945 http.c:715              <=3D Recv header: access-control-ex=
+pose-headers: Request-Context
+18:42:46.465954 http.c:703              <=3D Recv header, 0000000033 bytes =
+(0x00000021)
+18:42:46.465961 http.c:715              <=3D Recv header: x-content-type-op=
+tions: nosniff
+18:42:46.465972 http.c:703              <=3D Recv header, 0000000104 bytes =
+(0x00000068)
+18:42:46.465980 http.c:715              <=3D Recv header: x-msedge-ref: [st=
+ripped]
+18:42:46.465990 http.c:703              <=3D Recv header, 0000000037 bytes =
+(0x00000025)
+18:42:46.465996 http.c:715              <=3D Recv header: date: Mon, 19 Apr=
+ 2021 15:42:45 GMT
+18:42:46.466009 http.c:703              <=3D Recv header, 0000000002 bytes =
+(0x00000002)
+18:42:46.466017 http.c:715              <=3D Recv header:
+18:42:46.466294 pkt-line.c:80           packet:     sideband< \2\15Analyzin=
+g objects... (41535/116519)
+remote:
 
------BEGIN PGP SIGNATURE-----
+Is this normal and I should just wait, or is there a bug in git or Azure?
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmB9qEYACgkQVbJhu7ck
-PpRYrg//RJcEE5hxlkMXog0Il8yAGlddtf/tRWNK/DVHJOi/JbuVZGIC8RzreH73
-yG9ffovzA+iTn2iIZyoODCG98vK226IRfx676EnhFpva4FSIKcYiwtFix4h9S89v
-uKSljz7ToMQk3eTd7Yak7fVSJf/+w4W9A36qCHGND7wUI8xmKeaho5YUdQnrOXff
-jF5EaLqyj4zWG4QJD1D45afR9fAG55qPJ1EvgoBmgzZVR9Gq9cyd87T/VUJkcRvX
-KP0tGReucJSsLFJanU5cfkLivwFXa4D+thOJ1EZKDRVifHcidXeZJTrqAvaVUZ5T
-su5eZjjpqULRpw19OQ3gRYRQCwqWMtIg+hmFQJIhx8CjgKO3adEpUWkwDXlhPbIi
-sAw/zqivLbfSM0evJwg1VoNDQHSLhkoji/hmnJcoisCrYpH1NCK5AxG65kGQwJgX
-ulhBo+lg16UbBIIVBaQSMoS0h5/EsQhQzxL1if95BGBy5V8X4l34Wo+LU+jM/K9S
-5JQFtJw1o6eh1z2ZMBLF7uFl4jqh/+4yYNYriPWXdpJFQpC7w42G6PW408RtaIC7
-S0hxLBbFQ8UP9w6xVEUFcmlzr3/p9gdiOXA5bjFWvJAL3e0KZw2H/Zd570dFl7+0
-BSFqoBm12gndatlQE1zDQq0SQygSdk69jDx76wWnU1pXgSNpHtY=
-=p4Qh
------END PGP SIGNATURE-----
-
---rhTDc7k3lKkukEKC--
+Joonas Harjum=E4ki
