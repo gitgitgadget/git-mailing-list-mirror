@@ -2,69 +2,69 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FAAEC433B4
-	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 19:53:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 15CBBC433ED
+	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 19:53:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E6D7D61354
-	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 19:53:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D0BFE61260
+	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 19:53:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237037AbhDSTyP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Apr 2021 15:54:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33496 "EHLO
+        id S241891AbhDSTyS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Apr 2021 15:54:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33506 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235026AbhDSTyO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Apr 2021 15:54:14 -0400
-Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24A3DC06174A
-        for <git@vger.kernel.org>; Mon, 19 Apr 2021 12:53:44 -0700 (PDT)
-Received: by mail-qk1-x72f.google.com with SMTP id y136so4996983qkb.1
-        for <git@vger.kernel.org>; Mon, 19 Apr 2021 12:53:44 -0700 (PDT)
+        with ESMTP id S235026AbhDSTyR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Apr 2021 15:54:17 -0400
+Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50B33C06174A
+        for <git@vger.kernel.org>; Mon, 19 Apr 2021 12:53:46 -0700 (PDT)
+Received: by mail-qk1-x735.google.com with SMTP id s5so28306634qkj.5
+        for <git@vger.kernel.org>; Mon, 19 Apr 2021 12:53:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp.br; s=usp-google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=qqG0Q3amPKEC67Mmlms+gzupkQLZ2giwnrr7Zm28Pvw=;
-        b=geO1xy6r2e2e9sIST20wYxJsIe6yAxiyTgg1OQBgOnhtHbNnb3vqQOOwpfjZLKeSZS
-         di7mN+555aaqdI6CufhedGl6XpyEIkKJs7bm45WHpE+dNnqK/NV4EUzZumasjVVG/OZ1
-         nmoPi3xNC/Pvz8yQANZ6EgLMQDw56Cf5R3N5+w/ucYGfU178Qo1xohr8/wuGmIkkaXUw
-         HjC5NJDJvP7dKZhz5rnT0c8TjZ5f3sOilXBZ8THTpFPjTGeCE5nLezaXv1Tx++e7Htdq
-         fOouPT7eIhLJVA2hmzZywaM0Rb7bj5uXgIGvWoP6odj3rw2bIStzOrwgZm1uX8jQwBpe
-         2HBQ==
+        bh=kiaXRHg92mj71jrMsvh824L/EZwZeBs5PTKYvISldZA=;
+        b=fT7C3aTMndRYHtb+KwbYcOgZK8XA55UwCSmpZSo4Rr+oD05spjkJ8wUvPE7zHn7QRJ
+         3hS703bOxBVJRWIFTcdkyU0N4XEJ4njHwHre4BlWx2zsKoP60VCNuwz2xaK08w0/Trto
+         zn/3yaeG3wqwS84EknR79JyIiAjj+eNkGZas5/vspDL44Nwnd2Q37hyFcwJYsopsDAZs
+         cipIVmD7RpUJvuIKm3JQNHZlYpovn2RNmt6qU1WWHmhpl1E4wYcImdRE3lnthPna56qy
+         t7x0Ec+KuKUE+XTMPbThrtESAqgunepO6gFw1jRNWv3W/h04bNUF5xl+cMo/nlevLRfD
+         +trQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=qqG0Q3amPKEC67Mmlms+gzupkQLZ2giwnrr7Zm28Pvw=;
-        b=pY/yoliHG+0E5mBosh5AHfhx5Bf8ou6+Moz20oeiQY9H0JTQBYvhpIqkoSiHKEqoO5
-         qY9uSBOEKjmlGpJK1K3pAqj4OgoOnUw31p7YigQYkhoXlvPC8u4prDeVw65Zj5+wYjcx
-         8ayI+PJUGnHObc4s3eI0+3mWywwlDFkXuQVA6YiGKt4S9aE8q9weslgQBpCIwxtRJOqK
-         FNqXnVDo6G2JF2S8hDkKAxB9oJ3oK63uMKwqWHSSxgQg0mQi09Z3KA6OdwtB1/tdY7D0
-         sy+SiTB9kXXBsbQLUvxRPm0mPSEiT1uWSGN5QGXtTHGMF4E7zFOLmGBYBcGG7Ytj5zej
-         FtgA==
-X-Gm-Message-State: AOAM531BGrtyjxR2PRY93PrQ2SonGCc3AdeS+XVzyn4e6gnbrWgM7WmB
-        7ciflsaxaVsrXl1jAOaITRtURQ==
-X-Google-Smtp-Source: ABdhPJzdAgSxMK2f0j4mml/nX0VF1bm51qBd38zG60kPqGsm5NqvAxh+JenzzsoKGUYxCwkyQs3eLw==
-X-Received: by 2002:a37:e315:: with SMTP id y21mr7621563qki.176.1618862023345;
-        Mon, 19 Apr 2021 12:53:43 -0700 (PDT)
+        bh=kiaXRHg92mj71jrMsvh824L/EZwZeBs5PTKYvISldZA=;
+        b=MMDiUKxqJuzp2tv4N0b2Cqjr0/DOUkJprplvzL1gtV1tcCpyz4mp5B5rjWuqObCrwT
+         LhnkCanmxzDqUghBFYnkH3pfuRHISfLUW+dSwvF331vHbyq8oPt2ZNqdvoTzoSPHvUQr
+         MkwZQwi3NErhtZEx085lCRXVcyZ3gl05UVJQw6tQAJYJHyjMmqSvh/csaA5ZD0i25I5G
+         VqJNheLhq/ihGLX2KNqwnOwWg9FbnTN7FRyVnTo42aoHSUkF50UM/LHdmk8Osr3q4law
+         iP4O7C5rXH4wUXU99Jp9HVTBLZlGdtZs+XdDTgMUn+rd+Yv+j9Cnpy4dzCPWuhZB28bJ
+         L8SA==
+X-Gm-Message-State: AOAM530U6ooDLez+vsccT3+BB+gf5VxHCGRrIfQPajqqxyvCR1IJ+GJL
+        ROrnY4Hi/6X03wZKfQcXOVg9uQ==
+X-Google-Smtp-Source: ABdhPJwmqNftgEbi9Fh7dGu+F7++At07AVeSxwsoHi717ey7VUMyj4oU0SNi6usD1t/XVPpXf2zTBQ==
+X-Received: by 2002:a37:7043:: with SMTP id l64mr13437997qkc.358.1618862025406;
+        Mon, 19 Apr 2021 12:53:45 -0700 (PDT)
 Received: from mango.meuintelbras.local ([177.32.118.149])
-        by smtp.gmail.com with ESMTPSA id h3sm4479987qka.122.2021.04.19.12.53.41
+        by smtp.gmail.com with ESMTPSA id h3sm4479987qka.122.2021.04.19.12.53.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Apr 2021 12:53:42 -0700 (PDT)
+        Mon, 19 Apr 2021 12:53:45 -0700 (PDT)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, christian.couder@gmail.com,
         git@jeffhostetler.com
-Subject: [PATCH v4 0/5] Parallel Checkout (part 2)
-Date:   Mon, 19 Apr 2021 16:53:30 -0300
-Message-Id: <cover.1618861380.git.matheus.bernardino@usp.br>
+Subject: [PATCH v4 1/5] unpack-trees: add basic support for parallel checkout
+Date:   Mon, 19 Apr 2021 16:53:31 -0300
+Message-Id: <7096822c143ed4aed66e811227740610f4d6ac8a.1618861380.git.matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.30.1
-In-Reply-To: <cover.1618790794.git.matheus.bernardino@usp.br>
-References: <cover.1618790794.git.matheus.bernardino@usp.br>
+In-Reply-To: <cover.1618861380.git.matheus.bernardino@usp.br>
+References: <cover.1618861380.git.matheus.bernardino@usp.br>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,109 +72,559 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This version is almost identical to v3, but the last patch incorporates
-the typo fixes and other rewording suggestions Christian made about the
-design doc on the last round.
+This new interface allows us to enqueue some of the entries being
+checked out to later uncompress them, apply in-process filters, and
+write out the files in parallel. For now, the parallel checkout
+machinery is enabled by default and there is no user configuration, but
+run_parallel_checkout() just writes the queued entries in sequence
+(without spawning additional workers). The next patch will actually
+implement the parallelism and, later, we will make it configurable.
 
-I decided to remove the sentence about step 3 dominating the execution
-time as that's not always the case on e.g. a non-local clone or
-sparse-checkout.
+Note that, to avoid potential data races, not all entries are eligible
+for parallel checkout. Also, paths that collide on disk (e.g.
+case-sensitive paths in case-insensitive file systems), are detected by
+the parallel checkout code and skipped, so that they can be safely
+sequentially handled later. The collision detection works like the
+following:
 
-Matheus Tavares (5):
-  unpack-trees: add basic support for parallel checkout
-  parallel-checkout: make it truly parallel
-  parallel-checkout: add configuration options
-  parallel-checkout: support progress displaying
-  parallel-checkout: add design documentation
+- If the collision was at basename (e.g. 'a/b' and 'a/B'), the framework
+  detects it by looking for EEXIST and EISDIR errors after an
+  open(O_CREAT | O_EXCL) failure.
 
- .gitignore                                    |   1 +
- Documentation/Makefile                        |   1 +
- Documentation/config/checkout.txt             |  21 +
- Documentation/technical/parallel-checkout.txt | 270 ++++++++
- Makefile                                      |   2 +
- builtin.h                                     |   1 +
- builtin/checkout--worker.c                    | 145 ++++
- entry.c                                       |  17 +-
- git.c                                         |   2 +
- parallel-checkout.c                           | 655 ++++++++++++++++++
- parallel-checkout.h                           | 111 +++
- unpack-trees.c                                |  19 +-
- 12 files changed, 1240 insertions(+), 5 deletions(-)
- create mode 100644 Documentation/technical/parallel-checkout.txt
- create mode 100644 builtin/checkout--worker.c
+- If the collision was at dirname (e.g. 'a/b' and 'A'), it is detected
+  at the has_dirs_only_path() check, which is done for the leading path
+  of each item in the parallel checkout queue.
+
+Both verifications rely on the fact that, before enqueueing an entry for
+parallel checkout, checkout_entry() makes sure that there is no file at
+the entry's path and that its leading components are all real
+directories. So, any later change in these conditions indicates that
+there was a collision (either between two parallel-eligible entries or
+between an eligible and an ineligible one).
+
+After all parallel-eligible entries have been processed, the collided
+(and thus, skipped) entries are sequentially fed to checkout_entry()
+again. This is similar to the way the current code deals with
+collisions, overwriting the previously checked out entries with the
+subsequent ones. The only difference is that, since we no longer create
+the files in the same order that they appear on index, we are not able
+to determine which of the colliding entries will survive on disk (for
+the classic code, it is always the last entry).
+
+Co-authored-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+Co-authored-by: Jeff Hostetler <jeffhost@microsoft.com>
+Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
+---
+ Makefile            |   1 +
+ entry.c             |  17 ++-
+ parallel-checkout.c | 365 ++++++++++++++++++++++++++++++++++++++++++++
+ parallel-checkout.h |  32 ++++
+ unpack-trees.c      |   6 +-
+ 5 files changed, 418 insertions(+), 3 deletions(-)
  create mode 100644 parallel-checkout.c
  create mode 100644 parallel-checkout.h
 
-Range-diff against v3:
-1:  7096822c14 = 1:  7096822c14 unpack-trees: add basic support for parallel checkout
-2:  4526516ea0 = 2:  4526516ea0 parallel-checkout: make it truly parallel
-3:  ad165c0637 = 3:  ad165c0637 parallel-checkout: add configuration options
-4:  cf9e28dc0e = 4:  cf9e28dc0e parallel-checkout: support progress displaying
-5:  415d4114aa ! 5:  fd929f072c parallel-checkout: add design documentation
-    @@ Documentation/technical/parallel-checkout.txt (new)
-     +* Step 4: Write the new index to disk.
-     +
-     +Step 3 is the focus of the "parallel checkout" effort described here.
-    -+It dominates the execution time for most of the above command types.
-     +
-     +Sequential Implementation
-     +-------------------------
-    @@ Documentation/technical/parallel-checkout.txt (new)
-     +It wouldn't be safe to perform Step 3b in parallel, as there could be
-     +race conditions between file creations and removals. Instead, the
-     +parallel checkout framework lets the sequential code handle Step 3b,
-    -+and use parallel workers to replace the sequential
-    ++and uses parallel workers to replace the sequential
-     +`entry.c:write_entry()` calls from Step 3c.
-     +
-     +Rejected Multi-Threaded Solution
-    @@ Documentation/technical/parallel-checkout.txt (new)
-     +warning for the user, like the classic sequential checkout does.
-     +
-     +The workers are able to detect both collisions among the entries being
-    -+concurrently written and collisions among parallel-eligible and
-    -+ineligible entries. The general idea for collision detection is quite
-    -+straightforward: for each parallel-eligible entry, the main process must
-    -+remove all files that prevent this entry from being written (before
-    -+enqueueing it). This includes any non-directory file in the leading path
-    -+of the entry. Later, when a worker gets assigned the entry, it looks
-    -+again for the non-directories files and for an already existing file at
-    -+the entry's path. If any of these checks finds something, the worker
-    -+knows that there was a path collision.
-    ++concurrently written and collisions between a parallel-eligible entry
-    ++and an ineligible entry. The general idea for collision detection is
-    ++quite straightforward: for each parallel-eligible entry, the main
-    ++process must remove all files that prevent this entry from being written
-    ++(before enqueueing it). This includes any non-directory file in the
-    ++leading path of the entry. Later, when a worker gets assigned the entry,
-    ++it looks again for the non-directories files and for an already existing
-    ++file at the entry's path. If any of these checks finds something, the
-    ++worker knows that there was a path collision.
-     +
-     +Because parallel checkout can distinguish path collisions from the case
-     +where the file was already present in the working tree before checkout,
-    @@ Documentation/technical/parallel-checkout.txt (new)
-     +Besides, long-running filters may use the delayed checkout feature to
-     +postpone the return of some filtered blobs. The delayed checkout queue
-     +and the parallel checkout queue are not compatible and should remain
-    -+separated.
-    ++separate.
-     ++
-     +Note: regular files that only require internal filters, like end-of-line
-     +conversion and re-encoding, are eligible for parallel checkout.
-    @@ Documentation/technical/parallel-checkout.txt (new)
-     +The API
-     +-------
-     +
-    -+The parallel checkout API was designed with the goal to minimize changes
-    -+to the current users of the checkout machinery. This means that they
-    -+don't have to call a different function for sequential or parallel
-    ++The parallel checkout API was designed with the goal of minimizing
-    ++changes to the current users of the checkout machinery. This means that
-    ++they don't have to call a different function for sequential or parallel
-     +checkout. As already mentioned, `checkout_entry()` will automatically
-     +insert the given entry in the parallel checkout queue when this feature
-     +is enabled and the entry is eligible; otherwise, it will just write the
+diff --git a/Makefile b/Makefile
+index a6a73c5741..99734cc2ea 100644
+--- a/Makefile
++++ b/Makefile
+@@ -946,6 +946,7 @@ LIB_OBJS += pack-revindex.o
+ LIB_OBJS += pack-write.o
+ LIB_OBJS += packfile.o
+ LIB_OBJS += pager.o
++LIB_OBJS += parallel-checkout.o
+ LIB_OBJS += parse-options-cb.o
+ LIB_OBJS += parse-options.o
+ LIB_OBJS += patch-delta.o
+diff --git a/entry.c b/entry.c
+index 2dc94ba5cc..d7ed38aa40 100644
+--- a/entry.c
++++ b/entry.c
+@@ -7,6 +7,7 @@
+ #include "progress.h"
+ #include "fsmonitor.h"
+ #include "entry.h"
++#include "parallel-checkout.h"
+ 
+ static void create_directories(const char *path, int path_len,
+ 			       const struct checkout *state)
+@@ -426,8 +427,17 @@ static void mark_colliding_entries(const struct checkout *state,
+ 	for (i = 0; i < state->istate->cache_nr; i++) {
+ 		struct cache_entry *dup = state->istate->cache[i];
+ 
+-		if (dup == ce)
+-			break;
++		if (dup == ce) {
++			/*
++			 * Parallel checkout doesn't create the files in index
++			 * order. So the other side of the collision may appear
++			 * after the given cache_entry in the array.
++			 */
++			if (parallel_checkout_status() == PC_RUNNING)
++				continue;
++			else
++				break;
++		}
+ 
+ 		if (dup->ce_flags & (CE_MATCHED | CE_VALID | CE_SKIP_WORKTREE))
+ 			continue;
+@@ -536,6 +546,9 @@ int checkout_entry_ca(struct cache_entry *ce, struct conv_attrs *ca,
+ 		ca = &ca_buf;
+ 	}
+ 
++	if (!enqueue_checkout(ce, ca))
++		return 0;
++
+ 	return write_entry(ce, path.buf, ca, state, 0);
+ }
+ 
+diff --git a/parallel-checkout.c b/parallel-checkout.c
+new file mode 100644
+index 0000000000..590e2a3046
+--- /dev/null
++++ b/parallel-checkout.c
+@@ -0,0 +1,365 @@
++#include "cache.h"
++#include "entry.h"
++#include "parallel-checkout.h"
++#include "streaming.h"
++
++enum pc_item_status {
++	PC_ITEM_PENDING = 0,
++	PC_ITEM_WRITTEN,
++	/*
++	 * The entry could not be written because there was another file
++	 * already present in its path or leading directories. Since
++	 * checkout_entry_ca() removes such files from the working tree before
++	 * enqueueing the entry for parallel checkout, it means that there was
++	 * a path collision among the entries being written.
++	 */
++	PC_ITEM_COLLIDED,
++	PC_ITEM_FAILED,
++};
++
++struct parallel_checkout_item {
++	/* pointer to a istate->cache[] entry. Not owned by us. */
++	struct cache_entry *ce;
++	struct conv_attrs ca;
++	struct stat st;
++	enum pc_item_status status;
++};
++
++struct parallel_checkout {
++	enum pc_status status;
++	struct parallel_checkout_item *items; /* The parallel checkout queue. */
++	size_t nr, alloc;
++};
++
++static struct parallel_checkout parallel_checkout;
++
++enum pc_status parallel_checkout_status(void)
++{
++	return parallel_checkout.status;
++}
++
++void init_parallel_checkout(void)
++{
++	if (parallel_checkout.status != PC_UNINITIALIZED)
++		BUG("parallel checkout already initialized");
++
++	parallel_checkout.status = PC_ACCEPTING_ENTRIES;
++}
++
++static void finish_parallel_checkout(void)
++{
++	if (parallel_checkout.status == PC_UNINITIALIZED)
++		BUG("cannot finish parallel checkout: not initialized yet");
++
++	free(parallel_checkout.items);
++	memset(&parallel_checkout, 0, sizeof(parallel_checkout));
++}
++
++static int is_eligible_for_parallel_checkout(const struct cache_entry *ce,
++					     const struct conv_attrs *ca)
++{
++	enum conv_attrs_classification c;
++
++	/*
++	 * Symlinks cannot be checked out in parallel as, in case of path
++	 * collision, they could racily replace leading directories of other
++	 * entries being checked out. Submodules are checked out in child
++	 * processes, which have their own parallel checkout queues.
++	 */
++	if (!S_ISREG(ce->ce_mode))
++		return 0;
++
++	c = classify_conv_attrs(ca);
++	switch (c) {
++	case CA_CLASS_INCORE:
++		return 1;
++
++	case CA_CLASS_INCORE_FILTER:
++		/*
++		 * It would be safe to allow concurrent instances of
++		 * single-file smudge filters, like rot13, but we should not
++		 * assume that all filters are parallel-process safe. So we
++		 * don't allow this.
++		 */
++		return 0;
++
++	case CA_CLASS_INCORE_PROCESS:
++		/*
++		 * The parallel queue and the delayed queue are not compatible,
++		 * so they must be kept completely separated. And we can't tell
++		 * if a long-running process will delay its response without
++		 * actually asking it to perform the filtering. Therefore, this
++		 * type of filter is not allowed in parallel checkout.
++		 *
++		 * Furthermore, there should only be one instance of the
++		 * long-running process filter as we don't know how it is
++		 * managing its own concurrency. So, spreading the entries that
++		 * requisite such a filter among the parallel workers would
++		 * require a lot more inter-process communication. We would
++		 * probably have to designate a single process to interact with
++		 * the filter and send all the necessary data to it, for each
++		 * entry.
++		 */
++		return 0;
++
++	case CA_CLASS_STREAMABLE:
++		return 1;
++
++	default:
++		BUG("unsupported conv_attrs classification '%d'", c);
++	}
++}
++
++int enqueue_checkout(struct cache_entry *ce, struct conv_attrs *ca)
++{
++	struct parallel_checkout_item *pc_item;
++
++	if (parallel_checkout.status != PC_ACCEPTING_ENTRIES ||
++	    !is_eligible_for_parallel_checkout(ce, ca))
++		return -1;
++
++	ALLOC_GROW(parallel_checkout.items, parallel_checkout.nr + 1,
++		   parallel_checkout.alloc);
++
++	pc_item = &parallel_checkout.items[parallel_checkout.nr++];
++	pc_item->ce = ce;
++	memcpy(&pc_item->ca, ca, sizeof(pc_item->ca));
++	pc_item->status = PC_ITEM_PENDING;
++
++	return 0;
++}
++
++static int handle_results(struct checkout *state)
++{
++	int ret = 0;
++	size_t i;
++	int have_pending = 0;
++
++	/*
++	 * We first update the successfully written entries with the collected
++	 * stat() data, so that they can be found by mark_colliding_entries(),
++	 * in the next loop, when necessary.
++	 */
++	for (i = 0; i < parallel_checkout.nr; i++) {
++		struct parallel_checkout_item *pc_item = &parallel_checkout.items[i];
++		if (pc_item->status == PC_ITEM_WRITTEN)
++			update_ce_after_write(state, pc_item->ce, &pc_item->st);
++	}
++
++	for (i = 0; i < parallel_checkout.nr; i++) {
++		struct parallel_checkout_item *pc_item = &parallel_checkout.items[i];
++
++		switch(pc_item->status) {
++		case PC_ITEM_WRITTEN:
++			/* Already handled */
++			break;
++		case PC_ITEM_COLLIDED:
++			/*
++			 * The entry could not be checked out due to a path
++			 * collision with another entry. Since there can only
++			 * be one entry of each colliding group on the disk, we
++			 * could skip trying to check out this one and move on.
++			 * However, this would leave the unwritten entries with
++			 * null stat() fields on the index, which could
++			 * potentially slow down subsequent operations that
++			 * require refreshing it: git would not be able to
++			 * trust st_size and would have to go to the filesystem
++			 * to see if the contents match (see ie_modified()).
++			 *
++			 * Instead, let's pay the overhead only once, now, and
++			 * call checkout_entry_ca() again for this file, to
++			 * have its stat() data stored in the index. This also
++			 * has the benefit of adding this entry and its
++			 * colliding pair to the collision report message.
++			 * Additionally, this overwriting behavior is consistent
++			 * with what the sequential checkout does, so it doesn't
++			 * add any extra overhead.
++			 */
++			ret |= checkout_entry_ca(pc_item->ce, &pc_item->ca,
++						 state, NULL, NULL);
++			break;
++		case PC_ITEM_PENDING:
++			have_pending = 1;
++			/* fall through */
++		case PC_ITEM_FAILED:
++			ret = -1;
++			break;
++		default:
++			BUG("unknown checkout item status in parallel checkout");
++		}
++	}
++
++	if (have_pending)
++		error("parallel checkout finished with pending entries");
++
++	return ret;
++}
++
++static int reset_fd(int fd, const char *path)
++{
++	if (lseek(fd, 0, SEEK_SET) != 0)
++		return error_errno("failed to rewind descriptor of '%s'", path);
++	if (ftruncate(fd, 0))
++		return error_errno("failed to truncate file '%s'", path);
++	return 0;
++}
++
++static int write_pc_item_to_fd(struct parallel_checkout_item *pc_item, int fd,
++			       const char *path)
++{
++	int ret;
++	struct stream_filter *filter;
++	struct strbuf buf = STRBUF_INIT;
++	char *blob;
++	unsigned long size;
++	ssize_t wrote;
++
++	/* Sanity check */
++	assert(is_eligible_for_parallel_checkout(pc_item->ce, &pc_item->ca));
++
++	filter = get_stream_filter_ca(&pc_item->ca, &pc_item->ce->oid);
++	if (filter) {
++		if (stream_blob_to_fd(fd, &pc_item->ce->oid, filter, 1)) {
++			/* On error, reset fd to try writing without streaming */
++			if (reset_fd(fd, path))
++				return -1;
++		} else {
++			return 0;
++		}
++	}
++
++	blob = read_blob_entry(pc_item->ce, &size);
++	if (!blob)
++		return error("cannot read object %s '%s'",
++			     oid_to_hex(&pc_item->ce->oid), pc_item->ce->name);
++
++	/*
++	 * checkout metadata is used to give context for external process
++	 * filters. Files requiring such filters are not eligible for parallel
++	 * checkout, so pass NULL.
++	 */
++	ret = convert_to_working_tree_ca(&pc_item->ca, pc_item->ce->name,
++					 blob, size, &buf, NULL);
++
++	if (ret) {
++		size_t newsize;
++		free(blob);
++		blob = strbuf_detach(&buf, &newsize);
++		size = newsize;
++	}
++
++	wrote = write_in_full(fd, blob, size);
++	free(blob);
++	if (wrote < 0)
++		return error("unable to write file '%s'", path);
++
++	return 0;
++}
++
++static int close_and_clear(int *fd)
++{
++	int ret = 0;
++
++	if (*fd >= 0) {
++		ret = close(*fd);
++		*fd = -1;
++	}
++
++	return ret;
++}
++
++static void write_pc_item(struct parallel_checkout_item *pc_item,
++			  struct checkout *state)
++{
++	unsigned int mode = (pc_item->ce->ce_mode & 0100) ? 0777 : 0666;
++	int fd = -1, fstat_done = 0;
++	struct strbuf path = STRBUF_INIT;
++	const char *dir_sep;
++
++	strbuf_add(&path, state->base_dir, state->base_dir_len);
++	strbuf_add(&path, pc_item->ce->name, pc_item->ce->ce_namelen);
++
++	dir_sep = find_last_dir_sep(path.buf);
++
++	/*
++	 * The leading dirs should have been already created by now. But, in
++	 * case of path collisions, one of the dirs could have been replaced by
++	 * a symlink (checked out after we enqueued this entry for parallel
++	 * checkout). Thus, we must check the leading dirs again.
++	 */
++	if (dir_sep && !has_dirs_only_path(path.buf, dir_sep - path.buf,
++					   state->base_dir_len)) {
++		pc_item->status = PC_ITEM_COLLIDED;
++		goto out;
++	}
++
++	fd = open(path.buf, O_WRONLY | O_CREAT | O_EXCL, mode);
++
++	if (fd < 0) {
++		if (errno == EEXIST || errno == EISDIR) {
++			/*
++			 * Errors which probably represent a path collision.
++			 * Suppress the error message and mark the item to be
++			 * retried later, sequentially. ENOTDIR and ENOENT are
++			 * also interesting, but the above has_dirs_only_path()
++			 * call should have already caught these cases.
++			 */
++			pc_item->status = PC_ITEM_COLLIDED;
++		} else {
++			error_errno("failed to open file '%s'", path.buf);
++			pc_item->status = PC_ITEM_FAILED;
++		}
++		goto out;
++	}
++
++	if (write_pc_item_to_fd(pc_item, fd, path.buf)) {
++		/* Error was already reported. */
++		pc_item->status = PC_ITEM_FAILED;
++		close_and_clear(&fd);
++		unlink(path.buf);
++		goto out;
++	}
++
++	fstat_done = fstat_checkout_output(fd, state, &pc_item->st);
++
++	if (close_and_clear(&fd)) {
++		error_errno("unable to close file '%s'", path.buf);
++		pc_item->status = PC_ITEM_FAILED;
++		goto out;
++	}
++
++	if (state->refresh_cache && !fstat_done && lstat(path.buf, &pc_item->st) < 0) {
++		error_errno("unable to stat just-written file '%s'",  path.buf);
++		pc_item->status = PC_ITEM_FAILED;
++		goto out;
++	}
++
++	pc_item->status = PC_ITEM_WRITTEN;
++
++out:
++	strbuf_release(&path);
++}
++
++static void write_items_sequentially(struct checkout *state)
++{
++	size_t i;
++
++	for (i = 0; i < parallel_checkout.nr; i++)
++		write_pc_item(&parallel_checkout.items[i], state);
++}
++
++int run_parallel_checkout(struct checkout *state)
++{
++	int ret;
++
++	if (parallel_checkout.status != PC_ACCEPTING_ENTRIES)
++		BUG("cannot run parallel checkout: uninitialized or already running");
++
++	parallel_checkout.status = PC_RUNNING;
++
++	write_items_sequentially(state);
++	ret = handle_results(state);
++
++	finish_parallel_checkout();
++	return ret;
++}
+diff --git a/parallel-checkout.h b/parallel-checkout.h
+new file mode 100644
+index 0000000000..4ad2a519b3
+--- /dev/null
++++ b/parallel-checkout.h
+@@ -0,0 +1,32 @@
++#ifndef PARALLEL_CHECKOUT_H
++#define PARALLEL_CHECKOUT_H
++
++struct cache_entry;
++struct checkout;
++struct conv_attrs;
++
++enum pc_status {
++	PC_UNINITIALIZED = 0,
++	PC_ACCEPTING_ENTRIES,
++	PC_RUNNING,
++};
++
++enum pc_status parallel_checkout_status(void);
++
++/*
++ * Put parallel checkout into the PC_ACCEPTING_ENTRIES state. Should be used
++ * only when in the PC_UNINITIALIZED state.
++ */
++void init_parallel_checkout(void);
++
++/*
++ * Return -1 if parallel checkout is currently not accepting entries or if the
++ * entry is not eligible for parallel checkout. Otherwise, enqueue the entry
++ * for later write and return 0.
++ */
++int enqueue_checkout(struct cache_entry *ce, struct conv_attrs *ca);
++
++/* Write all the queued entries, returning 0 on success.*/
++int run_parallel_checkout(struct checkout *state);
++
++#endif /* PARALLEL_CHECKOUT_H */
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 8a1afbc1e4..f0430d458d 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -17,6 +17,7 @@
+ #include "object-store.h"
+ #include "promisor-remote.h"
+ #include "entry.h"
++#include "parallel-checkout.h"
+ 
+ /*
+  * Error messages expected by scripts out of plumbing commands such as
+@@ -441,7 +442,6 @@ static int check_updates(struct unpack_trees_options *o,
+ 	if (should_update_submodules())
+ 		load_gitmodules_file(index, &state);
+ 
+-	enable_delayed_checkout(&state);
+ 	if (has_promisor_remote()) {
+ 		/*
+ 		 * Prefetch the objects that are to be checked out in the loop
+@@ -464,6 +464,9 @@ static int check_updates(struct unpack_trees_options *o,
+ 					   to_fetch.oid, to_fetch.nr);
+ 		oid_array_clear(&to_fetch);
+ 	}
++
++	enable_delayed_checkout(&state);
++	init_parallel_checkout();
+ 	for (i = 0; i < index->cache_nr; i++) {
+ 		struct cache_entry *ce = index->cache[i];
+ 
+@@ -477,6 +480,7 @@ static int check_updates(struct unpack_trees_options *o,
+ 		}
+ 	}
+ 	stop_progress(&progress);
++	errs |= run_parallel_checkout(&state);
+ 	errs |= finish_delayed_checkout(&state, NULL);
+ 	git_attr_set_direction(GIT_ATTR_CHECKIN);
+ 
 -- 
 2.30.1
 
