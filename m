@@ -2,67 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26378C43462
-	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 11:38:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 30A0AC433B4
+	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 11:40:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 042E061288
-	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 11:38:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0A48861166
+	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 11:40:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238846AbhDSLjN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Apr 2021 07:39:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35938 "EHLO
+        id S238811AbhDSLjI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Apr 2021 07:39:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238715AbhDSLii (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Apr 2021 07:38:38 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C1D4C06138D
-        for <git@vger.kernel.org>; Mon, 19 Apr 2021 04:38:08 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id e5so4998565wrg.7
-        for <git@vger.kernel.org>; Mon, 19 Apr 2021 04:38:07 -0700 (PDT)
+        with ESMTP id S238663AbhDSLif (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Apr 2021 07:38:35 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67C94C06174A
+        for <git@vger.kernel.org>; Mon, 19 Apr 2021 04:38:05 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id g9so17634544wrx.0
+        for <git@vger.kernel.org>; Mon, 19 Apr 2021 04:38:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=68pLmCaint3lQjfMXOVfl+fz3vWfd4+/uPb6z55i5JM=;
-        b=ngHEiHXJnHZEss82LOEApown0cFhpUN54X0PTzrcrDRjSnDks93SYlnXFCZm6L+pAY
-         xJUM2yWkLK1W9/yozVr0EpMW9D+GZDqL6wxRssvykr1fu1dP5zetQRCSTmI9tt9YMc6u
-         MNcc0KBx7JkXciZMkaxdH8UMULYBAipfkZ+JMC+XGbVXZ3DhUunpvrd/dcg4/jEp9rNY
-         /9+pik68s6M+qqF2Rgqnele0w87lbqSU89zVztXFo7a600d+hg1hYhl9nZxGkwp7SkWC
-         LZm+h1eiuZIA3qTh8x0MWEFMRAVO3/IEhs9b/0oRDg1UNRYOOWNOgQipATfrvTdFxdri
-         1yWA==
+        bh=oev4451zcfiJIRokI1RZPsQFi4LyNbqQe+VIWGZcV5k=;
+        b=YG3quMyf/IQ5UzDikWAdKbQ/er5jNTpSSydBUnA6x00rxpMLtv/JOb7iK6kCqYqgvm
+         eBsMXmIxNDWvuRfZkh1FPbBy+yIpxU/k3uj2MLluhvxxBwPjUTltAn2Zbb/45fa/nKwu
+         Q4XvZwlfYNwThJ3jB14/ikegkVVM1+/iBdIFs3QUBf7shuNokMkTHSGUlK/nphTCUjP8
+         0u+cJqJTgVBGjVBHQAuOuXtXJM+aTzd7/lrtANhjYsprvB+XrPvHANPW+BgNtIzjp2lS
+         Whz1VoL1Tp+desc7W6V0rD/rXCqpSGGtl2dbrHO9ZqJ/9aVWZfbt3Q+vlIZsWD3PSMJw
+         30IA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=68pLmCaint3lQjfMXOVfl+fz3vWfd4+/uPb6z55i5JM=;
-        b=lmnkMmnxYPHAAuHm1Y1Glnxv7sJLwBckyqvcvwiPR/BMxhVUZNgfG5W9zjZyR3VuYP
-         YxLQ2W0cDqQX5LOd/dV4WHj9IEY2H0iZw3vBFXFH/J0TtG27hQRWpQv+I+WjbqOkIfD+
-         +O7I8Wqi3DZQtX7PN62+RR3wothacdt7aAqxGH0fETuZKaZqMcdxYp0JAOfXR819TXI9
-         T77wY6te00zCItntIltTWB2Qp7BYyCmTHaU64cA4BC7x1qgv0PSqzsIWUWOpR8CqYnIR
-         rcI1jnvvkenK8qxsR0nD5SGpFaiDXmyPLjdvoGV4bCsCW0enKCktsP5LJs98yoR7W/Gn
-         /Ikw==
-X-Gm-Message-State: AOAM532zG92CWS1OQTlI4CFAElgItTtoPml7SggJ8SNkLTMG60RcjZoa
-        XMOKrAX8cteKzSX2L0fp7qH71UsxNFM=
-X-Google-Smtp-Source: ABdhPJy6cSWMp3Kn1iedHjWjw2pbJhNeaCK43wI9MkPjfXWGvAbBTntuzc8ytjbFVOAhhV/6VAzZ0w==
-X-Received: by 2002:adf:fdcd:: with SMTP id i13mr13654323wrs.185.1618832286785;
-        Mon, 19 Apr 2021 04:38:06 -0700 (PDT)
+        bh=oev4451zcfiJIRokI1RZPsQFi4LyNbqQe+VIWGZcV5k=;
+        b=syWdtkzIyYsQ2x6u5AsKu/bXeld3Vq1oVNW5TnQZ6jJJNCvZ45axBFZPZB9BPg4Usi
+         Jo/ckI5No2IzldjpKLM9RfPi9RhfChej7Xy+CeMHAgiMF0LjyEHflejYzuHsXq1rLjBQ
+         jQOtA+vT6wp04k0yffzoo3tl2WLcRbxt+XLdO8Ub9SC3OgA4HztDTba2jk1sy2mJG6xJ
+         BvPwN73DvQI//3wpBZP99dlQewDWTztYu09JdSZe6Z3/spMttkFLfLMcgu0ZXo6YgYx4
+         U+6tfCN9xgPVH7P+C8oL4VIPJmkTVdsLTlvJCYmFa4zoimMiR7lDxeBs4MY0EM2THdVe
+         iEjg==
+X-Gm-Message-State: AOAM531B1uARsV26yCfWwAtQ1KGjSAnxuhnEHRVkyaZPD12A8ZdmwsEb
+        nZ8viOZ7NDYhjydsmKBLfcKG4KAWxOQ=
+X-Google-Smtp-Source: ABdhPJygOsWWsGvd2dXgVRK8pWIK2h5GPu1Gmk2erbVncY9EMkCCgQEdy9sT8KPO7tFsGgepZdIiOg==
+X-Received: by 2002:adf:d0cc:: with SMTP id z12mr14142689wrh.18.1618832284196;
+        Mon, 19 Apr 2021 04:38:04 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n18sm16390883wrw.11.2021.04.19.04.38.06
+        by smtp.gmail.com with ESMTPSA id n2sm22374358wmb.32.2021.04.19.04.38.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Apr 2021 04:38:06 -0700 (PDT)
-Message-Id: <0c2604d7e7d453fb86a00c97a139fb593b54eef3.1618832277.git.gitgitgadget@gmail.com>
+        Mon, 19 Apr 2021 04:38:03 -0700 (PDT)
+Message-Id: <5177919a3fd2f85cdf28ecf745361ae4ea75a7b8.1618832277.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.847.v7.git.git.1618832276.gitgitgadget@gmail.com>
 References: <pull.847.v6.git.git.1618255552.gitgitgadget@gmail.com>
         <pull.847.v7.git.git.1618832276.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 19 Apr 2021 11:37:39 +0000
-Subject: [PATCH v7 11/28] Provide zlib's uncompress2 from compat/zlib-compat.c
+Date:   Mon, 19 Apr 2021 11:37:35 +0000
+Subject: [PATCH v7 07/28] reftable: add error related functionality
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -89,189 +89,137 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-This will be needed for reading reflog blocks in reftable.
+The reftable/ directory is structured as a library, so it cannot
+crash on misuse. Instead, it returns an error codes.
+
+In addition, the error code can be used to signal conditions from lower levels
+of the library to be handled by higher levels of the library. For example, a
+transaction might legitimately write an empty reftable file, but in that case,
+we'd want to shortcut the transaction overhead.
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- Makefile                  |  7 +++
- compat/.gitattributes     |  1 +
- compat/zlib-uncompress2.c | 92 +++++++++++++++++++++++++++++++++++++++
- configure.ac              | 13 ++++++
- git-compat-util.h         |  4 ++
- 5 files changed, 117 insertions(+)
- create mode 100644 compat/.gitattributes
- create mode 100644 compat/zlib-uncompress2.c
+ reftable/error.c          | 41 ++++++++++++++++++++++++++
+ reftable/reftable-error.h | 62 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 103 insertions(+)
+ create mode 100644 reftable/error.c
+ create mode 100644 reftable/reftable-error.h
 
-diff --git a/Makefile b/Makefile
-index d6bc336c5565..e6df765d3361 100644
---- a/Makefile
-+++ b/Makefile
-@@ -256,6 +256,8 @@ all::
- #
- # Define NO_DEFLATE_BOUND if your zlib does not have deflateBound.
- #
-+# Define NO_UNCOMPRESS2 if your zlib does not have uncompress2.
-+#
- # Define NO_NORETURN if using buggy versions of gcc 4.6+ and profile feedback,
- # as the compiler can crash (http://gcc.gnu.org/bugzilla/show_bug.cgi?id=49299)
- #
-@@ -1706,6 +1708,11 @@ ifdef NO_DEFLATE_BOUND
- 	BASIC_CFLAGS += -DNO_DEFLATE_BOUND
- endif
- 
-+ifdef NO_UNCOMPRESS2
-+	BASIC_CFLAGS += -DNO_UNCOMPRESS2
-+	LIB_OBJS += compat/zlib-uncompress2.o
-+endif
-+
- ifdef NO_POSIX_GOODIES
- 	BASIC_CFLAGS += -DNO_POSIX_GOODIES
- endif
-diff --git a/compat/.gitattributes b/compat/.gitattributes
+diff --git a/reftable/error.c b/reftable/error.c
 new file mode 100644
-index 000000000000..40dbfb170dab
+index 000000000000..f6f16def9214
 --- /dev/null
-+++ b/compat/.gitattributes
-@@ -0,0 +1 @@
-+/zlib-uncompress2.c	whitespace=-indent-with-non-tab,-trailing-space
-diff --git a/compat/zlib-uncompress2.c b/compat/zlib-uncompress2.c
-new file mode 100644
-index 000000000000..0adc5ee7eeb6
---- /dev/null
-+++ b/compat/zlib-uncompress2.c
-@@ -0,0 +1,92 @@
-+/* taken from zlib's uncompr.c
++++ b/reftable/error.c
+@@ -0,0 +1,41 @@
++/*
++Copyright 2020 Google LLC
 +
-+   commit cacf7f1d4e3d44d871b605da3b647f07d718623f
-+   Author: Mark Adler <madler@alumni.caltech.edu>
-+   Date:   Sun Jan 15 09:18:46 2017 -0800
-+
-+       zlib 1.2.11
-+
++Use of this source code is governed by a BSD-style
++license that can be found in the LICENSE file or at
++https://developers.google.com/open-source/licenses/bsd
 +*/
++
++#include "reftable-error.h"
++
++#include <stdio.h>
++
++const char *reftable_error_str(int err)
++{
++	static char buf[250];
++	switch (err) {
++	case REFTABLE_IO_ERROR:
++		return "I/O error";
++	case REFTABLE_FORMAT_ERROR:
++		return "corrupt reftable file";
++	case REFTABLE_NOT_EXIST_ERROR:
++		return "file does not exist";
++	case REFTABLE_LOCK_ERROR:
++		return "data is outdated";
++	case REFTABLE_API_ERROR:
++		return "misuse of the reftable API";
++	case REFTABLE_ZLIB_ERROR:
++		return "zlib failure";
++	case REFTABLE_NAME_CONFLICT:
++		return "file/directory conflict";
++	case REFTABLE_EMPTY_TABLE_ERROR:
++		return "wrote empty table";
++	case REFTABLE_REFNAME_ERROR:
++		return "invalid refname";
++	case -1:
++		return "general error";
++	default:
++		snprintf(buf, sizeof(buf), "unknown error code %d", err);
++		return buf;
++	}
++}
+diff --git a/reftable/reftable-error.h b/reftable/reftable-error.h
+new file mode 100644
+index 000000000000..6f89bedf1a58
+--- /dev/null
++++ b/reftable/reftable-error.h
+@@ -0,0 +1,62 @@
++/*
++Copyright 2020 Google LLC
++
++Use of this source code is governed by a BSD-style
++license that can be found in the LICENSE file or at
++https://developers.google.com/open-source/licenses/bsd
++*/
++
++#ifndef REFTABLE_ERROR_H
++#define REFTABLE_ERROR_H
 +
 +/*
-+ * Copyright (C) 1995-2003, 2010, 2014, 2016 Jean-loup Gailly, Mark Adler
-+ * For conditions of distribution and use, see copyright notice in zlib.h
++ * Errors in reftable calls are signaled with negative integer return values. 0
++ * means success.
 + */
++enum reftable_error {
++	/* Unexpected file system behavior */
++	REFTABLE_IO_ERROR = -2,
 +
-+#include "system.h"
++	/* Format inconsistency on reading data */
++	REFTABLE_FORMAT_ERROR = -3,
 +
-+/* clang-format off */
++	/* File does not exist. Returned from block_source_from_file(), because
++	 * it needs special handling in stack.
++	 */
++	REFTABLE_NOT_EXIST_ERROR = -4,
 +
-+/* ===========================================================================
-+     Decompresses the source buffer into the destination buffer.  *sourceLen is
-+   the byte length of the source buffer. Upon entry, *destLen is the total size
-+   of the destination buffer, which must be large enough to hold the entire
-+   uncompressed data. (The size of the uncompressed data must have been saved
-+   previously by the compressor and transmitted to the decompressor by some
-+   mechanism outside the scope of this compression library.) Upon exit,
-+   *destLen is the size of the decompressed data and *sourceLen is the number
-+   of source bytes consumed. Upon return, source + *sourceLen points to the
-+   first unused input byte.
++	/* Trying to write out-of-date data. */
++	REFTABLE_LOCK_ERROR = -5,
 +
-+     uncompress returns Z_OK if success, Z_MEM_ERROR if there was not enough
-+   memory, Z_BUF_ERROR if there was not enough room in the output buffer, or
-+   Z_DATA_ERROR if the input data was corrupted, including if the input data is
-+   an incomplete zlib stream.
-+*/
-+int ZEXPORT uncompress2 (
-+    Bytef *dest,
-+    uLongf *destLen,
-+    const Bytef *source,
-+    uLong *sourceLen) {
-+    z_stream stream;
-+    int err;
-+    const uInt max = (uInt)-1;
-+    uLong len, left;
-+    Byte buf[1];    /* for detection of incomplete stream when *destLen == 0 */
++	/* Misuse of the API:
++	 *  - on writing a record with NULL refname.
++	 *  - on writing a reftable_ref_record outside the table limits
++	 *  - on writing a ref or log record before the stack's
++	 * next_update_inde*x
++	 *  - on writing a log record with multiline message with
++	 *  exact_log_message unset
++	 *  - on reading a reftable_ref_record from log iterator, or vice versa.
++	 *
++	 * When a call misuses the API, the internal state of the library is
++	 * kept unchanged.
++	 */
++	REFTABLE_API_ERROR = -6,
 +
-+    len = *sourceLen;
-+    if (*destLen) {
-+        left = *destLen;
-+        *destLen = 0;
-+    }
-+    else {
-+        left = 1;
-+        dest = buf;
-+    }
++	/* Decompression error */
++	REFTABLE_ZLIB_ERROR = -7,
 +
-+    stream.next_in = (z_const Bytef *)source;
-+    stream.avail_in = 0;
-+    stream.zalloc = (alloc_func)0;
-+    stream.zfree = (free_func)0;
-+    stream.opaque = (voidpf)0;
++	/* Wrote a table without blocks. */
++	REFTABLE_EMPTY_TABLE_ERROR = -8,
 +
-+    err = inflateInit(&stream);
-+    if (err != Z_OK) return err;
++	/* Dir/file conflict. */
++	REFTABLE_NAME_CONFLICT = -9,
 +
-+    stream.next_out = dest;
-+    stream.avail_out = 0;
++	/* Invalid ref name. */
++	REFTABLE_REFNAME_ERROR = -10,
++};
 +
-+    do {
-+        if (stream.avail_out == 0) {
-+            stream.avail_out = left > (uLong)max ? max : (uInt)left;
-+            left -= stream.avail_out;
-+        }
-+        if (stream.avail_in == 0) {
-+            stream.avail_in = len > (uLong)max ? max : (uInt)len;
-+            len -= stream.avail_in;
-+        }
-+        err = inflate(&stream, Z_NO_FLUSH);
-+    } while (err == Z_OK);
-+
-+    *sourceLen -= len + stream.avail_in;
-+    if (dest != buf)
-+        *destLen = stream.total_out;
-+    else if (stream.total_out && err == Z_BUF_ERROR)
-+        left = 1;
-+
-+    inflateEnd(&stream);
-+    return err == Z_STREAM_END ? Z_OK :
-+           err == Z_NEED_DICT ? Z_DATA_ERROR  :
-+           err == Z_BUF_ERROR && left + stream.avail_out ? Z_DATA_ERROR :
-+           err;
-+}
-diff --git a/configure.ac b/configure.ac
-index 031e8d3fee8f..c3a913103d00 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -672,9 +672,22 @@ AC_LINK_IFELSE([ZLIBTEST_SRC],
- 	NO_DEFLATE_BOUND=yes])
- LIBS="$old_LIBS"
- 
-+AC_DEFUN([ZLIBTEST_UNCOMPRESS2_SRC], [
-+AC_LANG_PROGRAM([#include <zlib.h>],
-+ [uncompress2(NULL,NULL,NULL,NULL);])])
-+AC_MSG_CHECKING([for uncompress2 in -lz])
-+old_LIBS="$LIBS"
-+LIBS="$LIBS -lz"
-+AC_LINK_IFELSE([ZLIBTEST_UNCOMPRESS2_SRC],
-+	[AC_MSG_RESULT([yes])],
-+	[AC_MSG_RESULT([no])
-+	NO_UNCOMPRESS2=yes])
-+LIBS="$old_LIBS"
-+
- GIT_UNSTASH_FLAGS($ZLIB_PATH)
- 
- GIT_CONF_SUBST([NO_DEFLATE_BOUND])
-+GIT_CONF_SUBST([NO_UNCOMPRESS2])
- 
- #
- # Define NEEDS_SOCKET if linking with libc is not enough (SunOS,
-diff --git a/git-compat-util.h b/git-compat-util.h
-index a508dbe5a351..d405d0bd7a79 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -1382,4 +1382,8 @@ static inline void *container_of_or_null_offset(void *ptr, size_t offset)
- 
- void sleep_millisec(int millisec);
- 
-+#ifdef NO_UNCOMPRESS2
++/* convert the numeric error code to a string. The string should not be
++ * deallocated. */
++const char *reftable_error_str(int err);
 +
 +#endif
-+
- #endif
 -- 
 gitgitgadget
 
