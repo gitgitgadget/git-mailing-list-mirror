@@ -8,62 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8ACDAC433B4
-	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 11:38:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 21ACBC433ED
+	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 11:38:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5A91C61090
-	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 11:38:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EBEBA61165
+	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 11:38:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238567AbhDSLic (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Apr 2021 07:38:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35892 "EHLO
+        id S238617AbhDSLie (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Apr 2021 07:38:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230272AbhDSLic (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232560AbhDSLic (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 19 Apr 2021 07:38:32 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A259FC061760
-        for <git@vger.kernel.org>; Mon, 19 Apr 2021 04:38:01 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id k26so17234116wrc.8
-        for <git@vger.kernel.org>; Mon, 19 Apr 2021 04:38:01 -0700 (PDT)
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63175C061763
+        for <git@vger.kernel.org>; Mon, 19 Apr 2021 04:38:02 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id s7so33564705wru.6
+        for <git@vger.kernel.org>; Mon, 19 Apr 2021 04:38:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=4SiXyNpOjEtT6sBNsSol0EteBZINGMXJ2tIBM05TJ3U=;
-        b=L7NzbF+rJQUKB1WMiTcpWdthv5raACD6CFtozWXslEuQGE3s5Nj0frg8Eqx3upVzT6
-         o3/hIp8tKfIkks/29Eeag76u/C+Xdx5a4Cv+SpWvysL4cxoG0xIyG2O1T6vhUeLgbaIv
-         tgoYl/1+XcLCrvB1F486EUx/RTjp6EsqPReyA0dUx9JSBlCWW9lMT7T+kqsAFz/XoR3+
-         3g979/hnR4wTYIfwlseFvTVrkMjLZGBfjuQv9bSxJDbPS0oFJLIpFr8t1ULsBPl5uLGv
-         dlwUWfH8UNoa4pOeQD8loMKBhMYTzSs53/exOfYKZjdZv5XSFlJjfqOo0dT6nPhC23aq
-         crTg==
+        bh=nAaI2/ecfrc2qcCxs34ZVZoSSLJHefKDvevbMrYH71E=;
+        b=EfgSb7MnNpdZGtH7pp5T/jMICJjwnpAYY+dOfh12nhR8+rw9prVzWiFAponzyewdcT
+         0qvADod86jyYv8dq69i7uT9JjxyuF7XzvmvdySIj9LMESaxGnhdZwpd2H6vMqrFUj7IB
+         MkJVaiQj+RLnrUyhO/fhVg1vn555EwWFKzMUL7SXTAAcAnNJWboDRtx/SMrcCP3W8wK4
+         i+K6lejFMnRWspXL/GhgwUBWdW5MhsTVmIjfO38+1nByCjg7Utg6T6k4djv2RjaHo7Nc
+         aWrtoGby/+l9bqbm7SYzKAcBeO/tV1PX+ITSIk/wJw09A0gwe48BgawCQsI7QPTOfj9d
+         Ul0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=4SiXyNpOjEtT6sBNsSol0EteBZINGMXJ2tIBM05TJ3U=;
-        b=m2n0tLTnVB22Cp/lpuHg9MbJjSnjQLOAZ8vagwkK8i15TR0sozzIFxPrC/GD4ND/0T
-         5YguovmLbDbh9FgA77NrBkDcoAjLYZ+s8O4XhQ09cLUCR3tntqfb56BFNZnGdsO0FedX
-         DgcDKJhY7ZwndEfTrOCy1A2FJ9B7T2411KksQQZf9MjfDKrOe1RYlpgZduj8GEuE9o8U
-         pZQBSARzK31oMxwW7C9f09EVACwResjLBL9lHHJbmjwIrFmaHMvtei55xGIdyMJd5n3q
-         el9KiPSVVIDbIevOwjntm3O03uhcb7nxuB8Jpc1pEUo2ms6IZbdtb99DJQoIABTLub9D
-         L6wA==
-X-Gm-Message-State: AOAM532Icn1vRSP22UTusxU+utc5YLyJBfLl0r7nXxTFcLm67cDyu8v5
-        6qlUIw65qg+Wpt0ghXAz98FZs0lDtr8=
-X-Google-Smtp-Source: ABdhPJwshINs0Ctg1hzHhy5B0yhuW5+aBFKzGQXtyyCG6u077V545ciJqrO0cGuIpP8/+3LjNoohiA==
-X-Received: by 2002:adf:ec47:: with SMTP id w7mr13461438wrn.178.1618832279984;
-        Mon, 19 Apr 2021 04:37:59 -0700 (PDT)
+        bh=nAaI2/ecfrc2qcCxs34ZVZoSSLJHefKDvevbMrYH71E=;
+        b=Ya8JbzzoMbwX4EQ09iOgvLnjDU/8qkrwuicMHL8VAKm2sjlt237RKGpZ1B07yc6KWP
+         kEhPsbU4nAbgI/1Lsv0XFVmwzkZIsyPiXFNGVKUZBCtneQOKEABQnd6ZMjJOIRn8pWms
+         4fxEFySAwnnZfL4+RIJG++TQ2B1koMsNGgZu+XAZslIj9hoTjiVuRrqmREwQZXI+PghF
+         SrkadZjz5GkXzVDwtWkhNl2f4i4AE82z7MXE0tTUL/GWln3YZpEX4K0D5g9DmrESs/0P
+         BUnpG9ue6cA573DO2AwUnJWvhPJa5CNvdW0KAHHa2AmI+b0aifA/gZivq+tOs/TpVjf9
+         GlZw==
+X-Gm-Message-State: AOAM531JxZIvmxAxc4hI0yBAqtuSb9jozk3l0gh9WWNVdcoOdxlQHlBO
+        ZVWqVpQMKypzbBr59ZsLsrqTKn/JOww=
+X-Google-Smtp-Source: ABdhPJx9t5U6hAHBq/zRp7wlNXL65v9Tv95y53P0UAN7qx6wK8SnncDJwB/YBih9SOQdNBXzckTlOg==
+X-Received: by 2002:a5d:4251:: with SMTP id s17mr13991457wrr.174.1618832281130;
+        Mon, 19 Apr 2021 04:38:01 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o17sm2983351wrg.80.2021.04.19.04.37.59
+        by smtp.gmail.com with ESMTPSA id h2sm19987408wmc.24.2021.04.19.04.38.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Apr 2021 04:37:59 -0700 (PDT)
-Message-Id: <8103a80394aefdd4e8b5061dfbb6a6199fe5fcae.1618832276.git.gitgitgadget@gmail.com>
+        Mon, 19 Apr 2021 04:38:00 -0700 (PDT)
+Message-Id: <9ae5ddff6aed48184d2a10c569e41441b9199f10.1618832277.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.847.v7.git.git.1618832276.gitgitgadget@gmail.com>
 References: <pull.847.v6.git.git.1618255552.gitgitgadget@gmail.com>
         <pull.847.v7.git.git.1618832276.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 19 Apr 2021 11:37:29 +0000
-Subject: [PATCH v7 01/28] refs: ref_iterator_peel returns boolean, rather than
- peel_status
+Date:   Mon, 19 Apr 2021 11:37:31 +0000
+Subject: [PATCH v7 03/28] refs/debug: trace into reflog expiry too
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -90,57 +89,77 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-Before, the cached ref_iterator would return peel_object() output directly. This
-led to spurious differences in the GIT_TRACE_REFS output, depending on the ref
-storage backend active.
-
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- refs.c               | 2 +-
- refs/ref-cache.c     | 2 +-
- refs/refs-internal.h | 3 +++
- 3 files changed, 5 insertions(+), 2 deletions(-)
+ refs/debug.c | 47 ++++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 44 insertions(+), 3 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index 261fd82beb98..8873854a44fb 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2010,7 +2010,7 @@ int peel_iterated_oid(const struct object_id *base, struct object_id *peeled)
- 	     oideq(current_ref_iter->oid, base)))
- 		return ref_iterator_peel(current_ref_iter, peeled);
- 
--	return peel_object(base, peeled);
-+	return !!peel_object(base, peeled);
+diff --git a/refs/debug.c b/refs/debug.c
+index 922e64fa6ad9..3b25e3aeb1ba 100644
+--- a/refs/debug.c
++++ b/refs/debug.c
+@@ -353,6 +353,40 @@ static int debug_delete_reflog(struct ref_store *ref_store, const char *refname)
+ 	return res;
  }
  
- int refs_create_symref(struct ref_store *refs,
-diff --git a/refs/ref-cache.c b/refs/ref-cache.c
-index 46f1e5428433..703a12959e1f 100644
---- a/refs/ref-cache.c
-+++ b/refs/ref-cache.c
-@@ -491,7 +491,7 @@ static int cache_ref_iterator_advance(struct ref_iterator *ref_iterator)
- static int cache_ref_iterator_peel(struct ref_iterator *ref_iterator,
- 				   struct object_id *peeled)
++struct debug_reflog_expiry_should_prune {
++	reflog_expiry_prepare_fn *prepare;
++	reflog_expiry_should_prune_fn *should_prune;
++	reflog_expiry_cleanup_fn *cleanup;
++	void *cb_data;
++};
++
++static void debug_reflog_expiry_prepare(const char *refname,
++				    const struct object_id *oid,
++				    void *cb_data)
++{
++	struct debug_reflog_expiry_should_prune *prune = cb_data;
++	trace_printf_key(&trace_refs, "reflog_expire_prepare: %s\n", refname);
++	prune->prepare(refname, oid, prune->cb_data);
++}
++
++static int debug_reflog_expiry_should_prune_fn(struct object_id *ooid,
++					       struct object_id *noid,
++					       const char *email,
++					       timestamp_t timestamp, int tz,
++					       const char *message, void *cb_data) {
++	struct debug_reflog_expiry_should_prune *prune = cb_data;
++
++	int result = prune->should_prune(ooid, noid, email, timestamp, tz, message, prune->cb_data);
++	trace_printf_key(&trace_refs, "reflog_expire_should_prune: %s %ld: %d\n", message, (long int) timestamp, result);
++	return result;
++}
++
++static void debug_reflog_expiry_cleanup(void *cb_data)
++{
++	struct debug_reflog_expiry_should_prune *prune = cb_data;
++	prune->cleanup(prune->cb_data);
++}
++
+ static int debug_reflog_expire(struct ref_store *ref_store, const char *refname,
+ 			       const struct object_id *oid, unsigned int flags,
+ 			       reflog_expiry_prepare_fn prepare_fn,
+@@ -361,10 +395,17 @@ static int debug_reflog_expire(struct ref_store *ref_store, const char *refname,
+ 			       void *policy_cb_data)
  {
--	return peel_object(ref_iterator->oid, peeled);
-+	return !!peel_object(ref_iterator->oid, peeled);
+ 	struct debug_ref_store *drefs = (struct debug_ref_store *)ref_store;
++	struct debug_reflog_expiry_should_prune prune = {
++		.prepare = prepare_fn,
++		.cleanup = cleanup_fn,
++		.should_prune = should_prune_fn,
++		.cb_data = policy_cb_data,
++	};
+ 	int res = drefs->refs->be->reflog_expire(drefs->refs, refname, oid,
+-						 flags, prepare_fn,
+-						 should_prune_fn, cleanup_fn,
+-						 policy_cb_data);
++						 flags, &debug_reflog_expiry_prepare,
++						 &debug_reflog_expiry_should_prune_fn,
++						 &debug_reflog_expiry_cleanup,
++						 &prune);
+ 	trace_printf_key(&trace_refs, "reflog_expire: %s: %d\n", refname, res);
+ 	return res;
  }
- 
- static int cache_ref_iterator_abort(struct ref_iterator *ref_iterator)
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 467f4b3c936d..546a6b965dcc 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -453,6 +453,9 @@ void base_ref_iterator_free(struct ref_iterator *iter);
-  */
- typedef int ref_iterator_advance_fn(struct ref_iterator *ref_iterator);
- 
-+/*
-+ * Peels the current ref, returning 0 for success.
-+ */
- typedef int ref_iterator_peel_fn(struct ref_iterator *ref_iterator,
- 				 struct object_id *peeled);
- 
 -- 
 gitgitgadget
 
