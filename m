@@ -8,61 +8,60 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A249EC433B4
-	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 10:53:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5B05C433ED
+	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 10:53:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7A05F6101E
-	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 10:53:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 878D66101E
+	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 10:53:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238399AbhDSKxp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Apr 2021 06:53:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54130 "EHLO
+        id S238403AbhDSKxq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Apr 2021 06:53:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237708AbhDSKxj (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S237751AbhDSKxj (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 19 Apr 2021 06:53:39 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10E5AC061761
-        for <git@vger.kernel.org>; Mon, 19 Apr 2021 03:53:07 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id p6so26795672wrn.9
-        for <git@vger.kernel.org>; Mon, 19 Apr 2021 03:53:06 -0700 (PDT)
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0429C06174A
+        for <git@vger.kernel.org>; Mon, 19 Apr 2021 03:53:09 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id w4so29781923wrt.5
+        for <git@vger.kernel.org>; Mon, 19 Apr 2021 03:53:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=PNXYjsqBmokYYN4Q17OeJZD7G3XLhxhwmPXKh3TfUPc=;
-        b=CqYgsJ9y9a3Lqe9qwePnTI7yAgd/w6tUahdOawSfSZL6eJ2Jq6A8C5/abpVy0wuuBb
-         L65TkmAlNMsjxJm/rW7jbL1brHpfH8eHPVsRuF2mLHGS2ubgY4UgJ+0j+swcNrIWPrMB
-         C14awNG4wob3CZMTdLHnMoCTC6Tt5JXVIo1MibCQlWHT9IKICua8W+1SuzRjx7a1RCAc
-         cSoQtwGBbihxHN2pqC9nAKZICumuJZQYAmRkTX5XDQlElqsdmF5EAE5k0xGI4RBoP3At
-         RKqEkaUHgP0rT81iN/4QmSQeWi/4sBn6X5QoYK+HMTLdOpTAUrcvc5Cx9BeaF1ipXLWR
-         6xgA==
+        bh=5xliBb1w9QcuJ0w9pHRU1bxZSrBpjJ7XjtqqWTLT3aM=;
+        b=gGjXRH5P1Kt9pf6GObmvOL/z50LpN0pB8yEOYCe5bnnkSoyE+bUG7WPTWVfhcMmux8
+         9YdiXQ2B/ZiGntAA0NLYzKRBE4mqPXusg8eaDUs4Gb5ENeZMGV7MaJ538KlnaFkE9qSb
+         ujf+4FEFmW0A5V5Wq5yEM6mvX+lAQSzaUvBT9fFrifKNA2/HjbOw+w3N5fCF5HKdABSo
+         RFI/D81lZAHt7KcEHjl24acNDqSGyHnUeuSZXlHbHWASRLT7ECA6etqbkiDjT2o/K7ur
+         zSxwESUgo6aynrHAdQDU6SZWTt3uwVC9sHNTrmZzcYdkFPJLgtLaL2G9IP42lD9obY+Y
+         WX9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=PNXYjsqBmokYYN4Q17OeJZD7G3XLhxhwmPXKh3TfUPc=;
-        b=Cy8eTJ/2F7bdHWWUCiSUGKTInpI37bHtvAw3VNhwwL1d2Vlq8Kz/jowptYBp/vnj3R
-         d481lDi5f7QOlQVQOtBCV05LtCbnIXTu/8oxVv0Ki72CCaxdHu51aD6U32w+ftnSZxQu
-         bGpYoWtsXw9xYz2tt8E3H5jtU23kaOPxrJEHRXFFCLtoIHI8sY9C229DSJbK3UjryJak
-         uLZXcQY54luLStuvK9QsQVqAPqQfnMEGS0hgL+rXtBAfR0B/d/1GmPkMw1C9OEnEYU/f
-         39/oMMEH8m5Mb2lc1RqKnOxmnf2x6eTcjWaU9ONLm21Ce2kC8Ad0QJOtVQc4lkz7bmTu
-         Rv7Q==
-X-Gm-Message-State: AOAM530GYqNLap1YOl84TbLHbuoCNHNJ40nqIRcmvNcOE7RtCXMIISdR
-        j+KMRvsN7F2ioKczi9mnrTVob5xuOsY=
-X-Google-Smtp-Source: ABdhPJxwd8HSp4lOengK1QOVOq8TnaCFQCmpkLTunOEzEHkK6wV/zj5fbzcPCyE/eLjsOHSxGVgMGA==
-X-Received: by 2002:adf:e607:: with SMTP id p7mr13564903wrm.381.1618829585809;
-        Mon, 19 Apr 2021 03:53:05 -0700 (PDT)
+        bh=5xliBb1w9QcuJ0w9pHRU1bxZSrBpjJ7XjtqqWTLT3aM=;
+        b=N6Sst2cl9A3h+fJtQJWTSF1DXayYZOKIAMmzxnPa1+DcO8RwWmPJGgaYtUpml5pko+
+         Z1DuTcsp2Us6efAOP3xbfP94K8zHC1+MaT7dkIfmWopM7WKRFgVLahWH1ezpTpXQqBPg
+         oFd8zdLODQ2ZElkbBmdngOhClh11BpO9/eKAkaG6MQCqAZWT9La4Z9rl2ThQPUunDUxc
+         5aggc48yzqbMhbd/h5N4K8IVtSVPue+5UtFYfXAkfi4aDsHT5MXgpw21cLWK5tHuPLYN
+         NzSV/3A4ru5y5i+eA9fY9uGymOB62UAy21ZAWnSAHitBWMOxEPzhZ7VPlW+CAkYuhfoj
+         QOZA==
+X-Gm-Message-State: AOAM533hAv3Rzi3KwsFZz4QmlKd19RproG3SR+wcDPEWOGofwI/FD+ms
+        CzvTHWIZhISp/ozsyfGVRDjh8zsu6VM=
+X-Google-Smtp-Source: ABdhPJzx/j6q4cx6PaKXsBZkWgwqPhtcJT2f3w1KyGtwpd23myZXHRML+zsNR8jSSpHhnBCkyJybQw==
+X-Received: by 2002:a5d:6e06:: with SMTP id h6mr13684787wrz.201.1618829588687;
+        Mon, 19 Apr 2021 03:53:08 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g84sm15528296wmg.42.2021.04.19.03.53.05
+        by smtp.gmail.com with ESMTPSA id c6sm43171414wmr.0.2021.04.19.03.53.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Apr 2021 03:53:05 -0700 (PDT)
-Message-Id: <ccc26a8950be41e5be4dc78295c66ecbade8a50e.1618829583.git.gitgitgadget@gmail.com>
+        Mon, 19 Apr 2021 03:53:08 -0700 (PDT)
+Message-Id: <79843c0d572765a3004968235391b5ae17365d56.1618829583.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1008.git.git.1618829583.gitgitgadget@gmail.com>
 References: <pull.1008.git.git.1618829583.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 19 Apr 2021 10:52:47 +0000
-Subject: [PATCH 02/18] t9300: check ref existence using git-rev-parse rather
- than FS check
+Date:   Mon, 19 Apr 2021 10:52:52 +0000
+Subject: [PATCH 07/18] t5000: inspect HEAD using git-rev-parse
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,22 +77,27 @@ From: Han-Wen Nienhuys <hanwen@google.com>
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- t/t9300-fast-import.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t5000-tar-tree.sh | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-index 5c47ac4465cb..087ddf097036 100755
---- a/t/t9300-fast-import.sh
-+++ b/t/t9300-fast-import.sh
-@@ -392,7 +392,7 @@ test_expect_success 'B: accept branch name "TEMP_TAG"' '
- 		git gc
- 		git prune" &&
- 	git fast-import <input &&
--	test -f .git/TEMP_TAG &&
-+	git rev-parse TEMP_TAG &&
- 	test $(git rev-parse main) = $(git rev-parse TEMP_TAG^)
- '
+diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
+index 7204799a0b52..472fec4ee64a 100755
+--- a/t/t5000-tar-tree.sh
++++ b/t/t5000-tar-tree.sh
+@@ -233,9 +233,10 @@ test_expect_success \
+      test_cmp expected.mtime b.mtime'
  
+ test_expect_success \
+-    'git get-tar-commit-id' \
+-    'git get-tar-commit-id <b.tar >b.commitid &&
+-     test_cmp .git/$(git symbolic-ref HEAD) b.commitid'
++	'git get-tar-commit-id' \
++	'git get-tar-commit-id <b.tar >actual &&
++	git rev-parse HEAD > expect &&
++	test_cmp expect actual'
+ 
+ test_expect_success 'git archive with --output, override inferred format' '
+ 	git archive --format=tar --output=d4.zip HEAD &&
 -- 
 gitgitgadget
 
