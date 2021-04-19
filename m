@@ -7,65 +7,65 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FB78C433ED
-	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 11:46:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AE556C433B4
+	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 11:46:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 57E6361090
-	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 11:46:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 91DE26108B
+	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 11:46:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238751AbhDSLrO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Apr 2021 07:47:14 -0400
-Received: from wout1-smtp.messagingengine.com ([64.147.123.24]:39387 "EHLO
+        id S238869AbhDSLrR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Apr 2021 07:47:17 -0400
+Received: from wout1-smtp.messagingengine.com ([64.147.123.24]:45009 "EHLO
         wout1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S238856AbhDSLrJ (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 19 Apr 2021 07:47:09 -0400
+        by vger.kernel.org with ESMTP id S238870AbhDSLrP (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 19 Apr 2021 07:47:15 -0400
 Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.west.internal (Postfix) with ESMTP id A8505B01;
-        Mon, 19 Apr 2021 07:46:39 -0400 (EDT)
+        by mailout.west.internal (Postfix) with ESMTP id D06E3E1B;
+        Mon, 19 Apr 2021 07:46:44 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Mon, 19 Apr 2021 07:46:40 -0400
+  by compute1.internal (MEProxy); Mon, 19 Apr 2021 07:46:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
         :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm3; bh=K4JgZnJdYfycPHrP9xfCggxiDsh
-        7q22Nb6DqqR/ypmA=; b=nqlR5KcRcFvE2H0O5hXlQ17J0Z0KQ2S0HxYWFIl/rAA
-        8D+QXVlSrD0hie0j7Mp2nvuvNQ5YBS1/iaSFHX4ofUnUlzOB+r/z1oF6Esyh1XdD
-        glRO5QH6diETHPMAx0WODW6vRHTKtUwMtvI2/E22VA+rTAIOvA8S2OSpFGfHWJmq
-        ZsgYqWLe2AntPAxFxNdLSUmsWvqeOwXpm4yQLKzQg+d+RxA/jLdT5JlQtTPGwvPP
-        ZvLrXUvq8wlnmciSiTTHPSU5i49iREWP7eRVe81aRdEpo94CqVb4+IL2gXu2Xi78
-        WwtCfgLdoNQGL1nxdiBz4qsQhHg5Vn5TcOwF2BoaL9w==
+        :content-type:in-reply-to; s=fm3; bh=eIi1YD+80dWcV6ejewL8Hpbj5EU
+        wA9aIPMo/vh1KK4E=; b=HVDWJhFJD75m8v7hAXjGE6KYQCTXGMK62yYo7ojktWP
+        DyLQi5mTkxPFJbcjttej7B3tVzukh+O0hBZYzFufhGBADZL3FNTb0i375IeNyHKi
+        kD+r3Tc1JP4uv7NvGL91hfUkhrP4CeXVvtn51lgBU1XSr5HovKlV6LwFYI9niwgl
+        8VyhPkyotSTchOJrn1AfasXeWQxp4gxBM7CWCJ0G0PF13ZSwOZcHynO1HZSn0o14
+        I523OmtZ8f++vXKDNRi+GeeMlSWV71PPEQADRwSe4SAta9QSCZgNU/EZq/hicr46
+        4ioiUndoAbY62JVLOv2Y9wtp6s6ho9qkWzfMPPM9Y6A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=K4JgZn
-        JdYfycPHrP9xfCggxiDsh7q22Nb6DqqR/ypmA=; b=Ad6eqbep6gkyi8zDYJO/xJ
-        hFb5Av0s0HD4cd3wlgpnNIZnixX5uA0de2tDAzsC/pdPtfT/HJ0IVxLPBY6Aljj2
-        W4x7UpJKWH89LXXP6PFw56b+OjavXamVPqHtbv4QJbTYW8tTurjaFV8zj20g9hY+
-        7NBQqpsZustTg+SQOmP9ivbLCtXpmGRaM7I+GOrhvyy9oJxuOc60ifJ+B2Nlb2/Q
-        yh3toQn6GHMqJFokvANMSiXa+b9EbcM08abUbz1idGULN+6ybt7jjrLwEDo5kTnN
-        Bn6E3kS/IhfupEkJRpVf+9hQe+Yol10KEjtLejGbQnQ8z5Kvw3vPrynrmGVkg7cQ
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=eIi1YD
+        +80dWcV6ejewL8Hpbj5EUwA9aIPMo/vh1KK4E=; b=Hq0NTXIwD6qoibfANCFCVM
+        fTq0tAmnnHeTYP9hQRy4TOg4cFTj1kz5Fo2R+CQ+ASWfoDjeFvJ5B10d6+TwxUgn
+        O8170dZK406MLTvhhqx3zT2d17BpXniP6fOr9TCNdC07j733hCp9yo42dLu42FAV
+        Ok30PDsdZvTsx+AdIoIygqOks4Au0aKgA8ycNvnTi/QGs28SF9GJn8DuUgBDmwwc
+        74gphc4Z0Fbe4tJU2bFZI8ILlkeFpKlpDxPrTcZ9Av/vhT2Hq+1+AYBcgND+gQWd
+        ebTu9xLCMZLY5U/Go0Vey/e/R9ALtgFqatUrDH3oe1xI3Bd45Qjnc+5So+1GhW/g
         ==
-X-ME-Sender: <xms:n219YIi-f6p3bQgMywLIVzcBBN_XPjq-oa3m3IbsooKo5coladvHoA>
-    <xme:n219YBBs6DrEFl1K1TTTSKyscNJhGkt4ZkIqEszIEkfAFT28tTmBXSPD3Xea1DblG
-    OPA_d0amigRrPfmiQ>
+X-ME-Sender: <xms:pG19YGssAFgiyJ-W9tE3avZXpc0A8-WdYcLTEU-iRjivbZsl7ksN2w>
+    <xme:pG19YLcnlaTKnzt-qQIYyFldP07fWNMwQQaf6LtB8cKn_vzD5qvaqJqqCd9DMiLy2
+    p3A8TTRTAxVfFCmTw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvddtgedggeehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
     hnpeehgefhtdefueffheekgfffudelffejtdfhvdejkedthfehvdelgfetgfdvtedthfen
-    ucfkphepjeejrdduledurdeikedrkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    ucfkphepjeejrdduledurdeikedrkedtnecuvehluhhsthgvrhfuihiivgepvdenucfrrg
     hrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:n219YAG7LFxzePTkJzSUcHrKd_h501HYYhSUvfKn9uBYonuTdgHcVg>
-    <xmx:n219YJTx3fYpj14wittXkcKbbuS7EmJ3zXgC7rcPRG7hMByXlEgrjg>
-    <xmx:n219YFyYPszkNu-ujBi8JmY2MNQJWINqWFpvypB4Yctl5-v6SBCZPg>
-    <xmx:n219YHsKu_TFTYEtQGWFbj1hQP6YsCuYV3nZmmhSa4A7qtPwXXL8gA>
+X-ME-Proxy: <xmx:pG19YByrRFuv2DSqAqJbLnTDFQPHtTgHkIC2Co5LJ1FPoiMjgXu6Hg>
+    <xmx:pG19YBNvq9gSpzBExV4VlfW5k20fEIDO-FtsL30PdhwAeeUKLb-ofg>
+    <xmx:pG19YG8hkWLBbwuTfa0n_cS1v2sDj_rqncjOeSIvKpn_5dHIsFkIqQ>
+    <xmx:pG19YKbvTammWNHQqS1ORbli-gjiYBVDJunAImzatT1Vq1TO6dxzog>
 Received: from vm-mail.pks.im (x4dbf4450.dyn.telefonica.de [77.191.68.80])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 5E213108006B;
-        Mon, 19 Apr 2021 07:46:38 -0400 (EDT)
+        by mail.messagingengine.com (Postfix) with ESMTPA id 650F11080064;
+        Mon, 19 Apr 2021 07:46:43 -0400 (EDT)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 7887ba6d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Mon, 19 Apr 2021 11:46:37 +0000 (UTC)
-Date:   Mon, 19 Apr 2021 13:46:36 +0200
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 900dae38 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Mon, 19 Apr 2021 11:46:42 +0000 (UTC)
+Date:   Mon, 19 Apr 2021 13:46:41 +0200
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>,
@@ -74,14 +74,13 @@ Cc:     Jeff King <peff@peff.net>,
         Philip Oakley <philipoakley@iee.email>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>,
         =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Subject: [PATCH v5 1/8] uploadpack.txt: document implication of
- `uploadpackfilter.allow`
-Message-ID: <bcc81336b10ff22f0844fdd7f7fe7e2c3807cec6.1618832437.git.ps@pks.im>
+Subject: [PATCH v5 2/8] revision: mark commit parents as NOT_USER_GIVEN
+Message-ID: <ffe8e2bf733dcfbe3847e172f6a397a205531cc9.1618832437.git.ps@pks.im>
 References: <cover.1618234575.git.ps@pks.im>
  <cover.1618832437.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="LLH+Znd9Sj+msq5D"
+        protocol="application/pgp-signature"; boundary="+ae7HN2tjs650dET"
 Content-Disposition: inline
 In-Reply-To: <cover.1618832437.git.ps@pks.im>
 Precedence: bulk
@@ -89,64 +88,98 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---LLH+Znd9Sj+msq5D
+--+ae7HN2tjs650dET
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When `uploadpackfilter.allow` is set to `true`, it means that filters
-are enabled by default except in the case where a filter is explicitly
-disabled via `uploadpackilter.<filter>.allow`. This option will not only
-enable the currently supported set of filters, but also any filters
-which get added in the future. As such, an admin which wants to have
-tight control over which filters are allowed and which aren't probably
-shouldn't ever set `uploadpackfilter.allow=3Dtrue`.
+The NOT_USER_GIVEN flag of an object marks whether a flag was explicitly
+provided by the user or not. The most important use case for this is
+when filtering objects: only objects that were not explicitly requested
+will get filtered.
 
-Amend the documentation to make the ramifications more explicit so that
-admins are aware of this.
+The flag is currently only set for blobs and trees, which has been fine
+given that there are no filters for tags or commits currently. We're
+about to extend filtering capabilities to add object type filter though,
+which requires us to set up the NOT_USER_GIVEN flag correctly -- if it's
+not set, the object wouldn't get filtered at all.
+
+Mark unseen commit parents as NOT_USER_GIVEN when processing parents.
+Like this, explicitly provided parents stay user-given and thus
+unfiltered, while parents which get loaded as part of the graph walk
+can be filtered.
+
+This commit shouldn't have any user-visible impact yet as there is no
+logic to filter commits yet.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Documentation/config/uploadpack.txt | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ revision.c | 4 ++--
+ revision.h | 3 ---
+ 2 files changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/config/uploadpack.txt b/Documentation/config/upl=
-oadpack.txt
-index b0d761282c..6729a072ea 100644
---- a/Documentation/config/uploadpack.txt
-+++ b/Documentation/config/uploadpack.txt
-@@ -59,7 +59,8 @@ uploadpack.allowFilter::
-=20
- uploadpackfilter.allow::
- 	Provides a default value for unspecified object filters (see: the
--	below configuration variable).
-+	below configuration variable). If set to `true`, this will also
-+	enable all filters which get added in the future.
- 	Defaults to `true`.
-=20
- uploadpackfilter.<filter>.allow::
+diff --git a/revision.c b/revision.c
+index 553c0faa9b..fd34c75e23 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1123,7 +1123,7 @@ static int process_parents(struct rev_info *revs, str=
+uct commit *commit,
+ 				mark_parents_uninteresting(p);
+ 			if (p->object.flags & SEEN)
+ 				continue;
+-			p->object.flags |=3D SEEN;
++			p->object.flags |=3D (SEEN | NOT_USER_GIVEN);
+ 			if (list)
+ 				commit_list_insert_by_date(p, list);
+ 			if (queue)
+@@ -1165,7 +1165,7 @@ static int process_parents(struct rev_info *revs, str=
+uct commit *commit,
+ 		}
+ 		p->object.flags |=3D left_flag;
+ 		if (!(p->object.flags & SEEN)) {
+-			p->object.flags |=3D SEEN;
++			p->object.flags |=3D (SEEN | NOT_USER_GIVEN);
+ 			if (list)
+ 				commit_list_insert_by_date(p, list);
+ 			if (queue)
+diff --git a/revision.h b/revision.h
+index a24f72dcd1..93aa012f51 100644
+--- a/revision.h
++++ b/revision.h
+@@ -44,9 +44,6 @@
+ /*
+  * Indicates object was reached by traversal. i.e. not given by user on
+  * command-line or stdin.
+- * NEEDSWORK: NOT_USER_GIVEN doesn't apply to commits because we only supp=
+ort
+- * filtering trees and blobs, but it may be useful to support filtering co=
+mmits
+- * in the future.
+  */
+ #define NOT_USER_GIVEN	(1u<<25)
+ #define TRACK_LINEAR	(1u<<26)
 --=20
 2.31.1
 
 
---LLH+Znd9Sj+msq5D
+--+ae7HN2tjs650dET
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmB9bZsACgkQVbJhu7ck
-PpQSnQ//YC4/wDAeJIpHaCcG3g0wwXk1psFyQ3/7GeOokzZrb7IjCsZi/jJxCxfg
-FPeQNyuGGY5gOHs93OYE01FyfCb+W2EwGfGUzsOT3hwilS5F/15LLhjTFffvW50L
-x9OFs+HGS19I0UotTuLfoTat/Qx3EH/1LTA6jcu/HdEQFoNCu8kWiNACn8iXy4Ze
-6cppGQztpSi8SmrNao2GWJcaj2UUXmlAIOG7eVzvVSBV+euZjIQPm/4fcwsQvR6X
-cBpPGc4FCL2FKP+YN8zVW/+yMyfHINul0Y7lr4j5IwsY2cqQIZQpFAjEx0dCl6P6
-razo6nyBwMAd10i/au8gk8xnwvtqM5d4dEFU8TeMv7Qdtz3bO4dQouPaxX5r4/iY
-5GXzV6ECcSlhaSsmHdGHDYKXtx82fzK9J1YlrjgKlMrDq1lT8qV4PTv/k+HiHxip
-+HYgXyoC0eCIjS0FK7ryUy8kEdESIm9Tdz5fw+BfCGkytx7AL9lEX0+2F+NWe4WV
-av2oKvRI74PUCaxlc2ETe7T/m89+70/8+UYVTZrA5nUxJx4FKfpwTSQX3PWiwiEG
-7JhI1pAH5pfOPc8OkYyDQYJhYSDIipqr4e9vED8CqU6Ry7YM1IBr5gjGFl5Yktse
-DaaTe1BHs7L3WWtjONMqE66KdGcCfkTMq4L9Vd/5T9T86MfBnt0=
-=ulZM
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmB9baAACgkQVbJhu7ck
+PpS96g//WW1shALfYLs0Oo2s++waRLRuQ1VNHqqCuyeluQ/0YxEm7r/EcjmKyGJ1
+eNlmVUik3kEZEWwwqrbIx3nEGJR8zSZhG7p/cebDrp6UrFhgWGrNLZDAdHIrhulz
+4aBLOQU+33C+WmJIsfLLEtJuU1gvq+VKZepdZxlsxGWvSeVf3jd8xnucMckIpj9d
+l00ZJkEsi37Heeh+3K4ZkvBXN2WQC2mEMx+YdMw73TlkC9H8OclFUiuA6hDPW2SF
+1EYpV9Rdk7/Dz88Ul8xUpfFv+aMQtZTBIozhkcpXtCQsXU/me6ZatUz6c+/iM+rS
+aJiuXWNC2HWJ2eZQTgR2qJB+yMkUErBeicQdtS5OpcNbAIUooqg2yQO0VxvzsiXn
+b03n18pzTlT4ZgelAqYNqk9Klel0HUmuGO3COqIFINqNqkh+O9EF95UrphnfHGmY
+uQd0qCbXeF4yDPIJxDlXsH3tPEory3M0rrOcjpDYmNe+++Cvubw5XtOfS1dxR5og
+Jb6eUDoIMhO2PDOGJ/l7udyAJlJ/ALlJH4P/NiG12t5Eyg7OXSU5EtaEXGB0f6AE
+rYylkB5lC6GvgM32MsWZLtvDC38MKuu+2ptyd89gRyJIlDb5uQdC5+zxhPvmwWPX
+p/9TS+yJgHJ6xosi0cDkMtWuQZpz9MH4Mk3cPstcgcmVQO96P+w=
+=CQrc
 -----END PGP SIGNATURE-----
 
---LLH+Znd9Sj+msq5D--
+--+ae7HN2tjs650dET--
