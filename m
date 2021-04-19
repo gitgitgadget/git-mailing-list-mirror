@@ -2,67 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AA676C433B4
-	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 11:38:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D16C8C433ED
+	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 11:38:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8228661166
-	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 11:38:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A2E5061165
+	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 11:38:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238738AbhDSLis (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Apr 2021 07:38:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35900 "EHLO
+        id S238543AbhDSLjB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Apr 2021 07:39:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238543AbhDSLic (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Apr 2021 07:38:32 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0679DC06138A
+        with ESMTP id S238606AbhDSLid (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Apr 2021 07:38:33 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B070DC061760
         for <git@vger.kernel.org>; Mon, 19 Apr 2021 04:38:03 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id e5so4998327wrg.7
-        for <git@vger.kernel.org>; Mon, 19 Apr 2021 04:38:02 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id w186so13467150wmg.3
+        for <git@vger.kernel.org>; Mon, 19 Apr 2021 04:38:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=74UCjTszC/JW9ZVjbpc5onRZS13S1spFDA7Rwrv0XpE=;
-        b=rMrgzUMx4/VOZmgSM74H+Y+QmK4TnlNWHcopOt4G+KHKFSFaFsNf+aUREWkNCkHTqo
-         i9kKm1nSVQN2Pm5wl0a4uk1X3VVlGiP8uabUaWA8A6WIJtnbeJqk6Ox5kVzyag8/8hAd
-         dHTw/meftUoo5aICgpc6fyl9HPfTlB7/6B8EaCAjE25eN6ElWtT72L7VkADrblov8sSm
-         9+loTKgjSg7TtbqMnemH2jxdrzY6sBYSz4eTHMLMFhNiW+xH75ty7mmh5Mahm8hn7mUa
-         vtGH8jtVFPqR6DpgoLjNlk/0U0cxUm+QnKSo2oyShW4YkfbYiK5gl43U4a6/5Acb9tpJ
-         2xLw==
+        bh=rJaShWjEu4eUF7ydhTR+EmPjwOi/kD1/15/JKYSZUWM=;
+        b=DQK+/k8ggwR6dVvlXatzzIw3HIybR8W/SOIp9SW52pO2uRfUeo6DzSYfUsvLlwRTy4
+         VG0S+wE7nqq/gmREpbn24Y8vI9stO9LfPV1Rv46TjIddEDR5A7YtwgZ4PxFQHZVD+2cw
+         mtRzTZX6ey771hnTrP/HeguH/qsOTB9JtsoF+pthErwN13v7fm5erfwy5ufMje3n9LzY
+         Rfmh41Vd80wL01v538VJvG1soduYfGH5VfK5ueCA25fphKul/OYDiRBYMDm8rTIHHU2g
+         UrnwHtSsT9J0kA9NA3gqjHIPnY2j/p5ld0S3/9NhCUYkQg64XX16KOp7GF6ho+qZSIDn
+         hr2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=74UCjTszC/JW9ZVjbpc5onRZS13S1spFDA7Rwrv0XpE=;
-        b=SVBNmpEFB50J5IgKJ47MhpP7ahlT2caUHqpPy4d8XDjz2gTXVaHPVSLJSaipuqguc8
-         CrHOzGvGJwB4R7poGDgYrp+gen59EQP9WzLjzjd7qbHeVtOVF6RNAL0SQf8DquUuX8n1
-         1yaGwDbki8fvu7pBMgGiL87i3earxgG4tRFz9OfBdDmEhXf4rPukV11kgZq1we+wZYo+
-         To+xy9UrOwEN5JcdHbfLt2u9q71nl3hC9AmUBf7DY/tWRlJURmSalPHTiYgGW6KyH/dW
-         5kfmzcT78k4JMLqt+8QA91BBga83GmJ4j/ze4RX8n8U/zhuRqpCA6FTGmsjoqdlK6uxj
-         WtTA==
-X-Gm-Message-State: AOAM530zXNUuWhs3t8kZYNhAO6GpSnBm+yPe8GPfoPycWK44GEaouj4k
-        /eul7BUs076/q5niWoviYkwU3FVt7zw=
-X-Google-Smtp-Source: ABdhPJzJgd3AXDec2WNy+zWCoVOd4NHJ2AtZMocoyiQWXQwNqRZBnZMWf+TV2y416yTu6Lao91Zp8w==
-X-Received: by 2002:a5d:4b12:: with SMTP id v18mr14035687wrq.45.1618832281770;
-        Mon, 19 Apr 2021 04:38:01 -0700 (PDT)
+        bh=rJaShWjEu4eUF7ydhTR+EmPjwOi/kD1/15/JKYSZUWM=;
+        b=Q4XeKkrDy20N7aYNFmP3TD+GRoKhRS8GC8hCx99ueQhi4saaYoiCQkOZLMnIzaFpx4
+         9rbFXWTrMJq3+UAiXngLHJjy5ORs9oumYEfUGwdaQcgZfeESZpaG3TjZXIk/ThusTJC8
+         eKjJWQnf6DqsC6WuK9aOj6GIfVK/YyH7ZuoAXfPYybgZ+v8va7mCu0lkeZ6zOyWQ267i
+         pE8X2MyWZCXM/b2trerca2etSTlaFImTzN85bhs4lE6LHp5GRJ5vJw59NdFaJSeVVuD5
+         NRvTNIGqtfYGpDjjHcLhpoxaQef+/b0oAuzhV2z89o6n1Mp2jOqBQZHx+IxyFyifMXsD
+         BlsA==
+X-Gm-Message-State: AOAM533hnKKckjoxbVNDX9kKLnXWmVrXA2MCGpzABBv4z8Vch58e43uP
+        ruNCuR+oWsbArboYldFMxjNTgqdCvUA=
+X-Google-Smtp-Source: ABdhPJyZ89P5l4nrNcjhoJB5Ho+h3V5ySiDIfehXO4XPwrHnwCC4TzKc/j6C1SYNJ7/zKODsVDrg8A==
+X-Received: by 2002:a7b:c5c8:: with SMTP id n8mr21174287wmk.63.1618832282525;
+        Mon, 19 Apr 2021 04:38:02 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g12sm23572695wru.47.2021.04.19.04.38.01
+        by smtp.gmail.com with ESMTPSA id l4sm22680284wrx.24.2021.04.19.04.38.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Apr 2021 04:38:01 -0700 (PDT)
-Message-Id: <f0216ae20b6988514bdb60d8fff96e18c2ce9f1d.1618832277.git.gitgitgadget@gmail.com>
+        Mon, 19 Apr 2021 04:38:02 -0700 (PDT)
+Message-Id: <fa64aa9ce7c107e9349c5c2e58b276eea053f2ac.1618832277.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.847.v7.git.git.1618832276.gitgitgadget@gmail.com>
 References: <pull.847.v6.git.git.1618255552.gitgitgadget@gmail.com>
         <pull.847.v7.git.git.1618832276.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 19 Apr 2021 11:37:32 +0000
-Subject: [PATCH v7 04/28] hash.h: provide constants for the hash IDs
+Date:   Mon, 19 Apr 2021 11:37:33 +0000
+Subject: [PATCH v7 05/28] init-db: set the_repository->hash_algo early on
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -89,62 +89,55 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-This will simplify referencing them from code that is not deeply integrated with
-Git, in particular, the reftable library.
+The reftable backend needs to know the hash algorithm for writing the
+initialization hash table.
 
+The initial reftable contains a symref HEAD => "main" (or "master"), which is
+agnostic to the size of hash value, but this is an exceptional circumstance, and
+the reftable library does not cater to this exception. It insists that all
+tables in the stack have a consistent format ID for the hash algorithm.
+
+Call set_repo_hash_algo directly after calling validate_hash_algorithm() (which
+reads $GIT_DEFAULT_HASH).
+
+Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- hash.h        | 6 ++++++
- object-file.c | 6 ++----
- 2 files changed, 8 insertions(+), 4 deletions(-)
+ builtin/init-db.c | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-diff --git a/hash.h b/hash.h
-index 3fb0c3d4005a..b17fb2927711 100644
---- a/hash.h
-+++ b/hash.h
-@@ -161,12 +161,18 @@ static inline int hash_algo_by_ptr(const struct git_hash_algo *p)
- 	return p - hash_algos;
- }
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index c19b35f1e691..ff06fe4b9a49 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -424,6 +424,27 @@ int init_db(const char *git_dir, const char *real_git_dir,
  
-+/* "sha1", big-endian */
-+#define GIT_SHA1_HASH_ID 0x73686131
-+
- /* The length in bytes and in hex digits of an object name (SHA-1 value). */
- #define GIT_SHA1_RAWSZ 20
- #define GIT_SHA1_HEXSZ (2 * GIT_SHA1_RAWSZ)
- /* The block size of SHA-1. */
- #define GIT_SHA1_BLKSZ 64
+ 	validate_hash_algorithm(&repo_fmt, hash);
  
-+/* "s256", big-endian */
-+#define GIT_SHA256_HASH_ID 0x73323536
++	/*
++	 * At this point, the_repository we have in-core does not look
++	 * anything like one that we would see initialized in an already
++	 * working repository after calling setup_git_directory().
++	 *
++	 * Calling repository.c::initialize_the_repository() may have
++	 * prepared the .index .objects and .parsed_objects members, but
++	 * other members like .gitdir, .commondir, etc. have not been
++	 * initialized.
++	 *
++	 * Many API functions assume they are working with the_repository
++	 * that has sensibly been initialized, but because we haven't
++	 * really read from an existing repository, we need to hand-craft
++	 * the necessary members of the structure to get out of this
++	 * chicken-and-egg situation.
++	 *
++	 * For now, we update the hash algorithm member to what the
++	 * validate_hash_algorithm() call decided for us.
++	 */
++	repo_set_hash_algo(the_repository, repo_fmt.hash_algo);
 +
- /* The length in bytes and in hex digits of an object name (SHA-256 value). */
- #define GIT_SHA256_RAWSZ 32
- #define GIT_SHA256_HEXSZ (2 * GIT_SHA256_RAWSZ)
-diff --git a/object-file.c b/object-file.c
-index 624af408cdcd..5af384a8cfc4 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -146,8 +146,7 @@ const struct git_hash_algo hash_algos[GIT_HASH_NALGOS] = {
- 	},
- 	{
- 		"sha1",
--		/* "sha1", big-endian */
--		0x73686131,
-+		GIT_SHA1_HASH_ID,
- 		GIT_SHA1_RAWSZ,
- 		GIT_SHA1_HEXSZ,
- 		GIT_SHA1_BLKSZ,
-@@ -160,8 +159,7 @@ const struct git_hash_algo hash_algos[GIT_HASH_NALGOS] = {
- 	},
- 	{
- 		"sha256",
--		/* "s256", big-endian */
--		0x73323536,
-+		GIT_SHA256_HASH_ID,
- 		GIT_SHA256_RAWSZ,
- 		GIT_SHA256_HEXSZ,
- 		GIT_SHA256_BLKSZ,
+ 	reinit = create_default_files(template_dir, original_git_dir,
+ 				      initial_branch, &repo_fmt,
+ 				      flags & INIT_DB_QUIET);
 -- 
 gitgitgadget
 
