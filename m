@@ -8,66 +8,65 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DD02C433ED
-	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 11:41:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E2F58C433B4
+	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 11:41:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 25A6961166
-	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 11:41:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C348461221
+	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 11:41:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238769AbhDSLlm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Apr 2021 07:41:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35900 "EHLO
+        id S238778AbhDSLln (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Apr 2021 07:41:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36008 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238759AbhDSLiw (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S238766AbhDSLiw (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 19 Apr 2021 07:38:52 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D050BC061350
-        for <git@vger.kernel.org>; Mon, 19 Apr 2021 04:38:16 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id p6so26945384wrn.9
-        for <git@vger.kernel.org>; Mon, 19 Apr 2021 04:38:16 -0700 (PDT)
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A82FCC061359
+        for <git@vger.kernel.org>; Mon, 19 Apr 2021 04:38:18 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id w7-20020a1cdf070000b0290125f388fb34so17869575wmg.0
+        for <git@vger.kernel.org>; Mon, 19 Apr 2021 04:38:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=Dz1zr8n39D/q2P9IL0Jw3lNhMszXFSjhNCDEQ18nlzQ=;
-        b=qO/+hu6wCbq6UapB8FBg/pZyjnkBfZsdPbJyEqMgKha3Ejf1z8DqmiIJaD5nfY5bKY
-         iDiHRKRbfSYdCxA4ol85avbJ4yrOkSVGCOklBoxeZ/GQBuV3gtOw5O6E0rErnwqUy+Xu
-         J/g809RbRRsh2BdFyo06wwISmJBn5RRhtv+v6GDjg1mXrofYApC1hUk09cN0s0AJGv3o
-         4ZdimIQweM6MGSaVtbyZ+XOjlhnkBzsOrInCDVUFyCRw43SoLA3qhKcbkaRs9fdhza++
-         0fGjCJfx0CSjdO5ClC9ZieK6Z4Yvbzhq/ACKz5TxzhgEb/OhuLwdOQA6fMFjEVsf3L67
-         l23g==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=z9U0KgF8TaxFk+I/huNnvpBLBhZnQwJVq7gqigKK5Zo=;
+        b=lTx/o/SluoHnZLVPxIqNrnx15L1BBAoaZjIiU/Nq0mR3sK9vDFQdP8LJ24ZpUgOllD
+         aa8XZ0o9IZAKvUXMVyrKWZg9otgHpXwq2VSq98AJJoBTewIVELkplBrkNxvuqwb02/dh
+         v3o+iva2aupxHA31ARCtDNJAG8zreO6loex4UEm9Sgt7eNQep7o7pQ6s1mDLj8tkD00A
+         rUGs5n44fNZgCy2z1imuZwwV0J9VlTVYlnrn90NsU21cKl1a+aYeJy8eoOw7p6Ml8bPD
+         4Ymtcko0sqROTSweuCrHzZBycGAuLu52IwlMl8T60G+1YLUe5WLupoHT3lOwXYgQafdr
+         Ol4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=Dz1zr8n39D/q2P9IL0Jw3lNhMszXFSjhNCDEQ18nlzQ=;
-        b=boIko6M8nQubCtk+OkM5bmIt4lk/ffpprMlvhB4hRxQjB+W+Ga0Rxc0cKK5SfBSrQd
-         8ECsbz6RfNA0TrSGMJkytI2be/FGv1qBe3pqHNjegj6PICXUUhxwR/1zAXphXTrqFs3D
-         FH3WDQ7nu54cOf//3kHNgRDT04IhBCWlU1RGGy1YXp3uWLFcWJmGusOC3a6JzFKWG6VU
-         M+VPYtBREhXO8ukdDsnDvviqqoQCuO1xUxr1rVXJaB5DLSREfPDPcUY48S8JyyG8dPka
-         8y3nEl3UiA8Ji8J/ycLJIZLrveHewEpvFJ04m0fFBHBbINhFXHikIhjeFNff7scwmf/X
-         pkMg==
-X-Gm-Message-State: AOAM5320AJDW0smRX8FXXh9AwpC3ZbfEU+eGjQ34t79OlkiB79iWsIC/
-        WFf6pxnAe+ggEbLW3m5WunFGvdlxIS4=
-X-Google-Smtp-Source: ABdhPJylJV4vTZkDRWLlAJ2rBF2OLHhrspSLHycXEORmYeNY9llc2Gkb9H7VMoke6HOdOB8pAyYLmA==
-X-Received: by 2002:a5d:4cc1:: with SMTP id c1mr14141910wrt.291.1618832295678;
-        Mon, 19 Apr 2021 04:38:15 -0700 (PDT)
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=z9U0KgF8TaxFk+I/huNnvpBLBhZnQwJVq7gqigKK5Zo=;
+        b=Mj6yYs3OVj6lgAXa/9tf5y0SNT5Rak7rLMwcvXkRslI50FOedbzvn7jxn7WMKI/keX
+         eT7PhoBDjkGvICH8t3UV89fxenI7SHaT/iAbqwQS7KcYxCOYFavetZ7aFNoV2PlnoG6i
+         bMACvQHtFapJLSqA4tSP7O/EjexEwUH28GYW+oK6eBXKwk/22MUwXdIqGEJrg9QQYcIu
+         iGIpTS11OSuHpQ7/eLsiy5SpTqmHtZg1uGsBp19lk1LXxsul/IXiGaDvUyvFIVvjpRko
+         5uLJ0R7pqCGySgnby8va1R8DHQC8hSqEk4mO6qIehLuv/YwDNFSphQ588MGDr6wfAUV3
+         56Qw==
+X-Gm-Message-State: AOAM531VCJhOz6SXIhdNN8sLPZ5VoHjc52nFp/bd6Oc6L/CFoc2ijEit
+        LGza5P4VGg6uGLU84gPZowVxbAcOT1Y=
+X-Google-Smtp-Source: ABdhPJwh64Q1Z7vjSrDgcIhcbggD6YbLTcWHL0NY66nlpvU9+GtpqloRLSNfl3gXrER/kIVu6wWLzg==
+X-Received: by 2002:a1c:7ed3:: with SMTP id z202mr20780286wmc.136.1618832297531;
+        Mon, 19 Apr 2021 04:38:17 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k22sm21987502wrh.5.2021.04.19.04.38.15
+        by smtp.gmail.com with ESMTPSA id f25sm22279589wrd.43.2021.04.19.04.38.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Apr 2021 04:38:15 -0700 (PDT)
-Message-Id: <742d716e451061540ec3a1df53e0c9dbb08d9124.1618832277.git.gitgitgadget@gmail.com>
+        Mon, 19 Apr 2021 04:38:17 -0700 (PDT)
+Message-Id: <0c1eb69900a7aa9650dcc695ef18793602320cce.1618832277.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.847.v7.git.git.1618832276.gitgitgadget@gmail.com>
 References: <pull.847.v6.git.git.1618255552.gitgitgadget@gmail.com>
         <pull.847.v7.git.git.1618832276.gitgitgadget@gmail.com>
-From:   "=?UTF-8?q?SZEDER=20G=C3=A1bor?= via GitGitGadget" 
-        <gitgitgadget@gmail.com>
-Date:   Mon, 19 Apr 2021 11:37:52 +0000
-Subject: [PATCH v7 24/28] git-prompt: prepare for reftable refs backend
-MIME-Version: 1.0
+From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 19 Apr 2021 11:37:55 +0000
+Subject: [PATCH v7 27/28] t1401,t2011: parameterize HEAD.lock for REFTABLE
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Fcc:    Sent
+MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Han-Wen Nienhuys <hanwen@google.com>, Jeff King <peff@peff.net>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>,
@@ -83,56 +82,65 @@ Cc:     Han-Wen Nienhuys <hanwen@google.com>, Jeff King <peff@peff.net>,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
         <avarab@gmail.com>, Han-Wen Nienhuys g <hanwen@google.com>,
         Han-Wen Nienhuys <hanwenn@gmail.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+        Han-Wen Nienhuys <hanwen@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+From: Han-Wen Nienhuys <hanwen@google.com>
 
-In our git-prompt script we strive to use Bash builtins wherever
-possible, because fork()-ing subshells for command substitutions and
-fork()+exec()-ing Git commands are expensive on some platforms.  We
-even read and parse '.git/HEAD' using Bash builtins to get the name of
-the current branch [1].  However, the upcoming reftable refs backend
-won't use '.git/HEAD' at all, but will write an invalid refname as
-placeholder for backwards compatibility instead, which will break our
-git-prompt script.
-
-Update the git-prompt script to recognize the placeholder '.git/HEAD'
-written by the reftable backend (its content is specified in the
-reftable specs), and then fall back to use 'git symbolic-ref' to get
-the name of the current branch.
-
-[1] 3a43c4b5bd (bash prompt: use bash builtins to find out current
-    branch, 2011-03-31)
-
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- contrib/completion/git-prompt.sh | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ t/t1401-symbolic-ref.sh          | 11 +++++++++--
+ t/t2011-checkout-invalid-head.sh | 11 +++++++++--
+ 2 files changed, 18 insertions(+), 4 deletions(-)
 
-diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-index 4640a1535d15..2e5a5d80271d 100644
---- a/contrib/completion/git-prompt.sh
-+++ b/contrib/completion/git-prompt.sh
-@@ -478,10 +478,15 @@ __git_ps1 ()
- 			if ! __git_eread "$g/HEAD" head; then
- 				return $exit
- 			fi
--			# is it a symbolic ref?
- 			b="${head#ref: }"
- 			if [ "$head" = "$b" ]; then
- 				detached=yes
-+			elif [ "$b" = "refs/heads/.invalid" ]; then
-+				# Reftable
-+				b="$(git symbolic-ref HEAD 2>/dev/null)" ||
-+				detached=yes
-+			fi
-+			if [ "$detached" = yes ]; then
- 				b="$(
- 				case "${GIT_PS1_DESCRIBE_STYLE-}" in
- 				(contains)
+diff --git a/t/t1401-symbolic-ref.sh b/t/t1401-symbolic-ref.sh
+index a4ebb0b65fec..4e130776b40f 100755
+--- a/t/t1401-symbolic-ref.sh
++++ b/t/t1401-symbolic-ref.sh
+@@ -99,9 +99,16 @@ test_expect_success LONG_REF 'we can parse long symbolic ref' '
+ 	test_cmp expect actual
+ '
+ 
++if test_have_prereq REFTABLE
++then
++	HEAD_LOCK=reftable/tables.list.lock
++else
++	HEAD_LOCK=HEAD.lock
++fi
++
+ test_expect_success 'symbolic-ref reports failure in exit code' '
+-	test_when_finished "rm -f .git/HEAD.lock" &&
+-	>.git/HEAD.lock &&
++	test_when_finished "rm -f .git/$HEAD_LOCK" &&
++	>.git/$HEAD_LOCK &&
+ 	test_must_fail git symbolic-ref HEAD refs/heads/whatever
+ '
+ 
+diff --git a/t/t2011-checkout-invalid-head.sh b/t/t2011-checkout-invalid-head.sh
+index e52022e15229..ef6471cb0954 100755
+--- a/t/t2011-checkout-invalid-head.sh
++++ b/t/t2011-checkout-invalid-head.sh
+@@ -22,9 +22,16 @@ test_expect_success 'checkout main from invalid HEAD' '
+ 	git checkout main --
+ '
+ 
++if test_have_prereq REFTABLE
++then
++	HEAD_LOCK=reftable/tables.list.lock
++else
++	HEAD_LOCK=HEAD.lock
++fi
++
+ test_expect_success 'checkout notices failure to lock HEAD' '
+-	test_when_finished "rm -f .git/HEAD.lock" &&
+-	>.git/HEAD.lock &&
++	test_when_finished "rm -f .git/$HEAD_LOCK" &&
++	>.git/$HEAD_LOCK &&
+ 	test_must_fail git checkout -b other
+ '
+ 
 -- 
 gitgitgadget
 
