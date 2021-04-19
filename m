@@ -2,109 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7AA8C433ED
-	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 21:18:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 234A6C433B4
+	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 21:33:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 92EAA61107
-	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 21:18:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DD86C613AC
+	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 21:33:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239182AbhDSVTO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Apr 2021 17:19:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52088 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229734AbhDSVTN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Apr 2021 17:19:13 -0400
-Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59310C06174A
-        for <git@vger.kernel.org>; Mon, 19 Apr 2021 14:18:43 -0700 (PDT)
-Received: by mail-yb1-xb2c.google.com with SMTP id p3so19835511ybk.0
-        for <git@vger.kernel.org>; Mon, 19 Apr 2021 14:18:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=l2YM96Qy+4Fpcou+g3QPoCXyJ4z2RKibLYxZvHESjR8=;
-        b=ovPZorTLW6f0EfpDhGBcjqVJtWddWxAgupfWS3kQltg8W27d9bq/2Bda5B24KJTkuM
-         V+9YsoZkoeo4SHzY4csYset/YfIzMVkkekmqmQeiZoLPdgg2ssYLk1ytUlAxLfUJmHpq
-         fPnR1kGVytbIchAsTddtp75L8/xvUOvv15ocvYabNC256VmGUqFnppzNFakmZi16Gl/3
-         1cXJN0eLg2INGcxYgeIm1WE1oJ2m9GNccgEN5LS+I6T6N1+VEnXYrrEJIUJ8Nw9Hrhrt
-         1xrky1ZaVqOuDXKQDsgPP9Xt4i83XQuEwcuoUhyJ2Mhvs1G03tLTWI9pD584nvIQuHAj
-         pNQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=l2YM96Qy+4Fpcou+g3QPoCXyJ4z2RKibLYxZvHESjR8=;
-        b=UYFekB4wCnE2BfMYGJyrXSZYzSYbZILVnoCGWTGXf7rM7DyqxplqLZ9GuDi2EKrFYD
-         Px2wS6jJXjCxB9mykCyrlNB4mzSdYfp8iyeDf3jh4uaCrmlEhJG1fR1sazXGh2D1esen
-         EypH29ov/JrifjYvol5xpzs9WTCuF2KF1/cO68/ZBPBv889cnLilwb+e4m8mbSTL1XwS
-         IZniBghKXnZ18uQ1CvYsqOa9q+rmYzFiqFc56m/hFSA0WBFSHbOOZu75np+QO1zWpQKY
-         UQ+Gzzt3TIGM34A6SKyK+hRMCp9wxDaPUqpnXE8dkqaEvBteMH/KR4dXmwlyLTK8m+KH
-         DDDA==
-X-Gm-Message-State: AOAM530XyKulrS4gm6CldVq4AsqNXpZuLtqnpxXu4FWk3BhgHV45Lazb
-        612eVH1VM+9/IwiTuA1vziCuiULflVWNQyxsBut16w==
-X-Google-Smtp-Source: ABdhPJzVVpqU+F0docVVt/hsszWafG0o6iGARCjFVLx+noS3gK2DOpyzWe+GAxOYTBDFG2Ycer+wTrV7rc56bRvsVUs=
-X-Received: by 2002:a25:50c:: with SMTP id 12mr21010641ybf.220.1618867122361;
- Mon, 19 Apr 2021 14:18:42 -0700 (PDT)
+        id S240846AbhDSVe0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Apr 2021 17:34:26 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:52292 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229714AbhDSVeZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Apr 2021 17:34:25 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2B82C12FDBD;
+        Mon, 19 Apr 2021 17:33:55 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=/9QnzAEcAZOsxcz13Sm3VPzLoKs=; b=UcGTPq
+        GSkYbwKWxpiQda/AuKCivm80wqdsxfgfD7rP3kFXChCJnVuN5zB6U+PjBatITvw/
+        NpVMdrPeNgwp3/a5+YsWi7pPQYSBGu6ta+HVTQZTYOg8smQc6s03+67ctCgSV5AW
+        eWsHEf1qukYaIAem4oMV+VT3o0JW7dyFrGVjQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=WktXr4lF/6EKvzsMGvbT/7RWs5PTR9n7
+        30dlcuIzC6bw75iXVKTXLkZQBpQG+Me2D5z50+TYE0qih30BFnfWFz6hSs0cQEqt
+        zKKW8uaUFNKf51cjvbQ/P5OWP8yotaeF5/DDntw6Dv4f7AgykJYFMjbH6CNu2KDR
+        bJcwlnsETOY=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 23E4A12FDBC;
+        Mon, 19 Apr 2021 17:33:55 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 6D82012FDBB;
+        Mon, 19 Apr 2021 17:33:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Andrey Bienkowski via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Andrey Bienkowski <hexagonrecursion@gmail.com>
+Subject: Re: [PATCH] doc: clarify the filename encoding in git diff
+References: <pull.996.git.git.1618838856399.gitgitgadget@gmail.com>
+Date:   Mon, 19 Apr 2021 14:33:50 -0700
+In-Reply-To: <pull.996.git.git.1618838856399.gitgitgadget@gmail.com> (Andrey
+        Bienkowski via GitGitGadget's message of "Mon, 19 Apr 2021 13:27:35
+        +0000")
+Message-ID: <xmqqwnsy7ydd.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <20210415212017.1407303-1-bga@google.com> <YHoJUrqeT26Nihua@camp.crustytoothpaste.net>
-In-Reply-To: <YHoJUrqeT26Nihua@camp.crustytoothpaste.net>
-From:   Bruno Albuquerque <bga@google.com>
-Date:   Mon, 19 Apr 2021 14:18:30 -0700
-Message-ID: <CAPeR6H71Hn3ei4CzZLnQH1JGTvTpy6Ru-Mpin5cVJ0_7GSkoag@mail.gmail.com>
-Subject: Re: [PATCH] object-info: support for retrieving object info
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Bruno Albuquerque <bga@google.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: EFA27E82-A156-11EB-A687-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 16, 2021 at 3:02 PM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
+"Andrey Bienkowski via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-> I want to point out a few notes as someone who's worked on projects
-> appurtenant to VFS for Git.  If your goal is to create a VFS, then
-> learning what Git thinks the object size is is not helpful.
->
-> Git performs all sorts of operations on files when checking them out,
-> such as smudge and clean filters (e.g., Git LFS), line ending
-> conversion, and working tree encodings (e.g., to and from UTF-16 on
-> Windows).  Thus, your VFS must necessarily exclude all of this
-> functionality to use Git's concept of an object size as a VFS parameter.
+> Signed-off-by: Andrey Bienkowski <hexagonrecursion@gmail.com>
+> ---
+>     My takeaway was to always parse it as utf8 regardless of platform or
+>     environment.
+>     
+>     Changes since v1:
 
-This is, of course, completely valid from a Git-specific point of view
-but, because we are dealing with a hypothetical remote FS, it would
-not be unheard of (and, actually, this is most likely the norm more
-often than not) that when exposing git objects in an actual FS, we
-would not be doing any conversions whatsoever and would, instead, show
-everything as it is actually stored on the remote server.
+I do not think the readers on the list have seen the "v1", but
+anyway, the 
 
-> For the average project, the worst functionality to lose is actually
-> line ending conversion, since that means people will practically check
-> in a mix of line endings unless you are very strict in CI.  VFS for Git
-> was originally designed to address the needs of a project that was not
-> cross-platform and thus this was not a problem, but these limitations
-> are substantial and I wouldn't recommend repeating them.
+>      * Replace "always" with "often"
 
-Although I understand the issue here, this would be fine in the
-context of a remote filesystem as I see it. In fact this is something
-that actually has  precedent in git anyway ("git cat-file -s" without
---filters will emit the size without any conversions).
+"often" here sound more measured than ...
 
-As long as the size we report match with the actual contents of the
-file we expose (i.e. without conversions), this looks ok to me.
+>  --name-only::
+> -	Show only names of changed files.
+> +	Show only names of changed files. The file names are usually encoded in UTF-8.
+> +	For more information see the discussion about encoding in the linkgit:git-log[1]
+> +	manual page.
 
-> So I'm not opposed to seeing this functionality come in if you have
-> other plans for it (which is fine and I'm certainly interested in
-> hearing about them if you do), but I don't think this is helpful for VFS
-> scenarios and shouldn't be used for that purpose.
+... "usually" here ...
 
-Thanks for your comments. This actually works for our purposes and,
-more generally, it would be useful even if you do care about all the
-conversions (in this case, as a reasonable approximation of the actual
-disk size I guess).
+>  --name-status::
+>  	Show only names and status of changed files. See the description
+>  	of the `--diff-filter` option on what the status letters mean.
+> +	Just like `--name-only` the file names are usually encoded in UTF-8.
+
+... and here.
+
+Thanks.
