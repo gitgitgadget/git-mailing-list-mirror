@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B147C433B4
-	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 11:40:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AFB1DC43460
+	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 11:40:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3C41261166
-	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 11:40:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8BDD761166
+	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 11:40:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238091AbhDSLlD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Apr 2021 07:41:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35908 "EHLO
+        id S238717AbhDSLlO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Apr 2021 07:41:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35928 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238724AbhDSLis (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Apr 2021 07:38:48 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64BA2C061342
-        for <git@vger.kernel.org>; Mon, 19 Apr 2021 04:38:09 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id f195-20020a1c1fcc0000b029012eb88126d7so7895527wmf.3
-        for <git@vger.kernel.org>; Mon, 19 Apr 2021 04:38:09 -0700 (PDT)
+        with ESMTP id S238745AbhDSLit (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Apr 2021 07:38:49 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F141DC06134A
+        for <git@vger.kernel.org>; Mon, 19 Apr 2021 04:38:13 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id n4-20020a05600c4f84b029013151278decso6658477wmq.4
+        for <git@vger.kernel.org>; Mon, 19 Apr 2021 04:38:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=TZjsSM9+pjvVpniNN8hEbI98IxmwNEkeFz3L25vRefs=;
-        b=u61fJusByy7SHpnwovtmJBNg5GQVe33x8M6RDswu/Y67l2OMOmO6kY6Tsx8Y45l6ky
-         NNPMwzt5qgfHoO+am41rBrJwhZ09h0zyHhFxRTu9zhJCQgysuEvlRhEiZNjZ+6DwccRR
-         5N4TxJy9QPwaqgsjc/Rs5k2OKvZ+GKnFxx1xsmKME1edOBCU5mYNKQIpEhxiAQgSsr56
-         y2Y+yeNIxx6a0cOlLqfFh0FC1jsAv9gLLeve4MPz3N+oqnvR6W9ZMTp3IXW8Jvdl6hk0
-         OvwtXEvQhy8MaUWAF/UlDxeqtGNyodl0MPajEDM3HvjqaeWfSDfsWfhV2lWivh6sAHzV
-         90KQ==
+        bh=2DU1GqxIla6FiKVvec3Z5HezJq4oNeUJWCYQWvQ0PEI=;
+        b=X62NlyK9WBz0osfQ8WWf8k/aSfGZs8s9azqr5qnnegwwlzWSXvuPKWOCRSgaaFnUbS
+         zByJ6uY3X+KQwFEvVcA6AXS4g2N3/kZOZdp0GBUgKY9nXbSXCDARlLYZ+P6Kc/92eyAL
+         FyQApn3uaoytDNDigYu0IRTRjg4KT1zCVUeZ+wCRTT4baAIJ48eeqWig4sc0IOPZK56L
+         gNuEVIb/4YbG9Xj/i/EAe8DbDxF+aHxONE1re7Wyw3BayH7OKwI2EbP0Hr88LyWiWgwb
+         nCSTnfadBgLeE0B+egonBZAJdHrb+aVzMuoayNR8nvgtBKX0EbUkOOmbU3FqzT3ZVk2F
+         LajA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=TZjsSM9+pjvVpniNN8hEbI98IxmwNEkeFz3L25vRefs=;
-        b=DvP35HSapbsEGyJEQU9NyFfz/naURupZpDGwhtUPHpH80xznhghaNjZBgTUTTH0TtQ
-         O8HmyBGTpAojuwvFH6qW7/4ytOrztIbB8GhhoalqtzhWqdPPe42xHlEjQzNTPRnrqGeG
-         ZeHLVigCx7vCrOTntGp5/su3pDQT3N9rMfU6exAx5Ksm4PPcSyVXyE9UezvPVTOoM/vM
-         H6L6rvywwQ4owAcwojTdDM9jwvnd4knZ8fD5hmdH4Pjy2Dyk7qsf9tu0G+LPSVwxUcWw
-         RGZLqtEWP3UNqEx7fbikLZH8IuqExyh3L1dSam7LWhayLRTauFfCbSyEya6Sz4zSy+Kb
-         mxFA==
-X-Gm-Message-State: AOAM531JHYiHPL54693JUElpTkKKhrezpYlFOG1WLb6+zYVEwqWj4v3D
-        jrc+7MOtOgNhhQfwVv69nZskK8SX5ig=
-X-Google-Smtp-Source: ABdhPJx6VES/lL50cRRUmH8tQVtWQ8EMaiffamZbobZwF3fuu0eJuB5zmlS+9T7SR+3J/7earmbZLw==
-X-Received: by 2002:a1c:87:: with SMTP id 129mr21345108wma.131.1618832288194;
-        Mon, 19 Apr 2021 04:38:08 -0700 (PDT)
+        bh=2DU1GqxIla6FiKVvec3Z5HezJq4oNeUJWCYQWvQ0PEI=;
+        b=BdvTGNcx0pyeLfdEK6MrhDGXpt6RS90gevepD7tfNxSZ31rV1AtHTg4n8RlFappHW6
+         E5SNL2jITtEcxvFdpPuo8zQBb5QYI1a/wvBSODpxlwdb8n20mh8nrScjW/ocxN4fMbDU
+         PWRcFfWOyqwZp4xP+cI8nqE8oG0w27Z5NncYzJvgz/6sfnL9/mR+ry4bJbwRbVnfAy3P
+         iAfLQFaounlIyckT2NXa7Oj8dUbzMMhVrIFW4vgt8kZnzM1YUjTKfmAXbmmGLIV/wEpm
+         GGcREslvvidwUdAZrURXfZLSEpfWtfBWgrADFKEWUr3G6hQ20m1Qu+pKIj7lFjX4Ru0s
+         nVdg==
+X-Gm-Message-State: AOAM532NngwJjw6Advlf7JpjfdXb1nTrW/szWZYRm2AlgY5ed4Xwc9Rv
+        bjap2N+/iAbKFVqe7R5CKgYiaaHfJp8=
+X-Google-Smtp-Source: ABdhPJwgXKUJVuJlFlb1FxrO99EofcWooijMC6vmSVY41qxBoC0pj04QtT2ctj7VrCf9voRQp25rvA==
+X-Received: by 2002:a1c:a182:: with SMTP id k124mr21556637wme.132.1618832292758;
+        Mon, 19 Apr 2021 04:38:12 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a8sm24760346wrh.91.2021.04.19.04.38.07
+        by smtp.gmail.com with ESMTPSA id a22sm21376889wrc.59.2021.04.19.04.38.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Apr 2021 04:38:07 -0700 (PDT)
-Message-Id: <c03957db45c076ccb4400ddfa621159c816a86e1.1618832277.git.gitgitgadget@gmail.com>
+        Mon, 19 Apr 2021 04:38:12 -0700 (PDT)
+Message-Id: <7913027063a269c524acffb9aafe7f6754094dd1.1618832277.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.847.v7.git.git.1618832276.gitgitgadget@gmail.com>
 References: <pull.847.v6.git.git.1618255552.gitgitgadget@gmail.com>
         <pull.847.v7.git.git.1618832276.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 19 Apr 2021 11:37:41 +0000
-Subject: [PATCH v7 13/28] reftable: a generic binary tree implementation
+Date:   Mon, 19 Apr 2021 11:37:48 +0000
+Subject: [PATCH v7 20/28] reftable: implement refname validation
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -89,160 +89,291 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-The reftable format includes support for an (OID => ref) map. This map can speed
-up visibility and reachability checks. In particular, various operations along
-the fetch/push path within Gerrit have ben sped up by using this structure.
-
-The map is constructed with help of a binary tree. Object IDs are hashes, so
-they are uniformly distributed. Hence, the tree does not attempt forced
-rebalancing.
+The packed/loose format has restrictions on refnames: a and a/b cannot
+coexist. This limitation does not apply to reftable per se, but must be
+maintained for interoperability. This code adds validation routines to
+abort transactions that are trying to add invalid names.
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- Makefile                 |  4 ++-
- reftable/tree.c          | 63 ++++++++++++++++++++++++++++++++++++++++
- reftable/tree.h          | 34 ++++++++++++++++++++++
- reftable/tree_test.c     | 61 ++++++++++++++++++++++++++++++++++++++
- t/helper/test-reftable.c |  1 +
- 5 files changed, 162 insertions(+), 1 deletion(-)
- create mode 100644 reftable/tree.c
- create mode 100644 reftable/tree.h
- create mode 100644 reftable/tree_test.c
+ Makefile                 |   1 +
+ reftable/refname.c       | 209 +++++++++++++++++++++++++++++++++++++++
+ reftable/refname.h       |  29 ++++++
+ reftable/refname_test.c  | 102 +++++++++++++++++++
+ t/helper/test-reftable.c |   1 +
+ 5 files changed, 342 insertions(+)
+ create mode 100644 reftable/refname.c
+ create mode 100644 reftable/refname.h
+ create mode 100644 reftable/refname_test.c
 
 diff --git a/Makefile b/Makefile
-index cd8a9de2519e..01916cefda0f 100644
+index 6139f02faabe..b3973d8f5a8f 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -2414,11 +2414,13 @@ REFTABLE_OBJS += reftable/block.o
- REFTABLE_OBJS += reftable/blocksource.o
- REFTABLE_OBJS += reftable/publicbasics.o
- REFTABLE_OBJS += reftable/record.o
-+REFTABLE_OBJS += reftable/tree.o
- 
-+REFTABLE_TEST_OBJS += reftable/basics_test.o
- REFTABLE_TEST_OBJS += reftable/block_test.o
+@@ -2430,6 +2430,7 @@ REFTABLE_TEST_OBJS += reftable/merged_test.o
+ REFTABLE_TEST_OBJS += reftable/pq_test.o
  REFTABLE_TEST_OBJS += reftable/record_test.o
+ REFTABLE_TEST_OBJS += reftable/readwrite_test.o
++REFTABLE_TEST_OBJS += reftable/refname_test.o
  REFTABLE_TEST_OBJS += reftable/test_framework.o
--REFTABLE_TEST_OBJS += reftable/basics_test.o
-+REFTABLE_TEST_OBJS += reftable/tree_test.o
+ REFTABLE_TEST_OBJS += reftable/tree_test.o
  
- TEST_OBJS := $(patsubst %$X,%.o,$(TEST_PROGRAMS)) $(patsubst %,t/helper/%,$(TEST_BUILTINS_OBJS))
- 
-diff --git a/reftable/tree.c b/reftable/tree.c
+diff --git a/reftable/refname.c b/reftable/refname.c
 new file mode 100644
-index 000000000000..82db7995dd68
+index 000000000000..957349693247
 --- /dev/null
-+++ b/reftable/tree.c
-@@ -0,0 +1,63 @@
++++ b/reftable/refname.c
+@@ -0,0 +1,209 @@
 +/*
-+Copyright 2020 Google LLC
++  Copyright 2020 Google LLC
 +
-+Use of this source code is governed by a BSD-style
-+license that can be found in the LICENSE file or at
-+https://developers.google.com/open-source/licenses/bsd
++  Use of this source code is governed by a BSD-style
++  license that can be found in the LICENSE file or at
++  https://developers.google.com/open-source/licenses/bsd
 +*/
 +
-+#include "tree.h"
-+
-+#include "basics.h"
 +#include "system.h"
++#include "reftable-error.h"
++#include "basics.h"
++#include "refname.h"
++#include "reftable-iterator.h"
 +
-+struct tree_node *tree_search(void *key, struct tree_node **rootp,
-+			      int (*compare)(const void *, const void *),
-+			      int insert)
++struct find_arg {
++	char **names;
++	const char *want;
++};
++
++static int find_name(size_t k, void *arg)
 +{
-+	int res;
-+	if (*rootp == NULL) {
-+		if (!insert) {
-+			return NULL;
-+		} else {
-+			struct tree_node *n =
-+				reftable_calloc(sizeof(struct tree_node));
-+			n->key = key;
-+			*rootp = n;
-+			return *rootp;
++	struct find_arg *f_arg = arg;
++	return strcmp(f_arg->names[k], f_arg->want) >= 0;
++}
++
++static int modification_has_ref(struct modification *mod, const char *name)
++{
++	struct reftable_ref_record ref = { NULL };
++	int err = 0;
++
++	if (mod->add_len > 0) {
++		struct find_arg arg = {
++			.names = mod->add,
++			.want = name,
++		};
++		int idx = binsearch(mod->add_len, find_name, &arg);
++		if (idx < mod->add_len && !strcmp(mod->add[idx], name)) {
++			return 0;
 +		}
 +	}
 +
-+	res = compare(key, (*rootp)->key);
-+	if (res < 0)
-+		return tree_search(key, &(*rootp)->left, compare, insert);
-+	else if (res > 0)
-+		return tree_search(key, &(*rootp)->right, compare, insert);
-+	return *rootp;
++	if (mod->del_len > 0) {
++		struct find_arg arg = {
++			.names = mod->del,
++			.want = name,
++		};
++		int idx = binsearch(mod->del_len, find_name, &arg);
++		if (idx < mod->del_len && !strcmp(mod->del[idx], name)) {
++			return 1;
++		}
++	}
++
++	err = reftable_table_read_ref(&mod->tab, name, &ref);
++	reftable_ref_record_release(&ref);
++	return err;
 +}
 +
-+void infix_walk(struct tree_node *t, void (*action)(void *arg, void *key),
-+		void *arg)
++static void modification_release(struct modification *mod)
 +{
-+	if (t->left) {
-+		infix_walk(t->left, action, arg);
++	/* don't delete the strings themselves; they're owned by ref records.
++	 */
++	FREE_AND_NULL(mod->add);
++	FREE_AND_NULL(mod->del);
++	mod->add_len = 0;
++	mod->del_len = 0;
++}
++
++static int modification_has_ref_with_prefix(struct modification *mod,
++					    const char *prefix)
++{
++	struct reftable_iterator it = { NULL };
++	struct reftable_ref_record ref = { NULL };
++	int err = 0;
++
++	if (mod->add_len > 0) {
++		struct find_arg arg = {
++			.names = mod->add,
++			.want = prefix,
++		};
++		int idx = binsearch(mod->add_len, find_name, &arg);
++		if (idx < mod->add_len &&
++		    !strncmp(prefix, mod->add[idx], strlen(prefix)))
++			goto done;
 +	}
-+	action(arg, t->key);
-+	if (t->right) {
-+		infix_walk(t->right, action, arg);
++	err = reftable_table_seek_ref(&mod->tab, &it, prefix);
++	if (err)
++		goto done;
++
++	while (1) {
++		err = reftable_iterator_next_ref(&it, &ref);
++		if (err)
++			goto done;
++
++		if (mod->del_len > 0) {
++			struct find_arg arg = {
++				.names = mod->del,
++				.want = ref.refname,
++			};
++			int idx = binsearch(mod->del_len, find_name, &arg);
++			if (idx < mod->del_len &&
++			    !strcmp(ref.refname, mod->del[idx])) {
++				continue;
++			}
++		}
++
++		if (strncmp(ref.refname, prefix, strlen(prefix))) {
++			err = 1;
++			goto done;
++		}
++		err = 0;
++		goto done;
++	}
++
++done:
++	reftable_ref_record_release(&ref);
++	reftable_iterator_destroy(&it);
++	return err;
++}
++
++static int validate_refname(const char *name)
++{
++	while (1) {
++		char *next = strchr(name, '/');
++		if (!*name) {
++			return REFTABLE_REFNAME_ERROR;
++		}
++		if (!next) {
++			return 0;
++		}
++		if (next - name == 0 || (next - name == 1 && *name == '.') ||
++		    (next - name == 2 && name[0] == '.' && name[1] == '.'))
++			return REFTABLE_REFNAME_ERROR;
++		name = next + 1;
++	}
++	return 0;
++}
++
++int validate_ref_record_addition(struct reftable_table tab,
++				 struct reftable_ref_record *recs, size_t sz)
++{
++	struct modification mod = {
++		.tab = tab,
++		.add = reftable_calloc(sizeof(char *) * sz),
++		.del = reftable_calloc(sizeof(char *) * sz),
++	};
++	int i = 0;
++	int err = 0;
++	for (; i < sz; i++) {
++		if (reftable_ref_record_is_deletion(&recs[i])) {
++			mod.del[mod.del_len++] = recs[i].refname;
++		} else {
++			mod.add[mod.add_len++] = recs[i].refname;
++		}
++	}
++
++	err = modification_validate(&mod);
++	modification_release(&mod);
++	return err;
++}
++
++static void strbuf_trim_component(struct strbuf *sl)
++{
++	while (sl->len > 0) {
++		int is_slash = (sl->buf[sl->len - 1] == '/');
++		strbuf_setlen(sl, sl->len - 1);
++		if (is_slash)
++			break;
 +	}
 +}
 +
-+void tree_free(struct tree_node *t)
++int modification_validate(struct modification *mod)
 +{
-+	if (t == NULL) {
-+		return;
++	struct strbuf slashed = STRBUF_INIT;
++	int err = 0;
++	int i = 0;
++	for (; i < mod->add_len; i++) {
++		err = validate_refname(mod->add[i]);
++		if (err)
++			goto done;
++		strbuf_reset(&slashed);
++		strbuf_addstr(&slashed, mod->add[i]);
++		strbuf_addstr(&slashed, "/");
++
++		err = modification_has_ref_with_prefix(mod, slashed.buf);
++		if (err == 0) {
++			err = REFTABLE_NAME_CONFLICT;
++			goto done;
++		}
++		if (err < 0)
++			goto done;
++
++		strbuf_reset(&slashed);
++		strbuf_addstr(&slashed, mod->add[i]);
++		while (slashed.len) {
++			strbuf_trim_component(&slashed);
++			err = modification_has_ref(mod, slashed.buf);
++			if (err == 0) {
++				err = REFTABLE_NAME_CONFLICT;
++				goto done;
++			}
++			if (err < 0)
++				goto done;
++		}
 +	}
-+	if (t->left) {
-+		tree_free(t->left);
-+	}
-+	if (t->right) {
-+		tree_free(t->right);
-+	}
-+	reftable_free(t);
++	err = 0;
++done:
++	strbuf_release(&slashed);
++	return err;
 +}
-diff --git a/reftable/tree.h b/reftable/tree.h
+diff --git a/reftable/refname.h b/reftable/refname.h
 new file mode 100644
-index 000000000000..fbdd002e23af
+index 000000000000..a24b40fcb428
 --- /dev/null
-+++ b/reftable/tree.h
-@@ -0,0 +1,34 @@
++++ b/reftable/refname.h
+@@ -0,0 +1,29 @@
 +/*
-+Copyright 2020 Google LLC
++  Copyright 2020 Google LLC
 +
-+Use of this source code is governed by a BSD-style
-+license that can be found in the LICENSE file or at
-+https://developers.google.com/open-source/licenses/bsd
++  Use of this source code is governed by a BSD-style
++  license that can be found in the LICENSE file or at
++  https://developers.google.com/open-source/licenses/bsd
 +*/
++#ifndef REFNAME_H
++#define REFNAME_H
 +
-+#ifndef TREE_H
-+#define TREE_H
++#include "reftable-record.h"
++#include "reftable-generic.h"
 +
-+/* tree_node is a generic binary search tree. */
-+struct tree_node {
-+	void *key;
-+	struct tree_node *left, *right;
++struct modification {
++	struct reftable_table tab;
++
++	char **add;
++	size_t add_len;
++
++	char **del;
++	size_t del_len;
 +};
 +
-+/* looks for `key` in `rootp` using `compare` as comparison function. If insert
-+ * is set, insert the key if it's not found. Else, return NULL.
-+ */
-+struct tree_node *tree_search(void *key, struct tree_node **rootp,
-+			      int (*compare)(const void *, const void *),
-+			      int insert);
++int validate_ref_record_addition(struct reftable_table tab,
++				 struct reftable_ref_record *recs, size_t sz);
 +
-+/* performs an infix walk of the tree. */
-+void infix_walk(struct tree_node *t, void (*action)(void *arg, void *key),
-+		void *arg);
-+
-+/*
-+ * deallocates the tree nodes recursively. Keys should be deallocated separately
-+ * by walking over the tree. */
-+void tree_free(struct tree_node *t);
++int modification_validate(struct modification *mod);
 +
 +#endif
-diff --git a/reftable/tree_test.c b/reftable/tree_test.c
+diff --git a/reftable/refname_test.c b/reftable/refname_test.c
 new file mode 100644
-index 000000000000..09a970e17b9c
+index 000000000000..8645cd93bbd8
 --- /dev/null
-+++ b/reftable/tree_test.c
-@@ -0,0 +1,61 @@
++++ b/reftable/refname_test.c
+@@ -0,0 +1,102 @@
 +/*
 +Copyright 2020 Google LLC
 +
@@ -251,70 +382,112 @@ index 000000000000..09a970e17b9c
 +https://developers.google.com/open-source/licenses/bsd
 +*/
 +
-+#include "tree.h"
-+
 +#include "basics.h"
++#include "block.h"
++#include "blocksource.h"
++#include "constants.h"
++#include "reader.h"
 +#include "record.h"
++#include "refname.h"
++#include "reftable-error.h"
++#include "reftable-writer.h"
++#include "system.h"
++
 +#include "test_framework.h"
 +#include "reftable-tests.h"
 +
-+static int test_compare(const void *a, const void *b)
-+{
-+	return (char *)a - (char *)b;
-+}
-+
-+struct curry {
-+	void *last;
++struct testcase {
++	char *add;
++	char *del;
++	int error_code;
 +};
 +
-+static void check_increasing(void *arg, void *key)
++static void test_conflict(void)
 +{
-+	struct curry *c = arg;
-+	if (c->last) {
-+		assert(test_compare(c->last, key) < 0);
++	struct reftable_write_options opts = { 0 };
++	struct strbuf buf = STRBUF_INIT;
++	struct reftable_writer *w =
++		reftable_new_writer(&strbuf_add_void, &buf, &opts);
++	struct reftable_ref_record rec = {
++		.refname = "a/b",
++		.value_type = REFTABLE_REF_SYMREF,
++		.value.symref = "destination", /* make sure it's not a symref.
++						*/
++		.update_index = 1,
++	};
++	int err;
++	int i;
++	struct reftable_block_source source = { NULL };
++	struct reftable_reader *rd = NULL;
++	struct reftable_table tab = { NULL };
++	struct testcase cases[] = {
++		{ "a/b/c", NULL, REFTABLE_NAME_CONFLICT },
++		{ "b", NULL, 0 },
++		{ "a", NULL, REFTABLE_NAME_CONFLICT },
++		{ "a", "a/b", 0 },
++
++		{ "p/", NULL, REFTABLE_REFNAME_ERROR },
++		{ "p//q", NULL, REFTABLE_REFNAME_ERROR },
++		{ "p/./q", NULL, REFTABLE_REFNAME_ERROR },
++		{ "p/../q", NULL, REFTABLE_REFNAME_ERROR },
++
++		{ "a/b/c", "a/b", 0 },
++		{ NULL, "a//b", 0 },
++	};
++	reftable_writer_set_limits(w, 1, 1);
++
++	err = reftable_writer_add_ref(w, &rec);
++	EXPECT_ERR(err);
++
++	err = reftable_writer_close(w);
++	EXPECT_ERR(err);
++	reftable_writer_free(w);
++
++	block_source_from_strbuf(&source, &buf);
++	err = reftable_new_reader(&rd, &source, "filename");
++	EXPECT_ERR(err);
++
++	reftable_table_from_reader(&tab, rd);
++
++	for (i = 0; i < ARRAY_SIZE(cases); i++) {
++		struct modification mod = {
++			.tab = tab,
++		};
++
++		if (cases[i].add) {
++			mod.add = &cases[i].add;
++			mod.add_len = 1;
++		}
++		if (cases[i].del) {
++			mod.del = &cases[i].del;
++			mod.del_len = 1;
++		}
++
++		err = modification_validate(&mod);
++		EXPECT(err == cases[i].error_code);
 +	}
-+	c->last = key;
++
++	reftable_reader_free(rd);
++	strbuf_release(&buf);
 +}
 +
-+static void test_tree(void)
++int refname_test_main(int argc, const char *argv[])
 +{
-+	struct tree_node *root = NULL;
-+
-+	void *values[11] = { NULL };
-+	struct tree_node *nodes[11] = { NULL };
-+	int i = 1;
-+	struct curry c = { NULL };
-+	do {
-+		nodes[i] = tree_search(values + i, &root, &test_compare, 1);
-+		i = (i * 7) % 11;
-+	} while (i != 1);
-+
-+	for (i = 1; i < ARRAY_SIZE(nodes); i++) {
-+		assert(values + i == nodes[i]->key);
-+		assert(nodes[i] ==
-+		       tree_search(values + i, &root, &test_compare, 0));
-+	}
-+
-+	infix_walk(root, check_increasing, &c);
-+	tree_free(root);
-+}
-+
-+int tree_test_main(int argc, const char *argv[])
-+{
-+	RUN_TEST(test_tree);
++	RUN_TEST(test_conflict);
 +	return 0;
 +}
 diff --git a/t/helper/test-reftable.c b/t/helper/test-reftable.c
-index c9deeaf08c7a..050551fa6985 100644
+index 8087f2da4e6a..c8db6852c353 100644
 --- a/t/helper/test-reftable.c
 +++ b/t/helper/test-reftable.c
-@@ -6,5 +6,6 @@ int cmd__reftable(int argc, const char **argv)
- 	basics_test_main(argc, argv);
- 	block_test_main(argc, argv);
+@@ -8,6 +8,7 @@ int cmd__reftable(int argc, const char **argv)
+ 	merged_test_main(argc, argv);
+ 	pq_test_main(argc, argv);
  	record_test_main(argc, argv);
-+	tree_test_main(argc, argv);
++	refname_test_main(argc, argv);
+ 	readwrite_test_main(argc, argv);
+ 	tree_test_main(argc, argv);
  	return 0;
- }
 -- 
 gitgitgadget
 
