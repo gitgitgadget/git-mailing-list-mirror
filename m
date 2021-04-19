@@ -2,122 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 212EEC433B4
-	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 19:28:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 99F18C433B4
+	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 19:32:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CEA616100B
-	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 19:28:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 62E3361360
+	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 19:32:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240100AbhDST2y convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Mon, 19 Apr 2021 15:28:54 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:41748 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238544AbhDST2x (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Apr 2021 15:28:53 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [173.33.197.34])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 13JJSK1c089909
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Mon, 19 Apr 2021 15:28:20 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Jacob Keller'" <jacob.keller@gmail.com>,
-        "'Emily Shaffer'" <emilyshaffer@google.com>
-Cc:     "'Git mailing list'" <git@vger.kernel.org>,
-        "=?UTF-8?Q?'=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason'?=" 
-        <avarab@gmail.com>, "'Jonathan Nieder'" <jrnieder@gmail.com>,
-        <albertcui@google.com>, "'Junio C Hamano'" <gitster@pobox.com>,
-        <matheus.bernardino@usp.br>
-References: <YHofmWcIAidkvJiD@google.com> <CA+P7+xqzsD+pU=-9YUYdGDAqT4uVk=XS4sdxA5WnAXL_7GwM5Q@mail.gmail.com>
-In-Reply-To: <CA+P7+xqzsD+pU=-9YUYdGDAqT4uVk=XS4sdxA5WnAXL_7GwM5Q@mail.gmail.com>
-Subject: RE: RFC/Discussion - Submodule UX Improvements
-Date:   Mon, 19 Apr 2021 15:28:15 -0400
-Message-ID: <013401d73552$287f49e0$797ddda0$@nexbridge.com>
+        id S240387AbhDSTcj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Apr 2021 15:32:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57028 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239355AbhDSTcj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Apr 2021 15:32:39 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6053EC06174A
+        for <git@vger.kernel.org>; Mon, 19 Apr 2021 12:32:07 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id u20so40713969lja.13
+        for <git@vger.kernel.org>; Mon, 19 Apr 2021 12:32:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=kslvRUywrPF86RKL/2MieJkefxvXxb/hOOK9KngXw8I=;
+        b=QURRKSBP9lcBkhmUefaEGu3sT9L7XNFs40npTOAMMT8+yGDOXYHMYF0BQYAPh3rHiQ
+         dQB9G23axrpCQgF03XnhbhFoGVCafooTohOpJC+zSxRqf9nzTXMXuxPqQAh7YFdFZg3x
+         0EDuk3WQPv98dW1l4wO1fWW6IgfV8NExg0VeCvbw5cqaATNMdeMhDDINvd/lUtyILNYJ
+         tIC5mNoe8dhjtT6rmQhl3H3Et7TJN1ScLwE2wMtyoJEyzyPeKI+Cr8heUxzPazO+r7Gd
+         VVi08+WFXao09QEpKWFl7SjlnsH5n7Qm/oP5d5e94ymFP+K9UmXfEz88kpTWpnpw9Gsd
+         ILRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=kslvRUywrPF86RKL/2MieJkefxvXxb/hOOK9KngXw8I=;
+        b=DOSg3BrHAowebceYVVHZqmysjELncD676ZAjIa5+deaiTlfwhrHkaOfMSZNyvBVmiy
+         kYvxKoR1V8TXwCmOVEuxhlCwN72pl0Ypzp2VcqEU1NBisAV6uOP4CWF0lnDlyV7tQ7PV
+         qPAh2KgiNhYqtYaV8qg5nKiAZExZt+kqelLVvxsqK/Tt+442/3/d8wbvPgWs+Q7fh98r
+         Q8OCBF6iRDC0v1h+tCGUAaG/uTAa1ImHaGw7CM2Gd92BnRjXQ9EGBY45YQq7dHu2L0nf
+         G6tHnvUfi1ot5XIczZysLnuZwOdskXsyG6XjYYrI9mhV47I7CFHqHEGGnlaLsxdpy7jt
+         F+FQ==
+X-Gm-Message-State: AOAM531yEcLAkm8Up+SSUHfbHTgrxEWfnEVujf5ivzrWYKS828U0Nexs
+        H395zWWzopUqEpDRTzMbvjEFUWgeSHbZvg==
+X-Google-Smtp-Source: ABdhPJx+oBRPFpeny8WVZ/CGIpovRiIzOCCbLPIzO34o9+L4WQdF1T7Q9vbNdq6IWigOAnCQ+hikJQ==
+X-Received: by 2002:a2e:968f:: with SMTP id q15mr2083924lji.464.1618860725811;
+        Mon, 19 Apr 2021 12:32:05 -0700 (PDT)
+Received: from aaberge.net (kramer.samfundet.no. [2001:67c:29f4::72])
+        by smtp.gmail.com with ESMTPSA id v7sm1159857lfo.297.2021.04.19.12.32.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 19 Apr 2021 12:32:05 -0700 (PDT)
+Date:   Mon, 19 Apr 2021 21:32:03 +0200
+From:   Trygve Aaberge <trygveaa@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+        Pranit Bauva <pranit.bauva@gmail.com>
+Subject: Re: Using --term-* with bisect breaks skip
+Message-ID: <20210419193203.GE10839@aaberge.net>
+References: <20210418151459.GC10839@aaberge.net>
+ <xmqqlf9e9k9d.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQJbFLMgoJsVHqAp1Cmec2AAO4rv5QHospcfqaUyivA=
-Content-Language: en-ca
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqlf9e9k9d.fsf@gitster.g>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On April 19, 2021 3:15 PM, Jacob Keller wrote:
-> On Fri, Apr 16, 2021 at 4:38 PM Emily Shaffer <emilyshaffer@google.com>
-> wrote:
-> >
-> > Hi folks,
-> >
-> > As hinted by a couple recent patches, I'm planning on some pretty big
-> > submodule work over the next 6 months or so - and Ævar pointed out to
-> > me in https://lore.kernel.org/git/87v98p17im.fsf@evledraar.gmail.com
-> > that I probably should share some of those plans ahead of time. :) So
-> > attached is a lightly modified version of the doc that we've been
-> > working on internally at Google, focusing on what we think would be an ideal
-> submodule workflow.
-> >
-> > I'm hoping that folks will get a chance to read some or all of it and
-> > let us know what sounds cool (or sounds extremely broken). The best
-> > spot to start is probably the "Overview" section, which describes what
-> > the "main path" would look like for a user working on a project with
-> > submodules. Most of the work that we're planning on doing is under the
-> "What doesn't already work" headings.
-> >
-> > Thanks in advance for any time you spend reading/discussing :)
-> >
-> >  - Emily
-> >
-> > Background
-> > ==========
-> >
-> > It's worth mentioning that the main goal that's funding this work is
-> > to provide an alternative for users whose projects use repo
-> > (https://source.android.com/setup/develop#repo) today. That means that
-> > the main focus is to try and reach feature parity to repo for an
-> > easier transition for those who want to switch. As a result, some of
-> > the direction below is aimed towards learning from what has worked
-> > well with repo (but hopefully more flexible for users who want to do more, or
-> differently).
-> >
-> > There are also a few things mentioned that are specifically targeted
-> > to ease use with Gerrit, which is in wide use here at Google (and
-> > therefore also a consideration we need to make to keep getting paid ;) ).
-> >
-> > Overview
-> > =======
-> >
-> 
-> One thing that I think I didn't see covered when I scanned this, that is
-> something I find difficult or annoying to resolve is using "blame"
-> with submodules. I use blame a lot to do code history analysis to understand
-> how something got to the way it is. (Often this helps resolve issues or bugs by
-> using new context to understand why an old change was broken).
-> 
-> It has bothered me in the past when I try to do "git blame
-> <path/to/submodule>" and I get nothing. Obviously there are ways around this:
-> you can for example just log the path and get the commit that changed it most
-> recently, or try to search for when the submodule was set to a given commit.
-> 
-> A sort of dream I had was a flow where I could do something from the parent
-> like "git blame <path/to/submodule>/submodule/file" and have it present a
-> blame of that files contents keyed on the *parent* commit that changed the
-> submodule to have that line, as opposed to being forced to go into the
-> submodule and figure out what commit introduced it and then go back to the
-> parent and find out what commit changed the submodule to include that
-> submodule commit.
+On Mon, Apr 19, 2021 at 11:55:42 -0700, Junio C Hamano wrote:
+> Can you "bisect" the problem?  There aren't that many commits that
+> touched bisection code during the period.
 
-Not going to disagree, but are you looking for the blame on the submodule ref file itself or files in the submodule? It's hard to teach git to do a blame on a one-line file.
+Yes, I ran it now. The commit introducing the regression is:
 
-Otherwise, and I think this is what you really are going for, teaching it to do a blame based on "git blame <path/to/submodule>/submodule/file" would be very nice and abstracts out the need for the user (or more importantly to me = scripts) to understand that a submodule is involved; however, it is opening up a very large door: "should/could we teach git to abstract submodules out of every command". This would potentially replace a significant part of the use cases for the "git submodule foreach" sub-command. In your ask, the current paradigm "cd <path/to/submodule>/submodule && git blame file" or pretty much every other command does work, but it requires the user/script to know you have a submodule in the path. So my question is: is this worth the effort? I don't have a good answer to that question. Half of my brain would like this very much/the other half is scared of the impact to the code.
+commit e4c7b33747dccc6600bc528b51e91c11b474eb04
+Author: Pranit Bauva <pranit.bauva@gmail.com>
+Date:   Wed Feb 3 22:54:37 2021 +0100
 
-Just my musings.
+    bisect--helper: reimplement `bisect_skip` shell function in C
+    
+    Reimplement the `bisect_skip()` shell function in C and also add
+    `bisect-skip` subcommand to `git bisect--helper` to call it from
+    git-bisect.sh
+    
+    Using `--bisect-skip` subcommand is a temporary measure to port shell
+    function to C so as to use the existing test suite.
+    
+    Mentored-by: Lars Schneider <larsxschneider@gmail.com>
+    Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+    Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+    Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+    Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
+    Signed-off-by: Miriam Rubio <mirucam@gmail.com>
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
-Randall
-
+-- 
+Trygve Aaberge
