@@ -2,111 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 939DFC433ED
-	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 23:14:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EEA42C433B4
+	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 23:17:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 676A36113C
-	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 23:14:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D17FC61029
+	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 23:17:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230121AbhDSXPM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Apr 2021 19:15:12 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:55429 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229723AbhDSXPL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Apr 2021 19:15:11 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C836313072C;
-        Mon, 19 Apr 2021 19:14:40 -0400 (EDT)
+        id S231652AbhDSXRb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Apr 2021 19:17:31 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64419 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230114AbhDSXRa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Apr 2021 19:17:30 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B4BBFC91D3;
+        Mon, 19 Apr 2021 19:16:59 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=LA7Uwf7DWSNWTKimd/MQbxKOJs4=; b=q77Xrh
-        Ei/gYkXnRZJgYjNgCLCv6hYJUaM1mOV63Ij7Ft3WVoAdwOrMo1McZChJEwyyw37G
-        cZqOZeSYWy3l39JEGYbGSBtuGUYY7YLYYtJ/bubsTqBd3ZWHe4R+1DxXDOWJx8vP
-        iwxwEhuPw2OD+HlXyXHQjPGzL1xF+U5DRj1zw=
+        :content-type; s=sasl; bh=8f1kNiNFtataJ0yABUXMwXImdxw=; b=cwI+XS
+        LWdxHLt2jC1qb4TEFSgN5FJTuuZSb0oQtN7yGzrWBAk0pJKpKvceqFl1ydY8eFhY
+        PPPGMpKU6dFzwne2WBmokGQRiHlhH8p0O+dYlldqCKNiIe4/twK/TfPB+FhPYgMg
+        8NeGXRXVXfWiazGngS/A0qiG5verT2JKXSclM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ZmPBQVAAgMSHNow5nVduKMqn8H78FKOh
-        IVVEtjCQSZJv5CefNxR0wAH7bGb78Y8e3mlbkiIjaHiNgo8oCBZuPL99RWHbBnCO
-        6MUsIH51kw61BAzJfrFb4TWgdtgKFgApSS93wbAbbEmmQsVGxTk1P95rPdzron0r
-        XGUTf2atRMw=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id BFC6F13072B;
-        Mon, 19 Apr 2021 19:14:40 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=Y8rifrvKnJIkBeNJfX+70DsQx+tADhAu
+        r62PUJQMwycwbZhB/pZFVjh38aq0epG5kF5hcaoIA1OlhQmiFDjSAbqzqtwku6ke
+        WNIPsikETECeifI/9gyI4XC5D+ybbPl5HvDnSOWd/QGF2zoECNtAdD6LJxXU6hEg
+        4U7xrtSN3Os=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A9E3CC91D2;
+        Mon, 19 Apr 2021 19:16:59 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 08CD813072A;
-        Mon, 19 Apr 2021 19:14:37 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2F3CBC91D1;
+        Mon, 19 Apr 2021 19:16:59 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Patrick Steinhardt <ps@pks.im>
-Subject: Re: What's cooking (draft for #4's issue this month)
-References: <xmqqmtu1zn3o.fsf@gitster.g> <xmqqim4owixg.fsf@gitster.g>
-        <YHeKFILFySGRo2Dc@camp.crustytoothpaste.net>
-        <xmqqr1jcrr3c.fsf@gitster.g>
-        <YHzmjhLy2QjDefXy@camp.crustytoothpaste.net>
-Date:   Mon, 19 Apr 2021 16:14:36 -0700
-In-Reply-To: <YHzmjhLy2QjDefXy@camp.crustytoothpaste.net> (brian m. carlson's
-        message of "Mon, 19 Apr 2021 02:10:22 +0000")
-Message-ID: <xmqq5z0h989v.fsf@gitster.g>
+To:     Patrick Steinhardt <ps@pks.im>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Christian Couder <christian.couder@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v5 0/8] rev-list: implement object type filter
+References: <cover.1618234575.git.ps@pks.im> <cover.1618832437.git.ps@pks.im>
+Date:   Mon, 19 Apr 2021 16:16:58 -0700
+In-Reply-To: <cover.1618832437.git.ps@pks.im> (Patrick Steinhardt's message of
+        "Mon, 19 Apr 2021 13:46:32 +0200")
+Message-ID: <xmqq1rb5985x.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 03163900-A165-11EB-A9C6-D609E328BF65-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 573A70AA-A165-11EB-AC31-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> I'm still working on a full reroll for the series including performance
-> measurements (since this took me much longer than I expected it would),
-> but I wanted to include a patch for the segfault below to keep things
-> tidy in the mean time.  I should point out that this doesn't appear to
-> crash when running the testsuite in SHA-256 mode for reasons I'm not
-> sure about, which explains why I didn't see it originally.
+> Hi,
+>
+> this is the fifth version of my patch series which implements a new
+> `object:type` filter for git-rev-list(1) and git-upload-pack(1) and
+> extends support for bitmap indices to work with combined filters.
+>
+> Changes compared to v4:
+>
+>     - I'm now explicitly passing `strlen(v0)` to
+>       `type_from_string_gently()` to be prepared for the future
+>       semantics change here.
+>
+>     - The error message printed in case the user passes in invalid
+>       object type to `--filter=object:type=` now prints the wrong
+>       value passed by the user.
+>
+>     - Fixed missing header in list-objects-filter-options.h.
+>
+>     - Tests now use test_create_repo and test_commit.
+>
+>     - Removed a needless subshell in the tests.
+>
+> I hope that this catches all feedback and that I didn't misunderstand or
+> miss something. If I did, please give me a shout!
 
-Thanks; will apply and keep it with the latest round for now.  
+Thanks.  Will queue and wait.
 
->
-> ---- %< ----
-> From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-> From: "brian m. carlson" <sandals@crustytoothpaste.net>
-> Date: Sun, 18 Apr 2021 22:56:04 +0000
-> Subject: [PATCH] http-push: set algorithm when reading object ID
->
-> In most places in the codebase, we use oidread to properly read an
-> object ID into a struct object_id.  However, in the HTTP code, we end up
-> needing to parse a loose object path with a slash in it, so we can't do
-> that.  Let's instead explicitly set the algorithm in this function so we
-> can rely on it in the future.
->
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> ---
->  http-push.c | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/http-push.c b/http-push.c
-> index b60d5fcc85..5675cd7708 100644
-> --- a/http-push.c
-> +++ b/http-push.c
-> @@ -1022,6 +1022,8 @@ static void remote_ls(const char *path, int flags,
->  /* extract hex from sharded "xx/x{38}" filename */
->  static int get_oid_hex_from_objpath(const char *path, struct object_id *oid)
->  {
-> +	oid->algo = hash_algo_by_ptr(the_hash_algo);
-> +
->  	if (strlen(path) != the_hash_algo->hexsz + 1)
->  		return -1;
->  
-> ---- %< ----
+I am expecting to go offline for about a week starting 21st or so;
+hopefully the topyc is ready to merge it to 'next' by the time I
+come back online.
+
