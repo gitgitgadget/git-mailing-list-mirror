@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20958C43462
-	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 10:53:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CC3EC433B4
+	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 10:53:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E890C6101E
-	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 10:53:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 680CC6101E
+	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 10:53:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237864AbhDSKxk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Apr 2021 06:53:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54138 "EHLO
+        id S238071AbhDSKxl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Apr 2021 06:53:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54132 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232344AbhDSKxj (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S237670AbhDSKxj (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 19 Apr 2021 06:53:39 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18C91C06138A
-        for <git@vger.kernel.org>; Mon, 19 Apr 2021 03:53:08 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id i21-20020a05600c3555b029012eae2af5d4so8331932wmq.4
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83E67C061763
+        for <git@vger.kernel.org>; Mon, 19 Apr 2021 03:53:07 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id t14-20020a05600c198eb029012eeb3edfaeso7940005wmq.2
         for <git@vger.kernel.org>; Mon, 19 Apr 2021 03:53:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Bp5AIwcRTPdgJs69D4au2FynlT9u6XNqahdftzLfIZI=;
-        b=Q97lVIfG30Hosp/IXHe4Vtktf19q/LrNnIR/G/HdHVFQixAsGNA9iDZkZJPc/LiDP/
-         jI+F+8ZEq9nL2Tpaxc3xjLI2/Z2x3N03IyozwG5zPaXyIZfTX6MRK3mpsliEsaHkWL+5
-         fq/DdHl63IK9bkcNTX3kCTPcZLFb1w8ExZg6tAsA/k31Kay9x2s2dVArGm3Ptp5jnYWC
-         EIBDJu18MgncMGGhcEwxi1+dOE2Epg2vymaxkMcyLVQ8ltUP5PqtG2VuueuH0ms0UjxR
-         qVI5Ic9CyBnyxwxpFJzwxF8JuME+8+ATJEeuy/5L7XmC2iJMSSTJC4U+2qR/QPX4IV3W
-         X9fQ==
+        bh=hCsQOIxYRiZGmvP6afW8BZps1OSvbdwKuZbdnuIFjdk=;
+        b=aGeiw8g40Ipdr91utGOYGVaqz86ikUgW4OnafeAqvnrxwUeKmmrfJnt4npVMsOnKlP
+         WVjj6BPfhfVMsQxlLGHAqrjla2GeqYcLsUFVz+x9EuU8M8wiJjq1CibNP99ZwRwiEMBk
+         Y/nBvxtTmD+lwdZ6ZPmlRoID1+JR8TVLs4YWS+nPaNCam7on199y+m1LdHTkJP5HztVA
+         lza87uf8nhqdbNOuf7PC+R1Bfptj32XsXWco8irw6lYSmsk17+ES29XYPUFGYXGsosYx
+         an31TUyaOiZ6uaSTnUjZR99e2beQ4Ve1aFySd+xJZAY2aXFfbfHrqZWc2brXoM1/P3KD
+         9mVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Bp5AIwcRTPdgJs69D4au2FynlT9u6XNqahdftzLfIZI=;
-        b=Q3X4j+yXrGgDd4RJrMZReCmBFRvRouwAIqMuuxf76HNj5wADZOht32EYhCD/qS0tXB
-         OzhpsPcWPso/2IOB3pbtt/AB3PZU2KHndd56r1ohh8N/HcqKmxMMyCEAhYI1vFvUebmZ
-         4awKaQN8YSts43DO4GzYGgt4fIILINU8OoSBCjoziOvfGTOS7HHWIJR/eeWnQY3A4Yqk
-         9Ch8Bt6ml3S+H0gRhtNXQk5KFtI1kljmXmYXfaJfvFkfjEq7tJ0gKpgHp9jaJpGQeICW
-         lJnZs6TyupC9V8Rtl14V3k7GKPZFIBWTtStlp82GVp3JDJ/ppn5/19aaY6EH1pCV3yYT
-         QNtw==
-X-Gm-Message-State: AOAM532SEBxfakSZthrcs31GMjI9P5ZBGRGpHSPE40NUHqB5vexGaNSk
-        m/N0lIzOhieUlYjaeP8fZfUSZfEfUd4=
-X-Google-Smtp-Source: ABdhPJylsanjuhzeH6/5pNVxSxt3S0AGrLMvAS/5NCMyTTQYJ13pWfn/NwZTtOWcsKiabZw9AvRuSw==
-X-Received: by 2002:a05:600c:247:: with SMTP id 7mr18988892wmj.111.1618829586851;
+        bh=hCsQOIxYRiZGmvP6afW8BZps1OSvbdwKuZbdnuIFjdk=;
+        b=hsFejDqg3IQlIX/8+tNlhldgiHuYlA827A/LRFrxZRxNl2ZJutQW7k9Nf21mhH+BUU
+         iBDgffcJ3pl9ZPy2+lvkMCGCHc3+31qaVD2yPWRuwHEpTogb0hqshJKczK39gSu4d6H+
+         iQ2386VUiyQkiU4HIV0hlGC7Jcd2Lq0QqL1DI0DhtmblZ13+pmyYtWtF5fvy6/S02Lem
+         8qQUVlcR4BAood6IKBWOUyiDCXTyRGHF5XZfyAwglD3HhvsnxNzBa+jcKhccCxkSOIT4
+         PdT8bZa/LCHzIpNwXmmftW1ej7ssvBmqptMrnojPa8RTTQKvu432J6TOfHpBMeHlbmcl
+         sG3g==
+X-Gm-Message-State: AOAM533ro5eXuUT4Ud22yDPl5q90D7lq5DUTfdqAoKSbA+24PpNxEK8O
+        3TK8qV1YBA3MaSrEprmAr8JIG3RA9F8=
+X-Google-Smtp-Source: ABdhPJywt+CKTFtqfTGxpzjxrEdb5ELi/FRGgRkGGNkTyAQ0oDxuRwJBqGeBXoHhncrGTdXcs/wJKQ==
+X-Received: by 2002:a7b:c10e:: with SMTP id w14mr20558230wmi.8.1618829586307;
         Mon, 19 Apr 2021 03:53:06 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n2sm22196905wmb.32.2021.04.19.03.53.06
+        by smtp.gmail.com with ESMTPSA id k22sm21811158wrh.5.2021.04.19.03.53.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 19 Apr 2021 03:53:06 -0700 (PDT)
-Message-Id: <53cf1069552b6cd6161ce6f69a31c44e59091096.1618829583.git.gitgitgadget@gmail.com>
+Message-Id: <47b5ec56a38379adf3eb48acd5a093bbdfdeb511.1618829583.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1008.git.git.1618829583.gitgitgadget@gmail.com>
 References: <pull.1008.git.git.1618829583.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 19 Apr 2021 10:52:49 +0000
-Subject: [PATCH 04/18] t1401-symbolic-ref: avoid direct filesystem access
+Date:   Mon, 19 Apr 2021 10:52:48 +0000
+Subject: [PATCH 03/18] t5601: read HEAD using rev-parse
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,58 +77,23 @@ From: Han-Wen Nienhuys <hanwen@google.com>
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- t/t1401-symbolic-ref.sh | 23 +++++++++--------------
- 1 file changed, 9 insertions(+), 14 deletions(-)
+ t/t5601-clone.sh | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/t/t1401-symbolic-ref.sh b/t/t1401-symbolic-ref.sh
-index a4ebb0b65fec..fd5980d3fb40 100755
---- a/t/t1401-symbolic-ref.sh
-+++ b/t/t1401-symbolic-ref.sh
-@@ -7,18 +7,13 @@ test_description='basic symbolic-ref tests'
- # the git repo, meaning that further tests will operate on
- # the surrounding git repo instead of the trash directory.
- reset_to_sane() {
--	echo ref: refs/heads/foo >.git/HEAD
-+	git --git-dir .git symbolic-ref HEAD refs/heads/foo
- }
- 
--test_expect_success 'symbolic-ref writes HEAD' '
--	git symbolic-ref HEAD refs/heads/foo &&
--	echo ref: refs/heads/foo >expect &&
--	test_cmp expect .git/HEAD
--'
--
--test_expect_success 'symbolic-ref reads HEAD' '
--	echo refs/heads/foo >expect &&
--	git symbolic-ref HEAD >actual &&
-+test_expect_success 'symbolic-ref read/write roundtrip' '
-+	git symbolic-ref HEAD refs/heads/read-write-roundtrip &&
-+	echo refs/heads/read-write-roundtrip > expect &&
-+	git symbolic-ref HEAD > actual &&
- 	test_cmp expect actual
- '
- 
-@@ -42,16 +37,16 @@ reset_to_sane
- test_expect_success 'symbolic-ref can be deleted' '
- 	git symbolic-ref NOTHEAD refs/heads/foo &&
- 	git symbolic-ref -d NOTHEAD &&
--	test_path_is_file .git/refs/heads/foo &&
--	test_path_is_missing .git/NOTHEAD
-+	git rev-parse refs/heads/foo &&
-+	! git symbolic-ref NOTHEAD
- '
- reset_to_sane
- 
- test_expect_success 'symbolic-ref can delete dangling symref' '
- 	git symbolic-ref NOTHEAD refs/heads/missing &&
- 	git symbolic-ref -d NOTHEAD &&
--	test_path_is_missing .git/refs/heads/missing &&
--	test_path_is_missing .git/NOTHEAD
-+	! git rev-parse refs/heads/missing &&
-+	! git symbolic-ref NOTHEAD
- '
- reset_to_sane
- 
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index 329ae599fd3c..7223372c7660 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -305,7 +305,8 @@ test_expect_success 'clone from original with relative alternate' '
+ test_expect_success 'clone checking out a tag' '
+ 	git clone --branch=some-tag src dst.tag &&
+ 	GIT_DIR=src/.git git rev-parse some-tag >expected &&
+-	test_cmp expected dst.tag/.git/HEAD &&
++	GIT_DIR=dst.tag/.git git rev-parse HEAD >actual &&
++	test_cmp expected actual &&
+ 	GIT_DIR=dst.tag/.git git config remote.origin.fetch >fetch.actual &&
+ 	echo "+refs/heads/*:refs/remotes/origin/*" >fetch.expected &&
+ 	test_cmp fetch.expected fetch.actual
 -- 
 gitgitgadget
 
