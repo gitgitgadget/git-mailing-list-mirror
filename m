@@ -2,142 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D054C433ED
-	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 20:38:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97924C433ED
+	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 20:49:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5968B61369
-	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 20:38:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7D3B66101C
+	for <git@archiver.kernel.org>; Mon, 19 Apr 2021 20:49:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234073AbhDSUjL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Apr 2021 16:39:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43298 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232217AbhDSUjL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Apr 2021 16:39:11 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECCDFC06174A
-        for <git@vger.kernel.org>; Mon, 19 Apr 2021 13:38:38 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id r7so23359140wrm.1
-        for <git@vger.kernel.org>; Mon, 19 Apr 2021 13:38:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=f86yotTPsryr2eXADOHl0cc4ueS4USS3P3htVOSnSnI=;
-        b=aFivpV0hAy4ebanGPlPNZU7byQKnVq/qzBdftlEYVSUIHPaWgPOeg+kfgdpJ0yssA5
-         IKV+HcypgA0R54Hje5Fua+XXvqrC5+0MYFQlSrUPCCIxbfvyySdNL4Q0lkUjki+3R/0W
-         ux8gkz3zYZs2XegJ5lxrsOYGscbGUJFERam6nj+dq5ENmEmnlAAVYEsq+3llzB40gg6z
-         rwfPCLxW2rqzKVAQF+myjMS8oiSHoBX1EsZXtBA/9Kw7cdlMdDRmfbVGcWrJpuXlH1dR
-         eaGONIirBn11miYBZN3fxuQtLcqqNMS7fmNUxloaUYeDMu/5DpeimNAHeRYHHJ7w3ild
-         79+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=f86yotTPsryr2eXADOHl0cc4ueS4USS3P3htVOSnSnI=;
-        b=sNX+aBNmK93h/1PNNcGml217KEB/NSyXI2vQqs4xkxSfLJPXLO12wsli5GeKxBNlRk
-         i5m5yQQYgN1aN3q78AOtMFECJdtubJZf3qejMky7fznqqZYaaPj05Nih1agAwZGAEmhi
-         7A6Ah7MC0pwTbuxWcmTojzsGaEO7CVuVLsUjNOf+X3GsA1kLaMhiCA00RMQ33jACaczJ
-         OqL14jCLXo9mlh4zYIOKniTrOdc+6WeAfUucl5gzeNnIxj5Oq8uYZcagXv25Or/WoL+z
-         yoFRt00dQwEAheriQUlgCvXw7PMRHq4VB5BEyHdKswZE1YnoFQkWASE9zAj6n+ZqEA/y
-         4ROA==
-X-Gm-Message-State: AOAM530+i7a5YYsiT9d0iLYrWqf7g8P8Q6K9akmq/MOb9cfd+KS2N0S5
-        dQFKduoGN1E80PKiTEPDYuk=
-X-Google-Smtp-Source: ABdhPJw2rk9/qFWbk5kc9laTs07SDr7nphyfdSL+1y7Ps/MCdgE555yxXp0Md2zgNRSNpOiOqIng/A==
-X-Received: by 2002:adf:ed0a:: with SMTP id a10mr16484117wro.61.1618864717808;
-        Mon, 19 Apr 2021 13:38:37 -0700 (PDT)
-Received: from szeder.dev (78-131-14-48.pool.digikabel.hu. [78.131.14.48])
-        by smtp.gmail.com with ESMTPSA id l5sm23636131wro.4.2021.04.19.13.38.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Apr 2021 13:38:37 -0700 (PDT)
-Date:   Mon, 19 Apr 2021 22:38:35 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH 04/18] t1401-symbolic-ref: avoid direct filesystem access
-Message-ID: <20210419203835.GW2947267@szeder.dev>
-References: <pull.1008.git.git.1618829583.gitgitgadget@gmail.com>
- <53cf1069552b6cd6161ce6f69a31c44e59091096.1618829583.git.gitgitgadget@gmail.com>
+        id S233752AbhDSUtq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Apr 2021 16:49:46 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56389 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S243038AbhDSUsA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Apr 2021 16:48:00 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 09704C82B6;
+        Mon, 19 Apr 2021 16:47:28 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=8gtfptF4Z5b+nd+y8gmGEbTTG+c=; b=dNlXJ3
+        hV4URXg2bS48CZ6HcF2Cb2Hj7/feWrxY3lXMxeU9GW+hzy/RKgD076zYn/EMHM+q
+        3+fh7D3q32PkANj8WMeUbqzB4c/k3AiHGzs2oEJYhyxjk2CjgFBuvfGckhz1Gx9y
+        s3L9QHG/D5cgJaWKrXmAjo+b/buPknj/MXv1s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=EszirFgWWFoT5aMQRr3V0cgOH2cYWkI1
+        xJ00DhUp/QIM0Wy+v7H0lsZexY5+7EczHttE6kVpggdW2pDqfaQknuv9ine7byWw
+        66qo87RxFb1VK8wbDXKB8J1pAP0cMNZEnuVIO09zb1MJfUjyeReExQMNuxdtUeae
+        mhml4ZztVlE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id F379EC82B5;
+        Mon, 19 Apr 2021 16:47:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7BB3CC82B4;
+        Mon, 19 Apr 2021 16:47:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Cristian Morales Vega <christian.morales.vega@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: git checkout behaviour when only ctime of file changes
+References: <CAOWQn3Qesh0+CkaD95q78Rq_vN5tjWKDe7HTk0Ynk-NY8XUKzg@mail.gmail.com>
+Date:   Mon, 19 Apr 2021 13:47:26 -0700
+In-Reply-To: <CAOWQn3Qesh0+CkaD95q78Rq_vN5tjWKDe7HTk0Ynk-NY8XUKzg@mail.gmail.com>
+        (Cristian Morales Vega's message of "Mon, 19 Apr 2021 10:11:12 +0100")
+Message-ID: <xmqqh7k29f35.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <53cf1069552b6cd6161ce6f69a31c44e59091096.1618829583.git.gitgitgadget@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 73AEE690-A150-11EB-BA16-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 19, 2021 at 10:52:49AM +0000, Han-Wen Nienhuys via GitGitGadget wrote:
-> From: Han-Wen Nienhuys <hanwen@google.com>
-> 
-> Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
-> ---
->  t/t1401-symbolic-ref.sh | 23 +++++++++--------------
->  1 file changed, 9 insertions(+), 14 deletions(-)
-> 
-> diff --git a/t/t1401-symbolic-ref.sh b/t/t1401-symbolic-ref.sh
-> index a4ebb0b65fec..fd5980d3fb40 100755
-> --- a/t/t1401-symbolic-ref.sh
-> +++ b/t/t1401-symbolic-ref.sh
-> @@ -7,18 +7,13 @@ test_description='basic symbolic-ref tests'
->  # the git repo, meaning that further tests will operate on
->  # the surrounding git repo instead of the trash directory.
->  reset_to_sane() {
-> -	echo ref: refs/heads/foo >.git/HEAD
-> +	git --git-dir .git symbolic-ref HEAD refs/heads/foo
->  }
->  
-> -test_expect_success 'symbolic-ref writes HEAD' '
-> -	git symbolic-ref HEAD refs/heads/foo &&
-> -	echo ref: refs/heads/foo >expect &&
-> -	test_cmp expect .git/HEAD
-> -'
-> -
-> -test_expect_success 'symbolic-ref reads HEAD' '
-> -	echo refs/heads/foo >expect &&
-> -	git symbolic-ref HEAD >actual &&
-> +test_expect_success 'symbolic-ref read/write roundtrip' '
-> +	git symbolic-ref HEAD refs/heads/read-write-roundtrip &&
-> +	echo refs/heads/read-write-roundtrip > expect &&
-> +	git symbolic-ref HEAD > actual &&
+Cristian Morales Vega <christian.morales.vega@gmail.com> writes:
 
-Style nit: no space between redirection and filename, i.e. these
-should be '>expect' and '>actual'.
+> I thought you may want to take a look at
+> https://issues.jenkins.io/browse/JENKINS-65395.
+>
+> Basically after something updates the ctime of a file, a
+> "git checkout" can behave differently depending on whether a
+> "git update-index --refresh" has been run before or not.
 
->  	test_cmp expect actual
->  '
->  
-> @@ -42,16 +37,16 @@ reset_to_sane
->  test_expect_success 'symbolic-ref can be deleted' '
->  	git symbolic-ref NOTHEAD refs/heads/foo &&
->  	git symbolic-ref -d NOTHEAD &&
-> -	test_path_is_file .git/refs/heads/foo &&
-> -	test_path_is_missing .git/NOTHEAD
-> +	git rev-parse refs/heads/foo &&
-> +	! git symbolic-ref NOTHEAD
+Changes to ctime, not just to mtime, participate in "the path may
+have been changed so need to go back to the contents to see if it
+truly has" logic, and "update-index --refresh" is a mechanism to
+clear that "the path may have been changed" bit.  
 
-Please use 'test_must_fail git ...', because otherwise a segfault
-could go unnoticed.
+So if your "behave differently ... with or without refresh" happens
+equally if you replace 'ctime' in your statement with 'mtime', then
+everything is working as designed.  But it was unclear from your
+description.
 
->  '
->  reset_to_sane
->  
->  test_expect_success 'symbolic-ref can delete dangling symref' '
->  	git symbolic-ref NOTHEAD refs/heads/missing &&
->  	git symbolic-ref -d NOTHEAD &&
-> -	test_path_is_missing .git/refs/heads/missing &&
-> -	test_path_is_missing .git/NOTHEAD
-> +	! git rev-parse refs/heads/missing &&
-> +	! git symbolic-ref NOTHEAD
->  '
->  reset_to_sane
->  
-> -- 
-> gitgitgadget
-> 
+Assuming that the difference with and without refresh after mtime
+change is the same as the difference with and without refresh after
+ctime change, the "core.trustctime" configuration variable is for
+those whose files have untrustworthy ctime (due to background
+scanners and other funnies).
+
