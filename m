@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 784FBC43460
-	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 16:52:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DAC3BC43462
+	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 16:52:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 427DB6135F
-	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 16:52:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 69625613AB
+	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 16:52:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233141AbhDTQwx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Apr 2021 12:52:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55258 "EHLO
+        id S233121AbhDTQwy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Apr 2021 12:52:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55252 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233324AbhDTQwr (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S233328AbhDTQwr (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 20 Apr 2021 12:52:47 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4441C06174A
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C76DC06138A
         for <git@vger.kernel.org>; Tue, 20 Apr 2021 09:52:15 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id f195-20020a1c1fcc0000b029012eb88126d7so10417383wmf.3
+Received: by mail-wr1-x435.google.com with SMTP id g9so22341945wrx.0
         for <git@vger.kernel.org>; Tue, 20 Apr 2021 09:52:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=2eWJTy9Qv2KDpLJ15ROcvoWWI/eDhftMSjxZD+5B7Zo=;
-        b=Zw+kj/Wo8bvvO2MP42lwBlOVQeUdS9HDTrh/kklY6aMFwv3qcXhyFjZvDwh17ql2gP
-         Uo9nqGE1Bfhd4g8aVmFQOSTUesah0S8QWXPfA5vkCe/DnVEBmZ3VKTHQBp4ABAaW9JlL
-         FNiahUUgZDt7nJ8HKpvrOCBvA+k90jgWenxSCjgttK+Ua1WwmJYrH/uTflRzhx8C3hdj
-         Dt/L4HqnL0a7QDqDCvtu+m6vDKlSbKpoxcTS/XAZCYcK69WR+InrYroY9Ktc6ma5fXQE
-         ILxFxcv1rMcXrWJPsYIzANYYIeHHF1MRcdsunQvD9WRuBzGPjX44ja2SEgMPNrHkGvnB
-         /Rhw==
+        bh=fOig0rtmFbMsuO7Glz/4J6tAr2Wc+LDu9zupBOBwnXQ=;
+        b=DC+vv5ND1v+BJycu+VYokrbfRMbaBQspuEe2Tu/YAF+cztqFeCr4gRDBdUKcKnXNtV
+         0ibiU2W+AO5/XncG64/PAPGW4jhFMQWYPzdjTJIKY2FMtf9RPjrWaPcDWT0+rcMOmrKM
+         5sg/Yp53Zfe9so3Q2iN2KkZAN6lo9QEQzUwkWPbtkd2GBkd0VfDwgIM8r8eQ639WJ9sH
+         V+8Pn8+/2OXdPYcxpWb02EzYVUyIek7MISBBVFIWdPchr3XQL52D7VzZ0y/4rGYIBJZp
+         vmf/cuek2noW4DMiWGG8ARsywDpjCcU7vrn3u3VxXGpvxMPtPDPpfXFAOq+dls5cfTJy
+         CDIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=2eWJTy9Qv2KDpLJ15ROcvoWWI/eDhftMSjxZD+5B7Zo=;
-        b=VSaqXXA+pZqrjiA1uiaQQKXM7FsWLPgqWT1H6GUOY3iUJgWED6Qqh8Qkvr6gnkvXjZ
-         uR3otc2zYlR6X6fUBnUfsO9TOetwggEhxYrPNvg8WpGjcUiZndtVbn8wc9zaRnib6PvR
-         MfmrD8N+fL2D6bJ9MvD4wjY48IDIxJ3jvZ1dJgXhkr6F8qCxd0intzdNhaMv7wlQyz33
-         T2SM5M6G4GmzQomWhmV0ltWAcXHNFiKEcrGjvlpVbD7SNzBhUMKSOwJVUkUdIVcKtO9D
-         3HLQwpTm/dlsyd2ZHdu/nEj4ffe9AYrQ3X/H92aqS1EKdoFsui53FTxwXvdN9rc1Ko9b
-         VhCg==
-X-Gm-Message-State: AOAM532/XU/kjAYbAGxEX6SiDsniYB3/bhaYF2Rk8wwCyxYDBlwVUYjQ
-        U8hV5O3wX0qzZSQiSdjWE7xWbn83PDo=
-X-Google-Smtp-Source: ABdhPJyNCHikV4PnH14eRCmz+zzKSH5+J4byiSDpIouYHbWmVRCbRgs+7TLiIwpA7eDyaefidF0DJA==
-X-Received: by 2002:a05:600c:b4b:: with SMTP id k11mr5506079wmr.129.1618937534596;
-        Tue, 20 Apr 2021 09:52:14 -0700 (PDT)
+        bh=fOig0rtmFbMsuO7Glz/4J6tAr2Wc+LDu9zupBOBwnXQ=;
+        b=DSQhBQqEedcz2tC6N63JUeMHrjAK+QHeSk85ipA9DsJi8n15BpBghJ3x52T/SWwiHs
+         8RgrgsW+hIswExOW1u3uRMActnM6rEzU2K8FVohVQt3HamaVJmwaYgh+fjzF8nEyGjrM
+         yy2cyNIV8dkw4cKTe5l/Z4hCJOOw53ghjgdN+TjFlhAaPGYCQkXdS/s60+ORjlTZqqr5
+         j993WIuF/Ey9dDXyc3ljgpIUB1tHFPXKXO+Fs41UW3Z2m7ENMoWgeMCwZL3aCVtpL6nk
+         Ups37CwsL2luxEuvZfbg0huGa7zupUIUYN9bpopLAOWqCD11NzpEe0ixxkwQJ3fxj0HF
+         +5ZQ==
+X-Gm-Message-State: AOAM530RZLiO4A81vmEq1yVN+2/tpex9979SzIqFJEvBwODNirHpjy0x
+        gcy3Pcf81itrjX/LxhZxUBUbAnsTUKw=
+X-Google-Smtp-Source: ABdhPJxRHP8Mt1snxfru1AjLSRlvw9DfeWHdIbHUI/6bb9NS5yrHMHzjHF2XwBuMdiVviDSSt4pkbA==
+X-Received: by 2002:a5d:4a8b:: with SMTP id o11mr21427870wrq.233.1618937533974;
+        Tue, 20 Apr 2021 09:52:13 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t20sm3781642wmi.35.2021.04.20.09.52.14
+        by smtp.gmail.com with ESMTPSA id b14sm29047079wrf.75.2021.04.20.09.52.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Apr 2021 09:52:14 -0700 (PDT)
-Message-Id: <a17949b9f80992a3f7ebfbf9fa602730abaf8bb1.1618937532.git.gitgitgadget@gmail.com>
+        Tue, 20 Apr 2021 09:52:13 -0700 (PDT)
+Message-Id: <7e378eef4b3405777eef9c0e9fe4e9e4ec6a1df9.1618937532.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.935.v2.git.1618937532.gitgitgadget@gmail.com>
 References: <pull.935.git.1618831726.gitgitgadget@gmail.com>
         <pull.935.v2.git.1618937532.gitgitgadget@gmail.com>
 From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 20 Apr 2021 16:52:11 +0000
-Subject: [PATCH v2 2/2] [GSOC] ref-filter: reuse output buffer
+Date:   Tue, 20 Apr 2021 16:52:10 +0000
+Subject: [PATCH v2 1/2] [GSOC] ref-filter: get rid of show_ref_array_item
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,143 +82,125 @@ X-Mailing-List: git@vger.kernel.org
 
 From: ZheNing Hu <adlternative@gmail.com>
 
-When we use `git for-each-ref`, every ref will allocate
-its own output strbuf and error strbuf. But we can reuse
-the final strbuf for each step ref's output. The error
-buffer will also be reused, despite the fact that the git
-will exit when `format_ref_array_item()` return a non-zero
-value and output the contents of the error buffer.
+Inlining the exported function `show_ref_array_item()`,
+which is not providing the right level of abstraction,
+simplifies the API and can unlock improvements at the
+former call sites.
 
-The performance for `git for-each-ref` on the Git repository
-itself with performance testing tool `hyperfine` changes from
-23.7 ms ± 0.9 ms to 22.2 ms ± 1.0 ms. Optimization is relatively
-minor.
-
-At the same time, we apply this optimization to `git tag -l`
-and `git branch -l`.
-
-This approach is similar to the one used by 79ed0a5
-(cat-file: use a single strbuf for all output, 2018-08-14)
-to speed up the cat-file builtin.
-
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Helped-by: Jeff King <peff@peff.net>
 Helped-by: René Scharfe <l.s.r@web.de>
 Signed-off-by: ZheNing Hu <adlternative@gmail.com>
 ---
- builtin/branch.c       | 10 ++++++----
- builtin/for-each-ref.c | 13 +++++++------
- builtin/tag.c          | 13 +++++++------
- 3 files changed, 20 insertions(+), 16 deletions(-)
+ builtin/for-each-ref.c | 14 ++++++++++++--
+ builtin/tag.c          | 14 ++++++++++++--
+ ref-filter.c           | 25 ++++++++++---------------
+ ref-filter.h           |  2 --
+ 4 files changed, 34 insertions(+), 21 deletions(-)
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index bcc00bcf182d..b23b1d1752af 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -411,6 +411,8 @@ static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sortin
- {
- 	int i;
- 	struct ref_array array;
-+	struct strbuf out = STRBUF_INIT;
-+	struct strbuf err = STRBUF_INIT;
- 	int maxwidth = 0;
- 	const char *remote_prefix = "";
- 	char *to_free = NULL;
-@@ -440,8 +442,8 @@ static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sortin
- 	ref_array_sort(sorting, &array);
- 
- 	for (i = 0; i < array.nr; i++) {
--		struct strbuf out = STRBUF_INIT;
--		struct strbuf err = STRBUF_INIT;
-+		strbuf_reset(&err);
-+		strbuf_reset(&out);
- 		if (format_ref_array_item(array.items[i], format, &out, &err))
- 			die("%s", err.buf);
- 		if (column_active(colopts)) {
-@@ -452,10 +454,10 @@ static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sortin
- 			fwrite(out.buf, 1, out.len, stdout);
- 			putchar('\n');
- 		}
--		strbuf_release(&err);
--		strbuf_release(&out);
- 	}
- 
-+	strbuf_release(&err);
-+	strbuf_release(&out);
- 	ref_array_clear(&array);
- 	free(to_free);
- }
 diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index 8520008604e3..b529228c6239 100644
+index cb9c81a04606..8520008604e3 100644
 --- a/builtin/for-each-ref.c
 +++ b/builtin/for-each-ref.c
-@@ -22,6 +22,8 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
- 	struct ref_array array;
- 	struct ref_filter filter;
- 	struct ref_format format = REF_FORMAT_INIT;
-+	struct strbuf output = STRBUF_INIT;
-+	struct strbuf err = STRBUF_INIT;
+@@ -80,8 +80,18 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
  
- 	struct option opts[] = {
- 		OPT_BIT('s', "shell", &format.quote_style,
-@@ -81,17 +83,16 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
  	if (!maxcount || array.nr < maxcount)
  		maxcount = array.nr;
- 	for (i = 0; i < maxcount; i++) {
--		struct strbuf output = STRBUF_INIT;
--		struct strbuf err = STRBUF_INIT;
--
-+		strbuf_reset(&err);
-+		strbuf_reset(&output);
- 		if (format_ref_array_item(array.items[i], &format, &output, &err))
- 			die("%s", err.buf);
- 		fwrite(output.buf, 1, output.len, stdout);
- 		putchar('\n');
--
--		strbuf_release(&err);
--		strbuf_release(&output);
- 	}
+-	for (i = 0; i < maxcount; i++)
+-		show_ref_array_item(array.items[i], &format);
++	for (i = 0; i < maxcount; i++) {
++		struct strbuf output = STRBUF_INIT;
++		struct strbuf err = STRBUF_INIT;
 +
-+	strbuf_release(&err);
-+	strbuf_release(&output);
++		if (format_ref_array_item(array.items[i], &format, &output, &err))
++			die("%s", err.buf);
++		fwrite(output.buf, 1, output.len, stdout);
++		putchar('\n');
++
++		strbuf_release(&err);
++		strbuf_release(&output);
++	}
  	ref_array_clear(&array);
  	return 0;
  }
 diff --git a/builtin/tag.c b/builtin/tag.c
-index d92d8e110b4d..82fcfc098242 100644
+index d403417b5625..d92d8e110b4d 100644
 --- a/builtin/tag.c
 +++ b/builtin/tag.c
-@@ -39,6 +39,8 @@ static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting,
- 		     struct ref_format *format)
- {
- 	struct ref_array array;
-+	struct strbuf output = STRBUF_INIT;
-+	struct strbuf err = STRBUF_INIT;
- 	char *to_free = NULL;
- 	int i;
- 
-@@ -64,17 +66,16 @@ static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting,
+@@ -63,8 +63,18 @@ static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting,
+ 	filter_refs(&array, filter, FILTER_REFS_TAGS);
  	ref_array_sort(sorting, &array);
  
- 	for (i = 0; i < array.nr; i++) {
--		struct strbuf output = STRBUF_INIT;
--		struct strbuf err = STRBUF_INIT;
--
-+		strbuf_reset(&output);
-+		strbuf_reset(&err);
- 		if (format_ref_array_item(array.items[i], format, &output, &err))
- 			die("%s", err.buf);
- 		fwrite(output.buf, 1, output.len, stdout);
- 		putchar('\n');
--
--		strbuf_release(&err);
--		strbuf_release(&output);
- 	}
+-	for (i = 0; i < array.nr; i++)
+-		show_ref_array_item(array.items[i], format);
++	for (i = 0; i < array.nr; i++) {
++		struct strbuf output = STRBUF_INIT;
++		struct strbuf err = STRBUF_INIT;
 +
-+	strbuf_release(&err);
-+	strbuf_release(&output);
++		if (format_ref_array_item(array.items[i], format, &output, &err))
++			die("%s", err.buf);
++		fwrite(output.buf, 1, output.len, stdout);
++		putchar('\n');
++
++		strbuf_release(&err);
++		strbuf_release(&output);
++	}
  	ref_array_clear(&array);
  	free(to_free);
  
+diff --git a/ref-filter.c b/ref-filter.c
+index f0bd32f71416..df67047fd615 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -2435,27 +2435,22 @@ int format_ref_array_item(struct ref_array_item *info,
+ 	return 0;
+ }
+ 
+-void show_ref_array_item(struct ref_array_item *info,
+-			 const struct ref_format *format)
+-{
+-	struct strbuf final_buf = STRBUF_INIT;
+-	struct strbuf error_buf = STRBUF_INIT;
+-
+-	if (format_ref_array_item(info, format, &final_buf, &error_buf))
+-		die("%s", error_buf.buf);
+-	fwrite(final_buf.buf, 1, final_buf.len, stdout);
+-	strbuf_release(&error_buf);
+-	strbuf_release(&final_buf);
+-	putchar('\n');
+-}
+-
+ void pretty_print_ref(const char *name, const struct object_id *oid,
+ 		      const struct ref_format *format)
+ {
+ 	struct ref_array_item *ref_item;
++	struct strbuf output = STRBUF_INIT;
++	struct strbuf err = STRBUF_INIT;
++
+ 	ref_item = new_ref_array_item(name, oid);
+ 	ref_item->kind = ref_kind_from_refname(name);
+-	show_ref_array_item(ref_item, format);
++	if (format_ref_array_item(ref_item, format, &output, &err))
++		die("%s", err.buf);
++	fwrite(output.buf, 1, output.len, stdout);
++	putchar('\n');
++
++	strbuf_release(&err);
++	strbuf_release(&output);
+ 	free_array_item(ref_item);
+ }
+ 
+diff --git a/ref-filter.h b/ref-filter.h
+index 19ea4c413409..baf72a718965 100644
+--- a/ref-filter.h
++++ b/ref-filter.h
+@@ -119,8 +119,6 @@ int format_ref_array_item(struct ref_array_item *info,
+ 			  const struct ref_format *format,
+ 			  struct strbuf *final_buf,
+ 			  struct strbuf *error_buf);
+-/*  Print the ref using the given format and quote_style */
+-void show_ref_array_item(struct ref_array_item *info, const struct ref_format *format);
+ /*  Parse a single sort specifier and add it to the list */
+ void parse_ref_sorting(struct ref_sorting **sorting_tail, const char *atom);
+ /*  Callback function for parsing the sort option */
 -- 
 gitgitgadget
+
