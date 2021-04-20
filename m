@@ -2,89 +2,160 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5809EC433ED
-	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 20:31:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B5B22C43460
+	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 20:32:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 14A8E613E5
-	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 20:31:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6FAFB613C0
+	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 20:32:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233886AbhDTUbt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Apr 2021 16:31:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47318 "EHLO
+        id S233750AbhDTUcv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Apr 2021 16:32:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47542 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233682AbhDTUbr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Apr 2021 16:31:47 -0400
-Received: from mail-qt1-x836.google.com (mail-qt1-x836.google.com [IPv6:2607:f8b0:4864:20::836])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FA9EC06174A
-        for <git@vger.kernel.org>; Tue, 20 Apr 2021 13:31:15 -0700 (PDT)
-Received: by mail-qt1-x836.google.com with SMTP id s4so1869746qtw.3
-        for <git@vger.kernel.org>; Tue, 20 Apr 2021 13:31:15 -0700 (PDT)
+        with ESMTP id S233682AbhDTUcu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Apr 2021 16:32:50 -0400
+Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com [IPv6:2607:f8b0:4864:20::d2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2CB0C06174A
+        for <git@vger.kernel.org>; Tue, 20 Apr 2021 13:32:15 -0700 (PDT)
+Received: by mail-io1-xd2d.google.com with SMTP id l21so3224341iob.1
+        for <git@vger.kernel.org>; Tue, 20 Apr 2021 13:32:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=b0wbfeNsVq1BXAnWY+xMtRhalNnSeYbTxhT2uCxF0vU=;
-        b=gCeiLmxtPAcqrImI+18W0C06WDHqxIJmyxmU2P5d3pU0tgDBkQqKyPOIf6fB0/dBCG
-         A3de9+cdtncE8ILjnd525in9rduh5dfcWlCQoegeinwMRAKnIPr8EeYbBglfZEWtpuV9
-         RhyUKui1NN3qkc/vniuMSTvwCc9plIzlKcGqA2DzMBi4WSwti3odXKUDhU+WASop3as2
-         d2Ak5z3cR21qL/unj/NEggwhO7/Ba5qkNqg7Sy+nRWdpr5UjUA9h6NdrK+vdUCSKYv21
-         tcFEiLyV8NyVLUE9aNIhOQfwaUjXS3C0f4gGV0JSHjkph/X20kPtgwUZYIfSFRMUkTLi
-         O0Bw==
+        bh=OoACPE5u4SUbbCsECOTUn+hT4tdzz3u6dLtGg/hHiBo=;
+        b=AqyrQbrv7aW+3Xl2LqFqxesk3aAqjJummX8gnsusehohcqNDSi9CgyiOa3K8WWf4Rl
+         bsy6kNSzLjOUY+CSlMklm0GbEIXfwSv2uuUpvtuQcyondj1QyW7jMcRMGIXChBbhmoy6
+         aCOm8NohPJnOBVncSAKKW19AzKsny2lH9MXhqmOg26AUz4VnCE4ZM+Ydo3A4oC1y4hLL
+         U5domEzKGm3ap4cxfnOLzNXkXPBD6pzLYxmX/wk6Aet5saTsFdvBbgTVFhzu+8WbVl1m
+         ewvDX06NsDTTbhXKr5o+BwBQR+fWdDd6NQdqBP+xQ5JtjdDkASA6yb4+o0vj13FYl2eP
+         LPRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=b0wbfeNsVq1BXAnWY+xMtRhalNnSeYbTxhT2uCxF0vU=;
-        b=bZUvS0aFzenqyCfiinQyj4qgnoQaeZpECfxKQsIFh5fax5Smcp3rvIlXdOfL1e4k/v
-         lfxh6U7V7tVI5I+AVCIarSPOIvB6BvJIEPZa+e6Vr5rPUwxPUqajeRyu+pv+yIXAIR7N
-         sBwbCerXLcf8sZrnwzNUHNF0wsBsM/8ocePEPMGa7Lu+opjVbTnfVJP3t7z1Xpg4RhBS
-         pMqwODE0wdKbV+t/pK1IVBFtkzjtHtpmdFtLi5DDrPN0XEYQHNOQXE4a03aaG5NpglKq
-         2/jdm5uLuv/kJgTFXUYRsWtdQNtLTveksj96SrOyYRbSjR3XsejfYbcwCddk2ac2wSMp
-         ru3w==
-X-Gm-Message-State: AOAM532Ag8cK7OrEAx8gkuW1mPWSEoyLL30pbGdjECDWo/QuIifJcJDB
-        uF7glEiNJumkAd35NGGKHLYo5A==
-X-Google-Smtp-Source: ABdhPJxjB4QZTZ81bZ6jQw/abmBOy+CCBoxTaCVvnsrIQBJTKiVUBpR+YJGtGDwM8+32N3t2GImrug==
-X-Received: by 2002:ac8:5545:: with SMTP id o5mr13234013qtr.330.1618950674400;
-        Tue, 20 Apr 2021 13:31:14 -0700 (PDT)
+        bh=OoACPE5u4SUbbCsECOTUn+hT4tdzz3u6dLtGg/hHiBo=;
+        b=K241wLZ6hm6N1kJnnLs3ITB5Mx9b+0XW56V61+7hHHcGdZUjSNh/2Se4m7qrjLnoye
+         1Mjq9lhLZ85Pb5+ihQO9D3vPMt5pWWEvQHZXIj3d5Ls0PF3QIzNQPRUz7fOh7NXcOgWA
+         /clng9mHekSsgl0Cz35ArhsTUSAvWbYrAk2JKg/hxX33esMks+hqGQs19mqvwFSIp0JN
+         YoOlpuaJBpK8ObV3s45j7cGRgQltxikDazSzmbgVYHahNXigZ1jPmBXLWJ57jwKW3M2x
+         G1rc51E9OOzmOrLbnjC6ri2SlsAhhOZgVJ38A4y1rxrad6Fvy6sE/yBNj0tZmjgzhzcU
+         OVMA==
+X-Gm-Message-State: AOAM5331jl2mipWdUnUp3YXNUpjsGGTww5cFbJSvRLNaGrK3/x2pLqtH
+        klpDoq24+CpO7U5mOFKJLDoTOE66denunHbG
+X-Google-Smtp-Source: ABdhPJxiWOs4T00UJoiMgUbkneA2ay6r6EgkMGjdlFCDMkB9eLC9vi8TNeFTcy/d3l8SN+pfLjeMAA==
+X-Received: by 2002:a6b:903:: with SMTP id t3mr8221586ioi.145.1618950734718;
+        Tue, 20 Apr 2021 13:32:14 -0700 (PDT)
 Received: from localhost ([2605:9480:22e:ff10:b323:36c3:bfb7:a769])
-        by smtp.gmail.com with ESMTPSA id g64sm163170qkf.41.2021.04.20.13.31.13
+        by smtp.gmail.com with ESMTPSA id a17sm9032515ili.6.2021.04.20.13.32.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Apr 2021 13:31:13 -0700 (PDT)
-Date:   Tue, 20 Apr 2021 16:31:12 -0400
+        Tue, 20 Apr 2021 13:32:14 -0700 (PDT)
+Date:   Tue, 20 Apr 2021 16:32:13 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, peff@peff.net, dstolee@microsoft.com
-Subject: Re: [PATCH] builtin/repack.c: set a default factor for '--geometric'
-Message-ID: <YH86ENkPrTeWnnBb@nand.local>
+To:     git@vger.kernel.org
+Cc:     peff@peff.net, dstolee@microsoft.com, gitster@pobox.com
+Subject: [PATCH v2] builtin/repack.c: set a default factor for '--geometric'
+Message-ID: <8d8dea2e2c149303891cfe6ae8dbec06b538622c.1618950726.git.me@ttaylorr.com>
 References: <1ecab817396fae6a1cbafde1ca8b3ebfd9ae4c11.1618883241.git.me@ttaylorr.com>
- <xmqqv98g4sbl.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqv98g4sbl.fsf@gitster.g>
+In-Reply-To: <1ecab817396fae6a1cbafde1ca8b3ebfd9ae4c11.1618883241.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 20, 2021 at 01:25:02PM -0700, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
->
-> > --g=<factor>::
-> > ---geometric=<factor>::
-> > +-g=[<factor>]::
-> > +--geometric[=<factor>]::
->
-> Do you mean "git repack -g= -d" is (1) accepted and/or (2)
-> recommended?
->
-> If not, we'd want "-g[=<factor>]" similar to the longer form, no?
+The '--geometric=<n>' argument specifies that each pack must contain at
+least 'n' times as many objects as the size of the next-largest pack.
+The factor 'n' is customizable, but setting it to '2' is a sane default.
 
-Thanks for spotting. The '[' should come before the '=' character, not
-after. I'll send a reroll with this (and a suggestion from Stolee).
+Instead of making the factor a required argument, make the argument
+optional with a default value of '2'.
 
-Thanks,
-Taylor
+To ensure that the option is setup correctly, modify the most complex
+test of t7703 to drop the explicit factor.
+
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+Range-diff against v1:
+1:  1ecab81739 ! 1:  8d8dea2e2c builtin/repack.c: set a default factor for '--geometric'
+    @@ Documentation/git-repack.txt: depth is 4095.
+      
+     --g=<factor>::
+     ---geometric=<factor>::
+    -+-g=[<factor>]::
+    ++-g[=<factor>]::
+     +--geometric[=<factor>]::
+      	Arrange resulting pack structure so that each successive pack
+    --	contains at least `<factor>` times the number of objects as the
+    + 	contains at least `<factor>` times the number of objects as the
+     -	next-largest pack.
+    -+	contains at least `<factor>` (`2` if unspecified) times the
+    -+	number of objects as the next-largest pack.
+    ++	next-largest pack. If `<factor>` is not specified, then `2` is
+    ++	used by default.
+      +
+      `git repack` ensures this by determining a "cut" of packfiles that need
+      to be repacked into one in order to ensure a geometric progression. It
+
+ Documentation/git-repack.txt | 7 ++++---
+ builtin/repack.c             | 5 +++--
+ t/t7703-repack-geometric.sh  | 2 +-
+ 3 files changed, 8 insertions(+), 6 deletions(-)
+
+diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
+index 317d63cf0d..f7c7e0aeae 100644
+--- a/Documentation/git-repack.txt
++++ b/Documentation/git-repack.txt
+@@ -165,11 +165,12 @@ depth is 4095.
+ 	Pass the `--delta-islands` option to `git-pack-objects`, see
+ 	linkgit:git-pack-objects[1].
+ 
+--g=<factor>::
+---geometric=<factor>::
++-g[=<factor>]::
++--geometric[=<factor>]::
+ 	Arrange resulting pack structure so that each successive pack
+ 	contains at least `<factor>` times the number of objects as the
+-	next-largest pack.
++	next-largest pack. If `<factor>` is not specified, then `2` is
++	used by default.
+ +
+ `git repack` ensures this by determining a "cut" of packfiles that need
+ to be repacked into one in order to ensure a geometric progression. It
+diff --git a/builtin/repack.c b/builtin/repack.c
+index 2847fdfbab..f2359c9d3a 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -494,8 +494,9 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 				N_("repack objects in packs marked with .keep")),
+ 		OPT_STRING_LIST(0, "keep-pack", &keep_pack_list, N_("name"),
+ 				N_("do not repack this pack")),
+-		OPT_INTEGER('g', "geometric", &geometric_factor,
+-			    N_("find a geometric progression with factor <N>")),
++		{ OPTION_INTEGER, 'g', "geometric", &geometric_factor, N_("n"),
++				N_("find a geometric progression with factor <n>"),
++				PARSE_OPT_OPTARG, NULL, 2 },
+ 		OPT_END()
+ 	};
+ 
+diff --git a/t/t7703-repack-geometric.sh b/t/t7703-repack-geometric.sh
+index 5ccaa440e0..77cd5f2284 100755
+--- a/t/t7703-repack-geometric.sh
++++ b/t/t7703-repack-geometric.sh
+@@ -123,7 +123,7 @@ test_expect_success '--geometric with small- and large-pack rollup' '
+ 
+ 		find $objdir/pack -name "*.pack" | sort >before &&
+ 
+-		git repack --geometric 2 -d &&
++		git repack --geometric -d &&
+ 
+ 		find $objdir/pack -name "*.pack" | sort >after &&
+ 		comm -12 before after >untouched &&
+-- 
+2.31.1.163.ga65ce7f831
