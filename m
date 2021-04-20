@@ -2,188 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BB436C433B4
-	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 23:34:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6C7AC433B4
+	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 23:37:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7BD6D613FA
-	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 23:34:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5ECCD61414
+	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 23:37:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234434AbhDTXfY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Apr 2021 19:35:24 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:38104 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S234427AbhDTXfX (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 20 Apr 2021 19:35:23 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S234382AbhDTXiP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Apr 2021 19:38:15 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:63440 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233992AbhDTXiP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Apr 2021 19:38:15 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id C5614118140;
+        Tue, 20 Apr 2021 19:37:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=KdPrxGaN5ntCaAKWwM9j+XEWLwo=; b=ibS5nT
+        TI8VuVhvR/HpbKIC+BRMjP9QQLepCllEOLTwZz+ika22OR5TAPYEaZFjqsKJdkjm
+        HIEAPC74Hf6Is7IrNhf0Md/nhmp97LoW5kex8NMwJQ15ARVU4NOV7qwYbJAkhGIz
+        rggDmaf8tbAt5UQ7IOTPm+FZNDXadPCAMLb9Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=eIHf5I4uTas0bQ6XH2clSqzMoV6Us3uh
+        GBFIIG5WCpk1yhmUnW1LaB8GWFEAS99qKjwyywBvcFiXUWg9atKRoh0piPOI/Zmq
+        3YYpZyEiZZP/MnEl2FY3MV7DzzvDd22X2o97Cl/qPGHbl/YS+roI6eow79b5RtZT
+        PI660Rydf1o=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id BE63D11813F;
+        Tue, 20 Apr 2021 19:37:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 0D3BE6044F;
-        Tue, 20 Apr 2021 23:34:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1618961691;
-        bh=RrQaORRXRyVnaSvH4XbJVxGpm2xbV5D5wOeEH3l7z58=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=oDnnWfe0yaACLn2jM4aDYN41Rs9A4za2UPYZhar48OT6C+pRSmBWkr+VLAbUaKgdE
-         SYv17m01wCM6dxkAuCSGzKwUPbq/e0QK6HDtCfB1jLBbP8UVNQtrWn71+e7h6qUvh5
-         84p651C7Rne2R5TTuKXNuTz5RONUg3fvb5LrE3nL0DFpeH4ZQ+z5HsIvltwdRTv6pu
-         nM8G/NVzaVafwCUMw500r7FN0gheDObleW/E310UJEG18MYTgZ+K3+SgTmfM+C+uCb
-         xGw95ucUjF0Hhsq0EWKAHa7obhzo6Bu33izN5rKAQGmw+UAl47EfLny3vmWL9ev03P
-         4H6PFYYePVlYbTh2REtvHxWn1SQkJciGlh08AVw3DAzBVRxBmjKEnCSxnxCsVRjsNE
-         Fv6QdguCoY+Uym2Z6jcrwk7AKAcnSFg/qXriF+kGZRZ4f/HVO/wifiZNUEiLiQFD5K
-         n10hzEgG/g2YCEwZEEDb6fGco8w7XDbtys6bb8CcCrWrGYgW+7B
-Date:   Tue, 20 Apr 2021 23:34:46 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Dennis Worthem <Dennis.Worthem@amtrustgroup.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Problems with CRLF line endings
-Message-ID: <YH9lFnJYpejqTOhk@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Dennis Worthem <Dennis.Worthem@amtrustgroup.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-References: <DM6PR17MB2106CEAA1CED29E738B81602F9489@DM6PR17MB2106.namprd17.prod.outlook.com>
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0F67311813E;
+        Tue, 20 Apr 2021 19:37:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
+Subject: Re: [PATCH 10/18] test-lib: provide test prereq REFFILES
+References: <pull.1008.git.git.1618829583.gitgitgadget@gmail.com>
+        <3d3b733c31273a004e80d5cbab8f746a2010e9ea.1618829583.git.gitgitgadget@gmail.com>
+        <xmqqa6ps36ow.fsf@gitster.g>
+Date:   Tue, 20 Apr 2021 16:37:38 -0700
+In-Reply-To: <xmqqa6ps36ow.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
+        20 Apr 2021 15:57:35 -0700")
+Message-ID: <xmqqo8e81q9p.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="CSvfnxaUZ93LzMVY"
-Content-Disposition: inline
-In-Reply-To: <DM6PR17MB2106CEAA1CED29E738B81602F9489@DM6PR17MB2106.namprd17.prod.outlook.com>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6540B548-A231-11EB-865D-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Junio C Hamano <gitster@pobox.com> writes:
 
---CSvfnxaUZ93LzMVY
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+>> From: Han-Wen Nienhuys <hanwen@google.com>
+>>
+>> REFFILES can be used to mark tests that are specific to the packed/loose ref
+>> storage format and its limitations. Marking such tests is a preparation for
+>> introducing the reftable storage backend.
+>
+> We'd want a bit of documentation either here or in t/README to
+> explain things like how these two interact with each other, if both
+> can be active at the same time, etc.
 
-On 2021-04-20 at 16:33:40, Dennis Worthem wrote:
-> We as a multi-developer team are using git version 2.31.0.windows.1 on th=
-e developer side which we use through Git Bash on Windows 10. On the server=
- side we use Azure Dev Ops.
-> Approximate 20 developers are working from one repository.  We want all f=
-iles to use CRLF line endings with working with the files. All the develope=
-rs have a .bashrc file with contents of "git config --global core.autocrlf =
-true".
-> Additionally, the repository with a .gitattributes file with contents:
-> *.raml text eol=3Dcrlf
-> *.json text eol=3Dcrlf
-> *.vb text eol=3Dcrlf
-> *.cs text eol=3Dcrlf
-> *.vbproj text eol=3Dcrlf
-> *.csproj text eol=3Dcrlf
+By "here", I meant the place in the code where the test_set_prereq
+was added, not in the proposed log message that will become hard to
+see when test writers need to work with the sources.
 
-text eol=3Dcrlf tells Git to store LF endings in the repository and use
-CRLF endings in the working tree.  This is the recommended way to
-configure things, since it means that operations like diffs don't show
-trailing whitespace.
+Thanks.
 
-> The problem we are having is that when pulling branches from the reposito=
-ry we still have recurring  files with phantom changes.
-> We have told developer who experience this to either reset the indices ca=
-che and do a hard reset or renormalize and check in and push as indicated i=
-n a number of web sites. But it still seems to be happening.
-> Our repository has a release branch and a develop branch and the problems=
- seems to be happening with mainly develop which has more developer traffic.
->=20
-> It seems inconsistent on changes, The file will download with all CRLF en=
-dings but the file is marked as modified and it is not clear what has chang=
-ed.
-
-This happens when the file that's checked into the repository hasn't
-been properly checked in and either a filter (e.g., Git LFS), a line
-ending change, or a working tree encoding causes the file as checked out
-to differ when checked into the index.
-
-For example, since you've told Git to store LF line endings in the
-index, if the file is checked into the repository with CRLF endings but
-then it gets updated, Git will re-read and convert the file into LF
-endings in the index, and it will appear modified.  That can happen
-because the timestamp changes or for other reasons that make Git think
-it's dirty.
-
-The proper solution to this is to do "git add --renormalize ." and then
-commit.  You may want to also set up your CI such that CRLF line endings
-in the repository cause a hard failure.  For example, you may wish to do
-this:
-
-----
-#!/bin/sh
-
-if git ls-files --eol | grep i/crlf
-then
-    echo "The above files have CRLF line endings in the index.  Aborting." =
->&2
-    false
-fi
-----
-
-It's unclear to me why this is happening if you have the above
-configured, but it could be files which have not been updated and still
-contain the old CRLF line endings in the repository, which the
-renormalize should fix.  It's also possible someone is using a different
-Git implementation, possibly one integrated in their editor, and it
-doesn't honor the .gitattributes file.  Or someone could have a
-=2Egit/info/attributes that's set to override the value.
-
-By adding a hard fail on this in your CI system, you'll figure out where
-the source of the problem is very quickly.  Most of the projects I'm on
-have hard failures on trailing whitespace, and this is very effective in
-stopping it from reappearing in the codebase.
-
-> Does anyone have recommendations on how we can get this to work (always C=
-RLF) without the phantom changes occurring in an apparently non-determinist=
-ic manner? Have I configured this completely?
-
-It's unclear to me why this happens inconsistently, but it seems to
-mostly affect Windows users.  Users of other OSes don't seem to have
-files in the working tree re-cleaned unexpectedly as often.  That's why
-this appears to be nondeterministic; I'm not sure what it is about
-Windows that seems to cause this problem to show up more often there.
-
-> The problem may be that one or more developers have not updated their loc=
-al indices. Also would it help to have everyone do a one-time reclone the r=
-epository?
->=20
-> One file marked as modified has
-> $ git ls-files --eol | grep WCAPI.Core/WCAPI.Core.csproj
-> i/crlf  w/crlf  attr/text eol=3Dcrlf      WCAPI.Core/WCAPI.Core.csproj
-
-This says that the index has CRLF line endings.  That's not correct.
-
-> and a similar one not marked as modified has
->=20
-> $ git ls-files --eol | grep WCAPI/WCAPI.csproj
-> i/lf    w/crlf  attr/text eol=3Dcrlf      WCAPI/WCAPI.csproj
-
-This is correct.
-
-> Why does the modified one have 'i/crlf' and the unmodified ones have 'i/l=
-f'
-
-Because it was originally checked in that way and hasn't been fixed.
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
-
---CSvfnxaUZ93LzMVY
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.27 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYH9lFgAKCRB8DEliiIei
-gYBGAP4pi1zuFNRkXZUS1zhfX/4ywIfmb0dy3fIWs1ZHDYF/DgD9HNeVeAQNuE53
-f4tq884GB6z1e0D/c0TGEs1rXanPTgU=
-=oPk/
------END PGP SIGNATURE-----
-
---CSvfnxaUZ93LzMVY--
+>
+>>
+>> Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+>> ---
+>>  t/test-lib.sh | 2 ++
+>>  1 file changed, 2 insertions(+)
+>>
+>> diff --git a/t/test-lib.sh b/t/test-lib.sh
+>> index d3f6af6a6545..ea7397c633db 100644
+>> --- a/t/test-lib.sh
+>> +++ b/t/test-lib.sh
+>> @@ -1481,6 +1481,8 @@ parisc* | hppa*)
+>>  	;;
+>>  esac
+>>  
+>> +test_set_prereq REFFILES
+>> +
+>>  ( COLUMNS=1 && test $COLUMNS = 1 ) && test_set_prereq COLUMNS_CAN_BE_1
+>>  test -z "$NO_PERL" && test_set_prereq PERL
+>>  test -z "$NO_PTHREADS" && test_set_prereq PTHREADS
