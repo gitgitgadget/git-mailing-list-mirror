@@ -2,182 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51243C433ED
-	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 23:07:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B7C64C433B4
+	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 23:10:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0CA5061419
-	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 23:07:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6CBB36141C
+	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 23:10:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234331AbhDTXIT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Apr 2021 19:08:19 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:38068 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S233964AbhDTXIS (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 20 Apr 2021 19:08:18 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id B5BD660422;
-        Tue, 20 Apr 2021 23:07:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1618960036;
-        bh=xVJN01nXswio/aSG81KEBujg8W7gR2UZ3BGfWBztFlA=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=Hxljtr/ACvViu0GZ6Xm3hTCnAoffnGLHhtjQXBUS3kQ6pPEXpXecuerz6lqNlfsVd
-         61z0QMw9AWNzpsgKGTOKof2PFE08YNDQsAiopqSAPtZr3J6bFzM3H60qneeI891j1w
-         WMHmCnlwbrIc57TPhPGIh1vsfCHNyYjT6Qt9ui3I6L6t49hS+MxLQjM6QFztAWw9db
-         /nKTKcOvf7dVIQ3sMyndvgfEH+J8qvo0EqTHGOBbG40J0mxFmh4q8vesvG4SA9h+Ut
-         wIlv9HzNslHGpyfu5xRY3Fr2qOg614oOyDrNsLC9hCoDKQ1WY3oI/YbmBoOt4e9J0u
-         6aoB/jLDZdeRvE4rTxQJffduBO/fJmt4qdowG+QdEZJql0MWHhNLzn5b0tafcjfeW/
-         jkLB9CAC2loy6RpEIaiFlsicqCr4fVr2FzoS7/X8FP4sGxxgahf4SGSAY0ry8XAcuA
-         zER0N4JtQDYwTLQf2BsEZaafn/hpKFBoeBJ8eUvTDtuht2zVpOr
-Date:   Tue, 20 Apr 2021 23:07:09 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Luke Shumaker <lukeshu@lukeshu.com>
-Cc:     git@vger.kernel.org, Luke Shumaker <lukeshu@datawire.io>,
+        id S234290AbhDTXLa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Apr 2021 19:11:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53906 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233964AbhDTXLa (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Apr 2021 19:11:30 -0400
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E6E9C06174A
+        for <git@vger.kernel.org>; Tue, 20 Apr 2021 16:10:56 -0700 (PDT)
+Received: by mail-pl1-x635.google.com with SMTP id s20so4693265plr.13
+        for <git@vger.kernel.org>; Tue, 20 Apr 2021 16:10:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=zK7ADla7opPnKJjT7v/YaXXcbAVHNberBoyWD3s/cC4=;
+        b=a5KgtgVJDHKh+ap71j+xQ4l0PtvwL4+ey8obh/QXFhciuRD3+HwS3TekRxI7KDM5tW
+         Y/vhTCsssaxfqtkijxTdd/CtHs7eHQOFw1AflIOSz1fd+W1apl/qhyU2MskhZeO1AyGM
+         Zp34YZRZAMG73/miqNN+dskUHhspfBGeGQ5ySMFB82iPIzdGKxKxQuMDpal6uk+4atiN
+         W3YlsVg0AhbuXGjyfn7tcP3R1RgwZyIphSBzbndThA4aRUL7MsIhpSo+D7pNu2dICL39
+         zGLhUzBGRfgx4iFZsxNI4lZHbImGDD3ZNbMoSAvhqFtPvM6IB2h9zmjvxNnW44A7gfgA
+         fV5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=zK7ADla7opPnKJjT7v/YaXXcbAVHNberBoyWD3s/cC4=;
+        b=SH9IE7QvvgveZKddpYAJ9ZkLUHer2cFghCZM1JiMfnXN4MDp1GNLAyDOk6CRVgC6u2
+         Fc/+40bHoP+W43+iPq8FyafbotbKtRqzlC1X05FHeOeIBaUZtKfsDYhe2vTKFOielx0v
+         Uhaem759AHMykt0aNCm8p8We38UmhM159fIGdz9a9D2Pca9BMocrhUhI6O0Um8zamB14
+         DaC0bk3l1UyYJoGINpPG1IJGXbI3R0av+0Zm0iKX9EavD7g9AgXVOOIKpA5QZv5JnQ4z
+         JzRVuH4MlAZvoJJwCBmEy9LIKm0whGaj0simEs3rbjfwxsLkWzz5wXM16q7FtCopos5F
+         WzHw==
+X-Gm-Message-State: AOAM532a0ZUxirW6QGxTupzoSdrcTbEvq6qGOADq9jAf9iC4Wgr2AWur
+        UnMIsw2hCP1+0Zaon8B1wFkz+JaPscJdvA==
+X-Google-Smtp-Source: ABdhPJy79sYdWMoCezr7yjl+rwtzcQPir5sIXcp122NNsObQ644vc/67+XECQX4W1f4Cr9d6NDvTzg==
+X-Received: by 2002:a17:903:244:b029:ec:9666:9fc6 with SMTP id j4-20020a1709030244b02900ec96669fc6mr17851683plh.63.1618960255878;
+        Tue, 20 Apr 2021 16:10:55 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:0:828e:a107:e159:3343])
+        by smtp.gmail.com with ESMTPSA id j7sm90037pfd.129.2021.04.20.16.10.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Apr 2021 16:10:55 -0700 (PDT)
+Date:   Tue, 20 Apr 2021 16:10:49 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git <git@vger.kernel.org>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>, albertcui@google.com,
         Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 3/3] fast-export, fast-import: implement signed-commits
-Message-ID: <YH9enUedtHjE87ET@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Luke Shumaker <lukeshu@lukeshu.com>, git@vger.kernel.org,
-        Luke Shumaker <lukeshu@datawire.io>,
-        Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-References: <20210419225441.3139048-1-lukeshu@lukeshu.com>
- <20210419225441.3139048-4-lukeshu@lukeshu.com>
- <YH4xY/oSwYIUmJyL@camp.crustytoothpaste.net>
- <87tuo0q3ma.wl-lukeshu@lukeshu.com>
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        Shourya Shukla <periperidip@gmail.com>
+Subject: Re: RFC/Discussion - Submodule UX Improvements
+Message-ID: <YH9feTykPhimIA13@google.com>
+References: <YHofmWcIAidkvJiD@google.com>
+ <CAP8UFD0Ct8NofMdds=w0k1-jjX638L6QJQEJWVxqJ6ZPSoJUjg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="woXG7bxl1QoR6QNR"
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <87tuo0q3ma.wl-lukeshu@lukeshu.com>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAP8UFD0Ct8NofMdds=w0k1-jjX638L6QJQEJWVxqJ6ZPSoJUjg@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sun, Apr 18, 2021 at 07:22:07AM +0200, Christian Couder wrote:
+> 
+> Hi Emily,
+> 
+> On Sat, Apr 17, 2021 at 1:39 AM Emily Shaffer <emilyshaffer@google.com> wrote:
+> >
+> > Hi folks,
+> >
+> > As hinted by a couple recent patches, I'm planning on some pretty big submodule
+> > work over the next 6 months or so - and Ævar pointed out to me in
+> > https://lore.kernel.org/git/87v98p17im.fsf@evledraar.gmail.com that I probably
+> > should share some of those plans ahead of time. :) So attached is a lightly
+> > modified version of the doc that we've been working on internally at Google,
+> > focusing on what we think would be an ideal submodule workflow.
+> 
+> Thanks for sharing this doc! My main concern with this is that we are
+> likely to have a GSoC student working soon on finishing to port `git
+> submodule` to C code. And I wonder how that would interact with your
+> work.
 
---woXG7bxl1QoR6QNR
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I discussed this a little with Jonathan N and Albert and we think it
+probably won't matter too much. If anything, I expect mostly we would
+touch the submodule--helper, and not the 'git submodule' builtin. But
+just in case - it would be useful if any GSoC student were publishing
+their code to a feature branch (on a fork, maybe) so that I could keep
+an eye out for possible conflicts that way. Or, at very least, CCing me
+and Jonathan N on patches :)
 
-On 2021-04-20 at 17:15:25, Luke Shumaker wrote:
-> On Mon, 19 Apr 2021 19:41:55 -0600,
-> brian m. carlson wrote:
-> > I would appreciate it if we did in fact implement it.  I would like to
-> > use this functionality to round-trip objects between SHA-1 and SHA-256,
-> > and it would be nice if both worked.
-> >=20
-> > The situation with tags is different: the signature using the current
-> > algorithm is always trailing, and the signature for the other algorithm
-> > is in the header.  That wasn't how we intended it to be, but that's how
-> > it ended up being.
-> >=20
-> > As a result, tag output can support SHA-256 data,
->=20
-> I don't believe that's true?  With SHA-1-signed tags, the signature
-> gets included in the fast-import stream as part of the tag message
-> (the `data` line in the BNF).  Since SHA-256-signed tags have their
-> signature as a header (rather than just appending it to the message),
-> we'd have to add a 'gpgsig' sub-command to the 'tag' top-level-command
-> (like I've done to the 'commit' top-level-command).
-
-If you're using a repository that's SHA-1, then the tag signature that's
-part of the message is a signature over the SHA-1 contents of the
-object, and the gpgsig-sha256 header is a signature over the SHA-256
-contents of the object.  If you're using a repository that's SHA-256,
-it's reversed: the signature at the end of the message covers the
-SHA-256 contents of the object and the gpgsig header covers the SHA-1
-contents.
-
-It isn't currently possible to create objects with both signatures in
-place, but that will be possible in the future.
-
-> >                                                   but with your
-> > proposal, SHA-256 commits wouldn't work at all.  Considering SHA-1 is
-> > wildly insecure and therefore signing SHA-1 commits adds very little
-> > security, whereas SHA-256 is presently considered strong, I'd argue that
-> > only supporting SHA-1 isn't the right move here.
->=20
-> The main reason I didn't implement SHA-256 support (well, besides that
-> the repo I'm working on turned out to not have any SHA-256-signed
-> commits in it) is that I had questions about SHA-256 that I didn't
-> know/couldn't find the answers to.
-
-Currently, repositories using SHA-256 currently don't interoperate with
-SHA-1 repositories.  However, if you want to create a test repo, you can
-do so with "git init --object-format=3Dsha256" in an empty directory.
-
-If you want to run the testsuite in SHA-256 mode, set
-GIT_TEST_DEFAULT_HASH=3Dsha256, and all the repositories created will use
-SHA-256.
-
-That should be sufficient to get this series such that it will work with
-simple SHA-256 repos.  If you have more questions about this work or how
-to get things working, I'm happy to answer them.
-
-> However, looking again, I see a few of the answers in
-> t7510-signed-commit.sh, so I'll have a go at it.  If I get stuck, I'll
-> go ahead and implement the below "gpgsig sha1" suggestion, and leave
-> the sha256 implementation to someone else.
-
-Not implementing this means the CI will fail when the testsuite is run
-in SHA-256 mode, so your patch probably won't be accepted.
-
-> > Provided we do that and the test suite passes under both algorithms, I'm
-> > strongly in favor of this feature.  In fact, I had been thinking about
-> > implementing this feature myself just the other day, so I'm delighted
-> > you decided to do it.
->=20
-> That's one of the big reasons I didn't implement both--I wasn't sure
-> how to test sha256 (within the test harness, `git commit -S` gives a
-> sha1 signature).
->=20
-> I see that t7510-signed-commit.sh 'verify-commit verifies multiply
-> signed commits' tests sha256 by hard-coding a raw commit object in the
-> test itself, and feeding that to `git hash-object`.  I'd prefer to
-> figure out how to get `git commit` itself to generate a sha256
-> signature rather than a sha1 signature, so that I can _know_ that I'm
-> getting the ordering of headers the same as `git commit`.  But I don't
-> think that needs to be a blocker; if the test doesn't do the same
-> ordering as `git commit`, I guess that can just be a bugfix later?
-
-Yes, dual-signed objects have to manually created right now; there's no
-tooling to create them because that code hasn't landed yet.  It's in my
-tree and very broken.  But you can create SHA-256 repositories as I
-mentioned above and test those, and the testsuite does run in that mode,
-so it should be easy enough to check at least single-signed commits for
-now, even if you don't implement dual-signed ones.  I think it's fine if
-that comes later, and I can pick that up as part of a future series.
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
-
---woXG7bxl1QoR6QNR
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.27 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYH9enQAKCRB8DEliiIei
-gWPyAQCNJx45SlADUvoDdqbaFwE966ew1eLRDrML5Bdll08M1QEA8u9quJb2AV7I
-ynTrdOxCc78kuukpMWlPvV648Wy1DA4=
-=fmPJ
------END PGP SIGNATURE-----
-
---woXG7bxl1QoR6QNR--
+ - Emily
