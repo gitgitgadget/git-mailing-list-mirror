@@ -2,205 +2,152 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DAC3BC43462
-	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 16:52:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F7A2C433ED
+	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 17:15:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 69625613AB
-	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 16:52:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DB7EB61076
+	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 17:15:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233121AbhDTQwy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Apr 2021 12:52:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55252 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233328AbhDTQwr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Apr 2021 12:52:47 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C76DC06138A
-        for <git@vger.kernel.org>; Tue, 20 Apr 2021 09:52:15 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id g9so22341945wrx.0
-        for <git@vger.kernel.org>; Tue, 20 Apr 2021 09:52:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=fOig0rtmFbMsuO7Glz/4J6tAr2Wc+LDu9zupBOBwnXQ=;
-        b=DC+vv5ND1v+BJycu+VYokrbfRMbaBQspuEe2Tu/YAF+cztqFeCr4gRDBdUKcKnXNtV
-         0ibiU2W+AO5/XncG64/PAPGW4jhFMQWYPzdjTJIKY2FMtf9RPjrWaPcDWT0+rcMOmrKM
-         5sg/Yp53Zfe9so3Q2iN2KkZAN6lo9QEQzUwkWPbtkd2GBkd0VfDwgIM8r8eQ639WJ9sH
-         V+8Pn8+/2OXdPYcxpWb02EzYVUyIek7MISBBVFIWdPchr3XQL52D7VzZ0y/4rGYIBJZp
-         vmf/cuek2noW4DMiWGG8ARsywDpjCcU7vrn3u3VxXGpvxMPtPDPpfXFAOq+dls5cfTJy
-         CDIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=fOig0rtmFbMsuO7Glz/4J6tAr2Wc+LDu9zupBOBwnXQ=;
-        b=DSQhBQqEedcz2tC6N63JUeMHrjAK+QHeSk85ipA9DsJi8n15BpBghJ3x52T/SWwiHs
-         8RgrgsW+hIswExOW1u3uRMActnM6rEzU2K8FVohVQt3HamaVJmwaYgh+fjzF8nEyGjrM
-         yy2cyNIV8dkw4cKTe5l/Z4hCJOOw53ghjgdN+TjFlhAaPGYCQkXdS/s60+ORjlTZqqr5
-         j993WIuF/Ey9dDXyc3ljgpIUB1tHFPXKXO+Fs41UW3Z2m7ENMoWgeMCwZL3aCVtpL6nk
-         Ups37CwsL2luxEuvZfbg0huGa7zupUIUYN9bpopLAOWqCD11NzpEe0ixxkwQJ3fxj0HF
-         +5ZQ==
-X-Gm-Message-State: AOAM530RZLiO4A81vmEq1yVN+2/tpex9979SzIqFJEvBwODNirHpjy0x
-        gcy3Pcf81itrjX/LxhZxUBUbAnsTUKw=
-X-Google-Smtp-Source: ABdhPJxRHP8Mt1snxfru1AjLSRlvw9DfeWHdIbHUI/6bb9NS5yrHMHzjHF2XwBuMdiVviDSSt4pkbA==
-X-Received: by 2002:a5d:4a8b:: with SMTP id o11mr21427870wrq.233.1618937533974;
-        Tue, 20 Apr 2021 09:52:13 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b14sm29047079wrf.75.2021.04.20.09.52.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Apr 2021 09:52:13 -0700 (PDT)
-Message-Id: <7e378eef4b3405777eef9c0e9fe4e9e4ec6a1df9.1618937532.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.935.v2.git.1618937532.gitgitgadget@gmail.com>
-References: <pull.935.git.1618831726.gitgitgadget@gmail.com>
-        <pull.935.v2.git.1618937532.gitgitgadget@gmail.com>
-From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 20 Apr 2021 16:52:10 +0000
-Subject: [PATCH v2 1/2] [GSOC] ref-filter: get rid of show_ref_array_item
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc:    Sent
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Hariom Verma <hariom18599@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        ZheNing Hu <adlternative@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>
+        id S232916AbhDTRP7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Apr 2021 13:15:59 -0400
+Received: from mav.lukeshu.com ([104.207.138.63]:58156 "EHLO mav.lukeshu.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232473AbhDTRP6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Apr 2021 13:15:58 -0400
+Received: from lukeshu-dw-thinkpad (unknown [8.42.69.49])
+        by mav.lukeshu.com (Postfix) with ESMTPSA id EB48180590;
+        Tue, 20 Apr 2021 13:15:25 -0400 (EDT)
+Date:   Tue, 20 Apr 2021 11:15:25 -0600
+Message-ID: <87tuo0q3ma.wl-lukeshu@lukeshu.com>
+From:   Luke Shumaker <lukeshu@lukeshu.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Luke Shumaker <lukeshu@lukeshu.com>, git@vger.kernel.org,
+        Luke Shumaker <lukeshu@datawire.io>,
+        Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?B?Tmd1eeG7hW4g?= =?ISO-8859-1?Q?Th?=
+         =?ISO-8859-1?Q?=E1i_?= =?UTF-8?B?Tmfhu41j?= Duy 
+        <pclouds@gmail.com>
+Subject: Re: [PATCH 3/3] fast-export, fast-import: implement signed-commits
+In-Reply-To: <YH4xY/oSwYIUmJyL@camp.crustytoothpaste.net>
+References: <20210419225441.3139048-1-lukeshu@lukeshu.com>
+        <20210419225441.3139048-4-lukeshu@lukeshu.com>
+        <YH4xY/oSwYIUmJyL@camp.crustytoothpaste.net>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?ISO-8859-4?Q?Goj=F2?=) APEL-LB/10.8 EasyPG/1.0.0
+ Emacs/27.2 (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: ZheNing Hu <adlternative@gmail.com>
+On Mon, 19 Apr 2021 19:41:55 -0600,
+brian m. carlson wrote:
+> 
+> [1  <text/plain; utf-8 (quoted-printable)>]
+> On 2021-04-19 at 22:54:41, Luke Shumaker wrote:
+> > From: Luke Shumaker <lukeshu@datawire.io>
+> > 
+> > fast-export has an existing --signed-tags= flag that controls how to
+> > handle tag signatures.  However, there is no equivalent for commit
+> > signatures; it just silently strips the signature out of the commit
+> > (analogously to --signed-tags=strip).
+> > 
+> > While signatures are generally problematic for fast-export/fast-import
+> > (because hashes are likely to change), if they're going to support tag
+> > signatures, there's no reason to not also support commit signatures.
+> > 
+> > So, implement signed-commits.
+> > 
+> > On the fast-export side, try to be as much like signed-tags as possible,
+> > in both implementation and in user-interface; with the exception that
+> > the default should be `--signed-commits=strip` (compared to the default
+> > `--signed-tags=abort`), in order to continue defaulting to the
+> > historical behavior.  Only bother implementing "gpgsig", not
+> > "gpgsig-sha256"; the existing signed-tag support doesn't implement
+> > "gpgsig-sha256" either.
+> 
+> I would appreciate it if we did in fact implement it.  I would like to
+> use this functionality to round-trip objects between SHA-1 and SHA-256,
+> and it would be nice if both worked.
+> 
+> The situation with tags is different: the signature using the current
+> algorithm is always trailing, and the signature for the other algorithm
+> is in the header.  That wasn't how we intended it to be, but that's how
+> it ended up being.
+> 
+> As a result, tag output can support SHA-256 data,
 
-Inlining the exported function `show_ref_array_item()`,
-which is not providing the right level of abstraction,
-simplifies the API and can unlock improvements at the
-former call sites.
+I don't believe that's true?  With SHA-1-signed tags, the signature
+gets included in the fast-import stream as part of the tag message
+(the `data` line in the BNF).  Since SHA-256-signed tags have their
+signature as a header (rather than just appending it to the message),
+we'd have to add a 'gpgsig' sub-command to the 'tag' top-level-command
+(like I've done to the 'commit' top-level-command).
 
-Helped-by: René Scharfe <l.s.r@web.de>
-Signed-off-by: ZheNing Hu <adlternative@gmail.com>
----
- builtin/for-each-ref.c | 14 ++++++++++++--
- builtin/tag.c          | 14 ++++++++++++--
- ref-filter.c           | 25 ++++++++++---------------
- ref-filter.h           |  2 --
- 4 files changed, 34 insertions(+), 21 deletions(-)
+>                                                   but with your
+> proposal, SHA-256 commits wouldn't work at all.  Considering SHA-1 is
+> wildly insecure and therefore signing SHA-1 commits adds very little
+> security, whereas SHA-256 is presently considered strong, I'd argue that
+> only supporting SHA-1 isn't the right move here.
 
-diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index cb9c81a04606..8520008604e3 100644
---- a/builtin/for-each-ref.c
-+++ b/builtin/for-each-ref.c
-@@ -80,8 +80,18 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
- 
- 	if (!maxcount || array.nr < maxcount)
- 		maxcount = array.nr;
--	for (i = 0; i < maxcount; i++)
--		show_ref_array_item(array.items[i], &format);
-+	for (i = 0; i < maxcount; i++) {
-+		struct strbuf output = STRBUF_INIT;
-+		struct strbuf err = STRBUF_INIT;
-+
-+		if (format_ref_array_item(array.items[i], &format, &output, &err))
-+			die("%s", err.buf);
-+		fwrite(output.buf, 1, output.len, stdout);
-+		putchar('\n');
-+
-+		strbuf_release(&err);
-+		strbuf_release(&output);
-+	}
- 	ref_array_clear(&array);
- 	return 0;
- }
-diff --git a/builtin/tag.c b/builtin/tag.c
-index d403417b5625..d92d8e110b4d 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -63,8 +63,18 @@ static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting,
- 	filter_refs(&array, filter, FILTER_REFS_TAGS);
- 	ref_array_sort(sorting, &array);
- 
--	for (i = 0; i < array.nr; i++)
--		show_ref_array_item(array.items[i], format);
-+	for (i = 0; i < array.nr; i++) {
-+		struct strbuf output = STRBUF_INIT;
-+		struct strbuf err = STRBUF_INIT;
-+
-+		if (format_ref_array_item(array.items[i], format, &output, &err))
-+			die("%s", err.buf);
-+		fwrite(output.buf, 1, output.len, stdout);
-+		putchar('\n');
-+
-+		strbuf_release(&err);
-+		strbuf_release(&output);
-+	}
- 	ref_array_clear(&array);
- 	free(to_free);
- 
-diff --git a/ref-filter.c b/ref-filter.c
-index f0bd32f71416..df67047fd615 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -2435,27 +2435,22 @@ int format_ref_array_item(struct ref_array_item *info,
- 	return 0;
- }
- 
--void show_ref_array_item(struct ref_array_item *info,
--			 const struct ref_format *format)
--{
--	struct strbuf final_buf = STRBUF_INIT;
--	struct strbuf error_buf = STRBUF_INIT;
--
--	if (format_ref_array_item(info, format, &final_buf, &error_buf))
--		die("%s", error_buf.buf);
--	fwrite(final_buf.buf, 1, final_buf.len, stdout);
--	strbuf_release(&error_buf);
--	strbuf_release(&final_buf);
--	putchar('\n');
--}
--
- void pretty_print_ref(const char *name, const struct object_id *oid,
- 		      const struct ref_format *format)
- {
- 	struct ref_array_item *ref_item;
-+	struct strbuf output = STRBUF_INIT;
-+	struct strbuf err = STRBUF_INIT;
-+
- 	ref_item = new_ref_array_item(name, oid);
- 	ref_item->kind = ref_kind_from_refname(name);
--	show_ref_array_item(ref_item, format);
-+	if (format_ref_array_item(ref_item, format, &output, &err))
-+		die("%s", err.buf);
-+	fwrite(output.buf, 1, output.len, stdout);
-+	putchar('\n');
-+
-+	strbuf_release(&err);
-+	strbuf_release(&output);
- 	free_array_item(ref_item);
- }
- 
-diff --git a/ref-filter.h b/ref-filter.h
-index 19ea4c413409..baf72a718965 100644
---- a/ref-filter.h
-+++ b/ref-filter.h
-@@ -119,8 +119,6 @@ int format_ref_array_item(struct ref_array_item *info,
- 			  const struct ref_format *format,
- 			  struct strbuf *final_buf,
- 			  struct strbuf *error_buf);
--/*  Print the ref using the given format and quote_style */
--void show_ref_array_item(struct ref_array_item *info, const struct ref_format *format);
- /*  Parse a single sort specifier and add it to the list */
- void parse_ref_sorting(struct ref_sorting **sorting_tail, const char *atom);
- /*  Callback function for parsing the sort option */
+The main reason I didn't implement SHA-256 support (well, besides that
+the repo I'm working on turned out to not have any SHA-256-signed
+commits in it) is that I had questions about SHA-256 that I didn't
+know/couldn't find the answers to.
+
+However, looking again, I see a few of the answers in
+t7510-signed-commit.sh, so I'll have a go at it.  If I get stuck, I'll
+go ahead and implement the below "gpgsig sha1" suggestion, and leave
+the sha256 implementation to someone else.
+
+> Provided we do that and the test suite passes under both algorithms, I'm
+> strongly in favor of this feature.  In fact, I had been thinking about
+> implementing this feature myself just the other day, so I'm delighted
+> you decided to do it.
+
+That's one of the big reasons I didn't implement both--I wasn't sure
+how to test sha256 (within the test harness, `git commit -S` gives a
+sha1 signature).
+
+I see that t7510-signed-commit.sh 'verify-commit verifies multiply
+signed commits' tests sha256 by hard-coding a raw commit object in the
+test itself, and feeding that to `git hash-object`.  I'd prefer to
+figure out how to get `git commit` itself to generate a sha256
+signature rather than a sha1 signature, so that I can _know_ that I'm
+getting the ordering of headers the same as `git commit`.  But I don't
+think that needs to be a blocker; if the test doesn't do the same
+ordering as `git commit`, I guess that can just be a bugfix later?
+
+> > diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
+> > index 458af0a2d6..3d0c5dbf7d 100644
+> > --- a/Documentation/git-fast-import.txt
+> > +++ b/Documentation/git-fast-import.txt
+> > @@ -437,6 +437,7 @@ change to the project.
+> >  	original-oid?
+> >  	('author' (SP <name>)? SP LT <email> GT SP <when> LF)?
+> >  	'committer' (SP <name>)? SP LT <email> GT SP <when> LF
+> > +	('gpgsig' LF data)?
+> 
+> Could we emit this as "gpgsig sha1 data" and "gpgsig sha256 data"?  That
+> would allow us to consider the future case where the hash algorithm
+> changes again without requiring a change of format.
+
+I like that idea.  I'll implement it.
+
+FWIW, I thought about instead adding a fast-import command to insert
+arbitrary headers in to the commit object, rather than having to add a
+new command for every new header we want to be able to round-trip.
+But it's like, if we're exposing that much of the low-levels of a
+commit object, why are we keeping up the facade fast-import stream at
+all, instead of streaming raw Git objects around?
+
 -- 
-gitgitgadget
-
+Happy hacking,
+~ Luke Shumaker
