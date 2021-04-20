@@ -2,102 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DBE6C433B4
-	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 22:44:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B1B4C433ED
+	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 22:45:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3A2D261403
-	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 22:44:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EA1FE61408
+	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 22:45:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234240AbhDTWpF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Apr 2021 18:45:05 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:59021 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233964AbhDTWpE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Apr 2021 18:45:04 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9E4EB12DB39;
-        Tue, 20 Apr 2021 18:44:32 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=7WWWdFfDWDEJRl96InqSMEYHZ6w=; b=WALuhl
-        KEEXmO0nqcT0Pq5H5TYJUAN5l+uJu4f8KXHnwQD/Bsehj6uS8Se4/P70JwUq/P+d
-        jqfzeqb5Sm2iGgtuMXHbRSJLuYi5Llb6Tm+dR4Tt/e1BQFYyQHyXwcB8npuAtNr5
-        L0pMi8GoKxd6D3AHXSEZARNpid4Gukh/oUfXc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=KMEKSa/HeYR7TOBJzq9nMwOirDUg1iL8
-        lAC7Dv/EbyonMRuX/WLJqXu5P8UudbWvUaSJ8hSILgq2upJyVDTjqKbwXcgF0tYb
-        Am2ApVfOt+Q8nL4jsqLOuDQLB9HuS7a4De01uZKGdmc1EnLIMYsuMnXVKnZs+aNv
-        Mh4KPdKio80=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 94E8912DB38;
-        Tue, 20 Apr 2021 18:44:32 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S234302AbhDTWqF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Apr 2021 18:46:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48438 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233964AbhDTWqF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Apr 2021 18:46:05 -0400
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [IPv6:2001:470:ea4a:1:5054:ff:fec7:86e4])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1CBDC06174A
+        for <git@vger.kernel.org>; Tue, 20 Apr 2021 15:45:33 -0700 (PDT)
+Received: from grubbs.orbis-terrarum.net (localhost [127.0.0.1])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5A02412DB37;
-        Tue, 20 Apr 2021 18:44:29 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>,
-        Jeff King <peff@peff.net>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Josh Steadmon <steadmon@google.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Patrick Steinhardt <ps@pks.im>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Han-Wen Nienhuys <hanwenn@gmail.com>
-Subject: Re: [PATCH v7 23/28] Reftable support for git-core
-References: <pull.847.v6.git.git.1618255552.gitgitgadget@gmail.com>
-        <pull.847.v7.git.git.1618832276.gitgitgadget@gmail.com>
-        <2fd7cb8c0983501e2af2f195aec81d7c17fb80e1.1618832277.git.gitgitgadget@gmail.com>
-Date:   Tue, 20 Apr 2021 15:44:27 -0700
-In-Reply-To: <2fd7cb8c0983501e2af2f195aec81d7c17fb80e1.1618832277.git.gitgitgadget@gmail.com>
-        (Han-Wen Nienhuys via GitGitGadget's message of "Mon, 19 Apr 2021
-        11:37:51 +0000")
-Message-ID: <xmqqk0ow37as.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        by smtp.gentoo.org (Postfix) with ESMTPS id B4620335D19
+        for <git@vger.kernel.org>; Tue, 20 Apr 2021 22:45:32 +0000 (UTC)
+Received: (qmail 10296 invoked by uid 10000); 20 Apr 2021 22:45:32 -0000
+Date:   Tue, 20 Apr 2021 22:45:32 +0000
+From:   "Robin H. Johnson" <robbat2@gentoo.org>
+To:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH v2 2/2] Document how we do embargoed releases - improving
+ mail template
+Message-ID: <robbat2-20210420T223619-939869983Z@orbis-terrarum.net>
+Reply-To: git@vger.kernel.org
+References: <pull.917.git.1616796767.gitgitgadget@gmail.com>
+ <pull.917.v2.git.1617025385.gitgitgadget@gmail.com>
+ <565d7982d870fb1b7644a9777aef6be7ee174dba.1617025385.git.gitgitgadget@gmail.com>
+ <robbat2-20210420T193302-520335089Z@orbis-terrarum.net>
+ <xmqq5z0g4oc9.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F773EE38-A229-11EB-85CB-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="DH7EmFk1tbGiwgm+"
+Content-Disposition: inline
+In-Reply-To: <xmqq5z0g4oc9.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> +if test -n "$GIT_TEST_REFTABLE"
-> +then
-> +  test_set_prereq REFTABLE
-> +fi
+--DH7EmFk1tbGiwgm+
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-How would this interact with what the test prep series did which was
-to unconditionally add
+On Tue, Apr 20, 2021 at 02:51:02PM -0700, Junio C Hamano wrote:
+> "Robin H. Johnson" <robbat2@gentoo.org> writes:
+> > As one of the Gentoo maintainer for Git, I was wondering if the
+> > embargoed-releases process could be tweaked slightly.
+> >
+> > Specifically, in the embargo email, could you please publishing the
+> > exact size & digests of the to-be-released tarballs, esp. the htmldocs &
+> > manpages tarballs.
+>=20
+> HTMLdocs and Manpages are as far as I am concerned part of SOURCES.
+>=20
+> They are generated from the true sources, I do not give signed tags
+> to them, and as a source-based distribution, Gentoo shouldn't
+> consider them as such, either.  When release tags are signed, their
+> sizes or digests are simply unavailable, since they have not even
+> been generated yet (I tag the releases, run make in the tagged
+> release tarball extract and that is what is tarred up as HTMLdocs
+> and or Manpages).
+I didn't say that those tarballs were tagged independently, as your mail
+seems to imply.
 
-test_seq_prereq REFFILES
+As part of the embargo process, you're sending the tags out already.
+All 3 tarballs are artifacts derived from those tags, directly or
+indirectly, and you presumably have the same process to generate the
+final tarballs if the tags are embargoed or not. I'm just asking that
+the final tarballs are generated when the tags are, and the sizes &
+digests of the tarballs are shared in the embargo email.
 
-around the same place?  Should $GIT_TEST_REFTABLE disable REFFILES?
-IOW, do you want the above to read
+Alternatively, publish byte-exact reproduction steps from the tags to
+the tarballs, so that we can generate them locally for co-ordinated
+release.
 
-	if test -n "$GIT_TEST_REFTABLE"
-	then
-		test_set_prereq REFTABLE
-	else
-		test_set_prereq REFFILES
-	fi
+--=20
+Robin Hugh Johnson
+Gentoo Linux: Dev, Infra Lead, Foundation Treasurer
+E-Mail   : robbat2@gentoo.org
+GnuPG FP : 11ACBA4F 4778E3F6 E4EDF38E B27B944E 34884E85
+GnuPG FP : 7D0B3CEB E9B85B1F 825BCECF EE05E6F6 A48F6136
 
-when both series are in effect?
+--DH7EmFk1tbGiwgm+
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Thanks.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
+
+iQKTBAABCgB9FiEEveu2pS8Vb98xaNkRGTlfI8WIJsQFAmB/WYpfFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldEJE
+RUJCNkE1MkYxNTZGREYzMTY4RDkxMTE5Mzk1RjIzQzU4ODI2QzQACgkQGTlfI8WI
+JsQ/fBAAoQV8688bTStEjInuxXAi54naXSPnuA5sGFgtdd4P85EtQXGfUC0YnOGq
++vynsrDItWIR16RyOrTpCN2QaC0b7be2jPaAkeJV2A94gGyVWunfUUqa8+p7CNrt
+ycX8E6XUXwTSxBCC4bmbYts64VR/32ppFpOMKy2FRG3M8QdvDvemVCYZtRTnX+VL
+k1Fg4jEb88VW+MdE8U8Uzwy2z8xcTBB1o6IN9x6vgbDbFAeeBhHM3R9sQRItBCj3
+HkvmLO1qoritq/DUO4fe6Zhxo5TzY1k2auv5Vt5WUunaB9xUAC4Z2yhEQmULv5if
+nzjppRYkC/6qFj1zFCEsOfq25oUV3+3ALdqkH+UVUE8MllcUHEiGnu/4vlJ8VZJf
+5a+lUtoNMHrsvvo+nmSTW1kSkV1n0qFYNkmPgCtIbpHkrgvENTqP+gUdks0WVGsg
+7x9/eiGagby51Ht5jk+HXlp9AIIuLn892zOfC5of8g/jynIKduGRmyJK/lww+DdY
+bYs5BJzo0/tZYM4EMOuttrxwPcghpM0PaPMbQIz3Hh9ZR3G3G4fkSCbwcPrFYun8
+pmPCkKL6l5bcjsqWpJUrGE4Pi2fJZav3EceEY//Q6gPlI3nztHqfWKoBRKQv+k5J
+FVJp134meLcHB7mIboSBQtm/DvDlutMvweHnPCtL4U4R7K5Cmkg=
+=tFT/
+-----END PGP SIGNATURE-----
+
+--DH7EmFk1tbGiwgm+--
