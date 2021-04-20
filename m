@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9AFD9C43460
-	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 13:37:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D3DA9C433B4
+	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 13:37:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6921F6113C
-	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 13:37:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9DE6E613AF
+	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 13:37:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232465AbhDTNhl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Apr 2021 09:37:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39960 "EHLO
+        id S232506AbhDTNhm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Apr 2021 09:37:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39968 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232419AbhDTNhi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Apr 2021 09:37:38 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4672C06174A
-        for <git@vger.kernel.org>; Tue, 20 Apr 2021 06:37:06 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id o9-20020a1c41090000b029012c8dac9d47so13186556wma.1
-        for <git@vger.kernel.org>; Tue, 20 Apr 2021 06:37:06 -0700 (PDT)
+        with ESMTP id S232394AbhDTNhk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Apr 2021 09:37:40 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85367C06138A
+        for <git@vger.kernel.org>; Tue, 20 Apr 2021 06:37:07 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id f195-20020a1c1fcc0000b029012eb88126d7so10025170wmf.3
+        for <git@vger.kernel.org>; Tue, 20 Apr 2021 06:37:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=o18dZx5ODPSOYuJsQ0/hh/CFt8AUBcOmkGfZpCS4ELo=;
-        b=qQtoJladwVFx08K8dmKOdRuMXkNXZE5vIIKTvAJwtEO/Snbgce49ST4ypErlRGKcXg
-         ba+GkjM5P+UfhlB21dOFxzCEgAhw+6ouNjKK22bNWL6yZTS/iyJ0Py8qZ35YEEceFJ7O
-         1w2CJi8K3+eQcunq2ICQRrRUumBfVhnYJFY7E1A/ZIUTTxd5jO38k8OWnIbypL/sAUBm
-         UXbAhTgVUuItmiQBj9+qhAJNr7Q7AYzN8G8zMI8agDewAfPPap3XUxVXGos/sIBgdn82
-         2ryv+vWhVR6SBn02LWAfVLtL2Y2BUtp1LCVwoIROJFKC8TNwMasUeit70yqz+xgoPHhy
-         1+fw==
+        bh=72wMm2mPufVEBlwp9ukij0QhsDbVibOnFSqed0Pqp+M=;
+        b=gXGLFLzqc/LSiBYx4WIABUMS56pegY4wZmQaEjHroQfSuLIB9oR++aPKYXqcCaIwON
+         awtRKWI3OlQLZ7PdI+xUd4DKYN2Z6i23kjMdSQSIANmEniuFSrAJsF4qQG+1Pd0gCwPR
+         n8rwyI/SZkHQIOtHC6g6+2OHZsvOGlPzC+dKvKaLDUfAjKIzPbdD7G7CObOJEaHpIMeJ
+         oaOlxiERn0EWvU6vRDanw4i1shXTCc0tVVBmBGO9Vsanc9bNzmpINGw9O5f042A3Yg7q
+         IIIvvhyuJTjjyj2wn1kg/wXlw5HzLDzb3TKH00ZcGKMi4QW+BF5YwQkd7I0RnPSm1tQj
+         sm3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=o18dZx5ODPSOYuJsQ0/hh/CFt8AUBcOmkGfZpCS4ELo=;
-        b=rM9MyS0GjjJOVDoxfzY10h53rNgiwGmMUp79J0UCHQsmy1NoVV+lBP05wXbqlLIJf0
-         nejXQoLgjLY93Aj03vkGZbv/guhZfBtgRB7nLWE8AVEgfaUxb8pzM0XpwqEx/pR9JaqA
-         2j39YNHh/CPadd/pG/V5MSPTnyEYOQA7Hfhrqm19+NIgVOJj5yV7HtTTPAcu03PC6ucN
-         04FFv39Wg8Q2BH//uLrNfbi6vlgK/PjlWlBer6tkJn4ifnIDMOMaUkAmEHlapfHAydpG
-         eu0OYzkqCuFloc7Hq5h5ZYSN9vLZ6UA39hCfSOn99RwTEL9ntABrmhTEZ4yEgDopy018
-         zV6g==
-X-Gm-Message-State: AOAM5335DC2sBOnnAlwwuR5Hz+U1c5W6w4ETt5DY7kcia8qRpWH1HoSS
-        MOyL3ZUTqux2dIxHwftZ2jbNKwYd/mfCPQ==
-X-Google-Smtp-Source: ABdhPJxWy7hFeUXWljb7HfRrChhMg5wtFNxF4XQUAKUxBnxmp7lfL/kb+WyRq/9580ZvIE+FXizUgQ==
-X-Received: by 2002:a05:600c:4142:: with SMTP id h2mr4599570wmm.87.1618925825177;
-        Tue, 20 Apr 2021 06:37:05 -0700 (PDT)
+        bh=72wMm2mPufVEBlwp9ukij0QhsDbVibOnFSqed0Pqp+M=;
+        b=Rs3kz5V9ocWAZ0T3z8c71SSl0rXbZRPlGw7rDOQOYnS9GPoKC7mhODOjiDHJhmp+mY
+         VulGztM5/qxG2TbpGcn+qWTgP02KDy1PyXD8d/1KQbn4pDdASKYyp4PWHmohyl0HYkxa
+         3wmIfiA37XRaYQyhKd1Ng0W2TAenHEcgQIcNWu234f+LYog2ZqDYBAoRocnO0jMAIHED
+         Dt+6tshCQvhDaRLr/MlysXto4yCdlEHMlZtlnDgvkilVPu5dElSy/qusGUKGpOOi4TzM
+         +7wqaVATgg7NydLjBGZCc9i8N8Tih6MNm/ZDSZc4jpfAuXtY4MSh9wMheGUqUKVPqPPg
+         AWFA==
+X-Gm-Message-State: AOAM531RvsVPh+KVPPMT5NHko9nIZbcQD+jhdZq8wgR1O1f9y2dXaRPV
+        5Z4ZAsbS+sy6y1YkqI61/qg2MUVsBgZu9w==
+X-Google-Smtp-Source: ABdhPJzX5qcV02iNrZ2REYZ+fAmB2253xRS1gVpel8ygeJ15zIbk7svl+/9xMuZNhUWkQvBeMIHulg==
+X-Received: by 2002:a1c:64c6:: with SMTP id y189mr4700762wmb.36.1618925826009;
+        Tue, 20 Apr 2021 06:37:06 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id c15sm17705518wrr.3.2021.04.20.06.37.04
+        by smtp.gmail.com with ESMTPSA id c15sm17705518wrr.3.2021.04.20.06.37.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Apr 2021 06:37:04 -0700 (PDT)
+        Tue, 20 Apr 2021 06:37:05 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Elijah Newren <newren@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 2/8] object.c: add a utility function for "expected type X, got Y"
-Date:   Tue, 20 Apr 2021 15:36:54 +0200
-Message-Id: <patch-2.8-1b472fcd85-20210420T133218Z-avarab@gmail.com>
+Subject: [PATCH v2 3/8] object.c: add and use oid_is_type_or_die_msg() function
+Date:   Tue, 20 Apr 2021 15:36:55 +0200
+Message-Id: <patch-3.8-22e7d9a3db-20210420T133218Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.1.723.ga5d7868e4a
 In-Reply-To: <cover-0.8-0000000000-20210420T133218Z-avarab@gmail.com>
 References: <cover-0.7-0000000000-20210409T083436Z-avarab@gmail.com> <cover-0.8-0000000000-20210420T133218Z-avarab@gmail.com>
@@ -78,189 +78,72 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Refactor various "Object X is not Y" error messages so that they use
-the same message as the long-standing object_as_type() error
-message. Now we'll consistently report e.g. that we got a commit when
-we expected a tag, not just that the object is not a tag.
+Add a oid_is_type_or_die_msg() function to go with the "error" and
+"die" forms for emitting "expected type X, got Y" messages. This is
+useful for callers that want the message itself as a char *.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/index-pack.c |  9 +++------
- combine-diff.c       |  3 +--
- commit.c             | 10 ++++------
- merge-recursive.c    |  1 +
- object.c             | 25 ++++++++++++++++++++++++-
- object.h             |  5 +++++
- tree.c               |  7 ++++---
- 7 files changed, 42 insertions(+), 18 deletions(-)
+ merge-recursive.c |  6 ++++--
+ object.c          | 12 ++++++++++++
+ object.h          |  3 +++
+ 3 files changed, 19 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index c0e3768c32..eabd9d4677 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -218,8 +218,8 @@ static int mark_link(struct object *obj, enum object_type type,
- 	if (!obj)
- 		return -1;
- 
--	if (type != OBJ_ANY && obj->type != type)
--		die(_("object type mismatch at %s"), oid_to_hex(&obj->oid));
-+	if (type != OBJ_ANY)
-+		oid_is_type_or_die(&obj->oid, obj->type, &type);
- 
- 	obj->flags |= FLAG_LINK;
- 	return 0;
-@@ -241,10 +241,7 @@ static unsigned check_object(struct object *obj)
- 		if (type <= 0)
- 			die(_("did not receive expected object %s"),
- 			      oid_to_hex(&obj->oid));
--		if (type != obj->type)
--			die(_("object %s: expected type %s, found %s"),
--			    oid_to_hex(&obj->oid),
--			    type_name(obj->type), type_name(type));
-+		oid_is_type_or_die(&obj->oid, obj->type, &type);
- 		obj->flags |= FLAG_CHECKED;
- 		return 1;
- 	}
-diff --git a/combine-diff.c b/combine-diff.c
-index 06635f91bc..aa767dbb8e 100644
---- a/combine-diff.c
-+++ b/combine-diff.c
-@@ -333,8 +333,7 @@ static char *grab_blob(struct repository *r,
- 		free_filespec(df);
- 	} else {
- 		blob = read_object_file(oid, &type, size);
--		if (type != OBJ_BLOB)
--			die("object '%s' is not a blob!", oid_to_hex(oid));
-+		oid_is_type_or_die(oid, OBJ_BLOB, &type);
- 	}
- 	return blob;
- }
-diff --git a/commit.c b/commit.c
-index 3580c62b92..3d7f1fba0c 100644
---- a/commit.c
-+++ b/commit.c
-@@ -304,9 +304,7 @@ const void *repo_get_commit_buffer(struct repository *r,
- 		if (!ret)
- 			die("cannot read commit object %s",
- 			    oid_to_hex(&commit->object.oid));
--		if (type != OBJ_COMMIT)
--			die("expected commit for %s, got %s",
--			    oid_to_hex(&commit->object.oid), type_name(type));
-+		oid_is_type_or_die(&commit->object.oid, OBJ_COMMIT, &type);
- 		if (sizep)
- 			*sizep = size;
- 	}
-@@ -494,10 +492,10 @@ int repo_parse_commit_internal(struct repository *r,
- 		return quiet_on_missing ? -1 :
- 			error("Could not read %s",
- 			     oid_to_hex(&item->object.oid));
--	if (type != OBJ_COMMIT) {
-+	ret = oid_is_type_or_error(&item->object.oid, OBJ_COMMIT, &type);
-+	if (ret) {
- 		free(buffer);
--		return error("Object %s not a commit",
--			     oid_to_hex(&item->object.oid));
-+		return ret;
- 	}
- 
- 	ret = parse_commit_buffer(r, item, buffer, size, 0);
 diff --git a/merge-recursive.c b/merge-recursive.c
-index 7618303f7b..b952106203 100644
+index b952106203..c74239544f 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -2999,6 +2999,7 @@ static int read_oid_strbuf(struct merge_options *opt,
+@@ -2999,9 +2999,11 @@ static int read_oid_strbuf(struct merge_options *opt,
  	if (!buf)
  		return err(opt, _("cannot read object %s"), oid_to_hex(oid));
  	if (type != OBJ_BLOB) {
-+		const char* msg = oid_is_type_or_die_msg(oid, OBJ_BLOB, &type);
+-		const char* msg = oid_is_type_or_die_msg(oid, OBJ_BLOB, &type);
++		char *msg = oid_is_type_or_die_msg(oid, OBJ_BLOB, &type);
++		int ret = err(opt, msg);
  		free(buf);
- 		return err(opt, _("object %s is not a blob"), oid_to_hex(oid));
+-		return err(opt, _("object %s is not a blob"), oid_to_hex(oid));
++		free(msg);
++		return ret;
  	}
+ 	strbuf_attach(dst, buf, size, size + 1);
+ 	return 0;
 diff --git a/object.c b/object.c
-index 3c962da6c9..9e06c0ee92 100644
+index 9e06c0ee92..0f07f976fb 100644
 --- a/object.c
 +++ b/object.c
-@@ -153,6 +153,29 @@ void *create_object(struct repository *r, const struct object_id *oid, void *o)
- 	return obj;
+@@ -176,6 +176,18 @@ int oid_is_type_or_error(const struct object_id *oid,
+ 		     type_name(want));
  }
  
-+static const char *object_type_mismatch_msg = N_("object %s is a %s, not a %s");
-+
-+void oid_is_type_or_die(const struct object_id *oid,
-+			enum object_type want,
-+			enum object_type *type)
++char* oid_is_type_or_die_msg(const struct object_id *oid,
++				   enum object_type want,
++				   enum object_type *type)
 +{
++	struct strbuf sb = STRBUF_INIT;
 +	if (want == *type)
-+		return;
-+	die(_(object_type_mismatch_msg), oid_to_hex(oid),
-+	    type_name(*type), type_name(want));
-+}
-+
-+int oid_is_type_or_error(const struct object_id *oid,
-+			 enum object_type want,
-+			 enum object_type *type)
-+{
-+	if (want == *type)
-+		return 0;
-+	return error(_(object_type_mismatch_msg),
-+		     oid_to_hex(oid), type_name(*type),
-+		     type_name(want));
++		BUG("call this just to get the message!");
++	strbuf_addf(&sb, _(object_type_mismatch_msg), oid_to_hex(oid),
++		    type_name(*type), type_name(want));
++	return strbuf_detach(&sb, NULL);
 +}
 +
  void *object_as_type(struct object *obj, enum object_type type, int quiet)
  {
  	if (obj->type == type)
-@@ -166,7 +189,7 @@ void *object_as_type(struct object *obj, enum object_type type, int quiet)
- 	}
- 	else {
- 		if (!quiet)
--			error(_("object %s is a %s, not a %s"),
-+			error(_(object_type_mismatch_msg),
- 			      oid_to_hex(&obj->oid),
- 			      type_name(obj->type), type_name(type));
- 		return NULL;
 diff --git a/object.h b/object.h
-index 85e7491815..f8609a8518 100644
+index f8609a8518..7ae6407598 100644
 --- a/object.h
 +++ b/object.h
-@@ -123,6 +123,11 @@ void *create_object(struct repository *r, const struct object_id *oid, void *obj
+@@ -127,6 +127,9 @@ void oid_is_type_or_die(const struct object_id *oid, enum object_type want,
+ 			enum object_type *type);
+ int oid_is_type_or_error(const struct object_id *oid, enum object_type want,
+ 			 enum object_type *type);
++char* oid_is_type_or_die_msg(const struct object_id *oid,
++			     enum object_type want,
++			     enum object_type *type);
  
- void *object_as_type(struct object *obj, enum object_type type, int quiet);
- 
-+void oid_is_type_or_die(const struct object_id *oid, enum object_type want,
-+			enum object_type *type);
-+int oid_is_type_or_error(const struct object_id *oid, enum object_type want,
-+			 enum object_type *type);
-+
  /*
   * Returns the object, having parsed it to find out what it is.
-  *
-diff --git a/tree.c b/tree.c
-index e9d2bd7ffd..f1c6e8f647 100644
---- a/tree.c
-+++ b/tree.c
-@@ -131,6 +131,7 @@ int parse_tree_gently(struct tree *item, int quiet_on_missing)
- 	enum object_type type;
- 	void *buffer;
- 	unsigned long size;
-+	int ret;
- 
- 	if (item->object.parsed)
- 		return 0;
-@@ -139,10 +140,10 @@ int parse_tree_gently(struct tree *item, int quiet_on_missing)
- 		return quiet_on_missing ? -1 :
- 			error("Could not read %s",
- 			     oid_to_hex(&item->object.oid));
--	if (type != OBJ_TREE) {
-+	ret = oid_is_type_or_error(&item->object.oid, OBJ_TREE, &type);
-+	if (ret) {
- 		free(buffer);
--		return error("Object %s not a tree",
--			     oid_to_hex(&item->object.oid));
-+		return ret;
- 	}
- 	return parse_tree_buffer(item, buffer, size);
- }
 -- 
 2.31.1.723.ga5d7868e4a
 
