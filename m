@@ -2,296 +2,476 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 43E8EC433B4
-	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 23:00:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B300C433ED
+	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 23:03:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E834A61412
-	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 23:00:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 312DF61410
+	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 23:03:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234276AbhDTXBX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Apr 2021 19:01:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51734 "EHLO
+        id S234249AbhDTXDs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Apr 2021 19:03:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52258 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233964AbhDTXBU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Apr 2021 19:01:20 -0400
-Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B1F4C06174A
-        for <git@vger.kernel.org>; Tue, 20 Apr 2021 16:00:47 -0700 (PDT)
-Received: by mail-ot1-x32c.google.com with SMTP id d3-20020a9d29030000b029027e8019067fso35409322otb.13
-        for <git@vger.kernel.org>; Tue, 20 Apr 2021 16:00:47 -0700 (PDT)
+        with ESMTP id S233964AbhDTXDr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Apr 2021 19:03:47 -0400
+Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4125C06174A
+        for <git@vger.kernel.org>; Tue, 20 Apr 2021 16:03:15 -0700 (PDT)
+Received: by mail-pl1-x631.google.com with SMTP id h20so20532373plr.4
+        for <git@vger.kernel.org>; Tue, 20 Apr 2021 16:03:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=L7CkexdQkQM93iAcZn+EmwGq8eVGg1VmUUjzj4nJZpc=;
-        b=n/AIrF8d0chU0LAnhuLBsWQnSsG0QJ8LHGupAnClydeCX4iSkhAsTyO/SUA/KKUCjb
-         hWIZpYMn5vAc/nNDyKJvZGR0Eu4MdZOyfXqOoJnebonhEQ00dYPdeudFBuvAljXBOqlI
-         EOBJg77brxuPIHfXEOHMmY1DBCy7EER0VD4sjpCyAMoZcFW5dFqGJs8krGv6MMUzci/W
-         TTDk0NG+3y7yKyZtYaKY6Eeka/7gW4sb+/gQaDhO2n0d0f/3ttfdm/BFPezhWZ1XSQUf
-         WaMqNMf9OHsj7soQS8CQmcmnuwWebsGyUQt725aMzVf8B+WO+2Mu3FSl1KbH5ZqkUcfF
-         Wu8A==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=0DCuyu8RvHZW/lENE2hjSuYC+FKNJDCtkcjP5VFRqG0=;
+        b=LOW849wfU9jLINXwy4+N3/YLld4qQJlXB6khyTIC4+DIxZcseO2yCROBZDuGhOW+3F
+         IgStdlktUTAfC0LrImRTwIopzA6yLhwKhRkX/DPCdarb0RTZAw6v4E6sM5zIxjjIbI3F
+         8Kv2+vMilsMkBVvgrC1T2O7v96NbYyYeNwdf3It4QZwGRuJ1ZGeYOgfVQ41sPBzGfsRZ
+         2pdJWFCTSqnO4irQ+1ByxA9oA2nT20U8wPH0AJxwNFR3uiXqDn8jB54xGORznrY5lXs+
+         M+99Bml0AyR39vkT+1boHJDWUJjUw1tmYwfaIy+a4WDIKrY30mSRLkydK5gtOgzqYPM5
+         b+EA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=L7CkexdQkQM93iAcZn+EmwGq8eVGg1VmUUjzj4nJZpc=;
-        b=kM+roWupdhGPJLGDIHM+n+m2Yupt2syQGQGDRPDwC8UyffXWHf65331zxZ9hGk1bAq
-         MV9QFLgaN1YGFYmhJKPBD8izkBbRuT11S4NCGbKx4jIEHPPUGoX6PO1W8uvtj+66P6wT
-         tzr+LHD82ieQrEVV0Ot2sN2kGciGr/sbC1bICKLXaetGD/CdshgEgOLZVxdXIWfb0Sk4
-         Ae7Vna0viOC5SgCm2xQPBVzdwHTwArVpjPSTlWInE1oHKdFyX4hKfNR4OgU5oWVMcKr+
-         aaMoTExHNpgH8dpKPTkuhslb9F4Jg7EK3A+tFpc0/+mLtqYUchOYrm3BjMD6PogLWTSA
-         i2xA==
-X-Gm-Message-State: AOAM53106YrLF4EZSRquIzozTTNk6MpoYFklBL3pdyezuPmv9kqERUvu
-        AfNHc52yN4gnzDvvtPnxFWxTA86LokmiEwCQ8VE=
-X-Google-Smtp-Source: ABdhPJx6vWIiFR+CkvvwhXUiHBYyiuIKH5i5/SQu60CprZoNmHoCxGJnIfmuRgurupXR1qHdx3y8RtJqBcAc4PvJUqk=
-X-Received: by 2002:a05:6830:108d:: with SMTP id y13mr15310202oto.162.1618959646315;
- Tue, 20 Apr 2021 16:00:46 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=0DCuyu8RvHZW/lENE2hjSuYC+FKNJDCtkcjP5VFRqG0=;
+        b=ngQIuUKJYJIT+8NLXV1HmTHYIQXF/Ta1dKp855DWFE2nGc5+pHsb36bGi9zgBhKDDT
+         eTtb7s2E/j/F/C8mwbBdMKNfuJtxhh0n6FskJfl8toFcDXlI+fLPtULSojvHSnROS1Vy
+         cRN043nXjw8vu57HeUXEGm61ZRA+3ryoCwK4BqCkPysiZJLf1LWF8ob18QRZEu8Q3AfK
+         BZCqCf/uvAlSMR6fuEWvfosgyCHFPwZqtamSOBxyTzftU/1wkKhZU1D/nxWyuWPWG5TR
+         zKdjATjCrm6ceA3bZAN/7YzHLx4xd/LMi+E2dgwnvwOWNhvmXWlRewmOjaxoZZyHwg8P
+         P14Q==
+X-Gm-Message-State: AOAM530F3UVGYyIAzGJjxp+Kg4I5KUwMly4zo2YuJHObPfL9PU689h2Z
+        uFfE8ISO745MKZlcDUKh7gxUIg==
+X-Google-Smtp-Source: ABdhPJx5I7WwdhkQKTK+Q0m5SZVPcLWCWk4+bAAzZmaeC9ZwW+/teFllwToS5kkB8Qdf10mFpx+FJA==
+X-Received: by 2002:a17:903:2288:b029:eb:6ca4:6493 with SMTP id b8-20020a1709032288b02900eb6ca46493mr31028495plh.85.1618959794925;
+        Tue, 20 Apr 2021 16:03:14 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:0:828e:a107:e159:3343])
+        by smtp.gmail.com with ESMTPSA id mw12sm134208pjb.51.2021.04.20.16.03.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Apr 2021 16:03:13 -0700 (PDT)
+Date:   Tue, 20 Apr 2021 16:03:09 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Philippe Blain <levraiphilippeblain@gmail.com>
+Cc:     git@vger.kernel.org, avarab@gmail.com, jrnieder@gmail.com,
+        albertcui@google.com, gitster@pobox.com, matheus.bernardino@usp.br
+Subject: Re: RFC/Discussion - Submodule UX Improvements
+Message-ID: <YH9drebF84mx2t5r@google.com>
+References: <YHofmWcIAidkvJiD@google.com>
+ <0fc5c0f7-52f7-fb36-f654-ff5223a8809b@gmail.com>
 MIME-Version: 1.0
-References: <pull.932.git.1618322497.gitgitgadget@gmail.com> <0a3892d2ec9e4acd4cba1c1d0390acc60dc6e50f.1618322497.git.gitgitgadget@gmail.com>
-In-Reply-To: <0a3892d2ec9e4acd4cba1c1d0390acc60dc6e50f.1618322497.git.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 20 Apr 2021 16:00:35 -0700
-Message-ID: <CABPp-BHcdhO_kEdqR23sDdGAgoSu2R-HBWv-RmzQvJ0ysWtzxg@mail.gmail.com>
-Subject: Re: [PATCH 02/10] unpack-trees: make sparse aware
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0fc5c0f7-52f7-fb36-f654-ff5223a8809b@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 13, 2021 at 7:01 AM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: Derrick Stolee <dstolee@microsoft.com>
->
-> As a first step to integrate 'git status' and 'git add' with the sparse
-> index, we must start integrating unpack_trees() with sparse directory
-> entries. These changes are currently impossible to trigger because
-> unpack_trees() calls ensure_full_index() if command_requires_full_index
-> is true. This is the case for all commands at the moment. As we expand
-> more commands to be sparse-aware, we might find that more changes are
-> required to unpack_trees(). The current changes will suffice for
-> 'status' and 'add'.
->
-> unpack_trees() calls the traverse_trees() API using unpack_callback()
-> to decide if we should recurse into a subtree. We must add new abilities
-> to skip a subtree if it corresponds to a sparse directory entry.
->
-> It is important to be careful about the trailing directory separator
-> that exists in the sparse directory entries but not in the subtree
-> paths.
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  dir.h           |  2 +-
->  preload-index.c |  2 ++
->  read-cache.c    |  3 +++
->  unpack-trees.c  | 24 ++++++++++++++++++++++--
->  4 files changed, 28 insertions(+), 3 deletions(-)
->
-> diff --git a/dir.h b/dir.h
-> index 51cb0e217247..9d6666f520f3 100644
-> --- a/dir.h
-> +++ b/dir.h
-> @@ -503,7 +503,7 @@ static inline int ce_path_match(struct index_state *istate,
->                                 char *seen)
->  {
->         return match_pathspec(istate, pathspec, ce->name, ce_namelen(ce), 0, seen,
-> -                             S_ISDIR(ce->ce_mode) || S_ISGITLINK(ce->ce_mode));
-> +                             S_ISSPARSEDIR(ce->ce_mode) || S_ISDIR(ce->ce_mode) || S_ISGITLINK(ce->ce_mode));
+On Sun, Apr 18, 2021 at 11:20:06PM -0400, Philippe Blain wrote:
+> > To download the code, they should be able to run simply git clone
+> > https://example.com/superproject to download the project and all its submodules;
+> 
+> Playing the devil's advocate here, but some projects do not want / need all of
+> their submodules in a "regular" checkout, so I guess that would have to be somehow
+> configurable. I've always felt that since each project is different in that regard,
+> it would be better if each project could declare if their submodules are non-optional
+> and need to be also cloned when the superproject is cloned. Maybe an additional field
+> in '.gitmodules', like a boolean 'submodule.<name>.optional', could be added,
+> so that submodules that are optional are not cloned, but others are. If that setting
+> is opt-in (meaning that it defaults to 'true', i.e., submodules are considered optional by default),
+> then it would be easier to argue for 'git clone' to mean 'git clone --recurse-submodules':
+> 'git clone' would clone the superproject and any non-optional submodule.
+> Then eventually, when the usage of 'submodule.<name>.optional' becomes more widespread,
+> we can switch the default and then projects would need to explicitely declare their submodule
+> optional if they don't want them cloned by a simple 'git clone'.
 
-I'm confused why this change would be needed, or why it'd semantically
-be meaningful here either.  Doesn't S_ISSPARSEDIR() being true imply
-S_ISDIR() is true (and perhaps even vice versa?).
+This is actually a point we discussed internally and I cut out of the
+doc before sharing, because it is very far down our roadmap (not
+expecting to address until probably the second half of the year). As I
+understand it, this can also be achieved today by setting
+'submodule.path/to/module.active = false' in the superproject's
+.git/config.
 
-By chance, was this a leftover from your early RFC changes from a few
-series ago when you had an entirely different mode for sparse
-directory entries?
+However, it seems to me like this would be a really cool application of
+sparse-checkout, especially if you could distribute the sparse-checkout
+config (for example, during clone* ;) ) before a user has the chance to
+try and clone all necessary repos for the initial checkout.
 
->  }
->
->  static inline int dir_path_match(struct index_state *istate,
-> diff --git a/preload-index.c b/preload-index.c
-> index e5529a586366..35e67057ca9b 100644
-> --- a/preload-index.c
-> +++ b/preload-index.c
-> @@ -55,6 +55,8 @@ static void *preload_thread(void *_data)
->                         continue;
->                 if (S_ISGITLINK(ce->ce_mode))
->                         continue;
-> +               if (S_ISSPARSEDIR(ce->ce_mode))
-> +                       continue;
->                 if (ce_uptodate(ce))
->                         continue;
->                 if (ce_skip_worktree(ce))
+* https://lore.kernel.org/git/pull.908.git.1616105016055.gitgitgadget@gmail.com
+> > While the user is waiting for feedback on their review, to work on their next
+> > task, they can 'git switch other-feature', which will checkout the branches
+> > specified in the superproject commit at the tip of 'other-feature'; now the user
+> > can continue working as before.
+> 
+> Here, I'm not sure what you mean by "the branches (plural) specified in the superproject
+> commit at the tip of other-feature". Today, with 'submodule.recurse = true', 'git checkout some-feature'
+> already checks out each submodule in detached HEAD at the commit recorded in the superproject commit
+> at the tip of some-feature. It's unclear if you are proposing to instead record submodule branch
+> names in the superproject commit.. is that what's going on here ? (or is it just a typo ?)
 
-Don't we have S_ISSPARSEDIR(ce->ce_mode) implies ce_skip_worktree(ce)?
- Is this a duplicate check?  If so, is it still desirable for
-future-proofing or code clarity, or is it strictly redundant?
+Yeah, I'm not sure that it makes sense to record branch name in the
+commit itself - but I could see it being useful to do some inference on
+the client side and put the user in some state besides detached-HEAD on
+checkout. Hmmm.
 
-> diff --git a/read-cache.c b/read-cache.c
-> index 29ffa9ac5db9..6308234b4838 100644
-> --- a/read-cache.c
-> +++ b/read-cache.c
-> @@ -1594,6 +1594,9 @@ int refresh_index(struct index_state *istate, unsigned int flags,
->                 if (ignore_skip_worktree && ce_skip_worktree(ce))
->                         continue;
->
-> +               if (istate->sparse_index && S_ISSPARSEDIR(ce->ce_mode))
-> +                       continue;
-> +
+> 
+> > 
+> > When it's time to update their local repo, the user can do so as with a
+> > single-repo project. First they can 'git checkout main && git pull' (or 'git
+> > pull -r'); Git will first checkout the branches associated with main in each
+> > submodule, then fetch and merge/rebase in each submodule appropriately.
+> 
+> What if some submodule does not use the same branch name for their primary integration branch?
+> Sometimes as a superproject using another project as a submodule, you do not
+> control that...
 
-I'm a bit confused about what could trigger ce_skip_worktree(ce) &&
-!ignore_skip_worktree and why it'd be desirable to refresh
-skip-worktree entries.  However, this is tangential to your patch and
-has apparently been around since 2009 (in particular, from 56cac48c35
-("ie_match_stat(): do not ignore skip-worktree bit with
-CE_MATCH_IGNORE_VALID", 2009-12-14)).
+Yeah, you're right that that's an important consideration - "how can I
+teach my superproject to default to a different branch than the name of
+the superproject's current branch?" I wonder whether the branch config
+in .gitmodules (or an equivalent in superproject's .git/config) would
+make sense to try and use here?
 
->                 if (pathspec && !ce_path_match(istate, ce, pathspec, seen))
->                         filtered = 1;
->
-> diff --git a/unpack-trees.c b/unpack-trees.c
-> index dddf106d5bd4..9a62e823928a 100644
-> --- a/unpack-trees.c
-> +++ b/unpack-trees.c
-> @@ -586,6 +586,13 @@ static void mark_ce_used(struct cache_entry *ce, struct unpack_trees_options *o)
->  {
->         ce->ce_flags |= CE_UNPACKED;
->
-> +       /*
-> +        * If this is a sparse directory, don't advance cache_bottom.
-> +        * That will be advanced later using the cache-tree data.
-> +        */
-> +       if (S_ISSPARSEDIR(ce->ce_mode))
-> +               return;
-> +
+> > Note that this means options like '--branch' *don't* propagate directly to the
+> > submodules. If superproject branch "foo" points its submodule to branch "main",
+> 
+> Here again, I'm not sure what you mean, because right now there is no concept of
+> the superproject having a submodule "pointing to some branch", only to a specific
+> commit. 'submodule.<name>.branch' is only ever used by the command 'git submodule update --remote'.
+> Is there an implicit proposal to change that ?
 
-I don't understand cache_bottom stuff; we might want to get Junio to
-look over it.  Or maybe I just need to dig a bit further and attempt
-to understand it.
+There is no proposal to change the concept of superproject commits
+referencing submodule commits. I do not think it is a good idea to try
+to have superproject commits reference submodule branch names. No. :) I
+think the answer here is the same as above - detached-HEAD is an
+inconvenient state for the user unless they specifically ask for it, and
+it would be better to check out some branch predictably if possible.
 
->         if (o->cache_bottom < o->src_index->cache_nr &&
->             o->src_index->cache[o->cache_bottom] == ce) {
->                 int bottom = o->cache_bottom;
-> @@ -984,6 +991,9 @@ static int do_compare_entry(const struct cache_entry *ce,
->         ce_len -= pathlen;
->         ce_name = ce->name + pathlen;
->
-> +       /* remove directory separator if a sparse directory entry */
-> +       if (S_ISSPARSEDIR(ce->ce_mode))
-> +               ce_len--;
->         return df_name_compare(ce_name, ce_len, S_IFREG, name, namelen, mode);
+That means that it should be hard for users to end up in a state where
+the submodule commit 123 referenced by the superproject commit abc
+doesn't have some ref pointing to it in the submodule; I think this is
+what I was trying to get at with the 'git status' improvements and 'git
+checkout'/'git switch' warnings.
 
-Shouldn't we be passing ce->ce_mode instead of S_IFREG here as well?
+> 
+> > then 'git clone --branch foo https://superproject.git' will clone
+> > superproject/submodule to branch 'main' instead. (It *may* be OK to take
+> > '--branch' to mean "the branch specified by the parent *and* the branch named in
+> > --branch if applicable, but no other branches".)
+> > 
+> > What doesn't already work:
+> > 
+> >    * --recurse-submodules should turn on submodule.recurse=true
+> 
+> That's actually a good very idea, but maybe it should be explicitely mentioned, I think
+> (in the output of the command I mean).
+> 
+> >    * superproject gets top-level config inherited by submodules
+> >    * New --recurse-submodules --single-branch semantics
+> >    * Progress bar for clone (see work estimates)
+> >    * Recommended config from project owner
+> > 
+> > 
+> > -- Partial clone
+> > 
+> > 1. git clone initializes the directory indicated by the user
+> > 2. git clone applies the appropriate configs for the partial clone filter
+> >     requested by the user
+> >    a) These configs go to the config file shared by superproject and submodules.
+> > 3. git clone fetches the superproject
+> > 4. git clone checks out the superproject at server's HEAD
+> > 5. git clone warns the user that a recommended hook/config setup exists and
+> >     provides a tip on how to install it
+> > 6. For each submodule encountered in step 4, git clone is invoked for the
+> >     submodule, and steps 1-4 are repeated (but in directories indicated by the
+> >     superproject commit, not by the user). The same filter supplied to the
+> >     superproject applies to the submodules.
+> > 
+> > 
+> > What doesn't already work:
+> > 
+> >    * --filter=blob:none with submodules (it's using global variables)
+> >    * propagating --filter=blob:none to submodules (via submodules.config)
+> >    * Recommended config from project owner
+> > 
+> > 
+> > - git fetch
+> > 
+> > By default, git fetch looks for (1) the remote name(s) supplied at the command
+> > line, (2) the remote which the currently checked out branch is tracking, or (3)
+> > the remote named origin, in that order. For submodules, there is no guarantee
+> > that (1) has anything to do with the state of the submodule referenced by the
+> > superproject commit, so just start from (2).
+> > 
+> > This operation can be extremely long-running if the project contains many large
+> > submodules, so progress indicators should be displayed.
+> > 
+> > Caveat: this will mean that we should be more careful about ensuring that
+> > submodule branches have tracking info set up correctly; that may be an issue for
+> > users who want to branch within their submodule. This may be OK because users
+> > will probably still have 'origin' as their submodule's remote, and if they want
+> > more complicated behavior, they will be able to configure it.
+> > 
+> > What doesn't already work:
+> > 
+> >    * Make sure not to propagate (1) to submodules while recursing
+> >    * Fetching new submodules.
+> >    * Not having 0.95 success probability ** 100 = low success probability (that
+> >      is, we need more retries during submodule fetch)
+> >    * Progress indicators
+> 
+> I would add the following:
+> 
+> - Fix 'git fetch upstream' when 'submodule.recurse' and 'fetch.recurseSubdmodules=on-demand'
+> are both set  (the submodule is not fetched even if the superproject changed the submodule
+> commit).
 
-Note the following sort order:
-   foo
-   foo.txt
-   foo/
-   foo/bar
+Interesting. Sounds like it's worth writing a test case to see what does
+happen/what should happen and make it work :)
 
-You've trimmed off the '/', so 'foo/' would be ordered where 'foo' is,
-but df_name_compare() exists to make "foo" sort exactly where "foo/"
-would when "foo" is a directory.  Will your df_name_compare() call
-here result in foo.txt being placed after all the "foo/<subpath>"
-entries in the index and perhaps cause other problems down the line?
-(Are there issues, e.g. with cache-trees getting wrong ordering from
-this, or even writing out indexes or tree objects with the wrong
-ordering?  I've written out trees to disk with wrong ordering before
-and git usually survives but gets really confused with diffs.)
+> 
+> - Do not rely on 'origin' exising in the submodule (or being pushable to). Right now,
+> renaming the 'origin' remote to 'upstream' in a submodule, and using 'origin' for one's own
+> fork of a submodule, (as is often done in the superproject), breaks 'git fetch --recurse-submodules'
+> (or 'git fetch' if 'submodule.recurse' is set), in the sense that the fetch does not recurse
+> to the submodule, as it should. I do not have a simple reproducer handy but
+> I've seen it happen and there are a couple hard-coded "origin" in the submodule code [1], [2].
 
-Since at least one caller of compare_entry() takes the return result
-and does a "if (cmp < 0)", this order is going to matter in some
-cases.  Perhaps we need some testcases where there is a sparse
-directory entry named "foo/" and a file recorded in some relevant tree
-with the name "foo.txt" to be able to trigger these lines of code?
+This sounds to me like a specific example of a more generalized goal,
+which may or may not have ended up in this doc(?) to appropriately
+choose the right remote for fetching and pushing. So, definitely :)
 
->  }
->
-> @@ -993,6 +1003,10 @@ static int compare_entry(const struct cache_entry *ce, const struct traverse_inf
->         if (cmp)
->                 return cmp;
->
-> +       /* If ce is a sparse directory, then allow equality here. */
-> +       if (S_ISSPARSEDIR(ce->ce_mode))
-> +               return 0;
-> +
+> > 
+> > 
+> > - git switch / git checkout
+> > 
+> > Submodules should continue to perform these operations the same way that they
+> > have before, that is, the way that single-repo Git works. But superprojects
+> > should behave as follows:
+> > 
+> > 
+> > -- Create mode (git switch -c / git checkout -b)
+> > 
+> > 1. The current worktree is checked for uncommitted changes to tracked files. The
+> >     current worktree of each submodule is also checked.
+> > 2. A new branch is created on the superproject; that branch's ref is pointed to
+> >     the current HEAD.
+> > 3. The new branch is checked out on the superproject.
+> > 4. A new branch with the same name is created on each submodule.
+> 
+> That might not be wanted by all, so I think it should be configurable.
+> 
+> >    a. If there is a naming conflict, we could prompt the user to resolve it, or
+> >       we could just check out the branch by that name and print a warning to the
+> >       user with advice on how to solve it (cd submodule && git switch -c
+> >       different-branch-name HEAD@{1}). Maybe we could skip the warning/advice if
+> >       the tree is identical to the tree we would have used as the start point
+> >       (that is, the user switched branches in the submodule, then said "oh crap"
+> >       and went back and switched branches in the superproject).
+> >    b. Tracking info is set appropriately on each new branch to the upstream of
+> >       the branch referenced by the parent of the new superproject commit, OR to
+> >       the default branch's upstream.
+> 
+> This last point is a little unclear: which "new superproject commit" ? (we are creating
+> a branch, so there is no new commit yet?). And again, you talk about a (submodule?) branch being referenced
+> by a superproject commit, which is not a concept that actually exists today.
 
-Um...so a sparse directory compares equal to _anything_ at all?  I'm
-really confused why this would be desirable.  Am I missing something
-here?
+Yeah, I can clean up the wording here, thanks for pointing it out.
 
->         /*
->          * Even if the beginning compared identically, the ce should
->          * compare as bigger than a directory leading up to it!
-> @@ -1243,6 +1257,7 @@ static int unpack_callback(int n, unsigned long mask, unsigned long dirmask, str
->         struct cache_entry *src[MAX_UNPACK_TREES + 1] = { NULL, };
->         struct unpack_trees_options *o = info->data;
->         const struct name_entry *p = names;
-> +       unsigned recurse = 1;
+> Also, usually tracking info is only set
+> automatically when using the form 'git checkout -b new-branch upstream/master' or
+> the like. Do you also propose that 'git checkout -b new-branch', by itself, should
+> automatically set tracking info ?
 
-"recurse" sent my mind off into questions about safety checks, base
-cases, etc., instead of just the simple "we don't want to read in
-directories corresponding to sparse entries".  I think this would be
-clearer either if the variable had the sparsity concept embedded in
-its name somewhere (e.g. "unsigned sparse_entry = 0", and check for
-(!sparse_entry) instead of (recurse) below), or with a comment about
-why there are cases where you want to avoid recursion.
+Yes - that is an approach that we want to explore, to solve the general
+push/fetch remote+branch problem.
 
->
->         /* Find first entry with a real name (we could use "mask" too) */
->         while (!p->mode)
-> @@ -1284,12 +1299,16 @@ static int unpack_callback(int n, unsigned long mask, unsigned long dirmask, str
->                                         }
->                                 }
->                                 src[0] = ce;
-> +
-> +                               if (S_ISSPARSEDIR(ce->ce_mode))
-> +                                       recurse = 0;
+> 
+> 
+> > 5. The new branch is checked out on each of the submodules.
+> > 
+> > What doesn't already work:
+> > 
+> >    * Safety check when leaving uncommitted submodule changes
+> 
+> Yes, that has been reported several times ([3], [4], [5]). I have fixes for this,
+> not quite ready to send because I'm trying to write extensive tests (maybe too extensive)...
+> 
+> >    * Propagating branch names to submodules currently requires a custom hacky
+> >      repolike patch
+> >    * Error handling + graceful non-error handling if the branch already exists
+> >    * "Knowing what branch to push to": copying over which-branch-is-upstream info
+> >      ** Needs some UX help, push.default is a mess
+> >    * Tracking info setups
+> > 
+> > -- Switching to an existing branch (git switch / git checkout)
+> > 
+> > 1. The current worktree is checked for uncommitted changes to tracked files. The
+> >     current worktree of each submodule is also checked.
+> > 2. The requested branch is checked out on the superproject.
+> > 3. The submodule commit or branch referenced by the newly-checked-out
+> >     superproject commit is checked out on each submodule.
+> > 
+> > What doesn't already work:
+> > 
+> >    * Same as in create mode
+> 
+> Here, I would add that 'git checkout --recurse-submodules', along with 'git clone --recurse-submodules',
+> have trouble with correctly checkout-ing an older commit that records a submodule that
+> was since removed from the project. The user experience around this use case is currently very very bad [6].
+> This is partly due to 'git clone --recurse-submodules' only cloning submodules that are recorded in
+> the tip commit of the default branch of the superproject, which could certainly be improved.
 
-Ah, the context here doesn't show it but this is in the "if (!cmp)"
-block, i.e. if we found a match for the sparse directory.  This makes
-sense, to me, _if_ we ignore the above question about sparse
-directories matching equal to anything and everything.
+Yeah, we are aware of this pain internally too, thanks for pointing it
+out.
 
->                         }
->                         break;
->                 }
->         }
->
-> -       if (unpack_nondirectories(n, mask, dirmask, src, names, info) < 0)
-> +       if (recurse &&
-> +           unpack_nondirectories(n, mask, dirmask, src, names, info) < 0)
->                 return -1;
->
->         if (o->merge && src[0]) {
-> @@ -1319,7 +1338,8 @@ static int unpack_callback(int n, unsigned long mask, unsigned long dirmask, str
->                         }
->                 }
->
-> -               if (traverse_trees_recursive(n, dirmask, mask & ~dirmask,
-> +               if (recurse &&
-> +                   traverse_trees_recursive(n, dirmask, mask & ~dirmask,
->                                              names, info) < 0)
->                         return -1;
->                 return mask;
+> 
+> > 
+> > 
+> > - git status
+> > 
+> > -- From superproject
+> > The superproject is clean if:
+> > 
+> >    * No tracked files in the superproject have been modified and not committed
+> >    * No tracked files in any submodules have been modified and not committed
+> >    * No commits in any submodules differ from the commits referenced by the tip
+> >      commit of the superproject
+> > 
+> > Advices should describe:
+> > 
+> >    * How to commit or drop changes to files in the superproject
+> >    * How to commit or drop changes to files in the submodules
+> >    * How to commit changes to submodule references
+> >    * Which commit/branch to switch the submodule back to if the current work
+> >      should be dropped: "Submodule "foo" no longer points to "main", 'git -C foo
+> >      switch main' to discard changes"
+> > 
+> > What doesn't already work:
+> > 
+> >    * "git status" being super fast and actually possible to use.
+> >      ** (That is, we've seen it move very slowly on projects with many
+> >         submodules.)
+> >    * Advice updates to use the appropriate submodule-y commands.
+> 
+> I would add that 'git status' should show the submodule as "rewind" if the
+> currently checked out submodule commit is *behind* what's recorded in the current superproject
+> commit. That is shown by 'git diff --submodule=<log | diff>' and 'git submodule summary'
+> and is quite useful to prevent a following 'git commit -am' in the superproject to regress the submodule commit
+> by mistake. It would be nice if 'git status' could also show this information (code in
+> submodule.c::show_submodule_header).
 
-Nice.  :-)
+Oh interesting, that's a good point. Thanks.
+
+> 
+> > 
+> > -- From submodule
+> > 
+> > git status's behavior for submodules does not change compared to
+> > single-repository Git, except that a red warning line will also display if the
+> > superproject commit does not point to the HEAD of the submodule. (This could
+> > look similar to the detached-HEAD warning and tracking branch lines in git
+> > status today, e.g. "HEAD is ahead of parent project by 2 commits".)
+> 
+> That would be a nice addition :)
+> 
+> > 
+> > What doesn't already work:
+> > 
+> >    * "git status" from a submodule being aware of the superproject.
+> > 
+> > 
+> > - git push
+> > 
+> > -- From superproject
+> > 
+> > Ideally, a push of the superproject commit results in a push of each submodule
+> > which changed, to the appropriate Gerrit upstream. Commits pushed this way
+> > across submodules should somehow be associated in the Gerrit UI, similar to the
+> > "submitted together" display. This will need some work to make happen.
+> > 
+> > What doesn't already work:
+> > 
+> >    * Automatically setting Gerrit topic (with a hook)
+> >    * "push --recurse-submodules" knowing where to push to in submodules to
+> >      initiate a Gerrit review
+> >      ** From `branch` field in .gitmodules?
+> >      ** Gerrit accepting 'git push -o review origin main' pushes?
+> >      ** Review URL with a remote helper that rewrites refs/heads/main to
+> >         refs/for/main?
+> >      ** Need UX help
+> 
+> It would be nice if 'git push' would not force users to use the same
+> remote names and branch names in the superproject and the submodule.
+> Previous discussion around this that I had spotted are at [7] and [8].
+> 
+> > 
+> > > From submodule
+> > No change to client behavior is needed. With Gerrit submodule subscriptions, the
+> > server knows how to generate superproject commits when merging submodule
+> > commits.
+> > 
+> > - git pull / git rebase
+> > 
+> > Note: We're still thinking about this one :)
+> > 
+> > 1. Performs a fetch as described above
+> > 2. For each superproject commit, replay the submodule commits against the newly
+> >     updated submodule base; then, make a new superproject commit containing those
+> >     changes
+> > 
+> > What doesn't already work:
+> > 
+> >    * Rewriting gitlinks in a superproject commit when 'rebase
+> >      --recurse-submodules'-ing
+> >    * Resuming after resolving a conflict during rebase
+> 
+> In general, rebase is not well aware of 'submodule.recurse'. Even if you do not
+> need to rewrite superproject commits, there are a couple of use cases that are broken
+> right now:
+> 
+> - 'git rebase upstream/master' when upstream updated the submodule, will correctly
+> (recursively) checkout upstream/master before starting the rebase, but upon
+> 'git rebase --abort', the submodule will stay checked out at the commit recorded in
+> 'upstream/master', which is confusing. This only happens when 'submodule.recurse' is true (!).
+> - 'git rebase -i' which stops at a commit 'A' where the submodule commit is changed,
+> does not correctly check out the submodule tree. It's checked out at the commit recorded in A~1
+> (and this also only happens if submodule.recurse is true)
+> - In some cases, like 'rebase -i'-ing across the addition of new submodules, at the end
+> of the rebase the submodules are empty, and 'git submodule update' must be run to
+> re-populate them.
+
+Interesting, thanks for pointing these out.
+
+> 
+> > 
+> > - git merge
+> > 
+> > The story for merges is a little bit muddled... and for our goals we don't need
+> > it for quite a while, so we haven't thought much about it :) Any suggestions
+> > folks have about reasonable ways to 'git merge --recurse-submodules' are totally
+> > welcome. For now, though, we'll probably just stick in some error message saying
+> > that merges with submodules isn't currently supported (maybe we will even add
+> > that downstream).
+> 
+> What is "downstream" here ?
+
+"Downstream" meaning the version (fork? ehh) of Git that we build and
+ship to developers at Google. We carry a handful of patches - mostly for
+stuff that only makes sense internally, like certain transports or
+authentication helpers - and occasionally experimental stuff (for
+example, we ship config-based hooks to Googlers this way right now). If
+we're expecting "No, you can't merge with submodules!" to be a temporary
+error message, then it might not make sense to try and upstream that
+error string at all.
 
 
-I think your patch was mostly about the recurse stuff, which other
-than the name or a comment about it look good to me.  However, all the
-other preparatory small tweaks brought up a lot of questions or
-confusion for me.  I'm worried there might be a bug or two, though I
-may have just misunderstood some of the code bits.
+
+Thanks for the thorough read and all the pointers, I really appreciate
+it.
+
+ - Emily
