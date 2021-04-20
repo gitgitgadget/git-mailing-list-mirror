@@ -2,119 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F409C433B4
-	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 15:55:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 69CE9C433B4
+	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 16:18:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4F480613C0
-	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 15:55:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2B8E5613C8
+	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 16:18:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233056AbhDTPzu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Apr 2021 11:55:50 -0400
-Received: from mout.gmx.net ([212.227.17.22]:37481 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233041AbhDTPzt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Apr 2021 11:55:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1618934107;
-        bh=1b28UI0VZVZmMBw/COPftwSxR9jVsFNP9Oxo6l2Ccu0=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=F9accmj+/6ZwbiG0Zt7D5RShRc7Z9V4QOF+LiMbGUX7V6xkVkGy4b78MyObWO1Gez
-         pu6kEvjj5PVMRMWDDpYKhRChkK9pgoihaiV9j3cF2Bqtyz+zTrFst6OZPVxOnNTk4H
-         ZnF9TKeaAA8DvbeUmBS7CRKGjO3nNUTZ8V9kner0=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.23.111.181] ([89.1.215.94]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MOiHf-1l9DcK141P-00QAFb; Tue, 20
- Apr 2021 17:55:07 +0200
-Date:   Tue, 20 Apr 2021 17:55:05 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Subject: Re: Random GitHub Actions added to git/git???
-In-Reply-To: <e4ed4046-6aa0-608f-896e-1c70715b81f3@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2104201751200.54@tvgsbejvaqbjf.bet>
-References: <xmqqmttt7q8f.fsf@gitster.g> <e4ed4046-6aa0-608f-896e-1c70715b81f3@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S232504AbhDTQSt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Apr 2021 12:18:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47550 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232174AbhDTQSt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Apr 2021 12:18:49 -0400
+Received: from mail-vk1-xa32.google.com (mail-vk1-xa32.google.com [IPv6:2607:f8b0:4864:20::a32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E65EC06174A
+        for <git@vger.kernel.org>; Tue, 20 Apr 2021 09:18:16 -0700 (PDT)
+Received: by mail-vk1-xa32.google.com with SMTP id s190so4048292vkd.6
+        for <git@vger.kernel.org>; Tue, 20 Apr 2021 09:18:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=UBBBC1yY/b0TVDAjn9jQyiMp4eFejuQ6GiATPofRuh4=;
+        b=H8fEjNidWJgdM0nSb/H/4vpXbosqvyejMLKfP7FhIOlDBgbHJ1kAy2B4qybN0b0pEi
+         dbURpXEecxAF3oB9EKGmhQPx+u2F42x19sfjTI8DQDjWSai4Q8yU1GVhWIi+wePp1ZU+
+         OZnBBJNyfXb1q4hAn4FFqznfssiKYiRUrC2a79U+J9wojmrnhOs63hTJoi/zzUZ6hTcb
+         fyqbsL+na47b6ANZzvdWj1dRxyUkpTxm3YurNzvTqizHjil4JWdZ5QrGyCVNRBOZvsX4
+         em94Dw3DKey5JjDx6S6mRIQXeS6Yw3IGVDYEqybhJFAZHVLA7aB16QTG9mhBiOMrTGdc
+         k5YQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=UBBBC1yY/b0TVDAjn9jQyiMp4eFejuQ6GiATPofRuh4=;
+        b=hULulqR7DLDoVjahFIwnVJQ5Aq5ScXykDNhxHGhsphG4HorfBRsQCMyAWiC0sXnlGl
+         gHPjpkwThg7ZpZBtHgEgio2w2Jc0qUiLjNZaG5tGmG38jKwoT22jeK1SIbBE0b+4pYfR
+         cAVFJUEJ3nnTVZ5nHVRUw6Fz9u3Vou3IaoSaeTBG/K0ncLmVZrW+Ek1f1AQRmtMRveqj
+         4AylYN+5oKkDfxibaVlXUpydWdeSNcpya+k1bTvZxolOjaLDLqFbU5kisYsQpQFHjsAx
+         0DgAhAGurWotaqBpwqBc0ybkZo75yEqYMfVDCqfLqz45bQvSpC/s5/98sZbQChXRwn6H
+         25Xg==
+X-Gm-Message-State: AOAM531bx6UnJOFvf1aG+Xk1a2cnXtCZm6REJKJj/YXrLND9gv2ZsQKg
+        H7oeo8fThCfNomWcqSCnoD4tzglZkVSrm8LAp9E=
+X-Google-Smtp-Source: ABdhPJx3BueILAGDFX3NmverZRBVJAn+vEhwjdjMlicfH7JJrd56DBCP3a50QLdhIwFNUY8znD3e9k09LYUN94iBwCk=
+X-Received: by 2002:a1f:5682:: with SMTP id k124mr20888845vkb.20.1618935495569;
+ Tue, 20 Apr 2021 09:18:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:hIzlLDXIWxbb44v5W50YiIWXwSLWz1/hBKoB6Gmf4AsLEQ6L6VH
- 0w3HscIHsQJEFB2MHFU9+HMnynqrA/vzIau7mj/8Rff/S5u9RnKwNwJCn9Sahw79p/pPL8H
- jZHuMzWUeNtbfeDbMeUltrgtrDURd47YKCmFAweRu3EOjFZA82AG2tkoLXctmh9bvTmqrkf
- a6K7kfw6JuWXBPPQxkRNQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:cAwdCsGt+AQ=:qgyAevja8W2GJSWDiR4F/r
- vrKeGJtWsN3sDSjLRaI1dUi70pNImT4HZY1bUHp53zTBYjT9wzhwSyClnNFl1ta7z2sIHWeKD
- pyijUQMw86zsH2PoDg9I5OWQpwEDpMoiRAjvu+zH4x0ZugqrDa83R3Q6kMrnDDHLYJGdrWfXR
- y1cNtByyHsnsd7O8lXp0j6fMFs6JQizxZmTmd3YeZPBmuTFSIvcGNU5+NHvr3wqmfBs6y4LLF
- d7uLXi8f33rMJrioZLX+HY01fGbFEcWS9ZE7JQTrHb+mOp4RDQiKBMRkTHzBJP6K9oTPT7309
- mk9GtaV8UtJ4PAxKenm4qat4XwD+/XRqCZmqzD2uJmmzrx8HnQVcR8aK+wuEwmKXlnHdUd8aS
- 07qJEI7XquKrgcVoJsoOUJsyKq6XhUIe493PLUnAFMWlFQU2yjje3QfrBMUgwqXYIdPNU2Io+
- vTpA9KyR8sox9+byhWT+0h0AJGziMXrKFQDu4bsZ2b5yLzUW3bq55K6xGbOjkk63ZLt7lhp5j
- 2QX+402pxbYQbdPdyHoac/WVI5D68qZy7m9LRk67OcDkdyvi7dmojsL8drsGv4pLsGtBGLzm2
- ULo7cxynsIdCTKM2JUj+Z9dH7hczifLhx4orKGFxFYVz0Jxl3vUQ9/2Jj92Iih2iqhwnURSRp
- SZBBKxRA/5tAlH2ciFwGNBoS3wrAeIOCvk/wMq7OLmDeLNROpJqdWbag7yaNnVDEYFxmTwtRm
- OcT2S3mq97kcrBjXSKlL/Fz0eSRbKpV4+DhSCVntRX8jIFwW/d2Y9I8OUFCx/dq7JBZ5qmC7e
- 8R+FIsIYUe3LiaJRCvohMQT9fFzeDM2vmN/AD4lZOyUD6TGxA1KIoVsWEJuO1NQEABTqtP3o3
- KQTmppmIUArg6jUgSEmzIN85b6O78chqA30MMleUsQkucRrU9GQ1YKwmbdXBrAV62Plp36oVf
- nV/WO+qgq9903xslz4hwqcROcgNey1KOUM591+5+UAe0NwI5plAGRej+v+0vvzufXOYIJhxAv
- klp0KmfIlmSmDmVY7JkN1W/7LUMsTvnXugeNqsaB0KWhdW4Z0NBtRlouyqrk0zNxp7cXOzXnd
- p0G9tmbUgYey/wwi/BGScCrDJtDLM19PfcFwIg/GeiaQG/QrxKYd8xvA6HwttHD2ue1C0YKiL
- 6YQn3uF2G3YMCydvcKY//rRdrdabQpOSt6D3vxQ2VpxDZ0UIfjVrk6HxkSbtDqR0uq8S4/loE
- LSvP9rpr+0sk8wyQd
+References: <YHofmWcIAidkvJiD@google.com> <CA+P7+xqzsD+pU=-9YUYdGDAqT4uVk=XS4sdxA5WnAXL_7GwM5Q@mail.gmail.com>
+ <013401d73552$287f49e0$797ddda0$@nexbridge.com>
+In-Reply-To: <013401d73552$287f49e0$797ddda0$@nexbridge.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Tue, 20 Apr 2021 09:18:05 -0700
+Message-ID: <CA+P7+xrOuhG5ujQRYS0=o7S9=xD5zm6BGp5mBRt493Lme9xYcw@mail.gmail.com>
+Subject: Re: RFC/Discussion - Submodule UX Improvements
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     Emily Shaffer <emilyshaffer@google.com>,
+        Git mailing list <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Albert Cui <albertcui@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Bagas,
-
-On Tue, 20 Apr 2021, Bagas Sanjaya wrote:
-
-> On 20/04/21 07.29, Junio C Hamano wrote:
-> > I was browsing https://github.com/git/git/actions and noticed that
-> > there are many "workflows", even though what we have in our source
-> > tree in .github/workflows/ define only two of them (which I consider
-> > "officially sanctioned ones").
-> >
-> > I suspect that these other ones come from "pull requests" random
-> > people threw at us that never hit our tree, with changes to the
-> > .github/workflows/ directory in these PR.
+On Mon, Apr 19, 2021 at 12:28 PM Randall S. Becker
+<rsbecker@nexbridge.com> wrote:
+> On April 19, 2021 3:15 PM, Jacob Keller wrote:
+> > A sort of dream I had was a flow where I could do something from the pa=
+rent
+> > like "git blame <path/to/submodule>/submodule/file" and have it present=
+ a
+> > blame of that files contents keyed on the *parent* commit that changed =
+the
+> > submodule to have that line, as opposed to being forced to go into the
+> > submodule and figure out what commit introduced it and then go back to =
+the
+> > parent and find out what commit changed the submodule to include that
+> > submodule commit.
 >
-> They are Actions jobs triggered by GitGitGadget PRs.
-
-No, they are not. From GitGitGadget's own home page at
-https://gitgitgadget.github.io/:
-
-
-	But... what is GitGitGadget?
-
-	GitGitGadget itself is a GitHub App that is backed by an Azure
-	Function written in pure Javascript which in turn triggers an
-	Azure Pipeline written in Typescript (which is really easy to
-	understand and write for everybody who knows even just a little
-	Javascript), maintained at
-	https://github.com/gitgitgadget/gitgitgadget.
-
-In other words, GitGitGadget uses Azure Pipelines, not GitHub Actions.
-
-> For example, job [1] corresponds to patchset [2].
+> Not going to disagree, but are you looking for the blame on the submodule=
+ ref file itself or files in the submodule? It's hard to teach git to do a =
+blame on a one-line file.
 >
-> [1]: https://github.com/git/git/actions/runs/763138085
 
-This has nothing to do with GitGitGadget, it is the regular
-`check-whitespace.yml` check from our very own
-`.github/workflows/check-whitespace.yml`.
+Well, I would like if "git blame <path/to/submodule>" did.. something
+other than just fail. Sometimes my brain is working in a "blame where
+this came from" and I type that out and then get frustrated when it
+fails. Additionally...
 
-Ciao,
-Johannes
+> Otherwise, and I think this is what you really are going for, teaching it=
+ to do a blame based on "git blame <path/to/submodule>/submodule/file" woul=
+d be very nice and abstracts out the need for the user (or more importantly=
+ to me =3D scripts) to understand that a submodule is involved; however, it=
+ is opening up a very large door: "should/could we teach git to abstract su=
+bmodules out of every command". This would potentially replace a significan=
+t part of the use cases for the "git submodule foreach" sub-command. In you=
+r ask, the current paradigm "cd <path/to/submodule>/submodule && git blame =
+file" or pretty much every other command does work, but it requires the use=
+r/script to know you have a submodule in the path. So my question is: is th=
+is worth the effort? I don't have a good answer to that question. Half of m=
+y brain would like this very much/the other half is scared of the impact to=
+ the code.
+>
+> Just my musings.
 
-> [2]:
-> https://lore.kernel.org/git/pull.847.v7.git.git.1618832276.gitgitgadget@=
-gmail.com/
+I'm not asking for "git blame <path/to/submodule>/<file>" to give the
+the same outout as "cd <path/to/submodule> && git blame <file>"
 
+What i'm asking is: given this file, tell me which commit in the
+parent did the line get introduced. So basically I want to walk over
+the changes to the submodule pointer and find out when it get
+introduced into the parent, not when it got introduced into the
+submodule itself.
+
+This is a related question, but it is actually not trivial to go
+instantly from "it was in xyz submodule commit" to "it was then pulled
+in by xyz parent commit". It's something that is quite tedious to do
+manually, especially since the submodule pointer could change
+arbitrarily so knowing the submodule commit doesn't mean you can
+simply grep for which commit set the submodule exactly to that commit.
+Essentially, I want a 'git blame' that ignores all changes which
+aren't actually the submodule pointer, update.
+
+I think that's something that is much harder to do manually, but feels
+like it should be relatively simple to implement within the blame
+algorithm. I don't feel like this is something strictly replaceable by
+"git submodule foreach"
+
+>
+> Randall
+>
