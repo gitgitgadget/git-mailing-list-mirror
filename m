@@ -2,203 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A2592C433ED
-	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 06:30:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 34EBFC433B4
+	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 06:31:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6D0BB610CC
-	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 06:30:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0E84A6127C
+	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 06:31:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229968AbhDTGan (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Apr 2021 02:30:43 -0400
-Received: from mail-vi1eur05on2080.outbound.protection.outlook.com ([40.107.21.80]:23523
-        "EHLO EUR05-VI1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S229577AbhDTGaj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Apr 2021 02:30:39 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=WqGltbSqKIJGHpf5Snw5LvHqmTOzWyA8EswP0L7e0NygS8Uee5lZcCB/S5qxn9v+p9RH/03OpYcZ7pYmJvpTqHtNgsaL0Jyb1HzxmsB0bloq6WpTDU3FpoucDI2+eSKfLBzlPXIJUWIFjUeys+xuqUyVohP4hmTPeC4uZvio/++zmTLMk3gOkOjsscU471hCaA0laBcXtXg/YK/tQAlu+19+Wp60aJ6atiyN5B5RqsAUz1B5eNVY5KKce2+ngjPPXBRQkBLugSXMCprl9X9qEScmlFJ8AtrDIU8JPnFYbhcSQG4lETrFFcux4l/AkSsPcRXI0CYcIF0+oMYgkQ5xXA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=6PxP1HgeG8uVXqjsdQhqTneJsmMbfzQuDqznHwouDxs=;
- b=mhFBe9w0PDcqspM01Cn09nJRSqlTtl6X0188GXu2xBM+nmIm+7A+xfYPCK5qicpaWEAKUJ5fea6Kb0UHYaNzAFQAwltvtzNOOxUlJAXDvpl0btxPzUHFBaQB1ufBO3WaIIuzw4JfgByj11EETsnNqOigxcGgqJ2UBKRDvfCI4djkNiwlusAAzpIqCM6Q6aVvebponpfh33WYKiAKK+ycyjt3HOsTKaCsCuDyq1vmQPFqgIBoHuX8HnETVb97zGNsmlZmdfUY7CsxBgzKSlfzb1FZAPcdTLUhRqNeKCQquGvocPbTMVliFVSnzFmNjdOsT+JzGy2/w/YREEUP4U6Hug==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=fi.abb.com; dmarc=pass action=none header.from=fi.abb.com;
- dkim=pass header.d=fi.abb.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fi.abb.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=6PxP1HgeG8uVXqjsdQhqTneJsmMbfzQuDqznHwouDxs=;
- b=jvLVdpTg1PxTaC3N8KWcTDV3OgqWu9Ugq2s3c758XNocQFFQGnmHyP4OewE9Wxi7yqBgiNXCVp1zgarTHIilcmUz8wmPjPmEYF00zo7Ofu3LC6H5CC6SEsC9ElF7oUGLzslY8NxZSnFQG+9EyQNIlkD0NZcoDRouSdcA6GN5VIPwf+WkQxz2oPDetzQdzIcPHnu+ZvkhpW4MFUoenxh2G8fSRZSvwwds4vrDXYUzzPwYdm1ItqNLBYCUHLyroIrkrr0Op5+6ObGRq1KT8zYqaL02rGJS+Ror5e0B2c9OdIicH7ZfEdvKC8Q4TIPBEToAvCRvdLOLWKclErb5wDFGfA==
-Received: from AM6PR06MB4263.eurprd06.prod.outlook.com (2603:10a6:20b:1e::31)
- by AM6PR06MB6168.eurprd06.prod.outlook.com (2603:10a6:20b:f3::33) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4042.19; Tue, 20 Apr
- 2021 06:30:06 +0000
-Received: from AM6PR06MB4263.eurprd06.prod.outlook.com
- ([fe80::7506:a4c7:c725:5bce]) by AM6PR06MB4263.eurprd06.prod.outlook.com
- ([fe80::7506:a4c7:c725:5bce%5]) with mapi id 15.20.4020.022; Tue, 20 Apr 2021
- 06:30:06 +0000
-From:   Joonas Harjumaki <joonas.harjumaki@fi.abb.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: Git push --mirror hangs
-Thread-Topic: Git push --mirror hangs
-Thread-Index: Adc1PsxdsJlWDxYBRYq97Jz1MhOtPAARVfWAAAqX1kA=
-Date:   Tue, 20 Apr 2021 06:30:06 +0000
-Message-ID: <AM6PR06MB426347AC8403658E95038202A7489@AM6PR06MB4263.eurprd06.prod.outlook.com>
-References: <AM6PR06MB4263DD69639AFD60663D1DD6A7499@AM6PR06MB4263.eurprd06.prod.outlook.com>
- <YH4tsaCBMJBGp0bC@camp.crustytoothpaste.net>
-In-Reply-To: <YH4tsaCBMJBGp0bC@camp.crustytoothpaste.net>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: crustytoothpaste.net; dkim=none (message not signed)
- header.d=none;crustytoothpaste.net; dmarc=none action=none
- header.from=fi.abb.com;
-x-originating-ip: [88.114.213.40]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: dddfec0d-217f-4d66-4cd7-08d903c5bd30
-x-ms-traffictypediagnostic: AM6PR06MB6168:
-x-microsoft-antispam-prvs: <AM6PR06MB6168868439F33416915A6DADA7489@AM6PR06MB6168.eurprd06.prod.outlook.com>
-x-abb-o365-outbound: ABBOUTBOUND1
-x-ms-oob-tlc-oobclassifiers: OLM:4125;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: GXZlZsNgbe2cWU1PTifkIQi/0ftYF5s+GmOA0j/mUzUa2jF0z9Zv/QLKmybx4uzSgP4CUqiL/MtzhkICIH8scopg/tEZD1Vka1W/KqKni9phGGsnt+LTUbg+YvsVV1CrGieh3WhW4vs/IvA8fpbzESfLqzeRtj1DbmgHrcbiIs+O7R3zn4E9hBBD/atyHrK5qLJph5FndaiXuA9MTgXAG+CYVZjyAjf0RiMinvuzEMXTEEpXh0jWX8CQd3N5SzTckVsYRlpfnOpiYu68rOTKiXcgpXaLtwSw16vlU8eI18UTmVFVliKCM+f+M8RNpNE/fZGJKN2qRC/7XCRtrUuSTur/yApM8ZQEdUwvCOqmD/E1b7o1SO5Da4+Cng/2NrWv+EPReKugG1ZGt/SqRctKiw+DF0HQFcGEHt8DvtIod7KK5gGaLosJIZ1+g3kyMK2LTDxMc8DieL9XWlbSWNehojN6h0K92Bv65FV72XubF3OQWqMQYunYqvpec9OsisIzt/geig/pDAfx8SDvraiFOgBwxTFy6kv/uXqG1SAF112Z803xT/qWXqQFUww28h3X/ApuMN9+OCQpSEff7jTJsmbOrVQmICCIRZY13BxVgIc=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM6PR06MB4263.eurprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(136003)(39860400002)(346002)(396003)(366004)(376002)(2906002)(6506007)(478600001)(186003)(64756008)(55016002)(33656002)(9686003)(8936002)(53546011)(71200400001)(7696005)(4326008)(5660300002)(38100700002)(76116006)(122000001)(66556008)(26005)(6916009)(66946007)(66446008)(44832011)(83380400001)(86362001)(52536014)(316002)(8676002)(66476007)(66574015);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata: =?utf-8?B?SGxrRmc4V2MzNzA4dTk2Zzh2UFlLTmpwamtEbjdsWDN1M0xseHc3Mk56K3Nv?=
- =?utf-8?B?bkMrQ1RKd2sxK2tTN1FVZ0FBd09jbzZueVRqRUozUEFxT0g1azJRa3FWUXE5?=
- =?utf-8?B?TGZKdjJLMzN4WE4wSXhRRnFycStqaXYvUGN5MGFFNytXM2g0d2xtbFlvOXBG?=
- =?utf-8?B?NDZvQnhyZjJXNTNPTTNLb1VpL2ZyTXlRWndEbnB3OHVTdERRZzk3N0QxNXo5?=
- =?utf-8?B?WWRpeGZ3cDh6TnJLRFF2enpZZnJiV1JZL1EzVEJQRW9Cbk8zY2JjTHlsME43?=
- =?utf-8?B?VEFzT1pCTndTM3l6WjdBRUVJaHI1NFhFRGg1ajQwQkJjWCtJMDV6Mm9ySjcw?=
- =?utf-8?B?Tm5yT0swK0N3aXg1SHpicHFOU0J6QVB4VmlZZGUzVGY0TDBKVklsbGFzWjlG?=
- =?utf-8?B?UkQzc2FINHN1bE1taXBOVldyMS9kREtsSlF6NjJWaXN2c093aCtIdDFpYkov?=
- =?utf-8?B?UWtYeERLdWRuMlIyODNkc1Q1UytkeDlpT081ZVFzWm1KcERERlJadlVYWldq?=
- =?utf-8?B?QXNvYzhLdGkrbXhQVGdGaDk5TnUyUHhwdUo4UnZIUGJsWnlWLzhybGZ0NCt5?=
- =?utf-8?B?TjVLRDBJdUhSN0lwa1ZZdGdxR09OZjZibWRrWVZqTTNBdGcvazhSUk54dy8r?=
- =?utf-8?B?b3J5QzFaQ290RFNsdE5BcHR6MGFSZ1BYYTVzcTBVcWNOWWxTeVFGbE9zK29O?=
- =?utf-8?B?RmFrT2MzZ2FhQ0pFSTcrbEdCRHd5NEFrR3BSSkI1RGREbW5rcGE1NTJCRm5Q?=
- =?utf-8?B?VzJEbGc1NlZCOWVnaFU0b3NycUFqdGVKQXRnR21xYlZ4TDQySHA4SlNLR3ll?=
- =?utf-8?B?QWc3NEhMTWZENlhjMEoyeXg5ZnJ4ZzZMUGdKMElRU0pFK3NMOVkranl0VlBQ?=
- =?utf-8?B?aGFKNWNDbTZJcGlKZ1ZtVDdtLzNSWWVWdFZXSnIyKzAyRVZ3VEQxZE9Rd1Rq?=
- =?utf-8?B?aHBURlRCNmRNbi8vMm8zMU5sbzY1dkYybjBKMWVqN2ViQU9pQXNlUUhxQ1Zn?=
- =?utf-8?B?dEFtMVNrSStyQmphTWZoNkcrejJvRUtBWld3VE1kSFBDQ2Vsdi8xQVVsWnRp?=
- =?utf-8?B?VWZEYXVZUEIzNWE5TzFEcXlHbHcwc1h5cnhnTnEraFNKK0hqcENFL2pUTk96?=
- =?utf-8?B?UVRRaUc4dE0wKzFHa3k3ZWFDUWwwTWVpVGJReHE4MlJwWS96ZDVQYml0Z3ly?=
- =?utf-8?B?ZGVFZThDNFg2NUYrNklFQ3JtSGpRZVVFK0VaUXVTcllIWmxnUUNNZjQvaGR0?=
- =?utf-8?B?TjRDblFyUVFBQWNHdXdINDFNNks2Unp0MVNzbXk4QWU2c090WGRXREJQVGJH?=
- =?utf-8?B?Mi9VMy9CVVA2b2NKS3AyMTBzaWVqVnNHSzE4SWhteURJNSsycDQ5M0NzVzIv?=
- =?utf-8?B?bzJEL1VWZ0R2QTA3cytwMEl6aDYwYUZObEJWQ1crd3pKUGV2Z081R3psb2Jw?=
- =?utf-8?B?MmRUbldpYVVvc2lScE84V0lEUUxFeCtUR2MxZzF4NGZqSnNXMWhkUVMzQURI?=
- =?utf-8?B?eVZJRXcyYU9VTmo3QVRQSTRFVTVVRHBucWQ2VTBZM21NLzROZkNQSUZqTWVm?=
- =?utf-8?B?TEtGZFQrZzVxejRWbjd0ZkhOeHNYZG4wTXRzUGtnSVc0ZHlURm0rYkhtcVVV?=
- =?utf-8?B?OTFiMlZPazdvaGwyQzhRaitEZ24xUHVJYUgrRFUza1lWbC9ZajVZa2tzUVRU?=
- =?utf-8?B?T3kzYWxWOVRQdmJqUUxEOVBWK3YzUDlUTXBNNTVBQUZnMUd5a3VzVFlzcmJ1?=
- =?utf-8?Q?5D7YIw8IChs7hZErqKEpIwQ5FIRN9qHUJDBqb33?=
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        id S230107AbhDTGbq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Apr 2021 02:31:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58704 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230105AbhDTGbp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Apr 2021 02:31:45 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CEEAC06174A
+        for <git@vger.kernel.org>; Mon, 19 Apr 2021 23:31:13 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id n138so59889107lfa.3
+        for <git@vger.kernel.org>; Mon, 19 Apr 2021 23:31:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=0VQzb4fN97HBJkPGlu5SRM41fyoJOr5lmnaZWIV6q1E=;
+        b=Zdnw5aE2xufREyCO4Gusu/wIuk5q7xceZxdcLoY7cPEch0NE4DRsjlGvbR/XreKL6D
+         sDsZTyuZw/okqNpsMrxs04jr6oqkQXeHD58dUiQXvXivAyqA2z29P1yJkLxvYZTpuRXd
+         sfh6njpvTQVDav0byC0aurln7gDISOqAt7SokAd5zjmrMD42dKCX+iq5/Mk9NRJwXF9Y
+         0/cyTwgTsKpZoTfFm2TqmtPZuz8rbQe+1sIwlJI5ksbtL2Zg8aikIocNV3didZpl0e5Y
+         V6cgW5T6WvZ9VfQDyUlhqMOnsqqcyR4dvnGU8ewQq8DBUt10hlvONbjTBUsLM+lHPo/a
+         7lbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=0VQzb4fN97HBJkPGlu5SRM41fyoJOr5lmnaZWIV6q1E=;
+        b=Po96Nb2VBuMMYuWPsCYa1SkvYamOCmEkZr9FrqJ3oPvobeok5CNXzC/wUhV4d9ArdP
+         ebjIE8rcLwHBciNGA9vSOwVJ9/hI52sPHUWL5dgPfK5cv2I9KHV14lk9d6iO2c4/MfOI
+         X+za7fcM+S0cYxq4B5cn0N8i2VJLZ9qcLFtj4eeK2xFeH6zsgqnQ415zfsCTfO35sB2N
+         tHpzS0HMU6JDtRn6uQ6lb6sca5ve5kJvOxDGa0EjmcwBFjmuA7jqMhoWNO7k3woC5OCZ
+         wpD+wVFUm9fr+MqeCpoyOAbpnrac3efksEkjkWlbBrSZD5ob7iT0saSnYrfU1jRUkrpa
+         8x/A==
+X-Gm-Message-State: AOAM533BzlhlZOM7A1E89NO65jZp+avE8RUvMub3AMVw+z3ieiXjbiFA
+        e3kgunlhfqm38T3oNxdYme6j0JjnoDvnQkk8KC0=
+X-Google-Smtp-Source: ABdhPJzu4LBclfc9l/OFPNKTgSHjGeevtI42NW5B9fIJkxjJJT5AvKyaxf9lgQkipqNMK5xRqO7ZA23GUeVD3P8vE2g=
+X-Received: by 2002:a19:4cc2:: with SMTP id z185mr14137818lfa.461.1618900271435;
+ Mon, 19 Apr 2021 23:31:11 -0700 (PDT)
 MIME-Version: 1.0
-X-OriginatorOrg: fi.abb.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AM6PR06MB4263.eurprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: dddfec0d-217f-4d66-4cd7-08d903c5bd30
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Apr 2021 06:30:06.6016
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 372ee9e0-9ce0-4033-a64a-c07073a91ecd
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: DBuR/e8Tegvb6zRgRwNgp5JPiu0MQsCIVvMFmykOmEOBWr3ZgASo2DKccucTchW0n3h0GCrjxsVkS7smWJ52JkkrvTTxKaMOBydOhe49W2k=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM6PR06MB6168
+References: <YHaIBvl6Mf7ztJB3@google.com> <22a0a383-0ae1-c7d1-75f7-7dfdfe5fb504@gmail.com>
+ <87fszn48lh.fsf@evledraar.gmail.com> <CAHGBnuOVmzzhgW6GanHBXNb22UW3P1m3i6PJnOUEhYPO76hH4g@mail.gmail.com>
+ <87czuq4r4l.fsf@evledraar.gmail.com> <CAHGBnuMedez4SE-4-JwCcR8k=_FRtjgBdBSEJqshQnVceCvGug@mail.gmail.com>
+ <YH4FaQRB/vWOI9aI@mit.edu>
+In-Reply-To: <YH4FaQRB/vWOI9aI@mit.edu>
+From:   Sebastian Schuberth <sschuberth@gmail.com>
+Date:   Tue, 20 Apr 2021 08:30:57 +0200
+Message-ID: <CAHGBnuNrXrHUz9f8nWEdB0PoO0FeLsNpNOGgdiYmsmAD5LjTmg@mail.gmail.com>
+Subject: Re: Pain points in Git's patch flow
+To:     "Theodore Ts'o" <tytso@mit.edu>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        patchwork@lists.ozlabs.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-VGhhbmtzISBQdXNoaW5nIHRoZSBoaXN0b3J5IGluIHBhcnRzIGhlbHBlZC4NCg0KSm9vbmFzIEhh
-cmp1bcOka2kNCg0KLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCkZyb206IGJyaWFuIG0uIGNh
-cmxzb24gPHNhbmRhbHNAY3J1c3R5dG9vdGhwYXN0ZS5uZXQ+IA0KU2VudDogdGlpc3RhaSAyMC4g
-aHVodGlrdXV0YSAyMDIxIDQuMjYNClRvOiBKb29uYXMgSGFyanVtYWtpIDxqb29uYXMuaGFyanVt
-YWtpQGZpLmFiYi5jb20+DQpDYzogZ2l0QHZnZXIua2VybmVsLm9yZw0KU3ViamVjdDogUmU6IEdp
-dCBwdXNoIC0tbWlycm9yIGhhbmdzDQoNCk9uIDIwMjEtMDQtMTkgYXQgMTc6MTE6MDEsIEpvb25h
-cyBIYXJqdW1ha2kgd3JvdGU6DQo+IEdpdCBoYXMgYmVlbiBzdHVjayBmb3IgYW4gaG91ciBhbmQg
-aGFsZiBhZnRlciBwcmludGluZyB0aGVzZToNCj4gV3JpdGluZyBvYmplY3RzOiAxMDAlICgxMTY1
-MTkvMTE2NTE5KSwgMy42OSBHaUIgfCAyLjk5IE1pQi9zLCBkb25lLg0KPiBUb3RhbCAxMTY1MTkg
-KGRlbHRhIDc0OTgxKSwgcmV1c2VkIDExNjUxOSAoZGVsdGEgNzQ5ODEpLCBwYWNrLXJldXNlZCAw
-DQo+IDE4OjQyOjQ1LjY1MDU3MiB0cmFjZS5jOjQ4NyAgICAgICAgICAgICBwZXJmb3JtYW5jZTog
-MTI2Ni41Njc1NDQwNjMgczogZ2l0IGNvbW1hbmQ6IC91c3IvbGliL2dpdC1jb3JlL2dpdCBwYWNr
-LW9iamVjdHMgLS1hbGwtcHJvZ3Jlc3MtaW1wbGllZCAtLXJldnMgLS1zdGRvdXQgLS10aGluIC0t
-cHJvZ3Jlc3MNCj4gMTg6NDI6NDUuNzQzMjU0IHBrdC1saW5lLmM6ODAgICAgICAgICAgIHBhY2tl
-dDogICAgICAgICAgZ2l0PiAwMDAwDQo+IDE4OjQyOjQ2LjQ2NTYzNyBodHRwLmM6NzAzICAgICAg
-ICAgICAgICA8PSBSZWN2IGhlYWRlciwgMDAwMDAwMDAxMyBieXRlcyAoMHgwMDAwMDAwZCkNCj4g
-MTg6NDI6NDYuNDY1NjkzIGh0dHAuYzo3MTUgICAgICAgICAgICAgIDw9IFJlY3YgaGVhZGVyOiBI
-VFRQLzIgMjAwDQo+IDE4OjQyOjQ2LjQ2NTcwNyBodHRwLmM6NzAzICAgICAgICAgICAgICA8PSBS
-ZWN2IGhlYWRlciwgMDAwMDAwMDAyNCBieXRlcyAoMHgwMDAwMDAxOCkNCj4gMTg6NDI6NDYuNDY1
-NzE2IGh0dHAuYzo3MTUgICAgICAgICAgICAgIDw9IFJlY3YgaGVhZGVyOiBjYWNoZS1jb250cm9s
-OiBwcml2YXRlDQo+IDE4OjQyOjQ2LjQ2NTcyNyBodHRwLmM6NzAzICAgICAgICAgICAgICA8PSBS
-ZWN2IGhlYWRlciwgMDAwMDAwMDA1MyBieXRlcyAoMHgwMDAwMDAzNSkNCj4gMTg6NDI6NDYuNDY1
-NzM0IGh0dHAuYzo3MTUgICAgICAgICAgICAgIDw9IFJlY3YgaGVhZGVyOiBjb250ZW50LXR5cGU6
-IGFwcGxpY2F0aW9uL3gtZ2l0LXJlY2VpdmUtcGFjay1yZXN1bHQNCj4gMTg6NDI6NDYuNDY1NzQ0
-IGh0dHAuYzo3MDMgICAgICAgICAgICAgIDw9IFJlY3YgaGVhZGVyLCAwMDAwMDAwMTI0IGJ5dGVz
-ICgweDAwMDAwMDdjKQ0KPiAxODo0Mjo0Ni40NjU3NTIgaHR0cC5jOjcxNSAgICAgICAgICAgICAg
-PD0gUmVjdiBoZWFkZXI6IHAzcDogQ1A9IkNBTyBEU1AgQ09SIEFETWEgREVWIENPTm8gVEVMbyBD
-VVIgUFNBIFBTRCBUQUkgSVZEbyBPVVIgU0FNaSBCVVMgREVNIE5BViBTVEEgVU5JIENPTSBJTlQg
-UEhZIE9OTCBGSU4gUFVSIExPQyBDTlQiDQo+IDE4OjQyOjQ2LjQ2NTc2MyBodHRwLmM6NzAzICAg
-ICAgICAgICAgICA8PSBSZWN2IGhlYWRlciwgMDAwMDAwMDA1NSBieXRlcyAoMHgwMDAwMDAzNykN
-Cj4gMTg6NDI6NDYuNDY1NzcwIGh0dHAuYzo3MTUgICAgICAgICAgICAgIDw9IFJlY3YgaGVhZGVy
-OiB4LXRmcy1wcm9jZXNzaWQ6IFtzdHJpcHBlZF0NCj4gMTg6NDI6NDYuNDY1Nzc4IGh0dHAuYzo3
-MDMgICAgICAgICAgICAgIDw9IFJlY3YgaGVhZGVyLCAwMDAwMDAwMDY0IGJ5dGVzICgweDAwMDAw
-MDQwKQ0KPiAxODo0Mjo0Ni40NjU3ODUgaHR0cC5jOjcxNSAgICAgICAgICAgICAgPD0gUmVjdiBo
-ZWFkZXI6IHN0cmljdC10cmFuc3BvcnQtc2VjdXJpdHk6IG1heC1hZ2U9MzE1MzYwMDA7IGluY2x1
-ZGVTdWJEb21haW5zDQo+IDE4OjQyOjQ2LjQ2NTc5NSBodHRwLmM6NzAzICAgICAgICAgICAgICA8
-PSBSZWN2IGhlYWRlciwgMDAwMDAwMDA1MCBieXRlcyAoMHgwMDAwMDAzMikNCj4gMTg6NDI6NDYu
-NDY1ODAxIGh0dHAuYzo3MTUgICAgICAgICAgICAgIDw9IFJlY3YgaGVhZGVyOiBhY3Rpdml0eWlk
-OiBbc3RyaXBwZWRdDQo+IDE4OjQyOjQ2LjQ2NTgxMCBodHRwLmM6NzAzICAgICAgICAgICAgICA8
-PSBSZWN2IGhlYWRlciwgMDAwMDAwMDA1MyBieXRlcyAoMHgwMDAwMDAzNSkNCj4gMTg6NDI6NDYu
-NDY1ODMzIGh0dHAuYzo3MTUgICAgICAgICAgICAgIDw9IFJlY3YgaGVhZGVyOiB4LXRmcy1zZXNz
-aW9uOiBbc3RyaXBwZWRdDQo+IDE4OjQyOjQ2LjQ2NTg0MiBodHRwLmM6NzAzICAgICAgICAgICAg
-ICA8PSBSZWN2IGhlYWRlciwgMDAwMDAwMDA1MSBieXRlcyAoMHgwMDAwMDAzMykNCj4gMTg6NDI6
-NDYuNDY1ODQ5IGh0dHAuYzo3MTUgICAgICAgICAgICAgIDw9IFJlY3YgaGVhZGVyOiB4LXZzcy1l
-MmVpZDogW3N0cmlwcGVkXQ0KPiAxODo0Mjo0Ni40NjU4NTggaHR0cC5jOjcwMyAgICAgICAgICAg
-ICAgPD0gUmVjdiBoZWFkZXIsIDAwMDAwMDAwODIgYnl0ZXMgKDB4MDAwMDAwNTIpDQo+IDE4OjQy
-OjQ2LjQ2NTg2NiBodHRwLmM6NzE1ICAgICAgICAgICAgICA8PSBSZWN2IGhlYWRlcjogeC12c3Mt
-dXNlcmRhdGE6IFtzdHJpcHBlZF0NCj4gMTg6NDI6NDYuNDY1ODk5IGh0dHAuYzo3MDMgICAgICAg
-ICAgICAgIDw9IFJlY3YgaGVhZGVyLCAwMDAwMDAwMDI5IGJ5dGVzICgweDAwMDAwMDFkKQ0KPiAx
-ODo0Mjo0Ni40NjU5MTAgaHR0cC5jOjcxNSAgICAgICAgICAgICAgPD0gUmVjdiBoZWFkZXI6IHgt
-ZnJhbWUtb3B0aW9uczogU0FNRU9SSUdJTg0KPiAxODo0Mjo0Ni40NjU5MTkgaHR0cC5jOjcwMyAg
-ICAgICAgICAgICAgPD0gUmVjdiBoZWFkZXIsIDAwMDAwMDAwNjggYnl0ZXMgKDB4MDAwMDAwNDQp
-DQo+IDE4OjQyOjQ2LjQ2NTkyNiBodHRwLmM6NzE1ICAgICAgICAgICAgICA8PSBSZWN2IGhlYWRl
-cjogcmVxdWVzdC1jb250ZXh0OiBbc3RyaXBwZWRdDQo+IDE4OjQyOjQ2LjQ2NTkzNiBodHRwLmM6
-NzAzICAgICAgICAgICAgICA8PSBSZWN2IGhlYWRlciwgMDAwMDAwMDA0OCBieXRlcyAoMHgwMDAw
-MDAzMCkNCj4gMTg6NDI6NDYuNDY1OTQ1IGh0dHAuYzo3MTUgICAgICAgICAgICAgIDw9IFJlY3Yg
-aGVhZGVyOiBhY2Nlc3MtY29udHJvbC1leHBvc2UtaGVhZGVyczogUmVxdWVzdC1Db250ZXh0DQo+
-IDE4OjQyOjQ2LjQ2NTk1NCBodHRwLmM6NzAzICAgICAgICAgICAgICA8PSBSZWN2IGhlYWRlciwg
-MDAwMDAwMDAzMyBieXRlcyAoMHgwMDAwMDAyMSkNCj4gMTg6NDI6NDYuNDY1OTYxIGh0dHAuYzo3
-MTUgICAgICAgICAgICAgIDw9IFJlY3YgaGVhZGVyOiB4LWNvbnRlbnQtdHlwZS1vcHRpb25zOiBu
-b3NuaWZmDQo+IDE4OjQyOjQ2LjQ2NTk3MiBodHRwLmM6NzAzICAgICAgICAgICAgICA8PSBSZWN2
-IGhlYWRlciwgMDAwMDAwMDEwNCBieXRlcyAoMHgwMDAwMDA2OCkNCj4gMTg6NDI6NDYuNDY1OTgw
-IGh0dHAuYzo3MTUgICAgICAgICAgICAgIDw9IFJlY3YgaGVhZGVyOiB4LW1zZWRnZS1yZWY6IFtz
-dHJpcHBlZF0NCj4gMTg6NDI6NDYuNDY1OTkwIGh0dHAuYzo3MDMgICAgICAgICAgICAgIDw9IFJl
-Y3YgaGVhZGVyLCAwMDAwMDAwMDM3IGJ5dGVzICgweDAwMDAwMDI1KQ0KPiAxODo0Mjo0Ni40NjU5
-OTYgaHR0cC5jOjcxNSAgICAgICAgICAgICAgPD0gUmVjdiBoZWFkZXI6IGRhdGU6IE1vbiwgMTkg
-QXByIDIwMjEgMTU6NDI6NDUgR01UDQo+IDE4OjQyOjQ2LjQ2NjAwOSBodHRwLmM6NzAzICAgICAg
-ICAgICAgICA8PSBSZWN2IGhlYWRlciwgMDAwMDAwMDAwMiBieXRlcyAoMHgwMDAwMDAwMikNCj4g
-MTg6NDI6NDYuNDY2MDE3IGh0dHAuYzo3MTUgICAgICAgICAgICAgIDw9IFJlY3YgaGVhZGVyOg0K
-PiAxODo0Mjo0Ni40NjYyOTQgcGt0LWxpbmUuYzo4MCAgICAgICAgICAgcGFja2V0OiAgICAgc2lk
-ZWJhbmQ8IFwyXDE1QW5hbHl6aW5nIG9iamVjdHMuLi4gKDQxNTM1LzExNjUxOSkNCj4gcmVtb3Rl
-Og0KDQpJIHN1c3BlY3QgYnkgdGhlIGNvbnRlbnQgb2YgdGhpcyBzaWRlYmFuZCBwYWNrZXQsIHRo
-YXQgQXp1cmUgRGV2T3BzIGlzIGRvaW5nIHNvbWV0aGluZyB3aXRoIHRob3NlIG9iamVjdHMuICBU
-aGUgdGV4dCAiQW5hbHl6aW5nIG9iamVjdHMiDQpkb2Vzbid0IGFwcGVhciBpbiBHaXQsIHNvIGl0
-J3MgcHJlc3VtYWJseSBzb21lIG9wZXJhdGlvbiBzcGVjaWZpYyB0byBBenVyZSBEZXZPcHMgdGhh
-dCdzIGJlaW5nIHBlcmZvcm1lZC4NCg0KSSB3b3VsZCBhc2sgdGhlbSB3aGF0J3MgZ29pbmcgb24g
-b24gdGhlaXIgc2lkZSB0aGF0J3MgbWFraW5nIHRoaXMgc28gc2xvdy4gIEl0J3MgcG9zc2libGUg
-dGhhdCB3YWl0aW5nIHdpbGwgaGVscCwgYnV0IGl0J3MgYWxzbyBwb3NzaWJsZSB0aGF0IGl0IHdv
-bid0LiAgU2luY2UgSSBkb24ndCBrbm93IHdoYXQncyBhY3R1YWxseSBoYXBwZW5pbmcgb24gdGhl
-IHNlcnZlciBzaWRlLCBJIGNhbid0IHNheS4NCi0tDQpicmlhbiBtLiBjYXJsc29uIChoZS9oaW0g
-b3IgdGhleS90aGVtKQ0KSG91c3RvbiwgVGV4YXMsIFVTDQo=
+On Tue, Apr 20, 2021 at 12:34 AM Theodore Ts'o <tytso@mit.edu> wrote:
+
+> The primary reason why the kernel uses mailing lists is because code
+> reviews are fundamentally *discussions*, and people are used to using
+> inboxes.  Sure, you can have a gerrit server send e-mail notifications
+
+[...]
+
+> maintainers simply find e-mail reviews to simply be more *convenient*
+> than using gerrit.  And over time, we've used other tools to track
+
+That still sounds to me as if people are stuck to what they know.
+Maintainers are "used to using inboxes'', and that's *why* they find
+e-mail reviews to be convenient.
+
+Of course, there's basically nothing wrong with sticking to a flow
+that works. But I understood the start of this discussion as a sign
+that you guys acknowledge that something does *not* work. At least not
+when it comes to attracting new contributors.
+
+> I'll note that the kernel folks have done this, starting with a 2019
+> Kernel Summit talk at the Linux Plumbers Conference in Lisbon.  A
+> description of the follow-up discussions from that talk can be found
+> here:
+
+I'm reading a lot about "maintainers" and "kernel developers" here.
+But what I believe is important to accept is that Git is not only
+about kernel development anymore. While I'm well aware of Git's
+history, there are by far more people using Git than there are kernel
+developers, and also by lines of code (or whatever "stupid" metric you
+want to choose) the kernel is not the biggest project maintained in
+Git. Maybe not even the most important one, but that's highly
+subjective anyway. So asked in a heretic way, why should the opinion
+of a kernel developer count more than the opinion of, say, an Eclipse
+Foundation developer when it comes to Git workflow questions?
+
+To me, that means if you want to make contributions to Git more
+attractive to the Git community beyond the kernel, you need to stop
+making incremental improvements to existing tools and start thinking
+out of the box by looking at the tools that are most popular in that
+"other side" of the community.
+
+And, please don't take anything I've written as a try to talk you into
+anything. But as the lead of a team who's day job it is to contribute
+to various Open Source projects, I believe to have a good feeling
+about what the pain points of developers are to start contributing.
+I'm just trying to foster some appreciation for the thinking of the
+"other side".
+
+-- 
+Sebastian Schuberth
