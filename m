@@ -8,66 +8,64 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 74A5BC433B4
-	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 10:44:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DBDF1C433ED
+	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 10:52:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3C64A61363
-	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 10:44:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 99FB9611C9
+	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 10:52:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231570AbhDTKpV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Apr 2021 06:45:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57916 "EHLO
+        id S231661AbhDTKxS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Apr 2021 06:53:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230290AbhDTKpU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Apr 2021 06:45:20 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E00CBC06174A
-        for <git@vger.kernel.org>; Tue, 20 Apr 2021 03:44:47 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id r20so7785334ejo.11
-        for <git@vger.kernel.org>; Tue, 20 Apr 2021 03:44:47 -0700 (PDT)
+        with ESMTP id S231532AbhDTKxR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Apr 2021 06:53:17 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3B36C06174A
+        for <git@vger.kernel.org>; Tue, 20 Apr 2021 03:52:45 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id sd23so48934214ejb.12
+        for <git@vger.kernel.org>; Tue, 20 Apr 2021 03:52:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
          :message-id:mime-version;
-        bh=WaTU5nNp0d3tM7dubT9yAIGXIp3W9hWOHEDTTtdq5Qw=;
-        b=NoBBsNkruK5yedPg09NYJGelYQwsQd11zrtCY33ehXBJfKFVFh2KZmikVCWasoKDd1
-         3gJruLlPCB9i+d/iE177usHrVC2Srv7/n3IxSh4r+DEKAEWEBebIvUsq1kKpWaDj+tnr
-         kUG14Vk3S/9m1snWD+VEBsIziUg9Cy3yZI13/TXdAYPx+qoUyKiCcdYqdnqr0lHjgITX
-         /RFwPKFDKUqjNXts9KdWDBTV5EXcbktT/knVZGo3zr64CfG7zdylqXT6P0CgRxRbohPw
-         w2U4E6YPrYy8m9PntdOxAtv0H+3qXFLiX+P7DIOCH5R95MKS7mQL9xPUSs96a51cDcfQ
-         zjhg==
+        bh=xqpnJsRR6gwf+eldfH8wgutnvuKJqOvfU75iMW2HZ9w=;
+        b=YC1AlqXuLhE+gLMN2hbocNHvz0GpolRU+KIhgHTLsYJvcmwOLzkfHpF9RzmMBHGOZj
+         8pkN7WlCGqjs02RD1uDiFGMf3DqxCVkgHfKYU4ZveD5KV0F0ZA+htS3T8KuCbHg7+GHa
+         7LUtwHuxirpQZ2vogM2Pbq4uooyWweUIi399LYUO96MHILuDIkyvTPA3PlsJKvuS7P7d
+         MFK5q7zvmgcX8v8qWBI5scLHvUNXzjClOoC8SifoiSgfkFa84R7MruEhLMen+jYoHUKQ
+         1qRqbfi5jiBEnj8UojIIJdnJnjgHe1S0+A0cHAtnPZPXAv2+OZOSSFVukS5VbS7itmrt
+         rbdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
          :in-reply-to:date:message-id:mime-version;
-        bh=WaTU5nNp0d3tM7dubT9yAIGXIp3W9hWOHEDTTtdq5Qw=;
-        b=bWsDsjiBxuWmIEOe/y8VDIhxtStTgbLP8Zu3CjLkeT37YErUfnaxUK2eqZMTRV5pty
-         SeFJ6AcN2d1nNYeRi3hPLbmeGaw29wEsKjfq5061ExEvcwD1fbRriwY18ItUr06Bfi3o
-         3D394zO5Of8g6LV2i8X7pAMT/hjvMN1hMT5Pk496ynF9WuCjj5FciNJk40E4/gLiecn6
-         tRhGYEVyl4VCpTcyS0I8ZSxt/q6wKKxwA3fXuJlUT5VpdxRz3HFLjrUFTE5Ktb/jhy1R
-         EattbvPNKbqVxB/8JeiWyPixnz/HwHPx/pUvQ6QMgWYKIEoqpz16mFYENpsgihhYbw9H
-         t6ZQ==
-X-Gm-Message-State: AOAM530hcuXvYVJXwXQojX9u04eVqM27eR1Y4Z1XvGAsS6ZR+T99YQ0z
-        AiSBIK1AgxkyBU66X7M43X7hcVkz/ao=
-X-Google-Smtp-Source: ABdhPJwfD7pxvr1JNx2SAoAj9Kcd+5hkazZNu1ESTz6zfDpiBr27wE4+mBH13j+xzY1KBcliAmOGrA==
-X-Received: by 2002:a17:907:217b:: with SMTP id rl27mr26998231ejb.359.1618915486401;
-        Tue, 20 Apr 2021 03:44:46 -0700 (PDT)
+        bh=xqpnJsRR6gwf+eldfH8wgutnvuKJqOvfU75iMW2HZ9w=;
+        b=VmiDCQDEMKa2TzE+Z+w7pYaW6+ScKav499lfMnzVdErLbj3iB3zC67JIVjQk39VdTA
+         TnELkzgf0DY+IzjyaENB8YZSJy8JyIdZEpGqRsg4jKcE91OBjGsfKpNDzeFFcx2zyHAF
+         ah//6ArhAXe7l6okmD0j4RtmLXsdl1n6L6DVbKEgKhfU4eU41kGgGkEk3ghPHfIgx5Uj
+         Xb6JwlqAI+mqrqn8sTwEuhtedOTfKnjayxI74T08mupQTSv1wJKyrz3JZXcVvEpVXqB2
+         w9du2v5I423SaSKQjGagCW0uvJAWwtR6xZhgfsB7EaR92ak8Lv/JKQEz0XoLf+ZB+dw+
+         RCYg==
+X-Gm-Message-State: AOAM530Vk3CSqSqSocKgTaQpKMmxf3Al2PAsSKgJSrJ0yVt/jgJQ9S7j
+        I4OFAu8bQbDDKV/X8RKaV7nze54oaeY=
+X-Google-Smtp-Source: ABdhPJzC291rSW1Rh9Tl6O/yDkI8DcBoqLCcQWhE2ZPG13ZcGBb7MicmG0W7cwmmiF+D3dSlg+steQ==
+X-Received: by 2002:a17:907:9852:: with SMTP id jj18mr2113164ejc.382.1618915964618;
+        Tue, 20 Apr 2021 03:52:44 -0700 (PDT)
 Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id z6sm12265847ejp.86.2021.04.20.03.44.45
+        by smtp.gmail.com with ESMTPSA id v1sm15712124eds.17.2021.04.20.03.52.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Apr 2021 03:44:45 -0700 (PDT)
+        Tue, 20 Apr 2021 03:52:44 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/5] git-completion.bash: consolidate cases in _git_stash()
-References: <cover.1618910364.git.liu.denton@gmail.com>
- <4f8d015d54376af277883f57e8b4cf2c63ed8a03.1618910364.git.liu.denton@gmail.com>
+To:     Patrick Steinhardt <ps@pks.im>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] git: support separate arg for `--config-env`'s value
+References: <cover.1618847606.git.ps@pks.im>
+ <d52db89bc2f40a9df5e9fafe4e1bb8c173a7f45f.1618847606.git.ps@pks.im>
 User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <4f8d015d54376af277883f57e8b4cf2c63ed8a03.1618910364.git.liu.denton@gmail.com>
-Date:   Tue, 20 Apr 2021 12:44:45 +0200
-Message-ID: <877dkx44ma.fsf@evledraar.gmail.com>
+In-reply-to: <d52db89bc2f40a9df5e9fafe4e1bb8c173a7f45f.1618847606.git.ps@pks.im>
+Date:   Tue, 20 Apr 2021 12:52:43 +0200
+Message-ID: <874kg14490.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -75,65 +73,86 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Tue, Apr 20 2021, Denton Liu wrote:
+On Mon, Apr 19 2021, Patrick Steinhardt wrote:
 
-> The $subcommand case statement in _git_stash() is quite repetitive.
-> Consolidate the cases together into one catch-all case to reduce the
-> repetition.
+> While not documented as such, many of the top-level options like
+> `--git-dir` and `--work-tree` support two syntaxes: they accept both an
+> equals sign between option and its value, and they do support option and
+> value as two separate arguments. The recently added `--config-env`
+> option only supports the syntax with an equals sign.
 >
-> Signed-off-by: Denton Liu <liu.denton@gmail.com>
-> ---
->  contrib/completion/git-completion.bash | 21 ++-------------------
->  1 file changed, 2 insertions(+), 19 deletions(-)
+> Mitigate this inconsistency by accepting both syntaxes and add tests to
+> verify both work.
 >
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index 30c9a97616..7bce9a0112 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -3032,21 +3032,6 @@ _git_stash ()
->  	fi
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+
+This whole series LGTM.
+
+>  git.c             |  8 ++++++++
+>  t/t1300-config.sh | 15 ++++++++++++++-
+>  2 files changed, 22 insertions(+), 1 deletion(-)
+>
+> diff --git a/git.c b/git.c
+> index b53e665671..ad365c05c7 100644
+> --- a/git.c
+> +++ b/git.c
+> @@ -255,6 +255,14 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
+>  			git_config_push_parameter((*argv)[1]);
+>  			(*argv)++;
+>  			(*argc)--;
+> +		} else if (!strcmp(cmd, "--config-env")) {
+> +			if (*argc < 2) {
+> +				fprintf(stderr, _("no config key given for --config-env\n" ));
+
+
+I found this use of fprintf() slightly odd, why not error(), but then
+went back and read the function and saw that it has N number of
+"fprintf(stderr, [...])" already.
+
+That could probably all be converted to error(), but better to be
+consistent for now.
+
+> +				usage(git_usage_string);
+> +			}
+> +			git_config_push_env((*argv)[1]);
+> +			(*argv)++;
+> +			(*argc)--;
+>  		} else if (skip_prefix(cmd, "--config-env=", &cmd)) {
+>  			git_config_push_env(cmd);
+>  		} else if (!strcmp(cmd, "--literal-pathspecs")) {
+> diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+> index e0dd5d65ce..18803f9953 100755
+> --- a/t/t1300-config.sh
+> +++ b/t/t1300-config.sh
+> @@ -1374,16 +1374,29 @@ test_expect_success 'git --config-env=key=envvar support' '
+>  	cat >expect <<-\EOF &&
+>  	value
+>  	value
+> +	value
+> +	value
+> +	false
+>  	false
+>  	EOF
+>  	{
+>  		ENVVAR=value git --config-env=core.name=ENVVAR config core.name &&
+> +		ENVVAR=value git --config-env core.name=ENVVAR config core.name &&
+>  		ENVVAR=value git --config-env=foo.CamelCase=ENVVAR config foo.camelcase &&
+> -		ENVVAR= git --config-env=foo.flag=ENVVAR config --bool foo.flag
+> +		ENVVAR=value git --config-env foo.CamelCase=ENVVAR config foo.camelcase &&
+> +		ENVVAR= git --config-env=foo.flag=ENVVAR config --bool foo.flag &&
+> +		ENVVAR= git --config-env foo.flag=ENVVAR config --bool foo.flag
+>  	} >actual &&
+>  	test_cmp expect actual
+>  '
 >  
->  	case "$subcommand,$cur" in
-> -	push,--*)
-> -		__gitcomp_builtin stash_push
-> -		;;
-> -	save,--*)
-> -		__gitcomp_builtin stash_save
-> -		;;
-> -	pop,--*)
-> -		__gitcomp_builtin stash_pop
-> -		;;
-> -	apply,--*)
-> -		__gitcomp_builtin stash_apply
-> -		;;
-> -	drop,--*)
-> -		__gitcomp_builtin stash_drop
-> -		;;
->  	list,--*)
->  		# NEEDSWORK: can we somehow unify this with the options in _git_log() and _git_show()
->  		__gitcomp_builtin stash_list "$__git_log_common_options $__git_diff_common_options"
-> @@ -3054,8 +3039,8 @@ _git_stash ()
->  	show,--*)
->  		__gitcomp_builtin stash_show "$__git_diff_common_options"
->  		;;
-> -	branch,--*)
-> -		__gitcomp_builtin stash_branch
-> +	*,--*)
-> +		__gitcomp_builtin "stash_$subcommand"
->  		;;
->  	branch,*)
->  		if [ $cword -eq $((__git_cmd_idx+2)) ]; then
-> @@ -3069,8 +3054,6 @@ _git_stash ()
->  		__gitcomp_nl "$(__git stash list \
->  				| sed -n -e 's/:.*//p')"
->  		;;
-> -	*)
-> -		;;
->  	esac
->  }
+> +test_expect_success 'git --config-env with missing value' '
+> +	test_must_fail env ENVVAR=value git --config-env 2>error &&
+> +	test_i18ngrep "no config key given for --config-env" error &&
+> +	test_must_fail env ENVVAR=value git --config-env config core.name 2>error &&
+> +	test_i18ngrep "invalid config format: config" error
+> +'
+> +
+>  test_expect_success 'git --config-env fails with invalid parameters' '
+>  	test_must_fail git --config-env=foo.flag config --bool foo.flag 2>error &&
+>  	test_i18ngrep "invalid config format: foo.flag" error &&
 
-One might think that this introduces a logic error in "git stash
-doesnotexist" now dispatching to a non-existing "stash_doesnotexist" or
-something, bu tI see that earlier (omitted from context) in the function
-there's an exhaustive lit of push/save/pop etc. which guards against
-this, is is that correct?
