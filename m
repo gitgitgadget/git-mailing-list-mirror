@@ -2,136 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E5B41C433ED
-	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 01:47:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D18F7C433ED
+	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 02:05:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C130E613AB
-	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 01:47:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8CADD61164
+	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 02:05:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231693AbhDTBsB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Apr 2021 21:48:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53942 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229528AbhDTBsA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Apr 2021 21:48:00 -0400
-Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AF4BC06174A
-        for <git@vger.kernel.org>; Mon, 19 Apr 2021 18:47:29 -0700 (PDT)
-Received: by mail-io1-xd35.google.com with SMTP id k25so36906544iob.6
-        for <git@vger.kernel.org>; Mon, 19 Apr 2021 18:47:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
-        bh=clpBqlGeH9EC5QCvBwS3B28Mp3Wfc3EO7MGZNjpp+4s=;
-        b=TogkzlpGwnJQldGIduGVoS3wf4kdKr2xhJBNPONeVFqk34tPTQ5cu4DZcAH5XEGp4R
-         vsW6A04f+2Kn0115VEESsTzjku0zsrGk8o/GgXDMJ3X2ITf1JWH8xWofnPd9tFj4RziB
-         tDNv9aOGuO3bemduCKfsGbMvp9qyNLDWTrvZ+A+ZzclAXA2cB0iLoS8S/SL+4bmL6HiG
-         WDjIlsC2ThLEzOm5ldR/28tn6SvhNzlV8NcFvAQBxR8FxUWgc/kpoY/06HdVHnPQaeWV
-         HFE+eFfn1UPJSHvOBM2C073XcIxb910Hn+9fKJ8FcfAfGZawPY2jOjQGYSqrDb+750jG
-         Inbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition;
-        bh=clpBqlGeH9EC5QCvBwS3B28Mp3Wfc3EO7MGZNjpp+4s=;
-        b=cl8IwFD880gOuEK2qL+RoXTXedMD5rqk8JxLFXiuV8EoYOMn4i7274i1soe8yeVUl+
-         aqQQbYI1hIvtVOsz65m0eQ7EJK1FNAJvwR0l696RF4A9ujfjbA+3cyb0T/BPNO5QvxiW
-         hCERUQXm2ouiPTzawPIhW3CUeK98kCfKdQpRLf0Ry+ENeTHpbATXdGZCDCzaQu1jPN7O
-         a45jnPq9Wr4/gcDtc6lw6MKk6jiqDYV92rVP9oJuDkgluGXe+RmmN6flFshFj86l0gsA
-         ub+6HXI4upnM3v7dW8++YkzJmnpjPXO+nOGr1G/Tfv6BhFMTqZB5F5LojR7CvH5t+tkN
-         WPiw==
-X-Gm-Message-State: AOAM532+fWMUhlJ+CkxzvkuE7H78u6jIu9zYD0B5OHPlefFtFKwkUcm7
-        eMEiGKbXsYPEs8tT9rX7/DBHRKpvi+RUke/2
-X-Google-Smtp-Source: ABdhPJzppAb0LfegBfHLp++tYRKQVPfgnndGBOtWG37Vf7X3MOL9QhiXVGj4mbJVdd+Dofg4NmQy7A==
-X-Received: by 2002:a05:6638:bcb:: with SMTP id g11mr5626942jad.144.1618883248210;
-        Mon, 19 Apr 2021 18:47:28 -0700 (PDT)
-Received: from localhost ([2605:9480:22e:ff10:6e34:2cc5:33ff:681d])
-        by smtp.gmail.com with ESMTPSA id h8sm7791090ils.35.2021.04.19.18.47.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Apr 2021 18:47:27 -0700 (PDT)
-Date:   Mon, 19 Apr 2021 21:47:26 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     peff@peff.net, dstolee@microsoft.com, gitster@pobox.com
-Subject: [PATCH] builtin/repack.c: set a default factor for '--geometric'
-Message-ID: <1ecab817396fae6a1cbafde1ca8b3ebfd9ae4c11.1618883241.git.me@ttaylorr.com>
+        id S233308AbhDTCF7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Apr 2021 22:05:59 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:37366 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229534AbhDTCF6 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 19 Apr 2021 22:05:58 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 87C5260422;
+        Tue, 20 Apr 2021 02:04:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1618884297;
+        bh=qUs0nNoqt51wD3GUi9El2wGWbGY4iP2ji9ZrsnNABOI=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=Es6XSPP3K9vMH9d3VIYCmtNgB6zv24ywn0ME3AC1hFGvR+yofQWlhth3Pb3f3E+ig
+         dXgBVS9uWsTwROjDNpIZwcSOLnzEuoVxmhUWAY4CdA92XIPjQ5SlaOYBWEEmSamAqx
+         fCexFg2MGGNY1F1fuqfK6jKIPA2t8OqZErcP9zO2j5oF7TrMLQVZOVkfDYvVW9PNFR
+         3j98xh8YpUqvOZQeBz8ZbEyMiZl8s/pZHNnE9kJ9cr1c3GRg+sQKusjEtNF2vaTlUG
+         z+tYny9Vz4UKOug/VvEiUfm5Rme32Lbxyv3HwqzgKJ8cwUnX71KeALshsuDTAaT1gl
+         Yw2vOcmowyfQWyJzACdT8oe+1oCcCBdxllMyH+ThSG/HtyBk99T7yOFFYIcQz/sFSM
+         haj4LRgdLmXSCNywi6ggZ1anM+hYL86kNxToJTfuoWSgXt3RLR2SnT98M26GwQsb7a
+         9p09WvsvvWpTffGabXvorr4nG3C8/9QSSzg7wrD6tWyPhjwr1F9
+Date:   Tue, 20 Apr 2021 02:04:52 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Cristian Morales Vega <christian.morales.vega@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: git checkout behaviour when only ctime of file changes
+Message-ID: <YH42xGwjTX4Axcpp@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Cristian Morales Vega <christian.morales.vega@gmail.com>,
+        git@vger.kernel.org
+References: <CAOWQn3Qesh0+CkaD95q78Rq_vN5tjWKDe7HTk0Ynk-NY8XUKzg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="CsgXBQ8XAj4EAXAZ"
 Content-Disposition: inline
+In-Reply-To: <CAOWQn3Qesh0+CkaD95q78Rq_vN5tjWKDe7HTk0Ynk-NY8XUKzg@mail.gmail.com>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The '--geometric=<n>' argument specifies that each pack must contain at
-least 'n' times as many objects as the size of the next-largest pack.
-The factor 'n' is customizable, but setting it to '2' is a sane default.
 
-Instead of making the factor a required argument, make the argument
-optional with a default value of '2'.
+--CsgXBQ8XAj4EAXAZ
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-To ensure that the option is setup correctly, modify the most complex
-test of t7703 to drop the explicit factor.
+On 2021-04-19 at 09:11:12, Cristian Morales Vega wrote:
+> I thought you may want to take a look at
+> https://issues.jenkins.io/browse/JENKINS-65395.
+>=20
+> Basically after something updates the ctime of a file, a
+> "git checkout" can behave differently depending on whether a
+> "git update-index --refresh" has been run before or not.
+> _Maybe_ it could make sense for "git checkout" to always behave as if
+> "git update-index --refresh" had been run before? No idea really.
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- Documentation/git-repack.txt | 8 ++++----
- builtin/repack.c             | 5 +++--
- t/t7703-repack-geometric.sh  | 2 +-
- 3 files changed, 8 insertions(+), 7 deletions(-)
+I believe the situation you're seeing is that git checkout usually
+doesn't rewrite files in the working tree that are already up to date.
+This makes checkout much faster in large working trees.
 
-diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
-index 317d63cf0d..d948a2913d 100644
---- a/Documentation/git-repack.txt
-+++ b/Documentation/git-repack.txt
-@@ -165,11 +165,11 @@ depth is 4095.
- 	Pass the `--delta-islands` option to `git-pack-objects`, see
- 	linkgit:git-pack-objects[1].
- 
---g=<factor>::
----geometric=<factor>::
-+-g=[<factor>]::
-+--geometric[=<factor>]::
- 	Arrange resulting pack structure so that each successive pack
--	contains at least `<factor>` times the number of objects as the
--	next-largest pack.
-+	contains at least `<factor>` (`2` if unspecified) times the
-+	number of objects as the next-largest pack.
- +
- `git repack` ensures this by determining a "cut" of packfiles that need
- to be repacked into one in order to ensure a geometric progression. It
-diff --git a/builtin/repack.c b/builtin/repack.c
-index 2847fdfbab..f2359c9d3a 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -494,8 +494,9 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 				N_("repack objects in packs marked with .keep")),
- 		OPT_STRING_LIST(0, "keep-pack", &keep_pack_list, N_("name"),
- 				N_("do not repack this pack")),
--		OPT_INTEGER('g', "geometric", &geometric_factor,
--			    N_("find a geometric progression with factor <N>")),
-+		{ OPTION_INTEGER, 'g', "geometric", &geometric_factor, N_("n"),
-+				N_("find a geometric progression with factor <n>"),
-+				PARSE_OPT_OPTARG, NULL, 2 },
- 		OPT_END()
- 	};
- 
-diff --git a/t/t7703-repack-geometric.sh b/t/t7703-repack-geometric.sh
-index 5ccaa440e0..77cd5f2284 100755
---- a/t/t7703-repack-geometric.sh
-+++ b/t/t7703-repack-geometric.sh
-@@ -123,7 +123,7 @@ test_expect_success '--geometric with small- and large-pack rollup' '
- 
- 		find $objdir/pack -name "*.pack" | sort >before &&
- 
--		git repack --geometric 2 -d &&
-+		git repack --geometric -d &&
- 
- 		find $objdir/pack -name "*.pack" | sort >after &&
- 		comm -12 before after >untouched &&
--- 
-2.31.1.163.ga65ce7f831
+By default, Git does include the ctime in its computation of whether a
+file is up to date.  If the ctime changes, then the file is considered
+to be stale.  git checkout, without an intervening command, will
+overwrite it, since it's dirty and just overwriting it is cheaper than
+determining whether it is in fact up to date.
+
+git update-index --refresh does the check about whether the file is in
+fact up to date.  This isn't free; if you've modified 1000 files, or if
+you've modified large files, there's going to be a cost to this, and it
+can be very substantial.  As mentioned, git checkout doesn't want to
+perform that cost needlessly, so it overwrites the file unconditionally.
+
+As far as I'm aware, Git doesn't document which files it does and does
+not rewrite in the working tree as part of a checkout, except as part of
+certain specified options (e.g., the --overlay option).  It is therefore
+free to choose any algorithm it chooses, and in this case, we've
+optimized for checkout performance, not minimal modifications.
+
+There is a config option, core.trustctime, which can be set to false if
+you don't want to consider the ctime as part of whether a file is up to
+date.  But Git is behaving correctly and as desired here.
+--=20
+brian m. carlson (he/him or they/them)
+Houston, Texas, US
+
+--CsgXBQ8XAj4EAXAZ
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.27 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYH42wwAKCRB8DEliiIei
+gWv0AP0XgRjP3MGouhXcPjUPR1aDBzlecdL6xI1PPiidf04nggD9GY46KBMXuKRS
+zD1sc0Xx3WqPZCw8E+obYHXj9XMmPwk=
+=62j7
+-----END PGP SIGNATURE-----
+
+--CsgXBQ8XAj4EAXAZ--
