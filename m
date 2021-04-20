@@ -2,173 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E851C433ED
-	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 21:52:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B8BE3C433ED
+	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 22:15:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E6B6661416
-	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 21:52:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 82258613FD
+	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 22:15:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234158AbhDTVwt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Apr 2021 17:52:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36908 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234205AbhDTVws (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Apr 2021 17:52:48 -0400
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59ACEC06138A
-        for <git@vger.kernel.org>; Tue, 20 Apr 2021 14:52:16 -0700 (PDT)
-Received: by mail-oi1-x232.google.com with SMTP id v6so12647631oiv.3
-        for <git@vger.kernel.org>; Tue, 20 Apr 2021 14:52:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=+TKuqEGBuCn+ytwF6yYXVT5rJ2LgSnnRQWVv8Ol7kCQ=;
-        b=Aie73n7fZD4ZqjLejYfs5Ktp1ukC47iOtCBjiWihO1y92RmPnAAi0Mf/3HNVFPKq9z
-         xihD5uNMUp+IRR/5R//F/kki2QTZkGzGgGkfmj3uXzOjtgthF/+CO1yJzfemddWdQNFb
-         h0gI2g5sKIZoTxnoWm0xv+dqYmClXjBMSRlJ2Et/21ajpRZoNq8ul7f6dW+GoRUjC66X
-         mRF9+so+zlH1PP4dJKH7PRBdoKOOHkHWP4h1rN+vOV//vZaZAShpi726Au9vCXtkxLg5
-         ETjJCixgBYEB+5txOrO/pX0s1uufxIj1vnqcgSM/rFpDn8Q4waZWGiNh4OJ/C2dtdayp
-         n5mw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=+TKuqEGBuCn+ytwF6yYXVT5rJ2LgSnnRQWVv8Ol7kCQ=;
-        b=uU1tNslGQeebMP8gP/2gkCdpTRj6jnNa15LJAXlAQxpZQzyk0Plrqw9FrmIXqf6E98
-         alli5KZutSZCuJdnDCaDl7O/u+CQiGRPmMkOabUf8uuMgQVTpR+ePHJ8OtXlcGYFD4Tg
-         L5BH8tmCfym1vI2X5GJpK2RdsZs50JWPJsCowMiTlVJ3SS9vTrVeQeWFloX0/e0LhfSf
-         tf2H70LE8AeT/ZmSh2QMJYiSnNa1+TyFxxAnAZf1Zl7pc2bqpxPPPX7yOqOblxkcCMA9
-         VKhnsB+nWNV6snX8KgOQfEY4l1/q7ke5Elvcz8XAqS+joMCUP2iuIINrrUIgyg5WQvk+
-         my4Q==
-X-Gm-Message-State: AOAM533fmAZGuiokik6D3vKGdZyOImj/VadWaiINjiYK2mgiLkAdJa0X
-        bCnU7O0Sr2gcx6CuZwG7NVPEkAwp+tXwUdlZTCU=
-X-Google-Smtp-Source: ABdhPJy5hU9Fg6iZe4Q3DKm7/WNtof1M7Z1qgUvzSGVxhA9KXptgTLlZaGaQk6x3UamFir1F1+0Dh9SvWRcKLtfRJPg=
-X-Received: by 2002:a54:4498:: with SMTP id v24mr4627655oiv.31.1618955535722;
- Tue, 20 Apr 2021 14:52:15 -0700 (PDT)
+        id S234224AbhDTWQH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Apr 2021 18:16:07 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61869 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234195AbhDTWQH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Apr 2021 18:16:07 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id BCAF8B9BF2;
+        Tue, 20 Apr 2021 18:15:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=PWZ/5I6VJKKn
+        0lpqYAb446XwgZQ=; b=XIrvK4VpwXN2YinUJ7qM5We0R6NxcsEofmUYDE2wX/rI
+        nuyIN4xT3E+q8oLf0r01TkwIfddVBIg2a6ULaO3m+eWNnfeqNIPi1YLxJwXN3V17
+        RWF1srZfuILtd/HG/g3DXUS5SJK1sNAgiRJ7JzKiVKyMK7MpO0zFgKoy3Yqs20o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=fksLha
+        u3CIZWf7AdXhzAKs2OMj7a4NMHmzlVEExOgNkDYyLrP48Ia6qqEaW/UtwIgO0qyX
+        8xMS+Ua8kuxIuclJWzgr88gjbqVYAAj+6hfa8ohmGUvIjV1Vm4/q4F9GO0mrS4bC
+        ZzMO7cw+1xE7QJSBSkZ4MkFmxNOYMtQ3ZB6eI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id AE9E1B9BF1;
+        Tue, 20 Apr 2021 18:15:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1807AB9BF0;
+        Tue, 20 Apr 2021 18:15:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jeff King <peff@peff.net>, Eric Wong <e@80x24.org>
+Subject: Re: What's cooking in git.git (Apr 2021, #05; Mon, 19)
+References: <xmqqtuo17t6t.fsf@gitster.g> <87mttt2hcu.fsf@evledraar.gmail.com>
+Date:   Tue, 20 Apr 2021 15:15:33 -0700
+In-Reply-To: <87mttt2hcu.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Tue, 20 Apr 2021 15:52:33 +0200")
+Message-ID: <xmqq1rb44n7e.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.932.git.1618322497.gitgitgadget@gmail.com> <b2cb5401eff83c43ca805a36bf41a28a6ffc3630.1618322497.git.gitgitgadget@gmail.com>
-In-Reply-To: <b2cb5401eff83c43ca805a36bf41a28a6ffc3630.1618322497.git.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 20 Apr 2021 14:52:04 -0700
-Message-ID: <CABPp-BFhyFiKSXdLM5q5t=ZKzr6V0pY7dbheierRaOHFbMEdkg@mail.gmail.com>
-Subject: Re: [PATCH 01/10] t1092: add tests for status/add and sparse files
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: ED275B3A-A225-11EB-B305-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 13, 2021 at 7:01 AM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: Derrick Stolee <dstolee@microsoft.com>
->
-> Before moving to update 'git status' and 'git add' to work with sparse
-> indexes, add an explicit test that ensures the sparse-index works the
-> same as a normal sparse-checkout when the worktree contains directories
-> and files outside of the sparse cone.
->
-> Specifically, 'folder1/a' is a file in our test repo, but 'folder1' is
-> not in the sparse cone. When 'folder1/a' is modified, the file
-> 'folder1/a' is shown as modified, but adding it fails. This is new
-> behavior as of a20f704 (add: warn when asked to update SKIP_WORKTREE
-> entries, 2021-04-08). Before that change, these adds would be silently
-> ignored.
->
-> Untracked files are fine: adding new files both with 'git add .' and
-> 'git add folder1/' works just as in a full checkout. This may not be
-> entirely desirable, but we are not intending to change behavior at the
-> moment, only document it.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-Personally, I'd say not desirable and we should throw an error just
-like we do with skip-worktree entries that the user happens to try to
-git add.  I've had reports from users that got confused by what
-happens after this.  I've been meaning to create some patches to fix
-it up, but wanted to avoid getting in the way of the sparse-index work
-and have been a bit tied up on other projects to boot.
+>> * ab/describe-tests-fix (2021-04-12) 5 commits
+>> ...
+>>  (this branch uses ab/test-lib-updates.)
+>> * ab/pickaxe-pcre2 (2021-04-12) 22 commits
+>> ...
+>>  (this branch uses ab/test-lib-updates.)
+>> * ab/test-lib-updates (2021-04-12) 16 commits
+>> ...
+>>  (this branch is used by ab/describe-tests-fix and ab/pickaxe-pcre2.)
+>>
+>>  Test clean-up.
+>>
+>>  Waiting for review discussion to conclude.
+>
+> I think with my re-roll today at
+> https://lore.kernel.org/git/cover-00.12-0000000000-20210420T121833Z-ava=
+rab@gmail.com/
+> there's no further outstanding issues.
 
-I'll note in particular that it's easy for users after running "git
-add" to run other things such as "git sparse-checkout reapply" or "git
-switch $otherbranch" and suddenly the file disappears from the working
-tree.  From the sparse-checkout machinery that makes sense; this path
-doesn't match the .git/info/sparse-checkout list of paths, so it
-should be removed from the working tree.  But it's very disorienting
-to users.  Especially if some of those commands are side-effects of
-other commands (e.g. our build system invokes "git sparse-checkout
-reapply" in various cases, most common of which is that even a simple
-"git pull" can bring down code with dependency changes and thus a need
-for new sparsity rules and whatnot), but it definitely can just happen
-in ways users don't expect with their own commands (e.g. the git
-switch/checkout example).
+OK, let's hope this to be the final version that is stable enough
+for others to build on.
 
-The patch looks good, but it'd be nice if while documenting it we also
-add a comment that we believe we want to change the behavior (for
-sparse-checkout both with and without sparse-index).  It's one of
-those many paper-cuts we still have.
-
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  t/t1092-sparse-checkout-compatibility.sh | 36 ++++++++++++++++++++++++
->  1 file changed, 36 insertions(+)
->
-> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-> index 12e6c453024f..6598c12a2069 100755
-> --- a/t/t1092-sparse-checkout-compatibility.sh
-> +++ b/t/t1092-sparse-checkout-compatibility.sh
-> @@ -232,6 +232,42 @@ test_expect_success 'add, commit, checkout' '
->         test_all_match git checkout -
->  '
->
-> +test_expect_success 'status/add: outside sparse cone' '
-> +       init_repos &&
-> +
-> +       # folder1 is at HEAD, but outside the sparse cone
-> +       run_on_sparse mkdir folder1 &&
-> +       cp initial-repo/folder1/a sparse-checkout/folder1/a &&
-> +       cp initial-repo/folder1/a sparse-index/folder1/a &&
-> +
-> +       test_sparse_match git status &&
-> +
-> +       write_script edit-contents <<-\EOF &&
-> +       echo text >>$1
-> +       EOF
-> +       run_on_all ../edit-contents folder1/a &&
-> +       run_on_all ../edit-contents folder1/new &&
-> +
-> +       test_sparse_match git status --porcelain=v2 &&
-> +
-> +       # This "git add folder1/a" is completely ignored
-> +       # by the sparse-checkout repos. It causes the
-> +       # full repo to have a different staged environment.
-> +       test_must_fail git -C sparse-checkout add folder1/a &&
-> +       test_must_fail git -C sparse-index add folder1/a &&
-> +       git -C full-checkout checkout HEAD -- folder1/a &&
-> +       test_sparse_match git status --porcelain=v2 &&
-> +
-> +       test_all_match git add . &&
-> +       test_all_match git status --porcelain=v2 &&
-> +       test_all_match git commit -m folder1/new &&
-> +
-> +       run_on_all ../edit-contents folder1/newer &&
-> +       test_all_match git add folder1/ &&
-> +       test_all_match git status --porcelain=v2 &&
-> +       test_all_match git commit -m folder1/newer
-> +'
-> +
->  test_expect_success 'checkout and reset --hard' '
->         init_repos &&
->
-> --
-> gitgitgadget
->
+Thanks.
