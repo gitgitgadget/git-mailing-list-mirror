@@ -6,82 +6,68 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C9221C433B4
-	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 23:30:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B5E57C433B4
+	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 23:31:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8666760C3E
-	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 23:30:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 81F7A61418
+	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 23:31:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234422AbhDTXbZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Apr 2021 19:31:25 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52958 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234343AbhDTXbY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Apr 2021 19:31:24 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 96E4CBA2F7;
-        Tue, 20 Apr 2021 19:30:51 -0400 (EDT)
+        id S234397AbhDTXcB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Apr 2021 19:32:01 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63085 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233992AbhDTXcB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Apr 2021 19:32:01 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D843ED1793;
+        Tue, 20 Apr 2021 19:31:28 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=3wwWTRINkls1Hd4Bh00ZgDiQ5Rw=; b=HhfvYf
-        3dFOFNR5Teshpbz7YTbWGCz7+HM5p94fmghD2YIL94yzIF2ob5zD0W2uKLdS1JQa
-        NsE+cyaFNhGnKwELHwcWkjb7hYd0t7oQPgxuKZqsB9D220X48RvXOQJ24RTwm/17
-        8kYKnfSSv2GtrCQRVxI2MwxTNB7QOeacV3YrE=
+        :content-type; s=sasl; bh=6Ex3CEBqpkjtG1RUTnijVzkOR6c=; b=oJrGmC
+        WeNYAkCNs4rw0NLxw9qF9Y3pDIIvZ8EOEOo/h/WO2aDJxBQbh/z11WDtb4TSgBnz
+        vURTsS4xauxLLmpGuqy8l0XagECGL2I3Tx0q+mYGuGfrDYAjZfe5qOqx3PQcOeGR
+        MEUx1WwznYGAuNxZwKoifbwNQe3vlKp++sGs4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=f9uDqjLb8BcYzsGX9/zJaX5aSNjYVwIM
-        BWC643T2Phkgpx5uEIVGVB3YQrcurUSVbQinIae95NLi0a417Ir6y9iPERa/mbye
-        FVjYYEe4KxXxTEwtMg54/dFgYprRYYgwWqiRZeunpFWWegl6kNzNq5mWF6YjJcm2
-        05zNppEGKio=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8C9C2BA2F6;
-        Tue, 20 Apr 2021 19:30:51 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=mKrtXJAjHvQHyBOKy9GphZ3ijHnHtM8/
+        IUAmUokIriZgPLNm+QmW/nPZTtpDnL6hd+14sA2hpNdFmG6j1QVRhQFae3oTUC4t
+        QGxDsL9D1b7c0XQFJjTHfyrjJ6uF8SfUUqDRwc5rbgkSLeb3/zVD1ZLL77ZRBPvi
+        Ad0268wM5B4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D0959D1792;
+        Tue, 20 Apr 2021 19:31:28 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 18088BA2F5;
-        Tue, 20 Apr 2021 19:30:51 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 67781D1791;
+        Tue, 20 Apr 2021 19:31:28 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
-        git@vger.kernel.org, avarab@gmail.com, jrnieder@gmail.com,
-        albertcui@google.com, matheus.bernardino@usp.br
-Subject: Re: RFC/Discussion - Submodule UX Improvements
-References: <YHofmWcIAidkvJiD@google.com>
-        <0fc5c0f7-52f7-fb36-f654-ff5223a8809b@gmail.com>
-        <YH9drebF84mx2t5r@google.com>
-Date:   Tue, 20 Apr 2021 16:30:50 -0700
-In-Reply-To: <YH9drebF84mx2t5r@google.com> (Emily Shaffer's message of "Tue,
-        20 Apr 2021 16:03:09 -0700")
-Message-ID: <xmqq1rb4355h.fsf@gitster.g>
+To:     "Robin H. Johnson" <robbat2@gentoo.org>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH v2 2/2] Document how we do embargoed releases -
+ improving mail template
+References: <pull.917.git.1616796767.gitgitgadget@gmail.com>
+        <pull.917.v2.git.1617025385.gitgitgadget@gmail.com>
+        <565d7982d870fb1b7644a9777aef6be7ee174dba.1617025385.git.gitgitgadget@gmail.com>
+        <robbat2-20210420T193302-520335089Z@orbis-terrarum.net>
+        <xmqq5z0g4oc9.fsf@gitster.g>
+Date:   Tue, 20 Apr 2021 16:31:27 -0700
+In-Reply-To: <xmqq5z0g4oc9.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
+        20 Apr 2021 14:51:02 -0700")
+Message-ID: <xmqqwnsw1qk0.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 717EF3B6-A230-11EB-B019-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 87BD19A0-A230-11EB-987B-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer <emilyshaffer@google.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> This is actually a point we discussed internally and I cut out of the
-> doc before sharing, because it is very far down our roadmap (not
-> expecting to address until probably the second half of the year). As I
-> understand it, this can also be achieved today by setting
-> 'submodule.path/to/module.active = false' in the superproject's
-> .git/config.
+> HTMLdocs and Manpages are as far as I am concerned part of SOURCES.
 
-Yeah, I think we also added support to choose which submodules can
-be "active" based on the attributes system.
-
-Three are many ways to apply band-aid to a tree that should have
-been a monolithic single repository but has been split into many
-submodules only because we historically did not scale well.  As you
-meantioned, sparse-checkout and lazy/partial cloning may change the
-picture drastically, not just "sparse" may allow such an "a set of
-artificially split out submodules" to be selectively populated, but
-more directly clone and work with only the parts you are interested
-in a monolithic repository.
+Sorry, NOT part of sources.
