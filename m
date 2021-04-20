@@ -2,160 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AC04BC433ED
-	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 06:05:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 629B0C433B4
+	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 06:10:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6C2F26127C
-	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 06:05:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1E0DF613AE
+	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 06:10:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229692AbhDTGFv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Apr 2021 02:05:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53060 "EHLO
+        id S229692AbhDTGKp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Apr 2021 02:10:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229593AbhDTGFu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Apr 2021 02:05:50 -0400
-Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76B5BC061763
-        for <git@vger.kernel.org>; Mon, 19 Apr 2021 23:05:19 -0700 (PDT)
-Received: by mail-io1-xd2f.google.com with SMTP id z14so3851770ioc.12
-        for <git@vger.kernel.org>; Mon, 19 Apr 2021 23:05:19 -0700 (PDT)
+        with ESMTP id S229577AbhDTGKo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Apr 2021 02:10:44 -0400
+Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9862DC06174A
+        for <git@vger.kernel.org>; Mon, 19 Apr 2021 23:10:13 -0700 (PDT)
+Received: by mail-yb1-xb2d.google.com with SMTP id c195so41643440ybf.9
+        for <git@vger.kernel.org>; Mon, 19 Apr 2021 23:10:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=L9G9ShGUltwOcggTb/1lPLjrh56j8jR+f7ged4EZvKQ=;
-        b=OM3TyqFlIyp2WNJZIIFm/8oNEP+MDSFCXs/P+G5UBv8QvxD8z1sCz3G4J/A8jLQqtQ
-         1KPrpTsGgEupr506w1xyTUpC8TCsALaFsCxGiidG5zihVGi6rqVTNUBzlsGBJsbE7Phe
-         +QLecv8lb8Q8z4HS9M3SpaBJCxZd9UGKsQjjl48De5DSOa/kT7VyVJ/qr/JszYagov4d
-         eaAl09kpqABJh3B8k8CojayqyE9VNqEzkGc2VWskQkd5UVDeZyIEqaziQ9/qyvyve3Qq
-         DHad/EGZubZGYxVCQ+WTj0iM2AMy0G2GpF+1GdqD2U2KYHUJzSq2zZF0NBrdYZBZLqz7
-         Yw1g==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=gGzwJxo+Km4P+rsBpp8TLReSH3dROPddFPxDgjRdgr0=;
+        b=ciXIYMEwbR9Xe2obahC/iSX8tmhDyW9ajt2HgCEDWFOJ6Ko0uejZPb83dULivp3DIT
+         86wR27e5Z323JdtTsw/2QO1NY77RB+PEsm6U85tk79dR742fxu4Cq9yjHHqeqfScOhxy
+         fT9vBLBIzeuSyaIWjoFDMPylaEHVH1Ioj6xECKu4LSwjdionlT7hpaK1md+Ss5e/h0vt
+         dZvBShwOY20tvMshYsOM+c/YoDOsZynlWP2cp9Bne136m70yb1oLx2y+KYOA163GHQro
+         WYzSesrLt06+qcbTd7jZHohhz0s/RzLT8nFpytyg3wYr7kXnsRH2i0Sj+HmkRxBDNl/b
+         UT8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=L9G9ShGUltwOcggTb/1lPLjrh56j8jR+f7ged4EZvKQ=;
-        b=C6h7o/vNxwrLwfMm6Djz9NNyi5f7vcpG6ikhiqUWJe94gmKj5e4XI3KtTUQeTwzcF4
-         NO2IHK/b1NM/zFSOlI3XMwonAAoYpC6iyQ+zRYfMuUDsovsfisYE/PYQk/29vKLg0Yz+
-         RQhMTMHl3Ewolqc31DfPRJdcsLtlfYXmiUWXzgX8zRunjNXW4Iu13Q9jNTLCbi9X9/U/
-         RgFc5URIoUlKz/u66VbtUwVrBCJkLypoIPY2LJtjtan/d5E3PJC54+tKAwMlRATqQiGY
-         QvbR+EMhr/SNTbS/gHnKOX8COHYuEvD2Kkco2N0Prlt1NPWcdVPUyQxsqVUy2pRGZuXI
-         Wz8Q==
-X-Gm-Message-State: AOAM5306SFG30sSkUEwgQoixkYEdQ4GsReysNzkak5C1yrzVCdYXFA//
-        a2Oz2kEP4CeKiNnhIiuwA8h9TTZ4G2Bf0mewgZk=
-X-Google-Smtp-Source: ABdhPJxV9JohvkCgmlxO8wQ5zexc3EFOR66iQJPN4O6drFAwMR9tIFZIWpGyH7E4g73PlmQgO6seOOyiMDuU2aCt3yE=
-X-Received: by 2002:a02:708e:: with SMTP id f136mr11384205jac.50.1618898718957;
- Mon, 19 Apr 2021 23:05:18 -0700 (PDT)
+         :message-id:subject:to;
+        bh=gGzwJxo+Km4P+rsBpp8TLReSH3dROPddFPxDgjRdgr0=;
+        b=fNfJJ8MPUfdi2CJ1Ex4598aJzznBvI5Ucy3gWnx+tl5HZ6C9KBSkvWZBSeyGrt/Ean
+         6Y6GnZ6AxaLZ3W8w+xPpQ8/cEyS1E5ZBKOljkeMEkYX3zEbOauVYbb50HqenwCpgLyVw
+         Qp6thKNB6MB0ixlnmRWMN55LoGyw4OX/QX7Opm2WwGILWRIc4QVXoOC4V+lehsf3Rmcs
+         LYX7Pvd4zKZBGwvKCquZf0Ht1oAAd9Xp82dlEBDUti3rQu4J2Rh7CqS5+LBoZ1r+F26o
+         zEMOcGLVU7CujC4jE3aHDNyQKlCxyngJ1YCBZVWS2EaTIr4hoDfzgel+NdC515hihp+0
+         SKXQ==
+X-Gm-Message-State: AOAM532dnoE/n2LEoM1NSqkupEvR42MXPS6oJfVMzoj5J/mYgqu7mBMJ
+        G6BydZ9YTCVH/2Kdn/YH2LibzIMwMd3CUsjZVhACGA26mnc62w==
+X-Google-Smtp-Source: ABdhPJwZ9IkrdQOyXWcRIgdZo9gYhQVGj+8Xw9Z2zHeCGHzh5Q0SF86bCuVxLjqrVwayN+OoYKmhukviKpwUDi1Ekuo=
+X-Received: by 2002:a25:e74a:: with SMTP id e71mr23538382ybh.408.1618899012836;
+ Mon, 19 Apr 2021 23:10:12 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.935.git.1618831726.gitgitgadget@gmail.com>
- <1c7a69ba072ac740273ef06972122f74cf3fa684.1618831726.git.gitgitgadget@gmail.com>
- <xmqq7dky9ear.fsf@gitster.g>
-In-Reply-To: <xmqq7dky9ear.fsf@gitster.g>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Tue, 20 Apr 2021 14:05:07 +0800
-Message-ID: <CAOLTT8SDv6bFOdqu6f_=QWPrQtbyFp_XYFkdRmONg4tJ7C=fAA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] [GSOC] ref-filter: reuse output buffer
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Hariom Verma <hariom18599@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+References: <CAOWQn3Qesh0+CkaD95q78Rq_vN5tjWKDe7HTk0Ynk-NY8XUKzg@mail.gmail.com>
+ <YH42xGwjTX4Axcpp@camp.crustytoothpaste.net>
+In-Reply-To: <YH42xGwjTX4Axcpp@camp.crustytoothpaste.net>
+From:   Cristian Morales Vega <christian.morales.vega@gmail.com>
+Date:   Tue, 20 Apr 2021 07:10:01 +0100
+Message-ID: <CAOWQn3Rr7qsTTjY1CYj1SAXk6_fhEc8mFn1o4Dep5N0c9yeK1A@mail.gmail.com>
+Subject: Re: git checkout behaviour when only ctime of file changes
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Cristian Morales Vega <christian.morales.vega@gmail.com>,
+        Git Users <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B44=E6=9C=8820=E6=97=
-=A5=E5=91=A8=E4=BA=8C =E4=B8=8A=E5=8D=885:04=E5=86=99=E9=81=93=EF=BC=9A
+On Tue, 20 Apr 2021 at 03:05, brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
 >
-> "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > diff --git a/builtin/branch.c b/builtin/branch.c
-> > index bcc00bcf182d..00081de1aed8 100644
-> > --- a/builtin/branch.c
-> > +++ b/builtin/branch.c
-> > @@ -411,6 +411,8 @@ static void print_ref_list(struct ref_filter *filte=
-r, struct ref_sorting *sortin
-> >  {
-> >       int i;
-> >       struct ref_array array;
-> > +     struct strbuf out =3D STRBUF_INIT;
-> > +     struct strbuf err =3D STRBUF_INIT;
-> >       int maxwidth =3D 0;
-> >       const char *remote_prefix =3D "";
-> >       char *to_free =3D NULL;
-> > @@ -440,8 +442,7 @@ static void print_ref_list(struct ref_filter *filte=
-r, struct ref_sorting *sortin
-> >       ref_array_sort(sorting, &array);
+> On 2021-04-19 at 09:11:12, Cristian Morales Vega wrote:
+> > I thought you may want to take a look at
+> > https://issues.jenkins.io/browse/JENKINS-65395.
 > >
-> >       for (i =3D 0; i < array.nr; i++) {
-> > -             struct strbuf out =3D STRBUF_INIT;
-> > -             struct strbuf err =3D STRBUF_INIT;
-> > +             strbuf_reset(&out);
-> >               if (format_ref_array_item(array.items[i], format, &out, &=
-err))
-> >                       die("%s", err.buf);
+> > Basically after something updates the ctime of a file, a
+> > "git checkout" can behave differently depending on whether a
+> > "git update-index --refresh" has been run before or not.
+> > _Maybe_ it could make sense for "git checkout" to always behave as if
+> > "git update-index --refresh" had been run before? No idea really.
 >
-> This change relies on the fact that format_ref_array_item() will
-> never touch error when it returns 0 (success); otherwise, we'd end
-> up accumulating err from multiple calls to it in the loop until it
-> returns non-zero (failure), at which point we emit a single "fatal:"
-> prefix to show multiple error messages.  Which leans me ...
+> I believe the situation you're seeing is that git checkout usually
+> doesn't rewrite files in the working tree that are already up to date.
+> This makes checkout much faster in large working trees.
 >
-> > @@ -452,10 +453,10 @@ static void print_ref_list(struct ref_filter *fil=
-ter, struct ref_sorting *sortin
-> >                       fwrite(out.buf, 1, out.len, stdout);
-> >                       putchar('\n');
-> >               }
-> > -             strbuf_release(&err);
-> > -             strbuf_release(&out);
-> >       }
-> >
-> > +     strbuf_release(&err);
-> > +     strbuf_release(&out);
->
-> ... to suspect that the _release() of err will always be a no-op.
->
+> By default, Git does include the ctime in its computation of whether a
+> file is up to date.  If the ctime changes, then the file is considered
+> to be stale.  git checkout, without an intervening command, will
+> overwrite it, since it's dirty and just overwriting it is cheaper than
+> determining whether it is in fact up to date.
 
-Yes, it's a no-op to _release(&err) In the present situation.
-
-> It may be easier to follow if err is _reset() always where out is
-> _reset(), from code cleanliness's perspective.  Then nobody has to
-> wonder why we do not reset err inside loop even though we release
-> at the end.
->
-> It also is OK to document more clearly that we assume that the loop
-> will not exit without calling die() when err is not empty.  If we
-> take that route, we may want to drop _release(&err) at the end.
->
-> I do not know which of the two is better, but the code presented
-> which is halfway between these two does not quite look easy to
-> reason about.
->
-
-Ren=C3=A9 Scharfe mention that it make leaks checking harder if we without
-releasing this err. So on balance, adding err's _reset() in the loop seems
-like a viable option. The change in performance will also be minimal too.
-
-Even though we're using _release() in the loop in v1, and then Peff think t=
-hat
-we don't need to _release() err, but code cleanness wasn't a concern
-at the time.
-
-So I'll add _reset() to the loop in the next iteration.
-
-> Thanks.
->
-
-Thanks.
---
-ZheNing Hu
+Yes, this is basically it. The "just overwriting it is cheaper than
+determining whether it is in fact up to date" is the main thing. I was
+thinking that maybe, if ctime has changed but mtime hasn't, it could
+be faster to not overwrite the files since I _think_ it means the file
+contents don't need to be checked, only the basic file permissions (I
+don't think git stores any extended attributes, does it?). But I could
+be completely wrong here. Otherwise "core.trustctime" seems like the
+perfect option for the problem.
