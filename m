@@ -8,52 +8,52 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5762BC433B4
-	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 12:22:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C719C43462
+	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 12:22:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 06ACE613C1
+	by mail.kernel.org (Postfix) with ESMTP id 2D36A613C0
 	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 12:22:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232201AbhDTMWw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Apr 2021 08:22:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51374 "EHLO
+        id S232181AbhDTMWv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Apr 2021 08:22:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51364 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232177AbhDTMWt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Apr 2021 08:22:49 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D53C7C06174A
+        with ESMTP id S232111AbhDTMWq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Apr 2021 08:22:46 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 033B4C06174A
         for <git@vger.kernel.org>; Tue, 20 Apr 2021 05:22:15 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id w4so33676101wrt.5
-        for <git@vger.kernel.org>; Tue, 20 Apr 2021 05:22:15 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id t14-20020a05600c198eb029012eeb3edfaeso10091940wmq.2
+        for <git@vger.kernel.org>; Tue, 20 Apr 2021 05:22:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=FrAch+ez0rxEpk6SU/z3hzgvOyPmdswlPariD3IIa+4=;
-        b=iidHM6MUv1UtAuRaJHEWVdGthNWe4Oi0uN2NvPN7SFnulH/8jlZU/ctxlc74n5Z10Y
-         G7z7SxWAtTet7HqKG2Re2/1jtCI79UkvANyl32KWql4aHsu4+UCnQF/AQhp7U22IaZRM
-         qJOPhhFkGevDo41y1r/pqz5Fs+7P7MjU1nPEqfUXBPXse4HEhUjuCXkJK67Dur4RVe7j
-         sMZMXuUm7iW+InqtD3ZhunTGdPWqZw81QFH9UlvP5mm7IhlHhjvlh4uW4/ez0HhbZgeM
-         OmlJ75QKXLB89H+J+Ko0KHI6kqCR6uX4d4nlKcBHYk/e+udWJZbsKc1M98rYYxc7bk7J
-         jX1Q==
+        bh=VvAwW3pZ0KXSCg400wEK8KILNxqoHxjpNb9AzvVL3/w=;
+        b=QI/6VpN78czpPJ0eKj5LLCVP4U1cKtpVZgyzZA3Cz+1z0zYRcTi/GgAh1Jsb3r9U63
+         r2sYTuuq4omyqzh22X1ndViKTZSSVrmsjpIN3R6I1ME4YyhTe34MUHWLMVi1YLepTHJl
+         cBkm+qMwXB61DP4AnoO7iPEK38R29LSllaBot6M5FkQadQJ7w3DgbgnVsE2/evTVzEoM
+         Gc1R31SH1VVLrjnhA4Rg62+WiUEIdfiW1v9l0QmtT2b3oSHeGhcZa+srHefj3aOFT+0q
+         Ns/lzP4MmFclsmxsqjU8PypM/sqfECZHDuaFT4rYF3PKSOipuSHg2hNH3obT0lE2wMjF
+         LDtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=FrAch+ez0rxEpk6SU/z3hzgvOyPmdswlPariD3IIa+4=;
-        b=HTJ37qcEnjcSNKE8sRZtdqbIBv80nk34xVLn4XgHZrFj9OhSxFQ3CSup5iuGqTGcT/
-         B3mwNMC4gQyA4KfEw10Wou2vcbbWTC7KqGRKuaXDpYxBBUyN/jjL/lbA2R0nYPjMdhWy
-         lRFp7RRrBf1yfyRQ3/jrSIykFic5en/VM4IbolMMvLg2+SrJeEwmkRwBXgxSG33T/qRu
-         KHpqpxrbE/xCtNk9cAMt2FRux8Gz2WfuJeFCTwcAqoyp5xqVVU0mVYA9CfYb/GV7x8Jo
-         B7ffCVZObWxrZKSWr/38+Eh/LpAKP2Xuh5o4VG+7Os+52RtZ1vGZYF/ZteFUw2YLYn8f
-         Ur8g==
-X-Gm-Message-State: AOAM532Y2zvs1I3t5Dx28uacjfb19pm0lq+tUoEPx1mJutusC3j9vQRG
-        oibJBoSZLJInE/64FszoV638wjyjzbxXTQ==
-X-Google-Smtp-Source: ABdhPJy93X4On8xczq1inIWDYNn8DjjeNyhIh6yCNW8uPlcz0WhLg15huEiaauU6zETcky1nJC3xHQ==
-X-Received: by 2002:adf:e50d:: with SMTP id j13mr20243379wrm.80.1618921334341;
-        Tue, 20 Apr 2021 05:22:14 -0700 (PDT)
+        bh=VvAwW3pZ0KXSCg400wEK8KILNxqoHxjpNb9AzvVL3/w=;
+        b=ahMjTTg9BYe6bohfkGqirsO9AJY7fBLj0GYh/eJsNFEhwXXLzmyY7n5TBR60mjS4vY
+         XkzO/IMmhVMfqilBIGwKP+tEtpDgO27sCOszfNvYI4qDkOQH5BFtVNEIRVTCU4j6h81w
+         40PfzMTgTosbWrDwkTe9Tcp+kgET8xN6m96EBh0R4kgWWpY6CLR4B3AdaHyts2DHgFHU
+         q6fJ0bedmjGcD/Y07ryisLz5vtygq65/CMPvle8Xx8M3WSWV5bAXAwZZ6kHQ9/hVUEV1
+         cVpWA2UhLj2g4KYTuGAAkyo2QX2oy+m7aiSCkFFZ203De1nhfjGBGFbnVWyNESWrjI+S
+         qhEg==
+X-Gm-Message-State: AOAM5335Xg9OlSWQUy3oCYnguo5/08NnVUWo68SN1BLIFik6AifBvgK8
+        IXm6Wg//vBxW0kleVaU1tpLyZ/CoCYsqag==
+X-Google-Smtp-Source: ABdhPJwyRgZEMWwHYvb7RBiuVCqY2pIwT7WpyumfoptG0Or0Gv2fUY2JvoutRt5d30KcfdXLodA6Iw==
+X-Received: by 2002:a7b:cbc1:: with SMTP id n1mr4267323wmi.50.1618921333467;
+        Tue, 20 Apr 2021 05:22:13 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id b1sm30541768wru.90.2021.04.20.05.22.13
+        by smtp.gmail.com with ESMTPSA id b1sm30541768wru.90.2021.04.20.05.22.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 20 Apr 2021 05:22:13 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -68,9 +68,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 08/12] test-lib functions: add --printf option to test_commit
-Date:   Tue, 20 Apr 2021 14:21:59 +0200
-Message-Id: <patch-08.12-dc0a863db7-20210420T121833Z-avarab@gmail.com>
+Subject: [PATCH v3 07/12] describe tests: convert setup to use test_commit
+Date:   Tue, 20 Apr 2021 14:21:58 +0200
+Message-Id: <patch-07.12-683b3ba3dd-20210420T121833Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.1.723.gf6bad1b9ba1
 In-Reply-To: <cover-00.12-0000000000-20210420T121833Z-avarab@gmail.com>
 References: <cover-00.12-00000000000-20210417T124424Z-avarab@gmail.com> <cover-00.12-0000000000-20210420T121833Z-avarab@gmail.com>
@@ -81,160 +81,109 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a --printf option to test_commit to allow writing to the file with
-"printf" instead of "echo".
+Convert the setup of the describe tests to use test_commit when
+possible. This makes use of the new --annotated-tag option to
+test_commit.
 
-This is useful for writing "\n", "\0" etc., in particular in
-combination with the --append option added in 3373518cc8 (test-lib
-functions: add an --append option to test_commit, 2021-01-12).
+Some of the setup here could simply be removed since the data being
+created wasn't important to any of the subsequent tests, so I've done
+so. E.g. assigning to the "one" variable was always useless, and just
+checking that we can describe HEAD after the first commit wasn't
+useful.
 
-I'm converting a few tests to use the new option rather than a manual
-printf/add/commit combination to demonstrate its usefulness. While I'm
-at it use "test_create_repo" where appropriate, and give the
-first/second commit a meaningful/more conventional log message in
-cases where no test cared about that message.
+In the case of the "two" variable we could instead use the tag we just
+created. See 5312ab11fbf (Add describe test., 2007-01-13) for the
+initial version of this code. There's other cases here like redundant
+"test_tick" invocations, or the simplification of not echoing "X" to a
+file we're about to tag as "x", now we just use "x" in both cases.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t1307-config-blob.sh    |  4 +---
- t/t2030-unresolve-info.sh |  3 +--
- t/t4006-diff-mode.sh      |  6 ++----
- t/t4030-diff-textconv.sh  |  8 ++------
- t/t5520-pull.sh           | 10 ++--------
- t/test-lib-functions.sh   | 12 ++++++++++--
- 6 files changed, 18 insertions(+), 25 deletions(-)
+ t/t6120-describe.sh | 58 ++++++++++-----------------------------------
+ 1 file changed, 13 insertions(+), 45 deletions(-)
 
-diff --git a/t/t1307-config-blob.sh b/t/t1307-config-blob.sh
-index 002e6d3388..930dce06f0 100755
---- a/t/t1307-config-blob.sh
-+++ b/t/t1307-config-blob.sh
-@@ -65,9 +65,7 @@ test_expect_success 'parse errors in blobs are properly attributed' '
+diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
+index e89b6747be..88fddc9142 100755
+--- a/t/t6120-describe.sh
++++ b/t/t6120-describe.sh
+@@ -31,64 +31,32 @@ check_describe () {
+ }
+ 
+ test_expect_success setup '
++	test_commit initial file one &&
++	test_commit second file two &&
++	test_commit third file three &&
++	test_commit --annotate A file A &&
++	test_commit c file c &&
+ 
+-	test_tick &&
+-	echo one >file && git add file && git commit -m initial &&
+-	one=$(git rev-parse HEAD) &&
+-
+-	git describe --always HEAD &&
+-
+-	test_tick &&
+-	echo two >file && git add file && git commit -m second &&
+-	two=$(git rev-parse HEAD) &&
+-
+-	test_tick &&
+-	echo three >file && git add file && git commit -m third &&
+-
+-	test_tick &&
+-	echo A >file && git add file && git commit -m A &&
+-	test_tick &&
+-	git tag -a -m A A &&
+-
+-	test_tick &&
+-	echo c >file && git add file && git commit -m c &&
+-	test_tick &&
+-	git tag c &&
+-
+-	git reset --hard $two &&
+-	test_tick &&
+-	echo B >side && git add side && git commit -m B &&
+-	test_tick &&
+-	git tag -a -m B B &&
++	git reset --hard second &&
++	test_commit --annotate B side B &&
+ 
+ 	test_tick &&
+ 	git merge -m Merged c &&
+ 	merged=$(git rev-parse HEAD) &&
+ 
+-	git reset --hard $two &&
+-	test_tick &&
+-	echo D >another && git add another && git commit -m D &&
+-	test_tick &&
+-	git tag -a -m D D &&
+-	test_tick &&
+-	git tag -a -m R R &&
+-
+-	test_tick &&
+-	echo DD >another && git commit -a -m another &&
++	git reset --hard second &&
++	test_commit --no-tag D another D &&
+ 
+ 	test_tick &&
+-	git tag e &&
++	git tag -a -m R R &&
+ 
+-	test_tick &&
+-	echo DDD >another && git commit -a -m "yet another" &&
++	test_commit e another DD &&
++	test_commit --no-tag "yet another" another DDD &&
+ 
+ 	test_tick &&
+ 	git merge -m Merged $merged &&
+ 
+-	test_tick &&
+-	echo X >file && echo X >side && git add file side &&
+-	git commit -m x
+-
++	test_commit --no-tag x file
  '
  
- test_expect_success 'can parse blob ending with CR' '
--	printf "[some]key = value\\r" >config &&
--	git add config &&
--	git commit -m CR &&
-+	test_commit --printf CR config "[some]key = value\\r" &&
- 	echo value >expect &&
- 	git config --blob=HEAD:config some.key >actual &&
- 	test_cmp expect actual
-diff --git a/t/t2030-unresolve-info.sh b/t/t2030-unresolve-info.sh
-index be6c84c52a..f691e6d903 100755
---- a/t/t2030-unresolve-info.sh
-+++ b/t/t2030-unresolve-info.sh
-@@ -179,8 +179,7 @@ test_expect_success 'rerere and rerere forget (subdirectory)' '
- 
- test_expect_success 'rerere forget (binary)' '
- 	git checkout -f side &&
--	printf "a\0c" >binary &&
--	git commit -a -m binary &&
-+	test_commit --printf binary binary "a\0c" &&
- 	test_must_fail git merge second &&
- 	git rerere forget binary
- '
-diff --git a/t/t4006-diff-mode.sh b/t/t4006-diff-mode.sh
-index 275ce5fa15..6cdee2a216 100755
---- a/t/t4006-diff-mode.sh
-+++ b/t/t4006-diff-mode.sh
-@@ -26,10 +26,8 @@ test_expect_success 'chmod' '
- '
- 
- test_expect_success 'prepare binary file' '
--	git commit -m rezrov &&
--	printf "\00\01\02\03\04\05\06" >binbin &&
--	git add binbin &&
--	git commit -m binbin
-+	git commit -m one &&
-+	test_commit --printf two binbin "\00\01\02\03\04\05\06"
- '
- 
- test_expect_success '--stat output after text chmod' '
-diff --git a/t/t4030-diff-textconv.sh b/t/t4030-diff-textconv.sh
-index c906320b60..a39a626664 100755
---- a/t/t4030-diff-textconv.sh
-+++ b/t/t4030-diff-textconv.sh
-@@ -26,12 +26,8 @@ EOF
- chmod +x hexdump
- 
- test_expect_success 'setup binary file with history' '
--	printf "\\0\\n" >file &&
--	git add file &&
--	git commit -m one &&
--	printf "\\01\\n" >>file &&
--	git add file &&
--	git commit -m two
-+	test_commit --printf one file "\\0\\n" &&
-+	test_commit --printf --append two file "\\01\\n"
- '
- 
- test_expect_success 'file is considered binary by porcelain' '
-diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index a09411327f..e2c0c51022 100755
---- a/t/t5520-pull.sh
-+++ b/t/t5520-pull.sh
-@@ -746,14 +746,8 @@ test_expect_success 'pull --rebase fails on corrupt HEAD' '
- '
- 
- test_expect_success 'setup for detecting upstreamed changes' '
--	mkdir src &&
--	(
--		cd src &&
--		git init &&
--		printf "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n" > stuff &&
--		git add stuff &&
--		git commit -m "Initial revision"
--	) &&
-+	test_create_repo src &&
-+	test_commit -C src --printf one stuff "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n" &&
- 	git clone src dst &&
- 	(
- 		cd src &&
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 6e2332a324..dbeb3d9262 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -173,6 +173,10 @@ debug () {
- #	Do not call test_tick before making a commit
- #   --append
- #	Use ">>" instead of ">" when writing "<contents>" to "<file>"
-+#   --printf
-+#       Use "printf" instead of "echo" when writing "<contents>" to
-+#       "<file>". You will need to provide your own trailing "\n". You
-+#       can only supply the FORMAT for the printf(1), not its ARGUMENT(s).
- #   --signoff
- #	Invoke "git commit" with --signoff
- #   --author <author>
-@@ -191,6 +195,7 @@ debug () {
- 
- test_commit () {
- 	notick= &&
-+	echo=echo &&
- 	append= &&
- 	author= &&
- 	signoff= &&
-@@ -202,6 +207,9 @@ test_commit () {
- 		--notick)
- 			notick=yes
- 			;;
-+		--printf)
-+			echo=printf
-+			;;
- 		--append)
- 			append=yes
- 			;;
-@@ -238,9 +246,9 @@ test_commit () {
- 	file=${2:-"$1.t"} &&
- 	if test -n "$append"
- 	then
--		echo "${3-$1}" >>"$indir$file"
-+		$echo "${3-$1}" >>"$indir$file"
- 	else
--		echo "${3-$1}" >"$indir$file"
-+		$echo "${3-$1}" >"$indir$file"
- 	fi &&
- 	git ${indir:+ -C "$indir"} add "$file" &&
- 	if test -z "$notick"
+ check_describe A-* HEAD
 -- 
 2.31.1.723.gf6bad1b9ba1
 
