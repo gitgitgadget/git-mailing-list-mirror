@@ -2,116 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 62561C433B4
-	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 23:43:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C02CC433ED
+	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 23:52:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1858561057
-	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 23:43:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B1F6061403
+	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 23:52:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234444AbhDTXoT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Apr 2021 19:44:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32848 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234290AbhDTXoS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Apr 2021 19:44:18 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04340C06174A
-        for <git@vger.kernel.org>; Tue, 20 Apr 2021 16:43:45 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id e7so30467913wrs.11
-        for <git@vger.kernel.org>; Tue, 20 Apr 2021 16:43:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=OpbhbGdXcT+D5LGPcH/dk65tz2tMN+VitHibfana6/g=;
-        b=DqOnr6xtPxhXZHcABhmpVj46UIny06khNS4HAYPWag76CcR++EePyhf/6qkUE22AH8
-         aLC13uMHVeqZAOlpp/xN1uFKN9MtlAoJnRiAjTiKrKTOr3PEZzpIhRdqCBSxnjTtO40c
-         h8he0zr/8c1Goy6khmT1zqzaZKrK55ryzM1+YldOwR0veXK23DOeS6+Jls5pDecn8GRO
-         B0xF6m7acE43RBVVYTFEWyGYcRKBTutUKA0rh6u5LR0/kw/HnQdXdx8YbCJiU2GsXGgV
-         yafyH+3k9NmRASY6MjSXFmJ39Q3q2uV4iUQzFyDTQ1Koy50pTwxHX5JPveVOgO7WBxuy
-         cBqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=OpbhbGdXcT+D5LGPcH/dk65tz2tMN+VitHibfana6/g=;
-        b=KyoTYbVvuzm8Qxs4/P7rNv6lLwS5MDuV17iHzYG4sJ4pVPxBQ8w1hJmzYpwLuEBtm3
-         4gNQLUUytau6NdRzIIjPM4QfcbONw8vSU+1xjuy/wNzWyr7AV7iH1tdJt/TPwVpPNaLR
-         F5lSirRU6L9pHV2YQf114ahr2lLaOygEJ6MdWg+OHVm7Ozu9PzM3HwzmkGwvkaOqSIdX
-         VcX3gyWmZKsHkTCpR6t/d0VCMBVUHYlMWONreboiZFvmlcly67/BwSXAuYO9bLdacjnd
-         kioLD7hauqhWNhDSrGFztQp/G3SD3GsKA4ClSy+2TKIEVq7sytQ+y2NdWzJfyMWWIeY8
-         fwkQ==
-X-Gm-Message-State: AOAM531wop+Wz6OSKf/tT/5fByIyThHVNi9rIrxD8ZsKt0z7qSAX9OCB
-        N4/JK4m1/6iPV42QETAC4zwS0MmKhyGKbDWSOL+IIirPGfM=
-X-Google-Smtp-Source: ABdhPJzIJsii5VsnmBPgtDg23H2IcWwYKlxQ/scGd2ovbkB60cGtYkyPnA/qPEZApYLv0rYeGtiqZ1RVVjlvy0k7U8Q=
-X-Received: by 2002:a5d:4682:: with SMTP id u2mr23627764wrq.167.1618962223600;
- Tue, 20 Apr 2021 16:43:43 -0700 (PDT)
+        id S234401AbhDTXwd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Apr 2021 19:52:33 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63057 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233992AbhDTXwc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Apr 2021 19:52:32 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1CE6DD185C;
+        Tue, 20 Apr 2021 19:52:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=iTT+o54pvsDb
+        xOj/HEI8ard4kb4=; b=s+bgmTekH97f+FN8FUQv+bnAta0pHCEsYHSUoq6iGyrf
+        kvDSY34erU2/HY8SgXxEufoMylslFNKCRbihp7TS98+lmqWL4/9nMIa4aGtJwjhj
+        b/KFDyVX3lXSLLLSq63uaD9BTHvsirW8kMv12KwFewLfXZnwTds+aLIPd5qcxp4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=deNivT
+        7XBJcd9E3NDJWkDRArZu9UO1WTY8n9KcZzzdoPNCoL3cVbNm7RcIkrVqcAlJSPY1
+        pzPj87vv5Vmk85WjgmA4ubxBza12TQyKWKnOOogcukpovXfi5Xuw2SCu5E+Gq9m+
+        83ZsLkhit3QC1lvixRgHR1OlDPDHJUTDDZsxw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 11D8BD185B;
+        Tue, 20 Apr 2021 19:52:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8C572D185A;
+        Tue, 20 Apr 2021 19:51:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jeff King <peff@peff.net>, Eric Wong <e@80x24.org>
+Subject: Re: What's cooking in git.git (Apr 2021, #05; Mon, 19)
+References: <xmqqtuo17t6t.fsf@gitster.g> <87mttt2hcu.fsf@evledraar.gmail.com>
+Date:   Tue, 20 Apr 2021 16:51:58 -0700
+In-Reply-To: <87mttt2hcu.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Tue, 20 Apr 2021 15:52:33 +0200")
+Message-ID: <xmqqk0ow1plt.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <20210415212017.1407303-1-bga@google.com> <xmqqmttznqj6.fsf@gitster.g>
-In-Reply-To: <xmqqmttznqj6.fsf@gitster.g>
-From:   Bruno Albuquerque <bga@google.com>
-Date:   Tue, 20 Apr 2021 16:43:32 -0700
-Message-ID: <CAPeR6H4V2_bAHaU4SCC8uGorj1bQEKLX5LWtXFuoHNRpo=dYPg@mail.gmail.com>
-Subject: Re: [PATCH] object-info: support for retrieving object info
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 65907748-A233-11EB-865F-D152C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 15, 2021 at 3:15 PM Junio C Hamano <gitster@pobox.com> wrote:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> > +int cap_object_info(struct repository *r, struct strvec *keys,
-> > +                 struct packet_reader *request)
-> > +{
-> > +     struct packet_writer writer;
-> > +     packet_writer_init(&writer, 1);
+> On Tue, Apr 20 2021, Junio C Hamano wrote:
 >
-> This triggers -Wdeclaration-after-statement below.  Move it down.
-
-Done.
-
-> > +     int parsed_header;
-> > +     struct requested_info info;
+> Comments on my outstanding serieses and related (you've indicated that
+> this summary was helpful, so I'll keep doing it).
 >
-> Puzzling blank line here.  There does not seem to be a good reason
-> why 'parsed_header' bit plus 'info' pair together closely than to
-> the other 'oid_str_list' variable, so it does not make much sense as
-> a grouping aid.
-
-Done.
-
-> > +     struct string_list oid_str_list = STRING_LIST_INIT_DUP;
-> > +
+>> * ab/unexpected-object-type (2021-04-14) 11 commits
+>> ...
+> I've just re-rolled these three at:
 >
-> Here, just before "parsed_header = 0;" after the blank line that
-> separates the decls and the statements, is a good place to say
-> "packet_writer_init()".  Also it may make more sense to give initial
-> value to parsed_header where it is declared.
+>  * https://lore.kernel.org/git/cover-00.10-0000000000-20210420T124428Z-=
+avarab@gmail.com
+>  * https://lore.kernel.org/git/cover-00.10-0000000000-20210420T125415Z-=
+avarab@gmail.com
+>  * https://lore.kernel.org/git/cover-0.8-0000000000-20210420T133218Z-av=
+arab@gmail.com
 
-Done.
+Unfortunately, I didn't get to these three.  In the meantime, I'd
+expect you to try merging these three into 'seen' once it gets
+published today, and invite others who have topics not in 'next' but
+in 'seen' to also do so.  By doing so, you'd see what interactions,
+if any, are expected with the other topics in-flight.  I'd hope them
+to be minimal---the old ab/unexpected-object-type had only one "yes,
+that might be nice standalone if you are not working together with
+other people, but we didn't have to make this change and we would
+have saved having to do an evil merge to resolve this conflict if we
+didn't"---as the old topic is tenatively ejected, the evil merge is
+gone for now from 'seen', which is good ;-).
 
-> > +     parsed_header = 0;
-> > +     while (packet_reader_read(request) == PACKET_READ_NORMAL) {
-> > +             if (!strcmp("size", request->line)) {
-> > +                     info.size = 1;
-> > +                     continue;
->
-> And upon further inspection, nobody seems to use parsed_header at
-> all.  Let's lose it.
+Anyway, without these three, but with the few topics that depends on
+updated test-lib-updates topioc, the integration of the topics in
+'seen' for today's cycle has been smooth.  The test-lib-updates
+still had the same few niggles in its early parts I pointed out in
+an earlier round, though.  Among the topics from you, I'd think that
+one would be the highest priority, simply because many other topics
+are taken hostage to it.  It matters to me a lot, as I'd be the one
+who ends up having to remember what depends on what else, and having
+to rebase them on top of each other.  The sooner that topic solidifies,
+the better for other topics that depend on it.
 
-Done.
+Thanks.
 
-> Next time, perhaps try "make DEVELOPER=YesPlease test" to catch
-> possible problems like these early?
 
-I did. But I was coding on a MacOS machine (which defaults to clang)
-and it looks like the warnings are not triggered at all in clang even
-with -Werror being explicitly set. I switched to a Linux machine and
-got the warnings.
