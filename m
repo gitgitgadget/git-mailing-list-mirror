@@ -2,89 +2,203 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F2BE4C433ED
-	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 11:24:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 32126C433ED
+	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 11:24:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BD6DB613AE
-	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 11:24:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 020A561363
+	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 11:24:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231561AbhDTLZA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Apr 2021 07:25:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38678 "EHLO
+        id S231651AbhDTLZN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Apr 2021 07:25:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38732 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230118AbhDTLY6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Apr 2021 07:24:58 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCEAEC06174A
-        for <git@vger.kernel.org>; Tue, 20 Apr 2021 04:24:26 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id z5so8101660edr.11
-        for <git@vger.kernel.org>; Tue, 20 Apr 2021 04:24:26 -0700 (PDT)
+        with ESMTP id S230118AbhDTLZN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Apr 2021 07:25:13 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EE32C06174A
+        for <git@vger.kernel.org>; Tue, 20 Apr 2021 04:24:40 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id o21-20020a1c4d150000b029012e52898006so10126235wmh.0
+        for <git@vger.kernel.org>; Tue, 20 Apr 2021 04:24:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=B/1TT4JFaUl9UXzeGKSuJ4dZmVNJzjREG3qOXcdkJuc=;
-        b=a7s56qsvSCSUbUvl/AnZHcQlHSKrCXWHP7KZGj0PQ5derHUzpDOYnsU2QLKswBcOwT
-         9PrsFzNMEilWn32ScJFbYIzSmsViSzfQqn59okk/MG4UBC+lpGf6mD8lUn8DOrw4xPz8
-         1oeEiNex4NNsYwbUEPBS8h+GBk4LAxqFkxA4F6JNIMrD68hyYdUhSeWuF0VsM9CO4e9e
-         9GrekXffU9aMoE3jtj+F40m6kNXO0bcjPkRlm02QrCIfB1a+fSOPplU+r8MAMQcZLwlE
-         0YL5IQI8RLvmrpd4W0FJjODG97936hll6XDqYXI1MjuMYMQINkAUZOM/EF1cqotnCany
-         De2g==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=B2fEEv0uE52g6ZiXPUm17jKZNaSiPs7Jd/bjt3+6rm8=;
+        b=EpJfv28UA+IwssTGZ9Fyu3rol4LhrWM+uuHn9pjOS8XnMdu481xjALAqWVcQSh+0l7
+         7bzboygs3dsCI094pw9Pfoil4P2M7Hl+vrgcWtKxXGIm4tSBApPw8rmvuw8bpHeBczSj
+         pk6eSSkt+PuKfdIeVOLWYjeFbz5An5rHe/CNSQkl22EPc4wf3k3gB7aPg7jEwY+dn3Wk
+         sRyksMG9/0WUTimKxbk6IzDdtPB5az443oj1l7nw1g/IkpmwMSH5RPPKYASrn47R7s6l
+         8AZK1+iD2UgQ+0CgCPVOAeB98NeOCFHsOBMHeRjsKkIGjuav73CkmKUN1+2N1M+5CiY3
+         uRyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=B/1TT4JFaUl9UXzeGKSuJ4dZmVNJzjREG3qOXcdkJuc=;
-        b=H3VyAQx5kowqFJtPsNPNDMvP4wQSbv5Vd8FDCgESwDxy03E1QMVHHui2DvX9FmdzB7
-         /D0K3zlNnDr5a2Qh5tySGAPum1LbJ8aHoEjXdRIksebL8TSIuwd+88ZNm6F/V0ZOgmsw
-         F7kldBWvICFbijZ7TrFRY7a4fW8T2CPO8eF4q7ZznnFG8w8FZcs871lr/04gP2By5xgx
-         uRBhd5jH/OgVUBDL/CK4PGNbH6WxjwTtVdPu8Mh6FQmKcbWso+i42fK/QMLFIQr+z+7Z
-         OUEyReC6pcsAwYsOVwqnpBHX/fIgvI82P7YxathitYCE/daQK2lCjHriETBM9MA23sFN
-         kh8A==
-X-Gm-Message-State: AOAM531f7g32h7ze2GkF8CqcylcjdsM6hpdzBx2zzWIEqnDpDeHa4qm/
-        fYT/cVPmMGEQonAUm4ic2DU=
-X-Google-Smtp-Source: ABdhPJwWG+pDnJvrvCfDYofBL7fwcwd0R71kl9Av75NAAR3/d4Faucid+73yhg74cWnXE3dHMmNsMg==
-X-Received: by 2002:a05:6402:453:: with SMTP id p19mr24491979edw.88.1618917865519;
-        Tue, 20 Apr 2021 04:24:25 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id w13sm15170792edx.80.2021.04.20.04.24.24
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=B2fEEv0uE52g6ZiXPUm17jKZNaSiPs7Jd/bjt3+6rm8=;
+        b=te6dbynWCoU04kpy91qcWS/WgY2Ke7Xm/4z+bPOzxoCzwG78SvAaF0T7ocBGRAPpdA
+         5qdyyI1jDC8XJxmSSQuPjrMh6zxPP6zEDDjDUKwIaUbQOZ0buGl/wHSCgfDpbiF0Kz5Z
+         wCkZ6KuxQta/j7fNtwWtCNhYUvcyEXGnIP8h0NFPxed2gf6jSXp4v3ohJgpD+PnofQfm
+         zcIXTQLoJP74ovFVWKhGN45BZP/vFN2IFXCBFPVvR/cGOtAG7NZCTPgjioRgSAIja4C5
+         /Pw4a/P9dxXTqIPJ/XdvB8TfKUsGhcl3kK2NvHcZ740loaCz3U+31LPgIod5DM8wCgUW
+         yYZA==
+X-Gm-Message-State: AOAM530ytXfXzPQT1ng0TN+X1sUflgn8OJEc7UVenioXEhnfQCQnU9Qz
+        oCmo9I+AiaXVCn0SdNMVtf87/HfQRGU=
+X-Google-Smtp-Source: ABdhPJz1pdGcwS8DnPZdH8SdLDz9/GSpz4ISTjSTQ9U8x0cjqIbyiXOhQdAulb4Iq8FhZ5TWOCxd7Q==
+X-Received: by 2002:a7b:c415:: with SMTP id k21mr3946887wmi.146.1618917879179;
+        Tue, 20 Apr 2021 04:24:39 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id l5sm26272027wro.4.2021.04.20.04.24.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Apr 2021 04:24:24 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] git: support separate arg for `--config-env`'s value
-References: <cover.1618847606.git.ps@pks.im>
- <d52db89bc2f40a9df5e9fafe4e1bb8c173a7f45f.1618847606.git.ps@pks.im>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <d52db89bc2f40a9df5e9fafe4e1bb8c173a7f45f.1618847606.git.ps@pks.im>
-Date:   Tue, 20 Apr 2021 13:24:24 +0200
-Message-ID: <87sg3l2o7r.fsf@evledraar.gmail.com>
+        Tue, 20 Apr 2021 04:24:38 -0700 (PDT)
+Message-Id: <pull.996.v2.git.git.1618917877881.gitgitgadget@gmail.com>
+In-Reply-To: <pull.996.git.git.1618838856399.gitgitgadget@gmail.com>
+References: <pull.996.git.git.1618838856399.gitgitgadget@gmail.com>
+From:   "Andrey Bienkowski via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 20 Apr 2021 11:24:37 +0000
+Subject: [PATCH v2] doc: clarify the filename encoding in git diff
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
+To:     git@vger.kernel.org
+Cc:     Andrey Bienkowski <hexagonrecursion@gmail.com>,
+        Andrey Bienkowski <hexagonrecursion@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Andrey Bienkowski <hexagonrecursion@gmail.com>
 
-On Mon, Apr 19 2021, Patrick Steinhardt wrote:
+AFAICT parsing the output of `git diff --name-only master...feature`
+is the intended way of programmatically getting the list of files
+modified
+by a feature branch. It is impossible to parse text unless you know what
+encoding it is in. The output encoding of diff --name-only and
+diff --name-status was not documented.
 
-> +test_expect_success 'git --config-env with missing value' '
-> +	test_must_fail env ENVVAR=value git --config-env 2>error &&
-> +	test_i18ngrep "no config key given for --config-env" error &&
-> +	test_must_fail env ENVVAR=value git --config-env config core.name 2>error &&
-> +	test_i18ngrep "invalid config format: config" error
-> +'
-> +
+I asked on the mailing list and got this:
+https://public-inbox.org/git/YGx2EMHnwXWbp4ET@coredump.intra.peff.net/
+> There's some discussion in Documentation/i18n.txt, which is included
+in
+various manpages (e.g., https://git-scm.com/docs/git-log#_discussion)
+but it doesn't seem to be mentioned in git-diff.
+>
+The short answer is: mostly utf8, but historically on platforms that
+don't care (like Linux) you could get away with other encodings.
+>
+-Peff
 
-Nit: (not spotted on the first reading): s/test_i18ngrep/grep/.
+My takeaway was to always parse it as utf8 regardless of platform or
+environment.
 
->  test_expect_success 'git --config-env fails with invalid parameters' '
->  	test_must_fail git --config-env=foo.flag config --bool foo.flag 2>error &&
->  	test_i18ngrep "invalid config format: foo.flag" error &&
+Signed-off-by: Andrey Bienkowski <hexagonrecursion@gmail.com>
+---
+    doc: clarify the filename encoding in git diff --name-only and
+    --name-status
+    
+    AFAICT parsing the output of git diff --name-only master...feature is
+    the intended way of programmatically getting the list of files modified
+    by a feature branch. It is impossible to parse text unless you know what
+    encoding it is in. The output encoding of diff --name-only and diff
+    --name-status was not documented.
+    
+    I asked on the mailing list and got this:
+    https://public-inbox.org/git/YGx2EMHnwXWbp4ET@coredump.intra.peff.net/
+    
+    > There's some discussion in Documentation/i18n.txt, which is included
+    > in various manpages (e.g.,
+    > https://git-scm.com/docs/git-log#_discussion) but it doesn't seem to
+    > be mentioned in git-diff.
+    >
+    > The short answer is: mostly utf8, but historically on platforms that
+    > don't care (like Linux) you could get away with other encodings.
+    >
+    > -Peff
+    
+    My takeaway was to always parse it as utf8 regardless of platform or
+    environment.
+    
+    Changes since v1:
+    
+     * Replace "always" with "usually"
+     * Add a link to https://git-scm.com/docs/git-log
+     * Replace "usually" with "often"
 
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-996%2Fhexagonrecursion%2Futf8-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-996/hexagonrecursion/utf8-v2
+Pull-Request: https://github.com/git/git/pull/996
+
+Range-diff vs v1:
+
+ 1:  4f1987e5e09c ! 1:  6daa652b7b15 doc: clarify the filename encoding in git diff
+     @@ Commit message
+          doc: clarify the filename encoding in git diff
+      
+          AFAICT parsing the output of `git diff --name-only master...feature`
+     -    is the intended way of programmatically getting the list of files modified
+     +    is the intended way of programmatically getting the list of files
+     +    modified
+          by a feature branch. It is impossible to parse text unless you know what
+          encoding it is in. The output encoding of diff --name-only and
+          diff --name-status was not documented.
+      
+          I asked on the mailing list and got this:
+          https://public-inbox.org/git/YGx2EMHnwXWbp4ET@coredump.intra.peff.net/
+     -    > There's some discussion in Documentation/i18n.txt, which is included in
+     +    > There's some discussion in Documentation/i18n.txt, which is included
+     +    in
+          various manpages (e.g., https://git-scm.com/docs/git-log#_discussion)
+          but it doesn't seem to be mentioned in git-diff.
+          >
+     @@ Documentation/diff-options.txt: explained for the configuration variable `core.q
+       
+       --name-only::
+      -	Show only names of changed files.
+     -+	Show only names of changed files. The file names are usually encoded in UTF-8.
+     ++	Show only names of changed files. The file names are often encoded in UTF-8.
+      +	For more information see the discussion about encoding in the linkgit:git-log[1]
+      +	manual page.
+       
+       --name-status::
+       	Show only names and status of changed files. See the description
+       	of the `--diff-filter` option on what the status letters mean.
+     -+	Just like `--name-only` the file names are usually encoded in UTF-8.
+     ++	Just like `--name-only` the file names are often encoded in UTF-8.
+       
+       --submodule[=<format>]::
+       	Specify how differences in submodules are shown.  When specifying
+
+
+ Documentation/diff-options.txt | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index aa2b5c11f20b..69de49f977b6 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -293,11 +293,14 @@ explained for the configuration variable `core.quotePath` (see
+ linkgit:git-config[1]).
+ 
+ --name-only::
+-	Show only names of changed files.
++	Show only names of changed files. The file names are often encoded in UTF-8.
++	For more information see the discussion about encoding in the linkgit:git-log[1]
++	manual page.
+ 
+ --name-status::
+ 	Show only names and status of changed files. See the description
+ 	of the `--diff-filter` option on what the status letters mean.
++	Just like `--name-only` the file names are often encoded in UTF-8.
+ 
+ --submodule[=<format>]::
+ 	Specify how differences in submodules are shown.  When specifying
+
+base-commit: 48bf2fa8bad054d66bd79c6ba903c89c704201f7
+-- 
+gitgitgadget
