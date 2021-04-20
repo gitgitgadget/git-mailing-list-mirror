@@ -2,135 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B9560C433B4
-	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 21:15:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B80F3C433B4
+	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 21:27:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 73EC4613F6
-	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 21:15:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 89062613F5
+	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 21:27:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234113AbhDTVQZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Apr 2021 17:16:25 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:64979 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233548AbhDTVQV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Apr 2021 17:16:21 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id BCDFE137435;
-        Tue, 20 Apr 2021 17:15:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=Uq5HfM0Spfp/
-        xzrW0CoEV/u7ki4=; b=VWAqISSKnmXjJPDUtVNCbSmDcnm8Qp/mQd/TtNgZ/uoA
-        iPk5coZ7jsXglrsjdQM7n4s+3LCI6XM4gk3norizm1XOCHlYYyyOx/w3DK5wd5b0
-        B617QVWZ2e1J6p5OKvWPCLUz7tN5RVqkMKzojfM29ldh+2xfl7oh+NQmKtOd8FA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=DP+ZZo
-        L4IY7HgIdzM9710Y8C3GI0JBzzgLetnMyIcTgHSNMshSIRMHgugAjByvcN0DXigG
-        8s6pNmkhJDjICk7S6eN6csboGIaTPD7n232cGmX6z77p6rX6wE/XIC+TAIfgSJ+I
-        siQtxYDF1r42PchgMcvO3kcHJ1AFDBjDy6IsQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B4D80137434;
-        Tue, 20 Apr 2021 17:15:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id DEBE8137433;
-        Tue, 20 Apr 2021 17:15:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
+        id S233964AbhDTV2G (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Apr 2021 17:28:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59720 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233724AbhDTV2G (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Apr 2021 17:28:06 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35931C06174A
+        for <git@vger.kernel.org>; Tue, 20 Apr 2021 14:27:34 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id m9so26442220wrx.3
+        for <git@vger.kernel.org>; Tue, 20 Apr 2021 14:27:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=v0AFnZcdcRDPONa/pEWliiCGWYu3S2DTL8SaLkZSxro=;
+        b=id34N6pUpOXiYFrNzWXus4I0CyNxoYbQbY0Zk2zJZ0tIYE/PRa1+WYyWKuvjWieP+p
+         rKj2Z42i2ko0q/iy1X0rKP7reuewEvKGQDIrVduGao16TohDB5jbEm8O6kCsoRven5ba
+         8o/q4uf/wT3CF3jgupcaykvrQOSaMLX4PvlkU26l6LaWT6vYyKmEHZG/rD9m0pirT/ag
+         AXVLGYTCOal1qx4HdpFmDecJ67UrPSVvLAkYJBf6r5nD992SfmS/m5X7B3SG1q9D60fz
+         LHn94QwtjGGQCvapyjZEiXPY0qEQ1+2CLB8m2TAIc5F0rmozJZwyV7G3F6psNSIfBKQR
+         jatA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=v0AFnZcdcRDPONa/pEWliiCGWYu3S2DTL8SaLkZSxro=;
+        b=Ge6bMQldB3C6ZANGlOzt4QCyPJ5WKcoTeJcRb/dWoS+SvehTvcVo/LQqtGiiEKD53E
+         t+gazdqB3S0jLWnXsCOcWJ1fqBQcBrAZGcYSty2yHsSYZZu8QU+c94TVs8xx3/uR0+o9
+         p/j/1jQOnsEaeUfGp0CdJivrkC7Xfm1J0S/dLXcBti2C5dluNKJNfeIdAyqBGQ4w1mqN
+         pXay/f2Ga9MMUPMsD9U3WrAkYbOK2cswKFRZ9bkhsixIq5mRb1su6ghhcO9TKRUJSjgP
+         G6Kh6C6QUTH8PdAD2KhVnFCHQMpJrbJVEi2FfaubfZmaLciCmlC/0sZy/TtvWqfMwHYy
+         yF3A==
+X-Gm-Message-State: AOAM530pXDJznqRKVS8irLKlTJAKMGLLoxHmLwwXOQdwQIwCDmLP1qWX
+        cLerfDkZY2xXQdFtfaGerd8MXkKjRok=
+X-Google-Smtp-Source: ABdhPJx16gK9aIGTSqgS8f2NVRH7IJAOnJ5U5DnmYONHtHdGzDLicnAMF/XlThQYHU6BF5se1py5Kg==
+X-Received: by 2002:adf:e8cf:: with SMTP id k15mr22930875wrn.112.1618954053058;
+        Tue, 20 Apr 2021 14:27:33 -0700 (PDT)
+Received: from szeder.dev (78-131-14-48.pool.digikabel.hu. [78.131.14.48])
+        by smtp.gmail.com with ESMTPSA id l20sm108445wmg.33.2021.04.20.14.27.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Apr 2021 14:27:32 -0700 (PDT)
+Date:   Tue, 20 Apr 2021 23:27:31 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Matthieu Moy <git@matthieu-moy.fr>,
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Matthieu Moy <git@matthieu-moy.fr>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBD?= =?utf-8?B?w7RuZw==?= Danh 
-        <congdanhqx@gmail.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: [PATCH v2 3/3] test-lib-functions: remove last two parameter
- count assertions
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+Subject: Re: [PATCH v2 12/12] test-lib: split up and deprecate
+ test_create_repo()
+Message-ID: <20210420212731.GY2947267@szeder.dev>
 References: <cover-00.16-00000000000-20210412T110456Z-avarab@gmail.com>
-        <cover-0.3-0000000000-20210420T122706Z-avarab@gmail.com>
-        <patch-3.3-8fd51861b5-20210420T122706Z-avarab@gmail.com>
-Date:   Tue, 20 Apr 2021 14:15:43 -0700
-In-Reply-To: <patch-3.3-8fd51861b5-20210420T122706Z-avarab@gmail.com>
- (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Tue, 20 Apr
- 2021 14:29:30 +0200")
-Message-ID: <xmqqfszk4pz4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+ <cover-00.12-00000000000-20210417T124424Z-avarab@gmail.com>
+ <patch-12.12-a3e20ef18f7-20210417T124424Z-avarab@gmail.com>
+ <20210417154218.GS2947267@szeder.dev>
+ <87h7k41t6i.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 926CEC80-A21D-11EB-9EF4-D609E328BF65-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87h7k41t6i.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+On Sat, Apr 17, 2021 at 11:45:41PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> >>  5. Since we don't need to move the .git/hooks directory
+> >
+> > Since we don't change directory anymore...
+> >
+> >> we don't need
+> >>     the subshell here either.
+> >> 
+> >>     That wasn't really needed for the .git/hooks either, but was being
+> >>     done for the convenience of not having to quote the path to the
+> >>     repository as we moved the hooks.
+> >
+> > And then this dubious explanation will not be necessary.
+> 
+> Why dubious? That's why we had the subshell-ing. See 0d314ce834
+> (test-lib: use subshell instead of cd $new && .. && cd $old,
+> 2010-08-30).
 
-> Remove a couple of parameter count assertions where, unlike the
-> preceding commit's migration to 'test -$x "$@"', we'll now silently do
-> the "wrong" thing if given too many parameters. The benefit is less
-> verbose trace output, as noted in the preceding commit.
->
-> In the case of "test_file_size", the "test-tool" we're invoking is
-> happy to accept N parameters (it'll print out all N sizes). Let's just
-> use "$@" in that case anyway. There's only a few callers, and
-> eventually those should probably be moved to use the test-tool
-> directly.
->
-> That only leaves test_line_count, I suppose I could leave that one
-> alone, but since it's the only common function left that does this
-> assertion let's remove it for the brevity of the -x output and
-> consistency with other functions.
+That commit doesn't mention hooks at all, so I'm not sure what I
+should see there.  OTOH, you did specifically write "use a subshell
+instead of keeping track of the old working directory and cd-ing back
+when it's done"...  which is in line with our best practices on how to
+change directories in our tests in order to reliably change back even
+in case of an error.
 
-Unlike the previous step that did not entirely sacrifice the "test
-writers are human and they need our help in detecting their
-mistakes", this step feels like "shortening '-x' output is the most
-important thing in the world, and helping test writers is much less
-important."
+And that cd-ing back and forth was not added because of the hooks
+either, but because back in the day when 'test_create_repo' was
+created 'git init-db' could only create a new repository in the
+current directory.
 
-IOW, I am not convinced it is a good change.
+> I don't mind rewording or not including some of this verbosity per-se,
+> but I wonder why you're honing in on the subshell part in
+> particular. Maybe there's something I'm missing...
+> 
+> The goal of the commit messsage is to point-by-point tear apart facets
+> of the previous behavior,
+
+Agreed.
+
+> and assure the reader that e.g. the
+> subshelling isn't needed for some other subtle reason.
+
+The role of moving the hooks with respect to the subshell is not a
+subtlety, it is simply irrelevant.  And while you are so focused on
+this irrevelancy you keep forgetting to mention the factor that
+actually does matter: that we won't change directories anymore.
 
 
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
-> ---
->  t/test-lib-functions.sh | 8 ++------
->  1 file changed, 2 insertions(+), 6 deletions(-)
->
-> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-> index f8f5bf9de1..e128b341ff 100644
-> --- a/t/test-lib-functions.sh
-> +++ b/t/test-lib-functions.sh
-> @@ -827,10 +827,7 @@ test_path_is_missing () {
->  # output through when the number of lines is wrong.
-> =20
->  test_line_count () {
-> -	if test $# !=3D 3
-> -	then
-> -		BUG "not 3 parameters to test_line_count"
-> -	elif ! test $(wc -l <"$3") "$1" "$2"
-> +	if ! test $(wc -l <"$3") "$1" "$2"
->  	then
->  		echo "test_line_count: line count for $3 !$1 $2"
->  		cat "$3"
-> @@ -839,8 +836,7 @@ test_line_count () {
->  }
-> =20
->  test_file_size () {
-> -	test "$#" -ne 1 && BUG "1 param"
-> -	test-tool path-utils file-size "$1"
-> +	test-tool path-utils file-size "$@"
->  }
-> =20
->  # Returns success if a comma separated string of keywords ($1) contain=
-s a
