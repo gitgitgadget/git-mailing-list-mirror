@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 24E2BC43461
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD626C43462
 	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 09:20:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EA368613AB
-	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 09:20:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 97AA561363
+	for <git@archiver.kernel.org>; Tue, 20 Apr 2021 09:20:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231382AbhDTJUj (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S231410AbhDTJUj (ORCPT <rfc822;git@archiver.kernel.org>);
         Tue, 20 Apr 2021 05:20:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39356 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39364 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231325AbhDTJUe (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Apr 2021 05:20:34 -0400
-Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F39DC06138B
-        for <git@vger.kernel.org>; Tue, 20 Apr 2021 02:20:03 -0700 (PDT)
-Received: by mail-pf1-x434.google.com with SMTP id i190so25111983pfc.12
-        for <git@vger.kernel.org>; Tue, 20 Apr 2021 02:20:03 -0700 (PDT)
+        with ESMTP id S230090AbhDTJUf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Apr 2021 05:20:35 -0400
+Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43864C06138C
+        for <git@vger.kernel.org>; Tue, 20 Apr 2021 02:20:04 -0700 (PDT)
+Received: by mail-pl1-x631.google.com with SMTP id 20so15393594pll.7
+        for <git@vger.kernel.org>; Tue, 20 Apr 2021 02:20:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Pu4tlybI35Z02KrsPO3c4r9zx4I/I0vuQpsUd5WaJ2E=;
-        b=Mh+3KuXkFjDh5sPUZeUPUmwwlYGKl4Qw1h5W23WKzA4/B38YBfIj2QqgXiBnELm+Xa
-         kSj86jP9+igfOFLdtda6NwgvzoJOmVJKpaA3zA7MXHDjRnGQ3/AaVxiuqQFZlEJTK3QC
-         DjK/MbZZzd47A+dqPeAeza7zEZ2dcF23SthxRqNC95LOJ9R/+cGtSKeB2noX2aiPN33c
-         +PaIRv5tAiRk2vAcVRTm+1wi3Om6/rWr/du/3ODVZXECSDHgV23hcu7qSbDa3TUhr6HL
-         31KVw9+DpxrzjhY54xz8+j5wc5vtP0kYhq7Km5xD5GqFT+OnnmhkUB5D+5T8KkXv1uBR
-         rz5Q==
+        bh=bMr5RwWvz1Wjmmk/xiGkhzAWg4eR4Q1W8mE6K97pmjg=;
+        b=N3t4j7PC9U44dhvlYHfWsJgbpTou9i4JprRZiOEPxDv3c8vVjiQNO7A9cvfNRqFZSg
+         R5zksPGDV2HoP+eMqTePdDq+4w2g8K7YTZNQkg0V1ROsDtjEi/WbZaRNB/iimlXtqhKq
+         olZkBjqd7gaujiTXvNmwHiN/FBU8uA+GpOJMKesWzeOKwCrREkXc2ogIR1twcM6+Netq
+         lFvg/fTHBVjgSirmo/bYfkcHORlRIOkCY3gJfAPehDbYlMrTzGsOhieCp+f+G29Kw1AE
+         8mYAvRvZWkZwg2nLKalxDjbRucctHo/SqqCV+sBYdI+rFf4xJ1PbeB6T9H49IrDYeDcq
+         k/OA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Pu4tlybI35Z02KrsPO3c4r9zx4I/I0vuQpsUd5WaJ2E=;
-        b=YpY3VPPqdiIQ724FTASvY3ZjGwLREdno1aHqQYEWM/UK7bSt12YKxAFBzEFr07M7ch
-         ofeEjjgWc/pu+n1zJ579uyw14bVSUYpuT6kJ8tlDaE0dCzCw955i9tXcvU3Qa8b3Uddc
-         KDzBay8fb6Zkj8Xs9ul2jfCgeLPUywJMQDqEsUQoDCVSvaQkfj5GI052qZclvwpmLeyn
-         X3KKA9J0DCQCUUqxwAYbqbtciyjrmr+eMIio29w4itH8tWHZ/DlUpKyLl7cdNZrBrhmr
-         uAtdYSvzk5hrt/LknAw+QlUyroLZcEMyCf7bp+9mh23ZM1HhKswer4ShLhvvi/Ddccat
-         X7VA==
-X-Gm-Message-State: AOAM5300tuv9kG3IkQLL/uoOPC01J2MmUhsdLWNlDHohSKdVvsHGWaxS
-        6rP5eSmp3xmfVymHbK7WQ+yXNUH6atk=
-X-Google-Smtp-Source: ABdhPJy8RKYHTBq7KbtsZODv0VpByuqIia2+Apw5/Bmh2ZM2cbHmhf7iz/JA/T3eG6zbrDtUYfy8pw==
-X-Received: by 2002:a63:2e47:: with SMTP id u68mr16121670pgu.6.1618910402662;
-        Tue, 20 Apr 2021 02:20:02 -0700 (PDT)
+        bh=bMr5RwWvz1Wjmmk/xiGkhzAWg4eR4Q1W8mE6K97pmjg=;
+        b=Fpb2Duxbcs1T2mqppLB7RzH8xOlaJmiSSS7j0ebgPLpCosLMUQPf2vKBUzYo+bUHmY
+         fuNSWCKnj1h0zMwjbUJVzxkP7NzcL7eCMNBwvXPiorSPGjg4T2mNHFlF8olZLLmrEp7q
+         +uBhbtwESRO7TX7QSpk75HlRCONOjZSfQmxuUWCmYfXUWKQuB34mq/BPSVyXOkiom5wb
+         FRD/VLgUnzWCEDNMjYjARkeDoy0aPtwfjd3w8dqUcMuYs4LbNDXooquafQ/ELoOy9OV9
+         xQSLnU8M1T1tgdXfrDBD/1oFFMWaaMU1DLkE97SsCYPdzuuwXrlvLTyr3bMkgUdFUyc1
+         UzcA==
+X-Gm-Message-State: AOAM532OVxoh8jv+w3Uw/I3rvHAFlfzPcaTfIzIaIuKqHCiBM70kOb2u
+        fMA5aw8mKD9s6ZPFsLyxJNCnoq7nNVs=
+X-Google-Smtp-Source: ABdhPJxExJ6glxHJM/gKXWIRJ0OxQ5H4IKmk+B7V2jSBIYRCJnDjj/YV2lS2y7RmR+biQxNf7acH2Q==
+X-Received: by 2002:a17:902:ac89:b029:e6:d199:29ac with SMTP id h9-20020a170902ac89b02900e6d19929acmr27864120plr.46.1618910403626;
+        Tue, 20 Apr 2021 02:20:03 -0700 (PDT)
 Received: from archbookpro.localdomain ([172.92.165.181])
-        by smtp.gmail.com with ESMTPSA id k15sm15247630pfi.0.2021.04.20.02.20.01
+        by smtp.gmail.com with ESMTPSA id k15sm15247630pfi.0.2021.04.20.02.20.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Apr 2021 02:20:02 -0700 (PDT)
+        Tue, 20 Apr 2021 02:20:03 -0700 (PDT)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/5] git-completion.bash: use $__git_cmd_idx in more places
-Date:   Tue, 20 Apr 2021 02:19:49 -0700
-Message-Id: <63a699258545d55e47d9f6fcf6e70055a76e8949.1618910364.git.liu.denton@gmail.com>
+Subject: [PATCH 4/5] git-completion.bash: consolidate cases in _git_stash()
+Date:   Tue, 20 Apr 2021 02:19:50 -0700
+Message-Id: <4f8d015d54376af277883f57e8b4cf2c63ed8a03.1618910364.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.31.1.424.g95a8dafae5
 In-Reply-To: <cover.1618910364.git.liu.denton@gmail.com>
 References: <cover.1618910364.git.liu.denton@gmail.com>
@@ -72,218 +72,61 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-With the introduction of the $__git_cmd_idx variable in e94fb44042
-(git-completion.bash: pass $__git_subcommand_idx from __git_main(),
-2021-03-24), completion functions were able to know the index at which
-the git command is listed, allowing them to skip options that are given
-to the underlying git itself, not the corresponding command (e.g.
-`-C asdf` in `git -C asdf branch`).
-
-While most of the changes here are self-explanatory, some bear further
-explanation.
-
-For the __git_find_on_cmdline() and __git_find_last_on_cmdline() pair of
-functions, these functions are only ever called in the context of a git
-command completion function. These functions will only care about words
-after the command so we can safely ignore the words before this.
-
-For _git_worktree(), this change is technically a no-op (once the
-__git_find_last_on_cmdline change is also applied). It was in poor style
-to have hard-coded on the index right after `worktree`. In case
-`git worktree` were to ever learn to accept options, the current
-situation would be inflexible.
+The $subcommand case statement in _git_stash() is quite repetitive.
+Consolidate the cases together into one catch-all case to reduce the
+repetition.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- contrib/completion/git-completion.bash | 26 ++++++++++++++------------
- t/t9902-completion.sh                  | 19 +++++++++++++++++++
- 2 files changed, 33 insertions(+), 12 deletions(-)
+ contrib/completion/git-completion.bash | 21 ++-------------------
+ 1 file changed, 2 insertions(+), 19 deletions(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index c29c129f87..30c9a97616 100644
+index 30c9a97616..7bce9a0112 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -1006,8 +1006,8 @@ __git_complete_revlist ()
- 
- __git_complete_remote_or_refspec ()
- {
--	local cur_="$cur" cmd="${words[1]}"
--	local i c=2 remote="" pfx="" lhs=1 no_complete_refspec=0
-+	local cur_="$cur" cmd="${words[__git_cmd_idx]}"
-+	local i c=$((__git_cmd_idx+1)) remote="" pfx="" lhs=1 no_complete_refspec=0
- 	if [ "$cmd" = "remote" ]; then
- 		((c++))
+@@ -3032,21 +3032,6 @@ _git_stash ()
  	fi
-@@ -1176,7 +1176,7 @@ __git_aliased_command ()
- # --show-idx: Optionally show the index of the found word in the $words array.
- __git_find_on_cmdline ()
- {
--	local word c=1 show_idx
-+	local word c="$__git_cmd_idx" show_idx
- 
- 	while test $# -gt 1; do
- 		case "$1" in
-@@ -1221,7 +1221,7 @@ __git_find_last_on_cmdline ()
- 	done
- 	local wordlist="$1"
- 
--	while [ $c -gt 1 ]; do
-+	while [ $c -gt "$__git_cmd_idx" ]; do
- 		((c--))
- 		for word in $wordlist; do
- 			if [ "$word" = "${words[c]}" ]; then
-@@ -1306,7 +1306,7 @@ __git_count_arguments ()
- 	local word i c=0
- 
- 	# Skip "git" (first argument)
--	for ((i=1; i < ${#words[@]}; i++)); do
-+	for ((i="$__git_cmd_idx"; i < ${#words[@]}; i++)); do
- 		word="${words[i]}"
- 
- 		case "$word" in
-@@ -1442,7 +1442,7 @@ __git_ref_fieldlist="refname objecttype objectsize objectname upstream push HEAD
- 
- _git_branch ()
- {
--	local i c=1 only_local_ref="n" has_r="n"
-+	local i c="$__git_cmd_idx" only_local_ref="n" has_r="n"
- 
- 	while [ $c -lt $cword ]; do
- 		i="${words[c]}"
-@@ -2474,7 +2474,7 @@ _git_switch ()
- __git_config_get_set_variables ()
- {
- 	local prevword word config_file= c=$cword
--	while [ $c -gt 1 ]; do
-+	while [ $c -gt "$__git_cmd_idx" ]; do
- 		word="${words[c]}"
- 		case "$word" in
- 		--system|--global|--local|--file=*)
-@@ -3224,7 +3224,7 @@ _git_svn ()
- 
- _git_tag ()
- {
--	local i c=1 f=0
-+	local i c="$__git_cmd_idx" f=0
- 	while [ $c -lt $cword ]; do
- 		i="${words[c]}"
- 		case "$i" in
-@@ -3276,9 +3276,11 @@ __git_complete_worktree_paths ()
- _git_worktree ()
- {
- 	local subcommands="add list lock move prune remove unlock"
--	local subcommand
-+	local subcommand subcommand_idx
- 
--	subcommand="$(__git_find_on_cmdline "$subcommands")"
-+	subcommand="$(__git_find_on_cmdline --show-idx "$subcommands")"
-+	subcommand_idx="${subcommand% *}"
-+	subcommand="${subcommand#* }"
  
  	case "$subcommand,$cur" in
- 	,*)
-@@ -3303,7 +3305,7 @@ _git_worktree ()
- 			# be either the 'add' subcommand, the unstuck
- 			# argument of an option (e.g. branch for -b|-B), or
- 			# the path for the new worktree.
--			if [ $cword -eq $((__git_cmd_idx+2)) ]; then
-+			if [ $cword -eq $((subcommand_idx+1)) ]; then
- 				# Right after the 'add' subcommand: have to
- 				# complete the path, so fall back to Bash
- 				# filename completion.
-@@ -3327,7 +3329,7 @@ _git_worktree ()
- 		__git_complete_worktree_paths
+-	push,--*)
+-		__gitcomp_builtin stash_push
+-		;;
+-	save,--*)
+-		__gitcomp_builtin stash_save
+-		;;
+-	pop,--*)
+-		__gitcomp_builtin stash_pop
+-		;;
+-	apply,--*)
+-		__gitcomp_builtin stash_apply
+-		;;
+-	drop,--*)
+-		__gitcomp_builtin stash_drop
+-		;;
+ 	list,--*)
+ 		# NEEDSWORK: can we somehow unify this with the options in _git_log() and _git_show()
+ 		__gitcomp_builtin stash_list "$__git_log_common_options $__git_diff_common_options"
+@@ -3054,8 +3039,8 @@ _git_stash ()
+ 	show,--*)
+ 		__gitcomp_builtin stash_show "$__git_diff_common_options"
  		;;
- 	move,*)
--		if [ $cword -eq $((__git_cmd_idx+2)) ]; then
-+		if [ $cword -eq $((subcommand_idx+1)) ]; then
- 			# The first parameter must be an existing working
- 			# tree to be moved.
- 			__git_complete_worktree_paths
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 04ce884ef5..9439fec8f0 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -1879,6 +1879,7 @@ test_expect_success '__git_find_on_cmdline - single match' '
- 	(
- 		words=(git command --opt list) &&
- 		cword=${#words[@]} &&
-+		__git_cmd_idx=1 &&
- 		__git_find_on_cmdline "add list remove" >actual
- 	) &&
- 	test_cmp expect actual
-@@ -1889,6 +1890,7 @@ test_expect_success '__git_find_on_cmdline - multiple matches' '
- 	(
- 		words=(git command -o --opt remove list add) &&
- 		cword=${#words[@]} &&
-+		__git_cmd_idx=1 &&
- 		__git_find_on_cmdline "add list remove" >actual
- 	) &&
- 	test_cmp expect actual
-@@ -1898,6 +1900,7 @@ test_expect_success '__git_find_on_cmdline - no match' '
- 	(
- 		words=(git command --opt branch) &&
- 		cword=${#words[@]} &&
-+		__git_cmd_idx=1 &&
- 		__git_find_on_cmdline "add list remove" >actual
- 	) &&
- 	test_must_be_empty actual
-@@ -1908,6 +1911,7 @@ test_expect_success '__git_find_on_cmdline - single match with index' '
- 	(
- 		words=(git command --opt list) &&
- 		cword=${#words[@]} &&
-+		__git_cmd_idx=1 &&
- 		__git_find_on_cmdline --show-idx "add list remove" >actual
- 	) &&
- 	test_cmp expect actual
-@@ -1918,6 +1922,7 @@ test_expect_success '__git_find_on_cmdline - multiple matches with index' '
- 	(
- 		words=(git command -o --opt remove list add) &&
- 		cword=${#words[@]} &&
-+		__git_cmd_idx=1 &&
- 		__git_find_on_cmdline --show-idx "add list remove" >actual
- 	) &&
- 	test_cmp expect actual
-@@ -1927,11 +1932,23 @@ test_expect_success '__git_find_on_cmdline - no match with index' '
- 	(
- 		words=(git command --opt branch) &&
- 		cword=${#words[@]} &&
-+		__git_cmd_idx=1 &&
- 		__git_find_on_cmdline --show-idx "add list remove" >actual
- 	) &&
- 	test_must_be_empty actual
- '
+-	branch,--*)
+-		__gitcomp_builtin stash_branch
++	*,--*)
++		__gitcomp_builtin "stash_$subcommand"
+ 		;;
+ 	branch,*)
+ 		if [ $cword -eq $((__git_cmd_idx+2)) ]; then
+@@ -3069,8 +3054,6 @@ _git_stash ()
+ 		__gitcomp_nl "$(__git stash list \
+ 				| sed -n -e 's/:.*//p')"
+ 		;;
+-	*)
+-		;;
+ 	esac
+ }
  
-+test_expect_success '__git_find_on_cmdline - ignores matches before command with index' '
-+	echo "6 remove" >expect &&
-+	(
-+		words=(git -C remove command -o --opt remove list add) &&
-+		cword=${#words[@]} &&
-+		__git_cmd_idx=3 &&
-+		__git_find_on_cmdline --show-idx "add list remove" >actual
-+	) &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success '__git_get_config_variables' '
- 	cat >expect <<-EOF &&
- 	name-1
-@@ -2275,6 +2292,7 @@ do
- 		(
- 			words=(git push '$flag' other ma) &&
- 			cword=${#words[@]} cur=${words[cword-1]} &&
-+			__git_cmd_idx=1 &&
- 			__git_complete_remote_or_refspec &&
- 			print_comp
- 		) &&
-@@ -2288,6 +2306,7 @@ do
- 		(
- 			words=(git push other '$flag' ma) &&
- 			cword=${#words[@]} cur=${words[cword-1]} &&
-+			__git_cmd_idx=1 &&
- 			__git_complete_remote_or_refspec &&
- 			print_comp
- 		) &&
 -- 
 2.31.1.424.g95a8dafae5
 
