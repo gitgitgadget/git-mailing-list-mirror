@@ -2,138 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EC5C1C433ED
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 02:27:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CF11C433ED
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 03:32:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A43FA61411
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 02:27:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 059A061406
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 03:32:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234646AbhDUC1z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Apr 2021 22:27:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39900 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234049AbhDUC1z (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Apr 2021 22:27:55 -0400
-Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C4FCC06174A
-        for <git@vger.kernel.org>; Tue, 20 Apr 2021 19:27:23 -0700 (PDT)
-Received: by mail-qk1-x72a.google.com with SMTP id z2so4561312qkb.9
-        for <git@vger.kernel.org>; Tue, 20 Apr 2021 19:27:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=KuWJkTIG8uMcv669I3f6u5NBgeXGewzJDC/NA0puMQA=;
-        b=N3PbjHQnuYFc+5XfSFSJn6PEePdVOk1VlYjn62zqflK4pREvWBdq97A43BVqGHMS+P
-         mMwe302nDq0WiPIF/jg+OoySk5iMp37KnNkcXrpW0Bx0oDxKyJXaf3sb+2PAAxKv2TLO
-         V4tYomVG2EALX05iQ3Y2nvvXfzEMLJk8SWcGB0GPPNGpcE5gzva9DKa0I+Lu8UlQXTHd
-         21kZrlYa2g0s/neuX9QfV6aQghmGlI1/hH/OgHdOzFdjqTdO4A0SCiv2gc/pG5C0T9fZ
-         opw4d6QRqnH19LZ1NlnPKIq+n+Vw+ptlfB1qbY0mxGU3K1q1YDfhxTgJlD0/sMkG99u4
-         KrMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=KuWJkTIG8uMcv669I3f6u5NBgeXGewzJDC/NA0puMQA=;
-        b=fVKBUnrAG6QjHdgHOG2B8L/zzOSQF4a5xKOfYnJOdNtdUAmhWzSN+AHfREcp94Hhk4
-         TJseeemk86ZQ0ZFeYJnsLYL9B8iA3Q/xeY+EHqeDYWmK9wllDaGCBuCIJVwELLoOrofi
-         rx1XQ5l5Q2blheVHSCt7txc8RpIxTgjJYy6MnKavpe1HEwznqwIePVa67/I/n0+xzm8p
-         QE48ILp7XoRm8zHinJAf/LgbX/0+t5VjVU6ZEnSRvo3hDw1/4KXiLOETtmvwq8D7x2BH
-         UIOJhgKNwznHrb/026NvTTMJmIZDAX2uVWSiqmJoUKJsxv71g4wzvmz1Sk02/3Wvl9QY
-         2TVw==
-X-Gm-Message-State: AOAM530dR0Bx9S3pLrZAek1N6LmFp8N65+HqUXEausH8qaf0NryVkxH1
-        eZgNdOolMbOPkaInKdez+wg=
-X-Google-Smtp-Source: ABdhPJz8TJqx/Jzq5AD1auYA/Cl+I9XALdiROnexLyEDsK8dhhimfSwXNiuvER2nfCrI6Rl9/VtgNw==
-X-Received: by 2002:a37:6705:: with SMTP id b5mr9272421qkc.378.1618972042296;
-        Tue, 20 Apr 2021 19:27:22 -0700 (PDT)
-Received: from [192.168.1.127] ([192.222.216.4])
-        by smtp.gmail.com with ESMTPSA id q26sm589569qtr.7.2021.04.20.19.27.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Apr 2021 19:27:21 -0700 (PDT)
-Subject: Re: RFC/Discussion - Submodule UX Improvements
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     git@vger.kernel.org, avarab@gmail.com, jrnieder@gmail.com,
-        albertcui@google.com, gitster@pobox.com, matheus.bernardino@usp.br
-References: <YHofmWcIAidkvJiD@google.com>
- <0fc5c0f7-52f7-fb36-f654-ff5223a8809b@gmail.com>
- <YH9drebF84mx2t5r@google.com>
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <a8ac4042-a0dd-47eb-8419-7b7d19da7cec@gmail.com>
-Date:   Tue, 20 Apr 2021 22:27:19 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.9.1
+        id S234023AbhDUDdQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Apr 2021 23:33:16 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:38252 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S233874AbhDUDdP (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 20 Apr 2021 23:33:15 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 931D26041F;
+        Wed, 21 Apr 2021 03:32:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1618975932;
+        bh=aTqNF8oF3xqTQWktbPnyiy9eXnloj42TTZ11o19wAw0=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=J6tG5ke1nulf3ALn1Aq98qpMreoz+H7hMbiyGeXtcEWG9HB+8iIinKL9v3yAQmaKk
+         tZJBUwNnsbknufjtuX/OyFOnu3ArXZDm+YMIP834K4sIQHc+lQFS6rczhUtqHQ4Q7y
+         Lr+9tWiuUu41usi3RdWr6xZfCUgFbaympepCnXavAbwGhsSo6nPRtAY/lyUgU8AQIz
+         u790MzZ3eoxhqSzQwT2oKZQd3RWtRvTYRUPC4RODoWyVci/+qrzeSa8rKza2UDEQoa
+         /VzP4DOkCCBQURIfqqQAiob+RLtel0FIqs8DQOISM9kBpYjorrp7AZXPt9fU/PwncT
+         /D+vhCCdxupjwDH9z205OaJZ7KCiGeagF5fJRfPSuxyUHgngIZingLgX2qa+PnQxxn
+         +Rt7IiABTv2Z5l3s8OInOIUnckkq2WJM7lx9nj6LLzZkg3E2SZnRNkUTs4GprerX9e
+         I7+1Xl1O25oFdd9pTmb7iO/FPqe6YfTumFd5ijT/Zc3tYWdkUTA
+Date:   Wed, 21 Apr 2021 03:32:07 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] mailinfo: strip CR from base64/quoted-printable email
+Message-ID: <YH+ct4haFn4q5qNB@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh <congdanhqx@gmail.com>,
+        git@vger.kernel.org
+References: <20210421013404.17383-1-congdanhqx@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <YH9drebF84mx2t5r@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="XZYsod8iRgvh62CF"
+Content-Disposition: inline
+In-Reply-To: <20210421013404.17383-1-congdanhqx@gmail.com>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
+--XZYsod8iRgvh62CF
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Le 2021-04-20 à 19:03, Emily Shaffer a écrit :
+On 2021-04-21 at 01:34:04, =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh wrote:
+> When an SMTP server receives an 8-bit email message, possibly with only
+> LF as line ending, some of those servers decide to change said LF to
+> CRLF.
+>=20
+> Some other SMTP servers, when receives an 8-bit email message, decide to
+> encoding such message in base64 and/or quoted-printable instead.
 
->>> When it's time to update their local repo, the user can do so as with a
->>> single-repo project. First they can 'git checkout main && git pull' (or 'git
->>> pull -r'); Git will first checkout the branches associated with main in each
->>> submodule, then fetch and merge/rebase in each submodule appropriately.
->>
->> What if some submodule does not use the same branch name for their primary integration branch?
->> Sometimes as a superproject using another project as a submodule, you do not
->> control that...
-> 
-> Yeah, you're right that that's an important consideration - "how can I
-> teach my superproject to default to a different branch than the name of
-> the superproject's current branch?" I wonder whether the branch config
-> in .gitmodules (or an equivalent in superproject's .git/config) would
-> make sense to try and use here?
+This really isn't an SMTP server.  It's mailing list software, namely
+mailman, and I would argue it's a bug, even though we may want to work
+around it.  For example, re-encoding the message breaks DKIM signatures,
+which means that mailman is likely to cause mail to be needlessly
+rejected.
 
-I think it depends on the workflow. Re-reading the above, I would definitely *not* want
-'git pull --recurse-submodules' in the superproject to go into each submodule
-and do 'git pull' there ! Because maybe some submodule introduced breaking changes
-in its API or something and I do not want to deal with that now; I just want to update my tree
-with the latest changes *to the superproject* (and maybe to the submodules *if* they
-were updated by the superproject, but not if they were updated in the submodule upstream project).
-For me, 'git pull --recurse-submodules'
-has mostly the right behaviour today, except what does not work (doing something useful
-when both sides record changes to the submodule pointer).
+8BITMIME is now so common with SMTP that I'd argue that we should just
+write off servers that don't support it (especially in the context of
+SMTPUTF8 existing), but this isn't the case of an SMTP server being
+stuck in the last century.  Can we say more accurately that this is
+mailing list software (or just call it out by name)?
 
+> If an email is transfered through those 2 email servers in order, the
+> final recipients will receive an email contains a patch mungled with
+> CRLF encoded inside another encoding. Thus, such CR couldn't be dropped
+> by mailsplit. Such accidents have been observed in the wild [1].
+>=20
+> Let's guess if such CR was added automatically and strip them in
+> mailinfo.
+>
+> [1]: https://nmbug.notmuchmail.org/nmweb/show/m2lf9ejegj.fsf%40guru.guru-=
+group.fi
+>=20
+> Signed-off-by: =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh <congdanhqx@gma=
+il.com>
+> ---
+>=20
+>  I'm not sure if guessing the heuristic to strip CR is a good approach.
+>  I think it's better to pass --keep-cr down from git-am.
+>  Let's say --keep-cr=3D<yes|no|auto>
 
-> 
->> Also, usually tracking info is only set
->> automatically when using the form 'git checkout -b new-branch upstream/master' or
->> the like. Do you also propose that 'git checkout -b new-branch', by itself, should
->> automatically set tracking info ?
-> 
-> Yes - that is an approach that we want to explore, to solve the general
-> push/fetch remote+branch problem.
+I think we may want a separate option here.  When I send a 7bit or 8bit
+body, I expect text canonicalization on the line endings.  However, when
+I send a base64 or quoted-printable body, I don't expect my data to be
+modified at all, and absent a compelling reason, doing so is incorrect.
+In most cases, using base64 or quoted-printable is going to mean that
+the sender knew that the body shouldn't be modified, not that mailman
+modified it, so we should make line munging in this case opt-in.
+--=20
+brian m. carlson (he/him or they/them)
+Houston, Texas, US
 
-Yeah, it would be nice if the triangular workflow capabilities of Git would be expanded
-(if I understand correctly that's what you are hinting at here). My personal TODO list
-for that has the following items (just dumping that here in case it's useful to someone):
+--XZYsod8iRgvh62CF
+Content-Type: application/pgp-signature; name="signature.asc"
 
-# improve UI/UX around 'branch.pushRemote' and 'remote.pushDefault'
-- git branch --verbose could show difference with @{push} in addition to / instead of @{upstream}
-- git status "
-- git prompt "
-- add config branch.<name>.pushBranch (or pushRef)
-- add 'git branch --set-push-to remote/name' to set branch.name.pushRemote and branch.name.pushRef
-- add 'git push -p <remote> <branch>' to set 'branch.name.pushRemote' and 'branch.name.pushRef' (and warn if push.default is not 'current') OR:
-- allow 'branch.pushRemote' and 'remote.pushDefault' to work if push.default=simple
-- reword push.default section in git-config  (very unclear)
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.27 (GNU/Linux)
 
-https://lore.kernel.org/git/87d0q72du2.fsf@javad.com/t/#u
-https://lore.kernel.org/git/20130607124146.GF28668@sociomantic.com/t/#u
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYH+ctwAKCRB8DEliiIei
+gaDSAP42ZyewX25CPBtEvYK/KPNbITXFcY/bGBqI2e9ybsEKtQD+OZJpGwj6YHjg
+y+rjCxedhttL2PZ8O1OpdDC5qg1AqAE=
+=iFbj
+-----END PGP SIGNATURE-----
 
-
-Cheers,
-
-Philippe.
+--XZYsod8iRgvh62CF--
