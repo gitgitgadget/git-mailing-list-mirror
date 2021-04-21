@@ -2,134 +2,209 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 01A72C433ED
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 00:09:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 73358C433ED
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 00:17:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C05BD6141D
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 00:09:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 259BF6141D
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 00:17:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233879AbhDUAJn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Apr 2021 20:09:43 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59599 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233807AbhDUAJn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Apr 2021 20:09:43 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id ABF8BD1A5C;
-        Tue, 20 Apr 2021 20:09:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=qaN9GA7iD0S/TCWmeITUNHcEWm8=; b=HTIn4r
-        fkAdPl2gnqppfHO63/HyNqlwJLf2D7k+Jj2zDPX+N2FFS1XEdLBtqShB/JreN/qO
-        i/b1vl42RQ9lF312W7u7ZfIgQWVwaifYIo6audI5+b2OgkcCJTQY1SFplb0379u5
-        D/GJcAH0JCR5rR8drRxfflkfhw+ik0BJw4wqo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=HuCdhReC2k6+VF3ijWhIrGcf4Cn56WrG
-        XjXQ59Xa9eSCmnbBjgkzNVofbVheLpFcKv/gLXI4PsH+tr9jdKiZEVVms1KyAD10
-        u5WbMwit27jQVwU9eqBFcNUBJNElBT90VmeOt1EzFmMRFG2k14yZIWqIXSRZp7Ky
-        1t+VjxfzH+I=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A2D2CD1A5B;
-        Tue, 20 Apr 2021 20:09:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2B8C2D1A5A;
-        Tue, 20 Apr 2021 20:09:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     ZheNing Hu <adlternative@gmail.com>
-Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v11 0/2] [GSOC] trailer: add new .cmd config option
-References: <pull.913.v10.git.1618562875.gitgitgadget@gmail.com>
-        <pull.913.v11.git.1618672417.gitgitgadget@gmail.com>
-        <xmqq5z0kbl8x.fsf@gitster.g>
-        <CAOLTT8RKCV+Kpya-_AVjuVGWzs1WtGS8n_+sD0FVzwEpeXGwCw@mail.gmail.com>
-Date:   Tue, 20 Apr 2021 17:09:09 -0700
-In-Reply-To: <CAOLTT8RKCV+Kpya-_AVjuVGWzs1WtGS8n_+sD0FVzwEpeXGwCw@mail.gmail.com>
-        (ZheNing Hu's message of "Sun, 18 Apr 2021 15:47:54 +0800")
-Message-ID: <xmqqfszk1ot6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S233879AbhDUARq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Apr 2021 20:17:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40156 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233752AbhDUARo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Apr 2021 20:17:44 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 574FEC06174A
+        for <git@vger.kernel.org>; Tue, 20 Apr 2021 17:17:11 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id g17so46544854edm.6
+        for <git@vger.kernel.org>; Tue, 20 Apr 2021 17:17:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=skydio.com; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=6859qnfNsB5QmnDYnF1Do40+Yhw+/qhnLAk9/XXbHtw=;
+        b=2jVWiN+NDYMcxI6QPsTkOUmw7DGnfqXwEj7DafnSYMMEUT/ea2f4C4tR5xTWnHVzZo
+         zgYWj1VFQg0vSB2nR9uHm5Gu6GkScValrxTsPVOJXsYzKCYPV+3DOqen7w+r/2xZz0Tl
+         L9Xj825ZivVKP3TBeyjv+Ek3XQqfxjERWeDLPf42QmZMfINlkNAwk9LtD98DCoRxumnr
+         hqM3ocFSou5PoCBOX8hg+LWeUIiQbYMal1qLsOqL9eBQtCD/Uh7isaEEagbLTzDsg0ig
+         UisXHXzpO6DZHT4NzctPcQQ9vSCwtAoE69mxuEtj7SfLrRsL/6BT4TgcQIi7C6x13cTp
+         cRVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=6859qnfNsB5QmnDYnF1Do40+Yhw+/qhnLAk9/XXbHtw=;
+        b=XKPXYUpRMYKQ/Ot0JDzXHVPZgrOcy5fesDEi+vgmOX55tXVLiZxOsfIDMxz+tzoEG1
+         AoqqRGtN2FGA5vjTXyfnaW0dkawolJF6bXYYh6qvNExbQw1kaGZXELN+fqyQOEW8mc3o
+         kKOoGFzI7FYrKqfZ+b1iAumd5gLZCSNt5GWx6HlyY+CdJYbaMPNC8DWaiT3DBwOucHNn
+         3HdxFJsQVVu3U+zxAr0QuDwn2vbppS79EhG7cAPWiJ1hX1SvXci5rYgrEAbXP5EfKBzh
+         VduhL/iyvMiLd7a88lGb/xiRmZQ5PNKZ1sQDhG2wunmT0TaNqBOfzB5I1COCPD/tdjk/
+         I1Pw==
+X-Gm-Message-State: AOAM530TsG6/30sNdpoMHzMbHhp23CmCPMoRIQaYWbA3Ow1QhWC0v7ru
+        fEbCt12pzz4XJNVXvEy4XdVwBPwW0+dje2Tit3qv3IZq5WQDHuIR
+X-Google-Smtp-Source: ABdhPJzTjAnsoLf2DQXuazjsPkxhhmQdhXBuTETQhE/LExEyY5BgWmmc/rDHsk08oqmPHFycMkZEkt/KgqyjuQFvFHs=
+X-Received: by 2002:a05:6402:368:: with SMTP id s8mr29799485edw.183.1618964229975;
+ Tue, 20 Apr 2021 17:17:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: CBDA4888-A235-11EB-80EF-D152C8D8090B-77302942!pb-smtp1.pobox.com
+References: <20210417001525.19960-1-jerry@skydio.com> <xmqqzgxxivrb.fsf@gitster.g>
+ <CAMKO5Cutas2BM_CTHTJs_O9NSp2Vyn-bK0jV0K758eq5M6-Oag@mail.gmail.com> <xmqqczutiddk.fsf@gitster.g>
+In-Reply-To: <xmqqczutiddk.fsf@gitster.g>
+From:   Jerry Zhang <jerry@skydio.com>
+Date:   Tue, 20 Apr 2021 17:16:59 -0700
+Message-ID: <CAMKO5Cu68cnUu6UEuwQSHoFQ31g9g4TtYgy5vpe35cr90cETXw@mail.gmail.com>
+Subject: Re: [PATCH] git-rev-list: add --exclude-path-first-parent flag
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Ross Yeager <ross@skydio.com>,
+        Abraham Bachrach <abe@skydio.com>,
+        Brian Kubisiak <brian.kubisiak@skydio.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-ZheNing Hu <adlternative@gmail.com> writes:
-
-> OK, I understand, then I can wait for a while until `trailer_cmd` merge
-> to master.
+On Sat, Apr 17, 2021 at 12:22 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
->> But let's see what's new in this iteration.
->>
->>
->> >       +#!/bin/sh
->> >      -+test -n "$1" && git shortlog -s --author="$1" HEAD || true
->> >      ++if test "$#" != 1
->> >      ++then
->> >      ++       exit 1
->> >      ++else
->> >      ++       test -n "$1" && git shortlog -s --author="$1" HEAD || true
->> >      ++fi
->>
->> I find this dubious.  Why not
->>
->>         if test "$#" != 1 || test -z "$1"
->>         then
->>                 exit 1
->>         else
->>                 git shortlog -s --author="$1" HEAD
->>         fi
->>
->> That is, if you happened to give an empty string, your version gives
->> "" to <value> and returns success, letting a trailer "cnt:" with
->> empty value.  Is that what we really want?
+> Jerry Zhang <jerry@skydio.com> writes:
 >
-> If it's the user use `--trailer="cnt:"` instread of command implict running,
-> I think keep it is right.
-
-No, if you give an empty string, you'd end up running "shortlog"
-with --author="" and give whatever random number it comes up with,
-which I do not think is what you would want.
-
-That is why --trailer=cnt: without name to match --author can be
-rejected with "exit 1" to demonstrate the feature.  The .cmd can
-squelch not just the "unasked for extra invocation", but invocation
-from the command line whose <value> was bogus, unlike the .runmode
-feature we've seen proposed earlier.
-
->> >      +        if (capture_command(&cp, &buf, 1024)) {
->> >      +-               error(_("running trailer command '%s' failed"), cmd.buf);
->> >      +                strbuf_release(&buf);
->> >      +-               result = xstrdup("");
->> >      ++               if (!conf->cmd || arg) {
->> >      ++                       error(_("running trailer command '%s' failed"), cmd.buf);
->>
->> I am not sure about this part.  If .cmd (the new style) exits with a
->> non-zero status for user-supplied --trailer=<token>:<value> (because
->> it did not like the <value>), is that "running failed"?  The script
->> is expected to express yes/no with its exit status, so I would say it
->> is not failing, but successfully expressed its displeasure and vetoed
->> the particular trailer from getting added.  IOW, "|| arg" part in
->> the condition feels iffy to me.
+> > On Fri, Apr 16, 2021 at 5:45 PM Junio C Hamano <gitster@pobox.com> wrote:
+> >>
+> >> Jerry Zhang <jerry@skydio.com> writes:
+> >>
+> >> > Add the --exclude-path-first-parent flag,
+> >> > which works similarly to --first-parent,
+> >> > but affects only the graph traversal for
+> >> > the set of commits being excluded.
+> >> >
+> >> >    -A-------E-HEAD
+> >> >      \     /
+> >> >       B-C-D
+> >> >
+> >> > In this example, the goal is to return the
+> >> > set {B, C, D} which represents a working
+> >> > branch that has been merged into main branch
+> >> > E. `git rev-list D ^E` will end up returning
+> >> > no commits since the exclude path eliminates
+> >> > D and its ancestors.
+> >> > `git rev-list --exclude-path-first-parent D ^E`
+> >> > however will return {B, C, D} as desired.
+> >>
+> >> It is not clera why you want to have this, instead of doing a more
+> >> obvious "D..E^".  Even better is "E^..E", which is often what you
+> >> want when viewing a history like my 'seen' that is a straight-line
+> >> into which tips of branches are merged.
+> > My motivation is to find the point at which a release branch forked off from
+> > a main branch, even though the release branch could have been merged
+> > into the main branch multiple times since it was forked off.
+> >
+> > If we add another merge from release to main, it will be more clear
+> > that those give different results:
+> >
+> >         -A-----E-F-main
+> >           \   / /
+> >            B-C-D-release
+> >
+> > `git rev-list --exclude-path-first-parent release ^main` returns {B, C, D}.
+> > I've added commit F to show that we don't necessarily have info on E,
+> > there could be many commits between it and the tip of main.
 >
-> Well, you mean we can take advantage of non-zero exits instead of
-> just removing implicitly executed content. I argee with you, this
-> place is worth change.
+> OK, you meant to deal with repeated merges into integration branch.
+>
+> So the idea is to just name the end point merge, say F (you also
+> could name D as the starting point, but see below), and
+>
+>  - initially mark its first parent as UNINTERESTING (i.e. E), and
+>    other parents as INTERESTING (i.e. D).
+>
+>  - run the revision traversal machinery, but when propagating the
+>    UNINTERESTING bit, give it only to the first parent.  The second
+>    and later parents won't become UNINTERESTING.
+>
+>  - stop after we exhaust INTERESTING commits.
+>
+> It would probably work for your idealized topology, but I do not
+> know what happens when there are criss-cross merges.  In the revised
+> picture, you are merging down from the B-C-D chain into the
+> mainline, but once the B-C-D chain becomes longer and diverges too
+> much from the mainline, it becomes tempting to break the "merge only
+> in one direction" discipline and merge back from the mainline, to
+> "catch up", and such a merge will have the history of B-C-D line of
+> development as its first parent.  Would that screw up the selection
+> of which line of development is uninteresting?
+Yeah this flag (as well as the --first-parent flag) is mainly only useful
+because "git merge" will always put the "branch you're on" as parent 1
+and the "branch being merged in" as parent 2. It is possible to break
+this assumption with either commit-tree or by merging while on one
+branch and pushing to another, but then the user should understand
+the consequences of doing so. In our case this isn't possible because
+a server handles all merges into the main branches.
+>
+> >> > Add the --exclude-path-first-parent flag,
+> >> > which works similarly to --first-parent,
+> >> > but affects only the graph traversal for
+> >> > the set of commits being excluded.
+> >> >
+> >> >    -A-------E-HEAD
+> >> >      \     /
+> >> >       B-C-D
+>
+> In any case, it was totally unclear from the proposed log messsage,
+> and the overlong option name that does not say much did not help me
+> guess what you wanted to do with it.  Specifically, it is not clear
+> what "exclude" means (we do not usually use the word in the context
+Exclude appears in the first paragraph of the man for git rev-list:
+"      List commits that are reachable by following the parent
+       links from the given commit(s), but exclude commits that
+       are reachable from the one(s) given with a ^ in front of
+       them. The output is given in reverse chronological order
+       by default."
+It appears 5+ more times in the man page with the same meaning.
+> of revision traversal), and when we talk about "path" in the context
+> of revision traversal, we almost always mean the paths to the files,
+> i.e. pathspec that limits and simplifies the shape of the history.
+"path" is used in the same man page for the flag "--ancestry-path".
+I agree that it could be ambiguous though, so perhaps "chain" would
+be better.
+> Also, it claims that it works similarly to --first-parent, but what
+> you are doing is to propagate UNINTERESTING bit on the first-parent
+> chain, which ends up showing the side branch (i.e. B-C-D chain),
+> without showing the commits on the first-parent chain (A and E).
+>
+> What are the words that convey the idea behind this operation
+> clearly at the conceptual level?  Let's think aloud to see if we can
+> come up with a better name.
+>
+>  * first parents are unintertesting
+>
+>  * show commits on side branch(es)
+>
+>  * follow side branch.
+>
+> I think that is closer to the problem you are solving, if I
+> understand what you wrote above correctly.
+>
+> Perhaps --show-side-branch or --follow-side-branch?  I dunno.
+For my particular use-case I am using it in combination with
+--first-parent and a single include and exclude commit to show the
+commits on the "side-branch" of the include commit. But if you specify
+multiple commits for either or don't use --first-parent, the behavior is
+different and I don't think "--side-branch" describes it well in those cases.
 
-Yup, that is what I meant.
+Since I don't believe I can predict all use-cases for the flag,
+I'd rather name it by what it "does" rather than what it is "for".
+If we're concerned about length, maybe "first-parent-not" could
+get the meaning across:
+- for "rev-list --first-parent A --not B" only first parents are visited
+along A's ancestry
+- for "rev-list --first-parent-not A --not B" it might be reasonable
+that since B is a "not" commit, only first parents are visited along
+B's ancestry.
 
-In any case, let's see how well the base topic fares.
-
-Thanks.
+Overall I don't think we can make a name so clear that the user
+can avoid the man page anyway.
