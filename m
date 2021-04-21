@@ -2,101 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FA27C433B4
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 23:22:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B52BC433ED
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 23:28:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 54DBB6140F
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 23:22:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 03D4461421
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 23:28:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343705AbhDUXXO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Apr 2021 19:23:14 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:63359 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231296AbhDUXXN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Apr 2021 19:23:13 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 09D2B136301;
-        Wed, 21 Apr 2021 19:22:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=9kzxIq7cIo5/0eK/EC0EWHz6Cy4=; b=lqKyYL
-        uHshzzVqnha8z3vA9tEdlsRvpJ2fcTIjce2urxE/pKZYUG5tORLyYG96iHTRC4kq
-        KkYz3mxDau4Tx3CXsEh5fyq8fQcZxPX99SlZHmsenm8JfLLnD5ESuSUSNO/C1ibk
-        8wQZIHiOMx1WJXS0AICdAJBs8Z5baM7tN1+2I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=uHRUTdyxzp4FDj5qd5oyBYtSKQqDbwPy
-        9RYojEl1wXmLwGBcfSUycnqlweAchucg2S/FMJ4t06sy2rhraGJ8Bjjoz3QB9DEO
-        Z4lBpiM6c2iy56DJ73FGIyr72K2sQy8+PXdIZp+VdDPTYcFTADhs2EoSTcRL5kah
-        xpxmyr4aba0=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 003FD136300;
-        Wed, 21 Apr 2021 19:22:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3E0CD1362FB;
-        Wed, 21 Apr 2021 19:22:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Han-Wen Nienhuys <hanwen@google.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
+        id S234874AbhDUX3Q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Apr 2021 19:29:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35712 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234681AbhDUX3P (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Apr 2021 19:29:15 -0400
+Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2045C06174A
+        for <git@vger.kernel.org>; Wed, 21 Apr 2021 16:28:40 -0700 (PDT)
+Received: by mail-pg1-x52a.google.com with SMTP id 31so149177pgn.13
+        for <git@vger.kernel.org>; Wed, 21 Apr 2021 16:28:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=7ZQbpMLs2/vrEQBcHSMWzn/+k62LZoUf+IO6u/4piHs=;
+        b=esOP1NLtQbSbSPLTyRl56PiudJpJgB1J1tgqizacyAxLrtsTMsZyJA/aLT8tx5D5V4
+         pUU6HMkIUqmEugVcGBvF7ZLWqFtlwsW02fO9WZQ2WlO8bzzY7Bk/cwDLwcfJDE8cD2O6
+         6HgJhkGh7thNN0NG5LWCJvLVAW4NRF89Gkmbk9Yk38wTuMwwp9iJJHNk7LQ8Whc0tPlL
+         R5yT6u2EPM2WrTiut8ggh2BoBs659I34kOBf+BkwFMYzbf1PHhPEhVXyWT1Y7bNJy4nb
+         9YwcSo5SAuaogC/0D8QYwoOEU8oyyBLqfJL9NurxLQxBwWnC+0pz5qkQO+zPxm5mmuwl
+         w+pA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :content-transfer-encoding:in-reply-to;
+        bh=7ZQbpMLs2/vrEQBcHSMWzn/+k62LZoUf+IO6u/4piHs=;
+        b=I+rHBQHXuvNCyFXQwCG9kw/pOyLAmAE7WhKG8+ZUY4RPzrIm0H8AS+k7U8lbqMWuBV
+         gw2dosvnga2uI0Vj2VahGI/cunJV6XDRDa+vgd5W4Zf/+utbvYQq0HMOxXjFvgeJZe8z
+         e6sbE+5Kc3wooDA2hD9Z8M250HlcNCNixxHb139/+cAp9eeyi86BcifGUJUkk2p93HQH
+         LuemUIbYEcvKfbPAyb+tAAvz52TTP0BY1jNPYBGd000K8wcDfYbpMB04kL3gAUhRlhK3
+         RT0emfB7ELovugUEXfuNK5Ni0zaYgEAOvOKmO1heRc/UvuMWK9sy0oWEjPXus6BuqDuu
+         4D9g==
+X-Gm-Message-State: AOAM531PRhTFar9VFY1BxQ5zm4XOrxr4rU2VJj88s1JhUVS5nyztXhOs
+        GRKDZ+SqTqdR2Roxv0vDeQW0hg==
+X-Google-Smtp-Source: ABdhPJz4tzCyIC1ceAFlfzSoksp+ZSYZ2vbAthW8p/Rm87UjU3yUJuPzvZPlyq1ZwpkXjQ7vZwby5w==
+X-Received: by 2002:a17:90a:ea0f:: with SMTP id w15mr13943521pjy.31.1619047720332;
+        Wed, 21 Apr 2021 16:28:40 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:6d58:26e3:155c:4476])
+        by smtp.gmail.com with ESMTPSA id x22sm386717pgx.19.2021.04.21.16.28.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Apr 2021 16:28:39 -0700 (PDT)
+Date:   Wed, 21 Apr 2021 16:28:33 -0700
+From:   Josh Steadmon <steadmon@google.com>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Josh Steadmon <steadmon@google.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Patrick Steinhardt <ps@pks.im>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Han-Wen Nienhuys <hanwenn@gmail.com>
-Subject: Re: [PATCH v7 23/28] Reftable support for git-core
-References: <pull.847.v6.git.git.1618255552.gitgitgadget@gmail.com>
-        <pull.847.v7.git.git.1618832276.gitgitgadget@gmail.com>
-        <2fd7cb8c0983501e2af2f195aec81d7c17fb80e1.1618832277.git.gitgitgadget@gmail.com>
-        <xmqqk0ow37as.fsf@gitster.g>
-        <CAFQ2z_Nm4Mixhi0kXTdN+nVj412_WPe=k9v6FpJFyaOx9qMRUA@mail.gmail.com>
-Date:   Wed, 21 Apr 2021 16:22:35 -0700
-In-Reply-To: <CAFQ2z_Nm4Mixhi0kXTdN+nVj412_WPe=k9v6FpJFyaOx9qMRUA@mail.gmail.com>
-        (Han-Wen Nienhuys's message of "Wed, 21 Apr 2021 12:19:09 +0200")
-Message-ID: <xmqqeef3xlxg.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v2 3/8] object.c: add and use oid_is_type_or_die_msg()
+ function
+Message-ID: <YIC1IcpKCXh3qoun@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+        Elijah Newren <newren@gmail.com>
+References: <cover-0.7-0000000000-20210409T083436Z-avarab@gmail.com>
+ <cover-0.8-0000000000-20210420T133218Z-avarab@gmail.com>
+ <patch-3.8-22e7d9a3db-20210420T133218Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 758DC446-A2F8-11EB-B586-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <patch-3.8-22e7d9a3db-20210420T133218Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Han-Wen Nienhuys <hanwen@google.com> writes:
+On 2021.04.20 15:36, Ævar Arnfjörð Bjarmason wrote:
+> diff --git a/object.c b/object.c
+> index 9e06c0ee92..0f07f976fb 100644
+> --- a/object.c
+> +++ b/object.c
+> @@ -176,6 +176,18 @@ int oid_is_type_or_error(const struct object_id *oid,
+>  		     type_name(want));
+>  }
+>  
+> +char* oid_is_type_or_die_msg(const struct object_id *oid,
 
->> IOW, do you want the above to read
->>
->>         if test -n "$GIT_TEST_REFTABLE"
->>         then
->>                 test_set_prereq REFTABLE
->>         else
->>                 test_set_prereq REFFILES
->>         fi
->>
->> when both series are in effect?
->
-> Yes, but on 2nd thought it's probably better to stick with just
-> REFFILES, and rewrite any reftable specific tests as !REFFILES.
-
-I guess that is both good enough and simpler.  The only possible
-downside is that it would be cumbersome if we ever need to support
-the third ref backend, but I expect that it won't happen before the
-reftable support solidifies, and under that assumption, the simpler
-the better.
-
-Thanks.
+It's kind of a nitpick, but I found the function name to be confusing.
+It sounds like you're going to die with a custom message. Maybe
+something like "get_oid_type_mismatch_msg()" would be more
+straightforward.
