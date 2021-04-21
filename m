@@ -2,135 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 110D0C433B4
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 12:30:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EA1C6C433B4
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 12:38:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CD27461413
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 12:29:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BA8DC61424
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 12:38:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239775AbhDUMab (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Apr 2021 08:30:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58978 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238576AbhDUMaa (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Apr 2021 08:30:30 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10F03C06174A
-        for <git@vger.kernel.org>; Wed, 21 Apr 2021 05:29:57 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id mh2so41693454ejb.8
-        for <git@vger.kernel.org>; Wed, 21 Apr 2021 05:29:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=s5WTsn69TU7ltr6jzxC/siJ7cIYf0xur2slSRsnyQdY=;
-        b=duJ3ynAWXMg5zGr4VB1SPRhuWW9oJUCDvj8lMoZ6DCof6nqVVvgrcmIb8Nd+5hgdD7
-         kmI701aUmvxfEBev/RKf/6c+AjZF+bZtAHweH/JY1dzJaE/Neg5L16NvZRdji5sXL+2B
-         UKB2HxeZz2aCjjislNLXwCzfjVGsJDrkyXvSj5V5pG0ELWDQKDLuszcYpmElkkXODMds
-         ZuaLTd5VVIzJHqAcSaa+WfiujPw8LswNiY5pAxCrxGXAfpHNj1y5II+2houzsuNmz6to
-         FTIs67HlfGI7Ou2bESYYItMYkNDs5/aK2dSvKQfbF0fkSbeBRFrFu4nhuodEB6fbA1ZR
-         Pgdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=s5WTsn69TU7ltr6jzxC/siJ7cIYf0xur2slSRsnyQdY=;
-        b=PWIMyv+srrbqQhFb2XfVfGCw+T/Ho7lGAyPkh4i4z8cXrbyj4JCiWYoKLkk2qzReTY
-         d5WBQtfW1A452+XYSVNicXabI1wDZBse8CvGmDCPukJOQeGdMDkDdcSo6rCUAjQXzAIw
-         PrWr6qf5FRoZ3bQxp9d5eXHDkmU1kA/rwAwwn/pYmhlGv0PfvAPpjcUkbk7yh/YthcAe
-         wg3oVu4Z/XsAxgU7emksGc+ppeuLnRyntEH8pMdEFYULY8sNl3/FGPoGMqc9/lIdQNlx
-         hpJAjMv6bM/x6yXeiwnFYsOgSd/psUeGN3vcOQ2e3CmRnkf1C2XNfj0Kd32Su6+KDHE1
-         Dzeg==
-X-Gm-Message-State: AOAM533+YjVoYlOTKIvAz+RWoMtqSgc0a9W1p1fNKQfQp/b9n9BmCCxe
-        OshMHaSG/fsgzNQlFI7HpIj+L6/GGsmpng==
-X-Google-Smtp-Source: ABdhPJyJxmjI+Pq9h0INAyKR1lztDgrkcaY2zvFxuu/O/Dz9h6hUFTgM5x1FW3gOmzoQe3QNfigJeA==
-X-Received: by 2002:a17:906:3e54:: with SMTP id t20mr32618844eji.53.1619008195434;
-        Wed, 21 Apr 2021 05:29:55 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id j9sm3197969eds.71.2021.04.21.05.29.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Apr 2021 05:29:54 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2 6/9] t4058: explore duplicate tree entry handling in
- a bit more detail
-References: <pull.929.git.git.1607223276.gitgitgadget@gmail.com>
- <pull.929.v2.git.git.1607677728.gitgitgadget@gmail.com>
- <8db27892c598a3976c0742e23563f1d360b8dee1.1607677728.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <8db27892c598a3976c0742e23563f1d360b8dee1.1607677728.git.gitgitgadget@gmail.com>
-Date:   Wed, 21 Apr 2021 14:29:53 +0200
-Message-ID: <87fszj3jni.fsf@evledraar.gmail.com>
+        id S239255AbhDUMjE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Apr 2021 08:39:04 -0400
+Received: from mout.gmx.net ([212.227.17.21]:34457 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S238336AbhDUMiy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Apr 2021 08:38:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1619008690;
+        bh=kLP4Xb40n1/xJrKCChuD7I2BqfJNvH0LtYiVkL+4k3M=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=jorz+mwvExozi2VwCCwUPgxTk/XFgPpXw6JVD5u4xbFzAakGMMrS+oSmJgkFGPnuZ
+         dlBu64IGTydWCpIWXvG8H+oMdAcHCYkyAC5zbnhPi7KPgcq3nayA1xUdhZRXgxojfs
+         tZFDs1vePpkJoY1x0CCliXGO3I5HLrh0wFI75fx0=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.23.111.181] ([89.1.215.94]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MBm1U-1llJb343kS-00C7ji; Wed, 21
+ Apr 2021 14:38:10 +0200
+Date:   Wed, 21 Apr 2021 14:38:06 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+        git@vger.kernel.org
+Subject: Re: Random GitHub Actions added to git/git???
+In-Reply-To: <xmqqzgxs4sed.fsf@gitster.g>
+Message-ID: <nycvar.QRO.7.76.6.2104211437040.54@tvgsbejvaqbjf.bet>
+References: <xmqqmttt7q8f.fsf@gitster.g> <nycvar.QRO.7.76.6.2104201748400.54@tvgsbejvaqbjf.bet> <xmqqzgxs4sed.fsf@gitster.g>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:WDaDoZwS1NVAagINAI6/qCj7nSXjOPf3eT9hHFDZMG8To4dsUVo
+ owgKthQbTTMJ4cLy/fRFVA4Y1DR6jHGxnEeBibHHLQoHjE0dbsll0ZptMT3LZdRz4t/yYn0
+ uJTdsySenVjsggapFd0zP8yl3LBMzHZq3GvsUxlWcW+UG8+0h+eGPrqR0myJafFnYSlskzO
+ xjb7656B3Xr8vi/D4n+qg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:OzgRUREqyt8=:iSCi1uTi67PGMqQD58Wodh
+ UzTcKhEdpSek5e+Q2qN/jkeKikz1/NOJ4Z8SH1QVeU6IxQ/VrxhHUJojGAIosf0CNPAY048e/
+ iXZNLfd6TCCoaAgg/FNv1D/Vy2W6N7CE+CAThylrgCdzSPfE7N+3PctIpjVruwv2+DHONk5Lu
+ bw2ZQYr7mmOAEO6hw2VLxLZp1GcTqXow8ib7JQVk2Rh6fbWMo+TsB9k0o2X6Ytx2atCcibAb2
+ VXipnst+l00A5oEDxHsT6ZJ6ziFzF9ykKfY1ZwEq2ULsAmHI8obT/qkFFsg//Xs4ycn9L5MGf
+ 5B6s1eg6S3+Ou5zumLtv61STfcUklLJVSp7jviTMMGonlhm9YWLyWGgMRfgAF+9HePO93zUhY
+ SjAgMJz0OE87EJQ3Okue9xQfWjRNQ2NSYpAodB4p4YH8SIyAmIUnJHoTx0Za+b9kf3mLiDBIg
+ A079ZSBmU4KfesIu6bp88Un2gDYJ5GJ5+wJOLrHIOil0ifV1y2W+WImZhmXQjqy9Dmmugdyhd
+ 1ht4B3EIeLwGrIJIkWxmAtsDNHuKpbdTMhTFI1BCVnGzYXB0vABTSwWocxATdvhOP5ZDPFx9u
+ q7iWbILLrbnf3yn3wHwpAwvH5Yim9TElSrRe/gDCwgjBFux6Df/e9n9+mw1PJzRSOqksrMN8T
+ w/RohDov9IShdpA+GQShRghPR0ZLnpgCakqh/jjsgeM3KzgINIfQNCsqqZB+UmCZe4WBhRTvL
+ ybkVTEfwvyQI+aYXMthE/00nOu5QAb9UaxoCeFRBlTdzvKmivpFsT+M1TZPiYSu+2FT2zE8yY
+ fSp3nbeDaSjQVyHzhaZfuAzvwkN+gmo6ptkTm9G8/0/7OALb1L6QCMkOEv30JGiNJu+x0E4bk
+ 6xQDSfJ+MxFgY2gciJZahH12V3zWfux088+I/fjlK569zwvX0adQby9a6KhoGjpVbKVpy1+rB
+ xD39ZD+oEkGRj0ZRT4XlK9hY3bj2VcUBrMyEtdY+5cMis6gtNRCJ/HTZUGfAldtKudl2NbMJf
+ 9ha6PELtlxn0eGFgDTARIrED+aVZXD4P0oI9PSn13edm1k2IriTD5DXAzGe+10DQDbMYPltWx
+ h6TlEzMH8amPHipcLtVth3nGzSS/MhJUYT/gHZi8hICf83r+j38knGl0a9nUfOCoMGZH/g0FF
+ 50UiydchCLavgM0oY1IsSYBA/galQrNcEaSSe+w8ApxrHFVcI1zg6zU+vXmtrIaYImS4gGKK6
+ NbbwiQML1yJ8EuXMC
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Junio,
 
-On Fri, Dec 11 2020, Elijah Newren via GitGitGadget wrote:
+On Tue, 20 Apr 2021, Junio C Hamano wrote:
 
-> While creating the last commit, I found a number of other cases where
-> git would segfault when faced with trees that have duplicate entries.
-> None of these segfaults are in the diffcore-rename code (they all occur
-> in cache-tree and unpack-trees).  Further, to my knowledge, no one has
-> ever been adversely affected by these bugs, and given that it has been
-> 15 years and folks have fixed a few other issues with historical
-> duplicate entries (as noted in the last commit), I am not sure we will
-> ever run into anyone having problems with these.  So I am not sure these
-> are worth fixing, but it doesn't hurt to at least document these
-> failures in the same test file that is concerned with duplicate tree
-> entries.
-> [...]
-> +test_expect_failure 'fast-forward from duplicate entries to non-duplicate' '
-> +	git merge update
-> +'
-> +
->  test_done
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+> > If you click on one of them (such as above-mentioned "Codacy Security
+> > Scan"), you will see that "This workflow run has been marked as
+> > disruptive" (see for yourself at
+> > https://github.com/git/git/actions/workflows/codacy-analysis.yml).
+>
+> Yes, I was the one who "manually disabled" some of them.  I did not
+> find how to mark them "as disruptive", though.
+>
+> How well are our refs protected from these random "Actions"?  Can
+> somebody spam us with a pull request with a new "workflow" that
+> advances one of our integration branches ;-)?
 
-Per https://lore.kernel.org/git/87lf9b3mth.fsf@evledraar.gmail.com/
-isn't the noise of having a segfault from "git" worth fixing in itself
-though? I.e. something like this, so we at least se why it fails:
+The GITHUB_TOKEN that is used by the GitHub workflows is generated in two
+ways, depending whether a PR originated from the same repository or from a
+fork. If it came from a fork, the token has only read permissions.
 
-diff --git a/t/t4058-diff-duplicates.sh b/t/t4058-diff-duplicates.sh
-index 54614b814db..ed91d9f7fe9 100755
---- a/t/t4058-diff-duplicates.sh
-+++ b/t/t4058-diff-duplicates.sh
-@@ -182,8 +182,10 @@ test_expect_success 'switch to base branch and force status to be clean' '
- 	test_must_be_empty actual
- '
- 
--test_expect_failure 'fast-forward from duplicate entries to non-duplicate' '
--	git merge update
-+test_expect_success 'fast-forward from duplicate entries to non-duplicate' '
-+	! git merge update 2>err &&
-+	grep "^BUG: " err &&
-+	grep -F "should have entry at o->src_index->cache[1]" err
- '
- 
- test_done
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 8a1afbc1e49..230cb073fe1 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -789,8 +789,11 @@ static int traverse_by_cache_tree(int pos, int nr_entries, int nr_names,
- 	 */
- 	for (i = 0; i < nr_entries; i++) {
- 		int new_ce_len, len, rc;
-+		int j = pos + i;
- 
--		src[0] = o->src_index->cache[pos + i];
-+		src[0] = o->src_index->cache[j];
-+		if (!src[0])
-+			BUG("should have entry at o->src_index->cache[%d]", j);
- 
- 		len = ce_namelen(src[0]);
- 		new_ce_len = cache_entry_size(len);
+So I'd say we're still safe.
 
+Ciao,
+Dscho
