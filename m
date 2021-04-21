@@ -2,86 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C84ACC433B4
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 14:25:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C40CC433B4
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 14:37:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9776D6144B
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 14:25:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 61CAF61421
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 14:37:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235973AbhDUO0A (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Apr 2021 10:26:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56892 "EHLO
+        id S242156AbhDUOho (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Apr 2021 10:37:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235791AbhDUOZ6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Apr 2021 10:25:58 -0400
-Received: from mail-il1-x132.google.com (mail-il1-x132.google.com [IPv6:2607:f8b0:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3B61C06174A
-        for <git@vger.kernel.org>; Wed, 21 Apr 2021 07:25:23 -0700 (PDT)
-Received: by mail-il1-x132.google.com with SMTP id r5so26888184ilb.2
-        for <git@vger.kernel.org>; Wed, 21 Apr 2021 07:25:23 -0700 (PDT)
+        with ESMTP id S235791AbhDUOhn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Apr 2021 10:37:43 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BBD8C06174A
+        for <git@vger.kernel.org>; Wed, 21 Apr 2021 07:37:08 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id q22so4743085lfu.8
+        for <git@vger.kernel.org>; Wed, 21 Apr 2021 07:37:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=oA+L4hCj/sn+H0hIX/l0VAtPY8hklRy08wxc/kGfGnw=;
-        b=LRk40dgZxDdocu6ty1mLyDrhbGRLBv+RsSNqvIJwnrR9GDZJXtypZb4wQnPVVxswxV
-         8cshTqKvArw4l/Q+WD73nCjsIcTPvlI91T5wxYXmA+gteoeJC85q/U8cuP0F+wuvq1rO
-         x2/UeEIAnYGSbEz306xbZuPUZxa2BMNuVonArfXChh2vS+SXLk7+VkzwS/tWoB25HrTn
-         SO3i11ePIY6tXNjhKXDKNFVwLj5PjtHWgo7R/r5s7ApNxx7P1lEok+I57qf8He0Y3u4D
-         yERB3Xmc8vU3wVfplLIaj7GzUBqxg4P4eHbsoLbxrcgsZNHwLwpRkdpS/dFfzdXKPDQ0
-         LqZQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=80hG2VOQLYRwnffRSF9q3XtmIcdmTVVTdPoQCpWqMGc=;
+        b=E+1Twz2WIEraKpALf29dH5ZbSTQfHiVzUYJC+jq2a7rSxK8beRsYYBlUlr0SOS4S6A
+         laCa48QxOgaT2eXgDRA0kc8uVIybfQ3tG3yDr3tRuUpvMItw9O9m0DhYA+SkGrOFEEWG
+         anVM3nQfEzApctVCfjLgmCjxMdcZHQRTOCxck7sf+XLgUq+LvrbUi1sZP1/BV/2shdAL
+         9SLij9qWLbW6pWApqH9Jdf59fWRa/V5glQBTyxO3VTPqft66ISNoFQzsFexsFxFQsBcs
+         L5bZJ4Sp59f7I3av5GBJTjW1y1HRaUyWG4nrl1un1AVsNa2OLY2oze2AbDWeKsnEzspE
+         r1xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=oA+L4hCj/sn+H0hIX/l0VAtPY8hklRy08wxc/kGfGnw=;
-        b=lZ259jqKhKUlUUt+c2dAfYfqs3eoi8YiQObvLwjWG9b6YiWgrjn8KRIHdICCWZDTXD
-         sirFMTrjU6diLZHasOfChe8L+n5dfYoHN7G5uK65PxfxOrweFpvx3oTaYoIFmjJXnyPW
-         l30zafgtUrLgmXKpJ1SqCkU7CiRjiAtbSvEwCrkqp8j3LSZjhNkboBM4ISpZQjHVLx+T
-         kIkGfOUsHue3WlKYOL+8sVGPcAIcnc7LwtBXlY+YvrlATg/nQmIBAPabZoR16ACcaHUv
-         2eEQ1LihIKcRbhzL1irQnnbYlY3n0bvSVo/xLYyBx3VPugagAE/aO6aafElcYdWAcOCi
-         re4g==
-X-Gm-Message-State: AOAM5335mdmoCMAQcLMNtVxYr/wfeyRdBKAmaVUTl23pLIPb/OIpId5Z
-        ysV03ESxhtxoCLUmYTBvb93Vl0t9rjlkYhsm
-X-Google-Smtp-Source: ABdhPJyF7mQRSq6xyo+m+8OIUzpymXslRvYmoffjQ2uOBzkVzZJnO2BBpQ2rHZAt3yTvySLyolJesw==
-X-Received: by 2002:a05:6e02:12a7:: with SMTP id f7mr27944200ilr.181.1619015123017;
-        Wed, 21 Apr 2021 07:25:23 -0700 (PDT)
-Received: from localhost ([2605:9480:22e:ff10:aa83:842a:cad4:8d29])
-        by smtp.gmail.com with ESMTPSA id q1sm1064943ilj.4.2021.04.21.07.25.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Apr 2021 07:25:22 -0700 (PDT)
-Date:   Wed, 21 Apr 2021 10:25:20 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Hongyi Zhao <hongyi.zhao@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: The meaning of the '+' before the submodule hash.
-Message-ID: <YIA10O/BVrP3z/LK@nand.local>
-References: <CAGP6PO+6MA9J1LRgGn4rcz8DBcW-hht92p-ahFaM9g6tcNFh-Q@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=80hG2VOQLYRwnffRSF9q3XtmIcdmTVVTdPoQCpWqMGc=;
+        b=cjlJKx3+506yfQrdikG8tApr5a9yvApIsGzjGETPz30+IETmSGz/SuWhWTNcD2xCpD
+         wlM9PYxpMAZcYAQBuZYz08RnoHz4wpN11REuDS1nWxjoVej0DBeNlAiAh4TPvYKpMwpR
+         zOKapLN/D1zq66RQZL8vnVwWBepF6qkjQ70dOJEvpEsXZdlhx0JUDmrPUv2+JB1kSsz6
+         tXXi/z7SouKCl99t/eM6x6vMPane/aIC9qhJG5/hPt6wdZZA6aOdCT6sS9hG79XwAu2A
+         LYhimvG8h8WIY4eOMB3f51xaOUd/deGtwdXcwIoHWckJnYqWRW6MKgFEX8GuGVrIGINu
+         RowA==
+X-Gm-Message-State: AOAM533WO+l4knEfYDFwDpLii0RXfswrvpHn0tap8w0b9uLPmzzg27gU
+        JpUkLJAs8wpfXv17br/26F+1ix+BRofWhIDIaCvkCohOBtTcW86U
+X-Google-Smtp-Source: ABdhPJzc8rkwZh7HwRSaq6388l71mazYTwAevC0LfAgK02ERxB7ni4WjpXt+dK8L6rkp7bWjEIMz52CH+YmlQPDevoc=
+X-Received: by 2002:ac2:53b4:: with SMTP id j20mr20805948lfh.390.1619015826672;
+ Wed, 21 Apr 2021 07:37:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAGP6PO+6MA9J1LRgGn4rcz8DBcW-hht92p-ahFaM9g6tcNFh-Q@mail.gmail.com>
+References: <CAGP6PO+6MA9J1LRgGn4rcz8DBcW-hht92p-ahFaM9g6tcNFh-Q@mail.gmail.com>
+ <YIA10O/BVrP3z/LK@nand.local>
+In-Reply-To: <YIA10O/BVrP3z/LK@nand.local>
+From:   Hongyi Zhao <hongyi.zhao@gmail.com>
+Date:   Wed, 21 Apr 2021 22:36:55 +0800
+Message-ID: <CAGP6POKTTBfrtsXEKi2P+xg0DLPNzo4+jRY+ySmJ0wOQFPdZpw@mail.gmail.com>
+Subject: Re: The meaning of the '+' before the submodule hash.
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 21, 2021 at 10:19:25PM +0800, Hongyi Zhao wrote:
-> What's the meaning of the '+' sign at the beginning? Why do some
-> submodules have this symbol, but some submodules don't?
+On Wed, Apr 21, 2021 at 10:25 PM Taylor Blau <me@ttaylorr.com> wrote:
+>
+> On Wed, Apr 21, 2021 at 10:19:25PM +0800, Hongyi Zhao wrote:
+> > What's the meaning of the '+' sign at the beginning? Why do some
+> > submodules have this symbol, but some submodules don't?
+>
+> There are three symbols, 'U', '-', and '+'. From the documentation [1],
+> they mean:
+>
+>     Each SHA-1 will possibly be prefixed with `-` if the submodule is not
+>     initialized, `+` if the currently checked out submodule commit does not
+>     match the SHA-1 found in the index of the containing repository and `U`
+>     if the submodule has merge conflicts.
+>
+> [1]: https://git-scm.com/docs/git-submodule#Documentation/git-submodule.txt-status--cached--recursive--ltpathgt82308203
 
-There are three symbols, 'U', '-', and '+'. From the documentation [1],
-they mean:
+Thank you very much for pointing out this document information to me.
+The above submodules status for my case were achieved by the following
+command:
 
-    Each SHA-1 will possibly be prefixed with `-` if the submodule is not
-    initialized, `+` if the currently checked out submodule commit does not
-    match the SHA-1 found in the index of the containing repository and `U`
-    if the submodule has merge conflicts.
+$ git submodule update --init --recursive --remote
 
-[1]: https://git-scm.com/docs/git-submodule#Documentation/git-submodule.txt-status--cached--recursive--ltpathgt82308203
+As you can see, this will cause the status denoted by '+', i.e., the
+currently checked out submodule commit does not match the SHA-1 found
+in the index of the containing repository. I'm not sure if this is
+harmful.
 
-Thanks,
-Taylor
+HY
+
+> Thanks,
+> Taylor
+
+
+
+-- 
+Assoc. Prof. Hongyi Zhao <hongyi.zhao@gmail.com>
+Theory and Simulation of Materials
+Hebei Polytechnic University of Science and Technology engineering
+NO. 552 North Gangtie Road, Xingtai, China
