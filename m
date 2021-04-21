@@ -2,108 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-21.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
-	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03D89C433ED
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 22:26:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 54648C433B4
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 22:33:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C2D01611F1
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 22:26:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 19A9A613FB
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 22:33:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235773AbhDUW1S (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Apr 2021 18:27:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50384 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235045AbhDUW1S (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Apr 2021 18:27:18 -0400
-Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0068C06174A
-        for <git@vger.kernel.org>; Wed, 21 Apr 2021 15:26:44 -0700 (PDT)
-Received: by mail-pf1-x44a.google.com with SMTP id q62-20020a6275410000b029026407f235dbso4560447pfc.23
-        for <git@vger.kernel.org>; Wed, 21 Apr 2021 15:26:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=4w0OEY4SffFKBz63pAiXSDhSZG4G1iBei7eJxT6d8gM=;
-        b=qvaEB+OT+4yJRjX1Ox6XOGjWiqVc8sRpaOrvj7o7oggfVub0NnxW/4GrujlYhcPHls
-         yuSzl9SL+XNfC4ZEOV8ccE/gn57cihd08W60r2YMzATTZT2PWQ/7JzXxgx6IawKeNZm8
-         jdO4gJkQZAUiYsOvT3hsnpCI5ay+6ytjhOA9OqDQ+vZpTuczx4AdoQvuuBmhB7oBsmwk
-         d+7CjeNUfelPKBDFMOI+Ls2TpnpIQlcTIMb5yQOZjI/qwZuY6GXFe5JYDWHPND3vfvJS
-         asJMe+3/rCw0qpSVa+0AVHGD7IZoQc5eh8IhjhbO/ftjtNI+FodXTp6+P/lGUDwyUvpL
-         wDuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=4w0OEY4SffFKBz63pAiXSDhSZG4G1iBei7eJxT6d8gM=;
-        b=SIL3sfbs90Wq8qMZdIeJD6iobHvCr+BGDoaTQEqM7VIRJfRzUe5K165y6oCr2bv3/a
-         yz/hU4yGl+bE/yudA1I+bWN3dFbpMqtLV693Ih1BdpQ/H6MGqbWftGE1NGC68+dzKoOL
-         lGuUwzW/Xx+WEE/84rejJdqEyMxyo+xWIoDhcEJVtOeebM7J2OFcMpXue3mwK/7XO/Wb
-         5N46z8lWMu4RGSuMV/5aPtpqIT0HnePbicHu1z4zawO4uRsk83LHDDDT5wat7F8VOcey
-         X97xt6wUbsmDpl9a/r0vI+VuYexmxDFkOR8ppNhUsuNWeIJBKfaNuVz/FZcwT1QWXZpn
-         v+Ww==
-X-Gm-Message-State: AOAM533kUfbSlRpelEIiI6WE1Xi0aWm/B55f+teF3kRW1bKETVihZvvD
-        /4wOcq3nDPhr+awaZchBTh/dE96zSmtIpRomkECQ
-X-Google-Smtp-Source: ABdhPJxIygGuaQGj/60osNwf/BXJFbArFVoqnOcOAkEVwYvDmHvvrmGR+xGj7UbrhxGooRAeR8YHL2r6RbdFcQzKTzJK
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a17:902:7b85:b029:e9:5e4e:e873 with
- SMTP id w5-20020a1709027b85b02900e95e4ee873mr222548pll.7.1619044004328; Wed,
- 21 Apr 2021 15:26:44 -0700 (PDT)
-Date:   Wed, 21 Apr 2021 15:26:42 -0700
-In-Reply-To: <patch-6.8-f337a5442d-20210420T133218Z-avarab@gmail.com>
-Message-Id: <20210421222642.1025049-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <patch-6.8-f337a5442d-20210420T133218Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.31.1.368.gbe11c130af-goog
-Subject: Re: [PATCH v2 6/8] commit.c: don't use deref_tag() -> object_as_type()
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     avarab@gmail.com
-Cc:     git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de,
-        peff@peff.net, me@ttaylorr.com, newren@gmail.com,
-        Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S243727AbhDUWeJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Apr 2021 18:34:09 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:39004 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S235362AbhDUWeI (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 21 Apr 2021 18:34:08 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 0D6C76042C;
+        Wed, 21 Apr 2021 22:33:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1619044384;
+        bh=pgtFyabPkQqmFSGzN25CVkl7hiAz5Cdqo8HorYi++yU=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=vPJsysiPobQAWnwARWtxXXB3+fmoe0R0qHcTy5wifPPxn8i4daSkb0GBsQNHrtB5m
+         wS25nfm6Wx5t2c+XuN4Au2zhAwuyY+FXoUeJFlGttwOZcth1/K87hasz/FqkaxBl47
+         XVUJjnjO0/QfFsxCYShnGRU1wMjBzW5YywxFlFakaRxmI1Dd7dgnRuFz/f6xOcFoCq
+         ed2K0ajGtekaXY7xfdug2NTl7woZA9n6+CEdffYs8e6I8he5KxgyUcID8oDCGVXAue
+         So1IxmLhrQxCkxxxkkpy1MWtf6l3ypEZPm1Sudcwcnd8ODLxubXCuypZf4+2vFadAR
+         xj17ozVul2PngZNMijeFOUsjMWV1JJhzlIRovjMgue824w8A/woFKyTRObQtCm80s8
+         fO/R7zUfU3yQ7S/+UIdhCZ0/tMDQ4idTdDujhPUvf0Izu0Y2H/j+WAdfzHdNUA2mG5
+         Ks6NFHuyLEUp+sJ4I/53fA0d1KU+zbRUr6wyrYYa39zNP0ek/cp
+Date:   Wed, 21 Apr 2021 22:32:57 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>, Eric Wong <e@80x24.org>
+Subject: Re: What's cooking in git.git (Apr 2021, #05; Mon, 19)
+Message-ID: <YICoGeaxHdf6pemo@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>, Eric Wong <e@80x24.org>
+References: <xmqqtuo17t6t.fsf@gitster.g>
+ <87mttt2hcu.fsf@evledraar.gmail.com>
+ <YH9gPt410QBRjG59@camp.crustytoothpaste.net>
+ <87tuo02gdd.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="Swl0Rq7kzf8gsLYM"
+Content-Disposition: inline
+In-Reply-To: <87tuo02gdd.fsf@evledraar.gmail.com>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Change a use of the object_as_type() function introduced in
-> 8ff226a9d5e (add object_as_type helper for casting objects,
-> 2014-07-13) to instead assume that we're not dealing with OBJ_NONE (or
-> OBJ_BAD) from deref_tag().
-> 
-> This makes this code easier to read, as the reader isn't wondering why
-> the function would need to deal with that. We're simply doing a check
-> of OBJ_{COMMIT,TREE,BLOB,TAG} here, not the bare-bones initialization
-> object_as_type() might be called on to do.
 
-I think the benefit of using object_as_type() here (functionality that
-checks the object type, with optional "quiet" behavior) outweighs the
-drawback (additional functionality that we don't need). If we're worried
-that the reader would wonder about the OBJ_NONE case, we can include the
-BUG check as you did.
+--Swl0Rq7kzf8gsLYM
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Even though we can read deref_tag() and see that it won't return
-> OBJ_NONE and friends, let's add a BUG() assertion here to help future
-> maintenance.
+On 2021-04-21 at 08:26:06, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> Using something like the:
+>=20
+>     git --object-format=3Dsha256 <cmd>
+>=20
+> Approch I suggsted in
+> https://lore.kernel.org/git/8735vq2l8a.fsf@evledraar.gmail.com/ ?
 
-This is reasonable.
+Yes, I generally like that approach and will likely adopt it with some
+modifications.  For example, I think we'll still need some sanity checks
+to be sure that we're not allowing users to specify a totally different
+algorithm from what's in the repo when working with the repo because
+that will likely break things in a variety of ways.
 
-> diff --git a/commit.c b/commit.c
-> index 3d7f1fba0c..c3bc6cbec4 100644
-> --- a/commit.c
-> +++ b/commit.c
-> @@ -31,13 +31,22 @@ const char *commit_type = "commit";
->  struct commit *lookup_commit_reference_gently(struct repository *r,
->  		const struct object_id *oid, int quiet)
->  {
-> -	struct object *obj = deref_tag(r,
-> -				       parse_object(r, oid),
-> -				       NULL, 0);
-> +	struct object *tmp = parse_object(r, oid);
-> +	struct object *obj = deref_tag(r, tmp, NULL, 0);
+What I want to do right now is figure out what additional changes are
+going to be required and in which programs these changes should be made,
+and that requires that I do more work in the series so I can have a
+better idea of what's involved.  Since that's going to take some time,
+I'm going to drop those patches so I can get the rest of the series in
+shape.
 
-This change isn't unnecessary, I think. "tmp" isn't used anywhere else.
+> In any case having something like the OPT_OBJECT_FORMAT() I added in
+> that WIP patch would make sense wouldn't it, to reduce the duplication
+> of current "object-format". It would also save each current caller from
+> doing the "unknown" and other sanity checks, since they could rely on
+> parse_options() having died in that case.
+
+I agree that's a nice improvement and would be happy to see it come in
+independent of my changes.  I'll probably pick it up sooner or later if
+you don't get to it first.
+--=20
+brian m. carlson (he/him or they/them)
+Houston, Texas, US
+
+--Swl0Rq7kzf8gsLYM
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.27 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYICoGAAKCRB8DEliiIei
+gVsBAQDkjYosIu0s+LXpNJUAKxnaFJRpWuUCoBty+77t2LkWRgD+OS1hKC8kM7ti
+tl9xyCUXtvJWPGOg28UwyA/QOnp6QwY=
+=405j
+-----END PGP SIGNATURE-----
+
+--Swl0Rq7kzf8gsLYM--
