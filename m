@@ -2,152 +2,135 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E8188C433ED
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 11:57:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CC46C433ED
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 12:07:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9F7DB613E0
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 11:57:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 54DF461447
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 12:07:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236722AbhDUL5r (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Apr 2021 07:57:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51630 "EHLO
+        id S237720AbhDUMIR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Apr 2021 08:08:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54070 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233957AbhDUL5p (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Apr 2021 07:57:45 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAA0FC06174A
-        for <git@vger.kernel.org>; Wed, 21 Apr 2021 04:57:11 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id mh2so41546378ejb.8
-        for <git@vger.kernel.org>; Wed, 21 Apr 2021 04:57:11 -0700 (PDT)
+        with ESMTP id S235510AbhDUMIR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Apr 2021 08:08:17 -0400
+Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A2BBC06174A
+        for <git@vger.kernel.org>; Wed, 21 Apr 2021 05:07:44 -0700 (PDT)
+Received: by mail-pg1-x52e.google.com with SMTP id j7so20177900pgi.3
+        for <git@vger.kernel.org>; Wed, 21 Apr 2021 05:07:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=ajliHNuGKqKtTuChpdnsVzpdSWEjKQuzOh2s8SvuZvE=;
-        b=AUDYDIphrKDiaTfLz5lszG9RVArdVZzW6FUTZeuArLbs3wCRZRoBxbJ/Ik4AGMi5JC
-         4gdBkpeo73sVX/VJ9+6GaffSUi8XhApjs4pSmQLfZenbkXkFTqhmMGAOCFccwMjQN+a7
-         o7YXoIssZfUhlTdln4TNKEptNqxQ/Hl7Dzmn62GyvZEUGSGJqQclYmnfldPAlrmOjXll
-         E9SL/2rEzzCIAPO0Xofa97FzPZul+UUjVVUi/hC8ZkCdOpQFULaPFn9kruhpDHtH4SWL
-         IpVaVluRYajoY1clYFvaUndEcNBowpJ+XJY6DeRcntRyz7RebJzF2r69mmiFarHXGDR6
-         o2rg==
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=rl72Ih+2mrO3kORB04QjIdVU3ANR1TAFIh4DLKeGbPo=;
+        b=WH+Nc+u0rgXZBDwIJZaKJptxQi1nNP3v6Xbxy2rUYhFcV78aVF6CwcxpJShON9RK88
+         z46ybR+uw9aFPsRAHB1mm9nfgA3O/a+DBadSXIfJgQabQd67Y0LsME/zIhGPu1YrMbgT
+         RNH9I04IqxWmeRc/YqZBZTnLsqDMKlr5lho3lVqbbL9LG2KvKr4BlHX3s8D1ZbeZ0VjG
+         b543jrnGKm/94yGZfhU8TqG2JB7mW7tRHyhs7g1cBfhNaB4ZosFcSB33OCbcq5IGOTU8
+         gks06wKmtVZbzaiuUDiRcA/+RvIDt8M85M/qVWwNSsAhHIRJfuC7cV7EPZoK85dizz58
+         8KHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=ajliHNuGKqKtTuChpdnsVzpdSWEjKQuzOh2s8SvuZvE=;
-        b=D/60IFRVGH8txF5Zqj5JuqSCFVntttGXBSZ75BtblV841QYopDwaKjbvXzt0OqQDI4
-         ByK/XCknWsL2vGAPYTd7Fy9lZMO+QktSP/fd+3fDLMds6NriVh12ovFIS77EfEdX1r41
-         o02SVgf47lHDdGqn2ShIWzIPobEjCf8mDr4TII1DI9M0jnzNQaoa7AuyrqGk77pCRwAo
-         TKgahHXJgXuQBSnfQr06PRIn82EehodXivwHBycU1N4Z50TGy8ViDAXzuGrMia/MXKwg
-         4iwaEiOz4vzW5h4lPEFG1/yWOalgkVsrh25BL2OCc3ePsHx5l+IT6p+GETN01vPTakNn
-         AdCg==
-X-Gm-Message-State: AOAM53093BmonEpb4562CK75gVHtcqZI4xmRVDwYlPeTQTw+xmw1CTkE
-        JIgbmYIJtwwiR5YPA62WxKI=
-X-Google-Smtp-Source: ABdhPJyIV8u0w4UNiioD2NCht+0/GntmNiDD3tuwJ0gBaR7wDuAuUGrCvOSUXwX1YOcVsbaMsZNbiQ==
-X-Received: by 2002:a17:906:8812:: with SMTP id zh18mr32480309ejb.342.1619006230273;
-        Wed, 21 Apr 2021 04:57:10 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id r18sm2155534ejd.106.2021.04.21.04.57.09
+        h=x-gm-message-state:date:from:to:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=rl72Ih+2mrO3kORB04QjIdVU3ANR1TAFIh4DLKeGbPo=;
+        b=fP6ptoBpr0w9K5pFNNd3mL5vyikSWXxfHvrMksNy7ciyeytVtaHSSp5tq82wyYd+B/
+         5wOrjzUPKwK/scLBKUim+PFGr9OanJ8TRHbHNkRrWxXCiDwtfMi7A4f4EsHmqU8UvYvH
+         m0sCH5PDOviaeEpL07j3hVDPgUOoeUnDEcmHJyI1OrZkQUuYUaoRsyGgpVViG5QkDNEh
+         q6r+XmlZyHTukVcBjH9kRDQByntmJESVnqsr+h3Xz4EVHIzX+wsXaqOoztzMUf/uaclZ
+         rZIwr38uDQHuYNuyAxa/gV0BMmTv+RE6wGJeTLOksY/pvmUZNhjB7NlPqXCyrwgtj8qg
+         jFBA==
+X-Gm-Message-State: AOAM532iWmTl2QI/ZWqe/djwLo0n43EoexWWWqWGYS1xHG1JoyFdKx7b
+        Kveiah73RUkpySVaKCNXcKQX1At+KQc=
+X-Google-Smtp-Source: ABdhPJwcCOshp2VENVkH8LyzMAvW8hiCJ0H7eHERP14IuDFB8QEMoDGqQ/U6Tj6aTMbWg1u8dfdEdg==
+X-Received: by 2002:a17:90a:540b:: with SMTP id z11mr10894690pjh.133.1619006863802;
+        Wed, 21 Apr 2021 05:07:43 -0700 (PDT)
+Received: from localhost ([2402:800:63b8:d379:85bd:c83a:4b40:cd9b])
+        by smtp.gmail.com with ESMTPSA id gt22sm1996154pjb.7.2021.04.21.05.07.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Apr 2021 04:57:09 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Han-Wen Nienhuys <hanwen@google.com>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: reflog existence & reftable
-References: <CAFQ2z_Ps3YxycA+NJ9VKt_PEXb+m83JdNB7ujzWw1fTPKyZ=fg@mail.gmail.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <CAFQ2z_Ps3YxycA+NJ9VKt_PEXb+m83JdNB7ujzWw1fTPKyZ=fg@mail.gmail.com>
-Date:   Wed, 21 Apr 2021 13:57:09 +0200
-Message-ID: <87im4f3l62.fsf@evledraar.gmail.com>
+        Wed, 21 Apr 2021 05:07:43 -0700 (PDT)
+Date:   Wed, 21 Apr 2021 19:07:42 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] mailinfo: strip CR from base64/quoted-printable email
+Message-ID: <YIAVjpdwQhPJbVbl@danh.dev>
+References: <20210421013404.17383-1-congdanhqx@gmail.com>
+ <YH+ct4haFn4q5qNB@camp.crustytoothpaste.net>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <YH+ct4haFn4q5qNB@camp.crustytoothpaste.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 2021-04-21 03:32:07+0000, "brian m. carlson" <sandals@crustytoothpaste.net> wrote:
+> On 2021-04-21 at 01:34:04, Đoàn Trần Công Danh wrote:
+> > When an SMTP server receives an 8-bit email message, possibly with only
+> > LF as line ending, some of those servers decide to change said LF to
+> > CRLF.
+> > 
+> > Some other SMTP servers, when receives an 8-bit email message, decide to
+> > encoding such message in base64 and/or quoted-printable instead.
+> 
+> This really isn't an SMTP server.  It's mailing list software, namely
+> mailman, and I would argue it's a bug, even though we may want to work
+> around it.  For example, re-encoding the message breaks DKIM signatures,
+> which means that mailman is likely to cause mail to be needlessly
+> rejected.
+> 
+> 8BITMIME is now so common with SMTP that I'd argue that we should just
+> write off servers that don't support it (especially in the context of
+> SMTPUTF8 existing), but this isn't the case of an SMTP server being
+> stuck in the last century.  Can we say more accurately that this is
+> mailing list software (or just call it out by name)?
 
-On Wed, Apr 21 2021, Han-Wen Nienhuys wrote:
+I think replace "SMTP servers" with "mailing list managers" is
+correct. I don't feel comfortable to call it out, since I don't know
+if other managers do it that way or not.
 
-> Hi there,
->
-> (splitting off from a code review of my test cleanups.)
+> 
+> > If an email is transfered through those 2 email servers in order, the
+> > final recipients will receive an email contains a patch mungled with
+> > CRLF encoded inside another encoding. Thus, such CR couldn't be dropped
+> > by mailsplit. Such accidents have been observed in the wild [1].
+> > 
+> > Let's guess if such CR was added automatically and strip them in
+> > mailinfo.
+> >
+> > [1]: https://nmbug.notmuchmail.org/nmweb/show/m2lf9ejegj.fsf%40guru.guru-group.fi
+> > 
+> > Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+> > ---
+> > 
+> >  I'm not sure if guessing the heuristic to strip CR is a good approach.
+> >  I think it's better to pass --keep-cr down from git-am.
+> >  Let's say --keep-cr=<yes|no|auto>
+> 
+> I think we may want a separate option here.  When I send a 7bit or 8bit
+> body, I expect text canonicalization on the line endings.  However, when
+> I send a base64 or quoted-printable body, I don't expect my data to be
+> modified at all, and absent a compelling reason, doing so is incorrect.
+> In most cases, using base64 or quoted-printable is going to mean that
+> the sender knew that the body shouldn't be modified, not that mailman
+> modified it, so we should make line munging in this case opt-in.
 
-Just changing the "Subject" won't break In-Reply-To and prune CC, FWIW
-the missing In-Reply-To is (probably):
-https://lore.kernel.org/git/87pmyo3zvw.fsf@evledraar.gmail.com/
+Make sense, this patch was sent mostly for some discussion first.
+Would you mind suggest something for the option.
 
-> Currently, reflogs are stored in .git/log/*. Git adds entries to the
-> reflog only if the reflog already exists (See the log_ref_setup()
-> function).
->
-> The current iteration of the reftable design has a unified key space
-> of {refname,index-number} for reflog entries. This causes there to be
-> no distinction between
->
->   1) reflog is empty (.git/logs/blah is a 0-byte file)
->   2) reflog does not exist (.git/logs/blah does not exist)
->
-> This trips up some current tests that make assumptions on reflog existence.
->
-> I don't know why one can tweak reflog to be written or not, but the
-> current functionality will cause a change in operation with reftable.
-> I see two ways forward:
->
-> 1) Have different functionality in case of reftable: you cannot query
-> for the existence of reflogs, and writing reflogs doesn't depend on
-> the existence of a reflog.
->
-> 2) Add a reflog existence feature to reftable. We could introduce a
-> magical reflog entry, which indicates that the reflog exists (but
-> might be empty). This adds some complexity to the C code, but lets us
-> maintain backward compatibility.
->
-> What do you think?
+I'm thinking about --quoted-cr=<nowarn|warn|fix>, mimicking the
+--whitespace option.
 
-I think we should fix the tests first, per [1] :)
-
-Because there's a third case revealed by the test case, which would be
-teased out by not entirely skipping the test with REFFILES, but
-incrementally splitting it up:
-
-Which is that the current reftable implementation is failing a test
-(well, probably a lot more, but the one under discussion) that:
-
- A. Sets core.logAllRefUpdates=false
- B. Checks out an orphan branch
- C. Checks that it has no existing reflog
- D. Makes a commit there
- E. Checks that it has no reflog
-
-Only the "E" case is covered by your summary above.
-
-But no matter how reftable's behavior is under
-core.logAllRefUpdates=false it should surely not be returning true in
-the "C" case, because there's no log entry to serve up, and indeed the
-branch being asked for has no commits.
-
-So for that case somewhere in the guts of the reftable integration we're
-losing the distinction between asking for a log that can't exist
-v.s. one that's empty, maybe the reftable code is returning "yes I have
-logging on" or "yes I have some entries somewhere" in that case?
-
-And in "E", related to "C" isn't in unambiguous to not write it if
-there's no existing entry for the branch in question and
-core.logAllRefUpdates=false is in effect?
-
-For the rest of this is the behavior under reftable indistinguishable
-from having core.logAllRefUpdates=always set?
-
-In any case, I don't think the emergent behavior of the files backend is
-worth emulating, but maybe if some feel that way it might be better to
-transition the setting in general to core.logAllRefUpdates being a
-global on/off boolean, and having a branch.<name>.logRefUpdates, but I
-suspect that there's not going to be any/many users of this selective
-logging feature.
-
-1. https://lore.kernel.org/git/87lf9b3mth.fsf@evledraar.gmail.com/
+-- 
+Danh
