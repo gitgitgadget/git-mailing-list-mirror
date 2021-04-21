@@ -2,106 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C40CC433B4
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 14:37:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1ED4CC43461
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 14:58:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 61CAF61421
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 14:37:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E2E6761453
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 14:58:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242156AbhDUOho (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Apr 2021 10:37:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59490 "EHLO
+        id S243724AbhDUO7S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Apr 2021 10:59:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35992 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235791AbhDUOhn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Apr 2021 10:37:43 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BBD8C06174A
-        for <git@vger.kernel.org>; Wed, 21 Apr 2021 07:37:08 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id q22so4743085lfu.8
-        for <git@vger.kernel.org>; Wed, 21 Apr 2021 07:37:08 -0700 (PDT)
+        with ESMTP id S243748AbhDUO7R (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Apr 2021 10:59:17 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 551B9C06174A
+        for <git@vger.kernel.org>; Wed, 21 Apr 2021 07:58:42 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id n127so10576947wmb.5
+        for <git@vger.kernel.org>; Wed, 21 Apr 2021 07:58:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=80hG2VOQLYRwnffRSF9q3XtmIcdmTVVTdPoQCpWqMGc=;
-        b=E+1Twz2WIEraKpALf29dH5ZbSTQfHiVzUYJC+jq2a7rSxK8beRsYYBlUlr0SOS4S6A
-         laCa48QxOgaT2eXgDRA0kc8uVIybfQ3tG3yDr3tRuUpvMItw9O9m0DhYA+SkGrOFEEWG
-         anVM3nQfEzApctVCfjLgmCjxMdcZHQRTOCxck7sf+XLgUq+LvrbUi1sZP1/BV/2shdAL
-         9SLij9qWLbW6pWApqH9Jdf59fWRa/V5glQBTyxO3VTPqft66ISNoFQzsFexsFxFQsBcs
-         L5bZJ4Sp59f7I3av5GBJTjW1y1HRaUyWG4nrl1un1AVsNa2OLY2oze2AbDWeKsnEzspE
-         r1xg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=aHMg2DL2kdOsSphE/43cOW3gdGyqZEsDm2jlr14qa9g=;
+        b=tGzvvwzYesqohfRZDM8CVOjFME9A+gBBi32JBiP3J02GfFG/BFf2qeagSY9ipV87zs
+         Uyn/ew7ToP9T9EV5tmHpQA0CzZ136ltonlZuHv8AWyTJkIYzGeLaCi0jrh+0oqNCBRhw
+         U8u1TJK+wPGvVKqK1RbqZ1MgaElRycEV3P64ZmpehGMTorgXttwqTCJVhkyCDSX0dhRZ
+         WyVxiZviwMryGGp6CAhPP0JxmlAUeYgO5MbRBRXQWKkpJBsy2V25RuTep9dx0YjRPkd4
+         YMr2Ns8tVYjlsNczJZKJ+Dii+HbHXgITisysINNrahKaUGILKejCpqHFlu+a+1fndjQj
+         9tIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=80hG2VOQLYRwnffRSF9q3XtmIcdmTVVTdPoQCpWqMGc=;
-        b=cjlJKx3+506yfQrdikG8tApr5a9yvApIsGzjGETPz30+IETmSGz/SuWhWTNcD2xCpD
-         wlM9PYxpMAZcYAQBuZYz08RnoHz4wpN11REuDS1nWxjoVej0DBeNlAiAh4TPvYKpMwpR
-         zOKapLN/D1zq66RQZL8vnVwWBepF6qkjQ70dOJEvpEsXZdlhx0JUDmrPUv2+JB1kSsz6
-         tXXi/z7SouKCl99t/eM6x6vMPane/aIC9qhJG5/hPt6wdZZA6aOdCT6sS9hG79XwAu2A
-         LYhimvG8h8WIY4eOMB3f51xaOUd/deGtwdXcwIoHWckJnYqWRW6MKgFEX8GuGVrIGINu
-         RowA==
-X-Gm-Message-State: AOAM533WO+l4knEfYDFwDpLii0RXfswrvpHn0tap8w0b9uLPmzzg27gU
-        JpUkLJAs8wpfXv17br/26F+1ix+BRofWhIDIaCvkCohOBtTcW86U
-X-Google-Smtp-Source: ABdhPJzc8rkwZh7HwRSaq6388l71mazYTwAevC0LfAgK02ERxB7ni4WjpXt+dK8L6rkp7bWjEIMz52CH+YmlQPDevoc=
-X-Received: by 2002:ac2:53b4:: with SMTP id j20mr20805948lfh.390.1619015826672;
- Wed, 21 Apr 2021 07:37:06 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=aHMg2DL2kdOsSphE/43cOW3gdGyqZEsDm2jlr14qa9g=;
+        b=jV9sT2gcc96/o3DYfRbWglGlZo4zBtG0J5F4V7wAHszb9BW5+mgAWMdyonRpTbuK/w
+         0XdgY8D1EqTzO3O2MqtBT0TCw/MepxMK0XB9IyoF11TpAt7bNYlCQnGE8ov8BAPS5fLv
+         JZX0PSuTxnMMhhB+uJV8d2EyVExosi9r15tkccfB1cxGk+vn81B+f/zgaUKYgnZ8QFc8
+         Tuk0Nm4pVhxA9tCXV0YbkGdNObrypn59fgMqoyLaIK035kBWqAN3rZdY5VGbjW+GYkNn
+         CWBNFJj5hdnQ1Rcyk9CLkPiu0eycO666ay5+XezJzRUwgseKl6ZK64pvSEIxtk4q8aoz
+         bmWw==
+X-Gm-Message-State: AOAM531eWl8R2AoJBF0LQ+Z78C28xEjaW5/6muPkWDf/FWlD+L7QC7hq
+        2UbDJjp07xhEG7DkWGN8LVujSkVYe6HtnQ==
+X-Google-Smtp-Source: ABdhPJyDdAiwspCjyiSotQUAMrxtfQ9dfsVtTtzOd0IgJo/CZV/NITACCOi9pAhZh3yZklGXmWM4lg==
+X-Received: by 2002:a1c:a182:: with SMTP id k124mr10466424wme.132.1619017120774;
+        Wed, 21 Apr 2021 07:58:40 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id g1sm3394316wrd.69.2021.04.21.07.58.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Apr 2021 07:58:40 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Matthieu Moy <git@matthieu-moy.fr>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Andreas Schwab <schwab@linux-m68k.org>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 0/5] test-lib-functions.sh: trickery to make -x less verbose
+Date:   Wed, 21 Apr 2021 16:58:33 +0200
+Message-Id: <cover-0.5-00000000000-20210421T144921Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.31.1.723.g9a7f2f961d4
+In-Reply-To: <cover-0.3-0000000000-20210420T122706Z-avarab@gmail.com>
+References: <cover-0.3-0000000000-20210420T122706Z-avarab@gmail.com>
 MIME-Version: 1.0
-References: <CAGP6PO+6MA9J1LRgGn4rcz8DBcW-hht92p-ahFaM9g6tcNFh-Q@mail.gmail.com>
- <YIA10O/BVrP3z/LK@nand.local>
-In-Reply-To: <YIA10O/BVrP3z/LK@nand.local>
-From:   Hongyi Zhao <hongyi.zhao@gmail.com>
-Date:   Wed, 21 Apr 2021 22:36:55 +0800
-Message-ID: <CAGP6POKTTBfrtsXEKi2P+xg0DLPNzo4+jRY+ySmJ0wOQFPdZpw@mail.gmail.com>
-Subject: Re: The meaning of the '+' before the submodule hash.
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 21, 2021 at 10:25 PM Taylor Blau <me@ttaylorr.com> wrote:
->
-> On Wed, Apr 21, 2021 at 10:19:25PM +0800, Hongyi Zhao wrote:
-> > What's the meaning of the '+' sign at the beginning? Why do some
-> > submodules have this symbol, but some submodules don't?
->
-> There are three symbols, 'U', '-', and '+'. From the documentation [1],
-> they mean:
->
->     Each SHA-1 will possibly be prefixed with `-` if the submodule is not
->     initialized, `+` if the currently checked out submodule commit does not
->     match the SHA-1 found in the index of the containing repository and `U`
->     if the submodule has merge conflicts.
->
-> [1]: https://git-scm.com/docs/git-submodule#Documentation/git-submodule.txt-status--cached--recursive--ltpathgt82308203
+This series makes the "-x" output less verbose for our various helper
+functions, mainly using the trickery of feeding "$@" to "test" to rely
+on it to die when given too many arguments.
 
-Thank you very much for pointing out this document information to me.
-The above submodules status for my case were achieved by the following
-command:
+Since v2[1] I ejected the patch to make the "test_line_count" function
+unsafer per Junio's feedback.
 
-$ git submodule update --init --recursive --remote
+The test_file_size has lost its "BUG" invocation, but is now safe as
+we do that check in the test helper, as shown in 5/5 we fixed one
+previous mild regression while doing that.
 
-As you can see, this will cause the status denoted by '+', i.e., the
-currently checked out submodule commit does not match the SHA-1 found
-in the index of the containing repository. I'm not sure if this is
-harmful.
+The 3-4/5 patches are just trivial "while we're at it" work.
 
-HY
+1. http://lore.kernel.org/git/cover-0.3-0000000000-20210420T122706Z-avarab@gmail.com
 
-> Thanks,
-> Taylor
+Ævar Arnfjörð Bjarmason (5):
+  test-lib-functions: normalize test_path_is_missing() debugging
+  Revert and amend "test-lib-functions: assert correct parameter count"
+  test helpers: remove unused test-tool path-utils slice-tests
+  test-helpers: rename "path-utils is_valid_path" to "is-valid-paths"
+  test-helpers: split "file-size" into "file-size(s)"
 
+ t/helper/test-path-utils.c  | 44 ++++++------------------
+ t/t0060-path-utils.sh       |  2 +-
+ t/t1050-large.sh            |  2 +-
+ t/t5319-multi-pack-index.sh |  6 ++--
+ t/test-lib-functions.sh     | 67 ++++++++++++++++---------------------
+ 5 files changed, 45 insertions(+), 76 deletions(-)
 
-
+Range-diff against v1:
+1:  fd33f6d71f0 = 1:  ba9d6251ad5 test-lib-functions: normalize test_path_is_missing() debugging
+2:  67ddd821dfa = 2:  5f8e5ad27f5 Revert and amend "test-lib-functions: assert correct parameter count"
+3:  8fd51861b59 < -:  ----------- test-lib-functions: remove last two parameter count assertions
+-:  ----------- > 3:  44948c6ace9 test helpers: remove unused test-tool path-utils slice-tests
+-:  ----------- > 4:  ae5dc5d03b3 test-helpers: rename "path-utils is_valid_path" to "is-valid-paths"
+-:  ----------- > 5:  947791d9535 test-helpers: split "file-size" into "file-size(s)"
 -- 
-Assoc. Prof. Hongyi Zhao <hongyi.zhao@gmail.com>
-Theory and Simulation of Materials
-Hebei Polytechnic University of Science and Technology engineering
-NO. 552 North Gangtie Road, Xingtai, China
+2.31.1.721.gbeb6a21927
+
