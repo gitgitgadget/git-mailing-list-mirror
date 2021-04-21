@@ -7,70 +7,72 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C7739C43460
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 13:19:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 53538C433B4
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 13:24:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 975B461456
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 13:19:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 109316144B
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 13:24:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240683AbhDUNTx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Apr 2021 09:19:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41314 "EHLO
+        id S240612AbhDUNZP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Apr 2021 09:25:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42618 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241830AbhDUNSU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Apr 2021 09:18:20 -0400
-Received: from mail-oo1-xc2c.google.com (mail-oo1-xc2c.google.com [IPv6:2607:f8b0:4864:20::c2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76EAFC061359
-        for <git@vger.kernel.org>; Wed, 21 Apr 2021 06:17:31 -0700 (PDT)
-Received: by mail-oo1-xc2c.google.com with SMTP id i9-20020a4ad0890000b02901efee2118aaso1634776oor.7
-        for <git@vger.kernel.org>; Wed, 21 Apr 2021 06:17:31 -0700 (PDT)
+        with ESMTP id S242154AbhDUNXd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Apr 2021 09:23:33 -0400
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AD2AC061349
+        for <git@vger.kernel.org>; Wed, 21 Apr 2021 06:21:16 -0700 (PDT)
+Received: by mail-oi1-x22f.google.com with SMTP id v6so14555898oiv.3
+        for <git@vger.kernel.org>; Wed, 21 Apr 2021 06:21:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=095+mf9uRaL8Rl0/vOjESeMEqKbResi2M+KQ4YW3Wws=;
-        b=OZGnNV8W8fuw1uXTmTABKuGH5wSgQyxx8yPmVsHFTXvwPTNxJHsjBd6a+kJz0ZZKne
-         wJ0MePwFrLz7oVGYZmvHKp+4OGUIFJjOZZhLxE9xhgsqp4a0OI5vHX+S16MSRHrWuWA8
-         Irh2yhiW3vUmVglluF9YTQKFO/pF1UyhDP6B5a5j3bG2PwFJBThMdo3ZnPafPJ+CYxfH
-         LjekbGff51XXe8zjS0glcVzG1i51hAtGKqIy3sq5mO2Bki1bUtqII4Ng+/wzt1Ab4Edr
-         pYSR96hX3k0830JiDr7KGTd5oOX9dggUk8IXxlAiIc/fdPffx1lC6+IC3+vgtewEGZxX
-         VtNw==
+        bh=8dA0F3A5uJgC20WZRPuDFpIiFnhEarhmhvPY0p7kMII=;
+        b=WTGrTDP5l4gNJvthQ0Eyqt2JWnAolBac93jaBAeHLxqunuhx68PLUXoIvsXBlrIy2q
+         /OWabUjxTyvuW60NqhSFb35UjvtuMJbZTK5+YcvwTp5BPuow/h5qc9uoPALnxnjpSaRN
+         opRUX4qiyItJA2abVnARpm1NiZ3DZZ8/9tfwDsMeq9PZ+I2gmRYlAVm3T4zMaLHYS/4e
+         joG1awyq6shVx/aElaJV4Z8r40jgSShIqZFmNRsUBqfJ1uNn1nemk6RLq4MW3MCM9NQ6
+         mik6RprUGlu9vUfkuxmIC+Tm+PtzoPDDFajKzPc8SwMGiO8bbRFi8Jy0qxFBV1NJJh9w
+         MTxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=095+mf9uRaL8Rl0/vOjESeMEqKbResi2M+KQ4YW3Wws=;
-        b=TVxaD7DQ41TJavUQYTkd6rcHp+ie0mUyV146O59Tfh5pK7KG2L1tahCIE/eoDyFKYV
-         iShmelpZj9/r46JSmsYC0fh94zVUaTyQ1MBpjS3DmV+GYJfee57ykMR8YCMHLxFg1xmm
-         myvResQNMOjrZWruBi6yc1wsZaGeW4DsaDx9AG2BDGLWmsPkdPMvdb1uuD+pxvbQ3HHI
-         Hhkyw7e6AK5nXVBLNqjPblFBkN9pQhaYthKES9ys8p9AtXRe2mceIGjsLuSlRLDDpuXB
-         Nq2RDWCQP/Zce2JPzoqXgjjcMhjfmN82jqmmOtUVKl5e3sQyLZcfPUEEK7MBDUVSG9Z7
-         Pz2Q==
-X-Gm-Message-State: AOAM532ac+U2hn0QYS0vIogpWoWOaPf4iNvWBFTa2WKON0swuU1UDe+W
-        JoTlkhLLjKfgSM9OaFc1e2U=
-X-Google-Smtp-Source: ABdhPJxy3PIHJWT+rl+wtMlWEd3FnGW9ECR5sOFrlbV/BIAP6j2IwUMs2WQ2k5f1VQN3nFybbkAehQ==
-X-Received: by 2002:a4a:a44a:: with SMTP id w10mr12076878ool.26.1619011050701;
-        Wed, 21 Apr 2021 06:17:30 -0700 (PDT)
+        bh=8dA0F3A5uJgC20WZRPuDFpIiFnhEarhmhvPY0p7kMII=;
+        b=aFhYeeyduGUTLrh5ZlAxyG7ImHta46/ch6awtzojoACrmF5aMOWoOWAQTL7wEvcf87
+         AuV933Fb2JFIFXserpxgeM7bLz01O1Y0JCiWVnVvFfSBt6RKMWPAm7+ix1Q8d6brEUl2
+         8mk9gL6stL/Pk52M3qX9ZxPmsU9XUyQj+gd2WRk6AW3AhpvDF3u1Tkp9QsJz8AVu0xuS
+         TWi0spwIBUaWWlFR/YVAxdwJK86NjIEfGxE195FYnfqxAW98gC3Glv7MXCTfGtEKYbL9
+         SrWzy9aW1RmsRj1HmCMvUfvendQdi0abiNQwPZaJkZQ+KuMjiV3MfD0S43y77a3dKAAy
+         vWMQ==
+X-Gm-Message-State: AOAM5314yyI48dmN3kENV3/BfPSqMsEEHqUL5N9hj63daYd/VeTU0c2Z
+        +zPduKyVKWkSmVzk9DJB+Ds=
+X-Google-Smtp-Source: ABdhPJwXSUF8IhZjyUGSvCYf/T6ZQEbwU1T/aJKXVRvsL7wPk24x7SgAsT4bqAsnoJZiB1FIOtm6OA==
+X-Received: by 2002:aca:d787:: with SMTP id o129mr6942883oig.40.1619011275693;
+        Wed, 21 Apr 2021 06:21:15 -0700 (PDT)
 Received: from ?IPv6:2600:1700:e72:80a0:e10e:eea5:8b82:2147? ([2600:1700:e72:80a0:e10e:eea5:8b82:2147])
-        by smtp.gmail.com with ESMTPSA id h59sm506324otb.29.2021.04.21.06.17.29
+        by smtp.gmail.com with ESMTPSA id q189sm454480oih.25.2021.04.21.06.21.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 Apr 2021 06:17:30 -0700 (PDT)
-Subject: Re: [PATCH 00/23] [RFC] Builtin FSMonitor Feature
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
-References: <pull.923.git.1617291666.gitgitgadget@gmail.com>
- <xmqq8s5hkfxm.fsf@gitster.g>
- <nycvar.QRO.7.76.6.2104201646210.54@tvgsbejvaqbjf.bet>
+        Wed, 21 Apr 2021 06:21:15 -0700 (PDT)
+Subject: Re: [PATCH 01/10] t1092: add tests for status/add and sparse files
+To:     Elijah Newren <newren@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.932.git.1618322497.gitgitgadget@gmail.com>
+ <b2cb5401eff83c43ca805a36bf41a28a6ffc3630.1618322497.git.gitgitgadget@gmail.com>
+ <CABPp-BFhyFiKSXdLM5q5t=ZKzr6V0pY7dbheierRaOHFbMEdkg@mail.gmail.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <f2f61f43-51ec-366f-9fac-f0d42d707de0@gmail.com>
-Date:   Wed, 21 Apr 2021 09:17:25 -0400
+Message-ID: <184087ce-b560-11e5-1c5d-e25b6bd58127@gmail.com>
+Date:   Wed, 21 Apr 2021 09:21:11 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.9.1
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.2104201646210.54@tvgsbejvaqbjf.bet>
+In-Reply-To: <CABPp-BFhyFiKSXdLM5q5t=ZKzr6V0pY7dbheierRaOHFbMEdkg@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -78,28 +80,31 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/20/2021 11:27 AM, Johannes Schindelin wrote:
-> Hi Junio,
+On 4/20/2021 5:52 PM, Elijah Newren wrote:
+> On Tue, Apr 13, 2021 at 7:01 AM Derrick Stolee via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+> I'll note in particular that it's easy for users after running "git
+> add" to run other things such as "git sparse-checkout reapply" or "git
+> switch $otherbranch" and suddenly the file disappears from the working
+> tree.  From the sparse-checkout machinery that makes sense; this path
+> doesn't match the .git/info/sparse-checkout list of paths, so it
+> should be removed from the working tree.  But it's very disorienting
+> to users.  Especially if some of those commands are side-effects of
+> other commands (e.g. our build system invokes "git sparse-checkout
+> reapply" in various cases, most common of which is that even a simple
+> "git pull" can bring down code with dependency changes and thus a need
+> for new sparsity rules and whatnot), but it definitely can just happen
+> in ways users don't expect with their own commands (e.g. the git
+> switch/checkout example).
 > 
-> On Fri, 16 Apr 2021, Junio C Hamano wrote:
-> 
->> "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com> writes:
->>
->>> This patch series adds a builtin FSMonitor daemon to Git.
->>
->> This hasn't seen much (if any) activity for a few weeks.
-...
->> What does it need to get this topic unstuck?
-> 
-> The same resource that you keep complaining about, and that seems to be
-> drained more quickly than it can be replenished: reviewers.
+> The patch looks good, but it'd be nice if while documenting it we also
+> add a comment that we believe we want to change the behavior (for
+> sparse-checkout both with and without sparse-index).  It's one of
+> those many paper-cuts we still have.
 
-I purposefully stayed away from reviewing the series since we are on
-the same team, but I have _not_ been involved in the development. At
-least that lets me have fresh eyes.
-
-If no external community members are willing to review it, then I will
-dedicate time for a careful review this week.
+I can try to comment on these corner case tests that the behavior is
+not intended to be permanent, especially when already needing to comment
+how strange it is acting.
 
 Thanks,
 -Stolee
