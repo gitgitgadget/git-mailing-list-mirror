@@ -2,146 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F5D9C433B4
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 17:38:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 17CD3C433ED
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 17:49:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 64C4B61430
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 17:38:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D938E61405
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 17:49:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244697AbhDURis (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Apr 2021 13:38:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43490 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240290AbhDURis (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Apr 2021 13:38:48 -0400
-Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAA41C06174A
-        for <git@vger.kernel.org>; Wed, 21 Apr 2021 10:38:14 -0700 (PDT)
-Received: by mail-ot1-x32a.google.com with SMTP id c8-20020a9d78480000b0290289e9d1b7bcso25588039otm.4
-        for <git@vger.kernel.org>; Wed, 21 Apr 2021 10:38:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=XSBHZlcOGyT2HuDBBQT+/C1q1cxDqP1Je43cLlL/8rg=;
-        b=MwexRAzz79lXbPFg+rxmt+Lfd1obB9lr6jCZam3qS97cdQ+chVud25ePkhWxjge2hM
-         Ph7mwj5Qjx105efklJIWU7wak73eoT4FNtHeStFjC4euQOG4ISHV7yofAxd+vb0Kd+i5
-         H8YZ6bP6+jH+1iH3SlsdivutbGS8FuRPsoTL4CQBCzhDoz/z99RJIQc2dnthW4t1xI+H
-         ntGG2VjQH/lbKzr4R39znE27+Kcz1RR0eqseCra4Lf2C+PRMdggiZvHAGiQ02QISdd4/
-         K9T2iSVGcd/J3L7yJDmzBdePcK7m4iVR/PxxzxNf+0w34WHuz0bDfCEpD4ZsAbeYWwxY
-         QM2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=XSBHZlcOGyT2HuDBBQT+/C1q1cxDqP1Je43cLlL/8rg=;
-        b=Qxm8S+iA5IcIyaI94WSo5fqvvHwRfpKE8AjYgPXXCSH7IPeAnWNarsX86gj0sL8KKB
-         4T0V97lf5NDyYxyWdBt6RDJUM/I6fqNf42S/txgyfKUXmqy3FvnhrcjGqBhdkLveEZqN
-         KtyryNhgm6C9/8qRES7n8Z1G0++MlCJF5dysHarwCOlML7pYZnIfZ8Td8OeY5uzUf7ZA
-         Qa+rxsFZYPuaP5gQ1wEu/IX8QFU4Vxxp1QT2o7wXWqlLIlyINFu8+cz+vfwtvbKsfMns
-         FheBOLEMSX/Hq7T/2/k+oo2MEsa22Tv1XceGo//0fZUWKRisQbvdfDJ6N7mqOXOmsTtY
-         2SsQ==
-X-Gm-Message-State: AOAM532T3C7eIKsfhFFr8UM1b6wTZc79rLBfJgO0tcLMBKrRhrVkjKjh
-        p9ddOIdK7w4no+KKFrUoPI72bOiIALU0n1a782I=
-X-Google-Smtp-Source: ABdhPJym4svd8hiioHKMmht2Dp4MqSUZMotO9sWdjQtM3OuB29JWw3whNtl+jCQ3pNzT6eGf6uiWaCOmj8HQyJ/J08s=
-X-Received: by 2002:a05:6830:906:: with SMTP id v6mr24256845ott.345.1619026694261;
- Wed, 21 Apr 2021 10:38:14 -0700 (PDT)
+        id S245002AbhDURts (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Apr 2021 13:49:48 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:56071 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S245006AbhDURte (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Apr 2021 13:49:34 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id DCD65133F80;
+        Wed, 21 Apr 2021 13:49:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=XShyDibpBLwt
+        4wBQyNlpj0QY1BA=; b=c2bqn1gwwEdMHtTL/ueZfkx+HDSXeC5mu9s6iZXwH+5y
+        IaeKAPMRnf2T10cakRK8NJEsw8eOgxXutAmGsTwhDsjqjys+FiZl0R9oiqX/D+R/
+        MHw30+JBQE+at49hGrJ9uCnusZVaAiorFAiRuawRHXqV9phYuMCZOmxVtI7gxvQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=I6LzUa
+        mEwKw4AyMLhM9WQBoETHv9LxDhdIXvPPRzB7RbuGTzus1DT2r4rZcgs/30Yii6VF
+        9qjwMTyN/IlNV3D39qs/yOTKRHdlFw9MikilG6eGZG4aizSTATgnX7/08JeBrtaA
+        NaWP9Blzk3r88rYzjFbIZhsr9Vxc1rxTQ3hTk=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id D4E7D133F7F;
+        Wed, 21 Apr 2021 13:49:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 257CD133F7E;
+        Wed, 21 Apr 2021 13:48:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Luke Shumaker <lukeshu@lukeshu.com>, git@vger.kernel.org,
+        Luke Shumaker <lukeshu@datawire.io>,
+        Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>
+Subject: Re: [RFC PATCH] fast-export, fast-import: Let tags specify an
+ internal name
+References: <20210420190552.822138-1-lukeshu@lukeshu.com>
+        <8735vk3vyq.fsf@evledraar.gmail.com>
+Date:   Wed, 21 Apr 2021 10:48:56 -0700
+In-Reply-To: <8735vk3vyq.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Wed, 21 Apr 2021 10:03:57 +0200")
+Message-ID: <xmqq5z0fzfxz.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.929.git.git.1607223276.gitgitgadget@gmail.com>
- <pull.929.v2.git.git.1607677728.gitgitgadget@gmail.com> <8db27892c598a3976c0742e23563f1d360b8dee1.1607677728.git.gitgitgadget@gmail.com>
- <87fszj3jni.fsf@evledraar.gmail.com>
-In-Reply-To: <87fszj3jni.fsf@evledraar.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 21 Apr 2021 10:38:03 -0700
-Message-ID: <CABPp-BHoCron-aNvjwwDkoAcvi_5X5uoZdO639eGg9XnoJUqdQ@mail.gmail.com>
-Subject: Re: [PATCH v2 6/9] t4058: explore duplicate tree entry handling in a
- bit more detail
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Taylor Blau <me@ttaylorr.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: D93CAF36-A2C9-11EB-9888-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 21, 2021 at 5:29 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
->
-> On Fri, Dec 11 2020, Elijah Newren via GitGitGadget wrote:
->
-> > While creating the last commit, I found a number of other cases where
-> > git would segfault when faced with trees that have duplicate entries.
-> > None of these segfaults are in the diffcore-rename code (they all occur
-> > in cache-tree and unpack-trees).  Further, to my knowledge, no one has
-> > ever been adversely affected by these bugs, and given that it has been
-> > 15 years and folks have fixed a few other issues with historical
-> > duplicate entries (as noted in the last commit), I am not sure we will
-> > ever run into anyone having problems with these.  So I am not sure thes=
-e
-> > are worth fixing, but it doesn't hurt to at least document these
-> > failures in the same test file that is concerned with duplicate tree
-> > entries.
-> > [...]
-> > +test_expect_failure 'fast-forward from duplicate entries to non-duplic=
-ate' '
-> > +     git merge update
-> > +'
-> > +
-> >  test_done
->
-> Per https://lore.kernel.org/git/87lf9b3mth.fsf@evledraar.gmail.com/
-> isn't the noise of having a segfault from "git" worth fixing in itself
-> though? I.e. something like this, so we at least se why it fails:
->
-> diff --git a/t/t4058-diff-duplicates.sh b/t/t4058-diff-duplicates.sh
-> index 54614b814db..ed91d9f7fe9 100755
-> --- a/t/t4058-diff-duplicates.sh
-> +++ b/t/t4058-diff-duplicates.sh
-> @@ -182,8 +182,10 @@ test_expect_success 'switch to base branch and force=
- status to be clean' '
->         test_must_be_empty actual
->  '
->
-> -test_expect_failure 'fast-forward from duplicate entries to non-duplicat=
-e' '
-> -       git merge update
-> +test_expect_success 'fast-forward from duplicate entries to non-duplicat=
-e' '
-> +       ! git merge update 2>err &&
-> +       grep "^BUG: " err &&
-> +       grep -F "should have entry at o->src_index->cache[1]" err
->  '
->
->  test_done
-> diff --git a/unpack-trees.c b/unpack-trees.c
-> index 8a1afbc1e49..230cb073fe1 100644
-> --- a/unpack-trees.c
-> +++ b/unpack-trees.c
-> @@ -789,8 +789,11 @@ static int traverse_by_cache_tree(int pos, int nr_en=
-tries, int nr_names,
->          */
->         for (i =3D 0; i < nr_entries; i++) {
->                 int new_ce_len, len, rc;
-> +               int j =3D pos + i;
->
-> -               src[0] =3D o->src_index->cache[pos + i];
-> +               src[0] =3D o->src_index->cache[j];
-> +               if (!src[0])
-> +                       BUG("should have entry at o->src_index->cache[%d]=
-", j);
->
->                 len =3D ce_namelen(src[0]);
->                 new_ce_len =3D cache_entry_size(len);
->
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-Seems reasonable to me.  Are you planning to add a commit message and
-turn it into a proper patch?  If so, I'll give my Thumbs-up-by or
-whatever we need.  :-)
+>> +	tagname =3D memmem(buf, message ? message - buf : size, "\ntag ", 5)=
+;
+>> +	if (!tagname)
+>> +		die("malformed tag %s", oid_to_hex(&tag->object.oid));
+>> +	tagname +=3D 5;
+>> +	tagname_end =3D strchrnul(tagname, '\n');
+>
+> So it's no longer possible to export a reporitory with a missing "tag"
+> entry in a tag? Maybe OK, but we have an escape hatch for it with fsck,
+> we don't need one here?
+
+We do have an escape hatch for missing "tagger" (e.g. "git cat-file
+tag v0.99") in tag.c::parse_tag_buffer() that is used by fsck.
+
+But a missing "tag " gets an immediate "return -1".
