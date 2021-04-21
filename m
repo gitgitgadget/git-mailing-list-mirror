@@ -2,145 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 66DD4C433B4
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 09:53:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A41CC433B4
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 09:54:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 22BB061440
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 09:53:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D9C7061446
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 09:54:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235038AbhDUJxi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Apr 2021 05:53:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52552 "EHLO
+        id S235349AbhDUJyc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Apr 2021 05:54:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52746 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233957AbhDUJxh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Apr 2021 05:53:37 -0400
-Received: from mail-vs1-xe29.google.com (mail-vs1-xe29.google.com [IPv6:2607:f8b0:4864:20::e29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07334C06174A
-        for <git@vger.kernel.org>; Wed, 21 Apr 2021 02:53:05 -0700 (PDT)
-Received: by mail-vs1-xe29.google.com with SMTP id 66so20849457vsk.9
-        for <git@vger.kernel.org>; Wed, 21 Apr 2021 02:53:04 -0700 (PDT)
+        with ESMTP id S233957AbhDUJyc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Apr 2021 05:54:32 -0400
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F30C8C06174A
+        for <git@vger.kernel.org>; Wed, 21 Apr 2021 02:53:58 -0700 (PDT)
+Received: by mail-pf1-x430.google.com with SMTP id c17so28274515pfn.6
+        for <git@vger.kernel.org>; Wed, 21 Apr 2021 02:53:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=q8kxvcZ+F9nHM26i15oNv0eBDNdXOHz6jUtd2XirjtM=;
-        b=kg17xrDOO+gL4a3k017pI2crh9/g6u7g2x2KWY328QThAcll5ZUf+/ljR5HiBwpmq0
-         6gVeDLgKqLkKbFSmTq+9oxXe6ThQWFx4KnutAXTmNBbgD9wcXL6g5bYBPOoD4H9Yg8XY
-         FgiKa6vWmg3usW17pltvLlEZ29MfLEZLrszJLcBkbpG9gYjgsp3Ph0KbZqSpMpd/XrXD
-         OGrALz1PcOLpXcjB/MqDsp7S5emLCVnNl1r/fS0bIDBTKrpyU97BydZPmKclJEDucBRD
-         DkXxroWFrgoqcHFz+x5msuholE9pN/fPpho5pDEnyXTgwzPPlwvz9xV31pYg5IsxqEVB
-         8Wvw==
+        d=diamand.org; s=google;
+        h=to:from:subject:message-id:date:user-agent:mime-version
+         :content-language:content-transfer-encoding;
+        bh=oIkpnUCmx5d9/lYZF0Rik9aMT4lGgzIPOmoG0+n/PrM=;
+        b=eYpmLYTMvt3sGIwMDq3gSturFmnjliV9b/8e0NxwPhiVrReVKFIcNPWwLsphJBajfy
+         aGxooXf3iwQKa4at91aT5KkkHBJWhT5+CCu2Khos9Fb7bDApNKs5+J2H198zRlrAWC1a
+         BOobHhCaWjbFtbww00YJOor7ojOt+M+zpmasg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=q8kxvcZ+F9nHM26i15oNv0eBDNdXOHz6jUtd2XirjtM=;
-        b=cKrbRcP797nXyyP7KaLow+UX70DTRStWoq8viagy+mYDVkRW3fbXI52t8BIJRWCyrp
-         VVuPlZTH8ptIE8c90S/YstrpGhzt7laChxKAOJlyg91ek766at+FvQHC/RqH0O6VOSwW
-         yWnORWPO5MELV89NRiBPXVtD0DQVkMkts1sT7gxjpaze6id7Gaar0MesuNd/B+988Ek1
-         pjKH14HVweN1H+7B+/4zRUfvjFPuuUQiPHw+wMhBQz3Lr9Y3+JKpSqjOQsNO5SpmFPYT
-         M/+026tLZS4qBSMz60/skl7yrAa7DYHPoqqAH383XC5s6AWrt9M0q9r7zrQfSb3bVJXW
-         UN4Q==
-X-Gm-Message-State: AOAM533uUcMU5rOJxwno2VSU+4XAVP22BUfU/ARxzFRnvjgdaY4ei8Vx
-        0433otl4821yzylcKLZGh6wo5dfRurIKjJ6AsgiMVhGSB+g=
-X-Google-Smtp-Source: ABdhPJxlxA7KRzffdKEhoBDYutHiWudMsiK85hTpqM9rtpRCbba3VFBI2KGYSFeEPtBdJzyRGMHG0YEQUggx9v3ddxw=
-X-Received: by 2002:a67:7d42:: with SMTP id y63mr25344494vsc.5.1618998783976;
- Wed, 21 Apr 2021 02:53:03 -0700 (PDT)
+        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+         :mime-version:content-language:content-transfer-encoding;
+        bh=oIkpnUCmx5d9/lYZF0Rik9aMT4lGgzIPOmoG0+n/PrM=;
+        b=aCzyGTZwM95vXg64eT8+QpLuD3ygIcxkftJn7bJtJL0CEtOlfnqCeTORLyyyf9h5uI
+         o6wnMWedrlJs/64wSUgU5Waoh/o7krdcUUsYj4xjChS5GaZqj2IHdR4TZqw09+iUNYs/
+         zfzJXb0noZPtF1bQiVM+JuI0MXeOCRxW+EzdXLYE05ftlxlhg6tb2vmOm1RvbCdusEUQ
+         pmStFmHkglmaCyoTO6VB7hwYQbAkg3uGmbVUhErdkN4XckvNsyx01UdZuvYLwsFvOlmt
+         LGyzXKR87MB9738CuppnZyWjXBur5jaEDtAVDfsGR7pod58lxs5+fOGcnAoHOXzxOnBI
+         bN6Q==
+X-Gm-Message-State: AOAM532RUdpBIXSl0Tt+dbMs6bJOJpTDlsaAjCoWWG7GT5Tzay2CkKBs
+        xZmMg4wRHIQvQ8sRV1KhUnNZkAxuJIwb4DIyJeU=
+X-Google-Smtp-Source: ABdhPJzY9rwm048rsXTwwSjiPz2mlT6fMc5lv4ughbLarB9mRA/tyG1ZuzUTv9SdpNhZBGYKj3L3cg==
+X-Received: by 2002:a62:3201:0:b029:211:3dcc:c9ca with SMTP id y1-20020a6232010000b02902113dccc9camr29007957pfy.46.1618998838155;
+        Wed, 21 Apr 2021 02:53:58 -0700 (PDT)
+Received: from [192.168.245.142] (cpc108961-cmbg20-2-0-cust748.5-4.cable.virginm.net. [80.5.130.237])
+        by smtp.gmail.com with ESMTPSA id gj13sm1658467pjb.57.2021.04.21.02.53.56
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 21 Apr 2021 02:53:57 -0700 (PDT)
+To:     git <git@vger.kernel.org>
+From:   Luke Diamand <luke@diamand.org>
+Subject: Track changes across multiple branches, c.f. "p4 interchanges" ?
+Message-ID: <d9022ce8-2752-db75-f4b7-d5188c41bd90@diamand.org>
+Date:   Wed, 21 Apr 2021 09:54:04 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.1
 MIME-Version: 1.0
-References: <pull.847.v6.git.git.1618255552.gitgitgadget@gmail.com>
- <pull.847.v7.git.git.1618832276.gitgitgadget@gmail.com> <878s5c3wti.fsf@evledraar.gmail.com>
-In-Reply-To: <878s5c3wti.fsf@evledraar.gmail.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Wed, 21 Apr 2021 11:52:52 +0200
-Message-ID: <CAFQ2z_MF3SbKf8yXBvkOcLGg03dVxJW3F=c6ZDUtstEbZUUMCQ@mail.gmail.com>
-Subject: Re: [PATCH v7 00/28] reftable library
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Josh Steadmon <steadmon@google.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Patrick Steinhardt <ps@pks.im>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Han-Wen Nienhuys <hanwenn@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 21, 2021 at 9:45 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> > The commits up to "hash.h: provide constants for the hash IDs" should b=
-e
-> > good to merge to 'next'.
->
-> With how Junio queues things up perhaps submitting this as another
-> "prep" series would be good, to reduce future reviewer fatigue,
-> i.e. anything we can make land on master makes re-rolls that much
-> smaller.
+We're moving over from Perforce to git.
 
-will do.
+In Perforce we can find out definitively if a given commit is on branchA 
+but not on branchB.
 
-> > There are several test fixups, but I've put them in another series beca=
-use
-> > GGG enforces max 30 commits.
->
-> I left a bunch of comments on the test prep series now. Probably good to
-> have it split up regardless of GGG limits.
->
-> Re the comments I left on the test series. I'm very happy to see the
-> start of addressing the "it must be tested" concerns I had in
-> https://lore.kernel.org/git/87wnt2th1v.fsf@evledraar.gmail.com/
+It doesn't use textual comparisons (c.f. "git change-id") but tracks 
+which changes are on which branches.
 
-It may look like the start, but I've been improving the number of
-tests that pass continuously since I posted the first version of this
-code over a year ago.
+This is invaluable for managing rapidly evolving sets of release branches.
 
-> I don't see the point of having re-rolls of this topic while the test
-> changes topic it's based on hasn't finished
-> marking/splitting/refactoring the various tests that do and don't depend
-> on the file backend.
->
-> At least when I review it I'm just left with going in circles digging
-> into one of those failing test, figuring out if it's really
-> refs/files-backend.c specific or not etc., and as long as we can't turn
-> on GIT_TEST_REFTABLE=3Dtrue in CI as part of this series I don't see a
-> path to making it advance to next->master.
+How do I go about doing this in git?
 
-The point of posting updates is to garner feedback, especially from
-people familiar with the Git code itself. If you would like this
-effort to move forward faster, I am most in need of review for the
-part that glues the library together with the git code itself (ie. the
-commit introducing refs/reftable-backend.c).
+1. Cherry
 
-> > Due to using uncompress2, this build fails on the Linux32 builder; what=
- is
-> > the magic incantation to run autoconf?
->
-> Doesn't this just need a NO_UNCOMPRESS2 for Linux32 in ci/lib.sh? See
-> the lines just below that for e.g. NO_REGEX for another CI target.
+"git cherry" - but surely once the change gets sufficiently mangled by 
+conflicts, won't it end up being "lost" ? That has certainly been my 
+experience in the past.
+
+2. Merge
+
+I could work on feature branches, and then "git merge --no-ff" the 
+feature branch - but when I do that I end up pulling all the intervening 
+history over. e.g.
+
+
+                - X -         bugfix
+              /       \
+    A - B - C - D - E - M     main
+     \
+      R  relbranch
+
+If I do "git merge bugfix" onto relbranch, then as well as getting X, I 
+also get B and C, which I don't want.
+
+3. Always start from a merge base
+
+I could tell people that if they are making a bugfix that will need to 
+go onto multiple branches, that they need to start from some common 
+merge base, and then merge to the final target branches.
+
+That's possible, but is quite a big change from the current workflow of 
+working on main and then "p4 integrate" individual changes over.
+
+And invariably people will start out thinking their change is not a 
+bugfix, but a new feature, and then find that actually we need the new 
+feature on the release branch.
+
+4. Use gerrit change-ids
+
+We could adopt gerrit change-ids. It feels like this is kind of a 
+kludge, but perhaps it's the only thing that really works?
+
+Is there something better?
 
 Thanks!
+Luke
 
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
 
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
 
-Registergericht und -nummer: Hamburg, HRB 86891
 
-Sitz der Gesellschaft: Hamburg
-
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
