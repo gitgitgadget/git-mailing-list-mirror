@@ -2,129 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B2A1C433B4
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 19:31:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D70EC433ED
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 19:33:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C385061439
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 19:31:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 63E7061445
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 19:33:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236322AbhDUTbf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Apr 2021 15:31:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40388 "EHLO
+        id S242839AbhDUTdm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Apr 2021 15:33:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40852 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235159AbhDUTbc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Apr 2021 15:31:32 -0400
-Received: from mav.lukeshu.com (mav.lukeshu.com [IPv6:2001:19f0:5c00:8069:5400:ff:fe26:6a86])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A096C06174A
-        for <git@vger.kernel.org>; Wed, 21 Apr 2021 12:30:59 -0700 (PDT)
-Received: from lukeshu-dw-thinkpad (c-73-229-136-185.hsd1.co.comcast.net [73.229.136.185])
-        by mav.lukeshu.com (Postfix) with ESMTPSA id C9E7080590;
-        Wed, 21 Apr 2021 15:30:57 -0400 (EDT)
-Date:   Wed, 21 Apr 2021 13:28:47 -0600
-Message-ID: <87fszj309c.wl-lukeshu@lukeshu.com>
-From:   Luke Shumaker <lukeshu@lukeshu.com>
-To:     Elijah Newren <newren@gmail.com>
+        with ESMTP id S235159AbhDUTdl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Apr 2021 15:33:41 -0400
+Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B334CC06174A
+        for <git@vger.kernel.org>; Wed, 21 Apr 2021 12:33:07 -0700 (PDT)
+Received: by mail-ot1-x334.google.com with SMTP id f75-20020a9d03d10000b0290280def9ab76so34852503otf.12
+        for <git@vger.kernel.org>; Wed, 21 Apr 2021 12:33:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=R+BL8Yeo2JxIN6cxUqQpN+GzNXIJXbOrH04kIVNbl6E=;
+        b=ULRLATSXFIIx0o13dlMNgrQ9ySJz58y9uFZEAhIwSLiS0pDK6CSTepX1DbxTtoAqWS
+         6LHj20p23GQBebXyM5sNou34bnbwKv3LVKdkml1Oc4a9JjQQ6QMVcmVmHuI52OUuCL89
+         l7snqaBeb1r4d3Y+GElkmSkWGO1GNl3gfQwt8WgleWPwk+aTFAStSLNwEbzdh9fbifGy
+         OyNMUhfhT530F2u8wUqI9naSUOPXYFezhivlr/NhjLXOfROgHaqEryiASdKP/pYsa+eo
+         iROGpZsJ8yUtwaG706nmNQiLmLbpIKNfr9c5JRUITRXZ8cPahqrRXcAQSRQL1TXzbSlY
+         aZWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=R+BL8Yeo2JxIN6cxUqQpN+GzNXIJXbOrH04kIVNbl6E=;
+        b=SztEeb559FYMc84/wv+RiDshJEajk0HkcUMq6YQxqBBfAcVf7nLBKki2sqShgdPx2f
+         tp7FweKaOrYwbciYxPHrLk9JIXn5sVY+xN2JhuUtwLHSxPsEYI+OssYZJGkpkdv+tdSL
+         4wauYh/2i+5pd4s64naLObjEGUQLJoUb69jzVOsl9Fir/M3ePn7Zvn64dTa/u0rAI32p
+         MTsmm9qiNPfMdGSHprEe5EPKwBds3pCv+IZehMHvLxGf6DLZn5ULLxtb4G0A34Kzo7G6
+         tm54p45U8q1rMSi8OVmnVykF8gUAd2QiNWm+aZcoLDRFtzIlui8tjBCL6HaeMu6cVH+V
+         xx7Q==
+X-Gm-Message-State: AOAM530RbJ5HUrELdxSfiMnf1me2RvGxIk/nPlB/JJBt/MR0V5eelC56
+        E54e1LvIvVMQgtEeMDrgr5inwwYKPqcy3WCM92E=
+X-Google-Smtp-Source: ABdhPJwkdeqBi7vOUzjsBFkmCSnp0brzwt1v6HBAOxkZ9kKZrCEgo33qXaAlEmWxdk7dyFIMPGVn8o4ROmly8dKXkDU=
+X-Received: by 2002:a05:6830:108d:: with SMTP id y13mr18790735oto.162.1619033587164;
+ Wed, 21 Apr 2021 12:33:07 -0700 (PDT)
+MIME-Version: 1.0
+References: <20210420190552.822138-1-lukeshu@lukeshu.com> <xmqqa6ps4otm.fsf@gitster.g>
+ <CABPp-BF-rHnxvz0sAFAujXkiNwSjtpRQA4uvxT=a3z8v_sYbAA@mail.gmail.com> <xmqqy2dbxybn.fsf@gitster.g>
+In-Reply-To: <xmqqy2dbxybn.fsf@gitster.g>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 21 Apr 2021 12:32:55 -0700
+Message-ID: <CABPp-BF373j2BbyTgTJbKzDP9Y5R2jZVNqWeOqLtypdz6VZRMQ@mail.gmail.com>
+Subject: Re: [RFC PATCH] fast-export, fast-import: Let tags specify an
+ internal name
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Luke Shumaker <lukeshu@lukeshu.com>,
         Git Mailing List <git@vger.kernel.org>,
-        Luke Shumaker <lukeshu@datawire.io>
-Subject: Re: [PATCH 0/3] fast-export, fast-import: implement signed-commits
-In-Reply-To: <CABPp-BEz-QykELpvofsrZzbQtQUE0fvijUcaJXhRFbCZpKJuYQ@mail.gmail.com>
-References: <20210419225441.3139048-1-lukeshu@lukeshu.com>
-        <CABPp-BEz-QykELpvofsrZzbQtQUE0fvijUcaJXhRFbCZpKJuYQ@mail.gmail.com>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?ISO-8859-4?Q?Goj=F2?=) APEL-LB/10.8 EasyPG/1.0.0
- Emacs/27.2 (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
+        Luke Shumaker <lukeshu@datawire.io>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 21 Apr 2021 12:12:40 -0600,
-Elijah Newren wrote:
-> 
-> On Mon, Apr 19, 2021 at 3:54 PM Luke Shumaker <lukeshu@lukeshu.com> wrote:
+On Wed, Apr 21, 2021 at 11:54 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Elijah Newren <newren@gmail.com> writes:
+>
+> > On Tue, Apr 20, 2021 at 2:40 PM Junio C Hamano <gitster@pobox.com> wrote:
+> >> ...
+> >> +The `<refname>` is prefixed with `refs/tags/` when stored
+> >>  in Git, so importing the CVS branch symbol `RELENG-1_0-FINAL` would
+> >> -use just `RELENG-1_0-FINAL` for `<name>`, and fast-import will write the
+> >> +use just `RELENG-1_0-FINAL` for `<refname>`, and fast-import will write the
+> >>  corresponding ref as `refs/tags/RELENG-1_0-FINAL`.
 > >
-> > From: Luke Shumaker <lukeshu@datawire.io>
+> > Going on a slight tangent since you didn't introduce this, but since
+> > you're modifying this exact documentation...
 > >
-> > fast-export has an existing --signed-tags= flag that controls how to
-> > handle tag signatures.  However, there is no equivalent for commit
-> > signatures; it just silently strips the signature out of the commit
-> > (analogously to --signed-tags=strip).
-> >
-> > So implement a --signed-commits= flag in fast-export, and implement
-> > the receiving side of it in fast-import.
-> 
-> I understand adding an option to fast-export, but shouldn't there also
-> be one for fast-import?  In particular, I can see users wanting any of
-> the following:
-> 
-> * I want these signatures exported and imported because I know I won't
-> tweak them and they'll still be valid.
-> * I want these signatures even though they'll be invalid.  Whatever,
-> I'll just deal with it.
-> * I want the signatures exported and imported *when they will remain
-> valid*.  Always exporting them makes sense, because fast-export
-> doesn't know about tweaks I'll be making to its output before feeding
-> it to fast-import.  But fast-import should have options to
-> strip-if-invalid/warn-if-invalid/error-if-invalid/import-without-warning
-> for these tags (though they don't have to use these exact names).
-> 
-> I know fast-import doesn't do anything of the sort for signed tags,
-> but fast-import also doesn't support signed tags as per this comment
-> in the documentation:
-> 
-> """
-> Signing annotated tags during import from within fast-import is not
-> supported.  Trying to include your own PGP/GPG signature is not
-> recommended, as the frontend does not (easily) have access to the
-> complete set of bytes which normally goes into such a signature.
-> If signing is required, create lightweight tags from within fast-import with
-> `reset`, then create the annotated versions of those tags offline
-> with the standard 'git tag' process.
-> """
-> 
-> it just happens to "work" since the signature is part of the
-> annotation and fast-import doesn't attempt to read or validate the
-> annotation in any way, treating it as free-from text.  I'd say users
-> relying on this are on somewhat shaky ground.
-> 
-> But here you're adding explicit fast-import directives to the language
-> for signatures of commits, so you clearly do need to care.  And I
-> suspect fast-import's default should be error-if-invalid rather than
-> import-without-warning.
+> > I hate the assumed "refs/tags/" prefix.  Especially since ...
+> > ... The special casing reminds me of the ref-updated hook in
+> > gerrit
+>
+> Gerrit and fast-import?  What is common is Shawn, perhaps ;-)?
 
-I agree that this would be a good and useful flag to add to
-fast-import.  However, I don't think that it's a necessary thing to
-add for this work, and I think that it's beyond the scope of what I am
-willing to implement.
+:-)  To be fair, though, given the number of things he created for us,
+it's inevitable there'd be a few small things causing problems and
+these are small potatoes in the big scheme of things.  ref-updated was
+fixed years ago, and it sounds like Luke is about to fix the tag
+prefix assumption for us.
 
-I see where you're coming from when you say that tags and commits are
-different in this regard, but I don't agree.  The signed tags
-situation does look like shakey ground, but IMO once fast-export
-gained the --signed-tags option, that was saying "this is the correct
-and stable way of encoding a tag signature in a fast-import stream".
-The fact that it is wonky in that it is shoved in to the message is an
-accident of implementation history, and to me doesn't say anything
-about the nature of the thing.
+> > broken given the fact that the name inside the tag didn't match the
+> > name of the actual ref.  (To be honest, though, I was never sure why
+> > the name of the tag was recorded inside the tag itself.)
+>
+> The name of the tag and the name of the object has to be together
+> for a signature over it to have any meaning, no?
 
-I think that such a flag in fast-import is just as worthy of existing
-for tags as it is worthy of existing for commits.
-
-Actually, I'm not sure I think such flags belong in fast-import
-itself, I think it may make good sense to have such a filter
-implemented as an external tool.  Fast-export and fast-import seem to
-avoid using the many parts of standard git library functions,
-apparently (to me) to avoid allocations because "fast".  Given that
-trouble gone to just to avoid allocations, calling out to GPG seems
-prohibitively slow by comparison.  But I agree such functionality
-would be good and useful, regardless of whether I think it belongs in
-fast-import itself.
-
--- 
-Happy hacking,
-~ Luke Shumaker
+Oh, I guess if you treat the signature as affirming that not only do
+you like the object but that it has a particular nickname, then yes
+you'd need both.  I had always viewed a signed tag as an affirmation
+that the object was good/tested/verified/whatever, and viewed the
+nickname of that good object as ancillary.  I have to admit to not
+using signed tags much, though.
