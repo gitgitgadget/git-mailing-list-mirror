@@ -2,118 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 54648C433B4
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 22:33:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DB753C433ED
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 23:05:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 19A9A613FB
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 22:33:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BA306613F6
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 23:05:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243727AbhDUWeJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Apr 2021 18:34:09 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:39004 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S235362AbhDUWeI (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 21 Apr 2021 18:34:08 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S1343631AbhDUXFr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Apr 2021 19:05:47 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:64812 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234654AbhDUXFr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Apr 2021 19:05:47 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 24E3A121B23;
+        Wed, 21 Apr 2021 19:05:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=whyr7EOwoW8rENu+K3srlHzpaPE=; b=RUHszL
+        GVHhxKUhpfuFsStW1g3KDCol27XtjBi3kNOiphsOD8g72SOZmoK2jSMqfahbjwDC
+        tEXm14tGUaZ2iWpojR5hK6IIjzbJxStz2YjqTBUeWQbyWze/vLKQGAgJYBZzbQGT
+        GP+d2ZmGi+6urLpxLaoJnmEA0eipIaXciqQAo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=dQsP4F3ZXPBeoEqJjVHJj02kbBzf35Ch
+        hrc+de7Bu6oJStBpa0iRtFeq+GNxeqJuPyVEbdhdAMk73lwrJq+oTzLEkYAWEjJT
+        ImvtoiYKYsjdkzdJyroll+YwvJdPVFUXusgv+xLjMeTYhGRKpQ7TnDfHN8jxSj34
+        iWKbn9HSuYU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1DEA0121B22;
+        Wed, 21 Apr 2021 19:05:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 0D6C76042C;
-        Wed, 21 Apr 2021 22:33:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1619044384;
-        bh=pgtFyabPkQqmFSGzN25CVkl7hiAz5Cdqo8HorYi++yU=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=vPJsysiPobQAWnwARWtxXXB3+fmoe0R0qHcTy5wifPPxn8i4daSkb0GBsQNHrtB5m
-         wS25nfm6Wx5t2c+XuN4Au2zhAwuyY+FXoUeJFlGttwOZcth1/K87hasz/FqkaxBl47
-         XVUJjnjO0/QfFsxCYShnGRU1wMjBzW5YywxFlFakaRxmI1Dd7dgnRuFz/f6xOcFoCq
-         ed2K0ajGtekaXY7xfdug2NTl7woZA9n6+CEdffYs8e6I8he5KxgyUcID8oDCGVXAue
-         So1IxmLhrQxCkxxxkkpy1MWtf6l3ypEZPm1Sudcwcnd8ODLxubXCuypZf4+2vFadAR
-         xj17ozVul2PngZNMijeFOUsjMWV1JJhzlIRovjMgue824w8A/woFKyTRObQtCm80s8
-         fO/R7zUfU3yQ7S/+UIdhCZ0/tMDQ4idTdDujhPUvf0Izu0Y2H/j+WAdfzHdNUA2mG5
-         Ks6NFHuyLEUp+sJ4I/53fA0d1KU+zbRUr6wyrYYa39zNP0ek/cp
-Date:   Wed, 21 Apr 2021 22:32:57 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>, Eric Wong <e@80x24.org>
-Subject: Re: What's cooking in git.git (Apr 2021, #05; Mon, 19)
-Message-ID: <YICoGeaxHdf6pemo@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>, Eric Wong <e@80x24.org>
-References: <xmqqtuo17t6t.fsf@gitster.g>
- <87mttt2hcu.fsf@evledraar.gmail.com>
- <YH9gPt410QBRjG59@camp.crustytoothpaste.net>
- <87tuo02gdd.fsf@evledraar.gmail.com>
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 5FC04121B21;
+        Wed, 21 Apr 2021 19:05:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+        git@vger.kernel.org
+Subject: Re: Random GitHub Actions added to git/git???
+References: <xmqqmttt7q8f.fsf@gitster.g>
+        <nycvar.QRO.7.76.6.2104201748400.54@tvgsbejvaqbjf.bet>
+        <xmqqzgxs4sed.fsf@gitster.g>
+        <nycvar.QRO.7.76.6.2104211437040.54@tvgsbejvaqbjf.bet>
+Date:   Wed, 21 Apr 2021 16:05:08 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.2104211437040.54@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Wed, 21 Apr 2021 14:38:06 +0200 (CEST)")
+Message-ID: <xmqqlf9bxmqj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Swl0Rq7kzf8gsLYM"
-Content-Disposition: inline
-In-Reply-To: <87tuo02gdd.fsf@evledraar.gmail.com>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 05925730-A2F6-11EB-98F2-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
---Swl0Rq7kzf8gsLYM
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On Tue, 20 Apr 2021, Junio C Hamano wrote:
+>
+>> How well are our refs protected from these random "Actions"?  Can
+>> somebody spam us with a pull request with a new "workflow" that
+>> advances one of our integration branches ;-)?
+>
+> The GITHUB_TOKEN that is used by the GitHub workflows is generated in two
+> ways, depending whether a PR originated from the same repository or from a
+> fork. If it came from a fork, the token has only read permissions.
+>
+> So I'd say we're still safe.
 
-On 2021-04-21 at 08:26:06, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> Using something like the:
->=20
->     git --object-format=3Dsha256 <cmd>
->=20
-> Approch I suggsted in
-> https://lore.kernel.org/git/8735vq2l8a.fsf@evledraar.gmail.com/ ?
+Yeah, their blog post came to my inbox, which was quite timely, this
+morning ;-).
 
-Yes, I generally like that approach and will likely adopt it with some
-modifications.  For example, I think we'll still need some sanity checks
-to be sure that we're not allowing users to specify a totally different
-algorithm from what's in the repo when working with the repo because
-that will likely break things in a variety of ways.
+https://github.blog/changelog/2021-04-20-github-actions-control-permissions-for-github_token/
 
-What I want to do right now is figure out what additional changes are
-going to be required and in which programs these changes should be made,
-and that requires that I do more work in the series so I can have a
-better idea of what's involved.  Since that's going to take some time,
-I'm going to drop those patches so I can get the rest of the series in
-shape.
-
-> In any case having something like the OPT_OBJECT_FORMAT() I added in
-> that WIP patch would make sense wouldn't it, to reduce the duplication
-> of current "object-format". It would also save each current caller from
-> doing the "unknown" and other sanity checks, since they could rely on
-> parse_options() having died in that case.
-
-I agree that's a nice improvement and would be happy to see it come in
-independent of my changes.  I'll probably pick it up sooner or later if
-you don't get to it first.
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
-
---Swl0Rq7kzf8gsLYM
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.27 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYICoGAAKCRB8DEliiIei
-gVsBAQDkjYosIu0s+LXpNJUAKxnaFJRpWuUCoBty+77t2LkWRgD+OS1hKC8kM7ti
-tl9xyCUXtvJWPGOg28UwyA/QOnp6QwY=
-=405j
------END PGP SIGNATURE-----
-
---Swl0Rq7kzf8gsLYM--
