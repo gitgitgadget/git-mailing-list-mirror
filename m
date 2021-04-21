@@ -2,141 +2,163 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-17.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A1A4C433B4
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 00:58:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 08293C433ED
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 01:04:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 04604613F5
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 00:58:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C959F61409
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 01:04:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234584AbhDUA6k (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Apr 2021 20:58:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48974 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234566AbhDUA6h (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Apr 2021 20:58:37 -0400
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5617AC06174A
-        for <git@vger.kernel.org>; Tue, 20 Apr 2021 17:58:05 -0700 (PDT)
-Received: by mail-ot1-x330.google.com with SMTP id i26-20020a9d625a0000b02902a2119f7613so733218otk.10
-        for <git@vger.kernel.org>; Tue, 20 Apr 2021 17:58:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=3+Ynm9BFGp1mEgdFrYJKFgsgSOS/FXaiLCsJ2C+ZoJo=;
-        b=VRfJFIuVfT27yvu9mPYDjl32iK57OOhBTr90eaxzCwx4mIHe8FztYfTZTno4iSKZES
-         o1dngFPU+pk4gmPNZaU+Pn/qLOqriiQObPX3S1/RkKroM/6YLFzOYd1n+fwDJ6eRQVSA
-         ryM+2C8uNWxF2tgIwxhZdX1NdK3Lpu6zuyQmPCRzLi0xS3bMQ5lu2nJwik+n5NuEOr0e
-         5+olcfIuR2EbiJtPop+hsuxZ5qDdjwz0BN/PVbEp+zkwArW6orA49XLR1zIwiBhzp2zM
-         vsX//p7TzmVzXMNxPkceMgrM4eET2Jf8Oy4OaUBK6klFIbJQdSncuAGDlTl1R8LkI939
-         0Tdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=3+Ynm9BFGp1mEgdFrYJKFgsgSOS/FXaiLCsJ2C+ZoJo=;
-        b=sjz4fEalD0qCIbYQZiso6j5itj70MLO0zHj09uRLbatxVwR0PCuMTKq2RQAnViLjkb
-         9G2PIpP/eBk2TDPJFeFXtPDIfhKG8TT/iUc9aUKOYfM3vNVuDyPgnsSqv4CNjFy8qLSh
-         Oq9d/KIpGKE8dBYtYXYBmrV3NeKisbHU6udvaaXz/bAm1A7arcLoI/2N6TbQSa47z3Vf
-         Lrw2ruG2pIDceg2CWMnENVunDMnNADtjurTV+Kw2SnQKAAE6319RHeU6LCSL0xDBRyb5
-         zqWWzd0E/Ykl16PjgrMwBK2X3xeplFocWMDqf9cplH/YIECXVeVEiJJvk/pISzfdkncK
-         B7KQ==
-X-Gm-Message-State: AOAM530hr41V9GyBr3NPf6H9OT231fV9vpJTZCTy9pbRHTBs9BXl/Jn1
-        hg+6iPPIupEYMu/YC10gWRZ/6NYCgFXn+DFA5/g=
-X-Google-Smtp-Source: ABdhPJxBgQHuFYskhhclVJiYnItFbUlceVxHrIha8T2LWxWkZhFI0PsN6+gqx/SkL0RCfXm8spJKMht2UhL9tWgnvW8=
-X-Received: by 2002:a9d:8a6:: with SMTP id 35mr21032532otf.316.1618966684785;
- Tue, 20 Apr 2021 17:58:04 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.932.git.1618322497.gitgitgadget@gmail.com> <6d7f30f2b90ac2151645a29c6a12639074c8f2d3.1618322498.git.gitgitgadget@gmail.com>
-In-Reply-To: <6d7f30f2b90ac2151645a29c6a12639074c8f2d3.1618322498.git.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 20 Apr 2021 17:57:53 -0700
-Message-ID: <CABPp-BHf-Tq7kmoWFGu5jA7j8-MiqhysG-vjVvGfUwKMe9Z2-g@mail.gmail.com>
-Subject: Re: [PATCH 08/10] pathspec: stop calling ensure_full_index
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
+        id S234538AbhDUBFS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Apr 2021 21:05:18 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:38178 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S234379AbhDUBFR (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 20 Apr 2021 21:05:17 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A23656044F;
+        Wed, 21 Apr 2021 01:04:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1618967054;
+        bh=zJ8IVFATBCJf4VWsK7rqtOYGPKydl6SRZtGgccOK2hw=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=fXZkpxH97H8TtwrohHD/Gc1n8sW8qBmA2tnW9UDZ3o9ui0CSn9KxhOCiPSAqt2MYp
+         Ex+HYwvJRPf7YeVhp/VrE5/8D9u3YSbviYuW3GKO56tXBmog+FASkVSND5T6kX7bOl
+         Xe5ABExMYiLU0V0QDolb1syNc+IXcu+LuAS3gVRzu4PygXRzle5OE9dWnUTPVlWu/5
+         Ma03+peDBuezfQPaaD088Vx46sGntXuGqRU2Egk+6ZKpYST4e4AWRfj5CmcrGyZrd7
+         W73pdEvsbbqpqskW8PTvyGweZrww9Dvn7zwis/gUb+/TPDHJTlmaiM3vQ8co8AAUA0
+         WPz6PFVjArBJvgd+vuGTrOQn4HO1JyGS59k1e1d9u4OV2hEp3/VPWDEkibuc31qbZp
+         T8SbyQ97/Lh9wsk1iM4uAW1IDjfquFPIfxmqwvirp2SnzVAvcZi5ggkKVL4hL9/Nmd
+         x1JRslHaJsiNQEjy7bi6bU3zXS50+gtSgB7xoq7eTHUx7mlF6k/
+Date:   Wed, 21 Apr 2021 01:04:09 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>,
+        Jeff King <peff@peff.net>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Josh Steadmon <steadmon@google.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Patrick Steinhardt <ps@pks.im>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>
+Subject: Re: [PATCH v7 04/28] hash.h: provide constants for the hash IDs
+Message-ID: <YH96CcJhZt4CTPWD@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
         Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>,
+        Jeff King <peff@peff.net>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Josh Steadmon <steadmon@google.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Patrick Steinhardt <ps@pks.im>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>
+References: <pull.847.v6.git.git.1618255552.gitgitgadget@gmail.com>
+ <pull.847.v7.git.git.1618832276.gitgitgadget@gmail.com>
+ <f0216ae20b6988514bdb60d8fff96e18c2ce9f1d.1618832277.git.gitgitgadget@gmail.com>
+ <xmqqlf9c68iy.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="ULv/vCNLeaML0F2V"
+Content-Disposition: inline
+In-Reply-To: <xmqqlf9c68iy.fsf@gitster.g>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 13, 2021 at 7:01 AM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: Derrick Stolee <dstolee@microsoft.com>
->
-> The add_pathspec_matches_against_index() focuses on matching a pathspec
-> to file entries in the index. This already works correctly for its only
-> use: checking if untracked files exist in the index.
->
-> The compatibility checks in t1092 already test that 'git add <dir>'
-> works for a directory outside of the sparse cone. That provides coverage
-> for removing this guard.
->
-> This finalizes our ability to run 'git add .' without expanding a sparse
-> index to a full one. This is evidenced by an update to t1092 and by
-> these performance numbers for p2000-sparse-operations.sh:
->
-> Test                                    HEAD~1            HEAD
-> --------------------------------------------------------------------------------
-> 2000.10: git add . (full-index-v3)      1.37(1.02+0.18)   1.38(1.01+0.20) +0.7%
-> 2000.11: git add . (full-index-v4)      1.26(1.00+0.15)   1.27(0.99+0.17) +0.8%
-> 2000.12: git add . (sparse-index-v3)    2.39(2.29+0.14)   0.06(0.05+0.07) -97.5%
-> 2000.13: git add . (sparse-index-v4)    2.42(2.32+0.14)   0.06(0.05+0.06) -97.5%
->
-> While the 97% improvement is shown by the test results, it is worth
-> noting that expanding the sparse index was adding overhead in previous
-> commits. Comparing to the full index case, we see the performance go
-> from 1.27s to 0.06s, a 95% improvement.
 
-This is awesome.  :-)
+--ULv/vCNLeaML0F2V
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  pathspec.c                               | 2 --
->  t/t1092-sparse-checkout-compatibility.sh | 6 ++++++
->  2 files changed, 6 insertions(+), 2 deletions(-)
->
-> diff --git a/pathspec.c b/pathspec.c
-> index 54813c0c4e8e..b51b48471fe6 100644
-> --- a/pathspec.c
-> +++ b/pathspec.c
-> @@ -37,8 +37,6 @@ void add_pathspec_matches_against_index(const struct pathspec *pathspec,
->                         num_unmatched++;
->         if (!num_unmatched)
->                 return;
-> -       /* TODO: audit for interaction with sparse-index. */
-> -       ensure_full_index(istate);
->         for (i = 0; i < istate->cache_nr; i++) {
->                 const struct cache_entry *ce = istate->cache[i];
->                 if (sw_action == PS_IGNORE_SKIP_WORKTREE && ce_skip_worktree(ce))
-> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-> index c210dba78067..738013b00191 100755
-> --- a/t/t1092-sparse-checkout-compatibility.sh
-> +++ b/t/t1092-sparse-checkout-compatibility.sh
-> @@ -471,6 +471,12 @@ test_expect_success 'sparse-index is not expanded' '
->         echo >>sparse-index/extra.txt &&
->         GIT_TRACE2_EVENT="$(pwd)/trace2.txt" GIT_TRACE2_EVENT_NESTING=10 \
->                 git -C sparse-index add extra.txt &&
-> +       test_region ! index ensure_full_index trace2.txt &&
-> +
-> +       rm trace2.txt &&
-> +       echo >>sparse-index/untracked.txt &&
-> +       GIT_TRACE2_EVENT="$(pwd)/trace2.txt" GIT_TRACE2_EVENT_NESTING=10 \
-> +               git -C sparse-index add . &&
->         test_region ! index ensure_full_index trace2.txt
->  '
->
-> --
-> gitgitgadget
->
+On 2021-04-20 at 19:49:41, Junio C Hamano wrote:
+> "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>=20
+> > From: Han-Wen Nienhuys <hanwen@google.com>
+> >
+> > This will simplify referencing them from code that is not deeply integr=
+ated with
+> > Git, in particular, the reftable library.
+> >
+> > Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+> > ---
+> >  hash.h        | 6 ++++++
+> >  object-file.c | 6 ++----
+> >  2 files changed, 8 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/hash.h b/hash.h
+> > index 3fb0c3d4005a..b17fb2927711 100644
+> > --- a/hash.h
+> > +++ b/hash.h
+> > @@ -161,12 +161,18 @@ static inline int hash_algo_by_ptr(const struct g=
+it_hash_algo *p)
+> >  	return p - hash_algos;
+> >  }
+> > =20
+> > +/* "sha1", big-endian */
+> > +#define GIT_SHA1_HASH_ID 0x73686131
+> > +
+> >  /* The length in bytes and in hex digits of an object name (SHA-1 valu=
+e). */
+> >  #define GIT_SHA1_RAWSZ 20
+> >  #define GIT_SHA1_HEXSZ (2 * GIT_SHA1_RAWSZ)
+> >  /* The block size of SHA-1. */
+> >  #define GIT_SHA1_BLKSZ 64
+> > =20
+> > +/* "s256", big-endian */
+> > +#define GIT_SHA256_HASH_ID 0x73323536
+>=20
+> I agree that it makes sense to have symbolic constants defined in
+> this file.  These are values that fit in the ".format_id" member of
+> "struct git_hash_algo", and it is preferrable to make sure that the
+> names align (if I were designing in void, I would have called the
+> member "algo_id" and made the constants GIT_(SHA1|SHA256)_ALGO_ID).
+>=20
+> Brian?  What's your preference ("I am fine to store HASH_ID in the
+> '.format_id' member" is perfectly an acceptable answer).
+
+I slightly prefer FORMAT_ID because it's consistent (and for that reason
+only), but if HASH_ID is more convenient, that's fine; I don't have a
+strong opinion at all.  Definitely don't reroll the series because of my
+slight preference.  Either way, I think these are fine things to have as
+constants, and I appreciate you hoisting the comments here.
+--=20
+brian m. carlson (he/him or they/them)
+Houston, Texas, US
+
+--ULv/vCNLeaML0F2V
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.27 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYH96CQAKCRB8DEliiIei
+gbxOAQCypJKWGnyA+/dDNzyHng2A8p+uhVxCvUoShwdtU0dY5QEA1lm7g2dMCYBj
+Z22JYkTpydTB/dguSYPPRBnlhGo4bAU=
+=hg1L
+-----END PGP SIGNATURE-----
+
+--ULv/vCNLeaML0F2V--
