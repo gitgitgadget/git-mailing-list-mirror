@@ -4,67 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E1AC6C433B4
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 05:47:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7BFDC433B4
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 05:52:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B17DD6141C
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 05:47:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ACB0A6101D
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 05:52:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234769AbhDUFsY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Apr 2021 01:48:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54920 "EHLO
+        id S235203AbhDUFwd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Apr 2021 01:52:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230516AbhDUFsX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Apr 2021 01:48:23 -0400
-Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com [IPv6:2607:f8b0:4864:20::d2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0292CC06174A
-        for <git@vger.kernel.org>; Tue, 20 Apr 2021 22:47:49 -0700 (PDT)
-Received: by mail-io1-xd2d.google.com with SMTP id v123so34047949ioe.10
-        for <git@vger.kernel.org>; Tue, 20 Apr 2021 22:47:49 -0700 (PDT)
+        with ESMTP id S235285AbhDUFwa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Apr 2021 01:52:30 -0400
+Received: from mail-il1-x12a.google.com (mail-il1-x12a.google.com [IPv6:2607:f8b0:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4973DC06174A
+        for <git@vger.kernel.org>; Tue, 20 Apr 2021 22:51:56 -0700 (PDT)
+Received: by mail-il1-x12a.google.com with SMTP id c15so34037177ilj.1
+        for <git@vger.kernel.org>; Tue, 20 Apr 2021 22:51:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=ohc/pHc3LT8vOmeYoBd2vlTkk3JjNMFlPx0MuHKs4AM=;
-        b=ahxCJvVZItOqVTcXAewP0V6csLo7v/khx8RZdozaQFJh0L54FOOcwt2mIBmTSNz7uT
-         0Dom9EFcVn5MKZkeObsePQUVq1kd/vjiAggz0aKZXyJpcEhRlnC9fQjfcGKa/Gc9oi4q
-         uN9m6qAdHj78V5cD6RHo0tErjdZvTXe22AU/z+vP2kgTKSZaTJ8cXuuKPpSmViJJ/H+u
-         zKFLf0k9e12DAD5I85nMDCx+x28e87QfIVQ9xmxYSKRU6AMK5xxH4qHTwQNpEsaAbSNU
-         kPSXOpwMKXMNisq6zZ7XXjVtbwEO7HrrohJGWb1ad1W0FIsWWe6dZRFhUKZmhrlHLCa8
-         CVAw==
+        bh=r7bRnE5Igd5njw0BEwIQV+mEGlzCsGWZx9gPQ50MVqM=;
+        b=O4l7M0kz7CacGCsTZBu723ZcchUHEtgcqUegJIsz1fbjkcVW6jTKPhUBA43ZiCqTxC
+         TV9TJovgxiC5l+uDBFc6/JtXelXUTFZRKJYiPbFjkuRhnEwRK2ssH+n5US9D6nz3ZMLR
+         PDZG5QJzHXpVEI4fdC2z10PHyDnSSFZJpJIg/XTJvs93dFe0PdavYQey4NauZQL5hXsd
+         Ep4lrahx77TmzxxfGq78PdOBSd6NB7/maGN0c0zYYOnwGIvRKQhUOUlpORIi+Gc/TN8u
+         6YxjfRJEWUDbN7gwLE3cLgEj4gytbxwMfrBAHgj/TEM9ycAB+S7X/PuZp6JeAnIAoXQI
+         x1og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ohc/pHc3LT8vOmeYoBd2vlTkk3JjNMFlPx0MuHKs4AM=;
-        b=DZtFg4Q9dsEmIRDCJtAWOTM+WD1W/nwI7c9J0DJRmc9d1hCyZnH/qQRs47lU+wbZdX
-         C5ZFXAs4Xkr8x/zZ/bIsom13voLf12vE1nrDYSKusz9EWD/OR4w3QdMnrU2V1VBT3JdI
-         o4TJWp4bQ4tzaFtTVKwJusEs2AegE+N2G5FBaaGhFIs59Epv6nrLFYoFUYuW/blJUPgR
-         UQ9+9keR7D/8mTBlWcETGVBzKLTjg3eOQzUCiP82ri3sv706wKEcjqhNPbrzIXwd/+Xe
-         AIw9B5XGt1KpAEN9yoPN5qQbl8+bqtQcvR/8m9dtJQZBbLqpJjdJGpKCzih+xXprkW8p
-         m+ow==
-X-Gm-Message-State: AOAM531/C8OAwnc0CLx08xLrLxrKo+Ii9nRka6mU4AhC7zmnRbmAnlGt
-        LAfsKLdHfzscdh7MhRXb900NuEtYW5amKDh1UIQ=
-X-Google-Smtp-Source: ABdhPJwhX2PdIwy2O2abaseljqD08osu7nc25HNho+7G0lQdsomA9PunqbReHboH1vjboqzyP1hOtbSQnUIheAdfgnE=
-X-Received: by 2002:a5d:848a:: with SMTP id t10mr22469912iom.68.1618984069299;
- Tue, 20 Apr 2021 22:47:49 -0700 (PDT)
+        bh=r7bRnE5Igd5njw0BEwIQV+mEGlzCsGWZx9gPQ50MVqM=;
+        b=oQOf6HtI6BI3Q0Fuzh3qNO7GPesH3iyYu52MN16JKyOLZtofk4cLjrUpY3QaiYFAuk
+         omaH6rw3vMzSvqk6+0AjkY7bbJ9qpnyTmH37K6MlLzG5O84MuZmLu7ZUhzVq7wLsJbXZ
+         /Wo+ZFBwXB2Rmocqkmrlk4KWRomcoM08m6fqZnfacPjBXrtipC1WRMKi+tjq3GzQWrGG
+         gN1UduR0dwzRZjzORaK1LpNnOoiba0jtiLI5vwuFPsuJjhPcLrheyJgKkI2P1065Kntc
+         XMrJjh2RjHinEJ5QfvKVdyLUJZVjGy+WK954/aBWgK6wkX8Lc2snZDggO/oONOdMcD2U
+         m1IA==
+X-Gm-Message-State: AOAM531TggPpID/9wm6n9sPT03QzTQ/jOENR3tWJZx1E/gsEXq2S+ETq
+        MrytIYOb+NISf+otDXpat0zWyFevJuT5ZeDZ3YRuzLngY8tFJbJXaBU=
+X-Google-Smtp-Source: ABdhPJz3U5d2AhUAFVBk72tB4YalCBxVqQCvzIoxHvFOaGbSE5LHqvqHjHqT+IjzJ+yvMvzWh91pZZ1hbj9B/GnRPpI=
+X-Received: by 2002:a92:cf45:: with SMTP id c5mr23509428ilr.259.1618984315821;
+ Tue, 20 Apr 2021 22:51:55 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.913.v10.git.1618562875.gitgitgadget@gmail.com>
- <pull.913.v11.git.1618672417.gitgitgadget@gmail.com> <xmqq5z0kbl8x.fsf@gitster.g>
- <CAOLTT8RKCV+Kpya-_AVjuVGWzs1WtGS8n_+sD0FVzwEpeXGwCw@mail.gmail.com> <xmqqfszk1ot6.fsf@gitster.g>
-In-Reply-To: <xmqqfszk1ot6.fsf@gitster.g>
+References: <pull.928.git.1617975348494.gitgitgadget@gmail.com>
+ <4c4eded7-3bb3-7ae9-6455-468b9522978c@web.de> <xmqqeef47s5k.fsf@gitster.g>
+In-Reply-To: <xmqqeef47s5k.fsf@gitster.g>
 From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Wed, 21 Apr 2021 13:47:38 +0800
-Message-ID: <CAOLTT8QUA+m1W6-v=ZA205SZo8G5GBKMzJHBzU8DuQSTKiPUBw@mail.gmail.com>
-Subject: Re: [PATCH v11 0/2] [GSOC] trailer: add new .cmd config option
+Date:   Wed, 21 Apr 2021 13:51:44 +0800
+Message-ID: <CAOLTT8TQfFjgcwQrf88SgMOYubwy1TsX7qgN2TbLZp=daTZ2Bg@mail.gmail.com>
+Subject: Re: [PATCH] [GSOC] ref-filter: get rid of show_ref_array_item
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>
+Cc:     =?UTF-8?B?UmVuw6kgU2NoYXJmZS4=?= <l.s.r@web.de>,
+        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Hariom Verma <hariom18599@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Derrick Stolee <stolee@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
@@ -72,97 +74,49 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B44=E6=9C=8821=E6=97=
-=A5=E5=91=A8=E4=B8=89 =E4=B8=8A=E5=8D=888:09=E5=86=99=E9=81=93=EF=BC=9A
+=A5=E5=91=A8=E4=B8=89 =E4=B8=8A=E5=8D=882:00=E5=86=99=E9=81=93=EF=BC=9A
 >
-> ZheNing Hu <adlternative@gmail.com> writes:
+> Ren=C3=A9 Scharfe. <l.s.r@web.de> writes:
 >
-> > OK, I understand, then I can wait for a while until `trailer_cmd` merge
-> > to master.
+> >> @@ -452,10 +453,9 @@ static void print_ref_list(struct ref_filter *fil=
+ter, struct ref_sorting *sortin
+> >>                      fwrite(out.buf, 1, out.len, stdout);
+> >>                      putchar('\n');
+> >>              }
+> >> -            strbuf_release(&err);
+> >> -            strbuf_release(&out);
+> >>      }
+> >>
+> >> +    strbuf_release(&out);
 > >
-> >> But let's see what's new in this iteration.
-> >>
-> >>
-> >> >       +#!/bin/sh
-> >> >      -+test -n "$1" && git shortlog -s --author=3D"$1" HEAD || true
-> >> >      ++if test "$#" !=3D 1
-> >> >      ++then
-> >> >      ++       exit 1
-> >> >      ++else
-> >> >      ++       test -n "$1" && git shortlog -s --author=3D"$1" HEAD |=
-| true
-> >> >      ++fi
-> >>
-> >> I find this dubious.  Why not
-> >>
-> >>         if test "$#" !=3D 1 || test -z "$1"
-> >>         then
-> >>                 exit 1
-> >>         else
-> >>                 git shortlog -s --author=3D"$1" HEAD
-> >>         fi
-> >>
-> >> That is, if you happened to give an empty string, your version gives
-> >> "" to <value> and returns success, letting a trailer "cnt:" with
-> >> empty value.  Is that what we really want?
+> > err is no longer released, and it is also not reset in the loop.
+> > That change is not mentioned in the commit message, but it should.
+> > Why is it safe?  Probably because format_ref_array_item() only
+> > populates it if it also returns non-zero and then we end up dying
+> > anyway.
 > >
-> > If it's the user use `--trailer=3D"cnt:"` instread of command implict r=
-unning,
-> > I think keep it is right.
+> > That makes leak checking harder, though -- it's not easy to see if
+> > err hasn't simply been forgotten to be released.  I'd just retain
+> > the strbuf_release() call at the end of the function -- it
+> > shouldn't have a measurable performance impact and documents that
+> > this function is cleaning up after itself.  Thoughts?
 >
-> No, if you give an empty string, you'd end up running "shortlog"
-> with --author=3D"" and give whatever random number it comes up with,
-> which I do not think is what you would want.
+> I should have responded to this comment before it was too late,
+> sorry.
 >
-> That is why --trailer=3Dcnt: without name to match --author can be
-> rejected with "exit 1" to demonstrate the feature.  The .cmd can
-> squelch not just the "unasked for extra invocation", but invocation
-> from the command line whose <value> was bogus, unlike the .runmode
-> feature we've seen proposed earlier.
->
-
-I admit that your idea makes sense, but we actually have another requiremen=
-t:
-Construct a trailer with an empty value.
-
-The Commit-Count example above may not be good, Let=E2=80=99s take a look a=
-t the
-Signed-off-by.
-
-e.g. `--trailer=3D"sign:"`, we expect to output a "Signed-off-by: ",
-then we can fill it
-with the "name <email>" pair we want, this is when we shouldn't return non-=
-zero
-and suppress its output.
-
-> >> >      +        if (capture_command(&cp, &buf, 1024)) {
-> >> >      +-               error(_("running trailer command '%s' failed")=
-, cmd.buf);
-> >> >      +                strbuf_release(&buf);
-> >> >      +-               result =3D xstrdup("");
-> >> >      ++               if (!conf->cmd || arg) {
-> >> >      ++                       error(_("running trailer command '%s' =
-failed"), cmd.buf);
-> >>
-> >> I am not sure about this part.  If .cmd (the new style) exits with a
-> >> non-zero status for user-supplied --trailer=3D<token>:<value> (because
-> >> it did not like the <value>), is that "running failed"?  The script
-> >> is expected to express yes/no with its exit status, so I would say it
-> >> is not failing, but successfully expressed its displeasure and vetoed
-> >> the particular trailer from getting added.  IOW, "|| arg" part in
-> >> the condition feels iffy to me.
-> >
-> > Well, you mean we can take advantage of non-zero exits instead of
-> > just removing implicitly executed content. I argee with you, this
-> > place is worth change.
->
-> Yup, that is what I meant.
->
-> In any case, let's see how well the base topic fares.
+> I am OK with documenting the assumption that we will die when err
+> gets populated without coming out of the loop and not releasing at
+> the end (because we would not have anything to release when we got
+> there).  I am also OK with resetting(err) in the loop (which will
+> be a no-op as err.len would always be 0 at that point, or we would
+> have died) and releasing(err) at the end.  I found it a bit funny
+> to be not resetting in the loop and releasing at the end, without
+> a comment that explains the thought behind it.
 >
 
-Yes, I don't know if Christian agrees with temporary situation.
-
-> Thanks.
+So a better solution is "without err buffer _reset() and _release()" and ex=
+plain
+the reason for "not needing to be cleaned up" in the commit message?
 
 Thanks.
 --
