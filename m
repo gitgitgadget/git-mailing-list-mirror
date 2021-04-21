@@ -2,71 +2,72 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 10089C433B4
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 08:04:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 361F4C433ED
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 08:19:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C372161158
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 08:04:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DF5E261264
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 08:19:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234218AbhDUIEk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Apr 2021 04:04:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56494 "EHLO
+        id S234623AbhDUITf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Apr 2021 04:19:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230343AbhDUIEi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Apr 2021 04:04:38 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA6D9C06174A
-        for <git@vger.kernel.org>; Wed, 21 Apr 2021 01:03:59 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id s15so48244757edd.4
-        for <git@vger.kernel.org>; Wed, 21 Apr 2021 01:03:59 -0700 (PDT)
+        with ESMTP id S234010AbhDUITe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Apr 2021 04:19:34 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86913C06174A
+        for <git@vger.kernel.org>; Wed, 21 Apr 2021 01:19:01 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id u21so62256232ejo.13
+        for <git@vger.kernel.org>; Wed, 21 Apr 2021 01:19:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
          :message-id:mime-version;
-        bh=Eh051tMwnf9O85Rtkdaf6kWB2v19Vy6AFBGlp1vrvHk=;
-        b=lDEfKPPHoXUIWyxCFg/lTUoNceklis1O5EdSQvGCVPOx3z0EAFKJvWa+jAvydM4ubG
-         Hp1atIK/1budRE/zRHuYiRGhyTUNcoI7MJNn5LFXRR7b4jLOMc6d+noTgxu0johIbmCe
-         5Zf+RH9w6pRwuGZOku5qRtAxxO8K5CCqs4Gy+iUgh/8QNNsuJOKRXJ/qDQ09c7r9wqx6
-         GdtyYiZOUZKh5kanPW+2YXW3cshh758YG6jCHp8fb4GMbVnRED4owgP54k+E4GZf9W+n
-         BdREvlb2bjvizMpkpoKPwaVIt3jrZZxwpAGLcFx/NjbF9ThWRbff1N6igeSItjSOtIQ0
-         ht6Q==
+        bh=tF8eVPrbsFlxqgyzbHuCviFt7qqGesasnxvxc644nOo=;
+        b=uehTV9BvTQm1nh05CE2hz1kyYDVNdIgUmRTjpT3VQloJFKThpjr8LU4XwFoiDVTefF
+         AX8rV9pYFLysW6pN+E6wX53jra2vTK/FuDjrdjZMLgFBjrQCUOrpoM2k9GnnwCe4Rg/w
+         gg+bV6HnK8nbho9vYV84k70IVPkl2bVnIyORz7A5PlEqQ09hLLSRuLh2QhnhUXnGbrlv
+         zbd35pe7iFi9U0yA929n5F+w010qk0eC7pnp/TuyQuQ944oznQ+3rXCj/I4gZf2kLMLu
+         6EjJbTEL5hcYE5eraM6S0MvRC7S/Yj4C/ZoEc5Q392JxAcU60x/JL5K0j8VjiLvYy/OR
+         knng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
          :in-reply-to:date:message-id:mime-version;
-        bh=Eh051tMwnf9O85Rtkdaf6kWB2v19Vy6AFBGlp1vrvHk=;
-        b=boeudSxNqAvLLdW8hkC9OAyves55fQYQb3wChHMJWORuxwjK2gpMCynGJXr3F2PcDI
-         3RvevvipQiQsGMS5G2eY+A90Xw87Fu+F/7beTcQHFJWa+d8js83rOeRuj9IiReaUtSkK
-         KJL9fBQq4C9XsfNOhGwV0F5uH7aidss7rlK+mJKLEFHmm/iGbGDmrFpI792e38/NWM5g
-         P28rkoELmYmFjC8H9J1wHU5dOWtyCwGnse6MietcgWjx8OUQPTxvjwN8QV3HMiUQ4i90
-         AC9JSZ3DpbZjp9Zz51z0UwC1iXgOUTZZYUg8gaaSvKN9+pJxJoSzqFH0LZxFSbhi86bb
-         ZXlw==
-X-Gm-Message-State: AOAM533qY0fVP/lVTouGR2t0EThHBQB2sAhGy26Iofi0nFl/G8+j+/0C
-        ZAxBheQLR+gFCxLgY9btwCM=
-X-Google-Smtp-Source: ABdhPJwc40yuBBFojgclPhu4fApOs4qNFq3cva0OJujYmVaUXZNsxhJ4B43eCOQ9qwMJHP4VffUuKw==
-X-Received: by 2002:a05:6402:31af:: with SMTP id dj15mr25327725edb.231.1618992238339;
-        Wed, 21 Apr 2021 01:03:58 -0700 (PDT)
+        bh=tF8eVPrbsFlxqgyzbHuCviFt7qqGesasnxvxc644nOo=;
+        b=Ao/A81806j2y6Btf/qgTWuhtVXT9gV5P6OHxmicgEPt8NCMi2ci5MFXIsjngUWB2sG
+         eoM6sCpNccTBdrnD4v/Mfe2UhuAHOndncbnaO+z/iU/GigwVWugodFH0GAgCQf9pPeqT
+         MNhW3D5WNsoH7rKjFQA2F6ERA9DgkoKXCFA6qYToPc0eOQfPvzqObqK3EdsJBh9fj2Cl
+         Yv1rBEj1QagaWQsdvt3zZmHPMaSTR+vbm5sHc7zFsj3iHz4FhXL/KkXx6FID/+oIxyZF
+         R+IGuhyBekoDWQpzOxtRD8Av5T4vhz3HNRo82783UKvXHUXI1obx6DBJ/5sA1uzTj087
+         SXTQ==
+X-Gm-Message-State: AOAM530xhhU1xCDO/7cC7HAnav8p3mmKQxVPlwsLUn6lHVtfVC7sXumB
+        0vhc0zbtGQyb4zHO9w+GJCY=
+X-Google-Smtp-Source: ABdhPJx6ec+3wN5MRpQu1Wk/fWKDJrO0nKB1o7pRj5w2HKFjl7aSBzBkVtjRRHhdNKDw/nn7NDIskg==
+X-Received: by 2002:a17:906:a385:: with SMTP id k5mr31218713ejz.148.1618993140190;
+        Wed, 21 Apr 2021 01:19:00 -0700 (PDT)
 Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id lj21sm1510742ejb.74.2021.04.21.01.03.57
+        by smtp.gmail.com with ESMTPSA id by27sm1596408ejc.47.2021.04.21.01.18.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Apr 2021 01:03:57 -0700 (PDT)
+        Wed, 21 Apr 2021 01:18:59 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Luke Shumaker <lukeshu@lukeshu.com>
-Cc:     git@vger.kernel.org, Luke Shumaker <lukeshu@datawire.io>,
-        Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Luke Shumaker <lukeshu@lukeshu.com>, git@vger.kernel.org,
+        Luke Shumaker <lukeshu@datawire.io>,
+        Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>
 Subject: Re: [RFC PATCH] fast-export, fast-import: Let tags specify an
  internal name
 References: <20210420190552.822138-1-lukeshu@lukeshu.com>
+ <xmqqa6ps4otm.fsf@gitster.g>
 User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <20210420190552.822138-1-lukeshu@lukeshu.com>
-Date:   Wed, 21 Apr 2021 10:03:57 +0200
-Message-ID: <8735vk3vyq.fsf@evledraar.gmail.com>
+In-reply-to: <xmqqa6ps4otm.fsf@gitster.g>
+Date:   Wed, 21 Apr 2021 10:18:58 +0200
+Message-ID: <87zgxs2gp9.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -74,77 +75,65 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Tue, Apr 20 2021, Luke Shumaker wrote:
+On Tue, Apr 20 2021, Junio C Hamano wrote:
 
-> -static void handle_tag(const char *name, struct tag *tag)
-> +static void handle_tag(const char *refname, struct tag *tag)
->  {
->  	unsigned long size;
->  	enum object_type type;
->  	char *buf;
-> -	const char *tagger, *tagger_end, *message;
-> +	const char *refbasename;
-> +	const char *tagname, *tagname_end, *tagger, *tagger_end, *message;
+> Luke Shumaker <lukeshu@lukeshu.com> writes:
+>
+>> That'd work fine if they're lightweight tags, but if they're annotated
+>> tags, then after the rename the internal name in the tag object
+>> (`v0.0.1`) is now different than the refname (`gitk/v0.0.1`).  Which
+>> is still mostly fine, since not too many tools care if the internal
+>> name and the refname disagree.
+>>
+>> But, fast-export/fast-import are tools that do care: it's currently
+>> impossible to represent these tags in a fast-import stream.
+>>
+>> This patch adds an optional "name" sub-command to fast-import's "tag"
+>> top-level-command, the stream
+>>
+>>     tag foo
+>>     name bar
+>>     ...
+>>
+>> will create a tag at "refs/tags/foo" that says "tag bar" internally.
+>>
+>> These tags are things that "shouldn't" happen, so perhaps adding
+>> support for them to fast-export/fast-import is unwelcome, which is why
+>> I've marked this as an "RFC".  If this addition is welcome, then it
+>> still needs tests and documentation.
+>
+> I actually think this is a good direction to go in, and it might be
+> even an acceptable change to fsck to require only the tail match of
+> tagname and refname so that it becomes perfectly OK for Gitk's
+> "v0.0.1" tag to be stored at say "refs/tags/gitk/v0.0.1".
 
-Let's put the new "*tagname, *tagname_end" on its own line, the current
-convention is to not conflate unrelated variable declarations on the
-same line (as e.g. the existing "message" and "tagger" does.
+Do you mean to change fsck to care about this it all? It doesn't care
+about the refname pointing to a tag, and AFAICT we never did.
 
->  	size_t message_size = 0;
->  	struct object *tagged;
->  	int tagged_mark;
-> @@ -800,6 +801,11 @@ static void handle_tag(const char *name, struct tag *tag)
->  		message += 2;
->  		message_size = strlen(message);
->  	}
-> +	tagname = memmem(buf, message ? message - buf : size, "\ntag ", 5);
-> +	if (!tagname)
-> +		die("malformed tag %s", oid_to_hex(&tag->object.oid));
-> +	tagname += 5;
-> +	tagname_end = strchrnul(tagname, '\n');
+All we check is that the pseudo-"refname" is valid, i.e. if we were to
+use the thing we find on the "tag" line as a refname, does it pass
+check_refname_format()?
 
-So it's no longer possible to export a reporitory with a missing "tag"
-entry in a tag? Maybe OK, but we have an escape hatch for it with fsck,
-we don't need one here?
+"git tag -v" doesn't care either:
+	
+	$ git update-ref refs/tags/a-v-2.31.0 3e90d4b58f3819cfd58ac61cb8668e83d3ea0563
+	$ git tag -v a-v-2.31.0
+	object a5828ae6b52137b913b978e16cd2334482eb4c1f
+	type commit
+	tag v2.31.0
+	tagger Junio C Hamano <gitster@pobox.com> 1615834385 -0700
+	[.. snip same gpgp output as for v2.31.0 itself..]
 
-In any case a test for it would be good to have.
+I think at this point the right thing to do is to just explicitly
+document that we ignore it, and that the export/import chain should be
+as forgiving about it as possible.
 
-> @@ -884,14 +890,19 @@ static void handle_tag(const char *name, struct tag *tag)
->  
->  	if (tagged->type == OBJ_TAG) {
->  		printf("reset %s\nfrom %s\n\n",
-> -		       name, oid_to_hex(&null_oid));
-> +		       refname, oid_to_hex(&null_oid));
->  	}
-> -	skip_prefix(name, "refs/tags/", &name);
-> -	printf("tag %s\n", name);
-> +	refbasename = refname;
-> +	skip_prefix(refbasename, "refs/tags/", &refbasename);
-> +	printf("tag %s\n", refbasename);
->  	if (mark_tags) {
->  		mark_next_object(&tag->object);
->  		printf("mark :%"PRIu32"\n", last_idnum);
->  	}
-> +	if ((size_t)(tagname_end - tagname) != strlen(refbasename) ||
+I.e. we have not cared about this before for validation, and
+e.g. core.alternateRefsPrefixes and such things will break any "it
+should be under refs/tags/" assumption.
 
-Would be more readable IMO to have a temporary variable for that
-"tagname_end - tagname", then just cast that and use it here.
-
-> +	    strncmp(tagname, refbasename, (size_t)(tagname_end - tagname)))
-
-and here.
-
-> @@ -2803,6 +2803,13 @@ static void parse_new_tag(const char *arg)
->  	read_next_command();
->  	parse_mark();
->  
-> +	/* name ... */
-> +	if (skip_prefix(command_buf.buf, "name ", &v)) {
-> +		name = strdupa(v);
-> +		read_next_command();
-> +	} else
-> +		name = NULL;
-> +
-
-Skip this whole (stylistically incorrect, should have {}) and just
-initialize it to NULL when you declare the variable?
+There's also perfectly legitimate in-the-wild use-cases for this,
+e.g. "archiving" tags to not-refs/tags/* so e.g. the upload-pack logic
+doesn't consider and follow them. Not being able to export/import those
+repositories as-is due to an overzelous data check there that's not in
+fsck.c would suck.
