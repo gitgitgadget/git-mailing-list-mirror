@@ -2,163 +2,262 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 08293C433ED
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 01:04:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0AEA9C433B4
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 01:34:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C959F61409
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 01:04:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B65CB61409
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 01:34:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234538AbhDUBFS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Apr 2021 21:05:18 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:38178 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S234379AbhDUBFR (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 20 Apr 2021 21:05:17 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A23656044F;
-        Wed, 21 Apr 2021 01:04:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1618967054;
-        bh=zJ8IVFATBCJf4VWsK7rqtOYGPKydl6SRZtGgccOK2hw=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=fXZkpxH97H8TtwrohHD/Gc1n8sW8qBmA2tnW9UDZ3o9ui0CSn9KxhOCiPSAqt2MYp
-         Ex+HYwvJRPf7YeVhp/VrE5/8D9u3YSbviYuW3GKO56tXBmog+FASkVSND5T6kX7bOl
-         Xe5ABExMYiLU0V0QDolb1syNc+IXcu+LuAS3gVRzu4PygXRzle5OE9dWnUTPVlWu/5
-         Ma03+peDBuezfQPaaD088Vx46sGntXuGqRU2Egk+6ZKpYST4e4AWRfj5CmcrGyZrd7
-         W73pdEvsbbqpqskW8PTvyGweZrww9Dvn7zwis/gUb+/TPDHJTlmaiM3vQ8co8AAUA0
-         WPz6PFVjArBJvgd+vuGTrOQn4HO1JyGS59k1e1d9u4OV2hEp3/VPWDEkibuc31qbZp
-         T8SbyQ97/Lh9wsk1iM4uAW1IDjfquFPIfxmqwvirp2SnzVAvcZi5ggkKVL4hL9/Nmd
-         x1JRslHaJsiNQEjy7bi6bU3zXS50+gtSgB7xoq7eTHUx7mlF6k/
-Date:   Wed, 21 Apr 2021 01:04:09 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>,
-        Jeff King <peff@peff.net>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Josh Steadmon <steadmon@google.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Patrick Steinhardt <ps@pks.im>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Han-Wen Nienhuys <hanwenn@gmail.com>
-Subject: Re: [PATCH v7 04/28] hash.h: provide constants for the hash IDs
-Message-ID: <YH96CcJhZt4CTPWD@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>,
-        Jeff King <peff@peff.net>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Josh Steadmon <steadmon@google.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Patrick Steinhardt <ps@pks.im>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Han-Wen Nienhuys <hanwenn@gmail.com>
-References: <pull.847.v6.git.git.1618255552.gitgitgadget@gmail.com>
- <pull.847.v7.git.git.1618832276.gitgitgadget@gmail.com>
- <f0216ae20b6988514bdb60d8fff96e18c2ce9f1d.1618832277.git.gitgitgadget@gmail.com>
- <xmqqlf9c68iy.fsf@gitster.g>
+        id S233879AbhDUBet (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Apr 2021 21:34:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56716 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231475AbhDUBes (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Apr 2021 21:34:48 -0400
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF6E9C06174A
+        for <git@vger.kernel.org>; Tue, 20 Apr 2021 18:34:16 -0700 (PDT)
+Received: by mail-pf1-x42b.google.com with SMTP id c17so27123650pfn.6
+        for <git@vger.kernel.org>; Tue, 20 Apr 2021 18:34:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=nzka1k0n28NxEpq2VOqIE+UHmdA9LPSTjA4wypi2C+4=;
+        b=tbRF+nEU0Z/Y0TwHIFb+/FqQznvmNxelq+9GX/6qOjRn5pqjgGS+ACif9AWhfk7G34
+         EurU52YuYKMpzzL0ylQDmt9aktBx35BKWbFdlaucNP4mnOQY493qYHR7Eqn/82Ien5/x
+         AQ7Bw1CIb5J9SFtbT26ydSQPpyc6ul76uCUcIWQRiJARYyNB98nz7egVExeid41kUaOb
+         kX5wOGZ9UsJiMqLGb3UAMmMpMQeORhiJneeRgKBoCRZE0fk/I5k9UPDQVEE5l4EswSR8
+         IRMxxeblRybTQbVCF1W/BR9f36iitO1NKEBqqYUJeNeb8PQXX/f0CKpqzqr75IlgMSbG
+         iDLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=nzka1k0n28NxEpq2VOqIE+UHmdA9LPSTjA4wypi2C+4=;
+        b=Jyqh5QstBFDse6DoJxl4i6pvZW/LUeDXtXUnDFVpptZ5IhUaKjgGKJu2YDDhFb++Dp
+         eH0PbQ3KdhjrfEfH5Sn8n7Nhm+uWZH4vyyaJMpI9Oc8hxVG01tRlfYtC17xMoBj5Qr77
+         Yu1ayM30BCrDO2QmJYR369ExMpliK4TIe1HLfPuUw7HlaEwpHiOvnezsL5yvFLr0sW4+
+         ZHitiHW8LHNZTQRUgm41ayPgqZWh+fcsCAy8klZB+gxgSpbZ7dheN4ChMwV+oCUJRPRM
+         yaBMwudaQLk2ZbZIpUePgJQ1WdOs8O9KBDJaOjrQaAiMpuC5dQMAkckd04ruKnHa+bVY
+         V7Bg==
+X-Gm-Message-State: AOAM531ASUwQyZtLDPTJy7z1l3xW2aEhxZWnhQ0yfTU4sDnVxl6m39Q2
+        BVaPnWx2TOOreysOVPvC2hkgeyWefO4=
+X-Google-Smtp-Source: ABdhPJyqM3wf/Nela2RdjzBUBb+0l7gF1r24fPYUr5vF2Zpk4Edk0pUlUULZco0jtc5N4/YtJLT2Gw==
+X-Received: by 2002:a17:90a:e28b:: with SMTP id d11mr8233588pjz.53.1618968855781;
+        Tue, 20 Apr 2021 18:34:15 -0700 (PDT)
+Received: from localhost.localdomain ([2402:800:63b8:d379:85bd:c83a:4b40:cd9b])
+        by smtp.gmail.com with ESMTPSA id x18sm296297pjn.51.2021.04.20.18.34.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Apr 2021 18:34:15 -0700 (PDT)
+From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>
+Subject: [PATCH] mailinfo: strip CR from base64/quoted-printable email
+Date:   Wed, 21 Apr 2021 08:34:04 +0700
+Message-Id: <20210421013404.17383-1-congdanhqx@gmail.com>
+X-Mailer: git-send-email 2.31.1.192.g0881477623
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="ULv/vCNLeaML0F2V"
-Content-Disposition: inline
-In-Reply-To: <xmqqlf9c68iy.fsf@gitster.g>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+When an SMTP server receives an 8-bit email message, possibly with only
+LF as line ending, some of those servers decide to change said LF to
+CRLF.
 
---ULv/vCNLeaML0F2V
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Some other SMTP servers, when receives an 8-bit email message, decide to
+encoding such message in base64 and/or quoted-printable instead.
 
-On 2021-04-20 at 19:49:41, Junio C Hamano wrote:
-> "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
->=20
-> > From: Han-Wen Nienhuys <hanwen@google.com>
-> >
-> > This will simplify referencing them from code that is not deeply integr=
-ated with
-> > Git, in particular, the reftable library.
-> >
-> > Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
-> > ---
-> >  hash.h        | 6 ++++++
-> >  object-file.c | 6 ++----
-> >  2 files changed, 8 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/hash.h b/hash.h
-> > index 3fb0c3d4005a..b17fb2927711 100644
-> > --- a/hash.h
-> > +++ b/hash.h
-> > @@ -161,12 +161,18 @@ static inline int hash_algo_by_ptr(const struct g=
-it_hash_algo *p)
-> >  	return p - hash_algos;
-> >  }
-> > =20
-> > +/* "sha1", big-endian */
-> > +#define GIT_SHA1_HASH_ID 0x73686131
-> > +
-> >  /* The length in bytes and in hex digits of an object name (SHA-1 valu=
-e). */
-> >  #define GIT_SHA1_RAWSZ 20
-> >  #define GIT_SHA1_HEXSZ (2 * GIT_SHA1_RAWSZ)
-> >  /* The block size of SHA-1. */
-> >  #define GIT_SHA1_BLKSZ 64
-> > =20
-> > +/* "s256", big-endian */
-> > +#define GIT_SHA256_HASH_ID 0x73323536
->=20
-> I agree that it makes sense to have symbolic constants defined in
-> this file.  These are values that fit in the ".format_id" member of
-> "struct git_hash_algo", and it is preferrable to make sure that the
-> names align (if I were designing in void, I would have called the
-> member "algo_id" and made the constants GIT_(SHA1|SHA256)_ALGO_ID).
->=20
-> Brian?  What's your preference ("I am fine to store HASH_ID in the
-> '.format_id' member" is perfectly an acceptable answer).
+If an email is transfered through those 2 email servers in order, the
+final recipients will receive an email contains a patch mungled with
+CRLF encoded inside another encoding. Thus, such CR couldn't be dropped
+by mailsplit. Such accidents have been observed in the wild [1].
 
-I slightly prefer FORMAT_ID because it's consistent (and for that reason
-only), but if HASH_ID is more convenient, that's fine; I don't have a
-strong opinion at all.  Definitely don't reroll the series because of my
-slight preference.  Either way, I think these are fine things to have as
-constants, and I appreciate you hoisting the comments here.
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
+Let's guess if such CR was added automatically and strip them in
+mailinfo.
 
---ULv/vCNLeaML0F2V
-Content-Type: application/pgp-signature; name="signature.asc"
+[1]: https://nmbug.notmuchmail.org/nmweb/show/m2lf9ejegj.fsf%40guru.guru-group.fi
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.27 (GNU/Linux)
+Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+---
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYH96CQAKCRB8DEliiIei
-gbxOAQCypJKWGnyA+/dDNzyHng2A8p+uhVxCvUoShwdtU0dY5QEA1lm7g2dMCYBj
-Z22JYkTpydTB/dguSYPPRBnlhGo4bAU=
-=hg1L
------END PGP SIGNATURE-----
+ I'm not sure if guessing the heuristic to strip CR is a good approach.
+ I think it's better to pass --keep-cr down from git-am.
+ Let's say --keep-cr=<yes|no|auto>
 
---ULv/vCNLeaML0F2V--
+ mailinfo.c             | 20 +++++++++++++++++---
+ t/t5100-mailinfo.sh    |  5 +++++
+ t/t5100/cr-base64.mbox | 22 ++++++++++++++++++++++
+ t/t5100/info1000       |  5 +++++
+ t/t5100/msg1000        |  2 ++
+ t/t5100/patch1000      | 22 ++++++++++++++++++++++
+ 6 files changed, 73 insertions(+), 3 deletions(-)
+ create mode 100644 t/t5100/cr-base64.mbox
+ create mode 100644 t/t5100/info1000
+ create mode 100644 t/t5100/msg1000
+ create mode 100644 t/t5100/patch1000
+
+diff --git a/mailinfo.c b/mailinfo.c
+index 5681d9130d..dbff867f42 100644
+--- a/mailinfo.c
++++ b/mailinfo.c
+@@ -988,16 +988,27 @@ static int handle_boundary(struct mailinfo *mi, struct strbuf *line)
+ }
+ 
+ static void handle_filter_flowed(struct mailinfo *mi, struct strbuf *line,
+-				 struct strbuf *prev)
++				 struct strbuf *prev, int *keep_cr)
+ {
+ 	size_t len = line->len;
+ 	const char *rest;
+ 
+ 	if (!mi->format_flowed) {
++		if (*keep_cr == -1 && len >= 2)
++			*keep_cr = !(line->buf[len - 2] == '\r' &&
++				     line->buf[len - 1] == '\n');
++		if (!*keep_cr && len >= 2 &&
++		    line->buf[len - 2] == '\r' &&
++		    line->buf[len - 1] == '\n') {
++			strbuf_setlen(line, len - 2);
++			strbuf_addch(line, '\n');
++			len--;
++		}
+ 		handle_filter(mi, line);
+ 		return;
+ 	}
+ 
++	*keep_cr = 1;
+ 	if (line->buf[len - 1] == '\n') {
+ 		len--;
+ 		if (len && line->buf[len - 1] == '\r')
+@@ -1036,6 +1047,7 @@ static void handle_filter_flowed(struct mailinfo *mi, struct strbuf *line,
+ static void handle_body(struct mailinfo *mi, struct strbuf *line)
+ {
+ 	struct strbuf prev = STRBUF_INIT;
++	int keep_cr = -1;
+ 
+ 	/* Skip up to the first boundary */
+ 	if (*(mi->content_top)) {
+@@ -1081,7 +1093,7 @@ static void handle_body(struct mailinfo *mi, struct strbuf *line)
+ 						strbuf_addbuf(&prev, sb);
+ 						break;
+ 					}
+-				handle_filter_flowed(mi, sb, &prev);
++				handle_filter_flowed(mi, sb, &prev, &keep_cr);
+ 			}
+ 			/*
+ 			 * The partial chunk is saved in "prev" and will be
+@@ -1091,7 +1103,9 @@ static void handle_body(struct mailinfo *mi, struct strbuf *line)
+ 			break;
+ 		}
+ 		default:
+-			handle_filter_flowed(mi, line, &prev);
++			/* CR in plain message was processed in mailsplit */
++			keep_cr = 1;
++			handle_filter_flowed(mi, line, &prev, &keep_cr);
+ 		}
+ 
+ 		if (mi->input_error)
+diff --git a/t/t5100-mailinfo.sh b/t/t5100-mailinfo.sh
+index 147e616533..9ccc11d16a 100755
+--- a/t/t5100-mailinfo.sh
++++ b/t/t5100-mailinfo.sh
+@@ -228,4 +228,9 @@ test_expect_success 'mailinfo handles unusual header whitespace' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'mailinfo strip CR after decode base64' '
++	cp $DATA/cr-base64.mbox 1000 &&
++	check_mailinfo 1000 ""
++'
++
+ test_done
+diff --git a/t/t5100/cr-base64.mbox b/t/t5100/cr-base64.mbox
+new file mode 100644
+index 0000000000..6ea9806a6b
+--- /dev/null
++++ b/t/t5100/cr-base64.mbox
+@@ -0,0 +1,22 @@
++From: A U Thor <mail@example.com>
++To: list@example.org
++Subject: [PATCH v2] sample
++Date: Mon,  3 Aug 2020 22:40:55 +0700
++Message-Id: <msg-id@example.com>
++Content-Type: text/plain; charset="utf-8"
++Content-Transfer-Encoding: base64
++
++T24gZGlmZmVyZW50IGRpc3RybywgcHl0ZXN0IGlzIHN1ZmZpeGVkIHdpdGggZGlmZmVyZW50IHBh
++dHRlcm5zLg0KDQotLS0NCiBjb25maWd1cmUgfCAyICstDQogMSBmaWxlIGNoYW5nZWQsIDEgaW5z
++ZXJ0aW9uKCspLCAxIGRlbGV0aW9uKC0pDQoNCmRpZmYgLS1naXQgYS9jb25maWd1cmUgYi9jb25m
++aWd1cmUNCmluZGV4IGRiMzUzOGIzLi5mN2MxYzA5NSAxMDA3NTUNCi0tLSBhL2NvbmZpZ3VyZQ0K
++KysrIGIvY29uZmlndXJlDQpAQCAtODE0LDcgKzgxNCw3IEBAIGlmIFsgJGhhdmVfcHl0aG9uMyAt
++ZXEgMSBdOyB0aGVuDQogICAgIHByaW50ZiAiQ2hlY2tpbmcgZm9yIHB5dGhvbjMgcHl0ZXN0ICg+
++PSAzLjApLi4uICINCiAgICAgY29uZj0kKG1rdGVtcCkNCiAgICAgcHJpbnRmICJbcHl0ZXN0XVxu
++bWludmVyc2lvbj0zLjBcbiIgPiAkY29uZg0KLSAgICBpZiBweXRlc3QtMyAtYyAkY29uZiAtLXZl
++cnNpb24gPi9kZXYvbnVsbCAyPiYxOyB0aGVuDQorICAgIGlmICIkcHl0aG9uIiAtbSBweXRlc3Qg
++LWMgJGNvbmYgLS12ZXJzaW9uID4vZGV2L251bGwgMj4mMTsgdGhlbg0KICAgICAgICAgcHJpbnRm
++ICJZZXMuXG4iDQogICAgICAgICBoYXZlX3B5dGhvbjNfcHl0ZXN0PTENCiAgICAgZWxzZQ0KLS0g
++DQoyLjI4LjANCl9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
++CmV4YW1wbGUgbWFpbGluZyBsaXN0IC0tIGxpc3RAZXhhbXBsZS5vcmcKVG8gdW5zdWJzY3JpYmUg
++c2VuZCBhbiBlbWFpbCB0byBsaXN0LWxlYXZlQGV4YW1wbGUub3JnCg==
+diff --git a/t/t5100/info1000 b/t/t5100/info1000
+new file mode 100644
+index 0000000000..dab2228b70
+--- /dev/null
++++ b/t/t5100/info1000
+@@ -0,0 +1,5 @@
++Author: A U Thor
++Email: mail@example.com
++Subject: sample
++Date: Mon, 3 Aug 2020 22:40:55 +0700
++
+diff --git a/t/t5100/msg1000 b/t/t5100/msg1000
+new file mode 100644
+index 0000000000..5e8e860aae
+--- /dev/null
++++ b/t/t5100/msg1000
+@@ -0,0 +1,2 @@
++On different distro, pytest is suffixed with different patterns.
++
+diff --git a/t/t5100/patch1000 b/t/t5100/patch1000
+new file mode 100644
+index 0000000000..51c4fb4cb5
+--- /dev/null
++++ b/t/t5100/patch1000
+@@ -0,0 +1,22 @@
++---
++ configure | 2 +-
++ 1 file changed, 1 insertion(+), 1 deletion(-)
++
++diff --git a/configure b/configure
++index db3538b3..f7c1c095 100755
++--- a/configure
+++++ b/configure
++@@ -814,7 +814,7 @@ if [ $have_python3 -eq 1 ]; then
++     printf "Checking for python3 pytest (>= 3.0)... "
++     conf=$(mktemp)
++     printf "[pytest]\nminversion=3.0\n" > $conf
++-    if pytest-3 -c $conf --version >/dev/null 2>&1; then
+++    if "$python" -m pytest -c $conf --version >/dev/null 2>&1; then
++         printf "Yes.\n"
++         have_python3_pytest=1
++     else
++-- 
++2.28.0
++_______________________________________________
++example mailing list -- list@example.org
++To unsubscribe send an email to list-leave@example.org
+-- 
+2.31.1.192.g0881477623
+
