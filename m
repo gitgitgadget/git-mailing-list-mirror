@@ -2,61 +2,62 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 53538C433B4
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 13:24:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DC12CC433B4
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 13:41:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 109316144B
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 13:24:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A4504613B6
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 13:41:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240612AbhDUNZP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Apr 2021 09:25:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42618 "EHLO
+        id S241284AbhDUNl7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Apr 2021 09:41:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242154AbhDUNXd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Apr 2021 09:23:33 -0400
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AD2AC061349
-        for <git@vger.kernel.org>; Wed, 21 Apr 2021 06:21:16 -0700 (PDT)
-Received: by mail-oi1-x22f.google.com with SMTP id v6so14555898oiv.3
-        for <git@vger.kernel.org>; Wed, 21 Apr 2021 06:21:16 -0700 (PDT)
+        with ESMTP id S229536AbhDUNl6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Apr 2021 09:41:58 -0400
+Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98F40C06174A
+        for <git@vger.kernel.org>; Wed, 21 Apr 2021 06:41:25 -0700 (PDT)
+Received: by mail-ot1-x32c.google.com with SMTP id 5-20020a9d09050000b029029432d8d8c5so13017163otp.11
+        for <git@vger.kernel.org>; Wed, 21 Apr 2021 06:41:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=8dA0F3A5uJgC20WZRPuDFpIiFnhEarhmhvPY0p7kMII=;
-        b=WTGrTDP5l4gNJvthQ0Eyqt2JWnAolBac93jaBAeHLxqunuhx68PLUXoIvsXBlrIy2q
-         /OWabUjxTyvuW60NqhSFb35UjvtuMJbZTK5+YcvwTp5BPuow/h5qc9uoPALnxnjpSaRN
-         opRUX4qiyItJA2abVnARpm1NiZ3DZZ8/9tfwDsMeq9PZ+I2gmRYlAVm3T4zMaLHYS/4e
-         joG1awyq6shVx/aElaJV4Z8r40jgSShIqZFmNRsUBqfJ1uNn1nemk6RLq4MW3MCM9NQ6
-         mik6RprUGlu9vUfkuxmIC+Tm+PtzoPDDFajKzPc8SwMGiO8bbRFi8Jy0qxFBV1NJJh9w
-         MTxg==
+        bh=sn0Y3nBrO/kd1z+gSH7iRiufnKeIlzI3YWiBTAbhyes=;
+        b=dj09jjyOdMGzkNbtG+lYfMr4ZdGP+7DYu0HdIk1M30xGWjGw+hQ1fnAKP6HFp8CiRa
+         8EZ5dLnhNW9aEf6uQdFvOZ5/yS07ZFAABW27COtYm6zREvgals+Ia5XGPZ8V54bdtG6i
+         H3L86ORzjASDJvL7taii/AhOarQIJHRNP1mWyjr/5OlgKnvz+f3+sQgOvrzyvAQUb+Ct
+         c7+uWN6ydYPfrbqvV7uQNTKJ/cHaLjDA+ONjSNp1f/MEsBjrD8BfQ7ZclXA8aCb1uNer
+         HXqRFqEuP/m2rYAuCC4T1pzsSHUOJja2wKn7KcCEaOuD/QgMDd7eniHussQTuxPpFVnN
+         TFJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=8dA0F3A5uJgC20WZRPuDFpIiFnhEarhmhvPY0p7kMII=;
-        b=aFhYeeyduGUTLrh5ZlAxyG7ImHta46/ch6awtzojoACrmF5aMOWoOWAQTL7wEvcf87
-         AuV933Fb2JFIFXserpxgeM7bLz01O1Y0JCiWVnVvFfSBt6RKMWPAm7+ix1Q8d6brEUl2
-         8mk9gL6stL/Pk52M3qX9ZxPmsU9XUyQj+gd2WRk6AW3AhpvDF3u1Tkp9QsJz8AVu0xuS
-         TWi0spwIBUaWWlFR/YVAxdwJK86NjIEfGxE195FYnfqxAW98gC3Glv7MXCTfGtEKYbL9
-         SrWzy9aW1RmsRj1HmCMvUfvendQdi0abiNQwPZaJkZQ+KuMjiV3MfD0S43y77a3dKAAy
-         vWMQ==
-X-Gm-Message-State: AOAM5314yyI48dmN3kENV3/BfPSqMsEEHqUL5N9hj63daYd/VeTU0c2Z
-        +zPduKyVKWkSmVzk9DJB+Ds=
-X-Google-Smtp-Source: ABdhPJwXSUF8IhZjyUGSvCYf/T6ZQEbwU1T/aJKXVRvsL7wPk24x7SgAsT4bqAsnoJZiB1FIOtm6OA==
-X-Received: by 2002:aca:d787:: with SMTP id o129mr6942883oig.40.1619011275693;
-        Wed, 21 Apr 2021 06:21:15 -0700 (PDT)
+        bh=sn0Y3nBrO/kd1z+gSH7iRiufnKeIlzI3YWiBTAbhyes=;
+        b=duCEuWRpbnR3bh4bmu6Op7CF2dfcSfW+JOG9y45x2rl/wSOdMV4mW+Mbu0hE3q3PZM
+         NmtwKLXrrhA0zcxKOmOcvpnXaOzvXbGxaMluDOIXHRbrQahBypgcfxyCLNqr1uzEg6KJ
+         lh2qOp3UC4S7LjTHy40UV/k42KUQj+HwXn4Q3UI+Bx/qKTc2XzzNsBb3WvttiKK0C1ok
+         367gLZp43mr6KPOvudeJlNhbgCpnvHnoGw5i+8kWJQbr+20zfRSY4cq76bmuozHBt5kp
+         J0LEksU+qlDZPmCa9xqPcyqnOjKZaSVXOCH2JMyelRdM4uEbfY69LcwiAn3nnnU04lEc
+         jhsw==
+X-Gm-Message-State: AOAM53210g3GbX84H4DEuuSqf4K18e8KHMhkGJKYyBUcBF0YUvQA3tsh
+        fEQztnEgHQKcWIxzqe7HPuc=
+X-Google-Smtp-Source: ABdhPJxnWsfJJcycqW0hF2fRUDojyoKHdKz91C+CxMe/Hglgzyc+byqYELhpjkdMQxoDCvuXNzVlBg==
+X-Received: by 2002:a9d:a4e:: with SMTP id 72mr16243541otg.229.1619012484798;
+        Wed, 21 Apr 2021 06:41:24 -0700 (PDT)
 Received: from ?IPv6:2600:1700:e72:80a0:e10e:eea5:8b82:2147? ([2600:1700:e72:80a0:e10e:eea5:8b82:2147])
-        by smtp.gmail.com with ESMTPSA id q189sm454480oih.25.2021.04.21.06.21.14
+        by smtp.gmail.com with ESMTPSA id r127sm459851oor.2.2021.04.21.06.41.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 Apr 2021 06:21:15 -0700 (PDT)
-Subject: Re: [PATCH 01/10] t1092: add tests for status/add and sparse files
+        Wed, 21 Apr 2021 06:41:24 -0700 (PDT)
+Subject: Re: [PATCH 02/10] unpack-trees: make sparse aware
 To:     Elijah Newren <newren@gmail.com>,
         Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
@@ -64,15 +65,15 @@ Cc:     Git Mailing List <git@vger.kernel.org>,
         Derrick Stolee <derrickstolee@github.com>,
         Derrick Stolee <dstolee@microsoft.com>
 References: <pull.932.git.1618322497.gitgitgadget@gmail.com>
- <b2cb5401eff83c43ca805a36bf41a28a6ffc3630.1618322497.git.gitgitgadget@gmail.com>
- <CABPp-BFhyFiKSXdLM5q5t=ZKzr6V0pY7dbheierRaOHFbMEdkg@mail.gmail.com>
+ <0a3892d2ec9e4acd4cba1c1d0390acc60dc6e50f.1618322497.git.gitgitgadget@gmail.com>
+ <CABPp-BHcdhO_kEdqR23sDdGAgoSu2R-HBWv-RmzQvJ0ysWtzxg@mail.gmail.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <184087ce-b560-11e5-1c5d-e25b6bd58127@gmail.com>
-Date:   Wed, 21 Apr 2021 09:21:11 -0400
+Message-ID: <a777331a-aff6-766f-30da-eef052ad83ee@gmail.com>
+Date:   Wed, 21 Apr 2021 09:41:19 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.9.1
 MIME-Version: 1.0
-In-Reply-To: <CABPp-BFhyFiKSXdLM5q5t=ZKzr6V0pY7dbheierRaOHFbMEdkg@mail.gmail.com>
+In-Reply-To: <CABPp-BHcdhO_kEdqR23sDdGAgoSu2R-HBWv-RmzQvJ0ysWtzxg@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -80,31 +81,246 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/20/2021 5:52 PM, Elijah Newren wrote:
+On 4/20/2021 7:00 PM, Elijah Newren wrote:
 > On Tue, Apr 13, 2021 at 7:01 AM Derrick Stolee via GitGitGadget
 > <gitgitgadget@gmail.com> wrote:
-> I'll note in particular that it's easy for users after running "git
-> add" to run other things such as "git sparse-checkout reapply" or "git
-> switch $otherbranch" and suddenly the file disappears from the working
-> tree.  From the sparse-checkout machinery that makes sense; this path
-> doesn't match the .git/info/sparse-checkout list of paths, so it
-> should be removed from the working tree.  But it's very disorienting
-> to users.  Especially if some of those commands are side-effects of
-> other commands (e.g. our build system invokes "git sparse-checkout
-> reapply" in various cases, most common of which is that even a simple
-> "git pull" can bring down code with dependency changes and thus a need
-> for new sparsity rules and whatnot), but it definitely can just happen
-> in ways users don't expect with their own commands (e.g. the git
-> switch/checkout example).
+>> diff --git a/dir.h b/dir.h
+>> index 51cb0e217247..9d6666f520f3 100644
+>> --- a/dir.h
+>> +++ b/dir.h
+>> @@ -503,7 +503,7 @@ static inline int ce_path_match(struct index_state *istate,
+>>                                 char *seen)
+>>  {
+>>         return match_pathspec(istate, pathspec, ce->name, ce_namelen(ce), 0, seen,
+>> -                             S_ISDIR(ce->ce_mode) || S_ISGITLINK(ce->ce_mode));
+>> +                             S_ISSPARSEDIR(ce->ce_mode) || S_ISDIR(ce->ce_mode) || S_ISGITLINK(ce->ce_mode));
 > 
-> The patch looks good, but it'd be nice if while documenting it we also
-> add a comment that we believe we want to change the behavior (for
-> sparse-checkout both with and without sparse-index).  It's one of
-> those many paper-cuts we still have.
+> I'm confused why this change would be needed, or why it'd semantically
+> be meaningful here either.  Doesn't S_ISSPARSEDIR() being true imply
+> S_ISDIR() is true (and perhaps even vice versa?).
+> 
+> By chance, was this a leftover from your early RFC changes from a few
+> series ago when you had an entirely different mode for sparse
+> directory entries?
 
-I can try to comment on these corner case tests that the behavior is
-not intended to be permanent, especially when already needing to comment
-how strange it is acting.
+I will double-check on this with additional testing and debugging.
+Your comments below make it clear that this patch would benefit from
+some additional splitting.
 
-Thanks,
+>>  }
+>>
+>>  static inline int dir_path_match(struct index_state *istate,
+>> diff --git a/preload-index.c b/preload-index.c
+>> index e5529a586366..35e67057ca9b 100644
+>> --- a/preload-index.c
+>> +++ b/preload-index.c
+>> @@ -55,6 +55,8 @@ static void *preload_thread(void *_data)
+>>                         continue;
+>>                 if (S_ISGITLINK(ce->ce_mode))
+>>                         continue;
+>> +               if (S_ISSPARSEDIR(ce->ce_mode))
+>> +                       continue;
+>>                 if (ce_uptodate(ce))
+>>                         continue;
+>>                 if (ce_skip_worktree(ce))
+> 
+> Don't we have S_ISSPARSEDIR(ce->ce_mode) implies ce_skip_worktree(ce)?
+>  Is this a duplicate check?  If so, is it still desirable for
+> future-proofing or code clarity, or is it strictly redundant?
+
+You're right, we could skip this one because the ce_skip_worktree(ce)
+is enough to cover this case. I think I created this one because I was
+auditing uses of S_ISGITLINK().
+
+>> diff --git a/read-cache.c b/read-cache.c
+>> index 29ffa9ac5db9..6308234b4838 100644
+>> --- a/read-cache.c
+>> +++ b/read-cache.c
+>> @@ -1594,6 +1594,9 @@ int refresh_index(struct index_state *istate, unsigned int flags,
+>>                 if (ignore_skip_worktree && ce_skip_worktree(ce))
+>>                         continue;
+>>
+>> +               if (istate->sparse_index && S_ISSPARSEDIR(ce->ce_mode))
+>> +                       continue;
+>> +
+> 
+> I'm a bit confused about what could trigger ce_skip_worktree(ce) &&
+> !ignore_skip_worktree and why it'd be desirable to refresh
+> skip-worktree entries.  However, this is tangential to your patch and
+> has apparently been around since 2009 (in particular, from 56cac48c35
+> ("ie_match_stat(): do not ignore skip-worktree bit with
+> CE_MATCH_IGNORE_VALID", 2009-12-14)).
+
+This is probably better served with a statement like this earlier in
+the method:
+
+	if (ignore_skip_worktree)
+		ensure_full_index(istate);
+
+It seems like ignoring the skip worktree bits is a rare occasion and
+it will be worth expanding the index for that case.
+
+>>                 if (pathspec && !ce_path_match(istate, ce, pathspec, seen))
+>>                         filtered = 1;
+>>
+>> diff --git a/unpack-trees.c b/unpack-trees.c
+>> index dddf106d5bd4..9a62e823928a 100644
+>> --- a/unpack-trees.c
+>> +++ b/unpack-trees.c
+>> @@ -586,6 +586,13 @@ static void mark_ce_used(struct cache_entry *ce, struct unpack_trees_options *o)
+>>  {
+>>         ce->ce_flags |= CE_UNPACKED;
+>>
+>> +       /*
+>> +        * If this is a sparse directory, don't advance cache_bottom.
+>> +        * That will be advanced later using the cache-tree data.
+>> +        */
+>> +       if (S_ISSPARSEDIR(ce->ce_mode))
+>> +               return;
+>> +
+> 
+> I don't understand cache_bottom stuff; we might want to get Junio to
+> look over it.  Or maybe I just need to dig a bit further and attempt
+> to understand it.
+
+I remember looking very careful at this when I created this (and found
+it worth a comment) but I don't recall enough off the top of my head.
+This is worth splitting out with a careful message, which will force me
+to reexamine the cache_bottom member.
+
+>>         if (o->cache_bottom < o->src_index->cache_nr &&
+>>             o->src_index->cache[o->cache_bottom] == ce) {
+>>                 int bottom = o->cache_bottom;
+>> @@ -984,6 +991,9 @@ static int do_compare_entry(const struct cache_entry *ce,
+>>         ce_len -= pathlen;
+>>         ce_name = ce->name + pathlen;
+>>
+>> +       /* remove directory separator if a sparse directory entry */
+>> +       if (S_ISSPARSEDIR(ce->ce_mode))
+>> +               ce_len--;
+>>         return df_name_compare(ce_name, ce_len, S_IFREG, name, namelen, mode);
+> 
+> Shouldn't we be passing ce->ce_mode instead of S_IFREG here as well?
+> 
+> Note the following sort order:
+>    foo
+>    foo.txt
+>    foo/
+>    foo/bar
+> 
+> You've trimmed off the '/', so 'foo/' would be ordered where 'foo' is,
+> but df_name_compare() exists to make "foo" sort exactly where "foo/"
+> would when "foo" is a directory.  Will your df_name_compare() call
+> here result in foo.txt being placed after all the "foo/<subpath>"
+> entries in the index and perhaps cause other problems down the line?
+> (Are there issues, e.g. with cache-trees getting wrong ordering from
+> this, or even writing out indexes or tree objects with the wrong
+> ordering?  I've written out trees to disk with wrong ordering before
+> and git usually survives but gets really confused with diffs.)
+> 
+> Since at least one caller of compare_entry() takes the return result
+> and does a "if (cmp < 0)", this order is going to matter in some
+> cases.  Perhaps we need some testcases where there is a sparse
+> directory entry named "foo/" and a file recorded in some relevant tree
+> with the name "foo.txt" to be able to trigger these lines of code?
+
+I will do some testing to find out why removing the separator here was
+necessary or valuable.
+
+>>  }
+>>
+>> @@ -993,6 +1003,10 @@ static int compare_entry(const struct cache_entry *ce, const struct traverse_inf
+>>         if (cmp)
+>>                 return cmp;
+>>
+>> +       /* If ce is a sparse directory, then allow equality here. */
+>> +       if (S_ISSPARSEDIR(ce->ce_mode))
+>> +               return 0;
+>> +
+> 
+> Um...so a sparse directory compares equal to _anything_ at all?  I'm
+> really confused why this would be desirable.  Am I missing something
+> here?
+
+The context is that is removed from the patch is that "cmp" is the
+response from do_compare_entry(), which does a length-limited comparison.
+If cmp is non-zero, then we've already returned the difference.
+
+The rest of the method is checking if the 'info' input is actually a
+parent directory of the _path_ given at this cache entry.
+
+>>         /*
+>>          * Even if the beginning compared identically, the ce should
+>>          * compare as bigger than a directory leading up to it!
+
+The line after this is:
+
+	return ce_namelen(ce) > traverse_path_len(info, tree_entry_len(n));
+
+This comparison is saying "these paths match up to the directory specified
+by info and n, but we need 'ce' to be a file within that directory." But
+in the case of a sparse directory entry, we can skip this comparison.
+
+>> @@ -1243,6 +1257,7 @@ static int unpack_callback(int n, unsigned long mask, unsigned long dirmask, str
+>>         struct cache_entry *src[MAX_UNPACK_TREES + 1] = { NULL, };
+>>         struct unpack_trees_options *o = info->data;
+>>         const struct name_entry *p = names;
+>> +       unsigned recurse = 1;
+> 
+> "recurse" sent my mind off into questions about safety checks, base
+> cases, etc., instead of just the simple "we don't want to read in
+> directories corresponding to sparse entries".  I think this would be
+> clearer either if the variable had the sparsity concept embedded in
+> its name somewhere (e.g. "unsigned sparse_entry = 0", and check for
+> (!sparse_entry) instead of (recurse) below), or with a comment about
+> why there are cases where you want to avoid recursion.
+
+I can understand that. This callback is confusing because it _does_
+recurse, but through a sequence of methods instead of actually calling
+itself.
+
+It would be better to say something like "unpack_subdirectories = 1"
+and disabling it when we are in a sparse directory.
+
+>>
+>>         /* Find first entry with a real name (we could use "mask" too) */
+>>         while (!p->mode)
+>> @@ -1284,12 +1299,16 @@ static int unpack_callback(int n, unsigned long mask, unsigned long dirmask, str
+>>                                         }
+>>                                 }
+>>                                 src[0] = ce;
+>> +
+>> +                               if (S_ISSPARSEDIR(ce->ce_mode))
+>> +                                       recurse = 0;
+> 
+> Ah, the context here doesn't show it but this is in the "if (!cmp)"
+> block, i.e. if we found a match for the sparse directory.  This makes
+> sense, to me, _if_ we ignore the above question about sparse
+> directories matching equal to anything and everything.
+
+I believe that "anything and everything" concern has been resolved.
+
+>> @@ -1319,7 +1338,8 @@ static int unpack_callback(int n, unsigned long mask, unsigned long dirmask, str
+>>                         }
+>>                 }
+>>
+>> -               if (traverse_trees_recursive(n, dirmask, mask & ~dirmask,
+>> +               if (recurse &&
+>> +                   traverse_trees_recursive(n, dirmask, mask & ~dirmask,
+>>                                              names, info) < 0)
+>>                         return -1;
+>>                 return mask;
+> 
+> Nice.  :-)
+> 
+> 
+> I think your patch was mostly about the recurse stuff, which other
+> than the name or a comment about it look good to me.  However, all the
+> other preparatory small tweaks brought up a lot of questions or
+> confusion for me.  I'm worried there might be a bug or two, though I
+> may have just misunderstood some of the code bits.
+ 
+This patch could probably be split up a little to make these things
+clearer. Thanks for bringing up the tricky bits.
+
 -Stolee
