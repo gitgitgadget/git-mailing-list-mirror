@@ -2,86 +2,208 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DB753C433ED
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 23:05:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E045C433B4
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 23:22:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BA306613F6
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 23:05:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 43747610CC
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 23:22:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343631AbhDUXFr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Apr 2021 19:05:47 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:64812 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234654AbhDUXFr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Apr 2021 19:05:47 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 24E3A121B23;
-        Wed, 21 Apr 2021 19:05:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=whyr7EOwoW8rENu+K3srlHzpaPE=; b=RUHszL
-        GVHhxKUhpfuFsStW1g3KDCol27XtjBi3kNOiphsOD8g72SOZmoK2jSMqfahbjwDC
-        tEXm14tGUaZ2iWpojR5hK6IIjzbJxStz2YjqTBUeWQbyWze/vLKQGAgJYBZzbQGT
-        GP+d2ZmGi+6urLpxLaoJnmEA0eipIaXciqQAo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=dQsP4F3ZXPBeoEqJjVHJj02kbBzf35Ch
-        hrc+de7Bu6oJStBpa0iRtFeq+GNxeqJuPyVEbdhdAMk73lwrJq+oTzLEkYAWEjJT
-        ImvtoiYKYsjdkzdJyroll+YwvJdPVFUXusgv+xLjMeTYhGRKpQ7TnDfHN8jxSj34
-        iWKbn9HSuYU=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1DEA0121B22;
-        Wed, 21 Apr 2021 19:05:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 5FC04121B21;
-        Wed, 21 Apr 2021 19:05:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
-        git@vger.kernel.org
-Subject: Re: Random GitHub Actions added to git/git???
-References: <xmqqmttt7q8f.fsf@gitster.g>
-        <nycvar.QRO.7.76.6.2104201748400.54@tvgsbejvaqbjf.bet>
-        <xmqqzgxs4sed.fsf@gitster.g>
-        <nycvar.QRO.7.76.6.2104211437040.54@tvgsbejvaqbjf.bet>
-Date:   Wed, 21 Apr 2021 16:05:08 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.2104211437040.54@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Wed, 21 Apr 2021 14:38:06 +0200 (CEST)")
-Message-ID: <xmqqlf9bxmqj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S1343703AbhDUXXH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Apr 2021 19:23:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34360 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231296AbhDUXXE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Apr 2021 19:23:04 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 341F6C06174A
+        for <git@vger.kernel.org>; Wed, 21 Apr 2021 16:22:30 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id y5-20020a05600c3645b0290132b13aaa3bso2086623wmq.1
+        for <git@vger.kernel.org>; Wed, 21 Apr 2021 16:22:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=4fzDd9ESlCmvhq/R6cXEZFdGXpIk3qtBfgTHD9mYaAY=;
+        b=FQ2j+qNOSxcyxQ4AA7Aub3CkyzAHEgPqAAU1QzuLlgVq3WQEWm7YdrN0LbYumqZDcA
+         neEEFoHO1keJ5XbPWsbzD+pQRvPB52l2jQwwr3WyXKz9TWOyUaZRNlsPmOwJOnEm5vZV
+         PjeFzkdZOn0dQv0oZVegIYdAr0HVfZxHB9Q0QvyLSGWhcLKb1V4Bd4u9jafvOef/lBG4
+         DZnEP+majfttNBJ+PYvbkNtYin18gVHBgP7uTMfIOUpN1oNBSCFdxbQkm8Jlp8PvBChn
+         OYWqBLaqu/E2moiHAFtISZ9NYxHwu4LqpoPWIWTSg5vMJjlx7StIRX6OQjt1Lk9H2AOL
+         5gMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=4fzDd9ESlCmvhq/R6cXEZFdGXpIk3qtBfgTHD9mYaAY=;
+        b=W0/KNCKxQXC+se9FcHkRWGu4TADDmGsZLjS7Go23R6s6HNhkMapBp/tPhzDJS9jmqX
+         0Bs4LfPRWmnx4eRaGocooMWCxUri5y82f37HOgibbLpGEMm/ZuUjMYTCOZ8Yn4Yg47br
+         6N6Z8b1032AdL6MnmR43v2zEldwdI3Snr424Mom8moJq/1OBwRxKgUWdJ0wfI2Eukklx
+         eTTEgwQKqiQvAEnej5faUq6/2AQo+QfedeVTTIQj4ETRPNDFYlb3yADJc6KTUdMO4b29
+         ArWll/8tpAMNbc5V9wJwgmK4N/mIYoSajdcYjPLINMFQpofSyA9kDMjjLF4MNQbouUfS
+         GG7Q==
+X-Gm-Message-State: AOAM5308XHuswbJ6xJiAwHosblB+tvyAQ/wAjXbWitI2PMdEndt0sq7b
+        hu3HO9cFK/KpqWPi2CJ2+CmTGkFg8vU=
+X-Google-Smtp-Source: ABdhPJzNnF1ld4G7sblG2xRgTtJJZ4RbaB5hK0nAC3ciRofdyJ5lUF2X691QFjThp+pzHAiGRpHw7g==
+X-Received: by 2002:a1c:7c0e:: with SMTP id x14mr528603wmc.31.1619047348846;
+        Wed, 21 Apr 2021 16:22:28 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id f12sm847345wrr.61.2021.04.21.16.22.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Apr 2021 16:22:28 -0700 (PDT)
+Message-Id: <pull.934.v2.git.1619047347605.gitgitgadget@gmail.com>
+In-Reply-To: <pull.934.git.1618770806366.gitgitgadget@gmail.com>
+References: <pull.934.git.1618770806366.gitgitgadget@gmail.com>
+From:   "Josh Soref via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 21 Apr 2021 23:22:26 +0000
+Subject: [PATCH v2] git-merge: move primary point before parenthetical
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 05925730-A2F6-11EB-98F2-D609E328BF65-77302942!pb-smtp21.pobox.com
+To:     git@vger.kernel.org
+Cc:     Josh Soref <jsoref@gmail.com>, Josh Soref <jsoref@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+From: Josh Soref <jsoref@gmail.com>
 
-> On Tue, 20 Apr 2021, Junio C Hamano wrote:
->
->> How well are our refs protected from these random "Actions"?  Can
->> somebody spam us with a pull request with a new "workflow" that
->> advances one of our integration branches ;-)?
->
-> The GITHUB_TOKEN that is used by the GitHub workflows is generated in two
-> ways, depending whether a PR originated from the same repository or from a
-> fork. If it came from a fork, the token has only read permissions.
->
-> So I'd say we're still safe.
+Usually, it is easier to read a message if it makes its primary
+point first, before giving a parenthetical note.
 
-Yeah, their blog post came to my inbox, which was quite timely, this
-morning ;-).
+Before:
+` (nothing to squash)Already up to date.
+`
 
-https://github.blog/changelog/2021-04-20-github-actions-control-permissions-for-github_token/
+After:
+`Already up to date (nothing to squash).
+`
 
+Signed-off-by: Josh Soref <jsoref@gmail.com>
+---
+    git-merge: move space to between strings
+    
+    GitHub Actions show things like:
+    
+     * branch                  master     -> FETCH_HEAD
+     (nothing to squash)Already up to date.
+    
+    
+    Usually, it is easier to read a message if it makes its primary point
+    first, before giving a parenthetical note.
+    
+    The expected results are:
+    
+     * branch                  master     -> FETCH_HEAD
+    Already up to date (nothing to squash).
+    
+    
+    This commit should change that. Other than breaking all the
+    localizations, and anyone who actively parses the output, this shouldn't
+    have much impact.
+    
+    Changes since v1:
+    
+     * finish_up_to_date now takes a message with a %s for the parenthetical
+       and a trailing \n to address feedback from Junio C Hamano
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-934%2Fjsoref%2Fnothing-to-squash-already-up-to-date-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-934/jsoref/nothing-to-squash-already-up-to-date-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/934
+
+Range-diff vs v1:
+
+ 1:  1b9d685d611f ! 1:  4f60e08195ea git-merge: move space to between strings
+     @@ Metadata
+      Author: Josh Soref <jsoref@gmail.com>
+      
+       ## Commit message ##
+     -    git-merge: move space to between strings
+     +    git-merge: move primary point before parenthetical
+     +
+     +    Usually, it is easier to read a message if it makes its primary
+     +    point first, before giving a parenthetical note.
+     +
+     +    Before:
+     +    ` (nothing to squash)Already up to date.
+     +    `
+     +
+     +    After:
+     +    `Already up to date (nothing to squash).
+     +    `
+      
+          Signed-off-by: Josh Soref <jsoref@gmail.com>
+      
+     @@ builtin/merge.c: static void restore_state(const struct object_id *head,
+       {
+       	if (verbosity >= 0)
+      -		printf("%s%s\n", squash ? _(" (nothing to squash)") : "", msg);
+     -+		printf("%s%s\n", squash ? _("(nothing to squash) ") : "", msg);
+     ++		printf(msg, squash ? _(" (nothing to squash)") : "");
+       	remove_merge_branch_state(the_repository);
+       }
+       
+     +@@ builtin/merge.c: int cmd_merge(int argc, const char **argv, const char *prefix)
+     + 		 * If head can reach all the merge then we are up to date.
+     + 		 * but first the most common case of merging one remote.
+     + 		 */
+     +-		finish_up_to_date(_("Already up to date."));
+     ++		finish_up_to_date(_("Already up to date%s.\n"));
+     + 		goto done;
+     + 	} else if (fast_forward != FF_NO && !remoteheads->next &&
+     + 			!common->next &&
+     +@@ builtin/merge.c: int cmd_merge(int argc, const char **argv, const char *prefix)
+     + 			}
+     + 		}
+     + 		if (up_to_date) {
+     +-			finish_up_to_date(_("Already up to date. Yeeah!"));
+     ++			finish_up_to_date(_("Already up to date%s. Yeeah!\n"));
+     + 			goto done;
+     + 		}
+     + 	}
+
+
+ builtin/merge.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 062e91144125..aad180010670 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -383,7 +383,7 @@ static void restore_state(const struct object_id *head,
+ static void finish_up_to_date(const char *msg)
+ {
+ 	if (verbosity >= 0)
+-		printf("%s%s\n", squash ? _(" (nothing to squash)") : "", msg);
++		printf(msg, squash ? _(" (nothing to squash)") : "");
+ 	remove_merge_branch_state(the_repository);
+ }
+ 
+@@ -1482,7 +1482,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 		 * If head can reach all the merge then we are up to date.
+ 		 * but first the most common case of merging one remote.
+ 		 */
+-		finish_up_to_date(_("Already up to date."));
++		finish_up_to_date(_("Already up to date%s.\n"));
+ 		goto done;
+ 	} else if (fast_forward != FF_NO && !remoteheads->next &&
+ 			!common->next &&
+@@ -1566,7 +1566,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 			}
+ 		}
+ 		if (up_to_date) {
+-			finish_up_to_date(_("Already up to date. Yeeah!"));
++			finish_up_to_date(_("Already up to date%s. Yeeah!\n"));
+ 			goto done;
+ 		}
+ 	}
+
+base-commit: 7a6a90c6ec48fc78c83d7090d6c1b95d8f3739c0
+-- 
+gitgitgadget
