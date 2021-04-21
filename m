@@ -2,143 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 37423C433B4
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 18:56:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A63EBC433B4
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 19:05:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 082A8613E6
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 18:56:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7390E61457
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 19:05:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245344AbhDUS5J (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Apr 2021 14:57:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32820 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234093AbhDUS5J (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Apr 2021 14:57:09 -0400
-Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9425C06174A
-        for <git@vger.kernel.org>; Wed, 21 Apr 2021 11:56:35 -0700 (PDT)
-Received: by mail-ot1-x32d.google.com with SMTP id f75-20020a9d03d10000b0290280def9ab76so34753440otf.12
-        for <git@vger.kernel.org>; Wed, 21 Apr 2021 11:56:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=PUEJ16soGeiqkfBsX8GHEPPwem6M2/Pswnjap4m1hy8=;
-        b=LCoEmAjTqrAuw0wvDs97TdpJSAbE0OymTcMX4778iQhDNQFnfRIJmgIXe5RCWfAheF
-         /Wsx315c71QeRNw+bT3MQwWqWDpqned0rbOv3g3KlfOjKJO3k8QLzAxsVD99CgIYNGeH
-         dXTo1tjTN/nVoxPVWD5bJbuJ77QgrAyFnW4dgE2rtWgAWSTxektf9YPP8//QNxxyJ5zn
-         qrK0kzC4tVkj1CkXD7Vgcgw+0RO9DpA+T2K6XQ/xW4gwNpsZ4UrvR9jopXNXxl2cmyyV
-         HnHh5iTdqd6i7WoFQF/fwYiptxHLeMn4YXYMigWFpLCQU3gDLJqgXB7MYUuA9d8to640
-         v10g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=PUEJ16soGeiqkfBsX8GHEPPwem6M2/Pswnjap4m1hy8=;
-        b=aq8utnnM+XlF4OmgkIErLl3PzNqbZuw6z7wnr/JIyxtDJ8w/mMCr010uLuoUBxhk6O
-         MMO1khiKItFVJPR8Ax1A2rQq73j1XAyADdmOcq8PfHRukKHvm+iAUaQ9c+aNZzWTPbDy
-         IzY+/bK7uSSUsl5IKk3hAYf/w1Z/8T2mZ+8U0/Hmrsn0z7tmQ0ABtu5FmcVtE4Mwe3D1
-         IOMnkTb+1+Xbm0wFcgxeR2Ov5e+N1GA1kCZGlYU8YGtGfCuz3ZT21WY9MlNe+fkw5qAi
-         GcQh7ph5wZSK/vdWgLyL2b5EEEugmOrsS3UcATqZyHyJ4nl5YYQiK1S/3drqWMH8HCpO
-         bkog==
-X-Gm-Message-State: AOAM531+ceaxC21XUfBuLS+zZ4oUZe+e6pA8v5BN60+tyrrGlVUiJ+ex
-        fhHTIKFcY2Wu6E4xatdRLigiO10WfE2RA3b8XmM=
-X-Google-Smtp-Source: ABdhPJwoR1XoJJBLwGdO1k35xn/hpF///47WstyAK5iPra6GKM290TZ/GClCbEvKpDF6Kq1WIeXAdYAlUC7i3vURLfo=
-X-Received: by 2002:a05:6830:906:: with SMTP id v6mr24494430ott.345.1619031395373;
- Wed, 21 Apr 2021 11:56:35 -0700 (PDT)
+        id S245468AbhDUTFn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Apr 2021 15:05:43 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:52793 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S245360AbhDUTFk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Apr 2021 15:05:40 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 03190134722;
+        Wed, 21 Apr 2021 15:05:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=q5AAx8NIuvbqrM22gPisyW4s8tQ=; b=drWZBy
+        VWInzb0PlN13T9gDlfTmLfrD3h07Pkgx5Q1Ot8pKJi9gdrXbPK4cNDbsO2MSmy2C
+        OrYb1mMoht2mEC44c07lERrvJ47+Zn5sVsf0I/OTLW787A79sYaMhIyTsEBdmfgx
+        Xnn7KOlKijryHvf0ZxQMJPjGvdrXivVAwFNVA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=D6/qIsFBWTZ9swq9lUVD9lTZRB4zGJto
+        hjwDL6jaVoQx3TcyBCvHNJaYdNVmz1R0nYodVPjsUP8+M5BbWPHoiEA8c1bCC4Cw
+        E5d3gsYTthB2GMGKCCo/eUzaVOJWyOPhSEbRMVgxJsZGKReB1hZJ77vD7SLuHsXG
+        DTvE9wrLlsM=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id EFF20134721;
+        Wed, 21 Apr 2021 15:05:06 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 34D5D134720;
+        Wed, 21 Apr 2021 15:05:04 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Luke Diamand <luke@diamand.org>
+Cc:     git <git@vger.kernel.org>
+Subject: Re: Track changes across multiple branches, c.f. "p4 interchanges" ?
+References: <d9022ce8-2752-db75-f4b7-d5188c41bd90@diamand.org>
+Date:   Wed, 21 Apr 2021 12:05:02 -0700
+In-Reply-To: <d9022ce8-2752-db75-f4b7-d5188c41bd90@diamand.org> (Luke
+        Diamand's message of "Wed, 21 Apr 2021 09:54:04 +0000")
+Message-ID: <xmqqpmynxxup.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.932.git.1618322497.gitgitgadget@gmail.com>
- <0a3892d2ec9e4acd4cba1c1d0390acc60dc6e50f.1618322497.git.gitgitgadget@gmail.com>
- <CABPp-BHcdhO_kEdqR23sDdGAgoSu2R-HBWv-RmzQvJ0ysWtzxg@mail.gmail.com> <34972851-7d3b-c759-ba87-7022702f74c0@gmail.com>
-In-Reply-To: <34972851-7d3b-c759-ba87-7022702f74c0@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 21 Apr 2021 11:56:24 -0700
-Message-ID: <CABPp-BF0ZhbSs42R3Bw_r-hbhQ71qtbXSBqXdq0djyaan=8p=A@mail.gmail.com>
-Subject: Re: [PATCH 02/10] unpack-trees: make sparse aware
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7AD26BEC-A2D4-11EB-A0F7-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 21, 2021 at 10:27 AM Derrick Stolee <stolee@gmail.com> wrote:
->
-> On 4/20/2021 7:00 PM, Elijah Newren wrote:
-> > On Tue, Apr 13, 2021 at 7:01 AM Derrick Stolee via GitGitGadget
-> > <gitgitgadget@gmail.com> wrote:
->
-> >> diff --git a/read-cache.c b/read-cache.c
-> >> index 29ffa9ac5db9..6308234b4838 100644
-> >> --- a/read-cache.c
-> >> +++ b/read-cache.c
-> >> @@ -1594,6 +1594,9 @@ int refresh_index(struct index_state *istate, unsigned int flags,
-> >>                 if (ignore_skip_worktree && ce_skip_worktree(ce))
-> >>                         continue;
-> >>
-> >> +               if (istate->sparse_index && S_ISSPARSEDIR(ce->ce_mode))
-> >> +                       continue;
-> >> +
-> >
-> > I'm a bit confused about what could trigger ce_skip_worktree(ce) &&
-> > !ignore_skip_worktree and why it'd be desirable to refresh
-> > skip-worktree entries.  However, this is tangential to your patch and
-> > has apparently been around since 2009 (in particular, from 56cac48c35
-> > ("ie_match_stat(): do not ignore skip-worktree bit with
-> > CE_MATCH_IGNORE_VALID", 2009-12-14)).
->
-> I did some more digging on this part here. There has been movement in
-> this space!
->
-> The thing that triggers this ignore_skip_worktree variable inside
-> refresh_index() is now the REFRESH_IGNORE_SKIP_WORKTREE flag which was
-> introduced recently and is set only by builtin/add.c:refresh(), by
-> Matheus: a20f704 (add: warn when asked to update SKIP_WORKTREE entries,
-> 2021-04-08).
->
-> This means that we can (for now) keep the behavior the same by adding
->
->         if (ignore_skip_worktree)
->                 ensure_full_index(istate);
->
-> before the loop. This prevents the expansion during 'git status', but
-> requires modification before we are ready for 'git add' to work
-> correctly. Specifically, 'git add' currently warns only when adding
-> something that exactly matches a tracked file with SKIP_WORKTREE. It
-> does _not_ warn when adding something that is untracked but would have
-> the SKIP_WORKTREE bit if it was tracked. We will need to add that
-> extra warning if we want to avoid expanding during 'git add'.
->
-> Alternatively, we can decide to change the behavior here and send an
-> error() and return failure if they try to add something that would
-> live within a sparse-directory entry. I will think more on this and
-> have a good answer before v2 is ready.
+Luke Diamand <luke@diamand.org> writes:
 
-See my comments on 01/10; users are already getting surprised by "git
-add" today and has been going on for months (though not super
-frequently).  When they try to "git add" an untracked path that would
-not match any path specifications in $GIT_DIR/info/sparse-checkout,
-the fact that "git add" doesn't error out (or at the very least give a
-warning) causes _subsequent_ commands to surprise the user with their
-behavior; the fact that it is some later command that does weird stuff
-(removing the file from the working tree) makes it harder for them to
-try to understand and make sense of.  So, I'd say we do want to change
-the behavior here...and not just for sparse-indexes but
-sparse-checkouts in general.
+> 2. Merge
+> ...
+> If I do "git merge bugfix" onto relbranch, then as well as getting X,
+> I also get B and C, which I don't want.
 
-As for how this affects the code, I think I'm behind both you and
-Matheus on understanding here, but I'm starting to think it was a good
-idea for me to spout my offhand comment on what looked like a funny
-code smell that I thought was unrelated to your patch.  Sounds like it
-is causing some good digging...I'll try to read up more on the results
-when you send v2.  :-)
+This won't work exactly for the reason why you want to do #3 below.
+
+> 3. Always start from a merge base
+>
+> I could tell people that if they are making a bugfix that will need to
+> go onto multiple branches, that they need to start from some common 
+> merge base, and then merge to the final target branches.
+> ...
+> And invariably people will start out thinking their change is not a
+> bugfix, but a new feature, and then find that actually we need the new 
+> feature on the release branch.
+>
+> 4. Use gerrit change-ids
+>
+> We could adopt gerrit change-ids. It feels like this is kind of a
+> kludge, but perhaps it's the only thing that really works?
+>
+> Is there something better?
+
+Just to throw another in for completeness (not claiming which one is
+better and which one is worse):
+
+5. Primarily use #3 to merge, but use "cherry-pick -x" when
+   replaying a fix that was built on a wrong base, and tweak the
+   procedure to find out "is this fix already on branch X?" to also
+   pay attention to it.
+
+It is no worse than #4, I would think, as both approaches would need
+to scan the commit log messages to find the commits that are not in
+the ancestry chain that participated to the branch.
+
