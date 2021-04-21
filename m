@@ -8,151 +8,110 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 04A7FC433B4
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 07:00:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40BA2C43461
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 07:01:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D5D9F6140A
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 07:00:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 057716102A
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 07:01:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234706AbhDUHBG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Apr 2021 03:01:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42558 "EHLO
+        id S236655AbhDUHBf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Apr 2021 03:01:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234727AbhDUHA7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Apr 2021 03:00:59 -0400
-Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96EB3C06138D
-        for <git@vger.kernel.org>; Wed, 21 Apr 2021 00:00:26 -0700 (PDT)
-Received: by mail-ot1-x334.google.com with SMTP id f75-20020a9d03d10000b0290280def9ab76so33005367otf.12
-        for <git@vger.kernel.org>; Wed, 21 Apr 2021 00:00:26 -0700 (PDT)
+        with ESMTP id S236606AbhDUHBc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Apr 2021 03:01:32 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67B5AC06174A
+        for <git@vger.kernel.org>; Wed, 21 Apr 2021 00:00:59 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id cq11so4387047edb.0
+        for <git@vger.kernel.org>; Wed, 21 Apr 2021 00:00:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=WSBAvtEREhU/jbkyq2/yYalpTVSL9Y8kcEKX2yYfqGo=;
-        b=UTuDItEyxqHWLYjqs1/XUyD7fIyAE72ZTkpEBRFHyiDpxDeaQIY/FyyFgxrCOEm2GN
-         NO8UsNqydQSiTY0SixKm51qfBBxLRB37PzqCfiOXy5eTAdHHcUNb/OpggWOoqEu6cenC
-         IvTtLFioYhhI2VDA4S093A6Q+OntGlcvuZVgVxjvx6kBDx9UKXs0rzm1iaCOJtYROM1O
-         AhK5rYCPsPC1/jAD1Y2d2RBeCv1VEAJ3YbrI66hcm5Ts5tHK9KP7hb8yBnIxqVts+Djw
-         +LTDjDAIeLRm9H0lr7ikZVoNm6+rSqKx3sGSZ6bspBM7zNU6vPNErWgkabOhygmjocCt
-         EFaA==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=MoTOTOaHe7SnyvS6So1NPCvyIHn4mhODGG/MBKtE/4U=;
+        b=OrG55RWIL4i+qnZCiy9ikakWbiij5ggLl5zlXAiAdYKA+weI8zn8+bYnRZUAFhihDQ
+         a3Oxh1RNCtngMLSjHnUaV/BQTVtpvR+iPzuwOQ5tQpZrtAfZp7oXrm1grCbSCDhET9Hj
+         HUd892g4/GcaDGUdglYZJdsEw8TcwVYaELZW9sL+iSHsap55N1t1zsb963oYLNSKobCM
+         QIq/JZzd9lsR3Bdo7iLszY5lZzYIpzKGvvgLclzZTIPX7uJe5M7NgHBw5+UFvZF+e1QW
+         CafplzbFsZmB7YugpW8jhRNEMBwisPRYf7HDSlIfUaoW2qhzbamTYNj7gJ50L5ita55/
+         yDkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=WSBAvtEREhU/jbkyq2/yYalpTVSL9Y8kcEKX2yYfqGo=;
-        b=bv3PPbi4hhrDDJqW+IIToy7gq3gzGsYKHzGT3+6j5dwdDGaRuUOxCqLQzATaWAPBH0
-         sDxuwgzBG4UrHcF3b9PpxzGMEHk/F50anDdM700BLC84fRl50qt6VowJ/bmqexzPOM8S
-         kI+7A0UclJSmClKn36RkQrtgJAWAsfI9KvAlkAZSzaJTlqeC9Haz+AHKPkM+QL721t64
-         GgfJYH72EvmByJpc1SJ0T+EbGscppBXqVIh+jdPcWK4+ZeLh0Pkv9xphhfu/FByvhZDC
-         GbeyxNagHzxMhX41ZGhqLSEL/svHZMuS93gVnIcdOQ62rCceFR1zt1pisV2BPBy1Cyvc
-         nKxA==
-X-Gm-Message-State: AOAM531elVRAk0CCTfKILfzV+KqmUH1jriXiEax8lXNXxzfAcVH8dPiJ
-        fSvgCynLbl2WtygqlOts5PzS7R9KjHBaXyxRJAA=
-X-Google-Smtp-Source: ABdhPJzbGLYSdG6MoT6WFDL1uJZqKVrqCEtD4nd8V7kfN3LLLaV3QgnblKElL1r+Fiekws+/5JwK2/lsD018HGfNO5E=
-X-Received: by 2002:a05:6830:108d:: with SMTP id y13mr16574236oto.162.1618988426001;
- Wed, 21 Apr 2021 00:00:26 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=MoTOTOaHe7SnyvS6So1NPCvyIHn4mhODGG/MBKtE/4U=;
+        b=poYpaZM1MqAUkEQjGkf+ibe8UVYMnCDVm1O2xP35m3WgbNXWDfwf4yQOQYCkL1ddqh
+         WisCGeNVTKUzGvfe6guxguh6Ba05RxWnmvQIN1N0QEXPn7obYJ5bAEVPVV9hgMgVWMtY
+         4VoEc/saDKgjT6FQBBGgJSQln5sjEjYEtZUsPFjrT/tHbecicanRl3EAamBD3f9jJzUm
+         P/pfTtUqWsB4DOIPW5h3fJXcUt3c+fel1lvsVl2ZZU9Pa6el3wb997CyBS5sBLLnX03d
+         PmjltEXsEnVL5H8wcA/Y3q9Bnln/1IgUdALCjOUOnyo0D5MWuWUW/Qd27Lo6/ZHf7cfv
+         F/3Q==
+X-Gm-Message-State: AOAM530q6I4BPEVHvL80eoCFjbVerWNPa8TkJq0iW8CeNOeadUd09q2O
+        OYfPerAgqqxS684hOu5/BCmAspa74J9s9Q==
+X-Google-Smtp-Source: ABdhPJy1us31VlzI2SeQ0DZckOAlusdXeUe4ns9YJQpjLMerN91SbtWR0FTw+iDx+QpK5u769kb5qA==
+X-Received: by 2002:a05:6402:382:: with SMTP id o2mr30358566edv.370.1618988457914;
+        Wed, 21 Apr 2021 00:00:57 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id z17sm1911169edx.36.2021.04.21.00.00.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Apr 2021 00:00:57 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
+Subject: Re: [PATCH 15/18] t7900: mark pack-refs tests as REFFILES
+References: <pull.1008.git.git.1618829583.gitgitgadget@gmail.com>
+ <2b3021c4ba626033cde3b28dda7e5a83b85be2b1.1618829583.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
+In-reply-to: <2b3021c4ba626033cde3b28dda7e5a83b85be2b1.1618829583.git.gitgitgadget@gmail.com>
+Date:   Wed, 21 Apr 2021 09:00:57 +0200
+Message-ID: <87k0ow3yvq.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <pull.932.git.1618322497.gitgitgadget@gmail.com> <9d1183ddd280b1e9a580dcbfe9761ceec8d0bc80.1618322498.git.gitgitgadget@gmail.com>
-In-Reply-To: <9d1183ddd280b1e9a580dcbfe9761ceec8d0bc80.1618322498.git.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 21 Apr 2021 00:00:15 -0700
-Message-ID: <CABPp-BGLsmNPjtdhb+SMPcXkHCPNaKcknO7ghUYdBoyrTiymTQ@mail.gmail.com>
-Subject: Re: [PATCH 10/10] fsmonitor: test with sparse index
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 13, 2021 at 7:01 AM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: Derrick Stolee <dstolee@microsoft.com>
->
-> During the effort to protect uses of the index to operate on a full
-> index, we did not modify fsmonitor.c. This is because it already works
-> effectively with only the change to index_name_stage_pos(). The only
-> thing left to do is to test that it works correctly.
->
-> These tests are added to demonstrate that the behavior is the same
-> across a full index and a sparse index, but also that file modifications
-> to a tracked directory outside of the sparse cone will trigger
-> ensure_full_index().
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  t/t7519-status-fsmonitor.sh | 48 +++++++++++++++++++++++++++++++++++++
->  1 file changed, 48 insertions(+)
->
-> diff --git a/t/t7519-status-fsmonitor.sh b/t/t7519-status-fsmonitor.sh
-> index 23879d967297..306157d48abf 100755
-> --- a/t/t7519-status-fsmonitor.sh
-> +++ b/t/t7519-status-fsmonitor.sh
-> @@ -78,6 +78,7 @@ test_expect_success 'setup' '
->         expect*
->         actual*
->         marker*
-> +       trace2*
->         EOF
->  '
->
-> @@ -400,4 +401,51 @@ test_expect_success 'status succeeds after staging/unstaging' '
->         )
->  '
->
-> +test_expect_success 'status succeeds with sparse index' '
-> +       test_config core.fsmonitor "$TEST_DIRECTORY/t7519/fsmonitor-all" &&
-> +       git status --porcelain=v2 >expect &&
-> +       git sparse-checkout init --cone --sparse-index &&
-> +       GIT_TRACE2_EVENT="$(pwd)/trace2.txt" GIT_TRACE2_EVENT_NESTING=10 \
-> +               git status --porcelain=v2 >actual &&
-> +       test_region ! index ensure_full_index trace2.txt &&
-> +       test_cmp expect actual &&
-> +       rm trace2.txt &&
-> +
-> +       write_script .git/hooks/fsmonitor-test<<-\EOF &&
-> +               printf "last_update_token\0"
-> +       EOF
-> +       git config core.fsmonitor .git/hooks/fsmonitor-test &&
-> +       git status --porcelain=v2 >expect &&
-> +       git sparse-checkout init --cone --sparse-index &&
-> +       GIT_TRACE2_EVENT="$(pwd)/trace2.txt" GIT_TRACE2_EVENT_NESTING=10 \
-> +               git status --porcelain=v2 >actual &&
-> +       test_region ! index ensure_full_index trace2.txt &&
-> +       test_cmp expect actual &&
-> +       rm trace2.txt &&
-> +
-> +       write_script .git/hooks/fsmonitor-test<<-\EOF &&
-> +               printf "last_update_token\0"
-> +               printf "dir1/modified\0"
-> +       EOF
-> +       git config core.fsmonitor .git/hooks/fsmonitor-test &&
-> +       git status --porcelain=v2 >expect &&
-> +       git sparse-checkout init --cone --sparse-index &&
-> +       GIT_TRACE2_EVENT="$(pwd)/trace2.txt" GIT_TRACE2_EVENT_NESTING=10 \
-> +               git status --porcelain=v2 >actual &&
-> +       test_region ! index ensure_full_index trace2.txt &&
-> +       test_cmp expect actual &&
-> +
-> +       write_script .git/hooks/fsmonitor-test<<-\EOF &&
-> +               printf "last_update_token\0"
-> +               printf "dir1a/modified\0"
-> +       EOF
-> +       git config core.fsmonitor .git/hooks/fsmonitor-test &&
-> +       git status --porcelain=v2 >expect &&
-> +       git sparse-checkout init --cone --sparse-index &&
-> +       GIT_TRACE2_EVENT="$(pwd)/trace2.txt" GIT_TRACE2_EVENT_NESTING=10 \
-> +               git status --porcelain=v2 >actual &&
-> +       test_region index ensure_full_index trace2.txt &&
-> +       test_cmp expect actual
 
-There's a lot of duplicated lines here; would it make sense to have a
-helper function you call, making it easier to see the differences
-between the four subsections of this test?  Also, do you want to use
-test_config instead of git config, so that it automatically gets unset
-at the end of the test?
+On Mon, Apr 19 2021, Han-Wen Nienhuys via GitGitGadget wrote:
+
+> From: Han-Wen Nienhuys <hanwen@google.com>
+>
+> Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+> ---
+>  t/t7900-maintenance.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+> index 2412d8c5c006..6f2f55a6c51d 100755
+> --- a/t/t7900-maintenance.sh
+> +++ b/t/t7900-maintenance.sh
+> @@ -343,7 +343,7 @@ test_expect_success 'maintenance.incremental-repack.auto' '
+>  	test_subcommand git multi-pack-index write --no-progress <trace-B
+>  '
+>  
+> -test_expect_success 'pack-refs task' '
+> +test_expect_success REFFILES 'pack-refs task' '
+>  	for n in $(test_seq 1 5)
+>  	do
+>  		git branch -f to-pack/$n HEAD || return 1
+
+Re [1] maybe this is ok/fine for now, but I think we should really split
+out the "is specific to file" part more narrowly (not just here, but in
+general).
+
+E.g. I assume that "pack-refs" is simply redundant under reftable, no?
+
+So should this (which the test you're skipping later runs):
+
+    git maintenance run --task=pack-refs
+
+Silently skip, warn, exit with zero or non-zero, some combination
+thereof?
+
+Should the current behavior documented in
+Documentation/git-maintenance.txt change with your series under reftable
+etc?
+
+1. https://lore.kernel.org/git/87sg3k40mc.fsf@evledraar.gmail.com/
