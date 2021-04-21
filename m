@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D574C433B4
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DF08EC433ED
 	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 10:15:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1640C61427
+	by mail.kernel.org (Postfix) with ESMTP id 9D7EB61442
 	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 10:15:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239165AbhDUKQG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Apr 2021 06:16:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57560 "EHLO
+        id S239167AbhDUKQH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Apr 2021 06:16:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57562 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239065AbhDUKP5 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S239069AbhDUKP5 (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 21 Apr 2021 06:15:57 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B086C06138B
-        for <git@vger.kernel.org>; Wed, 21 Apr 2021 03:15:23 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id x7so40723738wrw.10
-        for <git@vger.kernel.org>; Wed, 21 Apr 2021 03:15:23 -0700 (PDT)
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A081C06138C
+        for <git@vger.kernel.org>; Wed, 21 Apr 2021 03:15:24 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id c4so1831649wrt.8
+        for <git@vger.kernel.org>; Wed, 21 Apr 2021 03:15:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=3vpg5hbVTZwSj080ZrlN6mHQqkH/u2jjlisLXw8ZR4A=;
-        b=g1PxMKCf4zbLabVD1LlSGZmEusqOhd0eq3BmxevdDArxZJPnwZ82ghS4HhhKcBsSQl
-         iaOsAHrM3vETXi9ZCdJYSy7xzeMVVM9xyfB+qIzwMOeQHn/mCbm04LwRRBAyq12PGAmB
-         RIRLS91aB2XWPZZhy8tPqHov4ACT8PNjNCp6HGVSz6dywbrGHdcc90MquraM+TkK932V
-         pby1eDk7PYS++/SQOFympjY5A72dfCXPOGAWqKAH1MaqkHo00MVPsWRM1zgMPqqEXC+D
-         mEd9vC8jEI5wmy5NBCLZJTZG88f3IZRqB1smokVyBolAXVa7Roy86qhUlwNyFX7TkdGs
-         ZZ4A==
+        bh=NTnZ6X2+0iPrYckHE9EeYAhoEq/P48sO9wrgGeovRaI=;
+        b=aAQimyZI1MxCcZk527k74fxLJJ+TE4gDrjla651QliLPDX9JWLsBYwAj7dGUmCyp4N
+         YbcGWWTijLEHc5WXa25aAbfba5ZsnEPkzdjlE+B4yHZwKdjK+EMwqw63p0zIp1RBEd+C
+         twh/anG8OXnwn7cWxwuXUc7ctskl++0f4Zv+SSF5HjCJfowWwfbT4G1k2jOWLCheFvAO
+         IHYMW0bIZ5jfIeIbXyTToTWnkS5pbepjNwJlRsWi2iwdSZRcEwAk5g++UDQ7pyAg8c95
+         2B4KzklcnNIzsTfjxNJg3uretNQGAwMnJzYgmpkxfrqwbERyprW05941Kr99KINb7+kB
+         UcRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=3vpg5hbVTZwSj080ZrlN6mHQqkH/u2jjlisLXw8ZR4A=;
-        b=sfUWaPXw79TEoGYihv/IzdZ72/pazp4FAxaB4Itl63kp2v+rnKONPB3b25sN/+8Xml
-         L7adWk4AiUTovTWNKr8ax1HYCn79w1uEej9VSV5S+PpQ5WMyOaZo8gVzUQglfs15pMXi
-         +xmhvDN+O/mDnBw/niXB7SPFRGmGVveO8Dcy9lzRf7sT+J7tUcva3SF5jtgH8zNJZ8mP
-         2AEerkaB7PZn9rJcQaar0FmmPZq+cnza2mHzaXix2dYkNqVU/+hmyRv6aPKZq3+7ZHxF
-         fcy4PWzo8BF0ut8m6uKYs6MlnjAtjkLrBdifxtzonw92ed5rX7XQqc/ivIv/7bxujMaN
-         lIIA==
-X-Gm-Message-State: AOAM531xTH5jN23C5l6u/o5PFP2aumAvOkh5lIUpxZEonnss/U9ffiHQ
-        7gZxXt3oGV7K6hQeeeQF38jVszZ5EZiBSQ==
-X-Google-Smtp-Source: ABdhPJx8jBWww+cYYi8Ase20ouw98AURTMtRPYAN6PbkWO1rjWjPtwtH1XkFbLWRaQDgTbKyV1kdwQ==
-X-Received: by 2002:a5d:4d46:: with SMTP id a6mr26147646wru.3.1619000121804;
-        Wed, 21 Apr 2021 03:15:21 -0700 (PDT)
+        bh=NTnZ6X2+0iPrYckHE9EeYAhoEq/P48sO9wrgGeovRaI=;
+        b=LgWYcjTHc6eIDAOGx8mML81Hb1eur8bSsamSoNyo0TXqSOQ9bGyEe+cWEEDiq3oxBo
+         Wmxlo2a+ZKgm8HA1EX6jGgxU4PjCjqdVxqJV1jJD8DShB4qDmlMRwYkEHtZ+jq7Hj6b1
+         CWZy5V1qyE1BDSk/XAZaFVey3y1EvGuv07EduaUmXvCersrHtkSVo39fmXQYoQN8NOVE
+         RtgmowAWBNYEkp0veyOSlFR85KdueIRQFV2VnuqVepDcpXOQVSnhZrN7F8canH7JCKL3
+         oqqhrYs4p7WPypGq5n0gmaXwdf4jW+9BLnVW5zLR+FPFfeyMXpiT1B91z1ixWJD8WgIv
+         +Z6A==
+X-Gm-Message-State: AOAM533vU70kTZYd8Pk6FLSpJ/bu7ojVtq2KXb7N8Pt2xFS6/KLGPn0Y
+        SmLPSMOh+ZShnqlOVNzfxOkztmtZxVf+Qg==
+X-Google-Smtp-Source: ABdhPJxKWx2ONTMm2LZaiz2fCojcDuuBCmfMsjHu9OLjfEkIzIEE6SUFWJwUwFFb4bzBFBLMlF71CA==
+X-Received: by 2002:adf:eb0a:: with SMTP id s10mr26476294wrn.6.1619000122605;
+        Wed, 21 Apr 2021 03:15:22 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
         by smtp.gmail.com with ESMTPSA id i9sm1843084wmg.2.2021.04.21.03.15.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Apr 2021 03:15:21 -0700 (PDT)
+        Wed, 21 Apr 2021 03:15:22 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -69,9 +69,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Andreas Schwab <schwab@linux-m68k.org>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 03/11] test-lib-functions: reword "test_commit --append" docs
-Date:   Wed, 21 Apr 2021 12:15:08 +0200
-Message-Id: <patch-03.11-709bc773fb-20210421T101156Z-avarab@gmail.com>
+Subject: [PATCH v4 04/11] test-lib-functions: document test_commit --no-tag
+Date:   Wed, 21 Apr 2021 12:15:09 +0200
+Message-Id: <patch-04.11-b67654334e-20210421T101156Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.1.721.gbeb6a21927
 In-Reply-To: <cover-00.11-0000000000-20210421T101156Z-avarab@gmail.com>
 References: <cover-00.12-0000000000-20210420T121833Z-avarab@gmail.com> <cover-00.11-0000000000-20210421T101156Z-avarab@gmail.com>
@@ -82,32 +82,30 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Reword the documentation for "test_commit --append" added in my
-3373518cc8 (test-lib functions: add an --append option to test_commit,
-2021-01-12).
-
-A follow-up commit will make the "echo" part of this configurable, and
-in any case saying "echo >>" rather than ">>" was redundant.
+In 76b8b8d05c (test-lib functions: document arguments to test_commit,
+2021-01-12) I added missing documentation to test_commit, but in less
+than a month later in 3803a3a099 (t: add --no-tag option to
+test_commit, 2021-02-09) we got another undocumented option. Let's fix
+that.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/test-lib-functions.sh | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ t/test-lib-functions.sh | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 6348e8d733..d169fb2f59 100644
+index d169fb2f59..d0f4f3885d 100644
 --- a/t/test-lib-functions.sh
 +++ b/t/test-lib-functions.sh
-@@ -172,8 +172,7 @@ debug () {
- #   --notick
- #	Do not call test_tick before making a commit
- #   --append
--#	Use "echo >>" instead of "echo >" when writing "<contents>" to
--#	"<file>"
-+#	Use ">>" instead of ">" when writing "<contents>" to "<file>"
- #   --signoff
+@@ -177,6 +177,8 @@ debug () {
  #	Invoke "git commit" with --signoff
  #   --author <author>
+ #	Invoke "git commit" with --author <author>
++#   --no-tag
++#	Do not tag the resulting commit
+ #
+ # This will commit a file with the given contents and the given commit
+ # message, and tag the resulting commit with the given tag name.
 -- 
 2.31.1.721.gbeb6a21927
 
