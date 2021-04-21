@@ -8,67 +8,69 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31DA8C433B4
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 07:08:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 98EF6C433ED
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 07:15:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EFAF460FDC
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 07:08:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 587EF6142E
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 07:15:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236726AbhDUHIw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Apr 2021 03:08:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44370 "EHLO
+        id S235161AbhDUHQF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Apr 2021 03:16:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45980 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234099AbhDUHIq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Apr 2021 03:08:46 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15989C06174A
-        for <git@vger.kernel.org>; Wed, 21 Apr 2021 00:08:12 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id j12so23011023edy.3
-        for <git@vger.kernel.org>; Wed, 21 Apr 2021 00:08:12 -0700 (PDT)
+        with ESMTP id S230516AbhDUHQE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Apr 2021 03:16:04 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03567C06174A
+        for <git@vger.kernel.org>; Wed, 21 Apr 2021 00:15:31 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id j7so11166908eds.8
+        for <git@vger.kernel.org>; Wed, 21 Apr 2021 00:15:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=FTmggB3QZ3ZyjJ85nzmE6TVesey+XaN5TCeqxDJHXkc=;
-        b=GuLsCG28ok4fzDJsXxu/8KIGGfiPZ3M6EVRU94fz9UCtLHYVfBmdnAiR9ILjtRnkBb
-         r0zSeNFsmptwv6LvMpDYKbMJGSgenXkI4ZIWCW/bI9kBUwNMj0j1D9AFcJ+kSx3SJJh+
-         AJFdJEZeqv9a8a2UZylaB5iaeX/gHQB4XiNXUwrqxE0WsPdoE5VSnTXPNbdmhnqtib65
-         1MUWrAOS+8OZjAX18LcDYvFSbe4sE1xKpC0LNc57m8i1PTHZnPsrUskUcOdqCLbLFyoB
-         6NdKPvPYKk5OkJa7+EbQL6lck+9qRbz2fp06rxsgVykWmdLDw2w1CAf+IqiGiHH/pNpX
-         WB+Q==
+         :message-id:mime-version:content-transfer-encoding;
+        bh=jpyOEypET1rKVDGHcMoPMrBqW8FJWUrhCzjS2iJTyP4=;
+        b=at94HRoOmt056trO7ZbWRpKlcFwnBfPmMfhbk+6f04XIGDKMCXpgNvOE14N8xQubzQ
+         aMOJXOWCXuj6nORrvgEjEv8MKVnF73AU/hFe0E8rdmsqAVGPFUXeRTPTskxmitXhmKio
+         22o5xvNhdA51SGNdGxS5lbdhgCz108Q2vBhfrrWo3Y3fDuFJ8szxJ1rzPWNYOpunb7Ty
+         djVu77lJAgsLVE4btEmKBcqwMJKB3d4I22UWbKjtKkztV9cJldB2n0H2SOfADkxQSEXV
+         164naZkt8kI0C8krhQc5u2sbQIuFXv3OK7rqrpK94wQghbCRVe485+0FOxwm9ap1QsWs
+         W2ZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=FTmggB3QZ3ZyjJ85nzmE6TVesey+XaN5TCeqxDJHXkc=;
-        b=A9rA+OB3ca6fWjtIcWea3N6la9MFaYe1W/88Yz6hA51ttJmBwFjCjYha+Y550AkDpD
-         tdenVFinGRvl8X+qfpzBK3J43BEQZte/35pufQVfLZ0n6/NGbECYBw1XD298JWc9EEUx
-         kjy7ipbj+5yRYzTuO2uqfYdypkujtd8VO0FImBvcgVKxOdrw0tugQ9lYwQMlEXc349us
-         qYgwZDE1F2+pZVrpdiK9bL+dlq39PsRWWXqYtHersL4R4/P+qol89xMB+qcw4oq1+wr7
-         gQkERc4DDqh1ZvKZlo9SkDe6DNODZEqVd4jIREsIGU4PlyDakSAGzsACfdPVcISl32vv
-         PHZQ==
-X-Gm-Message-State: AOAM533nsAyljKRZdF/PurNHURIUGq3acvXeLuoWiAk3Wr69yx/RuCnL
-        D0pPNvlEZgK0Mm8r7QMKO2B/zg8ZfL/4+w==
-X-Google-Smtp-Source: ABdhPJwXp9q78OwrC+HxlY9vyCT+PfLEgKTmkvRZBR0idrcP2Gh/RdHdm4Oc/zTtiAaCrGFMPSV43A==
-X-Received: by 2002:a05:6402:1109:: with SMTP id u9mr37325478edv.174.1618988890600;
-        Wed, 21 Apr 2021 00:08:10 -0700 (PDT)
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=jpyOEypET1rKVDGHcMoPMrBqW8FJWUrhCzjS2iJTyP4=;
+        b=sUiGjRzbQUekQK+EhmmzeBp9resyHZw/oJkoZmIg77x4xnKIfD0gQhYaKBNpG65C6V
+         g4tLYSNkF7gKw1Pj8Ll7R2FQTQ2l8N12Qxe0EApUGxk4wF2NvfFSCrEUvLkvhsa0fXj9
+         b6WD7s2y9r5PM0lyKZXLl/zTPDoFp6ngZtZswegurgwHEIAUS3WdJVuJQAdk+iigGZHg
+         cpJNbtVl4uNWM9wwKM4ONvoaoyy0AyosYBgloQEICt7nmECyQ9cV1Q/T3DMhoNijt3k2
+         wtcgTR9CPGxDj9QU0KE41uMz1OBzclx+oUIYm1jQ7LKRm4e/G5i99DsKvWNgTs61M5eW
+         wXew==
+X-Gm-Message-State: AOAM531ellFGt0fx2+XtCbKXmThuNdvuBe66SrYuPp25kSRVqJchK01a
+        pBLuAU6TrMZxT3mlLFONfQpaaaZwZ+FQqA==
+X-Google-Smtp-Source: ABdhPJyR1LnH+avc/oKuZr0tN3v22n2cFagbBMgwX08K6JYbjEmBnthbaNbjPYLCUeyv6bBitzB6Xg==
+X-Received: by 2002:a05:6402:154a:: with SMTP id p10mr34106595edx.77.1618989330402;
+        Wed, 21 Apr 2021 00:15:30 -0700 (PDT)
 Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id z22sm1357269ejr.60.2021.04.21.00.08.09
+        by smtp.gmail.com with ESMTPSA id gn19sm1342064ejc.68.2021.04.21.00.15.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Apr 2021 00:08:10 -0700 (PDT)
+        Wed, 21 Apr 2021 00:15:29 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
         Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH 17/18] t4202: mark bogus head hash test with REFFILES
+Subject: Re: [PATCH 18/18] t1415: set REFFILES for test specific to storage
+ format
 References: <pull.1008.git.git.1618829583.gitgitgadget@gmail.com>
- <a2cce772d44f5939475a1dfddc1a55ab9bbb8ac5.1618829584.git.gitgitgadget@gmail.com>
+ <0665edb1308b8cd4536d6922fd36315e1abdd9d1.1618829584.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <a2cce772d44f5939475a1dfddc1a55ab9bbb8ac5.1618829584.git.gitgitgadget@gmail.com>
-Date:   Wed, 21 Apr 2021 09:08:09 +0200
-Message-ID: <87eef43yjq.fsf@evledraar.gmail.com>
+In-reply-to: <0665edb1308b8cd4536d6922fd36315e1abdd9d1.1618829584.git.gitgitgadget@gmail.com>
+Date:   Wed, 21 Apr 2021 09:15:29 +0200
+Message-ID: <87bla83y7i.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
@@ -78,38 +80,50 @@ On Mon, Apr 19 2021, Han-Wen Nienhuys via GitGitGadget wrote:
 
 > From: Han-Wen Nienhuys <hanwen@google.com>
 >
-> In reftable, hashes are correctly formed by design
-
-With the file backend this hits this in revision.c:
-
-        if (!refname || !(flags & REF_ISSYMREF) || (flags & REF_ISBROKEN))
-                die(_("your current branch appears to be broken"));
-
-There's a REF_ISBROKEN is the reftable code, so is hitting this codepath
-impossible under reftable and therefore we won't need this test at all?
-
-Maybe, and that would be cool, but re [1]'s 3rd item ("[...]what we
-*don't* cover[...]") shouldn't revision.c have a "if (reftable) BUG()"
-condition there then?
-
-1. https://lore.kernel.org/git/87wnt2th1v.fsf@evledraar.gmail.com/
-
 > Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 > ---
->  t/t4202-log.sh | 2 +-
+>  t/t1415-worktree-refs.sh | 2 +-
 >  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-> index c575deaad4fb..ed6d4ecd3a28 100755
-> --- a/t/t4202-log.sh
-> +++ b/t/t4202-log.sh
-> @@ -1834,7 +1834,7 @@ test_expect_success 'log --graph --no-walk is forbidden' '
->  	test_must_fail git log --graph --no-walk
+> diff --git a/t/t1415-worktree-refs.sh b/t/t1415-worktree-refs.sh
+> index 7ab91241ab7c..a8083a0af3af 100755
+> --- a/t/t1415-worktree-refs.sh
+> +++ b/t/t1415-worktree-refs.sh
+> @@ -16,7 +16,7 @@ test_expect_success 'setup' '
+>  	git -C wt2 update-ref refs/worktree/foo HEAD
 >  '
->  
-> -test_expect_success 'log diagnoses bogus HEAD hash' '
-> +test_expect_success REFFILES 'log diagnoses bogus HEAD hash' '
->  	git init empty &&
->  	test_must_fail git -C empty log 2>stderr &&
->  	test_i18ngrep does.not.have.any.commits stderr &&
+>=20=20
+> -test_expect_success 'refs/worktree must not be packed' '
+> +test_expect_success REFFILES 'refs/worktree must not be packed' '
+>  	git pack-refs --all &&
+>  	test_path_is_missing .git/refs/tags/wt1 &&
+>  	test_path_is_file .git/refs/worktree/foo &&
 
+So a na=C3=AFve:
+=20=20=20=20
+    diff --git a/refs/files-backend.c b/refs/files-backend.c
+    index 3f29f8c143..01e2dc8bc3 100644
+    --- a/refs/files-backend.c
+    +++ b/refs/files-backend.c
+    @@ -212,7 +212,7 @@ static void files_ref_path(struct files_ref_store *=
+refs,
+      */
+     static void add_per_worktree_entries_to_dir(struct ref_dir *dir, const=
+ char *dirname)
+     {
+    -       const char *prefixes[] =3D { "refs/bisect/", "refs/worktree/", =
+"refs/rewritten/" };
+    +       const char *prefixes[] =3D { "refs/bisect/", "refs/rewritten/" =
+};
+            int ip;
+=20=20=20=20
+            if (strcmp(dirname, "refs/"))
+
+Will fail the test under non-reftable, i.e. we somehow conflate "is
+packed" with correctly discovering these refs? A discussion of how
+8aff1a9ca5 (Add a place for (not) sharing stuff between worktrees,
+2018-09-29) relates to reftable would be valuable here.
+
+But on the tip of "seen" currently this test fails entirely with
+GIT_TEST_REFTABLE=3Dtrue, so I'm not sure if it got rid of the need for
+this abstraction in the files backend or what...
