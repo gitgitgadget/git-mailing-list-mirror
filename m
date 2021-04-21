@@ -4,67 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL
-	autolearn=no autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DB2D2C433B4
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 09:43:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 66DD4C433B4
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 09:53:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 976F061440
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 09:43:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 22BB061440
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 09:53:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238504AbhDUJoE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Apr 2021 05:44:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50500 "EHLO
+        id S235038AbhDUJxi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Apr 2021 05:53:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52552 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238011AbhDUJoD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Apr 2021 05:44:03 -0400
-Received: from mail-vs1-xe2d.google.com (mail-vs1-xe2d.google.com [IPv6:2607:f8b0:4864:20::e2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A16B7C06174A
-        for <git@vger.kernel.org>; Wed, 21 Apr 2021 02:43:30 -0700 (PDT)
-Received: by mail-vs1-xe2d.google.com with SMTP id b8so4384870vsu.8
-        for <git@vger.kernel.org>; Wed, 21 Apr 2021 02:43:30 -0700 (PDT)
+        with ESMTP id S233957AbhDUJxh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Apr 2021 05:53:37 -0400
+Received: from mail-vs1-xe29.google.com (mail-vs1-xe29.google.com [IPv6:2607:f8b0:4864:20::e29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07334C06174A
+        for <git@vger.kernel.org>; Wed, 21 Apr 2021 02:53:05 -0700 (PDT)
+Received: by mail-vs1-xe29.google.com with SMTP id 66so20849457vsk.9
+        for <git@vger.kernel.org>; Wed, 21 Apr 2021 02:53:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=dAgdkez25oWOgmE1EECL9Xtngh9R11pi4ixvUfXZPpw=;
-        b=iD0+WNpGtsyDvT8jvslG86vwYC0y3IT1kLpLfdG906qcjzooLG56Ng+A9IAC/qP0VL
-         h789DF380zzclKY6KCyk5cX0MaZnuva9MMZa7IiA55ErK+mYRppqjZ8XDX5BUSUPCUUq
-         g/fKwbxnKd22n0V42HuJA7+t9ePREwPxQlQUgLyBMd3HdLoLO4ISo0NeXfLuofVMwoCT
-         UQuPqED/faiMMeEVOdxxf/C5ygeCshQImzJ9yrJGha8VIQsB54ObbfAVbooYZO+zUq1A
-         cXUbTd/7NytwxpTA868UUfySQNPrureUKN6jnCtCOrf5ldXTak1jmJv+7PdeZJcku9on
-         jZNQ==
+         :cc:content-transfer-encoding;
+        bh=q8kxvcZ+F9nHM26i15oNv0eBDNdXOHz6jUtd2XirjtM=;
+        b=kg17xrDOO+gL4a3k017pI2crh9/g6u7g2x2KWY328QThAcll5ZUf+/ljR5HiBwpmq0
+         6gVeDLgKqLkKbFSmTq+9oxXe6ThQWFx4KnutAXTmNBbgD9wcXL6g5bYBPOoD4H9Yg8XY
+         FgiKa6vWmg3usW17pltvLlEZ29MfLEZLrszJLcBkbpG9gYjgsp3Ph0KbZqSpMpd/XrXD
+         OGrALz1PcOLpXcjB/MqDsp7S5emLCVnNl1r/fS0bIDBTKrpyU97BydZPmKclJEDucBRD
+         DkXxroWFrgoqcHFz+x5msuholE9pN/fPpho5pDEnyXTgwzPPlwvz9xV31pYg5IsxqEVB
+         8Wvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=dAgdkez25oWOgmE1EECL9Xtngh9R11pi4ixvUfXZPpw=;
-        b=AvJltSpwjGXPlJgO4l6x1MfKy5d+Uhyx3RKg1yzwkG4RHtuz7eh4Q2KXkafoPsk1jb
-         9EkhNFNYbgDE/KHTQVNweUv/nxZhyXvmAqNXoQrwtQvp9kR7MpYRQYiOSfSPOSLs4FO+
-         yfBTGgSxKVXYXSxpnzBnFlnE0AeuMIxWVupsJATPohD2maXJl5ifAwwh8CZh3xvUwfrk
-         SA2RDF10WpEAM8p7qoGi6JLUq3ZIDqkzKlnH3aLGKLP7ZflJXxfvqGccf8AFV6RF1cD0
-         Odk2BcI7IOI49YtVwoMYBq9Pvs44Sl0eWS4Bvr3JGkencXpRdEX8oXmcSTylB73pDLKi
-         d6vw==
-X-Gm-Message-State: AOAM53067/w6ZMuW5bWiaqGm7OpevDHR1c2F0Dw3nG66eT2t6q531rGp
-        cws6xrSVTl+zwUUaX9ADoicOXB4deGtOj6/XydonoA==
-X-Google-Smtp-Source: ABdhPJxoRfsbE8F+L221nIVTxjcm2Nd6y1KxjmKRswIMpOmPL/6PFdkmhxnTNR0glb3kNJ3iyk88Jh1Cz51xDlglQtU=
-X-Received: by 2002:a05:6102:20cc:: with SMTP id i12mr10951546vsr.12.1618998209667;
- Wed, 21 Apr 2021 02:43:29 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=q8kxvcZ+F9nHM26i15oNv0eBDNdXOHz6jUtd2XirjtM=;
+        b=cKrbRcP797nXyyP7KaLow+UX70DTRStWoq8viagy+mYDVkRW3fbXI52t8BIJRWCyrp
+         VVuPlZTH8ptIE8c90S/YstrpGhzt7laChxKAOJlyg91ek766at+FvQHC/RqH0O6VOSwW
+         yWnORWPO5MELV89NRiBPXVtD0DQVkMkts1sT7gxjpaze6id7Gaar0MesuNd/B+988Ek1
+         pjKH14HVweN1H+7B+/4zRUfvjFPuuUQiPHw+wMhBQz3Lr9Y3+JKpSqjOQsNO5SpmFPYT
+         M/+026tLZS4qBSMz60/skl7yrAa7DYHPoqqAH383XC5s6AWrt9M0q9r7zrQfSb3bVJXW
+         UN4Q==
+X-Gm-Message-State: AOAM533uUcMU5rOJxwno2VSU+4XAVP22BUfU/ARxzFRnvjgdaY4ei8Vx
+        0433otl4821yzylcKLZGh6wo5dfRurIKjJ6AsgiMVhGSB+g=
+X-Google-Smtp-Source: ABdhPJxlxA7KRzffdKEhoBDYutHiWudMsiK85hTpqM9rtpRCbba3VFBI2KGYSFeEPtBdJzyRGMHG0YEQUggx9v3ddxw=
+X-Received: by 2002:a67:7d42:: with SMTP id y63mr25344494vsc.5.1618998783976;
+ Wed, 21 Apr 2021 02:53:03 -0700 (PDT)
 MIME-Version: 1.0
 References: <pull.847.v6.git.git.1618255552.gitgitgadget@gmail.com>
- <pull.847.v7.git.git.1618832276.gitgitgadget@gmail.com> <f0216ae20b6988514bdb60d8fff96e18c2ce9f1d.1618832277.git.gitgitgadget@gmail.com>
- <xmqqlf9c68iy.fsf@gitster.g> <YH96CcJhZt4CTPWD@camp.crustytoothpaste.net>
-In-Reply-To: <YH96CcJhZt4CTPWD@camp.crustytoothpaste.net>
+ <pull.847.v7.git.git.1618832276.gitgitgadget@gmail.com> <878s5c3wti.fsf@evledraar.gmail.com>
+In-Reply-To: <878s5c3wti.fsf@evledraar.gmail.com>
 From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Wed, 21 Apr 2021 11:43:18 +0200
-Message-ID: <CAFQ2z_NAQ02y1gaTymzi21aHxh+bswvr6ko_Eg=1uuHds4mGyg@mail.gmail.com>
-Subject: Re: [PATCH v7 04/28] hash.h: provide constants for the hash IDs
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwen@google.com>,
-        Jeff King <peff@peff.net>,
+Date:   Wed, 21 Apr 2021 11:52:52 +0200
+Message-ID: <CAFQ2z_MF3SbKf8yXBvkOcLGg03dVxJW3F=c6ZDUtstEbZUUMCQ@mail.gmail.com>
+Subject: Re: [PATCH v7 00/28] reftable library
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -72,7 +69,6 @@ To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
         Josh Steadmon <steadmon@google.com>,
         Emily Shaffer <emilyshaffer@google.com>,
         Patrick Steinhardt <ps@pks.im>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Felipe Contreras <felipe.contreras@gmail.com>,
         Derrick Stolee <stolee@gmail.com>,
         Han-Wen Nienhuys <hanwenn@gmail.com>
@@ -82,25 +78,59 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 21, 2021 at 3:04 AM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
-> > I agree that it makes sense to have symbolic constants defined in
-> > this file.  These are values that fit in the ".format_id" member of
-> > "struct git_hash_algo", and it is preferrable to make sure that the
-> > names align (if I were designing in void, I would have called the
-> > member "algo_id" and made the constants GIT_(SHA1|SHA256)_ALGO_ID).
-> >
-> > Brian?  What's your preference ("I am fine to store HASH_ID in the
-> > '.format_id' member" is perfectly an acceptable answer).
+On Wed, Apr 21, 2021 at 9:45 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> > The commits up to "hash.h: provide constants for the hash IDs" should b=
+e
+> > good to merge to 'next'.
 >
-> I slightly prefer FORMAT_ID because it's consistent (and for that reason
-> only), but if HASH_ID is more convenient, that's fine; I don't have a
-> strong opinion at all.  Definitely don't reroll the series because of my
-> slight preference.  Either way, I think these are fine things to have as
-> constants, and I appreciate you hoisting the comments here.
+> With how Junio queues things up perhaps submitting this as another
+> "prep" series would be good, to reduce future reviewer fatigue,
+> i.e. anything we can make land on master makes re-rolls that much
+> smaller.
 
-Either way is fine for me. I can paint the bikeshed in your favorite color =
-:)
+will do.
+
+> > There are several test fixups, but I've put them in another series beca=
+use
+> > GGG enforces max 30 commits.
+>
+> I left a bunch of comments on the test prep series now. Probably good to
+> have it split up regardless of GGG limits.
+>
+> Re the comments I left on the test series. I'm very happy to see the
+> start of addressing the "it must be tested" concerns I had in
+> https://lore.kernel.org/git/87wnt2th1v.fsf@evledraar.gmail.com/
+
+It may look like the start, but I've been improving the number of
+tests that pass continuously since I posted the first version of this
+code over a year ago.
+
+> I don't see the point of having re-rolls of this topic while the test
+> changes topic it's based on hasn't finished
+> marking/splitting/refactoring the various tests that do and don't depend
+> on the file backend.
+>
+> At least when I review it I'm just left with going in circles digging
+> into one of those failing test, figuring out if it's really
+> refs/files-backend.c specific or not etc., and as long as we can't turn
+> on GIT_TEST_REFTABLE=3Dtrue in CI as part of this series I don't see a
+> path to making it advance to next->master.
+
+The point of posting updates is to garner feedback, especially from
+people familiar with the Git code itself. If you would like this
+effort to move forward faster, I am most in need of review for the
+part that glues the library together with the git code itself (ie. the
+commit introducing refs/reftable-backend.c).
+
+> > Due to using uncompress2, this build fails on the Linux32 builder; what=
+ is
+> > the magic incantation to run autoconf?
+>
+> Doesn't this just need a NO_UNCOMPRESS2 for Linux32 in ci/lib.sh? See
+> the lines just below that for e.g. NO_REGEX for another CI target.
+
+Thanks!
 
 --=20
 Han-Wen Nienhuys - Google Munich
