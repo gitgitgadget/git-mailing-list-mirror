@@ -2,91 +2,135 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C50BEC433B4
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 17:26:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 98CA0C433B4
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 17:27:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 82423613B2
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 17:26:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 616CD60FDB
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 17:27:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240224AbhDUR0h (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Apr 2021 13:26:37 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:63304 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235101AbhDUR0h (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Apr 2021 13:26:37 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4408311F1A7;
-        Wed, 21 Apr 2021 13:26:04 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=0I7R1pk4a+jMoi6OfCWbhK8EkbQ=; b=TdIxRr
-        +ZTHqRqdGJ5rHxqR7uBqeqbBzJftGzvI+kOPNCbxBCBD2vp5Yfhs1HFNmxMuhPnC
-        whR7IHF/hjcmfBvLjJCdjbOm2HNkKnr9k9460UWBbb4EDMPyYc/j875icTNyINDi
-        JUiZi++U7U2l96+NN18crKTks1BrZJNSXTFK8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=eP133Kyi8zJ2D0h/VX6nBd7gavCdFT/Y
-        x4h9yqU0UWEB9dOPQmCX/PndhtXDmZa5oscRX39081FdI+PWFennCTWkbXiDLgnm
-        AP9QtCaXRHUWAb6LCWGMIl/i2ZHCiNSfOcMVlXJBkOBNx/ZB/JkBM97sBpclP3gi
-        ecs6TnfyF3g=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3C74F11F1A6;
-        Wed, 21 Apr 2021 13:26:04 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8104911F1A2;
-        Wed, 21 Apr 2021 13:26:01 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
-Cc:     trygveaa@gmail.com, git@vger.kernel.org, larsxschneider@gmail.com,
-        chriscool@tuxfamily.org, Johannes.Schindelin@gmx.de,
-        pranit.bauva@gmail.com, tanushreetumane@gmail.com,
-        mirucam@gmail.com
-Subject: Re: [PATCH v2] test: add test for git bisect skip with --term*
- arguments
-References: <20210418151459.GC10839@aaberge.net>
-        <20210421040808.14185-1-bagasdotme@gmail.com>
-Date:   Wed, 21 Apr 2021 10:25:59 -0700
-In-Reply-To: <20210421040808.14185-1-bagasdotme@gmail.com> (Bagas Sanjaya's
-        message of "Wed, 21 Apr 2021 11:08:10 +0700")
-Message-ID: <xmqqa6przh08.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S240818AbhDUR1p (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Apr 2021 13:27:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40986 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240745AbhDUR1n (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Apr 2021 13:27:43 -0400
+Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB22FC06174A
+        for <git@vger.kernel.org>; Wed, 21 Apr 2021 10:27:08 -0700 (PDT)
+Received: by mail-qt1-x82d.google.com with SMTP id o2so18384427qtr.4
+        for <git@vger.kernel.org>; Wed, 21 Apr 2021 10:27:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=4F7l45C+TSP+oEBm+LpcPiy9xAwiwkVRPOJnr1AXmTQ=;
+        b=Kfgt0D3TYgyinehjOmEvay0Vlbvocoa2UDgQpWqxUfTuNOCS/SzaCGRnLpZYoo4tlo
+         XNphjCHQjrYJrVs/LPAiEALj3rLPKi1r16sVm4tO/YsEE53SnGTFDf76DKU/yPpG6WS8
+         LduiDCajgnCwqg+QNFTfJQxKZ4SmQgVY6kAitPSQVR5RCoIO9+1bEGNXclRlrF6OC4Ij
+         wOgiCRJpLfTdBAcB3EOk8Ir82nY5ghHnwHrMf/DiXm3FYX7cnwD/irw2HVXbjf50sYlE
+         vfjsEBSNqnYGw+S1JpWxyeGXE4G2opK7wgWFTjDrp9mWc/tQtmb8GNCQ0Laf4g6yxYZj
+         uBfQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=4F7l45C+TSP+oEBm+LpcPiy9xAwiwkVRPOJnr1AXmTQ=;
+        b=jcXPxms1p7JqtVoKJV0wPmsqI164hfzZrpL5xDBMFtMrn8Maczz79uESZXgbdYtO3l
+         o/XuX3kVuP/HtlDc2jYqjr9K+sO+fSsO18fpU/xMUds3wmxJI98RxnjDfS63XiXxnzvz
+         s5w3cmyTdqSvfIVq3dav9yK1qucHDDogg9ZORVjc6RKmaFdqtlGyLNXYYdNzal79MouO
+         Uyl/0kyiIUBsTHahMIhuD0ugzSn5r2PpjGeGRWe59rS4BspxOUomxml3A6PE5T50Rtel
+         RjuAfW3LIBuoYV71jXy9+N2mkeC1dPhfVk6lbdW/q1b2NxorQR8YtmsVCepcMxrT7USM
+         M4cw==
+X-Gm-Message-State: AOAM5336G+u1y+3RLExl6MWudtkiEVL8bba8osLuUKsxYOttLocEAJN9
+        PU30036IY323ikBLOdREl00=
+X-Google-Smtp-Source: ABdhPJyQqEKoBtlf3gZLMQowVViXiRa0O7em2XNtwNT/6EN/06JXzJq8/Yx1IxXOFBsR/cD/R8yl4g==
+X-Received: by 2002:ac8:6715:: with SMTP id e21mr22358295qtp.239.1619026027883;
+        Wed, 21 Apr 2021 10:27:07 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:e10e:eea5:8b82:2147? ([2600:1700:e72:80a0:e10e:eea5:8b82:2147])
+        by smtp.gmail.com with ESMTPSA id x7sm147408qts.42.2021.04.21.10.27.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 21 Apr 2021 10:27:07 -0700 (PDT)
+Subject: Re: [PATCH 02/10] unpack-trees: make sparse aware
+To:     Elijah Newren <newren@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+References: <pull.932.git.1618322497.gitgitgadget@gmail.com>
+ <0a3892d2ec9e4acd4cba1c1d0390acc60dc6e50f.1618322497.git.gitgitgadget@gmail.com>
+ <CABPp-BHcdhO_kEdqR23sDdGAgoSu2R-HBWv-RmzQvJ0ysWtzxg@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <34972851-7d3b-c759-ba87-7022702f74c0@gmail.com>
+Date:   Wed, 21 Apr 2021 13:27:03 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.9.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A4B42710-A2C6-11EB-96E7-D609E328BF65-77302942!pb-smtp21.pobox.com
+In-Reply-To: <CABPp-BHcdhO_kEdqR23sDdGAgoSu2R-HBWv-RmzQvJ0ysWtzxg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Bagas Sanjaya <bagasdotme@gmail.com> writes:
+On 4/20/2021 7:00 PM, Elijah Newren wrote:
+> On Tue, Apr 13, 2021 at 7:01 AM Derrick Stolee via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
 
-> Trygve Aaberge reported the current git bisect breakage on [1].
-> After starting bisection with --term-new and --term-old arguments to git
-> bisect start, skipping with git bisect skip does not change HEAD as
-> expected.
->
-> Let's add the test to catch this breakage.
+>> diff --git a/read-cache.c b/read-cache.c
+>> index 29ffa9ac5db9..6308234b4838 100644
+>> --- a/read-cache.c
+>> +++ b/read-cache.c
+>> @@ -1594,6 +1594,9 @@ int refresh_index(struct index_state *istate, unsigned int flags,
+>>                 if (ignore_skip_worktree && ce_skip_worktree(ce))
+>>                         continue;
+>>
+>> +               if (istate->sparse_index && S_ISSPARSEDIR(ce->ce_mode))
+>> +                       continue;
+>> +
+> 
+> I'm a bit confused about what could trigger ce_skip_worktree(ce) &&
+> !ignore_skip_worktree and why it'd be desirable to refresh
+> skip-worktree entries.  However, this is tangential to your patch and
+> has apparently been around since 2009 (in particular, from 56cac48c35
+> ("ie_match_stat(): do not ignore skip-worktree bit with
+> CE_MATCH_IGNORE_VALID", 2009-12-14)).
 
-I expected, as you said in your first version, that it would be
-added as part of an existing test script for "git bisect".  And I
-suspect that you can reuse the history the existing tests in the
-script already use, so you won't have to add the first "initialize"
-piece.  If the tested sequence should work but does not yet work due
-to lack of a fix to a known bug, the test should be marked as
-test_expect_failure instead of test_expect_success.
+I did some more digging on this part here. There has been movement in
+this space!
 
->   * style changes requested by Junio
+The thing that triggers this ignore_skip_worktree variable inside
+refresh_index() is now the REFRESH_IGNORE_SKIP_WORKTREE flag which was
+introduced recently and is set only by builtin/add.c:refresh(), by
+Matheus: a20f704 (add: warn when asked to update SKIP_WORKTREE entries,
+2021-04-08).
 
-Heh, I didn't request anything.  I merely pointed out the parts that
-violate the style guide, so if anything, the guide requested you and
-I was just a messenger ;-).
+This means that we can (for now) keep the behavior the same by adding
 
-Thanks.
+	if (ignore_skip_worktree)
+		ensure_full_index(istate);
+
+before the loop. This prevents the expansion during 'git status', but
+requires modification before we are ready for 'git add' to work
+correctly. Specifically, 'git add' currently warns only when adding
+something that exactly matches a tracked file with SKIP_WORKTREE. It
+does _not_ warn when adding something that is untracked but would have
+the SKIP_WORKTREE bit if it was tracked. We will need to add that
+extra warning if we want to avoid expanding during 'git add'.
+
+Alternatively, we can decide to change the behavior here and send an
+error() and return failure if they try to add something that would
+live within a sparse-directory entry. I will think more on this and
+have a good answer before v2 is ready.
+
+Thanks,
+-Stolee
