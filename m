@@ -2,101 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B52BC433ED
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 23:28:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BBC8DC433B4
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 23:28:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 03D4461421
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 23:28:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9403B61421
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 23:28:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234874AbhDUX3Q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Apr 2021 19:29:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35712 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234681AbhDUX3P (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Apr 2021 19:29:15 -0400
-Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2045C06174A
-        for <git@vger.kernel.org>; Wed, 21 Apr 2021 16:28:40 -0700 (PDT)
-Received: by mail-pg1-x52a.google.com with SMTP id 31so149177pgn.13
-        for <git@vger.kernel.org>; Wed, 21 Apr 2021 16:28:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=7ZQbpMLs2/vrEQBcHSMWzn/+k62LZoUf+IO6u/4piHs=;
-        b=esOP1NLtQbSbSPLTyRl56PiudJpJgB1J1tgqizacyAxLrtsTMsZyJA/aLT8tx5D5V4
-         pUU6HMkIUqmEugVcGBvF7ZLWqFtlwsW02fO9WZQ2WlO8bzzY7Bk/cwDLwcfJDE8cD2O6
-         6HgJhkGh7thNN0NG5LWCJvLVAW4NRF89Gkmbk9Yk38wTuMwwp9iJJHNk7LQ8Whc0tPlL
-         R5yT6u2EPM2WrTiut8ggh2BoBs659I34kOBf+BkwFMYzbf1PHhPEhVXyWT1Y7bNJy4nb
-         9YwcSo5SAuaogC/0D8QYwoOEU8oyyBLqfJL9NurxLQxBwWnC+0pz5qkQO+zPxm5mmuwl
-         w+pA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :content-transfer-encoding:in-reply-to;
-        bh=7ZQbpMLs2/vrEQBcHSMWzn/+k62LZoUf+IO6u/4piHs=;
-        b=I+rHBQHXuvNCyFXQwCG9kw/pOyLAmAE7WhKG8+ZUY4RPzrIm0H8AS+k7U8lbqMWuBV
-         gw2dosvnga2uI0Vj2VahGI/cunJV6XDRDa+vgd5W4Zf/+utbvYQq0HMOxXjFvgeJZe8z
-         e6sbE+5Kc3wooDA2hD9Z8M250HlcNCNixxHb139/+cAp9eeyi86BcifGUJUkk2p93HQH
-         LuemUIbYEcvKfbPAyb+tAAvz52TTP0BY1jNPYBGd000K8wcDfYbpMB04kL3gAUhRlhK3
-         RT0emfB7ELovugUEXfuNK5Ni0zaYgEAOvOKmO1heRc/UvuMWK9sy0oWEjPXus6BuqDuu
-         4D9g==
-X-Gm-Message-State: AOAM531PRhTFar9VFY1BxQ5zm4XOrxr4rU2VJj88s1JhUVS5nyztXhOs
-        GRKDZ+SqTqdR2Roxv0vDeQW0hg==
-X-Google-Smtp-Source: ABdhPJz4tzCyIC1ceAFlfzSoksp+ZSYZ2vbAthW8p/Rm87UjU3yUJuPzvZPlyq1ZwpkXjQ7vZwby5w==
-X-Received: by 2002:a17:90a:ea0f:: with SMTP id w15mr13943521pjy.31.1619047720332;
-        Wed, 21 Apr 2021 16:28:40 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:6d58:26e3:155c:4476])
-        by smtp.gmail.com with ESMTPSA id x22sm386717pgx.19.2021.04.21.16.28.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Apr 2021 16:28:39 -0700 (PDT)
-Date:   Wed, 21 Apr 2021 16:28:33 -0700
-From:   Josh Steadmon <steadmon@google.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        id S234989AbhDUX3Y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Apr 2021 19:29:24 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63635 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234681AbhDUX3X (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Apr 2021 19:29:23 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A21F1A95BB;
+        Wed, 21 Apr 2021 19:28:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=XBLgjsYCKMM6q6o87e3pcAQABmI=; b=MjAZ0z
+        IK7J4+5trIs95wTK72h6FSAMElV0Hu7PbTKKxf3ZrIv3NVsNLTsqQg3CEWMEkF3o
+        zM5SOLZvmp0RBem3pzEky9WMeNclNogHppEjnsXZOK+esER7wJjMHeuNFRntD7kt
+        Ly9EGGR1UsbzjzTmGJoq/DMaILbAKYcmLcDgE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=GGAQOH5h8kzwIL/m3rksAsWPzJWtoI5Q
+        o8id1xGHEwN/REZknz20WuG7qvzQpM9vGGNDyI/uo79ezpwGqnVOBGpDVSK3FRXX
+        8v0LPpr4e9o3+aRmYKBGlB2jPRvrOi+gu6Ie2PUKYK7R5IcTALykZjuIuiRAQ71l
+        SgT9rO16pD8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9945EA95B9;
+        Wed, 21 Apr 2021 19:28:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2201AA95B7;
+        Wed, 21 Apr 2021 19:28:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Han-Wen Nienhuys <hanwen@google.com>
+Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2 3/8] object.c: add and use oid_is_type_or_die_msg()
- function
-Message-ID: <YIC1IcpKCXh3qoun@google.com>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
-        Elijah Newren <newren@gmail.com>
-References: <cover-0.7-0000000000-20210409T083436Z-avarab@gmail.com>
- <cover-0.8-0000000000-20210420T133218Z-avarab@gmail.com>
- <patch-3.8-22e7d9a3db-20210420T133218Z-avarab@gmail.com>
+        Jonathan Tan <jonathantanmy@google.com>,
+        Josh Steadmon <steadmon@google.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Patrick Steinhardt <ps@pks.im>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>
+Subject: Re: [PATCH v7 01/28] refs: ref_iterator_peel returns boolean,
+ rather than peel_status
+References: <pull.847.v6.git.git.1618255552.gitgitgadget@gmail.com>
+        <pull.847.v7.git.git.1618832276.gitgitgadget@gmail.com>
+        <8103a80394aefdd4e8b5061dfbb6a6199fe5fcae.1618832276.git.gitgitgadget@gmail.com>
+        <xmqq35vk7pzd.fsf@gitster.g>
+        <CAFQ2z_MaS_jBof5VaqRg8K+0NN2n1GQ7mwnKnvjy__yzchwv1Q@mail.gmail.com>
+Date:   Wed, 21 Apr 2021 16:28:48 -0700
+In-Reply-To: <CAFQ2z_MaS_jBof5VaqRg8K+0NN2n1GQ7mwnKnvjy__yzchwv1Q@mail.gmail.com>
+        (Han-Wen Nienhuys's message of "Wed, 21 Apr 2021 12:15:40 +0200")
+Message-ID: <xmqqa6prxln3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <patch-3.8-22e7d9a3db-20210420T133218Z-avarab@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5336CB9E-A2F9-11EB-8551-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2021.04.20 15:36, Ævar Arnfjörð Bjarmason wrote:
-> diff --git a/object.c b/object.c
-> index 9e06c0ee92..0f07f976fb 100644
-> --- a/object.c
-> +++ b/object.c
-> @@ -176,6 +176,18 @@ int oid_is_type_or_error(const struct object_id *oid,
->  		     type_name(want));
->  }
->  
-> +char* oid_is_type_or_die_msg(const struct object_id *oid,
+Han-Wen Nienhuys <hanwen@google.com> writes:
 
-It's kind of a nitpick, but I found the function name to be confusing.
-It sounds like you're going to die with a custom message. Maybe
-something like "get_oid_type_mismatch_msg()" would be more
-straightforward.
+> All callers of peel_iterated_oid use it as a boolean exclusively, i.e.
+>
+>   if (!peel_iterated_oid( .. )) { .. }
+>
+> Aside from these considerations, it is also odd to return peel_status.
+> For example, PEEL_IS_SYMREF is unnecessary, because the symref status
+> is already returned from iterator_next().
+>
+>> I haven't seen a good justification given to help convince me that
+>> this is a good change (and I presume it is, as I trust you or any
+>> other contributores enough not to knowingly make the system worse),
+
+I am not sure I agree 100% with
+
+	if (!do_this()) {
+		...
+	}
+
+i.e. "try doing it and do one thing upon success" is a sign that all
+error conditions will ever be treated equally and justifies to squash
+all the error codes the current code tries to return, but whether I
+agree with it or not, I'd want to see it recorded in the proposed
+log message.  It would help future developers and allow them to take
+into account your motivation behind this change, when they need to
+update the implementation.
+
+>> > +/*
+>> > + * Peels the current ref, returning 0 for success.
+>> > + */
+>>
+>> And if it does make sense to squash the peel status down to "bool",
+>> then the comment should mention the single acceptable value for
+>> failure, not just "0 for success" which implies "different negative
+>> values depending on the nature of failure".
+>
+> I can make it return -1 instead.
+
+I do care more about _documenting_ it here, not just ending the
+sentence with ", returning 0 for success", it should also say
+"returns X upon failure", whether the value of X is 1 or -1 (and
+obviously our codebase prefers -1 for an error, but that is
+secondary).
+
+Thanks.
+
+	
