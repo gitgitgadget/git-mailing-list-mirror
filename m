@@ -2,145 +2,196 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1917DC433ED
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 08:46:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8786DC433B4
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 08:46:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D00516143D
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 08:46:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 46E6A6142B
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 08:46:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237496AbhDUIqo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Apr 2021 04:46:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37564 "EHLO
+        id S237188AbhDUIrR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Apr 2021 04:47:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237188AbhDUIqo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Apr 2021 04:46:44 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6162C06174A
-        for <git@vger.kernel.org>; Wed, 21 Apr 2021 01:46:10 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id x12so41575096ejc.1
-        for <git@vger.kernel.org>; Wed, 21 Apr 2021 01:46:10 -0700 (PDT)
+        with ESMTP id S233975AbhDUIrR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Apr 2021 04:47:17 -0400
+Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4756C06174A
+        for <git@vger.kernel.org>; Wed, 21 Apr 2021 01:46:44 -0700 (PDT)
+Received: by mail-pg1-x532.google.com with SMTP id z16so29116153pga.1
+        for <git@vger.kernel.org>; Wed, 21 Apr 2021 01:46:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=uY8kl11lg61hlcao79fJxRk+rNPR5QI+lvfoQMAzGEM=;
-        b=fXel8ea1rH4x1uyKCNf9UIAWw5Un6Zz3RU5p8NQwaz/rQHlqvjQ3dnVYNvkbfL6GZy
-         GZjiH6MXj0XwZyWyU9W+tAsnoPPgxWBd/Mt9mnsFZn1CEsfxpFDr0TbjF2vmJv/lygxW
-         hcWVa+4IyFhTuz9m1U8Oo6DMhioRl+vMXsaUeIXaQC8gMBxyAGAEvyeW5hOjvu7/J8mC
-         0wogZpbtITHUs/CWXfGZyjz7dSClKP28sqyz0vxmw8pn6354IVFgK/MacBa0h7qh3tZM
-         dABJpiXjYCAJJYcx68OOTMEkvJ+1A3Mkhrr7KHqgwIavJA89uKnkCKeU+mpu/MQtGoFX
-         qytQ==
+        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
+         :content-transfer-encoding;
+        bh=4gWzbqaEhZTPTSbsKAyXC3bIThfNjlWgsscapN+ugqk=;
+        b=VGLJVnnVvXdUq3ihlPHWeHrQ2DVfrYQ2xY5uOVo7nAFqP6NmOVRLEXFEVjViZYZl2f
+         AOKeV6dJEIr/o6rpwBFi/3CYXAS6U31mYa0Nuyx+YIwI1LknyXM27GeLNYwkBikn4gfj
+         CevK7Df/M+HntWrsOH5FVqqoWPF8HrY6CYRTMRM3HD0FcN82/3evQ0AD1V4at144FwSf
+         NGj29HPEr8S4+AkyRyiaTJCjDrruo+4wnFWoPwcG/8kt89iVERmpepv+5VAoQmmjOJrs
+         i8QOBzwl2CfmHE9nPqD+/Ja2Ev92LfXRYFpVTkmhD0cHHJpSPhriJdPekZjMXhu8W6ug
+         BVDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=uY8kl11lg61hlcao79fJxRk+rNPR5QI+lvfoQMAzGEM=;
-        b=DPLl907hqrUKYF1WPWql8T2fhRUBdiF/5d2/5T4ILm4eGLUrUCfFIsXagFNhSbU74m
-         RJXn3T14yrSnYMDiTq5lJSnz5dHswY/yTCVa8lCsUpFaz3NM7DRRI9GFQQOaBvR79CsP
-         ByrBSdAc/twl6uri/EaZVqGT9IAcmAcRD9d39QaPMoFohmutKre36+SVR1cLqCtbOcty
-         HRwPBRbYBK0L5S6zcXOuc2Yp4MwJpu/MhDoNlh7whsGHl7SWzjxTleCcHWOEva7gPrLA
-         A/iVrV6xjwRXGuFRzoVp3ChFlpcfPY6lBgu6xSh/6q3of5MomiyflyDUVDBd+//N/WLd
-         XwJA==
-X-Gm-Message-State: AOAM532Ipbf+z8gXnavcSUoXmNrUbx86b0c8gYlY2PNA2mBNx7oh55V+
-        dzQSSBHtwRgx6dIkeTaV2TDmGQHb8S9/Wg==
-X-Google-Smtp-Source: ABdhPJx0BOeQ5L0ljnNb34Se7GTIG7J9V90kNKlO8G/lVzSL3QxU0oAjol5OzuPGbTRDyEImdoskPA==
-X-Received: by 2002:a17:907:70d3:: with SMTP id yk19mr31502039ejb.108.1618994769395;
-        Wed, 21 Apr 2021 01:46:09 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id l9sm1592664ejz.96.2021.04.21.01.46.08
+        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=4gWzbqaEhZTPTSbsKAyXC3bIThfNjlWgsscapN+ugqk=;
+        b=KjyBUpK+yfM3ehi4j17yGuYPL0CVGXCGAHbfFwbgZQddIRYjz84+kjuyZXxmJ7KpAA
+         Y6Y4mGN3F82oIFUBtPz9hiPrz/s/xy3XbatHgCEkdT3nLBBSLw+ZuyrNhdgUj9FqdYPA
+         fMRsFOgz4cygifLMv9m9IJAKanOBbADi4ZkKob84tgZV3/aL0IhABRDiawenCKugXHP1
+         hxWgsaxnlcj0qZakJ3VZgoL0hiuy5mkkD6zfNg8VKKaHP7AeP+nadSl0MimVqMxSH11o
+         k6xi1Ia/p9Hof2OI8O0HRO30HLFJrOB6e5j0cHX/ncVHvQwvhhkg9EAq0EMN+UCxkGoX
+         StXA==
+X-Gm-Message-State: AOAM530CMj8oWJETGLYca1PbQOvW0f7a7Ag/0a0GTAk2UkV7jNqBLDz2
+        5w8j2oIzwfZgi3yEokX8rcdnLn7QjARUf9WK
+X-Google-Smtp-Source: ABdhPJyItERHvS9ts9dtXo9iPESBC6csKmu/zOlh3NaBqAQikk0G3ugKyRSc4Ecbv5sFyh+RxEmrNg==
+X-Received: by 2002:a17:90a:e50a:: with SMTP id t10mr10136687pjy.32.1618994804006;
+        Wed, 21 Apr 2021 01:46:44 -0700 (PDT)
+Received: from localhost.localdomain ([142.93.93.167])
+        by smtp.googlemail.com with ESMTPSA id x17sm4435523pjr.0.2021.04.21.01.46.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Apr 2021 01:46:08 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Matthieu Moy <git@matthieu-moy.fr>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBD?= =?utf-8?B?w7RuZw==?= Danh 
-        <congdanhqx@gmail.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH v3 01/12] check-non-portable-shell: check for "test
- <cond> -a/-o <cond>"
-References: <cover-00.12-00000000000-20210417T124424Z-avarab@gmail.com>
- <cover-00.12-0000000000-20210420T121833Z-avarab@gmail.com>
- <patch-01.12-a8b483bc77-20210420T121833Z-avarab@gmail.com>
- <xmqqwnsw3872.fsf@gitster.g>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <xmqqwnsw3872.fsf@gitster.g>
-Date:   Wed, 21 Apr 2021 10:46:08 +0200
-Message-ID: <87r1j42ffz.fsf@evledraar.gmail.com>
+        Wed, 21 Apr 2021 01:46:43 -0700 (PDT)
+From:   Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>
+To:     git@vger.kernel.org, tboegi@web.de, tzadik.vanderhoof@gmail.com
+Subject: [PATCH] add git-p4.fallbackEncoding config variable, to prevent git-p4 from crashing on non UTF-8 changeset descriptions
+Date:   Wed, 21 Apr 2021 01:46:04 -0700
+Message-Id: <20210421084604.3095-1-tzadik.vanderhoof@gmail.com>
+X-Mailer: git-send-email 2.31.1.windows.1
+In-Reply-To: <20210412040614.gqiot5qcsfpiae3a@tb-raspi4>
+References: <20210412040614.gqiot5qcsfpiae3a@tb-raspi4>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+---
+ Documentation/git-p4.txt                   | 10 ++++
+ git-p4.py                                  | 11 +++-
+ t/t9835-git-p4-config-fallback-encoding.sh | 65 ++++++++++++++++++++++
+ 3 files changed, 85 insertions(+), 1 deletion(-)
+ create mode 100755 t/t9835-git-p4-config-fallback-encoding.sh
 
-On Wed, Apr 21 2021, Junio C Hamano wrote:
+diff --git a/Documentation/git-p4.txt b/Documentation/git-p4.txt
+index f89e68b..e0131a9 100644
+--- a/Documentation/git-p4.txt
++++ b/Documentation/git-p4.txt
+@@ -638,6 +638,16 @@ git-p4.pathEncoding::
+ 	to transcode the paths to UTF-8. As an example, Perforce on Windows
+ 	often uses "cp1252" to encode path names.
+ 
++git-p4.fallbackEncoding::
++	Perforce changeset descriptions can be in a mixture of encodings.
++	Git-p4 first tries to interpret each description as UTF-8. If that
++	fails, this config allows another encoding to be tried. You
++	can specify, for example, "cp1252". If instead of an encoding,
++	you specify "replace", UTF-8 will be used, with invalid UTF-8
++	characters replaced by the Unicode replacement character. If you
++	specify "none" (the default), there is no fallback, and any non
++	UTF-8 character will cause git-p4 to immediately fail.
++
+ git-p4.largeFileSystem::
+ 	Specify the system that is used for large (binary) files. Please note
+ 	that large file systems do not support the 'git p4 submit' command.
+diff --git a/git-p4.py b/git-p4.py
+index 09c9e93..173f78a 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -771,7 +771,16 @@ def p4CmdList(cmd, stdin=None, stdin_mode='w+b', cb=None, skip_info=False,
+                 for key, value in entry.items():
+                     key = key.decode()
+                     if isinstance(value, bytes) and not (key in ('data', 'path', 'clientFile') or key.startswith('depotFile')):
+-                        value = value.decode()
++                        try:
++                            value = value.decode()
++                        except UnicodeDecodeError as ex:
++                            fallbackEncoding = gitConfig("git-p4.fallbackEncoding").lower() or 'none'
++                            if fallbackEncoding == 'none':
++                                raise Exception("UTF8 decoding failed. Consider using git config git-p4.fallbackEncoding") from ex
++                            elif fallbackEncoding == 'replace':
++                                value = value.decode(errors='replace')
++                            else:
++                                value = value.decode(encoding=fallbackEncoding)
+                     decoded_entry[key] = value
+                 # Parse out data if it's an error response
+                 if decoded_entry.get('code') == 'error' and 'data' in decoded_entry:
+diff --git a/t/t9835-git-p4-config-fallback-encoding.sh b/t/t9835-git-p4-config-fallback-encoding.sh
+new file mode 100755
+index 0000000..56a245e
+--- /dev/null
++++ b/t/t9835-git-p4-config-fallback-encoding.sh
+@@ -0,0 +1,65 @@
++#!/bin/sh
++
++test_description='test git-p4.fallbackEncoding config'
++
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
++export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
++
++. ./lib-git-p4.sh
++
++if test_have_prereq !MINGW,!CYGWIN; then
++	skip_all='This system is not subject to encoding failures in "git p4 clone"'
++	test_done
++fi
++
++test_expect_success 'start p4d' '
++	start_p4d
++'
++
++test_expect_success 'add cp1252 description' '
++	cd "$cli" &&
++	echo file1 >file1 &&
++	p4 add file1 &&
++	p4 submit -d documentación
++'
++
++test_expect_success 'clone fails with git-p4.fallbackEncoding unset' '
++	test_might_fail git config --global --unset git-p4.fallbackEncoding &&
++	test_when_finished cleanup_git &&
++	(
++		test_must_fail git p4 clone --dest="$git" //depot@all 2>> actual &&
++		grep "UTF8 decoding failed. Consider using git config git-p4.fallbackEncoding" actual
++	)
++'
++test_expect_success 'clone fails with git-p4.fallbackEncoding set to "none"' '
++	git config --global git-p4.fallbackEncoding none &&
++	test_when_finished cleanup_git &&
++	(
++		test_must_fail git p4 clone --dest="$git" //depot@all 2>> actual &&
++		grep "UTF8 decoding failed. Consider using git config git-p4.fallbackEncoding" actual
++	)
++'
++
++test_expect_success 'clone succeeds with git-p4.fallbackEncoding set to "cp1252"' '
++	git config --global git-p4.fallbackEncoding cp1252 &&
++	test_when_finished cleanup_git &&
++	(
++		git p4 clone --dest="$git" //depot@all &&
++		cd "$git" &&
++		git log --oneline >log &&
++		desc=$(head -1 log | awk '\''{print $2}'\'') &&	[ "$desc" = "documentación" ]
++	)
++'
++
++test_expect_success 'clone succeeds with git-p4.fallbackEncoding set to "replace"' '
++	git config --global git-p4.fallbackEncoding replace &&
++	test_when_finished cleanup_git &&
++	(
++		git p4 clone --dest="$git" //depot@all &&
++		cd "$git" &&
++		git log --oneline >log &&
++		desc=$(head -1 log | awk '\''{print $2}'\'') &&	[ "$desc" = "documentaci�n" ]
++	)
++'
++
++test_done
+-- 
+2.31.1.windows.1
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
->
->> These will only match the simplistic forms of `test -X blah` (where
->> "-X" is some single letter option), but will miss expressions such as
->> `test "$foo" =3D bar`. We stop at "&" or "|" to try not to overmatch
->> things like:
->>
->>     test whatever && ls -a foo
->>     test whatever && foo -o outfile
->
-> I still do not understand why you have to insist on dashed operator
-> as the first thing given to "test", like this:
->
->> +	/\btest\s+-[a-z]\s+[^&|]+\s+-a\s+/ and err '"test A && test B" ...
->> +	/\btest\s+-[a-z]\s+[^&|]+\s+-o\s+/ and err '"test A || test B" ...
->
-> IOW, what over-matching would we get if we simplified the condition
-> like so?
->
->     /\btest\s+[^&|]+\s+-a\s/
->     /\btest\s+[^&|]+\s+-o\s/
->
-> The one in the patch would miss things like
->
-> 	test "$a" =3D "$b" -o "$a" -lt "$b"
-> 	test "$n" -a "$n" -lt 4
->
-> but the only thing that we care about is that a command that started
-> with "test " has "-a" or "-o" before we see "&" or "|", no?
-
-Applying your suggestion results in these false positives:
-=09
-	t4038-diff-combined.sh:135: error: "test A && test B" preferred to "test A=
- -a B": git commit -m "test space change" -a &&
-	t4038-diff-combined.sh:147: error: "test A && test B" preferred to "test A=
- -a B": git commit -m "test other space changes" -a &&
-	t6400-merge-df.sh:89: error: "test A || test B" preferred to "test A -o B"=
-: test 0 -eq $(git ls-files -o | wc -l)
-	t6400-merge-df.sh:91: error: "test A || test B" preferred to "test A -o B"=
-: test 1 -eq $(git ls-files -o | wc -l)
-	t6400-merge-df.sh:110: error: "test A || test B" preferred to "test A -o B=
-": test 0 -eq $(git ls-files -o | wc -l)
-	t6400-merge-df.sh:112: error: "test A || test B" preferred to "test A -o B=
-": test 1 -eq $(git ls-files -o | wc -l)
-	t6402-merge-rename.sh:639: error: "test A || test B" preferred to "test A =
--o B": test 0 -eq "$(git ls-files -o | wc -l)"
-	t6402-merge-rename.sh:646: error: "test A || test B" preferred to "test A =
--o B": test 2 -eq "$(git ls-files -o | wc -l)"
-	t6402-merge-rename.sh:686: error: "test A || test B" preferred to "test A =
--o B": test 0 -eq "$(git ls-files -o | wc -l)" &&
-	t6402-merge-rename.sh:865: error: "test A || test B" preferred to "test A =
--o B": test 0 -eq $(git ls-files -o | wc -l) &&
-	annotate-tests.sh:201: error: "test A && test B" preferred to "test A -a B=
-": GIT_AUTHOR_NAME=3D"E" GIT_AUTHOR_EMAIL=3D"E at test dot git" git commit =
--a -m "norobots"
-
-I'll just drop this from the re-roll of this series. Maybe you/someone
-has a better suggestion for something that's simple but still catches
-these cases, but in any case I'd like to not have this series blocked on
-this minor thing (which none of the rest of it needs).
