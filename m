@@ -2,121 +2,132 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F2E82C433ED
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 23:46:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A50FAC433ED
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 23:53:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BC4C9613FA
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 23:46:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5E35B61448
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 23:53:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343771AbhDUXrC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Apr 2021 19:47:02 -0400
-Received: from mail-ed1-f47.google.com ([209.85.208.47]:43804 "EHLO
-        mail-ed1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237429AbhDUXrA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Apr 2021 19:47:00 -0400
-Received: by mail-ed1-f47.google.com with SMTP id e7so51201865edu.10
-        for <git@vger.kernel.org>; Wed, 21 Apr 2021 16:46:26 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=mG6lS7FTLFkKIiJyfUROEsCMXRNNpinCwmjXgGtrg28=;
-        b=O8lCog8cNRcMCbon9oSbKO9DMPEW5Ep+dHLqMNZg7/ENhuu2IH6moOkkDNrP9bHdzR
-         YlCgUeVvdCZij90vuKW/FaQRFQ8tPjtKsqCyWf1+rcqFupeATIysi5O3ycNAx2PiDLiy
-         zEFPWewYTnJ+iM73I5uOV9oJnWsi/JJVJTJcvRCL+LsuUQWwWIuv7HCU1qx9NIRAe5h+
-         IE6OWVfk7emaujsYYFB2jsgoAzxQJpSkxpTav/tY2jD142GexED0DgPPT1i4MKgNeyhW
-         XddI+eLZL3A6lAEd48QBfNVBdLBqTgawNyWxxOV8SyONT7QLZ1tn/BucZFa4BKIRMQaZ
-         z9cA==
-X-Gm-Message-State: AOAM533X2VmXyTFdnshHoGGXdb5X+NDpsLIHiA9gBddNPNHFY4VxDfqT
-        fpPD5DgpmzdlyJGkl9YAdUG9RRWpQBKUuudsRYNDejaHTj0TZQ==
-X-Google-Smtp-Source: ABdhPJzPGNqQNEi4jTkVptgSy6ygHhRpf5EFaWEoiEpQ0Rdv97jTGDWoGjZkOcdvxBkF/L3T8xyk8epn0eoAUOEw67Q=
-X-Received: by 2002:a05:6402:488:: with SMTP id k8mr476526edv.233.1619048785507;
- Wed, 21 Apr 2021 16:46:25 -0700 (PDT)
+        id S234977AbhDUXyI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Apr 2021 19:54:08 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61969 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234878AbhDUXyG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Apr 2021 19:54:06 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C951DC2EF0;
+        Wed, 21 Apr 2021 19:53:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=xEFgj8sZ0fEpHFmi+O0TxNctP7U=; b=uXUYlk
+        eQqZXff20OLliMO9OwUou7cViLUNIdfTTtMO0yD+LgQ/p/fqDgm9nZfjPH0Guepb
+        ekqu8E3n0uXaVDjk37c9LX4mjdcwqbrVwoiYNlueefsHVbkB1BR6EC1X2mVFAI+/
+        cSUX+E82E3DHnMLKZS6U8aNYb+zQQ/7qKKvGw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=nzT20c8NEM5UVhKUcN0CpCXpE2AMtI9v
+        CicolABjQ7GIPMW7fheaDA1zOBQXz1U/JXhaa/BWhXDry1cJKUqaqsbn/j38WNiK
+        c9mJsDPPe7ylLwn4mjliRwalwyBetNzYUu5+V35FrNeq63S1f0uu53SDDKlsIvsa
+        SYwx7g5Ef2Q=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B8231C2EEF;
+        Wed, 21 Apr 2021 19:53:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E085CC2EED;
+        Wed, 21 Apr 2021 19:53:29 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jerry Zhang <jerry@skydio.com>
+Cc:     git@vger.kernel.org, ross@skydio.com, abe@skydio.com,
+        brian.kubisiak@skydio.com
+Subject: Re: [PATCH] git-apply: silence errors for success cases
+References: <20210421004733.22395-1-jerry@skydio.com>
+        <xmqqtuo0z8mc.fsf@gitster.g>
+Date:   Wed, 21 Apr 2021 16:53:29 -0700
+In-Reply-To: <xmqqtuo0z8mc.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
+        20 Apr 2021 19:14:51 -0700")
+Message-ID: <xmqqwnsvw5xi.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.934.git.1618770806366.gitgitgadget@gmail.com> <pull.934.v2.git.1619047347605.gitgitgadget@gmail.com>
-In-Reply-To: <pull.934.v2.git.1619047347605.gitgitgadget@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 21 Apr 2021 19:46:14 -0400
-Message-ID: <CAPig+cT=xeLn9KNHz7hiNWo0QTfc1zZ1X-czJ4n503RRhBA0XQ@mail.gmail.com>
-Subject: Re: [PATCH v2] git-merge: move primary point before parenthetical
-To:     Josh Soref via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Josh Soref <jsoref@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: C5E52EBC-A2FC-11EB-8A0C-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 21, 2021 at 7:22 PM Josh Soref via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> Usually, it is easier to read a message if it makes its primary
-> point first, before giving a parenthetical note.
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Jerry Zhang <jerry@skydio.com> writes:
 >
-> Before:
-> ` (nothing to squash)Already up to date.
-> `
+>> Certain invocations of "git apply --3way"
+>> will print error messages even though git
+>> is able to fall back on apply_fragments and
+>> apply the patch successfully with a return
+>> value of 0. To fix, return early from
+>> try_threeway() in the following cases:
 >
-> After:
-> `Already up to date (nothing to squash).
-> `
+> I suspect that this is a recent breakage after we swapped the order
+> of 3way fallback.  It used to be that we tried the straight
+> application first (while suppressing the error messages) and then
+> fell back on 3way (while fully exposing the error messages).
 
-Thanks. This makes perfect sense and fixes what clearly seems to be a
-case of swapped arguments to printf(). While the intent of the patch
-is quite desirable, I do have some concerns about the actual
-changes...
+The other side of the coin is that we should say, before falling
+back to non-3way codepath, that we saw 3way application failed, and
+falling back to the straight patch, if we don't say so already with
+the recent change, just like we used to say the opposite after seeing
+the patch application to fail and then fell back to 3way.
 
-> Signed-off-by: Josh Soref <jsoref@gmail.com>
-> ---
-> diff --git a/builtin/merge.c b/builtin/merge.c
-> @@ -383,7 +383,7 @@ static void restore_state(const struct object_id *head,
->  static void finish_up_to_date(const char *msg)
->  {
->         if (verbosity >= 0)
-> -               printf("%s%s\n", squash ? _(" (nothing to squash)") : "", msg);
-> +               printf(msg, squash ? _(" (nothing to squash)") : "");
->         remove_merge_branch_state(the_repository);
->  }
-> @@ -1482,7 +1482,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
-> -               finish_up_to_date(_("Already up to date."));
-> +               finish_up_to_date(_("Already up to date%s.\n"));
-> @@ -1566,7 +1566,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
-> -                       finish_up_to_date(_("Already up to date. Yeeah!"));
-> +                       finish_up_to_date(_("Already up to date%s. Yeeah!\n"));
+In other words, we may have said, under the verbose mode, that we
+are falling back to threeway only after seeing apply-fragments
+failed, but if we are doing 3-way first, telling that we are doing
+three-way application in try_threeway() function is actively wrong.
+The message was there only because try_threeway() was a fallback and
+sometimes did not happen even when the user asked to do --3way (hence
+deserved a message).  Now we always try 3way first when the user asked,
+the extra message should be given only after try_threeway() failed
+and should talk about falling back to the straight application.
 
-I see why you changed the calling convention, making it the
-responsibility of the caller to supply the "%s" so that the "(nothing
-to squash)" annotation gets inserted before the period at the end of
-"Already up to date". However, this makes things confusing for people
-translating the text to other languages since they won't have enough
-context to understand what gets interpolated in place of "%s".
+IOW, a fix something along this line, perhaps, is needed to complete
+the "swap the order between 3way and direct application" series we
+earlier worked on.
 
-In fact (not a fault of your patch), this sort of "sentence Lego" was
-already a bit difficult on translators because they couldn't see the
-entire context of "Already up to date" and "(nothing to squash)"
-together, thus could only translate them individually which may have
-led to inferior translations in some languages.
 
-Ideally, for the sake of translators, we want to give them as much
-context as possible, such as the entire "Already up to date (nothing
-to squash)". So, keeping translators and context in mind, and asking
-if we really need to that rather odd "Yeeah!", an alternative way to
-resolve this problem would be like this:
+ apply.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-    static void finish_up_to_date()
-    {
-        if (verbosity >= 0) {
-            if (squash)
-                puts(_("Already up to date (nothing to squash)."));
-            else
-                puts(_("Already up to date."));
-        }
-        remove_merge_branch_state(the_repository);
-    }
+diff --git i/apply.c w/apply.c
+index 8c5b29809b..6634305e9e 100644
+--- i/apply.c
++++ w/apply.c
+@@ -3570,7 +3570,7 @@ static int try_threeway(struct apply_state *state,
+ 		 read_blob_object(&buf, &pre_oid, patch->old_mode))
+ 		return error(_("repository lacks the necessary blob to perform 3-way merge."));
+ 
+-	if (state->apply_verbosity > verbosity_silent)
++	if (state->apply_verbosity > verbosity_silent && patch->direct_to_threeway)
+ 		fprintf(stderr, _("Performing three-way merge...\n"));
+ 
+ 	img = strbuf_detach(&buf, &len);
+@@ -3637,6 +3637,9 @@ static int apply_data(struct apply_state *state, struct patch *patch,
+ 		return -1;
+ 
+ 	if (!state->threeway || try_threeway(state, &image, patch, st, ce) < 0) {
++		if (state->threeway && !patch->direct_to_threeway)
++			fprintf(stderr, _("Falling back to direct application...\n"));
++
+ 		/* Note: with --reject, apply_fragments() returns 0 */
+ 		if (patch->direct_to_threeway || apply_fragments(state, &image, patch) < 0)
+ 			return -1;
 
-And then the callers reduce simply to:
 
-    finish_up_to_date();
+
+
