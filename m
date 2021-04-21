@@ -8,59 +8,57 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87B05C433ED
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 00:53:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A1A4C433B4
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 00:58:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4CDDA6140D
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 00:53:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 04604613F5
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 00:58:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234378AbhDUAy3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Apr 2021 20:54:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48058 "EHLO
+        id S234584AbhDUA6k (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Apr 2021 20:58:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233879AbhDUAy2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Apr 2021 20:54:28 -0400
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0EF7C06174A
-        for <git@vger.kernel.org>; Tue, 20 Apr 2021 17:53:56 -0700 (PDT)
-Received: by mail-ot1-x329.google.com with SMTP id c8-20020a9d78480000b0290289e9d1b7bcso23460587otm.4
-        for <git@vger.kernel.org>; Tue, 20 Apr 2021 17:53:56 -0700 (PDT)
+        with ESMTP id S234566AbhDUA6h (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Apr 2021 20:58:37 -0400
+Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5617AC06174A
+        for <git@vger.kernel.org>; Tue, 20 Apr 2021 17:58:05 -0700 (PDT)
+Received: by mail-ot1-x330.google.com with SMTP id i26-20020a9d625a0000b02902a2119f7613so733218otk.10
+        for <git@vger.kernel.org>; Tue, 20 Apr 2021 17:58:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=nQykzR9/c+jYQRKVSasc74Tln/H88ojRfK8f0n63KJ0=;
-        b=AwA2Hc5mLJOev9KDHWLnVsTu3cNo4qhcF1we73DGWLumUy49HFNgvaWU44KISIMm9k
-         TAMQ+11dbkufdVJuL3wQk9B5N94x+vpHZcnpJ2x+vF++oVNIpvSHgU0Y3hbzVgs/Pdsx
-         Pw5MGzuwZwcwfzf5hx8JoiUL8R+CLTpCzwD16s7HuRbAy6kzWK/kwuRZhinD89zFUyPr
-         5eJVy48TZWI/7SuXoXAHbaqGuecQlauIjK9/xl/8fn1bIqIVyjFjjrRbsuPK2lcoGR/j
-         DIIaCxh9yphGTn0ACNnHABESPdQ6teiwD3ZwiXpWuYdY3LKaN5lAUyTQyL+5c2cssbfc
-         GumA==
+        bh=3+Ynm9BFGp1mEgdFrYJKFgsgSOS/FXaiLCsJ2C+ZoJo=;
+        b=VRfJFIuVfT27yvu9mPYDjl32iK57OOhBTr90eaxzCwx4mIHe8FztYfTZTno4iSKZES
+         o1dngFPU+pk4gmPNZaU+Pn/qLOqriiQObPX3S1/RkKroM/6YLFzOYd1n+fwDJ6eRQVSA
+         ryM+2C8uNWxF2tgIwxhZdX1NdK3Lpu6zuyQmPCRzLi0xS3bMQ5lu2nJwik+n5NuEOr0e
+         5+olcfIuR2EbiJtPop+hsuxZ5qDdjwz0BN/PVbEp+zkwArW6orA49XLR1zIwiBhzp2zM
+         vsX//p7TzmVzXMNxPkceMgrM4eET2Jf8Oy4OaUBK6klFIbJQdSncuAGDlTl1R8LkI939
+         0Tdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=nQykzR9/c+jYQRKVSasc74Tln/H88ojRfK8f0n63KJ0=;
-        b=aQLJJpmI5HZRsULT4Fa02RlKISycPLba3ilvcdifKLV2Q1ryPK6R024/D8dA4EJiQH
-         v2nDaV/3CKqobFRONl+ClrH9ePJigOwTqbUzR/5Y8W0q8usxzdM9m3afedxTAC1Pvq89
-         cd0cLpGyjUQXypx7wjxmoYU/v0T0IVLd7r1yXNBVsqq0iE78+j9qWsvza7qsQuJFiP6q
-         CrY8sIaq0upzIU9k865bNj0kHrUe9skx6Lub2IQHRX8UExsQdw1twbhRRBoKih8pxgTR
-         jCG5NbxhzTmPaCScLGOEuErqeR7Jkl1rKCh4OsyeHtfuZJW0DPB7XhMIEaBzabZtjqHM
-         r0wA==
-X-Gm-Message-State: AOAM530IyUZ5zt0NnWvZhSL5bYB0MkR7kGbKFSXT+aZiKNL1e1K6yVrK
-        SkY5RRwbRfKJ4jWxcOQWSpHMQLKAJplDxLtSFPY=
-X-Google-Smtp-Source: ABdhPJw7n6sX8O6xHHUi7Y2+TlsZIUwpnLRQwtxQ1+XkcrXHWW6bhSJgsM/ioXfsddul+7+OHJtdIHehiyfiwh2iBTo=
-X-Received: by 2002:a05:6830:906:: with SMTP id v6mr21321255ott.345.1618966436279;
- Tue, 20 Apr 2021 17:53:56 -0700 (PDT)
+        bh=3+Ynm9BFGp1mEgdFrYJKFgsgSOS/FXaiLCsJ2C+ZoJo=;
+        b=sjz4fEalD0qCIbYQZiso6j5itj70MLO0zHj09uRLbatxVwR0PCuMTKq2RQAnViLjkb
+         9G2PIpP/eBk2TDPJFeFXtPDIfhKG8TT/iUc9aUKOYfM3vNVuDyPgnsSqv4CNjFy8qLSh
+         Oq9d/KIpGKE8dBYtYXYBmrV3NeKisbHU6udvaaXz/bAm1A7arcLoI/2N6TbQSa47z3Vf
+         Lrw2ruG2pIDceg2CWMnENVunDMnNADtjurTV+Kw2SnQKAAE6319RHeU6LCSL0xDBRyb5
+         zqWWzd0E/Ykl16PjgrMwBK2X3xeplFocWMDqf9cplH/YIECXVeVEiJJvk/pISzfdkncK
+         B7KQ==
+X-Gm-Message-State: AOAM530hr41V9GyBr3NPf6H9OT231fV9vpJTZCTy9pbRHTBs9BXl/Jn1
+        hg+6iPPIupEYMu/YC10gWRZ/6NYCgFXn+DFA5/g=
+X-Google-Smtp-Source: ABdhPJxBgQHuFYskhhclVJiYnItFbUlceVxHrIha8T2LWxWkZhFI0PsN6+gqx/SkL0RCfXm8spJKMht2UhL9tWgnvW8=
+X-Received: by 2002:a9d:8a6:: with SMTP id 35mr21032532otf.316.1618966684785;
+ Tue, 20 Apr 2021 17:58:04 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.932.git.1618322497.gitgitgadget@gmail.com>
- <434306541613cbd0b9bb4ebb3102d97e3df9eb94.1618322497.git.gitgitgadget@gmail.com>
- <CABPp-BE2qzvFwp0Gg_o+Sd5oC2itpkLNuhvEv1qWTvbCGUKWhQ@mail.gmail.com>
-In-Reply-To: <CABPp-BE2qzvFwp0Gg_o+Sd5oC2itpkLNuhvEv1qWTvbCGUKWhQ@mail.gmail.com>
+References: <pull.932.git.1618322497.gitgitgadget@gmail.com> <6d7f30f2b90ac2151645a29c6a12639074c8f2d3.1618322498.git.gitgitgadget@gmail.com>
+In-Reply-To: <6d7f30f2b90ac2151645a29c6a12639074c8f2d3.1618322498.git.gitgitgadget@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 20 Apr 2021 17:53:45 -0700
-Message-ID: <CABPp-BHLTKWW_j53P9=mwGpmAiuBUcUvRp2Oaim8T+SB46+h+g@mail.gmail.com>
-Subject: Re: [PATCH 06/10] dir: use expand_to_path() for sparse directories
+Date:   Tue, 20 Apr 2021 17:57:53 -0700
+Message-ID: <CABPp-BHf-Tq7kmoWFGu5jA7j8-MiqhysG-vjVvGfUwKMe9Z2-g@mail.gmail.com>
+Subject: Re: [PATCH 08/10] pathspec: stop calling ensure_full_index
 To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
@@ -71,77 +69,74 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-One more thing:
+On Tue, Apr 13, 2021 at 7:01 AM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> From: Derrick Stolee <dstolee@microsoft.com>
+>
+> The add_pathspec_matches_against_index() focuses on matching a pathspec
+> to file entries in the index. This already works correctly for its only
+> use: checking if untracked files exist in the index.
+>
+> The compatibility checks in t1092 already test that 'git add <dir>'
+> works for a directory outside of the sparse cone. That provides coverage
+> for removing this guard.
+>
+> This finalizes our ability to run 'git add .' without expanding a sparse
+> index to a full one. This is evidenced by an update to t1092 and by
+> these performance numbers for p2000-sparse-operations.sh:
+>
+> Test                                    HEAD~1            HEAD
+> --------------------------------------------------------------------------------
+> 2000.10: git add . (full-index-v3)      1.37(1.02+0.18)   1.38(1.01+0.20) +0.7%
+> 2000.11: git add . (full-index-v4)      1.26(1.00+0.15)   1.27(0.99+0.17) +0.8%
+> 2000.12: git add . (sparse-index-v3)    2.39(2.29+0.14)   0.06(0.05+0.07) -97.5%
+> 2000.13: git add . (sparse-index-v4)    2.42(2.32+0.14)   0.06(0.05+0.06) -97.5%
+>
+> While the 97% improvement is shown by the test results, it is worth
+> noting that expanding the sparse index was adding overhead in previous
+> commits. Comparing to the full index case, we see the performance go
+> from 1.27s to 0.06s, a 95% improvement.
 
-On Tue, Apr 20, 2021 at 5:52 PM Elijah Newren <newren@gmail.com> wrote:
->
-> On Tue, Apr 13, 2021 at 7:01 AM Derrick Stolee via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> >
-> > From: Derrick Stolee <dstolee@microsoft.com>
-> >
-> > The recently-implemented expand_to_path() method can supply position
-> > queries a faster response if they are specifically asking for a path
-> > within the sparse cone. Since this is the most-common scenario, this
-> > provides a significant speedup.
-> >
-> > Update t1092-sparse-checkout-compatibility.sh to fully ensure that 'git
-> > status' does not expand a sparse index to a full one, even when there
-> > exist untracked files.
-> >
-> > The performance test script p2000-sparse-operations.sh demonstrates
-> > that this is the final hole to fill to allow 'git status' to speed up
-> > when using a sparse index:
-> >
-> > Test                                  HEAD~1            HEAD
-> > ------------------------------------------------------------------------------
-> > 2000.4: git status (sparse-index-v3)  1.50(1.43+0.10)   0.04(0.04+0.03) -97.3%
-> > 2000.5: git status (sparse-index-v4)  1.50(1.43+0.10)   0.04(0.03+0.04) -97.3%
->
-> Um, I'm confused.  In the previous patch you claimed the following speedups:
->
-> 2000.4: git status (sparse-index-v3)  2.43(2.33+0.14)  0.04(0.05+0.04) -98.4%
-> 2000.5: git status (sparse-index-v4)  2.44(2.35+0.13)  0.05(0.04+0.07) -98.0%
->
-> I don't understand why the "Before" for this patch claims 1.50 as the
-> initial speed, if the "After" for the last patch was 0.04.  Should the
-> previous commit message have instead claimed:
->
-> 2000.4: git status (sparse-index-v3)  2.43(2.33+0.14)  1.50(1.43+0.10) -38.3%
-> 2000.5: git status (sparse-index-v4)  2.44(2.35+0.13)  1.50(1.43+0.10) -38.5%
->
-> ?
->
-> >
-> > Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> > ---
-> >  t/t1092-sparse-checkout-compatibility.sh | 3 ++-
-> >  1 file changed, 2 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-> > index 380a085f8ec4..b937d7096afd 100755
-> > --- a/t/t1092-sparse-checkout-compatibility.sh
-> > +++ b/t/t1092-sparse-checkout-compatibility.sh
-> > @@ -456,8 +456,9 @@ test_expect_success 'sparse-index is not expanded' '
-> >         init_repos &&
-> >
-> >         rm -f trace2.txt &&
-> > +       echo >>sparse-index/untracked.txt &&
-> >         GIT_TRACE2_EVENT="$(pwd)/trace2.txt" GIT_TRACE2_EVENT_NESTING=10 \
-> > -               git -C sparse-index status -uno &&
-> > +               git -C sparse-index status &&
-> >         test_region ! index ensure_full_index trace2.txt
-> >  '
-> >
-> > --
-> > gitgitgadget
->
-> Oh!  So, the previous patch was testing without enumerating untracked
-> files (because it did those slowly), whereas this one enumerates
-> untracked files and is still able to achieve the same performance?
-> This wasn't very clear from the commit message.  Maybe I'm just bad at
-> reading, but perhaps the commit message could be tweaked slightly to
-> make this more clear?
+This is awesome.  :-)
 
-Why is the subject of this commit "dir: use expand_to_path() ..." if
-it only touches t1092-sparse-checkout-compatibility.sh?
+>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  pathspec.c                               | 2 --
+>  t/t1092-sparse-checkout-compatibility.sh | 6 ++++++
+>  2 files changed, 6 insertions(+), 2 deletions(-)
+>
+> diff --git a/pathspec.c b/pathspec.c
+> index 54813c0c4e8e..b51b48471fe6 100644
+> --- a/pathspec.c
+> +++ b/pathspec.c
+> @@ -37,8 +37,6 @@ void add_pathspec_matches_against_index(const struct pathspec *pathspec,
+>                         num_unmatched++;
+>         if (!num_unmatched)
+>                 return;
+> -       /* TODO: audit for interaction with sparse-index. */
+> -       ensure_full_index(istate);
+>         for (i = 0; i < istate->cache_nr; i++) {
+>                 const struct cache_entry *ce = istate->cache[i];
+>                 if (sw_action == PS_IGNORE_SKIP_WORKTREE && ce_skip_worktree(ce))
+> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+> index c210dba78067..738013b00191 100755
+> --- a/t/t1092-sparse-checkout-compatibility.sh
+> +++ b/t/t1092-sparse-checkout-compatibility.sh
+> @@ -471,6 +471,12 @@ test_expect_success 'sparse-index is not expanded' '
+>         echo >>sparse-index/extra.txt &&
+>         GIT_TRACE2_EVENT="$(pwd)/trace2.txt" GIT_TRACE2_EVENT_NESTING=10 \
+>                 git -C sparse-index add extra.txt &&
+> +       test_region ! index ensure_full_index trace2.txt &&
+> +
+> +       rm trace2.txt &&
+> +       echo >>sparse-index/untracked.txt &&
+> +       GIT_TRACE2_EVENT="$(pwd)/trace2.txt" GIT_TRACE2_EVENT_NESTING=10 \
+> +               git -C sparse-index add . &&
+>         test_region ! index ensure_full_index trace2.txt
+>  '
+>
+> --
+> gitgitgadget
+>
