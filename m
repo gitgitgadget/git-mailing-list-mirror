@@ -2,275 +2,177 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A46BC433B4
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 19:35:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A0B6C43460
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 19:52:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DA11761453
-	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 19:34:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2ACE6613B6
+	for <git@archiver.kernel.org>; Wed, 21 Apr 2021 19:52:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243110AbhDUTfc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Apr 2021 15:35:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41254 "EHLO
+        id S243367AbhDUTwc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Apr 2021 15:52:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45058 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235159AbhDUTfc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Apr 2021 15:35:32 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DC80C06174A
-        for <git@vger.kernel.org>; Wed, 21 Apr 2021 12:34:58 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id x7so42455428wrw.10
-        for <git@vger.kernel.org>; Wed, 21 Apr 2021 12:34:58 -0700 (PDT)
+        with ESMTP id S235930AbhDUTwc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Apr 2021 15:52:32 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACECDC06174A
+        for <git@vger.kernel.org>; Wed, 21 Apr 2021 12:51:57 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id m7so38277249ljp.10
+        for <git@vger.kernel.org>; Wed, 21 Apr 2021 12:51:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=RSRxVwi1s5N3bIqoknW8T3SmYplrXtIyZA+Fx5COMj8=;
-        b=S573iWilqnkeSTuaYiOikKApu7LXboBiFqBA7odHxJh06Qu4G7RPvAwG54BU9qlOOq
-         C+WG427j2OZy6ehv5pCi3oHowINCadPUgYK2i/zkayXcRu3A3bY+R3Yo8d1Ofa2GXuq2
-         cUvST65/8t4VmyylSpDFvEIpw/kOOuBHYp8JfqMlGlwtwYzh9JztZPq9HmQV3hTvpVV3
-         5y4Og0MQnAO2SctbVeseywXwtwbXs0Z82lkwAWtGGZiL8Q/cXrf2COaBGNF/p2RPC3Zl
-         4WhM6CyYlWUDcYd9H4lr/BiCB67Qt5QPbiuBgESgo5bdtt8iFe37n9Wrkr2fHH1q0iDu
-         4nhQ==
+        d=usp.br; s=usp-google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=fX0JthvcPLmifeMXVMI2YFQ8w5bBK0DVJDZe5jsSzjE=;
+        b=k72vAjQOThOHFhwxW0v4tmg2OpYceo+W5gCrU/EIg8k613yZ6l6DmGDMAzv3tpHHw8
+         /Oe5DVe+oOliH6ZF7OwO4UD731Gwb6V9v9jznuFDvJSW0XQR/U+zlA23Xw3A2euwk0P4
+         VUrYjwA60tRaJtFk/GuUGJ3dUmYstpRZCf5Cr4OznrzMfa5qBBPyoFmm+CP27Q5h8/qW
+         LEWuUgdZT+Vb89IE2tm5ofJvJ7XEmJgYKStXmcJmoFYPAAh0H7VM72cxgE5r84U6141w
+         9SvIouMeRz1AOBNG54irncUy7+Fm3rN+rnFQlyai1xdKPDO3tKTPoE2viHJTROjdvS6e
+         Sa7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=RSRxVwi1s5N3bIqoknW8T3SmYplrXtIyZA+Fx5COMj8=;
-        b=bE5vA/aJ8cbK+gmmlNivjDN7RrXZ3AZEJvYt69dmx6PRY4TSxLVpnhU7zaEpFrjWlO
-         AKfGVJQF/MM2nV8pQlPumfu0kdnEh/Fkf+HV89KUpupsJ1JYcD400t3MziTH2zNbOMvm
-         aJ3UZIZuo7Wg1XiZvAtESKSP1Yj8aLsR8QRXX8Qkq0FKKEjJxcPQD8X10jJ2We9c++Ye
-         Cruwe/gbmWp2R3EYeW+eDujDTwH/Ujlk5WYFT3uLWjKtUiLO8E7k8nRQ/1n+um+SpACS
-         JRI5th25Vsgn+1AShQv77aX6AMhbmz3MH1/k67VKAZrhRVvZUf666aJ6ukgP2SvgfLl3
-         du5w==
-X-Gm-Message-State: AOAM533bNPtwRBcLpLSvECAhLh0R4drP5VM2P9FX5esNIbO5ljkR5y2V
-        sc8uhrj+mA6cAs/FE1nQvBbTg2QqbK9qrmhl
-X-Google-Smtp-Source: ABdhPJyujECp+V/EcGcpyoPwb4F4x+O4L9tDVJLcqNF1SbYpI01EqbTEz9B1i+iKIvB3nemk/YcyXQ==
-X-Received: by 2002:a05:6000:1204:: with SMTP id e4mr28782885wrx.424.1619033696629;
-        Wed, 21 Apr 2021 12:34:56 -0700 (PDT)
-Received: from localhost.localdomain ([79.140.123.236])
-        by smtp.gmail.com with ESMTPSA id v8sm387106wrt.71.2021.04.21.12.34.55
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 21 Apr 2021 12:34:56 -0700 (PDT)
-From:   Rafael Silva <rafaeloliveira.cs@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Rafael Silva <rafaeloliveira.cs@gmail.com>
-Subject: [PATCH v3] repack: avoid loosening promisor objects in partial clones
-Date:   Wed, 21 Apr 2021 21:32:12 +0200
-Message-Id: <20210421193212.79784-1-rafaeloliveira.cs@gmail.com>
-X-Mailer: git-send-email 2.31.0.715.g22a2752fc5
-In-Reply-To: <20210418135749.27152-1-rafaeloliveira.cs@gmail.com>
-References: <20210418135749.27152-1-rafaeloliveira.cs@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=fX0JthvcPLmifeMXVMI2YFQ8w5bBK0DVJDZe5jsSzjE=;
+        b=ipfQDxR8rwZ6Jnq9gl0E57EdqcsrrHqIoalBzDf0PT6+E7mBw76dsP42KDjoA8eV1o
+         MA+6KrJpfZ074iEplbz+XozuvDmEPA89U3cXRyMI5ttoUSu3Y6h5SBIHX/j7SlUYB9l4
+         N9FctyOuCkikmrMbJefhc0uQ4w2rnCHRIsmGpJa4K4dbausrX3S7QtQGxHrOBwqEP391
+         b/91HfaYi9yrmDzbVTSgqrD8BOZJBAuaCIaCMPeum4lKBBquM1t5YXrKZaFD/ceqROmB
+         6CRZ40ISX69SfchChIcvT7Jnn6gO7vhCsZwMpzpYJRs6MthxYjzWIIHUgR5UcnCF6PUu
+         f6/A==
+X-Gm-Message-State: AOAM530F1RqRdYIgpOeEBIiAWo8so2LbnfCGKT3vbtP/KYEl4On7YUBS
+        QEfUIFvvmnmwng6VaK7DT4PKzjGePqts+M4Lb24CGfo+9FOOwA==
+X-Google-Smtp-Source: ABdhPJxsPZDaaz5RImnROLbB5+tl5CwHmEkPNs4WEfQ3fUzb/B+5OnF+uHpNZkcJKz59pVAyM3YbP/mLnipFjJcVL1Y=
+X-Received: by 2002:a2e:9b50:: with SMTP id o16mr20190431ljj.8.1619034716152;
+ Wed, 21 Apr 2021 12:51:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <pull.932.git.1618322497.gitgitgadget@gmail.com>
+ <0a3892d2ec9e4acd4cba1c1d0390acc60dc6e50f.1618322497.git.gitgitgadget@gmail.com>
+ <CABPp-BHcdhO_kEdqR23sDdGAgoSu2R-HBWv-RmzQvJ0ysWtzxg@mail.gmail.com>
+ <34972851-7d3b-c759-ba87-7022702f74c0@gmail.com> <CAHd-oW76_8D_wu7dixX+2i7-_M3Je=JGk3JonL18yeA5PRrsRg@mail.gmail.com>
+ <CABPp-BG5uSUHy6bQ7xEWSQ8VAy0GCqX0P670HfcopZPUwAfQcw@mail.gmail.com>
+In-Reply-To: <CABPp-BG5uSUHy6bQ7xEWSQ8VAy0GCqX0P670HfcopZPUwAfQcw@mail.gmail.com>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Wed, 21 Apr 2021 16:51:45 -0300
+Message-ID: <CAHd-oW4xm_Uis6yCNtCJZ9qm7a6Oy4ty-05E1VPYGZvvXqaRwg@mail.gmail.com>
+Subject: Re: [PATCH 02/10] unpack-trees: make sparse aware
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When `git repack -A -d` is run in a partial clone, `pack-objects`
-is invoked twice: once to repack all promisor objects, and once to
-repack all non-promisor objects. The latter `pack-objects` invocation
-is with --exclude-promisor-objects and --unpack-unreachable, which
-loosens all objects unused during this invocation. Unfortunately,
-this includes promisor objects.
+On Wed, Apr 21, 2021 at 4:11 PM Elijah Newren <newren@gmail.com> wrote:
+>
+> On Wed, Apr 21, 2021 at 11:55 AM Matheus Tavares Bernardino
+> <matheus.bernardino@usp.br> wrote:
+> >
+> > On Wed, Apr 21, 2021 at 2:27 PM Derrick Stolee <stolee@gmail.com> wrote:
+> > >
+> > > On 4/20/2021 7:00 PM, Elijah Newren wrote:
+> > > > On Tue, Apr 13, 2021 at 7:01 AM Derrick Stolee via GitGitGadget
+> > > > <gitgitgadget@gmail.com> wrote:
+> > >
+> > > >> diff --git a/read-cache.c b/read-cache.c
+> > > >> index 29ffa9ac5db9..6308234b4838 100644
+> > > >> --- a/read-cache.c
+> > > >> +++ b/read-cache.c
+> > > >> @@ -1594,6 +1594,9 @@ int refresh_index(struct index_state *istate, unsigned int flags,
+> > > >>                 if (ignore_skip_worktree && ce_skip_worktree(ce))
+> > > >>                         continue;
+> > > >>
+> > > >> +               if (istate->sparse_index && S_ISSPARSEDIR(ce->ce_mode))
+> > > >> +                       continue;
+> > > >> +
+> > > >
+> > > > I'm a bit confused about what could trigger ce_skip_worktree(ce) &&
+> > > > !ignore_skip_worktree and why it'd be desirable to refresh
+> > > > skip-worktree entries.  However, this is tangential to your patch and
+> > > > has apparently been around since 2009 (in particular, from 56cac48c35
+> > > > ("ie_match_stat(): do not ignore skip-worktree bit with
+> > > > CE_MATCH_IGNORE_VALID", 2009-12-14)).
+> > >
+> > > I did some more digging on this part here. There has been movement in
+> > > this space!
+> > >
+> > > The thing that triggers this ignore_skip_worktree variable inside
+> > > refresh_index() is now the REFRESH_IGNORE_SKIP_WORKTREE flag which was
+> > > introduced recently and is set only by builtin/add.c:refresh(), by
+> > > Matheus: a20f704 (add: warn when asked to update SKIP_WORKTREE entries,
+> > > 2021-04-08).
+> > >
+> > > This means that we can (for now) keep the behavior the same by adding
+> > >
+> > >         if (ignore_skip_worktree)
+> > >                 ensure_full_index(istate);
+> > >
+> > > before the loop.
+> >
+> > Hmm, I don't think we need to expand the index here.
+> > ignore_skip_worktree makes the loop below ignore entries with the
+> > skip_worktree bit set. Since sparse dirs also have this bit set, we
+> > will already get the behavior we want :)
+> >
+> > However, I think we will need to expand the index at
+> > `find_pathspecs_matching_against_index()` in order to find and warn
+> > about the pathspecs that have matches among skip_worktree entries...
+> >
+> > > This prevents the expansion during 'git status', but
+> > > requires modification before we are ready for 'git add' to work
+> > > correctly. Specifically, 'git add' currently warns only when adding
+> > > something that exactly matches a tracked file with SKIP_WORKTREE. It
+> > > does _not_ warn when adding something that is untracked but would have
+> > > the SKIP_WORKTREE bit if it was tracked. We will need to add that
+> > > extra warning if we want to avoid expanding during 'git add'.
+> >
+> > Hmm, I see :( I was trying to think if it would be possible to do the
+> > pathspec matching (for the warning) without having to expand the
+> > index, but then there are the untracked files... If the user gives
+> > "a/*/c" and we have "a/b/" as a sparse dir, we don't know if "a/b/c"
+> > is a skip_worktree entry or an untracked file without expanding the
+> > index...
+>
+> I thought Stolee's series added something that could allow us to check
+> that e.g. "a/b/c" corresponded to an entry under the sparse directory
+> "a/b/" and thus is a would-be-sparse entry.  Can we use that?
 
-Because the -d argument to `git repack` subsequently deletes all loose
-objects also in packs, these just-loosened promisor objects will be
-immediately deleted. However, this extra disk churn is unnecessary in
-the first place.  For example, in a newly-cloned partial repo that
-filters all blob objects (e.g. `--filter=blob:none`), `repack` ends up
-unpacking all trees and commits into the filesystem because every
-object, in this particular case, is a promisor object. Depending on
-the repo size, this increases the disk usage considerably: In my copy
-of the linux.git, the object directory peaked 26GB of more disk usage.
+Yes, you mean for the warning on untracked paths that would become
+sparse entries, right? The problem I was considering there was the
+warning on tracked entries only, in which case I'm not sure if it
+would help.
 
-In order to avoid this extra disk churn, pass the names of the promisor
-packfiles as --keep-pack arguments to the second invocation of
-`pack-objects`. This informs `pack-objects` that the promisor objects
-are already in a safe packfile and, therefore, do not need to be
-loosened.
+> > > Alternatively, we can decide to change the behavior here and send an
+> > > error() and return failure if they try to add something that would
+> > > live within a sparse-directory entry.
+> >
+> > I think this behavior would be tricky to replicate on non-sparse-index
+> > sparse-checkouts, if we were to do that. We would have to pathspec
+> > match each untracked file against the sparsity patterns, perhaps?
+>
+> By way of analogy, don't we have to pay the cost of pathspec matching
+> each tree entry against the sparsity patterns when doing a checkout
+> before putting those entries into the index?  Since "git add" is
+> trying to put new entries into the index, doesn't it make sense for it
+> to pay the same cost for the untracked paths it is about to place
+> there?
+>
+> Sure, that can be expensive for non-cone mode, but that's the price
+> users pay for using sparse-checkouts and not using cone mode, and they
+> pay it every time they try to update the index with some new checkout.
+> I think "git add" should be treated similarly as another way to update
+> the index -- especially since users will get confused (and have gotten
+> confused) by subsequent commands if we don't do those checks.
 
-For testing, we need to validate whether any object was loosened.
-However, the "evidence" (loosened objects) is deleted during the
-process which prevents us from inspecting the object directory.
-Instead, let's teach `pack-objects` to count loosened objects and
-emit via trace2 thus allowing inspecting the debug events after the
-process is finished. This new event is used on the added regression
-test.
-
-Lastly, add a new perf test to evaluate the performance impact
-made by this changes (tested on git.git):
-
-     Test          HEAD^                 HEAD
-     ----------------------------------------------------------
-     5600.3: gc    134.38(41.93+90.95)   7.80(6.72+1.35) -94.2%
-
-For a bigger repository, such as linux.git, the improvement is
-even bigger:
-
-     Test          HEAD^                     HEAD
-     -------------------------------------------------------------------
-     5600.3: gc    6833.00(918.07+3162.74)   268.79(227.02+39.18) -96.1%
-
-These improvements are particular big because every object in the
-newly-cloned partial repository is a promisor object.
-
-Reported-by: SZEDER Gábor <szeder.dev@gmail.com>
-Helped-by: Jeff King <peff@peff.net>
-Helped-by: Jonathan Tan <jonathantanmy@google.com>
-Signed-off-by: Rafael Silva <rafaeloliveira.cs@gmail.com>
----
-
-This series is built on top of jk/promisor-optim (now graduated to next). It
-conflicts with changes on p5600 otherwise.
-
-I believe the changes is pretty clear from the `range-diff` (only changes
-on the commit message).
-
-Range-diff against v2:
-1:  7380e3e724 ! 1:  6d94907ca3 repack: avoid loosening promisor objects in partial clones
-    @@ Commit message
-         is invoked twice: once to repack all promisor objects, and once to
-         repack all non-promisor objects. The latter `pack-objects` invocation
-         is with --exclude-promisor-objects and --unpack-unreachable, which
-    -    loosens all unused objects. Unfortunately, this includes promisor
-    -    objects.
-    +    loosens all objects unused during this invocation. Unfortunately,
-    +    this includes promisor objects.
-     
-         Because the -d argument to `git repack` subsequently deletes all loose
-         objects also in packs, these just-loosened promisor objects will be
-         immediately deleted. However, this extra disk churn is unnecessary in
-    -    the first place.  For example, a newly-clone partial repo that filters
-    -    all blob objects (e.g. `--filter=blob:none`), `repack` ends up
-    +    the first place.  For example, in a newly-cloned partial repo that
-    +    filters all blob objects (e.g. `--filter=blob:none`), `repack` ends up
-         unpacking all trees and commits into the filesystem because every
-         object, in this particular case, is a promisor object. Depending on
-         the repo size, this increases the disk usage considerably: In my copy
-    @@ Commit message
-         packfiles as --keep-pack arguments to the second invocation of
-         `pack-objects`. This informs `pack-objects` that the promisor objects
-         are already in a safe packfile and, therefore, do not need to be
-    -    loosened. The --keep-pack option takes only a packfile name, but we
-    -    concatenate both the path and the name in a single string. Instead,
-    -    let's split them into separate string in order to easily pass the
-    -    packfile name later.
-    +    loosened.
-     
-         For testing, we need to validate whether any object was loosened.
-         However, the "evidence" (loosened objects) is deleted during the
-
- builtin/pack-objects.c        | 8 +++++++-
- builtin/repack.c              | 9 +++++++--
- t/perf/p5600-partial-clone.sh | 4 ++++
- t/t5616-partial-clone.sh      | 8 ++++++++
- 4 files changed, 26 insertions(+), 3 deletions(-)
-
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index c1186f50a3..208cce228d 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -3479,6 +3479,7 @@ static void loosen_unused_packed_objects(void)
- {
- 	struct packed_git *p;
- 	uint32_t i;
-+	uint32_t loosened_objects_nr = 0;
- 	struct object_id oid;
- 
- 	for (p = get_all_packs(the_repository); p; p = p->next) {
-@@ -3492,11 +3493,16 @@ static void loosen_unused_packed_objects(void)
- 			nth_packed_object_id(&oid, p, i);
- 			if (!packlist_find(&to_pack, &oid) &&
- 			    !has_sha1_pack_kept_or_nonlocal(&oid) &&
--			    !loosened_object_can_be_discarded(&oid, p->mtime))
-+			    !loosened_object_can_be_discarded(&oid, p->mtime)) {
- 				if (force_object_loose(&oid, p->mtime))
- 					die(_("unable to force loose object"));
-+				loosened_objects_nr++;
-+			}
- 		}
- 	}
-+
-+	trace2_data_intmax("pack-objects", the_repository,
-+			   "loosen_unused_packed_objects/loosened", loosened_objects_nr);
- }
- 
- /*
-diff --git a/builtin/repack.c b/builtin/repack.c
-index 2847fdfbab..5f9bc74adc 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -20,7 +20,7 @@ static int delta_base_offset = 1;
- static int pack_kept_objects = -1;
- static int write_bitmaps = -1;
- static int use_delta_islands;
--static char *packdir, *packtmp;
-+static char *packdir, *packtmp_name, *packtmp;
- 
- static const char *const git_repack_usage[] = {
- 	N_("git repack [<options>]"),
-@@ -530,7 +530,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	packdir = mkpathdup("%s/pack", get_object_directory());
--	packtmp = mkpathdup("%s/.tmp-%d-pack", packdir, (int)getpid());
-+	packtmp_name = xstrfmt(".tmp-%d-pack", (int)getpid());
-+	packtmp = mkpathdup("%s/%s", packdir, packtmp_name);
- 
- 	sigchain_push_common(remove_pack_on_signal);
- 
-@@ -573,6 +574,10 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 		repack_promisor_objects(&po_args, &names);
- 
- 		if (existing_packs.nr && delete_redundant) {
-+			for_each_string_list_item(item, &names) {
-+				strvec_pushf(&cmd.args, "--keep-pack=%s-%s.pack",
-+					     packtmp_name, item->string);
-+			}
- 			if (unpack_unreachable) {
- 				strvec_pushf(&cmd.args,
- 					     "--unpack-unreachable=%s",
-diff --git a/t/perf/p5600-partial-clone.sh b/t/perf/p5600-partial-clone.sh
-index ca785a3341..a965f2c4d6 100755
---- a/t/perf/p5600-partial-clone.sh
-+++ b/t/perf/p5600-partial-clone.sh
-@@ -35,4 +35,8 @@ test_perf 'count non-promisor commits' '
- 	git -C bare.git rev-list --all --count --exclude-promisor-objects
- '
- 
-+test_perf 'gc' '
-+	git -C bare.git gc
-+'
-+
- test_done
-diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
-index 5cb415386e..cf3e82bdf5 100755
---- a/t/t5616-partial-clone.sh
-+++ b/t/t5616-partial-clone.sh
-@@ -548,6 +548,14 @@ test_expect_success 'fetch from a partial clone, protocol v2' '
- 	grep "version 2" trace
- '
- 
-+test_expect_success 'repack does not loosen promisor objects' '
-+	rm -rf client trace &&
-+	git clone --bare --filter=blob:none "file://$(pwd)/srv.bare" client &&
-+	test_when_finished "rm -rf client trace" &&
-+	GIT_TRACE2_PERF="$(pwd)/trace" git -C client repack -A -d &&
-+	grep "loosen_unused_packed_objects/loosened:0" trace
-+'
-+
- . "$TEST_DIRECTORY"/lib-httpd.sh
- start_httpd
- 
--- 
-2.31.0.715.g22a2752fc5
-
+Good point. Yeah, that all makes sense :)
