@@ -2,117 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 771E6C433B4
-	for <git@archiver.kernel.org>; Thu, 22 Apr 2021 17:28:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86CCFC433ED
+	for <git@archiver.kernel.org>; Thu, 22 Apr 2021 18:09:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4366661184
-	for <git@archiver.kernel.org>; Thu, 22 Apr 2021 17:28:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 44182613F6
+	for <git@archiver.kernel.org>; Thu, 22 Apr 2021 18:09:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236684AbhDVR2j (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Apr 2021 13:28:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47926 "EHLO
+        id S236813AbhDVSK2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Apr 2021 14:10:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236459AbhDVR2i (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Apr 2021 13:28:38 -0400
-Received: from mail-ua1-x934.google.com (mail-ua1-x934.google.com [IPv6:2607:f8b0:4864:20::934])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70BC2C06174A
-        for <git@vger.kernel.org>; Thu, 22 Apr 2021 10:28:03 -0700 (PDT)
-Received: by mail-ua1-x934.google.com with SMTP id 33so14408606uaa.7
-        for <git@vger.kernel.org>; Thu, 22 Apr 2021 10:28:03 -0700 (PDT)
+        with ESMTP id S236829AbhDVSK1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Apr 2021 14:10:27 -0400
+Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA98EC06174A
+        for <git@vger.kernel.org>; Thu, 22 Apr 2021 11:09:50 -0700 (PDT)
+Received: by mail-ot1-x32c.google.com with SMTP id 92-20020a9d02e50000b029028fcc3d2c9eso20520954otl.0
+        for <git@vger.kernel.org>; Thu, 22 Apr 2021 11:09:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=t9JqXWPCu1XNJBQSL0sKyN0+mx+VD18e8/FNMTuhuJY=;
-        b=iT6thAb2Sv8RG6I15Y+X9EjoIxI+XDsbXmOvlPnB77UyyEDEQzulAu9uu2TyK/BIG/
-         7PmwFL58sAjxxX1fJ7IBxKwwrArCFc+IDKIuku0GHiX57O0OwQrnhW1xS0Pqpt/aduDG
-         HH7s/Eeqo79K/y4z4PXuo60D7sCYfN1T39ZIQxZvtQw4P6erAwFXdTwckW2vgSMQAegU
-         ChK6qUzT0BvLigIPI4i8NvQz3oXVU8cY8d0f1ODJsdTVNfYxRctDuFynZZgl7yYqFuXS
-         tedKYpF/FsnCOxdANK+z937NxwLRtm3N3/gmrkn609lms0QOkJtxwPucmYBtU3n/+g5z
-         AXNw==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=AUxxds8LIF41FwgOfQZBYrc/1FKkk2VX330jpjCHqJY=;
+        b=bPmS0oVx2EdYOT1307VaQqeiXeY4bxFDg17j7xUVWOWzFx23mOnW26BnJXC0HQUoBm
+         8f+g27cEZDw8AiVPlHDEXGz5DNan4+lqMq/x6oEOpA5LVxpfu1s4Kc8sj+DQjDK5gm9D
+         3v1dFvOWQ2ATaa0Jq/8RzWtYfYbDHMq+zNlNBcjYnzrQGW9TJUCUq2obz6G1aDZG9Ien
+         lxAmcb18z2nV6Y/CvpZ7oHyC6xw+iVSugeMZ4vrKteMymEFS40+t1YB4/s8sMsbPgfDp
+         5vDKsDTJp0vPj7B6/UXjb/Ud/zQv0CCNQHRJdb9JeYyqoVbCy0FV7dmNJrIqySz6Najo
+         luig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=t9JqXWPCu1XNJBQSL0sKyN0+mx+VD18e8/FNMTuhuJY=;
-        b=C104o9kJR/LuO2lU6RSW649uSrhdppHSfbmRzaLpQSva+ZhKi6U2cPLzweeI3XYG42
-         lcQ/RUIL5o9D4UBrzNxJPh1LhuQrB3pGub3wjhfTJIaPu/gn226nhi49dw1v2+AlgNlv
-         yXViRGbl3zWNiQ9SOgIyzpxzKYooLkJX5f2XLjxqWwsYZdsJaDEFxjbgh9Vrh1EGpJ41
-         udkMcxsmB9tvSulz9u3s+jWfxrj3f+pYsqT9GBxbt+9zBnxbh3oQrPYFkLYqcSDcTP7f
-         dtrYKnl6AWUTKqoOltbHV/ngsBrQkzPnPOBvD1sZeLMopBoocMYkjfZ4JS5kzCJ2BPlE
-         TyFg==
-X-Gm-Message-State: AOAM53114J/kIQdsHy/gnaJiLNW3FOeNCorgNWPanBYUDVGaKnRO3Tqo
-        /jVL+1arWkJC9pf+ebUs7CmR0aXjsjuF9MKuG3tHQgvQgpRNwg==
-X-Google-Smtp-Source: ABdhPJzxmFf8/4KzQq7jO4jBR04fMXyw6k+9MG7C+yKowq/sUoe8e8quaDKLjvzU0WsYtvp4H3pzM95d+qX9K89EzYw=
-X-Received: by 2002:ab0:7216:: with SMTP id u22mr3930372uao.83.1619112482384;
- Thu, 22 Apr 2021 10:28:02 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.847.v6.git.git.1618255552.gitgitgadget@gmail.com>
- <pull.847.v7.git.git.1618832276.gitgitgadget@gmail.com> <9ae5ddff6aed48184d2a10c569e41441b9199f10.1618832277.git.gitgitgadget@gmail.com>
- <xmqqsg3k68vv.fsf@gitster.g>
-In-Reply-To: <xmqqsg3k68vv.fsf@gitster.g>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Thu, 22 Apr 2021 19:27:51 +0200
-Message-ID: <CAFQ2z_PTF=5wLKXmqzFkPiC3RTy-RtzCAtBHUSWekkgaKJekkw@mail.gmail.com>
-Subject: Re: [PATCH v7 03/28] refs/debug: trace into reflog expiry too
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Josh Steadmon <steadmon@google.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Patrick Steinhardt <ps@pks.im>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Han-Wen Nienhuys <hanwenn@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=AUxxds8LIF41FwgOfQZBYrc/1FKkk2VX330jpjCHqJY=;
+        b=jqmbxOxgiCWZOzHXdd7yOFmou+soCKvnQx+eD6Xg9/HF5bR4oMEq05rB9y4N02dTgc
+         /1LVGWlpRJxT7TmUwIT65opd7arhfPzhvIiQQAa7qiWZDODFgFGndCGyVlj+7zJLdCbO
+         iGZS8z1/cU5VdsgnBYY9PXUGdpelIy63TpZ13tTpB8sJmBUAoJfpJDBYjcNpArx9/zwi
+         wGDG4CT0nGtGFcihrH5BeI+SV2cmMoj4XSPgDYTFgida25//eCD2hRgYCflT1i25AhbE
+         VShbAYGwzLvd9xZqpySyR0Y4pnjM7kGex8A9LyO43rHkCQE6gXSplHDVLpSi653h8E/z
+         65Sw==
+X-Gm-Message-State: AOAM5330+GlhY9iK7B1RTYvIfm7DKjidbTq7+fRDZZUz6jX9XreYBbYw
+        0nF9UtLWQ6BOVQJJDUuKUf0=
+X-Google-Smtp-Source: ABdhPJyRfeRfkvjjhxEtlrKfqpvk0yXLSsb/8nZmbESzG5AhWheUUF5a75Q+FBO7eV1ZpMalPGs8jg==
+X-Received: by 2002:a05:6830:30b6:: with SMTP id g22mr3813654ots.196.1619114990359;
+        Thu, 22 Apr 2021 11:09:50 -0700 (PDT)
+Received: from localhost ([2806:2f0:4060:638f:a2c5:89ff:fe0c:1151])
+        by smtp.gmail.com with ESMTPSA id t6sm702044ood.41.2021.04.22.11.09.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Apr 2021 11:09:49 -0700 (PDT)
+Date:   Thu, 22 Apr 2021 13:09:48 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Taylor Blau <me@ttaylorr.com>,
+        Elijah Newren <newren@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Message-ID: <6081bbec7760c_11019208f5@natae.notmuch>
+In-Reply-To: <xmqq8s67m8zi.fsf@gitster.g>
+References: <20210308200426.21824-1-avarab@gmail.com>
+ <cover-00.11-00000000000-20210328T021238Z-avarab@gmail.com>
+ <patch-01.11-e51c860a65d-20210328T021238Z-avarab@gmail.com>
+ <xmqqy2e7on7d.fsf@gitster.g>
+ <87zgynmgbk.fsf@evledraar.gmail.com>
+ <xmqq8s67m8zi.fsf@gitster.g>
+Subject: Re: [PATCH v2 01/10] object.c: stop supporting len == -1 in
+ type_from_string_gently()
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 20, 2021 at 9:42 PM Junio C Hamano <gitster@pobox.com> wrote:
-> Nicely done.
->
-> I as a reader of this patch do have to wonder, with the above very
-> limited log message material, how useful did "debug_reflog_expire()"
-> machinery used to be without any tracing.
+Junio C Hamano wrote:
+> I am reasonably sure I and a few others on the list are net
+> suppliers of the reviewer bandwidth.  I do not expect all the
+> prolific contributors to become net suppliers; after all, designing
+> and writing their own stuff is always fun.  But I wish that the most
+> prominent contributors in the community to be reviewing others'
+> topics and ushering these topics to completion from time to time,
+> and I am hoping to see that happen more.
 
-It wasn't; that's why I'm changing it :-)
+The problem is that the suppliers are a club who often agree on what
+code is not ready to be merged, which is most of it, and also agree it's
+better to apply the reject hammer.
 
-I noticed a test failure with reftable, and adding this function
-showed me I was expiring the entries in the reverse order, so that
+This club is by definition small.
 
-  git reflog delete branch@{1}
+There's a spectrum of perfectness, and the suppliers are on the far left
+side: code has to be perfect, while most of the consumers are on the
+right side, or even on the sensible middle side: do not let the perfect
+be the enemy of the good.
 
-would remove one but oldest entry in the reflog.
+For the suppliers club good is usually not good enough.
 
-> Not a problem with this patch at all, and certainly it does not have
-> to be part of this series, but it feels very backwards, at least to
-> me, to have the method should_prune in ref backends.  As a function
-> to make a policy decision (e.g. "this has a timestamp older than X,
-> so needs to be pruned", "the author of this change I do not like, so
-> let's prune it ;-)"), it is more natural to have it as independent
-> as possible from the individual backends, no?
+I'm fairly confident most of the consumers would agree the bar on what
+constitutes "good enough" is too damn high, so why would they spend time
+raising it any higher? They won't.
 
-the should_prune function is passed in into the ref backend as an
-argument of type reflog_expiry_should_prune_fn to the
-refs_reflog_expire() function.
+If anything they are more often going to dissagree with the suppliers
+club, in order to increase the likelihood of perfectly good patches to
+be merged.
 
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
-Registergericht und -nummer: Hamburg, HRB 86891
-Sitz der Gesellschaft: Hamburg
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+As long as you keep insisting on making the perfect being the enemy of
+the good, you are going to ensure the supply is *always* going to be
+low.
+
+Cheers.
+
+-- 
+Felipe Contreras
