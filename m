@@ -6,23 +6,23 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E8B1C433B4
-	for <git@archiver.kernel.org>; Thu, 22 Apr 2021 04:44:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2EFD6C433B4
+	for <git@archiver.kernel.org>; Thu, 22 Apr 2021 04:50:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C986861430
-	for <git@archiver.kernel.org>; Thu, 22 Apr 2021 04:44:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 08F0E61430
+	for <git@archiver.kernel.org>; Thu, 22 Apr 2021 04:50:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229907AbhDVEoh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Apr 2021 00:44:37 -0400
-Received: from mav.lukeshu.com ([104.207.138.63]:60414 "EHLO mav.lukeshu.com"
+        id S229636AbhDVEvB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Apr 2021 00:51:01 -0400
+Received: from mav.lukeshu.com ([104.207.138.63]:60450 "EHLO mav.lukeshu.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231468AbhDVEob (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Apr 2021 00:44:31 -0400
+        id S229561AbhDVEvA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Apr 2021 00:51:00 -0400
 Received: from lukeshu-dw-thinkpad (unknown [IPv6:2601:281:8200:26:4e34:88ff:fe48:5521])
-        by mav.lukeshu.com (Postfix) with ESMTPSA id 1B10280590;
-        Thu, 22 Apr 2021 00:43:49 -0400 (EDT)
-Date:   Wed, 21 Apr 2021 22:43:48 -0600
-Message-ID: <878s5b2akb.wl-lukeshu@lukeshu.com>
+        by mav.lukeshu.com (Postfix) with ESMTPSA id E3DAF80590;
+        Thu, 22 Apr 2021 00:50:25 -0400 (EDT)
+Date:   Wed, 21 Apr 2021 22:50:25 -0600
+Message-ID: <877dku3otq.wl-lukeshu@lukeshu.com>
 From:   Luke Shumaker <lukeshu@lukeshu.com>
 To:     Eric Sunshine <sunshine@sunshineco.com>
 Cc:     Luke Shumaker <lukeshu@lukeshu.com>,
@@ -37,10 +37,11 @@ Cc:     Luke Shumaker <lukeshu@lukeshu.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>,
         Luke Shumaker <lukeshu@datawire.io>
 Subject: Re: [PATCH v2 2/3] fast-export: rename --signed-tags='warn' to 'warn-verbatim'
-In-Reply-To: <CAPig+cRk_0sevG6iVbCdMPKV7XRwkrCAvEC_YRGvPkxwZoXUuw@mail.gmail.com>
+In-Reply-To: <878s5b2akb.wl-lukeshu@lukeshu.com>
 References: <20210422002749.2413359-1-lukeshu@lukeshu.com>
         <20210422002749.2413359-3-lukeshu@lukeshu.com>
         <CAPig+cRk_0sevG6iVbCdMPKV7XRwkrCAvEC_YRGvPkxwZoXUuw@mail.gmail.com>
+        <878s5b2akb.wl-lukeshu@lukeshu.com>
 User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
  FLIM-LB/1.14.9 (=?ISO-8859-4?Q?Goj=F2?=) APEL-LB/10.8 EasyPG/1.0.0
  Emacs/27.2 (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
@@ -50,36 +51,13 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 21 Apr 2021 21:59:04 -0600,
-Eric Sunshine wrote:
-> On Wed, Apr 21, 2021 at 8:34 PM Luke Shumaker <lukeshu@lukeshu.com> wrote:
-> > The --signed-tags= option takes one of five arguments specifying how to
-> > handle signed tags during export.  Among these arguments, 'strip' is to
-> > 'warn-strip' as 'verbatim' is to 'warn' (the unmentioned argument is
-> > 'abort', which stops the fast-export process entirely).  That is,
-> > signatures are either stripped or copied verbatim while exporting, with
-> > or without a warning.
-> >
-> > Match the pattern and rename 'warn' to 'warn-verbatim' to make it clear
-> > that it instructs fast-export to copy signatures verbatim.
-> >
-> > To maintain backwards compatibility, 'warn' is still recognized as
-> > an undocumented alias.
-> 
-> Maintaining backward compatibility is good; making it undocumented is
-> perhaps less than good. I understand the motivation for not wanting to
-> document it: if it's not documented, people won't discover it, thus
-> won't use it. However, we also should take into consideration that
-> there may be scripts and documentation in the wild which use `warn`.
-> If someone comes across one of those and wants to learn what it means,
-> they won't be able to if the documentation doesn't mention it at all;
-> they'll either have to consult the source code to find out its purpose
-> or post a question somewhere, hoping that someone knows the answer.
+On Wed, 21 Apr 2021 22:43:48 -0600,
+Luke Shumaker wrote:
+> I guess I'll document --signed-tags=ignore too, while I'm at it.
 
-Fair enough.  My precedent was ee4bc3715f (fast-export: rename the
-signed tag mode 'ignore' to 'verbatim', 2007-12-03).
-
-I guess I'll document --signed-tags=ignore too, while I'm at it.
+Eh, nevermind, --signed-tags=ignore was only a thing for a month in
+2007, compared to 13 years that --signed-tags=warn has been the way of
+doing things.
 
 -- 
 Happy hacking,
