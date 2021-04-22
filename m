@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE5DCC433B4
-	for <git@archiver.kernel.org>; Thu, 22 Apr 2021 10:01:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 998C0C433ED
+	for <git@archiver.kernel.org>; Thu, 22 Apr 2021 10:01:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 878CE6144D
-	for <git@archiver.kernel.org>; Thu, 22 Apr 2021 10:01:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 59C486145B
+	for <git@archiver.kernel.org>; Thu, 22 Apr 2021 10:01:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235742AbhDVKBp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Apr 2021 06:01:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33790 "EHLO
+        id S235754AbhDVKBr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Apr 2021 06:01:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235583AbhDVKBn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Apr 2021 06:01:43 -0400
-Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91D7AC06174A
-        for <git@vger.kernel.org>; Thu, 22 Apr 2021 03:01:07 -0700 (PDT)
-Received: by mail-pl1-x630.google.com with SMTP id u15so14712698plf.10
-        for <git@vger.kernel.org>; Thu, 22 Apr 2021 03:01:07 -0700 (PDT)
+        with ESMTP id S235729AbhDVKBp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Apr 2021 06:01:45 -0400
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A8CEC06174A
+        for <git@vger.kernel.org>; Thu, 22 Apr 2021 03:01:10 -0700 (PDT)
+Received: by mail-pl1-x635.google.com with SMTP id u15so14712786plf.10
+        for <git@vger.kernel.org>; Thu, 22 Apr 2021 03:01:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=kx+fJVZamUGpAY5sKjS7VYX+PeEwWphyhbnMBpr/DAQ=;
-        b=TMsRkpja3TG75jIM1IOa9pY7kBRBUl1yqd6/yUdk9/WOpjv3s/pOM6xuFmfEYD8jA/
-         L+2Wlo7IwcSenPSFLaUiF1MAxvYvxwlJk3+ZyvDp1FDWpXK2E9RfG7H2hHxdlr2g4BNj
-         1ppYIVVHM5Ve/hHeRtcvpxp6v778F+iusbJNZWflDFSYIv8MdCj7WZBg3XsCkQepkXPM
-         X7Rrk5SADGlLNc7NLnoMU44iODJDWcvq/x/smPIzvJoCNrf1+4ceVtCpBdDuPBdzHPPs
-         DvfGj1x4X5tyyMj4m3nrn72+0mxyRaVq7z/R5f8CATRUeykMWEt6Z+F30EL8RXrka9Jd
-         BaHg==
+        bh=GQHcTnOm+lMh6jNj1vqZGtq66tcB/Q1K3XMjEcn6/eo=;
+        b=k0FBadVQpkeV8BIrZ8PK+/YctOd5RlklRtfTbLgEPKmH+EP5DZNwQL7wKxMDyfrpVD
+         sJgpFuM8uuYFjUhF4LmkJWJjpJk0l8NaLKDjbVXu8QadCLe+8+1iIOiRNX6Fd5mE0mGt
+         iADewqBQ5RnkQx63+AxOzA/Ue4CvGqUCSOMQoA8GURh9Qjx+qp5oWsJckw58oHSok1ni
+         EF07DmhJFaGoK8g2CwfyoZ1KgWEj1ghNyteWLu1l3eCIulHA76CgfUqr1fjn32HXOKWn
+         TQNhuDZECeRBslEaHIx2EF9ROo2RTdeD9UsRbpZCoRl0T7dPzkNLSoUjwuO4cs/9V/t9
+         1nSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=kx+fJVZamUGpAY5sKjS7VYX+PeEwWphyhbnMBpr/DAQ=;
-        b=mDt5/j7lkmkMH3pc2hsH3W7D1GVH4WJSwtPwip3VCnW5jm2v1Qw/kVJ/YrS6uvEtbt
-         gylkUyPUmsEvGWUeIykHt7b6I353sJ4A3jGU9nNVvI0MQ5zmgcUaK7qsoxaT7cQc3e9I
-         hJOQ1LLzsOI2hFDbBi2z2dqGLER4AE2LOC/ACFCeRKK9UbDmOP/ro/OIqZb/kSOsUu+6
-         a729SzRPktnBIFfqsfwl/RxJKhNnhdGoGr2aqgp7CmD7P1Xbe0rMCbiveQ6uEATB5Ai3
-         p+qTh+BSctS3tU2lYWqMreWQ7vJxfWObDPCn+mfaQyRylzD+K+ftoG0lXlPVsS1HwJdp
-         FR2A==
-X-Gm-Message-State: AOAM5307C+9w93PI9OxEtX0185nIcGtGW/e/0OfhQE0wDhKNxWrXA64p
-        ybdCjcNZ57RFnQaUgOCHxurFwbkGz9k=
-X-Google-Smtp-Source: ABdhPJwFmPjFHGjO5hTbxvKlgWwnOhol6wywcMPdsB2UKNye04RudZEipPqOr233CMZdVwabsYC8xQ==
-X-Received: by 2002:a17:90b:813:: with SMTP id bk19mr16218645pjb.108.1619085666877;
-        Thu, 22 Apr 2021 03:01:06 -0700 (PDT)
+        bh=GQHcTnOm+lMh6jNj1vqZGtq66tcB/Q1K3XMjEcn6/eo=;
+        b=qh8Vt6+C5dTrnqsdWwFk0kK7NuM5ekkD+tmqQ1pHcm8OAD8kp07ySrWudo85GTNKBv
+         9AzxaJNklVCrJBaBWCV4k744cXFPpZtuZAGiO85kRGoIqxowxZmrXX+RQJwii/TeQDXL
+         Tp45TmXJNPYHy+/KZyyEnZp+zfaDoRXSrlQiVohPejb4vyTzMgmDqsC8eoyZpIGdSHCr
+         YT7OOlDSUc0+2vbSa0mN4tAPj9wjjI7olfwd9Z+PiVtoWPqKJdY9CVD+bLFCqvv+iv1Y
+         x5WdVsVgO2GcYddECCgh0H1HSsFxe4Te/1d1ASLzOzj324ggsxbPZmRTy+oWiTAXnjpC
+         m9Rg==
+X-Gm-Message-State: AOAM532utHkIm+B+FmWZtFVoDsjJn4Ww8oT1965TbbhdJzN4eUqNyvh7
+        uUqJYH0WNXoz/UhBdFeD4UTNnd24uWM=
+X-Google-Smtp-Source: ABdhPJz0T5MqrpQRnCJV48lqDGP9J8R3dIJur8noRs+104mNjIItTs0cuDYTH92qbXy+Zr15cp553w==
+X-Received: by 2002:a17:90a:ce8d:: with SMTP id g13mr3076922pju.85.1619085669422;
+        Thu, 22 Apr 2021 03:01:09 -0700 (PDT)
 Received: from archbookpro.localdomain ([172.92.165.181])
-        by smtp.gmail.com with ESMTPSA id r3sm1741314pfl.159.2021.04.22.03.01.05
+        by smtp.gmail.com with ESMTPSA id r3sm1741314pfl.159.2021.04.22.03.01.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Apr 2021 03:01:05 -0700 (PDT)
+        Thu, 22 Apr 2021 03:01:08 -0700 (PDT)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 2/4] git-completion.bash: rename to $__git_cmd_idx
-Date:   Thu, 22 Apr 2021 03:00:50 -0700
-Message-Id: <76328e3123bd670435632244cbdd0e68db815804.1619085387.git.liu.denton@gmail.com>
+Subject: [PATCH v2 4/4] git-completion.bash: consolidate cases in _git_stash()
+Date:   Thu, 22 Apr 2021 03:00:52 -0700
+Message-Id: <103d38e29394d7e4d1bf01817795aed5be568673.1619085387.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.31.1.499.g90b4fd31cd
 In-Reply-To: <cover.1619085387.git.liu.denton@gmail.com>
 References: <cover.1618910364.git.liu.denton@gmail.com> <cover.1619085387.git.liu.denton@gmail.com>
@@ -72,106 +72,61 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In e94fb44042 (git-completion.bash: pass $__git_subcommand_idx from
-__git_main(), 2021-03-24), the $__git_subcommand_idx variable was
-introduced. Naming it after the index of the subcommand is needlessly
-confusing as, when this variable is used, it is in the completion
-functions for commands (e.g. _git_remote()) where for `git remote add`,
-the `remote` is referred to as the command and `add` is referred to as
-the subcommand.
-
-Rename this variable so that it's obvious it's about git commands. While
-we're at it, shorten up its name so that it's still readable without
-being a handful to type.
+The $subcommand case statement in _git_stash() is quite repetitive.
+Consolidate the cases together into one catch-all case to reduce the
+repetition.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- contrib/completion/git-completion.bash | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ contrib/completion/git-completion.bash | 21 ++-------------------
+ 1 file changed, 2 insertions(+), 19 deletions(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 1dedb14b47..c29c129f87 100644
+index 30c9a97616..7bce9a0112 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -1474,12 +1474,12 @@ _git_branch ()
+@@ -3032,21 +3032,6 @@ _git_stash ()
+ 	fi
  
- _git_bundle ()
- {
--	local cmd="${words[__git_subcommand_idx+1]}"
-+	local cmd="${words[__git_cmd_idx+1]}"
- 	case "$cword" in
--	$((__git_subcommand_idx+1)))
-+	$((__git_cmd_idx+1)))
- 		__gitcomp "create list-heads verify unbundle"
+ 	case "$subcommand,$cur" in
+-	push,--*)
+-		__gitcomp_builtin stash_push
+-		;;
+-	save,--*)
+-		__gitcomp_builtin stash_save
+-		;;
+-	pop,--*)
+-		__gitcomp_builtin stash_pop
+-		;;
+-	apply,--*)
+-		__gitcomp_builtin stash_apply
+-		;;
+-	drop,--*)
+-		__gitcomp_builtin stash_drop
+-		;;
+ 	list,--*)
+ 		# NEEDSWORK: can we somehow unify this with the options in _git_log() and _git_show()
+ 		__gitcomp_builtin stash_list "$__git_log_common_options $__git_diff_common_options"
+@@ -3054,8 +3039,8 @@ _git_stash ()
+ 	show,--*)
+ 		__gitcomp_builtin stash_show "$__git_diff_common_options"
  		;;
--	$((__git_subcommand_idx+2)))
-+	$((__git_cmd_idx+2)))
- 		# looking for a file
- 		;;
- 	*)
-@@ -1894,7 +1894,7 @@ _git_grep ()
- 	esac
- 
- 	case "$cword,$prev" in
--	$((__git_subcommand_idx+1)),*|*,-*)
-+	$((__git_cmd_idx+1)),*|*,-*)
- 		__git_complete_symbol && return
- 		;;
- 	esac
-@@ -3017,7 +3017,7 @@ _git_stash ()
- 	local subcommand="$(__git_find_on_cmdline "$subcommands save")"
- 
- 	if [ -z "$subcommand" ]; then
--		case "$((cword - __git_subcommand_idx)),$cur" in
-+		case "$((cword - __git_cmd_idx)),$cur" in
- 		*,--*)
- 			__gitcomp_builtin stash_push
- 			;;
-@@ -3058,7 +3058,7 @@ _git_stash ()
- 		__gitcomp_builtin stash_branch
+-	branch,--*)
+-		__gitcomp_builtin stash_branch
++	*,--*)
++		__gitcomp_builtin "stash_$subcommand"
  		;;
  	branch,*)
--		if [ $cword -eq $((__git_subcommand_idx+2)) ]; then
-+		if [ $cword -eq $((__git_cmd_idx+2)) ]; then
- 			__git_complete_refs
- 		else
- 			__gitcomp_nl "$(__git stash list \
-@@ -3303,7 +3303,7 @@ _git_worktree ()
- 			# be either the 'add' subcommand, the unstuck
- 			# argument of an option (e.g. branch for -b|-B), or
- 			# the path for the new worktree.
--			if [ $cword -eq $((__git_subcommand_idx+2)) ]; then
-+			if [ $cword -eq $((__git_cmd_idx+2)) ]; then
- 				# Right after the 'add' subcommand: have to
- 				# complete the path, so fall back to Bash
- 				# filename completion.
-@@ -3327,7 +3327,7 @@ _git_worktree ()
- 		__git_complete_worktree_paths
+ 		if [ $cword -eq $((__git_cmd_idx+2)) ]; then
+@@ -3069,8 +3054,6 @@ _git_stash ()
+ 		__gitcomp_nl "$(__git stash list \
+ 				| sed -n -e 's/:.*//p')"
  		;;
- 	move,*)
--		if [ $cword -eq $((__git_subcommand_idx+2)) ]; then
-+		if [ $cword -eq $((__git_cmd_idx+2)) ]; then
- 			# The first parameter must be an existing working
- 			# tree to be moved.
- 			__git_complete_worktree_paths
-@@ -3395,7 +3395,7 @@ __git_main ()
- {
- 	local i c=1 command __git_dir __git_repo_path
- 	local __git_C_args C_args_count=0
--	local __git_subcommand_idx
-+	local __git_cmd_idx
+-	*)
+-		;;
+ 	esac
+ }
  
- 	while [ $c -lt $cword ]; do
- 		i="${words[c]}"
-@@ -3426,7 +3426,7 @@ __git_main ()
- 			;;
- 		*)
- 			command="$i"
--			__git_subcommand_idx="$c"
-+			__git_cmd_idx="$c"
- 			break
- 			;;
- 		esac
 -- 
 2.31.1.499.g90b4fd31cd
 
