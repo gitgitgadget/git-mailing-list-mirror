@@ -2,124 +2,206 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22ECDC433B4
-	for <git@archiver.kernel.org>; Thu, 22 Apr 2021 15:18:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6323C433B4
+	for <git@archiver.kernel.org>; Thu, 22 Apr 2021 15:18:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E5DDB61222
-	for <git@archiver.kernel.org>; Thu, 22 Apr 2021 15:18:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 68FF66144A
+	for <git@archiver.kernel.org>; Thu, 22 Apr 2021 15:18:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237705AbhDVPSi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Apr 2021 11:18:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47310 "EHLO
+        id S237734AbhDVPSm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Apr 2021 11:18:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47316 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236548AbhDVPSi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Apr 2021 11:18:38 -0400
-Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52577C06174A
-        for <git@vger.kernel.org>; Thu, 22 Apr 2021 08:18:03 -0700 (PDT)
-Received: by mail-qk1-x734.google.com with SMTP id s5so37856933qkj.5
-        for <git@vger.kernel.org>; Thu, 22 Apr 2021 08:18:03 -0700 (PDT)
+        with ESMTP id S236545AbhDVPSj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Apr 2021 11:18:39 -0400
+Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9F6AC06174A
+        for <git@vger.kernel.org>; Thu, 22 Apr 2021 08:18:04 -0700 (PDT)
+Received: by mail-qt1-x831.google.com with SMTP id 1so34093078qtb.0
+        for <git@vger.kernel.org>; Thu, 22 Apr 2021 08:18:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp.br; s=usp-google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=1En0f1NBO0SWMODRgtlaszp1QfDFJ0y/frNTM5ITge0=;
-        b=cV5tYJGOhkLXkqUOVE86dt3vM0MIRJ4pnUA7TmqmM8OklWtL8rox/H2rglaK1gB8ja
-         m2YdHuuhJQ+E+OhK8DvXTLYlxMkcK5683W8eSi4hLZMBF/Nh7/+rmJZNqOAzyKynWrNs
-         Tb62dKSG00Od7m1KMT58ouiTBF2MwJKeUI676uIxnLd5PzukEa+KFrH+aN9ZiJh0daW+
-         DWDZ2XYeHYHUYyhNPdw3tLZKoykfrAchaLMRwrGuXqwnxsXCJukgfo1e3RKQPSBfcaQv
-         ij1AYAHn+o50/TgWUIpS0YhCjMGvpD544R2RLS7tX127HlqfHEVy7aTy1wF58Mo2oe3I
-         FTYw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=C/38sFQa6zRAfOZz7FManGZbEWRjFsxK9Oe9+m5j86c=;
+        b=Su4NFkbNk9wBRvUQK5aOPnH6vd3zVwDcKprz/eskLtKI9ZVdeFA4DRgnAZftO4fWt4
+         4DcFMxa5QE5obK5qmEJBnUle2Iz3Uro8oqatdU3tDt82nHVxvzbe9OQnGOSytA+7R5H5
+         RklRqtRMX7LR5Fgo56YvhSlDOsLAb8fSNXX3JhjIUE5pnAQieLPHO6QFp5AwegcUjE7x
+         /SqI4sVcyGK3Sp9vS5urv+iyUF0Vh4x3bs3utkRY2D7mPzeHlEINxga/fdVUXYJc+2i3
+         aKmqaem8SYChzeTjCtl+FAiJiW3vE7F4Of3GAKlPiQBmdiOgHWkq0N9PjKmYdKTr+ZeE
+         ZCOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=1En0f1NBO0SWMODRgtlaszp1QfDFJ0y/frNTM5ITge0=;
-        b=HTBIysxz0Lo1qLPoos6CBnwCCv1sxhAArJfgNy4X92LlReGYEgD/bNi0rmh9OfXzt9
-         PQeGLg9MKzIvg1RhphOimyYZGFMJF5nQ0PfCegozyw6cRCX9sEh7RirOvHSj2T/Cq1qJ
-         Zy8Ea4qKkVwpPrBy58t466OqrxwMc7H0Rd+8ipVulP5yD/tqFBCLvtM08H+LSrZO4VvW
-         l7jnVm3+mAQweRwWAFRDHA33VIpMTMnNuuOYAArXyH6wN9Qz6ka3eZplezsNM1qRcmPG
-         u5N4LO55f+OtjkCJbbBG99JhQ+6X5xK2DIi8oTt5wtAeyQm68cS8/VyuQhDZWVNF0EYB
-         jljw==
-X-Gm-Message-State: AOAM533HK1cJPYqYK8MSHqT3WzPPeDwD9mFLvwBRmKxaaEQ83ZGNIvzf
-        zA//ZkJ9f79hYAh/St+AkUdqKq9Q/Mey+w==
-X-Google-Smtp-Source: ABdhPJyvyS3NEfo9T5alZzQl9BYNpA4rDmnQcGNQNz0pPNh7q/YSYd2rJu5DTYhzUxx99FiEca8DGQ==
-X-Received: by 2002:a37:a156:: with SMTP id k83mr3917717qke.331.1619104681891;
-        Thu, 22 Apr 2021 08:18:01 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=C/38sFQa6zRAfOZz7FManGZbEWRjFsxK9Oe9+m5j86c=;
+        b=iJKiyuHcqnTniyv5NVXxrcyNx6ukCjvYLayuJPRr90CpZqGJgY/9EWMQaHoQAWO6zg
+         pgufa2BlWxO64kf7b7KqblLGXvgdABftXOG0noQd8N2SQZ9mG3zSKYUB2qnFEZGFdZ7j
+         Ll8eF5WA2v1B/4aRvT/SYHvhseCiV1b5byQAcTPkDJQJ8vCUGaT8Fq3RGTGq0Xlul0Jt
+         XyHP7BlZUPs0M/bSIW7ybDE84VqsMVw+WALobLLoD78299traWg5SgGlaT2utWsNZyv8
+         72zxbKAPO1yxKoD/GvYIaG4AzQzi27LkbDoVQTiRDxfph/QaTHpz33NDvhG/4+Y4j9f4
+         awaA==
+X-Gm-Message-State: AOAM533CFPCD3hv2AAaQf2hU0iYRaPeEUp2rDVr9DJHHnkx+M5HDbAlL
+        XXbI1JJ+V04mTsq/OMw8o5WBcR9tMR1Mow==
+X-Google-Smtp-Source: ABdhPJyx3jINAsYMWH5mBQUBO/bIqDUpltxamNBVGepsAAsY+HNSCj9QXtVghVdtyjH4IAv6tHc8eQ==
+X-Received: by 2002:ac8:470e:: with SMTP id f14mr3721214qtp.54.1619104683641;
+        Thu, 22 Apr 2021 08:18:03 -0700 (PDT)
 Received: from mango.meuintelbras.local ([177.32.118.149])
-        by smtp.gmail.com with ESMTPSA id l16sm2348909qkg.91.2021.04.22.08.17.59
+        by smtp.gmail.com with ESMTPSA id l16sm2348909qkg.91.2021.04.22.08.18.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Apr 2021 08:18:01 -0700 (PDT)
+        Thu, 22 Apr 2021 08:18:03 -0700 (PDT)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
 Cc:     christian.couder@gmail.com, git@jeffhostetler.com
-Subject: [PATCH 0/7] Parallel Checkout (part 3)
-Date:   Thu, 22 Apr 2021 12:17:46 -0300
-Message-Id: <cover.1619104091.git.matheus.bernardino@usp.br>
+Subject: [PATCH 1/7] make_transient_cache_entry(): optionally alloc from mem_pool
+Date:   Thu, 22 Apr 2021 12:17:47 -0300
+Message-Id: <f870040bfb3e73ee8cd27352b0acc65bb54be560.1619104091.git.matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.30.1
+In-Reply-To: <cover.1619104091.git.matheus.bernardino@usp.br>
+References: <cover.1619104091.git.matheus.bernardino@usp.br>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is the last part of the parallel checkout series :) I have a couple
-other small optimization and tuning ideas for later but, with this part,
-the main functionality should be now complete.
+Allow make_transient_cache_entry() to optionally receive a mem_pool
+struct in which it should allocate the entry. This will be used in the
+following patch, to store some transient entries which should persist
+until parallel checkout finishes.
 
-This is based on mt/parallel-checkout-part-2.
+Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
+---
+ builtin/checkout--worker.c |  2 +-
+ builtin/checkout.c         |  2 +-
+ builtin/difftool.c         |  2 +-
+ cache.h                    | 11 ++++++-----
+ read-cache.c               | 12 ++++++++----
+ unpack-trees.c             |  2 +-
+ 6 files changed, 18 insertions(+), 13 deletions(-)
 
-The first three patches add parallel checkout support for three
-codepaths that could not use the parallel mode yet:
-
-- git checkout-index
-- git checkout --patch
-- git checkout <pathspec>
-
-All these three call `checkout_entry()` directly instead of
-`unpack_trees()`, so we need to enable parallel checkout on them before
-they call `checkout_entry()`.
-
-The four remaining patches add tests for the parallel checkout
-framework.
-
-Matheus Tavares (7):
-  make_transient_cache_entry(): optionally alloc from mem_pool
-  builtin/checkout.c: complete parallel checkout support
-  checkout-index: add parallel checkout support
-  parallel-checkout: add tests for basic operations
-  parallel-checkout: add tests related to path collisions
-  parallel-checkout: add tests related to .gitattributes
-  ci: run test round with parallel-checkout enabled
-
- builtin/checkout--worker.c              |   2 +-
- builtin/checkout-index.c                |  24 +--
- builtin/checkout.c                      |  20 ++-
- builtin/difftool.c                      |   2 +-
- cache.h                                 |  11 +-
- ci/run-build-and-tests.sh               |   1 +
- parallel-checkout.c                     |  18 +++
- read-cache.c                            |  12 +-
- t/README                                |   4 +
- t/lib-encoding.sh                       |  25 +++
- t/lib-parallel-checkout.sh              |  40 +++++
- t/t0028-working-tree-encoding.sh        |  25 +--
- t/t2080-parallel-checkout-basics.sh     | 150 ++++++++++++++++++
- t/t2081-parallel-checkout-collisions.sh | 162 ++++++++++++++++++++
- t/t2082-parallel-checkout-attributes.sh | 194 ++++++++++++++++++++++++
- unpack-trees.c                          |   2 +-
- 16 files changed, 643 insertions(+), 49 deletions(-)
- create mode 100644 t/lib-encoding.sh
- create mode 100644 t/lib-parallel-checkout.sh
- create mode 100755 t/t2080-parallel-checkout-basics.sh
- create mode 100755 t/t2081-parallel-checkout-collisions.sh
- create mode 100755 t/t2082-parallel-checkout-attributes.sh
-
+diff --git a/builtin/checkout--worker.c b/builtin/checkout--worker.c
+index 31e0de2f7e..289a9b8f89 100644
+--- a/builtin/checkout--worker.c
++++ b/builtin/checkout--worker.c
+@@ -39,7 +39,7 @@ static void packet_to_pc_item(const char *buffer, int len,
+ 	}
+ 
+ 	memset(pc_item, 0, sizeof(*pc_item));
+-	pc_item->ce = make_empty_transient_cache_entry(fixed_portion->name_len);
++	pc_item->ce = make_empty_transient_cache_entry(fixed_portion->name_len, NULL);
+ 	pc_item->ce->ce_namelen = fixed_portion->name_len;
+ 	pc_item->ce->ce_mode = fixed_portion->ce_mode;
+ 	memcpy(pc_item->ce->name, variant, pc_item->ce->ce_namelen);
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 4c696ef480..db667d0267 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -291,7 +291,7 @@ static int checkout_merged(int pos, const struct checkout *state, int *nr_checko
+ 	if (write_object_file(result_buf.ptr, result_buf.size, blob_type, &oid))
+ 		die(_("Unable to add merge result for '%s'"), path);
+ 	free(result_buf.ptr);
+-	ce = make_transient_cache_entry(mode, &oid, path, 2);
++	ce = make_transient_cache_entry(mode, &oid, path, 2, NULL);
+ 	if (!ce)
+ 		die(_("make_cache_entry failed for path '%s'"), path);
+ 	status = checkout_entry(ce, state, NULL, nr_checkouts);
+diff --git a/builtin/difftool.c b/builtin/difftool.c
+index ef25729d49..afacbcd581 100644
+--- a/builtin/difftool.c
++++ b/builtin/difftool.c
+@@ -323,7 +323,7 @@ static int checkout_path(unsigned mode, struct object_id *oid,
+ 	struct cache_entry *ce;
+ 	int ret;
+ 
+-	ce = make_transient_cache_entry(mode, oid, path, 0);
++	ce = make_transient_cache_entry(mode, oid, path, 0, NULL);
+ 	ret = checkout_entry(ce, state, NULL, NULL);
+ 
+ 	discard_cache_entry(ce);
+diff --git a/cache.h b/cache.h
+index 148d9ab5f1..b6b42cc3f3 100644
+--- a/cache.h
++++ b/cache.h
+@@ -356,16 +356,17 @@ struct cache_entry *make_empty_cache_entry(struct index_state *istate,
+ 					   size_t name_len);
+ 
+ /*
+- * Create a cache_entry that is not intended to be added to an index.
+- * Caller is responsible for discarding the cache_entry
+- * with `discard_cache_entry`.
++ * Create a cache_entry that is not intended to be added to an index. If `mp`
++ * is not NULL, the entry is allocated within the given memory pool. Caller is
++ * responsible for discarding "loose" entries with `discard_cache_entry()` and
++ * the mem_pool with `mem_pool_discard(mp, should_validate_cache_entries())`.
+  */
+ struct cache_entry *make_transient_cache_entry(unsigned int mode,
+ 					       const struct object_id *oid,
+ 					       const char *path,
+-					       int stage);
++					       int stage, struct mem_pool *mp);
+ 
+-struct cache_entry *make_empty_transient_cache_entry(size_t name_len);
++struct cache_entry *make_empty_transient_cache_entry(size_t len, struct mem_pool *mp);
+ 
+ /*
+  * Discard cache entry.
+diff --git a/read-cache.c b/read-cache.c
+index 5a907af2fb..eb389ccb8f 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -813,8 +813,10 @@ struct cache_entry *make_empty_cache_entry(struct index_state *istate, size_t le
+ 	return mem_pool__ce_calloc(find_mem_pool(istate), len);
+ }
+ 
+-struct cache_entry *make_empty_transient_cache_entry(size_t len)
++struct cache_entry *make_empty_transient_cache_entry(size_t len, struct mem_pool *mp)
+ {
++	if (mp)
++		return mem_pool__ce_calloc(mp, len);
+ 	return xcalloc(1, cache_entry_size(len));
+ }
+ 
+@@ -848,8 +850,10 @@ struct cache_entry *make_cache_entry(struct index_state *istate,
+ 	return ret;
+ }
+ 
+-struct cache_entry *make_transient_cache_entry(unsigned int mode, const struct object_id *oid,
+-					       const char *path, int stage)
++struct cache_entry *make_transient_cache_entry(unsigned int mode,
++					       const struct object_id *oid,
++					       const char *path, int stage,
++					       struct mem_pool *mp)
+ {
+ 	struct cache_entry *ce;
+ 	int len;
+@@ -860,7 +864,7 @@ struct cache_entry *make_transient_cache_entry(unsigned int mode, const struct o
+ 	}
+ 
+ 	len = strlen(path);
+-	ce = make_empty_transient_cache_entry(len);
++	ce = make_empty_transient_cache_entry(len, mp);
+ 
+ 	oidcpy(&ce->oid, oid);
+ 	memcpy(ce->name, path, len);
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 4b77e52c6b..fa5b7ab7ee 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -1034,7 +1034,7 @@ static struct cache_entry *create_ce_entry(const struct traverse_info *info,
+ 	size_t len = traverse_path_len(info, tree_entry_len(n));
+ 	struct cache_entry *ce =
+ 		is_transient ?
+-		make_empty_transient_cache_entry(len) :
++		make_empty_transient_cache_entry(len, NULL) :
+ 		make_empty_cache_entry(istate, len);
+ 
+ 	ce->ce_mode = create_ce_mode(n->mode);
 -- 
 2.30.1
 
