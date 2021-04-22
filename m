@@ -2,144 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9F0AC43460
-	for <git@archiver.kernel.org>; Thu, 22 Apr 2021 02:24:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 21A57C433ED
+	for <git@archiver.kernel.org>; Thu, 22 Apr 2021 03:41:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AE3B461450
-	for <git@archiver.kernel.org>; Thu, 22 Apr 2021 02:24:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E5D08606A5
+	for <git@archiver.kernel.org>; Thu, 22 Apr 2021 03:41:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233979AbhDVCZR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Apr 2021 22:25:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46026 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230000AbhDVCZQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Apr 2021 22:25:16 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76E7BC06138B
-        for <git@vger.kernel.org>; Wed, 21 Apr 2021 19:24:40 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id h36so15589559lfv.7
-        for <git@vger.kernel.org>; Wed, 21 Apr 2021 19:24:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp.br; s=usp-google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=bjFcwHiAQyHh+YnpvDT8RRIOibEDJwvlr7oLmOw0dmU=;
-        b=IkxbAFNaA4EUfPhNExWhlYn9PWvM/lwyPfd9AzfHdFMbbyLNlWCz/TcgE3G4lgByb2
-         4n+dbnZMpnncc8onoGS632vri3HJSouGVxllAhUAPjyI/wNj6W7iph0h0yGFruYONBMY
-         R370MLAjwnzTfWW3oTh6kp7bytv3VxXh2rbtNBsyHvroeJEzSPSCdll5W4iOTKNWY7hK
-         JGhUKCXVrGH6O41rgruPCCWpVpc8b2XFSGg1awTFIaX3ee7rfXd0hnaOj3AIhQ16y89a
-         o+KqyJ0kwSMYMTcOKQYui6O8TzS8w3qbc9WNViMrTeo9pbOUSMU9e61Ik5UtqnFBU5I/
-         /lXQ==
+        id S234240AbhDVDmR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Apr 2021 23:42:17 -0400
+Received: from mail-ed1-f47.google.com ([209.85.208.47]:36756 "EHLO
+        mail-ed1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230319AbhDVDmL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Apr 2021 23:42:11 -0400
+Received: by mail-ed1-f47.google.com with SMTP id j12so26696221edy.3
+        for <git@vger.kernel.org>; Wed, 21 Apr 2021 20:41:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=bjFcwHiAQyHh+YnpvDT8RRIOibEDJwvlr7oLmOw0dmU=;
-        b=dDiTdcKIVcGz7QfUKSeNOAVCJ3xVN3c+5C4atI2mGIwZ8r+YUfX/onXt6cCzLzjiJo
-         IQCRN7y47Z/iLvjfJM6Nt+204Oa562NYaOk5DTACL0iZR8V/HE8NfXyyPsCdPM2KZj0a
-         00euZAX3ESsVuq3jlDbKvzDKo5imTqIGWgwwDdWUiJ1XqkA8aRADV9zHEediB177TDCr
-         BQM7RvE1ouMYjrJLDjcvPGczlWvDsRF3omxvOmWgvvjVStRz//5E/c4mwGS4/ZUj9E4w
-         XNp7KEXoLSat6rwnM3iq5sXgulf7KWWLAUucwn4m64QVqKtl+c6ei0h+eKbtIFFmcvmZ
-         e9sQ==
-X-Gm-Message-State: AOAM530P2yHW8CtmDGzxl8dyh8+0MRTFaRLTUOPPeFZD6xDrXIvXGAA+
-        dO4VoRb6SVeJhVBaKGGTHA8u/DkPpgP5+tATKV65ZA==
-X-Google-Smtp-Source: ABdhPJwnA6xPclF6haR879OHsTKTr4Ruc+F6KchZPAFKl2slf23FVo3nC2N1ydUctGc8mkeZtZzP1+FPofyXJwRbSBk=
-X-Received: by 2002:ac2:5f64:: with SMTP id c4mr804973lfc.538.1619058278965;
- Wed, 21 Apr 2021 19:24:38 -0700 (PDT)
+        bh=VgVrZYbS6s7jjtBNBfQH1oIxbmtYSMOREE/iopoudsE=;
+        b=lWr5iYlmvo8uCtHSskdfVT8tLDM1SkibLEbMztYDXWGUkSILLCYLkl1h9ZuvhsAeRZ
+         8U7ZJyjUAHW4za5jLRYfCONEcuD9dpcUSIz37qNxHotoGRVIcKDQQfuF2SsrwxlyEiel
+         wxv/BrT/V+7eLKskqgk0XNHjlxeT1HaKVQgxgX7akm8erPii1llJ5L8O8tbuq84hwiPk
+         rzvngXNmBWWsf0FuosmbOt8eZsWJ5TxsO6r9kNWX6faqTDvdfvLdetzxQzAUAHTtI3+/
+         uoGQ/wxWb0NXo/10POCD289BD/HoYxnhI8ootlu4BJMV9m/42Cx3+wlHm1Xe2RXYNnYI
+         NCaA==
+X-Gm-Message-State: AOAM533Myuu+ssXJSFSnOQ65/r0SBcmM+yQzktb8E5lJVaCd11d4bHFL
+        agtfEUS60hH8Er5tyrkUxKeBXvxYBU8xJsHgDi6F7AUzslULNA==
+X-Google-Smtp-Source: ABdhPJxKWbw34hyQQfHWKedOdPmMyOhTKKQ/6KJE+Dx4xtcSiu0W/mD+cXxXy8jIgFv1HroaDa2uxn521nXopkzmug4=
+X-Received: by 2002:a05:6402:488:: with SMTP id k8mr1189373edv.233.1619062886443;
+ Wed, 21 Apr 2021 20:41:26 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.932.git.1618322497.gitgitgadget@gmail.com>
- <0a3892d2ec9e4acd4cba1c1d0390acc60dc6e50f.1618322497.git.gitgitgadget@gmail.com>
- <CABPp-BHcdhO_kEdqR23sDdGAgoSu2R-HBWv-RmzQvJ0ysWtzxg@mail.gmail.com>
- <a777331a-aff6-766f-30da-eef052ad83ee@gmail.com> <CABPp-BEdXOrDecGZBxmwdMvLBse80s3J+O34Bwz5dRRvFPgnUA@mail.gmail.com>
-In-Reply-To: <CABPp-BEdXOrDecGZBxmwdMvLBse80s3J+O34Bwz5dRRvFPgnUA@mail.gmail.com>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Wed, 21 Apr 2021 23:24:27 -0300
-Message-ID: <CAHd-oW4Ei3p9rG5z2DRJMVx2dc5B7LeimnoRvBOsStM42v+9HQ@mail.gmail.com>
-Subject: Re: [PATCH 02/10] unpack-trees: make sparse aware
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.934.v2.git.1619047347605.gitgitgadget@gmail.com> <pull.934.v3.git.1619052906768.gitgitgadget@gmail.com>
+In-Reply-To: <pull.934.v3.git.1619052906768.gitgitgadget@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 21 Apr 2021 23:41:15 -0400
+Message-ID: <CAPig+cTZRM1d07Nd0WBtWm5AO1mfh9M8jvYAXcoPm9cJ1MpDnA@mail.gmail.com>
+Subject: Re: [PATCH v3] git-merge: rewrite already up to date message
+To:     Josh Soref via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Josh Soref <jsoref@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 21, 2021 at 1:11 PM Elijah Newren <newren@gmail.com> wrote:
+On Wed, Apr 21, 2021 at 8:55 PM Josh Soref via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> Usually, it is easier to read a message if it makes its primary
+> point first, before giving a parenthetical note.
+> [...]
+> Signed-off-by: Josh Soref <jsoref@gmail.com>
+> ---
+>     Changes since v2:
 >
-> // Adding Matheus to cc due to the ignore_skip_worktree bit, given his
-> experience and expertise with the checkout and unpack-trees code.
+>      * finish_up_to_date now figures out the answer on its own to address
+>        feedback from Eric Sunshine
 >
-> On Wed, Apr 21, 2021 at 6:41 AM Derrick Stolee <stolee@gmail.com> wrote:
-> >
-> > On 4/20/2021 7:00 PM, Elijah Newren wrote:
-> > > On Tue, Apr 13, 2021 at 7:01 AM Derrick Stolee via GitGitGadget
-> > > <gitgitgadget@gmail.com> wrote:
-> > >>
-> > >> diff --git a/read-cache.c b/read-cache.c
-> > >> index 29ffa9ac5db9..6308234b4838 100644
-> > >> --- a/read-cache.c
-> > >> +++ b/read-cache.c
-> > >> @@ -1594,6 +1594,9 @@ int refresh_index(struct index_state *istate, unsigned int flags,
-> > >>                 if (ignore_skip_worktree && ce_skip_worktree(ce))
-> > >>                         continue;
-> > >>
-> > >> +               if (istate->sparse_index && S_ISSPARSEDIR(ce->ce_mode))
-> > >> +                       continue;
-> > >> +
-> > >
-> > > I'm a bit confused about what could trigger ce_skip_worktree(ce) &&
-> > > !ignore_skip_worktree and why it'd be desirable to refresh
-> > > skip-worktree entries.
+>     -- Yes, I'm well aware of localization rules. But as Eric Sunshine
+>     noted, the code was already making a mess of things. I didn't want to
+>     make invasive changes. I actually wrote roughly what Eric proposed as an
+>     earlier implementation, but the various complexities, including trying
+>     to figure out what the yeah was for and who cared about it, made me
+>     really wary of proposing such a significant change.
 
-The skip-worktree entries are not really refreshed in refresh_index(),
-even when !ignore_skip_worktree (which is the default case; i.e.
-without the REFRESH_IGNORE_SKIP_WORKTREE flag).
+Understandable. I also was curious as to whether "Yeeah!" had any
+significance, thus checked the project history before responding to
+your v2. As far as I can tell, "Yeeah!" has no particular
+significance. It materialized out of thin air with 1c7b76be7d (Build
+in merge, 2008-07-07) and simply hasn't been touched since then (in
+any meaningful way). Delving into the list archive doesn't shed any
+additional light on "Yeeah!"; none of the reviews mentioned it at all.
+So, it doesn't seem to serve any genuine purpose, and I don't mind
+seeing it go away, especially since its removal simplifies things for
+translators.
 
-This flag (which is currently only used by `git add --refresh`s code
-at `builtin/add.c:refresh()`), just makes refresh_index() skip the
-following operations on skip-worktree entries: pathspec matching,
-marking the matches on `seen`, checking/warning if unmerged, and
-marking the entry as up-to-date (i.e. with the in-memory CE_UPTODATE
-bit).
+> diff --git a/builtin/merge.c b/builtin/merge.c
+> @@ -380,10 +380,14 @@ static void restore_state(const struct object_id *head,
+>  /* This is called when no merge was necessary. */
+> -static void finish_up_to_date(const char *msg)
+> +static void finish_up_to_date(void)
+>  {
+> -       if (verbosity >= 0)
+> -               printf("%s%s\n", squash ? _(" (nothing to squash)") : "", msg);
+> +       if (verbosity >= 0) {
+> +               if (squash)
+> +                       puts(_("Already up to date (nothing to squash)."));
+> +               else
+> +                       puts(_("Already up to date."));
+> +       }
+>         remove_merge_branch_state(the_repository);
+>  }
+> @@ -1482,7 +1486,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+> -               finish_up_to_date(_("Already up to date."));
+> +               finish_up_to_date();
+> @@ -1566,7 +1570,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+> -                       finish_up_to_date(_("Already up to date. Yeeah!"));
+> +                       finish_up_to_date();
 
-I added this flag in mt/add-rm-in-sparse-checkout and changed
-`builtin/add.c:refresh()` to use it mainly because we needed a `seen`
-array with only matches from non-skip-worktree entries so that we
-could later decide when to emit the warning. (In fact, the original
-implementation of the flag only controlled whether sparse matches
-would be marked on `seen` or not [1])
+Perhaps not surprisingly, I find this version of the patch much easier
+to understand.
 
-[1]: https://lore.kernel.org/git/d65b214dd1d83a2e8710a9bbf98477c1929f0d5e.1614138107.git.matheus.bernardino@usp.br/
-
-Perhaps we could alternatively make refresh_index() skip the
-previously mentioned operations on all skip-worktrees entries
-*unconditionally*. I.e. having, early in the loop:
-
-if (ce_skip_worktree(ce))
-        continue;
-
-But I'm not familiar enough with CE_UPTODATE and how it's used in
-different parts of the code base, so I didn't want to risk introducing
-any bugs at refresh_index() callers that might want/expect the
-function to set the CE_UPTODATE bit on the skip-worktree entries. The
-case of `git add --refresh` was much narrower and easier to analyze,
-and that's what we were interested in for the warning. That's why I
-only changed the behavior there :)
-
-> > > However, this is tangential to your patch and
-> > > has apparently been around since 2009 (in particular, from 56cac48c35
-> > > ("ie_match_stat(): do not ignore skip-worktree bit with
-> > > CE_MATCH_IGNORE_VALID", 2009-12-14)).
-
-Note that the `CE_MATCH_IGNORE_SKIP_WORKTREE` added in this patch does
-control if refresh_cache_ent() will refresh skip-worktree entries, but
-refresh_index() allways calls this function *without* this flag.
+Thanks for re-rolling.
