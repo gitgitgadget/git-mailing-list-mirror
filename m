@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AFDE0C433ED
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 07:21:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 372E6C43461
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 07:21:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6B249613DB
+	by mail.kernel.org (Postfix) with ESMTP id EF8E5613DB
 	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 07:21:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241063AbhDWHWB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Apr 2021 03:22:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60846 "EHLO
+        id S241081AbhDWHWC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Apr 2021 03:22:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60848 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240981AbhDWHWA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Apr 2021 03:22:00 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8A0AC061574
-        for <git@vger.kernel.org>; Fri, 23 Apr 2021 00:21:24 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id sd23so63799244ejb.12
-        for <git@vger.kernel.org>; Fri, 23 Apr 2021 00:21:24 -0700 (PDT)
+        with ESMTP id S241042AbhDWHWB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Apr 2021 03:22:01 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93068C061574
+        for <git@vger.kernel.org>; Fri, 23 Apr 2021 00:21:25 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id l4so72407480ejc.10
+        for <git@vger.kernel.org>; Fri, 23 Apr 2021 00:21:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=xEXil81XGsIn7ez73csuPkHBu+5/DvCKlakTqsUpZTQ=;
-        b=pm4NHmJzNq9bMcv4V1/0jyf55iqaoDvn+dadIy+5ToYCSRWhwjujIBN54lI0vs6GcU
-         I8V02u3TaJjQzi7ow58wyqaikHiSbZJG+X5B4vbdWckx6DWqMCcF2hIDlhM0m5dfu0iz
-         4nituUE+ZrTxVYnuU2luRq729LEJxjTooD5LbAC2KtSD5lpHNoS74xPjQh0eCmcEf6rk
-         bsfWal+RfjA0LBeI+Ste/ellHHrHQDUaun1HYYNfJp4NPx1PwJak0cfoKN9vYm4zsKKm
-         FD/9Q3P7uUr9TNq4yxgYkiCH6mdtckHzSDHN/lcTJuP5nfkOA6jCs5gp0gM5NhtoXYYv
-         BHJA==
+        bh=HWPFD3o28WzQ3Wbp4zpIg+jBG+f0FsnCaqvh4pw8C74=;
+        b=ClRedicbXNPt5Wola1vijO+R+jCrxwAHJDWjT4c+g5reLV7vWoJWOuCywXWrSUVMep
+         81QwphYlUAdF1+n1Mt1O+Cnr5/Z26MFJvN3h7qMyv9mc0BQqEkrozXoUTJIsY+qr95LC
+         oneKOk5GT8CsKB4bUwlfjYC7UkiPbAQdxdYQZqgX5cQCwf2rzfAGZ8N9Vl3Tr6SjibBC
+         gEuf/dQmdrNgCpt3uRpLyShKYWZSSF8vibzKZuRYg08P9excjxAkiVo+EaIC5AP3GfPI
+         2V0qGZ57b+jNkfjlxQtP8gPjuKzKmENKqi0sCNDHY/J4BjmoBgNiOK8vaU5XXK3p/uR7
+         m8Rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=xEXil81XGsIn7ez73csuPkHBu+5/DvCKlakTqsUpZTQ=;
-        b=JDchjIg63mg+wyYkKAmXqkFVJwyMKscs7aq1yXsXjM0fV0VyQpyjk8KIcjn4mRKjNV
-         e2bfQtetAHRcUcYHDesdcXjhFT/BRdQXb0oKf0U2pBhdgTLN/2BvsPplVBdG6llsBiAd
-         +zQ56Jo6fQLmDEuaT4MVC6V48rAe+7r1j7XXQwdIAwY1D1BSP4dIhGp62YIiF0Yn6BZM
-         xSLmescjHBE0ByYhvd2yzC+B2O7AklFvty3XHAEluwUhVrT871JHeTZ4nhZcGXbX928I
-         aiFSgBVAmJ974IztXdC72WFeaALtJj3hcIOrjgKaEH5Lo16dpBY2ogUyQKgab3lWyDEr
-         54lw==
-X-Gm-Message-State: AOAM532teBnrtOPEw0JWs+64frNbDRUZI4TLpCyUYu+YqOVpB7YzCh3z
-        WG4cymdmiEaf600+RS78N9tk67kgzKE=
-X-Google-Smtp-Source: ABdhPJyx3KBepqVfSPOrMvO90bAqSLoYoyJh4Bfsk3VLb7yuF09wEbxJfQS1QpDBcP4IMvYMtF4HKw==
-X-Received: by 2002:a17:906:1c17:: with SMTP id k23mr2783677ejg.266.1619162483179;
-        Fri, 23 Apr 2021 00:21:23 -0700 (PDT)
+        bh=HWPFD3o28WzQ3Wbp4zpIg+jBG+f0FsnCaqvh4pw8C74=;
+        b=Lfb2bxtP35Hh1YY8YgTG3/sUYvfpVYuDeWH2lioRu2i1GNmCCbVIYu9x16quggzh0I
+         Sj9VuOFS9f1C6yXq5UZyJYCip2nIKRv2v+7NsYWyizi3u7AsPJSiuswba+oyyMdUEli+
+         dI92/D4bx6nQHEy4AFwUEGQQBsLOGxJtr21rq6oCkzjJFwNfvOAZMIecKOulKlTYlJ4B
+         8KbH7VMBt9a5vJ0NgGgFezyh6rOEodZ+Q8NORkFIW2lBBEVPppoYdD9CWiwx8vYhF7bT
+         +FCz6FM38w1M5g8/urMP1feNgE7EtZN8TgOOxFDg0ljzOAw/ABuQy+bOS9e08hCe7Tr5
+         Qd9Q==
+X-Gm-Message-State: AOAM531E8Xsv80F7briVDqg2gv1GFtOgf6GObvGA+WR17Voyu6sVhpAN
+        E8MLiWbZayGEiDGnalc+Pzf1mMKrgg3YNg==
+X-Google-Smtp-Source: ABdhPJwx87eJ5f6cHeGVIzW7MHsecVKm53+/gpgKDJlg1fuWKPV8VMpAzPmFjRNQ3Ujkz01tGPxV6Q==
+X-Received: by 2002:a17:907:9852:: with SMTP id jj18mr2672863ejc.382.1619162484071;
+        Fri, 23 Apr 2021 00:21:24 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id e5sm3328892ejq.85.2021.04.23.00.21.22
+        by smtp.gmail.com with ESMTPSA id e5sm3328892ejq.85.2021.04.23.00.21.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Apr 2021 00:21:22 -0700 (PDT)
+        Fri, 23 Apr 2021 00:21:23 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -69,9 +69,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Andreas Schwab <schwab@linux-m68k.org>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 01/11] test-lib: bring $remove_trash out of retirement
-Date:   Fri, 23 Apr 2021 09:21:05 +0200
-Message-Id: <patch-01.11-75667f98f3a-20210423T072006Z-avarab@gmail.com>
+Subject: [PATCH v5 02/11] test-lib tests: remove dead GIT_TEST_FRAMEWORK_SELFTEST variable
+Date:   Fri, 23 Apr 2021 09:21:06 +0200
+Message-Id: <patch-02.11-55c9413f9cd-20210423T072006Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.1.737.g98b508eba36
 In-Reply-To: <cover-00.11-00000000000-20210423T072006Z-avarab@gmail.com>
 References: <cover-00.11-0000000000-20210421T101156Z-avarab@gmail.com> <cover-00.11-00000000000-20210423T072006Z-avarab@gmail.com>
@@ -82,104 +82,34 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There's no point in creating a repository or directory only to decide
-right afterwards that we're skipping all the tests. We can save
-ourselves the redundant "git init" or "mkdir" and "rm -rf" in this
-case.
+Stop setting the GIT_TEST_FRAMEWORK_SELFTEST variable. This was originally needed
+back in 4231d1ba99 (t0000: do not get self-test disrupted by
+environment warnings, 2018-09-20).
 
-We carry around the "$remove_trash" variable because if the directory
-is unexpectedly gone at test_done time we'll hit the error about it
-being unexpectedly gone added in df4c0d1a792 (test-lib: abort when
-can't remove trash directory, 2017-04-20).
-
-So let's partially revert 06478dab4c (test-lib: retire $remove_trash
-variable, 2017-04-23) and move the decision about whether to skip all
-tests earlier.
-
-Let's also fix a bug that was with us since abc5d372ec (Enable
-parallel tests, 2008-08-08): we would leak $remove_trash from the
-environment. We don't want this to error out, so let's reset it to the
-empty string first:
-
-     remove_trash=t GIT_SKIP_TESTS=t0001 ./t0001-init.sh
-
-I tested this with --debug, see 4d0912a206 (test-lib.sh: do not barf
-under --debug at the end of the test, 2017-04-24) for a bug we don't
-want to re-introduce.
-
-While I'm at it let's move the HOME assignment to just before
-test_create_repo, it could be lower, but it seems better to set it
-before calling anything in test-lib-functions.sh
+It hasn't been needed since I deleted the relevant code in test-lib.sh
+in c0eedbc009 (test-lib: remove check_var_migration, 2021-02-09), I
+just didn't notice that it was set here.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/test-lib.sh | 32 ++++++++++++++++++--------------
- 1 file changed, 18 insertions(+), 14 deletions(-)
+ t/t0000-basic.sh | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 3dec266221c..105c424bf56 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1169,7 +1169,7 @@ test_done () {
- 			esac
- 		fi
+diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+index 705d62cc27a..2c6e34b9478 100755
+--- a/t/t0000-basic.sh
++++ b/t/t0000-basic.sh
+@@ -84,10 +84,6 @@ _run_sub_test_lib_test_common () {
+ 		passing metrics
+ 		'
  
--		if test -z "$debug"
-+		if test -z "$debug" && test -n "$remove_trash"
- 		then
- 			test -d "$TRASH_DIRECTORY" ||
- 			error "Tests passed but trash directory already removed before test cleanup; aborting"
-@@ -1334,6 +1334,22 @@ then
- 	exit 1
- fi
- 
-+# Are we running this test at all?
-+remove_trash=
-+this_test=${0##*/}
-+this_test=${this_test%%-*}
-+if match_pattern_list "$this_test" $GIT_SKIP_TESTS
-+then
-+	say_color info >&3 "skipping test $this_test altogether"
-+	skip_all="skip all tests in $this_test"
-+	test_done
-+fi
-+
-+# Last-minute variable setup
-+HOME="$TRASH_DIRECTORY"
-+GNUPGHOME="$HOME/gnupg-home-not-used"
-+export HOME GNUPGHOME
-+
- # Test repository
- rm -fr "$TRASH_DIRECTORY" || {
- 	GIT_EXIT_OK=t
-@@ -1341,10 +1357,7 @@ rm -fr "$TRASH_DIRECTORY" || {
- 	exit 1
- }
- 
--HOME="$TRASH_DIRECTORY"
--GNUPGHOME="$HOME/gnupg-home-not-used"
--export HOME GNUPGHOME
+-		# Tell the framework that we are self-testing to make sure
+-		# it yields a stable result.
+-		GIT_TEST_FRAMEWORK_SELFTEST=t &&
 -
-+remove_trash=t
- if test -z "$TEST_NO_CREATE_REPO"
- then
- 	test_create_repo "$TRASH_DIRECTORY"
-@@ -1356,15 +1369,6 @@ fi
- # in subprocesses like git equals our $PWD (for pathname comparisons).
- cd -P "$TRASH_DIRECTORY" || exit 1
- 
--this_test=${0##*/}
--this_test=${this_test%%-*}
--if match_pattern_list "$this_test" $GIT_SKIP_TESTS
--then
--	say_color info >&3 "skipping test $this_test altogether"
--	skip_all="skip all tests in $this_test"
--	test_done
--fi
--
- if test -n "$write_junit_xml"
- then
- 	junit_xml_dir="$TEST_OUTPUT_DIRECTORY/out"
+ 		# Point to the t/test-lib.sh, which isn't in ../ as usual
+ 		. "\$TEST_DIRECTORY"/test-lib.sh
+ 		EOF
 -- 
 2.31.1.737.g98b508eba36
 
