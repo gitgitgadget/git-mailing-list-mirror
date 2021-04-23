@@ -6,46 +6,30 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B85A3C433B4
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 23:50:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AA19C433ED
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 23:50:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 90A13613B0
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 23:50:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 579B8611BF
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 23:50:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229718AbhDWXvI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Apr 2021 19:51:08 -0400
-Received: from mail-ed1-f43.google.com ([209.85.208.43]:38860 "EHLO
-        mail-ed1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235898AbhDWXvB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Apr 2021 19:51:01 -0400
-Received: by mail-ed1-f43.google.com with SMTP id y3so22902773eds.5
-        for <git@vger.kernel.org>; Fri, 23 Apr 2021 16:50:22 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ODRbios5o1B+fxo5+z/kWM/ISCpuE/BTJOioZ9MvIIk=;
-        b=QRoJGxIIMZbWaQ2M2ryZEddIWQnW9Yuu15GP/NtPSW9EddK0uJVLe8zBcpHgD1Dqnc
-         IGCADmlBtvNZPYNOR0K24y/Dt7Z+0FkUCAZiRi0HBGvi/V9HxBWuRZalsVfc8vXu3XBE
-         MlhJIwLcJULDz9ruSGPs3ZNqEdKCfa/Dz1tREerhF5Br+riECcDiQtP1CrBBg+9xWSo9
-         l5tw5ZmhkNTbnIB1IoOf5fYEwt+Pg48fYQ6kJRJ2AGbCJoZ5AsanFhg81NoKS/xlbtK4
-         4CnTmE8BSOXBgkI61B4D1Yfm4C2O8M3sM0dCFZvYHPesvxce5jNJfBhXTftfOLalMmf2
-         AMrw==
-X-Gm-Message-State: AOAM5331vwWEOGOpWVhEM0I6mDERYDx+gMCCRyBghKqizPEipepbmRcN
-        Qk+/KK7Br9pA8y6LHJ2/RLEpls0GBipJuHrN1Uo=
-X-Google-Smtp-Source: ABdhPJyxfawXvGFaDVeFOZaaOhtyFKFcDoB4PPy76EZQ/qnAdkH1f0wDChgmZupZs43FmXb5RylhjzCN7svW/CGLE4U=
-X-Received: by 2002:aa7:c7cc:: with SMTP id o12mr7379636eds.291.1619221822073;
- Fri, 23 Apr 2021 16:50:22 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210423194230.1388945-1-lukeshu@lukeshu.com> <20210423194230.1388945-15-lukeshu@lukeshu.com>
- <CAPig+cRcBA1y0WY_k4fge1KiRcLrW7PMeOS=Ns8bMa4VMdyy2w@mail.gmail.com> <8735vgbmy6.wl-lukeshu@lukeshu.com>
-In-Reply-To: <8735vgbmy6.wl-lukeshu@lukeshu.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 23 Apr 2021 19:50:11 -0400
-Message-ID: <CAPig+cRutK=C6WcnFyh+AJO0G5iyAUV1Us4U_F8gtDZK1+s1cg@mail.gmail.com>
-Subject: Re: [PATCH 14/30] subtree: drop support for git < 1.7
-To:     Luke Shumaker <lukeshu@lukeshu.com>
-Cc:     Git List <git@vger.kernel.org>,
+        id S236923AbhDWXvV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Apr 2021 19:51:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52806 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232106AbhDWXvU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Apr 2021 19:51:20 -0400
+Received: from mav.lukeshu.com (mav.lukeshu.com [IPv6:2001:19f0:5c00:8069:5400:ff:fe26:6a86])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 062BEC061574
+        for <git@vger.kernel.org>; Fri, 23 Apr 2021 16:50:42 -0700 (PDT)
+Received: from lukeshu-dw-thinkpad (unknown [IPv6:2601:281:8200:26:4e34:88ff:fe48:5521])
+        by mav.lukeshu.com (Postfix) with ESMTPSA id 0FD1880590;
+        Fri, 23 Apr 2021 19:50:36 -0400 (EDT)
+Date:   Fri, 23 Apr 2021 17:50:36 -0600
+Message-ID: <87zgxoa7cj.wl-lukeshu@lukeshu.com>
+From:   Luke Shumaker <lukeshu@lukeshu.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Luke Shumaker <lukeshu@lukeshu.com>,
+        Git List <git@vger.kernel.org>,
         Avery Pennarun <apenwarr@gmail.com>,
         Charles Bailey <cbailey32@bloomberg.net>,
         Danny Lin <danny0838@gmail.com>,
@@ -55,70 +39,80 @@ Cc:     Git List <git@vger.kernel.org>,
         James Denholm <nod.helm@gmail.com>, Jeff King <peff@peff.net>,
         Jonathan Nieder <jrnieder@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Roger L Strain <roger.strain@swri.org>,
+        =?UTF-8?B?Tmd1?= =?UTF-8?B?eeG7hW4g?= =?ISO-8859-1?Q?Th=E1i_?=
+         =?UTF-8?B?Tmfhu41j?= Duy <pclouds@gmail.com>,
+        Roger L Strain <roger.strain@swri.org>,
         Techlive Zheng <techlivezheng@gmail.com>,
         Luke Shumaker <lukeshu@datawire.io>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH 18/30] subtree: use $* instead of $@ as appropriate
+In-Reply-To: <CAPig+cTb-h=Qb9asvh+MVH2s5uj7szP_QOPpcm1bqdE6DK9V7g@mail.gmail.com>
+References: <20210423194230.1388945-1-lukeshu@lukeshu.com>
+        <20210423194230.1388945-19-lukeshu@lukeshu.com>
+        <CAPig+cTb-h=Qb9asvh+MVH2s5uj7szP_QOPpcm1bqdE6DK9V7g@mail.gmail.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?ISO-8859-4?Q?Goj=F2?=) APEL-LB/10.8 EasyPG/1.0.0
+ Emacs/27.2 (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 23, 2021 at 7:28 PM Luke Shumaker <lukeshu@lukeshu.com> wrote:
-> On Fri, 23 Apr 2021 14:31:46 -0600, Eric Sunshine wrote:
-> > Is there a higher reason for this change aside from "let's do it
-> > because we can"? For instance, are subsequent changes going to take
-> > advantage of features only present in more recent Git versions which
-> > would be painful or impossible to support with the older Git?
-> >
-> > The downside of this change is that, while git-subtree may live in
-> > git.git, it's still just "contrib", so people might grab git-subtree
-> > from a modern git.git but then end up using it with an older Git
-> > installation. That's not to say that doing such a thing is guaranteed
-> > to work anyhow, but we don't need to make it harder on people if there
-> > isn't a good reason (hence my question about whether subsequent
-> > changes will actually take advantage of newer Git features).
->
-> With the goal of making the whole thing easier to hack on, this just
-> seemed like an easy (if small) piece of fat to trim.
->
-> I guess I should include here that my bias is: With the 'git' package
-> that Parabola inherits from Arch Linux, you install 'git', you get a
-> working 'git subtree'.  If you want 'git send-email' to work, you also
-> need to install several other Perl packages.  Like, it might live in
-> the "contrib" directory, but it's de-facto at least as much a "part
-> of" Git as send-email is.
->
-> So that's the mindset I started from.  It looks like the latest macOS
-> supports me on that, but other distros like Fedora don't (Fedora has a
-> separate 'git-subtree' package).  If I take a step back, I realize
-> that mindset is flawed, but that's where I started from.
->
-> I don't think any of the other work depends on this (I think the only
-> commit that will conflict if we drop it is the "rename a some
-> variables" commit in this patchset).  It's very possible that
-> something else I do relies on newer git features (I'm not testing
-> against older git), but that's not something I did intentionally.
->
-> I just figured this would be a welcome piece of cleanup.  If that's
-> not the case, I don't have a problem dropping it.
+On Fri, 23 Apr 2021 14:40:31 -0600,
+Eric Sunshine wrote:
+> 
+> On Fri, Apr 23, 2021 at 3:43 PM Luke Shumaker <lukeshu@lukeshu.com> wrote:
+> > $* is for when you want to smash things together, whitespace-separated;
+> > $@ is for when you want them to be separate strings.  There are a couple
+> > of places in subtree that erroneously use $@ when smashing args together
+> > in to an error message.
+> 
+> Can we be explicit and say "$@" in the commit message rather than bare
+> $@ since the unquoted form is not magical and acts exactly like $*.
+> 
+> Also: s/in to/into/
+> 
+> Nit: I have some trouble following what the commit message is actually
+> trying to say with "smash things" and "separate strings". It might be
+> simpler to say merely that use of "$@" in these particular instances
+> is overkill and possibly misleading to readers not familiar with the
+> finer details of $* vs. "$@".
+> 
+> The patch itself makes sense.
 
-As a person who does not and has never used git-subtree, I don't have
-a strong opinion, and any git-subtree opinion I might have wouldn't
-carry any weight. I do have a bit of reflexive negative reaction to
-such removals in general if there's no clear and strong benefit,
-perhaps because my daily-use computers are old (perhaps ancient, as in
-10-25 years old), so I am regularly stung by support being dropped by
-packages I use. That's why I was asking if later patches would take
-advantage of some newer Git feature.
+How's this:
 
-Anyhow, I wasn't specifically asking for the patch to be dropped. As a
-reviewer I rather wanted to better understand the reason for the
-change beyond the somewhat hand-wavy "git-subtree now lives in-tree".
-If you happen to re-roll, perhaps you can expand the commit message a
-bit with something more concrete (for instance, how some packagers
-include git-subtree by default) to better sell the patch to reviewers
-who actually have investment in git-subtree (of which I am not one).
-Considering how old Git <1.7 is, it's quite likely that no current
-git-subtree users/reviewers would care about dropping support for such
-old versions.
+---
+subtree: use "$*" instead of "$@" as appropriate
+
+"$*" is for when you want to concatenate the args together,
+whitespace-separated; and "$@" is for when you want them to be separate
+strings.
+
+There are several places in subtree that erroneously use $@ when
+concatenating args together into an error message.
+
+For instance, if the args are argv[1]="dead" and argv[2]="beef", then
+the line
+
+    die "You must provide exactly one revision.  Got: '$@'"
+
+surely intends to call 'die' with the argument
+
+    argv[1]="You must provide exactly one revision.  Got: 'dead beef'"
+
+however, because the line used $@ instead of $*, it will actually call
+'die' with the arguments
+
+    argv[1]="You must provide exactly one revision.  Got: 'dead"
+    argv[2]="beef'"
+
+This isn't a big deal, because 'die' concatenates its arguments together
+anyway (using "$*").  But that doesn't change the fact that it was a
+mistake to use $@ instead of $*, even though in the end $@ still ended
+up doing the right thing.
+---
+
+-- 
+Happy hacking,
+~ Luke Shumaker
