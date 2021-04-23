@@ -7,21 +7,21 @@ X-Spam-Status: No, score=-16.7 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 114B1C43461
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 89E51C43462
 	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 19:43:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E1A416128B
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 19:43:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 67DD76113B
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 19:43:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244017AbhDWTn7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Apr 2021 15:43:59 -0400
-Received: from mav.lukeshu.com ([104.207.138.63]:35522 "EHLO mav.lukeshu.com"
+        id S244018AbhDWToB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Apr 2021 15:44:01 -0400
+Received: from mav.lukeshu.com ([104.207.138.63]:35450 "EHLO mav.lukeshu.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S243905AbhDWTno (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Apr 2021 15:43:44 -0400
+        id S243934AbhDWTnp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Apr 2021 15:43:45 -0400
 Received: from lukeshu-dw-thinkpad (unknown [IPv6:2601:281:8200:26:4e34:88ff:fe48:5521])
-        by mav.lukeshu.com (Postfix) with ESMTPSA id C06EB80594;
-        Fri, 23 Apr 2021 15:43:06 -0400 (EDT)
+        by mav.lukeshu.com (Postfix) with ESMTPSA id 9948A80596;
+        Fri, 23 Apr 2021 15:43:07 -0400 (EDT)
 From:   Luke Shumaker <lukeshu@lukeshu.com>
 To:     git@vger.kernel.org
 Cc:     Avery Pennarun <apenwarr@gmail.com>,
@@ -37,9 +37,9 @@ Cc:     Avery Pennarun <apenwarr@gmail.com>,
         <pclouds@gmail.com>, Roger L Strain <roger.strain@swri.org>,
         Techlive Zheng <techlivezheng@gmail.com>,
         Luke Shumaker <lukeshu@datawire.io>
-Subject: [PATCH 29/30] subtree: push: allow specifying a local rev other than HEAD
-Date:   Fri, 23 Apr 2021 13:42:29 -0600
-Message-Id: <20210423194230.1388945-30-lukeshu@lukeshu.com>
+Subject: [PATCH 30/30] subtree: be stricter about validating flags
+Date:   Fri, 23 Apr 2021 13:42:30 -0600
+Message-Id: <20210423194230.1388945-31-lukeshu@lukeshu.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210423194230.1388945-1-lukeshu@lukeshu.com>
 References: <20210423194230.1388945-1-lukeshu@lukeshu.com>
@@ -51,110 +51,261 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Luke Shumaker <lukeshu@datawire.io>
 
-'git subtree split' lets you specify a rev other than HEAD.  'git push'
-lets you specify a mapping between a local thing and a remot ref.  So
-smash those together, and have 'git subtree push' let you specify which
-local thing to run split on and push the result of that split to the
-remote ref.
+Don't silently ignore a flag that's invalid for a given subcommand.  The
+user expected it to do something; we should tell the user that they are
+mistaken, instead of surprising the user.
+
+It could be argued that this change might break existing users.  I'd
+argue that those existing users are already broken, and they just don't
+know it.  Let them know that they're broken.
 
 Signed-off-by: Luke Shumaker <lukeshu@datawire.io>
 ---
- contrib/subtree/git-subtree.sh     | 24 +++++++++++++++++-------
- contrib/subtree/git-subtree.txt    | 14 ++++++++------
- contrib/subtree/t/t7900-subtree.sh | 22 ++++++++++++++++++++++
- 3 files changed, 47 insertions(+), 13 deletions(-)
+ contrib/subtree/git-subtree.sh     |  89 ++++++++++++++++-------
+ contrib/subtree/t/t7900-subtree.sh | 111 +++++++++++++++++++++++++++++
+ 2 files changed, 175 insertions(+), 25 deletions(-)
 
 diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index 2846bd21b4..7361d8de3f 100755
+index 7361d8de3f..5073d82b2e 100755
 --- a/contrib/subtree/git-subtree.sh
 +++ b/contrib/subtree/git-subtree.sh
-@@ -11,7 +11,7 @@ git subtree add   --prefix=<prefix> <repository> <ref>
- git subtree merge --prefix=<prefix> <commit>
- git subtree split --prefix=<prefix> [<commit>]
- git subtree pull  --prefix=<prefix> <repository> <ref>
--git subtree push  --prefix=<prefix> <repository> <ref>
-+git subtree push  --prefix=<prefix> <repository> <refspec>
- --
- h,help        show the help
- q             quiet
-@@ -921,20 +921,30 @@ cmd_pull () {
- 	cmd_merge FETCH_HEAD
- }
+@@ -30,17 +30,6 @@ m,message=    use the given message as the commit message for the merge commit
  
--# Usage: cmd_push REPOSITORY REMOTEREF
-+# Usage: cmd_push REPOSITORY [+][LOCALREV:]REMOTEREF
- cmd_push () {
- 	if test $# -ne 2
+ PATH=$(git --exec-path):$PATH
+ 
+-arg_debug=
+-arg_command=
+-arg_prefix=
+-arg_split_branch=
+-arg_split_onto=
+-arg_split_rejoin=
+-arg_split_ignore_joins=
+-arg_split_annotate=
+-arg_addmerge_squash=
+-arg_addmerge_message=
+-
+ indent=0
+ 
+ # Usage: debug [MSG...]
+@@ -77,10 +66,61 @@ main () {
  	then
--		die "You must provide <repository> <ref>"
-+		die "You must provide <repository> <refspec>"
+ 		set -- -h
  	fi
--	ensure_valid_ref_format "$2"
- 	if test -e "$dir"
- 	then
- 		repository=$1
--		refspec=$2
-+		refspec=${2#+}
-+		remoteref=${refspec#*:}
-+		if test "$remoteref" = "$refspec"
-+		then
-+			localrevname_presplit=HEAD
-+		else
-+			localrevname_presplit=${refspec%%:*}
-+		fi
-+		ensure_valid_ref_format "$remoteref"
-+		localrev_presplit=$(git rev-parse -q --verify "$localrevname_presplit^{commit}") ||
-+			die "'$localrevname_presplit' does not refer to a commit"
+-	eval "$(echo "$OPTS_SPEC" | git rev-parse --parseopt -- "$@" || echo exit $?)"
++	set_args="$(echo "$OPTS_SPEC" | git rev-parse --parseopt -- "$@" || echo exit $?)"
++	eval "$set_args"
+ 	. git-sh-setup
+ 	require_work_tree
+ 
++	# First figure out the command and whether we use --rejoin, so
++	# that we can provide more helpful validation when we do the
++	# "real" flag parsing.
++	arg_split_rejoin=
++	allow_split=
++	allow_addmerge=
++	while test $# -gt 0
++	do
++		opt="$1"
++		shift
++		case "$opt" in
++			--annotate|-b|-P|-m|--onto)
++				shift
++				;;
++			--rejoin)
++				arg_split_rejoin=1
++				;;
++			--no-rejoin)
++				arg_split_rejoin=
++				;;
++			--)
++				break
++				;;
++		esac
++	done
++	arg_command=$1
++	case "$arg_command" in
++	add|merge|pull)
++		allow_addmerge=1
++		;;
++	split|push)
++		allow_split=1
++		allow_addmerge=$arg_split_rejoin
++		;;
++	*)
++		die "Unknown command '$arg_command'"
++		;;
++	esac
++	# Reset the arguments array for "real" flag parsing.
++	eval "$set_args"
 +
- 		echo "git push using: " "$repository" "$refspec"
--		localrev=$(cmd_split) || die
--		git push "$repository" "$localrev":"refs/heads/$refspec"
-+		localrev=$(cmd_split "$localrev_presplit") || die
-+		git push "$repository" "$localrev":"refs/heads/$remoteref"
- 	else
- 		die "'$dir' must already exist. Try 'git subtree add'."
- 	fi
-diff --git a/contrib/subtree/git-subtree.txt b/contrib/subtree/git-subtree.txt
-index a597d61d0f..c049827cb5 100644
---- a/contrib/subtree/git-subtree.txt
-+++ b/contrib/subtree/git-subtree.txt
-@@ -16,7 +16,7 @@ SYNOPSIS
++	# Begin "real" flag parsing.
++	arg_debug=
++	arg_prefix=
++	arg_split_branch=
++	arg_split_onto=
++	arg_split_ignore_joins=
++	arg_split_annotate=
++	arg_addmerge_squash=
++	arg_addmerge_message=
+ 	while test $# -gt 0
+ 	do
+ 		opt="$1"
+@@ -94,13 +134,16 @@ main () {
+ 			arg_debug=1
+ 			;;
+ 		--annotate)
++			test -n "$allow_split" || die "The '$opt' flag does not make sense with 'git subtree $arg_command'."
+ 			arg_split_annotate="$1"
+ 			shift
+ 			;;
+ 		--no-annotate)
++			test -n "$allow_split" || die "The '$opt' flag does not make sense with 'git subtree $arg_command'."
+ 			arg_split_annotate=
+ 			;;
+ 		-b)
++			test -n "$allow_split" || die "The '$opt' flag does not make sense with 'git subtree $arg_command'."
+ 			arg_split_branch="$1"
+ 			shift
+ 			;;
+@@ -109,6 +152,7 @@ main () {
+ 			shift
+ 			;;
+ 		-m)
++			test -n "$allow_addmerge" || die "The '$opt' flag does not make sense with 'git subtree $arg_command'."
+ 			arg_addmerge_message="$1"
+ 			shift
+ 			;;
+@@ -116,28 +160,34 @@ main () {
+ 			arg_prefix=
+ 			;;
+ 		--onto)
++			test -n "$allow_split" || die "The '$opt' flag does not make sense with 'git subtree $arg_command'."
+ 			arg_split_onto="$1"
+ 			shift
+ 			;;
+ 		--no-onto)
++			test -n "$allow_split" || die "The '$opt' flag does not make sense with 'git subtree $arg_command'."
+ 			arg_split_onto=
+ 			;;
+ 		--rejoin)
+-			arg_split_rejoin=1
++			test -n "$allow_split" || die "The '$opt' flag does not make sense with 'git subtree $arg_command'."
+ 			;;
+ 		--no-rejoin)
+-			arg_split_rejoin=
++			test -n "$allow_split" || die "The '$opt' flag does not make sense with 'git subtree $arg_command'."
+ 			;;
+ 		--ignore-joins)
++			test -n "$allow_split" || die "The '$opt' flag does not make sense with 'git subtree $arg_command'."
+ 			arg_split_ignore_joins=1
+ 			;;
+ 		--no-ignore-joins)
++			test -n "$allow_split" || die "The '$opt' flag does not make sense with 'git subtree $arg_command'."
+ 			arg_split_ignore_joins=
+ 			;;
+ 		--squash)
++			test -n "$allow_addmerge" || die "The '$opt' flag does not make sense with 'git subtree $arg_command'."
+ 			arg_addmerge_squash=1
+ 			;;
+ 		--no-squash)
++			test -n "$allow_addmerge" || die "The '$opt' flag does not make sense with 'git subtree $arg_command'."
+ 			arg_addmerge_squash=
+ 			;;
+ 		--)
+@@ -148,19 +198,8 @@ main () {
+ 			;;
+ 		esac
+ 	done
+-
+-	arg_command="$1"
+ 	shift
  
- [verse]
- 'git subtree' [<options>] -P <prefix> pull <repository> <remote-ref>
--'git subtree' [<options>] -P <prefix> push <repository> <remote-ref>
-+'git subtree' [<options>] -P <prefix> push <repository> <refspec>
- 
- DESCRIPTION
- -----------
-@@ -115,11 +115,13 @@ pull <repository> <remote-ref>::
- 	it fetches the given ref from the specified remote
- 	repository.
- 
--push <repository> <remote-ref>::
--	Does a 'split' using the <prefix> subtree of HEAD and then
--	does a 'git push' to push the result to the <repository> and
--	<remote-ref>.  This can be used to push your subtree to
--	different branches of the remote repository.
-+push <repository> [+][<local-commit>:]<remote-ref>::
-+	Does a 'split' using the <prefix> subtree of <local-commit>
-+	and then does a 'git push' to push the result to the
-+	<repository> and <remote-ref>.  This can be used to push your
-+	subtree to different branches of the remote repository.  Just
-+	as with 'split', if no <local-commit> is given, then HEAD is
-+	used.  The optional leading '+' is ignored.
- 
- OPTIONS FOR ALL COMMANDS
- ------------------------
+-	case "$arg_command" in
+-	add|merge|pull|split|push)
+-		:
+-		;;
+-	*)
+-		die "Unknown command '$arg_command'"
+-		;;
+-	esac
+-
+ 	if test -z "$arg_prefix"
+ 	then
+ 		die "You must provide the --prefix option."
 diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
-index e89e46fe65..fb85eed5fc 100755
+index fb85eed5fc..f83c491a61 100755
 --- a/contrib/subtree/t/t7900-subtree.sh
 +++ b/contrib/subtree/t/t7900-subtree.sh
-@@ -799,6 +799,28 @@ test_expect_success 'push "sub dir"/ with --branch for an incompatible branch' '
+@@ -33,6 +33,12 @@ test_create_commit () (
+ 	git commit -m "$commit" || error "Could not commit"
+ )
+ 
++test_wrong_flag() {
++	test_must_fail "$@" >out 2>err &&
++	test_must_be_empty out &&
++	grep "flag does not make sense with" err
++}
++
+ last_commit_subject () {
+ 	git log --pretty=format:%s -1
+ }
+@@ -72,6 +78,22 @@ test_expect_success 'no pull from non-existent subtree' '
  	)
  '
  
-+test_expect_success 'push "sub dir"/ with a local rev' '
++test_expect_success 'add rejects flags for split' '
++	subtree_test_create_repo "$test_count" &&
++	subtree_test_create_repo "$test_count/sub proj" &&
++	test_create_commit "$test_count" main1 &&
++	test_create_commit "$test_count/sub proj" sub1 &&
++	(
++		cd "$test_count" &&
++		git fetch ./"sub proj" HEAD &&
++		test_wrong_flag git subtree add --prefix="sub dir" --annotate=foo FETCH_HEAD &&
++		test_wrong_flag git subtree add --prefix="sub dir" --branch=foo FETCH_HEAD &&
++		test_wrong_flag git subtree add --prefix="sub dir" --ignore-joins FETCH_HEAD &&
++		test_wrong_flag git subtree add --prefix="sub dir" --onto=foo FETCH_HEAD &&
++		test_wrong_flag git subtree add --prefix="sub dir" --rejoin FETCH_HEAD
++	)
++'
++
+ test_expect_success 'add subproj as subtree into sub dir/ with --prefix' '
+ 	subtree_test_create_repo "$test_count" &&
+ 	subtree_test_create_repo "$test_count/sub proj" &&
+@@ -128,6 +150,28 @@ test_expect_success 'add subproj as subtree into sub dir/ with --squash and --pr
+ # Tests for 'git subtree merge'
+ #
+ 
++test_expect_success 'merge rejects flags for split' '
++	subtree_test_create_repo "$test_count" &&
++	subtree_test_create_repo "$test_count/sub proj" &&
++	test_create_commit "$test_count" main1 &&
++	test_create_commit "$test_count/sub proj" sub1 &&
++	(
++		cd "$test_count" &&
++		git fetch ./"sub proj" HEAD &&
++		git subtree add --prefix="sub dir" FETCH_HEAD
++	) &&
++	test_create_commit "$test_count/sub proj" sub2 &&
++	(
++		cd "$test_count" &&
++		git fetch ./"sub proj" HEAD &&
++		test_wrong_flag git subtree merge --prefix="sub dir" --annotate=foo FETCH_HEAD &&
++		test_wrong_flag git subtree merge --prefix="sub dir" --branch=foo FETCH_HEAD &&
++		test_wrong_flag git subtree merge --prefix="sub dir" --ignore-joins FETCH_HEAD &&
++		test_wrong_flag git subtree merge --prefix="sub dir" --onto=foo FETCH_HEAD &&
++		test_wrong_flag git subtree merge --prefix="sub dir" --rejoin FETCH_HEAD
++	)
++'
++
+ test_expect_success 'merge new subproj history into sub dir/ with --prefix' '
+ 	subtree_test_create_repo "$test_count" &&
+ 	subtree_test_create_repo "$test_count/sub proj" &&
+@@ -262,6 +306,30 @@ test_expect_success 'split requires path given by option --prefix must exist' '
+ 	)
+ '
+ 
++test_expect_success 'split rejects flags for add' '
 +	subtree_test_create_repo "$test_count" &&
 +	subtree_test_create_repo "$test_count/sub proj" &&
 +	test_create_commit "$test_count" main1 &&
@@ -165,20 +316,79 @@ index e89e46fe65..fb85eed5fc 100755
 +		git subtree add --prefix="sub dir" FETCH_HEAD
 +	) &&
 +	test_create_commit "$test_count" "sub dir"/main-sub1 &&
++	test_create_commit "$test_count" main2 &&
++	test_create_commit "$test_count/sub proj" sub2 &&
 +	test_create_commit "$test_count" "sub dir"/main-sub2 &&
 +	(
 +		cd "$test_count" &&
-+		bad_tree=$(git rev-parse --verify HEAD:"sub dir") &&
-+		good_tree=$(git rev-parse --verify HEAD^:"sub dir") &&
-+		git subtree push --prefix="sub dir" --annotate="*" ./"sub proj" HEAD^:from-mainline &&
-+		split_tree=$(git -C "sub proj" rev-parse --verify refs/heads/from-mainline:) &&
-+		test "$split_tree" = "$good_tree"
++		git fetch ./"sub proj" HEAD &&
++		git subtree merge --prefix="sub dir" FETCH_HEAD &&
++		split_hash=$(git subtree split --prefix="sub dir" --annotate="*") &&
++		test_wrong_flag git subtree split --prefix="sub dir" --squash &&
++		test_wrong_flag git subtree split --prefix="sub dir" --message=foo
++	)
++'
++
+ test_expect_success 'split sub dir/ with --rejoin' '
+ 	subtree_test_create_repo "$test_count" &&
+ 	subtree_test_create_repo "$test_count/sub proj" &&
+@@ -521,6 +589,26 @@ test_expect_success 'pull basic operation' '
+ 	)
+ '
+ 
++test_expect_success 'pull rejects flags for split' '
++	subtree_test_create_repo "$test_count" &&
++	subtree_test_create_repo "$test_count/sub proj" &&
++	test_create_commit "$test_count" main1 &&
++	test_create_commit "$test_count/sub proj" sub1 &&
++	(
++		cd "$test_count" &&
++		git fetch ./"sub proj" HEAD &&
++		git subtree add --prefix="sub dir" FETCH_HEAD
++	) &&
++	test_create_commit "$test_count/sub proj" sub2 &&
++	(
++		test_must_fail git subtree pull --prefix="sub dir" --annotate=foo ./"sub proj" HEAD &&
++		test_must_fail git subtree pull --prefix="sub dir" --branch=foo ./"sub proj" HEAD &&
++		test_must_fail git subtree pull --prefix="sub dir" --ignore-joins ./"sub proj" HEAD &&
++		test_must_fail git subtree pull --prefix="sub dir" --onto=foo ./"sub proj" HEAD &&
++		test_must_fail git subtree pull --prefix="sub dir" --rejoin ./"sub proj" HEAD
 +	)
 +'
 +
  #
- # Validity checking
+ # Tests for 'git subtree push'
  #
+@@ -563,6 +651,29 @@ test_expect_success 'push requires path given by option --prefix must exist' '
+ 	)
+ '
+ 
++test_expect_success 'push rejects flags for add' '
++	subtree_test_create_repo "$test_count" &&
++	subtree_test_create_repo "$test_count/sub proj" &&
++	test_create_commit "$test_count" main1 &&
++	test_create_commit "$test_count/sub proj" sub1 &&
++	(
++		cd "$test_count" &&
++		git fetch ./"sub proj" HEAD &&
++		git subtree add --prefix="sub dir" FETCH_HEAD
++	) &&
++	test_create_commit "$test_count" "sub dir"/main-sub1 &&
++	test_create_commit "$test_count" main2 &&
++	test_create_commit "$test_count/sub proj" sub2 &&
++	test_create_commit "$test_count" "sub dir"/main-sub2 &&
++	(
++		cd "$test_count" &&
++		git fetch ./"sub proj" HEAD &&
++		git subtree merge --prefix="sub dir" FETCH_HEAD &&
++		test_wrong_flag git subtree split --prefix="sub dir" --squash ./"sub proj" from-mainline &&
++		test_wrong_flag git subtree split --prefix="sub dir" --message=foo ./"sub proj" from-mainline
++	)
++'
++
+ test_expect_success 'push basic operation' '
+ 	subtree_test_create_repo "$test_count" &&
+ 	subtree_test_create_repo "$test_count/sub proj" &&
 -- 
 2.31.1
 
