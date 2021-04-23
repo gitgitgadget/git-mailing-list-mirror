@@ -5,70 +5,69 @@ X-Spam-Level:
 X-Spam-Status: No, score=-14.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DF1E5C43460
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 09:46:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3975DC433ED
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 09:55:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A8D786128A
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 09:46:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 06CFE6144D
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 09:54:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241903AbhDWJrE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Apr 2021 05:47:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36236 "EHLO
+        id S230420AbhDWJzf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Apr 2021 05:55:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241846AbhDWJrD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Apr 2021 05:47:03 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEA2BC061574
-        for <git@vger.kernel.org>; Fri, 23 Apr 2021 02:46:26 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id x12so52255849ejc.1
-        for <git@vger.kernel.org>; Fri, 23 Apr 2021 02:46:26 -0700 (PDT)
+        with ESMTP id S230036AbhDWJze (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Apr 2021 05:55:34 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B518C061574
+        for <git@vger.kernel.org>; Fri, 23 Apr 2021 02:54:58 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id r12so73045170ejr.5
+        for <git@vger.kernel.org>; Fri, 23 Apr 2021 02:54:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:references:from:message-id:date:user-agent:mime-version
          :in-reply-to:content-language:content-transfer-encoding;
-        bh=ekrb7ikh5V4OaUTaOj6NIDtnnBgsdDTo0Ezeh+TSBtY=;
-        b=jAshgNt0LovAXBZO/oBvFiL5pZn/BVCXeVrypGyDU8b3MP3tExy7bpxP3XHTUJCClr
-         JyYeHeFj98bLLxU12hQh1Maovpl+HHhiA9NWNUzRYcNGeiiTsu2oQTjpnZqa36iK1xTr
-         jyh+UxXPNwNeQkPnM4dvZbs2UA9UbeMfG8pfteVFOUO9UcwfWO1k351twMzro+fSkLh1
-         ij+lyJYsEvCEHBJZdVINi/c/1GgQerOw5DPuPjfPFoeRK4uunZGs5+lnJsITAi4T1MiX
-         XkATr5V8yZzl7R3PJyPe/BFrhIy0OqoVC491zz9plfkBmIZvQbd97XE1lyrf75z1VXiT
-         5IQQ==
+        bh=orUBrhwwyLHgxl0SF7xrBmp3o10L7HOVakrUAYyhU7Y=;
+        b=E9cIYtrghdvMd+vKFoFc4iyEI7pK/Zze07Fk8zORtmNdt9BdDxla+L9hyCmc1EzNVR
+         zEFc+lP9cTE8CPC/1irgoCLv6JKPFZJKfq4Daw3VFa3wxvqGImkySSxXfoso/THOl8oN
+         uWk8Z7gqBmTF66D8jjxerFplQtW1llS5ZjzT6fk2OUIIhxYDBrZ7cHHh1itDF38TJQCl
+         SIyquxJgtQq7I381LZhY0Jh+cvs0zjO3bQuXHE10e03//MBrVDqr+dX/77GEVIb6d6iG
+         8nBg2I+VLMLkpfwoBeauCSWtaTcoWQB6apiB2Dvkmps5bbDgZ82K0Hln7LU2y/5gedEL
+         j+HQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=ekrb7ikh5V4OaUTaOj6NIDtnnBgsdDTo0Ezeh+TSBtY=;
-        b=lNbvLjxlosUdfx+kNnEcTo7Ow2zwY0ktQgrJBpZn2QJQTs70u5b71TY5lelxgabedJ
-         1zJCqykk0wcZL1klAujeFNrupf5C7hFORA0RaaYzdVEaiqdMCwgnmOGvJYFKEkH2t8SY
-         T9O0qGF76ARfC6KF6O1+l/H3gn4lp5t5N4pj6W4B4YubfkT+W7wRq+PaOsUzG9Ljecbj
-         kWnWpuGkciIXgCoffQ0MFlwCQymYGnkRXdjnLrc3DYeqre+jLuor7jY7HCK9KRuaucjB
-         OrZcMV8I/tTM+jESy3Q8r9nUNFYO2t++MJQrTeHALzxfykQJrEmjm1QuyixKqhb2aSn+
-         00Ow==
-X-Gm-Message-State: AOAM530I9Tp9la30MrYbR6I35mlKiOi8CKccGcXyZHQNPfMeT1yQIQ4g
-        D6gp7IXcbtQ+B2tAbLR7hEOp0Sfj4Sg=
-X-Google-Smtp-Source: ABdhPJzXHt3kSX07a3H16jnyhm+PSRkmehUsrM2bpUdy3SD+LHGgy0Hnvm8B1Ub+EtbBodukMYTecQ==
-X-Received: by 2002:a17:906:6ce:: with SMTP id v14mr3188944ejb.296.1619171185576;
-        Fri, 23 Apr 2021 02:46:25 -0700 (PDT)
+        bh=orUBrhwwyLHgxl0SF7xrBmp3o10L7HOVakrUAYyhU7Y=;
+        b=TKpr0W8v3GqukcM0HCUDFWqADNIpmTKnI22uhFQDY1k9duBie/OY1EyBpKq/vUerzB
+         Zb6eCsesC+3Whg63Af21LpcRj3ldVRA/owSzKdFNauqu+jieS83MBPLTnPzanx3C1Awf
+         z5DrLcwSqNZE5LzTp4nkY0RKbIRTNndQSO7Ue/MYK1UshzB5SdXRWa4u7PlyLMlxJPn4
+         bfiMlUcTMZdwncsO3b6GyL31IGpjbk4Gnb+f2I0CY0dnOSSJHgs7CiZq6WxWvcfWiErc
+         dpBE7Ekzi5wJxMMmCBoGwvkz6ZEJqKbltYbDHcD8Ob1u8STWu4iqXgBix5pcamKbzcTU
+         +XMg==
+X-Gm-Message-State: AOAM531KvLsk8qxSNpFiOKAWtm7dMns8PFQ49LjcuVZDvOz9aAOyaBCn
+        gr9fHC5ViStp3qfrbXGu8KiEwekeLG0=
+X-Google-Smtp-Source: ABdhPJxuxLNBw9CQPgW/XCcfeHsT7Zkuoyd4rHBsAaoi7DnbxEPCe/Euk1a8Jqd4BM2kUXDeH1LFdA==
+X-Received: by 2002:a17:906:7257:: with SMTP id n23mr3359079ejk.412.1619171697081;
+        Fri, 23 Apr 2021 02:54:57 -0700 (PDT)
 Received: from [192.168.1.201] (243.20.198.146.dyn.plus.net. [146.198.20.243])
-        by smtp.googlemail.com with ESMTPSA id i19sm4320643eds.39.2021.04.23.02.46.24
+        by smtp.googlemail.com with ESMTPSA id la24sm3839460ejb.71.2021.04.23.02.54.56
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Apr 2021 02:46:25 -0700 (PDT)
-Subject: Re: [RFC PATCH v2 1/4] config: rename "submodule" scope to
- "gitmodules"
+        Fri, 23 Apr 2021 02:54:56 -0700 (PDT)
+Subject: Re: [RFC PATCH v2 3/4] t7006-pager.sh: more lenient trace checking
 To:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
 References: <20210423001539.4059524-1-emilyshaffer@google.com>
- <20210423001539.4059524-2-emilyshaffer@google.com>
+ <20210423001539.4059524-4-emilyshaffer@google.com>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <8d27af1f-7fa3-e3a7-f042-2559fc24bc18@gmail.com>
-Date:   Fri, 23 Apr 2021 10:46:23 +0100
+Message-ID: <f4c3688e-8316-7f66-3bcb-d8aaeef3a7d3@gmail.com>
+Date:   Fri, 23 Apr 2021 10:54:55 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.9.0
 MIME-Version: 1.0
-In-Reply-To: <20210423001539.4059524-2-emilyshaffer@google.com>
+In-Reply-To: <20210423001539.4059524-4-emilyshaffer@google.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -79,66 +78,107 @@ X-Mailing-List: git@vger.kernel.org
 Hi Emily
 
 On 23/04/2021 01:15, Emily Shaffer wrote:
-> To prepare for the addition of a new config scope which only applies to
-> submodule projects, disambiguate "CONFIG_SCOPE_SUBMODULES". This scope
-> refers to configs gathered from the .gitmodules file in the
-> superproject, so just call it "gitmodules."
+> A number of tests in t7006-pager.sh are, as a side effect, checking that
+> 'git log' does not invoke any child processes besides the pager. There
+> is no reason for that guarantee, and it is not explicitly the purpose of
+> these tests, so let's make the checking more intelligent and flexible.
+> 
+> child_start and child_exit events share a child ID - using that child
+> ID, we can try to disambiguate which child_exit belongs to which
+> child_start and limit our validation to only the pager's child process.
 
-Am I right in thinking that this changes the output of `git config 
---show-scope`? If so I'm not sure it's a good idea as it would break any 
-scripts that are parsing that output
+I've not looked at this test file properly but if we want to check that 
+the pager is invoked can we use a script that writes a file when it has 
+been run as the pager and just cleanup that file at the end of each test 
+case?
+
+> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+> ---
+>   t/t7006-pager.sh | 24 ++++++++++++++++++------
+>   1 file changed, 18 insertions(+), 6 deletions(-)
+> 
+> diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
+> index 0e7cf75435..ac2d91d56b 100755
+> --- a/t/t7006-pager.sh
+> +++ b/t/t7006-pager.sh
+> @@ -676,7 +676,9 @@ test_expect_success TTY 'git returns SIGPIPE on early pager exit' '
+>   		test_terminal git log
+>   	fi &&
+>   
+> -	grep child_exit trace.normal >child-exits &&
+> +	PAGER_CHILD_ID=$(grep pager-used trace.normal | \
+> +			 sed -n "s/child_start\[\([0-9]\+\)\].*/\1/p") &&
+
+If you want to save a process you could use sed to do the job of the 
+grep command. I think this should do it
+
+sed -n -e "/child_exit/ {" -e "s/child_start\[\([0-9]\+\)\].*/\1/p" -e "}"
+
+> +	grep -F "child_exit["$PAGER_CHILD_ID"]" trace.normal >child-exits &&
+
+Why is $PAGER_CHILD_ID unquoted?
 
 Best Wishes
 
 Phillip
 
-> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-> ---
->   config.c           | 4 ++--
->   config.h           | 2 +-
->   submodule-config.c | 2 +-
->   3 files changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/config.c b/config.c
-> index 870d9534de..c8426ef3f3 100644
-> --- a/config.c
-> +++ b/config.c
-> @@ -3499,8 +3499,8 @@ const char *config_scope_name(enum config_scope scope)
->   		return "worktree";
->   	case CONFIG_SCOPE_COMMAND:
->   		return "command";
-> -	case CONFIG_SCOPE_SUBMODULE:
-> -		return "submodule";
-> +	case CONFIG_SCOPE_GITMODULES:
-> +		return "gitmodules";
->   	default:
->   		return "unknown";
->   	}
-> diff --git a/config.h b/config.h
-> index 19a9adbaa9..535f5517b8 100644
-> --- a/config.h
-> +++ b/config.h
-> @@ -42,7 +42,7 @@ enum config_scope {
->   	CONFIG_SCOPE_LOCAL,
->   	CONFIG_SCOPE_WORKTREE,
->   	CONFIG_SCOPE_COMMAND,
-> -	CONFIG_SCOPE_SUBMODULE,
-> +	CONFIG_SCOPE_GITMODULES,
->   };
->   const char *config_scope_name(enum config_scope scope);
+>   	test_line_count = 1 child-exits &&
+>   	grep " code:0 " child-exits &&
+>   	test_path_is_file pager-used
+> @@ -697,7 +699,9 @@ test_expect_success TTY 'git returns SIGPIPE on early pager non-zero exit' '
+>   		test_terminal git log
+>   	fi &&
 >   
-> diff --git a/submodule-config.c b/submodule-config.c
-> index f502505566..0e435e6fdd 100644
-> --- a/submodule-config.c
-> +++ b/submodule-config.c
-> @@ -637,7 +637,7 @@ static void config_from_gitmodules(config_fn_t fn, struct repository *repo, void
->   {
->   	if (repo->worktree) {
->   		struct git_config_source config_source = {
-> -			0, .scope = CONFIG_SCOPE_SUBMODULE
-> +			0, .scope = CONFIG_SCOPE_GITMODULES
->   		};
->   		const struct config_options opts = { 0 };
->   		struct object_id oid;
+> -	grep child_exit trace.normal >child-exits &&
+> +	PAGER_CHILD_ID=$(grep pager-used trace.normal | \
+> +			 sed -n "s/child_start\[\([0-9]\+\)\].*/\1/p") &&
+> +	grep -F "child_exit["$PAGER_CHILD_ID"]" trace.normal >child-exits &&
+>   	test_line_count = 1 child-exits &&
+>   	grep " code:1 " child-exits &&
+>   	test_path_is_file pager-used
+> @@ -718,7 +722,9 @@ test_expect_success TTY 'git discards pager non-zero exit without SIGPIPE' '
+>   		test_terminal git log
+>   	fi &&
+>   
+> -	grep child_exit trace.normal >child-exits &&
+> +	PAGER_CHILD_ID=$(grep pager-used trace.normal | \
+> +			 sed -n "s/child_start\[\([0-9]\+\)\].*/\1/p") &&
+> +	grep -F "child_exit["$PAGER_CHILD_ID"]" trace.normal >child-exits &&
+>   	test_line_count = 1 child-exits &&
+>   	grep " code:1 " child-exits &&
+>   	test_path_is_file pager-used
+> @@ -739,7 +745,9 @@ test_expect_success TTY 'git discards nonexisting pager without SIGPIPE' '
+>   		test_terminal git log
+>   	fi &&
+>   
+> -	grep child_exit trace.normal >child-exits &&
+> +	PAGER_CHILD_ID=$(grep does-not-exist trace.normal | \
+> +			 sed -n "s/child_start\[\([0-9]\+\)\].*/\1/p") &&
+> +	grep -F "child_exit["$PAGER_CHILD_ID"]" trace.normal >child-exits &&
+>   	test_line_count = 1 child-exits &&
+>   	grep " code:127 " child-exits &&
+>   	test_path_is_file pager-used
+> @@ -760,7 +768,9 @@ test_expect_success TTY 'git attempts to page to nonexisting pager command, gets
+>   		test_terminal git log
+>   	fi &&
+>   
+> -	grep child_exit trace.normal >child-exits &&
+> +	PAGER_CHILD_ID=$(grep does-not-exist trace.normal | \
+> +			 sed -n "s/child_start\[\([0-9]\+\)\].*/\1/p") &&
+> +	grep -F "child_exit["$PAGER_CHILD_ID"]" trace.normal >child-exits &&
+>   	test_line_count = 1 child-exits &&
+>   	grep " code:-1 " child-exits
+>   '
+> @@ -780,7 +790,9 @@ test_expect_success TTY 'git returns SIGPIPE on propagated signals from pager' '
+>   		test_terminal git log
+>   	fi &&
+>   
+> -	grep child_exit trace.normal >child-exits &&
+> +	PAGER_CHILD_ID=$(grep pager-used trace.normal | \
+> +			 sed -n "s/child_start\[\([0-9]\+\)\].*/\1/p") &&
+> +	grep -F "child_exit["$PAGER_CHILD_ID"]" trace.normal >child-exits &&
+>   	test_line_count = 1 child-exits &&
+>   	grep " code:143 " child-exits &&
+>   	test_path_is_file pager-used
 > 
 
