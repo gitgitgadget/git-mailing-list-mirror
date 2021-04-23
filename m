@@ -7,24 +7,21 @@ X-Spam-Status: No, score=-16.7 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 56954C43460
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 19:42:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1978FC43462
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 19:42:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3BCA8610A2
+	by mail.kernel.org (Postfix) with ESMTP id F310861075
 	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 19:42:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243838AbhDWTnY (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S243843AbhDWTnZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Apr 2021 15:43:25 -0400
+Received: from mav.lukeshu.com ([104.207.138.63]:35186 "EHLO mav.lukeshu.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S243832AbhDWTnY (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 23 Apr 2021 15:43:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55434 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243795AbhDWTnY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Apr 2021 15:43:24 -0400
-Received: from mav.lukeshu.com (mav.lukeshu.com [IPv6:2001:19f0:5c00:8069:5400:ff:fe26:6a86])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 413DFC061574
-        for <git@vger.kernel.org>; Fri, 23 Apr 2021 12:42:47 -0700 (PDT)
 Received: from lukeshu-dw-thinkpad (unknown [IPv6:2601:281:8200:26:4e34:88ff:fe48:5521])
-        by mav.lukeshu.com (Postfix) with ESMTPSA id 9E52C80592;
-        Fri, 23 Apr 2021 15:42:46 -0400 (EDT)
+        by mav.lukeshu.com (Postfix) with ESMTPSA id 7DA6C80590;
+        Fri, 23 Apr 2021 15:42:47 -0400 (EDT)
 From:   Luke Shumaker <lukeshu@lukeshu.com>
 To:     git@vger.kernel.org
 Cc:     Avery Pennarun <apenwarr@gmail.com>,
@@ -40,9 +37,9 @@ Cc:     Avery Pennarun <apenwarr@gmail.com>,
         <pclouds@gmail.com>, Roger L Strain <roger.strain@swri.org>,
         Techlive Zheng <techlivezheng@gmail.com>,
         Luke Shumaker <lukeshu@datawire.io>
-Subject: [PATCH 06/30] subtree: t7900: use 'test' for string equality
-Date:   Fri, 23 Apr 2021 13:42:06 -0600
-Message-Id: <20210423194230.1388945-7-lukeshu@lukeshu.com>
+Subject: [PATCH 07/30] subtree: t7900: delete some dead code
+Date:   Fri, 23 Apr 2021 13:42:07 -0600
+Message-Id: <20210423194230.1388945-8-lukeshu@lukeshu.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210423194230.1388945-1-lukeshu@lukeshu.com>
 References: <20210423194230.1388945-1-lukeshu@lukeshu.com>
@@ -54,247 +51,48 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Luke Shumaker <lukeshu@datawire.io>
 
-t7900-subtree.sh defines its own `check_equal A B` function, instead of
-just using `test A = B` like all of the other tests.  Don't be special,
-get rid of `check_equal` in favor of `test`.
-
 Signed-off-by: Luke Shumaker <lukeshu@datawire.io>
 ---
- contrib/subtree/t/t7900-subtree.sh | 60 ++++++++++++------------------
- 1 file changed, 24 insertions(+), 36 deletions(-)
+ contrib/subtree/t/t7900-subtree.sh | 12 +-----------
+ 1 file changed, 1 insertion(+), 11 deletions(-)
 
 diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
-index 827bd3fcd8..ae96c8cff5 100755
+index ae96c8cff5..96acd4f8be 100755
 --- a/contrib/subtree/t/t7900-subtree.sh
 +++ b/contrib/subtree/t/t7900-subtree.sh
-@@ -28,18 +28,6 @@ create () {
- 	git add "$1"
+@@ -10,7 +10,6 @@ and split subcommands of git subtree.
+ '
+ 
+ TEST_DIRECTORY=$(pwd)/../../../t
+-export TEST_DIRECTORY
+ . "$TEST_DIRECTORY"/test-lib.sh
+ 
+ # Use our own wrapper around test-lib.sh's test_create_repo, in order
+@@ -23,15 +22,6 @@ subtree_test_create_repo () {
+ 	git -C "$1" config log.date relative
  }
  
--check_equal () {
--	test_debug 'echo'
--	test_debug "echo \"check a:\" \"{$1}\""
--	test_debug "echo \"      b:\" \"{$2}\""
--	if [ "$1" = "$2" ]
--	then
--		return 0
--	else
--		return 1
--	fi
+-create () {
+-	echo "$1" >"$1" &&
+-	git add "$1"
 -}
 -
- undo () {
- 	git reset --hard HEAD~
- }
-@@ -119,7 +107,7 @@ test_expect_success 'add subproj as subtree into sub dir/ with --prefix' '
- 		cd "$test_count" &&
- 		git fetch ./"sub proj" HEAD &&
- 		git subtree add --prefix="sub dir" FETCH_HEAD &&
--		check_equal "$(last_commit_message)" "Add '\''sub dir/'\'' from commit '\''$(git rev-parse FETCH_HEAD)'\''"
-+		test "$(last_commit_message)" = "Add '\''sub dir/'\'' from commit '\''$(git rev-parse FETCH_HEAD)'\''"
- 	)
- '
- 
-@@ -132,7 +120,7 @@ test_expect_success 'add subproj as subtree into sub dir/ with --prefix and --me
- 		cd "$test_count" &&
- 		git fetch ./"sub proj" HEAD &&
- 		git subtree add --prefix="sub dir" --message="Added subproject" FETCH_HEAD &&
--		check_equal "$(last_commit_message)" "Added subproject"
-+		test "$(last_commit_message)" = "Added subproject"
- 	)
- '
- 
-@@ -145,7 +133,7 @@ test_expect_success 'add subproj as subtree into sub dir/ with --prefix as -P an
- 		cd "$test_count" &&
- 		git fetch ./"sub proj" HEAD &&
- 		git subtree add -P "sub dir" -m "Added subproject" FETCH_HEAD &&
--		check_equal "$(last_commit_message)" "Added subproject"
-+		test "$(last_commit_message)" = "Added subproject"
- 	)
- '
- 
-@@ -158,7 +146,7 @@ test_expect_success 'add subproj as subtree into sub dir/ with --squash and --pr
- 		cd "$test_count" &&
- 		git fetch ./"sub proj" HEAD &&
- 		git subtree add --prefix="sub dir" --message="Added subproject with squash" --squash FETCH_HEAD &&
--		check_equal "$(last_commit_message)" "Added subproject with squash"
-+		test "$(last_commit_message)" = "Added subproject with squash"
- 	)
- '
- 
-@@ -181,7 +169,7 @@ test_expect_success 'merge new subproj history into sub dir/ with --prefix' '
- 		cd "$test_count" &&
- 		git fetch ./"sub proj" HEAD &&
- 		git subtree merge --prefix="sub dir" FETCH_HEAD &&
--		check_equal "$(last_commit_message)" "Merge commit '\''$(git rev-parse FETCH_HEAD)'\''"
-+		test "$(last_commit_message)" = "Merge commit '\''$(git rev-parse FETCH_HEAD)'\''"
- 	)
- '
- 
-@@ -200,7 +188,7 @@ test_expect_success 'merge new subproj history into sub dir/ with --prefix and -
- 		cd "$test_count" &&
- 		git fetch ./"sub proj" HEAD &&
- 		git subtree merge --prefix="sub dir" --message="Merged changes from subproject" FETCH_HEAD &&
--		check_equal "$(last_commit_message)" "Merged changes from subproject"
-+		test "$(last_commit_message)" = "Merged changes from subproject"
- 	)
- '
- 
-@@ -219,7 +207,7 @@ test_expect_success 'merge new subproj history into sub dir/ with --squash and -
- 		cd "$test_count" &&
- 		git fetch ./"sub proj" HEAD &&
- 		git subtree merge --prefix="sub dir" --message="Merged changes from subproject using squash" --squash FETCH_HEAD &&
--		check_equal "$(last_commit_message)" "Merged changes from subproject using squash"
-+		test "$(last_commit_message)" = "Merged changes from subproject using squash"
- 	)
- '
- 
-@@ -235,7 +223,7 @@ test_expect_success 'merge the added subproj again, should do nothing' '
- 		# this shouldn not actually do anything, since FETCH_HEAD
- 		# is already a parent
- 		result=$(git merge -s ours -m "merge -s -ours" FETCH_HEAD) &&
--		check_equal "${result}" "Already up to date."
-+		test "${result}" = "Already up to date."
- 	)
- '
- 
-@@ -254,7 +242,7 @@ test_expect_success 'merge new subproj history into subdir/ with a slash appende
- 		cd "$test_count" &&
- 		git fetch ./subproj HEAD &&
- 		git subtree merge --prefix=subdir/ FETCH_HEAD &&
--		check_equal "$(last_commit_message)" "Merge commit '\''$(git rev-parse FETCH_HEAD)'\''"
-+		test "$(last_commit_message)" = "Merge commit '\''$(git rev-parse FETCH_HEAD)'\''"
- 	)
- '
- 
-@@ -320,7 +308,7 @@ test_expect_success 'split sub dir/ with --rejoin' '
- 		git subtree merge --prefix="sub dir" FETCH_HEAD &&
- 		split_hash=$(git subtree split --prefix="sub dir" --annotate="*") &&
- 		git subtree split --prefix="sub dir" --annotate="*" --rejoin &&
--		check_equal "$(last_commit_message)" "Split '\''sub dir/'\'' into commit '\''$split_hash'\''"
-+		test "$(last_commit_message)" = "Split '\''sub dir/'\'' into commit '\''$split_hash'\''"
- 	)
- '
- 
-@@ -335,7 +323,7 @@ test_expect_success 'split sub dir/ with --rejoin from scratch' '
- 		git commit -m"sub dir file" &&
- 		split_hash=$(git subtree split --prefix="sub dir" --rejoin) &&
- 		git subtree split --prefix="sub dir" --rejoin &&
--		check_equal "$(last_commit_message)" "Split '\''sub dir/'\'' into commit '\''$split_hash'\''"
-+		test "$(last_commit_message)" = "Split '\''sub dir/'\'' into commit '\''$split_hash'\''"
- 	)
- '
- 
-@@ -358,7 +346,7 @@ test_expect_success 'split sub dir/ with --rejoin and --message' '
- 		git fetch ./"sub proj" HEAD &&
- 		git subtree merge --prefix="sub dir" FETCH_HEAD &&
- 		git subtree split --prefix="sub dir" --message="Split & rejoin" --annotate="*" --rejoin &&
--		check_equal "$(last_commit_message)" "Split & rejoin"
-+		test "$(last_commit_message)" = "Split & rejoin"
- 	)
- '
- 
-@@ -382,7 +370,7 @@ test_expect_success 'split "sub dir"/ with --branch' '
- 		git subtree merge --prefix="sub dir" FETCH_HEAD &&
- 		split_hash=$(git subtree split --prefix="sub dir" --annotate="*") &&
- 		git subtree split --prefix="sub dir" --annotate="*" --branch subproj-br &&
--		check_equal "$(git rev-parse subproj-br)" "$split_hash"
-+		test "$(git rev-parse subproj-br)" = "$split_hash"
- 	)
- '
- 
-@@ -406,13 +394,13 @@ test_expect_success 'check hash of split' '
- 		git subtree merge --prefix="sub dir" FETCH_HEAD &&
- 		split_hash=$(git subtree split --prefix="sub dir" --annotate="*") &&
- 		git subtree split --prefix="sub dir" --annotate="*" --branch subproj-br &&
--		check_equal "$(git rev-parse subproj-br)" "$split_hash" &&
-+		test "$(git rev-parse subproj-br)" = "$split_hash" &&
- 		# Check hash of split
- 		new_hash=$(git rev-parse subproj-br^2) &&
+-undo () {
+-	git reset --hard HEAD~
+-}
+-
+ # Make sure no patch changes more than one file.
+ # The original set of commits changed only one file each.
+ # A multi-file change would imply that we pruned commits
+@@ -400,7 +390,7 @@ test_expect_success 'check hash of split' '
  		(
  			cd ./"sub proj" &&
  			subdir_hash=$(git rev-parse HEAD) &&
--			check_equal ''"$new_hash"'' "$subdir_hash"
-+			test ''"$new_hash"'' = "$subdir_hash"
+-			test ''"$new_hash"'' = "$subdir_hash"
++			test "$new_hash" = "$subdir_hash"
  		)
  	)
  '
-@@ -438,7 +426,7 @@ test_expect_success 'split "sub dir"/ with --branch for an existing branch' '
- 		git subtree merge --prefix="sub dir" FETCH_HEAD &&
- 		split_hash=$(git subtree split --prefix="sub dir" --annotate="*") &&
- 		git subtree split --prefix="sub dir" --annotate="*" --branch subproj-br &&
--		check_equal "$(git rev-parse subproj-br)" "$split_hash"
-+		test "$(git rev-parse subproj-br)" = "$split_hash"
- 	)
- '
- 
-@@ -736,7 +724,7 @@ test_expect_success 'make sure the --rejoin commits never make it into subproj'
- 	(
- 		cd "$test_count" &&
- 		git subtree pull --prefix="sub dir" ./"sub proj" HEAD &&
--		check_equal "$(git log --pretty=format:"%s" HEAD^2 | grep -i split)" ""
-+		test "$(git log --pretty=format:"%s" HEAD^2 | grep -i split)" = ""
- 	)
- '
- 
-@@ -787,7 +775,7 @@ test_expect_success 'make sure no "git subtree" tagged commits make it into subp
- 		git subtree pull --prefix="sub dir" ./"sub proj" HEAD &&
- 
- 		# They are meaningless to subproj since one side of the merge refers to the mainline
--		check_equal "$(git log --pretty=format:"%s%n%b" HEAD^2 | grep "git-subtree.*:")" ""
-+		test "$(git log --pretty=format:"%s%n%b" HEAD^2 | grep "git-subtree.*:")" = ""
- 	)
- '
- 
-@@ -821,7 +809,7 @@ test_expect_success 'make sure "git subtree split" find the correct parent' '
- 		# not, something went wrong (the "newparent" of "HEAD~" commit should
- 		# have been sub2, but it was not, because its cache was not set to
- 		# itself)
--		check_equal "$(git log --pretty=format:%P -1 subproj-br)" "$(git rev-parse subproj-ref)"
-+		test "$(git log --pretty=format:%P -1 subproj-br)" = "$(git rev-parse subproj-ref)"
- 	)
- '
- 
-@@ -855,7 +843,7 @@ test_expect_success 'split a new subtree without --onto option' '
- 		# if the parent of the first commit in the tree is not empty,
- 		# then the new subtree has accidentally been attached to something
- 		git subtree split --prefix="sub dir2" --branch subproj2-br &&
--		check_equal "$(git log --pretty=format:%P -1 subproj2-br)" ""
-+		test "$(git log --pretty=format:%P -1 subproj2-br)" = ""
- 	)
- '
- 
-@@ -894,10 +882,10 @@ test_expect_success 'verify one file change per commit' '
- 				test_debug "echo Verifying commit $commit"
- 				test_debug "echo a: $a"
- 				test_debug "echo b: $b"
--				check_equal "$b" ""
-+				test "$b" = ""
- 				x=1
- 			done
--			check_equal "$x" 1
-+			test "$x" = 1
- 		)
- 	)
- '
-@@ -929,7 +917,7 @@ test_expect_success 'push split to subproj' '
- 		git subtree push ./"sub proj" --prefix "sub dir" sub-branch-1 &&
- 		cd ./"sub proj" &&
- 		git checkout sub-branch-1 &&
--		check_equal "$(last_commit_message)" "sub dir/main-sub3"
-+		test "$(last_commit_message)" = "sub dir/main-sub3"
- 	)
- '
- 
-@@ -989,7 +977,7 @@ test_expect_success 'subtree descendant check' '
- 
- 		git subtree split --prefix folder_subtree/ --branch subtree_tip $defaultBranch &&
- 		git subtree split --prefix folder_subtree/ --branch subtree_branch branch &&
--		check_equal $(git rev-list --count subtree_tip..subtree_branch) 0
-+		test $(git rev-list --count subtree_tip..subtree_branch) = 0
- 	)
- '
- 
 -- 
 2.31.1
 
