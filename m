@@ -2,180 +2,157 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4324EC43460
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 16:19:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 173BFC433B4
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 16:27:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1149561076
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 16:19:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B2481611C1
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 16:27:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231858AbhDWQTp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Apr 2021 12:19:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38608 "EHLO
+        id S230283AbhDWQ2E (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Apr 2021 12:28:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40400 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230355AbhDWQTp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Apr 2021 12:19:45 -0400
-Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF2CFC061574
-        for <git@vger.kernel.org>; Fri, 23 Apr 2021 09:19:08 -0700 (PDT)
-Received: by mail-ot1-x32e.google.com with SMTP id d3-20020a9d29030000b029027e8019067fso43842557otb.13
-        for <git@vger.kernel.org>; Fri, 23 Apr 2021 09:19:08 -0700 (PDT)
+        with ESMTP id S229456AbhDWQ2E (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Apr 2021 12:28:04 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E52BC061574
+        for <git@vger.kernel.org>; Fri, 23 Apr 2021 09:27:27 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id s7so48879190wru.6
+        for <git@vger.kernel.org>; Fri, 23 Apr 2021 09:27:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=ZHAMi+ZlTFAG034iOI1hIA5L7F3bwnODJhUrmeNZAeY=;
-        b=qN+NPjB/8JFk9XxhY5yvaZpfl4SYF4eM9HXSawNK+iVE9Qylx+m00gOyh/onkTuL4A
-         Ic8ZH/XAO5bFEEOYkgrUx/eTLj9xoZATcCfCmYIrl+cg2uk52sRvR6hAwSAoO7ZKdGzH
-         6f7iqFW4BjB6pn80F/uNGOI1/X6MEZWUoClUWdCvS4WZZzF1hlJZ+jymh0XKtSnoliBF
-         o5yZ/2vZ+YK1fX4HX0r0qICIvo5UbFOVjA4WtRmDAeFNDh1oeP0Bjtn6DZK2a6be6mOH
-         z90ae2otzS1sFT5vagtdkziOHb1cUU+9j9yKyy9wgwHd6TNckvEU7NyyTjwxHbyzGP9i
-         ypiQ==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=EATLUm96VzFBYyWbsazuHsL0Mu5i1UQY26TbUQ5u8to=;
+        b=JoWEzjp42YaMp7lCQpp36KxaAtTub5bq+B2uPIFRNT4ojAylh7f5Y8DoBultM0mSc/
+         u17PyVSrd+LtXP0zhZ2I6PR4BCMAXybhB6l5JkOqUxpGoKY9iEpvHC97Xp3iokSpq01O
+         c9/BqnXBzTwrKPBeURAXtfSpLRWYeaDWAmmJuuD/kLTVVyQeX2+Jw2Mq3DW0+zhlvIRH
+         /hX/FfnmMR8YWu3jLRmj6226kbhjtVPuZNQKgsofBlQ3BQzYgO3qGzLPsxcpejq6iiHX
+         KMjvpRJPsefUVG+BuWaJ5f2okhUvGC48j9vN6y7ADf993M7vrcWU6ck7dP14RH0OTw7Z
+         Q7pQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=ZHAMi+ZlTFAG034iOI1hIA5L7F3bwnODJhUrmeNZAeY=;
-        b=hH4XYd3lGe3GwguJaAB7HZpt5XoFmO0bIEHrR4I+goAUttcFoHKYa8CM/8zdxxviPI
-         Eg9EVx/XPZnb08RTYdDj3kbD8hnW2cEGSEoJp+N+7yL2Qp59BWNa/aQuLELYpVU3Kw41
-         pfoHsfNbyxeP/oufeIROidDTA/2nHG840xTyl+KEy9/mb69r9aYrEeRa7L3Qe9IJG+66
-         oATpM39aWU+nhJD2icMEGFVyDcw4PyKWgO3UthNQb0NBDnotYBTTJXLUUXcoksPKYAiE
-         eb5gB+rvK3qUZthuBLPfNEqrmufmfnwAXZiCNy2mLXgu3OKMNhQu6f6DeLafg+JOWwlh
-         I2Cg==
-X-Gm-Message-State: AOAM53397xtKes62iJo6xa3lBCvsPAL/JX7jlNd0RdW09LTB2ZgqHY8H
-        uV1TzhHdinVLsnOiTeK8waU=
-X-Google-Smtp-Source: ABdhPJwMFG73hqyLzYsH/REufPsO3UMh2limalm8V3wGGvKPi3w5VM8RqPePaAXyFyTiXQ1dG+5XqQ==
-X-Received: by 2002:a05:6830:781:: with SMTP id w1mr4064122ots.300.1619194748175;
-        Fri, 23 Apr 2021 09:19:08 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:3de1:cfe2:170e:4cb9? ([2600:1700:e72:80a0:3de1:cfe2:170e:4cb9])
-        by smtp.gmail.com with ESMTPSA id q1sm1441898otm.26.2021.04.23.09.19.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Apr 2021 09:19:07 -0700 (PDT)
-Subject: Re: [PATCH 2/7] builtin/checkout.c: complete parallel checkout
- support
-To:     Matheus Tavares <matheus.bernardino@usp.br>, git@vger.kernel.org
-Cc:     christian.couder@gmail.com, git@jeffhostetler.com
-References: <cover.1619104091.git.matheus.bernardino@usp.br>
- <5e0dee7beba083159f4277ddcd9e931859239bde.1619104091.git.matheus.bernardino@usp.br>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <058f6ca4-a575-a463-e29b-9071c35e5bd3@gmail.com>
-Date:   Fri, 23 Apr 2021 12:19:06 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.0
-MIME-Version: 1.0
-In-Reply-To: <5e0dee7beba083159f4277ddcd9e931859239bde.1619104091.git.matheus.bernardino@usp.br>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=EATLUm96VzFBYyWbsazuHsL0Mu5i1UQY26TbUQ5u8to=;
+        b=JRPyXMvUMLYJibr4X7KnfA4mNq/OAcOEddrnkVAC1t826JWkCWWVAQ1c4CXemFNQGr
+         JA76UiiK/rDo1W8JuF61mzULhne3MVPcoBDWtagiIpTk6hg2COehu96E5nndSGV31Azh
+         +cSvmMkDlQ89s4p5cXK30gT3YaG2pEFYsQLRfSyfzpB0u1nszOG2kPTu6d0gcUU/9iPe
+         F159XLRZuQbUAeLtZX57PFRWTBMiCskC+eIvpaZw3aryqTIF/soHqBhC1cJuSoxiIfD0
+         jvYDmO9S8FVVo3WOsj5JFuP1/GDJ9dUT/HOgT7pkkmnMVxOr13zlmaJ58kZlmg0Hrl/7
+         XiSA==
+X-Gm-Message-State: AOAM531d+kgT8Exm5l1qv8l3Tu2F1rFQsv0qEFEvxwymGZM/wY5MJixU
+        Skg32uXrKK3Xp2Pi9muk/WmEkSyk3Is=
+X-Google-Smtp-Source: ABdhPJw3mTVEz/adIX+NmDJTM6pdszaB/aQO8U45BfSY2To/9p62XtTczuCam4XzBKK1cBwO9ESTqA==
+X-Received: by 2002:adf:dd0d:: with SMTP id a13mr3888373wrm.416.1619195246413;
+        Fri, 23 Apr 2021 09:27:26 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id d133sm8671676wmf.9.2021.04.23.09.27.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Apr 2021 09:27:26 -0700 (PDT)
+Message-Id: <pull.939.git.1619195245606.gitgitgadget@gmail.com>
+From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 23 Apr 2021 16:27:25 +0000
+Subject: [PATCH] [GSOC] pretty: provide human date format
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        ZheNing Hu <adlternative@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/22/2021 11:17 AM, Matheus Tavares wrote:
-> There is one code path in builtin/checkout.c which still doesn't benefit
-> from parallel checkout because it calls checkout_entry() directly,> instead of unpack_trees(). Let's add parallel checkout support for this
-> missing spot as well.
+From: ZheNing Hu <adlternative@gmail.com>
 
-I couldn't tell immediately from the patch what would trigger this
-code path. I had to trace the method calls to discover that it is
-for the case of a pathspec-limited checkout:
+Add the placeholders %ah and %ch to format author date and committer
+date, like --date=human does, which provides more humanity date output.
 
-	git checkout <ref> -- <pathspec>
+Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+---
+    [GSOC] pretty: provide human date format
+    
+    Reasons for making this patch: --date=human has no corresponding
+    --pretty option.
+    
+    Although --date=human with --pretty="%(a|c)d" can achieve the same
+    effect with --pretty="%(a|c)h", but it can be noticed that most time
+    formats implement the corresponding option of --pretty, such as
+    --date=iso8601 can be replaced by --pretty=%(a|c)i, so add
+    "--pretty=%(a|c)h" seems to be a very reasonable thing.
 
-I confirmed that this does work with this change, but it might be
-nice to have a test that verifies that parallelism is triggering for
-this case.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-939%2Fadlternative%2Fpretty_human-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-939/adlternative/pretty_human-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/939
 
-Looking ahead to patches 4-6, which add tests, I do not see one for this
-code path. Yes, patch 7 will implicitly test it through optional
-settings, but it would be nice to verify that the code is actually using
-parallel workers. The test_checkout_workers helper in patch 4 should be
-helpful for this effort.
+ Documentation/pretty-formats.txt | 2 ++
+ pretty.c                         | 3 +++
+ t/t4205-log-pretty-formats.sh    | 6 ++++++
+ 3 files changed, 11 insertions(+)
 
-Please point out the test that covers this case, in case I'm just not
-seeing it.
-
-The good news is that I can see a difference. By alternating checkouts
-of the Git repository's "t" directory between v2.20 and v2.31.1, I can
-see these results for varying numbers of workers:
-
-Benchmark #1: 16 workers
-  Time (mean ± σ):     108.6 ms ±   5.2 ms    [User: 146.1 ms, System: 146.1 ms]
-  Range (min … max):    95.5 ms … 124.9 ms    100 runs
+diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+index 45133066e412..9cdcdb8bb414 100644
+--- a/Documentation/pretty-formats.txt
++++ b/Documentation/pretty-formats.txt
+@@ -190,6 +190,7 @@ The placeholders are:
+ '%ai':: author date, ISO 8601-like format
+ '%aI':: author date, strict ISO 8601 format
+ '%as':: author date, short format (`YYYY-MM-DD`)
++'%ah':: author date, human style
+ '%cn':: committer name
+ '%cN':: committer name (respecting .mailmap, see
+ 	linkgit:git-shortlog[1] or linkgit:git-blame[1])
+@@ -206,6 +207,7 @@ The placeholders are:
+ '%ci':: committer date, ISO 8601-like format
+ '%cI':: committer date, strict ISO 8601 format
+ '%cs':: committer date, short format (`YYYY-MM-DD`)
++'%ch':: committer date, human style
+ '%d':: ref names, like the --decorate option of linkgit:git-log[1]
+ '%D':: ref names without the " (", ")" wrapping.
+ '%(describe[:options])':: human-readable name, like
+diff --git a/pretty.c b/pretty.c
+index e5b33ba034bd..b1ecd039cef2 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -745,6 +745,9 @@ static size_t format_person_part(struct strbuf *sb, char part,
+ 	case 'I':	/* date, ISO 8601 strict */
+ 		strbuf_addstr(sb, show_ident_date(&s, DATE_MODE(ISO8601_STRICT)));
+ 		return placeholder_len;
++	case 'h':	/* date, human */
++		strbuf_addstr(sb, show_ident_date(&s, DATE_MODE(HUMAN)));
++		return placeholder_len;
+ 	case 's':
+ 		strbuf_addstr(sb, show_ident_date(&s, DATE_MODE(SHORT)));
+ 		return placeholder_len;
+diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
+index cabdf7d57a00..d4d75b0b350e 100755
+--- a/t/t4205-log-pretty-formats.sh
++++ b/t/t4205-log-pretty-formats.sh
+@@ -539,6 +539,12 @@ test_expect_success 'short date' '
+ 	test_cmp expected actual
+ '
  
-Benchmark #2: 8 workers
-  Time (mean ± σ):     104.8 ms ±   4.8 ms    [User: 128.3 ms, System: 131.7 ms]
-  Range (min … max):    94.2 ms … 119.0 ms    100 runs
- 
-Benchmark #3: 4 workers
-  Time (mean ± σ):     112.3 ms ±   6.2 ms    [User: 114.6 ms, System: 112.1 ms]
-  Range (min … max):   100.0 ms … 127.4 ms    100 runs
- 
-Benchmark #4: 2 workers
-  Time (mean ± σ):     124.2 ms ±   4.2 ms    [User: 106.5 ms, System: 102.0 ms]
-  Range (min … max):   114.8 ms … 136.3 ms    100 runs
- 
-Benchmark #5: sequential
-  Time (mean ± σ):     154.6 ms ±   6.7 ms    [User: 83.5 ms, System: 79.4 ms]
-  Range (min … max):   142.1 ms … 176.0 ms    100 runs
- 
-Summary
-  '8 workers' ran
-    1.04 ± 0.07 times faster than '16 workers'
-    1.07 ± 0.08 times faster than '4 workers'
-    1.19 ± 0.07 times faster than '2 workers'
-    1.48 ± 0.09 times faster than 'sequential'
++test_expect_success 'human date' '
++	git log --format=%ad%n%cd --date=human >expected &&
++	git log --format=%ah%n%ch >actual &&
++	test_cmp expected actual
++'
++
+ # get new digests (with no abbreviations)
+ test_expect_success 'set up log decoration tests' '
+ 	head1=$(git rev-parse --verify HEAD~0) &&
 
-(Note: these time measurements are for the round-trip of two checkout
-commands.)
-> @@ -359,16 +360,22 @@ static int checkout_worktree(const struct checkout_opts *opts,
->  	int nr_checkouts = 0, nr_unmerged = 0;
->  	int errs = 0;
->  	int pos;
-> +	int pc_workers, pc_threshold;
-> +	struct mem_pool ce_mem_pool;
->  
->  	state.force = 1;
->  	state.refresh_cache = 1;
->  	state.istate = &the_index;
->  
-> +	mem_pool_init(&ce_mem_pool, 0);
-> +	get_parallel_checkout_configs(&pc_workers, &pc_threshold);
->  	init_checkout_metadata(&state.meta, info->refname,
->  			       info->commit ? &info->commit->object.oid : &info->oid,
->  			       NULL);
->  
->  	enable_delayed_checkout(&state);
-> +	if (pc_workers > 1)
-> +		init_parallel_checkout();
-
-I'm late to looking at your parallel checkout work, but I find this
-to be a really nice API to get things initialized.
-
-
->  			else if (opts->merge)
->  				errs |= checkout_merged(pos, &state,
-> -							&nr_unmerged);
-> +							&nr_unmerged,
-> +							&ce_mem_pool);
-
-I see the need to populate these merged entries in the pool for now,
-before...
-
->  			pos = skip_same_name(ce, pos) - 1;
->  		}
->  	}
-> +	if (pc_workers > 1)
-> +		errs |= run_parallel_checkout(&state, pc_workers, pc_threshold,
-> +					      NULL, NULL);
-> +	mem_pool_discard(&ce_mem_pool, should_validate_cache_entries());
-...now running the parallel checkout and discarding the entries.
-
-Thanks,
--Stolee
+base-commit: b0c09ab8796fb736efa432b8e817334f3e5ee75a
+-- 
+gitgitgadget
