@@ -7,21 +7,24 @@ X-Spam-Status: No, score=-16.7 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E8FFFC433B4
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 19:42:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CC8EC433ED
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 19:42:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CC62F61075
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 19:42:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F0C1E61075
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 19:42:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243809AbhDWTn1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Apr 2021 15:43:27 -0400
-Received: from mav.lukeshu.com ([104.207.138.63]:35214 "EHLO mav.lukeshu.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S243849AbhDWTn0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Apr 2021 15:43:26 -0400
+        id S243890AbhDWTnb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Apr 2021 15:43:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55462 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S243880AbhDWTn2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Apr 2021 15:43:28 -0400
+Received: from mav.lukeshu.com (mav.lukeshu.com [IPv6:2001:19f0:5c00:8069:5400:ff:fe26:6a86])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9EF1C061756
+        for <git@vger.kernel.org>; Fri, 23 Apr 2021 12:42:50 -0700 (PDT)
 Received: from lukeshu-dw-thinkpad (unknown [IPv6:2601:281:8200:26:4e34:88ff:fe48:5521])
-        by mav.lukeshu.com (Postfix) with ESMTPSA id 4CDDB80595;
-        Fri, 23 Apr 2021 15:42:49 -0400 (EDT)
+        by mav.lukeshu.com (Postfix) with ESMTPSA id 4FF8380591;
+        Fri, 23 Apr 2021 15:42:50 -0400 (EDT)
 From:   Luke Shumaker <lukeshu@lukeshu.com>
 To:     git@vger.kernel.org
 Cc:     Avery Pennarun <apenwarr@gmail.com>,
@@ -37,9 +40,9 @@ Cc:     Avery Pennarun <apenwarr@gmail.com>,
         <pclouds@gmail.com>, Roger L Strain <roger.strain@swri.org>,
         Techlive Zheng <techlivezheng@gmail.com>,
         Luke Shumaker <lukeshu@datawire.io>
-Subject: [PATCH 09/30] subtree: t7900: rename last_commit_message to last_commit_subject
-Date:   Fri, 23 Apr 2021 13:42:09 -0600
-Message-Id: <20210423194230.1388945-10-lukeshu@lukeshu.com>
+Subject: [PATCH 10/30] subtree: t7900: add a test for the -h flag
+Date:   Fri, 23 Apr 2021 13:42:10 -0600
+Message-Id: <20210423194230.1388945-11-lukeshu@lukeshu.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210423194230.1388945-1-lukeshu@lukeshu.com>
 References: <20210423194230.1388945-1-lukeshu@lukeshu.com>
@@ -51,136 +54,31 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Luke Shumaker <lukeshu@datawire.io>
 
-t7900-subtree.sh defines a helper function named last_commit_message.
-However, it only returns the subject line of the commit message, not the
-entire commit message.  So rename it, to make the name less confusing.
+It's a dumb test, but it's surprisingly easy to break.
 
 Signed-off-by: Luke Shumaker <lukeshu@datawire.io>
 ---
- contrib/subtree/t/t7900-subtree.sh | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ contrib/subtree/t/t7900-subtree.sh | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
 diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
-index 70be18246b..4c4d6c8e6b 100755
+index 4c4d6c8e6b..6b655ab4b5 100755
 --- a/contrib/subtree/t/t7900-subtree.sh
 +++ b/contrib/subtree/t/t7900-subtree.sh
-@@ -33,7 +33,7 @@ test_create_commit () (
- 	git commit -m "$commit" || error "Could not commit"
- )
- 
--last_commit_message () {
-+last_commit_subject () {
+@@ -37,6 +37,13 @@ last_commit_subject () {
  	git log --pretty=format:%s -1
  }
  
-@@ -74,7 +74,7 @@ test_expect_success 'add subproj as subtree into sub dir/ with --prefix' '
- 		cd "$test_count" &&
- 		git fetch ./"sub proj" HEAD &&
- 		git subtree add --prefix="sub dir" FETCH_HEAD &&
--		test "$(last_commit_message)" = "Add '\''sub dir/'\'' from commit '\''$(git rev-parse FETCH_HEAD)'\''"
-+		test "$(last_commit_subject)" = "Add '\''sub dir/'\'' from commit '\''$(git rev-parse FETCH_HEAD)'\''"
- 	)
- '
- 
-@@ -87,7 +87,7 @@ test_expect_success 'add subproj as subtree into sub dir/ with --prefix and --me
- 		cd "$test_count" &&
- 		git fetch ./"sub proj" HEAD &&
- 		git subtree add --prefix="sub dir" --message="Added subproject" FETCH_HEAD &&
--		test "$(last_commit_message)" = "Added subproject"
-+		test "$(last_commit_subject)" = "Added subproject"
- 	)
- '
- 
-@@ -100,7 +100,7 @@ test_expect_success 'add subproj as subtree into sub dir/ with --prefix as -P an
- 		cd "$test_count" &&
- 		git fetch ./"sub proj" HEAD &&
- 		git subtree add -P "sub dir" -m "Added subproject" FETCH_HEAD &&
--		test "$(last_commit_message)" = "Added subproject"
-+		test "$(last_commit_subject)" = "Added subproject"
- 	)
- '
- 
-@@ -113,7 +113,7 @@ test_expect_success 'add subproj as subtree into sub dir/ with --squash and --pr
- 		cd "$test_count" &&
- 		git fetch ./"sub proj" HEAD &&
- 		git subtree add --prefix="sub dir" --message="Added subproject with squash" --squash FETCH_HEAD &&
--		test "$(last_commit_message)" = "Added subproject with squash"
-+		test "$(last_commit_subject)" = "Added subproject with squash"
- 	)
- '
- 
-@@ -136,7 +136,7 @@ test_expect_success 'merge new subproj history into sub dir/ with --prefix' '
- 		cd "$test_count" &&
- 		git fetch ./"sub proj" HEAD &&
- 		git subtree merge --prefix="sub dir" FETCH_HEAD &&
--		test "$(last_commit_message)" = "Merge commit '\''$(git rev-parse FETCH_HEAD)'\''"
-+		test "$(last_commit_subject)" = "Merge commit '\''$(git rev-parse FETCH_HEAD)'\''"
- 	)
- '
- 
-@@ -155,7 +155,7 @@ test_expect_success 'merge new subproj history into sub dir/ with --prefix and -
- 		cd "$test_count" &&
- 		git fetch ./"sub proj" HEAD &&
- 		git subtree merge --prefix="sub dir" --message="Merged changes from subproject" FETCH_HEAD &&
--		test "$(last_commit_message)" = "Merged changes from subproject"
-+		test "$(last_commit_subject)" = "Merged changes from subproject"
- 	)
- '
- 
-@@ -174,7 +174,7 @@ test_expect_success 'merge new subproj history into sub dir/ with --squash and -
- 		cd "$test_count" &&
- 		git fetch ./"sub proj" HEAD &&
- 		git subtree merge --prefix="sub dir" --message="Merged changes from subproject using squash" --squash FETCH_HEAD &&
--		test "$(last_commit_message)" = "Merged changes from subproject using squash"
-+		test "$(last_commit_subject)" = "Merged changes from subproject using squash"
- 	)
- '
- 
-@@ -209,7 +209,7 @@ test_expect_success 'merge new subproj history into subdir/ with a slash appende
- 		cd "$test_count" &&
- 		git fetch ./subproj HEAD &&
- 		git subtree merge --prefix=subdir/ FETCH_HEAD &&
--		test "$(last_commit_message)" = "Merge commit '\''$(git rev-parse FETCH_HEAD)'\''"
-+		test "$(last_commit_subject)" = "Merge commit '\''$(git rev-parse FETCH_HEAD)'\''"
- 	)
- '
- 
-@@ -275,7 +275,7 @@ test_expect_success 'split sub dir/ with --rejoin' '
- 		git subtree merge --prefix="sub dir" FETCH_HEAD &&
- 		split_hash=$(git subtree split --prefix="sub dir" --annotate="*") &&
- 		git subtree split --prefix="sub dir" --annotate="*" --rejoin &&
--		test "$(last_commit_message)" = "Split '\''sub dir/'\'' into commit '\''$split_hash'\''"
-+		test "$(last_commit_subject)" = "Split '\''sub dir/'\'' into commit '\''$split_hash'\''"
- 	)
- '
- 
-@@ -290,7 +290,7 @@ test_expect_success 'split sub dir/ with --rejoin from scratch' '
- 		git commit -m"sub dir file" &&
- 		split_hash=$(git subtree split --prefix="sub dir" --rejoin) &&
- 		git subtree split --prefix="sub dir" --rejoin &&
--		test "$(last_commit_message)" = "Split '\''sub dir/'\'' into commit '\''$split_hash'\''"
-+		test "$(last_commit_subject)" = "Split '\''sub dir/'\'' into commit '\''$split_hash'\''"
- 	)
- '
- 
-@@ -313,7 +313,7 @@ test_expect_success 'split sub dir/ with --rejoin and --message' '
- 		git fetch ./"sub proj" HEAD &&
- 		git subtree merge --prefix="sub dir" FETCH_HEAD &&
- 		git subtree split --prefix="sub dir" --message="Split & rejoin" --annotate="*" --rejoin &&
--		test "$(last_commit_message)" = "Split & rejoin"
-+		test "$(last_commit_subject)" = "Split & rejoin"
- 	)
- '
- 
-@@ -878,7 +878,7 @@ test_expect_success 'push split to subproj' '
- 		git subtree push ./"sub proj" --prefix "sub dir" sub-branch-1 &&
- 		cd ./"sub proj" &&
- 		git checkout sub-branch-1 &&
--		test "$(last_commit_message)" = "sub dir/main-sub3"
-+		test "$(last_commit_subject)" = "sub dir/main-sub3"
- 	)
- '
- 
++test_expect_success 'shows short help text for -h' '
++	test_expect_code 129 git subtree -h >out 2>err &&
++	test_must_be_empty err &&
++	grep -e "^ *or: git subtree pull" out &&
++	grep -e --annotate out
++'
++
+ #
+ # Tests for 'git subtree add'
+ #
 -- 
 2.31.1
 
