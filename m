@@ -7,20 +7,20 @@ X-Spam-Status: No, score=-16.7 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E3B9AC433ED
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 19:43:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 09694C433B4
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 19:43:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C82C2613C3
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 19:43:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E2192613C3
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 19:43:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243923AbhDWTnn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Apr 2021 15:43:43 -0400
-Received: from mav.lukeshu.com ([104.207.138.63]:35312 "EHLO mav.lukeshu.com"
+        id S243973AbhDWTno (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Apr 2021 15:43:44 -0400
+Received: from mav.lukeshu.com ([104.207.138.63]:35334 "EHLO mav.lukeshu.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S243905AbhDWTnf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Apr 2021 15:43:35 -0400
+        id S243880AbhDWTng (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Apr 2021 15:43:36 -0400
 Received: from lukeshu-dw-thinkpad (unknown [IPv6:2601:281:8200:26:4e34:88ff:fe48:5521])
-        by mav.lukeshu.com (Postfix) with ESMTPSA id 2AC9680591;
+        by mav.lukeshu.com (Postfix) with ESMTPSA id F127D80594;
         Fri, 23 Apr 2021 15:42:58 -0400 (EDT)
 From:   Luke Shumaker <lukeshu@lukeshu.com>
 To:     git@vger.kernel.org
@@ -37,9 +37,9 @@ Cc:     Avery Pennarun <apenwarr@gmail.com>,
         <pclouds@gmail.com>, Roger L Strain <roger.strain@swri.org>,
         Techlive Zheng <techlivezheng@gmail.com>,
         Luke Shumaker <lukeshu@datawire.io>
-Subject: [PATCH 19/30] subtree: give `$(git --exec-path)` precedence over `$PATH`
-Date:   Fri, 23 Apr 2021 13:42:19 -0600
-Message-Id: <20210423194230.1388945-20-lukeshu@lukeshu.com>
+Subject: [PATCH 20/30] subtree: use "^{commit}" instead of "^0"
+Date:   Fri, 23 Apr 2021 13:42:20 -0600
+Message-Id: <20210423194230.1388945-21-lukeshu@lukeshu.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210423194230.1388945-1-lukeshu@lukeshu.com>
 References: <20210423194230.1388945-1-lukeshu@lukeshu.com>
@@ -51,28 +51,36 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Luke Shumaker <lukeshu@datawire.io>
 
-Other Git commands implemented in shell give `git --exec-path`
-precedence over the existing $PATH, but subtree gives the existing $PATH
-precedence.  Flip subtree's PATH around to match what other commands do.
+They are synonyms.  Both are used in the file.  ^{commit} is clearer, so
+"standardize" on that.
 
 Signed-off-by: Luke Shumaker <lukeshu@datawire.io>
 ---
- contrib/subtree/git-subtree.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ contrib/subtree/git-subtree.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index 3105eb8033..9d365c9f2f 100755
+index 9d365c9f2f..d200fbfed7 100755
 --- a/contrib/subtree/git-subtree.sh
 +++ b/contrib/subtree/git-subtree.sh
-@@ -28,7 +28,7 @@ rejoin        merge the new branch back into HEAD
- squash        merge subtree changes as a single commit
- "
- 
--PATH=$PATH:$(git --exec-path)
-+PATH=$(git --exec-path):$PATH
- 
- arg_debug=
- arg_command=
+@@ -302,7 +302,7 @@ find_latest_squash () {
+ 			main="$b"
+ 			;;
+ 		git-subtree-split:)
+-			sub="$(git rev-parse "$b^0")" ||
++			sub="$(git rev-parse "$b^{commit}")" ||
+ 			die "could not rev-parse split hash $b from commit $sq"
+ 			;;
+ 		END)
+@@ -349,7 +349,7 @@ find_existing_splits () {
+ 			main="$b"
+ 			;;
+ 		git-subtree-split:)
+-			sub="$(git rev-parse "$b^0")" ||
++			sub="$(git rev-parse "$b^{commit}")" ||
+ 			die "could not rev-parse split hash $b from commit $sq"
+ 			;;
+ 		END)
 -- 
 2.31.1
 
