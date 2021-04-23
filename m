@@ -7,20 +7,23 @@ X-Spam-Status: No, score=-16.7 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C29CCC433B4
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 19:42:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D1ACC43460
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 19:42:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AA7C96128B
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 19:42:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 096186128B
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 19:42:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243896AbhDWTnc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Apr 2021 15:43:32 -0400
-Received: from mav.lukeshu.com ([104.207.138.63]:35254 "EHLO mav.lukeshu.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S243845AbhDWTn3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Apr 2021 15:43:29 -0400
+        id S243903AbhDWTnd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Apr 2021 15:43:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55478 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S243882AbhDWTna (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Apr 2021 15:43:30 -0400
+Received: from mav.lukeshu.com (mav.lukeshu.com [IPv6:2001:19f0:5c00:8069:5400:ff:fe26:6a86])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1DE1C06138D
+        for <git@vger.kernel.org>; Fri, 23 Apr 2021 12:42:52 -0700 (PDT)
 Received: from lukeshu-dw-thinkpad (unknown [IPv6:2601:281:8200:26:4e34:88ff:fe48:5521])
-        by mav.lukeshu.com (Postfix) with ESMTPSA id 1A91380592;
+        by mav.lukeshu.com (Postfix) with ESMTPSA id 0207280593;
         Fri, 23 Apr 2021 15:42:51 -0400 (EDT)
 From:   Luke Shumaker <lukeshu@lukeshu.com>
 To:     git@vger.kernel.org
@@ -37,9 +40,9 @@ Cc:     Avery Pennarun <apenwarr@gmail.com>,
         <pclouds@gmail.com>, Roger L Strain <roger.strain@swri.org>,
         Techlive Zheng <techlivezheng@gmail.com>,
         Luke Shumaker <lukeshu@datawire.io>
-Subject: [PATCH 11/30] subtree: t7900: add porcelain tests for 'pull' and 'push'
-Date:   Fri, 23 Apr 2021 13:42:11 -0600
-Message-Id: <20210423194230.1388945-12-lukeshu@lukeshu.com>
+Subject: [PATCH 12/30] subtree: don't have loose code outside of a function
+Date:   Fri, 23 Apr 2021 13:42:12 -0600
+Message-Id: <20210423194230.1388945-13-lukeshu@lukeshu.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210423194230.1388945-1-lukeshu@lukeshu.com>
 References: <20210423194230.1388945-1-lukeshu@lukeshu.com>
@@ -51,163 +54,300 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Luke Shumaker <lukeshu@datawire.io>
 
-The 'pull' and 'push' subcommands deserve their own sections in the tests.
-Add some basic tests for them.
+Shove all of the loose code inside of a main() function.
+
+"Ignore space change" is probably helpful when viewing this diff.
 
 Signed-off-by: Luke Shumaker <lukeshu@datawire.io>
 ---
- contrib/subtree/t/t7900-subtree.sh | 131 ++++++++++++++++++++++++++++-
- 1 file changed, 129 insertions(+), 2 deletions(-)
+ contrib/subtree/git-subtree.sh | 245 +++++++++++++++++----------------
+ 1 file changed, 125 insertions(+), 120 deletions(-)
 
-diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
-index 6b655ab4b5..3ee0524233 100755
---- a/contrib/subtree/t/t7900-subtree.sh
-+++ b/contrib/subtree/t/t7900-subtree.sh
-@@ -202,8 +202,8 @@ test_expect_success 'merge the added subproj again, should do nothing' '
- '
- 
- test_expect_success 'merge new subproj history into subdir/ with a slash appended to the argument of --prefix' '
--	test_create_repo "$test_count" &&
--	test_create_repo "$test_count/subproj" &&
-+	subtree_test_create_repo "$test_count" &&
-+	subtree_test_create_repo "$test_count/subproj" &&
- 	test_create_commit "$test_count" main1 &&
- 	test_create_commit "$test_count/subproj" sub1 &&
- 	(
-@@ -427,6 +427,133 @@ test_expect_success 'split "sub dir"/ with --branch for an incompatible branch'
- 	)
- '
- 
-+#
-+# Tests for 'git subtree pull'
-+#
-+
-+test_expect_success 'pull requires option --prefix' '
-+	subtree_test_create_repo "$test_count" &&
-+	subtree_test_create_repo "$test_count/sub proj" &&
-+	test_create_commit "$test_count" main1 &&
-+	test_create_commit "$test_count/sub proj" sub1 &&
-+	(
-+		cd "$test_count" &&
-+		git fetch ./"sub proj" HEAD &&
-+		git subtree add --prefix="sub dir" FETCH_HEAD
-+	) &&
-+	test_create_commit "$test_count/sub proj" sub2 &&
-+	(
-+		cd "$test_count" &&
-+		test_must_fail git subtree pull ./"sub proj" HEAD >out 2>err &&
-+
-+		echo "You must provide the --prefix option." >expected &&
-+		test_must_be_empty out &&
-+		test_cmp expected err
-+	)
-+'
-+
-+test_expect_success 'pull requires path given by option --prefix must exist' '
-+	subtree_test_create_repo "$test_count" &&
-+	subtree_test_create_repo "$test_count/sub proj" &&
-+	test_create_commit "$test_count" main1 &&
-+	test_create_commit "$test_count/sub proj" sub1 &&
-+	(
-+		test_must_fail git subtree pull --prefix="sub dir" ./"sub proj" HEAD >out 2>err &&
-+
-+		echo "'\''sub dir'\'' does not exist; use '\''git subtree add'\''" > expected &&
-+		test_must_be_empty out &&
-+		test_cmp expected err
-+	)
-+'
-+
-+test_expect_success 'pull basic operation' '
-+	subtree_test_create_repo "$test_count" &&
-+	subtree_test_create_repo "$test_count/sub proj" &&
-+	test_create_commit "$test_count" main1 &&
-+	test_create_commit "$test_count/sub proj" sub1 &&
-+	(
-+		cd "$test_count" &&
-+		git fetch ./"sub proj" HEAD &&
-+		git subtree add --prefix="sub dir" FETCH_HEAD
-+	) &&
-+	test_create_commit "$test_count/sub proj" sub2 &&
-+	(
-+		cd "$test_count" &&
-+		exp=$(git -C "sub proj" rev-parse --verify HEAD:) &&
-+		git subtree pull --prefix="sub dir" ./"sub proj" HEAD &&
-+		act=$(git rev-parse --verify HEAD:"sub dir") &&
-+		test "$act" = "$exp"
-+	)
-+'
-+
-+#
-+# Tests for 'git subtree push'
-+#
-+
-+test_expect_success 'push requires option --prefix' '
-+	subtree_test_create_repo "$test_count" &&
-+	subtree_test_create_repo "$test_count/sub proj" &&
-+	test_create_commit "$test_count" main1 &&
-+	test_create_commit "$test_count/sub proj" sub1 &&
-+	(
-+		cd "$test_count" &&
-+		git fetch ./"sub proj" HEAD &&
-+		git subtree add --prefix="sub dir" FETCH_HEAD &&
-+		echo "You must provide the --prefix option." > expected &&
-+		test_must_fail git subtree push "./sub proj" from-mainline > actual 2>&1 &&
-+		test_debug "printf '"expected: "'" &&
-+		test_debug "cat expected" &&
-+		test_debug "printf '"actual: "'" &&
-+		test_debug "cat actual" &&
-+		test_cmp expected actual
-+	)
-+'
-+
-+test_expect_success 'push requires path given by option --prefix must exist' '
-+	subtree_test_create_repo "$test_count" &&
-+	subtree_test_create_repo "$test_count/sub proj" &&
-+	test_create_commit "$test_count" main1 &&
-+	test_create_commit "$test_count/sub proj" sub1 &&
-+	(
-+		cd "$test_count" &&
-+		git fetch ./"sub proj" HEAD &&
-+		git subtree add --prefix="sub dir" FETCH_HEAD &&
-+		echo "'\''non-existent-directory'\'' does not exist; use '\''git subtree add'\''" > expected &&
-+		test_must_fail git subtree push --prefix=non-existent-directory "./sub proj" from-mainline > actual 2>&1 &&
-+		test_debug "printf '"expected: "'" &&
-+		test_debug "cat expected" &&
-+		test_debug "printf '"actual: "'" &&
-+		test_debug "cat actual" &&
-+		test_cmp expected actual
-+	)
-+'
-+
-+test_expect_success 'push basic operation' '
-+	subtree_test_create_repo "$test_count" &&
-+	subtree_test_create_repo "$test_count/sub proj" &&
-+	test_create_commit "$test_count" main1 &&
-+	test_create_commit "$test_count/sub proj" sub1 &&
-+	(
-+		cd "$test_count" &&
-+		git fetch ./"sub proj" HEAD &&
-+		git subtree add --prefix="sub dir" FETCH_HEAD
-+	) &&
-+	test_create_commit "$test_count" "sub dir"/main-sub1 &&
-+	test_create_commit "$test_count" main2 &&
-+	test_create_commit "$test_count/sub proj" sub2 &&
-+	test_create_commit "$test_count" "sub dir"/main-sub2 &&
-+	(
-+		cd "$test_count" &&
-+		git fetch ./"sub proj" HEAD &&
-+		git subtree merge --prefix="sub dir" FETCH_HEAD &&
-+		before=$(git rev-parse --verify HEAD) &&
-+		split_hash=$(git subtree split --prefix="sub dir") &&
-+		git subtree push --prefix="sub dir" ./"sub proj" from-mainline &&
-+		test "$before" = "$(git rev-parse --verify HEAD)" &&
-+		test "$split_hash" = "$(git -C "sub proj" rev-parse --verify refs/heads/from-mainline)"
-+	)
-+'
-+
+diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+index 868e18b9a1..d1ed7f9a6c 100755
+--- a/contrib/subtree/git-subtree.sh
++++ b/contrib/subtree/git-subtree.sh
+@@ -4,10 +4,7 @@
  #
- # Validity checking
+ # Copyright (C) 2009 Avery Pennarun <apenwarr@gmail.com>
  #
+-if test $# -eq 0
+-then
+-	set -- -h
+-fi
++
+ OPTS_SPEC="\
+ git subtree add   --prefix=<prefix> <commit>
+ git subtree add   --prefix=<prefix> <repository> <ref>
+@@ -30,12 +27,8 @@ rejoin        merge the new branch back into HEAD
+  options for 'add', 'merge', and 'pull'
+ squash        merge subtree changes as a single commit
+ "
+-eval "$(echo "$OPTS_SPEC" | git rev-parse --parseopt -- "$@" || echo exit $?)"
+ 
+ PATH=$PATH:$(git --exec-path)
+-. git-sh-setup
+-
+-require_work_tree
+ 
+ quiet=
+ branch=
+@@ -84,126 +77,138 @@ ensure_single_rev () {
+ 	fi
+ }
+ 
+-while test $# -gt 0
+-do
+-	opt="$1"
+-	shift
++main () {
++	if test $# -eq 0
++	then
++		set -- -h
++	fi
++	eval "$(echo "$OPTS_SPEC" | git rev-parse --parseopt -- "$@" || echo exit $?)"
++	. git-sh-setup
++	require_work_tree
+ 
+-	case "$opt" in
+-	-q)
+-		quiet=1
+-		;;
+-	-d)
+-		debug=1
+-		;;
+-	--annotate)
+-		annotate="$1"
+-		shift
+-		;;
+-	--no-annotate)
+-		annotate=
+-		;;
+-	-b)
+-		branch="$1"
+-		shift
+-		;;
+-	-P)
+-		prefix="${1%/}"
+-		shift
+-		;;
+-	-m)
+-		message="$1"
+-		shift
+-		;;
+-	--no-prefix)
+-		prefix=
+-		;;
+-	--onto)
+-		onto="$1"
++	while test $# -gt 0
++	do
++		opt="$1"
+ 		shift
++
++		case "$opt" in
++		-q)
++			quiet=1
++			;;
++		-d)
++			debug=1
++			;;
++		--annotate)
++			annotate="$1"
++			shift
++			;;
++		--no-annotate)
++			annotate=
++			;;
++		-b)
++			branch="$1"
++			shift
++			;;
++		-P)
++			prefix="${1%/}"
++			shift
++			;;
++		-m)
++			message="$1"
++			shift
++			;;
++		--no-prefix)
++			prefix=
++			;;
++		--onto)
++			onto="$1"
++			shift
++			;;
++		--no-onto)
++			onto=
++			;;
++		--rejoin)
++			rejoin=1
++			;;
++		--no-rejoin)
++			rejoin=
++			;;
++		--ignore-joins)
++			ignore_joins=1
++			;;
++		--no-ignore-joins)
++			ignore_joins=
++			;;
++		--squash)
++			squash=1
++			;;
++		--no-squash)
++			squash=
++			;;
++		--)
++			break
++			;;
++		*)
++			die "Unexpected option: $opt"
++			;;
++		esac
++	done
++
++	command="$1"
++	shift
++
++	case "$command" in
++	add|merge|pull)
++		default=
+ 		;;
+-	--no-onto)
+-		onto=
+-		;;
+-	--rejoin)
+-		rejoin=1
+-		;;
+-	--no-rejoin)
+-		rejoin=
+-		;;
+-	--ignore-joins)
+-		ignore_joins=1
+-		;;
+-	--no-ignore-joins)
+-		ignore_joins=
+-		;;
+-	--squash)
+-		squash=1
++	split|push)
++		default="--default HEAD"
+ 		;;
+-	--no-squash)
+-		squash=
++	*)
++		die "Unknown command '$command'"
+ 		;;
+-	--)
+-		break
++	esac
++
++	if test -z "$prefix"
++	then
++		die "You must provide the --prefix option."
++	fi
++
++	case "$command" in
++	add)
++		test -e "$prefix" &&
++			die "prefix '$prefix' already exists."
+ 		;;
+ 	*)
+-		die "Unexpected option: $opt"
++		test -e "$prefix" ||
++			die "'$prefix' does not exist; use 'git subtree add'"
+ 		;;
+ 	esac
+-done
+-
+-command="$1"
+-shift
+-
+-case "$command" in
+-add|merge|pull)
+-	default=
+-	;;
+-split|push)
+-	default="--default HEAD"
+-	;;
+-*)
+-	die "Unknown command '$command'"
+-	;;
+-esac
+-
+-if test -z "$prefix"
+-then
+-	die "You must provide the --prefix option."
+-fi
+-
+-case "$command" in
+-add)
+-	test -e "$prefix" &&
+-		die "prefix '$prefix' already exists."
+-	;;
+-*)
+-	test -e "$prefix" ||
+-		die "'$prefix' does not exist; use 'git subtree add'"
+-	;;
+-esac
+-
+-dir="$(dirname "$prefix/.")"
+-
+-if test "$command" != "pull" &&
+-		test "$command" != "add" &&
+-		test "$command" != "push"
+-then
+-	revs=$(git rev-parse $default --revs-only "$@") || exit $?
+-	dirs=$(git rev-parse --no-revs --no-flags "$@") || exit $?
+-	ensure_single_rev $revs
+-	if test -n "$dirs"
+-	then
+-		die "Error: Use --prefix instead of bare filenames."
+-	fi
+-fi
+-
+-debug "command: {$command}"
+-debug "quiet: {$quiet}"
+-debug "revs: {$revs}"
+-debug "dir: {$dir}"
+-debug "opts: {$*}"
+-debug
++
++	dir="$(dirname "$prefix/.")"
++
++	if test "$command" != "pull" &&
++			test "$command" != "add" &&
++			test "$command" != "push"
++	then
++		revs=$(git rev-parse $default --revs-only "$@") || exit $?
++		dirs=$(git rev-parse --no-revs --no-flags "$@") || exit $?
++		ensure_single_rev $revs
++		if test -n "$dirs"
++		then
++			die "Error: Use --prefix instead of bare filenames."
++		fi
++	fi
++
++	debug "command: {$command}"
++	debug "quiet: {$quiet}"
++	debug "revs: {$revs}"
++	debug "dir: {$dir}"
++	debug "opts: {$*}"
++	debug
++
++	"cmd_$command" "$@"
++}
+ 
+ cache_setup () {
+ 	cachedir="$GIT_DIR/subtree-cache/$$"
+@@ -898,4 +903,4 @@ cmd_push () {
+ 	fi
+ }
+ 
+-"cmd_$command" "$@"
++main "$@"
 -- 
 2.31.1
 
