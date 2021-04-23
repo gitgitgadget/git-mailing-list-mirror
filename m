@@ -5,63 +5,63 @@ X-Spam-Level:
 X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
-	version=3.4.0
+	URIBL_BLOCKED,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F8FCC433ED
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 00:15:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D2F6C433B4
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 00:15:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 00060613D8
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 00:15:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5E5D961155
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 00:15:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236224AbhDWAQW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Apr 2021 20:16:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52894 "EHLO
+        id S236877AbhDWAQX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Apr 2021 20:16:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52902 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231605AbhDWAQV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Apr 2021 20:16:21 -0400
-Received: from mail-qk1-x749.google.com (mail-qk1-x749.google.com [IPv6:2607:f8b0:4864:20::749])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DA25C061574
-        for <git@vger.kernel.org>; Thu, 22 Apr 2021 17:15:45 -0700 (PDT)
-Received: by mail-qk1-x749.google.com with SMTP id n18-20020a05620a1532b02902e4141f2fd8so6547553qkk.0
-        for <git@vger.kernel.org>; Thu, 22 Apr 2021 17:15:45 -0700 (PDT)
+        with ESMTP id S236319AbhDWAQX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Apr 2021 20:16:23 -0400
+Received: from mail-qv1-xf4a.google.com (mail-qv1-xf4a.google.com [IPv6:2607:f8b0:4864:20::f4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55416C061574
+        for <git@vger.kernel.org>; Thu, 22 Apr 2021 17:15:47 -0700 (PDT)
+Received: by mail-qv1-xf4a.google.com with SMTP id c5-20020a0ca9c50000b02901aede9b5061so4957509qvb.14
+        for <git@vger.kernel.org>; Thu, 22 Apr 2021 17:15:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=8g6eVnz6G2/KSY/HPB+pN5ILrUJHZvXaEYO/mDwxxaI=;
-        b=kDsp6eg2paxhqqEXdpTVNjkXOIqrYGwpO5NR5BsRYr8wDNT0RXIT1C4p10RWOtbr20
-         FVOHROD+DEpmlBqe64itMes4gDjPfbeQpdZPM7pZ4wCt0ueXQ/+5GhYISF3z2wQEUxt0
-         1+pml8a6+V9MW+5VNf3Ko1cU7x+C3bVL0h8p//ukhzFH8BsZRH1RAo32xL53/eIm95fd
-         YvdFgOappDcMlqvZ0IhbLNBMzGuoQjroeAAapIu5LTpABJ5E3NM5TUJuWQPmQ3qeHKmv
-         i4HXT/qkj4uQgGLt5JcuGfVZMR1Cb0g/xKfF4LT+vLpQIJ4hEpQN/aqMPCVH31wd7Wmz
-         yFnA==
+        bh=PbyIiFufSbyo/g1FNw00PACXkHOg84yyaWNB5eBEYCo=;
+        b=uUMfvXUSbwO1+/xV5n/B8HsxXYbKmff0Cz8LkYQE5XpSN+9gB7VkIyiAMLR5Yl/usk
+         jN+XmE8yr131JR3YGSIqjTv4bw04Xk3pp2gtZggReoyxD+NIAo9h1dXvg3EOO7ejtGxm
+         rGpuMz8TSc41Rd0CqgMrnRmAyd78hXoOyX20rMVzW4B7HRPk7TWzG9UcwF9bAMMOpnNi
+         5KG71st3Onz74dD68Cw8bWC4wpd8lvi9ESsctxt3gVrqCZsExjVp7M5pphVhUT0c931v
+         Vl95nnDw5TBMb8zVk6XgFKjP1IdC97ToI9Lg1/bpesW7gVg2TMqkvBr3P+Y/OUPUPeFo
+         2s5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=8g6eVnz6G2/KSY/HPB+pN5ILrUJHZvXaEYO/mDwxxaI=;
-        b=oQY0rCfBoIfIrQ7J6CeVcdOp9Csg85ocYl2znU3aEtldSZpPcdegHnzU8xskmsCjFe
-         REqg23OxfoumuD3tcz/xqbmfTq23aQh4E5juCCDPT1rrzkPpUH1MTC7X3DyMsll/AH4y
-         rIwYwJ9WWmeaCKdELeKoO9qh01/K4GDmPBC9Pri2cn/S78Efl4ktpkKousQy8jmRabV1
-         fQJvfaDCoq5/aGkRe+adlIByhozFLAFGwzwv8sPxPkEb0rPZaOeCGWabEDBKgJbC0vsc
-         DMfryTbG8fi6BIP10JPIwqN+fBhxEBpQstrXv04xp/C0AMA4g7UGx6/QIp9vWXcnH1cd
-         i2iw==
-X-Gm-Message-State: AOAM533utbQ7LNxTNnODY5ZMw/+I/UPPv1Zf+qD+bGGidxix3LjHpi/G
-        xEO9syZLllztR++P014MaQUWBthkzGZ8jxxbKp5OtxOboXVfKQBjqfLB+A4o2tVZYkFizEzgezr
-        6IXr3aGqbAA0I160QmVIxhCJ1SDD2HYBSgOolR6JuzidmkD7SkG7q/ynb6T6PWzVJ2U29ZRaabw
+        bh=PbyIiFufSbyo/g1FNw00PACXkHOg84yyaWNB5eBEYCo=;
+        b=X35OHsFFb2T72LtIGHe2NEADp6NjNzTWNIx6dx8RLW8xQ2GHPfaXM64d3mOLklrYZO
+         GkacqnOdrWHh4e3/VzAXK4d3gfyRsMMhxhQNBjjQy+NXxng59TxLyx2xb9tJJxfcBgZu
+         ZF8Cze0YBqj6OFyaSxhp0HISNg51p2Q+a3vuiEibRb797E1P7JqD0LJICMPqTRjPFbAM
+         lsgaXoiGkoMVJBvWd/O0xvMLGywX+Bxua2ilOA7feXwZXJbBjC4+QZtwDKP7NxewHwcW
+         Gi4r7U63Ci7+VUvxecxb18WtsRDbvknPyfi5hxW0cQ3N0PJqTE4oeywCykoVPlG6A6GL
+         kdFQ==
+X-Gm-Message-State: AOAM532GhF/oE5altArPRoSY/ZHonktEWJhAb6ph8qJVtOVUXWrKoc0+
+        VP0QlcYLAeU8MrCcdGyaz4b0BqXuGqUfo4EUasdpGCL0bO/G6XSTkSWt3Hw1cCtCxdcGOC41Yvc
+        gFOzo24ppmudx9yj3VOvXlWUSi29igWxwiema3ThcVWlTbqBLV8fgLxlPBMxXLw/KCu594i113w
         ==
-X-Google-Smtp-Source: ABdhPJz1ExnH73VKg5RnWQAjzjc3Dl+4LImhFWgnbZ1QUSghsbkAdOYTY52s0gQRmyyRAm98BfG4G477c+zjU+nspU0=
+X-Google-Smtp-Source: ABdhPJzdGmFvfMYboTX/WogeSQ2IyNEPpkM/5cZ+TPkaDg+td5BNhIbHyGDRPiUP54mr27EiweiTcufdM2hxcisXjEc=
 X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:0:fe4e:1417:67a4:42aa])
- (user=emilyshaffer job=sendgmr) by 2002:a0c:db82:: with SMTP id
- m2mr1247011qvk.37.1619136944817; Thu, 22 Apr 2021 17:15:44 -0700 (PDT)
-Date:   Thu, 22 Apr 2021 17:15:36 -0700
+ (user=emilyshaffer job=sendgmr) by 2002:a0c:9b82:: with SMTP id
+ o2mr1652721qve.47.1619136946577; Thu, 22 Apr 2021 17:15:46 -0700 (PDT)
+Date:   Thu, 22 Apr 2021 17:15:37 -0700
 In-Reply-To: <20210423001539.4059524-1-emilyshaffer@google.com>
-Message-Id: <20210423001539.4059524-2-emilyshaffer@google.com>
+Message-Id: <20210423001539.4059524-3-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20210423001539.4059524-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.31.1.498.g6c1eba8ee3d-goog
-Subject: [RFC PATCH v2 1/4] config: rename "submodule" scope to "gitmodules"
+Subject: [RFC PATCH v2 2/4] t1510-repo-setup: don't use exact matching on traces
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -70,59 +70,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-To prepare for the addition of a new config scope which only applies to
-submodule projects, disambiguate "CONFIG_SCOPE_SUBMODULES". This scope
-refers to configs gathered from the .gitmodules file in the
-superproject, so just call it "gitmodules."
+Tests which interrogate the exact underlying behavior of the code under
+test, instead of checking for the presence of desired side effects or
+calls, are a known testing antipattern. They are flaky as they need to
+be updated every time the underlying implementation changes.
+
+By using 'grep --fixed-strings --file <expect>' instead, we can check
+for the positive presence of lines we are sure should be happening, and
+ignore any additional things which may be happening around us (for
+example, additional child processes which are occurring unrelated to the
+code under test).
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
- config.c           | 4 ++--
- config.h           | 2 +-
- submodule-config.c | 2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ t/t1510-repo-setup.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/config.c b/config.c
-index 870d9534de..c8426ef3f3 100644
---- a/config.c
-+++ b/config.c
-@@ -3499,8 +3499,8 @@ const char *config_scope_name(enum config_scope scope)
- 		return "worktree";
- 	case CONFIG_SCOPE_COMMAND:
- 		return "command";
--	case CONFIG_SCOPE_SUBMODULE:
--		return "submodule";
-+	case CONFIG_SCOPE_GITMODULES:
-+		return "gitmodules";
- 	default:
- 		return "unknown";
- 	}
-diff --git a/config.h b/config.h
-index 19a9adbaa9..535f5517b8 100644
---- a/config.h
-+++ b/config.h
-@@ -42,7 +42,7 @@ enum config_scope {
- 	CONFIG_SCOPE_LOCAL,
- 	CONFIG_SCOPE_WORKTREE,
- 	CONFIG_SCOPE_COMMAND,
--	CONFIG_SCOPE_SUBMODULE,
-+	CONFIG_SCOPE_GITMODULES,
- };
- const char *config_scope_name(enum config_scope scope);
+diff --git a/t/t1510-repo-setup.sh b/t/t1510-repo-setup.sh
+index bbfe05b8e4..8bd4f54d03 100755
+--- a/t/t1510-repo-setup.sh
++++ b/t/t1510-repo-setup.sh
+@@ -63,7 +63,7 @@ test_repo () {
+ 		rm -f trace &&
+ 		GIT_TRACE_SETUP="$(pwd)/trace" git symbolic-ref HEAD >/dev/null &&
+ 		grep '^setup: ' trace >result &&
+-		test_cmp expected result
++		grep -Ff expected result
+ 	)
+ }
  
-diff --git a/submodule-config.c b/submodule-config.c
-index f502505566..0e435e6fdd 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -637,7 +637,7 @@ static void config_from_gitmodules(config_fn_t fn, struct repository *repo, void
- {
- 	if (repo->worktree) {
- 		struct git_config_source config_source = {
--			0, .scope = CONFIG_SCOPE_SUBMODULE
-+			0, .scope = CONFIG_SCOPE_GITMODULES
- 		};
- 		const struct config_options opts = { 0 };
- 		struct object_id oid;
 -- 
 2.31.1.498.g6c1eba8ee3d-goog
 
