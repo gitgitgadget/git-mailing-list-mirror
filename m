@@ -7,21 +7,24 @@ X-Spam-Status: No, score=-16.7 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F4168C43462
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 19:42:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57450C433B4
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 19:42:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C87EA610A2
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 19:42:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 36BB361075
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 19:42:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243738AbhDWTnW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Apr 2021 15:43:22 -0400
-Received: from mav.lukeshu.com ([104.207.138.63]:35144 "EHLO mav.lukeshu.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229691AbhDWTnW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Apr 2021 15:43:22 -0400
+        id S243801AbhDWTnX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Apr 2021 15:43:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55432 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S243795AbhDWTnX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Apr 2021 15:43:23 -0400
+Received: from mav.lukeshu.com (mav.lukeshu.com [IPv6:2001:19f0:5c00:8069:5400:ff:fe26:6a86])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F333C06174A
+        for <git@vger.kernel.org>; Fri, 23 Apr 2021 12:42:46 -0700 (PDT)
 Received: from lukeshu-dw-thinkpad (unknown [IPv6:2601:281:8200:26:4e34:88ff:fe48:5521])
-        by mav.lukeshu.com (Postfix) with ESMTPSA id CF59580594;
-        Fri, 23 Apr 2021 15:42:44 -0400 (EDT)
+        by mav.lukeshu.com (Postfix) with ESMTPSA id BCBB780590;
+        Fri, 23 Apr 2021 15:42:45 -0400 (EDT)
 From:   Luke Shumaker <lukeshu@lukeshu.com>
 To:     git@vger.kernel.org
 Cc:     Avery Pennarun <apenwarr@gmail.com>,
@@ -37,9 +40,9 @@ Cc:     Avery Pennarun <apenwarr@gmail.com>,
         <pclouds@gmail.com>, Roger L Strain <roger.strain@swri.org>,
         Techlive Zheng <techlivezheng@gmail.com>,
         Luke Shumaker <lukeshu@datawire.io>
-Subject: [PATCH 04/30] subtree: t7900: use consistent formatting
-Date:   Fri, 23 Apr 2021 13:42:04 -0600
-Message-Id: <20210423194230.1388945-5-lukeshu@lukeshu.com>
+Subject: [PATCH 05/30] subtree: t7900: comment subtree_test_create_repo
+Date:   Fri, 23 Apr 2021 13:42:05 -0600
+Message-Id: <20210423194230.1388945-6-lukeshu@lukeshu.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210423194230.1388945-1-lukeshu@lukeshu.com>
 References: <20210423194230.1388945-1-lukeshu@lukeshu.com>
@@ -51,147 +54,54 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Luke Shumaker <lukeshu@datawire.io>
 
-The formatting in t7900-subtree.sh isn't even consistent throughout the
-file.  Fix that; make it consistent throughout the file.
+It's unclear what the purpose of t7900-subtree.sh's
+`subtree_test_create_repo` helper function is.  It wraps test-lib.sh's,
+`test_create_repo` but follows that up by setting log.date=relative.  Why
+does it set log.date=relative?
+
+My first guess was that at one point the tests required that, but no
+longer do, and that the function is now vestigial.  I even wrote a patch
+to get rid of it and was moments away from `git send-email`ing it.
+
+However, by chance when looking for something else in the history, I
+discovered the true reason, from e7aac44ed2 (contrib/subtree: ignore
+log.date configuration, 2015-07-21).  It's testing that setting
+log.date=relative doesn't break `git subtree`, as at one point in the past
+that did break `git subtree`.
+
+So, add a comment about this, to avoid future such confusion.
+
+And while at it, go ahead and touch up the function to avoid a pointless
+subshell.
 
 Signed-off-by: Luke Shumaker <lukeshu@datawire.io>
 ---
- contrib/subtree/t/t7900-subtree.sh | 47 +++++++++++++-----------------
- 1 file changed, 21 insertions(+), 26 deletions(-)
+ contrib/subtree/t/t7900-subtree.sh | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
 diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
-index a6351d9195..74516513cd 100755
+index 74516513cd..827bd3fcd8 100755
 --- a/contrib/subtree/t/t7900-subtree.sh
 +++ b/contrib/subtree/t/t7900-subtree.sh
-@@ -11,11 +11,9 @@ and split subcommands of git subtree.
- 
- TEST_DIRECTORY=$(pwd)/../../../t
+@@ -13,12 +13,14 @@ TEST_DIRECTORY=$(pwd)/../../../t
  export TEST_DIRECTORY
-+. "$TEST_DIRECTORY"/test-lib.sh
+ . "$TEST_DIRECTORY"/test-lib.sh
  
--. ../../../t/test-lib.sh
--
--subtree_test_create_repo()
--{
-+subtree_test_create_repo () {
++# Use our own wrapper around test-lib.sh's test_create_repo, in order
++# to set log.date=relative.  `git subtree` parses the output of `git
++# log`, and so it must be careful to not be affected by settings that
++# change the `git log` output.  We test this by setting
++# log.date=relative for every repo in the tests.
+ subtree_test_create_repo () {
  	test_create_repo "$1" &&
- 	(
- 		cd "$1" &&
-@@ -23,26 +21,24 @@ subtree_test_create_repo()
- 	)
+-	(
+-		cd "$1" &&
+-		git config log.date relative
+-	)
++	git -C "$1" config log.date relative
  }
  
--create()
--{
-+create () {
- 	echo "$1" >"$1" &&
- 	git add "$1"
- }
- 
--check_equal()
--{
-+check_equal () {
- 	test_debug 'echo'
- 	test_debug "echo \"check a:\" \"{$1}\""
- 	test_debug "echo \"      b:\" \"{$2}\""
--	if [ "$1" = "$2" ]; then
-+	if [ "$1" = "$2" ]
-+	then
- 		return 0
- 	else
- 		return 1
- 	fi
- }
- 
--undo()
--{
-+undo () {
- 	git reset --hard HEAD~
- }
- 
-@@ -50,8 +46,7 @@ undo()
- # The original set of commits changed only one file each.
- # A multi-file change would imply that we pruned commits
- # too aggressively.
--join_commits()
--{
-+join_commits () {
- 	commit=
- 	all=
- 	while read x y; do
-@@ -70,7 +65,7 @@ join_commits()
- 	echo "$commit $all"
- }
- 
--test_create_commit() (
-+test_create_commit () (
- 	repo=$1 &&
- 	commit=$2 &&
- 	cd "$repo" &&
-@@ -81,8 +76,7 @@ test_create_commit() (
- 	git commit -m "$commit" || error "Could not commit"
- )
- 
--last_commit_message()
--{
-+last_commit_message () {
- 	git log --pretty=format:%s -1
- }
- 
-@@ -111,7 +105,8 @@ test_expect_success 'no pull from non-existent subtree' '
- 		cd "$test_count" &&
- 		git fetch ./"sub proj" HEAD &&
- 		test_must_fail git subtree pull --prefix="sub dir" ./"sub proj" HEAD
--	)'
-+	)
-+'
- 
- test_expect_success 'add subproj as subtree into sub dir/ with --prefix' '
- 	subtree_test_create_repo "$test_count" &&
-@@ -325,7 +320,7 @@ test_expect_success 'split sub dir/ with --rejoin' '
- 		git subtree split --prefix="sub dir" --annotate="*" --rejoin &&
- 		check_equal "$(last_commit_message)" "Split '\''sub dir/'\'' into commit '\''$split_hash'\''"
- 	)
-- '
-+'
- 
- test_expect_success 'split sub dir/ with --rejoin from scratch' '
- 	subtree_test_create_repo "$test_count" &&
-@@ -340,7 +335,7 @@ test_expect_success 'split sub dir/ with --rejoin from scratch' '
- 		git subtree split --prefix="sub dir" --rejoin &&
- 		check_equal "$(last_commit_message)" "Split '\''sub dir/'\'' into commit '\''$split_hash'\''"
- 	)
-- '
-+'
- 
- test_expect_success 'split sub dir/ with --rejoin and --message' '
- 	subtree_test_create_repo "$test_count" &&
-@@ -921,18 +916,18 @@ test_expect_success 'push split to subproj' '
- 	test_create_commit "$test_count" "sub dir"/main-sub2 &&
- 	(
- 		cd $test_count/"sub proj" &&
--                git branch sub-branch-1 &&
--                cd .. &&
-+		git branch sub-branch-1 &&
-+		cd .. &&
- 		git fetch ./"sub proj" HEAD &&
- 		git subtree merge --prefix="sub dir" FETCH_HEAD
- 	) &&
- 	test_create_commit "$test_count" "sub dir"/main-sub3 &&
--        (
-+	(
- 		cd "$test_count" &&
--	        git subtree push ./"sub proj" --prefix "sub dir" sub-branch-1 &&
--                cd ./"sub proj" &&
--                git checkout sub-branch-1 &&
--         	check_equal "$(last_commit_message)" "sub dir/main-sub3"
-+		git subtree push ./"sub proj" --prefix "sub dir" sub-branch-1 &&
-+		cd ./"sub proj" &&
-+		git checkout sub-branch-1 &&
-+		check_equal "$(last_commit_message)" "sub dir/main-sub3"
- 	)
- '
- 
+ create () {
 -- 
 2.31.1
 
