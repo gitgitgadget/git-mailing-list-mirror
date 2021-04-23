@@ -2,277 +2,180 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 01631C43461
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 15:31:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4324EC43460
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 16:19:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C12C8611AE
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 15:31:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1149561076
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 16:19:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242861AbhDWPca (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Apr 2021 11:32:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56386 "EHLO
+        id S231858AbhDWQTp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Apr 2021 12:19:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230294AbhDWPc2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Apr 2021 11:32:28 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93E62C06174A
-        for <git@vger.kernel.org>; Fri, 23 Apr 2021 08:31:51 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id r7so36806655wrm.1
-        for <git@vger.kernel.org>; Fri, 23 Apr 2021 08:31:51 -0700 (PDT)
+        with ESMTP id S230355AbhDWQTp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Apr 2021 12:19:45 -0400
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF2CFC061574
+        for <git@vger.kernel.org>; Fri, 23 Apr 2021 09:19:08 -0700 (PDT)
+Received: by mail-ot1-x32e.google.com with SMTP id d3-20020a9d29030000b029027e8019067fso43842557otb.13
+        for <git@vger.kernel.org>; Fri, 23 Apr 2021 09:19:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=F4HOaeHIO7KS1k6ttHWwH5r5xh4Z26cSAfantBfReEo=;
-        b=YfbfU0I5I+ZnQf8s3+gSHKplQPL2SbRZOmLn6cP9zH6hbfPPMlCSOrLwuobLr5qcGt
-         pG3cVo2qAFMqpaLibkvB/ek4fvIUSQvRvmdt/dzAe3Ysw7hZwTd8ayoZ1kQiW5r+1lDR
-         fIkA2PDbUMe107I4z+UjBiaYLCuxHmyUuC2WJ2GFjXqfH9q+kLuEmGcPPBLFZ9P7hiMT
-         TaYVIvlpu6iUAEISqawiec++Kl4gdqHPiNjgEyzpxNkWe9bHpccBczAWcIPPBVtRPL98
-         clOqixD9O0avznAFdnXahh8Lm47MCRsAisMaVQZCaKCTHxB0zyut4b2LH/z1llVgFDLs
-         p4Sw==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=ZHAMi+ZlTFAG034iOI1hIA5L7F3bwnODJhUrmeNZAeY=;
+        b=qN+NPjB/8JFk9XxhY5yvaZpfl4SYF4eM9HXSawNK+iVE9Qylx+m00gOyh/onkTuL4A
+         Ic8ZH/XAO5bFEEOYkgrUx/eTLj9xoZATcCfCmYIrl+cg2uk52sRvR6hAwSAoO7ZKdGzH
+         6f7iqFW4BjB6pn80F/uNGOI1/X6MEZWUoClUWdCvS4WZZzF1hlJZ+jymh0XKtSnoliBF
+         o5yZ/2vZ+YK1fX4HX0r0qICIvo5UbFOVjA4WtRmDAeFNDh1oeP0Bjtn6DZK2a6be6mOH
+         z90ae2otzS1sFT5vagtdkziOHb1cUU+9j9yKyy9wgwHd6TNckvEU7NyyTjwxHbyzGP9i
+         ypiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=F4HOaeHIO7KS1k6ttHWwH5r5xh4Z26cSAfantBfReEo=;
-        b=RvGB2TUPzYOVazmNqAcGLro7LGOjdr2BPCD5PFPUqTTv8GFAwl+1O11eDoTHyM0i1B
-         IkON+UJsGhFZLGImZCPTm/pA9q3wUtqXk1jMIxGHc2OhduhwZOyJtxqjiqGY224WQdCG
-         KG9kRXFJ0cz9vSZ6N0ewzPwlIGtK7r5KXMuNEgeFmkSlSCDng3NUWZg2JBm92O8KQrDc
-         fl0p5YNrltwYjWBIYDMud13mZxB0+P1d9LvmFdJ4EHKKeJQzQHXb8+SILRzscWBf8+H5
-         YHRy2xzdXgjKcDNudg/s/9JsXsGpT6VMQ1wixrlKxlV6Pk+uXXdwSrh1MvRGh2I3/9PD
-         kszA==
-X-Gm-Message-State: AOAM530fhy0FNG0TA71CBgXOTn1+ekemTvNVMp/JbVBO+JKbLpE4esj9
-        GG4MlYd7WKfGxl9NcjOtcsG3x792vtc=
-X-Google-Smtp-Source: ABdhPJwxce8cL5JjCaHAmhYCxyw2xj0txGmMU21ccodkDh1FcQ4aAbTksB4QqKjj8/Bn73DkfL+mTg==
-X-Received: by 2002:a5d:6d0a:: with SMTP id e10mr5561648wrq.161.1619191910397;
-        Fri, 23 Apr 2021 08:31:50 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u4sm12608293wml.0.2021.04.23.08.31.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Apr 2021 08:31:50 -0700 (PDT)
-Message-Id: <7fbc1c754f435c6d621734685ebee1bdc539c000.1619191907.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1011.v2.git.git.1619191907.gitgitgadget@gmail.com>
-References: <pull.1011.git.git.1619173446857.gitgitgadget@gmail.com>
-        <pull.1011.v2.git.git.1619191907.gitgitgadget@gmail.com>
-From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 23 Apr 2021 15:31:47 +0000
-Subject: [PATCH v2 3/3] refs: make errno output explicit for read_raw_ref_fn
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=ZHAMi+ZlTFAG034iOI1hIA5L7F3bwnODJhUrmeNZAeY=;
+        b=hH4XYd3lGe3GwguJaAB7HZpt5XoFmO0bIEHrR4I+goAUttcFoHKYa8CM/8zdxxviPI
+         Eg9EVx/XPZnb08RTYdDj3kbD8hnW2cEGSEoJp+N+7yL2Qp59BWNa/aQuLELYpVU3Kw41
+         pfoHsfNbyxeP/oufeIROidDTA/2nHG840xTyl+KEy9/mb69r9aYrEeRa7L3Qe9IJG+66
+         oATpM39aWU+nhJD2icMEGFVyDcw4PyKWgO3UthNQb0NBDnotYBTTJXLUUXcoksPKYAiE
+         eb5gB+rvK3qUZthuBLPfNEqrmufmfnwAXZiCNy2mLXgu3OKMNhQu6f6DeLafg+JOWwlh
+         I2Cg==
+X-Gm-Message-State: AOAM53397xtKes62iJo6xa3lBCvsPAL/JX7jlNd0RdW09LTB2ZgqHY8H
+        uV1TzhHdinVLsnOiTeK8waU=
+X-Google-Smtp-Source: ABdhPJwMFG73hqyLzYsH/REufPsO3UMh2limalm8V3wGGvKPi3w5VM8RqPePaAXyFyTiXQ1dG+5XqQ==
+X-Received: by 2002:a05:6830:781:: with SMTP id w1mr4064122ots.300.1619194748175;
+        Fri, 23 Apr 2021 09:19:08 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:3de1:cfe2:170e:4cb9? ([2600:1700:e72:80a0:3de1:cfe2:170e:4cb9])
+        by smtp.gmail.com with ESMTPSA id q1sm1441898otm.26.2021.04.23.09.19.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 23 Apr 2021 09:19:07 -0700 (PDT)
+Subject: Re: [PATCH 2/7] builtin/checkout.c: complete parallel checkout
+ support
+To:     Matheus Tavares <matheus.bernardino@usp.br>, git@vger.kernel.org
+Cc:     christian.couder@gmail.com, git@jeffhostetler.com
+References: <cover.1619104091.git.matheus.bernardino@usp.br>
+ <5e0dee7beba083159f4277ddcd9e931859239bde.1619104091.git.matheus.bernardino@usp.br>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <058f6ca4-a575-a463-e29b-9071c35e5bd3@gmail.com>
+Date:   Fri, 23 Apr 2021 12:19:06 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Han-Wen Nienhuys <hanwen@google.com>,
-        Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
+In-Reply-To: <5e0dee7beba083159f4277ddcd9e931859239bde.1619104091.git.matheus.bernardino@usp.br>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Han-Wen Nienhuys <hanwen@google.com>
+On 4/22/2021 11:17 AM, Matheus Tavares wrote:
+> There is one code path in builtin/checkout.c which still doesn't benefit
+> from parallel checkout because it calls checkout_entry() directly,> instead of unpack_trees(). Let's add parallel checkout support for this
+> missing spot as well.
 
-read_raw_ref_fn needs to supply a credible errno for a number of cases. These
-are primarily:
+I couldn't tell immediately from the patch what would trigger this
+code path. I had to trace the method calls to discover that it is
+for the case of a pathspec-limited checkout:
 
-1) The files backend calls read_raw_ref from lock_raw_ref, and uses the
-resulting error codes to create/remove directories as needed.
+	git checkout <ref> -- <pathspec>
 
-2) ENOENT should be translated in a zero OID, optionally with REF_ISBROKEN set,
-returning the last successfully resolved symref. This is necessary so
-read_raw_ref("HEAD") on an empty repo returns refs/heads/main (or the default branch
-du-jour), and we know on which branch to create the first commit.
+I confirmed that this does work with this change, but it might be
+nice to have a test that verifies that parallelism is triggering for
+this case.
 
-Make this information flow explicit by adding a failure_errno to the signature
-of read_raw_ref. All errnos from the files backend are still propagated
-unchanged, even though inspection suggests only ENOTDIR, EISDIR and ENOENT are
-relevant.
+Looking ahead to patches 4-6, which add tests, I do not see one for this
+code path. Yes, patch 7 will implicitly test it through optional
+settings, but it would be nice to verify that the code is actually using
+parallel workers. The test_checkout_workers helper in patch 4 should be
+helpful for this effort.
 
-Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
----
- refs.c                |  7 +++++--
- refs/debug.c          |  4 ++--
- refs/files-backend.c  | 17 ++++++++---------
- refs/packed-backend.c |  5 +++--
- refs/refs-internal.h  |  9 ++++++---
- 5 files changed, 24 insertions(+), 18 deletions(-)
+Please point out the test that covers this case, in case I'm just not
+seeing it.
 
-diff --git a/refs.c b/refs.c
-index 261fd82beb98..43e2ad6b612a 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1675,13 +1675,16 @@ int refs_read_raw_ref(struct ref_store *ref_store,
- 		      const char *refname, struct object_id *oid,
- 		      struct strbuf *referent, unsigned int *type)
- {
-+	int result, failure;
- 	if (!strcmp(refname, "FETCH_HEAD") || !strcmp(refname, "MERGE_HEAD")) {
- 		return refs_read_special_head(ref_store, refname, oid, referent,
- 					      type);
- 	}
+The good news is that I can see a difference. By alternating checkouts
+of the Git repository's "t" directory between v2.20 and v2.31.1, I can
+see these results for varying numbers of workers:
+
+Benchmark #1: 16 workers
+  Time (mean ± σ):     108.6 ms ±   5.2 ms    [User: 146.1 ms, System: 146.1 ms]
+  Range (min … max):    95.5 ms … 124.9 ms    100 runs
  
--	return ref_store->be->read_raw_ref(ref_store, refname, oid, referent,
--					   type);
-+	result = ref_store->be->read_raw_ref(ref_store, refname, oid, referent,
-+					     type, &failure);
-+	errno = failure;
-+	return result;
- }
+Benchmark #2: 8 workers
+  Time (mean ± σ):     104.8 ms ±   4.8 ms    [User: 128.3 ms, System: 131.7 ms]
+  Range (min … max):    94.2 ms … 119.0 ms    100 runs
  
- /* This function needs to return a meaningful errno on failure */
-diff --git a/refs/debug.c b/refs/debug.c
-index 922e64fa6ad9..887dbb14be6e 100644
---- a/refs/debug.c
-+++ b/refs/debug.c
-@@ -238,14 +238,14 @@ debug_ref_iterator_begin(struct ref_store *ref_store, const char *prefix,
+Benchmark #3: 4 workers
+  Time (mean ± σ):     112.3 ms ±   6.2 ms    [User: 114.6 ms, System: 112.1 ms]
+  Range (min … max):   100.0 ms … 127.4 ms    100 runs
  
- static int debug_read_raw_ref(struct ref_store *ref_store, const char *refname,
- 			      struct object_id *oid, struct strbuf *referent,
--			      unsigned int *type)
-+			      unsigned int *type, int *failure_errno)
- {
- 	struct debug_ref_store *drefs = (struct debug_ref_store *)ref_store;
- 	int res = 0;
+Benchmark #4: 2 workers
+  Time (mean ± σ):     124.2 ms ±   4.2 ms    [User: 106.5 ms, System: 102.0 ms]
+  Range (min … max):   114.8 ms … 136.3 ms    100 runs
  
- 	oidcpy(oid, &null_oid);
- 	res = drefs->refs->be->read_raw_ref(drefs->refs, refname, oid, referent,
--					    type);
-+					    type, failure_errno);
+Benchmark #5: sequential
+  Time (mean ± σ):     154.6 ms ±   6.7 ms    [User: 83.5 ms, System: 79.4 ms]
+  Range (min … max):   142.1 ms … 176.0 ms    100 runs
  
- 	if (res == 0) {
- 		trace_printf_key(&trace_refs, "read_raw_ref: %s: %s (=> %s) type %x: %d\n",
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index c9511da1d387..3ba3a96e1c6b 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -343,7 +343,7 @@ static struct ref_cache *get_loose_ref_cache(struct files_ref_store *refs)
- 
- static int files_read_raw_ref(struct ref_store *ref_store,
- 			      const char *refname, struct object_id *oid,
--			      struct strbuf *referent, unsigned int *type)
-+			      struct strbuf *referent, unsigned int *type, int *failure_errno)
- {
- 	struct files_ref_store *refs =
- 		files_downcast(ref_store, REF_STORE_READ, "read_raw_ref");
-@@ -354,7 +354,6 @@ static int files_read_raw_ref(struct ref_store *ref_store,
- 	struct stat st;
- 	int fd;
- 	int ret = -1;
--	int save_errno;
- 	int remaining_retries = 3;
- 
- 	*type = 0;
-@@ -459,10 +458,9 @@ static int files_read_raw_ref(struct ref_store *ref_store,
- 	ret = parse_loose_ref_contents(buf, oid, referent, type);
- 
- out:
--	save_errno = errno;
-+	*failure_errno = errno;
- 	strbuf_release(&sb_path);
- 	strbuf_release(&sb_contents);
--	errno = save_errno;
- 	return ret;
- }
- 
-@@ -541,6 +539,7 @@ static int lock_raw_ref(struct files_ref_store *refs,
- 	struct strbuf ref_file = STRBUF_INIT;
- 	int attempts_remaining = 3;
- 	int ret = TRANSACTION_GENERIC_ERROR;
-+	int failure_errno = 0;
- 
- 	assert(err);
- 	files_assert_main_repository(refs, "lock_raw_ref");
-@@ -630,8 +629,8 @@ static int lock_raw_ref(struct files_ref_store *refs,
- 	 */
- 
- 	if (files_read_raw_ref(&refs->base, refname,
--			       &lock->old_oid, referent, type)) {
--		if (errno == ENOENT) {
-+			       &lock->old_oid, referent, type, &failure_errno)) {
-+		if (failure_errno == ENOENT) {
- 			if (mustexist) {
- 				/* Garden variety missing reference. */
- 				strbuf_addf(err, "unable to resolve reference '%s'",
-@@ -655,7 +654,7 @@ static int lock_raw_ref(struct files_ref_store *refs,
- 				 *   reference named "refs/foo/bar/baz".
- 				 */
- 			}
--		} else if (errno == EISDIR) {
-+		} else if (failure_errno == EISDIR) {
- 			/*
- 			 * There is a directory in the way. It might have
- 			 * contained references that have been deleted. If
-@@ -693,13 +692,13 @@ static int lock_raw_ref(struct files_ref_store *refs,
- 					goto error_return;
- 				}
- 			}
--		} else if (errno == EINVAL && (*type & REF_ISBROKEN)) {
-+		} else if (failure_errno == EINVAL && (*type & REF_ISBROKEN)) {
- 			strbuf_addf(err, "unable to resolve reference '%s': "
- 				    "reference broken", refname);
- 			goto error_return;
- 		} else {
- 			strbuf_addf(err, "unable to resolve reference '%s': %s",
--				    refname, strerror(errno));
-+				    refname, strerror(failure_errno));
- 			goto error_return;
- 		}
- 
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index dfecdbc1db60..9a09ad7f5f29 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -726,7 +726,8 @@ static struct snapshot *get_snapshot(struct packed_ref_store *refs)
- 
- static int packed_read_raw_ref(struct ref_store *ref_store,
- 			       const char *refname, struct object_id *oid,
--			       struct strbuf *referent, unsigned int *type)
-+			       struct strbuf *referent, unsigned int *type,
-+			       int *failure_errno)
- {
- 	struct packed_ref_store *refs =
- 		packed_downcast(ref_store, REF_STORE_READ, "read_raw_ref");
-@@ -739,7 +740,7 @@ static int packed_read_raw_ref(struct ref_store *ref_store,
- 
- 	if (!rec) {
- 		/* refname is not a packed reference. */
--		errno = ENOENT;
-+		*failure_errno = ENOENT;
- 		return -1;
- 	}
- 
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 29728a339fed..15cc0ddd68ab 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -617,9 +617,11 @@ typedef int reflog_expire_fn(struct ref_store *ref_store,
-  * properly-formatted or even safe reference name. NEITHER INPUT NOR
-  * OUTPUT REFERENCE NAMES ARE VALIDATED WITHIN THIS FUNCTION.
-  *
-- * Return 0 on success. If the ref doesn't exist, set errno to ENOENT and return
-+ * Return 0 on success. If the ref doesn't exist, set failure_errno to ENOENT and return
-  * -1. If the ref exists but is neither a symbolic ref nor an object ID, it is
-- * broken; set REF_ISBROKEN in type, and return -1. If there is another error
-+ * broken; set REF_ISBROKEN in type, and return -1. For the files backend, EISDIR and ENOTDIR
-+ * may be set if the ref name is a directory
-+ * If there is another error
-  * reading the ref, set errno appropriately and return -1.
-  *
-  * Backend-specific flags might be set in type as well, regardless of
-@@ -636,7 +638,8 @@ typedef int reflog_expire_fn(struct ref_store *ref_store,
-  */
- typedef int read_raw_ref_fn(struct ref_store *ref_store,
- 			    const char *refname, struct object_id *oid,
--			    struct strbuf *referent, unsigned int *type);
-+			    struct strbuf *referent, unsigned int *type,
-+			    int *failure_errno);
- 
- struct ref_storage_be {
- 	struct ref_storage_be *next;
--- 
-gitgitgadget
+Summary
+  '8 workers' ran
+    1.04 ± 0.07 times faster than '16 workers'
+    1.07 ± 0.08 times faster than '4 workers'
+    1.19 ± 0.07 times faster than '2 workers'
+    1.48 ± 0.09 times faster than 'sequential'
+
+(Note: these time measurements are for the round-trip of two checkout
+commands.)
+> @@ -359,16 +360,22 @@ static int checkout_worktree(const struct checkout_opts *opts,
+>  	int nr_checkouts = 0, nr_unmerged = 0;
+>  	int errs = 0;
+>  	int pos;
+> +	int pc_workers, pc_threshold;
+> +	struct mem_pool ce_mem_pool;
+>  
+>  	state.force = 1;
+>  	state.refresh_cache = 1;
+>  	state.istate = &the_index;
+>  
+> +	mem_pool_init(&ce_mem_pool, 0);
+> +	get_parallel_checkout_configs(&pc_workers, &pc_threshold);
+>  	init_checkout_metadata(&state.meta, info->refname,
+>  			       info->commit ? &info->commit->object.oid : &info->oid,
+>  			       NULL);
+>  
+>  	enable_delayed_checkout(&state);
+> +	if (pc_workers > 1)
+> +		init_parallel_checkout();
+
+I'm late to looking at your parallel checkout work, but I find this
+to be a really nice API to get things initialized.
+
+
+>  			else if (opts->merge)
+>  				errs |= checkout_merged(pos, &state,
+> -							&nr_unmerged);
+> +							&nr_unmerged,
+> +							&ce_mem_pool);
+
+I see the need to populate these merged entries in the pool for now,
+before...
+
+>  			pos = skip_same_name(ce, pos) - 1;
+>  		}
+>  	}
+> +	if (pc_workers > 1)
+> +		errs |= run_parallel_checkout(&state, pc_workers, pc_threshold,
+> +					      NULL, NULL);
+> +	mem_pool_discard(&ce_mem_pool, should_validate_cache_entries());
+...now running the parallel checkout and discarding the entries.
+
+Thanks,
+-Stolee
