@@ -2,129 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+X-Spam-Status: No, score=-13.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CBE42C433ED
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 09:16:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C213C433ED
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 09:21:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 82A916145A
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 09:16:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 01FD3613B7
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 09:21:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230358AbhDWJQk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Apr 2021 05:16:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57824 "EHLO
+        id S230041AbhDWJVo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Apr 2021 05:21:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58902 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229456AbhDWJQj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Apr 2021 05:16:39 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 319F3C061574
-        for <git@vger.kernel.org>; Fri, 23 Apr 2021 02:16:03 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id mh2so51319886ejb.8
-        for <git@vger.kernel.org>; Fri, 23 Apr 2021 02:16:03 -0700 (PDT)
+        with ESMTP id S229456AbhDWJVn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Apr 2021 05:21:43 -0400
+Received: from mail-vk1-xa35.google.com (mail-vk1-xa35.google.com [IPv6:2607:f8b0:4864:20::a35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C96AC061574
+        for <git@vger.kernel.org>; Fri, 23 Apr 2021 02:21:06 -0700 (PDT)
+Received: by mail-vk1-xa35.google.com with SMTP id h130so5181794vkh.11
+        for <git@vger.kernel.org>; Fri, 23 Apr 2021 02:21:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=Ra6w3KAYblpEzDfSU0DznunTXvuFT4oTps6kGTcKf6U=;
-        b=L5KKOUdX23f9g2SYCybsP2pXuCxKoUPhuvNS3VszQ956kswx2TKWxf3It5nFHFXrqr
-         7Ug7ZZ+dWK2bgwe5jUlhJwIz4pNUJ76iDIKftup2WAbmUTIzHb27Y1NsHPkhvupapHd0
-         Bjem2GWfq3SA1cVEBNnZq7umGpzHTZ/iFwOLcbXB5hpCWrCJ25nqL7JHni36YbjPkh6Z
-         H9tviqWTdKvTI8OPUWvAiXkDh6wNkEhKW/4KFcEeoE7vcPFwzlSWHW8jrFk34yxvObkx
-         hLnSH4TlhTZZkCJn+GmDlcC00hUFlldlmsTSvPia/byMHn+1NX4iTvNOIGL/227srAE/
-         3WYg==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=BJ+ov6qy1c9ofZs78qHu2kD5kupRjQbub9etZ4R6BeY=;
+        b=KXxAxXctWRreOlVYArXvsBAGRA5OrUzdCbRn5AlIDAYwAgGt1PCOWQyh5hTn3hvYpq
+         S6Pp/QcGMUHv5E2IcffBAO1cW72Rl3fP/Zz62BhDhWK5egH+U7qySNe2773wDIUzFu9z
+         pTyxYYXVi4pot+9A23DK/uUk156AsHatNXR1lZOdpREauqqIZXWeyB0D6uiwF8KAWQNE
+         o4VyPTCs9z+EhAb10cgtyGvMttn+atw400jrZbnqoCEp9A/HBVSQuGB0PM5pYDQ09NUU
+         69lBnMAnfjoLaLtqVqP6+HFPFpbHBnEjflzQTsxKWAJe9EjAMOGSnRHwbeecwgbIf9Pm
+         7SwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=Ra6w3KAYblpEzDfSU0DznunTXvuFT4oTps6kGTcKf6U=;
-        b=G1bbq0wO4CH6DRz3YGBpqBIO7luasEey0/j4h4sHRwtcjv7A+5JApZAnPEPV8xXdvN
-         Z+PQYLyo3BuUWjg1H3uEdvJy+FF5/vbChl+Mk1rlKp1fGVy/2ngoQsB30huWJIuAkWv8
-         42rU+t3I2UO9xAFTSu/JtkvZFvyBMdExiRcSkMf598e6uSLp3uDU6HmPoBsCryU5AVYP
-         UIHXb8QxkE+N7fFl5yTHQREnMBZ5Pn3VtJ1OHhqiKlUtL7c0AWKYprV+cslB+aG3ibIT
-         udF3WaRB2yt7KNVhDgTpAoi/2Okiv1g2zXA+e0HP5K6z6eUfpL9UwNd7vL7Fa+BbFYeG
-         YnKA==
-X-Gm-Message-State: AOAM531d251Fx7c4IwO0XJJHCrWlgu4kg8U8c5Hbi2McmHaOFktWsPzx
-        iXg+4Zm3C55f7wKJsPNkvik=
-X-Google-Smtp-Source: ABdhPJzbeg6YvCtb1rr5vvPssLUeIgYZ74ozxMfNDhmSjcGXgj9/x62hr74J71T5UjztlkzUMx4FNw==
-X-Received: by 2002:a17:906:b09:: with SMTP id u9mr3208351ejg.244.1619169361860;
-        Fri, 23 Apr 2021 02:16:01 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id w6sm3514996eje.107.2021.04.23.02.16.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Apr 2021 02:16:01 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Han-Wen Nienhuys <hanwen@google.com>
-Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
-Subject: Re: [PATCH 04/18] t1401-symbolic-ref: avoid direct filesystem access
-References: <pull.1008.git.git.1618829583.gitgitgadget@gmail.com>
- <53cf1069552b6cd6161ce6f69a31c44e59091096.1618829583.git.gitgitgadget@gmail.com>
- <871rb45ftz.fsf@evledraar.gmail.com>
- <CAFQ2z_MMAM6jZ0+zRi+8fyS69Qw4fKQSsXgQW2zW7tcMdmN=QQ@mail.gmail.com>
- <20210422045953.GC2947267@szeder.dev>
- <CAFQ2z_Md=LAkJzohf3E5ogWGQHzxN_ik=yHAGmxm7bg-yT6-Zw@mail.gmail.com>
- <20210423051255.GD2947267@szeder.dev>
- <CAFQ2z_NgFC-7zENyD7HkEgvS6Dtc4qYqPRFL3m1LsbXnrFkPsA@mail.gmail.com>
- <CAFQ2z_N9_eXtuGcXSj1bwP5sy+t1fn8Q=X1na0jK9OpzDz2UAA@mail.gmail.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <CAFQ2z_N9_eXtuGcXSj1bwP5sy+t1fn8Q=X1na0jK9OpzDz2UAA@mail.gmail.com>
-Date:   Fri, 23 Apr 2021 11:16:00 +0200
-Message-ID: <87mttp1hv3.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=BJ+ov6qy1c9ofZs78qHu2kD5kupRjQbub9etZ4R6BeY=;
+        b=OBMetLa04EmPIippsVM8yzEa+OMEkHMU9DEUw76q5EgUEU/qU0LBHFbsfZvv9HGSzi
+         lOTr+8itDGkwXKnY2FfxVA26MtzTMX8qvuBTY6g+U3jY1RSphWRZdfMankPouMjZPW4l
+         q0L9GfEM5V2MT6CaVAloPNHLAAPYm2sXLn3jBYIElk1eWD/BpeKWQyq1Ga1qplZmOOeW
+         /kQbOFF+p6JEacTOly/yYvhFQHKtqL5xXVRLvxOmQc1tEwvSBFb5jVdvBAjjg1aiV4FG
+         Q53dBvmNaQ7ErDTQjLcihaMaDqf5xrUTns/nZi/yCdbG03dQBLTO1qJMuN1BmAqUlqs3
+         1Q3w==
+X-Gm-Message-State: AOAM530gwhnXY2+9tMCJg/2TDwgNp85tRX94Aei0p98XcP4J2mqVvJR2
+        JFGqlWkNRUC64Q9pFnszCqWiNUucvSMimProsPyRoQ==
+X-Google-Smtp-Source: ABdhPJy1RCgHLdluSmv+qbNsUh7BaR7YfeyiJzV11QEdxEqF8Itw/4hRH0Ep5QgZhEZhaygUMNzyX4lCMdVKeCT+Ps4=
+X-Received: by 2002:ac5:c185:: with SMTP id z5mr2337687vkb.19.1619169663258;
+ Fri, 23 Apr 2021 02:21:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <CAFQ2z_Ps3YxycA+NJ9VKt_PEXb+m83JdNB7ujzWw1fTPKyZ=fg@mail.gmail.com>
+ <87im4f3l62.fsf@evledraar.gmail.com> <xmqqim4fzier.fsf@gitster.g>
+In-Reply-To: <xmqqim4fzier.fsf@gitster.g>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Fri, 23 Apr 2021 11:20:52 +0200
+Message-ID: <CAFQ2z_OGv3qNp9jaeuMij5gqv1MoOeb73zH9mOvikLs8dWvmmg@mail.gmail.com>
+Subject: Re: reflog existence & reftable
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Fri, Apr 23 2021, Han-Wen Nienhuys wrote:
-
-> On Fri, Apr 23, 2021 at 9:47 AM Han-Wen Nienhuys <hanwen@google.com> wrot=
-e:
->>
->> On Fri, Apr 23, 2021 at 7:12 AM SZEDER G=C3=A1bor <szeder.dev@gmail.com>=
- wrote:
->> > > I see it as the test writer's job to clean up to the extent that
->> > > git-symbolic-ref can reset to a sane state.
->> >
->> > No, it's the job of whoever updates the cleanup routine to make sure
->> > that the updated cleanup routine still works just as well as it did in
->> > the past.
->>
->> Sorry, I don't mean to shirk my responsibility. What I mean is: is
->> there a way to signal "This test is fubar. Stop further execution of
->> test shell script".
+On Wed, Apr 21, 2021 at 6:55 PM Junio C Hamano <gitster@pobox.com> wrote:
+> If there isn't, then we could do either one of these two things.
 >
-> Or, more generally: if a cleanup routine fails, what is the point of
-> continuing to run the test script? If that happens, the test directory
-> is an indeterminate state, so the outcome of follow-on test-functions
-> is indeterminate as well.
+>  (1) we could add "git reflog create <ref>" and the reftable can
+>      record the fact that "reflog exists for the ref, but no ref
+>      movement recorded yet".  Then the condition C can be checked.
+>
+>  (2) we could declare that there is no way to create an empty reflog
+>      supported across ref backends, and make the tests that rely on
+>      the "feature" conditional on REF_FILES prerequisite.
+>
+> I have no strong preference.  In the early days I found the ability
+> to limit which branches get logged convenient, so if reftable
+> backend can learn the similar trick, we would want to go route (1)
+> (the convenience largely came from the fact that there was no need
+> to add one configuration item per branch, so I do not think we would
+> want to bother with branch.<name>.reflog=3Dbool configuration---that
+> won't be an easy-to-use substitute).  On the other hand, logs are
+> useful, and dormant logs are not costing anything (other than holding
+> onto stale objects we may no longer want), so it could be that it
+> may not be as convenient as it used to be to be able to turn logs on
+> only on selected refs, in which case approach (2) is fine.
 
-It's not a cleanup routine that's failing, but potentially the "setup
-the next test" routine.
+Exactly, these are the two options I outlined in my original message.
+Both can be made to work. I slightly prefer 2 (empty reflogs don't
+exist, and make logging a global switch), because it is simpler to
+understand and document. The divergence with the files backend itself
+is extra complexity, though. Maybe we could deprecate the behavior and
+always write reflogs in the  files backend too.
 
-In this case it's probably best to invert the logic, i.e. to make the
-tests do:
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
 
-	test_when_finished "rm -rf copy" &&=09
-	git clone . copy &&
-	<test-logic>
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
 
-Rather than:
+Registergericht und -nummer: Hamburg, HRB 86891
 
-	reset_state &&
-	<test-logic>
+Sitz der Gesellschaft: Hamburg
 
-That also makes it more obvious what's setup and what/where tests rely
-on things carried forward from previous tests.
-
-This test is just written in a style that I think it's fair to say
-wouldn't pass review today. E.g. if you skip the first N tests we do
-that resetting N times redundantly without any need for it. The pattern
-of moving state setup & teardown into individual tests is better.
-=09
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
