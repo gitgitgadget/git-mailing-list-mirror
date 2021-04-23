@@ -2,130 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FBC3C433ED
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 15:26:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8836BC433ED
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 15:31:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6D649613D5
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 15:26:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5162061042
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 15:31:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237081AbhDWP0n (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Apr 2021 11:26:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55134 "EHLO
+        id S231591AbhDWPc1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Apr 2021 11:32:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231437AbhDWP0m (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Apr 2021 11:26:42 -0400
-Received: from mail-ua1-x935.google.com (mail-ua1-x935.google.com [IPv6:2607:f8b0:4864:20::935])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3A56C06174A
-        for <git@vger.kernel.org>; Fri, 23 Apr 2021 08:26:04 -0700 (PDT)
-Received: by mail-ua1-x935.google.com with SMTP id r1so3352806uat.4
-        for <git@vger.kernel.org>; Fri, 23 Apr 2021 08:26:04 -0700 (PDT)
+        with ESMTP id S230294AbhDWPc0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Apr 2021 11:32:26 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEE7EC061574
+        for <git@vger.kernel.org>; Fri, 23 Apr 2021 08:31:49 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id o21-20020a1c4d150000b029012e52898006so1467496wmh.0
+        for <git@vger.kernel.org>; Fri, 23 Apr 2021 08:31:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=rc5KVK/4x6TTInau8GZ+9Jl8Ptmq1Ly44XP2xUJEu9o=;
-        b=ayiWAcF0B7P7iVgnygliG1ySA48Alhed8v1t9HADjij6bOtz8GXS0me4IVjaCKEgsi
-         KLJlExNkm4I7c//eEsynYCCFJFZFLwXhQQYI+HEleUnV/BWfsHBUi8W5/pvMxQQMrMQH
-         Ie9Sb/GNeigyvLYjOUdkVUx2y5Q01GuR/nklJb4aeFJXGtHswfWpx3x8thIQh+uQJh6O
-         tm3vxOsOAEipuhH00VmE2RGL48ptI2w03JiRIf4jmBh9vZ2ji4KYiJw84j85XLh+TVm4
-         DSGGazofleSXk6vTDRvXtuTfMNe4UGfgfyLjMYdm+We3Xd7oB0B40zeoBEpHtbfzHeMF
-         66eA==
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=BaZnimPkczXBVq6N45hEWx2xifFvSl48Pyf4dZ07eok=;
+        b=VjKKvB9gvMQlDUCpRmGlNC9/iGl77zWKRPbchWGWThSGicjAqzw6Fp70FG4Lg8mnJA
+         i3AHxzCUmzP1hEJ4aIOiYdPcUs4TGH9+GixKyYH1KIiuGCf16+0TjDZbocHkQAkxfpga
+         9Rtb/OViM671cuZxKNwR8EPyc7sBgdgqCP6ohwSHzCwFwLWjTP5DPVAaMPb60Jvtql7A
+         vFaCejmzAaF6Nhr0yMhUiNKM/NurhX1E/badaW7b9UnjWQoexKOioXgJGwqfDO/0dVyL
+         OzXZ7CSqRCEbJtdWgcS0LGwx7FLufExL/dlP4gPtw1PLInXPkUTdb3aZEiAlTELg4wrc
+         ggoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=rc5KVK/4x6TTInau8GZ+9Jl8Ptmq1Ly44XP2xUJEu9o=;
-        b=uGofYPb1bo8xUTZYeplsVh7Mlve3iqGQ0UKsAV5tor4TDU6HjCNPG7Aa0dlt+LWono
-         WoC0ftqxizPqgw3si1N/gJv9sTTceJuTi0x3LUfVCSPhRt8vd+TesK6Wh2haY1myzlMx
-         0nXHEN5daBtXbHwDON3/DbHAlLixkRFwKEi/XPaOyEqGwLfomTjvtWjpgX2aRQH6q83V
-         IyTcznJFKTumbl7Eb8Cwp3J5KzQFCPcJx6VeTaokIdHb1gAPpes2kOgxRgIJGOXEXBnV
-         p5qLoDni1n1VTLi5Fqw9Xp91nxN7HbzVsf/l8ZCEwZZDnkIEFmYsr4ZFujJej8nyEoSK
-         TCZA==
-X-Gm-Message-State: AOAM531+Nn9+ViEOVdI6tEDLAI84yjy6P17yxyY91MgvzZihJyiT87/n
-        uGT0kEDGpBYGG0zmQqAfgVaTRJksWrmI4SrY2Kw5IA==
-X-Google-Smtp-Source: ABdhPJxb7oJugVuMEWhcxvIc+cGHw7pgjUWOJFno35qH3ECBVULYtDvfB0S/tVBVHDu1sPW9eOvcchBWaD/z/YZgikQ=
-X-Received: by 2002:ab0:6030:: with SMTP id n16mr3846423ual.87.1619191563697;
- Fri, 23 Apr 2021 08:26:03 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=BaZnimPkczXBVq6N45hEWx2xifFvSl48Pyf4dZ07eok=;
+        b=OocEM4LeTioVXZ0mxfiCRr/+bIuKWp15PzAsXCZ6fZnqZoFjCiZ1z0oHmOU9/TW5uu
+         ooxtmyGv4m2rF9+Iva+mpsKZ6qXvAb5rqC2KpEHwMJQ6Jh2hXhk7oMOiq/b/wnitZE1v
+         khE1gRap3/7sj51ssxsY0M88wQmS1iHHF2AbKbhK0nYawb054sbl7C3an1wPaZabwmpy
+         6SW2/sERf8+yA1ox6W1ETtzpKPNABFjasJRuIEcattxe4kDwLABzAy9pG7fCia2L7HHV
+         2GsZgsif1B7mQDNmAKvgCDA7v+ZONNwT9KHodtmj7QpTsrTK5bFQ0C7Ykfv4mkm2vp/R
+         mdMw==
+X-Gm-Message-State: AOAM531XkLkJVZ++F3b5mKHcTeHQmMH/WtcFXTEUeUW+pF9ihE9VP+hB
+        6fCSRverdxlF8nmm/nDu4n8/LotGWQ0=
+X-Google-Smtp-Source: ABdhPJzfjKBW/6+mg9Ax9DzQE6pnN1yqByGU+LW06DmWpnFQbCOLCNWlRDJ5hDrh4gCbWplonhB5RQ==
+X-Received: by 2002:a1c:23d0:: with SMTP id j199mr6279481wmj.74.1619191908703;
+        Fri, 23 Apr 2021 08:31:48 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id f7sm9834513wrp.48.2021.04.23.08.31.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Apr 2021 08:31:48 -0700 (PDT)
+Message-Id: <pull.1011.v2.git.git.1619191907.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1011.git.git.1619173446857.gitgitgadget@gmail.com>
+References: <pull.1011.git.git.1619173446857.gitgitgadget@gmail.com>
+From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 23 Apr 2021 15:31:44 +0000
+Subject: [PATCH v2 0/3] refs: cleanup errno sideband ref related functions.
 MIME-Version: 1.0
-References: <pull.1011.git.git.1619173446857.gitgitgadget@gmail.com> <YILENm8vZE28HyuZ@coredump.intra.peff.net>
-In-Reply-To: <YILENm8vZE28HyuZ@coredump.intra.peff.net>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Fri, 23 Apr 2021 17:25:52 +0200
-Message-ID: <CAFQ2z_NxSLN-wNnk5gByit+_uhC9j-1QEt1=MZEk-kH5ztU6Jg@mail.gmail.com>
-Subject: Re: [PATCH] refs: remove EINVAL specification from the errno sideband
- in read_raw_ref_fn
-To:     Jeff King <peff@peff.net>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     Han-Wen Nienhuys <hanwen@google.com>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 23, 2021 at 2:57 PM Jeff King <peff@peff.net> wrote:
->
-> On Fri, Apr 23, 2021 at 10:24:06AM +0000, Han-Wen Nienhuys via GitGitGadg=
-et wrote:
->
-> > Subject: refs: remove EINVAL specification from the errno sideband in r=
-ead_raw_ref_fn
->
-> The subject says "read_raw_ref_fn", but the patch is touching
-> refs_resolve_ref_unsafe(). The former is an abstract type, and I didn't
-> dig to see the relationships, but I'll focus on the code change in the
-> patch.
+v2:
 
-Well spotted. I reverted this part (I did glance over existing
-callers, and couldn't find anyone inspecting errno)
+ * peff's feedback. For now, leave refs.c alone; instead cleanups in
+   files-backend and the ref backend API.
 
-> > A grep for EINVAL */*c reveals that no code inspects EINVAL after readi=
-ng
-> > references.
->
-> I don't think that's sufficient, for two reasons:
->
->   - in general we try to be careful about forks and topics in flight,
->     which might end up with semantic conflicts. So we don't necessarily
->     assume that we can see all code, and prefer if any subtle changes
->     like this at least result in a compile failure (e.g., changing
->     function name or signature). In practice, this is balanced with how
->     likely such code is, how bad the breakage would be, what we're
->     gaining, etc.
+Han-Wen Nienhuys (3):
+  refs: remove EINVAL specification from the errno sideband in
+    read_raw_ref_fn
+  refs/files-backend: stop setting errno from lock_ref_oid_basic
+  refs: make errno output explicit for read_raw_ref_fn
 
-would you say this is warranted here? refs.h doesn't mention the word
-errno, so this behavior isn't documented at all. I also looked over
-the current callers of read_raw_ref, and outside of refs/*.c none seem
-to inspect errno.
+ refs.c                |  7 +++++--
+ refs/debug.c          |  4 ++--
+ refs/files-backend.c  | 26 +++++++++-----------------
+ refs/packed-backend.c |  5 +++--
+ refs/refs-internal.h  | 14 ++++++++------
+ 5 files changed, 27 insertions(+), 29 deletions(-)
 
->   - just because they are not looking for EINVAL specifically doesn't
->     mean they are not looking at errno at all (e.g., after calling
->     refs_resolve_ref_unsafe(), lock_ref_oid_basic() does so). So we have
->     to set errno to _something_ after the error. After your patch, we
->     don't set it at all for these error returns, and so we'll be left
->     with whatever junk was in errno from a previous unrelated syscall,
->     which could be very misleading. Since we have to set it to
->     something, EINVAL seems like a reasonable value.
 
-The function has several exit paths that don't set errno at all, so
-the result is kind of random anyway, but I can't see the code I don't
-have. I've updated the series, with some real progress to stamping out
-errno. Hope this pleases you better.
+base-commit: 311531c9de557d25ac087c1637818bd2aad6eb3a
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1011%2Fhanwen%2Feinval-sideband-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1011/hanwen/einval-sideband-v2
+Pull-Request: https://github.com/git/git/pull/1011
 
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
+Range-diff vs v1:
 
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+ 1:  ed080f6a9c40 ! 1:  7e8181e77d40 refs: remove EINVAL specification from the errno sideband in read_raw_ref_fn
+     @@ Commit message
+      
+          Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+      
+     - ## refs.c ##
+     -@@ refs.c: const char *refs_resolve_ref_unsafe(struct ref_store *refs,
+     - 	if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL)) {
+     - 		if (!(resolve_flags & RESOLVE_REF_ALLOW_BAD_NAME) ||
+     - 		    !refname_is_safe(refname)) {
+     --			errno = EINVAL;
+     - 			return NULL;
+     - 		}
+     - 
+     -@@ refs.c: const char *refs_resolve_ref_unsafe(struct ref_store *refs,
+     - 		if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL)) {
+     - 			if (!(resolve_flags & RESOLVE_REF_ALLOW_BAD_NAME) ||
+     - 			    !refname_is_safe(refname)) {
+     --				errno = EINVAL;
+     - 				return NULL;
+     - 			}
+     - 
+     -
+       ## refs/refs-internal.h ##
+      @@ refs/refs-internal.h: typedef int reflog_expire_fn(struct ref_store *ref_store,
+        * properly-formatted or even safe reference name. NEITHER INPUT NOR
+ -:  ------------ > 2:  db5da7d7fb51 refs/files-backend: stop setting errno from lock_ref_oid_basic
+ -:  ------------ > 3:  7fbc1c754f43 refs: make errno output explicit for read_raw_ref_fn
 
-Registergericht und -nummer: Hamburg, HRB 86891
-
-Sitz der Gesellschaft: Hamburg
-
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+-- 
+gitgitgadget
