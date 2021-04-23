@@ -2,30 +2,28 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AA19C433ED
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 23:50:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 51ECCC433B4
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 23:58:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 579B8611BF
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 23:50:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2B82A61425
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 23:58:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236923AbhDWXvV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Apr 2021 19:51:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52806 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232106AbhDWXvU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Apr 2021 19:51:20 -0400
-Received: from mav.lukeshu.com (mav.lukeshu.com [IPv6:2001:19f0:5c00:8069:5400:ff:fe26:6a86])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 062BEC061574
-        for <git@vger.kernel.org>; Fri, 23 Apr 2021 16:50:42 -0700 (PDT)
+        id S232438AbhDWX7B (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Apr 2021 19:59:01 -0400
+Received: from mav.lukeshu.com ([104.207.138.63]:36022 "EHLO mav.lukeshu.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232101AbhDWX7A (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Apr 2021 19:59:00 -0400
 Received: from lukeshu-dw-thinkpad (unknown [IPv6:2601:281:8200:26:4e34:88ff:fe48:5521])
-        by mav.lukeshu.com (Postfix) with ESMTPSA id 0FD1880590;
-        Fri, 23 Apr 2021 19:50:36 -0400 (EDT)
-Date:   Fri, 23 Apr 2021 17:50:36 -0600
-Message-ID: <87zgxoa7cj.wl-lukeshu@lukeshu.com>
+        by mav.lukeshu.com (Postfix) with ESMTPSA id 353FB80590;
+        Fri, 23 Apr 2021 19:58:21 -0400 (EDT)
+Date:   Fri, 23 Apr 2021 17:58:20 -0600
+Message-ID: <87y2d8a6zn.wl-lukeshu@lukeshu.com>
 From:   Luke Shumaker <lukeshu@lukeshu.com>
 To:     Eric Sunshine <sunshine@sunshineco.com>
 Cc:     Luke Shumaker <lukeshu@lukeshu.com>,
@@ -44,11 +42,11 @@ Cc:     Luke Shumaker <lukeshu@lukeshu.com>,
         Roger L Strain <roger.strain@swri.org>,
         Techlive Zheng <techlivezheng@gmail.com>,
         Luke Shumaker <lukeshu@datawire.io>
-Subject: Re: [PATCH 18/30] subtree: use $* instead of $@ as appropriate
-In-Reply-To: <CAPig+cTb-h=Qb9asvh+MVH2s5uj7szP_QOPpcm1bqdE6DK9V7g@mail.gmail.com>
+Subject: Re: [PATCH 23/30] subtree: add comments and sanity checks
+In-Reply-To: <CAPig+cQmTTdVKQptQY_tT_x4DCduRh=Mq6QZ1vUsc790-0yTQw@mail.gmail.com>
 References: <20210423194230.1388945-1-lukeshu@lukeshu.com>
-        <20210423194230.1388945-19-lukeshu@lukeshu.com>
-        <CAPig+cTb-h=Qb9asvh+MVH2s5uj7szP_QOPpcm1bqdE6DK9V7g@mail.gmail.com>
+        <20210423194230.1388945-24-lukeshu@lukeshu.com>
+        <CAPig+cQmTTdVKQptQY_tT_x4DCduRh=Mq6QZ1vUsc790-0yTQw@mail.gmail.com>
 User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
  FLIM-LB/1.14.9 (=?ISO-8859-4?Q?Goj=F2?=) APEL-LB/10.8 EasyPG/1.0.0
  Emacs/27.2 (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
@@ -58,60 +56,48 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 23 Apr 2021 14:40:31 -0600,
+On Fri, 23 Apr 2021 14:58:34 -0600,
 Eric Sunshine wrote:
 > 
 > On Fri, Apr 23, 2021 at 3:43 PM Luke Shumaker <lukeshu@lukeshu.com> wrote:
-> > $* is for when you want to smash things together, whitespace-separated;
-> > $@ is for when you want them to be separate strings.  There are a couple
-> > of places in subtree that erroneously use $@ when smashing args together
-> > in to an error message.
+> > Signed-off-by: Luke Shumaker <lukeshu@datawire.io>
+> > ---
+> > diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+> > @@ -248,17 +263,22 @@ rev_exists () {
+> > +# Usage: try_remove_previous REV
+> > +#
+> >  # if a commit doesn't have a parent, this might not work.  But we only want
 > 
-> Can we be explicit and say "$@" in the commit message rather than bare
-> $@ since the unquoted form is not magical and acts exactly like $*.
+> s/if/If/ perhaps
+
+Ack.
+
+> >  # to remove the parent from the rev-list, and since it doesn't exist, it won't
+> >  # be there anyway, so do nothing in that case.
+> > @@ -302,10 +322,12 @@ find_latest_squash () {
+> > +# Usage: find_existing_splits DIR REV
+> >  find_existing_splits () {
+> > +       assert test $# = 2
+> >         debug "Looking for prior splits..."
+> >         dir="$1"
+> > -       revs="$2"
+> > +       rev="$2"
+> > @@ -314,7 +336,7 @@ find_existing_splits () {
+> >         git log --grep="$grep_format" \
+> > -               --no-show-signature --pretty=format:'START %H%n%s%n%n%b%nEND%n' $revs |
+> > +               --no-show-signature --pretty=format:'START %H%n%s%n%n%b%nEND%n' "$rev" |
 > 
-> Also: s/in to/into/
-> 
-> Nit: I have some trouble following what the commit message is actually
-> trying to say with "smash things" and "separate strings". It might be
-> simpler to say merely that use of "$@" in these particular instances
-> is overkill and possibly misleading to readers not familiar with the
-> finer details of $* vs. "$@".
-> 
-> The patch itself makes sense.
+> The caller of this function is passing in "$revs". Did you make this
+> semantic change because the caller's `revs` is guaranteed to be a
+> single rev? In any case, this change may deserve mention in the commit
+> message so readers don't have to wonder about it.
 
-How's this:
+No it's not?  The only caller is
 
----
-subtree: use "$*" instead of "$@" as appropriate
+	unrevs="$(find_existing_splits "$dir" "$rev")" || exit $?
 
-"$*" is for when you want to concatenate the args together,
-whitespace-separated; and "$@" is for when you want them to be separate
-strings.
-
-There are several places in subtree that erroneously use $@ when
-concatenating args together into an error message.
-
-For instance, if the args are argv[1]="dead" and argv[2]="beef", then
-the line
-
-    die "You must provide exactly one revision.  Got: '$@'"
-
-surely intends to call 'die' with the argument
-
-    argv[1]="You must provide exactly one revision.  Got: 'dead beef'"
-
-however, because the line used $@ instead of $*, it will actually call
-'die' with the arguments
-
-    argv[1]="You must provide exactly one revision.  Got: 'dead"
-    argv[2]="beef'"
-
-This isn't a big deal, because 'die' concatenates its arguments together
-anyway (using "$*").  But that doesn't change the fact that it was a
-mistake to use $@ instead of $*, even though in the end $@ still ended
-up doing the right thing.
----
+But yeah, this would be a good thing for me to call out in the commit
+message.
 
 -- 
 Happy hacking,
