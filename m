@@ -2,171 +2,227 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DC6E2C433B4
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 05:47:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DAFD1C433ED
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 06:38:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A41FE60BBB
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 05:47:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A65166144A
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 06:38:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240329AbhDWFsC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Apr 2021 01:48:02 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:57717 "EHLO
-        out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229456AbhDWFsB (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 23 Apr 2021 01:48:01 -0400
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.nyi.internal (Postfix) with ESMTP id DCB7D5C015C;
-        Fri, 23 Apr 2021 01:47:24 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Fri, 23 Apr 2021 01:47:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
-        :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm3; bh=hmLArgP04ZSCTFrm4NV6gY+ojZ8
-        hg1UEQZLVuQ3i5eI=; b=toaxpDxHrCEmIUhPBNW/e5jNjM90y9kwWN7EkkQIPe3
-        3u7tZbUYhkqOvH5YXp0dAuqh+9XVnSs66KVSeH7omhSbr5jxd0Og27Wr7FZMih6r
-        WJIwCcEKMsVfiVChXFsdD7c0gWD+Rr3mEBZQtD0gPpE9REI2OISA7uT1lJiQvWX3
-        SilyTsmjbNYyrl/SYEEwKIICM3iPjwwW3mZc8YhtNbpX3JAE3nsZnLHd1fAPsxbY
-        bpn8G+b7lKPeWkg3N5y8Wlh3cnr83cBVftxXv+zTjGC4Rc473tPM2QxyraxNOJqB
-        CfEJ7lxYCJH0fsysHoc2TPQXEnV3kqzPzX6X8aefLGw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=hmLArg
-        P04ZSCTFrm4NV6gY+ojZ8hg1UEQZLVuQ3i5eI=; b=FZpSXgFoUdwobZcSjPab6F
-        DSh/s1ge1lIlgrhzLB2sOtP7B003YSlhRfjsV2X76h/vt6y9MLqx/169/bHh7y5b
-        PAgmpFScLMG7uLfQ3ioy7yN6yhN9U9Knn9b2padeS/bDTq6nmRaO5/P8FgxxGRaW
-        MYMNIlHBmeSs8UyzSDsp0WvCCDqlBXU/VJ9i1n7rmhjxYxdeW6aAl1AbKyFxRwa4
-        BnqtyWHCIn1fbjJzysijjfOxtQiuDlvs8mG0NrPO1VES+aDYiHWaXLZOWlR2Qz0t
-        URqWSFuw6vrs7Q7Ukxg+3mIypiPrO13pohHNeNmDbdSOhLEVNNVrXY5zuW+JPcTQ
-        ==
-X-ME-Sender: <xms:bF-CYAKvrPryvpruO_bQe-xNjqNj6N3z7OiAqcAeUF0ZB0_D6lpenw>
-    <xme:bF-CYAJskDrZ1X4aiZVqodvT27VYfRY8ku8KJEYJOt0BTCeM3nwyzf_pKvu3iphyL
-    mMQ94oMTuonMdzehA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdduuddgleeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddunecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpedtffejieduudelhedvgfetieefleehjeetvdetudeitdetvddtfffffefhvdfggfen
-    ucfkphepjeejrdduuddruddtgedrhedunecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:bF-CYAshwPVMdlLa3vyYhnd3x45d36gTlKJJ5cAooyC5qyBblNNVLQ>
-    <xmx:bF-CYNZfhYX-H6jJKSqc3SQHNS52dceJIDyjrK-btucrwJTPeu4xvg>
-    <xmx:bF-CYHbWb9dirKOEIkzrcW9igsouYtV-gBY08bEnJbI80Co9rgkJ-g>
-    <xmx:bF-CYGn8dkHYdpA6ncva7KesU0AyAlaF5Y6B9ClRKHFYIzIgpVuatw>
-Received: from vm-mail.pks.im (dynamic-077-011-104-051.77.11.pool.telefonica.de [77.11.104.51])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 6EFC8108005B;
-        Fri, 23 Apr 2021 01:47:23 -0400 (EDT)
-Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id d8d4dc93 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Fri, 23 Apr 2021 05:47:16 +0000 (UTC)
-Date:   Fri, 23 Apr 2021 07:47:15 +0200
-From:   Patrick Steinhardt <ps@pks.im>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH] t1300: fix unset of GIT_CONFIG_NOSYSTEM leaking into
- subsequent tests
-Message-ID: <5b69d9d34e4bdf1c7eb3b172ad8ef0f78542c789.1619156659.git.ps@pks.im>
-References: <20210421204637.GA2947267@szeder.dev>
+        id S240686AbhDWGiu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Apr 2021 02:38:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51314 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240648AbhDWGit (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Apr 2021 02:38:49 -0400
+Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90C06C061574
+        for <git@vger.kernel.org>; Thu, 22 Apr 2021 23:38:13 -0700 (PDT)
+Received: by mail-ot1-x330.google.com with SMTP id 92-20020a9d02e50000b029028fcc3d2c9eso21975483otl.0
+        for <git@vger.kernel.org>; Thu, 22 Apr 2021 23:38:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=y5HJqHgWwsn3du6q9NGPzCMgwQsojBt7+UEz91VJBE0=;
+        b=sj7zi0g3Q5zeeYiGYgCqG/QjPL9Xn+eXFcsJuxDyv7oG4bE7G5zPOgWR+oc2jJdb4r
+         FK8Vk4p73DA1J+6nCYo0Ce42prSA2rU4sLcYn74my+ZJ2nCrc13zjHwEt1fIMRE2bPuG
+         jXzuCHcTIUpyXSxx0OXHLJ2OLWXRHTqFdFZf+ATSpsFBw/QsWb+ZosMbN65TRJhXyqwO
+         0ZH5m8y/D+i72AQWqbDqe07Xxwin+u3A9Lz5q4nGJYMdniLqSLZazElY5q1mPpAMlHNK
+         d+iAl8vET08zLb6tMp3GVNWWzVgFY5HVj/D98vZXMaumeQwVe5W1xLDOLgaZvRsk52X3
+         Q+sA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=y5HJqHgWwsn3du6q9NGPzCMgwQsojBt7+UEz91VJBE0=;
+        b=tc2KPtBEiQ3VHz7rVq1LXmh3XsJVa+3X/VeWRm57eash7JvWGhbs8FxDI3xSLZpQPE
+         wHtJvUskb5hmRruZ1iqJAx6MSiEdm9c+44VywS3//isw/AKDgJgdmCUWrjBb5FMUdren
+         BB6SUzEIsCSqKGQNfCRg12ka2XT8+ATCGOkudavkX3EMu9m5OrE+2cgmR5WZaQ39jvf5
+         TDJMyzmsWbBLfzOPV/MhZjrG9x66rgi3E4tTaEsEKharwMfD58t0k4HR5hnXoSeO93Wh
+         kHmH67msxnhqEm77GV5EDI1yxtjFpWUuoILBatkmrKNME5kiDhG0HT9JYDpmqlrhO3cd
+         k4Yw==
+X-Gm-Message-State: AOAM530rk+6Eiem4w3jOqOwGpBFowk4Oxs8P/aR9hs+L3300YzoZNgNW
+        nVa7jEh1pG9QEIC8EetKgWo=
+X-Google-Smtp-Source: ABdhPJx9tbdYnGdJkLunqFNZaT/hRAuK28RlmwvWjgFJoJjI8n39txTPnIV9mWBbo1UD0pc/Qof/kw==
+X-Received: by 2002:a05:6830:4d1:: with SMTP id s17mr1974291otd.108.1619159892947;
+        Thu, 22 Apr 2021 23:38:12 -0700 (PDT)
+Received: from localhost.localdomain ([142.93.93.167])
+        by smtp.googlemail.com with ESMTPSA id x5sm1214919ota.79.2021.04.22.23.38.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Apr 2021 23:38:11 -0700 (PDT)
+From:   Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
+        Git List <git@vger.kernel.org>
+Cc:     Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>
+Subject: [PATCH] add git-p4.fallbackEncoding config variable, to prevent git-p4 from crashing on non UTF-8 changeset descriptions
+Date:   Thu, 22 Apr 2021 23:36:32 -0700
+Message-Id: <20210423063632.1973-1-tzadik.vanderhoof@gmail.com>
+X-Mailer: git-send-email 2.31.1.windows.1
+In-Reply-To: <CAPig+cQUaJq4Bu1NDSBnsQoR2HXhQ+s+4aQHeVP82DM_BuEL8Q@mail.gmail.com>
+References: <CAPig+cQUaJq4Bu1NDSBnsQoR2HXhQ+s+4aQHeVP82DM_BuEL8Q@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="2n4nAobNrIp5UA3d"
-Content-Disposition: inline
-In-Reply-To: <20210421204637.GA2947267@szeder.dev>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+When git-p4 reads the output from a p4 command, it assumes it will be
+100% UTF-8. If even one character in the output of one p4 command is
+not UTF-8, git-p4 crashes with:
 
---2n4nAobNrIp5UA3d
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+    File "C:/Program Files/Git/bin/git-p4.py", line 774, in p4CmdList
+        value = value.decode() UnicodeDecodeError: 'utf-8' codec can't
+        decode byte Ox93 in position 42: invalid start byte
 
-In order to test whether the new GIT_CONFIG_SYSTEM environment variable
-behaves as expected, we unset GIT_CONFIG_NOSYSTEM in one of our tests in
-t1300. But because tests are not executed in a subshell, this unset
-leaks into all subsequent tests and may thus cause them to fail in some
-environments. These failures are easily reproducable with `make
-prefix=3D/root test`.
+This is especially a problem for the "git p4 clone ... @all" command,
+where git-p4 needs to read thousands of changeset descriptions, one of
+which may have a stray smart quote, causing the whole clone operation
+to fail.
 
-Fix the issue by not using `sane_unset GIT_CONFIG_NOSYSTEM`, but instead
-just manually add it to the environment of the two command invocations
-which need it.
+Add a new config setting, allowing git-p4 to try a fallback encoding
+(for example, "cp1252") and/or use the Unicode replacement character,
+to prevent the whole program from crashing on such a minor problem.
 
-Reported-by: SZEDER G=E1bor <szeder.dev@gmail.com>
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
+Signed-off-by: Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>
 ---
+ Documentation/git-p4.txt                   |  9 +++
+ git-p4.py                                  | 11 +++-
+ t/t9835-git-p4-config-fallback-encoding.sh | 76 ++++++++++++++++++++++
+ 3 files changed, 95 insertions(+), 1 deletion(-)
+ create mode 100755 t/t9835-git-p4-config-fallback-encoding.sh
 
-This patch applies on top of 47e6f16901 (Sync with master, 2021-04-20),
-which is the tip of next at the time of writing.
-
- t/t1300-config.sh | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
-
-diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-index 0f92dfe6fb..ec599baeba 100755
---- a/t/t1300-config.sh
-+++ b/t/t1300-config.sh
-@@ -2092,21 +2092,20 @@ test_expect_success 'override global and system con=
-fig' '
- 	git config --show-scope --list >output &&
- 	test_cmp expect output &&
-=20
--	sane_unset GIT_CONFIG_NOSYSTEM &&
--
- 	cat >expect <<-EOF &&
- 	system	system.config=3Dtrue
- 	global	global.config=3Dtrue
- 	local	local.config=3Dtrue
- 	EOF
--	GIT_CONFIG_SYSTEM=3Dcustom-system-config GIT_CONFIG_GLOBAL=3Dcustom-globa=
-l-config \
-+	GIT_CONFIG_NOSYSTEM=3Dfalse GIT_CONFIG_SYSTEM=3Dcustom-system-config GIT_=
-CONFIG_GLOBAL=3Dcustom-global-config \
- 		git config --show-scope --list >output &&
- 	test_cmp expect output &&
-=20
- 	cat >expect <<-EOF &&
- 	local	local.config=3Dtrue
- 	EOF
--	GIT_CONFIG_SYSTEM=3D/dev/null GIT_CONFIG_GLOBAL=3D/dev/null git config --=
-show-scope --list >output &&
-+	GIT_CONFIG_NOSYSTEM=3Dfalse GIT_CONFIG_SYSTEM=3D/dev/null GIT_CONFIG_GLOB=
-AL=3D/dev/null \
-+		git config --show-scope --list >output &&
- 	test_cmp expect output
- '
-=20
---=20
+diff --git a/Documentation/git-p4.txt b/Documentation/git-p4.txt
+index f89e68b424..86d3ffa644 100644
+--- a/Documentation/git-p4.txt
++++ b/Documentation/git-p4.txt
+@@ -638,6 +638,15 @@ git-p4.pathEncoding::
+ 	to transcode the paths to UTF-8. As an example, Perforce on Windows
+ 	often uses "cp1252" to encode path names.
+ 
++git-p4.fallbackEncoding::
++	Perforce changeset descriptions can be stored in any encoding.
++	Git-p4 first tries to interpret each description as UTF-8. If that
++	fails, this config allows another encoding to be tried. You can specify,
++	for example, "cp1252". If git-p4.fallbackEncoding is "replace", UTF-8 will
++	be used, with invalid UTF-8 characters replaced by the Unicode replacement
++	character. The default is "none": there is no fallback, and any non UTF-8
++	character will cause git-p4 to immediately fail.
++
+ git-p4.largeFileSystem::
+ 	Specify the system that is used for large (binary) files. Please note
+ 	that large file systems do not support the 'git p4 submit' command.
+diff --git a/git-p4.py b/git-p4.py
+index 09c9e93ac4..202fb01bdf 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -771,7 +771,16 @@ def p4CmdList(cmd, stdin=None, stdin_mode='w+b', cb=None, skip_info=False,
+                 for key, value in entry.items():
+                     key = key.decode()
+                     if isinstance(value, bytes) and not (key in ('data', 'path', 'clientFile') or key.startswith('depotFile')):
+-                        value = value.decode()
++                        try:
++                            value = value.decode()
++                        except UnicodeDecodeError:
++                            fallbackEncoding = gitConfig("git-p4.fallbackEncoding").lower() or 'none'
++                            if fallbackEncoding == 'none':
++                                raise Exception("UTF-8 decoding failed. Consider using git config git-p4.fallbackEncoding")
++                            elif fallbackEncoding == 'replace':
++                                value = value.decode(errors='replace')
++                            else:
++                                value = value.decode(encoding=fallbackEncoding)
+                     decoded_entry[key] = value
+                 # Parse out data if it's an error response
+                 if decoded_entry.get('code') == 'error' and 'data' in decoded_entry:
+diff --git a/t/t9835-git-p4-config-fallback-encoding.sh b/t/t9835-git-p4-config-fallback-encoding.sh
+new file mode 100755
+index 0000000000..ce352c826b
+--- /dev/null
++++ b/t/t9835-git-p4-config-fallback-encoding.sh
+@@ -0,0 +1,76 @@
++#!/bin/sh
++
++test_description='test git-p4.fallbackEncoding config'
++
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
++export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
++
++. ./lib-git-p4.sh
++
++# The Windows build of p4 encodes its command-line arguments according to the
++# active code page (which defaults to "cp1252"). As a result, "p4 submit -d" causes
++# Unicode changeset descriptions to be stored in the Perforce database as cp1252,
++# and a subsequent "git p4 clone" attempting to decode these descriptions as UTF-8
++# will raise a UnicodeDecodeError, necessitating the use of the git-p4.fallbackEncoding config.
++#
++# The Linux build of p4 encodes its command-line arguments as UTF-8, so changeset descriptions
++# are stored as UTF-8, and UnicodeDecodeError is never raised by "git p4 clone".
++
++if test_have_prereq !MINGW,!CYGWIN; then
++	skip_all='This system is not subject to encoding failures in "git p4 clone"'
++	test_done
++fi
++
++test_expect_success 'start p4d' '
++	start_p4d
++'
++
++test_expect_success 'add cp1252 description' '
++	cd "$cli" &&
++	echo file1 >file1 &&
++	p4 add file1 &&
++	p4 submit -d documentación
++'
++
++test_expect_success 'clone fails with git-p4.fallbackEncoding unset' '
++	test_might_fail git config --global --unset git-p4.fallbackEncoding &&
++	test_when_finished cleanup_git &&
++	(
++		test_must_fail git p4 clone --dest="$git" //depot@all 2>error &&
++		grep "UTF-8 decoding failed. Consider using git config git-p4.fallbackEncoding" error
++	)
++'
++test_expect_success 'clone fails with git-p4.fallbackEncoding set to "none"' '
++	git config --global git-p4.fallbackEncoding none &&
++	test_when_finished cleanup_git &&
++	(
++		test_must_fail git p4 clone --dest="$git" //depot@all 2>error &&
++		grep "UTF-8 decoding failed. Consider using git config git-p4.fallbackEncoding" error
++	)
++'
++
++test_expect_success 'clone succeeds with git-p4.fallbackEncoding set to "cp1252"' '
++	git config --global git-p4.fallbackEncoding cp1252 &&
++	test_when_finished cleanup_git &&
++	(
++		git p4 clone --dest="$git" //depot@all &&
++		cd "$git" &&
++		git log --oneline >log &&
++		desc=$(head -1 log | cut -d" " -f2) &&
++		test "$desc" = "documentación"
++	)
++'
++
++test_expect_success 'clone succeeds with git-p4.fallbackEncoding set to "replace"' '
++	git config --global git-p4.fallbackEncoding replace &&
++	test_when_finished cleanup_git &&
++	(
++		git p4 clone --dest="$git" //depot@all &&
++		cd "$git" &&
++		git log --oneline >log &&
++		desc=$(head -1 log | cut -d" " -f2) &&
++		test "$desc" = "documentaci�n"
++	)
++'
++
++test_done
+-- 
 2.31.1
 
-
---2n4nAobNrIp5UA3d
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmCCX2IACgkQVbJhu7ck
-PpTx0A/+NtfLTHvwkUMC2VdeJsbOkjD1OJiXkomSHtwSCQN4kThdy2RVYHnvzbw9
-JWlOc6LbdOg96lwjcaVvI4aBmhgLZWSkVlQO/aGcPb1lXl/PyIvCOnPw6WT3LUWH
-FhQfTQY2wpai2KGt7/1rgXSTeC5ywYN58ZtAOjOOQn939H53lA6CoNt/aQDiwa5f
-RNnenPQ7DwECh7wWv/XPAJ3Va6JEw714WM8MAfVasXZDxv74n5XgA6G6dvN9tWkt
-Kl4wF3oeJenOhAkqwcDqz1kLPRPkG2L6rQF7ECFRtgxud+VDRFhfVZccEVE8b6hW
-Ix91cUl7g9hjfcv1KQtd71CbJAhxhQUKrhMjddkGcJYS5EfqkfwWwWjkDwzE0HyI
-UUJgxctMejbTr/JTAQlWvKmC/Vd3kQDyXUywvG83Wam3xu6ZOMEVPWpEetBTEQ5/
-JS8tLc2upKJfVqHo83N2Swh5sATiky0vHOXkTlQYHxgo0HHxQcTECPBbrUuvFHBr
-AEgP/QbnBPepIAZA+4MWYIJs1KE5XgA3o9Fzz1WgabsOWfZskVtcDQLU3FZXxmSj
-34Bsoq1rY/38SDGMBKD7ArNz8/AXr55IaHQIogtwnWSU2bjRTTAH0D6A9DXtU3aK
-kE5Bgpyd8kWmilKCocDdaYeebgyqVVywuXW0SlyHbqA0snp6/wQ=
-=J4H/
------END PGP SIGNATURE-----
-
---2n4nAobNrIp5UA3d--
