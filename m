@@ -7,24 +7,21 @@ X-Spam-Status: No, score=-16.7 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 52C0AC43460
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 19:43:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E40DC433B4
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 19:43:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2D4E16128B
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 19:43:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 38AA36128B
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 19:43:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243924AbhDWTng (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Apr 2021 15:43:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55460 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243885AbhDWTna (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Apr 2021 15:43:30 -0400
-Received: from mav.lukeshu.com (mav.lukeshu.com [IPv6:2001:19f0:5c00:8069:5400:ff:fe26:6a86])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D2D8C06138E
-        for <git@vger.kernel.org>; Fri, 23 Apr 2021 12:42:53 -0700 (PDT)
+        id S243927AbhDWTni (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Apr 2021 15:43:38 -0400
+Received: from mav.lukeshu.com ([104.207.138.63]:35312 "EHLO mav.lukeshu.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S243832AbhDWTnb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Apr 2021 15:43:31 -0400
 Received: from lukeshu-dw-thinkpad (unknown [IPv6:2601:281:8200:26:4e34:88ff:fe48:5521])
-        by mav.lukeshu.com (Postfix) with ESMTPSA id DD95680590;
-        Fri, 23 Apr 2021 15:42:52 -0400 (EDT)
+        by mav.lukeshu.com (Postfix) with ESMTPSA id A309280594;
+        Fri, 23 Apr 2021 15:42:54 -0400 (EDT)
 From:   Luke Shumaker <lukeshu@lukeshu.com>
 To:     git@vger.kernel.org
 Cc:     Avery Pennarun <apenwarr@gmail.com>,
@@ -40,9 +37,9 @@ Cc:     Avery Pennarun <apenwarr@gmail.com>,
         <pclouds@gmail.com>, Roger L Strain <roger.strain@swri.org>,
         Techlive Zheng <techlivezheng@gmail.com>,
         Luke Shumaker <lukeshu@datawire.io>
-Subject: [PATCH 13/30] subtree: more consistent error propagation
-Date:   Fri, 23 Apr 2021 13:42:13 -0600
-Message-Id: <20210423194230.1388945-14-lukeshu@lukeshu.com>
+Subject: [PATCH 15/30] subtree: use `git merge-base --is-ancestor`
+Date:   Fri, 23 Apr 2021 13:42:15 -0600
+Message-Id: <20210423194230.1388945-16-lukeshu@lukeshu.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210423194230.1388945-1-lukeshu@lukeshu.com>
 References: <20210423194230.1388945-1-lukeshu@lukeshu.com>
@@ -54,138 +51,48 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Luke Shumaker <lukeshu@datawire.io>
 
-Ensure that every $(subshell) that calls a function (as opposed to an
-external executable) is followed by `|| exit $?`.  Similarly, ensure that
-every `cmd | while read; do ... done` loop is followed by `|| exit $?`.
-
-Both of those constructs mean that it can miss `die` calls, and keep
-running when it shouldn't.
+Instead of writing a slow `rev_is_descendant_of_branch $a $b` function
+in shell, just use the fast `git merge-base --is-ancestor $b $a`.
 
 Signed-off-by: Luke Shumaker <lukeshu@datawire.io>
 ---
- contrib/subtree/git-subtree.sh | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ contrib/subtree/git-subtree.sh | 16 +---------------
+ 1 file changed, 1 insertion(+), 15 deletions(-)
 
 diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index d1ed7f9a6c..9ca498f81c 100755
+index 4503564f7e..70e16b807b 100755
 --- a/contrib/subtree/git-subtree.sh
 +++ b/contrib/subtree/git-subtree.sh
-@@ -243,7 +243,7 @@ cache_miss () {
- }
- 
- check_parents () {
--	missed=$(cache_miss "$1")
-+	missed=$(cache_miss "$1") || exit $?
- 	local indent=$(($2 + 1))
- 	for miss in $missed
- 	do
-@@ -345,7 +345,7 @@ find_latest_squash () {
- 			sub=
- 			;;
- 		esac
--	done
-+	done || exit $?
- }
- 
- find_existing_splits () {
-@@ -394,7 +394,7 @@ find_existing_splits () {
- 			sub=
- 			;;
- 		esac
--	done
-+	done || exit $?
- }
- 
- copy_commit () {
-@@ -508,7 +508,7 @@ subtree_for_commit () {
- 		test "$type" = "commit" && continue  # ignore submodules
- 		echo $tree
- 		break
--	done
-+	done || exit $?
- }
- 
- tree_changed () {
-@@ -518,7 +518,7 @@ tree_changed () {
- 	then
- 		return 0   # weird parents, consider it changed
- 	else
--		ptree=$(toptree_for_commit $1)
-+		ptree=$(toptree_for_commit $1) || exit $?
- 		if test "$ptree" != "$tree"
- 		then
- 			return 0   # changed
-@@ -652,7 +652,7 @@ process_split_commit () {
- 	progress "$revcount/$revmax ($createcount) [$extracount]"
- 
- 	debug "Processing commit: $rev"
--	exists=$(cache_get "$rev")
-+	exists=$(cache_get "$rev") || exit $?
- 	if test -n "$exists"
- 	then
- 		debug "  prior: $exists"
-@@ -661,10 +661,10 @@ process_split_commit () {
- 	createcount=$(($createcount + 1))
- 	debug "  parents: $parents"
- 	check_parents "$parents" "$indent"
--	newparents=$(cache_get $parents)
-+	newparents=$(cache_get $parents) || exit $?
- 	debug "  newparents: $newparents"
- 
--	tree=$(subtree_for_commit "$rev" "$dir")
-+	tree=$(subtree_for_commit "$rev" "$dir") || exit $?
- 	debug "  tree is: $tree"
- 
- 	# ugly.  is there no better way to tell if this is a subtree
-@@ -750,7 +750,7 @@ cmd_add_commit () {
- 		commit=$(add_squashed_msg "$rev" "$dir" |
- 			git commit-tree "$tree" $headp -p "$rev") || exit $?
- 	else
--		revp=$(peel_committish "$rev") &&
-+		revp=$(peel_committish "$rev") || exit $?
- 		commit=$(add_msg "$dir" $headrev "$rev" |
- 			git commit-tree "$tree" $headp -p "$revp") || exit $?
+@@ -280,20 +280,6 @@ rev_exists () {
  	fi
-@@ -773,10 +773,10 @@ cmd_split () {
- 			# any parent we find there can be used verbatim
- 			debug "  cache: $rev"
- 			cache_set "$rev" "$rev"
--		done
-+		done || exit $?
- 	fi
+ }
  
--	unrevs="$(find_existing_splits "$dir" "$revs")"
-+	unrevs="$(find_existing_splits "$dir" "$revs")" || exit $?
- 
- 	# We can't restrict rev-list to only $dir here, because some of our
- 	# parents have the $dir contents the root, and those won't match.
-@@ -792,7 +792,7 @@ cmd_split () {
- 		process_split_commit "$rev" "$parents" 0
- 	done || exit $?
- 
--	latest_new=$(cache_get latest_new)
-+	latest_new=$(cache_get latest_new) || exit $?
- 	if test -z "$latest_new"
+-rev_is_descendant_of_branch () {
+-	newrev="$1"
+-	branch="$2"
+-	branch_hash=$(git rev-parse "$branch")
+-	match=$(git rev-list -1 "$branch_hash" "^$newrev")
+-
+-	if test -z "$match"
+-	then
+-		return 0
+-	else
+-		return 1
+-	fi
+-}
+-
+ # if a commit doesn't have a parent, this might not work.  But we only want
+ # to remove the parent from the rev-list, and since it doesn't exist, it won't
+ # be there anyway, so do nothing in that case.
+@@ -811,7 +797,7 @@ cmd_split () {
  	then
- 		die "No new revisions were found"
-@@ -801,7 +801,7 @@ cmd_split () {
- 	if test -n "$rejoin"
- 	then
- 		debug "Merging split branch into HEAD..."
--		latest_old=$(cache_get latest_old)
-+		latest_old=$(cache_get latest_old) || exit $?
- 		git merge -s ours \
- 			--allow-unrelated-histories \
- 			-m "$(rejoin_msg "$dir" "$latest_old" "$latest_new")" \
-@@ -834,7 +834,7 @@ cmd_merge () {
- 
- 	if test -n "$squash"
- 	then
--		first_split="$(find_latest_squash "$dir")"
-+		first_split="$(find_latest_squash "$dir")" || exit $?
- 		if test -z "$first_split"
+ 		if rev_exists "refs/heads/$branch"
  		then
- 			die "Can't squash-merge: '$dir' was never added."
+-			if ! rev_is_descendant_of_branch "$latest_new" "$branch"
++			if ! git merge-base --is-ancestor "$branch" "$latest_new"
+ 			then
+ 				die "Branch '$branch' is not an ancestor of commit '$latest_new'."
+ 			fi
 -- 
 2.31.1
 
