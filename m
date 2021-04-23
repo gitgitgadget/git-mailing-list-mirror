@@ -7,24 +7,21 @@ X-Spam-Status: No, score=-16.7 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 33E42C433ED
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 19:43:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 086A3C43460
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 19:43:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0B46D6113B
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 19:43:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D23796128B
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 19:43:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244016AbhDWTn4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Apr 2021 15:43:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55536 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243926AbhDWTnl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Apr 2021 15:43:41 -0400
-Received: from mav.lukeshu.com (mav.lukeshu.com [IPv6:2001:19f0:5c00:8069:5400:ff:fe26:6a86])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3719C06175F
-        for <git@vger.kernel.org>; Fri, 23 Apr 2021 12:43:03 -0700 (PDT)
+        id S243895AbhDWTn6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Apr 2021 15:43:58 -0400
+Received: from mav.lukeshu.com ([104.207.138.63]:35334 "EHLO mav.lukeshu.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S243960AbhDWTnm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Apr 2021 15:43:42 -0400
 Received: from lukeshu-dw-thinkpad (unknown [IPv6:2601:281:8200:26:4e34:88ff:fe48:5521])
-        by mav.lukeshu.com (Postfix) with ESMTPSA id 4BAB580597;
-        Fri, 23 Apr 2021 15:43:03 -0400 (EDT)
+        by mav.lukeshu.com (Postfix) with ESMTPSA id 109B180590;
+        Fri, 23 Apr 2021 15:43:05 -0400 (EDT)
 From:   Luke Shumaker <lukeshu@lukeshu.com>
 To:     git@vger.kernel.org
 Cc:     Avery Pennarun <apenwarr@gmail.com>,
@@ -40,9 +37,9 @@ Cc:     Avery Pennarun <apenwarr@gmail.com>,
         <pclouds@gmail.com>, Roger L Strain <roger.strain@swri.org>,
         Techlive Zheng <techlivezheng@gmail.com>,
         Luke Shumaker <lukeshu@datawire.io>
-Subject: [PATCH 25/30] subtree: have $indent actually affect indentation
-Date:   Fri, 23 Apr 2021 13:42:25 -0600
-Message-Id: <20210423194230.1388945-26-lukeshu@lukeshu.com>
+Subject: [PATCH 27/30] subtree: allow --squash to be used with --rejoin
+Date:   Fri, 23 Apr 2021 13:42:27 -0600
+Message-Id: <20210423194230.1388945-28-lukeshu@lukeshu.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210423194230.1388945-1-lukeshu@lukeshu.com>
 References: <20210423194230.1388945-1-lukeshu@lukeshu.com>
@@ -54,163 +51,217 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Luke Shumaker <lukeshu@datawire.io>
 
-Currently, the $indent variable is just used to track how deeply we're
-nested, and the debug log is indented by things like
+Besides being a genuinely useful thing to do, this also just makes sense
+and harmonizes which flags may be used when.  `git subtree split
+--rejoin` amounts to "automatically go ahead and do a `git subtree
+merge` after doing the main `git subtree split`", so it's weird and
+arbitrary that you can't pass `--squash` to `git subtree split --rejoin`
+like you can `git subtree merge`.  It's weird that `git subtree split
+--rejoin` inherits `git subtree merge`'s `--message` but not `--squash`.
 
-   debug "  foo"
-
-That is: The indentation-level is hard-coded.  It used to be that the
-code couldn't recurse, so the indentation level could be known
-statically, so it made sense to just hard-code it in the
-output. However, since 315a84f9aa ("subtree: use commits before rejoins
-for splits", 2018-09-28), it can now recurse, and the debug log is
-misleading.
-
-So fix that.  Indent according to $indent.
+Reconcile the situation by just having `split --rejoin` actually just
+call `merge` internally (or call `add` instead, as appropriate), so it
+can get access to the full `merge` behavior, including `--squash`.
 
 Signed-off-by: Luke Shumaker <lukeshu@datawire.io>
 ---
- contrib/subtree/git-subtree.sh | 42 +++++++++++++++++++---------------
- 1 file changed, 24 insertions(+), 18 deletions(-)
+ contrib/subtree/git-subtree.sh     | 33 ++++++++++++++++++++++------
+ contrib/subtree/git-subtree.txt    | 27 ++++++++++-------------
+ contrib/subtree/t/t7900-subtree.sh | 35 ++++++++++++++++++++++++++++++
+ 3 files changed, 72 insertions(+), 23 deletions(-)
 
 diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index 62cf54928e..54e904516b 100755
+index 4d0be1ad5c..ff54009c49 100755
 --- a/contrib/subtree/git-subtree.sh
 +++ b/contrib/subtree/git-subtree.sh
-@@ -41,11 +41,13 @@ arg_split_annotate=
- arg_addmerge_squash=
- arg_addmerge_message=
+@@ -17,15 +17,15 @@ h,help        show the help
+ q             quiet
+ d             show debug messages
+ P,prefix=     the name of the subdir to split out
+-m,message=    use the given message as the commit message for the merge commit
+  options for 'split'
+ annotate=     add a prefix to commit message of new commits
+ b,branch=     create a new branch from the split subtree
+ ignore-joins  ignore prior --rejoin commits
+ onto=         try connecting new tree to an existing one
+ rejoin        merge the new branch back into HEAD
+- options for 'add' and 'merge' (also: 'pull')
++ options for 'add' and 'merge' (also: 'pull' and 'split --rejoin')
+ squash        merge subtree changes as a single commit
++m,message=    use the given message as the commit message for the merge commit
+ "
  
-+indent=0
+ PATH=$(git --exec-path):$PATH
+@@ -424,6 +424,13 @@ add_msg () {
+ 	else
+ 		commit_message="Add '$dir/' from commit '$latest_new'"
+ 	fi
++	if test -n "$arg_split_rejoin"
++	then
++		# If this is from a --rejoin, then rejoin_msg has
++		# already inserted the `git-subtree-xxx:` tags
++		echo "$commit_message"
++		return
++	fi
+ 	cat <<-EOF
+ 		$commit_message
+ 
+@@ -746,7 +753,12 @@ cmd_add_commit () {
+ 	rev=$(git rev-parse --verify "$1^{commit}") || exit $?
+ 
+ 	debug "Adding $dir as '$rev'..."
+-	git read-tree --prefix="$dir" $rev || exit $?
++	if test -z "$arg_split_rejoin"
++	then
++		# Only bother doing this if this is a genuine 'add',
++		# not a synthetic 'add' from '--rejoin'.
++		git read-tree --prefix="$dir" $rev || exit $?
++	fi
+ 	git checkout -- "$dir" || exit $?
+ 	tree=$(git write-tree) || exit $?
+ 
+@@ -786,6 +798,11 @@ cmd_split () {
+ 		die "You must provide exactly one revision.  Got: '$*'"
+ 	fi
+ 
++	if test -n "$arg_split_rejoin"
++	then
++		ensure_clean
++	fi
 +
- # Usage: debug [MSG...]
- debug () {
- 	if test -n "$arg_debug"
+ 	debug "Splitting $dir..."
+ 	cache_setup || exit $?
+ 
+@@ -828,10 +845,12 @@ cmd_split () {
  	then
--		printf "%s\n" "$*" >&2
-+		printf "%$(($indent * 2))s%s\n" '' "$*" >&2
+ 		debug "Merging split branch into HEAD..."
+ 		latest_old=$(cache_get latest_old) || exit $?
+-		git merge -s ours \
+-			--allow-unrelated-histories \
+-			-m "$(rejoin_msg "$dir" "$latest_old" "$latest_new")" \
+-			"$latest_new" >&2 || exit $?
++		arg_addmerge_message="$(rejoin_msg "$dir" "$latest_old" "$latest_new")" || exit $?
++		if test -z "$(find_latest_squash "$dir")"; then
++			cmd_add "$latest_new" >&2 || exit $?
++		else
++			cmd_merge "$latest_new" >&2 || exit $?
++		fi
  	fi
- }
+ 	if test -n "$arg_split_branch"
+ 	then
+diff --git a/contrib/subtree/git-subtree.txt b/contrib/subtree/git-subtree.txt
+index 5728778bdf..b03ef88e1a 100644
+--- a/contrib/subtree/git-subtree.txt
++++ b/contrib/subtree/git-subtree.txt
+@@ -109,9 +109,6 @@ settings passed to 'split' (such as '--annotate') are the same.
+ Because of this, if you add new commits and then re-split, the new
+ commits will be attached as commits on top of the history you
+ generated last time, so 'git merge' and friends will work as expected.
+-+
+-Note that if you use '--squash' when you merge, you should usually not
+-just '--rejoin' when you split.
  
-@@ -222,17 +224,17 @@ cache_miss () {
- 	done
- }
+ pull <repository> <remote-ref>::
+ 	Exactly like 'merge', but parallels 'git pull' in that
+@@ -124,8 +121,8 @@ push <repository> <remote-ref>::
+ 	<remote-ref>.  This can be used to push your subtree to
+ 	different branches of the remote repository.
  
--# Usage: check_parents PARENTS_EXPR INDENT
-+# Usage: check_parents PARENTS_EXPR
- check_parents () {
--	assert test $# = 2
-+	assert test $# = 1
- 	missed=$(cache_miss "$1") || exit $?
--	local indent=$(($2 + 1))
-+	local indent=$(($indent + 1))
- 	for miss in $missed
- 	do
- 		if ! test -r "$cachedir/notree/$miss"
- 		then
--			debug "  incorrect order: $miss"
--			process_split_commit "$miss" "" "$indent"
-+			debug "incorrect order: $miss"
-+			process_split_commit "$miss" ""
- 		fi
- 	done
- }
-@@ -285,6 +287,8 @@ try_remove_previous () {
- find_latest_squash () {
- 	assert test $# = 1
- 	debug "Looking for latest squash ($dir)..."
-+	local indent=$(($indent + 1))
+-OPTIONS
+--------
++OPTIONS FOR ALL COMMANDS
++------------------------
+ -q::
+ --quiet::
+ 	Suppress unnecessary output messages on stderr.
+@@ -140,15 +137,11 @@ OPTIONS
+ 	want to manipulate.  This option is mandatory
+ 	for all commands.
+ 
+--m <message>::
+---message=<message>::
+-	This option is only valid for 'add', 'merge', 'pull', and 'split --rejoin'.
+-	Specify <message> as the commit message for the merge commit.
+-
+-OPTIONS FOR 'add' AND 'merge' (ALSO: 'pull')
+---------------------------------------------
++OPTIONS FOR 'add' AND 'merge' (ALSO: 'pull' AND 'split --rejoin')
++-----------------------------------------------------------------
+ These options for 'add' and 'merge' may also be given to 'pull' (which
+-wraps 'merge').
++wraps 'merge') and 'split --rejoin' (which wraps either 'add' or
++'merge' as appropriate).
+ 
+ --squash::
+ 	Instead of merging the entire history from the subtree project, produce
+@@ -176,6 +169,9 @@ Whether or not you use '--squash', changes made in your local repository
+ remain intact and can be later split and send upstream to the
+ subproject.
+ 
++-m <message>::
++--message=<message>::
++	Specify <message> as the commit message for the merge commit.
+ 
+ OPTIONS FOR 'split'
+ -------------------
+@@ -229,9 +225,8 @@ Unfortunately, using this option results in 'git log' showing an extra
+ copy of every new commit that was created (the original, and the
+ synthetic one).
+ +
+-If you do all your merges with '--squash', don't use '--rejoin' when you
+-split, because you don't want the subproject's history to be part of
+-your project anyway.
++If you do all your merges with '--squash', make sure you also use
++'--squash' when you 'split --rejoin'.
+ 
+ 
+ EXAMPLE 1. 'add' command
+diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
+index 3ee0524233..e5467c117b 100755
+--- a/contrib/subtree/t/t7900-subtree.sh
++++ b/contrib/subtree/t/t7900-subtree.sh
+@@ -324,6 +324,41 @@ test_expect_success 'split sub dir/ with --rejoin and --message' '
+ 	)
+ '
+ 
++test_expect_success 'split "sub dir"/ with --rejoin and --squash' '
++	subtree_test_create_repo "$test_count" &&
++	subtree_test_create_repo "$test_count/sub proj" &&
++	test_create_commit "$test_count" main1 &&
++	test_create_commit "$test_count/sub proj" sub1 &&
++	(
++		cd "$test_count" &&
++		git fetch ./"sub proj" HEAD &&
++		git subtree add --prefix="sub dir" --squash FETCH_HEAD
++	) &&
++	test_create_commit "$test_count" "sub dir"/main-sub1 &&
++	test_create_commit "$test_count" main2 &&
++	test_create_commit "$test_count/sub proj" sub2 &&
++	test_create_commit "$test_count" "sub dir"/main-sub2 &&
++	(
++		cd "$test_count" &&
++		git subtree pull --prefix="sub dir" --squash ./"sub proj" HEAD &&
++		MAIN=$(git rev-parse --verify HEAD) &&
++		SUB=$(git -C "sub proj" rev-parse --verify HEAD) &&
 +
- 	dir="$1"
- 	sq=
- 	main=
-@@ -331,6 +335,8 @@ find_latest_squash () {
- find_existing_splits () {
- 	assert test $# = 2
- 	debug "Looking for prior splits..."
-+	local indent=$(($indent + 1))
++		SPLIT=$(git subtree split --prefix="sub dir" --annotate="*" --rejoin --squash) &&
 +
- 	dir="$1"
- 	rev="$2"
- 	main=
-@@ -356,7 +362,7 @@ find_existing_splits () {
- 			die "could not rev-parse split hash $b from commit $sq"
- 			;;
- 		END)
--			debug "  Main is: '$main'"
-+			debug "Main is: '$main'"
- 			if test -z "$main" -a -n "$sub"
- 			then
- 				# squash commits refer to a subtree
-@@ -639,12 +645,11 @@ ensure_valid_ref_format () {
- 		die "'$1' does not look like a ref"
- }
- 
--# Usage: process_split_commit REV PARENTS INDENT
-+# Usage: process_split_commit REV PARENTS
- process_split_commit () {
--	assert test $# = 3
-+	assert test $# = 2
- 	local rev="$1"
- 	local parents="$2"
--	local indent=$3
- 
- 	if test $indent -eq 0
- 	then
-@@ -659,20 +664,21 @@ process_split_commit () {
- 	progress "$revcount/$revmax ($createcount) [$extracount]"
- 
- 	debug "Processing commit: $rev"
-+	local indent=$(($indent + 1))
- 	exists=$(cache_get "$rev") || exit $?
- 	if test -n "$exists"
- 	then
--		debug "  prior: $exists"
-+		debug "prior: $exists"
- 		return
- 	fi
- 	createcount=$(($createcount + 1))
--	debug "  parents: $parents"
--	check_parents "$parents" "$indent"
-+	debug "parents: $parents"
-+	check_parents "$parents"
- 	newparents=$(cache_get $parents) || exit $?
--	debug "  newparents: $newparents"
-+	debug "newparents: $newparents"
- 
- 	tree=$(subtree_for_commit "$rev" "$dir") || exit $?
--	debug "  tree is: $tree"
-+	debug "tree is: $tree"
- 
- 	# ugly.  is there no better way to tell if this is a subtree
- 	# vs. a mainline commit?  Does it matter?
-@@ -687,7 +693,7 @@ process_split_commit () {
- 	fi
- 
- 	newrev=$(copy_or_skip "$rev" "$tree" "$newparents") || exit $?
--	debug "  newrev is: $newrev"
-+	debug "newrev is: $newrev"
- 	cache_set "$rev" "$newrev"
- 	cache_set latest_new "$newrev"
- 	cache_set latest_old "$rev"
-@@ -791,7 +797,7 @@ cmd_split () {
- 		do
- 			# the 'onto' history is already just the subdir, so
- 			# any parent we find there can be used verbatim
--			debug "  cache: $rev"
-+			debug "cache: $rev"
- 			cache_set "$rev" "$rev"
- 		done || exit $?
- 	fi
-@@ -809,7 +815,7 @@ cmd_split () {
- 	eval "$grl" |
- 	while read rev parents
- 	do
--		process_split_commit "$rev" "$parents" 0
-+		process_split_commit "$rev" "$parents"
- 	done || exit $?
- 
- 	latest_new=$(cache_get latest_new) || exit $?
++		! git merge-base --is-ancestor $SUB HEAD &&
++		! git merge-base --is-ancestor $SPLIT HEAD &&
++		git rev-list HEAD ^$MAIN >commit-list &&
++		test_line_count = 2 commit-list &&
++		test "$(git rev-parse --verify HEAD:)"           = "$(git rev-parse --verify $MAIN:)" &&
++		test "$(git rev-parse --verify HEAD:"sub dir")"  = "$(git rev-parse --verify $SPLIT:)" &&
++		test "$(git rev-parse --verify HEAD^1)"          = $MAIN &&
++		test "$(git rev-parse --verify HEAD^2)"         != $SPLIT &&
++		test "$(git rev-parse --verify HEAD^2:)"         = "$(git rev-parse --verify $SPLIT:)" &&
++		test "$(last_commit_subject)" = "Split '\''sub dir/'\'' into commit '\''$SPLIT'\''"
++	)
++'
++
+ test_expect_success 'split "sub dir"/ with --branch' '
+ 	subtree_test_create_repo "$test_count" &&
+ 	subtree_test_create_repo "$test_count/sub proj" &&
 -- 
 2.31.1
 
