@@ -2,48 +2,47 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 45986C433B4
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 20:32:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7234EC433B4
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 20:40:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1B90F60241
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 20:32:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 57018613C1
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 20:40:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243799AbhDWUcg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Apr 2021 16:32:36 -0400
-Received: from mail-ej1-f47.google.com ([209.85.218.47]:37479 "EHLO
-        mail-ej1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232200AbhDWUcg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Apr 2021 16:32:36 -0400
-Received: by mail-ej1-f47.google.com with SMTP id w3so75692595ejc.4
-        for <git@vger.kernel.org>; Fri, 23 Apr 2021 13:31:57 -0700 (PDT)
+        id S243988AbhDWUlV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Apr 2021 16:41:21 -0400
+Received: from mail-ed1-f41.google.com ([209.85.208.41]:33566 "EHLO
+        mail-ed1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S243932AbhDWUlU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Apr 2021 16:41:20 -0400
+Received: by mail-ed1-f41.google.com with SMTP id cq11so15187808edb.0
+        for <git@vger.kernel.org>; Fri, 23 Apr 2021 13:40:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Qt6c1mx7kK7DgbHBAgomeg+afMcDm015ScMU6AkhQ54=;
-        b=nezuWoUWGmfyCI6XPjjVqPiySAe+ksbX+lyWlVaZDMeBnpWt2qZitEXjgd70wrXdFg
-         SqDdgjy07IIKzjVmIhHoaeA1qCaWwCVl+M27hCClwL/sI/t7UvWdItdexjGZqDZduT6X
-         AYrlXsCRxyNx4LVJAfDeHK9gsSgydbD7ycXXpFysfWn5JnM/zv8ur99jS9dnArU2ezCE
-         PHRjNd9oljxI7EUSFSvfOmBLE5iK8sSqEpRcmoH1+FEbie+izY48xHI9B8hmdvcy9pG0
-         WYye6cZsvSEgoMlwzvjZ+nHj8BcxIc6o8R3ZHXnT7gyUJCqHA1frcIo34Shnp/SZpqN0
-         DAng==
-X-Gm-Message-State: AOAM531VOqOCjMIEzucDDXpjJppXRJqQv0FY4ubSEfWUImD3vV1paFfi
-        X7JH+1BvnhQZn4fibce1O1rxx0VN/9hP2pcd0tw=
-X-Google-Smtp-Source: ABdhPJxuV/OwAkrSgbJJNi8F0lbMf76JQ/bsQQq+cYBUFq0PjGE2iEdEiwSI4urjFjL4zySa/e2Qwmyyv/GlSdV8iUo=
-X-Received: by 2002:a17:906:6d41:: with SMTP id a1mr6226622ejt.482.1619209916869;
- Fri, 23 Apr 2021 13:31:56 -0700 (PDT)
+        bh=aTqObfOhrLbWTFX0Q1ScrfypeNrvfCTFlLn7tMaomf8=;
+        b=ParMkcs5SbhI2KCx+P+rLRQ22LWnjeIuQxUi9loDpSubOlNscQWyrTcYyRMLD8FZ/H
+         hm3NxOWI+9I6ehG5VpjYqStzF3L8rhY9q2xddjC7I2YwGYBVkRY8u4lSlPdtRHfuBmvh
+         oMzCaLicX/UPoGzAbhH10VkuTZys6eWuojCeCRJARGZsIkubpC3lZKK0OONRO1k9Mxhw
+         Y7SCaSv4AdpS8Oh2TrrRwiq6lyjbOW/Nm+HNnTmOLg/dKsASmCS/RULD3w1H7iBwyPC4
+         /IMEERHF3mwn+Q/3nGGvqqX43M8ziO06IMGgj58N0vQLYmDeXwFbAYiTAu3lJxI8vRTZ
+         pIEw==
+X-Gm-Message-State: AOAM532jT5w4lertVy2bjj3rqSoixwOIRzPdz+psR/soWbBqREvkoUsN
+        Q0TximA760N+BH7qo7eC/zsP27sxyonhdvm0kTI=
+X-Google-Smtp-Source: ABdhPJyaxAYnVdosb27ykguEm1gnVBg5BDdnSgFyWIljOvn3uNidT9w0zVMLgLqNjGb7oEpkBR2mVHI8qqvwydgQVJ4=
+X-Received: by 2002:a05:6402:488:: with SMTP id k8mr6548448edv.233.1619210442669;
+ Fri, 23 Apr 2021 13:40:42 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210423194230.1388945-1-lukeshu@lukeshu.com> <20210423194230.1388945-15-lukeshu@lukeshu.com>
-In-Reply-To: <20210423194230.1388945-15-lukeshu@lukeshu.com>
+References: <20210423194230.1388945-1-lukeshu@lukeshu.com> <20210423194230.1388945-19-lukeshu@lukeshu.com>
+In-Reply-To: <20210423194230.1388945-19-lukeshu@lukeshu.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 23 Apr 2021 16:31:46 -0400
-Message-ID: <CAPig+cRcBA1y0WY_k4fge1KiRcLrW7PMeOS=Ns8bMa4VMdyy2w@mail.gmail.com>
-Subject: Re: [PATCH 14/30] subtree: drop support for git < 1.7
+Date:   Fri, 23 Apr 2021 16:40:31 -0400
+Message-ID: <CAPig+cTb-h=Qb9asvh+MVH2s5uj7szP_QOPpcm1bqdE6DK9V7g@mail.gmail.com>
+Subject: Re: [PATCH 18/30] subtree: use $* instead of $@ as appropriate
 To:     Luke Shumaker <lukeshu@lukeshu.com>
 Cc:     Git List <git@vger.kernel.org>,
         Avery Pennarun <apenwarr@gmail.com>,
@@ -65,22 +64,20 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Fri, Apr 23, 2021 at 3:43 PM Luke Shumaker <lukeshu@lukeshu.com> wrote:
-> That was nice to have when git-subtree lived out-of-tree.  But now that
-> it lives in git.git, it's not nescessary to keep around.
+> $* is for when you want to smash things together, whitespace-separated;
+> $@ is for when you want them to be separate strings.  There are a couple
+> of places in subtree that erroneously use $@ when smashing args together
+> in to an error message.
 
-s/nescessary/necessary/
+Can we be explicit and say "$@" in the commit message rather than bare
+$@ since the unquoted form is not magical and acts exactly like $*.
 
-> Signed-off-by: Luke Shumaker <lukeshu@datawire.io>
+Also: s/in to/into/
 
-Is there a higher reason for this change aside from "let's do it
-because we can"? For instance, are subsequent changes going to take
-advantage of features only present in more recent Git versions which
-would be painful or impossible to support with the older Git?
+Nit: I have some trouble following what the commit message is actually
+trying to say with "smash things" and "separate strings". It might be
+simpler to say merely that use of "$@" in these particular instances
+is overkill and possibly misleading to readers not familiar with the
+finer details of $* vs. "$@".
 
-The downside of this change is that, while git-subtree may live in
-git.git, it's still just "contrib", so people might grab git-subtree
-from a modern git.git but then end up using it with an older Git
-installation. That's not to say that doing such a thing is guaranteed
-to work anyhow, but we don't need to make it harder on people if there
-isn't a good reason (hence my question about whether subsequent
-changes will actually take advantage of newer Git features).
+The patch itself makes sense.
