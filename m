@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C2C9C433B4
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 20:05:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 10194C433ED
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 20:07:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2C2636144A
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 20:05:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D82D26144E
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 20:07:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243849AbhDWUGU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Apr 2021 16:06:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60444 "EHLO
+        id S232894AbhDWUHy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Apr 2021 16:07:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229691AbhDWUGT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Apr 2021 16:06:19 -0400
+        with ESMTP id S229691AbhDWUHx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Apr 2021 16:07:53 -0400
 Received: from mav.lukeshu.com (mav.lukeshu.com [IPv6:2001:19f0:5c00:8069:5400:ff:fe26:6a86])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 742D5C061574
-        for <git@vger.kernel.org>; Fri, 23 Apr 2021 13:05:41 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CA92C061574
+        for <git@vger.kernel.org>; Fri, 23 Apr 2021 13:07:15 -0700 (PDT)
 Received: from lukeshu-dw-thinkpad (unknown [IPv6:2601:281:8200:26:4e34:88ff:fe48:5521])
-        by mav.lukeshu.com (Postfix) with ESMTPSA id AE0CB80590;
-        Fri, 23 Apr 2021 16:05:40 -0400 (EDT)
-Date:   Fri, 23 Apr 2021 14:05:40 -0600
-Message-ID: <87zgxo22cr.wl-lukeshu@lukeshu.com>
+        by mav.lukeshu.com (Postfix) with ESMTPSA id 0512A80590;
+        Fri, 23 Apr 2021 16:07:13 -0400 (EDT)
+Date:   Fri, 23 Apr 2021 14:07:12 -0600
+Message-ID: <87y2d822a7.wl-lukeshu@lukeshu.com>
 From:   Luke Shumaker <lukeshu@lukeshu.com>
 To:     git@vger.kernel.org
 Cc:     Avery Pennarun <apenwarr@gmail.com>,
@@ -42,10 +42,10 @@ Cc:     Avery Pennarun <apenwarr@gmail.com>,
         Roger L Strain <roger.strain@swri.org>,
         Techlive Zheng <techlivezheng@gmail.com>,
         Luke Shumaker <lukeshu@datawire.io>
-Subject: Re: [PATCH 12/30] subtree: don't have loose code outside of a function
-In-Reply-To: <20210423194230.1388945-13-lukeshu@lukeshu.com>
+Subject: Re: [PATCH 14/30] subtree: drop support for git < 1.7
+In-Reply-To: <20210423194230.1388945-15-lukeshu@lukeshu.com>
 References: <20210423194230.1388945-1-lukeshu@lukeshu.com>
-        <20210423194230.1388945-13-lukeshu@lukeshu.com>
+        <20210423194230.1388945-15-lukeshu@lukeshu.com>
 User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
  FLIM-LB/1.14.9 (=?ISO-8859-4?Q?Goj=F2?=) APEL-LB/10.8 EasyPG/1.0.0
  Emacs/27.2 (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
@@ -55,71 +55,39 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 23 Apr 2021 13:42:12 -0600,
+On Fri, 23 Apr 2021 13:42:14 -0600,
 Luke Shumaker wrote:
 > "Ignore space change" is probably helpful when viewing this diff.
 
-For mailing-list reading, the `git show -w` is
+For mailing-list reading, the `git show -w` is:
 
 ---
 diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index 868e18b9a1..d1ed7f9a6c 100755
+index 9ca498f81c..4503564f7e 100755
 --- a/contrib/subtree/git-subtree.sh
 +++ b/contrib/subtree/git-subtree.sh
-@@ -4,10 +4,7 @@
- #
- # Copyright (C) 2009 Avery Pennarun <apenwarr@gmail.com>
- #
--if test $# -eq 0
--then
--	set -- -h
--fi
-+
- OPTS_SPEC="\
- git subtree add   --prefix=<prefix> <commit>
- git subtree add   --prefix=<prefix> <repository> <ref>
-@@ -30,12 +27,8 @@ rejoin        merge the new branch back into HEAD
-  options for 'add', 'merge', and 'pull'
- squash        merge subtree changes as a single commit
- "
--eval "$(echo "$OPTS_SPEC" | git rev-parse --parseopt -- "$@" || echo exit $?)"
- 
- PATH=$PATH:$(git --exec-path)
--. git-sh-setup
--
--require_work_tree
- 
- quiet=
- branch=
-@@ -84,6 +77,15 @@ ensure_single_rev () {
+@@ -852,16 +852,6 @@ cmd_merge () {
+ 		rev="$new"
  	fi
+ 
+-	version=$(git version)
+-	if test "$version" \< "git version 1.7"
+-	then
+-		if test -n "$message"
+-		then
+-			git merge -s subtree --message="$message" "$rev"
+-		else
+-			git merge -s subtree "$rev"
+-		fi
+-	else
+ 	if test -n "$message"
+ 	then
+ 		git merge -Xsubtree="$prefix" \
+@@ -869,7 +859,6 @@ cmd_merge () {
+ 	else
+ 		git merge -Xsubtree="$prefix" $rev
+ 	fi
+-	fi
  }
  
-+main () {
-+	if test $# -eq 0
-+	then
-+		set -- -h
-+	fi
-+	eval "$(echo "$OPTS_SPEC" | git rev-parse --parseopt -- "$@" || echo exit $?)"
-+	. git-sh-setup
-+	require_work_tree
-+
- 	while test $# -gt 0
- 	do
- 		opt="$1"
-@@ -205,6 +207,9 @@ debug "dir: {$dir}"
- 	debug "opts: {$*}"
- 	debug
- 
-+	"cmd_$command" "$@"
-+}
-+
- cache_setup () {
- 	cachedir="$GIT_DIR/subtree-cache/$$"
- 	rm -rf "$cachedir" ||
-@@ -898,4 +903,4 @@ cmd_push () {
- 	fi
- }
- 
--"cmd_$command" "$@"
-+main "$@"
+ cmd_pull () {
