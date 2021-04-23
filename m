@@ -2,47 +2,48 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7234EC433B4
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 20:40:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7919BC433ED
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 20:58:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 57018613C1
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 20:40:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 50C0E61075
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 20:58:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243988AbhDWUlV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Apr 2021 16:41:21 -0400
-Received: from mail-ed1-f41.google.com ([209.85.208.41]:33566 "EHLO
-        mail-ed1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243932AbhDWUlU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Apr 2021 16:41:20 -0400
-Received: by mail-ed1-f41.google.com with SMTP id cq11so15187808edb.0
-        for <git@vger.kernel.org>; Fri, 23 Apr 2021 13:40:43 -0700 (PDT)
+        id S244044AbhDWU7Y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Apr 2021 16:59:24 -0400
+Received: from mail-ej1-f54.google.com ([209.85.218.54]:37776 "EHLO
+        mail-ej1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S243797AbhDWU7X (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Apr 2021 16:59:23 -0400
+Received: by mail-ej1-f54.google.com with SMTP id w3so75777535ejc.4
+        for <git@vger.kernel.org>; Fri, 23 Apr 2021 13:58:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=aTqObfOhrLbWTFX0Q1ScrfypeNrvfCTFlLn7tMaomf8=;
-        b=ParMkcs5SbhI2KCx+P+rLRQ22LWnjeIuQxUi9loDpSubOlNscQWyrTcYyRMLD8FZ/H
-         hm3NxOWI+9I6ehG5VpjYqStzF3L8rhY9q2xddjC7I2YwGYBVkRY8u4lSlPdtRHfuBmvh
-         oMzCaLicX/UPoGzAbhH10VkuTZys6eWuojCeCRJARGZsIkubpC3lZKK0OONRO1k9Mxhw
-         Y7SCaSv4AdpS8Oh2TrrRwiq6lyjbOW/Nm+HNnTmOLg/dKsASmCS/RULD3w1H7iBwyPC4
-         /IMEERHF3mwn+Q/3nGGvqqX43M8ziO06IMGgj58N0vQLYmDeXwFbAYiTAu3lJxI8vRTZ
-         pIEw==
-X-Gm-Message-State: AOAM532jT5w4lertVy2bjj3rqSoixwOIRzPdz+psR/soWbBqREvkoUsN
-        Q0TximA760N+BH7qo7eC/zsP27sxyonhdvm0kTI=
-X-Google-Smtp-Source: ABdhPJyaxAYnVdosb27ykguEm1gnVBg5BDdnSgFyWIljOvn3uNidT9w0zVMLgLqNjGb7oEpkBR2mVHI8qqvwydgQVJ4=
-X-Received: by 2002:a05:6402:488:: with SMTP id k8mr6548448edv.233.1619210442669;
- Fri, 23 Apr 2021 13:40:42 -0700 (PDT)
+        bh=4SeSQvXDn3K7z3ncKGRfSoe+okxKHoBJwOOR3U3yAH4=;
+        b=lqZost1ybbyji9Kne5AlezVmlECzKI3yQXVq2or741qR0IUoL3/OsOgYgLMmhAvGBI
+         WPv1txYBcFBPlWwAnwKKfQNxJyKb9kPnPn2sSefG8RXTsAmKFsTaNTClxFyNEa8FQC1U
+         /JFLEav8RtRmuAKMA3ISmRID77DRNhPWngszFNx7UOoJdW4jZerO8TgccgB2ksS9bBjc
+         A9m3qv7fvEtiMyXAAr98qrcGW1eamBCJOkAyxjfRvgva9e32+J/5KF8SWOu09m5j92Az
+         hgohBTQAcAGEd/M4hWQ7ZDpEQf9D9NGij1mQgMqUVIgUD3yU/oKv/n6DIf5oCU1qZQD0
+         p6Ww==
+X-Gm-Message-State: AOAM531lhE5GaJlJWG6jm+iILyfK653CMU9qOtNOJ8UopZZTYmvJVJC0
+        5KkfIkmjQh4LOiE1fQqRlsVS7tcNQW1lINDmM7c=
+X-Google-Smtp-Source: ABdhPJyRqQUVJaZ2+WSoOeM5YvJVeOJS4aGXiOr6iru9CPgtS2MkKNxpuUoNwqOxLv3ZDhUZUQioK3maqvxH72uH/PM=
+X-Received: by 2002:a17:906:85cb:: with SMTP id i11mr6070130ejy.311.1619211525374;
+ Fri, 23 Apr 2021 13:58:45 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210423194230.1388945-1-lukeshu@lukeshu.com> <20210423194230.1388945-19-lukeshu@lukeshu.com>
-In-Reply-To: <20210423194230.1388945-19-lukeshu@lukeshu.com>
+References: <20210423194230.1388945-1-lukeshu@lukeshu.com> <20210423194230.1388945-24-lukeshu@lukeshu.com>
+In-Reply-To: <20210423194230.1388945-24-lukeshu@lukeshu.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 23 Apr 2021 16:40:31 -0400
-Message-ID: <CAPig+cTb-h=Qb9asvh+MVH2s5uj7szP_QOPpcm1bqdE6DK9V7g@mail.gmail.com>
-Subject: Re: [PATCH 18/30] subtree: use $* instead of $@ as appropriate
+Date:   Fri, 23 Apr 2021 16:58:34 -0400
+Message-ID: <CAPig+cQmTTdVKQptQY_tT_x4DCduRh=Mq6QZ1vUsc790-0yTQw@mail.gmail.com>
+Subject: Re: [PATCH 23/30] subtree: add comments and sanity checks
 To:     Luke Shumaker <lukeshu@lukeshu.com>
 Cc:     Git List <git@vger.kernel.org>,
         Avery Pennarun <apenwarr@gmail.com>,
@@ -64,20 +65,32 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Fri, Apr 23, 2021 at 3:43 PM Luke Shumaker <lukeshu@lukeshu.com> wrote:
-> $* is for when you want to smash things together, whitespace-separated;
-> $@ is for when you want them to be separate strings.  There are a couple
-> of places in subtree that erroneously use $@ when smashing args together
-> in to an error message.
+> Signed-off-by: Luke Shumaker <lukeshu@datawire.io>
+> ---
+> diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+> @@ -248,17 +263,22 @@ rev_exists () {
+> +# Usage: try_remove_previous REV
+> +#
+>  # if a commit doesn't have a parent, this might not work.  But we only want
 
-Can we be explicit and say "$@" in the commit message rather than bare
-$@ since the unquoted form is not magical and acts exactly like $*.
+s/if/If/ perhaps
 
-Also: s/in to/into/
+>  # to remove the parent from the rev-list, and since it doesn't exist, it won't
+>  # be there anyway, so do nothing in that case.
+> @@ -302,10 +322,12 @@ find_latest_squash () {
+> +# Usage: find_existing_splits DIR REV
+>  find_existing_splits () {
+> +       assert test $# = 2
+>         debug "Looking for prior splits..."
+>         dir="$1"
+> -       revs="$2"
+> +       rev="$2"
+> @@ -314,7 +336,7 @@ find_existing_splits () {
+>         git log --grep="$grep_format" \
+> -               --no-show-signature --pretty=format:'START %H%n%s%n%n%b%nEND%n' $revs |
+> +               --no-show-signature --pretty=format:'START %H%n%s%n%n%b%nEND%n' "$rev" |
 
-Nit: I have some trouble following what the commit message is actually
-trying to say with "smash things" and "separate strings". It might be
-simpler to say merely that use of "$@" in these particular instances
-is overkill and possibly misleading to readers not familiar with the
-finer details of $* vs. "$@".
-
-The patch itself makes sense.
+The caller of this function is passing in "$revs". Did you make this
+semantic change because the caller's `revs` is guaranteed to be a
+single rev? In any case, this change may deserve mention in the commit
+message so readers don't have to wonder about it.
