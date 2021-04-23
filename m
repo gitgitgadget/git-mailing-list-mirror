@@ -7,43 +7,43 @@ X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7919BC433ED
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 20:58:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 61082C433B4
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 21:07:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 50C0E61075
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 20:58:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3FD9D61249
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 21:07:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244044AbhDWU7Y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Apr 2021 16:59:24 -0400
-Received: from mail-ej1-f54.google.com ([209.85.218.54]:37776 "EHLO
-        mail-ej1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243797AbhDWU7X (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Apr 2021 16:59:23 -0400
-Received: by mail-ej1-f54.google.com with SMTP id w3so75777535ejc.4
-        for <git@vger.kernel.org>; Fri, 23 Apr 2021 13:58:46 -0700 (PDT)
+        id S244163AbhDWVId (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Apr 2021 17:08:33 -0400
+Received: from mail-ed1-f53.google.com ([209.85.208.53]:33517 "EHLO
+        mail-ed1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S244168AbhDWVIB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Apr 2021 17:08:01 -0400
+Received: by mail-ed1-f53.google.com with SMTP id cq11so15254388edb.0
+        for <git@vger.kernel.org>; Fri, 23 Apr 2021 14:07:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=4SeSQvXDn3K7z3ncKGRfSoe+okxKHoBJwOOR3U3yAH4=;
-        b=lqZost1ybbyji9Kne5AlezVmlECzKI3yQXVq2or741qR0IUoL3/OsOgYgLMmhAvGBI
-         WPv1txYBcFBPlWwAnwKKfQNxJyKb9kPnPn2sSefG8RXTsAmKFsTaNTClxFyNEa8FQC1U
-         /JFLEav8RtRmuAKMA3ISmRID77DRNhPWngszFNx7UOoJdW4jZerO8TgccgB2ksS9bBjc
-         A9m3qv7fvEtiMyXAAr98qrcGW1eamBCJOkAyxjfRvgva9e32+J/5KF8SWOu09m5j92Az
-         hgohBTQAcAGEd/M4hWQ7ZDpEQf9D9NGij1mQgMqUVIgUD3yU/oKv/n6DIf5oCU1qZQD0
-         p6Ww==
-X-Gm-Message-State: AOAM531lhE5GaJlJWG6jm+iILyfK653CMU9qOtNOJ8UopZZTYmvJVJC0
-        5KkfIkmjQh4LOiE1fQqRlsVS7tcNQW1lINDmM7c=
-X-Google-Smtp-Source: ABdhPJyRqQUVJaZ2+WSoOeM5YvJVeOJS4aGXiOr6iru9CPgtS2MkKNxpuUoNwqOxLv3ZDhUZUQioK3maqvxH72uH/PM=
-X-Received: by 2002:a17:906:85cb:: with SMTP id i11mr6070130ejy.311.1619211525374;
- Fri, 23 Apr 2021 13:58:45 -0700 (PDT)
+        bh=vzD7tOfXzrIp/NVtlsJzVV/FS83KB2tqD5Ws2kg+poo=;
+        b=cG4y+c8O9XWRqIOBswV5l/NiZkEYB+HlMNGKgFbDjYqgmqN5in3KE6yU7qrQd7Yddv
+         J//iVGDMpn8mf9K7K9935143U0hcOsxV3ENWASraY/lw/1kStE4q2uTInnT2xSTmKIjg
+         aYTKtLfxdqSQyCj9GPpvILC1QG+88dqjYt68fI9kNOber0gBROZkHgCFEKtFD1L6Kavh
+         rwy0QWsds5z9V9cQphPS0F3P+OUcPgWQU7s4L9SbJxuCK9j8Rbm7YfZs0KxsFOdiF0/P
+         ReaUUOKzmnzTZDE+DEwzS2XXBTEkyeuQpCdk4nkMWRcaR13IpCcFKLJekUXT1pd8ap/j
+         lv4w==
+X-Gm-Message-State: AOAM530DgPzDiM1t/GrfFr7S0ys3Hi69jt58J4Dld2VqEf77w9y2zHiI
+        eMdAJkyNsO12ogu/hWUJcnHT9D9LID98FJNjmPE=
+X-Google-Smtp-Source: ABdhPJw4KrI8Led0oxKm2qGKu+UbN3rmTmBXLR+KWr7KcdI3driVypGNYfhGrt98rGx7mtm66hPnodEWuqnu0/Troao=
+X-Received: by 2002:a05:6402:145:: with SMTP id s5mr6661008edu.221.1619212043007;
+ Fri, 23 Apr 2021 14:07:23 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210423194230.1388945-1-lukeshu@lukeshu.com> <20210423194230.1388945-24-lukeshu@lukeshu.com>
-In-Reply-To: <20210423194230.1388945-24-lukeshu@lukeshu.com>
+References: <20210423194230.1388945-1-lukeshu@lukeshu.com> <20210423194230.1388945-25-lukeshu@lukeshu.com>
+In-Reply-To: <20210423194230.1388945-25-lukeshu@lukeshu.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 23 Apr 2021 16:58:34 -0400
-Message-ID: <CAPig+cQmTTdVKQptQY_tT_x4DCduRh=Mq6QZ1vUsc790-0yTQw@mail.gmail.com>
-Subject: Re: [PATCH 23/30] subtree: add comments and sanity checks
+Date:   Fri, 23 Apr 2021 17:07:12 -0400
+Message-ID: <CAPig+cRaQnZ7DWYdU+efNpMgxdniXNQdF43TSFiaj6ezLELC_g@mail.gmail.com>
+Subject: Re: [PATCH 24/30] subtree: don't let debug and progress output clash
 To:     Luke Shumaker <lukeshu@lukeshu.com>
 Cc:     Git List <git@vger.kernel.org>,
         Avery Pennarun <apenwarr@gmail.com>,
@@ -65,32 +65,48 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Fri, Apr 23, 2021 at 3:43 PM Luke Shumaker <lukeshu@lukeshu.com> wrote:
+> Currently, debug output (triggered by passing '-d') and progress output
+> stomp on eachother.  The debug output is just streamed as lines to
+
+s/eachother/each other/
+
+> stderr, and the progress output is sent to stderr as '%s\r'.  It is
+> difficult to distinguish between the debug output and a progress line.
+> When writing to a terminal the debug lines hide progress lines.
+>
+> So, when '-d' has been passed, spit out progress as 'progress: %s\n',
+> instead of as '%s\r', so that it can be detected, and so that the debug
+> lines don't overwrite the progress when written to a terminal.
+
+Makes perfect sense when output is to a terminal, though might be
+annoying for the person who redirects stderr to a file. Just idly
+wondering if it makes sense to take that case into consideration...
+(but maybe it doesn't matter much when someone is working at debugging
+a problem).
+
 > Signed-off-by: Luke Shumaker <lukeshu@datawire.io>
 > ---
 > diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-> @@ -248,17 +263,22 @@ rev_exists () {
-> +# Usage: try_remove_previous REV
-> +#
->  # if a commit doesn't have a parent, this might not work.  But we only want
+> @@ -53,7 +53,12 @@ debug () {
+>  progress () {
+>         if test -z "$GIT_QUIET"
+>         then
+> -               printf "%s\r" "$*" >&2
+> +               if test -n "$arg_debug"
+> +               then
+> +                       printf "progress: %s\n" "$*" >&2
+> +               else
+> +                       printf "%s\r" "$*" >&2
+> +               fi
+>         fi
+>  }
 
-s/if/If/ perhaps
+Subjective (not necessarily worth changing): An `echo` would suffice
+in place of `printf "...\n"`:
 
->  # to remove the parent from the rev-list, and since it doesn't exist, it won't
->  # be there anyway, so do nothing in that case.
-> @@ -302,10 +322,12 @@ find_latest_squash () {
-> +# Usage: find_existing_splits DIR REV
->  find_existing_splits () {
-> +       assert test $# = 2
->         debug "Looking for prior splits..."
->         dir="$1"
-> -       revs="$2"
-> +       rev="$2"
-> @@ -314,7 +336,7 @@ find_existing_splits () {
->         git log --grep="$grep_format" \
-> -               --no-show-signature --pretty=format:'START %H%n%s%n%n%b%nEND%n' $revs |
-> +               --no-show-signature --pretty=format:'START %H%n%s%n%n%b%nEND%n' "$rev" |
+    echo "progress: $*" >&2
 
-The caller of this function is passing in "$revs". Did you make this
-semantic change because the caller's `revs` is guaranteed to be a
-single rev? In any case, this change may deserve mention in the commit
-message so readers don't have to wonder about it.
+It _might_ be worthwhile to have an in-code comment here explaining
+why progress() behaves differently in debug mode, especially if the
+reader is confused about why one case explicitly emits "progress:" and
+the other doesn't.
