@@ -2,28 +2,31 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0527C433B4
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 22:43:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C1F9C433ED
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 22:54:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A223961404
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 22:43:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0B22A61462
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 22:54:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231881AbhDWWoV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Apr 2021 18:44:21 -0400
-Received: from mav.lukeshu.com ([104.207.138.63]:35832 "EHLO mav.lukeshu.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232500AbhDWWoU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Apr 2021 18:44:20 -0400
+        id S231218AbhDWWyp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Apr 2021 18:54:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40498 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229520AbhDWWym (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Apr 2021 18:54:42 -0400
+Received: from mav.lukeshu.com (mav.lukeshu.com [IPv6:2001:19f0:5c00:8069:5400:ff:fe26:6a86])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85C8DC061574
+        for <git@vger.kernel.org>; Fri, 23 Apr 2021 15:54:05 -0700 (PDT)
 Received: from lukeshu-dw-thinkpad (unknown [IPv6:2601:281:8200:26:4e34:88ff:fe48:5521])
-        by mav.lukeshu.com (Postfix) with ESMTPSA id 3027D80590;
-        Fri, 23 Apr 2021 18:43:35 -0400 (EDT)
-Date:   Fri, 23 Apr 2021 16:43:34 -0600
-Message-ID: <87tunw1v1l.wl-lukeshu@lukeshu.com>
+        by mav.lukeshu.com (Postfix) with ESMTPSA id 706CD80590;
+        Fri, 23 Apr 2021 18:54:03 -0400 (EDT)
+Date:   Fri, 23 Apr 2021 16:54:02 -0600
+Message-ID: <87sg3g1uk5.wl-lukeshu@lukeshu.com>
 From:   Luke Shumaker <lukeshu@lukeshu.com>
 To:     Eric Sunshine <sunshine@sunshineco.com>
 Cc:     Luke Shumaker <lukeshu@lukeshu.com>,
@@ -42,11 +45,11 @@ Cc:     Luke Shumaker <lukeshu@lukeshu.com>,
         Roger L Strain <roger.strain@swri.org>,
         Techlive Zheng <techlivezheng@gmail.com>,
         Luke Shumaker <lukeshu@datawire.io>
-Subject: Re: [PATCH 12/30] subtree: don't have loose code outside of a function
-In-Reply-To: <CAPig+cQLP1XFnMFWOp4Zj-Ku8M-aqgE5DmpgEy=UWLqpBBW8Ng@mail.gmail.com>
+Subject: Re: [PATCH 04/30] subtree: t7900: use consistent formatting
+In-Reply-To: <CAPig+cT=jZdq=oDSHRF6DnvqZVo4OiPGy7x7AzTzdcy6RV76kw@mail.gmail.com>
 References: <20210423194230.1388945-1-lukeshu@lukeshu.com>
-        <20210423194230.1388945-13-lukeshu@lukeshu.com>
-        <CAPig+cQLP1XFnMFWOp4Zj-Ku8M-aqgE5DmpgEy=UWLqpBBW8Ng@mail.gmail.com>
+        <20210423194230.1388945-5-lukeshu@lukeshu.com>
+        <CAPig+cT=jZdq=oDSHRF6DnvqZVo4OiPGy7x7AzTzdcy6RV76kw@mail.gmail.com>
 User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
  FLIM-LB/1.14.9 (=?ISO-8859-4?Q?Goj=F2?=) APEL-LB/10.8 EasyPG/1.0.0
  Emacs/27.2 (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
@@ -56,43 +59,31 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 23 Apr 2021 14:23:18 -0600,
+On Fri, 23 Apr 2021 15:51:53 -0600,
 Eric Sunshine wrote:
 > 
 > On Fri, Apr 23, 2021 at 3:43 PM Luke Shumaker <lukeshu@lukeshu.com> wrote:
-> > Shove all of the loose code inside of a main() function.
-> >
-> > "Ignore space change" is probably helpful when viewing this diff.
+> > The formatting in t7900-subtree.sh isn't even consistent throughout the
+> > file.  Fix that; make it consistent throughout the file.
 > >
 > > Signed-off-by: Luke Shumaker <lukeshu@datawire.io>
+> > ---
+> > diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
+> > @@ -23,26 +21,24 @@ subtree_test_create_repo()
+> > -check_equal()
+> > -{
+> > +check_equal () {
+> >         test_debug 'echo'
+> >         test_debug "echo \"check a:\" \"{$1}\""
+> >         test_debug "echo \"      b:\" \"{$2}\""
+> > -       if [ "$1" = "$2" ]; then
+> > +       if [ "$1" = "$2" ]
+> > +       then
 > 
-> What is the purpose of this change? Does some subsequent commit depend
-> upon this or is it just a personal preference? The commit message
-> explains the "what" of the change but not the "why".
+> We prefer `test` over `[`, so it might make sense to update that, as
+> well, along with these other style cleanups.
 
-Dropping the commit would surely cause me much trouble with rebasing
-both the subsequent commits in this patchset and the commits I haven't
-yet submitted.  But I don't think they "depend" on it.
-
-I guess it is personal preference... one that I've developed from
-years of maintaining Bash scripts.  It's in a nearby part of my brain
-to "avoid global variables".  It's related to my notion that the
-reason most people think shell scripts are so terrible is that most
-people don't treat it like a real programming language and don't apply
-normal programming best practices; that not littering code around
-outside of a function is part of treating it like a real language (at
-least once the program grows beyond a certain size, which git-subtree
-surely has).  It's probably related to the Python idiom
-
-    if __name__ == "__main__":
-        main()
-
-that is often seen at the bottom of Python scripts.
-
-In this specific case, it's also moving the `set -- -h`, the `git
-rev-parse --parseopt`, and the `. git-sh-setup` to be closer to all
-the rest of the argument parsing, which is a readability win on its
-own, IMO.
+OK, I'll include that in this commit.
 
 -- 
 Happy hacking,
