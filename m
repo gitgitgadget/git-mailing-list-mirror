@@ -5,55 +5,55 @@ X-Spam-Level:
 X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB81AC433B4
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 07:21:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E316CC433ED
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 07:21:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7B6B8613C4
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 07:21:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 959EC613D7
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 07:21:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241176AbhDWHWJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Apr 2021 03:22:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60868 "EHLO
+        id S241093AbhDWHWK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Apr 2021 03:22:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241093AbhDWHWE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Apr 2021 03:22:04 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C35EC06174A
+        with ESMTP id S241122AbhDWHWF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Apr 2021 03:22:05 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F17BAC061574
         for <git@vger.kernel.org>; Fri, 23 Apr 2021 00:21:28 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id n2so72425738ejy.7
-        for <git@vger.kernel.org>; Fri, 23 Apr 2021 00:21:27 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id l4so72407682ejc.10
+        for <git@vger.kernel.org>; Fri, 23 Apr 2021 00:21:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=EVcyhVyfa+/+3jSQtfdgy6Yrq9vDAtx0TJY6PrTOgdU=;
-        b=RbziMKSbmV3SlOq17O1I7vEU5+JM0hQru87hBOtd3L7DmFWvLqh/olk/BdbdL3wA8U
-         HGaYHcjQ4e6K1Qm9Jy8BANJigTxQDHtur/LMkM4RrACWxGs4xmEabvtcQdz/WDBcYlGx
-         vubmcC5nDFAvGlw1IrTz0+XqVnDPbMnbI+UyeorScKQmDXZWApBjjrIMBcWkZzsszqC2
-         fFnQuKbFQZMnmyzKXX6TM611dCh+XlsjFOaey96JWzXmOLVldOtGQvcAVzYG3wsQOSao
-         5b3z06db5tx3GIefGccM24hWvhu6k9PFcEJdVnY3xSrHRfBiFcgdlxmHVTz2IWPcA8lS
-         zEpw==
+        bh=JyTvO720VkeLR2TGP2Iq4F9eggtM9ekpwCalzYbDvMQ=;
+        b=b3+HeGij3n+nrtqiQLgfBf6dl5XPIMHMq6DO5Gfm3DnfKz/ji2x76lxcrp7iOipODA
+         tZ1U6y+uop+7bp4wDs9Sa8vqp8jG814VvJ4dKfWfqoLhJxuLSStdyHYBdOIm8wX2DuWw
+         P0ssKdCq9Ft4riBTgl+VlrdLC+EcF+zL2F0A2a/sENFH8LvI5mTVlhOYVJBRoTWBxele
+         /zVxQrRTcVM2x+J9rL8W9uUtlSr2wlI0XSe69XQ5wST/1k4ARhsYVX+oewZF2OGo3nhS
+         RQ2wwRxhJ528jk37fpeL60kX2gCwyUXLcc34bR6dbU8uRFzW11Q2gd+RXvRBQ8kp+GSo
+         ZBNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=EVcyhVyfa+/+3jSQtfdgy6Yrq9vDAtx0TJY6PrTOgdU=;
-        b=WSZ/8/PSim32EKdqmTJAgJyvOoc7pNvYrIx2lRWJ5qynFUPBBremYjWL2IK2y8McH0
-         7Z+H6gPYMBKBesQfP9dTfKRgndh+zzw/ZIcoklqTzc2ROXTFSAjrv06z24FCG6pbqmHw
-         rwOMATMbzUqfvQ56fXCZ3Ijl6lgXPwx3DytTMtvg08rsA/gMO0hKifQ6nrw3QVwySh+W
-         fxGBbuEmZp1AftssQLv0tpK7tu37eZeFQ5BQHqRFhfg7ZqBn4czlyBD2yOb+iv0/sl3H
-         qP/kU0Tvtsr2fKLFJnPD+vXykz3mOyUyJ6A/SApNfBPFC9lkzV2DPgqUyG1hxUcR+swO
-         n3Dw==
-X-Gm-Message-State: AOAM531YEtzDeCKdlH670WSr4yn6EzuUn+FxP/YM2QNwndJ9s5FvFRkt
-        2h2R/jGvETwTdHGmIF77+elQU9G6WsgfbA==
-X-Google-Smtp-Source: ABdhPJzN3EiZFLdQHcQbvKyIelUaDgrLnTQ2GdqutlQ1ZZLVXB17GiddGYIkrgg8p18oeEROcHXj/w==
-X-Received: by 2002:a17:906:1114:: with SMTP id h20mr2735639eja.453.1619162486571;
-        Fri, 23 Apr 2021 00:21:26 -0700 (PDT)
+        bh=JyTvO720VkeLR2TGP2Iq4F9eggtM9ekpwCalzYbDvMQ=;
+        b=eiDAmYku/Bkbg6Ir9w9jLEbI1i/CGHyKPyQex9Tq2BEU2TfN3sSKFDq+ByMZI6jrZV
+         wHnnRgnHQjuZwI+6laSAcHCdJWM5vnSJr4FXQX6S3/S3YTvXQTe4DhjXgJP+Ps0PbxVi
+         yEXLIbZbdLD8EyCmyWdSWXZgNYFIUj2O7x9Hic7V0Ywx81Oaq0bCgIj2+4eG2A61iVHu
+         /ClypRS0jG5WSqpdpHjqiZrnSefZGcUbytrp5eggoRMj7ATuc+M1ycZQOORWaxTwb4Bx
+         vzw6ZOZWRdUvjUXyEiHTGDUkNPFmsiItNj+odsr2vykkyzHGqSvyR8+zQ3v/ckpC6RnQ
+         2Sww==
+X-Gm-Message-State: AOAM530dt0IhAFvlBfc04xTnrSK2PyCzKClC3z7cDTc25gfFXkiN50zT
+        PXhm5zPIG1pKQdu15fvu9g+1AbnlLr1KoA==
+X-Google-Smtp-Source: ABdhPJwohRGSE0+bE6P9hlSNBhqtPlJlBus1w93XrL4tRF+a2qv1oHQGYtYmPo/j+G33EVWMVSuaMQ==
+X-Received: by 2002:a17:907:2d89:: with SMTP id gt9mr2726725ejc.122.1619162487357;
+        Fri, 23 Apr 2021 00:21:27 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id e5sm3328892ejq.85.2021.04.23.00.21.25
+        by smtp.gmail.com with ESMTPSA id e5sm3328892ejq.85.2021.04.23.00.21.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Fri, 23 Apr 2021 00:21:26 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -69,9 +69,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Andreas Schwab <schwab@linux-m68k.org>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 05/11] test-lib functions: add an --annotated option to "test_commit"
-Date:   Fri, 23 Apr 2021 09:21:09 +0200
-Message-Id: <patch-05.11-4ceba3d404b-20210423T072006Z-avarab@gmail.com>
+Subject: [PATCH v5 06/11] describe tests: convert setup to use test_commit
+Date:   Fri, 23 Apr 2021 09:21:10 +0200
+Message-Id: <patch-06.11-589eaf7a078-20210423T072006Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.1.737.g98b508eba36
 In-Reply-To: <cover-00.11-00000000000-20210423T072006Z-avarab@gmail.com>
 References: <cover-00.11-0000000000-20210421T101156Z-avarab@gmail.com> <cover-00.11-00000000000-20210423T072006Z-avarab@gmail.com>
@@ -82,98 +82,109 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add an --annotated option to test_commit to create annotated tags. The
-tag will share the same message as the commit, and we'll call
-test_tick before creating it (unless --notick) is provided.
+Convert the setup of the describe tests to use test_commit when
+possible. This makes use of the new --annotated-tag option to
+test_commit.
 
-There's quite a few tests that could be simplified with this
-construct. I've picked one to convert in this change as a
-demonstration.
+Some of the setup here could simply be removed since the data being
+created wasn't important to any of the subsequent tests, so I've done
+so. E.g. assigning to the "one" variable was always useless, and just
+checking that we can describe HEAD after the first commit wasn't
+useful.
+
+In the case of the "two" variable we could instead use the tag we just
+created. See 5312ab11fbf (Add describe test., 2007-01-13) for the
+initial version of this code. There's other cases here like redundant
+"test_tick" invocations, or the simplification of not echoing "X" to a
+file we're about to tag as "x", now we just use "x" in both cases.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t1403-show-ref.sh     |  6 ++----
- t/test-lib-functions.sh | 27 ++++++++++++++++++++++-----
- 2 files changed, 24 insertions(+), 9 deletions(-)
+ t/t6120-describe.sh | 58 ++++++++++-----------------------------------
+ 1 file changed, 13 insertions(+), 45 deletions(-)
 
-diff --git a/t/t1403-show-ref.sh b/t/t1403-show-ref.sh
-index 6ce62f878c3..17d3cc14050 100755
---- a/t/t1403-show-ref.sh
-+++ b/t/t1403-show-ref.sh
-@@ -7,11 +7,9 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- . ./test-lib.sh
- 
- test_expect_success setup '
--	test_commit A &&
--	git tag -f -a -m "annotated A" A &&
-+	test_commit --annotate A &&
- 	git checkout -b side &&
--	test_commit B &&
--	git tag -f -a -m "annotated B" B &&
-+	test_commit --annotate B &&
- 	git checkout main &&
- 	test_commit C &&
- 	git branch B A^0
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index c6d07f4ce32..827c8502b10 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -179,6 +179,10 @@ debug () {
- #	Invoke "git commit" with --author <author>
- #   --no-tag
- #	Do not tag the resulting commit
-+#   --annotate
-+#	Create an annotated tag with "--annotate -m <message>". Calls
-+#	test_tick between making the commit and tag, unless --notick
-+#	is given.
- #
- # This will commit a file with the given contents and the given commit
- # message, and tag the resulting commit with the given tag name.
-@@ -191,7 +195,7 @@ test_commit () {
- 	author= &&
- 	signoff= &&
- 	indir= &&
--	no_tag= &&
-+	tag=light &&
- 	while test $# != 0
- 	do
- 		case "$1" in
-@@ -219,7 +223,10 @@ test_commit () {
- 			shift
- 			;;
- 		--no-tag)
--			no_tag=yes
-+			tag=none
-+			;;
-+		--annotate)
-+			tag=annotate
- 			;;
- 		*)
- 			break
-@@ -243,10 +250,20 @@ test_commit () {
- 	git ${indir:+ -C "$indir"} commit \
- 	    ${author:+ --author "$author"} \
- 	    $signoff -m "$1" &&
--	if test -z "$no_tag"
--	then
-+	case "$tag" in
-+	none)
-+		;;
-+	light)
- 		git ${indir:+ -C "$indir"} tag "${4:-$1}"
--	fi
-+		;;
-+	annotate)
-+		if test -z "$notick"
-+		then
-+			test_tick
-+		fi &&
-+		git ${indir:+ -C "$indir"} tag -a -m "$1" "${4:-$1}"
-+		;;
-+	esac
+diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
+index e89b6747bee..88fddc91424 100755
+--- a/t/t6120-describe.sh
++++ b/t/t6120-describe.sh
+@@ -31,64 +31,32 @@ check_describe () {
  }
  
- # Call test_merge with the arguments "<message> <commit>", where <commit>
+ test_expect_success setup '
++	test_commit initial file one &&
++	test_commit second file two &&
++	test_commit third file three &&
++	test_commit --annotate A file A &&
++	test_commit c file c &&
+ 
+-	test_tick &&
+-	echo one >file && git add file && git commit -m initial &&
+-	one=$(git rev-parse HEAD) &&
+-
+-	git describe --always HEAD &&
+-
+-	test_tick &&
+-	echo two >file && git add file && git commit -m second &&
+-	two=$(git rev-parse HEAD) &&
+-
+-	test_tick &&
+-	echo three >file && git add file && git commit -m third &&
+-
+-	test_tick &&
+-	echo A >file && git add file && git commit -m A &&
+-	test_tick &&
+-	git tag -a -m A A &&
+-
+-	test_tick &&
+-	echo c >file && git add file && git commit -m c &&
+-	test_tick &&
+-	git tag c &&
+-
+-	git reset --hard $two &&
+-	test_tick &&
+-	echo B >side && git add side && git commit -m B &&
+-	test_tick &&
+-	git tag -a -m B B &&
++	git reset --hard second &&
++	test_commit --annotate B side B &&
+ 
+ 	test_tick &&
+ 	git merge -m Merged c &&
+ 	merged=$(git rev-parse HEAD) &&
+ 
+-	git reset --hard $two &&
+-	test_tick &&
+-	echo D >another && git add another && git commit -m D &&
+-	test_tick &&
+-	git tag -a -m D D &&
+-	test_tick &&
+-	git tag -a -m R R &&
+-
+-	test_tick &&
+-	echo DD >another && git commit -a -m another &&
++	git reset --hard second &&
++	test_commit --no-tag D another D &&
+ 
+ 	test_tick &&
+-	git tag e &&
++	git tag -a -m R R &&
+ 
+-	test_tick &&
+-	echo DDD >another && git commit -a -m "yet another" &&
++	test_commit e another DD &&
++	test_commit --no-tag "yet another" another DDD &&
+ 
+ 	test_tick &&
+ 	git merge -m Merged $merged &&
+ 
+-	test_tick &&
+-	echo X >file && echo X >side && git add file side &&
+-	git commit -m x
+-
++	test_commit --no-tag x file
+ '
+ 
+ check_describe A-* HEAD
 -- 
 2.31.1.737.g98b508eba36
 
