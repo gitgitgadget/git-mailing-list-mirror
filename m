@@ -7,21 +7,21 @@ X-Spam-Status: No, score=-16.7 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 762ABC433ED
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 19:43:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 114B1C43461
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 19:43:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4B8DD61422
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 19:43:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E1A416128B
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 19:43:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243968AbhDWTn7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S244017AbhDWTn7 (ORCPT <rfc822;git@archiver.kernel.org>);
         Fri, 23 Apr 2021 15:43:59 -0400
-Received: from mav.lukeshu.com ([104.207.138.63]:35508 "EHLO mav.lukeshu.com"
+Received: from mav.lukeshu.com ([104.207.138.63]:35522 "EHLO mav.lukeshu.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S243967AbhDWTnn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Apr 2021 15:43:43 -0400
+        id S243905AbhDWTno (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Apr 2021 15:43:44 -0400
 Received: from lukeshu-dw-thinkpad (unknown [IPv6:2601:281:8200:26:4e34:88ff:fe48:5521])
-        by mav.lukeshu.com (Postfix) with ESMTPSA id E85AB80595;
-        Fri, 23 Apr 2021 15:43:05 -0400 (EDT)
+        by mav.lukeshu.com (Postfix) with ESMTPSA id C06EB80594;
+        Fri, 23 Apr 2021 15:43:06 -0400 (EDT)
 From:   Luke Shumaker <lukeshu@lukeshu.com>
 To:     git@vger.kernel.org
 Cc:     Avery Pennarun <apenwarr@gmail.com>,
@@ -37,9 +37,9 @@ Cc:     Avery Pennarun <apenwarr@gmail.com>,
         <pclouds@gmail.com>, Roger L Strain <roger.strain@swri.org>,
         Techlive Zheng <techlivezheng@gmail.com>,
         Luke Shumaker <lukeshu@datawire.io>
-Subject: [PATCH 28/30] subtree: allow 'split' flags to be passed to 'push'
-Date:   Fri, 23 Apr 2021 13:42:28 -0600
-Message-Id: <20210423194230.1388945-29-lukeshu@lukeshu.com>
+Subject: [PATCH 29/30] subtree: push: allow specifying a local rev other than HEAD
+Date:   Fri, 23 Apr 2021 13:42:29 -0600
+Message-Id: <20210423194230.1388945-30-lukeshu@lukeshu.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210423194230.1388945-1-lukeshu@lukeshu.com>
 References: <20210423194230.1388945-1-lukeshu@lukeshu.com>
@@ -51,104 +51,110 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Luke Shumaker <lukeshu@datawire.io>
 
-'push' does a 'split' internally, but it doesn't pass flags through to the
-'split'.  This is silly, if you need to pass flags to 'split', then it
-means that you can't use 'push'!
-
-So, have 'push' accept 'split' flags, and pass them through to 'split'.
-
-Add tests for this by copying split's tests with minimal modification.
+'git subtree split' lets you specify a rev other than HEAD.  'git push'
+lets you specify a mapping between a local thing and a remot ref.  So
+smash those together, and have 'git subtree push' let you specify which
+local thing to run split on and push the result of that split to the
+remote ref.
 
 Signed-off-by: Luke Shumaker <lukeshu@datawire.io>
 ---
- contrib/subtree/git-subtree.sh     |   6 +-
- contrib/subtree/git-subtree.txt    |  15 +-
- contrib/subtree/t/t7900-subtree.sh | 214 ++++++++++++++++++++++++++++-
- 3 files changed, 223 insertions(+), 12 deletions(-)
+ contrib/subtree/git-subtree.sh     | 24 +++++++++++++++++-------
+ contrib/subtree/git-subtree.txt    | 14 ++++++++------
+ contrib/subtree/t/t7900-subtree.sh | 22 ++++++++++++++++++++++
+ 3 files changed, 47 insertions(+), 13 deletions(-)
 
 diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index ff54009c49..2846bd21b4 100755
+index 2846bd21b4..7361d8de3f 100755
 --- a/contrib/subtree/git-subtree.sh
 +++ b/contrib/subtree/git-subtree.sh
-@@ -17,13 +17,13 @@ h,help        show the help
+@@ -11,7 +11,7 @@ git subtree add   --prefix=<prefix> <repository> <ref>
+ git subtree merge --prefix=<prefix> <commit>
+ git subtree split --prefix=<prefix> [<commit>]
+ git subtree pull  --prefix=<prefix> <repository> <ref>
+-git subtree push  --prefix=<prefix> <repository> <ref>
++git subtree push  --prefix=<prefix> <repository> <refspec>
+ --
+ h,help        show the help
  q             quiet
- d             show debug messages
- P,prefix=     the name of the subdir to split out
-- options for 'split'
-+ options for 'split' (also: 'push')
- annotate=     add a prefix to commit message of new commits
- b,branch=     create a new branch from the split subtree
- ignore-joins  ignore prior --rejoin commits
- onto=         try connecting new tree to an existing one
- rejoin        merge the new branch back into HEAD
-- options for 'add' and 'merge' (also: 'pull' and 'split --rejoin')
-+ options for 'add' and 'merge' (also: 'pull', 'split --rejoin', and 'push --rejoin')
- squash        merge subtree changes as a single commit
- m,message=    use the given message as the commit message for the merge commit
- "
-@@ -933,7 +933,7 @@ cmd_push () {
+@@ -921,20 +921,30 @@ cmd_pull () {
+ 	cmd_merge FETCH_HEAD
+ }
+ 
+-# Usage: cmd_push REPOSITORY REMOTEREF
++# Usage: cmd_push REPOSITORY [+][LOCALREV:]REMOTEREF
+ cmd_push () {
+ 	if test $# -ne 2
+ 	then
+-		die "You must provide <repository> <ref>"
++		die "You must provide <repository> <refspec>"
+ 	fi
+-	ensure_valid_ref_format "$2"
+ 	if test -e "$dir"
+ 	then
  		repository=$1
- 		refspec=$2
+-		refspec=$2
++		refspec=${2#+}
++		remoteref=${refspec#*:}
++		if test "$remoteref" = "$refspec"
++		then
++			localrevname_presplit=HEAD
++		else
++			localrevname_presplit=${refspec%%:*}
++		fi
++		ensure_valid_ref_format "$remoteref"
++		localrev_presplit=$(git rev-parse -q --verify "$localrevname_presplit^{commit}") ||
++			die "'$localrevname_presplit' does not refer to a commit"
++
  		echo "git push using: " "$repository" "$refspec"
--		localrev=$(git subtree split --prefix="$arg_prefix") || die
-+		localrev=$(cmd_split) || die
- 		git push "$repository" "$localrev":"refs/heads/$refspec"
+-		localrev=$(cmd_split) || die
+-		git push "$repository" "$localrev":"refs/heads/$refspec"
++		localrev=$(cmd_split "$localrev_presplit") || die
++		git push "$repository" "$localrev":"refs/heads/$remoteref"
  	else
  		die "'$dir' must already exist. Try 'git subtree add'."
+ 	fi
 diff --git a/contrib/subtree/git-subtree.txt b/contrib/subtree/git-subtree.txt
-index b03ef88e1a..a597d61d0f 100644
+index a597d61d0f..c049827cb5 100644
 --- a/contrib/subtree/git-subtree.txt
 +++ b/contrib/subtree/git-subtree.txt
-@@ -137,11 +137,11 @@ OPTIONS FOR ALL COMMANDS
- 	want to manipulate.  This option is mandatory
- 	for all commands.
+@@ -16,7 +16,7 @@ SYNOPSIS
  
--OPTIONS FOR 'add' AND 'merge' (ALSO: 'pull' AND 'split --rejoin')
-------------------------------------------------------------------
-+OPTIONS FOR 'add' AND 'merge' (ALSO: 'pull', 'split --rejoin', AND 'push --rejoin')
-+-----------------------------------------------------------------------------------
- These options for 'add' and 'merge' may also be given to 'pull' (which
--wraps 'merge') and 'split --rejoin' (which wraps either 'add' or
--'merge' as appropriate).
-+wraps 'merge'), 'split --rejoin' (which wraps either 'add' or 'merge'
-+as appropriate), and 'push --rejoin' (which wraps 'split --rejoin').
+ [verse]
+ 'git subtree' [<options>] -P <prefix> pull <repository> <remote-ref>
+-'git subtree' [<options>] -P <prefix> push <repository> <remote-ref>
++'git subtree' [<options>] -P <prefix> push <repository> <refspec>
  
- --squash::
- 	Instead of merging the entire history from the subtree project, produce
-@@ -173,9 +173,10 @@ subproject.
- --message=<message>::
- 	Specify <message> as the commit message for the merge commit.
+ DESCRIPTION
+ -----------
+@@ -115,11 +115,13 @@ pull <repository> <remote-ref>::
+ 	it fetches the given ref from the specified remote
+ 	repository.
  
--OPTIONS FOR 'split'
---------------------
--These options are only valid for 'split'.
-+OPTIONS FOR 'split' (ALSO: 'push')
-+----------------------------------
-+These options for 'split' may also be given to 'push' (which wraps
-+'split').
+-push <repository> <remote-ref>::
+-	Does a 'split' using the <prefix> subtree of HEAD and then
+-	does a 'git push' to push the result to the <repository> and
+-	<remote-ref>.  This can be used to push your subtree to
+-	different branches of the remote repository.
++push <repository> [+][<local-commit>:]<remote-ref>::
++	Does a 'split' using the <prefix> subtree of <local-commit>
++	and then does a 'git push' to push the result to the
++	<repository> and <remote-ref>.  This can be used to push your
++	subtree to different branches of the remote repository.  Just
++	as with 'split', if no <local-commit> is given, then HEAD is
++	used.  The optional leading '+' is ignored.
  
- --annotate=<annotation>::
- 	When generating synthetic history, add <annotation> as a prefix to each
+ OPTIONS FOR ALL COMMANDS
+ ------------------------
 diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
-index e5467c117b..e89e46fe65 100755
+index e89e46fe65..fb85eed5fc 100755
 --- a/contrib/subtree/t/t7900-subtree.sh
 +++ b/contrib/subtree/t/t7900-subtree.sh
-@@ -5,8 +5,8 @@
- #
- test_description='Basic porcelain support for subtrees
- 
--This test verifies the basic operation of the add, pull, merge
--and split subcommands of git subtree.
-+This test verifies the basic operation of the add, merge, split, pull,
-+and push subcommands of git subtree.
- '
- 
- TEST_DIRECTORY=$(pwd)/../../../t
-@@ -589,6 +589,216 @@ test_expect_success 'push basic operation' '
+@@ -799,6 +799,28 @@ test_expect_success 'push "sub dir"/ with --branch for an incompatible branch' '
  	)
  '
  
-+test_expect_success 'push sub dir/ with --rejoin' '
++test_expect_success 'push "sub dir"/ with a local rev' '
 +	subtree_test_create_repo "$test_count" &&
 +	subtree_test_create_repo "$test_count/sub proj" &&
 +	test_create_commit "$test_count" main1 &&
@@ -159,202 +165,14 @@ index e5467c117b..e89e46fe65 100755
 +		git subtree add --prefix="sub dir" FETCH_HEAD
 +	) &&
 +	test_create_commit "$test_count" "sub dir"/main-sub1 &&
-+	test_create_commit "$test_count" main2 &&
-+	test_create_commit "$test_count/sub proj" sub2 &&
 +	test_create_commit "$test_count" "sub dir"/main-sub2 &&
 +	(
 +		cd "$test_count" &&
-+		git fetch ./"sub proj" HEAD &&
-+		git subtree merge --prefix="sub dir" FETCH_HEAD &&
-+		split_hash=$(git subtree split --prefix="sub dir" --annotate="*") &&
-+		git subtree push --prefix="sub dir" --annotate="*" --rejoin ./"sub proj" from-mainline &&
-+		test "$(last_commit_subject)" = "Split '\''sub dir/'\'' into commit '\''$split_hash'\''" &&
-+		test "$split_hash" = "$(git -C "sub proj" rev-parse --verify refs/heads/from-mainline)"
-+	)
-+'
-+
-+test_expect_success 'push sub dir/ with --rejoin from scratch' '
-+	subtree_test_create_repo "$test_count" &&
-+	test_create_commit "$test_count" main1 &&
-+	(
-+		cd "$test_count" &&
-+		mkdir "sub dir" &&
-+		echo file >"sub dir"/file &&
-+		git add "sub dir/file" &&
-+		git commit -m"sub dir file" &&
-+		split_hash=$(git subtree split --prefix="sub dir" --rejoin) &&
-+		git init --bare "sub proj.git" &&
-+		git subtree push --prefix="sub dir" --rejoin ./"sub proj.git" from-mainline &&
-+		test "$(last_commit_subject)" = "Split '\''sub dir/'\'' into commit '\''$split_hash'\''" &&
-+		test "$split_hash" = "$(git -C "sub proj.git" rev-parse --verify refs/heads/from-mainline)"
-+	)
-+'
-+
-+test_expect_success 'push sub dir/ with --rejoin and --message' '
-+	subtree_test_create_repo "$test_count" &&
-+	subtree_test_create_repo "$test_count/sub proj" &&
-+	test_create_commit "$test_count" main1 &&
-+	test_create_commit "$test_count/sub proj" sub1 &&
-+	(
-+		cd "$test_count" &&
-+		git fetch ./"sub proj" HEAD &&
-+		git subtree add --prefix="sub dir" FETCH_HEAD
-+	) &&
-+	test_create_commit "$test_count" "sub dir"/main-sub1 &&
-+	test_create_commit "$test_count" main2 &&
-+	test_create_commit "$test_count/sub proj" sub2 &&
-+	test_create_commit "$test_count" "sub dir"/main-sub2 &&
-+	(
-+		cd "$test_count" &&
-+		git fetch ./"sub proj" HEAD &&
-+		git subtree merge --prefix="sub dir" FETCH_HEAD &&
-+		git subtree push --prefix="sub dir" --message="Split & rejoin" --annotate="*" --rejoin ./"sub proj" from-mainline &&
-+		test "$(last_commit_subject)" = "Split & rejoin" &&
-+		split_hash="$(git rev-parse --verify HEAD^2)" &&
-+		test "$split_hash" = "$(git -C "sub proj" rev-parse --verify refs/heads/from-mainline)"
-+	)
-+'
-+
-+test_expect_success 'push "sub dir"/ with --rejoin and --squash' '
-+	subtree_test_create_repo "$test_count" &&
-+	subtree_test_create_repo "$test_count/sub proj" &&
-+	test_create_commit "$test_count" main1 &&
-+	test_create_commit "$test_count/sub proj" sub1 &&
-+	(
-+		cd "$test_count" &&
-+		git fetch ./"sub proj" HEAD &&
-+		git subtree add --prefix="sub dir" --squash FETCH_HEAD
-+	) &&
-+	test_create_commit "$test_count" "sub dir"/main-sub1 &&
-+	test_create_commit "$test_count" main2 &&
-+	test_create_commit "$test_count/sub proj" sub2 &&
-+	test_create_commit "$test_count" "sub dir"/main-sub2 &&
-+	(
-+		cd "$test_count" &&
-+		git subtree pull --prefix="sub dir" --squash ./"sub proj" HEAD &&
-+		MAIN=$(git rev-parse --verify HEAD) &&
-+		SUB=$(git -C "sub proj" rev-parse --verify HEAD) &&
-+
-+		SPLIT=$(git subtree split --prefix="sub dir" --annotate="*") &&
-+		git subtree push --prefix="sub dir" --annotate="*" --rejoin --squash ./"sub proj" from-mainline &&
-+
-+		! git merge-base --is-ancestor $SUB HEAD &&
-+		! git merge-base --is-ancestor $SPLIT HEAD &&
-+		git rev-list HEAD ^$MAIN >commit-list &&
-+		test_line_count = 2 commit-list &&
-+		test "$(git rev-parse --verify HEAD:)"           = "$(git rev-parse --verify $MAIN:)" &&
-+		test "$(git rev-parse --verify HEAD:"sub dir")"  = "$(git rev-parse --verify $SPLIT:)" &&
-+		test "$(git rev-parse --verify HEAD^1)"          = $MAIN &&
-+		test "$(git rev-parse --verify HEAD^2)"         != $SPLIT &&
-+		test "$(git rev-parse --verify HEAD^2:)"         = "$(git rev-parse --verify $SPLIT:)" &&
-+		test "$(last_commit_subject)" = "Split '\''sub dir/'\'' into commit '\''$SPLIT'\''" &&
-+		test "$SPLIT" = "$(git -C "sub proj" rev-parse --verify refs/heads/from-mainline)"
-+	)
-+'
-+
-+test_expect_success 'push "sub dir"/ with --branch' '
-+	subtree_test_create_repo "$test_count" &&
-+	subtree_test_create_repo "$test_count/sub proj" &&
-+	test_create_commit "$test_count" main1 &&
-+	test_create_commit "$test_count/sub proj" sub1 &&
-+	(
-+		cd "$test_count" &&
-+		git fetch ./"sub proj" HEAD &&
-+		git subtree add --prefix="sub dir" FETCH_HEAD
-+	) &&
-+	test_create_commit "$test_count" "sub dir"/main-sub1 &&
-+	test_create_commit "$test_count" main2 &&
-+	test_create_commit "$test_count/sub proj" sub2 &&
-+	test_create_commit "$test_count" "sub dir"/main-sub2 &&
-+	(
-+		cd "$test_count" &&
-+		git fetch ./"sub proj" HEAD &&
-+		git subtree merge --prefix="sub dir" FETCH_HEAD &&
-+		split_hash=$(git subtree split --prefix="sub dir" --annotate="*") &&
-+		git subtree push --prefix="sub dir" --annotate="*" --branch subproj-br ./"sub proj" from-mainline &&
-+		test "$(git rev-parse subproj-br)" = "$split_hash" &&
-+		test "$split_hash" = "$(git -C "sub proj" rev-parse --verify refs/heads/from-mainline)"
-+	)
-+'
-+
-+test_expect_success 'check hash of push' '
-+	subtree_test_create_repo "$test_count" &&
-+	subtree_test_create_repo "$test_count/sub proj" &&
-+	test_create_commit "$test_count" main1 &&
-+	test_create_commit "$test_count/sub proj" sub1 &&
-+	(
-+		cd "$test_count" &&
-+		git fetch ./"sub proj" HEAD &&
-+		git subtree add --prefix="sub dir" FETCH_HEAD
-+	) &&
-+	test_create_commit "$test_count" "sub dir"/main-sub1 &&
-+	test_create_commit "$test_count" main2 &&
-+	test_create_commit "$test_count/sub proj" sub2 &&
-+	test_create_commit "$test_count" "sub dir"/main-sub2 &&
-+	(
-+		cd "$test_count" &&
-+		git fetch ./"sub proj" HEAD &&
-+		git subtree merge --prefix="sub dir" FETCH_HEAD &&
-+		split_hash=$(git subtree split --prefix="sub dir" --annotate="*") &&
-+		git subtree push --prefix="sub dir" --annotate="*" --branch subproj-br ./"sub proj" from-mainline &&
-+		test "$(git rev-parse subproj-br)" = "$split_hash" &&
-+		# Check hash of split
-+		new_hash=$(git rev-parse subproj-br^2) &&
-+		(
-+			cd ./"sub proj" &&
-+			subdir_hash=$(git rev-parse HEAD) &&
-+			test "$new_hash" = "$subdir_hash"
-+		) &&
-+		test "$split_hash" = "$(git -C "sub proj" rev-parse --verify refs/heads/from-mainline)"
-+	)
-+'
-+
-+test_expect_success 'push "sub dir"/ with --branch for an existing branch' '
-+	subtree_test_create_repo "$test_count" &&
-+	subtree_test_create_repo "$test_count/sub proj" &&
-+	test_create_commit "$test_count" main1 &&
-+	test_create_commit "$test_count/sub proj" sub1 &&
-+	(
-+		cd "$test_count" &&
-+		git fetch ./"sub proj" HEAD &&
-+		git branch subproj-br FETCH_HEAD &&
-+		git subtree add --prefix="sub dir" FETCH_HEAD
-+	) &&
-+	test_create_commit "$test_count" "sub dir"/main-sub1 &&
-+	test_create_commit "$test_count" main2 &&
-+	test_create_commit "$test_count/sub proj" sub2 &&
-+	test_create_commit "$test_count" "sub dir"/main-sub2 &&
-+	(
-+		cd "$test_count" &&
-+		git fetch ./"sub proj" HEAD &&
-+		git subtree merge --prefix="sub dir" FETCH_HEAD &&
-+		split_hash=$(git subtree split --prefix="sub dir" --annotate="*") &&
-+		git subtree push --prefix="sub dir" --annotate="*" --branch subproj-br ./"sub proj" from-mainline &&
-+		test "$(git rev-parse subproj-br)" = "$split_hash" &&
-+		test "$split_hash" = "$(git -C "sub proj" rev-parse --verify refs/heads/from-mainline)"
-+	)
-+'
-+
-+test_expect_success 'push "sub dir"/ with --branch for an incompatible branch' '
-+	subtree_test_create_repo "$test_count" &&
-+	subtree_test_create_repo "$test_count/sub proj" &&
-+	test_create_commit "$test_count" main1 &&
-+	test_create_commit "$test_count/sub proj" sub1 &&
-+	(
-+		cd "$test_count" &&
-+		git branch init HEAD &&
-+		git fetch ./"sub proj" HEAD &&
-+		git subtree add --prefix="sub dir" FETCH_HEAD
-+	) &&
-+	test_create_commit "$test_count" "sub dir"/main-sub1 &&
-+	test_create_commit "$test_count" main2 &&
-+	test_create_commit "$test_count/sub proj" sub2 &&
-+	test_create_commit "$test_count" "sub dir"/main-sub2 &&
-+	(
-+		cd "$test_count" &&
-+		git fetch ./"sub proj" HEAD &&
-+		git subtree merge --prefix="sub dir" FETCH_HEAD &&
-+		test_must_fail git subtree push --prefix="sub dir" --branch init "./sub proj" from-mainline
++		bad_tree=$(git rev-parse --verify HEAD:"sub dir") &&
++		good_tree=$(git rev-parse --verify HEAD^:"sub dir") &&
++		git subtree push --prefix="sub dir" --annotate="*" ./"sub proj" HEAD^:from-mainline &&
++		split_tree=$(git -C "sub proj" rev-parse --verify refs/heads/from-mainline:) &&
++		test "$split_tree" = "$good_tree"
 +	)
 +'
 +
