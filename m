@@ -2,106 +2,159 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-14.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
+	UNWANTED_LANGUAGE_BODY autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C388CC433ED
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 08:35:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 95670C433B4
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 09:10:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8EE35613F6
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 08:35:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 58A3161396
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 09:10:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241361AbhDWIft (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Apr 2021 04:35:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48942 "EHLO
+        id S241732AbhDWJLT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Apr 2021 05:11:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230059AbhDWIfs (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Apr 2021 04:35:48 -0400
-Received: from mail-vs1-xe2e.google.com (mail-vs1-xe2e.google.com [IPv6:2607:f8b0:4864:20::e2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2997EC061574
-        for <git@vger.kernel.org>; Fri, 23 Apr 2021 01:35:12 -0700 (PDT)
-Received: by mail-vs1-xe2e.google.com with SMTP id 2so24273387vsh.4
-        for <git@vger.kernel.org>; Fri, 23 Apr 2021 01:35:12 -0700 (PDT)
+        with ESMTP id S241184AbhDWJLS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Apr 2021 05:11:18 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A294BC061574
+        for <git@vger.kernel.org>; Fri, 23 Apr 2021 02:10:42 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id g9so31589265wrx.0
+        for <git@vger.kernel.org>; Fri, 23 Apr 2021 02:10:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=PoNiDq48ZhDxZRL0BSbsPJHuP/dORAu9eCqWT7ZJj0g=;
-        b=nhLFjxZY/WDzYJ/dlkLmvBQdaTJEBhqox+Zjbs+L5riDB4Dg9f4zSsTbgR0rqAWrQN
-         XCgQlp7M+hOOFUOtgB8oW9kYESbVmD8BlwvrWQJseIFmqaTCJGyBr6qjtLjJC6Y+e3w8
-         F9Me5Pt3Im+QZ+oMwrfJKQhuNexjEZ92hkSc7jdpkCisFHCeYRvg5ytazvUP996cQd5y
-         RxwO3AQVZQfI1N2xVpkZ6eKZmPAIoef/0/NA9sEp6sZPVFYKexSnRS/v0QufXmBVvU0t
-         1jIadcB0zzmJtLux9PBnMTwHTktmW1XZCY/Rn0+JKvJVo0UOBgIS0fJ4mQBOMV/JcuMi
-         SZug==
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=OQNkk9iCfi4KFpgS51KzbtiZ4mo+oOo5uIERURGS6r0=;
+        b=ITFAS3fplC8MpZYPOY4A3ke8oyOh/VT/yB0txyQy5JCLpak06WcQB9q8JjeN5wDFlX
+         e3mp82tK25ltTTLkZ7R9kiA0e4A+JShwYlcl+ydLMy5JZxlT1N6/ZkKX0Epxz3zYYQ88
+         e06TVNc9Cyl2AQWZaKNUT9mailjKl1ib6+/A/2j+gLXxwBgMot91fU7lH5clm05bOhcm
+         nVYLMWzW8OXAPryT2ONROw5wWKeQJDj+cnTmr4Jj/dxH6D7fmpQCN3i/za8O8AdfLUFB
+         KEc9Zz3fcgWZCGX15nuhrY9mtMuvmPwrZagyCJndFb3gf/QHOZTyxMquQ6qVAZgtfEHY
+         sIuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=PoNiDq48ZhDxZRL0BSbsPJHuP/dORAu9eCqWT7ZJj0g=;
-        b=kQocPE0Szano/03QZyydhguwtPPqhZdtbRH5LRiHFW8/zIjaNKZqCruyhoTIJT34YM
-         Kv6va5xTwL2cYZnuY9SY9E6cnH0Zxc5Y9ZmxmOhrN99KEzebqiM3zubpOLbXwpEZEOQo
-         iqTp6RWMpA74PDy4lUI8yu7E+2pgQ92CgJkmeljO4KnxfNtiK6+no9GrSo9BCi5rtTEB
-         9DNwz8jtPB4LfDYRbHDzU9UfQUL61Y71vxmCK0x4gT0y7+xyx1Qh53BhJhA3GQKG1+Of
-         sjUg7TfrRolrRG5z0lLi88XDzObB+vq2Nt0UFikNZhtpWqJ5BwB4oQSjgsUlMzlDIsnC
-         liOQ==
-X-Gm-Message-State: AOAM5303PmCQ1fd1c06dPYqOVt25P3GizofDz3Gk0LknluJXeuda9uQe
-        1vKoq6EStkji5zIPV0oxuSr6p2fVpbC2Q5E6D4F7zQ==
-X-Google-Smtp-Source: ABdhPJzdr2pCG+TFSi8+H7IdTO+fLDzcRJEo1iNZy1F9jODeOs5dO2f2xqq8Hd34UXk5qDDEAnNvpYdXnop4Bn5VmLo=
-X-Received: by 2002:a67:7d42:: with SMTP id y63mr2396415vsc.5.1619166911246;
- Fri, 23 Apr 2021 01:35:11 -0700 (PDT)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=OQNkk9iCfi4KFpgS51KzbtiZ4mo+oOo5uIERURGS6r0=;
+        b=WFEw0V5QB0zVTexm+MTLTLcOCongbUMZ5t0rdHfygYN6Mohp5K/QP3gIm/ISDrdINW
+         DhsZwWzu1jwokbfSkzX9I0kEWiAIPzyt0LvCPblXNsvf7VcMOqQR1s6zq9bjIIQuRDiV
+         S9VLj8H0xOno+CvL9oblpFSWfO2wIZxaBMBs90r8yQCSOg1tmD4Qbs9zmodnniTxHADc
+         d/ADFKxr/U0pupmKPbFQ/1Smq8jc1Czpl2SICRcZa5eDMDUNn8MAMTcgnBRQnEp3VEmW
+         2MoXzXEjzsjNjeFUo2oYQ2knEs7QPLeBek/jzqcYTaS+2F54+vzmDMwn/H+SbwsQDRiG
+         NE7g==
+X-Gm-Message-State: AOAM533yTO4mOEr4VY34YAlnUaI0njnaoCvYQlIQQRT0adMKhnFb2u90
+        GBDGTijyjCKcfiDIM7hRAlBevPX1lgk=
+X-Google-Smtp-Source: ABdhPJwT3XZ+eabUgxSnyFaGwxtlEbT9TH4TeLGdzEvpnkqU+9m8Yq8x7ahBa95k6PhtIGnhNLNx7Q==
+X-Received: by 2002:a05:6000:1816:: with SMTP id m22mr3465725wrh.260.1619169041364;
+        Fri, 23 Apr 2021 02:10:41 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id f25sm8424184wrd.43.2021.04.23.02.10.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Apr 2021 02:10:40 -0700 (PDT)
+Message-Id: <pull.1010.git.git.1619169039954.gitgitgadget@gmail.com>
+From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 23 Apr 2021 09:10:39 +0000
+Subject: [PATCH] refs/debug: trace into reflog expiry too
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.1002.git.git.1618255954484.gitgitgadget@gmail.com>
- <xmqq4kgbb2ic.fsf@gitster.g> <CAFQ2z_MnZOfo4Bt6SsRJnL+F70r9wr_jYSf2KGvcvyX-8PfVRQ@mail.gmail.com>
- <xmqqy2dmkkvo.fsf@gitster.g>
-In-Reply-To: <xmqqy2dmkkvo.fsf@gitster.g>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Fri, 23 Apr 2021 10:34:59 +0200
-Message-ID: <CAFQ2z_PhkOEnKNFZ29R5x9rttO+3POT8Tdx9stcQ__oNG=wQsA@mail.gmail.com>
-Subject: Re: [PATCH] refs: print errno for read_raw_ref if GIT_TRACE_REFS is set
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 13, 2021 at 10:08 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Han-Wen Nienhuys <hanwen@google.com> writes:
->
-> >> I do wonder if we want strerror(errno) instead of the number, but I
-> >> can go either way (it's just a trace output).
-> >
-> > For tracing, it would be most useful if we got the actual symbol (eg.
-> > ENOENT). Is there a way to get at that?
->
-> I do not think there is.
->
-> And that is the reason why we see everywhere calls to die_errno(),
-> error(..., strerror(errno)), etc.
->
-> As this is interpolated into trace with untranslated string,
-> I suspect that strerror() is not a good match, so let's live with %d
-> for now.
+From: Han-Wen Nienhuys <hanwen@google.com>
 
-Great!
+Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+---
+    refs/debug: trace into reflog expiry too
+    
+    this is split out from my larger reftable series. It improves debug
+    output, so it's both not crucial to the reftable series, and should be
+    uncontroversial to merge into next.
 
-This topic is marked as
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1010%2Fhanwen%2Fdebug-expiry-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1010/hanwen/debug-expiry-v1
+Pull-Request: https://github.com/git/git/pull/1010
 
-Waiting for reviews to conclude.
-cf. <xmqq4kgbb2ic.fsf@gitster.g>
+ refs/debug.c | 47 ++++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 44 insertions(+), 3 deletions(-)
 
-but I don't know what is left to do. Oversight?
+diff --git a/refs/debug.c b/refs/debug.c
+index 922e64fa6ad9..3b25e3aeb1ba 100644
+--- a/refs/debug.c
++++ b/refs/debug.c
+@@ -353,6 +353,40 @@ static int debug_delete_reflog(struct ref_store *ref_store, const char *refname)
+ 	return res;
+ }
+ 
++struct debug_reflog_expiry_should_prune {
++	reflog_expiry_prepare_fn *prepare;
++	reflog_expiry_should_prune_fn *should_prune;
++	reflog_expiry_cleanup_fn *cleanup;
++	void *cb_data;
++};
++
++static void debug_reflog_expiry_prepare(const char *refname,
++				    const struct object_id *oid,
++				    void *cb_data)
++{
++	struct debug_reflog_expiry_should_prune *prune = cb_data;
++	trace_printf_key(&trace_refs, "reflog_expire_prepare: %s\n", refname);
++	prune->prepare(refname, oid, prune->cb_data);
++}
++
++static int debug_reflog_expiry_should_prune_fn(struct object_id *ooid,
++					       struct object_id *noid,
++					       const char *email,
++					       timestamp_t timestamp, int tz,
++					       const char *message, void *cb_data) {
++	struct debug_reflog_expiry_should_prune *prune = cb_data;
++
++	int result = prune->should_prune(ooid, noid, email, timestamp, tz, message, prune->cb_data);
++	trace_printf_key(&trace_refs, "reflog_expire_should_prune: %s %ld: %d\n", message, (long int) timestamp, result);
++	return result;
++}
++
++static void debug_reflog_expiry_cleanup(void *cb_data)
++{
++	struct debug_reflog_expiry_should_prune *prune = cb_data;
++	prune->cleanup(prune->cb_data);
++}
++
+ static int debug_reflog_expire(struct ref_store *ref_store, const char *refname,
+ 			       const struct object_id *oid, unsigned int flags,
+ 			       reflog_expiry_prepare_fn prepare_fn,
+@@ -361,10 +395,17 @@ static int debug_reflog_expire(struct ref_store *ref_store, const char *refname,
+ 			       void *policy_cb_data)
+ {
+ 	struct debug_ref_store *drefs = (struct debug_ref_store *)ref_store;
++	struct debug_reflog_expiry_should_prune prune = {
++		.prepare = prepare_fn,
++		.cleanup = cleanup_fn,
++		.should_prune = should_prune_fn,
++		.cb_data = policy_cb_data,
++	};
+ 	int res = drefs->refs->be->reflog_expire(drefs->refs, refname, oid,
+-						 flags, prepare_fn,
+-						 should_prune_fn, cleanup_fn,
+-						 policy_cb_data);
++						 flags, &debug_reflog_expiry_prepare,
++						 &debug_reflog_expiry_should_prune_fn,
++						 &debug_reflog_expiry_cleanup,
++						 &prune);
+ 	trace_printf_key(&trace_refs, "reflog_expire: %s: %d\n", refname, res);
+ 	return res;
+ }
 
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
-Registergericht und -nummer: Hamburg, HRB 86891
-Sitz der Gesellschaft: Hamburg
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+base-commit: 311531c9de557d25ac087c1637818bd2aad6eb3a
+-- 
+gitgitgadget
