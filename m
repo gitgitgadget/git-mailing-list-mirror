@@ -2,161 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 43346C433B4
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 10:24:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F2E60C433ED
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 12:08:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 15116611AE
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 10:24:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C04BE6145A
+	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 12:08:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230502AbhDWKYp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Apr 2021 06:24:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44572 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229772AbhDWKYp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Apr 2021 06:24:45 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D77EDC061574
-        for <git@vger.kernel.org>; Fri, 23 Apr 2021 03:24:08 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id e5so19170071wrg.7
-        for <git@vger.kernel.org>; Fri, 23 Apr 2021 03:24:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:mime-version:content-transfer-encoding
-         :fcc:to:cc;
-        bh=+cO698uKkPeBjSDcgJbNosHQ6r9oblmaoQkI8E4+MbY=;
-        b=Ngt74qy/f3V5qkHXpKVZGy5h6axENYlSwzGDifliirsXWXqYeftCw1R/zP65XO8TA0
-         TC3neFH4cvo4a6ymd5RmhCYKMIB6UILfNqmBtARRte1ADv0+oMgZU9PBsCgbSfcO5o/9
-         U7254GXrM76fbqRUnOF+/wEM0gGekl7r/uS0eZWfmP5i/gyij/1YJBzZ3YbQ+ak+WGEn
-         uH7LH/0T/mXhwUin2FzLBe9CYIOpw4HtommAbLo6d4Tf0Mk4Fq131MwQCX/QUegr/Ml/
-         UHpnXBzrgmCBE5MxCWqgkhRZ+ezAdI4cIz4y7p5Q0XI2warvrdxsmlsdBrpZPw0WdRSU
-         DZAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=+cO698uKkPeBjSDcgJbNosHQ6r9oblmaoQkI8E4+MbY=;
-        b=D0FMgNarEzqSGkDSESRHojtcnC3BYJikQ2ZLD2xYIiEcQKWYO3PZUazjKH1Ti4Es6I
-         9WSQM3S49moVXT2GFk5y1jWcj3vsEwmWz8koXq8e0JHEIG/3vXBR2z5RXEPzkHa8YY8Y
-         lT2Sm/rv5fx4mjIy47DzQdOf1KW8E6ADzybRkpcueznxjrvGPnK5mZgURlwLsaTc/UoY
-         lYwyzWO2sP+Z7Bfk5qL0HDJiCvlmGPYX5wqlI8MFPGpzQLQO1TG74gsVubs4yX5HKEJD
-         yc81YFYO922UD2YI8W/cqm/e6Kry7oGGJ2RrnXaVNzomqgmVewIb91htGgsng2tnMbDM
-         ruQQ==
-X-Gm-Message-State: AOAM533S2ivaQ0SnLIG7NuGMFUowfjQwortXaod+w0vZIz4uVyVAwQ6L
-        9dAaPwwDEpxgLTSVs1pw0uAe7JyoriM=
-X-Google-Smtp-Source: ABdhPJzOlOhF6Saoh9l73b9cO8/ISS7MyUcXFRKSH3RFaUY+Qs/WQQvVypCb6TRmVen+rKonmaXztA==
-X-Received: by 2002:adf:fdca:: with SMTP id i10mr3752770wrs.55.1619173447678;
-        Fri, 23 Apr 2021 03:24:07 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b14sm8769681wrf.75.2021.04.23.03.24.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Apr 2021 03:24:07 -0700 (PDT)
-Message-Id: <pull.1011.git.git.1619173446857.gitgitgadget@gmail.com>
-From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 23 Apr 2021 10:24:06 +0000
-Subject: [PATCH] refs: remove EINVAL specification from the errno sideband in
- read_raw_ref_fn
+        id S231472AbhDWMJJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Apr 2021 08:09:09 -0400
+Received: from mout.gmx.net ([212.227.17.21]:58427 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229479AbhDWMJI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Apr 2021 08:09:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1619179710;
+        bh=ZsW5e70oJQjvEk4URK9Yisov+yrPYLgxoewSDXyuM44=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=NOYtyxFv5JWJ32WqMbrweQH2Zyi2FixAyK1p3+CkxtySJQdI/cOshpIOtQzILZDz7
+         TGqptempIWUUlhbesQm/vt3lSWwOkjeN6jD47noJO+75SZoh1+3750tWBhezev69mD
+         OTye+J4ecMXxeL/V8fQSU720Co2/zUBP/nEAtJD8=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.23.111.181] ([89.1.213.207]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MdvmY-1l18Ho2vNW-00b6sd; Fri, 23
+ Apr 2021 14:08:30 +0200
+Date:   Fri, 23 Apr 2021 14:08:29 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Emily Shaffer <emilyshaffer@google.com>
+cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH v2 4/4] config: add 'config.superproject' file
+In-Reply-To: <20210423001539.4059524-5-emilyshaffer@google.com>
+Message-ID: <nycvar.QRO.7.76.6.2104231405210.54@tvgsbejvaqbjf.bet>
+References: <20210423001539.4059524-1-emilyshaffer@google.com> <20210423001539.4059524-5-emilyshaffer@google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc:    Sent
-To:     git@vger.kernel.org
-Cc:     Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:47GO/dsjyO5pYt7YGtjBT+hle35x1OJQfbOfJvkd1EXEcBtSPKB
+ 0fCAzXQNEnJEt7D422kNa25VDvZ3UGarMWS3QP+GDIPMCNMY0brMgr01ynyvvulHnhwiMrh
+ wmgasTQqop6i5Gzm0FVp+Wzgt3fbOIoFdxp84zM4mvB35mnATyHIdAb+8dv8z4hzaiM9k2j
+ pr5T9RurRSSVAVqeZr27g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:O0yW1S241jg=:ajM4Kwx0iISOwPCF7SCyXh
+ JtNOkPW1KOGHJQ4BnLBP4dSuz9QiOt3ko8ZFE9Od0fMSKHeT3fcSYVVlBvJ0g42HQNLYeP9yo
+ L4HYQX6HnXga+o3CjmDt2jofTCT12iNFReQ6veQ3i81yUCheXbb5TQiMdXEMepQgo2jiGoxYp
+ oSdtH48ilx8l6zGQD9z1MHBXyhn/HXIpU7LcBIHr9HYlsN7T9QoU2TYUEWpEFhKRwYOlGH73w
+ AOvwydpVIbiMv2INvOVVtlYngukxY5b4VyO853L8YZHmWZ02Cx1r7FWSRsg52E9HHmrlULQdO
+ NKy3bNTX3DY1D7lAr5ZCY4W5s1VqFiApMfTsyWU3pM9TJkH5IQdlohBU62bunmp/zrqgiFUPa
+ 7tIRallCfxFPpq19ZJJWkXdUsmm1UkmuCTrXBOxpNroI4G9DWPje09+ahqxaozM8M60qa6uws
+ OIaizpbu0rmJqSLchzwpuas0PGzwErhRCYMIZoKN1rQ2Sy6q/wuAPn8xvh0xkDLRrNscotA4h
+ zT76WGtb+qMK0Ri2R6LqltTU5gKQwm7hUoGvB8Fvhm62K1G73ZWtDPt5L77kwjl3vdh7HHA13
+ AB0Htye1/KjDZtwtpqXqBWAey+Bm/OQ4XAPa3wGadK5mmTNiRM1bwUsB+1x2gZw1lqNKnnbUd
+ sx9wPrREniwgbX+E1bsaJFjWxZnWKx4BEIQT7Acw/zw0Ht4ALY65os+iGCInC6j6EeDINlicz
+ Wu3nsJs1HN/M9av6d/Hbs9FGcs1gqlqyhTef+e+GL0qzQOkEoTA1i64m+V7aFMar3aXPLD3sA
+ labsolXriK1xAB8lWGFg0RDXHBVrVbNE7TQt2ljBNQwuu5iARZykrjYMCAADOn3TK6W/YHcL/
+ JYQAambygdaU5hmzzOS5Ts3/hjzG9AOKyNM6T8OiIMMaHqKHVM+3A58sOoK0k6z0EYRR6SMRm
+ TQuSOxyXDmYdgUSvgrWuePObzOYVo4eDffCQC0WGiHLhPWQ1qOzAvrMwOvJ6M97zOEh+iokm8
+ 99/kaJZZ6ff9iom9KmNzsZlwFw8yO2ncwJkTqe08tjXd+77a9FjPWpDM5zgMt+T4iz57ZuFMj
+ BflPOlZRYht1CkIBeAokVcy6y1v5jo+l7PhITtJj+aRDXWP8OsSljXzEhew+Ddp92lE8lX+P9
+ ZhUuhHEowO3oIlPrY8X/SMlV1MEOOi/946w5MKfN4HolJ+g4sgBp4xN8+dhuI4qC9kLS1KSyS
+ MZ8m4FoFoJdmMngXp
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Han-Wen Nienhuys <hanwen@google.com>
+Hi Emily,
 
-A grep for EINVAL */*c reveals that no code inspects EINVAL after reading
-references.
+On Thu, 22 Apr 2021, Emily Shaffer wrote:
 
-The files ref backend does use EINVAL so parse_loose_ref_contents() can
-communicate to lock_raw_ref() about garbage following the hex SHA1, or a short
-read in files_read_raw_ref(), but the files backend does not call into
-refs_read_raw_ref(), so its EINVAL sideband error is unused.
+> Some configs, such as wrapper directives like gerrit.createChangeId, or
+> forthcoming hook configs, should apply to a superproject as well as all
+> its submodules. It may not be appropriate to apply them globally - for
+> example, if the user also contributes to many projects which do not use
+> the configs necessary for one project-with-submodules - and it may be
+> burdensome to apply them locally to the superproject and each of its
+> submodules. Even if the user runs 'git submodule foreach "git config
+> --local foo.bar', if a new submodule is added later on, that config is
+> not applied to the new submodule.
+>
+> It is also inappropriate to share the entire superproject config, since
+> some items - like remote URLs or partial-clone filters - would not apply
+> to a submodule.
+>
+> To make life easier for projects with many submodules, then, create a
+> new "config.superproject" config scope, which is included in the config
+> parse for the superproject as well as for all the submodules of that
+> superproject.
+>
+> For the superproject, this new config file is equally local to the local
+> config; for the submodule, the new config file is less local than the
+> local config. So let's include it directly before the local config
+> during the config parse.
+>
+> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+> ---
+>
+> Notes:
+>     Since v1:
+>
+>     - Used test_when_finished liberally in tests instead of bare cleanup=
+ steps
+>     - Fixed some nits regarding xstrdup instead of strbuf_detach.
+>
+>     One thing that I thought about but did not implement: rather than fi=
+nding the
+>     path to the superproject's gitdir, you could imagine gathering the c=
+onfig by
+>     making a call out to 'git -C ../ config' - but on second thought, it=
+ seems like
+>     that will make it harder to edit. However, if we don't want to be ab=
+le to edit
+>     superproject config from a submodule, that might be okay... (This ap=
+proach could
+>     make 'git config --show-origin' harder to implement, though, I think=
+.) So I did
+>     not make any changes about that.
 
-As the errno sideband is unintuitive and error-prone, remove EINVAL
-value, as a step towards getting rid of the errno sideband altogether.
+Hmm. Have you thought about worktrees of subprojects that happen to be
+outside the superproject's directory tree?
 
-Spotted by Ævar Arnfjörð Bjarmason <avarab@gmail.com>.
+I also wonder whether it is necessary to change Git at all, as a
+well-crafted `[includeIf "gitdir:/path/to/superproject/**"]` should do the
+trick, but without complicating the config code even further.
 
-Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
----
-    refs: remove EINVAL specification from the errno sideband in read_raw…
-    
-    …_ref_fn
-    
-    A grep for EINVAL */*c reveals that no code inspects EINVAL after
-    reading references.
-    
-    The files ref backend does use EINVAL so parse_loose_ref_contents() can
-    communicate to lock_raw_ref() about garbage following the hex SHA1, or a
-    short read in files_read_raw_ref(), but the files backend does not call
-    into refs_read_raw_ref(), so its EINVAL sideband error is unused.
-    
-    As the errno sideband is unintuitive and error-prone, remove EINVAL
-    value, as a step towards getting rid of the errno sideband altogether.
-    
-    Spotted by Ævar Arnfjörð Bjarmason avarab@gmail.com.
-    
-    Signed-off-by: Han-Wen Nienhuys hanwen@google.com
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1011%2Fhanwen%2Feinval-sideband-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1011/hanwen/einval-sideband-v1
-Pull-Request: https://github.com/git/git/pull/1011
-
- refs.c               | 2 --
- refs/refs-internal.h | 9 ++++-----
- 2 files changed, 4 insertions(+), 7 deletions(-)
-
-diff --git a/refs.c b/refs.c
-index 261fd82beb98..3179ebd71b2f 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1705,7 +1705,6 @@ const char *refs_resolve_ref_unsafe(struct ref_store *refs,
- 	if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL)) {
- 		if (!(resolve_flags & RESOLVE_REF_ALLOW_BAD_NAME) ||
- 		    !refname_is_safe(refname)) {
--			errno = EINVAL;
- 			return NULL;
- 		}
- 
-@@ -1765,7 +1764,6 @@ const char *refs_resolve_ref_unsafe(struct ref_store *refs,
- 		if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL)) {
- 			if (!(resolve_flags & RESOLVE_REF_ALLOW_BAD_NAME) ||
- 			    !refname_is_safe(refname)) {
--				errno = EINVAL;
- 				return NULL;
- 			}
- 
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 467f4b3c936d..29728a339fed 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -617,11 +617,10 @@ typedef int reflog_expire_fn(struct ref_store *ref_store,
-  * properly-formatted or even safe reference name. NEITHER INPUT NOR
-  * OUTPUT REFERENCE NAMES ARE VALIDATED WITHIN THIS FUNCTION.
-  *
-- * Return 0 on success. If the ref doesn't exist, set errno to ENOENT
-- * and return -1. If the ref exists but is neither a symbolic ref nor
-- * an object ID, it is broken; set REF_ISBROKEN in type, set errno to
-- * EINVAL, and return -1. If there is another error reading the ref,
-- * set errno appropriately and return -1.
-+ * Return 0 on success. If the ref doesn't exist, set errno to ENOENT and return
-+ * -1. If the ref exists but is neither a symbolic ref nor an object ID, it is
-+ * broken; set REF_ISBROKEN in type, and return -1. If there is another error
-+ * reading the ref, set errno appropriately and return -1.
-  *
-  * Backend-specific flags might be set in type as well, regardless of
-  * outcome.
-
-base-commit: 311531c9de557d25ac087c1637818bd2aad6eb3a
--- 
-gitgitgadget
+Ciao,
+Johannes
