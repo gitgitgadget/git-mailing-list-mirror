@@ -6,44 +6,44 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AA62AC433ED
-	for <git@archiver.kernel.org>; Sat, 24 Apr 2021 04:54:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 43FB5C433B4
+	for <git@archiver.kernel.org>; Sat, 24 Apr 2021 05:19:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 769C361474
-	for <git@archiver.kernel.org>; Sat, 24 Apr 2021 04:54:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 15B30611BE
+	for <git@archiver.kernel.org>; Sat, 24 Apr 2021 05:19:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229814AbhDXEz0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 24 Apr 2021 00:55:26 -0400
-Received: from mail-ej1-f54.google.com ([209.85.218.54]:35338 "EHLO
-        mail-ej1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229447AbhDXEzZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Apr 2021 00:55:25 -0400
-Received: by mail-ej1-f54.google.com with SMTP id u17so76785175ejk.2
-        for <git@vger.kernel.org>; Fri, 23 Apr 2021 21:54:48 -0700 (PDT)
+        id S230380AbhDXFTX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 24 Apr 2021 01:19:23 -0400
+Received: from mail-ej1-f49.google.com ([209.85.218.49]:41792 "EHLO
+        mail-ej1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229787AbhDXFTW (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Apr 2021 01:19:22 -0400
+Received: by mail-ej1-f49.google.com with SMTP id mh2so55205929ejb.8
+        for <git@vger.kernel.org>; Fri, 23 Apr 2021 22:18:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=xTf3GMcGaRUHC0GW4pn6k92L1eOqHILoLqpX9C9OO9w=;
-        b=qSfTp6njo+BRpING0HFgM+qr9EGufzf5nxt5XCp0NMkWua3+6kzvjsiwxkastWLUES
-         vAJ9J6OiW0h/QtshAtYM26Ryu1AK4eGWh34qiRk3lc/xq97x3WCEUCU3ec+nKIY678GZ
-         y4jKU1s19ZjGt4Y8np97YDNHc1wzO8Bv8SLyRjggYQi9FurWacd7arew0JI5sA7mVMCU
-         ZuYm1uXqkmhozCHCULc3FlzarSiNULcOXYLNkSGqjaI5WjR0Wby2HPZ95SJmQPL/RfWq
-         IuxtDd7ZeUewv4OxFTMx8wQ6FNKzSwAK5yYIlhEYZMduj5yUEMs5AX58CUAoUyKLpFnF
-         pWUA==
-X-Gm-Message-State: AOAM530vOq4hbI5p6CnoQI5K+dyvxbYTWySdduNiymnwIxCAhMKzP1Q8
-        2Y2Qnlh1vvg9kItbF8Tg1vf9p+0yDoBZ1wLVesc=
-X-Google-Smtp-Source: ABdhPJx+KojNRMGbyXZfg2K+vkgN2spt9t8Fg/CbZS5QheKToZjHyfNp2DjzaKFl5HmAlFn5r41zLTkFETnUq8kYZEE=
-X-Received: by 2002:a17:906:6d41:: with SMTP id a1mr7722794ejt.482.1619240087390;
- Fri, 23 Apr 2021 21:54:47 -0700 (PDT)
+        bh=JbheiMaaoY5Fab6wK9jxrGtAEXWDOosrXO10/a6/4QM=;
+        b=l4ymFl2MD8GZhF+/yEygDF2+u65oE4ZTp3KFo5YnDXNYmz2jZerYJuV0LKNde+jTnT
+         8JNnVdyUVmO9Bfl+jHeGXHCWiyYbfVT2vv9QTioSmXL9EQUGC6kfyblwWwUHVPzJ4cI/
+         AxXMVMOifzD2mwgiBZi5KctyHCytwjecdSG1MU0t3b3lBUN9I36zbR7dKRv9oY+TR/Xe
+         zlhc3qWAfI+WjZF+/awQkiqial/sR2fSLDSTLM9Mmr0aiHnUnKkNldxo5OMxl1cTp8/v
+         i0on90GuBbFw0rTMGiyepcqGGS8F38Hg9CXsy0Iz2KbljYjUZfwyItVH2WpDYUxhNc2E
+         j2lg==
+X-Gm-Message-State: AOAM5326YwtnrszrflN53gj1hQSYGuz/+mJwJhRJ7FNc3PdLLa1S31j2
+        rgt8rc2r6LSetHkg9MEP9wD0wpUlrcTfQIJMC5w=
+X-Google-Smtp-Source: ABdhPJzSVLryjuoHfEhUwv8jR+CYJcNMTQFgGyC1g/nv8QKC2k9Lh7fQEN4BvAlfLmhamhHtwlVsuecw9zILvH8Loxo=
+X-Received: by 2002:a17:906:90b:: with SMTP id i11mr7785955ejd.168.1619241524308;
+ Fri, 23 Apr 2021 22:18:44 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210423194230.1388945-1-lukeshu@lukeshu.com> <20210423194230.1388945-25-lukeshu@lukeshu.com>
- <CAPig+cRaQnZ7DWYdU+efNpMgxdniXNQdF43TSFiaj6ezLELC_g@mail.gmail.com> <87v98ca4uf.wl-lukeshu@lukeshu.com>
-In-Reply-To: <87v98ca4uf.wl-lukeshu@lukeshu.com>
+References: <20210423194230.1388945-1-lukeshu@lukeshu.com> <20210423194230.1388945-19-lukeshu@lukeshu.com>
+ <CAPig+cTb-h=Qb9asvh+MVH2s5uj7szP_QOPpcm1bqdE6DK9V7g@mail.gmail.com> <87zgxoa7cj.wl-lukeshu@lukeshu.com>
+In-Reply-To: <87zgxoa7cj.wl-lukeshu@lukeshu.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 24 Apr 2021 00:54:35 -0400
-Message-ID: <CAPig+cSJJ9EXRN4p2MYcMGVe8sCutdZ4NGZYfX+E0mLSuFA6SQ@mail.gmail.com>
-Subject: Re: [PATCH 24/30] subtree: don't let debug and progress output clash
+Date:   Sat, 24 Apr 2021 01:18:33 -0400
+Message-ID: <CAPig+cQ_7eVgdYuci1JeVwU89VOeOU6kzZ9=yw1ySR9RXzjuTA@mail.gmail.com>
+Subject: Re: [PATCH 18/30] subtree: use $* instead of $@ as appropriate
 To:     Luke Shumaker <lukeshu@lukeshu.com>
 Cc:     Git List <git@vger.kernel.org>,
         Avery Pennarun <apenwarr@gmail.com>,
@@ -64,18 +64,47 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 23, 2021 at 8:44 PM Luke Shumaker <lukeshu@lukeshu.com> wrote:
-> On Fri, 23 Apr 2021 15:07:12 -0600, Eric Sunshine wrote:
-> > Makes perfect sense when output is to a terminal, though might be
-> > annoying for the person who redirects stderr to a file. Just idly
-> > wondering if it makes sense to take that case into consideration...
-> > (but maybe it doesn't matter much when someone is working at debugging
-> > a problem).
->
-> The '%s\r' isn't really useful when written to a file, so this change
-> is useful in the file case too.  I'll add a comment and update the
-> commit-message.
+On Fri, Apr 23, 2021 at 7:50 PM Luke Shumaker <lukeshu@lukeshu.com> wrote:
+> On Fri, 23 Apr 2021 14:40:31 -0600, Eric Sunshine wrote:
+> > Nit: I have some trouble following what the commit message is actually
+> > trying to say with "smash things" and "separate strings". It might be
+> > simpler to say merely that use of "$@" in these particular instances
+> > is overkill and possibly misleading to readers not familiar with the
+> > finer details of $* vs. "$@".
 
-Ah, right. I didn't pay close enough attention to really notice that
-the "\r"-terminated line was going to stderr, so ignore that bit in my
-review comment.
+Oof, I somehow misread the code this patch is touching and ended up
+confusing myself, and the confusion bled into my review comments.
+Sorry.
+
+> How's this:
+> ---
+> subtree: use "$*" instead of "$@" as appropriate
+>
+> "$*" is for when you want to concatenate the args together,
+> whitespace-separated; and "$@" is for when you want them to be separate
+> strings.
+>
+> There are several places in subtree that erroneously use $@ when
+> concatenating args together into an error message.
+>
+> For instance, if the args are argv[1]="dead" and argv[2]="beef", then
+> the line
+>
+>     die "You must provide exactly one revision.  Got: '$@'"
+>
+> surely intends to call 'die' with the argument
+>
+>     argv[1]="You must provide exactly one revision.  Got: 'dead beef'"
+>
+> however, because the line used $@ instead of $*, it will actually call
+> 'die' with the arguments
+>
+>     argv[1]="You must provide exactly one revision.  Got: 'dead"
+>     argv[2]="beef'"
+>
+> This isn't a big deal, because 'die' concatenates its arguments together
+> anyway (using "$*").  But that doesn't change the fact that it was a
+> mistake to use $@ instead of $*, even though in the end $@ still ended
+> up doing the right thing.
+
+This explanation spells out the problem nicely.
