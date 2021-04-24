@@ -2,161 +2,166 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E089C433B4
-	for <git@archiver.kernel.org>; Sat, 24 Apr 2021 08:15:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 62347C433B4
+	for <git@archiver.kernel.org>; Sat, 24 Apr 2021 13:26:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D0C0C61360
-	for <git@archiver.kernel.org>; Sat, 24 Apr 2021 08:14:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 35FED600D4
+	for <git@archiver.kernel.org>; Sat, 24 Apr 2021 13:26:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232052AbhDXIPg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 24 Apr 2021 04:15:36 -0400
-Received: from mout.web.de ([212.227.17.11]:37813 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229704AbhDXIPd (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Apr 2021 04:15:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1619252089;
-        bh=Z7CfskLbRLu/evPaUYd0Nijn/z14QoK4aLDbS1rsLjY=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=omk7pyX5MNZ0AxD/RUliGeIq8G7zChpTHai0oNIsboGKQ97+56/hAp9vvtfe4bpzC
-         WKIN+Mvg8V7FBelxfxvVHfjgii0sDw5NiJ5G25YQcmZ31RvPi5OgymTIL/6nNCVlyj
-         pqhGtXWOg0BxtB3FC64mPeYGZ9wbbjKha7wu0zLk=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MS2D8-1m2EfS35II-00TA3Q; Sat, 24
- Apr 2021 10:14:48 +0200
-Date:   Sat, 24 Apr 2021 10:14:47 +0200
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Luke Diamand <luke@diamand.org>, Pete Wyckoff <pw@padd.com>
-Subject: Re: [PATCH] add git-p4.fallbackEncoding config variable, to prevent
- git-p4 from crashing on non UTF-8 changeset descriptions
-Message-ID: <20210424081447.uxabqbxc54k6yxrg@tb-raspi4>
-References: <CAPig+cQUaJq4Bu1NDSBnsQoR2HXhQ+s+4aQHeVP82DM_BuEL8Q@mail.gmail.com>
- <20210423063632.1973-1-tzadik.vanderhoof@gmail.com>
- <CAKu1iLVwfQ7Y-bOSO1tyxyFaNWum8sKW4b00i1nJCef98_2=UQ@mail.gmail.com>
- <CAKu1iLXPi4zc-5-RtZo3UBwTQ1GqshXjLEZKT=WvtvB0aiuUJA@mail.gmail.com>
+        id S233516AbhDXN1V (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 24 Apr 2021 09:27:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58468 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230432AbhDXN1T (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Apr 2021 09:27:19 -0400
+Received: from mail-il1-x12e.google.com (mail-il1-x12e.google.com [IPv6:2607:f8b0:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D2CDC061574
+        for <git@vger.kernel.org>; Sat, 24 Apr 2021 06:26:40 -0700 (PDT)
+Received: by mail-il1-x12e.google.com with SMTP id j12so29061348ils.4
+        for <git@vger.kernel.org>; Sat, 24 Apr 2021 06:26:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=v2B8+lArbcp7RYC1fMWPKgJgq63TvCWUR/L0gg7l2fE=;
+        b=gUMFIMl+TN8YqKYMpe0jkEQFmQE1kN9N7t19MhB2r5n3fI6bAbhGUeYb4tAWDzo68T
+         tIZJ7Z5d5BOSbBRa9FlRJRpcHMJnDVopoSEld08gokBFuPad1aFR4JCrlK0cRZ4IBqOX
+         hSujsuMZmi1u7RqPLfuPHWuBXCl/6QCJIYUz3l6Baiw3PoTUJ0XhQnV9nfnDuWpho3m8
+         NkseaLK5Q8aKSfmZ3s4LclNwGAtwGOHZR64QFY8jGA7CK6OiHdw++ds+oI9WnNokGdd6
+         WpEBN/We0Z2w+FryQzjEUnV8XevFysPHjkJApCtrYT+8d1VAY7znfeV6pG+sWGZnc5HU
+         R3fg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=v2B8+lArbcp7RYC1fMWPKgJgq63TvCWUR/L0gg7l2fE=;
+        b=UAmzsyNmTClCJNpwnT2Ddhj3rSGOky10bPrKDOahcp1HGxVcSDav84jkZOcOrlkgpM
+         gW++qu0IJLZN4WJ7PvdkyLw2/BgDxP2ii6sCoSrnYpnX0XgKnwDGe10TCzx0whYc3MA2
+         vYhDEgBi6XZv2+8FCAnMtcfK5DNPxImgG5lomH8NhmryODX1bTXZD/iU4UVGqBtQXNxy
+         8XLj/FB5265BtbhOQpXvcz/Wjc3BkHgmrxMqCX29aNgQHe191nm9XLYA/m803roTUPEV
+         PH8PQc/B/XAYj3nc4nUyq4crfZazjhdODALH+RTkRSwtGESM7te2LYdfiUbc5gIlvDdg
+         81AA==
+X-Gm-Message-State: AOAM531v7xz6r68gpzCTQwdXaPmJ+L8MLxElBRzMQGoratPAZyu9ngS0
+        /H9Euf94pJI9pAwwIElFt2eGa5YW50NLn6RN5m6o7w7us3f0I6LFzPk=
+X-Google-Smtp-Source: ABdhPJy09BnDGKdGTVqaOzrPyzHa3+ssp/1uUlO9lm8JxGeQ9tdNkAbrUpg6CaosEnAh9h/af13jxnzLvoOXsvi+yxw=
+X-Received: by 2002:a92:cf45:: with SMTP id c5mr6423304ilr.259.1619270799767;
+ Sat, 24 Apr 2021 06:26:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+References: <pull.939.git.1619195245606.gitgitgadget@gmail.com> <YIMsOV/O2Ss+qaeK@nand.local>
+In-Reply-To: <YIMsOV/O2Ss+qaeK@nand.local>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Sat, 24 Apr 2021 21:26:28 +0800
+Message-ID: <CAOLTT8S9T7-WpgCJXZwt7rU5V72h+EMmRa+onkGjkRm53pEGDw@mail.gmail.com>
+Subject: Re: [PATCH] [GSOC] pretty: provide human date format
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CAKu1iLXPi4zc-5-RtZo3UBwTQ1GqshXjLEZKT=WvtvB0aiuUJA@mail.gmail.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:w/5eAc8VoJ1ZF09yo8AlutfpCZ9LbwcvpcRq9SDXDR0oWrNZ2cL
- nFpkjfdY5dU7EGztCeKed1Ub1R96dJD9bxB75x9itTxahIS185PgiypkD58mO+aUjQleqVK
- PWBBHFmwXmfZI7kWWmW+ee+talcrigHnvaMJyiQT6hl/8rw4llS0nkvLgpykh8QfK5GY4D6
- ue595gB7rkBFln+Z1/Dag==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:LcATV6wjJn0=:elIxm31ya6IjlKHiLJ6zUh
- /sdfeo5C2i1QxzrUCSVd4xLrZO+qlMksXLEmwPPtaTqSicLXXd5lvPviextEDHWZAjTrXJ09Q
- +bkI8i8aeeff3OfsVt5QcGsECFkWIX86fujkW24aYavOlu87GGF0FGeU0VWBAdKmalhEpvklL
- UvPXrz2eb0XBZgWjPjaob7ldS7M1Fla7Nu3HE4w37lNyTGX+Y3PYdUrd9hJtLNS5EwecLoVV9
- v7uKZH5BP86loQ+5wcbdX/E9Ng6y95ejM4KN3V8PqxUqEuWrfmbnNzUY48lJbX3WsYcZPpkBo
- ypzdBfL09nReRzelQ+Gb2E2AHAYzFX4Z98V2C0AWd9XKwxtoUTNk+snsJEv+QTLp8JOXmW3RW
- ArblA0tJ0tURVDJXw2M5zkdl9xrOfyK1/t4v6nTpk49IV0j6th8DZrL3PDzwGcL98QEqZypzC
- VXdFCzhp0cU42PqlM9LTALWPvPMZjLIql078PpLL1tSPA3a8AmxielErIXm/Mvr/BZbI1hEYy
- 1zLYfV4GQq2uNXah0kJXcyDlJPwpqMmuDPasRDjQqo6gsozHLwH2lgELQ9L/JPEX/88teBBym
- NJ1Tqik9xBG4Rz7Dla8vezUyQKv9hoi/3uoIp6qt6NcpVxH/AggJJ0xh5Qp1jfwJ+7Gxvzq+O
- qYSWZddfsR800MELG9bRNbsdpuZ/31kQPFIb0V3VGqWszr+kcRA1D0W4G1a75WiBI4qpxgfDR
- IxOGL5PUSB19UR0N1zU3uyMP/0IHAoZWwnU8uvJpmsIz0A20Z7Ycz4a6N2HyXG6VqgyWmFnV6
- UgZTrf8I2COxQ5b+acCzok8/YA1Cmlp2jXGH5eaT8lby5Xqr+GiR21IZDq1w2kiKdDC0YpF91
- +YEMX6QQW8nMJXdOYed02t0ME6zfmSLat2Br/Zy8VDLbvZutrNhGYzf63Q/F7+9zsxNBfAlUu
- fRc55V7D/rPSiwjwepnj/EiMxl9xoyCwoQ4ammes3pS9CeDMigBlcDXGfWoOPJIfYXaVqOFG8
- zAP4szGEUccGYctVqRjtEO72BXtHnhVpkgzSsqFHJs4fylTo3Ziz8kTEQDnvnKrzh3l/77lRx
- 5HRuZgWRvf/eCw6nqpES2jC1j96HIPB4QsbIT/NuuMWytBXRZFxiA2JgdUPez0Xe1DpG5stN3
- 2m8gEtq6B1ZEtQQfn5BXqnftdmvV25ewFeH34xdgGYHYW3FXTaPTUomVUO//wm7Vu8gGo=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-(Adding some of the p4 and Windows experts in cc)
-
-On Fri, Apr 23, 2021 at 12:08:17PM -0700, Tzadik Vanderhoof wrote:
-> To clarify....
-
-Good. This is good information, and the important stuff could go
-into the commit message. And because the commit as such should be
-self-contained (as much as possible).
-Giving an overview about the problem.
-
+Taylor Blau <me@ttaylorr.com> =E4=BA=8E2021=E5=B9=B44=E6=9C=8824=E6=97=A5=
+=E5=91=A8=E5=85=AD =E4=B8=8A=E5=8D=884:21=E5=86=99=E9=81=93=EF=BC=9A
 >
-> The new config variable I am introducing addresses an issue that only
-> occurs on Windows.  This is because the behavior of the "p4" command
-> differs on Windows vs Linux around Unicode in changeset descriptions.
-
-What does Windows mean in this context ?
-Is p4 a "console application" ?
-In this case it may be possible to use CHCP to change to a different code =
-page ?
-
+> Hi ZheNing,
 >
-> I don't have the source code for "p4", but I'm guessing it's written
-> in C, and that this difference in behavior is simply a result of the
-> fact that there is no defined standard of how "char *argv[]" in "main"
-> should deal with non-ASCII characters being passed in from the command
-> line.
+> On Fri, Apr 23, 2021 at 04:27:25PM +0000, ZheNing Hu via GitGitGadget wro=
+te:
+> > From: ZheNing Hu <adlternative@gmail.com>
+> >
+> > Add the placeholders %ah and %ch to format author date and committer
+> > date, like --date=3Dhuman does, which provides more humanity date outpu=
+t.
 >
-> As a result, "git p4 clone" on Linux is not affected by this "p4"
-> behavior.
-
-Is it ?
-What happens if yoy have a p4 depot that was feed from Windows in CP-1252 =
-and is now
-accessed from a Linux  machine ?
-Doesthe Linux box face the same problems ?
-
-> Since my tests assume the Windows behavior, they fail when
-> run on Linux.  For this reason, I added code to my tests to skip them
-> on Linux.
-
-That makes sense, but what is the "Windows behavior" more in detail ?
-My understanding is that when you press e.g. the key '=C4' on the keybaord=
-,
-it will give a different byte sequence once that '=C4' is transferred
-across the wire (to the p4 server).
-This is dependent on what Linux calls a locale, and all major Linux instal=
-lations
-use UTF-8 these days by default.
-But that was not always the case, since in old days they used ISO-8851-1 o=
-r something
-else, usable for your contry/region.
-
-So most Windows "console applications" are not run under UTF-8, but it
-may be possible that "CHCP 65000" (or so) works - more testing needed.
+> I don't see a reason why this shouldn't exist, and the patch that you
+> wrote below looks pretty good to me.
 >
-> On a related note, I don't think there are any CI environments on
-> github for git that are (a) on Windows, and (b) have Python and (c)
-> have Perforce, so I don't think my tests are actually running on
-> github CI.  I'm not sure how that can be addressed.
+> To refresh my memory on if you had missed any spots, I followed
+> 0df621172d (pretty: provide short date format, 2019-11-19) as an
+> example. You did a fine job here, and I don't think this patch is
+> missing anything.
+>
 
-That are 3 different questions -
-(a) Yes, git is compiled under Windows, both gcc and MSVC (correct me if t=
-hat is wrong)
-(b) Yes, we have python on the different CI. Github actions has python, I =
-use it every day.
-(c) There are tests run for p4, but it seems if they are only run under Li=
-nux.
+Yes, I saw Ren=C3=A9 Scharfe's (have --cc) patch and learned handle way fro=
+m it.
 
-It would be nice if your test can pass under Linux, why are they failing ?
+> > Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+> > ---
+> >     [GSOC] pretty: provide human date format
+> >
+> >     Reasons for making this patch: --date=3Dhuman has no corresponding
+> >     --pretty option.
+> >
+> >     Although --date=3Dhuman with --pretty=3D"%(a|c)d" can achieve the s=
+ame
+> >     effect with --pretty=3D"%(a|c)h", but it can be noticed that most t=
+ime
+> >     formats implement the corresponding option of --pretty, such as
+> >     --date=3Diso8601 can be replaced by --pretty=3D%(a|c)i, so add
+> >     "--pretty=3D%(a|c)h" seems to be a very reasonable thing.
+>
+> Just to make sure I understand what you wrote: you're saying that the
+> pretty formats "%ah" and "%ch" that you propose here could be achieved
+> with --date=3Dhuman and --pretty=3D"%ad". Makes sense, but I agree that y=
+our
+> point about --date=3Diso8601 having a built-in pretty atom makes the case
+> for having "%ah" and "%ch".
+>
 
-If I dig here:
-<https://github.com/git/git/runs/2420889332?check_suite_focus=3Dtrue>
+Yes, I tried to explain that "%(a|c)h" makes sense.
 
-We can see that the t98 test are run, and are passing. Just to pick one:
-[15:28:22] t9804-git-p4-label.sh .............................. ok     396=
-9
+> > Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-939%2=
+Fadlternative%2Fpretty_human-v1
+> > Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-939/adlt=
+ernative/pretty_human-v1
+> > Pull-Request: https://github.com/gitgitgadget/git/pull/939
+> >
+> >  Documentation/pretty-formats.txt | 2 ++
+> >  pretty.c                         | 3 +++
+> >  t/t4205-log-pretty-formats.sh    | 6 ++++++
+> >  3 files changed, 11 insertions(+)
+> >
+> > diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-fo=
+rmats.txt
+> > index 45133066e412..9cdcdb8bb414 100644
+> > --- a/Documentation/pretty-formats.txt
+> > +++ b/Documentation/pretty-formats.txt
+> > @@ -190,6 +190,7 @@ The placeholders are:
+> >  '%ai':: author date, ISO 8601-like format
+> >  '%aI':: author date, strict ISO 8601 format
+> >  '%as':: author date, short format (`YYYY-MM-DD`)
+> > +'%ah':: author date, human style
+>
+> There's no sorting here, so this place (at the bottom of the author-date
+> placeholders) seems just as good as any.
+>
+> >  '%cn':: committer name
+> >  '%cN':: committer name (respecting .mailmap, see
+> >       linkgit:git-shortlog[1] or linkgit:git-blame[1])
+> > @@ -206,6 +207,7 @@ The placeholders are:
+> >  '%ci':: committer date, ISO 8601-like format
+> >  '%cI':: committer date, strict ISO 8601 format
+> >  '%cs':: committer date, short format (`YYYY-MM-DD`)
+> > +'%ch':: committer date, human style
+>
+> Likewise. The rest all looks good to me, too.
+>
+>   Reviewed-by: Taylor Blau <me@ttaylorr.com>
+>
+> Thanks,
+> Taylor
 
-Thanks for working on this.
-It would be good to have a v5 version of the patch with some more informat=
-ions,
-like above, and may be :how is the p4 server configured ?
-(Unicode or not ?)
-
+Thanks!
+--
+ZheNing Hu
