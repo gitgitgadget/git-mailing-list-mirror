@@ -2,28 +2,27 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51ECCC433B4
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 23:58:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DA6EC433ED
+	for <git@archiver.kernel.org>; Sat, 24 Apr 2021 00:21:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2B82A61425
-	for <git@archiver.kernel.org>; Fri, 23 Apr 2021 23:58:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3523161209
+	for <git@archiver.kernel.org>; Sat, 24 Apr 2021 00:21:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232438AbhDWX7B (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Apr 2021 19:59:01 -0400
-Received: from mav.lukeshu.com ([104.207.138.63]:36022 "EHLO mav.lukeshu.com"
+        id S235147AbhDXAVh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Apr 2021 20:21:37 -0400
+Received: from mav.lukeshu.com ([104.207.138.63]:36048 "EHLO mav.lukeshu.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232101AbhDWX7A (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Apr 2021 19:59:00 -0400
+        id S232101AbhDXAVf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Apr 2021 20:21:35 -0400
 Received: from lukeshu-dw-thinkpad (unknown [IPv6:2601:281:8200:26:4e34:88ff:fe48:5521])
-        by mav.lukeshu.com (Postfix) with ESMTPSA id 353FB80590;
-        Fri, 23 Apr 2021 19:58:21 -0400 (EDT)
-Date:   Fri, 23 Apr 2021 17:58:20 -0600
-Message-ID: <87y2d8a6zn.wl-lukeshu@lukeshu.com>
+        by mav.lukeshu.com (Postfix) with ESMTPSA id D398A80590;
+        Fri, 23 Apr 2021 20:20:56 -0400 (EDT)
+Date:   Fri, 23 Apr 2021 18:20:56 -0600
+Message-ID: <87wnssa5xz.wl-lukeshu@lukeshu.com>
 From:   Luke Shumaker <lukeshu@lukeshu.com>
 To:     Eric Sunshine <sunshine@sunshineco.com>
 Cc:     Luke Shumaker <lukeshu@lukeshu.com>,
@@ -42,11 +41,13 @@ Cc:     Luke Shumaker <lukeshu@lukeshu.com>,
         Roger L Strain <roger.strain@swri.org>,
         Techlive Zheng <techlivezheng@gmail.com>,
         Luke Shumaker <lukeshu@datawire.io>
-Subject: Re: [PATCH 23/30] subtree: add comments and sanity checks
-In-Reply-To: <CAPig+cQmTTdVKQptQY_tT_x4DCduRh=Mq6QZ1vUsc790-0yTQw@mail.gmail.com>
+Subject: Re: [PATCH 14/30] subtree: drop support for git < 1.7
+In-Reply-To: <CAPig+cRutK=C6WcnFyh+AJO0G5iyAUV1Us4U_F8gtDZK1+s1cg@mail.gmail.com>
 References: <20210423194230.1388945-1-lukeshu@lukeshu.com>
-        <20210423194230.1388945-24-lukeshu@lukeshu.com>
-        <CAPig+cQmTTdVKQptQY_tT_x4DCduRh=Mq6QZ1vUsc790-0yTQw@mail.gmail.com>
+        <20210423194230.1388945-15-lukeshu@lukeshu.com>
+        <CAPig+cRcBA1y0WY_k4fge1KiRcLrW7PMeOS=Ns8bMa4VMdyy2w@mail.gmail.com>
+        <8735vgbmy6.wl-lukeshu@lukeshu.com>
+        <CAPig+cRutK=C6WcnFyh+AJO0G5iyAUV1Us4U_F8gtDZK1+s1cg@mail.gmail.com>
 User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
  FLIM-LB/1.14.9 (=?ISO-8859-4?Q?Goj=F2?=) APEL-LB/10.8 EasyPG/1.0.0
  Emacs/27.2 (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
@@ -56,48 +57,74 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 23 Apr 2021 14:58:34 -0600,
+On Fri, 23 Apr 2021 17:50:11 -0600,
 Eric Sunshine wrote:
 > 
-> On Fri, Apr 23, 2021 at 3:43 PM Luke Shumaker <lukeshu@lukeshu.com> wrote:
-> > Signed-off-by: Luke Shumaker <lukeshu@datawire.io>
-> > ---
-> > diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-> > @@ -248,17 +263,22 @@ rev_exists () {
-> > +# Usage: try_remove_previous REV
-> > +#
-> >  # if a commit doesn't have a parent, this might not work.  But we only want
+> On Fri, Apr 23, 2021 at 7:28 PM Luke Shumaker <lukeshu@lukeshu.com> wrote:
+> > On Fri, 23 Apr 2021 14:31:46 -0600, Eric Sunshine wrote:
+> > > Is there a higher reason for this change aside from "let's do it
+> > > because we can"? For instance, are subsequent changes going to take
+> > > advantage of features only present in more recent Git versions which
+> > > would be painful or impossible to support with the older Git?
+> > >
+> > > The downside of this change is that, while git-subtree may live in
+> > > git.git, it's still just "contrib", so people might grab git-subtree
+> > > from a modern git.git but then end up using it with an older Git
+> > > installation. That's not to say that doing such a thing is guaranteed
+> > > to work anyhow, but we don't need to make it harder on people if there
+> > > isn't a good reason (hence my question about whether subsequent
+> > > changes will actually take advantage of newer Git features).
+> >
+> > With the goal of making the whole thing easier to hack on, this just
+> > seemed like an easy (if small) piece of fat to trim.
+> >
+> > I guess I should include here that my bias is: With the 'git' package
+> > that Parabola inherits from Arch Linux, you install 'git', you get a
+> > working 'git subtree'.  If you want 'git send-email' to work, you also
+> > need to install several other Perl packages.  Like, it might live in
+> > the "contrib" directory, but it's de-facto at least as much a "part
+> > of" Git as send-email is.
+> >
+> > So that's the mindset I started from.  It looks like the latest macOS
+> > supports me on that, but other distros like Fedora don't (Fedora has a
+> > separate 'git-subtree' package).  If I take a step back, I realize
+> > that mindset is flawed, but that's where I started from.
+> >
+> > I don't think any of the other work depends on this (I think the only
+> > commit that will conflict if we drop it is the "rename a some
+> > variables" commit in this patchset).  It's very possible that
+> > something else I do relies on newer git features (I'm not testing
+> > against older git), but that's not something I did intentionally.
+> >
+> > I just figured this would be a welcome piece of cleanup.  If that's
+> > not the case, I don't have a problem dropping it.
 > 
-> s/if/If/ perhaps
+> As a person who does not and has never used git-subtree, I don't have
+> a strong opinion, and any git-subtree opinion I might have wouldn't
+> carry any weight. I do have a bit of reflexive negative reaction to
+> such removals in general if there's no clear and strong benefit,
+> perhaps because my daily-use computers are old (perhaps ancient, as in
+> 10-25 years old), so I am regularly stung by support being dropped by
+> packages I use. That's why I was asking if later patches would take
+> advantage of some newer Git feature.
 
-Ack.
+I'm sending this from my work laptop, which is a little newer (2015),
+but my personal laptop (2007) is sitting on the end-table.  So I
+commiserate.  I'm a modern-software on old-hardware kind of guy
+though, so I don't mind dropping support for old software versions.
 
-> >  # to remove the parent from the rev-list, and since it doesn't exist, it won't
-> >  # be there anyway, so do nothing in that case.
-> > @@ -302,10 +322,12 @@ find_latest_squash () {
-> > +# Usage: find_existing_splits DIR REV
-> >  find_existing_splits () {
-> > +       assert test $# = 2
-> >         debug "Looking for prior splits..."
-> >         dir="$1"
-> > -       revs="$2"
-> > +       rev="$2"
-> > @@ -314,7 +336,7 @@ find_existing_splits () {
-> >         git log --grep="$grep_format" \
-> > -               --no-show-signature --pretty=format:'START %H%n%s%n%n%b%nEND%n' $revs |
-> > +               --no-show-signature --pretty=format:'START %H%n%s%n%n%b%nEND%n' "$rev" |
-> 
-> The caller of this function is passing in "$revs". Did you make this
-> semantic change because the caller's `revs` is guaranteed to be a
-> single rev? In any case, this change may deserve mention in the commit
-> message so readers don't have to wonder about it.
+> Anyhow, I wasn't specifically asking for the patch to be dropped. As a
+> reviewer I rather wanted to better understand the reason for the
+> change beyond the somewhat hand-wavy "git-subtree now lives in-tree".
+> If you happen to re-roll, perhaps you can expand the commit message a
+> bit with something more concrete (for instance, how some packagers
+> include git-subtree by default) to better sell the patch to reviewers
+> who actually have investment in git-subtree (of which I am not one).
+> Considering how old Git <1.7 is, it's quite likely that no current
+> git-subtree users/reviewers would care about dropping support for such
+> old versions.
 
-No it's not?  The only caller is
-
-	unrevs="$(find_existing_splits "$dir" "$rev")" || exit $?
-
-But yeah, this would be a good thing for me to call out in the commit
-message.
+I'll expand the commit message.
 
 -- 
 Happy hacking,
