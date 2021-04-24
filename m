@@ -2,167 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-20.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FFCBC433ED
-	for <git@archiver.kernel.org>; Sat, 24 Apr 2021 19:44:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6CF02C433B4
+	for <git@archiver.kernel.org>; Sat, 24 Apr 2021 20:33:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5563A613D5
-	for <git@archiver.kernel.org>; Sat, 24 Apr 2021 19:44:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 48B1D61139
+	for <git@archiver.kernel.org>; Sat, 24 Apr 2021 20:33:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235273AbhDXTp3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 24 Apr 2021 15:45:29 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:59195 "EHLO smtp.hosts.co.uk"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233563AbhDXTp3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Apr 2021 15:45:29 -0400
-Received: from host-92-1-139-132.as13285.net ([92.1.139.132] helo=[192.168.1.37])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1laOCt-0001fx-BT; Sat, 24 Apr 2021 20:44:49 +0100
-Subject: Re: [PATCH v2] [GSOC] pretty: provide human date format
-To:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Taylor Blau <me@ttaylorr.com>,
-        ZheNing Hu <adlternative@gmail.com>
-References: <pull.939.git.1619195245606.gitgitgadget@gmail.com>
- <pull.939.v2.git.1619275340051.gitgitgadget@gmail.com>
-From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <c0780b56-8852-d055-97ec-45ff93aa41de@iee.email>
-Date:   Sat, 24 Apr 2021 20:44:48 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.0
+        id S234109AbhDXUdv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 24 Apr 2021 16:33:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36774 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232560AbhDXUdu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Apr 2021 16:33:50 -0400
+Received: from mail-qv1-xf35.google.com (mail-qv1-xf35.google.com [IPv6:2607:f8b0:4864:20::f35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2ECE4C061574
+        for <git@vger.kernel.org>; Sat, 24 Apr 2021 13:33:12 -0700 (PDT)
+Received: by mail-qv1-xf35.google.com with SMTP id j3so25495210qvs.1
+        for <git@vger.kernel.org>; Sat, 24 Apr 2021 13:33:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=dinwoodie.org; s=google;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=npD7MiPC80uv308i1NFFktBKloXp3IIsYPMwOLRAMZI=;
+        b=Zho6mziiszIbt+L7hyGXylp2dkjfEAsOHo7IyYvDDHkaS8MPTZ+KBuyS8J6LxYg0Mr
+         fJCJQYRknx8XlGnAc11jKOoUmpgzzxyPa9UZOgQMRV4+wURcRXJh1cHflLV4wrIegGFk
+         VPBCThUP4cHoYFAZH5FKokNIvB2CDAYyFfcIU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=npD7MiPC80uv308i1NFFktBKloXp3IIsYPMwOLRAMZI=;
+        b=G0ueDCCWj6Vbo88V+qBU2ydii9Fug2ch7zgN/iUfsyL2oy/h/tvcDdmA208oxdVIg5
+         d/9Lt0rbSTBtS7LWKtcZMZaVqrTYEvbAPx4MkNnX7m4ddoc7opvD4bfnlGAxrOaVORcb
+         N4WMLGz+EREujwxIINvOuaCY5+FN4Eiw+pD9dlb34c0vxdBC5MFB8Lj0VEdiPq25YSu0
+         cpRKiw2TA16pTLeOW4Np1Ki/GYVQs3wP7BMfZR7Tcp0TFZco6jPezzOzypLOoKd12b+h
+         NlsFTsjApQLWToH0VCKFev43Y1gNPdF+enQTIBLfoWA0a6mmyRC7aN3VKVlbC9ft6JWf
+         2+MQ==
+X-Gm-Message-State: AOAM531/Jnl2Gx6a25L2t6vOlqkJ11OyazIm5UQ8K7/Iz0/5yuPMLjnz
+        33s9KUB4ALTZdL76xPQF0ve0/pqUQximhP82YwXWLyBF4wY=
+X-Google-Smtp-Source: ABdhPJx95xZWZE2+UuDQLZ4P9dGW1EHgoK1gUyX8XdxcsUZNiQr4Yifyvk3dFlknc/kji0dftS14m7sag8Hls8pHeIA=
+X-Received: by 2002:ad4:4ee8:: with SMTP id dv8mr10974425qvb.46.1619296390723;
+ Sat, 24 Apr 2021 13:33:10 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <pull.939.v2.git.1619275340051.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
+From:   Adam Dinwoodie <adam@dinwoodie.org>
+Date:   Sat, 24 Apr 2021 21:32:35 +0100
+Message-ID: <CA+kUOa=juEdBMVr_gyTKjz7PkPt2DZHkXQyzcQmAWCsEHC_ssw@mail.gmail.com>
+Subject: Security vulnerability in Git for Cygwin
+To:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-quoting nit..
-On 24/04/2021 15:42, ZheNing Hu via GitGitGadget wrote:
-> From: ZheNing Hu <adlternative@gmail.com>
->
-> Add the placeholders %ah and %ch to format author date and committer
-> date, like --date=human does, which provides more humanity date output.
->
-> Signed-off-by: ZheNing Hu <adlternative@gmail.com>
-> ---
->     [GSOC] pretty: provide human date format
->     
->     Reasons for making this patch: --date=human has no corresponding
->     --pretty option.
->     
->     Although --date=human with --pretty="%(a|c)d" can achieve the same
->     effect with --pretty="%(a|c)h", but it can be noticed that most time
->     formats implement the corresponding option of --pretty, such as
->     --date=iso8601 can be replaced by --pretty=%(a|c)i, so add
->     "--pretty=%(a|c)h" seems to be a very reasonable thing.
->     
->     Change from v1: add %(a|c)h link to rev-list-options.txt.
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-939%2Fadlternative%2Fpretty_human-v2
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-939/adlternative/pretty_human-v2
-> Pull-Request: https://github.com/gitgitgadget/git/pull/939
->
-> Range-diff vs v1:
->
->  1:  ed8abd6179d1 ! 1:  1517708876b5 [GSOC] pretty: provide human date format
->      @@ Documentation/pretty-formats.txt: The placeholders are:
->        '%ai':: author date, ISO 8601-like format
->        '%aI':: author date, strict ISO 8601 format
->        '%as':: author date, short format (`YYYY-MM-DD`)
->      -+'%ah':: author date, human style
->      ++'%ah':: author date, human style (like the --date=human option of
->      ++	linkgit:rev-list-options.txt[1])
->        '%cn':: committer name
->        '%cN':: committer name (respecting .mailmap, see
->        	linkgit:git-shortlog[1] or linkgit:git-blame[1])
->      @@ Documentation/pretty-formats.txt: The placeholders are:
->        '%ci':: committer date, ISO 8601-like format
->        '%cI':: committer date, strict ISO 8601 format
->        '%cs':: committer date, short format (`YYYY-MM-DD`)
->      -+'%ch':: committer date, human style
->      ++'%ch':: committer date, human style(like the --date=human option of
->      ++	linkgit:rev-list-options.txt[1])
->        '%d':: ref names, like the --decorate option of linkgit:git-log[1]
->        '%D':: ref names without the " (", ")" wrapping.
->        '%(describe[:options])':: human-readable name, like
->
->
->  Documentation/pretty-formats.txt | 4 ++++
->  pretty.c                         | 3 +++
->  t/t4205-log-pretty-formats.sh    | 6 ++++++
->  3 files changed, 13 insertions(+)
->
-> diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-> index 45133066e412..e37d5cbb6b16 100644
-> --- a/Documentation/pretty-formats.txt
-> +++ b/Documentation/pretty-formats.txt
-> @@ -190,6 +190,8 @@ The placeholders are:
->  '%ai':: author date, ISO 8601-like format
->  '%aI':: author date, strict ISO 8601 format
->  '%as':: author date, short format (`YYYY-MM-DD`)
-> +'%ah':: author date, human style (like the --date=human option of
-shouldn't that option be quoted " `--date=human` " so as to match the
-format in rev-list?
-> +	linkgit:rev-list-options.txt[1])
-Also. Is this right? Shouldn't it just link to the dashed git- command's
-man page, rather than the file, i.e.
- linkgit:git-rev-list[1])
->  '%cn':: committer name
->  '%cN':: committer name (respecting .mailmap, see
->  	linkgit:git-shortlog[1] or linkgit:git-blame[1])
-> @@ -206,6 +208,8 @@ The placeholders are:
->  '%ci':: committer date, ISO 8601-like format
->  '%cI':: committer date, strict ISO 8601 format
->  '%cs':: committer date, short format (`YYYY-MM-DD`)
-> +'%ch':: committer date, human style(like the --date=human option of
-likewise, quote the option ? and resolve the linkgit: to the man page
-> +	linkgit:rev-list-options.txt[1])
->  '%d':: ref names, like the --decorate option of linkgit:git-log[1]
->  '%D':: ref names without the " (", ")" wrapping.
->  '%(describe[:options])':: human-readable name, like
-> diff --git a/pretty.c b/pretty.c
-> index e5b33ba034bd..b1ecd039cef2 100644
-> --- a/pretty.c
-> +++ b/pretty.c
-> @@ -745,6 +745,9 @@ static size_t format_person_part(struct strbuf *sb, char part,
->  	case 'I':	/* date, ISO 8601 strict */
->  		strbuf_addstr(sb, show_ident_date(&s, DATE_MODE(ISO8601_STRICT)));
->  		return placeholder_len;
-> +	case 'h':	/* date, human */
-> +		strbuf_addstr(sb, show_ident_date(&s, DATE_MODE(HUMAN)));
-> +		return placeholder_len;
->  	case 's':
->  		strbuf_addstr(sb, show_ident_date(&s, DATE_MODE(SHORT)));
->  		return placeholder_len;
-> diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
-> index cabdf7d57a00..d4d75b0b350e 100755
-> --- a/t/t4205-log-pretty-formats.sh
-> +++ b/t/t4205-log-pretty-formats.sh
-> @@ -539,6 +539,12 @@ test_expect_success 'short date' '
->  	test_cmp expected actual
->  '
->  
-> +test_expect_success 'human date' '
-> +	git log --format=%ad%n%cd --date=human >expected &&
-> +	git log --format=%ah%n%ch >actual &&
-> +	test_cmp expected actual
-> +'
-> +
->  # get new digests (with no abbreviations)
->  test_expect_success 'set up log decoration tests' '
->  	head1=$(git rev-parse --verify HEAD~0) &&
->
-> base-commit: b0c09ab8796fb736efa432b8e817334f3e5ee75a
-Looks good otherwise.
-Philip
+Hi folks,
+
+I don't typically announce Cygwin releases of Git on this mailing
+list, but this one's for a security vulnerability, and in particular
+I'd like to catch the (hopefully very small number of) people who use
+Git on Cygwin compiling it themselves.
+
+I've just uploaded version 2.31.1-2 of Git to the Cygwin distribution
+server, and it will be being distributed to the Cygwin mirrors over
+the next few hours.
+
+This update addresses CVE-2021-29468, which would cause Git to
+overwrite arbitrary files with attacker-controlled contents when
+checking out content from a malicious repository, and in particular
+would allow an attacker to overwrite Git hooks to execute arbitrary
+code.
+
+Having discussed with the Git security list, I believe there are very
+few people compiling Git on Cygwin themselves, and therefore agreed to
+release the patched Cygwin build without yet having a patch in the
+main Git source code. However if you do use a version of Git on Cygwin
+that isn't from the official Cygwin distribution servers, I'd strongly
+recommend either not checking out or cloning from any untrusted
+repositories until you've applied at least the functional part of the
+patch I'll be submitting shortly.
+
+I'd like to thank RyotaK (https://github.com/Ry0taK /
+https://twitter.com/ryotkak) for finding and responsibly disclosing
+this vulnerability, and Johannes Schindelin for helping manage the
+response.
+
+Kind regards,
+
+Adam
