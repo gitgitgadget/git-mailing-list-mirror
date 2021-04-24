@@ -2,215 +2,190 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 859C9C433ED
-	for <git@archiver.kernel.org>; Sat, 24 Apr 2021 13:46:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5AE96C433ED
+	for <git@archiver.kernel.org>; Sat, 24 Apr 2021 14:42:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4E2D361492
-	for <git@archiver.kernel.org>; Sat, 24 Apr 2021 13:46:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 34C796140F
+	for <git@archiver.kernel.org>; Sat, 24 Apr 2021 14:42:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237369AbhDXNrB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 24 Apr 2021 09:47:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34422 "EHLO
+        id S229848AbhDXOnE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 24 Apr 2021 10:43:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233135AbhDXNqz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Apr 2021 09:46:55 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53AB8C061574
-        for <git@vger.kernel.org>; Sat, 24 Apr 2021 06:46:15 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id i21-20020a05600c3555b029012eae2af5d4so2667227wmq.4
-        for <git@vger.kernel.org>; Sat, 24 Apr 2021 06:46:15 -0700 (PDT)
+        with ESMTP id S229630AbhDXOnC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Apr 2021 10:43:02 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0968C061574
+        for <git@vger.kernel.org>; Sat, 24 Apr 2021 07:42:22 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id p6so44587238wrn.9
+        for <git@vger.kernel.org>; Sat, 24 Apr 2021 07:42:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=to:from:subject:message-id:date:user-agent:mime-version
-         :content-language:content-transfer-encoding;
-        bh=tDaUWtPlgrHCr82PxZumVNT1+aE8Vc4mGAj0CpqleFs=;
-        b=dYeg9ctXGT0cazNrQg0mVaISS3QuNoB9GpNjfQuEwe6ZIWZmA7zHz+mIO34vUBTirD
-         O+/QNMX6TUqK2k8qfWMSFVQvl/U1F/J1/2Oj2s7jNXistyJv2JHrN2rHHhW+McKIC8PU
-         MvCjBoW9qTdUmGF78Rp30MTriqCcU1P+mYjRzCYQTfQItX/PtL5CHhqq9vvvdogFEZ9Y
-         S4Ym2UXLuWv8tstc/UQSeIzCvZ8R040b6uuBa+c12gkemThgL4IgK587Qa77YKqCD4lD
-         tJDVY4/lcuiqlVB70TXngEE6KQ524gm/tQfYO28fvgEmn7rt+AM6CYkUw/WTyc/K2ZoK
-         hjEA==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=d7Qym9nT5yxKa1otscbqF55yHQ7NRN5xpOG+j96NNjA=;
+        b=tku6tU1PaSINIsZ48w0A/VslctXu2qRUsk2mM/w+nGmyU+2VoYvXxLqQoWDurH+2GF
+         qwNEyb/sbP/QZ5S5qDb+we1G8uAt5k4z/5PzY2bGaQXegodIt/qbhx9xqrQv6H0UjoyE
+         7mnmzAM1WOhFbAS3CVMOk3ByNM6CX01uQmyOegMAE3jYZsxI8jN9VtZsB/cDCAlqqcCt
+         lCwKZ+A52EosrGFh5u4gn7ZwFyBKz3ulwNplLoiiV8nThrNym4HR12u+x39c2iIUN/4A
+         CqpRs8dScU5TnpCsXxAIJ3gsq9NFIxSmWMc3emasZBhQBnB7HPMZrW0z2Npo7oD8Rxgj
+         6Stw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
-         :mime-version:content-language:content-transfer-encoding;
-        bh=tDaUWtPlgrHCr82PxZumVNT1+aE8Vc4mGAj0CpqleFs=;
-        b=nKzHwv/hsFw4IhBNwSKTtwlqIK2RB577FYzRtT0xvXD5gCjfgGR8vL6NWDqfqeiIfD
-         0AvtjurXSo5iYxK69C0J6lk84eq13ZPKScDa9+wQfnqbuyDDok6wdjAI5fYnw8xKxZHl
-         gw7VS6Rp4KdoX/zWGVkKhQIweBMI2hjYEVxBlGbmJV0R2jcx+3Um05GU8Pnb1Etr2u7A
-         7ALzwQrH+HHTns0VpfelYoMsaYXFZAqUIpHksJ9F8AdUFKq36LaBJYylWMPIIuegwqwV
-         OE6qAHadepdBj63eq1TqwZomHF4qcMcmhh83sBOI2SsPLxfsWtGQKpmKAE7Lryind1IX
-         xrFw==
-X-Gm-Message-State: AOAM531fRiPEzSu4ByemFnmuVOqpntYdF57SfbHU+hQYR/7piHzxNd1O
-        gvRTHP2HI1v0qvAewcTeboffMQ3iaRuNXw==
-X-Google-Smtp-Source: ABdhPJzg1wFkkt38+Yf1AWA2Lt9TrW+v6esROtl2RjQMnArvXF0QHs96uAhWKBZ7DStHW7IgLH0O1Q==
-X-Received: by 2002:a05:600c:20d:: with SMTP id 13mr9434197wmi.29.1619271974035;
-        Sat, 24 Apr 2021 06:46:14 -0700 (PDT)
-Received: from [192.168.0.169] ([170.253.36.171])
-        by smtp.gmail.com with ESMTPSA id n16sm2410252wrp.50.2021.04.24.06.46.13
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 24 Apr 2021 06:46:13 -0700 (PDT)
-To:     git <git@vger.kernel.org>
-From:   "Alejandro Colomar (man-pages)" <alx.manpages@gmail.com>
-Subject: git pull --rebase silently skipping commits
-Message-ID: <17e490f6-c393-0232-3236-3c1758b8bd25@gmail.com>
-Date:   Sat, 24 Apr 2021 15:46:12 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.0
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=d7Qym9nT5yxKa1otscbqF55yHQ7NRN5xpOG+j96NNjA=;
+        b=nOCY5KEfukiZRvS0eC2UxGlfPUyBtv/rLdwTw/O8vPT9IeF8aW2jUcgzSA/7820xSz
+         ArFQBFo0GUHCSrIkQ8CJhISTMPQZncl6H8Q+BML8e5+lXFAd1jk391MeuAC71x8XbbHI
+         QtGB58qYwG8Y7aPL18OogD3rApyyzdYeH7G6GwPpxlRQMx6vyWJ/7VfN167IhwfET/1y
+         TeDMmqis0lFRGMxwJlAMsPsCmzS/Y+7MCqztrR1IUkbRiKxMr2XS1CAdNxyBThqI7dJq
+         ejcOyIP4anXr7OUnWgEoldG89nXNerg2ADvhw4wlUa2rCgJaN5dVcI4DSkm0zzZFR2dd
+         AuvA==
+X-Gm-Message-State: AOAM532SJQaipRMV3UtgBkPaq24zQ9i6QDcEBt3BRYa/ievf5SldXU/r
+        BqjOUli6WyEuLmzF5ThpCOIHyDJNVlU=
+X-Google-Smtp-Source: ABdhPJxa1NPsQ8G9wTCcHRPAiodDV0U2oyQGPYVNsDAr3Net7U9JB05e7kzSUzIlAGTwpz6qt7p1EQ==
+X-Received: by 2002:a05:6000:50:: with SMTP id k16mr3470900wrx.418.1619275341497;
+        Sat, 24 Apr 2021 07:42:21 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id y125sm10855225wmy.34.2021.04.24.07.42.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 24 Apr 2021 07:42:20 -0700 (PDT)
+Message-Id: <pull.939.v2.git.1619275340051.gitgitgadget@gmail.com>
+In-Reply-To: <pull.939.git.1619195245606.gitgitgadget@gmail.com>
+References: <pull.939.git.1619195245606.gitgitgadget@gmail.com>
+From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 24 Apr 2021 14:42:19 +0000
+Subject: [PATCH v2] [GSOC] pretty: provide human date format
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Taylor Blau <me@ttaylorr.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        ZheNing Hu <adlternative@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+From: ZheNing Hu <adlternative@gmail.com>
 
-I started my PC and as always did a 'git fetch'.  I noticed that I 
-forgot to push a commit the other day, so I had the following situation:
+Add the placeholders %ah and %ch to format author date and committer
+date, like --date=human does, which provides more humanity date output.
 
-alx@msi:~/src/alx/config$ git tree -8
-* 226e73c - Thu, 22 Apr 2021 22:28:37 +0200 (2 days ago) (tag: v0.8.0, 
-origin/main, origin/HEAD)
-|           Makefile: ffix - Alejandro Colomar
-* 29cac15 - Thu, 22 Apr 2021 22:21:56 +0200 (2 days ago)
-|           Makefile: remove unused option of read - Alejandro Colomar
-* 5adc827 - Thu, 22 Apr 2021 22:20:16 +0200 (2 days ago)
-|           Makefile: use INSTALL_DATA instead of plain install - 
-Alejandro Colomar
-* 28df09e - Thu, 22 Apr 2021 22:12:40 +0200 (2 days ago)
-|           Makefile: Don't hardcode things - Alejandro Colomar
-* 9cdb873 - Thu, 22 Apr 2021 22:11:32 +0200 (2 days ago)
-|           ssh: Simplify code, and don't overwrite other contents of 
-.ssh/config - Alejandro Colomar
-| * 4d2f5ad - Thu, 22 Apr 2021 19:22:16 +0200 (2 days ago) (HEAD -> main)
-|/            sudo: Rename user alex to alx - Alejandro Colomar
-* ad1d205 - Thu, 22 Apr 2021 12:51:10 +0200 (2 days ago) (tag: v0.7.0)
-|           hosts: Don't overwrite the hole file - Alejandro Colomar
-* c5137b5 - Wed, 21 Apr 2021 14:14:34 +0200 (3 days ago) (tag: v0.6.2)
-|           Makefile: ffix - Alejandro Colomar
-alx@msi:~/src/alx/config$
+Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+---
+    [GSOC] pretty: provide human date format
+    
+    Reasons for making this patch: --date=human has no corresponding
+    --pretty option.
+    
+    Although --date=human with --pretty="%(a|c)d" can achieve the same
+    effect with --pretty="%(a|c)h", but it can be noticed that most time
+    formats implement the corresponding option of --pretty, such as
+    --date=iso8601 can be replaced by --pretty=%(a|c)i, so add
+    "--pretty=%(a|c)h" seems to be a very reasonable thing.
+    
+    Change from v1: add %(a|c)h link to rev-list-options.txt.
 
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-939%2Fadlternative%2Fpretty_human-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-939/adlternative/pretty_human-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/939
 
+Range-diff vs v1:
 
-Normally I would've run 'git rebase origin/main', but recently I knew 
-about 'git pull --rebase', so I was tried it.  However, to my surprise, 
-it silently skipped the local commit:
-
-alx@msi:~/src/alx/config$ git pull --rebase
-Successfully rebased and updated refs/heads/main.
-alx@msi:~/src/alx/config$ git tree -8
-* 226e73c - Thu, 22 Apr 2021 22:28:37 +0200 (2 days ago) (HEAD -> main, 
-tag: v0.8.0, origin/main, origin/HEAD)
-|           Makefile: ffix - Alejandro Colomar
-* 29cac15 - Thu, 22 Apr 2021 22:21:56 +0200 (2 days ago)
-|           Makefile: remove unused option of read - Alejandro Colomar
-* 5adc827 - Thu, 22 Apr 2021 22:20:16 +0200 (2 days ago)
-|           Makefile: use INSTALL_DATA instead of plain install - 
-Alejandro Colomar
-* 28df09e - Thu, 22 Apr 2021 22:12:40 +0200 (2 days ago)
-|           Makefile: Don't hardcode things - Alejandro Colomar
-* 9cdb873 - Thu, 22 Apr 2021 22:11:32 +0200 (2 days ago)
-|           ssh: Simplify code, and don't overwrite other contents of 
-.ssh/config - Alejandro Colomar
-* ad1d205 - Thu, 22 Apr 2021 12:51:10 +0200 (2 days ago) (tag: v0.7.0)
-|           hosts: Don't overwrite the hole file - Alejandro Colomar
-* c5137b5 - Wed, 21 Apr 2021 14:14:34 +0200 (3 days ago) (tag: v0.6.2)
-|           Makefile: ffix - Alejandro Colomar
-* 5244a5c - Wed, 21 Apr 2021 14:12:05 +0200 (3 days ago) (tag: v0.6.1)
-|           sshd: restart service after installing - Alejandro Colomar
-alx@msi:~/src/alx/config$
+ 1:  ed8abd6179d1 ! 1:  1517708876b5 [GSOC] pretty: provide human date format
+     @@ Documentation/pretty-formats.txt: The placeholders are:
+       '%ai':: author date, ISO 8601-like format
+       '%aI':: author date, strict ISO 8601 format
+       '%as':: author date, short format (`YYYY-MM-DD`)
+     -+'%ah':: author date, human style
+     ++'%ah':: author date, human style (like the --date=human option of
+     ++	linkgit:rev-list-options.txt[1])
+       '%cn':: committer name
+       '%cN':: committer name (respecting .mailmap, see
+       	linkgit:git-shortlog[1] or linkgit:git-blame[1])
+     @@ Documentation/pretty-formats.txt: The placeholders are:
+       '%ci':: committer date, ISO 8601-like format
+       '%cI':: committer date, strict ISO 8601 format
+       '%cs':: committer date, short format (`YYYY-MM-DD`)
+     -+'%ch':: committer date, human style
+     ++'%ch':: committer date, human style(like the --date=human option of
+     ++	linkgit:rev-list-options.txt[1])
+       '%d':: ref names, like the --decorate option of linkgit:git-log[1]
+       '%D':: ref names without the " (", ")" wrapping.
+       '%(describe[:options])':: human-readable name, like
 
 
-When trying 'git pull --rebase=interactive', I see the following:
+ Documentation/pretty-formats.txt | 4 ++++
+ pretty.c                         | 3 +++
+ t/t4205-log-pretty-formats.sh    | 6 ++++++
+ 3 files changed, 13 insertions(+)
 
-noop 
-
+diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+index 45133066e412..e37d5cbb6b16 100644
+--- a/Documentation/pretty-formats.txt
++++ b/Documentation/pretty-formats.txt
+@@ -190,6 +190,8 @@ The placeholders are:
+ '%ai':: author date, ISO 8601-like format
+ '%aI':: author date, strict ISO 8601 format
+ '%as':: author date, short format (`YYYY-MM-DD`)
++'%ah':: author date, human style (like the --date=human option of
++	linkgit:rev-list-options.txt[1])
+ '%cn':: committer name
+ '%cN':: committer name (respecting .mailmap, see
+ 	linkgit:git-shortlog[1] or linkgit:git-blame[1])
+@@ -206,6 +208,8 @@ The placeholders are:
+ '%ci':: committer date, ISO 8601-like format
+ '%cI':: committer date, strict ISO 8601 format
+ '%cs':: committer date, short format (`YYYY-MM-DD`)
++'%ch':: committer date, human style(like the --date=human option of
++	linkgit:rev-list-options.txt[1])
+ '%d':: ref names, like the --decorate option of linkgit:git-log[1]
+ '%D':: ref names without the " (", ")" wrapping.
+ '%(describe[:options])':: human-readable name, like
+diff --git a/pretty.c b/pretty.c
+index e5b33ba034bd..b1ecd039cef2 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -745,6 +745,9 @@ static size_t format_person_part(struct strbuf *sb, char part,
+ 	case 'I':	/* date, ISO 8601 strict */
+ 		strbuf_addstr(sb, show_ident_date(&s, DATE_MODE(ISO8601_STRICT)));
+ 		return placeholder_len;
++	case 'h':	/* date, human */
++		strbuf_addstr(sb, show_ident_date(&s, DATE_MODE(HUMAN)));
++		return placeholder_len;
+ 	case 's':
+ 		strbuf_addstr(sb, show_ident_date(&s, DATE_MODE(SHORT)));
+ 		return placeholder_len;
+diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
+index cabdf7d57a00..d4d75b0b350e 100755
+--- a/t/t4205-log-pretty-formats.sh
++++ b/t/t4205-log-pretty-formats.sh
+@@ -539,6 +539,12 @@ test_expect_success 'short date' '
+ 	test_cmp expected actual
+ '
  
++test_expect_success 'human date' '
++	git log --format=%ad%n%cd --date=human >expected &&
++	git log --format=%ah%n%ch >actual &&
++	test_cmp expected actual
++'
++
+ # get new digests (with no abbreviations)
+ test_expect_success 'set up log decoration tests' '
+ 	head1=$(git rev-parse --verify HEAD~0) &&
 
-# Rebase 4d2f5ad..4d2f5ad onto 226e73c (1 command)
-
-
-I'd expect 'git pull --rebase' to be an equivalent of 'git fetch origin 
-&& git rebase origin/main'.  But this time I had to use rebase:
-
-alx@msi:~/src/alx/config$ git reset 4d2f --h
-HEAD is now at 4d2f5ad sudo: Rename user alex to alx
-alx@msi:~/src/alx/config$ git tree -8
-* 226e73c - Thu, 22 Apr 2021 22:28:37 +0200 (2 days ago) (tag: v0.8.0, 
-origin/main, origin/HEAD)
-|           Makefile: ffix - Alejandro Colomar
-* 29cac15 - Thu, 22 Apr 2021 22:21:56 +0200 (2 days ago)
-|           Makefile: remove unused option of read - Alejandro Colomar
-* 5adc827 - Thu, 22 Apr 2021 22:20:16 +0200 (2 days ago)
-|           Makefile: use INSTALL_DATA instead of plain install - 
-Alejandro Colomar
-* 28df09e - Thu, 22 Apr 2021 22:12:40 +0200 (2 days ago)
-|           Makefile: Don't hardcode things - Alejandro Colomar
-* 9cdb873 - Thu, 22 Apr 2021 22:11:32 +0200 (2 days ago)
-|           ssh: Simplify code, and don't overwrite other contents of 
-.ssh/config - Alejandro Colomar
-| * 4d2f5ad - Thu, 22 Apr 2021 19:22:16 +0200 (2 days ago) (HEAD -> main)
-|/            sudo: Rename user alex to alx - Alejandro Colomar
-* ad1d205 - Thu, 22 Apr 2021 12:51:10 +0200 (2 days ago) (tag: v0.7.0)
-|           hosts: Don't overwrite the hole file - Alejandro Colomar
-* c5137b5 - Wed, 21 Apr 2021 14:14:34 +0200 (3 days ago) (tag: v0.6.2)
-|           Makefile: ffix - Alejandro Colomar
-alx@msi:~/src/alx/config$ git rebase origin/main
-Successfully rebased and updated refs/heads/main.
-alx@msi:~/src/alx/config$ git tree -8
-* 72f6ab9 - Thu, 22 Apr 2021 19:22:16 +0200 (2 days ago) (HEAD -> main)
-|           sudo: Rename user alex to alx - Alejandro Colomar
-* 226e73c - Thu, 22 Apr 2021 22:28:37 +0200 (2 days ago) (tag: v0.8.0, 
-origin/main, origin/HEAD)
-|           Makefile: ffix - Alejandro Colomar
-* 29cac15 - Thu, 22 Apr 2021 22:21:56 +0200 (2 days ago)
-|           Makefile: remove unused option of read - Alejandro Colomar
-* 5adc827 - Thu, 22 Apr 2021 22:20:16 +0200 (2 days ago)
-|           Makefile: use INSTALL_DATA instead of plain install - 
-Alejandro Colomar
-* 28df09e - Thu, 22 Apr 2021 22:12:40 +0200 (2 days ago)
-|           Makefile: Don't hardcode things - Alejandro Colomar
-* 9cdb873 - Thu, 22 Apr 2021 22:11:32 +0200 (2 days ago)
-|           ssh: Simplify code, and don't overwrite other contents of 
-.ssh/config - Alejandro Colomar
-* ad1d205 - Thu, 22 Apr 2021 12:51:10 +0200 (2 days ago) (tag: v0.7.0)
-|           hosts: Don't overwrite the hole file - Alejandro Colomar
-* c5137b5 - Wed, 21 Apr 2021 14:14:34 +0200 (3 days ago) (tag: v0.6.2)
-|           Makefile: ffix - Alejandro Colomar
-alx@msi:~/src/alx/config$
-
-
-I wonder if it may be due to this text, which I don't really understand:
-
-alx@msi:~$ man git-pull | sed -n '/-r, --rebase/,/^$/p'
-        -r, --rebase[=false|true|merges|preserve|interactive]
-            When true, rebase the current branch on top of the
-            upstream branch after fetching. If there is a
-            remote-tracking branch corresponding to the upstream
-            branch and the upstream branch was rebased since last
-            fetched, the rebase uses that information to avoid
-            rebasing non-local changes.
-
-What does it mean "the upstream branch was rebased since last fetched"?
-May it be the reason that it skipped that commit?  Isn't 'git pull 
---rebase' designed for what I'm using it?  In this case it's not really 
-necessary, but it removes the need for specifying the branch I'm on, 
-which is why I preferred it over 'git rebase'.
-
-
-Thanks,
-
-Alex
-
+base-commit: b0c09ab8796fb736efa432b8e817334f3e5ee75a
 -- 
-Alejandro Colomar
-Linux man-pages comaintainer; https://www.kernel.org/doc/man-pages/
-Senior SW Engineer; http://www.alejandro-colomar.es/
+gitgitgadget
