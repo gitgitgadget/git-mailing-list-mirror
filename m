@@ -2,130 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0791FC433B4
-	for <git@archiver.kernel.org>; Sat, 24 Apr 2021 03:46:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA62AC433ED
+	for <git@archiver.kernel.org>; Sat, 24 Apr 2021 04:54:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CBF23611C9
-	for <git@archiver.kernel.org>; Sat, 24 Apr 2021 03:46:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 769C361474
+	for <git@archiver.kernel.org>; Sat, 24 Apr 2021 04:54:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233027AbhDXDpU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Apr 2021 23:45:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46482 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232155AbhDXDpS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Apr 2021 23:45:18 -0400
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB8D3C061574
-        for <git@vger.kernel.org>; Fri, 23 Apr 2021 20:44:39 -0700 (PDT)
-Received: by mail-oi1-x229.google.com with SMTP id v6so23346998oiv.3
-        for <git@vger.kernel.org>; Fri, 23 Apr 2021 20:44:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:message-id:in-reply-to:references:subject:mime-version
-         :content-transfer-encoding;
-        bh=Z///F4iLRkeuoOAQheoVTPrzAbF3rMOoQixvyNwFd8I=;
-        b=S3ClyHC1CwkNcbVX6PR+I9n3l/yVmd2BSO9RDykNngMDVX9qxJQP9kzeSMcqftqv29
-         To8crQKyJUDiBBNqyxcE3Y17d4XBpgaRkuzM9sRiXs+UHCHw0P829pbLC3p9g9gK+3DW
-         LwQLf72R+k4fmrslo9Daa9JWsskqtcnkHQFksEWofqiQqqZhs/Y9GESQyyWvnZC3ztS4
-         ml4gfGmCQLZqH/c0E4BW8TaZYEGI/vHlCjb53+95BapJYNnjhdQyFFO7FewyjZeZhIYD
-         qEMX8AcQEcdy0BjIqH1Rmxrjwwt/bBQbmYarY5khU45wiIVfeICGIqWWzaXdIZ+sCvD7
-         EojQ==
+        id S229814AbhDXEz0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 24 Apr 2021 00:55:26 -0400
+Received: from mail-ej1-f54.google.com ([209.85.218.54]:35338 "EHLO
+        mail-ej1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229447AbhDXEzZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Apr 2021 00:55:25 -0400
+Received: by mail-ej1-f54.google.com with SMTP id u17so76785175ejk.2
+        for <git@vger.kernel.org>; Fri, 23 Apr 2021 21:54:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:message-id:in-reply-to:references
-         :subject:mime-version:content-transfer-encoding;
-        bh=Z///F4iLRkeuoOAQheoVTPrzAbF3rMOoQixvyNwFd8I=;
-        b=iJB9BWDaHHmReTJ1TqjtzO68RIlVnhrJo6KZlqjn4jwOkzRCuKWq7pVitjptIadIXA
-         ACN5mB6OWjZ8momcE5cExRISLegD+nvti9WJqNEVoXp4y0MCasGepnz19ZRxMutI4VLh
-         CMJETVMmYGsvS8Ql+PisTAkJNrsmo191K/98mhNW4V7KAkgDDO5zmTjveo3NJuNxECZU
-         5G37NXUgQOrkvFi/aPuslsoGh5PVSoXSIVZvrs+3bgd1kkjZCfn7hfP+9WW7Yg2V2WKL
-         caZP6ndQhwjA/g1X8XWKI9vgLvQ5R4rboa9hkHyLWgN5gwRDO8dHZJkV9rg+nQY5DkNg
-         x6/Q==
-X-Gm-Message-State: AOAM530nf/d9R01de/vbefAUJhIA/ahZheGRc+0+wOa9aZsZsBNswZk9
-        UiMa1AKg+FPTP5ln8hCDiZg=
-X-Google-Smtp-Source: ABdhPJwTUAnvMGd42iuFCzF8uOQ3oIjoRU4ViGI7Wz5XUcLzJvU006zQ54kB/EuYkTayZPH545C1PA==
-X-Received: by 2002:a05:6808:ab6:: with SMTP id r22mr6304073oij.139.1619235878964;
-        Fri, 23 Apr 2021 20:44:38 -0700 (PDT)
-Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id t19sm1840913otm.40.2021.04.23.20.44.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Apr 2021 20:44:38 -0700 (PDT)
-Date:   Fri, 23 Apr 2021 22:44:34 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     =?UTF-8?B?QW50b2luZSBCZWF1cHLDqQ==?= <anarcat@debian.org>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        git@vger.kernel.org
-Message-ID: <60839422353fc_10cb9208c7@natae.notmuch>
-In-Reply-To: <87k0osfpt8.fsf@angela.anarc.at>
-References: <87mttofs5t.fsf@angela.anarc.at>
- <60836fa129078_ff602089c@natae.notmuch>
- <87k0osfpt8.fsf@angela.anarc.at>
-Subject: RE: how to rename remote branches, the long way
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=xTf3GMcGaRUHC0GW4pn6k92L1eOqHILoLqpX9C9OO9w=;
+        b=qSfTp6njo+BRpING0HFgM+qr9EGufzf5nxt5XCp0NMkWua3+6kzvjsiwxkastWLUES
+         vAJ9J6OiW0h/QtshAtYM26Ryu1AK4eGWh34qiRk3lc/xq97x3WCEUCU3ec+nKIY678GZ
+         y4jKU1s19ZjGt4Y8np97YDNHc1wzO8Bv8SLyRjggYQi9FurWacd7arew0JI5sA7mVMCU
+         ZuYm1uXqkmhozCHCULc3FlzarSiNULcOXYLNkSGqjaI5WjR0Wby2HPZ95SJmQPL/RfWq
+         IuxtDd7ZeUewv4OxFTMx8wQ6FNKzSwAK5yYIlhEYZMduj5yUEMs5AX58CUAoUyKLpFnF
+         pWUA==
+X-Gm-Message-State: AOAM530vOq4hbI5p6CnoQI5K+dyvxbYTWySdduNiymnwIxCAhMKzP1Q8
+        2Y2Qnlh1vvg9kItbF8Tg1vf9p+0yDoBZ1wLVesc=
+X-Google-Smtp-Source: ABdhPJx+KojNRMGbyXZfg2K+vkgN2spt9t8Fg/CbZS5QheKToZjHyfNp2DjzaKFl5HmAlFn5r41zLTkFETnUq8kYZEE=
+X-Received: by 2002:a17:906:6d41:: with SMTP id a1mr7722794ejt.482.1619240087390;
+ Fri, 23 Apr 2021 21:54:47 -0700 (PDT)
+MIME-Version: 1.0
+References: <20210423194230.1388945-1-lukeshu@lukeshu.com> <20210423194230.1388945-25-lukeshu@lukeshu.com>
+ <CAPig+cRaQnZ7DWYdU+efNpMgxdniXNQdF43TSFiaj6ezLELC_g@mail.gmail.com> <87v98ca4uf.wl-lukeshu@lukeshu.com>
+In-Reply-To: <87v98ca4uf.wl-lukeshu@lukeshu.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sat, 24 Apr 2021 00:54:35 -0400
+Message-ID: <CAPig+cSJJ9EXRN4p2MYcMGVe8sCutdZ4NGZYfX+E0mLSuFA6SQ@mail.gmail.com>
+Subject: Re: [PATCH 24/30] subtree: don't let debug and progress output clash
+To:     Luke Shumaker <lukeshu@lukeshu.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Avery Pennarun <apenwarr@gmail.com>,
+        Charles Bailey <cbailey32@bloomberg.net>,
+        Danny Lin <danny0838@gmail.com>,
+        "David A . Greene" <greened@obbligato.org>,
+        David Aguilar <davvid@gmail.com>,
+        Jakub Suder <jakub.suder@gmail.com>,
+        James Denholm <nod.helm@gmail.com>, Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Roger L Strain <roger.strain@swri.org>,
+        Techlive Zheng <techlivezheng@gmail.com>,
+        Luke Shumaker <lukeshu@datawire.io>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Antoine Beaupr=C3=A9 wrote:
-> On 2021-04-23 20:08:49, Felipe Contreras wrote:
-> > Antoine Beaupr=C3=A9 wrote:
-> >> Before people start throwing things (like `git push origin oldref:ne=
-wref
-> >> :oldref`) at me, consider that I've been beating my head against thi=
-s
-> >> for a while, and everywhere I look basically suggests this:
-> >> =
+On Fri, Apr 23, 2021 at 8:44 PM Luke Shumaker <lukeshu@lukeshu.com> wrote:
+> On Fri, 23 Apr 2021 15:07:12 -0600, Eric Sunshine wrote:
+> > Makes perfect sense when output is to a terminal, though might be
+> > annoying for the person who redirects stderr to a file. Just idly
+> > wondering if it makes sense to take that case into consideration...
+> > (but maybe it doesn't matter much when someone is working at debugging
+> > a problem).
+>
+> The '%s\r' isn't really useful when written to a file, so this change
+> is useful in the file case too.  I'll add a comment and update the
+> commit-message.
 
-> >>     git branch -m to_branch
-> >>     git push origin from_branch:to_branch :from_branch
-> >
-> > Better:
-> >
-> >   git push origin from_branch:to_branch :from_branch &&
-> >   git branch -m from_branch to_branch
-> =
-
-> How so?
-
-If the remote branch can't be renamed, then the local branch isn't
-renamed either.
-
-> >> I wrote this primarily with the "master to main" migration, because =
-a
-> >> bunch of projects (including mine) are suddenly, actually migrating
-> >> their main branch from master to main. Personnally, it's because I'm=
-
-> >> tired of being yelled "master" from my shell prompt all the time, bu=
-t
-> >> naturally, I guess opinions on the matter vary.
-> >
-> > Just tell git to stop bothering you:
-> >
-> >   git config --global init.defaultbranch master
-> =
-
-> I think you misunderstood me; I am tired of seeing the name "master"
-> everywhere.
-
-I see.
-
-That makes me think we might want a converter that translates
-(local)main -> (remote)master, and (remote)master -> (local)mail
-everywhere, so if your eyes have trouble seeing one, you can configure
-git to simply see the other... Without bothering the rest of the word.
-
-I'll give that idea a try.
-
-Cheers.
-
--- =
-
-Felipe Contreras=
+Ah, right. I didn't pay close enough attention to really notice that
+the "\r"-terminated line was going to stderr, so ignore that bit in my
+review comment.
