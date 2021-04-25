@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 27B26C43460
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13DBCC433B4
 	for <git@archiver.kernel.org>; Sun, 25 Apr 2021 14:16:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0A78E61364
-	for <git@archiver.kernel.org>; Sun, 25 Apr 2021 14:16:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E98C960232
+	for <git@archiver.kernel.org>; Sun, 25 Apr 2021 14:16:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230377AbhDYORI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 25 Apr 2021 10:17:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39040 "EHLO
+        id S230366AbhDYORH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 25 Apr 2021 10:17:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39030 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230327AbhDYORF (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230311AbhDYORF (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 25 Apr 2021 10:17:05 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4886C061574
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65B44C061756
         for <git@vger.kernel.org>; Sun, 25 Apr 2021 07:16:25 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id n84so1358692wma.0
+Received: by mail-wm1-x333.google.com with SMTP id f15-20020a05600c4e8fb029013f5599b8a9so1681588wmq.1
         for <git@vger.kernel.org>; Sun, 25 Apr 2021 07:16:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=wIX81AgrL0S6PqMg9w1doAN+VWSJB1WdVOmEUxYaW8g=;
-        b=nL6cY6PtPB07NIOxujV+l4h6Zn+d8ZdlSm3+QxHnSxMNjOJTOfvd3qHTpCzq0Qu8xL
-         AM/2E3NmutW2tdNyvkFNkvCxoayBTy9X/eQDN8qsKSQ7nME2+N3OXZVTF6g1/62fyd+N
-         glq7BhTP8Ficfz2AhFpYnyIdW0tahTKUbn5BLeE8gqN0qqQ89s44cspOxAQ6XSPIeNUT
-         KrBGLYF/mmFc1Ze4NZaLsu2UlFhlXxi1HwpsS8kS/1XzR5J1mwrfSc54s3MaiI4TFAO8
-         u07IIfULdEe4pNTc1KELZ9Vx2tc9pLgtHobpjSlqmw/2iXW4oxktxFgZ/qdxLsSeqPPw
-         duTw==
+        bh=y5a3mcCcFnlbBQlIZ6kqrlD9aVEgZBkUVW53CuJkvac=;
+        b=G3TKTqYYnzTRtBHOpPceQnWDjiGi5Kt880495gGr0vyoE3JhJZLaHlxxnvfzn6Ep7G
+         TIZi+H5gciNW8lBOdII8rFU4Zq68qAC7YMG0/jTxZ11je1C7XEQMYduSioIwXRav1h9a
+         QFDe/DzUADVY6EChTAxwcp811qF2oGJqRSTaxZJOp+gKHWlQvnW2kJ5exWSVtRVF2z3a
+         +i5sIe0yf21ImeH2Wo3PYWPPwSEJgM7S3pcnJCH4HLJmUhqvyHnSBtTL8F2Aqpq9HE0A
+         aft8/NVovoW3lyUZ7zax9/p6mtNJMjAK3/SH8MqahPzjFtenjDBEqXGO/qprhcYyv7mG
+         XT/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=wIX81AgrL0S6PqMg9w1doAN+VWSJB1WdVOmEUxYaW8g=;
-        b=Q7/pP7UEU+WgW7+TVavUsncGybo3vrCyeiiPZg50Hc9ICsBcF8VGe9QORkaD9JcIfN
-         aXXP1HWfMEuL687AtHcprg7f7xy15QVd5/r2nCSFu6aQ6kR34o1AofxYQdx9nOSkxfE/
-         yccONWwTPHrGTqTMG46FtsKIrP1hmKrYTYDLOwWmVLr0G2BaTI3Utkw9yY/jVR96H7om
-         cHEC+fNyRQ8PAoZhJ6V/jfnLC13ztFFXg3dpRGvN3KuqLS6QXU/XsUdUQ9sQx5KIpqXE
-         5W5JMvq6d4gCRsqEup7ceduSw6oh6YclzmrP2Tz5A/cqqlKrGlyKXQDevaB32uZR0TBq
-         mZrQ==
-X-Gm-Message-State: AOAM531XinS2bnmdPE/84BJtVwuaaB+SU0FXPMwoTITx7+GJ+l0+XwxQ
-        XnfVq1byaiG+us3FoVN2haEl2q0aLt8=
-X-Google-Smtp-Source: ABdhPJwZWEPrd2KSlFFF+IuXqQkIxIWp41sJ5r1OzVGLlCV+Us6v5mXzDzfjirjyBUrJ4Ii4UJs3Sw==
-X-Received: by 2002:a1c:7515:: with SMTP id o21mr14511512wmc.90.1619360184681;
+        bh=y5a3mcCcFnlbBQlIZ6kqrlD9aVEgZBkUVW53CuJkvac=;
+        b=EZHb+GNBpiLiRRxI5P0cbDgs1zf0M1YwMCEf1u20ubSuPViv1lCH/lITPpiQcK76Ki
+         5xnNxDXcWoeH3YTN+/Vj0KRuGWn28C8sFd1QoEQPvAPOBMNsHPjPEj+Q051mEtWQCisy
+         DVBIyYI8mWd7mY9tBDgzH73GEXhU2j6P66GwTt8CQRUBPIm8cEuIvIXzy9NZqnOVeiQu
+         CW3KIQnAZ/qAM+dTtHXHM77AixaJ2jeWmzxA/D93+lZWcOmtVle7wsbM42uP6BXRihi3
+         rjpTz6NqcAzW1JILeQiAgvmd/tSgeAxiNkCDYzksFVm3+5ZLc0D5sPDzCZwPv5s2eULF
+         ZXEg==
+X-Gm-Message-State: AOAM530lq2uP3vHZTP7KadgGcpFREo0aTIRFXdiwuYuRUpkONvb+iYYl
+        7jCql3qNgozAcJ2hHNUVLyGer2bRTpw=
+X-Google-Smtp-Source: ABdhPJx1Iq0ODXp8qgDcMGjTUdAnI6VS7vYiZ4gAShs75jPgIUqknPCCxYaVZ3n9Pe2974XJoYkeWA==
+X-Received: by 2002:a1c:7516:: with SMTP id o22mr15876291wmc.91.1619360184011;
         Sun, 25 Apr 2021 07:16:24 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g197sm1052263wme.43.2021.04.25.07.16.24
+        by smtp.gmail.com with ESMTPSA id a2sm15371767wmn.48.2021.04.25.07.16.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 25 Apr 2021 07:16:24 -0700 (PDT)
-Message-Id: <154c6714f30596db84711b5cd639c62ace5b721b.1619360180.git.gitgitgadget@gmail.com>
+        Sun, 25 Apr 2021 07:16:23 -0700 (PDT)
+Message-Id: <fb64a3dcd0b077b1b818a285ada066a135f911a6.1619360180.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.929.v2.git.1619360180.gitgitgadget@gmail.com>
 References: <pull.929.git.1617994052.gitgitgadget@gmail.com>
         <pull.929.v2.git.1619360180.gitgitgadget@gmail.com>
 From:   "Andrzej Hunt via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 25 Apr 2021 14:16:12 +0000
-Subject: [PATCH v2 05/12] branch: FREE_AND_NULL instead of NULL'ing real_ref
+Date:   Sun, 25 Apr 2021 14:16:11 +0000
+Subject: [PATCH v2 04/12] bloom: clear each bloom_key after use
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,50 +78,50 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Andrzej Hunt <ajrhunt@google.com>
 
-real_ref was previously populated by dwim_ref(), which allocates new
-memory. We need to make sure to free real_ref when discarding it.
-(real_ref is already being freed at the end of create_branch() - but
-if we discard it early then it will leak.)
+fill_bloom_key() allocates memory into bloom_key, we need to clean that
+up once the key is no longer needed.
 
-This fixes the following leak found while running t0002-t0099:
+This leak was found while running t0002-t0099. Although this leak is
+happening in code being called from a test-helper, the same code is also
+used in various locations around git, and can therefore happen during
+normal usage too. Gabor's analysis shows that peak-memory usage during
+'git commit-graph write' is reduced on the order of 10% for a selection
+of larger repos (along with an even larger reduction if we override
+modified path bloom filter limits):
+https://lore.kernel.org/git/20210411072651.GF2947267@szeder.dev/
 
-Direct leak of 5 byte(s) in 1 object(s) allocated from:
-    #0 0x486954 in strdup /home/abuild/rpmbuild/BUILD/llvm-11.0.0.src/build/../projects/compiler-rt/lib/asan/asan_interceptors.cpp:452:3
-    #1 0xdd6484 in xstrdup wrapper.c:29:14
-    #2 0xc0f658 in expand_ref refs.c:671:12
-    #3 0xc0ecf1 in repo_dwim_ref refs.c:644:22
-    #4 0x8b1184 in dwim_ref ./refs.h:162:9
-    #5 0x8b0b02 in create_branch branch.c:284:10
-    #6 0x550cbb in update_refs_for_switch builtin/checkout.c:1046:4
-    #7 0x54e275 in switch_branches builtin/checkout.c:1274:2
-    #8 0x548828 in checkout_branch builtin/checkout.c:1668:9
-    #9 0x541306 in checkout_main builtin/checkout.c:2025:9
-    #10 0x5395fa in cmd_checkout builtin/checkout.c:2077:8
-    #11 0x4d02a8 in run_builtin git.c:467:11
-    #12 0x4cbfe9 in handle_builtin git.c:719:3
-    #13 0x4cf04f in run_argv git.c:808:4
-    #14 0x4cb85a in cmd_main git.c:939:19
-    #15 0x820cf6 in main common-main.c:52:11
-    #16 0x7f30bd9dd349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+LSAN output:
+
+Direct leak of 308 byte(s) in 11 object(s) allocated from:
+    #0 0x49a5e2 in calloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:154:3
+    #1 0x6f4032 in xcalloc wrapper.c:140:8
+    #2 0x4f2905 in fill_bloom_key bloom.c:137:28
+    #3 0x4f34c1 in get_or_compute_bloom_filter bloom.c:284:4
+    #4 0x4cb484 in get_bloom_filter_for_commit t/helper/test-bloom.c:43:11
+    #5 0x4cb072 in cmd__bloom t/helper/test-bloom.c:97:3
+    #6 0x4ca7ef in cmd_main t/helper/test-tool.c:121:11
+    #7 0x4caace in main common-main.c:52:11
+    #8 0x7f798af95349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+
+SUMMARY: AddressSanitizer: 308 byte(s) leaked in 11 allocation(s).
 
 Signed-off-by: Andrzej Hunt <ajrhunt@google.com>
 ---
- branch.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ bloom.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/branch.c b/branch.c
-index b71a2de29dbe..2260325d58c0 100644
---- a/branch.c
-+++ b/branch.c
-@@ -294,7 +294,7 @@ void create_branch(struct repository *r,
- 			if (explicit_tracking)
- 				die(_(upstream_not_branch), start_name);
- 			else
--				real_ref = NULL;
-+				FREE_AND_NULL(real_ref);
+diff --git a/bloom.c b/bloom.c
+index 52b87474c6eb..5e297038bb1f 100644
+--- a/bloom.c
++++ b/bloom.c
+@@ -283,6 +283,7 @@ struct bloom_filter *get_or_compute_bloom_filter(struct repository *r,
+ 			struct bloom_key key;
+ 			fill_bloom_key(e->path, strlen(e->path), &key, settings);
+ 			add_key_to_filter(&key, filter, settings);
++			clear_bloom_key(&key);
  		}
- 		break;
- 	default:
+ 
+ 	cleanup:
 -- 
 gitgitgadget
 
