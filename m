@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2137C433ED
-	for <git@archiver.kernel.org>; Sun, 25 Apr 2021 14:16:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 805F2C433B4
+	for <git@archiver.kernel.org>; Sun, 25 Apr 2021 14:16:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B6C7461364
-	for <git@archiver.kernel.org>; Sun, 25 Apr 2021 14:16:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6638C600D1
+	for <git@archiver.kernel.org>; Sun, 25 Apr 2021 14:16:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230415AbhDYORP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 25 Apr 2021 10:17:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39050 "EHLO
+        id S230435AbhDYORR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 25 Apr 2021 10:17:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230384AbhDYORJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Apr 2021 10:17:09 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 030E7C06175F
+        with ESMTP id S230389AbhDYORK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Apr 2021 10:17:10 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78B44C061760
         for <git@vger.kernel.org>; Sun, 25 Apr 2021 07:16:29 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id a4so53135795wrr.2
-        for <git@vger.kernel.org>; Sun, 25 Apr 2021 07:16:28 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id k128so28537748wmk.4
+        for <git@vger.kernel.org>; Sun, 25 Apr 2021 07:16:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Wcg85AEdtfOMCaUZXhnfDMMdyHFv/3Ywlth4J1G5IVM=;
-        b=WqnzotVj5cdUYyF8F/cxNGeQssAYRAbclNnqbFIDqkb+gz8grmQW346TSombbkxDFy
-         quyGyVmvweZTICeduZtskPfnMZ1y1tsl1yWxP8GrQrUb3KKxjk55ZzX8vXBDKIrEYNsM
-         AOaIrOuLxQ9PvZd/sXsm2Z+wduw9djfVDjdlqirGEDV+wnRpL6Ur2AB8pfZHJ23TGV2i
-         HAjg1f0qfrRtCQgTxSbRSfvdkf14KU4CQHu1V3TCl7TwD7kYPZj6dBuDEwXK+5RiHkw3
-         Dc+7QSh/YkseOSqcxKfUrk7F7w8EB/9vemLhd43xI9hsetZhhkF1kl3CcB0RH/AptQKY
-         DVvg==
+        bh=S6z0G57DdP3GQ5/enY3+6YG3xUz1kWofC9ozxQR0rBI=;
+        b=ZX1p/kI/rrHCUOniYZ/vvV9iHU5XE3nWHPjbcnsIviGvgA0LiK7Qpb2lHsutT4Mvc7
+         6ZAVxYD9xe+2hdH0M5RqV9AEcqP23eEM5wYZ6+DXGmrbiAVPerDpfKGQswTIJA//Vlf9
+         KKaXOzuBMXvwyr8/cIiNantVkdg2ZiYRsRIqhtovEm7s2p/OHY25W3qBEY3GaBxmGNAy
+         GLDSbOuspKUGFzwfzlYbsMljZRLPcjx5IshQXT2nrmjXle692GZbDvstiZmM0pW2gIQg
+         Xk6DWCR9WTBJ6XQ8a8evGrQjQXiWZfKqUXEtzR24aBVm2qgfbn74lGzmQ2uvZ1jnF8aX
+         YMCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Wcg85AEdtfOMCaUZXhnfDMMdyHFv/3Ywlth4J1G5IVM=;
-        b=ENaxzYp379OaCzAv8HUrFBetYxAVblJiYwBtRhpgTc7oA395lk+siQxFmZMa4mfTcL
-         VByWRZW7EfakGrOBAcieSExsxG9h96xNvCZXTv4gUPB5w4d7PBiUcsIHlrI/9OV3kwie
-         We5b5Y/vKfD8OPe5MPlyLnLJXRX/k9dB4HsUKzJWk+iu0l+WwzG8UL/svfGHx5WSyOL3
-         mcywoNgyHCPF7EK0TVO9IwN/UD0E2Ew5EXshItdN1W06jKeffOlEaKSonOUdN1yOoGUN
-         vOcq+SEKmJFKtqt7Dh33raVS5y/IzB+pLsFj++6DrFCAMqonCaOu9BOfc5r8hK/GDJN6
-         mbDQ==
-X-Gm-Message-State: AOAM531s9+yjZwN3Y5YbqklvPH2JcBOg9xGIlE+GSNV8iR8o3i+VHmTL
-        ySs7cyY1UZIvkrR3fwhQtaCMYomrjSk=
-X-Google-Smtp-Source: ABdhPJwnYOPUSSGIeiCFdW+tB72PhGXOv3lTxIpPdyByuZ8uVBU3rQm3p8dU0mabFE4E9Z2GFFwF6w==
-X-Received: by 2002:adf:db4f:: with SMTP id f15mr17113774wrj.99.1619360187852;
-        Sun, 25 Apr 2021 07:16:27 -0700 (PDT)
+        bh=S6z0G57DdP3GQ5/enY3+6YG3xUz1kWofC9ozxQR0rBI=;
+        b=tsuP/r/dotUy9wdh24fhfHcdMrGYtaYr5+/c/2AfY4Sm0pzUoRbrCfjdEqIGsfFuWX
+         +0LmsGq4ikc271573KbFYVTwPwFw29sgqfvQDIK92pFPypY4UnwiHoxkNEpD0ldXbKOZ
+         TavvshrdVGaZDYe5x1ki+RGIwarPgSGfWbtbb0KwSQkLI2e+Tq/pRFKrsZceEJfukRxw
+         QoK9PsrGe/zhv4XC2nhrrzijtLZ/bboqqztVi2217Y09jCcIhcb+vKL1xe9eh+1MPfh1
+         b2ffdMj/uoYKE5ToRL3G3xV904HisnongrfMVry+WgC8f5eOCB0OOQhvJsOkDNoJL8g5
+         Aq2A==
+X-Gm-Message-State: AOAM533vr+4z1tHVfujcYy+1wE6NO0gQVEUDT1j7YcIgK+PTKwnCz1s0
+        NErzwR4pVtGPWQU/wYkqZPRn6+Yr57U=
+X-Google-Smtp-Source: ABdhPJwj55LznK4l5LixC2Eyyo66rtV4Ur3oMdT+trrTuTYCQkP+sa2OwI5bTzhEkbmXr7JgPT3J/A==
+X-Received: by 2002:a1c:1d91:: with SMTP id d139mr6511868wmd.101.1619360188326;
+        Sun, 25 Apr 2021 07:16:28 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 2sm15986660wmi.19.2021.04.25.07.16.27
+        by smtp.gmail.com with ESMTPSA id l14sm12522683wmq.4.2021.04.25.07.16.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 25 Apr 2021 07:16:27 -0700 (PDT)
-Message-Id: <a67168677477c18e9ee1416f3e4e5701e1eebcb6.1619360180.git.gitgitgadget@gmail.com>
+        Sun, 25 Apr 2021 07:16:28 -0700 (PDT)
+Message-Id: <703cd9656bf8827565469c71a6bcca58f1a5647a.1619360180.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.929.v2.git.1619360180.gitgitgadget@gmail.com>
 References: <pull.929.git.1617994052.gitgitgadget@gmail.com>
         <pull.929.v2.git.1619360180.gitgitgadget@gmail.com>
 From:   "Andrzej Hunt via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 25 Apr 2021 14:16:18 +0000
-Subject: [PATCH v2 11/12] builtin/rebase: release git_format_patch_opt too
+Date:   Sun, 25 Apr 2021 14:16:19 +0000
+Subject: [PATCH v2 12/12] builtin/rm: avoid leaking pathspec and seen
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,46 +78,88 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Andrzej Hunt <ajrhunt@google.com>
 
-options.git_format_patch_opt can be populated during cmd_rebase's setup,
-and will therefore leak on return. Although we could just UNLEAK all of
-options, we choose to strbuf_release() the individual member, which matches
-the existing pattern (where we're freeing invidual members of options).
+parse_pathspec() populates pathspec, hence we need to clear it once it's
+no longer needed. seen is xcalloc'd within the same function and
+likewise needs to be freed once its no longer needed.
 
-Leak found when running t0021:
+cmd_rm() has multiple early returns, therefore we need to clear or free
+as soon as this data is no longer needed, as opposed to doing a cleanup
+at the end.
 
-Direct leak of 24 byte(s) in 1 object(s) allocated from:
+LSAN output from t0020:
+
+Direct leak of 112 byte(s) in 1 object(s) allocated from:
+    #0 0x49a85d in malloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:145:3
+    #1 0x9ac0a4 in do_xmalloc wrapper.c:41:8
+    #2 0x9ac07a in xmalloc wrapper.c:62:9
+    #3 0x873277 in parse_pathspec pathspec.c:582:2
+    #4 0x646ffa in cmd_rm builtin/rm.c:266:2
+    #5 0x4cd91d in run_builtin git.c:467:11
+    #6 0x4cb5f3 in handle_builtin git.c:719:3
+    #7 0x4ccf47 in run_argv git.c:808:4
+    #8 0x4caf49 in cmd_main git.c:939:19
+    #9 0x69dc0e in main common-main.c:52:11
+    #10 0x7f948825b349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+
+Indirect leak of 65 byte(s) in 1 object(s) allocated from:
     #0 0x49ab79 in realloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:164:3
-    #1 0x9ac296 in xrealloc wrapper.c:126:8
-    #2 0x93b13d in strbuf_grow strbuf.c:98:2
-    #3 0x93bd3a in strbuf_add strbuf.c:295:2
-    #4 0x60ae92 in strbuf_addstr strbuf.h:304:2
-    #5 0x605f17 in cmd_rebase builtin/rebase.c:1759:3
-    #6 0x4cd91d in run_builtin git.c:467:11
-    #7 0x4cb5f3 in handle_builtin git.c:719:3
-    #8 0x4ccf47 in run_argv git.c:808:4
-    #9 0x4caf49 in cmd_main git.c:939:19
-    #10 0x69dbfe in main common-main.c:52:11
-    #11 0x7f66dae91349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+    #1 0x9ac2a6 in xrealloc wrapper.c:126:8
+    #2 0x93b14d in strbuf_grow strbuf.c:98:2
+    #3 0x93ccf6 in strbuf_vaddf strbuf.c:392:3
+    #4 0x93f726 in xstrvfmt strbuf.c:979:2
+    #5 0x93f8b3 in xstrfmt strbuf.c:989:8
+    #6 0x92ad8a in prefix_path_gently setup.c:115:15
+    #7 0x873a8d in init_pathspec_item pathspec.c:439:11
+    #8 0x87334f in parse_pathspec pathspec.c:589:3
+    #9 0x646ffa in cmd_rm builtin/rm.c:266:2
+    #10 0x4cd91d in run_builtin git.c:467:11
+    #11 0x4cb5f3 in handle_builtin git.c:719:3
+    #12 0x4ccf47 in run_argv git.c:808:4
+    #13 0x4caf49 in cmd_main git.c:939:19
+    #14 0x69dc0e in main common-main.c:52:11
+    #15 0x7f948825b349 in __libc_start_main (/lib64/libc.so.6+0x24349)
 
-SUMMARY: AddressSanitizer: 24 byte(s) leaked in 1 allocation(s).
+Indirect leak of 15 byte(s) in 1 object(s) allocated from:
+    #0 0x486834 in strdup ../projects/compiler-rt/lib/asan/asan_interceptors.cpp:452:3
+    #1 0x9ac048 in xstrdup wrapper.c:29:14
+    #2 0x873ba2 in init_pathspec_item pathspec.c:468:20
+    #3 0x87334f in parse_pathspec pathspec.c:589:3
+    #4 0x646ffa in cmd_rm builtin/rm.c:266:2
+    #5 0x4cd91d in run_builtin git.c:467:11
+    #6 0x4cb5f3 in handle_builtin git.c:719:3
+    #7 0x4ccf47 in run_argv git.c:808:4
+    #8 0x4caf49 in cmd_main git.c:939:19
+    #9 0x69dc0e in main common-main.c:52:11
+    #10 0x7f948825b349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+
+Direct leak of 1 byte(s) in 1 object(s) allocated from:
+    #0 0x49a9d2 in calloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:154:3
+    #1 0x9ac392 in xcalloc wrapper.c:140:8
+    #2 0x647108 in cmd_rm builtin/rm.c:294:9
+    #3 0x4cd91d in run_builtin git.c:467:11
+    #4 0x4cb5f3 in handle_builtin git.c:719:3
+    #5 0x4ccf47 in run_argv git.c:808:4
+    #6 0x4caf49 in cmd_main git.c:939:19
+    #7 0x69dbfe in main common-main.c:52:11
+    #8 0x7f4fac1b0349 in __libc_start_main (/lib64/libc.so.6+0x24349)
 
 Signed-off-by: Andrzej Hunt <ajrhunt@google.com>
 ---
- builtin/rebase.c | 1 +
- 1 file changed, 1 insertion(+)
+ builtin/rm.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index ed1da1760e4c..a756fba23330 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -2109,6 +2109,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	free(options.head_name);
- 	free(options.gpg_sign_opt);
- 	free(options.cmd);
-+	strbuf_release(&options.git_format_patch_opt);
- 	free(squash_onto_name);
- 	return ret;
- }
+diff --git a/builtin/rm.c b/builtin/rm.c
+index 4858631e0f02..2927678d37b6 100644
+--- a/builtin/rm.c
++++ b/builtin/rm.c
+@@ -327,6 +327,8 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
+ 		if (!seen_any)
+ 			exit(0);
+ 	}
++	clear_pathspec(&pathspec);
++	free(seen);
+ 
+ 	if (!index_only)
+ 		submodules_absorb_gitdir_if_needed();
 -- 
 gitgitgadget
-
