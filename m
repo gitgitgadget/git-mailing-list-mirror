@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E4CEC433ED
-	for <git@archiver.kernel.org>; Sun, 25 Apr 2021 14:16:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A0AF5C43461
+	for <git@archiver.kernel.org>; Sun, 25 Apr 2021 14:16:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 80B806128B
-	for <git@archiver.kernel.org>; Sun, 25 Apr 2021 14:16:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 78E9960232
+	for <git@archiver.kernel.org>; Sun, 25 Apr 2021 14:16:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230312AbhDYORF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 25 Apr 2021 10:17:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39024 "EHLO
+        id S230340AbhDYORG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 25 Apr 2021 10:17:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39026 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230327AbhDYORE (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230329AbhDYORE (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 25 Apr 2021 10:17:04 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27B4BC06175F
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD0EAC061574
         for <git@vger.kernel.org>; Sun, 25 Apr 2021 07:16:24 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id y204so27142265wmg.2
+Received: by mail-wm1-x32e.google.com with SMTP id p10-20020a1c544a0000b02901387e17700fso3664623wmi.2
         for <git@vger.kernel.org>; Sun, 25 Apr 2021 07:16:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=1WXyZDq5u1ON4ki7kVTGWTuwGUZchGrEtVmXJ+CkXXc=;
-        b=Cckts4uSlu2ygt8CvJc+hHkGTHNg33ePYT7S1bXOc6wuUWkoIJEiuVynbLBZYFSErR
-         5nQmOJDc54Fcb3Y9ygqB5d3fYSR9/OvhG4UAH2E8mV7pCBVJNfRt0Ae9Hrk4oJwf7WJV
-         w4dLudWIHx07MXVkhNVBXlWrA9H6avHJ9b9ja5hzGZ1VqA7VXIe9RkMyfScfQgZup89d
-         Jyt90L4JnvxqrRUCfB/H38TnjF2EpETompm2E39CTRQMQAotvW5YhFW3b26p2K7ZYUrg
-         2sTVGLl4QHcxDBUlcf/fS9gS4IdZmHIGe3tgeI+eqn4WNFIHoaNdplwBkNig55lvtvZH
-         qjAw==
+        bh=/S2cCAihu244sZ8mK3Psrc+xkBPmsXsW5gez3ZTu/JU=;
+        b=nSLfBqYuy5oNkqFHHBOt3wPAjMXgbzzjPEyc7ovjcOMSaPgQJMSo/6qLt5QfQiZJAG
+         2XsLJDrjJ1ZnfwmS4kbB4pLTIxHxXJe1/hu9aMakldRAgcKs7OWNb6XQr/jPo+tQDjma
+         7diPse5QsOvWrvyZ65baepp7xAHzc8U/SZD8cYvDd/8zfNi1EPshi/7Envr2CZFfWQkv
+         4WRIJOKgKSms7LaiHCu90c9wV0P80nL5K/OvDe40SF/T0K8d9biFo5XVFdzJoAK6GQFc
+         lsJ6f76dTKnjT1+OZGQOK8m7h4rciw0hVuwm1aNV2DFFgqa/tRt6QWXSCprGEAiCkmZ9
+         xqmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=1WXyZDq5u1ON4ki7kVTGWTuwGUZchGrEtVmXJ+CkXXc=;
-        b=VKrXsXS6Fi8vTYfJ6phRqt0RrT9lL6A5Zo/WlOYyitq3gM+HXKT8nYpjDUcjNgZiZE
-         0BZTOgqkxlCSoOg4JJ2OSVUWTljfRraDWWkeEgTmNSYW3lPtKX20x5xYEIshkoMPB8VQ
-         F705UeL+7uKxVFrRZMK8oavM8XoH6xwyG1VBhGcGD8OG7ooLVAr52JLr4bF//NoVPDhL
-         wVdrX+OVxd5I0cY88UHgAjFFYg4vNhFtuqJvMqCB2/DloHhlkHrzEmgX+7DHLxEITSRW
-         IojTveiROhkrA3Mmia/+AeIUKas7+ZxiY3Qx+2oZ7rT3dKd+tYyF0GQX6Jx81c2ZIphm
-         Xjzw==
-X-Gm-Message-State: AOAM530r6Z/YKLdvchbkFPQiNxpLneeGNhwNYXjXrXLqLFsfYTrIuApn
-        Uo0uVZMBCWSH8usO7bC/993+v+6WdRY=
-X-Google-Smtp-Source: ABdhPJy9RiDwrsB9ZCtOts6g+HNXYLAMd8GoN65gMQWX/XFDJx+MsZPR27hH0B0lE4asdka0LSQh/Q==
-X-Received: by 2002:a1c:c3d4:: with SMTP id t203mr14696526wmf.32.1619360182987;
-        Sun, 25 Apr 2021 07:16:22 -0700 (PDT)
+        bh=/S2cCAihu244sZ8mK3Psrc+xkBPmsXsW5gez3ZTu/JU=;
+        b=iulbCgywljIIEGnYoKr+TnZ7BioeLmBwEXElQvL8lV9F9Xv8vjB8lbB+Do68mbcFzI
+         N4ChlcOufAXNbUsIloeBTA0JZME4EydBHostFknbYVG3zQTGC52VXMAvrrLSb4Nhbqn5
+         2BEVHuNjL0OSUSZbVjt9YWCRp9dtDm1vsY0zGZJfJvMEO04J7eSNWs2hmSXeOQFnLOWq
+         5TDvcSxZ/3q9bhZitNWTDWhGzXSETA0qp5/KgIcBWKlO3IpCi9DiUmFgQUcfph6YZMTF
+         9drjBwZIiCSB/P+QDz9vRvMHDTg90Rpl1PSKK+yBR6OTE+6O7z3JnXs6KtwQlwjza3Tu
+         CfIg==
+X-Gm-Message-State: AOAM5319eqhOaC0RKKKjDWjG0LUoMwiD2bMZjXEZ79InkDX4+BuqrDS9
+        s+fVLUi/guSBdR4PcvbMI4JwNXJTRc4=
+X-Google-Smtp-Source: ABdhPJwS2/9pd2DewL9ZxGRtvkfB52gp6IZ87tsOpj15R5UxzPDmb6pyyiG9ZdNZfGbR6krDMJHOFg==
+X-Received: by 2002:a1c:a7d1:: with SMTP id q200mr15255615wme.13.1619360183523;
+        Sun, 25 Apr 2021 07:16:23 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f6sm15399523wrt.19.2021.04.25.07.16.22
+        by smtp.gmail.com with ESMTPSA id z7sm1744797wrl.11.2021.04.25.07.16.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 25 Apr 2021 07:16:22 -0700 (PDT)
-Message-Id: <9ad3d8e3fbf4ebb0622f3b68b13ae34908ac5b87.1619360180.git.gitgitgadget@gmail.com>
+        Sun, 25 Apr 2021 07:16:23 -0700 (PDT)
+Message-Id: <76519acdfee7b7f45dc1a8b52b2083fb4fa03b3f.1619360180.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.929.v2.git.1619360180.gitgitgadget@gmail.com>
 References: <pull.929.git.1617994052.gitgitgadget@gmail.com>
         <pull.929.v2.git.1619360180.gitgitgadget@gmail.com>
 From:   "Andrzej Hunt via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 25 Apr 2021 14:16:09 +0000
-Subject: [PATCH v2 02/12] wt-status: fix multiple small leaks
+Date:   Sun, 25 Apr 2021 14:16:10 +0000
+Subject: [PATCH v2 03/12] ls-files: free max_prefix when done
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,91 +78,53 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Andrzej Hunt <ajrhunt@google.com>
 
-rev.prune_data is populated (in multiple functions) via copy_pathspec,
-and therefore needs to be cleared after running the diff in those
-functions.
+common_prefix() returns a new string, which we store in max_prefix -
+this string needs to be freed to avoid a leak. This leak is happening
+in cmd_ls_files, hence is of no real consequence - an UNLEAK would be
+just as good, but we might as well free the string properly.
 
-rev(_info).pending is populated indirectly via setup_revisions, and also
-needs to be cleared once diffing is done.
+Leak found while running t0002, see output below:
 
-These leaks were found while running t0008 or t0021. The rev.prune_data
-leaks are small (80B) but noisy, hence I won't bother including their
-logs - the rev.pending leaks are bigger, and can happen early in the
-course of other commands, and therefore possibly more valuable to fix -
-see example log from a rebase below:
-
-Direct leak of 2048 byte(s) in 1 object(s) allocated from:
-    #0 0x49ab79 in realloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:164:3
-    #1 0x9ac2a6 in xrealloc wrapper.c:126:8
-    #2 0x83da03 in add_object_array_with_path object.c:337:3
-    #3 0x8f5d8a in add_pending_object_with_path revision.c:329:2
-    #4 0x8ea50b in add_pending_object_with_mode revision.c:336:2
-    #5 0x8ea4fd in add_pending_object revision.c:342:2
-    #6 0x8ea610 in add_head_to_pending revision.c:354:2
-    #7 0x9b55f5 in has_uncommitted_changes wt-status.c:2474:2
-    #8 0x9b58c4 in require_clean_work_tree wt-status.c:2553:6
-    #9 0x606bcc in cmd_rebase builtin/rebase.c:1970:6
-    #10 0x4cd91d in run_builtin git.c:467:11
-    #11 0x4cb5f3 in handle_builtin git.c:719:3
-    #12 0x4ccf47 in run_argv git.c:808:4
-    #13 0x4caf49 in cmd_main git.c:939:19
-    #14 0x69dc0e in main common-main.c:52:11
-    #15 0x7f2d18909349 in __libc_start_main (/lib64/libc.so.6+0x24349)
-
-Indirect leak of 5 byte(s) in 1 object(s) allocated from:
-    #0 0x486834 in strdup ../projects/compiler-rt/lib/asan/asan_interceptors.cpp:452:3
-    #1 0x9ac048 in xstrdup wrapper.c:29:14
-    #2 0x83da8d in add_object_array_with_path object.c:349:17
-    #3 0x8f5d8a in add_pending_object_with_path revision.c:329:2
-    #4 0x8ea50b in add_pending_object_with_mode revision.c:336:2
-    #5 0x8ea4fd in add_pending_object revision.c:342:2
-    #6 0x8ea610 in add_head_to_pending revision.c:354:2
-    #7 0x9b55f5 in has_uncommitted_changes wt-status.c:2474:2
-    #8 0x9b58c4 in require_clean_work_tree wt-status.c:2553:6
-    #9 0x606bcc in cmd_rebase builtin/rebase.c:1970:6
-    #10 0x4cd91d in run_builtin git.c:467:11
-    #11 0x4cb5f3 in handle_builtin git.c:719:3
-    #12 0x4ccf47 in run_argv git.c:808:4
-    #13 0x4caf49 in cmd_main git.c:939:19
-    #14 0x69dc0e in main common-main.c:52:11
-    #15 0x7f2d18909349 in __libc_start_main (/lib64/libc.so.6+0x24349)
-
-SUMMARY: AddressSanitizer: 2053 byte(s) leaked in 2 allocation(s).
+Direct leak of 8 byte(s) in 1 object(s) allocated from:
+    #0 0x49a85d in malloc /home/abuild/rpmbuild/BUILD/llvm-11.0.0.src/build/../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:145:3
+    #1 0x9ab1b4 in do_xmalloc wrapper.c:41:8
+    #2 0x9ab248 in do_xmallocz wrapper.c:75:8
+    #3 0x9ab22a in xmallocz wrapper.c:83:9
+    #4 0x9ab2d7 in xmemdupz wrapper.c:99:16
+    #5 0x78d6a4 in common_prefix dir.c:191:15
+    #6 0x5aca48 in cmd_ls_files builtin/ls-files.c:669:16
+    #7 0x4cd92d in run_builtin git.c:453:11
+    #8 0x4cb5fa in handle_builtin git.c:704:3
+    #9 0x4ccf57 in run_argv git.c:771:4
+    #10 0x4caf49 in cmd_main git.c:902:19
+    #11 0x69ce2e in main common-main.c:52:11
+    #12 0x7f64d4d94349 in __libc_start_main (/lib64/libc.so.6+0x24349)
 
 Signed-off-by: Andrzej Hunt <ajrhunt@google.com>
 ---
- wt-status.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ builtin/ls-files.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/wt-status.c b/wt-status.c
-index 1aed68c43c26..34886655dbcc 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -616,6 +616,7 @@ static void wt_status_collect_changes_worktree(struct wt_status *s)
- 	rev.diffopt.rename_score = s->rename_score >= 0 ? s->rename_score : rev.diffopt.rename_score;
- 	copy_pathspec(&rev.prune_data, &s->pathspec);
- 	run_diff_files(&rev, 0);
-+	clear_pathspec(&rev.prune_data);
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index 60a2913a01e9..84448b360120 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -603,7 +603,7 @@ static int option_parse_exclude_standard(const struct option *opt,
+ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+ {
+ 	int require_work_tree = 0, show_tag = 0, i;
+-	const char *max_prefix;
++	char *max_prefix;
+ 	struct dir_struct dir;
+ 	struct pattern_list *pl;
+ 	struct string_list exclude_list = STRING_LIST_INIT_NODUP;
+@@ -781,5 +781,6 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+ 	}
+ 
+ 	dir_clear(&dir);
++	free(max_prefix);
+ 	return 0;
  }
- 
- static void wt_status_collect_changes_index(struct wt_status *s)
-@@ -652,6 +653,8 @@ static void wt_status_collect_changes_index(struct wt_status *s)
- 	rev.diffopt.rename_score = s->rename_score >= 0 ? s->rename_score : rev.diffopt.rename_score;
- 	copy_pathspec(&rev.prune_data, &s->pathspec);
- 	run_diff_index(&rev, 1);
-+	object_array_clear(&rev.pending);
-+	clear_pathspec(&rev.prune_data);
- }
- 
- static void wt_status_collect_changes_initial(struct wt_status *s)
-@@ -2480,6 +2483,7 @@ int has_uncommitted_changes(struct repository *r,
- 
- 	diff_setup_done(&rev_info.diffopt);
- 	result = run_diff_index(&rev_info, 1);
-+	object_array_clear(&rev_info.pending);
- 	return diff_result_code(&rev_info.diffopt, result);
- }
- 
 -- 
 gitgitgadget
 
