@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A9C2C433B4
-	for <git@archiver.kernel.org>; Sun, 25 Apr 2021 14:16:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 097CDC433ED
+	for <git@archiver.kernel.org>; Sun, 25 Apr 2021 14:16:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 445D4600EF
-	for <git@archiver.kernel.org>; Sun, 25 Apr 2021 14:16:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E06B461369
+	for <git@archiver.kernel.org>; Sun, 25 Apr 2021 14:16:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230411AbhDYORM (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S230414AbhDYORM (ORCPT <rfc822;git@archiver.kernel.org>);
         Sun, 25 Apr 2021 10:17:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39060 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39058 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230359AbhDYORI (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230369AbhDYORI (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 25 Apr 2021 10:17:08 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A17AC061574
-        for <git@vger.kernel.org>; Sun, 25 Apr 2021 07:16:28 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id a26-20020a05600c225ab029013f5867af96so1190197wmm.0
-        for <git@vger.kernel.org>; Sun, 25 Apr 2021 07:16:28 -0700 (PDT)
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CC86C06138B
+        for <git@vger.kernel.org>; Sun, 25 Apr 2021 07:16:27 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id f195-20020a1c1fcc0000b029012eb88126d7so3670045wmf.3
+        for <git@vger.kernel.org>; Sun, 25 Apr 2021 07:16:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=1nKP0yaXjr4MwVeYdNA48ZKHdlQ2SyIoLZPfwwX2iB4=;
-        b=KGsxautbn9nHXr7RNqA76u60du+36q4xEn7uNT1/ylIADHLjkBoW2XA9zPmYjiaynj
-         eTa9ygPHXo8b8J3xlDng6q+lennd393xGrkSr0KHDkxgYyhCWML8j0wku2P7AbkJRlZ3
-         CtmKyhP5s9E0NiSMFUO9QyvXy3xDQX7aTF9L7z+W5oAtKSF/sgupI8IeZCvs71iy6J8o
-         6/fjGi6z9qqlh1QAWA1zl6XBVfUnxbVA8pIS29oheJ/1Qo+NZsoG1Hp9wgBMZhZmzE3U
-         wlSLwNLyUcKTmv8GRRwvOk2FWvALF/ShOKj2yGro0LBcDcnr4K4C5fiQvZ3IHDUcLgDX
-         wZ5w==
+        bh=xBQHDAQkmLXliEEpOaUXRyoJMpH3nXNNFwi39q0+Dhw=;
+        b=VFao026D/Qa2wipdrTNrsyFT4CG1kIaipccvxA3fEcn9ebxnf3BxkhZNFEnJ1zleVw
+         da9IjSUwwO8pI5/H+AkjSvjVgFxRRz75IFTUq+lrTxZzdy6BhutKERHWvvUa9Eb6xUm4
+         hY4mbXo1V1GThOOlmQGWAYs6gXrpfzezhBp1s4ROxbFqLUcP6x4yCptk0PKEFnGakgi3
+         34u8KFgjDFMs8hY9VK4VkVMhWg5SHj07+KHZ7gdHHg/srnLVqAuecjYX7b6VSpEPNAzx
+         YGP53Ktr5viAKGqBOGhXg93fqWOq383I50oqGobwrypjMAId2znRonckrlQT3FtpZlzW
+         ZzDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=1nKP0yaXjr4MwVeYdNA48ZKHdlQ2SyIoLZPfwwX2iB4=;
-        b=Z0eALb04e9PyyKUE1CRCUJaaIe8Q0qkKBJ7H41rAOQEpBrMeqCtZokg8Iw5ZqON9Xu
-         AJd/KlO3Iclp7+w4lkmeP02aHQPfZr8ebsQ+m9YWX90yUjk3iUzxYgte1Z5vItHYOVPu
-         CCOtUoTEnPLhGkOopcWZGggZyomLNs1Q/GTqpW8yuLjfxjpAoRtD/v8EYsfOvj0tpLn1
-         mMEppPRscRRI6FxsHk3q+XGGfiaEQwhQrhrQ/yMINqOTvo7uisZcSRR1SGOmDhayzUlY
-         svTCjS1HBnyNrobFG6H6qdzTek2cawdIXUHspgzxhAbO+eNptnVj3OuIMi3GVLqKyu/n
-         eI7Q==
-X-Gm-Message-State: AOAM532qd5PQw9CXFmIbOqcx5mKpIWDTVOmKS4lq+boas3bZzzfMOMiV
-        GYVNQ6cCDGoOovUdno0tYXUvlrzTiZo=
-X-Google-Smtp-Source: ABdhPJxnYwRPgHLED0VZcdfdToRuH0j63034iEkcqnXbesufFzyMbcLtHu3YMKhbdH5KwFQ8qc46Cw==
-X-Received: by 2002:a1c:f701:: with SMTP id v1mr15924584wmh.69.1619360187275;
-        Sun, 25 Apr 2021 07:16:27 -0700 (PDT)
+        bh=xBQHDAQkmLXliEEpOaUXRyoJMpH3nXNNFwi39q0+Dhw=;
+        b=ABn4ZsI5nMnP24s9eny7jF3v1XasvzVkNssY6uVatvSy3a23VKLSFAXjQvpUUrbPIy
+         rKPBoBsociLrSFNuWvx3R3zNowzaSEGVwG6yfAMhzREdUWMyfuZl++zU3S30sXkQZuR9
+         tG7YDCeY0zVbQk5CVLqGL6pkcdJ2d7D357HBSRJpQkEtOb+xsxg7+UNwfqXU+up+ZTqt
+         lYBLR7vi1eaLfgUhqwSZ8dtLUk8fwzNNW2QcbeQALnhn4UfM00Y+w1o4bklaKPlKuymQ
+         ZduUshzK+BFW4RCDAmpdvvI9cEzapSVmk+hv3RZXEpDdD4FISzeIzJRbSL30TKhyJlr0
+         pPmA==
+X-Gm-Message-State: AOAM531x3Dfz7nrx0Ka/kFGQood9D6pREPpBYKw7bf4kZ5oE4gmHTJhk
+        x+wvse7Lf24R51/mWU4PJN/7QJY2ysc=
+X-Google-Smtp-Source: ABdhPJwRuPxQ7aZsiPaiuCfZ6EDKyr0HlxAwG1etJH+24FjOgc0tob6olbKIt6VTsGL5XchdydJJUA==
+X-Received: by 2002:a7b:c4d9:: with SMTP id g25mr16071271wmk.182.1619360186266;
+        Sun, 25 Apr 2021 07:16:26 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q17sm16554494wro.33.2021.04.25.07.16.26
+        by smtp.gmail.com with ESMTPSA id c77sm13376042wme.37.2021.04.25.07.16.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 25 Apr 2021 07:16:27 -0700 (PDT)
-Message-Id: <c4363c2122170b61ca49cf4150c8408dde05f96b.1619360180.git.gitgitgadget@gmail.com>
+        Sun, 25 Apr 2021 07:16:26 -0700 (PDT)
+Message-Id: <20c5f2e68c54bdd7d07acdc256f8895cabbca6c2.1619360180.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.929.v2.git.1619360180.gitgitgadget@gmail.com>
 References: <pull.929.git.1617994052.gitgitgadget@gmail.com>
         <pull.929.v2.git.1619360180.gitgitgadget@gmail.com>
 From:   "Andrzej Hunt via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 25 Apr 2021 14:16:17 +0000
-Subject: [PATCH v2 10/12] builtin/for-each-ref: free filter and UNLEAK
- sorting.
+Date:   Sun, 25 Apr 2021 14:16:15 +0000
+Subject: [PATCH v2 08/12] builtin/checkout: clear pending objects after
+ diffing
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,69 +79,51 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Andrzej Hunt <ajrhunt@google.com>
 
-sorting might be a list allocated in ref_default_sorting() (in this case
-it's a fixed single item list, which has nevertheless been xcalloc'd),
-or it might be a list allocated in parse_opt_ref_sorting(). In either
-case we could free these lists - but instead we UNLEAK as we're at the
-end of cmd_for_each_ref. (There's no existing implementation of
-clear_ref_sorting(), and writing a loop to free the list seems more
-trouble than it's worth.)
+add_pending_object() populates rev.pending, we need to take care of
+clearing it once we're done.
 
-filter.with_commit/no_commit are populated via
-OPT_CONTAINS/OPT_NO_CONTAINS, both of which create new entries via
-parse_opt_commits(), and also need to be free'd or UNLEAK'd. Because
-free_commit_list() already exists, we choose to use that over an UNLEAK.
+This code is run close to the end of a checkout, therefore this leak
+seems like it would have very little impact. See also LSAN output
+from t0020 below:
 
-LSAN output from t0041:
+Direct leak of 2048 byte(s) in 1 object(s) allocated from:
+    #0 0x49ab79 in realloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:164:3
+    #1 0x9acc46 in xrealloc wrapper.c:126:8
+    #2 0x83e3a3 in add_object_array_with_path object.c:337:3
+    #3 0x8f672a in add_pending_object_with_path revision.c:329:2
+    #4 0x8eaeab in add_pending_object_with_mode revision.c:336:2
+    #5 0x8eae9d in add_pending_object revision.c:342:2
+    #6 0x5154a0 in show_local_changes builtin/checkout.c:602:2
+    #7 0x513b00 in merge_working_tree builtin/checkout.c:979:3
+    #8 0x512cb3 in switch_branches builtin/checkout.c:1242:9
+    #9 0x50f8de in checkout_branch builtin/checkout.c:1646:9
+    #10 0x50ba12 in checkout_main builtin/checkout.c:2003:9
+    #11 0x5086c0 in cmd_checkout builtin/checkout.c:2055:8
+    #12 0x4cd91d in run_builtin git.c:467:11
+    #13 0x4cb5f3 in handle_builtin git.c:719:3
+    #14 0x4ccf47 in run_argv git.c:808:4
+    #15 0x4caf49 in cmd_main git.c:939:19
+    #16 0x69e43e in main common-main.c:52:11
+    #17 0x7f5dd1d50349 in __libc_start_main (/lib64/libc.so.6+0x24349)
 
-Direct leak of 16 byte(s) in 1 object(s) allocated from:
-    #0 0x49a9d2 in calloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:154:3
-    #1 0x9ac252 in xcalloc wrapper.c:140:8
-    #2 0x8a4a55 in ref_default_sorting ref-filter.c:2486:32
-    #3 0x56c6b1 in cmd_for_each_ref builtin/for-each-ref.c:72:13
-    #4 0x4cd91d in run_builtin git.c:467:11
-    #5 0x4cb5f3 in handle_builtin git.c:719:3
-    #6 0x4ccf47 in run_argv git.c:808:4
-    #7 0x4caf49 in cmd_main git.c:939:19
-    #8 0x69dabe in main common-main.c:52:11
-    #9 0x7f2bdc570349 in __libc_start_main (/lib64/libc.so.6+0x24349)
-
-Direct leak of 16 byte(s) in 1 object(s) allocated from:
-    #0 0x49a85d in malloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:145:3
-    #1 0x9abf54 in do_xmalloc wrapper.c:41:8
-    #2 0x9abf2a in xmalloc wrapper.c:62:9
-    #3 0x717486 in commit_list_insert commit.c:540:33
-    #4 0x8644cf in parse_opt_commits parse-options-cb.c:98:2
-    #5 0x869bb5 in get_value parse-options.c:181:11
-    #6 0x8677dc in parse_long_opt parse-options.c:378:10
-    #7 0x8659bd in parse_options_step parse-options.c:817:11
-    #8 0x867fcd in parse_options parse-options.c:870:10
-    #9 0x56c62b in cmd_for_each_ref builtin/for-each-ref.c:59:2
-    #10 0x4cd91d in run_builtin git.c:467:11
-    #11 0x4cb5f3 in handle_builtin git.c:719:3
-    #12 0x4ccf47 in run_argv git.c:808:4
-    #13 0x4caf49 in cmd_main git.c:939:19
-    #14 0x69dabe in main common-main.c:52:11
-    #15 0x7f2bdc570349 in __libc_start_main (/lib64/libc.so.6+0x24349)
-
+SUMMARY: AddressSanitizer: 2048 byte(s) leaked in 1 allocation(s).
 Signed-off-by: Andrzej Hunt <ajrhunt@google.com>
 ---
- builtin/for-each-ref.c | 3 +++
- 1 file changed, 3 insertions(+)
+ builtin/checkout.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index cb9c81a04606..84efb71f82fc 100644
---- a/builtin/for-each-ref.c
-+++ b/builtin/for-each-ref.c
-@@ -83,5 +83,8 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
- 	for (i = 0; i < maxcount; i++)
- 		show_ref_array_item(array.items[i], &format);
- 	ref_array_clear(&array);
-+	free_commit_list(filter.with_commit);
-+	free_commit_list(filter.no_commit);
-+	UNLEAK(sorting);
- 	return 0;
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 4c696ef4805b..190153c81571 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -602,6 +602,7 @@ static void show_local_changes(struct object *head,
+ 	diff_setup_done(&rev.diffopt);
+ 	add_pending_object(&rev, head, NULL);
+ 	run_diff_index(&rev, 0);
++	object_array_clear(&rev.pending);
  }
+ 
+ static void describe_detached_head(const char *msg, struct commit *commit)
 -- 
 gitgitgadget
 
