@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 84369C433B4
-	for <git@archiver.kernel.org>; Sun, 25 Apr 2021 09:11:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A981AC43461
+	for <git@archiver.kernel.org>; Sun, 25 Apr 2021 09:11:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5978C613C0
-	for <git@archiver.kernel.org>; Sun, 25 Apr 2021 09:11:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7F95E613BF
+	for <git@archiver.kernel.org>; Sun, 25 Apr 2021 09:11:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229656AbhDYJMT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 25 Apr 2021 05:12:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58136 "EHLO
+        id S229762AbhDYJMU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 25 Apr 2021 05:12:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58148 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229485AbhDYJMS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Apr 2021 05:12:18 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95D09C061574
-        for <git@vger.kernel.org>; Sun, 25 Apr 2021 02:11:37 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id o21-20020a1c4d150000b029012e52898006so3459732wmh.0
-        for <git@vger.kernel.org>; Sun, 25 Apr 2021 02:11:37 -0700 (PDT)
+        with ESMTP id S229485AbhDYJMU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Apr 2021 05:12:20 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E56CC061756
+        for <git@vger.kernel.org>; Sun, 25 Apr 2021 02:11:39 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id l2so361112wrm.9
+        for <git@vger.kernel.org>; Sun, 25 Apr 2021 02:11:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=GUvWph7d8Uo/9104PCgGT7/x+E2IV/ky6+p3NGdxObM=;
-        b=U8RogT41zNo72mco1x5tsPCNlVIL2M1RJU3eKzjQO0VANiSVeHCCMY14cW98EB/V7X
-         P07l2Pzj29G/DUicxCHjCvdZiaiKmUYvUTKH3UsuWdCn25UkV5PQrnMRnXBDb4mKJG7o
-         QXYvHv/n9g6K9G/rOTLP92LEaWnauys4dwcaHNMt8t+QIUaFx9N0ntLRhmh9rU7/7QxO
-         Rev4kOMqPqYOfQ6RCPVd1ddPye8OM1FywTf5SiZVltUmXcTSIrYB2eKmjN2GJh5JJUeh
-         NWO3rpfwNv7bw63F5448FASEbiwyz3GcHbzPQy2ZMxLwrmjk0qNZxjSBy61JMihbhWRQ
-         SBFw==
+        bh=Gjr4DU0zbF+rIbCdNWfCo8NEZUf1XQhs9k47krFmJ2A=;
+        b=chXMNUDZYSbPP6iihmKAwHE+3kPoQHDAuueEJHg1+0ewM5B2afVu8DUBGh6EjAqf5E
+         iIZAqDMYSLjy+7Hi6qeiJa1g1BiPBOKoYMFo9JznTgSNRwtQQLpJ++YmeowraRit8MiX
+         0BFJ+rR80/oCLK8xxwriDa7CD+KcQOqnAc2vs+y/OHeMEnL16lJcG23KYtlMag7xheOX
+         5+ZoPD2mqkU4f+5JPSKiF5bwmkbrTQ2WSqsvX7/2Si7psjmYl39pTIwyZ4yzsjvDVDMQ
+         l81gxF9lX7B1oAy1z330FIp1RUdHKoej/+JmaP0CuZmoAwpuItIkHNikutFMXHSFGQIm
+         8GaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=GUvWph7d8Uo/9104PCgGT7/x+E2IV/ky6+p3NGdxObM=;
-        b=kbbpVnFi9iMW/wy8LyrvuKT2I9jOZrTt9NXgf/HERViLipqFPuh6EPB36XYYDKWKZH
-         c+50Su7IvvCAURwmo8SbJWKOhvCwsUq9KE2ECoYtnbVQG7yeXVckKJ2/TRLY/JpohfCC
-         vn8nWUBnisTUnranOJCf/ILoRE5GKtFHupfNGYgvbsLrKTzWPzjbR9Yf5HI/ndkUqCDx
-         ZZChpmQhguNYLgJnzNB/ppL0uNsYu/XHFx7xFsxJIu4+iDZHeIP3QGZiFYIG3bffpO2T
-         Yn1EqPRn33f2XNSZsSFIH63lJiqxZaH+MQLTqgoa84eiNyYJaUk24niuQKeRx4DVH0yZ
-         xbXQ==
-X-Gm-Message-State: AOAM5304VjKI8f4jMeFXAFVKWFfo7U9SDGV/OzSSPwJhw/z6jwtV4z95
-        rZgcKPSu2m804hUJI3TuV9ibKSU3eWs=
-X-Google-Smtp-Source: ABdhPJyTVz08KFC3T39ZNtmV/DsrWtHiVX9xfhMC9qCvHxjpo7A+A5lTHRHUfHfaezOQ10NBABMzqA==
-X-Received: by 2002:a05:600c:2247:: with SMTP id a7mr13660085wmm.133.1619341896125;
-        Sun, 25 Apr 2021 02:11:36 -0700 (PDT)
+        bh=Gjr4DU0zbF+rIbCdNWfCo8NEZUf1XQhs9k47krFmJ2A=;
+        b=h99pLvERI8byg9ZQ7TYVvYeO3zWJf9NZBkKPJIk03rEGqjFLARY4tGusuPg2AlYZeE
+         rBGGBXRuVG7gYz4hPlve5MKPNrdeq2Giy2ClKDayyE1IQlFrk5HEjkg0SPtiRoGjFI91
+         39LGeWoPoOtnxKnKqiSTSnQR3ba2Yf+Q3q0t4DHhF4bxyVvv8b0mh0LvSyjwT8Q+/HNF
+         RogWGOB6qcspOt8AF9dkRStSMG7A8PVsMt6c3+FbNbdLI03uA0559DAWqXJGT3Sk1M4v
+         fYGeD3hwWYIbP4ETo8abaAoWKgzTlcYZ16XSG108aaNcZjJztQQ9wEXDNHE7b45pVabb
+         ACcQ==
+X-Gm-Message-State: AOAM532sSrtN6MGzCiOv5YDvd3HrCIDaJA8tZuxVmCWj2ObmwXQ2B4Bz
+        sW6VwBJ9ZSWjzL4E/CU+X8bEQUEF3Kn+Kg==
+X-Google-Smtp-Source: ABdhPJxL+0cAVHFzHu61OWEQr5SEHXt76uOnK7tMfJipsLAWl1UEIk0UrYHTaXho/iPB4XKH/h9NNw==
+X-Received: by 2002:adf:f6c5:: with SMTP id y5mr16146373wrp.121.1619341897737;
+        Sun, 25 Apr 2021 02:11:37 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id f11sm15693707wmc.6.2021.04.25.02.11.35
+        by smtp.gmail.com with ESMTPSA id f11sm15693707wmc.6.2021.04.25.02.11.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 25 Apr 2021 02:11:35 -0700 (PDT)
+        Sun, 25 Apr 2021 02:11:37 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,12 +65,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Taylor Blau <me@ttaylorr.com>, Beat Bolli <bbolli@ewanet.ch>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 0/2] pretty tests: --date/format test improvements
-Date:   Sun, 25 Apr 2021 11:11:31 +0200
-Message-Id: <cover-0.2-00000000000-20210425T090506Z-avarab@gmail.com>
+Subject: [PATCH 2/2] pretty tests: give --date/format tests a better description
+Date:   Sun, 25 Apr 2021 11:11:33 +0200
+Message-Id: <patch-2.2-6a17343b23b-20210425T090506Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.1.734.g8d26f61af32
-In-Reply-To: <pull.939.v2.git.1619275340051.gitgitgadget@gmail.com>
-References: <pull.939.v2.git.1619275340051.gitgitgadget@gmail.com>
+In-Reply-To: <cover-0.2-00000000000-20210425T090506Z-avarab@gmail.com>
+References: <pull.939.v2.git.1619275340051.gitgitgadget@gmail.com> <cover-0.2-00000000000-20210425T090506Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,16 +78,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A couple of trivial changes noticed when reviewing the "pretty:
-provide human date format" series.
+Change the description for the --date/format equivalency tests added
+in 466fb6742d7 (pretty: provide a strict ISO 8601 date format,
+2014-08-29) and 0df621172d8 (pretty: provide short date format,
+2019-11-19) to be more meaningful.
 
-Ævar Arnfjörð Bjarmason (2):
-  pretty tests: simplify %aI/%cI date format test
-  pretty tests: give --date/format tests a better description
+This allows us to reword the comment added in the former commit to
+refer to both tests, and any other future test, such as the in-flight
+--date=human format being proposed in [1].
 
- t/t4205-log-pretty-formats.sh | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+1. http://lore.kernel.org/git/pull.939.v2.git.1619275340051.gitgitgadget@gmail.com
 
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ t/t4205-log-pretty-formats.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
+index 0462115ac5c..bcb558ef4d7 100755
+--- a/t/t4205-log-pretty-formats.sh
++++ b/t/t4205-log-pretty-formats.sh
+@@ -525,14 +525,14 @@ test_expect_success 'strbuf_utf8_replace() not producing NUL' '
+ 	! grep Q actual
+ '
+ 
+-# ISO strict date format
+-test_expect_success 'ISO and ISO-strict date formats display the same values' '
++# --date=[XXX] and corresponding %a[X] %c[X] format equivalency
++test_expect_success '--date=iso-strict %ad%cd is the same as %aI%cI' '
+ 	git log --format=%ad%n%cd --date=iso-strict >expected &&
+ 	git log --format=%aI%n%cI >actual &&
+ 	test_cmp expected actual
+ '
+ 
+-test_expect_success 'short date' '
++test_expect_success '--date=short %ad%cd is the same as %as%cs' '
+ 	git log --format=%ad%n%cd --date=short >expected &&
+ 	git log --format=%as%n%cs >actual &&
+ 	test_cmp expected actual
 -- 
 2.31.1.734.g8d26f61af32
 
