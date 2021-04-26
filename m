@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CBBD9C433B4
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F005CC433ED
 	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 01:03:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8D7D861350
+	by mail.kernel.org (Postfix) with ESMTP id ACD536128B
 	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 01:03:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231574AbhDZBES (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S231582AbhDZBES (ORCPT <rfc822;git@archiver.kernel.org>);
         Sun, 25 Apr 2021 21:04:18 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:41782 "EHLO
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:41788 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S231550AbhDZBEP (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 25 Apr 2021 21:04:15 -0400
+        by vger.kernel.org with ESMTP id S231565AbhDZBEQ (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 25 Apr 2021 21:04:16 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 77FD461476;
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id F05A961477;
         Mon, 26 Apr 2021 01:03:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1619399014;
-        bh=ZOjnyRr9hRX5DLBLBGdlBCS5pe9Ya5VGQHVYthcU5D8=;
+        s=default; t=1619399015;
+        bh=sRj+o+z9k5z1UJlL+/+Hua9IwvNIpUrUSmnRYLyB4VU=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=JhTjZgZu/uWducFsWKzflB8SDHAb3YXTxfrhDQvN5LaN5v8moeVAlTxYQ3jWfb5vo
-         6SemwQFuXR2HV2gmWz7EGUW9gbQnRRCw/DBpMSd8KkAB0Tcz5swLLR2vBUTdiR3kWF
-         a9JipEY0BhL9TwtMGG4jAivQ49r29Cuj0LwYcP1plkrURwMM7ySEyBbIJK/cs4mu3U
-         AsglL/bcTwr6+6tUPIEq0B/ErUcI3zFONDWjtwvXJ1S3VjB6O8csS9mVtp4QNmgpA2
-         T1dKWH9PkRzpzjtf5inloIpsbceJp0eX/sfMTilEzCXJte3l1iwPPf6orYztTlnduK
-         /NcfunPokAZVDsrm4B/Hokd6wOXB3gsQTPqbTqVnNPf52Cd6C3i1cVrMFaIHSLAhgf
-         kjWcdQ8GOyh7nDN2cG1IGOl5GORAnTyPpJ+cJWrMPz/IuFH80STZ4DDItDUgF/A+HY
-         izibb/1Qg6esRYxHc14ETpHWJXrvDARF74qediI3aNLc1IWTHF7
+        b=rFPaAWfed9Qg+xS7e0+xmTXhbi84ZsIFPobl6tlinYEaz3js6W36KK0Tcmsh2ob2u
+         qzCZn6zhAVygIU7DjOPJjFkIHhHF/XOzo+Tkx8hG65Qy/YmFLmk9BGRkqz6TJYrDLe
+         4lID2iA3MCJ45KAXLQ/AA/E2Oadkrtl6u71wTaO0QNWgPa1RMr31FslWuRTSsLsvoN
+         ZmJcOXXiUhYrn/iy9ejDQn/bghHzbSHFow69qSgxivRKt0+pMMu7mlGoILjLiIivrX
+         7F2TrA01l3ZAqbnbxX98YhW2qNBizIDEDiHhcCb/c4BuBsddQSbMyHWXNkGJlI4H11
+         zlpHT7BjpGhf+naP9UQNQtDdpBNgK/Iv/+r7tQ82dbfhdjUMBn/0Xf1csc9TzJADdl
+         pfr/F5infQH41CmrSX1GuySW7lFAd3CKm4RVcBt7YMDQCNcG4p3vDoqe8UpMSrd4pW
+         s7Arjp02sgU9xR8jqCvCDhAtkm7EarZOa+SenH8iOtuQ4/uHe5e
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Derrick Stolee <dstolee@microsoft.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 10/13] commit-graph: don't store file hashes as struct object_id
-Date:   Mon, 26 Apr 2021 01:02:58 +0000
-Message-Id: <20210426010301.1093562-11-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 11/13] builtin/pack-objects: avoid using struct object_id for pack hash
+Date:   Mon, 26 Apr 2021 01:02:59 +0000
+Message-Id: <20210426010301.1093562-12-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.31.1.498.g6c1eba8ee3d
 In-Reply-To: <20210426010301.1093562-1-sandals@crustytoothpaste.net>
 References: <20210426010301.1093562-1-sandals@crustytoothpaste.net>
@@ -55,70 +55,80 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The idea behind struct object_id is that it is supposed to represent the
-identifier of a standard Git object or a special pseudo-object like the
-all-zeros object ID.  In this case, we have file hashes, which, while
-similar, are distinct from the identifiers of objects.
+We use struct object_id for the names of objects.  It isn't intended to
+be used for other hash values that don't name objects such as the pack
+hash.
 
-Switch these code paths to use an unsigned char array.  This is both
-more logically consistent and it means that we need not set the
-algorithm identifier for the struct object_id.
+Because struct object_id will soon need to have its algorithm member
+set, using it in this code path would mean that we didn't set that
+member, only the hash member, which would result in a crash.  For both
+of these reasons, switch to using an unsigned char array of size
+GIT_MAX_RAWSZ.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- commit-graph.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ builtin/pack-objects.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/commit-graph.c b/commit-graph.c
-index 23fef56d31..2bcb4e0f89 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -1793,8 +1793,8 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
- 	struct lock_file lk = LOCK_INIT;
- 	const unsigned hashsz = the_hash_algo->rawsz;
- 	struct strbuf progress_title = STRBUF_INIT;
--	struct object_id file_hash;
- 	struct chunkfile *cf;
-+	unsigned char file_hash[GIT_MAX_RAWSZ];
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index a1e33d7507..2741deac55 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -1030,7 +1030,7 @@ static void write_pack_file(void)
+ 	write_order = compute_write_order();
  
- 	if (ctx->split) {
- 		struct strbuf tmp_file = STRBUF_INIT;
-@@ -1909,7 +1909,7 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
- 	}
+ 	do {
+-		struct object_id oid;
++		unsigned char hash[GIT_MAX_RAWSZ];
+ 		char *pack_tmp_name = NULL;
  
- 	close_commit_graph(ctx->r->objects);
--	finalize_hashfile(f, file_hash.hash, CSUM_HASH_IN_STREAM | CSUM_FSYNC);
-+	finalize_hashfile(f, file_hash, CSUM_HASH_IN_STREAM | CSUM_FSYNC);
- 	free_chunkfile(cf);
+ 		if (pack_to_stdout)
+@@ -1059,13 +1059,13 @@ static void write_pack_file(void)
+ 		 * If so, rewrite it like in fast-import
+ 		 */
+ 		if (pack_to_stdout) {
+-			finalize_hashfile(f, oid.hash, CSUM_HASH_IN_STREAM | CSUM_CLOSE);
++			finalize_hashfile(f, hash, CSUM_HASH_IN_STREAM | CSUM_CLOSE);
+ 		} else if (nr_written == nr_remaining) {
+-			finalize_hashfile(f, oid.hash, CSUM_HASH_IN_STREAM | CSUM_FSYNC | CSUM_CLOSE);
++			finalize_hashfile(f, hash, CSUM_HASH_IN_STREAM | CSUM_FSYNC | CSUM_CLOSE);
+ 		} else {
+-			int fd = finalize_hashfile(f, oid.hash, 0);
+-			fixup_pack_header_footer(fd, oid.hash, pack_tmp_name,
+-						 nr_written, oid.hash, offset);
++			int fd = finalize_hashfile(f, hash, 0);
++			fixup_pack_header_footer(fd, hash, pack_tmp_name,
++						 nr_written, hash, offset);
+ 			close(fd);
+ 			if (write_bitmap_index) {
+ 				if (write_bitmap_index != WRITE_BITMAP_QUIET)
+@@ -1100,17 +1100,17 @@ static void write_pack_file(void)
+ 			strbuf_addf(&tmpname, "%s-", base_name);
  
- 	if (ctx->split) {
-@@ -1945,7 +1945,7 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
- 			unlink(graph_name);
+ 			if (write_bitmap_index) {
+-				bitmap_writer_set_checksum(oid.hash);
++				bitmap_writer_set_checksum(hash);
+ 				bitmap_writer_build_type_index(
+ 					&to_pack, written_list, nr_written);
+ 			}
+ 
+ 			finish_tmp_packfile(&tmpname, pack_tmp_name,
+ 					    written_list, nr_written,
+-					    &pack_idx_opts, oid.hash);
++					    &pack_idx_opts, hash);
+ 
+ 			if (write_bitmap_index) {
+-				strbuf_addf(&tmpname, "%s.bitmap", oid_to_hex(&oid));
++				strbuf_addf(&tmpname, "%s.bitmap", hash_to_hex(hash));
+ 
+ 				stop_progress(&progress_state);
+ 
+@@ -1124,7 +1124,7 @@ static void write_pack_file(void)
+ 
+ 			strbuf_release(&tmpname);
+ 			free(pack_tmp_name);
+-			puts(oid_to_hex(&oid));
++			puts(hash_to_hex(hash));
  		}
  
--		ctx->commit_graph_hash_after[ctx->num_commit_graphs_after - 1] = xstrdup(oid_to_hex(&file_hash));
-+		ctx->commit_graph_hash_after[ctx->num_commit_graphs_after - 1] = xstrdup(hash_to_hex(file_hash));
- 		final_graph_name = get_split_graph_filename(ctx->odb,
- 					ctx->commit_graph_hash_after[ctx->num_commit_graphs_after - 1]);
- 		ctx->commit_graph_filenames_after[ctx->num_commit_graphs_after - 1] = final_graph_name;
-@@ -2425,7 +2425,8 @@ static void graph_report(const char *fmt, ...)
- int verify_commit_graph(struct repository *r, struct commit_graph *g, int flags)
- {
- 	uint32_t i, cur_fanout_pos = 0;
--	struct object_id prev_oid, cur_oid, checksum;
-+	struct object_id prev_oid, cur_oid;
-+	unsigned char checksum[GIT_MAX_HEXSZ];
- 	int generation_zero = 0;
- 	struct hashfile *f;
- 	int devnull;
-@@ -2444,8 +2445,8 @@ int verify_commit_graph(struct repository *r, struct commit_graph *g, int flags)
- 	devnull = open("/dev/null", O_WRONLY);
- 	f = hashfd(devnull, NULL);
- 	hashwrite(f, g->data, g->data_len - g->hash_len);
--	finalize_hashfile(f, checksum.hash, CSUM_CLOSE);
--	if (!hasheq(checksum.hash, g->data + g->data_len - g->hash_len)) {
-+	finalize_hashfile(f, checksum, CSUM_CLOSE);
-+	if (!hasheq(checksum, g->data + g->data_len - g->hash_len)) {
- 		graph_report(_("the commit-graph file has incorrect checksum and is likely corrupt"));
- 		verify_commit_graph_error = VERIFY_COMMIT_GRAPH_ERROR_HASH;
- 	}
+ 		/* mark written objects as written to previous pack */
