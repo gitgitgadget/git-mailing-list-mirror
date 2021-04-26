@@ -7,24 +7,21 @@ X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FDEDC43461
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 17:48:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 12F7CC433ED
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 17:48:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 62EF76101C
+	by mail.kernel.org (Postfix) with ESMTP id DBA6461185
 	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 17:48:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235850AbhDZRsx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Apr 2021 13:48:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35164 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237613AbhDZRsd (ORCPT <rfc822;git@vger.kernel.org>);
+        id S237691AbhDZRsy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Apr 2021 13:48:54 -0400
+Received: from mav.lukeshu.com ([104.207.138.63]:39124 "EHLO mav.lukeshu.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S237612AbhDZRsd (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 26 Apr 2021 13:48:33 -0400
-Received: from mav.lukeshu.com (mav.lukeshu.com [IPv6:2001:19f0:5c00:8069:5400:ff:fe26:6a86])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC8E1C06138D
-        for <git@vger.kernel.org>; Mon, 26 Apr 2021 10:47:49 -0700 (PDT)
 Received: from lukeshu-dw-thinkpad (unknown [IPv6:2601:281:8200:26:4e34:88ff:fe48:5521])
-        by mav.lukeshu.com (Postfix) with ESMTPSA id 06E1780592;
-        Mon, 26 Apr 2021 13:47:48 -0400 (EDT)
+        by mav.lukeshu.com (Postfix) with ESMTPSA id A88678059B;
+        Mon, 26 Apr 2021 13:47:51 -0400 (EDT)
 From:   Luke Shumaker <lukeshu@lukeshu.com>
 To:     git@vger.kernel.org
 Cc:     Avery Pennarun <apenwarr@gmail.com>,
@@ -42,9 +39,9 @@ Cc:     Avery Pennarun <apenwarr@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Luke Shumaker <lukeshu@datawire.io>
-Subject: [PATCH v2 15/30] subtree: use `git merge-base --is-ancestor`
-Date:   Mon, 26 Apr 2021 11:45:10 -0600
-Message-Id: <20210426174525.3937858-16-lukeshu@lukeshu.com>
+Subject: [PATCH v2 18/30] subtree: use "$*" instead of "$@" as appropriate
+Date:   Mon, 26 Apr 2021 11:45:13 -0600
+Message-Id: <20210426174525.3937858-19-lukeshu@lukeshu.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210426174525.3937858-1-lukeshu@lukeshu.com>
 References: <20210423194230.1388945-1-lukeshu@lukeshu.com>
@@ -57,48 +54,72 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Luke Shumaker <lukeshu@datawire.io>
 
-Instead of writing a slow `rev_is_descendant_of_branch $a $b` function
-in shell, just use the fast `git merge-base --is-ancestor $b $a`.
+"$*" is for when you want to concatenate the args together,
+whitespace-separated; and "$@" is for when you want them to be separate
+strings.
+
+There are several places in subtree that erroneously use $@ when
+concatenating args together into an error message.
+
+For instance, if the args are argv[1]="dead" and argv[2]="beef", then
+the line
+
+    die "You must provide exactly one revision.  Got: '$@'"
+
+surely intends to call 'die' with the argument
+
+    argv[1]="You must provide exactly one revision.  Got: 'dead beef'"
+
+however, because the line used $@ instead of $*, it will actually call
+'die' with the arguments
+
+    argv[1]="You must provide exactly one revision.  Got: 'dead"
+    argv[2]="beef'"
+
+This isn't a big deal, because 'die' concatenates its arguments together
+anyway (using "$*").  But that doesn't change the fact that it was a
+mistake to use $@ instead of $*, even though in the end $@ still ended
+up doing the right thing.
 
 Signed-off-by: Luke Shumaker <lukeshu@datawire.io>
 ---
- contrib/subtree/git-subtree.sh | 16 +---------------
- 1 file changed, 1 insertion(+), 15 deletions(-)
+v2:
+ - Improve the commit message with quoting and clearer
+   explanation.
+
+ contrib/subtree/git-subtree.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index 4503564f7e..70e16b807b 100755
+index d7de4b0653..3105eb8033 100755
 --- a/contrib/subtree/git-subtree.sh
 +++ b/contrib/subtree/git-subtree.sh
-@@ -280,20 +280,6 @@ rev_exists () {
+@@ -58,14 +58,14 @@ progress () {
+ assert () {
+ 	if ! "$@"
+ 	then
+-		die "assertion failed: " "$@"
++		die "assertion failed: $*"
  	fi
  }
  
--rev_is_descendant_of_branch () {
--	newrev="$1"
--	branch="$2"
--	branch_hash=$(git rev-parse "$branch")
--	match=$(git rev-list -1 "$branch_hash" "^$newrev")
--
--	if test -z "$match"
--	then
--		return 0
--	else
--		return 1
--	fi
--}
--
- # if a commit doesn't have a parent, this might not work.  But we only want
- # to remove the parent from the rev-list, and since it doesn't exist, it won't
- # be there anyway, so do nothing in that case.
-@@ -811,7 +797,7 @@ cmd_split () {
+ ensure_single_rev () {
+ 	if test $# -ne 1
  	then
- 		if rev_exists "refs/heads/$branch"
- 		then
--			if ! rev_is_descendant_of_branch "$latest_new" "$branch"
-+			if ! git merge-base --is-ancestor "$branch" "$latest_new"
- 			then
- 				die "Branch '$branch' is not an ancestor of commit '$latest_new'."
- 			fi
+-		die "You must provide exactly one revision.  Got: '$@'"
++		die "You must provide exactly one revision.  Got: '$*'"
+ 	fi
+ }
+ 
+@@ -690,7 +690,7 @@ cmd_add () {
+ 
+ 		cmd_add_repository "$@"
+ 	else
+-		say >&2 "error: parameters were '$@'"
++		say >&2 "error: parameters were '$*'"
+ 		die "Provide either a commit or a repository and commit."
+ 	fi
+ }
 -- 
 2.31.1
 
