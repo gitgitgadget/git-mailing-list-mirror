@@ -7,21 +7,24 @@ X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D907C433ED
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 17:48:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AFBA6C43462
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 17:48:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7ADB1613B2
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 17:48:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 78439613B3
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 17:48:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237742AbhDZRtF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Apr 2021 13:49:05 -0400
-Received: from mav.lukeshu.com ([104.207.138.63]:39298 "EHLO mav.lukeshu.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237593AbhDZRsn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Apr 2021 13:48:43 -0400
+        id S237613AbhDZRtc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Apr 2021 13:49:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35160 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237661AbhDZRsq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Apr 2021 13:48:46 -0400
+Received: from mav.lukeshu.com (mav.lukeshu.com [IPv6:2001:19f0:5c00:8069:5400:ff:fe26:6a86])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98EAEC061761
+        for <git@vger.kernel.org>; Mon, 26 Apr 2021 10:48:00 -0700 (PDT)
 Received: from lukeshu-dw-thinkpad (unknown [IPv6:2601:281:8200:26:4e34:88ff:fe48:5521])
-        by mav.lukeshu.com (Postfix) with ESMTPSA id 5A16F80595;
-        Mon, 26 Apr 2021 13:48:01 -0400 (EDT)
+        by mav.lukeshu.com (Postfix) with ESMTPSA id 858D78059C;
+        Mon, 26 Apr 2021 13:47:59 -0400 (EDT)
 From:   Luke Shumaker <lukeshu@lukeshu.com>
 To:     git@vger.kernel.org
 Cc:     Avery Pennarun <apenwarr@gmail.com>,
@@ -39,9 +42,9 @@ Cc:     Avery Pennarun <apenwarr@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Luke Shumaker <lukeshu@datawire.io>
-Subject: [PATCH v2 29/30] subtree: push: allow specifying a local rev other than HEAD
-Date:   Mon, 26 Apr 2021 11:45:24 -0600
-Message-Id: <20210426174525.3937858-30-lukeshu@lukeshu.com>
+Subject: [PATCH v2 27/30] subtree: allow --squash to be used with --rejoin
+Date:   Mon, 26 Apr 2021 11:45:22 -0600
+Message-Id: <20210426174525.3937858-28-lukeshu@lukeshu.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210426174525.3937858-1-lukeshu@lukeshu.com>
 References: <20210423194230.1388945-1-lukeshu@lukeshu.com>
@@ -54,110 +57,184 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Luke Shumaker <lukeshu@datawire.io>
 
-'git subtree split' lets you specify a rev other than HEAD.  'git push'
-lets you specify a mapping between a local thing and a remot ref.  So
-smash those together, and have 'git subtree push' let you specify which
-local thing to run split on and push the result of that split to the
-remote ref.
+Besides being a genuinely useful thing to do, this also just makes sense
+and harmonizes which flags may be used when.  `git subtree split
+--rejoin` amounts to "automatically go ahead and do a `git subtree
+merge` after doing the main `git subtree split`", so it's weird and
+arbitrary that you can't pass `--squash` to `git subtree split --rejoin`
+like you can `git subtree merge`.  It's weird that `git subtree split
+--rejoin` inherits `git subtree merge`'s `--message` but not `--squash`.
+
+Reconcile the situation by just having `split --rejoin` actually just
+call `merge` internally (or call `add` instead, as appropriate), so it
+can get access to the full `merge` behavior, including `--squash`.
 
 Signed-off-by: Luke Shumaker <lukeshu@datawire.io>
 ---
- contrib/subtree/git-subtree.sh     | 24 +++++++++++++++++-------
- contrib/subtree/git-subtree.txt    | 14 ++++++++------
- contrib/subtree/t/t7900-subtree.sh | 22 ++++++++++++++++++++++
- 3 files changed, 47 insertions(+), 13 deletions(-)
+v2:
+ - In the added tests, use `test_must_fail` instead of `!`, as
+   appropriate.
+
+ contrib/subtree/git-subtree.sh     | 33 ++++++++++++++++++++++------
+ contrib/subtree/git-subtree.txt    | 27 ++++++++++-------------
+ contrib/subtree/t/t7900-subtree.sh | 35 ++++++++++++++++++++++++++++++
+ 3 files changed, 72 insertions(+), 23 deletions(-)
 
 diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index 1e5ac82f9b..678dd1dc19 100755
+index 3bffddf277..74b02c69b3 100755
 --- a/contrib/subtree/git-subtree.sh
 +++ b/contrib/subtree/git-subtree.sh
-@@ -27,7 +27,7 @@ git subtree add   --prefix=<prefix> <repository> <ref>
- git subtree merge --prefix=<prefix> <commit>
- git subtree split --prefix=<prefix> [<commit>]
- git subtree pull  --prefix=<prefix> <repository> <ref>
--git subtree push  --prefix=<prefix> <repository> <ref>
-+git subtree push  --prefix=<prefix> <repository> <refspec>
- --
- h,help        show the help
+@@ -33,15 +33,15 @@ h,help        show the help
  q             quiet
-@@ -950,20 +950,30 @@ cmd_pull () {
- 	cmd_merge FETCH_HEAD
- }
+ d             show debug messages
+ P,prefix=     the name of the subdir to split out
+-m,message=    use the given message as the commit message for the merge commit
+  options for 'split'
+ annotate=     add a prefix to commit message of new commits
+ b,branch=     create a new branch from the split subtree
+ ignore-joins  ignore prior --rejoin commits
+ onto=         try connecting new tree to an existing one
+ rejoin        merge the new branch back into HEAD
+- options for 'add' and 'merge' (also: 'pull')
++ options for 'add' and 'merge' (also: 'pull' and 'split --rejoin')
+ squash        merge subtree changes as a single commit
++m,message=    use the given message as the commit message for the merge commit
+ "
  
--# Usage: cmd_push REPOSITORY REMOTEREF
-+# Usage: cmd_push REPOSITORY [+][LOCALREV:]REMOTEREF
- cmd_push () {
- 	if test $# -ne 2
- 	then
--		die "You must provide <repository> <ref>"
-+		die "You must provide <repository> <refspec>"
- 	fi
--	ensure_valid_ref_format "$2"
- 	if test -e "$dir"
- 	then
- 		repository=$1
--		refspec=$2
-+		refspec=${2#+}
-+		remoteref=${refspec#*:}
-+		if test "$remoteref" = "$refspec"
-+		then
-+			localrevname_presplit=HEAD
-+		else
-+			localrevname_presplit=${refspec%%:*}
-+		fi
-+		ensure_valid_ref_format "$remoteref"
-+		localrev_presplit=$(git rev-parse -q --verify "$localrevname_presplit^{commit}") ||
-+			die "'$localrevname_presplit' does not refer to a commit"
-+
- 		echo "git push using: " "$repository" "$refspec"
--		localrev=$(cmd_split) || die
--		git push "$repository" "$localrev":"refs/heads/$refspec"
-+		localrev=$(cmd_split "$localrev_presplit") || die
-+		git push "$repository" "$localrev":"refs/heads/$remoteref"
+ arg_debug=
+@@ -453,6 +453,13 @@ add_msg () {
  	else
- 		die "'$dir' must already exist. Try 'git subtree add'."
+ 		commit_message="Add '$dir/' from commit '$latest_new'"
  	fi
++	if test -n "$arg_split_rejoin"
++	then
++		# If this is from a --rejoin, then rejoin_msg has
++		# already inserted the `git-subtree-xxx:` tags
++		echo "$commit_message"
++		return
++	fi
+ 	cat <<-EOF
+ 		$commit_message
+ 
+@@ -775,7 +782,12 @@ cmd_add_commit () {
+ 	rev=$(git rev-parse --verify "$1^{commit}") || exit $?
+ 
+ 	debug "Adding $dir as '$rev'..."
+-	git read-tree --prefix="$dir" $rev || exit $?
++	if test -z "$arg_split_rejoin"
++	then
++		# Only bother doing this if this is a genuine 'add',
++		# not a synthetic 'add' from '--rejoin'.
++		git read-tree --prefix="$dir" $rev || exit $?
++	fi
+ 	git checkout -- "$dir" || exit $?
+ 	tree=$(git write-tree) || exit $?
+ 
+@@ -815,6 +827,11 @@ cmd_split () {
+ 		die "You must provide exactly one revision.  Got: '$*'"
+ 	fi
+ 
++	if test -n "$arg_split_rejoin"
++	then
++		ensure_clean
++	fi
++
+ 	debug "Splitting $dir..."
+ 	cache_setup || exit $?
+ 
+@@ -857,10 +874,12 @@ cmd_split () {
+ 	then
+ 		debug "Merging split branch into HEAD..."
+ 		latest_old=$(cache_get latest_old) || exit $?
+-		git merge -s ours \
+-			--allow-unrelated-histories \
+-			-m "$(rejoin_msg "$dir" "$latest_old" "$latest_new")" \
+-			"$latest_new" >&2 || exit $?
++		arg_addmerge_message="$(rejoin_msg "$dir" "$latest_old" "$latest_new")" || exit $?
++		if test -z "$(find_latest_squash "$dir")"; then
++			cmd_add "$latest_new" >&2 || exit $?
++		else
++			cmd_merge "$latest_new" >&2 || exit $?
++		fi
+ 	fi
+ 	if test -n "$arg_split_branch"
+ 	then
 diff --git a/contrib/subtree/git-subtree.txt b/contrib/subtree/git-subtree.txt
-index 1282aa705f..559b64aa96 100644
+index 7baac17260..743e1bbc9e 100644
 --- a/contrib/subtree/git-subtree.txt
 +++ b/contrib/subtree/git-subtree.txt
-@@ -16,7 +16,7 @@ SYNOPSIS
+@@ -109,9 +109,6 @@ settings passed to 'split' (such as '--annotate') are the same.
+ Because of this, if you add new commits and then re-split, the new
+ commits will be attached as commits on top of the history you
+ generated last time, so 'git merge' and friends will work as expected.
+-+
+-Note that if you use '--squash' when you merge, you should usually not
+-just '--rejoin' when you split.
  
- [verse]
- 'git subtree' [<options>] -P <prefix> pull <repository> <remote-ref>
--'git subtree' [<options>] -P <prefix> push <repository> <remote-ref>
-+'git subtree' [<options>] -P <prefix> push <repository> <refspec>
+ pull <repository> <remote-ref>::
+ 	Exactly like 'merge', but parallels 'git pull' in that
+@@ -124,8 +121,8 @@ push <repository> <remote-ref>::
+ 	<remote-ref>.  This can be used to push your subtree to
+ 	different branches of the remote repository.
  
- DESCRIPTION
- -----------
-@@ -115,11 +115,13 @@ pull <repository> <remote-ref>::
- 	it fetches the given ref from the specified remote
- 	repository.
+-OPTIONS
+--------
++OPTIONS FOR ALL COMMANDS
++------------------------
+ -q::
+ --quiet::
+ 	Suppress unnecessary output messages on stderr.
+@@ -140,15 +137,11 @@ OPTIONS
+ 	want to manipulate.  This option is mandatory
+ 	for all commands.
  
--push <repository> <remote-ref>::
--	Does a 'split' using the <prefix> subtree of HEAD and then
--	does a 'git push' to push the result to the <repository> and
--	<remote-ref>.  This can be used to push your subtree to
--	different branches of the remote repository.
-+push <repository> [+][<local-commit>:]<remote-ref>::
-+	Does a 'split' using the <prefix> subtree of <local-commit>
-+	and then does a 'git push' to push the result to the
-+	<repository> and <remote-ref>.  This can be used to push your
-+	subtree to different branches of the remote repository.  Just
-+	as with 'split', if no <local-commit> is given, then HEAD is
-+	used.  The optional leading '+' is ignored.
+--m <message>::
+---message=<message>::
+-	This option is only valid for 'add', 'merge', 'pull', and 'split --rejoin'.
+-	Specify <message> as the commit message for the merge commit.
+-
+-OPTIONS FOR 'add' AND 'merge' (ALSO: 'pull')
+---------------------------------------------
++OPTIONS FOR 'add' AND 'merge' (ALSO: 'pull' AND 'split --rejoin')
++-----------------------------------------------------------------
+ These options for 'add' and 'merge' may also be given to 'pull' (which
+-wraps 'merge').
++wraps 'merge') and 'split --rejoin' (which wraps either 'add' or
++'merge' as appropriate).
  
- OPTIONS FOR ALL COMMANDS
- ------------------------
+ --squash::
+ 	Instead of merging the entire history from the subtree project, produce
+@@ -176,6 +169,9 @@ Whether or not you use '--squash', changes made in your local repository
+ remain intact and can be later split and send upstream to the
+ subproject.
+ 
++-m <message>::
++--message=<message>::
++	Specify <message> as the commit message for the merge commit.
+ 
+ OPTIONS FOR 'split'
+ -------------------
+@@ -229,9 +225,8 @@ Unfortunately, using this option results in 'git log' showing an extra
+ copy of every new commit that was created (the original, and the
+ synthetic one).
+ +
+-If you do all your merges with '--squash', don't use '--rejoin' when you
+-split, because you don't want the subproject's history to be part of
+-your project anyway.
++If you do all your merges with '--squash', make sure you also use
++'--squash' when you 'split --rejoin'.
+ 
+ 
+ EXAMPLE 1. 'add' command
 diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
-index 8bc0e488aa..8a3530305e 100755
+index ce6861c22d..6f1529935f 100755
 --- a/contrib/subtree/t/t7900-subtree.sh
 +++ b/contrib/subtree/t/t7900-subtree.sh
-@@ -799,6 +799,28 @@ test_expect_success 'push "sub dir"/ with --branch for an incompatible branch' '
+@@ -324,6 +324,41 @@ test_expect_success 'split sub dir/ with --rejoin and --message' '
  	)
  '
  
-+test_expect_success 'push "sub dir"/ with a local rev' '
++test_expect_success 'split "sub dir"/ with --rejoin and --squash' '
 +	subtree_test_create_repo "$test_count" &&
 +	subtree_test_create_repo "$test_count/sub proj" &&
 +	test_create_commit "$test_count" main1 &&
@@ -165,23 +242,36 @@ index 8bc0e488aa..8a3530305e 100755
 +	(
 +		cd "$test_count" &&
 +		git fetch ./"sub proj" HEAD &&
-+		git subtree add --prefix="sub dir" FETCH_HEAD
++		git subtree add --prefix="sub dir" --squash FETCH_HEAD
 +	) &&
 +	test_create_commit "$test_count" "sub dir"/main-sub1 &&
++	test_create_commit "$test_count" main2 &&
++	test_create_commit "$test_count/sub proj" sub2 &&
 +	test_create_commit "$test_count" "sub dir"/main-sub2 &&
 +	(
 +		cd "$test_count" &&
-+		bad_tree=$(git rev-parse --verify HEAD:"sub dir") &&
-+		good_tree=$(git rev-parse --verify HEAD^:"sub dir") &&
-+		git subtree push --prefix="sub dir" --annotate="*" ./"sub proj" HEAD^:from-mainline &&
-+		split_tree=$(git -C "sub proj" rev-parse --verify refs/heads/from-mainline:) &&
-+		test "$split_tree" = "$good_tree"
++		git subtree pull --prefix="sub dir" --squash ./"sub proj" HEAD &&
++		MAIN=$(git rev-parse --verify HEAD) &&
++		SUB=$(git -C "sub proj" rev-parse --verify HEAD) &&
++
++		SPLIT=$(git subtree split --prefix="sub dir" --annotate="*" --rejoin --squash) &&
++
++		test_must_fail git merge-base --is-ancestor $SUB HEAD &&
++		test_must_fail git merge-base --is-ancestor $SPLIT HEAD &&
++		git rev-list HEAD ^$MAIN >commit-list &&
++		test_line_count = 2 commit-list &&
++		test "$(git rev-parse --verify HEAD:)"           = "$(git rev-parse --verify $MAIN:)" &&
++		test "$(git rev-parse --verify HEAD:"sub dir")"  = "$(git rev-parse --verify $SPLIT:)" &&
++		test "$(git rev-parse --verify HEAD^1)"          = $MAIN &&
++		test "$(git rev-parse --verify HEAD^2)"         != $SPLIT &&
++		test "$(git rev-parse --verify HEAD^2:)"         = "$(git rev-parse --verify $SPLIT:)" &&
++		test "$(last_commit_subject)" = "Split '\''sub dir/'\'' into commit '\''$SPLIT'\''"
 +	)
 +'
 +
- #
- # Validity checking
- #
+ test_expect_success 'split "sub dir"/ with --branch' '
+ 	subtree_test_create_repo "$test_count" &&
+ 	subtree_test_create_repo "$test_count/sub proj" &&
 -- 
 2.31.1
 
