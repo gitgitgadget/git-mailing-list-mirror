@@ -2,126 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7EE68C433B4
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 18:37:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CFB56C433ED
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 19:00:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 44461613F3
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 18:37:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 91B4661078
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 19:00:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234725AbhDZShm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Apr 2021 14:37:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46302 "EHLO
+        id S239864AbhDZTB2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Apr 2021 15:01:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51214 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234481AbhDZShi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Apr 2021 14:37:38 -0400
-Received: from mail-vk1-xa34.google.com (mail-vk1-xa34.google.com [IPv6:2607:f8b0:4864:20::a34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 957CCC061574
-        for <git@vger.kernel.org>; Mon, 26 Apr 2021 11:36:54 -0700 (PDT)
-Received: by mail-vk1-xa34.google.com with SMTP id h130so7107206vkh.11
-        for <git@vger.kernel.org>; Mon, 26 Apr 2021 11:36:54 -0700 (PDT)
+        with ESMTP id S240334AbhDZS7z (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Apr 2021 14:59:55 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34F4FC061574
+        for <git@vger.kernel.org>; Mon, 26 Apr 2021 11:59:13 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id x7so56945801wrw.10
+        for <git@vger.kernel.org>; Mon, 26 Apr 2021 11:59:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=gbMyq48IvEenpjSvSM/fa6V78u+pzabZZBxxJru4u8M=;
-        b=GHNJ3rDjD+GW2DLBdnOiz1S7y7lh8pSWHEFAOwOgUbsjGTttiLJAxqx2FAF3Cha/Jw
-         HYOvt9XYmECzHc6k3QByNiI6Rxojrb07XgUQcpcAhyjR3ATOpYK9Ggirx/YJpRwk5uFC
-         0o/9JDqkD4bxoiRieGl9va707pCeoU8FTVUEEbTPJgcOGV0scH3An0j8rXp4tby2ca9y
-         IwxR91u+LT2GwR5svh7eAxi6mcSyIuaFPJmOdpK9cjDLeqRcMkzicv3T4bGcfdlR5njs
-         PwKCLet2R/axkq9SBH5xnKq1tN5FoJXzl1/0ZvpdafUOUkgVNEu+6pobref7/0iEkw/b
-         NZRg==
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=SYSV8YN05/nny5XJ9WGc6MsLTSxfNGoq6L3RAtESHL8=;
+        b=MjiQZ7K+3whHdsiVy/PEo1T9LIX4CKgLpqEHr28awrzKKj9bJKrEyI8xW3VNYYs9Cv
+         Ph3x2HwdZiVj7ZsEfEEF2FzxXIg6feWZyZuasKIR+wPg8l8Ufh/GSxWq/oNhpsEuDNwH
+         Mw8BqmCwNMdnTNLAy5VxV/pry2ubC/JYkvtAK5ERQ8prA4hie3vty2e0dPzRnr7u16og
+         o6qXZm7l8L+S6IuaNm4GgluKhpz5nJOiVDmsS1865iGHuKwC8BddG+DsUfYXmb/9VIhT
+         rEep0YiKMqhABwEZjal0UU8Jb4Q7tKScv3aEXcagULlzDMYok1RJ7v2gqpRSJlKVOBLO
+         WHcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=gbMyq48IvEenpjSvSM/fa6V78u+pzabZZBxxJru4u8M=;
-        b=psJwsyTeZLsQ6GRXs2ITulOC3uIvH9FxkwXXR5CX5Zo7vw2DKML3+DufQb9Yd1zsXp
-         FCqzyu2gaqxHsnHBmKQOUJufDq5EBN/X7F9yj8O7VGM/bAeIYfVLnpT89TfCiGmx8BGd
-         e8e5t51TINWzyM44WDZFYhay0X8XRljLWzon9PwrBu8BnzG6MBcVgTFyYXl03NFunxZn
-         sl/+13YcHnUhDemPjNMeg63G4F+1+sU6cWv+s/igU9vTAbnam1lB3J3hvS9Ra/eDiZA8
-         gRNnEGAtJiGqJh8mhO1y4uc9wE6rdqh7dM6xQy258UBmnaxbE65RpuWu5qeZYR/fnFRU
-         WyNQ==
-X-Gm-Message-State: AOAM531fRqHMc2fSrs53wFZ16XgM4bApXE8B0F0aQmlcm0kKzv3bPxTu
-        VzfNkYIczLONAFH9I7TY2y/Ry5Yz4MPJRg88+DsJXg==
-X-Google-Smtp-Source: ABdhPJyduDP/hbnQm3l8cCjyLyByIn0qDh6TGRKkBKhwrjdmEA+9JJQX4uMmlqjsc/5tFp0a1bWzoWSUk+FZ+gPhZfY=
-X-Received: by 2002:a1f:5c97:: with SMTP id q145mr13934849vkb.25.1619462213514;
- Mon, 26 Apr 2021 11:36:53 -0700 (PDT)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=SYSV8YN05/nny5XJ9WGc6MsLTSxfNGoq6L3RAtESHL8=;
+        b=a0QnroiJGof0GYMJ7ej66AVzltnv3lmFAqJc/uMlSLGJuKOZ8o72jTJJjA1K3oi/tX
+         0Fe9NoubV9ViQwIC2emC0lrxryGgRrJ/Mnz6cg0o9jQnYsg8uw5KjpMHxtU9ckDMBWXk
+         DhfLVoxblAPsgcPvjv5BxvxwxQJpbV3dS/LpAYbYJBjXspQjLUpGEoLWgaldDslevLaT
+         /6j4WM+eVdObR4ouG3ZH5wT49tkZoVpV2zlSveq8WMwrRX3SvoAa2wK8XoNL3gXN4tJ3
+         cJZxa/fhP0wswJUXzV5N573VKO4rxIMwif6fVR8UqLuZRja74BdOTRBbs15SZd4QC02t
+         yfmw==
+X-Gm-Message-State: AOAM531NHwRZVgQvOJa8Sr/FVeRtwxbX/gebOVZQycUeYgI5cWGE0SP/
+        jZWkL4yDG5oygRPBtbZnTuTNI8B6hIE=
+X-Google-Smtp-Source: ABdhPJy9HgZChvA+kpI1HuKH4w+xKE3WGmphftJpBty2mvYiuTpzjbY4thImzqpPIzGTgwnBi/qtuw==
+X-Received: by 2002:adf:f707:: with SMTP id r7mr6248984wrp.54.1619463552037;
+        Mon, 26 Apr 2021 11:59:12 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id u8sm1201127wrp.66.2021.04.26.11.59.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Apr 2021 11:59:11 -0700 (PDT)
+Message-Id: <pull.940.git.1619463549689.gitgitgadget@gmail.com>
+From:   "Peter Oliver via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 26 Apr 2021 18:59:09 +0000
+Subject: [PATCH] doc: point to diff attribute in patch format docs
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.1008.git.git.1618829583.gitgitgadget@gmail.com>
- <a3abc4f70e7d6bd833024f2c9b42ff731896e14d.1618829583.git.gitgitgadget@gmail.com>
- <87mtts3z2a.fsf@evledraar.gmail.com>
-In-Reply-To: <87mtts3z2a.fsf@evledraar.gmail.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Mon, 26 Apr 2021 20:36:41 +0200
-Message-ID: <CAFQ2z_M-ahhbgnvpTXhs3nR0KJKqHtE7snqrpzi_O-M1sVCfaQ@mail.gmail.com>
-Subject: Re: [PATCH 14/18] t1404: mark tests that muck with .git directly as REFFILES.
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Peter Oliver <git@mavit.org.uk>, Peter Oliver <git@mavit.org.uk>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 21, 2021 at 8:57 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> > -test_expect_success 'broken reference blocks create' '
-> > +test_expect_success REFFILES 'broken reference blocks create' '
-> >       prefix=3Drefs/broken-create &&
-> >       mkdir -p .git/$prefix &&
-> >       echo "gobbledigook" >.git/$prefix/foo &&
-> > @@ -504,7 +504,7 @@ test_expect_success 'broken reference blocks create=
-' '
-> >       test_cmp expected output.err
-> >  '
->
-> This doesn't seem specific to the files backend at all. I.e. if you grep
-> for "reference broken" in the file backends you'll find EINVAL and
-> REF_ISBROKEN handling, and your refs/reftable-backend.c has the same
-> exception handling, so presumably we can end up with broken refs.
+From: Peter Oliver <git@mavit.org.uk>
 
-I think it's not possible. In the files backend a broken ref is a
-shortread (less than 40 digits hex) or garbage following the hex (or
-maybe non-hex digits). This is all impossible with reftable.
+From the documentation for generating patch text with diff-related
+commands, refer to the documentation for the diff attribute.
 
-I've removed EINVAL from reftable-backend.c
+This attribute influences the way that patches are generated, but this
+was previously not mentioned in e.g., the git-diff manpage.
 
-It's possible to have a corrupt reftable file, but that would surface
-as  REFTABLE_FORMAT_ERROR, and is morally equivalent to an I/O error.
-I added a test for this; it says:
+Signed-off-by: Peter Oliver <git@mavit.org.uk>
+---
+    doc: point to diff attribute in patch format docs
+    
+    From the documentation for generating patch text with diff-related
+    commands, refer to the documentation for the diff attribute.
+    
+    This attribute influences the way that patches are generated, but this
+    was previously not mentioned in e.g., the git-diff manpage.
 
-++ git update-ref refs/heads/main 69af1687b671131ed0cfa61b7fcdc907a4c21f2c
-fatal: update_ref failed for ref 'refs/heads/main': reftable:
-transaction prepare: corrupt reftable file
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-940%2Fmavit%2Fdiff-gitattributes-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-940/mavit/diff-gitattributes-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/940
 
-> Anyway, much of reviewing this commit was trying to rediscover thing
-> that should really be in the commit message. Presumably you had to run
-> blame, log etc. to find the commits from Michael Haggerty and dig into
-> if they were relevant to reftable. Having that information in the commit
-> message would be *very* helpful.
+ Documentation/diff-generate-patch.txt | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-I added some more explanation. I did not dig into the history or the
-blame, as the tests seem relevant given what I know about how the
-files backend works, but for that same reason irrelevant to reftable.
-Maybe it should be documented more explicitly how the files backend
-works?
+diff --git a/Documentation/diff-generate-patch.txt b/Documentation/diff-generate-patch.txt
+index 2db8eacc3ec7..ec506155fc74 100644
+--- a/Documentation/diff-generate-patch.txt
++++ b/Documentation/diff-generate-patch.txt
+@@ -11,7 +11,7 @@ linkgit:git-diff-files[1]
+ with the `-p` option produces patch text.
+ You can customize the creation of patch text via the
+ `GIT_EXTERNAL_DIFF` and the `GIT_DIFF_OPTS` environment variables
+-(see linkgit:git[1]).
++(see linkgit:git[1]), and the `diff` attribute (see linkgit:gitattributes[5]).
+ 
+ What the -p option produces is slightly different from the traditional
+ diff format:
+@@ -74,6 +74,10 @@ separate lines indicate the old and the new mode.
+       rename from b
+       rename to a
+ 
++5.  Hunk headers mention the name of the function to which the hunk
++    applies.  See linkgit:gitattributes[5] for details of how to tailor
++    to this to specific languages.
++
+ 
+ Combined diff format
+ --------------------
 
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
-
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
-
-Registergericht und -nummer: Hamburg, HRB 86891
-
-Sitz der Gesellschaft: Hamburg
-
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+base-commit: 48bf2fa8bad054d66bd79c6ba903c89c704201f7
+-- 
+gitgitgadget
