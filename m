@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7748C43460
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 01:03:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D99CC43462
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 01:03:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 820AC611C9
+	by mail.kernel.org (Postfix) with ESMTP id C352A611CD
 	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 01:03:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231553AbhDZBEP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 25 Apr 2021 21:04:15 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:41756 "EHLO
+        id S231571AbhDZBER (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 25 Apr 2021 21:04:17 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:41788 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S231480AbhDZBEM (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 25 Apr 2021 21:04:12 -0400
+        by vger.kernel.org with ESMTP id S231547AbhDZBEO (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 25 Apr 2021 21:04:14 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 63C0F6078D;
-        Mon, 26 Apr 2021 01:03:30 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E0BA66078B;
+        Mon, 26 Apr 2021 01:03:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1619399010;
-        bh=vi3bbWnz2HPS7/axVhpa5eRjP7774GHHMKH5AeE6dE8=;
+        s=default; t=1619399013;
+        bh=xrnAGywGAiGF0vGjhXoBwcaquBN4cpeEEzYm4IAnHoA=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=gWaSccuifWnRGGBfN0uvCmfu8CDiQn6eCjbCzqHsUCAUk6eXCrrQCZDwgxDXjcAom
-         FDAdGuRT6HA+uSo76VT8cbG23ocLEgiX2sm4W0+z9/KkIQo1ekfqW6qH3rqjKY5MaF
-         sc0iQoyrZTXPq90pYh5iZK56Hb2JTMRn40VpPCjUwAeNAnW0jSulrHQa+Xey4+VYGD
-         r+CyfslJvl8taZvvOSK4fYUQMXwP5KbkwTqO4YNxhXS/6NQFEjb8AUcJwlqHjv5Kqh
-         LMrX4OK4Sg6mgk2LlFbF7N+yh0Cut2uTRYn6IbbvwpZhv1TsmOneNbAgFP6tuuHFI2
-         YazEIxVpNf/7b+TTn2Op3Vg1OtzyD548gMJ80EHwm82AlukVT0Ndw7Zw+Fmn7/fik7
-         sZrp3jPFRxELOvXMKMCk76w03z9vY9UIYFYF/ovDAsscQicH59DCwwHZhAC6qsNqha
-         9eiOUvryUtdnZ113Ll5tG37EmuHfPl7SHUVbYyBlroaMjrcotDj
+        b=Z6ZdDrogp+ScrcbC+VHUkJfn4mPL7Ikd/CA1nmp0J3sMa4WIjm7GvEemGnXMPy2iR
+         0nWdVn7a+SlsVmmY6S1aFNvVqhmLEoJHOZozBd6jmgqxt+TNJIgS+A1mVKHaS8AiuK
+         jsA1C4ahr4WWdACHqLO2eM5fm1QdlKoKWycTiLtB5jl0lAoVh7rxPrT4wYdWum74u1
+         VAtAdjWcIvCSChaILHhgCLIRXLdIP/oRQYUbwwDRgHCVI4LqN6VvnBmJzBRjH0Jd1d
+         P/oyp+Zs24Cn+ZNW9I9F3H525egR9Z3Lzm3fK1Dg6CzDcmd3GPV6+DRcmUEn9nudZY
+         rFI0HkRaf+wrj/5APA8vY9rAcNx61GmmlQPDvNvgB75CeuyIAnameIOGTZWXE40pOz
+         QJi0kYVRgI/Um83xQY/nyZiQKEVF51pPMJqpiVS2kGMWt4NoBKXX2keXagcWrGuuUp
+         zGOtcsu1iOGHk2X4po9dcvpztiQAPpmpIZ6G1r1TtlpJtoLPULV
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Derrick Stolee <dstolee@microsoft.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 02/13] Always use oidread to read into struct object_id
-Date:   Mon, 26 Apr 2021 01:02:50 +0000
-Message-Id: <20210426010301.1093562-3-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 07/13] hash: set, copy, and use algo field in struct object_id
+Date:   Mon, 26 Apr 2021 01:02:55 +0000
+Message-Id: <20210426010301.1093562-8-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.31.1.498.g6c1eba8ee3d
 In-Reply-To: <20210426010301.1093562-1-sandals@crustytoothpaste.net>
 References: <20210426010301.1093562-1-sandals@crustytoothpaste.net>
@@ -55,277 +55,238 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the future, we'll want oidread to automatically set the hash
-algorithm member for an object ID we read into it, so ensure we use
-oidread instead of hashcpy everywhere we're copying a hash value into a
-struct object_id.
+Now that struct object_id has an algorithm field, we should populate it.
+This will allow us to handle object IDs in any supported algorithm and
+distinguish between them.  Ensure that the field is written whenever we
+write an object ID by storing it explicitly every time we write an
+object.  Set values for the empty blob and tree values as well.
+
+In addition, use the algorithm field to compare object IDs.  Note that
+because we zero-initialize struct object_id in many places throughout
+the codebase, we default to the default algorithm in cases where the
+algorithm field is zero rather than explicitly initialize all of those
+locations.
+
+This leads to a branch on every comparison, but the alternative is to
+compare the entire buffer each time and padding the buffer for SHA-1.
+That alternative ranges up to 3.9% worse than this approach on the perf
+t0001, t1450, and t1451.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- archive.c                |  2 +-
- builtin/fast-import.c    |  4 ++--
- builtin/index-pack.c     |  4 ++--
- builtin/unpack-objects.c |  2 +-
- commit-graph.c           | 12 ++++++------
- dir.c                    |  4 ++--
- http-walker.c            |  2 +-
- match-trees.c            |  2 +-
- midx.c                   |  2 +-
- notes.c                  |  4 ++--
- read-cache.c             |  4 ++--
- split-index.c            |  2 +-
- tree-walk.c              |  2 +-
- 13 files changed, 23 insertions(+), 23 deletions(-)
+ hash.h        | 42 +++++++++++++++++++++++++++++++++++-------
+ hex.c         |  9 ++++++---
+ notes.c       |  3 +++
+ object-file.c | 15 +++++++++++----
+ 4 files changed, 55 insertions(+), 14 deletions(-)
 
-diff --git a/archive.c b/archive.c
-index 295615580d..6cfb9e42d6 100644
---- a/archive.c
-+++ b/archive.c
-@@ -203,7 +203,7 @@ static void queue_directory(const unsigned char *sha1,
- 	d->mode	   = mode;
- 	c->bottom  = d;
- 	d->len = xsnprintf(d->path, len, "%.*s%s/", (int)base->len, base->buf, filename);
--	hashcpy(d->oid.hash, sha1);
-+	oidread(&d->oid, sha1);
- }
+diff --git a/hash.h b/hash.h
+index c8f03d8aee..0e85e448ed 100644
+--- a/hash.h
++++ b/hash.h
+@@ -192,36 +192,56 @@ static inline int hash_algo_by_ptr(const struct git_hash_algo *p)
  
- static int write_directory(struct archiver_context *c)
-diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-index 3afa81cf9a..9d2a058a66 100644
---- a/builtin/fast-import.c
-+++ b/builtin/fast-import.c
-@@ -1276,8 +1276,8 @@ static void load_tree(struct tree_entry *root)
- 		e->versions[0].mode = e->versions[1].mode;
- 		e->name = to_atom(c, strlen(c));
- 		c += e->name->str_len + 1;
--		hashcpy(e->versions[0].oid.hash, (unsigned char *)c);
--		hashcpy(e->versions[1].oid.hash, (unsigned char *)c);
-+		oidread(&e->versions[0].oid, (unsigned char *)c);
-+		oidread(&e->versions[1].oid, (unsigned char *)c);
- 		c += the_hash_algo->rawsz;
- 	}
- 	free(buf);
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 15507b5cff..41e2c240b8 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -524,7 +524,7 @@ static void *unpack_raw_entry(struct object_entry *obj,
+ extern const struct object_id null_oid;
  
- 	switch (obj->type) {
- 	case OBJ_REF_DELTA:
--		hashcpy(ref_oid->hash, fill(the_hash_algo->rawsz));
-+		oidread(ref_oid, fill(the_hash_algo->rawsz));
- 		use(the_hash_algo->rawsz);
- 		break;
- 	case OBJ_OFS_DELTA:
-@@ -1358,7 +1358,7 @@ static struct object_entry *append_obj_to_pack(struct hashfile *f,
- 	obj[1].idx.offset += write_compressed(f, buf, size);
- 	obj[0].idx.crc32 = crc32_end(f);
- 	hashflush(f);
--	hashcpy(obj->idx.oid.hash, sha1);
-+	oidread(&obj->idx.oid, sha1);
- 	return obj;
- }
- 
-diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
-index 4a70b17f8f..a8b73ecf43 100644
---- a/builtin/unpack-objects.c
-+++ b/builtin/unpack-objects.c
-@@ -355,7 +355,7 @@ static void unpack_delta_entry(enum object_type type, unsigned long delta_size,
- 	struct object_id base_oid;
- 
- 	if (type == OBJ_REF_DELTA) {
--		hashcpy(base_oid.hash, fill(the_hash_algo->rawsz));
-+		oidread(&base_oid, fill(the_hash_algo->rawsz));
- 		use(the_hash_algo->rawsz);
- 		delta_data = get_data(delta_size);
- 		if (dry_run || !delta_data) {
-diff --git a/commit-graph.c b/commit-graph.c
-index f18380b922..23fef56d31 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -425,7 +425,7 @@ struct commit_graph *parse_commit_graph(struct repository *r,
- 		FREE_AND_NULL(graph->bloom_filter_settings);
- 	}
- 
--	hashcpy(graph->oid.hash, graph->data + graph->data_len - graph->hash_len);
-+	oidread(&graph->oid, graph->data + graph->data_len - graph->hash_len);
- 
- 	if (verify_commit_graph_lite(graph))
- 		goto free_and_return;
-@@ -746,7 +746,7 @@ static void load_oid_from_graph(struct commit_graph *g,
- 
- 	lex_index = pos - g->num_commits_in_base;
- 
--	hashcpy(oid->hash, g->chunk_oid_lookup + g->hash_len * lex_index);
-+	oidread(oid, g->chunk_oid_lookup + g->hash_len * lex_index);
- }
- 
- static struct commit_list **insert_parent_or_die(struct repository *r,
-@@ -939,7 +939,7 @@ static struct tree *load_tree_for_commit(struct repository *r,
- 	commit_data = g->chunk_commit_data +
- 			GRAPH_DATA_WIDTH * (graph_pos - g->num_commits_in_base);
- 
--	hashcpy(oid.hash, commit_data);
-+	oidread(&oid, commit_data);
- 	set_commit_tree(c, lookup_tree(r, &oid));
- 
- 	return c->maybe_tree;
-@@ -2322,7 +2322,7 @@ int write_commit_graph(struct object_directory *odb,
- 		struct commit_graph *g = ctx->r->objects->commit_graph;
- 		for (i = 0; i < g->num_commits; i++) {
- 			struct object_id oid;
--			hashcpy(oid.hash, g->chunk_oid_lookup + g->hash_len * i);
-+			oidread(&oid, g->chunk_oid_lookup + g->hash_len * i);
- 			oid_array_append(&ctx->oids, &oid);
- 		}
- 	}
-@@ -2453,7 +2453,7 @@ int verify_commit_graph(struct repository *r, struct commit_graph *g, int flags)
- 	for (i = 0; i < g->num_commits; i++) {
- 		struct commit *graph_commit;
- 
--		hashcpy(cur_oid.hash, g->chunk_oid_lookup + g->hash_len * i);
-+		oidread(&cur_oid, g->chunk_oid_lookup + g->hash_len * i);
- 
- 		if (i && oidcmp(&prev_oid, &cur_oid) >= 0)
- 			graph_report(_("commit-graph has incorrect OID order: %s then %s"),
-@@ -2501,7 +2501,7 @@ int verify_commit_graph(struct repository *r, struct commit_graph *g, int flags)
- 		timestamp_t generation;
- 
- 		display_progress(progress, i + 1);
--		hashcpy(cur_oid.hash, g->chunk_oid_lookup + g->hash_len * i);
-+		oidread(&cur_oid, g->chunk_oid_lookup + g->hash_len * i);
- 
- 		graph_commit = lookup_commit(r, &cur_oid);
- 		odb_commit = (struct commit *)create_object(r, &cur_oid, alloc_commit_node(r));
-diff --git a/dir.c b/dir.c
-index 3474e67e8f..813dd7ba53 100644
---- a/dir.c
-+++ b/dir.c
-@@ -3344,7 +3344,7 @@ static void read_oid(size_t pos, void *cb)
- 		rd->data = rd->end + 1;
- 		return;
- 	}
--	hashcpy(ud->exclude_oid.hash, rd->data);
-+	oidread(&ud->exclude_oid, rd->data);
- 	rd->data += the_hash_algo->rawsz;
- }
- 
-@@ -3352,7 +3352,7 @@ static void load_oid_stat(struct oid_stat *oid_stat, const unsigned char *data,
- 			  const unsigned char *sha1)
+-static inline int hashcmp(const unsigned char *sha1, const unsigned char *sha2)
++static inline int hashcmp_algop(const unsigned char *sha1, const unsigned char *sha2, const struct git_hash_algo *algop)
  {
- 	stat_data_from_disk(&oid_stat->stat, data);
--	hashcpy(oid_stat->oid.hash, sha1);
-+	oidread(&oid_stat->oid, sha1);
- 	oid_stat->valid = 1;
+ 	/*
+ 	 * Teach the compiler that there are only two possibilities of hash size
+ 	 * here, so that it can optimize for this case as much as possible.
+ 	 */
+-	if (the_hash_algo->rawsz == GIT_MAX_RAWSZ)
++	if (algop->rawsz == GIT_MAX_RAWSZ)
+ 		return memcmp(sha1, sha2, GIT_MAX_RAWSZ);
+ 	return memcmp(sha1, sha2, GIT_SHA1_RAWSZ);
  }
  
-diff --git a/http-walker.c b/http-walker.c
-index 4fb1235cd4..90d8ecb57e 100644
---- a/http-walker.c
-+++ b/http-walker.c
-@@ -155,7 +155,7 @@ static void prefetch(struct walker *walker, unsigned char *sha1)
- 
- 	newreq = xmalloc(sizeof(*newreq));
- 	newreq->walker = walker;
--	hashcpy(newreq->oid.hash, sha1);
-+	oidread(&newreq->oid, sha1);
- 	newreq->repo = data->alt;
- 	newreq->state = WAITING;
- 	newreq->req = NULL;
-diff --git a/match-trees.c b/match-trees.c
-index f6c194c1cc..df413989fa 100644
---- a/match-trees.c
-+++ b/match-trees.c
-@@ -226,7 +226,7 @@ static int splice_tree(const struct object_id *oid1, const char *prefix,
- 		    oid_to_hex(oid1));
- 	if (*subpath) {
- 		struct object_id tree_oid;
--		hashcpy(tree_oid.hash, rewrite_here);
-+		oidread(&tree_oid, rewrite_here);
- 		status = splice_tree(&tree_oid, subpath, oid2, &subtree);
- 		if (status)
- 			return status;
-diff --git a/midx.c b/midx.c
-index 9e86583172..21d6a05e88 100644
---- a/midx.c
-+++ b/midx.c
-@@ -247,7 +247,7 @@ struct object_id *nth_midxed_object_oid(struct object_id *oid,
- 	if (n >= m->num_objects)
- 		return NULL;
- 
--	hashcpy(oid->hash, m->chunk_oid_lookup + m->hash_len * n);
-+	oidread(oid, m->chunk_oid_lookup + m->hash_len * n);
- 	return oid;
+-static inline int oidcmp(const struct object_id *oid1, const struct object_id *oid2)
++static inline int hashcmp(const unsigned char *sha1, const unsigned char *sha2)
+ {
+-	return hashcmp(oid1->hash, oid2->hash);
++	return hashcmp_algop(sha1, sha2, the_hash_algo);
  }
  
+-static inline int hasheq(const unsigned char *sha1, const unsigned char *sha2)
++static inline int oidcmp(const struct object_id *oid1, const struct object_id *oid2)
++{
++	const struct git_hash_algo *algop;
++	if (!oid1->algo)
++		algop = the_hash_algo;
++	else
++		algop = &hash_algos[oid1->algo];
++	return hashcmp_algop(oid1->hash, oid2->hash, algop);
++}
++
++static inline int hasheq_algop(const unsigned char *sha1, const unsigned char *sha2, const struct git_hash_algo *algop)
+ {
+ 	/*
+ 	 * We write this here instead of deferring to hashcmp so that the
+ 	 * compiler can properly inline it and avoid calling memcmp.
+ 	 */
+-	if (the_hash_algo->rawsz == GIT_MAX_RAWSZ)
++	if (algop->rawsz == GIT_MAX_RAWSZ)
+ 		return !memcmp(sha1, sha2, GIT_MAX_RAWSZ);
+ 	return !memcmp(sha1, sha2, GIT_SHA1_RAWSZ);
+ }
+ 
++static inline int hasheq(const unsigned char *sha1, const unsigned char *sha2)
++{
++	return hasheq_algop(sha1, sha2, the_hash_algo);
++}
++
+ static inline int oideq(const struct object_id *oid1, const struct object_id *oid2)
+ {
+-	return hasheq(oid1->hash, oid2->hash);
++	const struct git_hash_algo *algop;
++	if (!oid1->algo)
++		algop = the_hash_algo;
++	else
++		algop = &hash_algos[oid1->algo];
++	return hasheq_algop(oid1->hash, oid2->hash, algop);
+ }
+ 
+ static inline int is_null_oid(const struct object_id *oid)
+@@ -237,6 +257,7 @@ static inline void hashcpy(unsigned char *sha_dst, const unsigned char *sha_src)
+ static inline void oidcpy(struct object_id *dst, const struct object_id *src)
+ {
+ 	memcpy(dst->hash, src->hash, GIT_MAX_RAWSZ);
++	dst->algo = src->algo;
+ }
+ 
+ static inline struct object_id *oiddup(const struct object_id *src)
+@@ -254,11 +275,13 @@ static inline void hashclr(unsigned char *hash)
+ static inline void oidclr(struct object_id *oid)
+ {
+ 	memset(oid->hash, 0, GIT_MAX_RAWSZ);
++	oid->algo = hash_algo_by_ptr(the_hash_algo);
+ }
+ 
+ static inline void oidread(struct object_id *oid, const unsigned char *hash)
+ {
+ 	memcpy(oid->hash, hash, the_hash_algo->rawsz);
++	oid->algo = hash_algo_by_ptr(the_hash_algo);
+ }
+ 
+ static inline int is_empty_blob_sha1(const unsigned char *sha1)
+@@ -281,6 +304,11 @@ static inline int is_empty_tree_oid(const struct object_id *oid)
+ 	return oideq(oid, the_hash_algo->empty_tree);
+ }
+ 
++static inline void oid_set_algo(struct object_id *oid, const struct git_hash_algo *algop)
++{
++	oid->algo = hash_algo_by_ptr(algop);
++}
++
+ const char *empty_tree_oid_hex(void);
+ const char *empty_blob_oid_hex(void);
+ 
+diff --git a/hex.c b/hex.c
+index da51e64929..e7af18fe55 100644
+--- a/hex.c
++++ b/hex.c
+@@ -69,7 +69,10 @@ int get_sha1_hex(const char *hex, unsigned char *sha1)
+ int get_oid_hex_algop(const char *hex, struct object_id *oid,
+ 		      const struct git_hash_algo *algop)
+ {
+-	return get_hash_hex_algop(hex, oid->hash, algop);
++	int ret = get_hash_hex_algop(hex, oid->hash, algop);
++	if (!ret)
++		oid_set_algo(oid, algop);
++	return ret;
+ }
+ 
+ /*
+@@ -80,7 +83,7 @@ int get_oid_hex_any(const char *hex, struct object_id *oid)
+ {
+ 	int i;
+ 	for (i = GIT_HASH_NALGOS - 1; i > 0; i--) {
+-		if (!get_hash_hex_algop(hex, oid->hash, &hash_algos[i]))
++		if (!get_oid_hex_algop(hex, oid, &hash_algos[i]))
+ 			return i;
+ 	}
+ 	return GIT_HASH_UNKNOWN;
+@@ -95,7 +98,7 @@ int parse_oid_hex_algop(const char *hex, struct object_id *oid,
+ 			const char **end,
+ 			const struct git_hash_algo *algop)
+ {
+-	int ret = get_hash_hex_algop(hex, oid->hash, algop);
++	int ret = get_oid_hex_algop(hex, oid, algop);
+ 	if (!ret)
+ 		*end = hex + algop->hexsz;
+ 	return ret;
 diff --git a/notes.c b/notes.c
-index a19e4ad794..a44b25858f 100644
+index a44b25858f..135ea13ba1 100644
 --- a/notes.c
 +++ b/notes.c
-@@ -352,7 +352,7 @@ static void add_non_note(struct notes_tree *t, char *path,
- 	n->next = NULL;
- 	n->path = path;
- 	n->mode = mode;
--	hashcpy(n->oid.hash, sha1);
-+	oidread(&n->oid, sha1);
- 	t->prev_non_note = n;
+@@ -455,6 +455,8 @@ static void load_subtree(struct notes_tree *t, struct leaf_node *subtree,
+ 		CALLOC_ARRAY(l, 1);
+ 		oidcpy(&l->key_oid, &object_oid);
+ 		oidcpy(&l->val_oid, &entry.oid);
++		oid_set_algo(&l->key_oid, the_hash_algo);
++		oid_set_algo(&l->val_oid, the_hash_algo);
+ 		if (note_tree_insert(t, node, n, l, type,
+ 				     combine_notes_concatenate))
+ 			die("Failed to load %s %s into notes tree "
+@@ -484,6 +486,7 @@ static void load_subtree(struct notes_tree *t, struct leaf_node *subtree,
+ 				strbuf_addch(&non_note_path, '/');
+ 			}
+ 			strbuf_addstr(&non_note_path, entry.path);
++			oid_set_algo(&entry.oid, the_hash_algo);
+ 			add_non_note(t, strbuf_detach(&non_note_path, NULL),
+ 				     entry.mode, entry.oid.hash);
+ 		}
+diff --git a/object-file.c b/object-file.c
+index 1d8c82fa99..d4ba0c4a4f 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -57,16 +57,20 @@
  
- 	if (!t->first_non_note) {
-@@ -1134,7 +1134,7 @@ int remove_note(struct notes_tree *t, const unsigned char *object_sha1)
- 	if (!t)
- 		t = &default_notes_tree;
- 	assert(t->initialized);
--	hashcpy(l.key_oid.hash, object_sha1);
-+	oidread(&l.key_oid, object_sha1);
- 	oidclr(&l.val_oid);
- 	note_tree_remove(t, t->root, 0, &l);
- 	if (is_null_oid(&l.val_oid)) /* no note was removed */
-diff --git a/read-cache.c b/read-cache.c
-index 5a907af2fb..2944146545 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1845,7 +1845,7 @@ static struct cache_entry *create_from_disk(struct mem_pool *ce_mem_pool,
- 	ce->ce_flags = flags & ~CE_NAMEMASK;
- 	ce->ce_namelen = len;
- 	ce->index = 0;
--	hashcpy(ce->oid.hash, ondisk->data);
-+	oidread(&ce->oid, ondisk->data);
- 	memcpy(ce->name, name, len);
- 	ce->name[len] = '\0';
+ const struct object_id null_oid;
+ static const struct object_id empty_tree_oid = {
+-	EMPTY_TREE_SHA1_BIN_LITERAL
++	.hash = EMPTY_TREE_SHA1_BIN_LITERAL,
++	.algo = GIT_HASH_SHA1,
+ };
+ static const struct object_id empty_blob_oid = {
+-	EMPTY_BLOB_SHA1_BIN_LITERAL
++	.hash = EMPTY_BLOB_SHA1_BIN_LITERAL,
++	.algo = GIT_HASH_SHA1,
+ };
+ static const struct object_id empty_tree_oid_sha256 = {
+-	EMPTY_TREE_SHA256_BIN_LITERAL
++	.hash = EMPTY_TREE_SHA256_BIN_LITERAL,
++	.algo = GIT_HASH_SHA256,
+ };
+ static const struct object_id empty_blob_oid_sha256 = {
+-	EMPTY_BLOB_SHA256_BIN_LITERAL
++	.hash = EMPTY_BLOB_SHA256_BIN_LITERAL,
++	.algo = GIT_HASH_SHA256,
+ };
  
-@@ -2195,7 +2195,7 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
- 	if (verify_hdr(hdr, mmap_size) < 0)
- 		goto unmap;
- 
--	hashcpy(istate->oid.hash, (const unsigned char *)hdr + mmap_size - the_hash_algo->rawsz);
-+	oidread(&istate->oid, (const unsigned char *)hdr + mmap_size - the_hash_algo->rawsz);
- 	istate->version = ntohl(hdr->hdr_version);
- 	istate->cache_nr = ntohl(hdr->hdr_entries);
- 	istate->cache_alloc = alloc_nr(istate->cache_nr);
-diff --git a/split-index.c b/split-index.c
-index 94937d21a3..4d6e52d46f 100644
---- a/split-index.c
-+++ b/split-index.c
-@@ -21,7 +21,7 @@ int read_link_extension(struct index_state *istate,
- 	if (sz < the_hash_algo->rawsz)
- 		return error("corrupt link extension (too short)");
- 	si = init_split_index(istate);
--	hashcpy(si->base_oid.hash, data);
-+	oidread(&si->base_oid, data);
- 	data += the_hash_algo->rawsz;
- 	sz -= the_hash_algo->rawsz;
- 	if (!sz)
-diff --git a/tree-walk.c b/tree-walk.c
-index 2d6226d5f1..3a94959d64 100644
---- a/tree-walk.c
-+++ b/tree-walk.c
-@@ -49,7 +49,7 @@ static int decode_tree_entry(struct tree_desc *desc, const char *buf, unsigned l
- 	desc->entry.path = path;
- 	desc->entry.mode = canon_mode(mode);
- 	desc->entry.pathlen = len - 1;
--	hashcpy(desc->entry.oid.hash, (const unsigned char *)path + len);
-+	oidread(&desc->entry.oid, (const unsigned char *)path + len);
- 
- 	return 0;
+ static void git_hash_sha1_init(git_hash_ctx *ctx)
+@@ -93,6 +97,7 @@ static void git_hash_sha1_final_oid(struct object_id *oid, git_hash_ctx *ctx)
+ {
+ 	git_SHA1_Final(oid->hash, &ctx->sha1);
+ 	memset(oid->hash + GIT_SHA1_RAWSZ, 0, GIT_MAX_RAWSZ - GIT_SHA1_RAWSZ);
++	oid->algo = GIT_HASH_SHA1;
  }
+ 
+ 
+@@ -124,6 +129,7 @@ static void git_hash_sha256_final_oid(struct object_id *oid, git_hash_ctx *ctx)
+ 	 * but keep it in case we extend the hash size again.
+ 	 */
+ 	memset(oid->hash + GIT_SHA256_RAWSZ, 0, GIT_MAX_RAWSZ - GIT_SHA256_RAWSZ);
++	oid->algo = GIT_HASH_SHA256;
+ }
+ 
+ static void git_hash_unknown_init(git_hash_ctx *ctx)
+@@ -2340,6 +2346,7 @@ int for_each_file_in_obj_subdir(unsigned int subdir_nr,
+ 		if (namelen == the_hash_algo->hexsz - 2 &&
+ 		    !hex_to_bytes(oid.hash + 1, de->d_name,
+ 				  the_hash_algo->rawsz - 1)) {
++			oid_set_algo(&oid, the_hash_algo);
+ 			if (obj_cb) {
+ 				r = obj_cb(&oid, path->buf, data);
+ 				if (r)
