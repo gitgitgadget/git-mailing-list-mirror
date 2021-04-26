@@ -6,45 +6,45 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 77AE5C433ED
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 20:12:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CBACC433ED
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 20:20:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3915261090
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 20:12:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 011DB613A9
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 20:20:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241851AbhDZUMw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Apr 2021 16:12:52 -0400
-Received: from mail-ed1-f45.google.com ([209.85.208.45]:45874 "EHLO
-        mail-ed1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241741AbhDZUMw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Apr 2021 16:12:52 -0400
-Received: by mail-ed1-f45.google.com with SMTP id d14so3418120edc.12
-        for <git@vger.kernel.org>; Mon, 26 Apr 2021 13:12:10 -0700 (PDT)
+        id S240469AbhDZUVY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Apr 2021 16:21:24 -0400
+Received: from mail-ed1-f46.google.com ([209.85.208.46]:43674 "EHLO
+        mail-ed1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238112AbhDZUVX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Apr 2021 16:21:23 -0400
+Received: by mail-ed1-f46.google.com with SMTP id e7so67183413edu.10
+        for <git@vger.kernel.org>; Mon, 26 Apr 2021 13:20:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=LUGLLxJyBH84XDSEkO15BXNhzRXfqDWw6c3W80oLQ74=;
-        b=iL7atfIjEoXmuzanAqt9w8O84uaujpeXDDArJv8DIj8QwAu0Iob2zb5hlrEvGfuyH4
-         qFAmRwVw4x01dVKRCujbCCogQwwBDn0HDjRKWqBMaeJr4OZAK1Idf7c4IfZ3yFJJx3Pi
-         m6tilac55aemCOL4Vfq+/7pkgyxMe5rzup0/gPBMUL8MR5PcUZDViW1mcv8fckORqeop
-         MXAtixOI7oG8nooaAXvday0YVIeCJ97lE1wzo/EdIetpAJQOyIWcnJGjjJvWBQMR0j1E
-         Ee9iM1vGNBxxyTTJVfw2mztDTivEy2A7IHRXvLDEdMDK2I9SnGL+gGoJKYs1QUZPKVxS
-         z5Cw==
-X-Gm-Message-State: AOAM533ElQrGmb4w/oqHZqLTgq1kUos/Iw0ti3NoCnqY/KoOQq0dgM8n
-        N/MSfvnP33PVZ0ZMQJekU5Y8xoQ+JBa6fZk0YlE=
-X-Google-Smtp-Source: ABdhPJwnJz7l8WFgQVQIBlixW0eR4ikG1YLAQvwXTwcPbn/y0chkAQ1SrZHXHUjUigCcDsoMqqy2lBQv2n+vGFNBWEA=
-X-Received: by 2002:aa7:c7cc:: with SMTP id o12mr431540eds.291.1619467929385;
- Mon, 26 Apr 2021 13:12:09 -0700 (PDT)
+        bh=6lIRRGZO1lpn6ysc+rzTTB99VXFvQ9LEyCs+i2UJsrY=;
+        b=bRZCfEpXEfaWcCelEBk5ziFFXobEkM0lPL2rFbjBVnJ4xlecd+LD9T5c8khAVSnP2/
+         W9KwziKEbMNB44U01SI1jhfwMFWcHDmwih4xuRnzG/knkZcku0NVvJOVmkMj/OTnWJes
+         mBfs51auAJc2OQn43S6rlIaPCC+lXDVH1/VBKZ8+pULp9WKImivZKSRhxDBVSegPRjdd
+         fVkkCY+0y58G7yj08C2EOvaKHLfs49aB9s1kjHyBOC7b7vQ0I4XD989S2r1VMlMEiLh1
+         M+cz/dWVHOvVhhcDQKW4P1OgWS8e0FOYxS1DOeNpikJhf1vkdHCi0LE9GtcJiTSSBLDd
+         S3Pg==
+X-Gm-Message-State: AOAM532O6+1Kk5nEAF5pbwX+MGcF0OCyPFtaGLsNICNQaOSjJw3XRznT
+        iqACCT427VtX5YLcKvm6jflxj94Liscmf+RufCjIkg8qGPTC3w==
+X-Google-Smtp-Source: ABdhPJyoEwA/PtJcXcpRSaUFhpTXS+wKE+pFCeon91TF0n93/k2AaQA+j5mTP0uTNvhNgiD7gaP7R20ptAAqt/JGFOA=
+X-Received: by 2002:a05:6402:145:: with SMTP id s5mr457328edu.221.1619468440267;
+ Mon, 26 Apr 2021 13:20:40 -0700 (PDT)
 MIME-Version: 1.0
 References: <pull.923.git.1617291666.gitgitgadget@gmail.com>
- <451563314d84f9d6dee29a4899b5d18033aa227d.1617291666.git.gitgitgadget@gmail.com>
- <aca24c96-33ab-3b90-bf21-0da19283a3d7@gmail.com>
-In-Reply-To: <aca24c96-33ab-3b90-bf21-0da19283a3d7@gmail.com>
+ <3dac63eae201e6d0b949680e682238625cad59bd.1617291666.git.gitgitgadget@gmail.com>
+ <5b63eb3f-0b87-209b-3943-ced8412abb93@gmail.com>
+In-Reply-To: <5b63eb3f-0b87-209b-3943-ced8412abb93@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 26 Apr 2021 16:11:58 -0400
-Message-ID: <CAPig+cT1yz-M1MYTx1_HQRYe+Ryy=vzwtRgkhkX7bTYDB5rnkA@mail.gmail.com>
-Subject: Re: [PATCH 10/23] fsmonitor--daemon: add pathname classification
+Date:   Mon, 26 Apr 2021 16:20:29 -0400
+Message-ID: <CAPig+cTjso8B=E0pGsr4TDU5zikVhjwbrrWD19uaiwJXvuXZ0w@mail.gmail.com>
+Subject: Re: [PATCH 02/23] fsmonitor-ipc: create client routines for git-fsmonitor--daemon
 To:     Derrick Stolee <stolee@gmail.com>
 Cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
         Git List <git@vger.kernel.org>,
@@ -54,22 +54,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 26, 2021 at 3:17 PM Derrick Stolee <stolee@gmail.com> wrote:
-> On 4/1/2021 11:40 AM, Jeff Hostetler via GitGitGadget wrote:
-> > +#define FSMONITOR_COOKIE_PREFIX ".fsmonitor-daemon-"
+On Mon, Apr 26, 2021 at 10:31 AM Derrick Stolee <stolee@gmail.com> wrote:
+> On 4/1/21 11:40 AM, Jeff Hostetler via GitGitGadget wrote:
+> > +#ifdef HAVE_FSMONITOR_DAEMON_BACKEND
+> > +#define FSMONITOR_DAEMON_IS_SUPPORTED 1
+> > +#else
+> > +#define FSMONITOR_DAEMON_IS_SUPPORTED 0
+> > +#endif
 > > +
-> > +     if (!fspathncmp(rel, FSMONITOR_COOKIE_PREFIX,
-> > +                     strlen(FSMONITOR_COOKIE_PREFIX)))
+> > +int fsmonitor_ipc__is_supported(void)
+> > +{
+> > +     return FSMONITOR_DAEMON_IS_SUPPORTED;
+> > +}
 >
-> Seems like this strlen() could be abstracted out. Is it
-> something the compiler can compute and set for us? Or,
-> should we create a macro for this constant?
+> I don't see any other use of FSMONITOR_DAEMON_IS_SUPPORTED,
+> so I was thinking you could use the #ifdef/#else/#endif
+> construct within the implementation of this method instead
+> of creating a macro outside. But my suggestion might be an
+> anti-pattern, so feel free to ignore me.
 
-If you're asking whether the compiler will resolve strlen("literal
-string") to an integer constant at compile time rather than computing
-the length at runtime, then the answer is that on this project we
-presume that the compiler is smart enough to do that.
+On this project, it is preferred to keep the #if / #else / #endif
+outside of functions since embedding them within functions often makes
+it difficult to follow how the code flows (and generally makes
+functions unnecessarily noisy). So, the way Jeff did this seems fine.
 
-Or are you asking for a function something like this?
+An alternative would have been:
 
-    fspathhasprefix(rel, FSMONITOR_COOKIE_PREFIX)
+  #ifdef HAVE_FSMONITOR_DAEMON_BACKEND
+  #define fsmonitor_ipc__is_supported() 1
+  #else
+  #define fsmonitor_ipc__is_supported() 0
+  #endif
+
+which would still allow calling it as a function:
+
+    if (fsmonitor_ipc__is_supported())
+        ...
+
+but it's subjective whether that's actually any cleaner or better.
