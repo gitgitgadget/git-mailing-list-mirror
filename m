@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A610EC433B4
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 16:18:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B78CBC433ED
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 16:19:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 70AF761158
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 16:18:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 85E6960C3D
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 16:19:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234382AbhDZQTg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Apr 2021 12:19:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43150 "EHLO
+        id S234076AbhDZQTm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Apr 2021 12:19:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234263AbhDZQTd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Apr 2021 12:19:33 -0400
-Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E8F9C061574
-        for <git@vger.kernel.org>; Mon, 26 Apr 2021 09:18:52 -0700 (PDT)
-Received: by mail-ot1-x334.google.com with SMTP id y14-20020a056830208eb02902a1c9fa4c64so16119269otq.9
-        for <git@vger.kernel.org>; Mon, 26 Apr 2021 09:18:52 -0700 (PDT)
+        with ESMTP id S234263AbhDZQTl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Apr 2021 12:19:41 -0400
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3EDCC061574
+        for <git@vger.kernel.org>; Mon, 26 Apr 2021 09:18:59 -0700 (PDT)
+Received: by mail-oi1-x22f.google.com with SMTP id u80so23354705oia.0
+        for <git@vger.kernel.org>; Mon, 26 Apr 2021 09:18:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=IOJKPqOeFx/TQGntZS7ZLedzJIeaulaJ9v77KNbJ0xs=;
-        b=W0EPiQft+O1OWgk3Wu/Gui9yxpp9ukgJqCIHLqMzBPURVf1M8tEz6rXE04eACNlyPs
-         pIP6M4p9kkNDRbn23vc6yYH/UKnSQd00mMZxPwKW/jqApzROaPsV/8ODUBj04W7Hz/de
-         PqxOVX3MO8b+IiCgEO+nHr7MqD3SxS5SqzwxgitpXaOudEOyLmpXiP9/rYXdaublcWzg
-         5S09oZk9gHquOSpSnUZSIyeF7ppTn2tOeEtVYD0iQwZoIaUiMG4uQjjmVu/sbAqabfyh
-         r+VonSyC9LB9VdbjX2san2eDSiqFYy8Nli/u/OTQzEDMoVDPShQU2/3cL8beq+2+nz+n
-         MA+g==
+        bh=syUABEO1C+p5G+myrsPvE9wf9xjIVx27sXBfRET2cSc=;
+        b=R0G2vt9PmVyiGpZRxv8zpSkQPhjqV7Oc5F2nhbQAXmYKCo46gMMdTPb43FNSPQHlM7
+         zKdLp8SY60v/BliWYc28IRNMw8fzmh9u2Gp+pedI0fn0U60PfoEvwdQ6B9g/8TiMFnIm
+         qII/3aAACNsdlCHtCUEmP5niutG6OafmlzWUAzntYGIBDcEMeKAjpfTOSomiwXj3UVeG
+         ZUCPDWwgmqvJsmOnclt1puYKAOEIuR9oRSEHQo9NN9oWhn5mI7PqYlAZErKrL0y0FOuC
+         ggqd6Ns093eNEn6G3YsoJkwo4ReG7vgNglH6e6JgMrElCAKXRidwYO490FlW6zFX648a
+         Ghvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=IOJKPqOeFx/TQGntZS7ZLedzJIeaulaJ9v77KNbJ0xs=;
-        b=Hd8wJSUbtrp0A0tIROYFOtyyFxMzfhv0z78candIOCNCVnbNa2aLfcA4B8U7QEElVW
-         evNUFIC9W7j2Z9pAae+pbEsqt1z8g+t59YId5IjoUvsrIHnt6lm6mAa4VJGeGk5k4jDQ
-         PGD2H/R0K3d8xugOFKSF9vqz1Eo0jkmWpIkNG3JOSMYQMU1OpCXoenoMndwIz9kpMlAo
-         im1VYa9M1gZAuJxedIOB6gNdgINKUXZYGNbUpBTJNnCwexiU6frZtmF+feFXQkvSseW0
-         uk70Te/a+PUgJwRBWQS3HPOUk9s+Lw6QfgXc4nHqHd3HfSKnlz06WwRX3tJtfVi/Ax7G
-         /APQ==
-X-Gm-Message-State: AOAM5312/f4LRvoZr8aaIcppfQqCLNQjLqklFxNtWkG2LAH0/+BTV48S
-        3cz+GWFr8urO8NCanJ2adtQKvBXwD3lM/A==
-X-Google-Smtp-Source: ABdhPJzJIHTxUJwH8yj8EsrZ+8yDJa7mMdnizTiDUVNir9bizBcTF0hqTgaYRHI5njerEc1Fexno9Q==
-X-Received: by 2002:a05:6830:3151:: with SMTP id c17mr15651735ots.245.1619453931272;
-        Mon, 26 Apr 2021 09:18:51 -0700 (PDT)
+        bh=syUABEO1C+p5G+myrsPvE9wf9xjIVx27sXBfRET2cSc=;
+        b=WnItCPLXnLBXwtUg27rg9oLS5Oz56Z500ZZtF6DSzWVpK9ESFD7rZSQIPf4yxAvJU4
+         J9j2SFzsGVC4L2w56xkW401WLqHIMhhUZmIjatMuSbT8j3UxOfzVU4p3X/RrR5naK1a5
+         7unqwvCLx1CCEuThpLYVAA6c1x9HN00p0g1lScQT4hTsGpooTTyCJceDS72DXsXtU6mD
+         uHo7mTgO1Ggk0VGNIEZL8BmRMhNGItqQ/cUp62MBmn3EOEK08xpQnCsvBIttvx0eFtr2
+         8srVst5d9avvIHuWmofiA4KVI80KKBlCcaQw6x1UExYCYrZcPY6rV2symEbAbktGVczO
+         N4aA==
+X-Gm-Message-State: AOAM533Ci7J23Rz/KX4XHxMqtgbUX3qt3vuCCJ4SJ10veCJTxM0f78hM
+        q896uiaiFDNUGS/01wv+oTp3BgJs4D3NZQ==
+X-Google-Smtp-Source: ABdhPJzf1lQ3YCokMF4PDzRDkX4o5kwVysVvopeafz8zyZNCnvoy/j8jsH85M/ywQy6FtUVHlcJPzw==
+X-Received: by 2002:aca:bb0b:: with SMTP id l11mr13916971oif.146.1619453939122;
+        Mon, 26 Apr 2021 09:18:59 -0700 (PDT)
 Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id e30sm67208oow.11.2021.04.26.09.18.50
+        by smtp.gmail.com with ESMTPSA id v28sm76152ood.27.2021.04.26.09.18.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Apr 2021 09:18:50 -0700 (PDT)
+        Mon, 26 Apr 2021 09:18:58 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v1 27/43] test: completion: add missing test
-Date:   Mon, 26 Apr 2021 11:14:42 -0500
-Message-Id: <20210426161458.49860-28-felipe.contreras@gmail.com>
+Subject: [PATCH v1 28/43] completion: bash: improve __gitcomp description
+Date:   Mon, 26 Apr 2021 11:14:43 -0500
+Message-Id: <20210426161458.49860-29-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.31.0
 In-Reply-To: <20210426161458.49860-1-felipe.contreras@gmail.com>
 References: <20210426161458.49860-1-felipe.contreras@gmail.com>
@@ -71,32 +71,27 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Once the correct suffix in __git_complete_config_variable_name() is set,
-we can add the test again.
+It does a lot more than what is stated now.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- t/t9902-completion.sh | 7 +++++++
- 1 file changed, 7 insertions(+)
+ contrib/completion/git-completion.bash | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 3528463047..bbea339a45 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -2315,6 +2315,13 @@ test_expect_success 'git config - value' '
- 	EOF
- '
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 14882297c6..b2a04a6b8c 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -319,8 +319,7 @@ __gitcompadd ()
+ 	done
+ }
  
-+test_expect_success 'git config - direct completions' '
-+	test_completion "git config branch.autoSetup" <<-\EOF
-+	branch.autoSetupMerge Z
-+	branch.autoSetupRebase Z
-+	EOF
-+'
-+
- test_expect_success 'git -c - section' '
- 	test_completion "git -c br" <<-\EOF
- 	branch.Z
+-# Generates completion reply, appending a space to possible completion words,
+-# if necessary.
++# Creates completion replies, reorganizing options and adding suffixes as needed.
+ # It accepts 1 to 4 arguments:
+ # 1: List of possible completion words.
+ # 2: A prefix to be added to each possible completion word (optional).
 -- 
 2.31.0
 
