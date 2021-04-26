@@ -6,23 +6,26 @@ X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A494C433ED
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 19:57:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E8DBC433ED
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 19:58:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 25CE46135D
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 19:57:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 72A4561396
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 19:58:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241597AbhDZT6d (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Apr 2021 15:58:33 -0400
-Received: from mav.lukeshu.com ([104.207.138.63]:39690 "EHLO mav.lukeshu.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236419AbhDZT6d (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Apr 2021 15:58:33 -0400
+        id S241639AbhDZT7a (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Apr 2021 15:59:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36122 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236419AbhDZT7a (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Apr 2021 15:59:30 -0400
+Received: from mav.lukeshu.com (mav.lukeshu.com [IPv6:2001:19f0:5c00:8069:5400:ff:fe26:6a86])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8111FC061574
+        for <git@vger.kernel.org>; Mon, 26 Apr 2021 12:58:48 -0700 (PDT)
 Received: from lukeshu-dw-thinkpad (unknown [IPv6:2601:281:8200:26:4e34:88ff:fe48:5521])
-        by mav.lukeshu.com (Postfix) with ESMTPSA id 670A380590;
-        Mon, 26 Apr 2021 15:57:49 -0400 (EDT)
-Date:   Mon, 26 Apr 2021 13:57:48 -0600
-Message-ID: <87o8e0akeb.wl-lukeshu@lukeshu.com>
+        by mav.lukeshu.com (Postfix) with ESMTPSA id 4A81480590;
+        Mon, 26 Apr 2021 15:58:47 -0400 (EDT)
+Date:   Mon, 26 Apr 2021 13:58:46 -0600
+Message-ID: <87mttkakcp.wl-lukeshu@lukeshu.com>
 From:   Luke Shumaker <lukeshu@lukeshu.com>
 To:     git@vger.kernel.org
 Cc:     Avery Pennarun <apenwarr@gmail.com>,
@@ -41,11 +44,11 @@ Cc:     Avery Pennarun <apenwarr@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
         Luke Shumaker <lukeshu@datawire.io>
-Subject: Re: [PATCH v2 04/30] subtree: t7900: use consistent formatting
-In-Reply-To: <20210426174525.3937858-5-lukeshu@lukeshu.com>
+Subject: Re: [PATCH v2 27/30] subtree: allow --squash to be used with --rejoin
+In-Reply-To: <20210426174525.3937858-28-lukeshu@lukeshu.com>
 References: <20210423194230.1388945-1-lukeshu@lukeshu.com>
         <20210426174525.3937858-1-lukeshu@lukeshu.com>
-        <20210426174525.3937858-5-lukeshu@lukeshu.com>
+        <20210426174525.3937858-28-lukeshu@lukeshu.com>
 User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
  FLIM-LB/1.14.9 (=?ISO-8859-4?Q?Goj=F2?=) APEL-LB/10.8 EasyPG/1.0.0
  Emacs/27.2 (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
@@ -55,34 +58,27 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 26 Apr 2021 11:44:59 -0600,
+On Mon, 26 Apr 2021 11:45:22 -0600,
 Luke Shumaker wrote:
-> @@ -50,15 +46,17 @@ undo()
->  # The original set of commits changed only one file each.
->  # A multi-file change would imply that we pruned commits
->  # too aggressively.
-> -join_commits()
-> -{
-> +join_commits () {
->  	commit=
->  	all=
->  	while read x y; do
-> -		if [ -z "$x" ]; then
-> +		if test -z "$x"
-> +		then
->  			continue
-> -		elif [ "$x" = "commit:" ]; then
-> -			if [ -n "$commit" ]; then
-> +		elif test "$x" = "commit:"
-> +		then
-> +			if test -n "$commit"
-> +			then
->  				echo "$commit $all"
->  				all=
->  			fi
+> @@ -857,10 +874,12 @@ cmd_split () {
+>  	then
+>  		debug "Merging split branch into HEAD..."
+>  		latest_old=$(cache_get latest_old) || exit $?
+> -		git merge -s ours \
+> -			--allow-unrelated-histories \
+> -			-m "$(rejoin_msg "$dir" "$latest_old" "$latest_new")" \
+> -			"$latest_new" >&2 || exit $?
+> +		arg_addmerge_message="$(rejoin_msg "$dir" "$latest_old" "$latest_new")" || exit $?
+> +		if test -z "$(find_latest_squash "$dir")"; then
+> +			cmd_add "$latest_new" >&2 || exit $?
+> +		else
+> +			cmd_merge "$latest_new" >&2 || exit $?
+> +		fi
+>  	fi
+>  	if test -n "$arg_split_branch"
+>  	then
 
-Whoops, I should have changed those 1-line `while ...; do`'s, in
-addition to the 1-line `if ...; then`'s.
+Whoops, that `if ...; then` should put the `then` on its own line.
 
 -- 
 Happy hacking,
