@@ -7,21 +7,21 @@ X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 12F7CC433ED
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 17:48:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6311FC43470
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 17:48:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DBA6461185
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 17:48:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 30238613B2
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 17:48:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237691AbhDZRsy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Apr 2021 13:48:54 -0400
-Received: from mav.lukeshu.com ([104.207.138.63]:39124 "EHLO mav.lukeshu.com"
+        id S237697AbhDZRsz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Apr 2021 13:48:55 -0400
+Received: from mav.lukeshu.com ([104.207.138.63]:39364 "EHLO mav.lukeshu.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237612AbhDZRsd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Apr 2021 13:48:33 -0400
+        id S237619AbhDZRsg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Apr 2021 13:48:36 -0400
 Received: from lukeshu-dw-thinkpad (unknown [IPv6:2601:281:8200:26:4e34:88ff:fe48:5521])
-        by mav.lukeshu.com (Postfix) with ESMTPSA id A88678059B;
-        Mon, 26 Apr 2021 13:47:51 -0400 (EDT)
+        by mav.lukeshu.com (Postfix) with ESMTPSA id 863BD80597;
+        Mon, 26 Apr 2021 13:47:53 -0400 (EDT)
 From:   Luke Shumaker <lukeshu@lukeshu.com>
 To:     git@vger.kernel.org
 Cc:     Avery Pennarun <apenwarr@gmail.com>,
@@ -39,9 +39,9 @@ Cc:     Avery Pennarun <apenwarr@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Luke Shumaker <lukeshu@datawire.io>
-Subject: [PATCH v2 18/30] subtree: use "$*" instead of "$@" as appropriate
-Date:   Mon, 26 Apr 2021 11:45:13 -0600
-Message-Id: <20210426174525.3937858-19-lukeshu@lukeshu.com>
+Subject: [PATCH v2 20/30] subtree: use "^{commit}" instead of "^0"
+Date:   Mon, 26 Apr 2021 11:45:15 -0600
+Message-Id: <20210426174525.3937858-21-lukeshu@lukeshu.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210426174525.3937858-1-lukeshu@lukeshu.com>
 References: <20210423194230.1388945-1-lukeshu@lukeshu.com>
@@ -54,72 +54,36 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Luke Shumaker <lukeshu@datawire.io>
 
-"$*" is for when you want to concatenate the args together,
-whitespace-separated; and "$@" is for when you want them to be separate
-strings.
-
-There are several places in subtree that erroneously use $@ when
-concatenating args together into an error message.
-
-For instance, if the args are argv[1]="dead" and argv[2]="beef", then
-the line
-
-    die "You must provide exactly one revision.  Got: '$@'"
-
-surely intends to call 'die' with the argument
-
-    argv[1]="You must provide exactly one revision.  Got: 'dead beef'"
-
-however, because the line used $@ instead of $*, it will actually call
-'die' with the arguments
-
-    argv[1]="You must provide exactly one revision.  Got: 'dead"
-    argv[2]="beef'"
-
-This isn't a big deal, because 'die' concatenates its arguments together
-anyway (using "$*").  But that doesn't change the fact that it was a
-mistake to use $@ instead of $*, even though in the end $@ still ended
-up doing the right thing.
+They are synonyms.  Both are used in the file.  ^{commit} is clearer, so
+"standardize" on that.
 
 Signed-off-by: Luke Shumaker <lukeshu@datawire.io>
 ---
-v2:
- - Improve the commit message with quoting and clearer
-   explanation.
-
- contrib/subtree/git-subtree.sh | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ contrib/subtree/git-subtree.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index d7de4b0653..3105eb8033 100755
+index af636fbb43..ee7fda3672 100755
 --- a/contrib/subtree/git-subtree.sh
 +++ b/contrib/subtree/git-subtree.sh
-@@ -58,14 +58,14 @@ progress () {
- assert () {
- 	if ! "$@"
- 	then
--		die "assertion failed: " "$@"
-+		die "assertion failed: $*"
- 	fi
- }
- 
- ensure_single_rev () {
- 	if test $# -ne 1
- 	then
--		die "You must provide exactly one revision.  Got: '$@'"
-+		die "You must provide exactly one revision.  Got: '$*'"
- 	fi
- }
- 
-@@ -690,7 +690,7 @@ cmd_add () {
- 
- 		cmd_add_repository "$@"
- 	else
--		say >&2 "error: parameters were '$@'"
-+		say >&2 "error: parameters were '$*'"
- 		die "Provide either a commit or a repository and commit."
- 	fi
- }
+@@ -316,7 +316,7 @@ find_latest_squash () {
+ 			main="$b"
+ 			;;
+ 		git-subtree-split:)
+-			sub="$(git rev-parse "$b^0")" ||
++			sub="$(git rev-parse "$b^{commit}")" ||
+ 			die "could not rev-parse split hash $b from commit $sq"
+ 			;;
+ 		END)
+@@ -363,7 +363,7 @@ find_existing_splits () {
+ 			main="$b"
+ 			;;
+ 		git-subtree-split:)
+-			sub="$(git rev-parse "$b^0")" ||
++			sub="$(git rev-parse "$b^{commit}")" ||
+ 			die "could not rev-parse split hash $b from commit $sq"
+ 			;;
+ 		END)
 -- 
 2.31.1
 
