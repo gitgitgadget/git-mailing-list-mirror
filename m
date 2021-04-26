@@ -7,64 +7,90 @@ X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 09432C433ED
-	for <git@archiver.kernel.org>; Sun, 25 Apr 2021 18:18:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5747CC433ED
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 00:40:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C7D1B61181
-	for <git@archiver.kernel.org>; Sun, 25 Apr 2021 18:18:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 19B806117A
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 00:40:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231229AbhDYSSn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 25 Apr 2021 14:18:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34662 "EHLO
+        id S231411AbhDZAkk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 25 Apr 2021 20:40:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230459AbhDYSSm (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Apr 2021 14:18:42 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97DA2C061574
-        for <git@vger.kernel.org>; Sun, 25 Apr 2021 11:18:02 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id l189-20020a1cbbc60000b0290140319ad207so1508771wmf.2
-        for <git@vger.kernel.org>; Sun, 25 Apr 2021 11:18:02 -0700 (PDT)
+        with ESMTP id S231247AbhDZAkj (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Apr 2021 20:40:39 -0400
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D09DEC061574
+        for <git@vger.kernel.org>; Sun, 25 Apr 2021 17:39:55 -0700 (PDT)
+Received: by mail-pj1-x102c.google.com with SMTP id f11-20020a17090a638bb02901524d3a3d48so4147479pjj.3
+        for <git@vger.kernel.org>; Sun, 25 Apr 2021 17:39:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=KMUDuHcadQGIzm8SP0+glzClZ5gOre5WdZTOWNqEA2k=;
-        b=d0GK/aNVlLz70+VhBuq1QT17GB+tkYsiihUaeO17gz30cMj62OQfXFYmbUPNTObPap
-         2UAyRPpcPaoDcpe/CUka+xddjYfFQ/oFKN2qmFsEO5BkeU3xS39simDE1zsnftbwzg0k
-         NIDjmRIlQ/esOdhXGP6e0nnyr4UHc9njGxw+qHG5a4YU8Vt1kRf+3d6qITuNLagi5CaJ
-         W/hOETvbxD0eWVmh8GNvAhRsyHUmdVOZZqWMK+T55TiOhbeyA+8QMnxb0Re4oXoHA/lZ
-         Nb/mdydO9gEaoWgbbmSdJWte+wfexWYaPq13hza4F2dNnO0n8uHpBBQd4dI2qIrM4Xia
-         DnGg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=CwYDtQXUN6H0pCiHMnaxRGT/oA8MQSJ9542OvWqbVRw=;
+        b=RqvMxS8Nhq4XAJN1UTK9LMBL6JDoxm8690BMTubsVmNnNlapdMbiLsQ6EYAelr6zMf
+         jD30/r/2wd4SBmc2KUtoHuPRq2gPbSSTE6f6VUGzh34/bLH/MJJ6XQmebMJI792xJ9F3
+         gsJ52zvUBtItuwemkOJX7auo/iKhspmmwtYOgo3/SVEDRqv3+ciVp2NsQRPEteTZxUUr
+         aXTGo1hb+Aqr2MGlXyCCrKyVrvxrTNOEFpQNQPBB1jZHiTMkpXdDcVYYc4HqNjaa0KSN
+         QfgfDu7ETL6TAOOTsMvUOMrDGWI+59682tFp9enmi/n9o2LaxoMMg0HqYDGtuzCNe3J9
+         YCWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=KMUDuHcadQGIzm8SP0+glzClZ5gOre5WdZTOWNqEA2k=;
-        b=R9UtZ1fvLdPgCSwrXGL+c5Pf/g/blqz++TySpqosFpozhcN2oGeUen9coEV/h4qbtM
-         E80Q2SNpFyqGNvh35kawdwSGFSyYFBfrbcWHKkd59de/NmpMvOToCIOhuRyN7FyvhaFZ
-         Q4oRPPHCmR22aqgmbaO8Qn0CCniAfC01bvENCqNueoGYHrjWukreJ2FkHrRSoBPSKcpd
-         Yl0f3LVRnuy0byrNEDIrRKDG/3HEX9ocn7KwBB42LO5I0S+5ndXt2yoll4583Am6VGYk
-         U3GhGtlzjGS3cQUarbBCVXP+Eaor+6ZgrX3hlNxkLPLJoEGM01q5HApLhpY/JRY7YcZF
-         JRhA==
-X-Gm-Message-State: AOAM532yA3UaRUZOPThNcie+PxzGQUIa8cInPeOZxlqVx51ZZ4/r5ek5
-        PAUn9XrCZcP9i58zPL4OCuRIUV2ixJlmpbYd5ryPtItO46c=
-X-Google-Smtp-Source: ABdhPJyJxvXj5xEY3/gobwumji8j+FpPs6NUzuJuRrugQC5V2Mzaix0JruKMKv5RhVTTANHXkeOmmObLJSGN/PD+Kp8=
-X-Received: by 2002:a1c:7903:: with SMTP id l3mr5504249wme.0.1619374680901;
- Sun, 25 Apr 2021 11:18:00 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=CwYDtQXUN6H0pCiHMnaxRGT/oA8MQSJ9542OvWqbVRw=;
+        b=boRdNrIePsE3KXLqeaPSeomkW4nf9M28rZoQCY5GhdBY/cOjq3664eEa7yEv5Rrgxx
+         c3FYlo6xMGatJDBOwmYD+iwbiA4jR26J9ld6dRZkddm4gEqdQK5gihmtVa8+u2jzPF8S
+         v6qZ3/nocPUj6MzjDvRDUcLfpQRmb4kGE0pxvGfruPj04atUYEAIZcwdH3lrU1WreK7D
+         L8ZsiqS2HtR4+I1LNSNm68GWZg4Q/9qXO7MuDqjOP9e/VB92r9FyqqapYRVyjFTabRHj
+         uziIADOBR50UY1+kHpL9FhQ/SRSc4m+Rd32r/9C8xM1Jisi9J5dHuzxXjRYM0n50vgse
+         myJw==
+X-Gm-Message-State: AOAM530xAl+TmWZXs8PCed+6D7HTidErjP/yITCJ+/JsAhFlk9jpwHPv
+        qRJ6JvMtRW7ivSWtE3jvSJo=
+X-Google-Smtp-Source: ABdhPJwD/6Dhitu3Vm9F681pQ8F+ObRC9x3K2lAYyHI1sRqzq7IWETgRLDYfdzcSQ2gwgCMdLCURKA==
+X-Received: by 2002:a17:902:6907:b029:ea:d1e8:b80b with SMTP id j7-20020a1709026907b02900ead1e8b80bmr15984735plk.41.1619397594976;
+        Sun, 25 Apr 2021 17:39:54 -0700 (PDT)
+Received: from localhost ([2402:800:63b8:d379:85bd:c83a:4b40:cd9b])
+        by smtp.gmail.com with ESMTPSA id u12sm9369037pfh.122.2021.04.25.17.39.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 25 Apr 2021 17:39:54 -0700 (PDT)
+Date:   Mon, 26 Apr 2021 07:39:52 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     Kostya M <kostya27@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Possible segfault with `git clone --mirror`
+Message-ID: <YIYL2BtIacMIthgy@danh.dev>
+References: <CACAwW2gHBPRujCV0LSS3p1Td_GkiGG87U6QPLVrp69ShVNnPTA@mail.gmail.com>
 MIME-Version: 1.0
-From:   Kostya M <kostya27@gmail.com>
-Date:   Sun, 25 Apr 2021 21:17:50 +0300
-Message-ID: <CACAwW2gHBPRujCV0LSS3p1Td_GkiGG87U6QPLVrp69ShVNnPTA@mail.gmail.com>
-Subject: Possible segfault with `git clone --mirror`
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CACAwW2gHBPRujCV0LSS3p1Td_GkiGG87U6QPLVrp69ShVNnPTA@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Git 2.31.1, reproduced on Ubuntu 20.04.01, and Arch Linux.
+On 2021-04-25 21:17:50+0300, Kostya M <kostya27@gmail.com> wrote:
+> Git 2.31.1, reproduced on Ubuntu 20.04.01, and Arch Linux.
+> 
+> `git clone -c core.askPass=true --mirror --quiet --
+> https://github.com/kostya/myhtml.git myhtml`
+> Segmentation fault (core dumped)
+> 
+> If i remove --mirror argument, it works.
+> This command generated by crystal language package manager called shards.
 
-`git clone -c core.askPass=true --mirror --quiet --
-https://github.com/kostya/myhtml.git myhtml`
-Segmentation fault (core dumped)
+Not reproducible.
 
-If i remove --mirror argument, it works.
-This command generated by crystal language package manager called shards.
+You may want to check if it's your config or filesystem first?
+
+If I were you, I would run something like this to see if it works:
+(Maybe with GIT_TRACE2=1 removed in first run to see if it's your config)
+
+	HOME=/tmp/not-exist XDG_CONFIG_HOME=/tmp/not-exist GIT_TRACE2=1 \
+		/usr/bin/git clone -c core.askPass=true --mirror --quiet -- \
+		https://github.com/kostya/myhtml.git myhtml
+
+-- 
+Danh
