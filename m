@@ -7,21 +7,24 @@ X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 38273C433B4
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 17:48:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FDEDC43461
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 17:48:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0C09E61185
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 17:48:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 62EF76101C
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 17:48:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237678AbhDZRsw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Apr 2021 13:48:52 -0400
-Received: from mav.lukeshu.com ([104.207.138.63]:39318 "EHLO mav.lukeshu.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237602AbhDZRsd (ORCPT <rfc822;git@vger.kernel.org>);
+        id S235850AbhDZRsx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Apr 2021 13:48:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35164 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237613AbhDZRsd (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 26 Apr 2021 13:48:33 -0400
+Received: from mav.lukeshu.com (mav.lukeshu.com [IPv6:2001:19f0:5c00:8069:5400:ff:fe26:6a86])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC8E1C06138D
+        for <git@vger.kernel.org>; Mon, 26 Apr 2021 10:47:49 -0700 (PDT)
 Received: from lukeshu-dw-thinkpad (unknown [IPv6:2601:281:8200:26:4e34:88ff:fe48:5521])
-        by mav.lukeshu.com (Postfix) with ESMTPSA id CAD0F80596;
-        Mon, 26 Apr 2021 13:47:50 -0400 (EDT)
+        by mav.lukeshu.com (Postfix) with ESMTPSA id 06E1780592;
+        Mon, 26 Apr 2021 13:47:48 -0400 (EDT)
 From:   Luke Shumaker <lukeshu@lukeshu.com>
 To:     git@vger.kernel.org
 Cc:     Avery Pennarun <apenwarr@gmail.com>,
@@ -39,9 +42,9 @@ Cc:     Avery Pennarun <apenwarr@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Luke Shumaker <lukeshu@datawire.io>
-Subject: [PATCH v2 17/30] subtree: use more explicit variable names for cmdline args
-Date:   Mon, 26 Apr 2021 11:45:12 -0600
-Message-Id: <20210426174525.3937858-18-lukeshu@lukeshu.com>
+Subject: [PATCH v2 15/30] subtree: use `git merge-base --is-ancestor`
+Date:   Mon, 26 Apr 2021 11:45:10 -0600
+Message-Id: <20210426174525.3937858-16-lukeshu@lukeshu.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210426174525.3937858-1-lukeshu@lukeshu.com>
 References: <20210423194230.1388945-1-lukeshu@lukeshu.com>
@@ -54,341 +57,48 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Luke Shumaker <lukeshu@datawire.io>
 
-Make it painfully obvious when reading the code which variables are
-direct parsings of command line arguments.
+Instead of writing a slow `rev_is_descendant_of_branch $a $b` function
+in shell, just use the fast `git merge-base --is-ancestor $b $a`.
 
 Signed-off-by: Luke Shumaker <lukeshu@datawire.io>
 ---
- contrib/subtree/git-subtree.sh | 132 ++++++++++++++++-----------------
- 1 file changed, 66 insertions(+), 66 deletions(-)
+ contrib/subtree/git-subtree.sh | 16 +---------------
+ 1 file changed, 1 insertion(+), 15 deletions(-)
 
 diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index bb4934dbc0..d7de4b0653 100755
+index 4503564f7e..70e16b807b 100755
 --- a/contrib/subtree/git-subtree.sh
 +++ b/contrib/subtree/git-subtree.sh
-@@ -30,19 +30,19 @@ squash        merge subtree changes as a single commit
- 
- PATH=$PATH:$(git --exec-path)
- 
--branch=
--debug=
--command=
--onto=
--rejoin=
--ignore_joins=
--annotate=
--squash=
--message=
--prefix=
-+arg_debug=
-+arg_command=
-+arg_prefix=
-+arg_split_branch=
-+arg_split_onto=
-+arg_split_rejoin=
-+arg_split_ignore_joins=
-+arg_split_annotate=
-+arg_addmerge_squash=
-+arg_addmerge_message=
- 
- debug () {
--	if test -n "$debug"
-+	if test -n "$arg_debug"
- 	then
- 		printf "%s\n" "$*" >&2
+@@ -280,20 +280,6 @@ rev_exists () {
  	fi
-@@ -88,54 +88,54 @@ main () {
- 			GIT_QUIET=1
- 			;;
- 		-d)
--			debug=1
-+			arg_debug=1
- 			;;
- 		--annotate)
--			annotate="$1"
-+			arg_split_annotate="$1"
- 			shift
- 			;;
- 		--no-annotate)
--			annotate=
-+			arg_split_annotate=
- 			;;
- 		-b)
--			branch="$1"
-+			arg_split_branch="$1"
- 			shift
- 			;;
- 		-P)
--			prefix="${1%/}"
-+			arg_prefix="${1%/}"
- 			shift
- 			;;
- 		-m)
--			message="$1"
-+			arg_addmerge_message="$1"
- 			shift
- 			;;
- 		--no-prefix)
--			prefix=
-+			arg_prefix=
- 			;;
- 		--onto)
--			onto="$1"
-+			arg_split_onto="$1"
- 			shift
- 			;;
- 		--no-onto)
--			onto=
-+			arg_split_onto=
- 			;;
- 		--rejoin)
--			rejoin=1
-+			arg_split_rejoin=1
- 			;;
- 		--no-rejoin)
--			rejoin=
-+			arg_split_rejoin=
- 			;;
- 		--ignore-joins)
--			ignore_joins=1
-+			arg_split_ignore_joins=1
- 			;;
- 		--no-ignore-joins)
--			ignore_joins=
-+			arg_split_ignore_joins=
- 			;;
- 		--squash)
--			squash=1
-+			arg_addmerge_squash=1
- 			;;
- 		--no-squash)
--			squash=
-+			arg_addmerge_squash=
- 			;;
- 		--)
- 			break
-@@ -146,10 +146,10 @@ main () {
- 		esac
- 	done
- 
--	command="$1"
-+	arg_command="$1"
- 	shift
- 
--	case "$command" in
-+	case "$arg_command" in
- 	add|merge|pull)
- 		default=
- 		;;
-@@ -157,31 +157,31 @@ main () {
- 		default="--default HEAD"
- 		;;
- 	*)
--		die "Unknown command '$command'"
-+		die "Unknown command '$arg_command'"
- 		;;
- 	esac
- 
--	if test -z "$prefix"
-+	if test -z "$arg_prefix"
- 	then
- 		die "You must provide the --prefix option."
- 	fi
- 
--	case "$command" in
-+	case "$arg_command" in
- 	add)
--		test -e "$prefix" &&
--			die "prefix '$prefix' already exists."
-+		test -e "$arg_prefix" &&
-+			die "prefix '$arg_prefix' already exists."
- 		;;
- 	*)
--		test -e "$prefix" ||
--			die "'$prefix' does not exist; use 'git subtree add'"
-+		test -e "$arg_prefix" ||
-+			die "'$arg_prefix' does not exist; use 'git subtree add'"
- 		;;
- 	esac
- 
--	dir="$(dirname "$prefix/.")"
-+	dir="$(dirname "$arg_prefix/.")"
- 
--	if test "$command" != "pull" &&
--			test "$command" != "add" &&
--			test "$command" != "push"
-+	if test "$arg_command" != "pull" &&
-+			test "$arg_command" != "add" &&
-+			test "$arg_command" != "push"
- 	then
- 		revs=$(git rev-parse $default --revs-only "$@") || exit $?
- 		dirs=$(git rev-parse --no-revs --no-flags "$@") || exit $?
-@@ -192,14 +192,14 @@ main () {
- 		fi
- 	fi
- 
--	debug "command: {$command}"
-+	debug "command: {$arg_command}"
- 	debug "quiet: {$GIT_QUIET}"
- 	debug "revs: {$revs}"
- 	debug "dir: {$dir}"
- 	debug "opts: {$*}"
- 	debug
- 
--	"cmd_$command" "$@"
-+	"cmd_$arg_command" "$@"
  }
  
- cache_setup () {
-@@ -333,7 +333,7 @@ find_existing_splits () {
- 	main=
- 	sub=
- 	local grep_format="^git-subtree-dir: $dir/*\$"
--	if test -n "$ignore_joins"
-+	if test -n "$arg_split_ignore_joins"
+-rev_is_descendant_of_branch () {
+-	newrev="$1"
+-	branch="$2"
+-	branch_hash=$(git rev-parse "$branch")
+-	match=$(git rev-list -1 "$branch_hash" "^$newrev")
+-
+-	if test -z "$match"
+-	then
+-		return 0
+-	else
+-		return 1
+-	fi
+-}
+-
+ # if a commit doesn't have a parent, this might not work.  But we only want
+ # to remove the parent from the rev-list, and since it doesn't exist, it won't
+ # be there anyway, so do nothing in that case.
+@@ -811,7 +797,7 @@ cmd_split () {
  	then
- 		grep_format="^Add '$dir/' from commit '"
- 	fi
-@@ -394,7 +394,7 @@ copy_commit () {
- 			GIT_COMMITTER_EMAIL \
- 			GIT_COMMITTER_DATE
- 		(
--			printf "%s" "$annotate"
-+			printf "%s" "$arg_split_annotate"
- 			cat
- 		) |
- 		git commit-tree "$2" $3  # reads the rest of stdin
-@@ -405,9 +405,9 @@ add_msg () {
- 	dir="$1"
- 	latest_old="$2"
- 	latest_new="$3"
--	if test -n "$message"
-+	if test -n "$arg_addmerge_message"
- 	then
--		commit_message="$message"
-+		commit_message="$arg_addmerge_message"
- 	else
- 		commit_message="Add '$dir/' from commit '$latest_new'"
- 	fi
-@@ -421,9 +421,9 @@ add_msg () {
- }
- 
- add_squashed_msg () {
--	if test -n "$message"
-+	if test -n "$arg_addmerge_message"
- 	then
--		echo "$message"
-+		echo "$arg_addmerge_message"
- 	else
- 		echo "Merge commit '$1' as '$2'"
- 	fi
-@@ -433,9 +433,9 @@ rejoin_msg () {
- 	dir="$1"
- 	latest_old="$2"
- 	latest_new="$3"
--	if test -n "$message"
-+	if test -n "$arg_addmerge_message"
- 	then
--		commit_message="$message"
-+		commit_message="$arg_addmerge_message"
- 	else
- 		commit_message="Split '$dir/' into commit '$latest_new'"
- 	fi
-@@ -722,7 +722,7 @@ cmd_add_commit () {
- 		headp=
- 	fi
- 
--	if test -n "$squash"
-+	if test -n "$arg_addmerge_squash"
- 	then
- 		rev=$(new_squash_commit "" "" "$rev") || exit $?
- 		commit=$(add_squashed_msg "$rev" "$dir" |
-@@ -741,10 +741,10 @@ cmd_split () {
- 	debug "Splitting $dir..."
- 	cache_setup || exit $?
- 
--	if test -n "$onto"
-+	if test -n "$arg_split_onto"
- 	then
--		debug "Reading history for --onto=$onto..."
--		git rev-list $onto |
-+		debug "Reading history for --onto=$arg_split_onto..."
-+		git rev-list $arg_split_onto |
- 		while read rev
- 		do
- 			# the 'onto' history is already just the subdir, so
-@@ -776,7 +776,7 @@ cmd_split () {
- 		die "No new revisions were found"
- 	fi
- 
--	if test -n "$rejoin"
-+	if test -n "$arg_split_rejoin"
- 	then
- 		debug "Merging split branch into HEAD..."
- 		latest_old=$(cache_get latest_old) || exit $?
-@@ -785,21 +785,21 @@ cmd_split () {
- 			-m "$(rejoin_msg "$dir" "$latest_old" "$latest_new")" \
- 			"$latest_new" >&2 || exit $?
- 	fi
--	if test -n "$branch"
-+	if test -n "$arg_split_branch"
- 	then
--		if rev_exists "refs/heads/$branch"
-+		if rev_exists "refs/heads/$arg_split_branch"
+ 		if rev_exists "refs/heads/$branch"
  		then
--			if ! git merge-base --is-ancestor "$branch" "$latest_new"
-+			if ! git merge-base --is-ancestor "$arg_split_branch" "$latest_new"
+-			if ! rev_is_descendant_of_branch "$latest_new" "$branch"
++			if ! git merge-base --is-ancestor "$branch" "$latest_new"
  			then
--				die "Branch '$branch' is not an ancestor of commit '$latest_new'."
-+				die "Branch '$arg_split_branch' is not an ancestor of commit '$latest_new'."
+ 				die "Branch '$branch' is not an ancestor of commit '$latest_new'."
  			fi
- 			action='Updated'
- 		else
- 			action='Created'
- 		fi
- 		git update-ref -m 'subtree split' \
--			"refs/heads/$branch" "$latest_new" || exit $?
--		say >&2 "$action branch '$branch'"
-+			"refs/heads/$arg_split_branch" "$latest_new" || exit $?
-+		say >&2 "$action branch '$arg_split_branch'"
- 	fi
- 	echo "$latest_new"
- 	exit 0
-@@ -810,7 +810,7 @@ cmd_merge () {
- 	ensure_single_rev $rev
- 	ensure_clean
- 
--	if test -n "$squash"
-+	if test -n "$arg_addmerge_squash"
- 	then
- 		first_split="$(find_latest_squash "$dir")" || exit $?
- 		if test -z "$first_split"
-@@ -830,12 +830,12 @@ cmd_merge () {
- 		rev="$new"
- 	fi
- 
--	if test -n "$message"
-+	if test -n "$arg_addmerge_message"
- 	then
--		git merge -Xsubtree="$prefix" \
--		    --message="$message" "$rev"
-+		git merge -Xsubtree="$arg_prefix" \
-+			--message="$arg_addmerge_message" "$rev"
- 	else
--		git merge -Xsubtree="$prefix" $rev
-+		git merge -Xsubtree="$arg_prefix" $rev
- 	fi
- }
- 
-@@ -863,7 +863,7 @@ cmd_push () {
- 		repository=$1
- 		refspec=$2
- 		echo "git push using: " "$repository" "$refspec"
--		localrev=$(git subtree split --prefix="$prefix") || die
-+		localrev=$(git subtree split --prefix="$arg_prefix") || die
- 		git push "$repository" "$localrev":"refs/heads/$refspec"
- 	else
- 		die "'$dir' must already exist. Try 'git subtree add'."
 -- 
 2.31.1
 
