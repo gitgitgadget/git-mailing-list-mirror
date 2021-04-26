@@ -2,119 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 570ECC433ED
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 15:45:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA92CC433B4
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 15:45:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1E9DA61175
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 15:45:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 942136135B
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 15:45:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234102AbhDZPqF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Apr 2021 11:46:05 -0400
-Received: from cloud.peff.net ([104.130.231.41]:35392 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233919AbhDZPqE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Apr 2021 11:46:04 -0400
-Received: (qmail 29991 invoked by uid 109); 26 Apr 2021 15:45:22 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 26 Apr 2021 15:45:22 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7493 invoked by uid 111); 26 Apr 2021 15:45:22 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 26 Apr 2021 11:45:22 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 26 Apr 2021 11:45:21 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v2 5/6] fsck: report invalid types recorded in objects
-Message-ID: <YIbgEaY+cie/4h2X@coredump.intra.peff.net>
-References: <cover-0.6-00000000000-20210328T025618Z-avarab@gmail.com>
- <cover-0.6-00000000000-20210413T093734Z-avarab@gmail.com>
- <patch-5.6-5fb6ac4faee-20210413T093734Z-avarab@gmail.com>
- <YILbk34nwqCPmxGQ@coredump.intra.peff.net>
- <87im493yos.fsf@evledraar.gmail.com>
+        id S234134AbhDZPqR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Apr 2021 11:46:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35564 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233919AbhDZPqQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Apr 2021 11:46:16 -0400
+Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4600C061574
+        for <git@vger.kernel.org>; Mon, 26 Apr 2021 08:45:33 -0700 (PDT)
+Received: by mail-qt1-x832.google.com with SMTP id l1so2097126qtr.12
+        for <git@vger.kernel.org>; Mon, 26 Apr 2021 08:45:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:from:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=ghFVnKGIvhvcH9nkvEgwBo7Dsf5xehS7zV96S3D2oqE=;
+        b=GeJbI8Z3IkTFG2r1abecZ9EmQZH2uZCEPqrmSqY7h2S1OwSQwwIZo1jZ0juLHT+FHF
+         ciU1LR28BajivrYp4l2Wi9Uy1/VliCt87tX/CCuiDh8Evu7+81RkUHK1UA1M8LZ5fXsN
+         7iEcakLTRvxtYboXkigyDX9l/Q+0LiUZa1o5Us+QNt8V23sx0X1PaRoD9CFahiBh98rd
+         /ZtBZO5i0p43ukR46PypUd6nsC52pyGckxzvwO2iwvs/aAxDo4NJx8m1glA8061Fkh7j
+         8GJX95zBKxURvOz5nerWkljmg5tA8gasPQsDA9m4JQ+6aSNAB3CjUSj2A6+4i2Hyilqf
+         zBGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=ghFVnKGIvhvcH9nkvEgwBo7Dsf5xehS7zV96S3D2oqE=;
+        b=a0kFogtfMj+9qRijdT8oVbnTqK4lrnHZr8CG9Eyn5G+44FuwaOoIdnCmHkzIjuIKgS
+         hAgQ8CLF0+WXIkx+Cjp+B+PHATi/lEzQpDo3BhZRKUvrBwgoh9bWzGoJpUEhu4QMTOxm
+         v6ANzlXB78IOmsCDLM8AVss1YkNX3MVp6QKFftJ2TvbuscxbJDrFSglX/LL4ez/GpaGH
+         yXDyz+nRgtZjeTKiWPtEsKz53RmWXzOo61KRiWJOb1IppjQFFiLDVjobqPUTawjbPYJ/
+         Wiz/ml2Uy4fK06/A3ji4+63dnsSbTdUNP8QCz3TOHlKs/pT2YSOn771B39p5TXoFMETu
+         eNcw==
+X-Gm-Message-State: AOAM532wc0hm2P0OyezddvqwN9vsq5xRoIUl4ohJfhdf5jEfnHyWUX/Z
+        0s3UzTzZ3k/Cv2XhCjS2MXg=
+X-Google-Smtp-Source: ABdhPJw3ehglrtP3OR9OvCX806MrOzJN3g6zk2voJVP8uivAY1L9+LmiMMdY4AzfLiJqgJ2Bk6V1uA==
+X-Received: by 2002:ac8:4501:: with SMTP id q1mr16973356qtn.385.1619451933090;
+        Mon, 26 Apr 2021 08:45:33 -0700 (PDT)
+Received: from Derricks-MBP.attlocal.net ([2600:1700:e72:80a0:cdf6:999f:6779:61eb])
+        by smtp.gmail.com with ESMTPSA id c29sm11349276qtv.93.2021.04.26.08.45.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 26 Apr 2021 08:45:32 -0700 (PDT)
+Subject: Re: [PATCH 05/23] fsmonitor--daemon: add a built-in fsmonitor daemon
+From:   Derrick Stolee <stolee@gmail.com>
+To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Jeff Hostetler <jeffhost@microsoft.com>
+References: <pull.923.git.1617291666.gitgitgadget@gmail.com>
+ <95d511d83b1211f24aeb17edbd4918750f406ece.1617291666.git.gitgitgadget@gmail.com>
+ <522e10e6-f18d-9c28-7102-f5a855d4be50@gmail.com>
+Message-ID: <1c45542a-5d80-6e51-26fe-94066987a566@gmail.com>
+Date:   Mon, 26 Apr 2021 11:45:32 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:78.0)
+ Gecko/20100101 Thunderbird/78.9.1
 MIME-Version: 1.0
+In-Reply-To: <522e10e6-f18d-9c28-7102-f5a855d4be50@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87im493yos.fsf@evledraar.gmail.com>
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 26, 2021 at 04:28:30PM +0200, Ævar Arnfjörð Bjarmason wrote:
-
-> >> @@ -92,7 +93,8 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
-> >>  	switch (opt) {
-> >>  	case 't':
-> >>  		oi.type_name = &sb;
-> >> -		if (oid_object_info_extended(the_repository, &oid, &oi, flags) < 0)
-> >> +		ret = oid_object_info_extended(the_repository, &oid, &oi, flags);
-> >> +		if (!unknown_type && ret < 0)
-> >>  			die("git cat-file: could not get object info");
-> >>  		if (sb.len) {
-> >>  			printf("%s\n", sb.buf);
-> >
-> > Surprised to see changes to cat-file here, since the commit message is
-> > all about fsck. Did the semantics of oid_object_info_extended() change?
-> > I.e., this hunk implies to me that it is now returning -1 when we said
-> > unknown types were OK, and we got one. But in that case, how do we
-> > distinguish that from a real error?
-> >
-> > Or more concretely, this patch causes this:
-> >
-> >   $ git cat-file -t 1234567890123456789012345678901234567890
-> >   fatal: git cat-file: could not get object info
-> >
-> >   $ git.compile cat-file --allow-unknown-type -t 1234567890123456789012345678901234567890
-> >   fatal: git cat-file 1234567890123456789012345678901234567890: bad file
-> >
-> > Or much worse, from the next hunk:
-> >
-> >   $ git cat-file -s 1234567890123456789012345678901234567890
-> >   fatal: git cat-file: could not get object info
-> >
-> >   $ git cat-file --allow-unknown-type -s 1234567890123456789012345678901234567890
-> >   140732113568960
-> >
-> > That seems wrong (so I think my "this hunk implies" is not true, but
-> > then I am left with: what is the point of this hunk?).
+On 4/26/21 11:08 AM, Derrick Stolee wrote:
+> On 4/1/21 11:40 AM, Jeff Hostetler via GitGitGadget wrote:> +#ifdef HAVE_FSMONITOR_DAEMON_BACKEND
 > 
-> That's very well spotted.
+> I think these compile-time macros should be replaced with a
+> method call, as I've said before. It should be simple to say
 > 
-> I started re-rolling this today but ran out of time. For what it's worth
-> the combination of this and 6/6 "makes sense" in the sense that all
-> tests pass at the end of this series.
+> 	if (!fsmonitor_ipc__is_supported())
+> 		die(_("fsmonitor--daemon is not supported on this platform"));
 > 
-> But the cases you're pointing out are ones we don't have tests for,
-> i.e. the combination of "allow unknown" and a non-existing object, as
-> opposed to a garbage one.
+> and call it a day. This can be done before parsing arguments.
 > 
-> Hence the bug with passing up an invalid (uninitialized) size in that
-> case. It's fallout from other partial lib-ification changes of these
-> APIs, i.e. making them return bad values upstream instead of dying right
-> away.
+>> +int cmd_fsmonitor__daemon(int argc, const char **argv, const char *prefix)
+>> +{
+>> +	enum daemon_mode {
+>> +		UNDEFINED_MODE,
+>> +	} mode = UNDEFINED_MODE;
+>> +
+>> +	struct option options[] = {
+>> +		OPT_END()
+>> +	};
+> 
+> I can see where you are going here, to use the parse-opts API
+> to get your "--<verb>" arguments to populate an 'enum'. However,
+> it seems like you will run into the problem where a user enters
+> multiple such arguments and you lose the information as the
+> parser overwrites 'mode' here.
 
-I'm not sure I understand. The problem seems solely in the hunk above.
-Before, if we got an error from oid_object_info_extended(), we stopped
-immediately. But after, we look at the results even though it told us
-there was an error. In general, I would think that a "-1" return value
-from oid_object_info_extended() is "all bets are off" (remember that
-unlike oid_object_info(), this is a strict error return, and not trying
-to force the object type into the return value).
+I see that you use OPT_CMDMODE in your implementation, which
+makes this concern invalid.
 
-And that's independent of what the other patches in the series are
-doing, I think.
+> Better to use a positional argument and drop the "--" prefix,
+> in my opinion.
 
-> I'll sort that out in some sensible way. Starting with adding meaningful
-> test coverage for the existing behavior.
+This is my personal taste, but the technical reason to do this
+doesn't exist.
 
-Yeah, that sounds fine. I think the current behavior there is perfectly
-reasonable (fail with "could not get object info").
-
--Peff
+Thanks,
+-Stolee
