@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F07BC433B4
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 01:04:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 54F6DC43460
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 01:04:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4B791611CD
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 01:04:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 33C52611CA
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 01:04:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231596AbhDZBEm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 25 Apr 2021 21:04:42 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:41824 "EHLO
+        id S231602AbhDZBEo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 25 Apr 2021 21:04:44 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:41834 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S231566AbhDZBEm (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 25 Apr 2021 21:04:42 -0400
+        by vger.kernel.org with ESMTP id S231597AbhDZBEn (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 25 Apr 2021 21:04:43 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 638AB6078F;
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id DE9AB60790;
         Mon, 26 Apr 2021 01:03:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1619399011;
-        bh=ryxL8TVkz3SwpwZYerzMP3/FULu0TXbnpOnkVI/nH1c=;
+        s=default; t=1619399012;
+        bh=9ZAn54+fAcZjKJEA/xFlfWTiGUvNgcmeVuZYG/DPAmc=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=xNpZ7U3jhkTkw4MOtGh6UcL0VtcD1zrRnnC/Ygqmvcm+5zuljhhYIsBbvpBPb6uOi
-         JUMov0yXTh1/Obxzp2TV7XpS+7WbK6KLnwuU3ocCSRv4xggIDi4KyTOmhkKE/MJpFU
-         Ps57k0kmrI9/yjocbY5gY/kbPLbhs/ysql7pSG+ExQnHcyNIrGJ6/ivhNp9SgftIPX
-         XBNZHVgbNxW5uPrGydzQwI1h/YDOaQ9XH6YMYTeAKWPUmz/Hz80IU15c3uYmFPpeko
-         9xmTRCnGj/L8C1efm1eW3IBn2jKZhly57B3dgqCy/p4eN8sKBaKgxsXMFUW9/tbh2Y
-         7o8ZHp6Zd+8UzoEozI+hVB25bG0rj7ktui37hSq2CTDOYGgruRt9TGwcGdHZPP6V8x
-         j5YJtU64lbtx0XGkUX6sSlNqkK7akyB6MBsIT5FvcF0H2xNF5SmQsdZUQbPpooWoX5
-         xPwLC57RV1EmRw7H19LIMWaabwokHYiQ/YF0HxaEOmkndaK6ky4
+        b=NuI+uF/5+vORI3+jHKY4t9V1nVE5GwmHxUQcZnlKgPDJS5tZ5LdDVwGPzfF6tV44g
+         D8Mv29X9mAoDyo9lRMY8hHG3QlBS/o9Q2KC+YAe1i8sQ2vtYWz+sg9ewNERZvihXUa
+         32bFYiKYZ9L3EgQeDeGJfndoKlRlBiUZPuD9YfZ9lijdV232traJA2cafwLCmf+65d
+         f7Jlt6PAJvCD2pCB2QGkeaVoMul7LDgfONU6pM9i8jmMdgnpj/W8OIK/SoU/OeRrYo
+         ddoFHiWI4MlgaGQs81sFKeUQiAZbXXNy+yW8dmFTWA81l09MYJ0MnRg5GM4v0IidAe
+         TnuzabilaPN+ExRHnlJp5FM2iNlpC5QvNtJBh4i8KEKwZVDystFbtKLSFshxMTLoQM
+         Ru/xA35jvMaUvPSw95aK6j+TxQslnYhwgvxW9sioi/dimDfNzWeAC8Y/GA4wpQCqBv
+         BiToSQJiVL12se37qm7BNuqhlSX5bcPm0rgzga0XYoKgdZ7O/1R
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Derrick Stolee <dstolee@microsoft.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 04/13] hash: add a function to finalize object IDs
-Date:   Mon, 26 Apr 2021 01:02:52 +0000
-Message-Id: <20210426010301.1093562-5-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 05/13] Use the final_oid_fn to finalize hashing of object IDs
+Date:   Mon, 26 Apr 2021 01:02:53 +0000
+Message-Id: <20210426010301.1093562-6-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.31.1.498.g6c1eba8ee3d
 In-Reply-To: <20210426010301.1093562-1-sandals@crustytoothpaste.net>
 References: <20210426010301.1093562-1-sandals@crustytoothpaste.net>
@@ -55,171 +55,146 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-To avoid the penalty of having to branch in hash comparison functions,
-we'll want to always compare the full hash member in a struct object_id,
-which will require that SHA-1 object IDs be zero-padded.  To do so, add
-a function which finalizes a hash context and writes it into an object
-ID that performs this padding.
-
-Move the definition of struct object_id and the constant definitions
-higher up so we they are available for us to use.
+When we're hashing a value which is going to be an object ID, we want to
+zero-pad that value if necessary.  To do so, use the final_oid_fn
+instead of the final_fn anytime we're going to create an object ID to
+ensure we perform this operation.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- hash.h        | 50 +++++++++++++++++++++++++++-----------------------
- object-file.c | 25 +++++++++++++++++++++++++
- 2 files changed, 52 insertions(+), 23 deletions(-)
+ builtin/fast-import.c    | 4 ++--
+ builtin/index-pack.c     | 2 +-
+ builtin/unpack-objects.c | 2 +-
+ bulk-checkin.c           | 2 +-
+ diff.c                   | 2 +-
+ http.c                   | 2 +-
+ object-file.c            | 8 ++++----
+ 7 files changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/hash.h b/hash.h
-index dafdcb3335..c8f03d8aee 100644
---- a/hash.h
-+++ b/hash.h
-@@ -95,6 +95,29 @@ static inline void git_SHA256_Clone(git_SHA256_CTX *dst, const git_SHA256_CTX *s
- /* Number of algorithms supported (including unknown). */
- #define GIT_HASH_NALGOS (GIT_HASH_SHA256 + 1)
+diff --git a/builtin/fast-import.c b/builtin/fast-import.c
+index 9d2a058a66..20406f6775 100644
+--- a/builtin/fast-import.c
++++ b/builtin/fast-import.c
+@@ -940,7 +940,7 @@ static int store_object(
+ 	the_hash_algo->init_fn(&c);
+ 	the_hash_algo->update_fn(&c, hdr, hdrlen);
+ 	the_hash_algo->update_fn(&c, dat->buf, dat->len);
+-	the_hash_algo->final_fn(oid.hash, &c);
++	the_hash_algo->final_oid_fn(&oid, &c);
+ 	if (oidout)
+ 		oidcpy(oidout, &oid);
  
-+/* The length in bytes and in hex digits of an object name (SHA-1 value). */
-+#define GIT_SHA1_RAWSZ 20
-+#define GIT_SHA1_HEXSZ (2 * GIT_SHA1_RAWSZ)
-+/* The block size of SHA-1. */
-+#define GIT_SHA1_BLKSZ 64
-+
-+/* The length in bytes and in hex digits of an object name (SHA-256 value). */
-+#define GIT_SHA256_RAWSZ 32
-+#define GIT_SHA256_HEXSZ (2 * GIT_SHA256_RAWSZ)
-+/* The block size of SHA-256. */
-+#define GIT_SHA256_BLKSZ 64
-+
-+/* The length in byte and in hex digits of the largest possible hash value. */
-+#define GIT_MAX_RAWSZ GIT_SHA256_RAWSZ
-+#define GIT_MAX_HEXSZ GIT_SHA256_HEXSZ
-+/* The largest possible block size for any supported hash. */
-+#define GIT_MAX_BLKSZ GIT_SHA256_BLKSZ
-+
-+struct object_id {
-+	unsigned char hash[GIT_MAX_RAWSZ];
-+	int algo;
-+};
-+
- /* A suitably aligned type for stack allocations of hash contexts. */
- union git_hash_ctx {
- 	git_SHA_CTX sha1;
-@@ -106,6 +129,7 @@ typedef void (*git_hash_init_fn)(git_hash_ctx *ctx);
- typedef void (*git_hash_clone_fn)(git_hash_ctx *dst, const git_hash_ctx *src);
- typedef void (*git_hash_update_fn)(git_hash_ctx *ctx, const void *in, size_t len);
- typedef void (*git_hash_final_fn)(unsigned char *hash, git_hash_ctx *ctx);
-+typedef void (*git_hash_final_oid_fn)(struct object_id *oid, git_hash_ctx *ctx);
+@@ -1136,7 +1136,7 @@ static void stream_blob(uintmax_t len, struct object_id *oidout, uintmax_t mark)
+ 		}
+ 	}
+ 	git_deflate_end(&s);
+-	the_hash_algo->final_fn(oid.hash, &c);
++	the_hash_algo->final_oid_fn(&oid, &c);
  
- struct git_hash_algo {
- 	/*
-@@ -138,6 +162,9 @@ struct git_hash_algo {
- 	/* The hash finalization function. */
- 	git_hash_final_fn final_fn;
- 
-+	/* The hash finalization function for object IDs. */
-+	git_hash_final_oid_fn final_oid_fn;
-+
- 	/* The OID of the empty tree. */
- 	const struct object_id *empty_tree;
- 
-@@ -161,29 +188,6 @@ static inline int hash_algo_by_ptr(const struct git_hash_algo *p)
- 	return p - hash_algos;
+ 	if (oidout)
+ 		oidcpy(oidout, &oid);
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 41e2c240b8..3fbc5d7077 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -489,7 +489,7 @@ static void *unpack_entry_data(off_t offset, unsigned long size,
+ 		bad_object(offset, _("inflate returned %d"), status);
+ 	git_inflate_end(&stream);
+ 	if (oid)
+-		the_hash_algo->final_fn(oid->hash, &c);
++		the_hash_algo->final_oid_fn(oid, &c);
+ 	return buf == fixed_buf ? NULL : buf;
  }
  
--/* The length in bytes and in hex digits of an object name (SHA-1 value). */
--#define GIT_SHA1_RAWSZ 20
--#define GIT_SHA1_HEXSZ (2 * GIT_SHA1_RAWSZ)
--/* The block size of SHA-1. */
--#define GIT_SHA1_BLKSZ 64
--
--/* The length in bytes and in hex digits of an object name (SHA-256 value). */
--#define GIT_SHA256_RAWSZ 32
--#define GIT_SHA256_HEXSZ (2 * GIT_SHA256_RAWSZ)
--/* The block size of SHA-256. */
--#define GIT_SHA256_BLKSZ 64
--
--/* The length in byte and in hex digits of the largest possible hash value. */
--#define GIT_MAX_RAWSZ GIT_SHA256_RAWSZ
--#define GIT_MAX_HEXSZ GIT_SHA256_HEXSZ
--/* The largest possible block size for any supported hash. */
--#define GIT_MAX_BLKSZ GIT_SHA256_BLKSZ
--
--struct object_id {
--	unsigned char hash[GIT_MAX_RAWSZ];
--	int algo;
--};
--
- #define the_hash_algo the_repository->hash_algo
+diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
+index a8b73ecf43..6ac90dc5f7 100644
+--- a/builtin/unpack-objects.c
++++ b/builtin/unpack-objects.c
+@@ -576,7 +576,7 @@ int cmd_unpack_objects(int argc, const char **argv, const char *prefix)
+ 	the_hash_algo->init_fn(&ctx);
+ 	unpack_all();
+ 	the_hash_algo->update_fn(&ctx, buffer, offset);
+-	the_hash_algo->final_fn(oid.hash, &ctx);
++	the_hash_algo->final_oid_fn(&oid, &ctx);
+ 	if (strict) {
+ 		write_rest();
+ 		if (fsck_finish(&fsck_options))
+diff --git a/bulk-checkin.c b/bulk-checkin.c
+index 6f3c97cd34..127312acd1 100644
+--- a/bulk-checkin.c
++++ b/bulk-checkin.c
+@@ -238,7 +238,7 @@ static int deflate_to_pack(struct bulk_checkin_state *state,
+ 		if (lseek(fd, seekback, SEEK_SET) == (off_t) -1)
+ 			return error("cannot seek back");
+ 	}
+-	the_hash_algo->final_fn(result_oid->hash, &ctx);
++	the_hash_algo->final_oid_fn(result_oid, &ctx);
+ 	if (!idx)
+ 		return 0;
  
- extern const struct object_id null_oid;
+diff --git a/diff.c b/diff.c
+index 4acccd9d7e..97c62f47df 100644
+--- a/diff.c
++++ b/diff.c
+@@ -6234,7 +6234,7 @@ static int diff_get_patch_id(struct diff_options *options, struct object_id *oid
+ 	}
+ 
+ 	if (!stable)
+-		the_hash_algo->final_fn(oid->hash, &ctx);
++		the_hash_algo->final_oid_fn(oid, &ctx);
+ 
+ 	return 0;
+ }
+diff --git a/http.c b/http.c
+index 406410f884..c83bc33a5f 100644
+--- a/http.c
++++ b/http.c
+@@ -2576,7 +2576,7 @@ int finish_http_object_request(struct http_object_request *freq)
+ 	}
+ 
+ 	git_inflate_end(&freq->stream);
+-	the_hash_algo->final_fn(freq->real_oid.hash, &freq->c);
++	the_hash_algo->final_oid_fn(&freq->real_oid, &freq->c);
+ 	if (freq->zret != Z_STREAM_END) {
+ 		unlink_or_warn(freq->tmpfile.buf);
+ 		return -1;
 diff --git a/object-file.c b/object-file.c
-index 624af408cd..ef1eb984c8 100644
+index ef1eb984c8..1d8c82fa99 100644
 --- a/object-file.c
 +++ b/object-file.c
-@@ -89,6 +89,12 @@ static void git_hash_sha1_final(unsigned char *hash, git_hash_ctx *ctx)
- 	git_SHA1_Final(hash, &ctx->sha1);
- }
- 
-+static void git_hash_sha1_final_oid(struct object_id *oid, git_hash_ctx *ctx)
-+{
-+	git_SHA1_Final(oid->hash, &ctx->sha1);
-+	memset(oid->hash + GIT_SHA1_RAWSZ, 0, GIT_MAX_RAWSZ - GIT_SHA1_RAWSZ);
-+}
-+
- 
- static void git_hash_sha256_init(git_hash_ctx *ctx)
- {
-@@ -110,6 +116,16 @@ static void git_hash_sha256_final(unsigned char *hash, git_hash_ctx *ctx)
- 	git_SHA256_Final(hash, &ctx->sha256);
- }
- 
-+static void git_hash_sha256_final_oid(struct object_id *oid, git_hash_ctx *ctx)
-+{
-+	git_SHA256_Final(oid->hash, &ctx->sha256);
-+	/*
-+	 * This currently does nothing, so the compiler should optimize it out,
-+	 * but keep it in case we extend the hash size again.
-+	 */
-+	memset(oid->hash + GIT_SHA256_RAWSZ, 0, GIT_MAX_RAWSZ - GIT_SHA256_RAWSZ);
-+}
-+
- static void git_hash_unknown_init(git_hash_ctx *ctx)
- {
- 	BUG("trying to init unknown hash");
-@@ -130,6 +146,12 @@ static void git_hash_unknown_final(unsigned char *hash, git_hash_ctx *ctx)
- 	BUG("trying to finalize unknown hash");
- }
- 
-+static void git_hash_unknown_final_oid(struct object_id *oid, git_hash_ctx *ctx)
-+{
-+	BUG("trying to finalize unknown hash");
-+}
-+
-+
- const struct git_hash_algo hash_algos[GIT_HASH_NALGOS] = {
- 	{
- 		NULL,
-@@ -141,6 +163,7 @@ const struct git_hash_algo hash_algos[GIT_HASH_NALGOS] = {
- 		git_hash_unknown_clone,
- 		git_hash_unknown_update,
- 		git_hash_unknown_final,
-+		git_hash_unknown_final_oid,
- 		NULL,
- 		NULL,
- 	},
-@@ -155,6 +178,7 @@ const struct git_hash_algo hash_algos[GIT_HASH_NALGOS] = {
- 		git_hash_sha1_clone,
- 		git_hash_sha1_update,
- 		git_hash_sha1_final,
-+		git_hash_sha1_final_oid,
- 		&empty_tree_oid,
- 		&empty_blob_oid,
- 	},
-@@ -169,6 +193,7 @@ const struct git_hash_algo hash_algos[GIT_HASH_NALGOS] = {
- 		git_hash_sha256_clone,
- 		git_hash_sha256_update,
- 		git_hash_sha256_final,
-+		git_hash_sha256_final_oid,
- 		&empty_tree_oid_sha256,
- 		&empty_blob_oid_sha256,
+@@ -1054,7 +1054,7 @@ int check_object_signature(struct repository *r, const struct object_id *oid,
+ 			break;
+ 		r->hash_algo->update_fn(&c, buf, readlen);
  	}
+-	r->hash_algo->final_fn(real_oid.hash, &c);
++	r->hash_algo->final_oid_fn(&real_oid, &c);
+ 	close_istream(st);
+ 	return !oideq(oid, &real_oid) ? -1 : 0;
+ }
+@@ -1755,7 +1755,7 @@ static void write_object_file_prepare(const struct git_hash_algo *algo,
+ 	algo->init_fn(&c);
+ 	algo->update_fn(&c, hdr, *hdrlen);
+ 	algo->update_fn(&c, buf, len);
+-	algo->final_fn(oid->hash, &c);
++	algo->final_oid_fn(oid, &c);
+ }
+ 
+ /*
+@@ -1927,7 +1927,7 @@ static int write_loose_object(const struct object_id *oid, char *hdr,
+ 	if (ret != Z_OK)
+ 		die(_("deflateEnd on object %s failed (%d)"), oid_to_hex(oid),
+ 		    ret);
+-	the_hash_algo->final_fn(parano_oid.hash, &c);
++	the_hash_algo->final_oid_fn(&parano_oid, &c);
+ 	if (!oideq(oid, &parano_oid))
+ 		die(_("confused by unstable object source data for %s"),
+ 		    oid_to_hex(oid));
+@@ -2508,7 +2508,7 @@ static int check_stream_oid(git_zstream *stream,
+ 		return -1;
+ 	}
+ 
+-	the_hash_algo->final_fn(real_oid.hash, &c);
++	the_hash_algo->final_oid_fn(&real_oid, &c);
+ 	if (!oideq(expected_oid, &real_oid)) {
+ 		error(_("hash mismatch for %s (expected %s)"), path,
+ 		      oid_to_hex(expected_oid));
