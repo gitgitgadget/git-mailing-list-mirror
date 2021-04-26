@@ -2,95 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5747CC433ED
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 00:40:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EBE05C433B4
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 01:03:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 19B806117A
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 00:40:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B37E4611CD
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 01:03:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231411AbhDZAkk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 25 Apr 2021 20:40:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33630 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231247AbhDZAkj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Apr 2021 20:40:39 -0400
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D09DEC061574
-        for <git@vger.kernel.org>; Sun, 25 Apr 2021 17:39:55 -0700 (PDT)
-Received: by mail-pj1-x102c.google.com with SMTP id f11-20020a17090a638bb02901524d3a3d48so4147479pjj.3
-        for <git@vger.kernel.org>; Sun, 25 Apr 2021 17:39:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=CwYDtQXUN6H0pCiHMnaxRGT/oA8MQSJ9542OvWqbVRw=;
-        b=RqvMxS8Nhq4XAJN1UTK9LMBL6JDoxm8690BMTubsVmNnNlapdMbiLsQ6EYAelr6zMf
-         jD30/r/2wd4SBmc2KUtoHuPRq2gPbSSTE6f6VUGzh34/bLH/MJJ6XQmebMJI792xJ9F3
-         gsJ52zvUBtItuwemkOJX7auo/iKhspmmwtYOgo3/SVEDRqv3+ciVp2NsQRPEteTZxUUr
-         aXTGo1hb+Aqr2MGlXyCCrKyVrvxrTNOEFpQNQPBB1jZHiTMkpXdDcVYYc4HqNjaa0KSN
-         QfgfDu7ETL6TAOOTsMvUOMrDGWI+59682tFp9enmi/n9o2LaxoMMg0HqYDGtuzCNe3J9
-         YCWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=CwYDtQXUN6H0pCiHMnaxRGT/oA8MQSJ9542OvWqbVRw=;
-        b=boRdNrIePsE3KXLqeaPSeomkW4nf9M28rZoQCY5GhdBY/cOjq3664eEa7yEv5Rrgxx
-         c3FYlo6xMGatJDBOwmYD+iwbiA4jR26J9ld6dRZkddm4gEqdQK5gihmtVa8+u2jzPF8S
-         v6qZ3/nocPUj6MzjDvRDUcLfpQRmb4kGE0pxvGfruPj04atUYEAIZcwdH3lrU1WreK7D
-         L8ZsiqS2HtR4+I1LNSNm68GWZg4Q/9qXO7MuDqjOP9e/VB92r9FyqqapYRVyjFTabRHj
-         uziIADOBR50UY1+kHpL9FhQ/SRSc4m+Rd32r/9C8xM1Jisi9J5dHuzxXjRYM0n50vgse
-         myJw==
-X-Gm-Message-State: AOAM530xAl+TmWZXs8PCed+6D7HTidErjP/yITCJ+/JsAhFlk9jpwHPv
-        qRJ6JvMtRW7ivSWtE3jvSJo=
-X-Google-Smtp-Source: ABdhPJwD/6Dhitu3Vm9F681pQ8F+ObRC9x3K2lAYyHI1sRqzq7IWETgRLDYfdzcSQ2gwgCMdLCURKA==
-X-Received: by 2002:a17:902:6907:b029:ea:d1e8:b80b with SMTP id j7-20020a1709026907b02900ead1e8b80bmr15984735plk.41.1619397594976;
-        Sun, 25 Apr 2021 17:39:54 -0700 (PDT)
-Received: from localhost ([2402:800:63b8:d379:85bd:c83a:4b40:cd9b])
-        by smtp.gmail.com with ESMTPSA id u12sm9369037pfh.122.2021.04.25.17.39.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 25 Apr 2021 17:39:54 -0700 (PDT)
-Date:   Mon, 26 Apr 2021 07:39:52 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     Kostya M <kostya27@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Possible segfault with `git clone --mirror`
-Message-ID: <YIYL2BtIacMIthgy@danh.dev>
-References: <CACAwW2gHBPRujCV0LSS3p1Td_GkiGG87U6QPLVrp69ShVNnPTA@mail.gmail.com>
+        id S231545AbhDZBEN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 25 Apr 2021 21:04:13 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:41754 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S231403AbhDZBEM (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 25 Apr 2021 21:04:12 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id DD6546078B;
+        Mon, 26 Apr 2021 01:03:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1619399010;
+        bh=/YGve5cDUEh1PYIa3iooGJbxQJijQBF9Ub8JAznS4Fc=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+         In-Reply-To:References:Content-Type:Content-Disposition;
+        b=m8XU5mP6epcvZ8JZ6OcbQxj8n/v2OFc/pWIvo+ZAlinD1L/vFsFoP2egEiodTteAq
+         dAe8ezKIgXfxoqQ/wOuPRPhxfR0CRPxi/upuwCeADzYJmKawa7dn/RAHtLBdSU1O4h
+         qniTl/Md3FlZd7iDsP1DoIyilYaFSKmD7Q5S7UJE8wYeWM8o+gVEcROUN5nLlCqsgV
+         Z/lvp0K++09C6uztNAoVTrGNtt9WJ9ITlsXZ2kZHPyUOzLgVDQ9csDhUXSQxBUcadW
+         NYag5a0mGcgRwT+akUUPhDv37i0gW1MfcZJOkdp6JoX3Fxk2trGkK9xMtVaXuBaZ6Y
+         y8VX9Um3yVu7wXIWx8be8XnwRL61hif0E/jIlhu8pjp8yMGwvrdIWBbYXPirvWFTmg
+         9xkOvoFiieCFSIyi4dUN7jjeMMcPIW2XpRSHrcmJ3ZzG2RC4zWQ/RUsJTYkWxcz6JX
+         f0lqN/N8U+dDYfC2JhTbPkidMemPEFjd3dKJKIvu153aIr1fWsv
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     <git@vger.kernel.org>
+Cc:     Derrick Stolee <dstolee@microsoft.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 01/13] hash: add an algo member to struct object_id
+Date:   Mon, 26 Apr 2021 01:02:49 +0000
+Message-Id: <20210426010301.1093562-2-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.31.1.498.g6c1eba8ee3d
+In-Reply-To: <20210426010301.1093562-1-sandals@crustytoothpaste.net>
+References: <20210426010301.1093562-1-sandals@crustytoothpaste.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACAwW2gHBPRujCV0LSS3p1Td_GkiGG87U6QPLVrp69ShVNnPTA@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2021-04-25 21:17:50+0300, Kostya M <kostya27@gmail.com> wrote:
-> Git 2.31.1, reproduced on Ubuntu 20.04.01, and Arch Linux.
-> 
-> `git clone -c core.askPass=true --mirror --quiet --
-> https://github.com/kostya/myhtml.git myhtml`
-> Segmentation fault (core dumped)
-> 
-> If i remove --mirror argument, it works.
-> This command generated by crystal language package manager called shards.
+Now that we're working with multiple hash algorithms in the same repo,
+it's best if we label each object ID with its algorithm so we can
+determine how to format a given object ID. Add a member called algo to
+struct object_id.
 
-Not reproducible.
+Performance testing on object ID-heavy workloads doesn't reveal a clear
+change in performance.  Out of performance tests t0001 and t1450, there
+are slight variations in performance both up and down, but all
+measurements are within the margin of error.
 
-You may want to check if it's your config or filesystem first?
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ hash.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-If I were you, I would run something like this to see if it works:
-(Maybe with GIT_TRACE2=1 removed in first run to see if it's your config)
-
-	HOME=/tmp/not-exist XDG_CONFIG_HOME=/tmp/not-exist GIT_TRACE2=1 \
-		/usr/bin/git clone -c core.askPass=true --mirror --quiet -- \
-		https://github.com/kostya/myhtml.git myhtml
-
--- 
-Danh
+diff --git a/hash.h b/hash.h
+index 3fb0c3d400..dafdcb3335 100644
+--- a/hash.h
++++ b/hash.h
+@@ -181,6 +181,7 @@ static inline int hash_algo_by_ptr(const struct git_hash_algo *p)
+ 
+ struct object_id {
+ 	unsigned char hash[GIT_MAX_RAWSZ];
++	int algo;
+ };
+ 
+ #define the_hash_algo the_repository->hash_algo
