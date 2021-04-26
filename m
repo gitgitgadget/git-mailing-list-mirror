@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4FBF6C433ED
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 16:15:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1ACF8C433ED
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 16:15:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1A6E96115C
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 16:15:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D614361159
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 16:15:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234338AbhDZQQY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Apr 2021 12:16:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42366 "EHLO
+        id S234344AbhDZQQb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Apr 2021 12:16:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42388 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234328AbhDZQQX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Apr 2021 12:16:23 -0400
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 495E8C061574
-        for <git@vger.kernel.org>; Mon, 26 Apr 2021 09:15:41 -0700 (PDT)
-Received: by mail-ot1-x331.google.com with SMTP id 65-20020a9d03470000b02902808b4aec6dso47826299otv.6
-        for <git@vger.kernel.org>; Mon, 26 Apr 2021 09:15:41 -0700 (PDT)
+        with ESMTP id S234346AbhDZQQ1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Apr 2021 12:16:27 -0400
+Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2150C061574
+        for <git@vger.kernel.org>; Mon, 26 Apr 2021 09:15:45 -0700 (PDT)
+Received: by mail-ot1-x335.google.com with SMTP id e89-20020a9d01e20000b0290294134181aeso26800766ote.5
+        for <git@vger.kernel.org>; Mon, 26 Apr 2021 09:15:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=uE+ln/DWyAKHmlptpr6V9OW1SY6SWtAUNqAMRFnMuDY=;
-        b=GXCcaKPDuvTlORWA5fCUTDtwqF/lrpD1E5Bpxj0ieM5qjM1lDJnwkRmx1WA3VsbNXR
-         pTbSWKeQNhEMs9j6bK7BTFJe4emRGPxN3l1oaorz997nzAk7PweeSvjor6jqrQFIYbOP
-         pOChlv4A2tfRnzcFHtEGk3HHq4toD1+5kLJUG/AqDvjHYrZp1MVHGKGf0HQP+nsxxI8v
-         i/IKq9jv5CD6H0J3xtXwi92bpASqtmT38YIERTxDAFL1KbjXDI7rzFWBqnbqb9fx632N
-         MXPfG7/hJ/G4r28AtxG7uSgS/n9Apst0r2RZ1YUNfFsBOwUmFlDoXCqhTwMxT1WBttQa
-         zbcg==
+        bh=TN5fyIbQXpcWr6TA0JuNUKoUtDPdeg1HgvROSqtCZbk=;
+        b=Y5hg19Y2y4MgC+HNeoprWjGz96y3PDSpBoED0frEZxML5pBojJPI+5BiLVbTqTyXJ7
+         1mo+wqUOYY4t4p36TIhjjkoXZxnN0TNxukyEIRfZWwt8wOyc1N3kWnh5lteq8B56PasI
+         kexGmkNUAuUTwJe7xm7xzrjWfpABS+Fu3j9O3bBQTv/cZMZdR9VA+l/6OP5rKshnw0re
+         7fkj3Zw2EtmmDjjZwlLumZfIOcb/8TpXyeUAYowz6rzo1l2susRgXRgyZFFbR8mCqSFE
+         LpF3bZuttN58IoiNvFyn2gILkiGV+VH2XM85cH9zBv/j6d4gknFJnAyT1n5AkrbDAH+m
+         NenQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=uE+ln/DWyAKHmlptpr6V9OW1SY6SWtAUNqAMRFnMuDY=;
-        b=Prjb/VH+sNKP8prbtSHErl0zOK3VYq456hin7A/TMVE15rtv2ed0hSqAYgeiPTLOrj
-         fLqu0EYShCEOXcsgJfELqenwGXgr/rWFFkD9/Nfn1YBup5Tk8uSxZlIotqDy0nKdDgio
-         VSf4Zd2TQhRcGLIzrih5/igXoi93zKh/XMlAbPsNmSB+Cq1bRahj2+ivPXQZDCPzbi83
-         tEG86p0AqxyRtrbQYa8AA3ITrkWCWdJMKZEeEcxFeZwMHXmab/2pJAxptQZ/bUnn0m4b
-         q5UQpuwthGCueHpK35Uk1SYozI7WcL1hBQK/KxZ5Oenl3AmSPttDp57gAv3N/+ZkgGV7
-         mAKA==
-X-Gm-Message-State: AOAM532u9whXlslMTYJ0vaduNaZoxySkdhVfooDMFqXnkX897oNwg+qQ
-        pEZD5JouYVIO5RyLBx2K28TbZ1gV4u6L6w==
-X-Google-Smtp-Source: ABdhPJxGnHe4lJhc/ilxBHbWXSIZSpzjAgQGtsA5J/Y5Q8Ttr3p9wHoFRIuIuJeAvOXEp7293fabNg==
-X-Received: by 2002:a9d:6b0e:: with SMTP id g14mr15273404otp.214.1619453740478;
-        Mon, 26 Apr 2021 09:15:40 -0700 (PDT)
-Received: from localhost ([2806:2f0:4060:638f:a2c5:89ff:fe0c:1151])
-        by smtp.gmail.com with ESMTPSA id b22sm3603330ots.59.2021.04.26.09.15.39
+        bh=TN5fyIbQXpcWr6TA0JuNUKoUtDPdeg1HgvROSqtCZbk=;
+        b=Bnv9kxCjv4eouiS4vjlg2mSvGO6z/SDoNtU10sg6x8UyRnu5fKMsdSZ9W+lWJXBA/p
+         yi/DwX+whoNOa6sCCeLWcGH1+9bOe7LnW+9VQfEOPAOykrhfeostWfCptk0BJOXH70j5
+         VALXuYILlQ+i7FQovxCfEwLZrM8pBzPEQG5zU/VOpsf58mK7nTWMfCivi39jEQBi/32u
+         0jqmReyB9InsOrZQxeC76Kkwtp+CoQ2IG/wuKvwbqjgTp93fqFpiFVZlF4+J2dAz7IAL
+         yz8YleDCGti4jpFV0JK0G5saM3ZbP06aQmKds+Tf2YrgEssYk/HEZ08fkwsEGVQyObUv
+         juZQ==
+X-Gm-Message-State: AOAM533cghCehnxiZAAoflCI4X3I1ZeVxTcPci+4SmS/fUtUoVFvUMrn
+        v3YZ+heR9kp2oSVFgREcOlGd3U/gTqjt4Q==
+X-Google-Smtp-Source: ABdhPJxlObGINHE/f+qiyH1IvJ8kYrj91rXIjuLjbKnthRjv6gca+QsTcINbxrvpq2A+Cy4cah8lyQ==
+X-Received: by 2002:a05:6830:1386:: with SMTP id d6mr15445729otq.150.1619453744945;
+        Mon, 26 Apr 2021 09:15:44 -0700 (PDT)
+Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
+        by smtp.gmail.com with ESMTPSA id f20sm73019oov.21.2021.04.26.09.15.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Apr 2021 09:15:40 -0700 (PDT)
+        Mon, 26 Apr 2021 09:15:44 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v1 08/43] test: completion: add run_func() helper
-Date:   Mon, 26 Apr 2021 11:14:23 -0500
-Message-Id: <20210426161458.49860-9-felipe.contreras@gmail.com>
+Subject: [PATCH v1 09/43] completion: bash: remove non-append functionality
+Date:   Mon, 26 Apr 2021 11:14:24 -0500
+Message-Id: <20210426161458.49860-10-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.31.0
 In-Reply-To: <20210426161458.49860-1-felipe.contreras@gmail.com>
 References: <20210426161458.49860-1-felipe.contreras@gmail.com>
@@ -71,208 +71,46 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Pretty straightforward: runs functions.
+There's no point in setting COMPREPLY only to override it later, and in
+fact; we don't do that.
+
+Therefore there's no functional difference between __gitcomp_direct()
+and __gitcomp_direct_append(), since __gitcomp_direct() *always*
+operates on empty COMPREPLY.
+
+The same goes for __gitcomp_nl().
+
+This patch makes the functionality of append and non-append functions
+the same.
+
+There should be no functional changes.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- t/t9902-completion.sh | 58 ++++++++++++++++++-------------------------
- 1 file changed, 24 insertions(+), 34 deletions(-)
+ contrib/completion/git-completion.bash | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 13bdf634a6..3528463047 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -78,6 +78,12 @@ run_completion ()
- 	__git_wrap__git_main && print_comp
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index cbb2730bf9..162c8a89a2 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -307,7 +307,7 @@ __gitcomp_direct ()
+ {
+ 	local IFS=$'\n'
+ 
+-	COMPREPLY=($1)
++	COMPREPLY+=($1)
  }
  
-+run_func ()
-+{
-+	local -a COMPREPLY &&
-+	"$@" && print_comp
-+}
-+
- # Test high-level completion
- # Arguments are:
- # 1: typed text so far (cur)
-@@ -455,8 +461,7 @@ test_expect_success '__gitcomp_direct - puts everything into COMPREPLY as-is' '
- 	EOF
- 	(
- 		cur=should_be_ignored &&
--		__gitcomp_direct "$(cat expected)" &&
--		print_comp
-+		run_func __gitcomp_direct "$(cat expected)"
- 	) &&
- 	test_cmp expected out
- '
-@@ -550,7 +555,7 @@ test_expect_success '__gitcomp - equal skip' '
- '
- 
- test_expect_success '__gitcomp - doesnt fail because of invalid variable name' '
--	__gitcomp "$invalid_variable_name"
-+	run_func __gitcomp "$invalid_variable_name"
- '
- 
- read -r -d "" refs <<-\EOF
-@@ -589,7 +594,7 @@ test_expect_success '__gitcomp_nl - no suffix' '
- '
- 
- test_expect_success '__gitcomp_nl - doesnt fail because of invalid variable name' '
--	__gitcomp_nl "$invalid_variable_name"
-+	run_func __gitcomp_nl "$invalid_variable_name"
- '
- 
- test_expect_success '__git_remotes - list remotes from $GIT_DIR/remotes and from config file' '
-@@ -1090,8 +1095,7 @@ test_expect_success '__git_complete_refs - simple' '
- 	EOF
- 	(
- 		cur= &&
--		__git_complete_refs &&
--		print_comp
-+		run_func __git_complete_refs
- 	) &&
- 	test_cmp expected out
- '
-@@ -1103,8 +1107,7 @@ test_expect_success '__git_complete_refs - matching' '
- 	EOF
- 	(
- 		cur=mat &&
--		__git_complete_refs &&
--		print_comp
-+		run_func __git_complete_refs
- 	) &&
- 	test_cmp expected out
- '
-@@ -1117,8 +1120,7 @@ test_expect_success '__git_complete_refs - remote' '
- 	EOF
- 	(
- 		cur= &&
--		__git_complete_refs --remote=other &&
--		print_comp
-+		run_func __git_complete_refs --remote=other
- 	) &&
- 	test_cmp expected out
- '
-@@ -1136,8 +1138,7 @@ test_expect_success '__git_complete_refs - track' '
- 	EOF
- 	(
- 		cur= &&
--		__git_complete_refs --track &&
--		print_comp
-+		run_func __git_complete_refs --track
- 	) &&
- 	test_cmp expected out
- '
-@@ -1149,8 +1150,7 @@ test_expect_success '__git_complete_refs - current word' '
- 	EOF
- 	(
- 		cur="--option=mat" &&
--		__git_complete_refs --cur="${cur#*=}" &&
--		print_comp
-+		run_func __git_complete_refs --cur="${cur#*=}"
- 	) &&
- 	test_cmp expected out
- '
-@@ -1162,8 +1162,7 @@ test_expect_success '__git_complete_refs - prefix' '
- 	EOF
- 	(
- 		cur=v1.0..mat &&
--		__git_complete_refs --pfx=v1.0.. --cur=mat &&
--		print_comp
-+		run_func __git_complete_refs --pfx=v1.0.. --cur=mat
- 	) &&
- 	test_cmp expected out
- '
-@@ -1179,8 +1178,7 @@ test_expect_success '__git_complete_refs - suffix' '
- 	EOF
- 	(
- 		cur= &&
--		__git_complete_refs --sfx=. &&
--		print_comp
-+		run_func __git_complete_refs --sfx=.
- 	) &&
- 	test_cmp expected out
- '
-@@ -1193,8 +1191,7 @@ test_expect_success '__git_complete_fetch_refspecs - simple' '
- 	EOF
- 	(
- 		cur= &&
--		__git_complete_fetch_refspecs other &&
--		print_comp
-+		run_func __git_complete_fetch_refspecs other
- 	) &&
- 	test_cmp expected out
- '
-@@ -1205,8 +1202,7 @@ test_expect_success '__git_complete_fetch_refspecs - matching' '
- 	EOF
- 	(
- 		cur=br &&
--		__git_complete_fetch_refspecs other "" br &&
--		print_comp
-+		run_func __git_complete_fetch_refspecs other "" br
- 	) &&
- 	test_cmp expected out
- '
-@@ -1219,8 +1215,7 @@ test_expect_success '__git_complete_fetch_refspecs - prefix' '
- 	EOF
- 	(
- 		cur="+" &&
--		__git_complete_fetch_refspecs other "+" ""  &&
--		print_comp
-+		run_func __git_complete_fetch_refspecs other "+" ""
- 	) &&
- 	test_cmp expected out
- '
-@@ -1233,8 +1228,7 @@ test_expect_success '__git_complete_fetch_refspecs - fully qualified' '
- 	EOF
- 	(
- 		cur=refs/ &&
--		__git_complete_fetch_refspecs other "" refs/ &&
--		print_comp
-+		run_func __git_complete_fetch_refspecs other "" refs/
- 	) &&
- 	test_cmp expected out
- '
-@@ -1247,8 +1241,7 @@ test_expect_success '__git_complete_fetch_refspecs - fully qualified & prefix' '
- 	EOF
- 	(
- 		cur=+refs/ &&
--		__git_complete_fetch_refspecs other + refs/ &&
--		print_comp
-+		run_func __git_complete_fetch_refspecs other + refs/
- 	) &&
- 	test_cmp expected out
- '
-@@ -1779,8 +1772,7 @@ test_path_completion ()
- 		# unusual characters in path names.  By requesting only
- 		# untracked files we do not have to bother adding any
- 		# paths to the index in those tests.
--		__git_complete_index_file --others &&
--		print_comp
-+		run_func __git_complete_index_file --others
- 	) &&
- 	test_cmp expected out
+ # Similar to __gitcomp_direct, but appends to COMPREPLY instead.
+@@ -459,7 +459,6 @@ __gitcomp_nl_append ()
+ #    appended.
+ __gitcomp_nl ()
+ {
+-	COMPREPLY=()
+ 	__gitcomp_nl_append "$@"
  }
-@@ -2284,8 +2276,7 @@ do
- 		(
- 			words=(git push '$flag' other ma) &&
- 			cword=${#words[@]} cur=${words[cword-1]} &&
--			__git_complete_remote_or_refspec &&
--			print_comp
-+			run_func __git_complete_remote_or_refspec
- 		) &&
- 		test_cmp expected out
- 	'
-@@ -2297,8 +2288,7 @@ do
- 		(
- 			words=(git push other '$flag' ma) &&
- 			cword=${#words[@]} cur=${words[cword-1]} &&
--			__git_complete_remote_or_refspec &&
--			print_comp
-+			run_func __git_complete_remote_or_refspec
- 		) &&
- 		test_cmp expected out
- 	'
+ 
 -- 
 2.31.0
 
