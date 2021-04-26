@@ -2,29 +2,26 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-14.0 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,UNWANTED_LANGUAGE_BODY,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DB6EEC43460
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 17:48:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 18ED4C433B4
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 17:48:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A75016101C
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 17:48:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E52CA613B3
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 17:48:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237669AbhDZRsr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Apr 2021 13:48:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35146 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237587AbhDZRsa (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Apr 2021 13:48:30 -0400
-Received: from mav.lukeshu.com (mav.lukeshu.com [IPv6:2001:19f0:5c00:8069:5400:ff:fe26:6a86])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 039B0C061760
-        for <git@vger.kernel.org>; Mon, 26 Apr 2021 10:47:47 -0700 (PDT)
+        id S237608AbhDZRss (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Apr 2021 13:48:48 -0400
+Received: from mav.lukeshu.com ([104.207.138.63]:39298 "EHLO mav.lukeshu.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S237599AbhDZRsc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Apr 2021 13:48:32 -0400
 Received: from lukeshu-dw-thinkpad (unknown [IPv6:2601:281:8200:26:4e34:88ff:fe48:5521])
-        by mav.lukeshu.com (Postfix) with ESMTPSA id 24C8180599;
-        Mon, 26 Apr 2021 13:47:47 -0400 (EDT)
+        by mav.lukeshu.com (Postfix) with ESMTPSA id E025B80595;
+        Mon, 26 Apr 2021 13:47:49 -0400 (EDT)
 From:   Luke Shumaker <lukeshu@lukeshu.com>
 To:     git@vger.kernel.org
 Cc:     Avery Pennarun <apenwarr@gmail.com>,
@@ -42,9 +39,9 @@ Cc:     Avery Pennarun <apenwarr@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Luke Shumaker <lukeshu@datawire.io>
-Subject: [PATCH v2 13/30] subtree: more consistent error propagation
-Date:   Mon, 26 Apr 2021 11:45:08 -0600
-Message-Id: <20210426174525.3937858-14-lukeshu@lukeshu.com>
+Subject: [PATCH v2 16/30] subtree: use git-sh-setup's `say`
+Date:   Mon, 26 Apr 2021 11:45:11 -0600
+Message-Id: <20210426174525.3937858-17-lukeshu@lukeshu.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210426174525.3937858-1-lukeshu@lukeshu.com>
 References: <20210423194230.1388945-1-lukeshu@lukeshu.com>
@@ -57,138 +54,98 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Luke Shumaker <lukeshu@datawire.io>
 
-Ensure that every $(subshell) that calls a function (as opposed to an
-external executable) is followed by `|| exit $?`.  Similarly, ensure that
-every `cmd | while read; do ... done` loop is followed by `|| exit $?`.
-
-Both of those constructs mean that it can miss `die` calls, and keep
-running when it shouldn't.
+subtree currently defines its own `say` implementation, rather than
+using git-sh-setups's implementation.  Change that, don't re-invent the
+wheel.
 
 Signed-off-by: Luke Shumaker <lukeshu@datawire.io>
 ---
- contrib/subtree/git-subtree.sh | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ contrib/subtree/git-subtree.sh | 22 +++++++---------------
+ 1 file changed, 7 insertions(+), 15 deletions(-)
 
 diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index d1ed7f9a6c..9ca498f81c 100755
+index 70e16b807b..bb4934dbc0 100755
 --- a/contrib/subtree/git-subtree.sh
 +++ b/contrib/subtree/git-subtree.sh
-@@ -243,7 +243,7 @@ cache_miss () {
- }
+@@ -30,7 +30,6 @@ squash        merge subtree changes as a single commit
  
- check_parents () {
--	missed=$(cache_miss "$1")
-+	missed=$(cache_miss "$1") || exit $?
- 	local indent=$(($2 + 1))
- 	for miss in $missed
- 	do
-@@ -345,7 +345,7 @@ find_latest_squash () {
- 			sub=
- 			;;
- 		esac
--	done
-+	done || exit $?
- }
+ PATH=$PATH:$(git --exec-path)
  
- find_existing_splits () {
-@@ -394,7 +394,7 @@ find_existing_splits () {
- 			sub=
- 			;;
- 		esac
--	done
-+	done || exit $?
- }
- 
- copy_commit () {
-@@ -508,7 +508,7 @@ subtree_for_commit () {
- 		test "$type" = "commit" && continue  # ignore submodules
- 		echo $tree
- 		break
--	done
-+	done || exit $?
- }
- 
- tree_changed () {
-@@ -518,7 +518,7 @@ tree_changed () {
- 	then
- 		return 0   # weird parents, consider it changed
- 	else
--		ptree=$(toptree_for_commit $1)
-+		ptree=$(toptree_for_commit $1) || exit $?
- 		if test "$ptree" != "$tree"
- 		then
- 			return 0   # changed
-@@ -652,7 +652,7 @@ process_split_commit () {
- 	progress "$revcount/$revmax ($createcount) [$extracount]"
- 
- 	debug "Processing commit: $rev"
--	exists=$(cache_get "$rev")
-+	exists=$(cache_get "$rev") || exit $?
- 	if test -n "$exists"
- 	then
- 		debug "  prior: $exists"
-@@ -661,10 +661,10 @@ process_split_commit () {
- 	createcount=$(($createcount + 1))
- 	debug "  parents: $parents"
- 	check_parents "$parents" "$indent"
--	newparents=$(cache_get $parents)
-+	newparents=$(cache_get $parents) || exit $?
- 	debug "  newparents: $newparents"
- 
--	tree=$(subtree_for_commit "$rev" "$dir")
-+	tree=$(subtree_for_commit "$rev" "$dir") || exit $?
- 	debug "  tree is: $tree"
- 
- 	# ugly.  is there no better way to tell if this is a subtree
-@@ -750,7 +750,7 @@ cmd_add_commit () {
- 		commit=$(add_squashed_msg "$rev" "$dir" |
- 			git commit-tree "$tree" $headp -p "$rev") || exit $?
- 	else
--		revp=$(peel_committish "$rev") &&
-+		revp=$(peel_committish "$rev") || exit $?
- 		commit=$(add_msg "$dir" $headrev "$rev" |
- 			git commit-tree "$tree" $headp -p "$revp") || exit $?
+-quiet=
+ branch=
+ debug=
+ command=
+@@ -49,15 +48,8 @@ debug () {
  	fi
-@@ -773,10 +773,10 @@ cmd_split () {
- 			# any parent we find there can be used verbatim
- 			debug "  cache: $rev"
- 			cache_set "$rev" "$rev"
--		done
-+		done || exit $?
+ }
+ 
+-say () {
+-	if test -z "$quiet"
+-	then
+-		printf "%s\n" "$*" >&2
+-	fi
+-}
+-
+ progress () {
+-	if test -z "$quiet"
++	if test -z "$GIT_QUIET"
+ 	then
+ 		printf "%s\r" "$*" >&2
+ 	fi
+@@ -93,7 +85,7 @@ main () {
+ 
+ 		case "$opt" in
+ 		-q)
+-			quiet=1
++			GIT_QUIET=1
+ 			;;
+ 		-d)
+ 			debug=1
+@@ -201,7 +193,7 @@ main () {
  	fi
  
--	unrevs="$(find_existing_splits "$dir" "$revs")"
-+	unrevs="$(find_existing_splits "$dir" "$revs")" || exit $?
+ 	debug "command: {$command}"
+-	debug "quiet: {$quiet}"
++	debug "quiet: {$GIT_QUIET}"
+ 	debug "revs: {$revs}"
+ 	debug "dir: {$dir}"
+ 	debug "opts: {$*}"
+@@ -698,7 +690,7 @@ cmd_add () {
  
- 	# We can't restrict rev-list to only $dir here, because some of our
- 	# parents have the $dir contents the root, and those won't match.
-@@ -792,7 +792,7 @@ cmd_split () {
- 		process_split_commit "$rev" "$parents" 0
- 	done || exit $?
+ 		cmd_add_repository "$@"
+ 	else
+-		say "error: parameters were '$@'"
++		say >&2 "error: parameters were '$@'"
+ 		die "Provide either a commit or a repository and commit."
+ 	fi
+ }
+@@ -742,7 +734,7 @@ cmd_add_commit () {
+ 	fi
+ 	git reset "$commit" || exit $?
  
--	latest_new=$(cache_get latest_new)
-+	latest_new=$(cache_get latest_new) || exit $?
- 	if test -z "$latest_new"
- 	then
- 		die "No new revisions were found"
-@@ -801,7 +801,7 @@ cmd_split () {
- 	if test -n "$rejoin"
- 	then
- 		debug "Merging split branch into HEAD..."
--		latest_old=$(cache_get latest_old)
-+		latest_old=$(cache_get latest_old) || exit $?
- 		git merge -s ours \
- 			--allow-unrelated-histories \
- 			-m "$(rejoin_msg "$dir" "$latest_old" "$latest_new")" \
-@@ -834,7 +834,7 @@ cmd_merge () {
+-	say "Added dir '$dir'"
++	say >&2 "Added dir '$dir'"
+ }
  
- 	if test -n "$squash"
- 	then
--		first_split="$(find_latest_squash "$dir")"
-+		first_split="$(find_latest_squash "$dir")" || exit $?
- 		if test -z "$first_split"
+ cmd_split () {
+@@ -807,7 +799,7 @@ cmd_split () {
+ 		fi
+ 		git update-ref -m 'subtree split' \
+ 			"refs/heads/$branch" "$latest_new" || exit $?
+-		say "$action branch '$branch'"
++		say >&2 "$action branch '$branch'"
+ 	fi
+ 	echo "$latest_new"
+ 	exit 0
+@@ -830,7 +822,7 @@ cmd_merge () {
+ 		sub=$2
+ 		if test "$sub" = "$rev"
  		then
- 			die "Can't squash-merge: '$dir' was never added."
+-			say "Subtree is already at commit $rev."
++			say >&2 "Subtree is already at commit $rev."
+ 			exit 0
+ 		fi
+ 		new=$(new_squash_commit "$old" "$sub" "$rev") || exit $?
 -- 
 2.31.1
 
