@@ -2,155 +2,279 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 286E4C433B4
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 14:31:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 79287C43460
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 14:31:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DCF616127A
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 14:31:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 34B686101B
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 14:31:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233880AbhDZObp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Apr 2021 10:31:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47104 "EHLO
+        id S233832AbhDZOcV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Apr 2021 10:32:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47244 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233765AbhDZObo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Apr 2021 10:31:44 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AC85C061756
-        for <git@vger.kernel.org>; Mon, 26 Apr 2021 07:31:01 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id c22so2325583edn.7
-        for <git@vger.kernel.org>; Mon, 26 Apr 2021 07:31:01 -0700 (PDT)
+        with ESMTP id S233819AbhDZOcT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Apr 2021 10:32:19 -0400
+Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2FC6C061574
+        for <git@vger.kernel.org>; Mon, 26 Apr 2021 07:31:37 -0700 (PDT)
+Received: by mail-qv1-xf31.google.com with SMTP id gv2so17992146qvb.8
+        for <git@vger.kernel.org>; Mon, 26 Apr 2021 07:31:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=piZ7AreG4oucu7Ed/yI0KWprhr+1d9XQCBtniHLaHac=;
-        b=pskvKj4N1ll2yJ6iZxhESKq8oRzIlP5Ig2Cj0Hslfc926SEfol4YyarkbUeyTDwoGK
-         7BkqhFDZdAMERTS5mAy8au2gCiVYy27rdhJxEzAxqr9REvAO/QrlFHO2+Rx99eW+9jyH
-         eI+fCZB7Vh828clboIy4uMLUgRAGeM8sp8pIPhm68zsr+RCzn2GshyhUgjLSWk2jpsZK
-         Rwxdrm1vqKHQ0AlEif/AmR4pQ2duMIYoIF/bzVmvS3q93746sn/NpTsG5M7nrZEXu0k2
-         mEB5OJjKcIbhLjwJPVsHAWiD1Q17/45T4kIPp6EIRcffs6AChhKH9lce4WbEo1fCh0X9
-         /0VA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=zP1gnbbSPgbY9ZVM0AK/Yqnx4fZ8o41TjDUBRks9CB4=;
+        b=qF56owtU5GukVfQonc8DiEkid2b26khI/egHwNZCIkfdWV0m4LYsoSo5CmbXmKk54v
+         j5WhwnOG9MebiqW90woQNfpzL00eM9jQn6d3T11nqT/lr8D9vRAa0Vo5OSMuPzVM604h
+         rCZV1joI97BP8eukodzqYzmEF5YX9j6Whfv96sDh9HGZYzAN7C6ec3ql4sR7KvTsjEN6
+         5VKdFoQvGSfI9nXdDFoGlZDQvoP9VHSKEvqLrtmnY5GizrokkWjDILLO6LQcB8jqwbV/
+         qwSSkIRTNmLuA3MZA3cbMZ2/yTZ0mFhX7ntQJOzdQsvH+z5vCZJfYVWvc/KL3DxeyjKj
+         bOng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=piZ7AreG4oucu7Ed/yI0KWprhr+1d9XQCBtniHLaHac=;
-        b=lvW9CsMFtnpREOBNdGDczbOhYJONvkViE20fR/QAVTPYyCcn1SMqDJJQkXNmSaRmXu
-         /2m7+19ZHPzUKGis6BPTZYaO5vPHM/+s3QCvdd/ezO8qeXlu6uL65vrlSDQEGaUxs397
-         3DAJl3IVklqsjlKw6HvfCz1pu8ko2zXrRaljRbHOF83Fb1VcizD2AZoD/qHuAXVnf5C8
-         07P7AD4eE0HUiO4D23k5EBSyP//3+dq2soBgtU/9uRQiVTzEGqWjQrWaoUG1U/fk0Ec3
-         cY0JRqM9GS1Pa4d1ahNKQ+p/MPxsU7U18h7QelQlNkbdSYgMZbw3n4hSOjLAycnZS6If
-         ZWfg==
-X-Gm-Message-State: AOAM533/WiHX8FbhYEAhQqStuj/wsueuQSGNaBa1Y6Af0/TaCv8KlVr6
-        Xo0kF8HAG2ME5a8DQ0ob1mw=
-X-Google-Smtp-Source: ABdhPJzz7i9KaMB3wdUMDVhJ3B2AM6t1/hdBCF5hXvN4qSVa41QBpUi0SNKwzE5N3KrLZiQZzbUtWg==
-X-Received: by 2002:a50:fd0c:: with SMTP id i12mr21903384eds.103.1619447460277;
-        Mon, 26 Apr 2021 07:31:00 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id u9sm13892edq.68.2021.04.26.07.30.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Apr 2021 07:30:59 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v2 5/6] fsck: report invalid types recorded in objects
-Date:   Mon, 26 Apr 2021 16:28:30 +0200
-References: <cover-0.6-00000000000-20210328T025618Z-avarab@gmail.com>
- <cover-0.6-00000000000-20210413T093734Z-avarab@gmail.com>
- <patch-5.6-5fb6ac4faee-20210413T093734Z-avarab@gmail.com>
- <YILbk34nwqCPmxGQ@coredump.intra.peff.net>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
-In-reply-to: <YILbk34nwqCPmxGQ@coredump.intra.peff.net>
-Message-ID: <87im493yos.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=zP1gnbbSPgbY9ZVM0AK/Yqnx4fZ8o41TjDUBRks9CB4=;
+        b=FCgIAI/aDCfVHHXgQfiembG9+PxDg4hzQJG7mfE0PHAYLXMNKG3NXrXapfFEXK69sD
+         DahFo2Q9t/5SRjeYKS3KAepzOh20svWTQJ5hfeaXOzJbhoudGKuOZzbNiX8mSTEsPXPI
+         oXofpyLOA9sjc2pFCyl/evsjilU1TfYXgoslq94jiAMgS9nrMbojtHFEoqY4mbLP70+e
+         1I8BM+7a3hTIULS/qYZLK0C+ahvyDmadrNV+7Ui1fW1kbUvQKf8t8XFNzl2T8n/PzDts
+         y2lvhmKosDfv4YF0cPkhLuVyo8WH7xevqUp2BP+2OuSVCdfSOhE8clCPvt8szz7wR4M/
+         EiWA==
+X-Gm-Message-State: AOAM531civTMKsS1MPqYZ7VlBScoDI2M3FLxJ2Yco2JHf+dH/7XJJt8T
+        TDE4wYLXJ+aBtwC7tJzSX4+KP+UTZ0z/pw==
+X-Google-Smtp-Source: ABdhPJyfrNnKVVyf+qiIONUmKc5CKEP+2Vvi3ubb20FBlucGmgQ8gj/ou+vA/uohrw/Y/k6CJVx2/w==
+X-Received: by 2002:a0c:80e1:: with SMTP id 88mr17920521qvb.43.1619447497078;
+        Mon, 26 Apr 2021 07:31:37 -0700 (PDT)
+Received: from Derricks-MBP.attlocal.net ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id f22sm11452852qtg.77.2021.04.26.07.31.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 26 Apr 2021 07:31:36 -0700 (PDT)
+Subject: Re: [PATCH 02/23] fsmonitor-ipc: create client routines for
+ git-fsmonitor--daemon
+To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Jeff Hostetler <jeffhost@microsoft.com>
+References: <pull.923.git.1617291666.gitgitgadget@gmail.com>
+ <3dac63eae201e6d0b949680e682238625cad59bd.1617291666.git.gitgitgadget@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <5b63eb3f-0b87-209b-3943-ced8412abb93@gmail.com>
+Date:   Mon, 26 Apr 2021 10:31:34 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:78.0)
+ Gecko/20100101 Thunderbird/78.9.1
 MIME-Version: 1.0
+In-Reply-To: <3dac63eae201e6d0b949680e682238625cad59bd.1617291666.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 4/1/21 11:40 AM, Jeff Hostetler via GitGitGadget wrote:> +#ifdef HAVE_FSMONITOR_DAEMON_BACKEND
+> +#define FSMONITOR_DAEMON_IS_SUPPORTED 1
+> +#else
+> +#define FSMONITOR_DAEMON_IS_SUPPORTED 0
+> +#endif
+> +
+> +/*
+> + * A trivial function so that this source file always defines at least
+> + * one symbol even when the feature is not supported.  This quiets an
+> + * annoying compiler error.
+> + */
+> +int fsmonitor_ipc__is_supported(void)
+> +{
+> +	return FSMONITOR_DAEMON_IS_SUPPORTED;
+> +}
 
-On Fri, Apr 23 2021, Jeff King wrote:
+I don't see any other use of FSMONITOR_DAEMON_IS_SUPPORTED,
+so I was thinking you could use the #ifdef/#else/#endif
+construct within the implementation of this method instead
+of creating a macro outside. But my suggestion might be an
+anti-pattern, so feel free to ignore me.
 
-> On Tue, Apr 13, 2021 at 11:43:08AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->
->> Continue the work in the preceding commit and improve the error on:
->>=20
->>     $ git hash-object --stdin -w -t garbage --literally </dev/null
->>     $ git fsck
->>     error: hash mismatch for <OID_PATH> (expected <OID>)
->>     error: <OID>: object corrupt or missing: <OID_PATH>
->>     [ other fsck output ]
->>=20
->> To instead emit:
->>=20
->>     $ git fsck
->>     error: <OID>: object is of unknown type 'garbage': <OID_PATH>
->>     [ other fsck output ]
->
-> Sounds good.
->
->> @@ -92,7 +93,8 @@ static int cat_one_file(int opt, const char *exp_type,=
- const char *obj_name,
->>  	switch (opt) {
->>  	case 't':
->>  		oi.type_name =3D &sb;
->> -		if (oid_object_info_extended(the_repository, &oid, &oi, flags) < 0)
->> +		ret =3D oid_object_info_extended(the_repository, &oid, &oi, flags);
->> +		if (!unknown_type && ret < 0)
->>  			die("git cat-file: could not get object info");
->>  		if (sb.len) {
->>  			printf("%s\n", sb.buf);
->
-> Surprised to see changes to cat-file here, since the commit message is
-> all about fsck. Did the semantics of oid_object_info_extended() change?
-> I.e., this hunk implies to me that it is now returning -1 when we said
-> unknown types were OK, and we got one. But in that case, how do we
-> distinguish that from a real error?
->
-> Or more concretely, this patch causes this:
->
->   $ git cat-file -t 1234567890123456789012345678901234567890
->   fatal: git cat-file: could not get object info
->
->   $ git.compile cat-file --allow-unknown-type -t 123456789012345678901234=
-5678901234567890
->   fatal: git cat-file 1234567890123456789012345678901234567890: bad file
->
-> Or much worse, from the next hunk:
->
->   $ git cat-file -s 1234567890123456789012345678901234567890
->   fatal: git cat-file: could not get object info
->
->   $ git cat-file --allow-unknown-type -s 12345678901234567890123456789012=
-34567890
->   140732113568960
->
-> That seems wrong (so I think my "this hunk implies" is not true, but
-> then I am left with: what is the point of this hunk?).
+> +#ifdef HAVE_FSMONITOR_DAEMON_BACKEND
+> +
+> +GIT_PATH_FUNC(fsmonitor_ipc__get_path, "fsmonitor")
+> +
+> +enum ipc_active_state fsmonitor_ipc__get_state(void)
+> +{
+> +	return ipc_get_active_state(fsmonitor_ipc__get_path());
+> +}
+> +
+> +static int spawn_daemon(void)
+> +{
+> +	const char *args[] = { "fsmonitor--daemon", "--start", NULL };
+> +
+> +	return run_command_v_opt_tr2(args, RUN_COMMAND_NO_STDIN | RUN_GIT_CMD,
+> +				    "fsmonitor");
+> +}
+> +
+> +int fsmonitor_ipc__send_query(const char *since_token,
+> +			      struct strbuf *answer)
+> +{
+> +	int ret = -1;
+> +	int tried_to_spawn = 0;
+> +	enum ipc_active_state state = IPC_STATE__OTHER_ERROR;
+> +	struct ipc_client_connection *connection = NULL;
+> +	struct ipc_client_connect_options options
+> +		= IPC_CLIENT_CONNECT_OPTIONS_INIT;
+> +
+> +	options.wait_if_busy = 1;
+> +	options.wait_if_not_found = 0;
+> +
+> +	trace2_region_enter("fsm_client", "query", NULL);
+> +
+> +	trace2_data_string("fsm_client", NULL, "query/command",
+> +			   since_token);
+> +
+> +try_again:
+> +	state = ipc_client_try_connect(fsmonitor_ipc__get_path(), &options,
+> +				       &connection);
+> +
+> +	switch (state) {
+> +	case IPC_STATE__LISTENING:
+> +		ret = ipc_client_send_command_to_connection(
+> +			connection, since_token, answer);
+> +		ipc_client_close_connection(connection);
+> +
+> +		trace2_data_intmax("fsm_client", NULL,
+> +				   "query/response-length", answer->len);
+> +
+> +		if (fsmonitor_is_trivial_response(answer))
+> +			trace2_data_intmax("fsm_client", NULL,
+> +					   "query/trivial-response", 1);
+> +
+> +		goto done;
+> +
+> +	case IPC_STATE__NOT_LISTENING:
+> +		ret = error(_("fsmonitor_ipc__send_query: daemon not available"));
+> +		goto done;
 
-That's very well spotted.
+I'll need to read up on the IPC layer a bit to find out the difference
+between IPC_STATE__NOT_LISTENING and IPC_STATE__PATH_NOT_FOUND. When
+testing on my macOS machine, I got this error. I was expecting the
+daemon to be spawned. After spawning it myself, it started working.
 
-I started re-rolling this today but ran out of time. For what it's worth
-the combination of this and 6/6 "makes sense" in the sense that all
-tests pass at the end of this series.
+I expect that there are some cases where the process can fail and the
+named pipe is not cleaned up. Let's investigate that soon. I should
+make it clear that I had tested the builtin FS Monitor on this machine
+a few weeks ago, but hadn't been using it much since. We should auto-
+recover from this situation.
 
-But the cases you're pointing out are ones we don't have tests for,
-i.e. the combination of "allow unknown" and a non-existing object, as
-opposed to a garbage one.
+But also: what is the cost of treating these two cases the same? Could
+we attempt to "restart" the daemon by spawning a new one? Will the new
+one find a way to kill a stale one?
 
-Hence the bug with passing up an invalid (uninitialized) size in that
-case. It's fallout from other partial lib-ification changes of these
-APIs, i.e. making them return bad values upstream instead of dying right
-away.
+(Reading on.)
 
-I'll sort that out in some sensible way. Starting with adding meaningful
-test coverage for the existing behavior.
+> +	case IPC_STATE__PATH_NOT_FOUND:
+> +		if (tried_to_spawn)
+> +			goto done;
+> +
+> +		tried_to_spawn++;
+> +		if (spawn_daemon())
+> +			goto done;
 
+This should return zero on success, OK.
+
+> +		/*
+> +		 * Try again, but this time give the daemon a chance to
+> +		 * actually create the pipe/socket.
+> +		 *
+> +		 * Granted, the daemon just started so it can't possibly have
+> +		 * any FS cached yet, so we'll always get a trivial answer.
+> +		 * BUT the answer should include a new token that can serve
+> +		 * as the basis for subsequent requests.
+> +		 */
+> +		options.wait_if_not_found = 1;
+> +		goto try_again;
+
+Because of the tried_to_spawn check, we will re-run the request over
+IPC but will not retry the spawn_daemon() request. I'm unsure how
+this could be helpful: is it possible that spawn_daemon() returns a
+non-zero error code after starting the daemon and somehow that
+daemon starts working? Or, is this a race-condition thing with parallel
+processes also starting up the daemon? It could be good to use this
+comment to describe why a retry might be helpful.
+
+> +
+> +	case IPC_STATE__INVALID_PATH:
+> +		ret = error(_("fsmonitor_ipc__send_query: invalid path '%s'"),
+> +			    fsmonitor_ipc__get_path());
+> +		goto done;
+> +
+> +	case IPC_STATE__OTHER_ERROR:
+> +	default:
+> +		ret = error(_("fsmonitor_ipc__send_query: unspecified error on '%s'"),
+> +			    fsmonitor_ipc__get_path());
+> +		goto done;
+> +	}
+> +
+> +done:
+> +	trace2_region_leave("fsm_client", "query", NULL);
+> +
+> +	return ret;
+> +}
+> +
+> +int fsmonitor_ipc__send_command(const char *command,
+> +				struct strbuf *answer)
+> +{
+> +	struct ipc_client_connection *connection = NULL;
+> +	struct ipc_client_connect_options options
+> +		= IPC_CLIENT_CONNECT_OPTIONS_INIT;
+> +	int ret;
+> +	enum ipc_active_state state;
+> +
+> +	strbuf_reset(answer);
+> +
+> +	options.wait_if_busy = 1;
+> +	options.wait_if_not_found = 0;
+> +
+> +	state = ipc_client_try_connect(fsmonitor_ipc__get_path(), &options,
+> +				       &connection);
+> +	if (state != IPC_STATE__LISTENING) {
+> +		die("fsmonitor--daemon is not running");
+> +		return -1;
+> +	}
+> +
+> +	ret = ipc_client_send_command_to_connection(connection, command, answer);
+> +	ipc_client_close_connection(connection);
+> +
+> +	if (ret == -1) {
+> +		die("could not send '%s' command to fsmonitor--daemon",
+> +		    command);
+> +		return -1;
+> +	}
+> +
+> +	return 0;
+> +}
+
+I wondier if this ...send_command() method is too generic. It might
+be nice to have more structure to its inputs and outputs to lessen
+the cognitive load when plugging into other portions of the code.
+However, I'll wait to see what those consumers look like in case the
+generality is merited.
+>  struct category_description {
+>  	uint32_t category;
+> @@ -664,6 +665,9 @@ void get_version_info(struct strbuf *buf, int show_build_options)
+>  		strbuf_addf(buf, "sizeof-size_t: %d\n", (int)sizeof(size_t));
+>  		strbuf_addf(buf, "shell-path: %s\n", SHELL_PATH);
+>  		/* NEEDSWORK: also save and output GIT-BUILD_OPTIONS? */
+> +
+> +		if (fsmonitor_ipc__is_supported())
+> +			strbuf_addstr(buf, "feature: fsmonitor--daemon\n");
+
+This change might deserve its own patch, including some documentation
+about how users can use 'git version --build-options' to determine if
+the builtin FS Monitor feature is available on their platform.
+
+Thanks,
+-Stolee
