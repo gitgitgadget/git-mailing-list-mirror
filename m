@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD346C433B4
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 16:19:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D765FC433B4
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 16:20:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ADDA76115C
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 16:19:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9543160C3D
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 16:20:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234549AbhDZQUg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Apr 2021 12:20:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43400 "EHLO
+        id S234383AbhDZQUs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Apr 2021 12:20:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43432 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234546AbhDZQUe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Apr 2021 12:20:34 -0400
-Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6035DC061574
-        for <git@vger.kernel.org>; Mon, 26 Apr 2021 09:19:52 -0700 (PDT)
-Received: by mail-ot1-x32d.google.com with SMTP id x54-20020a05683040b6b02902a527443e2fso1519561ott.1
-        for <git@vger.kernel.org>; Mon, 26 Apr 2021 09:19:52 -0700 (PDT)
+        with ESMTP id S233919AbhDZQUm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Apr 2021 12:20:42 -0400
+Received: from mail-oo1-xc31.google.com (mail-oo1-xc31.google.com [IPv6:2607:f8b0:4864:20::c31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 443BEC061574
+        for <git@vger.kernel.org>; Mon, 26 Apr 2021 09:20:00 -0700 (PDT)
+Received: by mail-oo1-xc31.google.com with SMTP id w6-20020a4a9d060000b02901f9175244e7so290056ooj.9
+        for <git@vger.kernel.org>; Mon, 26 Apr 2021 09:20:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=v1Carr5nFWwqLMAQMrCfsgkPiY7L1Ez7UH1WoS5YxbM=;
-        b=g6hAzbg1lTfW19W8dKvzG4g6+f6njsUFf9Bsmd2yD1r3EsI1v75lhaXUltIZMwpW0R
-         3/WtSdHi/j1oZg8kf6vLdt+wzhdETkNeFnAZPWaPY73/KzvylCg7HfwWT9X6EPG67Z+/
-         1WAVmpMugEjeeUZf9VfyRxtcy7gIFgHaWhO6rqNRYtoG25AIcQapIo7phpGTBLx0YGON
-         Im0kXai6CSulz1r8vIfgRqYEpgbF5Iuns9fh6jE2EIyI+Qwux23XVWxiMUhgvOMmmaTM
-         DFpW8hl+/3vV8yVE/kH0+4zqbzh2mwV/gEI/DsVq0BQSQlxd05EMiBmYLm+Cngc0oKv9
-         FRbA==
+        bh=2rKM0jsvPMc46w9HiUZvdwt6cYPr2zXcWxKnnOjtcKc=;
+        b=vUsP5YuwJha5MmWG+WTcf4dvlEs1emtWk43/DDC3b1AIOOdoBS9oMCUWGd4QGW6OKC
+         uCN1pLh4UQbvolgvWYqGp+OqETgyiYKUrCc/ISEqQ/7i4voWXOaHiaBDR4oj3U+3I5fk
+         CZMI58quC0uksklu6Ap2eT7nNQUXiz5lpXq/Pq4e2jYcYdWtxn79/ZTsM3+2E+gDO8h/
+         E7dRp2lYEmn5B3d8NgoYmLlPWG72u7oqirk3CypGjs9t7J+Gh65S+xXVQ6BT4fDcU/cQ
+         0C02hepP5QhSDDTPjiTNffq4xaeI/tiGQ2xC6XIR99SBI1EouF6dM9OqIq9fAati2s3k
+         AvZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=v1Carr5nFWwqLMAQMrCfsgkPiY7L1Ez7UH1WoS5YxbM=;
-        b=t5jjLTV6TMEfAPwRYfkJR0/6CgSSu/HQ+wsn6VCTPbBxckdydw2zdi3FeN79MP4qdu
-         a+iNQB3K0/QBo/vu9JfpMAYPq5EX/RwQLsrZbiH6JOZj1F7TczbumrXS7lnMR6AZPv5x
-         t1deSB+puaeCK117aPvMf/biEXS45W05YLlx/3YJBQnQ5xfuaV0FxkkJCzncj5m2UMAY
-         LKj2a0WoyqsIbnkSrow68Wj/7e7wU2pMRIK3RXnMSJ9H+h+4JDLtlc8cT6GWrmuNeeQ6
-         1uzxsEsb3xDIwZJ+3F8LAk6/cfGRV3vSvz4E24Fg3Rr+Es94hBZA6llDBLo8vDPEgOCj
-         sbzw==
-X-Gm-Message-State: AOAM530GzHPJNuXiR6e3SaoxGn14lmlKO+wzVMmixGiOfuX8nElndHuh
-        bfQS0p4WixrpNsw6glYqcy8Al2Un0QYpSQ==
-X-Google-Smtp-Source: ABdhPJw5hgJEzvUWr49d7PAveMAjkUnF78EdrUAuVcxjzgukJ1YxlZKJxkm47y6QBpvO0/mcRRJPGQ==
-X-Received: by 2002:a05:6830:1543:: with SMTP id l3mr4115754otp.31.1619453991617;
-        Mon, 26 Apr 2021 09:19:51 -0700 (PDT)
+        bh=2rKM0jsvPMc46w9HiUZvdwt6cYPr2zXcWxKnnOjtcKc=;
+        b=GhMYC56RGpwFA3rMhGNVyehaLfWLjNQ73Pi/bK/Bi62ZClazV68LPVe9XeZ6TNwvpe
+         foxLt5zUBbV7tcEPUpJUFN5wkm284oOnexTOuSBYGGnmIS5/u2IyppMc8BDCZGUGlV8+
+         NV1iEELbz1PBoOZWBrgWWs9JvKdMdmmXp1xuHO4PsezfoH2wTSO8V+uNBPTvrV9XKQFz
+         iTBz/NOu3YVJ81dlzlkz09l++vWs6otAawS7BrzORxavYRROXzErKa2zL+aXDEA0jE2t
+         ZNOricwEfB4bN22AhpFnGeYufkAmMCTkJmKwRKdnv2JaSiesH+Isx0J6N+HwaoF675AI
+         KeaA==
+X-Gm-Message-State: AOAM531VRoEY6GLhQw+lx/0opHKPvlpmR5mbFB3phf3wV/m/9lvYLOVo
+        Vom0j5ELiK/uDezX0mg0+Wy0GuDrAvx5fQ==
+X-Google-Smtp-Source: ABdhPJzIuOs/ko/eO6JljSvF/RINVWcilg+Z44irHzjXG13iri7BsgNKjWgUQXjr1ytuVA5GzYdBtw==
+X-Received: by 2002:a4a:dc84:: with SMTP id g4mr14147945oou.24.1619453996535;
+        Mon, 26 Apr 2021 09:19:56 -0700 (PDT)
 Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id x129sm927934oix.9.2021.04.26.09.19.50
+        by smtp.gmail.com with ESMTPSA id m129sm3130748oif.34.2021.04.26.09.19.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Apr 2021 09:19:51 -0700 (PDT)
+        Mon, 26 Apr 2021 09:19:56 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v1 34/43] completion: zsh: fix direct quoting
-Date:   Mon, 26 Apr 2021 11:14:49 -0500
-Message-Id: <20210426161458.49860-35-felipe.contreras@gmail.com>
+Subject: [PATCH v1 35/43] completion: zsh: add elements individually in __gitcomp_opts
+Date:   Mon, 26 Apr 2021 11:14:50 -0500
+Message-Id: <20210426161458.49860-36-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.31.0
 In-Reply-To: <20210426161458.49860-1-felipe.contreras@gmail.com>
 References: <20210426161458.49860-1-felipe.contreras@gmail.com>
@@ -71,56 +71,43 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Apparently using "compadd -Q" is almost always wrong, we want zsh to add
-quoting when necessary. However, if we remove the -Q option, that would
-make zsh add an extra "\ " at the end of some completions.
+It's useful to specify specific suffixes for specific words.
 
-We can manually remove the spaces from the completions that have them,
-and then add the suffix with the -S option, thus there's no more need
-for the -Q option.
-
-This makes completions like "stash@{0}" complete correctly:
-
-  git stash show <tab>
+This will be useful later on.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/completion/git-completion.zsh | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ contrib/completion/git-completion.zsh | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
 diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
-index 3665167b3f..2faf435087 100644
+index 2faf435087..82a4d6f470 100644
 --- a/contrib/completion/git-completion.zsh
 +++ b/contrib/completion/git-completion.zsh
-@@ -54,7 +54,7 @@ __gitcomp ()
- 	emulate -L zsh
+@@ -66,11 +66,10 @@ __gitcomp_opts ()
+ 	[[ "$cur_" == *= ]] && return
  
- 	local IFS=$' \t\n'
--	compadd -Q -S "${4- }" -p "${2-}" -- ${=1} && _ret=0
-+	compadd -S "${4- }" -p "${2-}" -- ${=1} && _ret=0
- }
- 
- __gitcomp_opts ()
-@@ -84,14 +84,17 @@ __gitcomp_opts ()
+ 	local c IFS=$' \t\n' sfx
+-	local -a array
+ 	for c in ${=1}; do
+ 		if [[ $c == "--" ]]; then
+ 			[[ "$cur_" == --no-* ]] && continue
+-			array+=("--no-... ")
++			compadd -S " " -- "--no-..." && _ret=0
+ 			break
  		fi
- 		array+=("$c$sfx")
+ 
+@@ -82,9 +81,8 @@ __gitcomp_opts ()
+ 		else
+ 			sfx="$4"
+ 		fi
+-		array+=("$c$sfx")
++		compadd -S "$sfx" -p "${2-}" -- "$c" && _ret=0
  	done
--	compadd -Q -S '' -p "${2-}" -a -- array && _ret=0
-+	compadd -S '' -p "${2-}" -a -- array && _ret=0
+-	compadd -S '' -p "${2-}" -a -- array && _ret=0
  }
  
  __gitcomp_nl ()
- {
- 	emulate -L zsh
- 
--	compadd -Q -S "${4- }" -p "${2-}" -- ${(f)1} && _ret=0
-+	# words that don't end up in space
-+	compadd -p "${2-}" -S "${4- }" -q -- ${${(f)1}:#*\ } && _ret=0
-+	# words that end in space
-+	compadd -p "${2-}" -S " ${4- }" -q -- ${${(M)${(f)1}:#*\ }% } && _ret=0
- }
- 
- __gitcomp_file ()
 -- 
 2.31.0
 
