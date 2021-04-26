@@ -7,24 +7,24 @@ X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BE16C433B4
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 17:48:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DB6EEC43460
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 17:48:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F37B1613BA
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 17:48:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A75016101C
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 17:48:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237654AbhDZRsp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Apr 2021 13:48:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35138 "EHLO
+        id S237669AbhDZRsr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Apr 2021 13:48:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237583AbhDZRs2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Apr 2021 13:48:28 -0400
+        with ESMTP id S237587AbhDZRsa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Apr 2021 13:48:30 -0400
 Received: from mav.lukeshu.com (mav.lukeshu.com [IPv6:2001:19f0:5c00:8069:5400:ff:fe26:6a86])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9671C06175F
-        for <git@vger.kernel.org>; Mon, 26 Apr 2021 10:47:46 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 039B0C061760
+        for <git@vger.kernel.org>; Mon, 26 Apr 2021 10:47:47 -0700 (PDT)
 Received: from lukeshu-dw-thinkpad (unknown [IPv6:2601:281:8200:26:4e34:88ff:fe48:5521])
-        by mav.lukeshu.com (Postfix) with ESMTPSA id 4654380594;
-        Mon, 26 Apr 2021 13:47:46 -0400 (EDT)
+        by mav.lukeshu.com (Postfix) with ESMTPSA id 24C8180599;
+        Mon, 26 Apr 2021 13:47:47 -0400 (EDT)
 From:   Luke Shumaker <lukeshu@lukeshu.com>
 To:     git@vger.kernel.org
 Cc:     Avery Pennarun <apenwarr@gmail.com>,
@@ -42,9 +42,9 @@ Cc:     Avery Pennarun <apenwarr@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Luke Shumaker <lukeshu@datawire.io>
-Subject: [PATCH v2 12/30] subtree: don't have loose code outside of a function
-Date:   Mon, 26 Apr 2021 11:45:07 -0600
-Message-Id: <20210426174525.3937858-13-lukeshu@lukeshu.com>
+Subject: [PATCH v2 13/30] subtree: more consistent error propagation
+Date:   Mon, 26 Apr 2021 11:45:08 -0600
+Message-Id: <20210426174525.3937858-14-lukeshu@lukeshu.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210426174525.3937858-1-lukeshu@lukeshu.com>
 References: <20210423194230.1388945-1-lukeshu@lukeshu.com>
@@ -57,312 +57,138 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Luke Shumaker <lukeshu@datawire.io>
 
-Shove all of the loose code inside of a main() function.
+Ensure that every $(subshell) that calls a function (as opposed to an
+external executable) is followed by `|| exit $?`.  Similarly, ensure that
+every `cmd | while read; do ... done` loop is followed by `|| exit $?`.
 
-This comes down to personal preference more than anything else.  A
-preference that I've developed over years of maintaining large Bash
-scripts, but still a mere personal preference.
-
-In this specific case, it's also moving the `set -- -h`, the `git
-rev-parse --parseopt`, and the `. git-sh-setup` to be closer to all
-the rest of the argument parsing, which is a readability win on its
-own, IMO.
-
-"Ignore space change" is probably helpful when viewing this diff.
+Both of those constructs mean that it can miss `die` calls, and keep
+running when it shouldn't.
 
 Signed-off-by: Luke Shumaker <lukeshu@datawire.io>
 ---
-v2:
- - Include rationale in the the commit message.
-
- contrib/subtree/git-subtree.sh | 245 +++++++++++++++++----------------
- 1 file changed, 125 insertions(+), 120 deletions(-)
+ contrib/subtree/git-subtree.sh | 28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
 diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index 868e18b9a1..d1ed7f9a6c 100755
+index d1ed7f9a6c..9ca498f81c 100755
 --- a/contrib/subtree/git-subtree.sh
 +++ b/contrib/subtree/git-subtree.sh
-@@ -4,10 +4,7 @@
- #
- # Copyright (C) 2009 Avery Pennarun <apenwarr@gmail.com>
- #
--if test $# -eq 0
--then
--	set -- -h
--fi
-+
- OPTS_SPEC="\
- git subtree add   --prefix=<prefix> <commit>
- git subtree add   --prefix=<prefix> <repository> <ref>
-@@ -30,12 +27,8 @@ rejoin        merge the new branch back into HEAD
-  options for 'add', 'merge', and 'pull'
- squash        merge subtree changes as a single commit
- "
--eval "$(echo "$OPTS_SPEC" | git rev-parse --parseopt -- "$@" || echo exit $?)"
- 
- PATH=$PATH:$(git --exec-path)
--. git-sh-setup
--
--require_work_tree
- 
- quiet=
- branch=
-@@ -84,126 +77,138 @@ ensure_single_rev () {
- 	fi
+@@ -243,7 +243,7 @@ cache_miss () {
  }
  
--while test $# -gt 0
--do
--	opt="$1"
--	shift
-+main () {
-+	if test $# -eq 0
-+	then
-+		set -- -h
-+	fi
-+	eval "$(echo "$OPTS_SPEC" | git rev-parse --parseopt -- "$@" || echo exit $?)"
-+	. git-sh-setup
-+	require_work_tree
- 
--	case "$opt" in
--	-q)
--		quiet=1
--		;;
--	-d)
--		debug=1
--		;;
--	--annotate)
--		annotate="$1"
--		shift
--		;;
--	--no-annotate)
--		annotate=
--		;;
--	-b)
--		branch="$1"
--		shift
--		;;
--	-P)
--		prefix="${1%/}"
--		shift
--		;;
--	-m)
--		message="$1"
--		shift
--		;;
--	--no-prefix)
--		prefix=
--		;;
--	--onto)
--		onto="$1"
-+	while test $# -gt 0
-+	do
-+		opt="$1"
- 		shift
-+
-+		case "$opt" in
-+		-q)
-+			quiet=1
-+			;;
-+		-d)
-+			debug=1
-+			;;
-+		--annotate)
-+			annotate="$1"
-+			shift
-+			;;
-+		--no-annotate)
-+			annotate=
-+			;;
-+		-b)
-+			branch="$1"
-+			shift
-+			;;
-+		-P)
-+			prefix="${1%/}"
-+			shift
-+			;;
-+		-m)
-+			message="$1"
-+			shift
-+			;;
-+		--no-prefix)
-+			prefix=
-+			;;
-+		--onto)
-+			onto="$1"
-+			shift
-+			;;
-+		--no-onto)
-+			onto=
-+			;;
-+		--rejoin)
-+			rejoin=1
-+			;;
-+		--no-rejoin)
-+			rejoin=
-+			;;
-+		--ignore-joins)
-+			ignore_joins=1
-+			;;
-+		--no-ignore-joins)
-+			ignore_joins=
-+			;;
-+		--squash)
-+			squash=1
-+			;;
-+		--no-squash)
-+			squash=
-+			;;
-+		--)
-+			break
-+			;;
-+		*)
-+			die "Unexpected option: $opt"
-+			;;
-+		esac
-+	done
-+
-+	command="$1"
-+	shift
-+
-+	case "$command" in
-+	add|merge|pull)
-+		default=
- 		;;
--	--no-onto)
--		onto=
--		;;
--	--rejoin)
--		rejoin=1
--		;;
--	--no-rejoin)
--		rejoin=
--		;;
--	--ignore-joins)
--		ignore_joins=1
--		;;
--	--no-ignore-joins)
--		ignore_joins=
--		;;
--	--squash)
--		squash=1
-+	split|push)
-+		default="--default HEAD"
- 		;;
--	--no-squash)
--		squash=
-+	*)
-+		die "Unknown command '$command'"
- 		;;
--	--)
--		break
-+	esac
-+
-+	if test -z "$prefix"
-+	then
-+		die "You must provide the --prefix option."
-+	fi
-+
-+	case "$command" in
-+	add)
-+		test -e "$prefix" &&
-+			die "prefix '$prefix' already exists."
- 		;;
- 	*)
--		die "Unexpected option: $opt"
-+		test -e "$prefix" ||
-+			die "'$prefix' does not exist; use 'git subtree add'"
- 		;;
- 	esac
--done
--
--command="$1"
--shift
--
--case "$command" in
--add|merge|pull)
--	default=
--	;;
--split|push)
--	default="--default HEAD"
--	;;
--*)
--	die "Unknown command '$command'"
--	;;
--esac
--
--if test -z "$prefix"
--then
--	die "You must provide the --prefix option."
--fi
--
--case "$command" in
--add)
--	test -e "$prefix" &&
--		die "prefix '$prefix' already exists."
--	;;
--*)
--	test -e "$prefix" ||
--		die "'$prefix' does not exist; use 'git subtree add'"
--	;;
--esac
--
--dir="$(dirname "$prefix/.")"
--
--if test "$command" != "pull" &&
--		test "$command" != "add" &&
--		test "$command" != "push"
--then
--	revs=$(git rev-parse $default --revs-only "$@") || exit $?
--	dirs=$(git rev-parse --no-revs --no-flags "$@") || exit $?
--	ensure_single_rev $revs
--	if test -n "$dirs"
--	then
--		die "Error: Use --prefix instead of bare filenames."
--	fi
--fi
--
--debug "command: {$command}"
--debug "quiet: {$quiet}"
--debug "revs: {$revs}"
--debug "dir: {$dir}"
--debug "opts: {$*}"
--debug
-+
-+	dir="$(dirname "$prefix/.")"
-+
-+	if test "$command" != "pull" &&
-+			test "$command" != "add" &&
-+			test "$command" != "push"
-+	then
-+		revs=$(git rev-parse $default --revs-only "$@") || exit $?
-+		dirs=$(git rev-parse --no-revs --no-flags "$@") || exit $?
-+		ensure_single_rev $revs
-+		if test -n "$dirs"
-+		then
-+			die "Error: Use --prefix instead of bare filenames."
-+		fi
-+	fi
-+
-+	debug "command: {$command}"
-+	debug "quiet: {$quiet}"
-+	debug "revs: {$revs}"
-+	debug "dir: {$dir}"
-+	debug "opts: {$*}"
-+	debug
-+
-+	"cmd_$command" "$@"
-+}
- 
- cache_setup () {
- 	cachedir="$GIT_DIR/subtree-cache/$$"
-@@ -898,4 +903,4 @@ cmd_push () {
- 	fi
+ check_parents () {
+-	missed=$(cache_miss "$1")
++	missed=$(cache_miss "$1") || exit $?
+ 	local indent=$(($2 + 1))
+ 	for miss in $missed
+ 	do
+@@ -345,7 +345,7 @@ find_latest_squash () {
+ 			sub=
+ 			;;
+ 		esac
+-	done
++	done || exit $?
  }
  
--"cmd_$command" "$@"
-+main "$@"
+ find_existing_splits () {
+@@ -394,7 +394,7 @@ find_existing_splits () {
+ 			sub=
+ 			;;
+ 		esac
+-	done
++	done || exit $?
+ }
+ 
+ copy_commit () {
+@@ -508,7 +508,7 @@ subtree_for_commit () {
+ 		test "$type" = "commit" && continue  # ignore submodules
+ 		echo $tree
+ 		break
+-	done
++	done || exit $?
+ }
+ 
+ tree_changed () {
+@@ -518,7 +518,7 @@ tree_changed () {
+ 	then
+ 		return 0   # weird parents, consider it changed
+ 	else
+-		ptree=$(toptree_for_commit $1)
++		ptree=$(toptree_for_commit $1) || exit $?
+ 		if test "$ptree" != "$tree"
+ 		then
+ 			return 0   # changed
+@@ -652,7 +652,7 @@ process_split_commit () {
+ 	progress "$revcount/$revmax ($createcount) [$extracount]"
+ 
+ 	debug "Processing commit: $rev"
+-	exists=$(cache_get "$rev")
++	exists=$(cache_get "$rev") || exit $?
+ 	if test -n "$exists"
+ 	then
+ 		debug "  prior: $exists"
+@@ -661,10 +661,10 @@ process_split_commit () {
+ 	createcount=$(($createcount + 1))
+ 	debug "  parents: $parents"
+ 	check_parents "$parents" "$indent"
+-	newparents=$(cache_get $parents)
++	newparents=$(cache_get $parents) || exit $?
+ 	debug "  newparents: $newparents"
+ 
+-	tree=$(subtree_for_commit "$rev" "$dir")
++	tree=$(subtree_for_commit "$rev" "$dir") || exit $?
+ 	debug "  tree is: $tree"
+ 
+ 	# ugly.  is there no better way to tell if this is a subtree
+@@ -750,7 +750,7 @@ cmd_add_commit () {
+ 		commit=$(add_squashed_msg "$rev" "$dir" |
+ 			git commit-tree "$tree" $headp -p "$rev") || exit $?
+ 	else
+-		revp=$(peel_committish "$rev") &&
++		revp=$(peel_committish "$rev") || exit $?
+ 		commit=$(add_msg "$dir" $headrev "$rev" |
+ 			git commit-tree "$tree" $headp -p "$revp") || exit $?
+ 	fi
+@@ -773,10 +773,10 @@ cmd_split () {
+ 			# any parent we find there can be used verbatim
+ 			debug "  cache: $rev"
+ 			cache_set "$rev" "$rev"
+-		done
++		done || exit $?
+ 	fi
+ 
+-	unrevs="$(find_existing_splits "$dir" "$revs")"
++	unrevs="$(find_existing_splits "$dir" "$revs")" || exit $?
+ 
+ 	# We can't restrict rev-list to only $dir here, because some of our
+ 	# parents have the $dir contents the root, and those won't match.
+@@ -792,7 +792,7 @@ cmd_split () {
+ 		process_split_commit "$rev" "$parents" 0
+ 	done || exit $?
+ 
+-	latest_new=$(cache_get latest_new)
++	latest_new=$(cache_get latest_new) || exit $?
+ 	if test -z "$latest_new"
+ 	then
+ 		die "No new revisions were found"
+@@ -801,7 +801,7 @@ cmd_split () {
+ 	if test -n "$rejoin"
+ 	then
+ 		debug "Merging split branch into HEAD..."
+-		latest_old=$(cache_get latest_old)
++		latest_old=$(cache_get latest_old) || exit $?
+ 		git merge -s ours \
+ 			--allow-unrelated-histories \
+ 			-m "$(rejoin_msg "$dir" "$latest_old" "$latest_new")" \
+@@ -834,7 +834,7 @@ cmd_merge () {
+ 
+ 	if test -n "$squash"
+ 	then
+-		first_split="$(find_latest_squash "$dir")"
++		first_split="$(find_latest_squash "$dir")" || exit $?
+ 		if test -z "$first_split"
+ 		then
+ 			die "Can't squash-merge: '$dir' was never added."
 -- 
 2.31.1
 
