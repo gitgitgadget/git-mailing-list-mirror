@@ -2,434 +2,152 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-21.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,USER_IN_DEF_DKIM_WL autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86B67C43470
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 17:48:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 38AD5C43461
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 17:59:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 52697611C1
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 17:48:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 060EC613B2
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 17:59:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237649AbhDZRtc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Apr 2021 13:49:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35220 "EHLO
+        id S237456AbhDZSAW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Apr 2021 14:00:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37780 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237659AbhDZRsp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Apr 2021 13:48:45 -0400
-Received: from mav.lukeshu.com (mav.lukeshu.com [IPv6:2001:19f0:5c00:8069:5400:ff:fe26:6a86])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1B5CC061343
-        for <git@vger.kernel.org>; Mon, 26 Apr 2021 10:47:59 -0700 (PDT)
-Received: from lukeshu-dw-thinkpad (unknown [IPv6:2601:281:8200:26:4e34:88ff:fe48:5521])
-        by mav.lukeshu.com (Postfix) with ESMTPSA id A8E5B80594;
-        Mon, 26 Apr 2021 13:47:58 -0400 (EDT)
-From:   Luke Shumaker <lukeshu@lukeshu.com>
-To:     git@vger.kernel.org
-Cc:     Avery Pennarun <apenwarr@gmail.com>,
-        Charles Bailey <cbailey32@bloomberg.net>,
-        Danny Lin <danny0838@gmail.com>,
-        "David A . Greene" <greened@obbligato.org>,
-        David Aguilar <davvid@gmail.com>,
-        Jakub Suder <jakub.suder@gmail.com>,
-        James Denholm <nod.helm@gmail.com>, Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Roger L Strain <roger.strain@swri.org>,
-        Techlive Zheng <techlivezheng@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Luke Shumaker <lukeshu@datawire.io>
-Subject: [PATCH v2 26/30] subtree: give the docs a once-over
-Date:   Mon, 26 Apr 2021 11:45:21 -0600
-Message-Id: <20210426174525.3937858-27-lukeshu@lukeshu.com>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20210426174525.3937858-1-lukeshu@lukeshu.com>
-References: <20210423194230.1388945-1-lukeshu@lukeshu.com>
- <20210426174525.3937858-1-lukeshu@lukeshu.com>
+        with ESMTP id S235847AbhDZSAU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Apr 2021 14:00:20 -0400
+Received: from mail-vs1-xe33.google.com (mail-vs1-xe33.google.com [IPv6:2607:f8b0:4864:20::e33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5ED15C061574
+        for <git@vger.kernel.org>; Mon, 26 Apr 2021 10:59:38 -0700 (PDT)
+Received: by mail-vs1-xe33.google.com with SMTP id k19so15617947vsg.0
+        for <git@vger.kernel.org>; Mon, 26 Apr 2021 10:59:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=8IU7V4qoCLoKSzSpuuSISA6DbdvUmy/7C8oXz1UCQZM=;
+        b=u5kOk2O6KctS4IhFa+cdmbkwb+E4kLrCvHmB3WGdwK7dbSg2PxNiylgDDxjJoWrDKV
+         FqYekZS4Tn87/Jbz9byfeykjQbvhuihOcCAB8eYGSkk7nDXQ4nI/RsSH2p/tqt+TMEBX
+         6h7TchgPxbHlhZsIDeU651UaSoJZY7e9AqCTGbAfr5Sfy7SjOjKKDizZr64bss9Qobar
+         Jh/lGpJagvRLghZ0EZK8YVL7yMUIdYccuSR00YnHtAtf3aCtAASqO064AecmvhvJ3Obp
+         oNEfc45BSUfTqibdvwCJ4+SXaYn2JFhBUmHwEQZ913wDzDqsiLOneg3r8bPaOR43vjBq
+         n+IA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=8IU7V4qoCLoKSzSpuuSISA6DbdvUmy/7C8oXz1UCQZM=;
+        b=K6CV70vfFi3L8aY4ZNkdxORW5vOfK2ujp0LRw65DoD9tGcXYo2Scp8oWPvnk0V7OUr
+         XRAtC8M8KG0XmTG9YXFyVhJBybeSW+iCVB+mJ5AMLPx401NS7KnO0XUbI7e6heX6O6Lo
+         JT8niKdRgTX9G7L62v7vanhtjW43jPko9AjtSYTQttpkLh0sj9HYLcq8rpRKm3BY/WMc
+         HhjZJHLKvwY8xghyp1elchAw0ki4M/ArN1krkz4h3xS++1HW33KozF5RHV5Wls/Akpuy
+         THqmZDtOZPi6aPiGovJztLuZ8omez45H7mbfFx8lf6xhC2QVEZG1fu4yGZhFroOYI6RR
+         R7Tw==
+X-Gm-Message-State: AOAM532CmdTPVR+qq+Zv+w9ujg0x2Phkx+QxPTbUtzW2S4IOYBMdsInX
+        q0SKfsNPYUVgIWRDgfNCXthwiLIWgLNZxmF2Rm58cQ==
+X-Google-Smtp-Source: ABdhPJyFXJ3giwI+Ia6moB+Pp2PtDDL2RnCeVHtp6x/wZU2c22uaP/Suql2foKxMkAqvoKpqskl8+EH8cMHgwVSJhJ4=
+X-Received: by 2002:a67:bd01:: with SMTP id y1mr13679874vsq.50.1619459977209;
+ Mon, 26 Apr 2021 10:59:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <pull.847.v6.git.git.1618255552.gitgitgadget@gmail.com>
+ <pull.847.v7.git.git.1618832276.gitgitgadget@gmail.com> <878s5c3wti.fsf@evledraar.gmail.com>
+ <CAFQ2z_MF3SbKf8yXBvkOcLGg03dVxJW3F=c6ZDUtstEbZUUMCQ@mail.gmail.com> <87lf9b3mth.fsf@evledraar.gmail.com>
+In-Reply-To: <87lf9b3mth.fsf@evledraar.gmail.com>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Mon, 26 Apr 2021 19:59:25 +0200
+Message-ID: <CAFQ2z_Ow38_80kA5W3vPyPnZFTSCAF7nwYavgki=GJVm44P7EQ@mail.gmail.com>
+Subject: Re: [PATCH v7 00/28] reftable library
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Josh Steadmon <steadmon@google.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Patrick Steinhardt <ps@pks.im>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Luke Shumaker <lukeshu@datawire.io>
+On Wed, Apr 21, 2021 at 1:21 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 
-Just went through the docs looking for anything inaccurate or that can
-be improved.
+> >> I don't see the point of having re-rolls of this topic while the test
+> >> changes topic it's based on hasn't finished
+> >> marking/splitting/refactoring the various tests that do and don't depe=
+nd
+> >> on the file backend.
+> >>
+> >> At least when I review it I'm just left with going in circles digging
+> >> into one of those failing test, figuring out if it's really
+> >> refs/files-backend.c specific or not etc., and as long as we can't tur=
+n
+> >> on GIT_TEST_REFTABLE=3Dtrue in CI as part of this series I don't see a
+> >> path to making it advance to next->master.
+> >
+> > The point of posting updates is to garner feedback, especially from
+> > people familiar with the Git code itself.
+>
+> So you agree that we should make the tests pass first, then shouldn't
+> these me marked as RFC/PATCH?
 
-In the '-h' text, in the man page synopsis, and in the man page
-description: Normalize the ordering of the list of sub-commands: 'add',
-'merge', 'split', 'pull', 'push'.  This allows us to kinda separate the
-lower-level add/merge/split from the higher-level pull/push.
+I added RFC to the patch introducing reftable-backend.c
 
-'-h' text:
- - correction: Indicate that split's arg is optional.
- - clarity: Emphasize that 'pull' takes the 'add'/'merge' flags.
+I consider the code under reftable/*.c to be of production quality,
+even if it's stylistically different from the git code.
 
-man page:
+> IOW a large part of the feedback you're looking for is already part of
+> the codebase. Nobody can keep all of it in their head, but we've encoded
+> all the tricky edge cases we could think of in the tests.
 
- - correction: State that all subcommands take options (it seemed to
-   indicate that only 'split' takes any options other than '-P').
- - correction: 'split' only guarantees that the results are identical if
-   the flags are identical.
- - completeness: Clarify that 'push' always operates on HEAD, and that
-   'split' operates on HEAD if no local commit is given.
- - clarity: In the description, when listing commands, repeat what their
-   arguments are.  This way the reader doesn't need to flip back and
-   forth between the command description and the synopsis and the full
-   description to understand what's being said.
- - clarity: In the <variables> used to give command arguments, give
-   slightly longer, descriptive names.  Like <local-commit> instead of
-   just <commit>.
- - clarity: Emphasize that 'pull' takes the 'add'/'merge' flags.
- - style: In the synopsis, list options before the subcommand.  This
-   makes things line up and be much more readable when shown
-   non-monospace (such as in `make html`), and also more closely matches
-   other man pages (like `git-submodule.txt`).
- - style: Use the correct syntax for indicating the options ([<options>]
-   instead of [OPTIONS]).
- - style: In the synopsis, separate 'pull' and 'push' from the other
-   lower-level commands.  I think this helps readability.
- - style: Code-quote things in prose that seem like they should be
-   code-quoted, like '.gitmodules', flags, or full commands.
- - style: Minor wording improvements, like more consistent mood (many
-   of the command descriptions start in the imperative mood and switch
-   to the indicative mode by the end).  That sort of thing.
- - style: Capitalize "ID".
- - style: Remove the "This option is only valid for XXX command" remarks
-   from each option, and instead rely on the section headings.
- - style: Since that line is getting edited anyway, switch "behaviour" to
-   American "behavior".
+That's disappointing. I know that I can just fix test failures until
+there are none left, but it's not a terribly efficient method if there
+is someone who knows how this works.  Is there no other way to solicit
+feedback?
 
-Signed-off-by: Luke Shumaker <lukeshu@datawire.io>
----
-v2:
- - behaviour -> behavior
+> I.e. reaching some consensus on things like whether
+> GIT_TEST_REFTABLE=3Dtrue passing under CI being a hard-prereq for this
+> series or not is surely one of the first things to sketch out before
+> figuring out how to move this forward.
 
- contrib/subtree/git-subtree.sh  |   4 +-
- contrib/subtree/git-subtree.txt | 162 +++++++++++++++-----------------
- 2 files changed, 80 insertions(+), 86 deletions(-)
+I've had conflicting feedback about this, but it's ultimately not my
+call to make. Jonathan Nieder suggested that this was asking too much,
+and it would be OK to have a credible starting point where the effort
+to address remaining test failures could be shared across multiple
+people. Jun also expressed he didn't want to put all the work on my
+shoulders, but so far I've not received much help.
 
-diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index 768fa7b6b6..3bffddf277 100755
---- a/contrib/subtree/git-subtree.sh
-+++ b/contrib/subtree/git-subtree.sh
-@@ -25,9 +25,9 @@ OPTS_SPEC="\
- git subtree add   --prefix=<prefix> <commit>
- git subtree add   --prefix=<prefix> <repository> <ref>
- git subtree merge --prefix=<prefix> <commit>
-+git subtree split --prefix=<prefix> [<commit>]
- git subtree pull  --prefix=<prefix> <repository> <ref>
- git subtree push  --prefix=<prefix> <repository> <ref>
--git subtree split --prefix=<prefix> <commit>
- --
- h,help        show the help
- q             quiet
-@@ -40,7 +40,7 @@ b,branch=     create a new branch from the split subtree
- ignore-joins  ignore prior --rejoin commits
- onto=         try connecting new tree to an existing one
- rejoin        merge the new branch back into HEAD
-- options for 'add', 'merge', and 'pull'
-+ options for 'add' and 'merge' (also: 'pull')
- squash        merge subtree changes as a single commit
- "
- 
-diff --git a/contrib/subtree/git-subtree.txt b/contrib/subtree/git-subtree.txt
-index 0db02fe3c0..7baac17260 100644
---- a/contrib/subtree/git-subtree.txt
-+++ b/contrib/subtree/git-subtree.txt
-@@ -9,13 +9,14 @@ git-subtree - Merge subtrees together and split repository into subtrees
- SYNOPSIS
- --------
- [verse]
--'git subtree' add   -P <prefix> <commit>
--'git subtree' add   -P <prefix> <repository> <ref>
--'git subtree' pull  -P <prefix> <repository> <ref>
--'git subtree' push  -P <prefix> <repository> <ref>
--'git subtree' merge -P <prefix> <commit>
--'git subtree' split -P <prefix> [OPTIONS] [<commit>]
-+'git subtree' [<options>] -P <prefix> add <local-commit>
-+'git subtree' [<options>] -P <prefix> add <repository> <remote-ref>
-+'git subtree' [<options>] -P <prefix> merge <local-commit>
-+'git subtree' [<options>] -P <prefix> split [<local-commit>]
- 
-+[verse]
-+'git subtree' [<options>] -P <prefix> pull <repository> <remote-ref>
-+'git subtree' [<options>] -P <prefix> push <repository> <remote-ref>
- 
- DESCRIPTION
- -----------
-@@ -28,7 +29,7 @@ as a subdirectory of your application.
- 
- Subtrees are not to be confused with submodules, which are meant for
- the same task. Unlike submodules, subtrees do not need any special
--constructions (like .gitmodules files or gitlinks) be present in
-+constructions (like '.gitmodules' files or gitlinks) be present in
- your repository, and do not force end-users of your
- repository to do anything special or to understand how subtrees
- work. A subtree is just a subdirectory that can be
-@@ -59,27 +60,28 @@ project as much as possible.  That is, if you make a change that
- affects both the library and the main application, commit it in
- two pieces.  That way, when you split the library commits out
- later, their descriptions will still make sense.  But if this
--isn't important to you, it's not *necessary*.  git subtree will
-+isn't important to you, it's not *necessary*.  'git subtree' will
- simply leave out the non-library-related parts of the commit
- when it splits it out into the subproject later.
- 
- 
- COMMANDS
- --------
--add::
-+add <local-commit>::
-+add <repository> <remote-ref>::
- 	Create the <prefix> subtree by importing its contents
--	from the given <commit> or <repository> and remote <ref>.
-+	from the given <local-commit> or <repository> and <remote-ref>.
- 	A new commit is created	automatically, joining the imported
--	project's history with your own.  With '--squash', imports
-+	project's history with your own.  With '--squash', import
- 	only a single commit from the subproject, rather than its
- 	entire history.
- 
--merge::
--	Merge recent changes up to <commit> into the <prefix>
-+merge <local-commit>::
-+	Merge recent changes up to <local-commit> into the <prefix>
- 	subtree.  As with normal 'git merge', this doesn't
- 	remove your own local changes; it just merges those
--	changes into the latest <commit>.  With '--squash',
--	creates only one commit that contains all the changes,
-+	changes into the latest <local-commit>.  With '--squash',
-+	create only one commit that contains all the changes,
- 	rather than merging in the entire history.
- +
- If you use '--squash', the merge direction doesn't always have to be
-@@ -87,39 +89,40 @@ forward; you can use this command to go back in time from v2.5 to v2.4,
- for example.  If your merge introduces a conflict, you can resolve it in
- the usual ways.
- 	
--pull::
--	Exactly like 'merge', but parallels 'git pull' in that
--	it fetches the given ref from the specified remote
--	repository.
--	
--push::
--	Does a 'split' (see below) using the <prefix> supplied
--	and then does a 'git push' to push the result to the 
--	repository and ref. This can be used to push your
--	subtree to different branches of the remote repository.
--
--split::
-+split [<local-commit>]::
- 	Extract a new, synthetic project history from the
--	history of the <prefix> subtree.  The new history
-+	history of the <prefix> subtree of <local-commit>, or of
-+	HEAD if no <local-commit> is given.  The new history
- 	includes only the commits (including merges) that
- 	affected <prefix>, and each of those commits now has the
- 	contents of <prefix> at the root of the project instead
- 	of in a subdirectory.  Thus, the newly created history
- 	is suitable for export as a separate git repository.
- +
--After splitting successfully, a single commit id is printed to stdout.
-+After splitting successfully, a single commit ID is printed to stdout.
- This corresponds to the HEAD of the newly created tree, which you can
- manipulate however you want.
- +
- Repeated splits of exactly the same history are guaranteed to be
--identical (i.e. to produce the same commit ids).  Because of this, if
--you add new commits and then re-split, the new commits will be attached
--as commits on top of the history you generated last time, so 'git merge'
--and friends will work as expected.
-+identical (i.e. to produce the same commit IDs) as long as the
-+settings passed to 'split' (such as '--annotate') are the same.
-+Because of this, if you add new commits and then re-split, the new
-+commits will be attached as commits on top of the history you
-+generated last time, so 'git merge' and friends will work as expected.
- +
- Note that if you use '--squash' when you merge, you should usually not
- just '--rejoin' when you split.
- 
-+pull <repository> <remote-ref>::
-+	Exactly like 'merge', but parallels 'git pull' in that
-+	it fetches the given ref from the specified remote
-+	repository.
-+
-+push <repository> <remote-ref>::
-+	Does a 'split' using the <prefix> subtree of HEAD and then
-+	does a 'git push' to push the result to the <repository> and
-+	<remote-ref>.  This can be used to push your subtree to
-+	different branches of the remote repository.
- 
- OPTIONS
- -------
-@@ -139,19 +142,18 @@ OPTIONS
- 
- -m <message>::
- --message=<message>::
--	This option is only valid for add, merge, pull, and split --rejoin.
-+	This option is only valid for 'add', 'merge', 'pull', and 'split --rejoin'.
- 	Specify <message> as the commit message for the merge commit.
- 
-+OPTIONS FOR 'add' AND 'merge' (ALSO: 'pull')
-+--------------------------------------------
-+These options for 'add' and 'merge' may also be given to 'pull' (which
-+wraps 'merge').
- 
--OPTIONS FOR add, merge, and pull
----------------------------------
- --squash::
--	This option is only valid for add, merge, and pull
--	commands.
--+
--Instead of merging the entire history from the subtree project, produce
--only a single commit that contains all the differences you want to
--merge, and then merge that new commit into your project.
-+	Instead of merging the entire history from the subtree project, produce
-+	only a single commit that contains all the differences you want to
-+	merge, and then merge that new commit into your project.
- +
- Using this option helps to reduce log clutter. People rarely want to see
- every change that happened between v1.0 and v1.1 of the library they're
-@@ -175,56 +177,48 @@ remain intact and can be later split and send upstream to the
- subproject.
- 
- 
--OPTIONS FOR split
-------------------
-+OPTIONS FOR 'split'
-+-------------------
-+These options are only valid for 'split'.
-+
- --annotate=<annotation>::
--	This option is only valid for the split command.
--+
--When generating synthetic history, add <annotation> as a prefix to each
--commit message.  Since we're creating new commits with the same commit
--message, but possibly different content, from the original commits, this
--can help to differentiate them and avoid confusion.
-+	When generating synthetic history, add <annotation> as a prefix to each
-+	commit message.  Since we're creating new commits with the same commit
-+	message, but possibly different content, from the original commits, this
-+	can help to differentiate them and avoid confusion.
- +
- Whenever you split, you need to use the same <annotation>, or else you
- don't have a guarantee that the new re-created history will be identical
- to the old one.  That will prevent merging from working correctly.  git
--subtree tries to make it work anyway, particularly if you use --rejoin,
-+subtree tries to make it work anyway, particularly if you use '--rejoin',
- but it may not always be effective.
- 
- -b <branch>::
- --branch=<branch>::
--	This option is only valid for the split command.
--+
--After generating the synthetic history, create a new branch called
--<branch> that contains the new history.  This is suitable for immediate
--pushing upstream.  <branch> must not already exist.
-+	After generating the synthetic history, create a new branch called
-+	<branch> that contains the new history.  This is suitable for immediate
-+	pushing upstream.  <branch> must not already exist.
- 
- --ignore-joins::
--	This option is only valid for the split command.
--+
--If you use '--rejoin', git subtree attempts to optimize its history
--reconstruction to generate only the new commits since the last
--'--rejoin'.  '--ignore-join' disables this behaviour, forcing it to
--regenerate the entire history.  In a large project, this can take a long
--time.
-+	If you use '--rejoin', git subtree attempts to optimize its history
-+	reconstruction to generate only the new commits since the last
-+	'--rejoin'.  '--ignore-join' disables this behavior, forcing it to
-+	regenerate the entire history.  In a large project, this can take a long
-+	time.
- 
- --onto=<onto>::
--	This option is only valid for the split command.
--+
--If your subtree was originally imported using something other than git
--subtree, its history may not match what git subtree is expecting.  In
--that case, you can specify the commit id <onto> that corresponds to the
--first revision of the subproject's history that was imported into your
--project, and git subtree will attempt to build its history from there.
-+	If your subtree was originally imported using something other than git
-+	subtree, its history may not match what git subtree is expecting.  In
-+	that case, you can specify the commit ID <onto> that corresponds to the
-+	first revision of the subproject's history that was imported into your
-+	project, and git subtree will attempt to build its history from there.
- +
- If you used 'git subtree add', you should never need this option.
- 
- --rejoin::
--	This option is only valid for the split command.
--+
--After splitting, merge the newly created synthetic history back into
--your main project.  That way, future splits can search only the part of
--history that has been added since the most recent --rejoin.
-+	After splitting, merge the newly created synthetic history back into
-+	your main project.  That way, future splits can search only the part of
-+	history that has been added since the most recent '--rejoin'.
- +
- If your split commits end up merged into the upstream subproject, and
- then you want to get the latest upstream version, this will allow git's
-@@ -240,8 +234,8 @@ split, because you don't want the subproject's history to be part of
- your project anyway.
- 
- 
--EXAMPLE 1. Add command
------------------------
-+EXAMPLE 1. 'add' command
-+------------------------
- Let's assume that you have a local repository that you would like
- to add an external vendor library to. In this case we will add the
- git-subtree repository as a subdirectory of your already existing
-@@ -253,15 +247,15 @@ git-extensions repository in ~/git-extensions/:
- 'master' needs to be a valid remote ref and can be a different branch
- name
- 
--You can omit the --squash flag, but doing so will increase the number
-+You can omit the '--squash' flag, but doing so will increase the number
- of commits that are included in your local repository.
- 
- We now have a ~/git-extensions/git-subtree directory containing code
- from the master branch of git://github.com/apenwarr/git-subtree.git
- in our git-extensions repository.
- 
--EXAMPLE 2. Extract a subtree using commit, merge and pull
-----------------------------------------------------------
-+EXAMPLE 2. Extract a subtree using 'commit', 'merge' and 'pull'
-+---------------------------------------------------------------
- Let's use the repository for the git source code as an example.
- First, get your own copy of the git.git repository:
- 
-@@ -284,9 +278,9 @@ the upstream.  You could do this:
- 0a8f4f0 to the current version, including 0a8f4f0 itself.")
- 
- If gitweb had originally been merged using 'git subtree add' (or
--a previous split had already been done with --rejoin specified)
-+a previous split had already been done with '--rejoin' specified)
- then you can do all your splits without having to remember any
--weird commit ids:
-+weird commit IDs:
- 
- 	$ git subtree split --prefix=gitweb --annotate='(split) ' --rejoin \
- 		--branch gitweb-latest2
-@@ -321,8 +315,8 @@ the standard gitweb:
- 
- 	git log gitweb-latest..$(git subtree split --prefix=gitweb)
- 
--EXAMPLE 3. Extract a subtree using branch
-------------------------------------------
-+EXAMPLE 3. Extract a subtree using a branch
-+-------------------------------------------
- Suppose you have a source directory with many files and
- subdirectories, and you want to extract the lib directory to its own
- git project. Here's a short way to do it:
--- 
-2.31.1
+> In v6 I noted that t5510-fetch.sh had a segfault[4], you said you'd
+> check it out, and reading your cover letter nothing stood out about
+> that, so I assumed it was sorted out somehow.
 
+I fixed a number of segfaults, so it's quite likely (I did see the
+freed transaction BUG).
+
+One of the problems of working with a large pending series like this,
+is that it is a project in itself, and keeping track of which change
+fixes which bug is something I really need version control for, but
+the frequent rebasing/squashing erases this kind of information.
+
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
+
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+
+Registergericht und -nummer: Hamburg, HRB 86891
+
+Sitz der Gesellschaft: Hamburg
+
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
