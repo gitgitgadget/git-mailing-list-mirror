@@ -2,26 +2,29 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.0 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,UNWANTED_LANGUAGE_BODY,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 18ED4C433B4
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 17:48:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 84BCBC433ED
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 17:48:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E52CA613B3
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 17:48:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 51AF261185
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 17:48:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237608AbhDZRss (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Apr 2021 13:48:48 -0400
-Received: from mav.lukeshu.com ([104.207.138.63]:39298 "EHLO mav.lukeshu.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237599AbhDZRsc (ORCPT <rfc822;git@vger.kernel.org>);
+        id S237611AbhDZRst (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Apr 2021 13:48:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35158 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237603AbhDZRsc (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 26 Apr 2021 13:48:32 -0400
+Received: from mav.lukeshu.com (mav.lukeshu.com [IPv6:2001:19f0:5c00:8069:5400:ff:fe26:6a86])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA8BBC061763
+        for <git@vger.kernel.org>; Mon, 26 Apr 2021 10:47:48 -0700 (PDT)
 Received: from lukeshu-dw-thinkpad (unknown [IPv6:2601:281:8200:26:4e34:88ff:fe48:5521])
-        by mav.lukeshu.com (Postfix) with ESMTPSA id E025B80595;
-        Mon, 26 Apr 2021 13:47:49 -0400 (EDT)
+        by mav.lukeshu.com (Postfix) with ESMTPSA id 1DFBB8059A;
+        Mon, 26 Apr 2021 13:47:48 -0400 (EDT)
 From:   Luke Shumaker <lukeshu@lukeshu.com>
 To:     git@vger.kernel.org
 Cc:     Avery Pennarun <apenwarr@gmail.com>,
@@ -39,9 +42,9 @@ Cc:     Avery Pennarun <apenwarr@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Luke Shumaker <lukeshu@datawire.io>
-Subject: [PATCH v2 16/30] subtree: use git-sh-setup's `say`
-Date:   Mon, 26 Apr 2021 11:45:11 -0600
-Message-Id: <20210426174525.3937858-17-lukeshu@lukeshu.com>
+Subject: [PATCH v2 14/30] subtree: drop support for git < 1.7
+Date:   Mon, 26 Apr 2021 11:45:09 -0600
+Message-Id: <20210426174525.3937858-15-lukeshu@lukeshu.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210426174525.3937858-1-lukeshu@lukeshu.com>
 References: <20210423194230.1388945-1-lukeshu@lukeshu.com>
@@ -54,98 +57,64 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Luke Shumaker <lukeshu@datawire.io>
 
-subtree currently defines its own `say` implementation, rather than
-using git-sh-setups's implementation.  Change that, don't re-invent the
-wheel.
+Suport for Git versions older than 1.7.0 (older than February 2010) was
+nice to have when git-subtree lived out-of-tree.  But now that it lives
+in git.git, it's not necessary to keep around.  While it's technically
+in contrib, with the standard 'git' packages for common systems
+(including Arch Linux and macOS) including git-subtree, it seems
+vanishingly likely to me that people are separately installing
+git-subtree from git.git alongside an older 'git' install (although it
+also seems vanishingly likely that people are still using >11 year old
+git installs).
+
+Not that there's much reason to remove it either, it's not much code,
+and none of my changes depend on a newer git (to my knowledge, anyway;
+I'm not actually testing against older git).  I just figure it's an easy
+piece of fat to trim, in the journey to making the whole thing easier to
+hack on.
+
+"Ignore space change" is probably helpful when viewing this diff.
 
 Signed-off-by: Luke Shumaker <lukeshu@datawire.io>
 ---
- contrib/subtree/git-subtree.sh | 22 +++++++---------------
- 1 file changed, 7 insertions(+), 15 deletions(-)
+v2:
+ - Include rationale in the the commit message.
+
+ contrib/subtree/git-subtree.sh | 19 ++++---------------
+ 1 file changed, 4 insertions(+), 15 deletions(-)
 
 diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index 70e16b807b..bb4934dbc0 100755
+index 9ca498f81c..4503564f7e 100755
 --- a/contrib/subtree/git-subtree.sh
 +++ b/contrib/subtree/git-subtree.sh
-@@ -30,7 +30,6 @@ squash        merge subtree changes as a single commit
- 
- PATH=$PATH:$(git --exec-path)
- 
--quiet=
- branch=
- debug=
- command=
-@@ -49,15 +48,8 @@ debug () {
+@@ -852,23 +852,12 @@ cmd_merge () {
+ 		rev="$new"
  	fi
- }
  
--say () {
--	if test -z "$quiet"
--	then
--		printf "%s\n" "$*" >&2
--	fi
--}
--
- progress () {
--	if test -z "$quiet"
-+	if test -z "$GIT_QUIET"
+-	version=$(git version)
+-	if test "$version" \< "git version 1.7"
++	if test -n "$message"
  	then
- 		printf "%s\r" "$*" >&2
- 	fi
-@@ -93,7 +85,7 @@ main () {
- 
- 		case "$opt" in
- 		-q)
--			quiet=1
-+			GIT_QUIET=1
- 			;;
- 		-d)
- 			debug=1
-@@ -201,7 +193,7 @@ main () {
- 	fi
- 
- 	debug "command: {$command}"
--	debug "quiet: {$quiet}"
-+	debug "quiet: {$GIT_QUIET}"
- 	debug "revs: {$revs}"
- 	debug "dir: {$dir}"
- 	debug "opts: {$*}"
-@@ -698,7 +690,7 @@ cmd_add () {
- 
- 		cmd_add_repository "$@"
+-		if test -n "$message"
+-		then
+-			git merge -s subtree --message="$message" "$rev"
+-		else
+-			git merge -s subtree "$rev"
+-		fi
++		git merge -Xsubtree="$prefix" \
++		    --message="$message" "$rev"
  	else
--		say "error: parameters were '$@'"
-+		say >&2 "error: parameters were '$@'"
- 		die "Provide either a commit or a repository and commit."
+-		if test -n "$message"
+-		then
+-			git merge -Xsubtree="$prefix" \
+-				--message="$message" "$rev"
+-		else
+-			git merge -Xsubtree="$prefix" $rev
+-		fi
++		git merge -Xsubtree="$prefix" $rev
  	fi
  }
-@@ -742,7 +734,7 @@ cmd_add_commit () {
- 	fi
- 	git reset "$commit" || exit $?
  
--	say "Added dir '$dir'"
-+	say >&2 "Added dir '$dir'"
- }
- 
- cmd_split () {
-@@ -807,7 +799,7 @@ cmd_split () {
- 		fi
- 		git update-ref -m 'subtree split' \
- 			"refs/heads/$branch" "$latest_new" || exit $?
--		say "$action branch '$branch'"
-+		say >&2 "$action branch '$branch'"
- 	fi
- 	echo "$latest_new"
- 	exit 0
-@@ -830,7 +822,7 @@ cmd_merge () {
- 		sub=$2
- 		if test "$sub" = "$rev"
- 		then
--			say "Subtree is already at commit $rev."
-+			say >&2 "Subtree is already at commit $rev."
- 			exit 0
- 		fi
- 		new=$(new_squash_commit "$old" "$sub" "$rev") || exit $?
 -- 
 2.31.1
 
