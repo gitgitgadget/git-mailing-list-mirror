@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE465C433ED
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 16:20:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D2630C433B4
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 16:20:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9DBB96115C
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 16:20:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9A68E61164
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 16:20:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234355AbhDZQV3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Apr 2021 12:21:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43618 "EHLO
+        id S234523AbhDZQVe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Apr 2021 12:21:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233919AbhDZQV1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Apr 2021 12:21:27 -0400
-Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F894C061574
-        for <git@vger.kernel.org>; Mon, 26 Apr 2021 09:20:46 -0700 (PDT)
-Received: by mail-ot1-x32b.google.com with SMTP id d3-20020a9d29030000b029027e8019067fso50721843otb.13
-        for <git@vger.kernel.org>; Mon, 26 Apr 2021 09:20:46 -0700 (PDT)
+        with ESMTP id S233919AbhDZQVd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Apr 2021 12:21:33 -0400
+Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E981DC061574
+        for <git@vger.kernel.org>; Mon, 26 Apr 2021 09:20:51 -0700 (PDT)
+Received: by mail-oi1-x230.google.com with SMTP id k25so56978270oic.4
+        for <git@vger.kernel.org>; Mon, 26 Apr 2021 09:20:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=R/TvVZKpQvdPHiHieOqBXvy/cQQ9HTuFFVCq3/qawCI=;
-        b=ZBImQt+P0/UyMZA20R37UkljdxdaqX4SMxI1Sy+Z2jRTNUtOo595VJBcmBAO0zuh6t
-         oKLcUipGPzRhQ6ieC/fLJ4be0VYrx+Q4kGKbiXxRqWY/ru9F9TF4jqZ5QiLq1axDg5bW
-         jqZboaPHMSSlJknTZ3gFmpn9YPPGZVMNUCe26Vz5n7tnnNy0I+Hposg5B5ZHZ0lmV9si
-         63nxCiItrspJZ7SB6gHchH/QRXiAWIHG6LWT6CZLTG7hnTHJDt72+AddGHNeIzxMbxTW
-         SEylFB2NSH3aqADB0qWI9ktRGWB/o6FxrDjZbH2Oa4OYM6Ja68vpvFkpBqAZ+1mOHqi3
-         W69g==
+        bh=O7RW+8hJP0Nay3XXmOTYHw106DOqFYPtV5o2FLwxBgE=;
+        b=OVXEGH7dtBucvMccIrxXKudSgTKefwLkVoqXI/Lw/f4c3HhMq6we5rUTT8iPE85Zzt
+         /l4W1FkpNmIDJCePC5p5pVwrACmKWxh+0urlqnYZV34IGeoUy8BmN9s0v+F/b9iF6x6y
+         1cwcCUFknwCra/6F/PTaruDVJFIALdV9JDQKBjpXsKqSs4GB4IryoQw/f3Y46OVPduS8
+         LS6owkcZ3mwisbVIi6t7TMeipVjImFq9nZnsJdI6dSXCml6U209t34hbMKWg6PttjVbb
+         Xf0qZOTtAWZTb+GPxPThgsuFUIFVFAUSZ8kDg/stA2F7kAdWzXjARVO8ekHRSeyZdxu8
+         l/rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=R/TvVZKpQvdPHiHieOqBXvy/cQQ9HTuFFVCq3/qawCI=;
-        b=dBDV7IoWBgRxPClSa+d0njBj/hBjytx4T4vRcJ2/AVIFvAS65fchUTvTrdzLfrf0uF
-         9pfJTxMcJ5MqMPBpag3iTCN3fau3fU22hNhXlpkRfaVhpJIG4tRtsSbXYTiXr6yWrOA8
-         wh3cvDJJ5iizu7iVGUCY/dxTvO1lf3CsYLclauoqbfPiihWbmUXAIvoI7rSs5z9PHCLz
-         GbmuXcAThxO6QpYYElnvUisaBEBr9X2vT1uwiO09rmjBqp51YEJ5nigNeWYsWMpyM5I2
-         a3u/k+rNh07dDebOrW75DWfW7aW9NbGVi/LRQ5mu3EEZfwroXnowNZ11VFtVx/ge2Y66
-         PumA==
-X-Gm-Message-State: AOAM531ghM9VoaqWTA7jvHSMsBjFplF4Xr+LEXAktRTQTUIDidLGHZ1r
-        7RDeiO1xgX9adDXF21REyFBWP9jA3KdQrQ==
-X-Google-Smtp-Source: ABdhPJyJb6LOG8yB2PWkag81ye+mQXyJuosMFA7qfwIXuDkiKtAPw3RpYY04YhkK1pfeoqC5QqUnSg==
-X-Received: by 2002:a9d:342:: with SMTP id 60mr15406277otv.295.1619454045567;
-        Mon, 26 Apr 2021 09:20:45 -0700 (PDT)
+        bh=O7RW+8hJP0Nay3XXmOTYHw106DOqFYPtV5o2FLwxBgE=;
+        b=oCwwA3coSSsodqycM4iP5v+f8wZY1AIm0rydUtf08dO/HwCrkL3sSb+97JQ6payOf3
+         6+muZaQIKJ11CsYx+geUxfV0EcnNPB1cSiQxQtX/MWB9W0rf5/bgQ7++5m6VeYQUv6KJ
+         7A8tShHZG40OG1AeJPzZEincm23+Fd4LSw8Eg2eAtKEcjiQKMjJctUJ4u2W8fuSr508o
+         ufdiQIA6JNoIFQjKkuWyDzVyEnmPqg17xRcncCcUnzqPhE5PKmV8HBg7t5Oe7PA6tQKX
+         j0nPtAhEfZIdNxMtF2GzsIda9yc18BE3+zbkLTe9g4cmwdo7PvJg5kHqawOPvCCupLTd
+         ILIA==
+X-Gm-Message-State: AOAM533SzIcQmMXXuByo/BdPQ0wOuo2tn2ZoppUZVwbn9XVbwjViVQbc
+        qgRA24LMGngs0KkZUpJCA1LYwv+rLdIf+g==
+X-Google-Smtp-Source: ABdhPJxllk45qSiaEiyKi9BzZnc4W1/H31dgYgQ3xcpaKZI8zkqg8QNoyWTFhb53tob5esjPr1lb4Q==
+X-Received: by 2002:a05:6808:699:: with SMTP id k25mr13638527oig.101.1619454051060;
+        Mon, 26 Apr 2021 09:20:51 -0700 (PDT)
 Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id j8sm3702895otj.49.2021.04.26.09.20.44
+        by smtp.gmail.com with ESMTPSA id 10sm3088665oiq.48.2021.04.26.09.20.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Apr 2021 09:20:45 -0700 (PDT)
+        Mon, 26 Apr 2021 09:20:50 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v1 38/43] completion: bash: simplify _get_comp_words_by_ref()
-Date:   Mon, 26 Apr 2021 11:14:53 -0500
-Message-Id: <20210426161458.49860-39-felipe.contreras@gmail.com>
+Subject: [PATCH v1 39/43] completion: bash: refactor _get_comp_words_by_ref()
+Date:   Mon, 26 Apr 2021 11:14:54 -0500
+Message-Id: <20210426161458.49860-40-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.31.0
 In-Reply-To: <20210426161458.49860-1-felipe.contreras@gmail.com>
 References: <20210426161458.49860-1-felipe.contreras@gmail.com>
@@ -71,88 +71,140 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We don't need the whole functionality of _get_comp_words_by_ref(), we
-know exactly what we need from that function, so only do that.
+We don't need a separate function to do what we already know we want to
+do.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/completion/git-completion.bash | 30 ++++++--------------------
- t/t9902-completion.sh                  | 21 ++++--------------
- 2 files changed, 10 insertions(+), 41 deletions(-)
+ contrib/completion/git-completion.bash | 93 +++++++++++---------------
+ 1 file changed, 39 insertions(+), 54 deletions(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index d760434c0c..cbea35441c 100644
+index cbea35441c..05b6762210 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -408,30 +408,12 @@ __git_reassemble_comp_words_by_ref()
- if ! type _get_comp_words_by_ref >/dev/null 2>&1; then
- _get_comp_words_by_ref ()
+@@ -334,21 +334,11 @@ __git_dequote ()
+ #
+ #   RELEASE: 2.x
+ 
+-# This function can be used to access a tokenized list of words
+-# on the command line:
+-#
+-#	__git_reassemble_comp_words_by_ref '=:'
+-#	if test "${words_[cword_-1]}" = -w
+-#	then
+-#		...
+-#	fi
+-#
+-# The argument should be a collection of characters from the list of
+-# word completion separators (COMP_WORDBREAKS) to treat as ordinary
+-# characters.
++# This function reorganizes the words on the command line to be processed by
++# the rest of the script.
+ #
+ # This is roughly equivalent to going back in time and setting
+-# COMP_WORDBREAKS to exclude those characters.  The intent is to
++# COMP_WORDBREAKS to exclude '=' and ':'.  The intent is to
+ # make option types like --date=<type> and <rev>:<path> easy to
+ # recognize by treating each shell word as a single token.
+ #
+@@ -356,60 +346,55 @@ __git_dequote ()
+ # shared with other completion scripts.  By the time the completion
+ # function gets called, COMP_WORDS has already been populated so local
+ # changes to COMP_WORDBREAKS have no effect.
+-#
+-# Output: words_, cword_, cur_.
+ 
+-__git_reassemble_comp_words_by_ref()
++if ! type _get_comp_words_by_ref >/dev/null 2>&1; then
++_get_comp_words_by_ref ()
  {
--	local exclude cur_ words_ cword_
--	if [ "$1" = "-n" ]; then
--		exclude=$2
--		shift 2
--	fi
--	__git_reassemble_comp_words_by_ref "$exclude"
--	cur_=${words_[cword_]}
--	while [ $# -gt 0 ]; do
--		case "$1" in
--		cur)
--			cur=$cur_
--			;;
--		prev)
--			prev=${words_[$cword_-1]}
--			;;
--		words)
--			words=("${words_[@]}")
--			;;
--		cword)
--			cword=$cword_
--			;;
--		esac
--		shift
--	done
 +	local words_ cword_
-+	__git_reassemble_comp_words_by_ref "=:"
-+	cword=$cword_
-+	cur=${words_[cword]}
-+	prev=${words_[cword-1]}
-+	words=("${words_[@]}")
- }
- fi
- 
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 205083184a..dfa2cb3b21 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -43,23 +43,10 @@ GIT_TESTING_PORCELAIN_COMMAND_LIST='add checkout rebase'
- # So let's override it with a minimal version for testing purposes.
- _get_comp_words_by_ref ()
- {
--	while [ $# -gt 0 ]; do
--		case "$1" in
--		cur)
--			cur=${_words[_cword]}
--			;;
--		prev)
--			prev=${_words[_cword-1]}
--			;;
--		words)
--			words=("${_words[@]}")
--			;;
--		cword)
--			cword=$_cword
--			;;
--		esac
--		shift
+ 	local exclude i j first
++
+ 	# Which word separators to exclude?
+-	exclude="${1//[^$COMP_WORDBREAKS]}"
++	exclude="${COMP_WORDBREAKS//[^=:]}"
+ 	cword_=$COMP_CWORD
+ 	if [ -z "$exclude" ]; then
+ 		words_=("${COMP_WORDS[@]}")
+-		return
+-	fi
+-	# List of word completion separators has shrunk;
+-	# re-assemble words to complete.
+-	for ((i=0, j=0; i < ${#COMP_WORDS[@]}; i++, j++)); do
+-		# Append each nonempty word consisting of just
+-		# word separator characters to the current word.
+-		first=t
+-		while
+-			[ $i -gt 0 ] &&
+-			[ -n "${COMP_WORDS[$i]}" ] &&
+-			# word consists of excluded word separators
+-			[ "${COMP_WORDS[$i]//[^$exclude]}" = "${COMP_WORDS[$i]}" ]
+-		do
+-			# Attach to the previous token,
+-			# unless the previous token is the command name.
+-			if [ $j -ge 2 ] && [ -n "$first" ]; then
+-				((j--))
+-			fi
+-			first=
++	else
++		# List of word completion separators has shrunk;
++		# re-assemble words to complete.
++		for ((i=0, j=0; i < ${#COMP_WORDS[@]}; i++, j++)); do
++			# Append each nonempty word consisting of just
++			# word separator characters to the current word.
++			first=t
++			while
++				[ $i -gt 0 ] &&
++				[ -n "${COMP_WORDS[$i]}" ] &&
++				# word consists of excluded word separators
++				[ "${COMP_WORDS[$i]//[^$exclude]}" = "${COMP_WORDS[$i]}" ]
++			do
++				# Attach to the previous token,
++				# unless the previous token is the command name.
++				if [ $j -ge 2 ] && [ -n "$first" ]; then
++					((j--))
++				fi
++				first=
++				words_[$j]=${words_[j]}${COMP_WORDS[i]}
++				if [ $i = $COMP_CWORD ]; then
++					cword_=$j
++				fi
++				if (($i < ${#COMP_WORDS[@]} - 1)); then
++					((i++))
++				else
++					# Done.
++					break 2
++				fi
++			done
+ 			words_[$j]=${words_[j]}${COMP_WORDS[i]}
+ 			if [ $i = $COMP_CWORD ]; then
+ 				cword_=$j
+ 			fi
+-			if (($i < ${#COMP_WORDS[@]} - 1)); then
+-				((i++))
+-			else
+-				# Done.
+-				return
+-			fi
+ 		done
+-		words_[$j]=${words_[j]}${COMP_WORDS[i]}
+-		if [ $i = $COMP_CWORD ]; then
+-			cword_=$j
+-		fi
 -	done
-+	cword=$_cword
-+	cur=${_words[cword]}
-+	prev=${_words[cword-1]}
-+	words=("${_words[@]}")
- }
+-}
++	fi
  
- print_comp ()
+-if ! type _get_comp_words_by_ref >/dev/null 2>&1; then
+-_get_comp_words_by_ref ()
+-{
+-	local words_ cword_
+-	__git_reassemble_comp_words_by_ref "=:"
+ 	cword=$cword_
+ 	cur=${words_[cword]}
+ 	prev=${words_[cword-1]}
 -- 
 2.31.0
 
