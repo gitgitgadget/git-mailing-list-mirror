@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92AE5C433ED
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 16:15:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5AB18C43460
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 16:15:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5AD3461164
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 16:15:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 39E996105A
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 16:15:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234243AbhDZQQP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Apr 2021 12:16:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42324 "EHLO
+        id S234326AbhDZQQW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Apr 2021 12:16:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42350 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234299AbhDZQQN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Apr 2021 12:16:13 -0400
-Received: from mail-oo1-xc2b.google.com (mail-oo1-xc2b.google.com [IPv6:2607:f8b0:4864:20::c2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED21AC061574
-        for <git@vger.kernel.org>; Mon, 26 Apr 2021 09:15:31 -0700 (PDT)
-Received: by mail-oo1-xc2b.google.com with SMTP id c12-20020a4ae24c0000b02901bad05f40e4so12398908oot.4
-        for <git@vger.kernel.org>; Mon, 26 Apr 2021 09:15:31 -0700 (PDT)
+        with ESMTP id S234316AbhDZQQV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Apr 2021 12:16:21 -0400
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6281C061756
+        for <git@vger.kernel.org>; Mon, 26 Apr 2021 09:15:36 -0700 (PDT)
+Received: by mail-ot1-x32f.google.com with SMTP id z20-20020a0568301294b02902a52ecbaf18so239248otp.8
+        for <git@vger.kernel.org>; Mon, 26 Apr 2021 09:15:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=8q/9izTH3+b5FZjKSC9PHnw70ZDe7b7IJKIurTswaLU=;
-        b=FAyJoDA91/xPH9dFj9TWfIfl1tUqlzbYVin6+yV9n29LZCSVxPK0AIev5f9U0TfTIE
-         Doon/PVj6ZNarIxIqklSLBAyeSEiRpOKFDJ4jg3SmP7t5SwRXPWp2iHLXkBJFOkSZt8i
-         +jzaqV6LdyTOT/5VjQxNhr/QteZ1+jXN8QCfL6G+YyVSkbOoYcbftc528ySeBg5j3gRS
-         YrTCTZ9kzTZc3cXbGaSPF/7Ctk60K2fe8lX/tEzS3g7ri2I+KLHvWNU0iDCBjznA4wXV
-         9fXf0Mopm7Y1VMeETkxqzHZmmfJC1EVuBJCHtGyeZHm9zHrscEFRrZ8xfOJALSWDRuvo
-         eHEw==
+        bh=Gjc2iTirAk06PW4Equ5G1GqwAUmddUKPB7Ru4CksQQg=;
+        b=vYuWBQRO1bBvq1F+YRPrCf4X/chMAeqOjuN08RXWWzdJtUfFta+N//9kqWCf55ZTB/
+         n8vfxbbwzHlg58CLFkzq2547FY0rar8MxiirjcuYAbkMdyEzS7yByQIUdfvUGvLSmEte
+         Ljg40t8fXV77V/W3MYkpPxQ01mSHV7gUk6JhHVZTUX5uO/44xmQnHUOtUTULywLxxcDg
+         +wyQelOfl64Y/F1SuLdX96DakIjp6onlXGd8ow6XZNBny8PmIIyk+F+Xcx0rvpIPLg4m
+         hSseQgCaniVI6IgX6GIea44Rsm/lVr0DoIhp5ozhoY+R3NRDtehNHAamHDz8dPOZZusd
+         NlWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=8q/9izTH3+b5FZjKSC9PHnw70ZDe7b7IJKIurTswaLU=;
-        b=DiUyTf4mcRX++jXKYFKfNcr5GQclQizbLbpWuE8RjYV2gjdogjV0c+rVNS8lnxwfOg
-         iWVLQdePSBmHqlp35wM8bK8bmawrvN3DecEybSzD+92k8Nap7YI06c7QkDW4QmyEd8qc
-         CmtZTsIgvnh/XrAhkGa48964ZtrnDTSusnWknd2Qol5DwtbvIRXPEbVwhjkKvdU5emyd
-         kEK6fNcDtbbV3F2b4YQuNJdiaorOZjWwuN3J4IAxkf8Ja6BhuASbWSfGMH1KQBkA4FaX
-         Y62L1HrOFmz4ND0HVBqzAx4vsdS9euXuY/8Wa7fIYZr6/YdDDteGWq2uAoznY0L5Szer
-         FkIw==
-X-Gm-Message-State: AOAM532sm56iIGZdHIWZS/j86r80I+ojk10WapNcSSIrBfmgU6uu/Qy/
-        zBamsP7hmWRS7lamd7aq2RxIkofF8qzPgA==
-X-Google-Smtp-Source: ABdhPJwNbzY2lCPJ/3uBvOUihRnDtfgD3g3xrW+nfmkCi2aTBzG3XAS3dl6xAA/dJWWzRPA23nE6JA==
-X-Received: by 2002:a4a:3142:: with SMTP id v2mr13950400oog.9.1619453731142;
-        Mon, 26 Apr 2021 09:15:31 -0700 (PDT)
-Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id j11sm63525ooo.45.2021.04.26.09.15.30
+        bh=Gjc2iTirAk06PW4Equ5G1GqwAUmddUKPB7Ru4CksQQg=;
+        b=RARrWEY9CHUvT6TLwVNqF3PJqmcGIavPNv7WCYcntby/1iA66xTp2hf6ufv3V1QfdO
+         jgYv8Vzl5z5znfXt6nbB1XSvK1cMisTWKbftuJktyydvdh4z1xAsobzoBRkTmF5s8EEZ
+         KGDJ67vRR0CGUX0NJu0jxzBb/1GsLnwnfrVPKERGTvL16Ytpiq7QysT3uVK2p1kaDMLD
+         /to1EaeoFsPxqVb8AE4QM2wwpjP4t5iml9pqhr2Y/6IucVKxntkz/jSjR6c3mEUaPFSR
+         hlIVeKBvwzBoBWz1mk06ZKu7sWFWq4v/gd3kATVo+nP+JRzkeDeicSe/3CMGe+gQlh3A
+         iLfw==
+X-Gm-Message-State: AOAM530tf7Du12rzTP+ljBKqQZWZjrHdPIopFfgsT/Bg1XdI0EJuNyMq
+        8thIY66EuwF5O9hVkJ5/7yZWNtYmgt3OLw==
+X-Google-Smtp-Source: ABdhPJzrWn4zufsyiwETuT2l9G+rVQX59bUJJwgtbTBp1aBSu1nRILNK1PhWbSyQuhf68ctcG+3rUA==
+X-Received: by 2002:a9d:7453:: with SMTP id p19mr15200228otk.271.1619453735914;
+        Mon, 26 Apr 2021 09:15:35 -0700 (PDT)
+Received: from localhost ([2806:2f0:4060:638f:a2c5:89ff:fe0c:1151])
+        by smtp.gmail.com with ESMTPSA id r19sm3097968oie.58.2021.04.26.09.15.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Apr 2021 09:15:30 -0700 (PDT)
+        Mon, 26 Apr 2021 09:15:35 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v1 06/43] test: completion: fix currently typed words
-Date:   Mon, 26 Apr 2021 11:14:21 -0500
-Message-Id: <20210426161458.49860-7-felipe.contreras@gmail.com>
+Subject: [PATCH v1 07/43] test: completion: switch __gitcomp_nl prefix test
+Date:   Mon, 26 Apr 2021 11:14:22 -0500
+Message-Id: <20210426161458.49860-8-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.31.0
 In-Reply-To: <20210426161458.49860-1-felipe.contreras@gmail.com>
 References: <20210426161458.49860-1-felipe.contreras@gmail.com>
@@ -71,37 +71,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-They don't match what we are supposed to be completing.
+By default COMP_WORDBREAKS includes =, so it's not realistic to test for
+a prefix that almost never will be there.
 
-No functional change.
+No functional changes.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- t/t9902-completion.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t9902-completion.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 7fc8eed375..4d4bee20b4 100755
+index 4d4bee20b4..13bdf634a6 100755
 --- a/t/t9902-completion.sh
 +++ b/t/t9902-completion.sh
-@@ -489,7 +489,7 @@ test_expect_success '__gitcomp - option parameter' '
+@@ -568,9 +568,9 @@ test_expect_success '__gitcomp_nl - trailing space' '
  '
  
- test_expect_success '__gitcomp - prefix' '
--	test_gitcomp "branch.me" "remote merge mergeoptions rebase" \
-+	test_gitcomp "branch.maint.me" "remote merge mergeoptions rebase" \
- 		"branch.maint." "me" <<-\EOF
- 	branch.maint.merge Z
- 	branch.maint.mergeoptions Z
-@@ -497,7 +497,7 @@ test_expect_success '__gitcomp - prefix' '
+ test_expect_success '__gitcomp_nl - prefix' '
+-	test_gitcomp_nl "--fixup=m" "$refs" "--fixup=" "m" <<-EOF
+-	--fixup=main Z
+-	--fixup=maint Z
++	test_gitcomp_nl "branch.m" "$refs" "branch." "m" <<-EOF
++	branch.main Z
++	branch.maint Z
+ 	EOF
  '
  
- test_expect_success '__gitcomp - suffix' '
--	test_gitcomp "branch.me" "master maint next seen" "branch." \
-+	test_gitcomp "branch.ma" "master maint next seen" "branch." \
- 		"ma" "." <<-\EOF
- 	branch.master.Z
- 	branch.maint.Z
 -- 
 2.31.0
 
