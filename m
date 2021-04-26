@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-18.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 21502C433B4
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 01:04:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A606C43460
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 01:04:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 02059611CA
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 01:04:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 58188611CA
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 01:04:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231612AbhDZBEs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 25 Apr 2021 21:04:48 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:41840 "EHLO
+        id S231615AbhDZBEu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 25 Apr 2021 21:04:50 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:41842 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S231566AbhDZBEp (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 25 Apr 2021 21:04:45 -0400
+        by vger.kernel.org with ESMTP id S231603AbhDZBEq (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 25 Apr 2021 21:04:46 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id F3CE8607A2;
-        Mon, 26 Apr 2021 01:03:33 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 7860961478;
+        Mon, 26 Apr 2021 01:03:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1619399014;
-        bh=IHd1nof/YW/R9WMalCpXSBUaTj6ofYzcMNCUwVNuRoY=;
+        s=default; t=1619399015;
+        bh=+olbTD51KsH9pvMu2ZfXjzWAIu4Iqz3BCHZ4gtMQgYM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=a8AUr6XH1NXYGwXXD4xxgcYHY0wggc0cwVsLRVVoN4E6gpB4kqgGtumypYxS4xLfS
-         HnrqWaJBLb1TINKpF5iZvBQ+jYALLhJHxJw0YpTqXOQCBa9SxZXoi/EZAFroONthME
-         Pr6ertvN/6BL2rRgM/5/EilMr5RnCz+esGXjEJYbNYjU5MDtEwBsELKEHZqUgw2qMv
-         xQG8UQhoCxtAK258U+5AWJ+q4B4npU5fpXsZpJxvdqEaPqk7O3pAZBpuy7aGcFd4L/
-         s0mb2CpNahnJtD+Moa8+j9zxf5LnhMuZRqOGqJ0bG5sXgpY6mzno54b6HTeLIr96hB
-         oNNHOpqaGliWn0PcG8naabRt+OZCCsqPsa1QFRBW0FJ7zDiTAD40yJkVPhbHIoPsWZ
-         nR+dCSErq3ewnDtTBtrO9UEhtuSFdCooOzloV+i4s5zJ+ohtcEq6etl2CPb8hwPf5l
-         CxzXnflwdjm7dAX32GB0RciEo4DSg2NMsRtcapjZnysEu70UYgg
+        b=iXzYe7O5fVCJarEHP+nG7q0Y+Px0W0ty91lk/pSWHAucUMQYCsNPbU9WPd9sh8DJ2
+         fQHSjdQ01uXq9kFp+K1H4TUIjtc+0yP5L4FRsDuRQwk7tHm8cIDHZ0JHwm9TOBIJES
+         YxM0pFEOqck3F45Eka16/gLIT8thNsHL1LmYgbebdM/WxJucZgkAhZm2bJAXOeQ8dx
+         C8N+X6u+L0tM4l1vLp4itRZ4Vkd3xmU+KXvEl47wGN11icQt+lh3dQUHSwmL8tBVP+
+         +f7/FP9rpuudABBJoANQYb01MWJdqXwIaBa3OMhLlYS3RILRndW6Mj0jhtCcqYvKjy
+         ocfsLOVlOzB6Wm80PBP2zPsXEaxjw5w3f+RHABvAXg7FsNIYOs9hiASLH7aoCJzeqm
+         CJ8fzoGGLEfKN/c/fEXYiWhhNfDIRCqwqV+5ShfvAXebk2ZbgKjVvJcVDHehO/xO8K
+         xFlj79FFS1g/mQnzW9vyw/jMMMbWQUoz2O51fj4FczUTdTbHcFy
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Derrick Stolee <dstolee@microsoft.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 09/13] builtin/show-index: set the algorithm for object IDs
-Date:   Mon, 26 Apr 2021 01:02:57 +0000
-Message-Id: <20210426010301.1093562-10-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 12/13] hex: default to the_hash_algo on zero algorithm value
+Date:   Mon, 26 Apr 2021 01:03:00 +0000
+Message-Id: <20210426010301.1093562-13-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.31.1.498.g6c1eba8ee3d
 In-Reply-To: <20210426010301.1093562-1-sandals@crustytoothpaste.net>
 References: <20210426010301.1093562-1-sandals@crustytoothpaste.net>
@@ -55,31 +55,36 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In most cases, when we load the hash of an object into a struct
-object_id, we load it using one of the oid* or *_oid_hex functions.
-However, for git show-index, we read it in directly using fread.  As a
-consequence, set the algorithm correctly so the objects can be used
-correctly both now and in the future.
+There are numerous places in the codebase where we assume we can
+initialize data by zeroing all its bytes.  However, when we do that with
+a struct object_id, it leaves the structure with a zero value for the
+algorithm, which is invalid.
+
+We could forbid this pattern and require that all struct object_id
+instances be initialized using oidclr, but this seems burdensome and
+it's unnatural to most C programmers.  Instead, if the algorithm is
+zero, assume we wanted to use the default hash algorithm instead.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/show-index.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ hex.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/builtin/show-index.c b/builtin/show-index.c
-index 8106b03a6b..0e0b9fb95b 100644
---- a/builtin/show-index.c
-+++ b/builtin/show-index.c
-@@ -71,9 +71,11 @@ int cmd_show_index(int argc, const char **argv, const char *prefix)
- 			uint32_t off;
- 		} *entries;
- 		ALLOC_ARRAY(entries, nr);
--		for (i = 0; i < nr; i++)
-+		for (i = 0; i < nr; i++) {
- 			if (fread(entries[i].oid.hash, hashsz, 1, stdin) != 1)
- 				die("unable to read sha1 %u/%u", i, nr);
-+			entries[i].oid.algo = hash_algo_by_ptr(the_hash_algo);
-+		}
- 		for (i = 0; i < nr; i++)
- 			if (fread(&entries[i].crc, 4, 1, stdin) != 1)
- 				die("unable to read crc %u/%u", i, nr);
+diff --git a/hex.c b/hex.c
+index e7af18fe55..74d256f239 100644
+--- a/hex.c
++++ b/hex.c
+@@ -124,6 +124,13 @@ char *hash_to_hex_algop_r(char *buffer, const unsigned char *hash,
+ 	char *buf = buffer;
+ 	int i;
+ 
++	/*
++	 * Our struct object_id has been memset to 0, so default to printing
++	 * using the default hash.
++	 */
++	if (algop == &hash_algos[0])
++		algop = the_hash_algo;
++
+ 	for (i = 0; i < algop->rawsz; i++) {
+ 		unsigned int val = *hash++;
+ 		*buf++ = hex[val >> 4];
