@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D99CC43462
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 01:03:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CBBD9C433B4
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 01:03:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C352A611CD
-	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 01:03:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8D7D861350
+	for <git@archiver.kernel.org>; Mon, 26 Apr 2021 01:03:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231571AbhDZBER (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 25 Apr 2021 21:04:17 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:41788 "EHLO
+        id S231574AbhDZBES (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 25 Apr 2021 21:04:18 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:41782 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S231547AbhDZBEO (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 25 Apr 2021 21:04:14 -0400
+        by vger.kernel.org with ESMTP id S231550AbhDZBEP (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 25 Apr 2021 21:04:15 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E0BA66078B;
-        Mon, 26 Apr 2021 01:03:32 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 77FD461476;
+        Mon, 26 Apr 2021 01:03:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1619399013;
-        bh=xrnAGywGAiGF0vGjhXoBwcaquBN4cpeEEzYm4IAnHoA=;
+        s=default; t=1619399014;
+        bh=ZOjnyRr9hRX5DLBLBGdlBCS5pe9Ya5VGQHVYthcU5D8=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=Z6ZdDrogp+ScrcbC+VHUkJfn4mPL7Ikd/CA1nmp0J3sMa4WIjm7GvEemGnXMPy2iR
-         0nWdVn7a+SlsVmmY6S1aFNvVqhmLEoJHOZozBd6jmgqxt+TNJIgS+A1mVKHaS8AiuK
-         jsA1C4ahr4WWdACHqLO2eM5fm1QdlKoKWycTiLtB5jl0lAoVh7rxPrT4wYdWum74u1
-         VAtAdjWcIvCSChaILHhgCLIRXLdIP/oRQYUbwwDRgHCVI4LqN6VvnBmJzBRjH0Jd1d
-         P/oyp+Zs24Cn+ZNW9I9F3H525egR9Z3Lzm3fK1Dg6CzDcmd3GPV6+DRcmUEn9nudZY
-         rFI0HkRaf+wrj/5APA8vY9rAcNx61GmmlQPDvNvgB75CeuyIAnameIOGTZWXE40pOz
-         QJi0kYVRgI/Um83xQY/nyZiQKEVF51pPMJqpiVS2kGMWt4NoBKXX2keXagcWrGuuUp
-         zGOtcsu1iOGHk2X4po9dcvpztiQAPpmpIZ6G1r1TtlpJtoLPULV
+        b=JhTjZgZu/uWducFsWKzflB8SDHAb3YXTxfrhDQvN5LaN5v8moeVAlTxYQ3jWfb5vo
+         6SemwQFuXR2HV2gmWz7EGUW9gbQnRRCw/DBpMSd8KkAB0Tcz5swLLR2vBUTdiR3kWF
+         a9JipEY0BhL9TwtMGG4jAivQ49r29Cuj0LwYcP1plkrURwMM7ySEyBbIJK/cs4mu3U
+         AsglL/bcTwr6+6tUPIEq0B/ErUcI3zFONDWjtwvXJ1S3VjB6O8csS9mVtp4QNmgpA2
+         T1dKWH9PkRzpzjtf5inloIpsbceJp0eX/sfMTilEzCXJte3l1iwPPf6orYztTlnduK
+         /NcfunPokAZVDsrm4B/Hokd6wOXB3gsQTPqbTqVnNPf52Cd6C3i1cVrMFaIHSLAhgf
+         kjWcdQ8GOyh7nDN2cG1IGOl5GORAnTyPpJ+cJWrMPz/IuFH80STZ4DDItDUgF/A+HY
+         izibb/1Qg6esRYxHc14ETpHWJXrvDARF74qediI3aNLc1IWTHF7
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Derrick Stolee <dstolee@microsoft.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 07/13] hash: set, copy, and use algo field in struct object_id
-Date:   Mon, 26 Apr 2021 01:02:55 +0000
-Message-Id: <20210426010301.1093562-8-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 10/13] commit-graph: don't store file hashes as struct object_id
+Date:   Mon, 26 Apr 2021 01:02:58 +0000
+Message-Id: <20210426010301.1093562-11-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.31.1.498.g6c1eba8ee3d
 In-Reply-To: <20210426010301.1093562-1-sandals@crustytoothpaste.net>
 References: <20210426010301.1093562-1-sandals@crustytoothpaste.net>
@@ -55,238 +55,70 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Now that struct object_id has an algorithm field, we should populate it.
-This will allow us to handle object IDs in any supported algorithm and
-distinguish between them.  Ensure that the field is written whenever we
-write an object ID by storing it explicitly every time we write an
-object.  Set values for the empty blob and tree values as well.
+The idea behind struct object_id is that it is supposed to represent the
+identifier of a standard Git object or a special pseudo-object like the
+all-zeros object ID.  In this case, we have file hashes, which, while
+similar, are distinct from the identifiers of objects.
 
-In addition, use the algorithm field to compare object IDs.  Note that
-because we zero-initialize struct object_id in many places throughout
-the codebase, we default to the default algorithm in cases where the
-algorithm field is zero rather than explicitly initialize all of those
-locations.
-
-This leads to a branch on every comparison, but the alternative is to
-compare the entire buffer each time and padding the buffer for SHA-1.
-That alternative ranges up to 3.9% worse than this approach on the perf
-t0001, t1450, and t1451.
+Switch these code paths to use an unsigned char array.  This is both
+more logically consistent and it means that we need not set the
+algorithm identifier for the struct object_id.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- hash.h        | 42 +++++++++++++++++++++++++++++++++++-------
- hex.c         |  9 ++++++---
- notes.c       |  3 +++
- object-file.c | 15 +++++++++++----
- 4 files changed, 55 insertions(+), 14 deletions(-)
+ commit-graph.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/hash.h b/hash.h
-index c8f03d8aee..0e85e448ed 100644
---- a/hash.h
-+++ b/hash.h
-@@ -192,36 +192,56 @@ static inline int hash_algo_by_ptr(const struct git_hash_algo *p)
+diff --git a/commit-graph.c b/commit-graph.c
+index 23fef56d31..2bcb4e0f89 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -1793,8 +1793,8 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+ 	struct lock_file lk = LOCK_INIT;
+ 	const unsigned hashsz = the_hash_algo->rawsz;
+ 	struct strbuf progress_title = STRBUF_INIT;
+-	struct object_id file_hash;
+ 	struct chunkfile *cf;
++	unsigned char file_hash[GIT_MAX_RAWSZ];
  
- extern const struct object_id null_oid;
- 
--static inline int hashcmp(const unsigned char *sha1, const unsigned char *sha2)
-+static inline int hashcmp_algop(const unsigned char *sha1, const unsigned char *sha2, const struct git_hash_algo *algop)
- {
- 	/*
- 	 * Teach the compiler that there are only two possibilities of hash size
- 	 * here, so that it can optimize for this case as much as possible.
- 	 */
--	if (the_hash_algo->rawsz == GIT_MAX_RAWSZ)
-+	if (algop->rawsz == GIT_MAX_RAWSZ)
- 		return memcmp(sha1, sha2, GIT_MAX_RAWSZ);
- 	return memcmp(sha1, sha2, GIT_SHA1_RAWSZ);
- }
- 
--static inline int oidcmp(const struct object_id *oid1, const struct object_id *oid2)
-+static inline int hashcmp(const unsigned char *sha1, const unsigned char *sha2)
- {
--	return hashcmp(oid1->hash, oid2->hash);
-+	return hashcmp_algop(sha1, sha2, the_hash_algo);
- }
- 
--static inline int hasheq(const unsigned char *sha1, const unsigned char *sha2)
-+static inline int oidcmp(const struct object_id *oid1, const struct object_id *oid2)
-+{
-+	const struct git_hash_algo *algop;
-+	if (!oid1->algo)
-+		algop = the_hash_algo;
-+	else
-+		algop = &hash_algos[oid1->algo];
-+	return hashcmp_algop(oid1->hash, oid2->hash, algop);
-+}
-+
-+static inline int hasheq_algop(const unsigned char *sha1, const unsigned char *sha2, const struct git_hash_algo *algop)
- {
- 	/*
- 	 * We write this here instead of deferring to hashcmp so that the
- 	 * compiler can properly inline it and avoid calling memcmp.
- 	 */
--	if (the_hash_algo->rawsz == GIT_MAX_RAWSZ)
-+	if (algop->rawsz == GIT_MAX_RAWSZ)
- 		return !memcmp(sha1, sha2, GIT_MAX_RAWSZ);
- 	return !memcmp(sha1, sha2, GIT_SHA1_RAWSZ);
- }
- 
-+static inline int hasheq(const unsigned char *sha1, const unsigned char *sha2)
-+{
-+	return hasheq_algop(sha1, sha2, the_hash_algo);
-+}
-+
- static inline int oideq(const struct object_id *oid1, const struct object_id *oid2)
- {
--	return hasheq(oid1->hash, oid2->hash);
-+	const struct git_hash_algo *algop;
-+	if (!oid1->algo)
-+		algop = the_hash_algo;
-+	else
-+		algop = &hash_algos[oid1->algo];
-+	return hasheq_algop(oid1->hash, oid2->hash, algop);
- }
- 
- static inline int is_null_oid(const struct object_id *oid)
-@@ -237,6 +257,7 @@ static inline void hashcpy(unsigned char *sha_dst, const unsigned char *sha_src)
- static inline void oidcpy(struct object_id *dst, const struct object_id *src)
- {
- 	memcpy(dst->hash, src->hash, GIT_MAX_RAWSZ);
-+	dst->algo = src->algo;
- }
- 
- static inline struct object_id *oiddup(const struct object_id *src)
-@@ -254,11 +275,13 @@ static inline void hashclr(unsigned char *hash)
- static inline void oidclr(struct object_id *oid)
- {
- 	memset(oid->hash, 0, GIT_MAX_RAWSZ);
-+	oid->algo = hash_algo_by_ptr(the_hash_algo);
- }
- 
- static inline void oidread(struct object_id *oid, const unsigned char *hash)
- {
- 	memcpy(oid->hash, hash, the_hash_algo->rawsz);
-+	oid->algo = hash_algo_by_ptr(the_hash_algo);
- }
- 
- static inline int is_empty_blob_sha1(const unsigned char *sha1)
-@@ -281,6 +304,11 @@ static inline int is_empty_tree_oid(const struct object_id *oid)
- 	return oideq(oid, the_hash_algo->empty_tree);
- }
- 
-+static inline void oid_set_algo(struct object_id *oid, const struct git_hash_algo *algop)
-+{
-+	oid->algo = hash_algo_by_ptr(algop);
-+}
-+
- const char *empty_tree_oid_hex(void);
- const char *empty_blob_oid_hex(void);
- 
-diff --git a/hex.c b/hex.c
-index da51e64929..e7af18fe55 100644
---- a/hex.c
-+++ b/hex.c
-@@ -69,7 +69,10 @@ int get_sha1_hex(const char *hex, unsigned char *sha1)
- int get_oid_hex_algop(const char *hex, struct object_id *oid,
- 		      const struct git_hash_algo *algop)
- {
--	return get_hash_hex_algop(hex, oid->hash, algop);
-+	int ret = get_hash_hex_algop(hex, oid->hash, algop);
-+	if (!ret)
-+		oid_set_algo(oid, algop);
-+	return ret;
- }
- 
- /*
-@@ -80,7 +83,7 @@ int get_oid_hex_any(const char *hex, struct object_id *oid)
- {
- 	int i;
- 	for (i = GIT_HASH_NALGOS - 1; i > 0; i--) {
--		if (!get_hash_hex_algop(hex, oid->hash, &hash_algos[i]))
-+		if (!get_oid_hex_algop(hex, oid, &hash_algos[i]))
- 			return i;
+ 	if (ctx->split) {
+ 		struct strbuf tmp_file = STRBUF_INIT;
+@@ -1909,7 +1909,7 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
  	}
- 	return GIT_HASH_UNKNOWN;
-@@ -95,7 +98,7 @@ int parse_oid_hex_algop(const char *hex, struct object_id *oid,
- 			const char **end,
- 			const struct git_hash_algo *algop)
- {
--	int ret = get_hash_hex_algop(hex, oid->hash, algop);
-+	int ret = get_oid_hex_algop(hex, oid, algop);
- 	if (!ret)
- 		*end = hex + algop->hexsz;
- 	return ret;
-diff --git a/notes.c b/notes.c
-index a44b25858f..135ea13ba1 100644
---- a/notes.c
-+++ b/notes.c
-@@ -455,6 +455,8 @@ static void load_subtree(struct notes_tree *t, struct leaf_node *subtree,
- 		CALLOC_ARRAY(l, 1);
- 		oidcpy(&l->key_oid, &object_oid);
- 		oidcpy(&l->val_oid, &entry.oid);
-+		oid_set_algo(&l->key_oid, the_hash_algo);
-+		oid_set_algo(&l->val_oid, the_hash_algo);
- 		if (note_tree_insert(t, node, n, l, type,
- 				     combine_notes_concatenate))
- 			die("Failed to load %s %s into notes tree "
-@@ -484,6 +486,7 @@ static void load_subtree(struct notes_tree *t, struct leaf_node *subtree,
- 				strbuf_addch(&non_note_path, '/');
- 			}
- 			strbuf_addstr(&non_note_path, entry.path);
-+			oid_set_algo(&entry.oid, the_hash_algo);
- 			add_non_note(t, strbuf_detach(&non_note_path, NULL),
- 				     entry.mode, entry.oid.hash);
+ 
+ 	close_commit_graph(ctx->r->objects);
+-	finalize_hashfile(f, file_hash.hash, CSUM_HASH_IN_STREAM | CSUM_FSYNC);
++	finalize_hashfile(f, file_hash, CSUM_HASH_IN_STREAM | CSUM_FSYNC);
+ 	free_chunkfile(cf);
+ 
+ 	if (ctx->split) {
+@@ -1945,7 +1945,7 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+ 			unlink(graph_name);
  		}
-diff --git a/object-file.c b/object-file.c
-index 1d8c82fa99..d4ba0c4a4f 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -57,16 +57,20 @@
  
- const struct object_id null_oid;
- static const struct object_id empty_tree_oid = {
--	EMPTY_TREE_SHA1_BIN_LITERAL
-+	.hash = EMPTY_TREE_SHA1_BIN_LITERAL,
-+	.algo = GIT_HASH_SHA1,
- };
- static const struct object_id empty_blob_oid = {
--	EMPTY_BLOB_SHA1_BIN_LITERAL
-+	.hash = EMPTY_BLOB_SHA1_BIN_LITERAL,
-+	.algo = GIT_HASH_SHA1,
- };
- static const struct object_id empty_tree_oid_sha256 = {
--	EMPTY_TREE_SHA256_BIN_LITERAL
-+	.hash = EMPTY_TREE_SHA256_BIN_LITERAL,
-+	.algo = GIT_HASH_SHA256,
- };
- static const struct object_id empty_blob_oid_sha256 = {
--	EMPTY_BLOB_SHA256_BIN_LITERAL
-+	.hash = EMPTY_BLOB_SHA256_BIN_LITERAL,
-+	.algo = GIT_HASH_SHA256,
- };
- 
- static void git_hash_sha1_init(git_hash_ctx *ctx)
-@@ -93,6 +97,7 @@ static void git_hash_sha1_final_oid(struct object_id *oid, git_hash_ctx *ctx)
+-		ctx->commit_graph_hash_after[ctx->num_commit_graphs_after - 1] = xstrdup(oid_to_hex(&file_hash));
++		ctx->commit_graph_hash_after[ctx->num_commit_graphs_after - 1] = xstrdup(hash_to_hex(file_hash));
+ 		final_graph_name = get_split_graph_filename(ctx->odb,
+ 					ctx->commit_graph_hash_after[ctx->num_commit_graphs_after - 1]);
+ 		ctx->commit_graph_filenames_after[ctx->num_commit_graphs_after - 1] = final_graph_name;
+@@ -2425,7 +2425,8 @@ static void graph_report(const char *fmt, ...)
+ int verify_commit_graph(struct repository *r, struct commit_graph *g, int flags)
  {
- 	git_SHA1_Final(oid->hash, &ctx->sha1);
- 	memset(oid->hash + GIT_SHA1_RAWSZ, 0, GIT_MAX_RAWSZ - GIT_SHA1_RAWSZ);
-+	oid->algo = GIT_HASH_SHA1;
- }
- 
- 
-@@ -124,6 +129,7 @@ static void git_hash_sha256_final_oid(struct object_id *oid, git_hash_ctx *ctx)
- 	 * but keep it in case we extend the hash size again.
- 	 */
- 	memset(oid->hash + GIT_SHA256_RAWSZ, 0, GIT_MAX_RAWSZ - GIT_SHA256_RAWSZ);
-+	oid->algo = GIT_HASH_SHA256;
- }
- 
- static void git_hash_unknown_init(git_hash_ctx *ctx)
-@@ -2340,6 +2346,7 @@ int for_each_file_in_obj_subdir(unsigned int subdir_nr,
- 		if (namelen == the_hash_algo->hexsz - 2 &&
- 		    !hex_to_bytes(oid.hash + 1, de->d_name,
- 				  the_hash_algo->rawsz - 1)) {
-+			oid_set_algo(&oid, the_hash_algo);
- 			if (obj_cb) {
- 				r = obj_cb(&oid, path->buf, data);
- 				if (r)
+ 	uint32_t i, cur_fanout_pos = 0;
+-	struct object_id prev_oid, cur_oid, checksum;
++	struct object_id prev_oid, cur_oid;
++	unsigned char checksum[GIT_MAX_HEXSZ];
+ 	int generation_zero = 0;
+ 	struct hashfile *f;
+ 	int devnull;
+@@ -2444,8 +2445,8 @@ int verify_commit_graph(struct repository *r, struct commit_graph *g, int flags)
+ 	devnull = open("/dev/null", O_WRONLY);
+ 	f = hashfd(devnull, NULL);
+ 	hashwrite(f, g->data, g->data_len - g->hash_len);
+-	finalize_hashfile(f, checksum.hash, CSUM_CLOSE);
+-	if (!hasheq(checksum.hash, g->data + g->data_len - g->hash_len)) {
++	finalize_hashfile(f, checksum, CSUM_CLOSE);
++	if (!hasheq(checksum, g->data + g->data_len - g->hash_len)) {
+ 		graph_report(_("the commit-graph file has incorrect checksum and is likely corrupt"));
+ 		verify_commit_graph_error = VERIFY_COMMIT_GRAPH_ERROR_HASH;
+ 	}
