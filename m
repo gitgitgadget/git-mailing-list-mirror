@@ -2,439 +2,208 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3AE32C433ED
-	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 15:41:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5ED2FC433B4
+	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 15:44:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0E5E161164
-	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 15:41:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 21098611F2
+	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 15:44:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237239AbhD0Pl5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Apr 2021 11:41:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42678 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229571AbhD0Pl5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Apr 2021 11:41:57 -0400
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDA19C061574
-        for <git@vger.kernel.org>; Tue, 27 Apr 2021 08:41:12 -0700 (PDT)
-Received: by mail-oi1-x22f.google.com with SMTP id i26so4770900oii.3
-        for <git@vger.kernel.org>; Tue, 27 Apr 2021 08:41:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=g8raHxQvna7dVhCYHKC2mEXR1cs6hnuYaMmpbLlKCZI=;
-        b=JbkvOTfa/zGWfRGCKaqKDfBnNk36LOl+YSKWGhuHoP4PPRdv62VZoyZfXt95R41J0R
-         nOvTUR89SbvhsDvmoYwny2xsJ5khLDidnnFMSdnyfWYsNG/WOO/fjS6cJ3cX+Q8GHgj3
-         +fLpXzCp2FHfcxnjVm86fZ2OETnoOUNZdmchhMB0cFZX8gCvXt5zUhI/tVZRAfgLdPdF
-         FRNWdrZsMae4mIPoGebYD/5d4PwXDRru2CA1hRfNXWpaSwqCyvpoDcR1TMXNrTu0B5lD
-         JivkV5rSKz8m4oWk92wSl3TCo8S9jwUpMtA4L5H+mpSXd9UtZQq7x5uWvVyjZDMFUIyw
-         Wajw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=g8raHxQvna7dVhCYHKC2mEXR1cs6hnuYaMmpbLlKCZI=;
-        b=EMpcsuWRGNbIFJgode1/uL22X/8Z4vgoVxBZc/4FAc50IBX852MdiFAPuaxMdACOvv
-         6unjhTPCS5JLyy9lbHWZna3ybPX3kFNNu/ln0OU+q6Z924h2xPcvFDKdogLtarjsgK3j
-         g1P7DAhPfOfyxIJ7fp9oqBhLtTt6WfFIrHVsjVu+vCIMlMOO6C5moaHZ9TOyvc9hP3ub
-         +Xut2E3PQVRKI0DQapFbX89EQH0Kr+JWtzPo/B3Rcy3koc1aQ74Pg6olyGGf/GQppqZA
-         YbAfSEEqmIkdWqLwMEb3Z1JygpN16LUDOdJc+VTuoy5oDXR7hN7D/B+Y4PyrFywtTSGI
-         v8dw==
-X-Gm-Message-State: AOAM533KcmRa0ppVd9Gj6XTaHTOI1PWqVp81l6zEZV11jYtMiTpl7V5v
-        lGmWyCW0HMSoJxTYHBLtRJY=
-X-Google-Smtp-Source: ABdhPJyC7Y2yA7DQ8jF39igf8j0gyZzGFqCUF6YWoLNOpW8JBJWPrampK5MRS5TiiU+dmiJYvSGedw==
-X-Received: by 2002:aca:57cc:: with SMTP id l195mr11555251oib.83.1619538072109;
-        Tue, 27 Apr 2021 08:41:12 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:3839:9ece:547d:49e5? ([2600:1700:e72:80a0:3839:9ece:547d:49e5])
-        by smtp.gmail.com with ESMTPSA id 128sm726102oog.37.2021.04.27.08.41.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Apr 2021 08:41:11 -0700 (PDT)
-Subject: Re: [PATCH 21/23] t7527: create test for fsmonitor--daemon
-To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Jeff Hostetler <jeffhost@microsoft.com>
-References: <pull.923.git.1617291666.gitgitgadget@gmail.com>
- <8b2280e5c4d2cec1fe39e90bfc93f059a1d0eb05.1617291666.git.gitgitgadget@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <b62694df-7dd5-71fa-304d-576c2550e5d2@gmail.com>
-Date:   Tue, 27 Apr 2021 11:41:10 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.0
+        id S236545AbhD0Pon (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Apr 2021 11:44:43 -0400
+Received: from cloud.peff.net ([104.130.231.41]:36810 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S234932AbhD0Pom (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Apr 2021 11:44:42 -0400
+Received: (qmail 3284 invoked by uid 109); 27 Apr 2021 15:43:59 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 27 Apr 2021 15:43:59 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 19812 invoked by uid 111); 27 Apr 2021 15:43:58 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 27 Apr 2021 11:43:58 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 27 Apr 2021 11:43:58 -0400
+From:   Jeff King <peff@peff.net>
+To:     David Emett <dave@sp4m.net>
+Cc:     git@vger.kernel.org
+Subject: [PATCH] prune: save reachable-from-recent objects with bitmaps
+Message-ID: <YIgxPtDmr9sYj0ft@coredump.intra.peff.net>
+References: <CAJ-dYSOVx0egnyxJb6ZjgWvEDR=19QPgc70JQ7cXUjUPZ1XDiQ@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <8b2280e5c4d2cec1fe39e90bfc93f059a1d0eb05.1617291666.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+In-Reply-To: <CAJ-dYSOVx0egnyxJb6ZjgWvEDR=19QPgc70JQ7cXUjUPZ1XDiQ@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/1/2021 11:41 AM, Jeff Hostetler via GitGitGadget wrote:
-> From: Jeff Hostetler <jeffhost@microsoft.com>
+On Tue, Apr 27, 2021 at 11:45:01AM +0100, David Emett wrote:
 
-It might be nice to summarize the testing strategy here. Are these just
-the basics? Is this a full list of every conceivable client/server
-interaction? Do some platforms need special tests?
+> I assume (2) is not intentional, given that "git gc --help" explicitly says
+> "Any object with modification time newer than the --prune date is kept, along
+> with everything reachable from it." Is it safe to just run the mark_recent
+> block after the bitmap_git block? Could add_unseen_recent_objects_to_traversal
+> just be called at the start of the bitmap_git block if mark_recent?
 
-> +# Ask the fsmonitor daemon to insert a little delay before responding to
-> +# client commands like `git status` and `git fsmonitor--daemon --query` to
-> +# allow recent filesystem events to be received by the daemon.  This helps
-> +# the CI/PR builds be more stable.
-> +#
-> +# An arbitrary millisecond value.
-> +#
-> +GIT_TEST_FSMONITOR_CLIENT_DELAY=1000
-> +export GIT_TEST_FSMONITOR_CLIENT_DELAY
+Here's a fix. Thanks very much for reporting.
 
-As I mentioned before, this seems like it is hiding a bug, especially
-because of a full second delay. But even a 1 millisecond delay seems
-like it is incorrect to assume this feature works correctly if the
-test requires this delay.
+I was a little surprised you saw this with "git gc", as when I tried
+testing with that, I found that the "git repack" run before "git prune"
+works around the bug (see the discussion of t6501 below). But I think
+perhaps it is just that "gc --auto" is more willing to do a "repack -d"
+sometimes, rather than a full "repack -A". At any rate, I was able to
+easily reproduce it for the tests with just git-prune.
 
-If there is a specific interaction that has issues, then it might be
-valid to insert this delay in a specific test or two.
+-- >8 --
+Subject: prune: save reachable-from-recent objects with bitmaps
 
-> +git version --build-options | grep "feature:" | grep "fsmonitor--daemon" || {
-> +	skip_all="The built-in FSMonitor is not supported on this platform"
-> +	test_done
-> +}
+We pass our prune expiration to mark_reachable_objects(), which will
+traverse not only the reachable objects, but consider any recent ones as
+tips for reachability; see d3038d22f9 (prune: keep objects reachable
+from recent objects, 2014-10-15) for details.
 
-I see some precedent of this pattern, but it might be nice to instead
-register a prereq and then test for the prereq here in the test script.
+However, this interacts badly with the bitmap code path added in
+fde67d6896 (prune: use bitmaps for reachability traversal, 2019-02-13).
+If we hit the bitmap-optimized path, we return immediately to avoid the
+regular traversal, accidentally skipping the "also traverse recent"
+code.
 
-> +kill_repo () {
+Instead, we should do an if-else for the bitmap versus regular
+traversal, and then follow up with the "recent" traversal in either
+case. This reuses the "rev_info" for a bitmap and then a regular
+traversal, but that should work OK (the bitmap code clears the pending
+array in the usual way, just like a regular traversal would).
 
-Perhaps "kill_repo_daemon" might be more specific?
+Note that I dropped the comment above the regular traversal here.  It
+has little explanatory value, and makes the if-else logic much harder to
+read.
 
-> +	r=$1
-> +	git -C $r fsmonitor--daemon --stop >/dev/null 2>/dev/null
-> +	rm -rf $1
-> +	return 0
-> +}
-> +
-> +start_daemon () {
-> +	case "$#" in
-> +		1) r="-C $1";;
-> +		*) r="";
-> +	esac
-> +
-> +	git $r fsmonitor--daemon --start || return $?
-> +	git $r fsmonitor--daemon --is-running || return $?
+Here are a few variants that I rejected:
 
-Perhaps add 'test_when_finished kill_repo "$r"' as a line here so
-consumers don't need to do it themselves.
+  - it seems like both the reachability and recent traversals could be
+    done in a single traversal. This was rejected by d3038d22f9 (prune:
+    keep objects reachable from recent objects, 2014-10-15), though the
+    balance may be different when using bitmaps. However, there's a
+    subtle correctness issue, too: we use revs->ignore_missing_links for
+    the recent traversal, but not the reachability one.
 
-> +	return 0
-> +}
-> +
-> +test_expect_success 'explicit daemon start and stop' '
-> +	test_when_finished "kill_repo test_explicit" &&
-> +
-> +	git init test_explicit &&
-> +	start_daemon test_explicit &&
-> +
-> +	git -C test_explicit fsmonitor--daemon --stop &&
-> +	test_must_fail git -C test_explicit fsmonitor--daemon --is-running
-> +'
+  - we could try using bitmaps for the recent traversal, too, which
+    could possibly improve performance. But it would require some fixes
+    in the bitmap code, which uses ignore_missing_links for its own
+    purposes. Plus it would probably not help all that much in practice.
+    We use the reachable tips to generate bitmaps, so those objects are
+    likely not covered by bitmaps (unless they just became unreachable).
+    And in general, we expect the set of unreachable objects to be much
+    smaller anyway, so there's less to gain.
 
-This is an example of a test that could have been created as early as
-patch 09/23.
+The test in t5304 detects the bug and confirms the fix.
 
-> +test_expect_success 'implicit daemon start' '
-> +	test_when_finished "kill_repo test_implicit" &&
-> +
-> +	git init test_implicit &&
-> +	test_must_fail git -C test_implicit fsmonitor--daemon --is-running &&
-> +
-> +	# query will implicitly start the daemon.
-> +	#
-> +	# for test-script simplicity, we send a V1 timestamp rather than
-> +	# a V2 token.  either way, the daemon response to any query contains
-> +	# a new V2 token.  (the daemon may complain that we sent a V1 request,
-> +	# but this test case is only concerned with whether the daemon was
-> +	# implicitly started.)
-> +
-> +	GIT_TRACE2_EVENT="$PWD/.git/trace" \
-> +		git -C test_implicit fsmonitor--daemon --query 0 >actual &&
-> +	nul_to_q <actual >actual.filtered &&
-> +	grep "builtin:" actual.filtered &&
-> +
-> +	# confirm that a daemon was started in the background.
-> +	#
-> +	# since the mechanism for starting the background daemon is platform
-> +	# dependent, just confirm that the foreground command received a
-> +	# response from the daemon.
-> +
-> +	grep :\"query/response-length\" .git/trace &&
-> +
-> +	git -C test_implicit fsmonitor--daemon --is-running &&
-> +	git -C test_implicit fsmonitor--daemon --stop &&
-> +	test_must_fail git -C test_implicit fsmonitor--daemon --is-running
-> +'
-> +
-> +test_expect_success 'implicit daemon stop (delete .git)' '
-> +	test_when_finished "kill_repo test_implicit_1" &&
-> +
-> +	git init test_implicit_1 &&
-> +
-> +	start_daemon test_implicit_1 &&
-> +
-> +	# deleting the .git directory will implicitly stop the daemon.
-> +	rm -rf test_implicit_1/.git &&
-> +
-> +	# Create an empty .git directory so that the following Git command
-> +	# will stay relative to the `-C` directory.  Without this, the Git
-> +	# command will (override the requested -C argument) and crawl out
+I also beefed up the tests in t6501, which covers the mtime-checking
+code more thoroughly, to handle the bitmap case (in addition to just
+"loose" and "packed" cases). Interestingly, this test doesn't actually
+detect the bug, because it is running "git gc", and not "prune"
+directly. And "gc" will call "repack" first, which does not suffer the
+same bug. So the old-but-reachable-from-recent objects get scooped up
+into the new pack along with the actually-recent objects, which gives
+both a recent mtime. But it seemed prudent to get more coverage of the
+bitmap case for related code.
 
-Why the parentheses here?
+Reported-by: David Emett <dave@sp4m.net>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ reachable.c                | 13 ++++---------
+ t/t5304-prune.sh           | 13 +++++++++++++
+ t/t6501-freshen-objects.sh | 21 +++++++++++++++------
+ 3 files changed, 32 insertions(+), 15 deletions(-)
 
-> +	# to the containing Git source tree.  This would make the test
-> +	# result dependent upon whether we were using fsmonitor on our
-> +	# development worktree.
-> +
-> +	sleep 1 &&
+diff --git a/reachable.c b/reachable.c
+index 77a60c70a5..a088717eb5 100644
+--- a/reachable.c
++++ b/reachable.c
+@@ -227,17 +227,12 @@ void mark_reachable_objects(struct rev_info *revs, int mark_reflog,
+ 	if (bitmap_git) {
+ 		traverse_bitmap_commit_list(bitmap_git, revs, mark_object_seen);
+ 		free_bitmap_index(bitmap_git);
+-		return;
++	} else {
++		if (prepare_revision_walk(revs))
++			die("revision walk setup failed");
++		traverse_commit_list(revs, mark_commit, mark_object, &cp);
+ 	}
+ 
+-	/*
+-	 * Set up the revision walk - this will move all commits
+-	 * from the pending list to the commit walking list.
+-	 */
+-	if (prepare_revision_walk(revs))
+-		die("revision walk setup failed");
+-	traverse_commit_list(revs, mark_commit, mark_object, &cp);
+-
+ 	if (mark_recent) {
+ 		revs->ignore_missing_links = 1;
+ 		if (add_unseen_recent_objects_to_traversal(revs, mark_recent))
+diff --git a/t/t5304-prune.sh b/t/t5304-prune.sh
+index b447ce56a9..20fcc2da1f 100755
+--- a/t/t5304-prune.sh
++++ b/t/t5304-prune.sh
+@@ -352,4 +352,17 @@ test_expect_success 'trivial prune with bitmaps enabled' '
+ 	test_must_fail git cat-file -e $blob
+ '
+ 
++test_expect_success 'old reachable-from-recent retained with bitmaps' '
++	git repack -adb &&
++	to_drop=$(echo bitmap-from-recent-1 | git hash-object -w --stdin) &&
++	test-tool chmtime -86400 .git/objects/$(test_oid_to_path $to_drop) &&
++	to_save=$(echo bitmap-from-recent-2 | git hash-object -w --stdin) &&
++	test-tool chmtime -86400 .git/objects/$(test_oid_to_path $to_save) &&
++	tree=$(printf "100644 blob $to_save\tfile\n" | git mktree) &&
++	git prune --expire=12.hours.ago &&
++	git cat-file -e $tree &&
++	git cat-file -e $to_save &&
++	test_must_fail git cat-file -e $to_drop
++'
++
+ test_done
+diff --git a/t/t6501-freshen-objects.sh b/t/t6501-freshen-objects.sh
+index 75210f012b..de7742cc51 100755
+--- a/t/t6501-freshen-objects.sh
++++ b/t/t6501-freshen-objects.sh
+@@ -43,15 +43,24 @@ commit () {
+ }
+ 
+ maybe_repack () {
+-	if test -n "$repack"; then
++	case "$title" in
++	loose)
++		: skip repack
++		;;
++	repack)
+ 		git repack -ad
+-	fi
++		;;
++	bitmap)
++		git repack -adb
++		;;
++	*)
++		echo >&2 "unknown test type in maybe_repack"
++		return 1
++		;;
++	esac
+ }
+ 
+-for repack in '' true; do
+-	title=${repack:+repack}
+-	title=${title:-loose}
+-
++for title in loose repack bitmap; do
+ 	test_expect_success "make repo completely empty ($title)" '
+ 		rm -rf .git &&
+ 		git init
+-- 
+2.31.1.789.g4530770a26
 
-I can understand this sleep, as we are waiting for a background process
-to end in response to a directory being deleted.
-
-I'm surprised this works on Windows! I recall having issues deleting
-repos that are being watched by Watchman.
-
-> +	mkdir test_implicit_1/.git &&
-> +
-> +	test_must_fail git -C test_implicit_1 fsmonitor--daemon --is-running
-> +'
-> +
-> +test_expect_success 'implicit daemon stop (rename .git)' '
-> +	test_when_finished "kill_repo test_implicit_2" &&
-> +
-> +	git init test_implicit_2 &&
-> +
-> +	start_daemon test_implicit_2 &&
-> +
-> +	# renaming the .git directory will implicitly stop the daemon.
-> +	mv test_implicit_2/.git test_implicit_2/.xxx &&
-> +
-> +	# Create an empty .git directory so that the following Git command
-> +	# will stay relative to the `-C` directory.  Without this, the Git
-> +	# command will (override the requested -C argument) and crawl out
-> +	# to the containing Git source tree.  This would make the test
-> +	# result dependent upon whether we were using fsmonitor on our
-> +	# development worktree.
-> +
-> +	sleep 1 &&
-> +	mkdir test_implicit_2/.git &&
-> +
-> +	test_must_fail git -C test_implicit_2 fsmonitor--daemon --is-running
-> +'
-> +
-> +test_expect_success 'cannot start multiple daemons' '
-> +	test_when_finished "kill_repo test_multiple" &&
-> +
-> +	git init test_multiple &&
-> +
-> +	start_daemon test_multiple &&
-> +
-> +	test_must_fail git -C test_multiple fsmonitor--daemon --start 2>actual &&
-> +	grep "fsmonitor--daemon is already running" actual &&
-> +
-> +	git -C test_multiple fsmonitor--daemon --stop &&
-> +	test_must_fail git -C test_multiple fsmonitor--daemon --is-running
-> +'
-
-The tests above seem like they could be inserted as soon as the
-platform-specific listeners are created. None of this requires the
-linked-list of batched updates or cookie file checks.
-
-> +test_expect_success 'setup' '
-> +	>tracked &&
-> +	>modified &&
-> +	>delete &&
-> +	>rename &&
-> +	mkdir dir1 &&
-> +	>dir1/tracked &&
-> +	>dir1/modified &&
-> +	>dir1/delete &&
-> +	>dir1/rename &&
-> +	mkdir dir2 &&
-> +	>dir2/tracked &&
-> +	>dir2/modified &&
-> +	>dir2/delete &&
-> +	>dir2/rename &&
-> +	mkdir dirtorename &&
-> +	>dirtorename/a &&
-> +	>dirtorename/b &&
-> +
-> +	cat >.gitignore <<-\EOF &&
-> +	.gitignore
-> +	expect*
-> +	actual*
-> +	EOF
-> +
-> +	git -c core.useBuiltinFSMonitor= add . &&
-> +	test_tick &&
-> +	git -c core.useBuiltinFSMonitor= commit -m initial &&
-> +
-> +	git config core.useBuiltinFSMonitor true
-> +'
-
-Now we are getting into the meat of the interactions with Git
-features. I can understand these not being ready until all of
-the previous product patches are in place.
-
-> +test_expect_success 'update-index implicitly starts daemon' '
-> +	test_must_fail git fsmonitor--daemon --is-running &&
-> +
-> +	GIT_TRACE2_EVENT="$PWD/.git/trace_implicit_1" \
-> +		git update-index --fsmonitor &&
-> +
-> +	git fsmonitor--daemon --is-running &&
-> +	test_might_fail git fsmonitor--daemon --stop &&
-
-Should this be a "test_when_finished kill_repo ." at the
-beginning of the test?
-
-> +
-> +	grep \"event\":\"start\".*\"fsmonitor--daemon\" .git/trace_implicit_1
-> +'
-> +
-> +test_expect_success 'status implicitly starts daemon' '
-> +	test_must_fail git fsmonitor--daemon --is-running &&
-> +
-> +	GIT_TRACE2_EVENT="$PWD/.git/trace_implicit_2" \
-> +		git status >actual &&
-> +
-> +	git fsmonitor--daemon --is-running &&
-> +	test_might_fail git fsmonitor--daemon --stop &&
-> +
-> +	grep \"event\":\"start\".*\"fsmonitor--daemon\" .git/trace_implicit_2
-> +'
-> +
-> +edit_files() {
-> +	echo 1 >modified
-> +	echo 2 >dir1/modified
-> +	echo 3 >dir2/modified
-> +	>dir1/untracked
-> +}
-> +
-> +delete_files() {
-> +	rm -f delete
-> +	rm -f dir1/delete
-> +	rm -f dir2/delete
-> +}
-> +
-> +create_files() {
-> +	echo 1 >new
-> +	echo 2 >dir1/new
-> +	echo 3 >dir2/new
-> +}
-> +
-> +rename_files() {
-> +	mv rename renamed
-> +	mv dir1/rename dir1/renamed
-> +	mv dir2/rename dir2/renamed
-> +}
-> +
-> +file_to_directory() {
-> +	rm -f delete
-> +	mkdir delete
-> +	echo 1 >delete/new
-> +}
-> +
-> +directory_to_file() {
-> +	rm -rf dir1
-> +	echo 1 >dir1
-> +}
-> +
-> +verify_status() {
-> +	git status >actual &&
-> +	GIT_INDEX_FILE=.git/fresh-index git read-tree master &&
-> +	GIT_INDEX_FILE=.git/fresh-index git -c core.useBuiltinFSMonitor= status >expect &&
-> +	test_cmp expect actual &&
-> +	echo HELLO AFTER &&
-> +	cat .git/trace &&
-> +	echo HELLO AFTER
-> +}
-> +
-> +# The next few test cases confirm that our fsmonitor daemon sees each type
-> +# of OS filesystem notification that we care about.  At this layer we just
-> +# ensure we are getting the OS notifications and do not try to confirm what
-> +# is reported by `git status`.
-> +#
-> +# We run a simple query after modifying the filesystem just to introduce
-> +# a bit of a delay so that the trace logging from the daemon has time to
-> +# get flushed to disk.
-> +#
-> +# We `reset` and `clean` at the bottom of each test (and before stopping the
-> +# daemon) because these commands might implicitly restart the daemon.
-> +
-> +clean_up_repo_and_stop_daemon () {
-> +	git reset --hard HEAD
-> +	git clean -fd
-> +	git fsmonitor--daemon --stop
-> +	rm -f .git/trace
-> +}
-> +
-> +test_expect_success 'edit some files' '
-> +	test_when_finished "clean_up_repo_and_stop_daemon" &&
-
-Do you need the quotes here?
-
-> +
-> +	(
-> +		GIT_TRACE_FSMONITOR="$PWD/.git/trace" &&
-
-Use "$(pwd)/.git/trace". There are some strange things with $PWD
-especially on Windows.
-
-> +		export GIT_TRACE_FSMONITOR &&
-> +
-> +		start_daemon
-> +	) &&
-> +
-> +	edit_files &&
-> +
-> +	git fsmonitor--daemon --query 0 >/dev/null 2>&1 &&
-> +
-> +	grep "^event: dir1/modified$"  .git/trace &&
-> +	grep "^event: dir2/modified$"  .git/trace &&
-> +	grep "^event: modified$"       .git/trace &&
-> +	grep "^event: dir1/untracked$" .git/trace
-> +'
-> +
-> +test_expect_success 'create some files' '
-> +	test_when_finished "clean_up_repo_and_stop_daemon" &&
-> +
-> +	(
-> +		GIT_TRACE_FSMONITOR="$PWD/.git/trace" &&
-> +		export GIT_TRACE_FSMONITOR &&
-> +
-> +		start_daemon
-> +	) &&
-> +
-> +	create_files &&
-> +
-> +	git fsmonitor--daemon --query 0 >/dev/null 2>&1 &&
-> +
-> +	grep "^event: dir1/new$" .git/trace &&
-> +	grep "^event: dir2/new$" .git/trace &&
-> +	grep "^event: new$"      .git/trace
-> +'
-
-I wonder if we can scan the trace for the number of events
-and ensure we have the right count, to ensure we aren't getting
-_extra_ events that we don't want?
-
-The rest of the tests seem similarly structured and testing
-important cases. I'll delay thinking of new tests until I see
-the rest of the tests you are adding.
-
-Thanks,
--Stolee
