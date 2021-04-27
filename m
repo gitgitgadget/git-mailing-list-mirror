@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 85E67C433ED
-	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 10:39:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C54F3C43460
+	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 10:39:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5062661168
-	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 10:39:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8FE1D611ED
+	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 10:39:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235924AbhD0Kjt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Apr 2021 06:39:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59764 "EHLO
+        id S235932AbhD0Kju (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Apr 2021 06:39:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238188AbhD0KjN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Apr 2021 06:39:13 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3A1DC061756
-        for <git@vger.kernel.org>; Tue, 27 Apr 2021 03:38:30 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id i21-20020a05600c3555b029012eae2af5d4so6788916wmq.4
-        for <git@vger.kernel.org>; Tue, 27 Apr 2021 03:38:30 -0700 (PDT)
+        with ESMTP id S238245AbhD0KjO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Apr 2021 06:39:14 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1502C06175F
+        for <git@vger.kernel.org>; Tue, 27 Apr 2021 03:38:29 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id n2so5779693wrm.0
+        for <git@vger.kernel.org>; Tue, 27 Apr 2021 03:38:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=JSuaS6Lx86aZL6ybUpWJM1gl/n2a0RFSQZV13ZjattY=;
-        b=kQk5QXNDMoKrs+qdfEEZ3YsU/HmNGvKJj99X9GqgfJIiIvV0ZlKBKNKyc/d6wLNOIr
-         NVfu5uXqEbJ/YPr+KfHJwcm+XCIC0ETPP1wixIgSCQT85VU7b6gJcGJHPJwo8517RKPo
-         AHP6wkw6ITNdLFqqiI+9pcmOXZ1kyMX2mzgJ0Q+NmQPsHrPf1ObVvfZDiE3peYdk950k
-         VZITQ4w11j1Kg3U7edls2yew+xe6XPk2Im20WPStncraDugpt7JdsxSFI9XJbcTNt55t
-         HSrkoz4+NMLGNP4uzjyKd/SxLUA7cxTS7u8UZdGEeHm6TfJgOs8t3WCnvFVx+etuXLBt
-         BQ/g==
+        bh=GINUYoeKtVZX7Ae2Vsi9H9ikU3XWyESu7g709miUeWI=;
+        b=BEMBmKi8Vnmfys+/mS93yldvG68qZP7autZrZERTfesq08IH1LcaK+8Yz8eiHyWxZg
+         iosxniDLBr0KGpHFxVXT6uCGbLlkC7Ch2C73A9mxhHU4z+L4mrTg1HEChIh3qNwytK1J
+         xnyob+QE66iqy88ORzl7uqU0wC8mZbf2PgsAz8v92LkVdsfHavACzVQJgsbwIcuWO3BJ
+         ntuf6pHHy74k1yr6W4sulFfUesVtCELXX9ZiyQUEsDeMqXKblzMPxmkIccKAxgwRvo9l
+         2iQi7tgSHu7nhlrGL6LwbGw/kNhYFYPgmEVvHwr0s+6w/aK0PDsQ53Iqgg3CuiLT29TD
+         FqEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=JSuaS6Lx86aZL6ybUpWJM1gl/n2a0RFSQZV13ZjattY=;
-        b=o0IqRCxwypYqGHrgPbD5l0npbVFFNgO/dud/WLOPbv4W3Ji/kcdsLV3/NzcldR1nkZ
-         fvekC0HBzrTz2GjRs/VkDPyglFy1e1nwYUXLA42cESCbWj13m+Oxp0IFwKGd0UGyTNEG
-         FE35L7Wyt5QwxFQiQs31Y/thNgOv6r8BAa8GfA49LoGuX0rBjU9i4w1y8tudKVh8LIJG
-         6xhRdnkWxzcgvDGLJgwMKDR50viWtMTt2bIc5kuPKjAKBmEoLbIUaaKaSMFdfS2RODTN
-         Ifx2zh8eTGo1aVPcYRoMf93UiJ8ZRDzaaR/xIDcE+N3GFIHRuCsYW/wOjcYXX6ejNoaN
-         hgPw==
-X-Gm-Message-State: AOAM531QFKnsqvIP6dQ4ddSiQLGqnJfL7jzTrSHqpFbm7G5nIlF7uw/G
-        7CuIN2OwUxKPcU43XsUnhwiChv8JQYs=
-X-Google-Smtp-Source: ABdhPJxnHg+DobNbPlThhBS3cPAh8JF1CFw5sOd/tpKZnU+zUsmUdgQV7kWVj8R8KH4QWFLm5MJ4eg==
-X-Received: by 2002:a1c:3d05:: with SMTP id k5mr16602514wma.182.1619519909715;
-        Tue, 27 Apr 2021 03:38:29 -0700 (PDT)
+        bh=GINUYoeKtVZX7Ae2Vsi9H9ikU3XWyESu7g709miUeWI=;
+        b=p25coBIG+yj61EccoRCLSGJAcM5f95Mi7eTuEupOUiTgXUAQOKuh+rAFGiDuvWHrdG
+         5O9RnyzGzrN2+Z4N++/2xkH9GBOJGZH9mVUKRth9zCMWnMRxxIakzTPVzKTJOjHOTXHh
+         nyiShQbfXIY5EiBzcyK5GFYUEXsMnXLM+z/NMP0r2Vrw95fhC4o3zExc+WVeJVytX8S2
+         8n52oTmp7hzPW2AkWrKH3BWG7FAPbw1ebpWEKYjt/bAJJ+/OXtyfPq2bHGuEGIFXxaLf
+         YR27q4IkSyWxk7tkDbuaHitKpzz1mNPLskmLGIQp7rB/ZnmLGpdGTp4xITkPyGuTsLrC
+         MmHQ==
+X-Gm-Message-State: AOAM530FYxSNPnHn1hSFudOMEx4uK4HjdT6lfaRlsob1yxSBArhj2Tm1
+        NT0rjd3S6JKskqlOtjKo3KDVut7gSOM=
+X-Google-Smtp-Source: ABdhPJyIXEehblzaLTpC+hdT1EB7IAr4guIxrMOZPNkglN7IiJRQgu3Rltx2Zh86/RbhkGAyAWI9hw==
+X-Received: by 2002:adf:e602:: with SMTP id p2mr14377455wrm.119.1619519908665;
+        Tue, 27 Apr 2021 03:38:28 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e12sm175406wrt.51.2021.04.27.03.38.29
+        by smtp.gmail.com with ESMTPSA id u2sm2042550wmc.22.2021.04.27.03.38.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Apr 2021 03:38:29 -0700 (PDT)
-Message-Id: <d6072a70ae7d75382d30d1239c218e4e58207c20.1619519903.git.gitgitgadget@gmail.com>
+        Tue, 27 Apr 2021 03:38:28 -0700 (PDT)
+Message-Id: <89cc215c601437147cd4f7c6641ac0382d951190.1619519903.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1008.v2.git.git.1619519903.gitgitgadget@gmail.com>
 References: <pull.1008.git.git.1618829583.gitgitgadget@gmail.com>
         <pull.1008.v2.git.git.1619519903.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 27 Apr 2021 10:38:10 +0000
-Subject: [PATCH v2 09/21] t5000: inspect HEAD using git-rev-parse
+Date:   Tue, 27 Apr 2021 10:38:08 +0000
+Subject: [PATCH v2 07/21] t1301: fix typo in error message
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,29 +79,22 @@ From: Han-Wen Nienhuys <hanwen@google.com>
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- t/t5000-tar-tree.sh | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ t/t1301-shared-repo.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
-index b6734cba7e65..153f8400035a 100755
---- a/t/t5000-tar-tree.sh
-+++ b/t/t5000-tar-tree.sh
-@@ -234,10 +234,11 @@ test_expect_success 'validate file modification time' '
- 	test_cmp expected.mtime b.mtime
- '
- 
--test_expect_success \
--    'git get-tar-commit-id' \
--    'git get-tar-commit-id <b.tar >b.commitid &&
--     test_cmp .git/$(git symbolic-ref HEAD) b.commitid'
-+test_expect_success 'git get-tar-commit-id' '
-+	git get-tar-commit-id <b.tar >actual &&
-+	git rev-parse HEAD >expect &&
-+	test_cmp expect actual
-+'
- 
- test_expect_success 'git archive with --output, override inferred format' '
- 	git archive --format=tar --output=d4.zip HEAD &&
+diff --git a/t/t1301-shared-repo.sh b/t/t1301-shared-repo.sh
+index ac947bff9fcf..84bf1970d8bf 100755
+--- a/t/t1301-shared-repo.sh
++++ b/t/t1301-shared-repo.sh
+@@ -124,7 +124,7 @@ test_expect_success POSIXPERM 'git reflog expire honors core.sharedRepository' '
+ 		: happy
+ 		;;
+ 	*)
+-		echo Ooops, .git/logs/refs/heads/main is not 0662 [$actual]
++		echo Ooops, .git/logs/refs/heads/main is not 066x [$actual]
+ 		false
+ 		;;
+ 	esac
 -- 
 gitgitgadget
 
