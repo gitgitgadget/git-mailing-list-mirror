@@ -7,21 +7,21 @@ X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E27CC433B4
-	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 21:18:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 236A0C43460
+	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 21:18:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DD39961139
-	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 21:18:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EBBA2613F3
+	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 21:18:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239314AbhD0VT2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Apr 2021 17:19:28 -0400
-Received: from mav.lukeshu.com ([104.207.138.63]:41596 "EHLO mav.lukeshu.com"
+        id S239328AbhD0VT3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Apr 2021 17:19:29 -0400
+Received: from mav.lukeshu.com ([104.207.138.63]:41632 "EHLO mav.lukeshu.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S239226AbhD0VTO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Apr 2021 17:19:14 -0400
+        id S239267AbhD0VTQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Apr 2021 17:19:16 -0400
 Received: from lukeshu-dw-thinkpad (unknown [IPv6:2601:281:8200:26:4e34:88ff:fe48:5521])
-        by mav.lukeshu.com (Postfix) with ESMTPSA id 0944980592;
-        Tue, 27 Apr 2021 17:18:29 -0400 (EDT)
+        by mav.lukeshu.com (Postfix) with ESMTPSA id BB8FF80598;
+        Tue, 27 Apr 2021 17:18:31 -0400 (EDT)
 From:   Luke Shumaker <lukeshu@lukeshu.com>
 To:     git@vger.kernel.org
 Cc:     Avery Pennarun <apenwarr@gmail.com>,
@@ -39,9 +39,9 @@ Cc:     Avery Pennarun <apenwarr@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Luke Shumaker <lukeshu@datawire.io>
-Subject: [PATCH v3 12/30] subtree: don't have loose code outside of a function
-Date:   Tue, 27 Apr 2021 15:17:30 -0600
-Message-Id: <20210427211748.2607474-13-lukeshu@lukeshu.com>
+Subject: [PATCH v3 14/30] subtree: drop support for git < 1.7
+Date:   Tue, 27 Apr 2021 15:17:32 -0600
+Message-Id: <20210427211748.2607474-15-lukeshu@lukeshu.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210427211748.2607474-1-lukeshu@lukeshu.com>
 References: <20210426174525.3937858-1-lukeshu@lukeshu.com>
@@ -54,16 +54,21 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Luke Shumaker <lukeshu@datawire.io>
 
-Shove all of the loose code inside of a main() function.
+Suport for Git versions older than 1.7.0 (older than February 2010) was
+nice to have when git-subtree lived out-of-tree.  But now that it lives
+in git.git, it's not necessary to keep around.  While it's technically
+in contrib, with the standard 'git' packages for common systems
+(including Arch Linux and macOS) including git-subtree, it seems
+vanishingly likely to me that people are separately installing
+git-subtree from git.git alongside an older 'git' install (although it
+also seems vanishingly likely that people are still using >11 year old
+git installs).
 
-This comes down to personal preference more than anything else.  A
-preference that I've developed over years of maintaining large Bash
-scripts, but still a mere personal preference.
-
-In this specific case, it's also moving the `set -- -h`, the `git
-rev-parse --parseopt`, and the `. git-sh-setup` to be closer to all
-the rest of the argument parsing, which is a readability win on its
-own, IMO.
+Not that there's much reason to remove it either, it's not much code,
+and none of my changes depend on a newer git (to my knowledge, anyway;
+I'm not actually testing against older git).  I just figure it's an easy
+piece of fat to trim, in the journey to making the whole thing easier to
+hack on.
 
 "Ignore space change" is probably helpful when viewing this diff.
 
@@ -72,294 +77,41 @@ Signed-off-by: Luke Shumaker <lukeshu@datawire.io>
 v2:
  - Include rationale in the the commit message.
 
- contrib/subtree/git-subtree.sh | 245 +++++++++++++++++----------------
- 1 file changed, 125 insertions(+), 120 deletions(-)
+ contrib/subtree/git-subtree.sh | 19 ++++---------------
+ 1 file changed, 4 insertions(+), 15 deletions(-)
 
 diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index 868e18b9a1..d1ed7f9a6c 100755
+index 9ca498f81c..4503564f7e 100755
 --- a/contrib/subtree/git-subtree.sh
 +++ b/contrib/subtree/git-subtree.sh
-@@ -4,10 +4,7 @@
- #
- # Copyright (C) 2009 Avery Pennarun <apenwarr@gmail.com>
- #
--if test $# -eq 0
--then
--	set -- -h
--fi
-+
- OPTS_SPEC="\
- git subtree add   --prefix=<prefix> <commit>
- git subtree add   --prefix=<prefix> <repository> <ref>
-@@ -30,12 +27,8 @@ rejoin        merge the new branch back into HEAD
-  options for 'add', 'merge', and 'pull'
- squash        merge subtree changes as a single commit
- "
--eval "$(echo "$OPTS_SPEC" | git rev-parse --parseopt -- "$@" || echo exit $?)"
+@@ -852,23 +852,12 @@ cmd_merge () {
+ 		rev="$new"
+ 	fi
  
- PATH=$PATH:$(git --exec-path)
--. git-sh-setup
--
--require_work_tree
- 
- quiet=
- branch=
-@@ -84,126 +77,138 @@ ensure_single_rev () {
+-	version=$(git version)
+-	if test "$version" \< "git version 1.7"
++	if test -n "$message"
+ 	then
+-		if test -n "$message"
+-		then
+-			git merge -s subtree --message="$message" "$rev"
+-		else
+-			git merge -s subtree "$rev"
+-		fi
++		git merge -Xsubtree="$prefix" \
++		    --message="$message" "$rev"
+ 	else
+-		if test -n "$message"
+-		then
+-			git merge -Xsubtree="$prefix" \
+-				--message="$message" "$rev"
+-		else
+-			git merge -Xsubtree="$prefix" $rev
+-		fi
++		git merge -Xsubtree="$prefix" $rev
  	fi
  }
  
--while test $# -gt 0
--do
--	opt="$1"
--	shift
-+main () {
-+	if test $# -eq 0
-+	then
-+		set -- -h
-+	fi
-+	eval "$(echo "$OPTS_SPEC" | git rev-parse --parseopt -- "$@" || echo exit $?)"
-+	. git-sh-setup
-+	require_work_tree
- 
--	case "$opt" in
--	-q)
--		quiet=1
--		;;
--	-d)
--		debug=1
--		;;
--	--annotate)
--		annotate="$1"
--		shift
--		;;
--	--no-annotate)
--		annotate=
--		;;
--	-b)
--		branch="$1"
--		shift
--		;;
--	-P)
--		prefix="${1%/}"
--		shift
--		;;
--	-m)
--		message="$1"
--		shift
--		;;
--	--no-prefix)
--		prefix=
--		;;
--	--onto)
--		onto="$1"
-+	while test $# -gt 0
-+	do
-+		opt="$1"
- 		shift
-+
-+		case "$opt" in
-+		-q)
-+			quiet=1
-+			;;
-+		-d)
-+			debug=1
-+			;;
-+		--annotate)
-+			annotate="$1"
-+			shift
-+			;;
-+		--no-annotate)
-+			annotate=
-+			;;
-+		-b)
-+			branch="$1"
-+			shift
-+			;;
-+		-P)
-+			prefix="${1%/}"
-+			shift
-+			;;
-+		-m)
-+			message="$1"
-+			shift
-+			;;
-+		--no-prefix)
-+			prefix=
-+			;;
-+		--onto)
-+			onto="$1"
-+			shift
-+			;;
-+		--no-onto)
-+			onto=
-+			;;
-+		--rejoin)
-+			rejoin=1
-+			;;
-+		--no-rejoin)
-+			rejoin=
-+			;;
-+		--ignore-joins)
-+			ignore_joins=1
-+			;;
-+		--no-ignore-joins)
-+			ignore_joins=
-+			;;
-+		--squash)
-+			squash=1
-+			;;
-+		--no-squash)
-+			squash=
-+			;;
-+		--)
-+			break
-+			;;
-+		*)
-+			die "Unexpected option: $opt"
-+			;;
-+		esac
-+	done
-+
-+	command="$1"
-+	shift
-+
-+	case "$command" in
-+	add|merge|pull)
-+		default=
- 		;;
--	--no-onto)
--		onto=
--		;;
--	--rejoin)
--		rejoin=1
--		;;
--	--no-rejoin)
--		rejoin=
--		;;
--	--ignore-joins)
--		ignore_joins=1
--		;;
--	--no-ignore-joins)
--		ignore_joins=
--		;;
--	--squash)
--		squash=1
-+	split|push)
-+		default="--default HEAD"
- 		;;
--	--no-squash)
--		squash=
-+	*)
-+		die "Unknown command '$command'"
- 		;;
--	--)
--		break
-+	esac
-+
-+	if test -z "$prefix"
-+	then
-+		die "You must provide the --prefix option."
-+	fi
-+
-+	case "$command" in
-+	add)
-+		test -e "$prefix" &&
-+			die "prefix '$prefix' already exists."
- 		;;
- 	*)
--		die "Unexpected option: $opt"
-+		test -e "$prefix" ||
-+			die "'$prefix' does not exist; use 'git subtree add'"
- 		;;
- 	esac
--done
--
--command="$1"
--shift
--
--case "$command" in
--add|merge|pull)
--	default=
--	;;
--split|push)
--	default="--default HEAD"
--	;;
--*)
--	die "Unknown command '$command'"
--	;;
--esac
--
--if test -z "$prefix"
--then
--	die "You must provide the --prefix option."
--fi
--
--case "$command" in
--add)
--	test -e "$prefix" &&
--		die "prefix '$prefix' already exists."
--	;;
--*)
--	test -e "$prefix" ||
--		die "'$prefix' does not exist; use 'git subtree add'"
--	;;
--esac
--
--dir="$(dirname "$prefix/.")"
--
--if test "$command" != "pull" &&
--		test "$command" != "add" &&
--		test "$command" != "push"
--then
--	revs=$(git rev-parse $default --revs-only "$@") || exit $?
--	dirs=$(git rev-parse --no-revs --no-flags "$@") || exit $?
--	ensure_single_rev $revs
--	if test -n "$dirs"
--	then
--		die "Error: Use --prefix instead of bare filenames."
--	fi
--fi
--
--debug "command: {$command}"
--debug "quiet: {$quiet}"
--debug "revs: {$revs}"
--debug "dir: {$dir}"
--debug "opts: {$*}"
--debug
-+
-+	dir="$(dirname "$prefix/.")"
-+
-+	if test "$command" != "pull" &&
-+			test "$command" != "add" &&
-+			test "$command" != "push"
-+	then
-+		revs=$(git rev-parse $default --revs-only "$@") || exit $?
-+		dirs=$(git rev-parse --no-revs --no-flags "$@") || exit $?
-+		ensure_single_rev $revs
-+		if test -n "$dirs"
-+		then
-+			die "Error: Use --prefix instead of bare filenames."
-+		fi
-+	fi
-+
-+	debug "command: {$command}"
-+	debug "quiet: {$quiet}"
-+	debug "revs: {$revs}"
-+	debug "dir: {$dir}"
-+	debug "opts: {$*}"
-+	debug
-+
-+	"cmd_$command" "$@"
-+}
- 
- cache_setup () {
- 	cachedir="$GIT_DIR/subtree-cache/$$"
-@@ -898,4 +903,4 @@ cmd_push () {
- 	fi
- }
- 
--"cmd_$command" "$@"
-+main "$@"
 -- 
 2.31.1
 
