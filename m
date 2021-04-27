@@ -6,64 +6,77 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 806EEC433ED
-	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 06:52:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AD47FC433ED
+	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 07:08:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4672761078
-	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 06:52:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6C98C610FB
+	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 07:08:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230084AbhD0Gwx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Apr 2021 02:52:53 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:50990 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229923AbhD0Gww (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Apr 2021 02:52:52 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B083811EB25;
-        Tue, 27 Apr 2021 02:52:09 -0400 (EDT)
+        id S234721AbhD0HJa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Apr 2021 03:09:30 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:65247 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229547AbhD0HJ3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Apr 2021 03:09:29 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B3468D6079;
+        Tue, 27 Apr 2021 03:08:45 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=RlR5Ep9MUqzkPL94+av7CcCrnJ3XcyjdSOvB3M
-        0RU1M=; b=AYm/5ipC6J4+ECOdP1aQTYns40lNxxuvfiJzpR+hAX2GpfjqZSzSHp
-        D6JG87W2SYIWH2VSisfhdx3Ejxc9+x9t0lrOj2EZ2ue8fJ8WJYY3rBPRgNCKruP1
-        GGl/H/JYPUk4AqyG0+CgE3eXmOywB0oKDp49STYnz47TYnTe/l4Kg=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9D83F11EB24;
-        Tue, 27 Apr 2021 02:52:09 -0400 (EDT)
+        :content-type:content-transfer-encoding; s=sasl; bh=0RjJsaNnvhtw
+        KafKSpxEaw/E0fpSEzrsZG2XVydteOU=; b=enZ/E6bXz5GRfE0eLvT3aOXeyMu1
+        fOAFoL0gxu5VnwmtLdjwDeY67Gi9xukWBa2DoqdCXUXykLOvXZm2Dt1wAwHgWC3Z
+        jfNG4VYSIq/nuKFNOT4P0hUHn/tvS15cgX3Mhuj38L8akrdD/e8ZjsOBLdivy+fw
+        aMbjq+nMERYIpz4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9BA46D6077;
+        Tue, 27 Apr 2021 03:08:45 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id CFBCB11EB23;
-        Tue, 27 Apr 2021 02:52:06 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DBEEDD6076;
+        Tue, 27 Apr 2021 03:08:44 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Han-Wen Nienhuys <hanwen@google.com>
-Cc:     Jeff King <peff@peff.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git <git@vger.kernel.org>
-Subject: Re: reflog existence & reftable
-References: <CAFQ2z_Ps3YxycA+NJ9VKt_PEXb+m83JdNB7ujzWw1fTPKyZ=fg@mail.gmail.com>
-        <87im4f3l62.fsf@evledraar.gmail.com> <xmqqim4fzier.fsf@gitster.g>
-        <CAFQ2z_OGv3qNp9jaeuMij5gqv1MoOeb73zH9mOvikLs8dWvmmg@mail.gmail.com>
-        <YILUs3T4oM78ZcW2@coredump.intra.peff.net>
-        <CAFQ2z_OEB_jnL-G=GfypMiLLjE3gwp07ZMo3uF5aGkp3o6Yb9A@mail.gmail.com>
-Date:   Tue, 27 Apr 2021 15:52:05 +0900
-In-Reply-To: <CAFQ2z_OEB_jnL-G=GfypMiLLjE3gwp07ZMo3uF5aGkp3o6Yb9A@mail.gmail.com>
-        (Han-Wen Nienhuys's message of "Mon, 26 Apr 2021 19:33:14 +0200")
-Message-ID: <xmqqy2d4dxt6.fsf@gitster.g>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, ZheNing Hu <adlternative@gmail.com>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Taylor Blau <me@ttaylorr.com>, Beat Bolli <bbolli@ewanet.ch>
+Subject: Re: [PATCH 1/2] pretty tests: simplify %aI/%cI date format test
+References: <pull.939.v2.git.1619275340051.gitgitgadget@gmail.com>
+        <cover-0.2-00000000000-20210425T090506Z-avarab@gmail.com>
+        <patch-1.2-4a90e4a141a-20210425T090506Z-avarab@gmail.com>
+Date:   Tue, 27 Apr 2021 16:08:44 +0900
+In-Reply-To: <patch-1.2-4a90e4a141a-20210425T090506Z-avarab@gmail.com>
+ (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Sun, 25 Apr
+ 2021 11:11:32 +0200")
+Message-ID: <xmqqtunsdx1f.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 14BEF23A-A725-11EB-A743-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 67A2BF48-A727-11EB-A458-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Han-Wen Nienhuys <hanwen@google.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> Thanks. Does that count as consensus? Junio?
+>  # ISO strict date format
+>  test_expect_success 'ISO and ISO-strict date formats display the same =
+values' '
+> -	git log --format=3D%ai%n%ci |
+> -	sed -e "s/ /T/; s/ //; s/..\$/:&/" >expected &&
+> +	git log --format=3D%ad%n%cd --date=3Diso-strict >expected &&
+>  	git log --format=3D%aI%n%cI >actual &&
 
-Sounds like it, even though I have been absent for most of the
-period ;-)
+While these two must show the same output, I wonder how much value
+we are getting out of them.  Don't they end up exercising pretty
+much the same codepath?
+
+Not that I think the original is any better at all, though ;-)
+
+>  	test_cmp expected actual
+>  '
