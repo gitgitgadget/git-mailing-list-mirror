@@ -2,107 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 25D88C433B4
-	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 07:23:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 12922C433B4
+	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 07:28:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E57C46112F
-	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 07:23:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D17C061177
+	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 07:28:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234627AbhD0HYW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Apr 2021 03:24:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45042 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234780AbhD0HYR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Apr 2021 03:24:17 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9934DC06138A
-        for <git@vger.kernel.org>; Tue, 27 Apr 2021 00:23:33 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id n21so11900276eji.1
-        for <git@vger.kernel.org>; Tue, 27 Apr 2021 00:23:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:references:to:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding;
-        bh=CxVnL1B9K0Vmi3Yom3MdwDalig23PAndVOWRroThMeA=;
-        b=Cc9/40Ady/zfMvSuZGTxlFxvbvdA1Jn+/a94aSbOth8agECu+fZ4pH3d6SAcGPmQoT
-         q1fMhmqPUBkyxLXQtp8m4C82gMTCuVgsACmwYPqTPpMSUnZYDwafnZqfYWbYVd9quU//
-         ORKZTEvAGf2p9SLfmF13BMdsgw4w5grx0h4ClyVNnWeSah2dAxFsp9GB7ytApfCtLinh
-         WwlCbKB0JXWOt5u0efZjByxYVvMEE7P87mgy34MqCefblXgVc1G68oxTD4kDKgZbGSrU
-         xc8e5UQMo/kt8L7+E4rPns2reMhXAc9yAK5Q5M0iUL/vnd8OlYJzCekwk4YxhFxiBDI5
-         ZsBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:references:to:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=CxVnL1B9K0Vmi3Yom3MdwDalig23PAndVOWRroThMeA=;
-        b=syF6bUovX3mw+/SE2azbv+t6HqXTs/5eKLxkgSduA5QNz6NcBMY95AmRJpvXMxdPaK
-         Cq1EWVC9YK4tLKcbDZW6nNymJnSuXVJHTYac149Zxd12Wa+VtvNk5FIB8dkcrEm51zZM
-         Zfwy1wkpt4J/ZkwfnvEVMIdnnPNu8hm70tt2kzFBd6FHDqTbNrjpxLdQhTNTd+H05SAu
-         7ATRC1RdEqziQqRGTeM3LRPsdn1iufnE3MbjhBgIuEf47FuEndzvA6iH5+yrbaWjOSbY
-         XySQaYW5dEJoKUC8JsrfAJkSGgHJM/lVQJssv0mNPLknuSKtYW1hOKIslGzOAh105LSi
-         OrTg==
-X-Gm-Message-State: AOAM531qncdt6CIBz1YCgaF1tLrlsgR6Vd90QR/AEERawR7U+7xHKP3E
-        Ma3nGOXyuPE0XSye9nQc2xGMf+H8H/SgYE8=
-X-Google-Smtp-Source: ABdhPJwSwpd7A44dECCeM7d26MogPZCD29qiyDXKh5vsmtBEWU17NEgD7mUwDls3wHBI06eVyC0aGg==
-X-Received: by 2002:a17:906:8a59:: with SMTP id gx25mr11688408ejc.63.1619508212404;
-        Tue, 27 Apr 2021 00:23:32 -0700 (PDT)
-Received: from [192.168.73.193] ([212.55.198.55])
-        by smtp.gmail.com with ESMTPSA id z17sm4310549eju.65.2021.04.27.00.23.31
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Apr 2021 00:23:32 -0700 (PDT)
-Subject: Bug: Git invokes hooks from wrong directory.
-References: <03b67357-4d9a-ea66-ad72-f01bb25aa54c@gmail.com>
-To:     Git List <git@vger.kernel.org>
-From:   =?UTF-8?Q?Gabriel_N=c3=bctzi?= <gnuetzi@gmail.com>
-X-Forwarded-Message-Id: <03b67357-4d9a-ea66-ad72-f01bb25aa54c@gmail.com>
-Message-ID: <e173a3c0-5ca9-4c0e-9a1b-ef5f6aa72340@gmail.com>
-Date:   Tue, 27 Apr 2021 09:23:33 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.0
+        id S234780AbhD0H2q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Apr 2021 03:28:46 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:64030 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230255AbhD0H2p (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Apr 2021 03:28:45 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 11C3913384A;
+        Tue, 27 Apr 2021 03:28:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Z8dFpZnYhUzL35rcWHB4ZCHJ7JYUqHaTZM1OBA
+        BZOQ4=; b=gb0C6ZakB2wr/+l5fROrMeESipb5EgO1otNGYzEGniTdgTxH6vDFJ6
+        JT/2MAIq6jE/6nrM6hjF2rmrKNrLZBGcySK9MTRyxCM8xqAewpmJQ99qworov4QK
+        YINrbwvxxfX3zj3Gf9UiaRn4AYZhLtGWUC+N4e73ubC/KuNTc5lng=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 09D05133849;
+        Tue, 27 Apr 2021 03:28:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 46058133847;
+        Tue, 27 Apr 2021 03:27:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Luke Shumaker <lukeshu@lukeshu.com>
+Cc:     git@vger.kernel.org, Avery Pennarun <apenwarr@gmail.com>,
+        Charles Bailey <cbailey32@bloomberg.net>,
+        Danny Lin <danny0838@gmail.com>,
+        "David A . Greene" <greened@obbligato.org>,
+        David Aguilar <davvid@gmail.com>,
+        Jakub Suder <jakub.suder@gmail.com>,
+        James Denholm <nod.helm@gmail.com>, Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Roger L Strain <roger.strain@swri.org>,
+        Techlive Zheng <techlivezheng@gmail.com>,
+        Luke Shumaker <lukeshu@datawire.io>
+Subject: Re: [PATCH 00/30] subtree: clean up, improve UX
+References: <20210423194230.1388945-1-lukeshu@lukeshu.com>
+        <87wnss2219.wl-lukeshu@lukeshu.com>
+Date:   Tue, 27 Apr 2021 16:27:57 +0900
+In-Reply-To: <87wnss2219.wl-lukeshu@lukeshu.com> (Luke Shumaker's message of
+        "Fri, 23 Apr 2021 14:12:34 -0600")
+Message-ID: <xmqqlf94dw5e.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <03b67357-4d9a-ea66-ad72-f01bb25aa54c@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 17B3D97E-A72A-11EB-A998-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Community
+Luke Shumaker <lukeshu@lukeshu.com> writes:
 
-The following MWE in
-https://stackoverflow.com/questions/67273420/why-does-git-execute-hooks-from-an-other-repository/67276138#67276138
+> On Fri, 23 Apr 2021 13:42:00 -0600,
+> Luke Shumaker wrote:
+>>                                                  I promise that
+>> there's more work coming on top of it (we've discovered lots of ways
+>> to break the "subtree split" algorithm, and come up with fixes for
+>> most of them).
+>
+> Follow-up question: If in that work I changed the shebang from
+> "#!/bin/sh" to "#!/usr/bin/env bash" and started using Bash arrays,
+> would that be so bad?  Would that be land-able?
 
-shows a bug that Git executes the hooks in `/tmp/A` instead of 
-`/tmp/Githooks`.
+I'd rather see "git subtree" tool taken out of my tree and flourish
+as a standalone project of its own.
 
-# ----------
-|# Make simple repo git init "/tmp/A" && cd "/tmp/A" || exit 1
-|
-|
-|
-|# Make hook to demonstrate the problem
-   mkdir -p ".git/hooks" &&
-|
-|echo "echo 'EXECUTED!!!'" >.git/hooks/reference-transaction &&
-|
-|  chmod +x ".git/hooks/reference-transaction" &&
-|
-|  git clone -c core.hooksPath=".git/hooks" --template= 
-"https://github.com/gabyx/Githooks.git" /tmp/Githooks|
-# ----------
+Over its long history, from time to time people stepped in only to
+scratch their own itch and then went away.  Without having continued
+presense of an area expert (or two) who can give consistent guidance
+to the tool's evolution, I feel that Git project itself failed to
+give sufficient service to users of "git subtree".
 
-Would be nice to know, if this is indeed a bug and should be fixed?
+As I won't be that area expert, and we do not seem to be growing
+such an area expert who can be responsible for the tool in the long
+haul, it probably is a disservice to its users to keep it in my tree
+and pretend that it is maintained to the same degree as the rest of
+Git.
 
-If somebody points me to the corresponding source code, I could dive in.
-Thanks a lot.
+If those who are interested and/or have stake in the "git subtree"
+tool can unite and take its development in their hands, with their
+own style, that might be better for the health of the "git subtree"
+tool in the long run.
 
-BR Gabriel Nützi
+Thanks.
+
 
 
