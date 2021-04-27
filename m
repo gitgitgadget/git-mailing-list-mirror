@@ -7,24 +7,21 @@ X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E058C433ED
-	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 21:19:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AFB38C433B4
+	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 21:19:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3F6FD613DA
-	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 21:19:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 77C4A613DA
+	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 21:19:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239050AbhD0VTo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Apr 2021 17:19:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33154 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238970AbhD0VT3 (ORCPT <rfc822;git@vger.kernel.org>);
+        id S239369AbhD0VTq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Apr 2021 17:19:46 -0400
+Received: from mav.lukeshu.com ([104.207.138.63]:41538 "EHLO mav.lukeshu.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S239272AbhD0VT3 (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 27 Apr 2021 17:19:29 -0400
-Received: from mav.lukeshu.com (mav.lukeshu.com [IPv6:2001:19f0:5c00:8069:5400:ff:fe26:6a86])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C100BC061342
-        for <git@vger.kernel.org>; Tue, 27 Apr 2021 14:18:43 -0700 (PDT)
 Received: from lukeshu-dw-thinkpad (unknown [IPv6:2601:281:8200:26:4e34:88ff:fe48:5521])
-        by mav.lukeshu.com (Postfix) with ESMTPSA id 14B7C8059D;
-        Tue, 27 Apr 2021 17:18:43 -0400 (EDT)
+        by mav.lukeshu.com (Postfix) with ESMTPSA id A845C80590;
+        Tue, 27 Apr 2021 17:18:45 -0400 (EDT)
 From:   Luke Shumaker <lukeshu@lukeshu.com>
 To:     git@vger.kernel.org
 Cc:     Avery Pennarun <apenwarr@gmail.com>,
@@ -42,9 +39,9 @@ Cc:     Avery Pennarun <apenwarr@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Luke Shumaker <lukeshu@datawire.io>
-Subject: [PATCH v3 27/30] subtree: allow --squash to be used with --rejoin
-Date:   Tue, 27 Apr 2021 15:17:45 -0600
-Message-Id: <20210427211748.2607474-28-lukeshu@lukeshu.com>
+Subject: [PATCH v3 30/30] subtree: be stricter about validating flags
+Date:   Tue, 27 Apr 2021 15:17:48 -0600
+Message-Id: <20210427211748.2607474-31-lukeshu@lukeshu.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210427211748.2607474-1-lukeshu@lukeshu.com>
 References: <20210426174525.3937858-1-lukeshu@lukeshu.com>
@@ -57,199 +54,209 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Luke Shumaker <lukeshu@datawire.io>
 
-Besides being a genuinely useful thing to do, this also just makes sense
-and harmonizes which flags may be used when.  `git subtree split
---rejoin` amounts to "automatically go ahead and do a `git subtree
-merge` after doing the main `git subtree split`", so it's weird and
-arbitrary that you can't pass `--squash` to `git subtree split --rejoin`
-like you can `git subtree merge`.  It's weird that `git subtree split
---rejoin` inherits `git subtree merge`'s `--message` but not `--squash`.
+Don't silently ignore a flag that's invalid for a given subcommand.  The
+user expected it to do something; we should tell the user that they are
+mistaken, instead of surprising the user.
 
-Reconcile the situation by just having `split --rejoin` actually just
-call `merge` internally (or call `add` instead, as appropriate), so it
-can get access to the full `merge` behavior, including `--squash`.
+It could be argued that this change might break existing users.  I'd
+argue that those existing users are already broken, and they just don't
+know it.  Let them know that they're broken.
 
 Signed-off-by: Luke Shumaker <lukeshu@datawire.io>
 ---
-v2:
- - In the added tests, use `test_must_fail` instead of `!`, as
-   appropriate.
-v3:
- - Style: Put the `then` of an `if/then` on its own line.
- - Fix a bug (and add a test) where the resulting commits confuse a
-   subsequent `git subtree merge --squash`.
-
- contrib/subtree/git-subtree.sh     | 37 +++++++++++++++-----
- contrib/subtree/git-subtree.txt    | 27 ++++++--------
- contrib/subtree/t/t7900-subtree.sh | 56 ++++++++++++++++++++++++++++++
- 3 files changed, 96 insertions(+), 24 deletions(-)
+ contrib/subtree/git-subtree.sh     |  89 ++++++++++++++++-------
+ contrib/subtree/t/t7900-subtree.sh | 111 +++++++++++++++++++++++++++++
+ 2 files changed, 175 insertions(+), 25 deletions(-)
 
 diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index 3bffddf277..25d69d7973 100755
+index 9e4d9a0619..b06782bc79 100755
 --- a/contrib/subtree/git-subtree.sh
 +++ b/contrib/subtree/git-subtree.sh
-@@ -33,15 +33,15 @@ h,help        show the help
- q             quiet
- d             show debug messages
- P,prefix=     the name of the subdir to split out
--m,message=    use the given message as the commit message for the merge commit
-  options for 'split'
- annotate=     add a prefix to commit message of new commits
- b,branch=     create a new branch from the split subtree
- ignore-joins  ignore prior --rejoin commits
- onto=         try connecting new tree to an existing one
- rejoin        merge the new branch back into HEAD
-- options for 'add' and 'merge' (also: 'pull')
-+ options for 'add' and 'merge' (also: 'pull' and 'split --rejoin')
- squash        merge subtree changes as a single commit
-+m,message=    use the given message as the commit message for the merge commit
+@@ -44,17 +44,6 @@ squash        merge subtree changes as a single commit
+ m,message=    use the given message as the commit message for the merge commit
  "
  
- arg_debug=
-@@ -346,7 +346,8 @@ find_latest_squash () {
- 				then
- 					# a rejoin commit?
- 					# Pretend its sub was a squash.
--					sq="$sub"
-+					sq=$(git rev-parse --verify "$sq^2") ||
-+						die
- 				fi
- 				debug "Squash found: $sq $sub"
- 				echo "$sq" "$sub"
-@@ -453,6 +454,13 @@ add_msg () {
- 	else
- 		commit_message="Add '$dir/' from commit '$latest_new'"
- 	fi
-+	if test -n "$arg_split_rejoin"
-+	then
-+		# If this is from a --rejoin, then rejoin_msg has
-+		# already inserted the `git-subtree-xxx:` tags
-+		echo "$commit_message"
-+		return
-+	fi
- 	cat <<-EOF
- 		$commit_message
- 
-@@ -775,7 +783,12 @@ cmd_add_commit () {
- 	rev=$(git rev-parse --verify "$1^{commit}") || exit $?
- 
- 	debug "Adding $dir as '$rev'..."
--	git read-tree --prefix="$dir" $rev || exit $?
-+	if test -z "$arg_split_rejoin"
-+	then
-+		# Only bother doing this if this is a genuine 'add',
-+		# not a synthetic 'add' from '--rejoin'.
-+		git read-tree --prefix="$dir" $rev || exit $?
-+	fi
- 	git checkout -- "$dir" || exit $?
- 	tree=$(git write-tree) || exit $?
- 
-@@ -815,6 +828,11 @@ cmd_split () {
- 		die "You must provide exactly one revision.  Got: '$*'"
- 	fi
- 
-+	if test -n "$arg_split_rejoin"
-+	then
-+		ensure_clean
-+	fi
-+
- 	debug "Splitting $dir..."
- 	cache_setup || exit $?
- 
-@@ -857,10 +875,13 @@ cmd_split () {
- 	then
- 		debug "Merging split branch into HEAD..."
- 		latest_old=$(cache_get latest_old) || exit $?
--		git merge -s ours \
--			--allow-unrelated-histories \
--			-m "$(rejoin_msg "$dir" "$latest_old" "$latest_new")" \
--			"$latest_new" >&2 || exit $?
-+		arg_addmerge_message="$(rejoin_msg "$dir" "$latest_old" "$latest_new")" || exit $?
-+		if test -z "$(find_latest_squash "$dir")"
-+		then
-+			cmd_add "$latest_new" >&2 || exit $?
-+		else
-+			cmd_merge "$latest_new" >&2 || exit $?
-+		fi
- 	fi
- 	if test -n "$arg_split_branch"
- 	then
-diff --git a/contrib/subtree/git-subtree.txt b/contrib/subtree/git-subtree.txt
-index 78baac1e6b..d7e6e7867c 100644
---- a/contrib/subtree/git-subtree.txt
-+++ b/contrib/subtree/git-subtree.txt
-@@ -109,9 +109,6 @@ settings passed to 'split' (such as '--annotate') are the same.
- Because of this, if you add new commits and then re-split, the new
- commits will be attached as commits on top of the history you
- generated last time, so 'git merge' and friends will work as expected.
--+
--Note that if you use '--squash' when you merge, you should usually not
--just '--rejoin' when you split.
- 
- pull <repository> <remote-ref>::
- 	Exactly like 'merge', but parallels 'git pull' in that
-@@ -124,8 +121,8 @@ push <repository> <remote-ref>::
- 	<remote-ref>.  This can be used to push your subtree to
- 	different branches of the remote repository.
- 
--OPTIONS
---------
-+OPTIONS FOR ALL COMMANDS
-+------------------------
- -q::
- --quiet::
- 	Suppress unnecessary output messages on stderr.
-@@ -140,15 +137,11 @@ OPTIONS
- 	want to manipulate.  This option is mandatory
- 	for all commands.
- 
---m <message>::
----message=<message>::
--	This option is only valid for 'add', 'merge', 'pull', and 'split --rejoin'.
--	Specify <message> as the commit message for the merge commit.
+-arg_debug=
+-arg_command=
+-arg_prefix=
+-arg_split_branch=
+-arg_split_onto=
+-arg_split_rejoin=
+-arg_split_ignore_joins=
+-arg_split_annotate=
+-arg_addmerge_squash=
+-arg_addmerge_message=
 -
--OPTIONS FOR 'add' AND 'merge' (ALSO: 'pull')
----------------------------------------------
-+OPTIONS FOR 'add' AND 'merge' (ALSO: 'pull' AND 'split --rejoin')
-+-----------------------------------------------------------------
- These options for 'add' and 'merge' may also be given to 'pull' (which
--wraps 'merge').
-+wraps 'merge') and 'split --rejoin' (which wraps either 'add' or
-+'merge' as appropriate).
+ indent=0
  
- --squash::
- 	Instead of merging the entire history from the subtree project, produce
-@@ -176,6 +169,9 @@ Whether or not you use '--squash', changes made in your local repository
- remain intact and can be later split and send upstream to the
- subproject.
+ # Usage: debug [MSG...]
+@@ -106,10 +95,61 @@ main () {
+ 	then
+ 		set -- -h
+ 	fi
+-	eval "$(echo "$OPTS_SPEC" | git rev-parse --parseopt -- "$@" || echo exit $?)"
++	set_args="$(echo "$OPTS_SPEC" | git rev-parse --parseopt -- "$@" || echo exit $?)"
++	eval "$set_args"
+ 	. git-sh-setup
+ 	require_work_tree
  
-+-m <message>::
-+--message=<message>::
-+	Specify <message> as the commit message for the merge commit.
++	# First figure out the command and whether we use --rejoin, so
++	# that we can provide more helpful validation when we do the
++	# "real" flag parsing.
++	arg_split_rejoin=
++	allow_split=
++	allow_addmerge=
++	while test $# -gt 0
++	do
++		opt="$1"
++		shift
++		case "$opt" in
++			--annotate|-b|-P|-m|--onto)
++				shift
++				;;
++			--rejoin)
++				arg_split_rejoin=1
++				;;
++			--no-rejoin)
++				arg_split_rejoin=
++				;;
++			--)
++				break
++				;;
++		esac
++	done
++	arg_command=$1
++	case "$arg_command" in
++	add|merge|pull)
++		allow_addmerge=1
++		;;
++	split|push)
++		allow_split=1
++		allow_addmerge=$arg_split_rejoin
++		;;
++	*)
++		die "Unknown command '$arg_command'"
++		;;
++	esac
++	# Reset the arguments array for "real" flag parsing.
++	eval "$set_args"
++
++	# Begin "real" flag parsing.
++	arg_debug=
++	arg_prefix=
++	arg_split_branch=
++	arg_split_onto=
++	arg_split_ignore_joins=
++	arg_split_annotate=
++	arg_addmerge_squash=
++	arg_addmerge_message=
+ 	while test $# -gt 0
+ 	do
+ 		opt="$1"
+@@ -123,13 +163,16 @@ main () {
+ 			arg_debug=1
+ 			;;
+ 		--annotate)
++			test -n "$allow_split" || die "The '$opt' flag does not make sense with 'git subtree $arg_command'."
+ 			arg_split_annotate="$1"
+ 			shift
+ 			;;
+ 		--no-annotate)
++			test -n "$allow_split" || die "The '$opt' flag does not make sense with 'git subtree $arg_command'."
+ 			arg_split_annotate=
+ 			;;
+ 		-b)
++			test -n "$allow_split" || die "The '$opt' flag does not make sense with 'git subtree $arg_command'."
+ 			arg_split_branch="$1"
+ 			shift
+ 			;;
+@@ -138,6 +181,7 @@ main () {
+ 			shift
+ 			;;
+ 		-m)
++			test -n "$allow_addmerge" || die "The '$opt' flag does not make sense with 'git subtree $arg_command'."
+ 			arg_addmerge_message="$1"
+ 			shift
+ 			;;
+@@ -145,28 +189,34 @@ main () {
+ 			arg_prefix=
+ 			;;
+ 		--onto)
++			test -n "$allow_split" || die "The '$opt' flag does not make sense with 'git subtree $arg_command'."
+ 			arg_split_onto="$1"
+ 			shift
+ 			;;
+ 		--no-onto)
++			test -n "$allow_split" || die "The '$opt' flag does not make sense with 'git subtree $arg_command'."
+ 			arg_split_onto=
+ 			;;
+ 		--rejoin)
+-			arg_split_rejoin=1
++			test -n "$allow_split" || die "The '$opt' flag does not make sense with 'git subtree $arg_command'."
+ 			;;
+ 		--no-rejoin)
+-			arg_split_rejoin=
++			test -n "$allow_split" || die "The '$opt' flag does not make sense with 'git subtree $arg_command'."
+ 			;;
+ 		--ignore-joins)
++			test -n "$allow_split" || die "The '$opt' flag does not make sense with 'git subtree $arg_command'."
+ 			arg_split_ignore_joins=1
+ 			;;
+ 		--no-ignore-joins)
++			test -n "$allow_split" || die "The '$opt' flag does not make sense with 'git subtree $arg_command'."
+ 			arg_split_ignore_joins=
+ 			;;
+ 		--squash)
++			test -n "$allow_addmerge" || die "The '$opt' flag does not make sense with 'git subtree $arg_command'."
+ 			arg_addmerge_squash=1
+ 			;;
+ 		--no-squash)
++			test -n "$allow_addmerge" || die "The '$opt' flag does not make sense with 'git subtree $arg_command'."
+ 			arg_addmerge_squash=
+ 			;;
+ 		--)
+@@ -177,19 +227,8 @@ main () {
+ 			;;
+ 		esac
+ 	done
+-
+-	arg_command="$1"
+ 	shift
  
- OPTIONS FOR 'split'
- -------------------
-@@ -229,9 +225,8 @@ Unfortunately, using this option results in 'git log' showing an extra
- copy of every new commit that was created (the original, and the
- synthetic one).
- +
--If you do all your merges with '--squash', don't use '--rejoin' when you
--split, because you don't want the subproject's history to be part of
--your project anyway.
-+If you do all your merges with '--squash', make sure you also use
-+'--squash' when you 'split --rejoin'.
- 
- 
- EXAMPLE 1. 'add' command
+-	case "$arg_command" in
+-	add|merge|pull|split|push)
+-		:
+-		;;
+-	*)
+-		die "Unknown command '$arg_command'"
+-		;;
+-	esac
+-
+ 	if test -z "$arg_prefix"
+ 	then
+ 		die "You must provide the --prefix option."
 diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
-index ce6861c22d..2561e25f43 100755
+index d7ad6ffff0..4153b65321 100755
 --- a/contrib/subtree/t/t7900-subtree.sh
 +++ b/contrib/subtree/t/t7900-subtree.sh
-@@ -324,6 +324,62 @@ test_expect_success 'split sub dir/ with --rejoin and --message' '
+@@ -33,6 +33,12 @@ test_create_commit () (
+ 	git commit -m "$commit" || error "Could not commit"
+ )
+ 
++test_wrong_flag() {
++	test_must_fail "$@" >out 2>err &&
++	test_must_be_empty out &&
++	grep "flag does not make sense with" err
++}
++
+ last_commit_subject () {
+ 	git log --pretty=format:%s -1
+ }
+@@ -72,6 +78,22 @@ test_expect_success 'no pull from non-existent subtree' '
  	)
  '
  
-+test_expect_success 'split "sub dir"/ with --rejoin and --squash' '
++test_expect_success 'add rejects flags for split' '
 +	subtree_test_create_repo "$test_count" &&
 +	subtree_test_create_repo "$test_count/sub proj" &&
 +	test_create_commit "$test_count" main1 &&
@@ -257,7 +264,59 @@ index ce6861c22d..2561e25f43 100755
 +	(
 +		cd "$test_count" &&
 +		git fetch ./"sub proj" HEAD &&
-+		git subtree add --prefix="sub dir" --squash FETCH_HEAD
++		test_wrong_flag git subtree add --prefix="sub dir" --annotate=foo FETCH_HEAD &&
++		test_wrong_flag git subtree add --prefix="sub dir" --branch=foo FETCH_HEAD &&
++		test_wrong_flag git subtree add --prefix="sub dir" --ignore-joins FETCH_HEAD &&
++		test_wrong_flag git subtree add --prefix="sub dir" --onto=foo FETCH_HEAD &&
++		test_wrong_flag git subtree add --prefix="sub dir" --rejoin FETCH_HEAD
++	)
++'
++
+ test_expect_success 'add subproj as subtree into sub dir/ with --prefix' '
+ 	subtree_test_create_repo "$test_count" &&
+ 	subtree_test_create_repo "$test_count/sub proj" &&
+@@ -128,6 +150,28 @@ test_expect_success 'add subproj as subtree into sub dir/ with --squash and --pr
+ # Tests for 'git subtree merge'
+ #
+ 
++test_expect_success 'merge rejects flags for split' '
++	subtree_test_create_repo "$test_count" &&
++	subtree_test_create_repo "$test_count/sub proj" &&
++	test_create_commit "$test_count" main1 &&
++	test_create_commit "$test_count/sub proj" sub1 &&
++	(
++		cd "$test_count" &&
++		git fetch ./"sub proj" HEAD &&
++		git subtree add --prefix="sub dir" FETCH_HEAD
++	) &&
++	test_create_commit "$test_count/sub proj" sub2 &&
++	(
++		cd "$test_count" &&
++		git fetch ./"sub proj" HEAD &&
++		test_wrong_flag git subtree merge --prefix="sub dir" --annotate=foo FETCH_HEAD &&
++		test_wrong_flag git subtree merge --prefix="sub dir" --branch=foo FETCH_HEAD &&
++		test_wrong_flag git subtree merge --prefix="sub dir" --ignore-joins FETCH_HEAD &&
++		test_wrong_flag git subtree merge --prefix="sub dir" --onto=foo FETCH_HEAD &&
++		test_wrong_flag git subtree merge --prefix="sub dir" --rejoin FETCH_HEAD
++	)
++'
++
+ test_expect_success 'merge new subproj history into sub dir/ with --prefix' '
+ 	subtree_test_create_repo "$test_count" &&
+ 	subtree_test_create_repo "$test_count/sub proj" &&
+@@ -262,6 +306,30 @@ test_expect_success 'split requires path given by option --prefix must exist' '
+ 	)
+ '
+ 
++test_expect_success 'split rejects flags for add' '
++	subtree_test_create_repo "$test_count" &&
++	subtree_test_create_repo "$test_count/sub proj" &&
++	test_create_commit "$test_count" main1 &&
++	test_create_commit "$test_count/sub proj" sub1 &&
++	(
++		cd "$test_count" &&
++		git fetch ./"sub proj" HEAD &&
++		git subtree add --prefix="sub dir" FETCH_HEAD
 +	) &&
 +	test_create_commit "$test_count" "sub dir"/main-sub1 &&
 +	test_create_commit "$test_count" main2 &&
@@ -265,47 +324,72 @@ index ce6861c22d..2561e25f43 100755
 +	test_create_commit "$test_count" "sub dir"/main-sub2 &&
 +	(
 +		cd "$test_count" &&
-+		git subtree pull --prefix="sub dir" --squash ./"sub proj" HEAD &&
-+		MAIN=$(git rev-parse --verify HEAD) &&
-+		SUB=$(git -C "sub proj" rev-parse --verify HEAD) &&
-+
-+		SPLIT=$(git subtree split --prefix="sub dir" --annotate="*" --rejoin --squash) &&
-+
-+		test_must_fail git merge-base --is-ancestor $SUB HEAD &&
-+		test_must_fail git merge-base --is-ancestor $SPLIT HEAD &&
-+		git rev-list HEAD ^$MAIN >commit-list &&
-+		test_line_count = 2 commit-list &&
-+		test "$(git rev-parse --verify HEAD:)"           = "$(git rev-parse --verify $MAIN:)" &&
-+		test "$(git rev-parse --verify HEAD:"sub dir")"  = "$(git rev-parse --verify $SPLIT:)" &&
-+		test "$(git rev-parse --verify HEAD^1)"          = $MAIN &&
-+		test "$(git rev-parse --verify HEAD^2)"         != $SPLIT &&
-+		test "$(git rev-parse --verify HEAD^2:)"         = "$(git rev-parse --verify $SPLIT:)" &&
-+		test "$(last_commit_subject)" = "Split '\''sub dir/'\'' into commit '\''$SPLIT'\''"
++		git fetch ./"sub proj" HEAD &&
++		git subtree merge --prefix="sub dir" FETCH_HEAD &&
++		split_hash=$(git subtree split --prefix="sub dir" --annotate="*") &&
++		test_wrong_flag git subtree split --prefix="sub dir" --squash &&
++		test_wrong_flag git subtree split --prefix="sub dir" --message=foo
 +	)
 +'
 +
-+test_expect_success 'split then pull "sub dir"/ with --rejoin and --squash' '
-+	# 1. "add"
+ test_expect_success 'split sub dir/ with --rejoin' '
+ 	subtree_test_create_repo "$test_count" &&
+ 	subtree_test_create_repo "$test_count/sub proj" &&
+@@ -542,6 +610,26 @@ test_expect_success 'pull basic operation' '
+ 	)
+ '
+ 
++test_expect_success 'pull rejects flags for split' '
 +	subtree_test_create_repo "$test_count" &&
 +	subtree_test_create_repo "$test_count/sub proj" &&
 +	test_create_commit "$test_count" main1 &&
 +	test_create_commit "$test_count/sub proj" sub1 &&
-+	git -C "$test_count" subtree --prefix="sub dir" add --squash ./"sub proj" HEAD &&
-+
-+	# 2. commit from parent
-+	test_create_commit "$test_count" "sub dir"/main-sub1 &&
-+
-+	# 3. "split --rejoin --squash"
-+	git -C "$test_count" subtree --prefix="sub dir" split --rejoin --squash &&
-+
-+	# 4. "pull --squash"
++	(
++		cd "$test_count" &&
++		git fetch ./"sub proj" HEAD &&
++		git subtree add --prefix="sub dir" FETCH_HEAD
++	) &&
 +	test_create_commit "$test_count/sub proj" sub2 &&
-+	git -C "$test_count" subtree -d --prefix="sub dir" pull --squash ./"sub proj" HEAD &&
-+
-+	test_must_fail git merge-base HEAD FETCH_HEAD
++	(
++		test_must_fail git subtree pull --prefix="sub dir" --annotate=foo ./"sub proj" HEAD &&
++		test_must_fail git subtree pull --prefix="sub dir" --branch=foo ./"sub proj" HEAD &&
++		test_must_fail git subtree pull --prefix="sub dir" --ignore-joins ./"sub proj" HEAD &&
++		test_must_fail git subtree pull --prefix="sub dir" --onto=foo ./"sub proj" HEAD &&
++		test_must_fail git subtree pull --prefix="sub dir" --rejoin ./"sub proj" HEAD
++	)
 +'
 +
- test_expect_success 'split "sub dir"/ with --branch' '
+ #
+ # Tests for 'git subtree push'
+ #
+@@ -584,6 +672,29 @@ test_expect_success 'push requires path given by option --prefix must exist' '
+ 	)
+ '
+ 
++test_expect_success 'push rejects flags for add' '
++	subtree_test_create_repo "$test_count" &&
++	subtree_test_create_repo "$test_count/sub proj" &&
++	test_create_commit "$test_count" main1 &&
++	test_create_commit "$test_count/sub proj" sub1 &&
++	(
++		cd "$test_count" &&
++		git fetch ./"sub proj" HEAD &&
++		git subtree add --prefix="sub dir" FETCH_HEAD
++	) &&
++	test_create_commit "$test_count" "sub dir"/main-sub1 &&
++	test_create_commit "$test_count" main2 &&
++	test_create_commit "$test_count/sub proj" sub2 &&
++	test_create_commit "$test_count" "sub dir"/main-sub2 &&
++	(
++		cd "$test_count" &&
++		git fetch ./"sub proj" HEAD &&
++		git subtree merge --prefix="sub dir" FETCH_HEAD &&
++		test_wrong_flag git subtree split --prefix="sub dir" --squash ./"sub proj" from-mainline &&
++		test_wrong_flag git subtree split --prefix="sub dir" --message=foo ./"sub proj" from-mainline
++	)
++'
++
+ test_expect_success 'push basic operation' '
  	subtree_test_create_repo "$test_count" &&
  	subtree_test_create_repo "$test_count/sub proj" &&
 -- 
