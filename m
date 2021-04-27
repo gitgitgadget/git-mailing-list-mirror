@@ -6,80 +6,64 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D50DC433ED
-	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 06:49:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 806EEC433ED
+	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 06:52:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F031261078
-	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 06:49:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4672761078
+	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 06:52:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230050AbhD0GuZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Apr 2021 02:50:25 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56353 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229923AbhD0GuZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Apr 2021 02:50:25 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3FF82C0487;
-        Tue, 27 Apr 2021 02:49:42 -0400 (EDT)
+        id S230084AbhD0Gwx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Apr 2021 02:52:53 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:50990 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229923AbhD0Gww (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Apr 2021 02:52:52 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B083811EB25;
+        Tue, 27 Apr 2021 02:52:09 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Wod2lUKOzLgxMIMU/h4vUBhUWwU19+2dgk+jpz
-        qTF7I=; b=AWvv1q3C1Hbq0ivOj5ZKrQQPRzO/PvCEK7Tu620H2uE7F7iIglnBbH
-        9n6pqtVk5aE/nupUC2LrjBSxgwYJN1MgOtRekPwAAgi/4Zv6JaFQhbxSoRc2mLL8
-        rpG/jA/Qm56uvlNhLaYeHnt8aHRlRgg8dgDjuNlN7Cysyhc3Ec/zA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2635EC0486;
-        Tue, 27 Apr 2021 02:49:42 -0400 (EDT)
+        :content-type; s=sasl; bh=RlR5Ep9MUqzkPL94+av7CcCrnJ3XcyjdSOvB3M
+        0RU1M=; b=AYm/5ipC6J4+ECOdP1aQTYns40lNxxuvfiJzpR+hAX2GpfjqZSzSHp
+        D6JG87W2SYIWH2VSisfhdx3Ejxc9+x9t0lrOj2EZ2ue8fJ8WJYY3rBPRgNCKruP1
+        GGl/H/JYPUk4AqyG0+CgE3eXmOywB0oKDp49STYnz47TYnTe/l4Kg=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9D83F11EB24;
+        Tue, 27 Apr 2021 02:52:09 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 93347C0485;
-        Tue, 27 Apr 2021 02:49:41 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id CFBCB11EB23;
+        Tue, 27 Apr 2021 02:52:06 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     ZheNing Hu <adlternative@gmail.com>
-Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v11 0/2] [GSOC] trailer: add new .cmd config option
-References: <pull.913.v10.git.1618562875.gitgitgadget@gmail.com>
-        <pull.913.v11.git.1618672417.gitgitgadget@gmail.com>
-        <xmqq5z0kbl8x.fsf@gitster.g>
-        <CAOLTT8RKCV+Kpya-_AVjuVGWzs1WtGS8n_+sD0FVzwEpeXGwCw@mail.gmail.com>
-        <xmqqfszk1ot6.fsf@gitster.g>
-        <CAOLTT8QUA+m1W6-v=ZA205SZo8G5GBKMzJHBzU8DuQSTKiPUBw@mail.gmail.com>
-        <xmqq1rb3xl3t.fsf@gitster.g>
-        <CAOLTT8TciU7rvmEgXGMuVCMDN6HjMadL-L=Q9kej6=j6ktJHwA@mail.gmail.com>
-Date:   Tue, 27 Apr 2021 15:49:40 +0900
-In-Reply-To: <CAOLTT8TciU7rvmEgXGMuVCMDN6HjMadL-L=Q9kej6=j6ktJHwA@mail.gmail.com>
-        (ZheNing Hu's message of "Thu, 22 Apr 2021 17:20:54 +0800")
-Message-ID: <xmqq35vcfchn.fsf@gitster.g>
+To:     Han-Wen Nienhuys <hanwen@google.com>
+Cc:     Jeff King <peff@peff.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git <git@vger.kernel.org>
+Subject: Re: reflog existence & reftable
+References: <CAFQ2z_Ps3YxycA+NJ9VKt_PEXb+m83JdNB7ujzWw1fTPKyZ=fg@mail.gmail.com>
+        <87im4f3l62.fsf@evledraar.gmail.com> <xmqqim4fzier.fsf@gitster.g>
+        <CAFQ2z_OGv3qNp9jaeuMij5gqv1MoOeb73zH9mOvikLs8dWvmmg@mail.gmail.com>
+        <YILUs3T4oM78ZcW2@coredump.intra.peff.net>
+        <CAFQ2z_OEB_jnL-G=GfypMiLLjE3gwp07ZMo3uF5aGkp3o6Yb9A@mail.gmail.com>
+Date:   Tue, 27 Apr 2021 15:52:05 +0900
+In-Reply-To: <CAFQ2z_OEB_jnL-G=GfypMiLLjE3gwp07ZMo3uF5aGkp3o6Yb9A@mail.gmail.com>
+        (Han-Wen Nienhuys's message of "Mon, 26 Apr 2021 19:33:14 +0200")
+Message-ID: <xmqqy2d4dxt6.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: BE2CC87A-A724-11EB-AF7C-D152C8D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 14BEF23A-A725-11EB-A743-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-ZheNing Hu <adlternative@gmail.com> writes:
+Han-Wen Nienhuys <hanwen@google.com> writes:
 
-> Now I think that we should keep those trailers which ask for a
-> "name <email>" pair, like "Helped-by", "Signed-off-by", when we
-> provide a "help:","sign:" in command line, This allows the user to
-> dynamically fill in the "name <email>" pair of other people in the
-> commit message later. It is worthwhile for users to exit with exit(0).
->
-> But those dispensable things like "Commit-Count", It must depend
-> on a person's statistics in the git repository. So "cnt:" is meaningless,
-> users' script can let it exit(1).
+> Thanks. Does that count as consensus? Junio?
 
-Perhaps, but at this point what you think (or what I think) does not
-matter.  That was the whole point of letting .cmd script signal Git
-if the result from the invocation should be kept or discarded with
-its exit status.  What would be sufficient here for us to do is to
-agree that it would be good to have a minimal set (perhaps a pair)
-of examples to demonstrate that the script can choose to keep or
-discard a meaningless trailer entry with its exit status.
+Sounds like it, even though I have been absent for most of the
+period ;-)
