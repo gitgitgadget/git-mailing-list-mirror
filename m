@@ -2,208 +2,169 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-14.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5ED2FC433B4
-	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 15:44:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B4FA8C433B4
+	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 15:45:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 21098611F2
-	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 15:44:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 82EE6613C9
+	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 15:45:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236545AbhD0Pon (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Apr 2021 11:44:43 -0400
-Received: from cloud.peff.net ([104.130.231.41]:36810 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234932AbhD0Pom (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Apr 2021 11:44:42 -0400
-Received: (qmail 3284 invoked by uid 109); 27 Apr 2021 15:43:59 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 27 Apr 2021 15:43:59 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19812 invoked by uid 111); 27 Apr 2021 15:43:58 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 27 Apr 2021 11:43:58 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 27 Apr 2021 11:43:58 -0400
-From:   Jeff King <peff@peff.net>
-To:     David Emett <dave@sp4m.net>
-Cc:     git@vger.kernel.org
-Subject: [PATCH] prune: save reachable-from-recent objects with bitmaps
-Message-ID: <YIgxPtDmr9sYj0ft@coredump.intra.peff.net>
-References: <CAJ-dYSOVx0egnyxJb6ZjgWvEDR=19QPgc70JQ7cXUjUPZ1XDiQ@mail.gmail.com>
+        id S237798AbhD0Pqk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Apr 2021 11:46:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43704 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234932AbhD0Pqj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Apr 2021 11:46:39 -0400
+Received: from mail-oo1-xc31.google.com (mail-oo1-xc31.google.com [IPv6:2607:f8b0:4864:20::c31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DD4FC061574
+        for <git@vger.kernel.org>; Tue, 27 Apr 2021 08:45:55 -0700 (PDT)
+Received: by mail-oo1-xc31.google.com with SMTP id i3-20020a4ad3830000b02901ef20f8cae8so5850889oos.11
+        for <git@vger.kernel.org>; Tue, 27 Apr 2021 08:45:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=MzdMjsAXiUF12LwGlKIimMGnjs2JhZmty6ePzzNwK80=;
+        b=QEwFlMsowbX1HeDqJtiSsVCuPkZQU7bCgYPvhdzuZ0PVai7zOHNR/Gu6pcIEuxHQ0j
+         PEKUi82yWcUqN4R6Y3bR3KTGfK2RIYx9qQpZxlENxqomhB0n86N2AysEtOr0qjJ6Mpt3
+         mSJGocp3g53250/fgnRzwLtWWIUhEcM4FzmrmqD+CjwawR8kj5flmsxG5lU5ni+ncWfP
+         4z4OX4IOnyrc7YMk0Jg3NvyTnHTuu1qVtlZ/XXgcGYsapaoRJ7NeXPwpGFPC1dRRh1T4
+         Mymx65BrgcmZN2CEbf6mlxDGOzlY8MXzOtUg1DtLH2br47gT+/922OFclasYnMHYlP/E
+         c0dQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=MzdMjsAXiUF12LwGlKIimMGnjs2JhZmty6ePzzNwK80=;
+        b=WeKPogkxmrY/U499k6RNaJG+1qwPJU+PGiU6mEx1PLpQC4qc0UYUnEw1B69i744jWf
+         IbVN8lJqe5hLNfnHJkNfU7jYFHHtcB12zy8H/wTsimH3hh3GKUDgAFI2n8tAViDoj6yE
+         s3Ps/XKreKlY7Gr/BtbCmeyJjfIE4v0bER3E0u7C9dVvNNXh5Q9L6UOZtXoKKiPDPLHb
+         6lJktIzaDSXD4SWH7cHSJycLBMtfo7r25cqRt8Y4MjFdSlGCCNWvEQkra64/3LAPMV3L
+         Vqk71GTQeeqUD7AcK8LS5e5n/uoAKK4XzIvR5MO/nO07IXkpwIcJLKkzch3dHUIZ/mwU
+         HmhA==
+X-Gm-Message-State: AOAM5302YHSrhj0z4m5LH031UWUkXuJGDGY6hCsJvoqZ36RF6O/0Wted
+        WisZ0QXlaMwUPmM1LnCNfsE=
+X-Google-Smtp-Source: ABdhPJwXO/j3DsvbtpIoHe8z8RQw6x2q96ya06G6jKsC6ERQKUOkzdprAYuokdb5vIZ6Fvp2+mpaMw==
+X-Received: by 2002:a4a:4551:: with SMTP id y78mr18340700ooa.33.1619538354372;
+        Tue, 27 Apr 2021 08:45:54 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:3839:9ece:547d:49e5? ([2600:1700:e72:80a0:3839:9ece:547d:49e5])
+        by smtp.gmail.com with ESMTPSA id y11sm55277oiv.19.2021.04.27.08.45.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 27 Apr 2021 08:45:54 -0700 (PDT)
+Subject: Re: [PATCH 22/23] p7519: add fsmonitor--daemon
+To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Jeff Hostetler <jeffhost@microsoft.com>
+References: <pull.923.git.1617291666.gitgitgadget@gmail.com>
+ <da5094e52032e28337cfcecd421dedb560952869.1617291666.git.gitgitgadget@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <e44ea355-5e58-bbf4-12a3-7653278da2d6@gmail.com>
+Date:   Tue, 27 Apr 2021 11:45:52 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.0
 MIME-Version: 1.0
+In-Reply-To: <da5094e52032e28337cfcecd421dedb560952869.1617291666.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAJ-dYSOVx0egnyxJb6ZjgWvEDR=19QPgc70JQ7cXUjUPZ1XDiQ@mail.gmail.com>
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 27, 2021 at 11:45:01AM +0100, David Emett wrote:
+On 4/1/2021 11:41 AM, Jeff Hostetler via GitGitGadget wrote:
+> From: Jeff Hostetler <jeffhost@microsoft.com>
+> 
+> Repeat all of the fsmonitor perf tests using `git fsmonitor--daemon` and
+> the "Simple IPC" interface.
 
-> I assume (2) is not intentional, given that "git gc --help" explicitly says
-> "Any object with modification time newer than the --prune date is kept, along
-> with everything reachable from it." Is it safe to just run the mark_recent
-> block after the bitmap_git block? Could add_unseen_recent_objects_to_traversal
-> just be called at the start of the bitmap_git block if mark_recent?
+It would be nice to see some numbers for how this test performs
+on some standard Git repositories across Windows and macOS.
 
-Here's a fix. Thanks very much for reporting.
+> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+> ---
+>  t/perf/p7519-fsmonitor.sh | 37 +++++++++++++++++++++++++++++++++++--
+>  1 file changed, 35 insertions(+), 2 deletions(-)
+> 
+> diff --git a/t/perf/p7519-fsmonitor.sh b/t/perf/p7519-fsmonitor.sh
+> index 5eb5044a103c..2d018bc7d589 100755
+> --- a/t/perf/p7519-fsmonitor.sh
+> +++ b/t/perf/p7519-fsmonitor.sh
+> @@ -24,7 +24,8 @@ test_description="Test core.fsmonitor"
+>  # GIT_PERF_7519_SPLIT_INDEX: used to configure core.splitIndex
+>  # GIT_PERF_7519_FSMONITOR: used to configure core.fsMonitor. May be an
+>  #   absolute path to an integration. May be a space delimited list of
+> -#   absolute paths to integrations.
+> +#   absolute paths to integrations.  (This hook or list of hooks does not
+> +#   include the built-in fsmonitor--daemon.)
+>  #
+>  # The big win for using fsmonitor is the elimination of the need to scan the
+>  # working directory looking for changed and untracked files. If the file
+> @@ -135,10 +136,16 @@ test_expect_success "one time repo setup" '
+>  
+>  setup_for_fsmonitor() {
+>  	# set INTEGRATION_SCRIPT depending on the environment
+> -	if test -n "$INTEGRATION_PATH"
+> +	if test -n "$USE_FSMONITOR_DAEMON"
+>  	then
+> +		git config core.useBuiltinFSMonitor true &&
+> +		INTEGRATION_SCRIPT=false
+> +	elif test -n "$INTEGRATION_PATH"
+> +	then
+> +		git config core.useBuiltinFSMonitor false &&
+>  		INTEGRATION_SCRIPT="$INTEGRATION_PATH"
+>  	else
+> +		git config core.useBuiltinFSMonitor false &&
+>  		#
+>  		# Choose integration script based on existence of Watchman.
+>  		# Fall back to an empty integration script.
+> @@ -285,4 +292,30 @@ test_expect_success "setup without fsmonitor" '
+>  test_fsmonitor_suite
+>  trace_stop
+>  
+> +#
+> +# Run a full set of perf tests using the built-in fsmonitor--daemon.
+> +# It does not use the Hook API, so it has a different setup.
+> +# Explicitly start the daemon here and before we start client commands
+> +# so that we can later add custom tracing.
+> +#
+> +
+> +test_lazy_prereq HAVE_FSMONITOR_DAEMON '
+> +	git version --build-options | grep "feature:" | grep "fsmonitor--daemon"
+> +'
 
-I was a little surprised you saw this with "git gc", as when I tried
-testing with that, I found that the "git repack" run before "git prune"
-works around the bug (see the discussion of t6501 below). But I think
-perhaps it is just that "gc --auto" is more willing to do a "repack -d"
-sometimes, rather than a full "repack -A". At any rate, I was able to
-easily reproduce it for the tests with just git-prune.
+Here you do create the prereq. Let's put this into t/test-lib.sh
+or t/test-lib-functions.sh, whichever is more appropriate.
 
--- >8 --
-Subject: prune: save reachable-from-recent objects with bitmaps
+> +
+> +if test_have_prereq HAVE_FSMONITOR_DAEMON
+> +then
+> +	USE_FSMONITOR_DAEMON=t
+> +
+> +	trace_start fsmonitor--daemon--server
+> +	git fsmonitor--daemon --start
+> +
+> +	trace_start fsmonitor--daemon--client
+> +	test_expect_success "setup for fsmonitor--daemon" 'setup_for_fsmonitor'
 
-We pass our prune expiration to mark_reachable_objects(), which will
-traverse not only the reachable objects, but consider any recent ones as
-tips for reachability; see d3038d22f9 (prune: keep objects reachable
-from recent objects, 2014-10-15) for details.
+Maybe this is copied from the rest of the file, but we should probably
+use the standard layout for tests here:
 
-However, this interacts badly with the bitmap code path added in
-fde67d6896 (prune: use bitmaps for reachability traversal, 2019-02-13).
-If we hit the bitmap-optimized path, we return immediately to avoid the
-regular traversal, accidentally skipping the "also traverse recent"
-code.
+	test_expect_success 'setup for fsmonitor--daemon' '
+		setup_for_fsmonitor
+	'
 
-Instead, we should do an if-else for the bitmap versus regular
-traversal, and then follow up with the "recent" traversal in either
-case. This reuses the "rev_info" for a bitmap and then a regular
-traversal, but that should work OK (the bitmap code clears the pending
-array in the usual way, just like a regular traversal would).
+> +	test_fsmonitor_suite
+> +
+> +	git fsmonitor--daemon --stop
+> +	trace_stop
+> +fi
+> +
 
-Note that I dropped the comment above the regular traversal here.  It
-has little explanatory value, and makes the if-else logic much harder to
-read.
-
-Here are a few variants that I rejected:
-
-  - it seems like both the reachability and recent traversals could be
-    done in a single traversal. This was rejected by d3038d22f9 (prune:
-    keep objects reachable from recent objects, 2014-10-15), though the
-    balance may be different when using bitmaps. However, there's a
-    subtle correctness issue, too: we use revs->ignore_missing_links for
-    the recent traversal, but not the reachability one.
-
-  - we could try using bitmaps for the recent traversal, too, which
-    could possibly improve performance. But it would require some fixes
-    in the bitmap code, which uses ignore_missing_links for its own
-    purposes. Plus it would probably not help all that much in practice.
-    We use the reachable tips to generate bitmaps, so those objects are
-    likely not covered by bitmaps (unless they just became unreachable).
-    And in general, we expect the set of unreachable objects to be much
-    smaller anyway, so there's less to gain.
-
-The test in t5304 detects the bug and confirms the fix.
-
-I also beefed up the tests in t6501, which covers the mtime-checking
-code more thoroughly, to handle the bitmap case (in addition to just
-"loose" and "packed" cases). Interestingly, this test doesn't actually
-detect the bug, because it is running "git gc", and not "prune"
-directly. And "gc" will call "repack" first, which does not suffer the
-same bug. So the old-but-reachable-from-recent objects get scooped up
-into the new pack along with the actually-recent objects, which gives
-both a recent mtime. But it seemed prudent to get more coverage of the
-bitmap case for related code.
-
-Reported-by: David Emett <dave@sp4m.net>
-Signed-off-by: Jeff King <peff@peff.net>
----
- reachable.c                | 13 ++++---------
- t/t5304-prune.sh           | 13 +++++++++++++
- t/t6501-freshen-objects.sh | 21 +++++++++++++++------
- 3 files changed, 32 insertions(+), 15 deletions(-)
-
-diff --git a/reachable.c b/reachable.c
-index 77a60c70a5..a088717eb5 100644
---- a/reachable.c
-+++ b/reachable.c
-@@ -227,17 +227,12 @@ void mark_reachable_objects(struct rev_info *revs, int mark_reflog,
- 	if (bitmap_git) {
- 		traverse_bitmap_commit_list(bitmap_git, revs, mark_object_seen);
- 		free_bitmap_index(bitmap_git);
--		return;
-+	} else {
-+		if (prepare_revision_walk(revs))
-+			die("revision walk setup failed");
-+		traverse_commit_list(revs, mark_commit, mark_object, &cp);
- 	}
- 
--	/*
--	 * Set up the revision walk - this will move all commits
--	 * from the pending list to the commit walking list.
--	 */
--	if (prepare_revision_walk(revs))
--		die("revision walk setup failed");
--	traverse_commit_list(revs, mark_commit, mark_object, &cp);
--
- 	if (mark_recent) {
- 		revs->ignore_missing_links = 1;
- 		if (add_unseen_recent_objects_to_traversal(revs, mark_recent))
-diff --git a/t/t5304-prune.sh b/t/t5304-prune.sh
-index b447ce56a9..20fcc2da1f 100755
---- a/t/t5304-prune.sh
-+++ b/t/t5304-prune.sh
-@@ -352,4 +352,17 @@ test_expect_success 'trivial prune with bitmaps enabled' '
- 	test_must_fail git cat-file -e $blob
- '
- 
-+test_expect_success 'old reachable-from-recent retained with bitmaps' '
-+	git repack -adb &&
-+	to_drop=$(echo bitmap-from-recent-1 | git hash-object -w --stdin) &&
-+	test-tool chmtime -86400 .git/objects/$(test_oid_to_path $to_drop) &&
-+	to_save=$(echo bitmap-from-recent-2 | git hash-object -w --stdin) &&
-+	test-tool chmtime -86400 .git/objects/$(test_oid_to_path $to_save) &&
-+	tree=$(printf "100644 blob $to_save\tfile\n" | git mktree) &&
-+	git prune --expire=12.hours.ago &&
-+	git cat-file -e $tree &&
-+	git cat-file -e $to_save &&
-+	test_must_fail git cat-file -e $to_drop
-+'
-+
- test_done
-diff --git a/t/t6501-freshen-objects.sh b/t/t6501-freshen-objects.sh
-index 75210f012b..de7742cc51 100755
---- a/t/t6501-freshen-objects.sh
-+++ b/t/t6501-freshen-objects.sh
-@@ -43,15 +43,24 @@ commit () {
- }
- 
- maybe_repack () {
--	if test -n "$repack"; then
-+	case "$title" in
-+	loose)
-+		: skip repack
-+		;;
-+	repack)
- 		git repack -ad
--	fi
-+		;;
-+	bitmap)
-+		git repack -adb
-+		;;
-+	*)
-+		echo >&2 "unknown test type in maybe_repack"
-+		return 1
-+		;;
-+	esac
- }
- 
--for repack in '' true; do
--	title=${repack:+repack}
--	title=${title:-loose}
--
-+for title in loose repack bitmap; do
- 	test_expect_success "make repo completely empty ($title)" '
- 		rm -rf .git &&
- 		git init
--- 
-2.31.1.789.g4530770a26
-
+Thanks,
+-Stolee
