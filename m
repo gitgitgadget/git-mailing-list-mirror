@@ -2,101 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 76E4AC433ED
-	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 10:40:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 376F7C433ED
+	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 10:45:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1CC2E61168
-	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 10:40:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 07D53613B2
+	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 10:45:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235613AbhD0Kkq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Apr 2021 06:40:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59802 "EHLO
+        id S235520AbhD0KqA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Apr 2021 06:46:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238482AbhD0KjT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Apr 2021 06:39:19 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84ED6C061756
-        for <git@vger.kernel.org>; Tue, 27 Apr 2021 03:38:36 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id o21-20020a1c4d150000b029012e52898006so6585365wmh.0
-        for <git@vger.kernel.org>; Tue, 27 Apr 2021 03:38:36 -0700 (PDT)
+        with ESMTP id S235709AbhD0Kp5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Apr 2021 06:45:57 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B09BBC061574
+        for <git@vger.kernel.org>; Tue, 27 Apr 2021 03:45:13 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id s15so69398660edd.4
+        for <git@vger.kernel.org>; Tue, 27 Apr 2021 03:45:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=lrfJTjST1EpqU9jSSQBOMP4Vy8yAsknMgVSKzJ8+zl8=;
-        b=chGNvCLuiCQFbr7vYkPlPUO0qMdjZzLyJi0VKkC8kzgdRyniUgUetBk/Nt1wjaBs8z
-         uKghiRwmeK32nuIwD/UhWV07LzcBIb+uXLF5Ko9pRZ6ja4MEH7J/kfASBdEFvtQah9hV
-         p3OwV9n1UZEo1ddKKl7/2X4e/cyeMvYP84kKi8KLaIhC7L5Nl+oRKU5RfawQZPxfYGjG
-         RBXd7J08KRZPxhehbx9YNSay6tA8bqFWIgWHLS5RV8sMa13vpr91xeghfD0sk9sKePlS
-         iOhLEh8qx42v1tok0EqCptWfyJjyapUcJx4oz3bmeYhYxiKfvo5EYT70pVGWBjSYVLO8
-         9EhQ==
+        d=sp4m.net; s=google;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=DKzlsaZoKE7l92k8PlqyRDNvEZNB8u9Lq/Q38lji0NQ=;
+        b=avTUZqQhT0mklB/5o0XV2usPL4DaqNzZsZV5HvavxDTumEY5T/Y213jqKZwzKtEe6P
+         wiA+2ZU/EUsIVXSOqNUa8eNMBimP54J4Y0QY0B9k1yW96yRrtsTpCbbNWmS6inok2EuH
+         MfP7S9UUPtSe17R1PJ94pssURoETKH7spkaxI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=lrfJTjST1EpqU9jSSQBOMP4Vy8yAsknMgVSKzJ8+zl8=;
-        b=QZJ9RFvqvUSJnwid+yNfMoteBkWM5p7G3qbshka7Xk9eCbON+BdwP3YonlACfabOdP
-         2Tug53uPsLwOnZxV8Ae66lhd828n9gk3HEyHygKmZFgE3YtCJUUZZdf4Nh9LqoGi6v8V
-         ly/O+oxcjS1Cx6IHqkWy5J1Y0UFbkZKUXfP1aFee2NTFwd0NVN6L1MqOJRHT6oRZyN6r
-         56615Sn09mOvuurFtkkwmIEojBleuDN+m2Hw9AWgwlM7Gdvky6NIecOMhgYLrL09LIeZ
-         6g8ZLPhKkuaLfzX9yX3GRmgK3tOurKAvMsWTwmV1AVBgqUfNjEXW1zvFpO9MT9of61uK
-         o7wg==
-X-Gm-Message-State: AOAM532zP20EpLjG9KDqjT/XqQSL7jV9SaWCOkaFl2pZ3qxDYRt0vC08
-        OTrxPwRBrvzewhUxBCs3agM7j8l5RT4=
-X-Google-Smtp-Source: ABdhPJxk0E1TbEfJUtODZp0qD7rNmwwoOzVnmRRY3I0SRGQi9o/Y35jVJJBQHE2FyTV6XgXGg2LgQw==
-X-Received: by 2002:a05:600c:3544:: with SMTP id i4mr23544907wmq.38.1619519915398;
-        Tue, 27 Apr 2021 03:38:35 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i17sm3412589wrn.87.2021.04.27.03.38.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Apr 2021 03:38:35 -0700 (PDT)
-Message-Id: <a33cdfda74ff55fbc8242d3486e1fd5a26ad4c00.1619519903.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1008.v2.git.git.1619519903.gitgitgadget@gmail.com>
-References: <pull.1008.git.git.1618829583.gitgitgadget@gmail.com>
-        <pull.1008.v2.git.git.1619519903.gitgitgadget@gmail.com>
-From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 27 Apr 2021 10:38:21 +0000
-Subject: [PATCH v2 20/21] t4202: mark bogus head hash test with REFFILES
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=DKzlsaZoKE7l92k8PlqyRDNvEZNB8u9Lq/Q38lji0NQ=;
+        b=MZ4ftmJJNxAvpP+bktn9ZJPdjP8K+7pxR7knfYpabP3VMpr4twfukDmVXe0onVu3jr
+         8c9V3clVXnO0WwFLikWHfjk+2Eo79XtsVvvzMwaGlJxO0FZWpF3+6oN0RzaGQRys0lRI
+         JK6TBh2Fgsjq3SS2+XXPgJuXBuhf7ACqIx9i/Y6aaSWgD+bkTcmuiBrG0gsmCgNh6UwO
+         ki0zkmcAqLEkgTgdX/EDDEWCTvlY0trAhL+cyyn6juokRRwfSK89yp3Eozc1E+8D5lYs
+         HPpCN9ssklxWh6EoWTJq9afB//AyfJ43goOGF1egDpwdY4/SsmHU93CiNmGy2OFIIfDv
+         vi+Q==
+X-Gm-Message-State: AOAM533Kufym2xE+BYdXtO1/shjXUyVyOhL/caJDYzlbxPFeHwwzs4Lu
+        wra/Z6riA8oCb13dluA66X7ONogSyFg6Cy4TIQH8IgIxD9mQ9yrq
+X-Google-Smtp-Source: ABdhPJzjFR46tTf1vH8NAR8TDwf5c5LMRlzVYSV4x+gBs8UcgnrgZKi+shRnOUx6ejWMExCRPUKJdSKVmcAiwRxI84Y=
+X-Received: by 2002:a05:6402:5107:: with SMTP id m7mr3483553edd.75.1619520312198;
+ Tue, 27 Apr 2021 03:45:12 -0700 (PDT)
 MIME-Version: 1.0
+From:   David Emett <dave@sp4m.net>
+Date:   Tue, 27 Apr 2021 11:45:01 +0100
+Message-ID: <CAJ-dYSOVx0egnyxJb6ZjgWvEDR=19QPgc70JQ7cXUjUPZ1XDiQ@mail.gmail.com>
+Subject: Two issues with mark_reachable_objects
 To:     git@vger.kernel.org
-Cc:     Han-Wen Nienhuys <hanwen@google.com>,
-        Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Han-Wen Nienhuys <hanwen@google.com>
+Hi all,
 
-In reftable, hashes are correctly formed by design
+I ran into an issue yesterday with a script that effectively does this:
 
-Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
----
- t/t4202-log.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+    set -e
+    git fetch origin refs/blah/blah
+    git checkout FETCH_HEAD
 
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index a8c5a00d012d..3f969b01508c 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -1834,7 +1834,7 @@ test_expect_success 'log --graph --no-walk is forbidden' '
- 	test_must_fail git log --graph --no-walk
- '
- 
--test_expect_success 'log diagnoses bogus HEAD hash' '
-+test_expect_success REFFILES 'log diagnoses bogus HEAD hash' '
- 	git init empty &&
- 	test_must_fail git -C empty log 2>stderr &&
- 	test_i18ngrep does.not.have.any.commits stderr &&
--- 
-gitgitgadget
+The checkout failed a few times with a "fatal: unable to read tree" error.
 
+I noticed that this only happened when the fetch triggered an automatic GC at
+the end. After a bit of digging I discovered two separate issues:
+
+1) It seems that FETCH_HEAD is not considered a root by mark_reachable_objects.
+
+2) If the bitmap_git branch in mark_reachable_objects is taken, the mark_recent
+   argument is ignored. This doesn't _completely_ break "git prune"'s --expire
+   option, as it turns out there is another explicit mtime check in
+   prune_object (prune.c). If that check passes this is not propagated to
+   referenced objects though. So even if a dangling commit is recent, a prune
+   can discard old objects it references.
+
+(1) has been discussed before on this mailing list [1], but it doesn't look
+like there was a conclusion.
+
+I assume (2) is not intentional, given that "git gc --help" explicitly says
+"Any object with modification time newer than the --prune date is kept, along
+with everything reachable from it." Is it safe to just run the mark_recent
+block after the bitmap_git block? Could add_unseen_recent_objects_to_traversal
+just be called at the start of the bitmap_git block if mark_recent?
+
+[1] https://lore.kernel.org/git/20160708025948.GA3226@x/
