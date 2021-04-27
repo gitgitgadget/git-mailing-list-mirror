@@ -2,165 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73FEAC433ED
-	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 19:23:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E7CF4C433ED
+	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 19:29:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 54E7C613F4
-	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 19:23:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CC02261153
+	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 19:29:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236917AbhD0TYM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Apr 2021 15:24:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35488 "EHLO
+        id S238438AbhD0T3y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Apr 2021 15:29:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235563AbhD0TYL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Apr 2021 15:24:11 -0400
-Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49673C061574
-        for <git@vger.kernel.org>; Tue, 27 Apr 2021 12:23:26 -0700 (PDT)
-Received: by mail-qk1-x736.google.com with SMTP id v23so9121546qkj.13
-        for <git@vger.kernel.org>; Tue, 27 Apr 2021 12:23:26 -0700 (PDT)
+        with ESMTP id S236459AbhD0T3y (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Apr 2021 15:29:54 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CEC8C061574
+        for <git@vger.kernel.org>; Tue, 27 Apr 2021 12:29:10 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id mu3so32244ejc.6
+        for <git@vger.kernel.org>; Tue, 27 Apr 2021 12:29:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dinwoodie.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=caI3ele0eCgQN7hBeB5mgsAvnmH+EqgDxX+LKgQgcck=;
-        b=QEFBppwhU9b8FIZSXgHbDp6QH+QFPSgW62CmKoJJB2Mo9cD8NitGRCCmkIRbwq2OaZ
-         Q7hU14Cx1t7ZQQzjjpwenrfSdmS2V5gGDnuZsAzSeKibkoUbdHtm8h2GQ2B1cLhX2OMy
-         ctFf0WuROpQ8YN+mO7y1H7cHjDn+9dS0wAyKQ=
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=uyi0PWzSVCsw1dHASrjzKOwkPo9Qan5oFffs3oUAqwY=;
+        b=ljO24UUg1QYOwkYqNPR/rZd1UmGCHqEhfcwLcnjqkmDtbCF29piGp8BnwRF3ALmO0d
+         RJn5TJm+09e/mPzgs4TrIRO7m7FAeGrIXfvkXR6PWWejYIpfuxyYpPllwIp076RCx/+D
+         WkQSSyvmqYFAcTx4iI00F//MA5ZwNsYclcBADKuhtd8YNQB9Y+W4GGBTemjcZCPpnt3y
+         IWHkuRN4QH501T729jbbfOYuwN3Rr75SQ8KqP3FXV0dbgdtDEN7W/GnRzyzT0iGL/2iN
+         sx3JDD/cLnCZL91IcW45f5zj70t/Sp6IBjmOHSSfARwGfiZAhTsB2NH0eHDDtkVEiYgM
+         kRHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=caI3ele0eCgQN7hBeB5mgsAvnmH+EqgDxX+LKgQgcck=;
-        b=Pc2xTGDywHbhUKib4rKZZekw/UDLAbktZ/V6m+suvVRe2jq1SXuJ1htyuPmwLxXWqs
-         yViNxxygNpcM12Il1ogy/1y3uJJHC271RLPscPFLoz2eLAG67Tro4gx8w50lL+gjO9Zj
-         7tfGPzFayOde5nOHwNdgAQQ1mc1c6Wad2h9/uqEUuuyMVuWwv8GcR/88jvdNSJhHcd/F
-         7gBeyICMuYDh9+0Rk+uZyHsWlVHxxVf9p6mydaOB5eXgBV8ewpNPDGmWcZ/1whKkL93b
-         MIkgTJlppfIkJ/Y6J4DKfKYagxJo4uDqFI3Tyava/RWKBg9Z3xtnALzar/UFaZFRDZjZ
-         oo/w==
-X-Gm-Message-State: AOAM531u15Caru14mInlwkeOlYPT1CnGrfqcR2KiPBlyJ8zJDaVU7jnq
-        WFy5da9R8P7b17mqwe2snHaedI5XAbL5prXxtE8xZQ==
-X-Google-Smtp-Source: ABdhPJzEfID2np3aPZsc0sK0bc16Dz8CzxRvi/1mIyuL7Wiip+SaBYJeYLH75igK54i8rUKoITAsKW7RE5kQiHKsN7k=
-X-Received: by 2002:a37:64d:: with SMTP id 74mr24409156qkg.6.1619551405383;
- Tue, 27 Apr 2021 12:23:25 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=uyi0PWzSVCsw1dHASrjzKOwkPo9Qan5oFffs3oUAqwY=;
+        b=atCg+wKIh61fBDB0ZoWv3NTr8YVuizboVZReu7wMC0L9E7u8lOrnk2F9ESpkJi+/F6
+         NTZ91kJJmFEElQkIkhfh2UnGRBKFmtJWUT9NIQUgaEseu0J0+KsytDinsG8qcAgYVXY5
+         4pxfMJrITm37lE5CPaMCRUoOFFgJ1u5PuuTTyuFstQ4yk4FNp1ql9FyAk6NoPTziuQJO
+         oRvdhWHy+VbF9Xz/gQLYluz889vATyc33qXOsXHPI72lXC9Tk5h+kPrJHtfkh10XtT16
+         Ps7Y/a9jIeQ1BUsCXJG60WZQ4iK2UzchZsARKJpL+ycKh/SDngSgnxSG8eL6plf1wmRx
+         q1ZA==
+X-Gm-Message-State: AOAM530FpS2jI9wak+LZmv/FDs4oAX4YhHS7ybl5vIbZoTtxLw8A1gJ0
+        eaNY85euxhsLoxHnR2/1ZiSV9T4OFl4=
+X-Google-Smtp-Source: ABdhPJxkgoUgiPWb5b9Vz6l8HG8NN5Aae23ysrasRDjr4N3PEalKWS9z5rlgpY7LZM69Ic+iznS5vw==
+X-Received: by 2002:a17:906:5203:: with SMTP id g3mr24277854ejm.95.1619551749301;
+        Tue, 27 Apr 2021 12:29:09 -0700 (PDT)
+Received: from gmail.com (193-81-60-66.adsl.highway.telekom.at. [193.81.60.66])
+        by smtp.gmail.com with ESMTPSA id h15sm2958593edb.74.2021.04.27.12.29.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Apr 2021 12:29:08 -0700 (PDT)
+Date:   Tue, 27 Apr 2021 21:29:06 +0200
+From:   Johannes Altmanninger <aclopte@gmail.com>
+To:     Robin Moussu <moussu.robin@pm.me>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Request: `git restore $commit $file` =?utf-8?Q?shouldn?=
+ =?utf-8?B?4oCZdA==?= override uncommited changes
+Message-ID: <20210427192906.7obdkopxwajqnv53@gmail.com>
+References: <pYZzGPZTHnJjYBKrUAVGcso74I_xJgfzNpSwDN94fhYcDoOamp62-IFvxVrU056uw0txy3MTHYSwny_II0XY4trSY5_E25q7EXwhNHjy3VY=@pm.me>
 MIME-Version: 1.0
-References: <20210424212117.6165-1-adam@dinwoodie.org> <nycvar.QRO.7.76.6.2104250413320.54@tvgsbejvaqbjf.bet>
- <CA+kUOan3vk1zJezpieRhKwZ8gsYrCxDBefkXJ1fUC61O+gb12A@mail.gmail.com>
-In-Reply-To: <CA+kUOan3vk1zJezpieRhKwZ8gsYrCxDBefkXJ1fUC61O+gb12A@mail.gmail.com>
-From:   Adam Dinwoodie <adam@dinwoodie.org>
-Date:   Tue, 27 Apr 2021 20:22:49 +0100
-Message-ID: <CA+kUOamYmFcKA+_on83=EbitvL4FQo9teMEbRHsQ=xo2ave1yQ@mail.gmail.com>
-Subject: Re: [RFC PATCH] cygwin: disallow backslashes in file names
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     RyotaK <security@ryotak.me>, Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <pYZzGPZTHnJjYBKrUAVGcso74I_xJgfzNpSwDN94fhYcDoOamp62-IFvxVrU056uw0txy3MTHYSwny_II0XY4trSY5_E25q7EXwhNHjy3VY=@pm.me>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[Re-adding the previous Cc list that I'd failed to copy on my previous
-email, sorry!]
+> I would have expected that `git restore $commit $file` would copy the
+> content of said file from another revision only if your don’t have
+> uncommitted changes or to get an error.
 
-On Mon, 26 Apr 2021 at 20:56, Adam Dinwoodie wrote:
->
-> On Mon, 26 Apr 2021 at 15:08, Johannes Schindelin wrote:
-> >
-> > Hi Adam,
-> >
-> > On Sat, 24 Apr 2021, Adam Dinwoodie wrote:
-> > > Notes:
-> > >     The patch to read-cache.c is the one I've applied downstream as t=
-he Cygwin Git
-> > >     maintainer to resolve this vulnerability, and I've manually teste=
-d that it
-> > >     resolves the vulnerability, so that's the change I'd recommend an=
-yone who needs
-> > >     to build Git on Cygwin themselves take until there's something of=
-ficially in
-> > >     the Git source code.
-> > >
-> > >     I'm much less convinced by my approach for the test script.  I de=
-finitely think
-> > >     it's worth having a test here, but the test as written still fail=
-s, as the test
-> > >     seems to be looking for the error message "directory not empty", =
-but running
-> > >     the test on Cygwin produces the error "cannot create submodule di=
-rectory d\a".
-> > >     I'm not sure why that difference exists, and whether the correct =
-approach would
-> > >     be to (a) ensure the error messages are consistent across platfor=
-ms or (b) to
-> > >     change the test to expect the appropriate error on the appropriat=
-e platform.
-> >
-> > Wasn't there something in Cygwin that _allowed_ backslashes as file nam=
-e
-> > characters? I vaguely remember that the ASCII characters forbidden by
-> > Windows were mapped into some "private page".
-> >
-> > Maybe that is responsible for the difference here?
->
-> So there is special handling of a bunch of characters like ":" that
-> are valid as parts of filenames on most *nix systems, but which aren't
-> valid on Windows, by substituting them for characters in the Unicode
-> "private use area" space. Backslash isn't one of those characters,
-> though; quoting
-> https://cygwin.com/cygwin-ug-net/using-specialnames.html (which I just
-> checked myself to be sure): "The backslash has to be exempt from this
-> conversion, because Cygwin accepts Win32 filenames including
-> backslashes as path separators on input."
->
-> Which is not to say this special handling _isn't_ the cause of the
-> difference here, but it's not so simple as that. If nobody spots an
-> explanation I've missed, I'll start digging into the code and strace
-> to work out exactly what's causing the difference in behaviour.
+The positional arguments to "git restore" are files.  So that command will
+error unless a file called $commit exists.
+(You shell's tab completion should guide you here.)
+You can use the --source option to specify the commit.
 
-I've worked out what's going wrong here: the "prevent git~1 squatting
-on Windows" test is actually testing a selection of different Windows
-path oddities, which are handled differently between Git for Windows
-and Cygwin Git. The specific behaviour here is the handling of a
-directory called "d."; Git for Windows (I assume in the MSYS2 layer)
-follows the standard Windows convention of treating "d." and "d" as
-identical filenames, while Cygwin sticks to its general design
-philosophy of mostly emulating *nix systems, allowing objects with
-both filenames to exist in the same directory (and causing pain for
-most non-Cygwin applications that try to interact with them).
+> If it was really what I wanted to do, I would have expected to either do
+> `git restore $file && git restore $commit $file`, directly `git restore
+> --force $commit $file` or something similar.
 
-Essentially this test is checking a bunch of different oddities about
-path handling on Windows. Some things =E2=80=93 such as handling backslashe=
-s =E2=80=93
-are common to both Cygwin and MSYS2; some =E2=80=93 such as handling traili=
-ng
-periods =E2=80=93 aren't. So I expect the solution here will be to have
-separate tests for (a) Git for Windows, (b) Cygwin Git, and (c) common
+Is your question that you expect a command like
 
-behaviour.
+	git restore --source=some-commit some-file
 
-> > >     I'm also not convinced by my approach of adding a "WINDOWS" prere=
-quisite to
-> > >     test-lib.sh. I went with this as I couldn't immediately see a way=
- to pass
-> > >     prerequisites on an "any" rather than "all" basis to test_expect_=
-success, and
-> > >     this would allow us to simplify all the tests that currently have
-> > >     "!MINGW,!CYGWIN" as prerequisites, but it still feels a bit clunk=
-y to me.
-> >
-> > Right, the only way I could think of it would be
-> >
-> >         test_lazy_prereq 'test_have_prereq MINGW || test_have_prereq CY=
-GWIN'
-> >
-> > Your approach looks fine to me, though.
->
-> Grand, okay. I'll stick with that for now, then, and follow up with a
-> patch to tidy up the other prerequisites at some point in the future.
->
-> Adam
+to error if you have uncommitted changes (to "some-file")?
+And instead you would run
+
+	git restore some-file
+	git restore --source=some-commit some-file
