@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 42375C433B4
-	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 10:39:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4C08C43460
+	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 10:39:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 155DF610FA
-	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 10:39:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 685AF61164
+	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 10:39:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237785AbhD0KkD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Apr 2021 06:40:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59764 "EHLO
+        id S237717AbhD0KkF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Apr 2021 06:40:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238359AbhD0KjR (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S238362AbhD0KjR (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 27 Apr 2021 06:39:17 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6DAEC061574
-        for <git@vger.kernel.org>; Tue, 27 Apr 2021 03:38:32 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id b19-20020a05600c06d3b029014258a636e8so2415881wmn.2
-        for <git@vger.kernel.org>; Tue, 27 Apr 2021 03:38:32 -0700 (PDT)
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E946CC061756
+        for <git@vger.kernel.org>; Tue, 27 Apr 2021 03:38:33 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id f15-20020a05600c4e8fb029013f5599b8a9so4760692wmq.1
+        for <git@vger.kernel.org>; Tue, 27 Apr 2021 03:38:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Ysi4oObk5JM1CaxHZuYRof/NRZf4UYF0Gr6BxiTvA3w=;
-        b=VHXrxDuLsr2eBnbt6Dhd0X4tmh0iFmeyF17nhE1BZDUkN0925xBTgrRA5+d090ZVgQ
-         1D+DFOsopvrY3PFl2nm91tse1N+UvF//FadYAABGbrl9LfCadZSf8OJBAI5XgPtIKZfr
-         fpGNQTgna1NKxsta9h5mG0Qo0foZpVmeKd023yoH0dUJyY2NiNGNEjoZM5L3thb4FDMV
-         YVJNHZ0uAFZWN7uLt4bmkdNSWQRuBV2haWk8tSoiKO/ud4mjEItokxSAsj4lfchiOCGp
-         HFCFrLYSXt5dpniKn+ux1K4jyaIHBlLoGERP8fAcRvbx/4R4ojv2Uwl9lvQjf0w51k/A
-         y56g==
+        bh=wod2A27fy11LyRODnuCxhNiKLVgYgInfwpEit4Of9S0=;
+        b=hvPuNxWqbEpK4fmUHnsXtHqTuByJ+/E/iqOWmKNAF8Phf8zexAuW6K9TxlSCevNGwI
+         nFMUc/mMlORVlCVF/VPWslgTH3wBVuf9uHHLyAtHYGlYrsghoe3AxD3CdhbJnn2+On3g
+         B0lP5Tyd97eqASJ9wgJG8MKjFtxHSWGPnidO6vDAX5joyzQ2AyXAAh+JNkanpn4tq70t
+         nf6B9msrBVH2zTlxpTK4BzTOu0ayMpnmaPiY5+ZWK3fbWHat7Yb+8Hl/49bYpmYFWuRJ
+         58k8uayNJARDEKnkXPm3PHodzwp1OCkEZZDD6zY3SDCPhIX3dHWFAWSrH5Ae37m2ar/x
+         NjHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Ysi4oObk5JM1CaxHZuYRof/NRZf4UYF0Gr6BxiTvA3w=;
-        b=pdqYGVi0lQLcqH64S8iEJDcExA8XbHsu7wG422u4CL0/z8FFsOghMTpdqnFszfU/2w
-         ZpiRMhK+J0k+Kzve7PdnruCvtCGm2qZrIMpiTF5vDMterHi87Q5V5afKxYwhd0x0aYzl
-         /R6GJf4tTipWHJC8tQ/GFbw41XaShsL+u9aGdLN5f7166Dgd86O3PVgbIc/bVgMm1eel
-         Ic3Nd7/lxPKHqbtIKuX7m/U4UQMdVoVShiZhUcwzswU0kAr5vqRC3WWkXTr7HsfxyEq4
-         xGeed4SWA9lrmVfwHY36AsY9kmsdJNM5C7O8BQRX1UPZ3I/9fay0CkMJHt7WY7H42Ei9
-         8hTQ==
-X-Gm-Message-State: AOAM533zVVJG6STYkXQOz1uOepO8PMblmztQs0UDhHb9wZHpD/qjOdlq
-        Dp+8IGuIvyE+qa4F/DcnX66GpSW6xmg=
-X-Google-Smtp-Source: ABdhPJwjmWe/2jcv02UwFOh+PvbennRjbz5yK5rr/ntRkk1W4+dmTr3isVq5d+AkQ4c8FsTXD8M3wQ==
-X-Received: by 2002:a7b:c091:: with SMTP id r17mr3564872wmh.28.1619519911792;
-        Tue, 27 Apr 2021 03:38:31 -0700 (PDT)
+        bh=wod2A27fy11LyRODnuCxhNiKLVgYgInfwpEit4Of9S0=;
+        b=EbmjGbZbDN1BjYgJcrT/VOQo8TEke69R4ZPcOJeUQV5ckLNcUjOJ55Tz6A+yuwvBL3
+         mzTVhxgaVuo7AAxCe004dc/LG0cnlI4VClbwir5JStJaxa8Ba531j8wBJTWdkv4taaKl
+         2gPy7ON9Q8tTQ0I5NPOjLTZkkNQEdNrnBT9Q3tE9F5RGWc8V4VljtckZHWueb/aeQN1K
+         o9Ra04LjMBbJaABCxn0776e8ulZmPNyQcGout6n99j0YHj00LVJgBsSP/Fb1u5UXNbRp
+         yDkDjEWpZqEeGT7f3YkOSPzCPLOOAwj1iwpJbc1osis45shS92UCAVt/s6Oskf4LZaOe
+         ZkaQ==
+X-Gm-Message-State: AOAM532NfS4OORYWNs2J82z+gxu+EQcewZUow8E7b3Zj2sZczxAahr6t
+        1PjYiu3SVR6kmg2mSlFY8LJhuf88mP8=
+X-Google-Smtp-Source: ABdhPJwNWnAgI/0RSrR6olgaR/o8PU7LWtZ+6HylmJKvhsUhh+bYn3lkCZniouWhRre+I3+dI2KYnA==
+X-Received: by 2002:a7b:c150:: with SMTP id z16mr24184311wmi.81.1619519912808;
+        Tue, 27 Apr 2021 03:38:32 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i17sm3412414wrn.87.2021.04.27.03.38.31
+        by smtp.gmail.com with ESMTPSA id l14sm18782713wmq.4.2021.04.27.03.38.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Apr 2021 03:38:31 -0700 (PDT)
-Message-Id: <180847f4db1470bcc585a93f662eb5e60ea010ea.1619519903.git.gitgitgadget@gmail.com>
+        Tue, 27 Apr 2021 03:38:32 -0700 (PDT)
+Message-Id: <0d3b18cd35423dadd35d55073bd7230bfc908fee.1619519903.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1008.v2.git.git.1619519903.gitgitgadget@gmail.com>
 References: <pull.1008.git.git.1618829583.gitgitgadget@gmail.com>
         <pull.1008.v2.git.git.1619519903.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 27 Apr 2021 10:38:14 +0000
-Subject: [PATCH v2 13/21] test-lib: provide test prereq REFFILES
+Date:   Tue, 27 Apr 2021 10:38:16 +0000
+Subject: [PATCH v2 15/21] t1414: mark corruption test with REFFILES
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,46 +77,26 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-REFFILES can be used to mark tests that are specific to the packed/loose ref
-storage format and its limitations. Marking such tests is a preparation for
-introducing the reftable storage backend.
+The reftable format guarantees that reflog entries are well-formed
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- t/README      | 6 ++++++
- t/test-lib.sh | 2 ++
- 2 files changed, 8 insertions(+)
+ t/t1414-reflog-walk.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/README b/t/README
-index fd9375b146d1..723bd3387fb7 100644
---- a/t/README
-+++ b/t/README
-@@ -1114,6 +1114,12 @@ use these, and "test_set_prereq" for how to define your own.
+diff --git a/t/t1414-reflog-walk.sh b/t/t1414-reflog-walk.sh
+index 80d94704d012..72a5ac61a520 100755
+--- a/t/t1414-reflog-walk.sh
++++ b/t/t1414-reflog-walk.sh
+@@ -119,7 +119,7 @@ test_expect_success 'min/max age uses entry date to limit' '
+ 	test_cmp expect actual
+ '
  
-    Git wasn't compiled with NO_PTHREADS=YesPlease.
- 
-+ - REFFILES
-+
-+   Test is specific to packed/loose ref storage, and should be
-+   disabled for other ref storage backends
-+
-+
- Tips for Writing Tests
- ----------------------
- 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 3dec266221cd..4a0c08e81e12 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1483,6 +1483,8 @@ parisc* | hppa*)
- 	;;
- esac
- 
-+test_set_prereq REFFILES
-+
- ( COLUMNS=1 && test $COLUMNS = 1 ) && test_set_prereq COLUMNS_CAN_BE_1
- test -z "$NO_PERL" && test_set_prereq PERL
- test -z "$NO_PTHREADS" && test_set_prereq PTHREADS
+-test_expect_success 'walk prefers reflog to ref tip' '
++test_expect_success REFFILES 'walk prefers reflog to ref tip' '
+ 	head=$(git rev-parse HEAD) &&
+ 	one=$(git rev-parse one) &&
+ 	ident="$GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE" &&
 -- 
 gitgitgadget
 
