@@ -7,21 +7,24 @@ X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E52ADC433B4
-	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 21:18:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A0288C433ED
+	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 21:18:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AFE41613DA
-	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 21:18:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6E1BE6105A
+	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 21:18:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239362AbhD0VTc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Apr 2021 17:19:32 -0400
-Received: from mav.lukeshu.com ([104.207.138.63]:41696 "EHLO mav.lukeshu.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S239274AbhD0VTU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Apr 2021 17:19:20 -0400
+        id S239388AbhD0VTf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Apr 2021 17:19:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33152 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239073AbhD0VTV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Apr 2021 17:19:21 -0400
+Received: from mav.lukeshu.com (mav.lukeshu.com [IPv6:2001:19f0:5c00:8069:5400:ff:fe26:6a86])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1038AC06175F
+        for <git@vger.kernel.org>; Tue, 27 Apr 2021 14:18:36 -0700 (PDT)
 Received: from lukeshu-dw-thinkpad (unknown [IPv6:2601:281:8200:26:4e34:88ff:fe48:5521])
-        by mav.lukeshu.com (Postfix) with ESMTPSA id 40BE780592;
-        Tue, 27 Apr 2021 17:18:35 -0400 (EDT)
+        by mav.lukeshu.com (Postfix) with ESMTPSA id 1E53780596;
+        Tue, 27 Apr 2021 17:18:36 -0400 (EDT)
 From:   Luke Shumaker <lukeshu@lukeshu.com>
 To:     git@vger.kernel.org
 Cc:     Avery Pennarun <apenwarr@gmail.com>,
@@ -39,9 +42,9 @@ Cc:     Avery Pennarun <apenwarr@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Luke Shumaker <lukeshu@datawire.io>
-Subject: [PATCH v3 18/30] subtree: use "$*" instead of "$@" as appropriate
-Date:   Tue, 27 Apr 2021 15:17:36 -0600
-Message-Id: <20210427211748.2607474-19-lukeshu@lukeshu.com>
+Subject: [PATCH v3 19/30] subtree: don't fuss with PATH
+Date:   Tue, 27 Apr 2021 15:17:37 -0600
+Message-Id: <20210427211748.2607474-20-lukeshu@lukeshu.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210427211748.2607474-1-lukeshu@lukeshu.com>
 References: <20210426174525.3937858-1-lukeshu@lukeshu.com>
@@ -54,72 +57,133 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Luke Shumaker <lukeshu@datawire.io>
 
-"$*" is for when you want to concatenate the args together,
-whitespace-separated; and "$@" is for when you want them to be separate
-strings.
+Scripts needing to fuss with with adding $(git --exec-prefix) PATH
+before loading git-sh-setup is a thing of the past.  As far as I can
+tell, it's been a thing of the past since since Git v1.2.0 (2006-02-12),
+or more specifically, since 77cb17e940 (Exec git programs without using
+PATH, 2006-01-10).  However, it stuck around in contrib scripts and in
+third-party scripts for long enough that it wasn't unusual to see.
 
-There are several places in subtree that erroneously use $@ when
-concatenating args together into an error message.
+Originally `git subtree` didn't fuss with PATH, but when people
+(including the original subtree author) had problems, because it was a
+common thing to see, it seemed that having subtree fuss with PATH was a
+reasonable solution.
 
-For instance, if the args are argv[1]="dead" and argv[2]="beef", then
-the line
+Here is an abridged history of fussing with PATH in subtree:
 
-    die "You must provide exactly one revision.  Got: '$@'"
+  2987e6add3 (Add explicit path of git installation by 'git --exec-path', Gianluca Pacchiella, 2009-08-20)
 
-surely intends to call 'die' with the argument
+    As pointed out by documentation, the correct use of 'git-sh-setup' is
+    using $(git --exec-path) to avoid problems with not standard
+    installations.
 
-    argv[1]="You must provide exactly one revision.  Got: 'dead beef'"
+    -. git-sh-setup
+    +. $(git --exec-path)/git-sh-setup
 
-however, because the line used $@ instead of $*, it will actually call
-'die' with the arguments
+  33aaa697a2 (Improve patch to use git --exec-path: add to PATH instead, Avery Pennarun, 2009-08-26)
 
-    argv[1]="You must provide exactly one revision.  Got: 'dead"
-    argv[2]="beef'"
+    If you (like me) are using a modified git straight out of its source
+    directory (ie. without installing), then --exec-path isn't actually correct.
+    Add it to the PATH instead, so if it is correct, it'll work, but if it's
+    not, we fall back to the previous behaviour.
 
-This isn't a big deal, because 'die' concatenates its arguments together
-anyway (using "$*").  But that doesn't change the fact that it was a
-mistake to use $@ instead of $*, even though in the end $@ still ended
-up doing the right thing.
+    -. $(git --exec-path)/git-sh-setup
+    +PATH=$(git --exec-path):$PATH
+    +. git-sh-setup
+
+  9c632ea29c ((Hopefully) fix PATH setting for msysgit, Avery Pennarun, 2010-06-24)
+
+    Reported by Evan Shaw.  The problem is that $(git --exec-path) includes a
+    'git' binary which is incompatible with the one in /usr/bin; if you run it,
+    it gives you an error about libiconv2.dll.
+
+    +OPATH=$PATH
+     PATH=$(git --exec-path):$PATH
+     . git-sh-setup
+    +PATH=$OPATH  # apparently needed for some versions of msysgit
+
+  df2302d774 (Another fix for PATH and msysgit, Avery Pennarun, 2010-06-24)
+
+    Evan Shaw tells me the previous fix didn't work.  Let's use this one
+    instead, which he says does work.
+
+    This fix is kind of wrong because it will run the "correct" git-sh-setup
+    *after* the one in /usr/bin, if there is one, which could be weird if you
+    have multiple versions of git installed.  But it works on my Linux and his
+    msysgit, so it's obviously better than what we had before.
+
+    -OPATH=$PATH
+    -PATH=$(git --exec-path):$PATH
+    +PATH=$PATH:$(git --exec-path)
+     . git-sh-setup
+    -PATH=$OPATH  # apparently needed for some versions of msysgit
+
+First of all, I disagree with Gianluca's reading of the documentation:
+ - I haven't gone back to read what the documentation said in 2009, but
+   in my reading of the 2021 documentation is that it includes "$(git
+   --exec-path)/" in the synopsis for illustrative purposes, not to say
+   it's the proper way.
+ - After being executed by `git`, the git exec path should be the very
+   first entry in PATH, so it shouldn't matter.
+ - None of the scripts that are part of git do it that way.
+
+But secondly, the root reason for fussing with PATH seems to be that
+Avery didn't know that he needs to set GIT_EXEC_PATH if he's going to
+use git from the source directory without installing.
+
+And finally, Evan's issue is clearly just a bug in msysgit.  I assume
+that msysgit has since fixed the issue, and also msysgit has been
+deprecated for 6 years now, so let's drop the workaround for it.
+
+So, remove the line fussing with PATH.  However, since subtree *is* in
+'contrib/' and it might get installed in funny ways by users
+after-the-fact, add a sanity check to the top of the script, checking
+that it is installed correctly.
 
 Signed-off-by: Luke Shumaker <lukeshu@datawire.io>
 ---
-v2:
- - Improve the commit message with quoting and clearer
-   explanation.
+v3:
+ - Fix capitalization in the commit message.
 
- contrib/subtree/git-subtree.sh | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ contrib/subtree/git-subtree.sh | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
 diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index d7de4b0653..3105eb8033 100755
+index 3105eb8033..af636fbb43 100755
 --- a/contrib/subtree/git-subtree.sh
 +++ b/contrib/subtree/git-subtree.sh
-@@ -58,14 +58,14 @@ progress () {
- assert () {
- 	if ! "$@"
- 	then
--		die "assertion failed: " "$@"
-+		die "assertion failed: $*"
- 	fi
- }
+@@ -5,6 +5,22 @@
+ # Copyright (C) 2009 Avery Pennarun <apenwarr@gmail.com>
+ #
  
- ensure_single_rev () {
- 	if test $# -ne 1
- 	then
--		die "You must provide exactly one revision.  Got: '$@'"
-+		die "You must provide exactly one revision.  Got: '$*'"
- 	fi
- }
++if test -z "$GIT_EXEC_PATH" || test "${PATH#"${GIT_EXEC_PATH}:"}" = "$PATH" || ! test -f "$GIT_EXEC_PATH/git-sh-setup"
++then
++	echo >&2 'It looks like either your git installation or your'
++	echo >&2 'git-subtree installation is broken.'
++	echo >&2
++	echo >&2 "Tips:"
++	echo >&2 " - If \`git --exec-path\` does not print the correct path to"
++	echo >&2 "   your git install directory, then set the GIT_EXEC_PATH"
++	echo >&2 "   environment variable to the correct directory."
++	echo >&2 " - Make sure that your \`${0##*/}\` file is either in your"
++	echo >&2 "   PATH or in your git exec path (\`$(git --exec-path)\`)."
++	echo >&2 " - You should run git-subtree as \`git ${0##*/git-}\`,"
++	echo >&2 "   not as \`${0##*/}\`." >&2
++	exit 126
++fi
++
+ OPTS_SPEC="\
+ git subtree add   --prefix=<prefix> <commit>
+ git subtree add   --prefix=<prefix> <repository> <ref>
+@@ -28,8 +44,6 @@ rejoin        merge the new branch back into HEAD
+ squash        merge subtree changes as a single commit
+ "
  
-@@ -690,7 +690,7 @@ cmd_add () {
- 
- 		cmd_add_repository "$@"
- 	else
--		say >&2 "error: parameters were '$@'"
-+		say >&2 "error: parameters were '$*'"
- 		die "Provide either a commit or a repository and commit."
- 	fi
- }
+-PATH=$PATH:$(git --exec-path)
+-
+ arg_debug=
+ arg_command=
+ arg_prefix=
 -- 
 2.31.1
 
