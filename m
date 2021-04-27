@@ -2,149 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E297EC433B4
-	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 11:03:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 59770C433ED
+	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 12:24:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A7AFB613BD
-	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 11:03:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1548B6101C
+	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 12:24:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235461AbhD0LDp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Apr 2021 07:03:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36978 "EHLO
+        id S235469AbhD0MZ3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Apr 2021 08:25:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55288 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235181AbhD0LDn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Apr 2021 07:03:43 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A591DC061574
-        for <git@vger.kernel.org>; Tue, 27 Apr 2021 04:03:00 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id o21-20020a1c4d150000b029012e52898006so6623102wmh.0
-        for <git@vger.kernel.org>; Tue, 27 Apr 2021 04:03:00 -0700 (PDT)
+        with ESMTP id S235410AbhD0MZ2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Apr 2021 08:25:28 -0400
+Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFD53C061574
+        for <git@vger.kernel.org>; Tue, 27 Apr 2021 05:24:45 -0700 (PDT)
+Received: by mail-io1-xd33.google.com with SMTP id t21so8560929iob.2
+        for <git@vger.kernel.org>; Tue, 27 Apr 2021 05:24:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=GjpTPO6YGzTTjLGzhAUngHwkPzuSknLiQqJrhuPu5R0=;
-        b=fYHshkvP6FxVCr1r3f+s5XFJID9qdZAvF3n4fbjhPMcorDLonKbe/oImaLaX4u98xd
-         i3gMh+KnfrAHPKh8m8oaDp1ZX9w6SG6/wDPAGPKv6HB73RHGj1XBaakywBZZHEuXaSWf
-         UmCWTTosvedoae8mWOwn+cwBroYNfkdT+wTTk5AOVq+UEN/Ew4IlXSEiMHmUFNW6AfWc
-         xyrjqO5qClxiQNfIdqXKehPmnfYv8UgE6LCEh5acbtoMGZGfDmkT0zYDh0F9i9smYELn
-         xAkB2dhqsi1QfiffqcqTxdCMg8IrZ3TeZI7KJ8kOeV8oTj4diyrfd/Q5b8Om6JS+hMNa
-         jP2g==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=K3InP04+u9YZm94ggCapDVREcXy8orPW/jEBlmVZGEA=;
+        b=Zor1X1d2iG04c1EweDkq/2LihxfEXXW1l/dfvEUOOS0noi/Z/WVDTpBz62JUuPzHNX
+         Q3PHxccomxBjBN5T16SFMsyorvjwpOrmN++QmUeklAxP3HetkmWpCj46AjXHop3IcFAW
+         SfijWSONDQ1/q8bVdZNjmlL7AakbxP0w+IYt4up2ntVvn2aICcP7732G7lTBaLUVlq1D
+         Zv03eYRLWQf9KhVfo5d2YsulJB8mDiqyejKXr0ss+4AicBbZtUBRRmSyx0Ljg3VehND+
+         6nDso8cLrziGKr5EIIjG67gB5yQpCuDFvxBQWywUcFwpdQYnw10DxyKHkv18lCW6xzec
+         E4DQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=GjpTPO6YGzTTjLGzhAUngHwkPzuSknLiQqJrhuPu5R0=;
-        b=cjvECOEgvRcvcoLzm0LsxZ73L3pyM3GKlW7sqvXwoIbXS9VaaUKFBCl4zqx5orFMtw
-         5nLTD4hfr8LlkqTQyowhYQU2oNjrtzR7yfy1wZYF4mkC9tNTtwJEItPPmoI/zLHhrB89
-         aaLu2Cu77L8mBE42XVAzdHpNZUPX3obTsxk3HFCXoBmIY5E+cl2/IgUqu6YCP8+gL7DZ
-         YPCaSyCPVZKYI1nZwFHaRIFDTSGD9Cz5QUuaH9fgMWjiyxo53fQ9/Z2f8FlT/Oqptgmq
-         hdqrpU3D27QAno/MYStjKVMZZGCmu4Us83xdbfDgGWO++uVyBpnfj2YOwFkG/dXmA2FX
-         RGCw==
-X-Gm-Message-State: AOAM530LWkWILmmRMF9HpiTP/oooOe60EwEZZJ8zxN1RS42fGD9P5VBN
-        BN2Afoqp69EZ6jeWH7XeGRlzGrsHl4I=
-X-Google-Smtp-Source: ABdhPJz7Vzz1qTjHIu01Blcb4RQlIMWS0gLuMNkYb8GZJyygZNJ7GBzbm6Ga1iFIGv8pzRRpYCRwew==
-X-Received: by 2002:a1c:f20d:: with SMTP id s13mr24483111wmc.92.1619521379483;
-        Tue, 27 Apr 2021 04:02:59 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s83sm20324849wms.16.2021.04.27.04.02.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Apr 2021 04:02:59 -0700 (PDT)
-Message-Id: <pull.940.v2.git.1619521378282.gitgitgadget@gmail.com>
-In-Reply-To: <pull.940.git.1619463549689.gitgitgadget@gmail.com>
-References: <pull.940.git.1619463549689.gitgitgadget@gmail.com>
-From:   "Peter Oliver via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 27 Apr 2021 11:02:57 +0000
-Subject: [PATCH v2] doc: point to diff attribute in patch format docs
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=K3InP04+u9YZm94ggCapDVREcXy8orPW/jEBlmVZGEA=;
+        b=lecWwS5ml/UuIV25DdMmZZuTmcNJ9+Jlyy3IOXifDbSDNQco47gC02UPxazdnx7NVu
+         6iBfrRRxWSWmnCKDji/nr/qN5O8uNcI7fJ8CANITALmjGchUpKW3C20UnwMeKwtIbpxC
+         vjJ0eoSGUuky0awI+2M5+M+2kyeaHz2/gR7i8gAvJ/rrFCy8POmhOg5QXlTCo6ZyqnEW
+         inRtciLX4qPYuQQgYfM51cj9kFOa08HpWhkBoIYCHpR5MgLTBanDqRp80uC1LzNufzjm
+         LuVOs0us5tjX+zkw/sgfxrJ2pWsFxVb4TOAvR34iWZiFRNZY//zuKZ66Tyk3fCS76pf5
+         gIkQ==
+X-Gm-Message-State: AOAM530ApnxG5r7pLwRjwiUArfgRtTYvga+hD5kBTUB46sElAWQufJGy
+        qFKyTK9WtnWOpx9Yhbp7z/SUMQ+Oo6t3EU+ikl8=
+X-Google-Smtp-Source: ABdhPJyNu22i7PTPcQdTBppZjRsGl1Ai4LDmxNL9+1YUEGWtib8w5aTA/HrSKdo8HmZQ6qyxFOy1qwkBpJ2K9wRP6vo=
+X-Received: by 2002:a6b:d213:: with SMTP id q19mr18774358iob.203.1619526285264;
+ Tue, 27 Apr 2021 05:24:45 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Peter Oliver <p.d.oliver@mavit.org.uk>,
-        Peter Oliver <git@mavit.org.uk>,
-        Peter Oliver <git@mavit.org.uk>
+References: <pull.913.v10.git.1618562875.gitgitgadget@gmail.com>
+ <pull.913.v11.git.1618672417.gitgitgadget@gmail.com> <xmqq5z0kbl8x.fsf@gitster.g>
+ <CAOLTT8RKCV+Kpya-_AVjuVGWzs1WtGS8n_+sD0FVzwEpeXGwCw@mail.gmail.com>
+ <xmqqfszk1ot6.fsf@gitster.g> <CAOLTT8QUA+m1W6-v=ZA205SZo8G5GBKMzJHBzU8DuQSTKiPUBw@mail.gmail.com>
+ <xmqq1rb3xl3t.fsf@gitster.g> <CAOLTT8TciU7rvmEgXGMuVCMDN6HjMadL-L=Q9kej6=j6ktJHwA@mail.gmail.com>
+ <xmqq35vcfchn.fsf@gitster.g>
+In-Reply-To: <xmqq35vcfchn.fsf@gitster.g>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Tue, 27 Apr 2021 20:24:32 +0800
+Message-ID: <CAOLTT8QrX3sk1U6WM983pachj8q4fmW7jxEViXd4-Y-aSR1JeQ@mail.gmail.com>
+Subject: Re: [PATCH v11 0/2] [GSOC] trailer: add new .cmd config option
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Peter Oliver <git@mavit.org.uk>
+Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B44=E6=9C=8827=E6=97=
+=A5=E5=91=A8=E4=BA=8C =E4=B8=8B=E5=8D=882:49=E5=86=99=E9=81=93=EF=BC=9A
+>
+> ZheNing Hu <adlternative@gmail.com> writes:
+>
+> > Now I think that we should keep those trailers which ask for a
+> > "name <email>" pair, like "Helped-by", "Signed-off-by", when we
+> > provide a "help:","sign:" in command line, This allows the user to
+> > dynamically fill in the "name <email>" pair of other people in the
+> > commit message later. It is worthwhile for users to exit with exit(0).
+> >
+> > But those dispensable things like "Commit-Count", It must depend
+> > on a person's statistics in the git repository. So "cnt:" is meaningles=
+s,
+> > users' script can let it exit(1).
+>
+> Perhaps, but at this point what you think (or what I think) does not
+> matter.  That was the whole point of letting .cmd script signal Git
+> if the result from the invocation should be kept or discarded with
+> its exit status.  What would be sufficient here for us to do is to
+> agree that it would be good to have a minimal set (perhaps a pair)
+> of examples to demonstrate that the script can choose to keep or
+> discard a meaningless trailer entry with its exit status.
 
-From the documentation for generating patch text with diff-related
-commands, refer to the documentation for the diff attribute.
+Yes, I argee.
+Due to previous attempts, it seems that such an example is well given:
+"Commit-Count" is the trailer that should be discarded.
+"Signed-off-by" is the trailer worth be kept.
 
-This attribute influences the way that patches are generated, but this
-was previously not mentioned in e.g., the git-diff manpage.
-
-Signed-off-by: Peter Oliver <git@mavit.org.uk>
----
-    doc: point to diff attribute in patch format docs
-    
-    From the documentation for generating patch text with diff-related
-    commands, refer to the documentation for the diff attribute.
-    
-    This attribute influences the way that patches are generated, but this
-    was previously not mentioned in e.g., the git-diff manpage.
-    
-    v2: Mention the specific relevant section of the gitattributes manual.
-    Thanks to Junio C Hamano for the suggestion.
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-940%2Fmavit%2Fdiff-gitattributes-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-940/mavit/diff-gitattributes-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/940
-
-Range-diff vs v1:
-
- 1:  6f87f3962b84 ! 1:  191d81ef61a5 doc: point to diff attribute in patch format docs
-     @@ Documentation/diff-generate-patch.txt: separate lines indicate the old and the n
-             rename to a
-       
-      +5.  Hunk headers mention the name of the function to which the hunk
-     -+    applies.  See linkgit:gitattributes[5] for details of how to tailor
-     -+    to this to specific languages.
-     ++    applies.  See "Defining a custom hunk-header" in
-     ++    linkgit:gitattributes[5] for details of how to tailor to this to
-     ++    specific languages.
-      +
-       
-       Combined diff format
-
-
- Documentation/diff-generate-patch.txt | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/diff-generate-patch.txt b/Documentation/diff-generate-patch.txt
-index 2db8eacc3ec7..c78063d4f74a 100644
---- a/Documentation/diff-generate-patch.txt
-+++ b/Documentation/diff-generate-patch.txt
-@@ -11,7 +11,7 @@ linkgit:git-diff-files[1]
- with the `-p` option produces patch text.
- You can customize the creation of patch text via the
- `GIT_EXTERNAL_DIFF` and the `GIT_DIFF_OPTS` environment variables
--(see linkgit:git[1]).
-+(see linkgit:git[1]), and the `diff` attribute (see linkgit:gitattributes[5]).
- 
- What the -p option produces is slightly different from the traditional
- diff format:
-@@ -74,6 +74,11 @@ separate lines indicate the old and the new mode.
-       rename from b
-       rename to a
- 
-+5.  Hunk headers mention the name of the function to which the hunk
-+    applies.  See "Defining a custom hunk-header" in
-+    linkgit:gitattributes[5] for details of how to tailor to this to
-+    specific languages.
-+
- 
- Combined diff format
- --------------------
-
-base-commit: 311531c9de557d25ac087c1637818bd2aad6eb3a
--- 
-gitgitgadget
+Thanks.
+--
+ZheNing Hu
