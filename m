@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D263C433B4
-	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 10:39:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D88FC43461
+	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 10:39:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 583976127A
-	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 10:39:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0EBB961168
+	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 10:39:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235666AbhD0Kjn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Apr 2021 06:39:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59746 "EHLO
+        id S235751AbhD0Kjo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Apr 2021 06:39:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238032AbhD0KjL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Apr 2021 06:39:11 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8562C061756
-        for <git@vger.kernel.org>; Tue, 27 Apr 2021 03:38:26 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id a4so58956045wrr.2
-        for <git@vger.kernel.org>; Tue, 27 Apr 2021 03:38:26 -0700 (PDT)
+        with ESMTP id S238105AbhD0KjM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Apr 2021 06:39:12 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52E03C061574
+        for <git@vger.kernel.org>; Tue, 27 Apr 2021 03:38:29 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id x7so58899847wrw.10
+        for <git@vger.kernel.org>; Tue, 27 Apr 2021 03:38:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=V6jTDUBCqmms0JZXureui5VPFraR3msoRfft4DttAE0=;
-        b=Pk88fopcmrMMryMWCbu8vIf1TP/ggIfrSwn1HQvsw3Df9ffNIcwM4P1/GridP6hHcs
-         cQqJxe6S7OKKpFS8M86UerPGP1j8YUxdSWruD8TxfGwPKrsuajmaWtA0sqa9a14cDREo
-         RlxVF8TOJGZtA0+I+SoYVz7LB8J59dHTSL6YgCvpRUrSJ/SDu79Zv8+4To5oVx0Ou8Zo
-         LIEL8ncltl78GZnH6U2JGw75eYln8S0+h2lPCtsuwzwICp4n8Ymz/Ru0zUrSB+MzOu9B
-         EBZ3DbInXprt1eYi1LdkaxZcpFB6VMHmjPsAV+4oto4RmFkalWv/AhNb+57pWBgqqPml
-         T3Pg==
+        bh=o5+fdn2/R55q7fUrDHdkUPAxmjhFjBcpcW1irQ7Bqq8=;
+        b=hUBwkDRMhMYkrSCkDaQYxoQwiErDwu72lUqofQzx3c2NBFrpGz/HE+eX1sFIduu3F8
+         TkA06qPtuOkenS7S4fPdx0zH+vogyBynwmPJOnQHmajhnlT4Gp33T6UjplQpu6mlO58c
+         /QrIJ29nA3qATY+kkhkV5AM0h48rRz2bGjnKIFYPQs3odTZQ0ihJs/RsoU6wmRFoF1pF
+         YJoMso3QabjVcUjQ8tqFBVrBo4ru/jn/sSQWSPP6QdLMKrbbpPLbEJYuwD9iyV+0xYrn
+         4HW70pGgsy5COtj70TK3JD8ICNLZHhOAfRxIMs5nlkedRX5CZoBY2mnaJ6qB83i6vZN1
+         c9Ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=V6jTDUBCqmms0JZXureui5VPFraR3msoRfft4DttAE0=;
-        b=DPX6SXzZ6mIDR5VHWEmYYanTRRtk3gzvD0Z17LPF3j9U2cVxzA5eyY+Fanw0AfkLHP
-         s0AVVhhE1rtor8C4HJKycUM7BErii0m5JA5TcbjuNN/nVSSwEzvDGlpBBP7aidihHqK4
-         7HmcSmRoAnlUpd3bOGldkaXVoFkt4KZRSHnKj0M59UVJa5IkRiPmSgb+Gm1G5M3pel3b
-         BYSPcNrqLVIDSpW4lFhQVOIRAfcmh3kfuUSC0IxtjAhi6NtT5qnqqzBPLj1BnIO5qd5d
-         5uCxlmnG5FA6QWK4hvzJLY2vs15eO9JYiI7gY1IPNqPsSXHyOJYOqAmi3296vVmoe7hk
-         39xw==
-X-Gm-Message-State: AOAM530efogIueG725nqHuQMa1++yutCHZhpGiCElwZsXgiyQbvOIzuf
-        +ZR8Shnk4F21ZdJXyTh2pIFG9pUz9pA=
-X-Google-Smtp-Source: ABdhPJwD3Ea4zBw4O/LWGRp+PiHG6ldh7r0nbyMCbU0hTShnUgzIvW7G5p+YcBWL6azmizon6zIyjw==
-X-Received: by 2002:a05:6000:184a:: with SMTP id c10mr28860573wri.237.1619519905556;
-        Tue, 27 Apr 2021 03:38:25 -0700 (PDT)
+        bh=o5+fdn2/R55q7fUrDHdkUPAxmjhFjBcpcW1irQ7Bqq8=;
+        b=FcEWWbG0pMDdGc6cVmB12+pbeTcHKvUHBImxfeYH1kt+As0sOOAPlOymlvNTHyhTSb
+         UzHsvEaAv53tuupsrUKpP3qetFFJifnFQtHmWdy8ew0641dCD1JK0C2hEBsnH1P+Jl1b
+         rGCL+eo8ftAUIWelK+LjZ3xdLtbcBQTybwDgPMoPvAKUSW985B1V4K/MyW1IWbnHVg6x
+         igaYnpzOU+pwdwRSkeCuKaBscWWNvi6d9opIcHEqAfzlreEPdEvslVDE8pXdmrWelk85
+         JUqwPChMrR4wsWPYzUtHLzuB9NquSBaJtQ04ApsC/EbDRDx8l9eA78hVvsvU6ItNIrAb
+         AKfw==
+X-Gm-Message-State: AOAM530Sp+3JxuBfOZOgDnbxbtDnSla+zVKjZzg/9zCulT2Q86AyYz1H
+        gfHaJadnqJfJfco2OWYXb/Ht8cQ5MlQ=
+X-Google-Smtp-Source: ABdhPJzuVg0h/KEiI0irDhiCHinlDMKZ/dURBDn/TSeTUu6Oqk/+tHinq5lJF9s0QlLdvsJHVfBbew==
+X-Received: by 2002:adf:f212:: with SMTP id p18mr2717344wro.120.1619519908178;
+        Tue, 27 Apr 2021 03:38:28 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x9sm3486425wrt.13.2021.04.27.03.38.25
+        by smtp.gmail.com with ESMTPSA id y19sm2047597wmj.28.2021.04.27.03.38.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Apr 2021 03:38:25 -0700 (PDT)
-Message-Id: <8ad4a35cda706b1bfcd8ddcf1b1c2e1d8f692c70.1619519903.git.gitgitgadget@gmail.com>
+        Tue, 27 Apr 2021 03:38:27 -0700 (PDT)
+Message-Id: <e4e8fc1d4b4f450d46dd320ffc2398515044b28a.1619519903.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1008.v2.git.git.1619519903.gitgitgadget@gmail.com>
 References: <pull.1008.git.git.1618829583.gitgitgadget@gmail.com>
         <pull.1008.v2.git.git.1619519903.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 27 Apr 2021 10:38:02 +0000
-Subject: [PATCH v2 01/21] t4202: split testcase for invalid HEAD symref and
- HEAD hash
+Date:   Tue, 27 Apr 2021 10:38:07 +0000
+Subject: [PATCH v2 06/21] t1413: use tar to save and restore entire .git
+ directory
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,40 +78,36 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-Reftable will prohibit invalid hashes at the storage level, but
-git-symbolic-ref can still create branches ending in ".lock".
+This makes the test independent of the particulars of the storage formats.
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- t/t4202-log.sh | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ t/t1413-reflog-detach.sh | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index 350cfa35936a..a8c5a00d012d 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -1834,14 +1834,18 @@ test_expect_success 'log --graph --no-walk is forbidden' '
- 	test_must_fail git log --graph --no-walk
+diff --git a/t/t1413-reflog-detach.sh b/t/t1413-reflog-detach.sh
+index bde05208ae6a..934688a1ee82 100755
+--- a/t/t1413-reflog-detach.sh
++++ b/t/t1413-reflog-detach.sh
+@@ -7,8 +7,7 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ . ./test-lib.sh
+ 
+ reset_state () {
+-	git checkout main &&
+-	cp saved_reflog .git/logs/HEAD
++	rm -rf .git && "$TAR" xf .git-saved.tar
+ }
+ 
+ test_expect_success setup '
+@@ -17,7 +16,7 @@ test_expect_success setup '
+ 	git branch side &&
+ 	test_tick &&
+ 	git commit --allow-empty -m second &&
+-	cat .git/logs/HEAD >saved_reflog
++	"$TAR" cf .git-saved.tar .git
  '
  
--test_expect_success 'log diagnoses bogus HEAD' '
-+test_expect_success 'log diagnoses bogus HEAD hash' '
- 	git init empty &&
- 	test_must_fail git -C empty log 2>stderr &&
- 	test_i18ngrep does.not.have.any.commits stderr &&
- 	echo 1234abcd >empty/.git/refs/heads/main &&
- 	test_must_fail git -C empty log 2>stderr &&
--	test_i18ngrep broken stderr &&
--	echo "ref: refs/heads/invalid.lock" >empty/.git/HEAD &&
-+	test_i18ngrep broken stderr'
-+
-+test_expect_success 'log diagnoses bogus HEAD symref' '
-+	rm -rf empty &&
-+	git init empty &&
-+	git --git-dir empty/.git symbolic-ref HEAD refs/heads/invalid.lock &&
- 	test_must_fail git -C empty log 2>stderr &&
- 	test_i18ngrep broken stderr &&
- 	test_must_fail git -C empty log --default totally-bogus 2>stderr &&
+ test_expect_success baseline '
 -- 
 gitgitgadget
 
