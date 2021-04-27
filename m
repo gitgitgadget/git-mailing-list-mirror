@@ -7,21 +7,21 @@ X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9BDDC43460
-	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 21:18:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B5A30C433ED
+	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 21:18:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7AA90613FC
-	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 21:18:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 60F74613DA
+	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 21:18:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239243AbhD0VTY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Apr 2021 17:19:24 -0400
-Received: from mav.lukeshu.com ([104.207.138.63]:41562 "EHLO mav.lukeshu.com"
+        id S239300AbhD0VT0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Apr 2021 17:19:26 -0400
+Received: from mav.lukeshu.com ([104.207.138.63]:41570 "EHLO mav.lukeshu.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S239075AbhD0VTO (ORCPT <rfc822;git@vger.kernel.org>);
+        id S239201AbhD0VTO (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 27 Apr 2021 17:19:14 -0400
 Received: from lukeshu-dw-thinkpad (unknown [IPv6:2601:281:8200:26:4e34:88ff:fe48:5521])
-        by mav.lukeshu.com (Postfix) with ESMTPSA id 412F080596;
-        Tue, 27 Apr 2021 17:18:28 -0400 (EDT)
+        by mav.lukeshu.com (Postfix) with ESMTPSA id 19AB280590;
+        Tue, 27 Apr 2021 17:18:29 -0400 (EDT)
 From:   Luke Shumaker <lukeshu@lukeshu.com>
 To:     git@vger.kernel.org
 Cc:     Avery Pennarun <apenwarr@gmail.com>,
@@ -39,9 +39,9 @@ Cc:     Avery Pennarun <apenwarr@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Luke Shumaker <lukeshu@datawire.io>
-Subject: [PATCH v3 10/30] subtree: t7900: add a test for the -h flag
-Date:   Tue, 27 Apr 2021 15:17:28 -0600
-Message-Id: <20210427211748.2607474-11-lukeshu@lukeshu.com>
+Subject: [PATCH v3 11/30] subtree: t7900: add porcelain tests for 'pull' and 'push'
+Date:   Tue, 27 Apr 2021 15:17:29 -0600
+Message-Id: <20210427211748.2607474-12-lukeshu@lukeshu.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210427211748.2607474-1-lukeshu@lukeshu.com>
 References: <20210426174525.3937858-1-lukeshu@lukeshu.com>
@@ -54,30 +54,157 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Luke Shumaker <lukeshu@datawire.io>
 
-It's a dumb test, but it's surprisingly easy to break.
+The 'pull' and 'push' subcommands deserve their own sections in the tests.
+Add some basic tests for them.
 
 Signed-off-by: Luke Shumaker <lukeshu@datawire.io>
 ---
- contrib/subtree/t/t7900-subtree.sh | 7 +++++++
- 1 file changed, 7 insertions(+)
+v2:
+ - Don't switch unrelated uses of vanilla test_create_repo over to
+   subtree_test_create_repo; this has been moved to happen in an
+   earlier commit.
+ - Fix whitespace.
+
+ contrib/subtree/t/t7900-subtree.sh | 127 +++++++++++++++++++++++++++++
+ 1 file changed, 127 insertions(+)
 
 diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
-index 5c2510f1f5..9afba2f282 100755
+index 9afba2f282..ce6861c22d 100755
 --- a/contrib/subtree/t/t7900-subtree.sh
 +++ b/contrib/subtree/t/t7900-subtree.sh
-@@ -37,6 +37,13 @@ last_commit_subject () {
- 	git log --pretty=format:%s -1
- }
+@@ -427,6 +427,133 @@ test_expect_success 'split "sub dir"/ with --branch for an incompatible branch'
+ 	)
+ '
  
-+test_expect_success 'shows short help text for -h' '
-+	test_expect_code 129 git subtree -h >out 2>err &&
-+	test_must_be_empty err &&
-+	grep -e "^ *or: git subtree pull" out &&
-+	grep -e --annotate out
++#
++# Tests for 'git subtree pull'
++#
++
++test_expect_success 'pull requires option --prefix' '
++	subtree_test_create_repo "$test_count" &&
++	subtree_test_create_repo "$test_count/sub proj" &&
++	test_create_commit "$test_count" main1 &&
++	test_create_commit "$test_count/sub proj" sub1 &&
++	(
++		cd "$test_count" &&
++		git fetch ./"sub proj" HEAD &&
++		git subtree add --prefix="sub dir" FETCH_HEAD
++	) &&
++	test_create_commit "$test_count/sub proj" sub2 &&
++	(
++		cd "$test_count" &&
++		test_must_fail git subtree pull ./"sub proj" HEAD >out 2>err &&
++
++		echo "You must provide the --prefix option." >expected &&
++		test_must_be_empty out &&
++		test_cmp expected err
++	)
++'
++
++test_expect_success 'pull requires path given by option --prefix must exist' '
++	subtree_test_create_repo "$test_count" &&
++	subtree_test_create_repo "$test_count/sub proj" &&
++	test_create_commit "$test_count" main1 &&
++	test_create_commit "$test_count/sub proj" sub1 &&
++	(
++		test_must_fail git subtree pull --prefix="sub dir" ./"sub proj" HEAD >out 2>err &&
++
++		echo "'\''sub dir'\'' does not exist; use '\''git subtree add'\''" >expected &&
++		test_must_be_empty out &&
++		test_cmp expected err
++	)
++'
++
++test_expect_success 'pull basic operation' '
++	subtree_test_create_repo "$test_count" &&
++	subtree_test_create_repo "$test_count/sub proj" &&
++	test_create_commit "$test_count" main1 &&
++	test_create_commit "$test_count/sub proj" sub1 &&
++	(
++		cd "$test_count" &&
++		git fetch ./"sub proj" HEAD &&
++		git subtree add --prefix="sub dir" FETCH_HEAD
++	) &&
++	test_create_commit "$test_count/sub proj" sub2 &&
++	(
++		cd "$test_count" &&
++		exp=$(git -C "sub proj" rev-parse --verify HEAD:) &&
++		git subtree pull --prefix="sub dir" ./"sub proj" HEAD &&
++		act=$(git rev-parse --verify HEAD:"sub dir") &&
++		test "$act" = "$exp"
++	)
++'
++
++#
++# Tests for 'git subtree push'
++#
++
++test_expect_success 'push requires option --prefix' '
++	subtree_test_create_repo "$test_count" &&
++	subtree_test_create_repo "$test_count/sub proj" &&
++	test_create_commit "$test_count" main1 &&
++	test_create_commit "$test_count/sub proj" sub1 &&
++	(
++		cd "$test_count" &&
++		git fetch ./"sub proj" HEAD &&
++		git subtree add --prefix="sub dir" FETCH_HEAD &&
++		echo "You must provide the --prefix option." >expected &&
++		test_must_fail git subtree push "./sub proj" from-mainline >actual 2>&1 &&
++		test_debug "printf '"expected: "'" &&
++		test_debug "cat expected" &&
++		test_debug "printf '"actual: "'" &&
++		test_debug "cat actual" &&
++		test_cmp expected actual
++	)
++'
++
++test_expect_success 'push requires path given by option --prefix must exist' '
++	subtree_test_create_repo "$test_count" &&
++	subtree_test_create_repo "$test_count/sub proj" &&
++	test_create_commit "$test_count" main1 &&
++	test_create_commit "$test_count/sub proj" sub1 &&
++	(
++		cd "$test_count" &&
++		git fetch ./"sub proj" HEAD &&
++		git subtree add --prefix="sub dir" FETCH_HEAD &&
++		echo "'\''non-existent-directory'\'' does not exist; use '\''git subtree add'\''" >expected &&
++		test_must_fail git subtree push --prefix=non-existent-directory "./sub proj" from-mainline >actual 2>&1 &&
++		test_debug "printf '"expected: "'" &&
++		test_debug "cat expected" &&
++		test_debug "printf '"actual: "'" &&
++		test_debug "cat actual" &&
++		test_cmp expected actual
++	)
++'
++
++test_expect_success 'push basic operation' '
++	subtree_test_create_repo "$test_count" &&
++	subtree_test_create_repo "$test_count/sub proj" &&
++	test_create_commit "$test_count" main1 &&
++	test_create_commit "$test_count/sub proj" sub1 &&
++	(
++		cd "$test_count" &&
++		git fetch ./"sub proj" HEAD &&
++		git subtree add --prefix="sub dir" FETCH_HEAD
++	) &&
++	test_create_commit "$test_count" "sub dir"/main-sub1 &&
++	test_create_commit "$test_count" main2 &&
++	test_create_commit "$test_count/sub proj" sub2 &&
++	test_create_commit "$test_count" "sub dir"/main-sub2 &&
++	(
++		cd "$test_count" &&
++		git fetch ./"sub proj" HEAD &&
++		git subtree merge --prefix="sub dir" FETCH_HEAD &&
++		before=$(git rev-parse --verify HEAD) &&
++		split_hash=$(git subtree split --prefix="sub dir") &&
++		git subtree push --prefix="sub dir" ./"sub proj" from-mainline &&
++		test "$before" = "$(git rev-parse --verify HEAD)" &&
++		test "$split_hash" = "$(git -C "sub proj" rev-parse --verify refs/heads/from-mainline)"
++	)
 +'
 +
  #
- # Tests for 'git subtree add'
+ # Validity checking
  #
 -- 
 2.31.1
