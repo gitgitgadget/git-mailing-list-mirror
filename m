@@ -2,101 +2,148 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6024BC433B4
-	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 19:58:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 74B25C433ED
+	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 20:41:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 42522613B1
-	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 19:58:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4B114611BE
+	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 20:41:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238908AbhD0T7I (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Apr 2021 15:59:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43224 "EHLO
+        id S235803AbhD0UmR convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Tue, 27 Apr 2021 16:42:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52602 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235719AbhD0T7G (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Apr 2021 15:59:06 -0400
-Received: from mail-oo1-xc32.google.com (mail-oo1-xc32.google.com [IPv6:2607:f8b0:4864:20::c32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2E8EC061574
-        for <git@vger.kernel.org>; Tue, 27 Apr 2021 12:58:21 -0700 (PDT)
-Received: by mail-oo1-xc32.google.com with SMTP id w6-20020a4a9d060000b02901f9175244e7so1213070ooj.9
-        for <git@vger.kernel.org>; Tue, 27 Apr 2021 12:58:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=xiyfy58l34Ys9lsYfY26Iy0LDsVzKviTaeKL7J2OljE=;
-        b=i6ZQNCiFVew2xXJxS/M5GhijPHel/j0bMKoR2NqHhiZMEZfOACyApib4VV+NG9R040
-         aePECsMp7i2gFMzp4QLMaanniga5TzH4yauafTOgR8N1xQ3GBLN8oc105Kc8eA12Ui1u
-         zMQLCGMfo3Xcv1fhx2qjxWip9Gv/BfkLXwNuzgRnOCUfTtogGU04htjysIeJnrzXRN6P
-         eilIrwtbTFgr4WxqZ/8nZ204xNnEm10NcRP23s7um03B+JiE8cDFfq/Q0KY4DLc8Je8n
-         PW0Xcv/jlqqHgfLwoE3iFnXTKGRjHq6HNRYNCSAEExlVLXX7m3eA5Im+kzxlGImNVnnp
-         ypvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=xiyfy58l34Ys9lsYfY26Iy0LDsVzKviTaeKL7J2OljE=;
-        b=ZrKBKgNR1t3Q9oP/e5arCdiywRqP3vqzmw28OVclIPn4DNNdaBPLBtxRKUVoVl3/AK
-         7rWyu9r85HanwcoGzFe6p0Tzyxio6VLHEvtub2rZ+Fobf7kxGnED3baEbsA/JCf81JPJ
-         ptiZNp1+CQimkJk8tdpgGqWLRnzsNtgqnP4vlYA7CkkkFTk7D4aQYgXZNEpG/o/lxva4
-         6mHsJdX3PK1QRvE++Vx2JbNiFLIwhkDVybEmJLd8VcNJmZkc/ArH78ftKc0BWXNS1nSZ
-         XyUt96Oc3va/li8SW+Yt+enaJrGdxNavJCevOFYIEsxcX/hzJoRPDGCYduiswP2V2tys
-         lLqw==
-X-Gm-Message-State: AOAM530rvkaML4qrRew65C6ufXDrlgwJZTzCJQtqchTVXV9X+FSY2o8U
-        AIp1cUMtYxcvbD4Q2bMyOLI=
-X-Google-Smtp-Source: ABdhPJybkMuO2Xm0pu9FwIQhX48rVDaX0yaxoamnSNWgB5GzEJaSEPQ/cI1ogkY1GlOd30A882N4ig==
-X-Received: by 2002:a4a:db7d:: with SMTP id o29mr19165427ood.45.1619553501104;
-        Tue, 27 Apr 2021 12:58:21 -0700 (PDT)
-Received: from localhost ([2806:2f0:4060:638f:a2c5:89ff:fe0c:1151])
-        by smtp.gmail.com with ESMTPSA id k24sm177261oic.51.2021.04.27.12.58.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Apr 2021 12:58:20 -0700 (PDT)
-Date:   Tue, 27 Apr 2021 14:58:19 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Shoaib Meenai <smeenai@fb.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Message-ID: <60886cdb7c3a2_222c20818@natae.notmuch>
-In-Reply-To: <87h7ju21kg.fsf@evledraar.gmail.com>
-References: <79834D18-EAF4-4748-9B96-38AAA0760499@fb.com>
- <608391297345f_10cb920875@natae.notmuch>
- <87h7ju21kg.fsf@evledraar.gmail.com>
-Subject: Re: [BUG] ** glob pattern in git diff doesn't match root directory
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        with ESMTP id S235412AbhD0UmQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Apr 2021 16:42:16 -0400
+Received: from mav.lukeshu.com (mav.lukeshu.com [IPv6:2001:19f0:5c00:8069:5400:ff:fe26:6a86])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D685C061574
+        for <git@vger.kernel.org>; Tue, 27 Apr 2021 13:41:32 -0700 (PDT)
+Received: from lukeshu-dw-thinkpad (unknown [IPv6:2601:281:8200:26:4e34:88ff:fe48:5521])
+        by mav.lukeshu.com (Postfix) with ESMTPSA id B39B380590;
+        Tue, 27 Apr 2021 16:41:23 -0400 (EDT)
+Date:   Tue, 27 Apr 2021 14:41:22 -0600
+Message-ID: <87k0ona2a5.wl-lukeshu@lukeshu.com>
+From:   Luke Shumaker <lukeshu@lukeshu.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Luke Shumaker <lukeshu@lukeshu.com>,
+        Git List <git@vger.kernel.org>,
+        Avery Pennarun <apenwarr@gmail.com>,
+        Charles Bailey <cbailey32@bloomberg.net>,
+        Danny Lin <danny0838@gmail.com>,
+        "David A .\ Greene" <greened@obbligato.org>,
+        David Aguilar <davvid@gmail.com>,
+        Jakub Suder <jakub.suder@gmail.com>,
+        James Denholm <nod.helm@gmail.com>, Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        =?UTF-8?B?Tmd1eeG7hW4g?= =?ISO-8859-1?Q?Th=E1i_?=
+         =?UTF-8?B?Tmfhu41j?= Duy <pclouds@gmail.com>,
+        Roger L Strain <roger.strain@swri.org>,
+        Techlive Zheng <techlivezheng@gmail.com>,
+        Luke Shumaker <lukeshu@datawire.io>
+Subject: Re: [PATCH 04/30] subtree: t7900: use consistent formatting
+In-Reply-To: <xmqqpmygdwml.fsf@gitster.g>
+References: <20210423194230.1388945-1-lukeshu@lukeshu.com>
+        <20210423194230.1388945-5-lukeshu@lukeshu.com>
+        <CAPig+cT=jZdq=oDSHRF6DnvqZVo4OiPGy7x7AzTzdcy6RV76kw@mail.gmail.com>
+        <xmqqpmygdwml.fsf@gitster.g>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?ISO-8859-4?Q?Goj=F2?=) APEL-LB/10.8 EasyPG/1.0.0
+ Emacs/27.2 (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason wrote:
-> On Sat, Apr 24 2021, Felipe Contreras wrote:
-
-> > I stumbled upoon a very similar issue (I wanted to find all the *.jpg in
-> > the repository). I couldn't find another way to do it but:
+On Tue, 27 Apr 2021 01:17:38 -0600,
+Junio C Hamano wrote:
+> 
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> 
+> >> +check_equal () {
+> >>         test_debug 'echo'
+> >>         test_debug "echo \"check a:\" \"{$1}\""
+> >>         test_debug "echo \"      b:\" \"{$2}\""
+> >> -       if [ "$1" = "$2" ]; then
+> >> +       if [ "$1" = "$2" ]
+> >> +       then
 > >
-> >   git diff ':(glob)**/foo'
+> > We prefer `test` over `[`, so it might make sense to update that, as
+> > well, along with these other style cleanups.
 > 
-> Maybe I'm missing something, but if you want to find all *.jpg isn't
-> that just:
+> If I were working on this, I wouldn't bother.
+
+In this case, it's not just about consistency with git-core, it's
+about consistency within contrib/subtree; there were just 2 or 3
+places where it used `[` instead of `test`.
+
+> If Luke is volunteering to take over its maintainership, it would be
+> appreciated by its users.  It has been in the "abandonware" status
+> for too long.
+
+I think I am volunteering.
+
+We have been using git-subtree increasingly heavily at Ambassador Labs
+(née Datawire) for about 2 years now, and I don't see that changing.
+What I'm doing now is trying to get >2 years of accumulated patches in
+to a submittable state (a lot of the patches were bad; for instance on
+my main branch `git subtree add` is broken, but that's fine, because
+you don't use `add` all the time like you do `split` or `merge`, but
+that's something I need to fix before submitting it).  Assuming that
+we're going to continue being heavy users of it, and are going to
+continue to patch issues with it, I'd rather let that live upstream
+rather than telling all of my coworkers to get it from
+<https://github.com/LukeShu/git>.
+
+With a recent change in project scheduling, I anticipate that I'll
+have bandwidth to be able to handle that.  (It's what's giving me
+adequate time to work through this pile of existing patches, anyway.)
+
+What does being a maintainer consist of?  Are there standups that I
+should join?
+
+> As far as I am concerned, contrib/subtree has always been treated as
+> a borrowed code [*] that is written in a dialect of shell that is
+> different from what our scripts are written in, and there are too
+> many style differences (I wouldn't call them violations---nobody has
+> expected the code there to follow our style, or attempted to enforce
+> our style there) to bother coercing.
 > 
->     git diff '*.jpg'
+> [Footnote]
 > 
-> ?
+> * ... as opposed to a properly maintained part of the git-core
+>   proper.
 
-Right, actually I misremembered; it was all '.gitignore' files.
+Elsewhere in the thread, you suggested that subtree be taken out of
+git.git, and live as a standalone project.
 
-If I do '*.gitignore' that matches all the files, but also any
-$x.gitignore files. If I want only '.gitignore' files I need
-':(glob)**/.gitignore'.
+I'm not entirely opposed to that, but
 
-Cheers.
+ 1. I'm not sure how whoever picks it up (me) establishes their
+    git-subtree as the "real" subtree (get a blessing from Avery?).
+
+ 2. I think a lot of the reason why more people don't use git-subtree
+    is that the core 'split' operation doesn't quite work reliably
+    (and also it can be quite slow), and so it doesn't get
+    recommended.  I would like nothing more than to improve the
+    'split' reliability to where it does start to gain adoption, to
+    where we can think about it graduating from contrib/ to git-core.
+
+ 3. Many systems (Arch Linux and macOS, at least) give users
+    git-subtree as part of the stock Git install.  If I'm interested
+    in growing git-subtree adoption, I'd be a fool to give that up :)
+
+On the other hand, I think that in the long-ish term git-subtree wants
+to be rewritten in a better-suited language.  My personal inclination
+would be Go, but if I ever want it to graduate to git-core, it'd have
+to be C, huh?
 
 -- 
-Felipe Contreras
+Happy hacking,
+~ Luke Shumaker
