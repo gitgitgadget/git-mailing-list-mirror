@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 35B7EC433B4
-	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 10:39:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C0BFC433B4
+	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 10:39:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 02162611ED
-	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 10:39:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DA2636127A
+	for <git@archiver.kernel.org>; Tue, 27 Apr 2021 10:39:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236536AbhD0Kjz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Apr 2021 06:39:55 -0400
+        id S235956AbhD0Kj5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Apr 2021 06:39:57 -0400
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238260AbhD0KjO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Apr 2021 06:39:14 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FF27C061574
-        for <git@vger.kernel.org>; Tue, 27 Apr 2021 03:38:31 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id a22-20020a05600c2256b029014294520f18so2235356wmm.1
-        for <git@vger.kernel.org>; Tue, 27 Apr 2021 03:38:31 -0700 (PDT)
+        with ESMTP id S238291AbhD0KjP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Apr 2021 06:39:15 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68761C06175F
+        for <git@vger.kernel.org>; Tue, 27 Apr 2021 03:38:32 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id i21-20020a05600c3555b029012eae2af5d4so6788964wmq.4
+        for <git@vger.kernel.org>; Tue, 27 Apr 2021 03:38:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=X0PzUSzC+SRtK99yWFnIg18G/Wq5vdZArXandSlRw4g=;
-        b=uf+ky12uG4Rv7GWrN8wvRkIbC7Qwa63iAfUl1DdFRN+y0Alhe3zo8I9bSyF0CbOOwn
-         NZ9R71iVYz8j375f7k7dprdu/gFKpvGfXsYw8kJyKpOoPpCSSzAsq2JG5ceRWv+WlOqJ
-         oa2wpcXIK3qzuR/tPMNwVK0NlHTCH5sVvYUd1HHqpygrDPZbd7in7Vhq51JnDE8cUP0s
-         FEHWVveUwmTxZTq/6xhzyJl/Y4yobKL5QjXYKcf9NsKgeo1/IG9CdNmHZH9p2OdVIMMl
-         ssawm6PW7C0wy36dHjGRwDgg9pXxGGapY8/geHfQCC0nihN0hX/zvTf5QDJNWM0fg2Cr
-         Hv0A==
+        bh=dg9jCCW7nSsv9yF5hGXFIkFdi+RzDW55ABM6rE35tLg=;
+        b=A2scK9hiOF9qgCkgMa4Pnv1ziwJrrgSyk5n4aAQeh493Yb5Y08RbeZvd9I1jFcHZWr
+         jjHu0StTadFM5tYZp/mIi/Nl1i2Eo4O3+2qPPYKPbhvkHxCxahmCKeXz5zs+kHSqxSVz
+         +q3zlRr4g7rf6WxAFCMtzgKLFrZfVIFTv2yTcePrw06erk3uNjGyaPSyk4BoQAJev/z2
+         uAowwgIYMN2bYPxywYXFBQrqPLlqpZF8l+zDPXtRcaT3HpJB742bkNuuEKWMVD5wYSkd
+         i41eHJt9KbKP8sBsyKi3JGUrRPB0CklzmBj/Hn70/pwcyEttJtJVnzw/PgTTwY9WDAmJ
+         euiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=X0PzUSzC+SRtK99yWFnIg18G/Wq5vdZArXandSlRw4g=;
-        b=kpxatoSi90ayj81N4f3l+TV8gGjhnr+mT7BNlhVLyNix6zVU9D9OFLKC4X1BMCvGoI
-         vZyDBRsmi7EKbEah9F0/JPQDAQ3eNVB7BGuR7Lb5qL0NQB7DWfQweNCyyshR6iBICWzR
-         ULRgnmK9GTLr6lFKqI/87ZfHaEUcAZGEKESvDVUgOgmedAoP/13vexVrJHX/XyWjUU2c
-         sPB/D6oe0FlxiwqWXGpbUWy94ReJIZ6mGx0PDFm6yDUt2qze45X9dboSu0Pxew5MZOm6
-         cLln/I5xG8cu7bXimePDogMKulvGp9MgeCwxuw7zTdBD9iDWmrhUvve8l+NFHP/EWUu5
-         lKOg==
-X-Gm-Message-State: AOAM533O5gElfpNTt24q0xkIknVIsQqSB+G9vEnRi062nfKhQZUhDsvX
-        ph/2H31iCpUA9Jf0AwcKWDLeQqzAhI8=
-X-Google-Smtp-Source: ABdhPJyTLOEbNNdP71FJoTfdGcKYlGYV6azxSgfR3PvLEIGP2yfF4fLdp0B3QTEpn7/KObWu9VF0rQ==
-X-Received: by 2002:a05:600c:251:: with SMTP id 17mr3704914wmj.64.1619519910245;
-        Tue, 27 Apr 2021 03:38:30 -0700 (PDT)
+        bh=dg9jCCW7nSsv9yF5hGXFIkFdi+RzDW55ABM6rE35tLg=;
+        b=h5f8fUdJueJW8LyYHUIcHgImETX961PWoqbSfYdKYlXmrbBxfCIsSCYWZsUvf+TgSh
+         UbhWiwsU9Oa/kQz1mtI2pE2JNTNuydQs7Nenbod59TW895AaoNJXBrFYL4TxNcLadugr
+         g5bboo2OtouwqqhtpAbOfLc42ZbnqyfTqAe3dN+bW5AHAKDYqoGBN21Mw+0bBAyDmKQ2
+         cJ/Q3pLKYAILHM14RfjvgRL3fur7wTtM4mn2COAE50bSLl9dvofCF/O+kuZNXPmU8Z4Y
+         ie6/zLLVEM88UQb6X3geCW+to74qhfugnYQEyztS/3km1VgqC9L1yWK3eqAA7npcii/i
+         kv/g==
+X-Gm-Message-State: AOAM533TeeMqS/DVduOvzCEWyh3Net7ZfAZ/DQbAhzjVUT8/dK3r4hef
+        9IWm5gMOFExz+WQIFNt6shbsS8n9fEk=
+X-Google-Smtp-Source: ABdhPJwhtokTwbZHtY0kIpjenUO6JDFoRPQurkdkfxjviEgDw88LBaR5UtIjRuoe0XrE7ArtN2IxuQ==
+X-Received: by 2002:a7b:ce17:: with SMTP id m23mr3633683wmc.124.1619519911221;
+        Tue, 27 Apr 2021 03:38:31 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d6sm3328864wrr.77.2021.04.27.03.38.29
+        by smtp.gmail.com with ESMTPSA id a142sm2142165wmd.7.2021.04.27.03.38.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Apr 2021 03:38:29 -0700 (PDT)
-Message-Id: <4bf1bf16bca35002453c4542c6758e3545e4844a.1619519903.git.gitgitgadget@gmail.com>
+        Tue, 27 Apr 2021 03:38:30 -0700 (PDT)
+Message-Id: <d8e80d83b6f8ee929b187aaffd5f37c3c981b50b.1619519903.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1008.v2.git.git.1619519903.gitgitgadget@gmail.com>
 References: <pull.1008.git.git.1618829583.gitgitgadget@gmail.com>
         <pull.1008.v2.git.git.1619519903.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 27 Apr 2021 10:38:11 +0000
-Subject: [PATCH v2 10/21] t7003: use rev-parse rather than FS inspection
+Date:   Tue, 27 Apr 2021 10:38:13 +0000
+Subject: [PATCH v2 12/21] t5304: use "reflog expire --all" to clear the reflog
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,24 +77,53 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
+This is more explicit, and reduces the depency between test functions. It also
+is more amenable to use with reftable, which has no concept of (non)existence of
+a reflog
+
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- t/t7003-filter-branch.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t5304-prune.sh | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
-index 1349e5b2321c..cf30055c88dd 100755
---- a/t/t7003-filter-branch.sh
-+++ b/t/t7003-filter-branch.sh
-@@ -395,7 +395,7 @@ test_expect_success '--prune-empty is able to prune root commit' '
- test_expect_success '--prune-empty is able to prune entire branch' '
- 	git branch prune-entire B &&
- 	git filter-branch -f --prune-empty --index-filter "git update-index --remove A.t B.t" prune-entire &&
--	test_path_is_missing .git/refs/heads/prune-entire &&
-+	test_must_fail git rev-parse refs/heads/prune-entire &&
- 	test_must_fail git reflog exists refs/heads/prune-entire
- '
+diff --git a/t/t5304-prune.sh b/t/t5304-prune.sh
+index 7f47f13c78e8..7b850ae26171 100755
+--- a/t/t5304-prune.sh
++++ b/t/t5304-prune.sh
+@@ -81,12 +81,12 @@ test_expect_success 'prune: prune nonsense parameters' '
  
+ test_expect_success 'prune: prune unreachable heads' '
+ 	git config core.logAllRefUpdates false &&
+-	mv .git/logs .git/logs.old &&
+-	: > file2 &&
++	>file2 &&
+ 	git add file2 &&
+ 	git commit -m temporary &&
+ 	tmp_head=$(git rev-list -1 HEAD) &&
+ 	git reset HEAD^ &&
++	git reflog expire --all &&
+ 	git prune &&
+ 	test_must_fail git reset $tmp_head --
+ '
+@@ -94,9 +94,7 @@ test_expect_success 'prune: prune unreachable heads' '
+ test_expect_success 'prune: do not prune detached HEAD with no reflog' '
+ 	git checkout --detach --quiet &&
+ 	git commit --allow-empty -m "detached commit" &&
+-	# verify that there is no reflogs
+-	# (should be removed and disabled by previous test)
+-	test_path_is_missing .git/logs &&
++	git reflog expire --all &&
+ 	git prune -n >prune_actual &&
+ 	test_must_be_empty prune_actual
+ '
+@@ -104,6 +102,7 @@ test_expect_success 'prune: do not prune detached HEAD with no reflog' '
+ test_expect_success 'prune: prune former HEAD after checking out branch' '
+ 	head_oid=$(git rev-parse HEAD) &&
+ 	git checkout --quiet main &&
++	git reflog expire --all &&
+ 	git prune -v >prune_actual &&
+ 	grep "$head_oid" prune_actual
+ '
 -- 
 gitgitgadget
 
