@@ -2,326 +2,188 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-1.2 required=3.0 tests=BAYES_00,DATE_IN_PAST_12_24,
+	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 13FC3C433ED
-	for <git@archiver.kernel.org>; Wed, 28 Apr 2021 13:54:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A1C47C433ED
+	for <git@archiver.kernel.org>; Wed, 28 Apr 2021 14:12:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CCAF361441
-	for <git@archiver.kernel.org>; Wed, 28 Apr 2021 13:54:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 769A6613FA
+	for <git@archiver.kernel.org>; Wed, 28 Apr 2021 14:12:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230245AbhD1NzK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Apr 2021 09:55:10 -0400
-Received: from siwi.pair.com ([209.68.5.199]:41285 "EHLO siwi.pair.com"
+        id S240162AbhD1OMr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Apr 2021 10:12:47 -0400
+Received: from mout.gmx.net ([212.227.17.20]:50519 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229965AbhD1NzK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Apr 2021 09:55:10 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 9B1703F40E4;
-        Wed, 28 Apr 2021 09:54:24 -0400 (EDT)
-Received: from MININT-RVM6V2G.redmond.corp.microsoft.com (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 695323F40DA;
-        Wed, 28 Apr 2021 09:54:24 -0400 (EDT)
-Subject: Re: [PATCH 01/23] fsmonitor--daemon: man page and documentation
-To:     Derrick Stolee <stolee@gmail.com>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Jeff Hostetler <jeffhost@microsoft.com>
-References: <pull.923.git.1617291666.gitgitgadget@gmail.com>
- <074273330f8d6c656dfec7c8778fad20314c6ad1.1617291666.git.gitgitgadget@gmail.com>
- <b868522c-f07f-c431-aa2c-14af84015ced@gmail.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <e3ef8d87-355e-d3df-9f04-fb52456734dd@jeffhostetler.com>
-Date:   Wed, 28 Apr 2021 09:54:23 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+        id S231375AbhD1OMr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Apr 2021 10:12:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1619619117;
+        bh=8rBGCQ9Q5PWlKB+JUA18vKXpCZt77VNfUTfNz9z4V2w=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=JfjuSFAbglyN2yx8pUAlH2rcYjeMKz6wOTnb9adSukJhGEXqgn69kpp04L/zMa/DF
+         yi0cTswak7RxYEXBWAXBJ+bTqeriTH8Dw+ABXaJ1oYsesSP4mS9e1cW9xRtKBm5tX4
+         ImTdFDnm68ZXA3XoXQo55xxKTawxtvAPcnnCzUBg=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.23.111.181] ([89.1.213.207]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MybGX-1lNFq41QIX-00z10Y; Wed, 28
+ Apr 2021 16:11:57 +0200
+Date:   Wed, 28 Apr 2021 02:27:18 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Adam Dinwoodie <adam@dinwoodie.org>
+cc:     RyotaK <security@ryotak.me>, Git Mailing List <git@vger.kernel.org>
+Subject: Re: [RFC PATCH] cygwin: disallow backslashes in file names
+In-Reply-To: <CA+kUOamYmFcKA+_on83=EbitvL4FQo9teMEbRHsQ=xo2ave1yQ@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2104280226530.54@tvgsbejvaqbjf.bet>
+References: <20210424212117.6165-1-adam@dinwoodie.org> <nycvar.QRO.7.76.6.2104250413320.54@tvgsbejvaqbjf.bet> <CA+kUOan3vk1zJezpieRhKwZ8gsYrCxDBefkXJ1fUC61O+gb12A@mail.gmail.com> <CA+kUOamYmFcKA+_on83=EbitvL4FQo9teMEbRHsQ=xo2ave1yQ@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <b868522c-f07f-c431-aa2c-14af84015ced@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="8323328-501121260-1619569640=:54"
+X-Provags-ID: V03:K1:Jgq9zSXjxBkdQuMZ4pEXBIJKpiBxagJ1Ijc6ln3ObvpNxpDKPcE
+ Y0q7OKCRh241aoCZQicbMLvOpvzduCJSePIunkuU5nrr0vZTiv6G2jrZNV0lPbj9sSEQToH
+ mmrZCOcPawmunItNgmr2cDOSGvVVF5HeocAt60HbUj7nX1LgDC/omkYdXx+P+8hmtFKtVSP
+ eMepzVH6yUfM1s8Zj/H+A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:0VAJ2eB5Nas=:/KvWipQXEyHVlNLIll6dEV
+ VWglQwpH7PJal3AJmVPz3un+zDJqtJ9QlRo1SNH0Sea+YQLR9YH5HALCKbLrCvy2926+aOq3s
+ YG4uLm8eSGk/wMBhtoocE68ws39Wwzhira5qlT7ZODZ307GRy9/qzYErxVOD65KxX7zfQnF14
+ Rex17pgl9Pz2gTHJVpCmjSyg08enqz27JDJb8iG1Vy6Z3f46zgAQS6NnvxhbRkh7bcWC2pmd7
+ YycYHQc89BzUoqwA5OUIvLjUOhz/qGuq9N3bEmwZ+reylSR+IRpaGIU532YYDCNrsgW2574Au
+ uFvxnnf/kV4/KbKJBX5dffftzFgV5X9lbSSHfPTwU283T0fJ1mucC8buKqxCMYO5XLnPDMF4m
+ JS7Net+NHbgdQjb0Un8sdsKXYNlKd3SKLGjCBn+LxbSsW7za+P/+jetnjOWBpY0iypKyOJEWd
+ Ou7XsO7Vt5fd2Tkjz2vBXu0V6/jgopE0OPTerz2W17emcJIBU4+DC5H7a805TXw72MSfs0quO
+ FfXvbKFnnAxSJe3Q2Tt4/XAvIQYCJEb9NAh7WNGeIsa/7FML8xrL7Gx7aBFs2x6v5n4vTEV6c
+ Y6ibtQyfVZW729gIwnnRMvOFj357hdyaezEDTjcXJgo0AMvrzspirgLRi9PEjY1xCrbT7UaTc
+ zmKI6Sr89lRMHJlaAtM58uKriXJkcCIGJQqWlZ1vHrDCq6OEn4kNeZSTAwMmngK34WzZeCEFp
+ 94SbOMxS+8/MliyoZ47GCOZ42STznTW3oA8m8uaYWC4xk9f9/hOMk8DbNehj3Jg4/dN1f+jrq
+ 0hRxiXcmeS59rtT2Evhd8sPcvfkNKtkpTXdeMIXTV2WfnIThlMxkrUZ3MJXMqZ2yRfiWO1hqc
+ C5pmT+xo9JTiyVku5xSfuVLlL/MXVf4Qd0B292TTPRHS+NaV7fTTxw8TGtzZhW3B7IUmaPjlL
+ 2eOSM/hX/aBFA2a/N0+3H0hCOLOVR11Wcz0n24EmJV76gWyUDESYrNWSrwB93elqXQapV8y5h
+ y9AhXRjQIcCEQPZNDvKdS1SvFuGEMDWHCSD3u99FmcUe/8ZTS+AP9m4dnj8rjKMRQIsEb66Wh
+ iyVYkAz34XJ6OMIlzttDEcjyf9WGL/xX2j7IyzX90gQ0EX67XmisC5tRi2eeFJrCp4sYtgqru
+ OX2gupc8t1/4bqdc5ANWdZJ5ISSs4Joi+lhBxXQRTU4G2B9p8QC0dCv44gXOPAZKfdloOHlJX
+ 3nmq74jK7t2s0ba05
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
+--8323328-501121260-1619569640=:54
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-On 4/26/21 10:13 AM, Derrick Stolee wrote:
-> On 4/1/21 11:40 AM, Jeff Hostetler via GitGitGadget wrote:
->> From: Jeff Hostetler <jeffhost@microsoft.com>
->>
->> Create a manual page describing the `git fsmonitor--daemon` feature.
->>
->> Update references to `core.fsmonitor`, `core.fsmonitorHookVersion` and
->> pointers to `watchman` to mention the built-in FSMonitor.
-> 
-> Make sense to add clarity here, since there will be new ways
-> to interact with a fileystem monitor.
->>   core.fsmonitorHookVersion::
->> -	Sets the version of hook that is to be used when calling fsmonitor.
->> -	There are currently versions 1 and 2. When this is not set,
->> -	version 2 will be tried first and if it fails then version 1
->> -	will be tried. Version 1 uses a timestamp as input to determine
->> -	which files have changes since that time but some monitors
->> -	like watchman have race conditions when used with a timestamp.
->> -	Version 2 uses an opaque string so that the monitor can return
->> -	something that can be used to determine what files have changed
->> -	without race conditions.
->> +	Sets the version of hook that is to be used when calling the
->> +	FSMonitor hook (as configured via `core.fsmonitor`).
->> ++
->> +There are currently versions 1 and 2. When this is not set,
->> +version 2 will be tried first and if it fails then version 1
->> +will be tried. Version 1 uses a timestamp as input to determine
->> +which files have changes since that time but some monitors
->> +like watchman have race conditions when used with a timestamp.
->> +Version 2 uses an opaque string so that the monitor can return
->> +something that can be used to determine what files have changed
->> +without race conditions.
-> 
-> This initially seemed like a big edit, but you just split the single
-> paragraph into multiple, with a better leading sentence and a final
-> statement about the built-in FSMonitor. Good.
->> ++
->> +Note: FSMonitor hooks (and this config setting) are ignored if the
->> +built-in FSMonitor is enabled (see `core.useBuiltinFSMonitor`).
->> +
->> +core.useBuiltinFSMonitor::
->> +	If set to true, enable the built-in filesystem event watcher (for
->> +	technical details, see linkgit:git-fsmonitor--daemon[1]).
->> ++
->> +Like external (hook-based) FSMonitors, the built-in FSMonitor can speed up
->> +Git commands that need to refresh the Git index (e.g. `git status`) in a
->> +worktree with many files. The built-in FSMonitor facility eliminates the
->> +need to install and maintain an external third-party monitoring tool.
->> ++
->> +The built-in FSMonitor is currently available only on a limited set of
->> +supported platforms.
-> 
-> Is there a way for users to know this set of platforms? Can they run
-> a command to find out? Will 'git fsmonitor--daemon --start' send a
-> helpful message to assist here? Or, could there be a 'git
-> fsmonitor--daemon --test' command?
+Hi Adam,
 
-I do have a `git fsmonitor--daemon --is-supported` option.  It will
-exit with 0 if the current platform is supported.
+On Tue, 27 Apr 2021, Adam Dinwoodie wrote:
 
-It would probably be helpful to list the current platforms and/or
-add a statement about the `--is-supported` command here.
+> On Mon, 26 Apr 2021 at 20:56, Adam Dinwoodie wrote:
+> >
+> > On Mon, 26 Apr 2021 at 15:08, Johannes Schindelin wrote:
+> > >
+> > > Hi Adam,
+> > >
+> > > On Sat, 24 Apr 2021, Adam Dinwoodie wrote:
+> > > > Notes:
+> > > >     The patch to read-cache.c is the one I've applied downstream a=
+s the Cygwin Git
+> > > >     maintainer to resolve this vulnerability, and I've manually te=
+sted that it
+> > > >     resolves the vulnerability, so that's the change I'd recommend=
+ anyone who needs
+> > > >     to build Git on Cygwin themselves take until there's something=
+ officially in
+> > > >     the Git source code.
+> > > >
+> > > >     I'm much less convinced by my approach for the test script.  I=
+ definitely think
+> > > >     it's worth having a test here, but the test as written still f=
+ails, as the test
+> > > >     seems to be looking for the error message "directory not empty=
+", but running
+> > > >     the test on Cygwin produces the error "cannot create submodule=
+ directory d\a".
+> > > >     I'm not sure why that difference exists, and whether the corre=
+ct approach would
+> > > >     be to (a) ensure the error messages are consistent across plat=
+forms or (b) to
+> > > >     change the test to expect the appropriate error on the appropr=
+iate platform.
+> > >
+> > > Wasn't there something in Cygwin that _allowed_ backslashes as file =
+name
+> > > characters? I vaguely remember that the ASCII characters forbidden b=
+y
+> > > Windows were mapped into some "private page".
+> > >
+> > > Maybe that is responsible for the difference here?
+> >
+> > So there is special handling of a bunch of characters like ":" that
+> > are valid as parts of filenames on most *nix systems, but which aren't
+> > valid on Windows, by substituting them for characters in the Unicode
+> > "private use area" space. Backslash isn't one of those characters,
+> > though; quoting
+> > https://cygwin.com/cygwin-ug-net/using-specialnames.html (which I just
+> > checked myself to be sure): "The backslash has to be exempt from this
+> > conversion, because Cygwin accepts Win32 filenames including
+> > backslashes as path separators on input."
+> >
+> > Which is not to say this special handling _isn't_ the cause of the
+> > difference here, but it's not so simple as that. If nobody spots an
+> > explanation I've missed, I'll start digging into the code and strace
+> > to work out exactly what's causing the difference in behaviour.
+>
+> I've worked out what's going wrong here: the "prevent git~1 squatting
+> on Windows" test is actually testing a selection of different Windows
+> path oddities, which are handled differently between Git for Windows
+> and Cygwin Git. The specific behaviour here is the handling of a
+> directory called "d."; Git for Windows (I assume in the MSYS2 layer)
+> follows the standard Windows convention of treating "d." and "d" as
+> identical filenames, while Cygwin sticks to its general design
+> philosophy of mostly emulating *nix systems, allowing objects with
+> both filenames to exist in the same directory (and causing pain for
+> most non-Cygwin applications that try to interact with them).
+>
+> Essentially this test is checking a bunch of different oddities about
+> path handling on Windows. Some things =E2=80=93 such as handling backsla=
+shes =E2=80=93
+> are common to both Cygwin and MSYS2; some =E2=80=93 such as handling tra=
+iling
+> periods =E2=80=93 aren't. So I expect the solution here will be to have
+> separate tests for (a) Git for Windows, (b) Cygwin Git, and (c) common
+> behaviour.
 
-> 
->> +Note: if this config setting is set to `true`, any FSMonitor hook
->> +configured via `core.fsmonitor` (and possibly `core.fsmonitorHookVersion`)
->> +is ignored.
-> ...
->> +git-fsmonitor--daemon(1)
->> +========================
->> +
->> +NAME
->> +----
->> +git-fsmonitor--daemon - Builtin file system monitor daemon
->> +
->> +SYNOPSIS
->> +--------
->> +[verse]
->> +'git fsmonitor--daemon' --start
->> +'git fsmonitor--daemon' --run
->> +'git fsmonitor--daemon' --stop
->> +'git fsmonitor--daemon' --is-running
->> +'git fsmonitor--daemon' --is-supported
->> +'git fsmonitor--daemon' --query <token>
->> +'git fsmonitor--daemon' --query-index
->> +'git fsmonitor--daemon' --flush
-> 
-> These arguments with the "--" prefix make it seem like they are
-> options that could be grouped together, but you really want these
-> to be verbs within the daemon. What do you think about removing
-> the "--" prefixes?
+Ah, that would explain things. Thank you so much for digging!
 
-That's easy enough.  The OPT_CMDMODE() made it easy to do it this
-way.
+Ciao,
+Dscho
 
-> 
->> +
->> +DESCRIPTION
->> +-----------
->> +
->> +Monitors files and directories in the working directory for changes using
->> +platform-specific file system notification facilities.
->> +
->> +It communicates directly with commands like `git status` using the
->> +link:technical/api-simple-ipc.html[simple IPC] interface instead of
->> +the slower linkgit:githooks[5] interface.
->> +
->> +OPTIONS
->> +-------
-> 
-> I typically view "OPTIONS" as arguments that can be grouped together,
-> but you are describing things more like verbs or subcommands. The
-> most recent example I know about is 'git maintenance <subcommand>',
-> documented at [1].
-> 
-> [1] https://git-scm.com/docs/git-maintenance#_subcommands
+>
+> > > >     I'm also not convinced by my approach of adding a "WINDOWS" pr=
+erequisite to
+> > > >     test-lib.sh. I went with this as I couldn't immediately see a =
+way to pass
+> > > >     prerequisites on an "any" rather than "all" basis to test_expe=
+ct_success, and
+> > > >     this would allow us to simplify all the tests that currently h=
+ave
+> > > >     "!MINGW,!CYGWIN" as prerequisites, but it still feels a bit cl=
+unky to me.
+> > >
+> > > Right, the only way I could think of it would be
+> > >
+> > >         test_lazy_prereq 'test_have_prereq MINGW || test_have_prereq=
+ CYGWIN'
+> > >
+> > > Your approach looks fine to me, though.
+> >
+> > Grand, okay. I'll stick with that for now, then, and follow up with a
+> > patch to tidy up the other prerequisites at some point in the future.
+> >
+> > Adam
+>
 
-Let me take a look at doing the subcommand way.
-
-> 
->> +
->> +--start::
->> +	Starts the fsmonitor daemon in the background.
->> +
->> +--run::
->> +	Runs the fsmonitor daemon in the foreground.
->> +
->> +--stop::
->> +	Stops the fsmonitor daemon running for the current working
->> +	directory, if present.
-> 
-> I'm noticing "fsmonitor" in lowercase throughout this document. Is
-> that the intended case for user-facing documentation? I've been
-> seeing "FS Monitor", "filesystem monitor", or even "File System
-> Monitor" in other places.
-
-I think I want to rewrite this whole man-page and address all
-of the different spellings and phrasing.
-
-
-> 
->> +--is-running::
->> +	Exits with zero status if the fsmonitor daemon is watching the
->> +	current working directory.
-> 
-> Another potential name for this verb is "status".
-> 
->> +--is-supported::
->> +	Exits with zero status if the fsmonitor daemon feature is supported
->> +	on this platform.
-> 
-> Ah, here is an indicator of whether the platform is supported. Please
-> include details for this command in the earlier documentation. I'll
-> check later to see if a message is also sent over 'stderr', which
-> would be helpful. Documenting the exit status is good for third-party
-> tools that might use this.
-> 
->> +--query <token>::
->> +	Connects to the fsmonitor daemon (starting it if necessary) and
->> +	requests the list of changed files and directories since the
->> +	given token.
->> +	This is intended for testing purposes.
->> +
->> +--query-index::
->> +	Read the current `<token>` from the File System Monitor index
->> +	extension (if present) and use it to query the fsmonitor daemon.
->> +	This is intended for testing purposes.
-> 
-> These two could be grouped as "query [--token=X|--index]", especially
-> because they are for testing purposes.
-> 
->> +
->> +--flush::
->> +	Force the fsmonitor daemon to flush its in-memory cache and
->> +	re-sync with the file system.
->> +	This is intended for testing purposes.
-> 
-> Do you see benefits to these being available in the CLI? Could these
-> be better served as a test helper?
-
-I debated putting the 3 test options into a test helper.
-Let me take a look at that.
-
-> 
->> +REMARKS
->> +-------
->> +The fsmonitor daemon is a long running process that will watch a single
->> +working directory.  Commands, such as `git status`, should automatically
->> +start it (if necessary) when `core.useBuiltinFSMonitor` is set to `true`
->> +(see linkgit:git-config[1]).
->> +
->> +Configure the built-in FSMonitor via `core.useBuiltinFSMonitor` in each
->> +working directory separately, or globally via `git config --global
->> +core.useBuiltinFSMonitor true`.
->> +
->> +Tokens are opaque strings.  They are used by the fsmonitor daemon to
->> +mark a point in time and the associated internal state.  Callers should
->> +make no assumptions about the content of the token.  In particular,
->> +the should not assume that it is a timestamp.
->> +
->> +Query commands send a request-token to the daemon and it responds with
->> +a summary of the changes that have occurred since that token was
->> +created.  The daemon also returns a response-token that the client can
->> +use in a future query.
->> +
->> +For more information see the "File System Monitor" section in
->> +linkgit:git-update-index[1].
->> +
->> +CAVEATS
->> +-------
->> +
->> +The fsmonitor daemon does not currently know about submodules and does
->> +not know to filter out file system events that happen within a
->> +submodule.  If fsmonitor daemon is watching a super repo and a file is
->> +modified within the working directory of a submodule, it will report
->> +the change (as happening against the super repo).  However, the client
->> +should properly ignore these extra events, so performance may be affected
->> +but it should not cause an incorrect result.
-> 
-> There are several uses of the word "should" where I think "will" is a
-> more appropriate word. That is, unless we do not actually have confidence
-> in this behavior.
-
-I think I was just being overly conservative in my language.
-
-> 
->> --- a/Documentation/git-update-index.txt
->> +++ b/Documentation/git-update-index.txt
->> @@ -498,7 +498,9 @@ FILE SYSTEM MONITOR
->>   This feature is intended to speed up git operations for repos that have
->>   large working directories.
->>   
->> -It enables git to work together with a file system monitor (see the
->> +It enables git to work together with a file system monitor (see
->> +linkgit:git-fsmonitor--daemon[1]
->> +and the
->>   "fsmonitor-watchman" section of linkgit:githooks[5]) that can
->>   inform it as to what files have been modified. This enables git to avoid
->>   having to lstat() every file to find modified files.
->> diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
->> index b51959ff9418..b7d5e926f7b0 100644
->> --- a/Documentation/githooks.txt
->> +++ b/Documentation/githooks.txt
->> @@ -593,7 +593,8 @@ fsmonitor-watchman
->>   
->>   This hook is invoked when the configuration option `core.fsmonitor` is
->>   set to `.git/hooks/fsmonitor-watchman` or `.git/hooks/fsmonitor-watchmanv2`
->> -depending on the version of the hook to use.
->> +depending on the version of the hook to use, unless overridden via
->> +`core.useBuiltinFSMonitor` (see linkgit:git-config[1]).
->>   
->>   Version 1 takes two arguments, a version (1) and the time in elapsed
->>   nanoseconds since midnight, January 1, 1970.
-> 
-> These are good connections to make.
-> 
-> Since the documentation for the fsmonitor--daemon is so deep, this
-> patch might be served well to split into two: one that just documents
-> the daemon, and another that updates existing documentation to point
-> to the new file.
-
-Good point.  Thanks!
-
-> 
-> This does provide a good basis for me to investigate during the rest
-> of the review.
-> 
-> Thanks,
-> -Stolee
-> 
-
-Thanks
-Jeff
+--8323328-501121260-1619569640=:54--
