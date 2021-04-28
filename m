@@ -2,122 +2,132 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 102D3C433ED
-	for <git@archiver.kernel.org>; Wed, 28 Apr 2021 22:45:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8A4CC433ED
+	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 00:08:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D33B86143D
-	for <git@archiver.kernel.org>; Wed, 28 Apr 2021 22:45:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B53D861448
+	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 00:08:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232719AbhD1WqP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Apr 2021 18:46:15 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:43858 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229488AbhD1WqO (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 28 Apr 2021 18:46:14 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 0725D6042C;
-        Wed, 28 Apr 2021 22:44:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1619649898;
-        bh=lMW40EQlE4+wnOL3DpsnXoIrt4TJBJilVb7ESB7EoT8=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=s1M9nj/T4D5PX6LlGai7aKPQn34oH4K/JBffKoYIlpIXaz3p+lxFePRxqwGXwBlDb
-         C6Rdnn/yLjprE81V0HvkRCKPFws6KPs3trQSmcEHgKqnClws7M/RslvrEKVV+ljrZj
-         128dZQHH/bDNkGH0TnhmdiFrVOab2kQkmddxMHBVxjmzDRnYcRgXmEzDVpfrrkEPWc
-         aeOoMYkWu9ATKY7ktcOEVRO6q3ZyJftb1xrHmUrIJb3e77AhOiWZ7o/OX+SL3GgcEp
-         1OfaYSpH4D/6/HT7Ir1b4qJFqxJX5Nuh4fIGPaO9fCKOm/8KbeAdBKN4rRn/zgeHbL
-         vjY/mk/6Dhf/YOIDhQGZebs7Ej/zB5FkLxgVi8snVOktUS8z/v9PHlz6rvC1xgnSP8
-         kT1LXse6LVNxpSFk6zIEMCHfQTE4OndLj0WwBzLo3Jbf311RVc1qROl4ZDk8g6EIFe
-         f2/4uA0sVk/V0gL92lUTqHI+UlJUiN6kuK9ZDj2n2UC6JBANJ7z
-Date:   Wed, 28 Apr 2021 22:44:53 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Eric Wong <e@80x24.org>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-        Raxel Gutierrez <raxelgutierrez09@gmail.com>,
-        mricon@kernel.org, patchwork@lists.ozlabs.org,
-        Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Emily Shaffer <emilyshaffer@google.com>
-Subject: Re: Pain points in Git's patch flow
-Message-ID: <YInlZStiucEn4Km9@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Eric Wong <e@80x24.org>, Jonathan Nieder <jrnieder@gmail.com>,
-        git@vger.kernel.org, Raxel Gutierrez <raxelgutierrez09@gmail.com>,
-        mricon@kernel.org, patchwork@lists.ozlabs.org,
-        Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
-        Emily Shaffer <emilyshaffer@google.com>
-References: <YHaIBvl6Mf7ztJB3@google.com>
- <YIYfsMsz0Uz48GaI@camp.crustytoothpaste.net>
- <20210428075927.GC13114@dcvr>
+        id S231807AbhD2AJL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Apr 2021 20:09:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48942 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231437AbhD2AJL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Apr 2021 20:09:11 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64AF4C06138B
+        for <git@vger.kernel.org>; Wed, 28 Apr 2021 17:08:25 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id e7so76312025edu.10
+        for <git@vger.kernel.org>; Wed, 28 Apr 2021 17:08:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=UoInKQh70TSWe8xX+mCa33zY8wufo9JOGy4EN4jQ1uQ=;
+        b=u1KvXWD0DDiE+5TzLqfXAyD+a5wDfNQIZsb2dbLqG/AdoOKLk0G1CyVHr4rV8gZb5m
+         6AF2qQ2NKvd28wYvRcGX9+XOz5iBUELNNrNd2WDs0MZGkvZHQX6Vkb/uJ+l907LlA/Ut
+         oVxgZ9nToNmMxvrdkCTPEOY3sI6/am6AK/lTVZiobYY3XxAvRddeYcE119kYNNbUcg0m
+         ISymGZhJtEn2+PyERxSNIDoG7ziS7WNR4YJtJLQU5Bla7HLgHr4gPKVe7XPTsLoe7TR+
+         GNlMtsQDbpEll+n1PmQErViVKLb5W+XtCk2bkDOeTKkcAraKVeD6BJoaHxCemcKULvyo
+         7kwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=UoInKQh70TSWe8xX+mCa33zY8wufo9JOGy4EN4jQ1uQ=;
+        b=RE43xR+bu9qfVxwclSjx3hnO3IW2+HOiNWeLCyXwYOy1pRX+WPzRHeMcxBG4EbLSxY
+         O1/fbeyBuOyubKBI8fWiBB2OorfHJLPh1YaXzGeXdNNylAixyU8I0XdqQkhBGsB61jJN
+         AISC70CUJ4DtpSkr/bK9ZUd65nw10dO3vQ9NxjH3nDfU8qdLnsntfug+yoPMss53MHmd
+         AEYgMDVlIYbh3rlgD3vJiuTKEISGn1tv/33BKM+SMmtDbibQrRNMK0XLwIU9dGsAJ6Lz
+         q6eW0XUbbHdUpCF7WYDUFN9HvzrTtWBQX6lO8jvwl01nemN21LVdG2I1pL5OSRcaPYa8
+         c2PA==
+X-Gm-Message-State: AOAM5308ytfpJvIAbxobOPBHPZ41Gvz6sQlpzuedODu5TEN70grAnNUR
+        SS712XOUsKVRpfoFELTFhbQ=
+X-Google-Smtp-Source: ABdhPJyP0LjepU2WBwSv1TXW/XOjG2GRcVcZTfqUXLLp20rvzDm18mGGB/L4UPLJsmCDkCQ7Tgzxlw==
+X-Received: by 2002:a05:6402:27d4:: with SMTP id c20mr14852316ede.271.1619654904054;
+        Wed, 28 Apr 2021 17:08:24 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id n17sm999157eds.72.2021.04.28.17.08.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 Apr 2021 17:08:23 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>, Patrick Steinhardt <ps@pks.im>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: Nesting topics within other threads (was: [PATCH]
+ repo-settings.c: simplify the setup)
+Date:   Thu, 29 Apr 2021 01:01:28 +0200
+References: <87k0omzv3h.fsf@evledraar.gmail.com>
+ <patch-1.1-e1d8c842c70-20210428T161817Z-avarab@gmail.com>
+ <1ecb3727-106f-3d04-976a-36aa03a61caf@gmail.com>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
+In-reply-to: <1ecb3727-106f-3d04-976a-36aa03a61caf@gmail.com>
+Message-ID: <87eeeuymtl.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Z4QrVcBR+Ozv7Rzd"
-Content-Disposition: inline
-In-Reply-To: <20210428075927.GC13114@dcvr>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---Z4QrVcBR+Ozv7Rzd
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Wed, Apr 28 2021, Derrick Stolee wrote:
 
-On 2021-04-28 at 07:59:27, Eric Wong wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> wrote:
-> > I have tooling to automatically generate the proper range for
-> > range-diffs in cover letters, but that tooling requires some sort of
-> > manual timestamp, which means I need to go search for my previous series
-> > to find the date and generate the range diff, or if I'm in a rush, I
-> > just have to omit it.  This can take some time, having to guess what I
-> > named the cover letter the last time and search for it in a mailbox with
-> > a 6-digit quantity of mails[0].
-> >=20
-> > In general, I have trouble keeping track of the patch mails I've sent.
-> > I do definitely need to refer to them later, but I don't generally keep
-> > them around on my system since they tend to duplicate my repository, so
-> > I end up needing to find them in my mailbox, which as mentioned, is
-> > slow and error prone.
->=20
-> Along the lines of what Ted said about Fcc, I've always Bcc-ed
-> myself on every message I send to verify deliverability and
-> check/train my spam filter.
->=20
-> What search tool do you use?  mairix can handle the 6-digit
-> quantity of the git list fairly well.  The following finds all
-> threads with "sandals" in From/To/Cc:
->=20
-> 	mairix -t a:sandals d:YYYYMMDD-YYYYMMDD
+> On 4/28/2021 12:26 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>> Simplify the setup code in repo-settings.c in various ways, making the
+>> code shorter, easier to read, and requiring fewer hacks to do the same
+>> thing as it did before:
+>
+> This patch is interesting, and I'll review it when I have some more
+> time. Probably tomorrow.
+>
+> But I thought that I would point out that this pattern of adding a
+> patch within the thread of a larger series makes it very difficult
+> to separate the two. I use an email client that groups messages by
+> thread in order to help parse meaningful discussion from the list
+> which otherwise looks like a fire hose of noise. Now, this patch is
+> linked to the FS Monitor thread and feedback to either will trigger
+> the thread as having unread messages.
+>
+> I find it very difficult to track multiple patch series that are
+> being juggled in the same thread. It is mentally taxing enough that
+> I have avoided reviewing code presented this way to save myself the
+> effort of tracking which patches go with what topic in what order.
+>
+> Since I've committed to reviewing the FS Monitor code, I'd prefer if
+> this patch (or maybe its v2, since this is here already) be sent as
+> a top-level message so it can be discussed independently.
 
-I simply use mutt to read my mailbox and search.  Nothing fancy.  I
-should point out that it's not local; it's on a Dovecot IMAP server
-located on a VPS in New York City.
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
+As a practical matter I think any effort I make to accommodate your
+request will be dwarfed by your own starting of a sub-thread on
+E-Mail/MUA nuances :)
 
---Z4QrVcBR+Ozv7Rzd
-Content-Type: application/pgp-signature; name="signature.asc"
+When [1] was brought up the other day (showing that I'm probably not the
+best person to ask about on-list In-Reply-To semantics) I was surprised
+to find that we don't have much (if any) explicit documentation about
+In-Reply-To best practices. There's a passing mention in
+Documentation/MyFirstContribution.txt, but as far as I can tell from a
+cursory glance that's it.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.27 (GNU/Linux)
+Personally I draw the line at "this random unrelated thing occurred to
+me while reading X" v.s. "this is directly in reply to X".
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYInlZAAKCRB8DEliiIei
-gVIMAQCeMHR0IEHGPzaCjB99akSDaTVQLAY6gc++6LUDJY6ZiwD9HBWC7oFolb8B
-fzssQIiRwkoS+ZSbXqWhJxgb04traAM=
-=Nyuy
------END PGP SIGNATURE-----
+Reading the upthread I don't really see a good point at which to start
+breaking the reply chain and not make things harder for others reading
+along with clients that aren't yours (which, looking at your headers
+seems to be Thunderbird 78).
 
---Z4QrVcBR+Ozv7Rzd--
+I.e. the one feedback on the patch idea is your upthread "waiting until
+such a change". With threading you can see the context, but without
+you'd need to get it via some not-MUA side-channel (presumably
+lore.kernel.org link). Sending a v2 (if any) without threading would
+break the chain again.
+
+1. https://lore.kernel.org/git/nycvar.QRO.7.76.6.2103191540330.57@tvgsbejva=
+qbjf.bet/
