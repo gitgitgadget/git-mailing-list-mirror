@@ -2,93 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 433A1C433B4
-	for <git@archiver.kernel.org>; Wed, 28 Apr 2021 04:12:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 00FCEC433B4
+	for <git@archiver.kernel.org>; Wed, 28 Apr 2021 04:20:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1E0126140B
-	for <git@archiver.kernel.org>; Wed, 28 Apr 2021 04:12:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CE154613FF
+	for <git@archiver.kernel.org>; Wed, 28 Apr 2021 04:20:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229600AbhD1EN1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Apr 2021 00:13:27 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53379 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229437AbhD1EN1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Apr 2021 00:13:27 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 789FFC88E9;
-        Wed, 28 Apr 2021 00:12:42 -0400 (EDT)
+        id S229868AbhD1EVi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Apr 2021 00:21:38 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57724 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229437AbhD1EVh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Apr 2021 00:21:37 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C0B8EAEA10;
+        Wed, 28 Apr 2021 00:20:52 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=P7A5n/j+RgUL
-        QSTzqlOYvTvM3O+JVQtknglir9u1J8Q=; b=R5+Ys0xd1WQFb+9uEh8vMl6J5IuP
-        m4e56JBWkQk4DUSY14SD3E9m0EZ8p4m6adyMpuDqrBnrcymEhThqi5PI0XOu+jGO
-        KD3F8dgdn5mMquZyhdYcpQ1CrwKl32/NY00FVUDcZOAvkhtacUFw1eQt6C/0+xkX
-        cynMcjrKfmI5+vo=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6F372C88E8;
-        Wed, 28 Apr 2021 00:12:42 -0400 (EDT)
+        :content-type; s=sasl; bh=t9Xu0Djod1iwUX4uPToOw4J9WDE9VJolGy6UOW
+        PK8Pk=; b=XkK87oyb1WKMY864xPn8IqGIR5+zWYyh/Q92zx/OcvQYRhbIPQd5eg
+        WhDg4TIeSYozrCYOD3izOY39xdSyIrosO3tnr3eIl4WtVK2ikOSMs9gN0U+ZlHP1
+        CgvdwuIO2bogmjHcKBByhh08IIx6sThm3Jn0vivc24n5ZizIXRqNc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B789BAEA0E;
+        Wed, 28 Apr 2021 00:20:52 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EDF92C88E7;
-        Wed, 28 Apr 2021 00:12:41 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3BAF0AEA0D;
+        Wed, 28 Apr 2021 00:20:52 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2 3/8] object.c: add and use oid_is_type_or_die_msg()
- function
-References: <cover-0.7-0000000000-20210409T083436Z-avarab@gmail.com>
-        <cover-0.8-0000000000-20210420T133218Z-avarab@gmail.com>
-        <patch-3.8-22e7d9a3db-20210420T133218Z-avarab@gmail.com>
-        <YIC1IcpKCXh3qoun@google.com>
-Date:   Wed, 28 Apr 2021 13:12:41 +0900
-In-Reply-To: <YIC1IcpKCXh3qoun@google.com> (Josh Steadmon's message of "Wed,
-        21 Apr 2021 16:28:33 -0700")
-Message-ID: <xmqq7dkncaiu.fsf@gitster.g>
+To:     "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>
+Subject: Re: [PATCH v2 2/3] refs/files-backend: stop setting errno from
+ lock_ref_oid_basic
+References: <pull.1011.git.git.1619173446857.gitgitgadget@gmail.com>
+        <pull.1011.v2.git.git.1619191907.gitgitgadget@gmail.com>
+        <db5da7d7fb5178c14c1f5733d35bb69813c9c644.1619191907.git.gitgitgadget@gmail.com>
+Date:   Wed, 28 Apr 2021 13:20:51 +0900
+In-Reply-To: <db5da7d7fb5178c14c1f5733d35bb69813c9c644.1619191907.git.gitgitgadget@gmail.com>
+        (Han-Wen Nienhuys via GitGitGadget's message of "Fri, 23 Apr 2021
+        15:31:46 +0000")
+Message-ID: <xmqqzgxjavks.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: FA0DBCBA-A7D7-11EB-B13B-D152C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1E46BA04-A7D9-11EB-8638-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Josh Steadmon <steadmon@google.com> writes:
+"Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> On 2021.04.20 15:36, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> diff --git a/object.c b/object.c
->> index 9e06c0ee92..0f07f976fb 100644
->> --- a/object.c
->> +++ b/object.c
->> @@ -176,6 +176,18 @@ int oid_is_type_or_error(const struct object_id *=
-oid,
->>  		     type_name(want));
->>  }
->> =20
->> +char* oid_is_type_or_die_msg(const struct object_id *oid,
+> From: Han-Wen Nienhuys <hanwen@google.com>
 >
-> It's kind of a nitpick, but I found the function name to be confusing.
-> It sounds like you're going to die with a custom message. Maybe
-> something like "get_oid_type_mismatch_msg()" would be more
-> straightforward.
+> Errno is a global variable written by almost all system calls, and therefore it
+> is hard to reason about its state.
+>
+> This is a functional noop, because calls to lock_ref_oid_basic() in this file
+> are followed by:
+>
+> * lock_ref_oid_basic (copy/rename rollback error path)
+>
+> * write_ref_to_lockfile (both in the rollback path and the success path of
+>   copy/rename)
+>
+> * create_symref_locked (files_create_symref)
+>
+> * refs_reflog_exists (reflog expiry)
+>
+> These calls do I/O and therefore clobber errno. They are not inspecting the
+> incoming errno.
 
-Yeah, in an older round I found this function's name was confusing,
-too.
-
-Also, there is a style (in our codebase, asterisk to signal the
-pointer-ness sticks to the identifier, not to the type name).
-
-Thanks.
+Hmph, are you saying that these calls do I/O and always the I/O
+would fail?  A system call that is successfull don't touch errno;
+only the calls that resulted in failure do.
