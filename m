@@ -2,188 +2,136 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.2 required=3.0 tests=BAYES_00,DATE_IN_PAST_12_24,
-	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1C47C433ED
-	for <git@archiver.kernel.org>; Wed, 28 Apr 2021 14:12:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DEFBCC433ED
+	for <git@archiver.kernel.org>; Wed, 28 Apr 2021 15:00:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 769A6613FA
-	for <git@archiver.kernel.org>; Wed, 28 Apr 2021 14:12:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9CE4E613BD
+	for <git@archiver.kernel.org>; Wed, 28 Apr 2021 15:00:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240162AbhD1OMr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Apr 2021 10:12:47 -0400
-Received: from mout.gmx.net ([212.227.17.20]:50519 "EHLO mout.gmx.net"
+        id S240496AbhD1PBb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Apr 2021 11:01:31 -0400
+Received: from mout.web.de ([212.227.15.3]:42719 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231375AbhD1OMr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Apr 2021 10:12:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1619619117;
-        bh=8rBGCQ9Q5PWlKB+JUA18vKXpCZt77VNfUTfNz9z4V2w=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=JfjuSFAbglyN2yx8pUAlH2rcYjeMKz6wOTnb9adSukJhGEXqgn69kpp04L/zMa/DF
-         yi0cTswak7RxYEXBWAXBJ+bTqeriTH8Dw+ABXaJ1oYsesSP4mS9e1cW9xRtKBm5tX4
-         ImTdFDnm68ZXA3XoXQo55xxKTawxtvAPcnnCzUBg=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.23.111.181] ([89.1.213.207]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MybGX-1lNFq41QIX-00z10Y; Wed, 28
- Apr 2021 16:11:57 +0200
-Date:   Wed, 28 Apr 2021 02:27:18 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Adam Dinwoodie <adam@dinwoodie.org>
-cc:     RyotaK <security@ryotak.me>, Git Mailing List <git@vger.kernel.org>
-Subject: Re: [RFC PATCH] cygwin: disallow backslashes in file names
-In-Reply-To: <CA+kUOamYmFcKA+_on83=EbitvL4FQo9teMEbRHsQ=xo2ave1yQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2104280226530.54@tvgsbejvaqbjf.bet>
-References: <20210424212117.6165-1-adam@dinwoodie.org> <nycvar.QRO.7.76.6.2104250413320.54@tvgsbejvaqbjf.bet> <CA+kUOan3vk1zJezpieRhKwZ8gsYrCxDBefkXJ1fUC61O+gb12A@mail.gmail.com> <CA+kUOamYmFcKA+_on83=EbitvL4FQo9teMEbRHsQ=xo2ave1yQ@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S240705AbhD1O70 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Apr 2021 10:59:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1619621906;
+        bh=YHKyj4dUKTxLtnDX6/hvJh8rEJ0m3wEU28Rc7FLU5/k=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=gAorXhNZRaL/ZapCSpG4GKGEIdIsSFbIUNQPgJwhVnibOSIWA13pTOee8NKTIdwUQ
+         QcLR3QzdFN1GzPgxdKuzINF6B8NcvBCyT0cIDZkunD02Ay/v4ChdiTt5eTTLW1b5nT
+         /faQ924dWwFewvajKQ5yD0iZI5kmR/KyNMNHw4Bc=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb004
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LkVZr-1l0mGf0rBD-00cPmM; Wed, 28
+ Apr 2021 16:58:26 +0200
+Date:   Wed, 28 Apr 2021 16:58:24 +0200
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Luke Diamand <luke@diamand.org>, Pete Wyckoff <pw@padd.com>
+Subject: Re: [PATCH v5] add git-p4.fallbackEncoding config variable, to
+ prevent git-p4 from crashing on non UTF-8 changeset descriptions
+Message-ID: <20210428145824.43c4t7hkjfqjyspb@tb-raspi4>
+References: <20210424081447.uxabqbxc54k6yxrg@tb-raspi4>
+ <20210427053916.1977-1-tzadik.vanderhoof@gmail.com>
+ <xmqqr1ivauph.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-501121260-1619569640=:54"
-X-Provags-ID: V03:K1:Jgq9zSXjxBkdQuMZ4pEXBIJKpiBxagJ1Ijc6ln3ObvpNxpDKPcE
- Y0q7OKCRh241aoCZQicbMLvOpvzduCJSePIunkuU5nrr0vZTiv6G2jrZNV0lPbj9sSEQToH
- mmrZCOcPawmunItNgmr2cDOSGvVVF5HeocAt60HbUj7nX1LgDC/omkYdXx+P+8hmtFKtVSP
- eMepzVH6yUfM1s8Zj/H+A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:0VAJ2eB5Nas=:/KvWipQXEyHVlNLIll6dEV
- VWglQwpH7PJal3AJmVPz3un+zDJqtJ9QlRo1SNH0Sea+YQLR9YH5HALCKbLrCvy2926+aOq3s
- YG4uLm8eSGk/wMBhtoocE68ws39Wwzhira5qlT7ZODZ307GRy9/qzYErxVOD65KxX7zfQnF14
- Rex17pgl9Pz2gTHJVpCmjSyg08enqz27JDJb8iG1Vy6Z3f46zgAQS6NnvxhbRkh7bcWC2pmd7
- YycYHQc89BzUoqwA5OUIvLjUOhz/qGuq9N3bEmwZ+reylSR+IRpaGIU532YYDCNrsgW2574Au
- uFvxnnf/kV4/KbKJBX5dffftzFgV5X9lbSSHfPTwU283T0fJ1mucC8buKqxCMYO5XLnPDMF4m
- JS7Net+NHbgdQjb0Un8sdsKXYNlKd3SKLGjCBn+LxbSsW7za+P/+jetnjOWBpY0iypKyOJEWd
- Ou7XsO7Vt5fd2Tkjz2vBXu0V6/jgopE0OPTerz2W17emcJIBU4+DC5H7a805TXw72MSfs0quO
- FfXvbKFnnAxSJe3Q2Tt4/XAvIQYCJEb9NAh7WNGeIsa/7FML8xrL7Gx7aBFs2x6v5n4vTEV6c
- Y6ibtQyfVZW729gIwnnRMvOFj357hdyaezEDTjcXJgo0AMvrzspirgLRi9PEjY1xCrbT7UaTc
- zmKI6Sr89lRMHJlaAtM58uKriXJkcCIGJQqWlZ1vHrDCq6OEn4kNeZSTAwMmngK34WzZeCEFp
- 94SbOMxS+8/MliyoZ47GCOZ42STznTW3oA8m8uaYWC4xk9f9/hOMk8DbNehj3Jg4/dN1f+jrq
- 0hRxiXcmeS59rtT2Evhd8sPcvfkNKtkpTXdeMIXTV2WfnIThlMxkrUZ3MJXMqZ2yRfiWO1hqc
- C5pmT+xo9JTiyVku5xSfuVLlL/MXVf4Qd0B292TTPRHS+NaV7fTTxw8TGtzZhW3B7IUmaPjlL
- 2eOSM/hX/aBFA2a/N0+3H0hCOLOVR11Wcz0n24EmJV76gWyUDESYrNWSrwB93elqXQapV8y5h
- y9AhXRjQIcCEQPZNDvKdS1SvFuGEMDWHCSD3u99FmcUe/8ZTS+AP9m4dnj8rjKMRQIsEb66Wh
- iyVYkAz34XJ6OMIlzttDEcjyf9WGL/xX2j7IyzX90gQ0EX67XmisC5tRi2eeFJrCp4sYtgqru
- OX2gupc8t1/4bqdc5ANWdZJ5ISSs4Joi+lhBxXQRTU4G2B9p8QC0dCv44gXOPAZKfdloOHlJX
- 3nmq74jK7t2s0ba05
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqr1ivauph.fsf@gitster.g>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:G4r4nHqp6DDMP53SLYb6uRL6gfheUAc1p0VEMvaiWmmKaK+9qlR
+ cgJWIW9yZtgaagh0qhkd5BBuS7ApnQ5bP731KNn5f/EusTzQubouwPl7aAk502lFUdYPCrh
+ cuM9uLqkpW0N1Im7skT/86q/H2nrLFy9yLt9tFG+rvjWT8H6Y3AQhP+7/QU35BE1CTUoy5v
+ dZa/liZ3lg5LaJDmrUZqA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:RkArHOUedu8=:Kgqcyy5kwABetvybAQCnOQ
+ Uw4xi+KSoMXV/zOf+OANK4lfo57e5bhrJw2wICCG04o6vMGmpI7RqIabm0R9F2VMgKaSJZB0B
+ dvFhrKlpDqcEVvXUygInggYor8hiLiNmoIYFuhTLuAadHrsgq9j04JfpWHZPLW2gSdwLkSs3r
+ MUGVE+q6pj3icxVKAesFsVsOdh5lBi8RO526MB/ItbM5tap9md2QlOrotOsbPKEbxvbXfSNYG
+ zgA+ehD1KgdadbLTM/UhOdu0EQYtI/+X5HLOSamKb1sLpxlh2OSs1ig/CP5KVUGd5HGWNcmpl
+ PKk99hPHwjNeZ8mtRe9+d5AnrMnhhW2yTB5ggkz2Wh+ocN2fj6penIiOG1An7TuQHQDeXAWNL
+ oNvzHoLx2zQsQ5NE5ypriHebSDjxEEXLware/rek792pDd36S6qXpPe1cL86fIpqTV1oDnZd3
+ LMutKfeoI4JYmLepexyes6r2HhpFF+jcIurTmEF8Oied0kWjPJ1HU+uQ3+RcYp5gcQ1WmNfgG
+ UvFoPSIRDMhtxFDu8cqYC7Nbacy2OY4KUZhtSM/FtnOLpWO7O99SkLVAtkba++aCLwRDQbooa
+ WqpTGU5Wml0Wf/yUvpW8/tzkmuX0srVncoXglXsbE8/veoTTyvfzUknyl97AA6L5k/WZne/Bp
+ uOjfI02xvItQOUVKK3Dz+rug3+udQp/XD2GfMMNytoJBfBDijxeFQzOiRRVvz6SwetRxy8TNt
+ kbJKhQiY4Au4R4X+gVDP55jGyGGk0Ld2KnKjEJoPrZdvrhvp8iE7ccpmnbo0inUeAjGq6KSke
+ /uxu3FWTxVTHgN5m32C0eKct4cRalOAU23JoOKahNc+fnPTDQm1iji0Dse64TXBE+4pFzHu57
+ HHL1LdHP7GbrZqGdd4dvVCMA/kXf3w5Nml0HF9Ln1xmXCf8pE9ql68HyUcU8+eBFjxVQ6fYjA
+ aXEBPOOBheVYpcH3JwtjypQASPybFATMlEB3TIPRSzL1zpBxR4nSle018RJCIjLF9WwvyNkrH
+ zlNJKNRUABgBaDQNtDMN61k9dQYuZqi2+bC1UEKm7hiBFhnOTDmkIFj6b3FenUxIq7SKGSR9k
+ Um37IKq0QGNHOvqBoV0bx4WL937nb8VC/+nHtzCs8dQApGNMgSQmudn5i2km5AfTdAaW5flbJ
+ Bcs1ZVol/XidxHTKg0huQVGzsUesm87PKWp+YyBfW1jQKjNygRgQBBCOkODOHeGHb9MNM=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323328-501121260-1619569640=:54
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-Hi Adam,
-
-On Tue, 27 Apr 2021, Adam Dinwoodie wrote:
-
-> On Mon, 26 Apr 2021 at 20:56, Adam Dinwoodie wrote:
-> >
-> > On Mon, 26 Apr 2021 at 15:08, Johannes Schindelin wrote:
-> > >
-> > > Hi Adam,
-> > >
-> > > On Sat, 24 Apr 2021, Adam Dinwoodie wrote:
-> > > > Notes:
-> > > >     The patch to read-cache.c is the one I've applied downstream a=
-s the Cygwin Git
-> > > >     maintainer to resolve this vulnerability, and I've manually te=
-sted that it
-> > > >     resolves the vulnerability, so that's the change I'd recommend=
- anyone who needs
-> > > >     to build Git on Cygwin themselves take until there's something=
- officially in
-> > > >     the Git source code.
-> > > >
-> > > >     I'm much less convinced by my approach for the test script.  I=
- definitely think
-> > > >     it's worth having a test here, but the test as written still f=
-ails, as the test
-> > > >     seems to be looking for the error message "directory not empty=
-", but running
-> > > >     the test on Cygwin produces the error "cannot create submodule=
- directory d\a".
-> > > >     I'm not sure why that difference exists, and whether the corre=
-ct approach would
-> > > >     be to (a) ensure the error messages are consistent across plat=
-forms or (b) to
-> > > >     change the test to expect the appropriate error on the appropr=
-iate platform.
-> > >
-> > > Wasn't there something in Cygwin that _allowed_ backslashes as file =
-name
-> > > characters? I vaguely remember that the ASCII characters forbidden b=
-y
-> > > Windows were mapped into some "private page".
-> > >
-> > > Maybe that is responsible for the difference here?
-> >
-> > So there is special handling of a bunch of characters like ":" that
-> > are valid as parts of filenames on most *nix systems, but which aren't
-> > valid on Windows, by substituting them for characters in the Unicode
-> > "private use area" space. Backslash isn't one of those characters,
-> > though; quoting
-> > https://cygwin.com/cygwin-ug-net/using-specialnames.html (which I just
-> > checked myself to be sure): "The backslash has to be exempt from this
-> > conversion, because Cygwin accepts Win32 filenames including
-> > backslashes as path separators on input."
-> >
-> > Which is not to say this special handling _isn't_ the cause of the
-> > difference here, but it's not so simple as that. If nobody spots an
-> > explanation I've missed, I'll start digging into the code and strace
-> > to work out exactly what's causing the difference in behaviour.
+On Wed, Apr 28, 2021 at 01:39:38PM +0900, Junio C Hamano wrote:
+> Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com> writes:
 >
-> I've worked out what's going wrong here: the "prevent git~1 squatting
-> on Windows" test is actually testing a selection of different Windows
-> path oddities, which are handled differently between Git for Windows
-> and Cygwin Git. The specific behaviour here is the handling of a
-> directory called "d."; Git for Windows (I assume in the MSYS2 layer)
-> follows the standard Windows convention of treating "d." and "d" as
-> identical filenames, while Cygwin sticks to its general design
-> philosophy of mostly emulating *nix systems, allowing objects with
-> both filenames to exist in the same directory (and causing pain for
-> most non-Cygwin applications that try to interact with them).
+> >  t/t9835-git-p4-config-fallback-encoding.sh | 87 +++++++++++++++++++++=
++
+> >  3 files changed, 106 insertions(+), 1 deletion(-)
+> >  create mode 100755 t/t9835-git-p4-config-fallback-encoding.sh
 >
-> Essentially this test is checking a bunch of different oddities about
-> path handling on Windows. Some things =E2=80=93 such as handling backsla=
-shes =E2=80=93
-> are common to both Cygwin and MSYS2; some =E2=80=93 such as handling tra=
-iling
-> periods =E2=80=93 aren't. So I expect the solution here will be to have
-> separate tests for (a) Git for Windows, (b) Cygwin Git, and (c) common
-> behaviour.
+> 9835 is already taken (see 'seen').
 
-Ah, that would explain things. Thank you so much for digging!
+In general, this looks good to me.
+There are two minor nitpicks to make the patch more the git-way:
 
-Ciao,
-Dscho
+> Subject: [PATCH v5] add git-p4.fallbackEncoding config variable, to prev=
+ent git-p4 from crashing on non UTF-8 changeset descriptionsw
 
->
-> > > >     I'm also not convinced by my approach of adding a "WINDOWS" pr=
-erequisite to
-> > > >     test-lib.sh. I went with this as I couldn't immediately see a =
-way to pass
-> > > >     prerequisites on an "any" rather than "all" basis to test_expe=
-ct_success, and
-> > > >     this would allow us to simplify all the tests that currently h=
-ave
-> > > >     "!MINGW,!CYGWIN" as prerequisites, but it still feels a bit cl=
-unky to me.
-> > >
-> > > Right, the only way I could think of it would be
-> > >
-> > >         test_lazy_prereq 'test_have_prereq MINGW || test_have_prereq=
- CYGWIN'
-> > >
-> > > Your approach looks fine to me, though.
-> >
-> > Grand, okay. I'll stick with that for now, then, and follow up with a
-> > patch to tidy up the other prerequisites at some point in the future.
-> >
-> > Adam
->
+The head line is somewhat too long.
+It should be much shorter, like 50-55 characters, if I recall it rigth.
+The first line of the commit message is what we see under PATCH in the ema=
+il,
+followed by a blank line (that's what we have) and a detailed description
+(Which we have)
 
---8323328-501121260-1619569640=:54--
+How abut this ?
+
+git-p4: Add git-p4.fallbackEncoding
+
+Add git-p4.fallbackEncoding config variable,
+to prevent git-p4 from crashing on non UTF-8 changeset descriptions.
+
+When git-p4 reads the output from a p4 command, it assumes it will be
+100% UTF-8. If even one character in the output of one p4 command is
+not UTF-8, git-p4 crashes with:
+
+    File "C:/Program Files/Git/bin/git-p4.py", line 774, in p4CmdList
+        value =3D value.decode() UnicodeDecodeError: 'utf-8' codec can't
+        decode byte Ox93 in position 42: invalid start byte
+
+This is especially a problem for the "git p4 clone ... @all" command,
+where git-p4 needs to read thousands of changeset descriptions, one of
+which may have a stray smart quote, causing the whole clone operation
+to fail.
+
+Add a new config setting, allowing git-p4 to try a fallback encoding
+(for example, "cp1252") and/or use the Unicode replacement character,
+to prevent the whole program from crashing on such a minor problem.
+
+
+[]
+
+And then, somewhere in the test:
+
+			cp /dev/null "$clone_fails" &&
+
+This should create an empty file, right ?
+Then we can use a simple output-redirection:
+
+			>"$clone_fails" &&
+
