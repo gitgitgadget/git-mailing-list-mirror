@@ -2,136 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 15F19C433ED
-	for <git@archiver.kernel.org>; Wed, 28 Apr 2021 04:04:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1ADD1C433ED
+	for <git@archiver.kernel.org>; Wed, 28 Apr 2021 04:09:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EAAEE613F9
-	for <git@archiver.kernel.org>; Wed, 28 Apr 2021 04:04:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E858760720
+	for <git@archiver.kernel.org>; Wed, 28 Apr 2021 04:09:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229632AbhD1EFW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Apr 2021 00:05:22 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:52777 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229451AbhD1EFV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Apr 2021 00:05:21 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E1F29123C5C;
-        Wed, 28 Apr 2021 00:04:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=m2hwES0halJwpg2iB5VtCe7wDWdZF/XcFJO7Xh
-        GA5hE=; b=eXwrZa+951LV1sohAmxko3L8q28MctxPcb+4elTiN+Eh9jzgxdOaHi
-        7PilU7haBJOCgvfQabdb798t75LySppJX18uDcL2R78ORZqTb/QYBU1fheHG1wJU
-        6KQXBsV5qDlWLJak3szZYa47gaLqzBI0BDYTwb185VARy6TsQBMwc=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id DA475123C5B;
-        Wed, 28 Apr 2021 00:04:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 1D3D6123C58;
-        Wed, 28 Apr 2021 00:04:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Josh Soref via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Josh Soref <jsoref@gmail.com>
-Subject: Re: [PATCH v3] git-merge: rewrite already up to date message
-References: <pull.934.v2.git.1619047347605.gitgitgadget@gmail.com>
-        <pull.934.v3.git.1619052906768.gitgitgadget@gmail.com>
-Date:   Wed, 28 Apr 2021 13:04:32 +0900
-In-Reply-To: <pull.934.v3.git.1619052906768.gitgitgadget@gmail.com> (Josh
-        Soref via GitGitGadget's message of "Thu, 22 Apr 2021 00:55:06 +0000")
-Message-ID: <xmqqbl9zcawf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S234674AbhD1EKK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Apr 2021 00:10:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37356 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229437AbhD1EKJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Apr 2021 00:10:09 -0400
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2ABE8C061574
+        for <git@vger.kernel.org>; Tue, 27 Apr 2021 21:09:25 -0700 (PDT)
+Received: by mail-pj1-x1034.google.com with SMTP id lr7so13918078pjb.2
+        for <git@vger.kernel.org>; Tue, 27 Apr 2021 21:09:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=OWIjgNEYG/tyv/0z1Gn9E0Ah0iNRR0gD4rd+Vs15kLg=;
+        b=Px0LcssyLcFGFl00pkbaxrqkcvikpRobvMiczHv6nYWOVTthoB/2T977RBwxXFLTEX
+         GNolHOvBiNyh5CfQUt79Bll+K7dlDDcH9yj/qex3UZHxMEkX8iUUXsPiKh2hsoz21c/l
+         pgMJCIEzfpIkFdnaSHpB0j8FTS254LVovQFrxVeq5v1lVWv9ufjRV/4sVDIrJgsZbeH1
+         J+qS5Af/ruiod1q6fLZBMxUPDEap+fK8l7eY9rhfxtFivYiPGnw6BxWdvnrE/CdQ5Ton
+         rZX/OSnw8EXrmrsaQd/ocFcfSpHgZOgZYoJDvnQGSyg0PJ6VQM0hIWsXGwwFe+j2a8TR
+         BbjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=OWIjgNEYG/tyv/0z1Gn9E0Ah0iNRR0gD4rd+Vs15kLg=;
+        b=lbggucZ2/4ERBo5MuRh3vRtRSz+D6Uzi3etfYxzP/ieoiQy4uZjXmvJlxOsrmhAbHZ
+         DuU7lwwjFkQKmidG8+0B2WZWjuTRBAkXHtb9SUAiPvuK7lMEabDFYdJ1ks8u9G1SXE5X
+         iWoHhOPA5S55shU6siOKJCGEqRiS3iaNGEiALdJ0QooPSPsprF1iDYv+/5O9gOtme6gh
+         hkNQ86dkNCXP7swu+GRExvh0DehAfEjzqaRvIaME/7wZo0//L8kDccRmiA4/gYBxjSrA
+         TRyJIowpCNV51585F35jpd6i7l/BeKS6byDjQxWsiSsPSGLCbRsvlKVdgI8KW03F5R7d
+         NSKg==
+X-Gm-Message-State: AOAM530dow76LagqrxzDbLmJvJ7MNBnY0uHGHKYIiDiXgslMYnE6ZW92
+        sojF8vyMR3doOdkoIuWN12wVaLvsOtzyig==
+X-Google-Smtp-Source: ABdhPJzn+MaJom7eFG+2lp03Deik+gayKgA4WfJMsxekO3BuDekCR5FHky462OJjasw54b7Gj4lfOQ==
+X-Received: by 2002:a17:90a:c404:: with SMTP id i4mr1826722pjt.10.1619582964041;
+        Tue, 27 Apr 2021 21:09:24 -0700 (PDT)
+Received: from [192.168.43.80] (subs03-180-214-233-84.three.co.id. [180.214.233.84])
+        by smtp.gmail.com with ESMTPSA id y195sm321428pfb.11.2021.04.27.21.09.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 27 Apr 2021 21:09:23 -0700 (PDT)
+Subject: Re: [PATCH] bisect--helper: use BISECT_TERMS in 'bisect skip' command
+To:     Christian Couder <christian.couder@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        GIT Mailing-list <git@vger.kernel.org>,
+        Trygve Aaberge <trygveaa@gmail.com>
+References: <fd40e12f-9649-1327-4bdb-dce5b5eed619@ramsayjones.plus.com>
+ <473a11db-cbb5-58b9-b05d-cab2072d5d2f@gmail.com>
+ <CAP8UFD3hOqeF04Xdjn-o2FShuTPQ9ZUEVCWnhfzCqV6MtbvU4g@mail.gmail.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <ffd80d10-9939-d31c-324d-3e32c37d2eaf@gmail.com>
+Date:   Wed, 28 Apr 2021 11:09:20 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D744193C-A7D6-11EB-A297-E43E2BB96649-77302942!pb-smtp20.pobox.com
+In-Reply-To: <CAP8UFD3hOqeF04Xdjn-o2FShuTPQ9ZUEVCWnhfzCqV6MtbvU4g@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Josh Soref via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 26/04/21 14.06, Christian Couder wrote:
+> Thanks Bagas for your test! I will take a look at it soon.
+> 
+> My opinion is that it would be best if both patches (Ramsay's and
+> Bagas') were in the same patch series or even perhaps in the same
+> commit. If you prefer separate patches, maybe the first one could be
+> Ramsay's, and the second one Bagas' where indeed the instructions to
+> replace test_expect_failure with test_expect_success have been
+> followed.
+> 
 
-> From: Josh Soref <jsoref@gmail.com>
->
-> Usually, it is easier to read a message if it makes its primary
-> point first, before giving a parenthetical note.
->
-> Possible messages before include:
-> ` (nothing to squash)Already up to date.
-> `
-> and
-> `Already up to date. Yeeah!
-> `
->
-> After:
-> `Already up to date (nothing to squash).
-> `
-> and
-> `Already up to date.
-> `
->
-> Localizations now have two easy to understand translatable strings.
-> (All localizations of the previous strings are broken.)
->
-> Co-authored-by: Eric Sunshine <sunshine@sunshineco.com>
-> Signed-off-by: Josh Soref <jsoref@gmail.com>
-> ---
+OK. Review ping
 
-I am not sure why this is Co-au, and not the more usual "Helped-by".
+> It might not be the best API for this (or the set_terms() and
+> get_terms() function could perhaps have better names), but anyway the
+> current situation is that set_terms(&terms, "bad", "good") is setting
+> the current terms to "bad"/"good" which is the default, and then
+> get_terms(&terms) is reading the terms stored in the BISECT_TERMS file
+> and using that to set the current terms. Also if the BISECT_TERMS file
+> doesn't exist, then get_terms(&terms) is doing nothing. So it seems to
+> me that Ramsay's patch is doing the right thing.
+> 
+> If get_terms(&terms) was used before set_terms(&terms, "bad", "good"),
+> then the current terms would always be "bad"/"good" even if the
+> BISECT_TERMS file contains valid terms different from "bad"/"good".
+> 
 
-The patch text makes sense to me.
+OK, thanks for the explanation.
 
-Thanks.
-
-
-> diff --git a/builtin/merge.c b/builtin/merge.c
-> index 062e91144125..f8c3d0687eaf 100644
-> --- a/builtin/merge.c
-> +++ b/builtin/merge.c
-> @@ -380,10 +380,14 @@ static void restore_state(const struct object_id *head,
->  }
->  
->  /* This is called when no merge was necessary. */
-> -static void finish_up_to_date(const char *msg)
-> +static void finish_up_to_date(void)
->  {
-> -	if (verbosity >= 0)
-> -		printf("%s%s\n", squash ? _(" (nothing to squash)") : "", msg);
-> +	if (verbosity >= 0) {
-> +		if (squash)
-> +			puts(_("Already up to date (nothing to squash)."));
-> +		else
-> +			puts(_("Already up to date."));
-> +	}
->  	remove_merge_branch_state(the_repository);
->  }
->  
-> @@ -1482,7 +1486,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
->  		 * If head can reach all the merge then we are up to date.
->  		 * but first the most common case of merging one remote.
->  		 */
-> -		finish_up_to_date(_("Already up to date."));
-> +		finish_up_to_date();
->  		goto done;
->  	} else if (fast_forward != FF_NO && !remoteheads->next &&
->  			!common->next &&
-> @@ -1566,7 +1570,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
->  			}
->  		}
->  		if (up_to_date) {
-> -			finish_up_to_date(_("Already up to date. Yeeah!"));
-> +			finish_up_to_date();
->  			goto done;
->  		}
->  	}
->
-> base-commit: 7a6a90c6ec48fc78c83d7090d6c1b95d8f3739c0
+-- 
+An old man doll... just what I always wanted! - Clara
