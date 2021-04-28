@@ -2,90 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 59F17C433ED
-	for <git@archiver.kernel.org>; Wed, 28 Apr 2021 09:16:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B540BC433B4
+	for <git@archiver.kernel.org>; Wed, 28 Apr 2021 10:55:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2998C613F1
-	for <git@archiver.kernel.org>; Wed, 28 Apr 2021 09:16:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7E84161423
+	for <git@archiver.kernel.org>; Wed, 28 Apr 2021 10:55:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230307AbhD1JRP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Apr 2021 05:17:15 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:52229 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229643AbhD1JRN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Apr 2021 05:17:13 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2030212581E;
-        Wed, 28 Apr 2021 05:16:29 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=b3qtwNgyLrmKDH40GGeJTSmJH4aFoET7rwLfF8
-        E1REg=; b=QzMxt6WfSNrtPRU/NFDe/5WY0vAsVZ8Cv6tyQnbPXD0+fhbwEvNbbI
-        izeQva8GEe3pa7l8DK0V/BFd6HKKwpcMinRAT7i388bDh2urKKJWTvp6KpyWbIwn
-        MGbQ/y5ETiUGwmGk3NwpKZTCG6SzwRw2dbpLOwLhgqhLF1AfiphD0=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1803E12581C;
-        Wed, 28 Apr 2021 05:16:29 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 4D20412581B;
-        Wed, 28 Apr 2021 05:16:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jerry Zhang <jerry@skydio.com>
-Cc:     git@vger.kernel.org, ross@skydio.com, abe@skydio.com,
-        brian.kubisiak@skydio.com
-Subject: Re: [PATCH] git-apply: add --quiet flag
-References: <20210427194106.14500-1-jerry@skydio.com>
-        <xmqq35vac0vq.fsf@gitster.g>
-Date:   Wed, 28 Apr 2021 18:16:24 +0900
-In-Reply-To: <xmqq35vac0vq.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-        28 Apr 2021 16:40:57 +0900")
-Message-ID: <xmqqsg3aahw7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S239616AbhD1K4H (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Apr 2021 06:56:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42532 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238863AbhD1K4F (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Apr 2021 06:56:05 -0400
+Received: from mail-vk1-xa32.google.com (mail-vk1-xa32.google.com [IPv6:2607:f8b0:4864:20::a32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DE77C061574
+        for <git@vger.kernel.org>; Wed, 28 Apr 2021 03:55:20 -0700 (PDT)
+Received: by mail-vk1-xa32.google.com with SMTP id n74so943526vkc.6
+        for <git@vger.kernel.org>; Wed, 28 Apr 2021 03:55:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=cMhNRA+9wyd3tL2/PL+dfWaIojevGgxOG5juIxqNobg=;
+        b=urYRUhyDI85gqBjm85LBGy/mwtvJfrxNSaBgeIcU5Dy5Q9T3IzeyRBt4QGR6BRPWyz
+         Q9gulatxPqZ67vVm2DpLIeGF82plVPgLK1BMJXOBKKqmMgeC3O30U2nJ8ZnkzyIni8w2
+         YMd/ZV/5s7Y1KDkTr9iS/+ojYiMhWm5WxjnRbtNdyZ8LrsmJl17EsTFDb2OIEUl59h81
+         H9WfF113+lpqJSVmTDdE5oU8oPXtlER1KwcpyEgwDVeHi8ZJZeslwCgz+IW+gQqY2OxB
+         IHiAbmwGQhTs+bQeX3h2wwndkjTR8sMEX2JMJWjU1TX/ohHApDORH359MAxAiVInBo5+
+         eYlA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=cMhNRA+9wyd3tL2/PL+dfWaIojevGgxOG5juIxqNobg=;
+        b=Cm24EX1oTGnK403dPpxCXcz0awwmncQgITe3qu70NTp9F/qR4kQBcXEW1lIo2KYvVX
+         0t6B58a0bAffgAPE8ajYcQO6jDc5Z1nRgxAuku9yCAy2SY/sowvpd8BdvQm17pXNiPBp
+         UIz7gjH2Goeaye66HXjor/BQLibH3DeLdA7B7XbbKWcK63l1PgnTuVet8JWCnqOpBmJt
+         7QuXeWtmNpDEcyTgUlgHWgp6XoA7bggpDeOHE0rJ0huPUbCLrYonqM82HcJFdtNI4XUK
+         PS2qKv8xirg76jwjQgupgWjR04ayChfHShkqtPZrortMxyiVwsIIxKtmozsR34fDzeWP
+         MeKA==
+X-Gm-Message-State: AOAM530rvElvW1jRO8VlAopWNuJXbfyQ6UKcJHujSOy3buMii4zb+dzZ
+        JErs+rGrPzkDXhsIwRLXsyPnxg+dbuUvuewHtDlvYg==
+X-Google-Smtp-Source: ABdhPJx3nekg10J9RpspLkg8heExiqEnDjHcsGWkRXASadNmJ6Ytp5tFbo/bhhynTZ2nXcDHKiU2xPRw8GcZ2hahm7g=
+X-Received: by 2002:a1f:43c3:: with SMTP id q186mr2294301vka.25.1619607319547;
+ Wed, 28 Apr 2021 03:55:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 689AD3D2-A802-11EB-9A58-E43E2BB96649-77302942!pb-smtp20.pobox.com
+References: <pull.1011.git.git.1619173446857.gitgitgadget@gmail.com>
+ <pull.1011.v2.git.git.1619191907.gitgitgadget@gmail.com> <db5da7d7fb5178c14c1f5733d35bb69813c9c644.1619191907.git.gitgitgadget@gmail.com>
+ <xmqqzgxjavks.fsf@gitster.g>
+In-Reply-To: <xmqqzgxjavks.fsf@gitster.g>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Wed, 28 Apr 2021 12:55:07 +0200
+Message-ID: <CAFQ2z_O=4sUjh1wk6nRijp9Gz2eeqX4=EY+Q-OTi9ppb9ikg3g@mail.gmail.com>
+Subject: Re: [PATCH v2 2/3] refs/files-backend: stop setting errno from lock_ref_oid_basic
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Wed, Apr 28, 2021 at 6:20 AM Junio C Hamano <gitster@pobox.com> wrote:
+> > These calls do I/O and therefore clobber errno. They are not inspecting=
+ the
+> > incoming errno.
+>
+> Hmph, are you saying that these calls do I/O and always the I/O
+> would fail?  A system call that is successfull don't touch errno;
+> only the calls that resulted in failure do.
 
-> Jerry Zhang <jerry@skydio.com> writes:
->
->> Replace OPT_VERBOSE with OPT_VERBOSITY.
->
-> While it is not an incorrect statement, it is odd to have such an
-> implementation detail nobody cares as the first thing in the log
-> message, though.
->
->> This adds a --quiet flag to "git apply" so
->> the user can turn down the verbosity.
->
-> Sure, I think you can do "apply --no-verbose" to do the same thing
-> without any change, but we introduced VERBOSITY to replace VERBOSE
-> exactly so that --verbose can be countermanded with --quiet, and
-> this patch is a good example of the application of that feature.
->
-> I wonder if this deserves a test.
+I'm saying that callers cannot reliably observe the errno result of
+lock_ref_oid_basic, because it might be clobbered by a failing
+follow-up call.
 
-Oh, another thing.  "--quiet" with OPT_VERBOSITY is given negative
-values, whose magnitude may be used to express "even more quiet".
-This is different from "--no-verbose" that is supported by both
-OPT_VERBOSITY and OPT_VERBOSE that resets the variable to 0.
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
 
-So use of OPT_VERBOSITY() to support both --verbose and --quiet is
-good, but you'd need to audit the way the verbosity variable is used
-by the code.  "if (verbose) perform_verbosely()" would have to be
-rewritten as "if (verbose > verbosity_level) perform_verbosely()" 
-or something like that, as the "verbose" variable can take a
-negative value to mean "less silent than the usual 0".
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
 
+Registergericht und -nummer: Hamburg, HRB 86891
+
+Sitz der Gesellschaft: Hamburg
+
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
