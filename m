@@ -2,113 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 394A0C433B4
-	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 19:23:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 88CAAC433B4
+	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 19:31:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F15576142A
-	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 19:23:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 64342613BD
+	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 19:31:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230338AbhD2TYI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Apr 2021 15:24:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45716 "EHLO
+        id S230315AbhD2Tc2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Apr 2021 15:32:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238504AbhD2TIV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Apr 2021 15:08:21 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90268C06138B
-        for <git@vger.kernel.org>; Thu, 29 Apr 2021 12:07:34 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id o16so77757568ljp.3
-        for <git@vger.kernel.org>; Thu, 29 Apr 2021 12:07:34 -0700 (PDT)
+        with ESMTP id S230303AbhD2Tc1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Apr 2021 15:32:27 -0400
+Received: from mail-ua1-x932.google.com (mail-ua1-x932.google.com [IPv6:2607:f8b0:4864:20::932])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAC5DC06138B
+        for <git@vger.kernel.org>; Thu, 29 Apr 2021 12:31:40 -0700 (PDT)
+Received: by mail-ua1-x932.google.com with SMTP id n61so4406107uan.2
+        for <git@vger.kernel.org>; Thu, 29 Apr 2021 12:31:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=WVmRUhWsjO8tzjrLR0JAUSFg/ml07rlxxNjGc/HSDU0=;
-        b=iHMuRX9EnAPoYe6PiSm4Roumn2P6lJIpZTR6xvszONvxlXfSscTfZbDPVD104W4cvx
-         OdunsUkbExEo/Q0Uku5dX+yUjYIVZ4/fwvvzSsByVXiq+rXDd57jCFNFV3F91uEcPVVH
-         ldBNHRgjq5HANmclKdN/lQWzQOS8KBll0HtllFruZvMDuaC/9atsyZQWn9ptG1P5YHQ/
-         sX+7wd41UvZXGZOfhiuAM/0pNdoXeLCyJodQVCswOUgwLtlQM1Lc7Rx23xFCSjt1577I
-         ZGUcYKlbgVk6SzCaauUra+fnHHzvywBMEgTrX0oIjaMg19V0nMU0Hhul48E8KWjx4rG8
-         Ek5w==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=8It+9fQ5drWNvy3Slhfar6+ynC/n+GnOIFQYi044334=;
+        b=nFJF+NtoENG8COQYh3z5zkkJS8+pF+SRgvAXfRGmzWYy1DuukM0wpxnW7q4kg3dQPO
+         BRIEQGb/3XWvhYC0X/eJVHuJzsw8EuvSveXO4v8Cj5Qpgnue97nn2GMTDSZpDk8SlFgM
+         9GTLdiN2ZDm2ho9ElYgFjOp9yHMZj2ec+LUyBNgU0iWFVf50rv+gBwcVlmKM4nkGRqOi
+         4nOnBKCZWuGUlTsPzv1ejbpEhiNywdLE9sNEp4WrzcodClbTlHZx50duyfaptnyFytDz
+         Rt4OghVfMFctZwQoDBxtJI1NH7ei0nhloVh/2M4AYVRv8ET/mDQMvynCun31DzqgwjFC
+         bZJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=WVmRUhWsjO8tzjrLR0JAUSFg/ml07rlxxNjGc/HSDU0=;
-        b=Q6KeEI3iqp2tepoCNuzOSInunhLJtDyMBTLp1H7Hd58kU9IIejYhW7mSGaf21Cs99i
-         rWHlKrmB+0Ck+Q+hidBom9QDXBXVC0gGEYfP/Y2I4fD7GHAbuAYjBhyyeBQkm7fDdm1Q
-         Ud66t0N/stmhvV2qhn/KA0kEi8Zsjp8BhdlnWUMLP72YrHStn7wtQRgyJcxvUezpKTco
-         TUsAIIYiloCT/t10/nsDGgMgyfRpvVBEzzNrWsqDBonkQhh1wggCYjZkWVGjtaPa66ZJ
-         RIl/x9LcGN5vqq+4+2p1WgE3r3r7gcThjZTyFe71ZXGOa1TpQ1CM1XCXkDzKwmw3jjK+
-         l86w==
-X-Gm-Message-State: AOAM532UImzGdZ/NAItS5/LQPB+t5vMES/e9CgzBuBRkqoih6byNrKzT
-        jJfsnhaSNhb10nSnholSFzudzhDwrB0=
-X-Google-Smtp-Source: ABdhPJyf5VetGpe0e4eT6/wKNcAMkolvKA1TrtBr3KPkDDZrsBZX0NwULOtHyhtQp2cQ/gYauEHN8Q==
-X-Received: by 2002:a05:651c:105a:: with SMTP id x26mr887967ljm.158.1619723252822;
-        Thu, 29 Apr 2021 12:07:32 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id i15sm59704lfg.232.2021.04.29.12.07.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Apr 2021 12:07:32 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Alex Henrie <alexhenrie24@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: Why doesn't `git log -m` imply `-p`?
-References: <CAMMLpeR-W35Qq6a343ifrxJ=mwBc_VcXZtVrBYDpJTySNBroFw@mail.gmail.com>
-        <xmqqwnsl93m3.fsf@gitster.g> <87im45clkp.fsf@osv.gnss.ru>
-        <CAMMLpeS4pkP_xRw_qT3mCTP4hS3iLP9TwdDf8LV+3+an9aJ3Hw@mail.gmail.com>
-        <87eeet9hhl.fsf@osv.gnss.ru>
-        <CAMMLpeQE5zY2KAu7rA=kGBGh5xeNUK8CRMf4FxKd-BoMjZzLJA@mail.gmail.com>
-Date:   Thu, 29 Apr 2021 22:07:31 +0300
-In-Reply-To: <CAMMLpeQE5zY2KAu7rA=kGBGh5xeNUK8CRMf4FxKd-BoMjZzLJA@mail.gmail.com>
-        (Alex Henrie's message of "Thu, 29 Apr 2021 11:24:22 -0600")
-Message-ID: <87a6pgaozw.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=8It+9fQ5drWNvy3Slhfar6+ynC/n+GnOIFQYi044334=;
+        b=fZwxW1pSxmBV6VKY2JIKNfdkjRHxebQYnPC9ELehh6JE2xnGx+iufnbBAkbvyzDcwV
+         jnvrud6VDPHA66YZu6gvOp/84yvwxtYjsONeQW8XwgVCQRncO3vfeoQ/nkcqXT6du26i
+         17ZDDVvE9qd/H8oHhDc2XdkwNe3nSpyYMjViTitk9ekdzetN7u0SALFxc1Amx1rYs3Vb
+         6tyvvIGRAGuFIQ6WKA8amotiRFAUDdVsWRwbyGsODqYRfOvs4nTOI1UgoWkt5LcqX8HJ
+         +KritSJJX2xasGvR2WyBoMIde6xziZN07WXC1nC54HRqeVK2rsQA/f0DG7RJtMuC2Ji1
+         r2xQ==
+X-Gm-Message-State: AOAM533sf/6Vx3ZHFSmS2DZOCBf1mmfIyBJ+utvmbMmMirJSqT7xGJET
+        MRdNYgv0dtIwcP2gzcFmyaBD2SCLy/ql9EpVRuQ=
+X-Google-Smtp-Source: ABdhPJzPxJ0p9tx5ezMRLm+rRjs9L2p0IudzJpPh2ek7JDcY18pk22TFq/s0x5aaQdJkmu7tGIptm8Ntqs3A+ATseT0=
+X-Received: by 2002:a9f:3728:: with SMTP id z37mr1047749uad.89.1619724700000;
+ Thu, 29 Apr 2021 12:31:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.1013.git.git.1619640416533.gitgitgadget@gmail.com>
+ <xmqq5z05akyf.fsf@gitster.g> <CAJGkkrQJFaLPfCBTVn6k1v9cCwF4wEUxr+ZyzebUBQJB8qLaWg@mail.gmail.com>
+ <b0befcf3-8d8a-f99f-d4f0-78b2cfe22505@diamand.org> <xmqqwnslfq4l.fsf@gitster.g>
+In-Reply-To: <xmqqwnslfq4l.fsf@gitster.g>
+From:   Joachim Kuebart <joachim.kuebart@gmail.com>
+Date:   Thu, 29 Apr 2021 21:31:03 +0200
+Message-ID: <CAJGkkrTzThckEuFr7abV7WwZg4FUw=y5Xt4uu6TuQzuhWcrSQw@mail.gmail.com>
+Subject: Re: [PATCH] git-p4: speed up search for branch parent
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Luke Diamand <luke@diamand.org>,
+        Joachim Kuebart via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alex Henrie <alexhenrie24@gmail.com> writes:
-
-> On Thu, Apr 29, 2021 at 10:35 AM Sergey Organov <sorganov@gmail.com> wrote:
->>
->> Alex Henrie <alexhenrie24@gmail.com> writes:
->>
->> > On Thu, Apr 29, 2021 at 6:38 AM Sergey Organov <sorganov@gmail.com> wrote:
->> >>
->> >> As the final purpose of all this is to have -m as user-friendly short
->> >> option, I'd incline to finally let it imply -p, as --diff-merges=m now
->> >> covers another side of the coin.
->> >>
->> >> What do you think?
->> >
->> > I am 100% in favor of that proposal, and I can work on the code this
->> > weekend.
->>
->> No need to bother. If we agree, I'll send a patch atop of my recent
->> changes that make -m format configurable.
+On Thu, 29 Apr 2021 at 10:31, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Great, thank you!
+> Luke Diamand <luke@diamand.org> writes:
+> >
+> > Looks good otherwise.
 >
->> Alternatively, we can add a configuration option, or let -m imply -p
->> only when -m format is explicitly configured by the user.
->
-> Since the goal here is simple, easily understandable, and
-> user-friendly behavior, I think -m should imply -p all the time, or at
-> least imply -p by default. The less I have to explain to new Git
-> users, the better.
+> Thanks for a prompt review.
 
-Yep, but OTOH -m never implied -p before, and it'll take time for the
-change get to release and then to reach distributions... So the actual
-question here is if anybody cares enough about backward compatibility in
-this particular case to complicate transition?
+I addressed your comments and updated my PR at
+https://github.com/git/git/pull/1013, but CI seems stuck and hasn't
+kicked off yet. I'd like to see it pass especially since I modified a
+test. Is there anything else I need to do?
 
--- Sergey Organov
+Joachim
