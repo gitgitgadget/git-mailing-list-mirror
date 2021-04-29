@@ -4,118 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A2735C433ED
-	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 00:27:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03549C433B4
+	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 00:28:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 82DE1613EE
-	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 00:27:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C6023613F8
+	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 00:28:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237191AbhD2A1z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Apr 2021 20:27:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53016 "EHLO
+        id S237062AbhD2A3i (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Apr 2021 20:29:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236454AbhD2A1w (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Apr 2021 20:27:52 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54E73C06138B
-        for <git@vger.kernel.org>; Wed, 28 Apr 2021 17:27:05 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id j28so12424450edy.9
-        for <git@vger.kernel.org>; Wed, 28 Apr 2021 17:27:05 -0700 (PDT)
+        with ESMTP id S239775AbhD2A3h (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Apr 2021 20:29:37 -0400
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1337C06138B
+        for <git@vger.kernel.org>; Wed, 28 Apr 2021 17:28:51 -0700 (PDT)
+Received: by mail-oi1-x22c.google.com with SMTP id z7so12633901oix.9
+        for <git@vger.kernel.org>; Wed, 28 Apr 2021 17:28:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=9HUE8JyoDPl/zYOwrx+y1fI2jnpLr7zP5DtHQvPpgLE=;
-        b=Q2F2IY3a2bbXZyFG1PWWHhK+3mvDw1G2yyMlMQ8sXafJ8PHrSP0WVX7cagyQQehx+Y
-         AECyg85IqdXDWk0ETNTEu04aRJjmwojvhJ5S8bFMXdXaNTzH4lp3+lAxazMEplfbtYu2
-         060ROKhSsFOxGE0Ec27d8asIIjOcHrwk5UdwN/YEzZZ/IqD3xxkY8CEG68I0au921GqY
-         chbpv4mosgROYh7dqgt9T1HP4D2x2uIrTXyczApZrLQ3fVhJlN6IKeatMPM0y37MWB9P
-         Z6VXqYnXf6qrgZqiEs/uWJbM7HC6plFus+J1iTHsDRoB9oTjIt0s4sEi0CDdVG19Zy6r
-         9gIA==
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=wGl6htKOM3MXmgPkO9LXYw+UbxSXOEuDwcQirwe8Bu4=;
+        b=egbe1kHzd/QfATjwCf8RtPRDgjSeVoLmeg8aaAWAYqtfQDzAeSJScD5QK1YSChb38j
+         gHKWI+RCOBwjM7iVCnWxKCE4x06JEqJkiqYwPh4d3NrD8PlBGHc++zqlnI0SwTYSfWkk
+         xqIEl7z87ACP3xiwYNbcEiN+ltK4JTJkacf8ZWjXVLFs1wRBQH4DnHHs3OgsBc4c+VrG
+         Z/kVnX4T6MH0iedTPpdJ72bw9rfxZa5VcovRM9II3VCDYABUduk0HA9TFQC7tCou/gS+
+         E3g2LZSYHUR8YcFkEO2TZqeLxrqTojQOkZYEwjBULy24qxUJf8yqrN9jKnV9ZxtCkDD5
+         flhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=9HUE8JyoDPl/zYOwrx+y1fI2jnpLr7zP5DtHQvPpgLE=;
-        b=Aj2J+/SoG+LxO5QIZl0C2nizrPnx4qCvY/UVLjzCuHcQmA8HLjwBOScc3oVtYGUIAK
-         KoFBKAacA2TMBM2g+inlg2D5KW2KX5br/6i5aAFdeEERREiVxXhvxB4nki9yBEC7bumg
-         I7BRz9uk1W62QHdF7XnKR/kjjEqpBGuh4xAdnLjc1EJ7LB2rqqxdRJ6O0t0ZlyWilBYB
-         96IGaTIMn6M2Zkb9GfFm1jzZS82WNP8vW0dg7IwfyRH8hGoVJ2sL2wM4GuJbHQrYSHm5
-         /vhOtEX5pZiOW0JCc4H/DgUgE5btPaqKDIKjaUEaIxfvlYj6W9jnIGGs5nEoRS4dgpX7
-         mQiQ==
-X-Gm-Message-State: AOAM530BxFValEsHi4LRRJfFuwP5BE+aouwtyGvBCYvN1k4DrlYuQHrR
-        EMncuaICHj67UZT/ceGckV4Y1U1a+pX2cA==
-X-Google-Smtp-Source: ABdhPJxDuruq0q3ocpbwKsWg3Q3AqzZUn7Lky+tzZ4+BmvoqBDn+BagyNcmwiDj/WbtcG3O/2JzOxg==
-X-Received: by 2002:a05:6402:5a:: with SMTP id f26mr14885590edu.285.1619656024060;
-        Wed, 28 Apr 2021 17:27:04 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id c19sm1087601edu.20.2021.04.28.17.27.03
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=wGl6htKOM3MXmgPkO9LXYw+UbxSXOEuDwcQirwe8Bu4=;
+        b=t5VoHXZosrDGaaD7WWOV1MDzUprqlD11ZUAuCNRVFtXdeVADB+SxMl3RDbJ6RyzIFJ
+         TSN94KwoWHrD/cqX9oEAfN8dwP1oUkX2RaMnXFrChnj39gdDURBM2gubCgV85DcyRXPP
+         EIWNDqFzqRQYOJsvhbDTmIx0zzJsn71Pva5xJAIjh8Z2L2i2v8QFsSATc3lkrvKf0Wcm
+         182xnqZ88VWcwFCmxulSGJBVhnuPwx+UeETcQb9ya3PO7qV1ikjY5RsPEDcL6kzrtlq7
+         sRV2ezJO0VtRQUq8Vsr4a8J+U32uuP6OXnK4xVeZ1ecslXTUU2xZ/OYQ2Yefzg5BxNuq
+         6f0A==
+X-Gm-Message-State: AOAM532DIhBMVQF98dIi8t5CxWaUwZ6mNELVNkp3UcReyoAeAEdYbNr3
+        /EPt9uidA6a8zerzfsIiwtE=
+X-Google-Smtp-Source: ABdhPJzRpvfpN6ruv9b51oFo1dKDCgGSOJ9EqidlMRUJ5PYI878EMyK/qyB/ScITt1fnVoTDaBhJbA==
+X-Received: by 2002:aca:30d7:: with SMTP id w206mr5678017oiw.163.1619656131396;
+        Wed, 28 Apr 2021 17:28:51 -0700 (PDT)
+Received: from localhost ([2806:2f0:4060:638f:a2c5:89ff:fe0c:1151])
+        by smtp.gmail.com with ESMTPSA id m127sm335674oib.32.2021.04.28.17.28.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Apr 2021 17:27:03 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     dwh@linuxprogrammer.org
-Cc:     git@vger.kernel.org
-Subject: Re: pkt-line and LF terminated lines of data
-Date:   Thu, 29 Apr 2021 02:12:00 +0200
-References: <20210428222219.GA982@localhost>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
-In-reply-to: <20210428222219.GA982@localhost>
-Message-ID: <87bl9yylyg.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain
+        Wed, 28 Apr 2021 17:28:50 -0700 (PDT)
+Date:   Wed, 28 Apr 2021 19:28:49 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     =?UTF-8?B?QW50b2luZSBCZWF1cHLDqQ==?= <anarcat@debian.org>,
+        git@vger.kernel.org
+Message-ID: <6089fdc1bfc0f_a9ef2081e@natae.notmuch>
+In-Reply-To: <YIRiSJDem/JaBHuN@camp.crustytoothpaste.net>
+References: <87mttofs5t.fsf@angela.anarc.at>
+ <60836fa129078_ff602089c@natae.notmuch>
+ <87k0osfpt8.fsf@angela.anarc.at>
+ <60839422353fc_10cb9208c7@natae.notmuch>
+ <YIRiSJDem/JaBHuN@camp.crustytoothpaste.net>
+Subject: Re: how to rename remote branches, the long way
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+brian m. carlson wrote:
+> On 2021-04-24 at 03:44:34, Felipe Contreras wrote:
+> > I see.
+> > 
+> > That makes me think we might want a converter that translates
+> > (local)main -> (remote)master, and (remote)master -> (local)mail
+> > everywhere, so if your eyes have trouble seeing one, you can configure
+> > git to simply see the other... Without bothering the rest of the word.
+> > 
+> > I'll give that idea a try.
+> 
+> I don't believe this is a helpful response, and judging from the
+> follow-up, neither did the OP.
 
-On Wed, Apr 28 2021, dwh@linuxprogrammer.org wrote:
+That's fine, you don't need to find it useful.
 
-> I was just reading the Documentation/technical/protocol-common.txt
-> description of the pkt-line format. One detail that is left out is how a
-> receiver of pkt-line encoded data determines if a line is binary data or
-> contains non-binary data.
+> They're not trying to do anything dangerous, improvident, or harmful
+> to others and they are trying to solve a problem that many people have
+> and that is due to an inherent limitation in Git (its inability to
+> rename remote branches easily[0]), so there's no reason to respond in
+> this way.
 
-They don't. The "is it binary" is a client convention / awareness of the
-consumed payload.
+What is "in this way"? Proposing another solution more people (including
+me) might find simpler, and more viable?
 
-> The documentation says:
->
->> A non-binary line SHOULD BE terminated by an LF, which if present MUST
->> be included in the total length. Receivers MUST treat pkt-lines with
->> non-binary data the same whether or not they contain the trailing LF
->> (stripping the LF if present, and not complaining when it is missing).
->
-> It seems like a pkt-line with binary data could easily end with 0x0a
-> (LF) and a receiver would strip it off even though that is a legitimate
-> byte in the binary stream. I don't think receivers should be trying to
-> determine if the pkt-line is binary or non-binary and never strip off
-> any 0x0a bytes at the end of a pkt-line.
->
-> The client code that relies on the pkt-line receiver is where the logic
-> should reside that figures out what to do with strings that end with LF.
-> The pkt-line receiver just parses the pkg-line length, reads the correct
-> number of bytes and passes them along for further processing.
->
-> What am I missing? What should be added to this documentation that gives
-> more detail on when/why/how a pkt-line would be determined to be
-> non-binary and the LF stripping would occur?
+> There is a difference between being firm and steadfast, such as when
+> responding to someone who repeatedly advocates an inadvisable technical
+> approach, and being rude and sarcastic, especially to someone who is
+> genuinely trying to improve things, and I think this crosses the line.
 
-My reading of the quoted documentation is that it already matches what
-you're suggesting it should say.
+I wasn't rude. You are free to disagree.
 
-I.e. it doesn't anything about how binary data is handled, what it does
-say is that if a client knows that a line is non-binary it should be
-treating "foo" and "foo\n" the same, i.e. being lenient and interpret
-both as "foo".
+> [0] Regardless of how you feel about this _particular_ rename, one would
+> want the ability to do this to preserve reflogs for _all_ remote
+> renames, and so this would be a valuable and desirable feature to have
+> in Git anyway.
 
-See PACKET_READ_CHOMP_NEWLINE in pkt-line.c, and the entirety of the
-commit that introduced the blurb you're quoting: 1c9b659d983
-(pack-protocol: clarify LF-handling in PKT-LINE(), 2015-09-03).
+I never claimed otherwise.
 
-If you tweak the pkt-line.c code to do PACKET_READ_CHOMP_NEWLINE
-unconditionally you'll get a lot of test failures, digging into those is
-a good starting point to see how the binary v.s. non-binary cases are
-handled.
+It's perfectly fine for two people to work on two approaches to solve
+the same problem.
+
+Cheers.
+
+-- 
+Felipe Contreras
