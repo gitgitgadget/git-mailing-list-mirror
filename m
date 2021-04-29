@@ -2,106 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E19B2C433ED
-	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 11:40:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68811C433B4
+	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 12:05:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AA1F461441
-	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 11:40:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3E18161419
+	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 12:05:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233114AbhD2Lkv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Apr 2021 07:40:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59308 "EHLO
+        id S234862AbhD2MGa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Apr 2021 08:06:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36636 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233252AbhD2Lkt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Apr 2021 07:40:49 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57EC5C06138B
-        for <git@vger.kernel.org>; Thu, 29 Apr 2021 04:40:01 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id k14so16640027wrv.5
-        for <git@vger.kernel.org>; Thu, 29 Apr 2021 04:40:01 -0700 (PDT)
+        with ESMTP id S230148AbhD2MG3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Apr 2021 08:06:29 -0400
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F006C06138B
+        for <git@vger.kernel.org>; Thu, 29 Apr 2021 05:05:43 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id d14so14411936edc.12
+        for <git@vger.kernel.org>; Thu, 29 Apr 2021 05:05:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=FpEZHpTqIEqdhZLS8Hd8+FsL4SE/BaMoxVMGpMpKoiY=;
-        b=GjYcosV+sLmsJAMwCJATWEI5RFLao0DmPW6e0XX4ZZwDxbkIhlZYE0sxVWyZBT0vkb
-         1tL9mtS2BTRR/q8WzUaHm1QWDFsDh4rR3I4XT6NqMGVeuBUTOaid054dsEg95oc4AhNb
-         5AMorNzYTL0aFfKFGsXAGT22aG8/RTla9e/RB4QpNbgVr1OsfxBHc0dbjMRgvwhFPXOJ
-         0C0n7ODaUR5QPCF2RwpHnruM6ZBcEb5acgK1kn4jUuVGQEtwO8J+Y1RVDzs+HCs+PyoO
-         NFqQpeoP7k6Bpl+Y5ulSmVQ34D8FKTYc8udyGphgd/ABfCPvDIvRBNyPUXeRcsO4mRc0
-         qsDg==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=nYFHROsTsmqEsQvDieLv7LYflIHD82OycYSCN/VeQ9s=;
+        b=l1fF4q8RE1frZxJmi6tC2A/mp+Q15JB4wc8LfSW020y4XsCla6RK+3Adq3AaFPndxq
+         rk4XyFUTSzjTNFBz1JkOZDbyhrGCQfVL16y54vDpPr9zWO0s01jWNYj+BqnuugFrHhx8
+         DmvtsF2FCXNvEhQcVAH8jKdW2Lqqs1yvTtHVwo4RyPS/JFwGIeDyWEgudv989UTE+67U
+         uZkQPbDjObzLJRVXZauZwK7aXG5nkesuRky37E67rFeKdGQsu8EVwuXDa9iWlXLxcu23
+         WskFX1mh7xLbNch6JpT6PDpHKRDbebGgqL6FMoCFYzrMOfolqR0/FVTHlUOU6AlNqcoz
+         Mx5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=FpEZHpTqIEqdhZLS8Hd8+FsL4SE/BaMoxVMGpMpKoiY=;
-        b=Ls3Ejp7GeNSRH3zvaAVuJ6g65ozvGEubmSrPwLctou+hLcQXh/1PshMVEmrbvuCOIF
-         eoLJgcJ1BzVSEfoW0lNHc6aMi7Do/dI7EicTt7gaZTRVb+OfTr0n0boK2qaZ/G0lpELZ
-         Aw860H60SP4pF53vgS70m01NAaQUFLQ9Y2BeZ0bHJjTFGhGO1HMkomhQ5ZEBhF0wOzlL
-         L8MznHjlLRvHGxLKUyKvvnjoEUg4wzeLE/ns+UvlKn2zmRrXaRK8rzL0y4XRNHaRvK+K
-         nUo+n7JRcWu+Mz/APQKLTNuIXI/MxvsixvQ/e5SYQzTEigdvxHuzzfnVhfX+u90cTAPx
-         /nbw==
-X-Gm-Message-State: AOAM531bl7b75DoqUJuwH19pHwah4ywBs4K/8MSvLQNbnVw3Zs/1HkeJ
-        XM3f6IA5QToyl3GxVOuPhm2sSlWb7SI=
-X-Google-Smtp-Source: ABdhPJyZuPA9WeA8+26jhQJI/zcqdW2pGdCFDJY9AJDQXtNxx3nh6oG+ioXrRra+98l7QZoYv+mDTw==
-X-Received: by 2002:a05:6000:1a41:: with SMTP id t1mr29463040wry.265.1619696400074;
-        Thu, 29 Apr 2021 04:40:00 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k15sm4360178wro.87.2021.04.29.04.39.59
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=nYFHROsTsmqEsQvDieLv7LYflIHD82OycYSCN/VeQ9s=;
+        b=EBrrNUPsJiTfJlBlmdzJfuFYs++2Q45f+EENQGqTBYnhmKcNLyyj59bjgRWHpzf4aH
+         R2uSnHqhBfNwOU6E/CNvwnuTcIu0sxMfsWWD6t678xlVTizOlDaveGqswsn86n94/k/0
+         b9FFGTeekXdSexlTj8OUb8aC9As7ls7kE8o9+RGSp60wkAi3MpULYG3NfRmlaUi01qGb
+         yA0NskQNmqSvVM5SjyfFPdXrmlQHicpBU3wz9GHko8V3WMgvPPJdFgMedoy0tg/d3WxS
+         mzHo/m6oh+NqfumA4+Ttm25UPysvWD2vgws4+diDabpfOdyUZOhDPWc/Hb1hlMWohT5b
+         pucQ==
+X-Gm-Message-State: AOAM533WVAXSJYg0He2oMJpoW1rO0xxuiAbyCDeLm1fuKEDDn5Ze/cCA
+        r+TolnO5/z5uYopCpUQSk+4=
+X-Google-Smtp-Source: ABdhPJwmzvvjwGyyQUA7M+SdWXo48RbDjskg9xd3bZ/tuRI8nIFtZWf67TWGutA+/4ySdBwirnTUxQ==
+X-Received: by 2002:a05:6402:348d:: with SMTP id v13mr17677744edc.294.1619697941887;
+        Thu, 29 Apr 2021 05:05:41 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id w1sm2265829edt.89.2021.04.29.05.05.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Apr 2021 04:39:59 -0700 (PDT)
-Message-Id: <pull.1014.git.git.1619696399147.gitgitgadget@gmail.com>
-From:   "Bert Huijben via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 29 Apr 2021 11:39:58 +0000
-Subject: [PATCH] mergetool: add win32 path translation for diffmerge
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Thu, 29 Apr 2021 05:05:41 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v2 05/10] {commit,tree,blob,tag}.c: add a
+ create_{commit,tree,blob,tag}()
+Date:   Thu, 29 Apr 2021 14:01:47 +0200
+References: <cover-0.3-0000000000-20210409T080534Z-avarab@gmail.com>
+ <cover-00.10-0000000000-20210420T124428Z-avarab@gmail.com>
+ <patch-05.10-5213d500b9-20210420T124428Z-avarab@gmail.com>
+ <xmqqa6ph8zsc.fsf@gitster.g>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
+In-reply-to: <xmqqa6ph8zsc.fsf@gitster.g>
+Message-ID: <875z05z46j.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Bert Huijben <bert@vmoo.com>, Bert Huijben <bert@vmoo.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Bert Huijben <bert@vmoo.com>
 
-Use the infrastructure added for finding winmerge to also
-automatically find DiffMerge,
+On Thu, Apr 29 2021, Junio C Hamano wrote:
 
-Signed-off-by: Bert Huijben <bert@vmoo.com>
----
-    mergetool: Add win32 path translation for DiffMerge
-    
-    Re-use the path translation added for winmerge to automatically find
-    SouceGear DiffMerge on Windows.
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+>
+>> Add a create_*() function for our built-in types as a handy but
+>> trivial wrapper around their calls to create_object().
+>>
+>> This allows for slightly simplifying code added in
+>> 96af91d410c (commit-graph: verify objects exist, 2018-06-27). The
+>> remaining three functions are added for consistency for now.
+>
+> "for now" puzzles me.  As file-scope static functions, they do not
+> hurt all that much, but on the other hand, having to say
+> "create_object(r, oid, alloc_blob_node(r))" is not hurting at all.
+>
+> The worst part of this "consistency" is that callers cannot call
+> create_blob() because it is not external, even though they learn
+> create_commit() as a handy way to use the create_object() API, which
+> is not consistent at all.
+>
+> And since most callers should be calling lookup_blob() etc., and
+> should not be calling create_blob(), we shouldn't tempt people to
+> push for making them externally available.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1014%2Frhuijben%2Ffix%2Fdiffmerge-path-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1014/rhuijben/fix/diffmerge-path-v1
-Pull-Request: https://github.com/git/git/pull/1014
+The API is for our own internal use. So I figured it was better to leave
+the ones that aren't used elsewhere "static" for now, and if anyone
+needed them in the future that commit could remove the "static".
 
- mergetools/diffmerge | 4 ++++
- 1 file changed, 4 insertions(+)
+> Which in turn makes me wonder if the use of create_object() added to
+> the commit-graph.c was a good idea to begin with.
 
-diff --git a/mergetools/diffmerge b/mergetools/diffmerge
-index 9b6355b98a71..458ed9a89718 100644
---- a/mergetools/diffmerge
-+++ b/mergetools/diffmerge
-@@ -16,3 +16,7 @@ merge_cmd () {
- exit_code_trustable () {
- 	true
- }
-+
-+translate_merge_tool_path() {
-+	mergetool_find_win32_cmd "sgdm.exe" "SourceGear/Common/DiffMerge"
-+}
+Yes we could just drop this and inline the various "alloc", i.e. not
+this & similar in the future:
 
-base-commit: b0c09ab8796fb736efa432b8e817334f3e5ee75a
--- 
-gitgitgadget
+-		odb_commit =3D (struct commit *)create_object(r, &cur_oid, alloc_commit_=
+node(r));
++		odb_commit =3D create_commit(r, &cur_oid);
+
+It just seemed like a net improvement for maintenance/readability to
+have the simpler wrapper for the allocation / object creation v.s. the
+existing alloc_X_node() + cast.
