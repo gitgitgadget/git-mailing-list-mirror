@@ -4,73 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 68811C433B4
-	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 12:05:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CA72C433B4
+	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 12:29:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3E18161419
-	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 12:05:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5FE24613E1
+	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 12:29:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234862AbhD2MGa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Apr 2021 08:06:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36636 "EHLO
+        id S233614AbhD2Ma1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Apr 2021 08:30:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230148AbhD2MG3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Apr 2021 08:06:29 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F006C06138B
-        for <git@vger.kernel.org>; Thu, 29 Apr 2021 05:05:43 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id d14so14411936edc.12
-        for <git@vger.kernel.org>; Thu, 29 Apr 2021 05:05:43 -0700 (PDT)
+        with ESMTP id S230148AbhD2Ma1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Apr 2021 08:30:27 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3B11C06138B
+        for <git@vger.kernel.org>; Thu, 29 Apr 2021 05:29:40 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id n25so6226069edr.5
+        for <git@vger.kernel.org>; Thu, 29 Apr 2021 05:29:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=nYFHROsTsmqEsQvDieLv7LYflIHD82OycYSCN/VeQ9s=;
-        b=l1fF4q8RE1frZxJmi6tC2A/mp+Q15JB4wc8LfSW020y4XsCla6RK+3Adq3AaFPndxq
-         rk4XyFUTSzjTNFBz1JkOZDbyhrGCQfVL16y54vDpPr9zWO0s01jWNYj+BqnuugFrHhx8
-         DmvtsF2FCXNvEhQcVAH8jKdW2Lqqs1yvTtHVwo4RyPS/JFwGIeDyWEgudv989UTE+67U
-         uZkQPbDjObzLJRVXZauZwK7aXG5nkesuRky37E67rFeKdGQsu8EVwuXDa9iWlXLxcu23
-         WskFX1mh7xLbNch6JpT6PDpHKRDbebGgqL6FMoCFYzrMOfolqR0/FVTHlUOU6AlNqcoz
-         Mx5w==
+        bh=XSjctXF1rN7HvpATfVppChK2dsvq1TpO7CbgLtEHheQ=;
+        b=kjr384zRJazZCWP6QBKMkT2Uw3JFstyc4qqIBmimJmrYxkk+kdhK1IgsJVA8ivRx9c
+         Bm6GuV8HcK58A3nEKyxqPIsWXEt+cZDXIT9nxOEQ24wnxzyFhnobQZsqeN1Srxic7skh
+         X4d+rMqGj5wpsMM0dGmp5CYBVDATzKqtZbL28iq+5ztt2uMOXXRz4Vayu+kd5VvdxGIO
+         7+Qr86sng0e60Fkcz7ei8oTw/GTniNY9zvPPE5ETM6RsB9PlhtkBCaCKbJfJaj4dEYWp
+         QzJOkZGH/eGgsnVONCSatJ/q/yvfa+Hpu9/rs9EznESW7fqTbIKDfUDZqt7+5EJ1XMj1
+         3HAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=nYFHROsTsmqEsQvDieLv7LYflIHD82OycYSCN/VeQ9s=;
-        b=EBrrNUPsJiTfJlBlmdzJfuFYs++2Q45f+EENQGqTBYnhmKcNLyyj59bjgRWHpzf4aH
-         R2uSnHqhBfNwOU6E/CNvwnuTcIu0sxMfsWWD6t678xlVTizOlDaveGqswsn86n94/k/0
-         b9FFGTeekXdSexlTj8OUb8aC9As7ls7kE8o9+RGSp60wkAi3MpULYG3NfRmlaUi01qGb
-         yA0NskQNmqSvVM5SjyfFPdXrmlQHicpBU3wz9GHko8V3WMgvPPJdFgMedoy0tg/d3WxS
-         mzHo/m6oh+NqfumA4+Ttm25UPysvWD2vgws4+diDabpfOdyUZOhDPWc/Hb1hlMWohT5b
-         pucQ==
-X-Gm-Message-State: AOAM533WVAXSJYg0He2oMJpoW1rO0xxuiAbyCDeLm1fuKEDDn5Ze/cCA
-        r+TolnO5/z5uYopCpUQSk+4=
-X-Google-Smtp-Source: ABdhPJwmzvvjwGyyQUA7M+SdWXo48RbDjskg9xd3bZ/tuRI8nIFtZWf67TWGutA+/4ySdBwirnTUxQ==
-X-Received: by 2002:a05:6402:348d:: with SMTP id v13mr17677744edc.294.1619697941887;
-        Thu, 29 Apr 2021 05:05:41 -0700 (PDT)
+        bh=XSjctXF1rN7HvpATfVppChK2dsvq1TpO7CbgLtEHheQ=;
+        b=Oyqlx9TpNiYVdh+Tp56vBGjTDXGrop5QBjxlkyZ55y2ld+hsQRR8QaGLChe+qrMAi2
+         99G0bivAkasCufrvlqN2jp8XVQOgBvQVtpMvsE9fmTIpJQoT4zF2qyox1Md7jjDKNCnv
+         AD+bxx2iXpM4iocXs8Y0vG60G+dTprNQuACby3PfoiSftsJV690m4EkfRNqEdwEFGLjC
+         TmYbBp1JKaeOaCLbDr2smXSinKZjFStLNxJ1TADcUPLwxoxPpc63R1tzQwdMF2fa5f7C
+         iMBetTNJyR0/cxnVf/HZPF/hUy/iSDVjxH4fG+q8/zRkSWKVsj8iTomvYJJoqkfYCeoc
+         HY1A==
+X-Gm-Message-State: AOAM530rCTxvx6EtgJqO5MCLjQG1iIeKuDaBjDoPKbQ7IJf6udUS6q6A
+        +5dhKws8yKvbAUIc1+jUe5E=
+X-Google-Smtp-Source: ABdhPJwCwpHdCr3tflMurxmEcB4ar1ONvXtCLzupTlLMF2LzMkaiSCWrWaoJj2cfohJMUx06B2JsdQ==
+X-Received: by 2002:a50:bec7:: with SMTP id e7mr18104329edk.295.1619699379467;
+        Thu, 29 Apr 2021 05:29:39 -0700 (PDT)
 Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id w1sm2265829edt.89.2021.04.29.05.05.41
+        by smtp.gmail.com with ESMTPSA id x9sm2276281edv.22.2021.04.29.05.29.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Apr 2021 05:05:41 -0700 (PDT)
+        Thu, 29 Apr 2021 05:29:39 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2 05/10] {commit,tree,blob,tag}.c: add a
- create_{commit,tree,blob,tag}()
-Date:   Thu, 29 Apr 2021 14:01:47 +0200
-References: <cover-0.3-0000000000-20210409T080534Z-avarab@gmail.com>
- <cover-00.10-0000000000-20210420T124428Z-avarab@gmail.com>
- <patch-05.10-5213d500b9-20210420T124428Z-avarab@gmail.com>
- <xmqqa6ph8zsc.fsf@gitster.g>
+Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
+        Taylor Blau <me@ttaylorr.com>, Patrick Steinhardt <ps@pks.im>
+Subject: Re: Nesting topics within other threads
+Date:   Thu, 29 Apr 2021 14:14:52 +0200
+References: <87k0omzv3h.fsf@evledraar.gmail.com>
+        <patch-1.1-e1d8c842c70-20210428T161817Z-avarab@gmail.com>
+        <1ecb3727-106f-3d04-976a-36aa03a61caf@gmail.com>
+        <xmqqsg397jyj.fsf@gitster.g>
 User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
-In-reply-to: <xmqqa6ph8zsc.fsf@gitster.g>
-Message-ID: <875z05z46j.fsf@evledraar.gmail.com>
+In-reply-to: <xmqqsg397jyj.fsf@gitster.g>
+Message-ID: <8735v9z32l.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -81,42 +78,89 @@ X-Mailing-List: git@vger.kernel.org
 
 On Thu, Apr 29 2021, Junio C Hamano wrote:
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+> Derrick Stolee <stolee@gmail.com> writes:
 >
->> Add a create_*() function for our built-in types as a handy but
->> trivial wrapper around their calls to create_object().
+>> On 4/28/2021 12:26 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>>> Simplify the setup code in repo-settings.c in various ways, making the
+>>> code shorter, easier to read, and requiring fewer hacks to do the same
+>>> thing as it did before:
 >>
->> This allows for slightly simplifying code added in
->> 96af91d410c (commit-graph: verify objects exist, 2018-06-27). The
->> remaining three functions are added for consistency for now.
+>> This patch is interesting, and I'll review it when I have some more
+>> time. Probably tomorrow.
+>>
+>> But I thought that I would point out that this pattern of adding a
+>> patch within the thread of a larger series makes it very difficult
+>> to separate the two. I use an email client that groups messages by
+>> thread in order to help parse meaningful discussion from the list
+>> which otherwise looks like a fire hose of noise. Now, this patch is
+>> linked to the FS Monitor thread and feedback to either will trigger
+>> the thread as having unread messages.
+>>
+>> I find it very difficult to track multiple patch series that are
+>> being juggled in the same thread. It is mentally taxing enough that
+>> I have avoided reviewing code presented this way to save myself the
+>> effort of tracking which patches go with what topic in what order.
 >
-> "for now" puzzles me.  As file-scope static functions, they do not
-> hurt all that much, but on the other hand, having to say
-> "create_object(r, oid, alloc_blob_node(r))" is not hurting at all.
+> I do find it distracting to have a full "ah, I just thought of
+> something while discussing this unrelated series" patch fairly
+> irritating for the same reason.  It however is unavoidable human
+> nature that we come up with ideas while thinking about something not
+> necessarily related.  So it largely is a presentation issue.
 >
-> The worst part of this "consistency" is that callers cannot call
-> create_blob() because it is not external, even though they learn
-> create_commit() as a handy way to use the create_object() API, which
-> is not consistent at all.
->
-> And since most callers should be calling lookup_blob() etc., and
-> should not be calling create_blob(), we shouldn't tempt people to
-> push for making them externally available.
+> I really appreciate the way some people (Peff is a stellar example,
+> but there are others who are as good at this) handle these tangents,
+> where the message sent to an existing thread is limited to only give
+> an outline of the idea (possibly with "something like this?" patch
+> for illustration) and then they quickly get out of the way of the
+> discussion by starting a separate thread, while back-referencing "So
+> here is a proper patch based on the idea I interjected in the
+> discussion of that other topic."  And the discussion on the tangent
+> will be done on its own thread.
 
-The API is for our own internal use. So I figured it was better to leave
-the ones that aren't used elsewhere "static" for now, and if anyone
-needed them in the future that commit could remove the "static".
+In RFC 822 terms. Are you talking about the In-Reply-To[1] or
+References[2] headers, or both/neither?
 
-> Which in turn makes me wonder if the use of create_object() added to
-> the commit-graph.c was a good idea to begin with.
+I'm happy to go along with whatever the convention is, but as noted
+think it's valuable to come to some explicit decision to document the
+convention.
 
-Yes we could just drop this and inline the various "alloc", i.e. not
-this & similar in the future:
+Threading isn't a concept that exists in E-Mail protocols per-se. Just
+In-Reply-To and References. The References header can reference N
+messages most would think about as a separate "thread", and "thread" is
+ultimately some fuzzy MUA-specific concept on top of these (and others).
 
--		odb_commit =3D (struct commit *)create_object(r, &cur_oid, alloc_commit_=
-node(r));
-+		odb_commit =3D create_commit(r, &cur_oid);
+E.g. in my client right now I'm looking at just 4 messages in this
+"thread", it doesn't descend down the whole In-Reply-To, others would
+act differently.
 
-It just seemed like a net improvement for maintenance/readability to
-have the simpler wrapper for the allocation / object creation v.s. the
-existing alloc_X_node() + cast.
+Some (such as GMail) have their own ad-hoc concept of "thread" separate
+from anything in RFCs (which includes some fuzzy group-by-subject). In
+GMail's web UI everything as of my "upthread"
+<patch-1.1-e1d8c842c70-20210428T161817Z-avarab@gmail.com> is presented
+as its own thread.
+
+The ML read as it happens, but it's also a collectively maintained
+datastructure.
+
+It seems to me to be better to veer on the side of using standard fields
+for their intended purpose for archiving / future use. I.e. making "a
+reference" universally machine-readable, as opposed to a lore.kernel.org
+link, or a free-form "in a recent thread" blurb.
+
+ML Archive Formats Matter[3] :)
+
+But yes, maybe MUAs in the wild these days mostly render things one way
+or another, so catering to them would be a good trade-off. I'm writing
+this from within an Emacs MUA, so I don't have much of a feel for common
+MUA conventions these days.
+
+I'm prodding to see if we can define the problem exactly, because
+e.g. maybe "References: <break@threading.hack> [actual <references>]" is
+something that would achieve both aims, i.e. make the references
+machine-readable, but break up threading in common in-the-wild
+clients. We could then patch format-patch etc. to support such
+"detached" threading.
+
+1. https://tools.ietf.org/html/rfc822#section-4.6.2
+2. https://tools.ietf.org/html/rfc822#section-4.6.3
+3. https://keithp.com/blogs/Repository_Formats_Matter/
