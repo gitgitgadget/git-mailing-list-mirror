@@ -2,165 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-18.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 24863C433B4
-	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 02:22:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 54A84C433ED
+	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 02:35:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DF88A61450
-	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 02:22:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2FEE26143D
+	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 02:35:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232936AbhD2CXX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Apr 2021 22:23:23 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:62330 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229888AbhD2CXW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Apr 2021 22:23:22 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2021112C6A8;
-        Wed, 28 Apr 2021 22:22:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=QWdprBGSo6lmYIP1F9eBlHj07BnlOVdREy4r5u
-        TC4k8=; b=uSfwYz7T83MIIgBJ+x+r9fL3DeivtKI4PnyYWz2Sgcv56bQ9AzrYGi
-        sXDI33vi3vfGYjR/y/AcI4lg3TwQiZnRQF8YtQgqXGCR0fe470wafxVyiSS/Yj2Q
-        LrN33u9cyKG5QB1O0geDP1/Ba1plKcpv1j88Wxk6DxlCRuLFbLLeI=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 09DF812C6A7;
-        Wed, 28 Apr 2021 22:22:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2DCC812C694;
-        Wed, 28 Apr 2021 22:22:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Joachim Kuebart via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Joachim Kuebart <joachim.kuebart@gmail.com>,
-        Luke Diamand <luke@diamand.org>
-Subject: Re: [PATCH] git-p4: speed up search for branch parent
-References: <pull.1013.git.git.1619640416533.gitgitgadget@gmail.com>
-Date:   Thu, 29 Apr 2021 11:22:32 +0900
-In-Reply-To: <pull.1013.git.git.1619640416533.gitgitgadget@gmail.com> (Joachim
-        Kuebart via GitGitGadget's message of "Wed, 28 Apr 2021 20:06:56
-        +0000")
-Message-ID: <xmqq5z05akyf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S229718AbhD2CgA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Apr 2021 22:36:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52464 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233150AbhD2CgA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Apr 2021 22:36:00 -0400
+Received: from mail-qv1-xf2f.google.com (mail-qv1-xf2f.google.com [IPv6:2607:f8b0:4864:20::f2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9450CC06138B
+        for <git@vger.kernel.org>; Wed, 28 Apr 2021 19:35:11 -0700 (PDT)
+Received: by mail-qv1-xf2f.google.com with SMTP id t14so1810484qvl.10
+        for <git@vger.kernel.org>; Wed, 28 Apr 2021 19:35:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=skydio.com; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=ntxK8i/7YjRo91thgPUV9qt+1Gfd0jvhXinOlF4JTbE=;
+        b=3E4sGB2JRIGHUw7aBLhce+YD9qYnsmZYnd2MTrGXqmtcF4RkK0FzU+Fs7QeTFSKbHo
+         ugoHIYOGtaYdFet0oYmRh9f79OMzHY02T8I/Yf0FnJ3YOrq5/UjvfIkKg01dPBsafxmm
+         DG0TkuRS+QM1DlKQ/AZOdIC3MnGEw3cWwzffHVJk8k3ujWaG+l4VlwAPMj/iSunN2cTy
+         feCdyQ12NK46NE1fkc/trTTa68T9G5pZRDq7ZNUvEY6o1AMOLCHzoZs7Yi56P+7fe9uw
+         Uq1IJDuMHWy4qHWAtwi9Xbut2wlMFtlqLP3x3uwgQZprApZ5kXdcr7/hMM4SDd+oEsCm
+         XfmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=ntxK8i/7YjRo91thgPUV9qt+1Gfd0jvhXinOlF4JTbE=;
+        b=XICOmjRnfWmiScNceb1Vgop4cxrTOurQz3zQxGcJy7FmGZhDgHQjeEeTru3rB5ZgJl
+         mY49ZBhRUlDXhEEyeCjj+xEQtGCpII7jbJtvWTqgBAQ6NSCBIT+IurCnodOrCcl+R1aZ
+         nUPwdZAUfE3UHZWHsfRgcNaK/OH1LZUq7l8jP4I7HeeHVkhswhvJBOjDdhSgayenz9y5
+         rJbSWJwoaRJwjv3lMNo98e7voDkbe5bg4EAdco8oM3x1U3iFb1yvJcBmesbZvtLK9NrW
+         geJVBVXlnCuGX+Kjeg0Cd1E3p3MHeVpY7eGIWsNx5KaltOK37wpVLfHRGPr6m4Dn6DwX
+         otiQ==
+X-Gm-Message-State: AOAM532Ru7EwVmcn6N3wCfpXI03iH+7LA6cs0BUpMqADFeRCQUiQo0bh
+        q+GBCbpixw8fndgi3x3AMg/dgwwrChsxEPxN
+X-Google-Smtp-Source: ABdhPJyt9OJfIwptVi0RjVEqeBpMW7Z9JXUe+er9GRjlVj/CMMqNZ5OK2JCuyMmTwSLB4x3GUhADJw==
+X-Received: by 2002:ad4:4f11:: with SMTP id fb17mr248061qvb.18.1619663710585;
+        Wed, 28 Apr 2021 19:35:10 -0700 (PDT)
+Received: from jerry-desktop.localdomain ([50.236.240.214])
+        by smtp.gmail.com with ESMTPSA id w5sm1265732qto.97.2021.04.28.19.35.09
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 28 Apr 2021 19:35:09 -0700 (PDT)
+From:   Jerry Zhang <jerry@skydio.com>
+To:     git@vger.kernel.org, gitster@pobox.com
+Cc:     ross@skydio.com, abe@skydio.com, brian.kubisiak@skydio.com,
+        Jerry Zhang <jerry@skydio.com>
+Subject: [PATCH V3] git-apply: adjust messages to account for --3way changes
+Date:   Wed, 28 Apr 2021 19:35:03 -0700
+Message-Id: <20210429023503.29631-1-jerry@skydio.com>
+X-Mailer: git-send-email 2.31.1.367.g30381d2e76.dirty
+In-Reply-To: <20210427194005.14318-1-jerry@skydio.com>
+References: <20210427194005.14318-1-jerry@skydio.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C1EA88F8-A891-11EB-A376-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Joachim Kuebart via GitGitGadget" <gitgitgadget@gmail.com> writes:
+"git apply" specifically calls out when it
+is falling back to 3way merge application.
+Since the order changed to preferring 3way
+and falling back to direct application,
+continue that behavior by printing whenever
+3way fails and git has to fall back.
 
-> From: Joachim Kuebart <joachim.kuebart@gmail.com>
+Signed-off-by: Jerry Zhang <jerry@skydio.com>
+---
+V2->V3 
+- Changed "modify prints" to "adjust messages"
 
-Thanks.  As git-p4 is not in my area of expertise, I'll make a style
-critique first, while pinging Luke as an area expert (you can learn
-who they are with "git shortlog --no-merges --since=18.months.ago
-git-p4.py").
+ apply.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-> Previously, the code iterated through the parent branch commits and
-> compared each one to the target tree using diff-tree.
-
-It is customary in this project to describe the problem in the
-present tense.  In other words, whoever is writing the log message
-still lives in the world without this patch applied to the system.
-
-    The code iterates through the parent commits and compares each of
-    them to the target tree using diff-tree.
-
-But before that sentence, please prepare the reader with a bit
-larger picture.  A reader may not know what purpose the comparison
-serves.  Do we know that the tree of one of the parents of the
-commit must match the tree of the target, and trying to see which
-parent is the one with the same tree?  What is helped by learning
-which parent has the same tree?
-
-Perhaps
-
-    The method searchParent() is used to find a commit in the
-    history of the given 'parent' commit whose tree exactly matches
-    the tree of the given 'target commit.  The code iterates through
-    the commits in the history and compares each of them to the
-    target tree by invoking diff-tree.
-
-And then our log message would make observation, pointing out what
-is wrong with it (after all comparing with diff-tree is not giving
-us a wrong result---the point of this change is that spawning diff-tree
-for each commit is wasteful when we only want to see exact matches).
-
-    Because we only are interested in finding a tree that is exactly
-    the same, and not interested in how other trees are different,
-    having to spawn diff-tree for each and every commit is wasteful. 
-
-> This patch outputs the revision's tree hash along with the commit hash,
-> thereby saving the diff-tree invocation. This results in a considerable
-> speed-up, at least on Windows.
-
-And then our log message would order the codebase to "become like
-so", in order to resolve the issue(s) pointed out in the
-observation.  Perhaps
-
-    Use the "--format" option of "rev-list" to find out the tree
-    object name of each commit in the history, and find the tree
-    whose name is exactly the same as the tree of the target commit
-    to optimize this.
-
-When making a claim on performance, it is helpful to our readers to
-give some numbers, even in a limited test, e.g.
-
-    In a sample history where ~100 commits needed to be traversed to
-    find the fork point on my Windows box, the current code took
-    10.4 seconds to complete, while the new code yields the same
-    result in 1.8 seconds, which is a significant speed-up.
-
-or something along these lines.
-
-> Signed-off-by: Joachim Kuebart <joachim.kuebart@gmail.com>
->  git-p4.py | 22 +++++++++++-----------
->  1 file changed, 11 insertions(+), 11 deletions(-)
->
-> diff --git a/git-p4.py b/git-p4.py
-> index 09c9e93ac401..dbe94e6fb83b 100755
-> --- a/git-p4.py
-> +++ b/git-p4.py
-> @@ -3600,19 +3600,19 @@ def importNewBranch(self, branch, maxChange):
->          return True
->  
->      def searchParent(self, parent, branch, target):
-> +        for tree in read_pipe_lines(["git", "rev-parse",
-> +                                     "{}^{{tree}}".format(target)]):
-> +            targetTree = tree.strip()
-
-It looks very strange to run a commit that you expect a single line
-of output, and read the result in a loop.  Doesn't git-p4.py supply
-a more suitable helper to read a single line output from a command?
-
-> +        for blob in read_pipe_lines(["git", "rev-list", "--format=%H %T",
->                                       "--no-merges", parent]):
-
-This is not a new problem you introduced, but when we hear word
-"blob" in the context of this project, it reminds us of the "blob"
-object, while the 'blob' variable used in this loop has nothing to
-do with it.  Perhaps rename it to say 'line' or something?
-
-> +            if blob[:7] == "commit ":
-> +                continue
-
-Perhaps blob.startswith("commit ") to avoid hardcoded string length?
-
-> +            blob = blob.strip().split(" ")
-> +            if blob[1] == targetTree:
->                  if self.verbose:
-> +                    print("Found parent of %s in commit %s" % (branch, blob[0]))
-> +                return blob[0]
-> +        return None
+diff --git a/apply.c b/apply.c
+index 5957430433..0ddde5e8a8 100644
+--- a/apply.c
++++ b/apply.c
+@@ -3572,7 +3572,7 @@ static int try_threeway(struct apply_state *state,
+ 		 read_blob_object(&buf, &pre_oid, patch->old_mode))
+ 		return error(_("repository lacks the necessary blob to perform 3-way merge."));
+ 
+-	if (state->apply_verbosity > verbosity_silent)
++	if (state->apply_verbosity > verbosity_silent && patch->direct_to_threeway)
+ 		fprintf(stderr, _("Performing three-way merge...\n"));
+ 
+ 	img = strbuf_detach(&buf, &len);
+@@ -3639,6 +3639,10 @@ static int apply_data(struct apply_state *state, struct patch *patch,
+ 		return -1;
+ 
+ 	if (!state->threeway || try_threeway(state, &image, patch, st, ce) < 0) {
++		if (state->apply_verbosity > verbosity_silent &&
++		    state->threeway && !patch->direct_to_threeway)
++			fprintf(stderr, _("Falling back to direct application...\n"));
++
+ 		/* Note: with --reject, apply_fragments() returns 0 */
+ 		if (patch->direct_to_threeway || apply_fragments(state, &image, patch) < 0)
+ 			return -1;
+-- 
+2.29.0
 
