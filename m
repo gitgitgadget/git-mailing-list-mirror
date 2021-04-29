@@ -2,108 +2,137 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7EF6BC433B4
-	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 07:25:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 274C5C433B4
+	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 07:25:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3BE71613BC
-	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 07:25:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DF83561431
+	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 07:25:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239050AbhD2HZz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Apr 2021 03:25:55 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54156 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232082AbhD2HZs (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Apr 2021 03:25:48 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 98C2FD1854;
-        Thu, 29 Apr 2021 03:24:01 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=nqSaRXyXrMEC
-        +a+jO5HE9HQMC3lTNwBikAedyXOQ6dM=; b=S6Ao5y6Atx7lzQ0gE4C4euFoTtCS
-        TExxx0HkmfWej+TM4nV04RHUU48XLFkqGvqQKTqLa2t7F6smbRva/ELYWNYSG58v
-        4+7pXyyyM4lDpBIN/X4qaQKdN+xYbV17kuoX/rQYBvOGORdCgEPobsklIqNfJfFX
-        V57Xc2uDY3Ws4Vk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BF786D1852;
-        Thu, 29 Apr 2021 03:24:00 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 062BBD1851;
-        Thu, 29 Apr 2021 03:24:00 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Matthieu Moy <git@matthieu-moy.fr>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        id S232511AbhD2H0A (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Apr 2021 03:26:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59342 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230174AbhD2HZ7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Apr 2021 03:25:59 -0400
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A664C06138B
+        for <git@vger.kernel.org>; Thu, 29 Apr 2021 00:25:13 -0700 (PDT)
+Received: by mail-pf1-x432.google.com with SMTP id h11so5853698pfn.0
+        for <git@vger.kernel.org>; Thu, 29 Apr 2021 00:25:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Uyl0+FDG3arIKQnhAmda7kJG18b9LFMV7BDfqnTgs4E=;
+        b=emOA9moSnYXaPrnMQHM8xG2L8U0MUtEBjQjWyOVuNmoSLDGAVppVrNVHeozIFQwSxe
+         XOY9MkuOKfHJRTcbhYYRvd2r27GYbeUjiA0Cod/G4hKSJJcwb40DInPrYahMoE1mt/eP
+         dLvTCcHbnVlNSy2nIYc4f4U9G2c24x9GkzQGCSomhAj1cLUUHW/3cfcZaILLrGAwYhqe
+         D9wg0pLdNwYC6Vfi2Iuaqwly0hHB3XWn9qdx0vsXflbEwL7NWdGbSpEtxNAW4A7y5Ovl
+         RmCknThUjg3uwoucnCQ6bMhk2IMzImKE5yWDYj7zrW/1k1CuKoDQFs3M8XiOC7joKBux
+         vUEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Uyl0+FDG3arIKQnhAmda7kJG18b9LFMV7BDfqnTgs4E=;
+        b=TN8W7oKt+kjDdiAApiKjQN+aGVcmSIUt9GG1B1WTS4ou2DZNDCvtix/PdFItaxzbp8
+         DsUGeaCEgyzRqMcJamwuIsXrlkWpoa7Gb57j3ishdw4w5PhV/uA/xeanLGOMeyfxBw0J
+         p9AbCXtgtqr5nIlxkGhvajKqVkaGd29KzRZNSbyBxEz8uUdBkHU/83dd6K9V8eHq8VTW
+         7izV7SmIl+AW8J+lxuMifGMevux1cQ4fAGH8xXbAQKvMaXmPBb2GrX3uCFr7aDr21fxZ
+         TWys8m8PhgMrNME2QrS1bzpsUATv9vGqfGMhNAujoNXY0aLZVU6//ApbwFH4nE4gZa+e
+         fxtg==
+X-Gm-Message-State: AOAM530Xe92TYebdVUlzAC3OHmKNm/huRoT5bBoJqUF3/jd+CVIegple
+        Yg3NMe1XbQaE0/geLC2flJb0KkQpAdIlYYU0
+X-Google-Smtp-Source: ABdhPJx7hVJHg9/wBX3aJUwolkuWTthA1C0cYEQvq1PHhcNiJHRczENeBZQBMIR2mD1Yin1KlehBKQ==
+X-Received: by 2002:a63:4550:: with SMTP id u16mr30832704pgk.440.1619681112771;
+        Thu, 29 Apr 2021 00:25:12 -0700 (PDT)
+Received: from ubuntu.mate (subs02-180-214-232-79.three.co.id. [180.214.232.79])
+        by smtp.gmail.com with ESMTPSA id e1sm1645913pfi.175.2021.04.29.00.25.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Apr 2021 00:25:08 -0700 (PDT)
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Pranit Bauva <pranit.bauva@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBD?= =?utf-8?B?w7RuZw==?= Danh 
-        <congdanhqx@gmail.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: [PATCH v5 00/11] test-lib.sh: new test_commit args,
- simplification & fixes
-References: <cover-00.11-0000000000-20210421T101156Z-avarab@gmail.com>
-        <cover-00.11-00000000000-20210423T072006Z-avarab@gmail.com>
-Date:   Thu, 29 Apr 2021 16:23:59 +0900
-In-Reply-To: <cover-00.11-00000000000-20210423T072006Z-avarab@gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 23 Apr
- 2021 09:21:04
-        +0200")
-Message-ID: <xmqqo8dx7dv4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        Junio C Hamano <gitster@pobox.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Trygve Aaberge <trygveaa@gmail.com>
+Subject: [PATCH v4] t6030: add test for git bisect skip started with --term* arguments
+Date:   Thu, 29 Apr 2021 14:24:51 +0700
+Message-Id: <20210429072451.38422-1-bagasdotme@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: DDEAD83A-A8BB-11EB-A46F-D152C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Trygve Aaberge reported git bisect breakage when the bisection
+is started with --term* arguments (--term-new and --term-old).
 
-> Changes since v4: Only a commit message change/re-wording per
-> <87v98e1oj7.fsf@evledraar.gmail.com>.
->
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (11):
->   test-lib: bring $remove_trash out of retirement
->   test-lib tests: remove dead GIT_TEST_FRAMEWORK_SELFTEST variable
->   test-lib-functions: reword "test_commit --append" docs
->   test-lib-functions: document test_commit --no-tag
->   test-lib functions: add an --annotated option to "test_commit"
->   describe tests: convert setup to use test_commit
->   test-lib functions: add --printf option to test_commit
->   submodule tests: use symbolic-ref --short to discover branch name
->   test-lib: reformat argument list in test_create_repo()
->   test-lib: do not show advice about init.defaultBranch under --verbose
->   test-lib: split up and deprecate test_create_repo()
+For example, suppose that we have repository with 10 commits, and we
+start the bisection from HEAD to first commit (HEAD~9) with:
 
-I wasn't paying much attention to this series, and didn't look at
-the last step at all (as I saw somebody else is already deeply
-biting into it), but the earlier parts looked good to me.
+  $ git bisect start --term-new=fixed --term-old=unfixed HEAD HEAD~9
 
-It was painful to come back to the pile of topics after a week's
-interruption, though.  While juggling ~50 topics, it is unfair to
-expect the maintainer to remember that a topic that is still going
-through iterations are depended on two other topics in flight (it is
-easier for contributors, who will be juggling far fewer number of
-topics at one time).
+The bisection then stopped at HEAD~5 (fifth commit), and we choose
+to skip (git bisect skip). The HEAD should now at HEAD~4 (sixth commit).
+In the breakage, however, the HEAD after skipping stayed at HEAD~5
+(not changed). The breakage is caused by forgetting to read '.git/BISECT_TERMS' during implementation of `'bisect skip' subcommand in C.
 
-But I think I've sorted out the duplicates caused by forgetting that
-I had to rebase ab/pickaxe-pcre2 and ab/describe-tests-fix on top of
-this topic.  Will be pushing out the result of today's integration
-sometime this evening, which is far from complete as I am still in
-the "catch up with what happened during my absense" mode.
+The fix is in commit 002241336f (bisect--helper: use BISECT_TERMS in
+'bisect skip' command, 2021-04-25). To verify it fixes the breakage, add
+the test.
 
-Thanks.
+Reported-by: Trygve Aaberge <trygveaa@gmail.com>
+Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
+---
+  Changes from v3 [1]:
+    * Lowercase local name variable hash_skipped_from and hash_skipped_to.
+      Christian Couder and Eric Sunshine argued that uppercase local
+      variable names make the reader confused them with global
+      variables.
+    * Mention breakage fix commit 002241336f in the commit message.
 
+  [1]:
+https://lore.kernel.org/git/20210428113805.109528-1-bagasdotme@gmail.com/
 
+ t/t6030-bisect-porcelain.sh | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+index 32bb66e1ed..a1baf4e451 100755
+--- a/t/t6030-bisect-porcelain.sh
++++ b/t/t6030-bisect-porcelain.sh
+@@ -922,6 +922,17 @@ test_expect_success 'bisect start takes options and revs in any order' '
+ 	test_cmp expected actual
+ '
+ 
++# Bisect is started with --term-new and --term-old arguments,
++# then skip. The HEAD should be changed.
++test_expect_success 'bisect skip works with --term*' '
++	git bisect reset &&
++	git bisect start --term-new=fixed --term-old=unfixed HEAD $HASH1 &&
++	hash_skipped_from=$(git rev-parse --verify HEAD) &&
++	git bisect skip &&
++	hash_skipped_to=$(git rev-parse --verify HEAD) &&
++	test "$hash_skipped_from" != "$hash_skipped_to"
++'
++
+ test_expect_success 'git bisect reset cleans bisection state properly' '
+ 	git bisect reset &&
+ 	git bisect start &&
+
+base-commit: 311531c9de557d25ac087c1637818bd2aad6eb3a
+-- 
+2.25.1
 
