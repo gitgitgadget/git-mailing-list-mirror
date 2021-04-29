@@ -6,98 +6,104 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FD28C433ED
-	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 05:13:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7EF6BC433B4
+	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 07:25:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2C63161450
-	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 05:13:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3BE71613BC
+	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 07:25:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231899AbhD2FOJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Apr 2021 01:14:09 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:50834 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229792AbhD2FNL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Apr 2021 01:13:11 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id E381D131793;
-        Thu, 29 Apr 2021 01:12:25 -0400 (EDT)
+        id S239050AbhD2HZz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Apr 2021 03:25:55 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54156 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232082AbhD2HZs (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Apr 2021 03:25:48 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 98C2FD1854;
+        Thu, 29 Apr 2021 03:24:01 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=Z5iW3b6tgBu5
-        J9+PHjkIRktWOKPUC/WkTA1BTD/hoH8=; b=U+dfns2kKF+4Xdd0PI6PYghbRBeQ
-        cCYdnR69y0aq9CnaHZH0wB4ZsX/f9S3lIH+41mF+P2jVNnMUcpJQn+U43CIXWpjP
-        sYsOPSIylqE1oSXBo0UbGPtSNh4yL4AZrdXnrcSdIlY5lbrd+fPrU/22Q7qCVF1R
-        75lMn5LumFQ07h0=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id CDC3B131792;
-        Thu, 29 Apr 2021 01:12:25 -0400 (EDT)
+        :content-type:content-transfer-encoding; s=sasl; bh=nqSaRXyXrMEC
+        +a+jO5HE9HQMC3lTNwBikAedyXOQ6dM=; b=S6Ao5y6Atx7lzQ0gE4C4euFoTtCS
+        TExxx0HkmfWej+TM4nV04RHUU48XLFkqGvqQKTqLa2t7F6smbRva/ELYWNYSG58v
+        4+7pXyyyM4lDpBIN/X4qaQKdN+xYbV17kuoX/rQYBvOGORdCgEPobsklIqNfJfFX
+        V57Xc2uDY3Ws4Vk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BF786D1852;
+        Thu, 29 Apr 2021 03:24:00 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0916E131791;
-        Thu, 29 Apr 2021 01:12:22 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 062BBD1851;
+        Thu, 29 Apr 2021 03:24:00 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Patrick Steinhardt <ps@pks.im>
-Subject: Re: Nesting topics within other threads
-References: <87k0omzv3h.fsf@evledraar.gmail.com>
-        <patch-1.1-e1d8c842c70-20210428T161817Z-avarab@gmail.com>
-        <1ecb3727-106f-3d04-976a-36aa03a61caf@gmail.com>
-Date:   Thu, 29 Apr 2021 14:12:20 +0900
-In-Reply-To: <1ecb3727-106f-3d04-976a-36aa03a61caf@gmail.com> (Derrick
-        Stolee's message of "Wed, 28 Apr 2021 15:09:28 -0400")
-Message-ID: <xmqqsg397jyj.fsf@gitster.g>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Matthieu Moy <git@matthieu-moy.fr>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBD?= =?utf-8?B?w7RuZw==?= Danh 
+        <congdanhqx@gmail.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [PATCH v5 00/11] test-lib.sh: new test_commit args,
+ simplification & fixes
+References: <cover-00.11-0000000000-20210421T101156Z-avarab@gmail.com>
+        <cover-00.11-00000000000-20210423T072006Z-avarab@gmail.com>
+Date:   Thu, 29 Apr 2021 16:23:59 +0900
+In-Reply-To: <cover-00.11-00000000000-20210423T072006Z-avarab@gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 23 Apr
+ 2021 09:21:04
+        +0200")
+Message-ID: <xmqqo8dx7dv4.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 7AF134D4-A8A9-11EB-B70B-D609E328BF65-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: DDEAD83A-A8BB-11EB-A46F-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> On 4/28/2021 12:26 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> Simplify the setup code in repo-settings.c in various ways, making the
->> code shorter, easier to read, and requiring fewer hacks to do the same
->> thing as it did before:
+> Changes since v4: Only a commit message change/re-wording per
+> <87v98e1oj7.fsf@evledraar.gmail.com>.
 >
-> This patch is interesting, and I'll review it when I have some more
-> time. Probably tomorrow.
->
-> But I thought that I would point out that this pattern of adding a
-> patch within the thread of a larger series makes it very difficult
-> to separate the two. I use an email client that groups messages by
-> thread in order to help parse meaningful discussion from the list
-> which otherwise looks like a fire hose of noise. Now, this patch is
-> linked to the FS Monitor thread and feedback to either will trigger
-> the thread as having unread messages.
->
-> I find it very difficult to track multiple patch series that are
-> being juggled in the same thread. It is mentally taxing enough that
-> I have avoided reviewing code presented this way to save myself the
-> effort of tracking which patches go with what topic in what order.
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (11):
+>   test-lib: bring $remove_trash out of retirement
+>   test-lib tests: remove dead GIT_TEST_FRAMEWORK_SELFTEST variable
+>   test-lib-functions: reword "test_commit --append" docs
+>   test-lib-functions: document test_commit --no-tag
+>   test-lib functions: add an --annotated option to "test_commit"
+>   describe tests: convert setup to use test_commit
+>   test-lib functions: add --printf option to test_commit
+>   submodule tests: use symbolic-ref --short to discover branch name
+>   test-lib: reformat argument list in test_create_repo()
+>   test-lib: do not show advice about init.defaultBranch under --verbose
+>   test-lib: split up and deprecate test_create_repo()
 
-I do find it distracting to have a full "ah, I just thought of
-something while discussing this unrelated series" patch fairly
-irritating for the same reason.  It however is unavoidable human
-nature that we come up with ideas while thinking about something not
-necessarily related.  So it largely is a presentation issue.
+I wasn't paying much attention to this series, and didn't look at
+the last step at all (as I saw somebody else is already deeply
+biting into it), but the earlier parts looked good to me.
 
-I really appreciate the way some people (Peff is a stellar example,
-but there are others who are as good at this) handle these tangents,
-where the message sent to an existing thread is limited to only give
-an outline of the idea (possibly with "something like this?" patch
-for illustration) and then they quickly get out of the way of the
-discussion by starting a separate thread, while back-referencing "So
-here is a proper patch based on the idea I interjected in the
-discussion of that other topic."  And the discussion on the tangent
-will be done on its own thread.
+It was painful to come back to the pile of topics after a week's
+interruption, though.  While juggling ~50 topics, it is unfair to
+expect the maintainer to remember that a topic that is still going
+through iterations are depended on two other topics in flight (it is
+easier for contributors, who will be juggling far fewer number of
+topics at one time).
+
+But I think I've sorted out the duplicates caused by forgetting that
+I had to rebase ab/pickaxe-pcre2 and ab/describe-tests-fix on top of
+this topic.  Will be pushing out the result of today's integration
+sometime this evening, which is far from complete as I am still in
+the "catch up with what happened during my absense" mode.
+
+Thanks.
+
 
 
