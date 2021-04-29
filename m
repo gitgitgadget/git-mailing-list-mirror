@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 77CA3C433B4
-	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 15:32:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A399C433B4
+	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 15:32:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 46F0861441
-	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 15:32:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 254CD61139
+	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 15:32:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240725AbhD2PdF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Apr 2021 11:33:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54626 "EHLO
+        id S240748AbhD2PdJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Apr 2021 11:33:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240672AbhD2PdD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Apr 2021 11:33:03 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45937C061342
-        for <git@vger.kernel.org>; Thu, 29 Apr 2021 08:32:16 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id n127so24296541wmb.5
-        for <git@vger.kernel.org>; Thu, 29 Apr 2021 08:32:16 -0700 (PDT)
+        with ESMTP id S240722AbhD2PdE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Apr 2021 11:33:04 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 361B4C06138E
+        for <git@vger.kernel.org>; Thu, 29 Apr 2021 08:32:15 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id a4so67398177wrr.2
+        for <git@vger.kernel.org>; Thu, 29 Apr 2021 08:32:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=0JyrnzQZNBv61TfTAVE5NfNsgGDmaT7cbsksCUDIFSU=;
-        b=davSZGMdMwkyyAy1mZUxiOdWOH3O/hvo1ywS/8lokaYfPwFW3P9uE6FVyoEaLXgYB6
-         9w5Ya1n3fqVK42YoycTQ3+miCUWp5OGQ3CXZfcBI87H3E2D0PV70d3l3HD9bb7ibhsSv
-         zlSHL8iTcQdgjBCTveGonkREqLwCebk1opjwg8zldjKn7szPTDK4ZJgX7Wh76oyO24D/
-         4538dp7defFj9D35JeSPR2eRlKs3CupNcsJD3emcss4LhSN8JHj77x7By0/bb8auxu/U
-         skBgsvLDEcuSmxoT/NO14G2jAwEPQwBPoiG3ocUlnvrfmm261vFRrTV/OoAaX4u3aSPc
-         8R3Q==
+        bh=Ns/C6v70aGGA915pkoG9rhASze7Hid+Pp0Hs8N9wQAI=;
+        b=ZXK/L0f+DRKbrB6lDh3sCbyHTfMpU9C7qr7OizB5qsKNMDPdmwdNZTC07g/0cA28Nn
+         R63IDD39FEVaU9M+wAnmdzQG4BhMFT4DACFy/y2Inj6zanBvGYJKLABuS4XijnDEu6c2
+         0Yx8ERkU9QF38bVTCz75QKCDqqI2VzNt8mJR+dVk0EriLI0Rqry6kJpMARNOnxPTGk7S
+         NaIHlg3/s+twgM3W8IFhS7/HAlCsGJ/TRxF+W6AG0bDQ4pXSayrWMjcGHj8Z7Sdg+zd/
+         NMbvAyGzKWJd7m2JBUEtWPG50FIB/lFmbRxeuxxKOeEn0eqi+WKgoRzQ7X8fxBvyfH+U
+         QQng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=0JyrnzQZNBv61TfTAVE5NfNsgGDmaT7cbsksCUDIFSU=;
-        b=My7H6ZJrCOmGOyc8VFSUYt1lkM5Tlr57clfZbJwcvY3o/uW9/Z3BHhGkm11m0JGkNR
-         94fmL1uJsuTezytODwq3drWR+CeNso5Obzhw9olpF2haxoShxTUxNOFJuk6ZWu0xGlfX
-         e6K/+LYiahG+kzNvBCS2WOJUezhUh8wdyCz3VzU06iMKcLqLjlIl+fSReo2djfXWxZIw
-         MePbcWw1ys6vjMEVuenKGZjLqi21jXGl53Mk7U5IHpuG9z9jZEkqAxuko+c4O2ZsF630
-         Dy9jxxeCojjHntV1P0dIK+7XDi+J1/4inQuuRr0OQEq8nI2TMQG/ctEWO1Y7QPzOAgCq
-         +whQ==
-X-Gm-Message-State: AOAM533ZQp1oYUAkoVmV8x9oXjqqMHx7rJbPa85RvTHerVB94Xpg0kyO
-        Do30Va/kMH9UzCGfDiXXAZOB+3J1O0M=
-X-Google-Smtp-Source: ABdhPJzTbdznUnzO1Jx5DHUaem/PWxxUXJzf47ea4CBnBXAbCrpzR45FNCsRb6Qf/2TYylF82iP/7g==
-X-Received: by 2002:a1c:b7c4:: with SMTP id h187mr667868wmf.178.1619710335042;
-        Thu, 29 Apr 2021 08:32:15 -0700 (PDT)
+        bh=Ns/C6v70aGGA915pkoG9rhASze7Hid+Pp0Hs8N9wQAI=;
+        b=mTQAAGAXBqlopTZuAD41xbkCiTzPoK+47pG+pFREXCwr75LBcwONj7MeIjvZgmsX3B
+         hl+qFM8o4VyM5ZJUfE3MT3IPJYoasVD4Q+l7+/2wY7YK47FjrZd1j829vxU/6gkhsPFS
+         0udhtaADBhjBrr1llduA0OZ1YmfeNuEvLEggSWlg7IFH09t/pq/rcU99oXJvG2rJl/+J
+         jpmrYC9kZTW8LX99W8G28fBkQ4t+wadLrPHvavSXba2lF+Cqd9ljGzTrLnX4FvB6Wyv8
+         O1NWKc+a6Ttun9PWBV+Qd14r9dG2IShnagaBT/9S4BpqArIm65EEYtXI8ZkJosMsfqwk
+         O0CQ==
+X-Gm-Message-State: AOAM530hXR6DM5sUQXPlyBnPUCE3Nj58bVxsvyoCiFjEpCzUIGn5Q8Yb
+        9kZbFNPueXJp/d2dCuRXVtOtj0cmHtk=
+X-Google-Smtp-Source: ABdhPJzY7CLgF0OmppiKgYvbm+ayr+wvE9Jr9uaIcQX9jXgUgyfeRFERNzJv+sIceaqzD4E7uCkLPQ==
+X-Received: by 2002:a5d:4b52:: with SMTP id w18mr413458wrs.41.1619710333968;
+        Thu, 29 Apr 2021 08:32:13 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o1sm6124173wrm.66.2021.04.29.08.32.14
+        by smtp.gmail.com with ESMTPSA id n12sm401487wmq.29.2021.04.29.08.32.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Apr 2021 08:32:14 -0700 (PDT)
-Message-Id: <9e161eeb5f6b6945499e036e27bd7cb511b336aa.1619710329.git.gitgitgadget@gmail.com>
+        Thu, 29 Apr 2021 08:32:13 -0700 (PDT)
+Message-Id: <1bb350ea5d21eacf95426192c89173b502b7e06a.1619710329.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1012.git.git.1619710329.gitgitgadget@gmail.com>
 References: <pull.1012.git.git.1619710329.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 29 Apr 2021 15:32:08 +0000
-Subject: [PATCH 8/8] refs: explicitly propagate errno from refs_read_raw_ref
+Date:   Thu, 29 Apr 2021 15:32:06 +0000
+Subject: [PATCH 6/8] refs: clear errno return in refs_resolve_ref_unsafe()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,80 +75,61 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-The function refs_resolve_ref_unsafe_with_errno should produce an errno output.
-Rather than taking the value from the errno (which might contain garbage
-beforehand), explicitly propagate the failure_errno coming out of
-refs_read_raw_ref().
+This is done in a separate commit, to pinpoint the precise cause should there be
+regressions in error reporting.
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- refs.c | 33 +++++++++++----------------------
- 1 file changed, 11 insertions(+), 22 deletions(-)
+ refs.c | 23 +++++++++++++++++------
+ 1 file changed, 17 insertions(+), 6 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index 597e4d1f18f9..a25d18873c56 100644
+index 08f69e2a16f6..6e746cb01f24 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -1684,12 +1684,11 @@ int refs_read_raw_ref(struct ref_store *ref_store, const char *refname,
- 					   type, failure_errno);
+@@ -1685,10 +1685,11 @@ int refs_read_raw_ref(struct ref_store *ref_store, const char *refname,
  }
  
--/* This function needs to return a meaningful errno on failure */
--static const char *refs_resolve_ref_unsafe_errno(struct ref_store *refs,
--						 const char *refname,
--						 int resolve_flags,
--						 struct object_id *oid,
--						 int *flags)
-+const char *refs_resolve_ref_unsafe_with_errno(struct ref_store *refs,
-+					       const char *refname,
-+					       int resolve_flags,
-+					       struct object_id *oid,
-+					       int *flags, int *failure_errno)
+ /* This function needs to return a meaningful errno on failure */
+-const char *refs_resolve_ref_unsafe(struct ref_store *refs,
+-				    const char *refname,
+-				    int resolve_flags,
+-				    struct object_id *oid, int *flags)
++static const char *refs_resolve_ref_unsafe_errno(struct ref_store *refs,
++						 const char *refname,
++						 int resolve_flags,
++						 struct object_id *oid,
++						 int *flags)
  {
  	static struct strbuf sb_refname = STRBUF_INIT;
  	struct object_id unused_oid;
-@@ -1702,6 +1701,7 @@ static const char *refs_resolve_ref_unsafe_errno(struct ref_store *refs,
- 		flags = &unused_flags;
- 
- 	*flags = 0;
-+	*failure_errno = 0;
- 
- 	if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL)) {
- 		if (!(resolve_flags & RESOLVE_REF_ALLOW_BAD_NAME) ||
-@@ -1728,6 +1728,8 @@ static const char *refs_resolve_ref_unsafe_errno(struct ref_store *refs,
- 				      &read_flags, &read_failure)) {
- 			*flags |= read_flags;
- 
-+			*failure_errno = read_failure;
-+
- 			/* In reading mode, refs must eventually resolve */
- 			if (resolve_flags & RESOLVE_REF_READING)
- 				return NULL;
-@@ -1779,22 +1781,9 @@ const char *refs_resolve_ref_unsafe(struct ref_store *refs, const char *refname,
- 				    int resolve_flags, struct object_id *oid,
- 				    int *flags)
- {
--	const char *result = refs_resolve_ref_unsafe_errno(
--		refs, refname, resolve_flags, oid, flags);
--	errno = 0;
--	return result;
--}
--
--const char *refs_resolve_ref_unsafe_with_errno(struct ref_store *refs,
--					       const char *refname,
--					       int resolve_flags,
--					       struct object_id *oid,
--					       int *flags, int *failure_errno)
--{
--	const char *result = refs_resolve_ref_unsafe_errno(
--		refs, refname, resolve_flags, oid, flags);
--	*failure_errno = errno;
--	return result;
-+	int ignore;
-+	return refs_resolve_ref_unsafe_with_errno(refs, refname, resolve_flags,
-+						  oid, flags, &ignore);
+@@ -1777,14 +1778,24 @@ const char *refs_resolve_ref_unsafe(struct ref_store *refs,
+ 	return NULL;
  }
  
- /* backend functions */
++const char *refs_resolve_ref_unsafe(struct ref_store *refs, const char *refname,
++				    int resolve_flags, struct object_id *oid,
++				    int *flags)
++{
++	const char *result = refs_resolve_ref_unsafe_errno(
++		refs, refname, resolve_flags, oid, flags);
++	errno = 0;
++	return result;
++}
++
+ const char *refs_resolve_ref_unsafe_with_errno(struct ref_store *refs,
+ 					       const char *refname,
+ 					       int resolve_flags,
+ 					       struct object_id *oid,
+ 					       int *flags, int *failure_errno)
+ {
+-	const char *result = refs_resolve_ref_unsafe(refs, refname,
+-						     resolve_flags, oid, flags);
++	const char *result = refs_resolve_ref_unsafe_errno(
++		refs, refname, resolve_flags, oid, flags);
+ 	*failure_errno = errno;
+ 	return result;
+ }
 -- 
 gitgitgadget
+
