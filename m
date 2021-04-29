@@ -6,78 +6,98 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C8DCC433B4
-	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 05:01:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FD28C433ED
+	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 05:13:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EAA4D61158
-	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 05:01:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2C63161450
+	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 05:13:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231356AbhD2FCb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Apr 2021 01:02:31 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54079 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229814AbhD2FC3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Apr 2021 01:02:29 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0590AD0E8C;
-        Thu, 29 Apr 2021 01:01:43 -0400 (EDT)
+        id S231899AbhD2FOJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Apr 2021 01:14:09 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:50834 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229792AbhD2FNL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Apr 2021 01:13:11 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E381D131793;
+        Thu, 29 Apr 2021 01:12:25 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=ZCu0b+Cy+JQh
-        VT/zAilfx9JVHhntnjkjVyPYfy09bZQ=; b=SCkZeV4qailiB7jk4RhH/Xy/awR+
-        7SWqcoLGN9dydA5mztWqBmU0MtH4ukacUGKHJ537eBu2flEuRQRoi2hF6LhyPMac
-        fsFKqq2cYDwZIOtDJoJPixKefRtxBHTbUPrtLftbFM2Zo7EuhcF2PbMSg2bGLAqd
-        jc7l+MNr8Nc9cuI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id F0F10D0E8B;
-        Thu, 29 Apr 2021 01:01:42 -0400 (EDT)
+        :content-type:content-transfer-encoding; s=sasl; bh=Z5iW3b6tgBu5
+        J9+PHjkIRktWOKPUC/WkTA1BTD/hoH8=; b=U+dfns2kKF+4Xdd0PI6PYghbRBeQ
+        cCYdnR69y0aq9CnaHZH0wB4ZsX/f9S3lIH+41mF+P2jVNnMUcpJQn+U43CIXWpjP
+        sYsOPSIylqE1oSXBo0UbGPtSNh4yL4AZrdXnrcSdIlY5lbrd+fPrU/22Q7qCVF1R
+        75lMn5LumFQ07h0=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id CDC3B131792;
+        Thu, 29 Apr 2021 01:12:25 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7E550D0E8A;
-        Thu, 29 Apr 2021 01:01:42 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0916E131791;
+        Thu, 29 Apr 2021 01:12:22 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2 09/10] mktree: stop setting *ntr++ to NIL
-References: <cover-0.3-0000000000-20210409T080534Z-avarab@gmail.com>
-        <cover-00.10-0000000000-20210420T124428Z-avarab@gmail.com>
-        <patch-09.10-e463fe5f6a-20210420T124428Z-avarab@gmail.com>
-Date:   Thu, 29 Apr 2021 14:01:41 +0900
-In-Reply-To: <patch-09.10-e463fe5f6a-20210420T124428Z-avarab@gmail.com>
- (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Tue, 20 Apr
- 2021 14:50:42 +0200")
-Message-ID: <xmqqwnsl7kga.fsf@gitster.g>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        Patrick Steinhardt <ps@pks.im>
+Subject: Re: Nesting topics within other threads
+References: <87k0omzv3h.fsf@evledraar.gmail.com>
+        <patch-1.1-e1d8c842c70-20210428T161817Z-avarab@gmail.com>
+        <1ecb3727-106f-3d04-976a-36aa03a61caf@gmail.com>
+Date:   Thu, 29 Apr 2021 14:12:20 +0900
+In-Reply-To: <1ecb3727-106f-3d04-976a-36aa03a61caf@gmail.com> (Derrick
+        Stolee's message of "Wed, 28 Apr 2021 15:09:28 -0400")
+Message-ID: <xmqqsg397jyj.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: FD2AB800-A8A7-11EB-BAF4-D152C8D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 7AF134D4-A8A9-11EB-B70B-D609E328BF65-77302942!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Derrick Stolee <stolee@gmail.com> writes:
 
-> Since 58ce21b819e (builtin/mktree: remove hard-coded constant,
-> 2018-10-15) we have not made any subsequent use of the ntr variable
-> itself, but we did rely on it to NIL-delimit the string we were about
-> to feed to type_from_string().
+> On 4/28/2021 12:26 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>> Simplify the setup code in repo-settings.c in various ways, making the
+>> code shorter, easier to read, and requiring fewer hacks to do the same
+>> thing as it did before:
 >
-> Using type_from_string() here results in needless work, as we'd do a
-> strlen() on it, just to find point at which we had a SPC
-> character (now NIL) earlier in this function.
+> This patch is interesting, and I'll review it when I have some more
+> time. Probably tomorrow.
+>
+> But I thought that I would point out that this pattern of adding a
+> patch within the thread of a larger series makes it very difficult
+> to separate the two. I use an email client that groups messages by
+> thread in order to help parse meaningful discussion from the list
+> which otherwise looks like a fire hose of noise. Now, this patch is
+> linked to the FS Monitor thread and feedback to either will trigger
+> the thread as having unread messages.
+>
+> I find it very difficult to track multiple patch series that are
+> being juggled in the same thread. It is mentally taxing enough that
+> I have avoided reviewing code presented this way to save myself the
+> effort of tracking which patches go with what topic in what order.
 
-Since when do we write in LISP? ;-)  The name of the ASCII character
-with value 0 is NUL (null).
+I do find it distracting to have a full "ah, I just thought of
+something while discussing this unrelated series" patch fairly
+irritating for the same reason.  It however is unavoidable human
+nature that we come up with ideas while thinking about something not
+necessarily related.  So it largely is a presentation issue.
 
-> We can instead skip incrementing the ntr pointer, then pass the
-> pointer and length to the type_from_string() function instead.
+I really appreciate the way some people (Peff is a stellar example,
+but there are others who are as good at this) handle these tangents,
+where the message sent to an existing thread is limited to only give
+an outline of the idea (possibly with "something like this?" patch
+for illustration) and then they quickly get out of the way of the
+discussion by starting a separate thread, while back-referencing "So
+here is a proper patch based on the idea I interjected in the
+discussion of that other topic."  And the discussion on the tangent
+will be done on its own thread.
 
-Makes sense.  Not clobbering the input buffer is good.
+
