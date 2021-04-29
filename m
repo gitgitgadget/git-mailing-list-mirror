@@ -2,134 +2,159 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 08C29C433ED
-	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 18:14:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BCF4FC433ED
+	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 19:02:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B287461441
-	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 18:14:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8088161441
+	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 19:02:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241063AbhD2SPk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Apr 2021 14:15:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34098 "EHLO
+        id S234056AbhD2TD2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Apr 2021 15:03:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44654 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241058AbhD2SPk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Apr 2021 14:15:40 -0400
-Received: from mail-vk1-xa2d.google.com (mail-vk1-xa2d.google.com [IPv6:2607:f8b0:4864:20::a2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08CA2C06138B
-        for <git@vger.kernel.org>; Thu, 29 Apr 2021 11:14:52 -0700 (PDT)
-Received: by mail-vk1-xa2d.google.com with SMTP id a11so8324846vkl.0
-        for <git@vger.kernel.org>; Thu, 29 Apr 2021 11:14:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=m7Y1vniXNFXlon/yM6OWKE6bthh45YLIY2PV/lr0bZ4=;
-        b=g+853ys28upeegApJ4tWwPoQ9JgBes7XM4f7CX4k9BB7iDElJxpLy8fYXV1SLzzpuG
-         emRgS/KL//gTvoBG/uNAhyGJpO+u9fU8+h3D9cudEsdiY8TLp0otiLlaqpoj9LBgYKGQ
-         SfO5tgnGHzdcT3HRJ1CW01AvJv5q4kOYPivU8HqehZbKnGdlSipN7Dxt6r6WFGYZajTx
-         Pqvtaw57YrDxsu1CcrQNQWEfe00jQGIHDeCP5tnyy6e/pdIl0g5aBo6D+9vEgzs6MfPq
-         dap3GyLyEfgfzc6WmFWfZrH4lexAFsO5W6lJSfAVgXKjxTmNbsUpW4XkD2BW5WQRAY12
-         Jg5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=m7Y1vniXNFXlon/yM6OWKE6bthh45YLIY2PV/lr0bZ4=;
-        b=GnS/HRc96OcdF0iZF8x8+mrJ9iGesqR7KUquxJnDQZ7lJk4lJ1Ws5YSRl7YKK5dZJ6
-         TSwtDoRMqFuVRyCy/nlxA/oXAQogrKfp0ebtgHeFWTJrCUOcrksvmaYB8Y6ABh1m44zp
-         qfH53ozdJf/Igif1ENgiL6xKx1D/B+2iyhaRzjl1Ch7vK0qvYPUWX2s0j/cOFXgpSduP
-         Novd5sJrStZIocS6EyMuLWbE2jOMyxao4MHSHhb92RcJj8iId0cnWi8fzp8rOBifU/da
-         omldiucUiwQ4HVlytwsQgRix10971x/qLGY1QZOXYP1v9AaKYm+VyXayq8qOhMXnU+FA
-         c0JA==
-X-Gm-Message-State: AOAM532RnPO6Mgcuph2k5NISdfHdJ/XALpqB4N6rDknlfvg5wmf8GoPN
-        cJ1eS/KeiUrz9JIkyEGNCXHo0rDwyQjkHbK+keWpQQ==
-X-Google-Smtp-Source: ABdhPJyu17xEXiN5wcDODAy1cpZogjKoPzGxqj0ATQXOZRAz3W7JolOVi9GMGiXq3GJiJJnvjuXzrt7rQ2TiLYRExpA=
-X-Received: by 2002:a1f:53c7:: with SMTP id h190mr1873251vkb.19.1619720090862;
- Thu, 29 Apr 2021 11:14:50 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.1008.git.git.1618829583.gitgitgadget@gmail.com>
- <1ce545043846ee06070d1a4bc05fcd5221847eab.1618829583.git.gitgitgadget@gmail.com>
- <87pmyo3zvw.fsf@evledraar.gmail.com>
-In-Reply-To: <87pmyo3zvw.fsf@evledraar.gmail.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Thu, 29 Apr 2021 20:14:39 +0200
-Message-ID: <CAFQ2z_Mdv=vZa5yzBjGyG_o4poNeSJsfa7-KwpVH559cWqM9Qg@mail.gmail.com>
-Subject: Re: [PATCH 13/18] t2017: mark --orphan/logAllRefUpdates=false test as REFFILES
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S233830AbhD2TD1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Apr 2021 15:03:27 -0400
+Received: from mav.lukeshu.com (mav.lukeshu.com [IPv6:2001:19f0:5c00:8069:5400:ff:fe26:6a86])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F605C06138C
+        for <git@vger.kernel.org>; Thu, 29 Apr 2021 12:02:40 -0700 (PDT)
+Received: from lukeshu-dw-thinkpad (unknown [IPv6:2601:281:8200:26:527b:9dff:fe2b:180a])
+        by mav.lukeshu.com (Postfix) with ESMTPSA id AC9DC80590;
+        Thu, 29 Apr 2021 15:02:31 -0400 (EDT)
+Date:   Thu, 29 Apr 2021 13:02:28 -0600
+Message-ID: <87pmycq5h7.wl-lukeshu@lukeshu.com>
+From:   Luke Shumaker <lukeshu@lukeshu.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Luke Shumaker <lukeshu@lukeshu.com>, git@vger.kernel.org,
+        Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?B?Tmd1eeG7hW4g?= =?ISO-8859-1?Q?Th?=
+         =?ISO-8859-1?Q?=E1i_?= =?UTF-8?B?Tmfhu41j?= Duy 
+        <pclouds@gmail.com>, Taylor Blau <me@ttaylorr.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Luke Shumaker <lukeshu@datawire.io>
+Subject: Re: [PATCH v3 2/3] fast-export: rename --signed-tags='warn' to 'warn-verbatim'
+In-Reply-To: <xmqqpmyfccjb.fsf@gitster.g>
+References: <20210422002749.2413359-1-lukeshu@lukeshu.com>
+        <20210423164118.693197-1-lukeshu@lukeshu.com>
+        <20210423164118.693197-3-lukeshu@lukeshu.com>
+        <xmqqpmyfccjb.fsf@gitster.g>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?ISO-8859-4?Q?Goj=F2?=) APEL-LB/10.8 EasyPG/1.0.0
+ Emacs/27.2 (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 21, 2021 at 8:39 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> > In reftable, there is no notion of a per-ref 'existence' of a reflog. E=
-ach
-> > reflog entry has its own key, so it is not possible to distinguish betw=
-een
-> > {reflog doesn't exist,reflog exists but is empty}. This makes the logic
-> > in log_ref_setup() (file refs/files-backend.c), which depends on the ex=
-istence
-> > of the reflog file infeasible.
->
-> Okey, so I'd follow this if the test was doing something like "test -e
-> .git/logs" to test whether we didn't have reflogs for a specific branch
-> or something....
->
-..
-> In your v7[1] of the reftable series there's no patch to
-> Documentation/revisions.txt altering that blurb.
->
-> So it seems to me that between this & that series there's some closing
-> of the gap needed with how this "must have an existing log" even works
-> under reftable.
+On Tue, 27 Apr 2021 21:29:12 -0600,
+Junio C Hamano wrote:
+> Luke Shumaker <lukeshu@lukeshu.com> writes:
+> 
+> > ---signed-tags=(verbatim|warn|warn-strip|strip|abort)::
+> > +--signed-tags=(verbatim|warn-verbatim|warn-strip|strip|abort)::
+> >  	Specify how to handle signed tags.  Since any transformation
+> >  	after the export can change the tag names (which can also happen
+> >  	when excluding revisions) the signatures will not match.
+> > @@ -36,8 +36,10 @@ When asking to 'abort' (which is the default), this program will die
+> >  when encountering a signed tag.  With 'strip', the tags will silently
+> >  be made unsigned, with 'warn-strip' they will be made unsigned but a
+> >  warning will be displayed, with 'verbatim', they will be silently
+> > -exported and with 'warn', they will be exported, but you will see a
+> > -warning.
+> > +exported and with 'warn-verbatim', they will be exported, but you will
+> > +see a warning.
+> > ++
+> > +`warn` is a deprecated synonym of `warn-verbatim`.
+> 
+> Two minor points
+> 
+>  - Is it obvious to everybody what is the implication of using
+>    "verbatim" (which in turn would bring the readers to realize why
+>    it often deserves a warning)?  If not, would it make sense to
+>    explain why "verbatim" may (may not) be a good idea in different
+>    situations?
 
-the problem is that it's using BRANCH@{0} as a way to indicate whether
-the reflog exists or not,  and something looks at the current tip of
-BRANCH for @{0} even if the reflog is empty:
+I had assumed that the above paragraph
 
-hanwen@hanwen1:~/vc/git$ ls -l .git/logs/refs/heads/windows-2
--rw-r----- 1 hanwen primarygroup 0 Apr 29 20:08 .git/logs/refs/heads/window=
-s-2
-hanwen@hanwen1:~/vc/git$ git rev-parse windows-2@{0}
-7048e02d79350e332f34f2bfae50eb28700cbeda
-hanwen@hanwen1:~/vc/git$ rm .git/logs/refs/heads/windows-2
-hanwen@hanwen1:~/vc/git$ git rev-parse windows-2@{0}
-windows-2@{0}
-fatal: ambiguous argument 'windows-2@{0}': unknown revision or path
-not in the working tree.
-Use '--' to separate paths from revisions, like this:
-'git <command> [<revision>...] -- [<file>...]'
+|	Specify how to handle signed tags.  Since any transformation
+|	after the export can change the tag names (which can also happen
+|	when excluding revisions) the signatures will not match.
 
-in reftable, with the current implementation, all reflogs are assumed
-to exist (but possibly empty).
+was adaquate for that purpose, but we can maybe do better?
 
-> Per [2] I had assumed that this worked under reftable by abstracting
-> away the syntax to some query for the ref name, and faking up "file does
-> not exist" as "there were no records" to anything like rev-parse, but it
-> doesn't work like that?
+>  - I am not sure a deprecated synonym deserves a separate paragraph.
 
-you could make it work like that, but I bet that then there are a host
-of other tests that fail because they might check that a reflog exists
-(but is empty) after doing eg. "git reflog expire --all".
+Fair enough.  My thinking was to keep the deprecation separate from
+the main "happy path" text.
 
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
+How about:
 
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+| Specify how to handle signed tags.  Since any transformation after the
+| export (or during the export, such as excluding revisions) can change
+| the hashes being signed, the signatures may not match.
+|
+| When asking to 'abort' (which is the default), this program will die
+| when encountering a signed tag.  With 'strip', the tags will silently
+| be made unsigned, with 'warn-strip' they will be made unsigned but a
+| warning will be displayed, with 'verbatim', they will be silently
+| exported and with 'warn-verbatim' (or 'warn', a deprecated synonym),
+| they will be exported, but you will see a warning.  'verbatim' should
+| not be used unless you know that no transformations affecting tags
+| will be performed, or unless you do not care that the resulting tag
+| will have an invalid signature.
 
-Registergericht und -nummer: Hamburg, HRB 86891
+?
 
-Sitz der Gesellschaft: Hamburg
+> > diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+> > index 85a76e0ef8..d121dd2ee6 100644
+> > --- a/builtin/fast-export.c
+> > +++ b/builtin/fast-export.c
+> > @@ -55,7 +55,7 @@ static int parse_opt_signed_tag_mode(const struct option *opt,
+> >  		signed_tag_mode = SIGNED_TAG_ABORT;
+> >  	else if (!strcmp(arg, "verbatim") || !strcmp(arg, "ignore"))
+> >  		signed_tag_mode = VERBATIM;
+> > -	else if (!strcmp(arg, "warn"))
+> > +	else if (!strcmp(arg, "warn-verbatim") || !strcmp(arg, "warn"))
+> >  		signed_tag_mode = WARN;
+> >  	else if (!strcmp(arg, "warn-strip"))
+> >  		signed_tag_mode = WARN_STRIP;
+> 
+> It would be preferrable to do s/WARN/WARN_VERBATIM/ at this step, as
+> the plan is to deprecate "warn", even if you are going to redo the
+> enums in later steps.  May want to consider doing so as a clean-up
+> iff this topic need rerolling for other reasons.
 
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+Ack.
+
+> > diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
+> > index 409b48e244..892737439b 100755
+> > --- a/t/t9350-fast-export.sh
+> > +++ b/t/t9350-fast-export.sh
+> > @@ -253,6 +253,24 @@ test_expect_success 'signed-tags=verbatim' '
+> >  
+> >  '
+> >  
+> > +test_expect_success 'signed-tags=warn-verbatim' '
+> > +
+> > +	git fast-export --signed-tags=warn-verbatim sign-your-name >output 2>err &&
+> > +	grep PGP output &&
+> > +	test -s err
+> 
+> I didn't look at the surrounding existing tests, but in general
+> "test -s err" is not a good ingredient in any test.  The feature you
+> happen to care about today may not stay to be be the only thing that
+> writes to the standard error stream.
+
+Yeah, that line made me nervous, but I figured if it was good enough
+for the existing 'warn-strip' test, then it was good enough for
+'warn-verbatim' too.
+
+-- 
+Happy hacking,
+~ Luke Shumaker
