@@ -2,76 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 74D25C433ED
-	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 01:37:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AD396C433B4
+	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 01:44:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4950961451
-	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 01:37:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6766961455
+	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 01:44:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231874AbhD2Bik (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Apr 2021 21:38:40 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:59268 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229888AbhD2Bij (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Apr 2021 21:38:39 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E439612C259;
-        Wed, 28 Apr 2021 21:37:53 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=MKjZAZdFUUbkHt2Pb6wkNKrlEj9+hQ4Ms04Ath
-        c0NI0=; b=wXR7MaBGQZP8TsGrsFCYo3zMcv4/1NBzHM6xql04VXHR6OUeUCPdnY
-        z5CN+2U3a1lTC9vKgTHvm5zLL0lTrmZ5BY/v4s8rWoqZpLsLcxN4Vwf9WMLY7wZq
-        ub5ojmPhSQi2z/PksvUniadE5HX06DFmQeHvo33w7QTO91GNaLsHw=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id DC95112C258;
-        Wed, 28 Apr 2021 21:37:53 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2319412C256;
-        Wed, 28 Apr 2021 21:37:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     David Emett <dave@sp4m.net>, git@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] prune: save reachable-from-recent objects with
- bitmaps
-References: <YImCNXC5DUvy5gT8@coredump.intra.peff.net>
-        <YImCcxVq6AWjtv8k@coredump.intra.peff.net>
-Date:   Thu, 29 Apr 2021 10:37:49 +0900
-In-Reply-To: <YImCcxVq6AWjtv8k@coredump.intra.peff.net> (Jeff King's message
-        of "Wed, 28 Apr 2021 11:42:43 -0400")
-Message-ID: <xmqqh7jpan0y.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S234554AbhD2BpW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Apr 2021 21:45:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41578 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231874AbhD2BpV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Apr 2021 21:45:21 -0400
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEA33C06138B
+        for <git@vger.kernel.org>; Wed, 28 Apr 2021 18:44:32 -0700 (PDT)
+Received: by mail-lj1-x229.google.com with SMTP id s9so16590334ljj.6
+        for <git@vger.kernel.org>; Wed, 28 Apr 2021 18:44:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=PdOxf1tIrLw93BRsmIdBrY48hsQji5yCqW/1RUlxedc=;
+        b=KD6r96bb3XeVxaSyUEBv5/bXib1Tod06BVFz9uA/Cr0KbMo0hTOAb/opurX/M26rEw
+         0UnXzrOGq5QXJNimIyjbVzIaHaN5KCQINP0Pk+oRxnNO1enYv0qXrvKpL/cM/EKNYmSC
+         +pcljGdJckClmluvoAgseL4bLoilN5JqpIZoX3E+NmjZFFn6fQPGwgn9/ERNLZcNwPZ7
+         H82rZfgfsl2u4A1KX0IsmFH4i0U9XZ3SdwQAvvM6S3hrD6NHFsZAO6XFlDdwaErgFD8Y
+         /5AhhPebz4WQI06cZyPOXAlQ5/19k9ARRLLwRkn4mfVilDoJlNDsNwnVpyG6Xoo28uYL
+         hIkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=PdOxf1tIrLw93BRsmIdBrY48hsQji5yCqW/1RUlxedc=;
+        b=GwWX1XXTp3AxPCNwZydjTLTdvXeo/SvT4IIeyaLcbaGPTDXH0+d4uwPZq1HMVo8JbI
+         d1pnZgPJcybTBrGyK44761FoBknyoTQtooJi4KB95MPVz0IdjZC/fG65Mk37YBR07PQr
+         MFowUNgwAfdu4bMFPygxIf2u+qILrYMwTdh/ubb+694spYwJJHAfADgMdak9hS4jUYqx
+         qenaq6LYFeK6XrNgkltpaCW7NA40XYvRkHC9ylKMJIPn83Z4G/Av59tOYvF+YL5wzRZ4
+         n6IHFIMOvI/irRDSM3m3/3K8p6/KNHfi+tCKbcUUZAV/zjvRoWv0moHbiSZzQ/Hjpm94
+         NLgQ==
+X-Gm-Message-State: AOAM530Ejd0KWiybaiY15g6yngUD4NLahtQeBdN8nlFB0wswgSpPP60N
+        h1Vg4xDZh88WafKifAxRHyRL55Sey41Ca5nqI2knDCkoeAnM5Q==
+X-Google-Smtp-Source: ABdhPJzo+y3StOqrwu+bi+0lIvKv2MPZEeL1rhwn8sk79Z153+MWjoLHuqS5m+AMbpkxIPZ+n8+aBlfI5iDydPOz8hE=
+X-Received: by 2002:a05:651c:1314:: with SMTP id u20mr22936709lja.36.1619660670665;
+ Wed, 28 Apr 2021 18:44:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 82B25D60-A88B-11EB-BCC3-E43E2BB96649-77302942!pb-smtp20.pobox.com
+From:   Alex Henrie <alexhenrie24@gmail.com>
+Date:   Wed, 28 Apr 2021 19:44:19 -0600
+Message-ID: <CAMMLpeR-W35Qq6a343ifrxJ=mwBc_VcXZtVrBYDpJTySNBroFw@mail.gmail.com>
+Subject: Why doesn't `git log -m` imply `-p`?
+To:     Git mailing list <git@vger.kernel.org>,
+        Sergey Organov <sorganov@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+I read the following in `man git-log` today:
 
-> -for repack in '' true; do
-> -	title=${repack:+repack}
-> -	title=${title:-loose}
-> -
-> +for title in loose repack bitmap; do
->  	test_expect_success "make repo completely empty ($title)" '
->  		rm -rf .git &&
->  		git init
+--diff-merges=separate, --diff-merges=m, -m
+    This makes merge commits show the full diff with respect to each of
+    the parents. Separate log entry and diff is generated for each
+    parent.  -m doesn't produce any output without -p.
 
-Just this part alone is worth the update ;-) It was not even clear
-what "repack" meant in the old loop, or what the significance of
-setting it to "true" (as opposed to say "false").
+--diff-merges=combined, --diff-merges=c, -c
+    With this option, diff output for a merge commit shows the
+    differences from each of the parents to the merge result
+    simultaneously instead of showing pairwise diff between a parent and
+    the result one at a time. Furthermore, it lists only files which
+    were modified from all parents.  -c implies -p.
 
-Of course, the early return in the code removed by this patch
-explains how the bug happened.  Will queue; thanks.
+--diff-merges=dense-combined, --diff-merges=cc, --cc
+    With this option the output produced by --diff-merges=combined is
+    further compressed by omitting uninteresting hunks whose contents
+    in the parents have only two variants and the merge result picks one
+    of them without modification.  --cc implies -p.
+
+Why do -c and -cc imply -p, but -m does not? I tried to use both `git
+log -c` and `git log -m` today and was confused when the latter didn't
+produce any output. Could we change this behavior in a future version
+of Git?
+
+-Alex
