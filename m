@@ -2,190 +2,161 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.0 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,PDS_BAD_THREAD_QP_64,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 56BB6C43461
-	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 12:53:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B010C433B4
+	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 14:10:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 20B5361423
-	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 12:53:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C2E096141E
+	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 14:10:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237279AbhD2Myj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Apr 2021 08:54:39 -0400
-Received: from wout5-smtp.messagingengine.com ([64.147.123.21]:59997 "EHLO
-        wout5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S237260AbhD2Myh (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 29 Apr 2021 08:54:37 -0400
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-        by mailout.west.internal (Postfix) with ESMTP id 06C78167F;
-        Thu, 29 Apr 2021 08:53:50 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Thu, 29 Apr 2021 08:53:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
-        :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm3; bh=g+dBJuXNgpnRiy3+xQWlDuNgQHX
-        SgE7PqkDp9/gNfII=; b=UyZrtbpwk7w2x6K+5WNDyC/2r2GU3JS4z+X/8HlmthI
-        z3g2nOvZu28y90MhbZ0yx+F2D/RBMImjhCn3rsaaMcHVrF7r92rkx6kXYf1TTOVg
-        LbLLDlHCe2qOhdt6tWUjNSMvqHULBDdwpa6QMUZVY0PyDGI7N+04mOBN0SijTCxq
-        27c4Vn1KP06xFPQlt0nAWLOTuFqbeMNZk3UK57hWguDuUI7GMKRW5x4WLdDyUJBy
-        0iXW4ON8Mj9Vtu4Ime1LJ64eju9ZdeW0ueJh4JtdISIXcVJTfLj4OvLwAUJJtUmJ
-        7/aE71CIOsh7qS8H9yfP6NQ64QoQVJJvkTqzI+bkEPA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=g+dBJu
-        XNgpnRiy3+xQWlDuNgQHXSgE7PqkDp9/gNfII=; b=TMjxlT7TbJb6kUz3JlN27X
-        p1UeWQGj7exqPKfKKRUp6dmARw4IGUfgRIuWmDuE3A99kvg9Lb8C/yGqjeYD5Nqb
-        36C+A15XbYE1pN2uG0H/PMJP/CJtVlftZho9OsHOrbkf6GHaGhifhlqZVV8Dm7wX
-        /yM9xqZe3cEp7lItj0aLz6C+JIWwYJXKhIhJiuRjOtjSy/K9KoukX/etADG11p/V
-        o4GKwhTcu5MzsWeztrrwSgvvBY+njH8IR7Jc3lSQNikLRvRqcxXFvdn1jPZbFZOJ
-        Sa4+2ebQXeDXMal1MO/ZpzzeYG+3DjaZe7If1jCzozDRB3R6kWXkP32e1+x7PIRA
-        ==
-X-ME-Sender: <xms:XqyKYEDdJdV6phMZ-fWtVaITVN7u16Bs-wUp41H0AsSQvuW60EHM_w>
-    <xme:XqyKYGjQ3ISbGO5RbZW99zXHaL-0mvN-n373JsLhJEahvKWgQQ1YvU5lVicF7Y4HS
-    KHh_5tESVlXhWPYgQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvddvgedgheelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
-    ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
-    dvjeektdfhhedvlefgtefgvdettdfhnecukfhppeejkedrheehrdefgedrkeejnecuvehl
-    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrd
-    himh
-X-ME-Proxy: <xmx:XqyKYHmEgjwXG2Tma_LlwFnhBm8gqtwB0tmzpiZulFxeV_BoI1KEfw>
-    <xmx:XqyKYKyJBllz6_w1ypUtrc5UQV8xinbAdh05FAjmFPXma411_ZZy2g>
-    <xmx:XqyKYJTqTBbNdEWAljruHlh2uv02kk8iV4rTAAxg4PZVijUAJ3MgHg>
-    <xmx:XqyKYK5X5FEgtwHDVaC9Lir-vAKAw2aEYPlV_XOyJXt-lKTyOwN8-A>
-Received: from vm-mail.pks.im (dynamic-078-055-034-087.78.55.pool.telefonica.de [78.55.34.87])
-        by mail.messagingengine.com (Postfix) with ESMTPA;
-        Thu, 29 Apr 2021 08:53:49 -0400 (EDT)
-Received: from localhost (tanuki [10.192.0.23])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 2e9a5f11 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Thu, 29 Apr 2021 12:53:49 +0000 (UTC)
-Date:   Thu, 29 Apr 2021 14:55:34 +0200
-From:   Patrick Steinhardt <ps@pks.im>
-To:     git@vger.kernel.org
-Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: [PATCH v2 2/2] git: support separate arg for `--config-env`'s value
-Message-ID: <5264fb6fa7e05b55ab48d02265d8611536dc93f1.1619700731.git.ps@pks.im>
-References: <cover.1618847606.git.ps@pks.im>
- <cover.1619700731.git.ps@pks.im>
+        id S239795AbhD2OKy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Apr 2021 10:10:54 -0400
+Received: from mail-co1nam11on2054.outbound.protection.outlook.com ([40.107.220.54]:60005
+        "EHLO NAM11-CO1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S239741AbhD2OKx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Apr 2021 10:10:53 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=P6NG7fPM12ohc6YqV6Iq0nWW8LgzMwyU8E6LwoIBZeHJmhACmc6WnkAhQbvQzwUZJP2vGYeNET88JPleVhqrYwITrIuhC8IxxnGJMbDDSDfSu01ngbVFlWAXefoIpwsiuJJTqBJffirEVLVy0Z87X5JxIZV4xAyyhWaTk6e2x0FoT7Grnb0TuvQgjn0NnblCZIYNS+hYoU0neP7ukNtwtztUbV4js+cNiHzyIsICXb0mY+aOjDQIDsi9ygZFdqvDnxOlanmFvcDWjgBvzVsIC0Kw5rfYaoxgD6lUm5E4V1GUCaXvhjwLMgo9jILRJUbXzOcpuiGYftZ4Mq/N5hQS9A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=vUDbyaPLgm3pfamXmpupnjcekfsD6RIixd0reMwV3s8=;
+ b=EWiLFX7oCJS22/OKxJ//SwqGJbhxgKYD/fMo0iqs4hloW/qja0gRUS8xHDmfkR3lNZrd4IsKXGkk9QRpCuP5KcNIt8ABrk/EOXqimTTpj9D2j5iBTlGRqERg/l75ZB5MEy+XExPG9y6FjuduL6O9/iK3UvVH0FSbH2qPLLFA2MEkFjZIp4IIQg4yOhXvyk3uzF+qVeme7VkjFAHyMQTXEUYk66nREfJXBZytw/hWxtv+AkCPhJLpJ3psDdFLyCAnjg5p5alcZWEM6o4COv3nvV7v6qYMhfoWvh42mDqu8mGnH9N+GT82Zl7S4Gyo0nE3nlUQIx0o3oBo7eDDzaZgQw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=jci.com; dmarc=pass action=none header.from=jci.com; dkim=pass
+ header.d=jci.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jci.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=vUDbyaPLgm3pfamXmpupnjcekfsD6RIixd0reMwV3s8=;
+ b=rtLmYZ/8GlFAQxtWEdrWJE0G+0ybdEJtsE+UjWCu8z7Ce17hSGLy/QSsbxX+obD6DYiNUXIlCba+XZAkuwt3ixrOAy5cnesZ5vVZxVObdjBfMcgovOjainowxYEwf0Sgwguf6+c9HkQEfBK9D8tg41nBkSgyXDu7hJh/yuGC4EM=
+Received: from CY4P132MB0088.NAMP132.PROD.OUTLOOK.COM (2603:10b6:923:1::27) by
+ CY4P132MB0069.NAMP132.PROD.OUTLOOK.COM (2603:10b6:923:1::20) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.4065.24; Thu, 29 Apr 2021 14:10:05 +0000
+Received: from CY4P132MB0088.NAMP132.PROD.OUTLOOK.COM
+ ([fe80::d43e:67c3:2daf:41ec]) by CY4P132MB0088.NAMP132.PROD.OUTLOOK.COM
+ ([fe80::d43e:67c3:2daf:41ec%8]) with mapi id 15.20.4065.032; Thu, 29 Apr 2021
+ 14:10:05 +0000
+From:   Jeremy Faith <jeremy.faith@jci.com>
+To:     Junio C Hamano <gitster@pobox.com>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: bug:git-check-ignore exit status is wrong for negative patterns
+ when -v option used
+Thread-Topic: bug:git-check-ignore exit status is wrong for negative patterns
+ when -v option used
+Thread-Index: AQHXO4AUDQX8jTZiwE6IhVGEoYJRi6rJhO2RgAIDcT8=
+Date:   Thu, 29 Apr 2021 14:10:05 +0000
+Message-ID: <CY4P132MB00885F00AAA46BCFAC76881B855F9@CY4P132MB0088.NAMP132.PROD.OUTLOOK.COM>
+References: <CY4P132MB00885C970ACF5A277F06E40385419@CY4P132MB0088.NAMP132.PROD.OUTLOOK.COM>,<xmqqfszac25x.fsf@gitster.g>
+In-Reply-To: <xmqqfszac25x.fsf@gitster.g>
+Accept-Language: en-GB, en-US
+Content-Language: en-GB
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: MSIP_Label_6be01c0c-f9b3-4dc4-af0b-a82110cc37cd_Enabled=True;MSIP_Label_6be01c0c-f9b3-4dc4-af0b-a82110cc37cd_SiteId=a1f1e214-7ded-45b6-81a1-9e8ae3459641;MSIP_Label_6be01c0c-f9b3-4dc4-af0b-a82110cc37cd_SetDate=2021-04-29T14:10:04.989Z;MSIP_Label_6be01c0c-f9b3-4dc4-af0b-a82110cc37cd_Name=Internal;MSIP_Label_6be01c0c-f9b3-4dc4-af0b-a82110cc37cd_ContentBits=0;MSIP_Label_6be01c0c-f9b3-4dc4-af0b-a82110cc37cd_Method=Standard;
+authentication-results: pobox.com; dkim=none (message not signed)
+ header.d=none;pobox.com; dmarc=none action=none header.from=jci.com;
+x-originating-ip: [82.24.136.134]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: ff009b6d-a2e0-4354-849b-08d90b187d23
+x-ms-traffictypediagnostic: CY4P132MB0069:
+x-microsoft-antispam-prvs: <CY4P132MB006950A54AB2434285A24C18855F9@CY4P132MB0069.NAMP132.PROD.OUTLOOK.COM>
+x-ms-oob-tlc-oobclassifiers: OLM:8882;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: NCK7GUP5ma5wa1nADX1VDkxLGXJ8JHgvot3qZB7x/hiuPPiJZdonomj6qBvyCyeEDj/iOC+YFLzQehSq8J17UsAMOKhneGoD7hID3LWxZtgbJw79sOPuqbUulCkBWX/hHSWAE1OG9r5nAkXjemBQCuFLWre6JQZzj+v1DNSEdG2fn4iSuTT4RMnwxEnynFk3+iz/isqahJmDuTZjpDvSfl4e+eVSZgYdUjE5vW3LpufmK/bvR1EdflTmgf099CC9nJwTVWoip/Q8IxZXahLuakvUiwmOQA236t+yMr2iHfo+qXNHdNFdMzP4MPT6TGgR9j2O2xZ0ZAQm4XiAgMCQwQEXwQcvTC4QnWdfxq+jhkxa0BcOLbkNM15WNR1T9s3PFVt5yddaPvedwDSi2GMSZFfs9Iidwwf5gAVgYa5aW2KRiFdoQ0rowjb+YvQRnCjhbTfd0YOTplqiXSQ5sCwkZKRmZy75BcUjuDI93kv+A8UIajJpSvErIjASbkt1cIYFBHNLVe4z836KyFX1M6kt62nuRbFXOwwXBcSlUTUns3Oc3dOTZN17RZyR5++e/Q70LxZtR49zETesJfHmUKVnhvcW+zVSQTXx0XZBNwH+I9s=
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CY4P132MB0088.NAMP132.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(4636009)(346002)(39860400002)(366004)(136003)(396003)(376002)(2906002)(9686003)(55016002)(33656002)(38100700002)(122000001)(4326008)(86362001)(6916009)(6506007)(76116006)(66946007)(64756008)(66556008)(66476007)(66446008)(8676002)(7696005)(71200400001)(186003)(26005)(478600001)(52536014)(5660300002)(8936002)(44832011)(316002);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata: =?iso-8859-1?Q?88Y4lfr59J4OOI8+udnrW1Xlv2WcvK9BRIGHU1CeClTCmtYi/KPaCglEaT?=
+ =?iso-8859-1?Q?7zzp9If8KF0b7zAS96L6IWfEQ6crcVXf70Xxqgg9iwa/IFCxzg9DliicID?=
+ =?iso-8859-1?Q?6eeAKhKAuB7ZAZ4uPNJGJ3HsUf1MQwyyaq8fG+hBAOHxdBMlWZB2Bl+zSs?=
+ =?iso-8859-1?Q?c/dMrEFoTgeSDt/XmhRIlMUmw/v30XB+yFkhzxnK9ZMko23FmH/ylonGKg?=
+ =?iso-8859-1?Q?vV34OsfpPeODxEL0M+Z3sZI8gGEivT1Awg0MdEqgkKprcxUc5stZVqZQ/9?=
+ =?iso-8859-1?Q?4C3IZ9NMfujEp8Z18tj55cpcVTvyQtMwzOPUaNl3UaxT1R8oxrtnOTOPoR?=
+ =?iso-8859-1?Q?0Qm3jFBlV9qNjfHlIAsm7Z9JS2g3HRaGc8tIHBf8smqG+ZaRfk0NVpAw9V?=
+ =?iso-8859-1?Q?XktKYBZ3526z8q++9rchSqCyCMYfj1X/ELYrXNXLXVcVmceXVqmjvN9+A2?=
+ =?iso-8859-1?Q?I9S0a7U3z29B1VipfQ0qNQI5yexlYNVMBNC9qRwRlLhLC3We4nAZblZ71z?=
+ =?iso-8859-1?Q?EOnuNdhmzwycy2taVMATo/CtSDd4k9fbqCNT8B5DNNRk4Mnp7QJWS8x1Ew?=
+ =?iso-8859-1?Q?8OI7rCs/TOsGzAEcRdW2wFsSF/QHdv+/YJU7NIt521jB9jsZQUeQ9z2I0W?=
+ =?iso-8859-1?Q?Dvmw/6SohjPf7/HqOd7ip7KEzjk/aNIkU2bFosGM12kEHuy6rGiwQtVi8Z?=
+ =?iso-8859-1?Q?CJWGN7Dpl/jCkc3K2f8XOWDGa5OGLnyjVHERENAOsUQXvAcbbvOi91YU56?=
+ =?iso-8859-1?Q?WCnC6oYG22NRbvQxriMAx+29ometPx+Uaa4Sgw8v9UTq4oT8dJS5FuRcvR?=
+ =?iso-8859-1?Q?A666oyoB3m7K/wRid3/EtR0G9MaO1ep+XRuNV0OJMQCzAtr7f1BTDJjzjB?=
+ =?iso-8859-1?Q?BSDhdv2JKbaYapcyT+Dm01N7q4qBedOoow0iB0AyjlEBCxiZmuL3Y00NQS?=
+ =?iso-8859-1?Q?TN3vEWGuQ6pDuGudaHMGPpEzBFHoa1dnTQ+7jHo53v0H/ItN8mmFcij/Ox?=
+ =?iso-8859-1?Q?NjaQJLchtzSAEP/EcfhmbP23t2YadukA0j1g04LFEQj5mznEOVgsgStZDp?=
+ =?iso-8859-1?Q?T+nsbhKoOM1sciOpp7nE6rUd6iaBgSYZHzALVduLh7layXO5LxI7/16N/g?=
+ =?iso-8859-1?Q?7OykQQi5oE61tnfmlCSGfPqzQFnMmS3369kxnTfYvxX6JEOKzjuOvOZFlY?=
+ =?iso-8859-1?Q?urskWFy4suwJ40YsKdEOOdWkcdVX+d2NtlnpgEToyl7sM4ZtiVBLC8AJM1?=
+ =?iso-8859-1?Q?OqDZRpfUPa0AObRHg1CxIkWhWzzkxuzFC4d7ZhzYOA3v1j1A+HziiyGlox?=
+ =?iso-8859-1?Q?Loy92rZ2n9j46ZkdzSQYV9fQLkjkfw9plALqgev2h52tTI8=3D?=
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="UOAGMSt9OD9nBlur"
-Content-Disposition: inline
-In-Reply-To: <cover.1619700731.git.ps@pks.im>
+X-OriginatorOrg: jci.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CY4P132MB0088.NAMP132.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-Network-Message-Id: ff009b6d-a2e0-4354-849b-08d90b187d23
+X-MS-Exchange-CrossTenant-originalarrivaltime: 29 Apr 2021 14:10:05.5456
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: a1f1e214-7ded-45b6-81a1-9e8ae3459641
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: fror2G4hA48E8GSgQX5lFxkt0YKfyTnouJQA1ipad8itN6olG8m99pa+HzVihkMJ
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY4P132MB0069
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
---UOAGMSt9OD9nBlur
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-While not documented as such, many of the top-level options like
-`--git-dir` and `--work-tree` support two syntaxes: they accept both an
-equals sign between option and its value, and they do support option and
-value as two separate arguments. The recently added `--config-env`
-option only supports the syntax with an equals sign.
-
-Mitigate this inconsistency by accepting both syntaxes and add tests to
-verify both work.
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- git.c             |  8 ++++++++
- t/t1300-config.sh | 15 ++++++++++++++-
- 2 files changed, 22 insertions(+), 1 deletion(-)
-
-diff --git a/git.c b/git.c
-index b53e665671..ad365c05c7 100644
---- a/git.c
-+++ b/git.c
-@@ -255,6 +255,14 @@ static int handle_options(const char ***argv, int *arg=
-c, int *envchanged)
- 			git_config_push_parameter((*argv)[1]);
- 			(*argv)++;
- 			(*argc)--;
-+		} else if (!strcmp(cmd, "--config-env")) {
-+			if (*argc < 2) {
-+				fprintf(stderr, _("no config key given for --config-env\n" ));
-+				usage(git_usage_string);
-+			}
-+			git_config_push_env((*argv)[1]);
-+			(*argv)++;
-+			(*argc)--;
- 		} else if (skip_prefix(cmd, "--config-env=3D", &cmd)) {
- 			git_config_push_env(cmd);
- 		} else if (!strcmp(cmd, "--literal-pathspecs")) {
-diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-index e0dd5d65ce..ad4e6d0cfc 100755
---- a/t/t1300-config.sh
-+++ b/t/t1300-config.sh
-@@ -1374,16 +1374,29 @@ test_expect_success 'git --config-env=3Dkey=3Denvva=
-r support' '
- 	cat >expect <<-\EOF &&
- 	value
- 	value
-+	value
-+	value
-+	false
- 	false
- 	EOF
- 	{
- 		ENVVAR=3Dvalue git --config-env=3Dcore.name=3DENVVAR config core.name &&
-+		ENVVAR=3Dvalue git --config-env core.name=3DENVVAR config core.name &&
- 		ENVVAR=3Dvalue git --config-env=3Dfoo.CamelCase=3DENVVAR config foo.came=
-lcase &&
--		ENVVAR=3D git --config-env=3Dfoo.flag=3DENVVAR config --bool foo.flag
-+		ENVVAR=3Dvalue git --config-env foo.CamelCase=3DENVVAR config foo.camelc=
-ase &&
-+		ENVVAR=3D git --config-env=3Dfoo.flag=3DENVVAR config --bool foo.flag &&
-+		ENVVAR=3D git --config-env foo.flag=3DENVVAR config --bool foo.flag
- 	} >actual &&
- 	test_cmp expect actual
- '
-=20
-+test_expect_success 'git --config-env with missing value' '
-+	test_must_fail env ENVVAR=3Dvalue git --config-env 2>error &&
-+	grep "no config key given for --config-env" error &&
-+	test_must_fail env ENVVAR=3Dvalue git --config-env config core.name 2>err=
-or &&
-+	grep "invalid config format: config" error
-+'
-+
- test_expect_success 'git --config-env fails with invalid parameters' '
- 	test_must_fail git --config-env=3Dfoo.flag config --bool foo.flag 2>error=
- &&
- 	test_i18ngrep "invalid config format: foo.flag" error &&
---=20
-2.31.1
-
-
---UOAGMSt9OD9nBlur
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmCKrMUACgkQVbJhu7ck
-PpTR3w/+Pc2KFkIqacuC+/QmWmHc3RdaWSYZm2RitZ8ExMLN9UMMNHnStcmWgcoj
-C+Z4vRQret7L70O8fn3SskPEhcoS8yn0Qq+BCQgWYIAzG65pga3oaUiqrvTduuIP
-0GgwKDMVYv26NIBGLd+cszdrS9Ye/CFmUX1c/PpelJhkvYKbshrl2o5MMvZe4L43
-yH3eyztmuTI4raAsHac57EViyI8FLUFaBnx7CD/JQmd5+TLhyD9kygOcET7YMsF3
-cyaO6Lp9iWnzpaMtZw5lkwIxAQ6yHd23gXnegLKcAeNI4KvsETwQ9/PpNAYq20rI
-/eu3xYlXGhlbfi6X/v12s2plnwGO1hEsrxqEtYXuulwyXCFcFo4cNBOYQgcQO3kF
-tXJAZNMZEiscKoF3q7dYOtXYN06N2WH4AvySW2ZtK3ABEmMA+FO4EQbwbtA5/Uqs
-VB+G0kGxQg3fMUMArj1h66Zt07LgqAjvHHaXfL9iqpEf54MjYNFgqiZRvjtFmr3n
-Vsv91TEq/vrk4efjcVs+tJMneiqq1R68jzG8WfUK24H3pprZ+vDXqLbJ4Nl/8Az0
-/b2elHt0dNkQiIPiz8+tF/8F4d3aP5vjqJfZ3pscbNYn0JPGszms4VWIoLI7NLt+
-6LmejFKOoatBg3ZSg5qbKHEQYtseDFALwjTY02wti5BWt00NT50=
-=Pkck
------END PGP SIGNATURE-----
-
---UOAGMSt9OD9nBlur--
+Junio C Hamano <gitster@pobox.com> wrote:=0A=
+ =0A=
+>Jeremy Faith <jeremy.faith@jci.com> writes:=0A=
+=0A=
+>> git version 2.31.1.362.g311531c9de=0A=
+>> git-check-ignore =0A=
+>> When a negative pattern is the last .gitignore match the -v option cause=
+s the exit status to be 0 rather than the expected 1.=0A=
+>> e.g say .gitignore contains=A0 one line: !hello=0A=
+>> git check-ignore hello #outputs nothing=0A=
+>> echo $?=A0 #shows correct exit status=3D1 i.e None of the provided paths=
+ are ignored.=0A=
+>> but=0A=
+>> git check-ignore -v hello #output is next line=0A=
+>> .gitignore:4:!hello=A0=A0 hello=0A=
+>> echo $?=A0 #shows wrong exit status=3D0 i.e. One or more of the provided=
+ paths is ignored=0A=
+=0A=
+>Hmph.=A0 This is kind of understandable given the history of the=0A=
+>command, which was *not* about programatically ask "is this path=0A=
+>ignored?" question at all.=A0 Instead, it was invented to answer this=0A=
+>question: I am puzzled by the fact that Git considers this path is=0A=
+>to be ignored (or "not to be ignored").=A0 Show me which entry in what=0A=
+>exclude file made the final decision to ignore (or "not to ignore")=0A=
+>it to help me debug my ignore file(s).=0A=
+=0A=
+>And the exit code was to signal "yes, I found a relevant entry",=0A=
+>which made sense for the tool's nature as a debugging aid.=0A=
+=0A=
+man git-check-ignore states:-=0A=
+EXIT STATUS=0A=
+-----------=0A=
+0::=0A=
+	One or more of the provided paths is ignored.=0A=
+1::=0A=
+	None of the provided paths are ignored.=0A=
+128::=0A=
+	A fatal error was encountered.=0A=
+=0A=
+So my change matches what the manual states.=0A=
+=0A=
+>So, I suspect that this is working as designed/intended.=A0 I agree=0A=
+>that it is debatable that the way it was designed to work is a good=0A=
+>one, though.=0A=
+=0A=
+I doubt that changing the exit status when -v is added is intended behaviou=
+r.=
