@@ -2,100 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BAEE9C433B4
-	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 01:55:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76EC3C433ED
+	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 02:08:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9588761453
-	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 01:55:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3A594610A5
+	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 02:08:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233053AbhD2B4A (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Apr 2021 21:56:00 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:51061 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229888AbhD2Bz7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Apr 2021 21:55:59 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8038213059A;
-        Wed, 28 Apr 2021 21:55:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ekOZ5IrXmlEGbjcY8Vtn5B3GobQ10C68HX+yYR
-        okjew=; b=f7BAwAtvfOy3IiOotlFUcOpsD/AP6JQzrO00oRFKilBthX9sBhimKx
-        jAWLHL+bw7jDuP76S9r0aPBec2xrL6Z657gLpYp0brxl0ebX0DcNqREy98y+v/5W
-        07eFJc5Mb51cLphKIdv9IrBkFy/swP45HWMmlmrEWBMw62xY356tw=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 790B4130599;
-        Wed, 28 Apr 2021 21:55:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S231874AbhD2CJ3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Apr 2021 22:09:29 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:43960 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229888AbhD2CJ2 (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 28 Apr 2021 22:09:28 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 82858130598;
-        Wed, 28 Apr 2021 21:55:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Han-Wen Nienhuys <hanwen@google.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
-Subject: Re: [PATCH v2 2/3] refs/files-backend: stop setting errno from
- lock_ref_oid_basic
-References: <pull.1011.git.git.1619173446857.gitgitgadget@gmail.com>
-        <pull.1011.v2.git.git.1619191907.gitgitgadget@gmail.com>
-        <db5da7d7fb5178c14c1f5733d35bb69813c9c644.1619191907.git.gitgitgadget@gmail.com>
-        <xmqqzgxjavks.fsf@gitster.g>
-        <CAFQ2z_O=4sUjh1wk6nRijp9Gz2eeqX4=EY+Q-OTi9ppb9ikg3g@mail.gmail.com>
-Date:   Thu, 29 Apr 2021 10:55:08 +0900
-In-Reply-To: <CAFQ2z_O=4sUjh1wk6nRijp9Gz2eeqX4=EY+Q-OTi9ppb9ikg3g@mail.gmail.com>
-        (Han-Wen Nienhuys's message of "Wed, 28 Apr 2021 12:55:07 +0200")
-Message-ID: <xmqqa6pham83.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A4A5F6044F;
+        Thu, 29 Apr 2021 02:08:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1619662092;
+        bh=IrHfZ7i4c5Uo8G6lohKMm5al7HGv61eEbpvTpQ930wk=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=yKXFE3NiYtM8LQwRwaiRJI9xIACKRi5BpfmkM0lJUn23wNbvuPTYEIFqotRtCV+PQ
+         pV/rzQ06dNho5xE2wVO5qnULtitqrDz1u3SvIKfMTBGaFUOc050issGDTgXh7s9KXc
+         lkjCm+dzQ1R8bE+43o5Bd/AxEIGi0cWe/kxOhQZ8bvUSxtwhL6lvmfwCg5ilgFvcUh
+         vvZr287MYeOVDIjZwuJypID09LthYYsOQNMNoQIiYfwMIZWg+9bA9KUV/pIJa+9O/M
+         k7wGhC/HEhcHXv+DrfmAQdu7OZMrZkUQ7Ugb6QH8VLkXzf+u9tSKnsm3W2XiUJtel4
+         AlMUpW4GMtsp93gxvJGFpDXli4EGNploHV6qeGBmoj4xcDuGFliZy1tdTftxDXq49v
+         ZizR0QoSFwiKoHMRqdj8TdmyTOZ1Y899vDaa9MOv2gleM40jOIcHfxFre9ZAB7HQ73
+         RdGLaIQCZmBFKIcsr6jBCt06rAHfS+VFIoV8+Qj1uOQE0eWJ4za
+Date:   Thu, 29 Apr 2021 02:08:06 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     dwh@linuxprogrammer.org, git@vger.kernel.org
+Subject: Re: pkt-line and LF terminated lines of data
+Message-ID: <YIoVBmeGMheSi897@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        dwh@linuxprogrammer.org, git@vger.kernel.org
+References: <20210428222219.GA982@localhost>
+ <87bl9yylyg.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: EE3924A4-A88D-11EB-B963-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="NlTVydTTl/8HXAZn"
+Content-Disposition: inline
+In-Reply-To: <87bl9yylyg.fsf@evledraar.gmail.com>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Han-Wen Nienhuys <hanwen@google.com> writes:
 
-> On Wed, Apr 28, 2021 at 6:20 AM Junio C Hamano <gitster@pobox.com> wrote:
->> > These calls do I/O and therefore clobber errno. They are not inspecting the
->> > incoming errno.
->>
->> Hmph, are you saying that these calls do I/O and always the I/O
->> would fail?  A system call that is successfull don't touch errno;
->> only the calls that resulted in failure do.
->
-> I'm saying that callers cannot reliably observe the errno result of
-> lock_ref_oid_basic, because it might be clobbered by a failing
-> follow-up call.
+--NlTVydTTl/8HXAZn
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Sorry, I still do not quite get it.  For example, you cite that a
-call to lock_ref_oid_basic() in files_create_symref() is followed by
-create_symref_locked() that may clobber errno when the latter fails.
+On 2021-04-29 at 00:12:00, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>=20
+> On Wed, Apr 28 2021, dwh@linuxprogrammer.org wrote:
+>=20
+> > I was just reading the Documentation/technical/protocol-common.txt
+> > description of the pkt-line format. One detail that is left out is how a
+> > receiver of pkt-line encoded data determines if a line is binary data or
+> > contains non-binary data.
+>=20
+> They don't. The "is it binary" is a client convention / awareness of the
+> consumed payload.
 
-But a failing lock_ref_oid_basic() would yield NULL and causes the
-caller to leave, before calling create_symref_locked() and letting
-it clobber errno, and the caller of files_create_symref() can
-observe, when it returns -1 to signal an error, the errno left by
-lock_ref_oid_basic(), no?  I would understand it if no caller of
-files_create_symref() cares what is in errno when it receives
-negative return to signal a failure, though.
+As a general rule of thumb, if the pkt-line is a pack or object, it's
+binary, and otherwise (a ref advertisement, a negotiation, etc.) it's
+text.  Almost any case where GIT_TRACE_PACKET prints the output is going
+to be text, and almost any case where it does not is going to be binary.
 
-And when lock_ref_oid_basic() did not fail, create_symref_locked()
-calls helpers that can fail (e.g. fdopen_lock_file()) and result in
-errno getting updated to record how it failed (this is also reported
-to the user via "error(... strerror(errno))").
+Note that whether something is text or binary is specifically an
+attribute of what part of the protocol is being parsed, not what bytes
+it contains.  For example, a ref advertisement with a ref containing the
+bytes FE and FF is text, despite those not appearing in UTF-8.
+--=20
+brian m. carlson (he/him or they/them)
+Houston, Texas, US
 
-So a caller of files_create_symref() may not be able to tell between
-lock_ref_oid_basic() and create_symref_locked() which one caused the
-files_create_symref() call to fail, but in either case it should be
-able to inspect errno to learn what kind of error we got from the
-underlying system, no?
+--NlTVydTTl/8HXAZn
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.27 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYIoVBQAKCRB8DEliiIei
+gbyqAP9UQB1tu4kcDKDYVi6zrtYhBOhIy1F5Owk7ttj4HLikQQEAngP2rhUGh8NW
+OiJihgQbuNDp/xYvK+0I3AKkdcq8kQY=
+=y/lW
+-----END PGP SIGNATURE-----
+
+--NlTVydTTl/8HXAZn--
