@@ -4,124 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C4C8C433B4
-	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 16:35:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 25095C433ED
+	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 17:14:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DC4E16144B
-	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 16:35:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E1908613F0
+	for <git@archiver.kernel.org>; Thu, 29 Apr 2021 17:14:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233420AbhD2Qfx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Apr 2021 12:35:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40290 "EHLO
+        id S240856AbhD2RPe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Apr 2021 13:15:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49124 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232004AbhD2Qfw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Apr 2021 12:35:52 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79538C06138B
-        for <git@vger.kernel.org>; Thu, 29 Apr 2021 09:35:05 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id b21so4714964ljf.11
-        for <git@vger.kernel.org>; Thu, 29 Apr 2021 09:35:05 -0700 (PDT)
+        with ESMTP id S233302AbhD2RPd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Apr 2021 13:15:33 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB81EC06138B
+        for <git@vger.kernel.org>; Thu, 29 Apr 2021 10:14:46 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id c22so15838055edn.7
+        for <git@vger.kernel.org>; Thu, 29 Apr 2021 10:14:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=QjXHokTcaiw3wHpuK7qNgPssVJ6jhnqvBnlj3hHQXpo=;
-        b=Pp3W1quOHOMzhqjhj0JAHILgnTKRfaCmljVVYN9T7Mzu9IeN/PvbHh/bqLqMql9jt/
-         i884s9i6wZ+Ne3xe+nwbn0/mK9gusYTkT3UXBYUUe6Dw2reEZqfo1udLpsGTwAb3SzE2
-         RxG8hJZJy9R0krZtsGwMxqSLqI825HtZiBtWKEmXstfx2KmEwgnACrfAkHuU6tU65/Wk
-         5tfFQ/V1wK3LxM1HhYmrhmHAxmHv5TApA/ls7y81amVxha9eX21of4EjD6F/X1yzmF/k
-         W31h/ZFLuPh0zKKO9nUZ6foVQqNVuq2yDo74JveEkJXzGel4xy0jpNSPpEsUFIdZYL5f
-         bxqw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=DWQS2v0M9wReWem4MKyE7Er5PZJscMw/zp88Yvu9Jzg=;
+        b=ugiVrpbr5Ie8HF7I+F+WhzIOFLciPR9URQOr1W48CCFKHyDLMcjm4ufqVlCyRn5iqR
+         h+fGa8982WCxqlkFRmO5jRRGMWwwrMYDDpEGnqXQmU8OQw9jr+BxRVouo/PzC5jRJRMA
+         sbT9IqhOuPgtz4ngQ4cAbzr8yF90bR6J/ab0aPAqI+5/nIDeVvZ0Iq2jW+RP1Oh/cqs2
+         Zw/4pTUzxNmv+93c2nV7ohLrl5N8ji6gROOvfY6TKTy3OpORHxNqpz7qAwX+6nZq0bpr
+         2UxJGgHOSnHaDlqhcailCTQexRM7D+UrXaIZGpOnLPW+Kn2JnEiuhxMG1LM3SOGvxknq
+         Wrrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=QjXHokTcaiw3wHpuK7qNgPssVJ6jhnqvBnlj3hHQXpo=;
-        b=FSKdwPKPQ5s3zWbHHx3JFXzAylzwdPwICXbOJfbBy7yrdktc2PQButsft0vF4/tI36
-         c3KCPHWHDMecWkdlJnPITq8qcXJ1FV/Uxv5XO0ww/h3ubaOSKG8VEWNt3EwYeMPkr4wH
-         q2/UzrCDg83rh3qfP1OwQMPQip+6gRZOS1SSW8g9ALMrPNX6uMTx6MjiD0ioifxjEWRc
-         dDWyK6QutY43oMv/Gvfv4b0AedSb8zrxbnNKODzoyMCWtuVsA2fXzaNCnKOcmxs7LY5/
-         gbsznvk6/qOPPSwFyPKRJUlMnGbVisOtCbvuAk/OK3f87HfSZyhySmB5VXVh22ZIgJre
-         PwSg==
-X-Gm-Message-State: AOAM532B/kB3gtLBvwLFOjrtVd0vzERStB091JC0KFdnfxo99CfulhGF
-        68FlIB4rscluOc1kZnua4h/URqwcSA4=
-X-Google-Smtp-Source: ABdhPJyOP2tWZZcBAkDMAiNYbdmyoEE5Zhsk7wfGZZwNB5it68Ln4rxxGnPCUL1lJEHCX26ysTk5GQ==
-X-Received: by 2002:a05:651c:212a:: with SMTP id a42mr338785ljq.505.1619714103758;
-        Thu, 29 Apr 2021 09:35:03 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id t184sm24412lff.208.2021.04.29.09.35.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Apr 2021 09:35:03 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Alex Henrie <alexhenrie24@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: Why doesn't `git log -m` imply `-p`?
-References: <CAMMLpeR-W35Qq6a343ifrxJ=mwBc_VcXZtVrBYDpJTySNBroFw@mail.gmail.com>
-        <xmqqwnsl93m3.fsf@gitster.g> <87im45clkp.fsf@osv.gnss.ru>
-        <CAMMLpeS4pkP_xRw_qT3mCTP4hS3iLP9TwdDf8LV+3+an9aJ3Hw@mail.gmail.com>
-Date:   Thu, 29 Apr 2021 19:35:02 +0300
-In-Reply-To: <CAMMLpeS4pkP_xRw_qT3mCTP4hS3iLP9TwdDf8LV+3+an9aJ3Hw@mail.gmail.com>
-        (Alex Henrie's message of "Thu, 29 Apr 2021 09:25:44 -0600")
-Message-ID: <87eeet9hhl.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:content-transfer-encoding;
+        bh=DWQS2v0M9wReWem4MKyE7Er5PZJscMw/zp88Yvu9Jzg=;
+        b=V8ArMF0WG5s3mn68/eMi79YjICpkaqA4lovZnumEXAryAkv7KP3wJzT4irWywxsoN4
+         7jckAC9uQFHKtOkcFkQXou+iKWq2cec4RLn8lFtCOGcIY3iT9kC8lLvdnRtNgRGdbGGW
+         pBSk3FW/U0OiSpYZXOa9MDCm1A7nvGhwNW7T7pBVr/b8FrH/F6LnJasMvrmaZPuKmCSt
+         jZ4cXFE3GbJ/6hD0dtMtC6vMKfx8bXA7aBPU84bfV9UlTt7wLZusTi/oqO1M9l5uGB1z
+         mSexq9wvRBi+ltSTtw9kP2Ah2K6KQFfVaL+HHmGNMto/PigDy5Jk9eCuzTkvAzd3/gT7
+         8bfA==
+X-Gm-Message-State: AOAM530/aTJ0bqR1aKyGYtU6jjQMNU7n/VOLcb2XOceDMksfGqS15MQH
+        cnSbJTmDQ54DlS2h4crGm6Osz6MgwouF/lHE7pU=
+X-Google-Smtp-Source: ABdhPJxixE20TkzMNoTEjF0splwOFZ99On1n5BUX50C/9a5Wj208Ifq78tLw5uno0bPox2BED8+LhgHOMcqcq5+bYHw=
+X-Received: by 2002:a05:6402:35d3:: with SMTP id z19mr730524edc.143.1619716485453;
+ Thu, 29 Apr 2021 10:14:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20210428145824.43c4t7hkjfqjyspb@tb-raspi4> <20210429074458.891-1-tzadik.vanderhoof@gmail.com>
+ <c4c48615-d1f4-fd37-0960-979535907f15@web.de>
+In-Reply-To: <c4c48615-d1f4-fd37-0960-979535907f15@web.de>
+From:   Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>
+Date:   Thu, 29 Apr 2021 10:14:33 -0700
+Message-ID: <CAKu1iLXJAdtKYQq25mZ4vvQUO=4K1S-p5vg0UioUQMBKzRtumA@mail.gmail.com>
+Subject: Re: [PATCH v6] Add git-p4.fallbackEncoding
+To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+        Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alex Henrie <alexhenrie24@gmail.com> writes:
-
-> On Wed, Apr 28, 2021 at 9:22 PM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> Alex Henrie <alexhenrie24@gmail.com> writes:
->>
->> > Why do -c and -cc imply -p, but -m does not? I tried to use both `git
->> > log -c` and `git log -m` today and was confused when the latter didn't
->> > produce any output. Could we change this behavior in a future version
->> > of Git?
->>
->> "[alias] lm = log -m" can be used when you only want the logs
->>
->>     $ git lm maint..master
->>
->> or when you want to also view patches your preference is to see all
->> sides of diffs of merges
->>
->>     $ git lm -p maint..mater
->>
->> but depending on who you are that may be of dubious utility.
->>
->> It is best to move on, writing it off as historical accident, and
->> embrace the new --diff-merges=m option, instead of wasting time on
->> pondering "why", because accidents do not have to have a deep reason
->> behind them ;-)
+On Thu, Apr 29, 2021 at 7:12 AM Torsten B=C3=B6gershausen <tboegi@web.de> w=
+rote:
 >
-> If the behavior is an idiosyncratic accident of dubious utility, let's
-> replace it with something that makes sense and is useful :-) If we
-> make -m imply -p then no alias is necessary, `git log` would display
-> the log without diffs and `git log -m` would display the log with all
-> the diffs.
+> Hej Tzadik,
 >
-> On Thu, Apr 29, 2021 at 6:38 AM Sergey Organov <sorganov@gmail.com> wrote:
->>
->> As the final purpose of all this is to have -m as user-friendly short
->> option, I'd incline to finally let it imply -p, as --diff-merges=m now
->> covers another side of the coin.
->>
->> What do you think?
+> This version went only to my email ?
 >
-> I am 100% in favor of that proposal, and I can work on the code this
-> weekend.
 
-No need to bother. If we agree, I'll send a patch atop of my recent
-changes that make -m format configurable.
+v6 went to the list as well as your email.  I just forgot to include
+you in the email to the list, so I sent you another copy with just
+you.
 
-Alternatively, we can add a configuration option, or let -m imply -p
-only when -m format is explicitly configured by the user.
+> The test case number seems to be fixed, thanks.
+>
+> (Normally we don't have this collision, but right now
+> it seem as if there is much going on in the git-p4 area,
+> which is good)
+>
+> The "headline" is still overlong, it seams.
+>
 
--- Sergey Organov
+I did shorten the first line of my commit as you asked and used that
+commit to create the v6 path. That first (short) line goes into the
+Subject line of the patch. When you do "git am" it will use the
+subject (which is short) as the first line of the commit. The overlong
+summary will become the 3rd line of the commit (after a blank second
+line)
