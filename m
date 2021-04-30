@@ -2,87 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3240CC433B4
-	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 16:25:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8035FC43461
+	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 16:33:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 016BE613B4
-	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 16:25:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6475761186
+	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 16:33:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229954AbhD3Q03 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Apr 2021 12:26:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44936 "EHLO
+        id S230380AbhD3QeN convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Fri, 30 Apr 2021 12:34:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46674 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229712AbhD3Q03 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Apr 2021 12:26:29 -0400
-Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18016C06174A
-        for <git@vger.kernel.org>; Fri, 30 Apr 2021 09:25:41 -0700 (PDT)
-Received: by mail-ot1-x332.google.com with SMTP id z20-20020a0568301294b02902a52ecbaf18so12545631otp.8
-        for <git@vger.kernel.org>; Fri, 30 Apr 2021 09:25:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=iYlfwh5u5nDcb6qwjrvAgOe0QFR4JK/4rDoHgmGNvKA=;
-        b=RuujnDEe+gOalbhZkH6HcYXGfl1VYlslKTagbOqicBlRjMAdH839O6tXK4yBJBCe1a
-         qnT7m4mFuJOV/LDNKUKeji0WIGRhJt3f4UY6T/9D4GM/M1nzBOgGFDqEt8vtJ279EbuC
-         PND9/UpK1LswRg2lrUSCvowsXLAOWQPnFUpnaZsm12ZeIRAyfWv47vBG4XjlMIZMWKcq
-         hiuLwlu7B9yaw/wxUheXF1Bkl+nkBMTqXawPC848LNPwEUfhm5Qr2IIxDRlZ0QPUrj2J
-         Hntm3R/dDbFkQZCcd5eCXd+pDErS18Htd1+e7tUNIljbwqXLgMBF6gxQr/QMHiO4YM0E
-         NrLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=iYlfwh5u5nDcb6qwjrvAgOe0QFR4JK/4rDoHgmGNvKA=;
-        b=Vmhv1EBOX2T6XnEwRyI0+kCRrZOU4KOjgfRnL57ilqWAWAEZroOPwGsCHDDajRJUcE
-         HG26Cwyb1joXaKfw3bhwuKJ+dM8ICZXJfc/vFpmcZ61fp24v5ov5JSHxpejs4S2zkrpD
-         yGs46LjXszkZTpPgKr7TZQm9ZwL6Kt6PdEehuNDHWkGYTV5mzbiIL0c8vKkL5jpYWPQn
-         FoYMDWJpHuLkQIPpGE0pC1LtKX53r6juatW3Y7WwcwEYJqjkjmo05H7mKVvGwfML5Rg5
-         T07EEFIKm9C0E9pq8mFLjSOdLh6v0W5WTEOtTFwMITce48ZiLlmC+dqYB1ur+M35peBG
-         arsA==
-X-Gm-Message-State: AOAM530sZFNoqnVYTNsZEzLZgNB8djceq+d6xtEjlyTBIqeYwQ3HjFSc
-        HoLV5Qgeuf6PlVS21K6a2cprCbHHHaH+f0E57He2OXv/isc=
-X-Google-Smtp-Source: ABdhPJwtqlUSDx2m6P/jljTG9oQU2P282Z07cy8QbstADVE2LZYeXDCniMyYSbq4cHL7FHKXD65AGKQInqdsZdMIEbM=
-X-Received: by 2002:a9d:8a6:: with SMTP id 35mr4303403otf.316.1619799940497;
- Fri, 30 Apr 2021 09:25:40 -0700 (PDT)
-MIME-Version: 1.0
-References: <011f01d73dd0$ecf91e00$c6eb5a00$@nexbridge.com>
-In-Reply-To: <011f01d73dd0$ecf91e00$c6eb5a00$@nexbridge.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 30 Apr 2021 09:25:29 -0700
-Message-ID: <CABPp-BH6RgiMwGLz31nHmis3VTpuEUG--G_6Y+Wfwg24u4Zbag@mail.gmail.com>
-Subject: Re: [Patch 1/3] connect.c: add nonstopssh variant to the sshVariant set.
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S231652AbhD3QeD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Apr 2021 12:34:03 -0400
+Received: from mav.lukeshu.com (mav.lukeshu.com [IPv6:2001:19f0:5c00:8069:5400:ff:fe26:6a86])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29D4EC06174A
+        for <git@vger.kernel.org>; Fri, 30 Apr 2021 09:33:14 -0700 (PDT)
+Received: from lukeshu-dw-thinkpad (unknown [IPv6:2601:281:8200:26:4e34:88ff:fe48:5521])
+        by mav.lukeshu.com (Postfix) with ESMTPSA id 1E03680590;
+        Fri, 30 Apr 2021 12:33:11 -0400 (EDT)
+Date:   Fri, 30 Apr 2021 10:33:10 -0600
+Message-ID: <87im43pwah.wl-lukeshu@lukeshu.com>
+From:   Luke Shumaker <lukeshu@lukeshu.com>
+To:     =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     Luke Shumaker <lukeshu@lukeshu.com>, git@vger.kernel.org,
+        Avery Pennarun <apenwarr@gmail.com>,
+        Charles Bailey <cbailey32@bloomberg.net>,
+        Danny Lin <danny0838@gmail.com>,
+        "David A .\ Greene" <greened@obbligato.org>,
+        David Aguilar <davvid@gmail.com>,
+        James Denholm <nod.helm@gmail.com>, Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?Tmd1eeG7hW4g?= =?ISO-8859-1?Q?Th=E1i_?=
+         =?UTF-8?B?Tmfhu41j?= Duy <pclouds@gmail.com>,
+        Roger L Strain <roger.strain@swri.org>,
+        Techlive Zheng <techlivezheng@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Luke Shumaker <lukeshu@datawire.io>
+Subject: Re: [PATCH v3 06/30] subtree: t7900: use 'test' for string equality
+In-Reply-To: <87r1isxffw.fsf@evledraar.gmail.com>
+References: <20210426174525.3937858-1-lukeshu@lukeshu.com>
+        <20210427211748.2607474-1-lukeshu@lukeshu.com>
+        <20210427211748.2607474-7-lukeshu@lukeshu.com>
+        <87r1isxffw.fsf@evledraar.gmail.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?ISO-8859-4?Q?Goj=F2?=) APEL-LB/10.8 EasyPG/1.0.0
+ Emacs/27.2 (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 30, 2021 at 7:58 AM Randall S. Becker
-<rsbecker@nexbridge.com> wrote:
->
-> From ba4beb8ed0dff67ae6b95692d346adce346e2871 Mon Sep 17 00:00:00 2001
-> From: "Randall S. Becker" <rsbecker@nexbridge.com>
-> Date: Fri, 30 Apr 2021 09:56:09 -0400
-> Subject: [Patch 1/3] connect.c: add nonstopssh variant to the sshVariant set.
->
-> This enhancement allows the NonStop SSH subsystem to be supported by
-> git without the need of a wrapper script. The command arguments for
-> the platform SSH client in /G/system/zssh/sshoss are constructed based
-> on optional supplied environment variables SSH2_PROCESS_NAME (system
-> defined), SSH_SUPPRESS_QUIET, and SSH_SUPPRESS_BANNER.
+On Fri, 30 Apr 2021 03:55:04 -0600,
+Ævar Arnfjörð Bjarmason wrote:
+> 
+> 
+> On Tue, Apr 27 2021, Luke Shumaker wrote:
+> 
+> > From: Luke Shumaker <lukeshu@datawire.io>
+> >
+> > t7900-subtree.sh defines its own `check_equal A B` function, instead of
+> > just using `test A = B` like all of the other tests.  Don't be special,
+> > get rid of `check_equal` in favor of `test`.
+> >
+> > Signed-off-by: Luke Shumaker <lukeshu@datawire.io>
+> > ---
+> >  contrib/subtree/t/t7900-subtree.sh | 60 ++++++++++++------------------
+> >  1 file changed, 24 insertions(+), 36 deletions(-)
+> >
+> > diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
+> > index 12b8cb03c7..76183153c9 100755
+> > --- a/contrib/subtree/t/t7900-subtree.sh
+> > +++ b/contrib/subtree/t/t7900-subtree.sh
+> > @@ -28,18 +28,6 @@ create () {
+> >  	git add "$1"
+> >  }
+> >  
+> > -check_equal () {
+> > -	test_debug 'echo'
+> > -	test_debug "echo \"check a:\" \"{$1}\""
+> > -	test_debug "echo \"      b:\" \"{$2}\""
+> > -	if test "$1" = "$2"
+> > -	then
+> > -		return 0
+> > -	else
+> > -		return 1
+> > -	fi
+> > -}
+> 
+> It looks like the reason this was used because when this fails just
+> having the "test" makes for bad debugging. I.e. if the values don't
+> match the $1 and $2 are not aligned, so it's hard to eyeball what went
+> wrong.
 
-Before introducing 3 new special environment variables, I think this
-commit message should explain why you can't just use
+It's easy to make that assumption, but looking at the history it seems
+the "actual" reason it exists is that it's vestigial from before the
+subtree tests used test-lib.sh, and echoing it like that was the only
+way you'd get feedback.
 
-GIT_SSH_COMMAND="/G/system/zssh/sshoss -Z -Q -S"
+> These days this is more idiomatic:
+> 
+>     echo "Add [...]" >expected
+>     last_commit_message >actual &&
+>     test_cmp expected actual
+> 
+> So I think in this case a better narrower improvement would be to keep
+> the check_equal function. I wonder if we shouldn't just in general in
+> t/test-lib.sh have a test_cmp_str for this use-case. I.e. a trivial
+> wrapper that echos the two strings to a file for you, before running
+> diff(1).
 
-particularly since GIT_SSH_COMMAND was introduced specifically so
-people wouldn't have to create wrapper scripts to pass to GIT_SSH.
+But it's been my experience that the tests are already impossible to
+debug without passing `-x`, so everything from `check_equal` ends up
+being just noise.
+
+And also I figured if `test` is good enough for t9350-fast-export.sh,
+then it's good enough for t7900-subtree.sh... after working with
+subtree, I'd accidentally written a couple of the checks in one of my
+fast-export patchsets using `check_equal`.  Being special makes things
+harder to hack on.
+
+-- 
+Happy hacking,
+~ Luke Shumaker
