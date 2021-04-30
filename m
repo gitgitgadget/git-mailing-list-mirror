@@ -2,120 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E1C3DC433B4
-	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 17:32:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EBC9C433B4
+	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 17:33:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9DAC96145D
-	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 17:32:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5ED1761462
+	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 17:33:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230387AbhD3RdH convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Fri, 30 Apr 2021 13:33:07 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:44187 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229750AbhD3RdG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Apr 2021 13:33:06 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [173.33.197.34])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 13UHWE0E096804
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Fri, 30 Apr 2021 13:32:15 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Elijah Newren'" <newren@gmail.com>
-Cc:     "'Git Mailing List'" <git@vger.kernel.org>
-References: <011f01d73dd0$ecf91e00$c6eb5a00$@nexbridge.com> <CABPp-BH6RgiMwGLz31nHmis3VTpuEUG--G_6Y+Wfwg24u4Zbag@mail.gmail.com> <012601d73ddf$3d0cf660$b726e320$@nexbridge.com> <CABPp-BE_5c1vXuxPWTO82cGmyajXxpxW+-ycZ+-5vy+tsV3bUA@mail.gmail.com>
-In-Reply-To: <CABPp-BE_5c1vXuxPWTO82cGmyajXxpxW+-ycZ+-5vy+tsV3bUA@mail.gmail.com>
-Subject: RE: [Patch 1/3] connect.c: add nonstopssh variant to the sshVariant set.
-Date:   Fri, 30 Apr 2021 13:32:08 -0400
-Message-ID: <012901d73de6$c25a4ff0$470eefd0$@nexbridge.com>
+        id S231312AbhD3Rec (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 30 Apr 2021 13:34:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60032 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230395AbhD3Reb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Apr 2021 13:34:31 -0400
+Received: from mail-qv1-xf33.google.com (mail-qv1-xf33.google.com [IPv6:2607:f8b0:4864:20::f33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79FBFC06174A
+        for <git@vger.kernel.org>; Fri, 30 Apr 2021 10:33:43 -0700 (PDT)
+Received: by mail-qv1-xf33.google.com with SMTP id i8so5099003qvv.0
+        for <git@vger.kernel.org>; Fri, 30 Apr 2021 10:33:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=hMTQnoVwehlljuU8QPp6HT3ceM5GaTcNXipRLyMaqoI=;
+        b=mpWa8xd/mw2IhoSZMCPcpqDyW0v9WYPA9U/0PC2/URhXMIPtBMaPFcjTD0XdV9vVwD
+         EXB3cvRzk7bW0zv6QtnMZ+LFB6uS44DNIbtZvkPaJsqokoX5XUXISSSOvaAVw1f2Ptm+
+         PV/hjrnNbSW73L8I7DMZS9UAnJJBF5OTS3ZSq7JMPMEgK7vfZERKwBfGZkLC9tqe2OFP
+         ClYwxYT9qmCOnSt3+YAD9x7/cA5QTE4OkLw2uborvyWXLG+pLZiUPLLNJaYjHc0wSs0T
+         HiyuFddSZsPbs+WM4YCT1HGB04c6u9WsysbM1Ok/2P13sJ6HylZjKObjsOyMcCdWNZAI
+         IYKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=hMTQnoVwehlljuU8QPp6HT3ceM5GaTcNXipRLyMaqoI=;
+        b=UEk/RiyVWRm6fIASftbjriwsWhBhCbeoC8xZ89ui/sXfAVittRdiYG0H35EUVqxAwd
+         k78J1usHPr1XELSKt0efKRcLS9S6HPEHLhOrXnAHHXxU/RYrqGQDX7jWAg5sD2nWhiUZ
+         ZVbjLDqvTog5GQBitaaXk/21OF7fLJZwpQpb8X0R+oz9TNwGy8dADJzhdAtlL/bmm4/p
+         Xs5nwhO8r3Nd7AdvTb1MukKw9ZRODAePBGwApyU75QU++qmjQ3qb/JgC9qhXRrZUzttG
+         dtCYW3vBUDeDyyIMWyoXkIQJqOw4W151suXdSIehmg7DnTpNyu9E54HTVLORIaReAJuZ
+         nC9Q==
+X-Gm-Message-State: AOAM531EAkVx+ArQmzrNjqmqzhjcAws2dql9Ok14NFsCnL8VXEgVQt0B
+        GwBvt76RwuYYm69nlNtrmYo=
+X-Google-Smtp-Source: ABdhPJw7MeuJs2zAGAUj6gkBF8U4qfU/GeaTRPjlfO0N6kS/QQQWuhTvGdOOCW4wrp4kpMCGCQLgLQ==
+X-Received: by 2002:a0c:ff48:: with SMTP id y8mr6745252qvt.8.1619804022619;
+        Fri, 30 Apr 2021 10:33:42 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:b0ab:c525:4a3f:138b? ([2600:1700:e72:80a0:b0ab:c525:4a3f:138b])
+        by smtp.gmail.com with ESMTPSA id h188sm1962488qkd.23.2021.04.30.10.33.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 30 Apr 2021 10:33:41 -0700 (PDT)
+Subject: Re: [PATCH 0/6] Push negotiation
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>
+References: <cover.1617929278.git.jonathantanmy@google.com>
+ <xmqqtunocoqf.fsf@gitster.g>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <e8d20651-43fb-8e1c-3047-7a0bfa5010e6@gmail.com>
+Date:   Fri, 30 Apr 2021 13:33:40 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.0
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQIWGYGttp5Jdx88vf9L/5ZtrxnlMwG55eaXAXoXgPoC7mL63aoehUnA
+In-Reply-To: <xmqqtunocoqf.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On April 30, 2021 1:17 PM, Elijah Newren wrote:
->On Fri, Apr 30, 2021 at 9:38 AM Randall S. Becker <rsbecker@nexbridge.com>
->wrote:
+On 4/30/2021 1:42 AM, Junio C Hamano wrote:
+> Jonathan Tan <jonathantanmy@google.com> writes:
+> 
+>> Here are patches for push negotiation. The basic idea is that we can
+>> reuse part of the fetch protocol (and code) to find out what is in
+>> common between the client and server, and then use that information to
+>> further narrow the objects sent in the packfile during a push.
 >>
->> On April 30, 2021 12:25 PM, Elijah Newren wrote:
->> >On Fri, Apr 30, 2021 at 7:58 AM Randall S. Becker
->> ><rsbecker@nexbridge.com>
->> >wrote:
->> >>
->> >> From ba4beb8ed0dff67ae6b95692d346adce346e2871 Mon Sep 17 00:00:00
->> >2001
->> >> From: "Randall S. Becker" <rsbecker@nexbridge.com>
->> >> Date: Fri, 30 Apr 2021 09:56:09 -0400
->> >> Subject: [Patch 1/3] connect.c: add nonstopssh variant to the sshVariant set.
->> >>
->> >> This enhancement allows the NonStop SSH subsystem to be supported
->> >> by git without the need of a wrapper script. The command arguments
->> >> for the platform SSH client in /G/system/zssh/sshoss are
->> >> constructed based on optional supplied environment variables
->> >> SSH2_PROCESS_NAME (system defined), SSH_SUPPRESS_QUIET, and
->SSH_SUPPRESS_BANNER.
->> >
->> >Before introducing 3 new special environment variables, I think this
->> >commit message should explain why you can't just use
->> >
->> >GIT_SSH_COMMAND="/G/system/zssh/sshoss -Z -Q -S"
+>> Patch 1 is a bug fix that probably should be merged even if the rest
+>> aren't. Patches 2-4 are refactorings in preparation for the future
+>> patches. Patches 5-6 contain the actual logic and documentation.
 >>
->> No, it would be GIT_SSH_COMMAND='/G/system/zssh/sshoss -Z -Q -S $ZSSH0'
->and that does not work correctly in the current git code base.
->
->Is the problem that $ZSSH0 may contain spaces, or that $ZSSH0 is expected to
->change over time and you don't want to have to re-run
->
->GIT_SSH_COMMAND="/G/system/zssh/sshoss -Z -Q -S $ZSSH0"
->
->each time?
->
->> >particularly since GIT_SSH_COMMAND was introduced specifically so
->> >people wouldn't have to create wrapper scripts to pass to GIT_SSH.
+>> I have written more about it in my prior work [1], although the commit
+>> messages and documentation in patches 5-6 should be enough to explain
+>> what's going on. (If they're not, feel free to make review comments.)
 >>
->> Going back through the archive to why this is needed:
->> https://public-inbox.org/git/008101d4f3db$56c20410$04460c30$@nexbridge
->> .com/
+>> The main change from [1] is that the client-side code that used to be in
+>> builtin/fetch-pack.c is now in builtin/fetch.c, because I realized that
+>> builtin/fetch-pack.c does not support HTTP. Other than that, all the
+>> "what hasn't been done yet" items have been done except for statistics
+>> in the commit message.
 >>
->> The SSH2_PROCESS_NAME is a system environment variable, not something I
->am introducing, that specifies the name of the SSH process. It's format is
->[\NODE.]$NAME, which causes shell to blank it out. A wrapper script is currently
->mandatory on this platform.
->>
->> I have been looking for a solution since that thread.
->
->Ah, so it's the case that $ZSSH0 changes for you, but is set somewhere by the
->system and you don't want to have to redefine GIT_SSH_COMMAND each time
->you log into some box.
->
->At a minimum, this explanation should be included in the commit message here,
->otherwise the problem you're trying to address won't be understood by
->reviewers.  It wasn't at all clear to me from your cover letter or this commit,
->and I even had trouble parsing it out of the other thread you linked to.  Only this
->above paragraph about SSH2_PROCESS_NAME and its value on your system
->explain it. (It's still hard to tell what from your "[\NODE.]$NAME" is literal text
->and what is meant to be replaced, though, it might be useful to have an example
->of the literal value of SSH2_PROCESS_NAME on some random node in the
->explanation as well.)
+>> [1] https://lore.kernel.org/git/20210218012100.928957-1-jonathantanmy@google.com/
+> 
+> So... anybody else wants to review this and give it a-OK?
 
-SSH2_PROCESS_NAME tends not to change much, although it is bound to a set of subnets. Example values are $ZSSH0 or \NODE.$ZSSH0, depending on whether the system admit decides to qualify the name with it's cluster host name, since you could use a different process on a different node. The name may change between repositories - so going to github.com would commonly have a different process name than a local enterprise server. I really would consider putting this in .gitconfig so it can be repository-specific, but I'd prefer to see whether this change has legs before doing that.
+I put this on my calendar for Monday morning. I hope that's not too
+long to wait.
 
-There are use cases on the platform where, from the user's perspective, this value may be random. It is set on an inbound SSH session by the server and provided to the shell in that variable. Users will either use the system supplied process (somewhat QoS-related) or will select their own.
-
-Do you have suggestions about the other two settings? I don't like the environment variable approach, but passing switches through git seems pretty heavy to me.
-
-I will do what I can to expand the discussion in the connect.c commit on V2.
-
--Randall
-
+Thanks,
+-Stolee
