@@ -2,98 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	PDS_TONAME_EQ_TOLOCAL_SHORT,SPF_HELO_NONE,SPF_PASS autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 730ACC433B4
-	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 12:23:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7AFEC433B4
+	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 12:36:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 38D226141C
-	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 12:23:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ACE70613D8
+	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 12:36:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231856AbhD3MXu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Apr 2021 08:23:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47270 "EHLO
+        id S232154AbhD3Mh3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 30 Apr 2021 08:37:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50500 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230208AbhD3MXp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Apr 2021 08:23:45 -0400
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93302C06174A
-        for <git@vger.kernel.org>; Fri, 30 Apr 2021 05:22:57 -0700 (PDT)
-Received: by mail-pf1-x433.google.com with SMTP id d124so5575924pfa.13
-        for <git@vger.kernel.org>; Fri, 30 Apr 2021 05:22:57 -0700 (PDT)
+        with ESMTP id S230053AbhD3Mh0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Apr 2021 08:37:26 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36786C06138B
+        for <git@vger.kernel.org>; Fri, 30 Apr 2021 05:36:38 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id q6so23163835edr.3
+        for <git@vger.kernel.org>; Fri, 30 Apr 2021 05:36:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=w7esWa65SUJHGYFxVG3UIadh5T+j7CIFzMyW1Foj4Rg=;
-        b=eb2MlPt8mgtLvAvNF3cSwfIbNrvffP+DhkZE8rvj0KrkCuZ5Rmx4twyRXLTXkn/tpC
-         oH0Ww9pmdeQmWw6sq+JNaLmL2cJyQx/1QI7FTddELuqNi9kkFBBWu7hdLdZQICABqhYV
-         C8fIvO6/Zw8v8wdAgYDyHrE2QjmXk45YnFxu6LuCeTG9LpVKPltXtvysUkT0DVq9QmL4
-         gdAwJGzXAdlTjxFoafL6oAX5NQzto03T1x3xhCtSvOPNQyoKZ6hWZXFBQak2x3p3WXBP
-         txrs+Hyh50qbid9RBXv4FtGLlPlzzSjm6eMQaPDGcJXXPCidmCTXUyUegUqgu6E5Zfqk
-         lzFw==
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=GzdyuqLKtumAbP84pI3ttnQptlCkB1pBaMZpiyvVed4=;
+        b=h004Wd+8qL9akdmGL3e2yAjn+7MOkwKP36MvjwNdjbu8+o5ZSnKT/DZ4Pevs4qLx0y
+         qY79bVIWIPK0ludxRB4uZcv4hzTio+tdOfZgQ8Fz2SaDHmMrOTsqBEH/JL8UQHlmu3yV
+         kH171uhKKrsBE9/Cwm3aQYh2jSnK+qcspypI2T39oouPxjXQc/cBlt+QnN8EXTz+qcsq
+         PcDpRwInlHxGSEmZJsqrdBbbsQUVMxyGF1KJHZBU7+exZSmj6yfWUqFjiMiX1Z8uO48O
+         SqV/zQjkvDo5iXcyfjnyINF7kDTwgVwu/FN/kNlWW1jpNMbMj32CRkJl/ZNOS4qtDkwU
+         NEqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=w7esWa65SUJHGYFxVG3UIadh5T+j7CIFzMyW1Foj4Rg=;
-        b=nRb783ssFkjFqJetzQcQ8V0CkQLFUvRvbrXFvTlEw7tnZlY98MP8K0E1TwpN6GZnT3
-         Tc8xwSQFs+2JzW45czs/7K/RKsnoY1yN07hzCi5X9jAXO5HLplRIHX2YHWc3oGEtVJ0H
-         bpyqQAYKv1uY7S8edaPCwGVVdS9i66RhcuBpRggdrf68G+wCLX3q42uRWA8W0thAJVvp
-         3RTOqwZUZEb+KgFn4NmsgJS/HX3xgNNywlYezU1MPc46S2MsMGZaL7yALc7qUBZfioKf
-         u1OCPwwbxVU40GJ+FBwyN6ZbNGiJwF+zz6JUIkhOaRH1FTPe0rT0TZoE4DlwgvpW57Dv
-         gU2g==
-X-Gm-Message-State: AOAM531FJ4LgE8dUrIbihiLANxNYGxCff1xLtI8/0lMWawY69Wz9HQzr
-        vwXjJ1qW7Av8Uc46oqPhAKA=
-X-Google-Smtp-Source: ABdhPJytPm1ecH2yFqHVf7NjyOoVKHxnBC5VQtqU7Nj2bn9H217iFv5YEqqsvVpaiXfMmv7EEt0fyw==
-X-Received: by 2002:a62:754d:0:b029:289:11e7:4103 with SMTP id q74-20020a62754d0000b029028911e74103mr3353782pfc.25.1619785377148;
-        Fri, 30 Apr 2021 05:22:57 -0700 (PDT)
-Received: from [192.168.43.80] (subs32-116-206-28-57.three.co.id. [116.206.28.57])
-        by smtp.gmail.com with ESMTPSA id k17sm2061710pfa.68.2021.04.30.05.22.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 30 Apr 2021 05:22:56 -0700 (PDT)
-Subject: Re: [PATCH v3 10/30] subtree: t7900: add a test for the -h flag
-To:     Luke Shumaker <lukeshu@lukeshu.com>, git@vger.kernel.org
-Cc:     Avery Pennarun <apenwarr@gmail.com>,
-        Charles Bailey <cbailey32@bloomberg.net>,
-        Danny Lin <danny0838@gmail.com>,
-        "David A . Greene" <greened@obbligato.org>,
-        David Aguilar <davvid@gmail.com>,
-        Jakub Suder <jakub.suder@gmail.com>,
-        James Denholm <nod.helm@gmail.com>, Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Roger L Strain <roger.strain@swri.org>,
-        Techlive Zheng <techlivezheng@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Luke Shumaker <lukeshu@datawire.io>
-References: <20210426174525.3937858-1-lukeshu@lukeshu.com>
- <20210427211748.2607474-1-lukeshu@lukeshu.com>
- <20210427211748.2607474-11-lukeshu@lukeshu.com>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-Message-ID: <565bbf80-9bdb-699c-ed27-107923e4b94a@gmail.com>
-Date:   Fri, 30 Apr 2021 19:22:50 +0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.0
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=GzdyuqLKtumAbP84pI3ttnQptlCkB1pBaMZpiyvVed4=;
+        b=UwF3xb31GUgtSjI0WMqcxjmwLj/m5IXrO/T1XBjzoxxBBWftsGLrPSPAqUh2U0JwOC
+         /9KUyv+XIk3fum/9KUkIj/+0+nLOEQrWS/+9TZnwvsqsd270TfM2kb+hnTsuuVGdvaeW
+         MbRCtYjo0zfOOvciMY7eWgBTdvhhAcLhanLD6vPsB2rFCAr/BmE52zHJ55hJfoMDtipT
+         eGzNbwov1AywW6vhv1Mb4dPBvM0qZad88Yj/Dh6ktRv5K8Q+Ux37WoxnRWFX6bLpix2y
+         PT+rjdrWVr3dH/lJVFRHb0acCrZ+T6OM8p9HZcD1+xZu7cSwdUHGUZcmQYFSKYq0IBQW
+         tpRA==
+X-Gm-Message-State: AOAM532RLkPlAeVMT845pRHMNiHtY/qIhIdyUp9JD8szmXJ9E3UICCQO
+        9NtIORV44/fTsa2gSfuCqpHkhrND0s3+GG5wthz8blJxDEPnfQ==
+X-Google-Smtp-Source: ABdhPJwf5F4CtKqwjPwGwThSmFX3N4UIq4gyqMYMWa+7JsNuyohootL1PYWU50rHrKneIOmrEkN7Ohiy3E4URaNcPpk=
+X-Received: by 2002:aa7:cd8b:: with SMTP id x11mr5748411edv.87.1619786196740;
+ Fri, 30 Apr 2021 05:36:36 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20210427211748.2607474-11-lukeshu@lukeshu.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Fri, 30 Apr 2021 14:36:25 +0200
+Message-ID: <CAP8UFD0h0xsXOF28wc8gi4Q8ivMBmbwoN_vzG=UwEbt7--+13g@mail.gmail.com>
+Subject: [ANNOUNCE] Git Rev News edition 74
+To:     git <git@vger.kernel.org>
+Cc:     lwn@lwn.net, Junio C Hamano <gitster@pobox.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Sven Strickroth <email@cs-ware.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Yann Dirson <ydirson@free.fr>,
+        Charvi Mendiratta <charvi077@gmail.com>,
+        Joey Salazar <jgsal@protonmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 28/04/21 04.17, Luke Shumaker wrote:
-> It's a dumb test, but it's surprisingly easy to break.
+Hi everyone,
 
-Why did you say that? Very sensitive?
+The 74th edition of Git Rev News is now published:
 
--- 
-An old man doll... just what I always wanted! - Clara
+  https://git.github.io/rev_news/2021/04/30/edition-74/
+
+Thanks a lot to Yann Dirson, Elijah Newren and Sven Strickroth who
+helped this month!
+
+Enjoy,
+Christian, Jakub, Markus and Kaartic.
+
+PS: An issue for the next edition is already opened and contributions
+are welcome:
+
+https://github.com/git/git.github.io/issues/500
