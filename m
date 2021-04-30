@@ -2,107 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EBC9C433B4
-	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 17:33:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 12E3DC433B4
+	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 17:37:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5ED1761462
-	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 17:33:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D0A92613B4
+	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 17:37:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231312AbhD3Rec (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Apr 2021 13:34:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60032 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230395AbhD3Reb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Apr 2021 13:34:31 -0400
-Received: from mail-qv1-xf33.google.com (mail-qv1-xf33.google.com [IPv6:2607:f8b0:4864:20::f33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79FBFC06174A
-        for <git@vger.kernel.org>; Fri, 30 Apr 2021 10:33:43 -0700 (PDT)
-Received: by mail-qv1-xf33.google.com with SMTP id i8so5099003qvv.0
-        for <git@vger.kernel.org>; Fri, 30 Apr 2021 10:33:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=hMTQnoVwehlljuU8QPp6HT3ceM5GaTcNXipRLyMaqoI=;
-        b=mpWa8xd/mw2IhoSZMCPcpqDyW0v9WYPA9U/0PC2/URhXMIPtBMaPFcjTD0XdV9vVwD
-         EXB3cvRzk7bW0zv6QtnMZ+LFB6uS44DNIbtZvkPaJsqokoX5XUXISSSOvaAVw1f2Ptm+
-         PV/hjrnNbSW73L8I7DMZS9UAnJJBF5OTS3ZSq7JMPMEgK7vfZERKwBfGZkLC9tqe2OFP
-         ClYwxYT9qmCOnSt3+YAD9x7/cA5QTE4OkLw2uborvyWXLG+pLZiUPLLNJaYjHc0wSs0T
-         HiyuFddSZsPbs+WM4YCT1HGB04c6u9WsysbM1Ok/2P13sJ6HylZjKObjsOyMcCdWNZAI
-         IYKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=hMTQnoVwehlljuU8QPp6HT3ceM5GaTcNXipRLyMaqoI=;
-        b=UEk/RiyVWRm6fIASftbjriwsWhBhCbeoC8xZ89ui/sXfAVittRdiYG0H35EUVqxAwd
-         k78J1usHPr1XELSKt0efKRcLS9S6HPEHLhOrXnAHHXxU/RYrqGQDX7jWAg5sD2nWhiUZ
-         ZVbjLDqvTog5GQBitaaXk/21OF7fLJZwpQpb8X0R+oz9TNwGy8dADJzhdAtlL/bmm4/p
-         Xs5nwhO8r3Nd7AdvTb1MukKw9ZRODAePBGwApyU75QU++qmjQ3qb/JgC9qhXRrZUzttG
-         dtCYW3vBUDeDyyIMWyoXkIQJqOw4W151suXdSIehmg7DnTpNyu9E54HTVLORIaReAJuZ
-         nC9Q==
-X-Gm-Message-State: AOAM531EAkVx+ArQmzrNjqmqzhjcAws2dql9Ok14NFsCnL8VXEgVQt0B
-        GwBvt76RwuYYm69nlNtrmYo=
-X-Google-Smtp-Source: ABdhPJw7MeuJs2zAGAUj6gkBF8U4qfU/GeaTRPjlfO0N6kS/QQQWuhTvGdOOCW4wrp4kpMCGCQLgLQ==
-X-Received: by 2002:a0c:ff48:: with SMTP id y8mr6745252qvt.8.1619804022619;
-        Fri, 30 Apr 2021 10:33:42 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:b0ab:c525:4a3f:138b? ([2600:1700:e72:80a0:b0ab:c525:4a3f:138b])
-        by smtp.gmail.com with ESMTPSA id h188sm1962488qkd.23.2021.04.30.10.33.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 30 Apr 2021 10:33:41 -0700 (PDT)
-Subject: Re: [PATCH 0/6] Push negotiation
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>
-References: <cover.1617929278.git.jonathantanmy@google.com>
- <xmqqtunocoqf.fsf@gitster.g>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <e8d20651-43fb-8e1c-3047-7a0bfa5010e6@gmail.com>
-Date:   Fri, 30 Apr 2021 13:33:40 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.0
+        id S231318AbhD3Rht (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 30 Apr 2021 13:37:49 -0400
+Received: from siwi.pair.com ([209.68.5.199]:38243 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229750AbhD3Rhs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Apr 2021 13:37:48 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 111963F4163;
+        Fri, 30 Apr 2021 13:37:00 -0400 (EDT)
+Received: from HCIPROD2.AZHCI.com (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id A79643F4161;
+        Fri, 30 Apr 2021 13:36:59 -0400 (EDT)
+Subject: Re: [PATCH 12/23] fsmonitor--daemon: create token-based changed path
+ cache
+To:     Derrick Stolee <stolee@gmail.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Jeff Hostetler <jeffhost@microsoft.com>
+References: <pull.923.git.1617291666.gitgitgadget@gmail.com>
+ <f1fa803ebe9c9f78608c22e55ec590f8c6775c94.1617291666.git.gitgitgadget@gmail.com>
+ <df33c12b-ada3-05dc-3d17-6cc9d205b4cc@gmail.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <ab661886-076c-4f8b-a65b-db54ca28d4a0@jeffhostetler.com>
+Date:   Fri, 30 Apr 2021 13:36:58 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqtunocoqf.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <df33c12b-ada3-05dc-3d17-6cc9d205b4cc@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/30/2021 1:42 AM, Junio C Hamano wrote:
-> Jonathan Tan <jonathantanmy@google.com> writes:
-> 
->> Here are patches for push negotiation. The basic idea is that we can
->> reuse part of the fetch protocol (and code) to find out what is in
->> common between the client and server, and then use that information to
->> further narrow the objects sent in the packfile during a push.
->>
->> Patch 1 is a bug fix that probably should be merged even if the rest
->> aren't. Patches 2-4 are refactorings in preparation for the future
->> patches. Patches 5-6 contain the actual logic and documentation.
->>
->> I have written more about it in my prior work [1], although the commit
->> messages and documentation in patches 5-6 should be enough to explain
->> what's going on. (If they're not, feel free to make review comments.)
->>
->> The main change from [1] is that the client-side code that used to be in
->> builtin/fetch-pack.c is now in builtin/fetch.c, because I realized that
->> builtin/fetch-pack.c does not support HTTP. Other than that, all the
->> "what hasn't been done yet" items have been done except for statistics
->> in the commit message.
->>
->> [1] https://lore.kernel.org/git/20210218012100.928957-1-jonathantanmy@google.com/
-> 
-> So... anybody else wants to review this and give it a-OK?
 
-I put this on my calendar for Monday morning. I hope that's not too
-long to wait.
+
+On 4/26/21 4:22 PM, Derrick Stolee wrote:
+...
+>> +
+>> +void fsmonitor_batch__add_path(struct fsmonitor_batch *batch,
+>> +			       const char *path)
+>> +{
+>> +	const char *interned_path = strintern(path);
+> 
+> This use of interned paths is interesting, although I become
+> concerned for the amount of memory we are consuming over the
+> lifetime of the process. This could be considered as a target
+> for future improvements, perhaps with an LRU cache or something
+> similar.
+
+Interning gives us a fixed pointer for any given path.  This
+gives us a way to de-dup paths using just pointers rather than
+string compares.
+
+Yes, we will accumulate paths in that dictionary, but the set of
+paths present in the typical working directory are usually pretty
+fixed.
+
+We only generate these for modified paths.  Users don't typically
+create/modify/delete that many paths in their source trees during
+normal development.
+
+Compilers may generate lots of trash files in their worktree, but
+those names are usually repeated (with each "make").  So we might
+acculuate a lot of paths for a repo, it should become stable.
+However, if they use temp files in the tree, it might invalidate
+this statement.
+
+WRT LRUs, that gets us into threading and lock contention problem
+and ref-counting.  I have it designed such that parallel threads
+read and send the current queue to the client without a lock.  They
+only need a quick lock to get the current head pointer; the rest
+is done lock free.  Also, purging from the end of the LRU would
+put is in contention with the FS listener thread that is adding
+new paths to the LRU.
+
+So, yeah, maybe this is something to keep an eye on -- especially
+in the monorepo case, but I don't think we need to address it now.
 
 Thanks,
--Stolee
+Jeff
