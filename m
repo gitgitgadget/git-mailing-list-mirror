@@ -6,47 +6,45 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E5835C433B4
-	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 16:49:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 45748C433ED
+	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 17:07:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C5D68613D9
-	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 16:49:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 22EF360C3E
+	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 17:07:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229901AbhD3Qtv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Apr 2021 12:49:51 -0400
-Received: from mav.lukeshu.com ([104.207.138.63]:46424 "EHLO mav.lukeshu.com"
+        id S230506AbhD3RIN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 30 Apr 2021 13:08:13 -0400
+Received: from mav.lukeshu.com ([104.207.138.63]:46462 "EHLO mav.lukeshu.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229579AbhD3Qtu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Apr 2021 12:49:50 -0400
+        id S229750AbhD3RIM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Apr 2021 13:08:12 -0400
 Received: from lukeshu-dw-thinkpad (unknown [IPv6:2601:281:8200:26:4e34:88ff:fe48:5521])
-        by mav.lukeshu.com (Postfix) with ESMTPSA id 61D9580590;
-        Fri, 30 Apr 2021 12:48:59 -0400 (EDT)
-Date:   Fri, 30 Apr 2021 10:48:58 -0600
-Message-ID: <87fsz7pvk5.wl-lukeshu@lukeshu.com>
+        by mav.lukeshu.com (Postfix) with ESMTPSA id D40C380590;
+        Fri, 30 Apr 2021 13:07:19 -0400 (EDT)
+Date:   Fri, 30 Apr 2021 11:07:19 -0600
+Message-ID: <87eeerpupk.wl-lukeshu@lukeshu.com>
 From:   Luke Shumaker <lukeshu@lukeshu.com>
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
-Cc:     Luke Shumaker <lukeshu@lukeshu.com>, git@vger.kernel.org,
-        Avery Pennarun <apenwarr@gmail.com>,
-        Charles Bailey <cbailey32@bloomberg.net>,
-        Danny Lin <danny0838@gmail.com>,
-        "David A . Greene" <greened@obbligato.org>,
-        David Aguilar <davvid@gmail.com>,
-        James Denholm <nod.helm@gmail.com>, Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Luke Shumaker <lukeshu@lukeshu.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?B?Tmd1eeG7hW4g?= =?ISO-8859-1?Q?Th=E1i_?=
          =?UTF-8?B?Tmfhu41j?= Duy <pclouds@gmail.com>,
-        Roger L Strain <roger.strain@swri.org>,
-        Techlive Zheng <techlivezheng@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
         Eric Sunshine <sunshine@sunshineco.com>,
-        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
         Luke Shumaker <lukeshu@datawire.io>
-Subject: Re: [PATCH v3 10/30] subtree: t7900: add a test for the -h flag
-In-Reply-To: <565bbf80-9bdb-699c-ed27-107923e4b94a@gmail.com>
-References: <20210426174525.3937858-1-lukeshu@lukeshu.com>
-        <20210427211748.2607474-1-lukeshu@lukeshu.com>
-        <20210427211748.2607474-11-lukeshu@lukeshu.com>
-        <565bbf80-9bdb-699c-ed27-107923e4b94a@gmail.com>
+Subject: Re: [PATCH v3 3/3] fast-export, fast-import: implement signed-commits
+In-Reply-To: <xmqqim44fyjj.fsf@gitster.g>
+References: <20210422002749.2413359-1-lukeshu@lukeshu.com>
+        <20210423164118.693197-1-lukeshu@lukeshu.com>
+        <20210423164118.693197-4-lukeshu@lukeshu.com>
+        <xmqqfszbcazc.fsf@gitster.g>
+        <87o8dwq2hv.wl-lukeshu@lukeshu.com>
+        <CABPp-BHhfT3b=UyWOXACrBb6nw86n74thNAx7DUDF0YNOcA-yA@mail.gmail.com>
+        <xmqqim44fyjj.fsf@gitster.g>
 User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
  FLIM-LB/1.14.9 (=?ISO-8859-4?Q?Goj=F2?=) APEL-LB/10.8 EasyPG/1.0.0
  Emacs/27.2 (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
@@ -56,21 +54,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 30 Apr 2021 06:22:50 -0600,
-Bagas Sanjaya wrote:
+On Thu, 29 Apr 2021 17:42:24 -0600,
+Junio C Hamano wrote:
 > 
-> On 28/04/21 04.17, Luke Shumaker wrote:
-> > It's a dumb test, but it's surprisingly easy to break.
+> Elijah Newren <newren@gmail.com> writes:
 > 
-> Why did you say that? Very sensitive?
+> > I do get that we might have to use warn-strip as the default anyway
+> > just because some existing tools might rely on it, but do you have any
+> > examples outside of git-filter-repo?  Given the filter-repo bug
+> > reports I've gotten with users being surprised at commit signatures
+> > being stripped (despite the fact that this is documented -- users
+> > don't always read the documentation), I'd argue that changing to
+> > --signed-commits=abort as the default is probably a good bugfix for
+> > both fast-export and for filter-repo.
+> 
+> Thanks.  The "filter-repo already gets bug reports from the users"
+> is a valuable input when deciding if it is reasonable to sell the
+> behaviour change as a bugfix to our users.
+> 
+> Perhaps teaching fast-export to pay attention to two environment
+> variables that say "when no --signed-{tag,commit}=<disposition>"
+> command line option is given, use this behaviour" would be a good
+> enough escape hatch for existing tools and their users, while they
+> are waiting for their tools to get updated with the new option you
+> are planning to add?
 
-Because I very nearly sent v1 of this patchset with a broken '-h' flag
-:)
+Between Elijah being on-board with changing the default, and the
+suggested env-var escape hatch, you've won me over.
 
-I don't recall for certain, but I think the mistake I made was
-allowing the ordering of `eval "$(echo "$OPTS_SPEC" | git rev-parse
---parseopt -- "$@")"` and `. git-sh-setup` to get flipped.  That
-certainly will break '-h', anyway.
+I'll change the default to 'abort' and implement an env-var escape
+hatch.  Any suggestions on how to name it?
+`FAST_EXPORT_SIGNED_COMMITS`?  Should I give it a `GIT_` prefix?
+`FILTER_BRANCH_SQUELCH_WARNING` doesn't have a `GIT_` prefix...
+
+> Also, I am glad that you brought up another possible behaviour that
+> Luke's patch did not add.  Exporting existing signatures that may
+> become invalid and deciding what to do with them on the receiving
+> end would be a good option to have.  And that would most likely have
+> to be done at "fast-import" end, as a commit that "fast-export"
+> expected to retain its object name if its export stream were applied
+> as-is may not retain the object name when the export stream gets
+> preprocessed before being fed to "fast-import".
+
+Elijah suggested that on an earlier version of the patchset too.  I
+agree that it's a splendid idea, but I'm not willing to be the one to
+do the work of implementing it... at least not in the next few months.
 
 -- 
 Happy hacking,
