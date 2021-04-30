@@ -2,338 +2,154 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C3674C433ED
-	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 05:45:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E6C22C433ED
+	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 06:02:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 98F2761362
-	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 05:45:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BFBE3613AD
+	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 06:02:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229712AbhD3Fqj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Apr 2021 01:46:39 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56444 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229482AbhD3Fqj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Apr 2021 01:46:39 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2D682C22DF;
-        Fri, 30 Apr 2021 01:45:51 -0400 (EDT)
+        id S230310AbhD3GDQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 30 Apr 2021 02:03:16 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52476 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230366AbhD3GDO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Apr 2021 02:03:14 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 79FBAA9360;
+        Fri, 30 Apr 2021 02:02:25 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=tjotpeW9F9Wtim92Lwj6GfD6APXVqy07gggqrW
-        ytdpU=; b=hZfPehNI3zEfJfK/JmjC10uLqrkH2WtB2isBnr/uiQVrYoJOMy0o2F
-        N8ktGlsbJjqF++GkeWFWiIMNfU8yBg/Em1OI5rfbaddNWsSPvthOU6ZfEpqhOLZS
-        /JGnD7vsetZH/cqVls0lldPBkMgZUEqsC8ac9U+t2RBFAkZRF0FmQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 25AF7C22DE;
-        Fri, 30 Apr 2021 01:45:51 -0400 (EDT)
+        :content-type; s=sasl; bh=a1dEG3xAeiGETmGsQAdgtlmqDYwAITjsakW6hR
+        YCwpI=; b=Wju+Bs6NJBXKpuYqxf32Pvr9DdVmpPgxfvfD1+P80DdB0f44E1X+z6
+        Yzb5Pc3nlloZAEwkj6UF2uNv1yC1WZ75cWO6d/V/As9NmHlnGHO2nrBdstP383JK
+        5ke7nrWIck93ed0zxl3DOsuJnvF9q7wCxxMYxTENFq8tWgrzGElH0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6F6D7A935F;
+        Fri, 30 Apr 2021 02:02:25 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9C665C22DC;
-        Fri, 30 Apr 2021 01:45:50 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CF03FA935D;
+        Fri, 30 Apr 2021 02:02:24 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Cc:     Bruno Albuquerque <bga@google.com>
-Subject: Re: [PATCH v2] object-info: support for retrieving object info
-References: <20210420233830.2181153-1-bga@google.com>
-Date:   Fri, 30 Apr 2021 14:45:50 +0900
-In-Reply-To: <20210420233830.2181153-1-bga@google.com> (Bruno Albuquerque's
-        message of "Tue, 20 Apr 2021 16:38:31 -0700")
-Message-ID: <xmqqpmyccokx.fsf@gitster.g>
+To:     "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
+Subject: Re: [PATCH 3/8] refs: make errno output explicit for read_raw_ref_fn
+References: <pull.1012.git.git.1619710329.gitgitgadget@gmail.com>
+        <ebd7b8380bf7aed84d23973a4809d1441aa21692.1619710329.git.gitgitgadget@gmail.com>
+        <xmqq35v8e982.fsf@gitster.g>
+Date:   Fri, 30 Apr 2021 15:02:24 +0900
+In-Reply-To: <xmqq35v8e982.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
+        30 Apr 2021 12:34:37 +0900")
+Message-ID: <xmqqeeescntb.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 51FBE974-A977-11EB-80E2-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: A293A8E8-A979-11EB-9A4A-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Bruno Albuquerque <bga@google.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Sometimes it is useful to get information of an object without having to
-> download it completely.
+> I like the general direction to move away from errno, which may make
+> sense only in the context of files backend (e.g. ENOENT would be
+> left in errno, only because the original "loose ref" implementation
+> used one file per ref, when a ref we wanted to see did not exist)
+> and having other backends use the same errno would not make much
+> sense, as it is not the goal to make other backends like reftable
+> emulate files backend.
 >
-> Add the "object-info" capability that lets the client ask for
-> object-related information with their full hexadecimal object names.
+> I wonder if in the ideal world, we'd rather want to define our own
+> enum, not <errno.h>, that is specific to failure modes of ref API
+> functions and signal failures by returning these values (and the
+> enum includes 0 as a value to signal success, all other errors are
+> negative values).
 >
-> Only sizes are returned for now.
->
-> Signed-off-by: Bruno Albuquerque <bga@google.com>
-> ---
+> What I am really getting at is if we need an extra "failure"
+> out-parameter-pointer in the internal API.  I do not mind if it
+> helps the transition to the ideal world, but I offhand do not see if
+> we need result and failure as separate variables.
 
-I recall seeing a comment that this would probably not help the vfs
-usecase all that much, but does anybody else have further comment on
-this change?  Otherwise let me mark the topic to be merged to 'next'
-in a few days.
+In any case, the change in the function signature helped me catch
+that this series invalidates what has been queued on hn/reftable
+without updating that topic to align with the new way to handle the
+errno (it would have become a silent semantic failure if we instead
+encoded the "failure" in the return value).
+
+The following is what I am tentatively using for tonight's
+integration when merging this and hn/reftable together to the 'seen'
+branch.
 
 Thanks.
 
-> This version is a small change with just style fixes.
->
->  Documentation/technical/protocol-v2.txt |  31 +++++++
->  Makefile                                |   1 +
->  protocol-caps.c                         | 113 ++++++++++++++++++++++++
->  protocol-caps.h                         |  10 +++
->  serve.c                                 |   2 +
->  t/t5701-git-serve.sh                    |  26 ++++++
->  6 files changed, 183 insertions(+)
->  create mode 100644 protocol-caps.c
->  create mode 100644 protocol-caps.h
->
-> diff --git a/Documentation/technical/protocol-v2.txt b/Documentation/technical/protocol-v2.txt
-> index a7c806a73e..f4ed141774 100644
-> --- a/Documentation/technical/protocol-v2.txt
-> +++ b/Documentation/technical/protocol-v2.txt
-> @@ -514,3 +514,34 @@ packet-line, and must not contain non-printable or whitespace characters. The
->  current implementation uses trace2 session IDs (see
->  link:api-trace2.html[api-trace2] for details), but this may change and users of
->  the session ID should not rely on this fact.
-> +
-> +object-info
-> +~~~~~~~~~~~
-> +
-> +`object-info` is the command to retrieve information about one or more objects.
-> +Its main purpose is to allow a client to make decisions based on this
-> +information without having to fully fetch objects. Object size is the only
-> +information that is currently supported.
-> +
-> +An `object-info` request takes the following arguments:
-> +
-> +	size
-> +	Requests size information to be returned for each listed object id.
-> +
-> +	oid <oid>
-> +	Indicates to the server an object which the client wants to obtain
-> +	information for.
-> +
-> +The response of `object-info` is a list of the the requested object ids
-> +and associated requested information, each separated by a single space.
-> +
-> +	output = info flush-pkt
-> +
-> +	info = PKT-LINE(attrs) LF)
-> +		*PKT-LINE(obj-info LF)
-> +
-> +	attrs = attr | attrs SP attrs
-> +
-> +	attr = "size"
-> +
-> +	obj-info = obj-id SP obj-size
-> diff --git a/Makefile b/Makefile
-> index 21c0bf1667..3225e37b63 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -961,6 +961,7 @@ LIB_OBJS += progress.o
->  LIB_OBJS += promisor-remote.o
->  LIB_OBJS += prompt.o
->  LIB_OBJS += protocol.o
-> +LIB_OBJS += protocol-caps.o
->  LIB_OBJS += prune-packed.o
->  LIB_OBJS += quote.o
->  LIB_OBJS += range-diff.o
-> diff --git a/protocol-caps.c b/protocol-caps.c
-> new file mode 100644
-> index 0000000000..13a9e63a04
-> --- /dev/null
-> +++ b/protocol-caps.c
-> @@ -0,0 +1,113 @@
-> +#include "git-compat-util.h"
-> +#include "protocol-caps.h"
-> +#include "gettext.h"
-> +#include "pkt-line.h"
-> +#include "strvec.h"
-> +#include "hash.h"
-> +#include "object.h"
-> +#include "object-store.h"
-> +#include "string-list.h"
-> +#include "strbuf.h"
-> +
-> +struct requested_info {
-> +	unsigned size : 1;
-> +};
-> +
-> +/*
-> + * Parses oids from the given line and collects them in the given
-> + * oid_str_list. Returns 1 if parsing was successful and 0 otherwise.
-> + */
-> +static int parse_oid(const char *line, struct string_list *oid_str_list)
-> +{
-> +	const char *arg;
-> +
-> +	if (!skip_prefix(line, "oid ", &arg))
-> +		return 0;
-> +
-> +	string_list_append(oid_str_list, arg);
-> +
-> +	return 1;
-> +}
-> +
-> +/*
-> + * Validates and send requested info back to the client. Any errors detected
-> + * are returned as they are detected.
-> + */
-> +static void send_info(struct repository *r, struct packet_writer *writer,
-> +		      struct string_list *oid_str_list,
-> +		      struct requested_info *info)
-> +{
-> +	struct string_list_item *item;
-> +	struct strbuf send_buffer = STRBUF_INIT;
-> +
-> +	if (!oid_str_list->nr)
-> +		return;
-> +
-> +	if (info->size)
-> +		packet_writer_write(writer, "size");
-> +
-> +	for_each_string_list_item (item, oid_str_list) {
-> +		const char *oid_str = item->string;
-> +		struct object_id oid;
-> +		unsigned long object_size;
-> +
-> +		if (get_oid_hex(oid_str, &oid) < 0) {
-> +			packet_writer_error(
-> +				writer,
-> +				"object-info: protocol error, expected to get oid, not '%s'",
-> +				oid_str);
-> +			continue;
-> +		}
-> +
-> +		strbuf_addstr(&send_buffer, oid_str);
-> +
-> +		if (info->size) {
-> +			if (oid_object_info(r, &oid, &object_size) < 0) {
-> +				strbuf_addstr(&send_buffer, " ");
-> +			} else {
-> +				strbuf_addf(&send_buffer, " %lu", object_size);
-> +			}
-> +		}
-> +
-> +		packet_writer_write(writer, "%s",
-> +				    strbuf_detach(&send_buffer, NULL));
-> +	}
-> +}
-> +
-> +int cap_object_info(struct repository *r, struct strvec *keys,
-> +		    struct packet_reader *request)
-> +{
-> +	struct requested_info info;
-> +	struct packet_writer writer;
-> +	struct string_list oid_str_list = STRING_LIST_INIT_DUP;
-> +
-> +	packet_writer_init(&writer, 1);
-> +
-> +	while (packet_reader_read(request) == PACKET_READ_NORMAL) {
-> +		if (!strcmp("size", request->line)) {
-> +			info.size = 1;
-> +			continue;
-> +		}
-> +
-> +		if (parse_oid(request->line, &oid_str_list))
-> +			continue;
-> +
-> +		packet_writer_error(&writer,
-> +				    "object-info: unexpected line: '%s'",
-> +				    request->line);
-> +	}
-> +
-> +	if (request->status != PACKET_READ_FLUSH) {
-> +		packet_writer_error(
-> +			&writer, "object-info: expected flush after arguments");
-> +		die(_("object-info: expected flush after arguments"));
-> +	}
-> +
-> +	send_info(r, &writer, &oid_str_list, &info);
-> +
-> +	string_list_clear(&oid_str_list, 1);
-> +
-> +	packet_flush(1);
-> +
-> +	return 0;
-> +}
-> diff --git a/protocol-caps.h b/protocol-caps.h
-> new file mode 100644
-> index 0000000000..6351648e37
-> --- /dev/null
-> +++ b/protocol-caps.h
-> @@ -0,0 +1,10 @@
-> +#ifndef PROTOCOL_CAPS_H
-> +#define PROTOCOL_CAPS_H
-> +
-> +struct repository;
-> +struct strvec;
-> +struct packet_reader;
-> +int cap_object_info(struct repository *r, struct strvec *keys,
-> +		    struct packet_reader *request);
-> +
-> +#endif /* PROTOCOL_CAPS_H */
-> \ No newline at end of file
-> diff --git a/serve.c b/serve.c
-> index ac20c72763..aa8209f147 100644
-> --- a/serve.c
-> +++ b/serve.c
-> @@ -5,6 +5,7 @@
->  #include "version.h"
->  #include "strvec.h"
->  #include "ls-refs.h"
-> +#include "protocol-caps.h"
->  #include "serve.h"
->  #include "upload-pack.h"
->  
-> @@ -78,6 +79,7 @@ static struct protocol_capability capabilities[] = {
->  	{ "server-option", always_advertise, NULL },
->  	{ "object-format", object_format_advertise, NULL },
->  	{ "session-id", session_id_advertise, NULL },
-> +	{ "object-info", always_advertise, cap_object_info },
->  };
->  
->  static void advertise_capabilities(void)
-> diff --git a/t/t5701-git-serve.sh b/t/t5701-git-serve.sh
-> index 509f379d49..73e74a9c54 100755
-> --- a/t/t5701-git-serve.sh
-> +++ b/t/t5701-git-serve.sh
-> @@ -19,6 +19,7 @@ test_expect_success 'test capability advertisement' '
->  	fetch=shallow
->  	server-option
->  	object-format=$(test_oid algo)
-> +	object-info
->  	0000
->  	EOF
->  
-> @@ -240,4 +241,29 @@ test_expect_success 'unexpected lines are not allowed in fetch request' '
->  	grep "unexpected line: .this-is-not-a-command." err
->  '
->  
-> +# Test the basics of object-info
-> +#
-> +test_expect_success 'basics of object-info' '
-> +	test-tool pkt-line pack >in <<-EOF &&
-> +	command=object-info
-> +	object-format=$(test_oid algo)
-> +	0001
-> +	size
-> +	oid $(git rev-parse two:two.t)
-> +	oid $(git rev-parse two:two.t)
-> +	0000
-> +	EOF
-> +
-> +	cat >expect <<-EOF &&
-> +	size
-> +	$(git rev-parse two:two.t) $(wc -c <two.t | xargs)
-> +	$(git rev-parse two:two.t) $(wc -c <two.t | xargs)
-> +	0000
-> +	EOF
-> +
-> +	test-tool serve-v2 --stateless-rpc <in >out &&
-> +	test-tool pkt-line unpack <out >actual &&
-> +	test_cmp expect actual
-> +'
-> +
->  test_done
+
+ refs/reftable-backend.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
+
+diff --git c/refs/reftable-backend.c w/refs/reftable-backend.c
+index 1aff21adb4..4385d2d6f5 100644
+--- c/refs/reftable-backend.c
++++ w/refs/reftable-backend.c
+@@ -52,7 +52,8 @@ static struct reftable_stack *stack_for(struct git_reftable_ref_store *store,
+ static int git_reftable_read_raw_ref(struct ref_store *ref_store,
+ 				     const char *refname, struct object_id *oid,
+ 				     struct strbuf *referent,
+-				     unsigned int *type);
++				     unsigned int *type,
++				     int *failure_errno);
+ 
+ static void clear_reftable_log_record(struct reftable_log_record *log)
+ {
+@@ -376,7 +377,8 @@ static int fixup_symrefs(struct ref_store *ref_store,
+ 						&old_oid, &referent,
+ 						/* mutate input, like
+ 						   files-backend.c */
+-						&update->type);
++						&update->type,
++						&errno);
+ 		if (err < 0 && errno == ENOENT &&
+ 		    is_null_oid(&update->old_oid)) {
+ 			err = 0;
+@@ -1538,7 +1540,7 @@ static int reftable_error_to_errno(int err)
+ static int git_reftable_read_raw_ref(struct ref_store *ref_store,
+ 				     const char *refname, struct object_id *oid,
+ 				     struct strbuf *referent,
+-				     unsigned int *type)
++				     unsigned int *type, int *failure_errno)
+ {
+ 	struct git_reftable_ref_store *refs =
+ 		(struct git_reftable_ref_store *)ref_store;
+@@ -1560,12 +1562,12 @@ static int git_reftable_read_raw_ref(struct ref_store *ref_store,
+ 
+ 	err = reftable_stack_read_ref(stack, refname, &ref);
+ 	if (err > 0) {
+-		errno = ENOENT;
++		*failure_errno = ENOENT;
+ 		err = -1;
+ 		goto done;
+ 	}
+ 	if (err < 0) {
+-		errno = reftable_error_to_errno(err);
++		*failure_errno = reftable_error_to_errno(err);
+ 		err = -1;
+ 		goto done;
+ 	}
+@@ -1578,7 +1580,7 @@ static int git_reftable_read_raw_ref(struct ref_store *ref_store,
+ 		oidread(oid, reftable_ref_record_val1(&ref));
+ 	} else {
+ 		*type |= REF_ISBROKEN;
+-		errno = EINVAL;
++		*failure_errno = EINVAL;
+ 		err = -1;
+ 	}
+ done:
