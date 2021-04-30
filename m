@@ -6,131 +6,121 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89BD5C433ED
-	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 02:38:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E113C433B4
+	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 03:10:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 399A161409
-	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 02:38:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 570856143A
+	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 03:10:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229609AbhD3Cje (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Apr 2021 22:39:34 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:58306 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229577AbhD3Cjc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Apr 2021 22:39:32 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3DC751353AC;
-        Thu, 29 Apr 2021 22:38:45 -0400 (EDT)
+        id S229599AbhD3DLg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Apr 2021 23:11:36 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:53495 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229577AbhD3DLf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Apr 2021 23:11:35 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 07B62121AC1;
+        Thu, 29 Apr 2021 23:10:48 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=swy11+tVM6Xpo3AwbIS0S+06hUEQQyZHX78fFi
-        A/mdM=; b=OPabssiLSTcbzXQcZjggEcGwmtwsyP3zfZW9oN73sV63AvrlBoiN5D
-        ab5oRcrMfQvIU6KeF+vAdhahdcsNlRKtfC6KbM0pU8x7MugWp/qHhVfU7ZoEBB05
-        BNDWYtvJstu9H0tv8mcb5qlK76NRP6oyoM0TtIduBesGuyMboFmrI=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 35EB71353AB;
-        Thu, 29 Apr 2021 22:38:45 -0400 (EDT)
+        :content-type; s=sasl; bh=7cSSqQ1a8Hh1wIL4cE5xfbV+AFyZo4aQ4e6mX/
+        YsQ4U=; b=UoDqvrY8cg2DgVluqnsSh91NaauLyBUuq9YMv9PgKaCVJn1PmWHmq/
+        ODFpn9LD4QvKV5EOoF3fmiUgGLMFuq5yItELIj2vjKp2WyBq8TDCLtPEBiwHCiFz
+        PXJAGMfKX1eL0FzYit7ZKXiQwxrg38C6yWfAUQWNOuvnTgZd5Rk6w=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 008AD121AC0;
+        Thu, 29 Apr 2021 23:10:48 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 691FD1353A9;
-        Thu, 29 Apr 2021 22:38:42 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 37742121ABE;
+        Thu, 29 Apr 2021 23:10:45 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
         Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH 1/8] refs: remove EINVAL specification from the errno
- sideband in read_raw_ref_fn
+Subject: Re: [PATCH 2/8] refs/files-backend: stop setting errno from
+ lock_ref_oid_basic
 References: <pull.1012.git.git.1619710329.gitgitgadget@gmail.com>
-        <7e8181e77d409af7595e357ad233b7781e026b78.1619710329.git.gitgitgadget@gmail.com>
-Date:   Fri, 30 Apr 2021 11:38:40 +0900
-In-Reply-To: <7e8181e77d409af7595e357ad233b7781e026b78.1619710329.git.gitgitgadget@gmail.com>
+        <b2c72097e5e8985e7fdd8e3eee66cdf43d1b65c0.1619710329.git.gitgitgadget@gmail.com>
+Date:   Fri, 30 Apr 2021 12:10:43 +0900
+In-Reply-To: <b2c72097e5e8985e7fdd8e3eee66cdf43d1b65c0.1619710329.git.gitgitgadget@gmail.com>
         (Han-Wen Nienhuys via GitGitGadget's message of "Thu, 29 Apr 2021
-        15:32:01 +0000")
-Message-ID: <xmqqk0okebtb.fsf@gitster.g>
+        15:32:02 +0000")
+Message-ID: <xmqqbl9weabw.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 2D727A06-A95D-11EB-826E-E43E2BB96649-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: A785D550-A961-11EB-8E5B-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+I 100% agree with you that errno is cumbersome to use and carries
+far less information than we want (we do not learn what operation
+failed on what path) over a long distance.  It only is useful when
+the callchain still knows what path was operated on.
+
+But...
+
 "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> From: Han-Wen Nienhuys <hanwen@google.com>
+> For the copy/rename support, calls to lock_ref_oid_basic() in this file are
+> followed by:
 >
-> A grep for EINVAL */*c reveals that no code inspects EINVAL after reading
-> references.
+> * lock_ref_oid_basic (copy/rename rollback error path)
+>
+> * write_ref_to_lockfile (both in the rollback path and the success path of
+>   copy/rename)
+>
+> These calls do not inspect the incoming errno. As they perform I/O, they can
+> clobber errno. For this reason, callers cannot reliably observe the errno that
+> lock_ref_oid_basic() generated, so it is unsound for programmatic use.
 
-We often use a pattern (which is common) like this:
+In the latter part of the above, "callers" refers to the callers of
+"the copy/rename support" (aka files_copy_or_rename_ref())?
 
-	if (some_func_in_ref_API(...) < 0) {
-		if (errno == ENOENT || errno == EISDIR)
-			... it is OK for the file to be missing ...
-		else
-			... error ...
-	}
+Then I am not sure why "callers cannot reliably observe the errno
+that lock_ref_oid_basic() generated" is a problem.  They will see
+the errno from the last system call that failed, if they care.  So
+their performing I/O is perfectly acceptable, too.
 
-If a piece of code currently sets EINVAL to errno manually when
-signalling a failure by returning a negative value to communicate
-with such a caller, we wouldn't see EINVAL mentioned, so such a grep
-alone would not help us guarantee the correctness of an update to
-stop assignment of EINVAL at all.  The callers must be vetted more
-carefully than "we are happy that nobody explicitly mentions EINVAL".
+Hence, I am not sure what change the above justifies, if any.
 
-> The files ref backend does use EINVAL so parse_loose_ref_contents() can
-> communicate to lock_raw_ref() about garbage following the hex SHA1, or a short
-> read in files_read_raw_ref(), but the files backend does not call into
-> refs_read_raw_ref(), so its EINVAL sideband error is unused.
+If we can show that no caller of files_copy_or_rename_ref() uses
+errno, it is a clear indication that lock_ref_oid_basic() is saving
+and restoring errno for no good reason.  I think that is what was
+done for the other two callers below.
 
-This paragraph is confusing.  It says EINVAL is used to signal
-lock_raw_ref(), and it says EINVAL is not used by the same files
-backend.  Which is correct?  If one part of the backend uses it, and
-other parts don't, wouldn't the backend as a whole still use it?
+So I traced what happens after the copy-rename thing gets called.
 
-Having said that, ...
+refs_rename_ref(), rename_ref(), refs_copy_existing_ref() and
+copy_existing_ref() (all in refs.c) should be the only callers of
+the function.  All callers in builtin/branch.c and builtin/remote.c
+of these functions (by the way, refs_X() variants do not seem to be
+called from anywhere---are they over-engineered?) just die() when
+they signal a failure by returning non-zero, so I think it is safe
+and much easier to understand to justify this change like so:
 
-> - * Return 0 on success. If the ref doesn't exist, set errno to ENOENT
-> - * and return -1. If the ref exists but is neither a symbolic ref nor
-> - * an object ID, it is broken; set REF_ISBROKEN in type, set errno to
-> - * EINVAL, and return -1. If there is another error reading the ref,
-> - * set errno appropriately and return -1.
+    refs/files-backend.c::lock_ref_oid_basic() tries hard to signal
+    how it failed to its callers using errno.  The three callers of
+    this file-scope static function are 
 
-... the mention (and requirement) of EINVAL seems redundant, as it
-sounds sufficient for the caller to inspect 'type' to see if it is
-REF_ISBOKEN.  So it may be OK for the code that gives REF_ISBROKEN
-to type *not* to set errno to EINVAL, as long as it won't leave it
-as ENOENT (meaning, an unrelated system call failed earlier may have
-set errno to ENOENT, and after having dealt with such an error, the
-control may have reached to the codepath we are interested in
-here---errno must be cleared to some value other than ENOENT, and
-assigning EINVAL is as good as any).
+    * files_copy_or_rename_ref()
+    * files_create_symref()
+    * files_reflog_expire()
 
-That is because there is a codeflow like this:
+    None of them looks at errno after seeing a negative return from
+    lock_ref_oid_basic() to make any decision, and no caller of
+    these three functions looks at errno after they signal a failure
+    by returning a negative value.
 
-	if (files_read_raw_ref(...)) {
-		if (errno == ENOENT) {
-			... do various things ...
-		} else if (errno == EISDIR) {
-			... do different and various things ...
-		} else if (errno == EINVAL && (*type & REF_ISBROKEN)) {
-			... deal with broken ref ...
-		}
-		 ...
-	}
+> For files_create_symref() and files_reflog_expire(), grepping over callers
+> showed no callers inspecting errno.
 
-where errno is looked at.
-
-> + * Return 0 on success. If the ref doesn't exist, set errno to ENOENT and return
-> + * -1. If the ref exists but is neither a symbolic ref nor an object ID, it is
-> + * broken; set REF_ISBROKEN in type, and return -1. If there is another error
-> + * reading the ref, set errno appropriately and return -1.
-
-So, this is not sufficient to let caller correctly and safely handle
-errors.  "set REF_ISBROKEN in type, set errno to something other
-than ENOENT or EISDIR, and then return -1" is necessary, I would
-think.
+Yes, this is a lot more relevant justification to allow these two
+functions, and functions that are called _only_ _by_ these two
+functions, stop worrying about errno.
