@@ -2,30 +2,27 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 53F17C433B4
-	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 16:07:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F359C433ED
+	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 16:10:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 09C0161420
-	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 16:07:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E9B876145D
+	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 16:10:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229977AbhD3QIk convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Fri, 30 Apr 2021 12:08:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41020 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229579AbhD3QIj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Apr 2021 12:08:39 -0400
-Received: from mav.lukeshu.com (mav.lukeshu.com [IPv6:2001:19f0:5c00:8069:5400:ff:fe26:6a86])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B9E4C06174A
-        for <git@vger.kernel.org>; Fri, 30 Apr 2021 09:07:51 -0700 (PDT)
+        id S229818AbhD3QKx convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Fri, 30 Apr 2021 12:10:53 -0400
+Received: from mav.lukeshu.com ([104.207.138.63]:46288 "EHLO mav.lukeshu.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229579AbhD3QKv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Apr 2021 12:10:51 -0400
 Received: from lukeshu-dw-thinkpad (unknown [IPv6:2601:281:8200:26:4e34:88ff:fe48:5521])
-        by mav.lukeshu.com (Postfix) with ESMTPSA id E5ABD80590;
-        Fri, 30 Apr 2021 12:07:44 -0400 (EDT)
-Date:   Fri, 30 Apr 2021 10:07:43 -0600
-Message-ID: <87mttfpxgw.wl-lukeshu@lukeshu.com>
+        by mav.lukeshu.com (Postfix) with ESMTPSA id 9B85480590;
+        Fri, 30 Apr 2021 12:10:02 -0400 (EDT)
+Date:   Fri, 30 Apr 2021 10:10:00 -0600
+Message-ID: <87lf8zpxd3.wl-lukeshu@lukeshu.com>
 From:   Luke Shumaker <lukeshu@lukeshu.com>
 To:     =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
 Cc:     Luke Shumaker <lukeshu@lukeshu.com>, git@vger.kernel.org,
@@ -34,21 +31,22 @@ Cc:     Luke Shumaker <lukeshu@lukeshu.com>, git@vger.kernel.org,
         Danny Lin <danny0838@gmail.com>,
         "David A .\ Greene" <greened@obbligato.org>,
         David Aguilar <davvid@gmail.com>,
+        Jakub Suder <jakub.suder@gmail.com>,
         James Denholm <nod.helm@gmail.com>, Jeff King <peff@peff.net>,
         Jonathan Nieder <jrnieder@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?Tmd1eeG7hW4g?= =?ISO-8859-1?Q?Th=E1i_?=
+        =?UTF-8?B?Tmd1?= =?UTF-8?B?eeG7hW4g?= =?ISO-8859-1?Q?Th=E1i_?=
          =?UTF-8?B?Tmfhu41j?= Duy <pclouds@gmail.com>,
         Roger L Strain <roger.strain@swri.org>,
         Techlive Zheng <techlivezheng@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Luke Shumaker <lukeshu@datawire.io>
-Subject: Re: [PATCH v3 02/30] subtree: t7900: update for having the default branch name be 'main'
-In-Reply-To: <87zgxgxg3t.fsf@evledraar.gmail.com>
+Subject: Re: [PATCH v3 03/30] subtree: t7900: use test-lib.sh's test_count
+In-Reply-To: <87wnskxfwo.fsf@evledraar.gmail.com>
 References: <20210426174525.3937858-1-lukeshu@lukeshu.com>
         <20210427211748.2607474-1-lukeshu@lukeshu.com>
-        <20210427211748.2607474-3-lukeshu@lukeshu.com>
-        <87zgxgxg3t.fsf@evledraar.gmail.com>
+        <20210427211748.2607474-4-lukeshu@lukeshu.com>
+        <87wnskxfwo.fsf@evledraar.gmail.com>
 User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
  FLIM-LB/1.14.9 (=?ISO-8859-4?Q?Goj=F2?=) APEL-LB/10.8 EasyPG/1.0.0
  Emacs/27.2 (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
@@ -59,26 +57,26 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 30 Apr 2021 03:38:52 -0600,
+On Fri, 30 Apr 2021 03:45:10 -0600,
 Ævar Arnfjörð Bjarmason wrote:
-> > @@ -994,6 +994,7 @@ test_expect_success 'push split to subproj' '
-> >  next_test
-> >  test_expect_success 'subtree descendant check' '
-> >  	subtree_test_create_repo "$subtree_test_count" &&
-> > +	defaultBranch=$(sed "s,ref: refs/heads/,," "$subtree_test_count/.git/HEAD") &&
-> >  	test_create_commit "$subtree_test_count" folder_subtree/a &&
-> >  	(
-> >  		cd "$subtree_test_count" &&
+> On Tue, Apr 27 2021, Luke Shumaker wrote:
+> > Use test-lib.sh's `test_count`, instead instead of having
+> > t7900-subtree.sh do its own book-keeping with `subtree_test_count` that
+> > has to be explicitly incremented by calling `next_test`.
 > 
-> This though needlessly peeks into the raw refstore. Use branch=$(git
-> symbolic-ref --short HEAD) instead. See e.g. my
-> https://lore.kernel.org/git/patch-08.11-7fb8849ce66-20210423T072006Z-avarab@gmail.com/
+> This just retains an existing pattern and all that, but I think this
+> pattern of testing makes for hard to read & maintain tests. It looks
+> like all of these could just be:
+> 
+>     test_when_finished "rm -rf repo" &&
+>     git init repo &&
+>     [...]
+> 
+> I.e. the only thing that's being done here is to piggy-back on the test
+> count to create a unique repo.
 
-I was about to say that doesn't work with a freshly initialized repo
-without a commit yet, but I'm thinking of `git rev-parse --abbrev-ref
-HEAD`.
-
-I'll change it if I have to re-roll for another reason.
+Thanks for the tip, I'll do that for any new tests I add, going
+forward.
 
 -- 
 Happy hacking,
