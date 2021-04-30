@@ -7,110 +7,177 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E1445C433ED
-	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 20:45:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9F67C433B4
+	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 20:51:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C13456145A
-	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 20:45:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A94DA6145A
+	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 20:51:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235981AbhD3UqR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Apr 2021 16:46:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45912 "EHLO
+        id S236028AbhD3UwX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 30 Apr 2021 16:52:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47282 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231265AbhD3UqQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Apr 2021 16:46:16 -0400
-Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E814EC06174A
-        for <git@vger.kernel.org>; Fri, 30 Apr 2021 13:45:26 -0700 (PDT)
-Received: by mail-oi1-x234.google.com with SMTP id l17so39934962oil.11
-        for <git@vger.kernel.org>; Fri, 30 Apr 2021 13:45:26 -0700 (PDT)
+        with ESMTP id S235970AbhD3UwS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Apr 2021 16:52:18 -0400
+Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17F32C06174A
+        for <git@vger.kernel.org>; Fri, 30 Apr 2021 13:51:30 -0700 (PDT)
+Received: by mail-oi1-x22d.google.com with SMTP id t24so13871368oic.10
+        for <git@vger.kernel.org>; Fri, 30 Apr 2021 13:51:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=v7EU7lG2goXYaaE9nDJxtTJyINqGTzZWE8pxVQsyKNg=;
-        b=E8JG29gmZMzATrnN7r1ZuDsKdQ3FiZA8oXVH3G2YSTeyJKS+47QvihXpcY+7s2MB/H
-         XPH9kSe5EGeYS5flnxguWB+sANpS+jtJMW1mYMAYHIPU8p57hiUJ67WrJ/qD7aPlvgYj
-         Z0XhdzVTBoeDQjovNirMFRQEMtCAvjSX3FXpsJ2u9ATiw+dcpwFSXmOPCm4Fm1RQ1s4z
-         rtgBAfHN5uzFdTNKPzr6si9jRMPFHfwG1wpKBX4anJKhXjSF4OIzOJyXzGCQbyTm1mSi
-         9EGNs/PA2YHZXRaQDIV+oBnPQIBNHYK8/WVLj6kw+0LIWgg3Hct19pBYFrg244mO59/4
-         ZyKA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=5QD42YqawuOdwgGKXGTu8vrfUyERwYBuArBdxArtTeQ=;
+        b=HsjIRYLJTkk7BZuOS3faIToWNJGW+QNTsfW6V/lD3iga6MGfKRQ0mojmLh25AXw3aB
+         UrozKb8vlsF9ux6pIc94JbUk1lbk6VhzaYO7fTQiiXucUUsnvb5EU1fxgPvdfyahvonM
+         +81m6iNuPR+5tjOG5i+YdVexFKvK8T3IViW9IgQ0Fj4fm02/4CArI8DSQSr3ro3R4bsy
+         5iFYDTbPOocX/7d70niT5GU7Vj1q5K/TX5YbpR4ZY/oX8E0GiDx2Zjp7/tMsEaXQO9vB
+         n5FzOHeYhDjLAShgHFV5PplhBMzLJkO1EqDmFaVoysjqA1BMDsneBLKpZ8fM75fvx/Rh
+         6y0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=v7EU7lG2goXYaaE9nDJxtTJyINqGTzZWE8pxVQsyKNg=;
-        b=qYc5o6W9cwuuSyWagmlkjIKLydch2EJbXJsOtgAhCd+IceHc5B0Q69VH5xdiSygiD+
-         9Lz8SLfimbFeRLPEOT/f/0rZzOpk7JwHStR0elOcCAOgK1eThyCEXUgpli7cDY+zFX64
-         sbQcgXLAHTf6P+MPcclnWVMqinuu7LYg1uhY7a9wmN6fsCMb/8oU4uah1HA5awj/ROZ2
-         Epcgu3Y4g6AXiEOV1t2saFb8P+gyAjBoD7theTFXA3/H+a6oUGVQ+McdicclSmnqcGdZ
-         tMj/PEWcdKO+AIF3iYuJeIXxNz6WzOwQfawIIY8JQ/Gsc+LtL3AKVx0fotqg1/VyOlqQ
-         378w==
-X-Gm-Message-State: AOAM530paQoHSMktLSCzj6g+x6hp17nBkxxkv33+XVnOgjLctanhwKmL
-        S/ogWqCp3JfFhznBN7roozs1gLLVLXDHxQ==
-X-Google-Smtp-Source: ABdhPJwZHJy/PfBrxOhzbj1bdgmx/ABHRNnt0sg0bv72lFbw/p+toQ9RqqXVXl+ptf6BAjUjYTXhzw==
-X-Received: by 2002:a05:6808:103:: with SMTP id b3mr5344814oie.132.1619815526395;
-        Fri, 30 Apr 2021 13:45:26 -0700 (PDT)
-Received: from localhost ([2806:2f0:4060:638f:a2c5:89ff:fe0c:1151])
-        by smtp.gmail.com with ESMTPSA id 34sm951405otf.38.2021.04.30.13.45.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Apr 2021 13:45:25 -0700 (PDT)
-Date:   Fri, 30 Apr 2021 15:45:24 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Sebastian Schuberth <sschuberth@gmail.com>,
-        Theodore Ts'o <tytso@mit.edu>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        patchwork@lists.ozlabs.org
-Message-ID: <608c6c64746b2_2cb208ee@natae.notmuch>
-In-Reply-To: <CAHGBnuNrXrHUz9f8nWEdB0PoO0FeLsNpNOGgdiYmsmAD5LjTmg@mail.gmail.com>
-References: <YHaIBvl6Mf7ztJB3@google.com>
- <22a0a383-0ae1-c7d1-75f7-7dfdfe5fb504@gmail.com>
- <87fszn48lh.fsf@evledraar.gmail.com>
- <CAHGBnuOVmzzhgW6GanHBXNb22UW3P1m3i6PJnOUEhYPO76hH4g@mail.gmail.com>
- <87czuq4r4l.fsf@evledraar.gmail.com>
- <CAHGBnuMedez4SE-4-JwCcR8k=_FRtjgBdBSEJqshQnVceCvGug@mail.gmail.com>
- <YH4FaQRB/vWOI9aI@mit.edu>
- <CAHGBnuNrXrHUz9f8nWEdB0PoO0FeLsNpNOGgdiYmsmAD5LjTmg@mail.gmail.com>
-Subject: Re: Pain points in Git's patch flow
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=5QD42YqawuOdwgGKXGTu8vrfUyERwYBuArBdxArtTeQ=;
+        b=IDO9mFf7E0iFA+HDzF2r15adiNs7MqZtDwLmnA2Et6lk+Y/rh7lyO/KOxSvDIQ6vVz
+         rnUt1WZ90Feyn6aGWuXWm/QUGwJiW1XsW01SSlv6sMSTft3d/Jj3vezOJsNOjfvxTFaU
+         wlNkKYhp65L0svtixFFtnwfRnlSL9Mi/psdK6H2sBEBlNI506uD8Yutp15SJSrqTsNW3
+         q26aw1wdotIwpsDZt9sDZF5nxxAL4b7tEs32ts3y8s48pXH3IU6OY5KZIRWWrNYa4PrW
+         Pdupfz16nXVchsrxubZmoqVZ5Xcw1AOa6tEmEqNx+yipRuEs1Uay1uicA2Me83ds6qpc
+         uHkg==
+X-Gm-Message-State: AOAM533D9M3hAJShGCuHJu9iPxCEfu78H37E2ZNGntSq0XLQsNBSiTO2
+        GX6ZNKM+yPm16DLBRykivmFg9ADPdTGwL1Nr7PqVhzachBxxfw==
+X-Google-Smtp-Source: ABdhPJyQNg2QKuKkuJ6wE2FsPGSno8ohwQlPfoOzgqMhhriWgP0DmPWLfHj5kNNVN9pHwIr00JudJ9cMuIzAmWGGFIU=
+X-Received: by 2002:a54:4498:: with SMTP id v24mr5469760oiv.31.1619815889444;
+ Fri, 30 Apr 2021 13:51:29 -0700 (PDT)
+MIME-Version: 1.0
+References: <CY4P132MB00885C970ACF5A277F06E40385419@CY4P132MB0088.NAMP132.PROD.OUTLOOK.COM>
+ <xmqqfszac25x.fsf@gitster.g> <CY4P132MB00885F00AAA46BCFAC76881B855F9@CY4P132MB0088.NAMP132.PROD.OUTLOOK.COM>
+ <xmqq5z04fwoz.fsf@gitster.g> <CY4P132MB00883DC8ABC72790A15C9630855E9@CY4P132MB0088.NAMP132.PROD.OUTLOOK.COM>
+In-Reply-To: <CY4P132MB00883DC8ABC72790A15C9630855E9@CY4P132MB0088.NAMP132.PROD.OUTLOOK.COM>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 30 Apr 2021 13:51:18 -0700
+Message-ID: <CABPp-BHYTBq=ExL=wx5oPH+DmWpSxsTqMbiOHgMM8uF1czs49g@mail.gmail.com>
+Subject: Re: bug:git-check-ignore exit status is wrong for negative patterns
+ when -v option used
+To:     Jeremy Faith <jeremy.faith@jci.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sebastian Schuberth wrote:
-> On Tue, Apr 20, 2021 at 12:34 AM Theodore Ts'o <tytso@mit.edu> wrote:
-> 
-> > The primary reason why the kernel uses mailing lists is because code
-> > reviews are fundamentally *discussions*, and people are used to using
-> > inboxes.  Sure, you can have a gerrit server send e-mail notifications
-> 
-> [...]
-> 
-> > maintainers simply find e-mail reviews to simply be more *convenient*
-> > than using gerrit.  And over time, we've used other tools to track
-> 
-> That still sounds to me as if people are stuck to what they know.
-> Maintainers are "used to using inboxes'', and that's *why* they find
-> e-mail reviews to be convenient.
+On Fri, Apr 30, 2021 at 2:57 AM Jeremy Faith <jeremy.faith@jci.com> wrote:
+>
+> On 30 April 2021 01:22 Junio C Hamano <gitster@pobox.com> wrote:
+>
+> >Jeremy Faith <jeremy.faith@jci.com> writes:
+> >
+> >> man git-check-ignore states:-
+> >> EXIT STATUS
+> >> -----------
+> >> 0::
+> >>        One or more of the provided paths is ignored.
+> >> 1::
+> >>        None of the provided paths are ignored.
+> >> 128::
+> >>        A fatal error was encountered.
+> >>
+> >> So my change matches what the manual states.
+>
+> >That is part of what I meant by "understandable, given the history".
+>
+> >The above description is _wrong_ ever since it was introduced, along
+> >with check-ignore, at 368aa529 (add git-check-ignore sub-command,
+> >2013-01-06).  It should have said "has/have entry that affects it in
+> >the gitignore/exclude files" instead of "is/are ignored".  After
+> >all, that is what the tool was written to do, i.e. to help debugging
+> >the gitignore/exclude files.
+> >
+> >    git-check-ignore(1)
+> >    ===================
+> >
+> >    NAME
+> >    ----
+> >    git-check-ignore - Debug gitignore / exclude files
+> >
+> >Having said all that.
+> >
+> >It is a misunderstanding that check-ignore is a tool to learn if a
+> >path is or is not ignored, but the misunderstanding is so widespread.
+> >
+> >I wonder if we can repurpose the command to "match" the
+> >misunderstanding, without hurting existing users, by
+> >
+> > (1) updating the one-liner description of the command in the
+> >     documentation;
+>
+> > (2) keep the EXIT STATUS section as-is; and
+> >
+> > (3) adjust the code to exit with status that reflects if there was
+> >     at least one path that was ignored (not "that had an entry in
+> >     the gitignore/exclude files that affected its fate").
+>
+> If I understand correctly:-
+>   (2) requires no change
+>   (3) I believe my one line change does this
+>
+> Which just leaves (1) where current line is
+>    git-check-ignore - Debug gitignore / exclude files
+> I think with the exit status operating as documented this description still
+> works i.e. check-ignore can be used to test if the .gitignore/exclude files
+> are working as desired.
+>
+> The longer Description is:
+>   DESCRIPTION
+>        For each pathname given via the command-line or from a file via
+>        --stdin, check whether the file is excluded by .gitignore (or other
+>        input files to the exclude mechanism) and output the path if it is
+>        excluded.
+> Which matches the exit status meaning as is.
+>
+> >That certainly is a backward compatible change, but I suspect that
+> >we may be able to sell it as a bugfix, taking advantage of the
+> >documentation bug you quoted above.  Of course, people do not read
+> >documentation, so scripts that used to use the command in the way it
+> >was intended to be used (as opposed to "the way it was documented")
+> >will still get broken with such a change, though.
+>
+> I'm not sure how the old exit status could be used in a useful way but you are
+> correct there is a chance that some existing scripts depend on it.
+>
+> I was originally confused by the exit status when using git versions 1.8.3.1
+> and 2.25.1. With these versions check-ignore returned 0 when a matching
+> pattern was found, it did not matter if it was a positive or negative pattern.
+> This did not match the exit status documented in the man page so I thought my
+> .gitignore patterns were not working when they were.
+> Perhaps I should stop reading man pages...
+>
+> I then tried the same patterns on an up to date version of git built from a
+> a git clone and found that without -v it returned the exit status as the man
+> page states but with -v the older exit status was given.
+> The commit that changed the exit status was 7ec8125 from 2020-02-18, first
+> release that included this commit was 2.26.
+>
+> So in 2.26 the exit status without -v was changed, maybe accidentally, in a
+> way that made it match the man page. But this commit broke scripts(that
+> do not use -v) that depend on exit status. My change extends the breakage to
+> scripts that do use -v. On the other hand scripts written that expect the
+> exit status to match the man page will be fixed!
+>
+> I'm not sure what the best course of action is but at least with my change
+> the exit status matches the man page(even with -v).
 
-I'm not stuck with what I know.
-
-The reason why I use the email workflow is not because "I'm stuck" with
-it, it's because I've tried every approach out there, and they are *all*
-inferior.
-
-You tell me of an approach and I will tell you all the ways in which
-it's inferior to email.
-
-If some people want to use Gerrit, and/or Patchwork on top of email,
-that's fine. You can use inferior approaches if you want, just don't
-force the rest of us to stop using the superior approach.
-
-Cheers.
-
--- 
-Felipe Contreras
+I'm inclined to agree with Jeremy here.  Commit  7ec8125fba96
+(check-ignore: fix documentation and implementation to match,
+2020-02-18) demonstrated pretty clearly that check-ignore was just
+flat-out broken since the beginning in regards to negated patterns, in
+multiple ways: wrong exit status, documentation that was
+self-contradictory, and non-matching documentation and implementation.
+Among other things, that commit from last year fixed the exit status
+without -v.  Unfortunately, when I (or the users I was interacting
+with) use -v, I ignore the exit status and am just looking for the
+output.  So I missed the exit status inconsistency for -v when I
+created that commit and only fixed the exit status without -v.
