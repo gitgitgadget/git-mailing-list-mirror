@@ -2,91 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C325AC433B4
-	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 04:34:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36988C433ED
+	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 04:50:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 994C860FD9
-	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 04:34:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 08AF461450
+	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 04:50:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229609AbhD3Ee6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Apr 2021 00:34:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57168 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229448AbhD3Ee4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Apr 2021 00:34:56 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BF06C06174A
-        for <git@vger.kernel.org>; Thu, 29 Apr 2021 21:34:08 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id i3so55382522edt.1
-        for <git@vger.kernel.org>; Thu, 29 Apr 2021 21:34:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ZJ70APABdNRJi+4MsC27ObcW9KaMTmV9WhxeX2hF5UU=;
-        b=faPHiGgruDUkyG1q7rVvfZV0ba4b6tvqNBd/8K6em5jyBnLBkb+EBS33WDmkmbmVim
-         LySNJ21qJ8/RTSxHByeSZLfW+o9p1ShE+UIeBncmzT96dfyAT1q0f1H7BfCSWN3DvjGJ
-         kyUaVm4iW1yDSCj6RRLZTgN1JJTEHzSsjIMqoant9z9sTH5IXZXH0TrchobY8sobMjv6
-         yZh7iFjyRzJ0AhjFpXt+FzcDyzkQWVbhHCnZ6FXFkJS2nHdY8ub+VUnBw6pnTboz+2nT
-         wsMTpu2FDuNy0RhOjxQba6ERaVU8Nf3EBA9a5GixWc27be9MTDTZKTks+8EiHGksLx4T
-         KgLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ZJ70APABdNRJi+4MsC27ObcW9KaMTmV9WhxeX2hF5UU=;
-        b=QqjCxUMS5pAAk88Cw6DRzI7p+Vfeh1PKO1rqrKUEjzkh7xxIeFAJprFCwpzULmus4o
-         UOJGVI8dT0UB9V1iQA2PKCqfHr3SlXYHzhQ0CTHReynIY7oH6vYp17Z/MNrRWja5Mbd6
-         OoaC7SinRvHy7XRUFUOvE8D3HIQKDwj8FiVKQ3hYSNIQ6jdODMTrbNtIafdFN4iKkSpg
-         o3QF1mn2V8iu5mss7Ny7F+PJFN2iFScu8zu+FoasZAJJyiwbjCim777ILrp67VF2/u9h
-         opteLX0gh+Ekz7ctmRHRkQq/sEZ5BA4V7XKT9f9FvZkNxd41FqJr8mvH8YuCC7Zzafkb
-         i5pA==
-X-Gm-Message-State: AOAM532zTqKINAnnepW9EyIz7FSk2ruthSNqO7ISs8sF57EKnejw1Oua
-        ItKCckZXKctwgso1bFcE0TCdzsvh3yiTHMkPwgg=
-X-Google-Smtp-Source: ABdhPJxmIXq+3yMEB0A4bu6/DF4DPlhkGQcqhLn7CIrqEZ1QhMpHHIq4UWtKZXWhn9vbdT/JjGZCwLHCtl7ViAi9z5s=
-X-Received: by 2002:a05:6402:752:: with SMTP id p18mr3367026edy.127.1619757247211;
- Thu, 29 Apr 2021 21:34:07 -0700 (PDT)
+        id S229591AbhD3EvF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 30 Apr 2021 00:51:05 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55660 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229448AbhD3EvE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Apr 2021 00:51:04 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 42AFAC1E15;
+        Fri, 30 Apr 2021 00:50:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=J7RpR6L6epY3BYgtf6+OdiBuFwIv4eDfq98QCT
+        K+ho0=; b=Haxl9b+iEFn57yuCy0rFEeKNJfC4ogJV7EPXuniRwRLWq3V0U5Qpei
+        DK+kSL86lleUyZZLAv4IY0qp+AGO/kADM0901kIl1ugDfC2zBs20EVT0Pdp/vAR5
+        vHF/57U3OeRFRLYGLAJgBec23drc707buBF6MjZ8Oed/Qb6W5MpPU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 26C62C1E12;
+        Fri, 30 Apr 2021 00:50:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 831DFC1E11;
+        Fri, 30 Apr 2021 00:50:15 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Sergey Organov <sorganov@gmail.com>
+Cc:     Alex Henrie <alexhenrie24@gmail.com>,
+        Git mailing list <git@vger.kernel.org>
+Subject: Re: Why doesn't `git log -m` imply `-p`?
+References: <CAMMLpeR-W35Qq6a343ifrxJ=mwBc_VcXZtVrBYDpJTySNBroFw@mail.gmail.com>
+        <xmqqwnsl93m3.fsf@gitster.g> <87im45clkp.fsf@osv.gnss.ru>
+        <xmqqmttgfz8e.fsf@gitster.g>
+Date:   Fri, 30 Apr 2021 13:50:14 +0900
+In-Reply-To: <xmqqmttgfz8e.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
+        30 Apr 2021 08:27:29 +0900")
+Message-ID: <xmqqy2d0cr5l.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <fa098676-a56c-cbb9-28cb-e57d4a8a5d77@ramsayjones.plus.com> <xmqqo8dwegk0.fsf@gitster.g>
-In-Reply-To: <xmqqo8dwegk0.fsf@gitster.g>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Fri, 30 Apr 2021 06:33:55 +0200
-Message-ID: <CAP8UFD08kH5k1wrjo0pHJ3KH2iW4=DDzePxiZXvYbDSCOqQSEw@mail.gmail.com>
-Subject: Re: [PATCH v2] bisect--helper: use BISECT_TERMS in 'bisect skip' command
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        GIT Mailing-list <git@vger.kernel.org>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Trygve Aaberge <trygveaa@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Pranit Bauva <pranit.bauva@gmail.com>,
-        Miriam Rubio <mirucam@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8E1B3444-A96F-11EB-8410-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 30, 2021 at 2:56 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
->
-> > This v2 patch was also created directly on top of commit e4c7b33747 and,
-> > once again, applied to current 'master' (@311531c9de). (I was a little
-> > surprised that it applied clean, given the changes to t6030-*.sh in the
-> > meantime! ;).
-> >
-> > I didn't bother with the range-diff[*], since it wasn't very illuminating
-> > (just the addition of a few trailing lines in the commit message and the
-> > addition of the test).
->
-> Thanks.  Let's hear from Bagas that this version looks good and
-> merge it down.
+Junio C Hamano <gitster@pobox.com> writes:
 
-This version looks good to me.
+> Sergey Organov <sorganov@gmail.com> writes:
+>
+>> Yep, but --diff-merges=m doesn't imply -p either, though it does produce
+>> diff output without -p, for merge commits only.
+>
+> I misspoke without thinking it through.  It is absolutely wrong for
+> the "-m" option (or "--diff-merges=m" for that matter) to imply
+> "-p".
+>
+> $ git log --stat --summary
+>
+> would show "diff", but the kind of "diff" requested is not a textual
+> patch but just diffstat and the summary of new/removed files, and
+> the "diff" is shown only for single-parent commits, and it omits
+> "diff" for merge commits.  Adding "-m" to this command line is *not*
+> a request to show the textual patch.  It is to ask "diff" to be
+> shown pairwise with each of the parent.
+>
+> $ git log -m --stat --summary
+>
+> It is probably OK to special case "-m" given alone without any other
+> option [*1*] that specifies what kind of "diff" is requested and
+> make it imply "-p".  But unconditionally flipping "-p" on only
+> because you saw "-m" (or "--diff-merges=m" for that matter) is just
+> wrong.
 
-Thanks Ramsay and Bagas!
+Luckily,
+
+    $ git log [--stat] --diff-merges=first-parent master..seen
+
+seems to do almost the right thing, with respect to the "It is
+probably OK to special case" I gave above.
+
+It only "enables diff" for merge commits, which does not quite feel
+right and we may want to do the same "enable diff" for single parent
+commits, but the good part is that it does not blindly imply "-p".
+
+It seems to do the "enable diff" the right way by honoring other
+command line options that specify the format of the diff, so with
+"--stat" included in the sample command line above, we get the
+diffstat for single parent commits (because we ask for "--stat" from
+the command line to show it throughout the history) and also for
+merge commits (because --diff-merges=first-parent does *not* blindly
+turn the textual patch '-p' on).
+
+> [Footnote]
+>
+> *1* They are not limited to "-p", "--stat" and "--summary", but
+> you'd need to also pay attention to "--raw", "--name-only", etc.)
+
+I've merged the so/log-diff-merge topic to 'master', with this
+(possibly) known breakage that it does not do anything for single
+parent commits.  We may want to fix this last mile before the
+release that is scheduled to happen around early June.
+
+Note that I didn't check if you are doing the right thing for all
+formats, or if I was lucky and --stat was only one of them you paid
+attention to, when you needed to notice all others that you don't.
+But if you used the same logic that allows "git show" to by default
+give "-p/--cc" output while "git show --stat" to squelch the patch
+output, you should be OK.
+
+Thanks.
