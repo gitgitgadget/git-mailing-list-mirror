@@ -2,107 +2,78 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C165CC433B4
-	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 14:56:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 647C5C433ED
+	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 14:57:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 92FA461405
-	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 14:56:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3005E613F8
+	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 14:57:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229994AbhD3O5H (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Apr 2021 10:57:07 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:40920 "EHLO
+        id S231202AbhD3O6d (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 30 Apr 2021 10:58:33 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:40983 "EHLO
         elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229977AbhD3O5E (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Apr 2021 10:57:04 -0400
+        with ESMTP id S230451AbhD3O6Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Apr 2021 10:58:25 -0400
 X-Virus-Scanned: amavisd-new at elehost.com
 Received: from gnash (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [173.33.197.34])
         (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 13UEu92x089450
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 13UEvYeM089510
         (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO)
-        for <git@vger.kernel.org>; Fri, 30 Apr 2021 10:56:11 -0400 (EDT)
+        for <git@vger.kernel.org>; Fri, 30 Apr 2021 10:57:35 -0400 (EDT)
         (envelope-from rsbecker@nexbridge.com)
 From:   "Randall S. Becker" <rsbecker@nexbridge.com>
 To:     <git@vger.kernel.org>
-Subject: [Patch 3/3] t5601: add nonstopssh SSH variant sub-tests
-Date:   Fri, 30 Apr 2021 10:56:10 -0400
-Message-ID: <012101d73dd0$f4fc0d10$def42730$@nexbridge.com>
+References: <011e01d73dd0$ec141530$c43c3f90$@nexbridge.com>
+In-Reply-To: <011e01d73dd0$ec141530$c43c3f90$@nexbridge.com>
+Subject: RE: [Patch 0/3] Explicit support for NonStop SSH variant
+Date:   Fri, 30 Apr 2021 10:57:28 -0400
+Message-ID: <012201d73dd1$27024b80$7506e280$@nexbridge.com>
 MIME-Version: 1.0
 Content-Type: text/plain;
         charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 X-Mailer: Microsoft Outlook 16.0
 Content-Language: en-ca
-Thread-Index: Adc90OARSV9oUEwuQEWWeCpm1cr5Vg==
+Thread-Index: AQGrR5/5dV7WhbnFo2JmEduBSf6qEKslEtrw
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From 375278eb010a91f0ad3114ca2334cd85c4519208 Mon Sep 17 00:00:00 2001
+Apologies for not using git send-email/imap-send. My ISP is blocking my access to that capability.
+
+Randall S. Becker, Managing Director, Nexbridge Inc.
++1.416.984.9826
+
+-----Original Message-----
+From: Randall S. Becker <rsbecker@nexbridge.com> 
+Sent: April 30, 2021 10:56 AM
+To: git@vger.kernel.org
+Subject: [Patch 0/3] Explicit support for NonStop SSH variant
+
+>From 375278eb010a91f0ad3114ca2334cd85c4519208 Mon Sep 17 00:00:00 2001
 From: "Randall S. Becker" <rsbecker@nexbridge.com>
-Date: Fri, 30 Apr 2021 10:10:28 -0400
-Subject: [Patch 3/3] t5601: add nonstopssh SSH variant sub-tests
+Date: Fri, 30 Apr 2021 10:19:38 -0400
+Subject: [Patch 0/3] Explicit support for NonStop SSH variant
 
-Tests added are creation of the base configuration for nonstopssh
-with defaults, banner suppression, verbosity suppression, and
-explicit specification of the platform's SSH2 process name
-(for example $ZSSH0).
+The nonstopssh SSH variant constructs the platform-specific SSH
+command using the /G/system/zssh/sshoss program and typical
+program arguments needed by users to use this client on the NonStop
+x86 and ia64 platforms.
 
-Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
----
- t/t5601-clone.sh | 34 ++++++++++++++++++++++++++++++++++
- 1 file changed, 34 insertions(+)
+Randall S. Becker (3):
+  connect.c: add nonstopssh variant to the sshVariant set.
+  ssh.txt: document nonstopssh variant
+  t5601: add nonstopssh SSH variant sub-tests
 
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index e7e6c08955..39b49ef67e 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -474,6 +474,40 @@ test_expect_success 'GIT_SSH_VARIANT overrides plink to tortoiseplink' '
-        expect_ssh "-batch -P 123" myhost src
- '
+ Documentation/config/ssh.txt | 18 +++++++++++++++++-
+ connect.c                    | 17 +++++++++++++++++
+ t/t5601-clone.sh             | 34 ++++++++++++++++++++++++++++++++++
+ 3 files changed, 68 insertions(+), 1 deletion(-)
 
-+test_expect_success 'nonstopssh base configuration' '
-+       copy_ssh_wrapper_as "$TRASH_DIRECTORY/nonstopssh" &&
-+       unset SSH2_PROCESS_NAME &&
-+       GIT_SSH_VARIANT=nonstopssh \
-+       git clone "[myhost:123]:src" ssh-bracket-clone-nonstopssh &&
-+       expect_ssh "-p 123 -Z -Q" myhost src
-+'
-+
-+test_expect_success 'nonstopssh suppress banner' '
-+       copy_ssh_wrapper_as "$TRASH_DIRECTORY/nonstopssh" &&
-+       unset SSH2_PROCESS_NAME &&
-+       GIT_SSH_VARIANT=nonstopssh \
-+       SSH_SUPPRESS_BANNER=1 \
-+       git clone "[myhost:123]:src" ssh-bracket-clone-nonstopssh2 &&
-+       expect_ssh "-p 123 -Q" myhost src
-+'
-+
-+test_expect_success 'nonstopssh suppress quiet' '
-+       copy_ssh_wrapper_as "$TRASH_DIRECTORY/nonstopssh" &&
-+       unset SSH2_PROCESS_NAME &&
-+       GIT_SSH_VARIANT=nonstopssh \
-+       SSH_SUPPRESS_QUIET=1 \
-+       git clone "[myhost:123]:src" ssh-bracket-clone-nonstopssh3 &&
-+       expect_ssh "-p 123 -Z" myhost src
-+'
-+
-+test_expect_success 'nonstopssh supply SSH process name' '
-+       copy_ssh_wrapper_as "$TRASH_DIRECTORY/nonstopssh" &&
-+       GIT_SSH_VARIANT=nonstopssh \
-+       SSH2_PROCESS_NAME=\$ZSSH0 \
-+       git clone "[myhost:123]:src" ssh-bracket-clone-nonstopssh4 &&
-+       expect_ssh "-p 123 -Z -Q -S \$ZSSH0" myhost src
-+'
-+
- test_expect_success 'clean failure on broken quoting' '
-        test_must_fail \
-                env GIT_SSH_COMMAND="${SQ}plink.exe -v" \
 --
 2.29.2
-
 
