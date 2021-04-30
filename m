@@ -7,21 +7,21 @@ X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1AACC433B4
-	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 23:26:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 25C9FC433B4
+	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 23:26:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 825E961418
-	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 23:26:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0098B6140C
+	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 23:26:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232910AbhD3X0u (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Apr 2021 19:26:50 -0400
-Received: from mav.lukeshu.com ([104.207.138.63]:47080 "EHLO mav.lukeshu.com"
+        id S232936AbhD3X0x (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 30 Apr 2021 19:26:53 -0400
+Received: from mav.lukeshu.com ([104.207.138.63]:47096 "EHLO mav.lukeshu.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232888AbhD3X0r (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Apr 2021 19:26:47 -0400
+        id S232911AbhD3X0s (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Apr 2021 19:26:48 -0400
 Received: from lukeshu-dw-thinkpad (unknown [IPv6:2601:281:8200:26:4e34:88ff:fe48:5521])
-        by mav.lukeshu.com (Postfix) with ESMTPSA id 5335680593;
-        Fri, 30 Apr 2021 19:25:58 -0400 (EDT)
+        by mav.lukeshu.com (Postfix) with ESMTPSA id 4A8DD80592;
+        Fri, 30 Apr 2021 19:25:59 -0400 (EDT)
 From:   Luke Shumaker <lukeshu@lukeshu.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -32,9 +32,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Luke Shumaker <lukeshu@datawire.io>
-Subject: [PATCH v4 3/5] git-fast-export.txt: clarify why 'verbatim' may not be a good idea
-Date:   Fri, 30 Apr 2021 17:25:35 -0600
-Message-Id: <20210430232537.1131641-4-lukeshu@lukeshu.com>
+Subject: [PATCH v4 4/5] fast-export: do not modify memory from get_commit_buffer
+Date:   Fri, 30 Apr 2021 17:25:36 -0600
+Message-Id: <20210430232537.1131641-5-lukeshu@lukeshu.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210430232537.1131641-1-lukeshu@lukeshu.com>
 References: <20210423164118.693197-1-lukeshu@lukeshu.com>
@@ -47,42 +47,154 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Luke Shumaker <lukeshu@datawire.io>
 
+fast-export's helper function find_encoding() takes a `const char *`, but
+modifies that memory despite the `const`.  Ultimately, this memory came
+from get_commit_buffer(), and you're not supposed to modify the memory
+that you get from get_commit_buffer().
+
+So, get rid of find_encoding() in favor of commit.h:find_commit_header(),
+which gives back a string length, rather than mutating the memory to
+insert a '\0' terminator.
+
+Because find_commit_header() detects the "\n\n" string that separates the
+headers and the commit message, move the call to be above the
+`message = strstr(..., "\n\n")` call.  This helps readability, and allows
+for the value of `encoding` to be used for a better value of "..." so that
+the same memory doesn't need to be checked twice.  Introduce a
+`commit_buffer_cursor` variable to avoid writing an awkward
+`encoding ? encoding + encoding_len : committer_end` expression.
+
 Signed-off-by: Luke Shumaker <lukeshu@datawire.io>
 ---
 
 Notes:
     v4: This commit is new in v4.
 
- Documentation/git-fast-export.txt | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ builtin/fast-export.c | 65 ++++++++++++++++++++++++-------------------
+ 1 file changed, 37 insertions(+), 28 deletions(-)
 
-diff --git a/Documentation/git-fast-export.txt b/Documentation/git-fast-export.txt
-index 593be7e9a2..a364812d9f 100644
---- a/Documentation/git-fast-export.txt
-+++ b/Documentation/git-fast-export.txt
-@@ -29,15 +29,19 @@ OPTIONS
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index d1cb8a3183..81f3fb1f05 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -499,21 +499,6 @@ static void show_filemodify(struct diff_queue_struct *q,
+ 	}
+ }
  
- --signed-tags=(verbatim|warn-verbatim|warn-strip|strip|abort)::
- 	Specify how to handle signed tags.  Since any transformation
--	after the export can change the tag names (which can also happen
--	when excluding revisions) the signatures will not match.
-+	after the export (or during the export, such as excluding
-+	revisions) can change the hashes being signed, the signatures
-+	may become invalid.
- +
- When asking to 'abort' (which is the default), this program will die
- when encountering a signed tag.  With 'strip', the tags will silently
- be made unsigned, with 'warn-strip' they will be made unsigned but a
- warning will be displayed, with 'verbatim', they will be silently
- exported and with 'warn-verbatim' (or 'warn', a deprecated synonym),
--they will be exported, but you will see a warning.
-+they will be exported, but you will see a warning.  'verbatim' and
-+'warn-verbatim' should only be used if you know that no
-+transformations affecting tags will be performed, or if you do not
-+care that the resulting tag will have an invalid signature.
+-static const char *find_encoding(const char *begin, const char *end)
+-{
+-	const char *needle = "\nencoding ";
+-	char *bol, *eol;
+-
+-	bol = memmem(begin, end ? end - begin : strlen(begin),
+-		     needle, strlen(needle));
+-	if (!bol)
+-		return NULL;
+-	bol += strlen(needle);
+-	eol = strchrnul(bol, '\n');
+-	*eol = '\0';
+-	return bol;
+-}
+-
+ static char *anonymize_ref_component(void *data)
+ {
+ 	static int counter;
+@@ -615,13 +600,26 @@ static void anonymize_ident_line(const char **beg, const char **end)
+ 	*end = out->buf + out->len;
+ }
  
- --tag-of-filtered-object=(abort|drop|rewrite)::
- 	Specify how to handle tags whose tagged object is filtered out.
++static char *reencode_message(const char *in_msg,
++			      const char *in_encoding, size_t in_encoding_len)
++{
++	static struct strbuf in_encoding_buf = STRBUF_INIT;
++
++	strbuf_reset(&in_encoding_buf);
++	strbuf_add(&in_encoding_buf, in_encoding, in_encoding_len);
++
++	return reencode_string(in_msg, "UTF-8", in_encoding_buf.buf);
++}
++
+ static void handle_commit(struct commit *commit, struct rev_info *rev,
+ 			  struct string_list *paths_of_changed_objects)
+ {
+ 	int saved_output_format = rev->diffopt.output_format;
+-	const char *commit_buffer;
++	const char *commit_buffer, *commit_buffer_cursor;
+ 	const char *author, *author_end, *committer, *committer_end;
+-	const char *encoding, *message;
++	const char *encoding;
++	size_t encoding_len;
++	const char *message;
+ 	char *reencoded = NULL;
+ 	struct commit_list *p;
+ 	const char *refname;
+@@ -630,21 +628,31 @@ static void handle_commit(struct commit *commit, struct rev_info *rev,
+ 	rev->diffopt.output_format = DIFF_FORMAT_CALLBACK;
+ 
+ 	parse_commit_or_die(commit);
+-	commit_buffer = get_commit_buffer(commit, NULL);
+-	author = strstr(commit_buffer, "\nauthor ");
++	commit_buffer_cursor = commit_buffer = get_commit_buffer(commit, NULL);
++
++	author = strstr(commit_buffer_cursor, "\nauthor ");
+ 	if (!author)
+ 		die("could not find author in commit %s",
+ 		    oid_to_hex(&commit->object.oid));
+ 	author++;
+-	author_end = strchrnul(author, '\n');
+-	committer = strstr(author_end, "\ncommitter ");
++	commit_buffer_cursor = author_end = strchrnul(author, '\n');
++
++	committer = strstr(commit_buffer_cursor, "\ncommitter ");
+ 	if (!committer)
+ 		die("could not find committer in commit %s",
+ 		    oid_to_hex(&commit->object.oid));
+ 	committer++;
+-	committer_end = strchrnul(committer, '\n');
+-	message = strstr(committer_end, "\n\n");
+-	encoding = find_encoding(committer_end, message);
++	commit_buffer_cursor = committer_end = strchrnul(committer, '\n');
++
++	/* find_commit_header() gets a `+ 1` because
++	 * commit_buffer_cursor points at the trailing "\n" at the end
++	 * of the previous line, but find_commit_header() wants a
++	 * pointer to the beginning of the next line. */
++	encoding = find_commit_header(commit_buffer_cursor + 1, "encoding", &encoding_len);
++	if (encoding)
++		commit_buffer_cursor = encoding + encoding_len;
++
++	message = strstr(commit_buffer_cursor, "\n\n");
+ 	if (message)
+ 		message += 2;
+ 
+@@ -685,14 +693,15 @@ static void handle_commit(struct commit *commit, struct rev_info *rev,
+ 	} else if (encoding) {
+ 		switch(reencode_mode) {
+ 		case REENCODE_YES:
+-			reencoded = reencode_string(message, "UTF-8", encoding);
++			reencoded = reencode_message(message, encoding, encoding_len);
+ 			break;
+ 		case REENCODE_NO:
+ 			break;
+ 		case REENCODE_ABORT:
+-			die("Encountered commit-specific encoding %s in commit "
++			die("Encountered commit-specific encoding %.*s in commit "
+ 			    "%s; use --reencode=[yes|no] to handle it",
+-			    encoding, oid_to_hex(&commit->object.oid));
++			    (int)encoding_len, encoding,
++			    oid_to_hex(&commit->object.oid));
+ 		}
+ 	}
+ 	if (!commit->parents)
+@@ -704,7 +713,7 @@ static void handle_commit(struct commit *commit, struct rev_info *rev,
+ 	       (int)(author_end - author), author,
+ 	       (int)(committer_end - committer), committer);
+ 	if (!reencoded && encoding)
+-		printf("encoding %s\n", encoding);
++		printf("encoding %.*s\n", (int)encoding_len, encoding);
+ 	printf("data %u\n%s",
+ 	       (unsigned)(reencoded
+ 			  ? strlen(reencoded) : message
 -- 
 2.31.1
 
