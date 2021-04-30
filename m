@@ -6,23 +6,23 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F359C433ED
-	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 16:10:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 200A3C433ED
+	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 16:13:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E9B876145D
-	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 16:10:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DC329613F8
+	for <git@archiver.kernel.org>; Fri, 30 Apr 2021 16:13:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229818AbhD3QKx convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Fri, 30 Apr 2021 12:10:53 -0400
-Received: from mav.lukeshu.com ([104.207.138.63]:46288 "EHLO mav.lukeshu.com"
+        id S229720AbhD3QOg convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Fri, 30 Apr 2021 12:14:36 -0400
+Received: from mav.lukeshu.com ([104.207.138.63]:46310 "EHLO mav.lukeshu.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229579AbhD3QKv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Apr 2021 12:10:51 -0400
+        id S229579AbhD3QOg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Apr 2021 12:14:36 -0400
 Received: from lukeshu-dw-thinkpad (unknown [IPv6:2601:281:8200:26:4e34:88ff:fe48:5521])
-        by mav.lukeshu.com (Postfix) with ESMTPSA id 9B85480590;
-        Fri, 30 Apr 2021 12:10:02 -0400 (EDT)
-Date:   Fri, 30 Apr 2021 10:10:00 -0600
-Message-ID: <87lf8zpxd3.wl-lukeshu@lukeshu.com>
+        by mav.lukeshu.com (Postfix) with ESMTPSA id EF53980590;
+        Fri, 30 Apr 2021 12:13:42 -0400 (EDT)
+Date:   Fri, 30 Apr 2021 10:13:42 -0600
+Message-ID: <87k0ojpx6x.wl-lukeshu@lukeshu.com>
 From:   Luke Shumaker <lukeshu@lukeshu.com>
 To:     =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
 Cc:     Luke Shumaker <lukeshu@lukeshu.com>, git@vger.kernel.org,
@@ -31,22 +31,21 @@ Cc:     Luke Shumaker <lukeshu@lukeshu.com>, git@vger.kernel.org,
         Danny Lin <danny0838@gmail.com>,
         "David A .\ Greene" <greened@obbligato.org>,
         David Aguilar <davvid@gmail.com>,
-        Jakub Suder <jakub.suder@gmail.com>,
         James Denholm <nod.helm@gmail.com>, Jeff King <peff@peff.net>,
         Jonathan Nieder <jrnieder@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?Tmd1?= =?UTF-8?B?eeG7hW4g?= =?ISO-8859-1?Q?Th=E1i_?=
+        =?UTF-8?B?Tmd1eeG7hW4g?= =?ISO-8859-1?Q?Th=E1i_?=
          =?UTF-8?B?Tmfhu41j?= Duy <pclouds@gmail.com>,
         Roger L Strain <roger.strain@swri.org>,
         Techlive Zheng <techlivezheng@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Luke Shumaker <lukeshu@datawire.io>
-Subject: Re: [PATCH v3 03/30] subtree: t7900: use test-lib.sh's test_count
-In-Reply-To: <87wnskxfwo.fsf@evledraar.gmail.com>
+Subject: Re: [PATCH v3 05/30] subtree: t7900: comment subtree_test_create_repo
+In-Reply-To: <87tunoxfls.fsf@evledraar.gmail.com>
 References: <20210426174525.3937858-1-lukeshu@lukeshu.com>
         <20210427211748.2607474-1-lukeshu@lukeshu.com>
-        <20210427211748.2607474-4-lukeshu@lukeshu.com>
-        <87wnskxfwo.fsf@evledraar.gmail.com>
+        <20210427211748.2607474-6-lukeshu@lukeshu.com>
+        <87tunoxfls.fsf@evledraar.gmail.com>
 User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
  FLIM-LB/1.14.9 (=?ISO-8859-4?Q?Goj=F2?=) APEL-LB/10.8 EasyPG/1.0.0
  Emacs/27.2 (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
@@ -57,26 +56,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 30 Apr 2021 03:45:10 -0600,
+On Fri, 30 Apr 2021 03:48:36 -0600,
 Ævar Arnfjörð Bjarmason wrote:
 > On Tue, Apr 27 2021, Luke Shumaker wrote:
-> > Use test-lib.sh's `test_count`, instead instead of having
-> > t7900-subtree.sh do its own book-keeping with `subtree_test_count` that
-> > has to be explicitly incremented by calling `next_test`.
+> > It's unclear what the purpose of t7900-subtree.sh's
+> > `subtree_test_create_repo` helper function is.  It wraps test-lib.sh's,
+> > `test_create_repo` but follows that up by setting log.date=relative.  Why
+> > does it set log.date=relative?
+> >
+> > My first guess was that at one point the tests required that, but no
+> > longer do, and that the function is now vestigial.  I even wrote a patch
+> > to get rid of it and was moments away from `git send-email`ing it.
+> >
+> > However, by chance when looking for something else in the history, I
+> > discovered the true reason, from e7aac44ed2 (contrib/subtree: ignore
+> > log.date configuration, 2015-07-21).  It's testing that setting
+> > log.date=relative doesn't break `git subtree`, as at one point in the past
+> > that did break `git subtree`.
 > 
-> This just retains an existing pattern and all that, but I think this
-> pattern of testing makes for hard to read & maintain tests. It looks
-> like all of these could just be:
+> This commit message is too much about describing the journey IMO. We
+> could just get straight to the point, e.g. something like:
 > 
->     test_when_finished "rm -rf repo" &&
->     git init repo &&
->     [...]
-> 
-> I.e. the only thing that's being done here is to piggy-back on the test
-> count to create a unique repo.
+>     Add a comment about why the git-subtree.sh tests set
+>     log.relative. It's to test that we don't have a regression of the
+>     bug fixed in e7aac44ed2 [...].
 
-Thanks for the tip, I'll do that for any new tests I add, going
-forward.
+OK, I'll reword it if I re-roll.
+
+> FWIW I think just having an isolated test for this would be better, but
+> since you're just refactoring existing code I think this is fine.
+> 
+> I.e. we'd use "git init" in the rest, and just have a test that stresses
+> this specifically. Or is the entry into git-subtree.sh so varied that we
+> need to "fuzz" all the tests like this to fully test it? I haven't
+> checked.
+
+I'd have to examine it a bit more to be sure, but I think that you're
+right.  That as long as the test does a 'split' that creates new
+commits, then just one test should be fine.
 
 -- 
 Happy hacking,
