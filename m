@@ -2,118 +2,159 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FB4EC433ED
-	for <git@archiver.kernel.org>; Sat,  1 May 2021 06:40:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DC115C43460
+	for <git@archiver.kernel.org>; Sat,  1 May 2021 08:52:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 50AC3613ED
-	for <git@archiver.kernel.org>; Sat,  1 May 2021 06:40:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BE46C61420
+	for <git@archiver.kernel.org>; Sat,  1 May 2021 08:52:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229517AbhEAGk5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 1 May 2021 02:40:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32946 "EHLO
+        id S231787AbhEAIwt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 1 May 2021 04:52:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229505AbhEAGk4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 May 2021 02:40:56 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16EF0C06174A
-        for <git@vger.kernel.org>; Fri, 30 Apr 2021 23:40:06 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id l4so365039ejc.10
-        for <git@vger.kernel.org>; Fri, 30 Apr 2021 23:40:05 -0700 (PDT)
+        with ESMTP id S230117AbhEAIwt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 May 2021 04:52:49 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB968C06174A
+        for <git@vger.kernel.org>; Sat,  1 May 2021 01:51:58 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id b25so657639eju.5
+        for <git@vger.kernel.org>; Sat, 01 May 2021 01:51:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=FLRzjl6YenvmtWBWFOZJJEKRN0h2uDDAJ16rmFsymoQ=;
-        b=guLHsuEJKTuivBX//ribc38MXczzDDMRJgu5WVM35uuWTe7m5AS6+J13eD4wixa4gF
-         hsDFa+oftx5Eju4XXeAgIvulZEYB4VsEbespQR2o8un+18FPJEeLcsfX2Xa1JCItIhc8
-         7UfKY+5CREvm788dnj34XwTOKzC6DRs9N+xXwPPRpLmG4pECICAKvbnneVEgretiRjIP
-         Y7WfviI/sEJzgWi1OULOsN6Vc7TyjK0U8S2o0UoTZv+NTWqhf7Lguw60RP6URf0LfNYA
-         wcTeAH1t8LffNOMhInUgKoAW+kJ9MAZNEHc7XcthYCUFhaur3rkGa5rW/Rngyd7O/pxe
-         kD7g==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=Gh/L502WNCCSM7IdVLEy4fXtw9NL7NNKZFuVkICmiNg=;
+        b=qevzAgeIJwCzOAAX0VOns8LywQfTmiX83k5bKLs9UaEUnS6zevPf7+bxrqHaOzbdTF
+         o97651OKJv9kYAJPXYz/NA232Oh3kfVPtY6uI2TdEdZ5FwUSpNPPbWm8NJLqSwvbmPzh
+         zq93mk9Phly9aQeVRNGP0yVmWEZdXIhNyTlyw5V2WhOsv78mtn6njYAPxDQOKbDJL9GD
+         EuVBnASb4U7PPqcvFeyAqwSoOn+L3Y8R6MnMac+0TSGQeTmyXAXf/VoIisgxcdaNo9F3
+         qEa15leRAu95X7oQxDu1FDPI2UbFEtvQRt7VcLE1GH/5lGWp90dvbPJiGoH8A74N71cZ
+         mjPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=FLRzjl6YenvmtWBWFOZJJEKRN0h2uDDAJ16rmFsymoQ=;
-        b=S/DZMwW0QlwTYURDwDrTq25s/ds+QsQsZOKOTBxd/jF5JFosirq73D9JP8iNEMyb3c
-         1B9BAkwb7FtxQme/LNrK69+V1wrIpKR0iY7uGKuBvnn7pEoMcnEemZzOkDV2HiK14cle
-         JoIRkKV8TFyZydJRFuC/iORFFO6JlvtgC61k2oN31ogMDvfe90GazZeXdl4kI9+9BxMy
-         2JuLgfXYQBMXK+bWhvbiYErHycgHjSl/G9DmY7/s51L21Sn5n721ySthw6CBZEiDxMEI
-         LLHHfzus238n/3v81eFeL1aDxgxEbVEPXl8xaQE0eE2jznmOhdZubquN6Yn25zhe4h2n
-         41Fg==
-X-Gm-Message-State: AOAM530mkYY+dvmzLd4EvrPg516eNgb9I4bNHM0CTL471b7hmwE3nKKf
-        Y6biEkgBKA5RCZaAMmGpQGAnmXJg8J5RE1ELyA8=
-X-Google-Smtp-Source: ABdhPJwWvsvSUE++8GX+iHF94RO+3osT6/JgSVIO8OMpQ0aoUWWZe/5ez3LztwrH1LecPeeN5NlyHDIOaZs59XLwVM8=
-X-Received: by 2002:a17:906:18e1:: with SMTP id e1mr7752884ejf.341.1619851204605;
- Fri, 30 Apr 2021 23:40:04 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.945.git.1619807844627.gitgitgadget@gmail.com>
-In-Reply-To: <pull.945.git.1619807844627.gitgitgadget@gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sat, 1 May 2021 08:39:53 +0200
-Message-ID: <CAP8UFD1Wm2e7Q3XY346-fFWMhdGHV_1Kp=wo8cqsx71j7Sg-dQ@mail.gmail.com>
-Subject: Re: [PATCH] urlmatch: do not allow passwords in URLs by default
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=Gh/L502WNCCSM7IdVLEy4fXtw9NL7NNKZFuVkICmiNg=;
+        b=XVfFOXl/VYIDoFpxMU04PRHMgi6+cfDEHXNSjLZTJD2jAPH6GfVhcAUT5ZYi4dJfO8
+         KfVsj635RkTDGc9gobzS0l5hXIIzJ/NDj0GbS1Oao98P2zDvZg82xXDWpI/Z29QyiSXB
+         EQvQUEFvU8t8or8o2z3rua94Wy7qQ2E61WJeCatkFWuHHOpBQDCGomOU8PZQldXpB4Hh
+         KKLH5d0PszwJL4M4a86UOK4qRYlqfTXJzecaUInkeFDBGRTT7ZsXED7VerHxeuUp5hsa
+         dnESVQ6kdriElbKMrzipx00T7e8vbAktgq0gFVY2qkAKJ47nRD0VrmfWkRJilGYN8ZHA
+         Lg+A==
+X-Gm-Message-State: AOAM531C7Ihij9OPIcxKpr3jh7cA96td5s9bFBPAXjKJpuV+fppTLSoW
+        ffjJfEKLFIjJvybhO1QRhPeipncVI8A=
+X-Google-Smtp-Source: ABdhPJzWz64/r4WEnw1VhV3npQQCVrKVAtpUVeOvzMBsqcqCYS2pVsPAcmxm8v0h2yj62xephEJlsA==
+X-Received: by 2002:a17:907:2663:: with SMTP id ci3mr8178914ejc.540.1619859117120;
+        Sat, 01 May 2021 01:51:57 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id i19sm4620560ejd.114.2021.05.01.01.51.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 01 May 2021 01:51:56 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Jonathan Nieder <jrnieder@gmail.com>,
+Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+        me@ttaylorr.com, christian.couder@gmail.com,
+        johannes.schindelin@gmx.de, jrnieder@gmail.com,
         Derrick Stolee <derrickstolee@github.com>,
         Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH] urlmatch: do not allow passwords in URLs by default
+Date:   Sat, 01 May 2021 10:44:12 +0200
+References: <pull.945.git.1619807844627.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
+In-reply-to: <pull.945.git.1619807844627.gitgitgadget@gmail.com>
+Message-ID: <87fsz6ygyc.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 30, 2021 at 8:37 PM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: Derrick Stolee <dstolee@microsoft.com>
->
-> Git allows URLs of the following pattern:
->
->   https://username:password@domain/route
 
-[...]
+On Fri, Apr 30 2021, Derrick Stolee via GitGitGadget wrote:
 
-> Some Git hosting providers are working to completely drop
-> username/password credential strategies, which will make URLs of this
-> form stop working. However, that requires certain changes to credential
-> managers that need to be released and sufficiently adopted before making
-> such a server-side change.
->
-> In the meantime, it might be helpful to alert users that they are doing
-> something insecure with these URLs.
+Just nits on the patch, will reply to the idea in another message:
 
-Another helpful thing to do might be to add --user and maybe
---password options to some commands like 'clone', 'fetch', 'remote
-add', etc.
+> [...]
+> +test_expect_success 'enable username:password urls' '
+> +	git config --global core.allowUsernamePasswordUrls true
+> +'
 
-I think historically we considered that authentication wasn't Git's
-responsibility. If we now think it should be concerned about this,
-then --user and --password options might be a good way to start taking
-responsibility.
+Hrm, --global? In any case isn't it also better here to tweak this for
+specific tests?
 
-For example `git clone --user XXX --password YYY
-https://git.example.com/git/git.git` could use an HTTP header to send
-the credentials, and then after the clone maybe (if a terminal is
-used) ask if the user would like to save the credentials using a
-credential manager.
+>  test_expect_success 'push status output scrubs password' '
+>  	cd "$ROOT_PATH/test_repo_clone" &&
+> +	git config core.allowUsernamePasswordUrls true &&
+>  	git push --porcelain \
+>  		"$HTTPD_URL_USER_PASS/smart/test_repo.git" \
+>  		+HEAD:scrub >status &&
+> @@ -469,9 +470,11 @@ test_expect_success 'push status output scrubs password' '
 
-I think this could be both as easy, or even easier, to use than an URL
-with credentials and more secure. We could also make things more
-secure over time by suggesting better credential managers as they
-improve.
+Use test_config instead, unless this is really "setup for the rest of
+the tests" in disguise, but IMO even more of a reason to use test_config
+for each one.
 
-Also I wonder if on Linux a credential manager could encrypt HTTP
-credentials and store them locally using the user's private ssh key if
-there is one.
+>  test_expect_success 'clone/fetch scrubs password from reflogs' '
+>  	cd "$ROOT_PATH" &&
+> -	git clone "$HTTPD_URL_USER_PASS/smart/test_repo.git" \
+> +	git -c core.allowUsernamePasswordUrls=true clone \
+> +		"$HTTPD_URL_USER_PASS/smart/test_repo.git" \
+>  		reflog-test &&
+>  	cd reflog-test &&
+> +	git config core.allowUsernamePasswordUrls true &&
 
-Thanks,
-Christian.
+Ditto. Although redundant in your patch, no, since we've set it to true
+above?
+
+> +test_expect_success 'clone fails when using username:password' '
+> +	test_must_fail git clone https://username:password@bogus.url 2>err &&
+> +	test_i18ngrep "attempted to parse a URL with a plain-text username and password" err
+> +'
+> +
+
+Just use grep, not test_i18ngrep. GETTEXT_POISON is gone.
+
+>  test_expect_success 'clone from hooks' '
+>  
+>  	test_create_repo r0 &&
+> diff --git a/urlmatch.c b/urlmatch.c
+> index 33a2ccd306b6..e81ec9e1fc0b 100644
+> --- a/urlmatch.c
+> +++ b/urlmatch.c
+> @@ -1,5 +1,6 @@
+>  #include "cache.h"
+>  #include "urlmatch.h"
+> +#include "config.h"
+>  
+>  #define URL_ALPHA "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+>  #define URL_DIGIT "0123456789"
+> @@ -106,6 +107,18 @@ static int match_host(const struct url_info *url_info,
+>  	return (!url_len && !pat_len);
+>  }
+>  
+> +static void die_if_username_password_not_allowed(void)
+> +{
+> +	int opt_in = 0;
+> +	if (!git_config_get_bool("core.allowusernamepasswordurls", &opt_in) &&
+> +	    opt_in)
+> +		return;
+
+API use nit: You need to either initialize "opt_in = 0" or check the
+git_config_get_bool() return value. Doing both isn't strictly
+needed. I.e. either of these would work:
+
+    int opt_in = 0;
+    git_config_get_bool(..., &opt_in);
+    if (opt_in) ...;
+
+Or:
+
+    int opt_in;
+    if (!git_config_get_bool(..., &opt_in) && opt_in)
+
+No?
