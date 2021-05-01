@@ -7,32 +7,32 @@ X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BED99C433ED
-	for <git@archiver.kernel.org>; Sat,  1 May 2021 14:03:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A9B2C433ED
+	for <git@archiver.kernel.org>; Sat,  1 May 2021 14:03:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 81A2561490
-	for <git@archiver.kernel.org>; Sat,  1 May 2021 14:03:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 69D2B614A7
+	for <git@archiver.kernel.org>; Sat,  1 May 2021 14:03:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232224AbhEAOER (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 1 May 2021 10:04:17 -0400
-Received: from cloud.peff.net ([104.130.231.41]:42028 "EHLO cloud.peff.net"
+        id S232260AbhEAOE3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 1 May 2021 10:04:29 -0400
+Received: from cloud.peff.net ([104.130.231.41]:42034 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232200AbhEAOEQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 May 2021 10:04:16 -0400
-Received: (qmail 26382 invoked by uid 109); 1 May 2021 14:03:26 -0000
+        id S232200AbhEAOE2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 May 2021 10:04:28 -0400
+Received: (qmail 26391 invoked by uid 109); 1 May 2021 14:03:38 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 01 May 2021 14:03:26 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 01 May 2021 14:03:38 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10033 invoked by uid 111); 1 May 2021 14:03:26 -0000
+Received: (qmail 10050 invoked by uid 111); 1 May 2021 14:03:38 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 01 May 2021 10:03:25 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 01 May 2021 10:03:38 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Sat, 1 May 2021 10:03:25 -0400
+Date:   Sat, 1 May 2021 10:03:37 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     Yiyuan guo <yguoaz@gmail.com>
-Subject: [PATCH 2/5] t5300: check that we produced expected number of deltas
-Message-ID: <YI1frTcgfGb6GA3N@coredump.intra.peff.net>
+Subject: [PATCH 3/5] pack-objects: clamp negative window size to 0
+Message-ID: <YI1fubjvQQlrPz9D@coredump.intra.peff.net>
 References: <YI1fbERSuS7Y3LKh@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -42,64 +42,50 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We pack a set of objects both with and without --window=0, assuming that
-the 0-length window will cause us not to produce any deltas. Let's
-confirm that this is the case.
+A negative window size makes no sense, and the code in find_deltas() is
+not prepared to handle it. If you pass "-1", for example, we end up
+generate a 0-length array of "struct unpacked", but our loop assumes it
+has at least one entry in it (and we end up reading garbage memory).
 
+We could complain to the user about this, but it's more forgiving to
+just clamp it to 0, which means "do not find any deltas at all". The
+0-case is already tested earlier in the script, so we'll make sure this
+does the same thing.
+
+Reported-by: Yiyuan guo <yguoaz@gmail.com>
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- t/t5300-pack-object.sh | 23 ++++++++++++++++++++---
- 1 file changed, 20 insertions(+), 3 deletions(-)
+ builtin/pack-objects.c | 2 ++
+ t/t5300-pack-object.sh | 5 +++++
+ 2 files changed, 7 insertions(+)
 
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 6d13cd3e1a..ea7a5b3ba5 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -3871,6 +3871,8 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 			(1U << OE_Z_DELTA_BITS) - 1);
+ 		cache_max_small_delta_size = (1U << OE_Z_DELTA_BITS) - 1;
+ 	}
++	if (window < 0)
++		window = 0;
+ 
+ 	strvec_push(&rp, "pack-objects");
+ 	if (thin) {
 diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-index 1e10c832a6..887e2d8d88 100755
+index 887e2d8d88..5c5e53f0be 100755
 --- a/t/t5300-pack-object.sh
 +++ b/t/t5300-pack-object.sh
-@@ -34,8 +34,22 @@ test_expect_success 'setup' '
- 	} >expect
+@@ -613,4 +613,9 @@ test_expect_success '--stdin-packs with broken links' '
+ 	)
  '
  
-+# usage: check_deltas <stderr_from_pack_objects> <cmp_op> <nr_deltas>
-+# e.g.: check_deltas stderr -gt 0
-+check_deltas() {
-+	deltas=$(perl -lne '/delta (\d+)/ and print $1' "$1") &&
-+	shift &&
-+	if ! test "$deltas" "$@"
-+	then
-+		echo >&2 "unexpected number of deltas (compared $delta $*)"
-+		return 1
-+	fi
-+}
-+
- test_expect_success 'pack without delta' '
--	packname_1=$(git pack-objects --window=0 test-1 <obj-list)
-+	packname_1=$(git pack-objects --progress --window=0 test-1 \
-+			<obj-list 2>stderr) &&
++test_expect_success 'negative window clamps to 0' '
++	git pack-objects --progress --window=-1 neg-window <obj-list 2>stderr &&
 +	check_deltas stderr = 0
- '
- 
- test_expect_success 'pack-objects with bogus arguments' '
-@@ -62,15 +76,18 @@ test_expect_success 'unpack without delta' '
- '
- 
- test_expect_success 'pack with REF_DELTA' '
--	packname_2=$(git pack-objects test-2 <obj-list)
-+	packname_2=$(git pack-objects --progress test-2 <obj-list 2>stderr) &&
-+	check_deltas stderr -gt 0
- '
- 
- test_expect_success 'unpack with REF_DELTA' '
- 	check_unpack test-2-${packname_2}
- '
- 
- test_expect_success 'pack with OFS_DELTA' '
--	packname_3=$(git pack-objects --delta-base-offset test-3 <obj-list)
-+	packname_3=$(git pack-objects --progress --delta-base-offset test-3 \
-+			<obj-list 2>stderr) &&
-+	check_deltas stderr -gt 0
- '
- 
- test_expect_success 'unpack with OFS_DELTA' '
++'
++
+ test_done
 -- 
 2.31.1.875.g5dccece0aa
 
