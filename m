@@ -2,135 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9DF0DC433ED
-	for <git@archiver.kernel.org>; Sat,  1 May 2021 02:01:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FB4EC433ED
+	for <git@archiver.kernel.org>; Sat,  1 May 2021 06:40:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6CE1761407
-	for <git@archiver.kernel.org>; Sat,  1 May 2021 02:01:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 50AC3613ED
+	for <git@archiver.kernel.org>; Sat,  1 May 2021 06:40:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231416AbhEACCQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Apr 2021 22:02:16 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:45324 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S230298AbhEACCP (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 30 Apr 2021 22:02:15 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E15F66041F;
-        Sat,  1 May 2021 02:00:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1619834455;
-        bh=h5NTJLcehVy6BwToOKnDtzs+/mCENWHaUTS3r6b/5JY=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=vAgk9knEZqJwhtCbqk8D5cS1jHDmfozS43wnR1OAhh3nDn8/dXQerEtHfQ6phLX1z
-         2HI3dHjzu06eidq6jAQcWd8ynocB24cy/Dpql8sfx8u4dD03Vs26cAxIymyZSE3Xdw
-         NzZtBQDfkdyqHQaL4qHT7VVZhbwpBfcoXb1eUsHpTCQI92eYyPL1SwsNrwuNmMMADj
-         QIk3RW3SrT5sp3GyfJybpAx/Dxnawvc5rwJ+MWjBjx3uupECbdfuLASIFRJpxjneue
-         TpRsd+u63SBGSuT/ykTUwaPkr1VIlTCPrNlPvdAtedmk2pw+2GtdEGY/TRhFHPdWZV
-         6ISXoTmEOifAJ/IQ58wz7yLSTRaFwbRdac0ll1mxUtGm18JrcQlft//wh8e3UqMfuh
-         t1XcOvaxHVlARjMJ+C3zxrzgin/Z0lRdNn1Q+f8ACo78/3sqX7YWqsUrtUEiSP4m9O
-         ZAs24efvUFRcYzgffZPF7oiqXByr7BrA2t7aX2bGvha2IZo9z1U
-Date:   Sat, 1 May 2021 02:00:49 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
-        me@ttaylorr.com, avarab@gmail.com, christian.couder@gmail.com,
-        johannes.schindelin@gmx.de, jrnieder@gmail.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH] urlmatch: do not allow passwords in URLs by default
-Message-ID: <YIy2UZWeNiWfa1jp@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
-        me@ttaylorr.com, avarab@gmail.com, christian.couder@gmail.com,
-        johannes.schindelin@gmx.de, jrnieder@gmail.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.945.git.1619807844627.gitgitgadget@gmail.com>
+        id S229517AbhEAGk5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 1 May 2021 02:40:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32946 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229505AbhEAGk4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 May 2021 02:40:56 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16EF0C06174A
+        for <git@vger.kernel.org>; Fri, 30 Apr 2021 23:40:06 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id l4so365039ejc.10
+        for <git@vger.kernel.org>; Fri, 30 Apr 2021 23:40:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=FLRzjl6YenvmtWBWFOZJJEKRN0h2uDDAJ16rmFsymoQ=;
+        b=guLHsuEJKTuivBX//ribc38MXczzDDMRJgu5WVM35uuWTe7m5AS6+J13eD4wixa4gF
+         hsDFa+oftx5Eju4XXeAgIvulZEYB4VsEbespQR2o8un+18FPJEeLcsfX2Xa1JCItIhc8
+         7UfKY+5CREvm788dnj34XwTOKzC6DRs9N+xXwPPRpLmG4pECICAKvbnneVEgretiRjIP
+         Y7WfviI/sEJzgWi1OULOsN6Vc7TyjK0U8S2o0UoTZv+NTWqhf7Lguw60RP6URf0LfNYA
+         wcTeAH1t8LffNOMhInUgKoAW+kJ9MAZNEHc7XcthYCUFhaur3rkGa5rW/Rngyd7O/pxe
+         kD7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=FLRzjl6YenvmtWBWFOZJJEKRN0h2uDDAJ16rmFsymoQ=;
+        b=S/DZMwW0QlwTYURDwDrTq25s/ds+QsQsZOKOTBxd/jF5JFosirq73D9JP8iNEMyb3c
+         1B9BAkwb7FtxQme/LNrK69+V1wrIpKR0iY7uGKuBvnn7pEoMcnEemZzOkDV2HiK14cle
+         JoIRkKV8TFyZydJRFuC/iORFFO6JlvtgC61k2oN31ogMDvfe90GazZeXdl4kI9+9BxMy
+         2JuLgfXYQBMXK+bWhvbiYErHycgHjSl/G9DmY7/s51L21Sn5n721ySthw6CBZEiDxMEI
+         LLHHfzus238n/3v81eFeL1aDxgxEbVEPXl8xaQE0eE2jznmOhdZubquN6Yn25zhe4h2n
+         41Fg==
+X-Gm-Message-State: AOAM530mkYY+dvmzLd4EvrPg516eNgb9I4bNHM0CTL471b7hmwE3nKKf
+        Y6biEkgBKA5RCZaAMmGpQGAnmXJg8J5RE1ELyA8=
+X-Google-Smtp-Source: ABdhPJwWvsvSUE++8GX+iHF94RO+3osT6/JgSVIO8OMpQ0aoUWWZe/5ez3LztwrH1LecPeeN5NlyHDIOaZs59XLwVM8=
+X-Received: by 2002:a17:906:18e1:: with SMTP id e1mr7752884ejf.341.1619851204605;
+ Fri, 30 Apr 2021 23:40:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="kcBThRu/4aP3hzLc"
-Content-Disposition: inline
+References: <pull.945.git.1619807844627.gitgitgadget@gmail.com>
 In-Reply-To: <pull.945.git.1619807844627.gitgitgadget@gmail.com>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sat, 1 May 2021 08:39:53 +0200
+Message-ID: <CAP8UFD1Wm2e7Q3XY346-fFWMhdGHV_1Kp=wo8cqsx71j7Sg-dQ@mail.gmail.com>
+Subject: Re: [PATCH] urlmatch: do not allow passwords in URLs by default
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Apr 30, 2021 at 8:37 PM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> From: Derrick Stolee <dstolee@microsoft.com>
+>
+> Git allows URLs of the following pattern:
+>
+>   https://username:password@domain/route
 
---kcBThRu/4aP3hzLc
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+[...]
 
-On 2021-04-30 at 18:37:24, Derrick Stolee via GitGitGadget wrote:
-> Create a new config option, core.allowUsernamePasswordUrls, which is
-> disabled by default. If Git attempts to parse a password from a URL in
-> this form, it will die() if this config is not enabled. This affects a
-> few test scripts, but enabling the config in those places is relatively
-> simple.
+> Some Git hosting providers are working to completely drop
+> username/password credential strategies, which will make URLs of this
+> form stop working. However, that requires certain changes to credential
+> managers that need to be released and sufficiently adopted before making
+> such a server-side change.
+>
+> In the meantime, it might be helpful to alert users that they are doing
+> something insecure with these URLs.
 
-Let's call this http.allowUsernamePasswordURLs (or
-http.allowCredentialsInURL) because this is ultimately about HTTP and
-HTTPS (and maybe FTP if we still support that, which I certainly hope we
-do not).  SSH doesn't have URLs and won't read a password from either
-the URL or a credential helper, since OpenSSH won't read a password from
-anything but a terminal (which is secure, but occasionally irritating).
+Another helpful thing to do might be to add --user and maybe
+--password options to some commands like 'clone', 'fetch', 'remote
+add', etc.
 
-> This will cause a significant change in behavior for users who rely upon
-> this username:password pattern. The error message describes the config
-> that they must enable to continue working with these URLs. This has a
-> significant chance of breaking some automated workflows that use URLs in
-> this fashion, but even those workflows would be better off using a
-> different mechanism for credentials.
+I think historically we considered that authentication wasn't Git's
+responsibility. If we now think it should be concerned about this,
+then --user and --password options might be a good way to start taking
+responsibility.
 
-I will admit to using this pattern in a test I was writing just this
-week.  I ultimately switched to an environment-based credential helper
-(=C3=A0 la FAQ) in my test, but I think automated tests and other situations
-where the credentials don't matter are really the only cases where this
-is okay.  I do think we will break some systems as a result, especially
-in situations where users cannot otherwise specify credentials (e.g., a
-SaaS offering which clones your repository to provide some
-functionality).
+For example `git clone --user XXX --password YYY
+https://git.example.com/git/git.git` could use an HTTP header to send
+the credentials, and then after the clone maybe (if a terminal is
+used) ask if the user would like to save the credentials using a
+credential manager.
 
-So I am a bit torn about this.  On one hand, we should really encourage
-much more secure options whenever possible and I'm glad this does this,
-but on the other hand, there are some useful cases where this is
-unobjectionable or at least the least terrible option and the config
-option may be a problem.  Don't let my doubts hold up this series if
-everyone else is for it, though.  It's definitely an improvement in
-security.
+I think this could be both as easy, or even easier, to use than an URL
+with credentials and more secure. We could also make things more
+secure over time by suggesting better credential managers as they
+improve.
 
-It is my intention (in my copious free time) to adjust credential
-helpers to support arbitrary auth schemes (e.g., Bearer).  At that
-point, I plan to deprecate support for Authorization extra headers.  In
-that case, because the user is guaranteed to have the opportunity to
-edit the config, they are guaranteed to have credential helper support
-and therefore there are no use cases we're excluding.
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
+Also I wonder if on Linux a credential manager could encrypt HTTP
+credentials and store them locally using the user's private ssh key if
+there is one.
 
---kcBThRu/4aP3hzLc
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.27 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYIy2UAAKCRB8DEliiIei
-gXc+AP4gwwdj3ooVUkAkFeC5Ia3/hNkIXSgxLcO9obuKwfvNPwEA4lIUVY5+CdVw
-8s7Bq5ZEb0epVbt3oKgsGjDHqFfR0QU=
-=jnFi
------END PGP SIGNATURE-----
-
---kcBThRu/4aP3hzLc--
+Thanks,
+Christian.
