@@ -4,61 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7415DC433B4
-	for <git@archiver.kernel.org>; Sat,  1 May 2021 17:06:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D037CC433ED
+	for <git@archiver.kernel.org>; Sat,  1 May 2021 17:08:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 41BFD610A6
-	for <git@archiver.kernel.org>; Sat,  1 May 2021 17:06:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A1CFC610A6
+	for <git@archiver.kernel.org>; Sat,  1 May 2021 17:08:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230522AbhEARHh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 1 May 2021 13:07:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54530 "EHLO
+        id S231415AbhEARJK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 1 May 2021 13:09:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54866 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230195AbhEARHh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 May 2021 13:07:37 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0372DC06174A
-        for <git@vger.kernel.org>; Sat,  1 May 2021 10:06:45 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id a4so1741203ejk.1
-        for <git@vger.kernel.org>; Sat, 01 May 2021 10:06:45 -0700 (PDT)
+        with ESMTP id S230195AbhEARJK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 May 2021 13:09:10 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1669C06174A
+        for <git@vger.kernel.org>; Sat,  1 May 2021 10:08:19 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id t4so1771064ejo.0
+        for <git@vger.kernel.org>; Sat, 01 May 2021 10:08:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=o/Bj0BeGGkQEzLQ01qqi2UMcvCS1i+cSXndsrUyBU+s=;
-        b=oWYp1kK2538gVORroP9NlWN+mEU7c/8TEHgs7RuEQSVwzM5d1DHvb+dJXdJ+SDdXpx
-         ABS90Bf+i/wPKK4wovaFnzOG/RfXRkAoOgMVDY420hPCEzY/qA2M/tVRc7iMyiqaioNF
-         EWRp/kCY1bHw6FgAlaoyoTodpTUHDHLWZjVrmpRdijE3nwsyliOwMIMc42mNXQk0E9cv
-         yAR3SBkMs1rIMfFtff9qwi2p8bmZHtpwJCrJ2IH+IU5S6pHnsbnDV2wHZHwZiqz1qUv2
-         RTVDS0AGpLVzwCcsxFwtzJXhMhsuPm9AucHTV5tLalbU1u4ATk7BEnJA/rE8TjMrXmcM
-         ttmA==
+        bh=xSx0e9zuPG+9mIefLX+8QIpCBrSuDKmIa4Lrmk5Ea2k=;
+        b=GNjOeH6sbNT6RcLOY54eYDIvV9P3Wv9HKw9sXo3tlaj4WWa5zJJXCd6CPungcT+bBW
+         TafRtUWw/O3EsG+BBUkhA7XOrhIrofvpqLxuJqhzjUY32STwD5MNUVbrYjSimvRTLMJB
+         pxt6ejQ22/d3kz8mlHsnOgc0a3BH7G0P5Q0LEW5FdUw7jSinC9Q+aJGHnifdPAMyu1XA
+         dnH1pvz1WefMCExMtYKpepUCD9NtKZZdePomMbhQvh/OEIs431E14DvT/bDxAzeMXEd/
+         wFZRgF5G2UfsSlAYmiZ6XDIyHTcycM3kammHhrmeEejiub5mm2CPkeMYALGw4Bz5jevs
+         bL2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=o/Bj0BeGGkQEzLQ01qqi2UMcvCS1i+cSXndsrUyBU+s=;
-        b=GGdpnuxWAfNI0mNWX3eMCZ1/X59bsEIzy18ROVYimWKkYR/0+2rBsXmOB3PMItQD11
-         ol8BL6q/O5CqWnZ/LzHdftggKkqr9Di/kbGn0YiCpNB5XvvTZGlcVoAVe0UCHBzoptv0
-         iQ2NbJzij704nyZPEGF2iGwCemf1QzJmaUk1tM0anJosLFwyUP+y1EZZLjmur69MfhCs
-         AXd0eahHcCn52RXL3/pNIK+Nig+LNCBahbvrq39ib4guY2ctO1E3fEcLrSTy/9VLcpZL
-         v8nce8cApwT28RqL5eFMJc6bB+smEGJl0mDYgzcyLD/C33EO1iCiOOxCxUDszuOfZ+l4
-         QsBw==
-X-Gm-Message-State: AOAM533IdljmUc+T1pC8l0Q59s7aPr70bih2NRMm8VEPNIUNwOmEzRDC
-        2pMVLyRSuA1VlHN0R7Qq9AxmCffnVrZEAiXfdUk=
-X-Google-Smtp-Source: ABdhPJxMXfU043fbV1qTHbiumSDIVeMAwxPHy65DTRq2PEOrLaj2GfzEzx7WGgvvFlZYm8T9jsJkwY+eoNw+YqG39Wg=
-X-Received: by 2002:a17:906:18e1:: with SMTP id e1mr9413581ejf.341.1619888802655;
- Sat, 01 May 2021 10:06:42 -0700 (PDT)
+        bh=xSx0e9zuPG+9mIefLX+8QIpCBrSuDKmIa4Lrmk5Ea2k=;
+        b=WzNo1ruZIO01sHh7qYQ9Se/u4/O7AQxGGeePzC2//9wo2OfEspXxo4fXaR8c70QyEh
+         R22U5S+fRiu9Fc/eridt+a30VIUCHKn39AbbH3qYMY8neYHw38LFMLRHjnMvZixwF/qQ
+         p6eYpxikSUkA0AzN+ZzUZIbGteUwtowEcT9zrUg3lv374k7kCxoOMUckb36CjxlW3edn
+         u7HJbzlWnVU3+I9ckBlJZiec5eEXG9gsMlM51g2x/q9C+oiUibCfz1voVthGXMUFZ+2R
+         Ak8xV9mOVCuJP4dxL1KLFwcpIaz05QgxUP9MsuRVfh2QUHiq0/K1m/jNvhXDFxzD54Tb
+         jxsw==
+X-Gm-Message-State: AOAM5313qjpI7mNuACyydqyKXhYj/WUVd8JKryAyDDU9GXeZp0uasxtG
+        ewT2cYOTRaIYiJFBtXdcDFrZGrky8xX2AL6W8a4=
+X-Google-Smtp-Source: ABdhPJxmMXfVjGfx9zx9wnXn9bFVfbd2n80atfuYcRbc8jIyOqgVKB6AqS4IuA6/wfwcfYXAveUOEUeq2xvgx6YVBhY=
+X-Received: by 2002:a17:906:a295:: with SMTP id i21mr9541620ejz.160.1619888898659;
+ Sat, 01 May 2021 10:08:18 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover.1619818517.git.matheus.bernardino@usp.br> <f870040bfb3e73ee8cd27352b0acc65bb54be560.1619818517.git.matheus.bernardino@usp.br>
-In-Reply-To: <f870040bfb3e73ee8cd27352b0acc65bb54be560.1619818517.git.matheus.bernardino@usp.br>
+References: <cover.1619818517.git.matheus.bernardino@usp.br> <e2d82c4337dc002d7296454c59d4006c3bb43c27.1619818517.git.matheus.bernardino@usp.br>
+In-Reply-To: <e2d82c4337dc002d7296454c59d4006c3bb43c27.1619818517.git.matheus.bernardino@usp.br>
 From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sat, 1 May 2021 19:06:31 +0200
-Message-ID: <CAP8UFD1dz=u-nXyxSKArP-fAiX6mq3FV+oiiKCHCqbWMMf4TWw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/8] make_transient_cache_entry(): optionally alloc
- from mem_pool
+Date:   Sat, 1 May 2021 19:08:07 +0200
+Message-ID: <CAP8UFD16N3MiYawrRLCxsrYuo4KkvD3SS5F4UqyEF37j4T9yVA@mail.gmail.com>
+Subject: Re: [PATCH v2 2/8] builtin/checkout.c: complete parallel checkout support
 To:     Matheus Tavares <matheus.bernardino@usp.br>
 Cc:     git <git@vger.kernel.org>, Jeff Hostetler <git@jeffhostetler.com>,
         Derrick Stolee <stolee@gmail.com>
@@ -67,24 +66,24 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->  struct cache_entry *make_transient_cache_entry(unsigned int mode,
->                                                const struct object_id *oid,
->                                                const char *path,
-> -                                              int stage);
-> +                                              int stage, struct mem_pool *mp);
+On Fri, Apr 30, 2021 at 11:40 PM Matheus Tavares
+<matheus.bernardino@usp.br> wrote:
+>
+> Pathspec-limited checkouts (like `git checkout *.txt`) are performed by
+> a code path that doesn't yet support parallel checkout because it calls
+> checkout_entry() directly, instead of unpack_trees(). Let's add parallel
+> checkout support for this code path too.
+>
+> Note: the transient cache entries allocated in checkout_merged() are now
 
-It's a bit strange that `int stage` isn't on its own line here, as
-other parameters are. And if line length was the issue, it looks like
-it could have been on the same line as `const char *path`.
+s/Note: the/The/
 
-> -struct cache_entry *make_transient_cache_entry(unsigned int mode, const struct object_id *oid,
-> -                                              const char *path, int stage)
-> +struct cache_entry *make_transient_cache_entry(unsigned int mode,
-> +                                              const struct object_id *oid,
-> +                                              const char *path, int stage,
+> allocated in a mem_pool which is only discarded after parallel checkout
+> finishes. This is done because the entries need to be valid when
+> run_parallel_checkout() is called.
 
-Here also, it's a bit strange that `int stage` isn't on its own line,
-as it looks like you want  to put others parameters on their own line.
-And this is not consistent with the above declaration.
+> -static int checkout_merged(int pos, const struct checkout *state, int *nr_checkouts)
+> +static int checkout_merged(int pos, const struct checkout *state,
+> +                          int *nr_checkouts, struct mem_pool *ce_mem_pool)
 
-> +                                              struct mem_pool *mp)
+For consistency with the previous patch, maybe: s/ce_mem_pool/ce_mp/
