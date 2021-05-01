@@ -2,135 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67889C433ED
-	for <git@archiver.kernel.org>; Sat,  1 May 2021 15:43:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7415DC433B4
+	for <git@archiver.kernel.org>; Sat,  1 May 2021 17:06:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3FDFB61477
-	for <git@archiver.kernel.org>; Sat,  1 May 2021 15:43:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 41BFD610A6
+	for <git@archiver.kernel.org>; Sat,  1 May 2021 17:06:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231670AbhEAPoB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 1 May 2021 11:44:01 -0400
-Received: from cloud.peff.net ([104.130.231.41]:42154 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230450AbhEAPoA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 May 2021 11:44:00 -0400
-Received: (qmail 26667 invoked by uid 109); 1 May 2021 15:43:10 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 01 May 2021 15:43:10 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10899 invoked by uid 111); 1 May 2021 15:43:10 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 01 May 2021 11:43:10 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Sat, 1 May 2021 11:43:09 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Subject: [PATCH 9/9] docs: document symlink restrictions for dot-files
-Message-ID: <YI13DTkOpDRP4YGa@coredump.intra.peff.net>
-References: <YI12hK4X/gfl3u29@coredump.intra.peff.net>
+        id S230522AbhEARHh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 1 May 2021 13:07:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54530 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230195AbhEARHh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 May 2021 13:07:37 -0400
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0372DC06174A
+        for <git@vger.kernel.org>; Sat,  1 May 2021 10:06:45 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id a4so1741203ejk.1
+        for <git@vger.kernel.org>; Sat, 01 May 2021 10:06:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=o/Bj0BeGGkQEzLQ01qqi2UMcvCS1i+cSXndsrUyBU+s=;
+        b=oWYp1kK2538gVORroP9NlWN+mEU7c/8TEHgs7RuEQSVwzM5d1DHvb+dJXdJ+SDdXpx
+         ABS90Bf+i/wPKK4wovaFnzOG/RfXRkAoOgMVDY420hPCEzY/qA2M/tVRc7iMyiqaioNF
+         EWRp/kCY1bHw6FgAlaoyoTodpTUHDHLWZjVrmpRdijE3nwsyliOwMIMc42mNXQk0E9cv
+         yAR3SBkMs1rIMfFtff9qwi2p8bmZHtpwJCrJ2IH+IU5S6pHnsbnDV2wHZHwZiqz1qUv2
+         RTVDS0AGpLVzwCcsxFwtzJXhMhsuPm9AucHTV5tLalbU1u4ATk7BEnJA/rE8TjMrXmcM
+         ttmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=o/Bj0BeGGkQEzLQ01qqi2UMcvCS1i+cSXndsrUyBU+s=;
+        b=GGdpnuxWAfNI0mNWX3eMCZ1/X59bsEIzy18ROVYimWKkYR/0+2rBsXmOB3PMItQD11
+         ol8BL6q/O5CqWnZ/LzHdftggKkqr9Di/kbGn0YiCpNB5XvvTZGlcVoAVe0UCHBzoptv0
+         iQ2NbJzij704nyZPEGF2iGwCemf1QzJmaUk1tM0anJosLFwyUP+y1EZZLjmur69MfhCs
+         AXd0eahHcCn52RXL3/pNIK+Nig+LNCBahbvrq39ib4guY2ctO1E3fEcLrSTy/9VLcpZL
+         v8nce8cApwT28RqL5eFMJc6bB+smEGJl0mDYgzcyLD/C33EO1iCiOOxCxUDszuOfZ+l4
+         QsBw==
+X-Gm-Message-State: AOAM533IdljmUc+T1pC8l0Q59s7aPr70bih2NRMm8VEPNIUNwOmEzRDC
+        2pMVLyRSuA1VlHN0R7Qq9AxmCffnVrZEAiXfdUk=
+X-Google-Smtp-Source: ABdhPJxMXfU043fbV1qTHbiumSDIVeMAwxPHy65DTRq2PEOrLaj2GfzEzx7WGgvvFlZYm8T9jsJkwY+eoNw+YqG39Wg=
+X-Received: by 2002:a17:906:18e1:: with SMTP id e1mr9413581ejf.341.1619888802655;
+ Sat, 01 May 2021 10:06:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YI12hK4X/gfl3u29@coredump.intra.peff.net>
+References: <cover.1619818517.git.matheus.bernardino@usp.br> <f870040bfb3e73ee8cd27352b0acc65bb54be560.1619818517.git.matheus.bernardino@usp.br>
+In-Reply-To: <f870040bfb3e73ee8cd27352b0acc65bb54be560.1619818517.git.matheus.bernardino@usp.br>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sat, 1 May 2021 19:06:31 +0200
+Message-ID: <CAP8UFD1dz=u-nXyxSKArP-fAiX6mq3FV+oiiKCHCqbWMMf4TWw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/8] make_transient_cache_entry(): optionally alloc
+ from mem_pool
+To:     Matheus Tavares <matheus.bernardino@usp.br>
+Cc:     git <git@vger.kernel.org>, Jeff Hostetler <git@jeffhostetler.com>,
+        Derrick Stolee <stolee@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We stopped allowing symlinks for .gitmodules files in 10ecfa7649
-(verify_path: disallow symlinks in .gitmodules, 2018-05-04), and we
-stopped following symlinks for .gitattributes, .gitignore, and .mailmap
-in the commits from 204333b015 (Merge branch 'jk/open-dotgitx-with-nofollow',
-2021-03-22). The reasons are discussed in detail there, but we never
-adjusted the documentation to let users know.
+>  struct cache_entry *make_transient_cache_entry(unsigned int mode,
+>                                                const struct object_id *oid,
+>                                                const char *path,
+> -                                              int stage);
+> +                                              int stage, struct mem_pool *mp);
 
-This hasn't been a big deal since the point is that such setups were
-mildly broken and thought to be unusual anyway. But it certainly doesn't
-hurt to be clear and explicit about it.
+It's a bit strange that `int stage` isn't on its own line here, as
+other parameters are. And if line length was the issue, it looks like
+it could have been on the same line as `const char *path`.
 
-Suggested-by: Philip Oakley <philipoakley@iee.email>
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/gitattributes.txt | 7 +++++++
- Documentation/gitignore.txt     | 5 +++++
- Documentation/gitmailmap.txt    | 7 +++++++
- Documentation/gitmodules.txt    | 8 ++++++++
- 4 files changed, 27 insertions(+)
+> -struct cache_entry *make_transient_cache_entry(unsigned int mode, const struct object_id *oid,
+> -                                              const char *path, int stage)
+> +struct cache_entry *make_transient_cache_entry(unsigned int mode,
+> +                                              const struct object_id *oid,
+> +                                              const char *path, int stage,
 
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-index cfcfa800c2..dfda94d996 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -1247,6 +1247,13 @@ to:
- [attr]binary -diff -merge -text
- ------------
- 
-+NOTES
-+-----
-+
-+Note that Git does not follow symbolic links when accessing a
-+`.gitattributes` file in the working tree. This keeps behavior
-+consistent when the file is accessed from the index or a tree versus
-+from the filesystem.
- 
- EXAMPLES
- --------
-diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
-index 5751603b13..4b6fd8d2cd 100644
---- a/Documentation/gitignore.txt
-+++ b/Documentation/gitignore.txt
-@@ -149,6 +149,11 @@ not tracked by Git remain untracked.
- To stop tracking a file that is currently tracked, use
- 'git rm --cached'.
- 
-+Note that Git does not follow symbolic links when accessing a
-+`.gitignore` file in the working tree. This keeps behavior consistent
-+when the file is accessed from the index or a tree versus from the
-+filesystem.
-+
- EXAMPLES
- --------
- 
-diff --git a/Documentation/gitmailmap.txt b/Documentation/gitmailmap.txt
-index 3fb39f801f..eb65eeb37f 100644
---- a/Documentation/gitmailmap.txt
-+++ b/Documentation/gitmailmap.txt
-@@ -55,6 +55,13 @@ this would also match the 'Commit Name <commit&#64;email.xx>' above:
- 	Proper Name <proper@email.xx> CoMmIt NaMe <CoMmIt@EmAiL.xX>
- --
- 
-+NOTES
-+-----
-+
-+Note that Git does not follow symbolic links when accessing a `.mailmap`
-+file in the working tree. This keeps behavior consistent when the file
-+is accessed from the index or a tree versus from the filesystem.
-+
- EXAMPLES
- --------
- 
-diff --git a/Documentation/gitmodules.txt b/Documentation/gitmodules.txt
-index 8e333dde1b..ca1c42b405 100644
---- a/Documentation/gitmodules.txt
-+++ b/Documentation/gitmodules.txt
-@@ -98,6 +98,14 @@ submodule.<name>.shallow::
- 	shallow clone (with a history depth of 1) unless the user explicitly
- 	asks for a non-shallow clone.
- 
-+NOTES
-+-----
-+
-+Note that Git does not allow the `.gitmodules` file within a working
-+tree to be a symbolic link, and will refuse to check out such a tree
-+entry. This keeps behavior consistent when the file is accessed from the
-+index or a tree versus from the filesystem, and helps Git reliably
-+enforce security checks of the file contents.
- 
- EXAMPLES
- --------
--- 
-2.31.1.875.g5dccece0aa
+Here also, it's a bit strange that `int stage` isn't on its own line,
+as it looks like you want  to put others parameters on their own line.
+And this is not consistent with the above declaration.
+
+> +                                              struct mem_pool *mp)
