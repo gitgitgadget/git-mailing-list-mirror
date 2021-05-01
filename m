@@ -7,87 +7,85 @@ X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A5C4FC433B4
-	for <git@archiver.kernel.org>; Sat,  1 May 2021 14:04:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EDA35C433B4
+	for <git@archiver.kernel.org>; Sat,  1 May 2021 14:13:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7AF1E61490
-	for <git@archiver.kernel.org>; Sat,  1 May 2021 14:04:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BBF6F61490
+	for <git@archiver.kernel.org>; Sat,  1 May 2021 14:13:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230014AbhEAOF0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 1 May 2021 10:05:26 -0400
-Received: from cloud.peff.net ([104.130.231.41]:42052 "EHLO cloud.peff.net"
+        id S230051AbhEAOOT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 1 May 2021 10:14:19 -0400
+Received: from cloud.peff.net ([104.130.231.41]:42058 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229873AbhEAOFZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 May 2021 10:05:25 -0400
-Received: (qmail 26409 invoked by uid 109); 1 May 2021 14:04:35 -0000
+        id S229785AbhEAOOS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 May 2021 10:14:18 -0400
+Received: (qmail 26443 invoked by uid 109); 1 May 2021 14:13:25 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 01 May 2021 14:04:35 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 01 May 2021 14:13:25 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10087 invoked by uid 111); 1 May 2021 14:04:35 -0000
+Received: (qmail 10251 invoked by uid 111); 1 May 2021 14:13:25 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 01 May 2021 10:04:35 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 01 May 2021 10:13:25 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Sat, 1 May 2021 10:04:34 -0400
+Date:   Sat, 1 May 2021 10:13:24 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Cc:     Yiyuan guo <yguoaz@gmail.com>
-Subject: [PATCH 5/5] pack-objects: clamp negative depth to 0
-Message-ID: <YI1f8jKReuE3LXVH@coredump.intra.peff.net>
-References: <YI1fbERSuS7Y3LKh@coredump.intra.peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Wang Yugui <wangyugui@e16-tech.com>
+Subject: [PATCH v2] docs/format-patch: mention handling of merges
+Message-ID: <YI1iBGGW6ySxNDRH@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <YI1fbERSuS7Y3LKh@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A negative delta depth makes no sense, and the code is not prepared to
-handle it. If passed "--depth=-1" on the command line, then this line
-from break_delta_chains():
-
-	cur->depth = (total_depth--) % (depth + 1);
-
-triggers a divide-by-zero. This is undefined behavior according to the C
-standard, but on POSIX systems results in SIGFPE killing the process.
-This is certainly one way to inform the use that the command was
-invalid, but it's a bit friendlier to just treat it as "don't allow any
-deltas", which we already do for --depth=0.
+Format-patch doesn't have a way to format merges in a way that can be
+applied by git-am (or any other tool), and so it just omits them.
+However, this may be a surprising implication for users who are not well
+versed in how the tool works. Let's add a note to the documentation
+making this more clear.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/pack-objects.c      | 2 ++
- t/t5316-pack-delta-depth.sh | 7 +++++++
- 2 files changed, 9 insertions(+)
+This is a re-work of the patch from:
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index ea7a5b3ba5..da5e0700f9 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -3861,6 +3861,8 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 	if (pack_to_stdout != !base_name || argc)
- 		usage_with_options(pack_usage, pack_objects_options);
+  https://lore.kernel.org/git/YDQ5YIeXGiR5nvLH@coredump.intra.peff.net/
+
+taking into account Junio's suggestion (and also rebased on top of
+28e29ee38b, which touches the same intro paragraph).
+
+ Documentation/git-format-patch.txt | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index 911da181a1..fe2f69d36e 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -36,7 +36,7 @@ SYNOPSIS
+ DESCRIPTION
+ -----------
  
-+	if (depth < 0)
-+		depth = 0;
- 	if (depth >= (1 << OE_DEPTH_BITS)) {
- 		warning(_("delta chain depth %d is too deep, forcing %d"),
- 			depth, (1 << OE_DEPTH_BITS) - 1);
-diff --git a/t/t5316-pack-delta-depth.sh b/t/t5316-pack-delta-depth.sh
-index 3e84df4137..759169d074 100755
---- a/t/t5316-pack-delta-depth.sh
-+++ b/t/t5316-pack-delta-depth.sh
-@@ -102,4 +102,11 @@ test_expect_success '--depth=0 disables deltas' '
- 	test_cmp expect actual
- '
+-Prepare each commit with its "patch" in
++Prepare each non-merge commit with its "patch" in
+ one "message" per commit, formatted to resemble a UNIX mailbox.
+ The output of this command is convenient for e-mail submission or
+ for use with 'git am'.
+@@ -740,6 +740,14 @@ use it only when you know the recipient uses Git to apply your patch.
+ $ git format-patch -3
+ ------------
  
-+test_expect_success 'negative depth disables deltas' '
-+	pack=$(git pack-objects --all --depth=-1 </dev/null pack) &&
-+	echo 0 >expect &&
-+	max_chain pack-$pack.pack >actual &&
-+	test_cmp expect actual
-+'
++CAVEATS
++-------
 +
- test_done
++Note that `format-patch` will omit merge commits from the output, even
++if they are part of the requested range. A simple "patch" does not
++include enough information for the receiving end to reproduce the same
++merge commit.
++
+ SEE ALSO
+ --------
+ linkgit:git-am[1], linkgit:git-send-email[1]
 -- 
 2.31.1.875.g5dccece0aa
