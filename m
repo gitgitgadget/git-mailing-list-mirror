@@ -7,31 +7,31 @@ X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E28B3C433ED
-	for <git@archiver.kernel.org>; Sat,  1 May 2021 15:42:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 71499C433B4
+	for <git@archiver.kernel.org>; Sat,  1 May 2021 15:42:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AC8D5614A7
-	for <git@archiver.kernel.org>; Sat,  1 May 2021 15:42:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4E7B461477
+	for <git@archiver.kernel.org>; Sat,  1 May 2021 15:42:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231517AbhEAPnC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 1 May 2021 11:43:02 -0400
-Received: from cloud.peff.net ([104.130.231.41]:42124 "EHLO cloud.peff.net"
+        id S231724AbhEAPnR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 1 May 2021 11:43:17 -0400
+Received: from cloud.peff.net ([104.130.231.41]:42130 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231416AbhEAPnA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 May 2021 11:43:00 -0400
-Received: (qmail 26639 invoked by uid 109); 1 May 2021 15:42:08 -0000
+        id S231416AbhEAPnR (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 May 2021 11:43:17 -0400
+Received: (qmail 26645 invoked by uid 109); 1 May 2021 15:42:26 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 01 May 2021 15:42:08 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 01 May 2021 15:42:26 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10816 invoked by uid 111); 1 May 2021 15:42:08 -0000
+Received: (qmail 10832 invoked by uid 111); 1 May 2021 15:42:26 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 01 May 2021 11:42:08 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 01 May 2021 11:42:26 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Sat, 1 May 2021 11:42:08 -0400
+Date:   Sat, 1 May 2021 11:42:25 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Subject: [PATCH 4/9] t7415: rename to expand scope
-Message-ID: <YI120ELAX6EZ4NgI@coredump.intra.peff.net>
+Subject: [PATCH 5/9] t7450: test verify_path() handling of gitmodules
+Message-ID: <YI124aZ1dbY5O67J@coredump.intra.peff.net>
 References: <YI12hK4X/gfl3u29@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -41,46 +41,62 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This script has already expanded beyond its original intent of ".. in
-submodule names" to include other malicious submodule bits. Let's update
-the name and description to reflect that, as well as the fact that we'll
-soon be adding similar tests for other dotfiles (.gitattributes, etc).
-We'll also renumber it to move it out of the group of submodule-specific
-tests.
+Commit 10ecfa7649 (verify_path: disallow symlinks in .gitmodules,
+2018-05-04) made it impossible to load a symlink .gitmodules file into
+the index. However, there are no tests of this behavior. Let's make sure
+this case is covered. We can easily reuse the test setup created by
+the matching b7b1fca175 (fsck: complain when .gitmodules is a symlink,
+2018-05-04).
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- ...submodule-names.sh => t7450-bad-git-dotfiles.sh} | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
- rename t/{t7415-submodule-names.sh => t7450-bad-git-dotfiles.sh} (95%)
+ t/t7450-bad-git-dotfiles.sh | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/t/t7415-submodule-names.sh b/t/t7450-bad-git-dotfiles.sh
-similarity index 95%
-rename from t/t7415-submodule-names.sh
-rename to t/t7450-bad-git-dotfiles.sh
-index 6a8cf3f47b..34d4dc6def 100755
---- a/t/t7415-submodule-names.sh
+diff --git a/t/t7450-bad-git-dotfiles.sh b/t/t7450-bad-git-dotfiles.sh
+index 34d4dc6def..c021d4e752 100755
+--- a/t/t7450-bad-git-dotfiles.sh
 +++ b/t/t7450-bad-git-dotfiles.sh
-@@ -1,9 +1,16 @@
- #!/bin/sh
- 
--test_description='check handling of .. in submodule names
-+test_description='check broken or malicious patterns in .git* files
- 
--Exercise the name-checking function on a variety of names, and then give a
--real-world setup that confirms we catch this in practice.
-+Such as:
-+
-+  - presence of .. in submodule names;
-+    Exercise the name-checking function on a variety of names, and then give a
-+    real-world setup that confirms we catch this in practice.
-+
-+  - nested submodule names
-+
-+  - symlinked .gitmodules, etc
+@@ -139,7 +139,7 @@ test_expect_success 'index-pack --strict works for non-repo pack' '
+ 	grep gitmodulesName output
  '
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-pack.sh
+ 
+-test_expect_success 'fsck detects symlinked .gitmodules file' '
++test_expect_success 'set up repo with symlinked .gitmodules file' '
+ 	git init symlink &&
+ 	(
+ 		cd symlink &&
+@@ -155,8 +155,14 @@ test_expect_success 'fsck detects symlinked .gitmodules file' '
+ 		{
+ 			printf "100644 blob $content\t$tricky\n" &&
+ 			printf "120000 blob $target\t.gitmodules\n"
+-		} >bad-tree &&
+-		tree=$(git mktree <bad-tree) &&
++		} >bad-tree
++	) &&
++	tree=$(git -C symlink mktree <symlink/bad-tree)
++'
++
++test_expect_success 'fsck detects symlinked .gitmodules file' '
++	(
++		cd symlink &&
+ 
+ 		# Check not only that we fail, but that it is due to the
+ 		# symlink detector
+@@ -165,6 +171,13 @@ test_expect_success 'fsck detects symlinked .gitmodules file' '
+ 	)
+ '
+ 
++test_expect_success 'refuse to load symlinked .gitmodules into index' '
++	test_must_fail git -C symlink read-tree $tree 2>err &&
++	test_i18ngrep "invalid path.*gitmodules" err &&
++	git -C symlink ls-files >out &&
++	test_must_be_empty out
++'
++
+ test_expect_success 'fsck detects non-blob .gitmodules' '
+ 	git init non-blob &&
+ 	(
 -- 
 2.31.1.875.g5dccece0aa
 
