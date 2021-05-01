@@ -7,31 +7,31 @@ X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0EF49C433B4
-	for <git@archiver.kernel.org>; Sat,  1 May 2021 15:41:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E28B3C433ED
+	for <git@archiver.kernel.org>; Sat,  1 May 2021 15:42:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DAC576102A
-	for <git@archiver.kernel.org>; Sat,  1 May 2021 15:41:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AC8D5614A7
+	for <git@archiver.kernel.org>; Sat,  1 May 2021 15:42:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231717AbhEAPmf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 1 May 2021 11:42:35 -0400
-Received: from cloud.peff.net ([104.130.231.41]:42118 "EHLO cloud.peff.net"
+        id S231517AbhEAPnC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 1 May 2021 11:43:02 -0400
+Received: from cloud.peff.net ([104.130.231.41]:42124 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230051AbhEAPme (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 May 2021 11:42:34 -0400
-Received: (qmail 26632 invoked by uid 109); 1 May 2021 15:41:44 -0000
+        id S231416AbhEAPnA (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 May 2021 11:43:00 -0400
+Received: (qmail 26639 invoked by uid 109); 1 May 2021 15:42:08 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 01 May 2021 15:41:44 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 01 May 2021 15:42:08 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10799 invoked by uid 111); 1 May 2021 15:41:44 -0000
+Received: (qmail 10816 invoked by uid 111); 1 May 2021 15:42:08 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 01 May 2021 11:41:44 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 01 May 2021 11:42:08 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Sat, 1 May 2021 11:41:43 -0400
+Date:   Sat, 1 May 2021 11:42:08 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Subject: [PATCH 3/9] fsck_tree(): wrap some long lines
-Message-ID: <YI12t5gzfzIxvZs3@coredump.intra.peff.net>
+Subject: [PATCH 4/9] t7415: rename to expand scope
+Message-ID: <YI120ELAX6EZ4NgI@coredump.intra.peff.net>
 References: <YI12hK4X/gfl3u29@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -41,98 +41,46 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Many calls to report() in fsck_tree() are kept on a single line and are
-quite long. Most were pretty big to begin with, but have gotten even
-longer over the years as we've added more parameters. Let's accept the
-churn of wrapping them in order to conform to our usual line limits.
+This script has already expanded beyond its original intent of ".. in
+submodule names" to include other malicious submodule bits. Let's update
+the name and description to reflect that, as well as the fact that we'll
+soon be adding similar tests for other dotfiles (.gitattributes, etc).
+We'll also renumber it to move it out of the group of submodule-specific
+tests.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- fsck.c | 48 ++++++++++++++++++++++++++++++++++++------------
- 1 file changed, 36 insertions(+), 12 deletions(-)
+ ...submodule-names.sh => t7450-bad-git-dotfiles.sh} | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
+ rename t/{t7415-submodule-names.sh => t7450-bad-git-dotfiles.sh} (95%)
 
-diff --git a/fsck.c b/fsck.c
-index dd31ed1413..db94817898 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -579,7 +579,9 @@ static int fsck_tree(const struct object_id *tree_oid,
- 	struct name_stack df_dup_candidates = { NULL };
+diff --git a/t/t7415-submodule-names.sh b/t/t7450-bad-git-dotfiles.sh
+similarity index 95%
+rename from t/t7415-submodule-names.sh
+rename to t/t7450-bad-git-dotfiles.sh
+index 6a8cf3f47b..34d4dc6def 100755
+--- a/t/t7415-submodule-names.sh
++++ b/t/t7450-bad-git-dotfiles.sh
+@@ -1,9 +1,16 @@
+ #!/bin/sh
  
- 	if (init_tree_desc_gently(&desc, buffer, size)) {
--		retval += report(options, tree_oid, OBJ_TREE, FSCK_MSG_BAD_TREE, "cannot be parsed as a tree");
-+		retval += report(options, tree_oid, OBJ_TREE,
-+				 FSCK_MSG_BAD_TREE,
-+				 "cannot be parsed as a tree");
- 		return retval;
- 	}
+-test_description='check handling of .. in submodule names
++test_description='check broken or malicious patterns in .git* files
  
-@@ -630,7 +632,9 @@ static int fsck_tree(const struct object_id *tree_oid,
- 		}
- 
- 		if (update_tree_entry_gently(&desc)) {
--			retval += report(options, tree_oid, OBJ_TREE, FSCK_MSG_BAD_TREE, "cannot be parsed as a tree");
-+			retval += report(options, tree_oid, OBJ_TREE,
-+					 FSCK_MSG_BAD_TREE,
-+					 "cannot be parsed as a tree");
- 			break;
- 		}
- 
-@@ -678,25 +682,45 @@ static int fsck_tree(const struct object_id *tree_oid,
- 	name_stack_clear(&df_dup_candidates);
- 
- 	if (has_null_sha1)
--		retval += report(options, tree_oid, OBJ_TREE, FSCK_MSG_NULL_SHA1, "contains entries pointing to null sha1");
-+		retval += report(options, tree_oid, OBJ_TREE,
-+				 FSCK_MSG_NULL_SHA1,
-+				 "contains entries pointing to null sha1");
- 	if (has_full_path)
--		retval += report(options, tree_oid, OBJ_TREE, FSCK_MSG_FULL_PATHNAME, "contains full pathnames");
-+		retval += report(options, tree_oid, OBJ_TREE,
-+				 FSCK_MSG_FULL_PATHNAME,
-+				 "contains full pathnames");
- 	if (has_empty_name)
--		retval += report(options, tree_oid, OBJ_TREE, FSCK_MSG_EMPTY_NAME, "contains empty pathname");
-+		retval += report(options, tree_oid, OBJ_TREE,
-+				 FSCK_MSG_EMPTY_NAME,
-+				 "contains empty pathname");
- 	if (has_dot)
--		retval += report(options, tree_oid, OBJ_TREE, FSCK_MSG_HAS_DOT, "contains '.'");
-+		retval += report(options, tree_oid, OBJ_TREE,
-+				 FSCK_MSG_HAS_DOT,
-+				 "contains '.'");
- 	if (has_dotdot)
--		retval += report(options, tree_oid, OBJ_TREE, FSCK_MSG_HAS_DOTDOT, "contains '..'");
-+		retval += report(options, tree_oid, OBJ_TREE,
-+				 FSCK_MSG_HAS_DOTDOT,
-+				 "contains '..'");
- 	if (has_dotgit)
--		retval += report(options, tree_oid, OBJ_TREE, FSCK_MSG_HAS_DOTGIT, "contains '.git'");
-+		retval += report(options, tree_oid, OBJ_TREE,
-+				 FSCK_MSG_HAS_DOTGIT,
-+				 "contains '.git'");
- 	if (has_zero_pad)
--		retval += report(options, tree_oid, OBJ_TREE, FSCK_MSG_ZERO_PADDED_FILEMODE, "contains zero-padded file modes");
-+		retval += report(options, tree_oid, OBJ_TREE,
-+				 FSCK_MSG_ZERO_PADDED_FILEMODE,
-+				 "contains zero-padded file modes");
- 	if (has_bad_modes)
--		retval += report(options, tree_oid, OBJ_TREE, FSCK_MSG_BAD_FILEMODE, "contains bad file modes");
-+		retval += report(options, tree_oid, OBJ_TREE,
-+				 FSCK_MSG_BAD_FILEMODE,
-+				 "contains bad file modes");
- 	if (has_dup_entries)
--		retval += report(options, tree_oid, OBJ_TREE, FSCK_MSG_DUPLICATE_ENTRIES, "contains duplicate file entries");
-+		retval += report(options, tree_oid, OBJ_TREE,
-+				 FSCK_MSG_DUPLICATE_ENTRIES,
-+				 "contains duplicate file entries");
- 	if (not_properly_sorted)
--		retval += report(options, tree_oid, OBJ_TREE, FSCK_MSG_TREE_NOT_SORTED, "not properly sorted");
-+		retval += report(options, tree_oid, OBJ_TREE,
-+				 FSCK_MSG_TREE_NOT_SORTED,
-+				 "not properly sorted");
- 	return retval;
- }
- 
+-Exercise the name-checking function on a variety of names, and then give a
+-real-world setup that confirms we catch this in practice.
++Such as:
++
++  - presence of .. in submodule names;
++    Exercise the name-checking function on a variety of names, and then give a
++    real-world setup that confirms we catch this in practice.
++
++  - nested submodule names
++
++  - symlinked .gitmodules, etc
+ '
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-pack.sh
 -- 
 2.31.1.875.g5dccece0aa
 
