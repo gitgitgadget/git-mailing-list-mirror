@@ -2,90 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2710EC433B4
-	for <git@archiver.kernel.org>; Sun,  2 May 2021 06:47:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 39418C433B4
+	for <git@archiver.kernel.org>; Sun,  2 May 2021 06:49:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EF03261358
-	for <git@archiver.kernel.org>; Sun,  2 May 2021 06:47:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1052B6135A
+	for <git@archiver.kernel.org>; Sun,  2 May 2021 06:49:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229621AbhEBGst (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 2 May 2021 02:48:49 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:54716 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229526AbhEBGss (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 May 2021 02:48:48 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A339F1346D0;
-        Sun,  2 May 2021 02:47:57 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=x9pdLrjhfPcl
-        KEvYUX5CUNah/V/2++B6q9JdtefFqms=; b=sp6hRWqJGYJCHL4FPaQqabSR8gEs
-        eF0OWbTXKal4DB+hgLDvgqbXwki6DLqx/d394C8ST4zb+7rEPirU62MqPj24cbAV
-        7vtPCXpQiJ8lBnAJtGUjfhOZ2hEELaF9idBj4jj/Opsg0NyOZ5qNbIF+mjouzgKi
-        iTqeu4azLDdKobE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8A1001346CF;
-        Sun,  2 May 2021 02:47:57 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 71E7F1346CD;
-        Sun,  2 May 2021 02:47:53 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: What's cooking in git.git (Apr 2021, #06; Thu, 29)
-References: <xmqqr1itfo41.fsf@gitster.g> <87im44xerh.fsf@evledraar.gmail.com>
-Date:   Sun, 02 May 2021 15:47:51 +0900
-In-Reply-To: <87im44xerh.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Fri, 30 Apr 2021 11:34:39 +0200")
-Message-ID: <xmqqeeepbpig.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S229673AbhEBGuV convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Sun, 2 May 2021 02:50:21 -0400
+Received: from mail-ed1-f48.google.com ([209.85.208.48]:34456 "EHLO
+        mail-ed1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229526AbhEBGuU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 May 2021 02:50:20 -0400
+Received: by mail-ed1-f48.google.com with SMTP id i3so2756481edt.1
+        for <git@vger.kernel.org>; Sat, 01 May 2021 23:49:28 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=khBKbs1fOHpGkNa+4R+wlaTUw9ewCA/IDyDpOi4AKK8=;
+        b=av24plG1i8hmEYUN9ZJNNmatRT5m7Esba0ennybtnRUJWRYrfnnjxynvJI28xND+//
+         j8eh6MlRdB71i9cfAZGe/dHXuQavzIGETlvbJym4boexOrOzQpenCt8Gs1zJ+7ixWSAT
+         V91QSogExI2ExO15tUsxgmXTVfgel2Kaz5rzj8NMO/XaQBFVHTkxxm9DqjSCR0X+NmoE
+         9JC722s/nGMPt2i2AOXsu32ENkabnMO8dinzvENq87nB7Y5Nl5SXqJNmEWcfByn8E/CX
+         3CS8NbRfDHdBCtKjoepgtL4u5OTIX1BneazfKalVhQp8C4S6WH13KB5QcBPEmh/NHKoL
+         iLyw==
+X-Gm-Message-State: AOAM532Yq31BrmjnWsyX1nZ6TpzP32DCTNMis6V3qgLwF3GIMVYfEKDx
+        qPSVKftBRV0QTAyA9EPKZYAafbA2wroK5brJtLoHSnHJ2QI=
+X-Google-Smtp-Source: ABdhPJy0/sIsPbajbxx6WIjdusZjFptBVqj9oQMlxl+pyfrXMX1je1oxcciNQ8Fjj2OV9TFtEZA4br5wFN4qfA6Kt28=
+X-Received: by 2002:a05:6402:145:: with SMTP id s5mr13989376edu.221.1619938167624;
+ Sat, 01 May 2021 23:49:27 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 51C8E7C6-AB12-11EB-AE97-D609E328BF65-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <20210501145220.2082670-1-lenaic@lhuard.fr> <81e77586-8e9a-44b8-bee6-94ecf1b60d12@gmail.com>
+In-Reply-To: <81e77586-8e9a-44b8-bee6-94ecf1b60d12@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sun, 2 May 2021 02:49:16 -0400
+Message-ID: <CAPig+cSwFwUbeyUZxs5mZ4GpFRqQ51C9xA1uD=VHQB==jkKj0Q@mail.gmail.com>
+Subject: Re: [PATCH] maintenance: use systemd timers on Linux
+To:     Bagas Sanjaya <bagasdotme@gmail.com>
+Cc:     =?UTF-8?B?TMOpbmHDr2MgSHVhcmQ=?= <lenaic@lhuard.fr>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
-
->> * ab/test-lib-updates (2021-04-29) 11 commits
->>  - test-lib: split up and deprecate test_create_repo()
->>  - test-lib: do not show advice about init.defaultBranch under --verbo=
-se
->>  - test-lib: reformat argument list in test_create_repo()
->>  - submodule tests: use symbolic-ref --short to discover branch name
->>  - test-lib functions: add --printf option to test_commit
->>  - describe tests: convert setup to use test_commit
->>  - test-lib functions: add an --annotated option to "test_commit"
->>  - test-lib-functions: document test_commit --no-tag
->>  - test-lib-functions: reword "test_commit --append" docs
->>  - test-lib tests: remove dead GIT_TEST_FRAMEWORK_SELFTEST variable
->>  - test-lib: bring $remove_trash out of retirement
->>  (this branch is used by ab/describe-tests-fix and ab/pickaxe-pcre2.)
->>
->>  Test clean-up.
->>
->>  Waiting for an Ack before merging them to 'next'.
+On Sun, May 2, 2021 at 1:28 AM Bagas Sanjaya <bagasdotme@gmail.com> wrote:
+> On 01/05/21 21.52, Lénaïc Huard wrote:
+> > The existing mechanism for scheduling background maintenance is done
+> > through cron. On Linux systems managed by systemd, systemd provides an
+> > alternative to schedule recurring tasks: systemd timers.
+> >
+> > The main motivations to implement systemd timers in addition to cron
+> > are:
+> > * cron is optional and Linux systems running systemd might not have it
+> >    installed.
 >
-> Is the ack a reply to
-> https://lore.kernel.org/git/xmqqo8dx7dv4.fsf@gitster.g/ (or here, I
-> suppose)?. Sorry about the in-flight hassle.
+> Supposed that I have Linux box with systemd and classical cron. Should
+> systemd timers be preferred over cron?
 
-No, what I meant was that v4 had review comments and v5 was done in
-response to that, so I wanted to make sure that reviewers are happy
-with the delta between v4 and v5 before taking v5 and declaring it
-good just by myself.
+The implementation in this patch unconditionally prefers `systemd`
+over `cron`. Whether that's a good idea is subject to question (as
+both brian and I mentioned in our reviews).
 
+> Nevertheless, because we are dealing with external dependency (systemd), it
+> should makes sense to enforce this dependency requirement when user choose to use
+> systemd timers so that users on non-systemd boxes (such as Gentoo with OpenRC)
+> don't see errors that forcing them to use systemd.
+
+If you scan through the patch itself, you will find that it is careful
+to choose the appropriate scheduler and not to spit out errors when
+one or the other scheduler is unavailable.
