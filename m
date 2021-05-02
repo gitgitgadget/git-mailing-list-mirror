@@ -2,92 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 97CD9C433B4
-	for <git@archiver.kernel.org>; Sun,  2 May 2021 11:07:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F801C433ED
+	for <git@archiver.kernel.org>; Sun,  2 May 2021 11:12:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 69EA061359
-	for <git@archiver.kernel.org>; Sun,  2 May 2021 11:07:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DAFA061208
+	for <git@archiver.kernel.org>; Sun,  2 May 2021 11:12:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231363AbhEBLHx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 2 May 2021 07:07:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59720 "EHLO
+        id S231801AbhEBLNC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 2 May 2021 07:13:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229676AbhEBLHw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 May 2021 07:07:52 -0400
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFF46C06174A
-        for <git@vger.kernel.org>; Sun,  2 May 2021 04:07:01 -0700 (PDT)
-Received: by mail-pj1-x102a.google.com with SMTP id gc22-20020a17090b3116b02901558435aec1so1716060pjb.4
-        for <git@vger.kernel.org>; Sun, 02 May 2021 04:07:01 -0700 (PDT)
+        with ESMTP id S229676AbhEBLNC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 May 2021 07:13:02 -0400
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A490DC06174A
+        for <git@vger.kernel.org>; Sun,  2 May 2021 04:12:10 -0700 (PDT)
+Received: by mail-pl1-x629.google.com with SMTP id v13so1315167ple.9
+        for <git@vger.kernel.org>; Sun, 02 May 2021 04:12:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=to:from:subject:message-id:date:user-agent:mime-version
-         :content-language:content-transfer-encoding;
-        bh=frL1qRGO+OJQNEceGk53AEBAn5iXd8GX/43j7HLLNmg=;
-        b=ZXo1J2ok2M5jxK4zehLRn9Y6Puw8P8ic10/VhnhDAsi3f2Km2Zw9kzdRK22MaVxXRg
-         su2hSJnqRsVo8c2j6iB52Gc4E+iShxtCCPKvBU8FMWD64BSY3mlm/3h80Lb2vki0hfMi
-         evWWKwzULXtBz64k6FxMH5prEd+LpP5SqoE4OThEVf7gErL2at2Im3atZj+giIX+Foq3
-         cea/eTeeJ92Loiu+otsFwTSkhSFXZnnbpl66dCu03ecjHF7ezgngT1jB+gwrfc6ULavB
-         xlGy5ayxrabObydcpAlYBGCiuAD6hjzTgZ5hkFi0bw5U3yTavkS4Eb7smq/xJ0sW1qQK
-         cs1g==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=J3fY5rEz0vJkbTx+Etctkg6PirB9FxCa5PAI/htuSyU=;
+        b=Hr/l2RosMIYupAPx5AY02dW1zhPZbNPOUsmgytgHbbW5PMsGMKHV5FoW6Cg8oliDBP
+         VUQVGVVuYXeQmLEGEElOtm92PF3O/5ifhzAVXFQ8A0VAmJs8cZtk5urC+Frxndn8OZ+O
+         Waf+SKC9M7n18djWz3VWmySQSk7FXoeE6AbR5IKcbR0UEJzptUZz2/yzSEo63D13uDtZ
+         gR8Cw6DvZYGjttOCHy5uTmWtfo7sTBJuVTys3q9c2DiiHR9anen3akK82iL/DE61OnG5
+         8CicWIRrDjUr8D8PvCjmfqvOuDCdFJn31zyhkgNDxzj1SPnr3VgiiiMONlLxjM1MJ2Od
+         YOXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
-         :mime-version:content-language:content-transfer-encoding;
-        bh=frL1qRGO+OJQNEceGk53AEBAn5iXd8GX/43j7HLLNmg=;
-        b=Ap23LR2GcPimZoM674v7ydcyi3d5WPnmOr+M0zxsPkQpS7UyWy6qiyVenuJsB7g35q
-         eEu2vKIC1a4LxsB0QPKeTlhTgRX13hq0KsCnVKSTcIqctpv9Vs86G0JuSLw1Hm/ViC2+
-         kbGPfVRzVs6iLj5HcFXpUrTCRAyMTK55gVRIy2ydDoUfXaLlbcFytoH2gLuwHukU4uCv
-         h0MDPxd1ViIxyHaf5joyM1WE30kdWunSEMYF2u77GpOAFq7GzB8NjJ/zRvCIvYjY/zUm
-         N1/geEKRsRH8wUI+AjZ/OHTfANVeqgugKb6NvWTQ6Y04GSia5FASC9RDkOEkYuv7lodF
-         DwMA==
-X-Gm-Message-State: AOAM5307a/Ejc/aTHz+N05X3CyXkKcxzdUhAwmmHiQKCmryct+VgDwwU
-        yamNmjbD1aH2lJo7GKOOd54c7ANMDWCuYg==
-X-Google-Smtp-Source: ABdhPJxKW+cTyVpQ16W0fIf9irz5ORXVvIaTd5irJiz0L6eTOi04Ctc36nLN5htqTCEREBsT+RpXhg==
-X-Received: by 2002:a17:902:fe94:b029:ee:ba90:a27a with SMTP id x20-20020a170902fe94b02900eeba90a27amr5915320plm.53.1619953619975;
-        Sun, 02 May 2021 04:06:59 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=J3fY5rEz0vJkbTx+Etctkg6PirB9FxCa5PAI/htuSyU=;
+        b=pO0vHVSqYJQ8kscpu1ksnj8ZKM7ifiQY31Rx/TKfftc5rC9cMbi/OUKEKtXX6HPg6f
+         TFqRchG4F+mZcEC/Y8ezNWA0OdtOWSeHbM0QSEOwFpNEXin60QlHlfzNn0DaRGPmST2I
+         tyCrcdVRd9ffEytS4Z+rj5IXtgc4OIhTcNLmQfgjv++ghf1mHzu9eNbyKi+PqCvTwjxm
+         7XY/cyABjDuwqw+d7nmdroPRlEEc0R3/zSdiHLohldjsCp+/62k3cIwACK7Oy1RENDDb
+         MeZjxdVrrCjcRIVv8j7ZOMir8lJ0kKfJutcgm0iZmuBkwVE9sWkD3/Q18FHq2oVNVRBN
+         /zMA==
+X-Gm-Message-State: AOAM53124H850LXJJajd6jpelGo04y1ygb66kgvhIixRFoaAxnnzseAd
+        XiGezeF9cKht4zv137VY2hS+7evtpSO1YQ==
+X-Google-Smtp-Source: ABdhPJytdfo+WpYo11QsxubniwxxAHXQDt2NjRDOp7rvs4a2Sw1RTSuoR0akujdyi7E155NMcxBBkA==
+X-Received: by 2002:a17:902:74c3:b029:ed:5a91:472d with SMTP id f3-20020a17090274c3b02900ed5a91472dmr14930278plt.32.1619953930223;
+        Sun, 02 May 2021 04:12:10 -0700 (PDT)
 Received: from [192.168.43.80] (subs32-116-206-28-61.three.co.id. [116.206.28.61])
-        by smtp.gmail.com with ESMTPSA id 39sm6368548pjo.25.2021.05.02.04.06.58
-        for <git@vger.kernel.org>
+        by smtp.gmail.com with ESMTPSA id l127sm379950pfd.128.2021.05.02.04.12.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 02 May 2021 04:06:59 -0700 (PDT)
-To:     Git Users <git@vger.kernel.org>
+        Sun, 02 May 2021 04:12:09 -0700 (PDT)
+Subject: Re: [PATCH] maintenance: use systemd timers on Linux
+To:     =?UTF-8?B?TMOpbmHDr2MgSHVhcmQ=?= <lenaic@lhuard.fr>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+References: <20210501145220.2082670-1-lenaic@lhuard.fr>
 From:   Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: "Unpacking objects" question
-Message-ID: <bdd50fcc-02c3-dc24-9d49-773db881b65d@gmail.com>
-Date:   Sun, 2 May 2021 18:06:57 +0700
+Message-ID: <d27d4832-0dc0-ae01-cb2b-264c938b1649@gmail.com>
+Date:   Sun, 2 May 2021 18:12:06 +0700
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.10.0
 MIME-Version: 1.0
+In-Reply-To: <20210501145220.2082670-1-lenaic@lhuard.fr>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On 01/05/21 21.52, Lénaïc Huard wrote:
+> +BACKGROUND MAINTENANCE ON LINUX SYSTEMD SYSTEMD
+> +-----------------------------------------------
+> +
 
-Recently I stumbled upon git unpack-objects documentation, which says:
+systemd was repeated twice above. It should be
+`BACKGROUND MAINTENANCE WITH SYSTEMD TIMERS`
 
-> Read a packed archive (.pack) from the standard input, expanding the objects contained within and writing them into the repository in "loose" (one object per file) format.
+>   test_expect_success 'help text' '
+>   	test_expect_code 129 git maintenance -h 2>err &&
 
-However, I have some questions:
-
-1. When I do git fetch, what is the threshold/limit for "Unpacking objects",
-    in other words what is the minimum number of objects for invoking
-    "Resolving deltas" instead of "Unpacking objects"?
-2. Can the threshold between unpacking objects and resolving deltas be
-    configurable?
-3. Why in some cases Git do unpacking objects where resolving deltas
-    can be done?
-
-Thanks.
+Why exit code 129 there?
 
 -- 
 An old man doll... just what I always wanted! - Clara
