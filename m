@@ -2,194 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 639D6C433ED
-	for <git@archiver.kernel.org>; Sun,  2 May 2021 05:36:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 342F0C433ED
+	for <git@archiver.kernel.org>; Sun,  2 May 2021 05:49:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 40363613AF
-	for <git@archiver.kernel.org>; Sun,  2 May 2021 05:36:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0676661423
+	for <git@archiver.kernel.org>; Sun,  2 May 2021 05:49:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229703AbhEBFhB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 2 May 2021 01:37:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45412 "EHLO
+        id S229613AbhEBFuh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 2 May 2021 01:50:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48302 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229526AbhEBFhB (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 May 2021 01:37:01 -0400
-Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37FE0C06174A
-        for <git@vger.kernel.org>; Sat,  1 May 2021 22:36:09 -0700 (PDT)
-Received: by mail-io1-xd33.google.com with SMTP id p8so1600152iol.11
-        for <git@vger.kernel.org>; Sat, 01 May 2021 22:36:09 -0700 (PDT)
+        with ESMTP id S229526AbhEBFuh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 May 2021 01:50:37 -0400
+Received: from mail-oo1-xc33.google.com (mail-oo1-xc33.google.com [IPv6:2607:f8b0:4864:20::c33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CE00C06174A
+        for <git@vger.kernel.org>; Sat,  1 May 2021 22:49:45 -0700 (PDT)
+Received: by mail-oo1-xc33.google.com with SMTP id w6-20020a4a9d060000b02901f9175244e7so544418ooj.9
+        for <git@vger.kernel.org>; Sat, 01 May 2021 22:49:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=mOKSu2R7lI7E42RGcYeAX4xulfcmI4ICuzyNbWEmCUI=;
-        b=uSFEWmn3vzNxbYl0q1ZT7yOKaVvS7cuDqehl7bA665vM72GJcotB9KOxnl0+C9/EAr
-         drJ6LfN00cm1i4TO70gnt8UGq6XzczY2K5F4MD7+KB5kOIuH+ihcWQV58Mr8q+Rw8pHl
-         WKojZH6E70vmJGqKrieXtzLFNO9BqN4j6khff13c5UxRRkaSeEc88R9Isq/FvQBbssKp
-         40vPdAQfEQJhfCzjvdRYTnwlWbeSVwAvG5BSNx268vy4Nm4AmclBnMi2mPPr1u0kILYy
-         /FDJ80Q0e5CYBfhZ07atBwImNTdElDTrEK7t3vFZPP8GPrzPHrEH3iuhI2gzFMuUvCWb
-         mOBw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=2KaUAc5EFlpFhJQ5csGULHmjAdj/qV5OCyyIzVaGXts=;
+        b=A3hUn8QHVjmXjiLOem9wRJIXO9stWVPS9uOsIr4dIRL37BIBKDRagHuDI6PUREa7ZR
+         W4dkmHkxESQiaBMIMtMohwPrygBt2cVfRX3mTw7USl2rZmeTPn66jp6sMHZU9+wFWLe4
+         6EYJt/FiBEAXEyRKfPE0zgUh2ttRyKSg75sB81Ttnzh+ve2yi/it0PuSGdFNd/8TBdlV
+         7duD48qyb7GhpwQ2WK1+0X8h2owWw2fuKT5MmdUbguqp3KmQydg7bhKuLHfrtBypEN6V
+         zS1l2mlKeENjt0V0nN1icjztLfuqPrzS7my8Ws/sEEmN/Q4lqerAXV1vL5eMAji4heqV
+         lKtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=mOKSu2R7lI7E42RGcYeAX4xulfcmI4ICuzyNbWEmCUI=;
-        b=uSTh8DLwlq9J7gAJKPDF2jRp3Qhwo6U6LIwB8Wc1chtf2NPbNfXgQ+7+j0zxceY9/d
-         qqYP1EIq+yTyageNXHYG1DWKwLeiPowEf960dc3PKuG/wft5N4r451NJbeUx8LNhS/9F
-         5kjLm4DYRGEVzerG5sPyp1AcQ1GSapEhVqvtJP08BNjcvfPwlhrs9SWgQEuJWCxyFZKm
-         lwWeXiFNnWz/d/UAo+7tzIJsjwENaQkYL9YWJ1Z1mjlIMkdh9cozzreD1Xj4tmYgjMZ/
-         5R6jRJM0MV0f8/hUv8Ue7Ip1CNLz6IUCJWgMTV1LWP7knAT3iognlvP3zg8NhdB3UAdE
-         JH8w==
-X-Gm-Message-State: AOAM532ujCVU2mePKI6oGCXqnSCjnpFfjqAjfygSU5B1lYN4TSJpvdK8
-        xZW/Ik2jbOcRPfPiIlXrbtW4wA8PZqelaxLwo4zV5MpPO2V+C3Jy9Eyy5Q==
-X-Google-Smtp-Source: ABdhPJyomHK2uulqu0PU9AI4AIEhyshPYuLpRxcsjJHUdljZHGwMqvROceRLxMcV3rUV8fjRlQzLp/UHRXrRiSYG5N4=
-X-Received: by 2002:a05:6638:1242:: with SMTP id o2mr12564173jas.10.1619933768683;
- Sat, 01 May 2021 22:36:08 -0700 (PDT)
+         :message-id:subject:to;
+        bh=2KaUAc5EFlpFhJQ5csGULHmjAdj/qV5OCyyIzVaGXts=;
+        b=YrlnsuLhSZDwLFGBXeujhmPGg4nH2P4LVQGCqHPZAR99X/6+G0SmLqpjqOH9j2zyXb
+         op1TLbXQYxuwy/tODnIqtHk2pK66fcka4gwVLHhfvLDWj55sBJHFDcQKOBErmAzRapKy
+         aDiqvlxf9Wf180xZo4A8mWOiqFtufKl58WULL5qJspsAEuM7bzfeGvzXGAiNi0/pA2VB
+         1045KI3ekMk0Wp7rA9usnyCF8vX37RIOIcK6i4Z7LhPCfA9PZWxVTKOW1rSEedSWcJI+
+         N4P2zF0E7EKHITQ7K4J3Sj1Wkfxg1PD2Vz19pHv2zFbeInROYGVLriosfizQyoeW0I/1
+         fFUw==
+X-Gm-Message-State: AOAM5327hkZo8lUDKphkdmoZIkb2DSRdQOtev+geo1mpjkK6KCFJo7PS
+        fi5DIuqdjAIvzYNFehtYHsMLWLShn1lgdQxG2/ukGxr/
+X-Google-Smtp-Source: ABdhPJzhbJpDJHSvFsMAD3dkhWisT6TURpxR3EG826UzcPA6vcrtjWFHxVr3LuPt6xhWF7LeOrQyYFbN30qPV/3+N00=
+X-Received: by 2002:a4a:e386:: with SMTP id l6mr10671842oov.81.1619934584665;
+ Sat, 01 May 2021 22:49:44 -0700 (PDT)
 MIME-Version: 1.0
-References: <YHaIBvl6Mf7ztJB3@google.com> <xmqqfszqko0k.fsf@gitster.g>
-In-Reply-To: <xmqqfszqko0k.fsf@gitster.g>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Sun, 2 May 2021 13:35:56 +0800
-Message-ID: <CAOLTT8Sr8hMe7jOaBNb10szbw219HP+FB439jgZu-xua7K9Xug@mail.gmail.com>
-Subject: Re: Pain points in Git's patch flow
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Raxel Gutierrez <raxelgutierrez09@gmail.com>,
-        mricon@kernel.org, patchwork@lists.ozlabs.org,
-        Taylor Blau <me@ttaylorr.com>,
-        Emily Shaffer <emilyshaffer@google.com>
+References: <gitgitgadget/git/pull/934@github.com> <gitgitgadget/git/pull/934/c830744540@github.com>
+In-Reply-To: <gitgitgadget/git/pull/934/c830744540@github.com>
+From:   Josh Soref <jsoref@gmail.com>
+Date:   Sun, 2 May 2021 01:49:33 -0400
+Message-ID: <CACZqfqA8u8cRM5xSdnArUW7tGOJX9dVO41FsmQU4-d2NyiNCiA@mail.gmail.com>
+Subject: Re: [gitgitgadget/git] git-merge: rewrite already up to date message (#934)
+To:     "gitgitgadget/git" 
+        <reply+AAQFMLC42KHLQTLKSC5H3XV6TILQ3EVBNHHDGQXBRY@reply.github.com>,
+        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Haaaa, everyone, I am this example :)
-Sorry I haven't checked these mails cc to me for a long time.
+Eric Sunshine wrote:
+> diff --git a/notes-merge.c b/notes-merge.c
+> index d2771fa3d4..321155fc87 100644
+> --- a/notes-merge.c
+> +++ b/notes-merge.c
+> @@ -628,7 +628,7 @@ int notes_merge(struct notes_merge_options *o,
+>   if (oideq(&remote->object.oid, base_oid)) {
+>   /* Already merged; result == local commit */
+>   if (o->verbosity >= 2)
+> - printf("Already up to date!\n");
+> + printf_ln("Already up to date.");
+>   oidcpy(result_oid, &local->object.oid);
+>   goto found_result;
+>   }
 
-Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B44=E6=9C=8817=E6=97=
-=A5=E5=91=A8=E5=85=AD =E4=B8=8A=E5=8D=883:50=E5=86=99=E9=81=93=EF=BC=9A
->
-> Jonathan Nieder <jrnieder@gmail.com> writes:
->
-> >  3. Do you think patchwork goes in a direction that is likely to help
-> >     with these?
->
-> So here is a real-life example.
->
-> Let's say somebody is looking at a "gentle ping" [*1*]
->
-> znh> The patch seems to have fallen into the crack.
-> zhn> Jeff and Junio, willing to help?
->
-> How would we figure out what happened to the patch today without
-> visiting patchwork would be:
->
->  1. Visit the message at lore.kernel.org/git/ [*1*]
->
->  2. Notice that it is a response to a message, and click the link to
->     be taken to [*2*]
->
->  3. Notice that nobody commented on the patch.
->
->  4. Type "f:zhening ref-filter" to the search box and search, with
->     suspicion that this was an updated version of something.
->
->  5. Click one of them in the result [*3*]
->
->  6. This time, we can tell that this seemed to have had two earlier
->     iterations, and after reading the discussion through, the last
->     one changed the course in a major way.  Not just a new helper
->     introduced in the earlier rounds has gone away, but an existing
->     helper got removed.
->
->  7. All comments in the discussion for the earlier two rounds can be
->     read as supporting the new direction the latest round takes.
->
->  8. The fact remains that even if the direction has been endorsed
->     (see 7. above) nobody took a look at the implementation for the
->     latest round.
->
->  9. Make the final verdict.
->
-> I use my newsreader to do pretty much the equivalent of the above
-> without hitting https://lore.kernel.org/git/ but the above is
-> written to use the web interface, in order to make it reproducible
-> more easily by anybody on the list.
->
-> Now, how can patchwork improve the above reviewer experience, out
-> of the box and possibly with new helpe rools around it?
->
-> I can see #3 would immediately become obvious, and I hope #4-#5
-> would become unnecessary.
->
-
-Here are my thoughts:
-
-For the reviewers like Junio, after missing a new patch iteration, need to
-review the past history to find the correct patch and related comments
-from other reviewers. Just like I once read a github blog saying that
-"patch" is also a special object in git. I would like to have a "new" tool
- which can link multiple related patches and comments.
-
-1. Coder need Reviewers' help.
-2. This new tool will obtained multiple different patches contents automati=
-cally
-or coder provided those pathes versions links.
-3. This tool will analyze the differences between multiple patches
-versions, get all
-the reviewers comments and coder comments related to the "patch stream",
-organize it into "patch graph".
-4. The tool will notify the reviewer(by email or something else) and
-show the links
-and patch graph or patch range-diff. It can visualize the entire patch proc=
-ess,
- It=E2=80=99s best that comments from different people can be displayed on =
-one page.
-
-In order to be more accurate, I made a picture [*1*].
-
-Using this new tool, reviewers can choose to see or not see the range-diff
-and diff in multiple different patch versions, Instead of the range-diff
-automatically sent by GGG. When my second patch processing was greatly
-changed from the previous one, I have to rebuild a new branch and create a =
-new
-PR, this is my pain point.
-
-Thanks!
---
-ZheNing Hu
-
-> Anything else?
->
-> At steps #6 and #7, there is human judgment involved that may not be
-> automatable, but would there be some mechanism to make it easy to
-> help these steps if the user visits patchwork (instead of staying
-> in my newsreader or web interface to the lore archive)?
->
-> I am of course not expecting to automate step #9 ;-)  It would be
-> nice though.
->
-> Thanks.
->
->
-> [References]
->
-> *1* https://lore.kernel.org/git/CAOLTT8Tis5Yjg8UR0c-i0BnqiFQvLXvDgxUQJ-Wc=
-P6jjQPu9cQ@mail.gmail.com/
->
-> *2* https://lore.kernel.org/git/pull.928.git.1617975348494.gitgitgadget@g=
-mail.com/
->
-> *3* https://lore.kernel.org/git/pull.927.v2.git.1617809209164.gitgitgadge=
-t@gmail.com/
-
-*1* https://github.com/adlternative/git/blob/pic/git-patch-pain-point-solve=
--idea.png
+Should this have `_(...)` decorations?
