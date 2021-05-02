@@ -2,89 +2,310 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A0407C433ED
-	for <git@archiver.kernel.org>; Sun,  2 May 2021 06:26:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EFD7AC433ED
+	for <git@archiver.kernel.org>; Sun,  2 May 2021 06:45:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 74931613CD
-	for <git@archiver.kernel.org>; Sun,  2 May 2021 06:26:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BC5F46128E
+	for <git@archiver.kernel.org>; Sun,  2 May 2021 06:45:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229676AbhEBG1J (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 2 May 2021 02:27:09 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54521 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229526AbhEBG1J (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 May 2021 02:27:09 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9C17FBC136;
-        Sun,  2 May 2021 02:26:17 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=AM2kNz5MawtlgSALScJRMS/BlOt/AskM8LuPNU
-        DX51w=; b=u2QINaEzGVsX2pEWrIffL5mBdVkCDE+JlHd5JJAPpm39LlUreVTH4R
-        6GHDtZgsnFDlcVIAUnTnnm1tJ6d+GOWxBgdW6bxV7ZHjRzU4eJrazeKVduTu1hEx
-        WY0UGyoHL0x1pMv4diakd7h07kbbdLp4na1K1LiYRO5O71/UoeT1Y=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 922D9BC135;
-        Sun,  2 May 2021 02:26:17 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1D56DBC134;
-        Sun,  2 May 2021 02:26:17 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Josh Soref <jsoref@gmail.com>,
-        Josh Soref via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH v3] git-merge: rewrite already up to date message
-References: <pull.934.v2.git.1619047347605.gitgitgadget@gmail.com>
-        <pull.934.v3.git.1619052906768.gitgitgadget@gmail.com>
-        <xmqqbl9zcawf.fsf@gitster.g> <xmqqk0ol7cka.fsf@gitster.g>
-        <CACZqfqCXrhUtsC3TLYaw6u7D0VohsBcz10aVxpe-1u8gg77qxQ@mail.gmail.com>
-        <CAPig+cR0Z=sUPHW8kuMG0sOv4bb309MV=WTR1nMGOoYB+1yfVg@mail.gmail.com>
-Date:   Sun, 02 May 2021 15:26:16 +0900
-In-Reply-To: <CAPig+cR0Z=sUPHW8kuMG0sOv4bb309MV=WTR1nMGOoYB+1yfVg@mail.gmail.com>
-        (Eric Sunshine's message of "Sat, 1 May 2021 22:15:18 -0400")
-Message-ID: <xmqqr1ipbqif.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S229613AbhEBGqg convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Sun, 2 May 2021 02:46:36 -0400
+Received: from mail-ej1-f41.google.com ([209.85.218.41]:40548 "EHLO
+        mail-ej1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229526AbhEBGqf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 May 2021 02:46:35 -0400
+Received: by mail-ej1-f41.google.com with SMTP id n2so3201856ejy.7
+        for <git@vger.kernel.org>; Sat, 01 May 2021 23:45:44 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Z94EEUb0ZOCJd3ZFLBVP4F8mEolYmwc5OkPEkF+9AMI=;
+        b=rdDPlrM6tQRldounxAnI+B6HB66tblPN5rnPTBuCHCPWXga3j+Pieu+NwuGAuBacON
+         HhqHY6wRhUWwyzjd/ihJm2GDJaWDF9kADv6INVmPNGPpphBGEzKlGVhMuuLWvlDwY4Xh
+         ZX/P8SkTyYbvFJsC9ALnB+HS587l+uh3Q66ArLYhWY/Fc6vgDaYx7UFPGzdTcxfIxUt1
+         3fp2TH7R9cA+xzBkIEJl6RLPDB8fdDJM3eQ9YhIyUB/cPE7jKrTIo6uA4LQ375Gt9ZHA
+         D1lc98WQwLyrE3EcW2uXg9/V6JNXSZsMIxWnf04JPvzHqQChhjP9jxvCsguxEgaVSdcC
+         L6nQ==
+X-Gm-Message-State: AOAM530V+mvcuYVBb0DZI8gQaxTmBT84IFUVgVxpgKIpx07K0chTNG8p
+        0BUFEg36xp5ATBMVUt1Sxd67KLa0fk/nVFzIX5E=
+X-Google-Smtp-Source: ABdhPJwAhCSHC8TJH1B2eHbdxLK37LtR/y1wdyenXA3OUc1UQoXeZSTuJeg0e8/cMlFdAzy6BvzU5XSaEhzC9T9HSlA=
+X-Received: by 2002:a17:907:3f99:: with SMTP id hr25mr8513046ejc.231.1619937943378;
+ Sat, 01 May 2021 23:45:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4D1A0A46-AB0F-11EB-9DC8-D152C8D8090B-77302942!pb-smtp1.pobox.com
+References: <20210501145220.2082670-1-lenaic@lhuard.fr>
+In-Reply-To: <20210501145220.2082670-1-lenaic@lhuard.fr>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sun, 2 May 2021 02:45:32 -0400
+Message-ID: <CAPig+cQks0_nL1J4YUbEUjmWYLKrhuHX-f8PkWM2zFE4gybWMw@mail.gmail.com>
+Subject: Re: [PATCH] maintenance: use systemd timers on Linux
+To:     =?UTF-8?B?TMOpbmHDr2MgSHVhcmQ=?= <lenaic@lhuard.fr>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+On Sat, May 1, 2021 at 10:59 AM Lénaïc Huard <lenaic@lhuard.fr> wrote:
+> The existing mechanism for scheduling background maintenance is done
+> through cron. On Linux systems managed by systemd, systemd provides an
+> alternative to schedule recurring tasks: systemd timers.
 
-> On Sat, May 1, 2021 at 9:51 PM Josh Soref <jsoref@gmail.com> wrote:
->> Junio C Hamano <gitster@pobox.com> writes:
->> > I am not sure why this is Co-au, and not the more usual "Helped-by".
->>
->> If you look at the thread, you'll see that the code in question was
->> written by Eric [1]. The only change from it was the addition of
->> `void` to the function prototype by me.
->
-> Oops, I suppose I've been doing too much Go and C++ lately and am
-> forgetting `void`.
->
-> I don't have a strong opinion between Co-authored-by: and Helped-by:
-> in this case. Here's my sign-off if you want to retain Co-authored-by:
->
->     Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+Thanks for working on this. While `cron` has been the go-to standard
+for decades, `systemd` is certainly widespread enough that it makes
+sense to support it, as well.
 
-I am not in principle opposed to the idea of co-authored-by; for
-this particular one, we historically have used Helped-by (i.e. a
-reviewer offers "writing it this way is cleaner" suggestions on the
-list and then gets credited on the next version), and it wasn't
-clear to me if you consented to be a co-author of the patch.  If the
-party who were named as a co-author responded that it is OK, I would
-be perfectly fine.
+> The main motivations to implement systemd timers in addition to cron
+> are:
+> * cron is optional and Linux systems running systemd might not have it
+>   installed.
+> * The execution of `crontab -l` can tell us if cron is installed but not
+>   if the daemon is actually running.
+> * With systemd, each service is run in its own cgroup and its logs are
+>   tagged by the service inside journald. With cron, all scheduled tasks
+>   are running in the cron daemon cgroup and all the logs of the
+>   user-scheduled tasks are pretended to belong to the system cron
+>   service.
+>   Concretely, a user that doesn’t have access to the system logs won’t
+>   have access to the log of its own tasks scheduled by cron whereas he
+>   will have access to the log of its own tasks scheduled by systemd
+>   timer.
 
+The last point is somewhat compelling. A potential counterargument is
+that `cron` does send email to the user by default if any output is
+generated by the cron job. However, it seems quite likely these days
+that many systems either won't have local mail service enabled or the
+user won't bother checking the local mailbox. It's a minor point, but
+if you re-roll it might make sense for the commit message to expand
+the last point by saying that although `cron` attempts to send email,
+that email may go unseen by the user.
+
+> In order to schedule git maintenance, we need two unit template files:
+> * ~/.config/systemd/user/git-maintenance@.service
+>   to define the command to be started by systemd and
+> * ~/.config/systemd/user/git-maintenance@.timer
+>   to define the schedule at which the command should be run.
+> [...]
+> The timer unit contains `Persistent=true` so that, if the computer is
+> powered down when a maintenance task should run, the task will be run
+> when the computer is back powered on.
+
+It would be nice for the commit message to also give some high-level
+information about how git-maintenance chooses between `cron` and
+`systemd` and whether the user can influence that decision. (I know
+the answer because I read the patch, but this is the sort of
+information which is good to have in the commit message; readers want
+to know why certain choices were made.)
+
+Although I avoid Linux distros with `systemd`, my knee-jerk reaction,
+like brian's upthread, is that there should be some escape hatch or
+direct mechanism to allow the user to choose between `systemd` and
+`cron`.
+
+The patch itself is straightforward enough and nicely follows the
+pattern established for already-implemented schedulers, so I don't
+have a lot to say about it. I did leave a few comments below, most of
+which are subjective nits and minor observations, though there are two
+or three actionable items.
+
+> Signed-off-by: Lénaïc Huard <lenaic@lhuard.fr>
+> ---
+> diff --git a/Documentation/git-maintenance.txt b/Documentation/git-maintenance.txt
+> @@ -279,6 +279,55 @@ schedule to ensure you are executing the correct binaries in your
+> +BACKGROUND MAINTENANCE ON LINUX SYSTEMD SYSTEMD
+> +-----------------------------------------------
+
+Is there a reason for the duplicated "SYSTEMD" that I'm missing? I
+suppose you probably mean "SYSTEMD SYSTEMS".
+
+> +In this case, `git maintenance start` will create user systemd timer units
+> +and start the timers. The current list of user-scheduled tasks can be found
+> +by running `systemctl --user list-timers`. The timers written by `git
+> +maintenance start` are similar to this:
+> +
+> +-----------------------------------------------------------------------
+> +$ systemctl --user list-timers
+> +NEXT                         LEFT          LAST                         PASSED     UNIT                         ACTIVATES
+> +Thu 2021-04-29 19:00:00 CEST 42min left    Thu 2021-04-29 18:00:11 CEST 17min ago  git-maintenance@hourly.timer git-maintenance@hourly.service
+> +Fri 2021-04-30 00:00:00 CEST 5h 42min left Thu 2021-04-29 00:00:11 CEST 18h ago    git-maintenance@daily.timer  git-maintenance@daily.service
+> +Mon 2021-05-03 00:00:00 CEST 3 days left   Mon 2021-04-26 00:00:11 CEST 3 days ago git-maintenance@weekly.timer git-maintenance@weekly.service
+> +
+> +3 timers listed.
+> +Pass --all to see loaded but inactive timers, too.
+> +-----------------------------------------------------------------------
+
+I suspect that the "3 timers listed" and "Pass --all" lines don't add
+value and can be dropped without hurting the example.
+
+> +`git maintenance start` will overwrite these files and start the timer
+> +again with `systemctl --user`, so any customization should be done by
+> +creating a drop-in file
+> +`~/.config/systemd/user/git-maintenance@.service.d/*.conf`.
+
+Will `systemd` users generally understand what filename to create in
+the "...@.service.d/" directory, and will they know what to populate
+the file with? (Genuine question; I've never dealt with that.)
+
+> diff --git a/builtin/gc.c b/builtin/gc.c
+> @@ -1872,6 +1872,25 @@ static int schtasks_update_schedule(int run_maintenance, int fd, const char *cmd
+> +static int is_crontab_available(const char *cmd)
+> +{
+> +       struct child_process child = CHILD_PROCESS_INIT;
+> +
+> +       strvec_split(&child.args, cmd);
+> +       strvec_push(&child.args, "-l");
+> +       child.no_stdin = 1;
+> +       child.no_stdout = 1;
+> +       child.no_stderr = 1;
+> +       child.silent_exec_failure = 1;
+> +
+> +       if (start_command(&child))
+> +               return 0;
+> +       /* Ignore exit code, as an empty crontab will return error. */
+> +       finish_command(&child);
+> +
+> +       return 1;
+> +}
+
+Ignoring the error from `crontab -l` is an already-established idiom
+in this file. Okay.
+
+Nit: There doesn't seem to be a need for the blank line before `return
+1`, and other maintenance-related functions don't have such a blank
+line. The same comment about blank lines before `return` applies to
+other newly-added functions, as well. But it's subjective, and not
+necessarily worth changing.
+
+> +static char *systemd_timer_timer_filename()
+> +{
+> +       const char *filename = "~/.config/systemd/user/git-maintenance@.timer";
+> +       char *expanded = expand_user_path(filename, 0);
+> +       if (!expanded)
+> +               die(_("failed to expand path '%s'"), filename);
+> +
+> +       return expanded;
+> +}
+
+I was curious whether this would fail if `.config/systemd/user/`
+didn't already exist, but looking at the implementation of
+expand_user_path() , I see that it doesn't require the path to already
+exist if you pass 0 for the second argument as you do here. Okay.
+
+> +static char *systemd_timer_service_filename()
+> +{
+> +       const char *filename =
+> +               "~/.config/systemd/user/git-maintenance@.service";
+> +       char *expanded = expand_user_path(filename, 0);
+> +       if (!expanded)
+> +               die(_("failed to expand path '%s'"), filename);
+> +
+> +       return expanded;
+> +}
+
+The duplication of code between systemd_timer_timer_filename() and
+systemd_timer_service_filename() is probably too minor to worry about.
+Okay.
+
+> +static int systemd_timer_enable_unit(int enable,
+> +                                    enum schedule_priority schedule,
+> +                                    const char *cmd)
+> +{
+> +       struct child_process child = CHILD_PROCESS_INIT;
+> +       const char *frequency = get_frequency(schedule);
+> +
+> +       strvec_split(&child.args, cmd);
+> +       strvec_push(&child.args, "--user");
+> +       if (enable)
+> +               strvec_push(&child.args, "enable");
+> +       else
+> +               strvec_push(&child.args, "disable");
+
+It's subjective, but this might be more nicely expressed as:
+
+    strvec_push(&child.args, enable ? "enable" : "disable");
+
+> +       strvec_push(&child.args, "--now");
+> +       strvec_pushf(&child.args, "git-maintenance@%s.timer", frequency);
+> +
+> +       if (start_command(&child))
+> +               die(_("failed to run systemctl"));
+> +       return finish_command(&child);
+> +}
+> +static int systemd_timer_write_unit_templates(const char *exec_path)
+> +{
+> +       unit = "[Unit]\n"
+> +              "Description=Optimize Git repositories data\n"
+> +              "\n"
+> +              "[Service]\n"
+> +              "Type=oneshot\n"
+> +              "ExecStart=\"%1$s/git\" --exec-path=\"%1$s\" for-each-repo --config=maintenance.repo maintenance run --schedule=%%i\n"
+
+I see that it's in POSIX, but do we use this `%n$s` directive
+elsewhere in the Git source code? If not, I'd be cautious of
+introducing it here. Maybe it's better to just use plain `%s` twice...
+
+> +              "LockPersonality=yes\n"
+> +              "MemoryDenyWriteExecute=yes\n"
+> +              "NoNewPrivileges=yes\n"
+> +              "RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6\n"
+> +              "RestrictNamespaces=yes\n"
+> +              "RestrictRealtime=yes\n"
+> +              "RestrictSUIDSGID=yes\n"
+> +              "SystemCallArchitectures=native\n"
+> +              "SystemCallFilter=@system-service\n";
+> +       fprintf(file, unit, exec_path);
+
+... and then:
+
+    fprintf(file, unit, exec_path, exec_path);
+
+> +       fclose(file);
+> +
+> +       return 0;
+> +}
+> @@ -1986,6 +2159,15 @@ static int update_background_schedule(int enable)
+> +       if (!strcmp(scheduler, "crontab_or_systemctl")) {
+> +               if (is_systemd_timer_available("systemctl"))
+> +                       scheduler = cmd = "systemctl";
+> +               else if (is_crontab_available("crontab"))
+> +                       scheduler = cmd = "crontab";
+> +               else
+> +                       die(_("Neither systemd timers nor crontab are available"));
+> +       }
+
+Other messages emitted by git-maintenance are entirely lowercase, so
+downcasing "Neither" would be appropriate.
+
+> @@ -1995,10 +2177,14 @@ static int update_background_schedule(int enable)
+> -               die("unknown background scheduler: %s", scheduler);
+> +               die(_("unknown background scheduler: %s"), scheduler);
+
+This change is unrelated to the rest of the patch. Normally, such a
+"fix" would be made as a separate patch. This one is somewhat minor,
+so perhaps it doesn't matter whether it's in this patch...
+
+>         rollback_lock_file(&lk);
+> +       free(lock_path);
+>         free(testing);
+>         return result;
+
+... however, this leak fix probably deserves its own patch. Or, at the
+very least, mention these two fixes in this commit message.
+
+> diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+> @@ -20,6 +20,20 @@ test_xmllint () {
+> +test_lazy_prereq SYSTEMD_ANALYZE '
+> +       systemd-analyze --help >out &&
+> +       grep -w verify out
+> +'
+
+Unportable use of `grep -w`. It's neither in POSIX nor understood by
+BSD-lineage `grep` (including macOS `grep`).
