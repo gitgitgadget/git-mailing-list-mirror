@@ -2,71 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26E7EC433B4
-	for <git@archiver.kernel.org>; Mon,  3 May 2021 14:55:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E533C433B4
+	for <git@archiver.kernel.org>; Mon,  3 May 2021 14:58:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EB663611CB
-	for <git@archiver.kernel.org>; Mon,  3 May 2021 14:55:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 73553611CB
+	for <git@archiver.kernel.org>; Mon,  3 May 2021 14:58:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230003AbhECO4H (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 May 2021 10:56:07 -0400
-Received: from cloud.peff.net ([104.130.231.41]:43162 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229596AbhECO4F (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 May 2021 10:56:05 -0400
-Received: (qmail 6065 invoked by uid 109); 3 May 2021 14:55:10 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 03 May 2021 14:55:10 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4347 invoked by uid 111); 3 May 2021 14:55:10 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 03 May 2021 10:55:10 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 3 May 2021 10:55:09 -0400
-From:   Jeff King <peff@peff.net>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org, Yiyuan guo <yguoaz@gmail.com>
-Subject: Re: [PATCH 3/5] pack-objects: clamp negative window size to 0
-Message-ID: <YJAOzTIXkO2lhxSs@coredump.intra.peff.net>
-References: <YI1fbERSuS7Y3LKh@coredump.intra.peff.net>
- <YI1fubjvQQlrPz9D@coredump.intra.peff.net>
- <3d77d70b-2cc5-4ca9-8753-fa9af5111842@gmail.com>
+        id S230094AbhECO70 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 May 2021 10:59:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55940 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230074AbhECO7Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 May 2021 10:59:24 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24A25C061761
+        for <git@vger.kernel.org>; Mon,  3 May 2021 07:58:30 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id 124so8511218lff.5
+        for <git@vger.kernel.org>; Mon, 03 May 2021 07:58:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=usp.br; s=usp-google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Cf4huCvwaVtIMgNzGcSnj/bC/bu85Wjf/wcw8mv7/yE=;
+        b=Xag3jS2uhx9E5aKOuWD7+84zyZFjjiIjWLlYXJQ4utu+z7vG+jVZynjxDeE3IwSO9p
+         hbWLov4MA2TLECHAGL56vGqygJ637oL5oK5xfgSvqHs6aAot6z1vtQ/IQUKnbWqdeBP1
+         edBhp2a7ng6pEMxh9AfR27aa7Oe3oAxdWKQIoh6Kn7KGeNHDXg8BVMVkSKeAlXtkfdrD
+         oVdhhdVtfljK5dxn/iudr2qsb2ZnpXfWGbI6ppOJcoaq4QPxiBZmASkrKuHvMrOxuLJe
+         AEx5DZwVCfmWi8oLfXOowEhOQPnpn1rzIVQchD/ksHAFlpnrNP6Ikfe5i0F8muMCSQxJ
+         Xqag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Cf4huCvwaVtIMgNzGcSnj/bC/bu85Wjf/wcw8mv7/yE=;
+        b=jdzYnVBt1z/A+y9orAQs4IOKJAr/N6sQd2NLWyiHwK/YjEGwHjqYuyNyuYP6GQOKiz
+         SkhJiuB/A5DfHe/W94EVI5SmhP+ebQfG+1xeQX7G/cFLicLcdx5QpOmBViMyvDt5Ww7q
+         fKeVyBhaxY0QR9OyeYZWPm0Amenf6qJrdEOOgO/HPSA2FFV8jhQmIGTp/+Cpt1fPm+xI
+         aqeVUgcZfGKPCG590kUKd6WnzVzOex3JU2XKzh6sQgPMbdf0QAAxesdmAm2mzzjic3TJ
+         O+gaHFws4joIaAIcZZblJU1JFchd7FeewcQvukP+5PcVFOSUFXjH9GjzuqoqG4SoVMb9
+         akMw==
+X-Gm-Message-State: AOAM533mVSf//8nLzOK1UH4gWPXnohipT+f3RrG/VItKhpSY1bGqXbm3
+        3yEnJeoMMIlGSgh7xZB+nQQxxmiozEZUhrIFkzyijA==
+X-Google-Smtp-Source: ABdhPJwY/i8XN6e8gmUSkfA1TbxAFenjJXHN9V6MXMoBETbcAX6lJS39eMEIqjAbZmRLtQjX6BEaIjaAWAb4YPBsyRo=
+X-Received: by 2002:ac2:418f:: with SMTP id z15mr13187855lfh.2.1620053908634;
+ Mon, 03 May 2021 07:58:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <3d77d70b-2cc5-4ca9-8753-fa9af5111842@gmail.com>
+References: <cover.1619818517.git.matheus.bernardino@usp.br>
+ <eae6d3a1c16e440f18fd60d69b061d15ffbfe8e7.1619818517.git.matheus.bernardino@usp.br>
+ <20210502075920.d2rdmuix7r34sas2@tb-raspi4>
+In-Reply-To: <20210502075920.d2rdmuix7r34sas2@tb-raspi4>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Mon, 3 May 2021 11:58:17 -0300
+Message-ID: <CAHd-oW46GR8cWHPq65QHHfrsN-9MN1xO301eADwLigwaLq7Y-w@mail.gmail.com>
+Subject: Re: [PATCH v2 5/8] parallel-checkout: add tests related to path collisions
+To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+Cc:     git <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Derrick Stolee <stolee@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 03, 2021 at 08:10:24AM -0400, Derrick Stolee wrote:
+On Sun, May 2, 2021 at 4:59 AM Torsten B=C3=B6gershausen <tboegi@web.de> wr=
+ote:
+>
+> On Fri, Apr 30, 2021 at 06:40:32PM -0300, Matheus Tavares wrote:
+> >
+> > diff --git a/t/t2081-parallel-checkout-collisions.sh b/t/t2081-parallel=
+-checkout-collisions.sh
+> > new file mode 100755
+> > index 0000000000..f6fcfc0c1e
+> > --- /dev/null
+> > +++ b/t/t2081-parallel-checkout-collisions.sh
+> > @@ -0,0 +1,162 @@
+> > +#!/bin/sh
+> > +
+> > +test_description=3D"path collisions during parallel checkout
+> > +
+> > +Parallel checkout must detect path collisions to:
+> > +
+> > +1) Avoid racily writing to different paths that represent the same fil=
+e on disk.
+> > +2) Report the colliding entries on clone.
+> > +
+> > +The tests in this file exercise parallel checkout's collision detectio=
+n code in
+> > +both these mechanics.
+> > +"
+> > +
+> > +. ./test-lib.sh
+> > +. "$TEST_DIRECTORY/lib-parallel-checkout.sh"
+>
+> Why this $TEST_DIRECTORY ?
+> Aren't all files under the t/ directory, where test-lib.sh is as well ?
 
-> On 5/1/2021 10:03 AM, Jeff King wrote:
-> > A negative window size makes no sense, and the code in find_deltas() is
-> > not prepared to handle it. If you pass "-1", for example, we end up
-> > generate a 0-length array of "struct unpacked", but our loop assumes it
-> > has at least one entry in it (and we end up reading garbage memory).
-> > 
-> > We could complain to the user about this, but it's more forgiving to
-> > just clamp it to 0, which means "do not find any deltas at all". The
-> > 0-case is already tested earlier in the script, so we'll make sure this
-> > does the same thing.
-> 
-> This seems like a reasonable approach. It takes existing "undefined"
-> behavior and turns it into well-understood, "defined" behavior.
-
-I was on the fence on doing that, or just:
-
-  if (window < 0)
-	die("sorry dude, negative windows are nonsense");
-
-So if anybody has a strong preference, I could be easily persuaded. Part
-of what led me to being forgiving was that we similarly clamp too-large
-depth values (with a warning; I didn't think it was really necessary
-here, though).
-
--Peff
+Good point. From what I understand, the reason why we need the macro
+here is that, when running the test with --root=3D<path>, the trash dir
+might actually be at a path outside `t/`. So the test can't rely on
+`./` to read files from `t/`. We don't need the macro for
+`test-lib.sh` because the working dir is only changed after it is
+sourced (by `test-lib.sh` itself).
