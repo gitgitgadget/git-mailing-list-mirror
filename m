@@ -4,167 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F0FCC433ED
-	for <git@archiver.kernel.org>; Mon,  3 May 2021 13:25:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 85943C433B4
+	for <git@archiver.kernel.org>; Mon,  3 May 2021 13:36:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 048D06121D
-	for <git@archiver.kernel.org>; Mon,  3 May 2021 13:25:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 50CE46115B
+	for <git@archiver.kernel.org>; Mon,  3 May 2021 13:36:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234162AbhECN0a (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 May 2021 09:26:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34974 "EHLO
+        id S234315AbhECNg4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 May 2021 09:36:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37314 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233592AbhECN03 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 May 2021 09:26:29 -0400
-Received: from mail-il1-x12e.google.com (mail-il1-x12e.google.com [IPv6:2607:f8b0:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58A11C06174A
-        for <git@vger.kernel.org>; Mon,  3 May 2021 06:25:35 -0700 (PDT)
-Received: by mail-il1-x12e.google.com with SMTP id p15so3670344iln.3
-        for <git@vger.kernel.org>; Mon, 03 May 2021 06:25:35 -0700 (PDT)
+        with ESMTP id S233550AbhECNgz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 May 2021 09:36:55 -0400
+Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C9EDC06174A
+        for <git@vger.kernel.org>; Mon,  3 May 2021 06:36:01 -0700 (PDT)
+Received: by mail-io1-xd31.google.com with SMTP id z14so4055594ioc.12
+        for <git@vger.kernel.org>; Mon, 03 May 2021 06:36:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=pEGs/aqzAaZegdfOFqAIK9f+D39zO31ajJPQ9BAa/f4=;
-        b=okuJ27m76+ix2JIHi/EwSJ78P7j01vsoWRQws54aN1MXvJstaPOeMoQCYyekIFiO2D
-         ywdbaKmLtnjA3+a2huYA5MRfaSEJQmjYFuyDMmQZ5ie/9To+1a1nKVB8U2yfhc1RQvI/
-         4Npin0+TADotiMQAoktE204yPtsSWz2kWL+4fKiFTAs09fTpLRU9rlYIm7ryXz5+Asee
-         CEp9Fl8LmJZCh5ewrXsvyKBT20LNDcszUA6IFDKwJQEh1Od8osrmnKk7+UFiiW0b1cx9
-         eUo2RcyQetgkv45P6mCn6H03fAdoSrQK59CzMxSqvQ2uVGBZt77wqCyR/18Z36IybxoD
-         CKiw==
+         :cc;
+        bh=yK1p0cOUEubAeFQYxksorE9rR7QQIfAaQslPK4649HE=;
+        b=a6LMa9g448jy/EM0srx1wxsZuGBPzLAb0C9NPThcADV2mSTRarrpnOCsKrG9/oErlu
+         l5vuxO3eCBZ3x+xPARbk8s1D0fJIXjFHUBCMEpuQciQCMrLiDLeQ8b+BODgGgO9GYX75
+         Hp8R5H6sZ1HJeIgk3GQkBxnNWlBRJCvYFamnQIc3eukLQJypAhBdPRWE+RBnx80EJdrs
+         QfL5ETBUDNVaxmY28tWXvH7urRdDpThtUyWS4lt/UUBKts32g7a/0qw9sg10epvUjqov
+         Dn8lm+sAclnhG1LVE5dbkqmryKGVKsFRp+BBkmQBjcOGg1FzgMbwXWkSsfNZmYWFHVm/
+         Zs+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=pEGs/aqzAaZegdfOFqAIK9f+D39zO31ajJPQ9BAa/f4=;
-        b=dvEO491fdSUdewp7myCsf21rkdVkTWukmh3hKtoKJ9xB7cYt/YCV4RwoPgaKTqWKvZ
-         B3WRVbYzaN37S65QJLU0ctGqRdPYFQdLElFwjbFyHLR+Jp8A+aRjZXaQMbo8rmiJHTRh
-         DeBvHGg+z4fF8r4oYIKL9oKeZTqJ69Df8S3QxyPp8saMnVPTyNh1XbHxeb3vEpvFWXD9
-         707c8mZNXbCG0X2LVMBLy/ugUWV5JKAmxzgqi9csLkoXBfTUbxpiuGaChpHNTqPSz0+w
-         Rsqtn9q1DZTClfywA6TCjOd1+lkWzsiFJuvq28628sVD+192CupGBJeJ7Pj7Rf4Agej3
-         t3ZQ==
-X-Gm-Message-State: AOAM531qwJn7GcWTD7jdX1btkS4KijEY3ISBy5QV7m/+daqTTE125mrf
-        Z0M8Ks2R7DhUv8itTyaqn1G+h3IcksOGCPRBiFo=
-X-Google-Smtp-Source: ABdhPJy2Cxhgx3gizCyEQVvCKrHTTjTyzt/RcLtbi4wg3zCAAn0+pDAWx66aUEfAq4a8YxqLjO/eXooYC9aZly2XEuk=
-X-Received: by 2002:a05:6e02:1152:: with SMTP id o18mr16102112ill.174.1620048329834;
- Mon, 03 May 2021 06:25:29 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=yK1p0cOUEubAeFQYxksorE9rR7QQIfAaQslPK4649HE=;
+        b=FUTVq1HumgjMHT7vvOti17iQOtW6tbSs+S0tqyeA1JtE/LwuDjLgUufjmcRPmW0Z5z
+         3DqOjPUILXgwB4rdPChidsNaeE7ctXHlZd9qYcm629bEGiTNewWOW5d/xPciCVPARgyS
+         /VSZFjzQHsUq6P7e51OsS6a4Seb0byTBd+J1JkVmf7PfC9N6GDhrRxFRDiiD8ATy0B3s
+         irRYifJ8mTXy89Mk8JzyUe/xbK8dSMlyASWo9GT+nnz5wLdZ+LQpOWWfPiQJMzYH8+l8
+         iR/uhcylOHPYD0JVUNnEiaMC7CAN3FzUTjHmH23hcmonDcMb5ax6L8logmTX06qOVrnk
+         2zFQ==
+X-Gm-Message-State: AOAM533Y1lcEtU1TmK5IXcDtJfG+E42STo245RVVwPsJJPD3g1csmgh5
+        EK1+Tv7SaRGVCRiXRXGpcBbl2GEnr5mLl8Z/VbSaKar63pAzI39XW7C3iw==
+X-Google-Smtp-Source: ABdhPJzBhlUS2ZbQ0/P0vFB1XIRblpHVO3jjlQ831V7Ufx/6rehN36KSHiT+tw0me7lt6VYoROIBvs3WA1SplsPgfJ4=
+X-Received: by 2002:a02:84a5:: with SMTP id f34mr18761043jai.50.1620048961019;
+ Mon, 03 May 2021 06:36:01 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.944.git.1619691880696.gitgitgadget@gmail.com>
- <38083c1b-f92b-7624-67b7-3a5dcf213d79@web.de> <CAOLTT8TGaVxxHJRF_-Dq0Gnd50_H-80C6zPhjQAQruiO59qw2A@mail.gmail.com>
- <xmqqsg34a5j8.fsf@gitster.g>
-In-Reply-To: <xmqqsg34a5j8.fsf@gitster.g>
+References: <xmqqr1itfo41.fsf@gitster.g> <CAOLTT8TWLUCOnL=s-SgCaJYbOw7YCyX5WNssZw5HCspaSAoxmw@mail.gmail.com>
+ <xmqq1raobncr.fsf@gitster.g>
+In-Reply-To: <xmqq1raobncr.fsf@gitster.g>
 From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Mon, 3 May 2021 21:25:14 +0800
-Message-ID: <CAOLTT8R2-uZQ4rAs+TNKSZXzfXjjB-=unuBUykMo=taguTPw7A@mail.gmail.com>
-Subject: Re: [PATCH] [GSOC] ref-filter: add %(notes) format atom
+Date:   Mon, 3 May 2021 21:35:45 +0800
+Message-ID: <CAOLTT8SDb0sUfOYTBwvNQgdp9sOzOokxmPzXaCaB2ALbsYkHig@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Apr 2021, #06; Thu, 29)
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Hariom Verma <hariom18599@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B45=E6=9C=883=E6=97=
-=A5=E5=91=A8=E4=B8=80 =E4=B8=8A=E5=8D=8810:57=E5=86=99=E9=81=93=EF=BC=9A
+> > Here is a small typo error, I forget a small blank, which was pointed
+> > out by Josh
+> > Soref in https://github.com/gitgitgadget/git/pull/939
+> >
+> > - '%ch':: committer date, human style(like the `--date=human` option of
+> > + '%ch':: committer date, human style (like the `--date=human` option of
 >
-> ZheNing Hu <adlternative@gmail.com> writes:
->
-> > Note that `cat-file --batch` should be a superset of `ref-filter` and
-> > `--pretty`, because
-> > it supports all objects, while `ref-filter` only supports "commit" and
-> > "tag" two kinds
-> > of objects, and `--pretty` only supports "commit" one kind of object.
->
-> What?  A ref can point at any kind of objects, not necessarily
-> commits and tags.  %(objectname), %(objecttype), etc. obviously
-> are applicable to any type of object.
+> Please update it with an incremental patch as the topic has been
+> merged to 'next' a few days ago already.
 >
 
-Thanks for correcting. I only saw tag and commit in the output
-of `git for-each-ref` before, and blob and tree are not processed
-in `grab_values` in `ref-filter.c`, which deepens my illusion.
-`git update-ref` can make a ref point to a blob object or tree object,
-although I don't know what these refs are used for... A reference to a
-commit object makes sense, but if it is a blob, are there any suitable
-scenarios?
+OK, I will resubmit it.
 
-> Another thing worth noting is that ref-filter needs to deal with
-> traits that are not tied to any particular object, but to the ref
-> itself, like who its upstream is and where it would be pushed to.
+> > I have a little doubt here. Do I need to modify the "Commit-Count"
+> > example in the docs immediately? I thought this should be left to
+> > the next step?
+> >
+> > If necessary, I will make changes immediately.
 >
+> We've done the "after waiting" part already, so I should have
+> updated the topic summary for this one.
+>
+> I just re-read the second patch and the count example that leaves an
+> empty "commit-count:" does look strange.  We probably want to update
+> it before the topic hits 'next'.  While at it, you might want to add
+> the "Helped-by: " example we discussed.
+>
+> The phrase "global script" looks strange---just call it "script"
+> would be much easier to understand, as things that are in ~/bin do
+> not sound "global" to everybody (it is effective across
+> repositories, so is a bit wider than per-repository, but it is of
+> course not visible to other users).
+>
+> Thanks.
 
-Indeed need to be considered "%(push)" "%(remote)" will change
-"refname".
-
-> > So it may be reasonable to provide `%(notes)` to "commit","tag"
-> > objects in `cat-file --batch`
-> > in the future, now integrate them into ref-filter firstly.
->
-> And you can attach notes to objects of any type, not limited to
-> commits and tags.
->
-> >> >     So in this patch, I tried to migrate --pretty=3D%N to --format=
-=3D%(notes).
->
-> What do you mean by "migrate"?  Are you making both available?
->
-
-Well, here are some incorrect statements, I just want to express that
-the `--format=3D"%(notes)"` implemented in "ref-filter" has the same semant=
-ics
-as "--pretty=3D%N".
-
-> >> > diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-=
-for-each-ref.txt
-> >> > index 2ae2478de706..07f037a16e13 100644
-> >> > --- a/Documentation/git-for-each-ref.txt
-> >> > +++ b/Documentation/git-for-each-ref.txt
-> >> > @@ -139,6 +139,9 @@ deltabase::
-> >> >       given object, if it is stored as a delta.  Otherwise it
-> >> >       expands to the null object name (all zeroes).
-> >> >
-> >> > +notes::
-> >> > +     The notes associated with the ref.
->
-> "The notes associated with the object pointed at by the ref".
->
-> A note is never associated with a ref.  It can only associated with
-> an object.
->
-
-Indeed.
-
-> If we are going to have %(notes), it may be natural to desire
-> grabbing notes for the given object from specified notes ref, e.g.
->
->     git for-each-ref --format=3D"%(notes:amlog) %(subject)" zh/pretty-dat=
-e-human
->
-> may want to give the same kind of information as
->
->     git show -s --format=3D'%N %s' --notes=3Damlog zh/pretty-date-human
->
-> The underlying notes machinery however may not be prepared to work
-> with more than one notes tree at the same time, so
->
->     git for-each-ref --format=3D"%(notes) %(subject)" --notes=3Damlog zh/=
-pretty-date-human
->
-> might be a better syntax, as --format=3D"%(notes:X) %(notes:Y)" may
-> not be something you can easily support.
->
-
-Here is a "bad" idea that might support this feature: use another subproces=
-s
-"git notes --refs=3Drefs/notes/amlog" :)
+I know what I should do now.
 
 Thanks.
 --
