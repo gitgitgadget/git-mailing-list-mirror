@@ -2,172 +2,174 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1292BC433B4
-	for <git@archiver.kernel.org>; Mon,  3 May 2021 16:10:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E63FC433B4
+	for <git@archiver.kernel.org>; Mon,  3 May 2021 16:29:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C665861185
-	for <git@archiver.kernel.org>; Mon,  3 May 2021 16:10:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C0673611AB
+	for <git@archiver.kernel.org>; Mon,  3 May 2021 16:29:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231166AbhECQLs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 May 2021 12:11:48 -0400
-Received: from mx.kolabnow.com ([95.128.36.40]:62368 "EHLO mx.kolabnow.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230210AbhECQLq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 May 2021 12:11:46 -0400
-Received: from localhost (unknown [127.0.0.1])
-        by ext-mx-out001.mykolab.com (Postfix) with ESMTP id BDCA5AFC;
-        Mon,  3 May 2021 18:10:51 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kolabnow.com; h=
-        content-transfer-encoding:content-language:content-type
-        :content-type:in-reply-to:mime-version:date:date:message-id:from
-        :from:references:subject:subject:received:received:received; s=
-        dkim20160331; t=1620058251; x=1621872652; bh=jfF+aMJLW5pyD6OvRN7
-        eLvm8qm5OhQVJJKxhvvaVUCU=; b=3WBsprZ9pDTx1AK5sDEcDn40rXpk0XIb6a8
-        bhBwnTPYNV0pfMQY0Kle5HBfAcbMNuvak89chlaBwSvlpih2D0laevcyOd7zOeEB
-        F+no+gHI5Q9hX6yaMV5/TLCxAzB6LtzqXIygrpbbE0Fcz2E51zFBfgo23DwTlSro
-        wsKy/i87ipkzx5BfHeTHBBhTtEZhtXeL3RvyEeFt2xW30e7xQQvESBzVLkPSFboA
-        G3yzLIqUIT8WaeZVbWx+iFMS8Q9r8xcNW/JHcHbCXt3qgD0Fn395+1BN/jivOIcp
-        0CvRDxIaw04fWL9c+RLJZVjqD6S0BWBSoaeXC1h6ZQ0JilkcoEn39mKombMAJ2Jn
-        1FIz8/zT4tWaQ/VCJhJkQZygCnVkmhf3WEU24/1qf3vni0MuoF6YJHsnxiO4axw1
-        s9O41q8k/wemxutvc3/OPWvWgxOADCDDHLUyjRcZsuEutFU9qFc5IrDxHIy2D+gv
-        gqC+9P2uH9YVZ2zsgXuF3uO7f7N8DRN1GZcdx0+hnM93K7IGu/9jrLyXGhlqr+nM
-        i+ab85feS8CBeFv/3MQ1IMsEazesxgZDdHzG/vyAWc+FkYFfi8N57ix77x1kYm/I
-        hN8dTSEc7gZPJ9JNcMBeAq9DQFRnc1QPzbl/LYok1uqCvOtA4PQP6S2KIQYnvd4M
-        L4IZzEK0=
-X-Virus-Scanned: amavisd-new at mykolab.com
-Received: from mx.kolabnow.com ([127.0.0.1])
-        by localhost (ext-mx-out001.mykolab.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id 6WWs5RtXnS0g; Mon,  3 May 2021 18:10:51 +0200 (CEST)
-Received: from int-mx001.mykolab.com (unknown [10.9.13.1])
-        by ext-mx-out001.mykolab.com (Postfix) with ESMTPS id 08A3D628;
-        Mon,  3 May 2021 18:10:50 +0200 (CEST)
-Received: from ext-subm001.mykolab.com (unknown [10.9.6.1])
-        by int-mx001.mykolab.com (Postfix) with ESMTPS id 7A540312;
-        Mon,  3 May 2021 18:10:49 +0200 (CEST)
-Subject: Re: [PATCH v4 3/8] for-each-repo: run subcommands on configured repos
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-References: <pull.724.v3.git.1601902635.gitgitgadget@gmail.com>
- <pull.724.v4.git.1602782524.gitgitgadget@gmail.com>
- <dd9237927395ef69663ab376a2da74da4654c495.1602782524.git.gitgitgadget@gmail.com>
-From:   Andrzej Hunt <andrzej@ahunt.org>
-Cc:     Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Message-ID: <cda4f200-2400-e915-e995-36eea2a27c11@ahunt.org>
-Date:   Mon, 3 May 2021 18:10:47 +0200
+        id S231206AbhECQaF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 May 2021 12:30:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48324 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231189AbhECQaE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 May 2021 12:30:04 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6459C06174A
+        for <git@vger.kernel.org>; Mon,  3 May 2021 09:29:09 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id t18so6240824wry.1
+        for <git@vger.kernel.org>; Mon, 03 May 2021 09:29:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=MkUMfLan4OKpQNqy1VAU/SYdNvR0urcsccwgfBxzYL0=;
+        b=JMRvJLIyZcCG3RdWa1uJQ24i9AZ+y5WelXp4UPVnpEMrKnmyAaBYStunxNgDUhuFzp
+         M9XxIMuTwMYcLZ4rHoHXpynu9zzQhgv4yducvd+qvlXYUF+ZwGtJWLTPB/JXJeEBiZ68
+         Aa1fWkquMqAnAuqnvbe1ggFlgomG3BVsCvKZbaHbmzQpotmJv1BoYUEcSO0pBnKkH058
+         4I/+5ypPqpFB1siQWgpiJYyBuXfoynSw0NCC7yNYz6f43ZRELduklz9CZyhnpxFH6Xep
+         4QwL632lNtbMbEU/e17NmKs73iAqqXjHbOB4nhGspiRzssW+vEmNfs+PSWFTeSH7QjF9
+         Is7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=MkUMfLan4OKpQNqy1VAU/SYdNvR0urcsccwgfBxzYL0=;
+        b=BXctm/aW5s27qizn79rPO5QWg8Sv/VNDEO3jXGoGswlZv7OrHUFo7vErRRJd+HqXs+
+         KlyJm5AkeT9pIkcWASJ9ZcsHjn4OZ5SUhJ4EBAoqRUmOcJzUj2BQpXMAUlmQZPY8UD3Y
+         rDSVfRzBT4T68rlgc3FlqZrvZLkJDKHJsy8sOP4xPIl21Q+fNuQ3/28rDDM+TaHKgn9m
+         LcTc59h5zqisi4pZAjbirKu3KpHJkvcQeKvjabGUTeepCqofqcFh7vKpBN9nC6XlEfBB
+         uWmb28NGopYKN4UIQpYF09zFgPlQc1SsP557f1Qnvj6Jq9DEJn+PAgteKgxkpa407rIl
+         C33A==
+X-Gm-Message-State: AOAM533N8kuldeWvZEZhRw+DfqxfBICl3c6clg4YJzz6KZ6At/BqCiEz
+        bLdlN1uNgWx5UnwLyfcJc3CVHRnQUG8=
+X-Google-Smtp-Source: ABdhPJwF05mLdPw2Ys15pH03zUix5pEuYYc/w1UfaLiqoaggCuUwZJeecd+DXD2f7i3G/Vy306OvUw==
+X-Received: by 2002:a5d:610c:: with SMTP id v12mr26205195wrt.57.1620059348653;
+        Mon, 03 May 2021 09:29:08 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id x5sm8731929wrt.49.2021.05.03.09.29.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 May 2021 09:29:08 -0700 (PDT)
+Message-Id: <pull.943.v2.git.1620059347674.gitgitgadget@gmail.com>
+In-Reply-To: <pull.943.git.1619685833872.gitgitgadget@gmail.com>
+References: <pull.943.git.1619685833872.gitgitgadget@gmail.com>
+From:   "Sardorbek Imomaliev via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 03 May 2021 16:29:07 +0000
+Subject: [PATCH v2] work around zsh comment in __git_complete_worktree_paths
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-In-Reply-To: <dd9237927395ef69663ab376a2da74da4654c495.1602782524.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+To:     git@vger.kernel.org
+Cc:     Sardorbek Imomaliev <sardorbek.imomaliev@gmail.com>,
+        Sardorbek Imomaliev <sardorbek.imomaliev@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Sardorbek Imomaliev <sardorbek.imomaliev@gmail.com>
 
-On 15/10/2020 19:21, Derrick Stolee via GitGitGadget wrote:
-> From: Derrick Stolee <dstolee@microsoft.com>
-[... snip ...]
-> diff --git a/builtin/for-each-repo.c b/builtin/for-each-repo.c
-> new file mode 100644
-> index 0000000000..5bba623ff1
-> --- /dev/null
-> +++ b/builtin/for-each-repo.c
-> @@ -0,0 +1,58 @@
-> +#include "cache.h"
-> +#include "config.h"
-> +#include "builtin.h"
-> +#include "parse-options.h"
-> +#include "run-command.h"
-> +#include "string-list.h"
-> +
-> +static const char * const for_each_repo_usage[] = {
-> +	N_("git for-each-repo --config=<config> <command-args>"),
-> +	NULL
-> +};
-> +
-> +static int run_command_on_repo(const char *path,
-> +			       void *cbdata)
-> +{
-> +	int i;
-> +	struct child_process child = CHILD_PROCESS_INIT;
-> +	struct strvec *args = (struct strvec *)cbdata;
+[PATCH]: contrib/completion/git-completion.bash, there is a construct
+where comment lines are placed between the command that is on
+the upstream of a pipe and the command that is on the downstream
+of a pipe in __git_complete_worktree_paths function.
 
-I was curious there's a strong reason for declaring args as void * 
-followed by this cast? The most obvious answer seems to be that this 
-probably evolved from a callback - and we could simplify it now?
-> +
-> +	child.git_cmd = 1;
-> +	strvec_pushl(&child.args, "-C", path, NULL);
-> +
-> +	for (i = 0; i < args->nr; i++)
-> +		strvec_push(&child.args, args->v[i]);
-So here we're copying all of args - and I don't see any way of avoiding 
-it since we're adding it to child's arg list.
+Unfortunately, this script is also used by Zsh completion, but
+Zsh mishandles this construct when "interactive_comments" option is not
+set (by default it is off on macOS), resulting in a breakage:
 
-> +
-> +	return run_command(&child);
-> +}
-> +
-> +int cmd_for_each_repo(int argc, const char **argv, const char *prefix)
-> +{
-> +	static const char *config_key = NULL;
-> +	int i, result = 0;
-> +	const struct string_list *values;
-> +	struct strvec args = STRVEC_INIT;
-> +
-> +	const struct option options[] = {
-> +		OPT_STRING(0, "config", &config_key, N_("config"),
-> +			   N_("config key storing a list of repository paths")),
-> +		OPT_END()
-> +	};
-> +
-> +	argc = parse_options(argc, argv, prefix, options, for_each_repo_usage,
-> +			     PARSE_OPT_STOP_AT_NON_OPTION);
-> +
-> +	if (!config_key)
-> +		die(_("missing --config=<config>"));
-> +
-> +	for (i = 0; i < argc; i++)
-> +		strvec_push(&args, argv[i]);
+$ git worktree remove [TAB]
+$ git worktree remove __git_complete_worktree_paths:7: command not found: #
 
-But why do we have to copy all of argv 1:1 into args here, only to later 
-pass it to run_command_on_repo() which, as described above, copies the 
-entire input again? I suspect this was done to comply with 
-run_command_on_repo()'s API (which takes strvec) - does that seem 
-plausible, or did I miss something?
+Move the comment, even though it explains what happens on the
+downstream of the pipe and logically belongs where it is right
+now, before the entire pipeline, to work around this problem.
 
-Which brings me to the real reason for my questions: I noticed we "leak" 
-args (this leak is of no significance since it happens in cmd_*, but 
-LSAN still complains, and I'm trying to get tests running leak-free). My 
-initial inclination was to strvec_clear() or UNLEAK() args - but if we 
-can avoid creating args in the first place we also wouldn't need to 
-clear it later.
+Signed-off-by: Sardorbek Imomaliev <sardorbek.imomaliev@gmail.com>
+---
+    Fix: wrongly put comment for __git_complete_worktree_paths completion
+    helper function
+    
+    git completion script fails for zsh
+    
+    $ git worktree remove [TAB]
+    $ git worktree remove __git_complete_worktree_paths:7: command not found: #
+    
 
-My current proposal is therefore to completely remove args and pass 
-argc+argv into run_command_on_repo() - but I wanted to be sure that I 
-didn't miss some important reason to stick with the current approach.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-943%2Fimomaliev%2Ffix%2Fgit-completion-worktree-subcommands-comment-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-943/imomaliev/fix/git-completion-worktree-subcommands-comment-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/943
 
-> +
-> +	values = repo_config_get_value_multi(the_repository,
-> +					     config_key);
-> +
-> +	for (i = 0; !result && i < values->nr; i++)
-> +		result = run_command_on_repo(values->items[i].string, &args);
-> +
-> +	return result;
-> +}
-[... snip ...]
+Range-diff vs v1:
 
-(I hope this doesn't come across as useless necroposting - I figured it 
-would be easier to clarify these questions on the original thread as 
-opposed to potentially discussing it as part of my next leak-fixing 
-series :) .)
+ 1:  89a2a4d66b73 ! 1:  60ba6801e0f5 Fix: fix comment for __git_complete_worktree_paths
+     @@ Metadata
+      Author: Sardorbek Imomaliev <sardorbek.imomaliev@gmail.com>
+      
+       ## Commit message ##
+     -    Fix: fix comment for __git_complete_worktree_paths
+     +    work around zsh comment in __git_complete_worktree_paths
+      
+     -    Completion helper function fails for zsh because of wrongly put comment
+     +    [PATCH]: contrib/completion/git-completion.bash, there is a construct
+     +    where comment lines are placed between the command that is on
+     +    the upstream of a pipe and the command that is on the downstream
+     +    of a pipe in __git_complete_worktree_paths function.
+     +
+     +    Unfortunately, this script is also used by Zsh completion, but
+     +    Zsh mishandles this construct when "interactive_comments" option is not
+     +    set (by default it is off on macOS), resulting in a breakage:
+     +
+     +    $ git worktree remove [TAB]
+     +    $ git worktree remove __git_complete_worktree_paths:7: command not found: #
+     +
+     +    Move the comment, even though it explains what happens on the
+     +    downstream of the pipe and logically belongs where it is right
+     +    now, before the entire pipeline, to work around this problem.
+      
+          Signed-off-by: Sardorbek Imomaliev <sardorbek.imomaliev@gmail.com>
+      
+     @@ contrib/completion/git-completion.bash: _git_whatchanged ()
+       __git_complete_worktree_paths ()
+       {
+       	local IFS=$'\n'
+     -+	# Skip the first entry: it's the path of the main worktree,
+     -+	# which can't be moved, removed, locked, etc.
+     ++	# Generate completion reply from worktree list skipping the first
+     ++	# entry: it's the path of the main worktree, which can't be moved,
+     ++	# removed, locked, etc.
+       	__gitcomp_nl "$(git worktree list --porcelain |
+      -		# Skip the first entry: it's the path of the main worktree,
+      -		# which can't be moved, removed, locked, etc.
 
-ATB,
 
-   Andrzej
+ contrib/completion/git-completion.bash | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 49e76e9d08cd..73f9fcf493c4 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -3268,9 +3268,10 @@ _git_whatchanged ()
+ __git_complete_worktree_paths ()
+ {
+ 	local IFS=$'\n'
++	# Generate completion reply from worktree list skipping the first
++	# entry: it's the path of the main worktree, which can't be moved,
++	# removed, locked, etc.
+ 	__gitcomp_nl "$(git worktree list --porcelain |
+-		# Skip the first entry: it's the path of the main worktree,
+-		# which can't be moved, removed, locked, etc.
+ 		sed -n -e '2,$ s/^worktree //p')"
+ }
+ 
+
+base-commit: 7e391989789db82983665667013a46eabc6fc570
+-- 
+gitgitgadget
