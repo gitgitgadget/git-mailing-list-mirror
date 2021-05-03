@@ -2,160 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.7 required=3.0 tests=BAYES_00,DATE_IN_PAST_12_24,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 293C8C433ED
-	for <git@archiver.kernel.org>; Tue,  4 May 2021 09:27:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F524C433ED
+	for <git@archiver.kernel.org>; Tue,  4 May 2021 09:50:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 004E7613AA
-	for <git@archiver.kernel.org>; Tue,  4 May 2021 09:27:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 41E9A610FC
+	for <git@archiver.kernel.org>; Tue,  4 May 2021 09:50:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230109AbhEDJ2d (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 May 2021 05:28:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47858 "EHLO
+        id S230149AbhEDJva (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 May 2021 05:51:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229903AbhEDJ2d (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 May 2021 05:28:33 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0427C061574
-        for <git@vger.kernel.org>; Tue,  4 May 2021 02:27:37 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id l13so6975077wru.11
-        for <git@vger.kernel.org>; Tue, 04 May 2021 02:27:37 -0700 (PDT)
+        with ESMTP id S230141AbhEDJva (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 May 2021 05:51:30 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D322C061574
+        for <git@vger.kernel.org>; Tue,  4 May 2021 02:50:35 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id c22so9693558edn.7
+        for <git@vger.kernel.org>; Tue, 04 May 2021 02:50:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=z2PMiL9T3aEDO+8w0tZ82b+LKvYK/O2KJoahh/X2jxQ=;
-        b=dk3eU40EWl71AI8aHblwja5wkUer10O0tIjLGjnOzovx4/l1hlFHrzVpZJF9YSSeyg
-         o6xzQUPm634y18i39hTmEZaDFsEA8AA5KlYKaJy1CAEIG3VRrhpBtczlOxdvIqyGPi0o
-         nMFAf605ghocypFOt3LDwG5G7Ku+MjB9JHe6ac4Hv/YFyvBKT++vvKQ6/SoqBwlRPr6Q
-         qS8nf0eTBeSfYOAQk/CkZ2tVH6X4dZDhFiEou3fALo3RnOzIkNyZaK80S+aLjyktwpwP
-         2CRErJMwjB+v0m6LoenGBOinQEct5v5ugMhZKx21OwvnpE9/R1bUJHquq7OFP/uKJBcM
-         +NkA==
+        h=from:to:cc:subject:date:message-id:references:user-agent
+         :in-reply-to:mime-version:content-transfer-encoding;
+        bh=0dm4P1W8xMiMI2RskXJgP1RjBcPoJJqJ22HdE1HBSho=;
+        b=s942IXQ/BwDs6KVWUr/3gPYLlOctroibIxegJwnk7nGk5dpTRzr3U7KdWMxxskY+jq
+         +PGCBs2B9zZuOIq9Y5D6fgWg+ktuQgsvu1AZwP4sLM7aq06nR1LBF2oBvIoN4ZtOVrN3
+         tGoWOWqospI4YGlLJPTIEgmZ/B12jJe39m9AGJRMbttfEKic7D9mF9SYF3Jqc2T31iUD
+         irkNaW7+7DArj6OoIPYikOAFEkCZdMGKoTzp1rLclVVHtCbl1pJ4hQCKryMds6wYxzkG
+         3qqeFZkHJ9ks/4NQ4HB/w88kJttu6U94eR/pDmP2Af5009KzzXd9x4HgwqGJRuh4w230
+         L9/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=z2PMiL9T3aEDO+8w0tZ82b+LKvYK/O2KJoahh/X2jxQ=;
-        b=rAWG2RnjGOVOElDvZdxIjwCFwZf2s5sozKhSn8kvdDV8HIb6h/xmT4mxKa/2M9Qkl4
-         mSj29iTX0B/AGcerX8adghv8t3iUYBYzQLnBtYWpZ4O0s14C6Hpkp8dJogqSHmkzKjMM
-         +1XNMDT3MWBzA9j/UFhtmq2GHx4VSZKM1cIKHueJAAkHQvtmPLLzDKDXZRb94cnwlwMr
-         Am7zupdkObbwt6jGeQ5zcTNeWId8zsxumoDYrzVUNVzf4GZNN8+/Vxx6fIWpizQpT830
-         4crV9f+KlbhEfoy5kKLcqe0mT6nbKQ9Ultgo03TScj95WqtfWskhsYXX5obafphX5Jn3
-         e/Bw==
-X-Gm-Message-State: AOAM532X4uASU3f7QBXsrra4KkupjSrisH19yFnuzmZY8HnSZ4sybDXr
-        6rvSOZvl3+uxvQgaDs/mkod1Q9yMXGU=
-X-Google-Smtp-Source: ABdhPJyLPKdTZlqy7YRsTemMuqa5ifXlzc89dGtONYUVOdjKHzJRprjZR+Ho0ig9IFE7yzOeon5ggQ==
-X-Received: by 2002:a5d:58e1:: with SMTP id f1mr29621230wrd.375.1620120456110;
-        Tue, 04 May 2021 02:27:36 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t2sm1881865wmg.38.2021.05.04.02.27.35
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:references
+         :user-agent:in-reply-to:mime-version:content-transfer-encoding;
+        bh=0dm4P1W8xMiMI2RskXJgP1RjBcPoJJqJ22HdE1HBSho=;
+        b=YT7TKsXmVAHRAybIgg/JbnywFy4EX5NlZz1JzurVIOJCF3aV2PLAldQ2vygchSW4AF
+         XZnERwLqhoSVieC4PCokebfYFA5UASnYFQvCSCcC7OwQW/b0kd3LWiLegSlDQL8zXbqR
+         mAZE6QIAUwCCG2VaPlpTcGbyzScFa/ASQZUkKMaaOFwULof6zIZhHo4xRdUYD/WBCQN8
+         PzN6MolWeXD0lMh/vItsrxh764ZXXaZ04pG1pLHt1Z644sIHq1Me7mwtodZ9SyNdobPU
+         UU52NZbcdGq8aWmcu10lHxlqJDqyEJc86UnPUkNQ3Ixf2wC5oCt1HAtLrcTGaRKbPmgw
+         v2Dw==
+X-Gm-Message-State: AOAM533hAbHb6bRWm9R5vuinWw8qW9mzscDJTaUa4pUQRWBlC2LZcnMF
+        mqd+K+St3UphMfKVFWqoh3g=
+X-Google-Smtp-Source: ABdhPJxHdKAfDzriEHmGNK0sliUPU8GSeewRc5q6gDLDHXRM+TH9jdR/yjfvARWZYdvbotOikooCMg==
+X-Received: by 2002:aa7:d658:: with SMTP id v24mr24525619edr.290.1620121833737;
+        Tue, 04 May 2021 02:50:33 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id w21sm13669181edq.82.2021.05.04.02.50.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 May 2021 02:27:35 -0700 (PDT)
-Message-Id: <pull.947.git.1620120455364.gitgitgadget@gmail.com>
-From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 04 May 2021 09:27:34 +0000
-Subject: [PATCH] word diff: handle zero length matches
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Tue, 04 May 2021 02:50:33 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] fsmonitor: only enable it in non-bare repositories
+Date:   Mon, 03 May 2021 19:56:35 +0200
+Message-ID: <87k0oex1yi.fsf@evledraar.gmail.com>
+References: <pull.942.git.1619682362363.gitgitgadget@gmail.com>
+ <87mttbx6ie.fsf@evledraar.gmail.com>
+ <810dc60c-3730-b5f3-34f6-5cc2ddc9942a@jeffhostetler.com>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
+In-reply-to: <810dc60c-3730-b5f3-34f6-5cc2ddc9942a@jeffhostetler.com>
+ --text follows this line-
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+On Mon, May 03 2021, Jeff Hostetler wrote:
 
-If find_word_boundaries() encounters a zero length match (which can be
-caused by matching a newline or using '*' instead of '+' in the regex)
-we stop splitting the input into words which generates an inaccurate
-diff. To fix this increment the start point when there is a zero
-length match and try a new match. This is safe as posix regular
-expressions always return the longest available match so a zero length
-match means there are no longer matches available from the current
-position.
+> On 5/3/21 9:58 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>> On Thu, Apr 29 2021, Johannes Schindelin via GitGitGadget wrote:
+>>=20
+>>> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>>>
+>>> The entire point of the FSMonitor is to monitor the worktree changes in
+>>> a more efficient manner than `lstat()`ing all worktree files every time
+>>> we refresh the index.
+>>>
+>>> But if there is no worktree, FSMonitor has nothing to monitor.
+>>>
+>>> So let's ignore if an FSMonitor is configured (e.g. in `~/.gitconfig`)
+>>> and we're running in a repository without worktree.
+>>>
+>>> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+>>> ---
+> ...
+>>>
+>>> base-commit: 14d50074ff19e68e7a8d718b22d138882087bbc9
+>> This is surely a correct fix for now, but wouldn't it in the future
+>> also
+>> be useful to run it in bare repositories e.g. to be able cache lookups
+>> for non-existing loose objects?
+>>=20
+>
+> No, the FSMonitor feature only expects data for paths within the
+> working directory.  (And is independent of whether the FS change
+> data is provided by my fsmonitor--daemon or provided by a hook-based
+> provider, such as Watchman.)  The FSMonitor feature uses that data to
+> shortcut scans of the working directory.
 
-Commit bf82940dbf1 (color-words: enable REG_NEWLINE to help user,
-2009-01-17) prevented matching newlines in negated character classes
-but it is still possible for the user to have an explicit newline
-match in the regex which could cause a zero length match.
+Indeed, hence "in the future". I'm not suggesting that it'll do anything
+useful by watching anything in the .git directory now, but that it might
+be an interesting thing to explore.
 
-One could argue that having explicit newline matches or using '*'
-rather than '+' are user errors but it seems to be better to work
-round them than produce inaccurate diffs.
+> There is no interaction with the contents of the .git/objects
+> directory and I'm not sure how that would work.
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
-    word diff: handle zero length matches
-    
-    If find_word_boundaries() encounters a zero length match (which can be
-    caused by matching a newline or using '*' instead of '+' in the regex)
-    we stop splitting the input into words which generates an inaccurate
-    diff. To fix this increment the start point when there is a zero length
-    match and try a new match.
+We'd watch .git/objects and .git/objects/{aa..ff}, then when about to
+check for a loose object we'd avoid hitting the FS.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-947%2Fphillipwood%2Fwip%2Fword-diff-zero-length-matches-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-947/phillipwood/wip/word-diff-zero-length-matches-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/947
+I don't know how useful that is post-61c7711cfea (sha1-file: use loose
+object cache for quick existence check, 2018-11-12), but e.g. on NFS
+this sort of thing still mattered. I had a "bigger hammer" approach with
+[1] that ran (and still does, I believe) on a big corporate
+installation.
 
- diff.c                | 10 +++++++---
- t/t4034-diff-words.sh |  5 +++++
- 2 files changed, 12 insertions(+), 3 deletions(-)
+More generally, if you strace .git access during repo operations you'll
+find we're doing all sorts of existence checks etc. all the time. Loose
+objects, refs, seeing what packs there are (better with the MIDX, but do
+we still fall back?) etc. If we had up-to-date inotify/fsmonitor info we
+could ask the daemon about it.
 
-diff --git a/diff.c b/diff.c
-index 4acccd9d7edb..c8b1d724349c 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2053,7 +2053,7 @@ static void fn_out_diff_words_aux(void *priv,
- static int find_word_boundaries(mmfile_t *buffer, regex_t *word_regex,
- 		int *begin, int *end)
- {
--	if (word_regex && *begin < buffer->size) {
-+	while (word_regex && *begin < buffer->size) {
- 		regmatch_t match[1];
- 		if (!regexec_buf(word_regex, buffer->ptr + *begin,
- 				 buffer->size - *begin, 1, match, 0)) {
-@@ -2061,9 +2061,13 @@ static int find_word_boundaries(mmfile_t *buffer, regex_t *word_regex,
- 					'\n', match[0].rm_eo - match[0].rm_so);
- 			*end = p ? p - buffer->ptr : match[0].rm_eo + *begin;
- 			*begin += match[0].rm_so;
--			return *begin >= *end;
-+			if (*begin == *end)
-+				(*begin)++;
-+			else
-+				return *begin > *end;
-+		} else {
-+			return -1;
- 		}
--		return -1;
- 	}
- 
- 	/* find the next word */
-diff --git a/t/t4034-diff-words.sh b/t/t4034-diff-words.sh
-index ee7721ab9135..561c582d1615 100755
---- a/t/t4034-diff-words.sh
-+++ b/t/t4034-diff-words.sh
-@@ -184,6 +184,11 @@ test_expect_success 'word diff with a regular expression' '
- 	word_diff --color-words="[a-z]+"
- '
- 
-+test_expect_success 'word diff with zero length matches' '
-+	cp expect.letter-runs-are-words expect &&
-+	word_diff --color-words="[a-z${LF}]*"
-+'
-+
- test_expect_success 'set up a diff driver' '
- 	git config diff.testdriver.wordRegex "[^[:space:]]" &&
- 	cat <<-\EOF >.gitattributes
-
-base-commit: 7e391989789db82983665667013a46eabc6fc570
--- 
-gitgitgadget
+1. https://lore.kernel.org/git/20181028225023.26427-5-avarab@gmail.com/
