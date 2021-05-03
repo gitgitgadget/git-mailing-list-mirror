@@ -6,81 +6,84 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AE69C433ED
-	for <git@archiver.kernel.org>; Mon,  3 May 2021 20:23:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DBA7C433ED
+	for <git@archiver.kernel.org>; Mon,  3 May 2021 20:29:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3A25D611CB
-	for <git@archiver.kernel.org>; Mon,  3 May 2021 20:23:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5F60061208
+	for <git@archiver.kernel.org>; Mon,  3 May 2021 20:29:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229577AbhECUYs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 May 2021 16:24:48 -0400
-Received: from cloud.peff.net ([104.130.231.41]:43448 "EHLO cloud.peff.net"
+        id S229570AbhECUao (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 May 2021 16:30:44 -0400
+Received: from cloud.peff.net ([104.130.231.41]:43464 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229472AbhECUYs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 May 2021 16:24:48 -0400
-Received: (qmail 7407 invoked by uid 109); 3 May 2021 20:23:55 -0000
+        id S229472AbhECUan (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 May 2021 16:30:43 -0400
+Received: (qmail 7435 invoked by uid 109); 3 May 2021 20:29:50 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 03 May 2021 20:23:55 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 03 May 2021 20:29:50 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7140 invoked by uid 111); 3 May 2021 20:23:55 -0000
+Received: (qmail 7204 invoked by uid 111); 3 May 2021 20:29:50 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 03 May 2021 16:23:55 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 03 May 2021 16:29:50 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Mon, 3 May 2021 16:23:54 -0400
+Date:   Mon, 3 May 2021 16:29:49 -0400
 From:   Jeff King <peff@peff.net>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 3/9] fsck_tree(): wrap some long lines
-Message-ID: <YJBb2k4yUipefmzM@coredump.intra.peff.net>
+Cc:     git@vger.kernel.org,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/9] t7415: remove out-dated comment about translation
+Message-ID: <YJBdPXkogxeERdi8@coredump.intra.peff.net>
 References: <YI12hK4X/gfl3u29@coredump.intra.peff.net>
- <YI12t5gzfzIxvZs3@coredump.intra.peff.net>
- <87v980vz2f.fsf@evledraar.gmail.com>
+ <YI12n+1rbedpwyfW@coredump.intra.peff.net>
+ <874kfkxhxe.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87v980vz2f.fsf@evledraar.gmail.com>
+In-Reply-To: <874kfkxhxe.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 03, 2021 at 01:22:13PM +0200, Ævar Arnfjörð Bjarmason wrote:
+On Mon, May 03, 2021 at 11:46:52AM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-> On Sat, May 01 2021, Jeff King wrote:
+> > Since GETTEXT_POISON does not exist anymore, there is no point warning
+> > people about whether we should use test_i18ngrep. This is doubly
+> > confusing because the comment was describing why it was OK to use grep,
+> > but it got caught up in the mass conversion of 674ba34038 (fsck: mark
+> > strings for translation, 2018-11-10).
+> >
+> > Note there are other uses of test_i18ngrep in this script which are now
+> > obsolete; I'll save those for a mass-cleanup. My goal here was just to
+> > fix the confusing comment in code I'm about to refactor.
 > 
-> > Many calls to report() in fsck_tree() are kept on a single line and are
-> > quite long. Most were pretty big to begin with, but have gotten even
-> > longer over the years as we've added more parameters. Let's accept the
-> > churn of wrapping them in order to conform to our usual line limits.
-> 
-> If we're going to have the churn I'd say just wrap the rest of the file
-> as well, now it's mostly-consistent in having these long lines.
-> 
-> FWIW I think having the long lines makes things more readable in this
-> case, but the inconsistency is worse.
+> For what it's worth between [1] and [2] I'm not sure what to do about
+> the test_i18ngrep cleanup. I think your patch below is fine, but the
+> "test_i18ngrep" has mutated into a "grep with debugging", not just
+> something needed for GETTEXT_POISON.
 
-I'm not sure I agree. It depends on how big a chunk you consider for
-consistency: a function, a file, or the whole project.
+Yes, I can see some value in that. Though if that's what it's going to
+be, IMHO we should use it consistently and give a better name (test_grep
+or something).
 
-fsck_tree() was already inconsistent, so this is making that function
-totally consistent. Since that was the function I was working in, that
-seemed like the limit of "while I'm here", and I'd prefer to keep it
-there for the series.
+> So that part of your patch right now is making it less friendly for
+> debugging. I don't care, and think if we want that we'd be better of
+> scraping the trace ouput for such common cases and/or use "verbose grep
+> [...]" and teach the "verbose" wrapper about these common cases, but
+> knowing of that objection + having other outstanding things has been why
+> I haven't sent s/test_i18ngrep/grep/g patches.
 
-I certainly don't mind extra clean up on top, though.
+I was the one who introduced "verbose" long ago, and I did have dreams
+that people would do "verbose grep" everywhere. But in the end, we made
+"-x" a lot nicer to use, and I think that largely obsoletes it. Using
+"verbose" makes the non-x verbose output slightly nicer, perhaps. But
+not having to remember to sprinkle "verbose" through the test code (nor
+read it) seems like a bigger win to me.
 
-As far as preferring the long lines, I don't mind lines a _little_ long,
-but some of these are 120+ characters. They wrap awkwardly even on my
-extra-wide terminals. ;) I guess we can have a discussion on whether
-long lines are OK, but it should probably center on what we put into
-CodingGuidelines, and not these particular lines.
-
-> I wonder if this whole thing wouldn't be better by declaring the format
-> in the msg_id_info struct. I.e. add this to fsck.h, but that's an even
-> bigger change...
-
-I think it gets tricky, as not all of the strings have the same number
-and type of format specifiers (most don't have any, but verify_headers()
-for example uses %ld).
+For the same reason, I'm pretty ambivalent about having test_grep. I
+suppose one could make a similar argument about "test_path_is_missing",
+etc, though some of those helpers are also encapsulating technique
+(e.g., test_dir_is_empty).
 
 -Peff
