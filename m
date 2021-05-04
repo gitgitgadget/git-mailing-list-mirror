@@ -2,108 +2,183 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D2D7C433ED
-	for <git@archiver.kernel.org>; Tue,  4 May 2021 17:26:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2070CC433ED
+	for <git@archiver.kernel.org>; Tue,  4 May 2021 17:51:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 00761613CA
-	for <git@archiver.kernel.org>; Tue,  4 May 2021 17:26:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DC331613C6
+	for <git@archiver.kernel.org>; Tue,  4 May 2021 17:51:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231704AbhEDR13 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 May 2021 13:27:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41674 "EHLO
+        id S232047AbhEDRwZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 May 2021 13:52:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47316 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231659AbhEDR12 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 May 2021 13:27:28 -0400
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 425C6C06174A
-        for <git@vger.kernel.org>; Tue,  4 May 2021 10:26:32 -0700 (PDT)
-Received: by mail-oi1-x229.google.com with SMTP id t8so9543389oij.0
-        for <git@vger.kernel.org>; Tue, 04 May 2021 10:26:32 -0700 (PDT)
+        with ESMTP id S231845AbhEDRwY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 May 2021 13:52:24 -0400
+Received: from mail-qt1-x849.google.com (mail-qt1-x849.google.com [IPv6:2607:f8b0:4864:20::849])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF038C061574
+        for <git@vger.kernel.org>; Tue,  4 May 2021 10:51:29 -0700 (PDT)
+Received: by mail-qt1-x849.google.com with SMTP id i12-20020ac860cc0000b02901cb6d022744so2528864qtm.20
+        for <git@vger.kernel.org>; Tue, 04 May 2021 10:51:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=dmmP5CaGIsVGIIqwkd5WC2LVg2SyBVcXfA1Z6ZYaPRo=;
-        b=Y4ygHueWTfy4pp7WNypqjMgwuZGEXTMcnMBkxEbo7D3gTbyLRg60sD0h1GZaVyJd0y
-         ZMD7U71Tilyaw4drM2ao7KEndA11J4At+h4rwNDborF0Uao5N2ZmETdn3Sb8mXrMl94j
-         H+E403izKjt+q13HW4lcnZXI63EgvFYLVzkrkhcxqUf/BJobWNufqTmmmS6KgXkv4I6X
-         ENTjnYcsZV4mb1U1o4GyzyKd8TAt9oYNfxt+8dvZUWSNs9Mxzr0Ypj1oPTTzLaFPMQVL
-         WvkeyTZGBK8x+TlNGQMEfJAwR47wx+TpWCHpOh48KrQJmpPsEbBIAcOZS2u3Fs/oaLj+
-         TCUQ==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=xpJhMGyXZx6PuSG5db5jweS1cgPfb5AZA0V82+ku5j4=;
+        b=R640gYbWQHZOk0biombNXstvsCz1ag9knpj5sWXIzJUVawd3doXm9/UgU1FSkzNiI4
+         wTuPGk7gEq42jyPo16Jb47qHvby+8oJlEmWSbhfA9KAMG3GYPXBv46QFywkLQCJTcC0F
+         fDbQtAC6VuANHLKV+2DuZR+nV9dif4vtKvjIgF4f0Gv1Lx5oh1APrH7Bg001VW/BQL8p
+         STD0CvbQowJ8v8obDR4tyVMhwvTZso/E0ZP0hH4hQtQAFobkFq/qMvPC35xr/50HNdjc
+         ZTfDf3tomOsoOYhKUwnCJCOI28Emo9SHW8NM/8/Mkhi/ucttcQXRwFjmQhhhMEK7Q3I2
+         esfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=dmmP5CaGIsVGIIqwkd5WC2LVg2SyBVcXfA1Z6ZYaPRo=;
-        b=KbQLty3l+Vn1pUrtnOR6aJ2QO+3leQ14WO73GKFFa1DRazMUwIJj8qTCXXU8z6X6Qw
-         Zswsrikmb8/zyZKX2mXCLyJ+kfRCRwZ2HVHpBnXBYPM23z+L9iyg9UdXWAmCZmcs60Wq
-         rgEbaEvFP4Z5I1l0SVJXrATMfRSFF2NkO2D6AbqsR+Frx/FPeupm8RyXRVGkc6LsMf9p
-         XjQTmGDdfOtsCqDGIHT41252Pz5Y5rbPSNLN0cU4CFdLqaYxC9Kvd4QARvQR+ywCNVtv
-         EySKEYWbjW+oXRo75hUeWPCD9xOVYJ2fcbaOulaYbko0Yw76cTFhUXAvDiQ2QRo+jvZR
-         rZZw==
-X-Gm-Message-State: AOAM531NxNgG4SklU0LM2ORQ06ZA8u/uRAYe/b+WPc42uhT59jcTv52n
-        kKqN7uWh36hpDhhh+HjYYrhPHhSbAHzang==
-X-Google-Smtp-Source: ABdhPJwD3pYgR/XJxOrx3yuXbQtSV6CN+fZNfjlPVWQq5ZTNavhwPdd1hAVABu/RAUkRke65IYLFkg==
-X-Received: by 2002:aca:2813:: with SMTP id 19mr18948586oix.80.1620149191336;
-        Tue, 04 May 2021 10:26:31 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:3c2f:d08:255c:f797? ([2600:1700:e72:80a0:3c2f:d08:255c:f797])
-        by smtp.gmail.com with ESMTPSA id 68sm879262otc.54.2021.05.04.10.26.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 May 2021 10:26:30 -0700 (PDT)
-Subject: Re: [PATCH 6/6] send-pack: support push negotiation
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-References: <c2780570-81ec-bede-2f4e-75748b788bbb@gmail.com>
- <20210503220244.2878522-1-jonathantanmy@google.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <70ea6b85-bc73-3f39-3449-9c08f6738a73@gmail.com>
-Date:   Tue, 4 May 2021 13:26:29 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.0
-MIME-Version: 1.0
-In-Reply-To: <20210503220244.2878522-1-jonathantanmy@google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=xpJhMGyXZx6PuSG5db5jweS1cgPfb5AZA0V82+ku5j4=;
+        b=fiCkwkRYJ8hS4D/aSFbmupMA6qDAxblrNQ8nOKmAbGmsMgr/nZsFxKXR/mymVtnP4u
+         4fGeHQ6VG39rUrFRu0e2JLlNzle8Rdca7Bb8H7tLbajMNW4NrCNjjU9rlsjG+Q9kjsRi
+         qYwV93agcmARQCASUI7a/IFoJsrtMRt2tfHX5COI6I1RyzXLIy+IQK52IaVJ0a9qP7eZ
+         Tikx/uwyR2ME0op4uA3tm1/zxAixasXb1YUZ14EEYPaVUsYcowb5+imuVJliTeyoKA3+
+         00PbylsnKqm8cjM3EQmXG1MPbXNH3VcxGZlnWEe8h/NfEMsHM9BV+LH+MfMN+tSxyR3N
+         s97w==
+X-Gm-Message-State: AOAM5306ypRG9O5WAlSfjIH2cQam1xdqcVcgkfdxhICsd+KrnCjjuH0B
+        rjAeIvMpo5vXSDbSkbbq3DPDZ4/pnFpk1zyuk9I9
+X-Google-Smtp-Source: ABdhPJwtfMLkf/TT/PjOxJqEZLrdI3bmP4fl5gG8iwcnrqwE8/Mz17roXaZjDWC4s2HIkRrBU9tsgYBZUuYgN9008szo
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a0c:a045:: with SMTP id
+ b63mr26239093qva.19.1620150688853; Tue, 04 May 2021 10:51:28 -0700 (PDT)
+Date:   Tue,  4 May 2021 10:51:25 -0700
+In-Reply-To: <ff74181e85975690b4fccfb6b72fb80045f4adc7.1617991824.git.me@ttaylorr.com>
+Message-Id: <20210504175125.2987651-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <ff74181e85975690b4fccfb6b72fb80045f4adc7.1617991824.git.me@ttaylorr.com>
+X-Mailer: git-send-email 2.31.1.527.g47e6f16901-goog
+Subject: Re: [PATCH 16/22] t5326: test multi-pack bitmap behavior
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     me@ttaylorr.com
+Cc:     git@vger.kernel.org, peff@peff.net, dstolee@microsoft.com,
+        gitster@pobox.com, jonathantanmy@google.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/3/2021 6:02 PM, Jonathan Tan wrote:
-> [snip asking about whether extra_have (a.k.a. advertised) and commons (a.k.a.
-> negotiated) can be merged]
-> 
->> Here, it would be nice if extra_have and commons were merged before calling
->> pack_objects(). I mentioned a way to perhaps make that easier above, but
->> the context might not make that be super-simple. Running a loop here to
->> scan 'commons' and append them to 'extra_have' might be a sufficient
->> approach.
->>
->> Generally, this approach seems like it would work. I have not done any
->> local testing, yet.
->>
->> Thanks,
->> -Stolee
-> 
-> I was reluctant to merge them because that would involve either (1)
-> adding commons to "extra_have" (as you suggest) or (2) iterating through
-> "extra_have" in order to add it to the "commons" set. For (1), this
-> would modify "extra_have", which is passed in from the outside. Looking
-> at its callers, the main one in git_transport_push() in transport.c
-> calls send_pack() with a set that has traversed the transport API, so I
-> think it would be confusing if such a set suddenly changed. For (2), the
-> extra loop seems more troublesome than having two parameters with
-> clearer names indicating where they come from. I don't mind changing to
-> (2), though, if people want it.
- 
-I suppose this concern about "ownership" is valid and worth having the
-two parameters in the helper function for extra safety.
+> +test_expect_success 'clone with bitmaps enabled' '
+> +	git clone --no-local --bare . clone-reverse-delta.git &&
+> +	test_when_finished "rm -fr clone-reverse-delta.git" &&
+> +
+> +	git rev-parse HEAD >expect &&
+> +	git --git-dir=clone-reverse-delta.git rev-parse HEAD >actual &&
+> +	test_cmp expect actual
+> +'
 
-Thanks,
--Stolee
+What is this test testing? That bitmaps are used? (I'm not sure how to
+verify that though - we seem to have tracing for bitmap writing but not
+for reading, for example.)
+
+> +bitmap_reuse_tests() {
+> +	from=$1
+> +	to=$2
+> +
+> +	test_expect_success "setup pack reuse tests ($from -> $to)" '
+> +		rm -fr repo &&
+> +		git init repo &&
+> +		(
+> +			cd repo &&
+> +			test_commit_bulk 16 &&
+> +			git tag old-tip &&
+> +
+> +			git config core.multiPackIndex true &&
+> +			if test "MIDX" = "$from"
+> +			then
+> +				GIT_TEST_MULTI_PACK_INDEX=0 git repack -Ad &&
+> +				git multi-pack-index write --bitmap
+> +			else
+> +				GIT_TEST_MULTI_PACK_INDEX=0 git repack -Adb
+> +			fi
+> +		)
+> +	'
+> +
+> +	test_expect_success "build bitmap from existing ($from -> $to)" '
+> +		(
+> +			cd repo &&
+> +			test_commit_bulk --id=further 16 &&
+> +			git tag new-tip &&
+> +
+> +			if test "MIDX" = "$to"
+> +			then
+> +				GIT_TEST_MULTI_PACK_INDEX=0 git repack -d &&
+> +				git multi-pack-index write --bitmap
+> +			else
+> +				GIT_TEST_MULTI_PACK_INDEX=0 git repack -Adb
+> +			fi
+> +		)
+> +	'
+> +
+> +	test_expect_success "verify resulting bitmaps ($from -> $to)" '
+> +		(
+> +			cd repo &&
+> +			git for-each-ref &&
+> +			git rev-list --test-bitmap refs/tags/old-tip &&
+> +			git rev-list --test-bitmap refs/tags/new-tip
+> +		)
+> +	'
+> +}
+> +
+> +bitmap_reuse_tests 'pack' 'MIDX'
+> +bitmap_reuse_tests 'MIDX' 'pack'
+> +bitmap_reuse_tests 'MIDX' 'MIDX'
+
+Is it possible to verify that the bitmaps have truly been reused (and
+not, say, created from scratch)? (E.g. is there any nature of the
+bitmap created - for example, the order of commits?)
+
+> +test_expect_success 'pack.preferBitmapTips' '
+> +	git init repo &&
+> +	test_when_finished "rm -fr repo" &&
+> +	(
+> +		cd repo &&
+> +
+> +		test_commit_bulk --message="%s" 103 &&
+> +
+> +		git log --format="%H" >commits.raw &&
+> +		sort <commits.raw >commits &&
+> +
+> +		git log --format="create refs/tags/%s %H" HEAD >refs &&
+> +		git update-ref --stdin <refs &&
+> +
+> +		git multi-pack-index write --bitmap &&
+> +		test_path_is_file $midx &&
+> +		test_path_is_file $midx-$(midx_checksum $objdir).bitmap &&
+> +
+> +		test-tool bitmap list-commits | sort >bitmaps &&
+> +		comm -13 bitmaps commits >before &&
+> +		test_line_count = 1 before &&
+> +
+> +		perl -ne "printf(\"create refs/tags/include/%d \", $.); print" \
+> +			<before | git update-ref --stdin &&
+> +
+> +		rm -fr $midx-$(midx_checksum $objdir).bitmap &&
+> +		rm -fr $midx-$(midx_checksum $objdir).rev &&
+> +		rm -fr $midx &&
+> +
+> +		git -c pack.preferBitmapTips=refs/tags/include \
+> +			multi-pack-index write --bitmap &&
+> +		test-tool bitmap list-commits | sort >bitmaps &&
+> +		comm -13 bitmaps commits >after &&
+> +
+> +		! test_cmp before after
+> +	)
+> +'
+
+Could we have a more precise comparison of "before" and "after" (besides
+the fact that they're different)?
+
+Besides that, all the patches up to this one look good (including patch
+14, verified with "--color-moved
+--color-moved-ws=allow-indentation-change").
