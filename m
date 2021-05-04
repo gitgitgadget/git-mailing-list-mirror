@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B63DC433ED
-	for <git@archiver.kernel.org>; Tue,  4 May 2021 16:28:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67B31C433B4
+	for <git@archiver.kernel.org>; Tue,  4 May 2021 16:28:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CA6F2611AD
-	for <git@archiver.kernel.org>; Tue,  4 May 2021 16:28:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3AF1461153
+	for <git@archiver.kernel.org>; Tue,  4 May 2021 16:28:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231844AbhEDQ3D (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 May 2021 12:29:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56640 "EHLO
+        id S231845AbhEDQ3G (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 May 2021 12:29:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231845AbhEDQ27 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 May 2021 12:28:59 -0400
-Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC2B6C061574
-        for <git@vger.kernel.org>; Tue,  4 May 2021 09:28:03 -0700 (PDT)
-Received: by mail-qv1-xf29.google.com with SMTP id q5so4729405qvv.6
-        for <git@vger.kernel.org>; Tue, 04 May 2021 09:28:03 -0700 (PDT)
+        with ESMTP id S231694AbhEDQ3C (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 May 2021 12:29:02 -0400
+Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 890CEC06174A
+        for <git@vger.kernel.org>; Tue,  4 May 2021 09:28:06 -0700 (PDT)
+Received: by mail-qk1-x731.google.com with SMTP id o5so9163626qkb.0
+        for <git@vger.kernel.org>; Tue, 04 May 2021 09:28:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp.br; s=usp-google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=24zXgh5ERhP6WetWcVX1R2rce49VOwH6kleFlHsnwFc=;
-        b=KF7//bv8Ek6LYO1cFIzCSOXLjJfFSXESkpIYNgOSYqEgD8brlq1MNOPzbydegWIpQS
-         NqeJZFgYOSVAZgUQii8LtEflWEs6YkVkQ8iGBls9f7+umAxAX9iLOIDkS/jfkp4MdvcB
-         PgfeWp9mqh9Pxhoi9rI7wq3rH0gL8txnnUMCT30dxU8yOWGpKcYQ1edKOPllvtoCQ2yy
-         RQQvzK3PBLHXNxrmwMSfPNqpe9tvHVemsGkxuK1sR0rKr5rDR3abSPnp9sgWmsIkF8Hp
-         O/kITO05s+lmv2GsitEkcRZh9UOdkQT6ALaawF8sJexXlViIetRytRrHMl0qEo+cWb43
-         fYHA==
+        bh=XKajkqyAJR2cWRG4UyaQ6mLUoNVl9zrHgnM7E69bptA=;
+        b=w8Bn/in66rqKty1QjjD38yzA7BGUNLTA3ucduJz0LXhS8VHRvRIrb1+Hd6uO2Sz1FT
+         qTpyYvE/zOHrRy1KbSke3AJEM/KA/yLpcv0Zkx66axgUX7rCLRcn4EzsQ2seIKfm6Cjo
+         d7gbw+w4GsEu8iDT7Gu6mgNgXmQn6xezFsPaizCIzxjsx7eFsCW59o8T0iwvLZj3/72b
+         QRPrgTYS8yhepiS3Sy4M2Klt+yqeEEqIn7XuKyaX9dqbPmse02bpEQoo0nguk3jC2SF0
+         ylCyfi5wvxzerPJ1BtuDp0K53H8aQWFjDvKQrvol2nyxYo5+uVuB8EJLMH57nsItPcI1
+         eLUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=24zXgh5ERhP6WetWcVX1R2rce49VOwH6kleFlHsnwFc=;
-        b=WhXy0l0/0yyx+WF7IjoeojfuFm4wsfsSuRvzz+VN4uiyjSrQzFlTM70c/u0WODwudB
-         I9OcX8oNpwOUJC635CeEgxi5SFagm2uGLZjKJh0M0MzIqEsWIZZafIiAAJcUwKIbl4YA
-         hxgV+kVG0Em7gPSD6WRbpk9BnMw72/EvoQMo2KlOpNm7EUpWQVPX2TiihIhwhpbp9m/P
-         7Bc4u1Zr2vLfXeSyFD7FLzcXFBCjN9GTnLGfw0oRD/OK/9N1NByHIEaaR2oVM36bY6jR
-         yQ77taKqH1Sk9yApB7wZLeJXmhoJ7uRz6QpbaNWZh2+96XhrAAVBJnscnJ0v8Yz3Mnz/
-         rOlw==
-X-Gm-Message-State: AOAM5325YnF7TIPMn49PwIw8+b86mehaavBVFapRSgbJm2FufP1bwroa
-        L6LOu6rqrZLNgttcSwfM3ht7Vv/LsLnE6A==
-X-Google-Smtp-Source: ABdhPJx6IIUUnVaxTRr3sJHxqiIzC+uDjtahfc6+94fpU/UiBqUqN9f+7Tzlm/3tFLXwGz9+eaZ51g==
-X-Received: by 2002:a05:6214:19e7:: with SMTP id q7mr26439441qvc.34.1620145682716;
-        Tue, 04 May 2021 09:28:02 -0700 (PDT)
+        bh=XKajkqyAJR2cWRG4UyaQ6mLUoNVl9zrHgnM7E69bptA=;
+        b=Jx6eOb2GfV9LK4W5p7RHWarZoI8Xd9Y5GAstGMcA5X/dMkh8lk7Yrww19UFFKLVY4t
+         Cu+P+OyxnGyu5l92un0AVKB7N9VoPL+3tWbH/cvSiuE8zutoWpUwi9brc62psRa4fAew
+         ofxH0I/ME/1hW6n1RBfRCEDSiVnlK+mzXezUrUVeCpDpF7LqUv9T3GvS92X0yY+fMflx
+         CIPpx2eq274unnSRqG66Q92lhy1mB7RKDR5ywnLiF+dJyCX+PIdBq4GOKeG96Qxk8XoN
+         29RNToImNGLD5SS8q1SmH885R9W8d+TFyFTLvxWZCIkYMqW9AjCY2B4bV8YrOoxh/b7z
+         8JzA==
+X-Gm-Message-State: AOAM532vMuOLbLPNvHcRVi3BJ4CuORal6xz82AV2xEMYmy21FJilqQ0B
+        7DkCUqGJb/2KPCyxL+s9eM+vLjPVVqTYJg==
+X-Google-Smtp-Source: ABdhPJxUidjSZ3cGTvXUttCxh4SND/tPVSETnm11HdsBxL0G64dKyAG5sjJUe+5zsfJDoX4jS3ppMQ==
+X-Received: by 2002:a37:7006:: with SMTP id l6mr25360586qkc.137.1620145685522;
+        Tue, 04 May 2021 09:28:05 -0700 (PDT)
 Received: from mango.meuintelbras.local ([177.32.118.149])
-        by smtp.gmail.com with ESMTPSA id x19sm11202689qkx.107.2021.05.04.09.28.00
+        by smtp.gmail.com with ESMTPSA id x19sm11202689qkx.107.2021.05.04.09.28.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 May 2021 09:28:02 -0700 (PDT)
+        Tue, 04 May 2021 09:28:05 -0700 (PDT)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
 Cc:     christian.couder@gmail.com, git@jeffhostetler.com,
         stolee@gmail.com, tboegi@web.de
-Subject: [PATCH v3 7/8] parallel-checkout: add tests related to .gitattributes
-Date:   Tue,  4 May 2021 13:27:34 -0300
-Message-Id: <5350689a30566f067a10a288e7cdef63119728d1.1620145501.git.matheus.bernardino@usp.br>
+Subject: [PATCH v3 8/8] ci: run test round with parallel-checkout enabled
+Date:   Tue,  4 May 2021 13:27:35 -0300
+Message-Id: <7b2966c488c29578aa621c609e3d6fc7e36534a9.1620145501.git.matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.30.1
 In-Reply-To: <cover.1620145501.git.matheus.bernardino@usp.br>
 References: <cover.1620145501.git.matheus.bernardino@usp.br>
@@ -71,221 +71,99 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add tests to confirm that the `struct conv_attrs` data is correctly
-passed from the main process to the workers, and that they can properly
-convert the blobs before writing them to the working tree.
+We already have tests for the basic parallel-checkout operations. But
+this code can also run be executed by other commands, such as
+git-read-tree and git-sparse-checkout, which are currently not tested
+with multiple workers. To promote a wider test coverage without
+duplicating tests:
 
-Also check that parallel-ineligible entries, such as regular files that
-require external filters, are correctly smudge and written when
-parallel-checkout is enabled.
+1. Add the GIT_TEST_CHECKOUT_WORKERS environment variable, to optionally
+   force parallel-checkout execution during the whole test suite.
 
-Co-authored-by: Jeff Hostetler <jeffhost@microsoft.com>
+2. Set this variable (with a value of 2) in the second test round of our
+   linux-gcc CI job. This round runs `make test` again with some
+   optional GIT_TEST_* variables enabled, so there is no additional
+   overhead in exercising the parallel-checkout code here.
+
+Note that tests checking out less than two parallel-eligible entries
+will fall back to the sequential mode. Nevertheless, it's still a good
+exercise for the parallel-checkout framework as the fallback codepath
+also writes the queued entries using the parallel-checkout functions
+(only without spawning any worker).
+
 Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
 ---
- t/t2082-parallel-checkout-attributes.sh | 194 ++++++++++++++++++++++++
- 1 file changed, 194 insertions(+)
- create mode 100755 t/t2082-parallel-checkout-attributes.sh
+ ci/run-build-and-tests.sh  |  1 +
+ parallel-checkout.c        | 14 ++++++++++++++
+ t/README                   |  4 ++++
+ t/lib-parallel-checkout.sh |  3 +++
+ 4 files changed, 22 insertions(+)
 
-diff --git a/t/t2082-parallel-checkout-attributes.sh b/t/t2082-parallel-checkout-attributes.sh
-new file mode 100755
-index 0000000000..2525457961
---- /dev/null
-+++ b/t/t2082-parallel-checkout-attributes.sh
-@@ -0,0 +1,194 @@
-+#!/bin/sh
+diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
+index d19be40544..3ce81ffee9 100755
+--- a/ci/run-build-and-tests.sh
++++ b/ci/run-build-and-tests.sh
+@@ -26,6 +26,7 @@ linux-gcc)
+ 	export GIT_TEST_ADD_I_USE_BUILTIN=1
+ 	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
+ 	export GIT_TEST_WRITE_REV_INDEX=1
++	export GIT_TEST_CHECKOUT_WORKERS=2
+ 	make test
+ 	;;
+ linux-clang)
+diff --git a/parallel-checkout.c b/parallel-checkout.c
+index 6fb3f1e6c9..6b1af32bb3 100644
+--- a/parallel-checkout.c
++++ b/parallel-checkout.c
+@@ -35,6 +35,20 @@ static const int DEFAULT_NUM_WORKERS = 1;
+ 
+ void get_parallel_checkout_configs(int *num_workers, int *threshold)
+ {
++	char *env_workers = getenv("GIT_TEST_CHECKOUT_WORKERS");
 +
-+test_description='parallel-checkout: attributes
++	if (env_workers && *env_workers) {
++		if (strtol_i(env_workers, 10, num_workers)) {
++			die("invalid value for GIT_TEST_CHECKOUT_WORKERS: '%s'",
++			    env_workers);
++		}
++		if (*num_workers < 1)
++			*num_workers = online_cpus();
 +
-+Verify that parallel-checkout correctly creates files that require
-+conversions, as specified in .gitattributes. The main point here is
-+to check that the conv_attr data is correctly sent to the workers
-+and that it contains sufficient information to smudge files
-+properly (without access to the index or attribute stack).
-+'
++		*threshold = 0;
++		return;
++	}
 +
-+TEST_NO_CREATE_REPO=1
-+. ./test-lib.sh
-+. "$TEST_DIRECTORY/lib-parallel-checkout.sh"
-+. "$TEST_DIRECTORY/lib-encoding.sh"
+ 	if (git_config_get_int("checkout.workers", num_workers))
+ 		*num_workers = DEFAULT_NUM_WORKERS;
+ 	else if (*num_workers < 1)
+diff --git a/t/README b/t/README
+index 8eb9e46b1d..a8cfd37387 100644
+--- a/t/README
++++ b/t/README
+@@ -439,6 +439,10 @@ GIT_TEST_WRITE_REV_INDEX=<boolean>, when true enables the
+ GIT_TEST_SPARSE_INDEX=<boolean>, when true enables index writes to use the
+ sparse-index format by default.
+ 
++GIT_TEST_CHECKOUT_WORKERS=<n> overrides the 'checkout.workers' setting
++to <n> and 'checkout.thresholdForParallelism' to 0, forcing the
++execution of the parallel-checkout code.
 +
-+test_expect_success 'parallel-checkout with ident' '
-+	set_checkout_config 2 0 &&
-+	git init ident &&
-+	(
-+		cd ident &&
-+		echo "A ident" >.gitattributes &&
-+		echo "\$Id\$" >A &&
-+		echo "\$Id\$" >B &&
-+		git add -A &&
-+		git commit -m id &&
+ Naming Tests
+ ------------
+ 
+diff --git a/t/lib-parallel-checkout.sh b/t/lib-parallel-checkout.sh
+index d6740425b1..21f5759732 100644
+--- a/t/lib-parallel-checkout.sh
++++ b/t/lib-parallel-checkout.sh
+@@ -1,5 +1,8 @@
+ # Helpers for tests invoking parallel-checkout
+ 
++# Parallel checkout tests need full control of the number of workers
++unset GIT_TEST_CHECKOUT_WORKERS
 +
-+		rm A B &&
-+		test_checkout_workers 2 git reset --hard &&
-+		hexsz=$(test_oid hexsz) &&
-+		grep -E "\\\$Id: [0-9a-f]{$hexsz} \\\$" A &&
-+		grep "\\\$Id\\\$" B
-+	)
-+'
-+
-+test_expect_success 'parallel-checkout with re-encoding' '
-+	set_checkout_config 2 0 &&
-+	git init encoding &&
-+	(
-+		cd encoding &&
-+		echo text >utf8-text &&
-+		write_utf16 <utf8-text >utf16-text &&
-+
-+		echo "A working-tree-encoding=UTF-16" >.gitattributes &&
-+		cp utf16-text A &&
-+		cp utf8-text B &&
-+		git add A B .gitattributes &&
-+		git commit -m encoding &&
-+
-+		# Check that A is stored in UTF-8
-+		git cat-file -p :A >A.internal &&
-+		test_cmp_bin utf8-text A.internal &&
-+
-+		rm A B &&
-+		test_checkout_workers 2 git checkout A B &&
-+
-+		# Check that A (and only A) is re-encoded during checkout
-+		test_cmp_bin utf16-text A &&
-+		test_cmp_bin utf8-text B
-+	)
-+'
-+
-+test_expect_success 'parallel-checkout with eol conversions' '
-+	set_checkout_config 2 0 &&
-+	git init eol &&
-+	(
-+		cd eol &&
-+		printf "multi\r\nline\r\ntext" >crlf-text &&
-+		printf "multi\nline\ntext" >lf-text &&
-+
-+		git config core.autocrlf false &&
-+		echo "A eol=crlf" >.gitattributes &&
-+		cp crlf-text A &&
-+		cp lf-text B &&
-+		git add A B .gitattributes &&
-+		git commit -m eol &&
-+
-+		# Check that A is stored with LF format
-+		git cat-file -p :A >A.internal &&
-+		test_cmp_bin lf-text A.internal &&
-+
-+		rm A B &&
-+		test_checkout_workers 2 git checkout A B &&
-+
-+		# Check that A (and only A) is converted to CRLF during checkout
-+		test_cmp_bin crlf-text A &&
-+		test_cmp_bin lf-text B
-+	)
-+'
-+
-+# Entries that require an external filter are not eligible for parallel
-+# checkout. Check that both the parallel-eligible and non-eligible entries are
-+# properly writen in a single checkout operation.
-+#
-+test_expect_success 'parallel-checkout and external filter' '
-+	set_checkout_config 2 0 &&
-+	git init filter &&
-+	(
-+		cd filter &&
-+		write_script <<-\EOF rot13.sh &&
-+		tr \
-+		  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" \
-+		  "nopqrstuvwxyzabcdefghijklmNOPQRSTUVWXYZABCDEFGHIJKLM"
-+		EOF
-+
-+		git config filter.rot13.clean "\"$(pwd)/rot13.sh\"" &&
-+		git config filter.rot13.smudge "\"$(pwd)/rot13.sh\"" &&
-+		git config filter.rot13.required true &&
-+
-+		echo abcd >original &&
-+		echo nopq >rot13 &&
-+
-+		echo "A filter=rot13" >.gitattributes &&
-+		cp original A &&
-+		cp original B &&
-+		cp original C &&
-+		git add A B C .gitattributes &&
-+		git commit -m filter &&
-+
-+		# Check that A (and only A) was cleaned
-+		git cat-file -p :A >A.internal &&
-+		test_cmp rot13 A.internal &&
-+		git cat-file -p :B >B.internal &&
-+		test_cmp original B.internal &&
-+		git cat-file -p :C >C.internal &&
-+		test_cmp original C.internal &&
-+
-+		rm A B C *.internal &&
-+		test_checkout_workers 2 git checkout A B C &&
-+
-+		# Check that A (and only A) was smudged during checkout
-+		test_cmp original A &&
-+		test_cmp original B &&
-+		test_cmp original C
-+	)
-+'
-+
-+# The delayed queue is independent from the parallel queue, and they should be
-+# able to work together in the same checkout process.
-+#
-+test_expect_success PERL 'parallel-checkout and delayed checkout' '
-+	write_script rot13-filter.pl "$PERL_PATH" \
-+		<"$TEST_DIRECTORY"/t0021/rot13-filter.pl &&
-+
-+	test_config_global filter.delay.process \
-+		"\"$(pwd)/rot13-filter.pl\" --always-delay \"$(pwd)/delayed.log\" clean smudge delay" &&
-+	test_config_global filter.delay.required true &&
-+
-+	echo "abcd" >original &&
-+	echo "nopq" >rot13 &&
-+
-+	git init delayed &&
-+	(
-+		cd delayed &&
-+		echo "*.d filter=delay" >.gitattributes &&
-+		cp ../original W.d &&
-+		cp ../original X.d &&
-+		cp ../original Y &&
-+		cp ../original Z &&
-+		git add -A &&
-+		git commit -m delayed &&
-+
-+		# Check that *.d files were cleaned
-+		git cat-file -p :W.d >W.d.internal &&
-+		test_cmp W.d.internal ../rot13 &&
-+		git cat-file -p :X.d >X.d.internal &&
-+		test_cmp X.d.internal ../rot13 &&
-+		git cat-file -p :Y >Y.internal &&
-+		test_cmp Y.internal ../original &&
-+		git cat-file -p :Z >Z.internal &&
-+		test_cmp Z.internal ../original &&
-+
-+		rm *
-+	) &&
-+
-+	set_checkout_config 2 0 &&
-+	test_checkout_workers 2 git -C delayed checkout -f &&
-+	verify_checkout delayed &&
-+
-+	# Check that the *.d files got to the delay queue and were filtered
-+	grep "smudge W.d .* \[DELAYED\]" delayed.log &&
-+	grep "smudge X.d .* \[DELAYED\]" delayed.log &&
-+	test_cmp delayed/W.d original &&
-+	test_cmp delayed/X.d original &&
-+
-+	# Check that the parallel-eligible entries went to the right queue and
-+	# were not filtered
-+	! grep "smudge Y .* \[DELAYED\]" delayed.log &&
-+	! grep "smudge Z .* \[DELAYED\]" delayed.log &&
-+	test_cmp delayed/Y original &&
-+	test_cmp delayed/Z original
-+'
-+
-+test_done
+ set_checkout_config () {
+ 	if test $# -ne 2
+ 	then
 -- 
 2.30.1
 
