@@ -2,93 +2,297 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-21.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
+	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E40EC433B4
-	for <git@archiver.kernel.org>; Tue,  4 May 2021 03:46:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D2CBAC433B4
+	for <git@archiver.kernel.org>; Tue,  4 May 2021 05:02:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EB0E3611CB
-	for <git@archiver.kernel.org>; Tue,  4 May 2021 03:46:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B202C611EE
+	for <git@archiver.kernel.org>; Tue,  4 May 2021 05:02:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229708AbhEDDrJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 May 2021 23:47:09 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55123 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229499AbhEDDrI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 May 2021 23:47:08 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5AE2DC3D76;
-        Mon,  3 May 2021 23:46:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=E3+u4XWWzFuqq8vcpiqIVx5tQjQMa4Fxu25y98
-        GEEkY=; b=bO+bLmiXpwN/mpP1ECRYK53lHHWDqemrRqkqtdU5fB2cJZzzEsTLdQ
-        Yf2zcRNODMC+sZGaX1Xjv7CaW6N0itNQrhXT2TFtv37FtnAnOY8dOA4DfsT8SEuc
-        79K0hBSsvg7DVpXC3C9I+rmHXrZW1pbnZvnnRf/aq5pA9dAihIuyY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 52ADFC3D75;
-        Mon,  3 May 2021 23:46:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D0037C3D74;
-        Mon,  3 May 2021 23:46:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Mark Amery <markrobertamery@gmail.com>, git@vger.kernel.org
-Subject: Re: Bug: Changing folder case with `git mv` crashes on
- case-insensitive file system
-References: <CAD8jeghpOQoibk0xM0QgLsOwLNw9GdM=4rhYuzV-NSkw8LinMQ@mail.gmail.com>
-        <YJCABtAGT7s70jl1@camp.crustytoothpaste.net>
-Date:   Tue, 04 May 2021 12:46:12 +0900
-In-Reply-To: <YJCABtAGT7s70jl1@camp.crustytoothpaste.net> (brian m. carlson's
-        message of "Mon, 3 May 2021 22:58:14 +0000")
-Message-ID: <xmqqfsz36u0r.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 45EFDDD6-AC8B-11EB-B8FC-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+        id S229825AbhEDFD1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 May 2021 01:03:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44520 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229727AbhEDFD1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 May 2021 01:03:27 -0400
+Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0673C061574
+        for <git@vger.kernel.org>; Mon,  3 May 2021 22:02:32 -0700 (PDT)
+Received: by mail-pf1-x449.google.com with SMTP id f79-20020a6238520000b029028e7b5e8d7bso2989558pfa.12
+        for <git@vger.kernel.org>; Mon, 03 May 2021 22:02:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=PF+wrTirO51tOYLo3EhYTSnjT/deIxwevZ0AmSkIN8k=;
+        b=knL7hDc3r+y5fvcbPH59x/SHXuWbV6R80eLCdoXzBjmSTsTDKlLs/xC9kGMMgrvBX5
+         sC+WYjypndsp1pSCBRauEHjBtYjFENtyEfoIt2e62H+e5MfDUQzGzLBLOTw7ho9s5r3N
+         dRz+balVezP3EfZAMLkjQmN4uf7ALvlHSupOnZwGcjryadKV/z9zHUTj+f/D5j4mbV67
+         NR0k1hJGp4tKiiUZTJRZcJvmy8DcbaxSaPe2Fnk6d0T99Ny+jtV8AEjHAfv7FhrVjTK4
+         g8bvX9h5/EnCOlI2EVGg7TMg8o0lx0ANzRvEE7wZzgoeKqDGJ3FtXTzwewgwOnzOZZf/
+         WcYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=PF+wrTirO51tOYLo3EhYTSnjT/deIxwevZ0AmSkIN8k=;
+        b=oH2LqL6zQy03MiacuscTvWVtlGNQZvYRmto6Akc/LBHFlW7xJLobi+l547Ix3+g9Jd
+         /87xg4JBXUVUsI/s/LQlwNwbmMofLGwl4JkJPeuptGhdFgzHifJ9/gx4EtxAhWKE1sbW
+         8ydD2gmvaHfd4kwq8wd9A87EeMkCI9BMF7480+bG4h0+FXR93vQVM5cD+dzdUOc+B8ML
+         32HTbWae1KXh40Y+aXR0DX4Mjxq/Bi11pTC+deS763xZT8Wzv7F9fO9U5cNiAYZGAayj
+         wVDmNFDuJyG8dNQWxKK5xDL0QI4XwPTvsm2MpyBvARuuQeZGLRAvgOtjzZpNWdUdS10V
+         xbig==
+X-Gm-Message-State: AOAM530zBN59JIbZpu3DNh6H579j7CGvaYUK8Dos3OrT3KKO/NhJJ9jP
+        7t2B3lLxNqDIARUJubFNBcCDHctsNzgYygE/7oNM
+X-Google-Smtp-Source: ABdhPJxlJKZ0MHUiv5uhylFqsd62u88Dnhoc5fyXKihM0GklaGWGTpX+lGZ8XaGs9CS7VBCCuDSv4ZIGtYHnsO998Hh6
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a17:902:ed95:b029:ee:aa46:547a with
+ SMTP id e21-20020a170902ed95b02900eeaa46547amr19923952plj.27.1620104552311;
+ Mon, 03 May 2021 22:02:32 -0700 (PDT)
+Date:   Mon,  3 May 2021 22:02:30 -0700
+In-Reply-To: <fd320c5ed48c7431b64b898f49101b0f53655a95.1617991824.git.me@ttaylorr.com>
+Message-Id: <20210504050230.2915390-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <fd320c5ed48c7431b64b898f49101b0f53655a95.1617991824.git.me@ttaylorr.com>
+X-Mailer: git-send-email 2.31.1.527.g47e6f16901-goog
+Subject: Re: [PATCH 13/22] pack-bitmap: write multi-pack bitmaps
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     me@ttaylorr.com
+Cc:     git@vger.kernel.org, peff@peff.net, dstolee@microsoft.com,
+        gitster@pobox.com, jonathantanmy@google.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+> Write multi-pack bitmaps in the format described by
+> Documentation/technical/bitmap-format.txt, inferring their presence with
+> the absence of '--bitmap'.
+> 
+> To write a multi-pack bitmap, this patch attempts to reuse as much of
+> the existing machinery from pack-objects as possible. Specifically, the
+> MIDX code prepares a packing_data struct that pretends as if a single
+> packfile has been generated containing all of the objects contained
+> within the MIDX.
 
-> Yeah, this is because your operating system returns EINVAL in this case.
-> POSIX specifies EINVAL when you're trying to make a directory a
-> subdirectory of itself.  Which, I mean, I guess is a valid
-> interpretation here, but it of course makes renaming the path needlessly
-> difficult.
-> ...
-> I suspect part of the problem here is two fold: on macOS we can't
-> distinguish an attempt to rename the path due to it folding or
-> canonicalizing to the same thing from a real attempt to move an actual
-> directory into itself.  The latter would be a problem we'd want to
-> report, and the former is not.  Unfortunately, detecting this is
-> difficult because that means we'd have to implement the macOS
-> canonicalization algorithm in Git and we don't want to do that.
+Sounds good, and makes sense. Conceptually, the MIDX bitmap is the same
+as a regular packfile bitmap, just that the order of objects in the
+bitmap is defined differently.
 
-I agree we'd probably need to resort to macOS specific hack (like we
-have NFS or Coda specific hacks), but it may not be too bad.
+> +static void prepare_midx_packing_data(struct packing_data *pdata,
+> +				      struct write_midx_context *ctx)
+> +{
+> +	uint32_t i;
+> +
+> +	memset(pdata, 0, sizeof(struct packing_data));
+> +	prepare_packing_data(the_repository, pdata);
+> +
+> +	for (i = 0; i < ctx->entries_nr; i++) {
+> +		struct pack_midx_entry *from = &ctx->entries[ctx->pack_order[i]];
+> +		struct object_entry *to = packlist_alloc(pdata, &from->oid);
+> +
+> +		oe_set_in_pack(pdata, to,
+> +			       ctx->info[ctx->pack_perm[from->pack_int_id]].p);
+> +	}
+> +}
 
-After seeing EINVAL, we can lstat src 'foo' and dst 'FOO', and
-realize that both are directories and have the same st_dev/st_ino,
-which should be fairly straightforward, no?
+It is surprising to see this right at the top. Scrolling down, I guess
+that there is more information needed than just the packing_data struct.
 
-For that, we do not exactly have to depend on any part of macOS-ism;
-we do depend on the traditional "within the same device, inum is a
-good way to tell if two filesystem entities are the same".
+> +static int add_ref_to_pending(const char *refname,
+> +			      const struct object_id *oid,
+> +			      int flag, void *cb_data)
+> +{
+> +	struct rev_info *revs = (struct rev_info*)cb_data;
+> +	struct object *object;
+> +
+> +	if ((flag & REF_ISSYMREF) && (flag & REF_ISBROKEN)) {
+> +		warning("symbolic ref is dangling: %s", refname);
+> +		return 0;
+> +	}
+> +
+> +	object = parse_object_or_die(oid, refname);
+> +	if (object->type != OBJ_COMMIT)
+> +		return 0;
+> +
+> +	add_pending_object(revs, object, "");
+> +	if (bitmap_is_preferred_refname(revs->repo, refname))
+> +		object->flags |= NEEDS_BITMAP;
+> +	return 0;
+> +}
 
-The (mis)design of "git mv a b c d ... DST" that turns the request
-into "mv a DST/a && mv b DST/b && ..." too early may make the
-fallback behaviour a bit cumbersome to implement (mainly, we need to
-strip out the '/foo' part out of the failing dst FOO/foo to get the
-real destination directory 'FOO' the user gave us, before checking
-with that lstat dance), but since it is an error codepath, we can be
-as inefficient as we like, as long as we are correct ;-)
+Makes sense. We need to flag certain commits as NEEDS_BITMAP because
+bitmaps are not made for all commits but only certain ones.
 
+> +struct bitmap_commit_cb {
+> +	struct commit **commits;
+> +	size_t commits_nr, commits_alloc;
+> +
+> +	struct write_midx_context *ctx;
+> +};
+> +
+> +static const struct object_id *bitmap_oid_access(size_t index,
+> +						 const void *_entries)
+> +{
+> +	const struct pack_midx_entry *entries = _entries;
+> +	return &entries[index].oid;
+> +}
+> +
+> +static void bitmap_show_commit(struct commit *commit, void *_data)
+> +{
+> +	struct bitmap_commit_cb *data = _data;
+> +	if (oid_pos(&commit->object.oid, data->ctx->entries,
+> +		    data->ctx->entries_nr,
+> +		    bitmap_oid_access) > -1) {
+> +		ALLOC_GROW(data->commits, data->commits_nr + 1,
+> +			   data->commits_alloc);
+> +		data->commits[data->commits_nr++] = commit;
+> +	}
+> +}
+> +
+> +static struct commit **find_commits_for_midx_bitmap(uint32_t *indexed_commits_nr_p,
+> +						    struct write_midx_context *ctx)
+> +{
+> +	struct rev_info revs;
+> +	struct bitmap_commit_cb cb;
+> +
+> +	memset(&cb, 0, sizeof(struct bitmap_commit_cb));
+> +	cb.ctx = ctx;
+> +
+> +	repo_init_revisions(the_repository, &revs, NULL);
+> +	for_each_ref(add_ref_to_pending, &revs);
+> +
+> +	fetch_if_missing = 0;
+> +	revs.exclude_promisor_objects = 1;
+
+I think that the MIDX bitmap requires all objects be present? If yes, we
+should omit these 2 lines.
+
+> +
+> +	if (prepare_revision_walk(&revs))
+> +		die(_("revision walk setup failed"));
+> +
+> +	traverse_commit_list(&revs, bitmap_show_commit, NULL, &cb);
+> +	if (indexed_commits_nr_p)
+> +		*indexed_commits_nr_p = cb.commits_nr;
+> +
+> +	return cb.commits;
+> +}
+
+Hmm...I might be missing something obvious, but this function and its
+callbacks seem to be written like this in order to put the returned
+commits in a certain order. But later on in write_midx_bitmap(), the
+return value of this function is passed to
+bitmap_writer_select_commits(), which resorts the list anyway?
+
+> +static int write_midx_bitmap(char *midx_name, unsigned char *midx_hash,
+> +			     struct write_midx_context *ctx,
+> +			     unsigned flags)
+> +{
+> +	struct packing_data pdata;
+> +	struct pack_idx_entry **index;
+> +	struct commit **commits = NULL;
+> +	uint32_t i, commits_nr;
+> +	char *bitmap_name = xstrfmt("%s-%s.bitmap", midx_name, hash_to_hex(midx_hash));
+> +	int ret;
+> +
+> +	prepare_midx_packing_data(&pdata, ctx);
+> +
+> +	commits = find_commits_for_midx_bitmap(&commits_nr, ctx);
+> +
+> +	/*
+> +	 * Build the MIDX-order index based on pdata.objects (which is already
+> +	 * in MIDX order; c.f., 'midx_pack_order_cmp()' for the definition of
+> +	 * this order).
+> +	 */
+> +	ALLOC_ARRAY(index, pdata.nr_objects);
+> +	for (i = 0; i < pdata.nr_objects; i++)
+> +		index[i] = (struct pack_idx_entry *)&pdata.objects[i];
+> +
+> +	bitmap_writer_show_progress(flags & MIDX_PROGRESS);
+> +	bitmap_writer_build_type_index(&pdata, index, pdata.nr_objects);
+> +
+> +	/*
+> +	 * bitmap_writer_select_commits expects objects in lex order, but
+> +	 * pack_order gives us exactly that. use it directly instead of
+> +	 * re-sorting the array
+> +	 */
+> +	for (i = 0; i < pdata.nr_objects; i++)
+> +		index[ctx->pack_order[i]] = (struct pack_idx_entry *)&pdata.objects[i];
+> +
+> +	bitmap_writer_select_commits(commits, commits_nr, -1);
+
+The comment above says bitmap_writer_select_commits() expects objects in
+lex order, but (1) you're putting "index" in lex order, not "commits",
+and (2) the first thing in bitmap_writer_select_commits() is a QSORT.
+Did you mean another function?
+
+> +	ret = bitmap_writer_build(&pdata);
+> +	if (!ret)
+> +		goto cleanup;
+> +
+> +	bitmap_writer_set_checksum(midx_hash);
+> +	bitmap_writer_finish(index, pdata.nr_objects, bitmap_name, 0);
+
+So bitmap_writer_build_type_index() and bitmap_writer_finish() are
+called with 2 different orders of commits. Is this expected? If yes,
+maybe this is worth a comment.
+
+> +
+> +cleanup:
+> +	free(index);
+> +	free(bitmap_name);
+> +	return ret;
+> +}
+
+[snip]
+
+> @@ -930,9 +1073,16 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+>  		for (i = 0; i < ctx.m->num_packs; i++) {
+>  			ALLOC_GROW(ctx.info, ctx.nr + 1, ctx.alloc);
+>  
+> +			if (prepare_midx_pack(the_repository, ctx.m, i)) {
+> +				error(_("could not load pack %s"),
+> +				      ctx.m->pack_names[i]);
+> +				result = 1;
+> +				goto cleanup;
+> +			}
+> +
+>  			ctx.info[ctx.nr].orig_pack_int_id = i;
+>  			ctx.info[ctx.nr].pack_name = xstrdup(ctx.m->pack_names[i]);
+> -			ctx.info[ctx.nr].p = NULL;
+> +			ctx.info[ctx.nr].p = ctx.m->packs[i];
+>  			ctx.info[ctx.nr].expired = 0;
+>  			ctx.nr++;
+>  		}
+
+Why is this needed now and not before? From what I see in this function,
+nothing seems to happen to this .p pack except that they are closed
+later.
+
+> @@ -1096,6 +1264,15 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+>  		if (ctx.info[i].p) {
+>  			close_pack(ctx.info[i].p);
+>  			free(ctx.info[i].p);
+> +			if (ctx.m) {
+> +				/*
+> +				 * Destroy a stale reference to the pack in
+> +				 * 'ctx.m'.
+> +				 */
+> +				uint32_t orig = ctx.info[i].orig_pack_int_id;
+> +				if (orig < ctx.m->num_packs)
+> +					ctx.m->packs[orig] = NULL;
+> +			}
+>  		}
+>  		free(ctx.info[i].pack_name);
+>  	}
+
+Is this hunk needed? "ctx" is a local variable and will not outlast this
+function.
+
+I'll review the rest tomorrow. It seems like I've gotten over the most
+difficult patches.
