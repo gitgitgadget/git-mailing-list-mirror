@@ -2,119 +2,280 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_2 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AAAC4C433B4
-	for <git@archiver.kernel.org>; Tue,  4 May 2021 21:02:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DD6BCC433B4
+	for <git@archiver.kernel.org>; Tue,  4 May 2021 21:16:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8B73D613C3
-	for <git@archiver.kernel.org>; Tue,  4 May 2021 21:02:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AB1CD613B4
+	for <git@archiver.kernel.org>; Tue,  4 May 2021 21:16:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232762AbhEDVC6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 May 2021 17:02:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33578 "EHLO
+        id S232782AbhEDVRG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 May 2021 17:17:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232710AbhEDVC5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 May 2021 17:02:57 -0400
-Received: from adoakley.name (adoakley.name [IPv6:2a01:4f8:c17:1310::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1017FC061574
-        for <git@vger.kernel.org>; Tue,  4 May 2021 14:02:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=adoakley.name; s=2018; h=Content-Transfer-Encoding:Content-Type:
-        MIME-Version:References:In-Reply-To:Message-ID:Subject:Cc:To:From:Date:Sender
-        :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=tiOTKr3+VrvE1Kjot9hPfYoD999WKFbpZGb7Yf+SNHc=; b=D5Vtg3t5AGy2l3AZFZH1Fejj+Z
-        sjVnfN3sFpgvP1TSqx60fJhpV70oqwKQEBT0FSFTY2+Qozj8QKl7x45ooTNbeD9bPvvhwqBapA+m/
-        xlmYN3KPU74TFXJ7jsv07ftMhtHN9ydZxq77GozyYuT7kMnX6romDy+PGJ/pEmygtk2E=;
-Received: from [2001:8b0:14bb:e93b:e8df:b9:8698:86f8] (helo=ado-tr)
-        by adoakley.name with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-        (Exim 4.93.0.4)
-        (envelope-from <andrew@adoakley.name>)
-        id 1le2B4-0004SZ-Ue; Tue, 04 May 2021 21:01:59 +0000
-Date:   Tue, 4 May 2021 22:01:53 +0100
-From:   Andrew Oakley <andrew@adoakley.name>
-To:     Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>
-Cc:     Luke Diamand <luke@diamand.org>, Git List <git@vger.kernel.org>,
-        Feiyang Xue <me@feiyangxue.com>
-Subject: Re: [PATCH 2/2] git-p4: do not decode data from perforce by default
-Message-ID: <20210504220153.1d9f0cb2@ado-tr>
-In-Reply-To: <CAKu1iLWbmPrVjAcgLKP1yisjmVxJr+kKQWJLiqkRzh=aAzETwA@mail.gmail.com>
-References: <20210412085251.51475-1-andrew@adoakley.name>
- <20210412085251.51475-3-andrew@adoakley.name>
- <CAKu1iLXRrsB4mRsDfhBH5aahWzDjpfqLuWP9t47RMB=RdpL1iA@mail.gmail.com>
- <20210430095342.58134e4e@ado-tr>
- <021c0caf-8e6f-4fbb-6ff7-40bacbe5de38@diamand.org>
- <CAKu1iLWbmPrVjAcgLKP1yisjmVxJr+kKQWJLiqkRzh=aAzETwA@mail.gmail.com>
-X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        with ESMTP id S231445AbhEDVRE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 May 2021 17:17:04 -0400
+Received: from mail-qk1-x749.google.com (mail-qk1-x749.google.com [IPv6:2607:f8b0:4864:20::749])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D1F9C061574
+        for <git@vger.kernel.org>; Tue,  4 May 2021 14:16:09 -0700 (PDT)
+Received: by mail-qk1-x749.google.com with SMTP id b3-20020a05620a0cc3b02902e9d5ca06f2so5587338qkj.19
+        for <git@vger.kernel.org>; Tue, 04 May 2021 14:16:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=ANtDgT+MK+tzqJwECuIuJtApiRvmiwy8ZTD/aVn1x88=;
+        b=NAO3i/OKt6iXy43tiiFR2exH75GgwT9W1GDhyO39DncZS4Bo90jd4jhQNYE31MyKZn
+         0uC3Wn5MSWg0XzpJeiDu2dK7O7tdbyJp9t+LWZbD3oImjFTJhxvlXWyZr9+0qOGUO0XD
+         GHzb8zW2rjwZNCX9wE66QSddNmdvo6XmmT3Wg1ygXExiNjT0wFA8uPcUdobw8RLFyhIV
+         WzclBdTvtjZ4f0Qlxz9cgmE5D2z4fhNq1l7Zh5KHOT7U488AgPsHKbwhnFp/L5xVksMn
+         fwdc5d9AFfhiyuzzH2ifTj2qFRcvfVTRhUc05nUpcWeyNoFoWXXLB0E4eoF8Yu0594fb
+         IXgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=ANtDgT+MK+tzqJwECuIuJtApiRvmiwy8ZTD/aVn1x88=;
+        b=Sh/lGhVkZhm9CUJzxzJqiYPEZmfI5JJJwjHbtuZZ13rXhnGudideNfXhKohNJZEV7t
+         V52/KvGbE0YEfmfXpKHuGzS7WdURus3fKVDlKKqIlWfrANJliHGNJhapKzAR/82Oo/LW
+         nT+P9boZusC8TZ/mnaqmPYQhZgWtrUCVOdGVbWt8g40FMf5f0ULWo07XRYK6QYjkSiwb
+         ascMALOP2NJs5ooSkKVAcAn3h1Ic1a6Kl++1xBH3AUK5RuOuQznQoqHv8R1xPkvfDLQ6
+         xgp2gIVcu6dtjIhyREkk8+hVdS9tId9uXQnfQAyfDCGsCnlHIFolBb8B4golcEMEu8Y/
+         Tt+w==
+X-Gm-Message-State: AOAM5305jBf/Sf+DOpRkkAe2tLjW7XwW6bAi8wHXVEs4OaczU7DngZg3
+        /sMtFc2/jbgP1hPyIvnknIJO2Xazu00f+P0Ag8tnbfKENyMupxHyh0DcgxyYhvCMi8DlsHoiFsv
+        dcboTTbQZ4VDQPC/pA9+19odjbrEGl2WcIH/xPilzfPABTPAJTHPznEEYgr5CkqflwhLK4soAPY
+        16
+X-Google-Smtp-Source: ABdhPJxghhDUZTRQ0603w0ecbE2gCoRc9nAwtRw7t3dTMlVG4RUmXuaYY/SM2gi8YF2iGZcpYQG8u80LdrjjMeLj3vIu
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a05:6214:58e:: with SMTP id
+ bx14mr27365537qvb.39.1620162968230; Tue, 04 May 2021 14:16:08 -0700 (PDT)
+Date:   Tue,  4 May 2021 14:15:57 -0700
+In-Reply-To: <cover.1617929278.git.jonathantanmy@google.com>
+Message-Id: <cover.1620162764.git.jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <cover.1617929278.git.jonathantanmy@google.com>
+X-Mailer: git-send-email 2.31.1.527.g47e6f16901-goog
+Subject: [PATCH v2 0/5] Push negotiation
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com,
+        stolee@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 30 Apr 2021 11:08:57 -0700
-Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com> wrote:
-> My server is not unicode.
-> 
-> These conversions are happening even with a non-Unicode perforce db.
-> I don't think it's the p4d code per se that is doing the conversion,
-> but rather an interaction between the OS and the code, which is
-> different under Linux vs Windows.
+Thanks for the review, Junio and Stolee.
 
-It's not particularly obvious exactly what is happening here.  The
-perforce command line client is written in a rather odd way - it uses
-the unicode (UTF-16) wWinMainCRTStartup entry point but then calls an
-undocumented API to get the "narrow" version of the command line.  The
-code is here:
+The first patch in version 1 has been merged to master, I believe, so
+here are the remaining 5 patches.
 
-https://swarm.workshop.perforce.com/projects/perforce_software-p4/files/2016-1/client/clientmain.cc
+As Stolee pointed out, some tests in version 1 fail when
+GIT_TEST_PROTOCOL_VERSION is set to 0. I have corrected that, but there
+is one test that still fails in t5601. That seems to also fail in
+"master". I'll see if I can fix it and send a separate patch for that.
 
-I think that perforce will end up with the data in a code page that
-depends on the configuration of the machine.  I don't think the exact
-details matter here - just that it's some semi-arbitrary encoding that
-isn't recorded in the commit.
+Jonathan Tan (5):
+  fetch-pack: refactor process_acks()
+  fetch-pack: refactor add_haves()
+  fetch-pack: refactor command and capability write
+  fetch: teach independent negotiation (no packfile)
+  send-pack: support push negotiation
 
-The key thing that I'm trying to point out here is that the encoding is
-not necessarily consistent between different commits.  The changes that
-you have proposed force you to pick one encoding that will be used for
-every commit.  If it's wrong then data will be corrupted, and there is
-no option provided to avoid that.  The only way I can see to avoid this
-issue is to not attempt to re-encode the data - just pass it directly
-to git.
+ Documentation/config/push.txt           |   7 +
+ Documentation/technical/protocol-v2.txt |   8 +
+ builtin/fetch.c                         |  27 ++-
+ fetch-pack.c                            | 246 ++++++++++++++++--------
+ fetch-pack.h                            |  14 ++
+ object.h                                |   2 +-
+ send-pack.c                             |  61 +++++-
+ t/t5516-fetch-push.sh                   |  35 ++++
+ t/t5701-git-serve.sh                    |   2 +-
+ t/t5702-protocol-v2.sh                  |  89 +++++++++
+ transport-helper.c                      |  10 +
+ transport.c                             |  30 ++-
+ transport.h                             |   6 +
+ upload-pack.c                           |  18 +-
+ 14 files changed, 455 insertions(+), 100 deletions(-)
 
-I think another way to solve the issue you have is the encoding header
-on git commits.  We can pass the bytes through git-p4 unmodified, but
-mark the commit message as being encoded using something that isn't
-UTF-8.  That avoids any potentially lossy conversions when cloning the
-repository, but should allow the data to be displayed correctly in git.
+Range-diff against v1:
+-:  ---------- > 1:  8102570374 fetch-pack: refactor process_acks()
+-:  ---------- > 2:  57c3451b2e fetch-pack: refactor add_haves()
+-:  ---------- > 3:  6871d0cec6 fetch-pack: refactor command and capability write
+1:  3ebe4ada28 ! 4:  1de34a6dce fetch: teach independent negotiation (no packfile)
+    @@ Commit message
+         There are 2 code paths that do not go through fetch_refs_via_pack() that
+         needed to be individually excluded: the bundle transport (excluded
+         through requiring smart_options, which the bundle transport doesn't
+    -    support) and transport helpers that do not support takeover.
+    -    Fortunately, none of these support protocol v2.
+    +    support) and transport helpers that do not support takeover. If or when
+    +    we support independent negotiation for protocol v0, we will need to
+    +    modify these 2 code paths to support it. But for now, report failure if
+    +    independent negotiation is requested in these cases.
+     
+         Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+         Signed-off-by: Junio C Hamano <gitster@pobox.com>
+    @@ builtin/fetch.c: int cmd_fetch(int argc, const char **argv, const char *prefix)
+     +		const struct object_id *oid;
+     +
+     +		if (!remote)
+    -+			die(_("Must supply remote when using --negotiate-only"));
+    ++			die(_("must supply remote when using --negotiate-only"));
+     +		gtransport = prepare_transport(remote, 1);
+     +		if (gtransport->smart_options) {
+     +			gtransport->smart_options->acked_commits = &acked_commits;
+    @@ fetch-pack.c
+      #include "fsck.h"
+      #include "shallow.h"
+     +#include "commit-reach.h"
+    ++#include "commit-graph.h"
+      
+      static int transfer_unpack_limit = -1;
+      static int fetch_unpack_limit = -1;
+    @@ fetch-pack.c: struct ref *fetch_pack(struct fetch_pack_args *args,
+     +{
+     +	struct object_array *a = data;
+     +
+    -+	add_object_array(parse_object(the_repository, oid), "", a);
+    ++	add_object_array(lookup_object(the_repository, oid), "", a);
+     +	return 0;
+     +}
+     +
+    ++static void clear_common_flag(struct oidset *s)
+    ++{
+    ++	struct oidset_iter iter;
+    ++	const struct object_id *oid;
+    ++	oidset_iter_init(s, &iter);
+    ++
+    ++	while ((oid = oidset_iter_next(&iter))) {
+    ++		struct object *obj = lookup_object(the_repository, oid);
+    ++		obj->flags &= ~COMMON;
+    ++	}
+    ++}
+    ++
+     +void negotiate_using_fetch(const struct oid_array *negotiation_tips,
+     +			   const struct string_list *server_options,
+     +			   int stateless_rpc,
+    @@ fetch-pack.c: struct ref *fetch_pack(struct fetch_pack_args *args,
+     +	int in_vain = 0;
+     +	int seen_ack = 0;
+     +	int last_iteration = 0;
+    ++	timestamp_t min_generation = GENERATION_NUMBER_INFINITY;
+     +
+     +	fetch_negotiator_init(the_repository, &negotiator);
+     +	mark_tips(&negotiator, negotiation_tips);
+    @@ fetch-pack.c: struct ref *fetch_pack(struct fetch_pack_args *args,
+     +				   &received_ready)) {
+     +			struct commit *commit = lookup_commit(the_repository,
+     +							      &common_oid);
+    -+			if (commit)
+    ++			if (commit) {
+    ++				timestamp_t generation;
+    ++
+    ++				parse_commit_or_die(commit);
+     +				commit->object.flags |= COMMON;
+    ++				generation = commit_graph_generation(commit);
+    ++				if (generation < min_generation)
+    ++					min_generation = generation;
+    ++			}
+     +			in_vain = 0;
+     +			seen_ack = 1;
+     +			oidset_insert(acked_commits, &common_oid);
+    @@ fetch-pack.c: struct ref *fetch_pack(struct fetch_pack_args *args,
+     +			do_check_stateless_delimiter(stateless_rpc, &reader);
+     +		if (can_all_from_reach_with_flag(&nt_object_array, COMMON,
+     +						 REACH_SCRATCH, 0,
+    -+						 GENERATION_NUMBER_ZERO))
+    ++						 min_generation))
+     +			last_iteration = 1;
+     +	}
+    ++	clear_common_flag(acked_commits);
+     +	strbuf_release(&req_buf);
+     +}
+     +
+    @@ fetch-pack.h: struct ref *fetch_pack(struct fetch_pack_args *args,
+     +/*
+     + * Execute the --negotiate-only mode of "git fetch", adding all known common
+     + * commits to acked_commits.
+    ++ *
+    ++ * In the capability advertisement that has happened prior to invoking this
+    ++ * function, the "wait-for-done" capability must be present.
+     + */
+     +void negotiate_using_fetch(const struct oid_array *negotiation_tips,
+     +			   const struct string_list *server_options,
+    @@ t/t5702-protocol-v2.sh: test_expect_success 'deepen-relative' '
+     +
+     +	setup_negotiate_only "$SERVER" "$URI" &&
+     +
+    -+	git -C client fetch \
+    ++	git -c protocol.version=2 -C client fetch \
+     +		--no-tags \
+     +		--negotiate-only \
+     +		--negotiation-tip=$(git -C client rev-parse HEAD) \
+    @@ t/t5702-protocol-v2.sh: test_expect_success 'packfile-uri with transfer.fsckobje
+     +
+     +	setup_negotiate_only "$SERVER" "$URI" &&
+     +
+    -+	git -C client fetch \
+    ++	git -c protocol.version=2 -C client fetch \
+     +		--no-tags \
+     +		--negotiate-only \
+     +		--negotiation-tip=$(git -C client rev-parse HEAD) \
+    @@ t/t5702-protocol-v2.sh: test_expect_success 'packfile-uri with transfer.fsckobje
+     +	echo "s/ wait-for-done/ xxxx-xxx-xxxx/" \
+     +		>"$HTTPD_ROOT_PATH/one-time-perl" &&
+     +
+    -+	test_must_fail git -C client fetch \
+    ++	test_must_fail git -c protocol.version=2 -C client fetch \
+     +		--no-tags \
+     +		--negotiate-only \
+     +		--negotiation-tip=$(git -C client rev-parse HEAD) \
+    @@ transport.h: struct git_transport_options {
+      	struct oid_array *negotiation_tips;
+     +
+     +	/*
+    -+	 * If set, whenever transport_fetch_refs() is called, add known common
+    -+	 * commits to this oidset instead of fetching any packfiles.
+    ++	 * If allocated, whenever transport_fetch_refs() is called, add known
+    ++	 * common commits to this oidset instead of fetching any packfiles.
+     +	 */
+     +	struct oidset *acked_commits;
+      };
+2:  bd55d6ba36 ! 5:  d38a8b7d66 send-pack: support push negotiation
+    @@ t/t5516-fetch-push.sh: test_expect_success 'fetch with pushInsteadOf (should not
+     +	git push testrepo $the_first_commit:refs/remotes/origin/first_commit &&
+     +	git -C testrepo config receive.hideRefs refs/remotes/origin/first_commit &&
+     +	echo now pushing without negotiation &&
+    -+	GIT_TRACE2_EVENT="$(pwd)/event" git push testrepo refs/heads/main:refs/remotes/origin/main &&
+    ++	GIT_TRACE2_EVENT="$(pwd)/event" git -c protocol.version=2 push testrepo refs/heads/main:refs/remotes/origin/main &&
+     +	grep_wrote 5 event && # 2 commits, 2 trees, 1 blob
+     +
+     +	# Same commands, but with negotiation
+    @@ t/t5516-fetch-push.sh: test_expect_success 'fetch with pushInsteadOf (should not
+     +	mk_empty testrepo &&
+     +	git push testrepo $the_first_commit:refs/remotes/origin/first_commit &&
+     +	git -C testrepo config receive.hideRefs refs/remotes/origin/first_commit &&
+    -+	GIT_TRACE2_EVENT="$(pwd)/event" git -c push.negotiate=1 push testrepo refs/heads/main:refs/remotes/origin/main &&
+    ++	GIT_TRACE2_EVENT="$(pwd)/event" git -c protocol.version=2 -c push.negotiate=1 push testrepo refs/heads/main:refs/remotes/origin/main &&
+     +	grep_wrote 2 event # 1 commit, 1 tree
+     +'
+     +
+    @@ t/t5516-fetch-push.sh: test_expect_success 'fetch with pushInsteadOf (should not
+     +	mk_empty testrepo &&
+     +	git push testrepo $the_first_commit:refs/remotes/origin/first_commit &&
+     +	git -C testrepo config receive.hideRefs refs/remotes/origin/first_commit &&
+    -+	GIT_TRACE_PACKET="$(pwd)/trace" GIT_TEST_PROTOCOL_VERSION=0 GIT_TRACE2_EVENT="$(pwd)/event" \
+    ++	GIT_TEST_PROTOCOL_VERSION=0 GIT_TRACE2_EVENT="$(pwd)/event" \
+     +		git -c push.negotiate=1 push testrepo refs/heads/main:refs/remotes/origin/main 2>err &&
+     +	grep_wrote 5 event && # 2 commits, 2 trees, 1 blob
+     +	test_i18ngrep "push negotiation failed" err
+-- 
+2.31.1.527.g47e6f16901-goog
 
-> In any event, if you look at my patch (v6 is the latest...
-> https://lore.kernel.org/git/20210429073905.837-1-tzadik.vanderhoof@gmail.com/
-> ), you will see I have written tests that pass under both Linux and
-> Windows. (If you want to run them yourself, you need to base my patch
-> off of "master", not "seen").  The tests make clear what the
-> different behavior is and also show that p4d is not set to Unicode
-> (since the tests do not change the default setting).
-
-I don't think the tests are doing anything interesting on Linux - you
-stick valid UTF-8 in, and valid UTF-8 data comes out.   I suspect the
-tests will fail on Windows if the relevant code page is set to a value
-that you're not expecting.
-
-For the purposes of writing tests that work the same everywhere we can
-use `p4 submit -i`.  The data written on stdin isn't reencoded, even on
-Windows.
-
-I can rework my test to use `p4 submit -i` on windows.  It should be
-fairly simple to write another change which allows the encoding to be
-set on commits created by git-p4.
-
-Does that seem like a reasonable way forward?  I think it gets us:
-- sensible handling for repositories with mixed encodings
-- sensible handling for repositories with known encodings
-- tests that work the same on Linux and Windows
