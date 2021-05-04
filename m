@@ -2,259 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 62A80C433ED
-	for <git@archiver.kernel.org>; Tue,  4 May 2021 21:16:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0007FC433B4
+	for <git@archiver.kernel.org>; Tue,  4 May 2021 21:38:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3C526613BA
-	for <git@archiver.kernel.org>; Tue,  4 May 2021 21:16:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C5889613D4
+	for <git@archiver.kernel.org>; Tue,  4 May 2021 21:38:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232840AbhEDVRP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 May 2021 17:17:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36694 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232860AbhEDVRN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 May 2021 17:17:13 -0400
-Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A719C061574
-        for <git@vger.kernel.org>; Tue,  4 May 2021 14:16:18 -0700 (PDT)
-Received: by mail-pf1-x449.google.com with SMTP id k7-20020aa788c70000b029028ead4f0f50so164797pff.10
-        for <git@vger.kernel.org>; Tue, 04 May 2021 14:16:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=0WZ9ru3HzUgtfpBOk78Oz0LmAZXe1/rXXOGRYXhnt10=;
-        b=YEs05o4019XBV+lsOUMkuSnvvVVoECCAdVSor/CimnF7T60vrX2Nuk3TyW6WcJgkrs
-         L/7Mex0dcFVtDqs70iHWFjWmSNAtoEwQzazJhlyQBBorSi6h7qrMVxR6BWyedW761Wd1
-         OhdzB5ZmxLRz6bQS7oRQZ/IUmc6fit18Z7hUNTa9J80sym35FhzvTjrSOuXZJU20wscI
-         q0Hc0byLRAxSffm2Krk/kQD/8xApjkP4cN5sevLHL65JhU0mmXp4jj0grIMXe9Mr74/D
-         282vGbRcls2FsKgdDMjZQ6LTPqv3eJ6+SU5Q8WtRKNX+wOQDVXVEYXKj+93qvd6cvahn
-         Ggrg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=0WZ9ru3HzUgtfpBOk78Oz0LmAZXe1/rXXOGRYXhnt10=;
-        b=TlpCwck9iUlrY/yCDSVoA6duc8Tx6YOzPg0fhhfz2teUiuhJsli2AzwPAkgWMggJMq
-         hm5iGkKKwas0xpa1RuitQnZ8eSGqeMnFC+IF9nPjPdPxy31fzVB926n8HyAFVs1Ldcnj
-         iJ/+WRtlIi1UuN4b2kkHx3QkyhNaIwoT+tJDsIhfN7Q5Q1tbRu/SW6oGldvFov3Y+r/R
-         cZ9ZsM1qooO0GNzF/xUWqEsGP7ObeIyEbx48jHHoKOlTDcTxK/uxiZs8K++cvyFTzcvQ
-         8keO3HTpemjpo3nSX0OL+AlzgrZcsfCvrWxjy+gHSVjb4AE8uKjC2UOq3uQ0cRfuI040
-         FeXQ==
-X-Gm-Message-State: AOAM533soo8UEiz+jtCN41yEc4tm6biXeiryAQMrhpx9PqaU3Is0nDgD
-        vVu85Lrnvp9gaNKs8xNeeXyGoeUbJuSEmbJhiH8qEbkVtcY+FuR73dFwcbmhRkG/kxEc389FZzI
-        EFtJIZK3GblRv2gqm7FlU4lhKWr1JmEdSGb5neh82TQaeRe4tJneFjSJCyLGM3yx48DValCsEv4
-        gT
-X-Google-Smtp-Source: ABdhPJyGx3x2MtmdjHD4c8j+pQeya/SBMu0w+lonQ0lkNE7z92ugTtfjX1FlWKYaUovrYXdqy7UTbeoSB3+TT2mzO1Qp
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a17:902:db0f:b029:ee:cf76:b74f with
- SMTP id m15-20020a170902db0fb02900eecf76b74fmr14737266plx.68.1620162977994;
- Tue, 04 May 2021 14:16:17 -0700 (PDT)
-Date:   Tue,  4 May 2021 14:16:02 -0700
-In-Reply-To: <cover.1620162764.git.jonathantanmy@google.com>
-Message-Id: <d38a8b7d66efee74e327c4a7f4322e2c02a7495d.1620162764.git.jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <cover.1617929278.git.jonathantanmy@google.com> <cover.1620162764.git.jonathantanmy@google.com>
-X-Mailer: git-send-email 2.31.1.527.g47e6f16901-goog
-Subject: [PATCH v2 5/5] send-pack: support push negotiation
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com,
-        stolee@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+        id S232870AbhEDVjL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 May 2021 17:39:11 -0400
+Received: from cloud.peff.net ([104.130.231.41]:44702 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232803AbhEDVjL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 May 2021 17:39:11 -0400
+Received: (qmail 13704 invoked by uid 109); 4 May 2021 21:38:16 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 04 May 2021 21:38:16 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 2420 invoked by uid 111); 4 May 2021 21:38:15 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 04 May 2021 17:38:15 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 4 May 2021 17:38:14 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
+        Yiyuan guo <yguoaz@gmail.com>
+Subject: Re: [PATCH 3/5] pack-objects: clamp negative window size to 0
+Message-ID: <YJG+xp2b1rUzBaws@coredump.intra.peff.net>
+References: <YI1fbERSuS7Y3LKh@coredump.intra.peff.net>
+ <YI1fubjvQQlrPz9D@coredump.intra.peff.net>
+ <3d77d70b-2cc5-4ca9-8753-fa9af5111842@gmail.com>
+ <YJAOzTIXkO2lhxSs@coredump.intra.peff.net>
+ <02a66bfb-aac0-c05e-dab3-366bc312d900@web.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <02a66bfb-aac0-c05e-dab3-366bc312d900@web.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teach Git the push.negotiate config variable.
+On Tue, May 04, 2021 at 08:47:56PM +0200, René Scharfe wrote:
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/config/push.txt |  7 ++++
- send-pack.c                   | 61 ++++++++++++++++++++++++++++++++---
- t/t5516-fetch-push.sh         | 35 ++++++++++++++++++++
- 3 files changed, 99 insertions(+), 4 deletions(-)
+> >> This seems like a reasonable approach. It takes existing "undefined"
+> >> behavior and turns it into well-understood, "defined" behavior.
+> >
+> > I was on the fence on doing that, or just:
+> >
+> >   if (window < 0)
+> > 	die("sorry dude, negative windows are nonsense");
+> >
+> > So if anybody has a strong preference, I could be easily persuaded. Part
+> > of what led me to being forgiving was that we similarly clamp too-large
+> > depth values (with a warning; I didn't think it was really necessary
+> > here, though).
+> 
+> There's another option: Mapping -1 or all negative values to the
+> maximum:
+> 
+> 	if (window < 0)
+> 		window = INT_MAX;
+> 	if (depth < 0)
+> 		depth = (1 << OE_DEPTH_BITS) - 1;
+> 
+> That's allows saying "gimme all you got" without knowing or being
+> willing to type out the exact maximum value, which may change between
+> versions.  Not all that useful for --window, I guess.  That convention
+> has been used elsewhere I'm sure, but can't point out a concrete
+> example.  $arr[-1] get the last item of the array $arr in PowerShell,
+> though, which is kind of similar.
+> 
+> Sure, you get the same effect in both cases by typing 2147483647, but
+> -1 is more convenient.
+> 
+> Not a strong preference, but I thought it was at least worth
+> mentioning that particular bike shed color. :)
 
-diff --git a/Documentation/config/push.txt b/Documentation/config/push.txt
-index 21b256e0a4..f2667b2689 100644
---- a/Documentation/config/push.txt
-+++ b/Documentation/config/push.txt
-@@ -120,3 +120,10 @@ push.useForceIfIncludes::
- 	`--force-if-includes` as an option to linkgit:git-push[1]
- 	in the command line. Adding `--no-force-if-includes` at the
- 	time of push overrides this configuration setting.
-+
-+push.negotiate::
-+	If set to "true", attempt to reduce the size of the packfile
-+	sent by rounds of negotiation in which the client and the
-+	server attempt to find commits in common. If "false", Git will
-+	rely solely on the server's ref advertisement to find commits
-+	in common.
-diff --git a/send-pack.c b/send-pack.c
-index 5f215b13c7..9cb9f71650 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -56,7 +56,9 @@ static void feed_object(const struct object_id *oid, FILE *fh, int negative)
- /*
-  * Make a pack stream and spit it out into file descriptor fd
-  */
--static int pack_objects(int fd, struct ref *refs, struct oid_array *extra, struct send_pack_args *args)
-+static int pack_objects(int fd, struct ref *refs, struct oid_array *advertised,
-+			struct oid_array *negotiated,
-+			struct send_pack_args *args)
- {
- 	/*
- 	 * The child becomes pack-objects --revs; we feed
-@@ -94,8 +96,10 @@ static int pack_objects(int fd, struct ref *refs, struct oid_array *extra, struc
- 	 * parameters by writing to the pipe.
- 	 */
- 	po_in = xfdopen(po.in, "w");
--	for (i = 0; i < extra->nr; i++)
--		feed_object(&extra->oid[i], po_in, 1);
-+	for (i = 0; i < advertised->nr; i++)
-+		feed_object(&advertised->oid[i], po_in, 1);
-+	for (i = 0; i < negotiated->nr; i++)
-+		feed_object(&negotiated->oid[i], po_in, 1);
- 
- 	while (refs) {
- 		if (!is_null_oid(&refs->old_oid))
-@@ -409,11 +413,55 @@ static void reject_invalid_nonce(const char *nonce, int len)
- 	}
- }
- 
-+static void get_commons_through_negotiation(const char *url,
-+					    const struct ref *remote_refs,
-+					    struct oid_array *commons)
-+{
-+	struct child_process child = CHILD_PROCESS_INIT;
-+	const struct ref *ref;
-+	int len = the_hash_algo->hexsz + 1; /* hash + NL */
-+
-+	child.git_cmd = 1;
-+	child.no_stdin = 1;
-+	child.out = -1;
-+	strvec_pushl(&child.args, "fetch", "--negotiate-only", NULL);
-+	for (ref = remote_refs; ref; ref = ref->next)
-+		strvec_pushf(&child.args, "--negotiation-tip=%s", oid_to_hex(&ref->new_oid));
-+	strvec_push(&child.args, url);
-+
-+	if (start_command(&child))
-+		die(_("send-pack: unable to fork off fetch subprocess"));
-+
-+	do {
-+		char hex_hash[GIT_MAX_HEXSZ + 1];
-+		int read_len = read_in_full(child.out, hex_hash, len);
-+		struct object_id oid;
-+		const char *end;
-+
-+		if (!read_len)
-+			break;
-+		if (read_len != len)
-+			die("invalid length read %d", read_len);
-+		if (parse_oid_hex(hex_hash, &oid, &end) || *end != '\n')
-+			die("invalid hash");
-+		oid_array_append(commons, &oid);
-+	} while (1);
-+
-+	if (finish_command(&child)) {
-+		/*
-+		 * The information that push negotiation provides is useful but
-+		 * not mandatory.
-+		 */
-+		warning(_("push negotiation failed; proceeding anyway with push"));
-+	}
-+}
-+
- int send_pack(struct send_pack_args *args,
- 	      int fd[], struct child_process *conn,
- 	      struct ref *remote_refs,
- 	      struct oid_array *extra_have)
- {
-+	struct oid_array commons = OID_ARRAY_INIT;
- 	int in = fd[0];
- 	int out = fd[1];
- 	struct strbuf req_buf = STRBUF_INIT;
-@@ -426,6 +474,7 @@ int send_pack(struct send_pack_args *args,
- 	int quiet_supported = 0;
- 	int agent_supported = 0;
- 	int advertise_sid = 0;
-+	int push_negotiate = 0;
- 	int use_atomic = 0;
- 	int atomic_supported = 0;
- 	int use_push_options = 0;
-@@ -437,6 +486,10 @@ int send_pack(struct send_pack_args *args,
- 	const char *push_cert_nonce = NULL;
- 	struct packet_reader reader;
- 
-+	git_config_get_bool("push.negotiate", &push_negotiate);
-+	if (push_negotiate)
-+		get_commons_through_negotiation(args->url, remote_refs, &commons);
-+
- 	git_config_get_bool("transfer.advertisesid", &advertise_sid);
- 
- 	/* Does the other end support the reporting? */
-@@ -625,7 +678,7 @@ int send_pack(struct send_pack_args *args,
- 			   PACKET_READ_DIE_ON_ERR_PACKET);
- 
- 	if (need_pack_data && cmds_sent) {
--		if (pack_objects(out, remote_refs, extra_have, args) < 0) {
-+		if (pack_objects(out, remote_refs, extra_have, &commons, args) < 0) {
- 			if (args->stateless_rpc)
- 				close(out);
- 			if (git_connection_is_socket(conn))
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index f11742ed59..0916f76302 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -191,6 +191,41 @@ test_expect_success 'fetch with pushInsteadOf (should not rewrite)' '
- 	)
- '
- 
-+grep_wrote () {
-+	object_count=$1
-+	file_name=$2
-+	grep 'write_pack_file/wrote.*"value":"'$1'"' $2
-+}
-+
-+test_expect_success 'push with negotiation' '
-+	# Without negotiation
-+	mk_empty testrepo &&
-+	git push testrepo $the_first_commit:refs/remotes/origin/first_commit &&
-+	git -C testrepo config receive.hideRefs refs/remotes/origin/first_commit &&
-+	echo now pushing without negotiation &&
-+	GIT_TRACE2_EVENT="$(pwd)/event" git -c protocol.version=2 push testrepo refs/heads/main:refs/remotes/origin/main &&
-+	grep_wrote 5 event && # 2 commits, 2 trees, 1 blob
-+
-+	# Same commands, but with negotiation
-+	rm event &&
-+	mk_empty testrepo &&
-+	git push testrepo $the_first_commit:refs/remotes/origin/first_commit &&
-+	git -C testrepo config receive.hideRefs refs/remotes/origin/first_commit &&
-+	GIT_TRACE2_EVENT="$(pwd)/event" git -c protocol.version=2 -c push.negotiate=1 push testrepo refs/heads/main:refs/remotes/origin/main &&
-+	grep_wrote 2 event # 1 commit, 1 tree
-+'
-+
-+test_expect_success 'push with negotiation proceeds anyway even if negotiation fails' '
-+	rm event &&
-+	mk_empty testrepo &&
-+	git push testrepo $the_first_commit:refs/remotes/origin/first_commit &&
-+	git -C testrepo config receive.hideRefs refs/remotes/origin/first_commit &&
-+	GIT_TEST_PROTOCOL_VERSION=0 GIT_TRACE2_EVENT="$(pwd)/event" \
-+		git -c push.negotiate=1 push testrepo refs/heads/main:refs/remotes/origin/main 2>err &&
-+	grep_wrote 5 event && # 2 commits, 2 trees, 1 blob
-+	test_i18ngrep "push negotiation failed" err
-+'
-+
- test_expect_success 'push without wildcard' '
- 	mk_empty testrepo &&
- 
--- 
-2.31.1.527.g47e6f16901-goog
+Thanks for thinking about this. In general, yeah, allowing "-1" as
+"unlimited" is a sensible thing for many options. But for these two
+variables, I don't think "unlimited" is ever a good idea:
 
+  - for --window, it makes the amount of work quadratic in the number of
+    objects in the repository (and likewise, memory usage equivalent to
+    the uncompressed contents of the repo). Going beyond about 250 or so
+    gives diminishing returns.
+
+  - for --depth, going beyond about 50 provides diminishing space
+    returns, and makes the run-time performance of accessing the deltas
+    horrible.
+
+So certainly INT_MAX or the max allowable by OE_DEPTH_BITS is a very bad
+idea in both cases, and the use would probably be happier if we just hit
+a die() instead. :) We _could_ make "-1" mean "the maximum sensible
+valuable", but I think there's a lot of wiggle room for "sensible"
+there. I much prefer using and advertising the actual values there (as
+we do for "gc --aggressive").
+
+-Peff
