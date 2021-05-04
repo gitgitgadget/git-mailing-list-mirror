@@ -7,83 +7,104 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C72DC433ED
-	for <git@archiver.kernel.org>; Tue,  4 May 2021 20:31:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20889C433B4
+	for <git@archiver.kernel.org>; Tue,  4 May 2021 20:34:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5030C613BC
-	for <git@archiver.kernel.org>; Tue,  4 May 2021 20:31:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DA035613D2
+	for <git@archiver.kernel.org>; Tue,  4 May 2021 20:34:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232626AbhEDUcm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 May 2021 16:32:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54966 "EHLO
+        id S232043AbhEDUfK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 May 2021 16:35:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55514 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232560AbhEDUcm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 May 2021 16:32:42 -0400
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6591BC061574
-        for <git@vger.kernel.org>; Tue,  4 May 2021 13:31:47 -0700 (PDT)
-Received: by mail-oi1-x230.google.com with SMTP id l6so108843oii.1
-        for <git@vger.kernel.org>; Tue, 04 May 2021 13:31:47 -0700 (PDT)
+        with ESMTP id S231786AbhEDUfJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 May 2021 16:35:09 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97C4FC061574
+        for <git@vger.kernel.org>; Tue,  4 May 2021 13:34:11 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id x2so15212419lff.10
+        for <git@vger.kernel.org>; Tue, 04 May 2021 13:34:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:message-id:in-reply-to:references:subject:mime-version
-         :content-transfer-encoding;
-        bh=PUBEWH3ghheRky6kZ2Z8YfKPsYpstnrwZ8NoNB1pa8E=;
-        b=DqgSrAf2VfMS5j/0wzRxSPfom84lBZgA7F4T4GFRSjVlfUzS9lS7IcbYQr6JhhsbF3
-         pb8T0Epb41hDe+K8GZYse1CMSK1j3BHkca/yLitWdWmAuXv7WTQb0kBU+QZDdEakGhcf
-         VJ/TRqwdMUD/n8wh2qsiFR+0qGIsU+rMw+3QjRBIjSKDsNkhyTBu8Ppa87qRBpb5V4fi
-         41DuoSR75ef+13fjWw1+9eMYUPAlbsvFDrw6zcwiLzeHU7VieuqlYuD1EGs+2WEIbsfr
-         TkbU0M5tF3jq8R33LTPBcOAlb8tw2YNBJ3Ax+bgzHwzVXbnyo7WY4mOJIFf5pTjFJD+e
-         wH1Q==
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=oFe8Lgw6N2Y1u098XqO4UKtMlkHFUdyx1cNObc4e7Xs=;
+        b=Va+teOVXRgqgo5Vs78g+qfmd+r/5q8yqswxJWF2fG6y6NFLdAdnOcp0251wZuOy55n
+         MiPgu5m7QaxZhFexlCjtMGaEq4htn0qJE8S8o8CwWU0pbO4lG3Giqpv+YxY9LcsgJLay
+         EQi7/v/sCzI+bmlDqsN/V3ZUv5NRmr0Kkk+CMV6zvVuxmyzSLDq0Ktg3hYcC8rDljGiZ
+         fpiOCnRlS6o/mcvmunnIz6KswifbiwEw3ArfrI0K0e8ED8PJE5khgAwDyTeeb/f5bkss
+         aplwVUe0Cx3/noZovLToVN/pCCfdXZSkBahCrSXCu+pagmz2sIytfCQHjzuX/xJyoQ3b
+         5kTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:message-id:in-reply-to:references
-         :subject:mime-version:content-transfer-encoding;
-        bh=PUBEWH3ghheRky6kZ2Z8YfKPsYpstnrwZ8NoNB1pa8E=;
-        b=I+X6XhxB21iGfoDdEU6gT5cKI2B9kMKJ3wSERUsONGcWxfXsu024qyQ9FmvdBaym4v
-         aF3GWYwf9AxSoRddW6hX6snG4c677ARrhT1kVnUdVnBI0YTmjQa2KUuzOI3FKlXQuhOr
-         DsBIw5neW8GOuFJla3IJOerEJgzO+N133kuuPznIb3SyTupHbI2mU+v/5PSVn3cuVXL4
-         hqmHyHprZvHDiWsgZL+282YX7cUi5fJL0406A3sAaTH5InQstAFGQXbY16p39zdUHSs+
-         fpBRnJGYXX6wOdLmhasnPy7nYqB2zD+/2xQ7mI9Yqe/Y/dLVmQGpOzK52pgmhQYjaFsv
-         ubjA==
-X-Gm-Message-State: AOAM532HF3Ol4whuqXQTJOQjvn6qmSkfYovd6iQozlF8R93ANIYeFQ2N
-        pliKsfoDHm8rgyOdmgJ1cSU=
-X-Google-Smtp-Source: ABdhPJyy+bBcmCJriyULsE9t4cSxE15gMpnwBOMK3PD1H3f0IDgIO5PNdfc0XjMn8ATc6FpBfIkHpw==
-X-Received: by 2002:a05:6808:315:: with SMTP id i21mr4341122oie.119.1620160306764;
-        Tue, 04 May 2021 13:31:46 -0700 (PDT)
-Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id k7sm928829ood.36.2021.05.04.13.31.44
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=oFe8Lgw6N2Y1u098XqO4UKtMlkHFUdyx1cNObc4e7Xs=;
+        b=myls4ltKPBgFNglpUe8NgkIN0TK9YFvFATxuZsIjaY62eufjhLtLz5Uaab5y11s0VL
+         S7tWd2QeJyoDW3XfmhwIzhfNsk7LFEtQhSh7to+tEJSk/vftLbS/CMh55hHefSiPMs8g
+         jIa7GHw+HexxiCGIwUc7JKQaN6+vPCp/NPO56KEex+/Qegi6Kd1/LvZQkecmiAYpJbZH
+         isCm/Z04bP6n/60AUwp3yViAQV+5Gb/nxuYJsZLJJD9j/1sv2mJpB11fUBrt6XHSpffK
+         Mq8gqLI8OjQPoF2OvxVl3DF1STpO7T3WZ7rD016tJXdJJb7jrZRc1gWgtTzwj/Y2fNh1
+         q7jA==
+X-Gm-Message-State: AOAM532qH+U/fDfMrpWUlQmX3zVytdF/Yi5j3zT92qt/w5HOAqSFWj/V
+        sqCtZbyzyBmoiVlCf4DF4XfkgQlGTt4=
+X-Google-Smtp-Source: ABdhPJxnamZiDBGry3FZCRP6SXz+p3xCyA2NMo4mgrLJ1DFD4ukcybRTlv1ZPrnO2cdeHGXMrzMF5Q==
+X-Received: by 2002:a05:6512:acc:: with SMTP id n12mr18597799lfu.9.1620160449676;
+        Tue, 04 May 2021 13:34:09 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id y14sm1838523ljy.18.2021.05.04.13.34.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 May 2021 13:31:45 -0700 (PDT)
-Date:   Tue, 04 May 2021 15:31:40 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Cristiana Man <man.cristiana1@gmail.com>, git@vger.kernel.org
-Message-ID: <6091af2cc6dd_b34a820889@natae.notmuch>
-In-Reply-To: <CAL2wJUAk50O-iSH9PEewYHwE9tV-TZZerqd1Eh9OTQfWBkmCgA@mail.gmail.com>
-References: <CAL2wJUAk50O-iSH9PEewYHwE9tV-TZZerqd1Eh9OTQfWBkmCgA@mail.gmail.com>
-Subject: RE: Git commit allow empty docs unclear
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        Tue, 04 May 2021 13:34:08 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Alex Henrie <alexhenrie24@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git mailing list <git@vger.kernel.org>
+Subject: Re: Why doesn't `git log -m` imply `-p`?
+References: <CAMMLpeR-W35Qq6a343ifrxJ=mwBc_VcXZtVrBYDpJTySNBroFw@mail.gmail.com>
+        <xmqqwnsl93m3.fsf@gitster.g> <87im45clkp.fsf@osv.gnss.ru>
+        <CAMMLpeS4pkP_xRw_qT3mCTP4hS3iLP9TwdDf8LV+3+an9aJ3Hw@mail.gmail.com>
+        <6091aa0dee8f4_b34a8208ba@natae.notmuch>
+Date:   Tue, 04 May 2021 23:34:08 +0300
+In-Reply-To: <6091aa0dee8f4_b34a8208ba@natae.notmuch> (Felipe Contreras's
+        message of "Tue, 04 May 2021 15:09:49 -0500")
+Message-ID: <87y2cu5jcv.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Cristiana Man wrote:
-> The documentation for Git commit --allow-empty option
-> (https://git-scm.com/docs/git-commit#Documentation/git-commit.txt---allow-empty)
-> contains the acronym SCM which is confusing to me.
-> Do you mean Software Configuration Management, Source Control
-> Management or Source Code Management?
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-The documentation is on git-SCM.com, also, there's a glossary [1]:
+> Alex Henrie wrote:
+>> On Wed, Apr 28, 2021 at 9:22 PM Junio C Hamano <gitster@pobox.com> wrote:
+>> > Alex Henrie <alexhenrie24@gmail.com> writes:
+>
+>> > It is best to move on, writing it off as historical accident, and
+>> > embrace the new --diff-merges=m option, instead of wasting time on
+>> > pondering "why", because accidents do not have to have a deep reason
+>> > behind them ;-)
+>> 
+>> If the behavior is an idiosyncratic accident of dubious utility, let's
+>> replace it with something that makes sense and is useful :-) If we
+>> make -m imply -p then no alias is necessary, `git log` would display
+>> the log without diffs and `git log -m` would display the log with all
+>> the diffs.
+>
+> Indeed. Mistakes in the design of the UI should not be carried on
+> forever.
+>
+> Either all --diff-merges={m,c,cc} imply -p, or none should.
 
-  SCM: Source code management (tool).
+None of --diff-merges imply -p, and none should, -- that's one of the
+goals of introducing --diff-merges.
 
-Cheers.
+OTOH, -c/--cc do imply -p, and then -m doesn't. That's the historical
+inconsistency, not anything about recently implemented --diff-merges,
+and the natural way to fix it is to let -m imply -p.
 
-[1] https://git-scm.com/docs/gitglossary
+Thanks,
 
--- 
-Felipe Contreras
+-- Sergey Organov
