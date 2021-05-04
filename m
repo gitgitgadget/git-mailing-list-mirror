@@ -7,94 +7,116 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B301C433B4
-	for <git@archiver.kernel.org>; Tue,  4 May 2021 20:09:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F876C433B4
+	for <git@archiver.kernel.org>; Tue,  4 May 2021 20:22:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E2ED761168
-	for <git@archiver.kernel.org>; Tue,  4 May 2021 20:09:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 61E34613CF
+	for <git@archiver.kernel.org>; Tue,  4 May 2021 20:22:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232684AbhEDUKv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 May 2021 16:10:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50100 "EHLO
+        id S232364AbhEDUXd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 May 2021 16:23:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232535AbhEDUKu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 May 2021 16:10:50 -0400
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99A2CC061574
-        for <git@vger.kernel.org>; Tue,  4 May 2021 13:09:55 -0700 (PDT)
-Received: by mail-oi1-x230.google.com with SMTP id i26so37086oii.3
-        for <git@vger.kernel.org>; Tue, 04 May 2021 13:09:55 -0700 (PDT)
+        with ESMTP id S231601AbhEDUXc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 May 2021 16:23:32 -0400
+Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9B79C061574
+        for <git@vger.kernel.org>; Tue,  4 May 2021 13:22:36 -0700 (PDT)
+Received: by mail-oi1-x231.google.com with SMTP id t8so114067oij.0
+        for <git@vger.kernel.org>; Tue, 04 May 2021 13:22:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=Ur5Og/fCIBNyipAUH297i8n2pqAvF6gNpzuk2QiC9Ys=;
-        b=sBPvs3zS2BwQ7w6tFHoQ5fiZvTPstwCCHYgxV+JdKIQwhybDjIUMjJU/kqB1xqgj1N
-         lmpfO+CyJuC3FKsyYljhBILY70oxmr1itvdAt6wpDF3scrMHyOZssPTJu86VhkrRys0F
-         ZPP5nXW8FkuZWOaXu2eofqsHHcyHTwSwo63UqY3ezym/wOMDdquL5XHDmfNdRtzVyeNs
-         tmpmzIe5BkJ3RuzPz1DXSddTwOCDeewlP0B9/kuPwHCeWbwX4qFas9qetFdrD21Ad81w
-         oiKy16B+2l0wapntgnPB46BHR39XmlXAGMRE+1/VEFoATbn4jX3QjwwDROZGOYGqEYO6
-         2IUA==
+        bh=8I9d5o5oMUKQdmU6DaFVnhCjEf129g3Y9PsvQi8QT4o=;
+        b=td+SLAg0OqLzgxNSn0yPyyFqmn77NkGXEsNe7C4ne5mRd+04sWesDEDFabAPC/fKAk
+         1up2hGb8NDxl6VpqNRJ3V3heCJlQjKx09Uox4ZtQoczuRNAWwrVRav/Pfh0q3X8TDlIY
+         7OAJQ4yEPLKpGbYoGjsR2C3Zli+b49TdXL1gcJPxE00BTM60xFNwicPKm6QwFmyTznIU
+         kGPSizAWvICdMc3zAlmicAX6SXcsWmLlcYsaA6ACoX1iAm30NAsFvkibaVPiSQQZ51tw
+         hZW98VRmLVjLXhAA4TTqCFXs9q4Yq6F0491PKtDPGM3AUXNRYWIMSlPKQaI+yPG69Pjk
+         8X4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=Ur5Og/fCIBNyipAUH297i8n2pqAvF6gNpzuk2QiC9Ys=;
-        b=Oho6+T/zNGaJw57FvVHdAvnJYYnRw/Lr4m5Xapm2aSPPYQcVQ/8aV+KhQ8lc3s3GkP
-         jb29cJqydxShBonlIojnqdIiR9OwhEEwfWjDQkwhPqR1deREIcCfSQ/8vOeBR0dcTb6h
-         btvha86E8tCkzDNUeCYHV4WJYoRabV0HC234EuztVGBMSYYbUMc6DfYJ5+YCuCK/QWjF
-         c8wmri0OPUNiH8zbjE6qmxbOtgTrSHgK5lS+UVoWJRv+kqAArkbYIRyX7zlc47O3V/Q8
-         1ZJ/iK1gxnPcGm85QI1PrUinLSa766LPHya7JyrMTYUDG/dYxPZEuQNOZ6VYNaEoF7nK
-         oSNQ==
-X-Gm-Message-State: AOAM531nRM5QmiLjwn+t0pRcf6ZG1mOpTG11bWDEOx4N3YxwUsCAXrB0
-        yjOOQZIyC4mn3HLZUCVuWm0=
-X-Google-Smtp-Source: ABdhPJxq9akPFhS3E2oQOzOrTiEIzXsZE5DaEB2ZjpaQaKn+j5SxLENbzliHkxOaD2r/IemYaIrRIA==
-X-Received: by 2002:aca:4e94:: with SMTP id c142mr15421932oib.107.1620158995074;
-        Tue, 04 May 2021 13:09:55 -0700 (PDT)
+        bh=8I9d5o5oMUKQdmU6DaFVnhCjEf129g3Y9PsvQi8QT4o=;
+        b=JKEPnA9nWac7QWuQV7ZcKVhwFB0dzEIjFq+ps4MsJ1hg+sPyJxBLP1oLkFEFUDVd9t
+         xqc2n11wL+q9/y11NIGdvIQnRJt5ErPBCw6M792fSBVzWQrMA8j8qNgb3PbPR4JiBkP6
+         dRHNilPoAmUvv9BOdhgof9Z3XsPtakl99j4xUyidxTqTbGQThNDIU0wqABm3XC97PLHu
+         dvU+XPDfHVAedzuv5vdYu+zzblCUJygFMoiuI7uEsDTJuLLkWOjAdJ/MJgWmstd2BD8b
+         9LQW2p/9eu0TnICn6Z65Bn/iahXhbruKV/09twQDGj0BEmE1QWeCZhGvqMaBfHa+EwVB
+         FN3g==
+X-Gm-Message-State: AOAM531xfkX8rVbYbA7oYNqWlymNaIwf8l0dYH1vUg1lRd4f31Nir0nr
+        S56YRRy5ygFZBR1r9bIbxus=
+X-Google-Smtp-Source: ABdhPJwTR7zup4+v6GKH33+AoxD4tTplzIzsMeVSrv6ymKDIbWnPy5Yyv7SjhJiBKjnKXjsjPWrFqg==
+X-Received: by 2002:a54:450b:: with SMTP id l11mr4306455oil.68.1620159756378;
+        Tue, 04 May 2021 13:22:36 -0700 (PDT)
 Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id z4sm1044107otq.65.2021.05.04.13.09.53
+        by smtp.gmail.com with ESMTPSA id m67sm881498otm.69.2021.05.04.13.22.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 May 2021 13:09:54 -0700 (PDT)
-Date:   Tue, 04 May 2021 15:09:49 -0500
+        Tue, 04 May 2021 13:22:35 -0700 (PDT)
+Date:   Tue, 04 May 2021 15:22:30 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Alex Henrie <alexhenrie24@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git mailing list <git@vger.kernel.org>
-Message-ID: <6091aa0dee8f4_b34a8208ba@natae.notmuch>
-In-Reply-To: <CAMMLpeS4pkP_xRw_qT3mCTP4hS3iLP9TwdDf8LV+3+an9aJ3Hw@mail.gmail.com>
-References: <CAMMLpeR-W35Qq6a343ifrxJ=mwBc_VcXZtVrBYDpJTySNBroFw@mail.gmail.com>
- <xmqqwnsl93m3.fsf@gitster.g>
- <87im45clkp.fsf@osv.gnss.ru>
- <CAMMLpeS4pkP_xRw_qT3mCTP4hS3iLP9TwdDf8LV+3+an9aJ3Hw@mail.gmail.com>
-Subject: Re: Why doesn't `git log -m` imply `-p`?
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Message-ID: <6091ad06cecb0_b34a8208bf@natae.notmuch>
+In-Reply-To: <87a6pawmyu.fsf@evledraar.gmail.com>
+References: <xmqqfsz4a23x.fsf@gitster.g>
+ <CAPig+cR19WDY1=qTbJMCzxeXjV4XtEddS1+=H8Cj6NUi5ZdN+w@mail.gmail.com>
+ <xmqqsg348k9j.fsf@gitster.g>
+ <xmqqo8ds8k6r.fsf_-_@gitster.g>
+ <877dkgxk9p.fsf@evledraar.gmail.com>
+ <xmqqpmy76w31.fsf@gitster.g>
+ <87czu6wuf3.fsf@evledraar.gmail.com>
+ <xmqq7dke7jeo.fsf@gitster.g>
+ <87a6pawmyu.fsf@evledraar.gmail.com>
+Subject: Re: [PATCH v2] CodingGuidelines: explicitly allow "local" for test
+ scripts
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alex Henrie wrote:
-> On Wed, Apr 28, 2021 at 9:22 PM Junio C Hamano <gitster@pobox.com> wrote:
-> > Alex Henrie <alexhenrie24@gmail.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> On Tue, May 04 2021, Junio C Hamano wrote:
+> > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+> >
+> >> It's effectively synonymous with saying "we still want to support gi=
+t on
+> >> platforms that are so broken they can't even run a single test in ou=
+r
+> >> test suite".
+> >
+> > Not really.  Those on such a platform would (rightly) say that it is
+> > the test suite that is broken and out of compliance.
+> =
 
-> > It is best to move on, writing it off as historical accident, and
-> > embrace the new --diff-merges=m option, instead of wasting time on
-> > pondering "why", because accidents do not have to have a deep reason
-> > behind them ;-)
-> 
-> If the behavior is an idiosyncratic accident of dubious utility, let's
-> replace it with something that makes sense and is useful :-) If we
-> make -m imply -p then no alias is necessary, `git log` would display
-> the log without diffs and `git log -m` would display the log with all
-> the diffs.
+> Indeed. But the lack of any reports about that suggests that in practic=
+e
+> this is universally supported enough to be a hard dependency.
 
-Indeed. Mistakes in the design of the UI should not be carried on
-forever.
+It is universally supported but not always in the same way, which is why
+it hasn't managed to become part of POSIX.
 
-Either all --diff-merges={m,c,cc} imply -p, or none should.
+I for example stumbled upon an issue where 'local x' does not work the
+same in bash and zsh, triggering a huge discussion on the zsh mailing
+list.
 
--- 
-Felipe Contreras
+However, if you set a value (e.g. 'local x=3D') then you shouldn't have
+any problems.
+
+  f () { local x; echo ${x-unset}; }; f # this behavior varies
+
+For a full discussion check [1].
+
+[1] https://www.austingroupbugs.net/bug_view_page.php?bug_id=3D767
+
+-- =
+
+Felipe Contreras=
