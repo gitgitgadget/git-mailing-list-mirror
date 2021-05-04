@@ -2,120 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3994EC433ED
-	for <git@archiver.kernel.org>; Tue,  4 May 2021 14:19:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E5F19C433ED
+	for <git@archiver.kernel.org>; Tue,  4 May 2021 14:45:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1BA966117A
-	for <git@archiver.kernel.org>; Tue,  4 May 2021 14:19:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B8366613B4
+	for <git@archiver.kernel.org>; Tue,  4 May 2021 14:45:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231527AbhEDOTz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 May 2021 10:19:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55732 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231393AbhEDOTy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 May 2021 10:19:54 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C935EC061574
-        for <git@vger.kernel.org>; Tue,  4 May 2021 07:18:59 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id s25so11396415lji.0
-        for <git@vger.kernel.org>; Tue, 04 May 2021 07:18:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=006jv1iPTdf/4kj3hNCkrPDOyXzDoa3aWVbuTywcbac=;
-        b=LXvqX85HmnpEPJv8ev158f3UVV8VRYsX/uoeYJDjELc5F4Gq8sFPGg7vCT9AJX2nQC
-         N7boD44o+q9dDj8CzndMx3v/Eswomf1d0tbuvoUVKNsyNfa7+JFpZCKb4sAs5DskIt1l
-         TKXKVrPNZvAqSMyXvimFQN627fnpl92yjWyE+cI2Jp7rpElrNrK8kfjhGudskairwk+/
-         lwKpHcC4aTFksHojjpjVofYme68R0P9sK+Wm/KkKbDw9q3KcWdtHCwH5iOWCxwk6Gai7
-         FOTdsFO1GIi1ckAP5kYqrlhR+16/FrPqkOJTU1nV1jkEPPrmV7SrMxHXvucMptDJ2n8L
-         +9Aw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=006jv1iPTdf/4kj3hNCkrPDOyXzDoa3aWVbuTywcbac=;
-        b=R3x2oUqJCdPUQGIczLcXkWtUbKi++gH8kRYM/vbCb3m60VnngVk9ZfjYcq8K7ZOWFt
-         ICSntTP0IvJ8TVW/8lG1rOVl1Gpsfxxc/lVipeqr0jQNWtE9ICM8NNjBDXRR3PRoYHgs
-         rNrFim7ntQsl4YUxI3Ww20lHdaDWquhFeikRxrNosxdIaqI18hEeVfY6zF95Yh/wK52L
-         JXyB73sIZrB8fPI72MUwpBeXyajyw8MTb1C4c7IUFDHVmqidQKyKPgQvulA66AOsKpqV
-         k2nDhCIi4B2FPcxoWJzaor4yIuG/ypbbaG59duNG5jwzqTih8k3fyDRj4R71aFbuP+7G
-         2JQw==
-X-Gm-Message-State: AOAM532Ka14J62mm+aSirL4PVybiIHj/LjxkRfWWMptfg4/eiTcb88B5
-        j/lVFgNmR1GFIElE8XITlwIIDgiI268=
-X-Google-Smtp-Source: ABdhPJz7a1ZwPGUzR/gmSXqjC60Ci971I6mE9NtHw5G/Lg64qnDWD+uZlLh9LPS5cxe+9Db0ovDMdw==
-X-Received: by 2002:a2e:a795:: with SMTP id c21mr18460760ljf.353.1620137938037;
-        Tue, 04 May 2021 07:18:58 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id f36sm276285lfv.248.2021.05.04.07.18.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 May 2021 07:18:57 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Alex Henrie <alexhenrie24@gmail.com>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: Why doesn't `git log -m` imply `-p`?
-References: <CAMMLpeR-W35Qq6a343ifrxJ=mwBc_VcXZtVrBYDpJTySNBroFw@mail.gmail.com>
-        <xmqqwnsl93m3.fsf@gitster.g> <87im45clkp.fsf@osv.gnss.ru>
-        <xmqqmttgfz8e.fsf@gitster.g> <xmqqy2d0cr5l.fsf@gitster.g>
-        <87v9837tzm.fsf@osv.gnss.ru> <xmqqzgxfb80r.fsf@gitster.g>
-        <87czu7u32v.fsf@osv.gnss.ru> <xmqqtunj70zy.fsf@gitster.g>
-        <87eeemhnj4.fsf@osv.gnss.ru> <xmqqbl9q7jxf.fsf@gitster.g>
-Date:   Tue, 04 May 2021 17:18:56 +0300
-In-Reply-To: <xmqqbl9q7jxf.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-        04 May 2021 21:38:52 +0900")
-Message-ID: <87r1imbmzz.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+        id S230398AbhEDOp5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 May 2021 10:45:57 -0400
+Received: from smtp.hosts.co.uk ([85.233.160.19]:18995 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230213AbhEDOp5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 May 2021 10:45:57 -0400
+Received: from host-92-1-139-132.as13285.net ([92.1.139.132] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1ldwIH-000ANO-3N; Tue, 04 May 2021 15:45:01 +0100
+Subject: Re: Advise request on adding a new SSH variant
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>, git@vger.kernel.org
+References: <043101d73aae$026409b0$072c1d10$@nexbridge.com>
+From:   Philip Oakley <philipoakley@iee.email>
+Message-ID: <fa8f81db-d470-130e-115d-7aef5e97e5a7@iee.email>
+Date:   Tue, 4 May 2021 15:45:00 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <043101d73aae$026409b0$072c1d10$@nexbridge.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi Randall,
+some drive-by comments..
 
-> Sergey Organov <sorganov@gmail.com> writes:
+On 26/04/2021 16:08, Randall S. Becker wrote:
+> Hi Team,
 >
->> That said, what do we decide about -m to finally join -c/--cc party and
->> start to imply -p? Last time we've discussed it, we decided that -m has
->> been simply overlooked when -c/--cc started to imply -p. Should we
->> finally fix this?
+> I am getting a bunch of requests from my team (and customers) to make SSH
+> configuration easier on the NonStop platform. 
+> We are currently using a
+> wrapper script to drive the variant of SSH on the platform but that is not
+> convenient for many people. 
+> I would like to add an ssh.Variant called
+> "nonstopssh", or something like that, which takes a few extra parameters.
+> -Q (quiet), -Z (don't display the banner), -p port (obvious but typically
+> required), -S (a system process name). 
+https://git-scm.com/docs/git-config#Documentation/git-config.txt-sshvariant
+
+Sounds sensible to me. Maybe also look at past issues that
+Git-for-Windows had with folks having too much prior choice (plink,
+putty, tortoiseplink). May need more clarity in the docs ;-)
+
+> The code in connect.c looks pretty
+> straight forward, but I'm wondering about the best way to pass in a process
+> name (it would be something like "$ZSSHX" - usually an environment variable
+> "SSH2_PROCESS_NAME"). 
+Hopefully others can chime in.. Maybe see discussion at
+<pull.913.git.1616511182942.gitgitgadget@gmail.com> about $ARG variable.
+> The program name for SSH, I assume, could come from
+> GIT_SSH_COMMAND (typically "/G/system/zssh/sshoss", or I could force it if
+> not supplied). 
+https://git-scm.com/docs/git-config#Documentation/git-config.txt-coresshCommand
+> I'm also wondering about controls for the -Q and -Z
+> parameters.
+> Should I just use the environment for this and build up args or
+> is there a more appropriate way of managing these values?
+
 >
-> I thought I already said this, but in case I didn't, I think
-> "--diff-merges=separate" should imply "some kind of diff", and not
-> necessarily "-p".
+> Thanks in advance,
+> Randall
+>
+> -- Brief whoami:
+> NonStop developer since approximately 211288444200000000
+> UNIX developer since approximately 421664400
+> -- In my real life, I talk too much.
+>
+>
+I was also thinking that the lack of replies maybe links to the "Pain
+points in Git's patch flow" thread <YHaIBvl6Mf7ztJB3@google.com> whereby
+it's all about the proposed patch, rather than thoughts about a
+potential patch.
+(Sort of like the philosophy of science [method] that ignores opinion,
+and demands evidence)
 
-Is this a more polite way to say "no"? If not, how is it relevant for
--m, now being a synonym for --diff-merges=on?
-
-As for particular idea, I'll repeat myself as well and say that I'm
-still against implying anything by any off --diff-merges, and even more
-against implying something that affects non-merge commits. --diff-merges
-are not convenience options that need to be short yet give specific
-functionality, so there is no place for additional implications.
-
-That said, I think that something like your idea could be fine if we
-introduce another convenience option, say, -d, that will imply both
---diff-merges=separate and "some kind of diff" (whatever the latter
-actually means, I'm not sure yet.) But then again, why don't just reuse
--m that, as we've decided before, is not that useful in its current
-state anyway?
-
-I must admit that I don't entirely understand your idea above yet. Maybe
-you could provide a draft of manual entry for proposed behavior of
---diff-merges=separate, for better understanding? For convenience, right
-now it reads:
-
-   --diff-merges=separate
-       This makes merge commits show the full diff with respect to
-       each of the parents. Separate log entry and diff is generated
-       for each parent.
-
-Thanks,
-
--- Sergey Organov
+--
+Philip
