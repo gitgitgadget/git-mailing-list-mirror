@@ -2,118 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EEBB4C433ED
-	for <git@archiver.kernel.org>; Tue,  4 May 2021 09:11:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 91707C433ED
+	for <git@archiver.kernel.org>; Tue,  4 May 2021 09:25:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CCD3A613AA
-	for <git@archiver.kernel.org>; Tue,  4 May 2021 09:11:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4F1596139A
+	for <git@archiver.kernel.org>; Tue,  4 May 2021 09:25:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230126AbhEDJLz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 May 2021 05:11:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44194 "EHLO
+        id S229947AbhEDJ0p (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 May 2021 05:26:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229905AbhEDJLy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 May 2021 05:11:54 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC4B4C061574
-        for <git@vger.kernel.org>; Tue,  4 May 2021 02:10:58 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id u25so10218554ljg.7
-        for <git@vger.kernel.org>; Tue, 04 May 2021 02:10:58 -0700 (PDT)
+        with ESMTP id S229937AbhEDJ0o (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 May 2021 05:26:44 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E54EAC06174A
+        for <git@vger.kernel.org>; Tue,  4 May 2021 02:25:48 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id s5-20020a7bc0c50000b0290147d0c21c51so887406wmh.4
+        for <git@vger.kernel.org>; Tue, 04 May 2021 02:25:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=IkMmyuWq9Z3peg+3nDVjMuXtUf6GtnV29NTrH6/Dx5I=;
-        b=Ye0+5TTy0JlOJUSx7VfGpullxOiR4Z+iKGQnDfccMMkjZqXNt27fDi5nkR3d1qolB8
-         RQfa0OoL39mrah1jC3FXFMUoDwFqG6dfTgDm/MmKY62jKfXQp7GgNx2bsY6xSmi4g0cs
-         VpIJ5DwFt7r98/RDG5hGxbdmkdmVKDedO9cSQA1FidIF+BANORz0SiRgeSuntk6EMwXT
-         yRVx2sISE/2LGuwoYXf0JnEXAqFijZ2SBh4+v5+Ba3c6O1jEVoVQqce5/tI29uYPLdOT
-         /EqokCXF9trJcpR6cPiPjxBbu1XnVb5mzV+Z2tURKE/XouggYS9WN4ctRWEq+S0MccR1
-         8T3A==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=+eOAok5LqpoNecYNkGL2KFLvV9ws6JsQIxC6RHJRsVs=;
+        b=moQqXm/Hf8O/wBzOG+Sq+ULaG+xJlokzwoJnF2V/rizXzRucf+2YY6ujetyewAgyGo
+         BjwmVMNk+60MgqBQ/7KTZGYQcF6yneQOaAzuIpWbHSvK62s+KJda7U3NI92oI3/SuoY6
+         GhDo429dav/dJDnCWF1YhDV+U9u6gOD7ojNB6UCxOgVVYG3tL0jn6LKD/sueNTXqbEjC
+         7eZQZmPintv7exJ66F6haZy3zxz1GsruVDYJEHXzP3NRvUCJvmkVtVO28fOdDRLt5p6G
+         xnxvH5zDDqazNQOMzC8lqEnSpmAhJo84hv82Z7HGASGP2wKwPYd7/a82s+lKuebdP1Q2
+         Qh0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=IkMmyuWq9Z3peg+3nDVjMuXtUf6GtnV29NTrH6/Dx5I=;
-        b=nVkzpB+F+ayVUEeMmzFSj5O2JMtNh/ZP0+247q8ViYsjqFKKn9K3VSgYSB57n116uD
-         CsSqhDsBR57N2dRC7G7rM/BDWDtXnaZC3FCjCi3flC3GE8NZ3DzWE5IANCBUFNOJLWnn
-         QAEkdHrxAIQu/tgUHzzEvF+1AhvIG1BmwsO9yK+aNSDVBQEh1xRFUzFC/9aWd1ifzhXv
-         BGdrTRfK1UKr+/jJoJYmvV4fYlETjH3+wN4HVYzHeWNLom2t+/F40ZrVRvjpHe90AZz5
-         k9N5S8e6TA+tCfh4E+ycbkdR7byA+JmdQPKPTzZWUbEuEjJ379T+C7TqZrCmBfGiGjfG
-         XmCA==
-X-Gm-Message-State: AOAM532hM6SKeRfpuCN87NvXPUs5i+cUKSDIZnJhH7YNkPLNw9N3t1sl
-        6vrBH4C7apdwx+64vjlgwZXJ+GvnSEQ=
-X-Google-Smtp-Source: ABdhPJzOoS8S5QyguwybCi831ghv5N2tHMZe7JO3A7trbNi/PThsejtITsE1Rvvzw3/RfjOBBO6NBQ==
-X-Received: by 2002:a2e:bf2a:: with SMTP id c42mr16181000ljr.208.1620119456961;
-        Tue, 04 May 2021 02:10:56 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id x35sm210697lfu.149.2021.05.04.02.10.56
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=+eOAok5LqpoNecYNkGL2KFLvV9ws6JsQIxC6RHJRsVs=;
+        b=ANee7+4O1ieufLXa9Er+jEdfx3hWVQHLwqVFDZID9kbnCYtksY8AbbtMhkJ+xOIOZV
+         fxq3G7877hDRy1vyRMMbBnjJgNouazBRKjrEeIUCc+a3SDeHcIvxDBRb70PXRvGC0x+0
+         6AXojXdMdSowU0JSqo6e+qT/r+IrZX8NaE5j0tUFAIcGUvdXfOlvID0h+0UnYXmQOi7n
+         9F2q6o1ssWkBrz+ysQSA4u23J618IToMv4XyH9POWjq3NlV2wkGzCab/D4rpZcRqxTdG
+         Jor/ZUuTefSu6YdbvC9JqSk+laNRKqnCdYFMeWquviuM4wOX40T/RA9p9UEEhIdAy6VR
+         cvQg==
+X-Gm-Message-State: AOAM530EDHNR3+shkCvYWMDoyA/gL3ZPFueq2XZvKH4jyfP/+Tk1XPTF
+        xh1vNRHKe9CwO5KinFkPOjSqVND6wa4=
+X-Google-Smtp-Source: ABdhPJyoHTFBK3Y8uf3vpcKPdeC/J0uZSukMVoe/ykJIHWkBO2BaWHzbijCGuglCTa4AxfSVIUmNxg==
+X-Received: by 2002:a05:600c:35c5:: with SMTP id r5mr16488761wmq.109.1620120347683;
+        Tue, 04 May 2021 02:25:47 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id l14sm1969135wmq.4.2021.05.04.02.25.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 May 2021 02:10:56 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Alex Henrie <alexhenrie24@gmail.com>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: Why doesn't `git log -m` imply `-p`?
-References: <CAMMLpeR-W35Qq6a343ifrxJ=mwBc_VcXZtVrBYDpJTySNBroFw@mail.gmail.com>
-        <xmqqwnsl93m3.fsf@gitster.g> <87im45clkp.fsf@osv.gnss.ru>
-        <xmqqmttgfz8e.fsf@gitster.g> <xmqqy2d0cr5l.fsf@gitster.g>
-        <87v9837tzm.fsf@osv.gnss.ru> <xmqqzgxfb80r.fsf@gitster.g>
-        <87czu7u32v.fsf@osv.gnss.ru> <xmqqtunj70zy.fsf@gitster.g>
-Date:   Tue, 04 May 2021 12:10:55 +0300
-In-Reply-To: <xmqqtunj70zy.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-        04 May 2021 10:15:29 +0900")
-Message-ID: <87eeemhnj4.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+        Tue, 04 May 2021 02:25:47 -0700 (PDT)
+Message-Id: <a339d1cf9b9ffd6365fca3efda8fb7e10346dda4.1620120345.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.948.git.1620120345.gitgitgadget@gmail.com>
+References: <pull.948.git.1620120345.gitgitgadget@gmail.com>
+From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 04 May 2021 09:25:44 +0000
+Subject: [PATCH 1/2] patience diff: remove unnecessary string comparisons
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-> Sergey Organov <sorganov@gmail.com> writes:
->
->>>  * "--patch", "--stat", "--cc" etc are to specify if we use the diff
->>>    machinery and what kind of output is desired.
->>
->> So, in your view, --cc output is not a product of "diff machinery"?
->
-> I view --cc and -c as an enhanced form of --patch that is also
-> capable of handling multi-way diffs, in other words, choosing --cc
-> should be to say "give me textual patch for all commits; when there
-> are multiple parents, condense multi-way patches".
->
-> So, yes, strictly speaking, --diff-merges=cc was probably a mistake,
-> and in the ideal world, --diff-merges should have taken only one of
-> "compare with nothing" (optional), "compare with first-parent", and
-> "compare with all parents".  The last choice could output diffs in
-> various forms, like traditional -m (i.e. patch output separately for
-> each parent), --cc, -c, etc.  "compare with nothing" is optional
-> because we could also control on the "output format" side to say
-> "produce no output" (ala "git show -s").
->
-> But such an idealized orthogonal design without special casing will
-> often lead to usability problems and complaints that -m alone does
-> not produce anything, so I am OK to have cc and friends as the value
-> for --diff-merges for that reason.
+xdl_prepare_env() calls xdl_classify_record() which arranges for the
+hashes of non-matching lines to be different so lines can be tested
+for equality by comparing just their hashes.
 
-I basically agree with what you say here, and it's in fact very close to
-the first variant of the design that originally came to my mind, and it
-was reality that shifted things to the way they are implemented now.
+This reduces the time taken to calculate the diff of v2.28.0 to
+v2.29.0 by ~3-4%.
 
-That said, what do we decide about -m to finally join -c/--cc party and
-start to imply -p? Last time we've discussed it, we decided that -m has
-been simply overlooked when -c/--cc started to imply -p. Should we
-finally fix this?
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
+ xdiff/xpatience.c | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
+diff --git a/xdiff/xpatience.c b/xdiff/xpatience.c
+index 20699a6f6054..db2d53e89cb0 100644
+--- a/xdiff/xpatience.c
++++ b/xdiff/xpatience.c
+@@ -90,7 +90,7 @@ static void insert_record(xpparam_t const *xpp, int line, struct hashmap *map,
+ {
+ 	xrecord_t **records = pass == 1 ?
+ 		map->env->xdf1.recs : map->env->xdf2.recs;
+-	xrecord_t *record = records[line - 1], *other;
++	xrecord_t *record = records[line - 1];
+ 	/*
+ 	 * After xdl_prepare_env() (or more precisely, due to
+ 	 * xdl_classify_record()), the "ha" member of the records (AKA lines)
+@@ -104,11 +104,7 @@ static void insert_record(xpparam_t const *xpp, int line, struct hashmap *map,
+ 	int index = (int)((record->ha << 1) % map->alloc);
+ 
+ 	while (map->entries[index].line1) {
+-		other = map->env->xdf1.recs[map->entries[index].line1 - 1];
+-		if (map->entries[index].hash != record->ha ||
+-				!xdl_recmatch(record->ptr, record->size,
+-					other->ptr, other->size,
+-					map->xpp->flags)) {
++		if (map->entries[index].hash != record->ha) {
+ 			if (++index >= map->alloc)
+ 				index = 0;
+ 			continue;
+@@ -253,8 +249,7 @@ static int match(struct hashmap *map, int line1, int line2)
+ {
+ 	xrecord_t *record1 = map->env->xdf1.recs[line1 - 1];
+ 	xrecord_t *record2 = map->env->xdf2.recs[line2 - 1];
+-	return xdl_recmatch(record1->ptr, record1->size,
+-		record2->ptr, record2->size, map->xpp->flags);
++	return record1->ha == record2->ha;
+ }
+ 
+ static int patience_diff(mmfile_t *file1, mmfile_t *file2,
+-- 
+gitgitgadget
 
-Thanks,
-
--- Sergey Organov
