@@ -8,60 +8,61 @@ X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 69528C433ED
-	for <git@archiver.kernel.org>; Tue,  4 May 2021 21:16:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 27BB8C433B4
+	for <git@archiver.kernel.org>; Tue,  4 May 2021 21:16:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 41318613B4
+	by mail.kernel.org (Postfix) with ESMTP id ED812613B4
 	for <git@archiver.kernel.org>; Tue,  4 May 2021 21:16:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232841AbhEDVRJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 May 2021 17:17:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36668 "EHLO
+        id S232847AbhEDVRK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 May 2021 17:17:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232840AbhEDVRI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 May 2021 17:17:08 -0400
-Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C681C061574
-        for <git@vger.kernel.org>; Tue,  4 May 2021 14:16:12 -0700 (PDT)
-Received: by mail-pl1-x649.google.com with SMTP id t12-20020a170902dcccb02900ed4648d0f9so4916262pll.2
-        for <git@vger.kernel.org>; Tue, 04 May 2021 14:16:12 -0700 (PDT)
+        with ESMTP id S232840AbhEDVRK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 May 2021 17:17:10 -0400
+Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 729ADC06174A
+        for <git@vger.kernel.org>; Tue,  4 May 2021 14:16:14 -0700 (PDT)
+Received: by mail-pf1-x44a.google.com with SMTP id j184-20020a6255c10000b0290214249d921cso138415pfb.17
+        for <git@vger.kernel.org>; Tue, 04 May 2021 14:16:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=eZxVnx+U11TuQpl7BsNPTcMEzYXOnZs4l4crToHx/nc=;
-        b=YIcuVIIgSiR3Abq1KphECOqXPZTB0GMQXmEiLTtEPU3Mj19FfG2D2YjRM58GG/QCge
-         9Rb+w3vK+Q9nKLvA1llh4B/NaSZCSC//wPE1ir6ZqTWJ79eu4DYO+tVCpRACvU+C9wCw
-         N2oV01mnV9wcptXZ0vCS+yygwNGpVS1dbvXfisFSlQceJ7vuYa8ygfvLFB3/7zcOIOOA
-         bAy9nHgtacl26cFa0LM82gCfQIQW2ssisPNMugdbj4P+p4eNIGCn5b/hVGJUuXqiHBA1
-         SQqt2a2/sMisxNHdTgqkQX2VKM2c8RxwU/i3Ji3rgGAKwF7SzEptFPbQ/hkIrBTtJtHs
-         aYAw==
+        bh=8ahVzaEVdw6hdPit0BuynimSDHzBo0Dsx3N4XhKGdQg=;
+        b=O1NImt2z3Kkuv0FQ1IFN47DJcJvJDeCmoxE1EJU17g9TAgFdQ8JZHUsZeefFWqWNB5
+         MsHsGjjlS43fcFibY+CzT5JuEPBaAmj/UNDVvK0d75yLtngpMU7j+8hzbzX0cRyuXvC1
+         u7MblHFFlMsKdCfzPHkh8SQ+GZZ3ui0WjIryLIYeCyzS73cakWcfvKvgTtYKPdKYW1jy
+         6aawU+kHNqoXMgnxm8WLjys1PTRAuuxJbqQuGWycOEfh9iB2RKPQINBfYbQ4uJEC07Qu
+         hMAVvRFIlYlJxWWTQmIkMSgVApARM6p4+UfxGn7XJOChP84J0VmTZGC2q4JWFZGy1ZhU
+         v3Dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=eZxVnx+U11TuQpl7BsNPTcMEzYXOnZs4l4crToHx/nc=;
-        b=RAD3pugUlXDODihd8og3IzZluD9E1+8rIrwjx+QQoo+L6HCdFezfCb4wdtWABNb6YS
-         0/Jcv9ttgilM552CONW/LiXSlNR4iKINBg0okAjEoAQHuwJfYCNJwL3s1V5EL04nEFG1
-         v11r/pbfIQE4/ERCKiaRbt2P04B18KViQbnLZT+iTvfPUvA2Sk0YyWpqQebcUfSzHC5o
-         V27YZFRUCPPbxsgUFHvpHIN+IUFOZ7M1QyfzKTtk40vu+d7vp4rwUK+UjCYf/z1wU4bI
-         pkCMAI/kl9drZLgN/E5SPMYawWmGif23coAQREUSiR/5su610N88epoauHigcBF3ooOA
-         mIIQ==
-X-Gm-Message-State: AOAM533iVu7mqTl1MYyHlo7vh2+qBWbsR2jjiClEEw69s9wpUiUg1IPr
-        jSd4g/clfXJ+GCpUGFvJ7J7DXJuJ4zEXmEJZ+8fLI/aOhEQoa/KNpZGxC6Eccb7YHkpqXzAmZGO
-        30XKvJavzBEmiRx8E7b+83fVUzag9FRRgsSc1iATC2GyYjKcRBGz/ZLJA6/OypIsJ0VgxZlyZLT
-        98
-X-Google-Smtp-Source: ABdhPJzoafrF0ckzeTWrVGfvJS1TAWIgbphR1jwOzISPJF21/80l1llg64MAOPDIcXX8+3ZwEhTVs4CUpD006UMPDWbF
+        bh=8ahVzaEVdw6hdPit0BuynimSDHzBo0Dsx3N4XhKGdQg=;
+        b=JWL3pGQwOvBf4iJ1kSWFLtwrkG5tAx8YpMh3UC3LaOmVTBKHZ6g1LMctU+msPhmw77
+         djnVuGRqG5LKORnpyDiZ1ZthX+NkNm87S8BQU+afPEwjCU4MoDho0zLKbrJHc+Pbrkk+
+         e2OsypRroX3k42w2XZfQ1t9swLoUkoFpHYROmXVUqLL3wGSlbdKpN8lROFg4wP69NjNV
+         TsXrfmYaKE38/mj31vjwJOGWypzn/JKFvlrClR0qAcMQ9EFtADY0Fm1nnjhKUQF91Vca
+         hlRW+ZvofgaP9UO0UxUcwVtjIsomJBk4otgNxjY+KH78dMWSP7/hlo1ZZ7FBOHlq/c1E
+         cXnA==
+X-Gm-Message-State: AOAM530pJMvfb0vyujgl+QDcGEpDAS8bppjKAqyaB8RvirV83nHLKwjX
+        qzlg2GCnnZckKpeVV/Ty/uiDiIp0bgFISMdm9l9bfRk15Ezpz9SbAtyUAWa2W6UlQBudSZk83dI
+        bowk5ZIHLpicqCjDK5Z8ugbOYfvScvyYZB0F72qUSWpSNhvTP4IAJnCWugbk+1k7NXL5UR+aAB3
+        i7
+X-Google-Smtp-Source: ABdhPJwOwcjhXntFRxnbCyC89y45NO48vwl7dXDmXn49vPYJqi54VJqzhGv/kQfeipn/BtZGcZcRGLJ5qkrCyZSBCIf3
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a17:90b:909:: with SMTP id
- bo9mr7393327pjb.142.1620162972120; Tue, 04 May 2021 14:16:12 -0700 (PDT)
-Date:   Tue,  4 May 2021 14:15:59 -0700
+ (user=jonathantanmy job=sendgmr) by 2002:a62:170e:0:b029:1fa:7161:fd71 with
+ SMTP id 14-20020a62170e0000b02901fa7161fd71mr25114973pfx.35.1620162973860;
+ Tue, 04 May 2021 14:16:13 -0700 (PDT)
+Date:   Tue,  4 May 2021 14:16:00 -0700
 In-Reply-To: <cover.1620162764.git.jonathantanmy@google.com>
-Message-Id: <57c3451b2e36d003aa7fc398c644ce71ab668b5e.1620162764.git.jonathantanmy@google.com>
+Message-Id: <6871d0cec62dc12d0c5f7390eee8a80614919578.1620162764.git.jonathantanmy@google.com>
 Mime-Version: 1.0
 References: <cover.1617929278.git.jonathantanmy@google.com> <cover.1620162764.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.31.1.527.g47e6f16901-goog
-Subject: [PATCH v2 2/5] fetch-pack: refactor add_haves()
+Subject: [PATCH v2 3/5] fetch-pack: refactor command and capability write
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com,
@@ -71,88 +72,87 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A subsequent commit will need part, but not all, of the functionality in
-add_haves(), so move some of its functionality to its sole caller
-send_fetch_request().
+A subsequent commit will need this functionality independent of the rest
+of send_fetch_request(), so put this into its own function.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- fetch-pack.c | 28 ++++++++++++----------------
- 1 file changed, 12 insertions(+), 16 deletions(-)
+ fetch-pack.c | 41 ++++++++++++++++++++++++-----------------
+ 1 file changed, 24 insertions(+), 17 deletions(-)
 
 diff --git a/fetch-pack.c b/fetch-pack.c
-index 9f3901cdba..128ad47d2a 100644
+index 128ad47d2a..512fe5450d 100644
 --- a/fetch-pack.c
 +++ b/fetch-pack.c
-@@ -1195,11 +1195,9 @@ static void add_common(struct strbuf *req_buf, struct oidset *common)
+@@ -1213,29 +1213,23 @@ static int add_haves(struct fetch_negotiator *negotiator,
+ 	return haves_added;
  }
  
- static int add_haves(struct fetch_negotiator *negotiator,
--		     int seen_ack,
- 		     struct strbuf *req_buf,
--		     int *haves_to_send, int *in_vain)
-+		     int *haves_to_send)
+-static int send_fetch_request(struct fetch_negotiator *negotiator, int fd_out,
+-			      struct fetch_pack_args *args,
+-			      const struct ref *wants, struct oidset *common,
+-			      int *haves_to_send, int *in_vain,
+-			      int sideband_all, int seen_ack)
++static void write_fetch_command_and_capabilities(struct strbuf *req_buf,
++						 const struct string_list *server_options)
  {
--	int ret = 0;
- 	int haves_added = 0;
- 	const struct object_id *oid;
+-	int haves_added;
+-	int done_sent = 0;
+ 	const char *hash_name;
+-	struct strbuf req_buf = STRBUF_INIT;
  
-@@ -1209,17 +1207,10 @@ static int add_haves(struct fetch_negotiator *negotiator,
- 			break;
+ 	if (server_supports_v2("fetch", 1))
+-		packet_buf_write(&req_buf, "command=fetch");
++		packet_buf_write(req_buf, "command=fetch");
+ 	if (server_supports_v2("agent", 0))
+-		packet_buf_write(&req_buf, "agent=%s", git_user_agent_sanitized());
++		packet_buf_write(req_buf, "agent=%s", git_user_agent_sanitized());
+ 	if (advertise_sid && server_supports_v2("session-id", 0))
+-		packet_buf_write(&req_buf, "session-id=%s", trace2_session_id());
+-	if (args->server_options && args->server_options->nr &&
++		packet_buf_write(req_buf, "session-id=%s", trace2_session_id());
++	if (server_options && server_options->nr &&
+ 	    server_supports_v2("server-option", 1)) {
+ 		int i;
+-		for (i = 0; i < args->server_options->nr; i++)
+-			packet_buf_write(&req_buf, "server-option=%s",
+-					 args->server_options->items[i].string);
++		for (i = 0; i < server_options->nr; i++)
++			packet_buf_write(req_buf, "server-option=%s",
++					 server_options->items[i].string);
  	}
  
--	*in_vain += haves_added;
--	if (!haves_added || (seen_ack && *in_vain >= MAX_IN_VAIN)) {
--		/* Send Done */
--		packet_buf_write(req_buf, "done\n");
--		ret = 1;
--	}
--
- 	/* Increase haves to send on next round */
- 	*haves_to_send = next_flush(1, *haves_to_send);
- 
--	return ret;
-+	return haves_added;
- }
- 
- static int send_fetch_request(struct fetch_negotiator *negotiator, int fd_out,
-@@ -1228,7 +1219,8 @@ static int send_fetch_request(struct fetch_negotiator *negotiator, int fd_out,
- 			      int *haves_to_send, int *in_vain,
- 			      int sideband_all, int seen_ack)
- {
--	int ret = 0;
+ 	if (server_feature_v2("object-format", &hash_name)) {
+@@ -1243,13 +1237,26 @@ static int send_fetch_request(struct fetch_negotiator *negotiator, int fd_out,
+ 		if (hash_algo_by_ptr(the_hash_algo) != hash_algo)
+ 			die(_("mismatched algorithms: client %s; server %s"),
+ 			    the_hash_algo->name, hash_name);
+-		packet_buf_write(&req_buf, "object-format=%s", the_hash_algo->name);
++		packet_buf_write(req_buf, "object-format=%s", the_hash_algo->name);
+ 	} else if (hash_algo_by_ptr(the_hash_algo) != GIT_HASH_SHA1) {
+ 		die(_("the server does not support algorithm '%s'"),
+ 		    the_hash_algo->name);
+ 	}
++	packet_buf_delim(req_buf);
++}
++
++static int send_fetch_request(struct fetch_negotiator *negotiator, int fd_out,
++			      struct fetch_pack_args *args,
++			      const struct ref *wants, struct oidset *common,
++			      int *haves_to_send, int *in_vain,
++			      int sideband_all, int seen_ack)
++{
 +	int haves_added;
 +	int done_sent = 0;
- 	const char *hash_name;
- 	struct strbuf req_buf = STRBUF_INIT;
++	struct strbuf req_buf = STRBUF_INIT;
++
++	write_fetch_command_and_capabilities(&req_buf, args->server_options);
  
-@@ -1312,9 +1304,13 @@ static int send_fetch_request(struct fetch_negotiator *negotiator, int fd_out,
- 	/* Add all of the common commits we've found in previous rounds */
- 	add_common(&req_buf, common);
- 
--	/* Add initial haves */
--	ret = add_haves(negotiator, seen_ack, &req_buf,
--			haves_to_send, in_vain);
-+	haves_added = add_haves(negotiator, &req_buf, haves_to_send);
-+	*in_vain += haves_added;
-+	if (!haves_added || (seen_ack && *in_vain >= MAX_IN_VAIN)) {
-+		/* Send Done */
-+		packet_buf_write(&req_buf, "done\n");
-+		done_sent = 1;
-+	}
- 
- 	/* Send request */
- 	packet_buf_flush(&req_buf);
-@@ -1322,7 +1318,7 @@ static int send_fetch_request(struct fetch_negotiator *negotiator, int fd_out,
- 		die_errno(_("unable to write request to remote"));
- 
- 	strbuf_release(&req_buf);
--	return ret;
-+	return done_sent;
- }
- 
- /*
+-	packet_buf_delim(&req_buf);
+ 	if (args->use_thin_pack)
+ 		packet_buf_write(&req_buf, "thin-pack");
+ 	if (args->no_progress)
 -- 
 2.31.1.527.g47e6f16901-goog
 
