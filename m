@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7013BC433B4
-	for <git@archiver.kernel.org>; Tue,  4 May 2021 16:28:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D3B93C433B4
+	for <git@archiver.kernel.org>; Tue,  4 May 2021 16:28:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4B197613BC
-	for <git@archiver.kernel.org>; Tue,  4 May 2021 16:28:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A86FA611AD
+	for <git@archiver.kernel.org>; Tue,  4 May 2021 16:28:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231826AbhEDQ2y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 May 2021 12:28:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56610 "EHLO
+        id S231852AbhEDQ3B (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 May 2021 12:29:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56624 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231726AbhEDQ2x (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 May 2021 12:28:53 -0400
-Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 782F6C06174A
-        for <git@vger.kernel.org>; Tue,  4 May 2021 09:27:58 -0700 (PDT)
-Received: by mail-qk1-x736.google.com with SMTP id o5so9163183qkb.0
-        for <git@vger.kernel.org>; Tue, 04 May 2021 09:27:58 -0700 (PDT)
+        with ESMTP id S231726AbhEDQ24 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 May 2021 12:28:56 -0400
+Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05A1FC061761
+        for <git@vger.kernel.org>; Tue,  4 May 2021 09:28:01 -0700 (PDT)
+Received: by mail-qk1-x731.google.com with SMTP id 8so9112987qkv.8
+        for <git@vger.kernel.org>; Tue, 04 May 2021 09:28:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp.br; s=usp-google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=t23D3WB4vmdvDXKy81WrtRCExr2GHpVXwNDoKFSvJ7E=;
-        b=gdPvbIUbK6sgOu+JAc0A1XIJwtKaebcIRF07+wMiPDpUZpov0ohm8b9r22NgqHm0go
-         xrqWM4eee8XCXoRXxEzwlHKRlu80ocGLApxXG7KeuIADoSfbzVK9b+fArtSOqf78jWvz
-         x1Q2mg8Z6EWoftJjl7Xf6qqHPCf8bqiyKfQfRDp6EH3YSTkCcy6MXKd+1sGmz9CJS1nI
-         2EIpIIPsTWmi5XlrAokwTD9fadVNBHlvs/BnXBQxtf8OKh1xDn0rieFSfJR5/OT48JVo
-         4+ebB/d5CwvmShB10wAYi0ecFiFK3Crk+3DQU0QF6XImtCiii6hMBCsKF2bI5Q7IXgcC
-         JgdA==
+        bh=2EnM5QDr7FoNgrYUhohEVPq46wiDviob4V3QvwYbMTk=;
+        b=zXOmvi6S/g9e1+uX+dyYmrrTqw6gUFQR/YktCbrg1FmTrCnOWCjPnbuUJc6PwLfyeU
+         n9biQi2mLsWI8xXNvFPhaUcSEGFyB5+1VV4EYeIU1Cn6xJZ02f2OiCtlWFagBwKQccyR
+         dmerQB+UPOg+U9so/MzCvVZEmx+yYMhIc4ezn73g2md3L9PhDp6YFwSdsgJSAbdjkxtQ
+         LFf4PFYm77u6/ybUv8wzDoHMRgGMvjiAbwl5RrV8NNO+hPI7FLSwK2J+7GGbDeqiBluj
+         hSWfx+ZeCJG80N8XsJZhQUZdcn18aRo1ynuBJu7FVYwTESjc2TMs/2vcY7CsFpz/cobP
+         a+Lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=t23D3WB4vmdvDXKy81WrtRCExr2GHpVXwNDoKFSvJ7E=;
-        b=AsPNeLIZsonTyT6/nYTuxfZb5oalYxEiBtS3U1N8tqIpvI9BHonEsJviO20ZGQyeHs
-         mGEjyEOYTQqZ6/YOXxts/ZyMrEhJSYc4Ld8Cu/zk6vndcWagjyhSBGNwlJ00GRnlk7xq
-         ztV+ZwiX6m9KbPr+L1zcLTTyoueVGsCaxSLZboe7SfZlL5xMgzigal2XMl+CWIUsp+Yx
-         4LGN3KPkDr67/Wp+B+yQ97IGMEYsHqRP08NyrIL7bAlrRmvhc85Nt6vpONYIlHj2BXLT
-         gxtU9Jx465w5pLKY3pnWvlSV6j5f1fW/MBUePP7CGmsJ5YLIaLae6M3xJX51ac6Imhg+
-         70Hg==
-X-Gm-Message-State: AOAM530z+1DYhi5po5lVg+NdYqbEYjf1/CEE0yE51Q/MEvwdc+y2KeQs
-        ztcEGWEmwFtzimXEXCTnz7tQcyHPWkD4LA==
-X-Google-Smtp-Source: ABdhPJyyH6v07GPn14TsC9URTzl6oYTL3y/x/fnu9FJK1+tLeJIdZ7KZHbNE1gG84L0wEB5s3RGDRg==
-X-Received: by 2002:a37:e40f:: with SMTP id y15mr7832073qkf.314.1620145677358;
-        Tue, 04 May 2021 09:27:57 -0700 (PDT)
+        bh=2EnM5QDr7FoNgrYUhohEVPq46wiDviob4V3QvwYbMTk=;
+        b=P9mx7KR01/vRzp5vabrZASInAKor8sZ+iOUO1Kpos4JxefxMXMgVx9WRsrE0TdliiP
+         JOO3/eh96ElKd0xFk6LfViwXzZE0HmGriHZ/2ub3niFwNOwW425ObuVCTORhL3XhTq6I
+         zo661ArzRKrlRPqENcdv9kmZ6GF1AUlViHkv8WD1vWqABrxuayiDvknptR6CY6K9qaqH
+         ITmKd/z5LTvPaGZlv2sP7qYZKePn2SKzxUtzpjvSg1q2/fvcYbjLdRsemHJIpBxQve8e
+         OIpcR//CnROyusmG78eUN+RhKuW/2Kx51wkgHaovhfBi6iOtnnQ/OslCq6EFle423hie
+         wjcw==
+X-Gm-Message-State: AOAM530MioS+Uj4t8aqw7coADEQlq4iCYu3nA2+Mlv0DOjbGAQspHbAK
+        jlHWT09/yvSZ63GCl5S7vaSJEzElmBlK0A==
+X-Google-Smtp-Source: ABdhPJyiEX+QFXRBZEC6RC2kOhBQQLTjwbIzfttW1eSYrpiR1slw6PvQhDBJHL01DWLSna6hpqbmgQ==
+X-Received: by 2002:a37:7a05:: with SMTP id v5mr26028568qkc.266.1620145679984;
+        Tue, 04 May 2021 09:27:59 -0700 (PDT)
 Received: from mango.meuintelbras.local ([177.32.118.149])
-        by smtp.gmail.com with ESMTPSA id x19sm11202689qkx.107.2021.05.04.09.27.55
+        by smtp.gmail.com with ESMTPSA id x19sm11202689qkx.107.2021.05.04.09.27.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 May 2021 09:27:57 -0700 (PDT)
+        Tue, 04 May 2021 09:27:59 -0700 (PDT)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
 Cc:     christian.couder@gmail.com, git@jeffhostetler.com,
         stolee@gmail.com, tboegi@web.de
-Subject: [PATCH v3 5/8] parallel-checkout: add tests related to path collisions
-Date:   Tue,  4 May 2021 13:27:32 -0300
-Message-Id: <dcb3acab1d6ed8304da32b10a1eaa9c3f6f81d3a.1620145501.git.matheus.bernardino@usp.br>
+Subject: [PATCH v3 6/8] t0028: extract encoding helpers to lib-encoding.sh
+Date:   Tue,  4 May 2021 13:27:33 -0300
+Message-Id: <6141c460517b3fd15e8052730dd180df7e445e12.1620145501.git.matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.30.1
 In-Reply-To: <cover.1620145501.git.matheus.bernardino@usp.br>
 References: <cover.1620145501.git.matheus.bernardino@usp.br>
@@ -71,235 +71,87 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add tests to confirm that path collisions are properly detected by
-checkout workers, both to avoid race conditions and to report colliding
-entries on clone.
+The following patch will add tests outside t0028 which will also need to
+re-encode some strings. Extract the auxiliary encoding functions from
+t0028 to a common lib file so that they can be reused.
 
-Co-authored-by: Jeff Hostetler <jeffhost@microsoft.com>
 Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
 ---
- parallel-checkout.c                     |   4 +
- t/lib-parallel-checkout.sh              |   4 +-
- t/t2081-parallel-checkout-collisions.sh | 162 ++++++++++++++++++++++++
- 3 files changed, 168 insertions(+), 2 deletions(-)
- create mode 100755 t/t2081-parallel-checkout-collisions.sh
+ t/lib-encoding.sh                | 25 +++++++++++++++++++++++++
+ t/t0028-working-tree-encoding.sh | 25 +------------------------
+ 2 files changed, 26 insertions(+), 24 deletions(-)
+ create mode 100644 t/lib-encoding.sh
 
-diff --git a/parallel-checkout.c b/parallel-checkout.c
-index 09e8b10a35..6fb3f1e6c9 100644
---- a/parallel-checkout.c
-+++ b/parallel-checkout.c
-@@ -8,6 +8,7 @@
- #include "sigchain.h"
- #include "streaming.h"
- #include "thread-utils.h"
-+#include "trace2.h"
- 
- struct pc_worker {
- 	struct child_process cp;
-@@ -326,6 +327,7 @@ void write_pc_item(struct parallel_checkout_item *pc_item,
- 	if (dir_sep && !has_dirs_only_path(path.buf, dir_sep - path.buf,
- 					   state->base_dir_len)) {
- 		pc_item->status = PC_ITEM_COLLIDED;
-+		trace2_data_string("pcheckout", NULL, "collision/dirname", path.buf);
- 		goto out;
- 	}
- 
-@@ -341,6 +343,8 @@ void write_pc_item(struct parallel_checkout_item *pc_item,
- 			 * call should have already caught these cases.
- 			 */
- 			pc_item->status = PC_ITEM_COLLIDED;
-+			trace2_data_string("pcheckout", NULL,
-+					   "collision/basename", path.buf);
- 		} else {
- 			error_errno("failed to open file '%s'", path.buf);
- 			pc_item->status = PC_ITEM_FAILED;
-diff --git a/t/lib-parallel-checkout.sh b/t/lib-parallel-checkout.sh
-index f60b22ef34..d6740425b1 100644
---- a/t/lib-parallel-checkout.sh
-+++ b/t/lib-parallel-checkout.sh
-@@ -22,12 +22,12 @@ test_checkout_workers () {
- 
- 	local trace_file=trace-test-checkout-workers &&
- 	rm -f "$trace_file" &&
--	GIT_TRACE2="$(pwd)/$trace_file" "$@" &&
-+	GIT_TRACE2="$(pwd)/$trace_file" "$@" 2>&8 &&
- 
- 	local workers=$(grep "child_start\[..*\] git checkout--worker" "$trace_file" | wc -l) &&
- 	test $workers -eq $expected_workers &&
- 	rm "$trace_file"
--}
-+} 8>&2 2>&4
- 
- # Verify that both the working tree and the index were created correctly
- verify_checkout () {
-diff --git a/t/t2081-parallel-checkout-collisions.sh b/t/t2081-parallel-checkout-collisions.sh
-new file mode 100755
-index 0000000000..f6fcfc0c1e
+diff --git a/t/lib-encoding.sh b/t/lib-encoding.sh
+new file mode 100644
+index 0000000000..2dabc8c73e
 --- /dev/null
-+++ b/t/t2081-parallel-checkout-collisions.sh
-@@ -0,0 +1,162 @@
-+#!/bin/sh
++++ b/t/lib-encoding.sh
+@@ -0,0 +1,25 @@
++# Encoding helpers
 +
-+test_description="path collisions during parallel checkout
-+
-+Parallel checkout must detect path collisions to:
-+
-+1) Avoid racily writing to different paths that represent the same file on disk.
-+2) Report the colliding entries on clone.
-+
-+The tests in this file exercise parallel checkout's collision detection code in
-+both these mechanics.
-+"
-+
-+. ./test-lib.sh
-+. "$TEST_DIRECTORY/lib-parallel-checkout.sh"
-+
-+TEST_ROOT="$PWD"
-+
-+test_expect_success CASE_INSENSITIVE_FS 'setup' '
-+	empty_oid=$(git hash-object -w --stdin </dev/null) &&
-+	cat >objs <<-EOF &&
-+	100644 $empty_oid	FILE_X
-+	100644 $empty_oid	FILE_x
-+	100644 $empty_oid	file_X
-+	100644 $empty_oid	file_x
-+	EOF
-+	git update-index --index-info <objs &&
-+	git commit -m "colliding files" &&
-+	git tag basename_collision &&
-+
-+	write_script "$TEST_ROOT"/logger_script <<-\EOF
-+	echo "$@" >>filter.log
-+	EOF
++test_lazy_prereq NO_UTF16_BOM '
++	test $(printf abc | iconv -f UTF-8 -t UTF-16 | wc -c) = 6
 +'
 +
-+test_workers_in_event_trace ()
-+{
-+	test $1 -eq $(grep ".event.:.child_start..*checkout--worker" $2 | wc -l)
++test_lazy_prereq NO_UTF32_BOM '
++	test $(printf abc | iconv -f UTF-8 -t UTF-32 | wc -c) = 12
++'
++
++write_utf16 () {
++	if test_have_prereq NO_UTF16_BOM
++	then
++		printf '\376\377'
++	fi &&
++	iconv -f UTF-8 -t UTF-16
 +}
 +
-+test_expect_success CASE_INSENSITIVE_FS 'worker detects basename collision' '
-+	GIT_TRACE2_EVENT="$(pwd)/trace" git \
-+		-c checkout.workers=2 -c checkout.thresholdForParallelism=0 \
-+		checkout . &&
-+
-+	test_workers_in_event_trace 2 trace &&
-+	collisions=$(grep -i "category.:.pcheckout.,.key.:.collision/basename.,.value.:.file_x.}" trace | wc -l) &&
-+	test $collisions -eq 3
-+'
-+
-+test_expect_success CASE_INSENSITIVE_FS 'worker detects dirname collision' '
-+	test_config filter.logger.smudge "\"$TEST_ROOT/logger_script\" %f" &&
-+	empty_oid=$(git hash-object -w --stdin </dev/null) &&
-+
-+	# By setting a filter command to "a", we make it ineligible for parallel
-+	# checkout, and thus it is checked out *first*. This way we can ensure
-+	# that "A/B" and "A/C" will both collide with the regular file "a".
-+	#
-+	attr_oid=$(echo "a filter=logger" | git hash-object -w --stdin) &&
-+
-+	cat >objs <<-EOF &&
-+	100644 $empty_oid	A/B
-+	100644 $empty_oid	A/C
-+	100644 $empty_oid	a
-+	100644 $attr_oid	.gitattributes
-+	EOF
-+	git rm -rf . &&
-+	git update-index --index-info <objs &&
-+
-+	rm -f trace filter.log &&
-+	GIT_TRACE2_EVENT="$(pwd)/trace" git \
-+		-c checkout.workers=2 -c checkout.thresholdForParallelism=0 \
-+		checkout . &&
-+
-+	# Check that "a" (and only "a") was filtered
-+	echo a >expected.log &&
-+	test_cmp filter.log expected.log &&
-+
-+	# Check that it used the right number of workers and detected the collisions
-+	test_workers_in_event_trace 2 trace &&
-+	grep "category.:.pcheckout.,.key.:.collision/dirname.,.value.:.A/B.}" trace &&
-+	grep "category.:.pcheckout.,.key.:.collision/dirname.,.value.:.A/C.}" trace
-+'
-+
-+test_expect_success SYMLINKS,CASE_INSENSITIVE_FS 'do not follow symlinks colliding with leading dir' '
-+	empty_oid=$(git hash-object -w --stdin </dev/null) &&
-+	symlink_oid=$(echo "./e" | git hash-object -w --stdin) &&
-+	mkdir e &&
-+
-+	cat >objs <<-EOF &&
-+	120000 $symlink_oid	D
-+	100644 $empty_oid	d/x
-+	100644 $empty_oid	e/y
-+	EOF
-+	git rm -rf . &&
-+	git update-index --index-info <objs &&
-+
-+	set_checkout_config 2 0 &&
-+	test_checkout_workers 2 git checkout . &&
-+	test_path_is_dir e &&
-+	test_path_is_missing e/x
-+'
-+
-+# The two following tests check that parallel checkout correctly reports
-+# colliding entries on clone. The sequential code detects a collision by
-+# calling lstat() before trying to open(O_CREAT) a file. (Note that this only
-+# works for clone.) Then, to find the pair of a colliding item k, it searches
-+# cache_entry[0, k-1]. This is not sufficient in parallel checkout because:
-+#
-+# - A colliding file may be created between the lstat() and open() calls;
-+# - A colliding entry might appear in the second half of the cache_entry array.
-+#
-+test_expect_success CASE_INSENSITIVE_FS 'collision report on clone (w/ racy file creation)' '
-+	git reset --hard basename_collision &&
-+	set_checkout_config 2 0 &&
-+	test_checkout_workers 2 git clone . clone-repo 2>stderr &&
-+
-+	grep FILE_X stderr &&
-+	grep FILE_x stderr &&
-+	grep file_X stderr &&
-+	grep file_x stderr &&
-+	grep "the following paths have collided" stderr
-+'
-+
-+# This test ensures that the collision report code is correctly looking for
-+# colliding peers in the second half of the cache_entry array. This is done by
-+# defining a smudge command for the *last* array entry, which makes it
-+# non-eligible for parallel-checkout. Thus, it is checked out *first*, before
-+# spawning the workers.
-+#
-+# Note: this test doesn't work on Windows because, on this system, the
-+# collision report code uses strcmp() to find the colliding pairs when
-+# core.ignoreCase is false. And we need this setting for this test so that only
-+# 'file_x' matches the pattern of the filter attribute. But the test works on
-+# OSX, where the colliding pairs are found using inode.
-+#
-+test_expect_success CASE_INSENSITIVE_FS,!MINGW,!CYGWIN \
-+	'collision report on clone (w/ colliding peer after the detected entry)' '
-+
-+	test_config_global filter.logger.smudge "\"$TEST_ROOT/logger_script\" %f" &&
-+	git reset --hard basename_collision &&
-+	echo "file_x filter=logger" >.gitattributes &&
-+	git add .gitattributes &&
-+	git commit -m "filter for file_x" &&
-+
-+	rm -rf clone-repo &&
-+	set_checkout_config 2 0 &&
-+	test_checkout_workers 2 \
-+		git -c core.ignoreCase=false clone . clone-repo 2>stderr &&
-+
-+	grep FILE_X stderr &&
-+	grep FILE_x stderr &&
-+	grep file_X stderr &&
-+	grep file_x stderr &&
-+	grep "the following paths have collided" stderr &&
-+
-+	# Check that only "file_x" was filtered
-+	echo file_x >expected.log &&
-+	test_cmp clone-repo/filter.log expected.log
-+'
-+
-+test_done
++write_utf32 () {
++	if test_have_prereq NO_UTF32_BOM
++	then
++		printf '\0\0\376\377'
++	fi &&
++	iconv -f UTF-8 -t UTF-32
++}
+diff --git a/t/t0028-working-tree-encoding.sh b/t/t0028-working-tree-encoding.sh
+index f970a9806b..82905a2156 100755
+--- a/t/t0028-working-tree-encoding.sh
++++ b/t/t0028-working-tree-encoding.sh
+@@ -6,33 +6,10 @@ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./test-lib.sh
++. "$TEST_DIRECTORY/lib-encoding.sh"
+ 
+ GIT_TRACE_WORKING_TREE_ENCODING=1 && export GIT_TRACE_WORKING_TREE_ENCODING
+ 
+-test_lazy_prereq NO_UTF16_BOM '
+-	test $(printf abc | iconv -f UTF-8 -t UTF-16 | wc -c) = 6
+-'
+-
+-test_lazy_prereq NO_UTF32_BOM '
+-	test $(printf abc | iconv -f UTF-8 -t UTF-32 | wc -c) = 12
+-'
+-
+-write_utf16 () {
+-	if test_have_prereq NO_UTF16_BOM
+-	then
+-		printf '\376\377'
+-	fi &&
+-	iconv -f UTF-8 -t UTF-16
+-}
+-
+-write_utf32 () {
+-	if test_have_prereq NO_UTF32_BOM
+-	then
+-		printf '\0\0\376\377'
+-	fi &&
+-	iconv -f UTF-8 -t UTF-32
+-}
+-
+ test_expect_success 'setup test files' '
+ 	git config core.eol lf &&
+ 
 -- 
 2.30.1
 
