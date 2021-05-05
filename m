@@ -2,141 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C6365C433B4
-	for <git@archiver.kernel.org>; Wed,  5 May 2021 15:53:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5866C433B4
+	for <git@archiver.kernel.org>; Wed,  5 May 2021 16:12:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A50016102A
-	for <git@archiver.kernel.org>; Wed,  5 May 2021 15:53:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 821D06121F
+	for <git@archiver.kernel.org>; Wed,  5 May 2021 16:12:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233614AbhEEPyq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 May 2021 11:54:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57174 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230437AbhEEPyo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 May 2021 11:54:44 -0400
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CC14C061574
-        for <git@vger.kernel.org>; Wed,  5 May 2021 08:53:48 -0700 (PDT)
-Received: by mail-pl1-x633.google.com with SMTP id h7so1336535plt.1
-        for <git@vger.kernel.org>; Wed, 05 May 2021 08:53:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=0fHjsiBCFQwX29acPr4zhuw8VBJsJTLQmHw6aW/Ub5Y=;
-        b=Eu8WTd2TdjE+aI0xlWUxNbc7EN76jMjnam83ISQqC1EldNE2a5DoeEJ4r+n41FY3/b
-         sxSXY3LYL/T+saUpZdRrnx+EwTGwmVIwdIMS0AT2OHndiuCu8bGLQcv2ttlTVZVrBBY+
-         nChHn3GZ8laqtIiMNbPCuudeFtNxYWzKxUZR8/fTKmss9MRF4ttgfimg4REy+g7mgDYI
-         ZPJvAyJ8aWLIZiUOlhbp0NC+uMq1xao78F9n/y3XQB4mTVVVk8NDRGfFEyYhQXQn/P6P
-         rNleoCiWZmiH4FFc6u6gAGYJ20+s+Djabl19hsvX05XpoKFNWXYoH84bA5UewC+727sz
-         yZ+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=0fHjsiBCFQwX29acPr4zhuw8VBJsJTLQmHw6aW/Ub5Y=;
-        b=csugbEJEe/78Czxhhs3svGrkGLC9UZF07P6KRWoOJ6BGVYaFmBIQwExjoZqRsNjxtX
-         uylI826wcI9sW1+f9Db6C/+mkq3FQNBBViQH+Et4oOXBuUVTGE2x98rl2KU8KZ7XijCI
-         DMzftCKkyFNx2thJlDG5EPr0Si1+LrgQOc7y6ELcGIDyv+ov1QOltXmrO5XjBNJ7njfX
-         haRcR1RChR8sSVpo+zP98SGZHcDFF9vDcjPoROeJ1GqNpnG0/qJoxRXQoFBFZr+S+YM8
-         D8tJPKDctK2E+jla8ubvVPekMH9MeXmhYyT1qHZiodgNdP4dE/L4HauLKLLqG0WtJ0g/
-         v1OA==
-X-Gm-Message-State: AOAM5337dUWaGzDTJPT5it0q1RaUp3K4iW3jt2p2DEuM338wXrjSjOgD
-        L2STx2Y/MB35Bs+utRXBT0fwyqxqTViZxw==
-X-Google-Smtp-Source: ABdhPJxDJ2TtnfyXj9b4kQiIGlE8Pv+eHtHxVfdKvLJb7fLuCc1smYxESpa/uxulUKx69Y+1vq4vLA==
-X-Received: by 2002:a17:90a:be10:: with SMTP id a16mr11464314pjs.112.1620230027991;
-        Wed, 05 May 2021 08:53:47 -0700 (PDT)
-Received: from localhost ([2402:800:63b8:d379:85bd:c83a:4b40:cd9b])
-        by smtp.gmail.com with ESMTPSA id y23sm15065810pfb.83.2021.05.05.08.53.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 May 2021 08:53:47 -0700 (PDT)
-Date:   Wed, 5 May 2021 22:53:45 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 3/5] mailinfo: skip quoted CR on user's wish
-Message-ID: <YJK/ieA7fzB+h01t@danh.dev>
-References: <20210421013404.17383-1-congdanhqx@gmail.com>
- <cover.1620148732.git.congdanhqx@gmail.com>
- <3215ea95cf869c8495d95cfd774973c330c14d1d.1620148732.git.congdanhqx@gmail.com>
- <xmqqeeel4y5f.fsf@gitster.g>
+        id S233836AbhEEQN0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 May 2021 12:13:26 -0400
+Received: from mout.gmx.net ([212.227.17.22]:54937 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233835AbhEEQNY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 May 2021 12:13:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1620231140;
+        bh=PUAGp6hg6IZwTGG3cvxBA6dH//zbhza0iKDmT0KvaTc=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=IvaZ38QFWlCe5toI1GieoEJkXJ3XVG//izcRmHAB7r34UzJY8ds+vNMm1liATYmdY
+         rWg6OkM6oSJbtSga4D3T4ea8XC07RoB98K/WXW/hOoLvNOgI5Zj2MHxhkcNlAA/VAg
+         hYzgubdMslrwHepMaOYyY20vF7rD+x2WQBW+URFc=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.28.146.104] ([89.1.212.20]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M1ps8-1lgX3k1TJ2-002GUH; Wed, 05
+ May 2021 18:12:20 +0200
+Date:   Wed, 5 May 2021 18:12:18 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>, Patrick Steinhardt <ps@pks.im>
+Subject: Re: Nesting topics within other threads (was: [PATCH] repo-settings.c:
+ simplify the setup)
+In-Reply-To: <87eeeuymtl.fsf@evledraar.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2105051808190.50@tvgsbejvaqbjf.bet>
+References: <87k0omzv3h.fsf@evledraar.gmail.com> <patch-1.1-e1d8c842c70-20210428T161817Z-avarab@gmail.com> <1ecb3727-106f-3d04-976a-36aa03a61caf@gmail.com> <87eeeuymtl.fsf@evledraar.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqeeel4y5f.fsf@gitster.g>
+Content-Type: multipart/mixed; BOUNDARY="8323328-822896925-1620231036=:50"
+Content-ID: <nycvar.QRO.7.76.6.2105051810450.50@tvgsbejvaqbjf.bet>
+X-Provags-ID: V03:K1:6VfAFncPPSc4bUya5Ud5AzgF3iZkHqm4zq4hjYqTme0UJV426qz
+ vYEhzzu6Dd0VgUZK2Yjou5khjgcAwMoNOmpNRkIyYj6p4rcTHlXFQJXWHR0jTIvLaUqE/U1
+ T/cUtPNRLzTG9zMe4QDUarVXWVbGKMbyPuG+kj3QPtRFJqQK+cGwSv2iB/gUs0DPGkAQwnB
+ uqdpJovPd3g5F1pGaVJog==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:QEcz5hewZ1s=:hrxOaeqWGxBF2Am9qOOKSu
+ /pw/USIbIT0TwHCz7NCtugFU71fp2akhtgOUEAX9HyvUleBFBSB3bB9MkUDrwbyhqbZ0I7lAF
+ 7e4xw0rQRaG1UJNY2RI+yYkjs00VKjNFwVCBrfJ3WvZuzg/wpXlQRVq8lo6fNOxwrY21uwl34
+ xhX/cf16f+/8CPbM9RlArM6J86CSSjzL98tGcY8kaD4DNA2aP2m7H1xEUz9iTX4aSOhSLy+0D
+ RSkqHut/A2Vvce3CFSZB/ud4hT8V5+uq4ZtpF3OGrNSQL8KHjIE4XdJKYUFQNEmiknJ2MMz/B
+ WhJ9SSq+iWGvNrMslWIXOv5U4BxibM3RKHIKrHSy8ZlW6Wafd7fOG53A7FiubjuQ3YY5tJ+tT
+ SimkUJKP1bSUzM91FJmFyLQ77dzcLqaPpu3DFwt/7UxrcD2MyH3YXkRktd91TGio3SNAaXkaG
+ q2GAaUt/k1fiW4Nop++iFp/V4QYX++15BmyWonhkF6JsyGECx5JKvZX/JnZ4VFg6+HnOBMLP5
+ 0/NMLlNVHVKDfyeLuueCVmpgVeLdoye7Y3dilLmlxsrdGyLg3LKQpx1QQpWELdMbv8qaazBHA
+ Y6x/7ogbcpLa3vhRyKDMNLCVYh8D4sOuzjv/Q2uHhy0KdQLBw41FVhUgtqF0XO9noAS5HIWMG
+ MfXdLqlr4diTJAAiaXkGKc0fABjzt/0lbBpo4bCd5gQxUJGYj+CoFNajXJyR8l91QQMuPP53R
+ Y+QvHAwwNliAWSbza0NNgVSw0Lg/fobcfDahREj6cUipfvxG6qsOPr/gawYarz9oF9GMRTFMT
+ dAFp6VhYWwGZ6ly33M63leYnHLrjAGhfsLTgGXqqkscme1Atb7bV5gGPATDztfaoc1jWrLa9y
+ 0bCNo85xlAt6oB6oaOe941H53aIaoZLGooZj5Vhkz/8RihC8F5CeexBURL8jlM0kidcyKUyoF
+ zSnFopaayMq5pE1w6BZb03FJYNpfO9BE2x+r14TPmn751ldi1sLfQK/5JoYeaxo/4Gb6ZYmo+
+ iqiR3ewh+h9n/mtBbDbG3bNvwjkrUx4T5Kwf3JpjoZmMg/z+sbVXc0u5vn6saeVOWOMKTq/Lv
+ GdxRYuXErZ6gDHsrXzJGbV0l7UXKbH+7ihag53cAdixPu9z++WUnre+gtUkIDlMXp+lBN/65c
+ ilJJ1ZPCaYnWySOVbRCVGTv7toAPaFE4F5qkzOfpG9Hnfk/hDpen4fSuhr7C5F1+PReF0z0zj
+ Hw84UKnYIvQfUO+7x
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2021-05-05 13:12:12+0900, Junio C Hamano <gitster@pobox.com> wrote:
-> > diff --git a/Documentation/git-mailinfo.txt b/Documentation/git-mailinfo.txt
-> > index d343f040f5..c776b27515 100644
-> > --- a/Documentation/git-mailinfo.txt
-> > +++ b/Documentation/git-mailinfo.txt
-> > @@ -9,7 +9,7 @@ git-mailinfo - Extracts patch and authorship from a single e-mail message
-> >  SYNOPSIS
-> >  --------
-> >  [verse]
-> > -'git mailinfo' [-k|-b] [-u | --encoding=<encoding> | -n] [--[no-]scissors] <msg> <patch>
-> > +'git mailinfo' [-k|-b] [-u | --encoding=<encoding> | -n] [--[no-]scissors] [--quoted-cr=<action>] <msg> <patch>
-> 
-> This line is getting really crowded.  Perhaps it is time to do
-> 
-> 	'git mailinfo' [<options>] <msg> <patch>
-> 
-> like other Git subcommands with too many options?  Certainly it can
-> be done after the dust settles from this entire series as a follow up
-> clean-up patch.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Yes, I think it's time to do that clean-up.
+--8323328-822896925-1620231036=:50
+Content-Type: text/plain; CHARSET=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Content-ID: <nycvar.QRO.7.76.6.2105051810451.50@tvgsbejvaqbjf.bet>
 
-> >  static const char mailinfo_usage[] =
-> > -	"git mailinfo [-k | -b] [-m | --message-id] [-u | --encoding=<encoding> | -n] [--scissors | --no-scissors] <msg> <patch> < mail >info";
-> > +	"git mailinfo [-k | -b] [-m | --message-id] [-u | --encoding=<encoding> | -n] [--scissors | --no-scissors] [--quoted-cr=<action>] <msg> <patch> < mail >info";
-> 
-> It is surprising that we haven't switched this to parse_options().
-> It of course is outside the scope of this series, but from a cursory
-> look of its option parsing loop, it looks like a trivial improvement
-> to make.
+Hi =C3=86var,
 
-And given that we also need 1/5 (otherwise, we need a new declaration
-for "const char *str"), I think it would be better to turn 1/5 to the
-conversion to parse_option.
+On Thu, 29 Apr 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-> > @@ -43,7 +43,11 @@ int cmd_mailinfo(int argc, const char **argv, const char *prefix)
-> >  			mi.use_scissors = 0;
-> >  		else if (!strcmp(argv[1], "--no-inbody-headers"))
-> >  			mi.use_inbody_headers = 0;
-> > -		else
-> > +		else if (skip_prefix(argv[1], "--quoted-cr=", &str)) {
-> > +			mi.quoted_cr = mailinfo_parse_quoted_cr_action(str);
-> > +			if (mi.quoted_cr == quoted_cr_invalid_action)
-> > +				usage(mailinfo_usage);
-> 
-> This is not all that helpful, given that mailinfo_usage[] only says
-> <action> without saying what the supported values are, and the
-> message does not make it clear it was issued while looking at the
-> --quoted-cr option.
-> 
-> At least, something like
-> 
-> 			if (mi.quoted_cr == quoted_cr_invalid_action)
->                         	die("--quoted-cr=%s: invalid action", str);
-> 
-> would be more palatable, but I wonder if mailinfo_parse_quoted_cr_action()
-> should have an option to die with the list of actions it knows about
-> in a message.
+> On Wed, Apr 28 2021, Derrick Stolee wrote:
+>
+> > On 4/28/2021 12:26 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> >> Simplify the setup code in repo-settings.c in various ways, making th=
+e
+> >> code shorter, easier to read, and requiring fewer hacks to do the sam=
+e
+> >> thing as it did before:
+> >
+> > [...]
+> > Since I've committed to reviewing the FS Monitor code, I'd prefer if
+> > this patch (or maybe its v2, since this is here already) be sent as
+> > a top-level message so it can be discussed independently.
+>
+> As a practical matter I think any effort I make to accommodate your
+> request will be dwarfed by your own starting of a sub-thread on
+> E-Mail/MUA nuances :)
+>
+> When [1] was brought up the other day (showing that I'm probably not the
+> best person to ask about on-list In-Reply-To semantics) I was surprised
+> to find that we don't have much (if any) explicit documentation about
+> In-Reply-To best practices. [...]
+>
+> 1. https://lore.kernel.org/git/nycvar.QRO.7.76.6.2103191540330.57@tvgsbe=
+jvaqbjf.bet/
 
-I tempted to remove the _invalid_action with the re-roll and always
-die when it doesn't understand the actions instead.
-Let's see how far I can get with that approach.
+I find it a bit disingenous to reference my complaint about your
+disconnected cover letter (which _definitely_ belongs with the patches for
+which it covers) with the practice of hiding patches or patch
+series deep in a thread discussion an (lengthy!) patch series,
+_especially_ if it threatens to totally conflict with that patch series
+and thereby disrupt the flow.
 
--- 
-Danh
+Couldn't you hold off with your patch for a while, instead help FSMonitor
+get over the finish line, and _then_ submit that simplification of
+repo-settings? That would be constructive, from my perspective.
+
+Ciao,
+Dscho
+
+--8323328-822896925-1620231036=:50--
