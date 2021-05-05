@@ -7,131 +7,113 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 44344C433B4
-	for <git@archiver.kernel.org>; Wed,  5 May 2021 16:19:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F233AC43460
+	for <git@archiver.kernel.org>; Wed,  5 May 2021 17:27:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1600960FD9
-	for <git@archiver.kernel.org>; Wed,  5 May 2021 16:19:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D04AE6105A
+	for <git@archiver.kernel.org>; Wed,  5 May 2021 17:27:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233966AbhEEQUT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 May 2021 12:20:19 -0400
-Received: from mout.web.de ([212.227.17.11]:44767 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233902AbhEEQUP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 May 2021 12:20:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1620231547;
-        bh=z8thELXMQCunAwQtVVlVkK5/XK60A7KHwtKVtR7E390=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=QTzUS2fC+CprjGXX1CXl+7RhsoISM6ks0gQDWDwpMIBzE3pSwulw23UuvZu1chAU8
-         GNXGa9BehvR4R1n5siY3fLIbx9jbS3iULyMxPW+fn9AcyPsrE7B7WQqHyMdexvfpNO
-         nvb0/FxRyeF/OB2xBde4TQp9w9mJYZY4bN3+NPaA=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from Mini-von-Rene.fritz.box ([79.203.31.60]) by smtp.web.de
- (mrweb105 [213.165.67.124]) with ESMTPSA (Nemesis) id
- 1M8T7K-1lZwWB08KO-004VHC; Wed, 05 May 2021 18:19:07 +0200
-Subject: Re: [PATCH 3/5] pack-objects: clamp negative window size to 0
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Derrick Stolee <stolee@gmail.com>,
-        git@vger.kernel.org, Yiyuan guo <yguoaz@gmail.com>
-References: <YI1fbERSuS7Y3LKh@coredump.intra.peff.net>
- <YI1fubjvQQlrPz9D@coredump.intra.peff.net>
- <3d77d70b-2cc5-4ca9-8753-fa9af5111842@gmail.com>
- <YJAOzTIXkO2lhxSs@coredump.intra.peff.net>
- <02a66bfb-aac0-c05e-dab3-366bc312d900@web.de>
- <874kfhwfwz.fsf@evledraar.gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <aa21321a-08d8-5a3a-0ccd-4f4ea4bf7a9c@web.de>
-Date:   Wed, 5 May 2021 18:19:06 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.10.0
+        id S237062AbhEER2T (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 May 2021 13:28:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45658 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237069AbhEERI4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 May 2021 13:08:56 -0400
+Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 998E9C034630
+        for <git@vger.kernel.org>; Wed,  5 May 2021 09:42:13 -0700 (PDT)
+Received: by mail-qt1-x831.google.com with SMTP id j19so1670200qtp.7
+        for <git@vger.kernel.org>; Wed, 05 May 2021 09:42:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=8rUt6aqk5kPlQViShiFcj5wX4j39mpcyzq/urBNeaT4=;
+        b=JJpn9wXKSSgXr67DhSCToEemUemsNzJ1Lk3Iyo9QjOw5QoNBlx0X79t4IMe2odbGyF
+         auoBAemgRTY0F+/oWj95Qmu9pWhNhFa3R7I/i/qnSZm6K77yGT5Mss11QVRhD4LQvLAp
+         iUEDj2Ql3IhqSorwiE/oS7iMi48X/iy7gKpRnUma4VkWiiaNR1lerIEfmsQ43yHVYJkV
+         1hJt07sqBoZFHlxLF0WjS9ZJ00MRmh3vClX4U62veKRu1oyiHu3PAfbohlM583GRyYhf
+         EecZOHutW+QrsFLWqt+grBrxB23DcVdbg1LJl5ryP3lWKXsQKlf/UfSzh1tFC4hfwjIS
+         AnKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=8rUt6aqk5kPlQViShiFcj5wX4j39mpcyzq/urBNeaT4=;
+        b=fxLVwthWjD4/wIoTQ9GdIAZwA5A7aoSn1XdSAtJM9GAmc4YYyv6utnv7K9zmAb3eqK
+         tQtkc0IT3Xc/kVvCH12ENx8VAy49hn1mhBeyJtJbpOqBxhmRdWpeHuBa1COwdbvU06I1
+         47k/G7M9jQj861BgIfo9N56ERAEPANdymk0dkwUF7jeW2Zeuy+9P9uS9cV3JJQQYakF9
+         6R03Tr53pik2oSVkksmxBKADjRf3JQ1BSliTxDRvKSvKnJrbM9ZqKdA/5hdPTPQDesVN
+         QDmrsMV1+qiQpOQE5MGmsUTdiqvPUYbfYrSxezwR/DUhsV0ZoneDOt/CUx8Wu+kWftRS
+         thBw==
+X-Gm-Message-State: AOAM530PHNLuHTS++bpfh1MvqmI2qrKwdF8SJBrk4rrfP+L4inOOnB1y
+        qt9pRWWM+oGErNVc39rHZLbqgEwIwsHunQ==
+X-Google-Smtp-Source: ABdhPJzXtNfcM440g1oFCCTu2o/TTdEicSvMWzSJYpusgwV0biV0iRbuSvGjOd8uX0dXoFkfapnqMQ==
+X-Received: by 2002:ac8:5fd4:: with SMTP id k20mr4204716qta.239.1620232932491;
+        Wed, 05 May 2021 09:42:12 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:ecd5:a409:e9b9:b043? ([2600:1700:e72:80a0:ecd5:a409:e9b9:b043])
+        by smtp.gmail.com with ESMTPSA id j13sm5231768qth.57.2021.05.05.09.42.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 05 May 2021 09:42:11 -0700 (PDT)
+Subject: Re: [PATCH v2 4/5] fetch: teach independent negotiation (no packfile)
+To:     Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+References: <cover.1617929278.git.jonathantanmy@google.com>
+ <cover.1620162764.git.jonathantanmy@google.com>
+ <1de34a6dced3f5477162dd675615342bc2dec05f.1620162764.git.jonathantanmy@google.com>
+ <xmqq4kfi54kb.fsf@gitster.g>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <9f650594-c8a6-4d89-2686-49de48aabb62@gmail.com>
+Date:   Wed, 5 May 2021 12:42:09 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.0
 MIME-Version: 1.0
-In-Reply-To: <874kfhwfwz.fsf@evledraar.gmail.com>
+In-Reply-To: <xmqq4kfi54kb.fsf@gitster.g>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:0xLHgQWJ0Esq+pt67zBah2TnjihPIKzYSVzoRWAjp8jlBNwvZor
- n1XRBVHvu73vQERtA0OXGXF43VGbXrb6Sd0KoYVSv1nS4OhclCb5WdRMp0mnUu9uIalrcWk
- 3cued5Uzu8ISH3SJAelG8wwrmqgIuq1p9Mch2kKs9GSlLWJZsaIoFpvOsoK4SHV0v2woexL
- GhdWe+02oQcbCvTxlstJg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:aDCZ6ZttPT8=:D4OOLqLvqlAaRG+z73grum
- XoHva/xE8JfINYNzdj1d/V7d+bq2iUvjVJOMwOSOm/RHocL+pWIVanE5Kk0LTPe4auro25dIc
- t7buEgkPSZDc8q07HjmZt1iL0z9DhXQ0uj9rdSAsmmcQZoZOrIpKAuK1TiBTsQhtbZJbUShoT
- CcagY2G94DpFnfoH1Nw6WWBeY5nHuPNJopGR5YZU+Ef370RxYihwfZRR1Jjs/WzrklpQO9eeW
- hOaEaGmNqoGWHOBTHhhKTkXiR/E+GEINZZzWiUVaqtDpAlh/HCl7f9/uVCrMAXzbPV+nUg4iV
- Jb8/VQNxrLNmn9ZTUcCNF43jJNBu0KP7UU+wlTxNvmXt9QuiNe1YFJh1bHIwJIFmgbPmdOL4C
- oFFzNqjRSa/+eVhreybnU6mNVgAAgCIFIYjOAuN8H7qb4rA65Uc7gpyHqrunwv9kgkhBOtymg
- 0OasZ4nI8l8frJ/NuoDDWh9Fzev51jaqygmImNWHmYQLF/Z7bFYv4Eig1+kO0AC1n85q3bI5i
- 8kh65PT7U1GhRfuMcqt3sKkri/gMjdmSZqUVdi//Ed7IP7Li3Ofuio+ZiG0XDwprPof5+n6PY
- sIDViw1QxMH0UePcYViM5aVvY0H6jfdt1ztjB44rQhre4VLILcscHDxlezX4MFopptX6PBwUy
- qY5A5FNdtaQh+yFmkOemv2kBBUIVATWFKt2uEjmvYdwVoXzuvPB1h5OKdVetpVhIWDyXMYvMe
- yPXZL+2HgFmrvAafF+CqEzrHcqlRJ5favBEwwcSKEiIsvqZMWVVmsh1nAlfOYV9neErQ19m+6
- 0tYxgnmf2lLXUpC0QtX0YoDpfp7z5xB3L+AVM3cR4c7hghVPE9XBbs6nh5pfjpW8J+lmcabLg
- cZlxfpo4zvC817GalxyIzLwOsKPWsQsgH/y070yzr3prh1GpZpRMoLFPzahfH9gXN/jGwWaY5
- C/0IDhsdiWGqaj6AnGUT2z9gh3lACfhklzHoh6ppMuTbhx/jBvM9HFxQCY1usdYLNmhohHk3h
- 2gbNT4dcLc9nIFxmrQrfRDuba5KGkWmDysIrQGg9FGlNrkAysHevlStzi5dt8cgEFkc+IbYhN
- 4x4v6ZBOx6Tu9zz6xNW2ICs4mWgDFOH9J76UFzNVHem/UGAL8lJuPsEfXj67q/h3VztC5aI5j
- 1uXXqmIRgZy+vxKYYcuATe01BSnvk4VAaZYtN6sV2grvos48uVqTi8Sbblavj94GaUcgw=
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 05.05.21 um 13:53 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
->
-> On Tue, May 04 2021, Ren=C3=A9 Scharfe wrote:
->
->> There's another option: Mapping -1 or all negative values to the
->> maximum:
+On 5/4/2021 9:53 PM, Junio C Hamano wrote:
+> Jonathan Tan <jonathantanmy@google.com> writes:
+> 
+>> +static int add_to_object_array(const struct object_id *oid, void *data)
+>> +{
+>> +	struct object_array *a = data;
+>> +
+>> +	add_object_array(lookup_object(the_repository, oid), "", a);
+> 
+> Moving to lookup_object() made me look around, but at this point the
+> object in question (which comes from the negotiation_tips) has been
+> instantiated, so it is OK.
+> 
+>     Side note. The big difference between lookup and parse is what
+>     happens when this process hasn't seen the object yet---the
+>     former will just return NULL instead of instantiating the
+>     in-core copy; for that reason, it is easier on the readers to
+>     use parse_object() if we know we want an in-core object *and*
+>     when we use it we want to see it parsed already).
 
-> That seems sensible to expose, but I think should really be
-> --window=3Dmax, not --window=3D-1. The latter feels way too much like
-> assuming that a user might know about C's "set all bits" semantics.
+Please forgive my incorrect recommendation here. I was expecting
+lookup_object() to behave like lookup_commit(), which creates the
+object if it is not already in the cached set.
 
-Nitpicking: Setting all bits for -1 is done by two's complement, which
-is just one of the signed number representations supported by C.
+>> +static void clear_common_flag(struct oidset *s)
+>> +{
+>> +	struct oidset_iter iter;
+>> +	const struct object_id *oid;
+>> +	oidset_iter_init(s, &iter);
+>> +
+>> +	while ((oid = oidset_iter_next(&iter))) {
+>> +		struct object *obj = lookup_object(the_repository, oid);
+> 
+> This one obviously is OK ;-)  The fact we are clearing by definition
+> means we already do have in-core objects.
 
-But yeah: A non-numeric value would probably be better in general.  As
-Peff explained it's not a particularly good idea to specify the maximum
-values of --depth and --window, though, so no need to make it easier.
+Thanks for your careful eye here.
 
-> The one example of such a variable I could think of is core.abbrev=3Dno,
-> which could arguably benefit from a core.abbrev=3Dmax synonym.
-
-core.abbrev=3Dno turns off abbreviation, i.e. you get the full hash
-size (false and off work as well).
-
-Following that logic, core.abbrev=3Dmax would ask for a maximum of
-abbreviation, i.e. for the shortest unambiguous hash.  That would have
-a length of at least 4.  This value is stored in a constant called
-minimum_abbrev -- which seems backwards.  The implied negation of abbrev
-(the more you abbreviate, the shorter the length) is a bit confusing.
-
-> Another one is *.threads, e.g. grep.threads, index.threads. We currently
-> say that "auto" is like "max, but I can see how we'd eventually benefit
-> from splitting those up. I sometimes run git on machines where that
-> "auto" is 48 or whatever (I haven't benchmarked, but that's surely
-> counter-productive). Having max !=3D auto in that case (but still having=
- a
-> "max") would be nice.
-
-Good thinking.  What is the maximum number of threads?  Certainly higher
-than the number of CPUs.  Would that be useful?  Maybe -- on a
-single-core VM with an SSD queue length of 32 we can probably benefit
-from running more than one thread.
-
-Are our threads CPU-bound or I/O-bound?  I guess the answer is "yes". :)
-How do we even find out the disk queue length in a portable way?  And
-how would we calculate the optimal number of threads?  Are these even
-the right questions to ask?
-
-An "auto" option might help with that.  I imagine it starting out with
-some default value and then experimentally decreasing and and increasing
-the number of threads to find out which one works best.  Downside: It
-would need to have comparable workloads for that.  And these benchmarks
-need an otherwise quiet system.  Similar battery level if running on a
-laptop.  Same system temperature.  Impractical during normal use.
-
-Perhaps a "git benchmark" command that runs some synthetic speed tests
-to tune grep.threads etc. would be possible?
-
-Ren=C3=A9
+-Stolee
