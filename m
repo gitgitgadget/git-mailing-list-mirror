@@ -2,187 +2,170 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DB880C433B4
-	for <git@archiver.kernel.org>; Wed,  5 May 2021 09:04:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40088C433ED
+	for <git@archiver.kernel.org>; Wed,  5 May 2021 09:34:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9E7A1613BA
-	for <git@archiver.kernel.org>; Wed,  5 May 2021 09:04:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EF4DF61029
+	for <git@archiver.kernel.org>; Wed,  5 May 2021 09:34:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232253AbhEEJFz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 May 2021 05:05:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50300 "EHLO
+        id S231981AbhEEJfb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 May 2021 05:35:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56794 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231637AbhEEJFy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 May 2021 05:05:54 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38E45C061574
-        for <git@vger.kernel.org>; Wed,  5 May 2021 02:04:58 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id a4so1680843ejk.1
-        for <git@vger.kernel.org>; Wed, 05 May 2021 02:04:58 -0700 (PDT)
+        with ESMTP id S231129AbhEEJf3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 May 2021 05:35:29 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AB9AC061574
+        for <git@vger.kernel.org>; Wed,  5 May 2021 02:34:32 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id z6so1069817wrm.4
+        for <git@vger.kernel.org>; Wed, 05 May 2021 02:34:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=0DWtQ5qWmlNmKbtSmTuvftdXnhMpmptJILcQzyfGX8Y=;
-        b=hHJg/DSYVkd+bddOh3Ytin2cyPR6kPm5phKtcVGATYPZo2zCTHNweW0lcDtmabo89h
-         DfJijlpLQTny29zZjqzaYFT2UJGT6zWoregrMRM0eVHkZ3cvGVWfdIQBcpevIz9vmqxO
-         qe+hrrk6rh5BGp8eSb8OE/WiJCkyZ0wzkdtrEHcyGaGv5Ujq0F6MmQVwElIok6wGsYdi
-         VcRFTJym7vMWb1fjp5ju9pZBVQ/Fu29qTZ83Tm5FqzP2GJ4gmz4dlbaBBWFMyORE+veH
-         r3VH9dnDPIe9itxBhVhmto9fhflt3f0htgEktkQ55YrOntVaniPqxGvkjQp9kHk8Jtz8
-         WzUg==
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=mOu2z9LoeJaWoQhFOFlC2qGN6GKt50CNPePgy1lpi2c=;
+        b=qlCk5BtmfVRX34kYXEoh40Hx7gpBz+GSjgoNJNDHUYo1+EYmFLZv6oDWtKR73oVq5l
+         xweKBdl9xx4k4DKlGLrbDQ8wefihbXOBbeJKrz28tUyB9N7sT+551m5fN457NlwUdteb
+         Z4EQlWxYAWQ4VjQ6gDeTCaoZIBa5LO+QsVXxVeoDHQdHgvvRedNzrJykf1X62ek0n5qp
+         qLcwkmTKbMGzLfHcFv0nQwKCzHbh/9U/ixiJ0JnWoFqbSw0+5Gfp7tSJ6nVxXx+fZlJg
+         zMeUWNvkBv30+TTYlKE26LwCMNonZv6wHCUSMnGvZpb0OGtMI+FJgJmW7QS3eVKf6LRO
+         TgUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=0DWtQ5qWmlNmKbtSmTuvftdXnhMpmptJILcQzyfGX8Y=;
-        b=gp6OvDR+CfNuG5JtFrcFlebk9wuRMEIav/mZt0Prwi2ornKSfJom6FieFvquYU4Qmq
-         2rLZsqNU6tbChEkAVFDD9g7SrvZ9tYSt1PsskzVgkyv69vf0VIvoFhHAqxa00840f/VA
-         FJuoMaE4kqcLiF4O4Rr1m7NgZQZijx84hcfnl+zung8iyBSdCyW7zW0xvoINrAbFnokA
-         K4ZM0XKreJnUd5MlHUFm0xaoU3K8Tvf546oUYG9FP4R6i+sPG4OS+WT/8DMco5MiV/fB
-         51a4qMdzQAX7+qEuvYjCl6Z2E59Vkm1N0pgtvox3rGCjqaEdnDHbvQFzYl65o0PzfPd5
-         JCKw==
-X-Gm-Message-State: AOAM533xpVy01pagcK1U1oEFnbVtWVtmARAWwkXiuPmsYeDXJfaN8jbz
-        VO1y9eATNuXpeycuB91Hd7TJKTHehSP5xMSf0uI=
-X-Google-Smtp-Source: ABdhPJywulR5QgnNS8/6rPKdhPCnhoIKVsYqU3hrYWd+Bx1R4ZA8TeM63AVasRVtk/uya8qfR1p7b/dg4p8SSpTOSwQ=
-X-Received: by 2002:a17:906:d7a2:: with SMTP id pk2mr26612620ejb.551.1620205496914;
- Wed, 05 May 2021 02:04:56 -0700 (PDT)
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=mOu2z9LoeJaWoQhFOFlC2qGN6GKt50CNPePgy1lpi2c=;
+        b=mwQhWTzzR6V1auFscsow2qYgssfow40rtkRtx2/UnoK2g7zoMKup/C65K5SrdlutjE
+         AkOSLdg7SEW/ys3PCZodcnTO9oDGQjmimBLJmpskmmllpULMOzqpgiB0iRHqs2YgQJT1
+         7YtPLNQA08a8tcmHOqOH7vSRCgey4p3v8dOHTGonMbyR9rwoMokAdF/QMaFYm45iGXFn
+         N9e5H7R5V1H66QCvmbo/JJFQozira9Kmx1B8HMLMEvKhFk3/0rTSFCRmW7E4Z6X7tctl
+         V7uWtaP0tRpllUEToScQ7+pokL5rSmpRvw6lc2IhJ+7LiJybVi9kghGK2b8gy+VffnW9
+         iVsA==
+X-Gm-Message-State: AOAM53312A2G6EsFj6bZ9goGC/GZtQzIOJgGvDy3jeuBy5u2FxxR2ysl
+        rJGv19aC9ZDU5ShrE0B0xPI=
+X-Google-Smtp-Source: ABdhPJwczQ0tbxpNeBefzlYqKW3nxm+CPODvDskD6EEmINORuleZSq/dVEKJNh3KaDUXE9/bQyStrQ==
+X-Received: by 2002:adf:e8ce:: with SMTP id k14mr18755449wrn.362.1620207271157;
+        Wed, 05 May 2021 02:34:31 -0700 (PDT)
+Received: from [192.168.1.240] (61.22.198.146.dyn.plus.net. [146.198.22.61])
+        by smtp.gmail.com with ESMTPSA id l14sm5044099wmq.4.2021.05.05.02.34.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 05 May 2021 02:34:30 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 1/2] patience diff: remove unnecessary string comparisons
+To:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <pull.948.git.1620120345.gitgitgadget@gmail.com>
+ <a339d1cf9b9ffd6365fca3efda8fb7e10346dda4.1620120345.git.gitgitgadget@gmail.com>
+ <xmqqpmy658e1.fsf@gitster.g>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <87001425-8043-4c66-dbc2-637f05a7229f@gmail.com>
+Date:   Wed, 5 May 2021 10:34:29 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.0
 MIME-Version: 1.0
-References: <20210411095538.34129-1-mirucam@gmail.com> <20210411095538.34129-4-mirucam@gmail.com>
- <xmqqy2doftrj.fsf@gitster.g>
-In-Reply-To: <xmqqy2doftrj.fsf@gitster.g>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Wed, 5 May 2021 11:04:45 +0200
-Message-ID: <CAP8UFD3X24F3qgefHpi00PM-KUk+vcqxwy2Dbngbyj7ciavCVQ@mail.gmail.com>
-Subject: Re: [PATCH v3 3/4] bisect--helper: reimplement `bisect_run` shell
- function in C
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Miriam Rubio <mirucam@gmail.com>, git <git@vger.kernel.org>,
-        Tanushree Tumane <tanushreetumane@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <xmqqpmy658e1.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Apr 11, 2021 at 10:31 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Miriam Rubio <mirucam@gmail.com> writes:
+On 05/05/2021 01:31, Junio C Hamano wrote:
+> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>>
+>> xdl_prepare_env() calls xdl_classify_record() which arranges for the
+>> hashes of non-matching lines to be different so lines can be tested
+>> for equality by comparing just their hashes.
+> 
+> Hmph, that is a bit different from what I read from the comment in
+> the post context of the first hunk, though.
+> 
+> 	/*
+> 	 * After xdl_prepare_env() (or more precisely, due to
+> 	 * xdl_classify_record()), the "ha" member of the records (AKA lines)
+> 	 * is _not_ the hash anymore, but a linearized version of it.  In
+> 	 * other words, the "ha" member is guaranteed to start with 0 and
+> 	 * the second record's ha can only be 0 or 1, etc.
+> 	 *
+> 	 * So we multiply ha by 2 in the hope that the hashing was
+> 	 * "unique enough".
+> 	 */
+> 
+> The words "home" and "enough" hints to me that the "ha" member is
+> not hash, but "lineralized version of it" (whatever it means) does
+> not guarantee that two records with the same "ha" are identical, or
+> does it?
 
-> > +             temporary_stdout_fd = open(git_path_bisect_run(), O_CREAT | O_WRONLY | O_TRUNC, 0666);
-> > +             saved_stdout = dup(1);
-> > +             dup2(temporary_stdout_fd, 1);
-> > +
-> > +             res = bisect_state(terms, args.v, args.nr);
-> > +
-> > +             dup2(saved_stdout, 1);
-> > +             close(saved_stdout);
-> > +             close(temporary_stdout_fd);
->
-> In v2, we just let bisect_state() to write to our standard output,
-> which was the reason why the loss of "cat" in the "write to
-> BISECT_RUN file and cat it to show to the user" in the scripted
-> version in v2 was OK.  Now, we are writing out, just like the
-> scripted version did, to BISECT_RUN, the user does not see its
-> contents.
->
-> Does the distinction matter?  Christian, what's your call on this?
+By "hashes" I meant "the value of record->ha". That comment is a bit 
+confusing. I think "linearized version of it" is referring to 
+xdl_classify_record() assigning a unique integer to each unique input 
+line starting from zero and increasing by one for each unique input line 
+(the function is fairly easy to follow). I assume "unique enough" is 
+referring to the line below the comment which takes the modulus of 
+record->ha and record->ha is not evenly distributed over the whole 
+integer range but bunched at the lower end.
 
-Sorry for the late answer. I think the content of the BISECT_RUN file
-should indeed be shown.
+The Myers implementation calls xdl_classify_record() and then only ever 
+compares record->ha, it does not call xdl_recmatch() while computing the 
+diff.
 
-bisect_state() calls bisect_auto_next() which calls bisect_next()
-which calls bisect_next_all(), and bisect_next_all() uses printf() to
-show things like "XXX is the first bad commit" which should be shown
-when using `git bisect run`.
+> Well, I should just go read xdl_classify_record() to see what it
+> really does, but if it eliminates collisions, then the patch is a
+> clear and obvious improvement.
 
-Also when adding an "exit 1 &&" before "git bisect reset" at the end
-of the `"git bisect run" simple case` test, with 'next' I get:
+Thanks
 
------------------
-$ ./t6030-bisect-porcelain.sh -i -v
-...
-expecting success of 6030.21 '"git bisect run" simple case':
-       write_script test_script.sh <<-\EOF &&
-       ! grep Another hello >/dev/null
-       EOF
-       git bisect start &&
-       git bisect good $HASH1 &&
-       git bisect bad $HASH4 &&
-       git bisect run ./test_script.sh >my_bisect_log.txt &&
-       grep "$HASH3 is the first bad commit" my_bisect_log.txt &&
-       exit 1 &&
-       git bisect reset
+Phillip
 
-Bisecting: 0 revisions left to test after this (roughly 1 step)
-[3de952f2416b6084f557ec417709eac740c6818c] Add <3: Another new day for
-git> into <hello>.
-3de952f2416b6084f557ec417709eac740c6818c is the first bad commit
-FATAL: Unexpected exit with code 1
------------------
 
-and:
-
------------------
-$ cat trash\ directory.t6030-bisect-porcelain/.git/BISECT_RUN
-3de952f2416b6084f557ec417709eac740c6818c is the first bad commit
-commit 3de952f2416b6084f557ec417709eac740c6818c
-Author: A U Thor <author@example.com>
-Date:   Thu Apr 7 15:15:13 2005 -0700
-
-   Add <3: Another new day for git> into <hello>.
-
-hello | 1 +
-1 file changed, 1 insertion(+)
------------------
-
-while with 'seen' I get:
-
------------------
-$ ./t6030-bisect-porcelain.sh -i -v
-...
-expecting success of 6030.21 '"git bisect run" simple case':
-       write_script test_script.sh <<-\EOF &&
-       ! grep Another hello >/dev/null
-       EOF
-       git bisect start &&
-       git bisect good $HASH1 &&
-       git bisect bad $HASH4 &&
-       git bisect run ./test_script.sh >my_bisect_log.txt &&
-       grep "$HASH3 is the first bad commit" my_bisect_log.txt &&
-       exit 1 &&
-       git bisect reset
-
-Bisecting: 0 revisions left to test after this (roughly 1 step)
-[3de952f2416b6084f557ec417709eac740c6818c] Add <3: Another new day for
-git> into <hello>.
-error: bisect run failed:'git bisect--helper --bisect-state good'
-exited with error code -10
-running  './test_script.sh'running
-'./test_script.sh'3de952f2416b6084f557ec417709eac740c6818c is the
-first bad commit
-FATAL: Unexpected exit with code 1
------------------
-
-and:
-
------------------
-$ cat trash\ directory.t6030-bisect-porcelain/.git/BISECT_RUN
------------------
-
-So it looks like there might be another issue with what's in 'seen'.
-
-> If it does not matter, then the code and tests are good as-is, but
-> if it does, the fact that you posted this round without noticing any
-> broken tests means that we have a gap in the test coverage.  Can we
-> have a new test about this (i.e. at the end of each round in "bisect
-> run", the output from bisect_state() is shown to the user)?
-
-Definitely it seems that taking a look at the tests is a good idea.
-For example, comparing the verbose (with -v) output of t6030 before
-and after each patch (and before and after this patch series) might
-help find issues.
+> Thanks.
+> 
+>> diff --git a/xdiff/xpatience.c b/xdiff/xpatience.c
+>> index 20699a6f6054..db2d53e89cb0 100644
+>> --- a/xdiff/xpatience.c
+>> +++ b/xdiff/xpatience.c
+>> @@ -90,7 +90,7 @@ static void insert_record(xpparam_t const *xpp, int line, struct hashmap *map,
+>>   {
+>>   	xrecord_t **records = pass == 1 ?
+>>   		map->env->xdf1.recs : map->env->xdf2.recs;
+>> -	xrecord_t *record = records[line - 1], *other;
+>> +	xrecord_t *record = records[line - 1];
+>>   	/*
+>>   	 * After xdl_prepare_env() (or more precisely, due to
+>>   	 * xdl_classify_record()), the "ha" member of the records (AKA lines)
+>> @@ -104,11 +104,7 @@ static void insert_record(xpparam_t const *xpp, int line, struct hashmap *map,
+>>   	int index = (int)((record->ha << 1) % map->alloc);
+>>   
+>>   	while (map->entries[index].line1) {
+>> -		other = map->env->xdf1.recs[map->entries[index].line1 - 1];
+>> -		if (map->entries[index].hash != record->ha ||
+>> -				!xdl_recmatch(record->ptr, record->size,
+>> -					other->ptr, other->size,
+>> -					map->xpp->flags)) {
+>> +		if (map->entries[index].hash != record->ha) {
+>>   			if (++index >= map->alloc)
+>>   				index = 0;
+>>   			continue;
+>> @@ -253,8 +249,7 @@ static int match(struct hashmap *map, int line1, int line2)
+>>   {
+>>   	xrecord_t *record1 = map->env->xdf1.recs[line1 - 1];
+>>   	xrecord_t *record2 = map->env->xdf2.recs[line2 - 1];
+>> -	return xdl_recmatch(record1->ptr, record1->size,
+>> -		record2->ptr, record2->size, map->xpp->flags);
+>> +	return record1->ha == record2->ha;
+>>   }
+>>   
+>>   static int patience_diff(mmfile_t *file1, mmfile_t *file2,
