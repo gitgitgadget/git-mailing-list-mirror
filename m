@@ -2,79 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 32507C433ED
-	for <git@archiver.kernel.org>; Wed,  5 May 2021 00:23:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 456A5C433B4
+	for <git@archiver.kernel.org>; Wed,  5 May 2021 00:31:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 10AA8613CC
-	for <git@archiver.kernel.org>; Wed,  5 May 2021 00:23:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1296D613CD
+	for <git@archiver.kernel.org>; Wed,  5 May 2021 00:31:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231146AbhEEAYD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 May 2021 20:24:03 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64022 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230333AbhEEAYC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 May 2021 20:24:02 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CAA4DCB1E3;
-        Tue,  4 May 2021 20:23:06 -0400 (EDT)
+        id S231441AbhEEAcD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 May 2021 20:32:03 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:64549 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231434AbhEEAcD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 May 2021 20:32:03 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 832D5126587;
+        Tue,  4 May 2021 20:31:07 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=1MObASarQw1f
-        w9wBX9kJFeYhcsyfHT2y9fJlhxUeGvc=; b=x7ViF2emPbwuBNQqyH3V0o2/7CZ6
-        9qxMVEz4YjVfuUSTJQqx4YZlnSpT0hdYetsdQbkP8GsKlWk1Hjy+KmjDfeTkMRvC
-        kPCyVkr1UF+pbMsooiVuNif/3mKEYuByJ/hTGMN0PqPEpMSrNuuW/Z63e2nZuV4U
-        X6NijlFUpdhZ+KQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8AFFCCB1E2;
-        Tue,  4 May 2021 20:23:06 -0400 (EDT)
+        :content-type; s=sasl; bh=38MoY/uwmLbr936KHmzEC+pl9HVCLuGc4Nk/dN
+        wUWi0=; b=ee3QYNZo5BU4xFUoOkRv27wgt0oR4swutVCHKOBdBRD4GMiEGdYklC
+        VW2QljLXn4XfufFGm0nkxADOcU1Jrs8Y9Ua6vhXUcZ9HVCbQYUn+MvjonUCUYNN6
+        oQjMR6DCMfRu6oW0kumUfI6ECEZJ7Xvn6GwsyyrPaxSdgGpSD7B5Y=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7B10C126586;
+        Tue,  4 May 2021 20:31:07 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D802ECB1E1;
-        Tue,  4 May 2021 20:23:05 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B0872126584;
+        Tue,  4 May 2021 20:31:04 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     Mark Amery <markrobertamery@gmail.com>, git@vger.kernel.org
-Subject: Re: Bug: Changing folder case with `git mv` crashes on
- case-insensitive file system
-References: <CAD8jeghpOQoibk0xM0QgLsOwLNw9GdM=4rhYuzV-NSkw8LinMQ@mail.gmail.com>
-        <20210504151954.aczbvml4rh7t2svc@tb-raspi4>
-Date:   Wed, 05 May 2021 09:23:05 +0900
-In-Reply-To: <20210504151954.aczbvml4rh7t2svc@tb-raspi4> ("Torsten
-        =?utf-8?Q?B=C3=B6gershausen=22's?= message of "Tue, 4 May 2021 17:19:54
- +0200")
-Message-ID: <xmqqtuni58ra.fsf@gitster.g>
+To:     "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH 1/2] patience diff: remove unnecessary string comparisons
+References: <pull.948.git.1620120345.gitgitgadget@gmail.com>
+        <a339d1cf9b9ffd6365fca3efda8fb7e10346dda4.1620120345.git.gitgitgadget@gmail.com>
+Date:   Wed, 05 May 2021 09:31:02 +0900
+In-Reply-To: <a339d1cf9b9ffd6365fca3efda8fb7e10346dda4.1620120345.git.gitgitgadget@gmail.com>
+        (Phillip Wood via GitGitGadget's message of "Tue, 04 May 2021 09:25:44
+        +0000")
+Message-ID: <xmqqpmy658e1.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 0FC25F06-AD38-11EB-A39B-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2D29DD48-AD39-11EB-B37B-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+"Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> To my undestanding we try to rename
-> foo/ into FOO/.
-> But because FOO/ already "exists" as directory,
-> Git tries to move foo/ into FOO/foo, which fails.
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >
-> And no, the problem is probably not restricted to MacOs,
-> Windows and all case-insenstive file systems should show
-> the same, but I haven't tested yet, so it's more a suspicion.
->
-> The following diff allows to move foo/ into FOO/
-> If someone wants to make a patch out if, that would be good.
+> xdl_prepare_env() calls xdl_classify_record() which arranges for the
+> hashes of non-matching lines to be different so lines can be tested
+> for equality by comparing just their hashes.
 
-Is strcasecmp() sufficient for macOS whose filesystem has not just
-case insensitivity but UTF-8 normalization issues?
+Hmph, that is a bit different from what I read from the comment in
+the post context of the first hunk, though.
 
+	/*
+	 * After xdl_prepare_env() (or more precisely, due to
+	 * xdl_classify_record()), the "ha" member of the records (AKA lines)
+	 * is _not_ the hash anymore, but a linearized version of it.  In
+	 * other words, the "ha" member is guaranteed to start with 0 and
+	 * the second record's ha can only be 0 or 1, etc.
+	 *
+	 * So we multiply ha by 2 in the hope that the hashing was
+	 * "unique enough".
+	 */
 
+The words "home" and "enough" hints to me that the "ha" member is
+not hash, but "lineralized version of it" (whatever it means) does
+not guarantee that two records with the same "ha" are identical, or
+does it?
+
+Well, I should just go read xdl_classify_record() to see what it
+really does, but if it eliminates collisions, then the patch is a
+clear and obvious improvement.
+
+Thanks.
+
+> diff --git a/xdiff/xpatience.c b/xdiff/xpatience.c
+> index 20699a6f6054..db2d53e89cb0 100644
+> --- a/xdiff/xpatience.c
+> +++ b/xdiff/xpatience.c
+> @@ -90,7 +90,7 @@ static void insert_record(xpparam_t const *xpp, int line, struct hashmap *map,
+>  {
+>  	xrecord_t **records = pass == 1 ?
+>  		map->env->xdf1.recs : map->env->xdf2.recs;
+> -	xrecord_t *record = records[line - 1], *other;
+> +	xrecord_t *record = records[line - 1];
+>  	/*
+>  	 * After xdl_prepare_env() (or more precisely, due to
+>  	 * xdl_classify_record()), the "ha" member of the records (AKA lines)
+> @@ -104,11 +104,7 @@ static void insert_record(xpparam_t const *xpp, int line, struct hashmap *map,
+>  	int index = (int)((record->ha << 1) % map->alloc);
+>  
+>  	while (map->entries[index].line1) {
+> -		other = map->env->xdf1.recs[map->entries[index].line1 - 1];
+> -		if (map->entries[index].hash != record->ha ||
+> -				!xdl_recmatch(record->ptr, record->size,
+> -					other->ptr, other->size,
+> -					map->xpp->flags)) {
+> +		if (map->entries[index].hash != record->ha) {
+>  			if (++index >= map->alloc)
+>  				index = 0;
+>  			continue;
+> @@ -253,8 +249,7 @@ static int match(struct hashmap *map, int line1, int line2)
+>  {
+>  	xrecord_t *record1 = map->env->xdf1.recs[line1 - 1];
+>  	xrecord_t *record2 = map->env->xdf2.recs[line2 - 1];
+> -	return xdl_recmatch(record1->ptr, record1->size,
+> -		record2->ptr, record2->size, map->xpp->flags);
+> +	return record1->ha == record2->ha;
+>  }
+>  
+>  static int patience_diff(mmfile_t *file1, mmfile_t *file2,
