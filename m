@@ -2,107 +2,207 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-14.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 37737C433ED
-	for <git@archiver.kernel.org>; Wed,  5 May 2021 18:04:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 647FEC433ED
+	for <git@archiver.kernel.org>; Wed,  5 May 2021 18:04:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0838D61057
-	for <git@archiver.kernel.org>; Wed,  5 May 2021 18:04:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1BE756121F
+	for <git@archiver.kernel.org>; Wed,  5 May 2021 18:04:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235138AbhEESFE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 May 2021 14:05:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56738 "EHLO
+        id S235512AbhEESFL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 May 2021 14:05:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234227AbhEESEB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 May 2021 14:04:01 -0400
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2F15C0610DA
-        for <git@vger.kernel.org>; Wed,  5 May 2021 10:52:05 -0700 (PDT)
-Received: by mail-oi1-x229.google.com with SMTP id m13so2915385oiw.13
-        for <git@vger.kernel.org>; Wed, 05 May 2021 10:52:05 -0700 (PDT)
+        with ESMTP id S236224AbhEESEq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 May 2021 14:04:46 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB93AC061350
+        for <git@vger.kernel.org>; Wed,  5 May 2021 11:01:00 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id n2so2842264wrm.0
+        for <git@vger.kernel.org>; Wed, 05 May 2021 11:01:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=FBzn6FOR7ua9aMScQgtWaQzhwTxH7s2TNSLklJyj3EM=;
-        b=M5bAslZwmqajF4jHIoUsLL/wgSCXQwXKSrwvV6HF6g4TMt7SrYnK0R+nUgBR/FeHWZ
-         4xmzWzpQpNMYDKqaDg99Q0GBiJNNEM2VRUdldGNcL00B/wDkVE0LsvQKFnhaZrbEqROQ
-         hfsekFLk/LGXHDuIr0Em0uZXRELF3Wd2dgsZyDP0Xplb3zSPgzBfS9KjpB67JG73lOxI
-         843m1ryR0wdbPvWaqSN0vheDK5Xz98MILvrNO7Hj8nz+TuEjUAnKwJF0hLsohkVQ310K
-         j+KdVpKSKxHnHO4AOVK/ztfBC5UpTjnU4KOKimDOiF0z1Rns/9qZUVbdWHniiZnXP5Mc
-         b+1g==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=hXHEua9KbnQgbeqPWZnag12/6c6UYGJQZyRIb4CzkJw=;
+        b=Oq9mjgLf5lzyil+G+9ZRKPxHsyuLHCfwxfWNXIDOvowp93KCKp+32KdaOtY+F7FrkL
+         oT3MfBNGNQBGZSaz8nMruZH23/jMMg93KHYb4DwQ/ynRSpJPdfjU4fPtlR18XhXjbHMR
+         yWiEqd8WYXDgLSeYJSFixg7Fhyu1Z180ZNeLA6v7c6eB6U1De82egctCbACJKIz+XcHT
+         THRY8RXQ2g+TGc8+K4y3Ir+UJCiPzB4Qf6Atlh3NvBaLYoDntzPM3FAGYstewjSdfwhX
+         axci5Q4qupvrIE6ShM/KvhpNCx6ZE5kRWBvGmMfIWman/lan0DkbIlIzfMgf2nJLAK3Z
+         Qqew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=FBzn6FOR7ua9aMScQgtWaQzhwTxH7s2TNSLklJyj3EM=;
-        b=BsvrWCcUtZyp5ozuogt8RzzeeCrfqw/NE0FEzE7bEouHYCrEYJZYfBSLWdz7lV7jOQ
-         KGj1Vy9MEiKyUiFbY2A1BiN5smena6w1f1Y2SCa2b6PrjrqhlhFR1voS9p+O/Y4XukJo
-         XBE7HwLATP9bl9E08VTy1/XK7XrEvijABrhhkvQhrLm+mIObsGdx/dh8FG3EHWuM8W8i
-         kNG1roxMPLGZg5GREMq2vnTiWtsqenuzBt4u1xy0ekLGmPEHVg9eeQ1KkY3/7nRpi5JY
-         u4+w7OBtZKQSujRmlSJ+a9f1UQYvsXhLNu0idR8YvtqbtqtsBwCoplwMMnew5fHkfJ+q
-         o9yQ==
-X-Gm-Message-State: AOAM531/JPWBQT9P3ERiCQn/dMWV0VtdH3cluK/tg2hxha+wcY4/IaNY
-        VdtxDmhkkbBLjopYFAP9tSs=
-X-Google-Smtp-Source: ABdhPJwMQa83pQrYHjd3mcGnOKkTLy9ZQ3p5julYMfgFRUClwrT8/lK/mbvzkJsMZA6ThjB2DwxG+g==
-X-Received: by 2002:a54:4d04:: with SMTP id v4mr7944493oix.115.1620237125222;
-        Wed, 05 May 2021 10:52:05 -0700 (PDT)
-Received: from localhost ([2806:2f0:4060:638f:a2c5:89ff:fe0c:1151])
-        by smtp.gmail.com with ESMTPSA id k20sm32289otb.15.2021.05.05.10.52.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 May 2021 10:52:04 -0700 (PDT)
-Date:   Wed, 05 May 2021 12:52:03 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=hXHEua9KbnQgbeqPWZnag12/6c6UYGJQZyRIb4CzkJw=;
+        b=Uhiejw7qjKTCFs5a7xGPVvMxB6KYISli1PZKF8R7pNdRRitfXlufPSvwk/6pEF6tAg
+         IpKL0J6hylIVQAibll9u6LN2h/AnNa8KzSkNd7rG8w6piaHs/ksLxff0fqzjLigGnqA6
+         snWnjvX5a9ZLq+FjZtLeksjhgQDZ+pXIQygAyQqxeEeZfIdlFU1j8bZ8HRpweip+Qmpu
+         ITz7OsP1I0yTuQCbRXpDR4btn0nyFhG9YqXcYrtzlitYYVCXAtRpnx23a1am4RtUTSHa
+         YLVcwCyJDx2o5DYUK2288I3eCskUgD1jdMYpcdRL+6JHY19bOgDhkeMB/mtZ0Lz8iWWV
+         BTRQ==
+X-Gm-Message-State: AOAM532ETN8wARK106bzgAZIswSH6B/c5dNPtPqj78AT5Gj4PwZPUkTR
+        tlJlfVERQlGZdwMFvTL37hk=
+X-Google-Smtp-Source: ABdhPJz9rmKIy5IB+Dt9PqulvmBNi+9wOmnstZzqTum4G4sFyKIzOEighvtFLdGx4cgULNtLigii4A==
+X-Received: by 2002:adf:fd0c:: with SMTP id e12mr297802wrr.324.1620237659446;
+        Wed, 05 May 2021 11:00:59 -0700 (PDT)
+Received: from [192.168.1.201] (61.22.198.146.dyn.plus.net. [146.198.22.61])
+        by smtp.googlemail.com with ESMTPSA id p17sm16832wru.1.2021.05.05.11.00.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 05 May 2021 11:00:59 -0700 (PDT)
+Subject: Re: [PATCH 1/2] patience diff: remove unnecessary string comparisons
 To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Elijah Newren <newren@gmail.com>
-Cc:     =?UTF-8?B?R8OhYm9yIEZhcmthcw==?= <gabor.farkas@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Message-ID: <6092db4384938_1d2452084a@natae.notmuch>
-In-Reply-To: <nycvar.QRO.7.76.6.2105051554250.50@tvgsbejvaqbjf.bet>
-References: <CAPiPmQnb=XMaF2+YkryEbiX8zA=jwa5y=fbAGk9jpCExpbS4Rw@mail.gmail.com>
- <CABPp-BHBcjSQbkotrzwDtVRSC-qqjEyP4m=biY-0+=Jdg9ETQw@mail.gmail.com>
- <nycvar.QRO.7.76.6.2105051554250.50@tvgsbejvaqbjf.bet>
-Subject: Re: git switch/restore, still experimental?
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <pull.948.git.1620120345.gitgitgadget@gmail.com>
+ <a339d1cf9b9ffd6365fca3efda8fb7e10346dda4.1620120345.git.gitgitgadget@gmail.com>
+ <xmqqpmy658e1.fsf@gitster.g>
+ <nycvar.QRO.7.76.6.2105051649280.50@tvgsbejvaqbjf.bet>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <67b46d8c-6a84-d2f7-dadf-e63050149e93@gmail.com>
+Date:   Wed, 5 May 2021 19:00:57 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.0
+MIME-Version: 1.0
+In-Reply-To: <nycvar.QRO.7.76.6.2105051649280.50@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin wrote:
-> Which leaves us with two hard choices regarding switch/restore, none of
-> them really being comfortable:
+Hi Dscho
+
+On 05/05/2021 15:58, Johannes Schindelin wrote:
+> Hi Junio,
 > 
-> - we scrap switch/restore because their usability is not really all that
->   improved relative to `git checkout`.
+> On Wed, 5 May 2021, Junio C Hamano wrote:
 > 
-> - we leave switch/restore as-are (because by now, changing the options or
->   the design would be almost certainly disruptive to users who already
->   tried to adopt the new commands, I being one of those users).
+>> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>>
+>>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>>>
+>>> xdl_prepare_env() calls xdl_classify_record() which arranges for the
+>>> hashes of non-matching lines to be different so lines can be tested
+>>> for equality by comparing just their hashes.
+>>
+>> Hmph, that is a bit different from what I read from the comment in
+>> the post context of the first hunk, though.
+>>
+>> 	/*
+>> 	 * After xdl_prepare_env() (or more precisely, due to
+>> 	 * xdl_classify_record()), the "ha" member of the records (AKA lines)
+>> 	 * is _not_ the hash anymore, but a linearized version of it.  In
+>> 	 * other words, the "ha" member is guaranteed to start with 0 and
+>> 	 * the second record's ha can only be 0 or 1, etc.
+>> 	 *
+>> 	 * So we multiply ha by 2 in the hope that the hashing was
+>> 	 * "unique enough".
+>> 	 */
+>>
+>> The words "home" and "enough" hints to me that the "ha" member is
+>> not hash, but "lineralized version of it" (whatever it means) does
+>> not guarantee that two records with the same "ha" are identical, or
+>> does it?
+>>
+>> Well, I should just go read xdl_classify_record() to see what it
+>> really does, but if it eliminates collisions, then the patch is a
+>> clear and obvious improvement.
+> 
+> Right. I had the same concern. But it does look as if
+> `xdl_classify_record()` replaced the possibly non-unique hash values to
+> unique sequential identifiers.
+> 
+> I have to admit that the code is unnecessarily hard to read for me:
+> https://github.com/git/git/blob/v2.31.1/xdiff/xprepare.c#L110-L157
+> 
+> But I do gather that the loop at
+> https://github.com/git/git/blob/v2.31.1/xdiff/xprepare.c#L119-L123
+> is called for every line, that it does compare it to every seen line with
+> the same hash, and that it exits the loop early if the contents disagree:
+> 
+> 	for (rcrec = cf->rchash[hi]; rcrec; rcrec = rcrec->next)
+> 		if (rcrec->ha == rec->ha &&
+> 				xdl_recmatch(rcrec->line, rcrec->size,
+> 					rec->ptr, rec->size, cf->flags))
+> 			break;
+> 
+> Since naming is hard (and you can easily err on saving space at the
+> expense of costing readers' time, as libxdiff proves), and since I am
+> running out of review time, I'll have to assume that
+> https://github.com/git/git/blob/v2.31.1/xdiff/xprepare.c#L150-L154 means
+> that indeed, the `ha` field is set to a counter that uniquely identifies
+> the line contents:
+> 
+> 	rec->ha = (unsigned long) rcrec->idx;
+> 
+> 
+> 	hi = (long) XDL_HASHLONG(rec->ha, hbits);
+> 	rec->next = rhash[hi];
+> 	rhash[hi] = rec;
+> 
+> So I am fairly confident that the patch is good, and the performance win
+> is nice.
 
-There's another option:
+Thanks for taking the time to review this patch, I agree with your 
+analysis. The output of `git log -p --diff-algorithm=patience 
+origin/master` for the whole history of git.git is unchanged by this patch.
 
- - we revamp completely switch/restore (because any users relying on
-   them by now were warned they shouldn't assume these commands to stay
-   as they are).
+Best Wishes
 
-> I say that neither of them is a really splendid choice because the
-> original goal is not only not accomplished, but I would say it is even
-> harder now than it was when we accepted switch/restore into an official
-> release, because of that experience with switch/restore. We simply do not
-> have the right expertise on this list, and therefore anything we do will
-> always have that "UX designed by an engineer" feel.
+Phillip
 
-I disagree. Engineers can create a good UI, especially after trying
-for a while failed attempts.
+> 
+> Thanks!
+> Dscho
+> 
+>>
+>> Thanks.
+>>
+>>> diff --git a/xdiff/xpatience.c b/xdiff/xpatience.c
+>>> index 20699a6f6054..db2d53e89cb0 100644
+>>> --- a/xdiff/xpatience.c
+>>> +++ b/xdiff/xpatience.c
+>>> @@ -90,7 +90,7 @@ static void insert_record(xpparam_t const *xpp, int line, struct hashmap *map,
+>>>   {
+>>>   	xrecord_t **records = pass == 1 ?
+>>>   		map->env->xdf1.recs : map->env->xdf2.recs;
+>>> -	xrecord_t *record = records[line - 1], *other;
+>>> +	xrecord_t *record = records[line - 1];
+>>>   	/*
+>>>   	 * After xdl_prepare_env() (or more precisely, due to
+>>>   	 * xdl_classify_record()), the "ha" member of the records (AKA lines)
+>>> @@ -104,11 +104,7 @@ static void insert_record(xpparam_t const *xpp, int line, struct hashmap *map,
+>>>   	int index = (int)((record->ha << 1) % map->alloc);
+>>>
+>>>   	while (map->entries[index].line1) {
+>>> -		other = map->env->xdf1.recs[map->entries[index].line1 - 1];
+>>> -		if (map->entries[index].hash != record->ha ||
+>>> -				!xdl_recmatch(record->ptr, record->size,
+>>> -					other->ptr, other->size,
+>>> -					map->xpp->flags)) {
+>>> +		if (map->entries[index].hash != record->ha) {
+>>>   			if (++index >= map->alloc)
+>>>   				index = 0;
+>>>   			continue;
+>>> @@ -253,8 +249,7 @@ static int match(struct hashmap *map, int line1, int line2)
+>>>   {
+>>>   	xrecord_t *record1 = map->env->xdf1.recs[line1 - 1];
+>>>   	xrecord_t *record2 = map->env->xdf2.recs[line2 - 1];
+>>> -	return xdl_recmatch(record1->ptr, record1->size,
+>>> -		record2->ptr, record2->size, map->xpp->flags);
+>>> +	return record1->ha == record2->ha;
+>>>   }
+>>>
+>>>   static int patience_diff(mmfile_t *file1, mmfile_t *file2,
+>>
 
-Cheers.
-
--- 
-Felipe Contreras
