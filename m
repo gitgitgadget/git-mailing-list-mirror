@@ -4,79 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B9829C433ED
-	for <git@archiver.kernel.org>; Wed,  5 May 2021 04:31:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D808AC433ED
+	for <git@archiver.kernel.org>; Wed,  5 May 2021 04:34:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8A6AF610F7
-	for <git@archiver.kernel.org>; Wed,  5 May 2021 04:31:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A9ACE610E6
+	for <git@archiver.kernel.org>; Wed,  5 May 2021 04:34:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231523AbhEEEb7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 May 2021 00:31:59 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62193 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230515AbhEEEb6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 May 2021 00:31:58 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 15DBDCC805;
-        Wed,  5 May 2021 00:31:02 -0400 (EDT)
+        id S231313AbhEEEfd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 May 2021 00:35:33 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:56494 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229484AbhEEEfd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 May 2021 00:35:33 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 50AA111B6AE;
+        Wed,  5 May 2021 00:34:37 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=Xka+T1g6BdD3
-        FdVCl6jcxHl+B+5cUyD38g4RbBmHUy4=; b=ySFJyunxsyNcPFVt0aabKkrFlYV6
-        +MwXIK/iSAeZ2Di1stSAFnI+JMX2iDfnoFjod3qGmnD3NSODJFlcXjA8w2W68Cu7
-        y4NyE2d4LD/URjfel1fStvdWXyE9603Sn8rnJ0bVdy7vNJXlYk8RnTppr2nGx1wj
-        H1sFjOXHOSZhfMg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id ECD8ACC803;
-        Wed,  5 May 2021 00:31:01 -0400 (EDT)
+        :content-type; s=sasl; bh=VFAFPMptHC481kbRAVEI+8jX6UDIQx3moc5M0K
+        rNgrU=; b=Xg0i3yvdTeUuYDuY71zfErK+snDOk0xYYW0Q+nr3PnJ+L3JxyeJ3I8
+        b8adKLOMqY9/voC30mysMUOlG8oqwnbYM9LVlOt25mmbqgD1uzRAp2DVqMZ3id7M
+        9k5HaegZR9NveIWyq/bnHFQM09SXR9dXDRXIz9ZZnw/2uNdkkSS9w=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4996D11B6AD;
+        Wed,  5 May 2021 00:34:37 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4E5E9CC802;
-        Wed,  5 May 2021 00:31:01 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 82D1911B6AC;
+        Wed,  5 May 2021 00:34:34 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-Cc:     git@vger.kernel.org,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 0/5] Teach am/mailinfo to process quoted CR
-References: <20210421013404.17383-1-congdanhqx@gmail.com>
-        <cover.1620148732.git.congdanhqx@gmail.com>
-Date:   Wed, 05 May 2021 13:31:00 +0900
-In-Reply-To: <cover.1620148732.git.congdanhqx@gmail.com> (=?utf-8?B?IsSQ?=
- =?utf-8?B?b8OgbiBUcuG6p24gQ8O0bmc=?=
-        Danh"'s message of "Wed, 5 May 2021 00:19:57 +0700")
-Message-ID: <xmqq5yzx4xa3.fsf@gitster.g>
+To:     Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>
+Cc:     Andrew Oakley <andrew@adoakley.name>,
+        Luke Diamand <luke@diamand.org>,
+        Git List <git@vger.kernel.org>, Feiyang Xue <me@feiyangxue.com>
+Subject: Re: [PATCH 2/2] git-p4: do not decode data from perforce by default
+References: <20210412085251.51475-1-andrew@adoakley.name>
+        <20210412085251.51475-3-andrew@adoakley.name>
+        <CAKu1iLXRrsB4mRsDfhBH5aahWzDjpfqLuWP9t47RMB=RdpL1iA@mail.gmail.com>
+        <20210430095342.58134e4e@ado-tr>
+        <021c0caf-8e6f-4fbb-6ff7-40bacbe5de38@diamand.org>
+        <CAKu1iLWbmPrVjAcgLKP1yisjmVxJr+kKQWJLiqkRzh=aAzETwA@mail.gmail.com>
+        <20210504220153.1d9f0cb2@ado-tr>
+        <CAKu1iLXOFiUGmQUeoW-YkiiJ8P2+LznXWz4YabEiGktv=nUYjA@mail.gmail.com>
+        <xmqqczu656iv.fsf@gitster.g>
+        <CAKu1iLUaLuAZWqjNK4tfhhR=YaSt4MdQ+90ZY-JcEh_SeHyYCw@mail.gmail.com>
+Date:   Wed, 05 May 2021 13:34:32 +0900
+In-Reply-To: <CAKu1iLUaLuAZWqjNK4tfhhR=YaSt4MdQ+90ZY-JcEh_SeHyYCw@mail.gmail.com>
+        (Tzadik Vanderhoof's message of "Tue, 4 May 2021 21:02:54 -0700")
+Message-ID: <xmqq1ral4x47.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: B2352C10-AD5A-11EB-80D8-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 314A33B0-AD5B-11EB-8E20-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh  <congdanhqx@gmail.com> writes=
-:
+Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com> writes:
 
-> When an SMTP server receives an 8-bit email message, possibly with only
-> LF as line ending, some of those servers decide to change said LF to
-> CRLF.
->
-> Some mailing list software, when receives an 8-bit email message,
-> decide to encoding such message in base64 or quoted-printable.
->
-> This series try to help users of such softwares deal with such patches.
->
-> This series is a complete rewrite of v1.
-> Hence, no {inter,range}-diff.
+> On Tue, May 4, 2021 at 6:11 PM Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com> writes:
+>>
+>> > On Tue, May 4, 2021 at 2:01 PM Andrew Oakley <andrew@adoakley.name> wrote:
+>> >> The key thing that I'm trying to point out here is that the encoding is
+>> >> not necessarily consistent between different commits.  The changes that
+>> >> you have proposed force you to pick one encoding that will be used for
+>> >> every commit.  If it's wrong then data will be corrupted, and there is
+>> >> no option provided to avoid that.  The only way I can see to avoid this
+>> >> issue is to not attempt to re-encode the data - just pass it directly
+>> >> to git.
+>> > ...
+> Are you talking about a scenario where most of the commits are UTF-8,
+> one is "cp1252" and another one is "cp1251", so a total of 3 encodings
+> are used in the Perforce depot?  I don't think that is a common scenario.
 
-Thanks.
+Yes.  I think that is where "not necessarily consistent between
+different commits" leads us to---not limited only to two encodings.
 
-I've left a few comments here and there, but like the overall
-approach.
+> I agree with the idea that if you know what the encoding is, then
+> why not just use that knowledge to convert that to UTF-8, rather
+> than use the encoding header.
