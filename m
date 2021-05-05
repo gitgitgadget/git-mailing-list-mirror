@@ -2,191 +2,191 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF0FCC433B4
-	for <git@archiver.kernel.org>; Wed,  5 May 2021 14:57:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 294E7C433B4
+	for <git@archiver.kernel.org>; Wed,  5 May 2021 14:58:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7773961222
-	for <git@archiver.kernel.org>; Wed,  5 May 2021 14:57:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DA8A3613B4
+	for <git@archiver.kernel.org>; Wed,  5 May 2021 14:58:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233477AbhEEO62 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 May 2021 10:58:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44448 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233338AbhEEO61 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 May 2021 10:58:27 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0798C061574
-        for <git@vger.kernel.org>; Wed,  5 May 2021 07:57:30 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id k4-20020a7bc4040000b02901331d89fb83so1310973wmi.5
-        for <git@vger.kernel.org>; Wed, 05 May 2021 07:57:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=1Op2nByi/4/wknQyhpOrUy3B7Kc70K1RIGsndve1yK8=;
-        b=iXUQOptQ5B5KxXB3xioZrf9toZDKZFeQxpyskPsBLo8uGIvB5bwJCrQL6fTP87x3Gr
-         R1eCVmrmFvyUDoKrJZKJG0SeOphgAzLGOFggnMx9MdWoiV82EreIIBeifCzq8GSRaptn
-         Sfu2LNU0eeSNDF0J6dp8NfZIjRh0NU98XdQRCm4ypIZqsEE4WEPuMIi5Ivdc6Mtpu66h
-         6K4AsiSxzla5yvHcCvKJZmLY0J4zO0dXbZN7x3xyiy7z98PTwJfJBuIDX/ivddt0gPi2
-         6Bro6w6mhnqerYIAqCw26jR6ghNtiAU47eHw5v5Yqe93lHSao31kBnBXF3l5GV2nYbBI
-         puZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=1Op2nByi/4/wknQyhpOrUy3B7Kc70K1RIGsndve1yK8=;
-        b=JfJfQVkusbqyJ5vQZbt9s3ps1YnjchJbrd6LmR5kxNk6TpvTpGk7Jt7bxizYQHoDC0
-         ykfTOtXWPXaKrBc8JhGHtJ1sMgfUpocj48muXTbGKGxjMt4K/2vuGGLc0AVEfGq+g7gd
-         8oGYH0qCHFHpeRFx32fbfXEKAHX57f6knffsABenyv0DkpSLgBSX7Adt/UhE4kEGKhps
-         pjwWmZGALzOfCJcE1ouf/Yx5fshQ97oy36LrW1cjftGlJO5p6Uv/iL/0HsX8+tO0g4HQ
-         tdm/iHNyUN2kHAkR6hJr9Ndx2+evxP2fcgHVndrvAM5vEJ+t7JsXiZFiKpjqFKwv1EvB
-         Mg2w==
-X-Gm-Message-State: AOAM532gItxTABr1cSbqZOYt52rE7FSqQ9Ph5whfOmiTG9ANEZnzhV3B
-        cwydMtqjh0TUk6I9fqtxGR0=
-X-Google-Smtp-Source: ABdhPJyrps38nCz1yUIrVR9SBDrA5l44ZDKP7vbRl+Vdy36Fa/pcGiIBf2WQA6hqY7YPE1Cy8x9l8g==
-X-Received: by 2002:a7b:c101:: with SMTP id w1mr10452605wmi.164.1620226649441;
-        Wed, 05 May 2021 07:57:29 -0700 (PDT)
-Received: from [192.168.1.240] (61.22.198.146.dyn.plus.net. [146.198.22.61])
-        by smtp.gmail.com with ESMTPSA id n5sm15599069wrx.31.2021.05.05.07.57.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 05 May 2021 07:57:29 -0700 (PDT)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] maintenance: use systemd timers on Linux
-To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        phillip.wood@dunelm.org.uk
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?B?TMOpbmHDr2MgSHVhcmQ=?= <lenaic@lhuard.fr>,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-References: <20210501145220.2082670-1-lenaic@lhuard.fr>
- <CAPig+cQks0_nL1J4YUbEUjmWYLKrhuHX-f8PkWM2zFE4gybWMw@mail.gmail.com>
- <b1153c47-05cf-877c-587b-8205d8d32816@gmail.com> <YJKNVX5Nq64wAfvA@danh.dev>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <24e37e66-1418-4f64-5405-46aaf6449e4a@gmail.com>
-Date:   Wed, 5 May 2021 15:57:27 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.0
+        id S233439AbhEEO7o (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 May 2021 10:59:44 -0400
+Received: from mout.gmx.net ([212.227.15.18]:59377 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233394AbhEEO7o (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 May 2021 10:59:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1620226720;
+        bh=t7RefJ48iDijBdSO+xXV7RjAL0SMXbCF2Bq8Gtuj/Cs=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=DvJU3n8+Kd7V0a5/9I3Lr2XEn95uOAbW0xU3ol0U91L0yTOPL3eJIk0U+clY/sivU
+         S0eukRinHUZDGjPN220OK1F675JX41DKKY7lPbUlFMvI0FqTlfYeVjwtGdgJQZbRc+
+         X9sq3P1QQYQ1LM+OHbL2lEkNYyVqXoxYSySctr4M=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.28.146.104] ([89.1.212.20]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MnaoZ-1lF7Ab2CQv-00jZpR; Wed, 05
+ May 2021 16:58:40 +0200
+Date:   Wed, 5 May 2021 16:58:38 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH 1/2] patience diff: remove unnecessary string
+ comparisons
+In-Reply-To: <xmqqpmy658e1.fsf@gitster.g>
+Message-ID: <nycvar.QRO.7.76.6.2105051649280.50@tvgsbejvaqbjf.bet>
+References: <pull.948.git.1620120345.gitgitgadget@gmail.com> <a339d1cf9b9ffd6365fca3efda8fb7e10346dda4.1620120345.git.gitgitgadget@gmail.com> <xmqqpmy658e1.fsf@gitster.g>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <YJKNVX5Nq64wAfvA@danh.dev>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:IETGERP9rJutnmYe8sh7YvpU7/DZ/Q1emgKvjVUVcHUoC5pjdKe
+ fimLssv2kVeG8Qm77Injkrtk0dYRMy1Cui4y1NMyu/cv6l7WXTPzOAcXsZeG3e9n9wR9FKK
+ a0p+z/1iASdN6qOT/2C+c2UbKKMEvZ65CG4RQpZbCpWJcUEf6csI2b0Qhx/OSdIjvrHHut+
+ +de0g+QggGFsu6ma6Ca9g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:bXrGw7u0P1M=:Un386hRhZBZzW5hKkAMaRu
+ 2H74I5/5sDjxHKg73W0HXtDItong0VTJ5dh6PsVEuJ9PcXokR95Abj24NTu4PGY4pOqveksiX
+ y7t2fDLnu6Y5GNjmf88IERzMl1jOFyTy7PMSpWye6YxX2cm9X8Uoir9IuUXVvMh/0Ao/dJudY
+ 36eNS1ZVf2cJaf34cNNWBtakyZwAX6DAYFfA2sCVw2Z10rpEalOxWo8qAaaCEq/SCAt0o7jwh
+ ngFtyrOYQRBQr88qOWribC+UyOpjWvflBWSTLdZErgahpEGhFEO+1nD9WW8HSyawtu6qkN9kY
+ OvCNKvIfvojMQ6PpjJe+GiofaGnAwnaGN3ZXXxphW5b4Q7bXkv9w2x7AL4tNHw/48NRd7i1GR
+ y3O233HijWSVMHCOVMETlUOBTLrIw49x9edv6baXjmfMS45+WFM3/yezbS9FiVgUqoklAKeK4
+ GujncJF48/oe/3QQKUilZq4nhnZTuku33uJNw4K7/iPX8FSAExH3eNuWPhMVTD2o9CIvKfQu/
+ ZPw39+/kfTjxaRZm84MX4xWZwBEA+mvYxMEl/i7bjKrqlcBuHQoo3TOVNNUTVv+TwnTfarwgQ
+ /t6gmN2AVwGw9u1f4Y0/Ci3A/2TlGd0H5PH9JYX4O7y7Ku3FdjgahoVFwJc6AK1daIYmid83I
+ WPSM9mIN/pY40Hu6syqAJREtAhZUvOrIi+Mc9WW4C7hnter2wgQ32wfkbpG+fHNqqiZj4y+6w
+ u6wsJ+bSv1NCeLife7yjOt0bVf6KK9Rp+l0ZALK3/527OKf2S7y+ts6mBAF+teP1lWdHteHaD
+ YoXzpI63sTSm5PFyBuRa0qSrxWK75caGVHnvGnqfZiQriUmSiIXsljVeXA8Pj5XBh3tYow9Qd
+ 06sOh8MYv04Mkle+iGNdZbz01HQ1qAVMxN5rbw1xMxpMXbQ5WZH8mN6L2CaDlrrWmoOG8HJdY
+ 2KFXMg6UTjMZSfl/e9kCrdBnZkjCe6R5whXLcVEPkoeMcNSA2c66VWfKFUpmVJ6PrCF8Dbv6s
+ 6d0VaKRe14e86xkt6u/CxnD+IA4xJMVKQ+XPoEKBhy04UVcXY6s3511NcoAaG0QxkU1mqPj5c
+ vTPNT8OSjsWfch4tzl25drIviOq+HqpRsXN7aLAL5IlRi13TrU9zsV0AGPYZrC0lI5xmzSLzn
+ L509SMJzZAXL9qbVtOcNeZUCbTzccwJujmxm97l0cuKmC4pCmzmXEf4+3MWya6oYpQKr50ndU
+ eIxkhpT/Y9vcIZP4f
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Đoàn
+Hi Junio,
 
-On 05/05/2021 13:19, Đoàn Trần Công Danh wrote:
-> On 2021-05-02 15:10:05+0100, Phillip Wood <phillip.wood123@gmail.com> wrote:
->> On 02/05/2021 07:45, Eric Sunshine wrote:
->>> On Sat, May 1, 2021 at 10:59 AM Lénaïc Huard <lenaic@lhuard.fr> wrote:
->>>> The existing mechanism for scheduling background maintenance is done
->>>> through cron. On Linux systems managed by systemd, systemd provides an
->>>> alternative to schedule recurring tasks: systemd timers.
->>>
->>> Thanks for working on this. While `cron` has been the go-to standard
->>> for decades, `systemd` is certainly widespread enough that it makes
->>> sense to support it, as well.
->>
->> Yes, thank you for working on this, it will be very useful to users like me
->> who use a linux distribution that does not install a cron daemon by default
->> but relies on systemd instead.
->>
->>>> The main motivations to implement systemd timers in addition to cron
->>>> are:
->>>> * cron is optional and Linux systems running systemd might not have it
->>>>     installed.
->>>> * The execution of `crontab -l` can tell us if cron is installed but not
->>>>     if the daemon is actually running.
->>
->> Can we use systemctl to see if it is running (and enabled so we know it will
->> be restarted after a reboot)?
-> 
-> Not sure if I understand this suggestion.
-> However, non-systemd systems doesn't have systemctl command to begin
-> with.
+On Wed, 5 May 2021, Junio C Hamano wrote:
 
-I was wondering if on systems with both cron and systemd installed we 
-could use systemctl to determine if crond is actually running as Lénaïc 
-pointed out that being able to run `crontab -l` does not tell us if 
-crond is running.
+> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > From: Phillip Wood <phillip.wood@dunelm.org.uk>
+> >
+> > xdl_prepare_env() calls xdl_classify_record() which arranges for the
+> > hashes of non-matching lines to be different so lines can be tested
+> > for equality by comparing just their hashes.
+>
+> Hmph, that is a bit different from what I read from the comment in
+> the post context of the first hunk, though.
+>
+> 	/*
+> 	 * After xdl_prepare_env() (or more precisely, due to
+> 	 * xdl_classify_record()), the "ha" member of the records (AKA lines)
+> 	 * is _not_ the hash anymore, but a linearized version of it.  In
+> 	 * other words, the "ha" member is guaranteed to start with 0 and
+> 	 * the second record's ha can only be 0 or 1, etc.
+> 	 *
+> 	 * So we multiply ha by 2 in the hope that the hashing was
+> 	 * "unique enough".
+> 	 */
+>
+> The words "home" and "enough" hints to me that the "ha" member is
+> not hash, but "lineralized version of it" (whatever it means) does
+> not guarantee that two records with the same "ha" are identical, or
+> does it?
+>
+> Well, I should just go read xdl_classify_record() to see what it
+> really does, but if it eliminates collisions, then the patch is a
+> clear and obvious improvement.
 
-Best Wishes
+Right. I had the same concern. But it does look as if
+`xdl_classify_record()` replaced the possibly non-unique hash values to
+unique sequential identifiers.
 
-Phillip
+I have to admit that the code is unnecessarily hard to read for me:
+https://github.com/git/git/blob/v2.31.1/xdiff/xprepare.c#L110-L157
 
->>>> * With systemd, each service is run in its own cgroup and its logs are
->>>>     tagged by the service inside journald. With cron, all scheduled tasks
->>>>     are running in the cron daemon cgroup and all the logs of the
->>>>     user-scheduled tasks are pretended to belong to the system cron
->>>>     service.
->>>>     Concretely, a user that doesn’t have access to the system logs won’t
->>>>     have access to the log of its own tasks scheduled by cron whereas he
->>>>     will have access to the log of its own tasks scheduled by systemd
->>>>     timer.
->>>
->>> The last point is somewhat compelling. A potential counterargument is
->>> that `cron` does send email to the user by default if any output is
->>> generated by the cron job. However, it seems quite likely these days
->>> that many systems either won't have local mail service enabled or the
->>> user won't bother checking the local mailbox. It's a minor point, but
->>> if you re-roll it might make sense for the commit message to expand
->>> the last point by saying that although `cron` attempts to send email,
->>> that email may go unseen by the user.
->>>
->>>> In order to schedule git maintenance, we need two unit template files:
->>>> * ~/.config/systemd/user/git-maintenance@.service
->>>>     to define the command to be started by systemd and
->>>> * ~/.config/systemd/user/git-maintenance@.timer
->>>>     to define the schedule at which the command should be run.
-> 
-> I think it would be better to change ~/.config here to
-> $XDG_CONFIG_HOME, as others also points out in another comments.
-> 
-> [..snip..]
-> 
->>>> +`git maintenance start` will overwrite these files and start the timer
->>>> +again with `systemctl --user`, so any customization should be done by
->>>> +creating a drop-in file
->>>> +`~/.config/systemd/user/git-maintenance@.service.d/*.conf`.
-> 
-> Ditto.
-> 
->>> Will `systemd` users generally understand what filename to create in
->>> the "...@.service.d/" directory, and will they know what to populate
->>> the file with? (Genuine question; I've never dealt with that.)
->>
->> I think it would be helpful to explicitly mention the file names (I don't
->> think I could tell you what they are without reading the relevant systemd
->> man page)
-> 
-> [..snip..]
-> 
->>>> +static char *systemd_timer_timer_filename()
->>>> +{
->>>> +       const char *filename = "~/.config/systemd/user/git-maintenance@.timer";
->>>> +       char *expanded = expand_user_path(filename, 0);
->>>> +       if (!expanded)
->>>> +               die(_("failed to expand path '%s'"), filename);
->>>> +
->>>> +       return expanded;
->>>> +}
->>>
->>> I was curious whether this would fail if `.config/systemd/user/`
->>> didn't already exist, but looking at the implementation of
->>> expand_user_path() , I see that it doesn't require the path to already
->>> exist if you pass 0 for the second argument as you do here. Okay.
->>
->> Do we need to worry about $XDG_CONFIG_HOME rather than hard coding
->> "~/.config/". There is a function xdg_config_home() that takes care of this.
-> 
+But I do gather that the loop at
+https://github.com/git/git/blob/v2.31.1/xdiff/xprepare.c#L119-L123
+is called for every line, that it does compare it to every seen line with
+the same hash, and that it exits the loop early if the contents disagree:
+
+	for (rcrec =3D cf->rchash[hi]; rcrec; rcrec =3D rcrec->next)
+		if (rcrec->ha =3D=3D rec->ha &&
+				xdl_recmatch(rcrec->line, rcrec->size,
+					rec->ptr, rec->size, cf->flags))
+			break;
+
+Since naming is hard (and you can easily err on saving space at the
+expense of costing readers' time, as libxdiff proves), and since I am
+running out of review time, I'll have to assume that
+https://github.com/git/git/blob/v2.31.1/xdiff/xprepare.c#L150-L154 means
+that indeed, the `ha` field is set to a counter that uniquely identifies
+the line contents:
+
+	rec->ha =3D (unsigned long) rcrec->idx;
+
+
+	hi =3D (long) XDL_HASHLONG(rec->ha, hbits);
+	rec->next =3D rhash[hi];
+	rhash[hi] =3D rec;
+
+So I am fairly confident that the patch is good, and the performance win
+is nice.
+
+Thanks!
+Dscho
+
+>
+> Thanks.
+>
+> > diff --git a/xdiff/xpatience.c b/xdiff/xpatience.c
+> > index 20699a6f6054..db2d53e89cb0 100644
+> > --- a/xdiff/xpatience.c
+> > +++ b/xdiff/xpatience.c
+> > @@ -90,7 +90,7 @@ static void insert_record(xpparam_t const *xpp, int =
+line, struct hashmap *map,
+> >  {
+> >  	xrecord_t **records =3D pass =3D=3D 1 ?
+> >  		map->env->xdf1.recs : map->env->xdf2.recs;
+> > -	xrecord_t *record =3D records[line - 1], *other;
+> > +	xrecord_t *record =3D records[line - 1];
+> >  	/*
+> >  	 * After xdl_prepare_env() (or more precisely, due to
+> >  	 * xdl_classify_record()), the "ha" member of the records (AKA lines=
+)
+> > @@ -104,11 +104,7 @@ static void insert_record(xpparam_t const *xpp, i=
+nt line, struct hashmap *map,
+> >  	int index =3D (int)((record->ha << 1) % map->alloc);
+> >
+> >  	while (map->entries[index].line1) {
+> > -		other =3D map->env->xdf1.recs[map->entries[index].line1 - 1];
+> > -		if (map->entries[index].hash !=3D record->ha ||
+> > -				!xdl_recmatch(record->ptr, record->size,
+> > -					other->ptr, other->size,
+> > -					map->xpp->flags)) {
+> > +		if (map->entries[index].hash !=3D record->ha) {
+> >  			if (++index >=3D map->alloc)
+> >  				index =3D 0;
+> >  			continue;
+> > @@ -253,8 +249,7 @@ static int match(struct hashmap *map, int line1, i=
+nt line2)
+> >  {
+> >  	xrecord_t *record1 =3D map->env->xdf1.recs[line1 - 1];
+> >  	xrecord_t *record2 =3D map->env->xdf2.recs[line2 - 1];
+> > -	return xdl_recmatch(record1->ptr, record1->size,
+> > -		record2->ptr, record2->size, map->xpp->flags);
+> > +	return record1->ha =3D=3D record2->ha;
+> >  }
+> >
+> >  static int patience_diff(mmfile_t *file1, mmfile_t *file2,
+>
