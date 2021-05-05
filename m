@@ -2,80 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B24F7C433ED
-	for <git@archiver.kernel.org>; Tue,  4 May 2021 23:55:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 52927C433B4
+	for <git@archiver.kernel.org>; Wed,  5 May 2021 00:08:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7E44860FD9
-	for <git@archiver.kernel.org>; Tue,  4 May 2021 23:55:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2FD48613CB
+	for <git@archiver.kernel.org>; Wed,  5 May 2021 00:08:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230454AbhEDX4S (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 May 2021 19:56:18 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:65119 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229694AbhEDX4R (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 May 2021 19:56:17 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7B63BB3B11;
-        Tue,  4 May 2021 19:55:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=M5dahjst6GMgNlFPB5gKdyfoUEBA0C1/4diGO3
-        bY/+c=; b=d2K5IIxQDGO3/33xhmFRJpsMsBRyOb1IDMGu/DfNdqmZIwLXEGr0Gd
-        QdOjVRPEAAh5ym03QKfZV3eDJnOP+gKz7IF5ruirlwBhR0+yEbQfBqJgmPDsgFqr
-        fFShiJlne6N8xSnLjWwYKPBeeZcvAwtlRT14wTXd1sinRRN3ahxuE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 71DDAB3B10;
-        Tue,  4 May 2021 19:55:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C43C3B3B0F;
-        Tue,  4 May 2021 19:55:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Git List <git@vger.kernel.org>,
+        id S231189AbhEEAJS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 May 2021 20:09:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46104 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229586AbhEEAJR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 May 2021 20:09:17 -0400
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62BE9C061574
+        for <git@vger.kernel.org>; Tue,  4 May 2021 17:08:22 -0700 (PDT)
+Received: by mail-oi1-x234.google.com with SMTP id t8so646762oij.0
+        for <git@vger.kernel.org>; Tue, 04 May 2021 17:08:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=xptVCUebyZwR1CR2lUGcxhnXLNbkZqhsPUE+LW05jtk=;
+        b=TA+bI7+i/EV8lRTuc1ATvL51bNd193OhGQ1P9mco4F9fI6N5TIMEMG/c2EHqYmor4m
+         2VfhUwmnh0WlVd8j/CsxbAj4YegCjWQj6eADQ+3wIkRkl4vnJ1iuqZAcOt/W9PFdah0Q
+         6QeajAyDogyfqNsxHbu9e8owZGCI3bv46So/1cBcJ2bEQmT2+hLQUxL8eRGo1u00DZ6j
+         dP/popmfhsrl2kIIlaDoPrATNUtDDHoeMlL56/G6n0sGvhMbD+Qv0UgmiXcnHGWPcAEE
+         3Jodl50xQTiRvYhO1vrY68QVug8VYB1eumh8vTiu6DSgdFqwzdHxa2nZ8smMBqeORoTc
+         lY9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=xptVCUebyZwR1CR2lUGcxhnXLNbkZqhsPUE+LW05jtk=;
+        b=DaL+uuGX5d3qZXG9Vfv6GJx25xRfQUkAT6UBp9mEOZNyK52Gl6kgEHir2xD5YQMiQ+
+         4bayZnlszeFXepH4brVP9r0e79O3Gjm736Nf4rqtHLHD2Kk99qu+U9EQPXz/8PzIh33O
+         oSmvaSqw+GtBXehU6sBevErjx7ZyR9zdi/LWVtPzhOeht806lN8zZ/hGZclF6A40V1OS
+         ogRFYIx1RPXgyQhhMWtt21VqSxv8nMw9TskOFtOUBXjt/N+58KVfPJdInjmp6kF3o0Ec
+         8cbeviJLIiCOFXvMPrGgJonQaPEEagv4CeI/09TUYcgIH599k+82OWOCXe8QiTmqri5v
+         63ow==
+X-Gm-Message-State: AOAM532QH7tzsmCfJoe+y71nLcUv3HPgzda1vkfTiiA+PVizKdaFyE3Z
+        jCI8sqIDYPu1DXfI/uNgRt4=
+X-Google-Smtp-Source: ABdhPJxgmyJ04gNYDsyGvTwzjHDA1+Cw1TX1sxpla+VcH//0/WI5r6zXR3jHqDyG7XDfcqfnaS0p/g==
+X-Received: by 2002:aca:385:: with SMTP id 127mr4874669oid.143.1620173301670;
+        Tue, 04 May 2021 17:08:21 -0700 (PDT)
+Received: from localhost ([201.162.245.67])
+        by smtp.gmail.com with ESMTPSA id t18sm1092503otq.77.2021.05.04.17.08.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 04 May 2021 17:08:20 -0700 (PDT)
+Date:   Tue, 04 May 2021 19:08:17 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
         Eric Sunshine <sunshine@sunshineco.com>
+Message-ID: <6091e1f12ddf9_cc8208b9@natae.notmuch>
+In-Reply-To: <YJHWJRYOcFEvHoD/@camp.crustytoothpaste.net>
+References: <xmqqfsz4a23x.fsf@gitster.g>
+ <CAPig+cR19WDY1=qTbJMCzxeXjV4XtEddS1+=H8Cj6NUi5ZdN+w@mail.gmail.com>
+ <xmqqsg348k9j.fsf@gitster.g>
+ <xmqqo8ds8k6r.fsf_-_@gitster.g>
+ <877dkgxk9p.fsf@evledraar.gmail.com>
+ <xmqqpmy76w31.fsf@gitster.g>
+ <87czu6wuf3.fsf@evledraar.gmail.com>
+ <xmqq7dke7jeo.fsf@gitster.g>
+ <87a6pawmyu.fsf@evledraar.gmail.com>
+ <YJHWJRYOcFEvHoD/@camp.crustytoothpaste.net>
 Subject: Re: [PATCH v2] CodingGuidelines: explicitly allow "local" for test
  scripts
-References: <xmqqfsz4a23x.fsf@gitster.g>
-        <CAPig+cR19WDY1=qTbJMCzxeXjV4XtEddS1+=H8Cj6NUi5ZdN+w@mail.gmail.com>
-        <xmqqsg348k9j.fsf@gitster.g> <xmqqo8ds8k6r.fsf_-_@gitster.g>
-        <877dkgxk9p.fsf@evledraar.gmail.com> <xmqqpmy76w31.fsf@gitster.g>
-        <87czu6wuf3.fsf@evledraar.gmail.com> <xmqq7dke7jeo.fsf@gitster.g>
-        <87a6pawmyu.fsf@evledraar.gmail.com>
-        <YJHWJRYOcFEvHoD/@camp.crustytoothpaste.net>
-Date:   Wed, 05 May 2021 08:55:20 +0900
-In-Reply-To: <YJHWJRYOcFEvHoD/@camp.crustytoothpaste.net> (brian m. carlson's
-        message of "Tue, 4 May 2021 23:17:57 +0000")
-Message-ID: <xmqq35v26olz.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2F49633C-AD34-11EB-88CF-D152C8D8090B-77302942!pb-smtp1.pobox.com
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+brian m. carlson wrote:
+> On 2021-05-04 at 15:09:54, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote=
+:
+> > My aim here was to discover if we had any reason to think that "local=
+"
+> > was less universally implemented than other POSIX/C89-plus features w=
+e
+> > rely on. It seems that it's not.
+> =
 
-> One of the main reasons the Austin Group is having trouble standardizing
-> it is because some shells implement it with lexical scoping and some use
-> dynamic scoping, but if we try not to make too many assumptions, we'll
-> probably be okay.
+> "local" is missing in AT&T ksh.
 
-Thanks for raising that one.  As long as we make sure that our
-script would work with anybody's "local", I do not care very much.
-I just didn't think we want to spend the effort to explain that in
-the documentation and enforce it---compared to the effort, just
-saying "no" is certainly easier.
+It's not missing, it's supported only in "functions", which have a
+different syntax in ksh:
 
-But if somebody wants an incremental patch on top to spell out how
-"local" is allowed to be used in our scripts, that's fine by me.
+  function f { local x=3D"foo"; echo $x; }; f
+
+-- =
+
+Felipe Contreras=
