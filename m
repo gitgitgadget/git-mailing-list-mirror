@@ -6,74 +6,65 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C25EC433ED
-	for <git@archiver.kernel.org>; Wed,  5 May 2021 13:34:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C2F62C433ED
+	for <git@archiver.kernel.org>; Wed,  5 May 2021 13:42:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BE47D611CB
-	for <git@archiver.kernel.org>; Wed,  5 May 2021 13:34:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 89942613BA
+	for <git@archiver.kernel.org>; Wed,  5 May 2021 13:42:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232613AbhEENfs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 May 2021 09:35:48 -0400
-Received: from cloud.peff.net ([104.130.231.41]:45238 "EHLO cloud.peff.net"
+        id S232490AbhEENnH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 May 2021 09:43:07 -0400
+Received: from cloud.peff.net ([104.130.231.41]:45266 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230159AbhEENfr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 May 2021 09:35:47 -0400
-Received: (qmail 18256 invoked by uid 109); 5 May 2021 13:34:51 -0000
+        id S231959AbhEENnG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 May 2021 09:43:06 -0400
+Received: (qmail 18305 invoked by uid 109); 5 May 2021 13:42:10 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 05 May 2021 13:34:51 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 05 May 2021 13:42:10 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9365 invoked by uid 111); 5 May 2021 13:34:50 -0000
+Received: (qmail 9515 invoked by uid 111); 5 May 2021 13:42:10 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 05 May 2021 09:34:50 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 05 May 2021 09:42:10 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Wed, 5 May 2021 09:34:50 -0400
+Date:   Wed, 5 May 2021 09:42:09 -0400
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH] trace2: refactor to avoid gcc warning under -O3
-Message-ID: <YJKe+ncDqrqq1i8P@coredump.intra.peff.net>
-References: <20200404142131.GA679473@coredump.intra.peff.net>
- <patch-1.1-87d9bcf1095-20210505T083951Z-avarab@gmail.com>
- <xmqqwnsd3426.fsf@gitster.g>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/5] streaming.c: remove enum/function/vtbl indirection
+Message-ID: <YJKgsfJXMsR47CkW@coredump.intra.peff.net>
+References: <cover-0.5-00000000000-20210505T122816Z-avarab@gmail.com>
+ <patch-2.5-13061f01212-20210505T122816Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqwnsd3426.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <patch-2.5-13061f01212-20210505T122816Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 05, 2021 at 06:47:29PM +0900, Junio C Hamano wrote:
+On Wed, May 05, 2021 at 02:33:29PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-> The patch makes sense to me, modulo that the way the variable
-> "saved_errno" introduced by this patch is used and the way a
-> variable with that name is typically used in our codebase are at
-> odds.  I.e. we typically call a variable "saved_errno" when it is
-> used in this pattern:
+> Remove the indirection of discovering a function pointer to use via an
+> enum and virtual table. This refactors code added in
+> 46bf043807c (streaming: a new API to read from the object store,
+> 2011-05-11).
 > 
->     if (a_syscall_whose_error_condition_we_care_about()) {
-> 	int saved_errno = errno;
-> 	perform_some_cleanup_operation_that_might_clobber_errno();
-> 	return error_errno(..., saved_errno);
-> 	/*
-> 	 * or
-> 	 * errno = saved_errno;
-> 	 * return -1;
-> 	 * and let the caller handle 'errno'
-> 	 */
->     }
+> We can instead simply return an "open_istream_fn" for use from the
+> "istream_source()" selector function directly. This allows us to get
+> rid of the "incore", "loose" and "pack_non_delta" enum
+> variables. We'll return the functions instead.
 > 
-> But since I do not think of a better name for this new variable that
-> is not exactly used like so, let's queue it as-is.
+> The "stream_error" variable in that enum can likewise go in favor of
+> returning NULL, which is what the open_istream() was doing when it got
+> that value anyway.
+> 
+> We can thus remove the entire enum, and the "open_istream_tbl" virtual
+> table that (indirectly) referenced it.
 
-I'd probably have just called it "err", but I think it is fine either
-way. :)
-
-The patch also looks good to me. I used to compile with -O3 occasionally
-to fix warnings, but given the date on this commit, it seems I have not
-done so in quite a while. (It reproduces on gcc 10 for me, which is not
-surprising).
+Yeah, I think this is simpler. The value of the vtable was that we might
+have added more functions to it, but we haven't done so over the course
+of the last 10 years. And I have trouble imagining for what purpose we
+would. So it seems like unnecessary complexity.
 
 -Peff
