@@ -2,235 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 45BC8C433B4
-	for <git@archiver.kernel.org>; Wed,  5 May 2021 14:39:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 47FE7C433ED
+	for <git@archiver.kernel.org>; Wed,  5 May 2021 14:52:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 15B2F61176
-	for <git@archiver.kernel.org>; Wed,  5 May 2021 14:39:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0D280613CD
+	for <git@archiver.kernel.org>; Wed,  5 May 2021 14:52:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233134AbhEEOkB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 May 2021 10:40:01 -0400
-Received: from mout.gmx.net ([212.227.15.19]:36501 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232919AbhEEOkA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 May 2021 10:40:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1620225524;
-        bh=MAv/3c66psQrAcpSQ/JmreNQL+dh7U96g4NdoHjLhqE=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=jHAh76qcLHxXozHt6uX4opdo+rb3q1UOeRo+EB5csLqAXzcf/rq2C7ohNsbRNPJ8L
-         4Xv0uVYtyG6W6kiZf6YNedvNZfKQ1DmJ9UiFqpzla3jIhbzKD/ZXXEMAFhvxaZ2kRX
-         +kPWodSg9jA3wiSae2HFueCSOcP1r/fqv+yy0oT8=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.28.146.104] ([89.1.212.20]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mf07E-1l2E1u2Jp4-00gUDR; Wed, 05
- May 2021 16:38:44 +0200
-Date:   Wed, 5 May 2021 16:38:42 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Denton Liu <liu.denton@gmail.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH] trace2: refactor to avoid gcc warning under -O3
-In-Reply-To: <patch-1.1-87d9bcf1095-20210505T083951Z-avarab@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2105051623230.50@tvgsbejvaqbjf.bet>
-References: <20200404142131.GA679473@coredump.intra.peff.net> <patch-1.1-87d9bcf1095-20210505T083951Z-avarab@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S233366AbhEEOxN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 May 2021 10:53:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43296 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233309AbhEEOxM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 May 2021 10:53:12 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75E9DC061574
+        for <git@vger.kernel.org>; Wed,  5 May 2021 07:52:14 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id s25so2882270lji.0
+        for <git@vger.kernel.org>; Wed, 05 May 2021 07:52:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=+yEilO6R3LXruubCToyIud0mdATa6waOVKEka3EzNXU=;
+        b=CV0xXZlSBTJA2QrYcTd63k1YyXq5+QIgI1iHm26M5ukEEhu5f5KRtmqu0jBXcyghul
+         zHRPS02P7HD+IQgTBZm6UghKVudtu+kXYBKIxKHE+9NkKk8q5FGo5ldjAPbogtO/7ob5
+         UyTEwP54Sk6H2KfdWEdvTkEMcuUBHOrvBsrJhsiRntuljbt/REH+wBx0GEzilomMgpRj
+         3cgNdd5TvZUw1v5Dhszz7pRoHEH5IIM4pm7ocFLirqNgpMUXy9G7mlkGkat6dfId4Be9
+         tKuXa28JquvWn5yPOU/tqX2tcc1UF1+kV8hSpUjMfnoz82cRLS/ZcYKDeen5VqacfwZx
+         lrVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=+yEilO6R3LXruubCToyIud0mdATa6waOVKEka3EzNXU=;
+        b=KUrWThGlDI86s3BSmPeQgAQbUuPJJgG7gAH2MZxKPu1B745xXQaH5vDSv0hx4lCSvX
+         x/UWGEbDcZUxjUWejg6C7BdeEqL6kqRzzRd7dr6Les9bQm9GGgHYvZck5QlJ9Mpu2Img
+         ARfEoVrs49mC4Z5TCA+D7XBpD8zLpi5YPel1vscFVSjaB0Pco9WL05e6lQFnh3VEKGe7
+         L8aExhazPAsW/bVZcNYIkgRqKOsIxxoE0c1hiRFnqI0bnfWQeFpJ1lCuj1i6pMr8WWKb
+         i0wN8BQEsgVzi+vHZphYHotvIOoZkTLwuJI60DID2is3/li5F1q8QCj2T57mFpOiE5oK
+         RQQw==
+X-Gm-Message-State: AOAM531S0izVfegNLZB4E9XLtphQ5C5IDT5BMbrTxkLLHMNsRM7kZHjM
+        FTnAk9j/nxBHmbVnuTm0ptyGyfTpSFpa9g==
+X-Google-Smtp-Source: ABdhPJyUg/eeTmBHndcRm24U/ZHp2EPqm3YZ7cdm70t53ONu8aGk5WCsnPkdlvIPQt8r3AR6f+q8tw==
+X-Received: by 2002:a2e:b44f:: with SMTP id o15mr15307684ljm.497.1620226332710;
+        Wed, 05 May 2021 07:52:12 -0700 (PDT)
+Received: from paasan.lan (150.37-191-137.fiber.lynet.no. [37.191.137.150])
+        by smtp.gmail.com with ESMTPSA id t3sm2162043lji.37.2021.05.05.07.52.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 05 May 2021 07:52:11 -0700 (PDT)
+From:   =?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>
+Subject: [PATCH] add: die if both --dry-run and --interactive are given
+Date:   Wed,  5 May 2021 16:52:04 +0200
+Message-Id: <20210505145204.51614-1-oystwa@gmail.com>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1963401848-1620225524=:50"
-X-Provags-ID: V03:K1:/Wajuz2DrnEZbQXu5oeyQcwpYJURF/sxb3XRgdg/I4Ksx76XXun
- FR0YFO0/OO8S3WKln0zgXvPqsiKQHgVrbvmwpCsUhAm9nrQ/loRrT9eoC6ltXr4tDtp5cCC
- 2YXS81jqxsnFDH2HHitxtCf+HLM5BE1l36PG8zlI4KZKeaIk+ixBCKpwzxyaOkzQ4MpBzJk
- cLqZkDwuUSzsd0rHFLw1w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:givYH3Z0tPA=:Vu5pF5Sj8Heae4CnsnCBre
- TkKTeRjiEZvASl8RyBoQa8w7Esdu4oSOsiolL/3WEkRMAPSk/hCELs6IG4DMgIDI7A5/I99Gi
- QQcHBi/et/rCmsEV92gS3nuRextyPgGDQ9kIuItZeg7jx4kBksXKNbEGl0Y1vmuKaakDpLx5z
- nahgorY9saO4Xdrnr7zvUnWGg23eXv82uO2qKl4MtoD1H10CeiqMN8UqA6FeNgBtxBpH7kqdb
- QEOesorJjTydKYZP/5a6hWt5gxwAXi3/S9w9OSQZmXCN0Rsv//nQTYc0FtrIIBvIFsLqixR9D
- eYQbSBLPATVxRz35+9ABibU224Ut7iofSlmYN+SlNL8JXmsyxoW1Cp2ScK1iBeeCjnfMnqxua
- kxGz5yqTyVj7qL7VvMpWBKWc6eF7S6lL8X1bXEbqUHMeKxyHS07RtdWH1jOsN3WZGKOi5AKeg
- 58kSb4Q7jfJ8F9kdvIG3t3HzUEHPBIQ9N85WWg4uxIpen0mgHZvakodrHHegZA0lPlbwAuLJN
- SMiarHKDJcmus492L5c7KAU5zRHhtTzUFbRXZy46X9ihzPn3HG0FJH6EMsFhOx8p91OwpRGZJ
- 81MwMoACTxjwZCaSUopKpGV2rtWXnkO6c0ZlX1XgKxAHmI3RFCr6zz5CxD1/5wd/azx2iMJag
- pTAYNY87SGPoF/L5gd+2sS/Ss5eL9Nbi/cvTpZqFXp94QJAtjB2FjlaV3sZYpM+1XKuz7/dy4
- uNJd3ISO7orNe4wfX0nje0t0RY7Me4dKcv0t1smKvcQpgOA6l+Md3kgBCgwa2IotMUnU5M97V
- f95S6+FGOTi97x13F+JZhKo/C4QMV8BILQRjl9kCMSAltDx7I56gsdnojQ3QMzIgaO1FWT+HU
- WyRUZ4kVXyBkIj32SRWIErOAxumwDzLdS7SZc2zljyHkIP6UMCzJg9fEj534THf9YBKXM1QQ9
- 7HxZaufDvUgfBoo+Z013JvTAz1+Y+tF7HVYdgYn9ZBCdwHl3XnHoAj7l2fWWG+wcviKpUPZ6Z
- ZTc/MFolZo8h8xp3/cr6pNyMg1THRX0C/v+t9pp8lJ1yB7aoehbpuZ3gwQsuGDzRPUHRG/0ml
- KD4KnfzEu9uhpYi2CQOEGuueKYvv0vwKs3E+K5XgDHuXDNKVq7nIDBq9CxIlqauNOqcjIENjF
- mQ4OqoDLfdgeK3Kcmgv/aAlNmz3oGsDtV6DuhBhJbLYnlLwQ0BpWG3/TXe/L+jSl3tYke4TYC
- SSRAgu4yugED+MAZa
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+The interactive machinery does not obey --dry-run. Die appropriate if
+both flags are passed.
 
---8323328-1963401848-1620225524=:50
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Øystein Walle <oystwa@gmail.com>
+---
+I think a better solution would be to allow this and improve the
+interactive machinery to handle --dry-run. This is what I could muster
+up at the moment.
 
-Hi =C3=86var,
+ builtin/add.c  | 2 ++
+ t/t3700-add.sh | 4 ++++
+ 2 files changed, 6 insertions(+)
 
-On Wed, 5 May 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+diff --git a/builtin/add.c b/builtin/add.c
+index ea762a41e3..6077eb189f 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -457,6 +457,8 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 	if (patch_interactive)
+ 		add_interactive = 1;
+ 	if (add_interactive) {
++		if (show_only)
++			die(_("--dry-run is incompatible with --interactive/--patch"));
+ 		if (pathspec_from_file)
+ 			die(_("--pathspec-from-file is incompatible with --interactive/--patch"));
+ 		exit(interactive_add(argv + 1, prefix, patch_interactive));
+diff --git a/t/t3700-add.sh b/t/t3700-add.sh
+index b3b122ff97..171b323f50 100755
+--- a/t/t3700-add.sh
++++ b/t/t3700-add.sh
+@@ -343,6 +343,10 @@ test_expect_success 'git add --dry-run --ignore-missing of non-existing file out
+ 	test_cmp expect.err actual.err
+ '
+ 
++test_expect_success 'git add --dry-run --interactive should fail' '
++	test_must_fail git add --dry-run --interactive
++'
++
+ test_expect_success 'git add empty string should fail' '
+ 	test_must_fail git add ""
+ '
+-- 
+2.27.0
 
-> Refactor tr2_dst_try_uds_connect() to avoid a gcc warning[1] that
-> appears under -O3 (but not -O2). This makes the build pass under
-> DEVELOPER=3D1 without needing a DEVOPTS=3Dno-error.
->
-> This can be reproduced with GCC Debian 8.3.0-6, but not e.g. with
-> clang 7.0.1-8+deb10u2. We've had this warning since
-> ee4512ed481 (trace2: create new combined trace facility, 2019-02-22).
->
-> As noted in [2] this warning happens because the compiler doesn't
-> assume that errno must be non-zero after a failed syscall. Let's work
-> around it as suggested in that analysis. We now return -1 ourselves on
-> error, and save away the value of errno in a variable the caller
-> passes in.
-
-It would probably be a lot nicer if you lead with this insight. I could
-imagine, for example, that a oneline like this would be much more helpful
-to any reader:
-
-	trace2: do not assume errno !=3D 0 after a failed syscall
-
-The first two paragraphs are less interesting than the third paragraph,
-too, therefore I would recommend
-
-About the patch...
-
->
-> 1.
->
->     trace2/tr2_dst.c: In function =E2=80=98tr2_dst_get_trace_fd.part.5=
-=E2=80=99:
->     trace2/tr2_dst.c:296:10: warning: =E2=80=98fd=E2=80=99 may be used u=
-ninitialized in this function [-Wmaybe-uninitialized]
->       dst->fd =3D fd;
->       ~~~~~~~~^~~~
->     trace2/tr2_dst.c:229:6: note: =E2=80=98fd=E2=80=99 was declared here
->       int fd;
->           ^~
-> 2. https://lore.kernel.org/git/20200404142131.GA679473@coredump.intra.pe=
-ff.net/
-> ---
->  trace2/tr2_dst.c | 27 +++++++++++++++------------
->  1 file changed, 15 insertions(+), 12 deletions(-)
->
-> diff --git a/trace2/tr2_dst.c b/trace2/tr2_dst.c
-> index ae052a07fe2..c2aba71041b 100644
-> --- a/trace2/tr2_dst.c
-> +++ b/trace2/tr2_dst.c
-> @@ -197,22 +197,25 @@ static int tr2_dst_try_path(struct tr2_dst *dst, c=
-onst char *tgt_value)
->  #define PREFIX_AF_UNIX_STREAM "af_unix:stream:"
->  #define PREFIX_AF_UNIX_DGRAM "af_unix:dgram:"
->
-> -static int tr2_dst_try_uds_connect(const char *path, int sock_type, int=
- *out_fd)
-> +static int tr2_dst_try_uds_connect(const char *path, int sock_type,
-> +				   int *out_fd, int *saved_errno)
->  {
->  	int fd;
->  	struct sockaddr_un sa;
->
->  	fd =3D socket(AF_UNIX, sock_type, 0);
-> -	if (fd =3D=3D -1)
-> -		return errno;
-> +	if (fd =3D=3D -1) {
-> +		*saved_errno =3D errno;
-> +		return -1;
-> +	}
-
-I don't think this is necessary. My manual page for socket(2) says this:
-
-	RETURN VALUE
-		If the connection or binding succeeds, zero is returned.
-		On error, -1 is returned, and errno is set appropriately.
-
->  	sa.sun_family =3D AF_UNIX;
->  	strlcpy(sa.sun_path, path, sizeof(sa.sun_path));
->
->  	if (connect(fd, (struct sockaddr *)&sa, sizeof(sa)) =3D=3D -1) {
-> -		int e =3D errno;
-> +		*saved_errno =3D errno;
->  		close(fd);
-> -		return e;
-> +		return -1;
-
-Likewise, my manual page for connect(2) says the same as for socket(2):
-upon return value -1, errno is set appropriately (i.e. non-zero).
-
-Therefore, I would say this patch is actually only papering over an
-overzealous (and incorrect) compiler warning.
-
-If you _must_ shut up GCC, a better idea would be a much less intrusive,
-easier to read
-
-		/* GCC thinks socket()/connect() might fail to set errno */
-		return errno ? errno : EIO;
-
-Ciao,
-Dscho
-
->  	}
->
->  	*out_fd =3D fd;
-> @@ -227,7 +230,7 @@ static int tr2_dst_try_unix_domain_socket(struct tr2=
-_dst *dst,
->  {
->  	unsigned int uds_try =3D 0;
->  	int fd;
-> -	int e;
-> +	int saved_errno;
->  	const char *path =3D NULL;
->
->  	/*
-> @@ -271,15 +274,15 @@ static int tr2_dst_try_unix_domain_socket(struct t=
-r2_dst *dst,
->  	}
->
->  	if (uds_try & TR2_DST_UDS_TRY_STREAM) {
-> -		e =3D tr2_dst_try_uds_connect(path, SOCK_STREAM, &fd);
-> -		if (!e)
-> +		if (!tr2_dst_try_uds_connect(path, SOCK_STREAM, &fd,
-> +					     &saved_errno))
->  			goto connected;
-> -		if (e !=3D EPROTOTYPE)
-> +		if (saved_errno !=3D EPROTOTYPE)
->  			goto error;
->  	}
->  	if (uds_try & TR2_DST_UDS_TRY_DGRAM) {
-> -		e =3D tr2_dst_try_uds_connect(path, SOCK_DGRAM, &fd);
-> -		if (!e)
-> +		if (!tr2_dst_try_uds_connect(path, SOCK_DGRAM, &fd,
-> +					     &saved_errno))
->  			goto connected;
->  	}
->
-> @@ -287,7 +290,7 @@ static int tr2_dst_try_unix_domain_socket(struct tr2=
-_dst *dst,
->  	if (tr2_dst_want_warning())
->  		warning("trace2: could not connect to socket '%s' for '%s' tracing: %=
-s",
->  			path, tr2_sysenv_display_name(dst->sysenv_var),
-> -			strerror(e));
-> +			strerror(saved_errno));
->
->  	tr2_dst_trace_disable(dst);
->  	return 0;
-> --
-> 2.31.1.745.g2af7c6593ce
->
->
-
---8323328-1963401848-1620225524=:50--
