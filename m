@@ -2,201 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73D86C433ED
-	for <git@archiver.kernel.org>; Wed,  5 May 2021 03:41:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 01025C433B4
+	for <git@archiver.kernel.org>; Wed,  5 May 2021 03:47:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 46B7D613CB
-	for <git@archiver.kernel.org>; Wed,  5 May 2021 03:41:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D52376112F
+	for <git@archiver.kernel.org>; Wed,  5 May 2021 03:47:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231253AbhEEDmx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 May 2021 23:42:53 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:50994 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231189AbhEEDmw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 May 2021 23:42:52 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C376D11B272;
-        Tue,  4 May 2021 23:41:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=cK2d429YMP+I
-        wlyTmlSpb2FE7OZUuJyO5aOQuRpb/oE=; b=Y7/D1t3VUN8TEE0PN+S0OKIvtEtR
-        R+8c2VNC3NboKxEK7vFjnjcRQpc+YMwK4TvL3m1KHyqIM/9XZzXSDW/DNd4SdXjm
-        iIeSquHd1At59XLbVA7O7uxz2zMIrurI5nIx/RHsvJRn9faVDJ9yIA8HfV34wAvr
-        3S1Murft0JQcQ28=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id BC66E11B271;
-        Tue,  4 May 2021 23:41:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id F286B11B26B;
-        Tue,  4 May 2021 23:41:53 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-Cc:     git@vger.kernel.org,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 2/5] mailinfo: warn if CR found in
- base64/quoted-printable email
-References: <20210421013404.17383-1-congdanhqx@gmail.com>
-        <cover.1620148732.git.congdanhqx@gmail.com>
-        <45d2c4ab58c4b0c6f0c7790890bbf75eb373f999.1620148732.git.congdanhqx@gmail.com>
-Date:   Wed, 05 May 2021 12:41:51 +0900
-In-Reply-To: <45d2c4ab58c4b0c6f0c7790890bbf75eb373f999.1620148732.git.congdanhqx@gmail.com>
-        (=?utf-8?B?IsSQb8OgbiBUcuG6p24gQ8O0bmc=?= Danh"'s message of "Wed, 5 May
- 2021 00:19:59 +0700")
-Message-ID: <xmqqr1il4zk0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S230500AbhEEDr6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 May 2021 23:47:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37228 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230483AbhEEDr5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 May 2021 23:47:57 -0400
+Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D195C061574
+        for <git@vger.kernel.org>; Tue,  4 May 2021 20:46:42 -0700 (PDT)
+Received: by mail-ot1-x333.google.com with SMTP id 65-20020a9d03470000b02902808b4aec6dso562214otv.6
+        for <git@vger.kernel.org>; Tue, 04 May 2021 20:46:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Ulb6aIezUv5qafUi4+miwgqSseK+tT57rFdM2Mi3cks=;
+        b=fpsQJNRllKzoc7hdNiGtcChJ2womit+67AJiw4ClX//ikLn7q6HKBv5idwqHu0tCSr
+         80XnA4r4cn46IA8+d2KQVJ7pP02Mlg81j+eOaNgDSDTK0eFOnxXhMk/UQ5YZluBOPR8w
+         iBaSzP9kQ5zWB3IkYmL+2ouZ12hMnu242rGXx2Poyc7pQeHb7NF9VYUABqmc0DDdVqL/
+         queQPzq4eb1P40CtaIadXjkQIkpwEgEm4ctV6mfX5+ca/Kt3lTyPFMdKeL0YhG5uAvz6
+         IQtAhUd9xwN8XSheMTIRLsmvcCvQIKIZFdTlRRBrRGmLF0mbZy8W9QD0NFq44Y3yvti/
+         Kecg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Ulb6aIezUv5qafUi4+miwgqSseK+tT57rFdM2Mi3cks=;
+        b=HRLYjWsRLNTwBJoblH6a2EQMmhuqty/4hHZGV7p7KS2yxYgpRx/Mpy4fPEQCm0Qiwc
+         JCMJWXSXpUd6IshsBSNZGhA8xUcT6dBbl8tRWQ6CbNy0Uk4YPOgbqXJ6Q5QvUDqKr0q1
+         VDEu3SA/vUsvm8yRFgtrjVbhwY1Zu99N++ytAQrc1+ZIxkfD+hS0/ae1wzFxe2sohwPf
+         pO+axDM5fCEM2abcAjM2YiyvfHv8AaAwca1uN8Gw8kbGpz3+UYBj4s4UM2rLg+mR/PGF
+         74Pi247uEEkhcvJig1UwHHoo5qovClps5ZkMGV48xaTnUNaoSDM8AvSTRdPqpnd0VHtx
+         /qxg==
+X-Gm-Message-State: AOAM531OE11sp7yRv4tJeOGR/9a5t2wfQOHnxCVT7TrmKDtbokU6u9Mx
+        fMV1CoIRcSi6FEgO9Hyg6rkww/zY92I1WlVVTzMfPBpHDio=
+X-Google-Smtp-Source: ABdhPJwlECt1Esj/gGPumEkk/hTRW+MJpFemIeb4rlUNNfJjtHzKsq7W0aumsJwiQ6HeHdIYPP0qxtgyCSKg66X0JMM=
+X-Received: by 2002:a9d:8a6:: with SMTP id 35mr22259819otf.316.1620186401793;
+ Tue, 04 May 2021 20:46:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: D5755E2C-AD53-11EB-95E5-D609E328BF65-77302942!pb-smtp21.pobox.com
+References: <CAPiPmQnb=XMaF2+YkryEbiX8zA=jwa5y=fbAGk9jpCExpbS4Rw@mail.gmail.com>
+In-Reply-To: <CAPiPmQnb=XMaF2+YkryEbiX8zA=jwa5y=fbAGk9jpCExpbS4Rw@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 4 May 2021 20:46:30 -0700
+Message-ID: <CABPp-BHBcjSQbkotrzwDtVRSC-qqjEyP4m=biY-0+=Jdg9ETQw@mail.gmail.com>
+Subject: Re: git switch/restore, still experimental?
+To:     =?UTF-8?Q?G=C3=A1bor_Farkas?= <gabor.farkas@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh  <congdanhqx@gmail.com> writes=
-:
-
-> When an SMTP server receives an 8-bit email message, possibly with only
-> LF as line ending, some of those servers decide to change said LF to
-> CRLF.
-
-s/an SMTP server receives/SMTP servers receive/
-s/those servers/them/
-
-> Some mailing list softwares, when receives an 8-bit email message,
-> decide to encoding such message in base64 or quoted-printable.
-
-s/encoding/encode/
-
-So the issue is not about CRLF terminating the lines of base64 or QP
-(we should treat CRLF and LF terminated lines when unwrapping base64
-or QP the same way).  It is about seeing CRLF in the payload after
-unwrapping base64 or QP.  It was unclear which one was at issue from
-the subject alone.
-
-> If an email is transfered through above mail servers, then distributed
-> by such mailing list softwares, the recipients will receive an email
-> contains a patch mungled with CRLF encoded inside another encoding.
-> Thus, such CR couldn't be dropped by mailsplit. Hence, the mailed patch
-> couldn't be applied cleanly. Such accidents have been observed in the w=
-ild [1].
+On Tue, May 4, 2021 at 3:36 AM G=C3=A1bor Farkas <gabor.farkas@gmail.com> w=
+rote:
 >
-> Let's give our users some warnings if such CR is found.
+> hi,
+>
+> the "git switch" and "git restore" commands were released two years
+> ago, but the manpage still says "THIS COMMAND IS EXPERIMENTAL. THE
+> BEHAVIOR MAY CHANGE.".
+>
+> i'd love to use them, but this warning gives me pause, perhaps i
+> should wait until it stops being experimental, i worry that it might
+> change in behavior unexpectedly and cause problems for me.
+>
+> considering that they were released two years ago, could the
+> experimental-warning be removed now?
+>
+> thanks,
+> gabor
 
-Hmph.  It is unclear which one of the following we want our endgame
-to be:
+This probably makes sense.  The author of switch and restore isn't
+involved in the git project anymore.  He decided to work on other
+things, which was and is a big loss for us.  I think others (myself
+included) didn't know all the things that might have been in Duy's
+head that he wanted to verify were working well before marking this as
+good, but these two commands have generally been very well received
+and it has been a few years.  Personally, I'm not aware of anything
+that we'd need or want to change with these commands.
 
- (1) strip silently and apply
- (2) warn but strip and apply
- (3) warn but do not strip, letting the application fail
+That said, we're only a few weeks from -rc0, and I'd rather remove the
+experimental label early in a release cycle, so maybe this would be a
+good thing to do after the June git-2.32 release.  That'd give plenty
+of time for others to chime in with anything they might be aware of
+that they want or need fixed.
 
-but let's keep reading.  I suspect (1) and (2) might be error prone,
-as the mailpath that may have caused this kind of breakage may not
-be under end-user's control.
+Thanks for flagging this.
 
-> +static void summarize_quoted_cr(struct mailinfo *mi, int have_quoted_c=
-r)
-> +{
-> +	if (have_quoted_cr)
-> +		warning("quoted CR detected");
-> +}
-
-At this step, it is unclear if it is easier to read to make it the
-responsibility of the caller to check for have_quoted_cr, but it
-will become clear as we add more condition for the warning in later
-steps to let callers unconditionally call this helper and decide
-when we want to be silent inside this function.
-
-Have you considered adding a new have_quoted_cr member to "struct
-mailinfo"?  After all, the mailinfo struct is not only about end
-user preference but contains all information we gleaned out of the
-incoming message.
-
->  static void handle_body(struct mailinfo *mi, struct strbuf *line)
->  {
->  	struct strbuf prev =3D STRBUF_INIT;
-> +	int have_quoted_cr =3D 0;
-> =20
->  	/* Skip up to the first boundary */
->  	if (*(mi->content_top)) {
-> @@ -1051,6 +1063,8 @@ static void handle_body(struct mailinfo *mi, stru=
-ct strbuf *line)
->  				handle_filter(mi, &prev);
->  				strbuf_reset(&prev);
->  			}
-> +			summarize_quoted_cr(mi, have_quoted_cr);
-> +			have_quoted_cr =3D 0;
->  			if (!handle_boundary(mi, line))
->  				goto handle_body_out;
->  		}
-> @@ -1081,7 +1095,7 @@ static void handle_body(struct mailinfo *mi, stru=
-ct strbuf *line)
->  						strbuf_addbuf(&prev, sb);
->  						break;
->  					}
-> -				handle_filter_flowed(mi, sb, &prev);
-> +				handle_filter_flowed(mi, sb, &prev, &have_quoted_cr);
->  			}
->  			/*
->  			 * The partial chunk is saved in "prev" and will be
-> @@ -1091,7 +1105,7 @@ static void handle_body(struct mailinfo *mi, stru=
-ct strbuf *line)
->  			break;
->  		}
->  		default:
-> -			handle_filter_flowed(mi, line, &prev);
-> +			handle_filter_flowed(mi, line, &prev, &have_quoted_cr);
->  		}
-> =20
->  		if (mi->input_error)
-> @@ -1100,6 +1114,7 @@ static void handle_body(struct mailinfo *mi, stru=
-ct strbuf *line)
-> =20
->  	if (prev.len)
->  		handle_filter(mi, &prev);
-> +	summarize_quoted_cr(mi, have_quoted_cr);
-> =20
->  	flush_inbody_header_accum(mi);
-> =20
-> diff --git a/t/t5100-mailinfo.sh b/t/t5100-mailinfo.sh
-> index 147e616533..d8fdda6bea 100755
-> --- a/t/t5100-mailinfo.sh
-> +++ b/t/t5100-mailinfo.sh
-> @@ -228,4 +228,19 @@ test_expect_success 'mailinfo handles unusual head=
-er whitespace' '
->  	test_cmp expect actual
->  '
-> =20
-> +check_quoted_cr_mail() {
-
-SP on both sides of (), i.e.
-
-	check_quoted_cr_mail () {
-
-> +	git mailinfo -u "$@" quoted-cr-msg quoted-cr-patch \
-> +		<"$DATA/quoted-cr.mbox" >quoted-cr-info 2>quoted-cr-err &&
-> +	test_cmp "expect-cr-msg" quoted-cr-msg &&
-> +	test_cmp "expect-cr-patch" quoted-cr-patch &&
-> +	test_cmp "$DATA/quoted-cr-info" quoted-cr-info
-> +}
-> +
-> +test_expect_success 'mailinfo warn CR in base64 encoded email' '
-> +	sed "s/%%/$(printf \\015)/" "$DATA/quoted-cr-msg" >expect-cr-msg &&
-> +	sed "s/%%/$(printf \\015)/" "$DATA/quoted-cr-patch" >expect-cr-patch =
-&&
-> +	check_quoted_cr_mail &&
-> +	grep "quoted CR detected" quoted-cr-err
-> +'
-> +
->  test_done
+Elijah
