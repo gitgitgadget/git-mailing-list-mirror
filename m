@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E6FDC433B4
-	for <git@archiver.kernel.org>; Thu,  6 May 2021 07:34:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 095E8C433B4
+	for <git@archiver.kernel.org>; Thu,  6 May 2021 08:21:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D5C1760FF3
-	for <git@archiver.kernel.org>; Thu,  6 May 2021 07:34:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BFE7960234
+	for <git@archiver.kernel.org>; Thu,  6 May 2021 08:21:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233392AbhEFHfS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 May 2021 03:35:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39028 "EHLO
+        id S232827AbhEFIVL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 May 2021 04:21:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49174 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233240AbhEFHfQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 May 2021 03:35:16 -0400
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B75D7C061574
-        for <git@vger.kernel.org>; Thu,  6 May 2021 00:34:17 -0700 (PDT)
-Received: by mail-pf1-x433.google.com with SMTP id v191so4473649pfc.8
-        for <git@vger.kernel.org>; Thu, 06 May 2021 00:34:17 -0700 (PDT)
+        with ESMTP id S232629AbhEFIVK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 May 2021 04:21:10 -0400
+Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0C04C061574
+        for <git@vger.kernel.org>; Thu,  6 May 2021 01:20:12 -0700 (PDT)
+Received: by mail-pg1-x52d.google.com with SMTP id m190so4241754pga.2
+        for <git@vger.kernel.org>; Thu, 06 May 2021 01:20:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=uJFhy6NEd04J6c2CfI4hVy6zFvxAXSqlPtQ3SMtMUVw=;
-        b=iG0gj4vze+FMlGAznSIoDRfiwcIHn4r2xOtFdKNP2DRyoZjKZIl4MOrxYVplKmrqhO
-         2MkQKdHmZqL9Jhv3b+R0cTjEGbuTURmEUajXrsuUNBZ2UnuHSg6EHYgrXNeC75k7iyGZ
-         rls6Z3KMmyMbnl5YFA+6WLaZyV6xkoiA6RcZ1lvgcmXpTrGBU3VPkTIUyhkwC5fV2WOW
-         s+9Ed+415DCqrrSKB7asuy7tJaOAieaQPRjTA6b7SdYXLVSGDpybECcSb6qSd6kx6re7
-         aun5tjoZDwIsFQUc8VqUVgOLrysn5rKzhvDQ4NAy75ZKvjGfBygTrILmZO8gDYDSkzID
-         WNuA==
+        bh=0jyJzVD1YDafrm2RFSmGaTTTU/4xrtJrPvJ+smBZzug=;
+        b=hdUm0GpZfPeUW+6/P94iUcjuQ+ERAsVevtQIDlQ9YYOVVCuWRRwTpZtLYbWCQZcRt7
+         hVsZ2erMo6EB/MdmKE6+rmSXrdsYdspxGSTV4mU/zdD+rkgLZ752738hcXRZIH5+88dy
+         QN6v7V6jXx17I0R7ZwZgUQz8qaiI76OK9TsnXVe3WhKw/cjQZG30g9eilzCzYkGNM231
+         uFGGhWoeo2wx+wnJnb3L6EaYs5danrLq8XDATf+Q2A/a9C2FENjng7K2vMexZ97gfRmF
+         nL9Z3vN9Ff5v0N2hzEMei465WeFtYd3IrBy/onrMsP7eWW3WsKOpuEILmEi+xSd29ubj
+         akXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=uJFhy6NEd04J6c2CfI4hVy6zFvxAXSqlPtQ3SMtMUVw=;
-        b=RP8vN0r4miOM7d6J5jIsVJlBEQ82OHb2OgvopgKMuAEmTXZDhVlCNIZNRCJTeeI6DM
-         4KshGRGvi3Xgc+J2fciAt2jH3SXFGNSQqrXNttinNHgfo1N9wpbc34sqZmMY7DdCltwE
-         IMB1xci/3DUft3KTkxCe+IKdd0JUvc4mbwlcLrqn2fCxPMxaL/tlrzoamiKObovlllwH
-         IH2CefQCsCnUvJkVUjZ44LVXVO1KetAfHEPhp4Z8Z7HSR9avE8sQrkPqmQPbDj08wC27
-         5xZSK79/z0t8W8t2tTQq6/W8XecgooAaC/MIxNO5oezF5h+4zZSIFZPys71HZddI9Z5T
-         /Vrg==
-X-Gm-Message-State: AOAM532A8L5SA8dJ5jMUG4nXWS+rIZOAwmJjbyQu1K9U+A7yQh+9ee6+
-        eZN9p2kSjJEKAHTB+Rdx1sp4ixgvO9wAOKadM8Rc3g==
-X-Google-Smtp-Source: ABdhPJzU8R3vu/r96Umui9pfxNGTzi+HnzyQaxMXq3TEJXedGHkC+O3nA5y4h2q1fBvWX1nmQwrBjQ==
-X-Received: by 2002:a63:164a:: with SMTP id 10mr3102830pgw.186.1620286457022;
-        Thu, 06 May 2021 00:34:17 -0700 (PDT)
+        bh=0jyJzVD1YDafrm2RFSmGaTTTU/4xrtJrPvJ+smBZzug=;
+        b=kFCjF7IS3G7ceb9Hae7gQIws5CI3xlmad0Mx9KuWrF4+TVmuzRc0XmN6Oa/c7qwRkG
+         3zzTVgkhqVvDJXQcXeta1glFIjzMDdftMX6IhVixc9pKdTJligrGjUcWImqNuDmSGJqf
+         uvwA3vdE1NZ8dGMGE2s0zvFALEpTz9zbkBBW8OwvjRv2m+21hXokw56GLIS0j1KZvJLX
+         7727wFU5bJcxEFGUEfAqj6lJpBY888FWHxCWF6Pn1CERKyY4zahTJQG90ojjNacdX8GQ
+         8tKqb11MbxTSHNdU21cT4GX8/yFktvhObLCcfBZKGLBTBYXVVTrEmnjAWdvjbWPrHTKv
+         zzmQ==
+X-Gm-Message-State: AOAM53115WxCD+7Eocct3r+t3CchgUB9InWban5WhtjnhYnWbAiEvGlx
+        b2wiwTy0zcm8uFaV2AbQOTK4nJI5L7uHwCeW9QlKKQ==
+X-Google-Smtp-Source: ABdhPJwjdfjRVM1t+TlVstKYum+DHWSlR7UEOBaUrKUm3dydjcaxIFTALmeSLucFwGM7XviCyKuN8g==
+X-Received: by 2002:a63:2143:: with SMTP id s3mr3181685pgm.429.1620289212359;
+        Thu, 06 May 2021 01:20:12 -0700 (PDT)
 Received: from localhost.localdomain ([47.89.83.80])
-        by smtp.gmail.com with ESMTPSA id t19sm1332678pjs.23.2021.05.06.00.34.15
+        by smtp.gmail.com with ESMTPSA id h10sm1462015pfk.210.2021.05.06.01.20.11
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 06 May 2021 00:34:16 -0700 (PDT)
+        Thu, 06 May 2021 01:20:12 -0700 (PDT)
 From:   Teng Long <dyroneteng@gmail.com>
 To:     git@vger.kernel.org
-Cc:     jonathantanmy@google.com, Teng Long <dyroneteng@gmail.com>
-Subject: [PATCH] Optimize the description of the configuration in packfile-uris doc
-Date:   Thu,  6 May 2021 15:33:54 +0800
-Message-Id: <20210506073354.27833-1-dyroneteng@gmail.com>
+Cc:     Teng Long <dyroneteng@gmail.com>
+Subject: [PATCH] Fix a small flaw in the comment of strmap.h
+Date:   Thu,  6 May 2021 16:19:36 +0800
+Message-Id: <20210506081936.29887-1-dyroneteng@gmail.com>
 X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -69,41 +69,24 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There is a description problem in the document about packfile-uris. This
-patch describes the configuration format of `uploadpack.blobPackfileUri`
-more accurately.
-
 Signed-off-by: Teng Long <dyroneteng@gmail.com>
 ---
- Documentation/technical/packfile-uri.txt | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ strmap.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/technical/packfile-uri.txt b/Documentation/technical/packfile-uri.txt
-index f7eabc6c76..1eb525fe76 100644
---- a/Documentation/technical/packfile-uri.txt
-+++ b/Documentation/technical/packfile-uri.txt
-@@ -35,13 +35,14 @@ include some sort of non-trivial implementation in the Minimum Viable Product,
- at least so that we can test the client.
+diff --git a/strmap.h b/strmap.h
+index 1e152d832d..0d1d00d14e 100644
+--- a/strmap.h
++++ b/strmap.h
+@@ -78,7 +78,7 @@ struct strmap_entry *strmap_get_entry(struct strmap *map, const char *str);
+ void *strmap_get(struct strmap *map, const char *str);
  
- This is the implementation: a feature, marked experimental, that allows the
--server to be configured by one or more `uploadpack.blobPackfileUri=<sha1>
--<uri>` entries. Whenever the list of objects to be sent is assembled, all such
--blobs are excluded, replaced with URIs. As noted in "Future work" below, the
--server can evolve in the future to support excluding other objects (or other
--implementations of servers could be made that support excluding other objects)
--without needing a protocol change, so clients should not expect that packfiles
--downloaded in this way only contain single blobs.
-+server to be configured by one or more `uploadpack.blobPackfileUri=
-+<object-hash> <pack-hash> <uri>` entries. Whenever the list of objects to be
-+sent is assembled, all such blobs are excluded, replaced with URIs. As noted
-+in "Future work" below, the server can evolve in the future to support
-+excluding other objects (or other implementations of servers could be made
-+that support excluding other objects) without needing a protocol change, so
-+clients should not expect that packfiles downloaded in this way only contain
-+single blobs.
- 
- Client design
- -------------
+ /*
+- * Return non-zero iff "str" is present in the map. This differs from
++ * Return non-zero if "str" is present in the map. This differs from
+  * strmap_get() in that it can distinguish entries with a NULL data pointer.
+  */
+ int strmap_contains(struct strmap *map, const char *str);
 -- 
 2.31.1
 
