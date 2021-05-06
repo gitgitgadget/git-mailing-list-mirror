@@ -2,132 +2,137 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 33AA0C433B4
-	for <git@archiver.kernel.org>; Thu,  6 May 2021 22:04:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 48305C433B4
+	for <git@archiver.kernel.org>; Thu,  6 May 2021 22:33:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ED2E261289
-	for <git@archiver.kernel.org>; Thu,  6 May 2021 22:03:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1C73861289
+	for <git@archiver.kernel.org>; Thu,  6 May 2021 22:33:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230220AbhEFWE6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 May 2021 18:04:58 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:52914 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230149AbhEFWE5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 May 2021 18:04:57 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8B71E12BDE9;
-        Thu,  6 May 2021 18:03:58 -0400 (EDT)
+        id S230410AbhEFWef (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 May 2021 18:34:35 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:53325 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230231AbhEFWef (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 May 2021 18:34:35 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 57F361285C3;
+        Thu,  6 May 2021 18:33:36 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=vf+e5/BmrhPMOla2lmlPOSsu/KXKOLQ9/mzkFK
-        KSIZY=; b=s7WCX8BN0YZTVFveTEIDaGpovTa44xSx5GDDlzDf3L82srS3O1b83Y
-        YKROL4e75hP8L8pURyAMwmCD3eVr5Nk3JC4dMNQx7Y83cnKve98ieKuQ8h5fBp1m
-        C3FtPWJ6nsYXW4v6Q0lhEZ19UryNNxdtxESGdbpNuwxVvGD4RkqGE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7714212BDE5;
-        Thu,  6 May 2021 18:03:58 -0400 (EDT)
+        :content-type; s=sasl; bh=Ms4LTBrNbKATOOq5j7bg0WXDQOnYpWWTYSckid
+        60g3g=; b=NNl2FghLB/nfAd58AHZR9ehXdRSvJfQb3AOVbPytIFw9zZJ/7RihZC
+        /2kyjRmOBU7OGq/IaWSHtZKGwDhu69EUq2A5evrQkKenhoUjWezWymrzVrNBDPzo
+        P7oTVZhiP/nnvfjkvAb1KPvrvcXvczrOMMphu4OQsbRWJLF2060eg=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3C1691285C2;
+        Thu,  6 May 2021 18:33:36 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 70C8E12BD82;
-        Thu,  6 May 2021 18:03:54 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 619621285C1;
+        Thu,  6 May 2021 18:33:33 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Lars Berntzon via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Lars Berntzon <lars.berntzon@cecilia-data.se>,
-        Lars Berntzon <lars.berntzon@external.atlascopco.com>
-Subject: Re: [PATCH] doc: attempt to clarify a blurry sentence.
-References: <pull.1019.git.git.1620319023972.gitgitgadget@gmail.com>
-Date:   Fri, 07 May 2021 07:03:52 +0900
-In-Reply-To: <pull.1019.git.git.1620319023972.gitgitgadget@gmail.com> (Lars
-        Berntzon via GitGitGadget's message of "Thu, 06 May 2021 16:37:03
-        +0000")
-Message-ID: <xmqqzgx7wmd3.fsf@gitster.g>
+To:     Firmin Martin <firminmartin24@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmail.com>,
+        Erik Faye-Lund <kusmabite@gmail.com>,
+        Denton Liu <liu.denton@gmail.com>
+Subject: Re: [PATCH v1 0/8] format-patch: introduce --confirm-overwrite
+References: <20210506165102.123739-1-firminmartin24@gmail.com>
+Date:   Fri, 07 May 2021 07:33:31 +0900
+In-Reply-To: <20210506165102.123739-1-firminmartin24@gmail.com> (Firmin
+        Martin's message of "Thu, 6 May 2021 18:50:54 +0200")
+Message-ID: <xmqqv97vwkzo.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: F2BE2CC0-AEB6-11EB-AAAA-D609E328BF65-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 1712CE7E-AEBB-11EB-BA41-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Lars Berntzon via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Firmin Martin <firminmartin24@gmail.com> writes:
 
-> diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-> index a953c7c38790..bbb30c52395e 100644
-> --- a/Documentation/git-push.txt
-> +++ b/Documentation/git-push.txt
-> @@ -66,10 +66,10 @@ it can be any arbitrary "SHA-1 expression", such as `master~4` or
->  The <dst> tells which ref on the remote side is updated with this
->  push. Arbitrary expressions cannot be used here, an actual ref must
->  be named.
-> -If `git push [<repository>]` without any `<refspec>` argument is set to
-> -update some ref at the destination with `<src>` with
-> -`remote.<repository>.push` configuration variable, `:<dst>` part can
-> -be omitted--such a push will update a ref that `<src>` normally updates
-> +If `git push [<repository>]` without any `<refspec>` argument then
-> +git will update the remote ref as defined by `remote.<repository>.push` configuration
-> +and it will be updated from HEAD.
-> +`:<dst>` part can be omitted--such a push will update a ref that `<src>` normally updates
+> Particulary, this behaviour could be awkward in the following
+> hypothetical situations:
+>
+> * The user can easily erase a cover letter coming from prior versions or
+> another patch series by reusing an old command line (e.g. autocompleted
+> from the shell history).
 
-Hmph, "If X then Git will do Y" expects X to be a full sentence with
-subject and verb, but I do not see any verb in 
+"prior versions" implies that the user is better off using -v$n
+where $n is the number greater than the one used for the prior
+iteration by one, and there won't be any overwriting, so this is not
+a very compelling use case.
 
-    `git push [<repository>]` without any `<refspec>` argument
+But the next one is real.
 
-in the rewritten version.
+> * Assuming that the user is writing a cover letter and realizes that
+> small changes should be made. They make the change, amend and
+> format-patch again to regenerate patches. If it happens that they use
+> the same command again (e.g. with --cover-letter), the cover letter
+> being written is gone.
 
-More importantly, the updated description is wrong.  The original
-may be hard to follow, but what it is trying to explain is the
-following.
+Yes, after preparing, say, -v2, but before sending them out, it is
+very plausible that proofreading of your own patches may make you
+realize more issues in the series, which may make you go back to your
+commits, "rebase -i" to improve them and re-run "format-patch -v2".
 
-Imagine that you have configured
+We do want to encourage such careful preparation of your patch
+series before sending it out, and we want to support it well with
+our tools.  Preventing overwriting of the cover (which will have the
+same filename, with the same v2- prefix) is very valuable here.
 
-	[remote "origin"]
-		push = refs/heads/*:refs/remotes/satellite/*
+There is another thing that I suspect people may find irritating in
+the same workflow.  If you fix the commit title while "rebase -i" to
+polish your v2 patch, it would result in a different filename from
+the original v2, so you'd end up with something like
 
-Imagine further that you have a local branch 'next' and you want to
-push it out to the "origin".  You also have other local branches
-like 'master' and 'maint', but you do not wish to push them out
-right now.
+    v2-0000-cover-letter.patch
+    v2-0001-thes-forny-change.patch
+    v2-0001-this-phoney-change.patch
+    v2-0002-another-sample-change.patch
 
-Under such a scenario, if you were to type
+while redoing a two-patch series.  The "thes-forny" thing is a
+leftover from the first "format-patch -v2" run, you fixed typoes
+with "rebase -i" after a self-review and other three files have the
+result of the second "format-patch -v2" run.  You need a way to
+somehow exclude that stale file when driving send-email; in other
+words, before running
 
-    $ git push origin
+    git send-email v2-*.patch
 
-(i.e. "`git push [<repository>]` without `<refspec>` argument"),
-such a command is set to update `refs/remotes/satellite/next`
-(i.e. "some ref") at the "origin" (i.e. "the destination") with
-`next` (i.e. "with <src>") via the remote.origin.push configuration
-variable.  So this scenario satisfies the precondition of the
-description we are discussing.
+you would want to move away v2-0001-thes-forny-change.patch that no
+longer is part of the series.  I wonder if format-patch can help by
+looking at the output directory before writing its output and move
+the old files away, say, to "old-v2-*.patch" or something?  That
+incidentally would solve your "files getting overwritten is
+irritating" issue at the same time.
 
-In such a case, you do not have to fully spell out
+Coming back to the topic of cover letter, even when there is no risk
+of ovetwriting, there is another thing we may want to improve to
+help our users.  Suppose you are preparing your v2 patch after
+sending out the v1.  The cover letter we generate for v2 will have
+the same **BOILERPLATE** placeholders that need to be filled from
+scratch.  As many things you wrote for the cover letter in the
+previous round should be reusable, even though the list of titles of
+the patch should be generated afresh, it would be nice if
+format-patch can carry forward what you wrote in the cover letter
+for the v1 iteration to the cover letter for this v2 iteration.
 
-    $ git push origin next:refs/remotes/satellite/next
-
-in order to push your 'next' branch (which may not be the current
-branch) from the command line to its usual/configured destination.
-
-Instead, you can omit ":<dst>", i.e.
-
-    $ git push origin next
-
-and such a push will update the remote ref that would be normally
-updated by the local ref named on the command line, i.e. the remote
-'refs/remotes/satellite/next' will be updated with your local
-'refs/heads/next'.  But your 'master' and 'maint' will not be pushed
-to their usual/configured destinations with such a push.
-
-Again, the original may hard to read and it can use some rewriting
-to make it easier to read.  Thanks for trying to help by attempting,
-and another try with the above information in mind is greatly
-appreciated.
+And when we have such a "reuse description in the existing cover
+letter" support, the value of "don't overwrite" knob will mostly go
+away.  Instead of failing the command by refusing to overwrite, you
+can read what is in the existing cover-letter that is about to be
+overwritten, combine the hand-written description with the material
+automatically generated, and ovewrite the existing file, and as long
+as you do a good job of preserving, nobody would complain that you
+overwrote the file.
 
