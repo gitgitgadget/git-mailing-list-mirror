@@ -2,109 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DEDF3C433ED
-	for <git@archiver.kernel.org>; Thu,  6 May 2021 01:53:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6894CC433ED
+	for <git@archiver.kernel.org>; Thu,  6 May 2021 02:12:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B2F4D613B5
-	for <git@archiver.kernel.org>; Thu,  6 May 2021 01:53:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2E43B610E9
+	for <git@archiver.kernel.org>; Thu,  6 May 2021 02:12:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229946AbhEFBye (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 May 2021 21:54:34 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56389 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229488AbhEFByd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 May 2021 21:54:33 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 92CF3BE251;
-        Wed,  5 May 2021 21:53:35 -0400 (EDT)
+        id S230029AbhEFCNP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 May 2021 22:13:15 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:50506 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229673AbhEFCNP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 May 2021 22:13:15 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 33576124573;
+        Wed,  5 May 2021 22:12:18 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Tqbor4UMbPZa1pB2FYPJgbpG3p2lBtJ8P8AEeB
-        drZ4g=; b=WHLzEn5RqTUYPYkD0zzsd7lce0bOrGV1UzwJIrWaVQ5hUBEFrxySSy
-        TY6TPG0oet/MQnRJOG8R0K/Ci1xZqnoipoyrNVCmReuhSJl0Yckd5m2ujXCyJQKO
-        NaBL+y09dl8eXkKBqdt6RXAaJOkBWY9CABW/xCURTCo7c92lTHr18=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 84245BE250;
-        Wed,  5 May 2021 21:53:35 -0400 (EDT)
+        :content-type; s=sasl; bh=6HKWuHIKlJD29wjb/LjXKjw6R25D46iAxSN46z
+        827qQ=; b=yiJPzwIwlOuHFtHPYIfb6RwpuPviL0aQObxMAq6uMAvOAd1/wppNPA
+        iLcKtUMJV+Ff9lwjGwMHpsxLHCqHD/wB47PTm4WIldW0MoU5W7mtFM7dJnuRgOKa
+        OEN0uz/k6+BWDvcUB2khQUnzOvpAaCBtJI4sVIeksDhoJHRUGpkTs=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2C6FB124572;
+        Wed,  5 May 2021 22:12:18 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DDE30BE24E;
-        Wed,  5 May 2021 21:53:33 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 6C65712456F;
+        Wed,  5 May 2021 22:12:15 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        ZheNing Hu <adlternative@gmail.com>
-Subject: Re: [PATCH] [GSOC] ref-filter: solve bugs caused by enumeration
-References: <pull.949.git.1620228664666.gitgitgadget@gmail.com>
-Date:   Thu, 06 May 2021 10:53:33 +0900
-In-Reply-To: <pull.949.git.1620228664666.gitgitgadget@gmail.com> (ZheNing Hu
-        via GitGitGadget's message of "Wed, 05 May 2021 15:31:04 +0000")
-Message-ID: <xmqqfsz01vc2.fsf@gitster.g>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2 4/5] fetch: teach independent negotiation (no packfile)
+References: <cover.1617929278.git.jonathantanmy@google.com>
+        <cover.1620162764.git.jonathantanmy@google.com>
+        <1de34a6dced3f5477162dd675615342bc2dec05f.1620162764.git.jonathantanmy@google.com>
+        <xmqq4kfi54kb.fsf@gitster.g>
+        <9f650594-c8a6-4d89-2686-49de48aabb62@gmail.com>
+Date:   Thu, 06 May 2021 11:12:13 +0900
+In-Reply-To: <9f650594-c8a6-4d89-2686-49de48aabb62@gmail.com> (Derrick
+        Stolee's message of "Wed, 5 May 2021 12:42:09 -0400")
+Message-ID: <xmqqbl9o1ugy.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: DD85436A-AE0D-11EB-B1CB-D152C8D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 7A015CA4-AE10-11EB-9AFE-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Derrick Stolee <stolee@gmail.com> writes:
 
-> From: ZheNing Hu <adlternative@gmail.com>
+>> Moving to lookup_object() made me look around, but at this point the
+>> object in question (which comes from the negotiation_tips) has been
+>> instantiated, so it is OK.
+>> 
+>>     Side note. The big difference between lookup and parse is what
+>>     happens when this process hasn't seen the object yet---the
+>>     former will just return NULL instead of instantiating the
+>>     in-core copy; for that reason, it is easier on the readers to
+>>     use parse_object() if we know we want an in-core object *and*
+>>     when we use it we want to see it parsed already).
 >
-> Johannes Schindelin seems to have introduced a bug in
-> cc72385f(for-each-ref: let upstream/push optionally
-> report the remote name), it use `atom->u.remote_ref.option`
-> which is a member of enumeration in the judgment statement.
+> Please forgive my incorrect recommendation here. I was expecting
+> lookup_object() to behave like lookup_commit(), which creates the
+> object if it is not already in the cached set.
 
-Sorry but I am not sure if our readers would understand what "a
-member of enumeration in the judgment statement" is (I certainly do
-not), and even more importantly, "bugs caused by enumeration" on the
-title does not hint much about what problem the patch is trying to
-solve.
+It is not wrong per-se to recommend or use lookup_object() in this
+case, as long as who recommends or uses the function is certain that
+the object should already exist in-core.
 
-> When we use other members in the enumeration `used_atom.u`,
-> and it happened to fill in `remote_ref.push`, this judgment
-> may still be established and produces errors. So replace the
-> judgment statement with `starts_with(name, "push")` to fix
-> the error.
+But it is just that the lookup_object() is often not what the caller
+wants to use; it is a very rare use case for a caller to be able to
+say "I am OK for you to return NULL to me for this object, even if
+it is in our object store, when we do not yet have it in-core".  The
+only exception is the implementation of lookup_<type>() helpers,
+where they handle "not loaded yet" answer from lookup_object() with
+create_object() and always return usable in-core object to the
+caller.
 
-And this paragraph does not enlighten all that much, unfortunately.
+So the sole practical use case for lookup_object() outside the
+lookup_<type>() implementation becomes "I am 100% sure that an
+object with this object name has already been loaded in-core, so
+please let me access it", which may be optimized for a wrong case
+(because most of the API pass in-core objects, not object names,
+around).  I am not sure if this particular API strangeness can be
+remedied, though.
 
-Is it that a check refers to one member of a union without making
-sure that member is the one in effect in the union?  I am most
-puzzled by the mention of "enumeration" when there does not appear
-to be any enum involved.
-
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-949%2Fadlternative%2Fref-filter-enum-bug-fix-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-949/adlternative/ref-filter-enum-bug-fix-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/949
->
->  ref-filter.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/ref-filter.c b/ref-filter.c
-> index a0adb4551d87..f467f2fbbb73 100644
-> --- a/ref-filter.c
-> +++ b/ref-filter.c
-> @@ -1730,7 +1730,7 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
->  			else
->  				v->s = xstrdup("");
->  			continue;
-> -		} else if (atom->u.remote_ref.push) {
-> +		} else if (starts_with(name, "push")) {
->  			const char *branch_name;
->  			v->s = xstrdup("");
->  			if (!skip_prefix(ref->refname, "refs/heads/",
->
-> base-commit: 311531c9de557d25ac087c1637818bd2aad6eb3a
+Thanks.
