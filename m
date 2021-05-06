@@ -2,156 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5EFE0C433ED
-	for <git@archiver.kernel.org>; Thu,  6 May 2021 08:56:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0E70C433B4
+	for <git@archiver.kernel.org>; Thu,  6 May 2021 09:09:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 24994610FB
-	for <git@archiver.kernel.org>; Thu,  6 May 2021 08:56:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 81916610C8
+	for <git@archiver.kernel.org>; Thu,  6 May 2021 09:09:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233926AbhEFI5k (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 May 2021 04:57:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57310 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233824AbhEFI5j (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 May 2021 04:57:39 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9683AC061574
-        for <git@vger.kernel.org>; Thu,  6 May 2021 01:56:40 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id u3so7080949eja.12
-        for <git@vger.kernel.org>; Thu, 06 May 2021 01:56:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=B5CQqTlaK7aGvEru8YysOZ0wmH1O/yOpi0IVYGKKQwU=;
-        b=OBi4AOzBdGdUiylwKkL7QIElm4f1qqlRip0KUdTVf355AeAuUbYnreufCulhywtfaw
-         jb9YVYbSF22HW2wlnhdhU5shVSllG4LNQ4EXqTqp5dKWwLx3iIyjFFTrv3SeJK435F33
-         vjVQGsp/wsK66+NWMfrdbllzXkahuOAygUec6WCKQldtpE/bztPPKf8sH6kDmN/RnVeY
-         1OkeUnu+gu9IHgoi5d63iH5VsfrOyNRLdpN9dUGWN0nwKHC8qEd5TDfoQw4I8vx1T7nl
-         CSeWpbPG0bMfQuUmwgFSWCQ1BJ4CujloKjudS2NlX5QAzVqK3bcv9DsbvXSk6U5S3KnK
-         d2mg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=B5CQqTlaK7aGvEru8YysOZ0wmH1O/yOpi0IVYGKKQwU=;
-        b=LDh/PXQkIXoFnB8Q0oNjSCx0xmWOq95X/bVMkU8S0NzQFin2TOoJVpfIbsBySgrIjv
-         g+El9LnnYeOAsyNLM6FQpETHJT3psB8f3bbQ57qSUnZuxoyaGJacKh1u6/6GniVZI1D/
-         0XOHgQxF4fUmbewGhWDEd6hTuqIh9Mnlra2DHY6KYthsoNkJ9OI1Ii7+0hsMcgwaTRUq
-         iUxXgDu+IIopCcbPTEmw5PmMWbVrSHRS1t0pbGdPQ2JvvTkl7ugPTUZv18/MrVCtEjS+
-         0dimSDo3XoyYi8LkvjRfn8reQdX1lNlIcfyBeJX/B9dosNeQfe72hRrLr0rpHrrEjYDp
-         NG2Q==
-X-Gm-Message-State: AOAM533trwk/VNZ7Dd0f838ffzyjBmQ+2y+Hk2lgriWkN+ggZdeYvnUZ
-        YyBuaXukDwDlzgjwL9kdBsw=
-X-Google-Smtp-Source: ABdhPJyPyorR8oQMIbRBMeV0T/NjOTqXTM9SGtOGvzpfrMEwDVd5Bx86JdOrMocRvfBnhIrVSO3hYQ==
-X-Received: by 2002:a17:907:9612:: with SMTP id gb18mr3321339ejc.408.1620291399215;
-        Thu, 06 May 2021 01:56:39 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id y2sm948415ejg.123.2021.05.06.01.56.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 May 2021 01:56:38 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] sparse-index.c: don't call prepare_repo_settings()
- twice in a row
-Date:   Thu, 06 May 2021 10:49:59 +0200
-References: <cover-0.2-00000000000-20210505T121028Z-avarab@gmail.com>
- <patch-2.2-8bca02efcee-20210505T121028Z-avarab@gmail.com>
- <7954338a-bb44-1345-61b6-787782063c3c@gmail.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
-In-reply-to: <7954338a-bb44-1345-61b6-787782063c3c@gmail.com>
-Message-ID: <87v97wuto9.fsf@evledraar.gmail.com>
+        id S234096AbhEFJKf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 May 2021 05:10:35 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:52546 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233765AbhEFJKe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 May 2021 05:10:34 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 265CF122532;
+        Thu,  6 May 2021 05:09:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=K7UpYMhYjhRt0qkuz2PcXVr8mGvYt04s3sGeYx
+        Q3FzE=; b=sJLy1GahBmx5Nvy02P30Jb0hFyJNcR83KcdXT4PywBT/xIaSyFRwkU
+        0IxWl5O0RsZVM2Bue1ltfXGToBXqfnC+y1tLCdXGWim3lE/cVtuwGDR/TXSEoAxv
+        WxjB8jMRv6nj5VIF63ILCD5KssPN3TDvgVnaS+uvRrRGLFmqSwf+A=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1DED3122531;
+        Thu,  6 May 2021 05:09:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5DAD1122530;
+        Thu,  6 May 2021 05:09:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Yuri <yuri@rawbw.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [feature suggestion] Add 'git stash export', 'git stash import'
+ commands to allow to backup stash externally
+References: <d8aef355-0718-8b3d-7e9f-614673dd250f@rawbw.com>
+        <fff9baee-ac4e-66ea-1dfb-791a8b044527@kdbg.org>
+        <e75f000b-e376-45d5-ee5a-2a555076a3d9@rawbw.com>
+        <35877543-93b8-00f8-692e-09a06d4679aa@kdbg.org>
+        <d4ae27b9-3911-506c-a23c-3ed91bb250d1@rawbw.com>
+        <xmqqbl9oz27g.fsf@gitster.g>
+        <f1bf3086-8c89-f0af-c0c7-f427a935771f@rawbw.com>
+Date:   Thu, 06 May 2021 18:09:32 +0900
+In-Reply-To: <f1bf3086-8c89-f0af-c0c7-f427a935771f@rawbw.com>
+        (yuri@rawbw.com's message of "Thu, 6 May 2021 01:41:13 -0700")
+Message-ID: <xmqqy2csxm7n.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: C660825C-AE4A-11EB-9CD9-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Yuri <yuri@rawbw.com> writes:
 
-On Wed, May 05 2021, Derrick Stolee wrote:
-
-> On 5/5/2021 8:11 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> Change code added in 58300f47432 (sparse-index: add index.sparse
->> config option, 2021-03-30) to only call prepare_repo_settings()
->> once. We know that our own set_sparse_index_config() has just finished
->> calling it, so we don't need to call it if we're acting on "test_env".
+> On 5/6/21 1:38 AM, Junio C Hamano wrote:
+>> Unlike centralized SCM like SVN and CVS, commits in Git are private
+>> until you make them public by pushing, and you do not allow other
+>> people to fetch/pull from the repository you actively work in.  If
+>> your commits become public immediately after you make them, perhaps
+>> there is a room in your workflow for vast improvement.
 >
-> I'm not sure about the value here. prepare_repo_settings() returns
-> quickly if the settings have already been prepared, so a second call
-> is negligible in cost.
-
-I changed that while I was at it to make it easier to read, it's not an
-optimization. I.e. one wonders what the side-effect is of calling
-prepare_repo_settings() twice, discovers there isn't one...
-
->> @@ -133,11 +133,12 @@ int convert_to_sparse(struct index_state *istate)
->>  	test_env =3D git_env_bool("GIT_TEST_SPARSE_INDEX", -1);
->>  	if (test_env >=3D 0)
->>  		set_sparse_index_config(istate->repo, test_env);
->> +	else
->> +		prepare_repo_settings(istate->repo);
 >
-> The change presented here to either call set_sparse_index_config()
-> _or_ prepare_repo_settings() seems like it knows too much about
-> how set_sparse_index_config() works.
+> Let's say I make commit1, commit2, commit3 and then commit4.
+>
+>
+> How can I push only commit1 and commit3, but not commit2 and commit4?
 
-It seems reasonable to assume that a function to set config has
-initialized (or died, if it couldn't) enough of our config state to do
-its job.
+You don't.
 
-Besides, it's a few lines above the changed code in the same file.=20
+> Can I permanently hold some commits from being pushed while pushing others?
 
-But looking at this again 2/3 callers of set_sparse_index_config()
-aren't checking the return value. Wouldn't something like [1] on top be
-a good idea here?
-
-Also, is GIT_TEST_SPARSE_INDEX=3Dtrue itself supposed to work? Running the
-test suite with it fails 3 test files for me, all /sparse/, i.e. tests
-that (presumably) assume it's not already turned on by this code.
-
-1.=20
-
-diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-index a4bdd7c4940..bea1e7dd00e 100644
---- a/builtin/sparse-checkout.c
-+++ b/builtin/sparse-checkout.c
-@@ -280,8 +280,9 @@ static int set_config(enum sparse_checkout_mode mode)
- 				      "core.sparseCheckoutCone",
- 				      mode =3D=3D MODE_CONE_PATTERNS ? "true" : NULL);
-=20
--	if (mode =3D=3D MODE_NO_PATTERNS)
--		set_sparse_index_config(the_repository, 0);
-+	if (mode =3D=3D MODE_NO_PATTERNS &&
-+	    set_sparse_index_config(the_repository, 0) < 0)
-+		die(_("could not set index.sparse=3D0"));
-=20
- 	return 0;
- }
-diff --git a/sparse-index.c b/sparse-index.c
-index 5bad05de645..3938bcec962 100644
---- a/sparse-index.c
-+++ b/sparse-index.c
-@@ -131,10 +131,13 @@ int convert_to_sparse(struct index_state *istate)
- 	 * index.sparse config variable to be on.
- 	 */
- 	test_env =3D git_env_bool("GIT_TEST_SPARSE_INDEX", -1);
--	if (test_env >=3D 0)
--		set_sparse_index_config(istate->repo, test_env);
--	else
-+	if (test_env >=3D 0) {
-+		if (set_sparse_index_config(istate->repo, test_env) < 0)
-+			die(_("could not set index.sparse based on GIT_TEST_SPARSE_INDEX=3D%d"),
-+			    test_env);
-+	} else {
- 		prepare_repo_settings(istate->repo);
-+	}
-=20
- 	/*
- 	 * Only convert to sparse if index.sparse is set.
+Yes, you arrange these unrelated things (e.g. if commit1 and commit3
+can become ready to be used without commit2 and commit4, there is
+*no* reason to build commit2 as a direct child of commit1 *AND*
+build commit3 as a direct child of commit2) into multiple branches,
+keep unrelated things separate and related things together, and push
+the branch commit1 & commit3 are on (obviously in your example they
+become ready to be consumed together while commit2 or commit4 are
+not, so they wouldn't be on the same commit as commit2 or commit4).
