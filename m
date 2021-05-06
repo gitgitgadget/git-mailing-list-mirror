@@ -6,71 +6,69 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AC152C433ED
-	for <git@archiver.kernel.org>; Thu,  6 May 2021 21:14:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A0A9C433B4
+	for <git@archiver.kernel.org>; Thu,  6 May 2021 21:14:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 63B1061289
-	for <git@archiver.kernel.org>; Thu,  6 May 2021 21:14:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5F1E761289
+	for <git@archiver.kernel.org>; Thu,  6 May 2021 21:14:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230037AbhEFVPf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 May 2021 17:15:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53714 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229747AbhEFVPe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 May 2021 17:15:34 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9872C061574
-        for <git@vger.kernel.org>; Thu,  6 May 2021 14:14:35 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id n138so9819300lfa.3
-        for <git@vger.kernel.org>; Thu, 06 May 2021 14:14:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp.br; s=usp-google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Ba8WOD4Js99v+e+CPr4bN6OqZwagikeiiVbFzheg9wo=;
-        b=NAJblHzgY2stjj4dTRJB+b8gCWHgcizHI8NtNyHKSq7xT6IEZU28W2/6GpbQnumXuL
-         r9JPgPQ0e1MWnEJ6RLpEOaYWM6TyQD35OhizcEga6L+leo7cTY7RZ1Zp0hlqEcdx7CH+
-         46Phx24EguV6zaWX7McXx+WNB8AAn8Myp6K9ndiimGOKpXdXRDdFREqKAlk2P+ZMm4/q
-         ThLYl5/X/CO6c671e5QHMzMwTbUR4xDedcUNV7lzbcaJenMr7OSvjLQ/6BtcTh1CDLLx
-         aiDqv+anhqYy2BiX2C73O7zy5+CTnrrHIgBzSLu4Yq1BydwWvVWWwdKYJH8v8uGEsE98
-         s33w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Ba8WOD4Js99v+e+CPr4bN6OqZwagikeiiVbFzheg9wo=;
-        b=P6/CSadEHLS21CtJuEWXKtBcQSHkzWn+Zi2cEOPrWTeolKcwnqeWMgE7N9yA+L9zS+
-         sxLoVjrIM3bYNw30oCJF/RE7ANr1LEMQQgRnNTK7csfUj7DighNqjqRFNLnrZvOSQiim
-         /yI4qmt4Gm5ZPO/s+Ml+xIf0KxYyefxFJ7aNrKUlHyn/ZcyUVf81S31T/i6PUZ6IWN4t
-         do4PDAj7oh2q6XMeSJ3JDjTBKZXm8VVv8qphJHBqBSHgbAMtBM3a1g2vIuBHjlY7mbMh
-         Kpg3Z7DsOAzNQDk7fOslA4vQwk5r2kKAedBrqXycF/rkHUL3u/ltb1/XLHQqlMyThgrK
-         +dqg==
-X-Gm-Message-State: AOAM532Ik8M5DZKef2nlfxx3I5vPKHmI09sk3Q5j9oJLmbYGHv7fpaGW
-        AXtulU23MLMyd3/f1MoUw7jIyG6h39PDL7HwE5ZuRA==
-X-Google-Smtp-Source: ABdhPJxoWGPmAoSbzXCvoupqNW1tGuRGqMypVykVAjpbY4nftZJNhydtc6ZZdV9ud/XxdNhmpUeegw6e8ushG8KRB4s=
-X-Received: by 2002:ac2:418f:: with SMTP id z15mr4260342lfh.2.1620335674215;
- Thu, 06 May 2021 14:14:34 -0700 (PDT)
+        id S230131AbhEFVPu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 May 2021 17:15:50 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:62743 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230056AbhEFVPt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 May 2021 17:15:49 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id A6945127CA0;
+        Thu,  6 May 2021 17:14:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=/2s7FiVNsk8/
+        s5NECTGZ+czruM8u/iTkjQq1CfAjRqY=; b=ntbNsn3neaSrkVDF17yxVm+qiYbB
+        MeS9BryKhNz/MqZuzhwnFxwqHwrunZnRJmO2imxx4EC65oKA6ZSBnVdxw1AGAlBh
+        aCUfaijUVcNeByy4T1hzJiolpxB9u7OVYFCE/gSFjeuED1PryMAe/NcQfzNh7ohu
+        YwWWvB2WelVx6Fg=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9ED0E127C9F;
+        Thu,  6 May 2021 17:14:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7692C127C67;
+        Thu,  6 May 2021 17:14:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] add: die if both --dry-run and --interactive are given
+References: <20210505145204.51614-1-oystwa@gmail.com>
+        <20210506141011.18245-1-oystwa@gmail.com>
+Date:   Fri, 07 May 2021 06:14:45 +0900
+In-Reply-To: <20210506141011.18245-1-oystwa@gmail.com> (=?utf-8?Q?=22?=
+ =?utf-8?Q?=C3=98ystein?= Walle"'s
+        message of "Thu, 6 May 2021 16:10:11 +0200")
+Message-ID: <xmqqczu3y37e.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <4f88ac58e46782c7cf335e13fabd14c8b4438267.1620329445.git.matheus.bernardino@usp.br>
- <YJRLim10cznG5G3d@coredump.intra.peff.net>
-In-Reply-To: <YJRLim10cznG5G3d@coredump.intra.peff.net>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Thu, 6 May 2021 18:14:22 -0300
-Message-ID: <CAHd-oW6oN7=8DwzEFmCXdSWRcvzpqGEKFDkTMzN3uP1M9Cphrg@mail.gmail.com>
-Subject: Re: [PATCH] clean: remove unnecessary variable
-To:     Jeff King <peff@peff.net>
-Cc:     Elijah Newren <newren@gmail.com>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 1635AB80-AEB0-11EB-BEB9-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 6, 2021 at 5:03 PM Jeff King <peff@peff.net> wrote:
->
-> Definitely not necessary, but on a patch like this I'll sometimes
-> manually specify "-U4" (and I always have diff.interhunkcontext set to
-> "1") to show the complete code between the declaration and use. It makes
-> it even more obvious that the result is correct (though obviously
-> applying and compiling shows it, too). #gitlifehacks
+=C3=98ystein Walle <oystwa@gmail.com> writes:
 
-That's a good idea, thanks for the advice :)
+> Hi, Junio and thanks for accepting the patch.
+>
+>> The interactive machinery does not obey --dry-run. Die appropriate if
+>> both flags are passed.
+>
+> I just noticed a minor spelling error here: "appropriate" should be
+> "appropriately". I can send a v2 if that's easier for you.
+
+Thanks, will locally amend---no need to resend.
+
+Thanks for contributing.
