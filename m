@@ -7,66 +7,67 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B633EC433ED
-	for <git@archiver.kernel.org>; Thu,  6 May 2021 09:19:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19B2CC433B4
+	for <git@archiver.kernel.org>; Thu,  6 May 2021 10:05:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7C5B4610A2
-	for <git@archiver.kernel.org>; Thu,  6 May 2021 09:19:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CEC51611AC
+	for <git@archiver.kernel.org>; Thu,  6 May 2021 10:05:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233036AbhEFJUa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 May 2021 05:20:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34080 "EHLO
+        id S233259AbhEFKGO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 May 2021 06:06:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44198 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232982AbhEFJU1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 May 2021 05:20:27 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 539BBC061574
-        for <git@vger.kernel.org>; Thu,  6 May 2021 02:19:29 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id s7so645421edq.12
-        for <git@vger.kernel.org>; Thu, 06 May 2021 02:19:29 -0700 (PDT)
+        with ESMTP id S229733AbhEFKGN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 May 2021 06:06:13 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AF3AC061574
+        for <git@vger.kernel.org>; Thu,  6 May 2021 03:05:15 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id s20so1892894ejr.9
+        for <git@vger.kernel.org>; Thu, 06 May 2021 03:05:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=upzM/ZyZcmZzAT3jhA5UV8y3uTm8ZOtf0S8ioT0A9EY=;
-        b=AeN9ukH2n8wXGMhFpbNbf8DF5nX+RSwAX1IlayN5Q6+jX3CPuF4se1uuOV6ex1GjM9
-         2PFX8zX1z9uV5mlJZ8PqE0+1TJQ69OncBJxG/wqm5EBq0Xiu/FT1tEA7lQrC2k04nh9Y
-         uKYpTKlN/q5TdcH2R4cXy0h1qRPvj9x1WPYhg7CBbcyk0TgZq8jJ6zbEJmfpzN9SkEyt
-         o/ziEGgKDY40mBBd0pFy/xeoSSl67vjTMvANqEIAw7r0wuWrgWFYaEGVWugDn0Ghaeek
-         qcvtAWeYZ/+oRtnhLytvWeYZn4hjtXX79On5jCOp3PxWjF+ZWHEofvt0qAUPapB5sNFT
-         V0aw==
+        bh=XGvlbHTQEW5NxafU7NjtwU7wCZAQ8dN4BpE4JdPeRm4=;
+        b=gZYATXBpMs3yiUkzAzI2c5lqJl/SyTnZvXBDchkLSaaOxafPNuout4a3LjP4H48ILX
+         /aMPx1C3zlnzNPPgkUQYoEzTB8jMdZVD1rh+f3lLUkExeqwjoPn73zq97Bsk2jJMkbQd
+         cbnnsoNhB7dQ48iRPZrKaMVnPzhoXv+MR2WEcGnxw1gwijucHgvhCP8l/c1Z/59UyoYF
+         amMVExLZN5EpdXHm2fIgZSE9afcHFX0VKyuVR1psDuHj8iHrM/tQ6+A3DLCqIKOTabJQ
+         2dTwS1EXG3rxeFeIAFHb5wZwQPQsYm6hVTq+qeihnPOYu4DnNY68x2LqlNITy9xvoRzl
+         /jRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=upzM/ZyZcmZzAT3jhA5UV8y3uTm8ZOtf0S8ioT0A9EY=;
-        b=YEh1uqEXi0/z2Q6iBbu1PbgMXN0aIBQ1FUx2VsEYbRw7h70s58aqnA/8KNJf6iJVjQ
-         5AyMBaqPQdvucmqFTTF8GBgP7aAQii40XqI2JSHycbn7rbeGbrUWiLI10pDgoh66nlE9
-         b5yGwfKnEdsEhsMo2CnHR5gZXhvUOearNQRqY6KDKxePP5TIfVvP1UpenG9/I9fAhPoO
-         OH2I77jsnyObubmFBOswjwzo3iDggFKNnH4S9N/Lh+koO7mluGfNbk8hp3MX79waAQu7
-         SVF6xRN1rlxyrnz/lx7uzLgavfzobY9tF9zPAlkG7qlUZ2rKI3SoxdC1GqHd8KQlTIKy
-         th9A==
-X-Gm-Message-State: AOAM532whCcEfI7uXs5WZFslQpbww5ZyEoSa/b+DMx6lTgDmUL8sB/BD
-        qlBuXMhoVt+t7EKNm+Vfzao=
-X-Google-Smtp-Source: ABdhPJyWahIDE7ZBkmHAU8YxFla6F4DLafPDryqQVMjZ819c0w51n3omtigHUJZXAvgb4cqiBuWUUw==
-X-Received: by 2002:a05:6402:2366:: with SMTP id a6mr4036860eda.10.1620292767880;
-        Thu, 06 May 2021 02:19:27 -0700 (PDT)
+        bh=XGvlbHTQEW5NxafU7NjtwU7wCZAQ8dN4BpE4JdPeRm4=;
+        b=Arq2SAM+gMrFE/u9jdwQyu4Vm1ou4ZYqBosMbfpx3AzFdXyxbRJXEi7e13NXDTCn28
+         cjfwTmM6JYPqpl3lQl2bon5d8UO6D/oDVebLOrx9Czz6oQl+/LoYp/Zk4ydEPqty6KIf
+         hTx5DV7b5D9jeD45LFFGRmTW7B8ZVgFYq0kvj5p1j9EAQfj1IX4YxVEyQXmnXyfExQ4W
+         azbul/e/c817piC5vQ80UNj2+L6wWb3xJXcx2+E2gzI+KJr7W1vWQA4sMavaSfQVd99o
+         0lk9z0kvXWuHFL27raORV1FZ6jlxGGUbIMoTrhN8+aGROlbc6Y0DxMAMkLIsUAkCnZqL
+         NKTw==
+X-Gm-Message-State: AOAM533xO6f5fHpSphza/S7pSuyrEtv+OtwIqT5C8k5YZp4qsl0U5dMd
+        mb/nTFg+rYKZbOluMJABcwLwOz8c8mE7poBV
+X-Google-Smtp-Source: ABdhPJxqghojNAp7bwJFHP4mBfb7quFLetx07izLi95FytUMDP6KQnlZFoN5jtz/7C61B8cjidkPJA==
+X-Received: by 2002:a17:906:8693:: with SMTP id g19mr3575753ejx.270.1620295513960;
+        Thu, 06 May 2021 03:05:13 -0700 (PDT)
 Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id r15sm1140901edp.62.2021.05.06.02.19.27
+        by smtp.gmail.com with ESMTPSA id j4sm1067680ejk.37.2021.05.06.03.05.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 May 2021 02:19:27 -0700 (PDT)
+        Thu, 06 May 2021 03:05:13 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [PATCH 1/4] Makefile: don't re-define PERL_DEFINES
-Date:   Thu, 06 May 2021 11:04:34 +0200
-References: <cover-0.4-00000000000-20210505T121857Z-avarab@gmail.com>
-        <patch-1.4-ed2005a2fbf-20210505T121857Z-avarab@gmail.com>
-        <YJKm0dnwHBwQuTi+@coredump.intra.peff.net>
-        <87y2csv0qm.fsf@evledraar.gmail.com> <xmqq7dkcz20u.fsf@gitster.g>
+Cc:     Elijah Newren <newren@gmail.com>,
+        =?utf-8?Q?G=C3=A1bor?= Farkas <gabor.farkas@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: git switch/restore, still experimental?
+Date:   Thu, 06 May 2021 12:02:28 +0200
+References: <CAPiPmQnb=XMaF2+YkryEbiX8zA=jwa5y=fbAGk9jpCExpbS4Rw@mail.gmail.com>
+ <CABPp-BHBcjSQbkotrzwDtVRSC-qqjEyP4m=biY-0+=Jdg9ETQw@mail.gmail.com>
+ <877dkdwgfe.fsf@evledraar.gmail.com> <xmqq35v01ua3.fsf@gitster.g>
 User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
-In-reply-to: <xmqq7dkcz20u.fsf@gitster.g>
-Message-ID: <87sg30usm9.fsf@evledraar.gmail.com>
+In-reply-to: <xmqq35v01ua3.fsf@gitster.g>
+Message-ID: <87pmy4uqhz.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -79,76 +80,34 @@ On Thu, May 06 2021, Junio C Hamano wrote:
 
 > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 >
->>>> -PERL_DEFINES =3D $(PERL_PATH_SQ):$(PERLLIB_EXTRA_SQ):$(perllibdir_SQ)
->>>> -
->>>> -PERL_DEFINES :=3D $(PERL_PATH_SQ) $(PERLLIB_EXTRA_SQ) $(perllibdir_SQ)
->>>> +PERL_DEFINES :=3D
->>>> +PERL_DEFINES +=3D $(PERL_PATH_SQ)
->>>> +PERL_DEFINES +=3D $(PERLLIB_EXTRA_SQ)
->>>> +PERL_DEFINES +=3D $(perllibdir_SQ)
->>>>  PERL_DEFINES +=3D $(RUNTIME_PREFIX)
->>>
->>> I don't think we generally use simply-expanded variables in our Makefile
->>> unless there's a reason. Do we actually need it here? Obviously not new
->>> in your patch, but just a curiosity I noticed while reading it.
+>> I mean, I see why. You don't want a typo of "master" as "maaster" to
+>> create a new "maaster" branch, so really that's out. But it really
+>> should be:
 >>
->> I didn't notice it at the time. I suppose it could be changed to not do
->> expansion, but per-se unrelated to the more narrorw bugfix in this
->> patch.
+>>     # -n or -N for --new / --new --force (the latter just in case of a
+>>     # race, and just for consistency)
+>>     git switch -n doesnotexist
 >
-> Actually, strictly speaking there was *no* bug because assigning
-> three items with :=3D made sure the previous recursively expanded one
-> to be ineffective.  In other words, there was a valid reason to use
-> ":=3D" there in the original version.
+> I do not see why --new is better than --create; we did choose not to
+> reuse --branch from "checkout" and I remember that was a deliberate
+> decision (i.e. once split into "switch" and "restore", "switch"
+> becomes only about branches, so unlike in the context of "checkout",
+> in the context of "switch", the word "branch" adds a lot less value,
+> and certainly does not signal we are creating a branch and switching
+> to it).
 
-Yes, there wasn't any bug with the the eventual value being
-incorrect. I.e. both of these are equivalent in a Makefile:
+I don't think --new is better than --create when considered in
+isolation. I happen to think --create is better.
 
-    FOO =3D abc
-    FOO :=3D def
-    FOO +=3D ghi
+What I'm arguing is that we should be aiming for some consistency in the
+command-set. In this case the relatively small change of
+s/--create/--new/ server so make the rest consistent. I.e. the branch
+and switch commands can mirror each other in the ways that matter for
+these common operations of create/copy/move.
 
-And:
+> It would have been a stronger argument to favor --new if we had "git
+> branch --new <branchname>", but that is not the case.
 
-    FOO =3D abc
-    FOO =3D def
-    FOO +=3D ghi
-
-Both will yield "def ghi". They're just different in a case like:
-=20=20=20=20
-    X =3D Y
-    FOO =3D abc
-    FOO :=3D $(X)
-    X =3D Z
-    FOO +=3D ghi
-
-Where using :=3D will echo "Y ghi", and using =3D will echo "Z ghi". As a
-practical matter the distinction doesn't matter in this case.
-
-> Now your patch removed the recursively expanded one that was
-> immediately invalidated, there no longer is a reason to use :=3D
-> there.  So "unrelated to the more narrow bugfix" is a rather lame
-> excuse to do only half a task.  If we remove that extra one (which
-> is a good thing), then we should correct :=3D into =3D because the
-> original used :=3D only because there was the unwanted extra one, no?
-
-I don't see how removing the stray line changes the reason to use ":=3D"
-or "=3D" there. I agree it should be removed, it's just unrelated to
-removing the stay line. Looking at 07d90eadb50 it's clear that it's just
-some copy/pasting error.
-
-Maybe the confusion is that I'm using "bug" closer to a meaning of "a
-thing nobody intended to be in the program", not just "a
-behavior-changing issue observable from the outside".
-
-In any case. I can just submit a patch on top of this in a v2. I
-continue to find it hard to discover the line between superfluous
-while-we're-at-it fixes in your mind v.s. "we should fix this while
-we're at it" though :)
-
-But regarding the "half a task" it seems to me that these are different
-issues; I don't think that's a point worth arguing in this case
-specifically (let's just fix it, and I will), but perhaps I'm missing
-something subtle with regards to Makefile semantics per my examples
-above so it really is all one issue, and I'd like to understand how
-they're entwined.
+The argument is that switch's experimental design squats on 2x other
+options, so changing -c to -n so we can make -c and -m do the same thing
+is better.
