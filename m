@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 614B6C433B4
-	for <git@archiver.kernel.org>; Thu,  6 May 2021 16:52:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 43D67C433ED
+	for <git@archiver.kernel.org>; Thu,  6 May 2021 16:52:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 277A161177
-	for <git@archiver.kernel.org>; Thu,  6 May 2021 16:52:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 173E9613B5
+	for <git@archiver.kernel.org>; Thu,  6 May 2021 16:52:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236105AbhEFQxl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 May 2021 12:53:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51622 "EHLO
+        id S236108AbhEFQxm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 May 2021 12:53:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51624 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236072AbhEFQxl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 May 2021 12:53:41 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6D76C061574
-        for <git@vger.kernel.org>; Thu,  6 May 2021 09:52:42 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id v12so6345317wrq.6
-        for <git@vger.kernel.org>; Thu, 06 May 2021 09:52:42 -0700 (PDT)
+        with ESMTP id S235881AbhEFQxm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 May 2021 12:53:42 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8176C061574
+        for <git@vger.kernel.org>; Thu,  6 May 2021 09:52:43 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id t18so6358856wry.1
+        for <git@vger.kernel.org>; Thu, 06 May 2021 09:52:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=bKLz9YgU+E+1QH0x93PER+OPkHX2Qopkv+2Q71QSacI=;
-        b=g794zA9/D2nHzKnNqPTrC2d21G3vmY/mWeqIHvrtB3k+33Z9CSEqgdZCRl5YTuD3cO
-         6ufZb4ns36LQxm37E/9aC7Yvbjd1UMYRwTviEv72PyvbsIZrK8dXO4OSKt7XfMIwXIye
-         r5+9P5iuknlTuAEBskI1ZMDE9pYSg04ZG0MDpsJYPPPh1bAMKq/tEY2MVxCcLJByA3ix
-         66r713G5GKup9XS1UH/s3If1Bj2DnpU/62wzbdCeZeOhrZojQy8PssWkTOnTOqJZmRgy
-         dll2QyKi1cV3sUW8AFWHnxwciyeIkN17ZL/CyD+BhG3LyBhaRypD7CFQ9FWSd3Oxr+jV
-         5wQw==
+        bh=/QqPvbntNNm0mzRCQZCg49nN1oygxHKwZAuEutsaIqc=;
+        b=q1Q3+k50MYieelGDgW77va4LR+qhJmcFCx2GmpQTwKO7FqtCTBMCNI/b9x2Yui8+wQ
+         bBtbzEyHPwjyj2px14sLkldmV3POfHsHirgwa8l21CWIRnpDVoXTV3RxAl2wh4ZO9hAw
+         E/NsiqIXPWbm1uNF42cCKH0jlXLfPPQczwvk2DeR+1cm+tGV2/GpbZPUweoSib7rpAG7
+         8Riv2TW6V64HL7LoyqAB3ozwT2x5LcksQTD1pcRqnAiHX6iN/Xs5SIeMqCIRDzmOeGKS
+         y7sQRxakl0xf4Fyg+mkcXUmvdJ4QadNh8Pa7MvCnGxg5Zlpf5niNJxYvzURlYidt8Y7p
+         rGeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=bKLz9YgU+E+1QH0x93PER+OPkHX2Qopkv+2Q71QSacI=;
-        b=hLTk+ymHIe5OFMag9IQeb8DeHehqcLN76oc15l6Vt8VdqZjoVjekuJ0frQAwWL62x2
-         PS9KyKbdIOIusQiHbw2qNGPun6eHUznstIf29hWfG2yzGjYJR5aZNmJZg2zkl/XrAb0J
-         BonPBAbbV7VY+MacIK8VSHRE+rRWjaSGnh5yJJ4IbmaoCNupaCq1f69HzziPbOh+7D1e
-         bqYXG/vUZmevobH9DL6o9sUVuIifGX20zHhXSMNmAq0yH10B4pgxGWn3b8Aw3pg4RhMu
-         oVfqmOktloMhYKCShVLs+a+/ncvtP8o010bjGvTV4fogpRZ35ST/0l4LuXWTDCCxlMn2
-         CyGA==
-X-Gm-Message-State: AOAM531DlC1G6a7N1ViOfrHLTTCWwLhICsviNrF42WPD0IzubR2IpX8B
-        utOP0Z6Vu3PubugbEluJVIQ=
-X-Google-Smtp-Source: ABdhPJxhpI3eKzzN3W9nxYRAgwlcc5/7AhfIiJfk6eO4vkKJT0BE4WOKajTh2+yIHeNwjmb4QZBj+g==
-X-Received: by 2002:adf:ed07:: with SMTP id a7mr6735342wro.113.1620319961757;
-        Thu, 06 May 2021 09:52:41 -0700 (PDT)
+        bh=/QqPvbntNNm0mzRCQZCg49nN1oygxHKwZAuEutsaIqc=;
+        b=hihhWvpaG1IRHqfCV+4MWz4Zu9YNdmIkXAW+rRLwLHEce/qjQEIQ/XUvadoMvEiER/
+         F8pECLioHEhABM3e2+HJnIisD/PceXh3+JZ1t3SLb85L5m6npzDl8NubX8+YplLR54Mv
+         sJlnXt5IEJ0d1X1gLnNkzDSLxkkpAYe/YawbNSuEH5HGIsDV0vVExR+WYjfVuUeRrzPX
+         CHtbEeqxwaCnOi7L/KepO76HQRe27vwRfKJpJcu406zDPYBJ7rugWNpdSu6MqMD+WgBX
+         Hf7M95lge7F7DRowazdu1qfw3+ouVDMwsTYacNl0VO4DKr+0wE1CylIkNm/zA2uQEPzP
+         PKrQ==
+X-Gm-Message-State: AOAM532t1eJiSTX9D1Md+4ZP1/SoRKgaUMMxujtGIH7FCYFx/8n3vaqi
+        yU77UbgFhGQ8PMYG9J0yB64=
+X-Google-Smtp-Source: ABdhPJzwBuV/lNCxVCgyFUGa4p0hmG0/vYG9fzp1t7IIrdBpLOb8LoFhKEaHpnXxUpS4HScaqb8xng==
+X-Received: by 2002:adf:e40f:: with SMTP id g15mr6457732wrm.392.1620319962388;
+        Thu, 06 May 2021 09:52:42 -0700 (PDT)
 Received: from Inspiron.home (2a01cb04010c42006d71140a7638f172.ipv6.abo.wanadoo.fr. [2a01:cb04:10c:4200:6d71:140a:7638:f172])
         by smtp.gmail.com with ESMTPSA id y14sm5354482wrr.82.2021.05.06.09.52.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 May 2021 09:52:41 -0700 (PDT)
+        Thu, 06 May 2021 09:52:42 -0700 (PDT)
 From:   Firmin Martin <firminmartin24@gmail.com>
 To:     Firmin Martin <firminmartin24@gmail.com>, git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Johannes Schindelin <johannes.schindelin@gmail.com>,
         Erik Faye-Lund <kusmabite@gmail.com>,
         Denton Liu <liu.denton@gmail.com>
-Subject: [PATCH v1 1/8] compat/terminal: let prompt accept input from pipe
-Date:   Thu,  6 May 2021 18:50:55 +0200
-Message-Id: <20210506165102.123739-2-firminmartin24@gmail.com>
+Subject: [PATCH v1 2/8] format-patch: confirmation whenever patches exist
+Date:   Thu,  6 May 2021 18:50:56 +0200
+Message-Id: <20210506165102.123739-3-firminmartin24@gmail.com>
 X-Mailer: git-send-email 2.31.1.450.g14fbf8793d
 In-Reply-To: <20210506165102.123739-1-firminmartin24@gmail.com>
 References: <20210506165102.123739-1-firminmartin24@gmail.com>
@@ -74,99 +74,97 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, git_prompt ignores input coming from anywhere other than
-terminal (pipe, redirection etc.) meaning that standard prompt
-auto-answering methods would have no effect:
+Currently, git-format-patch, along with the option --cover-letter,
+unconditionaly overwrites a cover letter with the same name (if
+present). Although this is a desired behaviour for patches which are
+auto-generated from Git commits log, it might not be the case for a
+cover letter whose the content is meticulously written manually.
 
-        echo 'Y' | git ...
-        yes 'Y' | git ...
-        git ... <input.txt
+Particulary, this behaviour could be awkward in the following
+hypothetical situations:
 
-It also prevents git subcommands using git_prompt to be tested using
-such methods.
+* The user can easily erase a cover letter coming from prior versions or
+  another patch series by reusing an old command line (e.g. autocompleted
+  from the shell history).
 
-This patch fixes this issue by considering standard input when !isatty(0).
-It also rearranges the control flow to close input and output file handlers.
+* Assuming that the user is writing a cover letter and realizes that
+  small changes should be made. They make the change, amend and
+  format-patch again to regenerate patches. If it happens that they use
+  the same command again (e.g. with --cover-letter), the cover letter
+  being written is gone.
+
+This patch addresses this issue by asking confirmation from the user
+whenever a cover letter or a patch with the same name already exists.
 
 Signed-off-by: Firmin Martin <firminmartin24@gmail.com>
 ---
- compat/terminal.c | 47 ++++++++++++++++++++++++++++-------------------
- 1 file changed, 28 insertions(+), 19 deletions(-)
+ builtin/log.c | 33 ++++++++++++++++++++++++++++-----
+ 1 file changed, 28 insertions(+), 5 deletions(-)
 
-diff --git a/compat/terminal.c b/compat/terminal.c
-index 43b73ddc75..c12e0b9ab9 100644
---- a/compat/terminal.c
-+++ b/compat/terminal.c
-@@ -202,41 +202,50 @@ static int mingw_getchar(void)
- char *git_terminal_prompt(const char *prompt, int echo)
+diff --git a/builtin/log.c b/builtin/log.c
+index 6102893fcc..bada3db9eb 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -35,6 +35,7 @@
+ #include "repository.h"
+ #include "commit-reach.h"
+ #include "range-diff.h"
++#include "prompt.h"
+ 
+ #define MAIL_DEFAULT_WRAP 72
+ #define COVER_FROM_AUTO_MAX_SUBJECT_LEN 100
+@@ -959,6 +960,10 @@ static int open_next_file(struct commit *commit, const char *subject,
+ 			 struct rev_info *rev, int quiet)
  {
- 	static struct strbuf buf = STRBUF_INIT;
--	int r;
--	FILE *input_fh, *output_fh;
-+	int r, input_not_from_tty = !isatty(STDIN_FILENO);
-+	FILE *input_fh = NULL, *output_fh = NULL;
-+	char* ret = NULL;
-+
-+	if (input_not_from_tty) 
-+		input_fh = stdin;
-+	else
-+		input_fh = fopen(INPUT_PATH, "r" FORCE_TEXT);
+ 	struct strbuf filename = STRBUF_INIT;
++	struct strbuf file_exists_prompt = STRBUF_INIT;
++	const char *yesno;
++	static int not_prompted = 1;
++	int res = 0;
  
--	input_fh = fopen(INPUT_PATH, "r" FORCE_TEXT);
- 	if (!input_fh)
--		return NULL;
+ 	if (output_directory) {
+ 		strbuf_addstr(&filename, output_directory);
+@@ -972,17 +977,35 @@ static int open_next_file(struct commit *commit, const char *subject,
+ 	else
+ 		fmt_output_subject(&filename, subject, rev);
+ 
+-	if (!quiet)
+-		printf("%s\n", filename.buf + outdir_offset);
++	if (not_prompted && !access(filename.buf, F_OK)) {
++
++		/*
++		 * TRANSLATORS: Make sure to include [Y] and [n] in your
++		 * translation. The program will only accept English input
++		 * at this point.
++		 */
++		strbuf_addf(&file_exists_prompt, _("The file '%s' already exists.\n"
++			"Would you overwrite this file and subsequent ones [Y/n]? "), filename.buf);
++		yesno = git_prompt(file_exists_prompt.buf, PROMPT_ECHO);
++		not_prompted = 0;
++		if (tolower(*yesno) == 'n') {
++			res = -1;
++			goto done;
++		}
++	}
+ 
+ 	if ((rev->diffopt.file = fopen(filename.buf, "w")) == NULL) {
+ 		error_errno(_("cannot open patch file %s"), filename.buf);
+-		strbuf_release(&filename);
+-		return -1;
++		res = -1;
 +		goto done;
- 
- 	output_fh = fopen(OUTPUT_PATH, "w" FORCE_TEXT);
--	if (!output_fh) {
--		fclose(input_fh);
--		return NULL;
--	}
- 
--	if (!echo && disable_echo()) {
--		fclose(input_fh);
--		fclose(output_fh);
--		return NULL;
--	}
-+	if (!output_fh) 
-+		goto done;
-+
-+	if (!echo && disable_echo()) 
-+		goto done;
- 
- 	fputs(prompt, output_fh);
- 	fflush(output_fh);
- 
- 	r = strbuf_getline_lf(&buf, input_fh);
--	if (!echo) {
-+
-+	if (input_not_from_tty) 
-+		fputs(buf.buf, output_fh);
-+
-+	if (!echo || input_not_from_tty) {
- 		putc('\n', output_fh);
- 		fflush(output_fh);
  	}
  
- 	restore_term();
--	fclose(input_fh);
--	fclose(output_fh);
- 
--	if (r == EOF)
--		return NULL;
--	return buf.buf;
-+	if (r != EOF)
-+		ret = buf.buf;
++	if (!quiet)
++		printf("%s\n", filename.buf + outdir_offset);
 +done:
-+	if (input_fh && input_fh != stdin) 
-+		fclose(input_fh);
-+	if (output_fh)
-+		fclose(output_fh);
-+
-+	return ret;
+ 	strbuf_release(&filename);
+-	return 0;
++	strbuf_release(&file_exists_prompt);
++	return res;
  }
  
- /*
+ static void get_patch_ids(struct rev_info *rev, struct patch_ids *ids)
 -- 
 2.31.1.449.g4a44fa8106
 
