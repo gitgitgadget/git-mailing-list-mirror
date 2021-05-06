@@ -2,86 +2,77 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 12C37C433B4
-	for <git@archiver.kernel.org>; Thu,  6 May 2021 01:32:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 05158C433B4
+	for <git@archiver.kernel.org>; Thu,  6 May 2021 01:39:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EB693613C1
-	for <git@archiver.kernel.org>; Thu,  6 May 2021 01:32:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D0D1F6139A
+	for <git@archiver.kernel.org>; Thu,  6 May 2021 01:39:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230246AbhEFBdR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 May 2021 21:33:17 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50386 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229465AbhEFBdR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 May 2021 21:33:17 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8695ED3862;
-        Wed,  5 May 2021 21:32:19 -0400 (EDT)
+        id S229956AbhEFBkb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 May 2021 21:40:31 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60826 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229465AbhEFBk1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 May 2021 21:40:27 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8ECEEBE1BA;
+        Wed,  5 May 2021 21:39:29 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=/2ceqBAlnzF1+jjQwr6wJd4lkFJKL9YnELWjkF
-        i3P48=; b=eiYEe66C7tE4UQrjkBIS/BcakzPxVXWZ+iP9a9+m7RI7F1vOeDTv1u
-        davjywZ3tw1pHeZDrWOJyRQINTaHLqR4vDYSZWUFR+mUaaruOKydSSE2c11Bmz2e
-        zpbhoTCA79rvIj4D6UWLupoOrUS34Z+R4uKLd0MWujbUMAmCO6SJw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7DFFDD3861;
-        Wed,  5 May 2021 21:32:19 -0400 (EDT)
+        :content-type; s=sasl; bh=679+oE2UL2Oo9AR2xTeigrYsLDLfOevskRFmZ4
+        dTm8o=; b=VltSOzGpGrUCCVcxZnjzfJE0nGA41fSt8yWP3JUCaIR9BNx4ALsCQW
+        ixsmpxJm9u9cWPt/cqNau1ass9V9gIXeNiEickVW46KXcUFtz/QFXzSToIblZrjw
+        wAf+lfZ4V/ZqIQ3mllxP3zw/UAt1TJ56nx4AuA1OrRo3/FDODfnEQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 863DABE1B9;
+        Wed,  5 May 2021 21:39:29 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 07F17D3860;
-        Wed,  5 May 2021 21:32:19 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 121AABE1B6;
+        Wed,  5 May 2021 21:39:29 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH 1/2] patience diff: remove unnecessary string comparisons
-References: <pull.948.git.1620120345.gitgitgadget@gmail.com>
-        <a339d1cf9b9ffd6365fca3efda8fb7e10346dda4.1620120345.git.gitgitgadget@gmail.com>
-        <xmqqpmy658e1.fsf@gitster.g>
-        <nycvar.QRO.7.76.6.2105051649280.50@tvgsbejvaqbjf.bet>
-Date:   Thu, 06 May 2021 10:32:18 +0900
-In-Reply-To: <nycvar.QRO.7.76.6.2105051649280.50@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Wed, 5 May 2021 16:58:38 +0200 (CEST)")
-Message-ID: <xmqqo8do1wbh.fsf@gitster.g>
+To:     Sergey Organov <sorganov@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        =?utf-8?Q?G=C3=A1bor?= Farkas <gabor.farkas@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: git switch/restore, still experimental?
+References: <CAPiPmQnb=XMaF2+YkryEbiX8zA=jwa5y=fbAGk9jpCExpbS4Rw@mail.gmail.com>
+        <CABPp-BHBcjSQbkotrzwDtVRSC-qqjEyP4m=biY-0+=Jdg9ETQw@mail.gmail.com>
+        <877dkdwgfe.fsf@evledraar.gmail.com> <87sg3155dt.fsf@osv.gnss.ru>
+Date:   Thu, 06 May 2021 10:39:28 +0900
+In-Reply-To: <87sg3155dt.fsf@osv.gnss.ru> (Sergey Organov's message of "Wed,
+        05 May 2021 22:48:14 +0300")
+Message-ID: <xmqqk0oc1vzj.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: E5A2AC0C-AE0A-11EB-A9DC-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: E5F5E128-AE0B-11EB-9309-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Sergey Organov <sorganov@gmail.com> writes:
 
-> Right. I had the same concern. But it does look as if
-> `xdl_classify_record()` replaced the possibly non-unique hash values to
-> unique sequential identifiers.
->
-> I have to admit that the code is unnecessarily hard to read for me:
-> https://github.com/git/git/blob/v2.31.1/xdiff/xprepare.c#L110-L157
->
-> But I do gather that the loop at
-> https://github.com/git/git/blob/v2.31.1/xdiff/xprepare.c#L119-L123
-> is called for every line, that it does compare it to every seen line with
-> the same hash, and that it exits the loop early if the contents disagree:
->
-> 	for (rcrec = cf->rchash[hi]; rcrec; rcrec = rcrec->next)
-> 		if (rcrec->ha == rec->ha &&
-> 				xdl_recmatch(rcrec->line, rcrec->size,
-> 					rec->ptr, rec->size, cf->flags))
-> 			break;
+> Isn't --merge a different (and inferior) way to achieve what we already
+> have elsewhere with --autostash? Does it make sense to get rid of --merge
+> here in favor of --autostash?
 
-Yeah, I arrived at the same conclusion.  Also as Phillip said in a
-separate message, Myers side already takes advantage of this same
-fact, so I am fine with this change.
+Not really.
 
-Thanks, both.
+The "--autostash" might appear to be applicable to cases that can
+induce larger conflict, but once the diversion gets larger than what
+one comfortably can deal with "checkout -m", the user is better off
+to work by forking a branch there and create a WIP commit, than deal
+with the stash.  So if anything, I'd rather get rid of "--autostash"
+than "-m", to help users get in a better work habit.
+
+
