@@ -6,115 +6,97 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1F6EC433B4
-	for <git@archiver.kernel.org>; Thu,  6 May 2021 16:56:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C95F1C433B4
+	for <git@archiver.kernel.org>; Thu,  6 May 2021 16:59:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6F9FE61177
-	for <git@archiver.kernel.org>; Thu,  6 May 2021 16:56:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8F269610A7
+	for <git@archiver.kernel.org>; Thu,  6 May 2021 16:59:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236088AbhEFQ46 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 May 2021 12:56:58 -0400
-Received: from cloud.peff.net ([104.130.231.41]:46562 "EHLO cloud.peff.net"
+        id S236123AbhEFRAC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 May 2021 13:00:02 -0400
+Received: from cloud.peff.net ([104.130.231.41]:46578 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236044AbhEFQ45 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 May 2021 12:56:57 -0400
-Received: (qmail 30353 invoked by uid 109); 6 May 2021 16:55:59 -0000
+        id S235881AbhEFRAC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 May 2021 13:00:02 -0400
+Received: (qmail 30370 invoked by uid 109); 6 May 2021 16:59:03 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 06 May 2021 16:55:59 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 06 May 2021 16:59:03 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 23382 invoked by uid 111); 6 May 2021 16:55:59 -0000
+Received: (qmail 23446 invoked by uid 111); 6 May 2021 16:59:03 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 06 May 2021 12:55:59 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 06 May 2021 12:59:03 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 6 May 2021 12:55:58 -0400
+Date:   Thu, 6 May 2021 12:59:02 -0400
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 Subject: Re: [PATCH 1/4] Makefile: don't re-define PERL_DEFINES
-Message-ID: <YJQfnviIeK7UdCBy@coredump.intra.peff.net>
+Message-ID: <YJQgVsKdb+gh5Sep@coredump.intra.peff.net>
 References: <cover-0.4-00000000000-20210505T121857Z-avarab@gmail.com>
  <patch-1.4-ed2005a2fbf-20210505T121857Z-avarab@gmail.com>
  <YJKm0dnwHBwQuTi+@coredump.intra.peff.net>
- <xmqq4kfg3c4v.fsf@gitster.g>
+ <87y2csv0qm.fsf@evledraar.gmail.com>
+ <xmqq7dkcz20u.fsf@gitster.g>
+ <87sg30usm9.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqq4kfg3c4v.fsf@gitster.g>
+In-Reply-To: <87sg30usm9.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 06, 2021 at 10:05:20AM +0900, Junio C Hamano wrote:
+On Thu, May 06, 2021 at 11:04:34AM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-> As to the simply-expanded vs recursively-expanded variable, there is
-> aneed to use former, which comes from what the original commit
-> 07d90ead did outside the context of this patch, which is:
+> > Actually, strictly speaking there was *no* bug because assigning
+> > three items with := made sure the previous recursively expanded one
+> > to be ineffective.  In other words, there was a valid reason to use
+> > ":=" there in the original version.
 > 
->     PERL_DEFINES := $(subst $(space),:,$(PERL_DEFINES))
->     GIT-PERL-DEFINES: FORCE
->             @FLAGS='$(PERL_DEFINES)'; \
->                 if test x"$$FLAGS" != x"`cat $@ 2>/dev/null`" ; then \
->                     echo >&2 "    * new perl-specific parameters"; \
->                     echo "$$FLAGS" >$@; \
->                 fi
+> Yes, there wasn't any bug with the the eventual value being
+> incorrect. I.e. both of these are equivalent in a Makefile:
 > 
-> That is, up to this point PERL_DEFINES accumulate various build-time
-> settings with += (i.e. space separated tokens), and at this point
-> finally it is turned into a colon separated tokens, which cannot be
-> written with a recursively expanded variable.
+>     FOO = abc
+>     FOO := def
+>     FOO += ghi
 > 
-> But I tend to agree that you do not have to := clear the list in
-> this patch.
+> And:
+> 
+>     FOO = abc
+>     FOO = def
+>     FOO += ghi
+> 
+> Both will yield "def ghi". They're just different in a case like:
+>     
+>     X = Y
+>     FOO = abc
+>     FOO := $(X)
+>     X = Z
+>     FOO += ghi
+> 
+> Where using := will echo "Y ghi", and using = will echo "Z ghi". As a
+> practical matter the distinction doesn't matter in this case.
 
-OK, that matches my understanding. Thanks for laying out.
+Yeah, I don't think the ":=" was impacting the bug or no bug (not to
+mention that even if we duplicated those entries in the variable, it
+_still_ wouldn't be a bug, since the whole point of the variable is just
+to notice when the content changes).
 
-In general, I would say that the later use that you quoted above would
-do better to use a second variable (because then there is no question of
-when PERL_DEFINES is space-separated and when it is colon-separated).
-But that is not that big a deal, and certainly very orthogonal to Ævar's
-patch.
+> > Now your patch removed the recursively expanded one that was
+> > immediately invalidated, there no longer is a reason to use :=
+> > there.  So "unrelated to the more narrow bugfix" is a rather lame
+> > excuse to do only half a task.  If we remove that extra one (which
+> > is a good thing), then we should correct := into = because the
+> > original used := only because there was the unwanted extra one, no?
+> 
+> I don't see how removing the stray line changes the reason to use ":="
+> or "=" there. I agree it should be removed, it's just unrelated to
+> removing the stay line. Looking at 07d90eadb50 it's clear that it's just
+> some copy/pasting error.
 
-I'd also question whether the colon transformation is even necessary.
-The point of the file is to change when the values change. Being sloppy
-with delimiters means we _could_ miss a change, but in practice I doubt
-it is very likely (and it is not like colons cannot appear in values,
-either, so they are not foolproof). But again, not really important for
-this patch.
+Yeah, I'd agree it is truly orthogonal. I don't mind seeing it cleaned
+up in addition (or am even actively happy to see it cleaned up :) ), but
+IMHO it would not need to hold up the series.
 
 -Peff
-
-P.S. I also wondered briefly if make would preserve spaces even for
-empty variables (since without that, we might miss delimiters and
-confuse one of the variables for another). I.e., we know that:
-
-  FOO = $(one):$(two):$(three)
-
-will have two colons even if some of the variables are empty. But does
-it preserve them even for "$(one) $(two) $(three)", or more importantly,
-when using "+=" (which _would_ be relevant to this patch)? The answer is
-yes, they are all fine.
-
-You can demonstrate it with the Makefile below, running "make one=foo
-three=bar", "make two=foo", etc.
-
--- >8 --
-empty :=
-space := $(empty) $(empty)
-
-COLONS = $(one):$(two):$(three)
-
-SPACES_SINGLE = $(one) $(two) $(three)
-SPACES_SINGLE := $(subst $(space),:,$(SPACES_SINGLE))
-
-SPACES_PLUS =
-SPACES_PLUS += $(one)
-SPACES_PLUS += $(two)
-SPACES_PLUS += $(three)
-SPACES_PLUS := $(subst $(space),:,$(SPACES_PLUS))
-
-all:
-	@echo "COLONS=$(COLONS)"
-	@echo "SPACES_SINGLE=$(SPACES_SINGLE)"
-	@echo "SPACES_PLUS=$(SPACES_PLUS)"
