@@ -6,90 +6,69 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2FC3C433B4
-	for <git@archiver.kernel.org>; Thu,  6 May 2021 00:38:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CA26C433ED
+	for <git@archiver.kernel.org>; Thu,  6 May 2021 00:40:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9F8E561185
-	for <git@archiver.kernel.org>; Thu,  6 May 2021 00:38:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5722961222
+	for <git@archiver.kernel.org>; Thu,  6 May 2021 00:40:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229725AbhEFAjP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 May 2021 20:39:15 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:64579 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229488AbhEFAjP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 May 2021 20:39:15 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7AC6B12F630;
-        Wed,  5 May 2021 20:38:18 -0400 (EDT)
+        id S229732AbhEFAlS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 May 2021 20:41:18 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61808 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229488AbhEFAlR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 May 2021 20:41:17 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6EFA2D345F;
+        Wed,  5 May 2021 20:40:20 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=IZ33ZAytE3HJfg5CXqdQ7xYqAooRZsbpe110wQ
-        sQIuA=; b=Ie4+zbQdbqHVvEh9LQazigCuD6MeABeSdzPp2DWXyOZVx9kvt5Tk6F
-        spdr8ar5wA3YC8/7gr82FYOV4ZlhDLXzpZtVgbqGDbp3AYcN59UuBuXtd9SmO9p0
-        kCJ/KGaOJ3llHYovFkvFcmPl9bXKwynpwBF7ZpzkyyQICrdUooQyw=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 72F9112F62F;
-        Wed,  5 May 2021 20:38:18 -0400 (EDT)
+        :content-type; s=sasl; bh=vQP5mqhgjKyxlZVLDYdtbOlcVpWAPpLmIFysuD
+        Y6CFY=; b=YJApPzxK/GVOsxZGexTS7hnP2Up3qyavC1y2fAjj97r+NYOys5+cj2
+        RfJ0KNaxpRhRGIcLZQsFHLPzlD8nLUWkjdvgXrhPePoBJpGOUwUOgTu/jE/MDOMJ
+        Z3M9CK/ZfGKiTFsJlcZGPDtplTpfYHO2X49LdK6aAVEVcI3B6N0TI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6582AD345E;
+        Wed,  5 May 2021 20:40:20 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9EDF712F62E;
-        Wed,  5 May 2021 20:38:15 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DBEB8D345C;
+        Wed,  5 May 2021 20:40:19 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Mark Amery <markrobertamery@gmail.com>, git@vger.kernel.org
-Subject: Re: Bug: Changing folder case with `git mv` crashes on
- case-insensitive file system
-References: <CAD8jeghpOQoibk0xM0QgLsOwLNw9GdM=4rhYuzV-NSkw8LinMQ@mail.gmail.com>
-        <YJCABtAGT7s70jl1@camp.crustytoothpaste.net>
-        <xmqqfsz36u0r.fsf@gitster.g>
-        <YJEuBqVVa/7x+jrZ@camp.crustytoothpaste.net>
-        <nycvar.QRO.7.76.6.2105051528030.50@tvgsbejvaqbjf.bet>
-Date:   Thu, 06 May 2021 09:38:14 +0900
-In-Reply-To: <nycvar.QRO.7.76.6.2105051528030.50@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Wed, 5 May 2021 15:51:14 +0200 (CEST)")
-Message-ID: <xmqqeeek3de1.fsf@gitster.g>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Matheus Tavares <matheus.bernardino@usp.br>, git@vger.kernel.org,
+        christian.couder@gmail.com, git@jeffhostetler.com, tboegi@web.de
+Subject: Re: [PATCH v3 0/8] Parallel Checkout (part 3)
+References: <cover.1619818517.git.matheus.bernardino@usp.br>
+        <cover.1620145501.git.matheus.bernardino@usp.br>
+        <273c4f16-60b6-5635-b95a-17192cf4d5de@gmail.com>
+Date:   Thu, 06 May 2021 09:40:19 +0900
+In-Reply-To: <273c4f16-60b6-5635-b95a-17192cf4d5de@gmail.com> (Derrick
+        Stolee's message of "Wed, 5 May 2021 09:57:08 -0400")
+Message-ID: <xmqqa6p83dak.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 586DC9FE-AE03-11EB-825A-E43E2BB96649-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: A27D7EC2-AE03-11EB-B65E-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Derrick Stolee <stolee@gmail.com> writes:
 
-> So _if_ we need that file ID information, I would be very much in favor of
-> introducing a proper abstraction, where differentiate between the
-> intention (think `get_inode(const char *path)`) from the
-> platform-dependent implementation detail (think `lstat()`, `CreateFile()`
-> and `GetFileInformationByHandle()`).
+> On 5/4/2021 12:27 PM, Matheus Tavares wrote:
+>> This is the last part of the parallel checkout series. It adds tests and
+>> parallel checkout support to `git checkout-index` and
+>> `git checkout <pathspec>`.
+>> 
+>> I rebased this version onto `master`, as part-2 was merged down to
+>> `master`.
+>
+> I read the range-diff and gave the patches another pass. This version
+> looks good to me.
 
-I agree in principle.  Essentially, we need to
-
- (1) examine all calls to lstat(2) we make in our codebase, and find
-     out what members of "stat" are really used out of the result
-     for each callsite.  This will be different from caller to
-     caller (some callers may want only ino, other callers may want
-     ino, size, and mtime, etc.), and we would learn that there are
-     N patterns.
-
- (2) write N abstracted helper functions (or a single helper that
-     takes const char *path, struct stat *, and an enum to tell
-     which one of N patterns this call is about).
-
- (3) replace each lstat(2) call with one of these N abstract helper
-     functions.
-
-get_inode() might be one of these N functions, but what is important
-is that the current callers that want ino and something else should
-not be penalized by making two separte calls get_inode() and
-get_other_things(), which, when done naively, would result in two
-lstat(2) calls.
-
-
-
+Thanks.  Your assessment matches mine.
