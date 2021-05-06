@@ -7,157 +7,148 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E213C433ED
-	for <git@archiver.kernel.org>; Thu,  6 May 2021 09:12:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B633EC433ED
+	for <git@archiver.kernel.org>; Thu,  6 May 2021 09:19:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EFD49610C8
-	for <git@archiver.kernel.org>; Thu,  6 May 2021 09:12:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7C5B4610A2
+	for <git@archiver.kernel.org>; Thu,  6 May 2021 09:19:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233976AbhEFJNw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 May 2021 05:13:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60848 "EHLO
+        id S233036AbhEFJUa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 May 2021 05:20:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34080 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233765AbhEFJNv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 May 2021 05:13:51 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BCD3C061574
-        for <git@vger.kernel.org>; Thu,  6 May 2021 02:12:53 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id n138so6780046lfa.3
-        for <git@vger.kernel.org>; Thu, 06 May 2021 02:12:53 -0700 (PDT)
+        with ESMTP id S232982AbhEFJU1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 May 2021 05:20:27 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 539BBC061574
+        for <git@vger.kernel.org>; Thu,  6 May 2021 02:19:29 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id s7so645421edq.12
+        for <git@vger.kernel.org>; Thu, 06 May 2021 02:19:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=NJWWAxy5H2OkwByjPwBBKGAL/lvHEQU2a42AcS2jiNA=;
-        b=vcVVFQdSqrZqvuwCLFcHntdswwDI0ES6UgkYxrprlhMaQylyhfoMOmjws7rF66NKdZ
-         ezpTDlrj+ywru/d1g41A2R4BAFk3MpUxvYW6gn0hBgWWbjAWBz9mTq9M4174sRLkgNzP
-         gbWK8cr5LIrvmZLVgi5BW2+AtdpLDuiDFA48zXE/ZGGd3qDSHBH/uNiYl5KPjI9xq1Mj
-         JJJyxi013L/qMAS6mwm9P56b/38GAQptKcfCR84bbaFsKFGaeBvLAt8nIaOScA3v0K88
-         ZhfLJMTiof/8mwWhs+rUEFiADUJoQsg/kiYGQWZWYENrXRrWnpCzsxvXEi2OBuLwRfJY
-         Ik5g==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=upzM/ZyZcmZzAT3jhA5UV8y3uTm8ZOtf0S8ioT0A9EY=;
+        b=AeN9ukH2n8wXGMhFpbNbf8DF5nX+RSwAX1IlayN5Q6+jX3CPuF4se1uuOV6ex1GjM9
+         2PFX8zX1z9uV5mlJZ8PqE0+1TJQ69OncBJxG/wqm5EBq0Xiu/FT1tEA7lQrC2k04nh9Y
+         uKYpTKlN/q5TdcH2R4cXy0h1qRPvj9x1WPYhg7CBbcyk0TgZq8jJ6zbEJmfpzN9SkEyt
+         o/ziEGgKDY40mBBd0pFy/xeoSSl67vjTMvANqEIAw7r0wuWrgWFYaEGVWugDn0Ghaeek
+         qcvtAWeYZ/+oRtnhLytvWeYZn4hjtXX79On5jCOp3PxWjF+ZWHEofvt0qAUPapB5sNFT
+         V0aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=NJWWAxy5H2OkwByjPwBBKGAL/lvHEQU2a42AcS2jiNA=;
-        b=dps/Iwyjj+m2RDdaGl+hEuKKooQvTZ4y4yqlSgoGaIh4qGPNxUa1afJBSEKeUX/ZJF
-         3H3dr/hhJMPWIlP7Gyx+iHBj9WlgHz1CL3GPMpp7HrdOmzRPtFcttrEOXcFz4ymL9cfb
-         c2fj9NatB+7PoxwWbtL/V2b+zHi9RAIn1QGBs/1yIS5zNUcZxa1+JK23Ou9YlJU01jPa
-         TuyMQj3FvCj2ziNMcgRWvbr3JyP0fFI8dYnMGq2vOEscG3pfBNfOO8l+yTmmNR+RGGRt
-         msASOe1dbMozoqYr/18cfQSZzZ11PlkvXSavHcsFhgONUTobcseRjLyyX3068vDdVNW6
-         SABw==
-X-Gm-Message-State: AOAM5332RiTnfZecSsW/QdqUMOw1iU/s54cSGd5AgKyTByc3aujdUxoz
-        psRLnQa/NYOvsjE5kmjeAuMClslDLZW4rak1zm4=
-X-Google-Smtp-Source: ABdhPJz/RdNberW7ovodsBUESrE34SccU9nM3ENzmVyK0RO0P0D3TWRgaIvMG0ak61xkRNOj5eQfsK8/L42YqMnz4bI=
-X-Received: by 2002:ac2:53aa:: with SMTP id j10mr2168800lfh.524.1620292371133;
- Thu, 06 May 2021 02:12:51 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=upzM/ZyZcmZzAT3jhA5UV8y3uTm8ZOtf0S8ioT0A9EY=;
+        b=YEh1uqEXi0/z2Q6iBbu1PbgMXN0aIBQ1FUx2VsEYbRw7h70s58aqnA/8KNJf6iJVjQ
+         5AyMBaqPQdvucmqFTTF8GBgP7aAQii40XqI2JSHycbn7rbeGbrUWiLI10pDgoh66nlE9
+         b5yGwfKnEdsEhsMo2CnHR5gZXhvUOearNQRqY6KDKxePP5TIfVvP1UpenG9/I9fAhPoO
+         OH2I77jsnyObubmFBOswjwzo3iDggFKNnH4S9N/Lh+koO7mluGfNbk8hp3MX79waAQu7
+         SVF6xRN1rlxyrnz/lx7uzLgavfzobY9tF9zPAlkG7qlUZ2rKI3SoxdC1GqHd8KQlTIKy
+         th9A==
+X-Gm-Message-State: AOAM532whCcEfI7uXs5WZFslQpbww5ZyEoSa/b+DMx6lTgDmUL8sB/BD
+        qlBuXMhoVt+t7EKNm+Vfzao=
+X-Google-Smtp-Source: ABdhPJyWahIDE7ZBkmHAU8YxFla6F4DLafPDryqQVMjZ819c0w51n3omtigHUJZXAvgb4cqiBuWUUw==
+X-Received: by 2002:a05:6402:2366:: with SMTP id a6mr4036860eda.10.1620292767880;
+        Thu, 06 May 2021 02:19:27 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id r15sm1140901edp.62.2021.05.06.02.19.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 May 2021 02:19:27 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [PATCH 1/4] Makefile: don't re-define PERL_DEFINES
+Date:   Thu, 06 May 2021 11:04:34 +0200
+References: <cover-0.4-00000000000-20210505T121857Z-avarab@gmail.com>
+        <patch-1.4-ed2005a2fbf-20210505T121857Z-avarab@gmail.com>
+        <YJKm0dnwHBwQuTi+@coredump.intra.peff.net>
+        <87y2csv0qm.fsf@evledraar.gmail.com> <xmqq7dkcz20u.fsf@gitster.g>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
+In-reply-to: <xmqq7dkcz20u.fsf@gitster.g>
+Message-ID: <87sg30usm9.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <CAD8jeghpOQoibk0xM0QgLsOwLNw9GdM=4rhYuzV-NSkw8LinMQ@mail.gmail.com>
- <20210504151954.aczbvml4rh7t2svc@tb-raspi4> <xmqqtuni58ra.fsf@gitster.g> <20210506043429.zqgzxjrj643avrns@tb-raspi4>
-In-Reply-To: <20210506043429.zqgzxjrj643avrns@tb-raspi4>
-From:   Mark Amery <markrobertamery@gmail.com>
-Date:   Thu, 6 May 2021 10:12:40 +0100
-Message-ID: <CAD8jeghZKDcp=weHtcMZ4z8KaO1jQJqfPqaRtYgtiwrX-1+NNg@mail.gmail.com>
-Subject: Re: Bug: Changing folder case with `git mv` crashes on
- case-insensitive file system
-To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-So, I'm just a dumb Git user who doesn't even write C, so much of this
-discussion is over my head, but I have a few thoughts that may be
-helpful:
 
-=E2=80=A2 The mv utility on Mac is capable of doing `mv b=C3=A4r.txt b=C3=
-=84r.txt` just
-fine. Maybe `git mv` can learn something from whatever `mv` does?
+On Thu, May 06 2021, Junio C Hamano wrote:
 
-=E2=80=A2 On a case-insensitive file system, `git mv somedir sOMEdir` is a
-rename. But on a case-sensitive file system, it might NOT be a rename;
-it might be the case that `somedir` and `sOMEdir` both exist and that
-the command should put `somedir` inside `sOMEdir`. I mention this
-because I can imagine some naive attempts at fixing the original bug
-by doing a case-insensitive comparison of the two names ending up
-breaking this behaviour on case-sensitive file systems by wrongly
-treating such a command as a rename. It's probably worth having a test
-that this scenario gets handled cleanly on case-sensitive file
-systems? (I haven't checked whether Torsten's proposed diff falls into
-this trap or not.)
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>
+>>>> -PERL_DEFINES =3D $(PERL_PATH_SQ):$(PERLLIB_EXTRA_SQ):$(perllibdir_SQ)
+>>>> -
+>>>> -PERL_DEFINES :=3D $(PERL_PATH_SQ) $(PERLLIB_EXTRA_SQ) $(perllibdir_SQ)
+>>>> +PERL_DEFINES :=3D
+>>>> +PERL_DEFINES +=3D $(PERL_PATH_SQ)
+>>>> +PERL_DEFINES +=3D $(PERLLIB_EXTRA_SQ)
+>>>> +PERL_DEFINES +=3D $(perllibdir_SQ)
+>>>>  PERL_DEFINES +=3D $(RUNTIME_PREFIX)
+>>>
+>>> I don't think we generally use simply-expanded variables in our Makefile
+>>> unless there's a reason. Do we actually need it here? Obviously not new
+>>> in your patch, but just a curiosity I noticed while reading it.
+>>
+>> I didn't notice it at the time. I suppose it could be changed to not do
+>> expansion, but per-se unrelated to the more narrorw bugfix in this
+>> patch.
+>
+> Actually, strictly speaking there was *no* bug because assigning
+> three items with :=3D made sure the previous recursively expanded one
+> to be ineffective.  In other words, there was a valid reason to use
+> ":=3D" there in the original version.
 
-=E2=80=A2 Above, Torsten mentions that there are filesystem-specific rules
-about what names are equal to each other that Git can't easily handle,
-because they go beyond just ASCII case changes. In that case, maybe
-the right solution is to always defer the question to the filesystem
-rather than Git trying to figure out the answer "in its head"?
+Yes, there wasn't any bug with the the eventual value being
+incorrect. I.e. both of these are equivalent in a Makefile:
 
-  That is: first check the inode or file ID of the src and dst passed
-to `git mv`. If they are different and the second one is a folder,
-move src inside the existing folder. If either they are the same or
-the second one is not a folder, then do a rename.
+    FOO =3D abc
+    FOO :=3D def
+    FOO +=3D ghi
 
-  It seems to me that this approach automatically handles stuff like
-`git mv b=C3=A4r.txt b=C3=84r.txt` plus any other rules about names being e=
-qual
-(like two different sequences of code points that both express "=C3=A0"),
-all without Git ever needing to explicitly check whether two names are
-case-insensitively equal. Am I missing something?
+And:
 
-Sorry if any of the above is dumb or if I'm reiterating things others
-have already said without realising it.
+    FOO =3D abc
+    FOO =3D def
+    FOO +=3D ghi
 
-On Thu, May 6, 2021 at 5:34 AM Torsten B=C3=B6gershausen <tboegi@web.de> wr=
-ote:
->
-> On Wed, May 05, 2021 at 09:23:05AM +0900, Junio C Hamano wrote:
-> > Torsten B=C3=B6gershausen <tboegi@web.de> writes:
-> >
-> > > To my undestanding we try to rename
-> > > foo/ into FOO/.
-> > > But because FOO/ already "exists" as directory,
-> > > Git tries to move foo/ into FOO/foo, which fails.
-> > >
-> > > And no, the problem is probably not restricted to MacOs,
-> > > Windows and all case-insenstive file systems should show
-> > > the same, but I haven't tested yet, so it's more a suspicion.
-> > >
-> > > The following diff allows to move foo/ into FOO/
-> > > If someone wants to make a patch out if, that would be good.
-> >
-> > Is strcasecmp() sufficient for macOS whose filesystem has not just
-> > case insensitivity but UTF-8 normalization issues?
-> >
->
-> Strictly speaking: no.
->
-> The Git code doesn't handle UTF-8 uppper/lower case at all:
-> git mv bar.txt BAR.TXT works because strcasecmp() is catching it.
->
-> git mv b=C3=A4r.txt B=C3=84R.TXT needs the long way:
-> git mv b=C3=A4r.txt baer.txt && git mv baer.txt B=C3=84R.TXT
->
-> We have been restricting the case-change-is-allowed to ASCII filenames
-> all the time.
-> There is no information, which code points map onto each other in Git,
-> since this is all file system dependent.
-> NTFS has one way, HFS+, APFS another, VFAT a third one, and if I expose
-> ext4 via SAMBA we probably have another one.
-> Not mentioniong that ext4 can be use case-insensitve on later Linux kerne=
-ls,
-> which sticks to unicode.
-> Or Git repos running on machines using ISO-8859-1, those should be rare t=
-hese
-> days.
->
-> That said, people are renaming files in ASCII only and are happy,
-> and in that sense renaming directories in ASCII can be supported
-> without major hassle.
->
-> And the inode approach mentioned as well:
-> This could go on top of strcasecmp() to cover non-ASCII filenames
-> or other oddities, if someone implements it.
->
->
+Both will yield "def ghi". They're just different in a case like:
+=20=20=20=20
+    X =3D Y
+    FOO =3D abc
+    FOO :=3D $(X)
+    X =3D Z
+    FOO +=3D ghi
+
+Where using :=3D will echo "Y ghi", and using =3D will echo "Z ghi". As a
+practical matter the distinction doesn't matter in this case.
+
+> Now your patch removed the recursively expanded one that was
+> immediately invalidated, there no longer is a reason to use :=3D
+> there.  So "unrelated to the more narrow bugfix" is a rather lame
+> excuse to do only half a task.  If we remove that extra one (which
+> is a good thing), then we should correct :=3D into =3D because the
+> original used :=3D only because there was the unwanted extra one, no?
+
+I don't see how removing the stray line changes the reason to use ":=3D"
+or "=3D" there. I agree it should be removed, it's just unrelated to
+removing the stay line. Looking at 07d90eadb50 it's clear that it's just
+some copy/pasting error.
+
+Maybe the confusion is that I'm using "bug" closer to a meaning of "a
+thing nobody intended to be in the program", not just "a
+behavior-changing issue observable from the outside".
+
+In any case. I can just submit a patch on top of this in a v2. I
+continue to find it hard to discover the line between superfluous
+while-we're-at-it fixes in your mind v.s. "we should fix this while
+we're at it" though :)
+
+But regarding the "half a task" it seems to me that these are different
+issues; I don't think that's a point worth arguing in this case
+specifically (let's just fix it, and I will), but perhaps I'm missing
+something subtle with regards to Makefile semantics per my examples
+above so it really is all one issue, and I'd like to understand how
+they're entwined.
