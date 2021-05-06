@@ -2,114 +2,156 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 97A84C433ED
-	for <git@archiver.kernel.org>; Thu,  6 May 2021 08:49:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5EFE0C433ED
+	for <git@archiver.kernel.org>; Thu,  6 May 2021 08:56:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5EF12611AE
-	for <git@archiver.kernel.org>; Thu,  6 May 2021 08:49:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 24994610FB
+	for <git@archiver.kernel.org>; Thu,  6 May 2021 08:56:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233883AbhEFIuu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 May 2021 04:50:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55796 "EHLO
+        id S233926AbhEFI5k (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 May 2021 04:57:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233464AbhEFIuq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 May 2021 04:50:46 -0400
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA826C061574
-        for <git@vger.kernel.org>; Thu,  6 May 2021 01:49:47 -0700 (PDT)
-Received: by mail-pj1-x1036.google.com with SMTP id gq14-20020a17090b104eb029015be008ab0fso3085036pjb.1
-        for <git@vger.kernel.org>; Thu, 06 May 2021 01:49:47 -0700 (PDT)
+        with ESMTP id S233824AbhEFI5j (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 May 2021 04:57:39 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9683AC061574
+        for <git@vger.kernel.org>; Thu,  6 May 2021 01:56:40 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id u3so7080949eja.12
+        for <git@vger.kernel.org>; Thu, 06 May 2021 01:56:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=QExGGPghMogbyOb8+nhBeMqXeh0cx/eE8cjFRD9yubc=;
-        b=ktnDXv14DgOshxmkJv/YrVtu3mhKJAikkWw1RZaCR6lBJeitUsNZr0UHhnw7BjfBcF
-         oq0SmYHdxTQJgL9YNBznrGmO2Pa3RIQFd6HLb90lzXgrNCpuwph08j5mtFXivevaXqqL
-         wR8FXkrOQd/kjYZXW/Dby+/s8MWnPtfdf13a+RaulEEqDp9+u/5xEJCZulYruD1IJl2d
-         ClbnZIrtiiTM4/U5Q5qzlxyl3V1R4S6mJyeSZC5o03SZTf21Klq8aGJJUetZXPW1UExE
-         EH0KA05ydJYg3MyVWMC+5xtjqGlo6FBaiC72JQGAbkWqxl2fjDV0dtK7eR6J9XtyItSu
-         4eGQ==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=B5CQqTlaK7aGvEru8YysOZ0wmH1O/yOpi0IVYGKKQwU=;
+        b=OBi4AOzBdGdUiylwKkL7QIElm4f1qqlRip0KUdTVf355AeAuUbYnreufCulhywtfaw
+         jb9YVYbSF22HW2wlnhdhU5shVSllG4LNQ4EXqTqp5dKWwLx3iIyjFFTrv3SeJK435F33
+         vjVQGsp/wsK66+NWMfrdbllzXkahuOAygUec6WCKQldtpE/bztPPKf8sH6kDmN/RnVeY
+         1OkeUnu+gu9IHgoi5d63iH5VsfrOyNRLdpN9dUGWN0nwKHC8qEd5TDfoQw4I8vx1T7nl
+         CSeWpbPG0bMfQuUmwgFSWCQ1BJ4CujloKjudS2NlX5QAzVqK3bcv9DsbvXSk6U5S3KnK
+         d2mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=QExGGPghMogbyOb8+nhBeMqXeh0cx/eE8cjFRD9yubc=;
-        b=DCJbNpP+Avhtc/YjRvNHfpnI1G4vv/tcLTZuOPU4f8ydZI32ATmI+7dJRESwPvzBiK
-         eDxWLUBg+EUZ17rGEc560qua5N68KCqTczOYC5Q3QDz4m8mPftaLE/0YYmHri8H3SG7L
-         OqeZESRtNMJdfMDvO8NAz4bCyX9A6GeH9zlGg6amff36tJt2vJe+B3aQ7plxfnNCC5rj
-         B2EGz2VvbH7+VyKVUtoDX6Otnw0rUNDd/1yIjrzy9WB72s3Gp0fDuEyV+NTO/ns9eWJV
-         lOmcl3Zr3Ifjybo5Y1a74e8Z3/kqi0V6QRR8nvuC8E2+VzssYQH2WKxgiuoQqVkY5L85
-         ciRw==
-X-Gm-Message-State: AOAM533C/vjVr9Bs3+9b1nTm2wlyQWmwxL8ZSNYbkWP8qFVLUQgUhI+5
-        IQ7gJj1izX7O2Wkjw6kF2c6Szj09c6K3wuFTMRGlxAGUX+j6wke7Vi+zzQ==
-X-Google-Smtp-Source: ABdhPJw+50dU1Xzi30z4pSCX/Amlf6tZL1HmdK41tysZyd1pkDlfa4OmdRtbWve51FaGxDqT8buj0oU17wObntfyZrk=
-X-Received: by 2002:a17:902:f2c2:b029:ed:929a:75bc with SMTP id
- h2-20020a170902f2c2b02900ed929a75bcmr3362588plc.0.1620290987396; Thu, 06 May
- 2021 01:49:47 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=B5CQqTlaK7aGvEru8YysOZ0wmH1O/yOpi0IVYGKKQwU=;
+        b=LDh/PXQkIXoFnB8Q0oNjSCx0xmWOq95X/bVMkU8S0NzQFin2TOoJVpfIbsBySgrIjv
+         g+El9LnnYeOAsyNLM6FQpETHJT3psB8f3bbQ57qSUnZuxoyaGJacKh1u6/6GniVZI1D/
+         0XOHgQxF4fUmbewGhWDEd6hTuqIh9Mnlra2DHY6KYthsoNkJ9OI1Ii7+0hsMcgwaTRUq
+         iUxXgDu+IIopCcbPTEmw5PmMWbVrSHRS1t0pbGdPQ2JvvTkl7ugPTUZv18/MrVCtEjS+
+         0dimSDo3XoyYi8LkvjRfn8reQdX1lNlIcfyBeJX/B9dosNeQfe72hRrLr0rpHrrEjYDp
+         NG2Q==
+X-Gm-Message-State: AOAM533trwk/VNZ7Dd0f838ffzyjBmQ+2y+Hk2lgriWkN+ggZdeYvnUZ
+        YyBuaXukDwDlzgjwL9kdBsw=
+X-Google-Smtp-Source: ABdhPJyPyorR8oQMIbRBMeV0T/NjOTqXTM9SGtOGvzpfrMEwDVd5Bx86JdOrMocRvfBnhIrVSO3hYQ==
+X-Received: by 2002:a17:907:9612:: with SMTP id gb18mr3321339ejc.408.1620291399215;
+        Thu, 06 May 2021 01:56:39 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id y2sm948415ejg.123.2021.05.06.01.56.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 May 2021 01:56:38 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] sparse-index.c: don't call prepare_repo_settings()
+ twice in a row
+Date:   Thu, 06 May 2021 10:49:59 +0200
+References: <cover-0.2-00000000000-20210505T121028Z-avarab@gmail.com>
+ <patch-2.2-8bca02efcee-20210505T121028Z-avarab@gmail.com>
+ <7954338a-bb44-1345-61b6-787782063c3c@gmail.com>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
+In-reply-to: <7954338a-bb44-1345-61b6-787782063c3c@gmail.com>
+Message-ID: <87v97wuto9.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <20210506081936.29887-1-dyroneteng@gmail.com> <xmqq35v0z1uw.fsf@gitster.g>
-In-Reply-To: <xmqq35v0z1uw.fsf@gitster.g>
-From:   dyrone teng <dyroneteng@gmail.com>
-Date:   Thu, 6 May 2021 16:49:36 +0800
-Message-ID: <CADMgQSRg559o_MLSsPvAU3c7_2uWWm0LuBkPZaQ-PD=oqqAEJQ@mail.gmail.com>
-Subject: Re: [PATCH] Fix a small flaw in the comment of strmap.h
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->The original is correct; this function returns a non-zero value if
->and only if (iff is a common abbreviation for this expression) "str"
->is in the map, implying that when "str" is not in the map, the
->caller can rest assured that the function will not return a non-zero
->value (in other words, the caller is guaranteed to receive zero).
 
->If you change that to "if", the comment no longer says what happens
->when "str" is *not* present in the map, which is making it worse.
+On Wed, May 05 2021, Derrick Stolee wrote:
 
-Thanks, got it.
+> On 5/5/2021 8:11 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>> Change code added in 58300f47432 (sparse-index: add index.sparse
+>> config option, 2021-03-30) to only call prepare_repo_settings()
+>> once. We know that our own set_sparse_index_config() has just finished
+>> calling it, so we don't need to call it if we're acting on "test_env".
+>
+> I'm not sure about the value here. prepare_repo_settings() returns
+> quickly if the settings have already been prepared, so a second call
+> is negligible in cost.
 
-Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B45=E6=9C=886=E6=97=
-=A5=E5=91=A8=E5=9B=9B =E4=B8=8B=E5=8D=884:46=E5=86=99=E9=81=93=EF=BC=9A
+I changed that while I was at it to make it easier to read, it's not an
+optimization. I.e. one wonders what the side-effect is of calling
+prepare_repo_settings() twice, discovers there isn't one...
+
+>> @@ -133,11 +133,12 @@ int convert_to_sparse(struct index_state *istate)
+>>  	test_env =3D git_env_bool("GIT_TEST_SPARSE_INDEX", -1);
+>>  	if (test_env >=3D 0)
+>>  		set_sparse_index_config(istate->repo, test_env);
+>> +	else
+>> +		prepare_repo_settings(istate->repo);
 >
-> Teng Long <dyroneteng@gmail.com> writes:
->
-> > Subject: Re: [PATCH] Fix a small flaw in the comment of strmap.h
->
-> cf. Documentation/SubmittingPatches::summary-section
->
-> > Signed-off-by: Teng Long <dyroneteng@gmail.com>
-> > ---
-> >  strmap.h | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/strmap.h b/strmap.h
-> > index 1e152d832d..0d1d00d14e 100644
-> > --- a/strmap.h
-> > +++ b/strmap.h
-> > @@ -78,7 +78,7 @@ struct strmap_entry *strmap_get_entry(struct strmap *=
-map, const char *str);
-> >  void *strmap_get(struct strmap *map, const char *str);
-> >
-> >  /*
-> > - * Return non-zero iff "str" is present in the map. This differs from
-> > + * Return non-zero if "str" is present in the map. This differs from
->
-> The original is correct; this function returns a non-zero value if
-> and only if (iff is a common abbreviation for this expression) "str"
-> is in the map, implying that when "str" is not in the map, the
-> caller can rest assured that the function will not return a non-zero
-> value (in other words, the caller is guaranteed to receive zero).
->
-> If you change that to "if", the comment no longer says what happens
-> when "str" is *not* present in the map, which is making it worse.
+> The change presented here to either call set_sparse_index_config()
+> _or_ prepare_repo_settings() seems like it knows too much about
+> how set_sparse_index_config() works.
+
+It seems reasonable to assume that a function to set config has
+initialized (or died, if it couldn't) enough of our config state to do
+its job.
+
+Besides, it's a few lines above the changed code in the same file.=20
+
+But looking at this again 2/3 callers of set_sparse_index_config()
+aren't checking the return value. Wouldn't something like [1] on top be
+a good idea here?
+
+Also, is GIT_TEST_SPARSE_INDEX=3Dtrue itself supposed to work? Running the
+test suite with it fails 3 test files for me, all /sparse/, i.e. tests
+that (presumably) assume it's not already turned on by this code.
+
+1.=20
+
+diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+index a4bdd7c4940..bea1e7dd00e 100644
+--- a/builtin/sparse-checkout.c
++++ b/builtin/sparse-checkout.c
+@@ -280,8 +280,9 @@ static int set_config(enum sparse_checkout_mode mode)
+ 				      "core.sparseCheckoutCone",
+ 				      mode =3D=3D MODE_CONE_PATTERNS ? "true" : NULL);
+=20
+-	if (mode =3D=3D MODE_NO_PATTERNS)
+-		set_sparse_index_config(the_repository, 0);
++	if (mode =3D=3D MODE_NO_PATTERNS &&
++	    set_sparse_index_config(the_repository, 0) < 0)
++		die(_("could not set index.sparse=3D0"));
+=20
+ 	return 0;
+ }
+diff --git a/sparse-index.c b/sparse-index.c
+index 5bad05de645..3938bcec962 100644
+--- a/sparse-index.c
++++ b/sparse-index.c
+@@ -131,10 +131,13 @@ int convert_to_sparse(struct index_state *istate)
+ 	 * index.sparse config variable to be on.
+ 	 */
+ 	test_env =3D git_env_bool("GIT_TEST_SPARSE_INDEX", -1);
+-	if (test_env >=3D 0)
+-		set_sparse_index_config(istate->repo, test_env);
+-	else
++	if (test_env >=3D 0) {
++		if (set_sparse_index_config(istate->repo, test_env) < 0)
++			die(_("could not set index.sparse based on GIT_TEST_SPARSE_INDEX=3D%d"),
++			    test_env);
++	} else {
+ 		prepare_repo_settings(istate->repo);
++	}
+=20
+ 	/*
+ 	 * Only convert to sparse if index.sparse is set.
