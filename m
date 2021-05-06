@@ -8,52 +8,52 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 43D67C433ED
-	for <git@archiver.kernel.org>; Thu,  6 May 2021 16:52:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E884C433B4
+	for <git@archiver.kernel.org>; Thu,  6 May 2021 16:52:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 173E9613B5
-	for <git@archiver.kernel.org>; Thu,  6 May 2021 16:52:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EC405611AE
+	for <git@archiver.kernel.org>; Thu,  6 May 2021 16:52:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236108AbhEFQxm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 May 2021 12:53:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51624 "EHLO
+        id S236115AbhEFQxn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 May 2021 12:53:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51634 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
         with ESMTP id S235881AbhEFQxm (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 6 May 2021 12:53:42 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8176C061574
-        for <git@vger.kernel.org>; Thu,  6 May 2021 09:52:43 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id t18so6358856wry.1
-        for <git@vger.kernel.org>; Thu, 06 May 2021 09:52:43 -0700 (PDT)
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60827C061574
+        for <git@vger.kernel.org>; Thu,  6 May 2021 09:52:44 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id m9so6369716wrx.3
+        for <git@vger.kernel.org>; Thu, 06 May 2021 09:52:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=/QqPvbntNNm0mzRCQZCg49nN1oygxHKwZAuEutsaIqc=;
-        b=q1Q3+k50MYieelGDgW77va4LR+qhJmcFCx2GmpQTwKO7FqtCTBMCNI/b9x2Yui8+wQ
-         bBtbzEyHPwjyj2px14sLkldmV3POfHsHirgwa8l21CWIRnpDVoXTV3RxAl2wh4ZO9hAw
-         E/NsiqIXPWbm1uNF42cCKH0jlXLfPPQczwvk2DeR+1cm+tGV2/GpbZPUweoSib7rpAG7
-         8Riv2TW6V64HL7LoyqAB3ozwT2x5LcksQTD1pcRqnAiHX6iN/Xs5SIeMqCIRDzmOeGKS
-         y7sQRxakl0xf4Fyg+mkcXUmvdJ4QadNh8Pa7MvCnGxg5Zlpf5niNJxYvzURlYidt8Y7p
-         rGeg==
+        bh=hsOLhCThGciT8IlLf93ZVtFXDGUr0WzgXEOka7x1W7c=;
+        b=ClN+a0jKSYrd18EkWfY/QynoEflcLxeRFfEGp7gGRxPN/UC60jsqu/Jkn3Fv/KK9VK
+         hsaovMd4Od6ztsC5NkHykHy4XINGtAsbQR4Sqvqqg+1GJr1AdgKZAtN+FqhwH0uWyMdo
+         XZXugj4BWO+8P/ciFiLvPmJaqytW9GpVuVIR5ou2RIKe8j3RmeLUXhoMsqRKXZti5pLd
+         6bIlIzx8jTzGyIThc1Tuo/hciCHpM13HuyTbJC8E+SLSv9sPmgpbqrJEUQTXgOAg8+IP
+         mVXl8f/mPvEh1ZmjNESwebOk/dxHNvbJ2VahzyvGmFtAxXHCu7pMPKIyTgWvM9y+CXjJ
+         UCgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=/QqPvbntNNm0mzRCQZCg49nN1oygxHKwZAuEutsaIqc=;
-        b=hihhWvpaG1IRHqfCV+4MWz4Zu9YNdmIkXAW+rRLwLHEce/qjQEIQ/XUvadoMvEiER/
-         F8pECLioHEhABM3e2+HJnIisD/PceXh3+JZ1t3SLb85L5m6npzDl8NubX8+YplLR54Mv
-         sJlnXt5IEJ0d1X1gLnNkzDSLxkkpAYe/YawbNSuEH5HGIsDV0vVExR+WYjfVuUeRrzPX
-         CHtbEeqxwaCnOi7L/KepO76HQRe27vwRfKJpJcu406zDPYBJ7rugWNpdSu6MqMD+WgBX
-         Hf7M95lge7F7DRowazdu1qfw3+ouVDMwsTYacNl0VO4DKr+0wE1CylIkNm/zA2uQEPzP
-         PKrQ==
-X-Gm-Message-State: AOAM532t1eJiSTX9D1Md+4ZP1/SoRKgaUMMxujtGIH7FCYFx/8n3vaqi
-        yU77UbgFhGQ8PMYG9J0yB64=
-X-Google-Smtp-Source: ABdhPJzwBuV/lNCxVCgyFUGa4p0hmG0/vYG9fzp1t7IIrdBpLOb8LoFhKEaHpnXxUpS4HScaqb8xng==
-X-Received: by 2002:adf:e40f:: with SMTP id g15mr6457732wrm.392.1620319962388;
-        Thu, 06 May 2021 09:52:42 -0700 (PDT)
+        bh=hsOLhCThGciT8IlLf93ZVtFXDGUr0WzgXEOka7x1W7c=;
+        b=QQuo4zZuu6ly2xYWlV2iAhLUMCqX+dMurrC/H2PRC66Xb6V1tYF0mA4iH5zQ6IWLFH
+         AWwUQgMOg6NucfD2CBnZHD/GTSSVk/Y+24KXsTYg2+5ET43s+gRV7wY92SoS/eI/fQl3
+         dOO1eGSR01fFdzGacIY3HAq7tsoOfikqoKNIfOri1rKCRADdX67n0RGQhy3xUqYV8zud
+         0ay/6eWF5vdy0X3pSrFsLhP6aPtsfL108r3uAai2iWP0yGKPczMjJDm2Z/hNW50BGtBn
+         v+pFP9oIvftnZy/cZXRgvlE0RP8GDB0HEr7rI45DA5lacE09bxyNia4aSFQ43xiYfQxb
+         4AMw==
+X-Gm-Message-State: AOAM533a3pv/mg1BxpwSrhOhhdKBPXmm2l0o928KL7hsXX85355FO53w
+        xe/ZVO0HuRq5esdSeyk5FYFaxYGpWSDobykR
+X-Google-Smtp-Source: ABdhPJw+gyycWJRq20OplB3IH9zP/MILTYZaDz9B4uvGJ4eHX6UOvg4igPu6Qx6uBSrMCheJJzoRnQ==
+X-Received: by 2002:adf:82e1:: with SMTP id 88mr6438571wrc.186.1620319963123;
+        Thu, 06 May 2021 09:52:43 -0700 (PDT)
 Received: from Inspiron.home (2a01cb04010c42006d71140a7638f172.ipv6.abo.wanadoo.fr. [2a01:cb04:10c:4200:6d71:140a:7638:f172])
-        by smtp.gmail.com with ESMTPSA id y14sm5354482wrr.82.2021.05.06.09.52.41
+        by smtp.gmail.com with ESMTPSA id y14sm5354482wrr.82.2021.05.06.09.52.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 06 May 2021 09:52:42 -0700 (PDT)
 From:   Firmin Martin <firminmartin24@gmail.com>
@@ -62,9 +62,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Johannes Schindelin <johannes.schindelin@gmail.com>,
         Erik Faye-Lund <kusmabite@gmail.com>,
         Denton Liu <liu.denton@gmail.com>
-Subject: [PATCH v1 2/8] format-patch: confirmation whenever patches exist
-Date:   Thu,  6 May 2021 18:50:56 +0200
-Message-Id: <20210506165102.123739-3-firminmartin24@gmail.com>
+Subject: [PATCH v1 3/8] format-patch: add config option confirmOverwrite
+Date:   Thu,  6 May 2021 18:50:57 +0200
+Message-Id: <20210506165102.123739-4-firminmartin24@gmail.com>
 X-Mailer: git-send-email 2.31.1.450.g14fbf8793d
 In-Reply-To: <20210506165102.123739-1-firminmartin24@gmail.com>
 References: <20210506165102.123739-1-firminmartin24@gmail.com>
@@ -74,97 +74,91 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, git-format-patch, along with the option --cover-letter,
-unconditionaly overwrites a cover letter with the same name (if
-present). Although this is a desired behaviour for patches which are
-auto-generated from Git commits log, it might not be the case for a
-cover letter whose the content is meticulously written manually.
+Provide the configuration option format.confirmOverwrite. This option
+will decide whether a confirmation is required to overwrite cover letter
+or patches issued by git-format-patch.
 
-Particulary, this behaviour could be awkward in the following
-hypothetical situations:
+It accepts three values.
+* "never"/"always": never/always ask confirmation whenever cover letter
+or patches are subject to be overwritten.
+* "cover": ask confirmation only if a cover letter is subject to be
+overwritten.
 
-* The user can easily erase a cover letter coming from prior versions or
-  another patch series by reusing an old command line (e.g. autocompleted
-  from the shell history).
-
-* Assuming that the user is writing a cover letter and realizes that
-  small changes should be made. They make the change, amend and
-  format-patch again to regenerate patches. If it happens that they use
-  the same command again (e.g. with --cover-letter), the cover letter
-  being written is gone.
-
-This patch addresses this issue by asking confirmation from the user
-whenever a cover letter or a patch with the same name already exists.
+format.confirmOverwrite defaults to "cover" to avoid cover letter
+being written be overwritten mistakenly.
 
 Signed-off-by: Firmin Martin <firminmartin24@gmail.com>
 ---
- builtin/log.c | 33 ++++++++++++++++++++++++++++-----
- 1 file changed, 28 insertions(+), 5 deletions(-)
+ builtin/log.c | 28 +++++++++++++++++++++++++++-
+ 1 file changed, 27 insertions(+), 1 deletion(-)
 
 diff --git a/builtin/log.c b/builtin/log.c
-index 6102893fcc..bada3db9eb 100644
+index bada3db9eb..ec9848da70 100644
 --- a/builtin/log.c
 +++ b/builtin/log.c
-@@ -35,6 +35,7 @@
- #include "repository.h"
- #include "commit-reach.h"
- #include "range-diff.h"
-+#include "prompt.h"
+@@ -816,6 +816,12 @@ enum auto_base_setting {
+ 	AUTO_BASE_WHEN_ABLE
+ };
  
- #define MAIL_DEFAULT_WRAP 72
- #define COVER_FROM_AUTO_MAX_SUBJECT_LEN 100
-@@ -959,6 +960,10 @@ static int open_next_file(struct commit *commit, const char *subject,
- 			 struct rev_info *rev, int quiet)
++enum confirm_overwrite_setting {
++	CONFIRM_OVERWRITE_NEVER,
++	CONFIRM_OVERWRITE_ALWAYS,
++	CONFIRM_OVERWRITE_COVER
++};
++
+ static enum thread_level thread;
+ static int do_signoff;
+ static enum auto_base_setting auto_base;
+@@ -827,6 +833,7 @@ static const char *config_output_directory;
+ static enum cover_from_description cover_from_description_mode = COVER_FROM_MESSAGE;
+ static int show_notes;
+ static struct display_notes_opt notes_opt;
++static enum confirm_overwrite_setting confirm_overwrite = CONFIRM_OVERWRITE_COVER;
+ 
+ static enum cover_from_description parse_cover_from_description(const char *arg)
  {
- 	struct strbuf filename = STRBUF_INIT;
-+	struct strbuf file_exists_prompt = STRBUF_INIT;
-+	const char *yesno;
-+	static int not_prompted = 1;
-+	int res = 0;
+@@ -844,6 +851,18 @@ static enum cover_from_description parse_cover_from_description(const char *arg)
+ 		die(_("%s: invalid cover from description mode"), arg);
+ }
  
- 	if (output_directory) {
- 		strbuf_addstr(&filename, output_directory);
-@@ -972,17 +977,35 @@ static int open_next_file(struct commit *commit, const char *subject,
++static enum confirm_overwrite_setting parse_confirm_overwrite(const char *arg)
++{
++	if (!arg || !strcasecmp(arg, "cover"))
++		return CONFIRM_OVERWRITE_COVER;
++	else if (!strcasecmp(arg, "always"))
++		return CONFIRM_OVERWRITE_ALWAYS;
++	else if (!strcasecmp(arg, "never"))
++		return CONFIRM_OVERWRITE_NEVER;
++	else
++		die(_("%s: invalid file overwrite setting"), arg);
++}
++
+ static int git_format_config(const char *var, const char *value, void *cb)
+ {
+ 	if (!strcmp(var, "format.headers")) {
+@@ -949,6 +968,10 @@ static int git_format_config(const char *var, const char *value, void *cb)
+ 		cover_from_description_mode = parse_cover_from_description(value);
+ 		return 0;
+ 	}
++	if (!strcmp(var, "format.confirmoverwrite")) {
++		confirm_overwrite = parse_confirm_overwrite(value);
++		return 0;
++	}
+ 
+ 	return git_log_config(var, value, cb);
+ }
+@@ -977,7 +1000,10 @@ static int open_next_file(struct commit *commit, const char *subject,
  	else
  		fmt_output_subject(&filename, subject, rev);
  
--	if (!quiet)
--		printf("%s\n", filename.buf + outdir_offset);
-+	if (not_prompted && !access(filename.buf, F_OK)) {
-+
-+		/*
-+		 * TRANSLATORS: Make sure to include [Y] and [n] in your
-+		 * translation. The program will only accept English input
-+		 * at this point.
-+		 */
-+		strbuf_addf(&file_exists_prompt, _("The file '%s' already exists.\n"
-+			"Would you overwrite this file and subsequent ones [Y/n]? "), filename.buf);
-+		yesno = git_prompt(file_exists_prompt.buf, PROMPT_ECHO);
-+		not_prompted = 0;
-+		if (tolower(*yesno) == 'n') {
-+			res = -1;
-+			goto done;
-+		}
-+	}
+-	if (not_prompted && !access(filename.buf, F_OK)) {
++	if (not_prompted &&
++        ((rev->nr == 0 && confirm_overwrite == CONFIRM_OVERWRITE_COVER) || 
++          confirm_overwrite == CONFIRM_OVERWRITE_ALWAYS) &&
++	  !access(filename.buf, F_OK)) {
  
- 	if ((rev->diffopt.file = fopen(filename.buf, "w")) == NULL) {
- 		error_errno(_("cannot open patch file %s"), filename.buf);
--		strbuf_release(&filename);
--		return -1;
-+		res = -1;
-+		goto done;
- 	}
- 
-+	if (!quiet)
-+		printf("%s\n", filename.buf + outdir_offset);
-+done:
- 	strbuf_release(&filename);
--	return 0;
-+	strbuf_release(&file_exists_prompt);
-+	return res;
- }
- 
- static void get_patch_ids(struct rev_info *rev, struct patch_ids *ids)
+ 		/*
+ 		 * TRANSLATORS: Make sure to include [Y] and [n] in your
 -- 
 2.31.1.449.g4a44fa8106
 
