@@ -2,74 +2,78 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C48DEC433B4
-	for <git@archiver.kernel.org>; Thu,  6 May 2021 15:30:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AE3EC433B4
+	for <git@archiver.kernel.org>; Thu,  6 May 2021 15:35:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9A87B61C58
-	for <git@archiver.kernel.org>; Thu,  6 May 2021 15:30:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EACFF613BA
+	for <git@archiver.kernel.org>; Thu,  6 May 2021 15:35:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235329AbhEFPbe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 May 2021 11:31:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33154 "EHLO
+        id S235751AbhEFPf5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 May 2021 11:35:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235147AbhEFPbc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 May 2021 11:31:32 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4037C061574
-        for <git@vger.kernel.org>; Thu,  6 May 2021 08:30:33 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id s20so3380706ejr.9
-        for <git@vger.kernel.org>; Thu, 06 May 2021 08:30:33 -0700 (PDT)
+        with ESMTP id S236081AbhEFPeo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 May 2021 11:34:44 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F67EC061574
+        for <git@vger.kernel.org>; Thu,  6 May 2021 08:33:45 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id r9so8917060ejj.3
+        for <git@vger.kernel.org>; Thu, 06 May 2021 08:33:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=d5ZsxTPcdE+ZzrdrM+kkjbhx9nylP2ECyCkzvZibQ0M=;
-        b=j2XDt1xjL56+FWMrbd74iDRh3nw6Ll9kUyiLjUukVTCldH2fuibet2lkm333T4SgEd
-         h8Z47o9y/3y+RZfK/FYNKwWbzWZAUi98f0i6Op6NtfXi2lpbdY2Om5vkr7AqoYs8QEPT
-         llth9iHv4ydtCRhJZv7fQOfilvCdqMfxixtBFH7xGLfoJafUrIS5hlmvZA/ogn/fOhqd
-         EZhm8406K9MDzsB2lGPBIMxnJCy0Sso645Ry3EYkWDTEU/ZfB+5cxu6sCgrmtjxHb89+
-         CiYhVBsCelsHg7jxeKHyt2FPv3Vk7jv2jVC3tPjJF2IyFP20PBZWq9ztChYUi0HbmYrR
-         7pzA==
+        bh=uD1PrAkISkAG5EnFYM8Xd/dYvSArhV5f/I8mEGbjnKk=;
+        b=qR8QZCRBlL2gWkw7MaDGS6RSTxD170952/+rakOlCi0YeDe7ftLneX65fAPZD/HvNT
+         nIariuGAsOHF9bJql9OpxzuQkVvm6ZZUY2pTXBZlg0L4aYWtpCCAvgkpIeUsGTv9+e+x
+         TfphAtphBzdQe72cm7Dg3WZs8m3stB2SbWU0tuWeZhYJPkqw/LKPfY/uOm0evOYFnMxg
+         hEJuNhD0/m66goTHCXMSCV8i839KF7vntUx1jv5LUZtGb9cuNPfbi9XxlZzMjsyd7Iez
+         /UBbt0eka3TEX1EySU8xi7dFoapwjcbPzn+vz3HbDnY58mls0jvgENhKwS5h2l/1yg/n
+         DMfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=d5ZsxTPcdE+ZzrdrM+kkjbhx9nylP2ECyCkzvZibQ0M=;
-        b=gKevcNzBacaJyrl81ot/ykiLRvrQ4QzBGnExuaJEGZqCRiRmuXMdI0TlPZlcFaI4dx
-         LST8Y7XlwwBv32zYSnFG48qBrGpKPxR/+h6Aa0viXqPLPqBh+8Ule3nAtmSIW1wmHHEt
-         ZYzlV+oprNGUYvFPymPIKPhHRS7bseuu44MS1kOOjNt5sBtiy9pkqtY9gpLEsIdCdbMW
-         Ul6IKPRLUWh+rnjhGVA186qIXxmnNSorm6flzOAPEDYLMMmbUzf1GqOWGI20ZQvKu8KS
-         ITGyVWHtw+qKw0LChRxnwD/Q/qtdCfjO5kkaAfxO0WL1Pst2anSzxJQvIaNdoJB5EaXw
-         Iong==
-X-Gm-Message-State: AOAM533OUhL5SpUuhFLNQY/erbU7yxcFBc4ZK5ehYKK54RfH1sy5QI0F
-        tE+PtU9lfRl0nAd+S0N5Gdmq2NyD6mQT6A==
-X-Google-Smtp-Source: ABdhPJzTh97jihD6FdEDhvOBHraY4QxGqY5iQtKm/QEh8225rB8gsEll/xF2kAKRw0OVBCoZxCkUdw==
-X-Received: by 2002:a17:906:551:: with SMTP id k17mr5085452eja.69.1620315032351;
-        Thu, 06 May 2021 08:30:32 -0700 (PDT)
+        bh=uD1PrAkISkAG5EnFYM8Xd/dYvSArhV5f/I8mEGbjnKk=;
+        b=U0IMNcm+ODiQ1m5y5xQRJ9Huq1Tpe46gFbZwb6gF3u7f79pJZuxybVUQ5TFobZclN2
+         Vv1RoRtydujYM3f6UPJEgw98CVUo3sQH5XViCEolMt4YzStCKaS1CP8JKM1r380vqVpk
+         exdysmlkPU8omSrub1lHU/xAO2KHvUPJyN2phshQNR+5c1h2K5ld8+IhwjpmoAycPzLf
+         CuLf6PxIUj7n+mr+yJwCuUn+2T4tUZixEM5iv0nnlj0XCJdnP4POSRPhtsFO1dwTpYjH
+         X8h8lCTu55JOY/82WsbehM86gtvZBPiUTw57AFtXgM0BQoH4k6wBe6AJw6NsVwgLnx3y
+         YH3g==
+X-Gm-Message-State: AOAM530768bekN8lsLeNFbI1DH3xk19EuDquE8wsoe4gpYGfimUqUM3K
+        4sul9oolbOu3nPfqwK1GxS5pHtzyXveW3A==
+X-Google-Smtp-Source: ABdhPJzfzscOduAwTUR0z+nDCaw2y5n3qFxdna3/SHBBJ8aMqRzfjOgSUj/jvj8sN48J7kJkTHiy1w==
+X-Received: by 2002:a17:906:7f97:: with SMTP id f23mr5353142ejr.74.1620315223587;
+        Thu, 06 May 2021 08:33:43 -0700 (PDT)
 Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id z22sm2166553edm.57.2021.05.06.08.30.31
+        by smtp.gmail.com with ESMTPSA id g9sm1562894ejo.8.2021.05.06.08.33.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 May 2021 08:30:31 -0700 (PDT)
+        Thu, 06 May 2021 08:33:42 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>,
-        =?utf-8?Q?G=C3=A1bor?= Farkas <gabor.farkas@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: git switch/restore, still experimental?
-Date:   Thu, 06 May 2021 17:26:37 +0200
-References: <CAPiPmQnb=XMaF2+YkryEbiX8zA=jwa5y=fbAGk9jpCExpbS4Rw@mail.gmail.com>
- <CABPp-BHBcjSQbkotrzwDtVRSC-qqjEyP4m=biY-0+=Jdg9ETQw@mail.gmail.com>
- <877dkdwgfe.fsf@evledraar.gmail.com> <xmqq35v01ua3.fsf@gitster.g>
- <6093cc63a4e81_325720840@natae.notmuch>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Matthieu Moy <git@matthieu-moy.fr>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Andreas Schwab <schwab@linux-m68k.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v5 00/11] test-lib.sh: new test_commit args,
+ simplification & fixes
+Date:   Thu, 06 May 2021 17:32:01 +0200
+References: <cover-00.11-0000000000-20210421T101156Z-avarab@gmail.com>
+ <cover-00.11-00000000000-20210423T072006Z-avarab@gmail.com>
 User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
-In-reply-to: <6093cc63a4e81_325720840@natae.notmuch>
-Message-ID: <87h7jfvq09.fsf@evledraar.gmail.com>
+In-reply-to: <cover-00.11-00000000000-20210423T072006Z-avarab@gmail.com>
+Message-ID: <87eeejvpuy.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -78,54 +82,116 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Thu, May 06 2021, Felipe Contreras wrote:
+On Fri, Apr 23 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-> Junio C Hamano wrote:
->> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->>=20
->> > I mean, I see why. You don't want a typo of "master" as "maaster" to
->> > create a new "maaster" branch, so really that's out. But it really
->> > should be:
->> >
->> >     # -n or -N for --new / --new --force (the latter just in case of a
->> >     # race, and just for consistency)
->> >     git switch -n doesnotexist
->>=20
->> I do not see why --new is better than --create;
->
-> I do. Different languages equal different minds.
->
-> New in this context is an adjetive: it is a modifier of a noun, in this
-> case, a branch.
->
-> Create is a verb; it's an action.
->
-> Linguistically speaking they could not be more different.
->
->
-> You don't do two verbs at a time. Either you sleep, or you eat, but you
-> don't do both. Similarly you don't switch and create. Doesn't make
-> sense.
->
-> If you use natural language:
->
->   1. Git, switch to a new branch
->
->   2. Git, switch, create, branch
->
-> One of these simply flows, the other is complete gibberish. I think
-> anyone familiar with English can identify which is which.
+> Changes since v4: Only a commit message change/re-wording per
+> <87v98e1oj7.fsf@evledraar.gmail.com>.
 
-Well, there's "Git, create a new branch and switch to it"
+SZEDER, Eric, =C4=90o=C3=A0n et al: does this v5 look good to you? Junio's
+suggested in [1] that this needs some final review feedback before
+advancing to 'next'. If you could take a look that would be great!
 
-Also, there's the verb "make" in common use in git's command set
-e.g. git-mktag, git-mktree, as well as mkdir(1), mkfifo(1) etc.
+1. https://lore.kernel.org/git/xmqqsg30zdql.fsf@gitster.g/
 
-Perhaps we'd be better off with a git-mkbranch in this case & leave "git
-branch" as an interrogation/change command.
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (11):
+>   test-lib: bring $remove_trash out of retirement
+>   test-lib tests: remove dead GIT_TEST_FRAMEWORK_SELFTEST variable
+>   test-lib-functions: reword "test_commit --append" docs
+>   test-lib-functions: document test_commit --no-tag
+>   test-lib functions: add an --annotated option to "test_commit"
+>   describe tests: convert setup to use test_commit
+>   test-lib functions: add --printf option to test_commit
+>   submodule tests: use symbolic-ref --short to discover branch name
+>   test-lib: reformat argument list in test_create_repo()
+>   test-lib: do not show advice about init.defaultBranch under --verbose
+>   test-lib: split up and deprecate test_create_repo()
+>
+>  t/lib-submodule-update.sh           |  3 +-
+>  t/t0000-basic.sh                    |  4 --
+>  t/t1307-config-blob.sh              |  4 +-
+>  t/t1403-show-ref.sh                 |  6 +--
+>  t/t2030-unresolve-info.sh           |  3 +-
+>  t/t4006-diff-mode.sh                |  6 +--
+>  t/t4030-diff-textconv.sh            |  8 +---
+>  t/t5406-remote-rejects.sh           |  1 -
+>  t/t5407-post-rewrite-hook.sh        |  2 -
+>  t/t5409-colorize-remote-messages.sh |  1 -
+>  t/t5520-pull.sh                     | 10 +----
+>  t/t6120-describe.sh                 | 58 +++++++---------------------
+>  t/test-lib-functions.sh             | 60 ++++++++++++++++++-----------
+>  t/test-lib.sh                       | 40 +++++++++++--------
+>  14 files changed, 87 insertions(+), 119 deletions(-)
+>
+> Range-diff against v4:
+>  1:  a76ea749bb6 =3D  1:  75667f98f3a test-lib: bring $remove_trash out o=
+f retirement
+>  2:  de7be7844ea =3D  2:  55c9413f9cd test-lib tests: remove dead GIT_TES=
+T_FRAMEWORK_SELFTEST variable
+>  3:  709bc773fb0 =3D  3:  361e34654e9 test-lib-functions: reword "test_co=
+mmit --append" docs
+>  4:  b67654334e6 =3D  4:  2db68a4ac7c test-lib-functions: document test_c=
+ommit --no-tag
+>  5:  3a166c92063 =3D  5:  4ceba3d404b test-lib functions: add an --annota=
+ted option to "test_commit"
+>  6:  981fc43ee69 =3D  6:  589eaf7a078 describe tests: convert setup to us=
+e test_commit
+>  7:  15057cdecfe =3D  7:  a0fe0640148 test-lib functions: add --printf op=
+tion to test_commit
+>  8:  5d437f53ec8 =3D  8:  7fb8849ce66 submodule tests: use symbolic-ref -=
+-short to discover branch name
+>  9:  9ee13ee71bc =3D  9:  f67245ba40d test-lib: reformat argument list in=
+ test_create_repo()
+> 10:  6ba568df9f4 =3D 10:  37338c88300 test-lib: do not show advice about =
+init.defaultBranch under --verbose
+> 11:  311a9dba36b ! 11:  7793311e5f1 test-lib: split up and deprecate test=
+_create_repo()
+>     @@ Commit message
+>              from "mkdir .git/hooks" changes various tests needed to re-s=
+etup
+>              that directory. Now they no longer do.
+>=20=20=20=20=20=20
+>     -     5. Since we don't need to move the .git/hooks directory we don'=
+t need
+>     -        the subshell here either.
+>     -
+>     -        See 0d314ce834 for when the subshell use got introduced for =
+the
+>     -        convenience of not having to "cd" back and forth while setti=
+ng up
+>     -        the hooks.
+>     +        This makes us implicitly depend on the default hooks being
+>     +        disabled, which is a good thing. If and when we'd have any
+>     +        on-by-default hooks (I see no reason we ever would) we'd wan=
+t to
+>     +        see the subtle and not so subtle ways that would break the t=
+est
+>     +        suite.
+>     +
+>     +     5. We don't need to "cd" to the "$repo" directory at all anymor=
+e.
+>     +
+>     +        In the code being removed here we both "cd"'d to the reposit=
+ory
+>     +        before calling "init", and did so in a subshell.
+>     +
+>     +        It's not important to do either, so both of those can be
+>     +        removed. We cd'd because this code grew from test-lib.sh code
+>     +        where we'd have done so already, see eedf8f97e58 (Abstract
+>     +        test_create_repo out for use in tests., 2006-02-17), and lat=
+er
+>     +        "cd"'d inside a subshell since 0d314ce834d to avoid having t=
+o keep
+>     +        track of an "old pwd" variable to cd back after the setup.
+>     +
+>     +        Being in the repository directory made moving the hooks arou=
+nd
+>     +        easier (we wouldn't have to fully qualify the path). Since w=
+e're
+>     +        not moving the hooks per #4 above we don't need to "cd" for =
+that
+>     +        reason either.
+>=20=20=20=20=20=20
+>           6. We can drop the --template argument and instead rely on the
+>              GIT_TEMPLATE_DIR set to the same path earlier in test-lib.sh=
+. See
 
-In any case, unless we're talking about rewamping git's entire command
-set (e.g. having a git-newtree or whatever) I'd like to think that it's
-more productive to focus on making the commands/switches we have
-internally consistent when possible, which is what I'm advocating in the
-E-Mail that started this sub-thread.
