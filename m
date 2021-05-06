@@ -6,66 +6,59 @@ X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B395FC433ED
-	for <git@archiver.kernel.org>; Thu,  6 May 2021 06:44:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 94F33C433B4
+	for <git@archiver.kernel.org>; Thu,  6 May 2021 06:58:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6FC02611EE
-	for <git@archiver.kernel.org>; Thu,  6 May 2021 06:44:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 51D926112D
+	for <git@archiver.kernel.org>; Thu,  6 May 2021 06:58:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232011AbhEFGo7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 May 2021 02:44:59 -0400
-Received: from bsmtp3.bon.at ([213.33.87.17]:20287 "EHLO bsmtp3.bon.at"
+        id S232946AbhEFG7V (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 May 2021 02:59:21 -0400
+Received: from shell1.rawbw.com ([198.144.192.42]:16017 "EHLO shell1.rawbw.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229844AbhEFGo6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 May 2021 02:44:58 -0400
-Received: from [192.168.0.98] (unknown [93.83.142.38])
-        by bsmtp3.bon.at (Postfix) with ESMTPSA id 4FbPDr0hg2z5tlQ;
-        Thu,  6 May 2021 08:43:56 +0200 (CEST)
+        id S232554AbhEFG7S (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 May 2021 02:59:18 -0400
+Received: from yv.noip.me (c-73-189-35-76.hsd1.ca.comcast.net [73.189.35.76])
+        (authenticated bits=0)
+        by shell1.rawbw.com (8.15.1/8.15.1) with ESMTPSA id 1466wH3K036309
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
+        Wed, 5 May 2021 23:58:17 -0700 (PDT)
+        (envelope-from yuri@rawbw.com)
+X-Authentication-Warning: shell1.rawbw.com: Host c-73-189-35-76.hsd1.ca.comcast.net [73.189.35.76] claimed to be yv.noip.me
 Subject: Re: [feature suggestion] Add 'git stash export', 'git stash import'
  commands to allow to backup stash externally
-To:     Yuri <yuri@rawbw.com>
+To:     Johannes Sixt <j6t@kdbg.org>
 Cc:     Git Mailing List <git@vger.kernel.org>
 References: <d8aef355-0718-8b3d-7e9f-614673dd250f@rawbw.com>
  <fff9baee-ac4e-66ea-1dfb-791a8b044527@kdbg.org>
  <e75f000b-e376-45d5-ee5a-2a555076a3d9@rawbw.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <35877543-93b8-00f8-692e-09a06d4679aa@kdbg.org>
-Date:   Thu, 6 May 2021 08:43:55 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.0
+ <35877543-93b8-00f8-692e-09a06d4679aa@kdbg.org>
+From:   Yuri <yuri@rawbw.com>
+Message-ID: <d4ae27b9-3911-506c-a23c-3ed91bb250d1@rawbw.com>
+Date:   Wed, 5 May 2021 23:58:16 -0700
+User-Agent: Mozilla/5.0 (X11; FreeBSD amd64; rv:78.0) Gecko/20100101
+ Thunderbird/78.9.1
 MIME-Version: 1.0
-In-Reply-To: <e75f000b-e376-45d5-ee5a-2a555076a3d9@rawbw.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+In-Reply-To: <35877543-93b8-00f8-692e-09a06d4679aa@kdbg.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 06.05.21 um 08:12 schrieb Yuri:
-> On 5/5/21 11:07 PM, Johannes Sixt wrote:
->> I would argue that you are doing something wrong if your stashes are
->> particularly valuable. If you regularly revert temporary, but precious
->> work, then you should commit the work and mark it with a branch tip or
->> tag.
->>
-> 
-> No, it is work in progress. I begin to work on some modification or
-> update, discover some issue, and stash the update until this issue is
-> resolved,
-> 
-> It could take days, weeks, months to resolve them.
+On 5/5/21 11:43 PM, Johannes Sixt wrote:
+> I know. But, as I said, when you turn away from your current work, which
+> is precious, then you should make a commit, in particular, when you can
+> forsee that you might not be able to come back soon.
 
-I know. But, as I said, when you turn away from your current work, which
-is precious, then you should make a commit, in particular, when you can
-forsee that you might not be able to come back soon.
 
-A 'git stash' is really only intended as a short-term
-make-the-worktree-temporarily-clean auxiliary storage. It is not
-intended as a long-term storage. For long-term storage, use branches.
-"Short term" is measured in seconds (rebase --autostash), minutes,
-perhaps hours, but certainly not weeks or months.
+How can I commit unfinished work? Commits are public, this would break 
+things.
 
-At least, that's how I understand (and use) it.
+> For long-term storage, use branches.
 
--- Hannes
+Branches are too heavy-weight. They need merging. Sometimes several stash items need to be used together, which makes it inconvenient.
+
+Yuri
+
