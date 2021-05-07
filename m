@@ -2,78 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A5B10C433ED
-	for <git@archiver.kernel.org>; Fri,  7 May 2021 04:08:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DED1C433B4
+	for <git@archiver.kernel.org>; Fri,  7 May 2021 04:32:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 785156112F
-	for <git@archiver.kernel.org>; Fri,  7 May 2021 04:08:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 29580613E3
+	for <git@archiver.kernel.org>; Fri,  7 May 2021 04:32:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229758AbhEGEJc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 May 2021 00:09:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59692 "EHLO
+        id S231622AbhEGEdm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 May 2021 00:33:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229666AbhEGEJb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 May 2021 00:09:31 -0400
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E77BC061574
-        for <git@vger.kernel.org>; Thu,  6 May 2021 21:08:32 -0700 (PDT)
-Received: by mail-oi1-x22d.google.com with SMTP id k25so7593443oic.4
-        for <git@vger.kernel.org>; Thu, 06 May 2021 21:08:32 -0700 (PDT)
+        with ESMTP id S229666AbhEGEdm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 May 2021 00:33:42 -0400
+Received: from mail-il1-x134.google.com (mail-il1-x134.google.com [IPv6:2607:f8b0:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A859C061574
+        for <git@vger.kernel.org>; Thu,  6 May 2021 21:32:42 -0700 (PDT)
+Received: by mail-il1-x134.google.com with SMTP id l19so6631740ilk.13
+        for <git@vger.kernel.org>; Thu, 06 May 2021 21:32:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=3IYXAqjrVjeHK69n0PO0dKYVWAMCXPF4ez+ay/ezdHU=;
-        b=nA0SEgiG7ypjE3ZunjhSSOpI1xPx2E0/MiFEmJnLC+oXW/vgjkL6Y76KpRFOwc7Mp0
-         tTZadAh8wfsYbfM/MihVDtOZzWopa+Bymsv9ytx0dNJRBYHc/BuOfr9fAK/A6EjtLljo
-         kc0UnA5ylhNW7l75VxNqLtmUt805iI2/gSAlSLJJbgfnf0HnqYGgzlZMsymFL7it8Ap5
-         KdJ3/tJRv7XZqyDcmy9vtwk4j4i0/dLlu489aI2VHAijdOMz/189ObK5MIRbo/ZUHCw4
-         X+2MqjStXvzK73A5A5Y3mK1n4NGZqpOycwwjS0rro4UXW49fuXXnzw600rzVxT9q9KOS
-         Gujw==
+        bh=WiGR7LRgdW0G7UWsx97uaY3cvzm1r4+m3eTqkmbUas4=;
+        b=PusntFm1ic/ZcwZxJfxYGVC7kiGv4OvwtGPA4IEENG9oHReprVD5WMJU88S2aWFqj8
+         FNYl8xYPyiAX+SAghlzHYsQMb7Ng0BVK2AY/qta5lFDMCVOWnuYdXvzf3yUnN3mDP0TR
+         gTL5Qed7eBQNHRV2qH1Lkh9iuA/34fGxGMNC2+mBmEDSLbOLJtI4lIvWogZWlruSCSrS
+         5RZ/SyCbsufARpDw+NPbb4au4yMktJwxSgSAhjfHrj16xQGBiJvE+ED3J/2dZKFr+Mng
+         scykmTdUAy9U/93SilPNLkVeYOtj6NQ6bgsFY+nZsmuT930XXwnJ+6wfUSgMpx82gpLy
+         7lLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=3IYXAqjrVjeHK69n0PO0dKYVWAMCXPF4ez+ay/ezdHU=;
-        b=chs1dy5J/3P9myVF1SlkYOJMFDdCpILTAVhG/S/UgEFEJgf7FSGGx6w3a6UutqX5EV
-         devryBe6B/EOv/HYtKiUTHVvuqiN3JICecL3ewCCUiV290c8thDlM3LVVC2H7Wn+BK46
-         wqs5B6qRQAfBxsh48UyhuhO9o+62trePDxlp/NP1PAxBEEnr8MmZv/6S3NgCwyjdnEdC
-         2uhtQ1ZlS2DHOK9WEPk1GOsagHnNZiJTQz7YF+a7NctMiuxL/NQfj5kg7OFeP5u+8J/e
-         hTSX0MDTcfNnUtVvXYw/xaihTI1rMU4joO2MaRz6nObvRd14xEYyoqtQqkh3P9TfCmsn
-         WVLQ==
-X-Gm-Message-State: AOAM5324BaWIse8WhnEqi76S8MoqpOrl5SOztbE2KuOgmgswOdMBQoN+
-        RbytEaP17Av0HELk150W6GF4rJAd2YZ8noo16Jw=
-X-Google-Smtp-Source: ABdhPJxtCrUPcmPABRcO+6JuhnZFy5iq6bqp44c9K/SpJ68EE/9diWgoeVnCjzf3jkUNtm/NHu/ZbmQ3OmPgVk1yx30=
-X-Received: by 2002:aca:6701:: with SMTP id z1mr12842672oix.167.1620360511404;
- Thu, 06 May 2021 21:08:31 -0700 (PDT)
+        bh=WiGR7LRgdW0G7UWsx97uaY3cvzm1r4+m3eTqkmbUas4=;
+        b=Sj3AFPcyqO8RfkM89Ldf5KROdQ2/NxTcjcZLb1J5d2BenSsLmSajDiWILO+rJexO+k
+         Ht3LKoh2/xmKfY8fX1CnLNvqTWnPLxxXW8mBx2hXmjvbNM6fD6M8kriO6N+mUueaF93R
+         464xUUkZK33gjvi8ItEN44+4w5QUZwZOc/WXLI8pVlYP32GzajsDU0vg6Hp2JB9jqrt0
+         hcic6xLC9vVVz+LIJCNbO7nikp+bQlyyfBjlHG5GKC3wqLgzHI2fFWFXAkZcW19mPiJX
+         o0Z9QPI8Dt/9UfCraXWdvFxovzxAHn7bcjFj6CzcWbk0jhlXKKaqcqb4PfO7ithWZ9Yn
+         YprA==
+X-Gm-Message-State: AOAM532ZQPeQcU+jvtKnc0hmlHLaQE2nzvVLdEXFdnGtjc+MbDEyeI0L
+        SxizvRXHxCi5OatqRnxtTYnRetDHEHalrFmCtQbAfjb4s+wmtagZBAtH2Q==
+X-Google-Smtp-Source: ABdhPJykLdKd39spWacKhv3ap0SRwr7J0E37/S4u3chTKVMZnohLNLgd7AkN1TcIb63BnikXftj4aLmt/ff9j5cSP18=
+X-Received: by 2002:a05:6e02:13e2:: with SMTP id w2mr7683830ilj.53.1620361961461;
+ Thu, 06 May 2021 21:32:41 -0700 (PDT)
 MIME-Version: 1.0
-References: <DM6PR00MB06829EC5B85E0C5AC595004E894E9@DM6PR00MB0682.namprd00.prod.outlook.com>
- <YHdzDlAfsuZ21HR7@camp.crustytoothpaste.net> <YHf+m7vOQumdJXwX@coredump.intra.peff.net>
- <MN2PR00MB068886B8F36DFC645138DA0489469@MN2PR00MB0688.namprd00.prod.outlook.com>
-In-Reply-To: <MN2PR00MB068886B8F36DFC645138DA0489469@MN2PR00MB0688.namprd00.prod.outlook.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 6 May 2021 21:08:20 -0700
-Message-ID: <CABPp-BFWunQjgUHKuJBHatNfxdukL=EHGMiS3Tax3wW=eFSHXg@mail.gmail.com>
-Subject: Re: Git clean enumerates ignored directories (since 2.27)
-To:     Jason Gore <Jason.Gore@microsoft.com>
-Cc:     "peff@peff.net" <peff@peff.net>,
-        "sandals@crustytoothpaste.net" <sandals@crustytoothpaste.net>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <pull.949.git.1620228664666.gitgitgadget@gmail.com>
+ <xmqqfsz01vc2.fsf@gitster.g> <CAOLTT8SmvRaohV+v2C9eFXyc8O+di5PfZJeWNinmm8X=Ckdveg@mail.gmail.com>
+ <xmqqk0oczao3.fsf@gitster.g> <CAOLTT8S9TbRWGPeGKR9=cDnaw2RMukawV48dPEK1KL0X_87udA@mail.gmail.com>
+ <xmqqtungxg4y.fsf@gitster.g> <CAOLTT8TQXAh9vu21d5rvaHe=+eqtFU8MCVhorfGmqYRohDThUg@mail.gmail.com>
+ <xmqq8s4ry2ye.fsf@gitster.g>
+In-Reply-To: <xmqq8s4ry2ye.fsf@gitster.g>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Fri, 7 May 2021 12:32:25 +0800
+Message-ID: <CAOLTT8QWadP9ovrUC_7m86dKh1PsawUyZ=msK5tx1utTpuCXMQ@mail.gmail.com>
+Subject: Re: [PATCH] [GSOC] ref-filter: solve bugs caused by enumeration
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 22, 2021 at 10:18 AM Jason Gore <Jason.Gore@microsoft.com> wrote:
+> Hmph, I do no think that would be futureproof at all.  If a new atom
+> "pushe" gets added, it is not all that unlikely that it would add
+> its own member to the same union.  name here would be "pushe" and
+> starts with "push", and upon parsing "pushe", its own member in the
+> union, atom->u.X, would have been assigned to, but the code we see
+> here still accesses atom->u.remote_ref.*, so you still have the same
+> problem you started to solve, no?
 >
-> Sorry to add noise to this thread but since the github issue was closed I wanted to make sure I'm not missing any updates here. Would any updates come through on this thread? Thanks!
 
-I have posted some proposed fixes at
-https://lore.kernel.org/git/pull.1020.git.git.1620360300.gitgitgadget@gmail.com/T/#t
-(particularly patches 1 & 3); feel free to watch there, or over at
-https://github.com/git/git/pull/1020.
+Well, this "pushe" has `atom->u.X` which is different from "push" and
+"push:". This is indeed worth worrying about.
+
+> The check we use in remote_ref_atom_parser() to see if the atom is
+> about pushing, i.e.
+>
+>         if (!strcmp(atom->name, "push") || starts_with(atom->name, "push:"))
+>
+> is unlikely to be invalidated in future changes, as this is very
+> much end-user facing and changing the condition will break existing
+> scripts, so that is what I was expecting you to use instead.
+>
+
+But I am afraid that the cost we paid for string matching here is too high,
+Since the string matching here is to illustrate that we use one of the members
+of the union, why can't we directly add a "union_type" member to used_atom?
+if we have this, we can just switch the "union_type" flag and also make the
+program correct. Perhaps this would be better than the large number of string
+matches have done here.
+
+>
+>
+
+Thanks.
+--
+ZheNing Hu
