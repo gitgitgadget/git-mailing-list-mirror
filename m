@@ -2,93 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 388E5C433ED
-	for <git@archiver.kernel.org>; Fri,  7 May 2021 22:57:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F0E0FC433ED
+	for <git@archiver.kernel.org>; Fri,  7 May 2021 22:58:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0702A610A7
-	for <git@archiver.kernel.org>; Fri,  7 May 2021 22:57:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CBCA7610F7
+	for <git@archiver.kernel.org>; Fri,  7 May 2021 22:58:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229542AbhEGW6l (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 May 2021 18:58:41 -0400
-Received: from cloud.peff.net ([104.130.231.41]:47722 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229470AbhEGW6l (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 May 2021 18:58:41 -0400
-Received: (qmail 4720 invoked by uid 109); 7 May 2021 22:57:41 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 07 May 2021 22:57:41 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 5433 invoked by uid 111); 7 May 2021 22:57:41 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 07 May 2021 18:57:41 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 7 May 2021 18:57:39 -0400
-From:   Jeff King <peff@peff.net>
-To:     Will Chandler <wfc@wfchandler.org>
-Cc:     git@vger.kernel.org, ps@pks.im
-Subject: Re: [PATCH] refs: cleanup directories when deleting packed ref
-Message-ID: <YJXF4xA0GFx2/2v4@coredump.intra.peff.net>
-References: <YJVQpaDwkQH/aCee@mini.wfchandler.org>
- <YJW3n6lVWVAuLQap@coredump.intra.peff.net>
- <YJW46fsdKaUv2Fln@coredump.intra.peff.net>
+        id S229870AbhEGW7M (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 May 2021 18:59:12 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:49816 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229470AbhEGW7K (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 7 May 2021 18:59:10 -0400
+Received: from camp.crustytoothpaste.net (castro.crustytoothpaste.net [75.10.60.170])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 3CE1660459;
+        Fri,  7 May 2021 22:57:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1620428259;
+        bh=bqoG8cStY6DvFcoeN7ATSRLR4ckKvPwU1GnRNbPk4oA=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=J1A6X0wiCiEXHbjnyuH5vuAkBafVUSEkSeAh8qru5EvWFzi5muc2+8AAsHcKRmVPJ
+         xZAzjs9y5vmLfYyaKLZXfltaeCmVFUYRbki2jFCyNb71Tgm5ofluBHKF80dRao/haE
+         kI/588WKIV7Hzr4aSWCY7jAuWEW16ATbYyXumgR2s4/53ooH7aP9t6Amr7qyDbBqJq
+         AaN751oMVKsZGoO6aYToArCMIDulU3qkb67NvveHxP1CGZps+x0WW32PcqRmTHOPvW
+         iZanV6olktqnlrQvlJJtOpvQupVxs73wu9uWF9A26juZf9gw0trA3y/JKWBOlSrEXN
+         Uoio/cqYd9HNCUa9+lGJ+b+qbh0dMSj76QhO5R4nwyhM3GEn2NXUks9TwipExguKjb
+         hgeXH6+MIU+Jspwe0CrDQxHLUQ3kERCwO7+1QfgMpOHzW+QotdBw+dOrlUIQ68KV0M
+         X6TPZeaDPP+B6o1B8wHzwKPRDFaHiSa5vE0n7iu6QCidRUpYAhE
+Date:   Fri, 7 May 2021 22:57:34 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     'Bagas Sanjaya' <bagasdotme@gmail.com>,
+        'Git Users' <git@vger.kernel.org>
+Subject: Re: [RFC suggestion] Generate manpage directly with Asciidoctor
+Message-ID: <YJXF3oq4n/NFJSx3@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>,
+        'Bagas Sanjaya' <bagasdotme@gmail.com>,
+        'Git Users' <git@vger.kernel.org>
+References: <3461c7b0-594d-989e-3048-2fc6583084ad@gmail.com>
+ <00db01d74338$d45615c0$7d024140$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="IQNNOIGsV0w7FSAX"
 Content-Disposition: inline
-In-Reply-To: <YJW46fsdKaUv2Fln@coredump.intra.peff.net>
+In-Reply-To: <00db01d74338$d45615c0$7d024140$@nexbridge.com>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 07, 2021 at 06:02:17PM -0400, Jeff King wrote:
 
-> On Fri, May 07, 2021 at 05:56:47PM -0400, Jeff King wrote:
-> 
-> > > +test_expect_success 'directory not created deleting packed ref' '
-> > > +	git branch d1/d2/r1 HEAD &&
-> > > +	git pack-refs --all &&
-> > > +	test_path_is_missing .git/refs/heads/d1/d2 &&
-> > > +	git branch -d d1/d2/r1 &&
-> > > +	test_path_is_missing .git/refs/heads/d1/d2 &&
-> > > +	test_path_is_missing .git/refs/heads/d1
-> > > +'
-> > 
-> > ...this test passes even without your patch applied. I wonder if there's
-> > something else required to trigger the problem.
-> 
-> If I replace "git branch -d" with "git update-ref -d", then the problem
-> does trigger (and your patch does indeed clear it up). I wonder what the
-> difference is.
+--IQNNOIGsV0w7FSAX
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I think this comes down to the interfaces. In update-ref, we call
-delete_ref(), which creates a transaction to delete the single ref. It
-realizes the ref is packed and there is no loose file to delete.
+On 2021-05-07 at 12:02:13, Randall S. Becker wrote:
+> On May 7, 2021 2:07 AM, Bagas Sanjaya wrote:
+> >To: Git Users <git@vger.kernel.org>
+> >Subject: [RFC suggestion] Generate manpage directly with Asciidoctor
+> >Asciidoctor has support for directly generating manpage, see [1].
+> >
+> >We support using Asciidoctor as drop-in replacement for original Asciido=
+c, but
+> >currently we need to use xmlto together with Asciidoc(tor) to produce
+> >manpages. However, most users don't inclined to install xmlto toolchain,=
+ partly
+> >because they had to download more than 300 MB of data just to install xm=
+lto
+> >and its dependencies (including dblatex and texlive).
+> >
+> >So completely migrating to Asciidoctor can eliminate xmlto requirement f=
+or
+> >generating manpage.
+> >
+> >What do you think about above?
+>=20
+> Our toolchain does not support asciidoctor itself because of porting issu=
+es. I am not sure it is available everywhere.
 
-Whereas in git-branch, call the plural delete_refs(), which handles the
-packed and loose stores separately. It first deletes everything from the
-packed ref store in one go, and then the loose store. And it's actually
-the deletion from the loose store which gets weird. The ref isn't
-_anywhere_ at this point. So when we try to read it, we don't set the
-REF_ISPACKED flag. And thus when it comes time to clean up the loose
-ref, we say "not packed, so I guess it's worth calling unlink()". Of
-course that syscall fails, but our unlink_or_msg() wrapper turns ENOENT
-into success (which is sensible; we want it to be gone, and it is).
+I think Asciidoctor is pure Ruby, since it also uses JRuby and Opal to
+run in Java and JavaScript environments.  Ruby is relatively portable to
+most architectures and systems (for example, it runs on 16 Debian
+architectures).
 
-And so we think we've deleted a loose ref, and thus call
-try_remove_empty_parents(), which cleans up the extra directory.
+Is the problem in your case Ruby or is it Asciidoctor itself?  I'm happy
+to send portability patches to Asciidoctor if necessary, but I'm not
+sure I'm a good candidate to send patches to Ruby itself, especially for
+an OS I don't use.
+--=20
+brian m. carlson (he/him or they/them)
+Houston, Texas, US
 
-So I'd argue that it's actually delete_refs() which is called from
-git-branch that is a little confused, or possibly even buggy. But I
-don't think it's hurting anything, and working around it would probably
-be awkward and/or inefficient.
+--IQNNOIGsV0w7FSAX
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Getting back to your patch, though, you are definitely fixing a problem
-with update-ref (which correctly realizes there is no loose ref to clean
-up, but forgets that we had to make a lockfile). And the solution you
-have looks correct. I think you just need to update the test to exercise
-it with "update-ref -d".
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
 
--Peff
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYJXF3gAKCRB8DEliiIei
+gWzFAPoCJZj0t5h/GZLH8bWHf213uPsqGTX4fEM/b9AdIcvS4AD8C1hOOd0IY0uE
+8ZI7LZxeCRJV0Yz5e+EvBDbWjIfVZQk=
+=OD1k
+-----END PGP SIGNATURE-----
+
+--IQNNOIGsV0w7FSAX--
