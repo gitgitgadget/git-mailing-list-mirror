@@ -2,109 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 960CBC433B4
-	for <git@archiver.kernel.org>; Fri,  7 May 2021 13:58:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2948BC433ED
+	for <git@archiver.kernel.org>; Fri,  7 May 2021 14:03:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5A5706141B
-	for <git@archiver.kernel.org>; Fri,  7 May 2021 13:58:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D0C8361424
+	for <git@archiver.kernel.org>; Fri,  7 May 2021 14:03:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237333AbhEGN74 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 May 2021 09:59:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49816 "EHLO
+        id S237363AbhEGOEA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 May 2021 10:04:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229635AbhEGN7z (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 May 2021 09:59:55 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1588CC061574
-        for <git@vger.kernel.org>; Fri,  7 May 2021 06:58:55 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id n138so12903593lfa.3
-        for <git@vger.kernel.org>; Fri, 07 May 2021 06:58:55 -0700 (PDT)
+        with ESMTP id S233689AbhEGOEA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 May 2021 10:04:00 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA4AEC061574
+        for <git@vger.kernel.org>; Fri,  7 May 2021 07:02:58 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id x20so12924681lfu.6
+        for <git@vger.kernel.org>; Fri, 07 May 2021 07:02:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp.br; s=usp-google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=cS2fy2GHJ4vrOP+3ba+yoBePTEOUM0JC9wlN/B1yyd4=;
-        b=t02FB8e+s7yZicUH8zUPtL6oBFMgpnqf6MubTXMmMEudIMGquGvpALgv3JnRA9j+y3
-         bhStuno4pZW2S4hiHFpi6QB8QsDIb25octMm2c0oh9GeuobT/grIFaMVm/V03FtcsHwE
-         i5mdB07kQ6tcA0QCPTlsVtPNQyIVDShBeUUUr+WS0ZaeROZF1xqadiOhWBYrE6XRGFS/
-         bYPj4LGb3DJV9aKPvlxgqitbntH73VI4GhHBlXeA4A98a1Tryq14waqTf/9ViNYJNpD7
-         jqc6agrmI1ZNZMGNmIFxAwrIPRMRcdRAqsuPwyCQJ/ezRp166Ugz0HDBCzp/2E9VQIJi
-         gprQ==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=q8lThpELikp8ODUS4j45tCvhIkLiOfbuAGZKuAO0Lic=;
+        b=urv7EI6U8jBta2J2b64avkRUfAYL/5+q1rADxnz3rOvTxbJ9dHsvZB7AxyRg2J5p4L
+         yl0lNxlwwZfFd1IoId5f/3PPEu/BxI9iy8JjEH3bBLYP3ouQJdXXPlnpitW4KInnhdmB
+         3CnVALqb74QJXW7X7/BWZeuIEoo1PkxfuEJDb3SdjxaXBm6qBUIKKVNqdZOYSLbYElam
+         V5DMppBpP7s+oPBuvasA+PcpW1JSol3RPNhO+4UzUXoI4hBjS4bTPKSbqjf88hVzTpFw
+         m7D1XLmhX2DARQ5FZKeT9MROJFSF7ff7nypjG/IG+9C8jkuF4WT+ODHEAkTo8axuXyDN
+         G2dA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=cS2fy2GHJ4vrOP+3ba+yoBePTEOUM0JC9wlN/B1yyd4=;
-        b=FvwF8sLNPlAReUuWCi5Zladdo/F/rg+2WKBKjpqnFCWfeZFLe5hjlWwAfB7IQ2SPlr
-         mvYLGFStM77+595Pn31eky7TidzoCWnePjtmnpDkfToVqS//2CGV2h+5rWUR2hQbJoro
-         rYzILwkG9wohJr+y99zA553mOIMyrxE87JlnAs5kn2vp93EwKQwS1bTSRmaXlgwFcTnn
-         dp5i2WLcraIcKVxoQq+Asow+bEXnsLnKDeNm4ROm5HgRi2TDtjUzwQlocrPpXgkc55yb
-         uvvxgXPMfrkz1/9+tVTZN3skZVIF+QBzL15tyLdy5pEEd8oI+o4/UbixjuhNynsbcgMB
-         lTSw==
-X-Gm-Message-State: AOAM533hqJJfOZnsVSn9EcoIWviFAlAWVeWn567bqcGLJ8g53TTkWUMc
-        1WfjNjVcbiiQ6U57Jsc2TxK/XVSgF9i9NS5AKRrW6Ptk8EW2aQ==
-X-Google-Smtp-Source: ABdhPJwJvfB60TDfxg+zBOknWCO5DLOiwlHAgKd8ltEXk16BTApL/twbXbAQ+YCUAYYVItRynOIKp5zgsaPvSJDkWQg=
-X-Received: by 2002:ac2:418f:: with SMTP id z15mr6405426lfh.2.1620395933583;
- Fri, 07 May 2021 06:58:53 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=q8lThpELikp8ODUS4j45tCvhIkLiOfbuAGZKuAO0Lic=;
+        b=LZ6ASANvUGI9FuKwsm8JJBDYewZtajYCv04aDvCL3I6FU0om4PXLxpHef2De1UH9o8
+         Xt2rww/oX4DITtKF1mtG6Y9+P2HeUjqCI6I1q7AF6MS5cVp37hB5LkfRWy2XJZ6NdhmB
+         +KBRYqToZ8MFMne4rB7EcN8ePimX6BJhAbafZM+mLwL32ycDSdhIwDc1fVrplItnfUq8
+         9YVcp8cqRtIAN76Nq7oKIUYWLG6J98kBkLsuJzX1r0nAy5xFbLEbuKaoZQ2uQDe9YH1H
+         CTeThnQcb7PTtgSTrC3lqDU6me82Jz52n6m0T9Q8Cam4mCBZAiytt1aWvS+6snKTvwNw
+         CARA==
+X-Gm-Message-State: AOAM533nfgGlMWOJUnMNAkIRWxDQcEDqK1DQKRptVxJL6ZJ49+SJcJTE
+        tpCT1O2fnOe9pi8I0MIOvwvuoIwzevo=
+X-Google-Smtp-Source: ABdhPJwc8tK5f8V2znS+CeSTdGuP95Uj0Z9oKa01rohbMyfXVHu/w5pasQ/Me3TfvVbzenSXd5Agtw==
+X-Received: by 2002:a05:6512:acc:: with SMTP id n12mr6744414lfu.9.1620396175794;
+        Fri, 07 May 2021 07:02:55 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id x207sm1378483lff.234.2021.05.07.07.02.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 May 2021 07:02:55 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Firmin Martin <firminmartin24@gmail.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmail.com>,
+        Erik Faye-Lund <kusmabite@gmail.com>,
+        Denton Liu <liu.denton@gmail.com>
+Subject: Re: [PATCH v1 0/8] format-patch: introduce --confirm-overwrite
+References: <20210506165102.123739-1-firminmartin24@gmail.com>
+        <60949be8613c1_8c2220882@natae.notmuch>
+Date:   Fri, 07 May 2021 17:02:54 +0300
+In-Reply-To: <60949be8613c1_8c2220882@natae.notmuch> (Felipe Contreras's
+        message of "Thu, 06 May 2021 20:46:16 -0500")
+Message-ID: <87sg2ybq0h.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
 MIME-Version: 1.0
-References: <20210426010301.1093562-1-sandals@crustytoothpaste.net> <20210426010301.1093562-2-sandals@crustytoothpaste.net>
-In-Reply-To: <20210426010301.1093562-2-sandals@crustytoothpaste.net>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Fri, 7 May 2021 10:58:42 -0300
-Message-ID: <CAHd-oW4N7GB=E6hFc4GAD-b+1QzTR9+hL-hDXwAQkuss4Y4Ddw@mail.gmail.com>
-Subject: Re: [PATCH v2 01/13] hash: add an algo member to struct object_id
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git <git@vger.kernel.org>, Derrick Stolee <dstolee@microsoft.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, brian
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-On Sun, Apr 25, 2021 at 10:03 PM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
+> Firmin Martin wrote:
+>> Currently, git-format-patch, along with the option --cover-letter,
+>> unconditionally overwrites a cover letter with the same name (if
+>> present). Although this is a desired behaviour for patches which are
+>> auto-generated from Git commits log, it might not be the case for a
+>> cover letter whose the content is meticulously written manually.
 >
-> Now that we're working with multiple hash algorithms in the same repo,
-> it's best if we label each object ID with its algorithm so we can
-> determine how to format a given object ID. Add a member called algo to
-> struct object_id.
+> This is one of the reasons I never use git format-patch directly, but I
+> use a tool on top: git send-series[1].
+>
+> It would be nice if git format-patch grabbed the text of the body from
+> somewhere,
 
-In parallel-checkout.c:send_one_item(), I used hashcpy() instead of
-oidcpy() to prepare the packet data that is sent to the checkout
-workers through a pipe.
+It does already. I use:
 
-I avoided oidcpy() because it would copy the whole GIT_MAX_RAWSZ
-bytes, and the last part could be uninitialized, leading to a Valgrind
-warning about passing uninitialized bytes to a write() syscall. There
-is no real harm in this case, but I wanted to avoid the warning as it
-might confuse someone trying to debug this code, me included.
+  git format-patch --cover-letter --cover-from-description=auto
 
-The problem with this approach, of course, is that it will not copy
-the new `algo` field, leaving it as zero for all items. So, what do
-you think would be best in this situation? Some ideas that came
-through my mind were:
+that takes both subject and text for cover letter from branch
+description.
 
-1. Make oidcpy() only copy `hash_algos[src->algo].rawsz` bytes. (But
-then we would probably need to branch in case `src->algo` is zero,
-right?)
+> and even better if git branch learned --edit-cover-letter.
 
-2. Reintroduce the oid_pad_buffer() function from your v1, and use it
-in parallel-checkout.c:send_one_item(), after oidcpy(). This would
-then zero out the copied uninitialized bytes (with the cost of one
-additional memcpy() per item, but this might be neglectable here).
+It reads:
 
-3. Use oidcpy() as-is, without additional padding, and let Valgrind
-warn. This false-positive warn might not be so problematic after all,
-and maybe I'm just overthinking things :)
+  git branch --edit-description
 
-What do you think?
+Works for me.
 
-Thanks,
-Matheus
+-- Sergey Organov
