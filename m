@@ -4,33 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A094C433ED
-	for <git@archiver.kernel.org>; Fri,  7 May 2021 06:22:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86CD8C433B4
+	for <git@archiver.kernel.org>; Fri,  7 May 2021 06:26:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D64A0613EA
-	for <git@archiver.kernel.org>; Fri,  7 May 2021 06:22:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 59E9D613DD
+	for <git@archiver.kernel.org>; Fri,  7 May 2021 06:26:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230380AbhEGGX0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 May 2021 02:23:26 -0400
-Received: from smtp517.hk.chengmail.me ([113.10.190.201]:43270 "EHLO
-        smtp517.hk.chengmail.me" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230197AbhEGGXZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 May 2021 02:23:25 -0400
-X-CHENGMAILHOST: 113.10.190.201
-X-CHENGMAIL-INSTANCEID: 140e.6094dc9a.94704.0
+        id S233655AbhEGG1U (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 May 2021 02:27:20 -0400
+Received: from smtp512.hk.chengmail.me ([113.10.190.174]:32936 "EHLO
+        smtp512.hk.chengmail.me" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230380AbhEGG1T (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 May 2021 02:27:19 -0400
+X-CHENGMAILHOST: 113.10.190.174
+X-CHENGMAIL-INSTANCEID: 4e3e.6094dd88.9d9cd.0
 From:   lilinchao@oschina.cn
 To:     git@vger.kernel.org
 Cc:     Li Linchao <lilinchao@oschina.cn>
-Subject: [PATCH] Fix type in Documentation/RelNotes/2.31.0.txt
-Date:   Fri,  7 May 2021 14:21:46 +0800
-X-source-message-id: <20210507062146.12883-1-lilinchao@oschina.cn>
+Subject: [PATCH] Fix typo in Documentation/RelNotes/2.31.0.txt
+Date:   Fri,  7 May 2021 14:26:12 +0800
+X-source-message-id: <20210507062612.13326-1-lilinchao@oschina.cn>
 X-Mailer: git-send-email 2.31.1.442.g7e39198978
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Message-ID: <93f1d430aefc11ebb63c0024e87935e7@oschina.cn>
+Message-ID: <21c2f550aefd11eb9a470026b95c99cc@oschina.cn>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
