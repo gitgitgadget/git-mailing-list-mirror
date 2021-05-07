@@ -2,112 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D5236C433ED
-	for <git@archiver.kernel.org>; Fri,  7 May 2021 12:47:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B00D1C433ED
+	for <git@archiver.kernel.org>; Fri,  7 May 2021 12:56:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9F57B6145D
-	for <git@archiver.kernel.org>; Fri,  7 May 2021 12:47:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7878A6143F
+	for <git@archiver.kernel.org>; Fri,  7 May 2021 12:56:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236662AbhEGMsI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 May 2021 08:48:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33890 "EHLO
+        id S236691AbhEGM5a (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 May 2021 08:57:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35958 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234610AbhEGMsH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 May 2021 08:48:07 -0400
-Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C901C061574
-        for <git@vger.kernel.org>; Fri,  7 May 2021 05:47:07 -0700 (PDT)
-Received: by mail-pf1-x434.google.com with SMTP id a5so496310pfa.11
-        for <git@vger.kernel.org>; Fri, 07 May 2021 05:47:07 -0700 (PDT)
+        with ESMTP id S234398AbhEGM50 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 May 2021 08:57:26 -0400
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B21EDC061574
+        for <git@vger.kernel.org>; Fri,  7 May 2021 05:56:25 -0700 (PDT)
+Received: by mail-pl1-x636.google.com with SMTP id a11so5090470plh.3
+        for <git@vger.kernel.org>; Fri, 07 May 2021 05:56:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=PVpgsLGS8BGCpOcmUCj+yvwPz/qrpLVVWtLYH2wGYuk=;
-        b=hUmrNZOk/M4Z+47ghiLMsa2Xs9NZu5dfCSvf6xdE0A8SWSZTZv6YHVm++tSajGbA5H
-         AE9WYYder1KlLlx9CdPApeWpVHoXGK2h0cWZ1vkEvW7FGPj0PnI8H9helgB3tsoSFp3p
-         kOxufWXp/oHRPsnvid5jwpjRQ6dERkAEy4lbMGLq04QZ+bYJ0yPp7KdyjFVgjUgvht+p
-         K8CnGXlY2FAheD6jQQisGiuJ2eHSFHAGtsRU6SX42koYqt+ahnFg6ScWhYoSnfi1O4WT
-         3bRo8n8duh0Wo5SMkM/btRQtS4oGEYLTGkRSJCGsaBBiVeSeBVhV2rr4v2pY3SUuobBr
-         6KuA==
+        h=to:from:cc:subject:message-id:date:user-agent:mime-version
+         :content-language:content-transfer-encoding;
+        bh=zSQwOsaS3YadaVy2p1NoWxdSnYq9sKMoDa7xlSWC97g=;
+        b=mpit45ydk4WdDfvF4dAeeLQPVW19YHfmxBLEFGscUueHay8ATndgAjgX2zQLk2v7c3
+         wnhjreRdTgdfSHdHahFYDxgspX1KaFG0rJDToEheRD2GtEWcy1iSQRvUTwFDX2FfiKdy
+         AWP7JuVndkx9YTIedpsh4W0Oec1eRZ7SNuo/wqwinPqWWtr/Uow7bqE6dUckAIbg+A6x
+         zA5gdzX+rDPqga+EPgE+NRQ1lHqCNEdwA/Uk+QNrlfLXpbVgF0VlQhvWu6PtY7rkipJW
+         /f4u6hsEqJsaliDj4a+EICXqD3V53cUuUTncgHSFf9JcIYdqL+HhNK8L8jCtOWpg4oO2
+         l0PQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=PVpgsLGS8BGCpOcmUCj+yvwPz/qrpLVVWtLYH2wGYuk=;
-        b=fSLC6wypUZqYy9iaWwRurpXLKjJT804W3FmwqMzu3bUGUcM3kup/IOQZl0I8Bxjoli
-         aXD3CgoXVtVIZ7/bfZlgaJXbukSZQvda6MnfTYPleJIXT7WtVVw3EbMmgdM4L7CBBxu9
-         4Ztidi5y29G7B5GMiSzv7ycXTRdwsiYAYHzx7W1VRZ9gkAMXVn5O7hYxflZm5W3tMvSg
-         OQ0E6Iq//T5FMzGxm2mlVkp5XrnW/EO/CjhV0QiIXAD4Kjf/+WvBEw8rv+Icw0CQqQvM
-         X5pXGSPw7P87FhmVaox/6V2DG4toB1OU3HvBo3klD6meVImQ1HNMiYP/c4kl7iO341qN
-         T8iw==
-X-Gm-Message-State: AOAM530ZuIg+y5KeqdkkK7eN34FNhXQxlvwzrBxWtDgfZwuAaeAd9Aj9
-        xw2O0yqg3YLlTG/wLp7mohlBT6PJlMAGDw==
-X-Google-Smtp-Source: ABdhPJxyw0XwOkPpuxKa0ZqQIjASnAx3Tf/mfbe87h8x7gmk+wqQHhG//A0WkgtEkR33nKRwjwh/fw==
-X-Received: by 2002:a63:bf0d:: with SMTP id v13mr1736170pgf.303.1620391626510;
-        Fri, 07 May 2021 05:47:06 -0700 (PDT)
+        h=x-gm-message-state:to:from:cc:subject:message-id:date:user-agent
+         :mime-version:content-language:content-transfer-encoding;
+        bh=zSQwOsaS3YadaVy2p1NoWxdSnYq9sKMoDa7xlSWC97g=;
+        b=i4kDvKAH3hJuk3BIyfGmk4IRSepz5DEEZo6jkPVa1S+vFcjI15xYTCIOQkxiVjyrDx
+         ArWAdEKDAW/mZ1MPzifkwBvVU/Tt++0p3dOd5q8CfjGdwPGCi6SAOhsO16SdjQM3ZBLJ
+         eGp23k9qnSF3SB/Tu/OJXdSUOUVGD7azDi/pH3WyVxtaVXFbDd3ylMd33kASQcxxzdH6
+         uYpvh9aJxNDNunBg5DaVS/F0a69UUIKNFeEiqMhGfoxJnGiQCW5UAqpxCh1O7v5Np8aI
+         afItSBe69ZanDDaO7iXvB9m/4KO4lx2nFn1y2TCGa9/87yYR/4xcgG480RL9CO2lV6PH
+         CF2Q==
+X-Gm-Message-State: AOAM533nQTwaSXaSmqsyNyRuBVMqfF4yc5STI/A2GEjQJ3vpCm7nB0lH
+        7oXO5wat9cRKU9GOMfzaoE0W7EhHktP0Zg==
+X-Google-Smtp-Source: ABdhPJxZfYgBBAF/YLWVOX3uYaTGW4lmBVZ8l7bZZoHh+pDPE7fuSzs+iSmB+UcwVwilwA6GfmIoXw==
+X-Received: by 2002:a17:90b:956:: with SMTP id dw22mr21022879pjb.211.1620392185223;
+        Fri, 07 May 2021 05:56:25 -0700 (PDT)
 Received: from [192.168.43.80] (subs02-180-214-232-23.three.co.id. [180.214.232.23])
-        by smtp.gmail.com with ESMTPSA id j24sm4408305pjy.1.2021.05.07.05.47.05
+        by smtp.gmail.com with ESMTPSA id a129sm4972860pfa.36.2021.05.07.05.56.24
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 07 May 2021 05:47:06 -0700 (PDT)
-Subject: Re: [RFC suggestion] Generate manpage directly with Asciidoctor
-To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
-Cc:     Git Users <git@vger.kernel.org>
-References: <3461c7b0-594d-989e-3048-2fc6583084ad@gmail.com>
- <YJUyHkYAIth0W9dY@danh.dev>
+        Fri, 07 May 2021 05:56:24 -0700 (PDT)
+To:     Git Users <git@vger.kernel.org>
 From:   Bagas Sanjaya <bagasdotme@gmail.com>
-Message-ID: <91eb6197-41b5-257a-34d5-6865df793880@gmail.com>
-Date:   Fri, 7 May 2021 19:47:03 +0700
+Cc:     "brian m . carlson" <sandals@crustytoothpaste.net>
+Subject: "bad revision" fetch error when fetching missing objects from partial
+ clones
+Message-ID: <6422f505-29c4-bee9-e28c-b77dd831c246@gmail.com>
+Date:   Fri, 7 May 2021 19:56:22 +0700
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.10.1
 MIME-Version: 1.0
-In-Reply-To: <YJUyHkYAIth0W9dY@danh.dev>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 07/05/21 19.27, Đoàn Trần Công Danh wrote:
-> I'm pretty sure xmlto doesn't depend on dblatex and/or texlive.
-> 
-> I'm building Git and Git's documentation on different Linux boxes with
-> asciidoc, most of them don't have dblatex and/or texlive.
-> In fact, I only have texlive installed in my laptop.
-> 
-> I guess you're using Debian or one of its derived distribution?
-> Debian puts dblatex as xmlto's rec. [2]
-> 
-> I think you can use:
-> 
-> 	apt install --no-install-recommends xmlto
-> 
-> to avoid those recommendations.
->
+Hi,
 
-Yes, I'm using Ubuntu (derived from Debian).
+I have a copy of Gitea application repository [1] on my local Git
+server on my computer. I was playing with partial clones using that
+repository as remote.
 
-> Hm, I'm pretty sure Ruby (asciidoctor's language) is very hard to port.
-> Last I heard, it's buggy on some platforms.
-> 
-> I think we're better to do like this:
-> 
-> * If we're using asciidoc, we will use xmlto
-> * If we're using asciidoctor, we will generate man-pages with
->    asciidoctor directly
-> 
+I began with blobless clone the repo by:
 
-Nice for your suggestion.
+$ git clone https://<myhost>/bagas/gitea.git gitea --filter=blob:none
 
-But will the resulting manpage from asciidoc+xmlto and from asciidoctor
-syntatically and semantically same?
+Then I tried to fetch missing objects. First, I gathered list of them:
+
+$ git rev-list --objects --all --missing=print | grep -o -P '^\?\K\w+' > .git/missing.list
+
+I had asked how to properly fetch objects from the list above before on
+this list, and brian m. carlson (CC'ed) suggested [2] that I should
+use xargs:
+
+$ xargs git fetch origin < .git/missing.list
+
+I expected that I received all missing objects. However, the error message
+I got was something like below, repeated:
+
+> remote: ...<skipped>
+> Receiving objects: 100% (64/64), 154.49 KiB | 2.97 MiB/s, done.
+> remote: ...<skipped>
+> Receiving objects: 100% (37/37), 168.35 KiB | 4.95 MiB/s, done.
+> Resolving deltas: 100% (5/5), done.
+> Resolving deltas: 100% (49/49), completed with 47 local objects.
+> fatal: bad revision 'd5e9cd36ab21839af3d116eff3221c53f6ca7fd6'
+> error: https://<myhost>/bagas/gitea.git did not send all necessary objects
+
+Then I repeated the object list gathering and fetching above, and the error
+still occured. Even I tried fetching only one of problematic object above
+and still errored.
+
+When I inspected that object with `git cat-file -p` from my other, full
+clone version (which I used for submitting changes upstream), the object
+is properly displayed (in this case as source code in Go).
+
+Note that I have uploadpack.allowfilter=true config on the server.
+
+Am I missing something?
+
+[1]: https://github.com/go-gitea/gitea
+[2]: https://lore.kernel.org/git/YD7bczBsIR5rkqfc@camp.crustytoothpaste.net/
 
 -- 
 An old man doll... just what I always wanted! - Clara
