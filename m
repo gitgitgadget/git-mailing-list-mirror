@@ -7,109 +7,108 @@ X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 810A1C433ED
-	for <git@archiver.kernel.org>; Fri,  7 May 2021 20:08:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8C1BC433ED
+	for <git@archiver.kernel.org>; Fri,  7 May 2021 20:25:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5726D6144F
-	for <git@archiver.kernel.org>; Fri,  7 May 2021 20:08:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B219461261
+	for <git@archiver.kernel.org>; Fri,  7 May 2021 20:25:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230085AbhEGUJ3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 May 2021 16:09:29 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:49744 "EHLO
+        id S230049AbhEGU0n (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 May 2021 16:26:43 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:49748 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229925AbhEGUJ1 (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 7 May 2021 16:09:27 -0400
-Received: from camp.crustytoothpaste.net (castro.crustytoothpaste.net [75.10.60.170])
+        by vger.kernel.org with ESMTP id S229986AbhEGU0m (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 7 May 2021 16:26:42 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 08AA860459;
-        Fri,  7 May 2021 20:07:54 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 51FBD6042E;
+        Fri,  7 May 2021 20:25:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1620418075;
-        bh=6MR6cT64cyYjaV0yJ3ERbfSrBHNmo/1AlssTuOyoWYI=;
+        s=default; t=1620419141;
+        bh=Z9/OGljVDlELGNuRMDSQIO2keSembuicgqL4jj+YOec=;
         h=Date:From:To:Cc:Subject:References:Content-Type:
          Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=ASiJfLB2mArgG7xj1aBULZt6vFvwcD2FbiHf8EUz5BnnYz9RK5aYbr1wn1hoJaYIT
-         QD2CjGapwVxwF0EPXoPGnf/0iJQrnKShQreTvhKoyZzl0cOi9AC/fL9hXsVMBOdmvU
-         5w4gx1bw9DHxTEXQbLpCWLT2po8RNEMZDyBS7FOtlTQsz6mDXfVRjH9a5r3kTBV3I4
-         59M5mTz2EamKuy+JbSUCWXPJh5GxseOg80WScb19x9jbhqKjWfUkYxmq0tN9b+IiU6
-         IEvttzQgBLpciU4hjhuh356Dv2EsflBCj9FoTXQCgDKRTc5I3pfXupBj6JQVRt3/91
-         y2JxVGe8LV2nzErqMP2QGQ9XFTzEiQsxo/XK5WHJIXres42KloyxHns76yGb7YDIVV
-         cVOnjNfkrR/GmiKLNC/FMwQ1mmiDLItUw1XI3QsSEtgvUCe9+Q+hLor0Lz2ETOlJmH
-         t5X/C68y7WuYsQkJWjNutHz4AZyfyJS/aqwMEE71iUtVE50KnxO
-Date:   Fri, 7 May 2021 20:07:51 +0000
+        b=ZaAIndl+QfEKnn6Et5GUUS7tUwWFc/1CG9iHNv4tWR25Q/JT96gmZYuCA5gQBGvuC
+         l27x9c+/ZpjVqJmisHlxQaW21TKFjuJLvV4VjSJZ9JA4o8mMb3gkT21SN99EbBnuMV
+         kyrAaWkAABgdOvlcfdsB3DoTHtu+6P0ecwb789OM+ZxDH/VE9yYv7RlEts/IjhwesI
+         qzeBLDuFDDL36+Z6Z6g2rUxDxeB2GSSUlc0Bhj470jqx6MCZLxKxMZP9JWrBdbb6ge
+         OZSBoc3QEx9k5czTjZVj16Uy2W1Qn/vxgl8yBCPuapc6m3Gqa4E5DSsYyQQjQ+QxgB
+         Gh1nCShU9HBRGQ+FNKwiXswy9cchAf7Nvxyry7X2oIxqblPyVbgC3aCXUQ/xK4ZfhU
+         FcDwW1NBGHLbN084FwOXvlWtNtBK1Y7aWP6H/iB0xk0jRe81eBuSurQkJDkVIEuoGK
+         OZSEqvNsMLBDXouK3qFBXXotZNCnq3UMKbe17oCJZTo1OUn9lru
+Date:   Fri, 7 May 2021 20:25:36 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Cc:     git <git@vger.kernel.org>, Derrick Stolee <dstolee@microsoft.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v2 01/13] hash: add an algo member to struct object_id
-Message-ID: <YJWeF8iaWcegWACa@camp.crustytoothpaste.net>
+To:     Bagas Sanjaya <bagasdotme@gmail.com>
+Cc:     Git Users <git@vger.kernel.org>
+Subject: Re: [RFC suggestion] Generate manpage directly with Asciidoctor
+Message-ID: <YJWiQH2nf0B14Zy7@camp.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        git <git@vger.kernel.org>, Derrick Stolee <dstolee@microsoft.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-References: <20210426010301.1093562-1-sandals@crustytoothpaste.net>
- <20210426010301.1093562-2-sandals@crustytoothpaste.net>
- <CAHd-oW4N7GB=E6hFc4GAD-b+1QzTR9+hL-hDXwAQkuss4Y4Ddw@mail.gmail.com>
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Git Users <git@vger.kernel.org>
+References: <3461c7b0-594d-989e-3048-2fc6583084ad@gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="XCJY5dS8jUKhNcwl"
+        protocol="application/pgp-signature"; boundary="4/QrDivbfw71kzzY"
 Content-Disposition: inline
-In-Reply-To: <CAHd-oW4N7GB=E6hFc4GAD-b+1QzTR9+hL-hDXwAQkuss4Y4Ddw@mail.gmail.com>
+In-Reply-To: <3461c7b0-594d-989e-3048-2fc6583084ad@gmail.com>
 User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---XCJY5dS8jUKhNcwl
+--4/QrDivbfw71kzzY
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On 2021-05-07 at 13:58:42, Matheus Tavares Bernardino wrote:
-> Hi, brian
+On 2021-05-07 at 06:06:31, Bagas Sanjaya wrote:
+> Hi,
+>=20
+> Asciidoctor has support for directly generating manpage, see [1].
+>=20
+> We support using Asciidoctor as drop-in replacement for original
+> Asciidoc, but currently we need to use xmlto together with Asciidoc(tor)
+> to produce manpages. However, most users don't inclined to install
+> xmlto toolchain, partly because they had to download more than 300 MB
+> of data just to install xmlto and its dependencies (including dblatex
+> and texlive).
 
-Hey,
+If you're installing on Debian, you want to install with
+--no-install-recommends to avoid the dependency on dblatex or fop,
+libpaper-utils, and zip.  That should avoid the large downloads.
 
-> 1. Make oidcpy() only copy `hash_algos[src->algo].rawsz` bytes. (But
-> then we would probably need to branch in case `src->algo` is zero,
-> right?)
+> So completely migrating to Asciidoctor can eliminate xmlto requirement
+> for generating manpage.
+>=20
+> What do you think about above?
 
-Yeah, this will likely incur a performance cost.  I'd recommend avoiding
-this if possible.
+I didn't do this because it makes things very complicated in the
+Makefile and my goal was to minimize the needed changes and divergence.
+I'm not opposed to someone else doing it, but I expect it will be a
+bunch of work.
 
-> 2. Reintroduce the oid_pad_buffer() function from your v1, and use it
-> in parallel-checkout.c:send_one_item(), after oidcpy(). This would
-> then zero out the copied uninitialized bytes (with the cost of one
-> additional memcpy() per item, but this might be neglectable here).
-
-This is fine with me.  I didn't have a use for it anymore, but you've
-clearly found one, and I think this is probably the best approach here.
-
-> 3. Use oidcpy() as-is, without additional padding, and let Valgrind
-> warn. This false-positive warn might not be so problematic after all,
-> and maybe I'm just overthinking things :)
-
-I'm okay with this, but I don't know if the other end is security
-sensitive and might need unused data zeroed.  If so, we should
-definitely avoid this option.
+It also doesn't help if you're generating more than just the manual
+pages, since generating the PDFs will definitely require xmlto and
+either dblatex or fop.  I personally prefer fop over dblatex, but folks
+have different opinions.
 --=20
 brian m. carlson (he/him or they/them)
 Houston, Texas, US
 
---XCJY5dS8jUKhNcwl
+--4/QrDivbfw71kzzY
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.3.1 (GNU/Linux)
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYJWeFgAKCRB8DEliiIei
-gfSKAQDQ9uZ9JTttpl6fcOmAOqDgZiQECbGC/17XQ4GH6LkrnQEA9Qh1tssBrbxO
-AzgFi9Fs2s7++WN4Hreyuu7DhfAExw0=
-=4UEp
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYJWiPwAKCRB8DEliiIei
+gaq/AP9YCwsc1BUC+QnkDn1lCI3thb3DpLGDuzQissQVRvBIDQD/YXAaHG5/4ccR
+Am83Kh4enkd2XYjoYWvb/dx7M6Uv0QI=
+=K+AM
 -----END PGP SIGNATURE-----
 
---XCJY5dS8jUKhNcwl--
+--4/QrDivbfw71kzzY--
