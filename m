@@ -2,93 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B71E7C433B4
-	for <git@archiver.kernel.org>; Fri,  7 May 2021 03:32:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 016BFC433ED
+	for <git@archiver.kernel.org>; Fri,  7 May 2021 03:43:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7E823613E3
-	for <git@archiver.kernel.org>; Fri,  7 May 2021 03:32:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C712960FEB
+	for <git@archiver.kernel.org>; Fri,  7 May 2021 03:43:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231560AbhEGDdW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 May 2021 23:33:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51896 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230376AbhEGDdW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 May 2021 23:33:22 -0400
-Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDF28C061574
-        for <git@vger.kernel.org>; Thu,  6 May 2021 20:32:21 -0700 (PDT)
-Received: by mail-pg1-x52c.google.com with SMTP id m12so6183030pgr.9
-        for <git@vger.kernel.org>; Thu, 06 May 2021 20:32:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=uEXZHfJeIoofkuvgbWuCJEAayz1teCZzj9QkB+TWE/4=;
-        b=V/Xj12PWIyVgKuNo81SRW6BTkaPKwtTPXA5lIMOuM7UoCeM6N9FbV3e5q4Vaba1Ukh
-         EbgFa/4aDavidO/mF6ORL6aSQ9O6VrVjDXprdzXdNQ80MJziB4zGDwewgq4/kgpBmr23
-         Hx7RMdLsuStYvYWF7VQsb9ifoek7TRxVytto6beIVxNpKSkbJy3mw6fokdYjx5LDs4rb
-         oFGeTQJ7i//moVAv/78IFxkbV/PxhkQqapYbqNy1WoL6d/mzthAQorqx4azco02IH0FV
-         283s2pmFqopWJM+2T+W+yhDZf7F7H6vGtOJnIxuHudLqA5qYebkRS9m+7SvyPi10XMOU
-         kkuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=uEXZHfJeIoofkuvgbWuCJEAayz1teCZzj9QkB+TWE/4=;
-        b=ly4YCHxScjWO0u630j6mozR5xtLQ1qBKR2J50Va/mUZH8Ah7+Jxf1UBqHo9BvtOeKc
-         bAYxd1I3d7hd98t+FVNQn/mxgFOZVbitXd8X6D3v4cL9/oW765EKxa1SgSquWnhlcDsB
-         jTLSjkth/a1kje1Pm8UoCHeLz73mk7T8r7NQtIwTJXp09vstMTMeCut8mccNk3+Hs2Gv
-         d68K7+v6451sDYIIb8FdzJlgYHsnPhiqVU+jSuKNjYB9G1S42+vf69SIK0b5e/wVZlXr
-         j8IjLNIY91OBstapzTYK0JRu/i+fKIi/J6b/wpE4VKohy9Btt9ealxARBshMhGszLwhO
-         dx2A==
-X-Gm-Message-State: AOAM5317irLJfdrnVhcBMiEd2sySCO/VB5mpV8Tqk2GERTPUAH5Z4+ov
-        p3sOT/dGjBsOMnS37R3rSIg=
-X-Google-Smtp-Source: ABdhPJwedMrwuJpHkOeuCbybHMMOfzZWeBlrfVycLdIbWZp+gxNjK5kG2HFZRJXORRKQ4sKtF9IIpQ==
-X-Received: by 2002:a62:f84a:0:b029:245:17e4:bde2 with SMTP id c10-20020a62f84a0000b029024517e4bde2mr7925861pfm.64.1620358341531;
-        Thu, 06 May 2021 20:32:21 -0700 (PDT)
-Received: from [192.168.43.80] (subs03-180-214-233-82.three.co.id. [180.214.233.82])
-        by smtp.gmail.com with ESMTPSA id 132sm3152932pfu.107.2021.05.06.20.32.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 May 2021 20:32:21 -0700 (PDT)
-Subject: Re: [PATCH v1 7/8] doc/format-patch: describe --confirm-overwrite
-To:     Firmin Martin <firminmartin24@gmail.com>, git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmail.com>,
-        Erik Faye-Lund <kusmabite@gmail.com>,
-        Denton Liu <liu.denton@gmail.com>
-References: <20210506165102.123739-1-firminmartin24@gmail.com>
- <20210506165102.123739-8-firminmartin24@gmail.com>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-Message-ID: <e0bc4aef-a92a-20f2-0b9f-d65917710e3b@gmail.com>
-Date:   Fri, 7 May 2021 10:32:17 +0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.1
+        id S232696AbhEGDoF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 May 2021 23:44:05 -0400
+Received: from cloud.peff.net ([104.130.231.41]:47086 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231299AbhEGDoC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 May 2021 23:44:02 -0400
+Received: (qmail 31990 invoked by uid 109); 7 May 2021 03:43:01 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 07 May 2021 03:43:01 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 29324 invoked by uid 111); 7 May 2021 03:43:03 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 06 May 2021 23:43:03 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 6 May 2021 23:43:00 -0400
+From:   Jeff King <peff@peff.net>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jason Gore <Jason.Gore@microsoft.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Git clean enumerates ignored directories (since 2.27)
+Message-ID: <YJS3RIEtittWdFSF@coredump.intra.peff.net>
+References: <DM6PR00MB06829EC5B85E0C5AC595004E894E9@DM6PR00MB0682.namprd00.prod.outlook.com>
+ <YHdzDlAfsuZ21HR7@camp.crustytoothpaste.net>
+ <YHf+m7vOQumdJXwX@coredump.intra.peff.net>
+ <CABPp-BH3tbTyA9gj=2vb878d1MQVCTqT7=kS5U+sB6CoDX0Jww@mail.gmail.com>
+ <YJSzQm2p5bCAd8Fv@coredump.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <20210506165102.123739-8-firminmartin24@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YJSzQm2p5bCAd8Fv@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/05/21 23.51, Firmin Martin wrote:
-> +always;;
-> +never;;
-> +	Always/never prompt for confirmation whenever patches or a cover letter
-> +	are subject to be overwritten.
-> +cover;;
-> +	Ask confirmation whenever a cover letter is subject to be overwritten.
-> +--
+On Thu, May 06, 2021 at 11:25:54PM -0400, Jeff King wrote:
 
-For `always` and `never`, I think s/patches or/patches and\/or
-For `cover`, I think s/whenever/whenever only (add `only` after `whenever`
+> > Anyone have any bright ideas about how to tweak this test?  See [3]
+> > for the current incarnation of the code, which was basically taken
+> > from Brian's sample testcase.
+> 
+> My guess is that that version of "rm" is trying to feed the entire
+> pathname directly to unlink() and rmdir(), and it exceeds PATH_MAX.
+> 
+> Even with GNU tools, for instance, I get:
+> 
+>   $ rmdir $(find avoid-traversing-deep-hierarchy -type d | tail -1)
+>   rmdir: failed to remove 'avoid-traversing-deep-hierarchy/directory400/
+>     [...and so on...]/directory1': File name too long
+> 
+> because it feeds the whole to a single rmdir() call. Whereas stracing
+> GNU "rm -rf", it uses unlinkat() and openat() to delete each level
+> individually (probably to avoid this exact problem).
+> 
+> Is the actual path length important, or just the depth? If the latter,
+> then calling it "d400/d399/.../d2/d1" would likely help, as that's less
+> than 2000 bytes.
 
--- 
-An old man doll... just what I always wanted! - Clara
+Reading your commit messages a little more carefully, I'm still not
+quite sure of the answer to that question.
+
+But if you really do need the long length, a workaround is to avoid
+dealing with the full path all at once. E.g., make two strings, one with
+"directory400/.../directory200", and one with "directory199/.../directory1".
+
+And then you can probably:
+
+  (cd $one && rm -rf directory199) &&
+  rm -rf directory400
+
+to do it in two parts, with each "rm" seeing only a half-length path.
+
+I notice you also run O(n) "mkdir" and "mv" calls to create the
+directory. I "mkdir -p" would be much more efficient, though it might
+run afoul of similar path-length problems (especially on non-GNU
+systems).
+
+It might be worth turning to perl here:
+
+  perl -e '
+    for (reverse 1..400) {
+      my $d = "directory$_";
+      mkdir($d) and chdir($d) or die "mkdir($d): $!";
+    }
+    open(my $fh, ">", "some-file");
+  '
+
+and you could probably do something similar to remove it. Sadly, I don't
+think using File::Path makes building it easier, because it hits the
+same path limit (it builds up the string internally). However, its
+removal does work (and is in the set of core modules that we can count
+on always being available):
+
+  perl -MFile::Path=remove_tree -e 'remove_tree("directory400")'
+
+-Peff
