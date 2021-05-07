@@ -2,113 +2,73 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E8C1BC433ED
-	for <git@archiver.kernel.org>; Fri,  7 May 2021 20:25:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E615EC433B4
+	for <git@archiver.kernel.org>; Fri,  7 May 2021 21:56:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B219461261
-	for <git@archiver.kernel.org>; Fri,  7 May 2021 20:25:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B743261157
+	for <git@archiver.kernel.org>; Fri,  7 May 2021 21:56:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230049AbhEGU0n (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 May 2021 16:26:43 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:49748 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229986AbhEGU0m (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 7 May 2021 16:26:42 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 51FBD6042E;
-        Fri,  7 May 2021 20:25:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1620419141;
-        bh=Z9/OGljVDlELGNuRMDSQIO2keSembuicgqL4jj+YOec=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=ZaAIndl+QfEKnn6Et5GUUS7tUwWFc/1CG9iHNv4tWR25Q/JT96gmZYuCA5gQBGvuC
-         l27x9c+/ZpjVqJmisHlxQaW21TKFjuJLvV4VjSJZ9JA4o8mMb3gkT21SN99EbBnuMV
-         kyrAaWkAABgdOvlcfdsB3DoTHtu+6P0ecwb789OM+ZxDH/VE9yYv7RlEts/IjhwesI
-         qzeBLDuFDDL36+Z6Z6g2rUxDxeB2GSSUlc0Bhj470jqx6MCZLxKxMZP9JWrBdbb6ge
-         OZSBoc3QEx9k5czTjZVj16Uy2W1Qn/vxgl8yBCPuapc6m3Gqa4E5DSsYyQQjQ+QxgB
-         Gh1nCShU9HBRGQ+FNKwiXswy9cchAf7Nvxyry7X2oIxqblPyVbgC3aCXUQ/xK4ZfhU
-         FcDwW1NBGHLbN084FwOXvlWtNtBK1Y7aWP6H/iB0xk0jRe81eBuSurQkJDkVIEuoGK
-         OZSEqvNsMLBDXouK3qFBXXotZNCnq3UMKbe17oCJZTo1OUn9lru
-Date:   Fri, 7 May 2021 20:25:36 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
-Cc:     Git Users <git@vger.kernel.org>
-Subject: Re: [RFC suggestion] Generate manpage directly with Asciidoctor
-Message-ID: <YJWiQH2nf0B14Zy7@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Git Users <git@vger.kernel.org>
-References: <3461c7b0-594d-989e-3048-2fc6583084ad@gmail.com>
+        id S229760AbhEGV5u (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 May 2021 17:57:50 -0400
+Received: from cloud.peff.net ([104.130.231.41]:47670 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229470AbhEGV5t (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 May 2021 17:57:49 -0400
+Received: (qmail 2939 invoked by uid 109); 7 May 2021 21:56:49 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 07 May 2021 21:56:49 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 4158 invoked by uid 111); 7 May 2021 21:56:49 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 07 May 2021 17:56:49 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 7 May 2021 17:56:47 -0400
+From:   Jeff King <peff@peff.net>
+To:     Will Chandler <wfc@wfchandler.org>
+Cc:     git@vger.kernel.org, ps@pks.im
+Subject: Re: [PATCH] refs: cleanup directories when deleting packed ref
+Message-ID: <YJW3n6lVWVAuLQap@coredump.intra.peff.net>
+References: <YJVQpaDwkQH/aCee@mini.wfchandler.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="4/QrDivbfw71kzzY"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <3461c7b0-594d-989e-3048-2fc6583084ad@gmail.com>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+In-Reply-To: <YJVQpaDwkQH/aCee@mini.wfchandler.org>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, May 07, 2021 at 10:37:25AM -0400, Will Chandler wrote:
 
---4/QrDivbfw71kzzY
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> When deleting a packed ref, a lockfile is made in the directory that
+> would contain the loose copy of that ref, creating any directories in
+> the ref's path that do not exist. When the transaction completes, the
+> lockfile is deleted, but any empty parent directories made when creating
+> the lockfile are left in place.  These empty directories are not removed
+> by 'pack-refs' or other housekeeping tasks and will accumulate over
+> time.
+> 
+> When deleting a loose ref, we remove all empty parent directories at the
+> end of the transaction.
+> 
+> This commit applies the parent directory cleanup logic used when
+> deleting loose refs to packed refs as well.
 
-On 2021-05-07 at 06:06:31, Bagas Sanjaya wrote:
-> Hi,
->=20
-> Asciidoctor has support for directly generating manpage, see [1].
->=20
-> We support using Asciidoctor as drop-in replacement for original
-> Asciidoc, but currently we need to use xmlto together with Asciidoc(tor)
-> to produce manpages. However, most users don't inclined to install
-> xmlto toolchain, partly because they had to download more than 300 MB
-> of data just to install xmlto and its dependencies (including dblatex
-> and texlive).
+Hmm. I can certainly believe that such a bug exists, but...
 
-If you're installing on Debian, you want to install with
---no-install-recommends to avoid the dependency on dblatex or fop,
-libpaper-utils, and zip.  That should avoid the large downloads.
+> +test_expect_success 'directory not created deleting packed ref' '
+> +	git branch d1/d2/r1 HEAD &&
+> +	git pack-refs --all &&
+> +	test_path_is_missing .git/refs/heads/d1/d2 &&
+> +	git branch -d d1/d2/r1 &&
+> +	test_path_is_missing .git/refs/heads/d1/d2 &&
+> +	test_path_is_missing .git/refs/heads/d1
+> +'
 
-> So completely migrating to Asciidoctor can eliminate xmlto requirement
-> for generating manpage.
->=20
-> What do you think about above?
+...this test passes even without your patch applied. I wonder if there's
+something else required to trigger the problem.
 
-I didn't do this because it makes things very complicated in the
-Makefile and my goal was to minimize the needed changes and divergence.
-I'm not opposed to someone else doing it, but I expect it will be a
-bunch of work.
-
-It also doesn't help if you're generating more than just the manual
-pages, since generating the PDFs will definitely require xmlto and
-either dblatex or fop.  I personally prefer fop over dblatex, but folks
-have different opinions.
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
-
---4/QrDivbfw71kzzY
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYJWiPwAKCRB8DEliiIei
-gaq/AP9YCwsc1BUC+QnkDn1lCI3thb3DpLGDuzQissQVRvBIDQD/YXAaHG5/4ccR
-Am83Kh4enkd2XYjoYWvb/dx7M6Uv0QI=
-=K+AM
------END PGP SIGNATURE-----
-
---4/QrDivbfw71kzzY--
+-Peff
