@@ -2,109 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-22.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B9A52C433B4
-	for <git@archiver.kernel.org>; Fri,  7 May 2021 08:51:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A356BC433B4
+	for <git@archiver.kernel.org>; Fri,  7 May 2021 08:55:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7FA206141E
-	for <git@archiver.kernel.org>; Fri,  7 May 2021 08:51:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6CD4A6144F
+	for <git@archiver.kernel.org>; Fri,  7 May 2021 08:55:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235415AbhEGIwq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 May 2021 04:52:46 -0400
-Received: from mailrelay3-2.pub.mailoutpod1-cph3.one.com ([46.30.212.2]:58520
-        "EHLO mailrelay3-2.pub.mailoutpod1-cph3.one.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S233079AbhEGIwp (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 7 May 2021 04:52:45 -0400
-X-Greylist: delayed 962 seconds by postgrey-1.27 at vger.kernel.org; Fri, 07 May 2021 04:52:45 EDT
+        id S235576AbhEGI44 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 May 2021 04:56:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39028 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231179AbhEGI44 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 May 2021 04:56:56 -0400
+Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21BE7C061574
+        for <git@vger.kernel.org>; Fri,  7 May 2021 01:55:57 -0700 (PDT)
+Received: by mail-pg1-x533.google.com with SMTP id y32so6679587pga.11
+        for <git@vger.kernel.org>; Fri, 07 May 2021 01:55:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=cecilia-data.se; s=20191106;
-        h=content-transfer-encoding:content-type:in-reply-to:mime-version:date:
-         message-id:from:references:to:subject:from;
-        bh=9QbZezRE8YYAH7HBZQR7qF81dBf04OdoqJMZN+dv1g0=;
-        b=n4faSFmvfsVsS0/iav0+1JCDE8eo4dhxVuEOamCvP//4+/t1dd4jCbzLhon9uPpZOXAH2sOzGxUWG
-         DnSBYjX2iIKF9Kv1xuy4EQekoHXghztIoPHx7ayLs3GkyxGbpCxjXHsLeLbx0iOcIoTBixNqOzCwEf
-         +rphkDodc8dSfLeQWs5FMef7IXW3jaaJl1ky1P33U7GOgfnFeAVqOnQ+0x2E2UNyuvgSZ3MK53HKCb
-         EeB0yV23Fx23yJh75Ft2DPDiGcN8uqTWSRmvTf2IHk+ioX96J5Cp838XJPuqlg5s476e3J+EsysDmE
-         bHCaecyIwB/Ytalq3gL6AwthOlpFOBA==
-X-HalOne-Cookie: 2a91685ec70940b04a9a2e112a785c3989e982a9
-X-HalOne-ID: 3474979e-af0f-11eb-8cd3-d0431ea8bb03
-Received: from [192.168.69.20] (c-2097e253.014-439-73746f46.bbcust.telenor.se [83.226.151.32])
-        by mailrelay3.pub.mailoutpod1-cph3.one.com (Halon) with ESMTPSA
-        id 3474979e-af0f-11eb-8cd3-d0431ea8bb03;
-        Fri, 07 May 2021 08:35:41 +0000 (UTC)
-Subject: Re: [PATCH] doc: attempt to clarify a blurry sentence.
-To:     git@vger.kernel.org
-References: <pull.1019.git.git.1620319023972.gitgitgadget@gmail.com>
-From:   Lars Berntzon <lars.berntzon@cecilia-data.se>
-Message-ID: <38c762aa-07b3-99c6-9fa7-8cbd667839bc@cecilia-data.se>
-Date:   Fri, 7 May 2021 10:35:39 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.0
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=PYJ/JPYOG5ucGKjA38I3CRVtmJL7QZ9rHxnFtJwmdo4=;
+        b=OMoZzwLGd7bKqfGXSHHEEH1fmXIiGzbts30RKWjpcj+cKrPQm/517pMp3qjxh07Cz2
+         zL1pkcxq0b8tNp8c9UMzBE6ziqe2vHZS9mAdMIF4J9uYNnm+8tMq5KypwVPdJbnEyjtH
+         j9OzHp4EUwAzLsHPa0YbVLS3pcERs1WfFjwHnvjVlSSrWWK0J+u2W9mo5TWGkPznjKvi
+         4MsU6lIsUFYXUubiI8+UEOrlfZrQel/5tGR4qhef/f2tRsfNigtAOTNXCz2Z52k9eKGq
+         8w6Bv9OvBnSOa8iVCZJwj+pgOXDM2lYMBjCF7+HyujrZmLdIyyHC9VSQJTLIP/1ftLA8
+         CvPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=PYJ/JPYOG5ucGKjA38I3CRVtmJL7QZ9rHxnFtJwmdo4=;
+        b=S8o4GAJ2coeoy38HQ8twH1/lxHSr+6UVeOtm+4zAcMBxmXyIpGIxidy/fTEBsJ4UZk
+         ZZIskFilxfNGL7ub9+AhHdz8dZHFfJahOXnh9qJcNMvH4UgqO6JPQulT2dYV2U7UOSHO
+         NAluu+DMpGyFZCMTbp/s2jAEVUvtGSyJ6/IhOd82KvbAReDdtv18iDPH9rN/DvFilq79
+         jAElU5D8pmt2+GNOWvBF0lLP5kV9U9k2rgQbLxRFWr7JW2zOdetY5e+U44auO4DJ2Ptv
+         4k1bWqsOT65qKbm9PSOXvxZ6viObbvBmmzIkJS4iVECModb3f9DQcEXj6HYgbt5fISbd
+         YuAQ==
+X-Gm-Message-State: AOAM5326VXC3Zoif9aazzfKhDE7D5M0FCNISfvhckRmT8HQO/i+ydROn
+        kiIK0khdsib8QEsN8Uqbcis=
+X-Google-Smtp-Source: ABdhPJxZH995n9lWJUJs4wLfTVHa1Ehz1gaWmEQ2RvUl9MQDkwyYSnwt1pZjr8qaOOZU8FaTstnAOQ==
+X-Received: by 2002:a63:f252:: with SMTP id d18mr8912879pgk.20.1620377756710;
+        Fri, 07 May 2021 01:55:56 -0700 (PDT)
+Received: from generichostname ([172.92.165.181])
+        by smtp.gmail.com with ESMTPSA id y17sm4079735pfb.183.2021.05.07.01.55.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 May 2021 01:55:55 -0700 (PDT)
+Date:   Fri, 7 May 2021 01:55:53 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Firmin Martin <firminmartin24@gmail.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmail.com>,
+        Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH v1 0/8] format-patch: introduce --confirm-overwrite
+Message-ID: <YJUAmUJiHmJRQBMj@generichostname>
+References: <20210506165102.123739-1-firminmartin24@gmail.com>
+ <60949be8613c1_8c2220882@natae.notmuch>
 MIME-Version: 1.0
-In-Reply-To: <pull.1019.git.git.1620319023972.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <60949be8613c1_8c2220882@natae.notmuch>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Yes, your text is clear. I realize now I miss-read the line as if it was:
+Hi Felipe,
 
-   If git push [<repository>] without any <refspec> argument is set, to 
--update some ref at the destination with <src> with....
+On Thu, May 06, 2021 at 08:46:16PM -0500, Felipe Contreras wrote:
+> Firmin Martin wrote:
+> > Currently, git-format-patch, along with the option --cover-letter,
+> > unconditionally overwrites a cover letter with the same name (if
+> > present). Although this is a desired behaviour for patches which are
+> > auto-generated from Git commits log, it might not be the case for a
+> > cover letter whose the content is meticulously written manually.
+> 
+> This is one of the reasons I never use git format-patch directly, but I
+> use a tool on top: git send-series[1].
 
-I mentally placed the comma there and then I could not get pass that 
-(and for me there was no verb there to start with so I though it was the 
-git-doc lingua).
+It seems like everyone has written some sort of tooling on top of
+format-patch at this point. Taking a cursory look at your tool, perhaps
+a feature like `--previous-cover-letter <file>` might provide most of
+the functionality that most tooling that I've seen gives.
 
-But the main problem I have I guess is that the line refers to and , but 
-those comes from the ref-spec, but the whole line is about when ref-spec 
-is not specified so the placeholders and are not valid. Also your 
-clarification contain <src> and <dst> but again without ref-spec that is 
-not defined.
+Perhaps this option could parse a cover letter from a previous version
+of a patch and use it to populate the next version number, In-Reply-To,
+cover letter subject/body, To/Cc lists and maybe more. I think that
+extracting the information would be pretty easy but designing the UI it
+in a non-obtuse way would be pretty challenging.
 
-Regards, Lars
+> It would be nice if git format-patch grabbed the text of the body from
+> somewhere, and even better if git branch learned --edit-cover-letter.
 
-On 2021-05-06 18:37, Lars Berntzon via GitGitGadget wrote:
-> From: Lars Berntzon <lars.berntzon@external.atlascopco.com>
->
-> Signed-off-by: Lars Berntzon <lars.berntzon@cecilia-data.se>
-> ---
->      Attempt to clarify a blurry sentence.
->      
->      Signed-off-by: Lars Berntzon lars.berntzon@cecilia-data.se
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1019%2Flboclboc%2Fmaster-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1019/lboclboc/master-v1
-> Pull-Request: https://github.com/git/git/pull/1019
->
->   Documentation/git-push.txt | 8 ++++----
->   1 file changed, 4 insertions(+), 4 deletions(-)
->
-> diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-> index a953c7c38790..bbb30c52395e 100644
-> --- a/Documentation/git-push.txt
-> +++ b/Documentation/git-push.txt
-> @@ -66,10 +66,10 @@ it can be any arbitrary "SHA-1 expression", such as `master~4` or
->   The <dst> tells which ref on the remote side is updated with this
->   push. Arbitrary expressions cannot be used here, an actual ref must
->   be named.
-> -If `git push [<repository>]` without any `<refspec>` argument is set to
-> -update some ref at the destination with `<src>` with
-> -`remote.<repository>.push` configuration variable, `:<dst>` part can
-> -be omitted--such a push will update a ref that `<src>` normally updates
-> +If `git push [<repository>]` without any `<refspec>` argument then
-> +git will update the remote ref as defined by `remote.<repository>.push` configuration
-> +and it will be updated from HEAD.
-> +`:<dst>` part can be omitted--such a push will update a ref that `<src>` normally updates
->   without any `<refspec>` on the command line.  Otherwise, missing
->   `:<dst>` means to update the same ref as the `<src>`.
->   +
->
-> base-commit: 7e391989789db82983665667013a46eabc6fc570
+Well, you're in luck! I wanted the same thing a couple of years back so
+I implemented the --cover-from-description option[0]. It allows the cover
+letter to be populated by the text given in
+`git branch --edit-description`.
+
+-Denton
+
+[0]: https://git-scm.com/docs/git-format-patch#Documentation/git-format-patch.txt---cover-from-descriptionltmodegt
