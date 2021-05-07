@@ -2,98 +2,172 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-23.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 17D2FC433ED
-	for <git@archiver.kernel.org>; Fri,  7 May 2021 16:27:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 00474C433ED
+	for <git@archiver.kernel.org>; Fri,  7 May 2021 17:10:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CD39B61458
-	for <git@archiver.kernel.org>; Fri,  7 May 2021 16:27:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B52436145E
+	for <git@archiver.kernel.org>; Fri,  7 May 2021 17:10:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238148AbhEGQ2M (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 May 2021 12:28:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54470 "EHLO
+        id S232296AbhEGRLE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 May 2021 13:11:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238116AbhEGQ2L (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 May 2021 12:28:11 -0400
-Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41488C061574
-        for <git@vger.kernel.org>; Fri,  7 May 2021 09:27:10 -0700 (PDT)
-Received: by mail-qk1-x733.google.com with SMTP id i67so9018619qkc.4
-        for <git@vger.kernel.org>; Fri, 07 May 2021 09:27:10 -0700 (PDT)
+        with ESMTP id S230015AbhEGRLE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 May 2021 13:11:04 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E02B2C061574
+        for <git@vger.kernel.org>; Fri,  7 May 2021 10:10:02 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id cl24-20020a17090af698b0290157efd14899so5685181pjb.2
+        for <git@vger.kernel.org>; Fri, 07 May 2021 10:10:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=4e3sjA9zg1iorNd5Mn8kmpEovSeLvuJsK/h2sEjfrqM=;
-        b=OJAfvx6OQnkluIZ7adCSCB5ln8Yb5f1MSKHpBf3okf5KBADYXsyWpS6pQpMMa06jbs
-         5o3eh02n24IdrMD0GREzSQR8mQVF/Ofjk82lHNlgd6K+qNepILHCUdpG49/hDUPZi9n5
-         URkrWY/SkX80a5jchYnrY6cwRSQSSB0elCqOMa5BDrKNljO6l/BXg/KhPfmQpe/heH0Z
-         oDz09PibZPTDWZI9wabf9z2VwJ4h5O4yvrIQuQ0q7ABhNpo6OiSKGkF92lUTGUmfACAj
-         k6i4AxmGYpir8wdIunZLiDL2QicZoHSbeSUZnAyR491ydKoMn62cygzHcBCPXBrz8NaY
-         cvDA==
+        d=google.com; s=20161025;
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Y07rRZ1FIEXPcbAZBFrHJO6CVzO1qNg1EI1UBKGceQM=;
+        b=EgJdUJ/Wp69ZMMlXMqTo8m4Ib6elikRuGL00oodcf4oHqT32RWVrHm5Cz5b9/2Bcym
+         rNgTP0z2PqgXyhFh2ZQyQuphkV0yUSP6RnQI/h1RXKlthK/A6Q02N0WJgh1up9izJGIu
+         PaJSkDhFcgH2WgtypTyNXMMobHgz1MB7kvwoFrraz6cXpoWZT8xHKZw2qVLr/gUOOSqq
+         1Z7ZeucdiDRTauM7uAYFLSqBon6PmN/KRQAxZs8lNLzs+Bv974tHUGwknLq8xFXLVzbk
+         xt7eR8E2GcYGK3Ydp+pZa/uVtSsObVcFijj6SRs4aEePTAABsLbQvre/C5seXoHMcXeF
+         t1Cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=4e3sjA9zg1iorNd5Mn8kmpEovSeLvuJsK/h2sEjfrqM=;
-        b=LLKGL5z0gbRzK3/XwzplkOpyirt0joB8bkIoeapfC5vl5s/E3VlUIuyJgyQQd4Iojd
-         66C9TIZ5IqGLcao21aIGwU6a86lNjhEa5RfA49qtC4Xz0AG2kZQQHjtAjylX0wET6Lnw
-         CaNJqa3SI40DXlcge7BRlBHmK1LmC9+5F3f1Ffw+0Nlz476W57YM4DChhW44fCXsPEPn
-         HA+fYeiIbQvMJFTiSIx3A0cAljXem8Bkl9pk9NQ6nrE707sVTBqn6N8R9CsdDqjavXHd
-         ueheZHSLYeW+CAMa8rqTolQ0JE5iJc7MR4SzXRYGje9muIL8Oco1Hp9cB5BIIExlBf/v
-         5ccw==
-X-Gm-Message-State: AOAM530tQkC8ZDvPpx2z/due0lmXllRTtONW1OuLwC0eS1BrYWh03qaM
-        mw48HMXCnf05e6gHiTPm1rlHSEnotE9wdg==
-X-Google-Smtp-Source: ABdhPJzJEa4HGq/wmMQ2N+LpSjP9pJLQMjSQ55qBdbvJNu2vRpSrvDwCwMJc5/pNHWjKy7YlyyxhXw==
-X-Received: by 2002:a37:ba83:: with SMTP id k125mr10245574qkf.336.1620404829411;
-        Fri, 07 May 2021 09:27:09 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:10d2:8815:444d:57fb? ([2600:1700:e72:80a0:10d2:8815:444d:57fb])
-        by smtp.gmail.com with ESMTPSA id m4sm5668419qtg.21.2021.05.07.09.27.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 07 May 2021 09:27:09 -0700 (PDT)
-Subject: Re: [PATCH 0/5] Directory traversal fixes
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>
-References: <pull.1020.git.git.1620360300.gitgitgadget@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <f99d7cd9-5e27-b5de-12fc-0a42be2d14ec@gmail.com>
-Date:   Fri, 7 May 2021 12:27:08 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.1
+        h=x-gm-message-state:date:from:to:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Y07rRZ1FIEXPcbAZBFrHJO6CVzO1qNg1EI1UBKGceQM=;
+        b=OkMABwtVow4a8siGEu+xkCVYudnkieqqralquieY68lbOIsESXx09tlsEoQ3AuMggH
+         VvJM75RuET+rcMtZc0xOjq82hwHfKgruEK+PBlOI9pFHnqcTExkcFRWEsWsCusbDwAjT
+         US8XKmrkWxfFTjJIHIyQ7TMVJwdwO0g/vE33MkwLkuTH9c2iojVZZjQ+McfEfZjAS/59
+         7HyD2ClQe104V4AeEq1aYiT90H4FXSvwXEfnjNMJfitvhuSaI7AByoyJGnbl9wStKO7r
+         zcDoQg4bhEBisrJGDWEE8y/P+a5fjaEK5+Ccx+dunynEZFKxbQPEvXsgICKieGPr1+Mb
+         AmVQ==
+X-Gm-Message-State: AOAM532552mZGhsv4zx/UVOsVVRi0eovhbB50cGW6lZD2Vdz/kNOf6n0
+        /glJV6P8VxJduixcmqbvxR83N54nlk5CrQ==
+X-Google-Smtp-Source: ABdhPJwvuhoy0OOBeQAj0MwqoSlwLL+la5PLRgFAPXUeRYAgLiMkEsdGJWOIUUt8oQC6GvJie3VFqw==
+X-Received: by 2002:a17:90b:4d08:: with SMTP id mw8mr24624338pjb.202.1620407401648;
+        Fri, 07 May 2021 10:10:01 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:0:d0e9:239c:84a2:f593])
+        by smtp.gmail.com with ESMTPSA id b65sm5073730pga.83.2021.05.07.10.10.00
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 May 2021 10:10:00 -0700 (PDT)
+Date:   Fri, 7 May 2021 10:09:54 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     git@vger.kernel.org
+Subject: Re: [PATCH] tr2: log parent process name
+Message-ID: <YJV0YibkFYUe2UcA@google.com>
+References: <20210507002908.1495061-1-emilyshaffer@google.com>
 MIME-Version: 1.0
-In-Reply-To: <pull.1020.git.git.1620360300.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210507002908.1495061-1-emilyshaffer@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/7/2021 12:04 AM, Elijah Newren via GitGitGadget wrote:
-> This patchset fixes a few directory traversal issues, where fill_directory()
-> would traverse into directories that it shouldn't and not traverse into
-> directories that it should. One of these issues was reported recently on
-> this list[1], another was found at $DAYJOB.
+On Thu, May 06, 2021 at 05:29:08PM -0700, Emily Shaffer wrote:
 > 
-> The fifth patch might have backward compatibility implications, but is easy
-> to review. Even if the logic in dir.c makes your eyes glaze over, at least
-> take a look at the fifth patch.
+> It can be useful to tell who invoked Git - was it invoked manually by a
+> user via CLI or script? By an IDE? Knowing where the Git invocation came
+> from can help with debugging to isolate where the problem came from.
 > 
-> Also, if anyone has any ideas about a better place to put the "Some
-> sidenotes" from the third commit message rather than keeping them in a
-> random commit message, that might be helpful too.
+> Unfortunately, there's no cross-platform reliable way to gather the name
+> of the parent process. If procfs is present, we can use that; otherwise
+> we will need to discover the name another way. However, the process ID
+> should be sufficient regardless of platform.
+> 
+> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+> ---
+> We briefly discussed hiding this behind a config, internally. However, I
+> wanted to include the parent name alongside the cmd_start event, which
+> happens very early (maybe before config gathering?).
+> 
+> Maybe it's better to log the parent_name as its own event, since it
+> shouldn't change over the lifetime of the process?
+> 
+> procfs is very non-portable, though - I think this won't even work on
+> MacOS. So I'm curious if anybody has better suggestions for how to do
+> this.
 
-As for your patches themselves, I can't claim to understand all the
-complicated details about how treat_directory() is working, but your
-patches are well organized and the new tests are the real proof that
-this is working as intended.
+I wrote this and then I wrote nonportable tests anyways, bah. Working on
+a fix now - the tests break for MacOS and Windows.
 
-Thanks for the attention to detail here.
+The parent_name needs to be set conditionally below.
 
--Stolee
+> diff --git a/t/t0212-trace2-event.sh b/t/t0212-trace2-event.sh
+> index 1529155cf0..3a2a8a5b5f 100755
+> --- a/t/t0212-trace2-event.sh
+> +++ b/t/t0212-trace2-event.sh
+> @@ -61,6 +61,7 @@ test_expect_success JSON_PP 'event stream, error event' '
+>  	|    "exit_code":0,
+>  	|    "hierarchy":"trace2",
+>  	|    "name":"trace2",
+> +	|    "parent_name":"/bin/sh",
+>  	|    "version":"$V"
+>  	|  }
+>  	|};
+> @@ -115,6 +116,7 @@ test_expect_success JSON_PP 'event stream, return code 0' '
+>  	|    "exit_code":0,
+>  	|    "hierarchy":"trace2",
+>  	|    "name":"trace2",
+> +	|    "parent_name":"/bin/sh",
+>  	|    "version":"$V"
+>  	|  },
+>  	|  "_SID0_/_SID1_":{
+> @@ -143,6 +145,7 @@ test_expect_success JSON_PP 'event stream, return code 0' '
+>  	|    "exit_code":0,
+>  	|    "hierarchy":"trace2/trace2",
+>  	|    "name":"trace2",
+> +	|    "parent_name":"test-tool",
+>  	|    "version":"$V"
+>  	|  },
+>  	|  "_SID0_/_SID1_/_SID2_":{
+> @@ -155,6 +158,7 @@ test_expect_success JSON_PP 'event stream, return code 0' '
+>  	|    "exit_code":0,
+>  	|    "hierarchy":"trace2/trace2/trace2",
+>  	|    "name":"trace2",
+> +	|    "parent_name":"$TEST_DIRECTORY/../t/helper//test-tool",
+>  	|    "version":"$V"
+>  	|  }
+>  	|};
+> @@ -192,6 +196,7 @@ test_expect_success JSON_PP 'event stream, list config' '
+>  	|        "value":"hello world"
+>  	|      }
+>  	|    ],
+> +	|    "parent_name":"/bin/sh",
+>  	|    "version":"$V"
+>  	|  }
+>  	|};
+> @@ -229,6 +234,7 @@ test_expect_success JSON_PP 'event stream, list env vars' '
+>  	|        "value":"hello world"
+>  	|      }
+>  	|    ],
+> +	|    "parent_name":"/bin/sh",
+>  	|    "version":"$V"
+>  	|  }
+>  	|};
+> @@ -263,6 +269,7 @@ test_expect_success JSON_PP 'basic trace2_data' '
+>  	|    "exit_code":0,
+>  	|    "hierarchy":"trace2",
+>  	|    "name":"trace2",
+> +	|    "parent_name":"/bin/sh",
+>  	|    "version":"$V"
+>  	|  }
+>  	|};
+> @@ -295,6 +302,7 @@ test_expect_success JSON_PP 'using global config, event stream, error event' '
+>  	|    "exit_code":0,
+>  	|    "hierarchy":"trace2",
+>  	|    "name":"trace2",
+> +	|    "parent_name":"/bin/sh",
+>  	|    "version":"$V"
+>  	|  }
+>  	|};
+
+
+ - Emily
