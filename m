@@ -2,96 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CDFD1C43462
-	for <git@archiver.kernel.org>; Fri,  7 May 2021 05:56:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9F09C433B4
+	for <git@archiver.kernel.org>; Fri,  7 May 2021 06:06:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B0664613E8
-	for <git@archiver.kernel.org>; Fri,  7 May 2021 05:56:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B23C0613D8
+	for <git@archiver.kernel.org>; Fri,  7 May 2021 06:06:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234439AbhEGF5r (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 May 2021 01:57:47 -0400
-Received: from mail-ej1-f47.google.com ([209.85.218.47]:37612 "EHLO
-        mail-ej1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234406AbhEGF5p (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 May 2021 01:57:45 -0400
-Received: by mail-ej1-f47.google.com with SMTP id w3so11752730ejc.4
-        for <git@vger.kernel.org>; Thu, 06 May 2021 22:56:46 -0700 (PDT)
+        id S234409AbhEGGHg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 May 2021 02:07:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57148 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229637AbhEGGHe (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 May 2021 02:07:34 -0400
+Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60940C061574
+        for <git@vger.kernel.org>; Thu,  6 May 2021 23:06:35 -0700 (PDT)
+Received: by mail-pf1-x433.google.com with SMTP id h127so6859890pfe.9
+        for <git@vger.kernel.org>; Thu, 06 May 2021 23:06:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=to:from:subject:message-id:date:user-agent:mime-version
+         :content-language:content-transfer-encoding;
+        bh=4GmLUuy/KOlcUFUzHfGoXLiEerqU992Qxpp7EP9/gwc=;
+        b=bC+MWhWHjh6WQlCqy7CIKaBUSM7aONxxVIVMduyOoB/a67v3gs1cEsW7QKVNwWPZhg
+         cX2ABdc8Su7yJsYTLxdCvXfkKXDPzfdc1+KN5eNuiDpIw/XXqYK2DeCKWI7U/TCsT9ei
+         mI8FUElLA4IymvTUpJQI1TbiwXSi8uI2LEaYq+wGcq3Gf4DT227QbEzq/fDtLlTE4vRo
+         7AF401c+ppfnuTDcT5XddRLOdWauLTvKnziGEKGZ5Dytuoj4uTrwbLjrclmZM3xTFUt+
+         ovDIzgtloNSwuAPYNjqSIlt6QEiEHYpBWKaftQpnlEOjoSg9zB1rxHYzT3Hljz6TxG2A
+         7VLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=/gkYLp7KE2KfLpCgXt+Q6Vmm1RGdEVQSQOXHQoCewfk=;
-        b=qz7ObhTcMPwNeigiPmgk3SOdjnXmnZimS24X8/HC+15f3UQ26B8/FZ7miY43uPs+eE
-         DPCLLvQ0+WbiZNQGuyRW/rWDX8GgJaMr3SwEW7ILGBIGiREkftAClWZbavS6YapOlmgJ
-         8zfmAGG92XaJoeX9jdrNQOFHvUEdV+OyQ9YaralpmZxbcfFiUndxgmMdr+P8tgU+d1SW
-         XTVp6yF6FNhSGoMU0An1bKxR46SDTfAaTFhQ73mHPT2Zat8g91Zdu1oBa1C7Novw0RiZ
-         LEtB+9OfBpsrCixqiisKO25aUj91IijQ0kiIwrX77JOGF1Q9+fw4VcB9NJn447mHsUQK
-         H1+Q==
-X-Gm-Message-State: AOAM531fe/Ige/HeCEQ/wHbUXXX4jzOPQ0yKCxbkAZ8dDzrAqORuuRKU
-        CeU9KAAy9XVE6RO2x5p5dt0cJfMJwUDgveKZAeQ=
-X-Google-Smtp-Source: ABdhPJxw59F7dtATPX7dLQlzfpFwrVESCzGue5WaDYbzY2AyyKml7zQIe2RsW7wu8Kj5mcMudfZIlsc+ngJ9m3l3koc=
-X-Received: by 2002:a17:906:a18e:: with SMTP id s14mr6735694ejy.311.1620367005507;
- Thu, 06 May 2021 22:56:45 -0700 (PDT)
+        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+         :mime-version:content-language:content-transfer-encoding;
+        bh=4GmLUuy/KOlcUFUzHfGoXLiEerqU992Qxpp7EP9/gwc=;
+        b=ToxEiQyOyhxAhyrr9S4uIjRLeRE/J39PGzj1IX1iPTFXwiH6PMnEGWf2zZGeVZWAAz
+         ZPD7Q7qY/BqLqG9T1pPreEvM0SlWJNgAPSTXwGaAtFs4Kc+igwcC7d42zlSzBXxuxRBO
+         CArS4QX+atFXwyDiSDSVu9MqWoSu8mZtr/sqDrlovbTjovDTERYk+LarFjREajQXKEaU
+         dig4JEWSvDz6/ghJ7mNotXjt7GV35v3I5NfSyBe1wDJYoIilLHOBYYbGT8OpVKxMegBP
+         M83SmjfNbj8xxvqg2Db5lXi8LMVAd65xUQjdbA3PQr8jggtuwG4tBbwH4D3mN5UUfeYF
+         QPaA==
+X-Gm-Message-State: AOAM530is5jL0P61O0Xht+vF+F9AtR8sNburd3yXSJ8nOdaQD4B4JGEc
+        4+cgiY3Cyg3jjWU8TIyHzwfvVMfBMhKiOw==
+X-Google-Smtp-Source: ABdhPJzi9XNIzI3bBIjP8UPXRo4hRePe5ZjWrk6QLyWTESVUKjmFJ99RgfRlTIFWrHHYrrl8uxtEew==
+X-Received: by 2002:a63:c142:: with SMTP id p2mr8248934pgi.14.1620367594611;
+        Thu, 06 May 2021 23:06:34 -0700 (PDT)
+Received: from [192.168.43.80] (subs32-116-206-28-8.three.co.id. [116.206.28.8])
+        by smtp.gmail.com with ESMTPSA id e23sm3742450pfd.104.2021.05.06.23.06.33
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 06 May 2021 23:06:34 -0700 (PDT)
+To:     Git Users <git@vger.kernel.org>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Subject: [RFC suggestion] Generate manpage directly with Asciidoctor
+Message-ID: <3461c7b0-594d-989e-3048-2fc6583084ad@gmail.com>
+Date:   Fri, 7 May 2021 13:06:31 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.1
 MIME-Version: 1.0
-References: <pull.1020.git.git.1620360300.gitgitgadget@gmail.com>
- <a3bd253fa8e8ae47d19beb35327d8283ffa49289.1620360300.git.gitgitgadget@gmail.com>
- <CAPig+cTzvKhUaNEXwRAVwV1Vkb7jpHNkcOytEPq0Gg33TrJXNg@mail.gmail.com>
- <CABPp-BGzUBF8S8t3nixi3TCkiBe7oS1fQ5cNCozicb20iZxshA@mail.gmail.com>
- <CAPig+cR3Z1dy8ibLEr+64C57dgrivPbgTveirnmSt-5D1wo59Q@mail.gmail.com> <CABPp-BFYpGYvy1wNdZBGObcRuVHMP=MxZtmikugA2hOUEHb-=w@mail.gmail.com>
-In-Reply-To: <CABPp-BFYpGYvy1wNdZBGObcRuVHMP=MxZtmikugA2hOUEHb-=w@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 7 May 2021 01:56:34 -0400
-Message-ID: <CAPig+cTrjcPjv8jva_ORbuSxm6XBumA1CZNcaDYYqqzTH7JJzw@mail.gmail.com>
-Subject: Re: [PATCH 1/5] t7300: add testcase showing unnecessary traversal
- into ignored directory
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 7, 2021 at 1:42 AM Elijah Newren <newren@gmail.com> wrote:
-> On Thu, May 6, 2021 at 10:32 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> > I may be confused, but I'm not following this reasoning. If you're
-> > using `-i` to debug a failure within the test, then the
-> > test_when_finished() cleanup actions won't be triggered anyhow
-> > (they're suppressed by `-i`), so everything will be left behind as
-> > desired.
->
-> I didn't know that about --immediate.  It's good to know.  However,
-> not all debugging is done with -i; someone can also just run the
-> testsuite expecting everything to pass, see a failure, and then decide
-> to go look around (and then maybe re-run with -i if the initial
-> looking around isn't clear).  I do that every once in a while.
+Hi,
 
-That's certainly an approach, and it's made easier when each test
-creates its own repo (as the tests you write typically do).
+Asciidoctor has support for directly generating manpage, see [1].
 
-In general. though, the majority of Git test scripts run all their
-tests in a single repo (per test script), with the result that state
-from a failed test is very frequently clobbered by subsequent tests,
-which is why --immediate is so useful (it stops the script as soon as
-one test fails, so the test state is preserved as well as it can be).
-Due to the "clobbering" problem, I don't think I've ever tried
-debugging a failed test without using --immediate.
+We support using Asciidoctor as drop-in replacement for original
+Asciidoc, but currently we need to use xmlto together with Asciidoc(tor)
+to produce manpages. However, most users don't inclined to install
+xmlto toolchain, partly because they had to download more than 300 MB
+of data just to install xmlto and its dependencies (including dblatex
+and texlive).
 
-> > The problem with not placing this under control of
-> > test_when_finished() is that, if something in the test proper does
-> > break, after the "test failed" message, you'll get the undesirable
-> > alpine-linux-musl behavior you explained in your earlier email where
-> > test_done() bombs out.
->
-> Unless I'm misunderstanding the test_done() code (I'm looking at
-> test-lib.sh, lines 1149-1183), test_done() only bombs out when it
-> tries to "rm -rf $TRASH_DIRECTORY", and it only runs that command if
-> there are 0 test failures (see test-lib.sh, lines 1149-1183).  So, if
-> something in the test proper does break, that by itself will prevent
-> test_done() from bombing out.
+So completely migrating to Asciidoctor can eliminate xmlto requirement
+for generating manpage.
 
-I see what you're saying. Okay.
+What do you think about above?
+
+[1]: https://docs.asciidoctor.org/asciidoctor/latest/manpage-backend/
+-- 
+An old man doll... just what I always wanted! - Clara
