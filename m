@@ -2,123 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B00D1C433ED
-	for <git@archiver.kernel.org>; Fri,  7 May 2021 12:56:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 960CBC433B4
+	for <git@archiver.kernel.org>; Fri,  7 May 2021 13:58:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7878A6143F
-	for <git@archiver.kernel.org>; Fri,  7 May 2021 12:56:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5A5706141B
+	for <git@archiver.kernel.org>; Fri,  7 May 2021 13:58:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236691AbhEGM5a (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 May 2021 08:57:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35958 "EHLO
+        id S237333AbhEGN74 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 May 2021 09:59:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49816 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234398AbhEGM50 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 May 2021 08:57:26 -0400
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B21EDC061574
-        for <git@vger.kernel.org>; Fri,  7 May 2021 05:56:25 -0700 (PDT)
-Received: by mail-pl1-x636.google.com with SMTP id a11so5090470plh.3
-        for <git@vger.kernel.org>; Fri, 07 May 2021 05:56:25 -0700 (PDT)
+        with ESMTP id S229635AbhEGN7z (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 May 2021 09:59:55 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1588CC061574
+        for <git@vger.kernel.org>; Fri,  7 May 2021 06:58:55 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id n138so12903593lfa.3
+        for <git@vger.kernel.org>; Fri, 07 May 2021 06:58:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=to:from:cc:subject:message-id:date:user-agent:mime-version
-         :content-language:content-transfer-encoding;
-        bh=zSQwOsaS3YadaVy2p1NoWxdSnYq9sKMoDa7xlSWC97g=;
-        b=mpit45ydk4WdDfvF4dAeeLQPVW19YHfmxBLEFGscUueHay8ATndgAjgX2zQLk2v7c3
-         wnhjreRdTgdfSHdHahFYDxgspX1KaFG0rJDToEheRD2GtEWcy1iSQRvUTwFDX2FfiKdy
-         AWP7JuVndkx9YTIedpsh4W0Oec1eRZ7SNuo/wqwinPqWWtr/Uow7bqE6dUckAIbg+A6x
-         zA5gdzX+rDPqga+EPgE+NRQ1lHqCNEdwA/Uk+QNrlfLXpbVgF0VlQhvWu6PtY7rkipJW
-         /f4u6hsEqJsaliDj4a+EICXqD3V53cUuUTncgHSFf9JcIYdqL+HhNK8L8jCtOWpg4oO2
-         l0PQ==
+        d=usp.br; s=usp-google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=cS2fy2GHJ4vrOP+3ba+yoBePTEOUM0JC9wlN/B1yyd4=;
+        b=t02FB8e+s7yZicUH8zUPtL6oBFMgpnqf6MubTXMmMEudIMGquGvpALgv3JnRA9j+y3
+         bhStuno4pZW2S4hiHFpi6QB8QsDIb25octMm2c0oh9GeuobT/grIFaMVm/V03FtcsHwE
+         i5mdB07kQ6tcA0QCPTlsVtPNQyIVDShBeUUUr+WS0ZaeROZF1xqadiOhWBYrE6XRGFS/
+         bYPj4LGb3DJV9aKPvlxgqitbntH73VI4GhHBlXeA4A98a1Tryq14waqTf/9ViNYJNpD7
+         jqc6agrmI1ZNZMGNmIFxAwrIPRMRcdRAqsuPwyCQJ/ezRp166Ugz0HDBCzp/2E9VQIJi
+         gprQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:from:cc:subject:message-id:date:user-agent
-         :mime-version:content-language:content-transfer-encoding;
-        bh=zSQwOsaS3YadaVy2p1NoWxdSnYq9sKMoDa7xlSWC97g=;
-        b=i4kDvKAH3hJuk3BIyfGmk4IRSepz5DEEZo6jkPVa1S+vFcjI15xYTCIOQkxiVjyrDx
-         ArWAdEKDAW/mZ1MPzifkwBvVU/Tt++0p3dOd5q8CfjGdwPGCi6SAOhsO16SdjQM3ZBLJ
-         eGp23k9qnSF3SB/Tu/OJXdSUOUVGD7azDi/pH3WyVxtaVXFbDd3ylMd33kASQcxxzdH6
-         uYpvh9aJxNDNunBg5DaVS/F0a69UUIKNFeEiqMhGfoxJnGiQCW5UAqpxCh1O7v5Np8aI
-         afItSBe69ZanDDaO7iXvB9m/4KO4lx2nFn1y2TCGa9/87yYR/4xcgG480RL9CO2lV6PH
-         CF2Q==
-X-Gm-Message-State: AOAM533nQTwaSXaSmqsyNyRuBVMqfF4yc5STI/A2GEjQJ3vpCm7nB0lH
-        7oXO5wat9cRKU9GOMfzaoE0W7EhHktP0Zg==
-X-Google-Smtp-Source: ABdhPJxZfYgBBAF/YLWVOX3uYaTGW4lmBVZ8l7bZZoHh+pDPE7fuSzs+iSmB+UcwVwilwA6GfmIoXw==
-X-Received: by 2002:a17:90b:956:: with SMTP id dw22mr21022879pjb.211.1620392185223;
-        Fri, 07 May 2021 05:56:25 -0700 (PDT)
-Received: from [192.168.43.80] (subs02-180-214-232-23.three.co.id. [180.214.232.23])
-        by smtp.gmail.com with ESMTPSA id a129sm4972860pfa.36.2021.05.07.05.56.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 07 May 2021 05:56:24 -0700 (PDT)
-To:     Git Users <git@vger.kernel.org>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-Cc:     "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: "bad revision" fetch error when fetching missing objects from partial
- clones
-Message-ID: <6422f505-29c4-bee9-e28c-b77dd831c246@gmail.com>
-Date:   Fri, 7 May 2021 19:56:22 +0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=cS2fy2GHJ4vrOP+3ba+yoBePTEOUM0JC9wlN/B1yyd4=;
+        b=FvwF8sLNPlAReUuWCi5Zladdo/F/rg+2WKBKjpqnFCWfeZFLe5hjlWwAfB7IQ2SPlr
+         mvYLGFStM77+595Pn31eky7TidzoCWnePjtmnpDkfToVqS//2CGV2h+5rWUR2hQbJoro
+         rYzILwkG9wohJr+y99zA553mOIMyrxE87JlnAs5kn2vp93EwKQwS1bTSRmaXlgwFcTnn
+         dp5i2WLcraIcKVxoQq+Asow+bEXnsLnKDeNm4ROm5HgRi2TDtjUzwQlocrPpXgkc55yb
+         uvvxgXPMfrkz1/9+tVTZN3skZVIF+QBzL15tyLdy5pEEd8oI+o4/UbixjuhNynsbcgMB
+         lTSw==
+X-Gm-Message-State: AOAM533hqJJfOZnsVSn9EcoIWviFAlAWVeWn567bqcGLJ8g53TTkWUMc
+        1WfjNjVcbiiQ6U57Jsc2TxK/XVSgF9i9NS5AKRrW6Ptk8EW2aQ==
+X-Google-Smtp-Source: ABdhPJwJvfB60TDfxg+zBOknWCO5DLOiwlHAgKd8ltEXk16BTApL/twbXbAQ+YCUAYYVItRynOIKp5zgsaPvSJDkWQg=
+X-Received: by 2002:ac2:418f:: with SMTP id z15mr6405426lfh.2.1620395933583;
+ Fri, 07 May 2021 06:58:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20210426010301.1093562-1-sandals@crustytoothpaste.net> <20210426010301.1093562-2-sandals@crustytoothpaste.net>
+In-Reply-To: <20210426010301.1093562-2-sandals@crustytoothpaste.net>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Fri, 7 May 2021 10:58:42 -0300
+Message-ID: <CAHd-oW4N7GB=E6hFc4GAD-b+1QzTR9+hL-hDXwAQkuss4Y4Ddw@mail.gmail.com>
+Subject: Re: [PATCH v2 01/13] hash: add an algo member to struct object_id
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git <git@vger.kernel.org>, Derrick Stolee <dstolee@microsoft.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi, brian
 
-I have a copy of Gitea application repository [1] on my local Git
-server on my computer. I was playing with partial clones using that
-repository as remote.
+On Sun, Apr 25, 2021 at 10:03 PM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+>
+> Now that we're working with multiple hash algorithms in the same repo,
+> it's best if we label each object ID with its algorithm so we can
+> determine how to format a given object ID. Add a member called algo to
+> struct object_id.
 
-I began with blobless clone the repo by:
+In parallel-checkout.c:send_one_item(), I used hashcpy() instead of
+oidcpy() to prepare the packet data that is sent to the checkout
+workers through a pipe.
 
-$ git clone https://<myhost>/bagas/gitea.git gitea --filter=blob:none
+I avoided oidcpy() because it would copy the whole GIT_MAX_RAWSZ
+bytes, and the last part could be uninitialized, leading to a Valgrind
+warning about passing uninitialized bytes to a write() syscall. There
+is no real harm in this case, but I wanted to avoid the warning as it
+might confuse someone trying to debug this code, me included.
 
-Then I tried to fetch missing objects. First, I gathered list of them:
+The problem with this approach, of course, is that it will not copy
+the new `algo` field, leaving it as zero for all items. So, what do
+you think would be best in this situation? Some ideas that came
+through my mind were:
 
-$ git rev-list --objects --all --missing=print | grep -o -P '^\?\K\w+' > .git/missing.list
+1. Make oidcpy() only copy `hash_algos[src->algo].rawsz` bytes. (But
+then we would probably need to branch in case `src->algo` is zero,
+right?)
 
-I had asked how to properly fetch objects from the list above before on
-this list, and brian m. carlson (CC'ed) suggested [2] that I should
-use xargs:
+2. Reintroduce the oid_pad_buffer() function from your v1, and use it
+in parallel-checkout.c:send_one_item(), after oidcpy(). This would
+then zero out the copied uninitialized bytes (with the cost of one
+additional memcpy() per item, but this might be neglectable here).
 
-$ xargs git fetch origin < .git/missing.list
+3. Use oidcpy() as-is, without additional padding, and let Valgrind
+warn. This false-positive warn might not be so problematic after all,
+and maybe I'm just overthinking things :)
 
-I expected that I received all missing objects. However, the error message
-I got was something like below, repeated:
+What do you think?
 
-> remote: ...<skipped>
-> Receiving objects: 100% (64/64), 154.49 KiB | 2.97 MiB/s, done.
-> remote: ...<skipped>
-> Receiving objects: 100% (37/37), 168.35 KiB | 4.95 MiB/s, done.
-> Resolving deltas: 100% (5/5), done.
-> Resolving deltas: 100% (49/49), completed with 47 local objects.
-> fatal: bad revision 'd5e9cd36ab21839af3d116eff3221c53f6ca7fd6'
-> error: https://<myhost>/bagas/gitea.git did not send all necessary objects
-
-Then I repeated the object list gathering and fetching above, and the error
-still occured. Even I tried fetching only one of problematic object above
-and still errored.
-
-When I inspected that object with `git cat-file -p` from my other, full
-clone version (which I used for submitting changes upstream), the object
-is properly displayed (in this case as source code in Go).
-
-Note that I have uploadpack.allowfilter=true config on the server.
-
-Am I missing something?
-
-[1]: https://github.com/go-gitea/gitea
-[2]: https://lore.kernel.org/git/YD7bczBsIR5rkqfc@camp.crustytoothpaste.net/
-
--- 
-An old man doll... just what I always wanted! - Clara
+Thanks,
+Matheus
