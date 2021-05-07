@@ -2,117 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E051C433B4
-	for <git@archiver.kernel.org>; Fri,  7 May 2021 23:03:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D6B5C433B4
+	for <git@archiver.kernel.org>; Fri,  7 May 2021 23:05:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2BA4661106
-	for <git@archiver.kernel.org>; Fri,  7 May 2021 23:03:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 13664613C8
+	for <git@archiver.kernel.org>; Fri,  7 May 2021 23:05:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229956AbhEGXEk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 May 2021 19:04:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57226 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229812AbhEGXEk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 May 2021 19:04:40 -0400
-Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4C58C061574
-        for <git@vger.kernel.org>; Fri,  7 May 2021 16:03:39 -0700 (PDT)
-Received: by mail-oi1-x236.google.com with SMTP id v22so5270571oic.2
-        for <git@vger.kernel.org>; Fri, 07 May 2021 16:03:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=YwZEzWGbxlZOwzeZ/BvahXt5Q5LTjpR9UsVUB1gyjk8=;
-        b=ghia/JB20KRHIb10AsE+OBb0eyy3FUEkbxZcmrmycQE/hjyB6Ekc0esG6i8HgAfTPg
-         1UMNbh3MetD6+pEUdGQfKr+nDNdLxqRqdi6W1KlNNudhVePgZeiAVcIeQNz13R26UmsZ
-         IxD/Fi8JQ8v2FRaAyZBhDfZgjfR6iVVjTZYgJ4bf13LNo9axPgcuFkCtC7kpRPRNO8WW
-         E0pqBMWEsekbfu2QDjpRmhhx+Xg+ZP4PUg0lIla740CH3TT+LA1NnPUDZ/QFN7iYW4tn
-         AHhI7ulp/OlTK7C49DEEtcuEXp3IUTYPyASYtr/mCC76w4QZLmQbKke32nJxv0g71kKn
-         /grg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=YwZEzWGbxlZOwzeZ/BvahXt5Q5LTjpR9UsVUB1gyjk8=;
-        b=pIeJdjaGpC7CiizH+OrFvVtAUccCmi/RYCP/BFOVBX1C8fi6ei3l8DT/Bj1be7ht5j
-         0EaaF8KRVO/rGkhsRSHOqOih+QRW3mEdlwRx177uSB8KnJhBzM96yVtpoIlHm8QohJDH
-         vurfuY66p93IZp2Ku3nn/mAOj0T5r1Y4/DyRC7SI8Nr4qc6fbxHNmb8nIFh5tEcUr30O
-         +F9rw0VfibpC1TPqIELIK++vpbnuaifkSg6IOZIyXXwNxtOJVqLNgpuWJ/Rda6QFyPH6
-         MhdI2MgGhGQeLTrYNjz0+Ae81+O+M4HteN1pXbBjxDD+rtvdryqQ3GyAbkWqCHTMRzYp
-         JezA==
-X-Gm-Message-State: AOAM533IijlneSbmp1oPZOMhWYpuPv7RS5ws6KI21HwGMPj1+gFjwCTu
-        o2vPbpdZsuNqs10Jgq/mXbZ7Dnd4GMbx7w==
-X-Google-Smtp-Source: ABdhPJxHFnHrl3jfX0gxhf5K8up7OjYJixEBVZZu+ZWypqtsZMRUE8Z0AUXXpLhpvpfGS1scLtYY/A==
-X-Received: by 2002:a05:6808:1150:: with SMTP id u16mr16675117oiu.74.1620428619251;
-        Fri, 07 May 2021 16:03:39 -0700 (PDT)
-Received: from localhost ([2806:2f0:4060:638f:a2c5:89ff:fe0c:1151])
-        by smtp.gmail.com with ESMTPSA id z25sm632940oic.30.2021.05.07.16.03.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 May 2021 16:03:38 -0700 (PDT)
-Date:   Fri, 07 May 2021 18:03:37 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>
-Cc:     Git Users <git@vger.kernel.org>
-Message-ID: <6095c74993f19_cfc72085d@natae.notmuch>
-In-Reply-To: <YJUyHkYAIth0W9dY@danh.dev>
-References: <3461c7b0-594d-989e-3048-2fc6583084ad@gmail.com>
- <YJUyHkYAIth0W9dY@danh.dev>
-Subject: Re: [RFC suggestion] Generate manpage directly with Asciidoctor
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+        id S229925AbhEGXGT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 May 2021 19:06:19 -0400
+Received: from cloud.peff.net ([104.130.231.41]:47744 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229812AbhEGXGT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 May 2021 19:06:19 -0400
+Received: (qmail 4755 invoked by uid 109); 7 May 2021 23:05:19 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 07 May 2021 23:05:19 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 5529 invoked by uid 111); 7 May 2021 23:05:19 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 07 May 2021 19:05:19 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 7 May 2021 19:05:17 -0400
+From:   Jeff King <peff@peff.net>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 1/5] t7300: add testcase showing unnecessary traversal
+ into ignored directory
+Message-ID: <YJXHrXWVDSgg5TZw@coredump.intra.peff.net>
+References: <pull.1020.git.git.1620360300.gitgitgadget@gmail.com>
+ <a3bd253fa8e8ae47d19beb35327d8283ffa49289.1620360300.git.gitgitgadget@gmail.com>
+ <CAPig+cTzvKhUaNEXwRAVwV1Vkb7jpHNkcOytEPq0Gg33TrJXNg@mail.gmail.com>
+ <CABPp-BGzUBF8S8t3nixi3TCkiBe7oS1fQ5cNCozicb20iZxshA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CABPp-BGzUBF8S8t3nixi3TCkiBe7oS1fQ5cNCozicb20iZxshA@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh wrote:
-> On 2021-05-07 13:06:31+0700, Bagas Sanjaya <bagasdotme@gmail.com> wrote=
-:
-> > So completely migrating to Asciidoctor can eliminate xmlto requiremen=
-t
-> > for generating manpage.
-> > =
+On Thu, May 06, 2021 at 10:00:49PM -0700, Elijah Newren wrote:
 
-> > What do you think about above?
-> =
+> > > +               >directory-random-file.txt &&
+> > > +               # Put this file under directory400/directory399/.../directory1/
+> > > +               depth=400 &&
+> > > +               for x in $(test_seq 1 $depth); do
+> > > +                       mkdir "tmpdirectory$x" &&
+> > > +                       mv directory* "tmpdirectory$x" &&
+> > > +                       mv "tmpdirectory$x" "directory$x"
+> > > +               done &&
+> >
+> > Is this expensive/slow loop needed because you'd otherwise run afoul
+> > of command-line length limits on some platforms if you tried creating
+> > the entire mess of directories with a single `mkdir -p`?
+> 
+> The whole point is creating a path long enough that it runs afoul of
+> limits, yes.
+> 
+> If we had an alternative way to check whether dir.c actually recursed
+> into a directory, then I could dispense with this and just have a
+> single directory (and it could be named a single character long for
+> that matter too), but I don't know of a good way to do that.  (Some
+> possiibilities I considered along that route are mentioned at
+> https://lore.kernel.org/git/CABPp-BF3e+MWQAGb6ER7d5jqjcV=kYqQ2stM_oDyaqvonPPPSw@mail.gmail.com/)
 
-> Hm, I'm pretty sure Ruby (asciidoctor's language) is very hard to port.=
+I don't have a better way of checking the dir.c behavior. But I think
+the other half of Eric's question was: why can't we do this setup way
+more efficiently with "mkdir -p"?
 
-> Last I heard, it's buggy on some platforms.
+I'd be suspicious that it would work portably because of the long path.
+But I think the perl I showed earlier would create it in much less time:
 
-And I'm pretty sure it isn't.
+  $ touch directory-file
+  $ time sh -c '
+      for x in $(seq 1 400)
+      do
+        mkdir tmpdirectory$x &&
+	mv directory* tmpdirectory$x &&
+	mv tmpdirectory$x directory$x
+      done
+    '
+    real	0m2.222s
+    user	0m1.481s
+    sys		0m0.816s
 
-Ruby is a mainstream language. At some point it was #8 in the TIOBE
-index, above PHP and Perl. Right now it's #11.
+  $ time perl -e '
+      for (reverse 1..400) {
+        my $d = "directory$_";
+	mkdir($d) and chdir($d) or die "mkdir($d): $!";
+      }
+      open(my $fh, ">", "some-file");
+    '
+    real	0m0.010s
+    user	0m0.001s
+    sys		0m0.009s
 
-A lot of effort has been put to make Ruby work on all platforms.
-
-> I think we're better to do like this:
-> =
-
-> * If we're using asciidoc, we will use xmlto
-> * If we're using asciidoctor, we will generate man-pages with
->   asciidoctor directly
-
-This certainly is the way to go.
-
-I'm not sure if Bagas suggested to make USE_ASCIIDOCTOR=3DYesPlease the
-default, but first we would need to make sure the output without xmlto
-is desirable, which we don't at the moment.
-
-So, even if we were to consider this, *first* the option to use pure
-asciidoctor needs to be in place.
-
-Cheers.
-
--- =
-
-Felipe Contreras=
+-Peff
