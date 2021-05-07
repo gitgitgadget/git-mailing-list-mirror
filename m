@@ -8,60 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF80FC43462
-	for <git@archiver.kernel.org>; Fri,  7 May 2021 04:05:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BFF72C433B4
+	for <git@archiver.kernel.org>; Fri,  7 May 2021 04:05:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AA9F96112F
-	for <git@archiver.kernel.org>; Fri,  7 May 2021 04:05:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A0476613EB
+	for <git@archiver.kernel.org>; Fri,  7 May 2021 04:05:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229791AbhEGEGH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 May 2021 00:06:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58926 "EHLO
+        id S229952AbhEGEGI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 May 2021 00:06:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58934 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229664AbhEGEGE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 May 2021 00:06:04 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93D58C061761
-        for <git@vger.kernel.org>; Thu,  6 May 2021 21:05:04 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id m9so7702193wrx.3
-        for <git@vger.kernel.org>; Thu, 06 May 2021 21:05:04 -0700 (PDT)
+        with ESMTP id S229671AbhEGEGF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 May 2021 00:06:05 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D129C0613ED
+        for <git@vger.kernel.org>; Thu,  6 May 2021 21:05:05 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id u5-20020a7bc0450000b02901480e40338bso5755177wmc.1
+        for <git@vger.kernel.org>; Thu, 06 May 2021 21:05:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=7bCsIv3hR/TUhuX0mUmDqE/q3hvqQQCp2a8FtFwo2KE=;
-        b=bPqM/O4ceeO9ueCcGe/3L6X80mRbkP3rejdtCXqqhlcMWvy/60pnv8zs4b3BYzTZeC
-         bYO3665q1/V0B8BMAdtgNrcNLsRd/ftxmvhB+GAEVRhug2OyqZfhyUHIxRUzZpyt9ocK
-         b4PXAieCZdawO+0dUXkeziP8DuQ39u5d1Gr+dV0skWM7UfOWuNZP5EmaJvpjEIn1v8Pk
-         vn/Y3AOP45pVTBmPXyxG4+GEEHEJOQbwoIRV3JPhUTf6vipH9VKsIy945a9CFyHF5fuh
-         S0Fey91IOLm9CFiN3xhNUXAYld+oBMt9KuaKKzgWg1rJwY5WQ0o9a+t3BV6+jfE6hPS/
-         mwSQ==
+        bh=RCD1WrFJxMrytQ2QmONFIxMjkN4xZtTfbmf/jmcKbn0=;
+        b=UrVo1IhoBazkvL1yUdT8RXHz7yxj1bk10RQg+Rcn79Rwhas5W81qa6TDiXfmSMEqfy
+         XbeAtcm+kczCw80VZcCwABGuUeKz7uU85gV09uhx1+zYneqa5TKrs6Vi/dY8jl+HsQ6f
+         laaE48TSYUtO46H+rVJWK8ID16aapyugC/XdlY47TD0BgVcObrCid9AJkHJCkdlxCRBW
+         CWiljUWNl4oYxBSKWGYJAYuGwkxZgqJJpZkkUJhwSvxTCObZiVoCmrsy8eDY3GX1sNml
+         xFq9YkvO4dSUfqEz0iyypDvyajXNxff4zvv/YZlpY6Sgeu5eDxdHlEDx02ljsicB0X/l
+         TjNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=7bCsIv3hR/TUhuX0mUmDqE/q3hvqQQCp2a8FtFwo2KE=;
-        b=BqndklXNYyFLbxg7TAq4Zj52SQhVlwqrxK3r7uLTwlF4o0Oa/z3GhUSpgO98JEkd6e
-         PFqTXzGoCNvdyBaju/+bUg+SMjP1oNYb8B9ChkOCAMuPYYacEC4QgQg0CyoNImxBkK+a
-         CyS3I/cYfNFYjKKoCOWnUGkz02EMpq0YBHnK7ou6Cm0+EyosGb5Dp1g/6q69NyT1CZ6o
-         07dZl6X/4gqjLzH1okUZXSd+hrorUrhMgs7eEdhcJFOsIGZPjx0GPU+RnnGeqFfY396y
-         swDr67cEm2mwmvDFGSHmZPIlGB5XAqVb52i0St6oU/8RXUtQAxo2Ipw+e5+27WRt4ldj
-         oPCQ==
-X-Gm-Message-State: AOAM531ped99FYf0xxC6Qq5RHsyTg84WmH66fF7UFrz3jbj1MlCD8XS5
-        ET4bCXmv7bYrD/KKgp3Ypud2CmIauvY=
-X-Google-Smtp-Source: ABdhPJwxAgc5fzoobib8IUjKM5OBq967/qrEOBo51t/nuqKs068raswSoBdUE12QJZyZ52xndjkTow==
-X-Received: by 2002:a5d:525c:: with SMTP id k28mr9400990wrc.158.1620360303309;
+        bh=RCD1WrFJxMrytQ2QmONFIxMjkN4xZtTfbmf/jmcKbn0=;
+        b=AswtJSi2PpSjBIC3PYzpGul12Kms9MSLywo1FWtt0e1u25L9vZdd6WIa6UrxFaHZJG
+         0hxNdRdHpDTnHxjUPcudQ3ugBwMF3o1DsGLSUWPY6XB31UXODgapV+fMDBl0w5sYcoD0
+         sgI1essYDkAyIlXds9fR8xAgC57GtupAW7wpvfriO39fq8pBWyrsdVKiAYe8E8PrUMs4
+         5SNtDKJtdQ+OMbFPHfKlI6S8MgZm9H6z9iib8fXMGlWdRkt2U8CxrUeztPeRrvtxUKbY
+         jwMjO9+2mWM0ttxtOAkrVi4gzjcdqiGLhdyBA3pJHr8BZ83oYiknxJFArIKrYitnE62l
+         xtrg==
+X-Gm-Message-State: AOAM532dTwgyQ9TcS2nhattt4kw6oNzSB0D1fmSTak3azym76eZC2fjg
+        ozxD+qiJIR+927/jXYMLQW+XJLFk47I=
+X-Google-Smtp-Source: ABdhPJxnUUVg5Cn8F2oS+doYvy6PenSYg+9US8S9mrwW2ve1f3m36MJfsAxqLtoka9iY9ck5/Rxbew==
+X-Received: by 2002:a1c:7501:: with SMTP id o1mr7717678wmc.65.1620360303878;
         Thu, 06 May 2021 21:05:03 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c14sm7260728wrt.77.2021.05.06.21.05.02
+        by smtp.gmail.com with ESMTPSA id z9sm5777116wmi.17.2021.05.06.21.05.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 06 May 2021 21:05:03 -0700 (PDT)
-Message-Id: <3c3f6111da13c885b341053a477d857bd897708f.1620360300.git.gitgitgadget@gmail.com>
+Message-Id: <fad048339b8131391f9f8952e215849a21145ea8.1620360300.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1020.git.git.1620360300.gitgitgadget@gmail.com>
 References: <pull.1020.git.git.1620360300.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 07 May 2021 04:04:58 +0000
-Subject: [PATCH 3/5] dir: avoid unnecessary traversal into ignored directory
+Date:   Fri, 07 May 2021 04:04:59 +0000
+Subject: [PATCH 4/5] dir: traverse into untracked directories if they may have
+ ignored subfiles
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,143 +75,74 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-The show_other_directories case in treat_directory() tried to handle
-both excludes and untracked files with the same logic, and mishandled
-both the excludes and the untracked files in the process, in different
-ways.  Split that logic apart, and then focus on the logic for the
-excludes; a subsequent commit will address the logic for untracked
-files.
+A directory that is untracked does not imply that all files under it
+should be categorized as untracked; in particular, if the caller is
+interested in ignored files, many files or directories underneath the
+untracked directory may be ignored.  We previously partially handled
+this right with DIR_SHOW_IGNORED_TOO, but missed DIR_SHOW_IGNORED.  It
+was not obvious, though, because the logic for untracked and excluded
+files had been fused together making it harder to reason about.  The
+previous commit split that logic out, making it easier to notice that
+DIR_SHOW_IGNORED was missing.  Add it.
 
-For show_other_directories, an excluded directory means that
-every path underneath that directory will also be excluded.  Given that
-the calling code requested to just show directories when everything
-under a directory had the same state (that's what the
-"DIR_SHOW_OTHER_DIRECTORIES" flag means), we generally do not need to
-traverse into such directories and can just immediately mark them as
-ignored (i.e. as path_excluded).  The only reason we cannot just
-immediately return path_excluded is the DIR_HIDE_EMPTY_DIRECTORIES flag
-and the possibility that the ignored directory is an empty directory.
-The code previously treated DIR_SHOW_IGNORED_TOO in most cases as an
-exception as well, which was wrong.  It can sometimes reduce the number
-of cases where we need to recurse (namely if
-DIR_SHOW_IGNORED_TOO_MODE_MATCHING is also set), but should not be able
-to increase the number of cases where we need to recurse.  Fix the logic
-accordingly.
-
-Some sidenotes about possible confusion with dir.c:
-
-* "ignored" often refers to an untracked ignore", i.e. a file which is
-  not tracked which matches one of the ignore/exclusion rules.  But you
-  can also have a "tracked ignore", a tracked file that happens to match
-  one of the ignore/exclusion rules and which dir.c has to worry about
-  since "git ls-files -c -i" is supposed to list them.
-
-* The dir code often uses "ignored" and "excluded" interchangeably,
-  which you need to keep in mind while reading the code.  Sadly, though,
-  it can get very confusing since ignore rules can have exclusions, as
-  in the last of the following .gitignore rules:
-      .gitignore
-      *~
-      *.log
-      !settings.log
-  In the last entry above, (pathspec->items[3].magic & PATHSPEC_EXCLUDE)
-  will be true due the the '!' negating the rule.  Someone might refer
-  to this as "excluded".  That means the file 'settings.log' will not
-  match, and thus not be ignored.  So we won't return path_excluded for
-  it.  So it's an exclude rule that prevents the file from being an
-  exclude.  The non-excluded rules are the ones that result in files
-  being excludes.  Great fun, eh?
-
-Sometimes it feels like dir.c needs its own glossary with its many
-definitions, including the multiply-defined terms.
-
-Reported-by: Jason Gore <Jason.Gore@microsoft.com>
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- dir.c            | 44 +++++++++++++++++++++++++++++---------------
- t/t7300-clean.sh |  2 +-
- 2 files changed, 30 insertions(+), 16 deletions(-)
+ dir.c                              | 10 ++++++----
+ t/t3001-ls-files-others-exclude.sh |  2 +-
+ t/t7300-clean.sh                   |  2 +-
+ 3 files changed, 8 insertions(+), 6 deletions(-)
 
 diff --git a/dir.c b/dir.c
-index 3474e67e8f3c..4b183749843e 100644
+index 4b183749843e..3beb8e17a839 100644
 --- a/dir.c
 +++ b/dir.c
-@@ -1844,6 +1844,7 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
- 	}
- 
- 	/* This is the "show_other_directories" case */
-+	assert(dir->flags & DIR_SHOW_OTHER_DIRECTORIES);
+@@ -1877,15 +1877,17 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
  
  	/*
- 	 * If we have a pathspec which could match something _below_ this
-@@ -1854,27 +1855,40 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
- 	if (matches_how == MATCHED_RECURSIVELY_LEADING_PATHSPEC)
- 		return path_recurse;
- 
-+	/* Special cases for where this directory is excluded/ignored */
-+	if (excluded) {
-+		/*
-+		 * In the show_other_directories case, if we're not
-+		 * hiding empty directories, there is no need to
-+		 * recurse into an ignored directory.
-+		 */
-+		if (!(dir->flags & DIR_HIDE_EMPTY_DIRECTORIES))
-+			return path_excluded;
-+
-+		/*
-+		 * Even if we are hiding empty directories, we can still avoid
-+		 * recursing into ignored directories for DIR_SHOW_IGNORED_TOO
-+		 * if DIR_SHOW_IGNORED_TOO_MODE_MATCHING is also set.
-+		 */
-+		if ((dir->flags & DIR_SHOW_IGNORED_TOO) &&
-+		    (dir->flags & DIR_SHOW_IGNORED_TOO_MODE_MATCHING))
-+			return path_excluded;
-+	}
-+
- 	/*
--	 * Other than the path_recurse case immediately above, we only need
--	 * to recurse into untracked/ignored directories if either of the
--	 * following bits is set:
-+	 * Other than the path_recurse case above, we only need to
-+	 * recurse into untracked directories if either of the following
-+	 * bits is set:
- 	 *   - DIR_SHOW_IGNORED_TOO (because then we need to determine if
- 	 *                           there are ignored entries below)
+ 	 * Other than the path_recurse case above, we only need to
+-	 * recurse into untracked directories if either of the following
++	 * recurse into untracked directories if any of the following
+ 	 * bits is set:
+-	 *   - DIR_SHOW_IGNORED_TOO (because then we need to determine if
+-	 *                           there are ignored entries below)
++	 *   - DIR_SHOW_IGNORED (because then we need to determine if
++	 *                       there are ignored entries below)
++	 *   - DIR_SHOW_IGNORED_TOO (same as above)
  	 *   - DIR_HIDE_EMPTY_DIRECTORIES (because we have to determine if
  	 *                                 the directory is empty)
  	 */
--	if (!(dir->flags & (DIR_SHOW_IGNORED_TOO | DIR_HIDE_EMPTY_DIRECTORIES)))
--		return excluded ? path_excluded : path_untracked;
--
--	/*
--	 * ...and even if DIR_SHOW_IGNORED_TOO is set, we can still avoid
--	 * recursing into ignored directories if the path is excluded and
--	 * DIR_SHOW_IGNORED_TOO_MODE_MATCHING is also set.
--	 */
--	if (excluded &&
--	    (dir->flags & DIR_SHOW_IGNORED_TOO) &&
--	    (dir->flags & DIR_SHOW_IGNORED_TOO_MODE_MATCHING))
--		return path_excluded;
-+	if (!excluded &&
-+	    !(dir->flags & (DIR_SHOW_IGNORED_TOO |
-+			    DIR_HIDE_EMPTY_DIRECTORIES))) {
-+		return path_untracked;
-+	}
- 
- 	/*
- 	 * Even if we don't want to know all the paths under an untracked or
-diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
-index 337f9af1d74b..00e5fa35dae3 100755
---- a/t/t7300-clean.sh
-+++ b/t/t7300-clean.sh
-@@ -746,7 +746,7 @@ test_expect_success 'clean untracked paths by pathspec' '
- 	test_must_be_empty actual
+ 	if (!excluded &&
+-	    !(dir->flags & (DIR_SHOW_IGNORED_TOO |
++	    !(dir->flags & (DIR_SHOW_IGNORED |
++			    DIR_SHOW_IGNORED_TOO |
+ 			    DIR_HIDE_EMPTY_DIRECTORIES))) {
+ 		return path_untracked;
+ 	}
+diff --git a/t/t3001-ls-files-others-exclude.sh b/t/t3001-ls-files-others-exclude.sh
+index ac05d1a17931..516c95ea0e82 100755
+--- a/t/t3001-ls-files-others-exclude.sh
++++ b/t/t3001-ls-files-others-exclude.sh
+@@ -292,7 +292,7 @@ EOF
+ 	test_cmp expect actual
  '
  
--test_expect_failure 'avoid traversing into ignored directories' '
-+test_expect_success 'avoid traversing into ignored directories' '
- 	test_when_finished rm -f output error &&
- 	test_create_repo avoid-traversing-deep-hierarchy &&
+-test_expect_failure 'ls-files with "**" patterns and --directory' '
++test_expect_success 'ls-files with "**" patterns and --directory' '
+ 	# Expectation same as previous test
+ 	git ls-files --directory -o -i --exclude "**/a.1" >actual &&
+ 	test_cmp expect actual
+diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
+index 00e5fa35dae3..c2a3b7b6a52b 100755
+--- a/t/t7300-clean.sh
++++ b/t/t7300-clean.sh
+@@ -786,7 +786,7 @@ test_expect_success 'avoid traversing into ignored directories' '
+ 	)
+ '
+ 
+-test_expect_failure 'traverse into directories that may have ignored entries' '
++test_expect_success 'traverse into directories that may have ignored entries' '
+ 	test_when_finished rm -f output &&
+ 	test_create_repo need-to-traverse-into-hierarchy &&
  	(
 -- 
 gitgitgadget
