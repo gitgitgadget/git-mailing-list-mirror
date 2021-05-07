@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE45AC433ED
-	for <git@archiver.kernel.org>; Fri,  7 May 2021 04:05:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 530C8C43461
+	for <git@archiver.kernel.org>; Fri,  7 May 2021 04:05:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 982E16112F
-	for <git@archiver.kernel.org>; Fri,  7 May 2021 04:05:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3044D613E3
+	for <git@archiver.kernel.org>; Fri,  7 May 2021 04:05:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229666AbhEGEGF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 May 2021 00:06:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58922 "EHLO
+        id S229758AbhEGEGH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 May 2021 00:06:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58924 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229463AbhEGEGC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 May 2021 00:06:02 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 687A5C061761
+        with ESMTP id S229652AbhEGEGD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 May 2021 00:06:03 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1154C061763
         for <git@vger.kernel.org>; Thu,  6 May 2021 21:05:03 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id v12so7681015wrq.6
+Received: by mail-wr1-x432.google.com with SMTP id s8so7681903wrw.10
         for <git@vger.kernel.org>; Thu, 06 May 2021 21:05:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=v5loYWvSZoqGvlhAuSo5IwrvfMT/3yTkKMM6xGuLRpM=;
-        b=gXP0fZ5Z2gSNnx7F5XOQiO3EUGz/wLQMvtvmEBea9NBDKBL7rOJakXYMjD1M1ftTmD
-         D1kS1cBSENi2GaT/AwetMsWkDKqWG8+6EcWDdEO6Dedk9fUay0UL/d3YWU9E3EoW6VAq
-         Cg1k6FJWtfedrjGNvCw3MoVFPX8z/pBq2HUBgwWL3LFGPu3bRuMEWdurKuVdJG0ii+WJ
-         ikM3b18nD/oIwVaBpPcrzjzLHtDhDi/bG0gOluVNS2VC/xGq47svlAyO8DQm7FeOi9sx
-         yuF33zTmRODU1AmYlqek2AEzfOrNSRfwpsJg+q6DRkY64+wXsb9qfL2+dFmAHO21/XGb
-         PM8Q==
+        bh=/8i2rA0Y8K4hQ70lLLGfR6UfKhpltRjIYWd7MBEBp4s=;
+        b=Jy6rWGW8k7K9NAXUhxmXUjiRuuzXvRg9/O/SenRyFJ1ScqLn1LgeR4VDcD18u8gKwm
+         Y8qINneiud2lR1PUtGIz/NcFSIMyspCiDuakZjucpDI4ru80Z2uULehE2NNku7F4lihY
+         6Ojhf4aO/3KEXeG8dYvXf7AjSJH7cGDibjv8uaMyAPf59w+GPHhr1Pmt0gJlKHNUSMsP
+         2DSSjYa0O0AFNicZY+yog85fcynGSdhJDV1Fcidq/e/Hlhgy2NoHLlrTkGdG1FyOKeJY
+         /Xaextzhps3SQDkM21/aK7DOZSf/5oKfeZG68ROvpvgeIjOHyCDkvN088Q/dxWsF7vk9
+         2jhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=v5loYWvSZoqGvlhAuSo5IwrvfMT/3yTkKMM6xGuLRpM=;
-        b=lm+b3pU2rJV2Al19TJj7FoYTfX1tER1LgqNKVMXWqiNGSzq/rJ96Q4pw3+tmgS9t10
-         A07bmMk3DFCTCIo7LXtJ0B06yoOs7rcQe8IFQlJNw6M51Uu90jwKjJmNaQKTYSRjQWD6
-         hAPiQxrNDX2x8A8dBqXP5UiHyqloRZS+Hicx44oUegdFOCuo+2zLRkP4MQPSchCeSvrp
-         ndWkH4VMhDUpIKWoX0KPSm6Rxc8R5toJy4PXoINcdJRdLLQ7BNejVf62edOdVQZrDnsi
-         5hZm/ezJLZ11PEI7VFw16KWyMotENa01LQe1JB4/gq1rfYetGVffQpmKB5ZWtHY7CgSj
-         wwsw==
-X-Gm-Message-State: AOAM530Fq8rtWf/a9mMCm41nmTIVYEwTk3vtf51/kDeJBjXSeF9WbhrX
-        PVdmkmzCUPiSOY74Z/i9WIm1S5itOWM=
-X-Google-Smtp-Source: ABdhPJxbpgeaSVt+BZADE6I+mSfmqLGkvA5kaMrH59IGTfCm/TDDYITQs2BUY9mewnDYpxlaEGcckQ==
-X-Received: by 2002:adf:fc42:: with SMTP id e2mr9680453wrs.302.1620360302236;
+        bh=/8i2rA0Y8K4hQ70lLLGfR6UfKhpltRjIYWd7MBEBp4s=;
+        b=PWjR9lu2hyxYneg1h4nrCXxypyepfWqsoSYHV/5xPgKFW2uHw5tQJNxTO8wZYbawah
+         Md8qg2Qu6YkO5Fsh0kskycihbOu6nHnaQz048UA9BLygJXL0sm7fSVWoTE3Ubd0TQlPM
+         IGt98BVngQEjxMI6NdD0w1cB5K+f0n50d4GxeDqJ/269f8bVMbGAHF2+1yzLRENyMso/
+         TR0UJWHIhtKQnLBER4HJ2TFsFVq+cJHUMvb25eVoInYWlfZc79cZu5ET5fbSuXV6S3FX
+         /3VUqsOL5nrcgUFBBS+w6gXG5Lf7G2BOZfVyuc52Pypx9EDqwTNYDPf9OV2PDOSVGkhL
+         eY0g==
+X-Gm-Message-State: AOAM533Y37ZkVVKn+1GIJBFQnOCPtt7rKXDoETDV5lEa77Er8Z50jQdf
+        UCWgY/20wsb6lk+5lprfSvtIXEGYWqE=
+X-Google-Smtp-Source: ABdhPJzz7quWZ6BkhEIL+f2NznzfSQt2dfTijevSYbMv0TGnaVnsQ+Hf7AbANG7IEMaGt0G8qTWnDw==
+X-Received: by 2002:adf:e811:: with SMTP id o17mr9563023wrm.71.1620360302731;
         Thu, 06 May 2021 21:05:02 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b20sm6902657wmj.3.2021.05.06.21.05.01
+        by smtp.gmail.com with ESMTPSA id e18sm7574630wrc.85.2021.05.06.21.05.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 May 2021 21:05:01 -0700 (PDT)
-Message-Id: <a3bd253fa8e8ae47d19beb35327d8283ffa49289.1620360300.git.gitgitgadget@gmail.com>
+        Thu, 06 May 2021 21:05:02 -0700 (PDT)
+Message-Id: <aa3a41e26eca0d3c9668b91ea9f1cc8f8faccdea.1620360300.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1020.git.git.1620360300.gitgitgadget@gmail.com>
 References: <pull.1020.git.git.1620360300.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 07 May 2021 04:04:56 +0000
-Subject: [PATCH 1/5] t7300: add testcase showing unnecessary traversal into
- ignored directory
+Date:   Fri, 07 May 2021 04:04:57 +0000
+Subject: [PATCH 2/5] t3001, t7300: add testcase showcasing missed directory
+ traversal
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,64 +75,62 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-PNPM is apparently creating deeply nested (but ignored) directory
-structures; traversing them is costly performance-wise, unnecessary, and
-in some cases is even throwing warnings/errors because the paths are too
-long to handle on various platforms.  Add a testcase that demonstrates
-this problem.
+In the last commit, we added a testcase showing that the directory
+traversal machinery sometimes traverses into directories unnecessarily.
+Here we show that there are cases where it does the opposite: it does
+not traverse into directories, despite those directories having
+important files that need to be flagged.
 
-Initial-test-by: Jason Gore <Jason.Gore@microsoft.com>
-Helped-by: brian m. carlson <sandals@crustytoothpaste.net>
+Add a testcase showing that `git ls-files -o -i --directory` can omit
+some of the files it should be listing, and another showing that `git
+clean -fX` can fail to clean out some of the expected files.
+
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t7300-clean.sh | 40 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 40 insertions(+)
+ t/t3001-ls-files-others-exclude.sh |  5 +++++
+ t/t7300-clean.sh                   | 19 +++++++++++++++++++
+ 2 files changed, 24 insertions(+)
 
-diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
-index a74816ca8b46..5f1dc397c11e 100755
---- a/t/t7300-clean.sh
-+++ b/t/t7300-clean.sh
-@@ -746,4 +746,44 @@ test_expect_success 'clean untracked paths by pathspec' '
- 	test_must_be_empty actual
+diff --git a/t/t3001-ls-files-others-exclude.sh b/t/t3001-ls-files-others-exclude.sh
+index 1ec7cb57c7a8..ac05d1a17931 100755
+--- a/t/t3001-ls-files-others-exclude.sh
++++ b/t/t3001-ls-files-others-exclude.sh
+@@ -292,6 +292,11 @@ EOF
+ 	test_cmp expect actual
  '
  
-+test_expect_failure 'avoid traversing into ignored directories' '
-+	test_when_finished rm -f output error &&
-+	test_create_repo avoid-traversing-deep-hierarchy &&
++test_expect_failure 'ls-files with "**" patterns and --directory' '
++	# Expectation same as previous test
++	git ls-files --directory -o -i --exclude "**/a.1" >actual &&
++	test_cmp expect actual
++'
+ 
+ test_expect_success 'ls-files with "**" patterns and no slashes' '
+ 	git ls-files -o -i --exclude "one**a.1" >actual &&
+diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
+index 5f1dc397c11e..337f9af1d74b 100755
+--- a/t/t7300-clean.sh
++++ b/t/t7300-clean.sh
+@@ -786,4 +786,23 @@ test_expect_failure 'avoid traversing into ignored directories' '
+ 	)
+ '
+ 
++test_expect_failure 'traverse into directories that may have ignored entries' '
++	test_when_finished rm -f output &&
++	test_create_repo need-to-traverse-into-hierarchy &&
 +	(
-+		cd avoid-traversing-deep-hierarchy &&
++		cd need-to-traverse-into-hierarchy &&
++		mkdir -p modules/foobar/src/generated &&
++		> modules/foobar/src/generated/code.c &&
++		> modules/foobar/Makefile &&
++		echo "/modules/**/src/generated/" >.gitignore &&
 +
-+		>directory-random-file.txt &&
-+		# Put this file under directory400/directory399/.../directory1/
-+		depth=400 &&
-+		for x in $(test_seq 1 $depth); do
-+			mkdir "tmpdirectory$x" &&
-+			mv directory* "tmpdirectory$x" &&
-+			mv "tmpdirectory$x" "directory$x"
-+		done &&
++		git clean -fX modules/foobar >../output &&
 +
-+		git clean -ffdxn -e directory$depth >../output 2>../error &&
++		grep Removing ../output &&
 +
-+		test_must_be_empty ../output &&
-+		# We especially do not want things like
-+		#   "warning: could not open directory "
-+		# appearing in the error output.  It is true that directories
-+		# that are too long cannot be opened, but we should not be
-+		# recursing into those directories anyway since the very first
-+		# level is ignored.
-+		test_must_be_empty ../error &&
-+
-+		# alpine-linux-musl fails to "rm -rf" a directory with such
-+		# a deeply nested hierarchy.  Help it out by deleting the
-+		# leading directories ourselves.  Super slow, but, what else
-+		# can we do?  Without this, we will hit a
-+		#     error: Tests passed but test cleanup failed; aborting
-+		# so do this ugly manual cleanup...
-+		while test ! -f directory-random-file.txt; do
-+			name=$(ls -d directory*) &&
-+			mv $name/* . &&
-+			rmdir $name
-+		done
++		test_path_is_missing modules/foobar/src/generated/code.c &&
++		test_path_is_file modules/foobar/Makefile
 +	)
 +'
 +
