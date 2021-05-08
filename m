@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DA6AC43461
-	for <git@archiver.kernel.org>; Sat,  8 May 2021 19:59:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76276C433B4
+	for <git@archiver.kernel.org>; Sat,  8 May 2021 19:59:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4CC3F613CE
-	for <git@archiver.kernel.org>; Sat,  8 May 2021 19:59:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5897F613CE
+	for <git@archiver.kernel.org>; Sat,  8 May 2021 19:59:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229698AbhEHUAQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 8 May 2021 16:00:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46488 "EHLO
+        id S229709AbhEHUAR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 8 May 2021 16:00:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229667AbhEHUAO (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229673AbhEHUAO (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 8 May 2021 16:00:14 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C973C061760
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADE37C061761
         for <git@vger.kernel.org>; Sat,  8 May 2021 12:59:11 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id v12so12546352wrq.6
+Received: by mail-wm1-x330.google.com with SMTP id n205so7014867wmf.1
         for <git@vger.kernel.org>; Sat, 08 May 2021 12:59:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=0e4RrCJuKuAV6s9KmC98iAx1qWZSkyg2U2VQQvqOO0E=;
-        b=fvpoERXfhPE+XbH3H2SbhwBW1ExMCIPqS9MLV5ZuvWPiQt3NUJ+6sRXEocAOiI/ihe
-         MLf/eAKFzDMbbpkEq4C0oRNRbOK9uhhrmTlsHmOD8/h5B4kjMTzGZHyNTGpVwzC/4NeL
-         riuuCvpx4QDIstsYrzIDIjAoLTaLmQHhlb2W1i1632oTkp1srrmfolBA0nD9HIGdPEFI
-         mmxoi+amO2JIFYpsy/b6ltm9m/c81BW7u3Aj+uE3bmi68Q6tluYYX0CT2lz/NB05KQc1
-         xATlUPLvWO/wVngTiZEHhvRlp2ZYSry8rHa6I3mzcfPv6+Nvq39YiVtHhdB1XV7T1So+
-         43ig==
+        bh=0IcNdyy+P1E9kfy1TvyMMUfCIsm+EFtiBPGU4jbxVqE=;
+        b=DSwhZQnr/Y/SvMyi0QtAo7YXb8TMWM6L68Nzkhg0pPYf4ZM2HjaKrENBx6LWnSdxUB
+         jXw4NoUTjSlDbwIy11tIRIA7mS44C0J9zfStr3Wzu9wlbPF4bDeogM1Ab0ctHa5/+PZd
+         9G3AqlfOAS+yoIzIpBuQJJ699gR09Ak25vZMcetXJHWA3lvFzXQMWVARMV7Fnogjt41/
+         V38Mro7V6crNvGWSCkzHvMg2/mwxKbBdicLqSTdw7dlop4eLD8Zx4tJcGbRT0M+0GqO/
+         mZiZpE5fnrCcqw7QoEOzbn+TVzBMoDcrSccyE8GqZnnKORYljkm0qKiK+hNp4wmHbXx/
+         69yQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=0e4RrCJuKuAV6s9KmC98iAx1qWZSkyg2U2VQQvqOO0E=;
-        b=muizO9FqVcuPHA1K/b4pJBkTGh7gd/Af/vygUwEQ26XI9T/pb1mAKmSC38HQxtC92h
-         iDdsnx6dRfLGyYFm6qfciwrpnqCz9lXtmPygXm7rEMov95zDh6flQBHxNCM553moTH8E
-         bKDQJcYwiQbHw0qb1GSjxOScqCBRj87iyLHcCaauGVPhZUIkgOzcTT0lwKJibgqBUYfH
-         wjnefcn6/FZUTTPOsQMcessC+3pzgnyj/vLvnqOU7+vU8kpHMV81bMGYFrkCExMnnWVu
-         A9JdG54eGEx28rY52VeGfeUO+SBWip9nmDmA4hEgKQfRQc+efZfJyJXwcvcs0Vn67f0+
-         iI2Q==
-X-Gm-Message-State: AOAM533CmrnhEU6+OLdlcwDZ3lp3zgDShtL8vsakLfLQwdAO+dc1QYXN
-        L4fdKKieAdkq/pqgTAMDpLooHpARr6s=
-X-Google-Smtp-Source: ABdhPJzm/H6x6kV42K4od/w0Tg3kATLHqedX94q5Cwnv1pYum2fAOtz9Y3bjpczY6+kxub1J13S9DQ==
-X-Received: by 2002:adf:f991:: with SMTP id f17mr20308029wrr.160.1620503949877;
-        Sat, 08 May 2021 12:59:09 -0700 (PDT)
+        bh=0IcNdyy+P1E9kfy1TvyMMUfCIsm+EFtiBPGU4jbxVqE=;
+        b=f+734AJQ2PD6pfCAlswG7IY89vIdEywmWk2Ie3P1MQu5RYfBDmOzeud5faQofMA4tc
+         daPIy++2TKw9Hbz5pjQLYgzJp7qzc71ZcrbycY+gm0zWsv3O+MqDJeG0CG4KB7yV8qTs
+         LK0F2NbQ4yg/hNX+h0IdeQCEil8/+QEDCBmENxcU25Idcf73jfM+jWVHDbRJHzpMgUSG
+         keoAORASI3ctFN8ARsq2nriXLTr0ZfNwu1BXp5fvf9nX9on80H0dIUmPmwlLE2NfmDj9
+         GeZbeJ6VfvIAHTkxSRIiSc1cBijrXphEg/y4szRnaBGIMiZcCaeN1wsaVmxJPaDt8PhM
+         uX3g==
+X-Gm-Message-State: AOAM532LYcC+ovtq0fx7b0Zd9M+cU89mOV+40yIGgxT9Zfjls106kuat
+        z4fvM8lE3Gmsg1eEE/VqOb499z+5YO4=
+X-Google-Smtp-Source: ABdhPJxAJ6DvfuRZzpxwQ30P+40q/sNnWS6Yl6iwOqe97CPFh/NLjesbuScBv090tj8Dabzc4snNzQ==
+X-Received: by 2002:a1c:6a04:: with SMTP id f4mr16859848wmc.131.1620503950458;
+        Sat, 08 May 2021 12:59:10 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f6sm16409352wru.72.2021.05.08.12.59.09
+        by smtp.gmail.com with ESMTPSA id y21sm19246904wmc.46.2021.05.08.12.59.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 08 May 2021 12:59:09 -0700 (PDT)
-Message-Id: <44a1322c44026e675ea254a00f3b50d4955ac56e.1620503945.git.gitgitgadget@gmail.com>
+        Sat, 08 May 2021 12:59:10 -0700 (PDT)
+Message-Id: <dc3d3f2471410aa55da4dbc8e2747192888bce5f.1620503945.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1020.v3.git.git.1620503945.gitgitgadget@gmail.com>
 References: <pull.1020.v2.git.git.1620432500.gitgitgadget@gmail.com>
         <pull.1020.v3.git.git.1620503945.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 08 May 2021 19:58:59 +0000
-Subject: [PATCH v3 3/8] [RFC] ls-files: error out on -i unless -o or -c are
- specified
+Date:   Sat, 08 May 2021 19:59:00 +0000
+Subject: [PATCH v3 4/8] t7300: add testcase showing unnecessary traversal into
+ ignored directory
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,80 +83,49 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-ls-files --ignored can be used together with either --others or
---cached.  After being perplexed for a bit and digging in to the code, I
-assumed that ls-files -i was just broken and not printing anything and
-had a nice patch ready to submit when I finally realized that -i can be
-used with --cached to find tracked ignores.
-
-While that was a mistake on my part, and a careful reading of the
-documentation could have made this more clear, I suspect this is an
-error others are likely to make as well.  In fact, of two uses in our
-testsuite, I believe one of the two did make this error.  In t1306.13,
-there are NO tracked files, and all the excludes built up and used in
-that test and in previous tests thus have to be about untracked files.
-However, since they were looking for an empty result, the mistake went
-unnoticed as their erroneous command also just happened to give an empty
-answer.
-
--i will most the time be used with -o, which would suggest we could just
-make -i imply -o in the absence of either a -o or -c, but that would be
-a backward incompatible break.  Instead, let's just flag -i without
-either a -o or -c as an error, and update the two relevant testcases to
-specify their intent.
+The PNPM package manager is apparently creating deeply nested (but
+ignored) directory structures; traversing them is costly
+performance-wise, unnecessary, and in some cases is even throwing
+warnings/errors because the paths are too long to handle on various
+platforms.  Add a testcase that checks for such unnecessary directory
+traversal.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/ls-files.c          | 3 +++
- t/t1306-xdg-files.sh        | 2 +-
- t/t3003-ls-files-exclude.sh | 4 ++--
- 3 files changed, 6 insertions(+), 3 deletions(-)
+ t/t7300-clean.sh | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index 60a2913a01e9..9f74b1ab2e69 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -748,6 +748,9 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
- 	if (pathspec.nr && error_unmatch)
- 		ps_matched = xcalloc(pathspec.nr, 1);
- 
-+	if ((dir.flags & DIR_SHOW_IGNORED) && !show_others && !show_cached)
-+		die("ls-files --ignored is usually used with --others, but --cached is the default.  Please specify which you want.");
-+
- 	if ((dir.flags & DIR_SHOW_IGNORED) && !exc_given)
- 		die("ls-files --ignored needs some exclude pattern");
- 
-diff --git a/t/t1306-xdg-files.sh b/t/t1306-xdg-files.sh
-index dd87b43be1a6..40d3c42618c0 100755
---- a/t/t1306-xdg-files.sh
-+++ b/t/t1306-xdg-files.sh
-@@ -116,7 +116,7 @@ test_expect_success 'Exclusion in a non-XDG global ignore file' '
- test_expect_success 'Checking XDG ignore file when HOME is unset' '
- 	(sane_unset HOME &&
- 	 git config --unset core.excludesfile &&
--	 git ls-files --exclude-standard --ignored >actual) &&
-+	 git ls-files --exclude-standard --ignored --others >actual) &&
+diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
+index a74816ca8b46..b7c9898fac5b 100755
+--- a/t/t7300-clean.sh
++++ b/t/t7300-clean.sh
+@@ -746,4 +746,26 @@ test_expect_success 'clean untracked paths by pathspec' '
  	test_must_be_empty actual
  '
  
-diff --git a/t/t3003-ls-files-exclude.sh b/t/t3003-ls-files-exclude.sh
-index d5ec333131f9..c41c4f046abf 100755
---- a/t/t3003-ls-files-exclude.sh
-+++ b/t/t3003-ls-files-exclude.sh
-@@ -29,11 +29,11 @@ test_expect_success 'add file to gitignore' '
- '
- check_all_output
- 
--test_expect_success 'ls-files -i lists only tracked-but-ignored files' '
-+test_expect_success 'ls-files -i -c lists only tracked-but-ignored files' '
- 	echo content >other-file &&
- 	git add other-file &&
- 	echo file >expect &&
--	git ls-files -i --exclude-standard >output &&
-+	git ls-files -i -c --exclude-standard >output &&
- 	test_cmp expect output
- '
- 
++test_expect_failure 'avoid traversing into ignored directories' '
++	test_when_finished rm -f output error trace.* &&
++	test_create_repo avoid-traversing-deep-hierarchy &&
++	(
++		cd avoid-traversing-deep-hierarchy &&
++
++		mkdir -p untracked/subdir/with/a &&
++		>untracked/subdir/with/a/random-file.txt &&
++
++		GIT_TRACE2_PERF="$TRASH_DIRECTORY/trace.output" \
++		git clean -ffdxn -e untracked
++	) &&
++
++	grep data.*read_directo.*visited trace.output \
++		| cut -d "|" -f 9 >trace.relevant &&
++	cat >trace.expect <<-EOF &&
++	 directories-visited:1
++	 paths-visited:4
++	EOF
++	test_cmp trace.expect trace.relevant
++'
++
+ test_done
 -- 
 gitgitgadget
 
