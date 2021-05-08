@@ -2,179 +2,171 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A2B99C433B4
-	for <git@archiver.kernel.org>; Sat,  8 May 2021 05:21:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 54EAEC433B4
+	for <git@archiver.kernel.org>; Sat,  8 May 2021 06:18:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6F6EA61456
-	for <git@archiver.kernel.org>; Sat,  8 May 2021 05:21:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 27CBC61432
+	for <git@archiver.kernel.org>; Sat,  8 May 2021 06:18:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229956AbhEHFWa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 8 May 2021 01:22:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54278 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229749AbhEHFW3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 May 2021 01:22:29 -0400
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07EACC061574
-        for <git@vger.kernel.org>; Fri,  7 May 2021 22:21:27 -0700 (PDT)
-Received: by mail-pl1-x62b.google.com with SMTP id s20so6278251plr.13
-        for <git@vger.kernel.org>; Fri, 07 May 2021 22:21:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=PuBHUKIk9XqJsMPg+ViKUeQP1tUWlG+bz6PVuLtubgQ=;
-        b=Fo6cwKk6didR0wQGgWTTh1AYUEAZF3/AjJtmKZktdJ0HHl5nMAs9mrREmXUxGv3Da5
-         MYx0/Fv639SWKmBH3matqlj+i9VPhFmVxAV/vXLn45kyBkvlZa01AjVK6Fc/TSfauoOf
-         U+CL/v+UCDEtDC5UAxj64EQWbjerZnJ44sTVTq/xVBj7a3FuXkfXkNv6LQvp0iEwXyH/
-         OBwSpHrsvpnoYqTSKV5E5nRP29HZ2utVb6tQRBc9lpA4PMVD93LKdTjAGBA13zYd9pnN
-         swtbuQ2HxcaDrcP71zxmvclrDiUF3wcBZk+N2P/rzQK80MWtA8X59bMt7oJUbSravoQM
-         +GaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=PuBHUKIk9XqJsMPg+ViKUeQP1tUWlG+bz6PVuLtubgQ=;
-        b=reg89UFg4k3sLSeNjpLNebymOonHcdGPQJ5vVVTsuJ168RxPc/TByXury7nmu1mspD
-         y0nDRXzGs5MzLNImNNFNA5VnZlzUbQE5EXjdFRvqWzNTutVbMh3z6kC8Zglri66jt1uU
-         9teykIrWAM6Amg9HvqZrC8x6k86z3gkVurYPyX7gfcISN9r2uZ4WA5wUoMLwYXzJN3LU
-         C8kUNgTsUi5WEoH+9YDGVZJTaemFOB+/8+TBGqYSu40XRIVd8clR7dENJsxZyuXGpNtl
-         pdx39HxyeQkT+ELq+ow0MdXw301c6onLGsPMIiivvO3vkGtaxHJPA/T5eqtzgVemo/FH
-         fmYg==
-X-Gm-Message-State: AOAM530vym3TBHwrOrF3SYBjBuwYdq2PuPqRcriQDfFDMQD5CZno1oi/
-        2FjxfwWu3ybQI7enrv4goan9CLQJ+8GxOA==
-X-Google-Smtp-Source: ABdhPJwnlpmtPAQf0dV03pWrM9wU/CLfxSir1AMgh3PSJsIDvNCUIrGw4U71KEcRBAN2eVtMJySGXg==
-X-Received: by 2002:a17:90a:c389:: with SMTP id h9mr26611240pjt.98.1620451287305;
-        Fri, 07 May 2021 22:21:27 -0700 (PDT)
-Received: from [192.168.43.80] (subs28-116-206-12-34.three.co.id. [116.206.12.34])
-        by smtp.gmail.com with ESMTPSA id j29sm5842543pgl.30.2021.05.07.22.21.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 07 May 2021 22:21:26 -0700 (PDT)
-Subject: Re: [PATCH] refs: cleanup directories when deleting packed ref
-To:     Will Chandler <wfc@wfchandler.org>, Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, ps@pks.im
-References: <YJVQpaDwkQH/aCee@mini.wfchandler.org>
- <YJW3n6lVWVAuLQap@coredump.intra.peff.net>
- <YJW46fsdKaUv2Fln@coredump.intra.peff.net>
- <YJXF4xA0GFx2/2v4@coredump.intra.peff.net>
- <YJYTQYk5q8g6HaIm@mini.wfchandler.org> <YJYa+7yUyt2YD16r@mini.wfchandler.org>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-Message-ID: <1bb65e54-a18d-852d-bb01-130cc57cce1b@gmail.com>
-Date:   Sat, 8 May 2021 12:21:23 +0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.1
+        id S229864AbhEHGT1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 8 May 2021 02:19:27 -0400
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:53037 "EHLO
+        out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229473AbhEHGT1 (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 8 May 2021 02:19:27 -0400
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+        by mailout.nyi.internal (Postfix) with ESMTP id E83AA5C012E
+        for <git@vger.kernel.org>; Sat,  8 May 2021 02:18:25 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute2.internal (MEProxy); Sat, 08 May 2021 02:18:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        linuxprogrammer.org; h=from:to:subject:date:message-id
+        :mime-version:content-transfer-encoding; s=fm3; bh=DR8oh+bwyHy0k
+        b2VmM8h+VRXrsBahOB37oiXZPmAfZg=; b=g9dvxkeW0DnfIljFO/na9W5MDUNnB
+        5AYfNJnz/gV16n0lrYAMZmtPfDz3Mbk8nwo3kBPgj8mY8ToggmX6msbxhP3ioJ5v
+        V22pWO9pusOImOoEcJXzmj4ZqUWvmxbVeDWkq/ZTA6Ke1+bauoOZUzCPkN42y8t1
+        XMxLF96nfC+PYZrPaYzywLSnPx6iP/bkw1nCHWflZSoib7zRqI0nHDl507YGmoGu
+        +w8RDXuVRWhsgTxgJsd6uOeOtn94tp3nXlrJRsD6CQIGN7iDLeNeUx68g0u9F+oi
+        /DGptPm2ZIgTTW/e5SeoxrzxJXj7/O6oOEWFnJXV9QhnYTJncelZegWvw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=content-transfer-encoding:date:from
+        :message-id:mime-version:subject:to:x-me-proxy:x-me-proxy
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=DR8oh+bwyHy0kb2Vm
+        M8h+VRXrsBahOB37oiXZPmAfZg=; b=OnFsQQMk7OB3i3fBYeh+glu6S/S4wU5BX
+        qtzU+7zpCeHCpnzfD66sC0v/jadrWlxh2+VOywVwd9VyN5SF+seObsgW0FJ0b/71
+        FGmQGzREU/xv2lW9wn34y9KDNJrLW9e8TpmsbwEruUC1N3CN10x7ILANTnYYLOeu
+        L6y7aTXVLsVhXYVIkk7Dj0CsPuINd2DeEv6FmQ8dDBhF5Z71PTIxwhwY0hui6D7+
+        l7VVzNOf2kAthL0aGLu7LAcEIwJ3tbQpec2sUlUaqnfXO2M8x1DTK6B08jXNzwGh
+        H/YfA815xDZ7/VKRd3RqD2rDl0H5mYbhkimh6LXW+6R8ear4krQmQ==
+X-ME-Sender: <xms:MS2WYHs4b8tt0753mue31IHL-Hp732krokYO_4PN1IbWkFIXcj71Pw>
+    <xme:MS2WYIeqc46rVwOaYEdudNkFrDBbZQnbVW1WLzFJq9EZENrkPwpVq1Y2NTVIwXQkO
+    YRK1pu5vdnp5BmN>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdegfedguddthecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkffoggfgsedtkeertd
+    ertddtnecuhfhrohhmpeffrghvvgcujfhushgvsgihuceougifhheslhhinhhugihprhho
+    ghhrrghmmhgvrhdrohhrgheqnecuggftrfgrthhtvghrnhepvdffgffgteeuteefleegff
+    fghfehieefveeigffgudfhgeeguddutdfhvdelvdehnecuffhomhgrihhnpehgihhthhhu
+    sgdrtghomhenucfkphepieekrddvvdegrdeikedrheenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegufihhsehlihhnuhigphhrohhgrhgrmhhm
+    vghrrdhorhhg
+X-ME-Proxy: <xmx:MS2WYKw9SdDwUw__GW9Yf_ow5ypDkzVbr-dfPLOhdGbv-1mNGdCI_w>
+    <xmx:MS2WYGM2C8QLdk8_MhiJFcEJLR2ZNifkOHYwxAxwTgqproVx8sXXyA>
+    <xmx:MS2WYH_eKsWs-hklRCEpiHYVcSF2TIwX8mkcJrJ4eg1GCErLGycCjg>
+    <xmx:MS2WYFcEHpcgNRUIpuTba7ZMDtcXXo-n7Pu2YLARAB0y1seQ9Hw7ag>
+Received: from linuxprogrammer.org (ip68-224-68-5.lv.lv.cox.net [68.224.68.5])
+        by mail.messagingengine.com (Postfix) with ESMTPA
+        for <git@vger.kernel.org>; Sat,  8 May 2021 02:18:25 -0400 (EDT)
+From:   Dave Huseby <dwh@linuxprogrammer.org>
+To:     git@vger.kernel.org
+Subject: [RFC PATCH v1 0/1] Universal cryptographic signing
+Date:   Fri,  7 May 2021 23:18:22 -0700
+Message-Id: <cover.1620454449.git.dwh@linuxprogrammer.org>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-In-Reply-To: <YJYa+7yUyt2YD16r@mini.wfchandler.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 08/05/21 12.00, Will Chandler wrote:
-> Subject: [PATCH v2] refs: cleanup directories when deleting packed ref
-> 
-> When deleting a packed ref via 'update-ref -d', a lockfile is made in
-> the directory that would contain the loose copy of that ref, creating
-> any directories in the ref's path that do not exist. When the
-> transaction completes, the lockfile is deleted, but any empty parent
-> directories made when creating the lockfile are left in place.  These
-> empty directories are not removed by 'pack-refs' or other housekeeping
-> tasks and will accumulate over time.
-> 
-> When deleting a loose ref, we remove all empty parent directories at the
-> end of the transaction.
-> 
-> This commit applies the parent directory cleanup logic used when
-> deleting loose refs to packed refs as well.
-> 
-> Signed-off-by: Will Chandler <wfc@wfchandler.org>
-> ---
->   refs/files-backend.c  | 12 ++++++------
->   t/t1400-update-ref.sh |  9 +++++++++
->   2 files changed, 15 insertions(+), 6 deletions(-)
-> 
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index 119972ee16..49e6ee069a 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -45,10 +45,10 @@
->   #define REF_UPDATE_VIA_HEAD (1 << 8)
->   
->   /*
-> - * Used as a flag in ref_update::flags when the loose reference has
-> - * been deleted.
-> + * Used as a flag in ref_update::flags when a reference has been
-> + * deleted and the ref's parent directories may need cleanup.
->    */
-> -#define REF_DELETED_LOOSE (1 << 9)
-> +#define REF_DELETED_RMDIR (1 << 9)
->   
->   struct ref_lock {
->   	char *ref_name;
-> @@ -2852,6 +2852,7 @@ static int files_transaction_finish(struct ref_store *ref_store,
->   
->   		if (update->flags & REF_DELETING &&
->   		    !(update->flags & REF_LOG_ONLY)) {
-> +			update->flags |= REF_DELETED_RMDIR;
->   			if (!(update->type & REF_ISPACKED) ||
->   			    update->type & REF_ISSYMREF) {
->   				/* It is a loose reference. */
-> @@ -2861,7 +2862,6 @@ static int files_transaction_finish(struct ref_store *ref_store,
->   					ret = TRANSACTION_GENERIC_ERROR;
->   					goto cleanup;
->   				}
-> -				update->flags |= REF_DELETED_LOOSE;
->   			}
->   		}
->   	}
-> @@ -2874,9 +2874,9 @@ static int files_transaction_finish(struct ref_store *ref_store,
->   	for (i = 0; i < transaction->nr; i++) {
->   		struct ref_update *update = transaction->updates[i];
->   
-> -		if (update->flags & REF_DELETED_LOOSE) {
-> +		if (update->flags & REF_DELETED_RMDIR) {
->   			/*
-> -			 * The loose reference was deleted. Delete any
-> +			 * The reference was deleted. Delete any
->   			 * empty parent directories. (Note that this
->   			 * can only work because we have already
->   			 * removed the lockfile.)
-> diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
-> index e31f65f381..4506cd435b 100755
-> --- a/t/t1400-update-ref.sh
-> +++ b/t/t1400-update-ref.sh
-> @@ -1598,4 +1598,13 @@ test_expect_success 'transaction cannot restart ongoing transaction' '
->   	test_must_fail git show-ref --verify refs/heads/restart
->   '
->   
-> +test_expect_success 'directory not created deleting packed ref' '
-> +	git branch d1/d2/r1 HEAD &&
-> +	git pack-refs --all &&
-> +	test_path_is_missing .git/refs/heads/d1/d2 &&
-> +	git update-ref -d refs/heads/d1/d2/r1 &&
-> +	test_path_is_missing .git/refs/heads/d1/d2 &&
-> +	test_path_is_missing .git/refs/heads/d1
-> +'
-> +
->   test_done
->
+This RFC patchset is the beginning of a project generously sponsored by
+Google and the Linux Foundation to modify Git to have universal
+cryptographic signing capabilities. Curently Git only supports gpg and
+gpgsm and the primary goal is to create the ability to use any
+signing/verification tool to sign Git commits, tags, mergetags, and
+pushes with a specific emphasis on supporting OpenSSH.
 
-I ask to you: why did you send v2 patch as reply to v1?
+The goals of this project are:
 
-Supposed that I interested to apply only this v2, instead of v1.
-With this situation, I downloaded mbox for v1, which contains v2
-patch as reply to v1. And git-am would instead apply v1 instead.
+- maintain full backwards compatibility without intervention. if it
+  works today, it will work after these patches land without any
+  modification to configs or support scripts.
+- remove all tool-specific code and replace it with a protocol driver
+  for using a standard protocol to talk to external signing and
+  verification tools.
+- normalize all of the command line switches so that they are the same
+  for all tools that support signing and they are no longer tool
+  specific (e.g. --sign instead of --gpgsign).
+- add a new sign.* configuration structure for specifying tool specific
+  configuration options (e.g. sign.openpgp.program) and deprecate all of
+  the signing related config options that are no longer needed (e.g.
+  user.signingKey).
+- make Git completely agnostic to the details of any signing regime by
+  storing signature data and options verbatim inside of signed objects
+  that it later passes to the associated verification tool.
+- add new tests needed to cover the new functionality while keeping all
+  of the old tests passing to verify backwards compatibility.
 
-So why not send this v2 as separate message-id?
+The proposed protocol for talking to signing/verification tools is a
+pkt-line based protocol inspired by the Assuan protocol used by GPG for
+IPC between its component executables. The full write-up on the proposed
+protocol is here:
+
+https://github.com/TrustFrame/git-cryptography-protocol/blob/main/Git%20Cryptography%20Protocol.md
+
+Like I said, this patchset is just the start of the project and all I
+have done here is gone through all of the existing documentation and
+updated it to reflect the normalized command line and config options as
+well as documented the new sign.* config options and the proposed
+signature format.
+
+I am especially looking for feedback on the proposed protocol, signature
+format and config structure. I have plans to follow up this project with
+another project to add support for config directories (e.g.
+.gitconfig.d) so that package maintainers will have an easier time of
+adding sign.* config values for arbitrary signing tools.
+
+As of right now, I have only grok'ed the handling of signed objects and
+I have ignored signed pushes. I will be updating this patchset with
+changes to the documentation for supporting universal signed pushes.
+
+There's some sticky details around the transition to SHA256 that I think
+I have worked out well enough that it won't get in the way. That is
+documented in the hash-function-transition.txt file.
+
+I know there is a lot here, this project cuts deep and will require tons
+of test driven development to avoid killing the patient during surgery.
+I look forward to the many long conversations on details ;)
+
+Cheers!
+
+Dave Huseby (1):
+  Modifies documentation for universal cryptographic signing
+
+ Documentation/config.txt                      |   2 +
+ Documentation/config/commit.txt               |  23 +-
+ Documentation/config/gpg.txt                  |  36 +--
+ Documentation/config/push.txt                 |  18 +-
+ Documentation/config/sign.txt                 |  72 ++++++
+ Documentation/config/tag.txt                  |  27 +-
+ Documentation/config/user.txt                 |  12 +-
+ Documentation/git-am.txt                      |  43 +++-
+ Documentation/git-cherry-pick.txt             |  43 +++-
+ Documentation/git-commit-tree.txt             |  44 +++-
+ Documentation/git-commit.txt                  |  43 +++-
+ Documentation/git-fast-import.txt             |   2 +-
+ Documentation/git-for-each-ref.txt            |   2 +-
+ Documentation/git-mktag.txt                   |  32 ++-
+ Documentation/git-rebase.txt                  |  44 +++-
+ Documentation/git-revert.txt                  |  44 +++-
+ Documentation/git-tag.txt                     | 102 +++++---
+ Documentation/git-verify-commit.txt           |   8 +-
+ Documentation/git-verify-tag.txt              |   8 +-
+ Documentation/merge-options.txt               |  40 ++-
+ Documentation/pretty-formats.txt              |   2 +-
+ Documentation/pretty-options.txt              |   2 +-
+ .../technical/hash-function-transition.txt    |  31 ++-
+ .../technical/signature-format-v2.txt         | 232 ++++++++++++++++++
+ Documentation/user-manual.txt                 |  40 +--
+ 25 files changed, 747 insertions(+), 205 deletions(-)
+ create mode 100644 Documentation/config/sign.txt
+ create mode 100644 Documentation/technical/signature-format-v2.txt
 
 -- 
-An old man doll... just what I always wanted! - Clara
+2.20.1
+
