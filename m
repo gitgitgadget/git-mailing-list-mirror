@@ -2,91 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7636DC433B4
-	for <git@archiver.kernel.org>; Sat,  8 May 2021 04:28:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 51AD9C433B4
+	for <git@archiver.kernel.org>; Sat,  8 May 2021 04:41:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 512116054E
-	for <git@archiver.kernel.org>; Sat,  8 May 2021 04:28:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1B77E613C5
+	for <git@archiver.kernel.org>; Sat,  8 May 2021 04:41:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230511AbhEHE3h (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 8 May 2021 00:29:37 -0400
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:55869 "EHLO
-        out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229467AbhEHE3g (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 8 May 2021 00:29:36 -0400
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-        by mailout.nyi.internal (Postfix) with ESMTP id 842F15C009D;
-        Sat,  8 May 2021 00:28:34 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Sat, 08 May 2021 00:28:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wfchandler.org;
-         h=date:from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm1; bh=CJ/NrtkyaWW+FKX0gVPEOlc3FBk
-        Q/uCEo+r4K43eU8c=; b=JqVuiS/rCtTAF3IvltJuAWIFxrJDZs9TD1D8+P1PzkP
-        yr0K+d/8aDSJjmEaPh2FLzBfdWujz598kWS4Pr1Ag2gDkWQlgnzQ2fLZFVyaotro
-        m0v6gg64fZxdByA7aeVfd7rrGbCMoNDWo+Tkbrpeh6Q/3XAqpW3cSu1tqT6E2OpY
-        xCw1kR5+GFJd4C7A5qDL1Y4PuRseim4zSJtTZ9ALyqCw+2U57/rfcu1G6WK1eLFT
-        zo5RtX7zPTovKBE/gOdLwTWl+hh4DBqDZxccWZyTgYMsZyvLg0LeZNsH+1pfIzYq
-        /ZNmi60Fm0y6JzSmy3Tz7mE/d55CHVmYyAeNRz6odeQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=CJ/Nrt
-        kyaWW+FKX0gVPEOlc3FBkQ/uCEo+r4K43eU8c=; b=MG/Azu2NBZagqH2QOAakA/
-        oky34+w4c09HZOg5fK7zll0NZ+7W6w47D4MB4ekbcRFs3Jl6FUSYh64tZuunVUuf
-        jB2PCjTQDQp4cL88v5kfdvTKI3hE5wRQvy+OYidVYQyxUa6U0kdnaTUvXlXs4gj3
-        BCkOAPwvG2ebXpfe28Fq6nfUCytrN2e1e3s9yHRlwmFUFr3bqfa99krlSgtQhOKa
-        +Jz9MNxVDnI2/+UbsfjexSqD/e/zdeZTLIsqkq2zk3v6OovKfTsjKM24fPzXGgQ5
-        LPEhE3pipKba6+um41JtZFicVO5d5ODCj9K0e6Ms/b32m/P9k5VkGt/B812IkMfA
-        ==
-X-ME-Sender: <xms:cROWYPt_IPNOpMjenzgkmwe4ORKxo5Nl4Au9EjYjSc0tKmmvbJQ87w>
-    <xme:cROWYAccLKVJazjkit4r-6vOyl4-4LOLs7fQPHS5aGHwthZzPQs7zP-ImsoNoJVzK
-    b72ns9GYhN9yqQjBLE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdegfedgkeegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesthdtre
-    dttddtjeenucfhrhhomhephghilhhlucevhhgrnhgulhgvrhcuoeiffhgtseiffhgthhgr
-    nhgulhgvrhdrohhrgheqnecuggftrfgrthhtvghrnhepgfdttefggfeludfgffeutdfhue
-    etvdeikeehgeeihfeugffgueeutdeuheduieeinecukfhppeejhedruddukedrfedrudeg
-    leenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpeiffh
-    gtseiffhgthhgrnhgulhgvrhdrohhrgh
-X-ME-Proxy: <xmx:chOWYCyRytQczYpw5UFGdcfjyAnEbDZuf8PtsmQEijwgKonsz48ikQ>
-    <xmx:chOWYOPDINpNsXPIbEUvkBKu7je7umNuAqWfOmchNzf52aCsc56Kog>
-    <xmx:chOWYP8defvP25s60MMwom3S9Sw4CVLLUPWLPRUuSMLUxc9AlOjFhg>
-    <xmx:chOWYMEn8LVVYRj-CtPwo862AiCF1EzM5alaj0sEo21D-SIzxwagGA>
-Received: from mini.wfchandler.org (d118-75-149-3.try.wideopenwest.com [75.118.3.149])
-        by mail.messagingengine.com (Postfix) with ESMTPA;
-        Sat,  8 May 2021 00:28:33 -0400 (EDT)
-Date:   Sat, 8 May 2021 00:27:45 -0400
-From:   Will Chandler <wfc@wfchandler.org>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, ps@pks.im
-Subject: Re: [PATCH] refs: cleanup directories when deleting packed ref
-Message-ID: <YJYTQYk5q8g6HaIm@mini.wfchandler.org>
-References: <YJVQpaDwkQH/aCee@mini.wfchandler.org>
- <YJW3n6lVWVAuLQap@coredump.intra.peff.net>
- <YJW46fsdKaUv2Fln@coredump.intra.peff.net>
- <YJXF4xA0GFx2/2v4@coredump.intra.peff.net>
+        id S230143AbhEHEmI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 8 May 2021 00:42:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45638 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229467AbhEHEmI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 May 2021 00:42:08 -0400
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 301B5C061574
+        for <git@vger.kernel.org>; Fri,  7 May 2021 21:41:05 -0700 (PDT)
+Received: by mail-pl1-x630.google.com with SMTP id 69so1657489plc.5
+        for <git@vger.kernel.org>; Fri, 07 May 2021 21:41:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=n5iUmG+3rZfQj7yQPN5/n2Fmsyoe2P1lPMvdf3fbUzk=;
+        b=h1kRf1uLRwPu5sFkwGDcMe33qjmQ663169J6w3DGS0r7JQm3EKwVn3msiYZeZCEtaJ
+         6yuOVTJmv3GCrC/ZhSsgizrKCsHarjPoA3Gpms8w1QkHOY3LCNyEXL7x0XJXZwyq7Z/s
+         lz80Ei8lrxTq5ndTZsrL2n3EQpIk57jcQBRG19R5GfqN8IMER/BHfGAF5UVRhXKZ+D1x
+         7IZZZEIDIG6Qtyo5brzaaafv1IRfpd+aid+8g/yoecNxhh0mkvcaH5sqK4rRbxUn8Mh2
+         H9lFVPCby/naELhhbzUGaTJl+0ib607mdSaOW/3zgkfk8KmxOmFYnO5ZcyKRCv3cxwa9
+         3J1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=n5iUmG+3rZfQj7yQPN5/n2Fmsyoe2P1lPMvdf3fbUzk=;
+        b=ERJSKcSL1MvDt8iH82BU7h0+hgm5T7gaufch9riR+bbpZP+aJb4WCFUFF5JeeW4E2L
+         hpey+dJi5EK8zwUWUOuQonl0WJUKubaig/mJmMPYeZ37u2c4E0kaQql9IBeM3x1iP2Ch
+         pIHBWx0qdzqNnzaaOiX93r544AAC5yViF+CzC/YY7jUOBef+yub2wLOZ8jUvx9FJIP4M
+         QfbKPtKxaMTnDL+ExRpLr1Za69CzJOjiNn1RAyqVA3Qgd1+kbXeSuRWYc8DD0cyaCXIK
+         T14e/oyFkgB1FKaZ01qcuUm8Q5ZVC2MzOAOWRzA2NCnobWQcJEg47eNmSYzPBDp12qL8
+         +NOA==
+X-Gm-Message-State: AOAM530WjOz+A1Gc2XKLlNN8rI7No3MDiTCUqN6szkssK7UHBvjEX5dn
+        FK5ezKEtoLJBQ7Wkz8bGEN+MrdGGQ5lAJLnh
+X-Google-Smtp-Source: ABdhPJxToBdAp8WupDbxqtmfw8HGAlBkVTwY+qpsdYQXkBzkEBkxT0Ak/hLKXbeKg4VLAKD01Tqkvg==
+X-Received: by 2002:a17:90a:4e81:: with SMTP id o1mr26257563pjh.7.1620448865451;
+        Fri, 07 May 2021 21:41:05 -0700 (PDT)
+Received: from [192.168.43.80] (subs28-116-206-12-34.three.co.id. [116.206.12.34])
+        by smtp.gmail.com with ESMTPSA id e5sm6040075pgj.91.2021.05.07.21.41.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 07 May 2021 21:41:05 -0700 (PDT)
+Subject: Re: Pain points in Git's patch flow
+To:     Git Mailing List <git@vger.kernel.org>,
+        Sebastian Schuberth <sschuberth@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        patchwork@lists.ozlabs.org
+References: <YHaIBvl6Mf7ztJB3@google.com>
+ <22a0a383-0ae1-c7d1-75f7-7dfdfe5fb504@gmail.com>
+ <87fszn48lh.fsf@evledraar.gmail.com>
+ <CAHGBnuOVmzzhgW6GanHBXNb22UW3P1m3i6PJnOUEhYPO76hH4g@mail.gmail.com>
+ <20210419214921.afurkxy7oru6bny6@nitro.local>
+ <20210508020855.GF3986@localhost>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <6f42d6e2-087a-4c95-1aa1-31ee871c06b4@gmail.com>
+Date:   Sat, 8 May 2021 11:41:02 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YJXF4xA0GFx2/2v4@coredump.intra.peff.net>
+In-Reply-To: <20210508020855.GF3986@localhost>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 07, 2021 at 06:57:39PM -0400, Jeff King wrote:
-> Getting back to your patch, though, you are definitely fixing a problem
-> with update-ref (which correctly realizes there is no loose ref to clean
-> up, but forgets that we had to make a lockfile). And the solution you
-> have looks correct. I think you just need to update the test to exercise
-> it with "update-ref -d".
+On 08/05/21 09.08, dwh@linuxprogrammer.org wrote:
 
-Thanks for the thorough analysis! Apologies for the confusion, I really
-appreciate your patience.
+> Think about it like this. Right now, I could use an IMAP client to
+> download all of my emails from GMail, store them in mbox files, then
+> use the IMAP client to upload the email to Fastmail or SDF.org or some
+> other email provider. Or better yet, I can install local tools for
+> working with my email. The fact that email providers/tools are largely
+> interchangeable and replacable--despite Google/Yahoo/Microsoft's best
+> efforts--gives maximum power to users.
 
-I'll get the test fixed and note that this is specific to 'update-ref'.
+Well, I use Thunderbird because it supports Gmail accounts out of the box.
+But I wish I could use Mutt or similar, alas Gmail requires that I need
+to enable 2FA and s/<google account password>/<specific app password>/
+in order to access Gmail via Mutt. I currently steer clear from 2FA, because
+once upon a time in 2018 I screwed up (locked-out) from my older account,
+which IMO mission-critical., for I couldn't pass all possible verification
+methods for that. So I created new account one in about Día de Kartini
+(Kartini's day).
+
+And yes, Google/Yahoo/MS have webmail interface for their mail services
+(Gmail/YahooMail/Outlook), but for purposes for sending to vger.kernel.org,
+these above are rubbish because they genereated HTML emails, and vger hate
+HTML emails.
+
+-- 
+An old man doll... just what I always wanted! - Clara
