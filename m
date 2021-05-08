@@ -2,109 +2,171 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51AD9C433B4
-	for <git@archiver.kernel.org>; Sat,  8 May 2021 04:41:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA071C433B4
+	for <git@archiver.kernel.org>; Sat,  8 May 2021 05:03:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1B77E613C5
-	for <git@archiver.kernel.org>; Sat,  8 May 2021 04:41:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 89D4F61458
+	for <git@archiver.kernel.org>; Sat,  8 May 2021 05:03:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230143AbhEHEmI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 8 May 2021 00:42:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45638 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229467AbhEHEmI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 May 2021 00:42:08 -0400
-Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 301B5C061574
-        for <git@vger.kernel.org>; Fri,  7 May 2021 21:41:05 -0700 (PDT)
-Received: by mail-pl1-x630.google.com with SMTP id 69so1657489plc.5
-        for <git@vger.kernel.org>; Fri, 07 May 2021 21:41:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=n5iUmG+3rZfQj7yQPN5/n2Fmsyoe2P1lPMvdf3fbUzk=;
-        b=h1kRf1uLRwPu5sFkwGDcMe33qjmQ663169J6w3DGS0r7JQm3EKwVn3msiYZeZCEtaJ
-         6yuOVTJmv3GCrC/ZhSsgizrKCsHarjPoA3Gpms8w1QkHOY3LCNyEXL7x0XJXZwyq7Z/s
-         lz80Ei8lrxTq5ndTZsrL2n3EQpIk57jcQBRG19R5GfqN8IMER/BHfGAF5UVRhXKZ+D1x
-         7IZZZEIDIG6Qtyo5brzaaafv1IRfpd+aid+8g/yoecNxhh0mkvcaH5sqK4rRbxUn8Mh2
-         H9lFVPCby/naELhhbzUGaTJl+0ib607mdSaOW/3zgkfk8KmxOmFYnO5ZcyKRCv3cxwa9
-         3J1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=n5iUmG+3rZfQj7yQPN5/n2Fmsyoe2P1lPMvdf3fbUzk=;
-        b=ERJSKcSL1MvDt8iH82BU7h0+hgm5T7gaufch9riR+bbpZP+aJb4WCFUFF5JeeW4E2L
-         hpey+dJi5EK8zwUWUOuQonl0WJUKubaig/mJmMPYeZ37u2c4E0kaQql9IBeM3x1iP2Ch
-         pIHBWx0qdzqNnzaaOiX93r544AAC5yViF+CzC/YY7jUOBef+yub2wLOZ8jUvx9FJIP4M
-         QfbKPtKxaMTnDL+ExRpLr1Za69CzJOjiNn1RAyqVA3Qgd1+kbXeSuRWYc8DD0cyaCXIK
-         T14e/oyFkgB1FKaZ01qcuUm8Q5ZVC2MzOAOWRzA2NCnobWQcJEg47eNmSYzPBDp12qL8
-         +NOA==
-X-Gm-Message-State: AOAM530WjOz+A1Gc2XKLlNN8rI7No3MDiTCUqN6szkssK7UHBvjEX5dn
-        FK5ezKEtoLJBQ7Wkz8bGEN+MrdGGQ5lAJLnh
-X-Google-Smtp-Source: ABdhPJxToBdAp8WupDbxqtmfw8HGAlBkVTwY+qpsdYQXkBzkEBkxT0Ak/hLKXbeKg4VLAKD01Tqkvg==
-X-Received: by 2002:a17:90a:4e81:: with SMTP id o1mr26257563pjh.7.1620448865451;
-        Fri, 07 May 2021 21:41:05 -0700 (PDT)
-Received: from [192.168.43.80] (subs28-116-206-12-34.three.co.id. [116.206.12.34])
-        by smtp.gmail.com with ESMTPSA id e5sm6040075pgj.91.2021.05.07.21.41.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 07 May 2021 21:41:05 -0700 (PDT)
-Subject: Re: Pain points in Git's patch flow
-To:     Git Mailing List <git@vger.kernel.org>,
-        Sebastian Schuberth <sschuberth@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        patchwork@lists.ozlabs.org
-References: <YHaIBvl6Mf7ztJB3@google.com>
- <22a0a383-0ae1-c7d1-75f7-7dfdfe5fb504@gmail.com>
- <87fszn48lh.fsf@evledraar.gmail.com>
- <CAHGBnuOVmzzhgW6GanHBXNb22UW3P1m3i6PJnOUEhYPO76hH4g@mail.gmail.com>
- <20210419214921.afurkxy7oru6bny6@nitro.local>
- <20210508020855.GF3986@localhost>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-Message-ID: <6f42d6e2-087a-4c95-1aa1-31ee871c06b4@gmail.com>
-Date:   Sat, 8 May 2021 11:41:02 +0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.1
+        id S230157AbhEHFBu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 8 May 2021 01:01:50 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:42801 "EHLO
+        out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229467AbhEHFBt (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 8 May 2021 01:01:49 -0400
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+        by mailout.nyi.internal (Postfix) with ESMTP id 92FC95C014D;
+        Sat,  8 May 2021 01:00:46 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute4.internal (MEProxy); Sat, 08 May 2021 01:00:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wfchandler.org;
+         h=date:from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=fm1; bh=oUAiBB0Tx7T3iNlVIkY85AwdLXL
+        pXq826PE6cW5xpjY=; b=LV9yLpezuWUMur1CLOvX497AXSdEWmTZziQWBOjqLO1
+        vPkAFIkOpyD+GZWeFH3nywbn1aTOXkoO5T4kAZMxEATfUrItX1ZKEqmIZucwMfIV
+        Gl4ZSwmu/PrzNXmF/VK1WugQRAHwSglYNAnill1I69DHf4vUx5hXMTO9xmhDNSbS
+        HULMtxfUICtTfGuyH+BrMy7WysgHMvSqpFIpuFu09qafLBwMZzGqTeAJVtEeOEkq
+        ta2h8u2gPbhDY8TKgiHkwJIaM2j1NdlE3MXcHfXkHbC9OAQBWZWuWiWDlTyljQMH
+        Mkop7DWoFdxrFIH/ocTgydAgZUKGMQ1WuGzCGx/CE6w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=oUAiBB
+        0Tx7T3iNlVIkY85AwdLXLpXq826PE6cW5xpjY=; b=fXaTBbbfxDstckvwFNW5vk
+        uivcI7YpQBxlVPBO05Tw98MoXoAqy2rXL3TZQOalIWsQoAiL+wcCgy1Aq15G4Pz/
+        /hP4jjLskPud1eM7bAQd+Pmv9izxlaa+/L6XCSnw12Htou11Vr9lF2SyH4A6FSKc
+        Msk4LQKh2szmvsIkjA+x7QynMIUqjNUg7PUlAB53Jgn4tMhWRaWppl5ebTv1ij7d
+        iF0rwSK6KECQOWzBXaQy6AiqzU0yY/n3DcjnWy5VyvriMkpdF2mw5SPBGZEdfnmY
+        wTGIJsRgFHbvEepadtXzbipBkPdwjVsYfW3L2CYUZ/k23vPrsDLzdxKxUsjZpxcg
+        ==
+X-ME-Sender: <xms:_RqWYPBAfUxyaX-X9xbPZ1FspaYKcYMGcF8N3G0Prptff28ZOHUxiQ>
+    <xme:_RqWYFhi4l62cZgKq7Sx-NPnfNNN4MuS2RaU_SZa8fDPBVVYzgxjca6vFJsfIDTLo
+    SjynOXbGG14nfDUazs>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdegfedgledtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesthdtre
+    dttddtjeenucfhrhhomhephghilhhlucevhhgrnhgulhgvrhcuoeiffhgtseiffhgthhgr
+    nhgulhgvrhdrohhrgheqnecuggftrfgrthhtvghrnhepgfdttefggfeludfgffeutdfhue
+    etvdeikeehgeeihfeugffgueeutdeuheduieeinecukfhppeejhedruddukedrfedrudeg
+    leenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpeiffh
+    gtseiffhgthhgrnhgulhgvrhdrohhrgh
+X-ME-Proxy: <xmx:_RqWYKlHP7vlImJRxZfrDt4Z3ZwrteO4XvTJsuE8eeOJNY9kZ6pjlg>
+    <xmx:_RqWYBzFAnc1Cgy7zIwJk1TPEqrptbcPq4fVQS0jYR8ggx4CevZrgA>
+    <xmx:_RqWYETZWGNs47IM1rv49ZpXCQ3-IGi9mp-GAJ0OkDXHw9p1uTFxsg>
+    <xmx:_hqWYN5QZOuH_8efOSbGPEujvhnyKl4hMBOLX9pPAT-OEJKbqsab5A>
+Received: from mini.wfchandler.org (d118-75-149-3.try.wideopenwest.com [75.118.3.149])
+        by mail.messagingengine.com (Postfix) with ESMTPA;
+        Sat,  8 May 2021 01:00:45 -0400 (EDT)
+Date:   Sat, 8 May 2021 01:00:43 -0400
+From:   Will Chandler <wfc@wfchandler.org>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, ps@pks.im
+Subject: Re: [PATCH] refs: cleanup directories when deleting packed ref
+Message-ID: <YJYa+7yUyt2YD16r@mini.wfchandler.org>
+References: <YJVQpaDwkQH/aCee@mini.wfchandler.org>
+ <YJW3n6lVWVAuLQap@coredump.intra.peff.net>
+ <YJW46fsdKaUv2Fln@coredump.intra.peff.net>
+ <YJXF4xA0GFx2/2v4@coredump.intra.peff.net>
+ <YJYTQYk5q8g6HaIm@mini.wfchandler.org>
 MIME-Version: 1.0
-In-Reply-To: <20210508020855.GF3986@localhost>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YJYTQYk5q8g6HaIm@mini.wfchandler.org>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 08/05/21 09.08, dwh@linuxprogrammer.org wrote:
+Subject: [PATCH v2] refs: cleanup directories when deleting packed ref
 
-> Think about it like this. Right now, I could use an IMAP client to
-> download all of my emails from GMail, store them in mbox files, then
-> use the IMAP client to upload the email to Fastmail or SDF.org or some
-> other email provider. Or better yet, I can install local tools for
-> working with my email. The fact that email providers/tools are largely
-> interchangeable and replacable--despite Google/Yahoo/Microsoft's best
-> efforts--gives maximum power to users.
+When deleting a packed ref via 'update-ref -d', a lockfile is made in
+the directory that would contain the loose copy of that ref, creating
+any directories in the ref's path that do not exist. When the
+transaction completes, the lockfile is deleted, but any empty parent
+directories made when creating the lockfile are left in place.  These
+empty directories are not removed by 'pack-refs' or other housekeeping
+tasks and will accumulate over time.
 
-Well, I use Thunderbird because it supports Gmail accounts out of the box.
-But I wish I could use Mutt or similar, alas Gmail requires that I need
-to enable 2FA and s/<google account password>/<specific app password>/
-in order to access Gmail via Mutt. I currently steer clear from 2FA, because
-once upon a time in 2018 I screwed up (locked-out) from my older account,
-which IMO mission-critical., for I couldn't pass all possible verification
-methods for that. So I created new account one in about Día de Kartini
-(Kartini's day).
+When deleting a loose ref, we remove all empty parent directories at the
+end of the transaction.
 
-And yes, Google/Yahoo/MS have webmail interface for their mail services
-(Gmail/YahooMail/Outlook), but for purposes for sending to vger.kernel.org,
-these above are rubbish because they genereated HTML emails, and vger hate
-HTML emails.
+This commit applies the parent directory cleanup logic used when
+deleting loose refs to packed refs as well.
 
+Signed-off-by: Will Chandler <wfc@wfchandler.org>
+---
+ refs/files-backend.c  | 12 ++++++------
+ t/t1400-update-ref.sh |  9 +++++++++
+ 2 files changed, 15 insertions(+), 6 deletions(-)
+
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 119972ee16..49e6ee069a 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -45,10 +45,10 @@
+ #define REF_UPDATE_VIA_HEAD (1 << 8)
+ 
+ /*
+- * Used as a flag in ref_update::flags when the loose reference has
+- * been deleted.
++ * Used as a flag in ref_update::flags when a reference has been
++ * deleted and the ref's parent directories may need cleanup.
+  */
+-#define REF_DELETED_LOOSE (1 << 9)
++#define REF_DELETED_RMDIR (1 << 9)
+ 
+ struct ref_lock {
+ 	char *ref_name;
+@@ -2852,6 +2852,7 @@ static int files_transaction_finish(struct ref_store *ref_store,
+ 
+ 		if (update->flags & REF_DELETING &&
+ 		    !(update->flags & REF_LOG_ONLY)) {
++			update->flags |= REF_DELETED_RMDIR;
+ 			if (!(update->type & REF_ISPACKED) ||
+ 			    update->type & REF_ISSYMREF) {
+ 				/* It is a loose reference. */
+@@ -2861,7 +2862,6 @@ static int files_transaction_finish(struct ref_store *ref_store,
+ 					ret = TRANSACTION_GENERIC_ERROR;
+ 					goto cleanup;
+ 				}
+-				update->flags |= REF_DELETED_LOOSE;
+ 			}
+ 		}
+ 	}
+@@ -2874,9 +2874,9 @@ static int files_transaction_finish(struct ref_store *ref_store,
+ 	for (i = 0; i < transaction->nr; i++) {
+ 		struct ref_update *update = transaction->updates[i];
+ 
+-		if (update->flags & REF_DELETED_LOOSE) {
++		if (update->flags & REF_DELETED_RMDIR) {
+ 			/*
+-			 * The loose reference was deleted. Delete any
++			 * The reference was deleted. Delete any
+ 			 * empty parent directories. (Note that this
+ 			 * can only work because we have already
+ 			 * removed the lockfile.)
+diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+index e31f65f381..4506cd435b 100755
+--- a/t/t1400-update-ref.sh
++++ b/t/t1400-update-ref.sh
+@@ -1598,4 +1598,13 @@ test_expect_success 'transaction cannot restart ongoing transaction' '
+ 	test_must_fail git show-ref --verify refs/heads/restart
+ '
+ 
++test_expect_success 'directory not created deleting packed ref' '
++	git branch d1/d2/r1 HEAD &&
++	git pack-refs --all &&
++	test_path_is_missing .git/refs/heads/d1/d2 &&
++	git update-ref -d refs/heads/d1/d2/r1 &&
++	test_path_is_missing .git/refs/heads/d1/d2 &&
++	test_path_is_missing .git/refs/heads/d1
++'
++
+ test_done
 -- 
-An old man doll... just what I always wanted! - Clara
+2.30.2
+
