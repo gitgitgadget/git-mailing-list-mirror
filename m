@@ -2,91 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D5CDC433ED
-	for <git@archiver.kernel.org>; Sat,  8 May 2021 11:12:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B05AC433B4
+	for <git@archiver.kernel.org>; Sat,  8 May 2021 11:13:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F316261019
-	for <git@archiver.kernel.org>; Sat,  8 May 2021 11:12:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5063761426
+	for <git@archiver.kernel.org>; Sat,  8 May 2021 11:13:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230445AbhEHLNH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 8 May 2021 07:13:07 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50599 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230326AbhEHLNG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 May 2021 07:13:06 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A5FA7B8DB5;
-        Sat,  8 May 2021 07:12:04 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=68upWYfUZfXm
-        ypu/60OvjO3zk7hu8B5/yWrSw629qPI=; b=NRnFJM1DN/llXn5vkRbWEQpdvXfs
-        8n78v68R646FsAzJo5ayYIQpzyEpnH/4FsXA7645jCfL/LVlKB7483j/uQO6tQcW
-        RadiOgmlQW+vMS4nk447UqHQeJWbUSM6r92ZbiMzh5uDcKnf0k1oIvFPe3rw+u+G
-        PS9uCtJ1MJE9Yrk=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 97F6DB8DB4;
-        Sat,  8 May 2021 07:12:04 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 400A2B8DB3;
-        Sat,  8 May 2021 07:12:03 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Moch <stefanmoch@mail.de>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        dwh@linuxprogrammer.org, git <git@vger.kernel.org>
-Subject: Re: Preserving the ability to have both SHA1 and SHA256 signatures
-References: <20210508022225.GH3986@localhost>
-        <CAP8UFD0vp-zZv=Q1+KWv8PHnxTuspTw2aSCUp8QUic0HOSyq4w@mail.gmail.com>
-        <xmqqim3tvhlr.fsf@gitster.g> <609645cb11f72_1fc6d208ee@natae.notmuch>
-        <f4f782c4-3adc-8c1c-428d-8037426fc475@mail.de>
-Date:   Sat, 08 May 2021 20:12:02 +0900
-In-Reply-To: <f4f782c4-3adc-8c1c-428d-8037426fc475@mail.de> (Stefan Moch's
-        message of "Sat, 8 May 2021 12:11:51 +0200")
-Message-ID: <xmqqlf8ptr7h.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S230434AbhEHLOf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 8 May 2021 07:14:35 -0400
+Received: from smtp.hosts.co.uk ([85.233.160.19]:56348 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230234AbhEHLOd (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 May 2021 07:14:33 -0400
+Received: from host-92-1-139-132.as13285.net ([92.1.139.132] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1lfKtl-000BMX-3j; Sat, 08 May 2021 12:13:29 +0100
+Subject: Re: [PATCH 1/5] t7300: add testcase showing unnecessary traversal
+ into ignored directory
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>
+References: <pull.1020.git.git.1620360300.gitgitgadget@gmail.com>
+ <a3bd253fa8e8ae47d19beb35327d8283ffa49289.1620360300.git.gitgitgadget@gmail.com>
+From:   Philip Oakley <philipoakley@iee.email>
+Message-ID: <2b4e818f-9429-83f1-51d6-d8eb0ba618ff@iee.email>
+Date:   Sat, 8 May 2021 12:13:28 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.1
 MIME-Version: 1.0
+In-Reply-To: <a3bd253fa8e8ae47d19beb35327d8283ffa49289.1620360300.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 377B220E-AFEE-11EB-9963-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Moch <stefanmoch@mail.de> writes:
+On 07/05/2021 05:04, Elijah Newren via GitGitGadget wrote:
+> From: Elijah Newren <newren@gmail.com>
+>
+> PNPM 
 
-> Good idea to write this down. How to use the mailing list is only
-> sparsely documented. The following files talk about sending to the
-> mailing list:
->
->  1. README.md
->  2. Documentation/SubmittingPatches
->  3. Documentation/MyFirstContribution.txt
->  4. MaintNotes (in Junio's =E2=80=9Ctodo=E2=80=9D branch, sent out to t=
-he list from
->     time to time as =E2=80=9CA note from the maintainer=E2=80=9D)
->
-> 2, 3 and 4 mention sending Cc to everyone involved.
->
-> 2 is about new messages.
->
-> 3 and 4 specifically talk about keeping everyone in Cc: in replies.
-> Both in the context of =E2=80=9Cyou don't have to be subscribed and you
-> don't need to ask for Cc:=E2=80=9D.
+for me, this was a UNA (un-named abbreviation), can we clarify it, e.g
+s/PNPM/& package manager/
 
-In case somebody wants to write a doc, a better pair of references
-than what I quoted earlier to draw material from are:
-
-https://public-inbox.org/git/7v4pndfjym.fsf@assigned-by-dhcp.cox.net/
-https://public-inbox.org/git/7vei7zjr3y.fsf@alter.siamese.dyndns.org/
+> is apparently creating deeply nested (but ignored) directory
+> structures; traversing them is costly performance-wise, unnecessary, and
+> in some cases is even throwing warnings/errors because the paths are too
+> long to handle on various platforms.  Add a testcase that demonstrates
+> this problem.
+>
+> Initial-test-by: Jason Gore <Jason.Gore@microsoft.com>
+> Helped-by: brian m. carlson <sandals@crustytoothpaste.net>
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>  t/t7300-clean.sh | 40 ++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 40 insertions(+)
+>
+> diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
+> index a74816ca8b46..5f1dc397c11e 100755
+> --- a/t/t7300-clean.sh
+> +++ b/t/t7300-clean.sh
+> @@ -746,4 +746,44 @@ test_expect_success 'clean untracked paths by pathspec' '
+>  	test_must_be_empty actual
+>  '
+>  
+> +test_expect_failure 'avoid traversing into ignored directories' '
+> +	test_when_finished rm -f output error &&
+> +	test_create_repo avoid-traversing-deep-hierarchy &&
+> +	(
+> +		cd avoid-traversing-deep-hierarchy &&
+> +
+> +		>directory-random-file.txt &&
+> +		# Put this file under directory400/directory399/.../directory1/
+> +		depth=400 &&
+> +		for x in $(test_seq 1 $depth); do
+> +			mkdir "tmpdirectory$x" &&
+> +			mv directory* "tmpdirectory$x" &&
+> +			mv "tmpdirectory$x" "directory$x"
+> +		done &&
+> +
+> +		git clean -ffdxn -e directory$depth >../output 2>../error &&
+> +
+> +		test_must_be_empty ../output &&
+> +		# We especially do not want things like
+> +		#   "warning: could not open directory "
+> +		# appearing in the error output.  It is true that directories
+> +		# that are too long cannot be opened, but we should not be
+> +		# recursing into those directories anyway since the very first
+> +		# level is ignored.
+> +		test_must_be_empty ../error &&
+> +
+> +		# alpine-linux-musl fails to "rm -rf" a directory with such
+> +		# a deeply nested hierarchy.  Help it out by deleting the
+> +		# leading directories ourselves.  Super slow, but, what else
+> +		# can we do?  Without this, we will hit a
+> +		#     error: Tests passed but test cleanup failed; aborting
+> +		# so do this ugly manual cleanup...
+> +		while test ! -f directory-random-file.txt; do
+> +			name=$(ls -d directory*) &&
+> +			mv $name/* . &&
+> +			rmdir $name
+> +		done
+> +	)
+> +'
+> +
+>  test_done
 
