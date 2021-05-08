@@ -4,62 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 47659C433ED
-	for <git@archiver.kernel.org>; Sat,  8 May 2021 15:22:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F1F98C433B4
+	for <git@archiver.kernel.org>; Sat,  8 May 2021 15:22:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 25C3361261
-	for <git@archiver.kernel.org>; Sat,  8 May 2021 15:22:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CCE8261155
+	for <git@archiver.kernel.org>; Sat,  8 May 2021 15:22:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229583AbhEHPXi (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S229605AbhEHPXi (ORCPT <rfc822;git@archiver.kernel.org>);
         Sat, 8 May 2021 11:23:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42714 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42716 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229544AbhEHPXh (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229553AbhEHPXh (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 8 May 2021 11:23:37 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFBDFC061574
-        for <git@vger.kernel.org>; Sat,  8 May 2021 08:22:35 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id x5so12125962wrv.13
-        for <git@vger.kernel.org>; Sat, 08 May 2021 08:22:35 -0700 (PDT)
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41873C06175F
+        for <git@vger.kernel.org>; Sat,  8 May 2021 08:22:36 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id n84so6798741wma.0
+        for <git@vger.kernel.org>; Sat, 08 May 2021 08:22:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=wo8GV6diCsgQ79rGAEP+Eok0/05V2zNhqhcBIaPsUsY=;
-        b=D7ztKUstZmR9OMol4wszJOnPk1ymjGYlucIlm3uAie83bcttCVZDquG/cNL2CqQyUk
-         UnR/YCKlcV/rQucVDdxYOe3SfrnJJNkdoVKIdPCWizvNwTLubuDPXD3bK6i1TUn5Eawr
-         uTKODJfiN3GYLbEa0LNnTjEPTbscUSDv1RPR932BRn7uArMozLS3FGXH6qqPXIuAazeg
-         3L5XrmclHl1u93cEPSzvn63oL+5vHPY7lJlL3XY2p9JaC7HOyzQlrotGdA1twhHlr611
-         y2QYLmloSEQ7BZRSC2yU++Q6MXfVm7mRu72WYMnK1iUfkI0j/HTwphQcPG07tq07nca3
-         4Bdw==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=gBHcabRsxOzaTZfqoW2cX/vxixQylnxsAwx9htHPiKg=;
+        b=b4g+py7IoJsH5HsyZVVdBjS9C1FrDq/HCAxLkdh77/m16XPIun3jSCce7ScrGoQyv3
+         JfI2xpAV9X4U9kssC8kkrBcDfOtMQTIMEKpJszJzaXpPe8ep11frJRpHHoRJmlWYvn25
+         Q1vEoBoFqFlZdtXnVdUnQLy8G2zdFAmtCPqhdAueWf/rE/XH/1Tu+oO9R7hSPaL9soqu
+         XwmF7IXt9UBLbYf1Zphfmsj0GUAas1b/4N4RiW6DWNV3y+RyKKzirBr92IE/vjO+v11O
+         aw7w3hW76QpSTkzwKAZfWQ5FDyUPU1HNlb8/iAwsWdLdjV8Pjv/jZ86YWObhVnchA2zL
+         kQJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=wo8GV6diCsgQ79rGAEP+Eok0/05V2zNhqhcBIaPsUsY=;
-        b=e+FHbOtyLzlcDbc6uToivoxV7lz3K28v04f5+p0zGTDBj4/xRNUdNQZ3AdgRntaCmC
-         3K+oAzf+CIKDiuPe0OFH/3cIFZ82lBr3aZ5WrU4JttPEcmP1b9NOO14wa/jwxW3UWapv
-         BEYuUKR+R+DKehdoshKz5SMrJUIevrEVZmh7JVxWeH/imhAy3i33Zn8ENJnQr++anqOD
-         4PodRBjZk72KxNJTecpMqvHb8NZobiyhtssY2V3PFn3iVFdCe+Pzkh0nK4HIYlDPWZOY
-         H4x32MtPxD/UlLVBI266xIC8Td+WkbxFQRtwX6dDTqRnTgTSf/GoirAtlHalVLR+TcUQ
-         xjOQ==
-X-Gm-Message-State: AOAM530oVDg8Vcsqq9wU+yRjpSyuBTR3VsonNxR5eFdWzz+SLV/CSEai
-        joHmTvWGmAWSrvr+fzM+sQ6i4j9WJC0=
-X-Google-Smtp-Source: ABdhPJwstaQmmzRUCEGFw0lNUacelNCUYPQnNCbf25hSadydx+eJ4JuMrEGUic/w+CiEaD8ShZGXQA==
-X-Received: by 2002:adf:e552:: with SMTP id z18mr19095015wrm.226.1620487354419;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=gBHcabRsxOzaTZfqoW2cX/vxixQylnxsAwx9htHPiKg=;
+        b=GAwjvrjIpVU8hmX+1IPMxKPp3MiaX6CNJbn6omh0iZMiMngbfQwudw+ZWS58tklVUY
+         XHGarFVEw5pAo20dXyGcPZu5sJ7d8nK3bI5ZgvRQsK+F8mYvpd7LyAgbJY40JmPncl8D
+         hht1I/4RdJFIYjYovL56uCIAQuX2IZOWbR0SUU1Km98njd5k7RPNGHUAnIYr6wbc0zAX
+         u94ZFyEPBLCvFdDRnu/dWM8iF/CBqEB7BObYrZXvc+mTecQmzkpYnV8bn3cbb4jzvJDg
+         NKOfsW+iboXV5Y2xJTjWlw3zpuWUqSEMUd7VI1CX41if4Wth/DKAq9Lhi91yWrzLcIHY
+         9tHw==
+X-Gm-Message-State: AOAM533KN+HepeXjndTXV1akO8oUBC1AxNa7nGmOuDyKOlr71t4l1DN5
+        kQyE7gZPrYM9ri2FtpCaHnKDidcHhug=
+X-Google-Smtp-Source: ABdhPJzCS0NTW6fLltGIgRXjVbfKC8EhxGJ6nRNsf6nUN1j3ppD4KgOU60qMW0vGLJ8AhjGRccK0Sg==
+X-Received: by 2002:a1c:b60b:: with SMTP id g11mr27806208wmf.68.1620487354960;
         Sat, 08 May 2021 08:22:34 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o15sm13731293wru.42.2021.05.08.08.22.33
+        by smtp.gmail.com with ESMTPSA id j13sm16721128wrd.81.2021.05.08.08.22.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 08 May 2021 08:22:33 -0700 (PDT)
-Message-Id: <pull.951.git.1620487353.gitgitgadget@gmail.com>
+        Sat, 08 May 2021 08:22:34 -0700 (PDT)
+Message-Id: <91ca57c9d04a822aa4955dbfe3962a6fb2444e81.1620487353.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.951.git.1620487353.gitgitgadget@gmail.com>
+References: <pull.951.git.1620487353.gitgitgadget@gmail.com>
 From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 08 May 2021 15:22:30 +0000
-Subject: [PATCH 0/2] [GSOC][RFC] ref-filter: introduce enum atom_type
+Date:   Sat, 08 May 2021 15:22:31 +0000
+Subject: [PATCH 1/2] [GSOC] ref-filter: add objectsize to used_atom
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,57 +70,79 @@ To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Christian Couder <chriscool@tuxfamily.org>,
         Hariom Verma <hariom18599@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>,
         ZheNing Hu <adlternative@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Firstly, let the union used_atom.u add a member "objectsize",which learn to
-record the attributes of "objectsize", this will bring an extension line for
-atom "%(objectsize)". Next patch will base on this feature to better support
-its functions.
+From: ZheNing Hu <adlternative@gmail.com>
 
-Secondly, In
-https://lore.kernel.org/git/CAOLTT8RhVZQJX8z1gY5UM1jv0imZ4K9UnD14MgJFfvqBBiAZQg@mail.gmail.com/
-I and Junio discussed the use of enum atom_type in used_atom to represent
-the specific type of union used_atom.u, which can correctly distinguish atom
-types and reduce the overhead of string matching.
+Since "objectsize:size" is composed of two parts,
+"type:attribute". However, the original implementation
+did not decouple the two parts "type" and "attribute" well,
+we still need to judge separately whether the atom is
+"objectsize" or "objectsize:disk" in `grab_common_values()`.
 
-But after my attempts, I found that our used_atom is better using enum to
-remember the type of valid_atom item instead of remember type of
-used_atom.u, which can be used throughout the ref-filter, easily distinguish
-different types of atoms through a used_atom[i].atom_type, and reduce the
-overhead of string matching.
+Add a new member `objectsize` to the union `used_atom.u`,
+so that we can separate the judgment of atom type from the
+judgment of atom attribute, This will bring scalability to
+atom `%(objectsize)`.
 
-What's left: some function like grab_oid() or grab_person(), they can also
-take advantage of this feature, but require some additional modifications.
+Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+---
+ ref-filter.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
-What's for future: Let used_atom entry can index directly by enum atom_type,
-In order to reduce the very many loops in ref-filter.
-
-E.g.
-
-static struct used_atom_cache { enum atom_type atom_type; struct used_atom
-*used_atom; } used_atom_cache[] = { {ATOM_REFNAME, NULL}, {ATOM_OBJECTTYPE,
-NULL}, ... };
-
-If want check whether used_atom entries have a atom "%(refname)", we can
-just check if
-used_atom_cache[ATOM_REFNAME].used_atom is equal to NULL, the time
-complexity is O(1) and the complexity of the original method is O(n). This
-will once again get a performance boost for ref-filter.
-
-ZheNing Hu (2):
-  [GSOC] ref-filter: add objectsize to used_atom
-  [GSOC][RFC] ref-filter: introduce enum atom_type
-
- ref-filter.c | 209 +++++++++++++++++++++++++++++++++------------------
- 1 file changed, 135 insertions(+), 74 deletions(-)
-
-
-base-commit: 7e391989789db82983665667013a46eabc6fc570
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-951%2Fadlternative%2Fref-filter-atom-type-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-951/adlternative/ref-filter-atom-type-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/951
+diff --git a/ref-filter.c b/ref-filter.c
+index a0adb4551d87..f420bae6e5ba 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -146,6 +146,9 @@ static struct used_atom {
+ 			enum { O_FULL, O_LENGTH, O_SHORT } option;
+ 			unsigned int length;
+ 		} oid;
++		struct {
++			enum { O_SIZE, O_SIZE_DISK } option;
++		} objectsize;
+ 		struct email_option {
+ 			enum { EO_RAW, EO_TRIM, EO_LOCALPART } option;
+ 		} email_option;
+@@ -269,11 +272,13 @@ static int objectsize_atom_parser(const struct ref_format *format, struct used_a
+ 				  const char *arg, struct strbuf *err)
+ {
+ 	if (!arg) {
++		atom->u.objectsize.option = O_SIZE;
+ 		if (*atom->name == '*')
+ 			oi_deref.info.sizep = &oi_deref.size;
+ 		else
+ 			oi.info.sizep = &oi.size;
+ 	} else if (!strcmp(arg, "disk")) {
++		atom->u.objectsize.option = O_SIZE_DISK;
+ 		if (*atom->name == '*')
+ 			oi_deref.info.disk_sizep = &oi_deref.disk_size;
+ 		else
+@@ -967,12 +972,14 @@ static void grab_common_values(struct atom_value *val, int deref, struct expand_
+ 			name++;
+ 		if (!strcmp(name, "objecttype"))
+ 			v->s = xstrdup(type_name(oi->type));
+-		else if (!strcmp(name, "objectsize:disk")) {
+-			v->value = oi->disk_size;
+-			v->s = xstrfmt("%"PRIuMAX, (uintmax_t)oi->disk_size);
+-		} else if (!strcmp(name, "objectsize")) {
+-			v->value = oi->size;
+-			v->s = xstrfmt("%"PRIuMAX , (uintmax_t)oi->size);
++		else if (starts_with(name, "objectsize")) {
++			if (used_atom[i].u.objectsize.option == O_SIZE_DISK) {
++				v->value = oi->disk_size;
++				v->s = xstrfmt("%"PRIuMAX, (uintmax_t)oi->disk_size);
++			} else if (used_atom[i].u.objectsize.option == O_SIZE) {
++				v->value = oi->size;
++				v->s = xstrfmt("%"PRIuMAX , (uintmax_t)oi->size);
++			}
+ 		} else if (!strcmp(name, "deltabase"))
+ 			v->s = xstrdup(oid_to_hex(&oi->delta_base_oid));
+ 		else if (deref)
 -- 
 gitgitgadget
+
