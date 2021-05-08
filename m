@@ -7,138 +7,101 @@ X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BC42C433ED
-	for <git@archiver.kernel.org>; Sat,  8 May 2021 02:09:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C682C433B4
+	for <git@archiver.kernel.org>; Sat,  8 May 2021 02:10:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4024A60E0C
-	for <git@archiver.kernel.org>; Sat,  8 May 2021 02:09:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D7C006140E
+	for <git@archiver.kernel.org>; Sat,  8 May 2021 02:10:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229920AbhEHCKA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 May 2021 22:10:00 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:39097 "EHLO
+        id S230096AbhEHCLP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 May 2021 22:11:15 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:43195 "EHLO
         out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229775AbhEHCJ6 (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 7 May 2021 22:09:58 -0400
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.nyi.internal (Postfix) with ESMTP id 3164D5C0143;
-        Fri,  7 May 2021 22:08:57 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Fri, 07 May 2021 22:08:57 -0400
+        by vger.kernel.org with ESMTP id S229775AbhEHCLN (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 7 May 2021 22:11:13 -0400
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailout.nyi.internal (Postfix) with ESMTP id EA1005C0150;
+        Fri,  7 May 2021 22:10:12 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute3.internal (MEProxy); Fri, 07 May 2021 22:10:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         linuxprogrammer.org; h=date:from:to:cc:subject:message-id
-        :references:mime-version:content-type:in-reply-to; s=fm3; bh=EdJ
-        oTe1CFzBkmk0bXOsbjykS0ZHQshEf7xZqDa8z2ss=; b=f1JNmdKfdYGeQZ1pVSB
-        Kw2jzc5J1ZSYEb9LycmJ8y8fZFacw8dYqwlN106oNBEW9sOA6JaHEEGskkQIxTgG
-        sd8f6xbVEOZ9vkWgnTRTiGs7blxvYH70vN+p+q61QyhyHA9byYqhFsfP/v2cOuWx
-        goapdOT7ycshTJ615ppjKycjISMoBxLE6R/hld4oi1eZsZr3V57CUccuvqfuiK1z
-        q19BoPHL+3n8BdCarQMmOA6SLmLyhvdYJ8v0ppSveuvm/kWzlF94Fuv9CUT50BZE
-        Sq08GStJ6IHaBroC47TwifMS/WqxS2GgvxnSYBLtT0UJIZdEzvZXnd/kgRUiifBh
-        yVQ==
+        :references:mime-version:content-type:in-reply-to; s=fm3; bh=/wg
+        KKxbNO/ebo4/iisikFmsTcHbg5kfP8OmfaXnoOzY=; b=phhs99sas/OzgQ39WU3
+        N2qNbWKD02LnbSgY+rLNHMDeNOojV5XHr/gcum9qFDxnj566g0RpLtEP8UVtXtwP
+        YP5UTAeENFUHEt278M+TYhVIRX3J5Q7WIk44OUmGJDvZVqY8pFCBBtY8YRiGMlxk
+        ftBVieWaLvydVc/fMQfc9l9B5Xs0G4AsWZWQNY55iU8FuXH64o156USqWIEhIJkX
+        dNaiyN4vrPpBL8pgKJguT6IouN4ZMWPkOeTnq6tIRr4zwN4eEpE5YIfPP5li5DCi
+        QDwp6UKs8juEJONod8uGwj8Qfxy/vZet1TsjcLh7mA8av85rLt/esEjzngshtOY+
+        +QA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=EdJoTe
-        1CFzBkmk0bXOsbjykS0ZHQshEf7xZqDa8z2ss=; b=o4Ejhsb+4+atO/CGMROAE7
-        AHvIOce3RwzXARwqcjchbaB1H+AKQ+dlQbGKzldrde9T2OCVAv2A4LGqXOXK9Foc
-        RsRxRGOI9F1VCYpVDf1KbAJvNB2+C+tcDeDHvskMZayZpRREaF7AxkS79oZA62VQ
-        Nd32ZACyzK3RfYtVCv5POItVaSmp66g/9zEhJdN6RSo4Pf+4oWqUwY6W935hS00f
-        DO7+1E6es+M4zZNumoZesb4bx22wVDlEqWJo8S9MvTXpgJKu7xYwTB5VY/bSP7lI
-        aWrBpqfFgm5USjRsbysTi5u0IHJB5zUOHhIXB2RPWJdq/ySLdnusC1KH2BIuyRuw
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=/wgKKx
+        bNO/ebo4/iisikFmsTcHbg5kfP8OmfaXnoOzY=; b=wgH0VTJBAIR9gN2NlYx9md
+        jqwOh737LH3fyOPtdixfCzBPflTNc3QbOnWyEIi2Pp5hzZq7sn4sEpXq2yAyvG8L
+        2Q3TieQoLRpxb/MB34d/8+jmrlgiCR7rienOaxzp/XflWau20ab1KibNIpoTeXcp
+        mYH0AHLkOX99+QPERS2eTZmK0hRjcuxV7RUSmABl/+sXUAEdE5mHttcGuDBDvviH
+        fm+uBLZ06wNSnENkYeQAJJw+xwzhN6I8p0ZjQvs1xOee7nDo6bcoySZBr9Tdyj5C
+        btOoW+VAV3BUzot6CUR9hYbbJ1HM3zhxrs2KZiEDuGBOfW9lkUj8X+KoxONeVEWw
         ==
-X-ME-Sender: <xms:uPKVYIRy4ASpJJdFMvYAJ6fDS5UaqyhCPs_fJAtZnGLYPBpzBRFcdA>
-    <xme:uPKVYFx2GQxo1c8sSPUw2U2PFgxoPJ765j0V5S472cRdQu5YhK5xTCJBHWWjfCo9V
-    72vzzw2KiDHCvT6>
+X-ME-Sender: <xms:BPOVYMtNvurALxN0F8JryEsfHUBmf8i_W_DxWUqQtGluKq1YXdgrVA>
+    <xme:BPOVYJedBfb7ysRh98DILXLuk-A9s-xg4FKSG7qsKewQE-Y7fO246pbacGQ830nd6
+    yQqKBxIH3pYfngx>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdegfedgheeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvffukfhfgggtuggjfgesthdtredttderjeenucfhrhhomhepugifhhes
-    lhhinhhugihprhhoghhrrghmmhgvrhdrohhrghenucggtffrrghtthgvrhhnpefgffeife
-    dttddufedvfeffhfegkedtgeekheetleejkeehuefgtdffkeefieelgfenucffohhmrghi
-    nhepshgufhdrohhrghenucfkphepieekrddvvdegrdeikedrheenucevlhhushhtvghruf
-    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegufihhsehlihhnuhigphhrohhg
-    rhgrmhhmvghrrdhorhhg
-X-ME-Proxy: <xmx:uPKVYF1lXuNrNRbF2dmau6Zdm__DQYzS6PVOjYyvNcup5tRvLRbs1g>
-    <xmx:uPKVYMAi4volRPElK987mPtwJqPcbKCsyf6ycQfAyMgzZrFDtWhbug>
-    <xmx:uPKVYBgQxcLCX_QGTTM4CJoehBYDDx5N0KAav48HHwOD9LUbBkYRkA>
-    <xmx:ufKVYBLx3YFsC8LAcx-7wSb7InLBJram_y6w9py6w8ihz7S9WqtA9w>
+    lhhinhhugihprhhoghhrrghmmhgvrhdrohhrghenucggtffrrghtthgvrhhnpefgtdekvd
+    ektdefveehieefgefgffehjeekffdvlefhffeffeelhedvheehieelleenucfkphepieek
+    rddvvdegrdeikedrheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
+    hlfhhrohhmpegufihhsehlihhnuhigphhrohhgrhgrmhhmvghrrdhorhhg
+X-ME-Proxy: <xmx:BPOVYHwbjvwc4Uarc88IqdAqc1XuozPxjVL-9CQv15OItUcLsvKu0Q>
+    <xmx:BPOVYPOHZlgyiujxlvBpz9zf5WF8clWKvfiJQtWV3n9MY7fojBUQzw>
+    <xmx:BPOVYM_4EwxuuKHrN7tyxE5Y3xAPzAB7FVIoor8NIFhMGr8x13KxMQ>
+    <xmx:BPOVYKl-HcJTgqihBD7XMjun-3vanKYgD1ZtZQQ4ARDteA6f7292fQ>
 Received: from localhost (ip68-224-68-5.lv.lv.cox.net [68.224.68.5])
         by mail.messagingengine.com (Postfix) with ESMTPA;
-        Fri,  7 May 2021 22:08:56 -0400 (EDT)
-Date:   Fri, 7 May 2021 19:08:55 -0700
+        Fri,  7 May 2021 22:10:11 -0400 (EDT)
+Date:   Fri, 7 May 2021 19:10:11 -0700
 From:   dwh@linuxprogrammer.org
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Sebastian Schuberth <sschuberth@gmail.com>,
+        Eric Wong <e@80x24.org>,
         =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
         patchwork@lists.ozlabs.org
 Subject: Re: Pain points in Git's patch flow
-Message-ID: <20210508020855.GF3986@localhost>
+Message-ID: <20210508021011.GG3986@localhost>
 Mail-Followup-To: Git Mailing List <git@vger.kernel.org>,
-        Sebastian Schuberth <sschuberth@gmail.com>,
+        Sebastian Schuberth <sschuberth@gmail.com>, Eric Wong <e@80x24.org>,
         =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
         patchwork@lists.ozlabs.org
 References: <YHaIBvl6Mf7ztJB3@google.com>
  <22a0a383-0ae1-c7d1-75f7-7dfdfe5fb504@gmail.com>
  <87fszn48lh.fsf@evledraar.gmail.com>
  <CAHGBnuOVmzzhgW6GanHBXNb22UW3P1m3i6PJnOUEhYPO76hH4g@mail.gmail.com>
- <20210419214921.afurkxy7oru6bny6@nitro.local>
+ <20210419193600.GA19186@dcvr>
+ <CAHGBnuOv5PvCcKqed-sTOs2uxyuhRS7RDF4XvzPu9oHpyroasQ@mail.gmail.com>
+ <20210419220013.mguw4l5644r2c7gj@nitro.local>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Disposition: inline
-In-Reply-To: <20210419214921.afurkxy7oru6bny6@nitro.local>
+In-Reply-To: <20210419220013.mguw4l5644r2c7gj@nitro.local>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 19.04.2021 17:49, Konstantin Ryabitsev wrote:
->On Mon, Apr 19, 2021 at 07:54:37AM +0200, Sebastian Schuberth wrote:
->> > of these proposed alternatives involve moving away from something that's
->> > a distributed system today (E-Mail infrastructure, local clients), to
->> > what's essentially some website run by a centralized entity, in some
->> > cases proprietary.
->>
->> That's a good point, I admit I haven't thought of that. Probably
->> because I also don't care much. So *does* it really matter? What
->> exactly concerns you about a "centralized entity"? Is it the technical
->> aspect of a single point of failure, or the political / social aspect
->> of being dependent on someone you do not want to get influenced by? I
->> guess it's a bit of both.
->
->Patches sent via email remain immune to this. Even if vger falls over, it's
->merely a list service -- there are alternative ways of transmitting RFC2822
->messages that don't involve a central host (such as via a NNTP gateway,
->publishing a public-inbox "feed", etc). Email remains one of the few protocols
->that are designed ground-up to be decentralized and I'm afraid that we are
->again finding ourselves in a world where this is increasingly relevant.
+On 19.04.2021 18:00, Konstantin Ryabitsev wrote:
+>I view email as merely one way of exchanging RFC2822-formatted messages.
+>There are others and RFC2822 is robust enough to serve as a good standard
+>base that allows both free-form and structured content, including mixed.
 
-I agree with Konstantin on this one. To this day, email is still the
-most decentralized and "user sovereign" system on the internet. The
-standardization of protocols and file formats is not perfect but it is
-"complete" in the sense that it meets all of the requirements for
-decentralized software development.
-
-Think about it like this. Right now, I could use an IMAP client to
-download all of my emails from GMail, store them in mbox files, then
-use the IMAP client to upload the email to Fastmail or SDF.org or some
-other email provider. Or better yet, I can install local tools for
-working with my email. The fact that email providers/tools are largely
-interchangeable and replacable--despite Google/Yahoo/Microsoft's best
-efforts--gives maximum power to users.
-
-Like I said, I totally agree with Konstantin and I think the vision he
-described in his post on developer sigchains is what I've always wanted
-as an open source developer. It is common to hear the argument that
-centralized systems are more convient and easier to use and the more
-decentralized a sysetem, the harder it gets to use. I suspect that is
-only a half-truth because I don't think we've achieved full
-decentralization which is what Konstantin touches on in his post too.
-Full decentralization will bring automatic maintainence of p2p
-connections and synchronization. Things will "just work".
-
-I know I'm veering off topic a bit here but decentralization has been
-the focus of all of my learning, research and work for more than a
-decade now. Email is critical for maintaining decentralized development
-capabilities.
++1 on RFC2822 as universal message format. It is simple, easy to
+understand, trivial to manipulate in any programming language and widely
+supported. Standard file formats, along with standard protocols, both
+without "proprietary extensinos" is the key to maintaining
+decentralization and avoiding siloing of data and users.
 
 Cheers!
 Dave
