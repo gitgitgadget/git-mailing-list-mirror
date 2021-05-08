@@ -7,101 +7,104 @@ X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C682C433B4
-	for <git@archiver.kernel.org>; Sat,  8 May 2021 02:10:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ED171C433ED
+	for <git@archiver.kernel.org>; Sat,  8 May 2021 02:22:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D7C006140E
-	for <git@archiver.kernel.org>; Sat,  8 May 2021 02:10:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C2B7060FD9
+	for <git@archiver.kernel.org>; Sat,  8 May 2021 02:22:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230096AbhEHCLP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 May 2021 22:11:15 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:43195 "EHLO
+        id S230257AbhEHCX2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 May 2021 22:23:28 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:52255 "EHLO
         out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229775AbhEHCLN (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 7 May 2021 22:11:13 -0400
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.nyi.internal (Postfix) with ESMTP id EA1005C0150;
-        Fri,  7 May 2021 22:10:12 -0400 (EDT)
+        by vger.kernel.org with ESMTP id S229775AbhEHCX2 (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 7 May 2021 22:23:28 -0400
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+        by mailout.nyi.internal (Postfix) with ESMTP id 3A59D5C00E4
+        for <git@vger.kernel.org>; Fri,  7 May 2021 22:22:27 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Fri, 07 May 2021 22:10:12 -0400
+  by compute4.internal (MEProxy); Fri, 07 May 2021 22:22:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        linuxprogrammer.org; h=date:from:to:cc:subject:message-id
-        :references:mime-version:content-type:in-reply-to; s=fm3; bh=/wg
-        KKxbNO/ebo4/iisikFmsTcHbg5kfP8OmfaXnoOzY=; b=phhs99sas/OzgQ39WU3
-        N2qNbWKD02LnbSgY+rLNHMDeNOojV5XHr/gcum9qFDxnj566g0RpLtEP8UVtXtwP
-        YP5UTAeENFUHEt278M+TYhVIRX3J5Q7WIk44OUmGJDvZVqY8pFCBBtY8YRiGMlxk
-        ftBVieWaLvydVc/fMQfc9l9B5Xs0G4AsWZWQNY55iU8FuXH64o156USqWIEhIJkX
-        dNaiyN4vrPpBL8pgKJguT6IouN4ZMWPkOeTnq6tIRr4zwN4eEpE5YIfPP5li5DCi
-        QDwp6UKs8juEJONod8uGwj8Qfxy/vZet1TsjcLh7mA8av85rLt/esEjzngshtOY+
-        +QA==
+        linuxprogrammer.org; h=date:from:to:subject:message-id
+        :mime-version:content-type; s=fm3; bh=3u0yPobrqXivAMCF56nYc3+QLC
+        xYpmzSh7gFbJ1G+vQ=; b=rFRKIF5hf7ZuNdGrIjKsm6xwykyf5P6ROyNpEAhs8m
+        4OBv06DEXWEkBr1O+hm1k+n4xF6osDCHJdn1d9D/L+lwN97E+ktarEGx6yKS9mbo
+        v0Bidx0Yv/uCDXqiUhIiIciZoyfRBYsFKVMgyoCdGPKeXF9VEqKYggZI+LOIsk4R
+        /HGb4Rrvdt+MjelK/yG1UnQEjfkLK0pDi0u/uTF4/YIbh1u7IlCB4aBH9sTruMni
+        jE4ysQ8E5KRamiKm7zNrauBn5dUixWQC8FaQdYYCR59jNFJiPEcPvEEyW5omIO7u
+        juaYz34+uH2rkLahGb7LNo12GDjvWS1ZQf9ynA2FxxCw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=/wgKKx
-        bNO/ebo4/iisikFmsTcHbg5kfP8OmfaXnoOzY=; b=wgH0VTJBAIR9gN2NlYx9md
-        jqwOh737LH3fyOPtdixfCzBPflTNc3QbOnWyEIi2Pp5hzZq7sn4sEpXq2yAyvG8L
-        2Q3TieQoLRpxb/MB34d/8+jmrlgiCR7rienOaxzp/XflWau20ab1KibNIpoTeXcp
-        mYH0AHLkOX99+QPERS2eTZmK0hRjcuxV7RUSmABl/+sXUAEdE5mHttcGuDBDvviH
-        fm+uBLZ06wNSnENkYeQAJJw+xwzhN6I8p0ZjQvs1xOee7nDo6bcoySZBr9Tdyj5C
-        btOoW+VAV3BUzot6CUR9hYbbJ1HM3zhxrs2KZiEDuGBOfW9lkUj8X+KoxONeVEWw
-        ==
-X-ME-Sender: <xms:BPOVYMtNvurALxN0F8JryEsfHUBmf8i_W_DxWUqQtGluKq1YXdgrVA>
-    <xme:BPOVYJedBfb7ysRh98DILXLuk-A9s-xg4FKSG7qsKewQE-Y7fO246pbacGQ830nd6
-    yQqKBxIH3pYfngx>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdegfedgheeiucetufdoteggodetrfdotf
+        messagingengine.com; h=content-type:date:from:message-id
+        :mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
+        :x-me-sender:x-sasl-enc; s=fm2; bh=3u0yPobrqXivAMCF56nYc3+QLCxYp
+        mzSh7gFbJ1G+vQ=; b=QzdHRF+vSfUZ4zzENtSIkpj3tEhno3FsBxAQAGg6MG4e6
+        harN2wzWkMoPat1654KtCxfCS09EZhJUwvKDkYc4m5dtrWosPU6CSYBBgEg/EQEG
+        bUsc3EaZGpxTXkvtRemNZ+Dl9a8qj3iCJS/FcxSBcsq3jQFjSnpvv3deyluWnWr/
+        DBeF3x/lxSfnWm1EhD01iqcCzB5yqgKGnylh2OxGa3A9dHwT5CYFSsL/7adX3urY
+        pHok/k+tHFCfPN3L1jkUPtk7MPbEldJZepexOZYftoNY+SvU94Zx9/O/732yVC5m
+        01so6GJzwa6z7+BVeOVy16gfTCyiwgH1YSzMDab6g==
+X-ME-Sender: <xms:4vWVYKTyefL_HXX1ubrzEGA6--kJDysB-N1tamivcnB8qLvLL545pA>
+    <xme:4vWVYPzDEf1DHTBNoobNdNTMDq8r4H2MdORQKdvXzulKB53v5a509BLkub_WmaPbu
+    8Y5PxKepyQJVESg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdegfedgheekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvffukfhfgggtuggjfgesthdtredttderjeenucfhrhhomhepugifhhes
-    lhhinhhugihprhhoghhrrghmmhgvrhdrohhrghenucggtffrrghtthgvrhhnpefgtdekvd
-    ektdefveehieefgefgffehjeekffdvlefhffeffeelhedvheehieelleenucfkphepieek
-    rddvvdegrdeikedrheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
-    hlfhhrohhmpegufihhsehlihhnuhigphhrohhgrhgrmhhmvghrrdhorhhg
-X-ME-Proxy: <xmx:BPOVYHwbjvwc4Uarc88IqdAqc1XuozPxjVL-9CQv15OItUcLsvKu0Q>
-    <xmx:BPOVYPOHZlgyiujxlvBpz9zf5WF8clWKvfiJQtWV3n9MY7fojBUQzw>
-    <xmx:BPOVYM_4EwxuuKHrN7tyxE5Y3xAPzAB7FVIoor8NIFhMGr8x13KxMQ>
-    <xmx:BPOVYKl-HcJTgqihBD7XMjun-3vanKYgD1ZtZQQ4ARDteA6f7292fQ>
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkgggtuggfsehttdertd
+    dtreejnecuhfhrohhmpegufihhsehlihhnuhigphhrohhgrhgrmhhmvghrrdhorhhgnecu
+    ggftrfgrthhtvghrnhepueffleehfeetieeghfffhfekveekudeggeegffevteduhefgke
+    eikeduhfetudeknecukfhppeeikedrvddvgedrieekrdehnecuvehluhhsthgvrhfuihii
+    vgeptdenucfrrghrrghmpehmrghilhhfrhhomhepugifhheslhhinhhugihprhhoghhrrg
+    hmmhgvrhdrohhrgh
+X-ME-Proxy: <xmx:4_WVYH0yVeKXtGcfe4ikySOyCKU7HvFEphyavcJeoisKMsgr90wnNA>
+    <xmx:4_WVYGA5wh_04Bziw214QgjDOncpaZOLG0XgyUWzdXOMkKCJzT4Acg>
+    <xmx:4_WVYDhyAmb4SnPXQfGzUn9bS0KuzrVvO3oRgNm47dfDJYgKPRJtJQ>
+    <xmx:4_WVYCQa3bbzM0_2rwVMON9AGB5T00KS6KoiGi82KErLRPfcF-UM2Q>
 Received: from localhost (ip68-224-68-5.lv.lv.cox.net [68.224.68.5])
-        by mail.messagingengine.com (Postfix) with ESMTPA;
-        Fri,  7 May 2021 22:10:11 -0400 (EDT)
-Date:   Fri, 7 May 2021 19:10:11 -0700
+        by mail.messagingengine.com (Postfix) with ESMTPA
+        for <git@vger.kernel.org>; Fri,  7 May 2021 22:22:26 -0400 (EDT)
+Date:   Fri, 7 May 2021 19:22:25 -0700
 From:   dwh@linuxprogrammer.org
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Sebastian Schuberth <sschuberth@gmail.com>,
-        Eric Wong <e@80x24.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        patchwork@lists.ozlabs.org
-Subject: Re: Pain points in Git's patch flow
-Message-ID: <20210508021011.GG3986@localhost>
-Mail-Followup-To: Git Mailing List <git@vger.kernel.org>,
-        Sebastian Schuberth <sschuberth@gmail.com>, Eric Wong <e@80x24.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        patchwork@lists.ozlabs.org
-References: <YHaIBvl6Mf7ztJB3@google.com>
- <22a0a383-0ae1-c7d1-75f7-7dfdfe5fb504@gmail.com>
- <87fszn48lh.fsf@evledraar.gmail.com>
- <CAHGBnuOVmzzhgW6GanHBXNb22UW3P1m3i6PJnOUEhYPO76hH4g@mail.gmail.com>
- <20210419193600.GA19186@dcvr>
- <CAHGBnuOv5PvCcKqed-sTOs2uxyuhRS7RDF4XvzPu9oHpyroasQ@mail.gmail.com>
- <20210419220013.mguw4l5644r2c7gj@nitro.local>
+To:     git@vger.kernel.org
+Subject: Preserving the ability to have both SHA1 and SHA256 signatures
+Message-ID: <20210508022225.GH3986@localhost>
+Mail-Followup-To: git@vger.kernel.org
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Disposition: inline
-In-Reply-To: <20210419220013.mguw4l5644r2c7gj@nitro.local>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 19.04.2021 18:00, Konstantin Ryabitsev wrote:
->I view email as merely one way of exchanging RFC2822-formatted messages.
->There are others and RFC2822 is robust enough to serve as a good standard
->base that allows both free-form and structured content, including mixed.
+Hi Everybody,
 
-+1 on RFC2822 as universal message format. It is simple, easy to
-understand, trivial to manipulate in any programming language and widely
-supported. Standard file formats, along with standard protocols, both
-without "proprietary extensinos" is the key to maintaining
-decentralization and avoiding siloing of data and users.
+I was reading through the
+Documentation/technical/hash-function-transition.txt doc and realized
+that the plan is to support allowing BOTH SHA1 and SHA256 signatures to
+exist in a single object:
+
+> Signed Commits
+> 1. using SHA-1 only, as in existing signed commit objects
+> 2. using both SHA-1 and SHA-256, by using both gpgsig-sha256 and gpgsig
+>   fields.
+> 3. using only SHA-256, by only using the gpgsig-sha256 field.
+>
+> Signed Tags
+> 1. using SHA-1 only, as in existing signed tag objects
+> 2. using both SHA-1 and SHA-256, by using gpgsig-sha256 and an in-body
+>   signature.
+> 3. using only SHA-256, by only using the gpgsig-sha256 field.
+
+The design that I'm working on only supports a single signature that
+uses a combination of fields: one 'signtype', zero or more 'signoption'
+and one 'sign' in objects. I am thinking that the best thing to do is
+replace the gpgsig-sha256 fields in objects and allow old gpgsig (commits)
+and in-body (tags) signatures to co-exist along side to give the same
+functionality.
+
+That not only paves the way forward but preserves the full backward
+compatibility that is one of my top requirements.
+
+Thoughts?
 
 Cheers!
 Dave
