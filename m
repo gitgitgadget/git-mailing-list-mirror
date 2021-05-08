@@ -2,100 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A3C2C433ED
-	for <git@archiver.kernel.org>; Sat,  8 May 2021 04:27:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7636DC433B4
+	for <git@archiver.kernel.org>; Sat,  8 May 2021 04:28:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1E6F661288
-	for <git@archiver.kernel.org>; Sat,  8 May 2021 04:27:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 512116054E
+	for <git@archiver.kernel.org>; Sat,  8 May 2021 04:28:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230300AbhEHE2H (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 8 May 2021 00:28:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42588 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229523AbhEHE2G (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 May 2021 00:28:06 -0400
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 093C3C061574
-        for <git@vger.kernel.org>; Fri,  7 May 2021 21:27:05 -0700 (PDT)
-Received: by mail-pj1-x1036.google.com with SMTP id b14-20020a17090a6e0eb0290155c7f6a356so5664413pjk.0
-        for <git@vger.kernel.org>; Fri, 07 May 2021 21:27:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=bF0etiCkQs2lvtZHPnRxrIy6c4LJSR7OwSL10pCnYNY=;
-        b=mhxy5AK/7Sdx0sqSP4sRP98XT+pbwVnckH3uOlp55lhZBA6uM8b1pSrA35VGJHWt+j
-         x8x2IbBNueZaHHnYzHUmAThguHGuDaJ1nQzNWJA44ws3gI5+4hmyobSxCFPykj2oN8AZ
-         wQWJtM8sf5Y2ynxndkJ+RZ1RACLL1IG9McY+eeh7J88Y1KwDemJw/A1XY8bNvabBFlJN
-         gP/ibTJl1iJ+5l9GAkkObGbNdIzTdYNDJS7rZSq8V+A1YP63zCNXVBsawUZhCSMGWS5B
-         qV/7JqLajSh9JhJIRktUocu+tLMyq7gXU8AFIEcJ6VyYpy90idcpUt7t7pZTxrzefYFL
-         zY+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=bF0etiCkQs2lvtZHPnRxrIy6c4LJSR7OwSL10pCnYNY=;
-        b=W9rCka69s2on0j8MiyOZuFH/znIBm+6w7wqqneGuXF1fi8g9zGPGI0GBIGbK7/UtUZ
-         LrPaGCQ8UtbgMKXKkhXcDUK3+sZIWgwUyZYw8lay9vodAmn2bT6LcTnzE56XAGlaRSck
-         l9eGNa/edodF2BUxFvZEptC3pAPbcCH3mVqkz5K432qh/nmjQ44lLzuCFEonE4fIgpf8
-         nP3SWnxUzgiaK19IBx0ioygZ2kGZsvyC/hcWp4wmPilhuxz+ayvcTG3XU7ptqrXe4UNJ
-         xUD276zrdNnQ5rmuyz4AzCRmdRebr214gO0NYH8z9c3GDUsrMCJ/NcBVRRM4t4A781Il
-         qKSA==
-X-Gm-Message-State: AOAM532QjB+tfFB0dwwKn2t6mQjhYoJ3QZP2ibsddQnV2Dnn2BZTvNLh
-        uCDsy8AFwt9dj+jcInTpuJaBDw3yWXM51Q==
-X-Google-Smtp-Source: ABdhPJxogkZDOLODDp7Ok17ATkyLJp/9LzgzUQYKVyDIBDnKjQwuQqndB5k8vDJG4bCk/MfEoyb8xg==
-X-Received: by 2002:a17:90b:1e51:: with SMTP id pi17mr25689490pjb.5.1620448024291;
-        Fri, 07 May 2021 21:27:04 -0700 (PDT)
-Received: from [192.168.43.80] (subs03-180-214-233-72.three.co.id. [180.214.233.72])
-        by smtp.gmail.com with ESMTPSA id p11sm5804027pjo.19.2021.05.07.21.27.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 07 May 2021 21:27:04 -0700 (PDT)
-Subject: Re: [RFC suggestion] Generate manpage directly with Asciidoctor
-To:     Felipe Contreras <felipe.contreras@gmail.com>,
-        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
-Cc:     Git Users <git@vger.kernel.org>
-References: <3461c7b0-594d-989e-3048-2fc6583084ad@gmail.com>
- <YJUyHkYAIth0W9dY@danh.dev> <6095c74993f19_cfc72085d@natae.notmuch>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-Message-ID: <5130bb11-002c-9aa9-ac6d-11bfd6f85f3f@gmail.com>
-Date:   Sat, 8 May 2021 11:27:01 +0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.1
+        id S230511AbhEHE3h (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 8 May 2021 00:29:37 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:55869 "EHLO
+        out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229467AbhEHE3g (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 8 May 2021 00:29:36 -0400
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+        by mailout.nyi.internal (Postfix) with ESMTP id 842F15C009D;
+        Sat,  8 May 2021 00:28:34 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute5.internal (MEProxy); Sat, 08 May 2021 00:28:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wfchandler.org;
+         h=date:from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=fm1; bh=CJ/NrtkyaWW+FKX0gVPEOlc3FBk
+        Q/uCEo+r4K43eU8c=; b=JqVuiS/rCtTAF3IvltJuAWIFxrJDZs9TD1D8+P1PzkP
+        yr0K+d/8aDSJjmEaPh2FLzBfdWujz598kWS4Pr1Ag2gDkWQlgnzQ2fLZFVyaotro
+        m0v6gg64fZxdByA7aeVfd7rrGbCMoNDWo+Tkbrpeh6Q/3XAqpW3cSu1tqT6E2OpY
+        xCw1kR5+GFJd4C7A5qDL1Y4PuRseim4zSJtTZ9ALyqCw+2U57/rfcu1G6WK1eLFT
+        zo5RtX7zPTovKBE/gOdLwTWl+hh4DBqDZxccWZyTgYMsZyvLg0LeZNsH+1pfIzYq
+        /ZNmi60Fm0y6JzSmy3Tz7mE/d55CHVmYyAeNRz6odeQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=CJ/Nrt
+        kyaWW+FKX0gVPEOlc3FBkQ/uCEo+r4K43eU8c=; b=MG/Azu2NBZagqH2QOAakA/
+        oky34+w4c09HZOg5fK7zll0NZ+7W6w47D4MB4ekbcRFs3Jl6FUSYh64tZuunVUuf
+        jB2PCjTQDQp4cL88v5kfdvTKI3hE5wRQvy+OYidVYQyxUa6U0kdnaTUvXlXs4gj3
+        BCkOAPwvG2ebXpfe28Fq6nfUCytrN2e1e3s9yHRlwmFUFr3bqfa99krlSgtQhOKa
+        +Jz9MNxVDnI2/+UbsfjexSqD/e/zdeZTLIsqkq2zk3v6OovKfTsjKM24fPzXGgQ5
+        LPEhE3pipKba6+um41JtZFicVO5d5ODCj9K0e6Ms/b32m/P9k5VkGt/B812IkMfA
+        ==
+X-ME-Sender: <xms:cROWYPt_IPNOpMjenzgkmwe4ORKxo5Nl4Au9EjYjSc0tKmmvbJQ87w>
+    <xme:cROWYAccLKVJazjkit4r-6vOyl4-4LOLs7fQPHS5aGHwthZzPQs7zP-ImsoNoJVzK
+    b72ns9GYhN9yqQjBLE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdegfedgkeegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesthdtre
+    dttddtjeenucfhrhhomhephghilhhlucevhhgrnhgulhgvrhcuoeiffhgtseiffhgthhgr
+    nhgulhgvrhdrohhrgheqnecuggftrfgrthhtvghrnhepgfdttefggfeludfgffeutdfhue
+    etvdeikeehgeeihfeugffgueeutdeuheduieeinecukfhppeejhedruddukedrfedrudeg
+    leenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpeiffh
+    gtseiffhgthhgrnhgulhgvrhdrohhrgh
+X-ME-Proxy: <xmx:chOWYCyRytQczYpw5UFGdcfjyAnEbDZuf8PtsmQEijwgKonsz48ikQ>
+    <xmx:chOWYOPDINpNsXPIbEUvkBKu7je7umNuAqWfOmchNzf52aCsc56Kog>
+    <xmx:chOWYP8defvP25s60MMwom3S9Sw4CVLLUPWLPRUuSMLUxc9AlOjFhg>
+    <xmx:chOWYMEn8LVVYRj-CtPwo862AiCF1EzM5alaj0sEo21D-SIzxwagGA>
+Received: from mini.wfchandler.org (d118-75-149-3.try.wideopenwest.com [75.118.3.149])
+        by mail.messagingengine.com (Postfix) with ESMTPA;
+        Sat,  8 May 2021 00:28:33 -0400 (EDT)
+Date:   Sat, 8 May 2021 00:27:45 -0400
+From:   Will Chandler <wfc@wfchandler.org>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, ps@pks.im
+Subject: Re: [PATCH] refs: cleanup directories when deleting packed ref
+Message-ID: <YJYTQYk5q8g6HaIm@mini.wfchandler.org>
+References: <YJVQpaDwkQH/aCee@mini.wfchandler.org>
+ <YJW3n6lVWVAuLQap@coredump.intra.peff.net>
+ <YJW46fsdKaUv2Fln@coredump.intra.peff.net>
+ <YJXF4xA0GFx2/2v4@coredump.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <6095c74993f19_cfc72085d@natae.notmuch>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YJXF4xA0GFx2/2v4@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 08/05/21 06.03, Felipe Contreras wrote:
-  >> I think we're better to do like this:
->>
->> * If we're using asciidoc, we will use xmlto
->> * If we're using asciidoctor, we will generate man-pages with
->>    asciidoctor directly
-> 
-> This certainly is the way to go.
-> 
-> I'm not sure if Bagas suggested to make USE_ASCIIDOCTOR=YesPlease the
-> default, but first we would need to make sure the output without xmlto
-> is desirable, which we don't at the moment.
+On Fri, May 07, 2021 at 06:57:39PM -0400, Jeff King wrote:
+> Getting back to your patch, though, you are definitely fixing a problem
+> with update-ref (which correctly realizes there is no loose ref to clean
+> up, but forgets that we had to make a lockfile). And the solution you
+> have looks correct. I think you just need to update the test to exercise
+> it with "update-ref -d".
 
-I'm not aiming for defaulting to AsciiDoctor, but I agree that we would like
-to migrate away from xmlto by making sure the output sans it is desirable.
+Thanks for the thorough analysis! Apologies for the confusion, I really
+appreciate your patience.
 
-> So, even if we were to consider this, *first* the option to use pure
-> asciidoctor needs to be in place.
-
-Don't you know there is USE_ASCIIDOCTOR=YesPlease flag which do the job?
-
--- 
-An old man doll... just what I always wanted! - Clara
+I'll get the test fixed and note that this is specific to 'update-ref'.
