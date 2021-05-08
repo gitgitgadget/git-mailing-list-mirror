@@ -2,90 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 055C8C433ED
-	for <git@archiver.kernel.org>; Sat,  8 May 2021 10:19:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CC83CC433ED
+	for <git@archiver.kernel.org>; Sat,  8 May 2021 10:20:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B8567611ED
-	for <git@archiver.kernel.org>; Sat,  8 May 2021 10:19:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9D288611ED
+	for <git@archiver.kernel.org>; Sat,  8 May 2021 10:20:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230289AbhEHKUV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 8 May 2021 06:20:21 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54589 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229947AbhEHKUU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 May 2021 06:20:20 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 17043B8917;
-        Sat,  8 May 2021 06:19:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=AsFRoJfYDgEz8Z6c65Yj10Xp7gk4arzCM9xbeA
-        QLtIA=; b=m99vMZU19fMGUZeAl6iYeHigEswKkir1vepchhpp4yt5J5wzYdN3Hm
-        c9+w1X1t01LUjaiiOxxdcfNn3+/FelB839dfAiHe8kcetRVoCZ+kRSNs6I5R+Y52
-        aS6GPxktbCg9hWDqQJEkIXCBvZlp0KcreviYfSuZNf2sp5fj9SGA8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0D553B8916;
-        Sat,  8 May 2021 06:19:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S230355AbhEHKVA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 8 May 2021 06:21:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34030 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230343AbhEHKU7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 May 2021 06:20:59 -0400
+X-Greylist: delayed 468 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 08 May 2021 03:19:58 PDT
+Received: from shout02.mail.de (shout02.mail.de [IPv6:2001:868:100:600::217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5835BC061574
+        for <git@vger.kernel.org>; Sat,  8 May 2021 03:19:58 -0700 (PDT)
+Received: from postfix01.mail.de (postfix02.bt.mail.de [10.0.121.126])
+        by shout02.mail.de (Postfix) with ESMTP id 1340FC00FB;
+        Sat,  8 May 2021 12:12:08 +0200 (CEST)
+Received: from smtp03.mail.de (smtp03.bt.mail.de [10.0.121.213])
+        by postfix01.mail.de (Postfix) with ESMTP id EA49FA006A;
+        Sat,  8 May 2021 12:12:07 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mail.de;
+        s=mailde202009; t=1620468728;
+        bh=Igdb3MnpfgK7PiWy6TBzYTRm/EJOb4UUuNGvpHeTtcw=;
+        h=From:Subject:To:Cc:References:Date:In-Reply-To:From;
+        b=d8N4MNfucuxUu8fcjOhu2nOPXReU0vFtTLcdwqUyCgZacz+zDmIxspcocsEBe8f92
+         Ujguo83j1Yt7H77XWNVPeMk+uyAFtbOSq5g3BCJ0j8b/MO85QoT8wwtWnlonjQNtJ+
+         PF4yAwfR9ClJVl2uIx3Y59xWNnoXoknYLMG4vv8fQh5LE+bXF/lvlpzwMgzVcnC9BL
+         EzOuoH2yhOQ2atHXj83iDAXlC9GwekZQoYZiwPQN87qzvt63MXEsgRI9HOe8nW4Sg7
+         7OFypFodcxLvrBg8Fh0SM8AKJtX9N/0DdIKo9hu/tE/cezbghQt4zdSmNxrqva+xCB
+         8C5suIigd//+Q==
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8D21CB8914;
-        Sat,  8 May 2021 06:19:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Elijah Newren <newren@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 1/8] t7300: add testcase showing unnecessary
- traversal into ignored directory
-References: <pull.1020.git.git.1620360300.gitgitgadget@gmail.com>
-        <pull.1020.v2.git.git.1620432500.gitgitgadget@gmail.com>
-        <a3bd253fa8e8ae47d19beb35327d8283ffa49289.1620432500.git.gitgitgadget@gmail.com>
-Date:   Sat, 08 May 2021 19:19:18 +0900
-In-Reply-To: <a3bd253fa8e8ae47d19beb35327d8283ffa49289.1620432500.git.gitgitgadget@gmail.com>
-        (Elijah Newren via GitGitGadget's message of "Sat, 08 May 2021
-        00:08:13 +0000")
-Message-ID: <xmqq8s4pv87t.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        by smtp03.mail.de (Postfix) with ESMTPSA id BBB10A0484;
+        Sat,  8 May 2021 12:12:06 +0200 (CEST)
+From:   Stefan Moch <stefanmoch@mail.de>
+Subject: Re: Preserving the ability to have both SHA1 and SHA256 signatures
+To:     Felipe Contreras <felipe.contreras@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        dwh@linuxprogrammer.org
+Cc:     git <git@vger.kernel.org>
+References: <20210508022225.GH3986@localhost>
+ <CAP8UFD0vp-zZv=Q1+KWv8PHnxTuspTw2aSCUp8QUic0HOSyq4w@mail.gmail.com>
+ <xmqqim3tvhlr.fsf@gitster.g> <609645cb11f72_1fc6d208ee@natae.notmuch>
+Message-ID: <f4f782c4-3adc-8c1c-428d-8037426fc475@mail.de>
+Date:   Sat, 8 May 2021 12:11:51 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D92E7338-AFE6-11EB-8EAF-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+In-Reply-To: <609645cb11f72_1fc6d208ee@natae.notmuch>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-purgate: clean
+X-purgate: This mail is considered clean (visit http://www.eleven.de for further information)
+X-purgate-type: clean
+X-purgate-Ad: Categorized by eleven eXpurgate (R) http://www.eleven.de
+X-purgate: This mail is considered clean (visit http://www.eleven.de for further information)
+X-purgate: clean
+X-purgate-size: 1752
+X-purgate-ID: 154282::1620468727-000063E7-D58F927C/0/0
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Felipe Contreras wrote:
+> Junio C Hamano wrote:
+>> Christian Couder <christian.couder@gmail.com> writes:
+>>> (Not sure why, but, when using "Reply to all" in Gmail, it doesn't
+>>> actually reply to you (or Cc you), only to the mailing list. I had to
+>>> manually add your email back.)
+>>
+>> I am sure why.  DWH, please do not use mail-follow-up-to when
+>> working with this list.  It is rude and wastes people's time (like
+>> the practice just did by stealing time from Christian).
+> 
+> I agree with this, but shouldn't this be written in some kind of mail
+> etiquiette guideline? Along with a rationale.
 
-> +		# alpine-linux-musl fails to "rm -rf" a directory with such
-> +		# a deeply nested hierarchy.  Help it out by deleting the
-> +		# leading directories ourselves.  Super slow, but, what else
-> +		# can we do?  Without this, we will hit a
-> +		#     error: Tests passed but test cleanup failed; aborting
-> +		# so do this ugly manual cleanup...
-> +		while test ! -f directory-random-file.txt; do
-> +			name=$(ls -d directory*) &&
-> +			mv $name/* . &&
-> +			rmdir $name
-> +		done
+Good idea to write this down. How to use the mailing list is only
+sparsely documented. The following files talk about sending to the
+mailing list:
 
-Another thing: this not being a test_when_finished handler means it
-would not help after a test failure.
+ 1. README.md
+ 2. Documentation/SubmittingPatches
+ 3. Documentation/MyFirstContribution.txt
+ 4. MaintNotes (in Junio's “todo” branch, sent out to the list from
+    time to time as “A note from the maintainer”)
 
-Perhaps wrap it in a helper
+2, 3 and 4 mention sending Cc to everyone involved.
 
-    clean_deep_hierarchy () {
-	rm -fr directory* ||
-	while test ! -f directory-random-file.txt
-	do
-		...
-	done
-    }
+2 is about new messages.
 
-and call it from test_when_finished?
+3 and 4 specifically talk about keeping everyone in Cc: in replies.
+Both in the context of “you don't have to be subscribed and you
+don't need to ask for Cc:”.
+
+
+Please also note, that mutt sets the “Mail-Followup-To:” header by
+default for sending to known mailing lists, unless “followup_to” is
+set to “no”. Whether or not it removes the sender address in this
+header depends on the list address to be known to be subscribed to
+or simply known to be a mailing list. It also does not set this
+header if no recipient address is known as a mailing list.
+
+http://www.mutt.org/doc/manual/#followup-to
+http://www.mutt.org/doc/manual/#using-lists
